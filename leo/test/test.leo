@@ -2786,11 +2786,11 @@
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
 <v t="edream.121303091808" a="E"><vh>Batch test</vh>
-<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.112203144347" a="M" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
-<v t="dthein.20040108213304" a="V"><vh>reformatParagraphsTests</vh>
+<v t="dthein.20040108213304" a="E"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
 <v t="dthein.20040108213304.2"><vh>before</vh></v>
 <v t="dthein.20040108213304.3"><vh>after</vh></v>
@@ -2835,13 +2835,17 @@
 <v t="dthein.20040108213304.5"><vh>before</vh></v>
 <v t="dthein.20040108213304.6"><vh>after</vh></v>
 </v>
-<v t="dthein.20040108220819"><vh>testMultiParagraphWithList</vh>
+<v t="dthein.20040108220819" a="E"><vh>testMultiParagraphWithList</vh>
 <v t="dthein.20040108220819.1"><vh>before</vh></v>
 <v t="dthein.20040108220819.2"><vh>after</vh></v>
 </v>
 <v t="dthein.20040110062310"><vh>testDirectiveBreaksParagraph</vh>
 <v t="dthein.20040110062310.1"><vh>before</vh></v>
 <v t="dthein.20040110062310.2"><vh>after</vh></v>
+</v>
+<v t="dthein.20040121204705" a="EV"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="dthein.20040121204705.1"><vh>before</vh></v>
+<v t="dthein.20040121204705.2"><vh>after</vh></v>
 </v>
 </v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
@@ -3243,6 +3247,47 @@ Wrap a long line, with trailing newline.
 </t>
 <t tx="dthein.20040110062855.2">This line is over forty characters long,
 at least it seems to be.
+</t>
+<t tx="dthein.20040121204705">@language plain
+@pagewidth 40
+@tabwidth 8
+
+Ran into a problem with the wrapping
+eating blank lines that delimit
+paragraphs if those blank lines have any
+leading whitespace. This test is to make
+sure that still works.
+
+If you "show invisibles" you'll see the
+leading whitespace in the blank lines --
+which is different from the
+"testMultiParagraphWithList" test.</t>
+<t tx="dthein.20040121204705.1">This paragraph leads of this test.  It is the "lead"
+paragraph.
+  
+  1. This is item 
+     number 1.  It is the first item in the list.
+  
+  2. This is item 
+     number 2.  It is the second item in the list.
+  
+  3. This is item 
+     number 3.  It is the third item in the list.
+  
+This paragraph ends the test.  It is the "final"
+paragraph.
+</t>
+<t tx="dthein.20040121204705.2">The two biggest problems with Leo are:
+
+   1. The editor sucks. I'd like to use either JEdit, emacs, or vim, or
+      somehow hook in the editor of my choice. 
+   
+   2. It is easy to get CVS conflicts in the Leo file (the file that
+      holds the collection of vnodes and tnodes) that are very difficult
+      to resolve. Part of this is because the Leo file is an XML file
+      and the CVS diff doesn't grox xml, just text lines. And part of
+      this is because developers can make conflicting changes in the
+      structure of the vnodes.
 </t>
 <t tx="edream.110203161858">@color
 
@@ -34713,11 +34758,6 @@ if app.batchMode:
 		print "Disabling log"
 		
 	flag,frame = openWithFileName(path,old_c=None,enableLog=enable)
-	c = frame.c
-	v = c.rootVnode()
-	while v:
-		print v.headString()
-		v = v.threadNext()
 	
 	print app.log
 	
@@ -34725,8 +34765,7 @@ if app.batchMode:
 		print "Enabling log"
 		frame.log.enable()
 		es(frame)
-	print "End of batchScript.py"
-</t>
+	print "End of batchScript.py"</t>
 <t tx="edream.112303064255">before
 &lt;&lt; section &gt;&gt;
 sec line 1
