@@ -294,6 +294,25 @@ class Bunch:
 		
 		
 #@-node:class Bunch
+#@+node:class nullObject
+# From the Python cookbook, recipe 5.23
+
+class nullObject:
+	
+	"""An object that does nothing, and does it very well."""
+	
+	def __init__   (self,*args,**keys): pass
+	def __call__   (self,*args,**keys): return self
+	
+	def __repr__   (self): return "nullObject"
+	
+	def __nonzero__ (self): return 0
+	
+	def __delattr__(self,attr):     return self
+	def __getattr__(self,attr):     return self
+	def __setattr__(self,attr,val): return self
+#@nonl
+#@-node:class nullObject
 #@+node:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
 
@@ -1611,193 +1630,6 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
-#@+node:os_path_abspath
-def os_path_abspath(path,encoding=None):
-	
-	"""Convert a path to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.abspath(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_abspath
-#@+node:os_path_basename
-def os_path_basename(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.basename(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_basename
-#@+node:os_path_dirname
-def os_path_dirname(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.dirname(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_dirname
-#@+node:os_path_exists
-def os_path_exists(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return os.path.exists(path)
-#@nonl
-#@-node:os_path_exists
-#@+node:os_path_getmtime
-def os_path_getmtime(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return os.path.getmtime(path)
-#@nonl
-#@-node:os_path_getmtime
-#@+node:os_path_isabs
-def os_path_isabs(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return os.path.isabs(path)
-#@nonl
-#@-node:os_path_isabs
-#@+node:os_path_isdir (not used)
-def os_path_isdir(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return os.path.isdir(path)
-#@nonl
-#@-node:os_path_isdir (not used)
-#@+node:os_path_isfile
-def os_path_isfile(path,encoding=None):
-	
-	"""Normalize the path and convert it to an absolute path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return os.path.isfile(path)
-#@nonl
-#@-node:os_path_isfile
-#@+node:os_path_join
-def os_path_join(*args,**keys):
-	
-	encoding = keys.get("encoding")
-
-	uargs = [toUnicodeFileEncoding(arg,encoding) for arg in args]
-
-	path = os.path.join(*uargs)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-
-	return path
-#@nonl
-#@-node:os_path_join
-#@+node:os_path_norm
-def os_path_norm(path,encoding=None):
-	
-	"""Normalize both the path and the case."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.normcase(path)
-	path = os.path.normpath(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_norm
-#@+node:os_path_normcase
-def os_path_normcase(path,encoding=None):
-	
-	"""Normalize the path's case."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.normcase(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_normcase
-#@+node:os_path_normpath
-def os_path_normpath(path,encoding=None):
-	
-	"""Normalize the path."""
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	path = os.path.normpath(path)
-	
-	path = toUnicodeFileEncoding(path,encoding)
-	
-	return path
-#@nonl
-#@-node:os_path_normpath
-#@+node:os_path_split
-def os_path_split(path,encoding=None):
-	
-	path = toUnicodeFileEncoding(path,encoding)
-
-	head,tail = os.path.split(path)
-
-	head = toUnicodeFileEncoding(head,encoding)
-	tail = toUnicodeFileEncoding(tail,encoding)
-
-	return head,tail
-#@nonl
-#@-node:os_path_split
-#@+node:os_path_splitext
-def os_path_splitext(path,encoding=None):
-
-	path = toUnicodeFileEncoding(path,encoding)
-
-	head,tail = os.path.splitext(path)
-
-	head = toUnicodeFileEncoding(head,encoding)
-	tail = toUnicodeFileEncoding(tail,encoding)
-
-	return head,tail
-#@nonl
-#@-node:os_path_splitext
-#@+node:toUnicodeFileEncoding
-def toUnicodeFileEncoding(path,encoding):
-
-	if not encoding:
-		if sys.platform == "win32":
-			encoding = "mbcs"
-		else:
-			encoding = app.tkEncoding
-
-	return toUnicode(path,encoding)
-#@nonl
-#@-node:toUnicodeFileEncoding
 #@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -2178,6 +2010,193 @@ def windows():
 	return app.windowList
 #@nonl
 #@-node:windows
+#@+node:os_path_abspath
+def os_path_abspath(path,encoding=None):
+	
+	"""Convert a path to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.abspath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_abspath
+#@+node:os_path_basename
+def os_path_basename(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.basename(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_basename
+#@+node:os_path_dirname
+def os_path_dirname(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.dirname(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_dirname
+#@+node:os_path_exists
+def os_path_exists(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.exists(path)
+#@nonl
+#@-node:os_path_exists
+#@+node:os_path_getmtime
+def os_path_getmtime(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.getmtime(path)
+#@nonl
+#@-node:os_path_getmtime
+#@+node:os_path_isabs
+def os_path_isabs(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isabs(path)
+#@nonl
+#@-node:os_path_isabs
+#@+node:os_path_isdir (not used)
+def os_path_isdir(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isdir(path)
+#@nonl
+#@-node:os_path_isdir (not used)
+#@+node:os_path_isfile
+def os_path_isfile(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isfile(path)
+#@nonl
+#@-node:os_path_isfile
+#@+node:os_path_join
+def os_path_join(*args,**keys):
+	
+	encoding = keys.get("encoding")
+
+	uargs = [toUnicodeFileEncoding(arg,encoding) for arg in args]
+
+	path = os.path.join(*uargs)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return path
+#@nonl
+#@-node:os_path_join
+#@+node:os_path_norm
+def os_path_norm(path,encoding=None):
+	
+	"""Normalize both the path and the case."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normcase(path)
+	path = os.path.normpath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_norm
+#@+node:os_path_normcase
+def os_path_normcase(path,encoding=None):
+	
+	"""Normalize the path's case."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normcase(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_normcase
+#@+node:os_path_normpath
+def os_path_normpath(path,encoding=None):
+	
+	"""Normalize the path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normpath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_normpath
+#@+node:os_path_split
+def os_path_split(path,encoding=None):
+	
+	path = toUnicodeFileEncoding(path,encoding)
+
+	head,tail = os.path.split(path)
+
+	head = toUnicodeFileEncoding(head,encoding)
+	tail = toUnicodeFileEncoding(tail,encoding)
+
+	return head,tail
+#@nonl
+#@-node:os_path_split
+#@+node:os_path_splitext
+def os_path_splitext(path,encoding=None):
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	head,tail = os.path.splitext(path)
+
+	head = toUnicodeFileEncoding(head,encoding)
+	tail = toUnicodeFileEncoding(tail,encoding)
+
+	return head,tail
+#@nonl
+#@-node:os_path_splitext
+#@+node:toUnicodeFileEncoding
+def toUnicodeFileEncoding(path,encoding):
+
+	if not encoding:
+		if sys.platform == "win32":
+			encoding = "mbcs"
+		else:
+			encoding = app.tkEncoding
+
+	return toUnicode(path,encoding)
+#@nonl
+#@-node:toUnicodeFileEncoding
 #@+node:scanAtFileOptions
 def scanAtFileOptions (h,err_flag=false):
 	
