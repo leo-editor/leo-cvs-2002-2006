@@ -572,16 +572,20 @@ class tangleCommands:
 	
 	def cleanup (self):
 		
-		#trace()
 		if self.errors == 0:
-		
+			
+			#@<< call tangle_done.run() or untangle_done.run() >>
+			#@+node:1::<< call tangle_done.run() or untangle_done.run() >>
+			#@+body
 			# Create a list of root names:
-			root_names = [] ; dir = app().loadDir
+			root_names = []
+			dir = self.tangle_directory # Bug fix: 12/04/02
+			if not dir: dir = ""
 			for section in self.root_list:
 				for part in section.parts:
 					if part.is_root:
 						root_names.append(os.path.join(dir,part.name))
-	
+			
 			if self.tangling and self.tangle_batch_flag:
 				try:
 					import tangle_done
@@ -596,6 +600,9 @@ class tangleCommands:
 				except:
 					es("Can not execute tangle_done.run()")
 					es_exception()
+			#@-body
+			#@-node:1::<< call tangle_done.run() or untangle_done.run() >>
+
 	
 		# Reinitialize the symbol tables and lists.
 		self.tst = {}
