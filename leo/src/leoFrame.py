@@ -893,6 +893,11 @@ class leoTree:
 			doHook("@url2",c=c,v=v)
 	#@nonl
 	#@-node:tree.OnIconDoubleClick (@url)
+	#@+node:tree.enableDrawingAfterException
+	def enableDrawingAfterException (self):
+		pass
+	#@nonl
+	#@-node:tree.enableDrawingAfterException
 	#@-others
 #@nonl
 #@-node:class leoTree
@@ -1386,6 +1391,9 @@ class nullTree (leoTree):
 	#@nonl
 	#@-node:oops
 	#@+node:Drawing
+	def enableDrawingAfterException (self):
+		pass
+	
 	def drawIcon(self,v,x=None,y=None):
 		pass
 	
