@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4431" clone_windows="0"/>
 <globals body_outline_ratio="0.47433035714285715">
-	<global_window_position top="39" left="305" height="896" width="940"/>
+	<global_window_position top="29" left="271" height="896" width="940"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1361,7 +1361,9 @@
 <v t="ekr.20031218072017.999"><vh>From Tree class</vh>
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node VERY USEFUL TRACE</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
+</v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
@@ -4437,7 +4439,9 @@
 <v t="ekr.20031218072017.4145"><vh>About drawing and updating</vh></v>
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node VERY USEFUL TRACE</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
+</v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
@@ -4445,6 +4449,13 @@
 <v t="ekr.20031218072017.1008"><vh>drawTree</vh>
 <v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
 <v t="ekr.20031218072017.1010"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
 <v t="ekr.20031218072017.1018"><vh>tree.idle_scrollTo</vh>
@@ -4584,7 +4595,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040228154544" a="TV"><vh>(Transition to 4.2) p.__getattr__ OFF (must be ON if use_plugins)</vh>
+<v t="ekr.20040228154544"><vh>(Transition to 4.2) p.__getattr__ OFF (must be ON if use_plugins)</vh>
 <v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t)</vh></v>
 <v t="ekr.20040117181936"><vh>To do</vh>
 <v t="ekr.20040315073818" a="M"><vh>create find-script to complete transition</vh></v>
@@ -4993,7 +5004,9 @@
 </v>
 </v>
 <v t="ekr.20040313083810.1"><vh>tree stuff...</vh>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node VERY USEFUL TRACE</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
+</v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
@@ -8429,7 +8442,69 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.4138" tnodeList="ekr.20031218072017.4138,ekr.20031218072017.4139,ekr.20031218072017.2409,ekr.20031218072017.4140,ekr.20031218072017.1017,ekr.20031218072017.4142,ekr.20031218072017.4143,ekr.20031218072017.1956,ekr.20031218072017.1957,ekr.20031218072017.1958,ekr.20031218072017.1959,ekr.20031218072017.1960,ekr.20031218072017.1961,ekr.20031218072017.1962,ekr.20031218072017.1963,ekr.20031218072017.1964,ekr.20031218072017.1965,ekr.20031218072017.1966,ekr.20031218072017.1967,ekr.20031218072017.1012,ekr.20040106095546,ekr.20031218072017.1013,ekr.20031218072017.1014,ekr.20031218072017.1015,ekr.20031218072017.1016,ekr.20031218072017.4145,ekr.20031218072017.1000,ekr.20031218072017.1002,ekr.20031218072017.1004,ekr.20031218072017.1005,ekr.20031218072017.1006,ekr.20031218072017.2029,ekr.20031218072017.1008,ekr.20031218072017.1009,ekr.20031218072017.1010,ekr.20031218072017.4147,ekr.20031218072017.1018,ekr.20040314092716,ekr.20040314092716.1,ekr.20031218072017.4148,ekr.20031218072017.4149,ekr.20031218072017.4151,ekr.20031218072017.4152,ekr.20031218072017.4153,ekr.20031218072017.4154,ekr.20031218072017.2336,ekr.20031218072017.2337,ekr.20031218072017.2338,ekr.20031218072017.2339,ekr.20031218072017.2340,ekr.20031218072017.2341,ekr.20031218072017.2342,ekr.20031218072017.2343,ekr.20031218072017.2344,ekr.20031218072017.2345,ekr.20031218072017.1776,ekr.20031218072017.1777,ekr.20031218072017.1778,ekr.20031218072017.1332,ekr.20031218072017.1333,ekr.20031218072017.1334,ekr.20031218072017.1335,ekr.20031218072017.1336,ekr.20031218072017.1337,ekr.20031218072017.1338,ekr.20031218072017.1339,ekr.20031218072017.1340,ekr.20031218072017.2346,ekr.20031218072017.2348,ekr.20031218072017.2349,ekr.20031218072017.2249,ekr.20031218072017.2250,ekr.20031218072017.2350,ekr.20031218072017.2351,ekr.20031218072017.2352,ekr.20031218072017.1027,ekr.20031218072017.1028,ekr.20031218072017.4156,ekr.20031218072017.1030,ekr.20031218072017.1029,ekr.20031218072017.1031,ekr.20031218072017.4158,ekr.20031218072017.4159,ekr.20031218072017.4160,ekr.20031218072017.4161,ekr.20031218072017.1019,ekr.20031218072017.1020,ekr.20031218072017.1021,ekr.20031218072017.1022,ekr.20031218072017.1023,ekr.20031218072017.1024,ekr.20031218072017.1025,ekr.20031218072017.4162,ekr.20031218072017.4163,ekr.20031218072017.4164,ekr.20031218072017.4165,ekr.20031218072017.1141"><vh>@file leoTkinterTree.py</vh>
+<v t="ekr.20031218072017.3603" tnodeList="ekr.20031218072017.3603,ekr.20031218072017.2413,ekr.20031218072017.3604,ekr.20031218072017.3605,ekr.20031218072017.3606,ekr.20031218072017.3607,ekr.20031218072017.3609,ekr.20031218072017.3610,ekr.20031218072017.3611,ekr.20031218072017.3612,ekr.20031218072017.3613,ekr.20031218072017.3614,ekr.20031218072017.3615,ekr.20031218072017.1490,ekr.20031218072017.1491,ekr.20031218072017.1492,ekr.20031218072017.3616,ekr.20031218072017.2030,ekr.20031218072017.2031,ekr.20031218072017.2033,ekr.20031218072017.2034,ekr.20031218072017.2032,ekr.20031218072017.2035,ekr.20031218072017.2036,ekr.20031218072017.1713,ekr.20031218072017.2037,ekr.20031218072017.2038,ekr.20031218072017.2039,ekr.20031218072017.2040,ekr.20031218072017.2041,ekr.20031218072017.2042,ekr.20031218072017.2043,ekr.20031218072017.2044,ekr.20031218072017.2045,ekr.20031218072017.1712,ekr.20031218072017.2046,ekr.20031218072017.2047,ekr.20031218072017.3618,ekr.20031218072017.3620,ekr.20031218072017.3621,ekr.20031218072017.1714,ekr.20031218072017.1493,ekr.20031218072017.1494,ekr.20031218072017.1495,ekr.20031218072017.1496,ekr.20031218072017.1497,ekr.20031218072017.3622,ekr.20031218072017.3623,ekr.20031218072017.3624,ekr.20031218072017.2243"><vh>@file leoUndo.py</vh>
+<v t="ekr.20031218072017.2413"><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3604"><vh>&lt;&lt; Define optional ivars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3605"><vh>class undoer</vh>
+<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
+<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
+</v>
+<v t="ekr.20031218072017.3608"><vh>State routines...</vh>
+<v t="ekr.20031218072017.3609"><vh>clearUndoState</vh></v>
+<v t="ekr.20031218072017.3610"><vh>canRedo &amp; canUndo</vh></v>
+<v t="ekr.20031218072017.3611"><vh>enableMenuItems</vh></v>
+<v t="ekr.20031218072017.3612"><vh>getBead, peekBead, setBead</vh></v>
+<v t="ekr.20031218072017.3613"><vh>redoMenuName, undoMenuName</vh></v>
+<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
+<v t="ekr.20031218072017.3615"><vh>setUndoParams</vh></v>
+<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
+<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3616"><vh>setUndoTypes</vh></v>
+</v>
+<v t="ekr.20031218072017.2030"><vh>u.redo</vh>
+<v t="ekr.20031218072017.2031"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2032"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2033"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2035"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2036"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1713"><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2037"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2038"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2039"><vh>u.undo</vh>
+<v t="ekr.20031218072017.2040"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2042"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2043"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2044"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1712"><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2045"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2046"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2047"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3617"><vh>Undo helpers</vh>
+<v t="ekr.20031218072017.3618"><vh>u.saveTree, restoreExtraAttributes</vh></v>
+<v t="ekr.20031218072017.3620"><vh>undoDemote</vh></v>
+<v t="ekr.20031218072017.3621"><vh>undoPromote</vh></v>
+<v t="ekr.20031218072017.1714"><vh>undoReplace</vh></v>
+<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
+<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3622"><vh>undoSortChildren</vh></v>
+<v t="ekr.20031218072017.3623"><vh>undoSortSiblings</vh></v>
+<v t="ekr.20031218072017.3624"><vh>undoSortTopLevel</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.4138" tnodeList="ekr.20031218072017.4138,ekr.20031218072017.4139,ekr.20031218072017.2409,ekr.20031218072017.4140,ekr.20031218072017.1017,ekr.20031218072017.4142,ekr.20031218072017.4143,ekr.20031218072017.1956,ekr.20031218072017.1957,ekr.20031218072017.1958,ekr.20031218072017.1959,ekr.20031218072017.1960,ekr.20031218072017.1961,ekr.20031218072017.1962,ekr.20031218072017.1963,ekr.20031218072017.1964,ekr.20031218072017.1965,ekr.20031218072017.1966,ekr.20031218072017.1967,ekr.20031218072017.1012,ekr.20040106095546,ekr.20031218072017.1013,ekr.20031218072017.1014,ekr.20031218072017.1015,ekr.20031218072017.1016,ekr.20031218072017.4145,ekr.20031218072017.1000,ekr.20031218072017.1002,ekr.20031218072017.1004,ekr.20040317171729,ekr.20031218072017.1005,ekr.20031218072017.1006,ekr.20031218072017.2029,ekr.20031218072017.1008,ekr.20031218072017.1009,ekr.20040317095510,ekr.20040317173849,ekr.20040317095153,ekr.20040317100702,ekr.20040317095153.1,ekr.20040317094609,ekr.20031218072017.1010,ekr.20031218072017.4147,ekr.20031218072017.1018,ekr.20040314092716,ekr.20040314092716.1,ekr.20031218072017.4148,ekr.20031218072017.4149,ekr.20031218072017.4151,ekr.20031218072017.4152,ekr.20031218072017.4153,ekr.20031218072017.4154,ekr.20031218072017.2336,ekr.20031218072017.2337,ekr.20031218072017.2338,ekr.20031218072017.2339,ekr.20031218072017.2340,ekr.20031218072017.2341,ekr.20031218072017.2342,ekr.20031218072017.2343,ekr.20031218072017.2344,ekr.20031218072017.2345,ekr.20031218072017.1776,ekr.20031218072017.1777,ekr.20031218072017.1778,ekr.20031218072017.1332,ekr.20031218072017.1333,ekr.20031218072017.1334,ekr.20031218072017.1335,ekr.20031218072017.1336,ekr.20031218072017.1337,ekr.20031218072017.1338,ekr.20031218072017.1339,ekr.20031218072017.1340,ekr.20031218072017.2346,ekr.20031218072017.2348,ekr.20031218072017.2349,ekr.20031218072017.2249,ekr.20031218072017.2250,ekr.20031218072017.2350,ekr.20031218072017.2351,ekr.20031218072017.2352,ekr.20031218072017.1027,ekr.20031218072017.1028,ekr.20031218072017.4156,ekr.20031218072017.1030,ekr.20031218072017.1029,ekr.20031218072017.1031,ekr.20031218072017.4158,ekr.20031218072017.4159,ekr.20031218072017.4160,ekr.20031218072017.4161,ekr.20031218072017.1019,ekr.20031218072017.1020,ekr.20031218072017.1021,ekr.20031218072017.1022,ekr.20031218072017.1023,ekr.20031218072017.1024,ekr.20031218072017.1025,ekr.20031218072017.4162,ekr.20031218072017.4163,ekr.20031218072017.4164,ekr.20031218072017.4165,ekr.20031218072017.1141"><vh>@file leoTkinterTree.py</vh>
 <v t="ekr.20031218072017.4139"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
@@ -8464,7 +8539,9 @@
 <v t="ekr.20031218072017.4145"><vh>About drawing and updating</vh></v>
 <v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
 <v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node VERY USEFUL TRACE</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
+</v>
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
@@ -8472,6 +8549,13 @@
 <v t="ekr.20031218072017.1008"><vh>drawTree</vh>
 <v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
 <v t="ekr.20031218072017.1010"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
 <v t="ekr.20031218072017.1018"><vh>tree.idle_scrollTo</vh>
@@ -8483,7 +8567,7 @@
 </v>
 <v t="ekr.20031218072017.4150"><vh>Config &amp; Measuring</vh>
 <v t="ekr.20031218072017.4151"><vh>tree.getFont,setFont,setFontFromConfig</vh></v>
-<v t="ekr.20031218072017.4152"><vh>headWidth</vh></v>
+<v t="ekr.20031218072017.4152"><vh>headWidth &amp; widthInPixels</vh></v>
 <v t="ekr.20031218072017.4153"><vh>setLineHeight</vh></v>
 <v t="ekr.20031218072017.4154"><vh>setTreeColorsFromConfig</vh></v>
 </v>
@@ -8556,66 +8640,29 @@
 </v>
 <v t="ekr.20031218072017.1141"><vh>tree.moveUpDown</vh></v>
 </v>
-<v t="ekr.20031218072017.3603" tnodeList="ekr.20031218072017.3603,ekr.20031218072017.2413,ekr.20031218072017.3604,ekr.20031218072017.3605,ekr.20031218072017.3606,ekr.20031218072017.3607,ekr.20031218072017.3609,ekr.20031218072017.3610,ekr.20031218072017.3611,ekr.20031218072017.3612,ekr.20031218072017.3613,ekr.20031218072017.3614,ekr.20031218072017.3615,ekr.20031218072017.1490,ekr.20031218072017.1491,ekr.20031218072017.1492,ekr.20031218072017.3616,ekr.20031218072017.2030,ekr.20031218072017.2031,ekr.20031218072017.2033,ekr.20031218072017.2034,ekr.20031218072017.2032,ekr.20031218072017.2035,ekr.20031218072017.2036,ekr.20031218072017.1713,ekr.20031218072017.2037,ekr.20031218072017.2038,ekr.20031218072017.2039,ekr.20031218072017.2040,ekr.20031218072017.2041,ekr.20031218072017.2042,ekr.20031218072017.2043,ekr.20031218072017.2044,ekr.20031218072017.2045,ekr.20031218072017.1712,ekr.20031218072017.2046,ekr.20031218072017.2047,ekr.20031218072017.3618,ekr.20031218072017.3620,ekr.20031218072017.3621,ekr.20031218072017.1714,ekr.20031218072017.1493,ekr.20031218072017.1494,ekr.20031218072017.1495,ekr.20031218072017.1496,ekr.20031218072017.1497,ekr.20031218072017.3622,ekr.20031218072017.3623,ekr.20031218072017.3624,ekr.20031218072017.2243"><vh>@file leoUndo.py</vh>
-<v t="ekr.20031218072017.2413"><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3604"><vh>&lt;&lt; Define optional ivars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3605"><vh>class undoer</vh>
-<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
-<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
+<v t="ekr.20040317094229" a="ETV"><vh>(Draw optional icons)</vh>
+<v t="ekr.20040317184631"><vh>Design</vh></v>
+<v t="ekr.20040317184631.1"><vh>To do</vh></v>
+<v t="ekr.20040317184631.2"><vh>Changes</vh></v>
+<v t="ekr.20031218072017.4140"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
+<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
+<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.3608"><vh>State routines...</vh>
-<v t="ekr.20031218072017.3609"><vh>clearUndoState</vh></v>
-<v t="ekr.20031218072017.3610"><vh>canRedo &amp; canUndo</vh></v>
-<v t="ekr.20031218072017.3611"><vh>enableMenuItems</vh></v>
-<v t="ekr.20031218072017.3612"><vh>getBead, peekBead, setBead</vh></v>
-<v t="ekr.20031218072017.3613"><vh>redoMenuName, undoMenuName</vh></v>
-<v t="ekr.20031218072017.3614"><vh>setRedoType, setUndoType</vh></v>
-<v t="ekr.20031218072017.3615"><vh>setUndoParams</vh></v>
-<v t="ekr.20031218072017.1490"><vh>setUndoTypingParams</vh>
-<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node</vh></v>
 </v>
-<v t="ekr.20031218072017.3616"><vh>setUndoTypes</vh></v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2030"><vh>u.redo</vh>
-<v t="ekr.20031218072017.2031"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2032"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2033"><vh>&lt;&lt; redo hoist cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2035"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2036"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1713"><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2037"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2038"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2039"><vh>u.undo</vh>
-<v t="ekr.20031218072017.2040"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2042"><vh>&lt;&lt; undo hoist cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2043"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2044"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1712"><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2045"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2046"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2047"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3617"><vh>Undo helpers</vh>
-<v t="ekr.20031218072017.3618"><vh>u.saveTree, restoreExtraAttributes</vh></v>
-<v t="ekr.20031218072017.3620"><vh>undoDemote</vh></v>
-<v t="ekr.20031218072017.3621"><vh>undoPromote</vh></v>
-<v t="ekr.20031218072017.1714"><vh>undoReplace</vh></v>
-<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
-<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3622"><vh>undoSortChildren</vh></v>
-<v t="ekr.20031218072017.3623"><vh>undoSortSiblings</vh></v>
-<v t="ekr.20031218072017.3624"><vh>undoSortTopLevel</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2243"><vh>class nullUndoer</vh></v>
+<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
+<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -16998,7 +17045,7 @@ def yviewCallback (self,*args,**keys):
 	tree = self
 	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
 	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y,image=image)
+	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 
 	id1 = self.canvas.tag_bind(id, "&lt;1&gt;", p.OnBoxClick)
 	id2 = self.canvas.tag_bind(id, "&lt;Double-1&gt;", lambda x: None)
@@ -17038,7 +17085,7 @@ def yviewCallback (self,*args,**keys):
 
 	# Get the image
 	image = self.getIconImage(imagename + ".GIF")
-	id = self.canvas.create_image(x,y,anchor="nw",image=image)
+	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
 	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 
 	id1 = self.canvas.tag_bind(id,"&lt;1&gt;",p.OnIconClick)
@@ -17050,31 +17097,28 @@ def yviewCallback (self,*args,**keys):
 	self.tagBindings.append((id,id2,"&lt;Double-1&gt;"),)
 	self.tagBindings.append((id,id3,"&lt;3&gt;"),)
 
-	return 0 # dummy icon height</t>
+	return 0,icon_width # dummy icon height,width</t>
 <t tx="ekr.20031218072017.1004">def drawNode(self,p,x,y):
 
 	"""Draw horizontal line from vertical line to icon"""
-
-	self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
+	
+	if hasattr(p.v.t,"unknownAttributes"):
+		self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
+	else:
+		self.lineyoffset = 0
+		
+	self.canvas.create_line(x,y+7+self.lineyoffset,
+		x+box_width,y+7+self.lineyoffset,
+		tag="lines",fill="gray50") # stipple="gray25")
 
 	if self.inVisibleArea(y):
 		return self.force_draw_node(p,x,y)
 	else:
-		return self.line_height
+		return self.line_height,0</t>
+<t tx="ekr.20031218072017.1005">def drawText(self,p,x,y):
 	
-def force_draw_node(self,p,x,y):
+	"""draw text for v at nominal coordinates x,y."""
 
-	# g.trace(p)
-	self.allocatedNodes += 1
-	if p.hasChildren():
-		self.drawBox(p,x,y)
-	icon_height = self.drawIcon(p,x+box_width,y)
-	text_height = self.drawText(p,x+box_width+icon_width,y)
-	return max(icon_height, text_height)</t>
-<t tx="ekr.20031218072017.1005"># draws text for v at x,y
-
-def drawText(self,p,x,y):
-	
 	tree = self
 	x += text_indent
 
@@ -17108,9 +17152,12 @@ def drawText(self,p,x,y):
 	self.bindings.append((t,id3,"&lt;Key&gt;"),)
 	self.bindings.append((t,id4,"&lt;Control-t&gt;"),)
 
-	id = self.canvas.create_window(x,y,anchor="nw",window=t)
+	id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
 	self.canvas.tag_lower(id)
-
+	
+	# This doesn't work: must call update_idletasks first, and that's hard here.
+	# g.trace(t,t.winfo_height(),t.winfo_width())
+	
 	return self.line_height</t>
 <t tx="ekr.20031218072017.1006">current = self.c.currentPosition()
 # g.trace(p,current)
@@ -17127,21 +17174,22 @@ else:
 	# g.trace(p)
 	yfirst = ylast = y
 	if level==0: yfirst += 10
-	
+
+	w = 0
 	while p: # Do not use an iterator
-		# g.trace(p,p.v)
 		# g.trace(x,y,p)
-		h = self.drawNode(p,x,y)
+		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
 		if p.isExpanded() and p.hasFirstChild():
-			y = self.drawTree(p.firstChild(),x+child_indent,y,h,level+1)
+			y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
+			x += w2 ; w += w2
 		if hoistFlag: break
 		else:         p.moveToNext()
 
 	&lt;&lt; draw vertical line &gt;&gt;
-	return y</t>
+	return y,w</t>
 <t tx="ekr.20031218072017.1009">id = self.canvas.create_line(
-	x, yfirst-hline_y+4,
+	x, yfirst-hline_y,
 	x, ylast+hline_y-h,
 	fill="gray50", # stipple="gray50"
 	tag="lines")
@@ -17262,6 +17310,7 @@ def redraw_now (self):
 	# Miscellaneous info.
 	self.iconimages = {} # Image cache set by getIconImage().
 	self.active = false # true if tree is active
+	self.lineyoffset = 0 # y offset for this headline.
 	
 	# Set self.font and self.fontName.
 	self.setFontFromConfig()
@@ -59864,6 +59913,7 @@ The tree class knows about vnodes.  The vnode class could be split into a base c
 <t tx="ekr.20031218072017.4140">box_padding = 5 # extra padding between box and icon
 box_width = 9 + box_padding
 icon_width = 20
+icon_padding = 2
 text_indent = 4 # extra padding between icon and tex
 child_indent = 28 # was 20
 hline_y = 7 # Vertical offset of horizontal line
@@ -60024,7 +60074,17 @@ def setFontFromConfig (self):
 
 	"""Returns the proper width of the entry widget for the headline."""
 
-	return max(10,5 + len(v.headString()))</t>
+	return max(10,5 + len(v.headString()))
+	
+def widthInPixels(self,s):
+
+	s = g.toEncodedString(s,g.app.tkEncoding)
+	
+	width = self.font.measure(s)
+	
+	# g.trace(width,s)
+	
+	return width</t>
 <t tx="ekr.20031218072017.4153">def setLineHeight (self,font):
 	
 	try:
@@ -66281,5 +66341,222 @@ For compatibility with previous versions I shall do the following:
 - If ',' comes first, no problem.
 
 - If '.' comes first, the specification must have been written by an old version of Leo.  In that case, Leo may as well stop there: older versions of Leo could not handle encodings containing '.' anyway.</t>
+<t tx="ekr.20040317094229"></t>
+<t tx="ekr.20040317094609">def drawUserIcons(self,p,where,x,y):
+	
+	"""Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+	
+	h,w = 0,0 ; t = p.v.t
+	
+	if not hasattr(t,"unknownAttributes"):
+		return h,w
+	
+	iconsList = t.unknownAttributes.get("icons")
+	# g.trace(iconsList)
+	
+	try:
+		for dict in iconsList:
+			h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+			h = max(h,h2) ; w += w2
+	except:
+		g.es_exception()
+
+	return h,w</t>
+<t tx="ekr.20040317095153">pass</t>
+<t tx="ekr.20040317095153.1">pass</t>
+<t tx="ekr.20040317095510">def drawUserIcon (self,where,x,y,dict):
+	
+	h,w = 0,0
+
+	if where != dict.get("where","beforeHeadline"):
+		return h,w
+		
+	# g.trace(where,x,y,dict)
+	
+	&lt;&lt; set offsets and pads &gt;&gt;
+	type = dict.get("type")
+	if type == "icon":
+		s = dict.get("icon")
+		&lt;&lt; draw the icon in string s &gt;&gt;
+	elif type == "file":
+		file = dict.get("file")
+		&lt;&lt; draw the icon at file &gt;&gt;
+	elif type == "url":
+		url = dict.get("url")
+		&lt;&lt; draw the icon at url &gt;&gt;
+		
+	# Allow user to specify height, width explicitly.
+	h = dict.get("height",h)
+	w = dict.get("width",w)
+
+	return h,w</t>
+<t tx="ekr.20040317100702">try:
+	image = self.iconimages[file]
+	# Get the image from the cache if possible.
+except KeyError:
+	try:
+		fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+		fullname = g.os_path_normpath(fullname)
+		image = Tkinter.PhotoImage(master=self.canvas,file=fullname)
+		self.iconimages[fullname] = image
+	except:
+		#g.es("Exception loading: " + fullname)
+		#g.es_exception()
+		image = None
+		
+if image:
+	id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+	self.canvas.lift(id)
+	h = image.height() + yoffset + ypad
+	w = image.width()  + xoffset + xpad</t>
+<t tx="ekr.20040317171729">def force_draw_node(self,p,x,y):
+
+	self.allocatedNodes += 1
+	h,w = self.drawUserIcons(p,"beforeBox",x,y)
+	xw = w # The extra indentation before the icon box.
+	if p.hasChildren():
+		self.drawBox(p,x+w,y)
+	w += box_width # even if box isn't drawn.
+
+	h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
+	h = max(h,h2) ; w += w2 ; xw += w2
+
+	h2,w2 = self.drawIcon(p,x+w,y)
+	h = max(h,h2) ; w += w2
+
+	h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
+	h = max(h,h2) ; w += w2
+
+	h2 = self.drawText(p,x+w,y)
+	h = max(h,h2)
+	w += self.widthInPixels(p.headString())
+
+	h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
+	h = max(h,h2)
+
+	return h,xw</t>
+<t tx="ekr.20040317173849">xoffset = dict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = dict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = dict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = dict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0</t>
+<t tx="ekr.20040317184631">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+
+</t>
+<t tx="ekr.20040317184631.1">@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.</t>
+<t tx="ekr.20040317184631.2">@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.</t>
 </tnodes>
 </leo_file>
