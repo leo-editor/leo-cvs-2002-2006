@@ -474,7 +474,6 @@ class leoFind:
                 line = gui.getLineContainingIndex(st,pos1)
                 self.printLine(line,allFlag=True)
             else: break
-        c.endUpdate()
         # Make sure the headline and body text are updated.
         v = c.currentVnode()
         c.frame.tree.onHeadChanged(v)
@@ -484,6 +483,7 @@ class leoFind:
             c.undoer.setUndoParams("Change All",v)
         g.es("changed: %d instances" % (count))
         self.restore(data)
+        c.endUpdate() # Bug fix.  Redraw after all console output.
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll
     #@+node:ekr.20031218072017.3070:changeSelection

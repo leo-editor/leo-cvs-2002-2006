@@ -1279,6 +1279,8 @@ class leoTkinterTree (leoFrame.leoTree):
     
         #@    << return if disabled, or quitting or dragging >>
         #@+node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
+        # g.trace('disableRedraw',self.disableRedraw)
+        
         if self.disableRedraw:
             # We have been called as the result of an update_idletasks in the log pane.
             # Don't do anything now.
@@ -1291,6 +1293,7 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.drag_p:
             # g.trace("dragging",self.drag_p)
             return
+        #@nonl
         #@-node:ekr.20040803072955.60:<< return if disabled, or quitting or dragging >>
         #@nl
     
