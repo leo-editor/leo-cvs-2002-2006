@@ -720,9 +720,12 @@ class baseCommands:
         
         """Create the RecentFiles menu.  May be called with Null fileName."""
         
+        if g.app.unitTesting: return
+        
         # Update the recent files list in all windows.
         if fileName:
             absFileName = g.os_path_abspath(fileName)
+            # g.trace(fileName)
             for frame in g.app.windowList:
                 c = frame.c
                 # Remove all versions of the file name.
