@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3886" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="26" left="352" height="872" width="893"/>
+	<global_window_position top="15" left="192" height="872" width="893"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,6 +15,7 @@
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.110203160744.1"><vh>November 2003</vh>
 <v t="edream.111903062701"><vh>11/19</vh>
+<v t="edream.111903181658"><vh>Allow all Leo constructs in Execute Script command</vh></v>
 <v t="edream.111903105834"><vh>Protected all tk code in leoPlugins.leo</vh></v>
 <v t="edream.111903105834.1"><vh>Fixed reorg problem in the nav bar</vh></v>
 <v t="edream.111903102251"><vh>Wrapped all calls to os.path</vh></v>
@@ -3841,7 +3842,7 @@
 <v t="edream.110203160744.2841"><vh>Writing (4.x)</vh>
 <v t="edream.110203160744.2842"><vh>Top level</vh>
 <v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
-<v t="edream.110203160744.2844"><vh>new_df.write</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
 <v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -3999,7 +4000,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2866" a="M" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1081,edream.110203160744.1885,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1106,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1150,edream.110203160744.1151,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.1191,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110403150047.1,edream.110403081646.1,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.1237,edream.110203160744.1236,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.2927,edream.110203160744.2925,edream.110203160744.2926,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1273,edream.110203160744.1274,edream.111103193726,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.1923,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
+<v t="edream.110203160744.2866" a="M" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1081,edream.110203160744.1885,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1106,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1150,edream.110203160744.1151,edream.111903142522,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.1191,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110403150047.1,edream.110403081646.1,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.1237,edream.110203160744.1236,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.2927,edream.110203160744.2925,edream.110203160744.2926,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1273,edream.110203160744.1274,edream.111103193726,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.1923,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
 <v t="edream.110203160744.1872"><vh> c.Birth &amp; death</vh>
 <v t="edream.110203160744.1844"><vh>c.__init__, initIvars</vh>
 <v t="edream.110203160744.1845"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -4009,7 +4010,7 @@
 <v t="edream.110203160744.2868"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="edream.110203160744.1081"><vh> doCommand</vh></v>
-<v t="edream.110203160744.1885" a=""><vh> version &amp; signon stuff</vh></v>
+<v t="edream.110203160744.1885" a="M"><vh> version &amp; signon stuff</vh></v>
 <v t="edream.111103172301"><vh>Command handlers...</vh>
 <v t="edream.110203160744.1084"><vh>File Menu</vh>
 <v t="edream.110203160744.1085"><vh>top level</vh>
@@ -4080,7 +4081,8 @@
 <v t="edream.110203160744.1142"><vh>Edit Menu...</vh>
 <v t="edream.110203160744.1143"><vh>Edit top level</vh>
 <v t="edream.110203160744.1150"><vh>delete</vh></v>
-<v t="edream.110203160744.1151"><vh>executeScript</vh>
+<v t="edream.110203160744.1151" a=""><vh>executeScript</vh>
+<v t="edream.111903142522"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -6354,7 +6356,24 @@
 </v>
 </v>
 </v>
-<v t="edream.111803110943" a="E"><vh>(Problem with duplicated nodes)</vh></v>
+<v t="edream.111803110943" a="E"><vh>(Fix bug re: two refs on same line)</vh></v>
+<v t="edream.111903142522.1"><vh>(Support directives &amp; sections in Execute Script Command)</vh>
+<v t="edream.110203160744.1151" a=""><vh>executeScript</vh>
+<v t="edream.111903142522"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -21125,9 +21144,10 @@ def OnPasteFromMenu (self):
 	if v == None:
 		v = c.currentVnode()
 
+	&lt;&lt; define class fileLikeObject &gt;&gt;
 	&lt;&lt; get script into s &gt;&gt;
 	&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;
-
+	s = s.strip()
 	if s:
 		s += '\n' # Make sure we end the script properly.
 		try:
@@ -21136,17 +21156,30 @@ def OnPasteFromMenu (self):
 			es("exception executing script")
 			es_exception(full=false)
 	else:
-		es("no script selected")</t>
-<t tx="edream.110203160744.1152"># Assume any selected body text is a script.
+		es("no script selected",color="blue")</t>
+<t tx="edream.110203160744.1152">try:
+	old_body = v.bodyString()
+	
+	if c.frame.body.hasTextSelection():
+		# Temporarily replace v's body text with just the selected text.
+		s = c.frame.body.getSelectedText()
+		v.t.setTnodeText(s) 
+	else:
+		s = c.frame.body.getAllText()
 
-start,end = c.frame.body.getTextSelection()
-
-if start and end and start != end:
-	s = c.frame.body.getSelectedText()
-else:
-	s = c.frame.body.getAllText()
-if s:
-	s = s.strip()</t>
+	if s.strip():
+		app.scriptDict["script1"]=s
+		df = c.atFileCommands.new_df
+		# Force Python comment delims.
+		df.startSentinelComment = "#"
+		df.endSentinelComment = None
+		# Write the "derived file" into fo.
+		fo = fileLikeObject()
+		df.write(v,nosentinels=false,scriptFile=fo)
+		s = fo.get()
+		app.scriptDict["script2"]=s
+finally:
+	v.t.setTnodeText(old_body)</t>
 <t tx="edream.110203160744.1153">if app.config.redirect_execute_script_output_to_log_pane:
 
 	from leoGlobals import redirectStdout,redirectStderr
@@ -23968,6 +24001,7 @@ This is exactly the same behaviour as in beta3.</t>
 	self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 	self.root = None # The hidden main window. Set later.
 	self.searchDict = {} # For communication between find/change scripts.
+	self.scriptDict = {} # For communication between Execute Script command and scripts.
 	self.trace_list = [] # "Sherlock" argument list for tracing().
 	self.tkEncoding = "utf-8"
 	self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
@@ -43965,7 +43999,7 @@ def closeWriteFile (self):
 		at.outputFile = None</t>
 <t tx="edream.110203160744.2844"># This is the entry point to the write code.  root should be an @file vnode.
 
-def write(self,root,nosentinels=false):
+def write(self,root,nosentinels=false,scriptFile=None):
 	
 	"""Write a 4.x derived file."""
 	
@@ -43978,24 +44012,40 @@ def write(self,root,nosentinels=false):
 		&lt;&lt; open the file; return on error &gt;&gt;
 		root.clearVisitedInTree()
 		&lt;&lt; write then entire @file tree &gt;&gt;
-		at.closeWriteFile()
-		&lt;&lt; warn about @ignored and orphans &gt;&gt;
-		&lt;&lt; finish writing &gt;&gt;
+		if not scriptFile:
+			at.closeWriteFile()
+			&lt;&lt; warn about @ignored and orphans &gt;&gt;
+			&lt;&lt; finish writing &gt;&gt;
 	except:
-		at.handleWriteException()</t>
+		if scriptFile:
+			es("exception preprocessing script",color="blue")
+			es_exception(full=false)
+			scriptFile.clear()
+		else:
+			at.handleWriteException()</t>
 <t tx="edream.110203160744.2845">at.errors = 0
 c.setIvarsFromPrefs()
 at.root = root
 at.root.tnodeList = []
 at.raw = false
 c.endEditing() # Capture the current headline.</t>
-<t tx="edream.110203160744.2846">if nosentinels:
+<t tx="edream.110203160744.2846">if scriptFile:
+	at.targetFileName = "&lt;script&gt;"
+if nosentinels:
 	at.targetFileName = root.atNoSentinelsFileNodeName()
 else:
 	at.targetFileName = root.atFileNodeName()
 
-ok = at.openWriteFile(root)
-if not ok: return</t>
+if scriptFile:
+	ok = true
+	at.outputFileName = "&lt;script&gt;"
+	at.outputFile = scriptFile
+else:
+	ok = at.openWriteFile(root)
+	
+if not ok:
+	return
+</t>
 <t tx="edream.110203160744.2847"># unvisited nodes will be orphans, except in cweb trees.
 root.clearVisitedInTree()
 
@@ -55974,9 +56024,7 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-- Update cvs.
-
-? Allow directives and section refs in the Execute Script command?
+- Print the wxWindows version number in the wxLeo log pane on signon.
 
 Regression tests:
 	- For all commands.
@@ -58710,5 +58758,35 @@ These have the potential to introduce subtle bugs for several reasons:
 I took care that scripts import only those os_path_xxx routines that are necessary.  However, this process could have introduced bugs.</t>
 <t tx="edream.111903105834">Moved @others inside if "tk and 1:"</t>
 <t tx="edream.111903105834.1"></t>
+<t tx="edream.111903142522">class fileLikeObject:
+	
+	def __init__(self):
+		self.s = ""
+		
+	def clear (self):
+		self.s = ""
+		
+	def close (self):
+		pass
+		
+	def flush (self):
+		pass
+		
+	def get (self):
+		return self.s
+		
+	def write (self,s):
+		if s:
+			self.s = self.s + s</t>
+<t tx="edream.111903142522.1"></t>
+<t tx="edream.111903181658">It was very easy to do: just use the atFile.write to write into a file-like object.
+
+The only other complication: we temporarily replace the root's body text with just the selected text.
+
+Created app.scriptDict to communicate between the Execute Script command and the scripts being executed.
+
+app.script["script1"] contains the original script.
+
+app.script["script2"] contains the preprocessed script.  This will contain Leo sentinel lines.</t>
 </tnodes>
 </leo_file>

@@ -976,18 +976,56 @@ class baseCommands:
 		if v == None:
 			v = c.currentVnode()
 	
+		#@	<< define class fileLikeObject >>
+		#@+node:<< define class fileLikeObject >>
+		class fileLikeObject:
+			
+			def __init__(self):
+				self.s = ""
+				
+			def clear (self):
+				self.s = ""
+				
+			def close (self):
+				pass
+				
+			def flush (self):
+				pass
+				
+			def get (self):
+				return self.s
+				
+			def write (self,s):
+				if s:
+					self.s = self.s + s
+		#@nonl
+		#@-node:<< define class fileLikeObject >>
+		#@nl
 		#@	<< get script into s >>
 		#@+node:<< get script into s >>
-		# Assume any selected body text is a script.
+		try:
+			old_body = v.bodyString()
+			
+			if c.frame.body.hasTextSelection():
+				# Temporarily replace v's body text with just the selected text.
+				s = c.frame.body.getSelectedText()
+				v.t.setTnodeText(s) 
+			else:
+				s = c.frame.body.getAllText()
 		
-		start,end = c.frame.body.getTextSelection()
-		
-		if start and end and start != end:
-			s = c.frame.body.getSelectedText()
-		else:
-			s = c.frame.body.getAllText()
-		if s:
-			s = s.strip()
+			if s.strip():
+				app.scriptDict["script1"]=s
+				df = c.atFileCommands.new_df
+				# Force Python comment delims.
+				df.startSentinelComment = "#"
+				df.endSentinelComment = None
+				# Write the "derived file" into fo.
+				fo = fileLikeObject()
+				df.write(v,nosentinels=false,scriptFile=fo)
+				s = fo.get()
+				app.scriptDict["script2"]=s
+		finally:
+			v.t.setTnodeText(old_body)
 		#@nonl
 		#@-node:<< get script into s >>
 		#@nl
@@ -1001,7 +1039,7 @@ class baseCommands:
 		#@nonl
 		#@-node:<< redirect output if redirect_execute_script_output_to_log_pane >>
 		#@nl
-	
+		s = s.strip()
 		if s:
 			s += '\n' # Make sure we end the script properly.
 			try:
@@ -1010,7 +1048,7 @@ class baseCommands:
 				es("exception executing script")
 				es_exception(full=false)
 		else:
-			es("no script selected")
+			es("no script selected",color="blue")
 	#@nonl
 	#@-node:executeScript
 	#@+node:goToLineNumber & allies

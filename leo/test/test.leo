@@ -26,7 +26,7 @@
 <v t="edream.110203161858.108"><vh>Singleton sequences</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.5" a="V" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
+<v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
@@ -501,134 +501,6 @@
 <v t="edream.110203161858.404"><vh>os, onl, etc.</vh></v>
 <v t="edream.110203161858.405"><vh>directiveKind</vh></v>
 </v>
-</v>
-</v>
-</v>
-<v t="edream.110203161858.406" tnodeList="edream.110203161858.406,edream.110203161858.407,edream.110203161858.408,edream.110203161858.409,edream.110203161858.410,edream.110203161858.411,edream.110203161858.412,edream.110203161858.413,edream.110203161858.414,edream.110203161858.415,edream.110203161858.416,edream.110203161858.417,edream.110203161858.418,edream.110203161858.419,edream.110203161858.420,edream.110203161858.421,edream.110203161858.422,edream.110203161858.423,edream.110203161858.424,edream.110203161858.425,edream.110203161858.426,edream.110203161858.427,edream.110203161858.428,edream.110203161858.429,edream.110203161858.430,edream.110203161858.431,edream.110203161858.432,edream.110203161858.433,edream.110203161858.434,edream.110203161858.435,edream.110203161858.436,edream.110203161858.437,edream.110203161858.438,edream.110203161858.439,edream.110203161858.440,edream.110203161858.441,edream.110203161858.443,edream.110203161858.444,edream.110203161858.445,edream.110203161858.446,edream.110203161858.447,edream.110203161858.448,edream.110203161858.449,edream.110203161858.450,edream.110203161858.451,edream.110203161858.452,edream.110203161858.453,edream.110203161858.454,edream.110203161858.455,edream.110203161858.456,edream.110203161858.457,edream.110203161858.460,edream.110203161858.461,edream.110203161858.458,edream.110203161858.459,edream.110203161858.462,edream.110203161858.463,edream.110203161858.464,edream.110203161858.465,edream.110203161858.466,edream.110203161858.467,edream.110203161858.468,edream.110203161858.469,edream.110203161858.470,edream.110203161858.471,edream.110203161858.472,edream.110203161858.474,edream.110203161858.475,edream.110203161858.476,edream.110203161858.477,edream.110203161858.478,edream.110203161858.480,edream.110203161858.479,edream.110203161858.481,edream.110203161858.482,edream.110203161858.483,edream.110203161858.485,edream.110203161858.487,edream.110203161858.488,edream.110203161858.489,edream.110203161858.490,edream.110203161858.491,edream.110203161858.492,edream.110203161858.493,edream.110203161858.494,edream.110203161858.495,edream.110203161858.496,edream.110203161858.497,edream.110203161858.498,edream.110203161858.499,edream.110203161858.500,edream.110203161858.501,edream.110203161858.502,edream.110203161858.503,edream.110203161858.504,edream.110203161858.505,edream.110203161858.506,edream.110203161858.507,edream.110203161858.508,edream.110203161858.509"><vh>@file c:\prog\test\leoColor.py</vh>
-<v t="edream.110203161858.407"><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.408"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="edream.110203161858.409"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
-<v t="edream.110203161858.410"><vh>class leoColorPanel</vh>
-<v t="edream.110203161858.411"><vh>colorPanel.__init__</vh></v>
-<v t="edream.110203161858.412"><vh>run</vh>
-<v t="edream.110203161858.413"><vh>&lt;&lt; create color panel &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.414"><vh>showColorPicker</vh></v>
-<v t="edream.110203161858.415"><vh>showColorName</vh></v>
-<v t="edream.110203161858.416"><vh>colorPanel.onOk, onCancel, onRevert</vh></v>
-<v t="edream.110203161858.417"><vh>update</vh></v>
-</v>
-<v t="edream.110203161858.418"><vh>class leoColorNamePanel</vh>
-<v t="edream.110203161858.419"><vh>namePanel.__init__</vh></v>
-<v t="edream.110203161858.420"><vh>getSelection</vh></v>
-<v t="edream.110203161858.421"><vh>run</vh>
-<v t="edream.110203161858.422"><vh>&lt;&lt; create color name panel &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.423"><vh>onOk, onCancel, onRevert, OnApply</vh></v>
-<v t="edream.110203161858.424"><vh>select</vh></v>
-</v>
-<v t="edream.110203161858.425"><vh>class colorizer</vh>
-<v t="edream.110203161858.426"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
-<v t="edream.110203161858.427"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.428"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.429"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.430"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.431"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.432"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.433"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.434"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.435"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.436"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.437"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.438"><vh>color.__init__</vh>
-<v t="edream.110203161858.439"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
-<v t="edream.110203161858.440"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
-<v t="edream.110203161858.441"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.442"><vh>color.callbacks...</vh>
-<v t="edream.110203161858.443"><vh>OnHyperLinkControlClick</vh></v>
-<v t="edream.110203161858.444"><vh>OnHyperLinkEnter</vh></v>
-<v t="edream.110203161858.445"><vh>OnHyperLinkLeave</vh></v>
-</v>
-<v t="edream.110203161858.446"><vh>colorize &amp; recolor_range</vh></v>
-<v t="edream.110203161858.447"><vh>colorizeAnyLanguage &amp; allies</vh>
-<v t="edream.110203161858.448"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
-<v t="edream.110203161858.449"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="edream.110203161858.450"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.451"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
-<v t="edream.110203161858.452"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
-<v t="edream.110203161858.453"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="edream.110203161858.454"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
-<v t="edream.110203161858.455"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
-<v t="edream.110203161858.456"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.457"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
-<v t="edream.110203161858.458"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
-<v t="edream.110203161858.459"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
-<v t="edream.110203161858.460"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
-<v t="edream.110203161858.461"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.462"><vh>colorizeLine &amp; allies</vh>
-<v t="edream.110203161858.463"><vh>continueBlockComment</vh></v>
-<v t="edream.110203161858.464"><vh>continueSingle/DoubleString</vh></v>
-<v t="edream.110203161858.465"><vh>continueDocPart</vh>
-<v t="edream.110203161858.466"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="edream.110203161858.467"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.468"><vh>continueNocolor</vh></v>
-<v t="edream.110203161858.469"><vh>continueSingle/DoublePythonString</vh></v>
-<v t="edream.110203161858.470"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
-<v t="edream.110203161858.471"><vh>doLatexLine</vh></v>
-<v t="edream.110203161858.472"><vh>doNormalState</vh>
-<v t="edream.110203161858.473"><vh>Valid regardless of latex mode</vh>
-<v t="edream.110203161858.474"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="edream.110203161858.475"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="edream.110203161858.476"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="edream.110203161858.477"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.478"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="edream.110203161858.479"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="edream.110203161858.480"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.481"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="edream.110203161858.482"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="edream.110203161858.483"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.484"><vh>Vaid only in latex mode</vh>
-<v t="edream.110203161858.485"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.486"><vh>Valid when not in latex_mode</vh>
-<v t="edream.110203161858.487"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="edream.110203161858.488"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="edream.110203161858.489"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="edream.110203161858.490"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="edream.110203161858.491"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="edream.110203161858.492"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.493"><vh>doNowebSecRef</vh>
-<v t="edream.110203161858.494"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.495"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
-</v>
-<v t="edream.110203161858.496"><vh>scanColorDirectives</vh>
-<v t="edream.110203161858.497"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
-<v t="edream.110203161858.498"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.499"><vh>color.schedule</vh></v>
-<v t="edream.110203161858.500"><vh>getCwebWord</vh></v>
-<v t="edream.110203161858.501"><vh>removeAllImages</vh></v>
-<v t="edream.110203161858.502"><vh>updateSyntaxColorer</vh></v>
-<v t="edream.110203161858.503"><vh>useSyntaxColoring</vh></v>
-<v t="edream.110203161858.504"><vh>Utils</vh>
-<v t="edream.110203161858.505"><vh>index &amp; tag</vh></v>
-<v t="edream.110203161858.506"><vh>setFirstLineState</vh></v>
-<v t="edream.110203161858.507"><vh>skip_id</vh></v>
-<v t="edream.110203161858.508"><vh>skip_python_string</vh></v>
-<v t="edream.110203161858.509"><vh>skip_string</vh></v>
 </v>
 </v>
 </v>
@@ -2691,9 +2563,6 @@
 <v t="edream.111103091713"><vh>Test of match brackets</vh></v>
 <v t="edream.111303082913"><vh>Redirect script output</vh></v>
 </v>
-<v t="edream.111803061704"><vh>Distribution checklist for 4.1 beta 3</vh>
-<v t="edream.111803061704.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
 <v t="edream.111803110909"><vh>Problem with duplicated nodes</vh>
 <v t="edream.111803110909.1" tnodeList="edream.111803110909.1,edream.111803110909.2"><vh>@file c:\prog\test\ref.txt</vh>
 <v t="edream.111803110909.2"><vh>&lt;&lt; rhs &gt;&gt;</vh></v>
@@ -2702,6 +2571,138 @@
 </v>
 <v t="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
 <v t="edream.111903103216.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
+<v t="edream.110203161858.406" tnodeList="edream.110203161858.406,edream.110203161858.407,edream.110203161858.408,edream.110203161858.409,edream.110203161858.410,edream.110203161858.411,edream.110203161858.412,edream.110203161858.413,edream.110203161858.414,edream.110203161858.415,edream.110203161858.416,edream.110203161858.417,edream.110203161858.418,edream.110203161858.419,edream.110203161858.420,edream.110203161858.421,edream.110203161858.422,edream.110203161858.423,edream.110203161858.424,edream.110203161858.425,edream.110203161858.426,edream.110203161858.427,edream.110203161858.428,edream.110203161858.429,edream.110203161858.430,edream.110203161858.431,edream.110203161858.432,edream.110203161858.433,edream.110203161858.434,edream.110203161858.435,edream.110203161858.436,edream.110203161858.437,edream.110203161858.438,edream.110203161858.439,edream.110203161858.440,edream.110203161858.441,edream.110203161858.443,edream.110203161858.444,edream.110203161858.445,edream.110203161858.446,edream.110203161858.447,edream.110203161858.448,edream.110203161858.449,edream.110203161858.450,edream.110203161858.451,edream.110203161858.452,edream.110203161858.453,edream.110203161858.454,edream.110203161858.455,edream.110203161858.456,edream.110203161858.457,edream.110203161858.460,edream.110203161858.461,edream.110203161858.458,edream.110203161858.459,edream.110203161858.462,edream.110203161858.463,edream.110203161858.464,edream.110203161858.465,edream.110203161858.466,edream.110203161858.467,edream.110203161858.468,edream.110203161858.469,edream.110203161858.470,edream.110203161858.471,edream.110203161858.472,edream.110203161858.474,edream.110203161858.475,edream.110203161858.476,edream.110203161858.477,edream.110203161858.478,edream.110203161858.480,edream.110203161858.479,edream.110203161858.481,edream.110203161858.482,edream.110203161858.483,edream.110203161858.485,edream.110203161858.487,edream.110203161858.488,edream.110203161858.489,edream.110203161858.490,edream.110203161858.491,edream.110203161858.492,edream.110203161858.493,edream.110203161858.494,edream.110203161858.495,edream.110203161858.496,edream.110203161858.497,edream.110203161858.498,edream.110203161858.499,edream.110203161858.500,edream.110203161858.501,edream.110203161858.502,edream.110203161858.503,edream.110203161858.504,edream.110203161858.505,edream.110203161858.506,edream.110203161858.507,edream.110203161858.508,edream.110203161858.509"><vh>@file c:\prog\test\leoColor.py</vh>
+<v t="edream.110203161858.407"><vh>&lt;&lt; define leo keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.408"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
+<v t="edream.110203161858.409"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
+<v t="edream.110203161858.410"><vh>class leoColorPanel</vh>
+<v t="edream.110203161858.411"><vh>colorPanel.__init__</vh></v>
+<v t="edream.110203161858.412"><vh>run</vh>
+<v t="edream.110203161858.413"><vh>&lt;&lt; create color panel &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.414"><vh>showColorPicker</vh></v>
+<v t="edream.110203161858.415"><vh>showColorName</vh></v>
+<v t="edream.110203161858.416"><vh>colorPanel.onOk, onCancel, onRevert</vh></v>
+<v t="edream.110203161858.417"><vh>update</vh></v>
+</v>
+<v t="edream.110203161858.418"><vh>class leoColorNamePanel</vh>
+<v t="edream.110203161858.419"><vh>namePanel.__init__</vh></v>
+<v t="edream.110203161858.420"><vh>getSelection</vh></v>
+<v t="edream.110203161858.421"><vh>run</vh>
+<v t="edream.110203161858.422"><vh>&lt;&lt; create color name panel &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.423"><vh>onOk, onCancel, onRevert, OnApply</vh></v>
+<v t="edream.110203161858.424"><vh>select</vh></v>
+</v>
+<v t="edream.110203161858.425"><vh>class colorizer</vh>
+<v t="edream.110203161858.426"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
+<v t="edream.110203161858.427"><vh>&lt;&lt; actionscript keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.428"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.429"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.430"><vh>&lt;&lt; java keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.431"><vh>&lt;&lt; latex keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.432"><vh>&lt;&lt; pascal keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.433"><vh>&lt;&lt; perl keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.434"><vh>&lt;&lt; python keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.435"><vh>&lt;&lt; tcl/tk keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.436"><vh>&lt;&lt; php keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.437"><vh>&lt;&lt; rebol keywords &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.438"><vh>color.__init__</vh>
+<v t="edream.110203161858.439"><vh>&lt;&lt; ivars for communication between colorAllDirectives and its allies &gt;&gt;</vh></v>
+<v t="edream.110203161858.440"><vh>&lt;&lt; define dispatch dicts &gt;&gt;</vh></v>
+<v t="edream.110203161858.441"><vh>&lt;&lt; define fonts and data for wiki tags &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.442"><vh>color.callbacks...</vh>
+<v t="edream.110203161858.443"><vh>OnHyperLinkControlClick</vh></v>
+<v t="edream.110203161858.444"><vh>OnHyperLinkEnter</vh></v>
+<v t="edream.110203161858.445"><vh>OnHyperLinkLeave</vh></v>
+</v>
+<v t="edream.110203161858.446"><vh>colorize &amp; recolor_range</vh></v>
+<v t="edream.110203161858.447"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="edream.110203161858.448"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
+<v t="edream.110203161858.449"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="edream.110203161858.450"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.451"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
+<v t="edream.110203161858.452"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="edream.110203161858.453"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="edream.110203161858.454"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
+<v t="edream.110203161858.455"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+<v t="edream.110203161858.456"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.457"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
+<v t="edream.110203161858.458"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
+<v t="edream.110203161858.459"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
+<v t="edream.110203161858.460"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
+<v t="edream.110203161858.461"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.462"><vh>colorizeLine &amp; allies</vh>
+<v t="edream.110203161858.463"><vh>continueBlockComment</vh></v>
+<v t="edream.110203161858.464"><vh>continueSingle/DoubleString</vh></v>
+<v t="edream.110203161858.465"><vh>continueDocPart</vh>
+<v t="edream.110203161858.466"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="edream.110203161858.467"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.468"><vh>continueNocolor</vh></v>
+<v t="edream.110203161858.469"><vh>continueSingle/DoublePythonString</vh></v>
+<v t="edream.110203161858.470"><vh>doAtKeyword: NOT for cweb keywords</vh></v>
+<v t="edream.110203161858.471"><vh>doLatexLine</vh></v>
+<v t="edream.110203161858.472"><vh>doNormalState</vh>
+<v t="edream.110203161858.473"><vh>Valid regardless of latex mode</vh>
+<v t="edream.110203161858.474"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="edream.110203161858.475"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="edream.110203161858.476"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="edream.110203161858.477"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.478"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="edream.110203161858.479"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="edream.110203161858.480"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.481"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="edream.110203161858.482"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="edream.110203161858.483"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.484"><vh>Vaid only in latex mode</vh>
+<v t="edream.110203161858.485"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.486"><vh>Valid when not in latex_mode</vh>
+<v t="edream.110203161858.487"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="edream.110203161858.488"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="edream.110203161858.489"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="edream.110203161858.490"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="edream.110203161858.491"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="edream.110203161858.492"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.493"><vh>doNowebSecRef</vh>
+<v t="edream.110203161858.494"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.495"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
+</v>
+<v t="edream.110203161858.496"><vh>scanColorDirectives</vh>
+<v t="edream.110203161858.497"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+<v t="edream.110203161858.498"><vh>&lt;&lt; Test for @root, @root-doc or @root-code &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.499"><vh>color.schedule</vh></v>
+<v t="edream.110203161858.500"><vh>getCwebWord</vh></v>
+<v t="edream.110203161858.501"><vh>removeAllImages</vh></v>
+<v t="edream.110203161858.502"><vh>updateSyntaxColorer</vh></v>
+<v t="edream.110203161858.503"><vh>useSyntaxColoring</vh></v>
+<v t="edream.110203161858.504"><vh>Utils</vh>
+<v t="edream.110203161858.505"><vh>index &amp; tag</vh></v>
+<v t="edream.110203161858.506"><vh>setFirstLineState</vh></v>
+<v t="edream.110203161858.507"><vh>skip_id</vh></v>
+<v t="edream.110203161858.508"><vh>skip_python_string</vh></v>
+<v t="edream.110203161858.509"><vh>skip_string</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.111903143504" a="EV" tnodeList="edream.111903143504"><vh>Handle Leo constructs when executing scripts</vh>
+<v t="edream.111903144347" tnodeList="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.111903143504.1" tnodeList="edream.111903143504.1"><vh>more</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -34184,12 +34185,6 @@ Test \% test.</t>
 print app.config.redirect_execute_script_output_to_log_pane
 </t>
 <t tx="edream.111803061611"></t>
-<t tx="edream.111803061704">@color
-
-Announcements
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate</t>
-<t tx="edream.111803061704.1"></t>
 <t tx="edream.111803110909">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2286887
 By: nobody
@@ -34277,5 +34272,23 @@ Announcements
 	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
 <t tx="edream.111903103216.1"></t>
+<t tx="edream.111903143504">@ print "ignored"
+@c
+@tabwidth 2
+from leoGlobals import *
+es("hello",color="orange")
+
+if 1:
+	print ; print "hello"
+@others
+&lt;&lt; ref &gt;&gt;
+print "goodbye"
+
+if 0:
+	from leoGlobals import app
+	print ; print "pre-processed script..." ; print
+	print app.scriptDict.get("script2")</t>
+<t tx="edream.111903143504.1">print "more"</t>
+<t tx="edream.111903144347">print "ref"</t>
 </tnodes>
 </leo_file>

@@ -4262,7 +4262,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:new_df.write
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
-	def write(self,root,nosentinels=false):
+	def write(self,root,nosentinels=false,scriptFile=None):
 		
 		"""Write a 4.x derived file."""
 		
@@ -4284,14 +4284,22 @@ class baseNewDerivedFile(oldDerivedFile):
 		try:
 			#@		<< open the file; return on error >>
 			#@+node:<< open the file; return on error >>
+			if scriptFile:
+				at.targetFileName = "<script>"
 			if nosentinels:
 				at.targetFileName = root.atNoSentinelsFileNodeName()
 			else:
 				at.targetFileName = root.atFileNodeName()
 			
-			ok = at.openWriteFile(root)
-			if not ok: return
-			#@nonl
+			if scriptFile:
+				ok = true
+				at.outputFileName = "<script>"
+				at.outputFile = scriptFile
+			else:
+				ok = at.openWriteFile(root)
+				
+			if not ok:
+				return
 			#@-node:<< open the file; return on error >>
 			#@nl
 			root.clearVisitedInTree()
@@ -4365,45 +4373,51 @@ class baseNewDerivedFile(oldDerivedFile):
 			
 			#@-node:<< write then entire @file tree >> (4.x)
 			#@nl
-			at.closeWriteFile()
-			#@		<< warn about @ignored and orphans >>
-			#@+node:<< Warn about @ignored and orphans  >>
-			# 10/26/02: Always warn, even when language=="cweb"
-			
-			next = root.nodeAfterTree()
-			v = root
-			while v and v != next:
-				if not v.isVisited():
-					at.writeError("Orphan node:  " + v.headString())
-				if v.isAtIgnoreNode():
-					at.writeError("@ignore node: " + v.headString())
-				v = v.threadNext()
-			#@-node:<< Warn about @ignored and orphans  >>
-			#@nl
-			#@		<< finish writing >>
-			#@+node:<< finish writing >>
-			#@+at 
-			#@nonl
-			# We set the orphan and dirty flags if there are problems writing 
-			# the file to force Commands::write_LEO_file to write the tree to 
-			# the .leo file.
-			#@-at
-			#@@c
-			
-			if at.errors > 0 or at.root.isOrphan():
-				root.setOrphan()
-				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
-				os.remove(at.outputFileName) # Delete the temp file.
-				es("Not written: " + at.outputFileName)
-			else:
-				root.clearOrphan()
-				root.clearDirty()
-				at.replaceTargetFileIfDifferent()
-			#@nonl
-			#@-node:<< finish writing >>
-			#@nl
+			if not scriptFile:
+				at.closeWriteFile()
+				#@			<< warn about @ignored and orphans >>
+				#@+node:<< Warn about @ignored and orphans  >>
+				# 10/26/02: Always warn, even when language=="cweb"
+				
+				next = root.nodeAfterTree()
+				v = root
+				while v and v != next:
+					if not v.isVisited():
+						at.writeError("Orphan node:  " + v.headString())
+					if v.isAtIgnoreNode():
+						at.writeError("@ignore node: " + v.headString())
+					v = v.threadNext()
+				#@-node:<< Warn about @ignored and orphans  >>
+				#@nl
+				#@			<< finish writing >>
+				#@+node:<< finish writing >>
+				#@+at 
+				#@nonl
+				# We set the orphan and dirty flags if there are problems 
+				# writing the file to force Commands::write_LEO_file to write 
+				# the tree to the .leo file.
+				#@-at
+				#@@c
+				
+				if at.errors > 0 or at.root.isOrphan():
+					root.setOrphan()
+					root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
+					os.remove(at.outputFileName) # Delete the temp file.
+					es("Not written: " + at.outputFileName)
+				else:
+					root.clearOrphan()
+					root.clearDirty()
+					at.replaceTargetFileIfDifferent()
+				#@nonl
+				#@-node:<< finish writing >>
+				#@nl
 		except:
-			at.handleWriteException()
+			if scriptFile:
+				es("exception preprocessing script",color="blue")
+				es_exception(full=false)
+				scriptFile.clear()
+			else:
+				at.handleWriteException()
 	#@nonl
 	#@-node:new_df.write
 	#@+node:new_df.rawWrite
