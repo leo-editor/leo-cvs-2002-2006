@@ -552,9 +552,6 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:drawBox (tag_bind)
 	def drawBox (self,p,x,y):
 	
-		# Make sure the bindings refer to the _present_ position.
-		p = p.copy()
-	
 		y += 7 # draw the box at x, y+7
 	
 		tree = self
@@ -578,7 +575,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		tree = self
 		
 		# Make sure the bindings refer to the _present_ position.
-		p = p.copy() ; v = p.v
+		v = p.v
 	
 		if x is None and y is None:
 			try:
@@ -616,7 +613,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0,icon_width # dummy icon height,width
-	#@nonl
 	#@-node:drawIcon (tag_bind)
 	#@+node:drawNode & force_draw_node (good trace)
 	def drawNode(self,p,x,y):
@@ -694,7 +690,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		tree = self
 		x += text_indent
 	
-		p = p.copy() # must remain constant for callbacks.
 		v = p.v
 	
 		t = Tkinter.Text(self.canvas,
@@ -766,22 +761,22 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@-node:drawTopTree
 	#@+node:drawTree
 	def drawTree(self,p,x,y,h,level,hoistFlag=false):
-		
-		# g.trace(p)
+	
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		w = 0
-	
-		p = p.copy()
-		while p: # Do not use an iterator
-			# g.trace(x,y,p)
+		
+		# We must make copies for drawText and drawBox and drawIcon,
+		# So making copies here actually reduces the total number of copies.
+		### This will change for incremental redraw.
+		for p in p.self_and_siblings_iter(copy=true):
 			h,w = self.drawNode(p,x,y)
 			y += h ; ylast = y
 			if p.isExpanded() and p.hasFirstChild():
+				# Must make an additional copy here by calling firstChild.
 				y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
 				x += w2 ; w += w2
 			if hoistFlag: break
-			else:         p.moveToNext()
 	
 		#@	<< draw vertical line >>
 		#@+node:<< draw vertical line >>
