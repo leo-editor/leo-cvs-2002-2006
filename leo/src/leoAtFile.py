@@ -350,7 +350,7 @@ class atFile:
             fn = g.os_path_normpath(fn)
             try:
                 # Open the file in binary mode to allow 0x1a in bodies & headlines.
-                at.inputFile = open(fn,'rb')
+                at.inputFile = self.openForRead(fn,'rb') #bwm
                 #@            << warn on read-only file >>
                 #@+node:ekr.20041005105605.20:<< warn on read-only file >>
                 # os.access() may not exist on all platforms.
@@ -369,6 +369,22 @@ class atFile:
                 at.inputFile = None
     #@nonl
     #@-node:ekr.20041005105605.19:openFileForReading
+    #@+node:bwmulder.20041231170726:openForRead
+    def openForRead(self, *args, **kw):
+        """
+        Hook for the mod_shadow plugin.
+        """
+        return open(*args, **kw)
+    
+    #@-node:bwmulder.20041231170726:openForRead
+    #@+node:bwmulder.20050101094804:openForWrite
+    def openForWrite(self, *args, **kw):
+        """
+        Hook for the mod_shadow plugin
+        """
+        return open(*args, **kw)
+    
+    #@-node:bwmulder.20050101094804:openForWrite
     #@+node:ekr.20041005105605.21:read
     # The caller must enclose this code in beginUpdate/endUpdate.
     
@@ -2717,7 +2733,7 @@ class atFile:
     
         try:
             at.outputFileName = at.targetFileName + ".tmp"
-            at.outputFile = open(at.outputFileName,'wb')
+            at.outputFile = self.openForWrite(at.outputFileName,'wb') # bwm
             if not at.outputFile:
                 at.writeError("can not create " + at.outputFileName)
         except:
@@ -4192,6 +4208,7 @@ class atFile:
                 #@nonl
                 #@-node:ekr.20041005105605.214:<< replace the target file with the output file >>
                 #@nl
+                return True # bwm
         else:
             #@        << rename the output file to be the target file >>
             #@+node:ekr.20041005105605.215:<< rename the output file to be the target file >>

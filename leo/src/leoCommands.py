@@ -1262,9 +1262,7 @@ class baseCommands:
             fileName = g.os_path_join(path,fileName)
             
             try:
-                theFile=open(fileName)
-                lines = theFile.readlines()
-                theFile.close()
+                lines=self.gotoLineNumberOpen(fileName) # bwm
             except:
                 g.es("not found: " + fileName)
                 return
@@ -1280,6 +1278,7 @@ class baseCommands:
             #@nonl
             #@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
             #@nl
+            n = self.applyLineNumberMappingIfAny(n) #bwm
         if n==1:
             p = root ; n2 = 1 ; found = True
         elif n >= len(lines):
@@ -1645,6 +1644,25 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
     #@-node:ekr.20031218072017.2864:goToLineNumber & allies
+    #@+node:bwmulder.20041231211219:gotoLineNumberOpen
+    def gotoLineNumberOpen(self, *args, **kw):
+        """
+        Hook for mod_shadow plugin.
+        """
+        theFile = open(*args, **kw)
+        lines = theFile.readlines()
+        theFile.close()
+        return lines
+    #@nonl
+    #@-node:bwmulder.20041231211219:gotoLineNumberOpen
+    #@+node:bwmulder.20041231211219.1:applyLineNumberMappingIfAny
+    def applyLineNumberMappingIfAny(self, n):
+        """
+        Hook for mod_shadow plugin.
+        """
+        return n
+    #@nonl
+    #@-node:bwmulder.20041231211219.1:applyLineNumberMappingIfAny
     #@+node:EKR.20040612232221:goToScriptLineNumber
     def goToScriptLineNumber (self,root,script,n):
     
