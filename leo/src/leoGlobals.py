@@ -1486,7 +1486,7 @@ def es_event_exception (eventName,full=false):
 #@nonl
 #@-node:es_event_exception
 #@+node:es_exception
-def es_exception (full=false):
+def es_exception (full=true):
 
 	import traceback
 	typ,val,tb = sys.exc_info()
@@ -3160,7 +3160,7 @@ def isValidEncoding (encoding):
 #@-node:isValidEncoding
 #@+node:reportBadChars
 def reportBadChars (s,encoding):
-	
+
 	errors = 0
 	if type(s) == type(u""):
 		for ch in s:
@@ -3176,8 +3176,8 @@ def reportBadChars (s,encoding):
 			try: unicode(ch,encoding,"strict")
 			except: errors += 1
 		if errors:
-			es("%d errors converting %s from %s to unicode" % 
-				(errors, s.encode(encoding,"replace"),encoding))
+			es("%d errors converting %s (%s encoding) to unicode" % 
+				(errors, unicode(s,encoding,"replace"),encoding)) # 10/23/03
 #@nonl
 #@-node:reportBadChars
 #@+node:toUnicode & toEncodedString
