@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="123" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="133" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="40" left="105" height="802" width="916"/>
+	<global_window_position top="44" left="274" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1"><vh>Distribution checklist</vh></v>
-<v t="T2" a="V"><vh>Distribution scripts</vh></v>
+<v t="T2"><vh>Distribution scripts</vh></v>
 <v t="T3"><vh>Notes</vh>
 <v t="T4"><vh>Quote from Alex Martelli</vh></v>
 <v t="T5"><vh>Singleton sequences</vh></v>
@@ -62,200 +62,214 @@
 </v>
 <v t="T36"><vh>@file c:\prog\test\tab_test.txt</vh></v>
 <v t="T37"><vh>@image Icons/Leoapp.GIF</vh></v>
-<v t="T38"><vh>Actionscript keywords</vh></v>
-<v t="T39"><vh>alloc tests</vh></v>
-<v t="T40"><vh>Assignment tests</vh></v>
-<v t="T41"><vh>clone tests</vh>
-<v t="T42" a="C"><vh>A</vh>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T38"><vh>@url file:///C:/prog/test/sortText.leo</vh></v>
+<v t="T39"><vh>Actionscript keywords</vh></v>
+<v t="T40"><vh>alloc tests</vh></v>
+<v t="T41"><vh>Assignment tests</vh></v>
+<v t="T42"><vh>clone tests</vh>
+<v t="T43" a="C"><vh>A</vh>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-</v>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
 </v>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T46" a="C"><vh>New root</vh>
-<v t="T42" a="C"><vh>A</vh>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-</v>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
 </v>
 </v>
+<v t="T47" a="C"><vh>New root</vh>
+<v t="T43" a="C"><vh>A</vh>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T46" a="C"><vh>New root</vh>
-<v t="T42" a="C"><vh>A</vh>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
-</v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
 </v>
-<v t="T43" a="C"><vh>B</vh>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T44" a="C"><vh>C</vh>
-<v t="T45"><vh>D</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
 </v>
 </v>
 </v>
+<v t="T47" a="C"><vh>New root</vh>
+<v t="T43" a="C"><vh>A</vh>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T47"><vh>Copy/Clones test</vh>
-<v t="T48" a="C"><vh>a Å</vh>
-<v t="T49" a="C"><vh>b</vh>
-<v t="T50"><vh>c</vh></v>
-</v>
-<v t="T49" a="C"><vh>b</vh>
-<v t="T50"><vh>c</vh></v>
-</v>
-</v>
-<v t="T48" a="C"><vh>a Å</vh>
-<v t="T49" a="C"><vh>b</vh>
-<v t="T50"><vh>c</vh></v>
-</v>
-<v t="T49" a="C"><vh>b</vh>
-<v t="T50"><vh>c</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
 </v>
+<v t="T44" a="C"><vh>B</vh>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T51"><vh>Dialog tests</vh>
-<v t="T52"><vh>Test askOk</vh></v>
-<v t="T53"><vh>Test aboutLeo</vh></v>
-<v t="T54"><vh>Test askLeoID</vh></v>
-<v t="T55"><vh>Test askOkCancelNumber</vh></v>
-<v t="T56"><vh>Test askOkCancel</vh></v>
-<v t="T57"><vh>Test askYesNo</vh></v>
-<v t="T58"><vh>Test askYesNoCancel</vh></v>
+<v t="T45" a="C"><vh>C</vh>
+<v t="T46"><vh>D</vh></v>
 </v>
-<v t="T59"><vh>Go to line number test</vh>
-<v t="T60"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
-<v t="T61"><vh>__init__</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="T48"><vh>Copy/Clones test</vh>
+<v t="T49" a="C"><vh>a Å</vh>
+<v t="T50" a="C"><vh>b</vh>
+<v t="T51"><vh>c</vh></v>
+</v>
+<v t="T50" a="C"><vh>b</vh>
+<v t="T51"><vh>c</vh></v>
+</v>
+</v>
+<v t="T49" a="C"><vh>a Å</vh>
+<v t="T50" a="C"><vh>b</vh>
+<v t="T51"><vh>c</vh></v>
+</v>
+<v t="T50" a="C"><vh>b</vh>
+<v t="T51"><vh>c</vh></v>
+</v>
+</v>
+</v>
+<v t="T52"><vh>Dialog tests</vh>
+<v t="T53"><vh>Test askOk</vh></v>
+<v t="T54"><vh>Test aboutLeo</vh></v>
+<v t="T55"><vh>Test askLeoID</vh></v>
+<v t="T56"><vh>Test askOkCancelNumber</vh></v>
+<v t="T57"><vh>Test askOkCancel</vh></v>
+<v t="T58"><vh>Test askYesNo</vh></v>
+<v t="T59"><vh>Test askYesNoCancel</vh></v>
+</v>
+<v t="T60"><vh>Go to line number test</vh>
+<v t="T61"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
 <v t="T62"><vh>__init__</vh></v>
+<v t="T63"><vh>__init__</vh></v>
 </v>
 </v>
-<v t="T63"><vh>Icon bar</vh>
-<v t="T64"><vh>add some buttons</vh></v>
-<v t="T65"><vh>add all gif files</vh></v>
-<v t="T66"><vh>clear</vh></v>
-<v t="T67"><vh>hide</vh></v>
-<v t="T68"><vh>configure</vh></v>
-<v t="T69"><vh>show (puts at bottom)</vh></v>
+<v t="T64"><vh>Icon bar</vh>
+<v t="T65"><vh>add some buttons</vh></v>
+<v t="T66"><vh>add all gif files</vh></v>
+<v t="T67"><vh>clear</vh></v>
+<v t="T68"><vh>hide</vh></v>
+<v t="T69"><vh>configure</vh></v>
+<v t="T70"><vh>show (puts at bottom)</vh></v>
 </v>
-<v t="T70"><vh>Ignore</vh>
-<v t="T71"><vh>@lineending and @encoding tests</vh></v>
-<v t="T72"><vh>@file test.py</vh>
-<v t="T73"><vh>Outer</vh>
-<v t="T74"><vh>A2</vh></v>
-<v t="T75"><vh>B</vh></v>
-</v>
-</v>
-<v t="T76"><vh>Check clones links</vh></v>
-</v>
-<v t="T77"><vh>Leo Unit Tests</vh></v>
-<v t="T78"><vh>Line break problems</vh>
-<v t="T79"><vh>Error</vh>
-<v t="T80"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
-<v t="T81"><vh>functions</vh>
-<v t="T82"><vh>objects</vh>
-<v t="T83" a="M"><vh>class shape</vh>
-<v t="T84"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
+<v t="T71"><vh>Ignore</vh>
+<v t="T72"><vh>@lineending and @encoding tests</vh></v>
+<v t="T73"><vh>@file test.py</vh>
+<v t="T74"><vh>Outer</vh>
+<v t="T75"><vh>A2</vh></v>
+<v t="T76"><vh>B</vh></v>
 </v>
 </v>
+<v t="T77"><vh>Check clones links</vh></v>
+</v>
+<v t="T78"><vh>Leo Unit Tests</vh></v>
+<v t="T79"><vh>Line break problems</vh>
+<v t="T80"><vh>Error</vh>
+<v t="T81"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
+<v t="T82"><vh>functions</vh>
+<v t="T83"><vh>objects</vh>
+<v t="T84" a="M"><vh>class shape</vh>
+<v t="T85"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="T85"><vh>New import</vh></v>
-<v t="T86"><vh>Overriding core classes</vh></v>
-<v t="T87"><vh>Read @file nodes</vh>
-<v t="T88"><vh>@file c:\prog\test\atFileTest.txt</vh>
-<v t="T89"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T90"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
-<v t="T91"><vh>reformatParagraph test</vh></v>
-<v t="T92"><vh>Spell test </vh>
-<v t="T93"><vh>node two</vh></v>
-<v t="T94"><vh>node two no misspellings</vh></v>
-</v>
-<v t="T95"><vh>Status line</vh>
-<v t="T96"><vh>put message</vh></v>
-<v t="T97"><vh>clear</vh></v>
-<v t="T98"><vh>tab width tests</vh>
-<v t="T99"><vh>2</vh></v>
-<v t="T100"><vh>4</vh></v>
-<v t="T101"><vh>6</vh></v>
-<v t="T102"><vh>8</vh></v>
+<v t="T86"><vh>New import</vh></v>
+<v t="T87"><vh>Overriding core classes</vh></v>
+<v t="T88"><vh>Read @file nodes</vh>
+<v t="T89"><vh>@file c:\prog\test\atFileTest.txt</vh>
+<v t="T90"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T103"><vh>Test of recent sections &amp; clones</vh>
-<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T105" a="C"><vh>hyper link test</vh>
-<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T106"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+<v t="T91"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
+<v t="T92"><vh>reformatParagraph test</vh></v>
+<v t="T93"><vh>Spell test </vh>
+<v t="T94"><vh>node two</vh></v>
+<v t="T95"><vh>node two no misspellings</vh></v>
 </v>
-<v t="T105" a="C"><vh>hyper link test</vh>
-<v t="T104" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T106"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T107"><vh>timeit (in 2.3b1)</vh></v>
-<v t="T108"><vh>Trailing newline in body</vh></v>
-<v t="T109"><vh>Use xml.sax</vh></v>
-<v t="T110"><vh>v.__repr__ and v.__str___</vh></v>
-<v t="T111"><vh>wrap test</vh>
-<v t="T112"><vh>@file c:\prog\test\wrap_test.txt</vh>
-<v t="T113"><vh>wrap node</vh></v>
-<v t="T114"><vh>nowrap node</vh></v>
+<v t="T96"><vh>Status line</vh>
+<v t="T97"><vh>put message</vh></v>
+<v t="T98"><vh>clear</vh></v>
+<v t="T99"><vh>tab width tests</vh>
+<v t="T100"><vh>2</vh></v>
+<v t="T101"><vh>4</vh></v>
+<v t="T102"><vh>6</vh></v>
+<v t="T103"><vh>8</vh></v>
 </v>
 </v>
-<v t="T115"><vh>Write Missing @file nodes test</vh>
-<v t="T116"><vh>@file ../test/missing_test.txt</vh></v>
+<v t="T104"><vh>Test of recent sections &amp; clones</vh>
+<v t="T105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T106" a="C"><vh>hyper link test</vh>
+<v t="T105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T107"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
-<v t="T117"><vh>wx Leo</vh></v>
-<v t="T118"><vh>Undo typing tests</vh></v>
-<v t="T119"><vh>Undo replace tests</vh>
-<v t="T120" a="CE"><vh>B</vh>
-<v t="T121"><vh>C</vh></v>
-<v t="T122"><vh>C2</vh></v>
-</v>
-<v t="T123" a="CE"><vh>A</vh>
-<v t="T120" a="CE"><vh>B</vh>
-<v t="T121"><vh>C</vh></v>
-<v t="T122"><vh>C2</vh></v>
+<v t="T106" a="C"><vh>hyper link test</vh>
+<v t="T105" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T107"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T123" a="CE"><vh>A</vh>
-<v t="T120" a="CE"><vh>B</vh>
-<v t="T121"><vh>C</vh></v>
-<v t="T122"><vh>C2</vh></v>
+<v t="T108"><vh>timeit (in 2.3b1)</vh></v>
+<v t="T109"><vh>Trailing newline in body</vh></v>
+<v t="T110"><vh>Undo replace tests</vh>
+<v t="T111" a="CE"><vh>B</vh>
+<v t="T112"><vh>C</vh></v>
+<v t="T113"><vh>C2</vh></v>
+</v>
+<v t="T114" a="CE"><vh>A</vh>
+<v t="T111" a="CE"><vh>B</vh>
+<v t="T112"><vh>C</vh></v>
+<v t="T113"><vh>C2</vh></v>
 </v>
 </v>
+<v t="T114" a="CE"><vh>A</vh>
+<v t="T111" a="CE"><vh>B</vh>
+<v t="T112"><vh>C</vh></v>
+<v t="T113"><vh>C2</vh></v>
+</v>
+</v>
+</v>
+<v t="T115"><vh>Undo typing tests</vh></v>
+<v t="T116"><vh>Use xml.sax</vh></v>
+<v t="T117"><vh>v.__repr__ and v.__str___</vh></v>
+<v t="T118"><vh>Write Missing @file nodes test</vh>
+<v t="T119"><vh>@file ../test/missing_test.txt</vh></v>
+</v>
+<v t="T120"><vh>wx Leo</vh></v>
+</v>
+<v t="T121"><vh>wrap test</vh>
+<v t="T122" a="E"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="T123"><vh>wrap node</vh></v>
+<v t="T124"><vh>nowrap node</vh></v>
+</v>
+</v>
+<v t="T125"><vh>@file c:\prog\test\docTest.txt</vh></v>
+<v t="T126" a="E"><vh>Test file</vh>
+<v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
+<v t="T128" a="EV"><vh>@file c:\prog\test\gnxText.txt</vh>
+<v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
+<v t="T129"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
+<v t="T130" a="E"><vh>Organizer node</vh>
+<v t="T131"><vh>node 1</vh></v>
+<v t="T132"><vh>empty node</vh></v>
+</v>
+<v t="T133"><vh>Node 2</vh></v>
 </v>
 </v>
 </vnodes>
@@ -347,7 +361,7 @@ path = os.path.join(app().loadDir,"../","test","screenshot.gif")
 
 ImageGrab.grab().save(path)
 </t>
-<t tx="T7"></t>
+<t tx="T7">@ignore</t>
 <t tx="T8"></t>
 <t tx="T9"></t>
 <t tx="T10">@nocolor
@@ -1119,7 +1133,8 @@ This is an umlaute ë</t>
 .   ..  ... ....    .   
         .   ..</t>
 <t tx="T37"></t>
-<t tx="T38">@language actionscript
+<t tx="T38"></t>
+<t tx="T39">@language actionscript
 
 break
 call, continue
@@ -1176,7 +1191,7 @@ _width
 _x, _xmouse, _xscale
 _y, _ymouse, _yscale
 and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
-<t tx="T39">import gc,Tkinter
+<t tx="T40">import gc,Tkinter
 
 # gc.set_debug(gc.DEBUG_STATS)
 
@@ -1216,7 +1231,7 @@ printGarbage("end 2")
 top = frame = canvas = None
 gc.collect()
 printGarbage("end 3")</t>
-<t tx="T40"># The output of this is 5 5 6
+<t tx="T41"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -1226,10 +1241,10 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
-<t tx="T41"># The following corrupts the outline: extract section (in B), undo.
+<t tx="T42"># The following corrupts the outline: extract section (in B), undo.
 </t>
-<t tx="T42"></t>
-<t tx="T43"># The following used to corrupt the outline: extract section, undo.
+<t tx="T43"></t>
+<t tx="T44"># The following used to corrupt the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
@@ -1237,7 +1252,6 @@ line 2
 
 after
 </t>
-<t tx="T44"></t>
 <t tx="T45"></t>
 <t tx="T46"></t>
 <t tx="T47"></t>
@@ -1245,7 +1259,8 @@ after
 <t tx="T49"></t>
 <t tx="T50"></t>
 <t tx="T51"></t>
-<t tx="T52">from leoGlobals import *
+<t tx="T52"></t>
+<t tx="T53">from leoGlobals import *
 import leoDialog
 
 if 1: # passed
@@ -1263,7 +1278,7 @@ if 1: # passed
 	fileName = "xyzzy"
 	print leoDialog.askOk("Read-only ouline",
 		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
-<t tx="T53">from leoGlobals import *
+<t tx="T54">from leoGlobals import *
 import leoDialog
 
 ver = "version 3.14159 "
@@ -1277,18 +1292,18 @@ url = "http://webpages.charter.net/edreamleo/front.html"
 email = "edreamleo@charter.net"
 
 leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
-<t tx="T54">import leoDialog
+<t tx="T55">import leoDialog
 
 print leoDialog.askLeoID().run(modal=1)</t>
-<t tx="T55">import leoDialog
+<t tx="T56">import leoDialog
 
 print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
 </t>
-<t tx="T56">import leoDialog
+<t tx="T57">import leoDialog
 
 print leoDialog.askOkCancel("Proceed?",
 	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
-<t tx="T57">import leoDialog
+<t tx="T58">import leoDialog
 
 if 1: # passed
 	message = "Replace changed outline with external changes?"
@@ -1302,7 +1317,7 @@ if 1: # passed
 	print leoDialog.askYesNo(
 		"Download Tutorial?",
 		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
-<t tx="T58">import leoDialog
+<t tx="T59">import leoDialog
 
 if 1: # passed
 	print leoDialog.askYesNoCancel("Confirm",
@@ -1318,23 +1333,23 @@ if 1: # passed
 		yesMessage = "Outline",
 		noMessage = "File",
 		defaultButton = "Cancel").run(modal=1)</t>
-<t tx="T59"></t>
-<t tx="T60">@others</t>
-<t tx="T61">def __init__ (self):
-	
-	pass # line 9</t>
+<t tx="T60"></t>
+<t tx="T61">@others</t>
 <t tx="T62">def __init__ (self):
 	
+	pass # line 9</t>
+<t tx="T63">def __init__ (self):
+	
 	pass # line 16</t>
-<t tx="T63"></t>
-<t tx="T64">from leoGlobals import *
+<t tx="T64"></t>
+<t tx="T65">from leoGlobals import *
 
 top().frame.addIconButton(imagefile="../Icons/Leoapp.gif")
 
 top().frame.addIconButton(text="hi")
 
 top().frame.addIconButton(imagefile="../Icons/Leodoc.gif")</t>
-<t tx="T65">from leoGlobals import *
+<t tx="T66">from leoGlobals import *
 import glob,os
 
 f = top().frame
@@ -1346,36 +1361,36 @@ files.sort()
 f.clearIconBar()
 for file in files:
 	f.addIconButton(imagefile=file,bg="lightBlue")</t>
-<t tx="T66">from leoGlobals import *
-
-top().frame.clearIconBar()</t>
 <t tx="T67">from leoGlobals import *
 
-top().frame.hideIconBar()</t>
+top().frame.clearIconBar()</t>
 <t tx="T68">from leoGlobals import *
 
-top().frame.iconFrame.configure(height="15m")</t>
+top().frame.hideIconBar()</t>
 <t tx="T69">from leoGlobals import *
 
+top().frame.iconFrame.configure(height="15m")</t>
+<t tx="T70">from leoGlobals import *
+
 top().frame.showIconBar()</t>
-<t tx="T70">@ignore</t>
-<t tx="T71">@lineending nl         (the default, Linux)
+<t tx="T71">@ignore</t>
+<t tx="T72">@lineending nl         (the default, Linux)
 @lineending cr         (Mac)
 @lineending crlf       (Windows)
 @lineending lf          (same as nl, not recommended)
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)
 
 @encoding utf-8</t>
-<t tx="T72"># Test file for cut/paste operations.
+<t tx="T73"># Test file for cut/paste operations.
 
 @others</t>
-<t tx="T73"></t>
-<t tx="T74">node A Text</t>
-<t tx="T75">node B text</t>
-<t tx="T76">from leoGlobals import *
+<t tx="T74"></t>
+<t tx="T75">node A Text</t>
+<t tx="T76">node B text</t>
+<t tx="T77">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T77">import unittest
+<t tx="T78">import unittest
 import leoTest
 reload(leoTest)
 
@@ -1390,27 +1405,27 @@ else:
 
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
-<t tx="T78"></t>
-<t tx="T79">@ EKR: the doc string in class shape is improperly indented.
+<t tx="T79"></t>
+<t tx="T80">@ EKR: the doc string in class shape is improperly indented.
 @c
 
 @language Python
 @tabwidth -4</t>
-<t tx="T80">@first #!/usr/bin/python
+<t tx="T81">@first #!/usr/bin/python
 
 @others
 </t>
-<t tx="T81">@others
-</t>
 <t tx="T82">@others
 </t>
-<t tx="T83">class shape(object):
+<t tx="T83">@others
+</t>
+<t tx="T84">class shape(object):
   	&lt;&lt; class shape declarations &gt;&gt;
   	# after decls</t>
-<t tx="T84">"""Parent class of all shapes."""
+<t tx="T85">"""Parent class of all shapes."""
 pass
 </t>
-<t tx="T85"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T86"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -1433,14 +1448,14 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T86">import leoFrame
+<t tx="T87">import leoFrame
 print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
-<t tx="T87">@ignore</t>
-<t tx="T88">@nocolor
+<t tx="T88">@ignore</t>
+<t tx="T89">@nocolor
 This is a test file
 @others</t>
-<t tx="T89">Node one text.  changed 2.</t>
-<t tx="T90">@language rebol
+<t tx="T90">Node one text.  changed 2.</t>
+<t tx="T91">@language rebol
 
 ; a comment
 about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
@@ -1506,7 +1521,7 @@ unset? url?
 value? view? 
 within? word?  
 zero?</t>
-<t tx="T91">@language plain
+<t tx="T92">@language plain
 @pagewidth 72
 @tabwidth 2
 
@@ -1521,10 +1536,10 @@ to be able to recreate a chunk of
 text in your head or on paper, and perhaps verbally.
 
 The steps might be as follows:</t>
-<t tx="T92">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
+<t tx="T93">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
 line tooo changed 9
 </t>
-<t tx="T93">this is another test.
+<t tx="T94">this is another test.
 
 hello there jkk this is werg
 		
@@ -1532,9 +1547,9 @@ the cht sat on the marh
 the cat was sitting phew, another day. by zz z z 
 two initabc
 </t>
-<t tx="T94">everything good.</t>
-<t tx="T95"></t>
-<t tx="T96">from leoGlobals import *
+<t tx="T95">everything good.</t>
+<t tx="T96"></t>
+<t tx="T97">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
@@ -1545,40 +1560,61 @@ for color in ("red","blue","yellow","green","orange"):
 	f.putStatusLine (" %s " % (color),color=color)
 
 f.putStatusLine(" World")</t>
-<t tx="T97">from leoGlobals import *
+<t tx="T98">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
 </t>
-<t tx="T98"></t>
-<t tx="T99">@tabwidth 2
+<t tx="T99"></t>
+<t tx="T100">@tabwidth 2
 
 a
 	b
 		c	d</t>
-<t tx="T100">@tabwidth 4
+<t tx="T101">@tabwidth 4
 
 a
 	b
 		c	d</t>
-<t tx="T101">@tabwidth 6
+<t tx="T102">@tabwidth 6
 
 a
 	b
 		c	d</t>
-<t tx="T102">@tabwidth 8
+<t tx="T103">@tabwidth 8
 
 a
 	b
 		c	d</t>
-<t tx="T103"></t>
-<t tx="T104">This is section a.</t>
-<t tx="T105">&lt;&lt; section a &gt;&gt;</t>
-<t tx="T106"></t>
-<t tx="T107">import timeit</t>
-<t tx="T108">ab
+<t tx="T104"></t>
+<t tx="T105">This is section a.</t>
+<t tx="T106">&lt;&lt; section a &gt;&gt;</t>
+<t tx="T107"></t>
+<t tx="T108">import timeit</t>
+<t tx="T109">ab
 </t>
-<t tx="T109">from leoGlobals import *
+<t tx="T110"></t>
+<t tx="T111"># The following corrupts the outline: extract section, undo.
+
+&lt;&lt; test &gt;&gt;
+line 1
+	line 2
+
+	after
+</t>
+<t tx="T112"># The following corrupts the outline: extract section, undo.
+
+&lt;&lt; test &gt;&gt;
+line 1
+	line 2
+
+	after
+
+</t>
+<t tx="T113"></t>
+<t tx="T114"></t>
+<t tx="T115">test one</t>
+<t tx="T116">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -1661,42 +1697,59 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T110">from leoGlobals import *
+<t tx="T117">from leoGlobals import *
 c = top() ; v = c.currentVnode()
 print v
 print `v`</t>
-<t tx="T111"></t>
-<t tx="T112">@others</t>
-<t tx="T113">@wrap
+<t tx="T118">@ignore</t>
+<t tx="T119"></t>
+<t tx="T120">import wxLeo
+reload(wxLeo)</t>
+<t tx="T121"></t>
+<t tx="T122">@others</t>
+<t tx="T123">@wrap
 
 this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T114">@nowrap
+<t tx="T124">@nowrap
 
 this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T115">@ignore</t>
-<t tx="T116"></t>
-<t tx="T117">import wxLeo
-reload(wxLeo)</t>
-<t tx="T118">test one</t>
-<t tx="T119"></t>
-<t tx="T120"># The following corrupts the outline: extract section, undo.
+<t tx="T125">@ doc part
+@c
 
-&lt;&lt; test &gt;&gt;
-line 1
-	line 2
+doc test</t>
+<t tx="T126">@ignore
+@encoding iso-8859-1</t>
+<t tx="T127">ref line 1
+ref line 2</t>
+<t tx="T128">@first   first line1
+@first   last line2
+@ This is a doc part
+line 2
+line 3
+@c
 
-	after
+# gnxText.txt  2
+
+before
+&lt;&lt; ref &gt;&gt; afterref
+middle
+	&lt;&lt; ref2 &gt;&gt;
+after
+	@others
+beforref &lt;&lt; ref &gt;&gt;
+after at-others
+@last last line1
+@last last line2</t>
+<t tx="T129">ref2 line</t>
+<t tx="T130"></t>
+<t tx="T131">@ Doc part
+doc part line 2
+@c
+node 1 line 1
+node 2 line 2</t>
+<t tx="T132"></t>
+<t tx="T133">node 2 line 1
+node 2 line 2
 </t>
-<t tx="T121"># The following corrupts the outline: extract section, undo.
-
-&lt;&lt; test &gt;&gt;
-line 1
-	line 2
-
-	after
-
-</t>
-<t tx="T122"></t>
-<t tx="T123"></t>
 </tnodes>
 </leo_file>

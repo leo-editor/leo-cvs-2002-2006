@@ -68,6 +68,12 @@ class baseAtFile:
 	startRef		     = 63 # @< < ... > > (3.0)
 	startVerbatim	 = 64 # @verbatim
 	startVerbatimAfterRef = 65 # @verbatimAfterRef (3.0)
+	
+	# New in 4.0...
+	startAfterRef  = 70 # @afterref (4.0)
+	startNl        = 71 # @nl (4.0)
+	startNonl      = 72 # @nonl (4.0)
+	startWs        = 73 # @ws (4.0)
 	#@-body
 	#@-node:1::<< atFile constants >>
 
@@ -158,6 +164,9 @@ class baseAtFile:
 		
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app().config.default_derived_file_encoding
+		
+		# New for 4.0
+		self.using_gnx = false # true: present derived file uses gnxs.
 		#@-body
 		#@-node:1::<< init atFile ivars >>
 
@@ -295,6 +304,12 @@ class baseAtFile:
 		#@+node:2::<< Scan the file buffer  >>
 		#@+body
 		firstLines = self.scanHeader(file)
+		
+		# Reading 4.0 files is not ready yet.
+		if self.using_gnx:
+			es("Reading 4.0 files not ready yet")
+			return false
+			
 		self.indent = 0
 		self.root_seen = false
 		out = []
@@ -311,6 +326,7 @@ class baseAtFile:
 			bodyText = '\n'.join(bodyLines)
 			bodyText = bodyText.replace('\r', '')
 			root.t.setTnodeText(bodyText)
+		
 		#@-body
 		#@-node:2::<< Scan the file buffer  >>
 
@@ -372,6 +388,12 @@ class baseAtFile:
 			#@+node:2::<< Scan the file buffer  >>
 			#@+body
 			firstLines = self.scanHeader(file)
+			
+			# Reading 4.0 files is not ready yet.
+			if self.using_gnx:
+				es("Reading 4.0 files not ready yet")
+				return false
+				
 			self.indent = 0
 			self.root_seen = false
 			out = []
@@ -388,6 +410,7 @@ class baseAtFile:
 				bodyText = '\n'.join(bodyLines)
 				bodyText = bodyText.replace('\r', '')
 				root.t.setTnodeText(bodyText)
+			
 			#@-body
 			#@-node:2::<< Scan the file buffer  >>
 
@@ -789,7 +812,7 @@ class baseAtFile:
 	def scanHeader(self,file):
 	
 		valid = true
-		tag = "@+leo"
+		tag = "@+leo" ; version_tag = "-ver="
 		encoding_tag = "-encoding="
 		
 		#@<< skip any non @+leo lines >>
@@ -830,8 +853,31 @@ class baseAtFile:
 		#@-node:2::<< make sure we have @+leo >>
 
 		
+		#@<< read optional version param >>
+		#@+node:3::<< read optional version param >>
+		#@+body
+		self.using_gnx = match(s,i,version_tag)
+		
+		if self.using_gnx:
+			trace("reading gnx file")
+			i += len(version_tag)
+			# Skip to the next minus sign or end-of-line
+			j = i
+			while i < len(s) and not is_nl(s,i) and s[i] != '-':
+				i += 1
+			if j < i:
+				version = s[j:i]
+			else:
+				valid = false
+		
+			
+		
+		#@-body
+		#@-node:3::<< read optional version param >>
+
+		
 		#@<< read optional encoding param >>
-		#@+node:3::<< read optional encoding param >>
+		#@+node:4::<< read optional encoding param >>
 		#@+body
 		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
 		
@@ -856,11 +902,11 @@ class baseAtFile:
 				valid = false
 		
 		#@-body
-		#@-node:3::<< read optional encoding param >>
+		#@-node:4::<< read optional encoding param >>
 
 		
 		#@<< set the closing comment delim >>
-		#@+node:4::<< set the closing comment delim >>
+		#@+node:5::<< set the closing comment delim >>
 		#@+body
 		# The closing comment delim is the trailing non-whitespace.
 		i = j = skip_ws(s,i)
@@ -868,7 +914,7 @@ class baseAtFile:
 			i += 1
 		self.endSentinelComment = s[j:i]
 		#@-body
-		#@-node:4::<< set the closing comment delim >>
+		#@-node:5::<< set the closing comment delim >>
 
 		if not valid:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
