@@ -22,7 +22,7 @@ visibleInitially = False # True: open spell dialog initially.
 aspell_dir = r'c:/Aspell'
 ini_file_name = __name__ + ".ini"
 
-__version__ = "0.8"
+__version__ = "0.9"
 #@<< version history >>
 #@+node:ekr.20040915052810:<< version history >>
 #@+at
@@ -51,6 +51,7 @@ __version__ = "0.8"
 #     - spellDialog.init override new leoTkinterFind.init method.
 #     - Added spellFrames global dict for use by @button code.
 #     - N.B. Rewrote @button script: see test.leo.
+# 0.9 EKR:  Added top-level init method.
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
@@ -76,9 +77,29 @@ import traceback
 
 spellFrames = {}
 
-global globalData
+globalData = None
 
 #@+others
+#@+node:ekr.20050128101933:init
+def init():
+    
+    '''Init the plugin and return True if all went well.'''
+    
+    ok = Tk and aspell
+
+    if ok: # Ok for unit testing.
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            global globalData
+            globalData = globalDataClass()
+            leoPlugins.registerHandler("after-create-leo-frame",onCreate)
+            g.plugin_signon(__name__)
+            
+    return ok
+#@nonl
+#@-node:ekr.20050128101933:init
 #@+node:ekr.20041226064125:onCreate
 def onCreate (tag,keys):
     
@@ -836,16 +857,6 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
 #@nonl
 #@-node:ekr.20040809151600.16:class spellDialog (leoTkinterFind)
 #@-others
-
-if Tk and aspell: # Ok for unit testing.
-
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        globalData = globalDataClass()
-        leoPlugins.registerHandler("after-create-leo-frame",onCreate)
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040809151600.1:@thin spellpyx.py
 #@-leo
