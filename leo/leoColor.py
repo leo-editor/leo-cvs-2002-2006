@@ -987,7 +987,7 @@ class colorizer:
 				#@+body
 				# Copy the leading states from the old to the new lines.
 				i = 0
-				while i < leading_lines:
+				while i < leading_lines and i < old_len: # 12/8/02
 					new_states.append(old_states[i])
 					i += 1
 					
