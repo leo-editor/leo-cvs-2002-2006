@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1800" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1805" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038">
 	<global_window_position top="14" left="269" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1419,13 +1419,6 @@
 <v t="edream.111803100242.7"><vh>writeTreeAsRst</vh></v>
 <v t="edream.111803100242.8"><vh>underline</vh></v>
 </v>
-<v t="edream.110203113231.910" tnodeList="edream.110203113231.910,edream.110203113231.911,edream.110203113231.912,edream.110203113231.913,edream.110203113231.914"><vh>@file startfile.py</vh>
-<v t="edream.110203113231.911"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="edream.110203113231.912"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="edream.110203113231.913"><vh>onIconDoubleClick</vh>
-<v t="edream.110203113231.914"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
-</v>
-</v>
 </v>
 <v t="edream.110203113231.915"><vh>Overriding functions, methods &amp; classes</vh>
 <v t="edream.110203113231.916" tnodeList="edream.110203113231.916,edream.110203113231.917,edream.110203113231.918"><vh>@file __overrideClasses.py</vh>
@@ -1668,7 +1661,7 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040317155851"><vh>Suggestions for improvement</vh>
 <v t="ekr.20040317155817"><vh>@url http://komodo.nique.net/~grayrest/leoUIproposal.txt</vh></v>
 </v>
@@ -1923,6 +1916,35 @@
 <v t="ekr.20040331153923.12"><vh>doCommand</vh></v>
 <v t="ekr.20040331153923.13"><vh>addScheduleMenu</vh></v>
 </v>
+<v t="ekr.20040422072343" tnodeList="ekr.20040422072343,ekr.20040422081253,ekr.20040422072343.1,ekr.20040422072343.2,ekr.20040422072343.3,ekr.20040422072343.4,ekr.20040422072343.5,ekr.20040422072343.6,ekr.20040422072343.7,ekr.20040422072343.8,ekr.20040422073911,ekr.20040422072343.13,ekr.20040422072343.14,ekr.20040422072343.15,ekr.20040422072343.16,ekr.20040422072343.10,ekr.20040422072343.11,ekr.20040422072343.12"><vh>@file rClick.py</vh>
+<v t="ekr.20040422081253" a="M"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.1"><vh>rc_help</vh></v>
+<v t="ekr.20040422072343.2"><vh>rc_dbody</vh></v>
+<v t="ekr.20040422072343.3"><vh>rc_nl</vh></v>
+<v t="ekr.20040422072343.4"><vh>rc_selectAll</vh></v>
+<v t="ekr.20040422072343.5"><vh>rClickbinder</vh></v>
+<v t="ekr.20040422072343.6"><vh>rClicker</vh>
+<v t="ekr.20040422072343.7"><vh>&lt;&lt; define commandList for body &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.8"><vh>&lt;&lt; add entries for context sensitive commands in body &gt;&gt;</vh>
+<v t="ekr.20040422073911"><vh>&lt;&lt; get text and word from the body text &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.13"><vh>&lt;&lt; add entry for open url &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.14"><vh>&lt;&lt; add entry for jump to section &gt;&gt;</vh></v>
+<v t="ekr.20040422072343.15"><vh>&lt;&lt; add epydoc help &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040422072343.16"><vh>&lt;&lt; define commandList for log pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040422072343.9"><vh>Utils for context sensitive commands</vh>
+<v t="ekr.20040422072343.10"><vh>crop</vh></v>
+<v t="ekr.20040422072343.11"><vh>getword</vh></v>
+<v t="ekr.20040422072343.12"><vh>getdoc</vh></v>
+</v>
+</v>
+<v t="EKR.20040422094618" tnodeList="EKR.20040422094618,EKR.20040422094618.1,EKR.20040422094618.2,EKR.20040422094618.3,EKR.20040422094618.4"><vh>@file startfile.py</vh>
+<v t="EKR.20040422094618.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="EKR.20040422094618.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="EKR.20040422094618.3" a="M"><vh>onIconDoubleClick</vh>
+<v t="EKR.20040422094618.4"><vh>&lt;&lt; find path and start file &gt;&gt;</vh></v>
+</v>
 </v>
 <v t="ekr.20040408161258"><vh>rst2 plugin</vh>
 <v t="ekr.20040408192158"><vh>Documentation for the rST plugin using rst</vh>
@@ -1961,35 +1983,99 @@
 <v t="ekr.20040331071319.8"><vh>underline</vh></v>
 </v>
 </v>
+</v>
 <v t="ekr.20040419105219" tnodeList="ekr.20040419105219,ekr.20040419105219.1,ekr.20040419105219.2"><vh>@file lineNumbers.py</vh>
 <v t="ekr.20040419105219.1"><vh>writing derived files</vh></v>
 <v t="ekr.20040419105219.2"><vh>reading derived files</vh></v>
 </v>
-<v t="ekr.20040422072343" a="E" tnodeList="ekr.20040422072343,ekr.20040422081253,ekr.20040422072343.1,ekr.20040422072343.2,ekr.20040422072343.3,ekr.20040422072343.4,ekr.20040422072343.5,ekr.20040422072343.6,ekr.20040422072343.7,ekr.20040422072343.8,ekr.20040422073911,ekr.20040422072343.13,ekr.20040422072343.14,ekr.20040422072343.15,ekr.20040422072343.16,ekr.20040422072343.10,ekr.20040422072343.11,ekr.20040422072343.12"><vh>@file rClick.py</vh>
-<v t="ekr.20040422081253" a="MTV"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
-<v t="ekr.20040422072343.1"><vh>rc_help</vh></v>
-<v t="ekr.20040422072343.2"><vh>rc_dbody</vh></v>
-<v t="ekr.20040422072343.3"><vh>rc_nl</vh></v>
-<v t="ekr.20040422072343.4"><vh>rc_selectAll</vh></v>
-<v t="ekr.20040422072343.5"><vh>rClickbinder</vh></v>
-<v t="ekr.20040422072343.6"><vh>rClicker</vh>
-<v t="ekr.20040422072343.7"><vh>&lt;&lt; define commandList for body &gt;&gt;</vh></v>
-<v t="ekr.20040422072343.8"><vh>&lt;&lt; add entries for context sensitive commands in body &gt;&gt;</vh>
-<v t="ekr.20040422073911"><vh>&lt;&lt; get text and word from the body text &gt;&gt;</vh></v>
-<v t="ekr.20040422072343.13"><vh>&lt;&lt; add entry for open url &gt;&gt;</vh></v>
-<v t="ekr.20040422072343.14"><vh>&lt;&lt; add entry for jump to section &gt;&gt;</vh></v>
-<v t="ekr.20040422072343.15"><vh>&lt;&lt; add epydoc help &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040422072343.16"><vh>&lt;&lt; define commandList for log pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040422072343.9"><vh>Utils for context sensitive commands</vh>
-<v t="ekr.20040422072343.10"><vh>crop</vh></v>
-<v t="ekr.20040422072343.11"><vh>getword</vh></v>
-<v t="ekr.20040422072343.12"><vh>getdoc</vh></v>
-</v>
-</v>
 </vnodes>
 <tnodes>
+<t tx="EKR.20040422094618">"""Lauches (starts) a file with the name of the headline on double-clicking it.
+Uses the @folder path if the headline is under an @folder headline.
+Otherwise the path is relative to the Leo file.
+Headlines starting with an '@' are ignored.
+This does not work on Linux, because the Python function os.startfile is not
+supported under Linux.
+"""
+
+# By Josef Dalcolmo: contributed under the same license as Leo.py itself.
+
+import leoPlugins
+import leoGlobals as g
+import os
+
+&lt;&lt; about this plugin &gt;&gt;
+&lt;&lt; change log &gt;&gt;
+
+@others
+
+# Register the handlers...
+leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+
+__version__ = "1.3"
+g.plugin_signon(__name__)
+
+def unitTest ():
+	pass</t>
+<t tx="EKR.20040422094618.1">@ This plugin starts a file with the name of a headline.</t>
+<t tx="EKR.20040422094618.2">@ Change log
+
+- JD: 2003-03-11 separated out from rst plugin
+- JD: 2004-04-18 change the defaultdir to the folder of the file which is being started.</t>
+<t tx="EKR.20040422094618.3">@
+Models @folder behavior after an idea and sample code by:
+korakot ( Korakot Chaovavanich ) @folder for files annotation 2002-11-27 02:39
+
+open file (double-click = startfile) behavior added
+nodes with @url, @folder, @rst are treated special
+
+by Josef Dalcolmo 2003-01-13
+
+This does not check for proper filename syntax.
+path is the current dir, or the place @folder points to
+this should probably be changed to @path or so.
+@c
+
+def onIconDoubleClick(tag,keywords):
+
+	v = keywords.get("p") or keywords.get("v") # Use p for 4.2 code base, v for 4.1 code base.
+	c = keywords.get("c")
+
+	if c and v:
+		h = v.headString().strip()
+		if len(h)==0 or h[0]=='@':
+			return # Let other plugins handle these
+		else:
+			# open file with associated application
+			&lt;&lt; find path and start file &gt;&gt;</t>
+<t tx="EKR.20040422094618.4"># Set the base directory by searching for @folder directives in ancestors.
+thisdir = os.path.abspath(os.curdir) # remember the current dir
+basedir = thisdir[:]	# use current dir as default.
+parv = v.parent()	# start with parent
+while parv:	# stop when no more parent found
+	p = parv.headString().strip()
+	if g.match_word(p,0,'@folder'):
+		basedir = p[8:]	# take rest of headline as pathname
+		break	# we found the closest @folder
+	else:
+		parv = parv.parent()	# try the parent of the parent
+
+fname = os.path.join(basedir,h) # join path and filename
+startdir, filename = os.path.split(fname)
+try:
+	os.chdir(startdir)
+	dirfound = 1
+except:
+	g.es(startdir+' - folder not found')
+	dirfound = 0
+
+if dirfound:
+	try:
+		os.startfile(filename)	# Try to open the file; it may not work for all file types.
+	except:
+		g.es(filename+' - file not found in '+startdir)
+		# g.es_exception()
+os.chdir(thisdir) # restore the original current dir.</t>
 <t tx="edream.031216103123">@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2336153
@@ -10516,85 +10602,6 @@ def on_headkey2 (tag,keywords):
 	else:
 		enable_body(c.frame.body)
 </t>
-<t tx="edream.110203113231.910">"""Lauches (starts) a file with the name of the headline on double-clicking it.
-Uses the @folder path if the headline is under an @folder headline.
-Otherwise the path is relative to the Leo file.
-Headlines starting with an '@' are ignored.
-This does not work on Linux (yet)."""
-
-@language python
-
-# By Josef Dalcolmo: contributed under the same license as Leo.py itself.
-
-import leoPlugins
-import leoGlobals as g
-from leoGlobals import true,false
-import os
-
-&lt;&lt; about this plugin &gt;&gt;
-&lt;&lt; change log &gt;&gt;
-
-@others
-
-# Register the handlers...
-leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-
-__version__ = "1.1"
-g.plugin_signon(__name__)
-
-def unitTest ():
-	pass
-</t>
-<t tx="edream.110203113231.911">@ This plugin starts a file with the name of a headline.
-
-
-</t>
-<t tx="edream.110203113231.912">@ Change log
-
-- JD: 2003-03-11 separated out from rst plugin
-
-
-
-</t>
-<t tx="edream.110203113231.913"># @folder behavior after an idea and sample code by:
-# korakot ( Korakot Chaovavanich ) @folder for files annotation 2002-11-27 02:39
-# 
-# open file (double-click = startfile) behavior added 
-# nodes with @url, @folder, @rst are treated special
-#
-# by Josef Dalcolmo 2003-01-13
-#
-# this does not check for proper filename syntax.
-# path is the current dir, or the place @folder points to
-# this should probably be changed to @path or so.
-
-def onIconDoubleClick(tag,keywords):
-
-	v = keywords.get("v")
-	c = keywords.get("c")
-	h = v.headString().strip()
-	if len(h)==0 or h[0]=='@':
-		return # Let other plugins handle these
-	else:
-		# open file with associated application
-		&lt;&lt; find path and start file &gt;&gt;</t>
-<t tx="edream.110203113231.914"># Set the base directory by searching for @folder directives in ancestors.
-try:
-	basedir = os.curdir	# use current dir as default.
-	parv = v.parent()	# start with parent
-	while parv:	# stop when no more parent found
-		p = parv.headString().strip()
-		if g.match_word(p,0,'@folder'):
-			basedir = p[8:]	# take rest of headline as pathname
-			break	# we found the closest @folder
-		else:
-			parv = parv.parent()	# try the parent of the parent
-	fname = os.path.join(basedir,h) # join path and filename
-	os.startfile(fname)	# Try to open the file; it may not work for all file types.
-except:
-	g.es(os.path.join(os.getcwd(),fname)+' - file or application not found')
-	g.es_exception()
-</t>
 <t tx="edream.110203113231.915"></t>
 <t tx="edream.110203113231.916">"""A plugin showing how to override Leo's core classes."""
 
@@ -16105,7 +16112,7 @@ g.plugin_signon(__name__)</t>
 	rowcol.py
 	# status_line.py
 	# word_export.py
-	# xemacs.py
+	xemacs.py
 	
 # Other plugins...
 	# open_shell.py
@@ -16121,16 +16128,15 @@ g.plugin_signon(__name__)</t>
 	# newButtons.py
 	# wordcompleter.py
 	
-# New in 4.2
-	lineNumbers.py
-
 # New from Bernhard Mulder
 	# mod_http.py
 	
 # New from Davide Salomoni
 	hoist.py
 	
-# New in 4.2
+# New or improved in 4.2
+	# startfile.py
+	lineNumbers.py
 	rClick.py
 	# niceNosent.py
 	# scheduler.py</t>
