@@ -15883,8 +15883,12 @@ The following already existed.  I added v=p keyword params:
 "icondclick1"   before double click in icon box   c,p,v,event
 "icondclick2"   after  double click in icon box   c,p,v,event
 
+Added documentation for the following:
+    
+
+
 Added leoPlugins.unregisterHandler and getHandlersFor tag for testing.
-#@nonl
+
 #@-node:ekr.20041111114148.1:What I did
 #@+node:ekr.20041111125613:New plugins code
 #@+node:ekr.20041111124831:getHandlersForTag
@@ -16180,6 +16184,45 @@ def onIconBoxDoubleClick (self,event):
 #@-node:ekr.20040803072955.80:Icon Box...
 #@-node:ekr.20041111121907:Changed code
 #@-node:ekr.20041018194900:(Restored drawing/event hooks)
+#@+node:ekr.20041112062558:Added p=p param to all hooks containing v=v
+@killcolor
+
+Changed these hooks:
+
+"bodyclick1", "bodyclick2",
+"bodydclick1", "bodydclick2",
+"bodyrclick1", "bodyrclick2",
+"bodykey1", "bodykey2",
+"command1", "command2",
+"headclick1", "headclick2",
+"headrclick1", "headrclick2",
+"headkey1", "headkey2", 
+"hyperclick1", "hyperclick2",
+"hyperenter1", "hyperenter2",
+"hyperleave1", "hyperleave2", 
+"openwith1", "openwith2",
+"menu1", "menu2", 
+"recentfiles1", "recentfiles2",
+"save1", "save2",
+"select1", "select2", "select3",
+"start2",
+"unselect1", "unselect2",
+"url1", "url2", 
+
+"clear-mark", "set-mark", 
+"color-optional-markup",
+"create-popup-menu", 
+"draw-outline-icon",
+"draw-outline-node",
+"draw-outline-text-box",
+"draw-sub-outline", 
+"init-color-markup",
+"scan-directives", 
+"draw-outline-box",
+"enable-popup-menu-items",
+"show-popup-menu",
+#@nonl
+#@-node:ekr.20041112062558:Added p=p param to all hooks containing v=v
 #@-node:ekr.20040929081120:4.2.1 projects
 #@-all
 #@nonl
