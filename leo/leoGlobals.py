@@ -2484,7 +2484,19 @@ def skip_pascal_braces(s,i):
 	else: return k
 #@-body
 #@-node:19::skip_pascal_braces
-#@+node:20::skip_ws, skip_ws_and_nl
+#@+node:20::skip_to_char
+#@+body
+def skip_to_char(s,i,ch):
+	
+	j = string.find(s,ch,i)
+	if j == -1:
+		return len(s),s[i:]
+	else:
+		return j,s[i:j]
+
+#@-body
+#@-node:20::skip_to_char
+#@+node:21::skip_ws, skip_ws_and_nl
 #@+body
 def skip_ws(s,i):
 
@@ -2500,7 +2512,7 @@ def skip_ws_and_nl(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:20::skip_ws, skip_ws_and_nl
+#@-node:21::skip_ws, skip_ws_and_nl
 #@-node:6::Scanners: no error messages
 #@+node:7::Tk.Text selection (utils)
 #@+node:1::bound_paragraph

@@ -2530,7 +2530,6 @@ class atFile:
 	#@+body
 	def doNormalLine (self,s,i):
 	
-		# We don't output the trailing newline if the next line is a sentinel.
 		if self.raw:
 			i = 0
 		else:
@@ -2538,13 +2537,13 @@ class atFile:
 		
 		assert(self.nextLine != None)
 		
+		# We don't output the trailing newline if the next line is a sentinel.
 		if self.nextKind == None:
 			line = s[i:]
 			self.out.append(line)
 		else:
 			line = s[i:-1] # don't output the newline
 			self.out.append(line)
-	
 	
 	#@-body
 	#@-node:1::doNormalLine
@@ -2625,57 +2624,40 @@ class atFile:
 	
 	#@-body
 	#@-node:3::doDirective
-	#@+node:4::doTnode
+	#@+node:4::doTnode (create new node)
 	#@+body
+	# The format of this sentinel is:
+	#
+	#	@tnode gti
+	#	text of headline on a single line.
+	
 	def doTnode (self,s,i):
 		
 		assert(match(s,i,"tnode"))
 		
-		# scan the tnode sentinel line
-		
-		#@<< Check the filename in the sentinel >>
-		#@+node:2::<< Check the filename in the sentinel >>
-		#@+body
-		fileName = string.strip(headline)
-		
-		if fileName[:5] == "@file":
-			fileName = string.strip(fileName[5:])
-			if fileName != self.targetFileName:
-				self.readError("File name in @node sentinel does not match file's name")
-		elif fileName[:8] == "@rawfile":
-			fileName = string.strip(fileName[8:])
-			if fileName != self.targetFileName:
-				self.readError("File name in @node sentinel does not match file's name")
-		else:
-			self.readError("Missing @file in root @node sentinel")
-		#@-body
-		#@-node:2::<< Check the filename in the sentinel >>
-
-		
-		# scan the following headline
-		self.headline = None
-		
-		#@<< Set headline and ref >>
-		#@+node:1::<< Set headline and ref >>
-		#@+body
-		# Set headline to the rest of the line.
-		if len(self.endSentinelComment) == 0:
-			self.headline = string.strip(s[i:-1])
-		else:
-			# Search from the right, not the left.
-			k = string.rfind(s,self.endSentinelComment,i)
-			self.headline = string.strip(s[i:k]) # works if k == -1
-			
-		# The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
-		if self.startSentinelComment[-1:] == '@':
-			self.headline = string.replace(headline,'@@','@')
-		
-		# Set reference if it exists.
-		i = skip_ws(s,i)
-		#@-body
-		#@-node:1::<< Set headline and ref >>
+		### set the gti ###
+	
+		# Skip the sentinel and set the headline.
+		s = readlineForceUnixNewline(self.file)
+		self.headline = s.replace("\\n","\n")
+	
 	#@-body
-	#@-node:4::doTnode
+	#@-node:4::doTnode (create new node)
+	#@+node:5::doVerbatim
+	#@+body
+	def doVerbatim (self,s,i):
+	
+		assert(match(s,i,"verbatim"))
+		
+		# Skip the sentinel.
+		s = readlineForceUnixNewline(self.file) 
+		
+		# Append the next line to the text.
+		i = self.skipIndent(s,0,self.indent)
+		self.out.append(s[i:])
+	
+	#@-body
+	#@-node:5::doVerbatim
 	#@-node:2::Non-paired sentinels
 	#@+node:3::Start Sentinels
 	#@+node:1::doStartBody
@@ -2900,29 +2882,14 @@ class atFile:
 	#@-body
 	#@-node:6::doEndRef
 	#@-node:4::End sentinels
-	#@+node:5::doStartVerbatim
-	#@+body
-	def doVerbatim (self,s,i):
-	
-		assert(match(s,i,"verbatim"))
-		
-		# Skip the sentinel.
-		s = readlineForceUnixNewline(self.file) 
-		
-		# Append the next line to the text.
-		i = self.skipIndent(s,0,self.indent)
-		self.out.append(s[i:])
-	
-	#@-body
-	#@-node:5::doStartVerbatim
-	#@+node:6::doUnknownGnxSentinel
+	#@+node:5::doUnknownGnxSentinel
 	#@+body
 	def doUnknownGnxSentinel (self,s,i):
 	
 		self.readError("Unknown sentinel: " + get_line(s,i))
 	
 	#@-body
-	#@-node:6::doUnknownGnxSentinel
+	#@-node:5::doUnknownGnxSentinel
 	#@-others
 	
 	#@-body
