@@ -145,7 +145,7 @@ def onIconDoubleClick(tag,keywords):
                 convertedFile.write(output)
                 convertedFile.close()
                 rstFile.close()
-                g.es('written: '+str(fname))
+                writeFullFileName(fname)
             #@nonl
             #@-node:edream.111803100242.4:<< write rST as HTML/LaTeX >>
             #@nl
@@ -155,11 +155,20 @@ def onIconDoubleClick(tag,keywords):
             rstFile = file(fname,'w')
             writeTreeAsRst(rstFile, fname, v, c)
             rstFile.close()
-            g.es('written: '+str(fname))
+            writeFullFileName(fname)
             #@nonl
             #@-node:edream.111803100242.6:<< write rST file >>
             #@nl
 #@-node:edream.111803100242.3:onIconDoubleClick
+#@+node:ekr.20040811065353:writeFullFileName
+def writeFullFileName (fname):
+    
+    path = g.os_path_join(os.getcwd(),fname)
+    path = g.os_path_abspath(path)
+    
+    g.es('rst written: ' + path,color="blue")
+#@nonl
+#@-node:ekr.20040811065353:writeFullFileName
 #@+node:edream.111803100242.7:writeTreeAsRst
 def writeTreeAsRst(rstFile, fname, vnode, c):
     'Writes the tree under vnode to the file rstFile (fname is the filename)'

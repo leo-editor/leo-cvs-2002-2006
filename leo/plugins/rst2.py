@@ -152,8 +152,7 @@ def onIconDoubleClick(tag,keywords):
                 convertedFile.write(output)
                 convertedFile.close()
                 rstFile.close()
-                g.es('written: '+str(fname))
-                #@nonl
+                writeFullFileName(fname)
                 #@-node:ekr.20040331071319.4:<< write rST as HTML/LaTeX >>
                 #@nl
             else:
@@ -162,7 +161,7 @@ def onIconDoubleClick(tag,keywords):
                 rstFile = file(fname,'w')
                 writeTreeAsRst(rstFile,fname,p,c)
                 rstFile.close()
-                g.es('written: ' + str(fname))
+                writeFullFileName(fname)
                 #@nonl
                 #@-node:ekr.20040331071319.6:<< write rST file >>
                 #@nl
@@ -176,6 +175,15 @@ def onIconDoubleClick(tag,keywords):
                 c.openWith(("os.startfile", None, ".tp"))
 #@nonl
 #@-node:ekr.20040331071319.3:onIconDoubleClick
+#@+node:ekr.20040811064922:writeFullFileName
+def writeFullFileName (fname):
+    
+    path = g.os_path_join(os.getcwd(),fname)
+    path = g.os_path_abspath(path)
+    
+    g.es('rst written: ' + path,color="blue")
+#@nonl
+#@-node:ekr.20040811064922:writeFullFileName
 #@+node:ekr.20040331071319.7:writeTreeAsRst
 def writeTreeAsRst(rstFile,fname,p,c,syntax):
     
