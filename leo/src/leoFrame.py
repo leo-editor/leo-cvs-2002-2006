@@ -1218,7 +1218,7 @@ class nullBody (leoBody):
         
         # At present, called only by c.getBodyLines.
         if not self.hasTextSelection():
-            start,end = self.insertPoint,self.insertPOint
+            start,end = self.insertPoint,self.insertPoint
         else:
             start,end = self.selection
     

@@ -2044,7 +2044,7 @@ class baseFileCommands:
         if g.os_path_exists(fileName):
             try:
                 if not os.access(fileName,os.W_OK):
-                    self.writeError("can not create: read only: " + self.targetFileName)
+                    g.es("can not create: read only: " + fileName)
                     return False
             except:
                 pass # os.access() may not exist on all platforms.

@@ -327,7 +327,7 @@ class leoGui:
         
     def moveIndexToNextLine(self,t,index):
     
-        self.oop()
+        self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3738:Index
     #@+node:ekr.20031218072017.3739:Idle time
