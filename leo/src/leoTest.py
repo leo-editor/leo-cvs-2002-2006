@@ -130,13 +130,11 @@ class generalTestCase(unittest.TestCase):
     def runTest (self):
     
         c = self.c ; p = self.p
-    
         script = g.getScript(c,p).strip()
         self.assert_(script)
     
         # Now just execute the script.
         # Let unit test handle any errors!
-    
         exec script + '\n' in {} # Use {} to get a pristine environment!
     #@nonl
     #@-node:ekr.20040707073029.4:runTest
@@ -1619,13 +1617,15 @@ def createUnitTestsFromDoctests (modules,verbose=True):
     suite = unittest.makeSuite(unittest.TestCase)
 
     for module in list(modules):
+        # New in Python 4.2: n may be zero.
         try:
             test = doctest.DocTestSuite(module)
-            suite.addTest(test)
             n = test.countTestCases()
-            created = True
-            if verbose:
-                print "Adding %2d doctests for %s" % (n,module.__name__)
+            if n > 0:
+                suite.addTest(test)
+                created = True
+                if verbose:
+                    print "Adding %2d doctests for %s" % (n,module.__name__)
         except ValueError:
             pass # No tests found.
 
