@@ -74,15 +74,13 @@ class fileCommands:
 	#@+body
 	def createVnode(self,parent,back,tref,headline):
 		
-		# tick()
-	
 		# trace(`headline` + ", parent:" + `parent` + ", back:" + `back`)
 		v = None ; c = self.commands
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
-			t = ()
+			t = leoNodes.tnode() # Was reverted in previous commit.
 		else:
-			t = self.getT(tref)
+			t = self.tnodesDict.get(tref)
 			if not t:
 				t = self.newTnode(tref)
 		if back: # create v after back.
@@ -709,17 +707,7 @@ class fileCommands:
 		return height, width
 	#@-body
 	#@-node:12::getSize
-	#@+node:13::getT
-	#@+body
-	def getT (self,index):
-	
-		if self.tnodesDict.has_key(index):
-			return self.tnodesDict[index]
-		else:
-			return None
-	#@-body
-	#@-node:13::getT
-	#@+node:14::getTnode (changed in 4.0)
+	#@+node:13::getTnode (changed in 4.0)
 	#@+body
 	def getTnode (self):
 	
@@ -736,7 +724,7 @@ class fileCommands:
 			elif self.matchTag("rtf=\"0\""): pass # ignored
 			else: break
 		self.getTag(">")
-		t = self.getT(index)
+		t = self.tnodesDict.get(index)
 		if t:
 			s = self.getEscapedString()
 			t.setTnodeText(s,encoding=self.leo_file_encoding)
@@ -753,9 +741,10 @@ class fileCommands:
 			es("no tnode with index: " + `index` + ".  The text will be discarded")
 			self.getEscapedString()
 		self.getTag("</t>")
+	
 	#@-body
-	#@-node:14::getTnode (changed in 4.0)
-	#@+node:15::getTnodes
+	#@-node:13::getTnode (changed in 4.0)
+	#@+node:14::getTnodes
 	#@+body
 	def getTnodes (self):
 	
@@ -768,8 +757,8 @@ class fileCommands:
 		self.getTag("</tnodes>")
 	
 	#@-body
-	#@-node:15::getTnodes
-	#@+node:16::getVnode (changed in 4.0)
+	#@-node:14::getTnodes
+	#@+node:15::getVnode (changed in 4.0)
 	#@+body
 	def getVnode (self,parent,back):
 	
@@ -836,8 +825,8 @@ class fileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-	#@-node:16::getVnode (changed in 4.0)
-	#@+node:17::getVnodes
+	#@-node:15::getVnode (changed in 4.0)
+	#@+node:16::getVnodes
 	#@+body
 	def getVnodes (self):
 	
@@ -856,8 +845,8 @@ class fileCommands:
 	
 		self.getTag("</vnodes>")
 	#@-body
-	#@-node:17::getVnodes
-	#@+node:18::getXmlStylesheetTag
+	#@-node:16::getVnodes
+	#@+node:17::getXmlStylesheetTag
 	#@+body
 	#@+at
 	#  Parses the optional xml stylesheet string, and sets the corresponding 
@@ -881,8 +870,8 @@ class fileCommands:
 			self.getTag("?>")
 	
 	#@-body
-	#@-node:18::getXmlStylesheetTag
-	#@+node:19::getXmlVersionTag
+	#@-node:17::getXmlStylesheetTag
+	#@+node:18::getXmlVersionTag
 	#@+body
 	# Parses the encoding string, and sets self.leo_file_encoding.
 	
@@ -900,8 +889,8 @@ class fileCommands:
 			es("invalid encoding in .leo file: " + encoding)
 	
 	#@-body
-	#@-node:19::getXmlVersionTag
-	#@+node:20::skipWs
+	#@-node:18::getXmlVersionTag
+	#@+node:19::skipWs
 	#@+body
 	def skipWs (self):
 	
@@ -915,8 +904,8 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:20::skipWs
-	#@+node:21::skipWsAndNl
+	#@-node:19::skipWs
+	#@+node:20::skipWsAndNl
 	#@+body
 	def skipWsAndNl (self):
 	
@@ -930,7 +919,7 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:21::skipWsAndNl
+	#@-node:20::skipWsAndNl
 	#@-node:3::get routines
 	#@+node:4::newTnode
 	#@+body
@@ -1590,8 +1579,8 @@ class fileCommands:
 		self.put("<v")
 		if self.a.use_gnx:
 			
-			#@<< put v.gnx and v.t.gxx, assigning them if needed >>
-			#@+node:1::<< put v.gnx and v.t.gxx, assigning them if needed >>
+			#@<< put v.gnx and v.t.gnx, assigning them if needed >>
+			#@+node:1::<< put v.gnx and v.t.gnx, assigning them if needed >>
 			#@+body
 			if not v.gnx:
 				tag = "putVnode v " + v.headString()
@@ -1610,7 +1599,7 @@ class fileCommands:
 			
 			t.setVisited() # Indicate we wrote the body text.
 			#@-body
-			#@-node:1::<< put v.gnx and v.t.gxx, assigning them if needed >>
+			#@-node:1::<< put v.gnx and v.t.gnx, assigning them if needed >>
 
 		else:
 			
