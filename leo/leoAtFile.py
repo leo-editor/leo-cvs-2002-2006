@@ -535,15 +535,38 @@ class atFile:
 			return atFile.miscDirective
 	#@-body
 	#@-node:2::directiveKind
-	#@+node:3::error
+	#@+node:3::isFirstDirective, is LastDirective (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN
+	# added for use by putBodyPart()
+	
+	# return true if i is index of an @first directive
+	def isFirstDirective(self,s,i):
+		
+		n = len(s)
+		if (i >= n) or (not match_word(s,i,"@first")):
+			return 0
+		return 1
+		
+		
+	# return true if i is index of an @last directive
+	def isLastDirective(self,s,i):
+		
+		n = len(s)
+		if (i >= n) or (not match_word(s,i,"@last")):
+			return 0
+		return 1
+	#@-body
+	#@-node:3::isFirstDirective, is LastDirective (Dave Hein)
+	#@+node:4::error
 	#@+body
 	def error(self,message):
 	
 		es(message)
 		self.errors += 1
 	#@-body
-	#@-node:3::error
-	#@+node:4::skipIndent
+	#@-node:4::error
+	#@+node:5::skipIndent
 	#@+body
 	# Skip past whitespace equivalent to width spaces.
 	
@@ -557,8 +580,8 @@ class atFile:
 			i += 1
 		return i
 	#@-body
-	#@-node:4::skipIndent
-	#@+node:5::readError
+	#@-node:5::skipIndent
+	#@+node:6::readError
 	#@+body
 	def readError(self,message):
 	
@@ -573,8 +596,8 @@ class atFile:
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body
-	#@-node:5::readError
-	#@+node:6::updateCloneIndices
+	#@-node:6::readError
+	#@+node:7::updateCloneIndices
 	#@+body
 	#@+at
 	#  The new Leo2 computes clone indices differently from the old Leo2:
@@ -611,8 +634,8 @@ class atFile:
 		# Make sure the root's clone index is zero.
 		root.t.setCloneIndex(0)
 	#@-body
-	#@-node:6::updateCloneIndices
-	#@+node:7::writeError
+	#@-node:7::updateCloneIndices
+	#@+node:8::writeError
 	#@+body
 	def writeError(self,message):
 	
@@ -622,7 +645,7 @@ class atFile:
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body
-	#@-node:7::writeError
+	#@-node:8::writeError
 	#@-node:4::Utilites
 	#@+node:5::Reading
 	#@+node:1::createNthChild
@@ -770,8 +793,15 @@ class atFile:
 		#@+body
 		self.indent = 0
 		out = []
-		self.scanHeader(file)
-		self.scanText(file,root,out,atFile.endLeo)
+		# 14-SEP-2002 DTHEIN: returns the leading lines that might be applied to @first
+		firstLines = self.scanHeader(file)
+		# 14-SEP-2002 DTHEIN: returnes the trailing lines that might be applied to @last
+		lastLines = self.scanText(file,root,out,atFile.endLeo)
+		# 14-SEP-2002 DTHEIN: FIXME -- capture the trailing lines here and 
+		#                     update the @last directives already captured
+		# 14-SEP-2002 DTHEIN: apply the leading lines as parameters to @first directives
+		self.completeFirstDirectives(out,firstLines)
+		self.completeLastDirectives(out,lastLines)
 		s = string.join(out, "")
 		# Stephen P. Schaefer 9/7/2002
 		# scanHeader and scanText no longer introduce
@@ -829,8 +859,15 @@ class atFile:
 			#@+body
 			self.indent = 0
 			out = []
-			self.scanHeader(file)
-			self.scanText(file,root,out,atFile.endLeo)
+			# 14-SEP-2002 DTHEIN: returns the leading lines that might be applied to @first
+			firstLines = self.scanHeader(file)
+			# 14-SEP-2002 DTHEIN: returnes the trailing lines that might be applied to @last
+			lastLines = self.scanText(file,root,out,atFile.endLeo)
+			# 14-SEP-2002 DTHEIN: FIXME -- capture the trailing lines here and 
+			#                     update the @last directives already captured
+			# 14-SEP-2002 DTHEIN: apply the leading lines as parameters to @first directives
+			self.completeFirstDirectives(out,firstLines)
+			self.completeLastDirectives(out,lastLines)
 			s = string.join(out, "")
 			# Stephen P. Schaefer 9/7/2002
 			# scanHeader and scanText no longer introduce
@@ -1124,17 +1161,23 @@ class atFile:
 	# 7/8/02: Leading whitespace is now significant here before the @+leo.  This is part of the "REM hack".  We do this so that 
 	# sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as 
 	# possible about what is recognized as a sentinel.  This minimizes false matches.
+	# 
+	# 14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, 
+	# if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the 
+	# lines before @+leo.
 
 	#@-at
 	#@@c
 	def scanHeader(self,file):
 	
 		valid = true ; tag = "@+leo"
+		firstLines = [] # DTHEIN: the first lines, before @+leo
 		# Skip any non @+leo lines.
 		s = readlineForceUnixNewline(file)
 		while len(s) > 0:
 			j = string.find(s,tag)
 			if j != -1: break
+			firstLines.append(s) # DTHEIN: queue the line
 			s = readlineForceUnixNewline(file)
 		n = len(s)
 		valid = n > 0
@@ -1160,9 +1203,66 @@ class atFile:
 		self.endSentinelComment = s[j:i]
 		if not valid:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
+		return firstLines
 	#@-body
 	#@-node:6:C=8:scanHeader
-	#@+node:7::scanText
+	#@+node:7::completeFirstDirectives (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
+	
+	# this function scans the lines in the list 'out' for @first directives
+	# and appends the corresponding line from 'firstLines' to each @first 
+	# directive found.  NOTE: the @first directives must be the very first
+	# lines in 'out'.
+	def completeFirstDirectives(self,out,firstLines):
+	
+		tag = "@first"
+		foundAtFirstYet = 0
+		outRange = range(len(out))
+		j = 0
+		for k in outRange:
+			# skip leading whitespace lines
+			if (not foundAtFirstYet) and (len(out[k].strip()) == 0): continue
+			# quit if something other than @first directive
+			i = 0
+			if not match(out[k],i,tag): break;
+			foundAtFirstYet = 1
+			# quit if no leading lines to apply
+			if j >= len(firstLines): break
+			# make the new @first directive
+			out[k] = tag + " " + firstLines[j] ; j += 1
+
+	#@-body
+	#@-node:7::completeFirstDirectives (Dave Hein)
+	#@+node:8::completeLastDirectives (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
+	
+	# this function scans the lines in the list 'out' for @last directives
+	# and appends the corresponding line from 'lastLines' to each @last 
+	# directive found.  NOTE: the @first directives must be the very last
+	# lines in 'out'.
+	def completeLastDirectives(self,out,lastLines):
+	
+		tag = "@last"
+		foundAtLastYet = 0
+		outRange = range(-1,-len(out),-1)
+		j = -1
+		for k in outRange:
+			# skip trailing whitespace lines
+			if (not foundAtLastYet) and (len(out[k].strip()) == 0): continue
+			# quit if something other than @last directive
+			i = 0
+			if not match(out[k],i,tag): break;
+			foundAtLastYet = 1
+			# quit if no trailing lines to apply
+			if j < -len(lastLines): break
+			# make the new @last directive
+			out[k] = tag + " " + lastLines[j] ; j -= 1
+
+	#@-body
+	#@-node:8::completeLastDirectives (Dave Hein)
+	#@+node:9::scanText
 	#@+body
 	#@+at
 	#  This method is the heart of the new read code.  It reads lines from the file until the given ending sentinel is found, and 
@@ -1174,6 +1274,7 @@ class atFile:
 	def scanText (self,file,v,out,endSentinelKind):
 	
 		c = self.commands
+		lastLines = [] # 14-SEP-2002 DTHEIN: the last lines, after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		nextLine = None
 		while 1:
@@ -1577,6 +1678,8 @@ class atFile:
 							while 1:
 								s = readlineForceUnixNewline(file)
 								if len(s) == 0: break
+								if not s.isspace():
+									lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
 						else: #old code
 							s = readlineForceUnixNewline(file)
 							if len(s) > 0:
@@ -1584,7 +1687,7 @@ class atFile:
 					# nextLine != None only if we have a non-sentinel line.
 					# Therefore, nextLine == None whenever scanText returns.
 					assert(nextLine==None)
-					return
+					return lastLines # 14-SEP-2002 DTHEIN: return the captured lines after @-leo
 				else:
 					# Tell of the structure error.
 					name = self.sentinelName(kind)
@@ -1617,13 +1720,14 @@ class atFile:
 		#@-node:5::<< handle unexpected end of text >>
 
 		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
+		return lastLines # 14-SEP-2002 DTHEIN: shouldn't get here unless problems
 
 	#@-body
 	#@+node:6::start sentinels
 	#@-node:6::start sentinels
 	#@+node:7::unpaired sentinels
 	#@-node:7::unpaired sentinels
-	#@-node:7::scanText
+	#@-node:9::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
 	#@+node:1:C=10:os, onl, etc. (leoAtFile)
@@ -1694,13 +1798,50 @@ class atFile:
 		#@+node:1::<< put code/doc parts and sentinels >>
 		#@+body
 		i = 0 ; n = len(s)
+		# 14-SEP-2002 DTHEIN: If this is the root node, then handle all @first directives here
+		lookingForLast = 0
+		lookingForFirst = 0
+		initialLastDirective = -1
+		lastDirectiveCount = 0
+		if (v == self.root):  #DTHEIN: FIXME is this test valid????
+			lookingForLast = 1
+			lookingForFirst = 1
+		#
 		while i < n:
 			kind = self.directiveKind(s,i)
+			# 14-SEP-2002 DTHEIN: If first directive isn't @first, then stop looking for @first
+			if lookingForFirst:
+				if kind != atFile.miscDirective:
+					lookingForFirst = 0
+				elif not self.isFirstDirective(s,i):
+					lookingForFirst = 0
+			if lookingForLast:
+				if initialLastDirective == -1:
+					if (kind == atFile.miscDirective) and self.isLastDirective(s,i):
+						# mark the point where the last directive was found
+						initialLastDirective = i
+				else:
+					if (kind != atFile.miscDirective) or (not self.isLastDirective(s,i)):
+						# found something after @last, so process the @last directives
+						# in 'ignore them' mode
+						i, initialLastDirective = initialLastDirective, -1
+						lastDirectiveCount = 0
+						kind = self.directiveKind(s,i)
+			#
 			j = i
 			if kind == atFile.docDirective or kind == atFile.atDirective:
 				i = self.putDoc(s,i,kind)
 			elif kind == atFile.miscDirective:
-				i = self.putDirective(s,i)
+				if lookingForFirst: # DTHEIN: can only be true if it is @first directive
+					i = self.putEmptyDirective(s,i)
+				elif (initialLastDirective != -1) and self.isLastDirective(s,i):
+					# DTHEIN: can only be here if lookingForLast is true
+					# skip the last directive ... we'll output it at the end if it
+					# is truly 'last'
+					lastDirectiveCount += 1
+					i = skip_line(s,i)
+				else:
+					i = self.putDirective(s,i)
 			elif kind == atFile.noDirective or kind == atFile.othersDirective:
 				i = self.putCodePart(s,i,v)
 			elif kind == atFile.cDirective or kind == atFile.codeDirective:
@@ -1709,6 +1850,12 @@ class atFile:
 			else: assert(false) # We must handle everything that directiveKind returns
 			assert(n == len(s))
 			assert(j < i) # We must make progress.
+		# 14-SEP-2002 DTHEIN: put out the last directives, if any
+		if initialLastDirective != -1:
+			d = initialLastDirective
+			for k in range(lastDirectiveCount):
+				d = self.putEmptyDirective(s,d)
+
 		#@-body
 		#@-node:1::<< put code/doc parts and sentinels >>
 
@@ -1963,7 +2110,27 @@ class atFile:
 		return i
 	#@-body
 	#@-node:5::putDirective  (handles @delims)
-	#@+node:6::putDoc
+	#@+node:6::putEmptyDirective (Dave Hein)
+	#@+body
+	# 14-SEP-2002 DTHEIN
+	# added for use by putBodyPart()
+	
+	# This method outputs the directive without the parameter text
+	def putEmptyDirective(self,s,i):
+	
+		assert(i < len(s) and s[i] == '@')
+		
+		endOfLine = s.find('\n',i)
+		token = s[i:endOfLine].split()
+		directive = token[0]
+		self.putSentinel("@" + directive)
+	
+		i = skip_line(s,i)
+		return i
+
+	#@-body
+	#@-node:6::putEmptyDirective (Dave Hein)
+	#@+node:7::putDoc
 	#@+body
 	#@+at
 	#  This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
@@ -1989,8 +2156,8 @@ class atFile:
 		self.putSentinel("@-" + tag)
 		return j
 	#@-body
-	#@-node:6::putDoc
-	#@+node:7:C=15:putDocPart
+	#@-node:7::putDoc
+	#@+node:8:C=15:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2058,8 +2225,8 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7:C=15:putDocPart
-	#@+node:8:C=16:putIndent
+	#@-node:8:C=15:putDocPart
+	#@+node:9:C=16:putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -2074,8 +2241,8 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:8:C=16:putIndent
-	#@+node:9:C=17:atFile.write
+	#@-node:9:C=16:putIndent
+	#@+node:10:C=17:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2301,8 +2468,8 @@ class atFile:
 			#@-body
 			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
-	#@-node:9:C=17:atFile.write
-	#@+node:10::writeAll
+	#@-node:10:C=17:atFile.write
+	#@+node:11::writeAll
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling write for every @file node found.  If partialFlag is true we write all @file nodes in 
@@ -2347,7 +2514,7 @@ class atFile:
 		if partialFlag and not written:
 			es("no @file nodes in the selected tree")
 	#@-body
-	#@-node:10::writeAll
+	#@-node:11::writeAll
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll
