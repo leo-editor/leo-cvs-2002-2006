@@ -529,6 +529,9 @@ class baseColorizer:
 	def __init__(self,c):
 	
 		self.c = c
+		self.frame = c.frame
+		self.body = c.frame.body
+	
 		self.count = 0 # how many times this has been called.
 		self.use_hyperlinks = false # true: use hyperlinks and underline "live" links.
 		self.enabled = true # true: syntax coloring enabled
@@ -557,7 +560,6 @@ class baseColorizer:
 		#@	<< ivars for communication between colorAllDirectives and its allies >>
 		#@+node:<< ivars for communication between colorAllDirectives and its allies >>
 		# Copies of arguments.
-		self.body = self.c.body
 		self.v = None
 		self.language = None
 		self.flag = None
@@ -1183,8 +1185,7 @@ class baseColorizer:
 			if self.c:
 				es_exception()
 			else:
-				import traceback
-				traceback.print_exc()
+				import traceback ; traceback.print_exc()
 			return "error" # for unit testing.
 	#@nonl
 	#@-node:colorizeAnyLanguage & allies
@@ -1887,7 +1888,7 @@ class baseColorizer:
 	# self.flag is true unless an unambiguous @nocolor is seen.
 	
 	def updateSyntaxColorer (self,v):
-		
+	
 		self.flag = self.useSyntaxColoring(v)
 		self.scanColorDirectives(v)
 	#@-node:updateSyntaxColorer

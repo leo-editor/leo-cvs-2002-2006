@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3875" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="35" left="386" height="872" width="813"/>
+	<global_window_position top="0" left="224" height="872" width="965"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,19 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.110203160744.1"><vh>November 2003</vh>
+<v t="edream.111703064137"><vh>11/17</vh>
+<v t="edream.111703102222"><vh>Fixed all problems reported by Pychecker</vh></v>
+<v t="edream.111703101935"><vh>Fixed new crasher in batch change commands</vh></v>
+<v t="edream.111703100357"><vh>Fixed new crasher in Show Invisibles command</vh></v>
+<v t="edream.111703094738"><vh>Fixed (new?) unbounded recursion in Go To Next Clone command</vh></v>
+<v t="edream.111703093534"><vh>Fixed (new?) crasher in Abort Edit Headline command</vh></v>
+<v t="edream.111703084944"><vh>Fixed new crashers when opening popup menu</vh></v>
+<v t="edream.111703082105"><vh>Fixed new crasher in Font panel</vh></v>
+<v t="edream.111703080619"><vh>Import traceback only as needed</vh></v>
+<v t="edream.111703080619.1"><vh>Fixed bug that caused new headlines not to be selected</vh></v>
+<v t="edream.111703071024"><vh>getSelectionLines now returns the insertion line if no selection</vh></v>
+<v t="edream.111703064137.1"><vh>Replaced c.body and c.log by c.frame.body &amp; c.frame.log</vh></v>
+</v>
 <v t="edream.111603085858"><vh>11/16</vh>
 <v t="edream.111603131807"><vh>Reorg is now complete!</vh></v>
 <v t="edream.111603130926"><vh>Moved menu utilities to leoMenu class</vh></v>
@@ -673,6 +686,7 @@
 <v t="edream.111603115116.3"><vh>Focus</vh></v>
 </v>
 <v t="edream.110203160744.3039"><vh>Dialog utils... REMOVED</vh></v>
+<v t="edream.110203160744.1930"><vh>tree.recolor, recolor_now, recolor_range (REMOVED FROM TREE)</vh></v>
 </v>
 </v>
 </v>
@@ -915,7 +929,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="M"><vh>To do: 4.1 beta 3</vh>
+<v t="edream.110403112538" a="MV"><vh>To do: 4.1 beta 3</vh>
 <v t="edream.111403200430"><vh>line ending problem</vh></v>
 <v t="edream.111303073523.3"><vh>Reorg</vh>
 <v t="edream.111303074519"><vh>Docs</vh></v>
@@ -1071,7 +1085,9 @@
 </v>
 </v>
 <v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
+<v t="edream.111603175355"><vh>Crash in colorizer</vh></v>
 </v>
+<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
 <v t="edream.110203160744.603"><vh>(Translation problems)</vh>
@@ -1256,7 +1272,7 @@
 <v t="edream.110203160744.747"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.748" a=""><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
-<v t="edream.110203160744.749" a=""><vh>Drawing routines (tree)...</vh>
+<v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
 <v t="edream.110203160744.750"><vh>redraw</vh></v>
 <v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
@@ -1517,7 +1533,7 @@
 </v>
 <v t="edream.110203160744.929" a=""><vh>v.sortChildren</vh></v>
 <v t="edream.110203160744.930" a=""><vh>v.moveToNthChildOf</vh></v>
-<v t="edream.110203160744.931" a=""><vh>c.deleteHeadline</vh></v>
+<v t="edream.110203160744.931" a=""><vh>c.deleteOutline</vh></v>
 </v>
 <v t="edream.110203160744.932"><vh>(double @root bug)</vh>
 <v t="edream.110203160744.933"><vh>Assert fails</vh></v>
@@ -1754,7 +1770,7 @@
 <v t="edream.110203160744.1299" a=""><vh>plugin_signon</vh></v>
 </v>
 <v t="edream.110203160744.1300"><vh>(Key handlers)</vh>
-<v t="edream.110203160744.1301" a=""><vh>body key handlers (tree)</vh>
+<v t="edream.110203160744.1301" a=""><vh>body key handlers</vh>
 <v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
 <v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
 <v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
@@ -1764,8 +1780,8 @@
 <v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
 <v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.1310"><vh>onBodyChanged</vh></v>
-<v t="edream.110203160744.1311"><vh>OnBodyKey</vh></v>
+<v t="edream.110203160744.1310"><vh>onBodyChanged (called from core)</vh></v>
+<v t="edream.110203160744.1311"><vh>onBodyKey</vh></v>
 <v t="edream.110203160744.1312" a=""><vh>onBodyWillChange</vh></v>
 </v>
 <v t="edream.110203160744.1313" a=""><vh>headline key handlers (tree)</vh>
@@ -1779,7 +1795,6 @@
 <v t="edream.110203160744.1321"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.1322"><vh>What doesn't work</vh></v>
 </v>
 <v t="edream.110203160744.1323"><vh>(scanAllDirectives, scanDirectives, related utils)</vh>
 <v t="edream.110203160744.1324"><vh>atFile.scanAllDirectives (calls writeError on errors)</vh>
@@ -1821,7 +1836,7 @@
 <v t="edream.110203160744.1356"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.1357" a=""><vh>tree.scanForTabWidth</vh>
+<v t="edream.110203160744.1357" a=""><vh>scanForTabWidth</vh>
 <v t="edream.110203160744.1358"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1359" a=""><vh>scanColorDirectives</vh>
@@ -2171,7 +2186,7 @@
 <v t="edream.110203160744.1517"><vh>3.12 projects</vh>
 <v t="edream.110203160744.1518"><vh>3.12 beta 1</vh>
 <v t="edream.110203160744.1519"><vh>(@wrap and @nowrap directives)</vh>
-<v t="edream.110203160744.1520" a=""><vh>f.setWrap</vh></v>
+<v t="edream.110203160744.1520" a=""><vh>setWrap</vh></v>
 <v t="edream.110203160744.757" a=""><vh>tree.select</vh>
 <v t="edream.110203160744.758"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
 <v t="edream.110203160744.759"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
@@ -2308,7 +2323,7 @@
 <v t="edream.110203160744.1628"><vh>(Make window bigger when opening Leo from leo.py)</vh>
 <v t="edream.110203160744.1086" a=""><vh>new</vh></v>
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
-<v t="edream.110203160744.1629" a=""><vh>f.setInitialWindowGeometry</vh></v>
+<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
 </v>
 <v t="edream.110203160744.1630"><vh>(Nav plugin &amp; related stuff)</vh>
 <v t="edream.110203160744.757" a=""><vh>tree.select</vh>
@@ -2466,7 +2481,7 @@
 </v>
 </v>
 <v t="edream.110203160744.1838"><vh>(Add/delete scrollbars for @wrap and @nowrap)</vh>
-<v t="edream.110203160744.1520" a=""><vh>f.setWrap</vh></v>
+<v t="edream.110203160744.1520" a=""><vh>setWrap</vh></v>
 </v>
 <v t="edream.110203160744.1839"><vh>(Worked around shutdown problems with 2.3)</vh>
 <v t="edream.110203160744.1602" a=""><vh>frame.doHook</vh></v>
@@ -2508,7 +2523,7 @@
 <v t="edream.110203160744.1905"><vh>Report</vh></v>
 <v t="edream.110203160744.1906" a=""><vh>Insert, Delete &amp; Clone (Commands)</vh>
 <v t="edream.110203160744.1907"><vh>c.checkMoveWithParentWithWarning</vh></v>
-<v t="edream.110203160744.931" a=""><vh>c.deleteHeadline</vh></v>
+<v t="edream.110203160744.931" a=""><vh>c.deleteOutline</vh></v>
 <v t="edream.110203160744.1773"><vh>c.insertHeadline</vh></v>
 <v t="edream.110203160744.1781"><vh>c.clone</vh></v>
 <v t="edream.110203160744.1908"><vh>initAllCloneBits &amp; initAllCloneBitsInTree</vh></v>
@@ -2591,7 +2606,7 @@
 <v t="edream.110203160744.2011"><vh>convertBlanks</vh></v>
 <v t="edream.110203160744.2012"><vh>convertTabs</vh></v>
 <v t="edream.110203160744.2013"><vh>createLastChildNode</vh></v>
-<v t="edream.110203160744.2014" a=""><vh>dedentBody</vh></v>
+<v t="edream.110203160744.2014"><vh>dedentBody</vh></v>
 <v t="edream.110203160744.1803" a=""><vh>extract</vh>
 <v t="edream.110203160744.1804"><vh>&lt;&lt; Set headline for extract &gt;&gt;</vh></v>
 </v>
@@ -2601,24 +2616,24 @@
 <v t="edream.110203160744.1807" a=""><vh>extractSectionNames</vh>
 <v t="edream.110203160744.1808"><vh>&lt;&lt; Find the next section name &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2015" a=""><vh>findBoundParagraph</vh>
+<v t="edream.110203160744.2015"><vh>findBoundParagraph</vh>
 <v t="edream.110203160744.2016"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1185"><vh>findMatchingBracket</vh>
 <v t="edream.110203160744.1186"><vh>findMatchingBracket</vh></v>
 </v>
-<v t="edream.110203160744.1779" a=""><vh>getBodyLines</vh></v>
-<v t="edream.110203160744.2017" a=""><vh>indentBody</vh></v>
+<v t="edream.110203160744.1779"><vh>getBodyLines</vh></v>
+<v t="edream.110203160744.2017"><vh>indentBody</vh></v>
 <v t="edream.110203160744.1188"><vh>insertBodyTime &amp; allies</vh>
 <v t="edream.110203160744.1189"><vh>getTime</vh></v>
 </v>
-<v t="edream.110203160744.2018" a=""><vh>reformatParagraph</vh>
+<v t="edream.110203160744.2018"><vh>reformatParagraph</vh>
 <v t="edream.110203160744.2019"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
 <v t="edream.110203160744.2020"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
 <v t="edream.110203160744.2021"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
 <v t="edream.110203160744.2022"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2023" a=""><vh>updateBodyPane (handles undo)</vh></v>
+<v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 <v t="edream.110203160744.1114" a=""><vh>readAtFileNodes</vh></v>
 </v>
@@ -2806,25 +2821,7 @@
 <v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.2147"><vh>(Converted Reformat Paragraph to use body abstraction routines)</vh>
-<v t="edream.110203160744.2015" a=""><vh>findBoundParagraph</vh>
-<v t="edream.110203160744.2016"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1779" a=""><vh>getBodyLines</vh></v>
-<v t="edream.110203160744.2148" a=""><vh>getInsertLines (leoTkinterBody)</vh></v>
-<v t="edream.110203160744.2018" a=""><vh>reformatParagraph</vh>
-<v t="edream.110203160744.2019"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
-<v t="edream.110203160744.2020"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
-<v t="edream.110203160744.2021"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
-<v t="edream.110203160744.2022"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2149" a=""><vh>splitLines &amp; joinLines</vh></v>
-<v t="edream.110203160744.2023" a=""><vh>updateBodyPane (handles undo)</vh></v>
-<v t="edream.110203160744.2150" a=""><vh>wrap_lines</vh>
-<v t="edream.110203160744.2151"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
-<v t="edream.110203160744.2152"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
-</v>
-</v>
+<v t="edream.110203160744.2147"><vh>(Converted Reformat Paragraph to use body abstraction routines)</vh></v>
 <v t="edream.110203160744.2384"><vh>(Converting to app.gui calls)</vh>
 <v t="edream.110203160744.2385"><vh>Finished</vh>
 <v t="edream.110203160744.2403"><vh>Removed bodyCtrl from colorizer</vh>
@@ -2858,12 +2855,7 @@
 <v t="edream.110203160744.1236" a=""><vh>goPrevVisitedNode</vh></v>
 <v t="edream.110203160744.1237" a=""><vh>goNextVisitedNode</vh></v>
 </v>
-<v t="edream.110203160744.2341"><vh>(Fixed bugs in Shift Left/Write commands)</vh>
-<v t="edream.110203160744.2014" a=""><vh>dedentBody</vh></v>
-<v t="edream.110203160744.2017" a=""><vh>indentBody</vh></v>
-<v t="edream.110203160744.2304" a=""><vh>setSelectionAreas</vh></v>
-<v t="edream.110203160744.2302" a=""><vh>getSelectionLines</vh></v>
-</v>
+<v t="edream.110203160744.2341"><vh>(Fixed bugs in Shift Left/Write commands)</vh></v>
 <v t="edream.110203160744.2342"><vh>(Fixed crasher with bad pattern match patterns)</vh></v>
 <v t="edream.110203160744.2347"><vh>(Fixed Nested comments bug)</vh>
 <v t="edream.110203160744.2348"><vh>Comments</vh></v>
@@ -3232,10 +3224,10 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
-<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
+<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
 <v t="edream.110203160744.2462" a=""><vh>&lt;&lt; About Tangle and Untangle &gt;&gt;</vh></v>
 <v t="edream.110203160744.2463" a=""><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="edream.110203160744.2464" a=""><vh>&lt;&lt; How Leo implements unlimited undo &gt;&gt;</vh></v>
@@ -3939,7 +3931,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2866" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1081,edream.110203160744.1885,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.1923,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1106,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1150,edream.110203160744.1151,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.1191,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110403150047.1,edream.110403081646.1,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.2927,edream.110203160744.2926,edream.110203160744.2925,edream.110203160744.1236,edream.110203160744.1237,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.1241,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.1273,edream.110203160744.1274,edream.111103193726,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
+<v t="edream.110203160744.2866" tnodeList="edream.110203160744.2866,edream.110203160744.1844,edream.110203160744.1845,edream.110203160744.1873,edream.110203160744.2867,edream.110203160744.2868,edream.110203160744.1081,edream.110203160744.1885,edream.110203160744.1086,edream.110203160744.1087,edream.110203160744.1088,edream.110203160744.1089,edream.110203160744.1090,edream.110203160744.1091,edream.110203160744.1092,edream.110203160744.1093,edream.110203160744.1094,edream.110203160744.1095,edream.110203160744.1096,edream.110203160744.1097,edream.110203160744.1098,edream.110203160744.1099,edream.110203160744.1100,edream.110203160744.1101,edream.110203160744.1102,edream.110203160744.1103,edream.110203160744.1104,edream.110203160744.1108,edream.110203160744.1109,edream.110203160744.1110,edream.110203160744.1106,edream.110203160744.1113,edream.110203160744.1114,edream.110203160744.1120,edream.110203160744.1121,edream.110203160744.1123,edream.110203160744.1124,edream.110203160744.1125,edream.110203160744.1127,edream.110203160744.1128,edream.110203160744.1129,edream.110203160744.1131,edream.110203160744.1132,edream.110203160744.1133,edream.110203160744.1134,edream.110203160744.1135,edream.110203160744.1136,edream.110203160744.1137,edream.110203160744.1138,edream.110203160744.1139,edream.110203160744.1140,edream.110203160744.1141,edream.110203160744.1150,edream.110203160744.1151,edream.110203160744.1152,edream.110203160744.1153,edream.110203160744.1154,edream.110203160744.1155,edream.110203160744.1156,edream.110203160744.1157,edream.110203160744.1158,edream.110203160744.1159,edream.110203160744.1160,edream.110203160744.1161,edream.110203160744.1162,edream.110203160744.1163,edream.110203160744.1164,edream.110203160744.1165,edream.110203160744.1166,edream.110203160744.1167,edream.110203160744.1168,edream.110203160744.1169,edream.110203160744.1170,edream.110203160744.1171,edream.110203160744.1172,edream.110203160744.1174,edream.110203160744.1175,edream.110203160744.1176,edream.110203160744.1177,edream.110203160744.1801,edream.110203160744.1802,edream.110203160744.2011,edream.110203160744.2012,edream.110203160744.2013,edream.110203160744.2014,edream.110203160744.1803,edream.110203160744.1804,edream.110203160744.1805,edream.110203160744.1806,edream.110203160744.1807,edream.110203160744.1808,edream.110203160744.2015,edream.110203160744.2016,edream.110203160744.1185,edream.110203160744.1186,edream.110203160744.1779,edream.110203160744.2017,edream.110203160744.1188,edream.110203160744.1189,edream.110203160744.2018,edream.110203160744.2019,edream.110203160744.2020,edream.110203160744.2021,edream.110203160744.2022,edream.110203160744.2023,edream.110203160744.1191,edream.110203160744.1194,edream.110203160744.1196,edream.110203160744.1197,edream.110203160744.1198,edream.110203160744.1199,edream.110203160744.1200,edream.110203160744.1543,edream.110203160744.1544,edream.110203160744.1545,edream.110403150047.1,edream.110403081646.1,edream.110203160744.1907,edream.110203160744.931,edream.110203160744.1773,edream.110203160744.1781,edream.110203160744.1908,edream.110203160744.1909,edream.110203160744.1910,edream.110203160744.926,edream.110203160744.927,edream.110203160744.928,edream.110203160744.1769,edream.110203160744.1770,edream.110203160744.2904,edream.110203160744.2905,edream.110203160744.2906,edream.110203160744.2907,edream.110203160744.2908,edream.110203160744.2909,edream.110203160744.2910,edream.110203160744.2911,edream.110203160744.2912,edream.110203160744.2914,edream.110203160744.2915,edream.110203160744.2916,edream.110203160744.1237,edream.110203160744.1236,edream.110203160744.1238,edream.110203160744.1239,edream.110203160744.2927,edream.110203160744.2925,edream.110203160744.2926,edream.110203160744.1243,edream.110203160744.1244,edream.110203160744.1245,edream.110203160744.2928,edream.110203160744.2929,edream.110203160744.2930,edream.110203160744.2931,edream.110203160744.2932,edream.110203160744.2933,edream.110203160744.2934,edream.110203160744.2935,edream.110203160744.1915,edream.110203160744.1916,edream.110203160744.1917,edream.110203160744.1918,edream.110203160744.1919,edream.110203160744.1920,edream.110203160744.1921,edream.110203160744.1922,edream.110203160744.1259,edream.110203160744.1260,edream.110203160744.1261,edream.110203160744.1262,edream.110203160744.1263,edream.110203160744.1264,edream.110203160744.1265,edream.110203160744.1267,edream.110203160744.1268,edream.110203160744.1269,edream.110203160744.1273,edream.110203160744.1274,edream.111103193726,edream.110203160744.1912,edream.110203160744.1913,edream.110203160744.1914,edream.110203160744.1923,edream.110203160744.2870,edream.110203160744.2871,edream.110203160744.2872,edream.110203160744.2873,edream.110203160744.2874,edream.110203160744.2876,edream.110203160744.2877,edream.110203160744.2878,edream.110203160744.2879,edream.110203160744.2880,edream.110203160744.2881,edream.110203160744.2882,edream.110203160744.2883,edream.110203160744.2884,edream.110203160744.2885,edream.110203160744.2886,edream.110203160744.2887,edream.110203160744.2888,edream.110203160744.2889,edream.110203160744.2890,edream.110203160744.2891,edream.110203160744.2892,edream.110203160744.2893,edream.110203160744.2894,edream.110203160744.2395,edream.110203160744.2895,edream.110203160744.2896,edream.110203160744.2897,edream.110203160744.2898,edream.110203160744.2899,edream.110203160744.2900,edream.110203160744.2901,edream.110203160744.2918,edream.110203160744.2919,edream.110203160744.2920,edream.110203160744.2921,edream.110203160744.2922,edream.110203160744.2923,edream.110203160744.1968,edream.110203160744.2937,edream.110203160744.2938,edream.110203160744.2939,edream.110203160744.2940,edream.110203160744.2941,edream.110203160744.2942,edream.110203160744.2943,edream.110203160744.2944,edream.110203160744.2945,edream.110203160744.2946"><vh>@file leoCommands.py</vh>
 <v t="edream.110203160744.1872"><vh> c.Birth &amp; death</vh>
 <v t="edream.110203160744.1844"><vh>c.__init__, initIvars</vh>
 <v t="edream.110203160744.1845"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -3949,14 +3941,8 @@
 <v t="edream.110203160744.2868"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="edream.110203160744.1081"><vh> doCommand</vh></v>
-<v t="edream.110203160744.1885" a=""><vh> version &amp; signon stuff</vh></v>
-<v t="edream.111103194948"><vh>Dragging</vh>
-<v t="edream.110203160744.1912"><vh>c.dragAfter</vh></v>
-<v t="edream.110203160744.1913"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
-<v t="edream.110203160744.1914"><vh>c.dragToNthChildOf</vh></v>
-<v t="edream.110203160744.1923"><vh>c.dragCloneAfter (changed in 3.11.1)</vh></v>
-</v>
-<v t="edream.111103172301"><vh> Command handlers...</vh>
+<v t="edream.110203160744.1885" a="M"><vh> version &amp; signon stuff</vh></v>
+<v t="edream.111103172301"><vh>Command handlers...</vh>
 <v t="edream.110203160744.1084"><vh>File Menu</vh>
 <v t="edream.110203160744.1085"><vh>top level</vh>
 <v t="edream.110203160744.1086" a=""><vh>new</vh></v>
@@ -4066,7 +4052,7 @@
 <v t="edream.110203160744.2011"><vh>convertBlanks</vh></v>
 <v t="edream.110203160744.2012"><vh>convertTabs</vh></v>
 <v t="edream.110203160744.2013"><vh>createLastChildNode</vh></v>
-<v t="edream.110203160744.2014" a=""><vh>dedentBody</vh></v>
+<v t="edream.110203160744.2014"><vh>dedentBody</vh></v>
 <v t="edream.110203160744.1803" a=""><vh>extract</vh>
 <v t="edream.110203160744.1804"><vh>&lt;&lt; Set headline for extract &gt;&gt;</vh></v>
 </v>
@@ -4076,24 +4062,24 @@
 <v t="edream.110203160744.1807" a=""><vh>extractSectionNames</vh>
 <v t="edream.110203160744.1808"><vh>&lt;&lt; Find the next section name &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2015" a=""><vh>findBoundParagraph</vh>
+<v t="edream.110203160744.2015"><vh>findBoundParagraph</vh>
 <v t="edream.110203160744.2016"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1185"><vh>findMatchingBracket</vh>
 <v t="edream.110203160744.1186"><vh>findMatchingBracket</vh></v>
 </v>
-<v t="edream.110203160744.1779" a=""><vh>getBodyLines</vh></v>
-<v t="edream.110203160744.2017" a=""><vh>indentBody</vh></v>
+<v t="edream.110203160744.1779"><vh>getBodyLines</vh></v>
+<v t="edream.110203160744.2017"><vh>indentBody</vh></v>
 <v t="edream.110203160744.1188"><vh>insertBodyTime &amp; allies</vh>
 <v t="edream.110203160744.1189"><vh>getTime</vh></v>
 </v>
-<v t="edream.110203160744.2018" a=""><vh>reformatParagraph</vh>
+<v t="edream.110203160744.2018"><vh>reformatParagraph</vh>
 <v t="edream.110203160744.2019"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
 <v t="edream.110203160744.2020"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
 <v t="edream.110203160744.2021"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
 <v t="edream.110203160744.2022"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2023" a=""><vh>updateBodyPane (handles undo)</vh></v>
+<v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1190"><vh>Edit Headline submenu</vh>
@@ -4119,7 +4105,7 @@
 <v t="edream.110403081646.1" a=""><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
 <v t="edream.110203160744.1906" a=""><vh>Insert, Delete &amp; Clone (Commands)</vh>
 <v t="edream.110203160744.1907"><vh>c.checkMoveWithParentWithWarning</vh></v>
-<v t="edream.110203160744.931" a=""><vh>c.deleteHeadline</vh></v>
+<v t="edream.110203160744.931" a=""><vh>c.deleteOutline</vh></v>
 <v t="edream.110203160744.1773"><vh>c.insertHeadline</vh></v>
 <v t="edream.110203160744.1781"><vh>c.clone</vh></v>
 <v t="edream.110203160744.1908"><vh>initAllCloneBits &amp; initAllCloneBitsInTree</vh></v>
@@ -4153,14 +4139,13 @@
 </v>
 </v>
 <v t="edream.110203160744.1235"><vh>Goto</vh>
-<v t="edream.110203160744.2927"><vh>goToNextClone</vh></v>
-<v t="edream.110203160744.2926"><vh>goToNextMarkedHeadline</vh></v>
-<v t="edream.110203160744.2925"><vh>goToNextDirtyHeadline</vh></v>
-<v t="edream.110203160744.1236" a=""><vh>goPrevVisitedNode</vh></v>
 <v t="edream.110203160744.1237" a=""><vh>goNextVisitedNode</vh></v>
+<v t="edream.110203160744.1236" a=""><vh>goPrevVisitedNode</vh></v>
 <v t="edream.110203160744.1238"><vh>goToFirstNode</vh></v>
 <v t="edream.110203160744.1239"><vh>goToLastNode</vh></v>
-<v t="edream.110203160744.1241"><vh>goToNextClone</vh></v>
+<v t="edream.110203160744.2927"><vh>goToNextClone</vh></v>
+<v t="edream.110203160744.2925"><vh>goToNextDirtyHeadline</vh></v>
+<v t="edream.110203160744.2926"><vh>goToNextMarkedHeadline</vh></v>
 <v t="edream.110203160744.1243"><vh>goToNextSibling</vh></v>
 <v t="edream.110203160744.1244"><vh>goToParent</vh></v>
 <v t="edream.110203160744.1245"><vh>goToPrevSibling</vh></v>
@@ -4203,15 +4188,16 @@
 <v t="edream.110203160744.1267"><vh>about (version number &amp; date)</vh></v>
 <v t="edream.110203160744.1268" a=""><vh>leoDocumentation</vh></v>
 <v t="edream.110203160744.1269"><vh>leoHome</vh></v>
-<v t="edream.110203160744.1270" a=""><vh>leoHelp</vh>
-<v t="edream.110203160744.1271"><vh>showProgressBar</vh>
-<v t="edream.110203160744.1272"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
 <v t="edream.110203160744.1273"><vh>leoTutorial (version number)</vh></v>
 <v t="edream.110203160744.1274" a=""><vh>leoConfig</vh></v>
 <v t="edream.111103193726"><vh>applyConfig</vh></v>
 </v>
+</v>
+<v t="edream.111103194948"><vh>Dragging</vh>
+<v t="edream.110203160744.1912"><vh>c.dragAfter</vh></v>
+<v t="edream.110203160744.1913"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
+<v t="edream.110203160744.1914"><vh>c.dragToNthChildOf</vh></v>
+<v t="edream.110203160744.1923"><vh>c.dragCloneAfter (changed in 3.11.1)</vh></v>
 </v>
 <v t="edream.110203160744.2869"><vh>Drawing Utilities</vh>
 <v t="edream.110203160744.2870"><vh>beginUpdate</vh></v>
@@ -4250,7 +4236,7 @@
 <v t="edream.110203160744.2901"><vh>canUnmarkAll</vh></v>
 </v>
 <v t="edream.110203160744.2917"><vh>Getters &amp; Setters</vh>
-<v t="edream.110203160744.2918"><vh>c.currentVnode</vh></v>
+<v t="edream.110203160744.2918"><vh>currentVnode</vh></v>
 <v t="edream.110203160744.2919"><vh>clearAllMarked</vh></v>
 <v t="edream.110203160744.2920"><vh>clearAllVisited</vh></v>
 <v t="edream.110203160744.2921"><vh>fileName</vh></v>
@@ -4265,7 +4251,7 @@
 <v t="edream.110203160744.2940"><vh>selectThreadNext</vh></v>
 <v t="edream.110203160744.2941"><vh>selectVisBack</vh></v>
 <v t="edream.110203160744.2942"><vh>selectVisNext</vh></v>
-<v t="edream.110203160744.2943"><vh>c.selectVnode (calls tree.select)</vh></v>
+<v t="edream.110203160744.2943"><vh>selectVnode (calls tree.select)</vh></v>
 <v t="edream.110203160744.2944"><vh>selectVnodeWithEditing</vh></v>
 </v>
 <v t="edream.110203160744.2945"><vh>Syntax coloring interface</vh>
@@ -4432,7 +4418,7 @@
 <v t="edream.110203160744.2999"><vh>xmlEscape</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3000" tnodeList="edream.110203160744.3000,edream.110203160744.3001,edream.110203160744.596,edream.110203160744.1576,edream.110203160744.1577,edream.110203160744.1579,edream.110203160744.1578,edream.110203160744.2114,edream.110203160744.3003,edream.110203160744.3004,edream.110203160744.1364,edream.110203160744.1365,edream.110203160744.1366,edream.110203160744.1367,edream.110203160744.998,edream.110203160744.999,edream.110203160744.1000,edream.110203160744.1368,edream.110203160744.1369,edream.110203160744.1370,edream.110203160744.1371,edream.110203160744.1372,edream.110203160744.1373,edream.110203160744.1374,edream.110203160744.1375,edream.110203160744.1376,edream.110203160744.1377,edream.110203160744.1378,edream.110203160744.1379,edream.110203160744.1380,edream.110203160744.1381,edream.110203160744.1382,edream.110203160744.1706,edream.110203160744.2150,edream.110203160744.2151,edream.110203160744.2152,edream.110203160744.1870,edream.110203160744.3008,edream.110203160744.3009,edream.110203160744.1002,edream.110203160744.2378,edream.110203160744.3010,edream.110203160744.3011,edream.110203160744.1658,edream.110203160744.3012,edream.110203160744.3013,edream.110203160744.3014,edream.110203160744.3015,edream.110203160744.979,edream.110203160744.1001,edream.110203160744.3016,edream.110203160744.3017,edream.110203160744.2379,edream.110203160744.3018,edream.110203160744.1774,edream.110203160744.3019,edream.110203160744.3021,edream.110203160744.3022,edream.110203160744.3023,edream.110203160744.3024,edream.110203160744.3025,edream.110203160744.3026,edream.110203160744.3027,edream.110203160744.3028,edream.110203160744.3029,edream.110203160744.3030,edream.110203160744.2126,edream.110203160744.1298,edream.110203160744.3031,edream.110203160744.3032,edream.110203160744.3033,edream.110203160744.3034,edream.110203160744.3035,edream.110203160744.3036,edream.110203160744.3037,edream.110203160744.2361,edream.110203160744.2363,edream.110203160744.2365,edream.110203160744.1594,edream.110203160744.1595,edream.110203160744.1596,edream.110203160744.1597,edream.110203160744.1598,edream.110203160744.1599,edream.110203160744.1297,edream.110203160744.1602,edream.110203160744.1299,edream.110203160744.2380,edream.110203160744.3045,edream.110203160744.3046,edream.110203160744.3047,edream.110203160744.3048,edream.110203160744.3049,edream.110203160744.1887,edream.110203160744.3050,edream.110203160744.1456,edream.110203160744.1973,edream.110203160744.3052,edream.110203160744.3054,edream.110203160744.3055,edream.110203160744.3056,edream.110203160744.3057,edream.110203160744.3058,edream.110203160744.3059,edream.110203160744.3060,edream.110203160744.3061,edream.110203160744.3062,edream.110203160744.3063,edream.110203160744.3064,edream.110203160744.3065,edream.110203160744.3066,edream.110203160744.3067,edream.110203160744.3068,edream.110203160744.3069,edream.110203160744.3070,edream.110203160744.3071,edream.110203160744.3072,edream.110203160744.3073,edream.110203160744.3074,edream.110203160744.3075,edream.110203160744.3077,edream.110203160744.3078,edream.110203160744.3079,edream.110203160744.3080,edream.110203160744.3081,edream.110203160744.3082,edream.110203160744.3083,edream.110203160744.3084,edream.110203160744.3085,edream.110203160744.3086,edream.110203160744.3087,edream.110203160744.3088,edream.110203160744.3089,edream.110203160744.3090,edream.110203160744.3091,edream.110203160744.3092,edream.110203160744.3093,edream.110203160744.3094,edream.110203160744.3095,edream.110203160744.3096,edream.110203160744.3097,edream.110203160744.2149,edream.110603105919.1,edream.110203160744.1480,edream.110203160744.1481,edream.110203160744.1482,edream.110203160744.1483,edream.110203160744.1484,edream.110203160744.1485,edream.110203160744.1486,edream.110203160744.3099,edream.110203160744.3100,edream.110203160744.3101,edream.110203160744.3102,edream.110203160744.3103,edream.110203160744.3104,edream.110203160744.3105,edream.110203160744.3106"><vh>@file leoGlobals.py</vh>
+<v t="edream.110203160744.3000" tnodeList="edream.110203160744.3000,edream.110203160744.3001,edream.110203160744.596,edream.110203160744.1576,edream.110203160744.1577,edream.110203160744.1579,edream.110203160744.1578,edream.110203160744.2114,edream.110203160744.3003,edream.110203160744.3004,edream.110203160744.1364,edream.110203160744.1365,edream.110203160744.1366,edream.110203160744.1367,edream.110203160744.998,edream.110203160744.999,edream.110203160744.1000,edream.110203160744.1368,edream.110203160744.1369,edream.110203160744.1370,edream.110203160744.1371,edream.110203160744.1372,edream.110203160744.1373,edream.110203160744.1374,edream.110203160744.1375,edream.110203160744.1376,edream.110203160744.1377,edream.110203160744.1378,edream.110203160744.1379,edream.110203160744.1380,edream.110203160744.1381,edream.110203160744.1382,edream.110203160744.1706,edream.110203160744.2150,edream.110203160744.2151,edream.110203160744.2152,edream.110203160744.1870,edream.110203160744.3025,edream.110203160744.3026,edream.110203160744.3027,edream.110203160744.3028,edream.110203160744.3029,edream.110203160744.3030,edream.110203160744.2126,edream.110203160744.3034,edream.110203160744.3035,edream.110203160744.3036,edream.110203160744.1298,edream.110203160744.3008,edream.110203160744.3009,edream.110203160744.1002,edream.110203160744.2378,edream.110203160744.3010,edream.110203160744.3011,edream.110203160744.1658,edream.110203160744.3012,edream.110203160744.3013,edream.110203160744.3014,edream.110203160744.3015,edream.110203160744.979,edream.110203160744.1001,edream.110203160744.3031,edream.110203160744.3032,edream.110203160744.3033,edream.110203160744.3016,edream.110203160744.3017,edream.110203160744.2379,edream.110203160744.3018,edream.110203160744.1774,edream.110203160744.3019,edream.110203160744.3021,edream.110203160744.3022,edream.110203160744.3023,edream.110203160744.3024,edream.110203160744.3037,edream.110203160744.2361,edream.110203160744.2363,edream.110203160744.2365,edream.110203160744.1594,edream.110203160744.1595,edream.110203160744.1596,edream.110203160744.1597,edream.110203160744.1598,edream.110203160744.1599,edream.110203160744.1297,edream.110203160744.1602,edream.110203160744.1299,edream.110203160744.2380,edream.110203160744.3045,edream.110203160744.3046,edream.110203160744.3047,edream.110203160744.3048,edream.110203160744.3049,edream.110203160744.1887,edream.110203160744.3050,edream.110203160744.1456,edream.110203160744.1973,edream.110203160744.3052,edream.110203160744.3054,edream.110203160744.3055,edream.110203160744.3056,edream.110203160744.3057,edream.110203160744.3058,edream.110203160744.3059,edream.110203160744.3060,edream.110203160744.3061,edream.110203160744.3062,edream.110203160744.3063,edream.110203160744.3064,edream.110203160744.3065,edream.110203160744.3066,edream.110203160744.3067,edream.110203160744.3068,edream.110203160744.3069,edream.110203160744.3070,edream.110203160744.3071,edream.110203160744.3072,edream.110203160744.3073,edream.110203160744.3074,edream.110203160744.3075,edream.110203160744.3077,edream.110203160744.3078,edream.110203160744.3079,edream.110203160744.3080,edream.110203160744.3081,edream.110203160744.3082,edream.110203160744.3083,edream.110203160744.3084,edream.110203160744.3085,edream.110203160744.3086,edream.110203160744.3087,edream.110203160744.3088,edream.110203160744.3089,edream.110203160744.3090,edream.110203160744.3091,edream.110203160744.3092,edream.110203160744.3093,edream.110203160744.3094,edream.110203160744.3095,edream.110203160744.3096,edream.110203160744.3097,edream.110203160744.2149,edream.110603105919.1,edream.110203160744.1480,edream.110203160744.1481,edream.110203160744.1482,edream.110203160744.1483,edream.110203160744.1484,edream.110203160744.1485,edream.110203160744.1486,edream.110203160744.3099,edream.110203160744.3100,edream.110203160744.3101,edream.110203160744.3102,edream.110203160744.3103,edream.110203160744.3104,edream.110203160744.3105,edream.110203160744.3106"><vh>@file leoGlobals.py</vh>
 <v t="edream.110203160744.3001"><vh>&lt;&lt; define general constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.3002"><vh>Checking Leo Files...</vh>
 <v t="edream.110203160744.596" a=""><vh>createTopologyList</vh></v>
@@ -4476,13 +4462,26 @@
 </v>
 </v>
 <v t="edream.110203160744.1706" a=""><vh>openWithFileName (leoGlobals)</vh></v>
-<v t="edream.110203160744.2150" a=""><vh>wrap_lines</vh>
+<v t="edream.110203160744.2150"><vh>wrap_lines</vh>
 <v t="edream.110203160744.2151"><vh>&lt;&lt; place blank and word on the present line &gt;&gt;</vh></v>
 <v t="edream.110203160744.2152"><vh>&lt;&lt; place word on a new line &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.1870"><vh>computeWindowTitle</vh></v>
 <v t="edream.110203160744.3006"><vh>Debugging, Dumping, Timing, Tracing &amp; Sherlock</vh>
+<v t="edream.110203160744.3025"><vh>alert</vh></v>
+<v t="edream.110203160744.3026"><vh>angleBrackets &amp; virtual_event_name</vh></v>
+<v t="edream.110203160744.3027"><vh>callerName</vh></v>
+<v t="edream.111703075055"><vh>Dumps</vh>
+<v t="edream.110203160744.3028"><vh>dump</vh></v>
+<v t="edream.110203160744.3029"><vh>es_error</vh></v>
+<v t="edream.110203160744.3030"><vh>es_event_exception</vh></v>
+<v t="edream.110203160744.2126"><vh>es_exception</vh></v>
+<v t="edream.110203160744.3034"><vh>printBindings</vh></v>
+<v t="edream.110203160744.3035"><vh>printGlobals</vh></v>
+<v t="edream.110203160744.3036"><vh>printLeoModules</vh></v>
+</v>
+<v t="edream.110203160744.1298" a=""><vh>file/module/plugin_date</vh></v>
 <v t="edream.110203160744.3007"><vh>Files &amp; Directories...</vh>
 <v t="edream.110203160744.3008"><vh>create_temp_name</vh></v>
 <v t="edream.110203160744.3009"><vh>ensure_extension</vh></v>
@@ -4499,6 +4498,9 @@
 <v t="edream.110203160744.979" a=""><vh>update_file_if_changed</vh></v>
 <v t="edream.110203160744.1001" a=""><vh>utils_rename</vh></v>
 </v>
+<v t="edream.110203160744.3031"><vh>funcToMethod</vh></v>
+<v t="edream.110203160744.3032"><vh>get_line &amp; get_line_after</vh></v>
+<v t="edream.110203160744.3033"><vh>pause</vh></v>
 <v t="edream.110203160744.3016"><vh>Sherlock...</vh>
 <v t="edream.110203160744.3017"><vh>init_sherlock</vh></v>
 <v t="edream.110203160744.2379" a=""><vh>get_Sherlock_args</vh></v>
@@ -4512,20 +4514,6 @@
 <v t="edream.110203160744.3023"><vh>stat</vh></v>
 </v>
 <v t="edream.110203160744.3024"><vh>Timing</vh></v>
-<v t="edream.110203160744.3025"><vh>alert</vh></v>
-<v t="edream.110203160744.3026"><vh>angleBrackets &amp; virtual_event_name</vh></v>
-<v t="edream.110203160744.3027"><vh>callerName</vh></v>
-<v t="edream.110203160744.3028"><vh>dump</vh></v>
-<v t="edream.110203160744.3029"><vh>es_error</vh></v>
-<v t="edream.110203160744.3030"><vh>es_event_exception</vh></v>
-<v t="edream.110203160744.2126"><vh>es_exception</vh></v>
-<v t="edream.110203160744.1298" a=""><vh>file/module/plugin_date</vh></v>
-<v t="edream.110203160744.3031"><vh>funcToMethod</vh></v>
-<v t="edream.110203160744.3032"><vh>get_line &amp; get_line_after</vh></v>
-<v t="edream.110203160744.3033"><vh>pause</vh></v>
-<v t="edream.110203160744.3034"><vh>printBindings</vh></v>
-<v t="edream.110203160744.3035"><vh>printGlobals</vh></v>
-<v t="edream.110203160744.3036"><vh>printLeoModules</vh></v>
 </v>
 <v t="edream.110203160744.3037"><vh>executeScript</vh></v>
 <v t="edream.110203160744.2361" a=""><vh>File utils (unicode filenames)  **** Rename to os_path_xxx</vh>
@@ -4611,7 +4599,7 @@
 <v t="edream.110203160744.3096"><vh>skip_to_char</vh></v>
 <v t="edream.110203160744.3097"><vh>skip_ws, skip_ws_and_nl</vh></v>
 </v>
-<v t="edream.110203160744.2149" a=""><vh>splitLines &amp; joinLines</vh></v>
+<v t="edream.110203160744.2149"><vh>splitLines &amp; joinLines</vh></v>
 </v>
 <v t="edream.110603105919"><vh>Script utils...</vh>
 <v t="edream.110603105919.1"><vh>initScriptFind</vh></v>
@@ -5397,23 +5385,11 @@
 <v t="edream.110203160744.2192"><vh>fontPanel.__init__</vh></v>
 <v t="edream.111203092853"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="edream.110703175037.1" tnodeList="edream.110703175037.1"><vh>@file leoKeys.py</vh></v>
-<v t="edream.110203160744.3590" tnodeList="edream.110203160744.3590,edream.111203082810,edream.110203160744.2221,edream.110203160744.1823,edream.110203160744.1824,edream.111203090040,edream.111203075252,edream.111203090040.1"><vh>@file leoPrefs.py</vh>
-<v t="edream.111203082810"><vh>&lt;&lt; define leoPrefs constants &gt;&gt;</vh></v>
-<v t="edream.111203090611"><vh>Birth</vh>
-<v t="edream.110203160744.2221"><vh>prefs.__init__</vh></v>
-<v t="edream.110203160744.1823"><vh>prefs.init</vh>
-<v t="edream.110203160744.1824"><vh>&lt;&lt; remember values for revert &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.111203090040"><vh>restoreOptions</vh></v>
-<v t="edream.111203075252"><vh>Must be overridden in subclasses</vh></v>
-<v t="edream.111203090040.1"><vh>printIvars</vh></v>
-</v>
-<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.110203160744.2278,edream.110203160744.2280,edream.111003091448,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546"><vh>@file leoFrame.py</vh>
+<v t="edream.110203160744.3540" tnodeList="edream.110203160744.3540,edream.110203160744.2278,edream.110203160744.2280,edream.111003091448,edream.111603115116,edream.110203160744.3541,edream.110903190535,edream.111603110756.2,edream.110203160744.2268,edream.111603110756,edream.110203160744.1592,edream.110203160744.1593,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.2323,edream.110203160744.2324,edream.110203160744.2325,edream.110203160744.2326,edream.110203160744.2327,edream.110203160744.2328,edream.110203160744.2329,edream.110203160744.2330,edream.110203160744.2331,edream.110203160744.3546,edream.111603161937,edream.111603161937.2,edream.111603161937.3,edream.111603121021,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.3705,edream.110203160744.3706,edream.111603115820,edream.111603173312,edream.111603161937.4"><vh>@file leoFrame.py</vh>
 <v t="edream.110203160744.2278"><vh>class leoBody</vh>
 <v t="edream.110203160744.2280"><vh>leoBody.__init__</vh></v>
 <v t="edream.111003091448"><vh>Must be overriden in subclasses</vh></v>
+<v t="edream.111603115116"><vh>Coloring </vh></v>
 </v>
 <v t="edream.110203160744.3541"><vh>class leoFrame</vh>
 <v t="edream.110903190535"><vh> leoFrame.__init__</vh></v>
@@ -5422,6 +5398,9 @@
 <v t="edream.111603110756"><vh>oops</vh></v>
 <v t="edream.110203160744.1592"><vh>promptForSave</vh>
 <v t="edream.110203160744.1593"><vh>&lt;&lt; Put up a file save dialog to set mFileName &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1357" a=""><vh>scanForTabWidth</vh>
+<v t="edream.110203160744.1358"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.2323"><vh>class leoLog</vh>
@@ -5434,7 +5413,23 @@
 <v t="edream.110203160744.2330"><vh>leoLog.onActivateLog</vh></v>
 <v t="edream.110203160744.2331"><vh>leoLog.put &amp; putnl</vh></v>
 </v>
-<v t="edream.110203160744.3546"><vh>class leoTree</vh></v>
+<v t="edream.110203160744.3546"><vh>class leoTree</vh>
+<v t="edream.111603161937"><vh>  tree.__init__</vh></v>
+<v t="edream.111603161937.1"><vh> Must be defined in subclasses</vh>
+<v t="edream.111603161937.2"><vh>Drawing</vh></v>
+<v t="edream.111603161937.3"><vh>Edit label</vh></v>
+<v t="edream.111603121021"><vh>Fonts</vh></v>
+<v t="edream.111603120940.1"><vh>Notifications</vh></v>
+<v t="edream.111603115116.5"><vh>Scrolling</vh></v>
+<v t="edream.111603115820.1"><vh>Selecting</vh></v>
+<v t="edream.111603120940"><vh>Tree operations</vh></v>
+</v>
+<v t="edream.110203160744.3705"><vh>beginUpdate</vh></v>
+<v t="edream.110203160744.3706"><vh>endUpdate</vh></v>
+<v t="edream.111603115820"><vh>Getters</vh></v>
+<v t="edream.111603173312"><vh>Setters</vh></v>
+<v t="edream.111603161937.4"><vh>oops</vh></v>
+</v>
 </v>
 <v t="edream.110203160744.3526" tnodeList="edream.110203160744.3526,edream.110203160744.1846,edream.110203160744.1847,edream.111303090743,edream.110203160744.3532,edream.111303090743.1,edream.111303090743.2,edream.111303090743.3,edream.110203160744.3539,edream.111303060636,edream.111303090124,edream.110203160744.2392,edream.110203160744.3534,edream.110203160744.3536,edream.110203160744.3538,edream.110203160744.2401,edream.111303082442,edream.110203160744.2398,edream.110203160744.3529,edream.110203160744.3528,edream.110203160744.3530"><vh>@file leoGui.py</vh>
 <v t="edream.110203160744.3535"><vh>app.gui Birth &amp; death</vh>
@@ -5464,6 +5459,7 @@
 <v t="edream.110203160744.3528"><vh>leoGui.__init__</vh></v>
 <v t="edream.110203160744.3530"><vh>oops</vh></v>
 </v>
+<v t="edream.110703175037.1" tnodeList="edream.110703175037.1"><vh>@file leoKeys.py</vh></v>
 <v t="edream.110703175037" tnodeList="edream.110703175037,edream.110903191647,edream.110903192602,edream.110903192602.1,edream.110903195011,edream.110903195011.1,edream.110903195011.2,edream.110903195011.3,edream.110903195011.4,edream.110903193858,edream.110903195011.5,edream.110903195011.6,edream.110903195011.7,edream.110903195303,edream.110903195303.1,edream.110903195303.2,edream.110903195303.3,edream.110903201536,edream.110903200010,edream.110903201212,edream.110903201212.1,edream.110903201212.2,edream.110903201212.3,edream.110903201212.4,edream.110903201212.5,edream.110903201212.6,edream.111603110101,edream.110203160744.1290,edream.110203160744.1291,edream.110203160744.1292,edream.110203160744.1293,edream.110203160744.1294,edream.110203160744.2640,edream.110203160744.3041,edream.110203160744.1052,edream.110203160744.1056,edream.110203160744.1053,edream.110203160744.1054,edream.110203160744.1055,edream.110203160744.1057,edream.110203160744.1276,edream.110203160744.1277,edream.110203160744.1278,edream.110203160744.1279,edream.110203160744.1280,edream.110203160744.1281,edream.110203160744.1282,edream.110203160744.1283,edream.110903214830,edream.110203160744.1065,edream.110203160744.1067,edream.110203160744.1068,edream.110203160744.1069,edream.110203160744.1070,edream.110203160744.1071,edream.110203160744.1072,edream.110203160744.1059,edream.110903194258,edream.110903194258.1,edream.110903194258.2,edream.110203160744.1073,edream.110203160744.1075,edream.110203160744.1076,edream.110203160744.1077,edream.110203160744.1078,edream.110203160744.1079,edream.110203160744.1080,edream.110203160744.1284,edream.110203160744.1111,edream.110203160744.1286,edream.110203160744.1287,edream.110203160744.1082,edream.111603110101.1,edream.111603110101.2"><vh>@file leoMenu.py</vh>
 <v t="edream.110903191647"><vh> leoMenu.__init__</vh></v>
 <v t="edream.110903192602"><vh>defineMenuTables</vh>
@@ -5555,6 +5551,18 @@
 <v t="edream.111603110101.1"><vh>9 Routines with Tk spellings</vh></v>
 <v t="edream.111603110101.2"><vh>7 Routines with new spellings</vh></v>
 </v>
+</v>
+<v t="edream.110203160744.3590" tnodeList="edream.110203160744.3590,edream.111203082810,edream.110203160744.2221,edream.110203160744.1823,edream.110203160744.1824,edream.111203090040,edream.111203075252,edream.111203090040.1"><vh>@file leoPrefs.py</vh>
+<v t="edream.111203082810"><vh>&lt;&lt; define leoPrefs constants &gt;&gt;</vh></v>
+<v t="edream.111203090611"><vh>Birth</vh>
+<v t="edream.110203160744.2221"><vh>prefs.__init__</vh></v>
+<v t="edream.110203160744.1823"><vh>prefs.init</vh>
+<v t="edream.110203160744.1824"><vh>&lt;&lt; remember values for revert &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.111203090040"><vh>restoreOptions</vh></v>
+<v t="edream.111203075252"><vh>Must be overridden in subclasses</vh></v>
+<v t="edream.111203090040.1"><vh>printIvars</vh></v>
 </v>
 </v>
 <v t="edream.110203160744.3547"><vh>Gui Tkinter classes</vh>
@@ -5724,7 +5732,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2275,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.2266,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111103193348.1,edream.111303101154,edream.110203160744.1697,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.736,edream.110203160744.1850,edream.111603120110,edream.111603115116,edream.111603115116.1,edream.111603115116.2,edream.111603121021,edream.111603115820,edream.111603120940.1,edream.111603115116.5,edream.111603115820.1,edream.111603120940,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
+<v t="edream.110203160744.3681" tnodeList="edream.110203160744.3681,edream.110203160744.2260,edream.110203160744.1693,edream.110203160744.1694,edream.110203160744.1875,edream.110203160744.1876,edream.110203160744.1880,edream.110203160744.1881,edream.110203160744.1882,edream.110203160744.1883,edream.110203160744.1884,edream.110203160744.2270,edream.110203160744.2271,edream.110203160744.2272,edream.110203160744.1523,edream.110203160744.2273,edream.110203160744.2274,edream.110203160744.2275,edream.110203160744.2276,edream.110203160744.2277,edream.110203160744.1525,edream.110203160744.1526,edream.110203160744.1527,edream.110203160744.1528,edream.110203160744.1529,edream.110203160744.1530,edream.110203160744.1531,edream.110203160744.1532,edream.110203160744.1533,edream.110203160744.1534,edream.110203160744.1535,edream.110203160744.1877,edream.110203160744.1878,edream.110203160744.1591,edream.110203160744.1879,edream.110203160744.2262,edream.110203160744.2263,edream.110203160744.2264,edream.110203160744.1629,edream.110203160744.2265,edream.110203160744.2266,edream.110203160744.1520,edream.110203160744.2267,edream.110203160744.1683,edream.110203160744.1684,edream.110203160744.1685,edream.110203160744.1686,edream.110203160744.1687,edream.110203160744.1688,edream.110203160744.1689,edream.110203160744.1690,edream.110203160744.1691,edream.110203160744.1147,edream.110203160744.1148,edream.110203160744.1149,edream.111103193348.1,edream.111303101154,edream.110203160744.1697,edream.111303101634,edream.110203160744.1256,edream.110203160744.1253,edream.110203160744.1258,edream.110203160744.1257,edream.110203160744.1255,edream.110203160744.1270,edream.110203160744.1271,edream.110203160744.1272,edream.110203160744.736,edream.110203160744.1850,edream.110203160744.2284,edream.110203160744.2286,edream.110203160744.2287,edream.110203160744.2288,edream.110203160744.2289,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.3710,edream.111003083003,edream.111003083003.1,edream.111003075626,edream.111003102135,edream.110203160744.2297,edream.110203160744.2305,edream.110203160744.2306,edream.111103092404,edream.111103053839,edream.110203160744.2308,edream.110203160744.2309,edream.110203160744.2310,edream.110203160744.2312,edream.110203160744.333,edream.111103063445,edream.110203160744.2317,edream.111103082046,edream.111003102120,edream.111103084151.1,edream.110203160744.2314,edream.110203160744.2315,edream.110203160744.2316,edream.110203160744.2319,edream.110203160744.2320,edream.110203160744.2299,edream.110203160744.2300,edream.111103093034,edream.110203160744.2148,edream.110203160744.2301,edream.110203160744.2302,edream.110203160744.2303,edream.111103085737.2,edream.111103065437,edream.111103070349,edream.110203160744.2304,edream.110203160744.2321,edream.110203160744.2332,edream.110203160744.2333,edream.110203160744.2334,edream.110203160744.2335,edream.110203160744.2336,edream.110203160744.2337,edream.110203160744.2338,edream.110203160744.1455,edream.110203160744.2339"><vh>@file leoTkinterFrame.py</vh>
 <v t="edream.110203160744.2260"><vh>class leoTkinterFrame</vh>
 <v t="edream.110203160744.1874"><vh> frame.Birth &amp; Death</vh>
 <v t="edream.110203160744.1693" a=""><vh>f.__init__</vh>
@@ -5775,14 +5783,14 @@
 </v>
 </v>
 <v t="edream.110203160744.2261"><vh>Configuration</vh>
-<v t="edream.110203160744.2262"><vh>f.configureBar</vh></v>
-<v t="edream.110203160744.2263"><vh>f.configureBarsFromConfig</vh></v>
-<v t="edream.110203160744.2264"><vh>f.reconfigureFromConfig</vh></v>
-<v t="edream.110203160744.1629" a=""><vh>f.setInitialWindowGeometry</vh></v>
-<v t="edream.110203160744.2265"><vh>f.setTabWidth</vh></v>
-<v t="edream.110203160744.2266"><vh>f.setTreeColorsFromConfig</vh></v>
-<v t="edream.110203160744.1520" a=""><vh>f.setWrap</vh></v>
-<v t="edream.110203160744.2267"><vh>f.reconfigurePanes (use config bar_width)</vh></v>
+<v t="edream.110203160744.2262"><vh>configureBar</vh></v>
+<v t="edream.110203160744.2263"><vh>configureBarsFromConfig</vh></v>
+<v t="edream.110203160744.2264"><vh>reconfigureFromConfig</vh></v>
+<v t="edream.110203160744.1629" a=""><vh>setInitialWindowGeometry</vh></v>
+<v t="edream.110203160744.2265"><vh>setTabWidth</vh></v>
+<v t="edream.110203160744.2266"><vh>setTreeColorsFromConfig</vh></v>
+<v t="edream.110203160744.1520" a=""><vh>setWrap</vh></v>
+<v t="edream.110203160744.2267"><vh>reconfigurePanes (use config bar_width)</vh></v>
 </v>
 <v t="edream.110203160744.1682"><vh>Event handlers (Frame)</vh>
 <v t="edream.110203160744.1683"><vh>frame.OnCloseLeoEvent</vh></v>
@@ -5804,9 +5812,9 @@
 </v>
 <v t="edream.111103193348.1"><vh>insertHeadlineTime</vh></v>
 <v t="edream.111303101154"><vh>endEditLabelCommand</vh></v>
-<v t="edream.110203160744.1697"><vh>abortEditLabelCommand</vh></v>
+<v t="edream.110203160744.1697" a="M"><vh>abortEditLabelCommand</vh></v>
 </v>
-<v t="edream.111103192953"><vh>Window Menu</vh>
+<v t="edream.111103192953"><vh>Window Menu...</vh>
 <v t="edream.111303101634"><vh>toggleActivePane</vh></v>
 <v t="edream.110203160744.1256"><vh>cascade</vh></v>
 <v t="edream.110203160744.1253"><vh>equalSizedPanes</vh></v>
@@ -5814,20 +5822,16 @@
 <v t="edream.110203160744.1257"><vh>minimizeAll</vh></v>
 <v t="edream.110203160744.1255"><vh>toggleSplitDirection</vh></v>
 </v>
+<v t="edream.111703095226"><vh>Help Menu...</vh>
+<v t="edream.110203160744.1270" a=""><vh>leoHelp</vh>
+<v t="edream.110203160744.1271"><vh>showProgressBar</vh>
+<v t="edream.110203160744.1272"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
 </v>
 <v t="edream.110203160744.736" a=""><vh>Scrolling callbacks (frame)</vh></v>
 <v t="edream.110203160744.1850"><vh>Tk bindings...</vh></v>
-<v t="edream.111603120110" a="M"><vh>Redirection routines...</vh>
-<v t="edream.111603115116"><vh>Coloring </vh></v>
-<v t="edream.111603115116.1"><vh>Drawing</vh></v>
-<v t="edream.111603115116.2"><vh>Editing</vh></v>
-<v t="edream.111603121021"><vh>Fonts</vh></v>
-<v t="edream.111603115820"><vh>Getters &amp; setters</vh></v>
-<v t="edream.111603120940.1"><vh>Notifications</vh></v>
-<v t="edream.111603115116.5"><vh>Scrolling</vh></v>
-<v t="edream.111603115820.1"><vh>Selecting</vh></v>
-<v t="edream.111603120940"><vh>Tree operations</vh></v>
-</v>
 </v>
 <v t="edream.110203160744.2284"><vh>class leoTkinterBody</vh>
 <v t="edream.110203160744.2285"><vh> Birth &amp; death</vh>
@@ -5836,6 +5840,21 @@
 <v t="edream.110203160744.2288"><vh>tkBody.createControl</vh></v>
 <v t="edream.110203160744.2289"><vh>tkBody.setBodyFontFromConfig</vh></v>
 </v>
+<v t="edream.110203160744.1301" a=""><vh>body key handlers</vh>
+<v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
+<v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="edream.110203160744.1305"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="edream.110203160744.1306"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="edream.110203160744.1307"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1310"><vh>onBodyChanged (called from core)</vh></v>
+<v t="edream.110203160744.1311"><vh>onBodyKey</vh></v>
+<v t="edream.110203160744.1312" a=""><vh>onBodyWillChange</vh></v>
+</v>
+<v t="edream.110203160744.3710"><vh>forceRecolor</vh></v>
 <v t="edream.111003083003"><vh>Tk bindings (leoTkinterBody)</vh>
 <v t="edream.111003083003.1"><vh>Bounding box (Tk spelling)</vh></v>
 <v t="edream.111003075626"><vh>Color tags (Tk spelling)</vh></v>
@@ -5871,9 +5890,9 @@
 <v t="edream.111103085737"><vh>get...</vh>
 <v t="edream.110203160744.2300"><vh>getAllText</vh></v>
 <v t="edream.111103093034"><vh>getCharAtIndex</vh></v>
-<v t="edream.110203160744.2148" a=""><vh>getInsertLines (leoTkinterBody)</vh></v>
+<v t="edream.110203160744.2148"><vh>getInsertLines</vh></v>
 <v t="edream.110203160744.2301"><vh>getSelectionAreas</vh></v>
-<v t="edream.110203160744.2302" a=""><vh>getSelectionLines</vh></v>
+<v t="edream.110203160744.2302"><vh>getSelectionLines</vh></v>
 <v t="edream.110203160744.2303"><vh>getTextRange</vh></v>
 </v>
 <v t="edream.111103085737.1"><vh>Insert...</vh>
@@ -5881,7 +5900,7 @@
 <v t="edream.111103065437"><vh>insertAtEnd</vh></v>
 <v t="edream.111103070349"><vh>insertAtStartOfLine</vh></v>
 </v>
-<v t="edream.110203160744.2304" a=""><vh>setSelectionAreas</vh></v>
+<v t="edream.110203160744.2304"><vh>setSelectionAreas</vh></v>
 </v>
 <v t="edream.110203160744.2321"><vh>Visibility &amp; scrolling</vh></v>
 </v>
@@ -5994,7 +6013,7 @@
 <v t="edream.110203160744.1058"><vh>createMenuBar</vh></v>
 <v t="edream.110203160744.1285"><vh>createOpenWithMenuFromTable</vh></v>
 <v t="edream.110903212244"><vh>defineMenuCallback</vh></v>
-<v t="edream.111603110101.4"><vh>defineMenuCallback</vh></v>
+<v t="edream.111603110101.4"><vh>defineOpenWithMenuCallback</vh></v>
 <v t="edream.111303163043.2"><vh>disableMenu</vh></v>
 <v t="edream.111303163043.1"><vh>enableMenu</vh></v>
 <v t="edream.111303163043.3"><vh>setMenuLabel</vh></v>
@@ -6023,9 +6042,9 @@
 <v t="edream.110203160744.1972"><vh>set_lang</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3700" tnodeList="edream.110203160744.3700,edream.110203160744.3701,edream.110203160744.2461,edream.110203160744.3702,edream.110203160744.755,edream.110203160744.1726,edream.110203160744.1727,edream.110203160744.1728,edream.110203160744.1729,edream.110203160744.1730,edream.110203160744.1731,edream.110203160744.1732,edream.110203160744.1733,edream.110203160744.1734,edream.110203160744.1735,edream.110203160744.1736,edream.110203160744.1737,edream.110203160744.1738,edream.110203160744.1739,edream.110203160744.3704,edream.110203160744.3705,edream.110203160744.738,edream.110203160744.739,edream.110203160744.740,edream.110203160744.741,edream.110203160744.750,edream.110203160744.751,edream.110203160744.752,edream.110203160744.753,edream.110203160744.754,edream.110203160744.742,edream.110203160744.743,edream.110203160744.744,edream.110203160744.745,edream.110403082224,edream.110203160744.746,edream.110203160744.747,edream.110203160744.3706,edream.110203160744.3707,edream.110203160744.748,edream.110203160744.3708,edream.110203160744.3709,edream.110203160744.3710,edream.110203160744.3711,edream.110203160744.3712,edream.110203160744.756,edream.110203160744.3713,edream.110203160744.1930,edream.110203160744.3714,edream.110203160744.1740,edream.110203160744.1741,edream.110203160744.1742,edream.110203160744.1743,edream.110203160744.1692,edream.110203160744.1744,edream.110203160744.1301,edream.110203160744.1302,edream.110203160744.1303,edream.110203160744.1304,edream.110203160744.1305,edream.110203160744.1306,edream.110203160744.1307,edream.110203160744.1308,edream.110203160744.1309,edream.110203160744.1310,edream.110203160744.1311,edream.110203160744.1312,edream.110203160744.1745,edream.110203160744.1746,edream.110203160744.1747,edream.110203160744.1748,edream.110203160744.1749,edream.110203160744.1750,edream.110203160744.1751,edream.110203160744.1313,edream.110203160744.1314,edream.110203160744.1315,edream.110203160744.1316,edream.110203160744.1317,edream.110203160744.1318,edream.110203160744.1319,edream.110203160744.1320,edream.110203160744.1321,edream.110203160744.1752,edream.110203160744.1753,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.110203160744.1673,edream.110203160744.1674,edream.110203160744.1675,edream.110203160744.1676,edream.110203160744.1677,edream.110203160744.1678,edream.110203160744.1679,edream.110203160744.765,edream.110203160744.766,edream.110203160744.3716,edream.110203160744.768,edream.110203160744.767,edream.110203160744.769,edream.110203160744.1698,edream.110203160744.1699,edream.110203160744.1700,edream.110203160744.1701,edream.110203160744.1357,edream.110203160744.1358,edream.110203160744.757,edream.110203160744.758,edream.110203160744.759,edream.110203160744.760,edream.110203160744.761,edream.110203160744.762,edream.110203160744.763,edream.110203160744.1702,edream.110203160744.1703,edream.110203160744.1704,edream.110203160744.1705,edream.110203160744.879"><vh>@file leoTkinterTree.py</vh>
+<v t="edream.110203160744.3700" tnodeList="edream.110203160744.3700,edream.110203160744.3701,edream.110203160744.2461,edream.110203160744.3702,edream.110203160744.755,edream.110203160744.1726,edream.110203160744.1727,edream.110203160744.1728,edream.110203160744.1729,edream.110203160744.1730,edream.110203160744.1731,edream.110203160744.1732,edream.110203160744.1733,edream.110203160744.1734,edream.110203160744.1735,edream.110203160744.1736,edream.110203160744.1737,edream.110203160744.1738,edream.110203160744.1739,edream.110203160744.750,edream.110203160744.751,edream.110203160744.752,edream.110203160744.753,edream.110203160744.754,edream.110203160744.3704,edream.110203160744.738,edream.110203160744.739,edream.110203160744.740,edream.110203160744.741,edream.110203160744.742,edream.110203160744.743,edream.110203160744.744,edream.110203160744.745,edream.110403082224,edream.110203160744.746,edream.110203160744.747,edream.110203160744.748,edream.110203160744.3708,edream.110203160744.3712,edream.110203160744.756,edream.110203160744.3713,edream.110203160744.3714,edream.110203160744.3711,edream.110203160744.3707,edream.110203160744.3709,edream.110203160744.1740,edream.110203160744.1741,edream.110203160744.1742,edream.110203160744.1743,edream.110203160744.1692,edream.110203160744.1744,edream.110203160744.1745,edream.110203160744.1746,edream.110203160744.1747,edream.110203160744.1748,edream.110203160744.1749,edream.110203160744.1750,edream.110203160744.1751,edream.110203160744.1313,edream.110203160744.1314,edream.110203160744.1315,edream.110203160744.1316,edream.110203160744.1317,edream.110203160744.1318,edream.110203160744.1319,edream.110203160744.1320,edream.110203160744.1321,edream.110203160744.1752,edream.110203160744.1753,edream.110203160744.1754,edream.110203160744.1755,edream.110203160744.1756,edream.110203160744.1757,edream.110203160744.1673,edream.110203160744.1674,edream.110203160744.1675,edream.110203160744.1676,edream.110203160744.1677,edream.110203160744.1678,edream.110203160744.1679,edream.110203160744.765,edream.110203160744.766,edream.110203160744.3716,edream.110203160744.768,edream.110203160744.767,edream.110203160744.769,edream.110203160744.1698,edream.110203160744.1699,edream.110203160744.1700,edream.110203160744.1701,edream.110203160744.757,edream.110203160744.758,edream.110203160744.759,edream.110203160744.760,edream.110203160744.761,edream.110203160744.762,edream.110203160744.763,edream.110203160744.1702,edream.110203160744.1703,edream.110203160744.1704,edream.110203160744.1705,edream.110203160744.879"><vh>@file leoTkinterTree.py</vh>
 <v t="edream.110203160744.3701"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
-<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt;</vh></v>
+<v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing and events &gt;&gt; (revise)</vh></v>
 <v t="edream.110203160744.3702"><vh>&lt;&lt; drawing constants &gt;&gt;</vh></v>
 <v t="edream.110203160744.1725"><vh>tree.Birth &amp; death</vh>
 <v t="edream.110203160744.755" a=""><vh>tree.__init__</vh></v>
@@ -6046,21 +6065,20 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3703"><vh>Drawing</vh>
-<v t="edream.110203160744.3704"><vh>About drawing and updating</vh></v>
-<v t="edream.110203160744.3705"><vh>beginUpdate</vh></v>
-<v t="edream.110203160744.738" a=""><vh>drawBox (tag_bind)</vh>
-<v t="edream.110203160744.739"><vh>&lt;&lt; define onBoxClickCallback &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.740" a=""><vh>drawIcon (tag_bind)</vh>
-<v t="edream.110203160744.741"><vh>&lt;&lt; define icon click callbacks &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.749" a=""><vh>Drawing routines (tree)...</vh>
+<v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
 <v t="edream.110203160744.750"><vh>redraw</vh></v>
 <v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
 <v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
+</v>
+<v t="edream.110203160744.3703"><vh>Drawing</vh>
+<v t="edream.110203160744.3704"><vh>About drawing and updating</vh></v>
+<v t="edream.110203160744.738" a=""><vh>drawBox (tag_bind)</vh>
+<v t="edream.110203160744.739"><vh>&lt;&lt; define onBoxClickCallback &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.740" a=""><vh>drawIcon (tag_bind)</vh>
+<v t="edream.110203160744.741"><vh>&lt;&lt; define icon click callbacks &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.742" a=""><vh>drawNode &amp; force_draw_node</vh></v>
 <v t="edream.110203160744.743" a=""><vh>drawText (bind)</vh>
@@ -6071,18 +6089,17 @@
 <v t="edream.110203160744.746" a=""><vh>drawTree</vh>
 <v t="edream.110203160744.747"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.3706"><vh>endUpdate</vh></v>
-<v t="edream.110203160744.3707"><vh>headWidth</vh></v>
 <v t="edream.110203160744.748" a=""><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="edream.110203160744.3708"><vh>lastVisible</vh></v>
-<v t="edream.110203160744.3709"><vh>setLineHeight</vh></v>
-<v t="edream.110203160744.3710"><vh>tree.forceRecolor</vh></v>
-<v t="edream.110203160744.3711"><vh>tree.getFont,setFont,setFontFromConfig</vh></v>
 <v t="edream.110203160744.3712"><vh>tree.getIconImage</vh></v>
 <v t="edream.110203160744.756" a=""><vh>tree.idle_scrollTo</vh></v>
 <v t="edream.110203160744.3713"><vh>tree.numberOfVisibleNodes</vh></v>
-<v t="edream.110203160744.1930"><vh>tree.recolor, recolor_now, recolor_range</vh></v>
 <v t="edream.110203160744.3714"><vh>tree.yoffset</vh></v>
+</v>
+<v t="edream.111603170011.1"><vh>Config &amp; Measuring</vh>
+<v t="edream.110203160744.3711"><vh>tree.getFont,setFont,setFontFromConfig</vh></v>
+<v t="edream.110203160744.3707"><vh>headWidth</vh></v>
+<v t="edream.110203160744.3709"><vh>setLineHeight</vh></v>
 </v>
 <v t="edream.110203160744.1740"><vh>Event handers (tree)</vh>
 <v t="edream.110203160744.1741"><vh>OnActivate</vh>
@@ -6091,20 +6108,6 @@
 <v t="edream.110203160744.1743"><vh>OnBoxClick</vh></v>
 <v t="edream.110203160744.1692"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
 <v t="edream.110203160744.1744"><vh>tree.findVnodeWithIconId</vh></v>
-<v t="edream.110203160744.1301" a=""><vh>body key handlers (tree)</vh>
-<v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
-<v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="edream.110203160744.1305"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
-<v t="edream.110203160744.1306"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
-<v t="edream.110203160744.1307"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1310"><vh>onBodyChanged</vh></v>
-<v t="edream.110203160744.1311"><vh>OnBodyKey</vh></v>
-<v t="edream.110203160744.1312" a=""><vh>onBodyWillChange</vh></v>
-</v>
 <v t="edream.110203160744.1745"><vh>tree.OnContinueDrag</vh>
 <v t="edream.110203160744.1746"><vh>&lt;&lt; continue dragging &gt;&gt;</vh>
 <v t="edream.110203160744.1747"><vh>&lt;&lt; scroll the canvas as needed &gt;&gt;</vh></v>
@@ -6158,9 +6161,6 @@
 <v t="edream.110203160744.1699"><vh>editLabel</vh></v>
 <v t="edream.110203160744.1700"><vh>endEditLabel</vh></v>
 <v t="edream.110203160744.1701"><vh>tree.expandAllAncestors</vh></v>
-<v t="edream.110203160744.1357" a=""><vh>tree.scanForTabWidth</vh>
-<v t="edream.110203160744.1358"><vh>&lt;&lt; set w and break on @tabwidth &gt;&gt;</vh></v>
-</v>
 <v t="edream.110203160744.757" a=""><vh>tree.select</vh>
 <v t="edream.110203160744.758"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
 <v t="edream.110203160744.759"><vh>&lt;&lt; unselect the old node &gt;&gt;</vh></v>
@@ -6345,7 +6345,7 @@ I really should create a wrapper for file to handle the except IOError: case...<
 </t>
 <t tx="edream.110203160744.37"></t>
 <t tx="edream.110203160744.38"></t>
-<t tx="edream.110203160744.39">This will allow me to define frame.body and c.body as instances of the leoTkinterBody class.</t>
+<t tx="edream.110203160744.39">This will allow me to define frame.body as an instance of the leoTkinterBody class.</t>
 <t tx="edream.110203160744.40"></t>
 <t tx="edream.110203160744.41">This removes some of the frame details from the app class.
 
@@ -6445,7 +6445,7 @@ newLeoCommanderAndFrame does the following.  Order is _crucial_:
 
 - first creates an "empty" frame first to pass to the commanders.  This was an Aha!
 - then creates the commander and all subcommanders.
-- then calls the new frame.finishCreate routine to create the actual frames (and set c.body).
+- then calls the new frame.finishCreate routine to create the actual frames.
 - finally calls c.undoer.clearUndoState(), which requires that menus have already been created.
 
 The present code should be moved to the tkinterGui class.</t>
@@ -9090,14 +9090,14 @@ vList = [] ; tList = [] # Remove these references immediately.</t>
 			image = None
 		if image:
 			# print image.height()
-			index = c.body.index("insert")
+			index = c.frame.body.index("insert")
 			if 1: # same behavior
-				bg = c.body.cget("background")
-				w = Tkinter.Label(c.body,image=image,bd=0,bg=bg)
-				c.body.window_create(index,window=w,align="baseline")
+				bg = c.frame.body.cget("background")
+				w = Tkinter.Label(c.frame.body,image=image,bd=0,bg=bg)
+				c.frame.body.window_create(index,window=w,align="baseline")
 			else:
-				c.body.image_create(index,image=image,align="baseline")
-			# c.body.dump(index) # The image isn't drawn unless we take an exception!
+				c.frame.body.image_create(index,image=image,align="baseline")
+			# c.frame.body.dump(index) # The image isn't drawn unless we take an exception!
 </t>
 <t tx="edream.110203160744.300"></t>
 <t tx="edream.110203160744.301"></t>
@@ -9310,7 +9310,7 @@ class distributeLeo:
 result = []
 
 # If active selection, then don't attempt a reformat.
-selStart, selEnd = c.body.getTextSelection()
+selStart, selEnd = c.frame.body.getTextSelection()
 if selStart != selEnd:
 	es("Text selection inhibits Reformat Paragraph",color="blue")
 	return
@@ -9365,7 +9365,7 @@ for i in range(firstLine,lineCount+firstLine):
 &lt;&lt; Set the new insert at the start of the next paragraph &gt;&gt;
 
 # Make sure we can see the new cursor.
-c.body.makeInsertPointVisible()
+c.frame.body.makeInsertPointVisible()
 </t>
 <t tx="edream.110203160744.321">lastLine = firstLine + lineCount
 if not endsWithNL:
@@ -9382,7 +9382,7 @@ else:
 			break;
 		lastLine += 1
 		insPos = str(lastLine) + ".0"
-c.body.setTextSelection(insPos,insPos)</t>
+c.frame.body.setTextSelection(insPos,insPos)</t>
 <t tx="edream.110203160744.322"># if selection was made from back to front, then i and j are reversed
 if i and j and i != j:
 	# Convert all lines containing any part of the selection.
@@ -9510,7 +9510,7 @@ endsWithNL: true if the paragraph ends with a newline"""
 <t tx="edream.110203160744.328">def getBodySelection (self):
 
 	c = self
-	i, j = c.body.getTextSelection()
+	i, j = c.frame.body.getTextSelection()
 	if i and j and c.bodyCtrl.compare(i,"&gt;",j):
 		i,j = j,i
 	return i, j</t>
@@ -9700,7 +9700,7 @@ def OnHeadlineRightClick(self,event=None):
 			c.beginUpdate()
 			c.selectVnode(v)
 			c.endUpdate()
-			c.body.mark_set("insert","1.0")
+			c.frame.body.mark_set("insert","1.0")
 		doHook("hypercclick2",c=c,v=v,event=event)
 	except:
 		es_event_exception("hypercclick")</t>
@@ -9710,7 +9710,7 @@ def OnHeadlineRightClick(self,event=None):
 		v = self ; c = v.commands
 		if not doHook("hyperenter1",c=c,v=v,event=event):
 			if 0: # This works, and isn't very useful.
-				c.body.tag_config(v.tagName,background="green")
+				c.frame.body.tag_config(v.tagName,background="green")
 		doHook("hyperenter2",c=c,v=v,event=event)
 	except:
 		es_event_exception("hyperenter")</t>
@@ -9720,7 +9720,7 @@ def OnHeadlineRightClick(self,event=None):
 		v = self ; c = v.commands
 		if not doHook("hyperleave1",c=c,v=v,event=event):
 			if 0: # This works, and isn't very useful.
-				c.body.tag_config(v.tagName,background="white")
+				c.frame.body.tag_config(v.tagName,background="white")
 		doHook("hyperleave2",c=c,v=v,event=event)
 	except:
 		es_event_exception("hyperleave")</t>
@@ -15443,10 +15443,9 @@ def drawText(self,v,x,y):
 	self.canvas.tag_lower(id)
 
 	return self.line_height</t>
-<t tx="edream.110203160744.744">if v == self.currentVnode:
-	# trace("editVnode",self.editVnode)
-	if v == self.editVnode:
-		self.setNormalLabelState(v) # 7/7/03
+<t tx="edream.110203160744.744">if v == self.currentVnode():
+	if v == self.editVnode():
+		self.setNormalLabelState(v)
 	else:
 		self.setDisabledLabelState(v) # selected, disabled
 else:
@@ -15521,9 +15520,7 @@ def redraw (self,event=None):
 	
 	if self.updateCount == 0 and not self.redrawScheduled:
 		self.redrawScheduled = true
-		self.canvas.after_idle(self.idle_redraw)
-		
-</t>
+		self.canvas.after_idle(self.idle_redraw)</t>
 <t tx="edream.110203160744.751"># Schedules a redraw even if inside beginUpdate/endUpdate
 def force_redraw (self):
 
@@ -15534,9 +15531,8 @@ def force_redraw (self):
 		self.canvas.after_idle(self.idle_redraw)</t>
 <t tx="edream.110203160744.752"># Redraws immediately: used by Find so a redraw doesn't mess up selections.
 # It is up to the caller to ensure that no other redraws are pending.
-def redraw_now (self):
 
-	# trace()
+def redraw_now (self):
 
 	self.idle_redraw()</t>
 <t tx="edream.110203160744.753">def idle_redraw (self):
@@ -15555,13 +15551,13 @@ def redraw_now (self):
 	# trace()
 	# print_bindings("canvas",self.canvas)
 
-	self.expandAllAncestors(self.currentVnode)
+	self.expandAllAncestors(self.currentVnode())
 	oldcursor = self.canvas['cursor']
 	self.canvas['cursor'] = "watch"
 	self.allocatedNodes = 0
 	if not doHook("redraw-entire-outline",c=self.c):
 		# Erase and redraw the entire tree.
-		self.topVnode = None
+		self.setTopVnode(None)
 		self.deleteBindings()
 		self.canvas.delete("all")
 		self.deleteWidgets()
@@ -15585,7 +15581,7 @@ def redraw_now (self):
 		
 	# Erase and redraw the entire tree the SECOND time.
 	# This ensures that all visible nodes are allocated.
-	self.topVnode = None
+	self.setTopVnode(None)
 	args = self.canvas.yview()
 	self.setVisibleArea(args)
 	self.deleteBindings()
@@ -15595,21 +15591,16 @@ def redraw_now (self):
 	if self.trace:
 		print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes</t>
 <t tx="edream.110203160744.755">def __init__(self,c,frame,canvas):
+	
+	# Init the base class.
+	leoFrame.leoTree.__init__(self,frame)
 
 	# Objects associated with this tree.
-	self.c = c
 	self.canvas = canvas
-	self.frame = frame
-	self.colorizer = leoColor.colorizer(c)
-	
-	# State info.
-	self.rootVnode = None
-	self.topVnode = None
 
 	# Miscellaneous info.
 	self.iconimages = {} # Image cache set by getIconImage().
 	self.active = false # true if tree is active
-	self.revertHeadline = None # Previous headline text for abortEditLabel.
 	
 	# Set self.font and self.fontName.
 	self.setFontFromConfig()
@@ -15618,22 +15609,10 @@ def redraw_now (self):
 	self.bindings = [] # List of bindings to be unbound when redrawing.
 	self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
 	self.icon_id_dict = {} # New in 3.12: keys are icon id's, values are vnodes.
-	self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
 	self.widgets = [] # Widgets that must be destroyed when redrawing.
-
-	# Controlling redraws
-	self.updateCount = 0 # self.redraw does nothing unless this is zero.
-	self.redrawCount = 0 # For traces
-	self.redrawScheduled = false # true if redraw scheduled.
-
-	# Selection ivars.
-	self.currentVnode = None # The presently selected vnode.
-	self.editVnode = None # The vnode being edited.
-	self.initing = false # true: opening file.
 	
 	# Drag and drop
 	self.drag_v = None
-	self.dragging = false # true: presently dragging.
 	self.controlDrag = false # true: control was down when drag started.
 	self.drag_id = None # To reset bindings after drag
 	self.keyCount = 0 # For debugging.
@@ -15649,7 +15628,6 @@ def redraw_now (self):
 	self.prevMoveToFrac = None
 	self.visibleArea = None
 	self.expandedVisibleArea = None
-	self.forceFullRecolorFlag = false
 	
 	self.allocatedNodes = 0 # A crucial statistic.
 		# Incremental drawing allocates visible nodes at most twice.
@@ -15658,7 +15636,7 @@ def redraw_now (self):
 	if self.allocateOnlyVisibleNodes:
 		self.frame.bar1.bind("&lt;B1-ButtonRelease&gt;", self.redraw)
 	
-	if not leoTkinterTree.callbacksInjected:
+	if not leoTkinterTree.callbacksInjected: # Class var.
 		leoTkinterTree.callbacksInjected = true
 		self.injectCallbacks()</t>
 <t tx="edream.110203160744.756">@ This scrolls the canvas so that v is in view.  This is done at idle time after a redraw so that treeBar.get() will return proper values.
@@ -15671,7 +15649,7 @@ def idle_scrollTo(self,v=None):
 	nextToLast = last.visBack()
 	# print 'v,last',`v`,`last`
 	if v == None:
-		v = self.currentVnode
+		v = self.currentVnode()
 	h1 = self.yoffset(v)
 	h2 = self.yoffset(last)
 	if nextToLast: # 2/2/03: compute approximate line height.
@@ -15733,11 +15711,11 @@ old_v = c.currentVnode()
 
 # Unselect any previous selected but unedited label.
 self.endEditLabel()
-old = self.currentVnode
+old = self.currentVnode()
 self.setUnselectedLabelState(old)</t>
 <t tx="edream.110203160744.759"># Remember the position of the scrollbar before making any changes.
 yview=body.yview()
-insertSpot = c.body.getInsertionPoint()
+insertSpot = c.frame.body.getInsertionPoint()
 
 # Remember the old body text
 old_body = body.get("1.0","end")
@@ -15757,7 +15735,7 @@ if old_body != s:
 	body.insert("1.0",s)
 
 # We must do a full recoloring: we may be changing context!
-self.recolor_now(v)
+self.frame.body.recolor_now(v)
 
 if v and v.t.scrollBarSpot != None:
 	first,last = v.t.scrollBarSpot
@@ -15790,11 +15768,10 @@ if v in c.visitedList:
 	c.visitedList.remove(v)
 	
 c.visitedList.insert(0,v)</t>
-<t tx="edream.110203160744.763">self.currentVnode = v
+<t tx="edream.110203160744.763">self.setCurrentVnode(v)
 self.setSelectedLabelState(v)
-self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
-app.gui.set_focus(c,c.frame.bodyCtrl)
-</t>
+self.frame.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
+app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 <t tx="edream.110203160744.764"></t>
 <t tx="edream.110203160744.765">def allocateNodes(self,where,lines):
 	
@@ -15818,7 +15795,7 @@ app.gui.set_focus(c,c.frame.bodyCtrl)
 	
 	# Allocate all nodes in expanded visible area.
 	self.updatedNodeCount = 0
-	self.updateTree(self.rootVnode,root_left,root_top,0,0)
+	self.updateTree(self.rootVnode(),root_left,root_top,0,0)
 	# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
 </t>
 <t tx="edream.110203160744.766">def allocateNodesBeforeScrolling (self, args):
@@ -18425,10 +18402,10 @@ def moveToNthChildOf (self, p, n):
 	
 	# 5/27/02: Moving a node can create a new root node.
 	if not p.parent() and not p.back():
-		c.frame.setRootVnode(p)</t>
+		c.frame.tree.setRootVnode(p)</t>
 <t tx="edream.110203160744.931"># Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 
-def deleteHeadline (self,op_name="Delete Outline"):
+def deleteOutline (self,op_name="Delete Outline"):
 
 	c = self ; v = c.currentVnode()
 	if not v: return
@@ -20240,13 +20217,15 @@ The code assumes that the "command1" hook has completely handled the command if 
 
 def doCommand (self,command,label,event=None):
 	
+	c = self ; v = c.currentVnode()
+
 	# A horrible kludge: set app.log to cover for a possibly missing activate event.
-	app.setLog(self.log,"doCommand")
+	app.setLog(c.frame.log,"doCommand")
 
 	if label == "cantredo": label = "redo"
 	if label == "cantundo": label = "undo"
 	app.commandName = label
-	c = self ; v = c.currentVnode()
+
 	if not doHook("command1",c=c,v=v,label=label):
 		try:
 			command()
@@ -20695,13 +20674,13 @@ closeFlag = (
 
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
-	oldText = c.body.getAllText()
-	oldSel = c.body.getTextSelection()
+	oldText = c.frame.body.getAllText()
+	oldSel = c.frame.body.getTextSelection()
 
 	c.fileCommands.readAtFileNodes()
 
-	newText = c.body.getAllText()
-	newSel = c.body.getTextSelection()
+	newText = c.frame.body.getAllText()
+	newSel = c.frame.body.getTextSelection()
 
 	c.undoer.setUndoParams("Read @file Nodes",
 		v,select=v,oldTree=v_copy,
@@ -20739,14 +20718,14 @@ closeFlag = (
 	c = self
 	c.atFileCommands.writeNewDerivedFiles()
 	es("auto-saving outline",color="blue")
-	self.OnSave() # Must be done to preserve tnodeList.
+	c.save() # Must be done to preserve tnodeList.
 	
 def writeOldDerivedFiles (self):
 	
 	c = self
 	c.atFileCommands.writeOldDerivedFiles()
 	es("auto-saving outline",color="blue")
-	self.OnSave() # Must be done to clear tnodeList.</t>
+	c.save() # Must be done to clear tnodeList.</t>
 <t tx="edream.110203160744.1122"></t>
 <t tx="edream.110203160744.1123">def tangleAll(self):
 	
@@ -20783,6 +20762,8 @@ def writeOldDerivedFiles (self):
 </t>
 <t tx="edream.110203160744.1130"></t>
 <t tx="edream.110203160744.1131">def exportHeadlines (self):
+	
+	c = self
 
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -20793,10 +20774,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".txt")
 
 	if fileName and len(fileName) &gt; 0:
-		self.c.importCommands.exportHeadlines(fileName)
+		c.importCommands.exportHeadlines(fileName)
 
 </t>
 <t tx="edream.110203160744.1132">def flattenOutline (self):
+	
+	c = self
 
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -20807,11 +20790,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".txt")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		c.importCommands.flattenOutline(fileName)
 
 </t>
 <t tx="edream.110203160744.1133">def importAtRoot (self):
+	
+	c = self
 	
 	types = [
 		("All files","*.*"),
@@ -20829,12 +20813,13 @@ def writeOldDerivedFiles (self):
 		defaultextension=".py")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFilesCommand (paths,"@root")
 
 </t>
 <t tx="edream.110203160744.1134">def importAtFile (self):
+	
+	c = self
 
 	types = [
 		("All files","*.*"),
@@ -20852,12 +20837,13 @@ def writeOldDerivedFiles (self):
 		defaultextension=".py")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFilesCommand (paths,"@file")
 
 </t>
 <t tx="edream.110203160744.1135">def importCWEBFiles (self):
+	
+	c = self
 	
 	filetypes = [
 		("CWEB files", "*.w"),
@@ -20870,11 +20856,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".w")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importWebCommand(paths,"cweb")
 </t>
 <t tx="edream.110203160744.1136">def importFlattenedOutline (self):
+	
+	c = self
 	
 	types = [("Text files","*.txt"), ("All files","*.*")]
 
@@ -20884,11 +20871,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".py")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importFlattenedOutline(paths)
 </t>
 <t tx="edream.110203160744.1137">def importNowebFiles (self):
+	
+	c = self
 
 	filetypes = [
 		("Noweb files", "*.nw"),
@@ -20901,12 +20889,13 @@ def writeOldDerivedFiles (self):
 		defaultextension=".nw")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		paths = [fileName] # alas, askopenfilename returns only a single name.
 		c.importCommands.importWebCommand(paths,"noweb")
 
 </t>
 <t tx="edream.110203160744.1138">def outlineToCWEB (self):
+	
+	c = self
 
 	filetypes=[
 		("CWEB files", "*.w"),
@@ -20920,11 +20909,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".w")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		c.importCommands.outlineToWeb(fileName,"cweb")
 
 </t>
 <t tx="edream.110203160744.1139">def outlineToNoweb (self):
+	
+	c = self
 	
 	filetypes=[
 		("Noweb files", "*.nw"),
@@ -20938,12 +20928,13 @@ def writeOldDerivedFiles (self):
 		defaultextension=".nw")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		c.importCommands.outlineToWeb(fileName,"noweb")
-		self.outlineToNowebDefaultFileName = fileName
+		c.outlineToNowebDefaultFileName = fileName
 
 </t>
 <t tx="edream.110203160744.1140">def removeSentinels (self):
+	
+	c = self
 	
 	types = [
 		("All files","*.*"),
@@ -20961,11 +20952,12 @@ def writeOldDerivedFiles (self):
 		defaultextension=".py")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		# alas, askopenfilename returns only a single name.
 		c.importCommands.removeSentinelsCommand (fileName)
 </t>
 <t tx="edream.110203160744.1141">def weave (self):
+	
+	c = self
 
 	filetypes = [("Text files", "*.txt"),("All files", "*")]
 
@@ -20976,7 +20968,6 @@ def writeOldDerivedFiles (self):
 		defaultextension=".txt")
 
 	if fileName and len(fileName) &gt; 0:
-		c = self
 		c.importCommands.weave(fileName)
 </t>
 <t tx="edream.110203160744.1142"></t>
@@ -20992,21 +20983,22 @@ def writeOldDerivedFiles (self):
 <t tx="edream.110203160744.1146"></t>
 <t tx="edream.110203160744.1147">def OnCut (self,event=None):
 
+	frame = self ; c = frame.c ; v = c.currentVnode()
+	
 	# Activate the body key handler by hand.
-	c = self ; v = c.currentVnode()
-	c.tree.forceFullRecolor()
-	c.tree.onBodyWillChange(v,"Cut")
+	frame.body.forceFullRecolor()
+	frame.body.onBodyWillChange(v,"Cut")
 
 def OnCutFromMenu (self):
+	
+	frame = self ; c = frame.c ; v = c.currentVnode()
 
 	w = self.getFocus()
-	c.tree.forceFullRecolor()
 	w.event_generate(virtual_event_name("Cut"))
 	
-	# 11/2/02: Make sure the event sticks.
-	c = self ; v = c.currentVnode()
-	c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-</t>
+	# Make sure the event sticks.
+	frame.body.forceFullRecolor()
+	frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.</t>
 <t tx="edream.110203160744.1148">def OnCopy (self,event=None):
 
 	# Copy never changes dirty bits or syntax coloring.
@@ -21014,38 +21006,37 @@ def OnCutFromMenu (self):
 	
 def OnCopyFromMenu (self):
 
-	# trace()
-	c = self
-	w = c.frame.getFocus()
+	frame = self ; c = frame.c
+
+	w = frame.getFocus()
 	w.event_generate(virtual_event_name("Copy"))</t>
 <t tx="edream.110203160744.1149">def OnPaste (self,event=None):
 
+	
+	frame = self ; c = frame.c ; v = c.currentVnode()
+	
 	# Activate the body key handler by hand.
-	c = self ; v = c.currentVnode()
-	self.tree.forceFullRecolor()
-	#trace()
-	self.tree.onBodyWillChange(v,"Paste")
+	frame.body.forceFullRecolor()
+	frame.body.onBodyWillChange(v,"Paste")
 	
 def OnPasteFromMenu (self):
+	
+	frame = self ; c = frame.c ; v = c.currentVnode()
 
 	w = self.getFocus()
 	w.event_generate(virtual_event_name("Paste"))
 	
-	# 10/23/02: Make sure the event sticks.
-	c = self ; v = c.currentVnode()
-	self.tree.forceFullRecolor()
-	#trace()
-	c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-
-</t>
+	# Make sure the event sticks.
+	frame.body.forceFullRecolor()
+	frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.</t>
 <t tx="edream.110203160744.1150">def delete(self):
 
 	c = self ; v = c.currentVnode()
 
-	if c.body.hasTextSelection():
-		oldSel = c.body.getTextSelection()
-		c.body.deleteTextSelection()
-		c.frame.onBodyChanged(v,"Delete",oldSel=oldSel)</t>
+	if c.frame.body.hasTextSelection():
+		oldSel = c.frame.body.getTextSelection()
+		c.frame.body.deleteTextSelection()
+		c.frame.body.onBodyChanged(v,"Delete",oldSel=oldSel)</t>
 <t tx="edream.110203160744.1151">@ This executes body text as a Python script.  We execute the selected text, or the entire body text if no text is selected.
 @c
 
@@ -21069,12 +21060,12 @@ def executeScript(self,v=None):
 		es("no script selected")</t>
 <t tx="edream.110203160744.1152"># Assume any selected body text is a script.
 
-start,end = c.body.getTextSelection()
+start,end = c.frame.body.getTextSelection()
 
 if start and end and start != end:
-	s = c.body.getSelectedText()
+	s = c.frame.body.getSelectedText()
 else:
-	s = c.body.getAllText()
+	s = c.frame.body.getAllText()
 if s:
 	s = s.strip()</t>
 <t tx="edream.110203160744.1153">if app.config.redirect_execute_script_output_to_log_pane:
@@ -21247,7 +21238,7 @@ if not v or v == after:
 	es("not found: " + vnodeName, color="red")
 	return</t>
 <t tx="edream.110203160744.1165">c.beginUpdate()
-c.frame.expandAllAncestors(v)
+c.frame.tree.expandAllAncestors(v)
 c.selectVnode(v)
 c.endUpdate()</t>
 <t tx="edream.110203160744.1166">if found:
@@ -21400,7 +21391,7 @@ if not vnodeName:
 
 	c = self ; frame = c.frame ; v = c.currentVnode()
 
-	colorizer = frame.getColorizer()
+	colorizer = frame.body.getColorizer()
 	colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
 
 	# It is much easier to change the menu name here than in the menu updater.
@@ -21410,7 +21401,7 @@ if not vnodeName:
 	else:
 		frame.menu.setMenuLabel(menu,"Hide Invisibles","Show Invisibles")
 
-	c.frame.recolor_now(v)</t>
+	c.frame.body.recolor_now(v)</t>
 <t tx="edream.110203160744.1177">def preferences(self):
 	
 	"""Show the Preferences Panel, creating it if necessary."""
@@ -21418,7 +21409,7 @@ if not vnodeName:
 	c = self ; frame = c.frame
 
 	if not frame.prefsPanel:
-		frame.prefsPanel = prefs = app.gui.createPrefsPanel(c)
+		frame.prefsPanel = app.gui.createPrefsPanel(c)
 		
 	frame.prefsPanel.bringToFront()</t>
 <t tx="edream.110203160744.1178"></t>
@@ -21449,37 +21440,37 @@ def OnReformatParagraph(self):
 </t>
 <t tx="edream.110203160744.1185">def findMatchingBracket (self):
 	
-	c = self
+	c = self ; body = c.frame.body
 	brackets = "()[]{}&lt;&gt;"
-	ch1 = c.body.getCharBeforeInsertPoint()
-	ch2 = c.body.getCharAtInsertPoint()
+	ch1 = body.getCharBeforeInsertPoint()
+	ch2 = body.getCharAtInsertPoint()
 
 	# Prefer to match the character to the left of the cursor.
 	if ch1 in brackets:
-		ch = ch1 ; index = c.body.getBeforeInsertionPoint()
+		ch = ch1 ; index = body.getBeforeInsertionPoint()
 	elif ch2 in brackets:
-		ch = ch2 ; index = c.body.getInsertionPoint()
+		ch = ch2 ; index = body.getInsertionPoint()
 	else:
 		return
 	
 	index2 = self.findSingleMatchingBracket(ch,index)
 	if index2:
-		if c.body.compareIndices(index,"&lt;=",index2):
-			adj_index = c.body.adjustIndex(index2,1)
-			c.body.setTextSelection(index,adj_index)
+		if body.compareIndices(index,"&lt;=",index2):
+			adj_index = body.adjustIndex(index2,1)
+			body.setTextSelection(index,adj_index)
 		else:
-			adj_index = c.body.adjustIndex(index,1)
-			c.body.setTextSelection(index2,adj_index)
-		adj_index = c.body.adjustIndex(index2,1)
-		c.body.setInsertionPoint(adj_index)
-		c.body.makeIndexVisible(adj_index)
+			adj_index = body.adjustIndex(index,1)
+			body.setTextSelection(index2,adj_index)
+		adj_index = body.adjustIndex(index2,1)
+		body.setInsertionPoint(adj_index)
+		body.makeIndexVisible(adj_index)
 	else:
 		es("unmatched " + `ch`)</t>
 <t tx="edream.110203160744.1186"># To do: replace comments with blanks before scanning.
 # Test  unmatched())
 def findSingleMatchingBracket(self,ch,index):
 	
-	c = self
+	c = self ; body = c.frame.body
 	open_brackets  = "([{&lt;" ; close_brackets = ")]}&gt;"
 	brackets = open_brackets + close_brackets
 	matching_brackets = close_brackets + open_brackets
@@ -21491,21 +21482,21 @@ def findSingleMatchingBracket(self,ch,index):
 			break
 	level = 0
 	while 1:
-		if forward and c.body.compareIndices(index,"&gt;=","end"):
+		if forward and body.compareIndices(index,"&gt;=","end"):
 			# trace("not found")
 			return None
-		ch2 = c.body.getCharAtIndex(index)
+		ch2 = body.getCharAtIndex(index)
 		if ch2 == ch:
 			level += 1 #; trace(level,index)
 		if ch2 == match_ch:
 			level -= 1 #; trace(level,index)
 			if level &lt;= 0:
 				return index
-		if not forward and c.body.compareIndices(index,"&lt;=","1.0"):
+		if not forward and body.compareIndices(index,"&lt;=","1.0"):
 			# trace("not found")
 			return None
 		adj = choose(forward,1,-1)
-		index = c.body.adjustIndex(index,adj)
+		index = body.adjustIndex(index,adj)
 	return 0 # unreachable: keeps pychecker happy.
 # Test  (
 # ([(x){y}]))
@@ -21518,11 +21509,11 @@ def findSingleMatchingBracket(self,ch,index):
 	
 	c = self ; v = c.currentVnode()
 	
-	oldSel = c.body.getTextSelection()
-	c.body.deleteTextSelection() # Works if nothing is selected.
+	oldSel = c.frame.body.getTextSelection()
+	c.frame.body.deleteTextSelection() # Works if nothing is selected.
 	s = self.getTime(body=true)
 	c.frame.body.insertAtInsertPoint(s)
-	c.frame.onBodyChanged(v,"Typing",oldSel=oldSel)</t>
+	c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)</t>
 <t tx="edream.110203160744.1189">def getTime (self,body=true):
 
 	config = app.config
@@ -21553,7 +21544,7 @@ def findSingleMatchingBracket(self,ch,index):
 <t tx="edream.110203160744.1191">def editHeadline(self):
 
 	tree = self.frame.tree
-	tree.editLabel(tree.currentVnode)</t>
+	tree.editLabel(tree.currentVnode())</t>
 <t tx="edream.110203160744.1192">def OnEndEditHeadline(self):
 
 	self.tree.endEditLabelCommand() # 10/28/03
@@ -21744,7 +21735,7 @@ def OnExpandToLevel9(self): self.c.expandLevel9()
 		v = c.beadList[c.beadPointer]
 		if v.exists(c):
 			c.beginUpdate()
-			c.frame.expandAllAncestors(v)
+			c.frame.tree.expandAllAncestors(v)
 			c.selectVnode(v,updateBeadList=false)
 			c.endUpdate()
 			c.frame.idle_scrollTo(v)
@@ -21759,7 +21750,7 @@ def OnExpandToLevel9(self): self.c.expandLevel9()
 		v = c.beadList[c.beadPointer]
 		if v.exists(c):
 			c.beginUpdate()
-			c.frame.expandAllAncestors(v)
+			c.frame.tree.expandAllAncestors(v)
 			c.selectVnode(v,updateBeadList=false)
 			c.endUpdate()
 			c.frame.idle_scrollTo(v)
@@ -21780,7 +21771,7 @@ def OnExpandToLevel9(self): self.c.expandLevel9()
 		v = v.threadNext()
 	if v:
 		c.beginUpdate()
-		c.frame.expandAllAncestors(v)
+		c.frame.tree.expandAllAncestors(v)
 		c.selectVnode(v)
 		c.endUpdate()
 
@@ -21788,10 +21779,6 @@ def OnExpandToLevel9(self): self.c.expandLevel9()
 <t tx="edream.110203160744.1240">def OnGoToNextChanged(self):
 
 	self.c.goToNextDirtyHeadline()
-</t>
-<t tx="edream.110203160744.1241">def goToNextClone(self):
-
-	self.c.goToNextClone()
 </t>
 <t tx="edream.110203160744.1242">def OnGoToNextMarked(self):
 
@@ -22316,7 +22303,7 @@ def createOpenWithMenuFromTable (self,table):
 		menu = self.getMenu(menuName)
 		if menu:
 			realItemName = self.getRealMenuName(itemName)
-			self.delete(menu,readItemName)
+			self.delete(menu,realItemName)
 		else:
 			es("menu not found: " + menuName)
 	except:
@@ -22556,11 +22543,11 @@ def file_date (file,format=None):
 		return "break" # The hook claims to have handled the event.
 	body = v.bodyString()
 	if not newSel:
-		newSel = c.body.getTextSelection()
+		newSel = c.frame.body.getTextSelection()
 	if oldText != None:
 		s = oldText
 	else:
-		s = c.body.getAllText()
+		s = c.frame.body.getAllText()
 	&lt;&lt; return if nothing has changed &gt;&gt;
 	&lt;&lt; set removeTrailing &gt;&gt;
 	if ch in ('\n','\r'):
@@ -22573,7 +22560,7 @@ def file_date (file,format=None):
 		newText = s
 		c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
 	v.t.setTnodeText(s)
-	v.t.insertSpot = c.body.getInsertionPoint()
+	v.t.insertSpot = c.frame.body.getInsertionPoint()
 	&lt;&lt; recolor the body &gt;&gt;
 	if not c.changed:
 		c.setChanged(true)
@@ -22624,7 +22611,7 @@ else:
 
 </t>
 <t tx="edream.110203160744.1305"># Do nothing if we are in @nocolor mode or if we are executing a Change command.
-if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
+if self.frame.body.colorizer.useSyntaxColoring(v) and undoType != "Change":
 	# Get the previous line.
 	s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
 	# Add the leading whitespace to the present line.
@@ -22681,14 +22668,14 @@ if undoType != "Change":
 			# print "prev w:" + `w` + ", prev chars:" + `prev`
 			c.frame.bodyCtrl.delete("insert -1c")
 			c.frame.bodyCtrl.insert("insert",' ' * w2)</t>
-<t tx="edream.110203160744.1307">s = c.body.getAllText()
+<t tx="edream.110203160744.1307">s = c.frame.body.getAllText()
 if len(s) &gt; 0 and s[-1] == '\n' and removeTrailing:
 	s = s[:-1]</t>
-<t tx="edream.110203160744.1308"># if self.forceFullRecolorFlag: trace(undoType,"full recolor")
+<t tx="edream.110203160744.1308">self.frame.scanForTabWidth(v)
 
-self.scanForTabWidth(v)
 incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-self.recolor_now(v,incremental=incremental)
+self.frame.body.recolor_now(v,incremental=incremental)
+
 self.forceFullRecolorFlag = false</t>
 <t tx="edream.110203160744.1309">redraw_flag = false
 
@@ -22716,16 +22703,16 @@ def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText
 		v = c.currentVnode()
 
 	if not oldSel:
-		oldSel = c.body.getTextSelection()
+		oldSel = c.frame.body.getTextSelection()
 
 	self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
 </t>
-<t tx="edream.110203160744.1311">def OnBodyKey (self,event):
+<t tx="edream.110203160744.1311">def onBodyKey (self,event):
 	
 	"""Handle any key press event in the body pane."""
 
 	c = self.c ; v = c.currentVnode() ; ch = event.char
-	oldSel = c.body.getTextSelection()
+	oldSel = c.frame.body.getTextSelection()
 
 	if 0:
 		self.keyCount += 1
@@ -22742,7 +22729,7 @@ def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
 	c = self.c
 	if not v: v = c.currentVnode()
 	if not oldSel:
-		oldSel = c.body.getTextSelection()
+		oldSel = c.frame.body.getTextSelection()
 		
 	#trace()
 	self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
@@ -22851,24 +22838,6 @@ elif changed:
 	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 	# Redrawing the whole screen now messes up the cursor in the headline.
 	self.drawIcon(v) # just redraw the icon.</t>
-<t tx="edream.110203160744.1322">@nocolor
-
-I tried several unsuccessful experiments:
-
-1. This does not work because we must _always_ call idle_body_key in order to delete spurious newlines.
-
-@color
-if ch and len(ch) &gt; 0:
-    self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
-    
-@nocolor
-2. This does not work when bound to KeyRelease events because of timing problems when releasing the control and s keys.
-
-@color
-def OnBodyKeyRelease (self,event):
-    c = self.commands ; v = c.currentVnode() ; ch = event.char
-    oldSel = getTextSelection(c.body)
-    self.idle_body_key(v,oldSel,"Typing",ch)</t>
 <t tx="edream.110203160744.1323">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.</t>
 <t tx="edream.110203160744.1324">@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node v, no @color or @nocolor directives are examined in any ancestor of v.
 
@@ -25068,10 +25037,10 @@ def undoRedoText (self,v,
 	if textResult == result:
 		if undoType in ("Cut","Paste"):
 			# trace("non-incremental undo")
-			c.frame.recolor(v,incremental=false)
+			c.frame.body.recolor(v,incremental=false)
 		else:
 			# trace("incremental undo:",leading,trailing)
-			c.frame.recolor_range(v,leading,trailing)
+			c.frame.body.recolor_range(v,leading,trailing)
 	else: # 11/19/02: # Rewrite the pane and do a full recolor.
 		if u.debug_print:
 			&lt;&lt; print mismatch trace &gt;&gt;
@@ -26018,16 +25987,16 @@ except:
 		return
 
 	if 0: # New code
-		index = c.body.getInsertionPoint()
-		row,col = c.body.indexToRowColumn(index)
-		index1 = c.body.rowColumnToIndex(row,0)
+		index = c.frame.body.getInsertionPoint()
+		row,col = c.frame.body.indexToRowColumn(index)
+		index1 = c.frame.body.rowColumnToIndex(row,0)
 	else:
 		index = body.index("insert")
 		row,col = gui.getindex(body,index)
 	
 	if col &gt; 0:
 		if 0: # new code
-			s = c.body.getRange(index1,index2)
+			s = c.frame.body.getRange(index1,index2)
 		else:
 			s = body.get("%d.0" % (row),index)
 		s = toUnicode(s,app.tkEncoding) # 9/28/03
@@ -26067,7 +26036,7 @@ It may be that the only thing to do is rewrite this code for 4.0.  It certainly 
 	c = self
 	if c.canDeleteHeadline():
 		c.copyOutline()
-		c.deleteHeadline("Cut Node")
+		c.deleteOutline("Cut Node")
 		c.recolor()</t>
 <t tx="edream.110203160744.1544">def copyOutline(self):
 
@@ -26131,7 +26100,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=true):
 	self.mFileName = c.mFileName
 	self.tnodesDict = {}
 	ok = true
-	c.frame.setTreeIniting(true) # Disable changes in endEditLabel
+	c.frame.tree.setIniting(true) # Disable changes in endEditLabel
 	c.loading = true # disable c.changed
 	try:
 		&lt;&lt; scan all the xml elements &gt;&gt;
@@ -26142,10 +26111,10 @@ def getLeoFile (self,fileName,atFileNodesFlag=true):
 	c.initAllCloneBits() # 9/23/03
 	if ok and atFileNodesFlag:
 		c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
-	if not c.frame.currentVnode():
-		c.frame.setCurrentVnode(c.frame.rootVnode())
-	c.selectVnode(c.frame.currentVnode()) # load body pane
-	c.frame.setTreeIniting(false) # Enable changes in endEditLabel
+	if not c.frame.tree.currentVnode():
+		c.frame.tree.setCurrentVnode(c.rootVnode())
+	c.selectVnode(c.frame.tree.currentVnode()) # load body pane
+	c.frame.tree.setIniting(false) # Enable changes in endEditLabel
 	c.loading = false # reenable c.changed
 	c.setChanged(c.changed) # Refresh the changed marker.
 	self.tnodesDict = {}
@@ -26357,7 +26326,7 @@ while 1:
 	else: break
 self.getDquote()</t>
 <t tx="edream.110203160744.1562">if setCurrent:
-	c.frame.setCurrentVnode(v)
+	c.frame.tree.setCurrentVnode(v)
 
 if setExpanded:
 	v.initExpandedBit()
@@ -26526,7 +26495,7 @@ def putVnodes (self):
 		while v:
 			self.putVnode(
 				v, # Write the next top-level node.
-				c.frame.topVnode()) # Write the top-vnode status bit.
+				c.frame.tree.topVnode()) # Write the top-vnode status bit.
 			v = v.next()
 	self.put("&lt;/vnodes&gt;") ; self.put_nl()</t>
 <t tx="edream.110203160744.1574">from leoGlobals import *
@@ -26670,7 +26639,7 @@ clonedAtFileNodes: 9
 	app.writeWaitingLog()
 	v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
-	frame.c.redraw()
+	frame.tree.redraw()
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()</t>
@@ -26688,7 +26657,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 			return true
 	except:
 		print "exception getting Python version"
-		traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return false</t>
 <t tx="edream.110203160744.1585">def computeLoadDir():
 	
@@ -26716,7 +26685,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 		return loadDir
 	except:
 		print "Exception getting load directory"
-		print traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return None</t>
 <t tx="edream.110203160744.1586">def createFrame (fileName):
 	
@@ -26878,7 +26847,7 @@ try:
 				gc.DEBUG_OBJECTS |
 				gc.DEBUG_SAVEALL)
 except:
-	traceback.print_exc()
+	import traceback ; traceback.print_exc()
 
 @others
 </t>
@@ -26938,7 +26907,7 @@ for o in objects:
 		lastObjectCount = n2
 		return delta
 	except:
-		traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return None</t>
 <t tx="edream.110203160744.1599">def printGcRefs (verbose=true):
 
@@ -27182,6 +27151,9 @@ def removeTagsFromLine (self):
 def __init__(self,c):
 
 	self.c = c
+	self.frame = c.frame
+	self.body = c.frame.body
+
 	self.count = 0 # how many times this has been called.
 	self.use_hyperlinks = false # true: use hyperlinks and underline "live" links.
 	self.enabled = true # true: syntax coloring enabled
@@ -27211,7 +27183,6 @@ def __init__(self,c):
 	&lt;&lt; define dispatch dicts &gt;&gt;
 	&lt;&lt; define fonts and data for wiki tags &gt;&gt;</t>
 <t tx="edream.110203160744.1612"># Copies of arguments.
-self.body = self.c.body
 self.v = None
 self.language = None
 self.flag = None
@@ -27901,7 +27872,7 @@ def endElementNS(self,name,qname):
 	assert(changedFiles != None)
 	if changedFiles:
 		es("auto-saving outline",color="blue")
-		c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
+		c.save() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1669"></t>
 <t tx="edream.110203160744.1670">@nocolor
 
@@ -27992,25 +27963,25 @@ def OnPopupFocusLost(self,event=None):
 	&lt;&lt; Create the menu table &gt;&gt;
 	frame.menu.createMenuEntries(menu,table)</t>
 <t tx="edream.110203160744.1676">table = (
-	("&amp;Read @file Nodes",None,frame.OnReadAtFileNodes),
-	("&amp;Write @file Nodes",None,frame.OnWriteAtFileNodes),
+	("&amp;Read @file Nodes",None,c.readAtFileNodes),
+	("&amp;Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
 	("-",None,None),
-	("&amp;Tangle","Shift+Ctrl+T",frame.OnTangle),
-	("&amp;Untangle","Shift+Ctrl+U",frame.OnUntangle),
+	("&amp;Tangle","Shift+Ctrl+T",c.tangle),
+	("&amp;Untangle","Shift+Ctrl+U",c.untangle),
 	("-",None,None),
-	("Toggle Angle &amp;Brackets","Ctrl+B",frame.OnToggleAngleBrackets),
+	("Toggle Angle &amp;Brackets","Ctrl+B",c.toggleAngleBrackets),
 	("-",None,None),
-	("Cut Node","Shift+Ctrl+X",frame.OnCutNode),
-	("Copy Node","Shift+Ctrl+C",frame.OnCopyNode),
-	("&amp;Paste Node","Shift+Ctrl+V",frame.OnPasteNode),
-	("&amp;Delete Node","Shift+Ctrl+BkSp",frame.OnDeleteNode),
+	("Cut Node","Shift+Ctrl+X",c.cutOutline),
+	("Copy Node","Shift+Ctrl+C",c.copyOutline),
+	("&amp;Paste Node","Shift+Ctrl+V",c.pasteOutline),
+	("&amp;Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
 	("-",None,None),
-	("&amp;Insert Node","Ctrl+I",frame.OnInsertNode),
-	("&amp;Clone Node","Ctrl+`",frame.OnCloneNode),
-	("Sort C&amp;hildren",None,frame.OnSortChildren),
-	("&amp;Sort Siblings","Alt-A",frame.OnSortSiblings),
+	("&amp;Insert Node","Ctrl+I",c.insertHeadline),
+	("&amp;Clone Node","Ctrl+`",c.clone),
+	("Sort C&amp;hildren",None,c.sortChildren),
+	("&amp;Sort Siblings","Alt-A",c.sortSiblings),
 	("-",None,None),
-	("Contract Parent","Alt+0",frame.OnContractParent))</t>
+	("Contract Parent","Alt+0",c.contractParent))</t>
 <t tx="edream.110203160744.1677">def enablePopupMenuItems (self,v,event):
 	
 	"""Enable and disable items in the popup menu."""
@@ -28023,17 +27994,19 @@ def OnPopupFocusLost(self,event=None):
 	canContract = v.parent() != None
 	canContract = choose(canContract,1,0)
 	
-	for name in ("Read @file Nodes", "Write @file Nodes"):
-		enableMenu(menu,name,isAtFile)
-	for name in ("Tangle", "Untangle"):
-		enableMenu(menu,name,isAtRoot)
+	enable = self.frame.menu.enableMenu
 	
-	enableMenu(menu,"Cut Node",c.canCutOutline())
-	enableMenu(menu,"Delete Node",c.canDeleteHeadline())
-	enableMenu(menu,"Paste Node",c.canPasteOutline())
-	enableMenu(menu,"Sort Children",c.canSortChildren())
-	enableMenu(menu,"Sort Siblings",c.canSortSiblings())
-	enableMenu(menu,"Contract Parent",c.canContractParent())</t>
+	for name in ("Read @file Nodes", "Write @file Nodes"):
+		enable(menu,name,isAtFile)
+	for name in ("Tangle", "Untangle"):
+		enable(menu,name,isAtRoot)
+
+	enable(menu,"Cut Node",c.canCutOutline())
+	enable(menu,"Delete Node",c.canDeleteHeadline())
+	enable(menu,"Paste Node",c.canPasteOutline())
+	enable(menu,"Sort Children",c.canSortChildren())
+	enable(menu,"Sort Siblings",c.canSortSiblings())
+	enable(menu,"Contract Parent",c.canContractParent())</t>
 <t tx="edream.110203160744.1678">isAtFile = false ; isAtRoot = false
 v2 = v ; next = v.nodeAfterTree()
 
@@ -28173,10 +28146,10 @@ def OnVisibility (self,event):
 <t tx="edream.110203160744.1686">def OnActivateBody (self,event=None):
 
 	try:
-		c = self.c ; gui = app.gui
-		app.setLog(self.log,"OnActivateBody")
+		frame = self ; c = frame.c ; gui = app.gui
+		app.setLog(frame.log,"OnActivateBody")
 		self.tree.OnDeactivate()
-		gui.set_focus(c,self.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
+		gui.set_focus(c,frame.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
 	except:
 		es_event_exception("activate body")</t>
 <t tx="edream.110203160744.1687">def OnActivateLeoEvent(self,event=None):
@@ -28195,10 +28168,10 @@ def OnDeactivateLeoEvent(self,event=None):
 <t tx="edream.110203160744.1688">def OnActivateTree (self,event=None):
 
 	try:
-		c = self.c ; gui = app.gui
-		app.setLog(self.log,"OnActivateTree")
+		frame = self ; c = frame.c ; gui = app.gui
+		app.setLog(frame.log,"OnActivateTree")
 		self.tree.undimEditLabel()
-		gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
+		gui.set_focus(c, frame.bodyCtrl)
 	except:
 		es_event_exception("activate tree")
 </t>
@@ -28257,16 +28230,16 @@ def OnMouseWheel(self, event=None):
 	
 	"""Deactivate the tree pane, dimming any headline being edited."""
 
-	c = self.c
+	tree = self ; c = self.c
 	focus = app.gui.get_focus(c.frame)
 
 	# Bug fix: 7/13/03: Only do this as needed.
 	# Doing this on every click would interfere with the double-clicking.
-	if not c.log.hasFocus() and focus != c.frame.bodyCtrl:
+	if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
 		try:
 			# trace(focus)
-			self.endEditLabel()
-			self.dimEditLabel()
+			tree.endEditLabel()
+			tree.dimEditLabel()
 		except:
 			es_event_exception("deactivate tree")</t>
 <t tx="edream.110203160744.1693">def __init__(self,title):
@@ -28298,7 +28271,8 @@ self.statusLabel = None # 5/20/02
 # Used by event handlers...
 self.redrawCount = 0
 self.draggedItem = None
-self.controlKeyIsDown = false # For control-drags</t>
+self.controlKeyIsDown = false # For control-drags
+self.revertHeadline = None # Previous headline text for abortEditLabel.</t>
 <t tx="edream.110203160744.1695"># These convenience routines just call the corresponding method of the app.gui class.
 # Note: at present these are not called from Leo's core.
 
@@ -28317,57 +28291,53 @@ def force_focus(c,widget):
 <t tx="edream.110203160744.1696"></t>
 <t tx="edream.110203160744.1697">def abortEditLabelCommand (self):
 	
-	c = self.c ; v = c.currentVnode ; tree = self.tree
-	# trace(v)
-	if self.revertHeadline and v.edit_text() and v == self.editVnode:
-		
-		# trace(`self.revertHeadline`)
+	frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+
+	if self.revertHeadline and v.edit_text() and v == tree.editVnode():
+	
 		v.edit_text().delete("1.0","end")
 		v.edit_text().insert("end",self.revertHeadline)
 		tree.idle_head_key(v) # Must be done immediately.
 		tree.revertHeadline = None
 		tree.select(v)
 		if v and len(v.t.joinList) &gt; 0:
-			# 3/26/03: changed redraw_now to force_redraw.
 			tree.force_redraw() # force a redraw of joined headlines.</t>
 <t tx="edream.110203160744.1698"># Convenience methods so the caller doesn't have to know the present edit node.
 
 def dimEditLabel (self):
 
-	v = self.currentVnode
+	v = self.currentVnode()
 	self.setDisabledLabelState(v)
 
 def undimEditLabel (self):
 
-	v = self.currentVnode
+	v = self.currentVnode()
 	self.setSelectedLabelState(v)</t>
-<t tx="edream.110203160744.1699"># Start editing v.edit_text()
-
-def editLabel (self, v):
+<t tx="edream.110203160744.1699">def editLabel (self, v):
+	
+	"""Start editing v.edit_text."""
 
 	# End any previous editing
-	if self.editVnode and v != self.editVnode:
+	if self.editVnode() and v != self.editVnode():
 		self.endEditLabel()
-		self.revertHeadline = None
+		self.frame.revertHeadline = None
 		
-	self.editVnode = v # 7/7/03.
+	self.setEditVnode(v)
 
 	# Start editing
 	if v and v.edit_text():
-		# trace(`v`)
 		self.setNormalLabelState(v)
-		self.revertHeadline = v.headString()</t>
-<t tx="edream.110203160744.1700"># End editing for self.editText
+		self.frame.revertHeadline = v.headString()</t>
+<t tx="edream.110203160744.1700">def endEditLabel (self):
+	
+	"""End editing for self.editText."""
 
-def endEditLabel (self):
+	c = self.c ; v = self.editVnode() ; gui = app.gui
 
-	c = self.c ; v = self.editVnode ; gui = app.gui
-	# trace(v)
 	if v and v.edit_text():
 		self.setUnselectedLabelState(v)
-		self.editVnode = None
+		self.setEditVnode(None)
 	if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-		# 3/26/03: changed redraw_now to force_redraw.
 		self.force_redraw() # force a redraw of joined and ancestor headlines.
 	gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
 <t tx="edream.110203160744.1701">def expandAllAncestors (self,v):
@@ -28381,8 +28351,8 @@ def endEditLabel (self):
 		p = p.parent()
 	return redraw_flag</t>
 <t tx="edream.110203160744.1702">def setNormalLabelState (self,v): # selected, editing
+
 	if v and v.edit_text():
-		# trace(v)
 		&lt;&lt; set editing headline colors &gt;&gt;
 		v.edit_text().tag_remove("sel","1.0","end")
 		v.edit_text().tag_add("sel","1.0","end")
@@ -28390,7 +28360,6 @@ def endEditLabel (self):
 
 def setDisabledLabelState (self,v): # selected, disabled
 	if v and v.edit_text():
-		# trace(v)
 		&lt;&lt; set selected, disabled headline colors &gt;&gt;
 
 def setSelectedLabelState (self,v): # selected, not editing
@@ -28398,7 +28367,6 @@ def setSelectedLabelState (self,v): # selected, not editing
 
 def setUnselectedLabelState (self,v): # not selected.
 	if v and v.edit_text():
-		# trace(v)
 		&lt;&lt; set unselected headline colors &gt;&gt;</t>
 <t tx="edream.110203160744.1703">config = app.config
 fg   = config.getWindowPref("headline_text_editing_foreground_color")
@@ -28502,7 +28470,7 @@ except:
 	except:
 		if 1:
 			print "exceptions opening:", fileName
-			traceback.print_exc()
+			import traceback ; traceback.print_exc()
 		else:
 			es("exceptions opening: " + fileName,color="red")
 			es_exception()
@@ -28889,7 +28857,7 @@ def OnBoxClick(self,event=None):
 	# trace()
 	try:
 		v = self ; c = v.c
-		if c.frame.dragging():
+		if c.frame.tree.dragging():
 			if not doHook("dragging1",c=c,v=v,event=event):
 				c.frame.tree.OnDrag(v,event)
 			doHook("dragging2",c=c,v=v,event=event)
@@ -29032,7 +29000,7 @@ def OnIconRightClick(self,event=None):
 		es_event_exception("activate tree")</t>
 <t tx="edream.110203160744.1742">c = self.c ; gui = app.gui
 
-if v == self.currentVnode:
+if v == self.currentVnode():
 	if self.active:
 		self.editLabel(v)
 	else:
@@ -29134,11 +29102,11 @@ def OnDrag(self,v,event):
 	if not event:
 		return
 
-	if not self.dragging:
+	if not self.dragging():
 		windowPref = app.config.getBoolWindowPref
 		# Only do this once: greatly speeds drags.
 		self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-		self.dragging = true
+		self.setDragging(true)
 		if windowPref("allow_clone_drags"):
 			self.controlDrag = c.frame.controlKeyIsDown
 			if windowPref("look_for_control_drag_on_mouse_down"):
@@ -29182,7 +29150,7 @@ def OnDrag(self,v,event):
 				else:
 					c.dragAfter(v,vdrag)
 		else:
-			if v and self.dragging:
+			if v and self.dragging():
 				pass # es("not dragged: " + v.headString())
 			if 0: # Don't undo the scrolling we just did!
 				self.idle_scrollTo(v)
@@ -29195,7 +29163,7 @@ def OnDrag(self,v,event):
 		canvas.tag_unbind(self.drag_id , "&lt;Any-ButtonRelease-1&gt;")
 		self.drag_id = None
 		
-	self.dragging = false
+	self.setDragging(false)
 	self.drag_v = None</t>
 <t tx="edream.110203160744.1751">x,y = event.x,event.y
 canvas_x = canvas.canvasx(x)
@@ -29234,7 +29202,7 @@ def OnIconRightClick (self,v,event):
 <t tx="edream.110203160744.1753">def onDragCallback(event,tree=tree,v=v):
 	try:
 		c = v.c
-		if tree.dragging:
+		if tree.dragging():
 			if not doHook("dragging1",c=c,v=v,event=event):
 				tree.OnDrag(v,event)
 			doHook("dragging2",c=c,v=v,event=event)
@@ -29405,7 +29373,7 @@ Jason</t>
 	
 	# 7/8/03: force an update of the body pane.
 	current.setBodyStringOrPane(current.bodyString())
-	c.frame.onBodyChanged(current,undoType=None)</t>
+	c.frame.body.onBodyChanged(current,undoType=None)</t>
 <t tx="edream.110203160744.1767">@nocolor
 
 The sortSequence function breaks if two different tuples have the same key.  Fortunately, Python's sort function can do all the work of sortSequence provided that we sort on the first item of each tuple.</t>
@@ -29494,8 +29462,7 @@ def trace (*args,**keys):
 		name = "&lt;unknown&gt;"
 
 	if callers:
-		import traceback
-		traceback.print_stack()
+		import traceback ; traceback.print_stack()
 		
 	if 1: # Print all traces.
 		print name + ": " + message
@@ -29559,13 +29526,13 @@ text in your head or on paper, and perhaps verbally.
 The steps might be as follows:</t>
 <t tx="edream.110203160744.1779">def getBodyLines (self):
 
-	c = self
-	oldVview = c.body.getYScrollPosition()
-	oldSel   = c.body.getTextSelection()
-	head,lines,tail = c.body.getSelectionLines()
+	c = self ; body = c.frame.body
+	oldVview = body.getYScrollPosition()
+	oldSel   = body.getTextSelection()
+	head,lines,tail = body.getSelectionLines()
 
 	if not lines:
-		lines = c.body.getAllText()
+		lines = body.getAllText()
 
 	lines = string.split(lines,'\n')  ## Why don't we use splitLines ???
 
@@ -29777,14 +29744,14 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 <t tx="edream.110203160744.1800"></t>
 <t tx="edream.110203160744.1801">def convertAllBlanks (self):
 	
-	c = self ; v = current = c.currentVnode()
+	c = self ; body = c.frame.body ; v = current = c.currentVnode()
 	next = v.nodeAfterTree()
 	dict = scanDirectives(c)
 	tabWidth  = dict.get("tabwidth")
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
-	oldText = c.body.getAllText()
-	oldSel = c.body.getTextSelection()
+	oldText = body.getAllText()
+	oldSel = body.getTextSelection()
 	count = 0
 	while v and v != next:
 		if v == current:
@@ -29806,8 +29773,8 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 		v.setDirty()
 		v = v.threadNext()
 	if count &gt; 0:
-		newText = c.body.getAllText()
-		newSel = c.body.getTextSelection()
+		newText = body.getAllText()
+		newSel = body.getTextSelection()
 		c.undoer.setUndoParams("Convert All Blanks",
 			current,select=current,oldTree=v_copy,
 			oldText=oldText,newText=newText,
@@ -29815,14 +29782,14 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 	es("blanks converted to tabs in %d nodes" % count)</t>
 <t tx="edream.110203160744.1802">def convertAllTabs (self):
 
-	c = self ; v = current = c.currentVnode()
+	c = self ; body = c.frame.body ; v = current = c.currentVnode()
 	next = v.nodeAfterTree()
 	dict = scanDirectives(c)
 	tabWidth  = dict.get("tabwidth")
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
-	oldText = c.body.getAllText()
-	oldSel = c.body.getTextSelection()
+	oldText = body.getAllText()
+	oldSel = body.getTextSelection()
 	count = 0
 	while v and v != next:
 		if v == current:
@@ -29845,8 +29812,8 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 		v.setDirty()
 		v = v.threadNext()
 	if count &gt; 0:
-		newText = c.body.getAllText()
-		newSel = c.body.getTextSelection() # 7/11/03
+		newText = body.getAllText()
+		newSel = body.getTextSelection() # 7/11/03
 		c.undoer.setUndoParams("Convert All Tabs",
 			current,select=current,oldTree=v_copy,
 			oldText=oldText,newText=newText,
@@ -29854,15 +29821,15 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 	es("tabs converted to blanks in %d nodes" % count)</t>
 <t tx="edream.110203160744.1803">def extract(self):
 
-	c = self ; current = v = c.currentVnode()
+	c = self ; body = c.frame.body ; current = v = c.currentVnode()
 	head,lines,tail,oldSel,oldYview = self.getBodyLines()
 	if not lines: return
 	headline = lines[0] ; del lines[0]
 	junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
-	oldText = c.body.getAllText()
-	oldSel = c.body.getTextSelection()
+	oldText = body.getAllText()
+	oldSel = body.getTextSelection()
 	&lt;&lt; Set headline for extract &gt;&gt;
 	# Remove leading whitespace from all body lines.
 	result = []
@@ -29879,8 +29846,8 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 		c.createLastChildNode(v,headline,body)
 		undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
 		c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=false)
-		newText = c.body.getAllText()
-		newSel = c.body.getTextSelection() # 7/11/03
+		newText = body.getAllText()
+		newSel = body.getTextSelection() # 7/11/03
 		c.undoer.setUndoParams("Extract",
 			v,select=current,oldTree=v_copy,
 			oldText=oldText,newText=newText,
@@ -29892,7 +29859,7 @@ while len(headline) &gt; 0 and headline[0] == '/':
 headline = string.strip(headline)</t>
 <t tx="edream.110203160744.1805">def extractSection(self):
 
-	c = self ; current = v = c.currentVnode()
+	c = self ; body = c.frame.body ; current = v = c.currentVnode()
 	head,lines,tail,oldSel,oldYview = self.getBodyLines()
 	if not lines: return
 	headline = lines[0] ; del lines[0]
@@ -29902,8 +29869,8 @@ headline = string.strip(headline)</t>
 	v_copy = c.undoer.saveTree(v)
 	# trace("v:     " + `v`)
 	# trace("v_copy:" + `v_copy`)
-	oldText = c.body.getAllText()
-	oldSel = c.body.getTextSelection()
+	oldText = body.getAllText()
+	oldSel = body.getTextSelection()
 	&lt;&lt; Set headline for extractSection &gt;&gt;
 	# Remove leading whitespace from all body lines.
 	result = []
@@ -29920,8 +29887,8 @@ headline = string.strip(headline)</t>
 		c.createLastChildNode(v,headline,body)
 		undoType = None # Set undo params later.
 		c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
-		newText = c.body.getAllText()
-		newSel = c.body.getTextSelection()
+		newText = body.getAllText()
+		newSel = body.getTextSelection()
 		c.undoer.setUndoParams("Extract Section",v,
 			select=current,oldTree=v_copy,
 			oldText=oldText,newText=newText,
@@ -29937,14 +29904,14 @@ if headline[0:2] != '&lt;&lt;' and headline[0:2] != '@&lt;':
 	return</t>
 <t tx="edream.110203160744.1807">def extractSectionNames(self):
 
-	c = self ; current = v = c.currentVnode()
+	c = self ; body = c.frame.body ; current = v = c.currentVnode()
 	head,lines,tail,oldSel,oldYview = self.getBodyLines()
 	if not lines: return
 	# Create copy for undo.
 	v_copy = c.undoer.saveTree(v)
 	# No change to body or selection of this node.
-	oldText = newText = c.body.getAllText()
-	i, j = oldSel = newSel = c.body.getTextSelection()
+	oldText = newText = body.getAllText()
+	i, j = oldSel = newSel = body.getTextSelection()
 	c.beginUpdate()
 	if 1: # update range...
 		found = false
@@ -29964,8 +29931,8 @@ if headline[0:2] != '&lt;&lt;' and headline[0:2] != '@&lt;':
 		oldText=oldText,newText=newText,
 		oldSel=oldSel,newSel=newSel)
 	# Restore the selection.
-	c.body.setTextSelection(oldSel)
-	c.body.setFocus()</t>
+	body.setTextSelection(oldSel)
+	body.setFocus()</t>
 <t tx="edream.110203160744.1808">head1 = string.find(s,"&lt;&lt;")
 if head1 &gt; -1:
 	head2 = string.find(s,"&gt;&gt;",head1)
@@ -30183,7 +30150,7 @@ def idle_set_ivars (self, event=None):
 	
 	c = top() ; v = c.currentVnode()
 	self.top.after_idle(self.set_ivars,c)
-	c.frame.recolor(v)
+	c.frame.body.recolor(v)
 	# print self.print_ivars()</t>
 <t tx="edream.110203160744.1827"># Global options
 w = self.pageWidthText.get("1.0","end")
@@ -30418,10 +30385,7 @@ def initIvars(self):
 
 	&lt;&lt; initialize ivars &gt;&gt;
 	self.setIvarsFromFind()</t>
-<t tx="edream.110203160744.1845"># Created later.
-self.body = self.log = None
-
-# per-document info...
+<t tx="edream.110203160744.1845"># per-document info...
 self.hookFunction = None
 self.openDirectory = None # 7/2/02
 
@@ -30471,7 +30435,6 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files</t>
 	
 	# Finish creating the frame
 	frame.finishCreate(c)
-	c.log = c.frame.log # Kludge: should replace c.log by abstract log routines.
 	
 	# Finish initing the subcommanders.
 	c.undoer.clearUndoState() # Menus must exist at this point.
@@ -30558,7 +30521,7 @@ def update (self):
 				es("Icons directory not found: "+path, color="red")
 	except:
 		print "exception setting bitmap"
-		traceback.print_exc()</t>
+		import traceback ; traceback.print_exc()</t>
 <t tx="edream.110203160744.1854">def attachLeoIcon (self,w):
 	
 	"""Try to attach a Leo icon to the Leo Window.
@@ -30577,7 +30540,7 @@ def update (self):
 		try:
 			&lt;&lt; try to use the PIL and tkIcon packages to draw the icon &gt;&gt;
 		except:
-			# traceback.print_exc()
+			# import traceback ; traceback.print_exc()
 			self.leoIcon = None</t>
 <t tx="edream.110203160744.1855">@ This code requires Fredrik Lundh's PIL and tkIcon packages:
 
@@ -30650,7 +30613,7 @@ This allows the caller to do an auto-save only if something was really written.<
 	assert(changedFiles != None)
 	if changedFiles:
 		es("auto-saving outline",color="blue")
-		c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
+		c.save() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1860">def writeMissingAtFileNodes (self):
 
 	c = self.c ; v = c.currentVnode()
@@ -30661,7 +30624,7 @@ This allows the caller to do an auto-save only if something was really written.<
 		assert(changedFiles != None)
 		if changedFiles:
 			es("auto-saving outline",color="blue")
-			c.frame.OnSave() # Must be done to set or clear tnodeList.</t>
+			c.save() # Must be done to set or clear tnodeList.</t>
 <t tx="edream.110203160744.1861">def writeMissing(self,v):
 
 	at = self
@@ -30905,7 +30868,7 @@ __str__ = __repr__
 
 	"""Clear all links to objects in a Leo window."""
 
-	frame = self ; c = self.c ; tree = frame.tree
+	frame = self ; c = self.c ; tree = frame.tree ; body = self.body
 
 	# Do this first.
 	&lt;&lt; clear all vnodes and tnodes in the tree &gt;&gt;
@@ -30917,7 +30880,9 @@ __str__ = __repr__
 	clearAllIvars(c.tangleCommands)
 	clearAllIvars(c.undoer)
 	clearAllIvars(c)
-	clearAllIvars(tree.colorizer)
+	clearAllIvars(body.colorizer)
+	clearAllIvars(body)
+	clearAllIvars(tree)
 	clearAllIvars(tree)
 
 	# This must be done last.
@@ -30966,7 +30931,7 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
 	if not doHook("menu1",c=c,v=v):
 		frame.menu.createMenuBar(self)
 
-	app.setLog(self.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+	app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
 
 	app.windowList.append(frame)
 	
@@ -31000,9 +30965,9 @@ self.createIconBar()
 # Create the canvas.
 self.createCanvas(self.split2Pane1)
 # Create the log class.
-c.log  = frame.log = leoTkinterLog(frame,self.split2Pane2)
+frame.log = leoTkinterLog(frame,self.split2Pane2)
 # Create the body class.
-c.body = frame.body = leoTkinterBody(frame,self.split1Pane2)
+frame.body = leoTkinterBody(frame,self.split1Pane2)
 frame.bodyCtrl = frame.body.bodyCtrl
 # Create the tree class.
 frame.tree = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
@@ -31027,7 +30992,7 @@ v.initHeadString("NewHeadline")
 v.moveToRoot()
 
 c.beginUpdate()
-c.frame.redraw()
+c.redraw()
 c.frame.getFocus()
 c.editVnode(v)
 c.endUpdate(false)</t>
@@ -31795,17 +31760,17 @@ This was tricky to get right:
 <t tx="edream.110203160744.1930">def recolor(self,v,incremental=0):
 	
 	if 0: # Do immediately
-		self.colorizer.colorize(v,incremental)
+		self.frame.body.colorizer.colorize(v,incremental)
 	else: # Do at idle time
-		self.colorizer.schedule(v,incremental)
+		self.frame.body.colorizer.schedule(v,incremental)
 
 def recolor_now(self,v,incremental=0):
 
-	self.colorizer.colorize(v,incremental)
+	self.frame.body.colorizer.colorize(v,incremental)
 	
 def recolor_range(self,v,leading,trailing):
 
-	self.colorizer.recolor_range(v,leading,trailing)</t>
+	self.frame.body.colorizer.recolor_range(v,leading,trailing)</t>
 <t tx="edream.110203160744.1931">elif redoType in ( "Typing",
 	"Change","Convert Blanks","Convert Tabs","Cut",
 	"Delete","Indent","Paste","Reformat Paragraph","Undent"):
@@ -31815,7 +31780,7 @@ def recolor_range(self,v,leading,trailing):
 	if current != u.v:
 		c.selectVnode(u.v)
 	elif redoType in ("Cut","Paste"):
-		c.frame.tree.forceFullRecolor()
+		c.frame.body.forceFullRecolor()
 
 	self.undoRedoText(
 		u.v,u.leading,u.trailing,
@@ -31826,7 +31791,7 @@ def recolor_range(self,v,leading,trailing):
 	if u.newSel:
 		c.frame.body.setTextSelection(u.newSel)
 	if u.yview:
-		c.body.setYScrollPosition(u.yview)
+		c.frame.body.setYScrollPosition(u.yview)
 	redrawFlag = (current != u.v)
 		
 elif redoType == "Change All":
@@ -31855,7 +31820,8 @@ elif redoType == "Change Headline":
 	for v2 in u.v.t.joinList:
 		if v2 != u.v:
 			v2.setHeadString(u.newText)
-	c.selectVnode(u.v)</t>
+	c.selectVnode(u.v)
+</t>
 <t tx="edream.110203160744.1932">@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
 
 But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
@@ -31870,7 +31836,7 @@ elif undoType in ( "Typing",
 	if current != u.v:
 		c.selectVnode(u.v)
 	elif undoType in ("Cut","Paste"):
-		c.frame.tree.forceFullRecolor()
+		c.frame.body.forceFullRecolor()
 
 	self.undoRedoText(
 		u.v,u.leading,u.trailing,
@@ -31880,7 +31846,7 @@ elif undoType in ( "Typing",
 	if u.oldSel:
 		c.frame.body.setTextSelection(u.oldSel)
 	if u.yview:
-		c.body.setYScrollPosition(u.yview)
+		c.frame.body.setYScrollPosition(u.yview)
 	redrawFlag = (current != u.v)
 		
 elif undoType == "Change All":
@@ -31909,7 +31875,8 @@ elif undoType == "Change Headline":
 	for v2 in u.v.t.joinList:
 		if v2 != u.v:
 			v2.setHeadString(u.oldText)
-	c.selectVnode(u.v)</t>
+	c.selectVnode(u.v)
+</t>
 <t tx="edream.110203160744.1933"></t>
 <t tx="edream.110203160744.1934"></t>
 <t tx="edream.110203160744.1935">@nocolor
@@ -32266,8 +32233,10 @@ if len(dir) &gt; 0:
 <t tx="edream.110203160744.1959">if 0: # This can't be done directly.
 
 	# This should be done after the pane size has been set.
-	top = c.frame.topVnode()
-	if top: c.frame.scrollTo(top)</t>
+	top = c.frame.tree.topVnode()
+
+	if top:
+		c.frame.tree.scrollTo(top)</t>
 <t tx="edream.110203160744.1960"># The caller has enclosed this code in beginUpdate/endUpdate.
 
 def read(self,root,importFileName=None):
@@ -32419,7 +32388,7 @@ AttributeError: 'NoneType' object has no attribute 'currentVnode'
 	v = c.currentVnode()
 	language = self.lang_var.get()
 	c.target_language = self.target_language = language
-	c.frame.recolor(v)
+	c.frame.body.recolor(v)
 	# trace(language)</t>
 <t tx="edream.110203160744.1973">@ c.doCommand and frame.OnMenuClick now set app.log, so top() will be reliable after any command is executed.
 
@@ -32779,7 +32748,7 @@ if j &lt; i:
 <t tx="edream.110203160744.2010"></t>
 <t tx="edream.110203160744.2011">def convertBlanks (self,setUndoParams=true):
 
-	c = self
+	c = self ; body = c.frame.body
 	head,lines,tail,oldSel,oldYview = c.getBodyLines()
 	result = [] ; changed = false
 
@@ -32795,12 +32764,12 @@ if j &lt; i:
 		result = string.join(result,'\n')
 		undoType = choose(setUndoParams,"Convert Blanks",None)
 		c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-		c.body.selectAllText()
+		body.selectAllText()
 
 	return changed</t>
 <t tx="edream.110203160744.2012">def convertTabs (self,setUndoParams=true):
 
-	c = self
+	c = self ; body = c.frame.body
 	head,lines,tail,oldSel,oldYview = self.getBodyLines()
 	result = [] ; changed = false
 	
@@ -32817,7 +32786,7 @@ if j &lt; i:
 		result = string.join(result,'\n')
 		undoType = choose(setUndoParams,"Convert Tabs",None)
 		c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-		c.body.selectAllText()
+		body.selectAllText()
 		
 	return changed</t>
 <t tx="edream.110203160744.2013">def createLastChildNode (self,parent,headline,body):
@@ -32849,7 +32818,7 @@ if j &lt; i:
 <t tx="edream.110203160744.2015">def findBoundParagraph (self):
 	
 	c = self
-	head,ins,tail = c.body.getInsertLines()
+	head,ins,tail = c.frame.body.getInsertLines()
 
 	if not ins or ins.isspace() or ins[0] == '@':
 		return None,None,None
@@ -32888,8 +32857,7 @@ if j &lt; i:
 	result.extend(para_tail_lines)
 	tail = joinLines(post_para_lines)
 
-	return head,result,tail # string, list, string
-</t>
+	return head,result,tail # string, list, string</t>
 <t tx="edream.110203160744.2016">print ; print "head_lines"
 for line in head_lines: print `line`
 print ; print "ins", `ins`
@@ -32921,9 +32889,9 @@ Paragraph is bound by start of body, end of body, blank lines, and lines
 starting with "@". Paragraph is selected by position of current insertion
 cursor."""
 
-	c = self ; v = c.currentVnode()
+	c = self ; body = c.frame.body ; v = c.currentVnode()
 
-	if c.body.hasTextSelection():
+	if body.hasTextSelection():
 		es("Text selection inhibits Reformat Paragraph",color="blue")
 		return
 
@@ -32936,9 +32904,9 @@ cursor."""
 pageWidth = dict.get("pagewidth")
 tabWidth  = dict.get("tabwidth")
 
-original = c.body.getAllText()
-oldSel   = c.body.getTextSelection()
-oldYview = c.body.getYScrollPosition()
+original = body.getAllText()
+oldSel   = body.getTextSelection()
+oldYview = body.getYScrollPosition()
 head,lines,tail = c.findBoundParagraph()</t>
 <t tx="edream.110203160744.2020">indents = [0,0] ; leading_ws = ["",""]
 
@@ -32970,26 +32938,26 @@ result = wrap_lines(lines,
 result = '\n'.join(result)
 if trailingNL:
 	result += '\n'</t>
-<t tx="edream.110203160744.2022">sel_start, sel_end = self.body.setSelectionAreas(head,result,tail)
+<t tx="edream.110203160744.2022">sel_start, sel_end = body.setSelectionAreas(head,result,tail)
 
 changed = original != head + result + tail
 undoType = choose(changed,"Reformat Paragraph",None)
-c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 
 # Advance the selection to the next paragraph.
 newSel = sel_end, sel_end
-c.body.setTextSelection(newSel)
+body.setTextSelection(newSel)
 
 c.recolor()</t>
 <t tx="edream.110203160744.2023">def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=true):
 	
-	c = self ; v = c.currentVnode()
+	c = self ; body = c.frame.body ; v = c.currentVnode()
 
 	# Update the text and notify the event handler.
-	self.body.setSelectionAreas(head,middle,tail)
+	body.setSelectionAreas(head,middle,tail)
 	if setSel:
-		self.body.setTextSelection(oldSel)
-	c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+		body.setTextSelection(oldSel)
+	body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 
 	# Update the changed mark and icon.
 	c.setChanged(true)
@@ -33000,11 +32968,11 @@ c.recolor()</t>
 
 	# Scroll as necessary.
 	if oldYview:
-		self.body.setYScrollPosition(oldYview)
+		body.setYScrollPosition(oldYview)
 	else:
-		self.body.makeInsertPointVisible()
+		body.makeInsertPointVisible()
 
-	c.body.setFocus()
+	body.setFocus()
 	c.recolor()</t>
 <t tx="edream.110203160744.2024">@nocolor
 
@@ -33539,7 +33507,7 @@ i += 1</t>
 	else: # create a root vnode
 		v = leoNodes.vnode(c,t)
 		v.moveToRoot()
-		c.frame.setRootVnode(v)
+		c.frame.tree.setRootVnode(v)
 	v.initHeadString(headline,encoding=self.leo_file_encoding)
 	&lt;&lt; handle unknown vnode attributes &gt;&gt;
 	return v</t>
@@ -33617,8 +33585,7 @@ def recolor_range(self,v,leading,trailing):
 		if self.c:
 			es_exception()
 		else:
-			import traceback
-			traceback.print_exc()
+			import traceback ; traceback.print_exc()
 		return "error" # for unit testing.</t>
 <t tx="edream.110203160744.2069">self.flag == self.last_flag and
 self.last_language == self.language and
@@ -33838,7 +33805,7 @@ def idle_colorize(self,v):
 <t tx="edream.110203160744.2084"># self.flag is true unless an unambiguous @nocolor is seen.
 
 def updateSyntaxColorer (self,v):
-	
+
 	self.flag = self.useSyntaxColoring(v)
 	self.scanColorDirectives(v)
 </t>
@@ -33940,7 +33907,7 @@ def useSyntaxColoring (self,v):
 	t.tag_add("sel",start,end)
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)</t>
-<t tx="edream.110203160744.2098">@ This routine performs a single batch change operation, updating the head or body string of v and leaving the result in s_text.  We update the c.body if we are changing the body text of c.currentVnode().
+<t tx="edream.110203160744.2098">@ This routine performs a single batch change operation, updating the head or body string of v and leaving the result in s_text.  We update the body if we are changing the body text of c.currentVnode().
 
 s_text contains the found text on entry and contains the changed text on exit.  pos and pos2 indicate the selection.  The selection will never be empty. NB: we can not assume that self.v is visible.
 @c
@@ -33955,8 +33922,8 @@ def batchChange (self,pos1,pos2,count):
 	s = gui.getAllText(st)
 	# Update the selection.
 	insert=choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
-	gui.setSelectionRange(t,insert,insert)
-	gui.setInsertPoint(t,insert)
+	gui.setSelectionRange(st,insert,insert)
+	gui.setInsertPoint(st,insert)
 	# Update the node
 	if self.in_headline:
 		&lt;&lt; set the undo head params &gt;&gt;
@@ -33976,7 +33943,7 @@ if s != v.headString():
 	if count == 1:
 		c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
 	c.undoer.setUndoTypingParams(v,"Change Headline",v.bodyString(),s,sel,sel)</t>
-<t tx="edream.110203160744.2100">sel = c.body.getInsertionPoint()
+<t tx="edream.110203160744.2100">sel = c.frame.body.getInsertionPoint()
 
 if len(s) &gt; 0 and s[-1]=='\n': s = s[:-1]
 
@@ -34002,14 +33969,14 @@ if s != v.bodyString():
 		if pos1:
 			count += 1
 			self.batchChange(pos1,pos2,count)
-			line = gui.getLineContainingIndex(t,pos1)
+			line = gui.getLineContainingIndex(st,pos1)
 			self.printLine(line,allFlag=true)
 		else: break
 	c.endUpdate()
 	# Make sure the headline and body text are updated.
 	v = c.currentVnode()
 	c.frame.onHeadChanged(v)
-	c.frame.onBodyChanged(v,"Can't Undo")
+	c.frame.body.onBodyChanged(v,"Can't Undo")
 	if count &gt; 0:
 		# A change was made.  Tag the end of the Change All command.
 		c.undoer.setUndoParams("Change All",v)
@@ -34891,7 +34858,7 @@ def yesButton(self):
 	
 	# Do this at idle time.
 	def callback(top=self.top):
-		app.gui.attachLeoIcon(self.top)
+		app.gui.attachLeoIcon(top)
 	
 	self.top.after_idle(callback)</t>
 <t tx="edream.110203160744.2181">def run (self,modal):
@@ -35181,11 +35148,11 @@ def getImpliedFont (self):
 	log  = self.logVar.get()
 	tree = self.treeVar.get()
 	
-	fn = c.body.cget("font")
+	fn = c.frame.body.cget("font")
 	bodyFont = tkFont.Font(font=fn)
-	fn = c.log.getFontConfig()
+	fn = c.frame.log.getFontConfig()
 	logFont = tkFont.Font(font=fn)
-	treeFont = c.frame.getFont()
+	treeFont = c.frame.tree.getFont()
 	
 	if log and not body and not tree:
 		font = logFont
@@ -35214,11 +35181,11 @@ def getImpliedFont (self):
 	c = self.c
 	# Revert the fonts themselves in the various panes.
 	font = self.revertBodyFont
-	c.body.configure(font=font)
+	c.frame.body.configure(font=font)
 	font = self.revertLogFont
-	c.log.configureFont(font)
+	c.frame.log.configureFont(font)
 	font = self.revertTreeFont
-	c.frame.setFont(font=font)
+	c.frame.tree.setFont(font=font)
 	# Revert the setting of the items in the font panel
 	self.last_selected_font = None # Use the font for the selected panes.
 	font = self.getImpliedFont()
@@ -35241,13 +35208,13 @@ def getImpliedFont (self):
 	
 	c = self.c
 
-	fn = c.body.cget("font")
+	fn = c.frame.body.cget("font")
 	self.revertBodyFont = tkFont.Font(font=fn)
 	
-	fn = c.log.getFontConfig()
+	fn = c.frame.log.getFontConfig()
 	self.revertLogFont = tkFont.Font(font=fn)
 	
-	self.revertTreeFont = c.frame.getFont()</t>
+	self.revertTreeFont = c.frame.tree.getFont()</t>
 <t tx="edream.110203160744.2206"># Note that just after a revert all three setting may be different.
 
 def showSettings (self):
@@ -35257,17 +35224,17 @@ def showSettings (self):
 	c = self.c
 	es("---------------")
 	# Body pane.
-	fn = c.body.cget("font")
+	fn = c.frame.body.cget("font")
 	font = tkFont.Font(font=fn)
 	name,size,slant,weight = self.getFontSettings(font)
 	es("body font:" + name + "," + `size` + "," + slant + "," + weight)
 	# Log pane.
-	fn = c.log.getFontConfig()
+	fn = c.frame.log.getFontConfig()
 	font = tkFont.Font(font=fn)
 	name,size,slant,weight = self.getFontSettings(font)
 	es("log font:" + name + "," + `size` + "," + slant + "," + weight)
 	# Tree pane.
-	font = c.frame.getFont()
+	font = c.frame.tree.getFont()
 	name,size,slant,weight = self.getFontSettings(font)
 	es("headline font:" + name + "," + `size` + "," + slant + "," + weight)</t>
 <t tx="edream.110203160744.2207">def update (self,event=None):
@@ -35299,13 +35266,13 @@ def showSettings (self):
 e.delete(0,"end")
 e.insert(0,`size`)</t>
 <t tx="edream.110203160744.2209">font = choose(bodyChecked,activeFont,self.revertBodyFont)
-c.body.configure(font=font)
+c.frame.body.configure(font=font)
 
 font = choose(logChecked,activeFont,self.revertLogFont)
-c.log.configureFont(font)
+c.frame.log.configureFont(font)
 
 font = choose(treeChecked,activeFont,self.revertTreeFont)
-c.frame.setFont(font=font)</t>
+c.frame.tree.setFont(font=font)</t>
 <t tx="edream.110203160744.2221">def __init__ (self,c):
 
 	self.c = c
@@ -35449,7 +35416,7 @@ revertButton.pack(side="left",pady=7,expand=1)</t>
 		es_exception()</t>
 <t tx="edream.110203160744.2264">def reconfigureFromConfig (self):
 	
-	f = self ; c = f.c
+	frame = self ; c = frame.c
 	
 	# Not ready yet: just reset the width and color.
 	# We need self.bar1 and self.bar2 ivars.
@@ -35458,14 +35425,14 @@ revertButton.pack(side="left",pady=7,expand=1)</t>
 	# The calls to redraw are workarounds for an apparent Tk bug.
 	# Without them the text settings get applied to the wrong widget!
 	# Moreover, only this order seems to work on Windows XP...
-	f.tree.setFontFromConfig()
-	f.setTreeColorsFromConfig()
-	f.configureBarsFromConfig()
+	frame.tree.setFontFromConfig()
+	frame.setTreeColorsFromConfig()
+	frame.configureBarsFromConfig()
 	c.redraw()
-	f.setBodyFontFromConfig()
-	f.setTabWidth(c.tab_width)
+	frame.setBodyFontFromConfig()
+	frame.setTabWidth(c.tab_width)
 	c.redraw()
-	f.log.setFontFromConfig()
+	frame.log.setFontFromConfig()
 	c.redraw()</t>
 <t tx="edream.110203160744.2265">def setTabWidth (self, w):
 	
@@ -35638,10 +35605,15 @@ def onDragSplitterBar (self, event, verticalFlag):
 <t tx="edream.110203160744.2280">def __init__ (self,frame,parentFrame):
 
 	self.frame = frame
-	self.c = frame.c
-
+	self.c = c = frame.c
+	self.forceFullRecolorFlag = false
+	
 	self.bodyCtrl = self.createControl(frame,parentFrame)
-	self.setBodyFontFromConfig()</t>
+	frame.body = self
+
+	self.setBodyFontFromConfig()
+	
+	self.colorizer = leoColor.colorizer(c)</t>
 <t tx="edream.110203160744.2284">class leoTkinterBody (leoFrame.leoBody):
 	
 	"""A class that represents the body pane of a Tkinter window."""
@@ -35662,7 +35634,7 @@ def onDragSplitterBar (self, event, verticalFlag):
 	t.bind("&lt;Button-1&gt;", frame.OnBodyClick)
 	t.bind("&lt;Button-3&gt;", frame.OnBodyRClick)
 	t.bind("&lt;Double-Button-1&gt;", frame.OnBodyDoubleClick)
-	t.bind("&lt;Key&gt;", frame.tree.OnBodyKey)
+	t.bind("&lt;Key&gt;", frame.body.onBodyKey)
 
 	# Gui-dependent commands...
 	t.bind(virtual_event_name("Cut"), frame.OnCut)
@@ -35736,7 +35708,7 @@ def onDragSplitterBar (self, event, verticalFlag):
 			cursor="xterm" + " " + fg + " " + bg
 			try: body.configure(cursor=cursor)
 			except:
-				traceback.print_exc()</t>
+				import traceback ; traceback.print_exc()</t>
 <t tx="edream.110203160744.2297">def hasFocus (self):
 	
 	return self.bodyCtrl == self.frame.top.focus_displayof()
@@ -35811,13 +35783,17 @@ def deleteRange (self,index1,index2):
 	after is all lines after the selected text
 	(or the text after the insert point if no selection)"""
 	
-	# At present, called only by getBodyLines.
+	# At present, called only by c.getBodyLines.
 
 	t = self.bodyCtrl
 	sel_index = t.tag_ranges("sel") 
 	if len(sel_index) != 2:
-		return "","",""
-		
+		if 1: # Choose the insert line.
+			index = t.index("insert")
+			sel_index = index,index
+		else:
+			return "","","" # Choose everything.
+
 	i,j = sel_index
 	i = t.index(i + "linestart")
 	j = t.index(j + "lineend") # 10/24/03: -1c  # 11/4/03: no -1c.
@@ -36159,7 +36135,7 @@ def findNextMatch(self):
 		if pos:
 			if c.mark_finds_flag:
 				v.setMarked()
-				c.frame.drawIcon(v) # redraw only the icon.
+				c.frame.tree.drawIcon(v) # redraw only the icon.
 			return pos, newpos
 		elif self.errors:
 			return None,None # Abort the search.
@@ -36805,7 +36781,7 @@ def runAskYesNoCancelDialog(self,title,
 	message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
 	"""Create and run an askYesNoCancel dialog ."""
 	d = leoTkinterDialog.tkinterAskYesNoCancel(
-		title,message,noMessage,defaultButton)
+		title,message,yesMessage,noMessage,defaultButton)
  	return d.run(modal=true)</t>
 <t tx="edream.110203160744.2389">def runOpenFileDialog(self,title,filetypes,defaultextension):
 
@@ -36916,7 +36892,7 @@ What I did:
 	
 - removed self.bodyCtrl from colorizer.
 	- This required several new body methods.
-- created self.body = self.c.body</t>
+</t>
 <t tx="edream.110203160744.2404"></t>
 <t tx="edream.110203160744.2405"></t>
 <t tx="edream.110203160744.2406">@nocolor
@@ -37451,23 +37427,7 @@ The Extract Section feature is enabled when ANY selection is made. It just does
 nothing if the first selected line is not a section name.
 
 The trouble seems to be that ExtractSection was not completely implemented in
-'Enabling Menu Items'. The current code is:
-
-def canExtract (self):
-
-c = self
-if c.body:
-i, j = getTextSelection(c.body)
-return i and j and c.body.compare(i, "!=", j)
-else:
-return false
-
-canExtractSection = canExtract
-canExtractSectionNames = canExtract
-
-which enables ExtractSection based on the same requirements as enabling
-Extract.
-</t>
+'Enabling Menu Items'.</t>
 <t tx="edream.110203160744.2450">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2112703
 By: edcdave
@@ -38298,7 +38258,7 @@ def setup():
 		if name == "": name = "untitled"
 		if c.changed:
 			print "saving ",name
-			frame.OnSave()
+			c.save()
 </t>
 <t tx="edream.110203160744.2497">def tangleLeoConfigDotLeo():
 
@@ -38335,7 +38295,7 @@ os.system("python setup.py sdist --formats=zip")
 
 true = 1 ; false = 0
 from distutils.core import setup
-import distutils,os,sys,traceback
+import distutils,os,sys
 
 @others
 
@@ -38428,7 +38388,7 @@ def generateModules():
 			f.write(data)
 			f.close()
 	except:
-		traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		sys.exit()
 </t>
 <t tx="edream.110203160744.2503">def setDefaultParams():
@@ -39947,8 +39907,7 @@ import compiler,dis,os,string,sys,types
 			a = eval(m)
 			any(a,stats)
 		except:
-			import traceback
-			traceback.print_exc()
+			import traceback ; traceback.print_exc()
 			print "----- no matching class in", `m`
 			
 	print_stats(stats)</t>
@@ -40880,7 +40839,7 @@ Edward K. Ream</t>
 
 from leoGlobals import *
 import leoApp,leoConfig,leoNodes
-import os,string,sys,traceback
+import os,string,sys
 
 @others
 
@@ -40937,9 +40896,9 @@ def profile ():
 @language python
 
 from leoGlobals import *
-import leoConfig,leoNodes
-import leoGui,leoTkinterGui # Tk is the default gui.
-import locale,os,sys
+
+import leoTkinterGui # Tk is the default gui.
+import os,sys
 
 class LeoApp:
 
@@ -44321,7 +44280,7 @@ def setIvarsFromPrefs (self):
 <t tx="edream.110203160744.2869"></t>
 <t tx="edream.110203160744.2870">def beginUpdate(self):
 
-	self.frame.beginUpdate()
+	self.frame.tree.beginUpdate()
 	
 BeginUpdate = beginUpdate # Compatibility with old scripts</t>
 <t tx="edream.110203160744.2871">def bringToFront(self):
@@ -44331,15 +44290,16 @@ BeginUpdate = beginUpdate # Compatibility with old scripts</t>
 BringToFront = bringToFront # Compatibility with old scripts</t>
 <t tx="edream.110203160744.2872">def endUpdate(self, flag=true):
 	
-	self.frame.endUpdate(flag)
+	self.frame.tree.endUpdate(flag)
 	
 EndUpdate = endUpdate # Compatibility with old scripts</t>
 <t tx="edream.110203160744.2873">def recolor(self):
 
-	self.frame.recolor(self.frame.currentVnode())</t>
+	c = self ; frame = c.frame
+	frame.body.recolor(frame.tree.currentVnode())</t>
 <t tx="edream.110203160744.2874">def redraw(self):
 
-	self.frame.redraw()
+	self.frame.tree.redraw()
 	
 # Compatibility with old scripts
 Redraw = redraw 
@@ -44431,8 +44391,8 @@ canCutOutline = canDeleteHeadline</t>
 <t tx="edream.110203160744.2885">def canExtract (self):
 
 	c = self
-	if c.body:
-		return c.body.hasTextSelection()
+	if c.frame.body:
+		return c.frame.body.hasTextSelection()
 	else:
 		return false
 
@@ -44559,8 +44519,8 @@ def canSelectVisNext (self):
 <t tx="edream.110203160744.2898">def canShiftBodyLeft (self):
 
 	c = self
-	if c.body:
-		s = c.body.getAllText()
+	if c.frame.body:
+		s = c.frame.body.getAllText()
 		return s and len(s) &gt; 0
 	else:
 		return false
@@ -44568,8 +44528,8 @@ def canSelectVisNext (self):
 def canShiftBodyRight (self):
 
 	c = self
-	if c.body:
-		s = c.body.getAllText()
+	if c.frame.body:
+		s = c.frame.body.getAllText()
 		return s and len(s) &gt; 0
 	else:
 		return false</t>
@@ -44718,7 +44678,7 @@ def expandLevel9 (self): self.expandToLevel(9)
 	while v and v != last:
 		v.expand()
 		v = v.threadNext()
-	c.frame.redraw()</t>
+	c.redraw()</t>
 <t tx="edream.110203160744.2916">def expandToLevel (self,level):
 
 	c = self
@@ -44748,7 +44708,7 @@ def expandLevel9 (self): self.expandToLevel(9)
 
 def currentVnode (self):
 
-	return self.frame.currentVnode()
+	return self.frame.tree.currentVnode()
 </t>
 <t tx="edream.110203160744.2919">def clearAllMarked (self):
 
@@ -44780,7 +44740,7 @@ def fileName (self):
 
 def rootVnode (self):
 
-	return self.frame.rootVnode()
+	return self.frame.tree.rootVnode()
 </t>
 <t tx="edream.110203160744.2924"></t>
 <t tx="edream.110203160744.2925">def goToNextDirtyHeadline (self):
@@ -44934,15 +44894,15 @@ def rootVnode (self):
 def editVnode(self,v):
 
 	c = self
-	# trace(v)
+
 	if v:
 		c.selectVnode(v)
-		c.frame.editLabel(v)</t>
+		c.frame.tree.editLabel(v)</t>
 <t tx="edream.110203160744.2938"># Ends the editing in the outline.
 
 def endEditing(self):
 
-	self.frame.endEditLabel()
+	self.frame.tree.endEditLabel()
 </t>
 <t tx="edream.110203160744.2939">def selectThreadBack(self):
 
@@ -44988,15 +44948,15 @@ def selectVisBack(self):
 		c.selectVnode(v)
 		c.endUpdate()
 </t>
-<t tx="edream.110203160744.2943"># This is called inside commands to select a new vnode.
-
-def selectVnode(self,v,updateBeadList=true):
+<t tx="edream.110203160744.2943">def selectVnode(self,v,updateBeadList=true):
+	
+	"""Select a new vnode."""
 
 	# All updating and "synching" of nodes are now done in the event handlers!
 	c = self
-	c.frame.endEditLabel()
-	c.frame.select(v,updateBeadList)
-	c.body.setFocus()
+	c.frame.tree.endEditLabel()
+	c.frame.tree.select(v,updateBeadList)
+	c.frame.body.setFocus()
 	self.editing = false</t>
 <t tx="edream.110203160744.2944"># Selects the given node and enables editing of the headline if editFlag is true.
 
@@ -45012,7 +44972,7 @@ def selectVnodeWithEditing(self,v,editFlag):
 </t>
 <t tx="edream.110203160744.2946">def updateSyntaxColorer(self,v):
 
-	self.frame.updateSyntaxColorer(v)
+	self.frame.body.updateSyntaxColorer(v)
 </t>
 <t tx="edream.110203160744.2947">@language python
 
@@ -45568,8 +45528,8 @@ def getCloneWindows (self):
 	# This should be done after the pane size has been set.
 	if 0: # This can not be done at present.
 		if self.topVnode:
-			c.frame.scrollTo(self.topVnode)
-			c.frame.Refresh()
+			c.frame.tree.scrollTo(self.topVnode)
+			c.redraw()
 	# delete the file buffer
 	self.fileBuffer = ""
 	return ok</t>
@@ -45859,7 +45819,7 @@ def xmlEscape(self,s):
 
 @language python
 
-import exceptions,os,re,string,sys,time,traceback,types
+import exceptions,os,re,string,sys,time,types
 
 &lt;&lt; define general constants &gt;&gt;
 
@@ -49211,11 +49171,11 @@ def isVisible (self):
 
 def currentVnode (self):
 
-	return self.c.frame.currentVnode()</t>
+	return self.c.frame.tree.currentVnode()</t>
 <t tx="edream.110203160744.3269">def edit_text (self):
 
 	v = self
-	return self.c.frame.getEditTextDict(v)</t>
+	return self.c.frame.tree.getEditTextDict(v)</t>
 <t tx="edream.110203160744.3270"># Compatibility routine for scripts
 
 def findRoot (self):
@@ -49589,7 +49549,7 @@ def linkAsRoot(self, oldRoot = None):
 	# 5/27/02
 	if oldRoot: oldRoot.mBack = v
 	v.mNext = oldRoot
-	c.frame.setRootVnode(v)</t>
+	c.frame.tree.setRootVnode(v)</t>
 <t tx="edream.110203160744.3315"># Used by scripts
 
 def moveAfter (self,a):
@@ -49604,7 +49564,7 @@ def moveAfter (self,a):
 	
 	# 5/27/02: Moving a node after another node can create a new root node.
 	if not a.parent() and not a.back():
-		c.frame.setRootVnode(a)</t>
+		c.frame.tree.setRootVnode(a)</t>
 <t tx="edream.110203160744.3316"></t>
 <t tx="edream.110203160744.3317"># This methods propagates clone bits from the receiver's tree to tree2.
 
@@ -49705,7 +49665,7 @@ def shouldBeClone (self):
 	# Special case the root
 	if v == c.rootVnode():
 		if not v.mNext: return # Should never happen.
-		c.frame.setRootVnode(v.mNext)
+		c.frame.tree.setRootVnode(v.mNext)
 
 	# Clear the links in other nodes
 	if v.mBack:
@@ -52512,7 +52472,7 @@ def setUndoParams (self,undo_type,v,**keywords):
 <t tx="edream.110203160744.3505">elif redoType == "Delete Outline" or redoType == "Cut Node":
 
 	c.selectVnode(u.v)
-	c.deleteHeadline()</t>
+	c.deleteOutline()</t>
 <t tx="edream.110203160744.3506">elif redoType in ["Import","Insert Outline","Paste Node"]:
 
 	if u.back:
@@ -52536,7 +52496,7 @@ def setUndoParams (self,undo_type,v,**keywords):
 	else:
 		# 3/16/02: Moving up is the only case that can do this.
 		parent = u.v.parent()
-		u.v.moveToRoot(c.frame.rootVnode()) # 5/27/02
+		u.v.moveToRoot(c.rootVnode()) # 5/27/02
 		if parent: # We could assert(parent)
 			parent.moveAfter(u.v)
 	c.initJoinedCloneBits(u.v) # 7/6/02
@@ -52614,13 +52574,13 @@ def undo (self):
 if undoType == "Clone":
 	
 	c.selectVnode(u.v)
-	c.deleteHeadline()
+	c.deleteOutline()
 	c.selectVnode(u.back)
 	
 elif undoType == "Drag &amp; Clone":
 	
 	c.selectVnode(u.v)
-	c.deleteHeadline()
+	c.deleteOutline()
 	c.selectVnode(u.oldV)</t>
 <t tx="edream.110203160744.3512">@ Deleting a clone is _not_ the same as undoing a clone: the clone may have been moved, so there is no necessary relationship between the two nodes.
 @c
@@ -52641,7 +52601,7 @@ elif undoType == "Delete Outline" or undoType == "Cut Node":
 <t tx="edream.110203160744.3513">elif undoType in ["Import","Insert Outline","Paste Node"]:
 	
 	c.selectVnode(u.v)
-	c.deleteHeadline()
+	c.deleteOutline()
 	if u.select:
 		# trace("Insert/Paste:" + `u.select`)
 		c.selectVnode(u.select)</t>
@@ -52654,7 +52614,7 @@ elif undoType == "Delete Outline" or undoType == "Cut Node":
 	else:
 		# 3/16/02: Moving up is the only case that can do this.
 		parent = u.v.parent()
-		u.v.moveToRoot(c.frame.rootVnode())
+		u.v.moveToRoot(c.rootVnode())
 		if parent: # We could assert(parent)
 			parent.moveAfter(u.v)
 	
@@ -52816,7 +52776,7 @@ class leoGui:
 <t tx="edream.110203160744.3530">def oops (self):
 	
 	print "leoGui oops", callerName(2), "should be overridden in subclass"</t>
-<t tx="edream.110203160744.3532">def destroySelf (self,frame):
+<t tx="edream.110203160744.3532">def destroySelf (self):
 
 	self.oops()</t>
 <t tx="edream.110203160744.3534">@ Subclasses are expected to subclass all of the following methods.
@@ -52886,8 +52846,8 @@ def get_window_info (self,window):
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
-import leoCompare,leoFontPanel,leoNodes,leoPrefs
-import os,string,sys,time,traceback
+import leoColor
+import os,string,sys,time
 
 @others</t>
 <t tx="edream.110203160744.3541">class leoFrame:
@@ -53566,7 +53526,7 @@ def onCompareFiles (self):
 <t tx="edream.110203160744.3580">@language python
 
 from leoGlobals import *
-import exceptions,sys,string,Tkinter,tkFont
+import exceptions,sys,string
 	
 class leoFontPanel:
 	
@@ -53594,7 +53554,7 @@ class leoFontPanel:
 	self.hide()</t>
 <t tx="edream.110203160744.3585">set = app.config.setWindowPref
 
-fn = c.body.cget("font")
+fn = c.frame.body.cget("font")
 font = tkFont.Font(font=fn)
 name,size,slant,weight = self.getFontSettings(font)
 set("body_text_font_family",name)
@@ -53602,7 +53562,7 @@ set("body_text_font_size",size)
 set("body_text_font_slant",slant)
 set("body_text_font_weight",weight)
 	
-fn = c.log.getFontConfig()
+fn = c.frame.log.getFontConfig()
 font = tkFont.Font(font=fn)
 name,size,slant,weight = self.getFontSettings(font)
 set("log_text_font_family",name)
@@ -53610,7 +53570,7 @@ set("log_text_font_size",size)
 set("log_text_font_slant",slant)
 set("log_text_font_weight",weight)
 	
-font = c.frame.getFont()
+font = c.frame.tree.getFont()
 name,size,slant,weight = self.getFontSettings(font)
 set("headline_text_font_family",name)
 set("headline_text_font_size",size)
@@ -53619,9 +53579,9 @@ set("headline_text_font_weight",weight)</t>
 <t tx="edream.110203160744.3586">def onRevert (self):
 
 	c = self.c
-	c.body.configure(font=self.revertBodyFont)
-	c.log.configureFont(self.revertLogFont)
-	c.frame.setFont (font=self.revertTreeFont)
+	c.frame.body.configure(font=self.revertBodyFont)
+	c.frame.log.configureFont(self.revertLogFont)
+	c.frame.tree.setFont (font=self.revertTreeFont)
 	c.redraw()
 	self.revertIvars()
 	# Don't call update here.</t>
@@ -54424,7 +54384,7 @@ def yesButton(self):
 		n = items[0]
 		v = self.vnodeList[n]
 		c.beginUpdate()
-		c.frame.expandAllAncestors(v)
+		c.frame.tree.expandAllAncestors(v)
 		c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 		c.endUpdate()
 		c.frame.idle_scrollTo(v)
@@ -54616,12 +54576,12 @@ def changeSelection(self):
 	c.beginUpdate()
 	if c.mark_changes_flag:
 		v.setMarked()
-		c.frame.drawIcon(v) # redraw only the icon.
+		c.frame.tree.drawIcon(v) # redraw only the icon.
 	# update node, undo status, dirty flag, changed mark &amp; recolor
 	if self.in_headline:
 		c.frame.idle_head_key(v)
 	else:
-		c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+		c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 	c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 	return true</t>
 <t tx="edream.110203160744.3668">def changeThenFind(self):
@@ -54735,7 +54695,7 @@ def initBatchCommands (self):
 	# Select the first node.
 	if c.suboutline_only_flag or c.node_only_flag or c.selection_only_flag: # 11/9/03
 		self.v = c.currentVnode()
-		if c.selection_only_flag: self.selStart,self.selEnd = c.body.getTextSelection()
+		if c.selection_only_flag: self.selStart,self.selEnd = c.frame.body.getTextSelection()
 		else:                     self.selStart,self.selEnd = None,None
 	else:
 		v = c.rootVnode()
@@ -54780,7 +54740,7 @@ def initInteractiveCommands(self):
 	
 	self.errors = 0
 	if self.in_headline:
-		c.frame.setEditVnode(v)
+		c.frame.tree.setEditVnode(v)
 		t = v.edit_text()
 		sel = None
 		# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.frame.editVnode()` + ":" + `v`)
@@ -54856,11 +54816,11 @@ def showSuccess(self,pos,newpos):
 	c.beginUpdate()
 	if 1: # range of update...
 		c.selectVnode(v)
-		c.frame.redraw_now() # Redraw now so selections are not destroyed.
+		c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
 		# Select the found vnode again after redraw.
 		if self.in_headline:
 			c.editVnode(v)
-			c.frame.setNormalLabelState(v)
+			c.frame.tree.setNormalLabelState(v)
 			assert(v.edit_text())
 		else:
 			c.selectVnode(v)
@@ -54883,10 +54843,10 @@ def showSuccess(self,pos,newpos):
 @language python
 
 from leoGlobals import *
-import leoColor,leoCommands,leoFrame,leoNodes,leoPlugins
+import leoFrame,leoNodes
 import leoTkinterMenu,leoTkinterTree
 import Tkinter,tkFont
-import os,string,sys,time,traceback
+import os,string,sys,time
 
 Tk = Tkinter
 
@@ -55072,21 +55032,20 @@ def create_labeled_frame (self,parent,
 &lt;&lt; about the tree classes &gt;&gt;
 
 from leoGlobals import *
-import leoColor
+import leoFrame
 import Tkinter,tkFont
 import os,string,types
 
 &lt;&lt; about drawing and events &gt;&gt;
 &lt;&lt; drawing constants &gt;&gt;
 
-class baseLeoTkinterTree:
-	"""The base class of the Leo's tree class."""
-	callbacksInjected = false
-	@others
+class leoTkinterTree (leoFrame.leoTree):
 	
-class leoTkinterTree (baseLeoTkinterTree):
-	"""A class that draws and handles events in an outline."""
-	pass</t>
+	callbacksInjected = false
+
+	"""Leo tkinter tree class."""
+	
+	@others</t>
 <t tx="edream.110203160744.3701">@ This class implements a tree control similar to Windows explorer.  The draw code is based on code found in Python's IDLE program.  Thank you Guido van Rossum!
 
 The tree class knows about vnodes.  The vnode class could be split into a base class (say a treeItem class) containing the ivars known to the tree class, and a derived class containing everything else, including, e.g., the bodyString ivar.  I haven't chosen to split the vnode class this way because nothing would be gained in Leo.
@@ -55131,7 +55090,7 @@ def headWidth(self,v):
 
 def lastVisible (self):
 
-	v = self.rootVnode
+	v = self.rootVnode()
 	while v:
 		last = v
 		if v.firstChild():
@@ -55198,7 +55157,7 @@ def setFontFromConfig (self):
 		return None</t>
 <t tx="edream.110203160744.3713">def numberOfVisibleNodes(self):
 	
-	n = 0 ; v = self.rootVnode
+	n = 0 ; v = self.rootVnode()
 	while v:
 		n += 1
 		v = v.visNext()
@@ -55209,7 +55168,7 @@ def setFontFromConfig (self):
 def yoffset(self, v1):
 
 	# if not v1.isVisible(): print "yoffset not visible:", `v1`
-	root = self.rootVnode
+	root = self.rootVnode()
 	h, flag = self.yoffsetTree(root,v1)
 	# flag can be false during initialization.
 	# if not flag: print "yoffset fails:", h, `v1`
@@ -55339,9 +55298,7 @@ def yoffsetTree(self,v,v1):
 		
 	def finishCreate(self,c):
 		
-		self.c = c
-		c.body = self.body
-		c.log = self.log</t>
+		self.c = c</t>
 <t tx="edream.110203160744.3743">"""Unit tests for Leo"""
 
 from leoGlobals import *
@@ -55834,7 +55791,7 @@ def canHoist(self):
 		v = c.hoistStack[-1]
 		self.drawTree(v,root_left,root_top,0,0,hoistFlag=true)
 	else:
-		self.drawTree(self.rootVnode,root_left,root_top,0,0)</t>
+		self.drawTree(self.rootVnode(),root_left,root_top,0,0)</t>
 <t tx="edream.110403083824"></t>
 <t tx="edream.110403085725"></t>
 <t tx="edream.110403085725.1">Hoisting itself is easy.  The biggest challenge was preventing moves outside the hoisted area, which would too confusing.</t>
@@ -55867,18 +55824,24 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-Run pychecker NOW.
+- Upload to cvs
+	** Warn that tk event handling is flakey
+
+- Color panel still adds u'name' when changing name.
+
+Document the changes:
+	- *Dont* want redirection.
+	- *Do want explicit code.
+	- ** Warn that tk event handling is flakey
 
 - Convert doc sections to doc strings.
 - Create os.path wrappers.
 
-Next:
-	
-	- Add new files to cvs.
-
 Tests:
 	- Create regression tests
 		- For all commands.
+			- Especially import/export read/write commands.
+			- Especially batch find/change commands
 		- For all plugins.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
@@ -56312,6 +56275,9 @@ The fix was:
 <t tx="edream.110903185336"></t>
 <t tx="edream.110903190535">def __init__ (self):
 	
+	self.c = None # Must be created by subclasses.
+	self.title = None # Must be created by subclasses.
+	
 	# Objects attached to this frame.
 	self.menu = None
 	self.keys = None
@@ -56422,7 +56388,7 @@ self.createMenuEntries(findMenu,self.editMenuFindMenuTable)</t>
 	("&amp;Replace","Ctrl+=",c.replace),
 	("Replace, &amp;Then Find","Ctrl+-",c.replaceThenFind))</t>
 <t tx="edream.110903195011.4">try:
-	show = c.frame.getColorizer().showInvisibles
+	show = c.frame.body.getColorizer().showInvisibles
 except:
 	show = false
 
@@ -56489,7 +56455,7 @@ self.editMenuTop2Table = (
 	("C&amp;ut Node","Shift+Ctrl+X",c.cutOutline),
 	("C&amp;opy Node","Shift+Ctrl+C",c.copyOutline),
 	("&amp;Paste Node","Shift+Ctrl+V",c.pasteOutline),
-	("&amp;Delete Node","Shift+Ctrl+BkSp",c.deleteHeadline),
+	("&amp;Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
 	("-",None,None),
 	("&amp;Insert Node","Ctrl+I",c.insertHeadline),
 	("&amp;Clone Node","Ctrl+`",c.clone),
@@ -56570,7 +56536,7 @@ self.editMenuTop2Table = (
 	("Open Online &amp;Tutorial",None,c.leoTutorial))
 	
 self.helpMenuTop2Table = (
-	("Open &amp;Offline Tutorial",None,c.leoHelp),)
+	("Open &amp;Offline Tutorial",None,f.leoHelp),)
 	
 self.helpMenuTop3Table = (
 	("Open Leo&amp;Docs.leo",None,c.leoDocumentation),
@@ -56752,6 +56718,9 @@ if 0: # This would work if all tk wrapper routines were prefixed with tk_
 	self.oops()
 
 def createControl (self,frame,parentFrame):
+	self.oops()
+	
+def initialRatios (self):
 	self.oops()
 	
 def setBodyFontFromConfig (self):
@@ -57232,7 +57201,7 @@ def oops(self):
 
 class leoColorPanel:
 	
-	"""A class to create and run a Tkinter color panel.
+	"""A base class to create Leo's color panel.
 	
 	Subclasses may create subsidiary panels."""
 	
@@ -57266,9 +57235,7 @@ class leoColorPanel:
 	self.oops()
 
 def oops(self):
-	print ("leoColorPanel oops:",
-		callerName(2),
-		"should be overridden in subclass")</t>
+	print "leoColorPanel oops:", callerName(2), "should be overridden in subclass"</t>
 <t tx="edream.111203105213">def bringToFront (self):
 	
 	"""Bring the tkinter Find Panel to the front."""
@@ -57317,6 +57284,7 @@ self.newStringKeys = ["radio-find-type", "radio-search-scope"]
 self.c = None # The commander for this search.
 self.v = None # The vnode being searched.  Never saved between searches!
 self.in_headline = false # true: searching headline text.
+self.s_text = None # The search text for this search.
 self.wrapping = false # true: wrapping is enabled.
 	# This is _not_ the same as c.wrap_flag for batch searches.
 
@@ -57373,6 +57341,9 @@ def init_s_text (self,s):
 	self.oops()
 	
 def bringToFront (self):
+	self.oops()
+	
+def gui_search (self,t,*args,**keys):
 	self.oops()
 	
 def oops(self):
@@ -57472,7 +57443,7 @@ Anyway, the road is now clear to rewrite the wx gui plugin.  It will probably ta
 <t tx="edream.111203203321.2"></t>
 <t tx="edream.111203203321.3"></t>
 <t tx="edream.111303060636">def runAboutLeoDialog(self,version,copyright,url,email):
-	"""Create and run a Tkinter About Leo dialog."""
+	"""Create and run Leo's About Leo dialog."""
 	self.oops()
 	
 def runAskLeoIDDialog(self):
@@ -57480,7 +57451,7 @@ def runAskLeoIDDialog(self):
 	self.oops()
 
 def runAskOkDialog(self,title,message=None,text="Ok"):
-	"""Create and run a Tkinter an askOK dialog ."""
+	"""Create and run an askOK dialog ."""
 	self.oops()
 
 def runAskOkCancelNumberDialog(self,title,message):
@@ -57526,13 +57497,13 @@ def lastIndex (self):
 <t tx="edream.111303085501.3"></t>
 <t tx="edream.111303090124">def runOpenFileDialog(self,title,filetypes,defaultextension):
 
-	"""Create and run an Tkinter open file dialog ."""
+	"""Create and run an open file dialog ."""
 
 	self.oops()
 
 def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 
-	"""Create and run an Tkinter save file dialog ."""
+	"""Create and run a save file dialog ."""
 	
 	self.oops()</t>
 <t tx="edream.111303090743">def createRootWindow(self):
@@ -57658,13 +57629,14 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	return t.see(index)</t>
 <t tx="edream.111303101154">def endEditLabelCommand (self):
 
-	c = self.c ; tree = self.tree ; v = self.editVnode ; gui = app.gui
+	frame = self ; c = frame.c ; tree = frame.tree ; gui = app.gui
+	
+	v = frame.tree.editVnode()
 
 	# trace(v)
 	if v and v.edit_text():
 		tree.select(v)
 	if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-		# 3/26/03: changed redraw_now to force_redraw.
 		tree.force_redraw() # force a redraw of joined headlines.
 
 	gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
@@ -57816,13 +57788,11 @@ While I was at it, I changed is_c_id so that it returns false if the argument is
 	return self.top.bind(bind_shortcut,callback)
 	
 </t>
-<t tx="edream.111603100720.5">def delete (self,menu,readItemName):
+<t tx="edream.111603100720.5">def delete (self,menu,realItemName):
 	
-	"""Wrapper for the Tkinter xxx menu method."""
+	"""Wrapper for the Tkinter delete menu method."""
 
-	return menu.delete(realItemName)
-	
-</t>
+	return menu.delete(realItemName)</t>
 <t tx="edream.111603100720.6">def delete_range (self,menu,n1,n2):
 	
 	"""Wrapper for the Tkinter delete menu method."""
@@ -57847,11 +57817,11 @@ While I was at it, I changed is_c_id so that it returns false if the argument is
 
 
 </t>
-<t tx="edream.111603100720.9">def new_menu(self,parent,tearoff=0):
+<t tx="edream.111603100720.9">def new_menu(self,parent,tearoff=false):
 	
 	"""Wrapper for the Tkinter new_menu menu method."""
 
-	return Tkinter.Menu(parent,tearoff=0)</t>
+	return Tkinter.Menu(parent,tearoff=tearoff)</t>
 <t tx="edream.111603103036.2"></t>
 <t tx="edream.111603104956">- Key insight 1:  menus must belong to frames, _not_ to a gui.
 
@@ -57891,7 +57861,7 @@ def add_separator(self,menu):
 def bind (self,bind_shortcut,callback):
 	self.oops()
 
-def delete (self,menu,readItemName):
+def delete (self,menu,realItemName):
 	self.oops()
 	
 def delete_range (self,menu,n1,n2):
@@ -57899,8 +57869,8 @@ def delete_range (self,menu,n1,n2):
 
 def destroy (self,menu):
 	self.oops()
-		
-def insert_cascade (self,index,label,menu,underline):
+
+def insert_cascade (self,parent,index,label,menu,underline):
 	self.oops()
 
 def new_menu(self,parent,tearoff=0):
@@ -57911,10 +57881,10 @@ def new_menu(self,parent,tearoff=0):
 def createOpenWithMenuFromTable (self,table):
 	self.oops()
 
-def defineMenuCallback(self,command):
+def defineMenuCallback(self,command,name):
 	self.oops()
 	
-def defineOpenWithMenuCallback(self,command,name):
+def defineOpenWithMenuCallback(self,command):
 	self.oops()
 	
 def disableMenu (self,menu,name):
@@ -57963,141 +57933,165 @@ These may create small problems in plugins...</t>
 
 def getColorizer(self):
 	
-	return self.tree.colorizer
+	return self.colorizer
 
-def recolor_now(self,v):
-	
-	return self.tree.recolor_now(v)
+def recolor_now(self,v,incremental=false):
+
+	self.colorizer.colorize(v,incremental)
 
 def recolor_range(self,v,leading,trailing):
 	
-	return self.tree.recolor_range(v,leading,trailing)
+	self.colorizer.recolor_range(v,leading,trailing)
 
 def recolor(self,v,incremental=false):
 	
-	return self.tree.recolor(v,incremental)
+	if 0: # Do immediately
+		self.colorizer.colorize(v,incremental)
+	else: # Do at idle time
+		self.colorizer.schedule(v,incremental)
 	
 def updateSyntaxColorer(self,v):
 	
-	return self.tree.colorizer.updateSyntaxColorer(v)
-</t>
-<t tx="edream.111603115116.1">def beginUpdate(self):
-
-	return self.tree.beginUpdate()
-
-def endUpdate(self,flag=true):
-
-	return self.tree.endUpdate(flag)
-
-def drawIcon(self,v,x=None,y=None):
-
-	return self.tree.drawIcon(v,x,y)
-
-def redraw(self):
-
-	return self.tree.redraw()
-
-def redraw_now(self):
-
-	return self.tree.redraw_now()</t>
-<t tx="edream.111603115116.2">def editLabel(self,v):
-	
-	return self.tree.editLabel(v)
-
-def editVnode(self):
-	
-	return self.tree.editVnode
-
-def endEditLabel(self):
-	
-	return self.tree.endEditLabel()
-	
-def getEditTextDict(self,v):
-	
-	return self.tree.edit_text_dict.get(v)
-
-def setEditVnode(self,v):
-	
-	self.tree.editVnode = v
-
-def setNormalLabelState(self,v):
-	
-	return self.tree.setNormalLabelState(v)
-</t>
+	return self.colorizer.updateSyntaxColorer(v)</t>
 <t tx="edream.111603115116.3"># Easily removed with a rename.
 
 def focus_get(self):
 	
 	return self.tree.canvas.focus_get()</t>
 <t tx="edream.111603115116.5">def scrollTo(self,v):
-	
-	return self.tree.scrollTo(v)
+	self.oops()
 
 def idle_scrollTo(self,v):
 	
-	return self.tree.idle_scrollTo(v)
+	self.oops()
 
 
 </t>
-<t tx="edream.111603115820"># Getters...
-def currentVnode(self):
-	return self.tree.currentVnode
+<t tx="edream.111603115820">def currentVnode(self):
+	return self.mCurrentVnode
 	
 def dragging(self):
-	return self.tree.dragging
+	return self.mDragging
+	
+def getEditTextDict(self,v):
+	return self.edit_text_dict.get(v)
+	
+def editVnode(self):
+	return self.mEditVnode
 
 def rootVnode(self):
-	return self.tree.rootVnode
+	return self.mRootVnode
 
 def topVnode(self):
-	return self.tree.topVnode
-
-# Setters...
-
-def setCurrentVnode(self,v):
-	self.tree.currentVnode = v
-
-def setRootVnode(self,v):
-	self.tree.rootVnode = v
-	
-def setTreeIniting(self,flag):
-	self.tree.initing = flag</t>
+	return self.mTopVnode</t>
 <t tx="edream.111603115820.1">def select(self,v,updateBeadList=true):
 	
-	return self.tree.select(v,updateBeadList)
-</t>
-<t tx="edream.111603120110">@ These are hard to remove, because there is no official tree class yet.</t>
+	self.oops()</t>
 <t tx="edream.111603120940">def expandAllAncestors(self,v):
 	
-	return self.tree.expandAllAncestors(v)</t>
+	self.oops()</t>
 <t tx="edream.111603120940.1"># These should all be internal to the tkinter.frame class.
 
 def OnActivateHeadline(self,v):
-	return self.tree.OnActivate(v)
+	self.oops()
 	
-def onBodyChanged(self,*args,**keys):
-	return self.tree.onBodyChanged(*args,**keys)
-
-def onHeadChanged(self,*args,**keys):
-	return self.tree.onHeadChanged(*args,**keys)
+def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+	self.oops()
+	
+def onHeadChanged(self,v):
+	self.oops()
 
 def OnHeadlineKey(self,v,event):
-	return self.tree.OnHeadlineKey(v,event)
+	self.oops()
 
-def idle_head_key(self,v):
-	return self.tree.idle_head_key(v)</t>
+def idle_head_key(self,v,ch=None):
+	self.oops()</t>
 <t tx="edream.111603121021">def getFont(self):
+	self.oops()
 	
-	return self.tree.getFont()
-	
-def setFont(self,font):
-	
-	return self.tree.setFont(font)</t>
+def setFont(self,font=None,fontName=None):
+	self.oops()</t>
 <t tx="edream.111603130926">Moved get/setRealMenuName &amp; setRealMenuNamesFromTable.
 
 It is really satisfying to get rid of these globals.  It makes the leoGlobals file much stronger.</t>
 <t tx="edream.111603131807">The biggest Aha was getting rid of redirection routines.
 
 I could get rid of the tree redicrection routines if I used a proper tree class.  It's probably not worth it...</t>
+<t tx="edream.111603161937">def __init__ (self,frame):
+	
+	self.frame = frame
+	self.c = frame.c
+	
+	self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
+	
+	# "public" ivars: correspond to setters &amp; getters.
+	self.mCurrentVnode = None
+	self.mDragging = false
+	self.mEditVnode = None
+	self.mRootVnode = None
+	self.mTopVnode = None
+	
+	# Controlling redraws
+	self.updateCount = 0 # self.redraw does nothing unless this is zero.
+	self.redrawCount = 0 # For traces
+	self.redrawScheduled = false # true if redraw scheduled.</t>
+<t tx="edream.111603161937.1"></t>
+<t tx="edream.111603161937.2">def drawIcon(self,v,x=None,y=None):
+	self.oops()
+
+def redraw(self,event=None): # May be bound to an event.
+	self.oops()
+
+def redraw_now(self):
+	self.oops()</t>
+<t tx="edream.111603161937.3">def editLabel(self,v):
+	self.oops()
+
+def endEditLabel(self):
+	self.oops()
+
+def setNormalLabelState(self,v):
+	self.oops()</t>
+<t tx="edream.111603161937.4">def oops(self):
+	
+	print "leoTree oops:", callerName(2), "should be overridden in subclass"</t>
+<t tx="edream.111603170011.1"></t>
+<t tx="edream.111603173312">def setCurrentVnode(self,v):
+	self.mCurrentVnode = v
+	
+def setDragging(self,flag):
+	self.mDragging = flag
+	
+def setEditVnode(self,v):
+	self.mEditVnode = v
+
+def setRootVnode(self,v):
+	self.mRootVnode = v
+	
+def setIniting(self,flag):
+	pass # No longer used
+	
+def setTopVnode(self,v):
+	self.mTopVnode = v</t>
+<t tx="edream.111603175355">Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoColor.py", line 1042, in colorizeAnyLanguage
+    new_states.append(old_states[j])
+IndexError: list index out of range
+
+</t>
+<t tx="edream.111703064137"></t>
+<t tx="edream.111703064137.1">This removes a bit of a kludge.</t>
+<t tx="edream.111703071024">This is much more natural than the old way.</t>
+<t tx="edream.111703075055"></t>
+<t tx="edream.111703080619"></t>
+<t tx="edream.111703080619.1">The new setEditVnode setter didn't set the global.</t>
+<t tx="edream.111703082105">A simple bug due to the reorg.</t>
+<t tx="edream.111703084944">Due to moving and renaming some commands routines.</t>
+<t tx="edream.111703093534"></t>
+<t tx="edream.111703094738"></t>
+<t tx="edream.111703095226"></t>
+<t tx="edream.111703100357"></t>
+<t tx="edream.111703101935"></t>
+<t tx="edream.111703102222"></t>
 </tnodes>
 </leo_file>

@@ -30,9 +30,6 @@ class baseCommands:
 	
 		#@	<< initialize ivars >>
 		#@+node:<< initialize ivars >>
-		# Created later.
-		self.body = self.log = None
-		
 		# per-document info...
 		self.hookFunction = None
 		self.openDirectory = None # 7/2/02
@@ -121,13 +118,15 @@ class baseCommands:
 	
 	def doCommand (self,command,label,event=None):
 		
+		c = self ; v = c.currentVnode()
+	
 		# A horrible kludge: set app.log to cover for a possibly missing activate event.
-		app.setLog(self.log,"doCommand")
+		app.setLog(c.frame.log,"doCommand")
 	
 		if label == "cantredo": label = "redo"
 		if label == "cantundo": label = "undo"
 		app.commandName = label
-		c = self ; v = c.currentVnode()
+	
 		if not doHook("command1",c=c,v=v,label=label):
 			try:
 				command()
@@ -168,113 +167,6 @@ class baseCommands:
 		enl()
 	#@nonl
 	#@-node: version & signon stuff
-	#@+node:c.dragAfter
-	def dragAfter(self,v,after):
-	
-		# es("dragAfter")
-		c = self
-		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			v.moveAfter(after)
-			c.undoer.setUndoParams("Drag",v,
-				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-			c.initJoinedCloneBits(v) # 10/8/03
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragAfter
-	#@+node:c.dragCloneToNthChildOf (changed in 3.11.1)
-	def dragCloneToNthChildOf (self,v,parent,n):
-	
-		c = self
-		c.beginUpdate()
-		# trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
-		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		if not c.checkMoveWithParentWithWarning(clone,parent,true):
-			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-			c.endUpdate(false) # Nothing has changed.
-			return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.endEditing()
-		clone.setDirty()
-		clone.moveToNthChildOf(parent,n)
-		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
-		c.undoer.setUndoParams("Drag & Clone",clone,
-			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
-		c.selectVnode(clone)
-		c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragCloneToNthChildOf (changed in 3.11.1)
-	#@+node:c.dragToNthChildOf
-	def dragToNthChildOf(self,v,parent,n):
-	
-		# es("dragToNthChildOf")
-		c = self
-		if not c.checkMoveWithParentWithWarning(v,parent,true): return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			v.moveToNthChildOf(parent,n)
-			c.undoer.setUndoParams("Drag",v,
-				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-			c.initJoinedCloneBits(v) # 10/8/03
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragToNthChildOf
-	#@+node:c.dragCloneAfter (changed in 3.11.1)
-	def dragCloneAfter (self,v,after):
-	
-		c = self
-		c.beginUpdate()
-		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		# trace("v,after:"+v.headString()+","+after.headString())
-		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
-			trace("invalid clone move")
-			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
-			c.endUpdate(false) # Nothing has changed.
-			return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.endEditing()
-		clone.setDirty()
-		clone.moveAfter(after)
-		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
-		c.undoer.setUndoParams("Drag & Clone",clone,
-			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-		clone.setDirty()
-		c.selectVnode(clone)
-		c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
-	#@nonl
-	#@-node:c.dragCloneAfter (changed in 3.11.1)
 	#@+node:new
 	def new (self):
 	
@@ -767,13 +659,13 @@ class baseCommands:
 	
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = c.body.getAllText()
-		oldSel = c.body.getTextSelection()
+		oldText = c.frame.body.getAllText()
+		oldSel = c.frame.body.getTextSelection()
 	
 		c.fileCommands.readAtFileNodes()
 	
-		newText = c.body.getAllText()
-		newSel = c.body.getTextSelection()
+		newText = c.frame.body.getAllText()
+		newSel = c.frame.body.getTextSelection()
 	
 		c.undoer.setUndoParams("Read @file Nodes",
 			v,select=v,oldTree=v_copy,
@@ -801,14 +693,14 @@ class baseCommands:
 		c = self
 		c.atFileCommands.writeNewDerivedFiles()
 		es("auto-saving outline",color="blue")
-		self.OnSave() # Must be done to preserve tnodeList.
+		c.save() # Must be done to preserve tnodeList.
 		
 	def writeOldDerivedFiles (self):
 		
 		c = self
 		c.atFileCommands.writeOldDerivedFiles()
 		es("auto-saving outline",color="blue")
-		self.OnSave() # Must be done to clear tnodeList.
+		c.save() # Must be done to clear tnodeList.
 	#@nonl
 	#@-node:writeNew/OldDerivedFiles
 	#@+node:tangleAll
@@ -853,6 +745,8 @@ class baseCommands:
 	#@-node:untangle
 	#@+node:exportHeadlines
 	def exportHeadlines (self):
+		
+		c = self
 	
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
 	
@@ -863,11 +757,13 @@ class baseCommands:
 			defaultextension=".txt")
 	
 		if fileName and len(fileName) > 0:
-			self.c.importCommands.exportHeadlines(fileName)
+			c.importCommands.exportHeadlines(fileName)
 	
 	#@-node:exportHeadlines
 	#@+node:flattenOutline
 	def flattenOutline (self):
+		
+		c = self
 	
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
 	
@@ -878,12 +774,13 @@ class baseCommands:
 			defaultextension=".txt")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			c.importCommands.flattenOutline(fileName)
 	
 	#@-node:flattenOutline
 	#@+node:importAtRoot
 	def importAtRoot (self):
+		
+		c = self
 		
 		types = [
 			("All files","*.*"),
@@ -901,13 +798,14 @@ class baseCommands:
 			defaultextension=".py")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFilesCommand (paths,"@root")
 	
 	#@-node:importAtRoot
 	#@+node:importAtFile
 	def importAtFile (self):
+		
+		c = self
 	
 		types = [
 			("All files","*.*"),
@@ -925,13 +823,14 @@ class baseCommands:
 			defaultextension=".py")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFilesCommand (paths,"@file")
 	
 	#@-node:importAtFile
 	#@+node:importCWEBFiles
 	def importCWEBFiles (self):
+		
+		c = self
 		
 		filetypes = [
 			("CWEB files", "*.w"),
@@ -944,12 +843,13 @@ class baseCommands:
 			defaultextension=".w")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importWebCommand(paths,"cweb")
 	#@-node:importCWEBFiles
 	#@+node:importFlattenedOutline
 	def importFlattenedOutline (self):
+		
+		c = self
 		
 		types = [("Text files","*.txt"), ("All files","*.*")]
 	
@@ -959,12 +859,13 @@ class baseCommands:
 			defaultextension=".py")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importFlattenedOutline(paths)
 	#@-node:importFlattenedOutline
 	#@+node:importNowebFiles
 	def importNowebFiles (self):
+		
+		c = self
 	
 		filetypes = [
 			("Noweb files", "*.nw"),
@@ -977,13 +878,14 @@ class baseCommands:
 			defaultextension=".nw")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			paths = [fileName] # alas, askopenfilename returns only a single name.
 			c.importCommands.importWebCommand(paths,"noweb")
 	
 	#@-node:importNowebFiles
 	#@+node:outlineToCWEB
 	def outlineToCWEB (self):
+		
+		c = self
 	
 		filetypes=[
 			("CWEB files", "*.w"),
@@ -997,12 +899,13 @@ class baseCommands:
 			defaultextension=".w")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			c.importCommands.outlineToWeb(fileName,"cweb")
 	
 	#@-node:outlineToCWEB
 	#@+node:outlineToNoweb
 	def outlineToNoweb (self):
+		
+		c = self
 		
 		filetypes=[
 			("Noweb files", "*.nw"),
@@ -1016,13 +919,14 @@ class baseCommands:
 			defaultextension=".nw")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			c.importCommands.outlineToWeb(fileName,"noweb")
-			self.outlineToNowebDefaultFileName = fileName
+			c.outlineToNowebDefaultFileName = fileName
 	
 	#@-node:outlineToNoweb
 	#@+node:removeSentinels
 	def removeSentinels (self):
+		
+		c = self
 		
 		types = [
 			("All files","*.*"),
@@ -1040,12 +944,13 @@ class baseCommands:
 			defaultextension=".py")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			# alas, askopenfilename returns only a single name.
 			c.importCommands.removeSentinelsCommand (fileName)
 	#@-node:removeSentinels
 	#@+node:weave
 	def weave (self):
+		
+		c = self
 	
 		filetypes = [("Text files", "*.txt"),("All files", "*")]
 	
@@ -1056,7 +961,6 @@ class baseCommands:
 			defaultextension=".txt")
 	
 		if fileName and len(fileName) > 0:
-			c = self
 			c.importCommands.weave(fileName)
 	#@-node:weave
 	#@+node:delete
@@ -1064,10 +968,10 @@ class baseCommands:
 	
 		c = self ; v = c.currentVnode()
 	
-		if c.body.hasTextSelection():
-			oldSel = c.body.getTextSelection()
-			c.body.deleteTextSelection()
-			c.frame.onBodyChanged(v,"Delete",oldSel=oldSel)
+		if c.frame.body.hasTextSelection():
+			oldSel = c.frame.body.getTextSelection()
+			c.frame.body.deleteTextSelection()
+			c.frame.body.onBodyChanged(v,"Delete",oldSel=oldSel)
 	#@nonl
 	#@-node:delete
 	#@+node:executeScript
@@ -1088,12 +992,12 @@ class baseCommands:
 		#@+node:<< get script into s >>
 		# Assume any selected body text is a script.
 		
-		start,end = c.body.getTextSelection()
+		start,end = c.frame.body.getTextSelection()
 		
 		if start and end and start != end:
-			s = c.body.getSelectedText()
+			s = c.frame.body.getSelectedText()
 		else:
-			s = c.body.getAllText()
+			s = c.frame.body.getAllText()
 		if s:
 			s = s.strip()
 		#@nonl
@@ -1337,7 +1241,7 @@ class baseCommands:
 		#@	<< select v and make it visible >>
 		#@+node:<< select v and make it visible >>
 		c.beginUpdate()
-		c.frame.expandAllAncestors(v)
+		c.frame.tree.expandAllAncestors(v)
 		c.selectVnode(v)
 		c.endUpdate()
 		#@nonl
@@ -1531,7 +1435,7 @@ class baseCommands:
 	
 		c = self ; frame = c.frame ; v = c.currentVnode()
 	
-		colorizer = frame.getColorizer()
+		colorizer = frame.body.getColorizer()
 		colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
 	
 		# It is much easier to change the menu name here than in the menu updater.
@@ -1541,7 +1445,7 @@ class baseCommands:
 		else:
 			frame.menu.setMenuLabel(menu,"Hide Invisibles","Show Invisibles")
 	
-		c.frame.recolor_now(v)
+		c.frame.body.recolor_now(v)
 	#@nonl
 	#@-node:viewAllCharacters
 	#@+node:preferences
@@ -1552,7 +1456,7 @@ class baseCommands:
 		c = self ; frame = c.frame
 	
 		if not frame.prefsPanel:
-			frame.prefsPanel = prefs = app.gui.createPrefsPanel(c)
+			frame.prefsPanel = app.gui.createPrefsPanel(c)
 			
 		frame.prefsPanel.bringToFront()
 	#@nonl
@@ -1560,14 +1464,14 @@ class baseCommands:
 	#@+node:convertAllBlanks
 	def convertAllBlanks (self):
 		
-		c = self ; v = current = c.currentVnode()
+		c = self ; body = c.frame.body ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = c.body.getAllText()
-		oldSel = c.body.getTextSelection()
+		oldText = body.getAllText()
+		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
 			if v == current:
@@ -1589,8 +1493,8 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
-			newText = c.body.getAllText()
-			newSel = c.body.getTextSelection()
+			newText = body.getAllText()
+			newSel = body.getTextSelection()
 			c.undoer.setUndoParams("Convert All Blanks",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -1601,14 +1505,14 @@ class baseCommands:
 	#@+node:convertAllTabs
 	def convertAllTabs (self):
 	
-		c = self ; v = current = c.currentVnode()
+		c = self ; body = c.frame.body ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = c.body.getAllText()
-		oldSel = c.body.getTextSelection()
+		oldText = body.getAllText()
+		oldSel = body.getTextSelection()
 		count = 0
 		while v and v != next:
 			if v == current:
@@ -1631,8 +1535,8 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if count > 0:
-			newText = c.body.getAllText()
-			newSel = c.body.getTextSelection() # 7/11/03
+			newText = body.getAllText()
+			newSel = body.getTextSelection() # 7/11/03
 			c.undoer.setUndoParams("Convert All Tabs",
 				current,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -1643,7 +1547,7 @@ class baseCommands:
 	#@+node:convertBlanks
 	def convertBlanks (self,setUndoParams=true):
 	
-		c = self
+		c = self ; body = c.frame.body
 		head,lines,tail,oldSel,oldYview = c.getBodyLines()
 		result = [] ; changed = false
 	
@@ -1659,7 +1563,7 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Blanks",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			c.body.selectAllText()
+			body.selectAllText()
 	
 		return changed
 	#@nonl
@@ -1667,7 +1571,7 @@ class baseCommands:
 	#@+node:convertTabs
 	def convertTabs (self,setUndoParams=true):
 	
-		c = self
+		c = self ; body = c.frame.body
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		
@@ -1684,7 +1588,7 @@ class baseCommands:
 			result = string.join(result,'\n')
 			undoType = choose(setUndoParams,"Convert Tabs",None)
 			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
-			c.body.selectAllText()
+			body.selectAllText()
 			
 		return changed
 	#@nonl
@@ -1724,15 +1628,15 @@ class baseCommands:
 	#@+node:extract
 	def extract(self):
 	
-		c = self ; current = v = c.currentVnode()
+		c = self ; body = c.frame.body ; current = v = c.currentVnode()
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		oldText = c.body.getAllText()
-		oldSel = c.body.getTextSelection()
+		oldText = body.getAllText()
+		oldSel = body.getTextSelection()
 		#@	<< Set headline for extract >>
 		#@+node:<< Set headline for extract >>
 		headline = string.strip(headline)
@@ -1757,8 +1661,8 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
 			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview,setSel=false)
-			newText = c.body.getAllText()
-			newSel = c.body.getTextSelection() # 7/11/03
+			newText = body.getAllText()
+			newSel = body.getTextSelection() # 7/11/03
 			c.undoer.setUndoParams("Extract",
 				v,select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -1769,7 +1673,7 @@ class baseCommands:
 	#@+node:extractSection
 	def extractSection(self):
 	
-		c = self ; current = v = c.currentVnode()
+		c = self ; body = c.frame.body ; current = v = c.currentVnode()
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
@@ -1779,8 +1683,8 @@ class baseCommands:
 		v_copy = c.undoer.saveTree(v)
 		# trace("v:     " + `v`)
 		# trace("v_copy:" + `v_copy`)
-		oldText = c.body.getAllText()
-		oldSel = c.body.getTextSelection()
+		oldText = body.getAllText()
+		oldSel = body.getTextSelection()
 		#@	<< Set headline for extractSection >>
 		#@+node:<< Set headline for extractSection >>
 		while len(headline) > 0 and headline[0] == '/':
@@ -1809,8 +1713,8 @@ class baseCommands:
 			c.createLastChildNode(v,headline,body)
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
-			newText = c.body.getAllText()
-			newSel = c.body.getTextSelection()
+			newText = body.getAllText()
+			newSel = body.getTextSelection()
 			c.undoer.setUndoParams("Extract Section",v,
 				select=current,oldTree=v_copy,
 				oldText=oldText,newText=newText,
@@ -1821,14 +1725,14 @@ class baseCommands:
 	#@+node:extractSectionNames
 	def extractSectionNames(self):
 	
-		c = self ; current = v = c.currentVnode()
+		c = self ; body = c.frame.body ; current = v = c.currentVnode()
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
 		# No change to body or selection of this node.
-		oldText = newText = c.body.getAllText()
-		i, j = oldSel = newSel = c.body.getTextSelection()
+		oldText = newText = body.getAllText()
+		i, j = oldSel = newSel = body.getTextSelection()
 		c.beginUpdate()
 		if 1: # update range...
 			found = false
@@ -1864,15 +1768,15 @@ class baseCommands:
 			oldText=oldText,newText=newText,
 			oldSel=oldSel,newSel=newSel)
 		# Restore the selection.
-		c.body.setTextSelection(oldSel)
-		c.body.setFocus()
+		body.setTextSelection(oldSel)
+		body.setFocus()
 	#@nonl
 	#@-node:extractSectionNames
 	#@+node:findBoundParagraph
 	def findBoundParagraph (self):
 		
 		c = self
-		head,ins,tail = c.body.getInsertLines()
+		head,ins,tail = c.frame.body.getInsertLines()
 	
 		if not ins or ins.isspace() or ins[0] == '@':
 			return None,None,None
@@ -1921,34 +1825,35 @@ class baseCommands:
 		tail = joinLines(post_para_lines)
 	
 		return head,result,tail # string, list, string
+	#@nonl
 	#@-node:findBoundParagraph
 	#@+node:findMatchingBracket
 	def findMatchingBracket (self):
 		
-		c = self
+		c = self ; body = c.frame.body
 		brackets = "()[]{}<>"
-		ch1 = c.body.getCharBeforeInsertPoint()
-		ch2 = c.body.getCharAtInsertPoint()
+		ch1 = body.getCharBeforeInsertPoint()
+		ch2 = body.getCharAtInsertPoint()
 	
 		# Prefer to match the character to the left of the cursor.
 		if ch1 in brackets:
-			ch = ch1 ; index = c.body.getBeforeInsertionPoint()
+			ch = ch1 ; index = body.getBeforeInsertionPoint()
 		elif ch2 in brackets:
-			ch = ch2 ; index = c.body.getInsertionPoint()
+			ch = ch2 ; index = body.getInsertionPoint()
 		else:
 			return
 		
 		index2 = self.findSingleMatchingBracket(ch,index)
 		if index2:
-			if c.body.compareIndices(index,"<=",index2):
-				adj_index = c.body.adjustIndex(index2,1)
-				c.body.setTextSelection(index,adj_index)
+			if body.compareIndices(index,"<=",index2):
+				adj_index = body.adjustIndex(index2,1)
+				body.setTextSelection(index,adj_index)
 			else:
-				adj_index = c.body.adjustIndex(index,1)
-				c.body.setTextSelection(index2,adj_index)
-			adj_index = c.body.adjustIndex(index2,1)
-			c.body.setInsertionPoint(adj_index)
-			c.body.makeIndexVisible(adj_index)
+				adj_index = body.adjustIndex(index,1)
+				body.setTextSelection(index2,adj_index)
+			adj_index = body.adjustIndex(index2,1)
+			body.setInsertionPoint(adj_index)
+			body.makeIndexVisible(adj_index)
 		else:
 			es("unmatched " + `ch`)
 	#@nonl
@@ -1958,7 +1863,7 @@ class baseCommands:
 	# Test  unmatched())
 	def findSingleMatchingBracket(self,ch,index):
 		
-		c = self
+		c = self ; body = c.frame.body
 		open_brackets  = "([{<" ; close_brackets = ")]}>"
 		brackets = open_brackets + close_brackets
 		matching_brackets = close_brackets + open_brackets
@@ -1970,21 +1875,21 @@ class baseCommands:
 				break
 		level = 0
 		while 1:
-			if forward and c.body.compareIndices(index,">=","end"):
+			if forward and body.compareIndices(index,">=","end"):
 				# trace("not found")
 				return None
-			ch2 = c.body.getCharAtIndex(index)
+			ch2 = body.getCharAtIndex(index)
 			if ch2 == ch:
 				level += 1 #; trace(level,index)
 			if ch2 == match_ch:
 				level -= 1 #; trace(level,index)
 				if level <= 0:
 					return index
-			if not forward and c.body.compareIndices(index,"<=","1.0"):
+			if not forward and body.compareIndices(index,"<=","1.0"):
 				# trace("not found")
 				return None
 			adj = choose(forward,1,-1)
-			index = c.body.adjustIndex(index,adj)
+			index = body.adjustIndex(index,adj)
 		return 0 # unreachable: keeps pychecker happy.
 	# Test  (
 	# ([(x){y}]))
@@ -1994,13 +1899,13 @@ class baseCommands:
 	#@+node:getBodyLines
 	def getBodyLines (self):
 	
-		c = self
-		oldVview = c.body.getYScrollPosition()
-		oldSel   = c.body.getTextSelection()
-		head,lines,tail = c.body.getSelectionLines()
+		c = self ; body = c.frame.body
+		oldVview = body.getYScrollPosition()
+		oldSel   = body.getTextSelection()
+		head,lines,tail = body.getSelectionLines()
 	
 		if not lines:
-			lines = c.body.getAllText()
+			lines = body.getAllText()
 	
 		lines = string.split(lines,'\n')  ## Why don't we use splitLines ???
 	
@@ -2028,11 +1933,11 @@ class baseCommands:
 		
 		c = self ; v = c.currentVnode()
 		
-		oldSel = c.body.getTextSelection()
-		c.body.deleteTextSelection() # Works if nothing is selected.
+		oldSel = c.frame.body.getTextSelection()
+		c.frame.body.deleteTextSelection() # Works if nothing is selected.
 		s = self.getTime(body=true)
 		c.frame.body.insertAtInsertPoint(s)
-		c.frame.onBodyChanged(v,"Typing",oldSel=oldSel)
+		c.frame.body.onBodyChanged(v,"Typing",oldSel=oldSel)
 	#@nonl
 	#@-node:insertBodyTime & allies
 	#@+node:getTime
@@ -2076,9 +1981,9 @@ class baseCommands:
 	starting with "@". Paragraph is selected by position of current insertion
 	cursor."""
 	
-		c = self ; v = c.currentVnode()
+		c = self ; body = c.frame.body ; v = c.currentVnode()
 	
-		if c.body.hasTextSelection():
+		if body.hasTextSelection():
 			es("Text selection inhibits Reformat Paragraph",color="blue")
 			return
 	
@@ -2088,9 +1993,9 @@ class baseCommands:
 		pageWidth = dict.get("pagewidth")
 		tabWidth  = dict.get("tabwidth")
 		
-		original = c.body.getAllText()
-		oldSel   = c.body.getTextSelection()
-		oldYview = c.body.getYScrollPosition()
+		original = body.getAllText()
+		oldSel   = body.getTextSelection()
+		oldYview = body.getYScrollPosition()
 		head,lines,tail = c.findBoundParagraph()
 		#@nonl
 		#@-node:<< compute vars for reformatParagraph >>
@@ -2138,15 +2043,15 @@ class baseCommands:
 			#@nl
 			#@		<< update the body, selection & undo state >>
 			#@+node:<< update the body, selection & undo state >>
-			sel_start, sel_end = self.body.setSelectionAreas(head,result,tail)
+			sel_start, sel_end = body.setSelectionAreas(head,result,tail)
 			
 			changed = original != head + result + tail
 			undoType = choose(changed,"Reformat Paragraph",None)
-			c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+			body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 			
 			# Advance the selection to the next paragraph.
 			newSel = sel_end, sel_end
-			c.body.setTextSelection(newSel)
+			body.setTextSelection(newSel)
 			
 			c.recolor()
 			#@nonl
@@ -2157,13 +2062,13 @@ class baseCommands:
 	#@+node:updateBodyPane (handles undo)
 	def updateBodyPane (self,head,middle,tail,undoType,oldSel,oldYview,setSel=true):
 		
-		c = self ; v = c.currentVnode()
+		c = self ; body = c.frame.body ; v = c.currentVnode()
 	
 		# Update the text and notify the event handler.
-		self.body.setSelectionAreas(head,middle,tail)
+		body.setSelectionAreas(head,middle,tail)
 		if setSel:
-			self.body.setTextSelection(oldSel)
-		c.frame.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
+			body.setTextSelection(oldSel)
+		body.onBodyChanged(v,undoType,oldSel=oldSel,oldYview=oldYview)
 	
 		# Update the changed mark and icon.
 		c.setChanged(true)
@@ -2174,11 +2079,11 @@ class baseCommands:
 	
 		# Scroll as necessary.
 		if oldYview:
-			self.body.setYScrollPosition(oldYview)
+			body.setYScrollPosition(oldYview)
 		else:
-			self.body.makeInsertPointVisible()
+			body.makeInsertPointVisible()
 	
-		c.body.setFocus()
+		body.setFocus()
 		c.recolor()
 	#@nonl
 	#@-node:updateBodyPane (handles undo)
@@ -2186,7 +2091,7 @@ class baseCommands:
 	def editHeadline(self):
 	
 		tree = self.frame.tree
-		tree.editLabel(tree.currentVnode)
+		tree.editLabel(tree.currentVnode())
 	#@nonl
 	#@-node:editHeadline
 	#@+node:toggleAngleBrackets
@@ -2247,7 +2152,7 @@ class baseCommands:
 		c = self
 		if c.canDeleteHeadline():
 			c.copyOutline()
-			c.deleteHeadline("Cut Node")
+			c.deleteOutline("Cut Node")
 			c.recolor()
 	#@nonl
 	#@-node:cutOutline
@@ -2414,10 +2319,10 @@ class baseCommands:
 				alert(drag_message)
 			return false
 	#@-node:c.checkMoveWithParentWithWarning
-	#@+node:c.deleteHeadline
+	#@+node:c.deleteOutline
 	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 	
-	def deleteHeadline (self,op_name="Delete Outline"):
+	def deleteOutline (self,op_name="Delete Outline"):
 	
 		c = self ; v = c.currentVnode()
 		if not v: return
@@ -2437,7 +2342,7 @@ class baseCommands:
 		c.endUpdate()
 		c.validateOutline()
 	#@nonl
-	#@-node:c.deleteHeadline
+	#@-node:c.deleteOutline
 	#@+node:c.insertHeadline
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
@@ -2768,7 +2673,7 @@ class baseCommands:
 		while v and v != last:
 			v.expand()
 			v = v.threadNext()
-		c.frame.redraw()
+		c.redraw()
 	#@nonl
 	#@-node:expandSubtree
 	#@+node:expandToLevel
@@ -2798,6 +2703,64 @@ class baseCommands:
 		c.endUpdate()
 	#@nonl
 	#@-node:expandToLevel
+	#@+node:goNextVisitedNode
+	def goNextVisitedNode(self):
+		
+		c = self
+	
+		while c.beadPointer + 1 < len(c.beadList):
+			c.beadPointer += 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.frame.tree.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.frame.idle_scrollTo(v)
+				return
+	#@nonl
+	#@-node:goNextVisitedNode
+	#@+node:goPrevVisitedNode
+	def goPrevVisitedNode(self):
+		
+		c = self
+	
+		while c.beadPointer > 0:
+			c.beadPointer -= 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.frame.tree.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.frame.idle_scrollTo(v)
+				return
+	#@-node:goPrevVisitedNode
+	#@+node:goToFirstNode
+	def goToFirstNode(self):
+		
+		c = self
+		v = c.rootVnode()
+		if v:
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+	#@nonl
+	#@-node:goToFirstNode
+	#@+node:goToLastNode
+	def goToLastNode(self):
+		
+		c = self
+		v = c.rootVnode()
+		while v and v.threadNext():
+			v = v.threadNext()
+		if v:
+			c.beginUpdate()
+			c.frame.tree.expandAllAncestors(v)
+			c.selectVnode(v)
+			c.endUpdate()
+	
+	#@-node:goToLastNode
 	#@+node:goToNextClone
 	def goToNextClone(self):
 	
@@ -2822,22 +2785,6 @@ class baseCommands:
 			c.endUpdate()
 	#@nonl
 	#@-node:goToNextClone
-	#@+node:goToNextMarkedHeadline
-	def goToNextMarkedHeadline(self):
-	
-		c = self ; current = c.currentVnode()
-		if not current: return
-	
-		v = current.threadNext()
-		while v and not v.isMarked():
-			v = v.threadNext()
-		if v:
-			c.beginUpdate()
-			c.endEditing()
-			c.selectVnode(v)
-			c.endUpdate()
-	#@nonl
-	#@-node:goToNextMarkedHeadline
 	#@+node:goToNextDirtyHeadline
 	def goToNextDirtyHeadline (self):
 	
@@ -2855,69 +2802,22 @@ class baseCommands:
 			c.selectVnode(v)
 	#@nonl
 	#@-node:goToNextDirtyHeadline
-	#@+node:goPrevVisitedNode
-	def goPrevVisitedNode(self):
-		
-		c = self
+	#@+node:goToNextMarkedHeadline
+	def goToNextMarkedHeadline(self):
 	
-		while c.beadPointer > 0:
-			c.beadPointer -= 1
-			v = c.beadList[c.beadPointer]
-			if v.exists(c):
-				c.beginUpdate()
-				c.frame.expandAllAncestors(v)
-				c.selectVnode(v,updateBeadList=false)
-				c.endUpdate()
-				c.frame.idle_scrollTo(v)
-				return
-	#@-node:goPrevVisitedNode
-	#@+node:goNextVisitedNode
-	def goNextVisitedNode(self):
-		
-		c = self
+		c = self ; current = c.currentVnode()
+		if not current: return
 	
-		while c.beadPointer + 1 < len(c.beadList):
-			c.beadPointer += 1
-			v = c.beadList[c.beadPointer]
-			if v.exists(c):
-				c.beginUpdate()
-				c.frame.expandAllAncestors(v)
-				c.selectVnode(v,updateBeadList=false)
-				c.endUpdate()
-				c.frame.idle_scrollTo(v)
-				return
-	#@nonl
-	#@-node:goNextVisitedNode
-	#@+node:goToFirstNode
-	def goToFirstNode(self):
-		
-		c = self
-		v = c.rootVnode()
-		if v:
-			c.beginUpdate()
-			c.selectVnode(v)
-			c.endUpdate()
-	#@nonl
-	#@-node:goToFirstNode
-	#@+node:goToLastNode
-	def goToLastNode(self):
-		
-		c = self
-		v = c.rootVnode()
-		while v and v.threadNext():
+		v = current.threadNext()
+		while v and not v.isMarked():
 			v = v.threadNext()
 		if v:
 			c.beginUpdate()
-			c.frame.expandAllAncestors(v)
+			c.endEditing()
 			c.selectVnode(v)
 			c.endUpdate()
-	
-	#@-node:goToLastNode
-	#@+node:goToNextClone
-	def goToNextClone(self):
-	
-		self.c.goToNextClone()
-	#@-node:goToNextClone
+	#@nonl
+	#@-node:goToNextMarkedHeadline
 	#@+node:goToNextSibling
 	def goToNextSibling(self):
 		
@@ -3465,59 +3365,6 @@ class baseCommands:
 			es("not found: " + url)
 	#@nonl
 	#@-node:leoHome
-	#@+node:leoHelp
-	def leoHelp (self):
-		
-		file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
-		file = toUnicode(file,app.tkEncoding) # 10/20/03
-	
-		if os.path.exists(file):
-			os.startfile(file)
-		else:	
-			answer = app.gui.runAskYesNoDialog(
-				"Download Tutorial?",
-				"Download tutorial (sbooks.chm) from SourceForge?")
-	
-			if answer == "yes":
-				try:
-					if 0: # Download directly.  (showProgressBar needs a lot of work)
-						url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
-						import urllib
-						self.scale = None
-						urllib.urlretrieve(url,file,self.showProgressBar)
-						if self.scale:
-							self.scale.destroy()
-							self.scale = None
-					else:
-						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
-						import webbrowser
-						os.chdir(app.loadDir)
-						webbrowser.open_new(url)
-				except:
-					es("exception dowloading sbooks.chm")
-					es_exception()
-	#@nonl
-	#@-node:leoHelp
-	#@+node:showProgressBar
-	def showProgressBar (self,count,size,total):
-	
-		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
-		if self.scale == None:
-			#@		<< create the scale widget >>
-			#@+node:<< create the scale widget >>
-			Tk = Tkinter
-			top = Tk.Toplevel()
-			top.title("Download progress")
-			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
-			scale.pack()
-			top.lift()
-			#@nonl
-			#@-node:<< create the scale widget >>
-			#@nl
-		self.scale.set(count*size)
-		self.scale.update_idletasks()
-	#@nonl
-	#@-node:showProgressBar
 	#@+node:leoTutorial (version number)
 	def leoTutorial (self):
 		
@@ -3566,10 +3413,117 @@ class baseCommands:
 		c.frame.reconfigureFromConfig()
 	#@nonl
 	#@-node:applyConfig
+	#@+node:c.dragAfter
+	def dragAfter(self,v,after):
+	
+		# es("dragAfter")
+		c = self
+		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			v.moveAfter(after)
+			c.undoer.setUndoParams("Drag",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragAfter
+	#@+node:c.dragCloneToNthChildOf (changed in 3.11.1)
+	def dragCloneToNthChildOf (self,v,parent,n):
+	
+		c = self
+		c.beginUpdate()
+		# trace("v,parent,n:"+v.headString()+","+parent.headString()+","+`n`)
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		if not c.checkMoveWithParentWithWarning(clone,parent,true):
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveToNthChildOf(parent,n)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragCloneToNthChildOf (changed in 3.11.1)
+	#@+node:c.dragToNthChildOf
+	def dragToNthChildOf(self,v,parent,n):
+	
+		# es("dragToNthChildOf")
+		c = self
+		if not c.checkMoveWithParentWithWarning(v,parent,true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			v.moveToNthChildOf(parent,n)
+			c.undoer.setUndoParams("Drag",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+			c.initJoinedCloneBits(v) # 10/8/03
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragToNthChildOf
+	#@+node:c.dragCloneAfter (changed in 3.11.1)
+	def dragCloneAfter (self,v,after):
+	
+		c = self
+		c.beginUpdate()
+		clone = v.clone(v) # Creates clone & dependents, does not set undo.
+		# trace("v,after:"+v.headString()+","+after.headString())
+		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
+			trace("invalid clone move")
+			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+			c.endUpdate(false) # Nothing has changed.
+			return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.endEditing()
+		clone.setDirty()
+		clone.moveAfter(after)
+		c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
+		c.undoer.setUndoParams("Drag & Clone",clone,
+			oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+		clone.setDirty()
+		c.selectVnode(clone)
+		c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+	#@nonl
+	#@-node:c.dragCloneAfter (changed in 3.11.1)
 	#@+node:beginUpdate
 	def beginUpdate(self):
 	
-		self.frame.beginUpdate()
+		self.frame.tree.beginUpdate()
 		
 	BeginUpdate = beginUpdate # Compatibility with old scripts
 	#@nonl
@@ -3585,7 +3539,7 @@ class baseCommands:
 	#@+node:endUpdate
 	def endUpdate(self, flag=true):
 		
-		self.frame.endUpdate(flag)
+		self.frame.tree.endUpdate(flag)
 		
 	EndUpdate = endUpdate # Compatibility with old scripts
 	#@nonl
@@ -3593,13 +3547,14 @@ class baseCommands:
 	#@+node:recolor
 	def recolor(self):
 	
-		self.frame.recolor(self.frame.currentVnode())
+		c = self ; frame = c.frame
+		frame.body.recolor(frame.tree.currentVnode())
 	#@nonl
 	#@-node:recolor
 	#@+node:redraw & repaint
 	def redraw(self):
 	
-		self.frame.redraw()
+		self.frame.tree.redraw()
 		
 	# Compatibility with old scripts
 	Redraw = redraw 
@@ -3720,8 +3675,8 @@ class baseCommands:
 	def canExtract (self):
 	
 		c = self
-		if c.body:
-			return c.body.hasTextSelection()
+		if c.frame.body:
+			return c.frame.body.hasTextSelection()
 		else:
 			return false
 	
@@ -3905,8 +3860,8 @@ class baseCommands:
 	def canShiftBodyLeft (self):
 	
 		c = self
-		if c.body:
-			s = c.body.getAllText()
+		if c.frame.body:
+			s = c.frame.body.getAllText()
 			return s and len(s) > 0
 		else:
 			return false
@@ -3914,8 +3869,8 @@ class baseCommands:
 	def canShiftBodyRight (self):
 	
 		c = self
-		if c.body:
-			s = c.body.getAllText()
+		if c.frame.body:
+			s = c.frame.body.getAllText()
 			return s and len(s) > 0
 		else:
 			return false
@@ -3958,13 +3913,13 @@ class baseCommands:
 		return false
 	#@nonl
 	#@-node:canUnmarkAll
-	#@+node:c.currentVnode
+	#@+node:currentVnode
 	# Compatibility with scripts
 	
 	def currentVnode (self):
 	
-		return self.frame.currentVnode()
-	#@-node:c.currentVnode
+		return self.frame.tree.currentVnode()
+	#@-node:currentVnode
 	#@+node:clearAllMarked
 	def clearAllMarked (self):
 	
@@ -4006,7 +3961,7 @@ class baseCommands:
 	
 	def rootVnode (self):
 	
-		return self.frame.rootVnode()
+		return self.frame.tree.rootVnode()
 	#@-node:rootVnode
 	#@+node:c.setChanged
 	def setChanged (self,changedFlag):
@@ -4039,10 +3994,10 @@ class baseCommands:
 	def editVnode(self,v):
 	
 		c = self
-		# trace(v)
+	
 		if v:
 			c.selectVnode(v)
-			c.frame.editLabel(v)
+			c.frame.tree.editLabel(v)
 	#@nonl
 	#@-node:editVnode (calls tree.editLabel)
 	#@+node:endEditing (calls tree.endEditLabel)
@@ -4050,7 +4005,7 @@ class baseCommands:
 	
 	def endEditing(self):
 	
-		self.frame.endEditLabel()
+		self.frame.tree.endEditLabel()
 	#@-node:endEditing (calls tree.endEditLabel)
 	#@+node:selectThreadBack
 	def selectThreadBack(self):
@@ -4104,19 +4059,19 @@ class baseCommands:
 			c.selectVnode(v)
 			c.endUpdate()
 	#@-node:selectVisNext
-	#@+node:c.selectVnode (calls tree.select)
-	# This is called inside commands to select a new vnode.
-	
+	#@+node:selectVnode (calls tree.select)
 	def selectVnode(self,v,updateBeadList=true):
+		
+		"""Select a new vnode."""
 	
 		# All updating and "synching" of nodes are now done in the event handlers!
 		c = self
-		c.frame.endEditLabel()
-		c.frame.select(v,updateBeadList)
-		c.body.setFocus()
+		c.frame.tree.endEditLabel()
+		c.frame.tree.select(v,updateBeadList)
+		c.frame.body.setFocus()
 		self.editing = false
 	#@nonl
-	#@-node:c.selectVnode (calls tree.select)
+	#@-node:selectVnode (calls tree.select)
 	#@+node:selectVnodeWithEditing
 	# Selects the given node and enables editing of the headline if editFlag is true.
 	
@@ -4137,7 +4092,7 @@ class baseCommands:
 	#@+node:updateSyntaxColorer
 	def updateSyntaxColorer(self,v):
 	
-		self.frame.updateSyntaxColorer(v)
+		self.frame.body.updateSyntaxColorer(v)
 	#@-node:updateSyntaxColorer
 	#@-others
 

@@ -89,7 +89,7 @@ class leoMenu:
 		#@<< define editMenuTop2Table >>
 		#@+node:<< define editMenuTop2Table >>
 		try:
-			show = c.frame.getColorizer().showInvisibles
+			show = c.frame.body.getColorizer().showInvisibles
 		except:
 			show = false
 		
@@ -208,7 +208,7 @@ class leoMenu:
 			("C&ut Node","Shift+Ctrl+X",c.cutOutline),
 			("C&opy Node","Shift+Ctrl+C",c.copyOutline),
 			("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-			("&Delete Node","Shift+Ctrl+BkSp",c.deleteHeadline),
+			("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
 			("-",None,None),
 			("&Insert Node","Ctrl+I",c.insertHeadline),
 			("&Clone Node","Ctrl+`",c.clone),
@@ -322,7 +322,7 @@ class leoMenu:
 			("Open Online &Tutorial",None,c.leoTutorial))
 			
 		self.helpMenuTop2Table = (
-			("Open &Offline Tutorial",None,c.leoHelp),)
+			("Open &Offline Tutorial",None,f.leoHelp),)
 			
 		self.helpMenuTop3Table = (
 			("Open Leo&Docs.leo",None,c.leoDocumentation),
@@ -1073,7 +1073,7 @@ class leoMenu:
 			menu = self.getMenu(menuName)
 			if menu:
 				realItemName = self.getRealMenuName(itemName)
-				self.delete(menu,readItemName)
+				self.delete(menu,realItemName)
 			else:
 				es("menu not found: " + menuName)
 		except:
@@ -1111,7 +1111,7 @@ class leoMenu:
 	def bind (self,bind_shortcut,callback):
 		self.oops()
 	
-	def delete (self,menu,readItemName):
+	def delete (self,menu,realItemName):
 		self.oops()
 		
 	def delete_range (self,menu,n1,n2):
@@ -1119,8 +1119,8 @@ class leoMenu:
 	
 	def destroy (self,menu):
 		self.oops()
-			
-	def insert_cascade (self,index,label,menu,underline):
+	
+	def insert_cascade (self,parent,index,label,menu,underline):
 		self.oops()
 	
 	def new_menu(self,parent,tearoff=0):
@@ -1134,10 +1134,10 @@ class leoMenu:
 	def createOpenWithMenuFromTable (self,table):
 		self.oops()
 	
-	def defineMenuCallback(self,command):
+	def defineMenuCallback(self,command,name):
 		self.oops()
 		
-	def defineOpenWithMenuCallback(self,command,name):
+	def defineOpenWithMenuCallback(self,command):
 		self.oops()
 		
 	def disableMenu (self,menu,name):

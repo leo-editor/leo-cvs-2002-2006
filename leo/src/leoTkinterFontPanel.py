@@ -174,13 +174,13 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		
 		c = self.c
 	
-		fn = c.body.cget("font")
+		fn = c.frame.body.cget("font")
 		self.revertBodyFont = tkFont.Font(font=fn)
 		
-		fn = c.log.getFontConfig()
+		fn = c.frame.log.getFontConfig()
 		self.revertLogFont = tkFont.Font(font=fn)
 		
-		self.revertTreeFont = c.frame.getFont()
+		self.revertTreeFont = c.frame.tree.getFont()
 	#@nonl
 	#@-node:setRevertVars
 	#@+node:bringToFront
@@ -253,7 +253,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		#@+node:<< update the configuration settings >>
 		set = app.config.setWindowPref
 		
-		fn = c.body.cget("font")
+		fn = c.frame.body.cget("font")
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
 		set("body_text_font_family",name)
@@ -261,7 +261,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		set("body_text_font_slant",slant)
 		set("body_text_font_weight",weight)
 			
-		fn = c.log.getFontConfig()
+		fn = c.frame.log.getFontConfig()
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
 		set("log_text_font_family",name)
@@ -269,7 +269,7 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		set("log_text_font_slant",slant)
 		set("log_text_font_weight",weight)
 			
-		font = c.frame.getFont()
+		font = c.frame.tree.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
 		set("headline_text_font_family",name)
 		set("headline_text_font_size",size)
@@ -287,9 +287,9 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 	def onRevert (self):
 	
 		c = self.c
-		c.body.configure(font=self.revertBodyFont)
-		c.log.configureFont(self.revertLogFont)
-		c.frame.setFont (font=self.revertTreeFont)
+		c.frame.body.configure(font=self.revertBodyFont)
+		c.frame.log.configureFont(self.revertLogFont)
+		c.frame.tree.setFont (font=self.revertTreeFont)
 		c.redraw()
 		self.revertIvars()
 		# Don't call update here.
@@ -388,11 +388,11 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		log  = self.logVar.get()
 		tree = self.treeVar.get()
 		
-		fn = c.body.cget("font")
+		fn = c.frame.body.cget("font")
 		bodyFont = tkFont.Font(font=fn)
-		fn = c.log.getFontConfig()
+		fn = c.frame.log.getFontConfig()
 		logFont = tkFont.Font(font=fn)
-		treeFont = c.frame.getFont()
+		treeFont = c.frame.tree.getFont()
 		
 		if log and not body and not tree:
 			font = logFont
@@ -411,11 +411,11 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		c = self.c
 		# Revert the fonts themselves in the various panes.
 		font = self.revertBodyFont
-		c.body.configure(font=font)
+		c.frame.body.configure(font=font)
 		font = self.revertLogFont
-		c.log.configureFont(font)
+		c.frame.log.configureFont(font)
 		font = self.revertTreeFont
-		c.frame.setFont(font=font)
+		c.frame.tree.setFont(font=font)
 		# Revert the setting of the items in the font panel
 		self.last_selected_font = None # Use the font for the selected panes.
 		font = self.getImpliedFont()
@@ -444,17 +444,17 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		c = self.c
 		es("---------------")
 		# Body pane.
-		fn = c.body.cget("font")
+		fn = c.frame.body.cget("font")
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
 		es("body font:" + name + "," + `size` + "," + slant + "," + weight)
 		# Log pane.
-		fn = c.log.getFontConfig()
+		fn = c.frame.log.getFontConfig()
 		font = tkFont.Font(font=fn)
 		name,size,slant,weight = self.getFontSettings(font)
 		es("log font:" + name + "," + `size` + "," + slant + "," + weight)
 		# Tree pane.
-		font = c.frame.getFont()
+		font = c.frame.tree.getFont()
 		name,size,slant,weight = self.getFontSettings(font)
 		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@nonl
@@ -489,13 +489,13 @@ class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 		#@	<< set the fonts in all panes >>
 		#@+node:<< set the fonts in all panes >>
 		font = choose(bodyChecked,activeFont,self.revertBodyFont)
-		c.body.configure(font=font)
+		c.frame.body.configure(font=font)
 		
 		font = choose(logChecked,activeFont,self.revertLogFont)
-		c.log.configureFont(font)
+		c.frame.log.configureFont(font)
 		
 		font = choose(treeChecked,activeFont,self.revertTreeFont)
-		c.frame.setFont(font=font)
+		c.frame.tree.setFont(font=font)
 		#@nonl
 		#@-node:<< set the fonts in all panes >>
 		#@nl

@@ -6,9 +6,9 @@
 #@@language python
 
 from leoGlobals import *
-import leoConfig,leoNodes
-import leoGui,leoTkinterGui # Tk is the default gui.
-import locale,os,sys
+
+import leoTkinterGui # Tk is the default gui.
+import os,sys
 
 class LeoApp:
 

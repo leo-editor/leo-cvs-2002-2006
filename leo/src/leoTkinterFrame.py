@@ -8,10 +8,10 @@
 #@@language python
 
 from leoGlobals import *
-import leoColor,leoCommands,leoFrame,leoNodes,leoPlugins
+import leoFrame,leoNodes
 import leoTkinterMenu,leoTkinterTree
 import Tkinter,tkFont
-import os,string,sys,time,traceback
+import os,string,sys,time
 
 Tk = Tkinter
 
@@ -53,6 +53,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		self.redrawCount = 0
 		self.draggedItem = None
 		self.controlKeyIsDown = false # For control-drags
+		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		#@nonl
 		#@-node:<< set the leoTkinterFrame ivars >>
 		#@nl
@@ -157,9 +158,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# Create the canvas.
 		self.createCanvas(self.split2Pane1)
 		# Create the log class.
-		c.log  = frame.log = leoTkinterLog(frame,self.split2Pane2)
+		frame.log = leoTkinterLog(frame,self.split2Pane2)
 		# Create the body class.
-		c.body = frame.body = leoTkinterBody(frame,self.split1Pane2)
+		frame.body = leoTkinterBody(frame,self.split1Pane2)
 		frame.bodyCtrl = frame.body.bodyCtrl
 		# Create the tree class.
 		frame.tree = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
@@ -180,7 +181,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		v.moveToRoot()
 		
 		c.beginUpdate()
-		c.frame.redraw()
+		c.redraw()
 		c.frame.getFocus()
 		c.editVnode(v)
 		c.endUpdate(false)
@@ -195,7 +196,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if not doHook("menu1",c=c,v=v):
 			frame.menu.createMenuBar(self)
 	
-		app.setLog(self.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+		app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
 	
 		app.windowList.append(frame)
 		
@@ -551,16 +552,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			return
 	
 		if 0: # New code
-			index = c.body.getInsertionPoint()
-			row,col = c.body.indexToRowColumn(index)
-			index1 = c.body.rowColumnToIndex(row,0)
+			index = c.frame.body.getInsertionPoint()
+			row,col = c.frame.body.indexToRowColumn(index)
+			index1 = c.frame.body.rowColumnToIndex(row,0)
 		else:
 			index = body.index("insert")
 			row,col = gui.getindex(body,index)
 		
 		if col > 0:
 			if 0: # new code
-				s = c.body.getRange(index1,index2)
+				s = c.frame.body.getRange(index1,index2)
 			else:
 				s = body.get("%d.0" % (row),index)
 			s = toUnicode(s,app.tkEncoding) # 9/28/03
@@ -582,7 +583,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		"""Clear all links to objects in a Leo window."""
 	
-		frame = self ; c = self.c ; tree = frame.tree
+		frame = self ; c = self.c ; tree = frame.tree ; body = self.body
 	
 		# Do this first.
 		#@	<< clear all vnodes and tnodes in the tree >>
@@ -617,7 +618,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		clearAllIvars(c.tangleCommands)
 		clearAllIvars(c.undoer)
 		clearAllIvars(c)
-		clearAllIvars(tree.colorizer)
+		clearAllIvars(body.colorizer)
+		clearAllIvars(body)
+		clearAllIvars(tree)
 		clearAllIvars(tree)
 	
 		# This must be done last.
@@ -653,7 +656,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		top.destroy()
 	#@nonl
 	#@-node:destroySelf
-	#@+node:f.configureBar
+	#@+node:configureBar
 	def configureBar (self, bar, verticalFlag):
 		
 		config = app.config
@@ -683,8 +686,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@nonl
-	#@-node:f.configureBar
-	#@+node:f.configureBarsFromConfig
+	#@-node:configureBar
+	#@+node:configureBarsFromConfig
 	def configureBarsFromConfig (self):
 		
 		config = app.config
@@ -710,11 +713,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			es("exception in user configuration for splitbar")
 			es_exception()
 	#@nonl
-	#@-node:f.configureBarsFromConfig
-	#@+node:f.reconfigureFromConfig
+	#@-node:configureBarsFromConfig
+	#@+node:reconfigureFromConfig
 	def reconfigureFromConfig (self):
 		
-		f = self ; c = f.c
+		frame = self ; c = frame.c
 		
 		# Not ready yet: just reset the width and color.
 		# We need self.bar1 and self.bar2 ivars.
@@ -723,18 +726,18 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# The calls to redraw are workarounds for an apparent Tk bug.
 		# Without them the text settings get applied to the wrong widget!
 		# Moreover, only this order seems to work on Windows XP...
-		f.tree.setFontFromConfig()
-		f.setTreeColorsFromConfig()
-		f.configureBarsFromConfig()
+		frame.tree.setFontFromConfig()
+		frame.setTreeColorsFromConfig()
+		frame.configureBarsFromConfig()
 		c.redraw()
-		f.setBodyFontFromConfig()
-		f.setTabWidth(c.tab_width)
+		frame.setBodyFontFromConfig()
+		frame.setTabWidth(c.tab_width)
 		c.redraw()
-		f.log.setFontFromConfig()
+		frame.log.setFontFromConfig()
 		c.redraw()
 	#@nonl
-	#@-node:f.reconfigureFromConfig
-	#@+node:f.setInitialWindowGeometry
+	#@-node:reconfigureFromConfig
+	#@+node:setInitialWindowGeometry
 	def setInitialWindowGeometry(self):
 		
 		"""Set the position and size of the frame to config params."""
@@ -753,8 +756,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
 	#@nonl
-	#@-node:f.setInitialWindowGeometry
-	#@+node:f.setTabWidth
+	#@-node:setInitialWindowGeometry
+	#@+node:setTabWidth
 	def setTabWidth (self, w):
 		
 		try: # This can fail when called from scripts
@@ -770,16 +773,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		except:
 			es_exception()
 			pass
-	#@-node:f.setTabWidth
-	#@+node:f.setTreeColorsFromConfig
+	#@-node:setTabWidth
+	#@+node:setTreeColorsFromConfig
 	def setTreeColorsFromConfig (self):
 	
 		bg = app.config.getWindowPref("outline_pane_background_color")
 		if bg:
 			try: self.canvas.configure(bg=bg)
 			except: pass
-	#@-node:f.setTreeColorsFromConfig
-	#@+node:f.setWrap
+	#@-node:setTreeColorsFromConfig
+	#@+node:setWrap
 	def setWrap (self,v):
 		
 		c = self.c
@@ -793,8 +796,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			else:
 				self.bodyCtrl.configure(wrap="none")
 				self.bodyXBar.pack(side="bottom",fill="x")
-	#@-node:f.setWrap
-	#@+node:f.reconfigurePanes (use config bar_width)
+	#@-node:setWrap
+	#@+node:reconfigurePanes (use config bar_width)
 	def reconfigurePanes (self):
 		
 		border = app.config.getIntWindowPref('additional_body_text_border')
@@ -808,7 +811,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		border = choose(self.splitVerticalFlag,4,2) 
 		self.log.configureBorder(border)
 	#@nonl
-	#@-node:f.reconfigurePanes (use config bar_width)
+	#@-node:reconfigurePanes (use config bar_width)
 	#@+node:frame.OnCloseLeoEvent
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
@@ -843,10 +846,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def OnActivateBody (self,event=None):
 	
 		try:
-			c = self.c ; gui = app.gui
-			app.setLog(self.log,"OnActivateBody")
+			frame = self ; c = frame.c ; gui = app.gui
+			app.setLog(frame.log,"OnActivateBody")
 			self.tree.OnDeactivate()
-			gui.set_focus(c,self.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
+			gui.set_focus(c,frame.body.bodyCtrl) # Reference to bodyCtrl is allowable in an event handler.
 		except:
 			es_event_exception("activate body")
 	#@nonl
@@ -871,10 +874,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	def OnActivateTree (self,event=None):
 	
 		try:
-			c = self.c ; gui = app.gui
-			app.setLog(self.log,"OnActivateTree")
+			frame = self ; c = frame.c ; gui = app.gui
+			app.setLog(frame.log,"OnActivateTree")
 			self.tree.undimEditLabel()
-			gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
+			gui.set_focus(c, frame.bodyCtrl)
 		except:
 			es_event_exception("activate tree")
 	#@-node:OnActivateTree
@@ -941,20 +944,23 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:frame.OnCut, OnCutFrom Menu
 	def OnCut (self,event=None):
 	
+		frame = self ; c = frame.c ; v = c.currentVnode()
+		
 		# Activate the body key handler by hand.
-		c = self ; v = c.currentVnode()
-		c.tree.forceFullRecolor()
-		c.tree.onBodyWillChange(v,"Cut")
+		frame.body.forceFullRecolor()
+		frame.body.onBodyWillChange(v,"Cut")
 	
 	def OnCutFromMenu (self):
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
 	
 		w = self.getFocus()
-		c.tree.forceFullRecolor()
 		w.event_generate(virtual_event_name("Cut"))
 		
-		# 11/2/02: Make sure the event sticks.
-		c = self ; v = c.currentVnode()
-		c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		# Make sure the event sticks.
+		frame.body.forceFullRecolor()
+		frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+	#@nonl
 	#@-node:frame.OnCut, OnCutFrom Menu
 	#@+node:frame.OnCopy, OnCopyFromMenu
 	def OnCopy (self,event=None):
@@ -964,32 +970,33 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 	def OnCopyFromMenu (self):
 	
-		# trace()
-		c = self
-		w = c.frame.getFocus()
+		frame = self ; c = frame.c
+	
+		w = frame.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
 	#@nonl
 	#@-node:frame.OnCopy, OnCopyFromMenu
 	#@+node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	def OnPaste (self,event=None):
 	
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
+		
 		# Activate the body key handler by hand.
-		c = self ; v = c.currentVnode()
-		self.tree.forceFullRecolor()
-		#trace()
-		self.tree.onBodyWillChange(v,"Paste")
+		frame.body.forceFullRecolor()
+		frame.body.onBodyWillChange(v,"Paste")
 		
 	def OnPasteFromMenu (self):
+		
+		frame = self ; c = frame.c ; v = c.currentVnode()
 	
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 		
-		# 10/23/02: Make sure the event sticks.
-		c = self ; v = c.currentVnode()
-		self.tree.forceFullRecolor()
-		#trace()
-		c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
-	
+		# Make sure the event sticks.
+		frame.body.forceFullRecolor()
+		frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+	#@nonl
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:insertHeadlineTime
 	def insertHeadlineTime (self):
@@ -1012,13 +1019,14 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:endEditLabelCommand
 	def endEditLabelCommand (self):
 	
-		c = self.c ; tree = self.tree ; v = self.editVnode ; gui = app.gui
+		frame = self ; c = frame.c ; tree = frame.tree ; gui = app.gui
+		
+		v = frame.tree.editVnode()
 	
 		# trace(v)
 		if v and v.edit_text():
 			tree.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			# 3/26/03: changed redraw_now to force_redraw.
 			tree.force_redraw() # force a redraw of joined headlines.
 	
 		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
@@ -1027,18 +1035,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:abortEditLabelCommand
 	def abortEditLabelCommand (self):
 		
-		c = self.c ; v = c.currentVnode ; tree = self.tree
-		# trace(v)
-		if self.revertHeadline and v.edit_text() and v == self.editVnode:
-			
-			# trace(`self.revertHeadline`)
+		frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+	
+		if self.revertHeadline and v.edit_text() and v == tree.editVnode():
+		
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("end",self.revertHeadline)
 			tree.idle_head_key(v) # Must be done immediately.
 			tree.revertHeadline = None
 			tree.select(v)
 			if v and len(v.t.joinList) > 0:
-				# 3/26/03: changed redraw_now to force_redraw.
 				tree.force_redraw() # force a redraw of joined headlines.
 	#@nonl
 	#@-node:abortEditLabelCommand
@@ -1127,6 +1133,59 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		self.resizePanesToRatio(ratio,secondary_ratio)
 	#@nonl
 	#@-node:toggleSplitDirection
+	#@+node:leoHelp
+	def leoHelp (self):
+		
+		file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
+		file = toUnicode(file,app.tkEncoding) # 10/20/03
+	
+		if os.path.exists(file):
+			os.startfile(file)
+		else:	
+			answer = app.gui.runAskYesNoDialog(
+				"Download Tutorial?",
+				"Download tutorial (sbooks.chm) from SourceForge?")
+	
+			if answer == "yes":
+				try:
+					if 0: # Download directly.  (showProgressBar needs a lot of work)
+						url = "http://umn.dl.sourceforge.net/sourceforge/leo/sbooks.chm"
+						import urllib
+						self.scale = None
+						urllib.urlretrieve(url,file,self.showProgressBar)
+						if self.scale:
+							self.scale.destroy()
+							self.scale = None
+					else:
+						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
+						import webbrowser
+						os.chdir(app.loadDir)
+						webbrowser.open_new(url)
+				except:
+					es("exception dowloading sbooks.chm")
+					es_exception()
+	#@nonl
+	#@-node:leoHelp
+	#@+node:showProgressBar
+	def showProgressBar (self,count,size,total):
+	
+		# trace("count,size,total:" + `count` + "," + `size` + "," + `total`)
+		if self.scale == None:
+			#@		<< create the scale widget >>
+			#@+node:<< create the scale widget >>
+			Tk = Tkinter
+			top = Tk.Toplevel()
+			top.title("Download progress")
+			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
+			scale.pack()
+			top.lift()
+			#@nonl
+			#@-node:<< create the scale widget >>
+			#@nl
+		self.scale.set(count*size)
+		self.scale.update_idletasks()
+	#@nonl
+	#@-node:showProgressBar
 	#@+node:Scrolling callbacks (frame)
 	def setCallback (self,*args,**keys):
 		
@@ -1189,160 +1248,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		self.top.update()
 	#@nonl
 	#@-node:Tk bindings...
-	#@+node:Redirection routines...
-	#@+at 
-	#@nonl
-	# These are hard to remove, because there is no official tree class yet.
-	#@-at
-	#@nonl
-	#@-node:Redirection routines...
-	#@+node:Coloring 
-	# It's weird to have the tree class be responsible for coloring the body pane!
-	
-	def getColorizer(self):
-		
-		return self.tree.colorizer
-	
-	def recolor_now(self,v):
-		
-		return self.tree.recolor_now(v)
-	
-	def recolor_range(self,v,leading,trailing):
-		
-		return self.tree.recolor_range(v,leading,trailing)
-	
-	def recolor(self,v,incremental=false):
-		
-		return self.tree.recolor(v,incremental)
-		
-	def updateSyntaxColorer(self,v):
-		
-		return self.tree.colorizer.updateSyntaxColorer(v)
-	#@-node:Coloring 
-	#@+node:Drawing
-	def beginUpdate(self):
-	
-		return self.tree.beginUpdate()
-	
-	def endUpdate(self,flag=true):
-	
-		return self.tree.endUpdate(flag)
-	
-	def drawIcon(self,v,x=None,y=None):
-	
-		return self.tree.drawIcon(v,x,y)
-	
-	def redraw(self):
-	
-		return self.tree.redraw()
-	
-	def redraw_now(self):
-	
-		return self.tree.redraw_now()
-	#@nonl
-	#@-node:Drawing
-	#@+node:Editing
-	def editLabel(self,v):
-		
-		return self.tree.editLabel(v)
-	
-	def editVnode(self):
-		
-		return self.tree.editVnode
-	
-	def endEditLabel(self):
-		
-		return self.tree.endEditLabel()
-		
-	def getEditTextDict(self,v):
-		
-		return self.tree.edit_text_dict.get(v)
-	
-	def setEditVnode(self,v):
-		
-		self.tree.editVnode = v
-	
-	def setNormalLabelState(self,v):
-		
-		return self.tree.setNormalLabelState(v)
-	#@-node:Editing
-	#@+node:Fonts
-	def getFont(self):
-		
-		return self.tree.getFont()
-		
-	def setFont(self,font):
-		
-		return self.tree.setFont(font)
-	#@nonl
-	#@-node:Fonts
-	#@+node:Getters & setters
-	# Getters...
-	def currentVnode(self):
-		return self.tree.currentVnode
-		
-	def dragging(self):
-		return self.tree.dragging
-	
-	def rootVnode(self):
-		return self.tree.rootVnode
-	
-	def topVnode(self):
-		return self.tree.topVnode
-	
-	# Setters...
-	
-	def setCurrentVnode(self,v):
-		self.tree.currentVnode = v
-	
-	def setRootVnode(self,v):
-		self.tree.rootVnode = v
-		
-	def setTreeIniting(self,flag):
-		self.tree.initing = flag
-	#@nonl
-	#@-node:Getters & setters
-	#@+node:Notifications
-	# These should all be internal to the tkinter.frame class.
-	
-	def OnActivateHeadline(self,v):
-		return self.tree.OnActivate(v)
-		
-	def onBodyChanged(self,*args,**keys):
-		return self.tree.onBodyChanged(*args,**keys)
-	
-	def onHeadChanged(self,*args,**keys):
-		return self.tree.onHeadChanged(*args,**keys)
-	
-	def OnHeadlineKey(self,v,event):
-		return self.tree.OnHeadlineKey(v,event)
-	
-	def idle_head_key(self,v):
-		return self.tree.idle_head_key(v)
-	#@nonl
-	#@-node:Notifications
-	#@+node:Scrolling
-	def scrollTo(self,v):
-		
-		return self.tree.scrollTo(v)
-	
-	def idle_scrollTo(self,v):
-		
-		return self.tree.idle_scrollTo(v)
-	
-	
-	#@-node:Scrolling
-	#@+node:Selecting
-	def select(self,v,updateBeadList=true):
-		
-		return self.tree.select(v,updateBeadList)
-	#@-node:Selecting
-	#@+node:Tree operations
-	def expandAllAncestors(self,v):
-		
-		return self.tree.expandAllAncestors(v)
-	#@nonl
-	#@-node:Tree operations
 	#@-others
 #@nonl
 #@-node:class leoTkinterFrame
@@ -1370,7 +1275,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		t.bind("<Button-1>", frame.OnBodyClick)
 		t.bind("<Button-3>", frame.OnBodyRClick)
 		t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
-		t.bind("<Key>", frame.tree.OnBodyKey)
+		t.bind("<Key>", frame.body.onBodyKey)
 	
 		# Gui-dependent commands...
 		t.bind(virtual_event_name("Cut"), frame.OnCut)
@@ -1450,9 +1355,288 @@ class leoTkinterBody (leoFrame.leoBody):
 				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
 				except:
-					traceback.print_exc()
+					import traceback ; traceback.print_exc()
 	#@nonl
 	#@-node:tkBody.setBodyFontFromConfig
+	#@+node:body key handlers
+	#@+at 
+	#@nonl
+	# The <Key> event generates the event before the body text is changed(!), 
+	# so we register an idle-event handler to do the work later.
+	# 
+	# 1/17/02: Rather than trying to figure out whether the control or alt 
+	# keys are down, we always schedule the idle_handler.  The idle_handler 
+	# sees if any change has, in fact, been made to the body text, and sets 
+	# the changed and dirty bits only if so.  This is the clean and safe way.
+	# 
+	# 2/19/02: We must distinguish between commands like "Find, Then Change", 
+	# that call onBodyChanged, and commands like "Cut" and "Paste" that call 
+	# onBodyWillChange.  The former commands have already changed the body 
+	# text, and that change must be captured immediately.  The latter commands 
+	# have not changed the body text, and that change may only be captured at 
+	# idle time.
+	#@-at
+	#@@c
+	
+	#@+others
+	#@+node:idle_body_key
+	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+		
+		"""Update the body pane at idle time."""
+	
+		if 0:
+			if ch: trace(ch,ord(ch))
+			else: trace(`ch`)
+	
+		c = self.c
+		if not c or not v or v != c.currentVnode():
+			return "break"
+		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
+			return "break" # The hook claims to have handled the event.
+		body = v.bodyString()
+		if not newSel:
+			newSel = c.frame.body.getTextSelection()
+		if oldText != None:
+			s = oldText
+		else:
+			s = c.frame.body.getAllText()
+		#@	<< return if nothing has changed >>
+		#@+node:<< return if nothing has changed >>
+		# 6/22/03: Make sure we handle delete key properly.
+		
+		if ch not in ('\n','\r',chr(8)):
+		
+			if s == body:
+				return "break"
+			
+			# Do nothing for control characters.
+			if (ch == None or len(ch) == 0) and body == s[:-1]:
+				return "break"
+			
+		# print `ch`,len(body),len(s)
+		#@nonl
+		#@-node:<< return if nothing has changed >>
+		#@nl
+		#@	<< set removeTrailing >>
+		#@+node:<< set removeTrailing >>
+		#@+at 
+		#@nonl
+		# Tk will add a newline only if:
+		# 1. A real change has been made to the Tk.Text widget, and
+		# 2. the change did _not_ result in the widget already containing a 
+		# newline.
+		# 
+		# It's not possible to tell, given the information available, what Tk 
+		# has actually done. We need only make a reasonable guess here.   
+		# setUndoTypingParams stores the number of trailing newlines in each 
+		# undo bead, so whatever we do here can be faithfully undone and 
+		# redone.
+		#@-at
+		#@@c
+		new = s ; old = body
+		
+		if len(new) == 0 or new[-1] != '\n':
+			# There is no newline to remove.  Probably will never happen.
+			# trace("false: no newline to remove")
+			removeTrailing = false
+		elif len(old) == 0:
+			# Ambigous case.
+			# trace("false: empty old")
+			removeTrailing = ch != '\n' # false
+		elif old == new[:-1]:
+			# A single trailing character has been added.
+			# trace("false: only changed trailing.")
+			removeTrailing = false
+		else:
+			# The text didn't have a newline, and now it does.
+			# Moveover, some other change has been made to the text,
+			# So at worst we have misreprented the user's intentions slightly.
+			# trace("true")
+			removeTrailing = true
+			
+		# trace(`ch`+","+`removeTrailing`)
+		
+		
+		#@-node:<< set removeTrailing >>
+		#@nl
+		if ch in ('\n','\r'):
+			#@		<< Do auto indent >>
+			#@+node:<< Do auto indent >> (David McNab)
+			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+			if self.frame.body.colorizer.useSyntaxColoring(v) and undoType != "Change":
+				# Get the previous line.
+				s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+				# Add the leading whitespace to the present line.
+				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
+				if s and len(s) > 0 and s[-1]==':':
+					# For Python: increase auto-indent after colons.
+					if self.colorizer.scanColorDirectives(v) == "python":
+						width += abs(c.tab_width)
+				if app.config.getBoolWindowPref("smart_auto_indent"):
+					# Added Nov 18 by David McNab, david@rebirthing.co.nz
+					# Determine if prev line has unclosed parens/brackets/braces
+					brackets = [width]
+					tabex = 0
+					for i in range(0, len(s)):
+						if s[i] == '\t':
+							tabex += c.tab_width - 1
+						if s[i] in '([{':
+							brackets.append(i+tabex + 1)
+						elif s[i] in '}])' and len(brackets) > 1:
+							brackets.pop()
+					width = brackets.pop()
+					# end patch by David McNab
+				ws = computeLeadingWhitespace (width,c.tab_width)
+				if ws and len(ws) > 0:
+					c.frame.bodyCtrl.insert("insert", ws)
+					removeTrailing = false # bug fix: 11/18
+			#@nonl
+			#@-node:<< Do auto indent >> (David McNab)
+			#@nl
+		elif ch == '\t' and c.tab_width < 0:
+			#@		<< convert tab to blanks >>
+			#@+node:<< convert tab to blanks >>
+			# Do nothing if we are executing a Change command.
+			if undoType != "Change":
+				
+				# Get the characters preceeding the tab.
+				prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+				
+				if 1: # 6/26/03: Convert tab no matter where it is.
+			
+					w = computeWidth(prev,c.tab_width)
+					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
+					# print "prev w:" + `w` + ", prev chars:" + `prev`
+					c.frame.bodyCtrl.delete("insert -1c")
+					c.frame.bodyCtrl.insert("insert",' ' * w2)
+				
+				else: # Convert only leading tabs.
+				
+					# Get the characters preceeding the tab.
+					prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+			
+					# Do nothing if there are non-whitespace in prev:
+					all_ws = true
+					for ch in prev:
+						if ch != ' ' and ch != '\t':
+							all_ws = false
+					if all_ws:
+						w = computeWidth(prev,c.tab_width)
+						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
+						# print "prev w:" + `w` + ", prev chars:" + `prev`
+						c.frame.bodyCtrl.delete("insert -1c")
+						c.frame.bodyCtrl.insert("insert",' ' * w2)
+			#@nonl
+			#@-node:<< convert tab to blanks >>
+			#@nl
+		#@	<< set s to widget text, removing trailing newlines if necessary >>
+		#@+node:<< set s to widget text, removing trailing newlines if necessary >>
+		s = c.frame.body.getAllText()
+		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+			s = s[:-1]
+		#@nonl
+		#@-node:<< set s to widget text, removing trailing newlines if necessary >>
+		#@nl
+		if undoType: # 11/6/03: set oldText properly when oldText param exists.
+			if not oldText: oldText = body
+			newText = s
+			c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+		v.t.setTnodeText(s)
+		v.t.insertSpot = c.frame.body.getInsertionPoint()
+		#@	<< recolor the body >>
+		#@+node:<< recolor the body >>
+		self.frame.scanForTabWidth(v)
+		
+		incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+		self.frame.body.recolor_now(v,incremental=incremental)
+		
+		self.forceFullRecolorFlag = false
+		#@nonl
+		#@-node:<< recolor the body >>
+		#@nl
+		if not c.changed:
+			c.setChanged(true)
+		#@	<< redraw the screen if necessary >>
+		#@+node:<< redraw the screen if necessary >>
+		redraw_flag = false
+		
+		c.beginUpdate()
+		
+		# Update dirty bits.
+		if not v.isDirty() and v.setDirty(): # Sets all cloned and @file dirty bits
+			redraw_flag = true
+			
+		# Update icons.
+		val = v.computeIcon()
+		if val != v.iconVal:
+			v.iconVal = val
+			redraw_flag = true
+		
+		c.endUpdate(redraw_flag) # redraw only if necessary
+		#@nonl
+		#@-node:<< redraw the screen if necessary >>
+		#@nl
+		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
+		return "break"
+	#@nonl
+	#@-node:idle_body_key
+	#@+node:onBodyChanged (called from core)
+	# Called by command handlers that have already changed the text.
+	
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+		
+		"""Handle a change to the body pane."""
+		
+		c = self.c
+		if not v:
+			v = c.currentVnode()
+	
+		if not oldSel:
+			oldSel = c.frame.body.getTextSelection()
+	
+		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+	#@-node:onBodyChanged (called from core)
+	#@+node:onBodyKey
+	def onBodyKey (self,event):
+		
+		"""Handle any key press event in the body pane."""
+	
+		c = self.c ; v = c.currentVnode() ; ch = event.char
+		oldSel = c.frame.body.getTextSelection()
+	
+		if 0:
+			self.keyCount += 1
+			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
+			
+		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
+	#@nonl
+	#@-node:onBodyKey
+	#@+node:onBodyWillChange
+	# Called by command handlers that change the text just before idle time.
+	
+	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
+		
+		"""Queue the body changed idle handler."""
+		
+		c = self.c
+		if not v: v = c.currentVnode()
+		if not oldSel:
+			oldSel = c.frame.body.getTextSelection()
+			
+		#trace()
+		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
+	
+	#@-node:onBodyWillChange
+	#@-others
+	#@nonl
+	#@-node:body key handlers
+	#@+node:forceRecolor
+	def forceFullRecolor (self):
+		
+		self.forceFullRecolorFlag = true
+	#@nonl
+	#@-node:forceRecolor
 	#@+node:Tk bindings (leoTkinterBody)
 	#@+at
 	# I could have used this to redirect all calls from the body class and the 
@@ -1738,7 +1922,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			return toUnicode(s,app.tkEncoding)
 	#@nonl
 	#@-node:getCharAtIndex
-	#@+node:getInsertLines (leoTkinterBody)
+	#@+node:getInsertLines
 	def getInsertLines (self):
 		
 		"""Return before,after where:
@@ -1761,7 +1945,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	
 		return before,ins,after
 	#@nonl
-	#@-node:getInsertLines (leoTkinterBody)
+	#@-node:getInsertLines
 	#@+node:getSelectionAreas
 	def getSelectionAreas (self):
 		
@@ -1804,13 +1988,17 @@ class leoTkinterBody (leoFrame.leoBody):
 		after is all lines after the selected text
 		(or the text after the insert point if no selection)"""
 		
-		# At present, called only by getBodyLines.
+		# At present, called only by c.getBodyLines.
 	
 		t = self.bodyCtrl
 		sel_index = t.tag_ranges("sel") 
 		if len(sel_index) != 2:
-			return "","",""
-			
+			if 1: # Choose the insert line.
+				index = t.index("insert")
+				sel_index = index,index
+			else:
+				return "","","" # Choose everything.
+	
 		i,j = sel_index
 		i = t.index(i + "linestart")
 		j = t.index(j + "lineend") # 10/24/03: -1c  # 11/4/03: no -1c.

@@ -84,6 +84,7 @@ class leoFind:
 		self.c = None # The commander for this search.
 		self.v = None # The vnode being searched.  Never saved between searches!
 		self.in_headline = false # true: searching headline text.
+		self.s_text = None # The search text for this search.
 		self.wrapping = false # true: wrapping is enabled.
 			# This is _not_ the same as c.wrap_flag for batch searches.
 		
@@ -274,7 +275,7 @@ class leoFind:
 	#@nonl
 	# This routine performs a single batch change operation, updating the head 
 	# or body string of v and leaving the result in s_text.  We update the 
-	# c.body if we are changing the body text of c.currentVnode().
+	# body if we are changing the body text of c.currentVnode().
 	# 
 	# s_text contains the found text on entry and contains the changed text on 
 	# exit.  pos and pos2 indicate the selection.  The selection will never be 
@@ -292,8 +293,8 @@ class leoFind:
 		s = gui.getAllText(st)
 		# Update the selection.
 		insert=choose(c.reverse_flag,pos1,pos1+'+'+`len(c.change_text)`+'c')
-		gui.setSelectionRange(t,insert,insert)
-		gui.setInsertPoint(t,insert)
+		gui.setSelectionRange(st,insert,insert)
+		gui.setInsertPoint(st,insert)
 		# Update the node
 		if self.in_headline:
 			#@		<< set the undo head params >>
@@ -311,7 +312,7 @@ class leoFind:
 		else:
 			#@		<< set the undo body typing params >>
 			#@+node:<< set the undo body typing params >>
-			sel = c.body.getInsertionPoint()
+			sel = c.frame.body.getInsertionPoint()
 			
 			if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 			
@@ -358,14 +359,14 @@ class leoFind:
 			if pos1:
 				count += 1
 				self.batchChange(pos1,pos2,count)
-				line = gui.getLineContainingIndex(t,pos1)
+				line = gui.getLineContainingIndex(st,pos1)
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
 		# Make sure the headline and body text are updated.
 		v = c.currentVnode()
 		c.frame.onHeadChanged(v)
-		c.frame.onBodyChanged(v,"Can't Undo")
+		c.frame.body.onBodyChanged(v,"Can't Undo")
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
 			c.undoer.setUndoParams("Change All",v)
@@ -404,12 +405,12 @@ class leoFind:
 		c.beginUpdate()
 		if c.mark_changes_flag:
 			v.setMarked()
-			c.frame.drawIcon(v) # redraw only the icon.
+			c.frame.tree.drawIcon(v) # redraw only the icon.
 		# update node, undo status, dirty flag, changed mark & recolor
 		if self.in_headline:
 			c.frame.idle_head_key(v)
 		else:
-			c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+			c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 		return true
 	#@nonl
@@ -548,7 +549,7 @@ class leoFind:
 			if pos:
 				if c.mark_finds_flag:
 					v.setMarked()
-					c.frame.drawIcon(v) # redraw only the icon.
+					c.frame.tree.drawIcon(v) # redraw only the icon.
 				return pos, newpos
 			elif self.errors:
 				return None,None # Abort the search.
@@ -740,7 +741,7 @@ class leoFind:
 		# Select the first node.
 		if c.suboutline_only_flag or c.node_only_flag or c.selection_only_flag: # 11/9/03
 			self.v = c.currentVnode()
-			if c.selection_only_flag: self.selStart,self.selEnd = c.body.getTextSelection()
+			if c.selection_only_flag: self.selStart,self.selEnd = c.frame.body.getTextSelection()
 			else:                     self.selStart,self.selEnd = None,None
 		else:
 			v = c.rootVnode()
@@ -794,7 +795,7 @@ class leoFind:
 		
 		self.errors = 0
 		if self.in_headline:
-			c.frame.setEditVnode(v)
+			c.frame.tree.setEditVnode(v)
 			t = v.edit_text()
 			sel = None
 			# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.frame.editVnode()` + ":" + `v`)
@@ -887,11 +888,11 @@ class leoFind:
 		c.beginUpdate()
 		if 1: # range of update...
 			c.selectVnode(v)
-			c.frame.redraw_now() # Redraw now so selections are not destroyed.
+			c.frame.tree.redraw_now() # Redraw now so selections are not destroyed.
 			# Select the found vnode again after redraw.
 			if self.in_headline:
 				c.editVnode(v)
-				c.frame.setNormalLabelState(v)
+				c.frame.tree.setNormalLabelState(v)
 				assert(v.edit_text())
 			else:
 				c.selectVnode(v)
@@ -914,6 +915,9 @@ class leoFind:
 		self.oops()
 		
 	def bringToFront (self):
+		self.oops()
+		
+	def gui_search (self,t,*args,**keys):
 		self.oops()
 		
 	def oops(self):

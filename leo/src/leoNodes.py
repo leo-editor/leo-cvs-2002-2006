@@ -806,14 +806,14 @@ class baseVnode:
 	
 	def currentVnode (self):
 	
-		return self.c.frame.currentVnode()
+		return self.c.frame.tree.currentVnode()
 	#@nonl
 	#@-node:currentVnode (vnode)
 	#@+node:edit_text
 	def edit_text (self):
 	
 		v = self
-		return self.c.frame.getEditTextDict(v)
+		return self.c.frame.tree.getEditTextDict(v)
 	#@nonl
 	#@-node:edit_text
 	#@+node:findRoot
@@ -1529,7 +1529,7 @@ class baseVnode:
 		# 5/27/02
 		if oldRoot: oldRoot.mBack = v
 		v.mNext = oldRoot
-		c.frame.setRootVnode(v)
+		c.frame.tree.setRootVnode(v)
 	#@nonl
 	#@-node:v.linkAsRoot
 	#@+node:v.moveAfter
@@ -1547,7 +1547,7 @@ class baseVnode:
 		
 		# 5/27/02: Moving a node after another node can create a new root node.
 		if not a.parent() and not a.back():
-			c.frame.setRootVnode(a)
+			c.frame.tree.setRootVnode(a)
 	#@nonl
 	#@-node:v.moveAfter
 	#@+node:v.moveToNthChildOf
@@ -1566,7 +1566,7 @@ class baseVnode:
 		
 		# 5/27/02: Moving a node can create a new root node.
 		if not p.parent() and not p.back():
-			c.frame.setRootVnode(p)
+			c.frame.tree.setRootVnode(p)
 	#@nonl
 	#@-node:v.moveToNthChildOf
 	#@+node:v.sortChildren
@@ -1884,7 +1884,7 @@ class baseVnode:
 		# Special case the root
 		if v == c.rootVnode():
 			if not v.mNext: return # Should never happen.
-			c.frame.setRootVnode(v.mNext)
+			c.frame.tree.setRootVnode(v.mNext)
 	
 		# Clear the links in other nodes
 		if v.mBack:

@@ -51,7 +51,6 @@ class leoGui:
 		
 		# Finish creating the frame
 		frame.finishCreate(c)
-		c.log = c.frame.log # Kludge: should replace c.log by abstract log routines.
 		
 		# Finish initing the subcommanders.
 		c.undoer.clearUndoState() # Menus must exist at this point.
@@ -71,7 +70,7 @@ class leoGui:
 	#@nonl
 	#@-node:createRootWindow
 	#@+node:destroySelf
-	def destroySelf (self,frame):
+	def destroySelf (self):
 	
 		self.oops()
 	#@nonl
@@ -113,7 +112,7 @@ class leoGui:
 	#@-node:runMainLoop
 	#@+node:app.gui dialogs
 	def runAboutLeoDialog(self,version,copyright,url,email):
-		"""Create and run a Tkinter About Leo dialog."""
+		"""Create and run Leo's About Leo dialog."""
 		self.oops()
 		
 	def runAskLeoIDDialog(self):
@@ -121,7 +120,7 @@ class leoGui:
 		self.oops()
 	
 	def runAskOkDialog(self,title,message=None,text="Ok"):
-		"""Create and run a Tkinter an askOK dialog ."""
+		"""Create and run an askOK dialog ."""
 		self.oops()
 	
 	def runAskOkCancelNumberDialog(self,title,message):
@@ -141,13 +140,13 @@ class leoGui:
 	#@+node:app.gui file dialogs
 	def runOpenFileDialog(self,title,filetypes,defaultextension):
 	
-		"""Create and run an Tkinter open file dialog ."""
+		"""Create and run an open file dialog ."""
 	
 		self.oops()
 	
 	def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	
-		"""Create and run an Tkinter save file dialog ."""
+		"""Create and run a save file dialog ."""
 		
 		self.oops()
 	#@nonl

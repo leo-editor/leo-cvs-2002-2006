@@ -69,7 +69,7 @@ class tkinterGui(leoGui.leoGui):
 					es("Icons directory not found: "+path, color="red")
 		except:
 			print "exception setting bitmap"
-			traceback.print_exc()
+			import traceback ; traceback.print_exc()
 	#@nonl
 	#@-node:setDefaultIcon
 	#@+node:getDefaultConfigFont
@@ -164,7 +164,7 @@ class tkinterGui(leoGui.leoGui):
 		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
 		"""Create and run an askYesNoCancel dialog ."""
 		d = leoTkinterDialog.tkinterAskYesNoCancel(
-			title,message,noMessage,defaultButton)
+			title,message,yesMessage,noMessage,defaultButton)
 	 	return d.run(modal=true)
 	#@nonl
 	#@-node:app.gui.Tkinter dialogs
@@ -403,7 +403,7 @@ class tkinterGui(leoGui.leoGui):
 				#@-node:<< try to use the PIL and tkIcon packages to draw the icon >>
 				#@nl
 			except:
-				# traceback.print_exc()
+				# import traceback ; traceback.print_exc()
 				self.leoIcon = None
 	#@nonl
 	#@-node:attachLeoIcon & createLeoIcon

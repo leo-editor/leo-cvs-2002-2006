@@ -36,7 +36,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 
 from leoGlobals import *
 import leoApp,leoConfig,leoNodes
-import os,string,sys,traceback
+import os,string,sys
 
 #@+others
 #@+node:run & allies
@@ -70,7 +70,7 @@ def run(fileName=None,*args,**keywords):
 	app.writeWaitingLog()
 	v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
-	frame.c.redraw()
+	frame.tree.redraw()
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
@@ -91,7 +91,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 			return true
 	except:
 		print "exception getting Python version"
-		traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return false
 #@nonl
 #@-node:isValidPython
@@ -122,7 +122,7 @@ def computeLoadDir():
 		return loadDir
 	except:
 		print "Exception getting load directory"
-		print traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return None
 #@nonl
 #@-node:computeLoadDir

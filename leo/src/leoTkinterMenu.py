@@ -58,12 +58,12 @@ class leoTkinterMenu (leoMenu.leoMenu):
 		
 	#@-node:bind
 	#@+node:delete
-	def delete (self,menu,readItemName):
+	def delete (self,menu,realItemName):
 		
-		"""Wrapper for the Tkinter xxx menu method."""
+		"""Wrapper for the Tkinter delete menu method."""
 	
 		return menu.delete(realItemName)
-		
+	#@nonl
 	#@-node:delete
 	#@+node:delete_range
 	def delete_range (self,menu,n1,n2):
@@ -93,11 +93,11 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 	#@-node:insert_cascade
 	#@+node:new_menu
-	def new_menu(self,parent,tearoff=0):
+	def new_menu(self,parent,tearoff=false):
 		
 		"""Wrapper for the Tkinter new_menu menu method."""
 	
-		return Tkinter.Menu(parent,tearoff=0)
+		return Tkinter.Menu(parent,tearoff=tearoff)
 	#@nonl
 	#@-node:new_menu
 	#@+node:createMenuBar
@@ -175,7 +175,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 		return callback
 	#@nonl
 	#@-node:defineMenuCallback
-	#@+node:defineMenuCallback
+	#@+node:defineOpenWithMenuCallback
 	def defineOpenWithMenuCallback(self,command):
 		
 		# The first parameter must be event, and it must default to None.
@@ -184,7 +184,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 		return callback
 	#@nonl
-	#@-node:defineMenuCallback
+	#@-node:defineOpenWithMenuCallback
 	#@+node:disableMenu
 	def disableMenu (self,menu,name):
 		

@@ -5,8 +5,8 @@
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
-import leoCompare,leoFontPanel,leoNodes,leoPrefs
-import os,string,sys,time,traceback
+import leoColor
+import os,string,sys,time
 
 #@+others
 #@+node:class leoBody
@@ -19,10 +19,15 @@ class leoBody:
 	def __init__ (self,frame,parentFrame):
 	
 		self.frame = frame
-		self.c = frame.c
-	
+		self.c = c = frame.c
+		self.forceFullRecolorFlag = false
+		
 		self.bodyCtrl = self.createControl(frame,parentFrame)
+		frame.body = self
+	
 		self.setBodyFontFromConfig()
+		
+		self.colorizer = leoColor.colorizer(c)
 	#@nonl
 	#@-node:leoBody.__init__
 	#@+node:Must be overriden in subclasses
@@ -32,6 +37,9 @@ class leoBody:
 	def createControl (self,frame,parentFrame):
 		self.oops()
 		
+	def initialRatios (self):
+		self.oops()
+		
 	def setBodyFontFromConfig (self):
 		self.oops()
 		
@@ -39,6 +47,33 @@ class leoBody:
 		print "leoBody oops:", callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:Must be overriden in subclasses
+	#@+node:Coloring 
+	# It's weird to have the tree class be responsible for coloring the body pane!
+	
+	def getColorizer(self):
+		
+		return self.colorizer
+	
+	def recolor_now(self,v,incremental=false):
+	
+		self.colorizer.colorize(v,incremental)
+	
+	def recolor_range(self,v,leading,trailing):
+		
+		self.colorizer.recolor_range(v,leading,trailing)
+	
+	def recolor(self,v,incremental=false):
+		
+		if 0: # Do immediately
+			self.colorizer.colorize(v,incremental)
+		else: # Do at idle time
+			self.colorizer.schedule(v,incremental)
+		
+	def updateSyntaxColorer(self,v):
+		
+		return self.colorizer.updateSyntaxColorer(v)
+	#@nonl
+	#@-node:Coloring 
 	#@-others
 #@nonl
 #@-node:class leoBody
@@ -52,6 +87,9 @@ class leoFrame:
 	#@	@+others
 	#@+node: leoFrame.__init__
 	def __init__ (self):
+		
+		self.c = None # Must be created by subclasses.
+		self.title = None # Must be created by subclasses.
 		
 		# Objects attached to this frame.
 		self.menu = None
@@ -157,6 +195,32 @@ class leoFrame:
 				return true # Veto.
 	#@nonl
 	#@-node:promptForSave
+	#@+node:scanForTabWidth
+	# Similar to code in scanAllDirectives.
+	
+	def scanForTabWidth (self, v):
+		
+		c = self.c ; w = c.tab_width
+	
+		while v:
+			s = v.t.bodyString
+			dict = get_directives_dict(s)
+			#@		<< set w and break on @tabwidth >>
+			#@+node:<< set w and break on @tabwidth >>
+			if dict.has_key("tabwidth"):
+				
+				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
+				if val and val != 0:
+					w = val
+					break
+			#@nonl
+			#@-node:<< set w and break on @tabwidth >>
+			#@nl
+			v = v.parent()
+	
+		c.frame.setTabWidth(w)
+	#@nonl
+	#@-node:scanForTabWidth
 	#@-others
 #@nonl
 #@-node:class leoFrame
@@ -236,6 +300,159 @@ class leoTree:
 	"""The base class for the outline pane in Leo windows."""
 	
 	#@	@+others
+	#@+node:  tree.__init__
+	def __init__ (self,frame):
+		
+		self.frame = frame
+		self.c = frame.c
+		
+		self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
+		
+		# "public" ivars: correspond to setters & getters.
+		self.mCurrentVnode = None
+		self.mDragging = false
+		self.mEditVnode = None
+		self.mRootVnode = None
+		self.mTopVnode = None
+		
+		# Controlling redraws
+		self.updateCount = 0 # self.redraw does nothing unless this is zero.
+		self.redrawCount = 0 # For traces
+		self.redrawScheduled = false # true if redraw scheduled.
+	#@nonl
+	#@-node:  tree.__init__
+	#@+node:Drawing
+	def drawIcon(self,v,x=None,y=None):
+		self.oops()
+	
+	def redraw(self,event=None): # May be bound to an event.
+		self.oops()
+	
+	def redraw_now(self):
+		self.oops()
+	#@nonl
+	#@-node:Drawing
+	#@+node:Edit label
+	def editLabel(self,v):
+		self.oops()
+	
+	def endEditLabel(self):
+		self.oops()
+	
+	def setNormalLabelState(self,v):
+		self.oops()
+	#@nonl
+	#@-node:Edit label
+	#@+node:Fonts
+	def getFont(self):
+		self.oops()
+		
+	def setFont(self,font=None,fontName=None):
+		self.oops()
+	#@nonl
+	#@-node:Fonts
+	#@+node:Notifications
+	# These should all be internal to the tkinter.frame class.
+	
+	def OnActivateHeadline(self,v):
+		self.oops()
+		
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+		self.oops()
+		
+	def onHeadChanged(self,v):
+		self.oops()
+	
+	def OnHeadlineKey(self,v,event):
+		self.oops()
+	
+	def idle_head_key(self,v,ch=None):
+		self.oops()
+	#@nonl
+	#@-node:Notifications
+	#@+node:Scrolling
+	def scrollTo(self,v):
+		self.oops()
+	
+	def idle_scrollTo(self,v):
+		
+		self.oops()
+	
+	
+	#@-node:Scrolling
+	#@+node:Selecting
+	def select(self,v,updateBeadList=true):
+		
+		self.oops()
+	#@nonl
+	#@-node:Selecting
+	#@+node:Tree operations
+	def expandAllAncestors(self,v):
+		
+		self.oops()
+	#@nonl
+	#@-node:Tree operations
+	#@+node:beginUpdate
+	def beginUpdate (self):
+	
+		self.updateCount += 1
+	#@nonl
+	#@-node:beginUpdate
+	#@+node:endUpdate
+	def endUpdate (self,flag=true):
+	
+		assert(self.updateCount > 0)
+		self.updateCount -= 1
+		if flag and self.updateCount == 0:
+			self.redraw()
+	#@nonl
+	#@-node:endUpdate
+	#@+node:Getters
+	def currentVnode(self):
+		return self.mCurrentVnode
+		
+	def dragging(self):
+		return self.mDragging
+		
+	def getEditTextDict(self,v):
+		return self.edit_text_dict.get(v)
+		
+	def editVnode(self):
+		return self.mEditVnode
+	
+	def rootVnode(self):
+		return self.mRootVnode
+	
+	def topVnode(self):
+		return self.mTopVnode
+	#@nonl
+	#@-node:Getters
+	#@+node:Setters
+	def setCurrentVnode(self,v):
+		self.mCurrentVnode = v
+		
+	def setDragging(self,flag):
+		self.mDragging = flag
+		
+	def setEditVnode(self,v):
+		self.mEditVnode = v
+	
+	def setRootVnode(self,v):
+		self.mRootVnode = v
+		
+	def setIniting(self,flag):
+		pass # No longer used
+		
+	def setTopVnode(self,v):
+		self.mTopVnode = v
+	#@nonl
+	#@-node:Setters
+	#@+node:oops
+	def oops(self):
+		
+		print "leoTree oops:", callerName(2), "should be overridden in subclass"
+	#@nonl
+	#@-node:oops
 	#@-others
 #@nonl
 #@-node:class leoTree

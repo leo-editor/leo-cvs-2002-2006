@@ -123,7 +123,7 @@ class leoTkinterDialog:
 		
 		# Do this at idle time.
 		def callback(top=self.top):
-			app.gui.attachLeoIcon(self.top)
+			app.gui.attachLeoIcon(top)
 		
 		self.top.after_idle(callback)
 	#@nonl
@@ -743,7 +743,7 @@ class tkinterListBoxDialog (leoTkinterDialog):
 			n = items[0]
 			v = self.vnodeList[n]
 			c.beginUpdate()
-			c.frame.expandAllAncestors(v)
+			c.frame.tree.expandAllAncestors(v)
 			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 			c.endUpdate()
 			c.frame.idle_scrollTo(v)

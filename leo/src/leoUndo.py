@@ -541,7 +541,7 @@ class baseUndoer:
 			elif redoType == "Delete Outline" or redoType == "Cut Node":
 			
 				c.selectVnode(u.v)
-				c.deleteHeadline()
+				c.deleteOutline()
 			#@nonl
 			#@-node:<< redo delete cases >>
 			#@nl
@@ -556,7 +556,7 @@ class baseUndoer:
 				else:
 					# 3/16/02: Moving up is the only case that can do this.
 					parent = u.v.parent()
-					u.v.moveToRoot(c.frame.rootVnode()) # 5/27/02
+					u.v.moveToRoot(c.rootVnode()) # 5/27/02
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
 				c.initJoinedCloneBits(u.v) # 7/6/02
@@ -629,7 +629,7 @@ class baseUndoer:
 				if current != u.v:
 					c.selectVnode(u.v)
 				elif redoType in ("Cut","Paste"):
-					c.frame.tree.forceFullRecolor()
+					c.frame.body.forceFullRecolor()
 			
 				self.undoRedoText(
 					u.v,u.leading,u.trailing,
@@ -640,7 +640,7 @@ class baseUndoer:
 				if u.newSel:
 					c.frame.body.setTextSelection(u.newSel)
 				if u.yview:
-					c.body.setYScrollPosition(u.yview)
+					c.frame.body.setYScrollPosition(u.yview)
 				redrawFlag = (current != u.v)
 					
 			elif redoType == "Change All":
@@ -670,7 +670,6 @@ class baseUndoer:
 					if v2 != u.v:
 						v2.setHeadString(u.newText)
 				c.selectVnode(u.v)
-			#@nonl
 			#@-node:<< redo typing cases >>
 			#@nl
 			else: trace("Unknown case: " + `redoType`)
@@ -715,13 +714,13 @@ class baseUndoer:
 			if undoType == "Clone":
 				
 				c.selectVnode(u.v)
-				c.deleteHeadline()
+				c.deleteOutline()
 				c.selectVnode(u.back)
 				
 			elif undoType == "Drag & Clone":
 				
 				c.selectVnode(u.v)
-				c.deleteHeadline()
+				c.deleteOutline()
 				c.selectVnode(u.oldV)
 			#@nonl
 			#@-node:<< undo clone cases >>
@@ -772,7 +771,7 @@ class baseUndoer:
 			elif undoType in ["Import","Insert Outline","Paste Node"]:
 				
 				c.selectVnode(u.v)
-				c.deleteHeadline()
+				c.deleteOutline()
 				if u.select:
 					# trace("Insert/Paste:" + `u.select`)
 					c.selectVnode(u.select)
@@ -790,7 +789,7 @@ class baseUndoer:
 				else:
 					# 3/16/02: Moving up is the only case that can do this.
 					parent = u.v.parent()
-					u.v.moveToRoot(c.frame.rootVnode())
+					u.v.moveToRoot(c.rootVnode())
 					if parent: # We could assert(parent)
 						parent.moveAfter(u.v)
 				
@@ -882,7 +881,7 @@ class baseUndoer:
 				if current != u.v:
 					c.selectVnode(u.v)
 				elif undoType in ("Cut","Paste"):
-					c.frame.tree.forceFullRecolor()
+					c.frame.body.forceFullRecolor()
 			
 				self.undoRedoText(
 					u.v,u.leading,u.trailing,
@@ -892,7 +891,7 @@ class baseUndoer:
 				if u.oldSel:
 					c.frame.body.setTextSelection(u.oldSel)
 				if u.yview:
-					c.body.setYScrollPosition(u.yview)
+					c.frame.body.setYScrollPosition(u.yview)
 				redrawFlag = (current != u.v)
 					
 			elif undoType == "Change All":
@@ -922,7 +921,6 @@ class baseUndoer:
 					if v2 != u.v:
 						v2.setHeadString(u.oldText)
 				c.selectVnode(u.v)
-			#@nonl
 			#@-node:<< undo typing cases >>
 			#@nl
 			else: trace("Unknown case: " + `u.undoType`)
@@ -1191,10 +1189,10 @@ class baseUndoer:
 		if textResult == result:
 			if undoType in ("Cut","Paste"):
 				# trace("non-incremental undo")
-				c.frame.recolor(v,incremental=false)
+				c.frame.body.recolor(v,incremental=false)
 			else:
 				# trace("incremental undo:",leading,trailing)
-				c.frame.recolor_range(v,leading,trailing)
+				c.frame.body.recolor_range(v,leading,trailing)
 		else: # 11/19/02: # Rewrite the pane and do a full recolor.
 			if u.debug_print:
 				#@			<< print mismatch trace >>

@@ -7,7 +7,7 @@
 
 #@@language python
 
-import exceptions,os,re,string,sys,time,traceback,types
+import exceptions,os,re,string,sys,time,types
 
 #@<< define general constants >>
 #@+node:<< define general constants >>
@@ -781,7 +781,7 @@ def openWithFileName(fileName,old_c=None):
 	except:
 		if 1:
 			print "exceptions opening:", fileName
-			traceback.print_exc()
+			import traceback ; traceback.print_exc()
 		else:
 			es("exceptions opening: " + fileName,color="red")
 			es_exception()
@@ -877,6 +877,166 @@ def computeWindowTitle (fileName):
 		return title
 #@nonl
 #@-node:computeWindowTitle
+#@+node:alert
+def alert(message):
+
+	es(message)
+
+	import tkMessageBox
+	tkMessageBox.showwarning("Alert", message)
+#@-node:alert
+#@+node:angleBrackets & virtual_event_name
+# Returns < < s > >
+
+def angleBrackets(s):
+
+	return ( "<<" + s +
+		">>") # must be on a separate line.
+
+virtual_event_name = angleBrackets
+#@nonl
+#@-node:angleBrackets & virtual_event_name
+#@+node:callerName
+def callerName (n=1):
+
+	try: # get the function name from the call stack.
+		f1 = sys._getframe(n) # The stack frame, n levels up.
+		code1 = f1.f_code # The code object
+		return code1.co_name # The code name
+	except:
+		es_exception()
+		return "<no caller name>"
+#@-node:callerName
+#@+node:dump
+def dump(s):
+	
+	out = ""
+	for i in s:
+		out += `ord(i)` + ","
+	return out
+		
+def oldDump(s):
+
+	out = ""
+	for i in s:
+		if i=='\n':
+			out += "[" ; out += "n" ; out += "]"
+		if i=='\t':
+			out += "[" ; out += "t" ; out += "]"
+		elif i==' ':
+			out += "[" ; out += " " ; out += "]"
+		else: out += i
+	return out
+#@nonl
+#@-node:dump
+#@+node:es_error
+def es_error (s):
+	
+	config = app.config
+	if config: # May not exist during initialization.
+		color = config.getWindowPref("log_error_color")
+		es(s,color=color)
+	else:
+		es(s)
+#@nonl
+#@-node:es_error
+#@+node:es_event_exception
+def es_event_exception (eventName,full=false):
+
+	import traceback
+	es("exception handling ", eventName, " event")
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es(i)
+	traceback.print_exc()
+#@nonl
+#@-node:es_event_exception
+#@+node:es_exception
+def es_exception (full=true):
+
+	import traceback
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es_error(i)
+	traceback.print_exc()
+#@nonl
+#@-node:es_exception
+#@+node:printBindings
+def print_bindings (name,window):
+
+	bindings = window.bind()
+	print
+	print "Bindings for", name
+	for b in bindings:
+		print b
+#@nonl
+#@-node:printBindings
+#@+node:printGlobals
+def printGlobals(message=None):
+	
+	# Get the list of globals.
+	globs = list(globals())
+	globs.sort()
+	
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	for glob in globs:
+		print glob
+#@nonl
+#@-node:printGlobals
+#@+node:printLeoModules
+def printLeoModules(message=None):
+	
+	# Create the list.
+	mods = []
+	for name in sys.modules.keys():
+		if name and name[0:3] == "leo":
+			mods.append(name)
+
+	# Print the list.
+	if message:
+		leader = "-" * 10
+		print leader, ' ', message, ' ', leader
+	mods.sort()
+	for m in mods:
+		print m,
+	print
+#@nonl
+#@-node:printLeoModules
+#@+node:file/module/plugin_date
+def module_date (mod,format=None):
+	file = os.path.join(app.loadDir,mod.__file__)
+	file = toUnicode(file,app.tkEncoding) # 10/20/03
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def plugin_date (plugin_mod,format=None):
+	file = os.path.join(app.loadDir,"..","plugins",plugin_mod.__file__)
+	file = toUnicode(file,app.tkEncoding) # 10/20/03
+	root,ext = os.path.splitext(file) 
+	return file_date(root + ".py",format=format)
+
+def file_date (file,format=None):
+	if file and len(file)and os.path.exists(file):
+		try:
+			import time
+			n = os.path.getmtime(file)
+			if format == None:
+				format = "%m/%d/%y %H:%M:%S"
+			return time.strftime(format,time.gmtime(n))
+		except: pass
+	return ""
+#@-node:file/module/plugin_date
 #@+node:create_temp_name
 # Returns a temporary file name.
 
@@ -1190,6 +1350,61 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@nonl
 #@-node:utils_rename
+#@+node:funcToMethod
+#@+at 
+#@nonl
+# The following is taken from page 188 of the Python Cookbook.
+# 
+# The following method allows you to add a function as a method of any class.  
+# That is, it converts the function to a method of the class.  The method just 
+# added is available instantly to all existing instances of the class, and to 
+# all instances created in the future.
+# 
+# The function's first argument should be self.
+# 
+# The newly created method has the same name as the function unless the 
+# optional name argument is supplied, in which case that name is used as the 
+# method name.
+#@-at
+#@@c
+
+def funcToMethod(f,theClass,name=None):
+	setattr(theClass,name or f.__name__,f)
+	# trace(`name`)
+#@nonl
+#@-node:funcToMethod
+#@+node:get_line & get_line_after
+# Very useful for tracing.
+
+def get_line (s,i):
+
+	nl = ""
+	if is_nl(s,i):
+		i = skip_nl(s,i)
+		nl = "[nl]"
+	j = find_line_start(s,i)
+	k = skip_to_end_of_line(s,i)
+	return nl + s[j:k]
+	
+def get_line_after (s,i):
+	
+	nl = ""
+	if is_nl(s,i):
+		i = skip_nl(s,i)
+		nl = "[nl]"
+	k = skip_to_end_of_line(s,i)
+	return nl + s[i:k]
+#@-node:get_line & get_line_after
+#@+node:pause
+def pause (s):
+	
+	print s
+	
+	i = 0
+	while i < 1000000L:
+		i += 1
+#@nonl
+#@-node:pause
 #@+node:Sherlock...
 #@+at 
 #@nonl
@@ -1321,8 +1536,7 @@ def trace (*args,**keys):
 		name = "<unknown>"
 
 	if callers:
-		import traceback
-		traceback.print_stack()
+		import traceback ; traceback.print_stack()
 		
 	if 1: # Print all traces.
 		print name + ": " + message
@@ -1424,221 +1638,6 @@ def esDiffTime(message, start):
 	return time.clock()
 #@nonl
 #@-node:Timing
-#@+node:alert
-def alert(message):
-
-	es(message)
-
-	import tkMessageBox
-	tkMessageBox.showwarning("Alert", message)
-#@-node:alert
-#@+node:angleBrackets & virtual_event_name
-# Returns < < s > >
-
-def angleBrackets(s):
-
-	return ( "<<" + s +
-		">>") # must be on a separate line.
-
-virtual_event_name = angleBrackets
-#@nonl
-#@-node:angleBrackets & virtual_event_name
-#@+node:callerName
-def callerName (n=1):
-
-	try: # get the function name from the call stack.
-		f1 = sys._getframe(n) # The stack frame, n levels up.
-		code1 = f1.f_code # The code object
-		return code1.co_name # The code name
-	except:
-		es_exception()
-		return "<no caller name>"
-#@-node:callerName
-#@+node:dump
-def dump(s):
-	
-	out = ""
-	for i in s:
-		out += `ord(i)` + ","
-	return out
-		
-def oldDump(s):
-
-	out = ""
-	for i in s:
-		if i=='\n':
-			out += "[" ; out += "n" ; out += "]"
-		if i=='\t':
-			out += "[" ; out += "t" ; out += "]"
-		elif i==' ':
-			out += "[" ; out += " " ; out += "]"
-		else: out += i
-	return out
-#@nonl
-#@-node:dump
-#@+node:es_error
-def es_error (s):
-	
-	config = app.config
-	if config: # May not exist during initialization.
-		color = config.getWindowPref("log_error_color")
-		es(s,color=color)
-	else:
-		es(s)
-#@nonl
-#@-node:es_error
-#@+node:es_event_exception
-def es_event_exception (eventName,full=false):
-
-	import traceback
-	es("exception handling ", eventName, " event")
-	typ,val,tb = sys.exc_info()
-	if full:
-		errList = traceback.format_exception(typ,val,tb)
-	else:
-		errList = traceback.format_exception_only(typ,val)
-	for i in errList:
-		es(i)
-	traceback.print_exc()
-#@nonl
-#@-node:es_event_exception
-#@+node:es_exception
-def es_exception (full=true):
-
-	import traceback
-	typ,val,tb = sys.exc_info()
-	if full:
-		errList = traceback.format_exception(typ,val,tb)
-	else:
-		errList = traceback.format_exception_only(typ,val)
-	for i in errList:
-		es_error(i)
-	traceback.print_exc()
-#@nonl
-#@-node:es_exception
-#@+node:file/module/plugin_date
-def module_date (mod,format=None):
-	file = os.path.join(app.loadDir,mod.__file__)
-	file = toUnicode(file,app.tkEncoding) # 10/20/03
-	root,ext = os.path.splitext(file) 
-	return file_date(root + ".py",format=format)
-
-def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app.loadDir,"..","plugins",plugin_mod.__file__)
-	file = toUnicode(file,app.tkEncoding) # 10/20/03
-	root,ext = os.path.splitext(file) 
-	return file_date(root + ".py",format=format)
-
-def file_date (file,format=None):
-	if file and len(file)and os.path.exists(file):
-		try:
-			import time
-			n = os.path.getmtime(file)
-			if format == None:
-				format = "%m/%d/%y %H:%M:%S"
-			return time.strftime(format,time.gmtime(n))
-		except: pass
-	return ""
-#@-node:file/module/plugin_date
-#@+node:funcToMethod
-#@+at 
-#@nonl
-# The following is taken from page 188 of the Python Cookbook.
-# 
-# The following method allows you to add a function as a method of any class.  
-# That is, it converts the function to a method of the class.  The method just 
-# added is available instantly to all existing instances of the class, and to 
-# all instances created in the future.
-# 
-# The function's first argument should be self.
-# 
-# The newly created method has the same name as the function unless the 
-# optional name argument is supplied, in which case that name is used as the 
-# method name.
-#@-at
-#@@c
-
-def funcToMethod(f,theClass,name=None):
-	setattr(theClass,name or f.__name__,f)
-	# trace(`name`)
-#@nonl
-#@-node:funcToMethod
-#@+node:get_line & get_line_after
-# Very useful for tracing.
-
-def get_line (s,i):
-
-	nl = ""
-	if is_nl(s,i):
-		i = skip_nl(s,i)
-		nl = "[nl]"
-	j = find_line_start(s,i)
-	k = skip_to_end_of_line(s,i)
-	return nl + s[j:k]
-	
-def get_line_after (s,i):
-	
-	nl = ""
-	if is_nl(s,i):
-		i = skip_nl(s,i)
-		nl = "[nl]"
-	k = skip_to_end_of_line(s,i)
-	return nl + s[i:k]
-#@-node:get_line & get_line_after
-#@+node:pause
-def pause (s):
-	
-	print s
-	
-	i = 0
-	while i < 1000000L:
-		i += 1
-#@nonl
-#@-node:pause
-#@+node:printBindings
-def print_bindings (name,window):
-
-	bindings = window.bind()
-	print
-	print "Bindings for", name
-	for b in bindings:
-		print b
-#@nonl
-#@-node:printBindings
-#@+node:printGlobals
-def printGlobals(message=None):
-	
-	# Get the list of globals.
-	globs = list(globals())
-	globs.sort()
-	
-	# Print the list.
-	if message:
-		leader = "-" * 10
-		print leader, ' ', message, ' ', leader
-	for glob in globs:
-		print glob
-#@nonl
-#@-node:printGlobals
-#@+node:printLeoModules
-def printLeoModules(message=None):
-	
-	# Create the list.
-	mods = []
-	for name in sys.modules.keys():
-		if name and name[0:3] == "leo":
-			mods.append(name)
-
-	# Print the list.
-	if message:
-		leader = "-" * 10
-		print leader, ' ', message, ' ', leader
-	mods.sort()
-	for m in mods:
-		print m,
-	print
-#@nonl
-#@-node:printLeoModules
 #@+node:executeScript
 def executeScript (name):
 	
@@ -1710,7 +1709,7 @@ try:
 				gc.DEBUG_OBJECTS |
 				gc.DEBUG_SAVEALL)
 except:
-	traceback.print_exc()
+	import traceback ; traceback.print_exc()
 
 #@+others
 #@+node:clearAllIvars
@@ -1776,7 +1775,7 @@ def printGc(message=None,onlyPrintChanges=false):
 		lastObjectCount = n2
 		return delta
 	except:
-		traceback.print_exc()
+		import traceback ; traceback.print_exc()
 		return None
 #@nonl
 #@-node:printGc

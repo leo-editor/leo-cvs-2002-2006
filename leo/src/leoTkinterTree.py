@@ -20,12 +20,12 @@
 #@nl
 
 from leoGlobals import *
-import leoColor
+import leoFrame
 import Tkinter,tkFont
 import os,string,types
 
 #@<< about drawing and events >>
-#@+node:<< About drawing and events >>
+#@+node:<< About drawing and events >> (revise)
 #@+at 
 #@nonl
 # Leo must redraw the outline pane when commands are executed and as the 
@@ -87,7 +87,7 @@ import os,string,types
 # rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
 # redrawn only when needed.
 #@-at
-#@-node:<< About drawing and events >>
+#@-node:<< About drawing and events >> (revise)
 #@nl
 #@<< drawing constants >>
 #@+node:<< drawing constants >>
@@ -105,27 +105,25 @@ line_height = 17 + 2 # To be replaced by Font height
 #@-node:<< drawing constants >>
 #@nl
 
-class baseLeoTkinterTree:
-	"""The base class of the Leo's tree class."""
+class leoTkinterTree (leoFrame.leoTree):
+	
 	callbacksInjected = false
+
+	"""Leo tkinter tree class."""
+	
 	#@	@+others
 	#@+node:tree.__init__
 	def __init__(self,c,frame,canvas):
+		
+		# Init the base class.
+		leoFrame.leoTree.__init__(self,frame)
 	
 		# Objects associated with this tree.
-		self.c = c
 		self.canvas = canvas
-		self.frame = frame
-		self.colorizer = leoColor.colorizer(c)
-		
-		# State info.
-		self.rootVnode = None
-		self.topVnode = None
 	
 		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.active = false # true if tree is active
-		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		
 		# Set self.font and self.fontName.
 		self.setFontFromConfig()
@@ -134,22 +132,10 @@ class baseLeoTkinterTree:
 		self.bindings = [] # List of bindings to be unbound when redrawing.
 		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
 		self.icon_id_dict = {} # New in 3.12: keys are icon id's, values are vnodes.
-		self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
 		self.widgets = [] # Widgets that must be destroyed when redrawing.
-	
-		# Controlling redraws
-		self.updateCount = 0 # self.redraw does nothing unless this is zero.
-		self.redrawCount = 0 # For traces
-		self.redrawScheduled = false # true if redraw scheduled.
-	
-		# Selection ivars.
-		self.currentVnode = None # The presently selected vnode.
-		self.editVnode = None # The vnode being edited.
-		self.initing = false # true: opening file.
 		
 		# Drag and drop
 		self.drag_v = None
-		self.dragging = false # true: presently dragging.
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
 		self.keyCount = 0 # For debugging.
@@ -165,7 +151,6 @@ class baseLeoTkinterTree:
 		self.prevMoveToFrac = None
 		self.visibleArea = None
 		self.expandedVisibleArea = None
-		self.forceFullRecolorFlag = false
 		
 		self.allocatedNodes = 0 # A crucial statistic.
 			# Incremental drawing allocates visible nodes at most twice.
@@ -174,7 +159,7 @@ class baseLeoTkinterTree:
 		if self.allocateOnlyVisibleNodes:
 			self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
 		
-		if not leoTkinterTree.callbacksInjected:
+		if not leoTkinterTree.callbacksInjected: # Class var.
 			leoTkinterTree.callbacksInjected = true
 			self.injectCallbacks()
 	#@nonl
@@ -251,7 +236,7 @@ class baseLeoTkinterTree:
 			# trace()
 			try:
 				v = self ; c = v.c
-				if c.frame.dragging():
+				if c.frame.tree.dragging():
 					if not doHook("dragging1",c=c,v=v,event=event):
 						c.frame.tree.OnDrag(v,event)
 					doHook("dragging2",c=c,v=v,event=event)
@@ -420,6 +405,100 @@ class baseLeoTkinterTree:
 			funcToMethod(f,leoNodes.vnode)
 	#@nonl
 	#@-node:tree.injectCallbacks (class method)
+	#@+node:redraw
+	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
+	# This _is_ useful when a flag is passed to c.endUpdate.
+	
+	def redraw (self,event=None):
+		
+		# trace()
+		
+		if self.updateCount == 0 and not self.redrawScheduled:
+			self.redrawScheduled = true
+			self.canvas.after_idle(self.idle_redraw)
+	#@nonl
+	#@-node:redraw
+	#@+node:force_redraw
+	# Schedules a redraw even if inside beginUpdate/endUpdate
+	def force_redraw (self):
+	
+		# trace()
+	
+		if not self.redrawScheduled:
+			self.redrawScheduled = true
+			self.canvas.after_idle(self.idle_redraw)
+	#@nonl
+	#@-node:force_redraw
+	#@+node:redraw_now
+	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
+	# It is up to the caller to ensure that no other redraws are pending.
+	
+	def redraw_now (self):
+	
+		self.idle_redraw()
+	#@nonl
+	#@-node:redraw_now
+	#@+node:idle_redraw
+	def idle_redraw (self):
+		
+		self.redrawScheduled = false # 7/10/03: Always do this here.
+	
+		frame = self.c.frame
+		if frame not in app.windowList or app.quitting:
+			# trace("no frame")
+			return
+			
+		if self.drag_v:
+			# trace("dragging",self.drag_v)
+			return
+	
+		# trace()
+		# print_bindings("canvas",self.canvas)
+	
+		self.expandAllAncestors(self.currentVnode())
+		oldcursor = self.canvas['cursor']
+		self.canvas['cursor'] = "watch"
+		self.allocatedNodes = 0
+		if not doHook("redraw-entire-outline",c=self.c):
+			# Erase and redraw the entire tree.
+			self.setTopVnode(None)
+			self.deleteBindings()
+			self.canvas.delete("all")
+			self.deleteWidgets()
+			self.setVisibleAreaToFullCanvas()
+			self.drawTopTree()
+			# Set up the scroll region after the tree has been redrawn.
+			x0, y0, x1, y1 = self.canvas.bbox("all")
+			self.canvas.configure(scrollregion=(0, 0, x1, y1))
+			# Do a scrolling operation after the scrollbar is redrawn
+			# printGc()
+			self.canvas.after_idle(self.idle_scrollTo)
+			if self.trace:
+				self.redrawCount += 1
+				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
+			doHook("after_redraw-outline",c=self.c)
+	
+		self.canvas['cursor'] = oldcursor
+	#@nonl
+	#@-node:idle_redraw
+	#@+node:idle_second_redraw
+	def idle_second_redraw (self):
+		
+		# trace()
+			
+		# Erase and redraw the entire tree the SECOND time.
+		# This ensures that all visible nodes are allocated.
+		self.setTopVnode(None)
+		args = self.canvas.yview()
+		self.setVisibleArea(args)
+		self.deleteBindings()
+		self.canvas.delete("all")
+		self.drawTopTree()
+		
+		if self.trace:
+			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
+	#@nonl
+	#@-node:idle_second_redraw
 	#@+node:About drawing and updating
 	#@+at 
 	#@nonl
@@ -449,12 +528,6 @@ class baseLeoTkinterTree:
 	# "dependent" vnodes to be deleted, but there really is no need to do so.
 	#@-at
 	#@-node:About drawing and updating
-	#@+node:beginUpdate
-	def beginUpdate (self):
-	
-		self.updateCount += 1
-	#@nonl
-	#@-node:beginUpdate
 	#@+node:drawBox (tag_bind)
 	def drawBox (self,v,x,y):
 		
@@ -569,101 +642,6 @@ class baseLeoTkinterTree:
 		return 0 # dummy icon height
 	#@nonl
 	#@-node:drawIcon (tag_bind)
-	#@+node:redraw
-	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
-	# This _is_ useful when a flag is passed to c.endUpdate.
-	
-	def redraw (self,event=None):
-		
-		# trace()
-		
-		if self.updateCount == 0 and not self.redrawScheduled:
-			self.redrawScheduled = true
-			self.canvas.after_idle(self.idle_redraw)
-			
-	#@-node:redraw
-	#@+node:force_redraw
-	# Schedules a redraw even if inside beginUpdate/endUpdate
-	def force_redraw (self):
-	
-		# trace()
-	
-		if not self.redrawScheduled:
-			self.redrawScheduled = true
-			self.canvas.after_idle(self.idle_redraw)
-	#@nonl
-	#@-node:force_redraw
-	#@+node:redraw_now
-	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
-	# It is up to the caller to ensure that no other redraws are pending.
-	def redraw_now (self):
-	
-		# trace()
-	
-		self.idle_redraw()
-	#@nonl
-	#@-node:redraw_now
-	#@+node:idle_redraw
-	def idle_redraw (self):
-		
-		self.redrawScheduled = false # 7/10/03: Always do this here.
-	
-		frame = self.c.frame
-		if frame not in app.windowList or app.quitting:
-			# trace("no frame")
-			return
-			
-		if self.drag_v:
-			# trace("dragging",self.drag_v)
-			return
-	
-		# trace()
-		# print_bindings("canvas",self.canvas)
-	
-		self.expandAllAncestors(self.currentVnode)
-		oldcursor = self.canvas['cursor']
-		self.canvas['cursor'] = "watch"
-		self.allocatedNodes = 0
-		if not doHook("redraw-entire-outline",c=self.c):
-			# Erase and redraw the entire tree.
-			self.topVnode = None
-			self.deleteBindings()
-			self.canvas.delete("all")
-			self.deleteWidgets()
-			self.setVisibleAreaToFullCanvas()
-			self.drawTopTree()
-			# Set up the scroll region after the tree has been redrawn.
-			x0, y0, x1, y1 = self.canvas.bbox("all")
-			self.canvas.configure(scrollregion=(0, 0, x1, y1))
-			# Do a scrolling operation after the scrollbar is redrawn
-			# printGc()
-			self.canvas.after_idle(self.idle_scrollTo)
-			if self.trace:
-				self.redrawCount += 1
-				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			doHook("after_redraw-outline",c=self.c)
-	
-		self.canvas['cursor'] = oldcursor
-	#@nonl
-	#@-node:idle_redraw
-	#@+node:idle_second_redraw
-	def idle_second_redraw (self):
-		
-		# trace()
-			
-		# Erase and redraw the entire tree the SECOND time.
-		# This ensures that all visible nodes are allocated.
-		self.topVnode = None
-		args = self.canvas.yview()
-		self.setVisibleArea(args)
-		self.deleteBindings()
-		self.canvas.delete("all")
-		self.drawTopTree()
-		
-		if self.trace:
-			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
-	#@nonl
-	#@-node:idle_second_redraw
 	#@+node:drawNode & force_draw_node
 	def drawNode(self,v,x,y):
 	
@@ -704,10 +682,9 @@ class baseLeoTkinterTree:
 		t.insert("end", v.headString())
 		#@	<< configure the text depending on state >>
 		#@+node:<< configure the text depending on state >>
-		if v == self.currentVnode:
-			# trace("editVnode",self.editVnode)
-			if v == self.editVnode:
-				self.setNormalLabelState(v) # 7/7/03
+		if v == self.currentVnode():
+			if v == self.editVnode():
+				self.setNormalLabelState(v)
 			else:
 				self.setDisabledLabelState(v) # selected, disabled
 		else:
@@ -774,7 +751,7 @@ class baseLeoTkinterTree:
 			v = c.hoistStack[-1]
 			self.drawTree(v,root_left,root_top,0,0,hoistFlag=true)
 		else:
-			self.drawTree(self.rootVnode,root_left,root_top,0,0)
+			self.drawTree(self.rootVnode(),root_left,root_top,0,0)
 	#@nonl
 	#@-node:drawTopTree
 	#@+node:drawTree
@@ -807,28 +784,6 @@ class baseLeoTkinterTree:
 		return y
 	#@nonl
 	#@-node:drawTree
-	#@+node:endUpdate
-	def endUpdate (self,flag=true):
-	
-		assert(self.updateCount > 0)
-		self.updateCount -= 1
-		if flag and self.updateCount == 0:
-			self.redraw()
-	#@nonl
-	#@-node:endUpdate
-	#@+node:headWidth
-	#@+at 
-	#@nonl
-	# Returns the proper width of the entry widget for the headline. This has 
-	# been a problem.
-	#@-at
-	#@@c
-	
-	def headWidth(self,v):
-	
-		return max(10,5 + len(v.headString()))
-	#@nonl
-	#@-node:headWidth
 	#@+node:inVisibleArea & inExpandedVisibleArea
 	def inVisibleArea (self,y1):
 		
@@ -856,7 +811,7 @@ class baseLeoTkinterTree:
 	
 	def lastVisible (self):
 	
-		v = self.rootVnode
+		v = self.rootVnode()
 		while v:
 			last = v
 			if v.firstChild():
@@ -869,53 +824,6 @@ class baseLeoTkinterTree:
 		return last
 	#@nonl
 	#@-node:lastVisible
-	#@+node:setLineHeight
-	def setLineHeight (self,font):
-		
-		try:
-			metrics = font.metrics()
-			linespace = metrics ["linespace"]
-			self.line_height = linespace + 5 # Same as before for the default font on Windows.
-			# print metrics
-		except:
-			self.line_height = line_height # was 17 + 2
-			es("exception setting outline line height")
-			es_exception()
-	#@nonl
-	#@-node:setLineHeight
-	#@+node:tree.forceRecolor
-	def forceFullRecolor (self):
-		
-		self.forceFullRecolorFlag = true
-	#@nonl
-	#@-node:tree.forceRecolor
-	#@+node:tree.getFont,setFont,setFontFromConfig
-	def getFont (self):
-	
-		return self.font
-			
-	# Called by leoFontPanel.
-	def setFont (self, font=None, fontName=None):
-		
-		if fontName:
-			self.fontName = fontName
-			self.font = tkFont.Font(font=fontName)
-		else:
-			self.fontName = None
-			self.font = font
-			
-		self.setLineHeight(self.font)
-		
-	# Called by ctor and when config params are reloaded.
-	def setFontFromConfig (self):
-	
-		font = app.config.getFontFromParams(
-			"headline_text_font_family", "headline_text_font_size",
-			"headline_text_font_slant",  "headline_text_font_weight")
-	
-		self.setFont(font)
-	#@nonl
-	#@-node:tree.getFont,setFont,setFontFromConfig
 	#@+node:tree.getIconImage
 	def getIconImage (self, name):
 	
@@ -950,7 +858,7 @@ class baseLeoTkinterTree:
 		nextToLast = last.visBack()
 		# print 'v,last',`v`,`last`
 		if v == None:
-			v = self.currentVnode
+			v = self.currentVnode()
 		h1 = self.yoffset(v)
 		h2 = self.yoffset(last)
 		if nextToLast: # 2/2/03: compute approximate line height.
@@ -987,30 +895,13 @@ class baseLeoTkinterTree:
 	#@+node:tree.numberOfVisibleNodes
 	def numberOfVisibleNodes(self):
 		
-		n = 0 ; v = self.rootVnode
+		n = 0 ; v = self.rootVnode()
 		while v:
 			n += 1
 			v = v.visNext()
 		return n
 	#@nonl
 	#@-node:tree.numberOfVisibleNodes
-	#@+node:tree.recolor, recolor_now, recolor_range
-	def recolor(self,v,incremental=0):
-		
-		if 0: # Do immediately
-			self.colorizer.colorize(v,incremental)
-		else: # Do at idle time
-			self.colorizer.schedule(v,incremental)
-	
-	def recolor_now(self,v,incremental=0):
-	
-		self.colorizer.colorize(v,incremental)
-		
-	def recolor_range(self,v,leading,trailing):
-	
-		self.colorizer.recolor_range(v,leading,trailing)
-	#@nonl
-	#@-node:tree.recolor, recolor_now, recolor_range
 	#@+node:tree.yoffset
 	#@+at 
 	#@nonl
@@ -1022,7 +913,7 @@ class baseLeoTkinterTree:
 	def yoffset(self, v1):
 	
 		# if not v1.isVisible(): print "yoffset not visible:", `v1`
-		root = self.rootVnode
+		root = self.rootVnode()
 		h, flag = self.yoffsetTree(root,v1)
 		# flag can be false during initialization.
 		# if not flag: print "yoffset fails:", h, `v1`
@@ -1047,6 +938,60 @@ class baseLeoTkinterTree:
 		return h, false
 	#@nonl
 	#@-node:tree.yoffset
+	#@+node:tree.getFont,setFont,setFontFromConfig
+	def getFont (self):
+	
+		return self.font
+			
+	# Called by leoFontPanel.
+	def setFont (self, font=None, fontName=None):
+		
+		if fontName:
+			self.fontName = fontName
+			self.font = tkFont.Font(font=fontName)
+		else:
+			self.fontName = None
+			self.font = font
+			
+		self.setLineHeight(self.font)
+		
+	# Called by ctor and when config params are reloaded.
+	def setFontFromConfig (self):
+	
+		font = app.config.getFontFromParams(
+			"headline_text_font_family", "headline_text_font_size",
+			"headline_text_font_slant",  "headline_text_font_weight")
+	
+		self.setFont(font)
+	#@nonl
+	#@-node:tree.getFont,setFont,setFontFromConfig
+	#@+node:headWidth
+	#@+at 
+	#@nonl
+	# Returns the proper width of the entry widget for the headline. This has 
+	# been a problem.
+	#@-at
+	#@@c
+	
+	def headWidth(self,v):
+	
+		return max(10,5 + len(v.headString()))
+	#@nonl
+	#@-node:headWidth
+	#@+node:setLineHeight
+	def setLineHeight (self,font):
+		
+		try:
+			metrics = font.metrics()
+			linespace = metrics ["linespace"]
+			self.line_height = linespace + 5 # Same as before for the default font on Windows.
+			# print metrics
+		except:
+			self.line_height = line_height # was 17 + 2
+			es("exception setting outline line height")
+			es_exception()
+	#@nonl
+	#@-node:setLineHeight
 	#@+node:Event handers (tree)
 	#@+at 
 	#@nonl
@@ -1063,7 +1008,7 @@ class baseLeoTkinterTree:
 			#@+node:<< activate this window >>
 			c = self.c ; gui = app.gui
 			
-			if v == self.currentVnode:
+			if v == self.currentVnode():
 				if self.active:
 					self.editLabel(v)
 				else:
@@ -1110,16 +1055,16 @@ class baseLeoTkinterTree:
 		
 		"""Deactivate the tree pane, dimming any headline being edited."""
 	
-		c = self.c
+		tree = self ; c = self.c
 		focus = app.gui.get_focus(c.frame)
 	
 		# Bug fix: 7/13/03: Only do this as needed.
 		# Doing this on every click would interfere with the double-clicking.
-		if not c.log.hasFocus() and focus != c.frame.bodyCtrl:
+		if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
 			try:
 				# trace(focus)
-				self.endEditLabel()
-				self.dimEditLabel()
+				tree.endEditLabel()
+				tree.dimEditLabel()
 			except:
 				es_event_exception("deactivate tree")
 	#@nonl
@@ -1133,279 +1078,6 @@ class baseLeoTkinterTree:
 		except:
 			return self.icon_id_dict.get(id)
 	#@-node:tree.findVnodeWithIconId
-	#@+node:body key handlers (tree)
-	#@+at 
-	#@nonl
-	# The <Key> event generates the event before the body text is changed(!), 
-	# so we register an idle-event handler to do the work later.
-	# 
-	# 1/17/02: Rather than trying to figure out whether the control or alt 
-	# keys are down, we always schedule the idle_handler.  The idle_handler 
-	# sees if any change has, in fact, been made to the body text, and sets 
-	# the changed and dirty bits only if so.  This is the clean and safe way.
-	# 
-	# 2/19/02: We must distinguish between commands like "Find, Then Change", 
-	# that call onBodyChanged, and commands like "Cut" and "Paste" that call 
-	# onBodyWillChange.  The former commands have already changed the body 
-	# text, and that change must be captured immediately.  The latter commands 
-	# have not changed the body text, and that change may only be captured at 
-	# idle time.
-	#@-at
-	#@@c
-	
-	#@+others
-	#@+node:idle_body_key
-	def idle_body_key (self,v,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
-		
-		"""Update the body pane at idle time."""
-	
-		if 0:
-			if ch: trace(ch,ord(ch))
-			else: trace(`ch`)
-	
-		c = self.c
-		if not c or not v or v != c.currentVnode():
-			return "break"
-		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
-			return "break" # The hook claims to have handled the event.
-		body = v.bodyString()
-		if not newSel:
-			newSel = c.body.getTextSelection()
-		if oldText != None:
-			s = oldText
-		else:
-			s = c.body.getAllText()
-		#@	<< return if nothing has changed >>
-		#@+node:<< return if nothing has changed >>
-		# 6/22/03: Make sure we handle delete key properly.
-		
-		if ch not in ('\n','\r',chr(8)):
-		
-			if s == body:
-				return "break"
-			
-			# Do nothing for control characters.
-			if (ch == None or len(ch) == 0) and body == s[:-1]:
-				return "break"
-			
-		# print `ch`,len(body),len(s)
-		#@nonl
-		#@-node:<< return if nothing has changed >>
-		#@nl
-		#@	<< set removeTrailing >>
-		#@+node:<< set removeTrailing >>
-		#@+at 
-		#@nonl
-		# Tk will add a newline only if:
-		# 1. A real change has been made to the Tk.Text widget, and
-		# 2. the change did _not_ result in the widget already containing a 
-		# newline.
-		# 
-		# It's not possible to tell, given the information available, what Tk 
-		# has actually done. We need only make a reasonable guess here.   
-		# setUndoTypingParams stores the number of trailing newlines in each 
-		# undo bead, so whatever we do here can be faithfully undone and 
-		# redone.
-		#@-at
-		#@@c
-		new = s ; old = body
-		
-		if len(new) == 0 or new[-1] != '\n':
-			# There is no newline to remove.  Probably will never happen.
-			# trace("false: no newline to remove")
-			removeTrailing = false
-		elif len(old) == 0:
-			# Ambigous case.
-			# trace("false: empty old")
-			removeTrailing = ch != '\n' # false
-		elif old == new[:-1]:
-			# A single trailing character has been added.
-			# trace("false: only changed trailing.")
-			removeTrailing = false
-		else:
-			# The text didn't have a newline, and now it does.
-			# Moveover, some other change has been made to the text,
-			# So at worst we have misreprented the user's intentions slightly.
-			# trace("true")
-			removeTrailing = true
-			
-		# trace(`ch`+","+`removeTrailing`)
-		
-		
-		#@-node:<< set removeTrailing >>
-		#@nl
-		if ch in ('\n','\r'):
-			#@		<< Do auto indent >>
-			#@+node:<< Do auto indent >> (David McNab)
-			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
-			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
-				# Get the previous line.
-				s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-				# Add the leading whitespace to the present line.
-				junk,width = skip_leading_ws_with_indent(s,0,c.tab_width)
-				if s and len(s) > 0 and s[-1]==':':
-					# For Python: increase auto-indent after colons.
-					if self.colorizer.scanColorDirectives(v) == "python":
-						width += abs(c.tab_width)
-				if app.config.getBoolWindowPref("smart_auto_indent"):
-					# Added Nov 18 by David McNab, david@rebirthing.co.nz
-					# Determine if prev line has unclosed parens/brackets/braces
-					brackets = [width]
-					tabex = 0
-					for i in range(0, len(s)):
-						if s[i] == '\t':
-							tabex += c.tab_width - 1
-						if s[i] in '([{':
-							brackets.append(i+tabex + 1)
-						elif s[i] in '}])' and len(brackets) > 1:
-							brackets.pop()
-					width = brackets.pop()
-					# end patch by David McNab
-				ws = computeLeadingWhitespace (width,c.tab_width)
-				if ws and len(ws) > 0:
-					c.frame.bodyCtrl.insert("insert", ws)
-					removeTrailing = false # bug fix: 11/18
-			#@nonl
-			#@-node:<< Do auto indent >> (David McNab)
-			#@nl
-		elif ch == '\t' and c.tab_width < 0:
-			#@		<< convert tab to blanks >>
-			#@+node:<< convert tab to blanks >>
-			# Do nothing if we are executing a Change command.
-			if undoType != "Change":
-				
-				# Get the characters preceeding the tab.
-				prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-				
-				if 1: # 6/26/03: Convert tab no matter where it is.
-			
-					w = computeWidth(prev,c.tab_width)
-					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-					# print "prev w:" + `w` + ", prev chars:" + `prev`
-					c.frame.bodyCtrl.delete("insert -1c")
-					c.frame.bodyCtrl.insert("insert",' ' * w2)
-				
-				else: # Convert only leading tabs.
-				
-					# Get the characters preceeding the tab.
-					prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-			
-					# Do nothing if there are non-whitespace in prev:
-					all_ws = true
-					for ch in prev:
-						if ch != ' ' and ch != '\t':
-							all_ws = false
-					if all_ws:
-						w = computeWidth(prev,c.tab_width)
-						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-						# print "prev w:" + `w` + ", prev chars:" + `prev`
-						c.frame.bodyCtrl.delete("insert -1c")
-						c.frame.bodyCtrl.insert("insert",' ' * w2)
-			#@nonl
-			#@-node:<< convert tab to blanks >>
-			#@nl
-		#@	<< set s to widget text, removing trailing newlines if necessary >>
-		#@+node:<< set s to widget text, removing trailing newlines if necessary >>
-		s = c.body.getAllText()
-		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
-			s = s[:-1]
-		#@nonl
-		#@-node:<< set s to widget text, removing trailing newlines if necessary >>
-		#@nl
-		if undoType: # 11/6/03: set oldText properly when oldText param exists.
-			if not oldText: oldText = body
-			newText = s
-			c.undoer.setUndoTypingParams(v,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
-		v.t.setTnodeText(s)
-		v.t.insertSpot = c.body.getInsertionPoint()
-		#@	<< recolor the body >>
-		#@+node:<< recolor the body >>
-		# if self.forceFullRecolorFlag: trace(undoType,"full recolor")
-		
-		self.scanForTabWidth(v)
-		incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
-		self.recolor_now(v,incremental=incremental)
-		self.forceFullRecolorFlag = false
-		#@nonl
-		#@-node:<< recolor the body >>
-		#@nl
-		if not c.changed:
-			c.setChanged(true)
-		#@	<< redraw the screen if necessary >>
-		#@+node:<< redraw the screen if necessary >>
-		redraw_flag = false
-		
-		c.beginUpdate()
-		
-		# Update dirty bits.
-		if not v.isDirty() and v.setDirty(): # Sets all cloned and @file dirty bits
-			redraw_flag = true
-			
-		# Update icons.
-		val = v.computeIcon()
-		if val != v.iconVal:
-			v.iconVal = val
-			redraw_flag = true
-		
-		c.endUpdate(redraw_flag) # redraw only if necessary
-		#@nonl
-		#@-node:<< redraw the screen if necessary >>
-		#@nl
-		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
-		return "break"
-	#@nonl
-	#@-node:idle_body_key
-	#@+node:onBodyChanged
-	# Called by command handlers that have already changed the text.
-	
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-		
-		"""Handle a change to the body pane."""
-		
-		c = self.c
-		if not v:
-			v = c.currentVnode()
-	
-		if not oldSel:
-			oldSel = c.body.getTextSelection()
-	
-		self.idle_body_key(v,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
-	#@-node:onBodyChanged
-	#@+node:OnBodyKey
-	def OnBodyKey (self,event):
-		
-		"""Handle any key press event in the body pane."""
-	
-		c = self.c ; v = c.currentVnode() ; ch = event.char
-		oldSel = c.body.getTextSelection()
-	
-		if 0:
-			self.keyCount += 1
-			if ch and len(ch)>0: print "%4d %s" % (self.keyCount,repr(ch))
-			
-		# We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
-		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
-	#@nonl
-	#@-node:OnBodyKey
-	#@+node:onBodyWillChange
-	# Called by command handlers that change the text just before idle time.
-	
-	def onBodyWillChange (self,v,undoType,oldSel=None,oldYview=None):
-		
-		"""Queue the body changed idle handler."""
-		
-		c = self.c
-		if not v: v = c.currentVnode()
-		if not oldSel:
-			oldSel = c.body.getTextSelection()
-			
-		#trace()
-		self.c.frame.bodyCtrl.after_idle(self.idle_body_key,v,oldSel,undoType,oldYview)
-	
-	#@-node:onBodyWillChange
-	#@-others
-	#@nonl
-	#@-node:body key handlers (tree)
 	#@+node:tree.OnContinueDrag
 	def OnContinueDrag(self,v,event):
 	
@@ -1483,11 +1155,11 @@ class baseLeoTkinterTree:
 		if not event:
 			return
 	
-		if not self.dragging:
+		if not self.dragging():
 			windowPref = app.config.getBoolWindowPref
 			# Only do this once: greatly speeds drags.
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-			self.dragging = true
+			self.setDragging(true)
 			if windowPref("allow_clone_drags"):
 				self.controlDrag = c.frame.controlKeyIsDown
 				if windowPref("look_for_control_drag_on_mouse_down"):
@@ -1545,7 +1217,7 @@ class baseLeoTkinterTree:
 					else:
 						c.dragAfter(v,vdrag)
 			else:
-				if v and self.dragging:
+				if v and self.dragging():
 					pass # es("not dragged: " + v.headString())
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(v)
@@ -1558,7 +1230,7 @@ class baseLeoTkinterTree:
 			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
 			self.drag_id = None
 			
-		self.dragging = false
+		self.setDragging(false)
 		self.drag_v = None
 	#@nonl
 	#@-node:tree.OnEndDrag
@@ -1716,7 +1388,7 @@ class baseLeoTkinterTree:
 					def onDragCallback(event,tree=tree,v=v):
 						try:
 							c = v.c
-							if tree.dragging:
+							if tree.dragging():
 								if not doHook("dragging1",c=c,v=v,event=event):
 									tree.OnDrag(v,event)
 								doHook("dragging2",c=c,v=v,event=event)
@@ -1893,25 +1565,25 @@ class baseLeoTkinterTree:
 		#@	<< Create the menu table >>
 		#@+node:<< Create the menu table >>
 		table = (
-			("&Read @file Nodes",None,frame.OnReadAtFileNodes),
-			("&Write @file Nodes",None,frame.OnWriteAtFileNodes),
+			("&Read @file Nodes",None,c.readAtFileNodes),
+			("&Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
 			("-",None,None),
-			("&Tangle","Shift+Ctrl+T",frame.OnTangle),
-			("&Untangle","Shift+Ctrl+U",frame.OnUntangle),
+			("&Tangle","Shift+Ctrl+T",c.tangle),
+			("&Untangle","Shift+Ctrl+U",c.untangle),
 			("-",None,None),
-			("Toggle Angle &Brackets","Ctrl+B",frame.OnToggleAngleBrackets),
+			("Toggle Angle &Brackets","Ctrl+B",c.toggleAngleBrackets),
 			("-",None,None),
-			("Cut Node","Shift+Ctrl+X",frame.OnCutNode),
-			("Copy Node","Shift+Ctrl+C",frame.OnCopyNode),
-			("&Paste Node","Shift+Ctrl+V",frame.OnPasteNode),
-			("&Delete Node","Shift+Ctrl+BkSp",frame.OnDeleteNode),
+			("Cut Node","Shift+Ctrl+X",c.cutOutline),
+			("Copy Node","Shift+Ctrl+C",c.copyOutline),
+			("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+			("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
 			("-",None,None),
-			("&Insert Node","Ctrl+I",frame.OnInsertNode),
-			("&Clone Node","Ctrl+`",frame.OnCloneNode),
-			("Sort C&hildren",None,frame.OnSortChildren),
-			("&Sort Siblings","Alt-A",frame.OnSortSiblings),
+			("&Insert Node","Ctrl+I",c.insertHeadline),
+			("&Clone Node","Ctrl+`",c.clone),
+			("Sort C&hildren",None,c.sortChildren),
+			("&Sort Siblings","Alt-A",c.sortSiblings),
 			("-",None,None),
-			("Contract Parent","Alt+0",frame.OnContractParent))
+			("Contract Parent","Alt+0",c.contractParent))
 		#@nonl
 		#@-node:<< Create the menu table >>
 		#@nl
@@ -1950,17 +1622,19 @@ class baseLeoTkinterTree:
 		canContract = v.parent() != None
 		canContract = choose(canContract,1,0)
 		
-		for name in ("Read @file Nodes", "Write @file Nodes"):
-			enableMenu(menu,name,isAtFile)
-		for name in ("Tangle", "Untangle"):
-			enableMenu(menu,name,isAtRoot)
+		enable = self.frame.menu.enableMenu
 		
-		enableMenu(menu,"Cut Node",c.canCutOutline())
-		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
-		enableMenu(menu,"Paste Node",c.canPasteOutline())
-		enableMenu(menu,"Sort Children",c.canSortChildren())
-		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
-		enableMenu(menu,"Contract Parent",c.canContractParent())
+		for name in ("Read @file Nodes", "Write @file Nodes"):
+			enable(menu,name,isAtFile)
+		for name in ("Tangle", "Untangle"):
+			enable(menu,name,isAtRoot)
+	
+		enable(menu,"Cut Node",c.canCutOutline())
+		enable(menu,"Delete Node",c.canDeleteHeadline())
+		enable(menu,"Paste Node",c.canPasteOutline())
+		enable(menu,"Sort Children",c.canSortChildren())
+		enable(menu,"Sort Siblings",c.canSortSiblings())
+		enable(menu,"Contract Parent",c.canContractParent())
 	#@nonl
 	#@-node:enablePopupMenuItems
 	#@+node:showPopupMenu
@@ -2003,7 +1677,7 @@ class baseLeoTkinterTree:
 		
 		# Allocate all nodes in expanded visible area.
 		self.updatedNodeCount = 0
-		self.updateTree(self.rootVnode,root_left,root_top,0,0)
+		self.updateTree(self.rootVnode(),root_left,root_top,0,0)
 		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
 	#@-node:allocateNodes
 	#@+node:allocateNodesBeforeScrolling
@@ -2102,46 +1776,44 @@ class baseLeoTkinterTree:
 	
 	def dimEditLabel (self):
 	
-		v = self.currentVnode
+		v = self.currentVnode()
 		self.setDisabledLabelState(v)
 	
 	def undimEditLabel (self):
 	
-		v = self.currentVnode
+		v = self.currentVnode()
 		self.setSelectedLabelState(v)
 	#@nonl
 	#@-node:dimEditLabel, undimEditLabel
 	#@+node:editLabel
-	# Start editing v.edit_text()
-	
 	def editLabel (self, v):
+		
+		"""Start editing v.edit_text."""
 	
 		# End any previous editing
-		if self.editVnode and v != self.editVnode:
+		if self.editVnode() and v != self.editVnode():
 			self.endEditLabel()
-			self.revertHeadline = None
+			self.frame.revertHeadline = None
 			
-		self.editVnode = v # 7/7/03.
+		self.setEditVnode(v)
 	
 		# Start editing
 		if v and v.edit_text():
-			# trace(`v`)
 			self.setNormalLabelState(v)
-			self.revertHeadline = v.headString()
+			self.frame.revertHeadline = v.headString()
 	#@nonl
 	#@-node:editLabel
 	#@+node:endEditLabel
-	# End editing for self.editText
-	
 	def endEditLabel (self):
+		
+		"""End editing for self.editText."""
 	
-		c = self.c ; v = self.editVnode ; gui = app.gui
-		# trace(v)
+		c = self.c ; v = self.editVnode() ; gui = app.gui
+	
 		if v and v.edit_text():
 			self.setUnselectedLabelState(v)
-			self.editVnode = None
+			self.setEditVnode(None)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			# 3/26/03: changed redraw_now to force_redraw.
 			self.force_redraw() # force a redraw of joined and ancestor headlines.
 		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
 	#@nonl
@@ -2159,32 +1831,6 @@ class baseLeoTkinterTree:
 		return redraw_flag
 	#@nonl
 	#@-node:tree.expandAllAncestors
-	#@+node:tree.scanForTabWidth
-	# Similar to code in scanAllDirectives.
-	
-	def scanForTabWidth (self, v):
-		
-		c = self.c ; w = c.tab_width
-	
-		while v:
-			s = v.t.bodyString
-			dict = get_directives_dict(s)
-			#@		<< set w and break on @tabwidth >>
-			#@+node:<< set w and break on @tabwidth >>
-			if dict.has_key("tabwidth"):
-				
-				val = scanAtTabwidthDirective(s,dict,issue_error_flag=false)
-				if val and val != 0:
-					w = val
-					break
-			#@nonl
-			#@-node:<< set w and break on @tabwidth >>
-			#@nl
-			v = v.parent()
-	
-		c.frame.setTabWidth(w)
-	#@nonl
-	#@-node:tree.scanForTabWidth
 	#@+node:tree.select
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
@@ -2197,7 +1843,7 @@ class baseLeoTkinterTree:
 		
 		# Unselect any previous selected but unedited label.
 		self.endEditLabel()
-		old = self.currentVnode
+		old = self.currentVnode()
 		self.setUnselectedLabelState(old)
 		#@nonl
 		#@-node:<< define vars and stop editing >>
@@ -2208,7 +1854,7 @@ class baseLeoTkinterTree:
 			#@+node:<< unselect the old node >>
 			# Remember the position of the scrollbar before making any changes.
 			yview=body.yview()
-			insertSpot = c.body.getInsertionPoint()
+			insertSpot = c.frame.body.getInsertionPoint()
 			
 			# Remember the old body text
 			old_body = body.get("1.0","end")
@@ -2236,7 +1882,7 @@ class baseLeoTkinterTree:
 				body.insert("1.0",s)
 			
 			# We must do a full recoloring: we may be changing context!
-			self.recolor_now(v)
+			self.frame.body.recolor_now(v)
 			
 			if v and v.t.scrollBarSpot != None:
 				first,last = v.t.scrollBarSpot
@@ -2287,10 +1933,11 @@ class baseLeoTkinterTree:
 	
 		#@	<< set the current node and redraw >>
 		#@+node:<< set the current node and redraw >>
-		self.currentVnode = v
+		self.setCurrentVnode(v)
 		self.setSelectedLabelState(v)
-		self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
+		self.frame.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
 		app.gui.set_focus(c,c.frame.bodyCtrl)
+		#@nonl
 		#@-node:<< set the current node and redraw >>
 		#@nl
 		doHook("select2",c=c,new_v=v,old_v=old_v)
@@ -2298,8 +1945,8 @@ class baseLeoTkinterTree:
 	#@-node:tree.select
 	#@+node:tree.set...LabelState
 	def setNormalLabelState (self,v): # selected, editing
+	
 		if v and v.edit_text():
-			# trace(v)
 			#@		<< set editing headline colors >>
 			#@+node:<< set editing headline colors >>
 			config = app.config
@@ -2330,7 +1977,6 @@ class baseLeoTkinterTree:
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text():
-			# trace(v)
 			#@		<< set selected, disabled headline colors >>
 			#@+node:<< set selected, disabled headline colors >>
 			config = app.config
@@ -2354,7 +2000,6 @@ class baseLeoTkinterTree:
 	
 	def setUnselectedLabelState (self,v): # not selected.
 		if v and v.edit_text():
-			# trace(v)
 			#@		<< set unselected headline colors >>
 			#@+node:<< set unselected headline colors >>
 			config = app.config
@@ -2411,10 +2056,6 @@ class baseLeoTkinterTree:
 	#@nonl
 	#@-node:tree.moveUpDown
 	#@-others
-	
-class leoTkinterTree (baseLeoTkinterTree):
-	"""A class that draws and handles events in an outline."""
-	pass
 #@nonl
 #@-node:@file leoTkinterTree.py
 #@-leo

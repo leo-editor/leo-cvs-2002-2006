@@ -3,7 +3,7 @@
 #@@language python
 
 from leoGlobals import *
-import exceptions,sys,string,Tkinter,tkFont
+import exceptions,sys,string
 	
 class leoFontPanel:
 	
