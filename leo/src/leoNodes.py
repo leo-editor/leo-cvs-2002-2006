@@ -2039,7 +2039,10 @@ class position (object):
         s = g.toUnicode(s,encoding)
         if p == c.currentPosition():
             # This code destoys all tags, so we must recolor.
-            c.frame.body.setSelectionAreas(s,None,None)
+            if 1: # 7/13/04: The old way makes no sense.
+                c.frame.body.setTextSelection(None)
+            else:
+                c.frame.body.setSelectionAreas(s,None,None)
             c.recolor()
             
         # Keep the body text in the tnode up-to-date.
