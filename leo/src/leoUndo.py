@@ -57,6 +57,8 @@ from leoGlobals import *
 
 import types
 
+#@+others
+#@+node:class undoer
 class baseUndoer:
 	"""The base class of the undoer class."""
 	#@	@+others
@@ -641,6 +643,7 @@ class baseUndoer:
 					
 			elif redoType == "Change All":
 			
+				count = 0
 				while 1:
 					u.bead += 1
 					d = u.getBead(u.bead+1)
@@ -653,9 +656,12 @@ class baseUndoer:
 					elif redoType == "Change":
 						u.v.t.setTnodeText(u.newText)
 						u.v.setDirty()
+						count += 1
 					elif redoType == "Change Headline":
 						u.v.initHeadString(u.newText)
+						count += 1
 					else: assert(false)
+				es("redo %d instances" % count)
 			
 			elif redoType == "Change Headline":
 				
@@ -887,6 +893,7 @@ class baseUndoer:
 					
 			elif undoType == "Change All":
 			
+				count = 0
 				while 1:
 					u.bead -= 1
 					d = u.getBead(u.bead)
@@ -898,10 +905,13 @@ class baseUndoer:
 						break
 					elif undoType == "Change":
 						u.v.t.setTnodeText(u.oldText)
+						count += 1
 						u.v.setDirty()
 					elif undoType == "Change Headline":
 						u.v.initHeadString(u.oldText)
+						count += 1
 					else: assert(false)
+				es("undo %d instances" % count)
 					
 			elif undoType == "Change Headline":
 				
@@ -912,6 +922,7 @@ class baseUndoer:
 					if v2 != u.v:
 						v2.setHeadString(u.oldText)
 				c.selectVnode(u.v)
+			#@nonl
 			#@-node:<< undo typing cases >>
 			#@nl
 			else: trace("Unknown case: " + `u.undoType`)
@@ -1252,6 +1263,54 @@ class baseUndoer:
 class undoer (baseUndoer):
 	"""A class that implements unlimited undo and redo."""
 	pass
+#@nonl
+#@-node:class undoer
+#@+node:class nullUndoer
+class nullUndoer (undoer):
+
+	def __init__ (self,c):
+		
+		undoer.__init__(self,c) # init the base class.
+		
+	def clearUndoState (self):
+		pass
+		
+	def canRedo (self):
+		return false
+
+	def canUndo (self):
+		return false
+		
+	def enableMenuItems (self):
+		pass
+
+	def getBead (self,n):
+		return {}
+	
+	def peekBead (self,n):
+		return {}
+
+	def setBead (self,n,keywords=None):
+		return {}
+		
+	def redoMenuName (self,name):
+		return "Can't Redo"
+	
+	def undoMenuName (self,name):
+		return "Can't Undo"
+			
+	def setUndoParams (self,undo_type,v,**keywords):
+		pass
+		
+	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+		pass
+		
+	def setUndoTypes (self):
+		pass
+		
+#@nonl
+#@-node:class nullUndoer
+#@-others
 #@nonl
 #@-node:@file leoUndo.py
 #@-leo
