@@ -1,20 +1,18 @@
-directive allows lines to preceed the opening @+leo sentinel line.
-Important notes:
 
-1. See INSTALL.TXT for installation instructions.
-2. 
+Important note: See INSTALL.TXT for installation instructions.
 
-leo.py 3.7                                 October 7, 2002
+
+leo.py 3.7                                 October 9, 2002
 
 Many improvements have been made to Leo.  The highlights:
 
 - Now works with Python 2.1.  Previous versions required Python 2.2.
-- Many new user options, including user-definable shortcuts for all commands
+- Many new user options, including user-definable shortcuts for all commands.
   and colors for all parts of Leo's windows.
   As a result, it is now possible to use arrow keys as you desire.
 - Minimal support for Unicode Latin-1 (iso-8859-1) encoding. Better support is coming.
 - Improved handling of relative path names.
-- The @first directive allows lines to preceed the opening @+leo sentinel line.
+- The @first directive allows lines to precede the opening @+leo sentinel line.
 - The @last  directive allows lines to follow  the closing @-leo sentinel line.
 - Better support for Perl+pod.
 - Leo now ends all lines with '\n' regardless of platform.
@@ -22,7 +20,7 @@ Many improvements have been made to Leo.  The highlights:
 - Simplified sentinels reduce spurious CVS diffs.
 - Many other minor improvements and bug fixes.
 
-Warning: Leo expects that all characters in derived files and .leo files are contained in the encoding specified by the xml_version_string option in leoConfig.txt.  Characters will be garbled if this restriction is not followed.  This restriction will be removed in the next release.
+Warning: Leo expects that all characters in derived files and .leo files are contained in the encoding specified by the xml_version_string option in leoConfig.txt.  Characters will be garbled if this restriction is not followed.  This restriction will be removed in a future release.
 
 leo.py 3.6                                   September 11, 2002
 
@@ -196,4 +194,5 @@ The version fixes two bugs that happen rarely and can cause loss of data when th
   so you may have to convert escaped text to something that your tools can understand.
 
 Edward K. Ream
+
 
