@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2100" clone_windows="0"/>
-<globals body_outline_ratio="0.35654008438818563">
+<globals body_outline_ratio="0.29999999999999999">
 	<global_window_position top="0" left="0" height="40" width="125"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
 <find_panel_settings search_body="1" whole_word="1">
-	<find_string>readline</find_string>
+	<find_string>scanHeader</find_string>
 	<change_string>readlineForceUnixNewline</change_string>
 </find_panel_settings>
 <vnodes>
@@ -1021,7 +1021,7 @@
 <v t="T623"><vh>&lt;&lt; open file &gt;&gt;</vh>
 <v t="T624"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
 </v>
-<v t="T625"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T625" a="C"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T626"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
 <v t="T627"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
 <v t="T628"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
@@ -1198,6 +1198,7 @@
 <v t="T731"><vh>&lt;&lt; handle reporting after at least one eof is seen &gt;&gt;</vh></v>
 </v>
 <v t="T732" a="C"><vh>dumpToEndOfFile</vh></v>
+<v t="T625" a="C"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 </v>
 </v>
 <v><vh> Commands &amp; utilities</vh>
@@ -2290,7 +2291,7 @@
 </v>
 <v t="T622" a="C"><vh>atFile.read</vh>
 <v t="T623"><vh>&lt;&lt; open file &gt;&gt;</vh></v>
-<v t="T625"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T625" a="C"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T626"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
 <v t="T627"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
 <v t="T628"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
@@ -2452,7 +2453,7 @@
 <v t="T623"><vh>&lt;&lt; open file &gt;&gt;</vh>
 <v t="T624"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
 </v>
-<v t="T625"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T625" a="C"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T626"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
 <v t="T627"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
 <v t="T628"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
@@ -3246,11 +3247,11 @@
 <v a="E"><vh>Reading</vh>
 <v t="T1585"><vh>createNthChild</vh></v>
 <v t="T1586"><vh>joinTrees</vh></v>
-<v t="T622" a="C"><vh>atFile.read</vh>
+<v t="T622" a="CE"><vh>atFile.read</vh>
 <v t="T623"><vh>&lt;&lt; open file &gt;&gt;</vh>
 <v t="T624"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
 </v>
-<v t="T625"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
+<v t="T625" a="C"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh></v>
 <v t="T626"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
 <v t="T627"><vh>&lt;&lt; Delete root's tree and body text &gt;&gt;</vh></v>
 <v t="T628"><vh>&lt;&lt; Handle clone bits &gt;&gt;</vh></v>
@@ -3581,7 +3582,7 @@
 <v t="T1678"><vh>updateSyntaxColorer</vh></v>
 </v>
 </v>
-<v t="T1679" a="E"><vh>@file leoCompare.py</vh>
+<v t="T1679"><vh>@file leoCompare.py</vh>
 <v t="T1680"><vh>choose</vh></v>
 <v t="T1681"><vh>go</vh></v>
 <v t="T1682" a="E"><vh>class leoCompare</vh>
@@ -4110,27 +4111,27 @@
 <v t="T1814"><vh>&lt;&lt; scripts &gt;&gt;</vh>
 <v t="T1410" a="C"><vh>importFiles</vh></v>
 </v>
-<v><vh>Import</vh>
+<v a="E"><vh>Import</vh>
 <v t="T1413" a="C"><vh>createOutline</vh>
 <v t="T1414"><vh>&lt;&lt; Read file into s &gt;&gt;</vh></v>
 </v>
 <v t="T1411" a="C"><vh>importFilesCommand</vh>
 <v t="T1412"><vh>&lt;&lt; Create a parent for two files having a common prefix &gt;&gt;</vh></v>
 </v>
-<v><vh>importFlattenedOutline &amp; allies</vh>
+<v a="E"><vh>importFlattenedOutline &amp; allies</vh>
 <v t="T892" a="C"><vh>convertMoreString/StringsToOutlineAfter</vh>
 <v t="T893"><vh>&lt;&lt; Link a new vnode v into the outline &gt;&gt;</vh></v>
 <v t="T894"><vh>&lt;&lt; Set the headline string, skipping over the leader &gt;&gt;</vh></v>
 <v t="T895"><vh>&lt;&lt; Count the number of following body lines &gt;&gt;</vh></v>
 <v t="T896"><vh>&lt;&lt; Add the lines to the body text of v &gt;&gt;</vh></v>
 </v>
-<v t="T1815"><vh>importFlattenedOutline</vh>
+<v t="T1815" a="E"><vh>importFlattenedOutline</vh>
 <v t="T1816"><vh>&lt;&lt; Read the file into array &gt;&gt;</vh></v>
 </v>
 <v t="T1817"><vh>moreHeadlineLevel</vh></v>
 <v t="T891" a="C"><vh>stringIs/stringsAreValidMoreFile</vh></v>
 </v>
-<v><vh>importWebCommand &amp; allies</vh>
+<v a="E"><vh>importWebCommand &amp; allies</vh>
 <v t="T1818"><vh>createOutlineFromWeb</vh></v>
 <v t="T1819"><vh>importWebCommand</vh></v>
 <v t="T1820"><vh>findFunctionDef</vh></v>
@@ -4145,7 +4146,7 @@
 <v t="T1828"><vh>&lt;&lt; Handle cweb @d, @f, @c and @p directives &gt;&gt;</vh></v>
 </v>
 </v>
-<v><vh>Symbol table</vh>
+<v a="E"><vh>Symbol table</vh>
 <v t="T1829"><vh>cstCanonicalize</vh></v>
 <v t="T1830"><vh>cstDump</vh></v>
 <v t="T1831"><vh>cstEnter</vh></v>
@@ -4252,14 +4253,14 @@
 <v t="T1853"><vh>&lt;&lt; handle possible sentinel &gt;&gt;</vh></v>
 </v>
 </v>
-<v><vh>Utilities</vh>
+<v a="E"><vh>Utilities</vh>
 <v t="T593" a="C"><vh>createHeadline</vh></v>
 <v t="T1854"><vh>error</vh></v>
 <v t="T1855"><vh>getLeadingIndent</vh></v>
 <v t="T1856"><vh>isDocStart and isModuleStart</vh></v>
 <v t="T592" a="C"><vh>massageBody</vh></v>
 <v t="T1857"><vh>massageComment</vh></v>
-<v t="T1858"><vh>massageWebBody</vh>
+<v t="T1858" a="E"><vh>massageWebBody</vh>
 <v t="T1859"><vh>&lt;&lt; Remove most newlines from @space and @* sections &gt;&gt;</vh></v>
 <v t="T1860"><vh>&lt;&lt; Replace abbreviated names with full names &gt;&gt;</vh></v>
 </v>
@@ -11520,8 +11521,12 @@ out = []
 self.scanHeader(file)
 self.scanText(file,root,out,atFile.endLeo)
 s = string.join(out, "")
+# Stephen P. Schaefer 9/7/2002
+# scanHeader and scanText no longer introduce
+# "\r" into s
+#
 # 8/13/02: Remove cursed newlines.
-s = string.replace(s, '\r', '')
+# s = string.replace(s, '\r', '')
 root.setBodyStringOrPane(s)</t>
 <t tx="T626">@ createNthNode marks all nodes in the derived file as visited.  Any unvisited nodes are either dummies or nodes that don't exist in the derived file.
 @c
@@ -12886,7 +12891,7 @@ def showSuccess(self,pos,newpos):
 <t tx="T694"># Stephen P. Schaefer 9/7/2002
 # The Unix readline() routine delivers "\r\n" line end
 # strings verbatim, while the windows versions force the
-# string to use the Unix convention of using only "\n"
+# string to use the Unix convention of using only "\n".
 # Cause the Unix readline to do the same.
 def readlineForceUnixNewline(f):
 	s = f.readline()

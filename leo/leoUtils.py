@@ -1605,7 +1605,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 # Stephen P. Schaefer 9/7/2002
 # The Unix readline() routine delivers "\r\n" line end
 # strings verbatim, while the windows versions force the
-# string to use the Unix convention of using only "\n"
+# string to use the Unix convention of using only "\n".
 # Cause the Unix readline to do the same.
 def readlineForceUnixNewline(f):
 	s = f.readline()
