@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 #@+leo
 
 #@+node:0::@file c2py.py
