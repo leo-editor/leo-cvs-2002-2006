@@ -163,7 +163,7 @@ if Tk: # Register the handlers...
 				row = 0
 				for option in options:
 					e = Tk.Entry(b)
-					e.insert(0, config.get(section, option))
+					e.insert(0, unicode(config.get(section,option))) # 6/8/04
 					Tk.Label(b, text=option).grid(row=row, column=0, sticky="e", pady=4)
 					e.grid(row=row, column=1, sticky="ew", pady = 4)
 					row += 1
@@ -216,12 +216,15 @@ if Tk: # Register the handlers...
 		
 			# Set values back into the config item.
 			for section, option, entry in self.entries:
-				self.config.set(section, option, entry.get())
+				s = entry.get()
+				s = g.toEncodedString(s,"ascii",reportErrors=true) # Config params had better be ascii.
+				self.config.set(section,option,s)
 		
 			# Write out to the file.
 			f = open(self.filename, "w")
 			self.config.write(f)
 			f.close()
+		#@nonl
 		#@-node:EKR.20040517080555.18:writeConfiguration
 		#@-others
 	#@nonl
