@@ -3,43 +3,89 @@
 #@@language python
 #@@tabwidth -4
 
+__version__ = "0.61"
+#@<< version history >>
+#@+node:ekr.20041103051117:<< version history >>
+#@@killcolor
+#@+at
+# 
+# v .2
+# 
+# 1. Trash. If there is a Chapter in the Leo project called 'Trash' all 
+# deleted nodes are deposited there. Then when deleted in the 'Trash' chapter 
+# it is finally removed. There is an option to quickly add a Trash barrel in 
+# the menu.
+# 2. Menu moved from Outline to being summoned by right clicking on a chapter 
+# tab or in the area of the tabs.
+# 3. Swapping Chapters. Swap one Chapter for another one.
+# 4. Conversion ops. Take one Outline and turn each node into a Chapter. The 
+# convers operation is also there, take each top level node in each Chapter 
+# and add it to one Chapter.
+# 5. Import/Export. You are now able to load leo files as Chapters. This 
+# means, for example, that if you have 5 Outlines that you would like to bind 
+# together as one Leo file but keep their separateness you can now import 
+# those 5 Outlines into there own Chapters. You can also Export a single 
+# Chapter into it's own separate Leo file.
+# 6. Search and Clone. This functionality is very similar to the Filtered 
+# Hoist concept. You decide which Chapter you want your search results to 
+# appear in and a dialog will pop up. You can enter simple text or a more 
+# complex regular expression and the function will search all the outlines and 
+# create a node with the results as children.
+# 7. Editors now have headlines indicating what Chapters and what node are 
+# being worked on.
+# 
+# v .6 EKR: Based on version .5 by Leo User.
+# 
+# - Added g. before all functions in leoGlobals.py.
+# - Right clicking on Chapter tab crashes.
+# 
+# .61 fixed up a couple of spots.
+# 
+# .62 EKR: Restored conditional call to g.app.createTkGui(__file__) in startup 
+# code.
+#@-at
+#@nonl
+#@-node:ekr.20041103051117:<< version history >>
+#@nl
 #@<< imports >>
-#@+node:ekr.20041019114718:<< imports >>
+#@+node:ekr.20041103050629:<< imports >>
 import leoGlobals as g
-import leoPlugins
 
-# from leoNodes import *
 import leoColor
 import leoCommands
 import leoFileCommands
 import leoFrame
 import leoNodes
-import leoTkinterFrame  
+import leoPlugins
+import leoTkinterFrame
 import leoTkinterMenu
 import leoTkinterTree
-#from leoTkinterFrame import leoTkinterLog
-#from leoTkinterFrame import leoTkinterBody
+# from leoNodes import *
 
 try:
     import Tkinter as Tk
     import tkFont
-except IOError:
-    Tk = g.cantImport("Tk",__name__)
-
+except ImportError:
+    Tk = g.cantImport("Tk")
+    
 try:
     import Pmw
 except:
-    Pmw = g.cantImport("Pmw",__name__)
+    Pmw = g.cantImport("Pmw")
     
+from leoTkinterFrame import leoTkinterLog
+from leoTkinterFrame import leoTkinterBody
+
 import os
 import string
 import sys
 import time
 import zipfile
 #@nonl
-#@-node:ekr.20041019114718:<< imports >>
+#@-node:ekr.20041103050629:<< imports >>
 #@nl
-
+#@<< globals >>
+#@+node:mork.20040926105355.2:<< globals >>
 chapters = {}
 notebooks = {}
 frames = {}
@@ -47,23 +93,28 @@ iscStringIO = False
 twidgets = {}
 pbodies = {}
 
+#@-node:mork.20040926105355.2:<< globals >>
+#@nl
+
 #@+others
 #@+node:mork.20040927092626:class Chapter
 class Chapter:
     '''The fundamental abstraction in the Chapters plugin.
        It enables the tracking of Chapters tree information.'''
-    
+       
+    #@    @+others
+    #@+node:ekr.20041103051228:__init__
     def __init__( self, c, tree, frame, canvas ):
-        
+            
         self.c = c
         self.tree = tree
         self.frame = frame
         self.canvas = canvas
         self.treeBar = frame.treeBar
         if hasattr( c, 'cChapter' ):
-            tn = tnode( '', 'New Headline' )
-            vn = vnode( c, tn )
-            pos = position( vn, [] )
+            tn = leoNodes.tnode( '', 'New Headline' )
+            vn = leoNodes.vnode( c, tn )
+            pos = leoNodes.position( vn, [] )
             self.cp = pos
             self.rp = pos
             self.tp = pos
@@ -72,13 +123,17 @@ class Chapter:
             self.cp = c._currentPosition
             self.tp = c._topPosition
             self.rp = c._rootPosition
-        
+    #@nonl
+    #@-node:ekr.20041103051228:__init__
+    #@+node:ekr.20041103051228.1:_saveInfo
     def _saveInfo( self ):
         
         self.cp = self.c._currentPosition
         self.rp = self.c._rootPosition
         self.tp = self.c._topPosition
-        
+    #@nonl
+    #@-node:ekr.20041103051228.1:_saveInfo
+    #@+node:ekr.20041103051228.2:setVariables
     def setVariables( self ):
         
         c = self.c
@@ -89,7 +144,8 @@ class Chapter:
         c._currentPosition = self.cp
         c._rootPosition = self.rp
         c._topPosition = self.tp
-        
+    #@-node:ekr.20041103051228.2:setVariables
+    #@+node:ekr.20041103051228.3:makeCurrent
     def makeCurrent( self ):
         
         c = self.c
@@ -98,12 +154,20 @@ class Chapter:
         self.setVariables()
         c.redraw()
         self.canvas.update_idletasks()
+    #@nonl
+    #@-node:ekr.20041103051228.3:makeCurrent
+    #@-others
 #@nonl
 #@-node:mork.20040927092626:class Chapter
 #@+node:mork.20040930090735:Creating widgets...
+#@+at
+# This category deals with creating widgets and any support functions for 
+# doing so.
+#@-at
+#@@c
+#@+others
 #@+node:mork.20040926105355.21:newCreateControl
 cControl = leoTkinterFrame.leoTkinterBody.createControl
-
 def newCreateControl( self, frame, parentFrame  ):
     c = self.c
     notebook = notebooks[ c ]
@@ -114,9 +178,8 @@ def newCreateControl( self, frame, parentFrame  ):
     ctrl = cControl( self, frame , parentFrame ) 
     ctrl.bind( "<FocusIn>", lambda event, body = frame.body : getGoodPage( event, body ), '+' )
     i = 1.0 / len( pbody.panes() )
-    g.trace(i)
     for z in pbody.panes():
-        pbody.configurepane( z , size = i ) # EKR
+        pbody.configurepane( z , size = i )
     pbody.updatelayout()
     frame.body.l =l
     frame.body.r =r 
@@ -129,13 +192,13 @@ def newCreateControl( self, frame, parentFrame  ):
 #@-node:mork.20040926105355.21:newCreateControl
 #@+node:mork.20040929110556:createPanedWidget
 def createPanedWidget( parentFrame, c ):
-    
     #constructs a new panedwidget for a frame
     pbody = Pmw.PanedWidget( parentFrame , orient = 'horizontal' )
     pbody.pack( expand = 1 , fill = 'both')
     pbodies[ c ] = pbody
     parentFrame = newEditorPane( c )
     return parentFrame
+#@nonl
 #@-node:mork.20040929110556:createPanedWidget
 #@+node:mork.20040926105355.22:newEditorPane
 editorNames = {}
@@ -151,7 +214,6 @@ def newEditorPane( c ):
 #@-node:mork.20040926105355.22:newEditorPane
 #@+node:mork.20040926105355.23:newCreateCanvas
 def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas ):
-    
     c = self.c
     
     if c not in frames:
@@ -166,7 +228,9 @@ def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinte
     tab = notebook.tab( indx )
     if indx == 0:
         tab.configure( background = 'grey', foreground = 'white' )
-    canvas = createCanvas( self, page ) 
+    canvas = createCanvas( self, page )
+    
+    hull = notebook.component( 'hull' )
     tab.bind( '<Button-3>' , lambda event : hull.tmenu.post( event.x_root , event.y_root ) )
     sv = Tk.StringVar()
     page.sv = sv
@@ -272,8 +336,15 @@ def newEditor( c ):
     af.r.configure( text = c.currentVnode().headString() )
 
 #@-node:mork.20040926105355.35:newEditor
+#@-others
+#@nonl
 #@-node:mork.20040930090735:Creating widgets...
 #@+node:mork.20040930091319:tab menu stuff
+#@+at
+# Tab menu and factory functions for the tab menu creation process.
+#@-at
+#@@c
+#@+others
 #@+node:mork.20040926105355.41:makeTabMenu
 def makeTabMenu( widget, notebook, c ):
     #creates the Menu that appears
@@ -309,12 +380,12 @@ def makeTabMenu( widget, notebook, c ):
     opmenu.add_command( label = 'Empty Trash Barrel', command =
     lambda notebook = notebooks[ c ], c = c: emptyTrash( notebook, c ) )
     setupMenu = getSetupMenu( c, notebook )
-    cmenu.configure( postcommand = lambda menu = cmenu,
-        command = cloneToChapter : setupMenu( menu, command ) )
-    movmenu.configure( postcommand = lambda menu = movmenu,
-        command = moveToChapter : setupMenu( menu, command ) )
-    copymenu.configure( postcommand = lambda menu = copymenu,
-        command = copyToChapter : setupMenu( menu, command ) ) 
+    cmenu.configure(
+        postcommand = lambda menu = cmenu, command = cloneToChapter : setupMenu( menu, command ) )
+    movmenu.configure(
+        postcommand = lambda menu = movmenu, command = moveToChapter : setupMenu( menu, command ) )
+    copymenu.configure(
+        postcommand = lambda menu = copymenu, command = copyToChapter : setupMenu( menu, command ) ) 
     swapmenu.configure( postcommand = 
     lambda menu = swapmenu, command = swapChapters : setupMenu( menu, command ) )
     searchmenu.configure( postcommand = lambda menu = searchmenu,
@@ -325,22 +396,20 @@ def makeTabMenu( widget, notebook, c ):
     edmenu.add_command( label = "Remove Editor", command = lambda c = c : removeEditor( c ) )
     conmenu = Tk.Menu( tmenu, tearoff = 0 )
     tmenu.add_cascade( menu = conmenu, label = 'Conversion' )
-    conmenu.add_command( label = "Convert To Simple Outline",
+    conmenu.add_command(
+        label = "Convert To Simple Outline",
         command = lambda c =c : conversionToSimple( c ) )
-    conmenu.add_command( label = "Convert Simple Outline into Chapters",
+    conmenu.add_command(
+        label = "Convert Simple Outline into Chapters",
         command = lambda c= c : conversionToChapters( c ) )
     iemenu = Tk.Menu( tmenu, tearoff = 0 )
-    tmenu.add_cascade( label = 'Import/Export', menu = iemenu )
-    iemenu.add_command( label = "Import Leo File ",
-        command = lambda c = c: importLeoFile(c ) )
-    iemenu.add_command( label = "Export Chapter To Leo File",
-        command = lambda c =c : exportLeoFile( c ) )
+    tmenu.add_cascade(label = 'Import/Export', menu = iemenu )
+    iemenu.add_command( label = "Import Leo File ", command = lambda c = c: importLeoFile(c ) )
+    iemenu.add_command( label = "Export Chapter To Leo File", command = lambda c =c : exportLeoFile( c ) )
     indmen = Tk.Menu( tmenu, tearoff = 0 )
     tmenu.add_cascade( label = 'Index', menu = indmen )
-    indmen.add_command( label = 'Make Index',
-        command = lambda c =c : viewIndex( c ) )
-    indmen.add_command( label = 'Make Regex Index',
-        command = lambda c =c : regexViewIndex( c ) ) 
+    indmen.add_command( label = 'Make Index', command = lambda c =c : viewIndex( c ) )
+    indmen.add_command( label = 'Make Regex Index', command = lambda c =c : regexViewIndex( c ) ) 
     try:
         import reportlab
         tmenu.add_command( label = 'Convert To PDF', command = lambda c = c: doPDFConversion( c ) )
@@ -459,6 +528,8 @@ def getSetupMenu( c, notebook ):
 #@-others
 #@nonl
 #@-node:mork.20040930091319.1:function factories
+#@-others
+#@nonl
 #@-node:mork.20040930091319:tab menu stuff
 #@+node:mork.20040930092346:Multi-Editor stuff
 #@+others
@@ -941,7 +1012,7 @@ def newselect (self, v , updateBeadList = True):
     
     self.frame.body.lastNode = v
     self.frame.body.lastChapter = notebooks[ v.c ].getcurselection()
-    rv = old_select( self , v, updateBeadList )
+    rv = ol_select( self , v, updateBeadList )
     if hasattr( v.c.frame.body, 'r' ):
         v.c.frame.body.r.configure( text = v.headString() )
     return rv
@@ -1301,11 +1372,11 @@ def _changeTreeToPDF( name, num, v, c, Story, styles , maxlen):
     style = styles[ 'Normal' ]        
     while v:
 			    head = v.moreHead( 0 )
-			    head = toEncodedString(head,enc,reportErrors=True) 
+			    head = g.toEncodedString(head,enc,reportErrors=True) 
 			    s = head +'\n'
 			    body = v.moreBody() # Inserts escapes.
 			    if len(body) > 0:
-			        body = toEncodedString(body,enc, reportErrors=True)
+			        body = g.toEncodedString(body,enc, reportErrors=True)
 			        s = s + body
 			        s = s.split( '\n' )
 			        s2 = []
@@ -1337,25 +1408,33 @@ def _changeTreeToPDF( name, num, v, c, Story, styles , maxlen):
 #@-node:mork.20040930091624.1:PDF
 #@-others
     
-old_select = leoTkinterTree.leoTkinterTree.select
+ol_select = leoTkinterTree.leoTkinterTree.select
 
-if Tk and Pmw:
-    leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
-    leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
-    leoTkinterTree.leoTkinterTree.select = newselect
-    leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
-    leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
-    g.os_path_dirname = newos_path_dirname
-    leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
-    leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
-    leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
-    leoFileCommands.fileCommands.open = newOpen
-    if hasattr( leoNodes.vnode, 'doDelete' ):
-        leoNodes.vnode.doDelete = newTrashDelete
-    else:
-        leoNodes.position.doDelete = newTrashDelete
-    __version__ = '.6'
-    g.plugin_signon(__name__)
+if Pmw:
+    if g.app.gui is None: 
+        g.app.createTkGui(__file__)
+
+    if g.app.gui.guiName() == "tkinter":
+        #@        << override various methods >>
+        #@+node:ekr.20041103054545:<< override various methods >>
+        leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
+        leoTkinterFrame.leoTkinterBody.createControl = newCreateControl
+        leoTkinterTree.leoTkinterTree.select = newselect
+        leoTkinterTree.leoTkinterTree.endEditLabel = newendEditLabel
+        leoTkinterTree.leoTkinterTree.__init__ = newTreeinit
+        g.os_path_dirname = newos_path_dirname
+        leoFileCommands.fileCommands.write_LEO_file = newWrite_LEO_file
+        leoFileCommands.fileCommands.write_Leo_file = newWrite_LEO_file
+        leoFileCommands.fileCommands.getLeoFile = newGetLeoFile
+        leoFileCommands.fileCommands.open = newOpen
+        if hasattr( leoNodes.vnode, 'doDelete' ):
+            leoNodes.vnode.doDelete = newTrashDelete
+        else:
+            leoNodes.position.doDelete = newTrashDelete
+        #@nonl
+        #@-node:ekr.20041103054545:<< override various methods >>
+        #@nl
+        g.plugin_signon( __name__ )
 #@nonl
 #@-node:mork.20040926105355.1:@thin chapters.py
 #@-leo
