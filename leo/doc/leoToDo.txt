@@ -4,195 +4,12 @@
 
 #@+all
 #@+node:ekr.20040630214448:To do next
+#@+node:ekr.20040701182420:There may be a small problem with updating cloned text in ignore'd files
+#@-node:ekr.20040701182420:There may be a small problem with updating cloned text in ignore'd files
 #@+node:ekr.20040701041539:Check for memory leaks & other performance problems
 #@-node:ekr.20040701041539:Check for memory leaks & other performance problems
 #@+node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
 #@-node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
-#@+node:ekr.20040701152235:Fix shawdow warnings
-@killcolor
-
-cmp,dict,dir,file,id,type are all global functions.
-#@+node:ekr.20040701152235.2:leoApp
-c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.2:leoApp
-#@+node:ekr.20040701152235.3:leoPlugins
-C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.3:leoPlugins
-#@+node:ekr.20040701152235.4:leoColor
-C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.4:leoColor
-#@+node:ekr.20040701152235.5:leoNodes
-C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.5:leoNodes
-#@+node:ekr.20040701152235.6:leoCompare
-C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
-C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.6:leoCompare
-#@+node:ekr.20040701152235.7:leoTkinterDialog
-c:\prog\leoCVS\leo\src\leoTkinterDialog.py:182: (copyright) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.7:leoTkinterDialog
-#@+node:ekr.20040701152235.8:leoFind
-c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.8:leoFind
-#@+node:ekr.20040701152235.9:leoMenu
-c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.9:leoMenu
-#@+node:ekr.20040701152235.10:leoTkinterTree
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.10:leoTkinterTree
-#@+node:ekr.20040701152235.11:leoTkinterFrame
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
-
-c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.11:leoTkinterFrame
-#@+node:ekr.20040701152235.12:leoTkinterPrefs
-c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.12:leoTkinterPrefs
-#@+node:ekr.20040701152235.13:leoTkinterGui
-c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.13:leoTkinterGui
-#@+node:ekr.20040701152235.14:leoAtFile
-C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
-#@-node:ekr.20040701152235.14:leoAtFile
-#@+node:ekr.20040701152235.15:leoFileCommands
-C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.15:leoFileCommands
-#@+node:ekr.20040701152235.16:leoImport
-C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
-C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.16:leoImport
-#@+node:ekr.20040701152235.17:leoTangle
-c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
-c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.17:leoTangle
-#@+node:ekr.20040701152235.18:leoCommands
-C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
-C:\prog\leoCVS\leo\src\leoCommands.py:3804: (copyright) shadows builtin
-#@nonl
-#@-node:ekr.20040701152235.18:leoCommands
-#@-node:ekr.20040701152235:Fix shawdow warnings
-#@+node:ekr.20040701120647:Pychecker stuff...
-#@+node:ekr.20040701123332:To do: redirect output
-- Redirect output to a file-like-object, then check the contents of that object.
-#@nonl
-#@-node:ekr.20040701123332:To do: redirect output
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
-
-in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines are Tkinter callbacks.
-
-in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
-
-several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
-
-@c
-
-if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
-    try:
-        import pychecker.checker
-        # from pychecker import Config
-        print ; print "Warning: pychecker.checker running..." ; print
-    except: pass
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
-#@-node:ekr.20040701120647:Pychecker stuff...
 #@+node:ekr.20040630214448.1:Use inspect module to improve Go To Line Number
 @killcolor
 
@@ -3217,6 +3034,186 @@ def main():
 #@-node:ekr.20040324072124.10:main
 #@-node:ekr.20040324072124:CallTipWindow.py
 #@-node:ekr.20040310092400.1:Use calltips in outline pane Isn't this a plugin??
+#@+node:ekr.20040701120647:Pychecker stuff...
+#@+node:ekr.20040701152235:Fix shawdow warnings
+@killcolor
+
+cmp,dict,dir,file,id,type are all global functions.
+#@+node:ekr.20040701152235.2:leoApp
+c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.2:leoApp
+#@+node:ekr.20040701152235.3:leoPlugins
+C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.3:leoPlugins
+#@+node:ekr.20040701152235.4:leoColor
+C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.4:leoColor
+#@+node:ekr.20040701152235.5:leoNodes
+C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.5:leoNodes
+#@+node:ekr.20040701152235.6:leoCompare
+C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
+C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.6:leoCompare
+#@+node:ekr.20040701152235.8:leoFind
+c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.8:leoFind
+#@+node:ekr.20040701152235.9:leoMenu
+c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.9:leoMenu
+#@+node:ekr.20040701152235.10:leoTkinterTree
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.10:leoTkinterTree
+#@+node:ekr.20040701152235.11:leoTkinterFrame
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
+
+c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.11:leoTkinterFrame
+#@+node:ekr.20040701152235.12:leoTkinterPrefs
+c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.12:leoTkinterPrefs
+#@+node:ekr.20040701152235.13:leoTkinterGui
+c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.13:leoTkinterGui
+#@+node:ekr.20040701152235.14:leoAtFile
+C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
+#@-node:ekr.20040701152235.14:leoAtFile
+#@+node:ekr.20040701152235.15:leoFileCommands
+C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.15:leoFileCommands
+#@+node:ekr.20040701152235.16:leoImport
+C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
+C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.16:leoImport
+#@+node:ekr.20040701152235.17:leoTangle
+c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.17:leoTangle
+#@+node:ekr.20040701152235.18:leoCommands
+C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
+C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.18:leoCommands
+#@-node:ekr.20040701152235:Fix shawdow warnings
+#@+node:ekr.20040701123332:To do: redirect output
+- Redirect output to a file-like-object, then check the contents of that object.
+#@nonl
+#@-node:ekr.20040701123332:To do: redirect output
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
+
+in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines are Tkinter callbacks.
+
+in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
+
+several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
+
+@c
+
+if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
+    try:
+        import pychecker.checker
+        # from pychecker import Config
+        print ; print "Warning: pychecker.checker running..." ; print
+    except: pass
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
+#@-node:ekr.20040701120647:Pychecker stuff...
 #@-node:EKR.20040430163619:To do: 4.2
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app

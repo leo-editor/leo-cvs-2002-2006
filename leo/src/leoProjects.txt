@@ -3976,7 +3976,8 @@ def level(self,verbose=False):
         else:
             if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             # if g.app.debug: assert(level==simpleLevel)
-            return level
+            break
+    return level
 #@nonl
 #@-node:ekr.20040227214711:p.level & simpleLevel
 #@+node:ekr.20040228060340:p.vParentWithStack
@@ -9406,7 +9407,8 @@ def level(self,verbose=False):
         else:
             if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
             # if g.app.debug: assert(level==simpleLevel)
-            return level
+            break
+    return level
 #@nonl
 #@-node:ekr.20040227214711:p.level & simpleLevel
 #@+node:ekr.20031218072017.4146:p.lastVisible & oldLastVisible
@@ -9418,8 +9420,9 @@ def oldLastVisible(self):
     while 1:
         if g.app.debug: g.trace(last)
         p.moveToVisNext()
-        if not p: return last
+        if not p: break
         last = p.copy()
+    return last
         
 def lastVisible(self):
     """Move to the last visible node of the entire tree."""
@@ -20416,8 +20419,9 @@ def oldLastVisible(self):
     while 1:
         if g.app.debug: g.trace(last)
         p.moveToVisNext()
-        if not p: return last
+        if not p: break
         last = p.copy()
+    return last
         
 def lastVisible(self):
     """Move to the last visible node of the entire tree."""
@@ -21382,8 +21386,9 @@ def oldLastVisible(self):
     while 1:
         if g.app.debug: g.trace(last)
         p.moveToVisNext()
-        if not p: return last
+        if not p: break
         last = p.copy()
+    return last
         
 def lastVisible(self):
     """Move to the last visible node of the entire tree."""
@@ -29717,9 +29722,6 @@ def getUnknownTag(self):
 def getUnknownAttribute(self,nodeType):
     
     """Parse an unknown attribute in a <v> or <t> element."""
-    
-    import binascii
-    import pickle
     
     # New in 4.2.  The unknown tag has been pickled and hexlify'd.
     attr,val = self.getUnknownTag()
@@ -44020,9 +44022,6 @@ def getUnknownAttribute(self,nodeType):
     
     """Parse an unknown attribute in a <v> or <t> element."""
     
-    import binascii
-    import pickle
-    
     # New in 4.2.  The unknown tag has been pickled and hexlify'd.
     attr,val = self.getUnknownTag()
     if not attr:
@@ -44800,9 +44799,6 @@ def getUnknownAttribute(self,nodeType):
     
     """Parse an unknown attribute in a <v> or <t> element."""
     
-    import binascii
-    import pickle
-    
     # New in 4.2.  The unknown tag has been pickled and hexlify'd.
     attr,val = self.getUnknownTag()
     if not attr:
@@ -44949,6 +44945,115 @@ if marks or expanded:
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20040701065235.5:Reading...
 #@-node:EKR.20040614151841.2:(More changes to read/write logic) New in 4.2 Beta 2
+#@+node:ekr.20040701193902:(Fixed major pychecker warnings)
+#@+node:ekr.20040701193902.1:leoAtFile.py
+# Potential real problems.
+(fixed) c:\prog\leoCVS\leo\src\leoAtFile.py:5731: Variable (line) used before being set
+
+# Not real problems...
+c:\prog\leoCVS\leo\src\leoAtFile.py:4516: Overridden method (putCloseNodeSentinel)
+ doesnt match signature in class (leoAtFile.oldDerivedFile)
+c:\prog\leoCVS\leo\src\leoAtFile.py:4550: Overridden method (putOpenNodeSentinel)
+  doesnt match signature in class (leoAtFile.oldDerivedFile)
+c:\prog\leoCVS\leo\src\leoAtFile.py:4697: Overridden method (write)
+  doesnt match signature in class (leoAtFile.oldDerivedFile)
+#@nonl
+#@-node:ekr.20040701193902.1:leoAtFile.py
+#@+node:ekr.20040701193902.2:leoColor.py
+# Real bugs
+(fixed) c:\prog\leoCVS\leo\src\leoColor.py:654: No global (false) found
+(fixed) c:\prog\leoCVS\leo\src\leoColor.py:2173: Base class (leoColor.colorizer) __init__() not called
+#@nonl
+#@-node:ekr.20040701193902.2:leoColor.py
+#@+node:ekr.20040701193902.3:leoCommands.py
+# Potential real problems
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1529: Function return types are inconsistent
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:4223: Function returns a value and also implicitly returns None
+#@-node:ekr.20040701193902.3:leoCommands.py
+#@+node:ekr.20040701193902.4:leoFileCommands.py
+c:\prog\leoCVS\leo\src\leoFileCommands.py:1977: No class attribute (targetFileName) found
+c:\prog\leoCVS\leo\src\leoFileCommands.py:1977: No class attribute (writeError) found
+#@-node:ekr.20040701193902.4:leoFileCommands.py
+#@+node:ekr.20040701193902.5:leoFind.py
+# Potential real problem.
+(fixed) c:\prog\leoCVS\leo\src\leoFind.py:694: Function returns a value and also implicitly returns None
+#@nonl
+#@-node:ekr.20040701193902.5:leoFind.py
+#@+node:ekr.20040701193902.6:leoImport.py
+(suppressed) c:\prog\leoCVS\leo\src\leoImport.py:190: Object (lastVnode) has no attribute (insertAfter)
+(suppressed) c:\prog\leoCVS\leo\src\leoImport.py:192: Object (lastVnode) has no attribute (insertAsNthChild)
+(suppressed) c:\prog\leoCVS\leo\src\leoImport.py:197: Object (lastVnode) has no attribute (parent)
+#@nonl
+#@-node:ekr.20040701193902.6:leoImport.py
+#@+node:ekr.20040701193902.7:leoNodes.py
+# Real bug.
+(fixed) C:\prog\leoCVS\leo\src\leoUndo.py:699: Redefining attribute (saveTree) original line (628)
+
+# Potential real problems.
+(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1976: Format string argument count (1) doesnt match arguments (2)
+(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1978: Format string argument count (1) doesnt match arguments (2)
+(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1981: Function returns a value and also implicitly returns None
+(fixed) c:\prog\leoCVS\leo\src\leoNodes.py:1936: Function returns a value and also implicitly returns None
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:753: Redefining attribute (hasChildren) original line (747)
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:2143: Redefining attribute (isDirty) original line (1704)
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:3212: Redefining attribute (invalidOutline) original line (2847)
+#@-node:ekr.20040701193902.7:leoNodes.py
+#@+node:ekr.20040701193902.8:leoTkinterFind.py
+# Potential real problems.
+(fixed) c:\prog\leoCVS\leo\src\leoTkinterFind.py:295: Function returns a value and also implicitly returns None
+#@-node:ekr.20040701193902.8:leoTkinterFind.py
+#@+node:ekr.20040701193902.9:leoTkinterFrame.py
+# Potential real problem.
+(suppressed) c:\prog\leoCVS\leo\src\leoTkinterFrame.py:2022: Overridden method (deleteTextSelection)
+    doesnt match signature in class(leoFrame.leoBody)
+#@-node:ekr.20040701193902.9:leoTkinterFrame.py
+#@+node:ekr.20040701193902.10:leoTkinterTree.py
+# Potential real problem.
+(suppressed) c:\prog\leoCVS\leo\src\leoTkinterTree.py:445:
+    Overridden method (redraw_now) doesnt match signature in class (leoFrame.leoTree)
+#@-node:ekr.20040701193902.10:leoTkinterTree.py
+#@+node:ekr.20040701193902.11:leoUndo.py
+# Potential real problem
+(fixed) c:\prog\leoCVS\leo\src\leoUndo.py:220: Format string argument count (2) doesnt match arguments (3)
+#@nonl
+#@-node:ekr.20040701193902.11:leoUndo.py
+#@-node:ekr.20040701193902:(Fixed major pychecker warnings)
+#@+node:ekr.20040701194847:(Suppressed more pychecker errors)
+#@+node:ekr.20040701203211:Reports
+@killcolor
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:935: Module (binascii) re-imported
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:936: Module (pickle) re-imported
+
+(suppressed) C:\prog\leoCVS\leo\src\leo.py:266: Module (profile) re-imported
+(suppressed) C:\prog\leoCVS\leo\src\leo.py:153: Module (leo) imports itself
+(suppressed) C:\prog\leoCVS\leo\src\leo.py:33: Imported module (pychecker) not used
+
+(rewrote code) c:\prog\leoCVS\leo\src\leoApp.py:357:   No module attribute (leoID) found
+
+(suppressed) c:\prog\leoCVS\leo\src\leoFind.py:694: Function returns a value and also implicitly returns None
+(suppressed) C:\prog\leoCVS\leo\src\leoCommands.py:4223: Function returns a value and also implicitly returns None
+
+(suppressed) c:\python23\lib\distutils\errors.py:13: Variable (__revision__) not used
+#@-node:ekr.20040701203211:Reports
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if not g.app.batchMode:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@-node:ekr.20040701194847:(Suppressed more pychecker errors)
 #@-node:ekr.20040701065235:in 4.2 b2
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
