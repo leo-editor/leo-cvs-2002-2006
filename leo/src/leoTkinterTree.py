@@ -387,19 +387,19 @@ class leoTkinterTree (leoFrame.leoTree):
 			g.funcToMethod(f,leoNodes.position)
 	#@nonl
 	#@-node:tree.injectCallbacks (class method)
-	#@+node:redraw
+	#@+node:tree.redraw
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
 	
 	def redraw (self,event=None):
 		
-		# g.trace()
+		# g.trace(self.updateCount,self.redrawScheduled)
 		
 		if self.updateCount == 0 and not self.redrawScheduled:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 	#@nonl
-	#@-node:redraw
+	#@-node:tree.redraw
 	#@+node:tkTree.redrawAfterException
 	#@+at 
 	#@nonl
@@ -422,12 +422,13 @@ class leoTkinterTree (leoFrame.leoTree):
 	# Schedules a redraw even if inside beginUpdate/endUpdate
 	def force_redraw (self):
 		
-		# g.trace()
+		# g.trace(self.redrawScheduled)
 		# import traceback ; traceback.print_stack()
 	
 		if not self.redrawScheduled:
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
+	#@nonl
 	#@-node:force_redraw
 	#@+node:redraw_now
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
@@ -502,7 +503,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		g.doHook("after-redraw-outline",c=self.c)
 	
 		self.canvas['cursor'] = oldcursor
-	#@nonl
 	#@-node:idle_redraw
 	#@+node:idle_second_redraw
 	def idle_second_redraw (self):
@@ -557,11 +557,20 @@ class leoTkinterTree (leoFrame.leoTree):
 	def drawBox (self,p,x,y):
 	
 		y += 7 # draw the box at x, y+7
+		h = self.line_height
 	
 		tree = self
 		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
 		image = self.getIconImage(iconname)
 		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
 		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
@@ -569,7 +578,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		# Remember the bindings so deleteBindings can delete them.
 		self.tagBindings.append((id,id1,"<1>"),)
 		self.tagBindings.append((id,id2,"<Double-1>"),)
-	#@nonl
 	#@-node:drawBox (tag_bind)
 	#@+node:drawIcon (tag_bind)
 	def drawIcon(self,p,x=None,y=None):
@@ -961,6 +969,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		c = self.c ; frame = c.frame
 		if not p: p = self.c.currentPosition()
+		if not p: p = self.c.rootPosition() # 4/8/04.
 		try:
 			last = p.lastVisible()
 			nextToLast = last.visBack()
@@ -1488,6 +1497,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:tree.OnIconClick & OnIconRightClick
 	def OnIconClick (self,p,event):
 		
+		# g.trace(p)
+		
 		p = p.copy() # Make sure callbacks use the _present_ position.
 	
 		tree = self ; canvas = tree.canvas
@@ -1509,10 +1520,12 @@ class leoTkinterTree (leoFrame.leoTree):
 				self.tagBindings.append((id,id4,"<B1-Motion>"),)
 				self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
 		tree.select(p)
+		return "break" # disable expanded box handling.
 		
 	def OnIconRightClick (self,p,event):
 	
 		self.select(p)
+		return "break" # disable expanded box handling.
 	#@nonl
 	#@-node:tree.OnIconClick & OnIconRightClick
 	#@+node:tree.OnPopup & allies
