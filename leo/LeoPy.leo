@@ -12,9 +12,10 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Diary</vh>
-<v><vh>Sept 2002</vh>
-<v><vh>9/24</vh>
+<v t="T1" a="V"><vh>Diary</vh>
+<v a="E"><vh>Sept 2002</vh>
+<v a="E"><vh>9/24</vh>
+<v><vh>"Mysterious" changes to files were due to setting Page Width = 80</vh></v>
 <v><vh>Added code to configure headline colors</vh></v>
 <v><vh>Made the About Leo dialog non-modal</vh></v>
 <v><vh>Fixed bug that disabled all shortcuts</vh></v>
@@ -3517,7 +3518,7 @@
 </v>
 </v>
 </v>
-<v t="T1581" a="V"><vh>Code</vh>
+<v t="T1581"><vh>Code</vh>
 <v t="T1582"><vh> Overview of code</vh></v>
 <v t="T1583"><vh> Scripts &amp; Batch Files</vh>
 <v t="T1584"><vh> Batch Files &amp; other @root trees</vh>
@@ -17830,9 +17831,9 @@ while match(s,i,tag):
 	i = skip_ws(s,i)
 	j = i
 	i = skip_to_end_of_line(s,i)
-	if i &gt; j:
-		line = s[j:i]
-		self.os(line) ; self.onl()
+	# 21-SEP-2002 DTHEIN: write @first line, whether empty or not
+	line = s[j:i]
+	self.os(line) ; self.onl()
 	i = skip_nl(s,i)</t>
 <t tx="T972">next = root.nodeAfterTree()
 v = root
@@ -24737,8 +24738,8 @@ else:
 		while 1:
 			s = readlineForceUnixNewline(file)
 			if len(s) == 0: break
-			if not s.isspace():
-				lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
+			# 21-SEP-2002 DTHEIN: capture _all_ the trailing lines, even if empty
+			lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
 	# nextLine != None only if we have a non-sentinel line.
 	# Therefore, nextLine == None whenever scanText returns.
 	assert(nextLine==None)
@@ -28375,7 +28376,9 @@ def completeFirstDirectives(self,out,firstLines):
 		if j &gt;= len(firstLines): break
 		# make the new @first directive
 		#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-		out[k] = tag + " " + firstLines[j].rstrip() ; j += 1
+		# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @first directive
+		leadingLine = " " + firstLines[j]
+		out[k] = tag + leadingLine.rstrip() ; j += 1
 </t>
 <t tx="T1720"># 14-SEP-2002 DTHEIN: added for use by atFile.read()
 
@@ -28400,7 +28403,9 @@ def completeLastDirectives(self,out,lastLines):
 		if j &lt; -len(lastLines): break
 		# make the new @last directive
 		#18-SEP-2002 DTHEIN: remove trailing newlines because they are inserted later
-		out[k] = tag + " " + lastLines[j].rstrip() ; j -= 1
+		# 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
+		trailingLine = " " + lastLines[j]
+		out[k] = tag + trailingLine.rstrip() ; j -= 1
 </t>
 <t tx="T1721">@ root is an ancestor of v, or root == v.  This puts the entire expansion of v's body text enclosed in sentinel lines.
 @c
@@ -28538,13 +28543,15 @@ def putEmptyDirective(self,s,i):
 	assert(i &lt; len(s) and s[i] == '@')
 	
 	endOfLine = s.find('\n',i)
+	# 21-SEP-2002 DTHEIN: if no '\n' then just use line length
+	if endOfLine == -1:
+		endOfLine = len(s)
 	token = s[i:endOfLine].split()
 	directive = token[0]
 	self.putSentinel("@" + directive)
 
 	i = skip_line(s,i)
-	return i
-</t>
+	return i</t>
 <t tx="T1731">@ This method outputs a doc section terminated by @code or end-of-text.  All other interior directives become part of the doc part.
 @c
 def putDoc(self,s,i,kind):
