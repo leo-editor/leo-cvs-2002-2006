@@ -1931,17 +1931,17 @@ class LeoFrame:
 		# Activate the body key handler by hand.
 		c = self.commands ; v = c.currentVnode()
 		self.commands.tree.onBodyWillChange(v,"Cut")
-		
-		# Copy the selection to the internal clipboard.
-		if 0: # no longer needed.
-			app().clipboard = getSelectedText(self.body)
-			# trace(`app().clipboard`)
 		return # Allow the actual cut!
 	
 	def OnCutFromMenu (self,event=None):
 	
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Cut"))
+		
+		# 11/2/02: Make sure the event sticks.
+		c = self.commands ; v = c.currentVnode()
+		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
+		return "break"
 	#@-body
 	#@-node:3::frame.OnCut, OnCutFrom Menu
 	#@+node:4::frame.OnCopy, OnCopyFromMenu
@@ -1949,11 +1949,6 @@ class LeoFrame:
 	def OnCopy (self,event=None):
 	
 		# Copy never changes dirty bits or syntax coloring.
-		
-		# Copy the selection to the internal clipboard.
-		if 0: # no longer needed.
-			app().clipboard = getSelectedText(self.body)
-			# trace(`app().clipboard`)
 		return # Allow the actual copy!
 		
 	def OnCopyFromMenu (self,event=None):
@@ -1961,7 +1956,6 @@ class LeoFrame:
 		# trace()
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Copy"))
-		
 		return "break"
 	#@-body
 	#@-node:4::frame.OnCopy, OnCopyFromMenu
@@ -1981,13 +1975,12 @@ class LeoFrame:
 		
 	def OnPasteFromMenu (self,event=None):
 	
-		# trace()
 		w = self.getFocus()
 		w.event_generate(virtual_event_name("Paste"))
 		
 		# 10/23/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
-		c.tree.onHeadChanged(v)
+		c.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	
 	#@-body
 	#@-node:5::frame.OnPaste, OnPasteNode, OnPasteFromMenu

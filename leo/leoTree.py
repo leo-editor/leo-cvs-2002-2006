@@ -765,7 +765,7 @@ class leoTree:
 		c = self.commands
 		if not v: v = c.currentVnode()
 		oldSel = c.body.index("insert")
-		# trace(`oldSel`)
+		trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType)
 	
 	# Bound to any key press..
