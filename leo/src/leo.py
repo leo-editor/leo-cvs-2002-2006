@@ -72,10 +72,10 @@ def run(fileName=None,*args,**keywords):
     # Create the default gui if needed.
     if g.app.gui == None:
         g.app.createTkGui()
-    if g.app.use_gnx:
-        if not g.app.leoID: g.app.setLeoID() # Forces the user to set g.app.leoID.
-        import leoNodes
-        g.app.nodeIndices = leoNodes.nodeIndices()
+    if not g.app.leoID:
+        g.app.setLeoID() # Forces the user to set g.app.leoID.
+    import leoNodes
+    g.app.nodeIndices = leoNodes.nodeIndices()
     # Initialize tracing and statistics.
     g.init_sherlock(args)
     g.clear_stats()
@@ -193,7 +193,7 @@ def createFrame (fileName):
                 return frame.c,frame
     
     # Create a new frame & indicate it is the startup window.
-    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     
