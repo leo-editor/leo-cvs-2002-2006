@@ -560,7 +560,7 @@ class baseFileCommands:
     #@+node:ekr.20031218072017.1553:getLeoFile
     # The caller should enclose this in begin/endUpdate.
     
-    def getLeoFile (self,fileName,readAtFileNodesFlag=True):
+    def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
     
         c = self.c
         c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
@@ -599,8 +599,9 @@ class baseFileCommands:
             self.getFindPanelSettings()
             
             # Causes window to appear.
-            c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
-            g.es("reading: " + fileName)
+            c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+            if not silent:
+                g.es("reading: " + fileName)
             
             self.getVnodes()
             self.getTnodes()
@@ -1185,7 +1186,7 @@ class baseFileCommands:
     
         if g.isValidEncoding(encoding):
             self.leo_file_encoding = encoding
-            g.es("File encoding: " + encoding, color="blue")
+            # g.es("File encoding: " + encoding, color="blue")
         else:
             g.es("invalid encoding in .leo file: " + encoding, color="red")
     #@-node:ekr.20031218072017.1468:getXmlVersionTag
@@ -1253,7 +1254,7 @@ class baseFileCommands:
     #@nonl
     #@-node:ekr.20031218072017.3029:readAtFileNodes
     #@+node:ekr.20031218072017.2297:open
-    def open(self,theFile,fileName,readAtFileNodesFlag=True):
+    def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
     
         c = self.c ; frame = c.frame
         # Read the entire file into the buffer
@@ -1279,7 +1280,7 @@ class baseFileCommands:
         #@nl
         self.topPosition = None
         c.beginUpdate()
-        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
+        ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
         frame.resizePanesToRatio(ratio,frame.secondary_ratio)
         if 0: # 1/30/04: this is useless.
             if self.topPosition: 

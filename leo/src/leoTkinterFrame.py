@@ -3245,6 +3245,8 @@ class leoTkinterLog (leoFrame.leoLog):
     # All output to the log stream eventually comes here.
     def put (self,s,color=None):
         
+        # print 'tkLog.put',self.c.shortFileName(),s,
+    
         if g.app.quitting: return
         elif self.logCtrl:
             #@        << put s to log control >>

@@ -2494,7 +2494,7 @@ def getLeoOutline (self,s,reassignIndices=True):
         v = self.finishPaste(reassignIndices)
     except invalidPaste:
         v = None
-        g.es("Invalid Paste Retaining Clones",color="blue")
+        g.es("Invalid Paste As Clone",color="blue")
     except BadLeoFile:
         v = None
         g.es("The clipboard is not valid ",color="blue")
@@ -4343,7 +4343,7 @@ self.outlineMenuTopMenuTable = (
     ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
     ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
     ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
-    ("Paste &Retaining Clones",None,c.pasteOutlineRetainingClones),
+    ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
     ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
     ("-",None,None),
     ("&Insert Node","Ctrl+I",c.insertHeadline),
@@ -4355,7 +4355,7 @@ self.outlineMenuTopMenuTable = (
     ("D&e-Hoist",None,f.c.dehoist),
     ("-",None,None))
     
-# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,r,s,u
+# Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
 #@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
 #@+node:ekr.20040711140738:<< define outlineMenuCheckOutlineMenuTable >>
 self.outlineMenuCheckOutlineMenuTable = (
@@ -11101,6 +11101,7 @@ def __init__ (self,frame,parentFrame):
     self.c = frame.c
     self.enabled = True
     self.newlines = 0
+    self.isNull = False
 
     # Note: self.logCtrl is None for nullLog's.
     self.logCtrl = self.createControl(parentFrame)
@@ -11118,6 +11119,7 @@ def __init__ (self,frame=None,parentFrame=None):
         
     # Init the base class.
     leoLog.__init__(self,frame,parentFrame)
+    self.isNull = True
 #@nonl
 #@-node:ekr.20041012083237:nullLog.__init__
 #@+node:ekr.20041012083237.1:createControl
@@ -11639,8 +11641,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(g.app.tkEncoding,fileName)
 
     # Try to create a frame for the file.
     if fileName:
@@ -14720,6 +14720,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -14968,7 +14969,7 @@ def openSettingsFile (self,path):
     frame.log.enable(False)
     g.app.setLog(frame.log,"openWithFileName")
     g.app.lockLog()
-    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
+    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
     g.app.unlockLog()
     frame.openDirectory = g.os_path_dirname(path)
     g.app.gui = oldGui
@@ -14989,8 +14990,8 @@ def readSettingsFiles (self,fileName,verbose=True):
         if path and path.lower() not in seen:
             seen.append(path.lower())
             if verbose:
-                # A print statement here is clearest.
-                print "reading settings in %s" % path
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -15097,6 +15098,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -15388,8 +15390,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(g.app.tkEncoding,fileName)
 
     # Try to create a frame for the file.
     if fileName:
@@ -15466,7 +15466,7 @@ def reportDirectories(verbose):
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
 #@+node:ekr.20031218072017.2297:open
-def open(self,theFile,fileName,readAtFileNodesFlag=True):
+def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
 
     c = self.c ; frame = c.frame
     # Read the entire file into the buffer
@@ -15475,7 +15475,7 @@ def open(self,theFile,fileName,readAtFileNodesFlag=True):
     << Set the default directory >>
     self.topPosition = None
     c.beginUpdate()
-    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag)
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
     frame.resizePanesToRatio(ratio,frame.secondary_ratio)
     if 0: # 1/30/04: this is useless.
         if self.topPosition: 
@@ -15499,7 +15499,7 @@ if len(theDir) > 0:
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
 
-def getLeoFile (self,fileName,readAtFileNodesFlag=True):
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
 
     c = self.c
     c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
@@ -15561,8 +15561,9 @@ self.getPrefs()
 self.getFindPanelSettings()
 
 # Causes window to appear.
-c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
-g.es("reading: " + fileName)
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
 
 self.getVnodes()
 self.getTnodes()
@@ -17177,6 +17178,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -17254,8 +17256,8 @@ def readSettingsFiles (self,fileName,verbose=True):
         if path and path.lower() not in seen:
             seen.append(path.lower())
             if verbose:
-                # A print statement here is clearest.
-                print "reading settings in %s" % path
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -17497,7 +17499,7 @@ def openSettingsFile (self,path):
     frame.log.enable(False)
     g.app.setLog(frame.log,"openWithFileName")
     g.app.lockLog()
-    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
+    frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
     g.app.unlockLog()
     frame.openDirectory = g.os_path_dirname(path)
     g.app.gui = oldGui
@@ -17518,8 +17520,8 @@ def readSettingsFiles (self,fileName,verbose=True):
         if path and path.lower() not in seen:
             seen.append(path.lower())
             if verbose:
-                # A print statement here is clearest.
-                print "reading settings in %s" % path
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -18094,8 +18096,8 @@ def readSettingsFiles (self,fileName,verbose=True):
         if path and path.lower() not in seen:
             seen.append(path.lower())
             if verbose:
-                # A print statement here is clearest.
-                print "reading settings in %s" % path
+                s = 'reading settings in %s' % path
+                print s ; g.es(s)
             c = self.openSettingsFile(path)
             if c:
                 d = self.readSettings(c)
@@ -22057,11 +22059,12 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\Leo Stuff\oldLeoFiles.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
-c:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\Leo Stuff\oldLeoFiles.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -25821,8 +25824,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(g.app.tkEncoding,fileName)
 
     # Try to create a frame for the file.
     if fileName:
@@ -26712,6 +26713,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -28256,6 +28258,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -28327,6 +28330,115 @@ def leoConfig (self):
 #@nonl
 #@-node:ekr.20031218072017.2943:leoConfig
 #@-node:ekr.20050127091201:(Changed Help menu & related code to handle leoSettings.leo instead of leoConfig.leo)
+#@+node:ekr.20050129114601.1:(Investigated recent files problems)
+#@+node:ekr.20050130101623:Report
+http://sourceforge.net/forum/message.php?msg_id=2966541
+By: jasonic
+
+"Recent Files"  is not remembering files after one closes all open leo sessions.
+
+But it does update the "Recent Files" list while leo is open in the same session.
+If one opens more files it adds them to the list. But close all files and Leo
+forgets them all.
+
+With chapters 0.66 enabled -- same behavior. 
+
+Jason
+#@nonl
+#@-node:ekr.20050130101623:Report
+#@+node:ekr.20050130101623.1:Added to @recentfile documentation
+Warning: The following features of @recentfiles nodes are confusing and probably
+will be changed:
+
+- Leo does not save recent file information unless the open .leo file has an
+@settings tree and an @recentfiles node within the @settings tree. That is, Leo
+does not save recent files information in leoSettings.leo files.
+
+- Changing the @rencentfiles node doesn't mark the Leo file as dirty, so if you
+don't save the .leo file the recent files information will not be updated.
+#@nonl
+#@-node:ekr.20050130101623.1:Added to @recentfile documentation
+#@+node:ekr.20041118084146:Setters
+#@+node:ekr.20041118084146.1:set (g.app.config)
+def set (self,c,setting,kind,val):
+    
+    '''Set the setting.  Not called during initialization.'''
+
+    found = False ;  key = self.munge(setting)
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d: found = True
+
+    if not found:
+        theHash = c.hash()
+        for d in self.localOptionsList:
+            hash2 = d.get('_hash')
+            if theHash == hash2:
+                found = True ; break
+
+    if not found:
+        d = self.dictList [0]
+
+    d[key] = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
+    # g.trace(d.get(key).toString())
+
+    if 0:
+        dkind = d.get('_hash','<no hash: %s>' % c.hash())
+        g.trace(dkind,setting,kind,val)
+#@nonl
+#@-node:ekr.20041118084146.1:set (g.app.config)
+#@+node:ekr.20041118084241:setString
+def setString (self,c,setting,val):
+    
+    self.set(c,setting,"string",val)
+#@nonl
+#@-node:ekr.20041118084241:setString
+#@+node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
+def setIvarsFromSettings (self,c):
+
+    '''Init g.app.config ivars or c's ivars from settings.
+    
+    - Called from readSettingsFiles with c = None to init g.app.config ivars.
+    - Called from c.__init__ to init corresponding commmander ivars.'''
+    
+    # Ingore temporary commanders created by readSettingsFiles.
+    if not self.inited: return
+
+    # g.trace(c)
+    d = self.ivarsDict
+    for key in d:
+        if key != '_hash':
+            bunch = d.get(key)
+            if bunch:
+                ivar = bunch.ivar # The actual name of the ivar.
+                kind = bunch.kind
+                val = self.get(c,key,kind) # Don't use bunch.val!
+                if c:
+                    # g.trace("%20s %s = %s" % (g.shortFileName(c.mFileName),ivar,val))
+                    setattr(c,ivar,val)
+                else:
+                    # g.trace("%20s %s = %s" % ('g.app.config',ivar,val))
+                    setattr(self,ivar,val)
+#@nonl
+#@-node:ekr.20041228042224:setIvarsFromSettings (g.app.config)
+#@+node:ekr.20041201080436:config.appendToRecentFiles
+def appendToRecentFiles (self,files):
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)
+#@nonl
+#@-node:ekr.20041201080436:config.appendToRecentFiles
+#@-node:ekr.20041118084146:Setters
+#@-node:ekr.20050129114601.1:(Investigated recent files problems)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)
@@ -29231,6 +29343,52 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
 #@-node:ekr.20050127120924:(Plugins manager attempts to call init functions in plugins)
+#@+node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
+# This affects leoSettings.leo.
+#@nonl
+#@+node:ekr.20050130102241:Request
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2963461
+By: ktenney
+
+It would make more sense to me if 'Paste Retaining Clone' was called 'Paste As Clone'
+
+Note: requires change to leoSettings.leo
+#@nonl
+#@-node:ekr.20050130102241:Request
+#@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+self.outlineMenuTopMenuTable = (
+    ("C&ut Node","Shift+Ctrl+X",c.cutOutline),
+    ("C&opy Node","Shift+Ctrl+C",c.copyOutline),
+    ("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+    ("Paste Node &As Clone",None,c.pasteOutlineRetainingClones),
+    ("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+    ("-",None,None),
+    ("&Insert Node","Ctrl+I",c.insertHeadline),
+    ("&Clone Node","Ctrl+`",c.clone),
+    ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
+    ("&Sort Siblings","Alt+A",c.sortSiblings),
+    ("-",None,None),
+    ("&Hoist",None,c.hoist),
+    ("D&e-Hoist",None,f.c.dehoist),
+    ("-",None,None))
+    
+# Ampersand bindings:  a,c,d,e,h,i,k,m,n,o,p,s,u
+#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+#@+node:ekr.20040131171020:<< enable top level outline menu >>
+menu = frame.menu.getMenu("Outline")
+enable(menu,"Cut Node",c.canCutOutline())
+enable(menu,"Delete Node",c.canDeleteHeadline())
+enable(menu,"Paste Node",c.canPasteOutline())
+enable(menu,"Paste Node As Clone",c.canPasteOutline())
+enable(menu,"Clone Node",c.canClone()) # 1/31/04
+enable(menu,"Sort Siblings",c.canSortSiblings())
+enable(menu,"Hoist",c.canHoist())
+enable(menu,"De-Hoist",c.canDehoist())
+#@nonl
+#@-node:ekr.20040131171020:<< enable top level outline menu >>
+#@-node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
 #@-all

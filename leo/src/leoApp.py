@@ -497,6 +497,9 @@ class LeoApp:
             for s,color in self.logWaiting:
                 g.es(s,color=color,newline=0) # The caller must write the newlines.
             self.logWaiting = []
+        else:
+            print 'writeWaitingLog: still no log!'
+    #@nonl
     #@-node:ekr.20031218072017.2619:app.writeWaitingLog
     #@-others
 #@-node:ekr.20031218072017.2608:@thin leoApp.py

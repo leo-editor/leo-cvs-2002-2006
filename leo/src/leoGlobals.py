@@ -606,6 +606,7 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         if theFile:
             c,frame = app.gui.newLeoCommanderAndFrame(fileName)
             frame.log.enable(enableLog)
+            g.app.writeWaitingLog() # New in 4.3: write queued log first.
             if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
                 app.setLog(frame.log,"openWithFileName")
                 app.lockLog()
@@ -2126,7 +2127,8 @@ def es(s,*args,**keys):
             app.log.put(s)
     else:
         log = app.log
-        if log:
+        if log and not log.isNull:
+            # print 'g.es',log,s
             log.put(s,color=color)
             for ch in s:
                 if ch == '\n': log.newlines += 1
@@ -2134,11 +2136,11 @@ def es(s,*args,**keys):
             if newline:
                 g.ecnl() # only valid here
         elif newline:
-            app.logWaiting.append((s+'\n',color),) # 2/16/03
-            print s
+            app.logWaiting.append((s+'\n',color),)
+            # print s
         else:
-            app.logWaiting.append((s,color),) # 2/16/03
-            print s,
+            app.logWaiting.append((s,color),)
+            # print s,
 #@nonl
 #@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20031218072017.3148:top

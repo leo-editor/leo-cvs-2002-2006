@@ -257,6 +257,9 @@ class tkinterGui(leoGui.leoGui):
         
     def createLeoFrame(self,title):
         """Create a new Leo frame."""
+        
+        # print 'tkGui.createLeoFrame'
+    
         gui = self
         return leoTkinterFrame.leoTkinterFrame(title,gui)
     #@nonl

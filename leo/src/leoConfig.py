@@ -1104,7 +1104,7 @@ class baseConfig:
         frame.log.enable(False)
         g.app.setLog(frame.log,"openWithFileName")
         g.app.lockLog()
-        frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False) # closes theFile.
+        frame.c.fileCommands.open(theFile,path,readAtFileNodesFlag=False,silent=True) # closes theFile.
         g.app.unlockLog()
         frame.openDirectory = g.os_path_dirname(path)
         g.app.gui = oldGui
@@ -1125,8 +1125,8 @@ class baseConfig:
             if path and path.lower() not in seen:
                 seen.append(path.lower())
                 if verbose:
-                    # A print statement here is clearest.
-                    print "reading settings in %s" % path
+                    s = 'reading settings in %s' % path
+                    print s ; g.es(s)
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)

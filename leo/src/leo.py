@@ -309,8 +309,6 @@ def createFrame (fileName):
     """Create a LeoFrame during Leo's startup process."""
     
     import leoGlobals as g
-    
-    # g.trace(g.app.tkEncoding,fileName)
 
     # Try to create a frame for the file.
     if fileName:

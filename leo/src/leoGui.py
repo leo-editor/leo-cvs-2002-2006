@@ -382,15 +382,17 @@ class nullGui(leoGui):
             return nullObject()
     #@nonl
     #@-node:ekr.20031219075221: nullGui.__getattr__
-    #@+node:ekr.20031218072017.2226:createLeoFrame
+    #@+node:ekr.20031218072017.2226:nullGui.createLeoFrame
     def createLeoFrame(self,title):
         
         """Create a null Leo Frame."""
+        
+        # print 'nullGui.createLeoFrame'
+        
         gui = self
         self.lastFrame = leoFrame.nullFrame(title,gui)
         return self.lastFrame
-    #@nonl
-    #@-node:ekr.20031218072017.2226:createLeoFrame
+    #@-node:ekr.20031218072017.2226:nullGui.createLeoFrame
     #@+node:ekr.20031218072017.2227:createRootWindow
     def createRootWindow(self):
         pass

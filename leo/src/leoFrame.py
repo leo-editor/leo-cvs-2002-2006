@@ -677,6 +677,7 @@ class leoLog:
         self.c = frame.c
         self.enabled = True
         self.newlines = 0
+        self.isNull = False
     
         # Note: self.logCtrl is None for nullLog's.
         self.logCtrl = self.createControl(parentFrame)
@@ -1496,6 +1497,7 @@ class nullLog (leoLog):
             
         # Init the base class.
         leoLog.__init__(self,frame,parentFrame)
+        self.isNull = True
     #@nonl
     #@-node:ekr.20041012083237:nullLog.__init__
     #@+node:ekr.20041012083237.1:createControl
