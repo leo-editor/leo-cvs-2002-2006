@@ -1118,6 +1118,9 @@ class leoTree:
 		c = self.commands
 		if not v or not v.edit_text or v != c.currentVnode():
 			return "break"
+		flag = handleLeoHook("headkey1",c=c,v=v,ch=ch)
+		if flag == true:
+			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
 		
 		#@<< Make sure that the headline text is valid in the encoding >>
@@ -1204,6 +1207,8 @@ class leoTree:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
+	
+		handleLeoHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@-body
 	#@-node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
