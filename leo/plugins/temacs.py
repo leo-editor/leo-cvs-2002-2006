@@ -1,2867 +1,4677 @@
 #@+leo-ver=4-thin
-#@+node:mork.20041014112843.1:@thin temacs.py
-'''temacs is a binding module for the Tkinter Text widget.
-
-setBufferStrokes() will bind callbacks to the widget.  It is not an attempt
-to emulate all Emacs keystrokes, but only a select few.
-'''
+#@+node:mork.20041030164547:@thin temacs.py
+'''temacs is a binding module for the Tkinter Text widget.  Using the
+setBufferStrokes def will bind callbacks to the widget.'''
 
 #@@language python
 #@@tabwidth -4
 
-__version__ = '.5'
+__version__ = ".51"
 #@<< version history >>
-#@+node:ekr.20041028081942:<< version history >>
+#@+node:mork.20041101100635:<<version history>>
 #@+at
 # 
-# 0.3 Leo User: Original code.
+# .5
+#        This was a fairly major shift for temacs.
+#    -- Changed structure from pure functional to Object Oriented.  Emacs is 
+# the central class in the temacs package now.
+#       The changes wrought by this are quite extensive.
+#    -- worked on complicated control logic, turned some parts into Objects 
+# that are state Handlers and Managers
+#    -- fixed a bug in block indentation.  If the first line was blank it 
+# throw an Exception.  It now finds the first text line.
+#    -- added the ability to add extensions.  see 'how to write an Emacs 
+# extension' section.  Also look at exampleTemacsExtension.py
+#       for a simple example as to how this works.
+#    -- fixed control-left control-right up so they do what Emacs does.  This 
+# has ramifications for delete previous word as well,
+#       since that command relies on the control-left command to do its work.
+#    -- added the ability to change the keystrokes via the 
+# reconfigureKeyStroke method.  This method is largely untested.
+#    -- last count: at around 204 keystrokes and commands( note some commands 
+# and keystrokes are the same,
+#       just different ways of accesing the functionality.
+#    -- enhanced incremental search so that if the search doesnt find anything 
+# it will start again either at the top or bottom, depending
+#       on which direction it is going.  This is a nice little enhancement.
+#    -- enhanced Tabing with alt-x, so that the user can cycle through the 
+# matches. Added Tracker class to accomplish this.
+#       This will speed up the use of the Alt-x commands and expose 
+# functionality that is hard for a user to remember by keystroke.
+#    -- added Control-x and regular keystroke commands to Alt-x commands.  Ive 
+# focused on the ones Ive found most usefull.  This might be
+#       the best way to access rectangle functionality and registers.
+#    -- Created a better organized Outline.  There are several organizing 
+# nodes now.  Its easier to find things when looking for them.
+#    -- Added killing append to system clipboard.  The clipboard gets set with 
+# every kill.  Control - y will return the fresh clipboard kill as well as 
+# Alt-y.  This will be very nice to have.
+#    -- Added ability to test standalone.  Just type: python temacs.py and a 
+# simple Editor will appear.
+#    -- New commands and keystrokes:
+#        Control-j ( insert newline and tab )
+#        added goto-char
+#        added set-fill-column ( Control-x f )
+#        added center-line  ( Alt- s )
+#        added center-region ( see node 'fill column and centering' to see 
+# what these do )
+#        ( these buffer ops have to be configured so the Emacs instance knows 
+# what is a 'buffer' in the environment,
+#        see 'buffer recognition and alterers' node )
+#        append-to-buffer
+#        prepend-to-buffer
+#        copy-to-buffer
+#        insert-buffer
+#        list-buffer ( aka Control-x Control-b )
+#        switch-to-buffer ( aka Control-x b )
+#        kill-buffer ( aka Control-x k )
+#        rename-buffer
 # 
-# 0.4 EKR: Minor style mods.
 # 
-# 0.5 EKR: cbDict must be defined at end of file.
+# 0.51 EKR:  Minor stylistic changes.
 #@-at
-#@nonl
-#@-node:ekr.20041028081942:<< version history >>
+#@-node:mork.20041101100635:<<version history>>
 #@nl
-#@<< imports >>
-#@+node:ekr.20041028081841:<< imports >>
-import leoGlobals as g
-
-try:
-    import Tkinter
-    import tkFileDialog
-except ImportError:
-    Tkinter = g.cantImport("Tkinter",__name__)
-    
-    
-import cPickle
-import re
-import string
-#@-node:ekr.20041028081841:<< imports >>
-#@nl
-#@<< globals >>
-#@+node:ekr.20041028084110:<< globals >>
-# Abbreviations...
-abbrevMode = False
-abbrevOn = False
-abbrevs = {}
-
-# Macros...
-lastMacro = None
-macs = []
-macro = []
-namedMacros = {}
-macroing = False
-
-# Buffers...
-mbuffers = {}
-svars = {}
-
-registers = {}
-
-tailEnds = {}
-
-undoers = {}
-#@nonl
-#@-node:ekr.20041028084110:<< globals >>
-#@nl
-
-isearch = False
+#@<< documentation >>
+#@+node:ekr.20041106101311:<< documentation >>
+#@@nocolor
 
 #@+others
-#@+node:mork.20041014112843.31:setBufferStrokes
-def setBufferStrokes( buffer, label ):
-        '''setBufferStrokes takes a Tk Text widget called buffer. 'stext' is a function or method
-        that when called will return the value of the search text. 'rtext' is a function or method
-        that when called will return the value of the replace text.  It is this method and
-        getHelpText that users of the temacs module should call.  The rest are callback functions
-        that enable the Emacs emulation.'''
-        def cb( evstring ):
-            _cb = None
-            if cbDict.has_key( evstring ):
-                _cb = cbDict[ evstring ]
-            evstring = '<%s>' % evstring
-            if evstring != '<Key>':
-                buffer.bind( evstring,  lambda event, meth = _cb: masterCommand( event, meth , evstring) )
-            else:
-                buffer.bind( evstring,  lambda event, meth = _cb: masterCommand( event, meth , evstring), '+' )
+#@+node:mork.20041101203748:How to write an Emacs extension
+#@+at
+# Emacs instances offer the user the ability to add functionality
+# to itself.  This is accomplished through the Emacs extendAltX method.  
+# Functions passed in should not be methods
+# but just plain functions.
+# 
+# An example:
+# def burp( self, event ):
+#     print 'burp %s' % self     #This will print info about the Emacs 
+# instance
+#     self.stopControlX( event ) #every extension should call this or the 
+# function will be called for each keystroke.
+#                                #To be more precise, it should be called when 
+# the function has completely cycled through.
+# ei.extendAltX( 'burp', burp ) #burp has been added as an Alt-x command and 
+# the burp function has become
+#                               #a method of the Emacs instance.  self, will 
+# now reflect this.
+# 
+# accessing it through the Alt-X interface will be done like so
+# Alt-x
+# burp ( Hit return , alternatively the user could type b and hit the tab 
+# button )
+# 
+# Each function/method will be called with two parameters:
+#     self -- which is the Emacs instance
+#     event -- which is an Tkinter Event instance.
+#     self gives the extension writer the ability to access the Emacs intances 
+# functionality
+#     event gives the user the ability to access the Text widget that the 
+# Emacs instance is bound to.
+#     the preferred way to do so is like this:
+#     tbuffer = event.widget
+#@-at
+#@nonl
+#@-node:mork.20041101203748:How to write an Emacs extension
+#@+node:mork.20041102081834:Coding convenions
+#@+at 
+# 
+# tbuffer - a Tkinter Text widget.  Would be called buffer, but this shadows a 
+# Python builin.  This is the widget carried
+# by the events in the Emacs instancs.  Can be accessed like so 'event.widget'
+# svar - a Tkinter StringVar widget.  This should hold what the minibuffer is 
+# showing currently.  Can
+# be acquired by 'self.getSvarLabel'.
+# 
+# 
+# 
+#@-at
+#@-node:mork.20041102081834:Coding convenions
+#@+node:mork.20041102082911:Known bugs
+#@+at 
+# 
+# .5
+# 
+# - control-u seems kinda flaky.  Will enhance in the next iteration and make 
+# less flaky. :)
+# - digit-arguments seem pretty flaky as well.
+# --- These are no longer flaky.  A simple change to calling 
+# self.keyboardQuit, has eliminated the flakiness Ive seen. :)
+#     This was centered on using a command that wasnt a commadn like typing 
+# 99a, made it burp!  You can also see the commands
+#     as they are done in the Editor.  For example 'Control-u 99 a'  will type 
+# 'a' 99 times in the editor.  Or
+#     'Control-u 99 Control-_'  will undo the last 99 changes, thats if the 
+# Emacs instance has been configure with an undoer.
+#@-at
+#@nonl
+#@-node:mork.20041102082911:Known bugs
+#@+node:mork.20041102103822:Future directions
+#@+at
+# 
+# 1. Continue adding the keystroke command names to the Alt-x mechanism.  Much 
+# of this has already been done.
+# 2. Maybe make it possible for the user to add state to the MC_StateManager 
+# instance.  This could allow the extension writer
+# to create specific state based extension functions.  They may already be 
+# able to do this.
+# 3. When python 2.4 is official, look at subprocess module and decide if it 
+# can be used to run exterior commands.  Pythons current
+# cross platform process commands, dont seem too cross platform at this 
+# point.  subprocess hopefully will fix this.
+# 4. Continue migrating statefull commands to the MC_StateManager class.
+# 5. Add ability for a user to learn the keystroke for a command.  The Help 
+# Text should be considered a definitive source of
+# information, but it may be quicker for the user to just ask.  This will be 
+# accomplished by adding the 'where-is' command or
+# 'Control-h w'.  Not essential at this point, and will be done when we are 
+# entering a polish iteration.
+# 6. Maybe add the ability for the user to evaluate Python expressions.  
+# Vanilla Emacs has the ability to do something with
+# Lisp expressions, so it may make sense to do this with Python since Python 
+# is what this is built out of.
+# 7. Maybe add Emacs variables for the commands.  Ive noticed that you can set 
+# Emac variables to change some of the behavior
+# in subtle ways.  A dictionary should be used to implement this, adding 1000 
+# attributes to the Emacs class doesnt seem like a good idea.
+# 8 Maybe add local abbreviations 'Control-x a i l'
+# 
+# 
+# 
+# 
+# 
+#@-at
+#@-node:mork.20041102103822:Future directions
+#@+node:mork.20041104095745:A Note on Alt-X
+#@+at
+# Alt-x is the mechanism by which the user should be able to access any 
+# command in the Emacs instance.
+# The first steps in developing temacs was focused on the keystrokes.  Though 
+# in reality the keystrokes
+# are just ways to access the commands.
+# 
+# To initiate a command type Alt-x
+# Start typing the command name
+# Press Tab.  If the command does not come up, continue pressing Tab.
+# If you placed the correct prefix in the minibuffer, eventually the command 
+# will appear.
+# 
+# 
+# This will help a user to quickly cycle through commands and select the one 
+# they want, even if they can somewhat remember what
+# the spelling is.
+#@-at
+#@nonl
+#@-node:mork.20041104095745:A Note on Alt-X
+#@-others
+#@nonl
+#@-node:ekr.20041106101311:<< documentation >>
+#@nl
+#@<< imports >>
+#@+node:mork.20041030164547.1:<< imports >>
+try:
+    import Tkinter
+except ImportError:
+    Tkinter = g.cantImport("Tkinter")
 
-        for z in cbDict:
-            cb( z )
+import string
+import weakref
+import new
+#@nonl
+#@-node:mork.20041030164547.1:<< imports >>
+#@nl
+
+#@+others
+#@+node:mork.20041104102456:Emacs helper classes
+#@+others
+#@+node:mork.20041031131847:class ControlXHandler
+class ControlXHandler:
+    '''The ControlXHandler manages how the Control-X based commands operate on the
+       Emacs instance.'''    
+    
+    #@    @+others
+    #@+node:mork.20041031162953:__init__
+    def __init__( self, emacs ):
+            
+        self.emacs = emacs
+        self.previous = []
+        self.rect_commands = {
+        'o': emacs.openRectangle,
+        'c': emacs.clearRectangle,
+        't': emacs.stringRectangle,
+        'y': emacs.yankRectangle,
+        'd': emacs.deleteRectangle,
+        'k': emacs.killRectangle,
+        'r': emacs.activateRectangleMethods,             
+        }
         
-        mbuffers[ buffer ] = label
-        svars[ buffer ] = Tkinter.StringVar()
-        def setVar( event ):
-            label = mbuffers[ event.widget ]
-            svar = svars[ event.widget ]
-            label.configure( textvariable = svar )
-        buffer.bind( '<FocusIn>', setVar, '+' )
-        cb( 'Key' )
-#@-node:mork.20041014112843.31:setBufferStrokes
-#@+node:mork.20041014112843.3:setLabelGrey
-def setLabelGrey( label ):
-    label.configure( background = 'lightgrey' )
-#@-node:mork.20041014112843.3:setLabelGrey
-#@+node:mork.20041014112843.4:setLabelBlue
-def setLabelBlue( label ):
-    label.configure( background = 'lightblue' ) 
-#@-node:mork.20041014112843.4:setLabelBlue
-#@+node:mork.20041014112843.5:_tailEnd
-def _tailEnd( buffer ):
-    return tailEnds[ buffer ]( buffer )
-#@-node:mork.20041014112843.5:_tailEnd
-#@+node:mork.20041014112843.6:setTailEnd
-def setTailEnd( buffer , tailCall ):
-    tailEnds[ buffer ] = tailCall
-#@-node:mork.20041014112843.6:setTailEnd
-#@+node:ekr.20041028083211.1:Undo...
-#@+node:mork.20041014112843.7:setUndoer
+        self.variety_commands = {
+        'period': emacs.setFillPrefix,
+        'parenleft': emacs.startKBDMacro,
+        'parenright' : emacs.stopKBDMacro,
+        'semicolon': emacs.setCommentColumn,
+        'Tab': emacs.tabIndentRegion,
+        'u': lambda event: emacs.doUndo( event, 2 ),
+        'equal': emacs.lineNumber,
+        'h': emacs.selectAll,
+        'f': emacs.setFillColumn,
+        'b': lambda event, which = 'switch-to-buffer': emacs.setInBufferMode( event, which ),
+        'k': lambda event, which = 'kill-buffer': emacs.setInBufferMode( event, which ),
+        }
+        
+        self.abbreviationDispatch = {    
+        'a': lambda event: emacs.abbreviationDispatch( event, 1 ),
+        'a i': lambda event: emacs.abbreviationDispatch( event, 2 ),    
+        }
+        
+        self.register_commands ={    
+        1: emacs.setNextRegister,
+        2: emacs.executeRegister,        
+        }
+    #@-node:mork.20041031162953:__init__
+    #@+node:mork.20041031132342:__call__
+    def __call__( self, event , stroke ):
+        
+        self.previous.insert( 0, event.keysym )
+        emacs = self.emacs 
+        if len( self.previous ) > 10: self.previous.pop()
+        if stroke == '<Key>':
+            return self.processKey( event )
+        if stroke in emacs.xcommands:
+            emacs.xcommands[ stroke ]( event )
+            if stroke != '<Control-b>': emacs.keyboardQuit( event )
+        return 'break'
+    #@nonl
+    #@-node:mork.20041031132342:__call__
+    #@+node:mork.20041031133146:processKey
+    def processKey( self, event ):
+            
+        emacs = self.emacs 
+        previous = self.previous
+        if event.keysym in ( 'Shift_L', 'Shift_R' ):
+            return
+            
+        if emacs.sRect:
+            return emacs.stringRectangle( event )
+            
+        if ( event.keysym == 'r' and emacs.rectanglemode == 0 ) and not emacs.registermode:
+            return self.processRectangle( event )
+        elif self.rect_commands.has_key( event.keysym ) and emacs.rectanglemode == 1:
+            return self.processRectangle( event )
+            
+        if self.register_commands.has_key( emacs.registermode ):
+            self.register_commands[ emacs.registermode ]( event )
+            return 'break'
+        
+        if self.variety_commands.has_key( event.keysym ):
+            emacs.stopControlX( event )
+            return self.variety_commands[ event.keysym ]( event )
+            
+        
+        #if emacs.sRect:
+        #    return emacs.stringRectangle( event )
+        #    #return 'break'
+        if event.keysym in ( 'a', 'i' , 'e'):
+            if self.processAbbreviation( event ): return 'break'
+    
+        if event.keysym == 'g':
+            svar, label = emacs.getSvarLabel( event )
+            l = svar.get()
+            if self.abbreviationDispatch.has_key( l ):
+                emacs.stopControlX( event )
+                return self.abbreviationDispatch[ l ]( event )
+            #if l == 'a':
+            #    emacs.stopControlX( event )
+            #    return emacs.abbreviationDispatch( event, 1 )
+            #elif l == 'a i':
+            #    emacs.stopControlX( event )
+            #    return emacs.abbreviationDispatch( event, 2 )
+        if event.keysym == 'e':
+            emacs.stopControlX( event )
+            return emacs.executeLastMacro( event )
+        if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
+            event.keysym = 's' 
+            emacs.setNextRegister( event )
+            return 'break'
+            
+        #if event.keysym == 'r':
+        #    return emacs.activateRectangleMethods( event )
+        #if self.rect_commands.has_key( event.keysym ):# and emacs.registermode == 1:
+        #    return self.processRectangle( event )
+         
+        #if emacs.registermode == 1:
+        #    emacs.setNextRegister( event )
+        #    return 'break'
+        #elif emacs.registermode == 2:
+        #    emacs.executeRegister( event )
+        #    return 'break'
+        #if self.register_commands.has_key( emacs.registermode ):
+        #    print 'register commands'
+        #    self.register_commands[ emacs.registermode ]( event )
+        #    return 'break'
+        #if event.keysym == 'r':
+        #    return emacs.activateRectangleMethods( event )
+        #    emacs.registermode = 1
+        #    svar = emacs.svars[ event.widget ]
+        #    svar.set( 'C - x r' )
+        #    return 'break'
+        #if event.keysym== 'h':
+        #    emacs.stopControlX( event )
+        #    event.widget.tag_add( 'sel', '1.0', 'end' )
+        #tag_add( 'sel', '1.0', 'end' )    return 'break' 
+        #if event.keysym == 'equal':
+        #    emacs.lineNumber( event )
+        #    return 'break'
+        #if event.keysym == 'u':
+        #    emacs.stopControlX( event )
+        #    return emacs.doUndo( event, 2 )   
+            
+             
+    
+    
+    
+    #@-node:mork.20041031133146:processKey
+    #@+node:mork.20041031134709:processRectangle
+    def processRectangle( self, event ):
+        
+        self.rect_commands[ event.keysym ]( event )
+        return 'break'
+        #if event.keysym == 'o':
+        #    emacs.openRectangle( event )
+        #    return 'break'
+        #if event.keysym == 'c':
+        #    emacs.clearRectangle( event )
+        #    return 'break'
+        #if event.keysym == 't':
+        #    emacs.stringRectangle( event )
+        #    return 'break'
+        #if event.keysym == 'y':
+        #    emacs.yankRectangle( event )
+        #    return 'break'
+        #if event.keysym == 'd':
+        #    emacs.deleteRectangle( event )
+        #    return 'break'
+        #if event.keysym == 'k':
+        #    emacs.killRectangle( event )
+        #    return 'break'       
+    #@-node:mork.20041031134709:processRectangle
+    #@+node:mork.20041031135748:processAbbreviation
+    def processAbbreviation( self, event ):
+        
+        emacs = self.emacs
+        svar, label = emacs.getSvarLabel( event )
+        if svar.get() != 'a' and event.keysym == 'a':
+            svar.set( 'a' )
+            return 'break'
+        elif svar.get() == 'a':
+            if event.char == 'i':
+                svar.set( 'a i' )
+            elif event.char == 'e':
+                emacs.stopControlX( event )
+                event.char = ''
+                emacs.expandAbbrev( event )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041031135748:processAbbreviation
+    #@-others
+
+#@-node:mork.20041031131847:class ControlXHandler
+#@+node:mork.20041031145157:class MC_StateManager
+class MC_StateManager:
+    '''MC_StateManager manages the state that the Emacs instance has entered and
+       routes key events to the right method, dependent upon the state in the MC_StateManager'''
+       
+    #@    @+others
+    #@+node:mork.20041031162857:__init__
+    def __init__( self, emacs ):
+            
+            self.emacs = emacs
+            self.state = None
+            self.states = {}
+            #@        <<statecommands>>
+            #@+node:mork.20041031150125:<<statecommands>>
+            
+            def eA( event ):
+                if self.emacs.expandAbbrev( event ) :
+                        return 'break'
+            
+            
+            self.stateCommands = {
+                'uC': ( 2, emacs.universalDispatch ),
+                'controlx': ( 2, emacs.doControlX ),
+                'isearch':( 2, emacs.iSearch ),
+                'goto': ( 1, emacs.Goto ),
+                'zap': ( 1, emacs.zapTo ),
+                'howM': ( 1, emacs.howMany ),
+                'abbrevMode': ( 1, emacs.abbrevCommand1 ),
+                'altx': ( 1, emacs.doAlt_X ),
+                'qlisten': ( 1, emacs.masterQR ),
+                'rString': ( 1, emacs.replaceString ),
+                'negativeArg':( 2, emacs.negativeArgument ),
+                'abbrevOn': ( 1, eA ),
+                'set-fill-column': ( 1, emacs.setFillColumn ),
+                'chooseBuffer': ( 1, emacs.chooseBuffer ),
+                'renameBuffer': ( 1, emacs.renameBuffer ),
+                }
+                
+            #@nonl
+            #@-node:mork.20041031150125:<<statecommands>>
+            #@nl
+    #@nonl
+    #@-node:mork.20041031162857:__init__
+    #@+node:mork.20041031162857.1:setState
+    def setState( self, state, value ):
+            
+        self.state = state
+        self.states[ state ] = value
+    #@nonl
+    #@-node:mork.20041031162857.1:setState
+    #@+node:mork.20041031162857.2:getState
+    def getState( self, state ):
+        
+        return self.states.get( state, False )
+    #@nonl
+    #@-node:mork.20041031162857.2:getState
+    #@+node:mork.20041031162857.3:hasState
+    def hasState( self ):
+        if self.state: return self.states[ self.state ]
+    #@nonl
+    #@-node:mork.20041031162857.3:hasState
+    #@+node:mork.20041031162857.4:__call__
+    def __call__( self, *args ):
+            
+        if self.state:
+            which = self.stateCommands[ self.state ]
+            if which[ 0 ] == 1:
+                return which[ 1 ]( args[ 0 ] )
+            else:
+                return which[ 1 ]( *args )
+    #@nonl
+    #@-node:mork.20041031162857.4:__call__
+    #@+node:mork.20041031162857.5:clear
+    def clear( self ):
+            
+        self.state = None
+        for z in self.states.keys():
+            self.states[ z ] = False
+    #@nonl
+    #@-node:mork.20041031162857.5:clear
+    #@-others
 
 
-def setUndoer( buffer, undoer ):
-    undoers[ buffer ] = undoer
-#@-node:mork.20041014112843.7:setUndoer
-#@+node:mork.20041014112843.8:doUndo
-def doUndo( event, amount = 1 ):
-    buffer = event.widget
-    if undoers.has_key( buffer ):
-        for z in xrange( amount ):
-            undoers[ buffer ]()
-    return 'break'
-#@-node:mork.20041014112843.8:doUndo
-#@-node:ekr.20041028083211.1:Undo...
-#@+node:ekr.20041028083211.2:Keyboard macros...
-#@+node:mork.20041014112843.9:startKBDMacro
-def startKBDMacro( event ):
-    global macroing
-    macroing = True
-    return 'break'
-#@-node:mork.20041014112843.9:startKBDMacro
-#@+node:mork.20041014112843.10:recordKBDMacro
-def recordKBDMacro( event, stroke ):
-    if stroke != '<Key>':
-        macro.append( (stroke, event.keycode, event.keysym, event.char) )
-    elif stroke == '<Key>':
-        if event.keysym != '??':
-            macro.append( ( event.keycode, event.keysym ) )
-    return
-#@-node:mork.20041014112843.10:recordKBDMacro
-#@+node:mork.20041014112843.11:stopKBDMacro
-def stopKBDMacro( event ):
-    global macro, lastMacro, macroing
-    if macro:
-        macro = macro[ : -4 ]
-        macs.insert( 0, macro )
-        lastMacro = macro
-        macro = []
-
-    macroing = False
-    return 'break' 
-#@-node:mork.20041014112843.11:stopKBDMacro
-#@+node:mork.20041014112843.12:_executeMacro
-def _executeMacro( macro, buffer ):
-    for z in macro:
-        if len( z ) == 2:
-            buffer.event_generate( '<Key>', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+#@-node:mork.20041031145157:class MC_StateManager
+#@+node:mork.20041101083527:class MC_KeyStrokeManager
+class MC_KeyStrokeManager:
+    
+    #@    @+others
+    #@+node:mork.20041101083527.1:__init__
+    def __init__( self, emacs ):
+        
+        self.emacs = emacs
+        #@    <<keystrokes>>
+        #@+node:mork.20041101083527.2:<<keystrokes>>
+        self.keystrokes = {
+        
+            '<Control-s>': ( 2, emacs.startIncremental ), 
+            '<Control-r>': ( 2, emacs.startIncremental ),
+            '<Alt-g>': ( 1, emacs.startGoto ),
+            '<Alt-z>': ( 1, emacs.startZap ),
+            '<Alt-percent>': ( 1,  emacs.masterQR ) ,
+            '<Control-Alt-w>': ( 1, lambda event: 'break' ),
+        
+        }
+        
+        #@-node:mork.20041101083527.2:<<keystrokes>>
+        #@nl
+    #@-node:mork.20041101083527.1:__init__
+    #@+node:mork.20041101084148:hasKeyStroke
+    def hasKeyStroke( self, stroke ):
+        
+        return self.keystrokes.has_key( stroke )
+    #@nonl
+    #@-node:mork.20041101084148:hasKeyStroke
+    #@+node:mork.20041101084148.1:__call__
+    def __call__( self, event, stroke ):
+        
+        kstroke = self.keystrokes[ stroke ]
+        if kstroke[ 0 ] == 1:
+            return kstroke[ 1 ]( event )
         else:
-            meth = z[ 0 ].lstrip( '<' ).rstrip( '>' )
-            method = cbDict[ meth ]
-            ev = Tkinter.Event()
-            ev.widget = buffer
-            ev.keycode = z[ 1 ]
-            ev.keysym = z[ 2 ]
-            ev.char = z[ 3 ]
-            masterCommand( ev , method, '<%s>' % meth )
-    return _tailEnd( buffer )  
-#@-node:mork.20041014112843.12:_executeMacro
-#@+node:mork.20041014112843.13:executeLastMacro
-def executeLastMacro( event ):
-    buffer = event.widget
-    if lastMacro:
-        return _executeMacro( lastMacro, buffer )
-    return 'break'
-#@-node:mork.20041014112843.13:executeLastMacro
-#@+node:mork.20041014112843.14:nameLastMacro
-def nameLastMacro( event ):
-    global macroing
-    svar, label = getSvarLabel( event )    
-    if macroing == False:
-        macroing = 2
+            return kstroke[ 1 ]( event, stroke )
+    #@nonl
+    #@-node:mork.20041101084148.1:__call__
+    #@-others
+#@nonl
+#@-node:mork.20041101083527:class MC_KeyStrokeManager
+#@+node:mork.20041102131352:class Tracker
+class Tracker:
+    '''A class designed to allow the user to cycle through a list
+       and to change the list as deemed appropiate.'''
+    
+    
+    
+    #@    @+others
+    #@+node:mork.20041102131352.1:init
+    def __init__( self ):
+        
+        self.tablist = []
+        self.prefix = None
+        self.ng = self._next()
+    #@nonl
+    #@-node:mork.20041102131352.1:init
+    #@+node:mork.20041102131352.2:setTabList
+    def setTabList( self, prefix, tlist ):
+        
+        self.prefix = prefix
+        self.tablist = tlist
+        
+    
+    #@-node:mork.20041102131352.2:setTabList
+    #@+node:mork.20041102131352.3:_next
+    def _next( self ):
+        
+        while 1:
+            
+            tlist = self.tablist
+            if not tlist: yield ''
+            for z in self.tablist:
+                if tlist != self.tablist:
+                    break
+                yield z
+    #@-node:mork.20041102131352.3:_next
+    #@+node:mork.20041102132710:next
+    def next( self ):
+        
+        return self.ng.next()
+    #@-node:mork.20041102132710:next
+    #@+node:mork.20041102160313:clear
+    def clear( self ):
+    
+        self.tablist = []
+        self.prefix = None
+    #@-node:mork.20041102160313:clear
+    #@-others
+        
+#@-node:mork.20041102131352:class Tracker
+#@-others
+#@-node:mork.20041104102456:Emacs helper classes
+#@+node:mork.20041030165020:class Emacs
+class Emacs:
+    '''The Emacs class binds to a Tkinter Text widget and adds Emac derived keystrokes and commands
+       to it.'''
+    
+    Emacs_instances = weakref.WeakKeyDictionary()
+    global_killbuffer = []
+    global_registers = {}
+    lossage = list( ' ' * 100 )
+    #@    @+others
+    #@+node:mork.20041030165020.1:__init__
+    def __init__( self , tbuffer = None , minibuffer = None, useGlobalKillbuffer = False, useGlobalRegisters = False):
+        '''Sets up Emacs instance.
+        	  If a Tkinter Text widget and Tkinter Label are passed in
+           via the tbuffer and minibuffer parameters, these are bound to.
+           Otherwise an explicit call to setBufferStrokes must be done.
+           useGlobalRegisters set to True indicates that the Emacs instance should use a class attribute that functions
+           as a global register.
+           useGlobalKillbuffer set to True indicates that the Emacs instances should use a class attribute that functions
+           as a global killbuffer.'''
+        
+        self.mbuffers = {}
+        self.svars = {}
+        
+        
+        #self.isearch = False
+        self.tailEnds = {} #functions to execute at the end of many Emac methods.  Configurable by environment.
+        self.undoers = {} #Emacs instance tracks undoers given to it.
+        
+        
+        self.store = {'rlist': [], 'stext': ''} 
+        
+        #macros
+        self.lastMacro = None 
+        self.macs = []
+        self.macro = []
+        self.namedMacros = {}
+        self.macroing = False
+        
+        self.bufferListGetters = {}
+        self.bufferSetters = {}
+        self.bufferGotos = {}
+        self.bufferDeletes = {}
+        self.renameBuffers = {}
+        self.bufferDict = None
+        self.bufferTracker = Tracker()
+        self.bufferCommands = {
+        
+        'append-to-buffer': self.appendToBuffer,
+        'prepend-to-buffer': self.prependToBuffer,
+        'copy-to-buffer': self.copyToBuffer,
+        'insert-buffer': self.insertToBuffer,
+        'switch-to-buffer': self.switchToBuffer,
+         'kill-buffer': self.killBuffer,   
+        }
+        
+        self.swapSpots = []
+        self.ccolumn = '0'
+        #self.howM = False
+        self.reset = False
+        if useGlobalKillbuffer:
+            self.killbuffer = Emacs.global_killbuffer
+        else:
+            self.killbuffer = []
+        self.kbiterator = self.iterateKillBuffer()
+        
+        #self.controlx = False
+        self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
+        self.pref = None
+        #self.zap = False
+        #self.goto = False
+        self.previousStroke = ''
+        if useGlobalRegisters:
+            self.registers = Emacs.global_registers
+        else:
+            self.registers = {}
+        
+        #registers
+        self.regMeth = None
+        self.regMeths, self.regText = self.addRegisterItems()
+    
+        #Abbreviations
+        self.abbrevMode = False 
+        self.abbrevOn = False # determines if abbreviations are on for masterCommand and toggle abbreviations
+        self.abbrevs = {}
+        
+        self.regXRpl = None
+        self.regXKey = None
+        
+        self.fillPrefix = '' #for fill prefix functions
+        self.fillColumn = 70 #for line centering
+        self.registermode = False #for rectangles and registers
+        
+        self.qQ = None
+        self.qR = None
+        #self.qlisten = False
+        self.lqR = Tkinter.StringVar()
+        self.lqR.set( 'Query with: ' )
+        self.qgetQuery = False
+        self.lqQ = Tkinter.StringVar()
+        self.lqQ.set( 'Replace with:' ) 
+        self.qgetReplace = False
+        self.qrexecute = False 
+        
+        #self.rString = False
+        self._sString = ''
+        self._rpString = ''
+        
+        self.sRect = False  #State indicating string rectangle.  May be moved to MC_StateManager
+        self.krectangle = None #The kill rectangle
+        self.rectanglemode = 0 #Determines what state the rectangle system is in.
+        
+        self.last_clipboard = None #For interacting with system clipboard.
+        
+        self.negativeArg = False 
+        self.negArgs = { '<Alt-c>': self.changePreviousWord,
+        '<Alt-u>' : self.changePreviousWord,
+        '<Alt-l>': self.changePreviousWord } #For negative argument functionality
+        
+        #self.altx = False
+        #Alt-X commands.
+        self.doAltX = self.addAltXCommands()
+        self.axTabList = Tracker()
+        self.x_hasNumeric = [ 'sort-lines' , 'sort-fields']
+        
+        #self.uC = False
+        #These attributes are for the universal command functionality.
+        self.uCstring = string.digits + '\b'
+        self.uCdict = { '<Alt-x>' : self.alt_X }
+        
+        self.cbDict = self.addCallBackDict()# Creates callback dictionary, primarily used in the master command
+        self.xcommands = self.addXCommands() # Creates the X commands dictionary
+        self.cxHandler = ControlXHandler( self ) #Creates the handler for Control-x commands
+        self.mcStateManager = MC_StateManager( self ) #Manages state for the master command
+        self.kstrokeManager = MC_KeyStrokeManager( self ) #Manages some keystroke state for the master command.
+        
+        if tbuffer and minibuffer:
+            self.setBufferStrokes( tbuffer, minibuffer )
+    
+    
+    
+    
+    #@-node:mork.20041030165020.1:__init__
+    #@+node:mork.20041030164547.41:getHelpText
+    def getHelpText():
+        '''This returns a string that describes what all the
+        keystrokes do with a bound Text widget.'''
+        help_t = [ 'Buffer Keyboard Commands:',
+        '----------------------------------------\n',
+        '<Control-p>: move up one line',
+        '<Control-n>: move down one line',
+        '<Control-f>: move forward one char',
+        '<Conftol-b>: move backward one char',
+        '<Control-o>: insert newline',
+        '<Control-Alt-o> : insert newline and indent',
+        '<Control-j>: insert newline and tab',
+        '<Alt-<> : move to start of Buffer',
+        '<Alt- >' +' >: move to end of Buffer',
+        '<Control a>: move to start of line',
+        '<Control e> :move to end of line',
+        '<Alt-Up>: move to start of line',
+        '<Alt-Down>: move to end of line',
+        '<Alt b>: move one word backward',
+        '<Alt f> : move one word forward',
+        '<Control - Right Arrow>: move one word forward',
+        '<Control - Left Arrow>: move one word backwards',
+        '<Alt-m> : move to beginning of indentation',
+        '<Alt-g> : goto line number',
+        '<Control-v>: scroll forward one screen',
+        '<Alt-v>: scroll up one screen',
+        '<Alt-a>: move back one sentence',
+        '<Alt-e>: move forward one sentence',
+        '<Alt-}>: move forward one paragraph',
+        '<Alt-{>: move backwards one paragraph',
+        '<Control-x . >: set fill prefix',
+        '<Alt-q>: fill paragraph',
+        '<Alt-h>: select current or next paragraph',
+        '<Control-x Control-@>: pop global mark',
+        '<Control-u>: universal command, repeats the next command n times.',
+        '<Alt -n > : n is a number.  Processes the next command n times.',
+        '<Control-x (>: start definition of kbd macro',
+        '<Control-x ) > : stop definition of kbd macro',
+        '<Control-x e : execute last macro defined',
+        '<Control-u Control-x ( >: execute last macro and edit',
+        '''<Control-x u > : advertised undo.   This function utilizes the environments.
+        If the buffer is not configure explicitly, there is no operation.''',
+        '<Control-_>: advertised undo.  See above',
+        '----------------------------------------\n',
+        '<Delete> : delete previous character',
+        '<Control d>: delete next character',
+        '<Control k> : delete from cursor to end of line. Text goes to kill buffer',
+        '<Alt d>: delete word. Word goes to kill buffer',
+        '<Alt Delete>: delete previous word. Word goes to kill buffer',
+        '<Alt k >: delete current sentence. Sentence goes to kill buffer',
+        '<Control x Delete>: delete previous sentence. Sentence goes to kill buffer',
+        '<Control y >: yank last deleted text segment from\n kill buffer and inserts it.',
+        '<Alt y >: cycle and yank through kill buffer.\n',
+        '<Alt z >: zap to typed letter. Text goes to kill buffer',
+        '<Alt-^ >: join this line to the previous one',
+        '<Alt-\ >: delete surrounding spaces',
+        '<Alt-s> >: center line in current fill column',
+        '<Control-Alt-w>: next kill is appended to kill buffer\n'
+        
+        '----------------------------------------\n',
+        '<Alt c>: Capitalize the word the cursor is under.',
+        '<Alt u>: Uppercase the characters in the word.',
+        '<Alt l>: Lowercase the characters in the word.',
+        '----------------------------------------\n',
+        '<Alt t>: Mark word for word swapping.  Marking a second\n word will swap this word with the first',
+        '<Control-t>: Swap characters',
+        '<Ctrl-@>: Begin marking region.',
+        '<Ctrl-W>: Kill marked region',
+        '<Alt-W>: Copy marked region',
+        '<Ctrl-x Ctrl-u>: uppercase a marked region',
+        '<Ctrl-x Ctrl-l>: lowercase a marked region',
+        '<Ctrl-x h>: mark entire buffer',
+        '<Alt-Ctrl-backslash>: indent region to indentation of line 1 of the region.',
+        '<Ctrl-x tab> : indent region by 1 tab',
+        '<Control-x Control-x> : swap point and mark',
+        '<Control-x semicolon>: set comment column',
+        '<Alt-semicolon>: indent to comment column',
+        '----------------------------------------\n',
+        '<Control-x a e>: Expand the abbrev before point (expand-abbrev). This is effective even when Abbrev mode is not enabled',
+        '<Control-x a g>: Define an abbreviation for previous word',
+        '<Control-x a i g>: Define a word as abbreviation for word before point, or in point',                        
+        '----------------------------------------\n',
+        '<Control s>: forward search, using pattern in Mini buffer.\n',
+        '<Control r>: backward search, using pattern in Mini buffer.\n' ,
+        '''<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
+        q or Return exits. ! to replace all remaining matches with no more questions''',
+        '<Alt-=>: count lines and characters in regions',
+        '<Alt-( >: insert parentheses()',
+        '<Alt-) >:  move past close',
+        '<Control-x Control-t>: transpose lines.',
+        '<Control-x Control-o>: delete blank lines' ,
+        '<Control-x r s>: save region to register',
+        '<Control-x r i>: insert to buffer from register',
+        '<Control-x r +>: increment register',
+        '<Control-x r n>: insert number 0 to register',
+        '<Control-x r space > : point insert point to register',
+        '<Control-x r j > : jump to register',
+        '<Control-x x>: save region to register',
+        '<Control-x r r> : save rectangle to register',
+        '<Control-x r o>: open up rectangle',
+        '<Control-x r c> : clear rectangle',
+        '<Control-x r d> : delete rectangle',
+        '<Control-x r t> : replace rectangle with string',
+        '<Control-x r k> : kill rectangle',
+        '<Control-x r y> : yank rectangle',
+        '<Control-g> : keyboard quit\n',
+        '<Control-x = > : position of cursor',
+        '<Control-x . > : set fill prefix',
+        '<Control-x f > : set the fill column',
+        '<Control-x Control-b > : display the buffer list',
+        '<Control-x b > : switch to buffer',
+        '<Control-x k > : kill the specified buffer',
+        '----------------------------------------\n',
+        '<Alt - - Alt-l >: lowercase previous word',
+        '<Alt - - Alt-u>: uppercase previous word',
+        '<Alt - - Alt-c>: capitalise previous word',
+        '----------------------------------------\n',
+        '<Alt-/ >: dynamic expansion',
+        '<Control-Alt-/>: dynamic expansion.  Expands to common prefix in buffer\n'
+        '----------------------------------------\n',
+        'Alt-x commands:\n',
+        '(Pressing Tab will result in auto completion of the options if an appropriate match is found',
+        'replace-string  -  replace string with string',
+        'append-to-register  - append region to register',
+        'prepend-to-register - prepend region to register\n'
+        'sort-lines - sort selected lines',
+        'sort-columns - sort by selected columns',
+        'reverse-region - reverse selected lines',
+        'sort-fields  - sort by fields',
+        'abbrev-mode - toggle abbrev mode on/off',
+        'kill-all-abbrevs - kill current abbreviations',
+        'expand-region-abbrevs - expand all abrevs in region',
+        'read-abbrev-file - read abbreviations from file',
+        'write-abbrev-file - write abbreviations to file',
+        'list-abbrevs   - list abbrevs in minibuffer',
+        'fill-region-as-paragraph - treat region as one paragraph and add fill prefix',
+        'fill-region - fill paragraphs in region with fill prefix',
+        'close-rectangle  - close whitespace rectangle',
+        'how-many - counts occurances of python regular expression',
+        'kill-paragraph - delete from cursor to end of paragraph',
+        'backward-kill-paragraph - delete from cursor to start of paragraph',
+        'name-last-kbd-macro - give the last kbd-macro a name',
+        'insert-keyboard-macro - save macros to file',
+        'load-file - load a macro file',
+        'kill-word - delete the word the cursor is on',
+        'kill-line - delete form the cursor to end of the line', 
+        'kill-sentence - delete the sentence the cursor is on',
+        'kill-region - delete a marked region',
+        'yank - restore what you have deleted',
+        'backward-kill-word - delete previous word',
+        'backward-delete-char - delete previous character',
+        'delete-char - delete character under cursor' , 
+        'isearch-forward - start forward incremental search',
+        'isearch-backward - start backward incremental search',
+        'capitalize-word - capitalize the current word',
+        'upcase-word - switch word to upper case',
+        'downcase-word - switch word to lower case',
+        'indent-region - indent region to first line in region',
+        'indent-rigidly - indent region by a tab',
+        'set-mark-command - mark the beginning or end of a region',
+         'kill-rectangle - kill the rectangle',
+        'delete-rectangle - delete the rectangle',
+        'yank-rectangle - yank the rectangle',
+        'open-rectangle - open the rectangle',
+        'clear-rectangle - clear the rectangle',
+        'copy-to-register - copy selection to register',
+        'insert-register - insert register into buffer',
+        'copy-rectangle-to-register - copy buffer rectangle to register',
+        'jump-to-register - jump to position in register',
+        'point-to-register - insert point into register',
+        'number-to-register - insert number into register',
+        'increment-register - increment number in register',
+        'view-register - view what register contains',
+        'beginning-of-line - move to the beginning of the line',
+        'end-of-line - move to the end of the line',
+        'beginning-of-buffer - move to the beginning of the buffer',
+        'end-of-buffer - move to the end of the buffer',
+        'newline-and-indent - insert a newline and tab',
+        'keyboard-quit - abort current command',
+        'advertised-undo - undo the last operation',
+        'back-to-indentation - move to first non-blank character of line',
+        'delete-indentation - join this line to the previous one',
+        'view-lossage - see the last 100 characters typed',
+        'transpose-chars - transpose two letters',
+        'transpose-words - transpose two words',
+        'transpose-line - transpose two lines',
+        'insert-file - insert file at current position',
+        'save-buffer - save file',
+        'split-line - split line at cursor. indent to column of cursor',
+        'upcase-region - Upper case region',
+        'downcase-region - lower case region',
+        'goto-line - goto a line in the buffer',
+        'goto-char - goto a char in the buffer',
+        'set-fill-column - sets the fill column',
+        'center-line - centers the current line within the fill column',
+        'center-region - centers the current region within the fill column',   
+        'forward-char - move the cursor forward one char',
+        'backward-char - move the cursor backward one char',
+        'previous-line - move the cursor up one line',
+        'next-line - move the cursor down one line',
+        'universal-argument - Repeat the next command "n" times',
+        'digit-argument - Repeat the next command "n" times',
+        'set-fill-prefix - Sets the prefix from the insert point to the start of the line',
+        'scroll-up - scrolls up one screen',
+        'scroll-down - scrolls down one screen',
+        'append-to-buffer - Append region to a specified buffer',
+        'prepend-to-buffer - Prepend region to a specified buffer',
+        'copy-to-buffer - Copy region to a specified buffer, deleting the previous contents',
+        'insert-buffer - Insert the contents of a specified buffer into current buffer at point',
+        'list-buffers - Display the buffer list',
+        'switch-to-buffer - switch to a different buffer, if it does not exits, it is created.',
+        'kill-buffer - kill the specified buffer',
+        'rename-buffer - rename the buffer',
+        'query-replace - query buffer for pattern and replace it.  The user will be asked for a pattern, and for text to replace the pattern with.',
+        'inverse-add-global-abbrev - add global abbreviation from previous word.  Will ask user for word to expand to',
+        'expand-abbrev - Expand the abbrev before point. This is effective even when Abbrev mode is not enabled',
+        ]
+        return '\n'.join( help_t )
+    
+    getHelpText = staticmethod( getHelpText )
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #@-node:mork.20041030164547.41:getHelpText
+    #@+node:mork.20041030164547.43:masterCommand
+    #self.controlx = False
+    #self.csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
+    #self.pref = None
+    #self.zap = False
+    #self.goto = False
+    #self.previousStroke = ''
+    def masterCommand( self, event, method , stroke):
+        '''The masterCommand is the central routing method of the Emacs method.
+           All commands and keystrokes pass through here.'''
+        #global previousStroke, regXKey
+        
+        Emacs.lossage.pop() #The lossage list is already at 100, we keep it at 100 by popping it
+        Emacs.lossage.reverse()
+        Emacs.lossage.append( event.char )#Then we add the new char.  Hopefully this will keep Python from allocating a new array each time.
+        Emacs.lossage.reverse()
+        
+        if self.macroing:
+            if self.macroing == 2 and stroke != '<Control-x>':
+                return self.nameLastMacro( event )
+            elif self.macroing == 3 and stroke != '<Control-x>':
+                return self.getMacroName( event )
+            else:
+               self.recordKBDMacro( event, stroke )
+               
+    
+        
+        if  stroke == '<Control-g>':
+            self.previousStroke = stroke
+            return self.keyboardQuit( event )
+            
+        if self.mcStateManager.hasState():
+            self.previousStroke = stroke
+            return self.mcStateManager( event, stroke )
+            
+        if self.kstrokeManager.hasKeyStroke( stroke ):
+            self.previousStroke = stroke
+            return self.kstrokeManager( event, stroke )
+                       
+        #if self.uC:
+        #    self.previousStroke = stroke
+        #    return self.universalDispatch( event, stroke )
+        
+        #if self.controlx:
+        #    self.previousStroke = stroke
+        #     return self.doControlX( event, stroke )
+            
+            
+        #if stroke in ('<Control-s>', '<Control-r>' ): 
+        #    self.previousStroke = stroke
+        #    return self.startIncremental( event, stroke )
+                
+        #if self.isearch:
+        #   return self.iSearch( event )
+           
+        #if stroke == '<Alt-g>':
+        #    self.previousStroke = stroke
+        #    return self.startGoto( event )
+        #if self.goto:
+        #    return self.Goto( event )
+        
+        #if stroke == '<Alt-z>':
+        #    self.previousStroke = stroke
+        #    return self.startZap( event )
+    
+        #if self.zap:
+        #    return self.zapTo( event )
+            
+        if self.regXRpl:
+            try:
+                self.regXKey = event.keysym
+                self.regXRpl.next()
+            finally:
+                return 'break'
+    
+        #if self.howM:
+        #    return self.howMany( event )
+            
+        #if self.abbrevMode:
+        #    return self.abbrevCommand1( event )
+            
+        #if self.altx:
+        #    return self.doAlt_X( event )
+    
+        #if stroke == '<Alt-percent>':
+        #    self.previousStroke = stroke
+        #    return self.masterQR( event )  
+        #if self.qlisten:
+        #    return self.masterQR( event )
+            
+        #if self.rString:
+        #    return self.replaceString( event )
+         
+        #if self.negativeArg:
+        #    return self.negativeArgument( event, stroke )
+        
+        #if stroke == '<Control-Alt-w>':
+        #    self.previousStroke = '<Control-Alt-w>'   
+        #    return 'break' 
+            
+        if self.abbrevOn:
+            if self.expandAbbrev( event ) :
+                return 'break'       
+            
+        
+        if method:
+            rt = method( event )
+            self.previousStroke = stroke
+            return rt
+    
+    #@-node:mork.20041030164547.43:masterCommand
+    #@+node:mork.20041102082023:keyboardQuit
+    def keyboardQuit( self, event ):
+        '''This method cleans the Emacs instance of state and ceases current operations.'''
+        return self.stopControlX( event )#This method will eventually contain the stopControlX code.
+        
+    #@-node:mork.20041102082023:keyboardQuit
+    #@+node:mork.20041031182258:add command dictionary methods
+    #@+at
+    # These methods create the dispatch dictionarys that the
+    # Emacs instance uses to execute specific keystrokes and commands.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030183331:addCallBackDict
+    def addCallBackDict( self ):
+        '''This method adds a dictionary to the Emacs instance through which the masterCommand can
+           call the specified method.'''
+        cbDict = {
+        'Alt-less' : lambda event, spot = '1.0' : self.moveTo( event, spot ),
+        'Alt-greater': lambda event, spot = 'end' : self.moveTo( event, spot ),
+        'Control-Right': lambda event, way = 1: self.moveword( event, way ),
+        'Control-Left': lambda event, way = -1: self.moveword( event, way ),
+        'Control-a': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+        'Control-e': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+        'Alt-Up': lambda event, spot = 'insert linestart': self.moveTo( event, spot ),
+        'Alt-Down': lambda event, spot = 'insert lineend': self.moveTo( event, spot ),
+        'Alt-f': lambda event, way = 1: self.moveword( event, way ),
+        'Alt-b' : lambda event, way = -1: self.moveword( event, way ),
+        'Control-o': self.insertNewLine,
+        'Control-k': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) ,
+        'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ),
+        'Alt-Delete': lambda event: self.deletelastWord( event ),
+        "Control-y": lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which),
+        "Alt-y": lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ),
+        "Alt-k": lambda event : self.killsentence( event ),
+        'Control-s' : None,
+        'Control-r' : None,
+        'Alt-c': lambda event, which = 'cap' : self.capitalize( event, which ),
+        'Alt-u': lambda event, which = 'up' : self.capitalize( event, which ),
+        'Alt-l': lambda event, which = 'low' : self.capitalize( event, which ),
+        'Alt-t': lambda event, sw = self.swapSpots: self.swapWords( event, sw ),
+        'Alt-x': self.alt_X,
+        'Control-x': self.startControlX,
+        'Control-g': self.keyboardQuit,
+        'Control-Shift-at': self.setRegion,
+        'Control-w': lambda event, which = 'd' :self.killRegion( event, which ),
+        'Alt-w': lambda event, which = 'c' : self.killRegion( event, which ),
+        'Control-t': self.swapCharacters,
+        'Control-u': None,
+        'Control-l': None,
+        'Alt-z': None,
+        'Control-i': None,
+        'Alt-Control-backslash': self.indentRegion,
+        'Alt-m' : self.backToIndentation,
+        'Alt-asciicircum' : self.deleteIndentation,
+        'Control-d': self.deleteNextChar,
+        'Alt-backslash': self.deleteSpaces, 
+        'Alt-g': None,
+        'Control-v' : lambda event, way = 'south': self.screenscroll( event, way ),
+        'Alt-v' : lambda event, way = 'north' : self.screenscroll( event, way ),
+        'Alt-equal': self.countRegion,
+        'Alt-parenleft': self.insertParentheses,
+        'Alt-parenright': self.movePastClose,
+        'Alt-percent' : None,
+        'Delete': lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ),
+        'Control-p': lambda event, which = 'Up': self.manufactureKeyPress( event, which ),
+        'Control-n': lambda event, which = 'Down': self.manufactureKeyPress( event, which ),
+        'Control-f': lambda event, which = 'Right':self.manufactureKeyPress( event, which ),
+        'Control-b': lambda event, which = 'Left': self.manufactureKeyPress( event, which ),
+        'Control-Alt-w': None,
+        'Alt-a': lambda event, which = 'bak': self.prevNexSentence( event, which ),
+        'Alt-e': lambda event, which = 'for': self.prevNexSentence( event, which ),
+        'Control-Alt-o': self.insertNewLineIndent,
+        'Control-j': self.insertNewLineAndTab,
+        'Alt-minus': self.negativeArgument,
+        'Alt-slash': self.dynamicExpansion,
+        'Control-Alt-slash': self.dynamicExpansion2,
+        'Control-u': lambda event, keystroke = '<Control-u>': self.universalDispatch( event, keystroke ),
+        'Alt-braceright': lambda event, which = 1: self.movingParagraphs( event, which ),
+        'Alt-braceleft': lambda event , which = 0: self.movingParagraphs( event, which ),
+        'Alt-q': self.fillParagraph,
+        'Alt-h': self.selectParagraph,
+        'Alt-semicolon': self.indentToCommentColumn,
+        'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: self.numberCommand( event, stroke, number ) ,
+        'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: self.numberCommand( event, stroke, number ) ,
+        'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: self.numberCommand( event, stroke, number ) ,
+        'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: self.numberCommand( event, stroke, number ) ,
+        'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: self.numberCommand( event, stroke, number ) ,
+        'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: self.numberCommand( event, stroke, number ) ,
+        'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: self.numberCommand( event, stroke, number ) ,
+        'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: self.numberCommand( event, stroke, number ) ,
+        'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: self.numberCommand( event, stroke, number ) ,
+        'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: self.numberCommand( event, stroke, number ) ,
+        'Control-underscore': self.doUndo,
+        'Alt-s': self.centerLine,
+        
+        }
+        
+        return cbDict
+    #@nonl
+    #@-node:mork.20041030183331:addCallBackDict
+    #@+node:mork.20041030183633:addXCommands
+    def addXCommands( self ):
+        
+        xcommands = {
+        '<Control-t>': self.transposeLines, 
+        '<Control-u>': lambda event , way ='up': self.upperLowerRegion( event, way ),
+        '<Control-l>':  lambda event , way ='low': self.upperLowerRegion( event, way ),
+        '<Control-o>': self.removeBlankLines,
+        '<Control-i>': self.insertFile,
+        '<Control-s>': self.saveFile,
+        '<Control-x>': self.exchangePointMark,
+        '<Control-b>': self.listBuffers,
+        '<Control-Shift-at>': lambda event: event.widget.selection_clear(),
+        '<Delete>' : lambda event, back = True: self.killsentence( event, back ),
+        }
+        
+        return xcommands
+    #@nonl
+    #@-node:mork.20041030183633:addXCommands
+    #@+node:mork.20041030190903:addAltXCommands
+    def addAltXCommands( self ):
+        
+        #many of the simpler methods need self.keyboardQuit( event ) appended to the end to stop the Alt-x mode.
+        doAltX= {
+        'prepend-to-register': self.prependToRegister,
+        'append-to-register': self.appendToRegister,
+        'replace-string': self.replaceString,
+        'sort-lines': self.sortLines,
+        'sort-columns': self.sortColumns,
+        'reverse-region': self.reverseRegion,
+        'sort-fields': self.sortFields,
+        'abbrev-mode': self.toggleAbbrevMode,
+        'kill-all-abbrevs': self.killAllAbbrevs,
+        'expand-region-abbrevs': self.regionalExpandAbbrev,
+        'write-abbrev-file': self.writeAbbreviations,
+        'read-abbrev-file': self.readAbbreviations,
+        'fill-region-as-paragraph': self.fillRegionAsParagraph,
+        'fill-region': self.fillRegion,
+        'close-rectangle': self.closeRectangle,
+        'how-many': self.startHowMany,
+        'kill-paragraph': self.killParagraph,
+        'backward-kill-paragraph': self.backwardKillParagraph,
+        'name-last-kbd-macro': self.nameLastMacro,
+        'load-file': self.loadMacros,
+        'insert-keyboard-macro' : self.getMacroName,
+        'list-abbrevs': self.listAbbrevs,
+        'kill-word': lambda event, frm = 'insert wordstart', to = 'insert wordend': self.kill( event,frm, to ) and self.keyboardQuit( event ),
+        'kill-line': lambda event, frm = 'insert', to = 'insert lineend': self.kill( event, frm, to) and self.keyboardQuit( event ), 
+        'kill-sentence': lambda event : self.killsentence( event ) and self.keyboardQuit( event ),
+        'kill-region': lambda event, which = 'd' :self.killRegion( event, which ) and self.keyboardQuit( event ),
+        'yank': lambda event, frm = 'insert', which = 'c': self.walkKB( event, frm, which) and self.keyboardQuit( event ),
+        'yank-pop' : lambda event , frm = "insert", which = 'a': self.walkKB( event, frm, which ) and self.keyboardQuit( event ),
+        'backward-kill-word': lambda event: self.deletelastWord( event ) and self.keyboardQuit( event ),
+        'backward-delete-char':lambda event, which = 'BackSpace': self.manufactureKeyPress( event, which ) and self.keyboardQuit( event ),
+        'delete-char': lambda event: self.deleteNextChar( event ) and self.keyboardQuit( event ) , 
+        'isearch-forward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-s>' ),
+        'isearch-backward': lambda event: self.keyboardQuit( event ) and self.startIncremental( event, '<Control-r>' ),
+        'capitalize-word': lambda event, which = 'cap' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+        'upcase-word': lambda event, which = 'up' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+        'downcase-word': lambda event, which = 'low' : self.capitalize( event, which ) and self.keyboardQuit( event ),
+        'indent-region': lambda event: self.indentRegion( event ) and self.keyboardQuit( event ),
+        'indent-rigidly': lambda event: self.tabIndentRegion( event ) and self.keyboardQuit( event ),
+        'set-mark-command': lambda event: self.setRegion( event ) and self.keyboardQuit( event ),
+        'kill-rectangle': lambda event: self.killRectangle( event ),
+        'delete-rectangle': lambda event: self.deleteRectangle( event ),
+        'yank-rectangle': lambda event: self.yankRectangle( event ),
+        'open-rectangle': lambda event: self.openRectangle( event ),
+        'clear-rectangle': lambda event: self.clearRectangle( event ),
+        'copy-to-register': lambda event: self.setEvent( event, 's' ) and self.setNextRegister( event ),
+        'insert-register': lambda event: self.setEvent( event, 'i' ) and self.setNextRegister( event ),
+        'copy-rectangle-to-register': lambda event: self.setEvent( event, 'r' ) and self.setNextRegister( event ),
+        'jump-to-register': lambda event: self.setEvent( event, 'j' ) and self.setNextRegister( event ),
+        'point-to-register': lambda event: self.setEvent( event, 'space' ) and self.setNextRegister( event ),
+        'number-to-register': lambda event: self.setEvent( event, 'n' ) and self.setNextRegister( event ),
+        'increment-register': lambda event: self.setEvent( event, 'plus' ) and self.setNextRegister( event ),
+        'view-register': lambda event: self.setEvent( event, 'view' ) and self.setNextRegister( event ),
+        'beginning-of-line': lambda event, spot = 'insert linestart': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+        'end-of-line': lambda event, spot = 'insert lineend': self.moveTo( event, spot ) and self.keyboardQuit( event ),
+        'keyboard-quit': lambda event: self.keyboardQuit( event ),
+        'advertised-undo': lambda event: self.doUndo( event ) and self.keyboardQuit( event ),
+        'back-to-indentation': lambda event: self.backToIndentation( event ) and self.keyboardQuit( event ),
+        'delete-indentation': lambda event: self.deleteIndentation( event ) and self.keyboardQuit( event ),    
+        'view-lossage': lambda event: self.viewLossage( event ),
+         'transpose-chars': lambda event : self.swapCharacters( event ) and self.keyboardQuit( event ),
+         'transpose-words': lambda event, sw = self.swapSpots: self.swapWords( event, sw ) and self.keyboardQuit( event ),
+         'transpose-lines': lambda event: self.transposeLines( event ) and self.keyboardQuit( event ),
+         'insert-file' : lambda event: self.insertFile( event ) and self.keyboardQuit( event ),
+         'save-buffer' : lambda event: self.saveFile( event ) and self.keyboardQuit( event ),
+         'split-line' : lambda event: self.insertNewLineIndent( event ) and self.keyboardQuit( event ),
+         'upcase-region': lambda event: self.upperLowerRegion( event, 'up' ) and self.keyboardQuit( event ),
+         'downcase-region': lambda event: self.upperLowerRegion( event , 'low' ) and self.keyboardQuit( event ),
+         'dabbrev-expands': lambda event: self.dynamicExpansion( event ) and self.keyboardQuit( event ),
+         'dabbrev-completion': lambda event: self.dynamicExpansion2( event ) and self.keyboardQuit( event ),
+         'goto-line': lambda event: self.startGoto( event ),
+         'goto-char': lambda event: self.startGoto( event, True ),
+         'set-fill-prefix': lambda event: self.setFillPrefix( event ) and self.keyboardQuit( event ),
+         'set-fill-column': lambda event: self.setFillColumn( event ),
+         'center-line': lambda event: self.centerLine( event ) and self.keyboardQuit( event ),
+         'center-region': lambda event: self.centerRegion( event ) and self.keyboardQuit( event ),
+         'forward-char': lambda event, which = 'Right': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+         'backward-char': lambda event, which = 'Left': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+         'previous-line': lambda event, which = 'Up': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+         'next-line': lambda event, which = 'Down': self.keyboardQuit( event ) and self.manufactureKeyPress( event, which ),
+         'digit-argument': lambda event: self.universalDispatch( event, '' ),
+         'universal-argument': lambda event: self.universalDispatch( event, '' ),   
+         'newline-and-indent': lambda event: self.insertNewLineAndTab( event ) and self.keyboardQuit( event ),
+         'beginning-of-buffer': lambda event, spot = '1.0' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+         'end-of-buffer': lambda event, spot = 'end' : self.moveTo( event, spot ) and self.keyboardQuit( event ),
+         'scroll-up': lambda event, way = 'north' : self.screenscroll( event, way ) and self.keyboardQuit( event ),
+         'scroll-down': lambda event, way = 'south': self.screenscroll( event, way ) and self.keyboardQuit( event ),
+         'copy-to-buffer': lambda event, which = 'copy-to-buffer': self.setInBufferMode( event, which ),
+         'insert-buffer': lambda event, which = 'insert-buffer': self.setInBufferMode( event, which ),
+         'append-to-buffer': lambda event , which = 'append-to-buffer':  self.setInBufferMode( event, which ),
+         'prepend-to-buffer': lambda event, which = 'prepend-to-buffer': self.setInBufferMode( event, which ),
+         'switch-to-buffer': lambda event, which = 'switch-to-buffer': self.setInBufferMode( event, which ),
+         'list-buffers' : lambda event: self.listBuffers( event ),
+         'kill-buffer' : lambda event, which = 'kill-buffer': self.setInBufferMode( event, which ),
+         'rename-buffer': lambda event: self.renameBuffer( event ),
+         'query-replace': lambda event: self.masterQR( event ), 
+         'inverse-add-global-abbrev': lambda event: self.abbreviationDispatch( event, 2 ) ,  
+         'expand-abbrev': lambda event : self.keyboardQuit( event ) and self.expandAbbrev( event ), 
+    
+        }    
+        #Note: if we are reusing some of the cbDict lambdas we need to alter many by adding: self.keyboardQuit( event )
+        #Otherwise the darn thing just sits in Alt-X land.  Putting the 'and self.keyboardQuit( event )' part in the killbuffer
+        #and yanking it out for each new item, works well.  Adding it to a register might be good to.
+        return doAltX
+    
+    
+    
+    
+    
+    
+    #@-node:mork.20041030190903:addAltXCommands
+    #@+node:mork.20041030190729:addRegisterItems
+    def addRegisterItems( self ):
+        
+        regMeths = {
+        's' : self.copyToRegister,
+        'i' : self.insertFromRegister,
+        'n': self.numberToRegister,
+        'plus': self.incrementRegister,
+        'space': self.pointToRegister,
+        'j': self.jumpToRegister,
+        'a': lambda event , which = 'a': self._ToReg( event, which ),
+        'p': lambda event , which = 'p': self._ToReg( event, which ),
+        'r': self.copyRectangleToRegister,
+        'view' : self.viewRegister,
+        }    
+        
+        regText = {
+        's' : 'copy to register',
+        'i' : 'insert from register',
+        'plus': 'increment register',
+        'n' : 'number to register',
+        'p' : 'prepend to register',
+        'a' : 'append to register',
+        'space' : 'point to register',
+        'j': 'jump to register',
+        'r': 'rectangle to register',
+        'view': 'view register',
+        }
+        
+        return regMeths, regText
+    #@nonl
+    #@-node:mork.20041030190729:addRegisterItems
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182258:add command dictionary methods
+    #@+node:mork.20041031183614:general utility methods
+    #@+at
+    # These methods currently do not have a specific class that they belong 
+    # to.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041031195549:buffer altering methods
+    #@+others
+    #@+node:mork.20041030164547.31:moveTo
+    def moveTo( self, event, spot ):
+        tbuffer = event.widget
+        tbuffer.mark_set( Tkinter.INSERT, spot )
+        tbuffer.see( spot )
+        return 'break'
+    #@-node:mork.20041030164547.31:moveTo
+    #@+node:mork.20041030164547.33:moveword
+    def moveword( self, event, way  ):
+        '''This function moves the cursor to the next word, direction dependent on the way parameter'''
+        
+        tbuffer = event.widget
+        #i = way
+        
+        ind = tbuffer.index( 'insert' )
+        if way == 1:
+             ind = tbuffer.search( '\w', 'insert', stopindex = 'end', regexp=True )
+             if ind:
+                nind = '%s wordend' % ind
+             else:
+                nind = 'end'
+        else:
+             ind = tbuffer.search( '\w', 'insert -1c', stopindex= '1.0', regexp = True, backwards = True )
+             if ind:
+                nind = '%s wordstart' % ind 
+             else:
+                nind = '1.0'
+        tbuffer.mark_set( 'insert', nind )
+        tbuffer.see( 'insert' )
+        tbuffer.event_generate( '<Key>' )
+        tbuffer.update_idletasks()
+        return 'break'
+    #@nonl
+    #@-node:mork.20041030164547.33:moveword
+    #@+node:mork.20041030164547.39:capitalize
+    def capitalize( self, event, which ):
+        tbuffer = event.widget
+        text = tbuffer.get( 'insert wordstart', 'insert wordend' )
+        i = tbuffer.index( 'insert' )
+        if text == ' ': return 'break'
+        tbuffer.delete( 'insert wordstart', 'insert wordend' )
+        if which == 'cap':
+            text = text.capitalize() 
+        if which == 'low':
+            text = text.lower()
+        if which == 'up':
+            text = text.upper()
+        tbuffer.insert( 'insert', text )
+        tbuffer.mark_set( 'insert', i )    
+        return 'break' 
+    #@-node:mork.20041030164547.39:capitalize
+    #@+node:mork.20041030164547.40:swapWords
+    def swapWords( self, event , swapspots ):
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert wordstart', 'insert wordend' )
+        if txt == ' ' : return 'break'
+        i = tbuffer.index( 'insert wordstart' )
+        if len( swapspots ) != 0:
+            def swp( find, ftext, lind, ltext ):
+                tbuffer.delete( find, '%s wordend' % find )
+                tbuffer.insert( find, ltext )
+                tbuffer.delete( lind, '%s wordend' % lind )
+                tbuffer.insert( lind, ftext )
+                swapspots.pop()
+                swapspots.pop()
+                return 'break'
+            if tbuffer.compare( i , '>', swapspots[ 1 ] ):
+                return swp( i, txt, swapspots[ 1 ], swapspots[ 0 ] )
+            elif tbuffer.compare( i , '<', swapspots[ 1 ] ):
+                return swp( swapspots[ 1 ], swapspots[ 0 ], i, txt )
+            else:
+                return 'break'
+        else:
+            swapspots.append( txt )
+            swapspots.append( i )
+            return 'break'
+    #@-node:mork.20041030164547.40:swapWords
+    #@+node:mork.20041030164547.103:insertParentheses
+    def insertParentheses( self, event ):
+        tbuffer = event.widget
+        tbuffer.insert( 'insert', '()' )
+        tbuffer.mark_set( 'insert', 'insert -1c' )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.103:insertParentheses
+    #@+node:mork.20041030164547.115:replaceString
+    #self.rString = False
+    #self._sString = ''
+    #self._rpString = ''
+    def replaceString( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        if event.keysym in ( 'Control_L', 'Control_R' ):
+            return
+        rS = self.mcStateManager.getState( 'rString' )
+        if not rS:
+            #self.rString = 1
+            self.mcStateManager.setState( 'rString', 1 )
+            self._sString = ''
+            self._rpString = ''
+            svar.set( 'Replace String' )
+            return
+        if event.keysym == 'Return':
+            #self.rString = self.rString + 1
+            rS = rS + 1
+            self.mcStateManager.setState( 'rString', rS  )
+            #return 'break'
+        if rS == 1:
+            svar.set( '' )
+            #self.rString = self.rString + 1
+            rS = rS + 1
+            self.mcStateManager.setState( 'rString', rS )
+        if rS == 2:
+            self.setSvar( event, svar )
+            self._sString = svar.get()
+            return 'break'
+        if rS == 3:
+            svar.set( 'Replace string %s with:' % self._sString )
+            self.mcStateManager.setState( 'rString',rS + 1 )
+            #self.rString = self.rString + 1
+            return 'break'
+        if rS == 4:
+            svar.set( '' )
+            #self.rString = self.rString + 1
+            rS = rS + 1
+            self.mcStateManager.setState( 'rString', rS )
+        if rS == 5:
+            self.setSvar( event, svar )
+            self._rpString = svar.get()
+            return 'break'
+        if rS == 6:
+            tbuffer = event.widget
+            i = 'insert'
+            ct = 0
+            while i:
+                i = tbuffer.search( self._sString, i, stopindex = 'end' )
+                if i:
+                    tbuffer.delete( i, '%s +%sc' %( i, len( self._sString) ))
+                    tbuffer.insert( i, self._rpString )
+                    ct = ct +1
+            svar.set( 'Replaced %s occurances' % ct )
+            label.configure( background = 'lightgrey' ) 
+            #self.rString = False
+            self.mcStateManager.clear()
+            #self.mcStateManager.setState( 'rString', False )
+            return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.115:replaceString
+    #@+node:mork.20041030164547.116:swapCharacters
+    def swapCharacters( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        c1 = tbuffer.get( 'insert', 'insert +1c' )
+        c2 = tbuffer.get( 'insert -1c', 'insert' )
+        tbuffer.delete( 'insert -1c', 'insert' )
+        tbuffer.insert( 'insert', c1 )
+        tbuffer.delete( 'insert', 'insert +1c' )
+        tbuffer.insert( 'insert', c2 )
+        tbuffer.mark_set( 'insert', i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.116:swapCharacters
+    #@+node:mork.20041030164547.117:insertNewLine
+    def insertNewLine( self,event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        tbuffer.insert( 'insert', '\n' )
+        tbuffer.mark_set( 'insert', i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.117:insertNewLine
+    #@+node:mork.20041030164547.131:insertNewLineIndent
+    #self.negArgs = { '<Alt-c>': changePreviousWord,
+    #'<Alt-u>' : changePreviousWord,
+    #'<Alt-l>': changePreviousWord }
+    
+    
+    
+    def insertNewLineIndent( self, event ):
+        tbuffer =  event.widget
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        txt = self.getWSString( txt )
+        i = tbuffer.index( 'insert' )
+        tbuffer.insert( i, txt )
+        tbuffer.mark_set( 'insert', i )    
+        return self.insertNewLine( event )
+    #@-node:mork.20041030164547.131:insertNewLineIndent
+    #@+node:mork.20041103135515:insertNewLineAndTab
+    def insertNewLineAndTab( self, event ):
+        '''Insert a newline and tab'''
+        tbuffer = event.widget
+        self.insertNewLine( event )
+        i = tbuffer.index( 'insert +1c' )
+        tbuffer.insert( i, '\t' )
+        tbuffer.mark_set( 'insert', '%s lineend' % i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041103135515:insertNewLineAndTab
+    #@+node:mork.20041030164547.148:transposeLines
+    def transposeLines( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = str( int( i1 ) -1 )
+        if i1 != '0':
+            l2 = tbuffer.get( 'insert linestart', 'insert lineend' )
+            tbuffer.delete( 'insert linestart-1c', 'insert lineend' )
+            tbuffer.insert( i1+'.0', l2 +'\n')
+        else:
+            l2 = tbuffer.get( '2.0', '2.0 lineend' )
+            tbuffer.delete( '2.0', '2.0 lineend' )
+            tbuffer.insert( '1.0', l2 + '\n' )
+        return self._tailEnd( tbuffer )         
+    #@-node:mork.20041030164547.148:transposeLines
+    #@+node:mork.20041030164547.130:changePreviousWord
+    def changePreviousWord( self, event, stroke ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        self.moveword( event, -1  )
+        if stroke == '<Alt-c>': 
+            self.capitalize( event, 'cap' )
+        elif stroke =='<Alt-u>':
+             self.capitalize( event, 'up' )
+        elif stroke == '<Alt-l>': 
+            self.capitalize( event, 'low' )
+        tbuffer.mark_set( 'insert', i )
+        self.stopControlX( event )
+        return self._tailEnd( tbuffer )    
+    #@-node:mork.20041030164547.130:changePreviousWord
+    #@+node:mork.20041030164547.150:removeBlankLines
+    def removeBlankLines( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = int( i1 )
+        dindex = []
+        if tbuffer.get( 'insert linestart', 'insert lineend' ).strip() == '':
+            while 1:
+                if str( i1 )+ '.0'  == '1.0' :
+                    break 
+                i1 = i1 - 1
+                txt = tbuffer.get( '%s.0' % i1, '%s.0 lineend' % i1 )
+                txt = txt.strip()
+                if len( txt ) == 0:
+                    dindex.append( '%s.0' % i1)
+                    dindex.append( '%s.0 lineend' % i1 )
+                elif dindex:
+                    tbuffer.delete( '%s-1c' % dindex[ -2 ], dindex[ 1 ] )
+                    tbuffer.event_generate( '<Key>' )
+                    tbuffer.update_idletasks()
+                    break
+                else:
+                    break
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = int( i1 )
+        dindex = []
+        while 1:
+            if tbuffer.index( '%s.0 lineend' % i1 ) == tbuffer.index( 'end' ):
+                break
+            i1 = i1 + 1
+            txt = tbuffer.get( '%s.0' % i1, '%s.0 lineend' % i1 )
+            txt = txt.strip() 
+            if len( txt ) == 0:
+                dindex.append( '%s.0' % i1 )
+                dindex.append( '%s.0 lineend' % i1 )
+            elif dindex:
+                tbuffer.delete( '%s-1c' % dindex[ 0 ], dindex[ -1 ] )
+                tbuffer.event_generate( '<Key>' )
+                tbuffer.update_idletasks()
+                break
+            else:
+                break
+    #@-node:mork.20041030164547.150:removeBlankLines
+    #@+node:mork.20041030164547.101:screenscroll
+    def screenscroll( self, event, way = 'north' ):
+        tbuffer = event.widget
+        chng = self.measure( tbuffer )
+        i = tbuffer.index( 'insert' )
+        
+        if way == 'north':
+            #top = chng[ 1 ]
+            i1, i2 = i.split( '.' )
+            i1 = int( i1 ) - chng[ 0 ]
+        else:
+            #bottom = chng[ 2 ]
+            i1, i2 = i.split( '.' )
+            i1 = int( i1 ) + chng[ 0 ]
+            
+        tbuffer.mark_set( 'insert', '%s.%s' % ( i1, i2 ) )
+        tbuffer.see( 'insert' )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.101:screenscroll
+    #@+node:mork.20041030164547.22:exchangePointMark
+    def exchangePointMark( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        s1 = tbuffer.index( 'sel.first' )
+        s2 = tbuffer.index( 'sel.last' )
+        i = tbuffer.index( 'insert' )
+        if i == s1:
+            tbuffer.mark_set( 'insert', s2 )
+        else:
+            tbuffer.mark_set('insert', s1 )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.22:exchangePointMark
+    #@+node:mork.20041030164547.96:backToIndentation
+    def backToIndentation( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert linestart' )
+        i2 = tbuffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
+        tbuffer.mark_set( 'insert', i2 )
+        tbuffer.update_idletasks()
+        return 'break'
+    #@-node:mork.20041030164547.96:backToIndentation
+    #@+node:mork.20041030164547.129:negativeArgument
+    #self.negativeArg = False
+    def negativeArgument( self, event, stroke = None ):
+        #global negativeArg
+        svar, label = self.getSvarLabel( event )
+        svar.set( "Negative Argument" )
+        label.configure( background = 'lightblue' )
+        nA = self.mcStateManager.getState( 'negativeArg' )
+        if not nA:
+            self.mcStateManager.setState( 'negativeArg', True )
+            #self.negativeArg = True
+        if nA:
+            if self.negArgs.has_key( stroke ):
+                self.negArgs[ stroke ]( event , stroke)
+        return 'break'
+    #@-node:mork.20041030164547.129:negativeArgument
+    #@+node:mork.20041030164547.114:movePastClose
+    def movePastClose( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.search( '(', 'insert' , backwards = True ,stopindex = '1.0' )
+        icheck = tbuffer.search( ')', 'insert',  backwards = True, stopindex = '1.0' )
+        if ''  ==  i:
+            return 'break'
+        if icheck:
+            ic = tbuffer.compare( i, '<', icheck )
+            if ic: 
+                return 'break'
+        i2 = tbuffer.search( ')', 'insert' ,stopindex = 'end' )
+        i2check = tbuffer.search( '(', 'insert', stopindex = 'end' )
+        if '' == i2:
+            return 'break'
+        if i2check:
+            ic2 = tbuffer.compare( i2, '>', i2check )
+            if ic2:
+                return 'break'
+        ib = tbuffer.index( 'insert' )
+        tbuffer.mark_set( 'insert', '%s lineend +1c' % i2 )
+        if tbuffer.index( 'insert' ) == tbuffer.index( '%s lineend' % ib ):
+            tbuffer.insert( 'insert' , '\n')
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.114:movePastClose
+    #@+node:mork.20041030164547.119:prevNexSentence
+    def prevNexSentence( self, event , way ):
+        tbuffer = event.widget
+        if way == 'bak':
+            i = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+            if i:
+                i2 = tbuffer.search( '.', i, backwards = True, stopindex = '1.0' )
+                if not i2:
+                    i2 = '1.0'
+                if i2:
+                    i3 = tbuffer.search( '\w', i2, stopindex = i, regexp = True )
+                    if i3:
+                        tbuffer.mark_set( 'insert', i3 )
+            else:
+                tbuffer.mark_set( 'insert', '1.0' )
+        else:
+            i = tbuffer.search( '.', 'insert', stopindex = 'end' )
+            if i:
+                tbuffer.mark_set( 'insert', '%s +1c' %i )
+            else:
+                tbuffer.mark_set( 'insert', 'end' )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.119:prevNexSentence
+    #@+node:mork.20041031202438:selectAll
+    def selectAll( event ):
+    
+        event.widget.tag_add( 'sel', '1.0', 'end' )
+        return 'break'
+        
+    #@-node:mork.20041031202438:selectAll
+    #@-others
+    #@nonl
+    #@-node:mork.20041031195549:buffer altering methods
+    #@+node:mork.20041031195908:informational methods
+    #@+others
+    #@+node:mork.20041030164547.118:lineNumber
+    def lineNumber( self, event ):
+        self.stopControlX( event )
+        svar, label = self.getSvarLabel( event )
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        c = tbuffer.get( 'insert', 'insert + 1c' )
+        txt = tbuffer.get( '1.0', 'end' )
+        txt2 = tbuffer.get( '1.0', 'insert' )
+        perc = len( txt ) * .01
+        perc = int( len( txt2 ) / perc )
+        svar.set( 'Char: %s point %s of %s(%s%s)  Column %s' %( c, len( txt2), len( txt), perc,'%', i1 ) )
+        return 'break'
+    #@-node:mork.20041030164547.118:lineNumber
+    #@+node:mork.20041102161859:viewLossage
+    def viewLossage( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        loss = ''.join( Emacs.lossage )
+        self.keyboardQuit( event )
+        svar.set( loss )
+    #@nonl
+    #@-node:mork.20041102161859:viewLossage
+    #@-others
+    #@nonl
+    #@-node:mork.20041031195908:informational methods
+    #@+node:mork.20041031195908.1:pure utility methods
+    #@+others
+    #@+node:mork.20041102151939:setEvent
+    def setEvent( self, event, l ):
+        event.keysym = l
+        return event
+        
+    #@-node:mork.20041102151939:setEvent
+    #@+node:mork.20041030164547.127:getWSString
+    def getWSString( self, txt ):
+        ntxt = []
+        for z in txt:
+            if z == '\t':
+                ntxt.append( z )
+            else:
+                ntxt.append( ' ' )
+        return ''.join( ntxt )
+    #@-node:mork.20041030164547.127:getWSString
+    #@+node:mork.20041030164547.135:findPre
+    def findPre( self, a, b ):
+        st = ''
+        for z in a:
+            st1 = st + z
+            if b.startswith( st1 ):
+                st = st1
+            else:
+                return st
+        return st  
+    #@-node:mork.20041030164547.135:findPre
+    #@+node:mork.20041030164547.100:measure
+    def measure( self, tbuffer ):
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        start = int( i1 )
+        watch = 0
+        ustart = start
+        pone = 1
+        top = i
+        bottom = i
+        while pone:
+            ustart = ustart - 1
+            if ustart < 0:
+                break
+            ds = '%s.0' % ustart
+            pone = tbuffer.dlineinfo( ds )
+            if pone:
+                top = ds
+                watch = watch  + 1
+        
+        pone = 1
+        ustart = start
+        while pone:
+            ustart = ustart +1
+            ds = '%s.0' % ustart
+            pone = tbuffer.dlineinfo( ds )
+            if pone:
+                bottom = ds
+                watch = watch + 1
+                
+        return watch , top, bottom
+    #@-node:mork.20041030164547.100:measure
+    #@+node:mork.20041030164547.95:manufactureKeyPress
+    def manufactureKeyPress( self, event, which ):
+        tbuffer = event.widget
+        tbuffer.event_generate( '<Key>',  keysym = which  )
+        tbuffer.update_idletasks()
+        return 'break'
+    #@-node:mork.20041030164547.95:manufactureKeyPress
+    #@+node:mork.20041030164547.83:changecbDict
+    def changecbDict( self, changes ):
+        for z in changes:
+            if self.cbDict.has_key( z ):
+                self.cbDict[ z ] = self.changes[ z ]
+    #@-node:mork.20041030164547.83:changecbDict
+    #@+node:mork.20041030164547.92:removeRKeys
+    def removeRKeys( self, widget ):
+        mrk = 'sel'
+        widget.tag_delete( mrk )
+        widget.unbind( '<Left>' )
+        widget.unbind( '<Right>' )
+        widget.unbind( '<Up>' )
+        widget.unbind( '<Down>' )
+    #@-node:mork.20041030164547.92:removeRKeys
+    #@+node:mork.20041030164547.142:_findMatch2
+    def _findMatch2( self, svar, fdict = None ):#, fdict = self.doAltX ):
+        '''This method returns a sorted list of matches.'''
+        if not fdict:
+            fdict = self.doAltX
+        txt = svar.get()
+        if not txt.isspace() and txt != '':
+            txt = txt.strip()
+            pmatches = filter( lambda a : a.startswith( txt ), fdict )
+        else:
+            pmatches = []
+        pmatches.sort()
+        return pmatches
+        #if pmatches:
+        #    #mstring = reduce( self.findPre, pmatches )
+        #    #return mstring
+        #return txt
+    #@-node:mork.20041030164547.142:_findMatch2
+    #@+node:mork.20041102133805:_findMatch
+    def _findMatch( self, svar, fdict = None ):#, fdict = self.doAltX ):
+        '''This method finds the first match it can find in a sorted list'''
+        if not fdict:
+            fdict = self.doAltX
+        txt = svar.get()
+        pmatches = filter( lambda a : a.startswith( txt ), fdict )
+        pmatches.sort()
+        if pmatches:
+            mstring = reduce( self.findPre, pmatches )
+            return mstring
+        return txt
+    #@-node:mork.20041102133805:_findMatch
+    #@-others
+    #@nonl
+    #@-node:mork.20041031195908.1:pure utility methods
+    #@-others
+    #@nonl
+    #@-node:mork.20041031183614:general utility methods
+    #@+node:mork.20041031182215:Label( minibuffer ) and svar methods
+    #@+at
+    # Two closely related categories under this one heading.  Svars are the 
+    # internals of the minibuffer
+    # and the labels are the presentation of those internals
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041102183901:label( minibuffer ) methods
+    #@+node:mork.20041030164547.2:setLabelGrey
+    def setLabelGrey( self, label ):
+        label.configure( background = 'lightgrey' )
+    #@-node:mork.20041030164547.2:setLabelGrey
+    #@+node:mork.20041030164547.3:setLabelBlue
+    def setLabelBlue( self ,label ):
+        label.configure( background = 'lightblue' ) 
+    #@-node:mork.20041030164547.3:setLabelBlue
+    #@+node:mork.20041030164547.86:resetMiniBuffer
+    def resetMiniBuffer( self, event ):
+        svar, label = self.getSvarLabel( event )
         svar.set( '' )
-        setLabelBlue( label )
+        label.configure( background = 'lightgrey' )
+    #@-node:mork.20041030164547.86:resetMiniBuffer
+    #@-node:mork.20041102183901:label( minibuffer ) methods
+    #@+node:mork.20041031182943:svar methods
+    #@+at
+    # These methods get and alter the Svar variable which is a Tkinter
+    # StringVar.  This StringVar contains what is displayed in the minibuffer.
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.112:getSvarLabel
+    def getSvarLabel( self, event ):
+        '''returns the StringVar and Label( minibuffer ) for a specific Text editor'''
+        svar = self.svars[ event.widget ]
+        label = self.mbuffers[ event.widget ]
+        return svar, label
+    #@-node:mork.20041030164547.112:getSvarLabel
+    #@+node:mork.20041030164547.113:setSvar
+    def setSvar( self, event, svar ):
+        '''Alters the StringVar svar to represent the change in the event.
+           It mimics what would happen with the keyboard and a Text editor
+           instead of plain accumalation.''' 
+        t = svar.get()  
+        if event.char == '\b':
+               if len( t ) == 1:
+                   t = ''
+               else:
+                   t = t[ 0 : -1 ]
+               svar.set( t )
+        else:
+                t = t + event.char
+                svar.set( t )
+    #@-node:mork.20041030164547.113:setSvar
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182943:svar methods
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182215:Label( minibuffer ) and svar methods
+    #@+node:mork.20041031194746:configurable methods
+    #@+at
+    # These methods contain methods by which an Emacs instance is extended, 
+    # changed, added to , etc...
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041031182643:tailEnd methods
+    #@+others
+    #@+node:mork.20041030164547.4:_tailEnd
+    def _tailEnd( self, tbuffer ):
+        '''This returns the tailEnd function that has been configure for the tbuffer parameter.'''
+        if self.tailEnds.has_key( tbuffer ):
+            return self.tailEnds[ tbuffer ]( tbuffer )
+        else:
+            return 'break'
+    #@-node:mork.20041030164547.4:_tailEnd
+    #@+node:mork.20041030164547.5:setTailEnd
+    #self.tailEnds = {}
+    def setTailEnd( self, tbuffer , tailCall ):
+        '''This method sets a ending call that is specific for a particular Text widget.
+           Some environments require that specific end calls be made after a keystroke
+           or command is executed.'''
+        self.tailEnds[ tbuffer ] = tailCall
+    #@-node:mork.20041030164547.5:setTailEnd
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182643:tailEnd methods
+    #@+node:mork.20041031182643.1:undoer methods
+    #@+at
+    # Emacs requires an undo mechanism be added from the environment.
+    # If there is no undo mechanism added, there will be no undo functionality 
+    # in the instance.
+    #@-at
+    #@@c
+    
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.6:setUndoer
+    #self.undoers = {}
+    def setUndoer( self, tbuffer, undoer ):
+        '''This method sets the undoer method for the Emacs instance.'''
+        self.undoers[ tbuffer ] = undoer
+    #@-node:mork.20041030164547.6:setUndoer
+    #@+node:mork.20041030164547.7:doUndo
+    def doUndo(  self, event, amount = 1 ):
+        tbuffer = event.widget
+        if self.undoers.has_key( tbuffer ):
+            for z in xrange( amount ):
+                self.undoers[ tbuffer ]()
         return 'break'
-    if event.keysym == 'Return':
-        name = svar.get()
-        _addToDoAltX( name, lastMacro )
-        svar.set( '' )
-        setLabelBlue( label )
-        macroing = False
+    #@-node:mork.20041030164547.7:doUndo
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182643.1:undoer methods
+    #@+node:mork.20041030164547.30:setBufferStrokes
+    #mbuffers = {}
+    #svars = {}
+    def setBufferStrokes( self, tbuffer, label ):
+            '''setBufferStrokes takes a Tk Text widget called buffer. 'stext' is a function or method
+            that when called will return the value of the search text. 'rtext' is a function or method
+            that when called will return the value of the replace text.  It is this method and
+            getHelpText that users of the temacs module should call.  The rest are callback functions
+            that enable the Emacs emulation.'''
+            Emacs.Emacs_instances[ tbuffer ] = self
+            def cb( evstring ):
+                _cb = None
+                if self.cbDict.has_key( evstring ):
+                    _cb = self.cbDict[ evstring ]
+                evstring = '<%s>' % evstring
+                if evstring != '<Key>':
+                    tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring) )
+                else:
+                    tbuffer.bind( evstring,  lambda event, meth = _cb: self.masterCommand( event, meth , evstring), '+' )
+    
+            for z in self.cbDict:
+                cb( z )
+            
+            self.mbuffers[ tbuffer ] = label
+            self.svars[ tbuffer ] = Tkinter.StringVar()
+            def setVar( event ):
+                label = self.mbuffers[ event.widget ]
+                svar = self.svars[ event.widget ]
+                label.configure( textvariable = svar )
+            tbuffer.bind( '<FocusIn>', setVar, '+' )
+            cb( 'Key' )
+    #@-node:mork.20041030164547.30:setBufferStrokes
+    #@+node:mork.20041101190309:extendAltX
+    def extendAltX( self, name, function ):
+        '''A simple method that extends the functions Alt-X offers.'''
+        
+        nfunction = new.instancemethod( function, self, Emacs ) #making it an instance method allows the function to be passed 'self'.
+        self.doAltX[ name ] = nfunction
+        
+    
+    #@-node:mork.20041101190309:extendAltX
+    #@+node:mork.20041102094716:reconfigureKeyStroke
+    def reconfigureKeyStroke( self, tbuffer, keystroke , set_to ):
+        '''This method allows the user to reconfigure what a keystroke does.
+           This feature is alpha at best, and untested.'''
+        if self.cbDict.has_key( set_to ):
+            
+            command = self.cbDict[ set_to ]
+            self.cbDict[ keystroke ] = command
+            evstring = '<%s>' % keystroke
+            tbuffer.bind( evstring,  lambda event, meth = command: self.masterCommand( event, meth , evstring)  )
+    #@-node:mork.20041102094716:reconfigureKeyStroke
+    #@+node:mork.20041103155347:buffer recognition and alterers
+    #@+at
+    # an Emacs instance does not have knowledge of what is considered a buffer 
+    # in the environment.
+    # It must be configured by the user so that it can operate on the other 
+    # buffers.  Otherwise
+    # these methods will be useless.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041104094826:configure buffer methods
+    #@+others
+    #@+node:mork.20041103155347.1:setBufferGetter
+    def setBufferListGetter( self, buffer, method ):
+        #Sets a method that returns a buffer name and its text, and its insert position.
+        self.bufferListGetters[ buffer ] = method
+    #@-node:mork.20041103155347.1:setBufferGetter
+    #@+node:mork.20041103155347.2:setBufferSetter
+    def setBufferSetter( self, buffer, method ):
+        #Sets a method that takes a buffer name and the new contents.
+        self.bufferSetters[ buffer ] = method
+    #@nonl
+    #@-node:mork.20041103155347.2:setBufferSetter
+    #@+node:mork.20041103155347.3:getBufferDict
+    def getBufferDict( self, event ):
+        
+        tbuffer = event.widget
+        meth = self.bufferListGetters[ tbuffer ]
+        return meth()
+    #@nonl
+    #@-node:mork.20041103155347.3:getBufferDict
+    #@+node:mork.20041103162147:setBufferData
+    def setBufferData( self, event, name, data ):
+        
+        tbuffer = event.widget
+        meth = self.bufferSetters[ tbuffer ]
+        meth( name, data )
+    #@nonl
+    #@-node:mork.20041103162147:setBufferData
+    #@+node:mork.20041103191311:setBufferGoto
+    def setBufferGoto( self, tbuffer, method ):
+        self.bufferGotos[ tbuffer ] = method 
+    #@nonl
+    #@-node:mork.20041103191311:setBufferGoto
+    #@+node:mork.20041104090224:setBufferDelete
+    def setBufferDelete( self, tbuffer, method ):
+        
+        self.bufferDeletes[ tbuffer ] = method
+        
+    
+    #@-node:mork.20041104090224:setBufferDelete
+    #@+node:mork.20041104092349:setBufferRename
+    def setBufferRename( self, buffer, method ):
+        
+        self.renameBuffers[ buffer ] = method
+    #@nonl
+    #@-node:mork.20041104092349:setBufferRename
+    #@-others
+    #@nonl
+    #@-node:mork.20041104094826:configure buffer methods
+    #@+node:mork.20041104094826.1:buffer operations
+    #@+others
+    #@+node:mork.20041103155347.4:appendToBuffer
+    def appendToBuffer( self, event, name ):
+    
+        tbuffer = event.widget
+        try:
+            txt = tbuffer.get( 'sel.first', 'sel.last' )
+            bdata = self.bufferDict[ name ]
+            bdata = '%s%s' % ( bdata, txt )
+            self.setBufferData( event, name, bdata )
+        except Exception, x:
+            pass
+        return self.keyboardQuit( event )
+    #@nonl
+    #@-node:mork.20041103155347.4:appendToBuffer
+    #@+node:mork.20041103155347.5:prependToBuffer
+    def prependToBuffer( self, event, name ):
+        
+        tbuffer = event.widget
+        try:
+            txt = tbuffer.get( 'sel.first', 'sel.last' )
+            bdata = self.bufferDict[ name ]
+            bdata = '%s%s' % ( txt, bdata )
+            self.setBufferData( event, name, bdata )
+        except Exception, x:
+            pass
+        return self.keyboardQuit( event )
+    #@nonl
+    #@-node:mork.20041103155347.5:prependToBuffer
+    #@+node:mork.20041103155347.6:insertToBuffer
+    def insertToBuffer( self, event, name ):
+    
+        tbuffer = event.widget
+        bdata = self.bufferDict[ name ]
+        tbuffer.insert( 'insert', bdata )
+        self._tailEnd( tbuffer )
+        return self.keyboardQuit( event )
+    #@-node:mork.20041103155347.6:insertToBuffer
+    #@+node:mork.20041103190332:listBuffers
+    def listBuffers( self, event ):
+        
+        bdict  = self.getBufferDict( event )
+        list = bdict.keys()
+        list.sort()
+        svar, label = self.getSvarLabel( event )
+        data = '\n'.join( list )
+        self.keyboardQuit( event )
+        svar.set( data )
         return 'break'
-    setSvar( event, svar )
-    return 'break'
-#@-node:mork.20041014112843.14:nameLastMacro
-#@+node:mork.20041014112843.15:_addToDoAltX
-def _addToDoAltX( name, macro ):
-    if not doAltX.has_key( name ):
-        def exe( event, macro = macro ):
-            stopControlX( event )
-            return _executeMacro( macro, event.widget )
-        doAltX[ name ] = exe
-        namedMacros[ name ] = macro
-        return True
-    else:
-        return False
-#@-node:mork.20041014112843.15:_addToDoAltX
-#@+node:mork.20041014112843.16:loadMacros
-def loadMacros( event ):
-
-    f = tkFileDialog.askopenfile()
-    if f == None: return 'break'
-    else:
-        return _loadMacros( f )       
-#@-node:mork.20041014112843.16:loadMacros
-#@+node:mork.20041014112843.17:_loadMacros
-def _loadMacros( f ):
-    macros = cPickle.load( f )
-    for z in macros:
-        _addToDoAltX( z, macros[ z ] )
-    return 'break'
-#@-node:mork.20041014112843.17:_loadMacros
-#@+node:mork.20041014112843.18:getMacroName
-def getMacroName( event ):
-    global macroing
-    svar, label = getSvarLabel( event )
-    if not macroing:
-        macroing = 3
-        svar.set('')
-        setLabelBlue( label )
+        
+    #@nonl
+    #@-node:mork.20041103190332:listBuffers
+    #@+node:mork.20041103155347.7:copyToBuffer
+    def copyToBuffer( self, event, name ):
+        
+        tbuffer = event.widget
+        try:
+            txt = tbuffer.get( 'sel.first', 'sel.last' )
+            self.setBufferData( event, name, txt )
+        except Exception, x:
+            pass
+        return self.keyboardQuit( event )
+        
+    #@-node:mork.20041103155347.7:copyToBuffer
+    #@+node:mork.20041103191311.1:switchToBuffer
+    def switchToBuffer( self, event, name ):
+        
+        method = self.bufferGotos[ event.widget ]
+        self.keyboardQuit( event )
+        method( name )
         return 'break'
-    if event.keysym == 'Return':
-        macroing = False
-        saveMacros( event, svar.get() )
+    #@-node:mork.20041103191311.1:switchToBuffer
+    #@+node:mork.20041104090224.1:killBuffer
+    def killBuffer( self, event, name ):
+        
+        method = self.bufferDeletes[ event.widget ]
+        self.keyboardQuit( event )
+        method( name )
         return 'break'
-    if event.keysym == 'Tab':
-        svar.set( _findMatch( svar, namedMacros ) )
-        return 'break'        
-    setSvar( event, svar )
-    return 'break'    
-#@-node:mork.20041014112843.18:getMacroName
-#@+node:mork.20041014112843.19:saveMacros
-def saveMacros( event, macname ):
-
+        
+    
+    #@-node:mork.20041104090224.1:killBuffer
+    #@+node:mork.20041104092058:renameBuffer
+    def renameBuffer( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+        if not self.mcStateManager.getState( 'renameBuffer' ):
+            self.mcStateManager.setState( 'renameBuffer', True )
+            svar.set( '' )
+            label.configure( background = 'lightblue' )
+            return 'break'
+        if event.keysym == 'Return':
+           
+           nname = svar.get()
+           self.keyboardQuit( event )
+           self.renameBuffers[ event.widget ]( nname )
+            
+            
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    #@nonl
+    #@-node:mork.20041104092058:renameBuffer
+    #@+node:mork.20041103161202:chooseBuffer
+    def chooseBuffer( self, event ):
+        
+        svar, label = self.getSvarLabel( event )
+    
+        state = self.mcStateManager.getState( 'chooseBuffer' )
+        if state.startswith( 'start' ):
+            state = state[ 5: ]
+            self.mcStateManager.setState( 'chooseBuffer', state )
+            svar.set( '' )
+        if event.keysym == 'Tab':
+            
+            stext = svar.get().strip()
+            if self.bufferTracker.prefix and stext.startswith( self.bufferTracker.prefix ):
+                svar.set( self.bufferTracker.next() ) #get next in iteration
+            else:
+                prefix = svar.get()
+                pmatches = []
+                for z in self.bufferDict.keys():
+                    if z.startswith( prefix ):
+                        pmatches.append( z )
+                self.bufferTracker.setTabList( prefix, pmatches )
+                svar.set( self.bufferTracker.next() ) #begin iteration on new lsit
+            return 'break'        
+    
+            
+        elif event.keysym == 'Return':
+           
+           bMode = self.mcStateManager.getState( 'chooseBuffer' )
+           return self.bufferCommands[ bMode ]( event, svar.get() )
+            
+            
+        else:
+            self.setSvar( event, svar )
+            return 'break'
+    
+    #@-node:mork.20041103161202:chooseBuffer
+    #@+node:mork.20041103161202.1:setInBufferMode
+    def setInBufferMode( self, event, which ):
+        
+        self.keyboardQuit( event )
+        tbuffer = event.widget
+        self.mcStateManager.setState( 'chooseBuffer', 'start%s' % which )
+        svar, label = self.getSvarLabel( event )
+        label.configure( background = 'lightblue' )
+        svar.set( 'Choose Buffer Name:' )
+        self.bufferDict = self.getBufferDict( event )
+        return 'break'
+    #@nonl
+    #@-node:mork.20041103161202.1:setInBufferMode
+    #@-others
+    #@nonl
+    #@-node:mork.20041104094826.1:buffer operations
+    #@-others
+    #@nonl
+    #@-node:mork.20041103155347:buffer recognition and alterers
+    #@-others
+    #@nonl
+    #@-node:mork.20041031194746:configurable methods
+    #@+node:mork.20041031155753:macro methods
+    #@+at
+    # general macro methods.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.8:startKBDMacro
+    #self.lastMacro = None
+    #self.macs = []
+    #self.macro = []
+    #self.namedMacros = {}
+    #self.macroing = False
+    def startKBDMacro( self, event ):
+    
+        svar, label = self.getSvarLabel( event )
+        svar.set( 'Recording Keyboard Macro' )
+        label.configure( background = 'lightblue' )
+        self.macroing = True
+        return 'break'
+    #@-node:mork.20041030164547.8:startKBDMacro
+    #@+node:mork.20041030164547.9:recordKBDMacro
+    def recordKBDMacro( self, event, stroke ):
+        if stroke != '<Key>':
+            self.macro.append( (stroke, event.keycode, event.keysym, event.char) )
+        elif stroke == '<Key>':
+            if event.keysym != '??':
+                self.macro.append( ( event.keycode, event.keysym ) )
+        return
+    #@-node:mork.20041030164547.9:recordKBDMacro
+    #@+node:mork.20041030164547.10:stopKBDMacro
+    def stopKBDMacro( self, event ):
+        #global macro, lastMacro, macroing
+        if self.macro:
+            self.macro = self.macro[ : -4 ]
+            self.macs.insert( 0, self.macro )
+            self.lastMacro = self.macro
+            self.macro = []
+    
+        self.macroing = False
+        svar, label = self.getSvarLabel( event )
+        svar.set( 'Keyboard macro defined' )
+        label.configure( background = 'lightgrey' )
+        return 'break' 
+    #@-node:mork.20041030164547.10:stopKBDMacro
+    #@+node:mork.20041030164547.11:_executeMacro
+    def _executeMacro( self, macro, tbuffer ):
+        for z in macro:
+            if len( z ) == 2:
+                tbuffer.event_generate( '<Key>', keycode = z[ 0 ], keysym = z[ 1 ] ) 
+            else:
+                meth = z[ 0 ].lstrip( '<' ).rstrip( '>' )
+                method = self.cbDict[ meth ]
+                ev = Tkinter.Event()
+                ev.widget = tbuffer
+                ev.keycode = z[ 1 ]
+                ev.keysym = z[ 2 ]
+                ev.char = z[ 3 ]
+                self.masterCommand( ev , method, '<%s>' % meth )
+        return self._tailEnd( tbuffer )  
+    #@-node:mork.20041030164547.11:_executeMacro
+    #@+node:mork.20041030164547.12:executeLastMacro
+    def executeLastMacro( self, event ):
+        tbuffer = event.widget
+        if self.lastMacro:
+            return self._executeMacro( self.lastMacro, tbuffer )
+        return 'break'
+    #@-node:mork.20041030164547.12:executeLastMacro
+    #@+node:mork.20041030164547.13:nameLastMacro
+    def nameLastMacro( self, event ):
+        '''Names the last macro defined.'''
+        #global macroing
+        svar, label = self.getSvarLabel( event )    
+        if not self.macroing :
+            self.macroing = 2
+            svar.set( '' )
+            self.setLabelBlue( label )
+            return 'break'
+        if event.keysym == 'Return':
+            name = svar.get()
+            self._addToDoAltX( name, self.lastMacro )
+            svar.set( '' )
+            self.setLabelBlue( label )
+            self.macroing = False
+            self.stopControlX( event )
+            return 'break'
+        self.setSvar( event, svar )
+        return 'break'
+    #@-node:mork.20041030164547.13:nameLastMacro
+    #@+node:mork.20041030164547.14:_addToDoAltX
+    def _addToDoAltX( self, name, macro ):
+        '''Adds macro to Alt-X commands.'''
+        if not self.doAltX.has_key( name ):
+            def exe( event, macro = macro ):
+                self.stopControlX( event )
+                return self._executeMacro( macro, event.widget )
+            self.doAltX[ name ] = exe
+            self.namedMacros[ name ] = macro
+            return True
+        else:
+            return False
+    #@-node:mork.20041030164547.14:_addToDoAltX
+    #@+node:mork.20041030164547.15:loadMacros
+    def loadMacros( self,event ):
+        '''Asks for a macro file name to load.'''
+        import tkFileDialog
+        f = tkFileDialog.askopenfile()
+        if f == None: return 'break'
+        else:
+            return self._loadMacros( f )       
+    #@-node:mork.20041030164547.15:loadMacros
+    #@+node:mork.20041030164547.16:_loadMacros
+    def _loadMacros( self, f ):
+        '''Loads a macro file into the macros dictionary.'''
+        import cPickle
+        macros = cPickle.load( f )
+        for z in macros:
+            self._addToDoAltX( z, macros[ z ] )
+        return 'break'
+    #@-node:mork.20041030164547.16:_loadMacros
+    #@+node:mork.20041030164547.17:getMacroName
+    def getMacroName( self, event ):
+        '''A method to save your macros to file.'''
+        #global macroing
+        svar, label = self.getSvarLabel( event )
+        if not self.macroing:
+            self.macroing = 3
+            svar.set('')
+            self.setLabelBlue( label )
+            return 'break'
+        if event.keysym == 'Return':
+            self.macroing = False
+            self.saveMacros( event, svar.get() )
+            return 'break'
+        if event.keysym == 'Tab':
+            svar.set( self._findMatch( svar, self.namedMacros ) )
+            return 'break'        
+        self.setSvar( event, svar )
+        return 'break'    
+    #@-node:mork.20041030164547.17:getMacroName
+    #@+node:mork.20041030164547.18:saveMacros
+    def saveMacros( self, event, macname ):
+        '''Asks for a file name and saves it.'''
+        import tkFileDialog
         name = tkFileDialog.asksaveasfilename()
         if name:
             f = file( name, 'a+' )
             f.seek( 0 )
             if f:
-                _saveMacros( f, macname ) 
+                self._saveMacros( f, macname ) 
         return 'break'
-#@-node:mork.20041014112843.19:saveMacros
-#@+node:mork.20041014112843.20:_saveMacros
-def _saveMacros( f , name ):
-    fname = f.name
-    try:
-        macs = cPickle.load( f )
-    except:
-        macs = {}
-    f.close()
-    if namedMacros.has_key( name ):
-        macs[ name ] = namedMacros[ name ]
-        f = file( fname, 'w' )
-        cPickle.dump( macs, f )
-        f.close()   
-#@-node:mork.20041014112843.20:_saveMacros
-#@-node:ekr.20041028083211.2:Keyboard macros...
-#@+node:ekr.20041028083211.3:Emacs commands...
-#@+node:ekr.20041028083211.4:Comment column
-#@+node:mork.20041014112843.21:setCommentColumn
-ccolumn = '0'
-def setCommentColumn( event ):
-    global ccolumn
-    cc= event.widget.index( 'insert' )
-    cc1, cc2 = cc.split( '.' )
-    ccolumn = cc2
-    return 'break'
-#@-node:mork.20041014112843.21:setCommentColumn
-#@+node:mork.20041014112843.22:indentToCommentColumn
-def indentToCommentColumn( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert lineend' )
-    i1, i2 = i.split( '.' )
-    i2 = int( i2 )
-    c1 = int( ccolumn )
-    if i2 < c1:
-        wsn = c1 - i2
-        buffer.insert( 'insert lineend', ' '* wsn )
-    if i2 >= c1:
-        buffer.insert( 'insert lineend', ' ')
-    buffer.mark_set( 'insert', 'insert lineend' )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.22:indentToCommentColumn
-#@-node:ekr.20041028083211.4:Comment column
-#@+node:ekr.20041028083211.5:Editing commands
-#@+node:mork.20041014112843.23:exchangePointMark
-def exchangePointMark( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    s1 = buffer.index( 'sel.first' )
-    s2 = buffer.index( 'sel.last' )
-    i = buffer.index( 'insert' )
-    if i == s1:
-        buffer.mark_set( 'insert', s2 )
-    else:
-        buffer.mark_set('insert', s1 )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.23:exchangePointMark
-#@+node:mork.20041014112843.24:howMany
-howM = False
-def howMany( event ):
-    global howM
-    svar, label = getSvarLabel( event )
-    if event.keysym == 'Return':
-        buffer = event.widget
-        txt = buffer.get( '1.0', 'end' )
-        reg1 = svar.get()
-        reg = re.compile( reg1 )
-        i = reg.findall( txt )
-        svar.set( '%s occurances found of %s' % (len(i), reg1 ) )
-        setLabelGrey( label )
-        howM = False
-        return 'break'
-    setSvar( event, svar )
-    return 'break'
-#@-node:mork.20041014112843.24:howMany
-#@+node:mork.20041014112843.25:startHowMany
-def startHowMany( event ):
-    global howM
-    howM = True
-    svar, label = getSvarLabel( event )
-    svar.set( '' )
-    setLabelBlue( label )
-    return 'break'
-#@-node:mork.20041014112843.25:startHowMany
-#@+node:mork.20041014112843.26:selectParagraph
-def selectParagraph( event ):
-    buffer = event.widget
-    txt = buffer.get( 'insert linestart', 'insert lineend' )
-    txt = txt.lstrip().rstrip()
-    i = buffer.index( 'insert' )
-    if not txt:
-        while 1:
-            i = buffer.index( '%s + 1 lines' % i )
-            txt = buffer.get( '%s linestart' % i, '%s lineend' % i )
-            txt = txt.lstrip().rstrip()
-            if txt:
-                _selectParagraph( buffer, i )
-                break
-            if buffer.index( '%s lineend' % i ) == buffer.index( 'end' ):
-                return 'break'
-    if txt:
-        while 1:
-            i = buffer.index( '%s - 1 lines' % i )
-            txt = buffer.get( '%s linestart' % i, '%s lineend' % i )
-            txt = txt.lstrip().rstrip()
-            if not txt or buffer.index( '%s linestart' % i ) == buffer.index( '1.0' ):
-                if not txt:
-                    i = buffer.index( '%s + 1 lines' % i )
-                _selectParagraph( buffer, i )
-                break     
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.26:selectParagraph
-#@+node:mork.20041014112843.27:_selectParagraph
-def _selectParagraph( buffer, start ):
-    i2 = start
-    while 1:
-        txt = buffer.get( '%s linestart' % i2, '%s lineend' % i2 )
-        if buffer.index( '%s lineend' % i2 )  == buffer.index( 'end' ):
-            break
-        txt = txt.lstrip().rstrip()
-        if not txt: break
-        else:
-            i2 = buffer.index( '%s + 1 lines' % i2 )
-    buffer.tag_add( 'sel', '%s linestart' % start, '%s lineend' % i2 )
-    buffer.mark_set( 'insert', '%s lineend' % i2 )
-#@-node:mork.20041014112843.27:_selectParagraph
-#@+node:mork.20041014112843.28:killParagraph
-def killParagraph( event ):   
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    txt = buffer.get( 'insert linestart', 'insert lineend' )
-    if not txt.rstrip().lstrip():
-        i = buffer.search( r'\w', i, regexp = True, stopindex = 'end' )
-    _selectParagraph( buffer, i )
-    i2 = buffer.index( 'insert' )
-    kill( event, i, i2 )
-    buffer.mark_set( 'insert', i )
-    buffer.selection_clear()
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.28:killParagraph
-#@+node:mork.20041014112843.29:backwardKillParagraph
-def backwardKillParagraph( event ):   
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    i2 = i
-    txt = buffer.get( 'insert linestart', 'insert lineend' )
-    if not txt.rstrip().lstrip():
-        movingParagraphs( event, -1 )
-        i2 = buffer.index( 'insert' )
-    selectParagraph( event )
-    i3 = buffer.index( 'sel.first' )
-    kill( event, i3, i2 )
-    buffer.mark_set( 'insert', i )
-    buffer.selection_clear()
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.29:backwardKillParagraph
-#@+node:mork.20041014112843.30:iterateKillBuffer
-reset = False
-def iterateKillBuffer():
-    global reset
-    while 1:
-        for z in killbuffer:
-            if reset:
-                reset = False
-                break
-            yield z
-#@-node:mork.20041014112843.30:iterateKillBuffer
-#@+node:mork.20041014112843.32:moveTo
-def moveTo( event, spot ):
-    buffer = event.widget
-    buffer.mark_set( Tkinter.INSERT, spot )
-    buffer.see( spot )
-    return 'break'
-#@-node:mork.20041014112843.32:moveTo
-#@+node:mork.20041014112843.33:moveword
-def moveword( event, way  ):
-            buffer = event.widget
-            c = 'c'
-            i = way
-            def wsBack( i , way):
-                        while 1:
-                            i = i + way
-                            bs = ''
-                            if i > 0:
-                                bs = 'insert +%sc' % i 
-                                char = buffer.get( bs ) 
-                            if i < 0:
-                                bs = 'insert'+str( i ) + c
-                                char = buffer.get( bs ) 
-                            if buffer.index( bs ) in ( '1.0', buffer.index( 'end' ) ):
-                                char = 'stop'
-                            if char not in string.whitespace:
-                                buffer.mark_set( 'insert', bs + ' wordstart' )
-                                buffer.see( 'insert' )
-                                buffer.event_generate( '<Key>' )
-                                buffer.update_idletasks()
-                                return 'break'
-            def toWs( i , way):                
-                while 1:
-                    bs = ''
-                    if way < 0:
-                        bs = 'insert %sc' % i 
-                        char = buffer.get( bs )
-                    if way > 0:
-                        bs = 'insert +%sc' %  i  
-                        char = buffer.get( bs )
-                    if buffer.index( bs ) in ( '1.0', buffer.index( 'end' ) ):
-                        return i                    
-                    if char in string.whitespace: return i
-                    i = i + way
-            char = buffer.get( 'insert', 'insert + 1c' )
-            if char in string.whitespace : return wsBack( i , way)
-            else: return wsBack( toWs( i , way ) , way)
-#@-node:mork.20041014112843.33:moveword
-#@+node:mork.20041014112843.34:kill
-def kill( event, frm, to  ):
-    buffer = event.widget
-    text = buffer.get( frm, to )
-    addToKillBuffer( text )
-    if frm == 'insert' and to =='insert lineend' and buffer.index( frm ) == buffer.index( to ):
-        buffer.delete( 'insert', 'insert lineend +1c' )
-        addToKillBuffer( '\n' )
-    else:
-        buffer.delete( frm, to )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.34:kill
-#@+node:mork.20041014112843.35:deletelastWord
-def deletelastWord( event ):
-    buffer = event.widget
-    i = buffer.get( 'insert' )
-    moveword( event, -1 )
-    kill( event, 'insert', 'insert wordend')
-    moveword( event ,1 )
-    return 'break'
-#@-node:mork.20041014112843.35:deletelastWord
-#@+node:mork.20041014112843.36:walkKB
-def walkKB( event, frm, which, kb = iterateKillBuffer() ):
-    global reset
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    t , t1 = i.split( '.' )
-    
-    if killbuffer:
-        if which == 'c':
-            reset = True
-            txt = kb.next()
-            buffer.tag_delete( 'kb' )
-            buffer.insert( frm, txt, ('kb') )
-            buffer.mark_set( 'insert', i )
-        else:
-            txt = kb.next()
-            t1 = str( int( t1 ) + len( txt ) )
-            r = buffer.tag_ranges( 'kb' )
-            if r and r[ 0 ] == i:
-                buffer.delete( r[ 0 ], r[ -1 ] )
-            buffer.tag_delete( 'kb' )
-            buffer.insert( frm, txt, ('kb') )
-            buffer.mark_set( 'insert', i )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.36:walkKB
-#@+node:mork.20041014112843.37:killsentence
-def killsentence( event, back = False ):
-    buffer = event.widget
-    i = buffer.search( '.' , 'insert', stopindex = 'end' )
-    if back:
-        i = buffer.search( '.' , 'insert', backwards = True, stopindex = '1.0' ) 
-        if i == '':
-            return 'break'
-        i2 = buffer.search( '.' , i, backwards = True , stopindex = '1.0' )
-        if i2 == '':
-            i2 = '1.0'
-            return kill( event, i2, '%s + 1c' % i )
-    else:
-        i = buffer.search( '.' , 'insert', stopindex = 'end' )
-        i2 = buffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
-    if i2 == '':
-       i2 = '1.0'
-    else:
-       i2 = i2 + ' + 1c '
-    if i == '': return 'break'
-    return kill( event, i2, '%s + 1c' % i )
-#@-node:mork.20041014112843.37:killsentence
-#@+node:mork.20041014112843.38:search
-def search( event, way ):
-    buffer = event.widget
-    svar, label = getSvarLabel( event )
-    stext = svar.get()
-    if stext == '': return 'break'
-    if way == 'bak':
-        i = buffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' )
-    else:
-        if buffer.index( 'insert + 1c' ) == buffer.index( 'end' ):
-            i = buffer.search(  stext, "insert", stopindex = 'end') 
-        else:
-            i = buffer.search(  stext, "insert + 1c", stopindex = 'end') 
-    if i in string.whitespace : return 'break'
-    buffer.mark_set( 'insert', i )
-    buffer.see( 'insert' )
-#@-node:mork.20041014112843.38:search
-#@+node:mork.20041014112843.39:capitalize
-def capitalize( event, which ):
-    buffer = event.widget
-    text = buffer.get( 'insert wordstart', 'insert wordend' )
-    i = buffer.index( 'insert' )
-    if text == ' ': return 'break'
-    buffer.delete( 'insert wordstart', 'insert wordend' )
-    if which == 'cap':
-        text = text.capitalize() 
-    if which == 'low':
-        text = text.lower()
-    if which == 'up':
-        text = text.upper()
-    buffer.insert( 'insert', text )
-    buffer.mark_set( 'insert', i )    
-    return 'break'
-#@-node:mork.20041014112843.39:capitalize
-#@+node:mork.20041014112843.40:swapWords
-def swapWords( event , swapspots ):
-    buffer = event.widget
-    txt = buffer.get( 'insert wordstart', 'insert wordend' )
-    if txt == ' ' : return 'break'
-    i = buffer.index( 'insert wordstart' )
-    if len( swapspots ) != 0:
-        def swp( find, ftext, lind, ltext ):
-            buffer.delete( find, '%s wordend' % find )
-            buffer.insert( find, ltext )
-            buffer.delete( lind, '%s wordend' % lind )
-            buffer.insert( lind, ftext )
-            swapspots.pop()
-            swapspots.pop()
-            return 'break'
-        if buffer.compare( i , '>', swapspots[ 1 ] ):
-            return swp( i, txt, swapspots[ 1 ], swapspots[ 0 ] )
-        elif buffer.compare( i , '<', swapspots[ 1 ] ):
-            return swp( swapspots[ 1 ], swapspots[ 0 ], i, txt )
-        else:
-            return 'break'
-    else:
-        swapspots.append( txt )
-        swapspots.append( i )
-        return 'break'
-#@-node:mork.20041014112843.40:swapWords
-#@+node:mork.20041014112843.41:getHelpText
-def getHelpText():
-            '''This returns a string that describes what all the
-            keystrokes do with a bound Text widget.'''
-            help = [ 'Buffer Keyboard Commands:',
-            '----------------------------------------\n',
-            '<Control-p>: move up one line',
-            '<Control-n>: move down one line',
-            '<Control-f>: move forward one char',
-            '<Conftol-b>: move backward one char',
-            '<Control-o>: insert newline',
-            '<Control-Alt-o> : insert newline and indent',
-            '<Alt-<> : move to start of Buffer',
-            '<Alt- >' +' >: move to end of Buffer',
-            '<Control a>: move to start of line',
-            '<Control e> :move to end of line',
-            '<Alt-Up>: move to start of line',
-            '<Alt-Down>: move to end of line',
-            '<Alt b>: move one word backward',
-            '<Alt f> : move one word forward',
-            '<Control - Right Arrow>: move one word forward',
-            '<Control - Left Arrow>: move one word backwards',
-            '<Alt-m> : move to beginning of indentation',
-            '<Alt-g> : goto line number',
-            '<Control-v>: scroll forward one screen',
-            '<Alt-v>: scroll up one screen',
-            '<Alt-a>: move back one sentence',
-            '<Alt-e>: move forward one sentence',
-            '<Alt-}>: move forward one paragraph',
-            '<Alt-{>: move backwards one paragraph',
-            '<Control-x . >: set fill prefix',
-            '<Alt-q>: fill paragraph',
-            '<Alt-h>: select current or next paragraph',
-            '<Control-x Control-@>: pop global mark',
-            '<Control-u>: universal command',
-            '<Alt -n > : n is a number.  Functions like universal command',
-            '<Control-x (>: start definition of kbd macro',
-            '<Control-x ) > : stop definition of kbd macro',
-            '<Control-u Control-x ( >: execute last macro and edit',
-            '''<Control-x u > : advertised undo.   This function utilizes the environments.
-              If the buffer is not configure explicitly, there is no operation.''',
-              '<Control-_>: advertised undo.  See above',
-            '----------------------------------------\n',
-            '<Delete> : delete previous character',
-            '<Control d>: delete next character',
-            '<Control k> : delete from cursor to end of line. Text goes to kill buffer',
-            '<Alt d>: delete word. Word goes to kill buffer',
-            '<Alt Delete>: delete previous word. Word goes to kill buffer',
-            '<Alt k >: delete current sentence. Sentence goes to kill buffer',
-            '<Control x Delete>: delete previous sentence. Sentence goes to kill buffer',
-            '<Control y >: yank last deleted text segment from\n kill buffer and inserts it.',
-            '<Alt y >: cycle and yank through kill buffer.\n',
-            '<Alt z >: zap to typed letter. Text goes to kill buffer',
-            '<Alt-^ >: join this line to the previous one',
-            '<Alt-\ >: delete surrounding spaces',
-            '<Control-Alt-w>: next kill is appended to kill buffer\n'
-            
-            '----------------------------------------\n',
-            '<Alt c>: Capitalize the word the cursor is under.',
-            '<Alt u>: Uppercase the characters in the word.',
-            '<Alt l>: Lowercase the characters in the word.',
-             '----------------------------------------\n',
-             '<Alt t>: Mark word for word swapping.  Marking a second\n word will swap this word with the first',
-             '<Control-t>: Swap characters',
-             '<Ctrl-@>: Begin marking region.',
-             '<Ctrl-W>: Kill marked region',
-             '<Alt-W>: Copy marked region',
-             '<Ctrl-x Ctrl-u>: uppercase a marked region',
-             '<Ctrl-x Ctrl-l>: lowercase a marked region',
-             '<Ctrl-x h>: mark entire buffer',
-             '<Alt-Ctrl-backslash>: indent region to indentation of line 1 of the region.',
-             '<Ctrl-x tab> : indent region by 1 tab',
-             '<Control-x Control-x> : swap point and mark',
-             '<Control-x semicolon>: set comment column',
-             '<Alt-semicolon>: indent to comment column',
-              '----------------------------------------\n',
-             '<Control-x a e>: expand abbreviation before point',
-             '<Control-x a g>: set abbreviation for previous word',
-             '<Control-x a i g>: set word as abbreviation for word',                        
-            '----------------------------------------\n',
-            '<Control s>: forward search, using pattern in Mini buffer.\n',
-            '<Control r>: backward search, using pattern in Mini buffer.\n' ,
-            '''<Alt-%>: begin query search/replace. n skips to next match. y changes current match.  
-            q or Return exits. ! to replace all remaining matches with no more questions''',
-            '<Alt-=>: count lines and characters in regions',
-            '<Alt-( >: insert parentheses()',
-            '<Alt-) >:  move past close',
-            '<Control-x Control-t>: transpose lines.',
-            '<Control-x Control-o>: delete blank lines' ,
-            '<Control-x r s>: save region to register',
-            '<Control-x r i>: insert to buffer from register',
-            '<Control-x r +>: increment register',
-            '<Control-x r n>: insert number 0 to register',
-            '<Control-x r space > : point insert point to register',
-            '<Control-x r j > : jump to register',
-            '<Control-x x>: save region to register',
-            '<Control-x r r> : save rectangle to register',
-            '<Control-x r o>: open up rectangle',
-            '<Control-x r c> : clear rectangle',
-            '<Control-x r d> : delete rectangle',
-            '<Control-x r t> : replace rectangle with string',
-            '<Control-x r k> : kill rectangle',
-            '<Control-x r y> : yank rectangle',
-            '<Control-g> : keyboard quit\n',
-            '<Control-x = > : position of cursor',
-            '<Control-x . > : set fill prefix',
-             '----------------------------------------\n',
-             '<Alt - - Alt-l >: lowercase previous word',
-             '<Alt - - Alt-u>: uppercase previous word',
-             '<Alt - - Alt-c>: capitalise previous word',
-             '----------------------------------------\n',
-             '<Alt-/ >: dynamic expansion',
-             '<Control-Alt-/>: dynamic expansion.  Expands to common prefix in buffer\n'
-             '----------------------------------------\n',
-             'Alt-x commands:\n'
-             'replace-string  -  replace string with string',
-             'append-to-register  - append region to register',
-             'prepend-to-register - prepend region to register\n'
-             'sort-lines - sort selected lines',
-             'sort-columns - sort by selected columns',
-             'reverse-region - reverse selected lines',
-             'sort-fields  - sort by fields',
-             'abbrev-mode - toggle abbrev mode on/off',
-             'kill-all-abbrevs - kill current abbreviations',
-             'expand-region-abbrevs - expand all abrevs in region',
-             'read-abbrev-file - read abbreviations from file',
-             'write-abbrev-file - write abbreviations to file',
-             'list-abbrevs   - list abbrevs in minibuffer',
-             'fill-region-as-paragraph - treat region as one paragraph and add fill prefix',
-             'fill-region - fill paragraphs in region with fill prefix',
-             'close-rectangle  - close whitespace rectangle',
-             'how-many - counts occurances of python regular expression',
-             'kill-paragraph - delete from cursor to end of paragraph',
-             'backward-kill-paragraph - delete from cursor to start of paragraph',
-            ]
-            return '\n'.join( help )
-#@-node:mork.20041014112843.41:getHelpText
-#@+node:mork.20041014112843.42:addToKillBuffer
-killbuffer = []
-def addToKillBuffer( text ):
-    global reset
-    reset = True
-    if previousStroke in ( '<Control-k>', '<Control-w>' ,
-     '<Alt-d>', '<Alt-Delete', '<Alt-z>', '<Delete>',
-     '<Control-Alt-w>' ) and len( killbuffer):
-        killbuffer[ 0 ] = killbuffer[ 0 ] + text
-        return
-    killbuffer.insert( 0, text )
-#@-node:mork.20041014112843.42:addToKillBuffer
-#@+node:mork.20041014112843.43:masterCommand
-controlx = False
-csr = { '<Control-s>': 'for', '<Control-r>':'bak' }
-pref = None
-zap = False
-goto = False
-previousStroke = ''
-def masterCommand( event, method , stroke): 
-    global previousStroke, regXKey
-    if macroing:
-        if macroing == 2 and stroke != '<Control-x>':
-            return nameLastMacro( event )
-        elif macroing == 3 and stroke != '<Control-x>':
-            return getMacroName( event )
-        else:
-            recordKBDMacro( event, stroke )
-    
-    if  stroke == '<Control-g>':
-        previousStroke = stroke
-        return stopControlX( event )
-                   
-    if uC:
-        previousStroke = stroke
-        return universalDispatch( event, stroke )
-    
-    if controlx:
-        previousStroke = stroke
-        return doControlX( event, stroke )
-        
-        
-    if stroke in ('<Control-s>', '<Control-r>' ): 
-        previousStroke = stroke
-        return startIncremental( event, stroke )
-            
-    if  isearch:
-       return  iSearch( event )
-       
-    if stroke == '<Alt-g>':
-        previousStroke = stroke
-        return startGoto( event )
-    if goto:
-        return Goto( event )
-    
-    if stroke == '<Alt-z>':
-        previousStroke = stroke
-        return startZap( event )
-
-    if zap:
-        return zapTo( event )
-        
-    if regXRpl:
+    #@-node:mork.20041030164547.18:saveMacros
+    #@+node:mork.20041030164547.19:_saveMacros
+    def _saveMacros( self, f , name ):
+        '''Saves the macros as a pickled dictionary'''
+        import cPickle
+        fname = f.name
         try:
-            regXKey = event.keysym
-            regXRpl.next()
-        finally:
+            macs = cPickle.load( f )
+        except:
+            macs = {}
+        f.close()
+        if self.namedMacros.has_key( name ):
+            macs[ name ] = self.namedMacros[ name ]
+            f = file( fname, 'w' )
+            cPickle.dump( macs, f )
+            f.close()   
+    #@-node:mork.20041030164547.19:_saveMacros
+    #@-others
+    #@nonl
+    #@-node:mork.20041031155753:macro methods
+    #@+node:mork.20041031194703:comment column methods
+    #@+others
+    #@+node:mork.20041030164547.20:setCommentColumn
+    #self.ccolumn = '0'
+    def setCommentColumn( self, event ):
+        #global ccolumn
+        cc= event.widget.index( 'insert' )
+        cc1, cc2 = cc.split( '.' )
+        self.ccolumn = cc2
+        return 'break'
+    #@-node:mork.20041030164547.20:setCommentColumn
+    #@+node:mork.20041030164547.21:indentToCommentColumn
+    def indentToCommentColumn( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert lineend' )
+        i1, i2 = i.split( '.' )
+        i2 = int( i2 )
+        c1 = int( self.ccolumn )
+        if i2 < c1:
+            wsn = c1 - i2
+            tbuffer.insert( 'insert lineend', ' '* wsn )
+        if i2 >= c1:
+            tbuffer.insert( 'insert lineend', ' ')
+        tbuffer.mark_set( 'insert', 'insert lineend' )
+        return self._tailEnd( tbuffer ) 
+    #@-node:mork.20041030164547.21:indentToCommentColumn
+    #@-others
+    #@nonl
+    #@-node:mork.20041031194703:comment column methods
+    #@+node:mork.20041031182709:how many methods
+    #@+others
+    #@+node:mork.20041030164547.23:howMany
+    #self.howM = False
+    def howMany( self, event ):
+        #global howM
+        svar, label = self.getSvarLabel( event )
+        if event.keysym == 'Return':
+            tbuffer = event.widget
+            txt = tbuffer.get( '1.0', 'end' )
+            import re
+            reg1 = svar.get()
+            reg = re.compile( reg1 )
+            i = reg.findall( txt )
+            svar.set( '%s occurances found of %s' % (len(i), reg1 ) )
+            self.setLabelGrey( label )
+            #self.howM = False
+            self.mcStateManager.setState( 'howM', False )
             return 'break'
-
-    if howM:
-        return howMany( event )
-        
-    if abbrevMode:
-        return abbrevCommand1( event )
-        
-    if altx:
-        return doAlt_X( event )
-
-    if stroke == '<Alt-percent>':
-        previousStroke = stroke
-        return masterQR( event )  
-    if qlisten:
-        return masterQR( event )
-        
-    if rString:
-        return replaceString( event )
-     
-    if negativeArg:
-        return negativeArgument( event, stroke )
-    
-    if stroke == '<Control-Alt-w>':
-        previousStroke = '<Control-Alt-w>'   
-        return 'break' 
-        
-    if abbrevOn:
-        if expandAbbrev( event ) :
-            return 'break'       
-        
-    if method:
-        rt = method( event )
-        previousStroke = stroke
-        return rt
-#@-node:mork.20041014112843.43:masterCommand
-#@-node:ekr.20041028083211.5:Editing commands
-#@+node:ekr.20041028083211.6:Register commands...
-#@+node:mork.20041014112843.44:copyToRegister
-def copyToRegister( event ):
-    if not _chckSel( event ):
-        return
-    if event.keysym in string.letters:
-        event.keysym = event.keysym.lower()
-        buffer = event.widget
-        txt = buffer.get( 'sel.first', 'sel.last' )
-        registers[ event.keysym ] = txt
-        return 
-    stopControlX( event )
-#@-node:mork.20041014112843.44:copyToRegister
-#@+node:mork.20041014112843.45:copyRectangleToRegister
-def copyRectangleToRegister( event ):
-    if not _chckSel( event ):
-        return
-    if event.keysym in string.letters:
-        event.keysym = event.keysym.lower()
-        buffer = event.widget
-        r1, r2, r3, r4 = getRectanglePoints( event )
-        rect = []
-        while r1 <= r3:
-            txt = buffer.get( '%s.%s' %( r1, r2 ), '%s.%s' %( r1, r4 ) )
-            rect.append( txt )
-            r1 = r1 +1
-        registers[ event.keysym ] = rect
-    stopControlX( event )        
-#@-node:mork.20041014112843.45:copyRectangleToRegister
-#@+node:mork.20041014112843.46:prependToRegister
-def prependToRegister( event ):
-    global regMeth, registermode, controlx, registermode
-    event.keysym = 'p'
-    setNextRegister( event )
-    controlx = True
-#@-node:mork.20041014112843.46:prependToRegister
-#@+node:mork.20041014112843.47:appendToRegister
-def appendToRegister( event ):
-    global regMeth, registermode, controlx
-    event.keysym = 'a'
-    setNextRegister( event )
-    controlx = True
-#@-node:mork.20041014112843.47:appendToRegister
-#@+node:mork.20041014112843.48:_chckSel
-def _chckSel( event ):
-     if not 'sel' in event.widget.tag_names():
-        return False
-     if not event.widget.tag_ranges( 'sel' ):
-        return False  
-     return True
-#@-node:mork.20041014112843.48:_chckSel
-#@+node:mork.20041014112843.49:_ToReg
-def _ToReg( event , which):
-    if not _chckSel( event ):
-        return
-    if _checkIfRectangle( event ):
-        return
-    if event.keysym in string.letters:
-        event.keysym = event.keysym.lower()
-        buffer = event.widget
-        if not registers.has_key( event.keysym ):
-            registers[ event.keysym ] = ''
-        txt = buffer.get( 'sel.first', 'sel.last' )
-        rtxt = registers[ event.keysym ]
-        if which == 'p':
-            txt = txt + rtxt
-        else:
-            txt = rtxt + txt
-        registers[ event.keysym ] = txt
-        return
-#@-node:mork.20041014112843.49:_ToReg
-#@+node:mork.20041014112843.50:_checkIfRectangle
-def _checkIfRectangle( event ):
-    if registers.has_key( event.keysym ):
-        if isinstance( registers[ event.keysym ], list ):
-            svar, label = getSvarLabel( event )
-            stopControlX( event )
-            svar.set( "Register contains Rectangle, not text" )
-            return True
-    return False           
-#@-node:mork.20041014112843.50:_checkIfRectangle
-#@+node:mork.20041014112843.51:insertFromRegister
-def insertFromRegister( event ):
-    buffer = event.widget
-    if registers.has_key( event.keysym ):
-        if isinstance( registers[ event.keysym ], list ):
-            yankRectangle( event, registers[ event.keysym ] )
-        else:
-            buffer.insert( 'insert', registers[ event.keysym ] )
-            buffer.event_generate( '<Key>' )
-            buffer.update_idletasks()
-    stopControlX( event )
-#@-node:mork.20041014112843.51:insertFromRegister
-#@+node:mork.20041014112843.52:incrementRegister
-def incrementRegister( event ):
-    if registers.has_key( event.keysym ):
-        if _checkIfRectangle( event ):
-            return
-        if registers[ event.keysym ] in string.digits:
-            i = registers[ event.keysym ]
-            i = str( int( i ) + 1 )
-            registers[ event.keysym ] = i
-        else:
-            invalidRegister( event, 'number' )
-            return
-    stopControlX( event )
-#@-node:mork.20041014112843.52:incrementRegister
-#@+node:mork.20041014112843.53:numberToRegister
-def numberToRegister( event ):
-    if event.keysym in string.letters:
-        registers[ event.keysym.lower() ] = str( 0 )
-    stopControlX( event )
-#@-node:mork.20041014112843.53:numberToRegister
-#@+node:mork.20041014112843.54:pointToRegister
-def pointToRegister( event ):
-    if event.keysym in string.letters:
-        buffer = event.widget
-        registers[ event.keysym.lower() ] = buffer.index( 'insert' )
-    stopControlX( event )
-#@-node:mork.20041014112843.54:pointToRegister
-#@+node:mork.20041014112843.55:jumpToRegister
-def jumpToRegister( event ):
-    if event.keysym in string.letters:
-        if _checkIfRectangle( event ):
-            return
-        buffer = event.widget
-        i = registers[ event.keysym.lower() ]
-        i2 = i.split( '.' )
-        if len( i2 ) == 2:
-            if i2[ 0 ].isdigit() and i2[ 1 ].isdigit():
-                pass
-            else:
-                invalidRegister( event, 'index' )
-                return
-        else:
-            invalidRegister( event, 'index' )
-            return
-        buffer.mark_set( 'insert', i )
-        buffer.event_generate( '<Key>' )
-        buffer.update_idletasks() 
-    stopControlX( event ) 
-#@-node:mork.20041014112843.55:jumpToRegister
-#@+node:mork.20041014112843.56:invalidRegister
-def invalidRegister( event, what ):
-    deactivateRegister( event )
-    svar, label = getSvarLabel( event )
-    svar.set( 'Register does not contain valid %s'  % what)
-    return    
-#@-node:mork.20041014112843.56:invalidRegister
-#@+node:mork.20041014112843.57:setNextRegister
-regMeth = None
-regMeths = {
-'s' : copyToRegister,
-'i' : insertFromRegister,
-'n': numberToRegister,
-'plus': incrementRegister,
-'space': pointToRegister,
-'j': jumpToRegister,
-'a': lambda event , which = 'a': _ToReg( event, which ),
-'p': lambda event , which = 'p': _ToReg( event, which ),
-'r': copyRectangleToRegister
-}    
-
-regText = {
-'s' : 'copy to register',
-'i' : 'insert from register',
-'plus': 'increment register',
-'n' : 'number to register',
-'p' : 'prepend to register',
-'a' : 'append to register',
-'space' : 'point to register',
-'j': 'jump to register',
-'r': 'rectangle to register'
-}
-def setNextRegister( event ):
-    global regMeth, registermode
-    if event.keysym == 'Shift':
-        return
-    if regMeths.has_key( event.keysym ):
-        regMeth = regMeths[ event.keysym ]
-        registermode = 2
-        svar = svars[ event.widget ]
-        svar.set( regText[ event.keysym ] )
-        return
-    stopControlX( event )
-#@-node:mork.20041014112843.57:setNextRegister
-#@+node:mork.20041014112843.58:executeRegister
-def executeRegister( event ):
-    regMeth( event )
-    if registermode: 
-        stopControlX( event )
-    return
-#@-node:mork.20041014112843.58:executeRegister
-#@+node:mork.20041014112843.59:deactivateRegister
-def deactivateRegister( event ):
-    global registermode, regMeth
-    svar, label = getSvarLabel( event )
-    svar.set( '' )
-    setLabelGrey( label )
-    registermode = False
-    regMeth = None
-#@-node:mork.20041014112843.59:deactivateRegister
-#@-node:ekr.20041028083211.6:Register commands...
-#@+node:ekr.20041028083211.7:Abbreviations
-#@+node:mork.20041014112843.60:abbreviationDispatch
-def abbreviationDispatch( event, which ):
-    global abbrevMode
-    if not abbrevMode:
-        abbrevMode = which
-        svar, label = getSvarLabel( event )
-        svar.set( '' )
-        setLabelBlue( label )
+        self.setSvar( event, svar )
         return 'break'
-    if abbrevMode:
-        abbrevCommand1( event )
-    return 'break'
-#@-node:mork.20041014112843.60:abbreviationDispatch
-#@+node:mork.20041014112843.61:abbrevCommand1
-def abbrevCommand1( event ):
-    global abbrevMode
-    if event.keysym == 'Return':
-        buffer = event.widget
-        word = buffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
-        if word == ' ': return
-        svar, label = getSvarLabel( event )
-        if abbrevMode == 1:
-            abbrevs[ svar.get() ] = word
-        elif abbrevMode == 2:
-            abbrevs[ word ] = svar.get()
-        abbrevMode = False
-        resetMiniBuffer( event )
-        return 'break'
-    svar, label = getSvarLabel( event )
-    setSvar( event, svar )
-    return 'break'
-#@-node:mork.20041014112843.61:abbrevCommand1
-#@+node:mork.20041014112843.62:expandAbbrev
-def expandAbbrev( event ):
-    buffer = event.widget
-    word = buffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
-    word = '%s%s' %( word, event.char )
-    if abbrevs.has_key( word ):
-        buffer.delete( 'insert -1c wordstart', 'insert -1c wordend' )
-        buffer.insert( 'insert', abbrevs[ word ] )
-        return True
-    else: return False
-#@-node:mork.20041014112843.62:expandAbbrev
-#@+node:mork.20041014112843.63:regionalExpandAbbrev
-regXRpl = None
-regXKey = None
-def regionalExpandAbbrev( event ):
-    global regXRpl
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    i1 = buffer.index( 'sel.first' )
-    i2 = buffer.index( 'sel.last' ) 
-    ins = buffer.index( 'insert' )
-    def searchXR( i1 , i2, ins, event ):
-        buffer.tag_add( 'sXR', i1, i2 )
-        while i1:
-            tr = buffer.tag_ranges( 'sXR' )
-            if not tr: break
-            i1 = buffer.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
-            if i1:
-                word = buffer.get( '%s wordstart' % i1, '%s wordend' % i1 )
-                buffer.tag_delete( 'found' )
-                buffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
-                buffer.tag_config( 'found', background = 'yellow' )
-                if abbrevs.has_key( word ):
-                    svar, label = getSvarLabel( event )
-                    svar.set( 'Replace %s with %s? y/n' % ( word, abbrevs[ word ] ) )
-                    yield None
-                    if regXKey == 'y':
-                        ind = buffer.index( '%s wordstart' % i1 )
-                        buffer.delete( '%s wordstart' % i1, '%s wordend' % i1 )
-                        buffer.insert( ind, abbrevs[ word ] )
-                i1 = '%s wordend' % i1
-        buffer.mark_set( 'insert', ins )
-        buffer.selection_clear()
-        buffer.tag_delete( 'sXR' )
-        buffer.tag_delete( 'found' )
-        svar, label = getSvarLabel( event )
+    #@-node:mork.20041030164547.23:howMany
+    #@+node:mork.20041030164547.24:startHowMany
+    def startHowMany( self, event ):
+        #global howM
+        #self.howM = True
+        self.mcStateManager.setState( 'howM', True )
+        svar, label = self.getSvarLabel( event )
         svar.set( '' )
-        setLabelGrey( label )
-        _setRAvars()
-    regXRpl = searchXR( i1, i2, ins, event)
-    regXRpl.next()
-    return 'break' 
-#@-node:mork.20041014112843.63:regionalExpandAbbrev
-#@+node:mork.20041014112843.64:_setRAvars
-def _setRAvars():
-    global regXRpl, regXKey
-    regXRpl = regXKey = None 
-#@-node:mork.20041014112843.64:_setRAvars
-#@+node:mork.20041014112843.65:killAllAbbrevs
-def killAllAbbrevs( event ):
-    global abbrevs
-    abbrevs = {}
-#@-node:mork.20041014112843.65:killAllAbbrevs
-#@+node:mork.20041014112843.66:toggleAbbrevMode
-def toggleAbbrevMode( event ):
-    global abbrevOn
-    if abbrevOn:
-        abbrevOn = False
-    else:
-        abbrevOn = True
-#@-node:mork.20041014112843.66:toggleAbbrevMode
-#@+node:mork.20041014112843.67:listAbbrevs
-def listAbbrevs( event ):
-    svar, label = getSvarLabel( event )
-    txt = ''
-    for z in abbrevs:
-        txt = '%s%s=%s\n' %( txt, z, abbrevs[ z ] )
-    svar.set( '' )
-    svar.set( txt )
-    return 'break'
-#@-node:mork.20041014112843.67:listAbbrevs
-#@+node:mork.20041014112843.68:readAbbreviations
-def readAbbreviations( event ):
-
-    f = tkFileDialog.askopenfile()
-    if f == None: return 'break'        
-    return _readAbbrevs( f )
-#@nonl
-#@-node:mork.20041014112843.68:readAbbreviations
-#@+node:mork.20041014112843.69:_readAbbrevs
-def _readAbbrevs( f ):
-    for x in f:
-        a, b = x.split( '=' )
-        b = b[ : -1 ]
-        abbrevs[ a ] = b
-    f.close()        
-    return 'break'
-#@-node:mork.20041014112843.69:_readAbbrevs
-#@+node:mork.20041014112843.70:writeAbbreviations
-def writeAbbreviations( event ):
-
-    f = tkFileDialog.asksaveasfile() 
-    if f == None: return 'break' 
-    return _writeAbbrevs( f )
-#@-node:mork.20041014112843.70:writeAbbreviations
-#@+node:mork.20041014112843.71:_writeAbbrevs
-def _writeAbbrevs( f ):
-    print abbrevs
-    for x in abbrevs:
-        f.write( '%s=%s\n' %( x, abbrevs[ x ] ) )
-    f.close()    
-    return 'break'
-#@-node:mork.20041014112843.71:_writeAbbrevs
-#@-node:ekr.20041028083211.7:Abbreviations
-#@+node:ekr.20041028083211.8:Paragraph commands...
-#@+node:mork.20041014112843.72:movingParagraphs
-def movingParagraphs( event, way ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    
-    if way == 1:
-        while 1:
-            txt = buffer.get( '%s linestart' % i, '%s lineend' %i )
-            txt = txt.rstrip().lstrip()
-            if not txt:
-                i = buffer.search( r'\w', i, regexp = True, stopindex = 'end' )
-                i = '%s' %i
-                break
-            else:
-                i = buffer.index( '%s + 1 lines' % i )
-                if buffer.index( '%s linestart' % i ) == buffer.index( 'end' ):
-                    i = buffer.search( r'\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
-                    i = '%s + 1c' % i
+        self.setLabelBlue( label )
+        return 'break'
+    #@-node:mork.20041030164547.24:startHowMany
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182709:how many methods
+    #@+node:mork.20041031155913:paragraph methods
+    #@+others
+    #@+node:mork.20041030164547.25:selectParagraph
+    def selectParagraph( self, event ):
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        txt = txt.lstrip().rstrip()
+        i = tbuffer.index( 'insert' )
+        if not txt:
+            while 1:
+                i = tbuffer.index( '%s + 1 lines' % i )
+                txt = tbuffer.get( '%s linestart' % i, '%s lineend' % i )
+                txt = txt.lstrip().rstrip()
+                if txt:
+                    self._selectParagraph( tbuffer, i )
                     break
-    else:
+                if tbuffer.index( '%s lineend' % i ) == tbuffer.index( 'end' ):
+                    return 'break'
+        if txt:
+            while 1:
+                i = tbuffer.index( '%s - 1 lines' % i )
+                txt = tbuffer.get( '%s linestart' % i, '%s lineend' % i )
+                txt = txt.lstrip().rstrip()
+                if not txt or tbuffer.index( '%s linestart' % i ) == tbuffer.index( '1.0' ):
+                    if not txt:
+                        i = tbuffer.index( '%s + 1 lines' % i )
+                    self._selectParagraph( tbuffer, i )
+                    break     
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.25:selectParagraph
+    #@+node:mork.20041030164547.26:_selectParagraph
+    def _selectParagraph( self, tbuffer, start ):
+        i2 = start
         while 1:
-            txt = buffer.get( '%s linestart' % i, '%s lineend' %i )
-            txt = txt.rstrip().lstrip()
-            if not txt:
-                i = buffer.search( r'\w', i, backwards = True, regexp = True, stopindex = '1.0' )
-                i = '%s +1c' %i
+            txt = tbuffer.get( '%s linestart' % i2, '%s lineend' % i2 )
+            if tbuffer.index( '%s lineend' % i2 )  == tbuffer.index( 'end' ):
                 break
+            txt = txt.lstrip().rstrip()
+            if not txt: break
             else:
-                i = buffer.index( '%s - 1 lines' % i )
-                if buffer.index( '%s linestart' % i ) == '1.0':
-                    i = buffer.search( r'\w', '1.0', regexp = True, stopindex = 'end' )
-                    break
-    if i : 
-        buffer.mark_set( 'insert', i )
-        buffer.see( 'insert' )
-        return _tailEnd( buffer )
-    return 'break'
-#@-node:mork.20041014112843.72:movingParagraphs
-#@+node:mork.20041014112843.73:setFillPrefix
-fillPrefix = ''
-def setFillPrefix( event ):
-    global fillPrefix
-    buffer = event.widget
-    txt = buffer.get( 'insert linestart', 'insert' )
-    fillPrefix = txt
-    return 'break'
-#@-node:mork.20041014112843.73:setFillPrefix
-#@+node:mork.20041014112843.74:fillParagraph
-def fillParagraph( event ):
-    buffer = event.widget
-    txt = buffer.get( 'insert linestart', 'insert lineend' )
-    txt = txt.lstrip().rstrip()
-    if txt:
-        i = buffer.index( 'insert' )
+                i2 = tbuffer.index( '%s + 1 lines' % i2 )
+        tbuffer.tag_add( 'sel', '%s linestart' % start, '%s lineend' % i2 )
+        tbuffer.mark_set( 'insert', '%s lineend' % i2 )
+    #@-node:mork.20041030164547.26:_selectParagraph
+    #@+node:mork.20041030164547.27:killParagraph
+    def killParagraph( self, event ):   
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        if not txt.rstrip().lstrip():
+            i = tbuffer.search( r'\w', i, regexp = True, stopindex = 'end' )
+        self._selectParagraph( tbuffer, i )
+        i2 = tbuffer.index( 'insert' )
+        self.kill( event, i, i2 )
+        tbuffer.mark_set( 'insert', i )
+        tbuffer.selection_clear()
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.27:killParagraph
+    #@+node:mork.20041030164547.28:backwardKillParagraph
+    def backwardKillParagraph( self, event ):   
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
         i2 = i
-        txt2 = txt
-        while txt2:
-            pi2 = buffer.index( '%s - 1 lines' % i2)
-            txt2 = buffer.get( '%s linestart' % pi2, '%s lineend' % pi2 )
-            if buffer.index( '%s linestart' % pi2 ) == '1.0':
-                i2 = buffer.search( '\w', '1.0', regexp = True, stopindex = 'end' )
-                break
-            if txt2.lstrip().rstrip() == '': break
-            i2 = pi2
-        i3 = i
-        txt3 = txt
-        while txt3:
-            pi3 = buffer.index( '%s + 1 lines' %i3 )
-            txt3 = buffer.get( '%s linestart' % pi3, '%s lineend' % pi3 )
-            if buffer.index( '%s lineend' % pi3 ) == buffer.index( 'end' ):
-                i3 = buffer.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
-                break
-            if txt3.lstrip().rstrip() == '': break
-            i3 = pi3
-        ntxt = buffer.get( '%s linestart' %i2, '%s lineend' %i3 )
-        ntxt = _addPrefix( ntxt )
-        buffer.delete( '%s linestart' %i2, '%s lineend' % i3 )
-        buffer.insert( i2, ntxt )
-        buffer.mark_set( 'insert', i )
-        return _tailEnd( buffer )
-#@-node:mork.20041014112843.74:fillParagraph
-#@+node:mork.20041014112843.75:_addPrefix
-def _addPrefix( ntxt ):
-        ntxt = ntxt.split( '.' )
-        ntxt = map( lambda a: fillPrefix+a, ntxt )
-        ntxt = '.'.join( ntxt )               
-        return ntxt
-#@-node:mork.20041014112843.75:_addPrefix
-#@+node:mork.20041014112843.76:fillRegionAsParagraph
-def fillRegionAsParagraph( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    i1 = buffer.index( 'sel.first linestart' )
-    i2 = buffer.index( 'sel.last lineend' )
-    txt = buffer.get(  i1,  i2 )
-    txt = _addPrefix( txt )
-    buffer.delete( i1, i2 )
-    buffer.insert( i1, txt )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.76:fillRegionAsParagraph
-#@+node:mork.20041014112843.77:fillRegion
-def fillRegion( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    i = buffer.index( 'insert' ) 
-    s1 = buffer.index( 'sel.first' )
-    s2 = buffer.index( 'sel.last' )
-    buffer.mark_set( 'insert', s1 )
-    movingParagraphs( event, -1 )
-    if buffer.index( 'insert linestart' ) == '1.0':
-        fillParagraph( event )
-    while 1:
-        movingParagraphs( event, 1 )
-        if buffer.compare( 'insert', '>', s2 ):
-            break
-        fillParagraph( event )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.77:fillRegion
-#@+node:mork.20041014112843.78:doControlX
-registermode = False
-def doControlX( event, stroke, previous = [] ):
-    global registermode
-    previous.insert( 0, event.keysym )
-    if len( previous ) > 10: previous.pop()
-    if stroke == '<Key>':
-        if event.keysym in ( 'Shift_L', 'Shift_R' ):
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        if not txt.rstrip().lstrip():
+            self.movingParagraphs( event, -1 )
+            i2 = tbuffer.index( 'insert' )
+        self.selectParagraph( event )
+        i3 = tbuffer.index( 'sel.first' )
+        self.kill( event, i3, i2 )
+        tbuffer.mark_set( 'insert', i )
+        tbuffer.selection_clear()
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.28:backwardKillParagraph
+    #@-others
+    #@nonl
+    #@-node:mork.20041031155913:paragraph methods
+    #@+node:mork.20041031181929:kill methods
+    #@+at
+    # These methods add text to the killbuffer.
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041030164547.34:kill
+    def kill( self, event, frm, to  ):
+        tbuffer = event.widget
+        text = tbuffer.get( frm, to )
+        self.addToKillBuffer( text )
+        tbuffer.clipboard_clear()
+        tbuffer.clipboard_append( text )    
+        if frm == 'insert' and to =='insert lineend' and tbuffer.index( frm ) == tbuffer.index( to ):
+            tbuffer.delete( 'insert', 'insert lineend +1c' )
+            self.addToKillBuffer( '\n' )
+        else:
+            tbuffer.delete( frm, to )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.34:kill
+    #@+node:mork.20041030164547.36:walkKB
+    def walkKB( self, event, frm, which ):# kb = self.iterateKillBuffer() ):
+            #if not kb1:
+            #    kb1.append( self.iterateKillBuffer() )
+            #kb = kb1[ 0 ]
+            #global reset
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        t , t1 = i.split( '.' )
+        clip_text = self.getClipboard( tbuffer )    
+        if self.killbuffer or clip_text:
+            if which == 'c':
+                self.reset = True
+                if clip_text:
+                    txt = clip_text
+                else:
+                    txt = self.kbiterator.next()
+                tbuffer.tag_delete( 'kb' )
+                tbuffer.insert( frm, txt, ('kb') )
+                tbuffer.mark_set( 'insert', i )
+            else:
+                if clip_text:
+                    txt = clip_text
+                else:
+                    txt = self.kbiterator.next()
+                t1 = str( int( t1 ) + len( txt ) )
+                r = tbuffer.tag_ranges( 'kb' )
+                if r and r[ 0 ] == i:
+                    tbuffer.delete( r[ 0 ], r[ -1 ] )
+                tbuffer.tag_delete( 'kb' )
+                tbuffer.insert( frm, txt, ('kb') )
+                tbuffer.mark_set( 'insert', i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.36:walkKB
+    #@+node:mork.20041030164547.35:deletelastWord
+    def deletelastWord( self, event ):
+        #tbuffer = event.widget
+        #i = tbuffer.get( 'insert' )
+        self.moveword( event, -1 )
+        self.kill( event, 'insert', 'insert wordend')
+        self.moveword( event ,1 )
+        return 'break'
+    #@-node:mork.20041030164547.35:deletelastWord
+    #@+node:mork.20041030164547.37:killsentence
+    def killsentence( self, event, back = False ):
+        tbuffer = event.widget
+        i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+        if back:
+            i = tbuffer.search( '.' , 'insert', backwards = True, stopindex = '1.0' ) 
+            if i == '':
+                return 'break'
+            i2 = tbuffer.search( '.' , i, backwards = True , stopindex = '1.0' )
+            if i2 == '':
+                i2 = '1.0'
+                return self.kill( event, i2, '%s + 1c' % i )
+        else:
+            i = tbuffer.search( '.' , 'insert', stopindex = 'end' )
+            i2 = tbuffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
+        if i2 == '':
+           i2 = '1.0'
+        else:
+           i2 = i2 + ' + 1c '
+        if i == '': return 'break'
+        return self.kill( event, i2, '%s + 1c' % i )
+    #@-node:mork.20041030164547.37:killsentence
+    #@+node:mork.20041030164547.91:killRegion
+    def killRegion( self, event, which ):
+        mrk = 'sel'
+        tbuffer = event.widget
+        trange = tbuffer.tag_ranges( mrk )
+        if len( trange ) != 0:
+            txt = tbuffer.get( trange[ 0 ] , trange[ -1 ] )
+            if which == 'd':
+                tbuffer.delete( trange[ 0 ], trange[ -1 ] )   
+            self.addToKillBuffer( txt )
+            tbuffer.clipboard_clear()
+            tbuffer.clipboard_append( txt )
+        self.removeRKeys( tbuffer )
+        return 'break'
+    #@-node:mork.20041030164547.91:killRegion
+    #@+node:mork.20041030164547.42:addToKillBuffer
+    #self.killbuffer = []
+    def addToKillBuffer( self, text ):
+        #global reset
+        self.reset = True 
+        if self.previousStroke in ( '<Control-k>', '<Control-w>' ,
+         '<Alt-d>', '<Alt-Delete', '<Alt-z>', '<Delete>',
+         '<Control-Alt-w>' ) and len( self.killbuffer):
+            self.killbuffer[ 0 ] = self.killbuffer[ 0 ] + text
             return
-        if event.keysym == 'period':
-            stopControlX( event )
-            return setFillPrefix( event )
-        if event.keysym == 'parenleft':
-            stopControlX( event )
-            return startKBDMacro( event )
-        if event.keysym == 'parenright':
-            stopControlX( event )
-            return stopKBDMacro( event )
-        if event.keysym == 'semicolon':
-            stopControlX( event )
-            return setCommentColumn( event )
-        if event.keysym == 'Tab':
-            stopControlX( event )
-            return tabIndentRegion( event )
-        if sRect:
-            stringRectangle( event )
-            return 'break'
-        if event.keysym in ( 'a', 'i' , 'e'):
-            svar, label = getSvarLabel( event )
-            if svar.get() != 'a' and event.keysym == 'a':
-                svar.set( 'a' )
-                return 'break'
-            elif svar.get() == 'a':
-                if event.char == 'i':
-                    svar.set( 'a i' )
-                elif event.char == 'e':
-                    stopControlX( event )
-                    event.char = ''
-                    expandAbbrev( event )
-                return 'break'
-        if event.keysym == 'g':
-            svar, label = getSvarLabel( event )
-            l = svar.get()
-            if l == 'a':
-                stopControlX( event )
-                return abbreviationDispatch( event, 1 )
-            elif l == 'a i':
-                stopControlX( event )
-                return abbreviationDispatch( event, 2 )
-        if event.keysym == 'e':
-            stopControlX( event )
-            return executeLastMacro( event )
-        if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
-            event.keysym = 's' 
-            setNextRegister( event )
-            return 'break'
-        if event.keysym == 'o' and registermode == 1:
-            openRectangle( event )
-            return 'break'
-        if event.keysym == 'c' and registermode == 1:
-            clearRectangle( event )
-            return 'break'
-        if event.keysym == 't' and registermode == 1:
-            stringRectangle( event )
-            return 'break'
-        if event.keysym == 'y' and registermode == 1:
-            yankRectangle( event )
-            return 'break'
-        if event.keysym == 'd' and registermode == 1:
-            deleteRectangle( event )
-            return 'break'
-        if event.keysym == 'k' and registermode == 1:
-            killRectangle( event )
-            return 'break'       
-        if registermode == 1:
-            setNextRegister( event )
-            return 'break'
-        elif registermode == 2:
-            executeRegister( event )
-            return 'break'
-        if event.keysym == 'r':
-            registermode = 1
-            svar = svars[ event.widget ]
-            svar.set( 'C - x r' )
-            return 'break'
-        if event.keysym== 'h':
-           stopControlX( event )
-           event.widget.tag_add( 'sel', '1.0', 'end' )
-           return 'break' 
-        if event.keysym == 'equal':
-            lineNumber( event )
-            return 'break'
-        if event.keysym == 'u':
-            stopControlX( event )
-            return doUndo( event, 2 )
-    if stroke in xcommands:
-        xcommands[ stroke ]( event )
-        stopControlX( event )
-    return 'break'
-#@-node:mork.20041014112843.78:doControlX
-#@-node:ekr.20041028083211.8:Paragraph commands...
-#@+node:ekr.20041028083211.9:Search...
-#@+node:mork.20041014112843.79:startIncremental
-def startIncremental( event, stroke ):
-    global isearch, pref
-    widget = event.widget
-    if isearch:
-        search( event, way = csr[ stroke ] )
-        pref = csr[ stroke ]
-        scolorizer( event )
-        return 'break'
-    else:
-        svar, label = getSvarLabel( event )
-        isearch = True
-        pref = csr[ stroke ]
-        label.configure( background = 'lightblue' )
-        label.configure( textvariable = svars )
-        return 'break'
-#@-node:mork.20041014112843.79:startIncremental
-#@+node:mork.20041014112843.80:iSearch
-def iSearch( event ):
-    if len( event.char ) == 0: return
-    widget = event.widget
-    svar, label = getSvarLabel( event )
-    label.configure( textvariable = svar )
-    if event.keysym == 'Return':
-          return stopControlX( event )
-    setSvar( event, svar )
-    if event.char != '\b':
-       stext = svar.get()
-       z = widget.search( stext , 'insert' , stopindex = 'insert +%sc' % len( stext ) )
-       if not z:
-           search( event, pref )
-    scolorizer( event )
-    return 'break'
-#@-node:mork.20041014112843.80:iSearch
-#@+node:mork.20041014112843.81:startZap
-def startZap( event ):
-    global zap
-    zap = True
-    svar, label = getSvarLabel( event )
-    label.configure( background = 'lightblue' )
-    svar.set( 'Zap To Character' )
-    return 'break'
-#@-node:mork.20041014112843.81:startZap
-#@+node:mork.20041014112843.82:zapTo
-def zapTo( event ):
-    global zap
-    widget = event.widget
-    s = string.ascii_letters + string.digits + string.punctuation
-    if len( event.char ) != 0 and event.char in s:
-        zap = False
-        i = widget.search( event.char , 'insert',  stopindex = 'end' )
-        resetMiniBuffer( event )
-        if i:
-            t = widget.get( 'insert', '%s+1c'% i )
-            addToKillBuffer( t )
-            widget.delete( 'insert', '%s+1c' % i)
-            return 'break'
-    else:
-        return 'break'
-#@nonl
-#@-node:mork.20041014112843.82:zapTo
-#@+node:mork.20041014112843.83:changecbDict
-def changecbDict( changes ):
-    for z in changes:
-        if cbDict.has_key( z ):
-            cbDict[ z ] = changes[ z ]
-#@-node:mork.20041014112843.83:changecbDict
-#@+node:mork.20041014112843.84:startControlX
-def startControlX( event ):  
-    global controlx
-    controlx = True
-    svar, label = getSvarLabel( event )
-    svar.set( 'Control - X' )
-    label.configure( background = 'lightblue' )
-    return 'break'
-#@-node:mork.20041014112843.84:startControlX
-#@+node:mork.20041014112843.85:stopControlX
-def stopControlX( event ): 
-    global controlx, rstring, isearch, sRect,negativeArg, uC, howM, altx
-    altx = False
-    howM = False
-    controlx = False
-    isearch = False
-    sRect = False
-    uC = False
-    negativeArg = False
-    event.widget.tag_delete( 'color' )
-    event.widget.tag_delete( 'color1' )
-    if registermode:
-        deactivateRegister( event )
-    rString = False
-    resetMiniBuffer( event )
-    return 'break'
-#@-node:mork.20041014112843.85:stopControlX
-#@+node:mork.20041014112843.86:resetMiniBuffer
-def resetMiniBuffer( event ):
-    svar, label = getSvarLabel( event )
-    svar.set( '' )
-    label.configure( background = 'lightgrey' )
-#@-node:mork.20041014112843.86:resetMiniBuffer
-#@+node:mork.20041014112843.87:setRegion
-def setRegion( event ):   
-    mrk = 'sel'
-    buffer = event.widget
-    def extend( event ):
-        widget = event.widget
-        widget.mark_set( 'insert', 'insert + 1c' )
-        if inRange( widget, mrk ):
-            widget.tag_remove( mrk, 'insert -1c' )
-        else:
-            widget.tag_add( mrk, 'insert -1c' )
-            widget.tag_configure( mrk, background = 'lightgrey' )
-            testinrange( widget )
-        return 'break'
-        
-    def truncate( event ):
-        widget = event.widget
-        widget.mark_set( 'insert', 'insert -1c' )
-        if inRange( widget, mrk ):
-            testinrange( widget )
-            widget.tag_remove( mrk, 'insert' )
-        else:
-            widget.tag_add( mrk, 'insert' )
-            widget.tag_configure( mrk, background = 'lightgrey' )
-            testinrange( widget  )
-        return 'break'
-        
-    def up( event ):
-        widget = event.widget
-        if not testinrange( widget ):
-            return 'break'
-        widget.tag_add( mrk, 'insert linestart', 'insert' )
-        i = widget.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = str( int( i1 ) - 1 )
-        widget.mark_set( 'insert', i1+'.'+i2)
-        widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
-        if inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
-            widget.tag_remove( mrk, 'insert', 'end' )  
-        return 'break'
-        
-    def down( event ):
-        widget = event.widget
-        if not testinrange( widget ):
-            return 'break'
-        widget.tag_add( mrk, 'insert', 'insert lineend' )
-        i = widget.index( 'insert' )
-        i1, i2 = i.split( '.' )
-        i1 = str( int( i1 ) + 1 )
-        widget.mark_set( 'insert', i1 +'.'+i2 )
-        widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
-        if inRange( widget, mrk , l = '-1c', r = '+1c' ): 
-            widget.tag_remove( mrk, '1.0', 'insert' )
-        return 'break'
-        
-    extend( event )   
-    buffer.bind( '<Right>', extend, '+' )
-    buffer.bind( '<Left>', truncate, '+' )
-    buffer.bind( '<Up>', up, '+' )
-    buffer.bind( '<Down>', down, '+' )
-    return 'break'
-#@-node:mork.20041014112843.87:setRegion
-#@+node:mork.20041014112843.88:inRange
-def inRange( widget, range, l = '', r = '' ):
-    ranges = widget.tag_ranges( range )
-    i = widget.index( 'insert' )
-    for z in xrange( 0,  len( ranges) , 2 ):
-        z1 = z + 1
-        l1 = 'insert%s' %l
-        r1 = 'insert%s' % r
-        if widget.compare( l1, '>=', ranges[ z ]) and widget.compare( r1, '<=', ranges[ z1] ):
-            return True
-    return False
-#@-node:mork.20041014112843.88:inRange
-#@+node:mork.20041014112843.89:contRanges
-def contRanges( widget, range ):
-    ranges = widget.tag_ranges( range)
-    t1 = widget.get( ranges[ 0 ], ranges[ -1 ] )
-    t2 = []
-    for z in xrange( 0,  len( ranges) , 2 ):
-        z1 = z + 1
-        t2.append( widget.get( ranges[ z ], ranges[ z1 ] ) )
-    t2 = '\n'.join( t2 )
-    return t1 == t2
-#@-node:mork.20041014112843.89:contRanges
-#@+node:mork.20041014112843.90:testinrange
-def testinrange( widget ):
-    mrk = 'sel'
-    ranges = widget.tag_ranges( mrk)
-    if not inRange( widget , mrk) or not contRanges( widget, mrk ):
-        removeRKeys( widget )
-        return False
-    return True
-#@-node:mork.20041014112843.90:testinrange
-#@+node:mork.20041014112843.91:killRegion
-def killRegion( event, which ):
-    mrk = 'sel'
-    range = event.widget.tag_ranges( mrk )
-    if len( range ) != 0:
-        txt = event.widget.get( range[ 0 ] , range[ -1 ] )
-        if which == 'd':
-            event.widget.delete( range[ 0 ], range[ -1 ] )   
-        addToKillBuffer( txt )
-    removeRKeys( event.widget )
-    return 'break'
-#@-node:mork.20041014112843.91:killRegion
-#@+node:mork.20041014112843.92:removeRKeys
-def removeRKeys( widget ):
-    mrk = 'sel'
-    widget.tag_delete( mrk )
-    widget.unbind( '<Left>' )
-    widget.unbind( '<Right>' )
-    widget.unbind( '<Up>' )
-    widget.unbind( '<Down>' )
-#@-node:mork.20041014112843.92:removeRKeys
-#@+node:mork.20041014112843.93:indentRegion
-def indentRegion( event ):
-    buffer = event.widget
-    mrk = 'sel'
-    range = buffer.tag_ranges( mrk )
-    if len( range ) != 0:
-        text = buffer.get( '%s linestart' % range[ 0 ] ,  '%s lineend' % range[ 0 ])
-        sstring = text.lstrip()
-        sstring = sstring[ 0 ]
-        ws = text.split( sstring )
-        if len( ws ) > 1:
-            ws = ws[ 0 ]
-        else:
-            ws = ''
-        s , s1 = range[ 0 ].split( '.' )
-        e , e1 = range[ -1 ].split( '.' )
-        s = int( s )
-        s = s + 1
-        e = int( e ) + 1
-        for z in xrange( s , e ):
-            t2 = buffer.get( '%s.0' %z ,  '%s.0 lineend'%z)
-            t2 = t2.lstrip()
-            t2 = ws + t2
-            buffer.delete( '%s.0' % z ,  '%s.0 lineend' %z)
-            buffer.insert( '%s.0' % z, t2 )
-        buffer.event_generate( '<Key>' )
-        buffer.update_idletasks()
-    removeRKeys( buffer )
-    return 'break'
-#@-node:mork.20041014112843.93:indentRegion
-#@+node:mork.20041014112843.94:tabIndentRegion
-def tabIndentRegion( event ):
-    buffer = event.widget
-    if not _chckSel( event ):
-        return
-    i = buffer.index( 'sel.first' )
-    i2 = buffer.index( 'sel.last' )
-    i = buffer.index( '%s linestart' %i )
-    i2 = buffer.index( '%s linestart' % i2)
-    while 1:
-        buffer.insert( i, '\t' )
-        if i == i2: break
-        i = buffer.index( '%s + 1 lines' % i )    
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.94:tabIndentRegion
-#@+node:mork.20041014112843.95:manufactureKeyPress
-def manufactureKeyPress( event, which ):
-    buffer = event.widget
-    buffer.event_generate( '<Key>',  keysym = which  )
-    buffer.update_idletasks()
-    return 'break'
-#@-node:mork.20041014112843.95:manufactureKeyPress
-#@+node:mork.20041014112843.96:backToIndentation
-def backToIndentation( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert linestart' )
-    i2 = buffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
-    buffer.mark_set( 'insert', i2 )
-    buffer.update_idletasks()
-    return 'break'
-#@-node:mork.20041014112843.96:backToIndentation
-#@+node:mork.20041014112843.97:deleteIndentation
-def deleteIndentation( event ):
-    buffer = event.widget
-    txt = buffer.get( 'insert linestart' , 'insert lineend' )
-    txt = ' %s' % txt.lstrip()
-    buffer.delete( 'insert linestart' , 'insert lineend +1c' )    
-    i  = buffer.index( 'insert - 1c' )
-    buffer.insert( 'insert -1c', txt )
-    buffer.mark_set( 'insert', i )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.97:deleteIndentation
-#@+node:mork.20041014112843.98:deleteNextChar
-def deleteNextChar( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    buffer.delete( i, '%s +1c' % i )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.98:deleteNextChar
-#@+node:mork.20041014112843.99:deleteSpaces
-def deleteSpaces( event , insertspace = False):
-    buffer = event.widget
-    char = buffer.get( 'insert', 'insert + 1c ' )
-    if char in string.whitespace:
-        i = buffer.index( 'insert' )
-        wf = buffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
-        wb = buffer.search( r'\w', i, stopindex = '%s linestart' % i, regexp = True, backwards = True )
-        if '' in ( wf, wb ):
-            return 'break'
-        buffer.delete( '%s +1c' %wb, wf )
-        if insertspace:
-            buffer.insert( 'insert', ' ' )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.99:deleteSpaces
-#@+node:mork.20041014112843.100:measure
-def measure( buffer ):
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    start = int( i1 )
-    watch = 0
-    ustart = start
-    pone = 1
-    top = i
-    bottom = i
-    while pone:
-        ustart = ustart - 1
-        if ustart < 0:
-            break
-        ds = '%s.0' % ustart
-        pone = buffer.dlineinfo( ds )
-        if pone:
-            top = ds
-            watch = watch  + 1
-    
-    pone = 1
-    ustart = start
-    while pone:
-        ustart = ustart +1
-        ds = '%s.0' % ustart
-        pone = buffer.dlineinfo( ds )
-        if pone:
-            bottom = ds
-            watch = watch + 1
+        self.killbuffer.insert( 0, text )
+    #@-node:mork.20041030164547.42:addToKillBuffer
+    #@+node:mork.20041030164547.29:iterateKillBuffer
+    #self.reset = False
+    def iterateKillBuffer( self ):
+        #global reset
+        while 1:
+            if self.killbuffer:
+                self.last_clipboard = None
+                for z in self.killbuffer:
+                    if self.reset:
+                        self.reset = False
+                        break        
+                    yield z
             
-    return watch , top, bottom
-#@-node:mork.20041014112843.100:measure
-#@+node:mork.20041014112843.101:screenscroll
-def screenscroll( event, way = 'north' ):
-    buffer = event.widget
-    chng = measure( buffer )
-    i = buffer.index( 'insert' )
-    
-    if way == 'north':
-        top = chng[ 1 ]
-        i1, i2 = i.split( '.' )
-        i1 = int( i1 ) - chng[ 0 ]
-    else:
-        bottom = chng[ 2 ]
-        i1, i2 = i.split( '.' )
-        i1 = int( i1 ) + chng[ 0 ]
+                
+    #@-node:mork.20041030164547.29:iterateKillBuffer
+    #@+node:mork.20041103120919:getClipboard
+    def getClipboard( self, tbuffer ):
         
-    buffer.mark_set( 'insert', '%s.%s' % ( i1, i2 ) )
-    buffer.see( 'insert' )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.101:screenscroll
-#@+node:mork.20041014112843.102:countRegion
-def countRegion( event ):
-    buffer = event.widget
-    txt = buffer.get( 'sel.first', 'sel.last')
-    svar = svars[ buffer ]
-    lines = 1
-    chars = 0
-    for z in txt:
-        if z == '\n': lines = lines + 1
+        ctxt = None
+        try:
+            ctxt = tbuffer.selection_get( selection='CLIPBOARD' )
+            if ctxt != self.last_clipboard or not self.killbuffer:
+                self.last_clipboard = ctxt
+                if self.killbuffer and self.killbuffer[ 0 ] == ctxt:
+                    return None
+                return ctxt
+            else:
+                return None
+            
+        except:
+            return None
+            
+        return None
+    #@nonl
+    #@-node:mork.20041103120919:getClipboard
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181929:kill methods
+    #@+node:mork.20041031155642:register methods
+    #@+at
+    # These methods add things to the registers( a-z )
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041030164547.44:copyToRegister
+    #self.registers = {}
+    
+    def copyToRegister( self, event ):
+    
+        if not self._chckSel( event ):
+            return
+        if event.keysym in string.letters:
+            event.keysym = event.keysym.lower()
+            tbuffer = event.widget
+            txt = tbuffer.get( 'sel.first', 'sel.last' )
+            self.registers[ event.keysym ] = txt
+            return 
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.44:copyToRegister
+    #@+node:mork.20041030164547.45:copyRectangleToRegister
+    def copyRectangleToRegister( self, event ):
+        if not self._chckSel( event ):
+            return
+        if event.keysym in string.letters:
+            event.keysym = event.keysym.lower()
+            tbuffer = event.widget
+            r1, r2, r3, r4 = self.getRectanglePoints( event )
+            rect = []
+            while r1 <= r3:
+                txt = tbuffer.get( '%s.%s' %( r1, r2 ), '%s.%s' %( r1, r4 ) )
+                rect.append( txt )
+                r1 = r1 +1
+            self.registers[ event.keysym ] = rect
+        self.stopControlX( event )        
+    #@-node:mork.20041030164547.45:copyRectangleToRegister
+    #@+node:mork.20041030164547.46:prependToRegister
+    def prependToRegister( self, event ):
+        #global regMeth, registermode, controlx, registermode
+        event.keysym = 'p'
+        self.setNextRegister( event )
+        self.mcStateManager.setState( 'controlx', False )
+        #self.controlx = True
+    #@-node:mork.20041030164547.46:prependToRegister
+    #@+node:mork.20041030164547.47:appendToRegister
+    def appendToRegister( self, event ):
+        #global regMeth, registermode, controlx
+        event.keysym = 'a'
+        self.setNextRegister( event )
+        self.mcStateManager.setState( 'controlx', True )
+        #self.controlx = True
+    #@-node:mork.20041030164547.47:appendToRegister
+    #@+node:mork.20041030164547.49:_ToReg
+    def _ToReg( self, event , which):
+        if not self._chckSel( event ):
+            return
+        if self._checkIfRectangle( event ):
+            return
+        if event.keysym in string.letters:
+            event.keysym = event.keysym.lower()
+            tbuffer = event.widget
+            if not self.registers.has_key( event.keysym ):
+                self.registers[ event.keysym ] = ''
+            txt = tbuffer.get( 'sel.first', 'sel.last' )
+            rtxt = self.registers[ event.keysym ]
+            if self.which == 'p':
+                txt = txt + rtxt
+            else:
+                txt = rtxt + txt
+            self.registers[ event.keysym ] = txt
+            return
+    #@-node:mork.20041030164547.49:_ToReg
+    #@+node:mork.20041030164547.48:_chckSel
+    def _chckSel( self, event ):
+         if not 'sel' in event.widget.tag_names():
+            return False
+         if not event.widget.tag_ranges( 'sel' ):
+            return False  
+         return True
+    #@-node:mork.20041030164547.48:_chckSel
+    #@+node:mork.20041030164547.50:_checkIfRectangle
+    def _checkIfRectangle( self, event ):
+        if self.registers.has_key( event.keysym ):
+            if isinstance( self.registers[ event.keysym ], list ):
+                svar, label = self.getSvarLabel( event )
+                self.stopControlX( event )
+                svar.set( "Register contains Rectangle, not text" )
+                return True
+        return False           
+    #@-node:mork.20041030164547.50:_checkIfRectangle
+    #@+node:mork.20041030164547.51:insertFromRegister
+    def insertFromRegister( self, event ):
+        tbuffer = event.widget
+        if self.registers.has_key( event.keysym ):
+            if isinstance( self.registers[ event.keysym ], list ):
+                self.yankRectangle( event, self.registers[ event.keysym ] )
+            else:
+                tbuffer.insert( 'insert', self.registers[ event.keysym ] )
+                tbuffer.event_generate( '<Key>' )
+                tbuffer.update_idletasks()
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.51:insertFromRegister
+    #@+node:mork.20041030164547.52:incrementRegister
+    def incrementRegister( self, event ):
+        if self.registers.has_key( event.keysym ):
+            if self._checkIfRectangle( event ):
+                return
+            if self.registers[ event.keysym ] in string.digits:
+                i = self.registers[ event.keysym ]
+                i = str( int( i ) + 1 )
+                self.registers[ event.keysym ] = i
+            else:
+                self.invalidRegister( event, 'number' )
+                return
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.52:incrementRegister
+    #@+node:mork.20041030164547.53:numberToRegister
+    def numberToRegister( self, event ):
+        if event.keysym in string.letters:
+            self.registers[ event.keysym.lower() ] = str( 0 )
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.53:numberToRegister
+    #@+node:mork.20041030164547.54:pointToRegister
+    def pointToRegister( self, event ):
+        if event.keysym in string.letters:
+            tbuffer = event.widget
+            self.registers[ event.keysym.lower() ] = tbuffer.index( 'insert' )
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.54:pointToRegister
+    #@+node:mork.20041030164547.55:jumpToRegister
+    def jumpToRegister( self, event ):
+        if event.keysym in string.letters:
+            if self._checkIfRectangle( event ):
+                return
+            tbuffer = event.widget
+            i = self.registers[ event.keysym.lower() ]
+            i2 = i.split( '.' )
+            if len( i2 ) == 2:
+                if i2[ 0 ].isdigit() and i2[ 1 ].isdigit():
+                    pass
+                else:
+                    self.invalidRegister( event, 'index' )
+                    return
+            else:
+                self.invalidRegister( event, 'index' )
+                return
+            tbuffer.mark_set( 'insert', i )
+            tbuffer.event_generate( '<Key>' )
+            tbuffer.update_idletasks() 
+        self.stopControlX( event ) 
+    #@-node:mork.20041030164547.55:jumpToRegister
+    #@+node:mork.20041030164547.56:invalidRegister
+    def invalidRegister( self, event, what ):
+        self.deactivateRegister( event )
+        svar, label = self.getSvarLabel( event )
+        svar.set( 'Register does not contain valid %s'  % what)
+        return    
+    #@-node:mork.20041030164547.56:invalidRegister
+    #@+node:mork.20041030164547.57:setNextRegister
+    def setNextRegister( self, event ):
+        #global regMeth, registermode
+        if event.keysym == 'Shift':
+            return
+        if self.regMeths.has_key( event.keysym ):
+            self.mcStateManager.setState( 'controlx', True )
+            self.regMeth = self.regMeths[ event.keysym ]
+            self.registermode = 2
+            svar = self.svars[ event.widget ]
+            svar.set( self.regText[ event.keysym ] )
+            return
+        self.stopControlX( event )
+    #@-node:mork.20041030164547.57:setNextRegister
+    #@+node:mork.20041030164547.58:executeRegister
+    def executeRegister( self, event ):
+        self.regMeth( event )
+        if self.registermode: 
+            self.stopControlX( event )
+        return
+    #@-node:mork.20041030164547.58:executeRegister
+    #@+node:mork.20041030164547.59:deactivateRegister
+    def deactivateRegister( self, event ):
+        #global registermode, regMeth
+        svar, label = self.getSvarLabel( event )
+        svar.set( '' )
+        self.setLabelGrey( label )
+        self.registermode = False
+        self.regMeth = None
+    #@-node:mork.20041030164547.59:deactivateRegister
+    #@+node:mork.20041102151545:viewRegister
+    def viewRegister( self, event ):
+        
+        self.stopControlX( event )
+        if event.keysym in string.letters:
+            text = self.registers[ event.keysym.lower() ]
+            svar, label = self.getSvarLabel( event )
+            svar.set( text )
+    #@nonl
+    #@-node:mork.20041102151545:viewRegister
+    #@-others
+    #@nonl
+    #@-node:mork.20041031155642:register methods
+    #@+node:mork.20041031181701:abbreviation methods
+    #@+at
+    # 
+    # type some text, set its abbreviation with Control-x a i g, type the text 
+    # for abbreviation expansion
+    # type Control-x a e ( or Alt-x expand-abbrev ) to expand abbreviation
+    # type Alt-x abbrev-on to turn on automatic abbreviation expansion
+    # Alt-x abbrev-on to turn it off
+    # 
+    # an example:
+    # type:
+    # frogs
+    # after typing 's' type Control-x a i g.  This will turn the minibuffer 
+    # blue, type in your definition. For example: turtles.
+    # 
+    # Now in the buffer type:
+    # frogs
+    # after typing 's' type Control-x a e.  This will turn the 'frogs' into:
+    # turtles
+    # 
+    # 
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041030164547.60:abbreviationDispatch
+    #self.abbrevMode = False
+    #self.abbrevOn = False
+    #self.abbrevs = {}
+    def abbreviationDispatch( self, event, which ):
+        #global abbrevMode
+        #if not self.abbrevMode:
+        aM = self.mcStateManager.getState( 'abbrevMode' )
+        if not aM:
+            #self.abbrevMode = which
+            self.mcStateManager.setState( 'abbrevMode', which )
+            svar, label = self.getSvarLabel( event )
+            svar.set( '' )
+            self.setLabelBlue( label )
+            return 'break'
+        if aM:
+            self.abbrevCommand1( event )
+        return 'break'
+    #@-node:mork.20041030164547.60:abbreviationDispatch
+    #@+node:mork.20041030164547.61:abbrevCommand1
+    def abbrevCommand1( self, event ):
+        #global abbrevMode
+        if event.keysym == 'Return':
+            tbuffer = event.widget
+            word = tbuffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
+            if word == ' ': return
+            svar, label = self.getSvarLabel( event )
+            aM = self.mcStateManager.getState( 'abbrevMode' )
+            if aM == 1:
+                self.abbrevs[ svar.get() ] = word
+            elif aM == 2:
+                self.abbrevs[ word ] = svar.get()
+            #self.abbrevMode = False
+            #self.mcStateManager.setState( 'abbrevMode', False )
+            self.keyboardQuit( event )
+            self.resetMiniBuffer( event )
+            return 'break'
+        svar, label = self.getSvarLabel( event )
+        self.setSvar( event, svar )
+        return 'break'
+    #@-node:mork.20041030164547.61:abbrevCommand1
+    #@+node:mork.20041030164547.62:expandAbbrev
+    def expandAbbrev( self,event ):
+        tbuffer = event.widget
+        word = tbuffer.get( 'insert -1c wordstart', 'insert -1c wordend' )
+        c = event.char.strip()
+        if c: #We have to do this because this method is called from Alt-x and Control-x, we get two differnt types of data and tbuffer states.
+            word = '%s%s' %( word, event.char )
+        if self.abbrevs.has_key( word ):
+            tbuffer.delete( 'insert -1c wordstart', 'insert -1c wordend' )
+            tbuffer.insert( 'insert', self.abbrevs[ word ] ) 
+            return self._tailEnd( tbuffer )
+            #return True
+        else: return False
+    #@-node:mork.20041030164547.62:expandAbbrev
+    #@+node:mork.20041030164547.63:regionalExpandAbbrev
+    #self.regXRpl = None
+    #self.regXKey = None
+    def regionalExpandAbbrev( self, event ):
+        #global regXRpl
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        i1 = tbuffer.index( 'sel.first' )
+        i2 = tbuffer.index( 'sel.last' ) 
+        ins = tbuffer.index( 'insert' )
+        def searchXR( i1 , i2, ins, event ):
+            tbuffer.tag_add( 'sXR', i1, i2 )
+            while i1:
+                tr = tbuffer.tag_ranges( 'sXR' )
+                if not tr: break
+                i1 = tbuffer.search( r'\w', i1, stopindex = tr[ 1 ] , regexp = True )
+                if i1:
+                    word = tbuffer.get( '%s wordstart' % i1, '%s wordend' % i1 )
+                    tbuffer.tag_delete( 'found' )
+                    tbuffer.tag_add( 'found',  '%s wordstart' % i1, '%s wordend' % i1 )
+                    tbuffer.tag_config( 'found', background = 'yellow' )
+                    if self.abbrevs.has_key( word ):
+                        svar, label = self.getSvarLabel( event )
+                        svar.set( 'Replace %s with %s? y/n' % ( word, self.abbrevs[ word ] ) )
+                        yield None
+                        if self.regXKey == 'y':
+                            ind = tbuffer.index( '%s wordstart' % i1 )
+                            tbuffer.delete( '%s wordstart' % i1, '%s wordend' % i1 )
+                            tbuffer.insert( ind, self.abbrevs[ word ] )
+                    i1 = '%s wordend' % i1
+            tbuffer.mark_set( 'insert', ins )
+            tbuffer.selection_clear()
+            tbuffer.tag_delete( 'sXR' )
+            tbuffer.tag_delete( 'found' )
+            svar, label = self.getSvarLabel( event )
+            svar.set( '' )
+            self.setLabelGrey( label )
+            self._setRAvars()
+        self.regXRpl = searchXR( i1, i2, ins, event)
+        self.regXRpl.next()
+        return 'break' 
+    #@-node:mork.20041030164547.63:regionalExpandAbbrev
+    #@+node:mork.20041030164547.64:_setRAvars
+    def _setRAvars( self ):
+        #global regXRpl, regXKey
+        self.regXRpl = self.regXKey = None 
+    #@-node:mork.20041030164547.64:_setRAvars
+    #@+node:mork.20041030164547.65:killAllAbbrevs
+    def killAllAbbrevs( self, event ):
+        #global abbrevs
+        self.abbrevs = {}
+        return self.keyboardQuit( event )
+    #@-node:mork.20041030164547.65:killAllAbbrevs
+    #@+node:mork.20041030164547.66:toggleAbbrevMode
+    def toggleAbbrevMode( self, event ):
+        #global abbrevOn
+        #aO = self.mcStateManager.getState( 'abbrevOn' )
+        svar, label = self.getSvarLabel( event )
+        if self.abbrevOn:
+            self.abbrevOn = False
+            self.keyboardQuit( event )
+            svar.set( "Abbreviations are Off" )  
+            #self.mcStateManager.setState( 'abbrevOn', False ) #This doesnt work too well with the mcStateManager
         else:
-            chars = chars + 1       
-    svar.set( 'Region has %s lines, %s characters' %( lines, chars ) )
-    return 'break'
-#@-node:mork.20041014112843.102:countRegion
-#@+node:mork.20041014112843.103:insertParentheses
-def insertParentheses( event ):
-    buffer = event.widget
-    buffer.insert( 'insert', '()' )
-    buffer.mark_set( 'insert', 'insert -1c' )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.103:insertParentheses
-#@+node:mork.20041014112843.104:listenQR
-qQ = None
-qR = None
-qlisten = False
-lqR = Tkinter.StringVar()
-lqR.set( 'Query with: ' )
-def listenQR( event ):
-    global qgetQuery, qlisten
-    qlisten = True
-    buffer = event.widget
-    svar, label = getSvarLabel( event )
-    label.configure( background = 'lightblue' , textvariable = lqR)
-    qgetQuery = True
-#@-node:mork.20041014112843.104:listenQR
-#@+node:mork.20041014112843.105:qsearch
-def qsearch( event ):
-    if qQ:
-        buffer = event.widget
-        i = buffer.search( qQ, 'insert', stopindex = 'end' )
-        buffer.tag_delete( 'qR' )
-        if i:
-            buffer.mark_set( 'insert', i )
-            buffer.update_idletasks()
-            buffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( qQ ) )
-            buffer.tag_config( 'qR', background = 'lightblue' )
-            return True
-        quitQSearch( event )
+            self.abbrevOn = True
+            self.keyboardQuit( event )
+            svar.set( "Abbreviations are On" )
+            #self.mcStateManager.setState( 'abbrevOn', True )
+    #@-node:mork.20041030164547.66:toggleAbbrevMode
+    #@+node:mork.20041030164547.67:listAbbrevs
+    def listAbbrevs( self, event ):
+        svar, label = self.getSvarLabel( event )
+        txt = ''
+        for z in self.abbrevs:
+            txt = '%s%s=%s\n' %( txt, z, self.abbrevs[ z ] )
+        svar.set( '' )
+        svar.set( txt )
+        return 'break'
+    #@-node:mork.20041030164547.67:listAbbrevs
+    #@+node:mork.20041030164547.68:readAbbreviations
+    def readAbbreviations( self, event ):
+        import tkFileDialog
+        f = tkFileDialog.askopenfile()
+        if f == None: return 'break'        
+        return self._readAbbrevs( f )
+    #@-node:mork.20041030164547.68:readAbbreviations
+    #@+node:mork.20041030164547.69:_readAbbrevs
+    def _readAbbrevs( self, f ):
+        for x in f:
+            a, b = x.split( '=' )
+            b = b[ : -1 ]
+            self.abbrevs[ a ] = b
+        f.close()        
+        return 'break'
+    #@-node:mork.20041030164547.69:_readAbbrevs
+    #@+node:mork.20041030164547.70:writeAbbreviations
+    def writeAbbreviations( self, event ):
+        import tkFileDialog
+        f = tkFileDialog.asksaveasfile() 
+        if f == None: return 'break' 
+        return self._writeAbbrevs( f )
+    #@-node:mork.20041030164547.70:writeAbbreviations
+    #@+node:mork.20041030164547.71:_writeAbbrevs
+    def _writeAbbrevs( self, f ):
+        for x in self.abbrevs:
+            f.write( '%s=%s\n' %( x, self.abbrevs[ x ] ) )
+        f.close()    
+        return 'break'
+    #@-node:mork.20041030164547.71:_writeAbbrevs
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181701:abbreviation methods
+    #@+node:mork.20041031182137:paragraph methods
+    #@+at
+    # 
+    # untested as of yet for .5 conversion.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.72:movingParagraphs
+    def movingParagraphs( self, event, way ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        
+        if way == 1:
+            while 1:
+                txt = tbuffer.get( '%s linestart' % i, '%s lineend' %i )
+                txt = txt.rstrip().lstrip()
+                if not txt:
+                    i = tbuffer.search( r'\w', i, regexp = True, stopindex = 'end' )
+                    i = '%s' %i
+                    break
+                else:
+                    i = tbuffer.index( '%s + 1 lines' % i )
+                    if tbuffer.index( '%s linestart' % i ) == tbuffer.index( 'end' ):
+                        i = tbuffer.search( r'\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
+                        i = '%s + 1c' % i
+                        break
+        else:
+            while 1:
+                txt = tbuffer.get( '%s linestart' % i, '%s lineend' %i )
+                txt = txt.rstrip().lstrip()
+                if not txt:
+                    i = tbuffer.search( r'\w', i, backwards = True, regexp = True, stopindex = '1.0' )
+                    i = '%s +1c' %i
+                    break
+                else:
+                    i = tbuffer.index( '%s - 1 lines' % i )
+                    if tbuffer.index( '%s linestart' % i ) == '1.0':
+                        i = tbuffer.search( r'\w', '1.0', regexp = True, stopindex = 'end' )
+                        break
+        if i : 
+            tbuffer.mark_set( 'insert', i )
+            tbuffer.see( 'insert' )
+            return self._tailEnd( tbuffer )
+        return 'break'
+    #@-node:mork.20041030164547.72:movingParagraphs
+    #@+node:mork.20041030164547.74:fillParagraph
+    def fillParagraph( self, event ):
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        txt = txt.lstrip().rstrip()
+        if txt:
+            i = tbuffer.index( 'insert' )
+            i2 = i
+            txt2 = txt
+            while txt2:
+                pi2 = tbuffer.index( '%s - 1 lines' % i2)
+                txt2 = tbuffer.get( '%s linestart' % pi2, '%s lineend' % pi2 )
+                if tbuffer.index( '%s linestart' % pi2 ) == '1.0':
+                    i2 = tbuffer.search( '\w', '1.0', regexp = True, stopindex = 'end' )
+                    break
+                if txt2.lstrip().rstrip() == '': break
+                i2 = pi2
+            i3 = i
+            txt3 = txt
+            while txt3:
+                pi3 = tbuffer.index( '%s + 1 lines' %i3 )
+                txt3 = tbuffer.get( '%s linestart' % pi3, '%s lineend' % pi3 )
+                if tbuffer.index( '%s lineend' % pi3 ) == tbuffer.index( 'end' ):
+                    i3 = tbuffer.search( '\w', 'end', backwards = True, regexp = True, stopindex = '1.0' )
+                    break
+                if txt3.lstrip().rstrip() == '': break
+                i3 = pi3
+            ntxt = tbuffer.get( '%s linestart' %i2, '%s lineend' %i3 )
+            ntxt = self._addPrefix( ntxt )
+            tbuffer.delete( '%s linestart' %i2, '%s lineend' % i3 )
+            tbuffer.insert( i2, ntxt )
+            tbuffer.mark_set( 'insert', i )
+            return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.74:fillParagraph
+    #@+node:mork.20041030164547.76:fillRegionAsParagraph
+    def fillRegionAsParagraph( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        i1 = tbuffer.index( 'sel.first linestart' )
+        i2 = tbuffer.index( 'sel.last lineend' )
+        txt = tbuffer.get(  i1,  i2 )
+        txt = self._addPrefix( txt )
+        tbuffer.delete( i1, i2 )
+        tbuffer.insert( i1, txt )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.76:fillRegionAsParagraph
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182137:paragraph methods
+    #@+node:mork.20041031182916:fill prefix methods
+    #@+others
+    #@+node:mork.20041030164547.73:setFillPrefix
+    #self.fillPrefix = ''
+    def setFillPrefix( self, event ):
+        #global fillPrefix
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert linestart', 'insert' )
+        self.fillPrefix = txt
+        return 'break'
+    #@-node:mork.20041030164547.73:setFillPrefix
+    #@+node:mork.20041030164547.75:_addPrefix
+    def _addPrefix( self, ntxt ):
+            ntxt = ntxt.split( '.' )
+            ntxt = map( lambda a: self.fillPrefix+a, ntxt )
+            ntxt = '.'.join( ntxt )               
+            return ntxt
+    #@-node:mork.20041030164547.75:_addPrefix
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182916:fill prefix methods
+    #@+node:mork.20041103085329:fill column and centering
+    #@+at
+    # These methods are currently just used in tandem to center the line or 
+    # region within the fill column.
+    # for example, dependent upon the fill column, this text:
+    # 
+    # cats
+    # raaaaaaaaaaaats
+    # mats
+    # zaaaaaaaaap
+    # 
+    # may look like
+    # 
+    #                                  cats
+    #                            raaaaaaaaaaaats
+    #                                  mats
+    #                              zaaaaaaaaap
+    # after an center-region command via Alt-x.
+    # 
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041103085329.1:centerLine
+    def centerLine( self, event ):
+        '''Centers line within current fillColumn'''
+        
+        tbuffer = event.widget
+        ind = tbuffer.index( 'insert linestart' )
+        txt = tbuffer.get( 'insert linestart', 'insert lineend' )
+        txt = txt.strip()
+        if len( txt ) >= self.fillColumn: return self._tailEnd( tbuffer )
+        amount = ( self.fillColumn - len( txt ) ) / 2
+        ws = ' ' * amount
+        col, nind = ind.split( '.' )
+        ind = tbuffer.search( '\w', 'insert linestart', regexp = True, stopindex = 'insert lineend' )
+        if not ind: return 'break'
+        tbuffer.delete( 'insert linestart', '%s' % ind )
+        tbuffer.insert( 'insert linestart', ws )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041103085329.1:centerLine
+    #@+node:mork.20041103095628:centerRegion
+    def centerRegion( self, event ):
+        '''This method centers the current region within the fill column'''
+        tbuffer = event.widget
+        start = tbuffer.index( 'sel.first linestart' )
+        sindex , x = start.split( '.' )
+        sindex = int( sindex )
+        end = tbuffer.index( 'sel.last linestart' )
+        eindex , x = end.split( '.' )
+        eindex = int( eindex )
+        while sindex <= eindex:
+            txt = tbuffer.get( '%s.0 linestart' % sindex , '%s.0 lineend' % sindex )
+            txt = txt.strip()
+            if len( txt ) >= self.fillColumn:
+                sindex = sindex + 1
+                continue
+            amount = ( self.fillColumn - len( txt ) ) / 2
+            ws = ' ' * amount
+            ind = tbuffer.search( '\w', '%s.0' % sindex, regexp = True, stopindex = '%s.0 lineend' % sindex )
+            if not ind: 
+                sindex = sindex + 1
+                continue
+            tbuffer.delete( '%s.0' % sindex , '%s' % ind )
+            tbuffer.insert( '%s.0' % sindex , ws )
+            sindex = sindex + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041103095628:centerRegion
+    #@+node:mork.20041103085329.2:setFillColumn
+    def setFillColumn( self, event ):
+        
+        if self.mcStateManager.getState( 'set-fill-column' ):
+            
+            if event.keysym == 'Return':
+                svar, label = self.getSvarLabel( event )
+                value = svar.get()
+                if value.isdigit():
+                    self.fillColumn = int( value )
+                return self.keyboardQuit( event )
+            elif event.char.isdigit() or event.char == '\b':
+                svar, label = self.getSvarLabel( event )
+                self.setSvar( event, svar )
+                return 'break'
+            return 'break'
+            
+            
+            
+        else:
+            self.mcStateManager.setState( 'set-fill-column', 1 )
+            svar, label = self.getSvarLabel( event )
+            svar.set( '' )
+            label.configure( background = 'lightblue' )
+            return 'break'
+    #@-node:mork.20041103085329.2:setFillColumn
+    #@-others
+    
+    #@-node:mork.20041103085329:fill column and centering
+    #@+node:mork.20041031183136:region methods
+    #@+others
+    #@+node:mork.20041030164547.77:fillRegion
+    def fillRegion( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        #i = tbuffer.index( 'insert' ) 
+        s1 = tbuffer.index( 'sel.first' )
+        s2 = tbuffer.index( 'sel.last' )
+        tbuffer.mark_set( 'insert', s1 )
+        self.movingParagraphs( event, -1 )
+        if tbuffer.index( 'insert linestart' ) == '1.0':
+            self.fillParagraph( event )
+        while 1:
+            self.movingParagraphs( event, 1 )
+            if tbuffer.compare( 'insert', '>', s2 ):
+                break
+            self.fillParagraph( event )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.77:fillRegion
+    #@+node:mork.20041030164547.87:setRegion
+    def setRegion( self, event ):   
+        mrk = 'sel'
+        tbuffer = event.widget
+        def extend( event ):
+            widget = event.widget
+            widget.mark_set( 'insert', 'insert + 1c' )
+            if self.inRange( widget, mrk ):
+                widget.tag_remove( mrk, 'insert -1c' )
+            else:
+                widget.tag_add( mrk, 'insert -1c' )
+                widget.tag_configure( mrk, background = 'lightgrey' )
+                self.testinrange( widget )
+            return 'break'
+            
+        def truncate( event ):
+            widget = event.widget
+            widget.mark_set( 'insert', 'insert -1c' )
+            if self.inRange( widget, mrk ):
+                self.testinrange( widget )
+                widget.tag_remove( mrk, 'insert' )
+            else:
+                widget.tag_add( mrk, 'insert' )
+                widget.tag_configure( mrk, background = 'lightgrey' )
+                self.testinrange( widget  )
+            return 'break'
+            
+        def up( event ):
+            widget = event.widget
+            if not self.testinrange( widget ):
+                return 'break'
+            widget.tag_add( mrk, 'insert linestart', 'insert' )
+            i = widget.index( 'insert' )
+            i1, i2 = i.split( '.' )
+            i1 = str( int( i1 ) - 1 )
+            widget.mark_set( 'insert', i1+'.'+i2)
+            widget.tag_add( mrk, 'insert', 'insert lineend + 1c' )
+            if self.inRange( widget, mrk ,l = '-1c', r = '+1c') and widget.index( 'insert' ) != '1.0':
+                widget.tag_remove( mrk, 'insert', 'end' )  
+            return 'break'
+            
+        def down( event ):
+            widget = event.widget
+            if not self.testinrange( widget ):
+                return 'break'
+            widget.tag_add( mrk, 'insert', 'insert lineend' )
+            i = widget.index( 'insert' )
+            i1, i2 = i.split( '.' )
+            i1 = str( int( i1 ) + 1 )
+            widget.mark_set( 'insert', i1 +'.'+i2 )
+            widget.tag_add( mrk, 'insert linestart -1c', 'insert' )
+            if self.inRange( widget, mrk , l = '-1c', r = '+1c' ): 
+                widget.tag_remove( mrk, '1.0', 'insert' )
+            return 'break'
+            
+        extend( event )   
+        tbuffer.bind( '<Right>', extend, '+' )
+        tbuffer.bind( '<Left>', truncate, '+' )
+        tbuffer.bind( '<Up>', up, '+' )
+        tbuffer.bind( '<Down>', down, '+' )
+        return 'break'
+    #@-node:mork.20041030164547.87:setRegion
+    #@+node:mork.20041030164547.93:indentRegion
+    def indentRegion( self, event ):
+        tbuffer = event.widget
+        mrk = 'sel'
+        trange = tbuffer.tag_ranges( mrk )
+        if len( trange ) != 0:
+            ind = tbuffer.search( '\w', '%s linestart' % trange[ 0 ], stopindex = 'end', regexp = True )
+            if not ind : return
+            text = tbuffer.get( '%s linestart' % ind ,  '%s lineend' % ind)
+            sstring = text.lstrip()
+            sstring = sstring[ 0 ]
+            ws = text.split( sstring )
+            if len( ws ) > 1:
+                ws = ws[ 0 ]
+            else:
+                ws = ''
+            s , s1 = trange[ 0 ].split( '.' )
+            e , e1 = trange[ -1 ].split( '.' )
+            s = int( s )
+            s = s + 1
+            e = int( e ) + 1
+            for z in xrange( s , e ):
+                t2 = tbuffer.get( '%s.0' %z ,  '%s.0 lineend'%z)
+                t2 = t2.lstrip()
+                t2 = ws + t2
+                tbuffer.delete( '%s.0' % z ,  '%s.0 lineend' %z)
+                tbuffer.insert( '%s.0' % z, t2 )
+            tbuffer.event_generate( '<Key>' )
+            tbuffer.update_idletasks()
+        self.removeRKeys( tbuffer )
+        return 'break'
+    #@-node:mork.20041030164547.93:indentRegion
+    #@+node:mork.20041030164547.94:tabIndentRegion
+    def tabIndentRegion( self,event ):
+        tbuffer = event.widget
+        if not self._chckSel( event ):
+            return
+        i = tbuffer.index( 'sel.first' )
+        i2 = tbuffer.index( 'sel.last' )
+        i = tbuffer.index( '%s linestart' %i )
+        i2 = tbuffer.index( '%s linestart' % i2)
+        while 1:
+            tbuffer.insert( i, '\t' )
+            if i == i2: break
+            i = tbuffer.index( '%s + 1 lines' % i )    
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.94:tabIndentRegion
+    #@+node:mork.20041030164547.102:countRegion
+    def countRegion( self, event ):
+        tbuffer = event.widget
+        txt = tbuffer.get( 'sel.first', 'sel.last')
+        svar = self.svars[ tbuffer ]
+        lines = 1
+        chars = 0
+        for z in txt:
+            if z == '\n': lines = lines + 1
+            else:
+                chars = chars + 1       
+        svar.set( 'Region has %s lines, %s characters' %( lines, chars ) )
+        return 'break'
+    #@-node:mork.20041030164547.102:countRegion
+    #@+node:mork.20041030164547.138:reverseRegion
+    def reverseRegion( self, event ):
+        tbuffer = event.widget
+        if not self._chckSel( event ):
+            return
+        ins = tbuffer.index( 'insert' )
+        is1 = tbuffer.index( 'sel.first' )
+        is2 = tbuffer.index( 'sel.last' )    
+        txt = tbuffer.get( '%s linestart' % is1, '%s lineend' %is2 )
+        tbuffer.delete( '%s linestart' % is1, '%s lineend' %is2  )
+        txt = txt.split( '\n' )
+        txt.reverse()
+        istart = is1.split( '.' )
+        istart = int( istart[ 0 ] )
+        for z in txt:
+            tbuffer.insert( '%s.0' % istart, '%s\n' % z )
+            istart = istart + 1
+        tbuffer.mark_set( 'insert', ins )
+        self.mcStateManager.clear()
+        self.resetMiniBuffer( event )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.138:reverseRegion
+    #@+node:mork.20041030164547.149:upperLowerRegion
+    def upperLowerRegion( self, event, way ):
+        tbuffer = event.widget
+        mrk = 'sel'
+        trange = tbuffer.tag_ranges( mrk )
+        if len( trange ) != 0:
+            text = tbuffer.get( trange[ 0 ] , trange[ -1 ] )
+            i = tbuffer.index( 'insert' )
+            if text == ' ': return 'break'
+            tbuffer.delete( trange[ 0 ], trange[ -1 ] )
+            if way == 'low':
+                text = text.lower()
+            if way == 'up':
+                text = text.upper()
+            tbuffer.insert( 'insert', text )
+            tbuffer.mark_set( 'insert', i ) 
+        self.removeRKeys( tbuffer )
+        return 'break'
+    #@-node:mork.20041030164547.149:upperLowerRegion
+    #@-others
+    #@nonl
+    #@-node:mork.20041031183136:region methods
+    #@+node:mork.20041031182837:incremental search methods
+    #@+at
+    # These methods enable the incremental search functionality.
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041030164547.79:startIncremental
+    def startIncremental( self, event, stroke ):
+        #global isearch, pref
+        #widget = event.widget
+        #if self.isearch:
+        if self.mcStateManager.getState( 'isearch' ):
+            self.search( event, way = self.csr[ stroke ] )
+            self.pref = self.csr[ stroke ]
+            self.scolorizer( event )
+            return 'break'
+        else:
+            svar, label = self.getSvarLabel( event )
+            #self.isearch = True'
+            self.mcStateManager.setState( 'isearch', True )
+            self.pref = self.csr[ stroke ]
+            label.configure( background = 'lightblue' )
+            label.configure( textvariable = svar )
+            return 'break'
+    #@-node:mork.20041030164547.79:startIncremental
+    #@+node:mork.20041030164547.38:search
+    def search( self, event, way ):
+        '''This method moves the insert spot to position that matches the pattern in the minibuffer'''
+        tbuffer = event.widget
+        svar, label = self.getSvarLabel( event )
+        stext = svar.get()
+        if stext == '': return 'break'
+        if way == 'bak': #Means search backwards.
+            i = tbuffer.search( stext, 'insert', backwards = True,  stopindex = '1.0' )
+            if not i: #If we dont find one we start again at the bottom of the buffer. 
+                i = tbuffer.search( stext, 'end', backwards = True, stopindex = 'insert' )
+        else: #Since its not 'bak' it means search forwards.
+            i = tbuffer.search(  stext, "insert + 1c", stopindex = 'end') 
+            if not i: #If we dont find one we start at the top of the buffer. 
+                i = tbuffer.search( stext, '1.0', stopindex = 'insert' )
+        if i.isspace() or not i : return 'break'
+        tbuffer.mark_set( 'insert', i )
+        tbuffer.see( 'insert' )
+    #@-node:mork.20041030164547.38:search
+    #@+node:mork.20041030164547.80:iSearch
+    def iSearch( self, event, stroke ):
+        if len( event.char ) == 0: return
+        
+        if stroke in self.csr: return self.startIncremental( event, stroke )
+        if event.keysym == 'Return':
+              return self.stopControlX( event )
+              #return self._tailEnd( event.widget )
+        widget = event.widget
+        svar, label = self.getSvarLabel( event )
+        label.configure( textvariable = svar )
+        #if event.keysym == 'Return':
+        #      return self.stopControlX( event )
+        self.setSvar( event, svar )
+        if event.char != '\b':
+           stext = svar.get()
+           z = widget.search( stext , 'insert' , stopindex = 'insert +%sc' % len( stext ) )
+           if not z:
+               self.search( event, self.pref )
+        self.scolorizer( event )
+        return 'break'
+    #@-node:mork.20041030164547.80:iSearch
+    #@+node:mork.20041030164547.153:scolorizer
+    def scolorizer( self, event ):
+    
+        tbuffer = event.widget
+        svar, label = self.getSvarLabel( event )
+        stext = svar.get()
+        tbuffer.tag_delete( 'color' )
+        tbuffer.tag_delete( 'color1' )
+        if stext == '': return 'break'
+        ind = '1.0'
+        while ind:
+            ind = tbuffer.search( stext, ind, stopindex = 'end')
+            if ind:
+                i, d = ind.split('.')
+                d = str(int( d ) + len( stext ))
+                index = tbuffer.index( 'insert' )
+                if ind == index:
+                    tbuffer.tag_add( 'color1', ind, '%s.%s' % (i,d) )
+                tbuffer.tag_add( 'color', ind, '%s.%s' % (i, d) )
+                ind = i +'.'+d
+        tbuffer.tag_config( 'color', foreground = 'red' ) 
+        tbuffer.tag_config( 'color1', background = 'lightblue' ) 
+    #@-node:mork.20041030164547.153:scolorizer
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182837:incremental search methods
+    #@+node:mork.20041031182332:Zap methods
+    #@+at
+    # These methods start and execute the Zap to functionality.
+    #@-at
+    #@@c
+    
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.81:startZap
+    def startZap( self, event ):
+        #global zap
+        #self.zap = True
+        self.mcStateManager.setState( 'zap', True )
+        svar, label = self.getSvarLabel( event )
+        label.configure( background = 'lightblue' )
+        svar.set( 'Zap To Character' )
+        return 'break'
+    #@-node:mork.20041030164547.81:startZap
+    #@+node:mork.20041030164547.82:zapTo
+    def zapTo( self, event ):
+            #global zap
+    
+            widget = event.widget
+            s = string.ascii_letters + string.digits + string.punctuation
+            if len( event.char ) != 0 and event.char in s:
+                #self.zap = False
+                self.mcStateManager.setState( 'zap', False )
+                i = widget.search( event.char , 'insert',  stopindex = 'end' )
+                self.resetMiniBuffer( event )
+                if i:
+                    t = widget.get( 'insert', '%s+1c'% i )
+                    self.addToKillBuffer( t )
+                    widget.delete( 'insert', '%s+1c' % i)
+                    return 'break'
+            else:
+                return 'break'
+    #@-node:mork.20041030164547.82:zapTo
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182332:Zap methods
+    #@+node:mork.20041031181740:ControlX methods
+    #@+others
+    #@+node:mork.20041030164547.84:startControlX
+    def startControlX( self, event ):
+        '''This method starts the Control-X command sequence.'''  
+        #global controlx
+        #self.controlx = True
+        self.mcStateManager.setState( 'controlx', True )
+        svar, label = self.getSvarLabel( event )
+        svar.set( 'Control - X' )
+        label.configure( background = 'lightblue' )
+        return 'break'
+    #@-node:mork.20041030164547.84:startControlX
+    #@+node:mork.20041030164547.85:stopControlX
+    def stopControlX( self, event ):  #This will all be migrated to keyboardQuit eventually.
+        '''This method clears the state of the Emacs instance'''
+        #global controlx, rstring, isearch, sRect,negativeArg, uC, howM, altx
+        #self.altx = False
+        #self.howM = False
+        #self.controlx = False
+        #self.isearch = False
+        self.sRect = False
+        #self.uC = False
+        #self.negativeArg = False
+        self.mcStateManager.clear()
+        event.widget.tag_delete( 'color' )
+        event.widget.tag_delete( 'color1' )
+        if self.registermode:
+            self.deactivateRegister( event )
+        self.rectanglemode = 0
+        self.bufferMode = None
+        #self.rString = False
+        self.resetMiniBuffer( event )
+        event.widget.update_idletasks()     
+        return 'break'
+    
+    #@-node:mork.20041030164547.85:stopControlX
+    #@+node:mork.20041030164547.78:doControlX
+    #self.registermode = False
+    def doControlX( self, event, stroke, previous = [] ):
+        #global registermode
+        """previous.insert( 0, event.keysym )
+        if len( previous ) > 10: previous.pop()
+        if stroke == '<Key>':
+            if event.keysym in ( 'Shift_L', 'Shift_R' ):
+                return
+            if event.keysym == 'period':
+                self.stopControlX( event )
+                return self.setFillPrefix( event )
+            if event.keysym == 'parenleft':
+                self.stopControlX( event )
+                return self.startKBDMacro( event )
+            if event.keysym == 'parenright':
+                self.stopControlX( event )
+                return self.stopKBDMacro( event )
+            if event.keysym == 'semicolon':
+                self.stopControlX( event )
+                return self.setCommentColumn( event )
+            if event.keysym == 'Tab':
+                self.stopControlX( event )
+                return self.tabIndentRegion( event )
+            if self.sRect:
+                self.stringRectangle( event )
+                return 'break'
+            if event.keysym in ( 'a', 'i' , 'e'):
+                svar, label = self.getSvarLabel( event )
+                if svar.get() != 'a' and event.keysym == 'a':
+                    svar.set( 'a' )
+                    return 'break'
+                elif svar.get() == 'a':
+                    if event.char == 'i':
+                        svar.set( 'a i' )
+                    elif event.char == 'e':
+                        self.stopControlX( event )
+                        event.char = ''
+                        self.expandAbbrev( event )
+                    return 'break'
+            if event.keysym == 'g':
+                svar, label = self.getSvarLabel( event )
+                l = svar.get()
+                if l == 'a':
+                    self.stopControlX( event )
+                    return self.abbreviationDispatch( event, 1 )
+                elif l == 'a i':
+                    self.stopControlX( event )
+                    return self.abbreviationDispatch( event, 2 )
+            if event.keysym == 'e':
+                self.stopControlX( event )
+                return self.executeLastMacro( event )
+            if event.keysym == 'x' and previous[ 1 ] not in ( 'Control_L', 'Control_R'):
+                event.keysym = 's' 
+                self.setNextRegister( event )
+                return 'break'
+            if event.keysym == 'o' and self.registermode == 1:
+                self.openRectangle( event )
+                return 'break'
+            if event.keysym == 'c' and self.registermode == 1:
+                self.clearRectangle( event )
+                return 'break'
+            if event.keysym == 't' and self.registermode == 1:
+                self.stringRectangle( event )
+                return 'break'
+            if event.keysym == 'y' and self.registermode == 1:
+                self.yankRectangle( event )
+                return 'break'
+            if event.keysym == 'd' and self.registermode == 1:
+                self.deleteRectangle( event )
+                return 'break'
+            if event.keysym == 'k' and self.registermode == 1:
+                self.killRectangle( event )
+                return 'break'       
+            if self.registermode == 1:
+                self.setNextRegister( event )
+                return 'break'
+            elif self.registermode == 2:
+                self.executeRegister( event )
+                return 'break'
+            if event.keysym == 'r':
+                self.registermode = 1
+                svar = self.svars[ event.widget ]
+                svar.set( 'C - x r' )
+                return 'break'
+            if event.keysym== 'h':
+               self.stopControlX( event )
+               event.widget.tag_add( 'sel', '1.0', 'end' )
+               return 'break' 
+            if event.keysym == 'equal':
+                self.lineNumber( event )
+                return 'break'
+            if event.keysym == 'u':
+                self.stopControlX( event )
+                return self.doUndo( event, 2 )
+        if stroke in self.xcommands:
+            self.xcommands[ stroke ]( event )
+            self.stopControlX( event )
+        return 'break' """
+        return self.cxHandler( event, stroke )
+    #@-node:mork.20041030164547.78:doControlX
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181740:ControlX methods
+    #@+node:mork.20041031183614.1:range methods
+    #@+others
+    #@+node:mork.20041030164547.88:inRange
+    def inRange( self, widget, range, l = '', r = '' ):
+        ranges = widget.tag_ranges( range )
+        #i = widget.index( 'insert' )
+        for z in xrange( 0,  len( ranges) , 2 ):
+            z1 = z + 1
+            l1 = 'insert%s' %l
+            r1 = 'insert%s' % r
+            if widget.compare( l1, '>=', ranges[ z ]) and widget.compare( r1, '<=', ranges[ z1] ):
+                return True
         return False
-#@-node:mork.20041014112843.105:qsearch
-#@+node:mork.20041014112843.106:quitQSearch
-def quitQSearch( event ):
-        global qQ, qR, qlisten, qrexecute
+    #@-node:mork.20041030164547.88:inRange
+    #@+node:mork.20041030164547.89:contRanges
+    def contRanges( self, widget, range ):
+        ranges = widget.tag_ranges( range)
+        t1 = widget.get( ranges[ 0 ], ranges[ -1 ] )
+        t2 = []
+        for z in xrange( 0,  len( ranges) , 2 ):
+            z1 = z + 1
+            t2.append( widget.get( ranges[ z ], ranges[ z1 ] ) )
+        t2 = '\n'.join( t2 )
+        return t1 == t2
+    #@-node:mork.20041030164547.89:contRanges
+    #@+node:mork.20041030164547.90:testinrange
+    def testinrange( self, widget ):
+        mrk = 'sel'
+        #ranges = widget.tag_ranges( mrk)
+        if not self.inRange( widget , mrk) or not self.contRanges( widget, mrk ):
+            self.removeRKeys( widget )
+            return False
+        return True
+    #@-node:mork.20041030164547.90:testinrange
+    #@-others
+    #@nonl
+    #@-node:mork.20041031183614.1:range methods
+    #@+node:mork.20041031182402:delete methods
+    #@+others
+    #@+node:mork.20041030164547.97:deleteIndentation
+    def deleteIndentation( self, event ):
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert linestart' , 'insert lineend' )
+        txt = ' %s' % txt.lstrip()
+        tbuffer.delete( 'insert linestart' , 'insert lineend +1c' )    
+        i  = tbuffer.index( 'insert - 1c' )
+        tbuffer.insert( 'insert -1c', txt )
+        tbuffer.mark_set( 'insert', i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.97:deleteIndentation
+    #@+node:mork.20041030164547.98:deleteNextChar
+    def deleteNextChar( self,event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert' )
+        tbuffer.delete( i, '%s +1c' % i )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.98:deleteNextChar
+    #@+node:mork.20041030164547.99:deleteSpaces
+    def deleteSpaces( self, event , insertspace = False):
+        tbuffer = event.widget
+        char = tbuffer.get( 'insert', 'insert + 1c ' )
+        if char.isspace():
+            i = tbuffer.index( 'insert' )
+            wf = tbuffer.search( r'\w', i, stopindex = '%s lineend' % i, regexp = True )
+            wb = tbuffer.search( r'\w', i, stopindex = '%s linestart' % i, regexp = True, backwards = True )
+            if '' in ( wf, wb ):
+                return 'break'
+            tbuffer.delete( '%s +1c' %wb, wf )
+            if insertspace:
+                tbuffer.insert( 'insert', ' ' )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.99:deleteSpaces
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182402:delete methods
+    #@+node:mork.20041031194858:query search methods
+    #@+others
+    #@+node:mork.20041030164547.104:listenQR
+    #self.qQ = None
+    #self.qR = None
+    #self.qlisten = False
+    #self.lqR = Tkinter.StringVar()
+    #self.lqR.set( 'Query with: ' )
+    def listenQR( self, event ):
+        #global qgetQuery, qlisten
+        #self.qlisten = True
+        self.mcStateManager.setState( 'qlisten', True )
+        #tbuffer = event.widget
+        svar, label = self.getSvarLabel( event )
+        label.configure( background = 'lightblue' , textvariable = self.lqR)
+        self.qgetQuery = True
+    #@-node:mork.20041030164547.104:listenQR
+    #@+node:mork.20041030164547.105:qsearch
+    def qsearch( self, event ):
+        if self.qQ:
+            tbuffer = event.widget
+            i = tbuffer.search( self.qQ, 'insert', stopindex = 'end' )
+            tbuffer.tag_delete( 'qR' )
+            if i:
+                tbuffer.mark_set( 'insert', i )
+                tbuffer.update_idletasks()
+                tbuffer.tag_add( 'qR', 'insert', 'insert +%sc'% len( self.qQ ) )
+                tbuffer.tag_config( 'qR', background = 'lightblue' )
+                return True
+            self.quitQSearch( event )
+            return False
+    #@-node:mork.20041030164547.105:qsearch
+    #@+node:mork.20041030164547.106:quitQSearch
+    def quitQSearch( self,event ):
+        #global qQ, qR, qlisten, qrexecute
         event.widget.tag_delete( 'qR' )
-        qQ = None
-        qR = None
-        qlisten = False
-        qrexecute = False
-        svar, label = getSvarLabel( event )
+        self.qQ = None
+        self.qR = None
+        #self.qlisten = False
+        self.mcStateManager.setState( 'qlisten', False )
+        self.qrexecute = False
+        svar, label = self.getSvarLabel( event )
         svar.set( '' )
         label.configure( background = 'lightgrey' )
         event.widget.event_generate( '<Key>' )
         event.widget.update_idletasks()
-#@-node:mork.20041014112843.106:quitQSearch
-#@+node:mork.20041014112843.107:qreplace
-def qreplace( event ):
-    if event.keysym == 'y':
-        _qreplace( event )
-        return
-    elif event.keysym in ( 'q', 'Return' ):
-        quitQSearch( event )
-    elif event.keysym == 'exclam':
-        while qrexecute:
-            _qreplace( event )
-    elif event.keysym in ( 'n', 'Delete'):
-        i = event.widget.index( 'insert' )
-        event.widget.mark_set( 'insert', 'insert +%sc' % len( qQ ) )
-        qsearch( event )
-    event.widget.see( 'insert' )
-#@-node:mork.20041014112843.107:qreplace
-#@+node:mork.20041014112843.108:_qreplace
-def _qreplace( event ):
-    i = event.widget.tag_ranges( 'qR' )
-    event.widget.delete( i[ 0 ], i[ 1 ] )
-    event.widget.insert( 'insert', qR )
-    qsearch( event )
-#@-node:mork.20041014112843.108:_qreplace
-#@+node:mork.20041014112843.109:getQuery
-qgetQuery = False
-lqQ = Tkinter.StringVar()
-lqQ.set( 'Replace with:' )      
-def getQuery( event ):
-    global qQ, qgetQuery, qgetReplace
-    l = event.keysym
-    svar, label = getSvarLabel( event )
-    label.configure( textvariable = svar )
-    if l == 'Return':
-        qgetQuery = False
-        qgetReplace = True
-        qQ = svar.get()
-        svar.set( '')
-        label.configure( textvariable = lqQ)
-        return
-    setSvar( event, svar )
-#@-node:mork.20041014112843.109:getQuery
-#@+node:mork.20041014112843.110:getReplace
-qgetReplace = False
-def getReplace( event ):
-    global qR, qgetReplace, qrexecute
-    l = event.keysym
-    svar, label = getSvarLabel( event )
-    label.configure( textvariable = svar )
-    if l == 'Return':
-        qgetReplace = False
-        qR = svar.get()
-        svar.set( 'Replace %s with %s y/n' %( qQ, qR ) )
-        qrexecute = True
-        ok = qsearch( event )
-        return
-    setSvar( event, svar )
-#@-node:mork.20041014112843.110:getReplace
-#@+node:mork.20041014112843.111:masterQR
-qrexecute = False   
-def masterQR( event ):
-
-    if qgetQuery:
-        getQuery( event )
-    elif qgetReplace:
-        getReplace( event )
-    elif qrexecute:
-        qreplace( event )
-    else:
-        listenQR( event )
-    return 'break'
-#@-node:mork.20041014112843.111:masterQR
-#@+node:ekr.20041028083211.10:Search utils...
-#@+node:mork.20041014112843.112:getSvarLabel
-def getSvarLabel( event ):
-    svar = svars[ event.widget ]
-    label = mbuffers[ event.widget ]
-    return svar, label
-#@-node:mork.20041014112843.112:getSvarLabel
-#@+node:mork.20041014112843.113:setSvar
-def setSvar( event, svar ):  
-    t = svar.get()  
-    if event.char == '\b':
-           if len( t ) == 1:
-               t = ''
-           else:
-               t = t[ 0 : -1 ]
-           svar.set( t )
-    else:
-            t = t + event.char
-            svar.set( t )
-#@-node:mork.20041014112843.113:setSvar
-#@+node:mork.20041014112843.114:movePastClose
-def movePastClose( event ):
-    buffer = event.widget
-    i = buffer.search( '(', 'insert' , backwards = True ,stopindex = '1.0' )
-    icheck = buffer.search( ')', 'insert',  backwards = True, stopindex = '1.0' )
-    if ''  ==  i:
-        return 'break'
-    if icheck:
-        ic = buffer.compare( i, '<', icheck )
-        if ic: 
-            return 'break'
-    i2 = buffer.search( ')', 'insert' ,stopindex = 'end' )
-    i2check = buffer.search( '(', 'insert', stopindex = 'end' )
-    if '' == i2:
-        return 'break'
-    if i2check:
-        ic2 = buffer.compare( i2, '>', i2check )
-        if ic2:
-            return 'break'
-    ib = buffer.index( 'insert' )
-    buffer.mark_set( 'insert', '%s lineend +1c' % i2 )
-    if buffer.index( 'insert' ) == buffer.index( '%s lineend' % ib ):
-        buffer.insert( 'insert' , '\n')
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.114:movePastClose
-#@+node:mork.20041014112843.115:replaceString
-rString = False
-_sString = ''
-_rpString = ''
-def replaceString( event ):
-    global rString, _sString, _rpString
-    svar, label = getSvarLabel( event )
-    if event.keysym in ( 'Control_L', 'Control_R' ):
-        return
-    if not rString:
-        rString = 1
-        _sString = ''
-        _rpString = ''
-        svar.set( 'Replace String' )
-        return
-    if event.keysym == 'Return':
-        rString = rString + 1
-    if rString == 1:
-        svar.set( '' )
-        rString = rString + 1
-    if rString == 2:
-        setSvar( event, svar )
-        _sString = svar.get()
-        return 'break'
-    if rString == 3:
-        svar.set( 'Replace string %s with:' % _sString )
-        rString = rString + 1
-        return 'break'
-    if rString == 4:
-        svar.set( '' )
-        rString = rString + 1
-    if rString == 5:
-        setSvar( event, svar )
-        _rpString = svar.get()
-        return 'break'
-    if rString == 6:
-        buffer = event.widget
-        i = 'insert'
-        ct = 0
-        while i:
-            i = buffer.search( _sString, i, stopindex = 'end' )
-            if i:
-                buffer.delete( i, '%s +%sc' %( i, len( _sString) ))
-                buffer.insert( i, _rpString )
-                ct = ct +1
-        svar.set( 'Replaced %s occurances' % ct )
-        label.configure( background = 'lightgrey' ) 
-        rString = False
-        return _tailEnd( buffer )
-#@-node:mork.20041014112843.115:replaceString
-#@+node:mork.20041014112843.116:swapCharacters
-def swapCharacters( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    c1 = buffer.get( 'insert', 'insert +1c' )
-    c2 = buffer.get( 'insert -1c', 'insert' )
-    buffer.delete( 'insert -1c', 'insert' )
-    buffer.insert( 'insert', c1 )
-    buffer.delete( 'insert', 'insert +1c' )
-    buffer.insert( 'insert', c2 )
-    buffer.mark_set( 'insert', i )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.116:swapCharacters
-#@+node:mork.20041014112843.117:insertNewLine
-def insertNewLine( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    buffer.insert( 'insert', '\n' )
-    buffer.mark_set( 'insert', i )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.117:insertNewLine
-#@+node:mork.20041014112843.118:lineNumber
-def lineNumber( event ):
-    stopControlX( event )
-    svar, label = getSvarLabel( event )
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    c = buffer.get( 'insert', 'insert + 1c' )
-    txt = buffer.get( '1.0', 'end' )
-    txt2 = buffer.get( '1.0', 'insert' )
-    perc = len( txt ) * .01
-    perc = int( len( txt2 ) / perc )
-    svar.set( 'Char: %s point %s of %s(%s%s)  Column %s' %( c, len( txt2), len( txt), perc,'%', i1 ) )
-    return 'break'
-#@-node:mork.20041014112843.118:lineNumber
-#@+node:mork.20041014112843.119:prevNexSentence
-def prevNexSentence( event , way ):
-    buffer = event.widget
-    if way == 'bak':
-        i = buffer.search( '.', 'insert', backwards = True, stopindex = '1.0' )
-        if i:
-            i2 = buffer.search( '.', i, backwards = True, stopindex = '1.0' )
-            if not i2:
-                i2 = '1.0'
-            if i2:
-                i3 = buffer.search( '\w', i2, stopindex = i, regexp = True )
-                if i3:
-                    buffer.mark_set( 'insert', i3 )
-        else:
-            buffer.mark_set( 'insert', '1.0' )
-    else:
-        i = buffer.search( '.', 'insert', stopindex = 'end' )
-        if i:
-            buffer.mark_set( 'insert', '%s +1c' %i )
-        else:
-            buffer.mark_set( 'insert', 'end' )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.119:prevNexSentence
-#@+node:mork.20041014112843.120:openRectangle
-def openRectangle( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    r1, r2, r3, r4 = getRectanglePoints( event )
-    lth = ' ' * ( r4 - r2 )
-    stopControlX( event )
-    while r1 <= r3:
-        buffer.insert( '%s.%s' % ( r1, r2 ) , lth)
-        r1 = r1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.120:openRectangle
-#@+node:mork.20041014112843.121:clearRectangle
-def clearRectangle( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    r1, r2, r3, r4 = getRectanglePoints( event )
-    lth = ' ' * ( r4 - r2 )
-    stopControlX( event )
-    while r1 <= r3:
-        buffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-        buffer.insert( '%s.%s' % ( r1, r2 ) , lth)
-        r1 = r1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.121:clearRectangle
-#@+node:mork.20041014112843.122:deleteRectangle
-def deleteRectangle( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    r1, r2, r3, r4 = getRectanglePoints( event )
-    lth = ' ' * ( r4 - r2 )
-    stopControlX( event )
-    while r1 <= r3:
-        buffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-        r1 = r1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.122:deleteRectangle
-#@+node:mork.20041014112843.123:stringRectangle
-sRect = False   
-def stringRectangle( event ):
-    global sRect
-    svar, label = getSvarLabel( event )
-    if not sRect:
-        sRect = 1
-        svar.set( 'String rectangle :' )
-        setLabelBlue( label )
-        return 'break'
-    if event.keysym == 'Return':
-        sRect = 3
-    if sRect == 1:
-        svar.set( '' )
-        sRect = 2
-    if sRect == 2:
-        setSvar( event, svar )
-        return 'break'
-    if sRect == 3:
-        if not _chckSel( event ):
-            stopControlX( event )
+    #@-node:mork.20041030164547.106:quitQSearch
+    #@-others
+    #@nonl
+    #@-node:mork.20041031194858:query search methods
+    #@+node:mork.20041031181701.1:query replace methods
+    #@+others
+    #@+node:mork.20041030164547.107:qreplace
+    def qreplace( self, event ):
+        if event.keysym == 'y':
+            self._qreplace( event )
             return
-        buffer = event.widget
-        r1, r2, r3, r4 = getRectanglePoints( event )
-        lth = svar.get()
-        stopControlX( event )
-        while r1 <= r3:
-            buffer.delete( '%s.%s' % ( r1, r2 ),  '%s.%s' % ( r1, r4 ) )
-            buffer.insert( '%s.%s' % ( r1, r2 ) , lth )
-            r1 = r1 + 1
-        return _tailEnd( buffer )
-#@-node:mork.20041014112843.123:stringRectangle
-#@+node:mork.20041014112843.124:killRectangle
-krectangle = None       
-def killRectangle( event ):
-    global krectangle
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    r1, r2, r3, r4 = getRectanglePoints( event )
-    lth = ' ' * ( r4 - r2 )
-    stopControlX( event )
-    krectangle = []
-    while r1 <= r3:
-        txt = buffer.get( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-        krectangle.append( txt )
-        buffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
-        r1 = r1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.124:killRectangle
-#@+node:mork.20041014112843.125:closeRectangle
-def closeRectangle( event ):
-    if not _chckSel( event ):
-        return
-    buffer = event.widget
-    r1, r2, r3, r4 = getRectanglePoints( event ) 
-    ar1 = r1
-    txt = []
-    while ar1 <= r3:
-        txt.append( buffer.get( '%s.%s' %( ar1, r2 ), '%s.%s' %( ar1, r4 ) ) )
-        ar1 = ar1 + 1 
-    for z in txt:
-        if z.lstrip().rstrip():
+        elif event.keysym in ( 'q', 'Return' ):
+            self.quitQSearch( event )
+        elif event.keysym == 'exclam':
+            while self.qrexecute:
+                self._qreplace( event )
+        elif event.keysym in ( 'n', 'Delete'):
+            #i = event.widget.index( 'insert' )
+            event.widget.mark_set( 'insert', 'insert +%sc' % len( self.qQ ) )
+            self.qsearch( event )
+        event.widget.see( 'insert' )
+    #@-node:mork.20041030164547.107:qreplace
+    #@+node:mork.20041030164547.108:_qreplace
+    def _qreplace( self, event ):
+        i = event.widget.tag_ranges( 'qR' )
+        event.widget.delete( i[ 0 ], i[ 1 ] )
+        event.widget.insert( 'insert', self.qR )
+        self.qsearch( event )
+    #@-node:mork.20041030164547.108:_qreplace
+    #@+node:mork.20041030164547.109:getQuery
+    #self.qgetQuery = False
+    #self.lqQ = Tkinter.StringVar()
+    #self.lqQ.set( 'Replace with:' )      
+    def getQuery( self, event ):
+        #global qQ, qgetQuery, qgetReplace
+        l = event.keysym
+        svar, label = self.getSvarLabel( event )
+        label.configure( textvariable = svar )
+        if l == 'Return':
+            self.qgetQuery = False
+            self.qgetReplace = True
+            self.qQ = svar.get()
+            svar.set( '')
+            label.configure( textvariable = self.lqQ)
             return
-    while r1 <= r3:
-        buffer.delete( '%s.%s' %(r1, r2 ), '%s.%s' %( r1, r4 ) )
-        r1 = r1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.125:closeRectangle
-#@+node:mork.20041014112843.126:yankRectangle
-def yankRectangle( event , krec = None ):
-    stopControlX( event )
-    if not krec:
-        krec = krectangle
-    if not krec:
-        return 'break'
-    buffer = event.widget
-    txt = buffer.get( 'insert linestart', 'insert' )
-    txt = getWSString( txt )
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    i1 = int( i1 )
-    for z in krec:        
-        txt2 = buffer.get( '%s.0 linestart' % i1, '%s.%s' % ( i1, i2 ) )
-        if len( txt2 ) != len( txt ):
-            amount = len( txt ) - len( txt2 )
-            z = txt[ -amount : ] + z
-        buffer.insert( '%s.%s' %( i1, i2 ) , z )
-        if buffer.index( '%s.0 lineend +1c' % i1 ) == buffer.index( 'end' ):
-            buffer.insert( '%s.0 lineend' % i1, '\n' )
-        i1 = i1 + 1
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.126:yankRectangle
-#@+node:mork.20041014112843.127:getWSString
-def getWSString( txt ):
-    ntxt = []
-    for z in txt:
-        if z == '\t':
-            ntxt.append( z )
+        self.setSvar( event, svar )
+    #@-node:mork.20041030164547.109:getQuery
+    #@+node:mork.20041030164547.110:getReplace
+    #self.qgetReplace = False
+    def getReplace( self, event ):
+        #global qR, qgetReplace, qrexecute
+        l = event.keysym
+        svar, label = self.getSvarLabel( event )
+        label.configure( textvariable = svar )
+        if l == 'Return':
+            self.qgetReplace = False
+            self.qR = svar.get()
+            svar.set( 'Replace %s with %s y/n' %( self.qQ, self.qR ) )
+            self.qrexecute = True
+            ok = self.qsearch( event )
+            return
+        self.setSvar( event, svar )
+    #@-node:mork.20041030164547.110:getReplace
+    #@+node:mork.20041030164547.111:masterQR
+    #self.qrexecute = False   
+    def masterQR( self, event ):
+    
+        if self.qgetQuery:
+            self.getQuery( event )
+        elif self.qgetReplace:
+            self.getReplace( event )
+        elif self.qrexecute:
+            self.qreplace( event )
         else:
-            ntxt.append( ' ' )
-    return ''.join( ntxt )
-#@-node:mork.20041014112843.127:getWSString
-#@+node:mork.20041014112843.128:getRectanglePoints
-def getRectanglePoints( event ):
-    buffer = event.widget
-    i = buffer.index( 'sel.first' )
-    i2 = buffer.index( 'sel.last' )
-    r1, r2 = i.split( '.' )
-    r3, r4 = i2.split( '.' )
-    r1 = int( r1 )
-    r2 = int( r2 )
-    r3 = int( r3 )
-    r4 = int( r4 )
-    return r1, r2, r3, r4
-#@-node:mork.20041014112843.128:getRectanglePoints
-#@+node:mork.20041014112843.129:negativeArgument
-negativeArg = False
-def negativeArgument( event, stroke = None ):
-    global negativeArg
-    svar, label = getSvarLabel( event )
-    svar.set( "Negative Argument" )
-    label.configure( background = 'lightblue' )
-    if not negativeArg:
-        negativeArg = True
-    if negativeArg:
-        if negArgs.has_key( stroke ):
-            negArgs[ stroke ]( event , stroke)
-    return 'break'
-#@-node:mork.20041014112843.129:negativeArgument
-#@+node:mork.20041014112843.130:changePreviousWord
-def changePreviousWord( event, stroke ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    moveword( event, -1  )
-    if stroke == '<Alt-c>': 
-        capitalize( event, 'cap' )
-    elif stroke =='<Alt-u>':
-         capitalize( event, 'up' )
-    elif stroke == '<Alt-l>': 
-        capitalize( event, 'low' )
-    buffer.mark_set( 'insert', i )
-    stopControlX( event )
-    return _tailEnd( buffer )    
-#@-node:mork.20041014112843.130:changePreviousWord
-#@+node:mork.20041014112843.131:insertNewLineIndent
-negArgs = { '<Alt-c>': changePreviousWord,
-'<Alt-u>' : changePreviousWord,
-'<Alt-l>': changePreviousWord }
-
-
-
-def insertNewLineIndent( event ):
-    buffer =  event.widget
-    txt = buffer.get( 'insert linestart', 'insert lineend' )
-    txt = getWSString( txt )
-    i = buffer.index( 'insert' )
-    buffer.insert( i, txt )
-    buffer.mark_set( 'insert', i )    
-    return insertNewLine( event )
-#@-node:mork.20041014112843.131:insertNewLineIndent
-#@+node:mork.20041014112843.132:dynamicExpansion
-def dynamicExpansion( event, store = {'rlist': [], 'stext': ''} ):
-    buffer = event.widget
-    rlist = store[ 'rlist' ]
-    stext = store[ 'stext' ]
-    i = buffer.index( 'insert -1c wordstart' )
-    i2 = buffer.index( 'insert -1c wordend' )
-    txt = buffer.get( i, i2 )
-    dA = buffer.tag_ranges( 'dA' )
-    buffer.tag_delete( 'dA' )
-    def doDa( txt ):
-        buffer.delete( 'insert -1c wordstart', 'insert -1c wordend' ) 
-        buffer.insert( 'insert', txt )
-        buffer.tag_add( 'dA', 'insert -1c wordstart', 'insert -1c wordend' )
-        return _tailEnd( buffer )
+            svar, label = self.getSvarLabel( event )
+            svar.set( '' )
+            self.listenQR( event )
+        return 'break'
+    #@-node:mork.20041030164547.111:masterQR
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181701.1:query replace methods
+    #@+node:mork.20041031155313:Rectangles methods
+    #@+others
+    #@+node:mork.20041031202908:activateRectangleMethods
+    def activateRectangleMethods( self, event ):
         
-    if dA:
-        if i == dA[ 0 ] and i2 == dA[ 1 ]:
-            if rlist:
-                txt = rlist.pop()
-            else:
-                txt = stext
-                getDynamicList( buffer, txt, rlist )
-            return doDa( txt )
-        else:
-            dA = None
-            
-    if not dA:
-        store[ 'stext' ] = txt
-        store[ 'rlist' ] = rlist = []
-        getDynamicList( buffer, txt, rlist )
-        if not rlist:
+        self.rectanglemode = 1
+        svar = self.svars[ event.widget ]
+        svar.set( 'C - x r' )
+        return 'break'
+    #@-node:mork.20041031202908:activateRectangleMethods
+    #@+node:mork.20041030164547.120:openRectangle
+    def openRectangle( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        lth = ' ' * ( r4 - r2 )
+        self.stopControlX( event )
+        while r1 <= r3:
+            tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
+            r1 = r1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.120:openRectangle
+    #@+node:mork.20041030164547.121:clearRectangle
+    def clearRectangle( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        lth = ' ' * ( r4 - r2 )
+        self.stopControlX( event )
+        while r1 <= r3:
+            tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+            tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth)
+            r1 = r1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.121:clearRectangle
+    #@+node:mork.20041030164547.122:deleteRectangle
+    def deleteRectangle( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        #lth = ' ' * ( r4 - r2 )
+        self.stopControlX( event )
+        while r1 <= r3:
+            tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+            r1 = r1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.122:deleteRectangle
+    #@+node:mork.20041030164547.123:stringRectangle
+    #self.sRect = False   
+    def stringRectangle( self, event ):
+        #global sRect
+        svar, label = self.getSvarLabel( event )
+        if not self.sRect:
+            self.sRect = 1
+            svar.set( 'String rectangle :' )
+            self.setLabelBlue( label )
             return 'break'
-        txt = rlist.pop()
-        return doDa( txt )
-#@-node:mork.20041014112843.132:dynamicExpansion
-#@+node:mork.20041014112843.133:dynamicExpansion2
-def dynamicExpansion2( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert -1c wordstart' )
-    i2 = buffer.index( 'insert -1c wordend' )
-    txt = buffer.get( i, i2 )   
-    rlist = []
-    getDynamicList( buffer, txt, rlist )
-    dEstring = reduce( findPre, rlist )
-    if dEstring:
-        buffer.delete( i , i2 )
-        buffer.insert( i, dEstring )    
-        return _tailEnd( buffer )          
-#@-node:mork.20041014112843.133:dynamicExpansion2
-#@+node:mork.20041014112843.134:getDynamicList
-def getDynamicList( buffer, txt , rlist ):
-     i = '1.0'
-     while i:
-         i = buffer.search( txt, i,  stopindex = 'end' )
-         if i == buffer.index( 'insert -1c wordstart' ): 
-            i = '%s wordend' % i
-            continue
-         if i:
-            if i == buffer.index( '%s wordstart' % i ):
-                word = buffer.get( i, '%s wordend' % i )
-                if word not in rlist:
-                    rlist.append ( word )
+        if event.keysym == 'Return':
+            self.sRect = 3
+        if self.sRect == 1:
+            svar.set( '' )
+            self.sRect = 2
+        if self.sRect == 2:
+            self.setSvar( event, svar )
+            return 'break'
+        if self.sRect == 3:
+            if not self._chckSel( event ):
+                self.stopControlX( event )
+                return
+            tbuffer = event.widget
+            r1, r2, r3, r4 = self.getRectanglePoints( event )
+            lth = svar.get()
+            #self.stopControlX( event )
+            while r1 <= r3:
+                tbuffer.delete( '%s.%s' % ( r1, r2 ),  '%s.%s' % ( r1, r4 ) )
+                tbuffer.insert( '%s.%s' % ( r1, r2 ) , lth )
+                r1 = r1 + 1
+            #i = tbuffer.index( 'insert' )
+            #tbuffer.mark_set( 'insert', 'insert wordend' )
+            #tbuffer.tag_remove( 'sel', '1.0', 'end' )
+            #return self._tailEnd( tbuffer )
+            self.stopControlX( event )
+            return self._tailEnd( tbuffer )
+            #return 'break'
+            #return 'break'
+            #tbuffer.mark_set( 'insert', i )
+            #return 'break'
+    #@-node:mork.20041030164547.123:stringRectangle
+    #@+node:mork.20041030164547.124:killRectangle
+    #self.krectangle = None       
+    def killRectangle( self, event ):
+        #global krectangle
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event )
+        #lth = ' ' * ( r4 - r2 )
+        self.stopControlX( event )
+        self.krectangle = []
+        while r1 <= r3:
+            txt = tbuffer.get( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+            self.krectangle.append( txt )
+            tbuffer.delete( '%s.%s' % ( r1, r2 ) , '%s.%s' % ( r1, r4 )  )
+            r1 = r1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.124:killRectangle
+    #@+node:mork.20041030164547.125:closeRectangle
+    def closeRectangle( self, event ):
+        if not self._chckSel( event ):
+            return
+        tbuffer = event.widget
+        r1, r2, r3, r4 = self.getRectanglePoints( event ) 
+        ar1 = r1
+        txt = []
+        while ar1 <= r3:
+            txt.append( tbuffer.get( '%s.%s' %( ar1, r2 ), '%s.%s' %( ar1, r4 ) ) )
+            ar1 = ar1 + 1 
+        for z in txt:
+            if z.lstrip().rstrip():
+                return
+        while r1 <= r3:
+            tbuffer.delete( '%s.%s' %(r1, r2 ), '%s.%s' %( r1, r4 ) )
+            r1 = r1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.125:closeRectangle
+    #@+node:mork.20041030164547.126:yankRectangle
+    def yankRectangle( self, event , krec = None ):
+        self.stopControlX( event )
+        if not krec:
+            krec = self.krectangle
+        if not krec:
+            return 'break'
+        tbuffer = event.widget
+        txt = tbuffer.get( 'insert linestart', 'insert' )
+        txt = self.getWSString( txt )
+        i = tbuffer.index( 'insert' )
+        i1, i2 = i.split( '.' )
+        i1 = int( i1 )
+        for z in krec:        
+            txt2 = tbuffer.get( '%s.0 linestart' % i1, '%s.%s' % ( i1, i2 ) )
+            if len( txt2 ) != len( txt ):
+                amount = len( txt ) - len( txt2 )
+                z = txt[ -amount : ] + z
+            tbuffer.insert( '%s.%s' %( i1, i2 ) , z )
+            if tbuffer.index( '%s.0 lineend +1c' % i1 ) == tbuffer.index( 'end' ):
+                tbuffer.insert( '%s.0 lineend' % i1, '\n' )
+            i1 = i1 + 1
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.126:yankRectangle
+    #@+node:mork.20041030164547.128:getRectanglePoints
+    def getRectanglePoints( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'sel.first' )
+        i2 = tbuffer.index( 'sel.last' )
+        r1, r2 = i.split( '.' )
+        r3, r4 = i2.split( '.' )
+        r1 = int( r1 )
+        r2 = int( r2 )
+        r3 = int( r3 )
+        r4 = int( r4 )
+        return r1, r2, r3, r4
+    #@-node:mork.20041030164547.128:getRectanglePoints
+    #@-others
+    #@nonl
+    #@-node:mork.20041031155313:Rectangles methods
+    #@+node:mork.20041031181701.2:dynamic abbreviations methods
+    #@+others
+    #@+node:mork.20041030164547.132:dynamicExpansion
+    def dynamicExpansion( self, event ):#, store = {'rlist': [], 'stext': ''} ):
+        tbuffer = event.widget
+        rlist = self.store[ 'rlist' ]
+        stext = self.store[ 'stext' ]
+        i = tbuffer.index( 'insert -1c wordstart' )
+        i2 = tbuffer.index( 'insert -1c wordend' )
+        txt = tbuffer.get( i, i2 )
+        dA = tbuffer.tag_ranges( 'dA' )
+        tbuffer.tag_delete( 'dA' )
+        def doDa( txt ):
+            tbuffer.delete( 'insert -1c wordstart', 'insert -1c wordend' ) 
+            tbuffer.insert( 'insert', txt )
+            tbuffer.tag_add( 'dA', 'insert -1c wordstart', 'insert -1c wordend' )
+            return self._tailEnd( tbuffer )
+            
+        if dA:
+            if i == dA[ 0 ] and i2 == dA[ 1 ]:
+                if rlist:
+                    txt = rlist.pop()
                 else:
-                    rlist.remove( word )
-                    rlist.append( word )
-            i = '%s wordend' % i
-#@-node:mork.20041014112843.134:getDynamicList
-#@+node:mork.20041014112843.135:findPre
-def findPre( a, b ):
-    st = ''
-    for z in a:
-        st1 = st + z
-        if b.startswith( st1 ):
-            st = st1
+                    txt = stext
+                    self.getDynamicList( tbuffer, txt, rlist )
+                return doDa( txt )
+            else:
+                dA = None
+                
+        if not dA:
+            self.store[ 'stext' ] = txt
+            self.store[ 'rlist' ] = rlist = []
+            self.getDynamicList( tbuffer, txt, rlist )
+            if not rlist:
+                return 'break'
+            txt = rlist.pop()
+            return doDa( txt )
+    #@-node:mork.20041030164547.132:dynamicExpansion
+    #@+node:mork.20041030164547.133:dynamicExpansion2
+    def dynamicExpansion2( self, event ):
+        tbuffer = event.widget
+        i = tbuffer.index( 'insert -1c wordstart' )
+        i2 = tbuffer.index( 'insert -1c wordend' )
+        txt = tbuffer.get( i, i2 )   
+        rlist = []
+        self.getDynamicList( tbuffer, txt, rlist )
+        dEstring = reduce( self.findPre, rlist )
+        if dEstring:
+            tbuffer.delete( i , i2 )
+            tbuffer.insert( i, dEstring )    
+            return self._tailEnd( tbuffer )          
+    #@-node:mork.20041030164547.133:dynamicExpansion2
+    #@+node:mork.20041030164547.134:getDynamicList
+    def getDynamicList( self, tbuffer, txt , rlist ):
+         i = '1.0'
+         while i:
+             i = tbuffer.search( txt, i,  stopindex = 'end' )
+             if i == tbuffer.index( 'insert -1c wordstart' ): 
+                i = '%s wordend' % i
+                continue
+             if i:
+                if i == tbuffer.index( '%s wordstart' % i ):
+                    word = tbuffer.get( i, '%s wordend' % i )
+                    if word not in rlist:
+                        rlist.append ( word )
+                    else:
+                        rlist.remove( word )
+                        rlist.append( word )
+                i = '%s wordend' % i
+    #@-node:mork.20041030164547.134:getDynamicList
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181701.2:dynamic abbreviations methods
+    #@+node:mork.20041031183018:sort methods
+    #@+others
+    #@+node:mork.20041030164547.136:sortLines
+    def sortLines( self, event , which = None ):
+        tbuffer = event.widget  
+        if not self._chckSel( event ):
+            return
+        i = tbuffer.index( 'sel.first' )
+        i2 = tbuffer.index( 'sel.last' )
+        is1 = i.split( '.' )
+        is2 = i2.split( '.' )
+        txt = tbuffer.get( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
+        ins = tbuffer.index( 'insert' )
+        txt = txt.split( '\n' )
+        tbuffer.delete( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
+        txt.sort()
+        if which:
+            txt.reverse()
+        inum = int(is1[ 0 ])
+        for z in txt:
+            tbuffer.insert( '%s.0' % inum, '%s\n' % z ) 
+            inum = inum + 1
+        tbuffer.mark_set( 'insert', ins )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.136:sortLines
+    #@+node:mork.20041030164547.137:sortColumns
+    def sortColumns( self, event ):
+        tbuffer = event.widget
+        if not self._chckSel( event ):
+            return
+        ins = tbuffer.index( 'insert' )
+        is1 = tbuffer.index( 'sel.first' )
+        is2 = tbuffer.index( 'sel.last' )   
+        sint1, sint2 = is1.split( '.' )
+        sint2 = int( sint2 )
+        sint3, sint4 = is2.split( '.' )
+        sint4 = int( sint4 )
+        txt = tbuffer.get( '%s.0' % sint1, '%s.0 lineend' % sint3 )
+        tbuffer.delete( '%s.0' % sint1, '%s.0 lineend' % sint3 )
+        columns = []
+        i = int( sint1 )
+        i2 = int( sint3 )
+        while i <= i2:
+            t = tbuffer.get( '%s.%s' %( i, sint2 ), '%s.%s' % ( i, sint4 ) )
+            columns.append( t )
+            i = i + 1
+        txt = txt.split( '\n' )
+        zlist = zip( columns, txt )
+        zlist.sort()
+        i = int( sint1 )      
+        for z in xrange( len( zlist ) ):
+             tbuffer.insert( '%s.0' % i, '%s\n' % zlist[ z ][ 1 ] ) 
+             i = i + 1
+        tbuffer.mark_set( 'insert', ins )
+        return self._tailEnd( tbuffer ) 
+    #@-node:mork.20041030164547.137:sortColumns
+    #@+node:mork.20041030164547.139:sortFields
+    def sortFields( self, event, which = None ):
+        tbuffer = event.widget
+        if not self._chckSel( event ):
+            return
+        ins = tbuffer.index( 'insert' )
+        is1 = tbuffer.index( 'sel.first' )
+        is2 = tbuffer.index( 'sel.last' )    
+        txt = tbuffer.get( '%s linestart' % is1, '%s lineend' % is2 )
+        txt = txt.split( '\n' )
+        fields = []
+        import re
+        fn = r'\w+'
+        frx = re.compile( fn )
+        for z in txt:
+            f = frx.findall( z )
+            if not which:
+                fields.append( f[ 0 ] )
+            else:
+                i =  int( which )
+                if len( f ) < i:
+                    return self._tailEnd( tbuffer )
+                i = i - 1            
+                fields.append( f[ i ] )
+        nz = zip( fields, txt )
+        nz.sort()
+        tbuffer.delete( '%s linestart' % is1, '%s lineend' % is2 )
+        i = is1.split( '.' )
+        #i2 = is2.split( '.' )
+        int1 = int( i[ 0 ] )
+        for z in nz:
+            tbuffer.insert( '%s.0' % int1, '%s\n'% z[1] )
+            int1 = int1 + 1
+        tbuffer.mark_set( 'insert' , ins )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.139:sortFields
+    #@-others
+    #@nonl
+    #@-node:mork.20041031183018:sort methods
+    #@+node:mork.20041031181929.1:Alt_X methods
+    #@+at
+    # These methods control the Alt-x command functionality.
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.140:alt_X
+    #self.altx = False
+    def alt_X( self, event , which = None):
+        #global altx
+        if which:
+            self.mcStateManager.setState( 'altx', which )
         else:
-            return st
-    return st  
-#@-node:mork.20041014112843.135:findPre
-#@+node:mork.20041014112843.136:sortLines
-def sortLines( event , which):
-    buffer = event.widget
-    if not _chckSel( event ):
-        return
-    i = buffer.index( 'sel.first' )
-    i2 = buffer.index( 'sel.last' )
-    is1 = i.split( '.' )
-    is2 = i2.split( '.' )
-    txt = buffer.get( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
-    ins = buffer.index( 'insert' )
-    txt = txt.split( '\n' )
-    buffer.delete( '%s.0' % is1[ 0 ], '%s.0 lineend' % is2[ 0 ] )
-    txt.sort()
-    if which:
-        txt.reverse()
-    inum = int(is1[ 0 ])
-    for z in txt:
-        buffer.insert( '%s.0' % inum, '%s\n' % z ) 
-        inum = inum + 1
-    buffer.mark_set( 'insert', ins )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.136:sortLines
-#@+node:mork.20041014112843.137:sortColumns
-def sortColumns( event ):
-    buffer = event.widget
-    if not _chckSel( event ):
-        return
-    ins = buffer.index( 'insert' )
-    is1 = buffer.index( 'sel.first' )
-    is2 = buffer.index( 'sel.last' )   
-    sint1, sint2 = is1.split( '.' )
-    sint2 = int( sint2 )
-    sint3, sint4 = is2.split( '.' )
-    sint4 = int( sint4 )
-    txt = buffer.get( '%s.0' % sint1, '%s.0 lineend' % sint3 )
-    buffer.delete( '%s.0' % sint1, '%s.0 lineend' % sint3 )
-    columns = []
-    i = int( sint1 )
-    i2 = int( sint3 )
-    while i <= i2:
-        t = buffer.get( '%s.%s' %( i, sint2 ), '%s.%s' % ( i, sint4 ) )
-        columns.append( t )
-        i = i + 1
-    txt = txt.split( '\n' )
-    zlist = zip( columns, txt )
-    zlist.sort()
-    i = int( sint1 )      
-    for z in xrange( len( zlist ) ):
-         buffer.insert( '%s.0' % i, '%s\n' % zlist[ z ][ 1 ] ) 
-         i = i + 1
-    buffer.mark_set( 'insert', ins )
-    return _tailEnd( buffer ) 
-#@-node:mork.20041014112843.137:sortColumns
-#@+node:mork.20041014112843.138:reverseRegion
-def reverseRegion( event ):
-    buffer = event.widget
-    if not _chckSel( event ):
-        return
-    ins = buffer.index( 'insert' )
-    is1 = buffer.index( 'sel.first' )
-    is2 = buffer.index( 'sel.last' )    
-    txt = buffer.get( '%s linestart' % is1, '%s lineend' %is2 )
-    buffer.delete( '%s linestart' % is1, '%s lineend' %is2  )
-    txt = txt.split( '\n' )
-    txt.reverse()
-    istart = is1.split( '.' )
-    istart = int( istart[ 0 ] )
-    for z in txt:
-        buffer.insert( '%s.0' % istart, '%s\n' % z )
-        istart = istart + 1
-    buffer.mark_set( 'insert', ins )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.138:reverseRegion
-#@+node:mork.20041014112843.139:sortFields
-def sortFields( event, which = None ):
-    buffer = event.widget
-    if not _chckSel( event ):
-        return
-    ins = buffer.index( 'insert' )
-    is1 = buffer.index( 'sel.first' )
-    is2 = buffer.index( 'sel.last' )    
-    txt = buffer.get( '%s linestart' % is1, '%s lineend' % is2 )
-    txt = txt.split( '\n' )
-    fields = []
-    fn = r'\w+'
-    frx = re.compile( fn )
-    for z in txt:
-        f = frx.findall( z )
-        if not which:
-            fields.append( f[ 0 ] )
+            self.mcStateManager.setState( 'altx', 'True' )
+        svar, label = self.getSvarLabel( event )
+        if which:
+            svar.set( '%s M-x:' % which )
         else:
-            i =  int( which )
-            if len( f ) < i:
-                return _tailEnd( buffer )
-            i = i - 1            
-            fields.append( f[ i ] )
-    nz = zip( fields, txt )
-    nz.sort()
-    buffer.delete( '%s linestart' % is1, '%s lineend' % is2 )
-    i = is1.split( '.' )
-    i2 = is2.split( '.' )
-    int1 = int( i[ 0 ] )
-    for z in nz:
-        buffer.insert( '%s.0' % int1, '%s\n'% z[1] )
-        int1 = int1 + 1
-    buffer.mark_set( 'insert' , ins )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.139:sortFields
-#@+node:mork.20041014112843.140:alt_X
-altx = False
-def alt_X( event , which = None):
-    global altx
-    if which:
-        altx = which
-    else:
-        altx = 'True'
-    svar, label = getSvarLabel( event )
-    if which:
-        svar.set( '%s M-x:' % which )
-    else:
-        svar.set( 'M-x:' )
-    setLabelBlue( label )
-    return 'break'
-#@-node:mork.20041014112843.140:alt_X
-#@+node:mork.20041014112843.141:doAlt_X
-doAltX= {
-'prepend-to-register': prependToRegister,
-'append-to-register': appendToRegister,
-'replace-string': replaceString,
-'sort-lines': sortLines,
-'sort-columns': sortColumns,
-'reverse-region': reverseRegion,
-'sort-fields': sortFields,
-'abbrev-mode': toggleAbbrevMode,
-'kill-all-abbrevs': killAllAbbrevs,
-'expand-region-abbrevs': regionalExpandAbbrev,
-'write-abbrev-file': writeAbbreviations,
-'read-abbrev-file': readAbbreviations,
-'fill-region-as-paragraph': fillRegionAsParagraph,
-'fill-region': fillRegion,
-'close-rectangle': closeRectangle,
-'how-many': startHowMany,
-'kill-paragraph': killParagraph,
-'backward-kill-paragraph': backwardKillParagraph,
-'name-last-kbd-macro': nameLastMacro,
-'load-file': loadMacros,
-'insert-keyboard-macro' : getMacroName,
-'list-abbrevs': listAbbrevs
-}
-
-x_hasNumeric = [ 'sort-lines' , 'sort-fields']
-
-
-def doAlt_X( event ):
-    global altx
-    svar, label = getSvarLabel( event )
-    if svar.get().endswith( 'M-x:' ): svar.set( '' )
-    if event.keysym == 'Return':
+            svar.set( 'M-x:' )
+        self.setLabelBlue( label )
+        return 'break'
+    #@-node:mork.20041030164547.140:alt_X
+    #@+node:mork.20041030164547.141:doAlt_X
+    def doAlt_X( self, event ):
+        '''This method executes the correct Alt-X command'''
+        svar, label = self.getSvarLabel( event )
+        if svar.get().endswith( 'M-x:' ): 
+            self.axTabList.clear() #clear the list, new Alt-x command is in effect
+            svar.set( '' )
+        if event.keysym == 'Return':
+            txt = svar.get()
+            if self.doAltX.has_key( txt ):
+                aX = self.mcStateManager.getState( 'altx' )
+                if aX.isdigit() and txt in self.x_hasNumeric:
+                    self.doAltX[ txt]( event, aX )
+                else:
+                    self.doAltX[ txt ]( event )
+            else:
+                self.keyboardQuit( event )
+                svar.set('Command does not exist' )
+    
+            #self.altx = False
+            #self.mcStateManager.setState( 'altx', False )
+            return 'break'
+        if event.keysym == 'Tab':
+            
+            stext = svar.get().strip()
+            if self.axTabList.prefix and stext.startswith( self.axTabList.prefix ):
+                svar.set( self.axTabList.next() ) #get next in iteration
+            else:
+                prefix = svar.get()
+                pmatches = self._findMatch2( svar )
+                self.axTabList.setTabList( prefix, pmatches )
+                svar.set( self.axTabList.next() ) #begin iteration on new lsit
+            return 'break'   
+        else:
+            self.axTabList.clear() #clear the list, any other character besides tab indicates that a new prefix is in effect.    
+        self.setSvar( event, svar )
+        return 'break'
+    #@-node:mork.20041030164547.141:doAlt_X
+    #@-others
+    #@nonl
+    #@-node:mork.20041031181929.1:Alt_X methods
+    #@+node:mork.20041031155455:universal methods
+    #@+others
+    #@+node:mork.20041030164547.143:universalDispatch
+    #self.uC = False
+    def universalDispatch( self, event, stroke ):
+        #global uC    
+        uC = self.mcStateManager.getState( 'uC' )
+        if not uC:
+            #self.uC = 1
+            self.mcStateManager.setState( 'uC', 1 )
+            svar, label = self.getSvarLabel( event )
+            svar.set( '' )
+            self.setLabelBlue( label ) 
+        elif uC == 1:
+            self.universalCommand1( event, stroke )
+        elif uC == 2:
+            self.universalCommand3( event, stroke )
+        return 'break'
+    #@-node:mork.20041030164547.143:universalDispatch
+    #@+node:mork.20041030164547.144:universalCommand1
+    #import string
+    #self.uCstring = string.digits + '\b'
+    
+    def universalCommand1( self, event, stroke ):
+        #global uC
+        if event.char not in self.uCstring:
+            return self.universalCommand2( event, stroke )
+        svar, label = self.getSvarLabel( event )
+        self.setSvar( event, svar )
+        if event.char != '\b':
+            svar.set( '%s ' %svar.get() )
+    #@-node:mork.20041030164547.144:universalCommand1
+    #@+node:mork.20041030164547.145:universalCommand2
+    def universalCommand2(  self, event , stroke ):
+        #global uC
+        #self.uC = False
+        #self.mcStateManager.setState( 'uC', False )
+        svar, label = self.getSvarLabel( event )
         txt = svar.get()
-        if doAltX.has_key( txt ):
-            if altx.isdigit() and txt in x_hasNumeric:
-                doAltX[ txt]( event, altx )
-            else:
-                doAltX[ txt ]( event )
+        self.keyboardQuit( event )
+        txt = txt.replace( ' ', '' )
+        self.resetMiniBuffer( event )
+        if not txt.isdigit(): #This takes us to macro state.  For example Control-u Control-x (  will execute the last macro and begin editing of it.
+            if stroke == '<Control-x>':
+                #self.uC = 2
+                self.mcStateManager.setState( 'uC', 2 )
+                return self.universalCommand3( event, stroke )
+            return self._tailEnd( event.widget )
+        if self.uCdict.has_key( stroke ): #This executes the keystroke 'n' number of times.
+                self.uCdict[ stroke ]( event , txt )
         else:
-            svar.set('Command does not exist' )
-            setLabelGrey( label )
-        altx = False
-        return 'break'
-    if event.keysym == 'Tab':
-        svar.set( _findMatch( svar ) )
-        return 'break'        
-    setSvar( event, svar )
-    return 'break'
-#@-node:mork.20041014112843.141:doAlt_X
-#@+node:mork.20041014112843.142:_findMatch
-def _findMatch( svar, fdict = doAltX ):
-    txt = svar.get()
-    pmatches = filter( lambda a : a.startswith( txt ), fdict )
-    if pmatches:
-        mstring = reduce( findPre, pmatches )
-        return mstring
-    return txt
-#@-node:mork.20041014112843.142:_findMatch
-#@+node:mork.20041014112843.143:universalDispatch
-uC = False
-def universalDispatch( event, stroke ):
-    global uC    
-    if not uC:
-        uC = 1
-        svar, label = getSvarLabel( event )
+            tbuffer = event.widget
+            i = int( txt )
+            stroke = stroke.lstrip( '<' ).rstrip( '>' )
+            if self.cbDict.has_key( stroke ):
+                for z in xrange( i ):
+                    method = self.cbDict[ stroke ]
+                    ev = Tkinter.Event()
+                    ev.widget = event.widget
+                    ev.keysym = event.keysym
+                    ev.keycode = event.keycode
+                    ev.char = event.char
+                    self.masterCommand( ev , method, '<%s>' % stroke )
+            else:
+                for z in xrange( i ):
+                    tbuffer.event_generate( '<Key>', keycode = event.keycode, keysym = event.keysym )
+                    self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.145:universalCommand2
+    #@+node:mork.20041030164547.146:universalCommand3
+    #self.uCdict = { '<Alt-x>' : alt_X }
+    def universalCommand3( self, event, stroke ):
+        svar, label = self.getSvarLabel( event )
+        svar.set( 'Control-u %s' % stroke.lstrip( '<' ).rstrip( '>' ) )
+        self.setLabelBlue( label )
+        if event.keysym == 'parenleft':
+            self.keyboardQuit( event )
+            self.startKBDMacro( event )
+            self.executeLastMacro( event )
+            return 'break'
+    #@-node:mork.20041030164547.146:universalCommand3
+    #@+node:mork.20041030164547.147:numberCommand
+    def numberCommand( self, event, stroke, number ):
+        self.universalDispatch( event, stroke )
+        tbuffer = event.widget
+        tbuffer.event_generate( '<Key>', keysym = number )
+        return 'break'       
+    #@-node:mork.20041030164547.147:numberCommand
+    #@-others
+    #@nonl
+    #@-node:mork.20041031155455:universal methods
+    #@+node:mork.20041031182449:file methods
+    #@+at
+    # These methods load files into buffers and save buffers to files
+    # 
+    #@-at
+    #@@c
+    
+    
+    #@+others
+    #@+node:mork.20041030164547.151:insertFile
+    def insertFile( self, event ):
+        tbuffer = event.widget
+        import tkFileDialog
+        f = tkFileDialog.askopenfile()
+        if f == None: return None
+        txt = f.read()
+        f.close()
+        tbuffer.insert( 'insert', txt )
+        return self._tailEnd( tbuffer )
+    #@-node:mork.20041030164547.151:insertFile
+    #@+node:mork.20041030164547.152:saveFile
+    def saveFile( self, event ):
+        tbuffer = event.widget
+        import tkFileDialog
+        txt = tbuffer.get( '1.0', 'end' )
+        f = tkFileDialog.asksaveasfile()
+        if f == None : return None
+        f.write( txt )
+        f.close()
+    #@-node:mork.20041030164547.152:saveFile
+    #@-others
+    #@nonl
+    #@-node:mork.20041031182449:file methods
+    #@+node:mork.20041031160002:goto methods
+    #@+at
+    # These methods take the user to a specific line or a specific character 
+    # in the buffer
+    # 
+    # 
+    #@-at
+    #@@c
+    
+    #@+others
+    #@+node:mork.20041030164547.154:startGoto
+    def startGoto( self, event , ch = False):
+        #global goto
+        #self.goto = True
+        if not ch:
+            self.mcStateManager.setState( 'goto', 1 )
+        else:
+            self.mcStateManager.setState( 'goto', 2 )
+        #label = self.mbuffers[ event.widget ] 
+        svar , label = self.getSvarLabel( event )
         svar.set( '' )
-        setLabelBlue( label ) 
-    elif uC == 1:
-        universalCommand1( event, stroke )
-    elif uC == 2:
-        universalCommand3( event, stroke )
-    return 'break'
-#@-node:mork.20041014112843.143:universalDispatch
-#@+node:mork.20041014112843.144:universalCommand1
-uCstring = string.digits + '\b'
-
-def universalCommand1( event, stroke ):
-    global uC
-    if event.char not in uCstring:
-        return universalCommand2( event, stroke )
-    svar, label = getSvarLabel( event )
-    setSvar( event, svar )
-    if event.char != '\b':
-        svar.set( '%s ' %svar.get() )
-#@-node:mork.20041014112843.144:universalCommand1
-#@+node:mork.20041014112843.145:universalCommand2
-def universalCommand2( event , stroke ):
-    global uC
-    uC = False
-    svar, label = getSvarLabel( event )
-    txt = svar.get()
-    txt = txt.replace( ' ', '' )
-    resetMiniBuffer( event )
-    if not txt.isdigit():
-        if stroke == '<Control-x>':
-            uC = 2
-            return universalCommand3( event, stroke )
-        return _tailEnd( event.widget )
-    if uCdict.has_key( stroke ):
-            uCdict[ stroke ]( event , txt )
-    else:
-        buffer = event.widget
-        i = int( txt )
-        stroke = stroke.lstrip( '<' ).rstrip( '>' )
-        if cbDict.has_key( stroke ):
-            for z in xrange( i ):
-                method = cbDict[ stroke ]
-                ev = Tkinter.Event()
-                ev.widget = event.widget
-                ev.keysym = event.keysym
-                ev.keycode = event.keycode
-                ev.char = event.char
-                masterCommand( ev , method, '<%s>' % stroke )
-        else:
-            for z in xrange( i ):
-                event.widget.event_generate( '<Key>', keycode = event.keycode, keysym = event.keysym )
-#@-node:mork.20041014112843.145:universalCommand2
-#@+node:mork.20041014112843.146:universalCommand3
-uCdict = { '<Alt-x>' : alt_X }
-
-def universalCommand3( event, stroke ):
-    svar, label = getSvarLabel( event )
-    svar.set( 'Control-u %s' % stroke.lstrip( '<' ).rstrip( '>' ) )
-    setLabelBlue( label )
-    if event.keysym == 'parenleft':
-        stopControlX( event )
-        startKBDMacro( event )
-        executeLastMacro( event )
+        label.configure( background = 'lightblue' )
         return 'break'
-#@-node:mork.20041014112843.146:universalCommand3
-#@+node:mork.20041014112843.147:numberCommand
-def numberCommand( event, stroke, number ):
-    universalDispatch( event, stroke )
-    buffer = event.widget
-    buffer.event_generate( '<Key>', keysym = number )
-    return 'break'       
-#@-node:mork.20041014112843.147:numberCommand
-#@+node:mork.20041014112843.148:transposeLines
-def transposeLines( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    i1 = str( int( i1 ) -1 )
-    if i1 != '0':
-        l2 = buffer.get( 'insert linestart', 'insert lineend' )
-        buffer.delete( 'insert linestart-1c', 'insert lineend' )
-        buffer.insert( i1+'.0', l2 +'\n')
-    else:
-        l2 = buffer.get( '2.0', '2.0 lineend' )
-        buffer.delete( '2.0', '2.0 lineend' )
-        buffer.insert( '1.0', l2 + '\n' )         
-#@nonl
-#@-node:mork.20041014112843.148:transposeLines
-#@+node:mork.20041014112843.149:upperLowerRegion
-def upperLowerRegion( event, way ):
-    buffer = event.widget
-    mrk = 'sel'
-    range = buffer.tag_ranges( mrk )
-    if len( range ) != 0:
-        text = buffer.get( range[ 0 ] , range[ -1 ] )
-        i = buffer.index( 'insert' )
-        if text == ' ': return 'break'
-        buffer.delete( range[ 0 ], range[ -1 ] )
-        if way == 'low':
-            text = text.lower()
-        if way == 'up':
-            text = text.upper()
-        buffer.insert( 'insert', text )
-        buffer.mark_set( 'insert', i ) 
-    removeRKeys( buffer )
-    return 'break'
-#@-node:mork.20041014112843.149:upperLowerRegion
-#@+node:mork.20041014112843.150:removeBlankLines
-def removeBlankLines( event ):
-    buffer = event.widget
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    i1 = int( i1 )
-    dindex = []
-    if buffer.get( 'insert linestart', 'insert lineend' ).strip() == '':
-        while 1:
-            if str( i1 )+ '.0'  == '1.0' :
-                break 
-            i1 = i1 - 1
-            txt = buffer.get( '%s.0' % i1, '%s.0 lineend' % i1 )
-            txt = txt.strip()
-            if len( txt ) == 0:
-                dindex.append( '%s.0' % i1)
-                dindex.append( '%s.0 lineend' % i1 )
-            elif dindex:
-                buffer.delete( '%s-1c' % dindex[ -2 ], dindex[ 1 ] )
-                buffer.event_generate( '<Key>' )
-                buffer.update_idletasks()
-                break
-            else:
-                break
-    i = buffer.index( 'insert' )
-    i1, i2 = i.split( '.' )
-    i1 = int( i1 )
-    dindex = []
-    while 1:
-        if buffer.index( '%s.0 lineend' % i1 ) == buffer.index( 'end' ):
-            break
-        i1 = i1 + 1
-        txt = buffer.get( '%s.0' % i1, '%s.0 lineend' % i1 )
-        txt = txt.strip()
-        if len( txt ) == 0:
-            dindex.append( '%s.0' % i1 )
-            dindex.append( '%s.0 lineend' % i1 )
-        elif dindex:
-            buffer.delete( '%s-1c' % dindex[ 0 ], dindex[ -1 ] )
-            buffer.event_generate( '<Key>' )
-            buffer.update_idletasks()
-            break
+    #@-node:mork.20041030164547.154:startGoto
+    #@+node:mork.20041030164547.155:Goto
+    def Goto( self, event ):
+        #global goto
+        widget = event.widget
+        svar, label = self.getSvarLabel( event )
+        if event.keysym == 'Return':
+              i = svar.get()
+              self.resetMiniBuffer( event )
+              #self.goto = False
+              state = self.mcStateManager.getState( 'goto' )
+              self.mcStateManager.setState( 'goto', False )
+              if i.isdigit():
+                  
+                  if state == 1:
+                    widget.mark_set( 'insert', '%s.0' % i )
+                  elif state == 2:
+                    widget.mark_set( 'insert', '1.0 +%sc' % i )
+                  widget.event_generate( '<Key>' )
+                  widget.update_idletasks()
+                  widget.see( 'insert' )
+              return 'break'
+        t = svar.get()
+        if event.char == '\b':
+               if len( t ) == 1:
+                   t = ''
+               else:
+                   t = t[ 0 : -1 ]
+               svar.set( t )
         else:
-            break
-#@-node:mork.20041014112843.150:removeBlankLines
-#@+node:mork.20041014112843.151:insertFile
-def insertFile( event ):
-    buffer = event.widget
-    f = tkFileDialog.askopenfile()
-    if f == None: return None
-    txt = f.read()
-    f.close()
-    buffer.insert( 'insert', txt )
-    return _tailEnd( buffer )
-#@-node:mork.20041014112843.151:insertFile
-#@+node:mork.20041014112843.152:saveFile
-def saveFile( event ):
-    buffer = event.widget
-    txt = buffer.get( '1.0', 'end' )
-    f = tkFileDialog.asksaveasfile()
-    if f == None : return None
-    f.write( txt )
-    f.close()
-#@-node:mork.20041014112843.152:saveFile
-#@+node:mork.20041014112843.153:scolorizer
-xcommands = {
-'<Control-t>': transposeLines, 
-'<Control-u>': lambda event , way ='up': upperLowerRegion( event, way ),
-'<Control-l>':  lambda event , way ='low': upperLowerRegion( event, way ),
-'<Control-o>': removeBlankLines,
-'<Control-i>': insertFile,
-'<Control-s>': saveFile,
-'<Control-x>': exchangePointMark,
-'<Control-Shift-at>': lambda event: event.widget.selection_clear(),
-'<Delete>' : lambda event, back = True: killsentence( event, back ),
-}
-
-def scolorizer( event ):
-
-    buffer = event.widget
-    svar, label = getSvarLabel( event )
-    stext = svar.get()
-    buffer.tag_delete( 'color' )
-    buffer.tag_delete( 'color1' )
-    if stext == '': return 'break'
-    ind = '1.0'
-    while ind:
-        ind = buffer.search( stext, ind, stopindex = 'end')
-        if ind:
-            i, d = ind.split('.')
-            d = str(int( d ) + len( stext ))
-            index = buffer.index( 'insert' )
-            if ind == index:
-                buffer.tag_add( 'color1', ind, '%s.%s' % (i,d) )
-            buffer.tag_add( 'color', ind, '%s.%s' % (i, d) )
-            ind = i +'.'+d
-    buffer.tag_config( 'color', foreground = 'red' ) 
-    buffer.tag_config( 'color1', background = 'lightblue' ) 
-#@-node:mork.20041014112843.153:scolorizer
-#@+node:mork.20041014112843.154:startGoto
-def startGoto( event ):
-    global goto
-    goto = True
-    label = mbuffers[ event.widget ] 
-    label.configure( background = 'lightblue' )
-    return 'break'
-#@-node:mork.20041014112843.154:startGoto
-#@+node:mork.20041014112843.155:Goto
-def Goto( event ):
-    global goto
-    widget = event.widget
-    svar, label = getSvarLabel( event )
-    if event.keysym == 'Return':
-          i = svar.get()
-          resetMiniBuffer( event )
-          goto = False
-          if i.isdigit():
-              widget.mark_set( 'insert', '%s.0' % i )
-              widget.event_generate( '<Key>' )
-              widget.update_idletasks()
-              widget.see( 'insert' )
-          return 'break'
-    t = svar.get()
-    if event.char == '\b':
-           if len( t ) == 1:
-               t = ''
-           else:
-               t = t[ 0 : -1 ]
-           svar.set( t )
-    else:
-            t = t + event.char
-            svar.set( t )
-    return 'break'
-#@-node:mork.20041014112843.155:Goto
-#@-node:ekr.20041028083211.10:Search utils...
-#@-node:ekr.20041028083211.9:Search...
-#@-node:ekr.20041028083211.3:Emacs commands...
+                t = t + event.char
+                svar.set( t )
+        return 'break'
+    #@-node:mork.20041030164547.155:Goto
+    #@-others
+    #@nonl
+    #@-node:mork.20041031160002:goto methods
+    #@-others
+    
+#@nonl
+#@-node:mork.20041030165020:class Emacs
 #@-others
 
-#@<< define cbDict >>
-#@+node:ekr.20041028083211:<< define cbDict >>
-cbDict = {
-'Alt-less' : lambda event, spot = '1.0' :moveTo( event, spot ),
-'Alt-greater': lambda event, spot = 'end' :moveTo( event, spot ),
-'Control-Right': lambda event, way = 1: moveword( event, way ),
-'Control-Left': lambda event, way = -1: moveword( event, way ),
-'Control-a': lambda event, spot = 'insert linestart': moveTo( event, spot ),
-'Control-e': lambda event, spot = 'insert lineend': moveTo( event, spot ),
-'Alt-Up': lambda event, spot = 'insert linestart': moveTo( event, spot ),
-'Alt-Down': lambda event, spot = 'insert lineend': moveTo( event, spot ),
-'Alt-f': lambda event, way = 1: moveword( event, way ),
-'Alt-b' : lambda event, way = -1: moveword( event, way ),
-'Control-o': insertNewLine,
-'Control-k': lambda event, frm = 'insert', to = 'insert lineend': kill( event, frm, to) ,
-'Alt-d': lambda event, frm = 'insert wordstart', to = 'insert wordend': kill( event,frm, to ),
-'Alt-Delete': lambda event: deletelastWord( event ),
-"Control-y": lambda event, frm = 'insert', which = 'c': walkKB( event, frm, which),
-"Alt-y": lambda event , frm = "insert", which = 'a': walkKB( event, frm, which ),
-"Alt-k": lambda event : killsentence( event ),
- 'Control-s' : None,
- 'Control-r' : None,
- 'Alt-c': lambda event, which = 'cap' : capitalize( event, which ),
- 'Alt-u': lambda event, which = 'up' : capitalize( event, which ),
- 'Alt-l': lambda event, which = 'low' : capitalize( event, which ),
- 'Alt-t': lambda event, sw = []: swapWords( event, sw ),
- 'Alt-x': alt_X,
-'Control-x': startControlX,
-'Control-g': stopControlX,
-'Control-Shift-at': setRegion,
-'Control-w': lambda event, which = 'd' :killRegion( event, which ),
-'Alt-w': lambda event, which = 'c' : killRegion( event, which ),
-'Control-t': swapCharacters,
-'Control-u': None,
-'Control-l': None,
-'Alt-z': None,
-'Control-i': None,
-'Alt-Control-backslash': indentRegion,
-'Alt-m' : backToIndentation,
-'Alt-asciicircum' : deleteIndentation,
-'Control-d': deleteNextChar,
-'Alt-backslash': deleteSpaces, 
-'Alt-g': None,
-'Control-v' : lambda event, way = 'south': screenscroll( event, way ),
-'Alt-v' : lambda event, way = 'north' : screenscroll( event, way ),
-'Alt-equal': countRegion,
-'Alt-parenleft': insertParentheses,
-'Alt-parenright': movePastClose,
-'Alt-percent' : None,
-'Delete': lambda event, which = 'BackSpace': manufactureKeyPress( event, which ),
-'Control-p': lambda event, which = 'Up': manufactureKeyPress( event, which ),
-'Control-n': lambda event, which = 'Down': manufactureKeyPress( event, which ),
-'Control-f': lambda event, which = 'Right': manufactureKeyPress( event, which ),
-'Control-b': lambda event, which = 'Left': manufactureKeyPress( event, which ),
-'Control-Alt-w': None,
-'Alt-a': lambda event, which = 'bak': prevNexSentence( event, which ),
-'Alt-e': lambda event, which = 'for': prevNexSentence( event, which ),
-'Control-Alt-o': insertNewLineIndent,
-'Alt-minus': negativeArgument,
-'Alt-slash': dynamicExpansion,
-'Control-Alt-slash': dynamicExpansion2,
-'Control-u': lambda event, keystroke = '<Control-u>': universalDispatch( event, keystroke ),
-'Alt-braceright': lambda event, which = 1: movingParagraphs( event, which ),
-'Alt-braceleft': lambda event , which = 0: movingParagraphs( event, which ),
-'Alt-q': fillParagraph,
-'Alt-h': selectParagraph,
-'Alt-semicolon': indentToCommentColumn,
-'Alt-0': lambda event, stroke = '<Alt-0>', number = 0: numberCommand( event, stroke, number ) ,
-'Alt-1': lambda event, stroke = '<Alt-1>', number = 1: numberCommand( event, stroke, number ) ,
-'Alt-2': lambda event, stroke = '<Alt-2>', number = 2: numberCommand( event, stroke, number ) ,
-'Alt-3': lambda event, stroke = '<Alt-3>', number = 3: numberCommand( event, stroke, number ) ,
-'Alt-4': lambda event, stroke = '<Alt-4>', number = 4: numberCommand( event, stroke, number ) ,
-'Alt-5': lambda event, stroke = '<Alt-5>', number = 5: numberCommand( event, stroke, number ) ,
-'Alt-6': lambda event, stroke = '<Alt-6>', number = 6: numberCommand( event, stroke, number ) ,
-'Alt-7': lambda event, stroke = '<Alt-7>', number = 7: numberCommand( event, stroke, number ) ,
-'Alt-8': lambda event, stroke = '<Alt-8>', number = 8: numberCommand( event, stroke, number ) ,
-'Alt-9': lambda event, stroke = '<Alt-9>', number = 9: numberCommand( event, stroke, number ) ,
-'Control-underscore': doUndo,
-}
-#@-node:ekr.20041028083211:<< define cbDict >>
-#@nl
+if __name__ == '__main__':
+    
+    #@    << run standalone tests >>
+    #@+node:ekr.20041106100834:<< run standalone tests >>
+    #@+at
+    # This part runs Temacs with a Text widget.
+    # It should be accessible by typing python temacs.py at the command prompt
+    # Note: There is no configuration as to buffers and such, so dont access 
+    # that functionality.  Just a proof of concept.
+    # 
+    #@-at
+    #@@c
+    
+    Tl = Tkinter.Tk()
+    Tl.title( 'temacs Emacs test' )
+    Tx = Tkinter.Text( background = 'white', foreground = 'blue' )
+    f2 = Tkinter.Frame()
+    f2.pack( side = 'bottom' )
+    def onQuit():
+        import sys
+        sys.exit( 0 )
+        
+    minibuffer = Tkinter.Label( f2 )
+    minibuffer.pack( side = 'right', expand = 1, fill = 'both' )
+    quitb = Tkinter.Button( f2, text = 'Quit' , command = onQuit )
+    quitb.pack( side = 'left' )
+    Tx.pack( side = 'top' )
+    emacs = Emacs( Tx, minibuffer, True, True )
+    Tl.mainloop()
+    #@nonl
+    #@-node:ekr.20041106100834:<< run standalone tests >>
+    #@nl
 #@nonl
-#@-node:mork.20041014112843.1:@thin temacs.py
+#@-node:mork.20041030164547:@thin temacs.py
 #@-leo
