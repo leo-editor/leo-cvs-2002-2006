@@ -262,7 +262,7 @@
 <v t="T125"><vh>@file c:\prog\test\docTest.txt</vh></v>
 <v t="T126" a="E"><vh>Test file</vh>
 <v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
-<v t="T128" a="EV"><vh>@file c:\prog\test\gnxText.txt</vh>
+<v t="T128" a="EV" tnodeList="128,127,129,131,133,127"><vh>@file c:\prog\test\gnxText.txt</vh>
 <v t="T127" a="C"><vh>&lt;&lt; ref &gt;&gt; (this should remained cloned)</vh></v>
 <v t="T129"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
 <v t="T130" a="E"><vh>Organizer node</vh>

@@ -95,7 +95,7 @@ class baseFileCommands:
 		return v
 	#@-body
 	#@-node:1::createVnode
-	#@+node:2::finishPaste (changed from 3.11.1)  (calls initAllCloneBits)
+	#@+node:2::finishPaste
 	#@+body
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
@@ -144,7 +144,7 @@ class baseFileCommands:
 		c.endUpdate()
 		return current
 	#@-body
-	#@-node:2::finishPaste (changed from 3.11.1)  (calls initAllCloneBits)
+	#@-node:2::finishPaste
 	#@+node:3::get routines
 	#@+node:1::get & match (basic)(leoFileCommands)
 	#@+node:1::get routines
@@ -501,7 +501,8 @@ class baseFileCommands:
 		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
-		self.tnodesDict = {}
+		# 4.0:  Save this dict for Read @file Node command.
+		# self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
 	#@-node:7::getLeoFile (calls setAllJoinLinks, initAllCloneBits)
@@ -530,7 +531,7 @@ class baseFileCommands:
 				break
 	#@-body
 	#@-node:8::getLeoHeader
-	#@+node:9::getLeoOutline (from clipboard) (changed from 3.11.1)
+	#@+node:9::getLeoOutline (from clipboard)
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
 	def getLeoOutline (self,s):
@@ -557,7 +558,7 @@ class baseFileCommands:
 		self.tnodesDict = {}
 		return v
 	#@-body
-	#@-node:9::getLeoOutline (from clipboard) (changed from 3.11.1)
+	#@-node:9::getLeoOutline (from clipboard)
 	#@+node:10::getPosition
 	#@+body
 	def getPosition (self):
@@ -665,7 +666,7 @@ class baseFileCommands:
 		return height, width
 	#@-body
 	#@-node:12::getSize
-	#@+node:13::getTnode (no change from 3.11.1)(changed 6/11)
+	#@+node:13::getTnode
 	#@+body
 	def getTnode (self):
 	
@@ -708,8 +709,8 @@ class baseFileCommands:
 			es("no tnode with index: " + `index` + ".  The text will be discarded")
 		self.getTag("</t>")
 	#@-body
-	#@-node:13::getTnode (no change from 3.11.1)(changed 6/11)
-	#@+node:14::getTnodes (no change from 3.11.1)
+	#@-node:13::getTnode
+	#@+node:14::getTnodes
 	#@+body
 	def getTnodes (self):
 	
@@ -722,15 +723,15 @@ class baseFileCommands:
 		self.getTag("</tnodes>")
 	
 	#@-body
-	#@-node:14::getTnodes (no change from 3.11.1)
-	#@+node:15::getVnode (changed from 3.11.1)
+	#@-node:14::getTnodes
+	#@+node:15::getVnode
 	#@+body
 	def getVnode (self,parent,back):
 	
 		# trace("parent:" + `parent` + ", back:" + `back`)
 		c = self.commands
 		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
-		tref = -1 ; headline = "" ; gnxString = None
+		tref = -1 ; headline = "" ; tnodeList = None
 		# we have already matched <v.
 		while 1:
 			if self.matchTag("a=\""):
@@ -756,6 +757,8 @@ class baseFileCommands:
 				tref = self.getIndex() ; self.getDquote()
 			elif self.matchTag("vtag=\"V"):
 				self.getIndex() ; self.getDquote() # ignored
+			elif self.matchTag("tnodeList=\""):
+				tnodeList = self.getTnodeList() # New for 4.0
 			else: break
 		self.getTag(">")
 		# Headlines are optional.
@@ -763,6 +766,7 @@ class baseFileCommands:
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
 		v = self.createVnode(parent,back,tref,headline)
+		if tnodeList: v.tnodeList = tnodeList # New for 4.0
 		
 		#@<< Set the remembered status bits >>
 		#@+node:2::<< Set the remembered status bits >>
@@ -793,8 +797,29 @@ class baseFileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-	#@-node:15::getVnode (changed from 3.11.1)
-	#@+node:16::getVnodes  (no change from 3.11.1)
+	#@-node:15::getVnode
+	#@+node:16::getTnodeList (4.0)
+	#@+body
+	def getTnodeList (self):
+	
+		"""Parse a list of tnode indices terminated by a double quote."""
+	
+		fc = self ; tnodeList = []
+		
+		if fc.matchChar('"'):
+			return tnodeList
+	
+		while 1:
+			tref = fc.getIndex()
+			tnodeList.append(tref)
+			if fc.matchChar('"'):
+				trace(`tnodeList`)
+				return tnodeList
+			else:
+				fc.getTag(',')
+	#@-body
+	#@-node:16::getTnodeList (4.0)
+	#@+node:17::getVnodes
 	#@+body
 	def getVnodes (self):
 	
@@ -813,8 +838,8 @@ class baseFileCommands:
 	
 		self.getTag("</vnodes>")
 	#@-body
-	#@-node:16::getVnodes  (no change from 3.11.1)
-	#@+node:17::getXmlStylesheetTag
+	#@-node:17::getVnodes
+	#@+node:18::getXmlStylesheetTag
 	#@+body
 	#@+at
 	#  Parses the optional xml stylesheet string, and sets the corresponding 
@@ -838,8 +863,8 @@ class baseFileCommands:
 			self.getTag("?>")
 	
 	#@-body
-	#@-node:17::getXmlStylesheetTag
-	#@+node:18::getXmlVersionTag
+	#@-node:18::getXmlStylesheetTag
+	#@+node:19::getXmlVersionTag
 	#@+body
 	# Parses the encoding string, and sets self.leo_file_encoding.
 	
@@ -857,8 +882,8 @@ class baseFileCommands:
 			es("invalid encoding in .leo file: " + encoding)
 	
 	#@-body
-	#@-node:18::getXmlVersionTag
-	#@+node:19::skipWs
+	#@-node:19::getXmlVersionTag
+	#@+node:20::skipWs
 	#@+body
 	def skipWs (self):
 	
@@ -872,8 +897,8 @@ class baseFileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:19::skipWs
-	#@+node:20::skipWsAndNl
+	#@-node:20::skipWs
+	#@+node:21::skipWsAndNl
 	#@+body
 	def skipWsAndNl (self):
 	
@@ -887,7 +912,7 @@ class baseFileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:20::skipWsAndNl
+	#@-node:21::skipWsAndNl
 	#@-node:3::get routines
 	#@+node:4::newTnode
 	#@+body
@@ -1046,7 +1071,7 @@ class baseFileCommands:
 	#@-node:9::xmlUnescape
 	#@-node:2::Reading
 	#@+node:3::Writing
-	#@+node:1::assignFileIndices (no change from 3.11.1)
+	#@+node:1::assignFileIndices
 	#@+body
 	def assignFileIndices (self,root=None):
 		
@@ -1071,8 +1096,8 @@ class baseFileCommands:
 			# if self.usingClipboard: trace(t.fileIndex)
 			v = v.threadNext()
 	#@-body
-	#@-node:1::assignFileIndices (no change from 3.11.1)
-	#@+node:2::compactFileIndices (changed from 3.11.1)
+	#@-node:1::assignFileIndices
+	#@+node:2::compactFileIndices
 	#@+body
 	def compactFileIndices (self):
 		
@@ -1089,14 +1114,13 @@ class baseFileCommands:
 		v = c.rootVnode()
 		while v: # Set indices for all tnodes that will be written.
 			t = v.t
-			#### old code was: if t.hasBody() or v.getJoinList():
 			if t.hasBody() or len(v.t.joinList) > 0: # Write shared tnodes even if they are empty.
 				if t.fileIndex == 0:
 					self.maxTnodeIndex += 1
 					t.setFileIndex(self.maxTnodeIndex)
 			v = v.threadNext()
 	#@-body
-	#@-node:2::compactFileIndices (changed from 3.11.1)
+	#@-node:2::compactFileIndices
 	#@+node:3::put routines
 	#@+node:1::putClipboardHeader
 	#@+body
@@ -1303,7 +1327,7 @@ class baseFileCommands:
 		self.put("/>") ; self.put_nl()
 	#@-body
 	#@-node:6::putHeader
-	#@+node:7::putLeoOutline (to clipboard) (no change from 3.11.1)
+	#@+node:7::putLeoOutline (to clipboard)
 	#@+body
 	# Writes a Leo outline to s in a format suitable for pasting to the clipboard.
 	
@@ -1322,7 +1346,7 @@ class baseFileCommands:
 		self.usingClipboard = false
 		return s
 	#@-body
-	#@-node:7::putLeoOutline (to clipboard) (no change from 3.11.1)
+	#@-node:7::putLeoOutline (to clipboard)
 	#@+node:8::putPrefs
 	#@+body
 	def putPrefs (self):
@@ -1424,7 +1448,7 @@ class baseFileCommands:
 		self.put("</leo_file>") ; self.put_nl()
 	#@-body
 	#@-node:10::putPostlog
-	#@+node:11::putTnodes (reverted to 3.11.1)
+	#@+node:11::putTnodes
 	#@+body
 	def putTnodes (self):
 		
@@ -1461,8 +1485,8 @@ class baseFileCommands:
 
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
-	#@-node:11::putTnodes (reverted to 3.11.1)
-	#@+node:12::putTnode (no change from 3.11.1)
+	#@-node:11::putTnodes
+	#@+node:12::putTnode
 	#@+body
 	def putTnode (self,t):
 		
@@ -1477,8 +1501,8 @@ class baseFileCommands:
 	
 		self.put("</t>") ; self.put_nl()
 	#@-body
-	#@-node:12::putTnode (no change from 3.11.1)
-	#@+node:13::putVnodes (reverted 3.11.1)
+	#@-node:12::putTnode
+	#@+node:13::putVnodes
 	#@+body
 	#@+at
 	#  This method puts all vnodes by starting the recursion.  putVnode will 
@@ -1505,8 +1529,8 @@ class baseFileCommands:
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@-body
-	#@-node:13::putVnodes (reverted 3.11.1)
-	#@+node:14::putVnode (no change from 3.11.1) (generates error)
+	#@-node:13::putVnodes
+	#@+node:14::putVnode
 	#@+body
 	#@+at
 	#  This writes full headline and body text for all vnodes, even orphan and 
@@ -1575,7 +1599,7 @@ class baseFileCommands:
 				child = child.next()
 		self.put("</v>") ; self.put_nl()
 	#@-body
-	#@-node:14::putVnode (no change from 3.11.1) (generates error)
+	#@-node:14::putVnode
 	#@-node:3::put routines
 	#@+node:4::save
 	#@+body
