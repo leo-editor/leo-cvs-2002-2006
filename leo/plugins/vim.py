@@ -28,8 +28,10 @@ import os
 # you can leave the command as is, you do not need to change it to "gvim ..."
 # Note: _vim_cmd must end with a space.
 
-_vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
-_vim_cmd = "vim --servername LEO "
+if 1:
+    _vim_cmd = "vim --servername LEO "
+else: # Works for xp with vim in the folder indicated.
+    _vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
 
 #@+others
 #@+node:EKR.20040517075715.11:open_in_vim

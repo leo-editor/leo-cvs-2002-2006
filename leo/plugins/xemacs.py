@@ -1,15 +1,21 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.12:@thin xemacs.py
-"""emacs handler"""
+"""emacs handler
+
+http://www.cs.mu.oz.au/~markn/leo/external_editors.leo"""
 
 #@@language python
 #@@tabwidth -4
 
 import leoGlobals as g
 import leoPlugins
+import sys
 
-# path = "/usr/bin/gnuclient"
-path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
+if sys.platform == "win32":
+    # Modify this pth as needed.
+    path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
+else: # Linux
+    path = "/usr/bin/gnuclient"
 
 def open_in_emacs (tag,keywords):
     g.top() and g.top().openWith(("os.spawnl",path,None),)
