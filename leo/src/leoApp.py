@@ -22,6 +22,7 @@ class LeoApp:
 	
 		# These ivars are the global vars of this program.
 		self.afterHandler = None
+		self.batchMode = false # True: run in batch mode.
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
