@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6681" clone_windows="0"/>
-<globals body_outline_ratio="0.521970705726">
-	<global_window_position top="213" left="218" height="663" width="911"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6685" clone_windows="0"/>
+<globals body_outline_ratio="0.53544494721">
+	<global_window_position top="81" left="263" height="745" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1024,6 +1024,11 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
+<v t="ekr.20050328101834"><vh>@page http plugin</vh>
+<v t="ekr.20050328101834.1"><vh>@bool http_active = True</vh></v>
+<v t="ekr.20050328101834.2"><vh>@int  port = 8080</vh></v>
+<v t="ekr.20050328101834.3"><vh>@string rst_http_attributename = ''</vh></v>
+</v>
 </v>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
@@ -1032,9 +1037,10 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041125145818.1"><vh>@button settings...</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
-<v t="ekr.20050210180937"><vh>@button jython</vh></v>
+<v t="ekr.20050210180937"><vh>@ button jython</vh></v>
+<v t="ekr.20050331070207" a="E"><vh>@button golf</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E" annotate="7d71002e"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1108,7 +1114,7 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1546,10 +1552,10 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20050105080048" a="E"><vh>Test ivars</vh>
+<v t="ekr.20050105080048"><vh>Test ivars</vh>
 <v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
 <v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
-<v t="ekr.20050105084757" a="TV"><vh>@test official g.app directories</vh></v>
+<v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
 <v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
 </v>
 <v t="ekr.20040712101754.102"><vh>Tests of @file nodes</vh>
@@ -1681,6 +1687,18 @@ expanded="ekr.20040708145036,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20050316063336"><vh>test of NameError traceback</vh></v>
 <v t="ekr.20050316074630.1"><vh>test of an exception in another module</vh></v>
+<v t="ekr.20050318143124"><vh>test of undo/redo Convert All Blanks</vh>
+<v t="ekr.20050318150022"><vh>node 2</vh></v>
+</v>
+<v t="ekr.20050331065217" a="TV"><vh>Golf test</vh>
+<v t="ekr.20050331065217.1"><vh>@golf-directive myGolfDirective</vh></v>
+<v t="ekr.20050331071301"><vh>@golf-options myGolfOptions</vh></v>
+<v t="ekr.20050331065217.2"><vh>@golf-script myGolfScript</vh></v>
+<v t="ekr.20050331065217.3" a="E"><vh>Root</vh>
+<v t="ekr.20050331065217.4"><vh>Node 1</vh></v>
+<v t="ekr.20050331065322"><vh>Node 2</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">p1 = r"c:\prog\leoMenu(1).py"
@@ -2252,7 +2270,7 @@ print '
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">next = p.next()
 t = next.v.t
 v = next.v
@@ -2388,7 +2406,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
 &lt;&lt; define event callbacks &gt;&gt;
@@ -10510,8 +10528,7 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -13958,5 +13975,43 @@ print z</t>
 <t tx="ekr.20050316074630.1">import leoTest
 
 leoTest.throwAssertionError()</t>
+<t tx="ekr.20050318143124">@tabwidth -4
+
+    line 1
+    line 2</t>
+<t tx="ekr.20050318150022">    line 1, node 2</t>
+<t tx="ekr.20050328101834"> 
+        
+        
+        </t>
+<t tx="ekr.20050328101834.1"></t>
+<t tx="ekr.20050328101834.2"></t>
+<t tx="ekr.20050328101834.3"></t>
+<t tx="ekr.20050331065217"></t>
+<t tx="ekr.20050331065217.1">print 'myGolfDirective'</t>
+<t tx="ekr.20050331065217.2">print 'myGolfScript'</t>
+<t tx="ekr.20050331065217.3"></t>
+<t tx="ekr.20050331065217.4">Node 1, line 1.
+line 2.
+</t>
+<t tx="ekr.20050331065322">Node 2, line 1</t>
+<t tx="ekr.20050331070207">import leoPlugins
+
+golf = leoPlugins.getPluginModule('golf')
+
+if not golf:
+    golf = leoPlugins.loadOnePlugin('golf',verbose=True)
+    keys = {'c':c}
+    if golf: golf.onCreate('tag',keys)
+
+if golf:
+    controller = golf.controllers.get(c)
+    if controller:
+        controller.golfCommand()
+
+if not golf or not controller:
+    # Ask to be removed.
+    g.app.scriptDict['removeMe'] = True</t>
+<t tx="ekr.20050331071301">optionName = True</t>
 </tnodes>
 </leo_file>
