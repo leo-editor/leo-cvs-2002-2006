@@ -391,6 +391,7 @@ class root_attributes:
 #@+node:4::class tangleCommands methods
 #@+body
 class baseTangleCommands:
+	"""The base class for Leo's tangle and untangle commands."""
 
 	#@+others
 	#@+node:1::tangle.__init__
@@ -4285,6 +4286,7 @@ class baseTangleCommands:
 
 	
 class tangleCommands (baseTangleCommands):
+	"""A class that implements Leo' tangle and untangle commands."""
 	pass
 #@-body
 #@-node:4::class tangleCommands methods

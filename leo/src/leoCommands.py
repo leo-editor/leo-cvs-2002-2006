@@ -3,20 +3,13 @@
 #@+body
 #@@language python
 
-
-#@+at
-#  This class implements the most basic commands.  Subcommanders contain an 
-# ivar that points to an instance of this class.
-
-#@-at
-#@@c
-
 from leoGlobals import *
 
 # Import the subcommanders.
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 
 class baseCommands:
+	"""The base class for Leo's main commander."""
 
 	#@+others
 	#@+node:1::Birth & death
@@ -2343,6 +2336,7 @@ class baseCommands:
 
 
 class Commands (baseCommands):
+	"""A class that implements most of Leo's commands."""
 	pass
 #@-body
 #@-node:0::@file leoCommands.py

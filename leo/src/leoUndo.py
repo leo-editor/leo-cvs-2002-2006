@@ -62,6 +62,7 @@ from leoGlobals import *
 import types
 
 class baseUndoer:
+	"""The base class of the undoer class."""
 
 	#@+others
 	#@+node:3::undo.__init__ & clearIvars
@@ -1266,6 +1267,7 @@ class baseUndoer:
 
 	
 class undoer (baseUndoer):
+	"""A class that implements unlimited undo and redo."""
 	pass
 #@-body
 #@-node:0::@file leoUndo.py

@@ -16,6 +16,7 @@ import tempfile
 Tk = Tkinter
 
 class baseLeoFrame:
+	"""A base class for Leo's main frame class."""
 	instances = 0
 
 	#@+others
@@ -4899,6 +4900,7 @@ class baseLeoFrame:
 
 
 class LeoFrame (baseLeoFrame):
+	"""A class that represents a Leo window."""
 	pass
 
 #@-body

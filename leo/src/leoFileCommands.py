@@ -31,6 +31,7 @@ class BadLeoFile(Exception):
 		return "Bad Leo File:" + self.message
 
 class baseFileCommands:
+	"""A base class for the fileCommands subcommander."""
 
 	#@+others
 	#@+node:1::leoFileCommands._init_
@@ -1860,6 +1861,7 @@ class baseFileCommands:
 
 	
 class fileCommands (baseFileCommands):
+	"""A class creating the fileCommands subcommander."""
 	pass
 #@-body
 #@-node:0::@file leoFileCommands.py

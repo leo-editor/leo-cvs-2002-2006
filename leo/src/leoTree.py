@@ -4,6 +4,9 @@
 #@@language python
 
 
+#@<< about the tree classes >>
+#@+node:1::<< about the tree classes >>
+#@+body
 #@+at
 #  This class implements a tree control similar to Windows explorer.  The draw 
 # code is based on code found in Python's IDLE program.  Thank you Guido van Rossum!
@@ -15,7 +18,9 @@
 # nothing would be gained in Leo.
 
 #@-at
-#@@c
+#@-body
+#@-node:1::<< about the tree classes >>
+
 
 from leoGlobals import *
 import leoColor
@@ -23,7 +28,7 @@ import os,string,Tkinter,tkFont,types
 
 
 #@<< about drawing and events >>
-#@+node:1::<< About drawing and events >>
+#@+node:2::<< About drawing and events >>
 #@+body
 #@+at
 #  Leo must redraw the outline pane when commands are executed and as the 
@@ -87,11 +92,11 @@ import os,string,Tkinter,tkFont,types
 
 #@-at
 #@-body
-#@-node:1::<< About drawing and events >>
+#@-node:2::<< About drawing and events >>
 
 
 #@<< drawing constants >>
-#@+node:2::<< drawing constants >>
+#@+node:3::<< drawing constants >>
 #@+body
 box_padding = 5 # extra padding between box and icon
 box_width = 9 + box_padding
@@ -104,13 +109,14 @@ root_top = 2
 hiding = true # True if we don't reallocate items
 line_height = 17 + 2 # To be replaced by Font height
 #@-body
-#@-node:2::<< drawing constants >>
+#@-node:3::<< drawing constants >>
 
 
 class baseLeoTree:
+	"""The base class of the Leo's tree class."""
 
 	#@+others
-	#@+node:3::Birth & death
+	#@+node:4::Birth & death
 	#@+node:1::tree.__init__
 	#@+body
 	def __init__(self,commands,canvas):
@@ -212,8 +218,8 @@ class baseLeoTree:
 		self.widgets = []
 	#@-body
 	#@-node:3::tree.deleteWidgets
-	#@-node:3::Birth & death
-	#@+node:4::Drawing
+	#@-node:4::Birth & death
+	#@+node:5::Drawing
 	#@+node:1::About drawing and updating
 	#@+body
 	#@+at
@@ -729,8 +735,8 @@ class baseLeoTree:
 		return h, false
 	#@-body
 	#@-node:19::tree.yoffset
-	#@-node:4::Drawing
-	#@+node:5::Event handers (tree)
+	#@-node:5::Drawing
+	#@+node:6::Event handers (tree)
 	#@+body
 	#@+at
 	#  Important note: most hooks are created in the vnode callback routines, 
@@ -1301,7 +1307,7 @@ class baseLeoTree:
 	#@+body
 	def OnHeadlineKey (self,v,event):
 		
-		"""."""
+		"""Handle a key event in a headline."""
 	
 		ch = event.char
 		self.commands.body.after_idle(self.idle_head_key,v,ch)
@@ -1662,8 +1668,8 @@ class baseLeoTree:
 		self.popupMenu.unpost()
 	#@-body
 	#@-node:13::tree.OnPopup
-	#@-node:5::Event handers (tree)
-	#@+node:6::Incremental drawing
+	#@-node:6::Event handers (tree)
+	#@+node:7::Incremental drawing
 	#@+node:1::allocateNodes
 	#@+body
 	def allocateNodes(self,where,lines):
@@ -1793,8 +1799,8 @@ class baseLeoTree:
 	
 	#@-body
 	#@-node:6::tree.updateTree
-	#@-node:6::Incremental drawing
-	#@+node:7::Selecting & editing (tree)
+	#@-node:7::Incremental drawing
+	#@+node:8::Selecting & editing (tree)
 	#@+node:1::abortEditLabelCommand
 	#@+body
 	def abortEditLabelCommand (self):
@@ -2135,8 +2141,8 @@ class baseLeoTree:
 			#@-node:3::<< set unselected headline colors >>
 	#@-body
 	#@-node:8::tree.set...LabelState
-	#@-node:7::Selecting & editing (tree)
-	#@+node:8::tree.moveUpDown
+	#@-node:8::Selecting & editing (tree)
+	#@+node:9::tree.moveUpDown
 	#@+body
 	def OnUpKey   (self,event=None): return self.moveUpDown("up")
 	def OnDownKey (self,event=None): return self.moveUpDown("down")
@@ -2172,11 +2178,12 @@ class baseLeoTree:
 		# trace("insert:",body.index("insert"))
 		return "break" # Inhibit further bindings.
 	#@-body
-	#@-node:8::tree.moveUpDown
+	#@-node:9::tree.moveUpDown
 	#@-others
 
 	
 class leoTree (baseLeoTree):
+	"""A class that draws and handles events in an outline."""
 	pass
 #@-body
 #@-node:0::@file leoTree.py

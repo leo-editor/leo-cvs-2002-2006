@@ -8,6 +8,7 @@ import leoFind
 import ConfigParser,exceptions,os,string,sys,tkFont
 
 class baseConfig:
+	"""The base class for Leo's configuration handler."""
 	
 	#@<< define defaultsDict >>
 	#@+node:1::<< define defaultsDict >>
@@ -761,6 +762,7 @@ class baseConfig:
 
 	
 class config (baseConfig):
+	"""A class to manage configuration settings."""
 	pass
 #@-body
 #@-node:0::@file leoConfig.py

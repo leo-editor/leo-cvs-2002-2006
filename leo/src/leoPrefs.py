@@ -19,6 +19,7 @@ ivars = [
 	"target_language" ]
 
 class baseLeoPrefs:
+	"""The base class of Leo's preferences panel."""
 
 	#@+others
 	#@+node:1::prefs.__init__
@@ -401,6 +402,7 @@ class baseLeoPrefs:
 
 	
 class LeoPrefs (baseLeoPrefs):
+	"""A class that creates Leo's preferenes panel."""
 	pass
 #@-body
 #@-node:0::@file leoPrefs.py

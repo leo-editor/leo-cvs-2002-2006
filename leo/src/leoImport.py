@@ -53,6 +53,7 @@ def importFiles (dir, type = None, kind = "@file"):
 
 
 class baseLeoImportCommands:
+	"""The base class for Leo's import commands."""
 
 	#@+others
 	#@+node:1::import.__init__
@@ -3021,6 +3022,7 @@ class baseLeoImportCommands:
 
 	
 class leoImportCommands (baseLeoImportCommands):
+	"""A class that implements Leo's import commands."""
 	pass
 #@-body
 #@-node:0::@file leoImport.py

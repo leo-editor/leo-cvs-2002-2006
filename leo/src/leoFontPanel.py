@@ -6,7 +6,8 @@
 from leoGlobals import *
 import exceptions,sys,string,Tkinter,tkFont
 
-class leoFontPanel:
+class baseLeoFontPanel:
+	"""The base class for Leo's font panel."""
 
 	#@+others
 	#@+node:1::fontPanel.__init__
@@ -521,6 +522,11 @@ class leoFontPanel:
 	#@-body
 	#@-node:15::update
 	#@-others
+
+	
+class leoFontPanel (baseLeoFontPanel):
+	"""A class that creates Leo's font panel."""
+	pass
 #@-body
 #@-node:0::@file leoFontPanel.py
 #@-leo

@@ -516,6 +516,7 @@ colorNamesList = (
 #@+node:4::class leoColorPanel
 #@+body
 class baseLeoColorPanel:
+	"""The base class for Leo's color panel."""
 
 	#@+others
 	#@+node:1::colorPanel.__init__
@@ -699,13 +700,16 @@ class baseLeoColorPanel:
 
 	
 class leoColorPanel (baseLeoColorPanel):
+	"""A class that creates Leo's color picker panel."""
 	pass
+
 
 #@-body
 #@-node:4::class leoColorPanel
 #@+node:5::class leoColorNamePanel
 #@+body
 class baseLeoColorNamePanel:
+	"""The base class for Leo's color name picker panel."""
 
 	#@+others
 	#@+node:1::namePanel.__init__
@@ -859,12 +863,14 @@ class baseLeoColorNamePanel:
 
 	
 class leoColorNamePanel(baseLeoColorNamePanel):
+	"""A class that creates Leo's color name picker panel."""
 	pass
 #@-body
 #@-node:5::class leoColorNamePanel
 #@+node:6::class colorizer
 #@+body
 class baseColorizer:
+	"""The base class for Leo's syntax colorer."""
 
 	#@+others
 	#@+node:1::color.__init__
@@ -2494,6 +2500,7 @@ class baseColorizer:
 
 	
 class colorizer (baseColorizer):
+	"""Leo's syntax colorer class"""
 	pass
 #@-body
 #@-node:6::class colorizer

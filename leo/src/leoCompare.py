@@ -63,6 +63,7 @@ def go ():
 #@+node:3::class leoCompare
 #@+body
 class baseLeoCompare:
+	"""The base class for Leo's compare code."""
 
 	#@+others
 	#@+node:1::compare.__init__
@@ -557,12 +558,14 @@ class baseLeoCompare:
 
 	
 class leoCompare (baseLeoCompare):
+	"""A class containing Leo's compare code."""
 	pass
 #@-body
 #@-node:3::class leoCompare
 #@+node:4::class leoComparePanel
 #@+body
 class baseLeoComparePanel:
+	"""The base class for Leo's compare panel."""
 
 	#@+others
 	#@+node:1::browser
@@ -1042,7 +1045,9 @@ class baseLeoComparePanel:
 
 	
 class leoComparePanel (baseLeoComparePanel):
+	"""A class that creates Leo's compare panel."""
 	pass
+
 #@-body
 #@-node:4::class leoComparePanel
 #@-others

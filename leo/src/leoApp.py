@@ -9,6 +9,11 @@ import os,sys,Tkinter
 
 class LeoApp:
 
+	"""A class representing the Leo application itself.
+	
+	Ivars of this class are Leo's global variables."""
+	
+
 	#@+others
 	#@+node:1::app.__init__
 	#@+body
@@ -493,6 +498,8 @@ class LeoApp:
 	#@-body
 	#@-node:12::app.writeWaitingLog
 	#@-others
+
+
 #@-body
 #@-node:0::@file leoApp.py
 #@-leo

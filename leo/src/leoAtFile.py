@@ -27,6 +27,7 @@ import leoColor,leoNodes
 import filecmp,os,os.path,time
 
 class baseAtFile:
+	"""The base class for the atFile subcommander."""
 	
 	#@<< atFile constants >>
 	#@+node:1::<< atFile constants >>
@@ -3460,6 +3461,7 @@ class baseAtFile:
 
 	
 class atFile (baseAtFile):
+	"""A subcommander implementing atFile commands."""
 	pass
 
 

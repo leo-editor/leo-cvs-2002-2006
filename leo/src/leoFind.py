@@ -66,7 +66,7 @@ Tk=Tkinter
 #@+node:2::class leoFindBase
 #@+body
 class leoFindBase (leoDialog.leoDialog):
-	
+	"""The base class for Leo's Find panel."""
 
 	#@+others
 	#@+node:1::findBase.__init__
@@ -114,7 +114,7 @@ class leoFindBase (leoDialog.leoDialog):
 #@+node:3::class leoFind
 #@+body
 class leoFind (leoFindBase):
-	
+	"""A class that implements Leo's find commands."""
 
 	#@+others
 	#@+node:1::find.__init__ (creates find panel)

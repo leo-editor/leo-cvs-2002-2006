@@ -230,6 +230,7 @@ import types
 #@+node:3::class tnode
 #@+body
 class baseTnode:
+	"""The base class of the tnode class."""
 	
 	#@<< tnode constants >>
 	#@+node:1::<< tnode constants >>
@@ -408,12 +409,14 @@ class baseTnode:
 
 	
 class tnode (baseTnode):
+	"""A class that implements tnodes."""
 	pass
 #@-body
 #@-node:3::class tnode
 #@+node:4::class vnode
 #@+body
 class baseVnode:
+	"""The base class of the vnode class."""
 	
 	#@<< vnode constants >>
 	#@+node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
@@ -2335,6 +2338,7 @@ class baseVnode:
 
 	
 class vnode (baseVnode):
+	"""A class that implements vnodes."""
 	pass
 #@-body
 #@-node:4::class vnode

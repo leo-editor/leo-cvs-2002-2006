@@ -14,9 +14,7 @@ Tk = Tkinter
 #@+node:1::class leoDialog
 #@+body
 class baseLeoDialog:
-	
-	"""A base class for all Leo dialogs"""
-
+	"""The base class for all Leo dialogs"""
 
 	#@+others
 	#@+node:1::__init__ (leoDialog)
@@ -167,6 +165,7 @@ class baseLeoDialog:
 
 	
 class leoDialog (baseLeoDialog):
+	"""A base class for all Leo dialogs that may be overridden by plugins."""
 	pass
 
 #@-body
@@ -174,9 +173,7 @@ class leoDialog (baseLeoDialog):
 #@+node:2::class aboutLeo
 #@+body
 class aboutLeo (leoDialog):
-	
-	""" """
-	
+	"""A class that creates the About Leo dialog."""
 
 	#@+others
 	#@+node:1::aboutLeo.__init__
@@ -298,12 +295,10 @@ class aboutLeo (leoDialog):
 
 #@-body
 #@-node:2::class aboutLeo
-#@+node:3::class askOkCancelNumber (tested)
+#@+node:3::class askOkCancelNumber
 #@+body
 class  askOkCancelNumber (leoDialog):
-	
 	"""Create and run a modal dialog to get a number."""
-	
 
 	#@+others
 	#@+node:1::askOKCancelNumber.__init__
@@ -404,13 +399,11 @@ class  askOkCancelNumber (leoDialog):
 
 
 #@-body
-#@-node:3::class askOkCancelNumber (tested)
-#@+node:4::class askOk (tested)
+#@-node:3::class askOkCancelNumber
+#@+node:4::class askOk
 #@+body
 class askOk(leoDialog):
-	
-	""" """
-	
+	"""A class that creates a dialog with a single OK button."""
 
 	#@+others
 	#@+node:1::askOk.__init__
@@ -448,13 +441,11 @@ class askOk(leoDialog):
 	#@-node:2::askOk.onKey
 	#@-others
 #@-body
-#@-node:4::class askOk (tested)
-#@+node:5::class askOkCancel (tested)
+#@-node:4::class askOk
+#@+node:5::class askOkCancel
 #@+body
 class askOkCancel (leoDialog):
-	
-	""" """
-	
+	"""A class that creates a dialog with two buttons: Ok and Cancel."""
 
 	#@+others
 	#@+node:1::askOkCancel.__init__
@@ -494,13 +485,11 @@ class askOkCancel (leoDialog):
 	#@-node:2::askOkCancel.onKey
 	#@-others
 #@-body
-#@-node:5::class askOkCancel (tested)
-#@+node:6::class askYesNo (tested)
+#@-node:5::class askOkCancel
+#@+node:6::class askYesNo
 #@+body
 class askYesNo (leoDialog):
-	
-	""" """
-	
+	"""A class that creates a dialog with two buttons: Yes and No."""
 
 	#@+others
 	#@+node:1::askYesNo.__init__
@@ -542,9 +531,10 @@ class askYesNo (leoDialog):
 	#@-others
 
 
+
 #@-body
-#@-node:6::class askYesNo (tested)
-#@+node:7::class askYesNoCancel (tested)
+#@-node:6::class askYesNo
+#@+node:7::class askYesNoCancel
 #@+body
 class askYesNoCancel(leoDialog):
 	
@@ -627,13 +617,11 @@ class askYesNoCancel(leoDialog):
 
 
 #@-body
-#@-node:7::class askYesNoCancel (tested)
+#@-node:7::class askYesNoCancel
 #@+node:8::class listboxDialog
 #@+body
 class listBoxDialog (leoDialog):
-	
 	"""A base class for dialogs containing a Tk Listbox"""
-
 
 	#@+others
 	#@+node:1::listboxDialog.__init__
