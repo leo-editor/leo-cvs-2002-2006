@@ -79,6 +79,7 @@ class parserBaseClass:
             'page':         self.doPage,
             'ratio':        self.doRatio,
             'recentfiles':  self.doRecentFiles,
+            'shortcut':     self.doShortcut,
             'shortcuts':    self.doShortcuts,
             'string':       self.doString,
             'strings':      self.doStrings,
@@ -435,6 +436,8 @@ class parserBaseClass:
     #@-node:ekr.20041120094940.9:set (parseBaseClass)
     #@+node:ekr.20041227071423:setShortcut (ParserBaseClass)
     def setShortcut (self,name,val):
+        
+        # g.trace(name,val)
         
         c = self.c
         
