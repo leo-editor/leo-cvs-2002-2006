@@ -518,7 +518,7 @@ class atFile:
 
 		if self.default_directory == None:
 			self.default_directory = ""
-
+	
 		
 		#@<< Set comment Strings from delims >>
 		#@+node:7::<< Set comment Strings from delims >>
@@ -765,6 +765,20 @@ class atFile:
 			fn = os.path.normpath(fn)
 			try:
 				file = open(fn,'r')
+				if file:
+					
+					#@<< warn on read-only file >>
+					#@+node:1::<< warn on read-only file >>
+					#@+body
+					# 8/13/02
+					try:
+						read_only = not os.access(fn,os.W_OK)
+						if read_only:
+							es("read only: " + fn)
+					except: pass # os.access() may not exist on all platforms.
+					#@-body
+					#@-node:1::<< warn on read-only file >>
+
 			except:
 				self.readError("Can not open: " + '"' + root.headString() + '"')
 		#@-body
@@ -2113,6 +2127,14 @@ class atFile:
 					traceback.print_exc()
 					valid = false
 			
+			if valid:
+				try: # 8/13/02
+					read_only = not os.access(self.targetFileName,os.W_OK)
+					if read_only:
+						es("read only: " + self.targetFileName)
+						valid = false
+				except: pass # os.access() may not exist on all platforms.
+				
 			if valid:
 				try:
 					self.outputFileName = self.targetFileName + ".tmp"

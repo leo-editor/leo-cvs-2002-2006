@@ -7,7 +7,7 @@
 from leoGlobals import *
 from leoUtils import *
 
-import leoNodes
+import leoDialog,leoNodes
 import os,os.path,time,traceback
 
 class BadLeoFile:
@@ -44,6 +44,7 @@ class fileCommands:
 		self.dummy_v = None
 		self.dummy_t = None
 		# For writing
+		self.read_only = false
 		self.outputFile = None # File for normal writing
 		self.outputString = None # String for pasting
 		self.openDirectory = None
@@ -363,6 +364,28 @@ class fileCommands:
 	def getLeoFile (self,frame,fileName,atFileNodesFlag):
 	
 		c=self.commands
+		
+		#@<< warn on read-only files >>
+		#@+node:1::<< warn on read-only files >>
+		#@+body
+		# 8/13/02
+		try:
+			self.read_only = false
+			self.read_only = not os.access(fileName,os.W_OK)
+			if self.read_only:
+				es("read only: " + fileName)
+				d = leoDialog.leoDialog()
+				d.askOk(
+					"Read-only ouline",
+					"Warning: the outline: " + fileName + " is read-only.")
+		except:
+			if 0: # testing only: access may not exist on all platforms.
+				es("exception getting file access")
+				traceback.print_exc()
+		#@-body
+		#@-node:1::<< warn on read-only files >>
+
+			
 		self.mFileName = frame.mFileName
 		self.tnodesDict = {} ; ok = true
 		try:
@@ -381,7 +404,7 @@ class fileCommands:
 			self.getTag("</leo_file>")
 			
 			#@<< Create join lists of all vnodes >>
-			#@+node:1::<< Create join lists of all vnodes >>
+			#@+node:2::<< Create join lists of all vnodes >>
 			#@+body
 			# Pass 1: create all join lists using the joinHead field in each tnode
 			v = c.rootVnode()
@@ -412,7 +435,7 @@ class fileCommands:
 				last.setJoinList(head)
 				v = v.threadNext()
 			#@-body
-			#@-node:1::<< Create join lists of all vnodes >>
+			#@-node:2::<< Create join lists of all vnodes >>
 
 		except BadLeoFile, message: # All other exceptions are Leo bugs
 			# traceback.print_exc()
@@ -1512,6 +1535,10 @@ class fileCommands:
 				es("exception writing derived files")
 				traceback.print_exc()
 				return false
+				
+		if self.read_only:
+			es("read only: " + fileName)
+			return false
 	
 		try:
 			
