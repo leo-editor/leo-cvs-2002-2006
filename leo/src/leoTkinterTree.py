@@ -104,7 +104,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # Miscellaneous info.
         self.iconimages = {} # Image cache set by getIconImage().
         self.active = False # True if tree is active
-        self._editPosition = None
+        self._editPosition = None # returned by leoTree.editPosition()
         self.lineyoffset = 0 # y offset for this headline.
         self.disableRedraw = False # True: reschedule a redraw for later.
         self.lastClickFrameId = None # id of last entered clickBox.
@@ -1323,97 +1323,6 @@ class leoTkinterTree (leoFrame.leoTree):
     # Important note: most hooks are created in the vnode callback routines, 
     # _not_ here.
     #@-at
-    #@+node:ekr.20031218072017.2337:OnActivate
-    def OnActivate (self,p,event=None):
-    
-        try:
-            c = self.c ; gui = g.app.gui
-            #@        << activate this window >>
-            #@+node:ekr.20031218072017.2338:<< activate this window >>
-            current = c.currentPosition()
-            
-            if p == current:
-                if self.active:
-                    self.editLabel(p)
-                else:
-                    self.undimEditLabel()
-                    gui.set_focus(c,self.canvas) # Essential for proper editing.
-            else:
-                self.select(p)
-                g.app.findFrame.handleUserClick(p) # 4/3/04
-                if p.v.t.insertSpot != None: # 9/1/02
-                    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-                    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-                else:
-                    c.frame.bodyCtrl.mark_set("insert","1.0")
-                gui.set_focus(c,c.frame.bodyCtrl)
-            
-            self.active = True
-            #@nonl
-            #@-node:ekr.20031218072017.2338:<< activate this window >>
-            #@nl
-        except:
-            g.es_event_exception("activate tree")
-    #@nonl
-    #@-node:ekr.20031218072017.2337:OnActivate
-    #@+node:ekr.20031218072017.2339:OnBoxClick
-    # Called on click in box and double-click in headline.
-    
-    def OnBoxClick (self,p):
-        
-        # g.trace(p)
-    
-        # Note: "boxclick" hooks handled by vnode callback routine.
-        c = self.c ; gui = g.app.gui
-    
-        if p.isExpanded(): p.contract()
-        else:              p.expand()
-    
-        self.active = True
-        self.select(p)
-        g.app.findFrame.handleUserClick(p) # 4/3/04
-        gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
-        self.redraw()
-    #@nonl
-    #@-node:ekr.20031218072017.2339:OnBoxClick
-    #@+node:ekr.20031218072017.2345:tree.OnCtontrolT
-    # This works around an apparent Tk bug.
-    
-    def OnControlT (self,event=None):
-    
-        # If we don't inhibit further processing the Tx.Text widget switches characters!
-        return "break"
-    #@nonl
-    #@-node:ekr.20031218072017.2345:tree.OnCtontrolT
-    #@+node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
-    def OnDeactivate (self,event=None):
-        
-        """Deactivate the tree pane, dimming any headline being edited."""
-    
-        tree = self ; c = self.c
-        focus = g.app.gui.get_focus(c.frame)
-    
-        # Bug fix: 7/13/03: Only do this as needed.
-        # Doing this on every click would interfere with the double-clicking.
-        if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
-            try:
-                # g.trace(focus)
-                tree.endEditLabel()
-                tree.dimEditLabel()
-            except:
-                g.es_event_exception("deactivate tree")
-    #@nonl
-    #@-node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
-    #@+node:ekr.20031218072017.2341:tree.findVnodeWithIconId
-    def findVnodeWithIconId (self,id):
-        
-        # Due to an old bug, id may be a tuple.
-        try:
-            return self.icon_id_dict.get(id[0])
-        except:
-            return self.icon_id_dict.get(id)
-    #@nonl
-    #@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
     #@+node:EKR.20040608110312:Dragging (tk tree)
     #@+node:ekr.20031218072017.2342:tree.OnContinueDrag
     def OnContinueDrag(self,p,event):
@@ -1714,6 +1623,97 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-others
     #@nonl
     #@-node:ekr.20031218072017.1332:headline key handlers (tree)
+    #@+node:ekr.20031218072017.2337:OnActivate
+    def OnActivate (self,p,event=None):
+    
+        try:
+            c = self.c ; gui = g.app.gui
+            #@        << activate this window >>
+            #@+node:ekr.20031218072017.2338:<< activate this window >>
+            current = c.currentPosition()
+            
+            if p == current:
+                if self.active:
+                    self.editLabel(p)
+                else:
+                    self.undimEditLabel()
+                    gui.set_focus(c,self.canvas) # Essential for proper editing.
+            else:
+                self.select(p)
+                g.app.findFrame.handleUserClick(p) # 4/3/04
+                if p.v.t.insertSpot != None: # 9/1/02
+                    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+                    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+                else:
+                    c.frame.bodyCtrl.mark_set("insert","1.0")
+                gui.set_focus(c,c.frame.bodyCtrl)
+            
+            self.active = True
+            #@nonl
+            #@-node:ekr.20031218072017.2338:<< activate this window >>
+            #@nl
+        except:
+            g.es_event_exception("activate tree")
+    #@nonl
+    #@-node:ekr.20031218072017.2337:OnActivate
+    #@+node:ekr.20031218072017.2339:OnBoxClick
+    # Called on click in box and double-click in headline.
+    
+    def OnBoxClick (self,p):
+        
+        # g.trace(p)
+    
+        # Note: "boxclick" hooks handled by vnode callback routine.
+        c = self.c ; gui = g.app.gui
+    
+        if p.isExpanded(): p.contract()
+        else:              p.expand()
+    
+        self.active = True
+        self.select(p)
+        g.app.findFrame.handleUserClick(p) # 4/3/04
+        gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
+        self.redraw()
+    #@nonl
+    #@-node:ekr.20031218072017.2339:OnBoxClick
+    #@+node:ekr.20031218072017.2341:tree.findVnodeWithIconId
+    def findVnodeWithIconId (self,id):
+        
+        # Due to an old bug, id may be a tuple.
+        try:
+            return self.icon_id_dict.get(id[0])
+        except:
+            return self.icon_id_dict.get(id)
+    #@nonl
+    #@-node:ekr.20031218072017.2341:tree.findVnodeWithIconId
+    #@+node:ekr.20031218072017.2345:tree.OnCtontrolT
+    # This works around an apparent Tk bug.
+    
+    def OnControlT (self,event=None):
+    
+        # If we don't inhibit further processing the Tx.Text widget switches characters!
+        return "break"
+    #@nonl
+    #@-node:ekr.20031218072017.2345:tree.OnCtontrolT
+    #@+node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
+    def OnDeactivate (self,event=None):
+        
+        """Deactivate the tree pane, dimming any headline being edited."""
+    
+        tree = self ; c = self.c
+        focus = g.app.gui.get_focus(c.frame)
+    
+        # Bug fix: 7/13/03: Only do this as needed.
+        # Doing this on every click would interfere with the double-clicking.
+        if not c.frame.log.hasFocus() and focus != c.frame.bodyCtrl:
+            try:
+                # g.trace(focus)
+                tree.endEditLabel()
+                tree.dimEditLabel()
+            except:
+                g.es_event_exception("deactivate tree")
+    #@nonl
+    #@-node:ekr.20031218072017.2340:tree.OnDeactivate (caused double-click problem)
     #@+node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
     def OnIconClick (self,p,event):
         
@@ -2028,6 +2028,23 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20031218072017.1031:tree.updateTree
     #@-node:ekr.20031218072017.4155:Incremental drawing
     #@+node:ekr.20031218072017.4157:Selecting & editing (tree)
+    #@+node:ekr.20040725044521.1:tree.edit_text
+    def edit_text (self,p):
+        
+        c = self.c
+        
+        if c:
+            # New in 4.2: the dictionary is a list of pairs(p,v)
+            pairs = self.getEditTextDict(p.v)
+            for p2,t2 in pairs:
+                if p.equal(p2):
+                    # g.trace("found",t2)
+                    return t2
+            return None
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20040725044521.1:tree.edit_text
     #@+node:ekr.20031218072017.4158:dimEditLabel, undimEditLabel
     # Convenience methods so the caller doesn't have to know the present edit node.
     
