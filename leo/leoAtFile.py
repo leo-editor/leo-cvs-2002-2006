@@ -2034,7 +2034,10 @@ class atFile:
 			j = i
 			if kind == atFile.docDirective or kind == atFile.atDirective:
 				i = self.putDoc(s,i,kind)
-			elif kind == atFile.miscDirective:
+			elif ( # 10/16/02
+				kind == atFile.miscDirective or
+				kind == atFile.rawDirective or
+				kind == atFile.endRawDirective ):
 				if firstLastHack:
 					
 					#@<< handle misc directives >>
