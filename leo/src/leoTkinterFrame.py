@@ -1563,7 +1563,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		#@nonl
 		#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
 		#@nl
-		if ch in ('\t','\n','\r'):
+		if ch in ('\t','\n','\r',chr(8)):
 			d = g.scanDirectives(c,p) # Support @tab_width directive properly.
 			tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
 			if ch in ('\n','\r'):
@@ -1600,7 +1600,7 @@ class leoTkinterBody (leoFrame.leoBody):
 				#@nonl
 				#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
 				#@nl
-			elif tab_width < 0:
+			elif ch == '\t' and tab_width < 0:
 				#@			<< convert tab to blanks >>
 				#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
 				# Do nothing if we are executing a Change command.
@@ -1635,6 +1635,35 @@ class leoTkinterBody (leoFrame.leoBody):
 							c.frame.bodyCtrl.insert("insert",' ' * w2)
 				#@nonl
 				#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+				#@nl
+			elif ch in (chr(8)) and tab_width < 0:
+				#@			<< handle backspace with negative tab_width >>
+				#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+				# Get the preceeding characters.
+				prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+				allPrev=c.frame.bodyCtrl.get("1.0","insert")
+				n = len(allPrev)
+				try:
+					oldAllPrev = body[:n]
+					assert(allPrev==oldAllPrev)
+					deletedChar = body[n:n+1]
+				except (IndexError,AssertionError):
+					deletedChar = None
+				
+				if deletedChar in (u' ',' '):
+					n = len(prev) ; w = abs(tab_width)
+					n2 = n % w # Delete up to n2 spaces.
+					count = 0
+					while n2 > 0:
+						n2 -= 1
+						ch = prev[n-count-1]
+						# g.trace(count,repr(ch))
+						if ch in (u' ',' '): count += 1
+						else: break
+					if count > 0:
+						c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+				#@nonl
+				#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
 				#@nl
 		#@	<< set s to widget text, removing trailing newlines if necessary >>
 		#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
@@ -1685,7 +1714,6 @@ class leoTkinterBody (leoFrame.leoBody):
 		#@nl
 		g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
-	#@nonl
 	#@-node:ekr.20031218072017.1321:idle_body_key
 	#@+node:ekr.20031218072017.1329:onBodyChanged (called from core)
 	# Called by command handlers that have already changed the text.
