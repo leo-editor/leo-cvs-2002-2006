@@ -2654,7 +2654,7 @@ class atFile:
 						self.newline_pending = false
 						self.onl()
 					s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
-					self.outputFile.write(s)
+					self.outputStringWithLineEndings(s)
 					self.putSentinel("@-body")
 					
 				self.putCloseNodeSentinel(v)
@@ -2740,7 +2740,7 @@ class atFile:
 				s = v.bodyString()
 				if s and len(s) > 0:
 					s = toEncodedString(s,self.encoding,reportErrors=true) # 3/7/03
-					self.outputFile.write(s)
+					self.outputStringWithLineEndings(s)
 				#@-body
 				#@-node:2::<< Write v's body >>
 
@@ -3286,6 +3286,16 @@ class atFile:
 	
 	#@-body
 	#@-node:5::atFile.replaceTargetFileIfDifferent
+	#@+node:6::atFile.outputStringWithLineEndings
+	#@+body
+	# Write the string s as-is except that we replace '\n' with the proper line ending.
+	
+	def outputStringWithLineEndings (self,s):
+	
+		# Calling self.onl() runs afoul of queued newlines.
+		self.os(s.replace('\n',self.output_newline))
+	#@-body
+	#@-node:6::atFile.outputStringWithLineEndings
 	#@-node:7::Top level write helpers
 	#@-node:1::Top level
 	#@+node:2::putBodyPart
