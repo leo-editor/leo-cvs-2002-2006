@@ -170,16 +170,36 @@ class atFile:
 		else: clone_s = ""
 		
 		if v == self.root or not v.parent():
-			node_s = '0'
+			index = 0
 		else:
 			index = v.childIndex() + 1
-			if 0: # config.use_relative_node_indices and self.defaultIndex == index:
-				node_s = ""
-			else:
-				# Use absolute node indices.
-				node_s = str(index)
 	
-		return node_s + ':' + clone_s + ':' +  v.headString()
+		h = v.headString()
+		
+		#@<< remove comment delims from h if necessary >>
+		#@+node:1::<< remove comment delims from h if necessary >>
+		#@+body
+		#@+at
+		#  Bug fix 1/24/03:
+		# 
+		# If the present @language/@comment settings do not specify a 
+		# single-line comment we remove all block comment delims from h.  This 
+		# prevents headline text from interfering with the parsing of node sentinels.
+
+		#@-at
+		#@@c
+
+		start = self.startSentinelComment
+		end = self.endSentinelComment
+		
+		if end and len(end) > 0:
+			h = h.replace(start,"")
+			h = h.replace(end,"")
+		#@-body
+		#@-node:1::<< remove comment delims from h if necessary >>
+
+	
+		return str(index) + ':' + clone_s + ':' + h
 	#@-body
 	#@-node:1::nodeSentinelText
 	#@+node:2::putCloseNodeSentinel
@@ -857,10 +877,43 @@ class atFile:
 			dummy.initHeadString("Dummy")
 	
 		if n <= parent.numberOfChildren():
+			
+			#@<< check the headlines >>
+			#@+node:1::<< check the headlines >>
+			#@+body
+			#@+at
+			#  1/24/03: A kludgy fix to the problem of headlines containing 
+			# comment delims.
+			# 
+			# The comparisons of headlines will disappear in 4.0.  However, 
+			# the problems created by having block comment delimiters in 
+			# headlines will remain: they can't be allowed to interfere with 
+			# the block comment delimiters in sentinels.
+
+			#@-at
+			#@@c
 			result = parent.nthChild(n-1)
 			resulthead = result.headString()
+			
 			if headline.strip() != resulthead.strip():
-				self.structureErrors += 1
+				start = self.startSentinelComment
+				end = self.endSentinelComment
+				if end and len(end) > 0:
+					# 1/25/03: The kludgy fix.
+					# Compare the headlines without the delims.
+					h1 =   headline.replace(start,"").replace(end,"")
+					h2 = resulthead.replace(start,"").replace(end,"")
+					if h1.strip() == h2.strip():
+						# 1/25/03: Another kludge: use the headline from the outline, not the derived file.
+						headline = resulthead
+					else:
+						self.structureErrors += 1
+				else:
+					self.structureErrors += 1
+			
+			#@-body
+			#@-node:1::<< check the headlines >>
+
 		else:
 			# This is using a dummy; we should already have bumped structureErrors.
 			result = parent.insertAsLastChild(leoNodes.tnode())

@@ -1021,13 +1021,13 @@ class Commands:
 	def canPasteOutline (self,s=None):
 	
 		a = app() ; c = self
-	
 		if s == None:
 			try:
 				s = a.root.selection_get(selection="CLIPBOARD")
 			except:
 				return false
-			
+	
+		# trace(s)
 		if match(s,0,a.prolog_prefix_string):
 			return true
 		elif len(s) > 0:
