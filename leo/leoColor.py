@@ -1152,7 +1152,7 @@ class colorizer:
 		self.comment_string = None
 		while v:
 			s = v.t.bodyString
-			bits, dict = is_special_bits(s)
+			dict = get_directives_dict(s)
 			
 			#@<< Test for @comment or @language >>
 			#@+node:1::<< Test for @comment or @language >>
@@ -1167,18 +1167,15 @@ class colorizer:
 			#@-at
 			#@@c
 
-			if btest(comment_bits,bits):
-				
-				# @comment effectively disables syntax coloring.
-				if 0: # 7/8/02: This is stupid and confusing.
-					language = plain_text_language
+			if dict.has_key("comment"):
 					
 				# 8/11/02: Allow colorizer to honor the comment string.
 				k = dict["comment"]
 				self.comment_string = s[k:]
 				break
 			
-			elif btest(language_bits,bits):
+			elif dict.has_key("language"):
+			
 				issue_error_flag = false
 				i = dict["language"]
 				language, junk, junk, junk = set_language(s,i,issue_error_flag)
@@ -1256,10 +1253,10 @@ class colorizer:
 		first = v ; val = true
 		while v:
 			s = v.t.bodyString
-			bits, dict = is_special_bits(s)
-			no_color = ( bits & nocolor_bits ) != 0
-			color = ( bits & color_bits ) != 0
-			# trace(`bits` + ", " + `v`)
+			dict = get_directives_dict(s)
+			no_color = dict.has_key("nocolor")
+			color = dict.has_key("color")
+			# trace(`dict` + ", " + `v`)
 			# A color anywhere in the target enables coloring.
 			if color and v == first:
 				val = true ; break

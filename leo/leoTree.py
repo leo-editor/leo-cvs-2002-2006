@@ -1513,14 +1513,14 @@ class leoTree:
 	
 		while v:
 			s = v.t.bodyString
-			bits, dict = is_special_bits(s)
+			dict = get_directives_dict(s)
 			
 			#@<< set w and break on @tabwidth >>
 			#@+node:1::<< set w and break on @tabwidth >>
 			#@+body
-			if (bits & tab_width_bits) != 0:
+			if dict.has_key("tabwidth"):
 			
-				k = dict["tab_width"]
+				k = dict["tabwidth"]
 				i = k + len("@tabwidth")
 				i, val = skip_long(s, i)
 				if val != None and val != 0:

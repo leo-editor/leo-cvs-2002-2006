@@ -297,6 +297,7 @@ def es_exception ():
 	errList = traceback.format_exception_only(typ,val)
 	for i in errList:
 		es(i)
+	traceback.print_exc()
 #@-body
 #@-node:2::es_exception
 #@+node:3::get_line & get_line_after
@@ -690,7 +691,75 @@ def getBaseDirectory():
 		return "" # An error.
 #@-body
 #@-node:12::getBaseDirectory
-#@+node:13::scanError
+#@+node:13::get_directives_dict
+#@+body
+#@+at
+#  Scans root for @directives and returns a dict containing pointers to the 
+# start of each directive.
+# 
+# The caller passes [root_node] or None as the second arg.  This allows us to 
+# distinguish between None and [None].
+
+#@-at
+#@@c
+
+def get_directives_dict(s,root=None):
+
+	if root: root_node = root[0]
+	dict = {}
+	i = 0 ; n = len(s)
+	while i < n:
+		if s[i] == '@' and i+1 < n:
+			
+			#@<< set dict for @ directives >>
+			#@+node:1::<< set dict for @ directives >>
+			#@+body
+			# EKR: rewritten 10/10/02
+			directiveList = (
+				"color", "comment", "header", "ignore",
+				"language", "nocolor", "noheader",
+				"pagewidth", "path", "quiet", "root", "silent",
+				"tabwidth", "terse", "unit", "verbose")
+			
+			j = skip_c_id(s,i+1)
+			word = s[i+1:j]
+			if word in directiveList:
+				dict [word] = i
+			
+			#@-body
+			#@-node:1::<< set dict for @ directives >>
+
+		elif root and match(s,i,"<<"):
+			
+			#@<< set dict["root"] for noweb * chunks >>
+			#@+node:2::<< set dict["root"] for noweb * chunks >>
+			#@+body
+			#@+at
+			#  The following looks for chunk definitions of the form < < * > > 
+			# =. If found, we take this to be equivalent to @root filename if 
+			# the headline has the form @root filename.
+
+			#@-at
+			#@@c
+
+			i = skip_ws(s,i+2)
+			if i < n and s[i] == '*' :
+				i = skip_ws(s,i+1) # Skip the '*'
+				if match(s,i,">>="):
+					# < < * > > = implies that @root should appear in the headline.
+					i += 3
+					if root_node:
+						dict["root"]=0 # value not immportant
+					else:
+						es(angleBrackets("*") + "= requires @root in the headline")
+			#@-body
+			#@-node:2::<< set dict["root"] for noweb * chunks >>
+
+		i = skip_line(s,i)
+	return dict
+#@-body
+#@-node:13::get_directives_dict
+#@+node:14::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -708,8 +777,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:13::scanError
-#@+node:14::Scanners: calling scanError
+#@-node:14::scanError
+#@+node:15::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1096,8 +1165,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:14::Scanners: calling scanError
-#@+node:15::Scanners: no error messages
+#@-node:15::Scanners: calling scanError
+#@+node:16::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1170,133 +1239,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7::is_special_bits
-#@+body
-#@+at
-#  Returns bits, dict where:
-# bits is a bit-set representing all the @directives of a particular body text.
-# dict contains various pointers into the text.
-# 
-# The caller passes [root_node] or None as the second arg.  This allows us to 
-# distinguish between None and [None].
-
-#@-at
-#@@c
-
-def is_special_bits(s,root=None):
-
-	if root: root_node = root[0]
-	bits = 0 ; dict = {}
-	i = 0 ; n = len(s)
-	while i < n:
-		if s[i] == '@' and i+1 < n:
-			
-			#@<< set bits for @ directives >>
-			#@+node:1::<< set bits for @ directives >>
-			#@+body
-			# We really don't need these bits either, we could just test the dict returned by this routine.
-			# And all we really need is a list of directives!
-			
-			directiveDict = {
-				"@color"     : color_bits,
-				"@comment"   : comment_bits,
-				"@header"    : header_bits,
-				"@ignore"    : ignore_bits,
-				"@language"  : language_bits,
-				"@nocolor"   : nocolor_bits,
-				"@noheader"  : noheader_bits,
-				"@pagewidth" : page_width_bits,
-				"@path"      : path_bits,
-				"@quiet"     : quiet_bits,
-				"@root"      : root_bits,
-				"@silent"    : silent_bits,
-				"@tabwidth"  : tab_width_bits,
-				"@terse"     : terse_bits,
-				"@unit"      : unit_bits,
-				"@verbose"   : verbose_bits }
-				
-			if 1: # new code
-				j = skip_c_id(s,i+1)
-				word = s[i:j]
-				try:
-					bits |= directiveDict[word]
-					dict[word[1:]]=i
-					print `word`
-				except: pass
-			else:
-				# This is brain-dead.  A dictionary is faster and clearer.
-				ch = s[i+1]
-				if ch == 'c':
-					if   match_word(s,i,"@color"): bits |= color_bits
-					elif match_word(s,i,"@comment"):
-						bits |= comment_bits ; dict["comment"] = i
-				elif ch == 'h':
-					if match_word(s,i,"@header"): bits |= header_bits
-				elif ch == 'i':
-					if match_word(s,i,"@ignore"): bits |= ignore_bits
-				elif ch == 'l':
-					if match_word(s,i,"@language"):
-						# trace(`s[i:]`)
-						bits |= language_bits ; dict ["language"] = i
-				elif ch == 'n':
-					if   match_word(s,i,"@nocolor"):  bits |= nocolor_bits
-					elif match_word(s,i,"@noheader"): bits |= noheader_bits
-				elif ch == 'p':
-					if   match_word(s,i,"@pagewidth"):
-						bits |= page_width_bits ; dict["page_width"] = i
-					elif match_word(s,i,"@path"):
-						bits |= path_bits ; dict["path"] = i
-				elif ch == 'q': # 10/9/02
-					if match_word(s,i,"@quiet"):
-						bits |= quiet_bits ; dict["quiet"] = i
-				elif ch == 'r':
-					if match_word(s,i,"@root"): bits |= root_bits # skip_body finds the root.
-				elif ch == 's':
-					if match_word(s,i,"@silent"): bits |= silent_bits
-				elif ch == 't':
-					if   match_word(s,i,"@tabwidth"):
-						bits |= tab_width_bits ; dict["tab_width"] = i
-					elif match_word(s,i,"@terse"):
-						bits |= terse_bits
-				elif ch == 'u':
-					if match_word(s,i,"@unit"): bits |= unit_bits
-				elif ch == 'v':
-					if match_word(s,i,"@verbose"): bits |= verbose_bits
-			#@-body
-			#@-node:1::<< set bits for @ directives >>
-
-		elif root and match(s,i,"<<"):
-			
-			#@<< set root bits for noweb * chunks >>
-			#@+node:2::<< set root bits for noweb * chunks >>
-			#@+body
-			#@+at
-			#  The following looks for chunk definitions of the form < < * > > 
-			# =. If found, we take this to be equivalent to @root filename if 
-			# the headline has the form @root filename.
-
-			#@-at
-			#@@c
-
-			i = skip_ws(s,i+2)
-			if i < n and s[i] == '*' :
-				i = skip_ws(s,i+1) # Skip the '*'
-				if match(s,i,">>="):
-					# < < * > > = implies that @root should appear in the headline.
-					i += 3
-					if root_node:
-						bits |= root_bits
-					else:
-						es("<<" +
-							"*>>= requires @root in the headline")
-			#@-body
-			#@-node:2::<< set root bits for noweb * chunks >>
-
-		i = skip_line(s,i)
-	return bits, dict
-#@-body
-#@-node:7::is_special_bits
-#@+node:8::is_ws & is_ws_or_nl
+#@+node:7::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
 
@@ -1306,8 +1249,8 @@ def is_ws_or_nl(s,i):
 
 	return is_nl(s,i) or (i < len(s) and is_ws(s[i]))
 #@-body
-#@-node:8::is_ws & is_ws_or_nl
-#@+node:9::match
+#@-node:7::is_ws & is_ws_or_nl
+#@+node:8::match
 #@+body
 # Warning: this code makes no assumptions about what follows pattern.
 
@@ -1315,23 +1258,23 @@ def match(s,i,pattern):
 
 	return s and pattern and string.find(s,pattern,i,i+len(pattern)) == i
 #@-body
-#@-node:9::match
-#@+node:10::match_c_word
+#@-node:8::match
+#@+node:9::match_c_word
 #@+body
 def match_c_word (s,i,name):
 
 	n = len(name)
 	return name == s[i:i+n] and (i+n == len(s) or not is_c_id(s[i+n]))
 #@-body
-#@-node:10::match_c_word
-#@+node:11::match_ignoring_case
+#@-node:9::match_c_word
+#@+node:10::match_ignoring_case
 #@+body
 def match_ignoring_case(s1,s2):
 
 	return string.lower(s1) == string.lower(s2)
 #@-body
-#@-node:11::match_ignoring_case
-#@+node:12::match_word
+#@-node:10::match_ignoring_case
+#@+node:11::match_word
 #@+body
 def match_word(s,i,pattern):
 
@@ -1343,8 +1286,8 @@ def match_word(s,i,pattern):
 	c = s[i+j]
 	return not (c in string.letters or c in string.digits or c == '_')
 #@-body
-#@-node:12::match_word
-#@+node:13::skip_blank_lines
+#@-node:11::match_word
+#@+node:12::skip_blank_lines
 #@+body
 def skip_blank_lines(s,i):
 
@@ -1359,8 +1302,8 @@ def skip_blank_lines(s,i):
 		else: break
 	return i
 #@-body
-#@-node:13::skip_blank_lines
-#@+node:14::skip_c_id
+#@-node:12::skip_blank_lines
+#@+node:13::skip_c_id
 #@+body
 def skip_c_id(s,i):
 
@@ -1372,8 +1315,8 @@ def skip_c_id(s,i):
 		else: break
 	return i
 #@-body
-#@-node:14::skip_c_id
-#@+node:15::skip_line, skip_to_end_of_line
+#@-node:13::skip_c_id
+#@+node:14::skip_line, skip_to_end_of_line
 #@+body
 #@+at
 #  These methods skip to the next newline, regardless of whether the newline 
@@ -1395,8 +1338,8 @@ def skip_to_end_of_line (s,i):
 	if i == -1: return len(s)
 	else: return i
 #@-body
-#@-node:15::skip_line, skip_to_end_of_line
-#@+node:16::skip_long
+#@-node:14::skip_line, skip_to_end_of_line
+#@+node:15::skip_long
 #@+body
 # returns (i, val) or (i, None) if s[i] does not point at a number.
 
@@ -1417,8 +1360,8 @@ def skip_long(s,i):
 	val = int(s[j:i])
 	return i, val
 #@-body
-#@-node:16::skip_long
-#@+node:17::skip_matching_delims
+#@-node:15::skip_long
+#@+node:16::skip_matching_delims
 #@+body
 def skip_matching_delims(s,i,delim1,delim2):
 	
@@ -1431,8 +1374,8 @@ def skip_matching_delims(s,i,delim1,delim2):
 	else:
 		return k + len(delim2)
 #@-body
-#@-node:17::skip_matching_delims
-#@+node:18::skip_nl
+#@-node:16::skip_matching_delims
+#@+node:17::skip_nl
 #@+body
 #@+at
 #  This function skips a single "logical" end-of-line character.  We need this 
@@ -1447,8 +1390,8 @@ def skip_nl (s,i):
 	elif match(s,i,'\n') or match(s,i,'\r'): return i + 1
 	else: return i
 #@-body
-#@-node:18::skip_nl
-#@+node:19::skip_pascal_braces
+#@-node:17::skip_nl
+#@+node:18::skip_pascal_braces
 #@+body
 # Skips from the opening { to the matching }.
 
@@ -1459,8 +1402,8 @@ def skip_pascal_braces(s,i):
 	if i == -1: return len(s)
 	else: return k
 #@-body
-#@-node:19::skip_pascal_braces
-#@+node:20::skip_ws, skip_ws_and_nl
+#@-node:18::skip_pascal_braces
+#@+node:19::skip_ws, skip_ws_and_nl
 #@+body
 def skip_ws(s,i):
 
@@ -1476,9 +1419,9 @@ def skip_ws_and_nl(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:20::skip_ws, skip_ws_and_nl
-#@-node:15::Scanners: no error messages
-#@+node:16::shortFileName
+#@-node:19::skip_ws, skip_ws_and_nl
+#@-node:16::Scanners: no error messages
+#@+node:17::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1487,8 +1430,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:16::shortFileName
-#@+node:17::sortSequence
+#@-node:17::shortFileName
+#@+node:18::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1527,8 +1470,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:17::sortSequence
-#@+node:18::Timing
+#@-node:18::sortSequence
+#@+node:19::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1543,8 +1486,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:18::Timing
-#@+node:19::Tk.Text selection (utils)
+#@-node:19::Timing
+#@+node:20::Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1593,8 +1536,8 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:3::setTextSelection
-#@-node:19::Tk.Text selection (utils)
-#@+node:20::Unicode...
+#@-node:20::Tk.Text selection (utils)
+#@+node:21::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -1675,8 +1618,8 @@ def returnNonEncodingChar(c,xml_encoding):
 			return c
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:20::Unicode...
-#@+node:21::update_file_if_changed
+#@-node:21::Unicode...
+#@+node:22::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1722,8 +1665,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:21::update_file_if_changed
-#@+node:22::utils_rename
+#@-node:22::update_file_if_changed
+#@+node:23::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1742,8 +1685,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:22::utils_rename
-#@+node:23::version checking (Dave Hein)
+#@-node:23::utils_rename
+#@+node:24::version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1858,8 +1801,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:23::version checking (Dave Hein)
-#@+node:24::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:24::version checking (Dave Hein)
+#@+node:25::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1879,7 +1822,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:24::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:25::readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

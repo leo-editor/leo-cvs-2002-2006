@@ -382,13 +382,9 @@ class atFile:
 	#@-at
 	#@@c
 
-	def btest(self, b1, b2):
-		return (b1 & b2) != 0
-	
 	def scanAllDirectives(self,v):
 	
 		c = self.commands ; config = app().config
-		bits = 0 ; old_bits = 0 ; val = 0
 		
 		#@<< Set ivars >>
 		#@+node:1::<< Set ivars >>
@@ -429,18 +425,19 @@ class atFile:
 		#@-body
 		#@-node:2::<< Set path from @file node >>
 
+		old = {}
 		while v:
 			s = v.t.bodyString
-			bits, dict = is_special_bits(s)
+			dict = get_directives_dict(s)
 			
 			#@<< Test for @path >>
-			#@+node:4::<< Test for @path >>
+			#@+node:5::<< Test for @path >>
 			#@+body
 			# We set the current director to a path so future writes will go to that directory.
 			
 			loadDir = app().loadDir
 			
-			if self.btest(path_bits, bits) and not self.default_directory and not self.btest(path_bits, old_bits):
+			if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
 				
@@ -493,38 +490,49 @@ class atFile:
 				else:
 					self.error("ignoring empty @path")
 			#@-body
-			#@-node:4::<< Test for @path >>
+			#@-node:5::<< Test for @path >>
 
 			
-			#@<< Test for @comment or @language >>
-			#@+node:3::<< Test for @comment or @language >>
+			#@<< Test for @comment and @language >>
+			#@+node:3::<< Test for @comment and @language >>
 			#@+body
-			if self.btest(comment_bits, old_bits) or self.btest(language_bits, old_bits):
+			if old.has_key("comment") or old.has_key("language"):
 				pass # Do nothing more.
 			
-			elif self.btest(comment_bits, bits):
-				k = dict["comment"] # 7/8/02, not "language!"
+			elif dict.has_key("comment"):
+				k = dict["comment"]
 				d1, d2, d3 = set_delims_from_string(s[k:])
 				if delim1:
 					# @comment effectively disables Untangle.
 					delim1, delim2, delim3 = d1, d2, d3
-				
-			elif self.btest(language_bits, bits):
+			
+			elif dict.has_key("language"):
 				k = dict["language"]
 				issue_error_flag = false
 				language, d1, d2, d3 = set_language(s,k,issue_error_flag)
-				# print `delim1`,`delim2`,`delim3`
 				if delim1:
 					delim1, delim2, delim3 = d1, d2, d3
+			
 			#@-body
-			#@-node:3::<< Test for @comment or @language >>
+			#@-node:3::<< Test for @comment and @language >>
 
 			
-			#@<< Test for @pagewidth and @tabwidth >>
-			#@+node:5::<< Test for @pagewidth and @tabwidth >>
+			#@<< Test for @header and @noheader >>
+			#@+node:4::<< Test for @header and @noheader >>
 			#@+body
-			if self.btest(page_width_bits, bits) and not self.btest(page_width_bits, old_bits):
-				k = dict["page_width"]
+			# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+			if dict.has_key("header") and dict.has_key("noheader"):
+				es("conflicting @header and @noheader directives")
+			#@-body
+			#@-node:4::<< Test for @header and @noheader >>
+
+			
+			#@<< Test for @pagewidth >>
+			#@+node:6::<< Test for @pagewidth >>
+			#@+body
+			if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+			
+				k = dict["pagewidth"]
 				j = i = k + len("@pagewidth")
 				i, val = skip_long(s,i)
 				if val != None and val > 0:
@@ -532,9 +540,16 @@ class atFile:
 				else:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
+			#@-body
+			#@-node:6::<< Test for @pagewidth >>
+
 			
-			if self.btest(tab_width_bits, bits) and not self.btest(tab_width_bits, old_bits):
-				k = dict["tab_width"]
+			#@<< Test for @tabwidth >>
+			#@+node:7::<< Test for @tabwidth >>
+			#@+body
+			if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+			
+				k = dict["tabwidth"]
 				j = i = k + len("@tabwidth")
 				i, val = skip_long(s, i)
 				if val != None and val != 0:
@@ -542,14 +557,15 @@ class atFile:
 				else:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
+			
 			#@-body
-			#@-node:5::<< Test for @pagewidth and @tabwidth >>
+			#@-node:7::<< Test for @tabwidth >>
 
-			old_bits |= bits
+			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set current directory >>
-		#@+node:6::<< Set current directory >>
+		#@+node:8::<< Set current directory >>
 		#@+body
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
@@ -576,11 +592,11 @@ class atFile:
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
 		#@-body
-		#@-node:6::<< Set current directory >>
+		#@-node:8::<< Set current directory >>
 
 		
 		#@<< Set comment Strings from delims >>
-		#@+node:7::<< Set comment Strings from delims >>
+		#@+node:9::<< Set comment Strings from delims >>
 		#@+body
 		# Use single-line comments if we have a choice.
 		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
@@ -595,7 +611,7 @@ class atFile:
 			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
 		#@-body
-		#@-node:7::<< Set comment Strings from delims >>
+		#@-node:9::<< Set comment Strings from delims >>
 	#@-body
 	#@-node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+node:2::directiveKind

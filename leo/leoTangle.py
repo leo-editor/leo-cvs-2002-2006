@@ -338,7 +338,7 @@ class root_attributes:
 				", start_comment_string: " + tangle_state.start_comment_string +
 				", end_comment_string: " + tangle_state.end_comment_string +
 				", use_header_flag: " + choose(tangle_state.use_header_flag, "true", "false") +
-				", print_bits: " + represent_print_bits(tangle_state.print_bits) +
+				", print_mode: " + tangle_state.print_mode +
 				", path: " + choose(tangle_state.path, tangle_state.path, "") +
 				", page_width: " + tangle_state.page_width +
 				", tab_width: " + tangle_state.tab_width +
@@ -349,7 +349,7 @@ class root_attributes:
 		self.start_comment_string = tangle_state.start_comment_string
 		self.end_comment_string = tangle_state.end_comment_string
 		self.use_header_flag = tangle_state.use_header_flag
-		self.print_bits = tangle_state.print_bits
+		self.print_mode = tangle_state.print_mode
 		
 		# of all the state variables, this one isn't set in tangleCommands.__init__
 		# peculiar
@@ -372,7 +372,7 @@ class root_attributes:
 			", start_comment_string: " +	self.start_comment_string +
 			", end_comment_string: " +	self.end_comment_string +
 			", use_header_flag: " + choose(self.use_header_flag, "true", "false") +
-			", print_bits: " + represent_print_bits(self.print_bits) +
+			", print_mode: " + self.print_mode +
 			", path: " + self.path +
 			", page_width: " + self.page_width +
 			", tab_width: " + self.tab_width +
@@ -381,15 +381,6 @@ class root_attributes:
 	
 	#@-body
 	#@-node:2::root_attributes.__repr__
-	#@+node:3::root_attributes.represent_print_bits
-	#@+body
-	def represent_print_bits(print_bits):
-		return choose(print_bits == verbose_bits, "verbose_bits",
-	        choose(print_bits == terse_bits, "terse_bits",
-	            choose(print_bits == silent_bits, "silent_bits", "?INVALID?")))
-	
-	#@-body
-	#@-node:3::root_attributes.represent_print_bits
 	#@-others
 #@-body
 #@-node:5::class root_attributes (Stephen P. Schaefer)
@@ -546,7 +537,7 @@ class tangleCommands:
 		self.use_noweb_flag = not self.use_cweb_flag
 		
 		# Set only from directives.
-		self.print_bits = verbose_bits
+		self.print_mode = "verbose"
 		
 		# Stephen P. Schaefer 9/13/2002
 		# support @first directive
@@ -705,8 +696,8 @@ class tangleCommands:
 		while v and v != next:
 			self.v = v
 			self.setRootFromHeadline(v)
-			bits, dict = is_special_bits(v.bodyString(),[self.head_root])
-			is_ignore = (bits & ignore_bits)!= 0
+			dict = get_directives_dict(v.bodyString(),[self.head_root])
+			is_ignore = dict.has_key("ignore")
 			if is_ignore:
 				v = v.nodeAfterTree()
 				continue
@@ -763,10 +754,10 @@ class tangleCommands:
 	
 		while v and v != next:
 			self.setRootFromHeadline(v)
-			bits, dict = is_special_bits(v.bodyString(),[self.head_root])
-			is_ignore = (bits & ignore_bits) != 0
-			is_root = (bits & root_bits) != 0
-			is_unit = (bits & unit_bits) != 0
+			dict = get_directives_dict(v.bodyString(),[self.head_root])
+			is_ignore = dict.has_key("ignore")
+			is_root = dict.has_key("root")
+			is_unit = dict.has_key("unit")
 			if is_ignore:
 				v = v.nodeAfterTree()
 			elif not is_root and not is_unit:
@@ -895,9 +886,10 @@ class tangleCommands:
 			es("**Unknown language for " + path)
 			return
 		
-		if self.print_bits == silent_bits:
-			es("@silent inhibits untangle for " + path)
+		if self.print_mode in ("quiet","silent"):
+			es("@" + self.print_mode +  " inhibits untangle for " + path)
 			return
+		
 		#@-body
 		#@-node:1::<< return if @silent or unknown language >>
 
@@ -969,10 +961,10 @@ class tangleCommands:
 	
 		while v and v != afterEntireTree and self.errors == 0:
 			self.setRootFromHeadline(v)
-			bits, dict = is_special_bits(v.bodyString(),[self.head_root])
-			ignore =(bits & ignore_bits)!= 0
-			root =(bits & root_bits)!= 0
-			unit =(bits & unit_bits)!= 0
+			dict = get_directives_dict(v.bodyString(),[self.head_root])
+			ignore = dict.has_key("ignore")
+			root = dict.has_key("root")
+			unit = dict.has_key("unit")
 			if ignore:
 				v = v.nodeAfterTree()
 			elif unit:
@@ -982,8 +974,8 @@ class tangleCommands:
 				v = v.threadNext()
 				while v and v != afterUnit and self.errors == 0:
 					self.setRootFromHeadline(v)
-					bits, dict = is_special_bits(v.bodyString(),[self.head_root])
-					root =(bits & root_bits)!= 0
+					dict = get_directives_dict(v.bodyString(),[self.head_root])
+					root = dict.has_key("root")
 					if root:
 						any_root_flag = true
 						end = None
@@ -1483,7 +1475,7 @@ class tangleCommands:
 			self.start_comment_string = section.root_attributes.start_comment_string
 			self.end_comment_string = section.root_attributes.end_comment_string
 			self.use_header_flag = section.root_attributes.use_header_flag
-			self.print_bits = section.root_attributes.print_bits
+			self.print_mode = section.root_attributes.print_mode
 			self.path = section.root_attributes.path
 			self.page_width = section.root_attributes.page_width
 			self.tab_width = section.root_attributes.tab_width
@@ -1502,7 +1494,7 @@ class tangleCommands:
 			#@-body
 			#@-node:2::<<Put @first lines>>
 
-			if self.use_header_flag and self.print_bits == verbose_bits:
+			if self.use_header_flag and self.print_mode == "verbose":
 				
 				#@<< Write a banner at the start of the output file >>
 				#@+node:3::<<Write a banner at the start of the output file>>
@@ -1667,7 +1659,7 @@ class tangleCommands:
 			width = max(0,self.tangle_indent) + 20
 		# Skip Initial white space in the doc part.
 		i = skip_ws_and_nl(s,0)
-		if i < len(s) and self.print_bits == verbose_bits:
+		if i < len(s) and self.print_mode == "verbose":
 			use_block_comment = self.start_comment_string and self.end_comment_string
 			use_single_comment = not use_block_comment and self.single_comment_string
 			# javadoc_comment = use_block_comment and self.start_comment_string == "/**"
@@ -1866,7 +1858,7 @@ class tangleCommands:
 			else: name = "<NULL part>"
 			trace(`name`)
 	
-		if part.doc and self.output_doc_flag and self.print_bits != silent_bits and part.doc:
+		if part.doc and self.output_doc_flag and self.print_mode != "silent" and part.doc:
 			self.put_doc(part.doc)
 	
 		if part.code:
@@ -1911,16 +1903,16 @@ class tangleCommands:
 		# trace("leading ws:" + `width` + " + new indent:" + `self.tangle_indent`)
 		
 		# 4/27/01: Force no trailing whitespace in @silent mode.
-		if self.print_bits == silent_bits:
+		if self.print_mode == "silent":
 			trailing_ws_indent = 0
 		else:
 			trailing_ws_indent = self.tangle_indent
 		
 		# Increase the indentation if the section reference does not immediately follow
 		# the leading white space.  4/3/01: Make no adjustment in @silent mode.
-		if (j < len(s) and self.print_bits != silent_bits and
-			((self.use_noweb_flag and s[j] != '<') or
-			(self.use_cweb_flag and s[j] != '@'))):
+		if (j < len(s) and self.print_mode != "silent" and
+				((self.use_noweb_flag and s[j] != '<') or
+				(self.use_cweb_flag and s[j] != '@'))):
 			self.tangle_indent += abs(self.tab_width)
 		#@-body
 		#@-node:1::<< Calculate the new value of tangle_indent >>
@@ -1929,7 +1921,7 @@ class tangleCommands:
 		#@<< Set 'newline_flag' if the line ends with the reference >>
 		#@+node:2::<< Set 'newline_flag' if the line ends with the reference >>
 		#@+body
-		if self.print_bits != silent_bits:
+		if self.print_mode != "silent":
 			i = name_end
 			i = skip_ws(s,i)
 			newline_flag = (i >= len(s) or is_nl(s,i))
@@ -1961,10 +1953,10 @@ class tangleCommands:
 					# In @silent mode, there is no sentinel line to "use up" the previously output
 					# leading whitespace.  We set the flag to tell put_part_node and put_code
 					# not to call put_newline at the start of the first code part of the definition.
-					no_first_leading_ws_flag = (count == 1 and self.print_bits == silent_bits)
+					no_first_leading_ws_flag = (count == 1 and self.print_mode == "silent")
 					inner_old_indent = self.tangle_indent
 					# 4/3/01: @silent inhibits newlines after section expansion.
-					if self.print_bits != silent_bits:
+					if self.print_mode != "silent":
 						
 						#@<< Put the section name in a comment >>
 						#@+node:1::<< Put the section name in a comment >>
@@ -2010,7 +2002,7 @@ class tangleCommands:
 
 					self.put_part_node(part,no_first_leading_ws_flag)
 					# 4/3/01: @silent inhibits newlines after section expansion.
-					if count == sections and self.print_bits != silent_bits:
+					if count == sections and self.print_mode != "silent":
 						
 						#@<< Put the ending comment >>
 						#@+node:2::<< Put the ending comment >>
@@ -2072,7 +2064,7 @@ class tangleCommands:
 			#@+body
 			self.onl() ; self.put_leading_ws(self.tangle_indent)
 			
-			if self.print_bits != silent_bits:
+			if self.print_mode != "silent":
 				if self.single_comment_string:
 					self.os(self.single_comment_string)
 					self.os(" undefined section: ") ; self.os(name) ; self.onl()
@@ -2202,7 +2194,7 @@ class tangleCommands:
 		if doc:
 			doc = string.rstrip(doc) # remove trailing lines.
 		if code:
-			if self.print_bits != silent_bits: # @silent supresses newline processing.
+			if self.print_mode != "silent": # @silent supresses newline processing.
 				i = skip_blank_lines(code,0) # remove leading lines.
 				if i > 0: code = code[i:] 
 				if code and len(code) > 0: code = string.rstrip(code) # remove trailing lines.
@@ -3799,19 +3791,21 @@ class tangleCommands:
 	
 		c = self.commands ; config = app().config
 		# trace(`v`)
-		old_bits = 0 # One bit for each directive.
+		old = {} ; print_mode_changed = false
 		self.init_directive_ivars()
-		# Stephen P. Schaefer 9/13/2002
-		# Add support for @first
-		# Unlike other root attributes, does *NOT* inherit
-		# from parent nodes
 		if v:
 			s = v.bodyString()
 			
 			#@<< Collect @first attributes >>
 			#@+node:1::<< Collect @first attributes >>
 			#@+body
-			# Stephen P. Schaefer 9/13/2002
+			#@+at
+			#  Stephen P. Schaefer 9/13/2002: Add support for @first.
+			# Unlike other root attributes, does *NOT* inherit from parent nodes.
+
+			#@-at
+			#@@c
+
 			tag = "@first"
 			i = 0
 			while 1:
@@ -3832,18 +3826,18 @@ class tangleCommands:
 
 		while v:
 			s = v.bodyString()
-			bits, dict = is_special_bits(s)
-			# trace("bits:" + `bits` + ", dict:" + `dict`, ", " + `v`)
+			dict = get_directives_dict(s)
+			# trace("dict:" + `dict`, ", " + `v`)
 			
-			#@<< Test for @comment or @language >>
-			#@+node:2::<< Test for @comment or @language >>
+			#@<< Test for @comment and @language >>
+			#@+node:2::<< Test for @comment and @language >>
 			#@+body
-			if btest(old_bits,comment_bits)or btest(old_bits,language_bits):
+			if old.has_key("comment") or old.has_key("language"):
 				 pass # Do nothing more.
-				 
-			elif btest(bits,comment_bits):
+			
+			elif dict.has_key("comment"):
+			
 				i = dict["comment"]
-				# self.set_root_delims(s[i:])
 				(delim1,delim2,delim3) = set_delims_from_string(s[i:])
 				if delim1 or delim2:
 					self.single_comment_string = delim1
@@ -3855,25 +3849,25 @@ class tangleCommands:
 					if issue_error_flag:
 						es("ignoring: " + s[i:])
 			
-			elif btest(bits,language_bits):
+			elif dict.has_key("language"):
+			
 				issue_error_flag = false
 				i = dict["language"]
 				language,delim1,delim2,delim3 = set_language(s,i,issue_error_flag)
 				self.language = language
-				# 8/1/02: Now works as expected.
 				self.single_comment_string = delim1
 				self.start_comment_string = delim2
 				self.end_comment_string = delim3
 				if 0:
 					trace(`self.single_comment_string` + "," +
-					`self.start_comment_string` + "," +
-					`self.end_comment_string`)
+						`self.start_comment_string` + "," +
+						`self.end_comment_string`)
 			#@-body
-			#@-node:2::<< Test for @comment or @language >>
+			#@-node:2::<< Test for @comment and @language >>
 
 			
-			#@<< Test for @verbose,@terse or @silent >>
-			#@+node:3::<< Test for @verbose, @terse or @silent >>
+			#@<< Test for print modes directives >>
+			#@+node:3::<< Test for print modes directives >>
 			#@+body
 			#@+at
 			#  It is valid to have more than one of these directives in the 
@@ -3882,23 +3876,21 @@ class tangleCommands:
 			#@-at
 			#@@c
 
-			if btest(old_bits,verbose_bits)or btest(old_bits,terse_bits)or btest(old_bits,silent_bits):
-				pass # Do nothing more.
-			elif btest(bits,verbose_bits):
-				self.print_bits = verbose_bits
-			elif btest(bits,terse_bits):
-				self.print_bits = terse_bits
-			elif btest(bits,silent_bits):
-				self.print_bits = silent_bits
+			if not print_mode_changed:
+				for name in ("verbose","terse","quiet","silent"):
+					if dict.has_key(name):
+						self.print_mode = name
+						print_mode_changed = true
+						break
 			
 			#@-body
-			#@-node:3::<< Test for @verbose, @terse or @silent >>
+			#@-node:3::<< Test for print modes directives >>
 
 			
 			#@<< Test for @path >>
 			#@+node:4::<< Test for @path >>
 			#@+body
-			if require_path_flag and btest(bits,path_bits)and not btest(old_bits,path_bits):
+			if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 			
 				k = dict["path"]
 				
@@ -3961,11 +3953,12 @@ class tangleCommands:
 			#@-node:4::<< Test for @path >>
 
 			
-			#@<< Test for @pagewidth and @tabwidth >>
-			#@+node:5::<< Test for @pagewidth and @tabwidth >>
+			#@<< Test for @pagewidth >>
+			#@+node:5::<< Test for @pagewidth >>
 			#@+body
-			if btest(bits,page_width_bits) and not btest(old_bits,page_width_bits):
-				i = dict["page_width"] # 7/18/02 (!)
+			if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
+			
+				i = dict["pagewidth"]
 				i, val = skip_long(s,i+10) # Point past @pagewidth
 				if val != None and val > 0:
 					self.page_width = val
@@ -3974,8 +3967,16 @@ class tangleCommands:
 						j = skip_to_end_of_line(s,i)
 						es("ignoring " + s[i:j])
 			
-			if btest(bits,tab_width_bits)and not btest(old_bits,tab_width_bits):
-				i = dict["tab_width"] # 7/18/02 (!)
+			#@-body
+			#@-node:5::<< Test for @pagewidth >>
+
+			
+			#@<< Test for @tabwidth >>
+			#@+node:6::<< Test for @tabwidth >>
+			#@+body
+			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
+			
+				i = dict["tabwidth"] # 7/18/02 (!)
 				i, val = skip_long(s,i+9) # Point past @tabwidth.
 				if val != None and val != 0:
 					self.tab_width = val
@@ -3985,30 +3986,33 @@ class tangleCommands:
 						es("ignoring " + s[i:j])
 			
 			#@-body
-			#@-node:5::<< Test for @pagewidth and @tabwidth >>
+			#@-node:6::<< Test for @tabwidth >>
 
 			
-			#@<< Test for @header or @noheader >>
-			#@+node:6::<< Test for @header or @noheader >>
+			#@<< Test for @header and @noheader >>
+			#@+node:7::<< Test for @header and @noheader >>
 			#@+body
-			if btest(old_bits,header_bits)or btest(old_bits,noheader_bits):
+			if old.has_key("header") or old.has_key("noheader"):
 				pass # Do nothing more.
-			elif btest(bits,header_bits)and btest(bits,noheader_bits):
+				
+			elif dict.has_key("header") and dict.has_key("noheader"):
 				if issue_error_flag:
 					es("conflicting @header and @noheader directives")
-			elif btest(bits,header_bits):
+			
+			elif dict.has_key("header"):
 				self.use_header_flag = true
-			elif btest(bits,noheader_bits):
+			
+			elif dict.has_key("noheader"):
 				self.use_header_flag = false
 			
 			#@-body
-			#@-node:6::<< Test for @header or @noheader >>
+			#@-node:7::<< Test for @header and @noheader >>
 
-			old_bits |= bits
+			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set self.tangle_directory >>
-		#@+node:7::<< Set self.tangle_directory >>
+		#@+node:8::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
 		#  This code sets self.tangle_directory if it has not already been set 
@@ -4062,7 +4066,7 @@ class tangleCommands:
 		if not self.tangle_directory and issue_error_flag:
 			self.pathError("No directory specified by @root, @path or Preferences.")
 		#@-body
-		#@-node:7::<< Set self.tangle_directory >>
+		#@-node:8::<< Set self.tangle_directory >>
 	#@-body
 	#@-node:17::tangle.scanAllDirectives
 	#@+node:18::token_type

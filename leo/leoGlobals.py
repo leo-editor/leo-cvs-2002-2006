@@ -50,27 +50,6 @@ shell_language =	16  # shell scripts
 tcltk_language =	17
 unknown_language =	18  # Set when @comment is seen.
 php_language = 19 # 08-SEP-2002 DTHEIN
-
-# Synonyms for the bits returned by is_special_bits...
-color_bits =    0x00001
-comment_bits =	 0x00002
-cweb_bits =     0x00004
-header_bits =   0x00008
-ignore_bits =   0x00010
-language_bits = 0x00020
-nocolor_bits =	 0x00040
-noheader_bits = 0x00080
-noweb_bits =    0x00100
-page_width_bits=0x00200
-path_bits =	    0x00400
-quiet_bits =    0x00800 # 10/9/02
-root_bits =	    0x01000 # Also represents < < * > > =
-silent_bits =	  0x02000
-tab_width_bits =0x04000
-terse_bits = 	  0x08000
-unit_bits = 	   0x10000
-verbose_bits =	 0x20000
-
 #@-body
 #@-node:1::<< define global constants >>
 
