@@ -4,14 +4,13 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 Release Candidate 3              December 19, 2003
+Leo 4.1 Release Candidate 4              February 3, 2004
 
-This release fixes a serious bug in the logic that reads old-style derived files.
+This release fixes numerous bugs reported since 4.1 rc3 and makes several other
+minor improvements, including several nifty new plugins.
 
-There are no known bugs in this version of Leo.
+The highlights of Leo 4.1:
 
-The highlights of 4.1:
-----------------------
 - Leo runs in batch mode when invoked with --script aScriptFile.py
 - Leo supports Unicode characters (e.g. Chinese) in path and file names.
 - @directives and section references are now valid when executing scripts.
@@ -22,4 +21,5 @@ The highlights of 4.1:
 - A new gui-agnostic architecture: useful for batch mode and unit tests.
 - Several new configuration settings.
 - Many new unit tests.
+- Excellent new plugins.
 - A host of bug fixes.

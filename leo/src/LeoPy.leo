@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4109" clone_windows="0"/>
-<globals body_outline_ratio="0.35010940919037198">
-	<global_window_position top="10" left="265" height="914" width="919"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4164" clone_windows="0"/>
+<globals body_outline_ratio="0.49671772428884026">
+	<global_window_position top="10" left="340" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1308,6 +1308,22 @@
 <v t="ekr.20031218072017.857"><vh>Study SPE editor</vh></v>
 <v t="ekr.20031218072017.859"><vh>Should mouse up cancel a drag?</vh></v>
 <v t="ekr.20040115163454"><vh>@killcolor directive</vh></v>
+</v>
+</v>
+<v t="ekr.20040130171643" a="TV"><vh> To do: 4.1 rc5</vh>
+<v t="ekr.20040118101339.1"><vh>Plugins to add</vh>
+<v t="ekr.20040130185920.1"><vh>Add incremental search to search plugin</vh></v>
+<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
+</v>
+<v t="ekr.20040129080202"><vh>Mac/Linux  bugs</vh>
+<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
+<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
+<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
+<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
+<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
+</v>
+<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.863"><vh>(Project Views)</vh>
@@ -4132,48 +4148,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
-<v t="ekr.20040105210752"><vh>(Keystrokes)</vh>
-<v t="ekr.20040105214540"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
-<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
-<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
-<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
-<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
-</v>
-<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
-<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
-<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
-<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
-<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
-<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1007"><vh>&lt;&lt; define the headline click callbacks &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.2164"><vh>(Adding batch-script logic to startup code)</vh>
-<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
-<v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
-<v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
-<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
-<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20040107064101"><vh>rc4 projects</vh>
 <v t="ekr.20040130185920"><vh>Before 1/29</vh>
 <v t="ekr.20040106121339.1"><vh>(Added message when plugins are disabled)</vh>
@@ -4606,21 +4580,46 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040130171643"><vh> To do: 4.1 rc5</vh>
-<v t="ekr.20040118101339.1"><vh>Plugins to add</vh>
-<v t="ekr.20040130185920.1"><vh>Add incremental search to search plugin</vh></v>
-<v t="ekr.20040115162445"><vh>Create plugin to insert status bar</vh></v>
-<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
 </v>
-<v t="ekr.20040129080202"><vh>Mac/Linux  bugs 5</vh>
-<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
-<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
-<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
-<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
+<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
+<v t="ekr.20040105210752"><vh>(Keystrokes)</vh>
+<v t="ekr.20040105214540"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3960"><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
+<v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
+<v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
+<v t="ekr.20031218072017.1733"><vh>updateStatusRowCol</vh></v>
 </v>
-<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
+<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
+<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
+<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.838"><vh>tkBody.createBindings</vh></v>
+<v t="ekr.20031218072017.1723"><vh>createMenuEntries</vh>
+<v t="ekr.20031218072017.1724"><vh>&lt;&lt; set name to the label for doCommand &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1725"><vh>&lt;&lt; set accel to the shortcut for name &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1726"><vh>&lt;&lt; set bind_shortcut and menu_shortcut using accel &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1727"><vh>&lt;&lt; define callback function &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1728"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1729"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
+<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1007"><vh>&lt;&lt; define the headline click callbacks &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2164"><vh>(Adding batch-script logic to startup code)</vh>
+<v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
+<v t="ekr.20031218072017.1935"><vh>&lt;&lt; print encoding info &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+<v t="ekr.20031218072017.1937"><vh>computeLoadDir</vh></v>
+<v t="ekr.20031218072017.1624"><vh>createFrame (leo.py)</vh></v>
+<v t="ekr.20031218072017.1938"><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="ekr.20031218072017.1939"><vh>getBatchScript</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -4634,7 +4633,7 @@
 <v t="ekr.20031218072017.2414"><vh>&lt;&lt; Theory of operation of find/change &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2415"><vh>  Scripts</vh>
-<v t="ekr.20031218072017.2416" a="E"><vh>Fnd/change scripts</vh>
+<v t="ekr.20031218072017.2416"><vh>Fnd/change scripts</vh>
 <v t="ekr.20031218072017.2418"><vh>initScriptFind (use this to set up Leo's Find/Change dialog for scripting)</vh></v>
 <v t="ekr.20040201070845"><vh>Routines that execute script-find and script-change</vh>
 <v t="ekr.20031218072017.3072" a="M"><vh>doFind...Script</vh></v>
@@ -7926,9 +7925,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20031219082559" a="E"><vh>To do: 4.1 rc4</vh>
-<v t="ekr.20040105080119.2" a="TV"><vh>Document new stuff: review all 4.x changes</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -40433,7 +40429,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="ekr.20031218072017.2563">Metadata-Version: 1.0
 Name: leo
-Version: 4.1-rc3
+Version: 4.1-rc4
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -40459,14 +40455,13 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 Release Candidate 3              December 19, 2003
+Leo 4.1 Release Candidate 4              February 3, 2004
 
-This release fixes a serious bug in the logic that reads old-style derived files.
+This release fixes numerous bugs reported since 4.1 rc3 and makes several other
+minor improvements, including several nifty new plugins.
 
-There are no known bugs in this version of Leo.
+The highlights of Leo 4.1:
 
-The highlights of 4.1:
-----------------------
 - Leo runs in batch mode when invoked with --script aScriptFile.py
 - Leo supports Unicode characters (e.g. Chinese) in path and file names.
 - @directives and section references are now valid when executing scripts.
@@ -40477,6 +40472,7 @@ The highlights of 4.1:
 - A new gui-agnostic architecture: useful for batch mode and unit tests.
 - Several new configuration settings.
 - Many new unit tests.
+- Excellent new plugins.
 - A host of bug fixes.</t>
 <t tx="ekr.20031218072017.2565"># The manifest template: specifies all files to be included in the distribution.
 
@@ -40608,7 +40604,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="ekr.20031218072017.2571">name="leo",
-version="4.1-rc3",
+version="4.1-rc4",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -40927,15 +40923,14 @@ rm -fr $LEO_LIB_DIR
 rm -f  $LEO_RUN_SCRIPT_OUTPUT
 
 "</t>
-<t tx="ekr.20031218072017.2581">@ignore
-@nocolor</t>
+<t tx="ekr.20031218072017.2581">@ignore</t>
 <t tx="ekr.20031218072017.2582">def getBuildNumber(self):
 	c = self
 	return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
 
 def getSignOnLine (self):
 	c = self
-	return "Leo 4.1 rc3, build %s, December 19, 2003" % c.getBuildNumber()
+	return "Leo 4.1 rc4, build %s, February 3, 2004" % c.getBuildNumber()
 	
 def initVersion (self):
 	c = self
@@ -61487,7 +61482,6 @@ class nullObject:
 
 		trace("nullGui",attr)
 		return nullObject()</t>
-<t tx="ekr.20031219082559">@nocolor</t>
 <t tx="ekr.20031219082957">The nullGui class is not ready for prime time yet.</t>
 <t tx="ekr.20031219100030"></t>
 <t tx="ekr.20040104162835"></t>
@@ -61918,18 +61912,6 @@ panel.
 RodrigoB.
 
 </t>
-<t tx="ekr.20040105080119.2">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2356591
-By: dthein
-
-Much of the new changes documented in LeoDocs.leo:
-
-- @root-doc/code and the @file-* options are not documented.
-
-- The documentation for @language doesn't list all the builtin languages.
-
-This probably needs some serious review.</t>
 <t tx="ekr.20040105080119.4">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2342120
 By: rodrigo_b
@@ -62347,7 +62329,6 @@ This is annoying because I need to move to somewhere above the @file node to
 use write @file nodes and I'm usually working on a clone that's somewhere else
 in the outline.
 </t>
-<t tx="ekr.20040115162445"></t>
 <t tx="ekr.20040115162445.1">@nocolor
 
 
