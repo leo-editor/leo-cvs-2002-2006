@@ -3,7 +3,7 @@
 #@@language python
 
 from leoGlobals import *
-import leoFind
+
 import ConfigParser,exceptions,os,string,sys
 
 class baseConfig:
@@ -82,6 +82,8 @@ class baseConfig:
 			self.configDir = os.path.join(app.loadDir,"..","config")
 	
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
+		self.configFileName = toUnicode(self.configFileName,app.tkEncoding) # 10/20/03
+	
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
 		# These are now set in gui.getDefaultConfigFont
@@ -129,21 +131,21 @@ class baseConfig:
 		#@+node:<< initialize ivars that may be set by config options >>
 		# 10/11/02: Defaults are specified only here.
 		
-		self.config = None # The current instance of ConfigParser
 		self.at_root_bodies_start_in_doc_mode = true # For compatibility with previous versions.
-		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
-		self.output_newline = "nl"
+		self.config = None # The current instance of ConfigParser
+		self.config_encoding = "utf-8" # Encoding used for leoConfig.txt.
 		self.create_nonexistent_directories = false
 		self.default_derived_file_encoding = "utf-8"
 		self.load_derived_files_immediately = 0
 		self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
+		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
+		self.output_newline = "nl"
 		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
 		self.redirect_execute_script_output_to_log_pane = false
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
-		self.thin_at_file_trees = 0
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
 		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
@@ -173,6 +175,7 @@ class baseConfig:
 			val = None
 		elif val == None:
 			val = self.defaultsDict.get(name)
+			val = toUnicode(val,self.config_encoding) # 10/31/03
 		return val
 	
 	def getIntFromDict (self,name,dict):
@@ -498,6 +501,15 @@ class baseConfig:
 			self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
 				"at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
 				
+			encoding = self.initConfigParam(
+				"config_encoding",self.config_encoding)
+				
+			if isValidEncoding(encoding):
+				self.config_encoding = encoding
+				es("leoConfig.txt encoding: " + encoding, color="blue")
+			else:
+				es("bad config_encoding: " + encoding)
+				
 			self.create_nonexistent_directories = self.initBooleanConfigParam(
 				"create_nonexistent_directories",self.create_nonexistent_directories)
 				
@@ -546,9 +558,6 @@ class baseConfig:
 			self.stylesheet = self.initConfigParam(
 				"stylesheet",self.stylesheet)
 				
-			self.thin_at_file_trees = self.initBooleanConfigParam(
-				"thin_at_file_trees",self.thin_at_file_trees)
-				
 			encoding = self.initConfigParam(
 				"tk_encoding",self.tkEncoding)
 				
@@ -557,6 +566,12 @@ class baseConfig:
 					self.tkEncoding = encoding
 				else:
 					es("bad tk_encoding: " + encoding)
+					
+			# trace("config.self.tkEncoding",self.tkEncoding)
+			
+			app.use_gnx = self.initBooleanConfigParam(
+				"use_gnx",app.use_gnx)
+			trace("app.use_gnx",app.use_gnx)
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)
@@ -574,7 +589,9 @@ class baseConfig:
 			else: # easier to read in the config file.
 				try:
 					for i in xrange(10):
-						self.recentFiles.append(config.get(section,"file" + `i`,raw=1)) # 2/4/03
+						f = config.get(section,"file" + `i`,raw=1)
+						f = toUnicode(f,"utf-8") # 10/31/03
+						self.recentFiles.append(f)
 				except: pass
 			#@nonl
 			#@-node:<< get recent files >>
@@ -583,7 +600,9 @@ class baseConfig:
 				if dict != None:
 					try:
 						for opt in config.options(section):
-							dict[string.lower(opt)]=config.get(section,opt,raw=1) # 2/4/03
+							val = config.get(section,opt,raw=1)
+							val = toUnicode(val,self.config_encoding) # 10/31/03
+							dict[string.lower(opt)]= val
 					except: pass
 			#@		<< convert find/change options to unicode >>
 			#@+node:<< convert find/change options to unicode >>
@@ -656,6 +675,8 @@ class baseConfig:
 			section = self.recentFilesSection
 			files = self.recentFiles
 			
+			section = toEncodedString(section,"utf-8") # 10/31/03
+			
 			if config.has_section(section):
 				config.remove_section(section)
 			config.add_section(section)
@@ -664,7 +685,8 @@ class baseConfig:
 				config.set(section,"recentFiles",files)
 			else: # easier to read in the config file.
 				for i in xrange(len(files)):
-					config.set(section, "file"+`i`, files[i])
+					f = toEncodedString(files[i],self.config_encoding) # 10/31/03
+					config.set(section, "file"+`i`, f)
 			#@nonl
 			#@-node:<< write recent files section >>
 			#@nl
@@ -683,6 +705,8 @@ class baseConfig:
 	#@+node:update_section
 	def update_section (self,config,section,dict):
 		
+		section = toEncodedString(section,self.config_encoding) # 10/31/03
+	
 		if config.has_section(section):
 			config.remove_section(section)
 		config.add_section(section)
@@ -691,8 +715,10 @@ class baseConfig:
 		keys.sort() # Not effective.
 		for name in keys:
 			val = dict [name]
-			val = toEncodedString(val,"utf-8")
+			val = toEncodedString(val,self.config_encoding)
+			name = toEncodedString(name,self.config_encoding) # 10/31/03
 			config.set(section,name,val)
+	#@nonl
 	#@-node:update_section
 	#@-others
 	
