@@ -31,7 +31,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 
 import leoGlobals # Can't import * here: app() is not defined yet!
 import leoApp, leoFrame, leoUtils, Tkinter
-import os, sys
+import os, string, sys
 
 app = leoGlobals.app
 	
@@ -74,7 +74,11 @@ def init_sherlock (args):
 #@-node:4::init_sherlock
 #@+node:5::open
 #@+body
-def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
+def open(fileName=None,*args):
+	
+	if fileName == None:
+		run()
+		return
 
 	reload_all()
 
@@ -123,7 +127,35 @@ def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
 	root.mainloop()
 #@-body
 #@-node:5::open
-#@+node:6:C=2:leo.run
+#@+node:6:C=2:reload_all
+#@+body
+def reload_all ():
+
+	return ##
+
+	modules = [ "", "App", "AtFile", "Color", "Commands", "Compare",
+		"Dialog", "FileCommands", "Frame", "Find", "Globals",
+		"Import", "Nodes", "Prefs", "Tangle", "Tree", "Undo", "Utils" ]
+	
+	print "reloading all modules"
+	for m in modules:
+		exec("import leo%s" % m)
+		exec("reload(leo%s)" % m)
+		
+
+#@+at
+#  Warning: Python version 2.2 warns if import * is done outside the module level.  Alas, for reasons that are not clear to me, it 
+# appears necessary to do an import * whenever leoGlobals or leoUtils change.  The workaround is to quit Python and then reload 
+# leo.py from scratch.  Sigh.
+
+#@-at
+#@@c 
+	if 0: # invalid past 2.1: import * must be at the module level.
+		from leoGlobals import *
+		from leoUtils import *
+#@-body
+#@-node:6:C=2:reload_all
+#@+node:7:C=3:run
 #@+body
 def run(*args):
 
@@ -157,40 +189,19 @@ def run(*args):
 	init_sherlock(args)
 	root.mainloop()
 #@-body
-#@-node:6:C=2:leo.run
-#@+node:7:C=3:reload_all
-#@+body
-def reload_all ():
-
-	return ##
-
-	modules = [ "", "App", "AtFile", "Color", "Commands", "Compare",
-		"Dialog", "FileCommands", "Frame", "Find", "Globals",
-		"Import", "Nodes", "Prefs", "Tangle", "Tree", "Undo", "Utils" ]
-	
-	print "reloading all modules"
-	for m in modules:
-		exec("import leo%s" % m)
-		exec("reload(leo%s)" % m)
-		
-
-#@+at
-#  Warning: Python version 2.2 warns if import * is done outside the module level.  Alas, for reasons that are not clear to me, it 
-# appears necessary to do an import * whenever leoGlobals or leoUtils change.  The workaround is to quit Python and then reload 
-# leo.py from scratch.  Sigh.
-
-#@-at
-#@@c 
-	if 0: # invalid past 2.1: import * must be at the module level.
-		from leoGlobals import *
-		from leoUtils import *
-#@-body
-#@-node:7:C=3:reload_all
+#@-node:7:C=3:run
 #@-others
 
 
 if __name__ == "__main__":
-	run()
+	if len(sys.argv) > 1:
+		if sys.platform=="win32": # Windows
+			fileName = string.join(sys.argv[1:],' ')
+		else:
+			fileName = sys.argv[1]
+		open(fileName)
+	else:
+		run()
 #@-body
 #@-node:0::@file leo.py
 #@-leo

@@ -72,7 +72,7 @@ class LeoApp:
 			bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception creating bitmap"
-			
+		
 		try:
 			version = self.root.getvar("tk_patchLevel")
 			# print "tcl version:" + `version`
@@ -99,6 +99,7 @@ class LeoApp:
 
 		except:
 			print "exception getting version"
+			v834 = None # 6/18/02
 			
 		if v834:
 			try:

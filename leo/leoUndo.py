@@ -376,7 +376,7 @@ class undoer:
 			#@<< redo move & drag cases >>
 			#@+node:4:C=3:<< redo move & drag cases >>
 			#@+body
-			elif type in ["Move Down","Move Left","Move Right","Move Up"]:
+			elif type in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
 			
 				if u.parent:
 					u.v.moveToNthChildOf(u.parent,u.n)
@@ -545,19 +545,8 @@ class undoer:
 			#@-node:2::<< undo delete cases >>
 
 			
-			#@<< undo drag cases >>
-			#@+node:3::<< undo drag cases >>
-			#@+body
-			elif type == "Drag":
-				
-				u.v.moveToNthChildOf(u.parent,u.n)
-				c.selectVnode(u.v)
-			#@-body
-			#@-node:3::<< undo drag cases >>
-
-			
 			#@<< undo insert cases >>
-			#@+node:4::<< undo insert cases >>
+			#@+node:3::<< undo insert cases >>
 			#@+body
 			elif type == "Insert Outline" or type == "Paste Node":
 				
@@ -567,13 +556,13 @@ class undoer:
 					# trace("Insert/Paste:" + `u.select`)
 					c.selectVnode(u.select)
 			#@-body
-			#@-node:4::<< undo insert cases >>
+			#@-node:3::<< undo insert cases >>
 
 			
-			#@<< undo move cases >>
-			#@+node:5:C=5:<< undo move cases >>
+			#@<< undo move & drag cases >>
+			#@+node:4:C=5:<< undo move  & drag cases >>
 			#@+body
-			elif type in ["Move Down","Move Left","Move Right","Move Up"]:
+			elif type in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
 				if u.oldParent:
 					u.v.moveToNthChildOf(u.oldParent,u.oldN)
@@ -587,11 +576,11 @@ class undoer:
 						parent.moveAfter(u.v)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:5:C=5:<< undo move cases >>
+			#@-node:4:C=5:<< undo move  & drag cases >>
 
 			
 			#@<< undo promote and demote cases >>
-			#@+node:6::<< undo promote and demote cases >>
+			#@+node:5::<< undo promote and demote cases >>
 			#@+body
 			#@+at
 			#  Promote and demote operations are the hard to undo, because they involve relinking a list of nodes. We pass the 
@@ -608,11 +597,11 @@ class undoer:
 				
 				u.undoPromote()
 			#@-body
-			#@-node:6::<< undo promote and demote cases >>
+			#@-node:5::<< undo promote and demote cases >>
 
 			
 			#@<< undo sort cases >>
-			#@+node:7::<< undo sort cases >>
+			#@+node:6::<< undo sort cases >>
 			#@+body
 			#@+at
 			#  Sort operations are the hard to undo, because they involve relinking a list of nodes. We pass the work off to 
@@ -629,11 +618,11 @@ class undoer:
 				
 				u.undoSortSiblings()
 			#@-body
-			#@-node:7::<< undo sort cases >>
+			#@-node:6::<< undo sort cases >>
 
 			
 			#@<< undo typing cases >>
-			#@+node:8::<< undo typing cases >>
+			#@+node:7::<< undo typing cases >>
 			#@+body
 			elif type in [
 				"Typing","Change","Cut","Paste","Delete",
@@ -671,7 +660,7 @@ class undoer:
 				u.v.setHeadStringOrHeadline(u.oldText)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:8::<< undo typing cases >>
+			#@-node:7::<< undo typing cases >>
 
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)

@@ -5,12 +5,8 @@
 from leoGlobals import *
 from leoUtils import *
 
-# import Tkinter
-
 import leoNodes
-import os
-import os.path
-import time
+import os,os.path,time
 
 class BadLeoFile:
 	def __init__(self, message):
@@ -1418,7 +1414,7 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=5:fileCommands.write_LEO_file
+	#@+node:11:C=5:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1427,29 +1423,124 @@ class fileCommands:
 		if not outlineOnlyFlag:
 			at = c.atFileCommands
 			at.writeAll(c.rootVnode(), false) # forceFlag
+		
+		#@<< create backup file >>
+		#@+node:1::<< create backup file >>
+		#@+body
+		# rename fileName to fileName.bak if fileName exists.
+		
+		if os.path.exists(fileName):
+			try:
+				backupName = os.path.join(app().loadDir,fileName)
+				backupName = fileName + ".bak"
+				if os.path.exists(backupName):
+					os.unlink(backupName)
+				os.rename(fileName,backupName)
+			except:
+				es("error creating " + backupName)
+				backupName = None
+		else:
+			backupName = None
+		#@-body
+		#@-node:1::<< create backup file >>
+
 		self.mFileName = fileName
 		self.outputFile = open(fileName, 'w')
 		if not self.outputFile:
 			es("Can not open " + fileName)
+			
+			#@<< delete backup file >>
+			#@+node:2::<< delete backup file >>
+			#@+body
+			if backupName and os.path.exists(backupName):
+				try:
+					os.unlink(backupName)
+				except:
+					es("error deleting " + backupName)
+			#@-body
+			#@-node:2::<< delete backup file >>
+
 			return false
-	
-		self.putProlog()
-		self.putHeader()
-		self.putGlobals()
-		self.putPrefs()
-		self.putFindSettings()
-		self.putVnodes()
-		self.putTnodes()
-		self.putPostlog()
+		try:
+			self.putProlog()
+			self.putHeader()
+			self.putGlobals()
+			self.putPrefs()
+			self.putFindSettings()
+			self.putVnodes()
+			self.putTnodes()
+			self.putPostlog()
+			# raise BadLeoFile # testing
+		except:
+			if self.outputFile:
+				self.outputFile.close()
+				self.outputFile = None
+			
+			#@<< erase filename and rename backupName to fileName >>
+			#@+node:3::<< erase filename and rename backupName to fileName >>
+			#@+body
+			es("error writing " + fileName)
+			
+			if fileName and os.path.exists(fileName):
+				try:
+					os.unlink(fileName)
+				except:
+					pass
+					
+			if backupName:
+				es("restoring " + fileName + " from " + backupName)
+				try:
+					os.rename(backupName, fileName)
+				except:
+					es("can not rename " + backupName + " to " + fileName)
+
+			#@-body
+			#@-node:3::<< erase filename and rename backupName to fileName >>
+
+			return false
 	
 		if self.outputFile:
 			self.outputFile.close()
 			self.outputFile = None
+			
+			#@<< delete backup file >>
+			#@+node:2::<< delete backup file >>
+			#@+body
+			if backupName and os.path.exists(backupName):
+				try:
+					os.unlink(backupName)
+				except:
+					es("error deleting " + backupName)
+			#@-body
+			#@-node:2::<< delete backup file >>
+
 			return true
-		else:
+		else: # This probably will never happen because errors should raise exceptions.
+			
+			#@<< erase filename and rename backupName to fileName >>
+			#@+node:3::<< erase filename and rename backupName to fileName >>
+			#@+body
+			es("error writing " + fileName)
+			
+			if fileName and os.path.exists(fileName):
+				try:
+					os.unlink(fileName)
+				except:
+					pass
+					
+			if backupName:
+				es("restoring " + fileName + " from " + backupName)
+				try:
+					os.rename(backupName, fileName)
+				except:
+					es("can not rename " + backupName + " to " + fileName)
+
+			#@-body
+			#@-node:3::<< erase filename and rename backupName to fileName >>
+
 			return false
 	#@-body
-	#@-node:11:C=5:fileCommands.write_LEO_file
+	#@-node:11:C=5:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

@@ -1052,7 +1052,7 @@ class LeoFrame:
 	#@-node:5::updateOutlineMenu
 	#@-node:12:C=10:Menu enablers (Frame)
 	#@+node:13:C=11:Menu Command Handlers
-	#@+node:1::File Menu (Unfinished: Page Setup, Print, Import...)
+	#@+node:1::File Menu
 	#@+node:1::top level
 	#@+node:1::OnNew
 	#@+body
@@ -1628,7 +1628,7 @@ class LeoFrame:
 	#@-body
 	#@-node:9::OnRemoveSentinels
 	#@-node:5:C=18:Import&Export submenu
-	#@-node:1::File Menu (Unfinished: Page Setup, Print, Import...)
+	#@-node:1::File Menu
 	#@+node:2::Edit Menu (change to handle log pane too)
 	#@+node:1::Edit top level
 	#@+node:1::OnUndo
@@ -2355,7 +2355,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 2.3, June 5, 2002\n\n" +
+			"Version 2.4, June 20, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

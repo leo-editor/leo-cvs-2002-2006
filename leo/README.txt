@@ -1,3 +1,25 @@
+leo.py version 2.4                             June 20, 2002
+
+This version fixes some annoying bugs and adds some nice features:
+
+1. Leo now properly highlights the headline of a newly created node and
+the Edit Headline command now works properly.
+Double and triple clicking in a headline now selects a word or the entire headline.
+
+2. Drag and drop.  You can now reorganize outlines by dragging nodes around.
+You must drag from a node's headline and release on another node's headline.
+See LeoDocs.leo or Leo's web site for complete details.
+
+3. You can now open .leo files in leo.py by double cliking on .leo files
+provided that you associate leo.py with .leo files.
+See LeoDocs.leo for detailed instructions about how to do this.
+
+4. Improves error recovery when there are errors writing .leo files.
+
+5. All parts of LeoDocs.leo now match the documentation on Leo's web site.
+At long last, Leo's documentation is complete.
+
+
 leo.py version 2.3                             June 12, 2002
 
 This version fixes a minor problem with Leo.

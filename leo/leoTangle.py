@@ -2037,7 +2037,7 @@ class tangleCommands:
 	
 	def st_enter_root_name(self,name,code,doc):
 		
-		assert(code)
+		# assert(code)
 		if name: # User errors can result in an empty @root name.
 			self.st_enter(name,code,doc,disallow_multiple_parts,is_root_name)
 	#@-body
@@ -2943,7 +2943,7 @@ class tangleCommands:
 		#@+node:1::<< Remove leading blank lines and comments from ucode >>
 		#@+body
 		#@+at
-		#  We assume that any leading comments came from an @doc part.  This this isn't always valid this code will eliminate such 
+		#  We assume that any leading comments came from an @doc part.  This isn't always valid and this code will eliminate such 
 		# leading comments.  This is a defect in Untangle; it can hardly be avoided.
 
 		#@-at

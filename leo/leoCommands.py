@@ -1211,27 +1211,36 @@ class Commands:
 	#@-node:7::setChanged
 	#@-node:12::Getters & Setters
 	#@+node:13::Insert, Delete & Clone (Commands)
-	#@+node:1::checkMoveWithParentWithWarning
+	#@+node:1:C=12:c.checkMoveWithParentWithWarning
 	#@+body
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
-	def checkMoveWithParentWithWarning (self,tree,parent,warningFlag):
+	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
 	
-		next = tree.nodeAfterTree()
-		message = "Illegal move or drag: no clone may contain a clone of itself"
+		next = root.nodeAfterTree() ; parent1 = parent
+		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
 		while parent:
 			if parent.isCloned():
-				v = tree
+				v = root
 				while v and v != next:
-					if v.t== parent.t:
+					if v.t == parent.t:
 						if warningFlag:
-							alert(message)
+							alert(clone_message)
 						return false
 					v = v.threadNext()
 			parent = parent.parent()
+			
+		drag_message = "Can't drag a node into its own tree"
+		parent = parent1
+		while parent:
+			if root == parent:
+				if warningFlag:
+					alert(drag_message)
+				return false
+			parent = parent.parent()
 		return true
 	#@-body
-	#@-node:1::checkMoveWithParentWithWarning
+	#@-node:1:C=12:c.checkMoveWithParentWithWarning
 	#@+node:2::clone (Commands)
 	#@+body
 	def clone (self):
@@ -1249,7 +1258,7 @@ class Commands:
 		c.endUpdate() # updates all icons
 	#@-body
 	#@-node:2::clone (Commands)
-	#@+node:3:C=12:c.deleteHeadline
+	#@+node:3:C=13:c.deleteHeadline
 	#@+body
 	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 	
@@ -1273,7 +1282,7 @@ class Commands:
 		c.endUpdate()
 		c.validateOutline()
 	#@-body
-	#@-node:3:C=12:c.deleteHeadline
+	#@-node:3:C=13:c.deleteHeadline
 	#@+node:4::initAllCloneBits
 	#@+body
 	#@+at
@@ -1313,7 +1322,7 @@ class Commands:
 		c.endUpdate()
 	#@-body
 	#@-node:4::initAllCloneBits
-	#@+node:5:C=13:c.insertHeadline
+	#@+node:5:C=14:c.insertHeadline
 	#@+body
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
@@ -1332,10 +1341,11 @@ class Commands:
 			c.selectVnode(v)
 			v.setDirty() # Essential in Leo2.
 			c.setChanged(true)
-		c.endUpdate()
+		c.endUpdate(false)
+		c.tree.redraw_now()
 		c.editVnode(v)
 	#@-body
-	#@-node:5:C=13:c.insertHeadline
+	#@-node:5:C=14:c.insertHeadline
 	#@+node:6::validateOutline
 	#@+body
 	# Makes sure all nodes are valid.
@@ -1499,100 +1509,14 @@ class Commands:
 	#@-body
 	#@-node:9::unmarkAll
 	#@-node:14::Mark & Unmark
-	#@+node:15:C=14:Moving, Promote, Demote, Sort
-	#@+node:1::demote
+	#@+node:15:C=15:Moving, Dragging, Promote, Demote, Sort
+	#@+node:1:C=16:c.dragAfter
 	#@+body
-	def demote(self):
+	def dragAfter(self,v,after):
 	
-		c = self ; v = c.currentVnode()
-		if not v or not v.next(): return
-		# Make sure all the moves will be valid.
-		child = v.next()
-		while child:
-			if not c.checkMoveWithParentWithWarning(child,v,true):
-				return
-			child = child.next()
-		c.beginUpdate()
-		c.mInhibitOnTreeChanged = true
-		c.endEditing()
-		last = None
-		while v.next():
-			child = v.next()
-			child.moveToNthChildOf(v,v.numberOfChildren())
-			last = child # For undo.
-		c.expandVnode(v)
-		c.selectVnode(v)
-		v.setDirty()
-		c.setChanged(true)
-		c.mInhibitOnTreeChanged = false
-		c.endUpdate()
-		c.undoer.setUndoParams("Demote",v,lastChild=last)
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
-	#@-body
-	#@-node:1::demote
-	#@+node:2:C=15:moveOutlineDown
-	#@+body
-	#@+at
-	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
-	# have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
-
-	#@-at
-	#@@c
-	
-	def moveOutlineDown(self):
-	
+		# es("dragAfter")
 		c = self
-		v = c.currentVnode()
-		if not v: return
-		# Set next to the node after which v will be moved.
-		next = v.visNext()
-		while next and v.isAncestorOf(next):
-			next = next.visNext()
-		if not next: return
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			
-			#@<< Move v down >>
-			#@+node:1::<< Move v down >>
-			#@+body
-			# Remember both the before state and the after state for undo/redo
-			oldBack = v.back()
-			oldParent = v.parent()
-			oldN = v.childIndex()
-			
-			if next.hasChildren() and next.isExpanded():
-				# Attempt to move v to the first child of next.
-				if c.checkMoveWithParentWithWarning(v,next,true):
-					v.moveToNthChildOf(next,0)
-					c.undoer.setUndoParams("Move Down",v,
-						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			else:
-				# Attempt to move v after next.
-				if c.checkMoveWithParentWithWarning(v,next.parent(),true):
-					v.moveAfter(next)
-					c.undoer.setUndoParams("Move Down",v,
-						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			#@-body
-			#@-node:1::<< Move v down >>
-
-			v.setDirty() # This second call is essential.
-			c.selectVnode(v)# 4/23/01
-			c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
-	#@-body
-	#@-node:2:C=15:moveOutlineDown
-	#@+node:3::moveOutlineLeft
-	#@+body
-	def moveOutlineLeft(self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v: return
-		parent = v.parent()
-		if not parent: return
+		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
 		# Remember both the before state and the after state for undo/redo
 		oldBack = v.back()
 		oldParent = v.parent()
@@ -1601,26 +1525,23 @@ class Commands:
 		if 1: # inside update...
 			c.endEditing()
 			v.setDirty()
-			v.moveAfter(parent)
-			c.undoer.setUndoParams("Move Left",v,
+			v.moveAfter(after)
+			c.undoer.setUndoParams("Drag",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
 		c.endUpdate()
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:3::moveOutlineLeft
-	#@+node:4::moveOutlineRight
+	#@-node:1:C=16:c.dragAfter
+	#@+node:2:C=17:c.dragToNthChildOf
 	#@+body
-	def moveOutlineRight(self):
+	def dragToNthChildOf(self,v,parent,n):
 	
+		# es("dragToNthChildOf")
 		c = self
-		v = c.currentVnode()
-		if not v: return
-		back = v.back()
-		if not back: return
-		if not c.checkMoveWithParentWithWarning(v,back,true): return
+		if not c.checkMoveWithParentWithWarning(v,parent,true): return
 		# Remember both the before state and the after state for undo/redo
 		oldBack = v.back()
 		oldParent = v.parent()
@@ -1629,91 +1550,17 @@ class Commands:
 		if 1: # inside update...
 			c.endEditing()
 			v.setDirty()
-			n = back.numberOfChildren()
-			v.moveToNthChildOf(back,n)
-			c.undoer.setUndoParams("Move Right",v,
+			v.moveToNthChildOf(parent,n)
+			c.undoer.setUndoParams("Drag",v,
 				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
 			v.setDirty()
 			c.selectVnode(v)
 			c.setChanged(true)
 		c.endUpdate()
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:4::moveOutlineRight
-	#@+node:5:C=16:moveOutlineUp
-	#@+body
-	def moveOutlineUp(self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v: return
-		back = v.visBack()
-		if not back: return
-		back2 = back.visBack()
-		c = self
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			
-			#@<< Move v up >>
-			#@+node:1::<< Move v up >>
-			#@+body
-			# Remember both the before state and the after state for undo/redo
-			oldBack = v.back()
-			oldParent = v.parent()
-			oldN = v.childIndex()
-			
-			if not back2:
-				# v will be the new root node
-				v.moveToRoot(c.tree.rootVnode) # 3/16/02, 5/17/02
-				c.undoer.setUndoParams("Move Up",v,
-					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			elif back2.hasChildren() and back2.isExpanded():
-				if c.checkMoveWithParentWithWarning(v,back2,true):
-					v.moveToNthChildOf(back2,0)
-					c.undoer.setUndoParams("Move Up",v,
-						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
-				# Insert after back2.
-				v.moveAfter(back2)
-				c.undoer.setUndoParams("Move Up",v,
-					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			#@-body
-			#@-node:1::<< Move v up >>
-
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
-	#@-body
-	#@-node:5:C=16:moveOutlineUp
-	#@+node:6::promote
-	#@+body
-	def promote(self):
-	
-		c = self
-		v = c.currentVnode()
-		if not v or not v.hasChildren(): return
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			after = v ; last = None
-			while v.hasChildren():
-				child = v.firstChild()
-				child.moveAfter(after)
-				after = child
-				last = child # for undo.
-			v.setDirty()
-			c.setChanged(true)
-			c.selectVnode(v)
-		c.endUpdate()
-		c.undoer.setUndoParams("Promote",v,lastChild=last)
-		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
-	#@-body
-	#@-node:6::promote
-	#@+node:7:C=17:c.sortChildren, sortSiblings
+	#@-node:2:C=17:c.dragToNthChildOf
+	#@+node:3:C=18:c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -1769,10 +1616,223 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:7:C=17:c.sortChildren, sortSiblings
-	#@-node:15:C=14:Moving, Promote, Demote, Sort
+	#@-node:3:C=18:c.sortChildren, sortSiblings
+	#@+node:4::demote
+	#@+body
+	def demote(self):
+	
+		c = self ; v = c.currentVnode()
+		if not v or not v.next(): return
+		# Make sure all the moves will be valid.
+		child = v.next()
+		while child:
+			if not c.checkMoveWithParentWithWarning(child,v,true):
+				return
+			child = child.next()
+		c.beginUpdate()
+		c.mInhibitOnTreeChanged = true
+		c.endEditing()
+		last = None
+		while v.next():
+			child = v.next()
+			child.moveToNthChildOf(v,v.numberOfChildren())
+			last = child # For undo.
+		c.expandVnode(v)
+		c.selectVnode(v)
+		v.setDirty()
+		c.setChanged(true)
+		c.mInhibitOnTreeChanged = false
+		c.endUpdate()
+		c.undoer.setUndoParams("Demote",v,lastChild=last)
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:4::demote
+	#@+node:5:C=19:moveOutlineDown
+	#@+body
+	#@+at
+	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
+	# have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
+
+	#@-at
+	#@@c
+	
+	def moveOutlineDown(self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		# Set next to the node after which v will be moved.
+		next = v.visNext()
+		while next and v.isAncestorOf(next):
+			next = next.visNext()
+		if not next: return
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			
+			#@<< Move v down >>
+			#@+node:1::<< Move v down >>
+			#@+body
+			# Remember both the before state and the after state for undo/redo
+			oldBack = v.back()
+			oldParent = v.parent()
+			oldN = v.childIndex()
+			
+			if next.hasChildren() and next.isExpanded():
+				# Attempt to move v to the first child of next.
+				if c.checkMoveWithParentWithWarning(v,next,true):
+					v.moveToNthChildOf(next,0)
+					c.undoer.setUndoParams("Move Down",v,
+						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			else:
+				# Attempt to move v after next.
+				if c.checkMoveWithParentWithWarning(v,next.parent(),true):
+					v.moveAfter(next)
+					c.undoer.setUndoParams("Move Down",v,
+						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			#@-body
+			#@-node:1::<< Move v down >>
+
+			v.setDirty() # This second call is essential.
+			c.selectVnode(v)# 4/23/01
+			c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:5:C=19:moveOutlineDown
+	#@+node:6::moveOutlineLeft
+	#@+body
+	def moveOutlineLeft(self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		parent = v.parent()
+		if not parent: return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			v.moveAfter(parent)
+			c.undoer.setUndoParams("Move Left",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:6::moveOutlineLeft
+	#@+node:7::moveOutlineRight
+	#@+body
+	def moveOutlineRight(self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		back = v.back()
+		if not back: return
+		if not c.checkMoveWithParentWithWarning(v,back,true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			n = back.numberOfChildren()
+			v.moveToNthChildOf(back,n)
+			c.undoer.setUndoParams("Move Right",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:7::moveOutlineRight
+	#@+node:8:C=20:moveOutlineUp
+	#@+body
+	def moveOutlineUp(self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v: return
+		back = v.visBack()
+		if not back: return
+		back2 = back.visBack()
+		c = self
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			
+			#@<< Move v up >>
+			#@+node:1::<< Move v up >>
+			#@+body
+			# Remember both the before state and the after state for undo/redo
+			oldBack = v.back()
+			oldParent = v.parent()
+			oldN = v.childIndex()
+			
+			if not back2:
+				# v will be the new root node
+				v.moveToRoot(c.tree.rootVnode) # 3/16/02, 5/17/02
+				c.undoer.setUndoParams("Move Up",v,
+					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			elif back2.hasChildren() and back2.isExpanded():
+				if c.checkMoveWithParentWithWarning(v,back2,true):
+					v.moveToNthChildOf(back2,0)
+					c.undoer.setUndoParams("Move Up",v,
+						oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
+				# Insert after back2.
+				v.moveAfter(back2)
+				c.undoer.setUndoParams("Move Up",v,
+					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			#@-body
+			#@-node:1::<< Move v up >>
+
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:8:C=20:moveOutlineUp
+	#@+node:9::promote
+	#@+body
+	def promote(self):
+	
+		c = self
+		v = c.currentVnode()
+		if not v or not v.hasChildren(): return
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			after = v ; last = None
+			while v.hasChildren():
+				child = v.firstChild()
+				child.moveAfter(after)
+				after = child
+				last = child # for undo.
+			v.setDirty()
+			c.setChanged(true)
+			c.selectVnode(v)
+		c.endUpdate()
+		c.undoer.setUndoParams("Promote",v,lastChild=last)
+		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+	#@-body
+	#@-node:9::promote
+	#@-node:15:C=15:Moving, Dragging, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
-	#@+node:1::editVnode (calls tree.editLabel)
+	#@+node:1:C=21:editVnode (calls tree.editLabel)
 	#@+body
 	# Selects v: sets the focus to v and edits v.
 	
@@ -1783,7 +1843,7 @@ class Commands:
 			c.selectVnode(v)
 			c.tree.editLabel(v)
 	#@-body
-	#@-node:1::editVnode (calls tree.editLabel)
+	#@-node:1:C=21:editVnode (calls tree.editLabel)
 	#@+node:2::endEditing (calls tree.endEditLabel)
 	#@+body
 	# Ends the editing in the outline.
@@ -1794,7 +1854,7 @@ class Commands:
 
 	#@-body
 	#@-node:2::endEditing (calls tree.endEditLabel)
-	#@+node:3:C=18:selectThreadBack
+	#@+node:3:C=22:selectThreadBack
 	#@+body
 	def selectThreadBack(self):
 	
@@ -1808,8 +1868,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:3:C=18:selectThreadBack
-	#@+node:4:C=19:selectThreadNext
+	#@-node:3:C=22:selectThreadBack
+	#@+node:4:C=23:selectThreadNext
 	#@+body
 	def selectThreadNext(self):
 	
@@ -1823,8 +1883,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:4:C=19:selectThreadNext
-	#@+node:5:C=20:selectVisBack
+	#@-node:4:C=23:selectThreadNext
+	#@+node:5:C=24:selectVisBack
 	#@+body
 	# This has an up arrow for a control key.
 	
@@ -1840,8 +1900,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:5:C=20:selectVisBack
-	#@+node:6:C=21:selectVisNext
+	#@-node:5:C=24:selectVisBack
+	#@+node:6:C=25:selectVisNext
 	#@+body
 	def selectVisNext(self):
 	
@@ -1855,7 +1915,7 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:6:C=21:selectVisNext
+	#@-node:6:C=25:selectVisNext
 	#@+node:7::c.selectVnode (calls tree.select)
 	#@+body
 	# This is called inside commands to select a new vnode.

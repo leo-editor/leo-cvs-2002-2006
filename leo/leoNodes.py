@@ -221,8 +221,11 @@ class vnode:
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
 		self.edit_text = None # Essential: used by many parts of tree code.
 		
+		if 1:
+			self.icon_id = None # 6/15/02: Now cleared in __del__
+		
 		if 0: # These links are harmful: they prevent old tree items from being recycled properly.
-			self.box_id = self.icon_id = None
+			self.box_id = None
 			self.edit_text_id = None # The editable text field for this vnode.
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
@@ -237,7 +240,9 @@ class vnode:
 	
 		# Can't trace while destroying.
 		# print "v.__del__" + `self`
-		pass
+		try:
+			self.icon_id = None
+		except: pass
 	#@-body
 	#@-node:3::v.__del__
 	#@+node:4::vnode.__repr__
@@ -295,21 +300,37 @@ class vnode:
 		self.commands.tree.OnBoxClick(self)
 	#@-body
 	#@-node:1::OnBoxClick
-	#@+node:2::OnHeadlineClick
+	#@+node:2::OnDrag
+	#@+body
+	def OnDrag(self,event=None):
+		
+		self.commands.tree.OnDrag(self,event)
+
+	#@-body
+	#@-node:2::OnDrag
+	#@+node:3::OnEndDrag
+	#@+body
+	def OnEndDrag(self,event=None):
+		
+		self.commands.tree.OnEndDrag(self,event)
+
+	#@-body
+	#@-node:3::OnEndDrag
+	#@+node:4::OnHeadlineClick
 	#@+body
 	def OnHeadlineClick(self,event=None):
 	
 		self.commands.tree.OnActivate(self)
 	#@-body
-	#@-node:2::OnHeadlineClick
-	#@+node:3::OnHeadlineKey
+	#@-node:4::OnHeadlineClick
+	#@+node:5::OnHeadlineKey
 	#@+body
 	def OnHeadlineKey (self,event):
 	
 		self.commands.tree.OnHeadlineKey(self,event)
 	#@-body
-	#@-node:3::OnHeadlineKey
-	#@+node:4::OnHyperLinkControlClick
+	#@-node:5::OnHeadlineKey
+	#@+node:6::OnHyperLinkControlClick
 	#@+body
 	def OnHyperLinkControlClick (self,event):
 	
@@ -319,8 +340,8 @@ class vnode:
 		c.endUpdate()
 		c.body.mark_set("insert","1.0")
 	#@-body
-	#@-node:4::OnHyperLinkControlClick
-	#@+node:5::OnHyperLinkEnter
+	#@-node:6::OnHyperLinkControlClick
+	#@+node:7::OnHyperLinkEnter
 	#@+body
 	def OnHyperLinkEnter (self,event):
 	
@@ -328,8 +349,8 @@ class vnode:
 		if 0: # This works, and isn't very useful.
 			c.body.tag_config(v.tagName,background="green")
 	#@-body
-	#@-node:5::OnHyperLinkEnter
-	#@+node:6::OnHyperLinkLeave
+	#@-node:7::OnHyperLinkEnter
+	#@+node:8::OnHyperLinkLeave
 	#@+body
 	def OnHyperLinkLeave (self,event):
 	
@@ -337,14 +358,15 @@ class vnode:
 		if 0: # This works, and isn't very useful.
 			c.body.tag_config(v.tagName,background="white")
 	#@-body
-	#@-node:6::OnHyperLinkLeave
-	#@+node:7::OnIconClick
+	#@-node:8::OnHyperLinkLeave
+	#@+node:9::v.OnIconClick
 	#@+body
 	def OnIconClick(self,event=None):
-	
-		self.commands.tree.select(self)
+		
+		self.commands.tree.OnIconClick(self,event)
+
 	#@-body
-	#@-node:7::OnIconClick
+	#@-node:9::v.OnIconClick
 	#@-node:7:C=3:v.Callbacks
 	#@+node:8::Comparisons
 	#@+node:1::atFileNodeName
