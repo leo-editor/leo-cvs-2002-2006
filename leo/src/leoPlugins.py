@@ -118,6 +118,27 @@ def isLoaded (name):
     return name in g.app.loadedPlugins
 #@nonl
 #@-node:ekr.20041001160216:isLoaded
+#@+node:ekr.20041111124831:getHandlersForTag
+def getHandlersForTag(tags):
+    
+    import types
+
+    if type(tags) in (types.TupleType,types.ListType):
+        result = []
+        for tag in tags:
+            fn = getHandlersForOneTag(tag)
+            result.append((tag,fn),)
+        return result
+    else:
+        return getHandlersForOneTag(tags)
+
+def getHandlersForOneTag (tag):
+
+    global handlers
+    
+    return handlers.get(tag)
+#@nonl
+#@-node:ekr.20041111124831:getHandlersForTag
 #@+node:ekr.20031218072017.3443:registerHandler
 def registerHandler(tags,fn):
     
@@ -138,7 +159,8 @@ def registerOneHandler(tag,fn):
     global handlers
 
     existing = handlers.setdefault(tag,[])
-    existing.append(fn)
+    if fn not in existing:
+        existing.append(fn)
 #@nonl
 #@-node:ekr.20031218072017.3443:registerHandler
 #@+node:ekr.20031218072017.3444:registerExclusiveHandler
@@ -164,7 +186,31 @@ def registerOneExclusiveHandler(tag, fn):
         g.es("*** Two exclusive handlers for '%s'" % tag)
     else:
         handlers[tag] = (fn,)
+#@nonl
 #@-node:ekr.20031218072017.3444:registerExclusiveHandler
+#@+node:ekr.20041111123313:unregisterHandler
+def unregisterHandler(tags,fn):
+    
+    import types
+
+    if type(tags) in (types.TupleType,types.ListType):
+        for tag in tags:
+            unregisterOneHandler(tag,fn)
+    else:
+        unregisterOneHandler(tags,fn)
+
+def unregisterOneHandler (tag,fn):
+
+    global handlers
+
+    fn_list = handlers.get(tag)
+    if fn_list:
+        while fn in fn_list:
+            fn_list.remove(fn)
+        handlers[tag] = fn_list
+        # g.trace(handlers.get(tag))
+#@nonl
+#@-node:ekr.20041111123313:unregisterHandler
 #@-others
 #@-node:ekr.20031218072017.3439:@thin leoPlugins.py
 #@-leo
