@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="21" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="18" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="116" height="31" width="87"/>
+	<global_window_position top="0" left="182" height="31" width="87"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,33 +13,29 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>NSIS Sample Scripts</vh>
-<v t="T2"><vh>Change log</vh></v>
-<v t="T3" a="V"><vh>NSIS script for Leo</vh>
-<v t="T4" a="E"><vh>@root leo.nsi</vh>
-<v t="T5"><vh>&lt;&lt; installer settings &gt;&gt;</vh>
-<v t="T6"><vh>&lt;&lt; icons used by the installer &gt;&gt;</vh></v>
-<v t="T7"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; the user license &gt;&gt;</vh></v>
-<v t="T9"><vh>&lt;&lt; Additional Installer Settings &gt;&gt;</vh></v>
+<v t="T2" a="E"><vh>NSIS script for Leo</vh>
+<v t="T3" a="E"><vh>@root leo.nsi</vh>
+<v t="T4"><vh>&lt;&lt; installer settings &gt;&gt;</vh>
+<v t="T5"><vh>&lt;&lt; icons used by the installer &gt;&gt;</vh></v>
+<v t="T6"><vh>&lt;&lt; the installation dir &gt;&gt;</vh></v>
+<v t="T7"><vh>&lt;&lt; the user license &gt;&gt;</vh></v>
+<v t="T8"><vh>&lt;&lt; Additional Installer Settings &gt;&gt;</vh></v>
 </v>
-<v t="T10"><vh>&lt;&lt; required files section&gt;&gt;</vh>
-<v t="T11"><vh>&lt;&lt; check to see whether Python is installed &gt;&gt;</vh></v>
+<v t="T9"><vh>&lt;&lt; required files section&gt;&gt;</vh>
+<v t="T10"><vh>&lt;&lt; check to see whether Python is installed &gt;&gt;</vh></v>
 </v>
-<v t="T12"><vh>&lt;&lt; optional files section&gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; file association &gt;&gt;</vh></v>
-<v t="T14"><vh>&lt;&lt; post install section &gt;&gt;</vh></v>
-<v t="T15" a="E"><vh>&lt;&lt; uninstall section &gt;&gt;</vh>
-<v t="T16"><vh>&lt;&lt; remove file association &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; remove program folder &gt;&gt;</vh></v>
-<v t="T18"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
-</v>
-</v>
-<v><vh>hold</vh>
-<v t="T19"><vh>&lt;&lt; get the path to pythonw.exe &gt;&gt;</vh></v>
+<v t="T11"><vh>&lt;&lt; optional files section&gt;&gt;</vh></v>
+<v t="T12"><vh>&lt;&lt; file association &gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; post install section &gt;&gt;</vh></v>
+<v t="T14" a="E"><vh>&lt;&lt; uninstall section &gt;&gt;</vh>
+<v t="T15"><vh>&lt;&lt; remove file association &gt;&gt;</vh></v>
+<v t="T16"><vh>&lt;&lt; remove program folder &gt;&gt;</vh></v>
+<v t="T17"><vh>&lt;&lt; remove shortcuts &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T20"><vh>License file</vh>
-<v t="T21"><vh>@root leo_license.txt</vh></v>
+<v a="EV"><vh>hold</vh>
+<v t="T18"><vh>&lt;&lt; get the path to pythonw.exe &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -51,8 +47,7 @@ This file contains sample NSIS script(s). Use these scripts with NSIS to create 
 NSIS is Nullsoft's nifty free installer, available at http://www.nullsoft.com
 
 Version 1.0 of this Leo file by Joe Orr, donated to public domain.</t>
-<t tx="T2">@ 9/19/02: Removed setup.py from the distribution: it is too confusing.</t>
-<t tx="T3">@nocolor
+<t tx="T2">@nocolor
 
 NSIS Script for LEO - Literate Programming Editor with Outlines
 http://sourceforge.net/projects/leo
@@ -65,7 +60,7 @@ How to create an installer for Leo using this script:
 Version 1.0 of this script by Joe Orr, donated to public domain.
 
 @color</t>
-<t tx="T4">@comment ;
+<t tx="T3">@comment ;
 @silent
 @root leo.nsi
 
@@ -79,7 +74,7 @@ Version 1.0 of this script by Joe Orr, donated to public domain.
 &lt;&lt; uninstall section &gt;&gt;
 
 ; eof</t>
-<t tx="T5">@code
+<t tx="T4">@code
 
 # [Installer Attributes]
 Name "Leo"
@@ -93,19 +88,19 @@ Caption "Leo Installer"
 &lt;&lt; the installation dir &gt;&gt;
 
 ComponentText "This will install Leo on your computer. Select which optional components you would also like to install."</t>
-<t tx="T6">@code
+<t tx="T5">@code
 Icon Icons\leo_inst.ico
 EnabledBitmap Icons\leo_on.bmp
 DisabledBitmap Icons\leo_off.bmp</t>
-<t tx="T7">@code
+<t tx="T6">@code
 InstallDir "$PROGRAMFILES\Leo"
 InstallDirRegKey HKEY_LOCAL_MACHINE "SOFTWARE\EKR\leo" ""
 DirShow show # (make this hide to not let the user change it)
 DirText "Select the directory to install Leo in:"</t>
-<t tx="T8">@code
+<t tx="T7">@code
 LicenseText "You must agree to this license before installing."
 LicenseData "leo_license.txt"</t>
-<t tx="T9">@ You may not need to change these for your own app...
+<t tx="T8">@ You may not need to change these for your own app...
 @c
 ShowInstDetails show
 AutoCloseWindow false
@@ -115,7 +110,7 @@ SetCompress auto
 SetDatablockOptimize on
 SetOverwrite ifnewer
 WindowIcon off</t>
-<t tx="T10">@code
+<t tx="T9">@code
 
 Section "Leo" ; (default, required section)
 
@@ -125,7 +120,6 @@ ok:
   # here we list all files to included in installer	
   # first list the folder (using SetOutPath) then the filespec
   SetOutPath "$INSTDIR"
-  File leo_license.txt
   File LeoPy.leo
   File LeoDocs.leo
   File leoConfig.leo
@@ -137,7 +131,10 @@ ok:
   File tangle_done.py
   File untangle_done.py
   File __init__.py
-  File README.txt
+  File README.TXT
+  File INSTALL.TXT
+  File PKG-INFO.TXT
+  File LICENSE.TXT
   File leo.rc
   File leo.res
   File sdist.bat
@@ -146,7 +143,7 @@ ok:
   File "Icons\*.*"
 
 SectionEnd ; end of default section</t>
-<t tx="T11">@code
+<t tx="T10">@code
 # I sure hope there is a better way to do this, but other techniques don't seem to work.
 
 # Supposedly the Python installer creates the following registry entry
@@ -181,7 +178,7 @@ ng:
   Quit
   
 </t>
-<t tx="T12">@code
+<t tx="T11">@code
 
 # optional sections
 
@@ -194,7 +191,7 @@ SectionEnd
 Section "Desktop Shortcut"
   CreateShortCut "$DESKTOP\Leo.lnk" "$8" '"$INSTDIR\leo.py"' "$INSTDIR\Icons\LeoApp.ico" 0
 SectionEnd</t>
-<t tx="T13">@code
+<t tx="T12">@code
 
 Section ".leo File Association"
   SectionIn 1
@@ -215,7 +212,7 @@ Label1:
   WriteRegStr HKCR "LeoFile\shell\open\command" "" '$8 "$INSTDIR\leo.py" %1'  
 
 SectionEnd</t>
-<t tx="T14">@code
+<t tx="T13">@code
 
 Section "-post" # (post install section, happens last after any optional sections)
 
@@ -230,7 +227,7 @@ Section "-post" # (post install section, happens last after any optional section
 SectionEnd ; end of -post section
 
 </t>
-<t tx="T15">@code
+<t tx="T14">@code
 
 # [ begin uninstall settings/section ]
 UninstallText "This will uninstall Leo from your system"
@@ -250,7 +247,7 @@ DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Unins
 RMDir "$SMPROGRAMS\Leo"
 
 SectionEnd ; end of uninstall section</t>
-<t tx="T16">@code
+<t tx="T15">@code
 
   ReadRegStr $1 HKCR ".leo" ""
   StrCmp $1 "LeoFile" 0 NoOwn ; only do this if we own it
@@ -263,7 +260,7 @@ SectionEnd ; end of uninstall section</t>
       DeleteRegValue HKCR ".leo" "backup_val"
   NoOwn:
 </t>
-<t tx="T17">@code
+<t tx="T16">@code
 MessageBox MB_YESNO|MB_ICONQUESTION \
              "Delete all files in Leo Program folder?" \
              IDNO NoDelete
@@ -273,11 +270,10 @@ MessageBox MB_YESNO|MB_ICONQUESTION \
   RMDir "$INSTDIR"
 NoDelete:
 </t>
-<t tx="T18">@code
+<t tx="T17">@code
 Delete "$SMPROGRAMS\Leo\*.*"
 Delete "$DESKTOP\Leo.lnk"</t>
-<t tx="T19">
-# yo - why doesn't this work?
+<t tx="T18"># yo - why doesn't this work?
 #ExecShell open "$INSTDIR\getpypath.pyw"
 
 #IfFileExists "$INSTDIR\pypath.txt" ok ng
@@ -297,20 +293,5 @@ Delete "$DESKTOP\Leo.lnk"</t>
 #  Quit
 
 </t>
-<t tx="T20">@nocolor
-
-Note: the copyright sign in the license will appear properly when rendered in the encoding specified for this Leo file.  By default this is UTF-8.</t>
-<t tx="T21">@silent
-@root leo_license.txt
-
-Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
-
-Copyright (c) 1997-2002 by Edward K. Ream. All Rights Reserved.
-
-Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Leo or Edward K. Ream not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
-
-DISCLAIMER OF WARRANTIES
-
-EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS RO A PARTICULAR PURPOSE. IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
 </tnodes>
 </leo_file>
