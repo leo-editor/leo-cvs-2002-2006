@@ -415,9 +415,10 @@ if 1:
         # g.trace(i,len(s),repr(s))
         g.es("Truncating headline to one line",color="blue")
         s = s[:i]
-    if len(s) > 250:
-        g.es("Truncating headline to 250 characters",color="blue")
-        s = s[:250]
+    limit = 1000
+    if len(s) > limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
 
 s = g.toUnicode(s,g.app.tkEncoding)
 
@@ -5448,6 +5449,339 @@ def importDerivedFile (self):
 #@nonl
 #@-node:ekr.20031218072017.1809:importDerivedFile
 #@-node:ekr.20040829101055:(Fixed Import Derived Files command)
+#@+node:ekr.20040831104303:(Fixed parsing of minimal <preferences> tag
+#@+node:ekr.20040831104303.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2720802
+By: billp9619
+
+This  file testmini.leo
+
+<?xml version="1.0" encoding="UTF-8"?>
+<leo_file>
+<leo_header/>
+<globals/>
+<preferences allow_rich_text="0"/>
+<find_panel_settings/>
+<vnodes/>
+<tnodes/>
+</leo_file>
+
+Gives error message as follows.
+
+Leo Log Window...
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.4, Tk 8.4.3, win32
+
+File encoding: UTF-8
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 610, in getLeoFile
+    self.getPrefs()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 814, in getPrefs
+    self.getUnknownTag()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 371, in
+getUnknownTag
+    tag = self.getStringToTag('=')
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 349, in
+getStringToTag
+    raise BadLeoFile("expecting string terminated by " + tag)
+BadLeoFile: Bad Leo File:expecting string terminated by =
+C:\Program Files\Leo\testmini.leo is not a valid Leo file: Bad Leo File:expecting
+string terminated by =
+
+
+A copy of LeoDocs.leo with the <preferences allow_rich_text="0"/> tag in it
+gave this error message:
+
+File encoding: UTF-8
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 610, in getLeoFile
+    self.getPrefs()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 827, in getPrefs
+    self.getTag("</preferences>")
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 365, in getTag
+    raise BadLeoFile("expecting" + tag)
+BadLeoFile: Bad Leo File:expecting</preferences>
+C:\Program Files\Leo\leodocsTESTCOPY.leo is not a valid Leo file: Bad Leo
+File:expecting</preferences>
+
+regards,
+
+bill p
+#@nonl
+#@-node:ekr.20040831104303.1:Report
+#@+node:ekr.20031218072017.2062:getPrefs
+def getPrefs (self):
+
+    c = self.c ; config = g.app.config
+    
+    if self.getOpenTag("<preferences"):
+        return # <preferences/> seeen
+
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    done = False
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag("/>"):
+                done = True ; break
+            if self.matchTag(">"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
+
+    if not done: # 8/31/04
+        while 1:
+            if self.matchTag("<defaultDirectory>"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("</defaultDirectory>")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("<TSyntaxMemo_options>"):
+                self.getEscapedString() # ignored
+                self.getTag("</TSyntaxMemo_options>")
+            else: break
+        self.getTag("</preferences>")
+
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    if config.configsExist:
+        config.setCommandsIvars(c)
+#@nonl
+#@+node:ekr.20031218072017.2063:getTargetLanguage
+def getTargetLanguage (self):
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default
+#@nonl
+#@-node:ekr.20031218072017.2063:getTargetLanguage
+#@-node:ekr.20031218072017.2062:getPrefs
+#@-node:ekr.20040831104303:(Fixed parsing of minimal <preferences> tag
+#@+node:ekr.20040831110923:(Allow longer headlines for to support long url's)
+#@+node:ekr.20040831111203:Report
+@killcolor
+
+From Dan Winkler:
+
+On a couple of occasions, I tried to paste in a long @url node and got 
+this message:
+
+	Truncating headline to 250 characters
+
+I wonder if the 250 character limit on headline length should be 
+rethought in light of the @url directive and long web addresses.
+#@nonl
+#@-node:ekr.20040831111203:Report
+#@+node:ekr.20040803072955.91:idle_head_key
+def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c
+
+    if not p or not p.isCurrentPosition():
+        return "break"
+        
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
+    changed = s != head
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+        << update p >>
+    if done or changed:
+        << reconfigure p and all nodes joined to p >>
+        << update the screen >>
+
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"
+#@nonl
+#@+node:ekr.20040803072955.92:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20040803072955.92:<< set head to vnode text >>
+#@+node:ekr.20040803072955.93:<< set the widget text to head >>
+self.setText(edit_text,head,tag="idle_head_key")
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:ekr.20040803072955.93:<< set the widget text to head >>
+#@+node:ekr.20040803072955.94:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    limit = 1000
+    if len(s) > limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20040803072955.94:<< set s to the widget text >>
+#@+node:ekr.20040803072955.95:<< update p >>
+c.beginUpdate()
+if 1: # update...
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+    p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s,tag="idle_head_key2")
+    edit_text.mark_set("insert",index)
+c.endUpdate(False) # do not redraw now.
+#@nonl
+#@-node:ekr.20040803072955.95:<< update p >>
+#@+node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+# Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))
+#@nonl
+#@-node:ekr.20040803072955.96:<< reconfigure p and all nodes joined to p >>
+#@+node:ekr.20040803072955.97:<< update the screen >>
+if done:
+    # g.trace("done")
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20040803072955.97:<< update the screen >>
+#@-node:ekr.20040803072955.91:idle_head_key
+#@-node:ekr.20040831110923:(Allow longer headlines for to support long url's)
+#@+node:ekr.20040831120106:(Fixed read errors with @language html)
+#@+node:ekr.20040831120106.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2714125
+
+1) Create a node that contains the following.
+
+@language html
+@doc
+
+Multi
+line
+HTML
+comments
+
+@c
+<p>HTML code</p>
+
+2) Save the leo file.
+3) Re-open leo and you'll get a "Missing open block comment in readLastDocLine:"
+error.
+
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.4, Tk 8.4.4, linux2
+#@nonl
+#@-node:ekr.20040831120106.1:Report
+#@+node:ekr.20031218072017.1753:readLastDocLine
+def readLastDocLine (self,tag):
+    
+    """Read the @c line that terminates the doc part.
+    tag is @doc or @."""
+    
+    at = self
+    end = at.endSentinelComment
+    start = at.startSentinelComment
+    s = ''.join(at.docOut)
+    
+    # Remove the @doc or @space.  We'll add it back at the end.
+    if g.match(s,0,tag):
+        s = s[len(tag):]
+    else:
+        at.readError("Missing start of doc part")
+        return
+
+    if end:
+        # 9/3/04: Remove leading newline.
+        if s[0] == '\n': s = s[1:]
+        # Remove opening block delim.
+        if g.match(s,0,start):
+            s = s[len(start):]
+        else:
+            at.readError("Missing open block comment")
+            g.trace(s)
+            return
+        # Remove trailing newline.
+        if s[-1] == '\n': s = s[:-1]
+        # Remove closing block delim.
+        if s[-len(end):] == end:
+            s = s[:-len(end)]
+        else:
+            at.readError("Missing close block comment")
+            return
+
+    at.out.append(tag + s)
+    at.docOut = []
+    
+#@nonl
+#@-node:ekr.20031218072017.1753:readLastDocLine
+#@-node:ekr.20040831120106:(Fixed read errors with @language html)
 #@-node:ekr.20040809102904:4.2 rc1 projects
 #@-all
 #@nonl

@@ -83,8 +83,6 @@ e
 #@nonl
 #@-node:ekr.20040828161347:Report
 #@-node:ekr.20040812033107:Fix bug:  Perfect Import does not import pyrex/plex files correctly
-#@+node:ekr.20040811083125:Make sure *nix install script has *nix line endings
-#@-node:ekr.20040811083125:Make sure *nix install script has *nix line endings
 #@+node:ekr.20040811112113:Document @test, @suite and unit-testing breakthroughs
 @nocolor
 
@@ -296,6 +294,25 @@ R: hilited text appended to headline rather than replacing
 This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
 #@nonl
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
+#@+node:ekr.20040831112005:(Fix control-v problems on the Mac)
+#@+node:ekr.20040831112005.1:Report
+@killcolor
+
+Dan Winkler
+
+> I've noticed that Leo often inserts a v when I hit command-v to paste.  
+> I'm sure I've got the command key down before I type the v, but Leo is 
+> more sensitive to the timing somehow than most apps.
+
+> Now I'm seeing a problem where when I use command-v to paste into a 
+> headline it pastes the text twice.  If I use the edit menu and choose 
+> paste it works correctly and only pastes once.  Also, if I paste into 
+> the body of a node with command-v, that works correctly too.  It's only 
+> when I use the command key to paste into a headline that I see the 
+> problem.
+#@nonl
+#@-node:ekr.20040831112005.1:Report
+#@-node:ekr.20040831112005:(Fix control-v problems on the Mac)
 #@-node:EKR.20040422132037:Linux bugs 3
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
@@ -1412,6 +1429,7 @@ def getPrefs (self):
         ("defaultTargetLanguage","target_language",self.getTargetLanguage),
         ("use_header_flag","use_header_flag",self.getBool))
     
+    done = False
     while 1:
         found = False
         for tag,var,f in table:
@@ -1423,24 +1441,27 @@ def getPrefs (self):
                     self.getDqString()
                 found = True ; break
         if not found:
+            if self.matchTag("/>"):
+                done = True ; break
             if self.matchTag(">"):
                 break
             else: # New in 4.1: ignore all other tags.
                 self.getUnknownTag()
 
-    while 1:
-        if self.matchTag("<defaultDirectory>"):
-            # New in version 0.16.
-            c.tangle_directory = self.getEscapedString()
-            self.getTag("</defaultDirectory>")
-            if not g.os_path_exists(c.tangle_directory):
-                g.es("default tangle directory not found:" + c.tangle_directory)
-        elif self.matchTag("<TSyntaxMemo_options>"):
-            self.getEscapedString() # ignored
-            self.getTag("</TSyntaxMemo_options>")
-        else: break
-    self.getTag("</preferences>")
-    
+    if not done: # 8/31/04
+        while 1:
+            if self.matchTag("<defaultDirectory>"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("</defaultDirectory>")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("<TSyntaxMemo_options>"):
+                self.getEscapedString() # ignored
+                self.getTag("</TSyntaxMemo_options>")
+            else: break
+        self.getTag("</preferences>")
+
     # Override .leo file's preferences if settings are in leoConfig.txt.
     if config.configsExist:
         config.setCommandsIvars(c)
@@ -3905,9 +3926,10 @@ if 1:
         # g.trace(i,len(s),repr(s))
         g.es("Truncating headline to one line",color="blue")
         s = s[:i]
-    if len(s) > 250:
-        g.es("Truncating headline to 250 characters",color="blue")
-        s = s[:250]
+    limit = 1000
+    if len(s) > limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
 
 s = g.toUnicode(s,g.app.tkEncoding)
 
@@ -5382,6 +5404,8 @@ into the Task node.
 #@nonl
 #@-node:ekr.20040208095208:Mark Task & Clone To Task commands
 #@-node:ekr.20040329182535:plugins
+#@+node:ekr.20040831114214:Thread the colorizer?
+#@-node:ekr.20040831114214:Thread the colorizer?
 #@-node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20040329182535.7:1-2 hour projects
 #@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
