@@ -68,6 +68,7 @@ def cantImport (s):
     message = "Can not import " + s
     print message
     g.es(message,color="blue")
+    return None # So caller can do x = cantImport("x")
 #@-node:ekr.20040915102019:cantImport
 #@+node:ekr.20040831115238.2:load
 def load( event, entry, c ):

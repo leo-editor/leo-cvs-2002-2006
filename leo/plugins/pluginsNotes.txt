@@ -338,7 +338,7 @@ It is safe to import and execute code from Leo itself, provided that you got Leo
 #@-node:edream.110203113231.7:Hooks should never blindly Python scripts
 #@+node:edream.110203113231.8:NEVER use this kind of code in a hook!!
 @color
-@ WARNING ***** Using the following routine exposes you malicious code in .leo files! *****
+@ WARNING     ** Using the following routine exposes you malicious code in .leo files!     **
 
 Do not EVER use code that blindly executes code in .leo files!
 Someone could send you malicious code embedded in the .leo file.
@@ -1551,7 +1551,7 @@ def suggestWords(self, event):
 	start = "%s.0" % (thisline, )
 	text = c.frame.body.getTextRange(start, insert)
 	# If the user pressed '.' then this isn't in the text yet so we
-	# manually add it - *** This doesn't work!
+	# manually add it -      This doesn't work!
 	if event.char == ".":
 		text += "."
 		dotted = 1

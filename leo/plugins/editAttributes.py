@@ -47,36 +47,35 @@ def addAttrDetection( tag, keywords ):
     can = c.frame.canvas
     #@    << define hit callback >>
     #@+node:ekr.20040722143218:<< define hit callback >>
-    def hit( event, tree = c.frame.tree , c = c):
-       
-        iddict = tree.icon_id_dict
+    def hit (event, c = c):
+        
+        # Modified for 4.2 code base.
+        tree = c.frame.tree
+        iddict = tree.iconIds # was tree.icon_id_dict
         can = event.widget
         x = can.canvasx( event.x )
         y = can.canvasy( event.y )
         olap = can.find_overlapping( x, y, x, y)
         
-        g.trace(olap,iddict.get(olap[0]))
-    
-        # if olap and iddict.has_key( olap[ 0 ] ):
+        # g.trace(olap,iddict.get(olap[0]))
             
         # EKR: search for the key.
         found = False
         for item in olap:
             if iddict.get(item):
-                v = iddict[item]
+                p,generation = iddict[item] # New in 4.2.
                 found = True ; break
             
         if found:
             par = can.master
             can.pack_forget()
-            # v = iddict[ olap[ 0 ] ]
-            if str( v.__class__ )!= 'leoNodes.vnode':
-                v = v.v
-            if hasattr( v,'unknownAttributes' ):
-                b = v.unknownAttributes
+            
+            if hasattr(p.v,'unknownAttributes' ):
+                b = p.v.unknownAttributes
             else:
-                b = v.unknownAttributes = {}
+                b = p.v.unknownAttributes = {}
         
+            v = p
             #@        << create widgets >>
             #@+node:ekr.20040722144601:<< create widgets >>
             f = Tk.Frame( par )
@@ -193,7 +192,6 @@ if Tk and Pmw and weakref and not g.app.unitTesting:
     leoPlugins.registerHandler('open2', addAttrDetection)
     __version__ = ".0.2"
         # 0.2 EKR: converted to outline.  Fixed some bugs.
-    print "editAttributes.py"
     g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20040722142445:@thin editAttributes.py

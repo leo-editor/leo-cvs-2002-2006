@@ -37,10 +37,6 @@
     
 # Timestamp all save operations to show when they occur.
     # mod_timestamp.py
-    
-# Uses Python's urllib module to download files and import them into Leo.
-    # requires the TabbedLog plugin,
-     URLloader.py
 #@nonl
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
@@ -94,11 +90,15 @@
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
+# Adds tabs to Leo outline.
+    ## NOT READY YET: NOT CONVERTED FULLY FROM 4.1 CODE BASE
+    # chapters.py
+
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py
 
 # Turns the log into a tabbed component.  Other plugins may add tabs.
-    # tabbedLog.py
+    TabbedLog.py
     
 # A plugin for searching unknownAttributes (uA's).
     # Requires tabbedLog.py plugin.
@@ -107,17 +107,29 @@
 # Left mouse click scrolls down; right mouse click scrolls up.
     # This does not work well with expanded_click_area = 1
     # UniversalScrolling.py
+    
+# Uses Python's urllib module to download files and import them into Leo.
+    # requires the TabbedLog plugin.
+    # URLloader.py
 #@nonl
 #@-node:ekr.20040915073259.3:Enhance windows
 #@+node:ekr.20040722121404:Experimental plugins
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
     # __wx_gui.py
     
+# Adds ConceptualSort to outline menu.
+    # Requires editAttributes.py plugin.
+    # ConceptualSort.py
+    
+# Add and edit unknown attributes of a node.
+    # Temporarily replaces the outline pane!
+    # editAttributes.py
+
 # The original inspirations for mod_scripting.py 
     # dyna_menu.py
     
-# """Add and edit unknown attributes of a node
-    # editAttributes.py
+# Creates Parameterize Section Reference command.
+    # macros.py
     
 # New from Bernhard Mulder
     # mod_http.py
