@@ -12,7 +12,7 @@
 #@@color
 
 #@+all
-#@+node:ekr.20031218072017.646: To do...
+#@+node:ekr.20031218072017.646:To do...
 #@@ignore
 #@@nocolor
 #@nonl
@@ -688,8 +688,9 @@ if __name__=='__main__':
 #@+node:ekr.20031218072017.785:Test
 #@+at 
 #@nonl
-# We have _lots_ of object available while Leo is running, so it would be possible to pass those objects to the tooltip routines.  
-# However, it is not clear how useful all those global names will be.
+# We have _lots_ of object available while Leo is running, so it would be 
+# possible to pass those objects to the tooltip routines.  However, it is not 
+# clear how useful all those global names will be.
 #@-at
 #@@c
 
@@ -2861,16 +2862,20 @@ Or, use something else instead of "os.startfile" to really use the intended edit
 
 #@+at 
 #@nonl
-# This is not going well :-(  Probably what is happening is that Tk is competing with the win32 extensions in setting the 
-# clipboard.  It might not be so easy to
+# This is not going well :-(  Probably what is happening is that Tk is 
+# competing with the win32 extensions in setting the clipboard.  It might not 
+# be so easy to
 # 
-# a) completely disable Tk's clipboard handling, in _both_ headlines and body text.
+# a) completely disable Tk's clipboard handling, in _both_ headlines and body 
+# text.
 # b) do the cut/paste operations "by hand".
 # 
-# This might require new body routlines to replace the selected text in the body.  And then there are issues relating to whether 
-# the headline or body text should be changed.  All in all, this is much harder than it looks.
+# This might require new body routlines to replace the selected text in the 
+# body.  And then there are issues relating to whether the headline or body 
+# text should be changed.  All in all, this is much harder than it looks.
 # 
-# Also, if one is not careful one can take fatal Python errors related to missing threads.  Pretty much a nightmare.
+# Also, if one is not careful one can take fatal Python errors related to 
+# missing threads.  Pretty much a nightmare.
 #@-at
 #@nonl
 #@+node:ekr.20031218072017.836:updateEditMenu
@@ -4048,7 +4053,8 @@ pack $w.sample.text -side top -anchor c -expand 1 -fill none
 #@+node:ekr.20031218072017.705:dkffontCreateFontPanel
 #@+at 
 #@nonl
-# Build the font panel (except for the apply button, which is handled by the 'configure_apply procedure...
+# Build the font panel (except for the apply button, which is handled by the 
+# 'configure_apply procedure...
 #@-at
 #@@c
 
@@ -4923,8 +4929,9 @@ def open(self,file,fileName):
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@+at 
 #@nonl
-# The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has 
-# specified the "Default Directory" preference that will over-ride what we are about to set.
+# The most natural default directory is the directory containing the .leo file 
+# that we are about to open.  If the user has specified the "Default 
+# Directory" preference that will over-ride what we are about to set.
 #@-at
 #@@c
 
@@ -4961,8 +4968,9 @@ def readOutlineOnly (self,file,fileName):
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@+at 
 #@nonl
-# The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has 
-# specified the "Default Directory" preference that will over-ride what we are about to set.
+# The most natural default directory is the directory containing the .leo file 
+# that we are about to open.  If the user has specified the "Default 
+# Directory" preference that will over-ride what we are about to set.
 #@-at
 #@@c
 
@@ -4985,12 +4993,15 @@ if len(dir) > 0:
 #@nonl
 #@+node:ekr.20040115165036.1:Demo XML comment bug
 #@+at 
-# This document demonstrates what appears to be a bug in Leo 4.1 rc3, build 1.62 of December 19, 2003.
+# This document demonstrates what appears to be a bug in Leo 4.1 rc3, build 
+# 1.62 of December 19, 2003.
 # 
-# It has manifested when Leo is executed under Python 2.3.3, Tk 8.4.3 under Windows 2000.
+# It has manifested when Leo is executed under Python 2.3.3, Tk 8.4.3 under 
+# Windows 2000.
 # 
-# In brief, derived XML files are not well-formed with respect to comments under some conditions.  Comments can wind up nested, 
-# which looks okay to humans but not to XML parsers.
+# In brief, derived XML files are not well-formed with respect to comments 
+# under some conditions.  Comments can wind up nested, which looks okay to 
+# humans but not to XML parsers.
 #@-at
 #@@c
 #@nonl
@@ -5001,8 +5012,10 @@ if len(dir) > 0:
 <HiMom>
 #@+at 
 #@nonl
-# This will produce, in the derived file, an XML comment with another XML comment embedded.  Or, if you prefer, it will produce an 
-# unclosed XML comment followed by a well-formed one, followed by a string of text containing a comment-close marker.
+# This will produce, in the derived file, an XML comment with another XML 
+# comment embedded.  Or, if you prefer, it will produce an unclosed XML 
+# comment followed by a well-formed one, followed by a string of text 
+# containing a comment-close marker.
 # 
 # This text is sitting in the inner comment, according to the first view.
 #@-at
@@ -5010,7 +5023,8 @@ if len(dir) > 0:
 
 
 #@+at
-# This comment is well-formed, seemingly because its content does not begin on the same line as the at-sign.
+# This comment is well-formed, seemingly because its content does not begin on 
+# the same line as the at-sign.
 #@-at
 #@@c
 </HiMom>
@@ -5138,62 +5152,8 @@ other times only fix is to exit & restart.
 #@-node:ekr.20040105064959:Bugs: can wait
 #@-node:ekr.20040329185649:Bugs: can't be fixed or can wait
 #@-node:ekr.20040123102724:Can't or wont
-#@-node:ekr.20031218072017.646: To do...
+#@-node:ekr.20031218072017.646:To do...
 #@+node:EKR.20040430163619:To Do: 4.2
-#@+node:EKR.20040427074150:Bug: suboutline only option doesn't work
-#@-node:EKR.20040427074150:Bug: suboutline only option doesn't work
-#@+node:EKR.20040425130443:(Clone bug)
-#@@nocolor
-Open Discussion
-http://sourceforge.net/forum/forum.php?thread_id=1058570&forum_id=10226
-
-By: Maxim Krikun - tws5
- 4.2a1 problems   
-2004-04-16 07:16  
-
- I'm using this alpha for two days, and had experienced certain strange behaviour. Probably this is related to the warning above. Anyway, here is a report:
-
-(1) Focus switch instead of moving node when moving clones
-
-Create the following tree (all nodes empty):
-
-ROOT
-..clone (1)
-..A
-....clone (2)
-..B
-....clone (3)
-
-If i sit in clone(3) and press Ctrl+U, the focus goes to clone(2). Next Ctrl+U sets focus to clone (1).
-
-If i sit in clone(1) and press Ctrl+D, i get (surprising)
-
-ROOT
-..clone
-..clone
-
-(2) _parent lost somewhere:
-
-in a new file, create 'ROOT' root node
-insert 'SUB' node (Ctrl+I)
-move right (Ctri+R)
-at this point ROOT collapses
-trying to move 'SUB' left (Ctrl+L) raises an exception:
-
-exception executing command
-Traceback (most recent call last):
-File "C:\maxim\leo\leo-4.2-a1\src\leoCommands.py", line 140, in doCommand
-command()
-File "C:\maxim\leo\leo-4.2-a1\src\leoCommands.py", line 3353, in moveOutlineLeft
-p.moveAfter(parent)
-File "C:\maxim\leo\leo-4.2-a1\src\leoNodes.py", line 2493, in moveAfter
-p.linkAfter(a)
-File "C:\maxim\leo\leo-4.2-a1\src\leoNodes.py", line 2987, in linkAfter
-p.v._parent = after.v._parent
-AttributeError: 'NoneType' object has no attribute '_parent'
-
-Also when sitting at "SUB" cannot move up with 'Alt+Up'  
-#@-node:EKR.20040425130443:(Clone bug)
 #@+node:ekr.20040409164648:Bugs
 #@+node:ekr.20040323170225:General bugs
 #@+node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
@@ -5253,14 +5213,17 @@ def idleTimeHookHandler(*args,**keys):
 #@+node:ekr.20031218072017.1596:frame.doHook
 #@+at 
 #@nonl
-# This global function calls a hook routine.  Hooks are identified by the tag param.
-# Returns the value returned by the hook routine, or None if the there is an exception.
+# This global function calls a hook routine.  Hooks are identified by the tag 
+# param.
+# Returns the value returned by the hook routine, or None if the there is an 
+# exception.
 # 
 # We look for a hook routine in three places:
 # 1. g.top().hookFunction
 # 2. app.hookFunction
 # 3. leoPlugins.doPlugins()
-# We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+# We set app.hookError on all exceptions.  Scripts may reset app.hookError to 
+# try again.
 #@-at
 #@@c
 
@@ -5584,9 +5547,11 @@ else:
 #@+node:ekr.20031218072017.3247:<< handle possible class or function >>
 #@+at 
 #@nonl
-# In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
+# In PHP, all functions are typeless and start with the keyword "function;  
+# all classes start with the keyword class.
 # 
-# Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
+# Functions can be nested, but we don't handle that right now (I don't think 
+# it is a common practice anyway).
 #@-at
 #@@c
 if g.match(s,i,"function "):
@@ -7848,8 +7813,9 @@ c.endUpdate(false)
 # 1. self.splitVerticalFlag tells the alignment of the main splitter and
 # 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
 # 
-# Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for 
-# Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
+# Only the general-purpose divideAnySplitter routine doesn't know about these 
+# invariants.  So most of this code is specialized for Leo's window.  OTOH, 
+# creating a single splitter window would be much easier than this code.
 #@-at
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,secondary_ratio):
@@ -8511,11 +8477,13 @@ def clearIvars (self):
 # 
 # 1. We call initConfigParam and initBooleanConfigParam to get the values.
 # 
-# The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section 
-# without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values 
-# via the ivars of this class.
+# The general purpose code will enter all these values into configDict.  This 
+# allows update() to write the configuration section without special case 
+# code.  configDict is not accessible by the user.  Rather, for greater speed 
+# the user access these values via the ivars of this class.
 # 
-# 2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
+# 2. We pass the ivars themselves as params so that default initialization is 
+# done in the ctor, as would normally be expected.
 #@-at
 #@@c
 
@@ -8608,9 +8576,11 @@ self.write_old_format_derived_files = self.initBooleanConfigParam(
 #@+node:ekr.20031218072017.1490:setUndoTypingParams
 #@+at 
 #@nonl
-# This routine saves enough information so a typing operation can be undone and redone.
+# This routine saves enough information so a typing operation can be undone 
+# and redone.
 # 
-# We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+# We do nothing when called from the undo/redo logic because the Undo and Redo 
+# commands merely reset the bead pointer.
 #@-at
 #@@c
 
@@ -8656,8 +8626,9 @@ u.p = p
 #@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
 #@+at 
 #@nonl
-# Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that 
-# match, and save both the old and new middle lines.
+# Incremental undo typing is similar to incremental syntax coloring.  We 
+# compute the number of leading and trailing lines that match, and save both 
+# the old and new middle lines.
 # 
 # NB: the number of old and new middle lines may be different.
 #@-at
@@ -8835,11 +8806,13 @@ elif redoType == "Change Headline":
 #@+node:ekr.20031218072017.2047:<< undo typing cases >>
 #@+at 
 #@nonl
-# When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense 
-# is minor.
+# When making "large" changes to text, we simply save the old and new text for 
+# undo and redo.  This happens rarely, so the expense is minor.
 # 
-# But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount 
-# of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
+# But for typical typing situations, where we are typing a single character, 
+# saving both the old and new text wastes a huge amount of space and puts 
+# extreme stress on the garbage collector.  This in turn can cause big 
+# performance problems.
 #@-at
 #@@c
 	

@@ -410,6 +410,7 @@ class leoFrame:
 	def equalSizedPanes(self):      self.oops()
 	def hideLogWindow (self):       self.oops()
 	def minimizeAll(self):          self.oops()
+	def resizeToScreen(self):       self.oops()
 	def toggleActivePane(self):     self.oops()
 	def toggleSplitDirection(self): self.oops()
 	

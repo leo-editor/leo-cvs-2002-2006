@@ -526,6 +526,7 @@
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
 </v>
+<v t="EKR.20040502125446" a="TV"><vh>At-file thin tests</vh>
 <v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
 <v t="EKR.20040427092657.1"><vh>node 1</vh>
 <v t="EKR.20040428145741" a="E"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
@@ -545,7 +546,8 @@
 <v t="EKR.20040429090143"><vh>@file-thin c:\prog\test\leoAtFile2.txt</vh></v>
 <v t="EKR.20040430083550" a="E"><vh>@ file-thin c:\prog\test\atAllTest.txt</vh></v>
 <v t="EKR.20040430083543"><vh>@file-thin c:\prog\test\atAllTest.txt</vh></v>
-<v t="EKR.20040430160416" a="TV"><vh>Tests: for unit tests</vh>
+</v>
+<v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
 <v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
 <v t="EKR.20040430160416.2"><vh>tex.xml</vh>
 <v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
@@ -1319,6 +1321,7 @@ AssertionError
 @root a.txt 
 some text 
 @ </t>
+<t tx="EKR.20040502125446"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>

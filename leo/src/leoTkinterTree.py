@@ -1994,14 +1994,14 @@ class leoTkinterTree (leoFrame.leoTree):
 			#@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 			#@nl
 	
-		#@	<< set the current node and redraw >>
-		#@+node:ekr.20031218072017.1025:<< set the current node and redraw >>
+		#@	<< set the current node >>
+		#@+node:ekr.20031218072017.1025:<< set the current node >>
 		self.c.setCurrentPosition(p)
 		self.setSelectedLabelState(p)
 		self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
 		g.app.gui.set_focus(c,c.frame.bodyCtrl)
 		#@nonl
-		#@-node:ekr.20031218072017.1025:<< set the current node and redraw >>
+		#@-node:ekr.20031218072017.1025:<< set the current node >>
 		#@nl
 		
 		g.doHook("select2",c=c,new_v=p,old_v=old_p)
