@@ -1489,12 +1489,15 @@ class colorizer:
 		j = s.find(self.block_comment_end,i)
 	
 		if j == -1:
-			# The entire line is part of the block comment.
+			j = len(s) # The entire line is part of the block comment.
 			if self.language=="cweb":
-				self.doLatexLine(s,i,len(s))
+				self.doLatexLine(s,i,j)
 			else:
-				self.tag("comment",i,"end")
-			return len(s),"blockComment" # skipt the rest of the line.
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=j,colortag="comment"):
+					self.tag("comment",i,j)
+			return j,"blockComment" # skip the rest of the line.
+	
 		else:
 			# End the block comment.
 			k = len(self.block_comment_end)
@@ -1502,7 +1505,9 @@ class colorizer:
 				self.doLatexLine(s,i,j)
 				self.tag("comment",j,j+k)
 			else:
-				self.tag("comment",i,j+k)
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=j+k,colortag="comment"):
+					self.tag("comment",i,j+k)
 			i = j + k
 			return i,"normal"
 	#@-body
@@ -1604,8 +1609,11 @@ class colorizer:
 				i = j ; state = "normal"
 			else:
 				# The entire line is in the doc part.
-				self.tag("docPart",i,"end")
-				i = len(s) # skipt the rest of the line.
+				j = len(s)
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=j,colortag="docPart"):
+					self.tag("docPart",i,j)
+				i = j # skip the rest of the line.
 			
 			#@-body
 			#@-node:2::<< handle noweb doc part >>
@@ -1651,16 +1659,23 @@ class colorizer:
 		return self.continuePythonString(s,i,j,"string3s")
 	
 	def continuePythonString (self,s,i,j,continueState):
+	
 		if j == -1: # The entire line is part of the triple-quoted string.
 			if continueState == "string3d":
-				self.doWikiText(s,i,len(s),"string")
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=len(s),colortag="string"):
+					self.tag("string",i,len(s))
 			else:
 				self.tag("string",i,len(s))
 			return len(s),continueState # skip the rest of the line.
+	
 		else: # End the string
 			if continueState == "string3d":
-				self.doWikiText(s,i,j,"string")
-				self.tag("string",j,j+3)
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=j,colortag="string"):
+					self.tag("string",j,j+3)
+				else:
+					self.tag("string",i,j+3)
 			else:
 				self.tag("string",i,j+3)
 			return j+3,"normal"
@@ -1682,9 +1697,11 @@ class colorizer:
 		if self.language != "plain" and (word == "@" or word == "@doc"):
 			# at-space is a Leo keyword.
 			self.tag("leoKeyword",i,j)
-			# Everything on the line is in the doc part.
-			self.tag("docPart",j,"end")
-			return len(s),"doc"
+			k = len(s) # Everything on the line is in the doc part.
+			if not doHook("color-optional-markup",
+				colorer=self,s=s,i=j,j=k,colortag="docPart"):
+				self.tag("docPart",j,k)
+			return k,"doc"
 		elif word == "@nocolor":
 			# Nothing on the line is colored.
 			self.tag("leoKeyword",i,j)
@@ -1881,8 +1898,11 @@ class colorizer:
 				self.doLatexLine(s,j,len(s))
 				i = len(s)
 			else:
-				self.tag("comment",i,"end")
-				i = len(s)
+				j = len(s)
+				if not doHook("color-optional-markup",
+					colorer=self,s=s,i=i,j=j,colortag="comment"):
+					self.tag("comment",i,j)
+				i = j
 			#@-body
 			#@-node:3::<< handle single-line comment >>
 			#@-node:1::Valid regardless of latex mode
@@ -1894,7 +1914,11 @@ class colorizer:
 			#@+node:4::<< start block comment >>
 			#@+body
 			k = len(self.block_comment_start)
-			self.tag("comment",i,i+k)
+			
+			if not doHook("color-optional-markup",
+				colorer=self,s=s,i=i,j=i+k,colortag="comment"):
+				self.tag("comment",i,i+k)
+			
 			i += k ; state = "blockComment"
 			#@-body
 			#@-node:4::<< start block comment >>
@@ -1937,25 +1961,22 @@ class colorizer:
 			#@+node:1::<< handle string >>
 			#@+body
 			if self.language == "python":
+			
 				delim = s[i:i+3]
 				j, state = self.skip_python_string(s,i)
-				if delim == '"""': # Only handle wiki items in """ strings.
-					if state == "string3d":
-						# The entire line is part of the wiki text.
-						self.doWikiText(s,i,j,"string")
-					else:
-						# The wiki text ends at j-3.
-						self.doWikiText(s,i,j-3,"string")
-						self.tag("string",j-3,j)
+				if delim == '"""':
+					# Only handle wiki items in """ strings.
+					if not doHook("color-optional-markup",
+						colorer=self,s=s,i=i,j=j,colortag="string"):
+						self.tag("string",i,j)
 				else:
 					self.tag("string",i,j)
 				i = j
+			
 			else:
 				j, state = self.skip_string(s,i)
 				self.tag("string",i,j)
 				i = j
-			
-			
 			
 			#@-body
 			#@-node:1::<< handle string >>
@@ -2094,137 +2115,7 @@ class colorizer:
 			return j + k
 	#@-body
 	#@-node:9::doNowebSecRef
-	#@+node:10::doWikiText & allies
-	#@+body
-	def doWikiText (self,s,i,end,tag):
-		
-		if 1: # Don't colorize wiki text
-			self.tag(tag,i,end)
-	
-		else: # Handle some wiki formatting elements.
-		
-			# print ; trace(`tag`,`i`,`end`,`s[i:end]`)
-			self.tag(tag,i,end)
-	
-			while i < end:
-				
-				#@<< set first to a tuple describing the first tag to be handled >>
-				#@+node:1::<< set first to a tuple describing the first tag to be handled >>
-				#@+body
-				first = None
-				
-				for tag,delim1,delim2 in (
-					("bold","__","__"),
-					("italic","''","''"),
-					("picture","{picture file=","}"),
-					("color","~~","~~")):
-					n1 = s.find(delim1,i,end)
-					if n1 > -1:
-						n2 = s.find(delim2,n1+len(delim1),end)
-						if n2 > -1:
-							if not first or (first and n1 < first[1]):
-								first = tag,n1,n2,delim1,delim2
-				
-				#@-body
-				#@-node:1::<< set first to a tuple describing the first tag to be handled >>
-
-				if first:
-					tag,n1,n2,delim1,delim2 = first
-					i = n2 + len(delim2)
-					
-					#@<< handle the tag using n1,n2,delim1,delim2 >>
-					#@+node:2::<< handle the tag using n1,n2,delim1,delim2 >>
-					#@+body
-					#@+at
-					#  To do:
-					# 	Create a color tag list.
-					# 	Entries are the color argument, and also the tag name.
-					# 	Create the tag name if it isn't in the list.
-
-					#@-at
-					#@@c
-
-					if tag =="picture":
-						self.tag("elide",n1,n2+len(delim2)) # Elide everything.
-						filename = s[n1+len(delim1):n2]
-						inserted = self.insertWikiPicture(filename,s,n2+len(delim2))
-						if inserted: end += 1
-					elif tag == "color":
-						
-						#@<< parse and handle color field >>
-						#@+node:1::<< parse and handle color field >>
-						#@+body
-						# Parse the color value.
-						j = n1+len(delim1)
-						n = s.find(":",j,n2)
-						if n2 > n > j > -1:
-							name = s[j:n]
-							name = name[0] + name[1:].zfill(6)
-							if name in self.color_tags_list:
-								self.tag("elide",n1,n+1)
-								self.tag(name,n+1,n2)
-								self.tag("elide",n2,n2+len(delim2))
-							else:
-								try:
-									# print "entering", name
-									self.body.tag_configure(name,foreground=name)
-									self.color_tags_list.append(name)
-									self.tag("elide",n1,n+1)
-									self.tag(name,n+1,n2)
-									self.tag("elide",n2,n2+len(delim2))
-								except: # an invalid color name: elide nothing.
-									pass # es_exception()
-						#@-body
-						#@-node:1::<< parse and handle color field >>
-
-					else:
-						self.tag("elide",n1,n1+len(delim1))
-						self.tag("elide",n2,n2+len(delim2))
-						self.tag(tag,n1+len(delim1),n2)
-						# print tag,`n1+len(delim1)`,`n2`
-					#@-body
-					#@-node:2::<< handle the tag using n1,n2,delim1,delim2 >>
-
-				else: i = end
-	#@-body
-	#@+node:3::insertWikiPicture
-	#@+body
-	# Display the image file in the text pane, if you can find the file
-	
-	def insertWikiPicture (self,filename,s,i):
-	
-		if not os.path.isfile(filename):
-			es("Can't insert image: " + filename,color="blue")
-			return
-	
-		# Return if a picture already exists at that location.
-		for data in self.image_references:
-			v,photo,image,fn = data
-			try: index = self.body.index(image)
-			except: index = None
-			if index and fn == filename:
-				return false # nothing inserted.
-		# Tkinter only understands GIF
-		try:
-			photo = Tkinter.PhotoImage(master=app().root, file=filename)
-			# Nicely display the image at the center top and push the text below.
-			if 1:
-				padding=0
-			else:
-				photoWidth = photo.width()
-				bodyWidth = self.body.winfo_width()
-				padding = int((bodyWidth - photoWidth - 16) / 2)
-				padding = max(0,padding)
-			image = self.body.image_create(self.index(i),image=photo,padx=padding)
-			# Keep references so images stay on the canvas.
-			self.image_references.append((self.v,photo,image,filename),)
-			return true # one extra character inserted.
-		except:
-			return false # nothing inserted.
-	#@-body
-	#@-node:3::insertWikiPicture
-	#@-node:10::doWikiText & allies
-	#@+node:11::removeAllTags & removeTagsFromLines
+	#@+node:10::removeAllTags & removeTagsFromLines
 	#@+body
 	def removeAllTags (self):
 		
@@ -2244,7 +2135,7 @@ class colorizer:
 		for tag in self.color_tags_list:
 			self.body.tag_remove(tag,self.index(0),self.index("end"))
 	#@-body
-	#@-node:11::removeAllTags & removeTagsFromLines
+	#@-node:10::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives

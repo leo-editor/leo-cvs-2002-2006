@@ -1759,14 +1759,14 @@ def idleTimeHookHandler(*args):
 	a = app() ; c = top()
 	if c: v = c.currentVnode()
 	else: v = None
-	handleLeoHook("idle",c=c,v=v)
+	doHook("idle",c=c,v=v)
 	# Requeue this routine after 100 msec.
 	# Faster requeues overload the system.
 	if a.idleTimeHook:
 		a.root.after(a.idleTimeDelay,idleTimeHookHandler)
 #@-body
 #@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:2::handleLeoHook
+#@+node:2::doHook
 #@+body
 #@+at
 #  This global function calls a hook routine.  Hooks are identified by the tag param.
@@ -1782,7 +1782,7 @@ def idleTimeHookHandler(*args):
 #@-at
 #@@c
 
-def handleLeoHook(tag,**keywords):
+def doHook(tag,*args,**keywords):
 
 	a = app() ; c = top() # c may be None during startup.
 	
@@ -1815,7 +1815,7 @@ def handleLeoHook(tag,**keywords):
 	a.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
 #@-body
-#@-node:2::handleLeoHook
+#@-node:2::doHook
 #@+node:3::issueHookWarning
 #@+body
 #@+at
@@ -1957,8 +1957,8 @@ def es(s,*args,**keys):
 # window and opening a .leo file also set app().log correctly, so it appears 
 # that all holes have now been plugged.
 # 
-# Note 1: handleLeoHook calls top(), so the wrong hook function might be 
-# dispatched if this routine does not return the proper value.
+# Note 1: doHook calls top(), so the wrong hook function might be dispatched 
+# if this routine does not return the proper value.
 # 
 # Note 2: The value of top() may change during a new or open command, which 
 # may change the routine used to execute the "command1" and "command2" hooks.  
@@ -3173,7 +3173,33 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 
 #@-body
 #@-node:1::CheckVersion (Dave Hein)
-#@+node:2::unloadAll
+#@+node:2::importFromPath
+#@+body
+def importFromPath (name,path):
+	
+	import imp
+	
+	file = None ; module = None
+	try:
+		fn = shortFileName(name)
+		module,ext = os.path.splitext(fn)
+		path = os.path.normpath(path)
+		data = imp.find_module(module,[path])
+		if data:
+			try:
+				file,pathname,description = data
+				module = imp.load_module(module,file,pathname,description)
+			finally:
+				if not module: es_exception()
+				if file: file.close()
+	except:
+		es_exception()
+		
+	return module
+
+#@-body
+#@-node:2::importFromPath
+#@+node:3::unloadAll
 #@+body
 #@+at
 #  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
@@ -3206,8 +3232,8 @@ def unloadAll():
 		es_exception()
 
 #@-body
-#@-node:2::unloadAll
-#@+node:3::plugin_signon
+#@-node:3::unloadAll
+#@+node:4::plugin_signon
 #@+body
 def plugin_signon(module_name):
 	
@@ -3218,9 +3244,13 @@ def plugin_signon(module_name):
 			m.__name__, m.__version__, plugin_date(m)))
 	else:
 		print m.__name__, m.__version__
+		
+	# Increment a global count.
+	import leoPlugins
+	leoPlugins.count += 1
 
 #@-body
-#@-node:3::plugin_signon
+#@-node:4::plugin_signon
 #@-node:11::Startup & initialization...
 #@+node:12::Unicode utils...
 #@+node:1::isValidEncoding

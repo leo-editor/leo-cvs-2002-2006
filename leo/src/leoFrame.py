@@ -116,7 +116,7 @@ class LeoFrame:
 		#@-node:2::<< create the first tree node >>
 
 		v = c.currentVnode()
-		if handleLeoHook("menu1",c=c,v=v) == None:
+		if not doHook("menu1",c=c,v=v):
 			self.createMenuBar(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
@@ -574,18 +574,18 @@ class LeoFrame:
 	def OnBodyClick (self,event=None):
 		try:
 			c = self.commands ; v = c.currentVnode()
-			if handleLeoHook("bodyclick1",c=c,v=v,event=event) == None:
+			if not doHook("bodyclick1",c=c,v=v,event=event):
 				self.OnActivateBody(event=event)
-			handleLeoHook("bodyclick2",c=c,v=v,event=event)
+			doHook("bodyclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("bodyclick")
 			
 	def OnBodyRClick(self,event=None):
 		try:
 			c = self.commands ; v = c.currentVnode()
-			if handleLeoHook("bodyrclick1",c=c,v=v,event=event) == None:
+			if not doHook("bodyrclick1",c=c,v=v,event=event):
 				pass # By default Leo does nothing.
-			handleLeoHook("bodyrclick2",c=c,v=v,event=event)
+			doHook("bodyrclick2",c=c,v=v,event=event)
 		except:
 			es_event_exception("iconrclick")
 	#@-body
@@ -596,14 +596,14 @@ class LeoFrame:
 	
 		try:
 			c = self.commands ; v = c.currentVnode()
-			if handleLeoHook("bodydclick1",c=c,v=v,event=event) == None:
+			if not doHook("bodydclick1",c=c,v=v,event=event):
 				if event: # 8/4/02: prevent wandering insertion point.
 					index = "@%d,%d" % (event.x, event.y) # Find where we clicked
 				body = self.body
 				start = body.index(index + " wordstart")
 				end = body.index(index + " wordend")
 				setTextSelection(self.body,start,end)
-			handleLeoHook("bodydclick1",c=c,v=v,event=event)
+			doHook("bodydclick1",c=c,v=v,event=event)
 		except:
 			es_event_exception("bodydclick")
 	
@@ -1053,8 +1053,10 @@ class LeoFrame:
 			("Edit &Headline","Ctrl+H",self.OnEditHeadline),
 			("&End Edit Headline","Escape",self.OnEndEditHeadline),
 			("&Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
-			("Insert Headline Time/&Date","Shift+Ctrl+H",self.OnInsertHeadlineTime),
-			("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets))
+			("Insert Headline Time/&Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
+			
+			# 5/16/03 EKR: I dislike this command.
+			#("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets)
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
@@ -1229,7 +1231,7 @@ class LeoFrame:
 		#@-body
 		#@-node:3::<< create the outline menu >>
 
-		handleLeoHook("create-optional-menus",c=c) # A stub hook.
+		doHook("create-optional-menus",c=c)
 		
 		#@<< create the window menu >>
 		#@+node:4::<< create the window menu >>
@@ -1396,8 +1398,8 @@ class LeoFrame:
 	# Command handlers no longer need to return "break".  Yippee!
 	# 
 	# The code assumes that the "command1" hook has completely handled the 
-	# command if handleLeoHook("command1") returns false.  This provides a 
-	# very simple mechanism for overriding commands.
+	# command if doHook("command1") returns false.  This provides a very 
+	# simple mechanism for overriding commands.
 
 	#@-at
 	#@@c
@@ -1411,7 +1413,7 @@ class LeoFrame:
 		if label == "cantundo": label = "undo"
 		app().commandName = label
 		c = self.commands ; v = c.currentVnode() # 2/8/03
-		if handleLeoHook("command1",c=c,v=v,label=label) == None:
+		if not doHook("command1",c=c,v=v,label=label):
 			try:
 				command(event)
 			except:
@@ -1419,7 +1421,7 @@ class LeoFrame:
 				print "exception executing command"
 				es_exception()
 		
-		handleLeoHook("command2",c=c,v=v,label=label)
+		doHook("command2",c=c,v=v,label=label)
 				
 		return "break" # Inhibit all other handlers.
 	#@-body
@@ -1455,7 +1457,7 @@ class LeoFrame:
 		top = frame.top
 		
 		# 5/16/03: Needed for hooks.
-		handleLeoHook("new",old_c=self,new_c=frame.commands)
+		doHook("new",old_c=self,new_c=frame.commands)
 	
 		# Set the size of the new window.
 		h = config.getIntWindowPref("initial_window_height")
@@ -1541,7 +1543,7 @@ class LeoFrame:
 		if not data: return
 		try:
 			openType,arg,ext=data
-			if handleLeoHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext) == None:
+			if not doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
 				
 				#@<< set ext based on the present language >>
 				#@+node:1::<< set ext based on the present language >>
@@ -1682,7 +1684,7 @@ class LeoFrame:
 				#@-body
 				#@-node:3::<< execute a command to open path in external editor >>
 
-			handleLeoHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+			doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
 		except:
 			es("exception in OnOpenWith")
 			es_exception()
@@ -1771,13 +1773,13 @@ class LeoFrame:
 			file = open(fileName,'r')
 			if file:
 				frame = LeoFrame(fileName)
-				if handleLeoHook("open1",
-					old_c=self,new_c=frame.commands,fileName=fileName)==None:
+				if not doHook("open1",
+					old_c=self,new_c=frame.commands,fileName=fileName):
 					app().log = frame # 5/12/03
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				frame.updateRecentFiles(fileName)
-				handleLeoHook("open2",
+				doHook("open2",
 					old_c=self,new_c=frame.commands,fileName=fileName)
 				return true, frame
 			else:
@@ -1987,13 +1989,13 @@ class LeoFrame:
 			file = open(fileName,'r')
 			if file:
 				frame = LeoFrame(fileName)
-				if handleLeoHook("open1",
-					old_c=self,new_c=frame.commands,fileName=fileName)==None:
+				if not doHook("open1",
+					old_c=self,new_c=frame.commands,fileName=fileName):
 					app().log = frame # 5/12/03
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				frame.updateRecentFiles(fileName)
-				handleLeoHook("open2",
+				doHook("open2",
 					old_c=self,new_c=frame.commands,fileName=fileName)
 				return true, frame
 			else:
@@ -2034,13 +2036,13 @@ class LeoFrame:
 			return
 	
 		fileName = name
-		if handleLeoHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag)==None:
+		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
 				app().windowList.remove(self)
 				self.destroy() # force the window to go away now.
 				app().log = frame # Sets the log stream for es()
-		handleLeoHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
 	#@-node:2::frame.OnOpenRecentFile
 	#@-node:2::Recent Files submenu
@@ -4194,7 +4196,7 @@ class LeoFrame:
 		
 		# Allow the user first crack at updating menus.
 		c = self.commands ; v = c.currentVnode() # 2/8/03
-		if handleLeoHook("menu2",c=c,v=v) == None:
+		if not doHook("menu2",c=c,v=v):
 			self.updateFileMenu()
 			self.updateEditMenu()
 			self.updateOutlineMenu()

@@ -256,6 +256,9 @@ class leoTree:
 	#@+node:3::drawBox (tag_bind)
 	#@+body
 	def drawBox (self,v,x,y):
+		
+		if doHook("draw-outine-box",tree=self,v=v,x=x,y=y):
+			return
 	
 		y += 7 # draw the box at x, y+7
 	
@@ -273,24 +276,72 @@ class leoTree:
 			self.tagBindings.append((id,id2,"<Double-1>"),)
 	#@-body
 	#@-node:3::drawBox (tag_bind)
-	#@+node:4::drawNode
+	#@+node:4::drawIcon (tag_bind))
+	#@+body
+	# Draws icon for v at x,y
+	
+	def drawIcon(self,v,x,y):
+		
+		hook_val = doHook("draw-outline-icon",tree=self,v=v,x=x,y=y)
+		if hook_val != None: return hook_val
+	
+		v.iconx, v.icony = x,y
+		y += 2 # draw icon at y + 2
+	
+		# Always recompute icon.
+		val = v.iconVal = v.computeIcon()
+		assert(0 <= val <= 15)
+		
+		# Compute the image name
+		imagename = "box"
+		if val < 10: imagename += "0"
+		imagename += `val`
+	
+		# Get the image
+		image = self.getIconImage(imagename + ".GIF")
+		id = self.canvas.create_image(x,y,anchor="nw",image=image)
+		if 1: # 6/15/02: this reference is now cleared in v.__del__
+			v.icon_id = id
+		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick) # 2/8/03
+		if self.recycleBindings:
+			self.tagBindings.append((id,id1,"<1>"),)
+			self.tagBindings.append((id,id2,"<Double-1>"),)
+			self.tagBindings.append((id,id3,"<3>"),) # 2/8/03
+	
+		return 0 # dummy icon height
+	
+	#@-body
+	#@-node:4::drawIcon (tag_bind))
+	#@+node:5::drawNode
 	#@+body
 	def drawNode(self,v,x,y):
 	
-		# Draw horizontal line from vertical line to icon.
+		"""Draw horizontal line from vertical line to icon"""
+		
+		hook_val = doHook("draw-outline-node",tree=self,v=v,x=x,y=y)
+		if hook_val != None: return hook_val
+	
 		self.canvas.create_line(x, y+7, x+box_width, y+7,tag="lines",fill="gray50") # stipple="gray25")
-		if v.firstChild(): self.drawBox(v,x,y)
+		if v.firstChild():
+			self.drawBox(v,x,y)
+	
 		icon_height = self.drawIcon(v,x+box_width,y)
 		text_height = self.drawText(v,x+box_width+icon_width,y)
 		return max(icon_height, text_height)
+	
 	#@-body
-	#@-node:4::drawNode
-	#@+node:5::drawText (bind)
+	#@-node:5::drawNode
+	#@+node:6::drawText (bind)
 	#@+body
 	# draws text for v at x,y
 	
 	def drawText(self,v,x,y):
-	
+		
+		hook_val = doHook("draw-outline-text-box",tree=self,v=v,x=x,y=y)
+		if hook_val != None: return hook_val
+		
 		x += text_indent
 		if v.edit_text: # self.canvas.delete("all") may already have done this, but do it anyway.
 			v.edit_text.destroy()
@@ -329,10 +380,13 @@ class leoTree:
 	
 		return self.line_height
 	#@-body
-	#@-node:5::drawText (bind)
-	#@+node:6::drawTree
+	#@-node:6::drawText (bind)
+	#@+node:7::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
+		
+		hook_val = doHook("draw-sub-outline",tree=self,v=v,x=x,y=y,h=h,level=level)
+		if hook_val != None: return hook_val
 		
 		# Recursive routine, stat() not useful.
 		yfirst = ylast = y
@@ -360,8 +414,8 @@ class leoTree:
 
 		return y
 	#@-body
-	#@-node:6::drawTree
-	#@+node:7::endUpdate
+	#@-node:7::drawTree
+	#@+node:8::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
 	
@@ -370,8 +424,8 @@ class leoTree:
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@-body
-	#@-node:7::endUpdate
-	#@+node:8::headWidth
+	#@-node:8::endUpdate
+	#@+node:9::headWidth
 	#@+body
 	#@+at
 	#  Returns the proper width of the entry widget for the headline. This has 
@@ -384,41 +438,8 @@ class leoTree:
 	
 		return max(10,5 + len(v.headString()))
 	#@-body
-	#@-node:8::headWidth
-	#@+node:9::hideAllChildren
-	#@+body
-	def hideAllChildren(self,v):
-	
-		child = v.firstChild()
-		while child:
-			self.hideTree(child)
-			child = child.next()
-	#@-body
-	#@-node:9::hideAllChildren
-	#@+node:10::hideNode (no longer used)
-	#@+body
-	def hideNode(self,v):
-	
-		self.canvas.delete(v.box_id)
-		self.canvas.delete(v.icon_id)
-		self.canvas.delete(v.edit_text)
-		self.canvas.delete(v.edit_text_id)
-		v.box_id = v.icon_id = None
-		v.edit_text = v.edit_text_id = None
-	#@-body
-	#@-node:10::hideNode (no longer used)
-	#@+node:11::hideTree (no longer used)
-	#@+body
-	def hideTree(self,v):
-	
-		last = v.lastNode()
-		while v:
-			self.hideNode(v)
-			if v == last: break
-			v = v.threadNext()
-	#@-body
-	#@-node:11::hideTree (no longer used)
-	#@+node:12::lastVisible
+	#@-node:9::headWidth
+	#@+node:10::lastVisible
 	#@+body
 	# Returns the last visible node of the screen.
 	
@@ -436,8 +457,8 @@ class leoTree:
 				v = v.threadNext()
 		return last
 	#@-body
-	#@-node:12::lastVisible
-	#@+node:13::setLineHeight
+	#@-node:10::lastVisible
+	#@+node:11::setLineHeight
 	#@+body
 	def setLineHeight (self,font):
 		
@@ -451,44 +472,8 @@ class leoTree:
 			es("exception setting outline line height")
 			es_exception()
 	#@-body
-	#@-node:13::setLineHeight
-	#@+node:14::tree.drawIcon (tag_bind))
-	#@+body
-	# Draws icon for v at x,y
-	
-	def drawIcon(self,v,x,y):
-	
-		v.iconx, v.icony = x,y
-	
-		y += 2 # draw icon at y + 2
-	
-		# Always recompute icon.
-		val = v.iconVal = v.computeIcon()
-		assert(0 <= val <= 15)
-		
-		# Compute the image name
-		imagename = "box"
-		if val < 10: imagename += "0"
-		imagename += `val`
-	
-		# Get the image
-		image = self.getIconImage(imagename + ".GIF")
-		id = self.canvas.create_image(x,y,anchor="nw",image=image)
-		if 1: # 6/15/02: this reference is now cleared in v.__del__
-			v.icon_id = id
-		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
-		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
-		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick) # 2/8/03
-		if self.recycleBindings:
-			self.tagBindings.append((id,id1,"<1>"),)
-			self.tagBindings.append((id,id2,"<Double-1>"),)
-			self.tagBindings.append((id,id3,"<3>"),) # 2/8/03
-	
-		return 0 # dummy icon height
-	
-	#@-body
-	#@-node:14::tree.drawIcon (tag_bind))
-	#@+node:15::tree.getFont,setFont,setFontFromConfig
+	#@-node:11::setLineHeight
+	#@+node:12::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
 	
@@ -515,8 +500,8 @@ class leoTree:
 	
 		self.setFont(font)
 	#@-body
-	#@-node:15::tree.getFont,setFont,setFontFromConfig
-	#@+node:16::tree.getIconImage
+	#@-node:12::tree.getFont,setFont,setFontFromConfig
+	#@+node:13::tree.getIconImage
 	#@+body
 	def getIconImage (self, name):
 	
@@ -542,8 +527,8 @@ class leoTree:
 			es_exception()
 			return None
 	#@-body
-	#@-node:16::tree.getIconImage
-	#@+node:17::tree.idle_scrollTo
+	#@-node:13::tree.getIconImage
+	#@+node:14::tree.idle_scrollTo
 	#@+body
 	#@+at
 	#  This scrolls the canvas so that v is in view.  This is done at idle 
@@ -583,8 +568,8 @@ class leoTree:
 			self.canvas.yview("moveto",frac2)
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
 	#@-body
-	#@-node:17::tree.idle_scrollTo
-	#@+node:18::tree.numberOfVisibleNodes
+	#@-node:14::tree.idle_scrollTo
+	#@+node:15::tree.numberOfVisibleNodes
 	#@+body
 	def numberOfVisibleNodes(self):
 		
@@ -594,8 +579,8 @@ class leoTree:
 			v = v.visNext()
 		return n
 	#@-body
-	#@-node:18::tree.numberOfVisibleNodes
-	#@+node:19::tree.recolor, recolor_now, recolor_range
+	#@-node:15::tree.numberOfVisibleNodes
+	#@+node:16::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -616,8 +601,8 @@ class leoTree:
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:19::tree.recolor, recolor_now, recolor_range
-	#@+node:20::tree.redraw , force_redraw, redraw_now
+	#@-node:16::tree.recolor, recolor_now, recolor_range
+	#@+node:17::tree.redraw , force_redraw, redraw_now
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
@@ -653,7 +638,8 @@ class leoTree:
 			self.canvas['cursor'] = "watch"
 			self.deleteBindings()
 			self.canvas.delete("all")
-			self.drawTree(self.rootVnode,root_left,root_top,0,0)
+			if not doHook("redraw-entire-outline",c=self.commands):
+				self.drawTree(self.rootVnode,root_left,root_top,0,0)
 			self.canvas['cursor'] = oldcursor
 			# Set up the scroll region.
 			x0, y0, x1, y1 = self.canvas.bbox("all")
@@ -663,8 +649,8 @@ class leoTree:
 			if self.recycleBindings:
 				collectGarbage()
 	#@-body
-	#@-node:20::tree.redraw , force_redraw, redraw_now
-	#@+node:21::tree.yoffset
+	#@-node:17::tree.redraw , force_redraw, redraw_now
+	#@+node:18::tree.yoffset
 	#@+body
 	#@+at
 	#  We can't just return icony because the tree hasn't been redrawn yet.  
@@ -700,7 +686,7 @@ class leoTree:
 			v = v.next()
 		return h, false
 	#@-body
-	#@-node:21::tree.yoffset
+	#@-node:18::tree.yoffset
 	#@-node:4::Drawing
 	#@+node:5::Event handers (tree)
 	#@+body
@@ -848,7 +834,7 @@ class leoTree:
 		if not c or not v or v != c.currentVnode():
 			return "break"
 		# Call the pre-key hook.
-		if handleLeoHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)!=None:
+		if doHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType):
 			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
 		s = c.body.get("1.0", "end")
@@ -992,7 +978,7 @@ class leoTree:
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
 		# Call the post-key hook.
-		handleLeoHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
+		doHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
 	#@-body
 	#@-node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
@@ -1177,7 +1163,7 @@ class leoTree:
 		c = self.commands
 		if not v or not v.edit_text or v != c.currentVnode():
 			return "break"
-		if handleLeoHook("headkey1",c=c,v=v,ch=ch) != None:
+		if doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
@@ -1239,7 +1225,7 @@ class leoTree:
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
 	
-		handleLeoHook("headkey2",c=c,v=v,ch=ch)
+		doHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@-body
 	#@-node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
@@ -1276,8 +1262,7 @@ class leoTree:
 		c = self.commands
 		s = v.headString().strip()
 		if match_word(s,0,"@url"):
-			flag = handleLeoHook("@url1",c=c,v=v)
-			if flag == None:  # Anything other than None overrides.
+			if not doHook("@url1",c=c,v=v):
 				url = s[4:].strip()
 				
 				#@<< stop the url after any whitespace >>
@@ -1355,7 +1340,7 @@ class leoTree:
 				#@-body
 				#@-node:3::<< pass the url to the web browser >>
 
-			handleLeoHook("@url2",c=c,v=v)
+			doHook("@url2",c=c,v=v)
 	#@-body
 	#@-node:12::tree.OnIconDoubleClick (@url)
 	#@+node:13::tree.OnPopup
@@ -1627,7 +1612,7 @@ class leoTree:
 		#@-node:1::<< define vars and stop editing >>
 
 	
-		if handleLeoHook("unselect1",c=c,new_v=v,old_v=old_v) == None:
+		if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
 			
 			#@<< unselect the old node >>
 			#@+node:2::<< unselect the old node >>
@@ -1648,9 +1633,9 @@ class leoTree:
 
 		else: old_body = u""
 	
-		handleLeoHook("unselect2",c=c,new_v=v,old_v=old_v)
+		doHook("unselect2",c=c,new_v=v,old_v=old_v)
 		
-		if handleLeoHook("select1",c=c,new_v=v,old_v=old_v) == None:
+		if not doHook("select1",c=c,new_v=v,old_v=old_v):
 			
 			#@<< select the new node >>
 			#@+node:3::<< select the new node >>
@@ -1694,7 +1679,7 @@ class leoTree:
 		#@-body
 		#@-node:4::<< set the current node and redraw >>
 
-		handleLeoHook("select2",c=c,new_v=v,old_v=old_v)
+		doHook("select2",c=c,new_v=v,old_v=old_v)
 	#@-body
 	#@-node:7::tree.select
 	#@+node:8::tree.set...LabelState

@@ -86,7 +86,7 @@ def leoOpen(fileName=None,*args):
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
-	handleLeoHook("start1")
+	doHook("start1")
 	# Create the first Leo window
 	frame1 = leoFrame.LeoFrame()
 	frame1.top.withdraw()
@@ -118,7 +118,7 @@ def leoOpen(fileName=None,*args):
 	# Write any queued output generated before a log existed.
 	app.writeWaitingLog() # 2/16/03
 	c = frame.commands ; v = c.currentVnode() # 2/8/03
-	handleLeoHook("start2",c=c,v=v,fileName=fileName)
+	doHook("start2",c=c,v=v,fileName=fileName)
 	root.mainloop()
 #@-body
 #@-node:3::leo.leoOpen
@@ -152,7 +152,7 @@ def run(*args):
 	if not app.finishCreate(): # do this after gApp exists.
 		root.destroy()
 		return
-	handleLeoHook("start1")
+	doHook("start1")
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.top.deiconify() # 7/19/02
@@ -162,7 +162,7 @@ def run(*args):
 	issueHookWarning()
 	# Write any queued output generated before a log existed.
 	app.writeWaitingLog() # 2/16/03
-	handleLeoHook("start2")
+	doHook("start2")
 	root.mainloop()
 #@-body
 #@-node:4::leo.run

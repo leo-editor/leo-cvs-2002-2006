@@ -409,7 +409,7 @@ class LeoApp:
 	def quit(self):
 	
 		# Wait until everything is quiet before really quitting.
-		handleLeoHook("end1")
+		doHook("end1")
 	
 		self.destroyAllGlobalWindows()
 		self.handleOpenTempFiles()

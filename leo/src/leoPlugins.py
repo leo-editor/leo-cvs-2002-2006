@@ -19,6 +19,7 @@ After startup:
 from leoGlobals import *
 
 handlers = {}
+count = 0 ; examined = 0
 
 def doPlugins(tag,keywords):
 	if tag == "start1":
@@ -33,26 +34,15 @@ def loadHandlers():
 
 	"""Load all plugins from the plugins directory"""
 	import glob,os,sys
-	oldpath = sys.path
-	try: # Make sure we restore sys.path.
-		path = os.path.join(app().loadDir,"..","plugins") # 2/19/03
-		files = glob.glob(os.path.join(path,"mod_*.py"))
-		files.sort()
-		if files:
-			# es("Loading plugins:",color="red")
-			sys.path.append(path)
-			for file in files:
-				try:
-					fn = shortFileName(file)
-					module,ext = os.path.splitext(fn)
-					exec ("import " + module)
-				except:
-					es("Exception importing " + module)
-					es_exception()
-	finally:
-		sys.path = oldpath
-
-
+	global count
+	
+	path = os.path.join(app().loadDir,"..","plugins")
+	files = glob.glob(os.path.join(path,"*.py"))
+	files.sort()
+	if files:
+		for file in files:
+			importFromPath(file,path)
+		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")
 #@-body
 #@-node:1::loadHandlers
 #@+node:2::doHandlersForTag
@@ -70,6 +60,7 @@ def doHandlersForTag (tag,keywords):
 			ret = handle_fn(tag,keywords)
 			if ret is not None:
 				return ret
+
 	if handlers.has_key("all"):
 		handle_fns = handlers["all"]
 		handle_fns.sort()
@@ -85,7 +76,9 @@ def doHandlersForTag (tag,keywords):
 def registerHandler(tags,fn):
 	
 	""" Register one or more handlers"""
+	
 	import types
+
 	if type(tags) in (types.TupleType,types.ListType):
 		for tag in tags:
 			registerOneHandler(tag,fn)
@@ -93,8 +86,11 @@ def registerHandler(tags,fn):
 		registerOneHandler(tags,fn)
 
 def registerOneHandler(tag,fn):
+	
 	"""Register one handler"""
-	global handlers,errors
+
+	global handlers
+
 	existing = handlers.setdefault(tag,[])
 	try:
 		existing.append(fn)
@@ -106,7 +102,9 @@ def registerOneHandler(tag,fn):
 #@+node:4::registerExclusiveHandler
 #@+body
 def registerExclusiveHandler(tag, fn):
+	
 	""" Register one or more exclusive handlers"""
+	
 	import types
 	
 	if type(tags) in (types.TupleType,types.ListType):
@@ -116,8 +114,11 @@ def registerExclusiveHandler(tag, fn):
 		registerOneExclusiveHandler(tags,fn)
 			
 def registerOneExclusiveHandler(tag, fn):
+	
 	"""Register one exclusive handler"""
-	global handlers,errors
+	
+	global handlers
+	
 	if handlers.has_key(tag):
 		es("*** Two exclusive handlers for '%s'" % tag)
 	else:
