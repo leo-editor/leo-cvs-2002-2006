@@ -1149,17 +1149,19 @@ class baseLeoTree:
 			return
 	
 		if not self.dragging:
-			# 11/25/02: Only do this once: greatly speeds drags.
+			windowPref = app.config.getBoolWindowPref
+			# Only do this once: greatly speeds drags.
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
 			self.dragging = true
-			self.controlDrag = c.frame.controlKeyIsDown
-			# 1/29/03: support this new option.
-			flag = app.config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
-			if flag:
-				if self.controlDrag:
-					es("dragged node will be cloned")
-				else:
-					es("dragged node will be moved")
+			if windowPref("allow_clone_drags"):
+				self.controlDrag = c.frame.controlKeyIsDown
+				if windowPref("look_for_control_drag_on_mouse_down"):
+					if windowPref("enable_drag_messages"):
+						if self.controlDrag:
+							es("dragged node will be cloned")
+						else:
+							es("dragged node will be moved")
+			else: self.controlDrag = false
 			self.canvas['cursor'] = "hand2" # "center_ptr"
 	
 		self.OnContinueDrag(v,event)
@@ -1177,7 +1179,7 @@ class baseLeoTree:
 			return
 	
 		assert(v == self.drag_v)
-		c = self.commands ; canvas = self.canvas
+		c = self.commands ; canvas = self.canvas ; config = app.config
 	
 		if event:
 			#@		<< set vdrag, childFlag >>
@@ -1192,10 +1194,10 @@ class baseLeoTree:
 			#@nonl
 			#@-node:<< set vdrag, childFlag >>
 			#@nl
-			# 1/29/03: support for this new option.
-			flag = app.config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
-			if not flag:
-				self.controlDrag = c.frame.controlKeyIsDown
+			if config.getBoolWindowPref("allow_clone_drags"):
+				if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
+					self.controlDrag = c.frame.controlKeyIsDown
+	
 			if vdrag and vdrag != v:
 				if self.controlDrag: # Clone v and move the clone.
 					if childFlag:

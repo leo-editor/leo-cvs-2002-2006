@@ -16,11 +16,11 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -30,9 +30,9 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -765,7 +765,17 @@ body_gmt_time = 0
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="T19">headline_text_unselected_foreground_color = black
+<t tx="T19">allow_clone_drags = 1
+# 1: Allows control-dragging to create clones.
+# 0: All drags move nodes.
+# See also: look_for_control_drag_on_mouse_down
+# Setting this setting to 0 allows Leo to be used on Aqua.
+
+enable_drag_messages = 1
+# 1: Tell whether drags will move nodes or clone nodes.
+# 0: Don't issue such messages.
+
+headline_text_unselected_foreground_color = black
 headline_text_unselected_background_color = white
 #	Foreground and background colors of unselected headline text.
 #	Both must be specified for either to take effect.

@@ -39,11 +39,13 @@ class baseConfig:
 		"color_directives_in_plain_text" : 1,
 		"underline_undefined_section_names" : 1,
 		# Window options...
+		"allow_clone_drags" : 1,
 		"body_pane_wraps" : 1,
 		"body_text_font_family" : "Courier",
 		"body_text_font_size" : defaultBodyFontSize,
 		"body_text_font_slant" : "roman",
 		"body_text_font_weight" : "normal",
+		"enable_drag_messages" : 1,
 		"headline_text_font_size" : 12,
 		"headline_text_font_slant" : "roman",
 		"headline_text_font_weight" : "normal",

@@ -264,7 +264,7 @@
 <v t="T163"><vh>Ý</vh></v>
 </v>
 <v t="T164"><vh>Script to find which modules define names</vh></v>
-<v t="T165" a="E"><vh>4.0 Test files</vh>
+<v t="T165"><vh>4.0 Test files</vh>
 <v t="T166"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T167"><vh>Test Files...</vh>
 <v t="T168" a="C"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
@@ -2717,8 +2717,8 @@
 <v t="T2164"><vh>node3</vh></v>
 </v>
 </v>
-<v t="T2165" a="E" tnodeList="2165,2166,2167,2168,2169,2170,2171,2172,2173,2174"><vh>@file c:\prog\test\leo.py </vh>
-<v t="T2166" a="MV"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
+<v t="T2165" tnodeList="2165,2166,2167,2168,2169,2170,2171,2172,2173,2174"><vh>@file c:\prog\test\leo.py </vh>
+<v t="T2166" a="M"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="T2167"><vh>runMainLoop</vh></v>
 <v t="T2168"><vh>run &amp; allies</vh>
 <v t="T2169"><vh>createTkRoot</vh>
@@ -2731,6 +2731,7 @@
 <v t="T2174"><vh>profile</vh></v>
 </v>
 </v>
+<v a="V"><vh>classImportTest</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -33681,7 +33682,7 @@ several files: pychecker complains about several routines being "too big", i.e.,
 @c
 
 if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
-	try: #changed 7
+	try: #changed 8
 		import pychecker.checker
 	except: pass</t>
 <t tx="T2167">def runMainLoop(root):

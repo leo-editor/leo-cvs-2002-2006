@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="648" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="668" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="25" left="318" height="828" width="873"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -384,7 +384,7 @@
 </v>
 </v>
 </v>
-<v t="T337" a="V"><vh>Plugins</vh>
+<v t="T337" a="E"><vh>Plugins</vh>
 <v t="T338"><vh>Commands</vh>
 <v t="T339"><vh> Importing Cisco configuration files</vh>
 <v t="T340" a="M" tnodeList="340,341,342,343,344,345,346,347"><vh>@file import_cisco_config.py</vh>
@@ -796,6 +796,31 @@
 <v t="T647"><vh>update</vh></v>
 <v t="T648"><vh>updateButtons</vh></v>
 </v>
+</v>
+</v>
+</v>
+<v t="T649" a="V"><vh>Plugin manager (demo)</vh>
+<v t="T650"><vh>Notes by Paul Paterson</vh></v>
+<v t="T651" tnodeList="651,652,653,654,655,656,657,658,659,660"><vh>@file leopm_client.py</vh>
+<v t="T652"><vh>class LeoPMClient</vh>
+<v t="T653"><vh>__init__</vh></v>
+<v t="T654"><vh>poll</vh></v>
+<v t="T655"><vh>_getSelectedPluginName</vh></v>
+<v t="T656"><vh>updateDetail</vh></v>
+<v t="T657"><vh>downloadPlugin</vh></v>
+<v t="T658"><vh>getPluginList</vh></v>
+<v t="T659"><vh>initListbox</vh></v>
+<v t="T660"><vh>getVersionOfFile</vh></v>
+</v>
+</v>
+<v t="T661" tnodeList="661,662,662,663,664,665,666,667,668"><vh>@file leopm_server.py</vh>
+<v t="T662"><vh>class LeoPM</vh>
+<v t="T663"><vh>__init__</vh></v>
+<v t="T664"><vh>getPluginNames</vh></v>
+<v t="T665"><vh>getPluginDescription</vh></v>
+<v t="T666"><vh>getPlugin</vh></v>
+<v t="T667"><vh>getPluginVersion</vh></v>
+<v t="T668"><vh>getPluginFilenames</vh></v>
 </v>
 </v>
 </v>
@@ -10835,5 +10860,262 @@ if self.dictionary.has_key(word.lower()):
 	self.addButton.configure(state=state)
 
 	self.ignoreButton.configure(state="normal")</t>
+<t tx="T649">@ignore</t>
+<t tx="T650">@nocolor
+
+Attached is some proof-of-concept code for a Leo Plugin manager.
+
+To try it out ... (warning: it will write files to your c:\temp directory)
+
+1. Start 'leopm_server.py' ... Should display a message saying "Listening on 8001"
+2. Start 'leopm_client.py' ... Should bring up an ugly Tkinter window
+
+How it works:
+
+1. The client attaches to the remote server (via XMLRPC) 
+2. Client asks for a list of plug-ins
+3. Server responds
+4. Client asks for details of files required + version for each plugin
+5. Client checks local plugin directory to see if these files are there and if they are the right version.
+6. Client displays list of available + installed plugins
+7. User selects plugin and clicks 'Install'
+8. Client requests files from server
+9. Server sends back files
+10. Client installs files in local directory (currently c:\temp)
+
+In the current code, the client side is functional - the server side is
+actually dummy methods just returning the right kind of data. There's no
+point doing anything clever there until the client functionality is
+fully fleshed out. Although it is all running locally in the demo there
+aren't any code changes required to run remotely.
+
+It is all pretty primitive, but I think the functionality maps quite
+closely with jEdit. Tidying the Tkinter interface and fleshing out the
+server side shouldn't take too long and then it could be wrapped as a
+plugin itself.
+
+Advantages of this (XMLRPC) approach,
+
+- can go over HTTP port
+- client and server are nicely decoupled (server needn't be in Python if the web host doesn't support it)
+- client/server stuff is so transparent (look at the server implementation!) compared to other approaches.
+
+Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
+
+Do you think this is worth pursuing?</t>
+<t tx="T651">@first #!/usr/bin/env python
+
+"""A client implementing a plug-in manager for Leo
+
+The client is based on an XML server architecture. Methods exist
+to query the plug-ins on the server, find version numbers, help information and
+to download the actual source. In the future it might be possible to upload
+plug-ins as well."""
+
+from Tkinter import *
+import os,re,xmlrpclib
+
+__version__ = "0.1"
+
+PORT = 8001 # The port the server is listening on
+HOST = "http://localhost:%d" % PORT
+ROOTDIR = r"c:\temp" # Where the plugins will end up
+
+@others
+
+if __name__ == "__main__":
+    server = xmlrpclib.ServerProxy(HOST)
+    root = Tk()
+    client = LeoPMClient(root, server, ROOTDIR)
+    root.mainloop()
+</t>
+<t tx="T652">class LeoPMClient:
+	
+	"""The client to talk to the LeoPM server"""
+
+	@others
+</t>
+<t tx="T653">def __init__(self, master, server, rootdir):
+    """Initialize the client"""
+    self.server = server
+    self.master = master
+    self.rootdir = rootdir
+    #
+    frame = Frame(master)
+    frame.pack()
+    #
+    l = Label(frame, text="Leo Plugin Manager")
+    l.pack(side=TOP)
+    # Get the list of plugins
+    listbox = Listbox(frame)
+    listbox.pack(side=TOP)
+    self.listbox = listbox
+    self.initListbox()
+    # Detail box for additional information
+    text = Text(frame)
+    text.pack(side=TOP)
+    self.text = text
+    #
+    buttonframe = Frame(frame)
+    buttonframe.pack(side=BOTTOM)
+    #
+    quit = Button(buttonframe, text="QUIT", fg="red", command=master.quit)
+    quit.pack(side=RIGHT)
+    #
+    download = Button(buttonframe, text="Download", command=self.downloadPlugin)
+    download.pack(side=LEFT)
+    # Start polling for changes in selection
+    self.lastselection = None
+    self.poll() </t>
+<t tx="T654">def poll(self):
+    """Poll and update the detail view if appropriate"""
+    now = self._getSelectedPluginName()
+    if now is not None and now != self.lastselection:
+        self.updateDetail(now)
+        self.lastselection = now
+    self.master.after(250, self.poll)
+</t>
+<t tx="T655">def _getSelectedPluginName(self):
+    """Return the currently selected plugin name"""
+    sel = self.listbox.curselection()
+    if sel:
+        return self.plugins[int(sel[0])]
+    else:
+        return None
+</t>
+<t tx="T656">def updateDetail(self, name):
+    """Update the detail view of a plugin"""
+    self.text.delete(1.0, END)
+    self.text.insert(END, self.server.getPluginDescription(name))
+</t>
+<t tx="T657">def downloadPlugin(self):
+    """Download the selected plugin"""
+    self.text.insert(END, "\n\nInstalling\n")
+    data = self.server.getPlugin(self._getSelectedPluginName())
+    self.text.insert(END, "Got plugin data\n")
+    for filename, text in data:
+        self.text.insert(END, "Copying file '%s' ..." % filename)
+        f = file(os.path.join(self.rootdir, filename), "w")
+        f.write(text)
+        f.close()
+        self.text.insert(END, "Done!\n")
+    self.text.insert(END, "\n\nPlugin installed\n")
+    self.initListbox()
+</t>
+<t tx="T658">def getPluginList(self):
+    """Return a list of plugins on the server
+    
+    We markup the list to show which plugins are installed etc
+    
+    """
+    ret = []
+    self.plugins = server.getPluginNames()
+    for name in self.plugins:
+        version = server.getPluginVersion(name)
+        files = server.getPluginFilenames(name)
+        #
+        found = 0
+        version = None
+        #
+        for fname in files:
+            # Is file already installed?
+            filename = os.path.join(self.rootdir, fname)
+            if os.path.isfile(filename):
+                found += 1
+                # Check version
+                version = version or self.getVersionOfFile(filename)
+        #
+        if found == len(files):
+            version = version or "Unknown"
+            ret.append("%s - installed (v%s)" % (name, version))
+        elif found:
+            ret.append("%s - partially installed" % name)
+        else:
+            ret.append(name)
+    #
+    return ret
+</t>
+<t tx="T659">def initListbox(self):
+    """Initialize the listbox"""
+    plugin_list = self.getPluginList()
+    self.listbox.delete(0, END)
+    for item in plugin_list:
+        self.listbox.insert(END, item)
+</t>
+<t tx="T660">def getVersionOfFile(self, filename):
+    """Check the version of a plugin file"""
+    ver = re.compile('.*__version__\s*=\s"(.*?)".*', re.DOTALL+re.MULTILINE)
+    f = file(filename, "r")
+    text = f.read()
+    f.close()
+    match = ver.match(text)
+    if match:
+        return match.groups()[0]
+    else:
+        return None
+</t>
+<t tx="T661">@first #!/usr/bin/env python
+
+"""A server implementing a plug-in manager for Leo
+
+The server is based on an XML server architecture. Methods exist
+to query the plug-ins on the server, find version numbers, help information and to
+download the actual source. In the future it might be possible to upload
+plug-ins as well."""
+
+import SimpleXMLRPCServer
+
+__version__ = "0.1"
+
+PORT = 8001
+
+@others
+        
+if __name__ == "__main__":
+    # Create the server
+    leoPluginManager = LeoPM()
+    server = SimpleXMLRPCServer.SimpleXMLRPCServer(("localhost", PORT))
+    server.register_instance(leoPluginManager)
+    # Go into the main listener loop
+    print "LeoPM (v%s) Started\nListening on port %s" % (__version__, PORT)
+    server.serve_forever()</t>
+<t tx="T662">class LeoPM:
+	"""The Leo Plugin manager XMLRPC server"""
+	@others
+</t>
+<t tx="T663">def __init__(self, plugin_dir="."):
+    """Start the server with plugins located in the specified directory"""
+</t>
+<t tx="T664">    #self._locatePlugins()
+    
+def getPluginNames(self):
+    """Return a list of the plug-ins by name"""
+    return ["one", "two", "three"]
+</t>
+<t tx="T665">def getPluginDescription(self, name):
+	
+    """Return the description of the plugin"""
+
+    return "%s - v%s\n\n%s" % (name, len(name), "Some important details about it")
+</t>
+<t tx="T666">def getPlugin(self, name):
+
+    """Get the source files for a plugin
+    
+    Files are returned as a list of tuples (filename, text)"""
+
+    return [("%s1.py" % name, 'this is #1\n__version__ = "%d"' % len(name)),
+            ("%s2.py" % name, 'this is #2\n__version__ = "%d"' % len(name))]
+</t>
+<t tx="T667">def getPluginVersion(self, name):
+	
+    """Return the plugin version"""
+
+    return len(name)
+</t>
+<t tx="T668">def getPluginFilenames(self, name):
+	
+    """Return a list of the files needed by a plugin"""
+    return ("%s1.py" % name, "%s2.py" % name)</t>
 </tnodes>
 </leo_file>
