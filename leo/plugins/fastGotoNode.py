@@ -51,6 +51,8 @@ __version__ = ".101"
 # .101 EKR:
 #     - Removed 'start2' hook.
 #     - Get c from keywords, not g.top().
+# .102 EKR:
+#     - Added 'return True' to end of init function.
 #@-at
 #@nonl
 #@-node:ekr.20050226120947.1:<< version history >>
@@ -69,6 +71,8 @@ def init ():
 
     if os.path.exists( lkpm ):
         loadLanguages( lkpm )
+        
+    return True
 #@nonl
 #@-node:ekr.20050226120947.2:init
 #@+node:mork.20041018091414.3:disappear
