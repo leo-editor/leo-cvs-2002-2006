@@ -1126,7 +1126,7 @@ def createRootWindow(self):
 #@-node:ekr.20041214135556:How to use Tile
 #@-node:ekr.20031218072017.365:How to...
 #@+node:ekr.20050214055018:Mac Notes
-#@+node:ekr.20050221054932:Detailed Mac instructions
+#@+node:ekr.20050221054932:How to make monolithic Leo app on MacOS X
  @killcolor
 http://sourceforge.net/forum/message.php?msg_id=3007062
 By: jgleeson
@@ -1169,25 +1169,7 @@ HTH
 
 -John
 #@nonl
-#@-node:ekr.20050221054932:Detailed Mac instructions
-#@+node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
-http://sourceforge.net/forum/message.php?msg_id=2980056
-By: jgleeson
-
-To make .leo files double-clickable, you need to set CFBundleTypeExtensions to
-"leo" in the info.plist file.
-
-It would also be useful to set CFBundleTypeName, which shows up as "Kind" in
-file descriptions.
-
-Here's an example from the setup.py script I use with py2app
-
-<html://pythonmac.org/wiki/py2app>:
-
-    CFBundleTypeExtensions=["leo"],
-    CFBundleTypeName="Leo Outline File",
-#@nonl
-#@-node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
+#@-node:ekr.20050221054932:How to make monolithic Leo app on MacOS X
 #@+node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
 #@-node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
 #@+node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)

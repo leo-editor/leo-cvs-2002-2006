@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="71" left="287" height="782" width="931"/>
+	<global_window_position top="212" left="286" height="782" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,19 +39,21 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install leo.py on Linux</vh></v>
 <v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
 <v t="ekr.20040219100738"><vh>How to install Leo on MacOS Panther (10.3)</vh></v>
+<v t="ekr.20050225070247"><vh>How to use Platypus to create a Mac launcher for Leo</vh></v>
+<v t="ekr.20050225070247.1"><vh>How to create MacOS X .pkg files</vh></v>
 <v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050221104844" a="ETV"><vh>4.3-a3</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20050221104844" a="E"><vh>4.3-a3</vh>
 <v t="ekr.20050221104844.2"><vh>Bugs</vh>
 <v t="ekr.20050221104844.3" a="E"><vh>Fixed crasher in Tangle</vh></v>
 <v t="ekr.20050221104844.12" a="E"><vh>Applied patch to rst2 plugin</vh></v>
@@ -16950,5 +16952,62 @@ doesn't call atfile.write.
 This suppresses the following irrelevant message when executing scripts:
 
     "No absolute directory specified anywhere."</t>
+<t tx="ekr.20050225070247">This documents how I used Platypus 3.0 to create MacLeo, the MacOS X launcher
+for Leo. You don't need Platypus to _use_ MacLeo, but you do need Platypus to
+_create_ MacLeo. You may download Platypus 3.0 from:
+
+http://sveinbjorn.vefsyn.is/platypus
+
+Platypus creates something called an "application bundle," essentially a wrapper
+for the shell script called openLeoScript.sh.
+
+At present this script contains just:
+
+#!/bin/sh
+# $2 only works if .leo is one of the extensions.
+/usr/bin/pythonw ~/leo/src/leo.py $2
+
+In detail, here is how I created MacLeo:
+
+1. Open Platypus.
+
+2.  Set the Platypus settings:
+	- Name: MacLeo
+	- Script type: shell
+	- Icon: Python Icon
+		- Using the standard Leo outline doesn't work, but one could be created…
+	- Script Path: /Users/edream/dist/Platypus 3.0/openLeoScript.sh
+	- Is droppable checkbox (checked)
+		- Edit Types:  .leo only, not *, not folders.
+		- N.B.  There MUST be a period in front of .leo!  Otherwise $2 will be empty in the script.
+	- Output: None (progress bar and text window appear to be essentially useless)
+
+3.  Hit the create button to create MacLeo.</t>
+<t tx="ekr.20050225070247.1">This tells how I created leo-4-3-a3.pkg using PackageMaker.
+
+PackageMaker is included in the Xtools disk that comes with MacOS X. Installing
+PackageMaker was easy, but I don't remember the details.
+
+1. Make sure ~/dist/make-leo-dist contains a folder called leo-(version)
+
+The ~/dist/make-leo-dist/leo-(version) folder should contain a _folder_ called just leo.  This is the folder that should have the files to be distributed.   I got this folder by downloading leo-4-3-a3.zip, the official a3 distribution.
+
+2.  Open PackageMaker by double-clicking the file ~/dist/LeoPackage.pmsp
+
+I originally created this .pmsp file in PackageMaker.  It will be included in the next official release.  I'll also add it to cvs.
+
+LeoPackage.pmsp contains most of the information needed to create the .pkg file, but even without the .pmsp file using PackageMaker is pretty self-explanatory
+
+3. Update the description in the PackageMaker dialog.
+
+This should be similar to the readme file.
+
+4. Browse to ~/dist/make-leo-dist/leo-(version) in the Files tab in the PackageMaker dialog.
+
+5. Choose Make Package from the PackageMaker File menu.
+
+If necessary, set the file name to Leo.pkg.  This will create Leo.pkg.
+
+6. Quit PackageMaker.  Choose 'yes' when prompted to save LeoPackage.pmsp.</t>
 </tnodes>
 </leo_file>

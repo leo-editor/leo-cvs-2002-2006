@@ -4,18 +4,10 @@
 
 #@+all
 #@+node:ekr.20050126101301:4.3 a4 Plugins, etc.
-#@+node:ekr.20050224072156:Mac stuff
-#@+node:ekr.20040104162835.16:Put Leo on Fink Commander
-FC gets its list of packages from the servers listed in 
-/sw/etc/apt/sources.list.  So you can put Leo into any server and 
-people can add it to their sources.list or you can talk to the people 
-who run the default servers and get Leo hosted there (better).
-#@-node:ekr.20040104162835.16:Put Leo on Fink Commander
-#@+node:ekr.20050224072156.1:Document how to use platypus
-#@-node:ekr.20050224072156.1:Document how to use platypus
-#@-node:ekr.20050224072156:Mac stuff
 #@+node:ekr.20050212040628:First: Always use a file-like object for writing!!
 #@-node:ekr.20050212040628:First: Always use a file-like object for writing!!
+#@+node:ekr.20050224072347:Fix problem shown in gcg.leo
+#@-node:ekr.20050224072347:Fix problem shown in gcg.leo
 #@+node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
 RE: bizarre data loss: no big deal
 
@@ -705,10 +697,16 @@ By: jasonic
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
 #@-node:ekr.20050211080215:Docs
-#@+node:ekr.20050217080914:Rework Leo posting
+#@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
 #@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
 #@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
-#@-node:ekr.20050217080914:Rework Leo posting
+#@-node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
+#@+node:ekr.20040104162835.16:Put Leo on Fink Commander
+FC gets its list of packages from the servers listed in 
+/sw/etc/apt/sources.list.  So you can put Leo into any server and 
+people can add it to their sources.list or you can talk to the people 
+who run the default servers and get Leo hosted there (better).
+#@-node:ekr.20040104162835.16:Put Leo on Fink Commander
 #@-node:ekr.20050126101301:4.3 a4 Plugins, etc.
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme

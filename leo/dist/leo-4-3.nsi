@@ -239,6 +239,8 @@ Section "Leo" SEC01
   
   File "leoDist.leo"
   
+  File "LeoPackage.pmsp"
+  
   File "leo-4-3.nsi"
   
   File ".pycheckrc"
@@ -324,6 +326,8 @@ Section "Leo" SEC01
   File "..\scripts\leoScripts.txt"
   
   File "..\scripts\*.py"
+  
+  File "..\scripts\openLeoScript.sh"
   ;@nonl
   ;@-node:ekr.20050118104901.13:<< install scripts >>
   ;@nl
@@ -511,6 +515,8 @@ Section Uninstall
   
   Delete "$INSTDIR\dist\leoDist.leo"
   
+  Delete "$INSTDIR\dist\LeoPackage.pmsp"
+  
   Delete "$INSTDIR\dist\leo-4-3.nsi"
   
   Delete "$INSTDIR\dist\.pycheckrc"
@@ -578,6 +584,8 @@ Section Uninstall
   Delete "$INSTDIR\scripts\leoScripts.txt"
   
   Delete "$INSTDIR\scripts\*.p*"
+  
+  Delete "$INSTDIR\scripts\openLeoScript.sh"
   ;@nonl
   ;@-node:ekr.20050118104901.14:<< uninstall scripts >>
   ;@nl

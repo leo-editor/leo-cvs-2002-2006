@@ -24,6 +24,7 @@ include config/leoSettings.leo
 include dist/createLeoDist.py
 include dist/leo-4-3.nsi
 include dist/leoDist.leo
+include dist/LeoPackage.pmsp
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
@@ -83,6 +84,7 @@ include plugins/*.ini
 include plugins/*.txt
 include plugins/*.py
 
+include scripts/openLeoScript.sh
 include scripts/leoScripts.txt
 include scripts/*.py
 

@@ -128,18 +128,18 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
+<v t="ekr.20050118103207" a="E"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.2"><vh>&lt;&lt; uninstall config files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104149.3"><vh>dist files</vh>
+<v t="ekr.20050118104149.3" a="E"><vh>dist files</vh>
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
-<v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
+<v t="ekr.20050118104149.5" a="TV"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118104901"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
@@ -179,7 +179,7 @@
 <v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
-<v t="ekr.20050117032444" a="TV"><vh>@button Create Leo-4.3.zip</vh>
+<v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -450,7 +450,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.3-a3", # No spaces here!
+version="4-3-a3", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -707,6 +707,7 @@ include config/leoSettings.leo
 include dist/createLeoDist.py
 include dist/leo-4-3.nsi
 include dist/leoDist.leo
+include dist/LeoPackage.pmsp
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
@@ -766,6 +767,7 @@ include plugins/*.ini
 include plugins/*.txt
 include plugins/*.py
 
+include scripts/openLeoScript.sh
 include scripts/leoScripts.txt
 include scripts/*.py
 
@@ -3490,12 +3492,16 @@ Delete "$INSTDIR\config\.leoID.txt"</t>
 
 File "leoDist.leo"
 
+File "LeoPackage.pmsp"
+
 File "leo-4-3.nsi"
 
 File ".pycheckrc"</t>
 <t tx="ekr.20050118104149.5">Delete "$INSTDIR\dist\createLeoDist.p*"
 
 Delete "$INSTDIR\dist\leoDist.leo"
+
+Delete "$INSTDIR\dist\LeoPackage.pmsp"
 
 Delete "$INSTDIR\dist\leo-4-3.nsi"
 
@@ -3566,10 +3572,14 @@ Delete "$INSTDIR\src\leo*.p*"</t>
 <t tx="ekr.20050118104901.12"></t>
 <t tx="ekr.20050118104901.13">File "..\scripts\leoScripts.txt"
 
-File "..\scripts\*.py"</t>
+File "..\scripts\*.py"
+
+File "..\scripts\openLeoScript.sh"</t>
 <t tx="ekr.20050118104901.14">Delete "$INSTDIR\scripts\leoScripts.txt"
 
-Delete "$INSTDIR\scripts\*.p*"</t>
+Delete "$INSTDIR\scripts\*.p*"
+
+Delete "$INSTDIR\scripts\openLeoScript.sh"</t>
 <t tx="ekr.20050118113631"></t>
 <t tx="ekr.20050118122404">File "..\extensions\__init__.py"
 File "..\extensions\path.py"
