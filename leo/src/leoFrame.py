@@ -4908,7 +4908,7 @@ class baseLeoFrame:
 			
 		# Reschedule this routine 10 ms. later.
 		# Don't use after_idle: it hangs Leo.
-		self.statusFrame.after(10,self.updateStatusRowCol)
+		self.statusFrame.after(100,self.updateStatusRowCol)
 	
 	#@-body
 	#@-node:4::updateStatusRowCol()
