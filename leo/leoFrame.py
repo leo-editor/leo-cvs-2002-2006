@@ -603,8 +603,9 @@ class LeoFrame:
 			accelerator="Ctrl-T",command=self.OnToggleActivePane)
 		windowMenu.add_command(label="Toggle Split Direction",
 			command=self.OnToggleSplitDirection)
-		windowMenu.add_command(label="Hide Log Window",
-			command=self.OnHideLogWindow)
+		if 0: # I consider this to be a dubious command.
+			windowMenu.add_command(label="Hide Log Window",
+				command=self.OnHideLogWindow)
 		windowMenu.add_separator()
 		
 		windowMenu.add_command(label="Cascade",
