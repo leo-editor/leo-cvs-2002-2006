@@ -2742,7 +2742,9 @@ class atFile:
         #@nonl
         #@-node:ekr.20041005105605.145:<< set at.targetFileName >>
         #@nl
-        at.initWriteIvars(root,at.targetFileName,thinFile=thinFile,scriptWrite=scriptWrite,toString=toString)
+        at.initWriteIvars(root,at.targetFileName,
+            nosentinels=nosentinels,thinFile=thinFile,
+            scriptWrite=scriptWrite,toString=toString)
         if not at.openFileForWriting(root,at.targetFileName,toString):
             return
     
