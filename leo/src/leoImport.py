@@ -126,9 +126,8 @@ class baseLeoImportCommands:
             
             try:
                 theFile = open(fileName,'rb')
-                junk,read_new,isThin = at.scanHeader(theFile,fileName)
+                isThin = at.scanHeaderForThin(theFile,fileName)
                 theFile.close()
-            
             except IOError:
                 isThin = False
             #@nonl

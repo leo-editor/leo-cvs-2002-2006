@@ -540,6 +540,23 @@ class atFile:
         return open(*args, **kw)
     
     #@-node:bwmulder.20050101094804:openForWrite
+    #@+node:ekr.20050103163224:scanHeaderForThin
+    def scanHeaderForThin (self,theFile,fileName):
+        
+        '''Scan the header of a derived file and return True if it is a thin file.
+        
+        N.B. We are not interested in @first lines, so any encoding will do.'''
+        
+        at = self
+    
+        # The encoding doesn't matter.  No error messages are given.
+        at.encoding = at.c.config.default_derived_file_encoding
+        
+        junk,junk,isThin = at.scanHeader(theFile,fileName)
+        
+        return isThin
+    #@nonl
+    #@-node:ekr.20050103163224:scanHeaderForThin
     #@-node:ekr.20041005105605.18:Reading (top level)
     #@+node:ekr.20041005105605.29:Reading (3.x)
     #@+node:ekr.20041005105605.30:createNthChild3
@@ -2516,9 +2533,6 @@ class atFile:
         # "verbatim", so nothing more needs to be done!
         #@-at
         #@@c
-        
-        # Bug fix: 1/3/05: Use default encoding until parseLeoSentinel changes it.
-        at.encoding = at.c.config.default_derived_file_encoding
         
         s = at.readLine(theFile)
         while len(s) > 0:
