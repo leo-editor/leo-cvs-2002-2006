@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1002" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1003" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
 	<global_window_position top="44" left="233" height="778" width="875"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -17,6 +17,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4</vh></v>
 <v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a3</vh></v>
 <v t="ekr.20050224070230"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
@@ -88,7 +89,7 @@
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
+<v t="EKR.20040519090846" a="E"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -623,7 +624,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-a3
+Version: 4.3-a4
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -642,45 +643,48 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3 alpha 3                                  February 24, 2005
+<t tx="EKR.20040519090846.9">Leo 4.3 alpha 4                 March 15, 2005
 
-Leo 4.3 alpha 3 is now available at http://sourceforge.net/projects/leo/
+Leo 4.3 is the culmination of more than five months of work. This alpha 4
+focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
+now work with the 4.3 code base. Warning: not all plugins have been tested
+thorougly.
 
-Leo 4.3 is the culmination of more than five months of work. This alpha 3
-release corrects various bugs in Leo's core and in plugins. This is the
-first release that include an installer for MacOSX.
+This alpha 4 release also adds the requently-requested Add Comments and Delete
+Comments commands to Leo's Edit Body menu.
 
 The defining features of Leo 4.3:
----------------------------------
-1. Leo now stores options in @settings trees, that is, outlines whose
-headline is '@settings'. When opening a .leo file, Leo looks for
-@settings trees not only in the outline being opened but also in
-various leoSettings.leo files.
 
-Users can create arbitrarily complex user options with @settings
-trees. Leo settings outlines are, in fact, infinitely more flexible
-and powerful than any scheme based on flat text. Readers of Python's
-configParser shootout take note.
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
 
-2. The Preferences command temporarily replaces the outline pane with
-an outline showing all the @settings trees in effect. The Preferences
-command also replaces the body pane with a "settings pane". This
-settings pane allows you to change the settings selected in the
-outline pane using standard gui widgets.
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
 
-3. Leo's read/write code in leoAtFile.py has been rewritten to support
-user-defined tangling and untangling. This is a major cleanup of
-Leo's core.
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
 
-4. Leo now boasts an excellent Plugins Manager plugin. This plugin
-enables and disables plugins automatically and tells you everything
-you need to know about each plugin. This plugin also lets you download
-plugins from Leo's cvs site.
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
 
-5. You can install third-party extensions in Leo's extensions
-directory. Leo will attempt to import such extensions from the
-extensions directory when normal imports fail. The distribution contains
-Python Mega Widgets in the extensions directory.</t>
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+5. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -3996,6 +4000,121 @@ Download: http://sourceforge.net/project/showfiles.php?group_id=3458
 CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+January 25, 2005
+--------------------------------------------------------------------
+Edward K. Ream   email:  edreamleo@charter.net
+Leo: Literate Editor with Outlines
+Leo: http://webpages.charter.net/edreamleo/front.html
+--------------------------------------------------------------------
+</t>
+<t tx="ekr.20050313105121">Leo 4.3 alpha 4 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 is the culmination of more than five months of work. This alpha 4
+focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
+now work with the 4.3 code base. Warning: not all plugins have been tested
+thorougly.
+
+This alpha 4 release also adds the requently-requested Add Comments and Delete
+Comments commands to Leo's Edit Body menu.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose
+headline is '@settings'. When opening a .leo file, Leo looks for
+@settings trees not only in the outline being opened but also in
+various leoSettings.leo files.
+
+Users can create arbitrarily complex user options with @settings
+trees. Leo settings outlines are, in fact, infinitely more flexible
+and powerful than any scheme based on flat text. Readers of Python's
+configParser shootout take note.
+
+2. The Preferences command temporarily replaces the outline pane with
+an outline showing all the @settings trees in effect. The Preferences
+command also replaces the body pane with a "settings pane". This
+settings pane allows you to change the settings selected in the
+outline pane using standard gui widgets.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support
+user-defined tangling and untangling. This is a major cleanup of
+Leo's core.
+
+4. Leo now boasts an excellent Plugins Manager plugin. This plugin
+enables and disables plugins automatically and tells you everything
+you need to know about each plugin. This plugin also lets you download
+plugins from Leo's cvs site.
+
+5. You can install third-party extensions in Leo's extensions
+directory. Leo will attempt to import such extensions from the
+extensions directory when normal imports fail. The distribution contains
+Python Mega Widgets in the extensions directory.
+
+What people are saying about Leo
+--------------------------------
+"[Leo] should either replace or greatly augment the development tools
+that I use." -- Zak Greant
+
+"Leo is a marriage of outlining and literate programming. Pure genius.
+The main reason I am impressed with this tool is that it doesn't
+affect your choice of tools. You can use whatever IDE for whatever
+language and switch back and forth between Leo and it." -- Austin
+King
+
+"Leo is the best IDE that I have had the pleasure to use. I have been
+using it now for about 2--3 months. It has totally changed not only
+the way that I program, but also the way that I store and organize all
+of the information that I need for the job that I do." -- Ian Mulvany
+
+"I only have one week of Leo experience but I already know it will be
+my default IDE/project manager...people complain about the lack of a
+project manager for the free/standard Python IDE's like Idle. Leo
+clearly solves that problem and in a way that commercial tools can't
+touch." -- Marshall Parsons
+
+"I have been using Leo for about 3 weeks and I hardly use my other
+programming editor anymore...I find it easy and enjoyable to use. I
+plan to adopt it as my presentation tool for code reviews." -- Jim
+Vickroy
+
+"I'm absolutely astounded by the power of such a simple idea! It works
+great and I can immediately see the benefits of using Leo in place of
+the standard flat file editor." -- Tom Lee, &lt;tomlee@bigpond.net.au&gt;
+
+I think you're really showing what open source can do and your current
+trajectory puts you on track to kick Emacs into the dustbin of
+computing history. -- Dan Winkler
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
 
 Edward K. Ream
 January 25, 2005
