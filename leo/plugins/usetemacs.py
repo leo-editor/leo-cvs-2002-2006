@@ -36,7 +36,7 @@ import leoTkinterFrame
 
 #@-node:mork.20041013092542.2:<< imports >>
 #@nl
-__version__ = '.4'
+__version__ = '.5'
 #@<< version history >>
 #@+node:ekr.20041028162818:<< version history >>
 #@+at
@@ -95,52 +95,53 @@ def addMenu( tag, keywords ):
 #@-others
 
 if temacs:
-    olBindings = leoTkinterFrame.leoTkinterBody.createBindings
-    #@    << define createBindings callback >>
-    #@+node:ekr.20041028084650:<< define createBindings callback >>
-    def createBindings (self,frame):
+    if g.app.gui is None: 
+        g.app.createTkGui(__file__)
+    if g.app.gui.guiName() == "tkinter":
+        olBindings = leoTkinterFrame.leoTkinterBody.createBindings
+        #@        << define createBindings callback >>
+        #@+node:ekr.20041028084650:<< define createBindings callback >>
+        def createBindings (self,frame):
         
-        g.trace(frame)
-    
-        olBindings(self,frame )
-    
-        #stext = lambda : g.app.findFrame.find_text.get( '1.0', 'end').rstrip( '\n' )
-        #rtext = lambda : g.app.findFrame.change_text.get( '1.0', 'end' ).rstrip( '\n' )
-    
-        if not labels.has_key(frame ):
-            group = Pmw.Group(frame.split2Pane2, tag_text = 'mini buffer' )
-            group.pack( side = 'bottom', fill='x' )
-            for z in frame.split2Pane2.children.values():
-                group.pack_configure( before = z )
-            label = Tk.Label( group.interior() )
-            label.pack( fill = 'both', expand = 1 )   
-            labels[ frame ] = label  
-        else:
-            label = labels[ frame ]
-    
-        temacs.setBufferStrokes( frame.bodyCtrl, label )
-        temacs.setUndoer( frame.bodyCtrl, self.c.undoer.undo ) 
-        temacs.setTailEnd( frame.bodyCtrl, utTailEnd )
-    #@nonl
-    #@-node:ekr.20041028084650:<< define createBindings callback >>
-    #@nl
-    leoTkinterFrame.leoTkinterBody.createBindings = createBindings
-    g.plugin_signon(__name__)
-    leoPlugins.registerHandler(('start2','open2',"new"), addMenu )
-    if temacs:
-        #@        << load macros >>
-        #@+node:ekr.20041028084650.1:<< load macros >>
-        pth = os.path.split( g.app.loadDir ) 
-        aini = pth[ 0 ] + os.sep + 'plugins' + os.sep
-        if os.path.exists( aini + r'usetemacs.kbd' ):
-            f = file( aini +  r'usetemacs.kbd', 'r' )
-            temacs._loadMacros( f )
-        if os.path.exists( aini + r'usetemacs.abv' ):
-            f = file( aini + r'usetemacs.abv', 'r' )
-            temacs._readAbbrevs( f )
+            olBindings(self,frame )
+        
+            #stext = lambda : g.app.findFrame.find_text.get( '1.0', 'end').rstrip( '\n' )
+            #rtext = lambda : g.app.findFrame.change_text.get( '1.0', 'end' ).rstrip( '\n' )
+        
+            if not labels.has_key(frame ):
+                group = Pmw.Group(frame.split2Pane2, tag_text = 'mini buffer' )
+                group.pack( side = 'bottom', fill='x' )
+                for z in frame.split2Pane2.children.values():
+                    group.pack_configure( before = z )
+                label = Tk.Label( group.interior() )
+                label.pack( fill = 'both', expand = 1 )   
+                labels[ frame ] = label  
+            else:
+                label = labels[ frame ]
+        
+            temacs.setBufferStrokes( frame.bodyCtrl, label )
+            temacs.setUndoer( frame.bodyCtrl, self.c.undoer.undo ) 
+            temacs.setTailEnd( frame.bodyCtrl, utTailEnd )
         #@nonl
-        #@-node:ekr.20041028084650.1:<< load macros >>
+        #@-node:ekr.20041028084650:<< define createBindings callback >>
         #@nl
+        leoTkinterFrame.leoTkinterBody.createBindings = createBindings
+        g.plugin_signon(__name__)
+        leoPlugins.registerHandler(('start2','open2',"new"), addMenu )
+        if temacs:
+            #@            << load macros >>
+            #@+node:ekr.20041028084650.1:<< load macros >>
+            pth = os.path.split( g.app.loadDir ) 
+            aini = pth[ 0 ] + os.sep + 'plugins' + os.sep
+            if os.path.exists( aini + r'usetemacs.kbd' ):
+                f = file( aini +  r'usetemacs.kbd', 'r' )
+                temacs._loadMacros( f )
+            if os.path.exists( aini + r'usetemacs.abv' ):
+                f = file( aini + r'usetemacs.abv', 'r' )
+                temacs._readAbbrevs( f )
+            #@nonl
+            #@-node:ekr.20041028084650.1:<< load macros >>
+            #@nl
 #@nonl
 #@-node:mork.20041013092542.1:@thin usetemacs.py
 #@-leo
