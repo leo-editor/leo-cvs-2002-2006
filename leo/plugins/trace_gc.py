@@ -19,7 +19,9 @@ gcCount = 0
 def printIdleGC(tag,keywords):
 	
 	# Calling printGc is too expensive to do on every idle call.
-	if tag == "idle":
+	if g.app.killed:
+		return # Work around a Tk bug.
+	elif if tag == "idle":
 		global gcCount ; gcCount += 1
 		if (gcCount % 20) == 0:
 			g.printGc(tag,onlyPrintChanges=true)

@@ -22,6 +22,7 @@ if Tk: # Register the handlers...
 	
 		import os
 		a = g.app
+		if a.killed: return
 		for dict in a.openWithFiles:
 			path = dict.get("path")
 			c = dict.get("c")
@@ -123,9 +124,7 @@ if Tk: # Register the handlers...
 			#@nonl
 			#@-node:EKR.20040517075715.9:<< create the Open With menu >>
 			#@nl
-			# Enable the idle-time hook so we can check temp files created by Open With.
-			from leoGlobals import enableIdleTimeHook
-			g.enableIdleTimeHook(idleTimeDelay=500)
+	#@nonl
 	#@-node:EKR.20040517075715.8:create_open_with_menu
 	#@-others
 

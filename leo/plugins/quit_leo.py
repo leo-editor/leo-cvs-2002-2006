@@ -17,7 +17,7 @@ if 0: # Force a shutdown during startup.
 	print "quitting during startup"
 	g.app.forceShutdown()
 
-if 0: # Force a shutdown at any other time, even "idle" time.
+if 1: # Force a shutdown at any other time, even "idle" time.
 
 	# Exception: do not call g.app.forceShutdown in a "start2" hook.
 

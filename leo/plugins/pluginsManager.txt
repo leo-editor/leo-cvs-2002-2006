@@ -11,6 +11,7 @@
 
 # Debugging plugins...
 	# trace_keys.py
+	# quit_leo.py
 
 # "official" plugins...
 	add_directives.py

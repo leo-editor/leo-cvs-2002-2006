@@ -91,6 +91,10 @@ class HoistButtons:
 	#@+node:ekr.20040331072607.7:onIdle
 	def onIdle(self, tag, keywords):
 		
+		# This should not be necessary, and it is.
+		if g.app.killed:
+			return
+		
 		c = keywords.get('c')
 	
 		if not c or not hasattr(c,"hoistStack"):
@@ -116,7 +120,6 @@ class HoistButtons:
 			on_widget.config(bg=self.bgColor,
 				activebackground=self.activeBgColor,
 				text="Hoist")
-	#@nonl
 	#@-node:ekr.20040331072607.7:onIdle
 	#@-others
 #@nonl

@@ -47,14 +47,9 @@ class rowColClass:
 		
 		# Update the row/column indicators immediately to reserve a place.
 		self.updateRowColWidget()
-		
-		g.enableIdleTimeHook()
 	#@nonl
 	#@-node:ekr.20040108095351.2:addWidgets
 	#@+node:ekr.20040108095351.4:updateRowColWidget
-	### There seems to be no way of undoing the idle-time hook!
-	### And one idle-time hook interferes with other hooks!
-	
 	def updateRowColWidget (self,*args,**keys):
 		
 		c = self.c

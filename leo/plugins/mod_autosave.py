@@ -35,6 +35,8 @@ def autosave(tag, keywords):
 	"""Save the current document if it has a name"""
 
 	global LAST_AUTOSAVE
+	
+	if g.app.killed: return # Work around a Tk bug.
 
 	if ACTIVE == "Yes":
 		if time.time() - LAST_AUTOSAVE > AUTOSAVE_INTERVAL:

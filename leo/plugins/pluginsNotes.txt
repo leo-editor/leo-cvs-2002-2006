@@ -3,12 +3,12 @@
 #@@nocolor
 #@+all
 #@+node:edream.110203113231.3:Documentation and security warnings
-#@@nocolor
+@nocolor
 
 This file contains code for all plugins distributed with Leo.
 #@nonl
 #@+node:edream.110203113231.4:Overview of plugins and hooks
-#@@nocolor
+@nocolor
 
 What is a plugin?
 
@@ -37,7 +37,7 @@ How do plugins work?
 Plugins register themselves when Leo imports them using the following code,
 which should appear as the outer level of the .py file:
 
-#@@color
+@color
 
 """A description of this plugin"""
 
@@ -45,7 +45,7 @@ leoPlugins.registerHandler("xxx", onXXX)
 __version__ = "1.2"
 g.plugin_signon(__name__)
 	
-#@@nocolor
+@nocolor
 
 Line by line:
 
@@ -86,14 +86,14 @@ See the "About hooks" section of leoPlugins.leo for full documentation about
 how to write hook handler routines, like onXXX or onKey in the examples above.
 Basically, each hook should have this pattern:
 	
-#@@color
+@color
 
 def onXXX (tag,keywords):
 	c = keywords.get("c")
 	otherKeyword = keywords.get("otherKeyword")
 	<< do something with c and otherKeyword, etc. >>
 	
-#@@nocolor
+@nocolor
 
 In other words, keywords is a Python dictionary containing the keyword
 arguments passed to the hook handler. See the See the "About hooks" section of
@@ -113,31 +113,31 @@ suited to this style of programming.
 #@nonl
 #@-node:edream.110203113231.4:Overview of plugins and hooks
 #@+node:edream.110203113231.5:Intro to scripts
-#@@nocolor
+@nocolor
 
 Scripting is fully documented in Leo's Users Guide, and the following should be enough to get you started:
 
-#@@color
+@color
 
 top() # The commander of the top (current) windows.
 top().rootVnode() # The root vnode of the outline.
 top().currentVnode() # The presently selected vnode.
 
-#@@nocolor
+@nocolor
 
 If v is any vnode:
 	
-#@@color
+@color
 
 v.headString() # is the headline of v.
 v.bodyString() # is the body of v.
 v.threadNext() # is node after v in outline order.
 
-#@@nocolor
+@nocolor
 
 For example, this prints every headline of an outline:
 	
-#@@color
+@color
 
 v = top().rootVnode()
 while v:
@@ -239,11 +239,11 @@ tag argument                                                   keys in keywords
 
 "create-optional-menus"  no          (note 8)                  (note 8)
 
-"draw-outine-box"        yes         start of drawBox          tree,v,x,y (note 6)
-"draw-outline-icon"      yes         start of tree.drawIcon    tree,v,x,y (note 6)
-"draw-outline-node"      yes         start of tree.drawNode    tree,v,x,y (note 6)
-"draw-outline-text-box"  yes         start of tree.drawText    tree,v,x,y (note 6)
-"draw-sub-outline"       yes         start of tree.drawTree    tree,v,x,y,h,level (note 6)
+"draw-outine-box"        yes         start of drawBox          tree,p,v,x,y (note 6)
+"draw-outline-icon"      yes         start of tree.drawIcon    tree,p,v,x,y (note 6)
+"draw-outline-node"      yes         start of tree.drawNode    tree,p,v,x,y (note 6)
+"draw-outline-text-box"  yes         start of tree.drawText    tree,p,v,x,y (note 6)
+"draw-sub-outline"       yes         start of tree.drawTree    tree,p,v,x,y,h,level,hoistFlag(note 6)
 "redraw-entire-outline"  yes         start of tree.redraw      c (note 6)
 
 "color-optional-markup"  yes *       (note 7)                  colorer,v (note 7)
@@ -337,23 +337,18 @@ It is safe to import and execute code from Leo itself, provided that you got Leo
 #@nonl
 #@-node:edream.110203113231.7:Hooks should never blindly Python scripts
 #@+node:edream.110203113231.8:NEVER use this kind of code in a hook!!
-#@@color
-#@+at 
-#@nonl
-# WARNING ***** Using the following routine exposes you malicious code in .leo 
-# files! *****
-# 
-# Do not EVER use code that blindly executes code in .leo files!
-# Someone could send you malicious code embedded in the .leo file.
-# 
-# WARNING 1: Changing "@onloadpythonscript" to something else will NOT protect
-#            you if you EVER share either your files with anyone else.
-# 
-# WARNING 2: Replacing exec by rexec below provides NO additional protection!
-#            A malicious rexec script could trash your .leo file in subtle 
-# ways.
-#@-at
-#@@c
+@color
+@ WARNING ***** Using the following routine exposes you malicious code in .leo files! *****
+
+Do not EVER use code that blindly executes code in .leo files!
+Someone could send you malicious code embedded in the .leo file.
+
+WARNING 1: Changing "@onloadpythonscript" to something else will NOT protect
+           you if you EVER share either your files with anyone else.
+
+WARNING 2: Replacing exec by rexec below provides NO additional protection!
+           A malicious rexec script could trash your .leo file in subtle ways.
+@c
 if 0: # WRONG: This blindly execute scripts found in an .leo file! NEVER DO THIS!
 	def onLoadFile():
 		v = top().rootVnode()
@@ -370,7 +365,7 @@ if 0: # WRONG: This blindly execute scripts found in an .leo file! NEVER DO THIS
 #@nonl
 #@-node:edream.110203113231.8:NEVER use this kind of code in a hook!!
 #@+node:ekr.20040401054523:New coding conventions for plugins
-#@@nocolor
+@nocolor
 
 Leo 4.2 uses new coding conventions internally.  I recommend using the new coding conventions in all plugins, although the old way will work inside LeoPlugins.leo.
 
@@ -426,6 +421,8 @@ Please put each class, method and function in a separate node.
 #@-node:edream.110203113231.3:Documentation and security warnings
 #@+node:EKR.20040517074402:Diary
 #@+node:ekr.20040119102021:2004
+#@+node:EKR.20040602113117:June 2, 2004: registering an "idle" event now automatically calls g.enableIdleTimeHook
+#@-node:EKR.20040602113117:June 2, 2004: registering an "idle" event now automatically calls g.enableIdleTimeHook
 #@+node:ekr.20040325075338:March 2004
 #@+node:ekr.20040325075338.1:3/25: revised for 4.2 code base
 - Changed g.app() to g.app.
@@ -456,7 +453,7 @@ This creates a status area at the bottom of the Leo Window.  Plugins may write t
 #@+node:ekr.20040119102021.2:2003
 #@+node:edream.031217094146:12/17
 #@+node:edream.031216103123:Fix problems in plugins
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2336153
 By: dsalomoni
@@ -550,7 +547,7 @@ Updated color_markup.py to use c.body.bodyCtrl.
 #@+node:edream.110203113231.9:Unfinished projects
 #@+node:edream.110203113231.10:(Settings menu)
 #@+node:edream.110203113231.11:To do
-#@@nocolor
+@nocolor
 
 Allow different default types for each section.
 Create _all_ menus from settings ?
@@ -601,7 +598,7 @@ if Tk and 0: # Register the handlers...
 
 	settingsMenu = None
 
-#@@others
+@others
 	
 	# leoPlugins.registerHandler("start1",onAfterFinishCreate)
 	leoPlugins.registerHandler("create-optional-menus",createSettingsMenu)
@@ -621,7 +618,7 @@ def createSettingsMenu (tag,keywords):
 #@-node:edream.110203113231.13:settings_menu.py
 #@-node:edream.110203113231.10:(Settings menu)
 #@+node:edream.112003032318:About html plugin
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2295621
 By: billp9619
 
@@ -666,7 +663,7 @@ can handle plug-in development at this stage.  :-)
 #@-node:edream.112003032318:About html plugin
 #@+node:ekr.20040331072431:Custom @file plugin (prototype)
 #@+node:ekr.20040331072431.1:Documentation
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:ekr.20040331072431.2:Summary of the problem
 Leo's @file concept is very powerful but there are numerous occasions when the user wants to read and write outlines in specialized formats which cannot be handled using the @comment, @first etc directives. Examples would be,
@@ -776,7 +773,7 @@ Handler clients register themselves using the registerDispatcher call which take
 In addition, a convenience blank handler (ie ignore the event) can be inserted by calling the registerNullDispatcher for a particular extension and ontype.
 #@nonl
 #@+node:ekr.20040331072431.10:<< class dispatchedDerivedFile declarations >>
-#@@code
+@code
 
 """New type of derived file which can dispatch on the file type"""
 
@@ -839,9 +836,9 @@ Following that a more complete implementation could be put together if this is t
 #@-node:ekr.20040331072431.1:Documentation
 #@+node:ekr.20040331072431.17:Code
 #@+node:ekr.20040331072431.18:atfile_dispatch.py
-#@@ignore
-#@@root atfile_dispatch.py
-#@@language python
+@ignore
+@root atfile_dispatch.py
+@language python
 << atfile_dispatch declarations >>
 << atfile_dispatch methods >>
 
@@ -850,7 +847,7 @@ if 1: # Register the handlers...
 	g.plugin_signon(__name__)
 
 #@+node:ekr.20040331072431.19:<< atfile_dispatch declarations >>
-#@@code
+@code
 
 """Enable dispatching of @file writing to custom handlers"""
 
@@ -872,7 +869,7 @@ class dispatchedDerivedFile(leoAtFile.baseNewDerivedFile):
 	<< class dispatchedDerivedFile methods >>
 
 #@+node:ekr.20040331072431.10:<< class dispatchedDerivedFile declarations >>
-#@@code
+@code
 
 """New type of derived file which can dispatch on the file type"""
 
@@ -995,9 +992,9 @@ def registerNullDispatcher(extension, ontype):
 #@-node:ekr.20040331072431.12:registerNullDispatcher
 #@-node:ekr.20040331072431.18:atfile_dispatch.py
 #@+node:ekr.20040331072431.28:freemind_export.py
-#@@ignore
-#@@root freemind_export.py
-#@@language python
+@ignore
+@root freemind_export.py
+@language python
 << freemind_export declarations >>
 << freemind_export methods >>
 
@@ -1014,7 +1011,7 @@ if 1: # Register the handlers...
 	atfile_dispatch.registerDispatcher("mm", "end", handleEnd)
 	
 #@+node:ekr.20040331072431.29:<< freemind_export declarations >>
-#@@code
+@code
 
 """Export part of a Leo outline to FreeMind"""
 
@@ -1034,7 +1031,7 @@ class MindMapNode(list):
 	<< class MindMapNode methods >>
 
 #@+node:ekr.20040331072431.31:<< class MindMapNode declarations >>
-#@@code
+@code
 
 """Class representing a mind map node"""
 
@@ -1123,11 +1120,11 @@ def handleEnd(self, *args, **kw):
 #@-node:ekr.20040331072431.28:freemind_export.py
 #@-node:ekr.20040331072431.17:Code
 #@+node:ekr.20040331072431.39:Test files
-#@@ignore
+@ignore
 #@nonl
 #@+node:ekr.20040331072431.40:@file c:\temp\mind.mm
 The main node
-#@@others
+@others
 #@+node:ekr.20040331072431.41:a
 aaaa
 #@nonl
@@ -1138,12 +1135,12 @@ bbb
 #@-node:ekr.20040331072431.42:b
 #@+node:ekr.20040331072431.43:c
 ccc
-#@@others
+@others
 #@nonl
 #@+node:ekr.20040331072431.44:c1
 c1c1
 
-#@@others
+@others
 #@nonl
 #@+node:ekr.20040331072431.45:c1a
 c1ac1a
@@ -1161,7 +1158,7 @@ ddd
 #@-node:ekr.20040331072431.47:d
 #@-node:ekr.20040331072431.40:@file c:\temp\mind.mm
 #@+node:ekr.20040331072431.48:@file c:\temp\mind2.txt
-#@@others
+@others
 #@nonl
 #@+node:ekr.20040331072431.49:a
 aaaa
@@ -1197,7 +1194,7 @@ This is some text
 second line
 third
 
-#@@others
+@others
 #@+node:ekr.20040331072431.57:Header
 inside header
 #@-node:ekr.20040331072431.57:Header
@@ -1206,7 +1203,7 @@ inside header
 #@-node:ekr.20040331072431:Custom @file plugin (prototype)
 #@+node:ekr.20040320072156:Word completion (prototype)
 #@+node:ekr.20040320075528:Documentation
-#@@nocolor
+@nocolor
 
 This plugin implements a word completion scheme for Leo. In the body pane you
 have two new options,
@@ -1231,7 +1228,7 @@ frequently used words should appear first. Once you reach the end it stops.
 #@nonl
 #@-node:ekr.20040320075528:Documentation
 #@+node:ekr.20040320075528.1:Code notes
-#@@nocolor
+@nocolor
 
 Why two keys? I tried the get the "dotted completion" to work when you press
 the "." key but I couldn't stop the "." appearing in the body as well. The code
@@ -1246,7 +1243,7 @@ another WordCompleter class.
 #@nonl
 #@-node:ekr.20040320075528.1:Code notes
 #@+node:ekr.20040320121631:Changes made
-#@@nocolor
+@nocolor
 
 Changes made:
 
@@ -1269,7 +1266,7 @@ import leoGlobals as g
 
 import re
 
-#@@others
+@others
 
 if __name__ == "__main__":
 	test()
@@ -1279,7 +1276,7 @@ class Splitter(object):
 
 	"""Split text into base/extension parts"""
 
-#@@others
+@others
 #@+node:ekr.20040320072156.4:__init__
 def __init__(self):
 
@@ -1296,7 +1293,7 @@ def split(self, text):
 #@+node:ekr.20040320072156.6:class ReSplitter
 class ReSplitter(Splitter):
 
-#@@others
+@others
 #@+node:ekr.20040320072156.7:__init__
 def __init__(self, base, extension, *args):
 
@@ -1331,7 +1328,7 @@ class Extender(object):
 
 	"""Learn about text strings and suggest ways to extend a string"""
 
-#@@others
+@others
 #@+node:ekr.20040320072156.10:__init__
 def __init__(self, splitter):
 
@@ -1435,7 +1432,7 @@ class DottedExtender(Extender):
 
 	"""An extender based around dotted names"""
 
-#@@others
+@others
 #@+node:ekr.20040320072156.16:__init__
 def __init__(self):
 
@@ -1450,7 +1447,7 @@ class WordExtender(Extender):
 
 	"""An extender based on simple words"""
 
-#@@others
+@others
 #@+node:ekr.20040320072156.18:__init__
 def __init__(self):
 
@@ -1485,7 +1482,7 @@ except ImportError: Tk = None
 
 import extender
 
-#@@others
+@others
 
 if Tk:
 	__version__ = "0.2" # Converted to @file by EKR.
@@ -1510,7 +1507,7 @@ class WordCompleter:
 	keybinding = None # Override this 
 	extender_class = None # Override this
 
-#@@others
+@others
 #@nonl
 #@+node:ekr.20040320072156.22:__init__
 def __init__(self):
@@ -1694,15 +1691,15 @@ def suggestions(self, base, start=None, number=None):
 #@-node:ekr.20040320091826:(problem with dot in Word completion plugin)
 #@-node:edream.110203113231.9:Unfinished projects
 #@+node:EKR.20040517075110:Script to find and replace all functions in leoGlobals.py
-#@@color
-#@@language python
+@color
+@language python
 
 import leoGlobals as g
 from leoGlobals import true,false
 import string
 c = g.top()
 
-#@@others
+@others
 
 if 1:
 	<< set nameList to the list of functions in leoGlobals.py >>

@@ -679,6 +679,9 @@ def loop(timeout=5.0, use_poll=0, map=None):
 #@-node:EKR.20040517080250.44:loop
 #@+node:EKR.20040517080250.45:plugin_wrapper
 def plugin_wrapper(tag, keywords):
+	
+	if g.app.killed: return
+
 	first = True
 	while loop(timeout):
 		pass
