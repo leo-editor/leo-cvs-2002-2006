@@ -921,7 +921,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         show = pack
         #@nonl
         #@-node:ekr.20041223111916:pack & show
-        #@+node:ekr.20031218072017.3963:put
+        #@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
         def put(self,s,color=None):
             
             t = self.textWidget
@@ -944,7 +944,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             t.configure(state="disabled")
             t.update_idletasks()
         #@nonl
-        #@-node:ekr.20031218072017.3963:put
+        #@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
         #@+node:EKR.20040424154804:setFocus
         if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
         
@@ -3256,9 +3256,6 @@ class leoTkinterLog (leoFrame.leoLog):
             #@+node:EKR.20040423082910:<< put s to log control >>
             if type(s) == type(u""): # 3/18/03
                 s = g.toEncodedString(s,g.app.tkEncoding)
-                
-            if sys.platform == "darwin":
-                print s,
             
             if color:
                 if color not in self.colorTags:
@@ -3297,9 +3294,6 @@ class leoTkinterLog (leoFrame.leoLog):
         elif self.logCtrl:
             #@        << put newline to log control >>
             #@+node:EKR.20040423082910.2:<< put newline to log control >>
-            if sys.platform == "darwin":
-                print
-                
             self.logCtrl.insert("end",'\n')
             self.logCtrl.see("end")
             
