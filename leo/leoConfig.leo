@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
@@ -88,7 +88,7 @@ These get converted to 0/1 if the file is not read_only.</t>
 
 [config options]
 
-read_only = 1
+read_only = 0
 #	0: Leo writes this file, clearing all comments in the process.
 #	1: Leo writes nothing to this file.
 #	Syntax errors in this file set this file to read-only.
