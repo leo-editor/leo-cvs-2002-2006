@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="99" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="100" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="88" left="369" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -213,17 +213,21 @@
 <v t="T97" a="CE"><vh>A</vh>
 <v t="T98" a="CEV"><vh>B</vh>
 <v t="T99" a="E"><vh>C</vh></v>
+<v t="T100"><vh>C2</vh></v>
 </v>
 <v t="T98" a="CE"><vh>B</vh>
-<v t="T99" a="E"><vh>C</vh></v>
+<v t="T99"><vh>C</vh></v>
+<v t="T100"><vh>C2</vh></v>
 </v>
 </v>
 <v t="T97" a="CE"><vh>A</vh>
 <v t="T98" a="CE"><vh>B</vh>
-<v t="T99" a="E"><vh>C</vh></v>
+<v t="T99"><vh>C</vh></v>
+<v t="T100"><vh>C2</vh></v>
 </v>
 <v t="T98" a="CE"><vh>B</vh>
-<v t="T99" a="E"><vh>C</vh></v>
+<v t="T99"><vh>C</vh></v>
+<v t="T100"><vh>C2</vh></v>
 </v>
 </v>
 </v>
@@ -905,5 +909,6 @@ line 1
 
 	after</t>
 <t tx="T99"></t>
+<t tx="T100"></t>
 </tnodes>
 </leo_file>
