@@ -22,6 +22,59 @@ class leoGui:
 	
 	Subclasses are expected to override all do-nothing methods of this class."""
 	
+	#@	<< define leoGui file types >>
+	#@+node:<< define leoGui file types >> (not used yet)
+	allFullFiletypes = [
+		("All files",   "*"),
+		("C/C++ files", "*.c"),
+		("C/C++ files", "*.cpp"),
+		("C/C++ files", "*.h"),
+		("C/C++ files", "*.hpp"),
+		("Java files",  "*.java"),
+		("Pascal files","*.pas"),
+		("Python files","*.py")]
+		# To do: *.php, *.php3, *.php4")
+	pythonFullFiletypes = [
+		("Python files","*.py"),
+		("All files","*"),
+		("C/C++ files","*.c"),
+		("C/C++ files","*.cpp"),
+		("C/C++ files","*.h"),
+		("C/C++ files","*.hpp"),
+		("Java files","*.java"),
+		("Pascal files","*.pas")]
+		# To do: *.php, *.php3, *.php4")
+	textFullFiletypes = [
+		("Text files","*.txt"),
+		("C/C++ files","*.c"),
+		("C/C++ files","*.cpp"),
+		("C/C++ files","*.h"),
+		("C/C++ files","*.hpp"),
+		("Java files","*.java"),
+		("Pascal files","*.pas"),
+		("Python files","*.py"),
+		("All files","*")]
+		# To do: *.php, *.php3, *.php4")
+	CWEBTextAllFiletypes = [
+		("CWEB files","*.w"),
+		("Text files","*.txt"),
+		("All files", "*")]
+	leoAllFiletypes = [
+		("Leo files","*.leo"),
+		("All files","*")]
+	leoFiletypes = [
+		("Leo files","*.leo")]
+	nowebTextAllFiletypes = [
+		("Noweb files","*.nw"),
+		("Text files", "*.txt"),
+		("All files",  "*")]
+	textAllFiletypes = [
+		("Text files","*.txt"),
+		("All files", "*")]
+	#@nonl
+	#@-node:<< define leoGui file types >> (not used yet)
+	#@nl
+	
 	#@	@+others
 	#@+node: leoGui.__init__
 	def __init__ (self,guiName):
@@ -290,7 +343,6 @@ class leoGui:
 	#@nonl
 	#@-node:oops
 	#@-others
-#@nonl
 #@-node:class leoGui
 #@+node:class nullGui (runs scripts)
 class nullGui(leoGui):
