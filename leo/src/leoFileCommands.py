@@ -2015,23 +2015,14 @@ class baseFileCommands:
             #@+node:ekr.20031218072017.3047:<< create backup file >>
             # rename fileName to fileName.bak if fileName exists.
             if g.os_path_exists(fileName):
-                try:
-                    backupName = g.os_path_join(g.app.loadDir,fileName)
-                    backupName = fileName + ".bak"
-                    if g.os_path_exists(backupName):
-                        os.remove(backupName)
-                    g.utils_rename(fileName,backupName)
-                except OSError:
+                backupName = g.os_path_join(g.app.loadDir,fileName)
+                backupName = fileName + ".bak"
+                if g.os_path_exists(backupName):
+                    g.utils_remove(backupName)
+                ok = g.utils_rename(fileName,backupName)
+                if not ok:
                     if self.read_only:
                         g.es("read only",color="red")
-                    else:
-                        g.es("exception creating backup file: " + backupName)
-                        g.es_exception()
-                    return False
-                except:
-                    g.es("exception creating backup file: " + backupName)
-                    g.es_exception()
-                    backupName = None
                     return False
             else:
                 backupName = None
