@@ -15,7 +15,8 @@ import tempfile
 
 Tk = Tkinter
 
-class LeoFrame:
+class leoCoreFrame:
+	instances = 0
 
 	#@+others
 	#@+node:1::Birth & Death
@@ -24,6 +25,7 @@ class LeoFrame:
 	def __init__(self, title = None):
 	
 		Tk = Tkinter
+		LeoFrame.instances += 1
 		
 		#@<< set the LeoFrame ivars >>
 		#@+node:1::<< set the LeoFrame ivars >>
@@ -177,25 +179,11 @@ class LeoFrame:
 	#@+body
 	def __repr__ (self):
 	
-		return "leoFrame: " + self.title
+		return "<leoFrame: %s>" % (self.title)
 	
 	#@-body
 	#@-node:2::f.__repr__
-	#@+node:3::f.destroy
-	#@+body
-	def destroy (self):
-	
-		# print "frame.destroy:", self, self.top # Don't use trace.
-		
-		self.tree.destroy()
-		self.tree = None
-		self.commands.destroy()
-		self.commands = None
-		self.top.destroy() # Actually close the window.
-		self.top = None
-	#@-body
-	#@-node:3::f.destroy
-	#@+node:4::f.setWindowTitle
+	#@+node:3::f.setWindowTitle
 	#@+body
 	def setWindowTitle (self,fileName):
 		
@@ -206,8 +194,8 @@ class LeoFrame:
 			title = fn
 		return title
 	#@-body
-	#@-node:4::f.setWindowTitle
-	#@+node:5::f.createLeoFrame
+	#@-node:3::f.setWindowTitle
+	#@+node:4::f.createLeoFrame
 	#@+body
 	def createLeoFrame (self,top):
 	
@@ -333,7 +321,115 @@ class LeoFrame:
 		self.putStatusLine("Welcome to Leo")
 	
 	#@-body
-	#@-node:5::f.createLeoFrame
+	#@-node:4::f.createLeoFrame
+	#@+node:5::frame.destroy
+	#@+body
+	def destroy (self):
+		
+		"""Clear all links from a frame to other objects."""
+	
+		# print "frame.destroy" # Don't use trace.
+		
+		# Clear links to panels.
+		self.colorPanel = None
+		self.comparePanel = None
+		self.fontPanel = None 
+		self.prefsPanel = None
+		
+		# Clear other ivars.
+		self.activeFrame = None
+		self.body = None
+		self.bodyBar = None
+		self.canvas = None
+		self.commands = None
+		self.draggedItem = None
+		self.f1 = self.f2 = None
+		self.hwnd = None
+		self.icon = None
+		self.iconFrame = None
+		self.log = None
+		self.logBar = None
+		self.logColorTags = None
+		self.menus = None
+		self.menuShortcuts = None
+		self.mFileName = None
+		self.outerFrame = None
+		self.recentFiles = None
+		self.splitter1 = self.splitter2 = None
+		self.statusFrame  = None
+		self.statusLabel = None
+		self.statusText = None
+		self.title = None
+		self.top = None
+		self.tree = None
+		self.treeBar = None
+	#@-body
+	#@-node:5::frame.destroy
+	#@+node:6::frame.destroyAllPanels
+	#@+body
+	def destroyAllPanels (self):
+		
+		"""Destroy all panels attached to this frame."""
+		
+		panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
+	
+		for panel in panels:
+			if panel:
+				panel.top.destroy()
+				
+		self.comparePanel = None
+		self.colorPanel = None
+		self.fontPanel = None
+		self.prefsPanel = None
+	#@-body
+	#@-node:6::frame.destroyAllPanels
+	#@+node:7::frame.promptForSave
+	#@+body
+	def promptForSave (self):
+		
+		"""Prompt the user to save changes.
+		
+		Return true if the user vetos the quit or save operation."""
+		
+		c = self.commands
+		name = choose(self.mFileName, self.mFileName, self.title)
+		type = choose(app().quitting, "quitting?", "closing?")
+		
+		answer = leoDialog.askYesNoCancel("Confirm",
+			'Save changes to %s before %s' % (name,type)).run(modal=true)
+			
+		# print answer	
+		if answer == "cancel":
+			return true # Veto.
+		elif answer == "no":
+			return false # Don't save and don't veto.
+		else:
+			if not self.mFileName:
+				
+				#@<< Put up a file save dialog to set mFileName >>
+				#@+node:1::<< Put up a file save dialog to set mFileName >>
+				#@+body
+				# Make sure we never pass None to the ctor.
+				if not self.title:
+					self.title = ""
+					
+				self.mFileName = tkFileDialog.asksaveasfilename(
+					initialfile = self.mFileName,
+					title="Save",
+					filetypes=[("Leo files", "*.leo")],
+					defaultextension=".leo")
+				
+				#@-body
+				#@-node:1::<< Put up a file save dialog to set mFileName >>
+
+			if self.mFileName:
+				# print "saving", self.mFileName
+				c.fileCommands.save(self.mFileName)
+				return false # Don't veto.
+			else:
+				return true # Veto.
+	#@-body
+	#@-node:7::frame.promptForSave
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar
@@ -567,101 +663,16 @@ class LeoFrame:
 	#@-body
 	#@-node:3::Scrolling callbacks (frame)
 	#@+node:4::Event handlers (Frame)
-	#@+node:1::frame.OnCloseLeoEvent to do: call app.onCloseWindow
+	#@+node:1::frame.OnCloseLeoEvent
 	#@+body
 	# Called from quit logic and when user closes the window.
 	# Returns true if the close happened.
 	
 	def OnCloseLeoEvent(self):
 	
-		try:
-			
-			#@<< handle request to close a leo window >>
-			#@+node:1::<< handle request to close a leo window >>
-			#@+body
-			# trace(`self in app().windowList` + ":" + `self`)
-			veto=false
-			c = self.commands ; frame = c.frame
-			if c.changed:
-				
-				#@<< Prompt for change.  Set veto if the user cancels >>
-				#@+node:1::<< Prompt for change.  Set veto if the user cancels >>
-				#@+body
-				name = choose(self.mFileName, self.mFileName, self.title)
-				type = choose(app().quitting, "quitting?", "closing?")
-				
-				answer = leoDialog.askYesNoCancel("Confirm",
-					'Save changes to "' + name + '" before ' + type).run(modal=true)
-				
-				if answer=="yes":
-					if not self.mFileName or self.mFileName == "":
-						
-						#@<< Put up a file save dialog; set veto if the user cancels >>
-						#@+node:1::<< Put up a file save dialog; set veto if the user cancels >>
-						#@+body
-						# Make sure we never pass None to the ctor.
-						if not self.title:
-							self.title = ""
-							
-						self.mFileName = tkFileDialog.asksaveasfilename(
-							initialfile = self.mFileName,
-							title="Save",
-							filetypes=[("Leo files", "*.leo")],
-							defaultextension=".leo")
-							
-						if not self.mFileName:
-							veto = true
-						
-						#@-body
-						#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
-
-					if veto==false and self.mFileName and self.mFileName != "":
-						self.commands.fileCommands.save( self.mFileName )
-				
-				elif answer=="cancel":
-					veto = true #The user wants to cancel the close.
-				
-				else: veto = false # The user wants to close without saving.
-				#@-body
-				#@-node:1::<< Prompt for change.  Set veto if the user cancels >>
-
-			if veto: return false
-			app().log = None # no log until we reactive a window.
-			# Destroy all windows attached to this windows.
-			# This code will be executed if we haven't explicitly closed the windows.
-			if self.comparePanel:
-				self.comparePanel.top.destroy()
-			if self.colorPanel:
-				self.colorPanel.top.destroy()
-			if self.fontPanel:
-				self.fontPanel.top.destroy()
-			if self.prefsPanel:
-				self.prefsPanel.top.destroy()
-				
-			doHook("close-frame",c=c)
-			
-			if self in app().windowList:
-				app().windowList.remove(self)
-				self.destroy() # force the window to go away now.
-			if app().windowList:
-				# Pick a window to activate so we can set the log.
-				w = app().windowList[0]
-				w.top.deiconify()
-				w.top.lift()
-				app().log = w
-			else:
-				app().quit()
-			
-			#@-body
-			#@-node:1::<< handle request to close a leo window >>
-
-			return true
-		except:
-			es_event_exception("close window")
-			return false
-	
+		app().closeLeoWindow(self)
 	#@-body
-	#@-node:1::frame.OnCloseLeoEvent to do: call app.onCloseWindow
+	#@-node:1::frame.OnCloseLeoEvent
 	#@+node:2::frame.OnControlKeyUp/Down
 	#@+body
 	def OnControlKeyDown (self,event=None):
@@ -1870,10 +1881,12 @@ class LeoFrame:
 	
 		if fileName and len(fileName) > 0:
 			ok, frame = self.OpenWithFileName(fileName)
+			
 			if ok and closeFlag:
-				app().windowList.remove(self)
-				self.destroy() # force the window to go away now.
 				app().log = frame # Sets the log stream for es()
+				app().windowList.remove(self)
+				self.top.destroy() # force the window to go away now.
+				
 	
 	#@-body
 	#@-node:2::frame.OnOpen
@@ -2142,18 +2155,11 @@ class LeoFrame:
 	#@-node:4::frame.OpenWithFileName
 	#@+node:5::frame.OnClose
 	#@+body
-	# Called when File-Close command is chosen.
-	
 	def OnClose(self,event=None):
 		
-		u = self.commands.undoer
-		if 0:
-			if u and u.new_undo and u.debug:
-				print "old undo mem:",u.old_mem
-				print "new undo mem:",u.new_mem
-				print "ratio new/old:",float(u.new_mem)/float(u.old_mem)
+		"""Handle the File-Close command."""
 		
-		self.OnCloseLeoEvent() # Destroy the frame unless the user cancels.
+		app().closeLeoWindow(self)
 	#@-body
 	#@-node:5::frame.OnClose
 	#@+node:6::OnSave
@@ -2262,22 +2268,13 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:9::OnRevert
-	#@+node:10::frame.OnQuit to do: call app.onQuit
+	#@+node:10::frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
-	
-		app().quitting += 1
 		
-		while app().windowList:
-			w = app().windowList[0]
-			if not w.OnCloseLeoEvent():
-				break
-				
-		app().quitting -= 1 # If we get here the quit has been disabled.
-	
-	
+		app().onQuit()
 	#@-body
-	#@-node:10::frame.OnQuit to do: call app.onQuit
+	#@-node:10::frame.OnQuit
 	#@+node:11::frame.updateRecentFiles
 	#@+body
 	def updateRecentFiles (self, fileName):
@@ -4116,7 +4113,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.12 beta 1, Build " + build + ", May 12, 2003\n\n"
+		version = "leo.py 3.12 beta 1, Build " + build + ", June 21, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -4839,6 +4836,11 @@ class LeoFrame:
 	#@-node:4::updateStatusRowCol()
 	#@-node:11::Status line: convenience routines
 	#@-others
+
+
+class LeoFrame (leoCoreFrame):
+	pass
+
 #@-body
 #@-node:0::@file leoFrame.py
 #@-leo

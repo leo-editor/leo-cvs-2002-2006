@@ -15,17 +15,13 @@ import exceptions,os,re,string,sys,time,Tkinter,traceback,types
 body_newline = '\n'
 body_ignored_newline = '\r'
 
-if 0: # Work around problems in 2.3 a1
-	true = 1
-	false = 0 # Better than None
-else:
-	try:
-		true = True
-		false = False
-	except:
-		# print "True and False not defined"
-		true = True = 1
-		false = False = 0 # Better than None
+try:
+	true = True
+	false = False
+except:
+	# print "True and False not defined"
+	true = True = 1
+	false = False = 0 # Better than None
 
 assert(false!=None)
 #@-body
@@ -133,7 +129,152 @@ def checkClones2Links (c=None,verbose=false):
 #@-body
 #@-node:2::checkClones2Links
 #@-node:2::Checking Leo Files...
-#@+node:3::Commands, Dialogs, Directives, & Menus...
+#@+node:3::CheckVersion (Dave Hein)
+#@+body
+#@+at
+# 
+# CheckVersion() is a generic version checker.  Assumes a
+# version string of up to four parts, or tokens, with
+# leftmost token being most significant and each token
+# becoming less signficant in sequence to the right.
+# 
+# RETURN VALUE
+# 
+# 1 if comparison is true
+# 0 if comparison is false
+# 
+# PARAMETERS
+# 
+# version: the version string to be tested
+# againstVersion: the reference version string to be
+# 				compared against
+# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+# stringCompare: whether to test a token using only the
+# 			   leading integer of the token, or using the
+# 			   entire token string.  For example, a value
+# 			   of "0.0.1.0" means that we use the integer
+# 			   value of the first, second, and fourth
+# 			   tokens, but we use a string compare for the
+# 			   third version token.
+# delimiter: the character that separates the tokens in the
+# 		   version strings.
+# 
+# The comparison uses the precision of the version string
+# with the least number of tokens.  For example a test of
+# "8.4" against "8.3.3" would just compare the first two
+# tokens.
+# 
+# The version strings are limited to a maximum of 4 tokens.
+
+#@-at
+#@@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+	import sre  # Unicode-aware regular expressions
+	#
+	# tokenize the stringCompare flags
+	compareFlag = string.split( stringCompare, '.' )
+	#
+	# tokenize the version strings
+	testVersion = string.split( version, delimiter )
+	testAgainst = string.split( againstVersion, delimiter )
+	#
+	# find the 'precision' of the comparison
+	tokenCount = 4
+	if tokenCount > len(testAgainst):
+		tokenCount = len(testAgainst)
+	if tokenCount > len(testVersion):
+		tokenCount = len(testVersion)
+	#
+	# Apply the stringCompare flags
+	justInteger = sre.compile("^[0-9]+")
+	for i in range(tokenCount):
+		if "0" == compareFlag[i]:
+			m = justInteger.match( testVersion[i] )
+			testVersion[i] = m.group()
+			m = justInteger.match( testAgainst[i] )
+			testAgainst[i] = m.group()
+		elif "1" != compareFlag[i]:
+			errMsg = "stringCompare argument must be of " +\
+				 "the form \"x.x.x.x\" where each " +\
+				 "'x' is either '0' or '1'."
+			raise EnvironmentError,errMsg
+	#
+	# Compare the versions
+	if condition == ">=":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 1 # it was equal
+	if condition == ">":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 0 # it was equal
+	if condition == "==":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 0 # any token was not equal
+		return 1 # every token was equal
+	if condition == "!=":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 1 # any token was not equal
+		return 0 # every token was equal
+	if condition == "<":
+		for i in range(tokenCount):
+			if testVersion[i] >= testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 0 # it was equal
+	if condition == "<=":
+		for i in range(tokenCount):
+			if testVersion[i] > testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 1 # it was equal
+	#
+	# didn't find a condition that we expected.
+	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+
+#@-body
+#@-node:3::CheckVersion (Dave Hein)
+#@+node:4::class Bunch
+#@+body
+# From The Python Cookbook.
+
+import operator
+
+class Bunch:
+	
+	"""A class that represents a colection of things.
+	
+	Especially useful for representing a collection of related variables."""
+	
+	def __init__(self, **keywords):
+		self.__dict__.update (keywords)
+
+	def ivars(self):
+		return self.__dict__.keys()
+		
+	def __setitem__ (self,key,value):
+		return operator.setitem(self.__dict__,key,value)
+		
+	def __getitem__ (self,key):
+		return operator.getitem(self.__dict__,key)
+		
+		
+		
+
+#@-body
+#@-node:4::class Bunch
+#@+node:5::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
 #@+body
@@ -981,8 +1122,8 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:3::Commands, Dialogs, Directives, & Menus...
-#@+node:4::Debugging, Dumping, Timing, Tracing & Sherlock
+#@-node:5::Commands, Dialogs, Directives, & Menus...
+#@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
@@ -1796,8 +1937,154 @@ def printLeoModules(message=None):
 	print
 #@-body
 #@-node:18::printLeoModules
-#@-node:4::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:5::Hooks & plugins
+#@-node:6::Debugging, Dumping, Timing, Tracing & Sherlock
+#@+node:7::executeScript
+#@+body
+def executeScript (name):
+	
+	"""Execute a script whose short python file name is given"""
+	
+	mod_name,ext = os.path.splitext(name)
+	file = None
+	try:
+		# This code is in effect an import or a reload.
+		# This allows the user to modify scripts without leaving Leo.
+		import imp
+		file,filename,description = imp.find_module(mod_name)
+		imp.load_module(mod_name,file,filename,description)
+	except:
+		es("Exception executing " + name,color="red")
+		es_exception()
+
+	if file:
+		file.close()
+
+
+#@-body
+#@-node:7::executeScript
+#@+node:8::Garbage Collection
+#@+body
+lastObjectCount = 0
+lastObjectsDict = {}
+debugGC = false
+
+# gc may not exist everywhere.
+try: 
+	import gc
+	if 0:
+		if debugGC:
+			gc.set_debug(
+				gc.DEBUG_STATS |# prints statistics.
+				# gc.DEBUG_LEAK | # Same as all below.
+				gc.DEBUG_COLLECTABLE |
+				gc.DEBUG_UNCOLLECTABLE |
+				gc.DEBUG_INSTANCES |
+				gc.DEBUG_OBJECTS |
+				gc.DEBUG_SAVEALL)
+except:
+	traceback.print_exc()
+
+
+#@+others
+#@+node:1::collectGarbage
+#@+body
+def collectGarbage(message=None):
+	
+	if not debugGC: return
+	
+	if not message:
+		message = callerName(n=2)
+	
+	try: gc.collect()
+	except: pass
+	
+	if 1:
+		printGc(message)
+	
+	if 0: # This isn't needed unless we want to look at individual objects.
+	
+		
+		#@<< make a list of the new objects >>
+		#@+node:1::<< make a list of the new objects >>
+		#@+body
+		# WARNING: the id trick is not proper because newly allocated objects can have the same address as old objets.
+		
+		global lastObjectsDict
+		objects = gc.get_objects()
+		
+		newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+		
+		lastObjectsDict = {}
+		for o in objects:
+			lastObjectsDict[id(o)]=o
+		#@-body
+		#@-node:1::<< make a list of the new objects >>
+
+		print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+
+#@-body
+#@-node:1::collectGarbage
+#@+node:2::printGc
+#@+body
+def printGc(message=None,onlyPrintChanges=false):
+	
+	if not debugGC: return None
+	
+	if not message:
+		message = callerName(n=2)
+	
+	global lastObjectCount
+
+	try:
+		n = len(gc.garbage)
+		n2 = len(gc.get_objects())
+		delta = n2-lastObjectCount
+		if not onlyPrintChanges or delta:
+			if n:
+				print "garbage: %d, objects: %+6d =%7d %s" % (n,delta,n2,message)
+			else:
+				print "objects: %+6d =%7d %s" % (n2-lastObjectCount,n2,message)
+
+		lastObjectCount = n2
+		return delta
+	except:
+		traceback.print_exc()
+		return None
+#@-body
+#@-node:2::printGc
+#@+node:3::printGcRefs
+#@+body
+def printGcRefs (verbose=true):
+
+	import leoFrame
+
+	
+	refs = gc.get_referrers(app().windowList[0])
+	print '-' * 30
+	
+	
+	if verbose:
+		print "refs of", app().windowList[0]
+		for ref in refs:
+			print type(ref)
+			if 0:
+				if type(ref) == type({}):
+					keys = ref.keys()
+					keys.sort()
+					for key in keys:
+						val = ref[key]
+						if isinstance(val,leoFrame.LeoFrame):
+							print key,ref[key]
+	else:
+		print "%d referers" % len(refs)
+#@-body
+#@-node:3::printGcRefs
+#@-others
+
+
+#@-body
+#@-node:8::Garbage Collection
+#@+node:9::Hooks & plugins
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1896,8 +2183,34 @@ def plugin_signon(module_name):
 
 #@-body
 #@-node:3::plugin_signon
-#@-node:5::Hooks & plugins
-#@+node:6::Lists...
+#@-node:9::Hooks & plugins
+#@+node:10::importFromPath
+#@+body
+def importFromPath (name,path):
+	
+	import imp
+
+	try:
+		file = None ; result = None
+		try:
+			fn = shortFileName(name)
+			mod_name,ext = os.path.splitext(fn)
+			path = os.path.normpath(path)
+			data = imp.find_module(mod_name,[path]) # This can open the file.
+			if data:
+				file,pathname,description = data
+				result = imp.load_module(mod_name,file,pathname,description)
+		except:
+			es_exception()
+
+	# Bug fix: 6/12/03: Put no return statements before here!
+	finally: 
+		if file: file.close()
+
+	return result
+#@-body
+#@-node:10::importFromPath
+#@+node:11::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1930,8 +2243,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:6::Lists...
-#@+node:7::Most common functions
+#@-node:11::Lists...
+#@+node:12::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -2031,9 +2344,13 @@ def es(s,*args,**keys):
 def top():
 
 	# 11/6/02: app().log is now set correctly when there are multiple windows.
-	frame = app().log # the current frame
-	if frame:
-		return frame.commands
+	a = app()
+	if a:
+		frame = a.log # the current frame
+		if frame:
+			return frame.commands
+		else:
+			return None
 	else:
 		return None
 
@@ -2047,8 +2364,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:7::Most common functions
-#@+node:8::Scanning, selection & whitespace...
+#@-node:12::Most common functions
+#@+node:13::Scanning, selection & whitespace...
 #@+node:1::getindex
 #@+body
 def getindex(text, index):
@@ -3128,8 +3445,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:9::Whitespace...
-#@-node:8::Scanning, selection & whitespace...
-#@+node:9::Unicode utils...
+#@-node:13::Scanning, selection & whitespace...
+#@+node:14::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3256,278 +3573,7 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:9::Unicode utils...
-#@+node:10::CheckVersion (Dave Hein)
-#@+body
-#@+at
-# 
-# CheckVersion() is a generic version checker.  Assumes a
-# version string of up to four parts, or tokens, with
-# leftmost token being most significant and each token
-# becoming less signficant in sequence to the right.
-# 
-# RETURN VALUE
-# 
-# 1 if comparison is true
-# 0 if comparison is false
-# 
-# PARAMETERS
-# 
-# version: the version string to be tested
-# againstVersion: the reference version string to be
-# 				compared against
-# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
-# stringCompare: whether to test a token using only the
-# 			   leading integer of the token, or using the
-# 			   entire token string.  For example, a value
-# 			   of "0.0.1.0" means that we use the integer
-# 			   value of the first, second, and fourth
-# 			   tokens, but we use a string compare for the
-# 			   third version token.
-# delimiter: the character that separates the tokens in the
-# 		   version strings.
-# 
-# The comparison uses the precision of the version string
-# with the least number of tokens.  For example a test of
-# "8.4" against "8.3.3" would just compare the first two
-# tokens.
-# 
-# The version strings are limited to a maximum of 4 tokens.
-
-#@-at
-#@@c
-
-def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-	import sre  # Unicode-aware regular expressions
-	#
-	# tokenize the stringCompare flags
-	compareFlag = string.split( stringCompare, '.' )
-	#
-	# tokenize the version strings
-	testVersion = string.split( version, delimiter )
-	testAgainst = string.split( againstVersion, delimiter )
-	#
-	# find the 'precision' of the comparison
-	tokenCount = 4
-	if tokenCount > len(testAgainst):
-		tokenCount = len(testAgainst)
-	if tokenCount > len(testVersion):
-		tokenCount = len(testVersion)
-	#
-	# Apply the stringCompare flags
-	justInteger = sre.compile("^[0-9]+")
-	for i in range(tokenCount):
-		if "0" == compareFlag[i]:
-			m = justInteger.match( testVersion[i] )
-			testVersion[i] = m.group()
-			m = justInteger.match( testAgainst[i] )
-			testAgainst[i] = m.group()
-		elif "1" != compareFlag[i]:
-			errMsg = "stringCompare argument must be of " +\
-				 "the form \"x.x.x.x\" where each " +\
-				 "'x' is either '0' or '1'."
-			raise EnvironmentError,errMsg
-	#
-	# Compare the versions
-	if condition == ">=":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 1 # it was equal
-	if condition == ">":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 0 # it was equal
-	if condition == "==":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 0 # any token was not equal
-		return 1 # every token was equal
-	if condition == "!=":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 1 # any token was not equal
-		return 0 # every token was equal
-	if condition == "<":
-		for i in range(tokenCount):
-			if testVersion[i] >= testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 0 # it was equal
-	if condition == "<=":
-		for i in range(tokenCount):
-			if testVersion[i] > testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 1 # it was equal
-	#
-	# didn't find a condition that we expected.
-	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
-
-#@-body
-#@-node:10::CheckVersion (Dave Hein)
-#@+node:11::class Bunch
-#@+body
-# From The Python Cookbook.
-
-import operator
-
-class Bunch:
-	
-	"""A class that represents a colection of things.
-	
-	Especially useful for representing a collection of related variables."""
-	
-	def __init__(self, **keywords):
-		self.__dict__.update (keywords)
-
-	def ivars(self):
-		return self.__dict__.keys()
-		
-	def __setitem__ (self,key,value):
-		return operator.setitem(self.__dict__,key,value)
-		
-	def __getitem__ (self,key):
-		return operator.getitem(self.__dict__,key)
-		
-		
-		
-
-#@-body
-#@-node:11::class Bunch
-#@+node:12::collectGarbage & printGarbage
-#@+body
-lastObjectCount = 0
-lastObjectsDict = {}
-debugGC = false
-
-# gc may not exist everywhere.
-try: 
-	import gc
-	if 0:
-		if debugGC:
-			gc.set_debug(
-				gc.DEBUG_STATS |# prints statistics.
-				# gc.DEBUG_LEAK | # Same as all below.
-				gc.DEBUG_COLLECTABLE |
-				gc.DEBUG_UNCOLLECTABLE |
-				gc.DEBUG_INSTANCES |
-				gc.DEBUG_OBJECTS |
-				gc.DEBUG_SAVEALL)
-except:
-	traceback.print_exc()
-
-
-#@+others
-#@+node:1::collectGarbage
-#@+body
-def collectGarbage():
-	
-	if debugGC: # This just slows everything down.
-		try: gc.collect()
-		except: pass
-
-		global lastObjectsDict
-		objects = gc.get_objects()
-		
-		newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
-				
-		lastObjectsDict = {}
-		for o in objects:
-			lastObjectsDict[id(o)]=o
-			
-		print "%d new, %d total objects" % (len(newObjects),len(objects))
-	
-		printGarbage()
-#@-body
-#@-node:1::collectGarbage
-#@+node:2::printGarbage
-#@+body
-def printGarbage(message=""):
-	
-	global lastObjectCount
-	try:
-		n = len(gc.garbage)
-		n2 = len(gc.get_objects())
-		if n:
-			print message, "garbage: %d, objects: %+5d =%7d" % (n,n2-lastObjectCount,n2)
-		else:
-			print message, "objects: %+5d =%7d" % (n2-lastObjectCount,n2)
-			
-		if 0: # We may use the gc.DEBUG_STATS to do this.
-			if n:
-				print '-' * 30
-				garbage = gc.garbage[:]
-				for g in garbage:
-					# gc.get_referrers(*objs) 
-					print `g`
-		lastObjectCount = n2
-	except:
-		traceback.print_exc()
-#@-body
-#@-node:2::printGarbage
-#@-others
-
-
-#@-body
-#@-node:12::collectGarbage & printGarbage
-#@+node:13::executeScript
-#@+body
-def executeScript (name):
-	
-	"""Execute a script whose short python file name is given"""
-	
-	mod_name,ext = os.path.splitext(name)
-	file = None
-	try:
-		# This code is in effect an import or a reload.
-		# This allows the user to modify scripts without leaving Leo.
-		import imp
-		file,filename,description = imp.find_module(mod_name)
-		imp.load_module(mod_name,file,filename,description)
-	except:
-		es("Exception executing " + name,color="red")
-		es_exception()
-
-	if file:
-		file.close()
-
-
-#@-body
-#@-node:13::executeScript
-#@+node:14::importFromPath
-#@+body
-def importFromPath (name,path):
-	
-	import imp
-
-	try:
-		file = None ; result = None
-		try:
-			fn = shortFileName(name)
-			mod_name,ext = os.path.splitext(fn)
-			path = os.path.normpath(path)
-			data = imp.find_module(mod_name,[path]) # This can open the file.
-			if data:
-				file,pathname,description = data
-				result = imp.load_module(mod_name,file,pathname,description)
-		except:
-			es_exception()
-
-	# Bug fix: 6/12/03: Put no return statements before here!
-	finally: 
-		if file: file.close()
-
-	return result
-#@-body
-#@-node:14::importFromPath
+#@-node:14::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

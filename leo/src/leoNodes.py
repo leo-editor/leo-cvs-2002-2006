@@ -33,11 +33,7 @@
 # Most commanders deal only with vnodes, though there are exceptions.
 # 
 # Because leo.py has unlimited Undo commands, vnodes and tnodes can be deleted 
-# only when the window containing them is closed. Nodes are deleted 
-# indirectly. Several classes, including the vnode, tnode, leoFrame and 
-# leoTree classes, have destroy() routines. These destroy() routines merely 
-# clear links so that Python's and Tkinter's reference counting mechanisms 
-# will eventually delete vnodes, tnodes and other data when a window closes.
+# only when the window containing them is closed. Nodes are deleted indirectly.
 # 
 # Leo uses several kinds of node indices. Leo's XML file format uses tnode 
 # indices to indicate which tnodes (t elements) belong to which vnodes (v 
@@ -271,8 +267,13 @@ class tnode:
 	#@+node:3::t.destroy
 	#@+body
 	def destroy (self):
+		
+		"""Clear all links from a tnode to other objects."""
+		
+		# print "t.destroy"
 	
 		self.joinList = None
+	
 	#@-body
 	#@-node:3::t.destroy
 	#@+node:4::Getters
@@ -446,6 +447,16 @@ class vnode:
 
 
 	#@+others
+	#@+node:2::Birth & death
+	#@+node:1::v.__cmp__ (not used)
+	#@+body
+	if 0: # not used
+		def __cmp__(self,other):
+			
+			trace(`self` + "," + `other`)
+			return not (self is other) # Must return 0, 1 or -1
+	#@-body
+	#@-node:1::v.__cmp__ (not used)
 	#@+node:2::v.__init__
 	#@+body
 	def __init__ (self,commands,t):
@@ -478,42 +489,30 @@ class vnode:
 	def __repr__ (self):
 		
 		if self.t:
-			return "<v %d:%s>" % (id(self),`self.t.headString`)
+			return "<vnode %d:%s>" % (id(self),`self.t.headString`)
 		else:
-			return "<v %d:NULL tnode>" % (id(self))
+			return "<vnode %d:NULL tnode>" % (id(self))
+			
+	__str__ = __repr__
 	
-	def __str__ (self):
-		
-		if self.t:
-			return "<v %d:%s>" % (id(self),`self.t.headString`)
-		else:
-			return "<v %d:NULL tnode>" % (id(self))
 	#@-body
 	#@-node:3::v.__repr__ & v.__str__
-	#@+node:4::v.__cmp__ (not used)
-	#@+body
-	if 0: # not used
-		def __cmp__(self,other):
-			
-			trace(`self` + "," + `other`)
-			return not (self is other) # Must return 0, 1 or -1
-	#@-body
-	#@-node:4::v.__cmp__ (not used)
-	#@+node:5::v.destroy
+	#@+node:4::v.destroy
 	#@+body
 	def destroy (self):
+		
+		"""Clear all links from a vnode to other objects."""
 	
 		# print "v.destroy" # Don't use trace.
 	
 		self.commands = None
-		self.t.destroy()
 		self.t = None
 		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
 	
-	
 	#@-body
-	#@-node:5::v.destroy
-	#@+node:6::v.Callbacks (handles event hooks)
+	#@-node:4::v.destroy
+	#@-node:2::Birth & death
+	#@+node:3::v.Callbacks (handles event hooks)
 	#@+body
 	#@+at
 	#  These callbacks are vnode methods so we can pass the vnode back to the 
@@ -683,8 +682,8 @@ class vnode:
 	
 	#@-body
 	#@-node:10::OnIconDoubleClick
-	#@-node:6::v.Callbacks (handles event hooks)
-	#@+node:7::Comparisons (vnode)
+	#@-node:3::v.Callbacks (handles event hooks)
+	#@+node:4::Comparisons (vnode)
 	#@+node:1::afterHeadlineMatch
 	#@+body
 	# 12/03/02: We now handle @file options here.
@@ -832,8 +831,8 @@ class vnode:
 		return p == h[0:len(p)]
 	#@-body
 	#@-node:7::matchHeadline
-	#@-node:7::Comparisons (vnode)
-	#@+node:8::File Conversion (vnode)
+	#@-node:4::Comparisons (vnode)
+	#@+node:5::File Conversion (vnode)
 	#@+node:1::convertTreeToString
 	#@+body
 	# Converts the outline to a string in "MORE" format
@@ -910,8 +909,8 @@ class vnode:
 			return string.join(list,'')
 	#@-body
 	#@-node:3::v.moreBody
-	#@-node:8::File Conversion (vnode)
-	#@+node:9::Getters
+	#@-node:5::File Conversion (vnode)
+	#@+node:6::Getters
 	#@+node:1::Children
 	#@+node:1::childIndex
 	#@+body
@@ -1158,8 +1157,8 @@ class vnode:
 		return false
 	#@-body
 	#@-node:10::v.exists
-	#@-node:9::Getters
-	#@+node:10::Setters
+	#@-node:6::Getters
+	#@+node:7::Setters
 	#@+node:1::Head and body text
 	#@+node:1::appendStringToBody
 	#@+body
@@ -1572,8 +1571,8 @@ class vnode:
 			# Don't set the dirty bit: it would just be annoying.
 	#@-body
 	#@-node:6::trimTrailingLines
-	#@-node:10::Setters
-	#@+node:11::Tree Traversal (vnode)
+	#@-node:7::Setters
+	#@+node:8::Tree Traversal (vnode)
 	#@+node:1::back
 	#@+body
 	# Compatibility routine for scripts
@@ -1710,8 +1709,8 @@ class vnode:
 		return v
 	#@-body
 	#@-node:10::visNext
-	#@-node:11::Tree Traversal (vnode)
-	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@-node:8::Tree Traversal (vnode)
+	#@+node:9::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@+node:1::Entry Points (vnode)
 	#@+node:1::doDelete
 	#@+body
@@ -2353,7 +2352,7 @@ class vnode:
 	#@-body
 	#@-node:13::unjoinTree (changed for 4.0)
 	#@-node:3::Private helper functions
-	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
+	#@-node:9::Moving, Inserting, Deleting, Cloning, Sorting (vnode)
 	#@-others
 #@-body
 #@-node:4::class vnode

@@ -547,7 +547,7 @@ class askYesNoCancel(leoDialog):
 	
 	"""A class to create and run dialogs having three buttons.
 	
-	By default, these buttons are labeled yes, no and cancel."""
+	By default, these buttons are labeled Yes, No and Cancel."""
 	
 
 	#@+others
@@ -608,14 +608,14 @@ class askYesNoCancel(leoDialog):
 		
 		"""Handle clicks in the 'no' (second) button in a dialog with three buttons."""
 		
-		self.answer=self.noMessage
+		self.answer=self.noMessage.lower()
 		self.top.destroy()
 		
 	def yesButton(self):
 		
 		"""Handle clicks in the 'yes' (first) button in a dialog with three buttons."""
 		
-		self.answer=self.yesMessage
+		self.answer=self.yesMessage.lower()
 		self.top.destroy()
 	
 	#@-body

@@ -72,7 +72,8 @@ class atFile:
 
 
 	#@+others
-	#@+node:2::atFile.__init__& initIvars
+	#@+node:2::Birth & death
+	#@+node:1::atFile.__init__& initIvars
 	#@+body
 	def __init__(self,theCommander): 
 	
@@ -161,7 +162,20 @@ class atFile:
 
 	
 	#@-body
-	#@-node:2::atFile.__init__& initIvars
+	#@-node:1::atFile.__init__& initIvars
+	#@+node:2::atFile.destroy
+	#@+body
+	def destroy (self):
+		
+		"""Clear all links from an atFile object to other objects."""
+		
+		# print "atFile.destroy" # Don't use trace.
+		
+		self.outputFile = None
+		self.root = None
+	#@-body
+	#@-node:2::atFile.destroy
+	#@-node:2::Birth & death
 	#@+node:3::Top level
 	#@+node:1::atFile.readAll
 	#@+body

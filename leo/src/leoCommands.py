@@ -19,6 +19,7 @@ import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 class Commands:
 
 	#@+others
+	#@+node:1::Birth & death
 	#@+node:1::c.__init__ & initIvars
 	#@+body
 	def __init__(self,frame):
@@ -80,7 +81,34 @@ class Commands:
 		#@-node:1::<< initialize ivars >>
 	#@-body
 	#@-node:1::c.__init__ & initIvars
-	#@+node:2::c.__repr__
+	#@+node:2::c.destroy
+	#@+body
+	def destroy (self):
+		
+		"""Clear all links from a commander to other objects."""
+	
+		# print "c.destroy" # Don't use trace.
+		
+		# Clear links to subcommanders.
+		self.atFileCommands = None
+		self.fileCommands = None
+		self.importCommands = None
+		self.tangleCommands = None
+		self.undoer = None
+	
+		# Clear others ivars.
+		self.beadList = None
+		self.body = None
+		self.canvas = None
+		self.frame = None
+		self.hookFunction = None
+		self.log = None
+		self.tree = None
+		self.visitedList = None
+	
+	#@-body
+	#@-node:2::c.destroy
+	#@+node:3::c.__repr__ & __str__
 	#@+body
 	def __repr__ (self):
 		
@@ -88,24 +116,13 @@ class Commands:
 			return "Commander: " + self.frame.mFileName
 		except:
 			return "Commander: bad mFileName"
+			
+	__str__ = __repr__
 	
 	#@-body
-	#@-node:2::c.__repr__
-	#@+node:3::c.destroy
-	#@+body
-	def destroy (self):
-	
-		# print "c.destroy:", self.frame # Don't use trace.
-	
-		# Remove all links from this object to other objects.
-		self.frame = None
-		self.fileCommands = None
-		self.atFileCommands = None
-		self.importCommands = None
-		self.tangleCommands = None
-	#@-body
-	#@-node:3::c.destroy
-	#@+node:4::c.setIvarsFromFind
+	#@-node:3::c.__repr__ & __str__
+	#@-node:1::Birth & death
+	#@+node:2::c.setIvarsFromFind
 	#@+body
 	# This should be called whenever we need to use find values:
 	# i.e., before reading or writing
@@ -117,8 +134,8 @@ class Commands:
 			find.set_ivars(c)
 	
 	#@-body
-	#@-node:4::c.setIvarsFromFind
-	#@+node:5::c.setIvarsFromPrefs
+	#@-node:2::c.setIvarsFromFind
+	#@+node:3::c.setIvarsFromPrefs
 	#@+body
 	#@+at
 	#  This should be called whenever we need to use preference:
@@ -133,8 +150,8 @@ class Commands:
 	
 		pass
 	#@-body
-	#@-node:5::c.setIvarsFromPrefs
-	#@+node:6::Cut & Paste Outlines
+	#@-node:3::c.setIvarsFromPrefs
+	#@+node:4::Cut & Paste Outlines
 	#@+node:1::cutOutline
 	#@+body
 	def cutOutline(self):
@@ -209,8 +226,8 @@ class Commands:
 			es("The clipboard is not a valid " + choose(isLeo,"Leo","MORE") + " file")
 	#@-body
 	#@-node:3::pasteOutline
-	#@-node:6::Cut & Paste Outlines
-	#@+node:7::Drawing Utilities
+	#@-node:4::Cut & Paste Outlines
+	#@+node:5::Drawing Utilities
 	#@+node:1::beginUpdate
 	#@+body
 	def beginUpdate(self):
@@ -258,8 +275,8 @@ class Commands:
 	Repaint = redraw
 	#@-body
 	#@-node:5::redraw & repaint
-	#@-node:7::Drawing Utilities
-	#@+node:8::Edit Body Text
+	#@-node:5::Drawing Utilities
+	#@+node:6::Edit Body Text
 	#@+node:1::convertAllBlanks
 	#@+body
 	def convertAllBlanks (self):
@@ -767,8 +784,8 @@ class Commands:
 		c.recolor() # 7/5/02
 	#@-body
 	#@-node:14::updateBodyPane (handles undo)
-	#@-node:8::Edit Body Text
-	#@+node:9::Enabling Menu Items (Commands)
+	#@-node:6::Edit Body Text
+	#@+node:7::Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines
 	#@+body
 	def canContractAllHeadlines (self):
@@ -1134,8 +1151,8 @@ class Commands:
 		return false
 	#@-body
 	#@-node:27::canUnmarkAll
-	#@-node:9::Enabling Menu Items (Commands)
-	#@+node:10::Expand & Contract
+	#@-node:7::Enabling Menu Items (Commands)
+	#@+node:8::Expand & Contract
 	#@+node:1::Commands
 	#@+node:1::contractAllHeadlines
 	#@+body
@@ -1327,8 +1344,8 @@ class Commands:
 	#@-body
 	#@-node:3::expandToLevel
 	#@-node:2::Utilities
-	#@-node:10::Expand & Contract
-	#@+node:11::Getters & Setters
+	#@-node:8::Expand & Contract
+	#@+node:9::Getters & Setters
 	#@+node:1::c.currentVnode
 	#@+body
 	# Compatibility with scripts
@@ -1419,8 +1436,8 @@ class Commands:
 	
 	#@-body
 	#@-node:7::setChanged
-	#@-node:11::Getters & Setters
-	#@+node:12::Insert, Delete & Clone (Commands)
+	#@-node:9::Getters & Setters
+	#@+node:10::Insert, Delete & Clone (Commands)
 	#@+node:1::c.checkMoveWithParentWithWarning
 	#@+body
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
@@ -1602,8 +1619,8 @@ class Commands:
 			return true
 	#@-body
 	#@-node:8::validateOutline
-	#@-node:12::Insert, Delete & Clone (Commands)
-	#@+node:13::Mark & Unmark & goto
+	#@-node:10::Insert, Delete & Clone (Commands)
+	#@+node:11::Mark & Unmark & goto
 	#@+node:1::goToNextDirtyHeadline
 	#@+body
 	def goToNextDirtyHeadline (self):
@@ -1793,8 +1810,8 @@ class Commands:
 		c.endUpdate()
 	#@-body
 	#@-node:11::unmarkAll
-	#@-node:13::Mark & Unmark & goto
-	#@+node:14::Moving, Dragging, Promote, Demote, Sort (commands)
+	#@-node:11::Mark & Unmark & goto
+	#@+node:12::Moving, Dragging, Promote, Demote, Sort (commands)
 	#@+node:1::c.dragAfter
 	#@+body
 	def dragAfter(self,v,after):
@@ -2220,8 +2237,8 @@ class Commands:
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:12::c.dragCloneAfter (changed in 3.11.1)
-	#@-node:14::Moving, Dragging, Promote, Demote, Sort (commands)
-	#@+node:15::Selecting & Updating (commands)
+	#@-node:12::Moving, Dragging, Promote, Demote, Sort (commands)
+	#@+node:13::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)
 	#@+body
 	# Selects v: sets the focus to v and edits v.
@@ -2332,8 +2349,8 @@ class Commands:
 	
 	#@-body
 	#@-node:8::selectVnodeWithEditing
-	#@-node:15::Selecting & Updating (commands)
-	#@+node:16::Syntax coloring interface
+	#@-node:13::Selecting & Updating (commands)
+	#@+node:14::Syntax coloring interface
 	#@+body
 	#@+at
 	#  These routines provide a convenient interface to the syntax colorer.
@@ -2348,7 +2365,7 @@ class Commands:
 	
 	#@-body
 	#@-node:1::updateSyntaxColorer
-	#@-node:16::Syntax coloring interface
+	#@-node:14::Syntax coloring interface
 	#@-others
 
 

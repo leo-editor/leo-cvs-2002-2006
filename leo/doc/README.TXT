@@ -4,12 +4,6 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-leo.py 4.0 alpha 2                  May 14, 2003
-
-This version contains disabled 4.x read/write code.  It is compatible all 3.x versions of Leo.
-
-- alpha 2 fixes a bad bug when cutting and pasting entire trees.
-
 leo.py 3.11.1                       May 1, 2003
 
 This version fixes two bugs:

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="57" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="59" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="36" left="542" height="75" width="97"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -98,10 +98,12 @@
 <v t="T53"><vh>Test askYesNo</vh></v>
 <v t="T54"><vh>Test askYesNoCancel</vh></v>
 </v>
-<v t="T55" a="EV"><vh>Spell test</vh>
+<v t="T55"><vh>Spell test </vh>
 <v t="T56"><vh>node two</vh></v>
 <v t="T57"><vh>node two no misspellings</vh></v>
 </v>
+<v t="T58"><vh>v.__repr__ and v.__str___</vh></v>
+<v t="T59" a="V"><vh>Overriding core classes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -513,7 +515,7 @@ if 1: # passed
 		noMessage = "File",
 		defaultButton = "Cancel").run(modal=1)</t>
 <t tx="T55">a b leoDialog modal end
-line tooo</t>
+line tooo changed 9</t>
 <t tx="T56">this is another test.
 
 hello there jkk this is werg
@@ -522,5 +524,11 @@ the cht sat on the marh
 the cat was sitting phew, another day. by zz z z
 two</t>
 <t tx="T57">everything good.</t>
+<t tx="T58">from leoGlobals import *
+c = top() ; v = c.currentVnode()
+print v
+print `v`</t>
+<t tx="T59">import leoFrame
+print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
 </tnodes>
 </leo_file>

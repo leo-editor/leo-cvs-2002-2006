@@ -215,22 +215,35 @@ class leoTree:
 	#@+node:4::tree.destroy
 	#@+body
 	def destroy (self):
+		
+		"""Clear all links from a tree to other objects."""
 	
 		# print "tree.destroy" # Don't use trace.
 	
-		self.iconimages = None
-		del self.colorizer
-		self.colorizer = None
+		# Delete all references to Tk widgets.
+		self.deleteBindings()
+		self.canvas.delete("all")
+		self.deleteWidgets()
 	
-		# Remove links to objects destroyed by frame.
+		# Clear all ivars.
+		self.bindings = None
+		self.colorizer = None
 		self.commands = None
 		self.canvas = None
-	
-		# Remove all links to nodes
-		self.currentVnode = None # The presently selected vnode.
-		self.editVnode = None # The vnode being edited.
+		self.currentVnode = None
+		self.drag_id = None
+		self.editVnode = None
+		self.edit_text_dict = None
+		self.font = None
+		self.fontName = None
+		self.iconimages = None
+		self.icon_id_dict = None
+		self.popupMenu = None
 		self.rootVnode = None
+		self.tagBindings = None
 		self.topVnode = None
+		self.widgets = None
+	
 	#@-body
 	#@-node:4::tree.destroy
 	#@-node:3::Birth & death
@@ -552,7 +565,6 @@ class leoTree:
 			self.deleteBindings()
 			self.canvas.delete("all")
 			self.deleteWidgets()
-			# printGarbage("redraw")
 			self.setVisibleAreaToFullCanvas()
 			self.drawTree(self.rootVnode,root_left,root_top,0,0)
 			# Set up the scroll region after the tree has been redrawn.
@@ -563,7 +575,6 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			collectGarbage()
 			doHook("after_redraw-outline")
 	
 		self.canvas['cursor'] = oldcursor

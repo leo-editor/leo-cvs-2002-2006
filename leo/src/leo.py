@@ -46,19 +46,34 @@ def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
 
-	app,root = doStep1() # Create app object and call app().finishCreate.
-	if root:
-		doHook("start1") # Load plugins before doing step 2.
-		frame = doStep2(app,fileName)
-		if frame:
-			doStep3(app,frame,args)
-			runMainLoop(root)
+	printGc("before creating root")
+	root = createTkRoot()
+	printGc("after creating root")
+	if not root: return
+	
+	app = createAppObject(root)
+	printGc("after creating app")
+	if not app: return
+	
+	doHook("start1")
+	printGc("after loading plugins")
+	
+	initSherlock(app,args)
+	frame = createFrame(app,fileName)
+	printGc("after creating frames")
+	if not frame: return
 
+	# Write queued output and redraw the screen.
+	app.writeWaitingLog()
 
+	doHook("start2")
+	frame.commands.redraw()
+
+	runMainLoop(root)
 #@-body
-#@+node:1::doStep1
+#@+node:1::createTkRoot
 #@+body
-def doStep1 ():
+def createTkRoot ():
 	
 	"""Step 1 of Leo startup process:
 	
@@ -85,22 +100,30 @@ def doStep1 ():
 
 	root.title("Leo Main Window")
 	root.withdraw()
+	return root
+	
+
+#@-body
+#@-node:1::createTkRoot
+#@+node:2::createAppObject
+#@+body
+def createAppObject(root):
 
 	# Create the application object.
 	app = leoApp.LeoApp(root)
 	setApp(app)
 	
-	# do this after gApp exists.
+	# Finish the creation of the app object after app() exists.
 	if not app.finishCreate(): 
 		root.destroy()
 		root = None
-	
-	return app,root
+
+	return app
 #@-body
-#@-node:1::doStep1
-#@+node:2::doStep2
+#@-node:2::createAppObject
+#@+node:3::createFrame
 #@+body
-def doStep2 (app,fileName):
+def createFrame (app,fileName):
 	
 	"""Step 2 of Leo startup process:
 		
@@ -125,7 +148,7 @@ def doStep2 (app,fileName):
 		else: ok = 0
 		if ok:
 			app.windowList.remove(frame1)
-			frame1.destroy() # force the window to go away now.
+			frame1.top.destroy() # force the window to go away now.
 			app.log = frame2 # Sets the log stream for es()
 			return frame2
 		else:
@@ -146,26 +169,18 @@ def doStep2 (app,fileName):
 		frame1.startupWindow = true
 		return frame1
 #@-body
-#@-node:2::doStep2
-#@+node:3::doStep3
+#@-node:3::createFrame
+#@+node:4::initSherlock
 #@+body
-def doStep3 (app,frame,args):
+def initSherlock (app,args):
 	
-	"""Step 3 of Leo startup process:
-		
-	Initialize Sherlock and reddraw the screen."""
+	"""Initialize Sherlock."""
 	
 	# Initialze Sherlock & stats.
 	init_sherlock(args)
 	clear_stats()
-
-	# Write queued output and redraw the screen.
-	app.writeWaitingLog()
-	doHook("start2")
-	frame.commands.redraw()
-
 #@-body
-#@-node:3::doStep3
+#@-node:4::initSherlock
 #@-node:2::run & allies
 #@+node:3::runMainLoop
 #@+body
