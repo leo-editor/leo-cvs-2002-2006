@@ -63,9 +63,9 @@ def addUThreading( self, parentFrame ):
         while 1:
             ev.wait()
             if way.way == 'Down':
-                canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+                canvas.yview(Tk.SCROLL, 1, Tk.UNITS)
             else:
-                canvas.yview( Tkinter.SCROLL, -1, Tkinter.UNITS )
+                canvas.yview( Tk.SCROLL, -1, Tk.UNITS )
             time.sleep( .1 )
     
     t = threading.Thread( target = run )
