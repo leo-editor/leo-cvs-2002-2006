@@ -4117,6 +4117,9 @@ class atFile:
         
         assert(self.outputFile is None)
         
+        if self.toString:
+            return
+        
         self.fileChangedFlag = False
         if g.os_path_exists(self.targetFileName):
             if self.compareFiles(
