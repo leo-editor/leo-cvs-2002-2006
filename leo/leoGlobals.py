@@ -1324,7 +1324,7 @@ def listToString(theList):
 #@-body
 #@-node:3::listToString
 #@-node:7::Lists...
-#@+node:8::Scanning, selection, text & whitespace...
+#@+node:8::Scanning, selection & whitespace...
 #@+node:1::scanError
 #@+body
 #@+at
@@ -2250,89 +2250,7 @@ def setTextSelection (t,start,end):
 #@-body
 #@-node:4::setTextSelection
 #@-node:5::Tk.Text selection (utils)
-#@+node:6::Unicode...
-#@+node:1::convertChar/String/ToXMLCharRef
-#@+body
-def convertCharToXMLCharRef(c,xml_encoding):
-
-	try:
-		if type(c) == types.UnicodeType:
-			xml_encoding = app().config.xml_version_string
-			e = c.encode(xml_encoding)
-			e = unicode(e,xml_encoding)
-			return e
-		else:
-			s = unicode(c,xml_encoding)
-			return s
-	except:
-		#Convert to a character reference.
-		return u"&#%d;" % ord(c)
-
-def convertStringToXMLCharRef(s,xml_encoding):
-	
-	s2 = u""
-	for c in s:
-		s2 += convertCharToXMLCharRef(c,xml_encoding)
-	return s2
-#@-body
-#@-node:1::convertChar/String/ToXMLCharRef
-#@+node:2::replaceNonEncodingChar/s
-#@+body
-def replaceNonEncodingChar(c,c2,xml_encoding):
-
-	try:
-		if type(c) == types.UnicodeType:
-			xml_encoding = app().config.xml_version_string
-			e = c.encode(xml_encoding)
-			e = unicode(e,xml_encoding)
-			return e
-		else:
-			s = unicode(c,xml_encoding)
-			return s
-	except:
-		if 0:
-			m = "invalid in "+xml_encoding+": "
-			c2 = c.encode("utf-8")
-			m = unicode(m,"utf-8") + unicode(c2,"utf-8")
-			es(m)
-		return c2
-			
-def replaceNonEncodingChars(s,c2,xml_encoding):
-	
-	s2 = u""
-	for c in s:
-		s2 += replaceNonEncodingChar(c,c2,xml_encoding)
-	return s2
-#@-body
-#@-node:2::replaceNonEncodingChar/s
-#@+node:3::es_nonEncodingChar, returnNonEncodingChar
-#@+body
-def es_nonEncodingChars(s,xml_encoding):
-
-	for c in s:
-		s2 = returnNonEncodingChar(c,xml_encoding)
-		if len(s2) > 0:
-			es(s2)
-		
-def returnNonEncodingChar(c,xml_encoding):
-	try:
-		if type(c) == types.UnicodeType:
-			xml_encoding = app().config.xml_version_string
-			e = c.encode(xml_encoding)
-			unicode(e,xml_encoding)
-			return u""
-		else:
-			unicode(c,xml_encoding)
-			return u""
-	except:
-		if ord(c) < 32 or ord(c) >= 128:
-			return c + "=" + hex(ord(c))
-		else:
-			return c
-#@-body
-#@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:6::Unicode...
-#@-node:8::Scanning, selection, text & whitespace...
+#@-node:8::Scanning, selection & whitespace...
 #@+node:9::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
@@ -2485,6 +2403,113 @@ def unloadAll():
 #@-body
 #@-node:2::unloadAll
 #@-node:9::Startup & initialization...
+#@+node:10::Unicode...
+#@+node:1::convertChar/String/ToXMLCharRef
+#@+body
+def convertCharToXMLCharRef(c,xml_encoding):
+
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			e = unicode(e,xml_encoding)
+			return e
+		else:
+			s = unicode(c,xml_encoding)
+			return s
+	except:
+		#Convert to a character reference.
+		return u"&#%d;" % ord(c)
+
+def convertStringToXMLCharRef(s,xml_encoding):
+	
+	s2 = u""
+	for c in s:
+		s2 += convertCharToXMLCharRef(c,xml_encoding)
+	return s2
+#@-body
+#@-node:1::convertChar/String/ToXMLCharRef
+#@+node:2::convertUnicodeToString
+#@+body
+# Converts s to a string type, returns non-None unicode u on an error.
+# This should be called whenever getting text from a Tk.Text widget.
+
+def convertUnicodeToString (s):
+	
+	if not s: s = ""
+
+	try:
+		encoding = app().config.xml_version_string
+		if type(s) == types.UnicodeType:
+			# This can fail, e.g., if character > 256 used in Latin-1 encoding.
+			s = s.encode(encoding)
+		u = None
+	except:
+		es_nonEncodingChars(s,encoding)
+		u = replaceNonEncodingChars(s,"?",encoding)
+		s = u.encode(xml_encoding)
+
+	# result is always a string.
+	assert(type(s)==types.StringType)
+	return s,u
+#@-body
+#@-node:2::convertUnicodeToString
+#@+node:3::es_nonEncodingChar, returnNonEncodingChar
+#@+body
+def es_nonEncodingChars(s,xml_encoding):
+
+	for c in s:
+		s2 = returnNonEncodingChar(c,xml_encoding)
+		if len(s2) > 0:
+			es(s2)
+		
+def returnNonEncodingChar(c,xml_encoding):
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			unicode(e,xml_encoding)
+			return u""
+		else:
+			unicode(c,xml_encoding)
+			return u""
+	except:
+		if ord(c) < 32 or ord(c) >= 128:
+			return c + "=" + hex(ord(c))
+		else:
+			return c
+#@-body
+#@-node:3::es_nonEncodingChar, returnNonEncodingChar
+#@+node:4::replaceNonEncodingChar/s
+#@+body
+def replaceNonEncodingChar(c,c2,xml_encoding):
+
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			e = unicode(e,xml_encoding)
+			return e
+		else:
+			s = unicode(c,xml_encoding)
+			return s
+	except:
+		if 0:
+			m = "invalid in "+xml_encoding+": "
+			c2 = c.encode("utf-8")
+			m = unicode(m,"utf-8") + unicode(c2,"utf-8")
+			es(m)
+		return c2
+			
+def replaceNonEncodingChars(s,c2,xml_encoding):
+	
+	s2 = u""
+	for c in s:
+		s2 += replaceNonEncodingChar(c,c2,xml_encoding)
+	return s2
+#@-body
+#@-node:4::replaceNonEncodingChar/s
+#@-node:10::Unicode...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

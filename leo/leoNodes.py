@@ -345,19 +345,9 @@ class tnode:
 	# This sets the text in the tnode from the given string.
 	
 	def setTnodeText (self,s):
-		
-		old_s = s
-		if type(s) == types.UnicodeType: # 8/9/02
-			xml_encoding = app().config.xml_version_string
-			s = s.encode(xml_encoding)
 	
-		if 0:
-			if len(old_s) != len(s):
-				trace("old_s != s")
-			
-		assert(type(s)==types.StringType)
+		s,junk = convertUnicodeToString(s)
 		self.bodyString = s
-	
 	#@-body
 	#@-node:2::setTnodeText
 	#@+node:3::setSelection
@@ -1231,27 +1221,14 @@ class vnode:
 	#@+node:3::setHeadString & initHeadString
 	#@+body
 	def setHeadString(self, s):
-	
-		if not s: s = ""
-		
-		if type(s) == types.UnicodeType: # 10/1
-			xml_encoding = app().config.xml_version_string
-			s = s.encode(xml_encoding) # result is a string.
-		assert(type(s)==types.StringType)
-		
+		s,junk = convertUnicodeToString(s)
 		self.mHeadString = s
 		self.setDirty()
 	
 	def initHeadString (self, s):
-	
-		if not s: s = ""
-		
-		if type(s) == types.UnicodeType: # 10/1
-			xml_encoding = app().config.xml_version_string
-			s = s.encode(xml_encoding) # result is a string.
-		assert(type(s)==types.StringType)
-	
+		s,junk = convertUnicodeToString(s)
 		self.mHeadString = s
+	
 	#@-body
 	#@-node:3::setHeadString & initHeadString
 	#@+node:4::setHeadStringOrHeadline

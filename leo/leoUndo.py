@@ -1130,7 +1130,8 @@ class undoer:
 		# Add oldNewlines newlines.
 		if oldNewlines > 0:
 			s = s + '\n' * oldNewlines
-		result = s
+		
+		result,junk = convertUnicodeToString(s)
 		
 		if self.debug_print:
 			print "body:  ",`body`
@@ -1144,6 +1145,8 @@ class undoer:
 		#@+node:3::<< Get textResult from the Tk.Text widget >>
 		#@+body
 		textResult = c.frame.body.get("1.0","end")
+		textResult,junk = convertUnicodeToString(textResult)
+		
 		if textResult != result:
 			# Remove the newline from textResult if that is the only difference.
 			if len(textResult) > 0 and textResult[:-1] == result:

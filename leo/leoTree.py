@@ -780,18 +780,27 @@ class leoTree:
 		s = c.body.get("1.0", "end")
 		first,last = getTextSelection(c.body)
 		newSel = (first,last)
+		body,junk = convertUnicodeToString(body)
+		s,u       = convertUnicodeToString(s)
+		if u: # u is s with invalid chars replaced by '?'
+			
+			#@<< replace body text by u >>
+			#@+node:1::<< replace body text by u >>
+			#@+body
+			ins = c.body.index("insert")
+			c.body.delete("1.0","end")
+			c.body.insert("end",u) # Always put unicode in the Tk.Text widget!
+			c.body.mark_set("insert",ins)
+			#@-body
+			#@-node:1::<< replace body text by u >>
+
 		# Do nothing for control characters...
 		if (ch == None or len(ch) == 0):
-			if s == body:
-				# trace("s==body")
-				return "break"
-			if body == s[:-1]:
-				# trace("body == s[:-1]")
-				return "break"
-		# If the only change is the newline, the newline must be real.
+			if s == body: return "break"
+			if body == s[:-1]: return "break"
 		
 		#@<< set removeTrailing >>
-		#@+node:1::<< set removeTrailing >>
+		#@+node:2::<< set removeTrailing >>
 		#@+body
 		#@+at
 		#  Tk will add a newline only if:
@@ -830,49 +839,13 @@ class leoTree:
 		
 		
 		#@-body
-		#@-node:1::<< set removeTrailing >>
-
-		
-		#@<< Make sure s is valid in the encoding >>
-		#@+node:4::<< Make sure s is valid in the encoding >>
-		#@+body
-		xml_encoding = app().config.xml_version_string
-		
-		try:
-			if type(s) == types.UnicodeType:
-				# This can fail, e.g., if character > 256 used in Latin-1 encoding.
-				s2 = s.encode(xml_encoding) # result is a string.
-				s = s2 # don't destroy s until we know that all is well.
-		except:
-			es_nonEncodingChars(s,xml_encoding)
-			u = replaceNonEncodingChars(s,"?",xml_encoding)
-			s = u.encode(xml_encoding) # result is a string.
-			ins = c.body.index("insert")
-			c.body.delete("1.0","end")
-			c.body.insert("end",u) # Always put unicode in the Tk.Text widget!
-			c.body.mark_set("insert",ins)
-			return "break"
-		
-		#@-body
-		#@-node:4::<< Make sure s is valid in the encoding >>
-
-		
-		#@<< Make sure body is valid in the encoding >>
-		#@+node:5::<< Make sure body is valid in the encoding >>
-		#@+body
-		if type(body) == types.UnicodeType:
-		
-			# vnode strings are encoded using the xml_encoding.
-			body = body.encode(xml_encoding) # result is a string.
-		
-		#@-body
-		#@-node:5::<< Make sure body is valid in the encoding >>
+		#@-node:2::<< set removeTrailing >>
 
 		# trace(`ch`)
 		if ch == '\r' or ch == '\n':
 			
 			#@<< Do auto indent >>
-			#@+node:2::<< Do auto indent >> (David McNab)
+			#@+node:3::<< Do auto indent >> (David McNab)
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -906,12 +879,12 @@ class leoTree:
 					c.body.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
 			#@-body
-			#@-node:2::<< Do auto indent >> (David McNab)
+			#@-node:3::<< Do auto indent >> (David McNab)
 
 		elif ch == '\t' and c.tab_width < 0:
 			
 			#@<< convert leading tab to blanks >>
-			#@+node:3::<< convert leading tab to blanks >>
+			#@+node:4::<< convert leading tab to blanks >>
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -929,10 +902,10 @@ class leoTree:
 					c.body.delete("insert -1c")
 					c.body.insert("insert",' ' * w2)
 			#@-body
-			#@-node:3::<< convert leading tab to blanks >>
+			#@-node:4::<< convert leading tab to blanks >>
 
 		s = c.body.get("1.0", "end")
-		if s == None: s = ""
+		s,junk = convertUnicodeToString(s)
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
