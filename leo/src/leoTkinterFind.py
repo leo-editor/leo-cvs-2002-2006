@@ -185,6 +185,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for key in self.intKeys:
 			val = getattr(c, key + "_flag")
+			val = choose(val,1,0) # 2/1/04: work around major Tk problem.
 			self.dict[key].set(val)
 			# trace(key,`val`)
 	
