@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5412" clone_windows="0"/>
-<globals body_outline_ratio="0.617480136209">
-	<global_window_position top="13" left="346" height="881" width="856"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5438" clone_windows="0"/>
+<globals body_outline_ratio="0.737797956867">
+	<global_window_position top="31" left="357" height="881" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,314 +20,43 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040707140711"><vh>Old unit test code from leotTest.py</vh>
-<v t="EKR.20040623200709.44"><vh>Find Command tests</vh>
-<v t="EKR.20040623200709.45"><vh> makeFindCommandSuite</vh></v>
-<v t="EKR.20040623200709.46"><vh>class findCommandTestCase</vh>
-<v t="EKR.20040623200709.47"><vh>setUp</vh></v>
-<v t="EKR.20040623200709.48"><vh>testFindCommand</vh></v>
-<v t="EKR.20040623200709.49"><vh>testFindWordCommand</vh></v>
-<v t="EKR.20040623200709.50"><vh>testFindIgnoreCaseCommand</vh></v>
-</v>
-</v>
-<v t="EKR.20040623200709.51"><vh>Import/Export tests</vh>
-<v t="EKR.20040623200709.52"><vh>makeImportExportSuite</vh></v>
-<v t="EKR.20040623200709.53"><vh>class importExportTestCase</vh>
-<v t="EKR.20040623200709.54"><vh>__init__</vh></v>
-<v t="EKR.20040623200709.55"><vh>importExport</vh></v>
-<v t="EKR.20040623200709.56"><vh>runTest</vh></v>
-<v t="EKR.20040623200709.57"><vh>setUp</vh></v>
-<v t="EKR.20040623200709.58"><vh>shortDescription</vh></v>
-<v t="EKR.20040623200709.59"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="EKR.20040623200709.67"><vh>Outline tests (tests undo)</vh>
-<v t="EKR.20040623200709.68"><vh> makeOutlineSuite</vh></v>
-<v t="EKR.20040623200709.69"><vh>class outlineTestCase</vh>
-<v t="EKR.20040623200709.70"><vh>__init__</vh></v>
-<v t="EKR.20040623200709.71"><vh>outlineCommand</vh></v>
-<v t="EKR.20040623200709.72"><vh>runTest</vh></v>
-<v t="EKR.20040623200709.73"><vh>setUp</vh></v>
-<v t="EKR.20040623200709.74"><vh>tearDown</vh></v>
-</v>
-</v>
-<v t="EKR.20040623200709.75"><vh>Plugin tests</vh>
-<v t="EKR.20040623200709.76"><vh> makePluginsSuite</vh></v>
-<v t="EKR.20040623200709.77"><vh>class pluginTestCase</vh>
-<v t="EKR.20040623200709.78"><vh>__init__</vh></v>
-<v t="EKR.20040623200709.79"><vh>pluginTest</vh></v>
-<v t="EKR.20040623200709.80"><vh>runTest</vh></v>
-<v t="EKR.20040623200709.81"><vh>setUp</vh></v>
-<v t="EKR.20040623200709.82"><vh>shortDescription</vh></v>
-<v t="EKR.20040623200709.83"><vh>tearDown</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040619133116" a="M"><vh>Unit testing...</vh>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
-<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
-<v t="ekr.20040303063549.63"><vh>OLDeditBodyTests</vh>
-<v t="ekr.20040303063549.64"><vh>dedentBody</vh>
-<v t="ekr.20040303063549.65"><vh>before</vh></v>
-<v t="ekr.20040303063549.66"><vh>after</vh></v>
-<v t="ekr.20040303063549.67"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040303063549.68"><vh>indentBody</vh>
-<v t="ekr.20040303063549.69"><vh>before</vh></v>
-<v t="ekr.20040303063549.70"><vh>after</vh></v>
-<v t="ekr.20040303063549.71"><vh>selection</vh></v>
-</v>
-<v t="ekr.20040303063549.72"><vh>extractSection</vh>
-<v t="ekr.20040303063549.73"><vh>before</vh></v>
-<v t="ekr.20040303063549.74"><vh>after</vh>
-<v t="ekr.20040303063549.75"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040303063549.76"><vh>selection</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.77"><vh>exportTests</vh>
-<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
-<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
-<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.82"><vh>weave</vh>
-<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
-<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
-<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
-<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
-</v>
-</v>
-<v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
-<v t="ekr.20040303063549.90"><vh>importTests</vh>
-<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
-<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
-<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
-<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
-<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
-</v>
-<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
-<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.101"><vh>outlineTests</vh>
-<v t="ekr.20040303063549.102"><vh>moveOutlineDown</vh>
-<v t="ekr.20040303063549.103"><vh>before</vh>
-<v t="ekr.20040303063549.104"><vh>a</vh></v>
-<v t="ekr.20040303063549.105"><vh>move</vh></v>
-<v t="ekr.20040303063549.106"><vh>b</vh></v>
-</v>
-<v t="ekr.20040303063549.107"><vh>after</vh>
-<v t="ekr.20040303063549.108"><vh>a</vh></v>
-<v t="ekr.20040303063549.109"><vh>b</vh></v>
-<v t="ekr.20040303063549.110"><vh>move</vh></v>
-</v>
-<v t="ekr.20040303063549.111"><vh>ref</vh>
-<v t="ekr.20040303063549.112"><vh>a</vh></v>
-<v t="ekr.20040303063549.113"><vh>move</vh></v>
-<v t="ekr.20040303063549.114"><vh>b</vh></v>
-</v>
-</v>
-<v t="ekr.20040303063549.115"><vh>moveOutlineLeft</vh></v>
-<v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040623202054.1"><vh>Others...</vh>
-<v t="ekr.20040414082806"><vh>Clone test</vh>
-<v t="ekr.20040409140301"><vh>clone test</vh>
-<v t="ekr.20040409140301.1"><vh>b</vh>
-<v t="ekr.20040409140301.2"><vh>c</vh>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
-</v>
-<v t="ekr.20040409142028"><vh>sibling</vh></v>
-</v>
-<v t="ekr.20040409140301.3"><vh>a</vh></v>
-</v>
-<v t="ekr.20040409140343"><vh>d</vh>
-<v t="ekr.20040409140301.2"><vh>c</vh>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
-</v>
-<v t="ekr.20040409142028.1"><vh>sibling 2</vh></v>
-</v>
-<v t="ekr.20040409142108"><vh>firstChild</vh></v>
-<v t="ekr.20040409140343.1"><vh>last</vh></v>
-</v>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
 <v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
 </v>
-<v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
-<v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
-<v t="EKR.20040430160416.2"><vh>tex.xml</vh>
-<v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.4"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
+<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+<v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
+<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
+<v t="ekr.20040319111213.1"><vh>description</vh></v>
+<v t="ekr.20040319142708"><vh>filter</vh></v>
+<v t="ekr.20040319142202"><vh>old code</vh>
+<v t="ekr.20040319111213.2"><vh>filter</vh></v>
+<v t="ekr.20040319111213.3"><vh>search</vh></v>
 </v>
-<v t="EKR.20040430160416.5"><vh>python.xml</vh>
-<v t="EKR.20040430160416.6"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.7"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.8"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.9"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.10"><vh>&lt;&lt; keywords &gt;&gt;</vh>
-<v t="EKR.20040430160416.11"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.12"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.13"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
-<v t="EKR.20040430160416.14"><vh>&lt;&lt; types &gt;&gt;</vh></v>
+<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
+<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
 </v>
+<v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
+<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
+<v t="EKR.20040424065452"><vh>Compare script</vh></v>
+<v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
+<v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
+<v t="EKR.20040517074600.9"><vh>Scripts to debug font problem</vh>
+<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
+<v t="EKR.20040517074600.11"><vh>Show settings</vh>
+<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
 </v>
+<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
-<v t="EKR.20040430160416.15"><vh> Colorizing Test</vh></v>
-<v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
-<v t="EKR.20040430162649.2"><vh> Tests</vh>
-<v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
-<v t="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
-<v t="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
+<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
+<v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
-<v t="EKR.20040430162649.6"><vh> Tests</vh>
-<v t="EKR.20040430162649.7"><vh>Import/export tests</vh>
-<v t="EKR.20040430162649.8"><vh>test</vh>
-<v t="EKR.20040430162649.9"><vh>NewHeadlineë</vh></v>
-</v>
-</v>
-<v t="EKR.20040430162649.10"><vh>@file c:/prog/test/unicodeTest.doc</vh>
-<v t="EKR.20040430162649.11"><vh>NewÖ</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040430162649.12"><vh>REM_ hack and perlpod hacks</vh>
-<v t="EKR.20040430162649.13"><vh>perlpod test</vh>
-<v t="EKR.20040430162649.14"><vh>perlpod test</vh>
-<v t="EKR.20040430162649.15"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="EKR.20040430162649.16"><vh>REM test</vh>
-<v t="EKR.20040430162649.17"><vh>@file c:/prog/test/remTest.txt</vh></v>
-</v>
-</v>
-<v t="EKR.20040430162649.18"><vh>Allow @comment after @language plain</vh>
-<v t="EKR.20040430162649.19"><vh>Test</vh></v>
-</v>
-<v t="EKR.20040430162649.20"><vh>Suppress @@ sentinel unless leading @ starts a directive</vh>
-<v t="EKR.20040430162649.21"><vh>@file c:\prog\test\perltest.txt</vh></v>
-</v>
-<v t="EKR.20040430162649.22"><vh>Other Reformat Paragraph tests</vh></v>
-<v t="EKR.20040430162649.23"><vh>(double @root bug)</vh>
-<v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
-<v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
-</v>
-<v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
-<v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
-<v t="EKR.20040526200017" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
-<v t="EKR.20040529092739"><vh>Tests of c iters</vh>
-<v t="EKR.20040529093047"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
-<v t="EKR.20040529093047.1"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
-</v>
-<v t="EKR.20040528152529"><vh>Tests of p and v iters</vh>
-<v t="EKR.20040527073459"><vh>child1</vh>
-<v t="EKR.20040527072047"><vh>a</vh>
-<v t="EKR.20040527072047.1"><vh>b</vh></v>
-</v>
-<v t="EKR.20040527074524"><vh>c</vh></v>
-<v t="EKR.20040527072047"><vh>a</vh>
-<v t="EKR.20040527072047.1"><vh>b</vh></v>
-</v>
-<v t="EKR.20040527074524.1"><vh>d</vh>
-<v t="EKR.20040527074524.2"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040529105640"><vh>child2</vh></v>
-<v t="EKR.20040529104307"><vh>&lt;&lt; tests of consistency of p and v iters &gt;&gt;</vh></v>
-<v t="EKR.20040527083449.1"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
-<v t="EKR.20040527083449.2"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
-</v>
-<v t="EKR.20040527154402"><vh>Test of undo extract section</vh>
-<v t="EKR.20040528130659"><vh>a</vh></v>
-<v t="EKR.20040528130659"><vh>a</vh></v>
-</v>
-<v t="EKR.20040523112430"><vh>Cloning headlines</vh>
-<v t="EKR.20040523112430.1"><vh>read me</vh>
-<v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040523112430.6"><vh>g</vh></v>
-</v>
-<v t="EKR.20040523112430.7"><vh>a</vh>
-<v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040523112430.6"><vh>g</vh></v>
-</v>
-<v t="EKR.20040523112430.7"><vh>a</vh>
-<v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523112430.3"><vh>c</vh>
-<v t="EKR.20040523112430.4"><vh>d</vh></v>
-<v t="EKR.20040523112430.5"><vh>e</vh></v>
-</v>
-</v>
-<v t="EKR.20040523112430.6"><vh>g</vh></v>
-</v>
-<v t="EKR.20040523112430.8"><vh>f</vh></v>
-</v>
-</v>
-<v t="EKR.20040608095146"><vh>Recent tests</vh>
+<v t="ekr.20040708215319"><vh>To do...</vh>
+<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
 <v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
 <v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
@@ -382,155 +111,8 @@
 <v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
-<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
-<v t="ekr.20040317101155"><vh>Test of user icons</vh>
-<v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
-<v t="EKR.20040603103118"><vh>String bug in html</vh></v>
-<v t="EKR.20040603143325"><vh>AssertionError test</vh></v>
-<v t="EKR.20040603174633"><vh>test of focus</vh></v>
-<v t="EKR.20040604082113"><vh>Test of @tabwidth</vh></v>
-<v t="EKR.20040604143253"><vh>Test of Remove sentinels</vh>
-<v t="EKR.20040604143253.1"><vh>@thin removeSentTest.txt</vh></v>
-</v>
-<v t="EKR.20040604170105"><vh>Mini test of Remove sentinels</vh></v>
-<v t="EKR.20040606204316"><vh>test of @first</vh>
-<v t="EKR.20040606204316.1"><vh>@thin atFirstTest.txt</vh></v>
-</v>
-<v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
-<v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
-<v t="EKR.20040608095146.1" a="M"><vh>@file login_process.cfm</vh></v>
-<v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
-<v t="EKR.20040610131858"><vh>Test of Paste Node Retaining Clones</vh>
-<v t="EKR.20040615144810"><vh>b</vh></v>
-<v t="EKR.20040615144735"><vh>branch</vh>
-<v t="EKR.20040615144810"><vh>b</vh></v>
-<v t="EKR.20040610131858.1"><vh>a</vh>
-<v t="EKR.20040610143643"><vh>b</vh></v>
-<v t="EKR.20040610143643"><vh>b</vh></v>
-</v>
-<v t="EKR.20040610131858.1"><vh>a</vh>
-<v t="EKR.20040610143643"><vh>b</vh></v>
-<v t="EKR.20040610143643"><vh>b</vh></v>
-</v>
-<v t="EKR.20040610132739"><vh>copied</vh></v>
-</v>
-</v>
-<v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
-<v t="EKR.20040612215136"><vh>Contains error</vh></v>
-</v>
-<v t="EKR.20040615070332"><vh>Test print</vh></v>
-<v t="EKR.20040625110032"><vh>@ thin c:\prog\test\mixedCommentDelims.txt</vh>
-<v t="EKR.20040625110032.1"><vh>node 1</vh></v>
-<v t="EKR.20040625110032.2"><vh>node 2</vh>
-<v t="EKR.20040625110032.3"><vh>Node 3</vh></v>
-</v>
-</v>
-<v t="EKR.20040627100615"><vh>Test of error messages when redirecting output</vh></v>
-<v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
-<v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
-<v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
-<v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
-</v>
-<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
-<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
-<v t="EKR.20040622074004.1"><vh>a</vh>
-<v t="EKR.20040622074004.2" a="M"><vh>b</vh></v>
-<v t="EKR.20040622074004.3"><vh>c</vh></v>
-</v>
-<v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
-</v>
-<v t="ekr.20040701081330"><vh>Test of decendent attributes</vh>
-<v t="ekr.20040701065412"><vh>@ thin c:\prog\test\attribTest.txt</vh>
-<v t="ekr.20040701065412.1" a="M"><vh>Marked</vh></v>
-<v t="ekr.20040701065412.2"><vh>Expanded</vh>
-<v t="ekr.20040701065412.3"><vh>child</vh></v>
-</v>
-<v t="ekr.20040701065412.4" a="M"><vh>Marked and expanded</vh>
-<v t="ekr.20040701065412.5"><vh>child2</vh></v>
-</v>
-<v t="ekr.20040701065424"><vh>Neither Expanded or marked</vh>
-<v t="ekr.20040701065424.1"><vh>child</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040312101720"><vh>Experiments</vh>
-<v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
-<v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
-<v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
-<v t="ekr.20040323082119"><vh>Creating a list of distinct vnodes</vh></v>
-<v t="ekr.20040325082811"><vh>Test that back quotes are not needed in es</vh></v>
-<v t="ekr.20040325130503" a="M"><vh>test of list comparisons</vh></v>
-<v t="ekr.20040325140133"><vh>test that childIndex doesn't mess with p</vh></v>
-<v t="ekr.20040325155043"><vh>Test of __cmp__ vrs equal</vh></v>
-</v>
-<v t="ekr.20040707110818"><vh>Files...</vh>
-<v t="EKR.20040531110157"><vh>at-file thin tests</vh>
-<v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
-<v t="EKR.20040524050419.1"><vh>Organizer node</vh>
-<v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
-<v t="EKR.20040525083635.1"><vh>orphan</vh></v>
-</v>
-</v>
-<v t="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
-<v t="ekr.20040419105536"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
-<v t="ekr.20040419105536.1"><vh>one</vh></v>
-<v t="ekr.20040419105536.2"><vh>two</vh></v>
-</v>
-<v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
-<v t="EKR.20040427092657.1"><vh>node 1</vh>
-<v t="EKR.20040428145741"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
-<v t="EKR.20040428145741.1"><vh>child node 1</vh></v>
-<v t="EKR.20040428145741.2"><vh>child node 2</vh></v>
-</v>
-</v>
-<v t="EKR.20040427092657.2"><vh>&lt;&lt; ref &gt;&gt;</vh>
-<v t="EKR.20040428150018"><vh>organizer node</vh>
-<v t="EKR.20040428145826"><vh>ref child 1</vh></v>
-<v t="EKR.20040428145826.1"><vh>ref child 2</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
-<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
-<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
-<v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
-<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
-<v t="ekr.20040319111213.1"><vh>description</vh></v>
-<v t="ekr.20040319142708"><vh>filter</vh></v>
-<v t="ekr.20040319142202"><vh>old code</vh>
-<v t="ekr.20040319111213.2"><vh>filter</vh></v>
-<v t="ekr.20040319111213.3"><vh>search</vh></v>
-</v>
-<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
-<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
-</v>
-<v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
-<v t="ekr.20040330095252"><vh>script to clear log frame</vh></v>
-<v t="EKR.20040424065452"><vh>Compare script</vh></v>
-<v t="EKR.20040424091411"><vh>Compare script using text mode to ignore newlines</vh></v>
-<v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
-<v t="EKR.20040517074600.9"><vh>Scripts to debug font problem</vh>
-<v t="EKR.20040517074600.10"><vh>Show font</vh></v>
-<v t="EKR.20040517074600.11"><vh>Show settings</vh>
-<v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
-</v>
-<v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
-</v>
-<v t="EKR.20040613162717"><vh>Report newlines</vh></v>
-<v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
-</v>
-<v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
+<v t="EKR.20040612095237" a="M"><vh>Prototypes of new commands</vh>
 <v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
 <v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
@@ -578,13 +160,14 @@
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
-<v t="ekr.20040704104554"><vh>Test mixed @language directives in a single node</vh>
-<v t="ekr.20040704104554.1"><vh>Mixed script</vh></v>
-<v t="ekr.20040704104554.2"><vh>@thin c:\prog\test\mixedLanguages.txt</vh></v>
 </v>
-<v t="ekr.20040707091428" a="ETV"><vh>New Unit Tests</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040707091428"><vh>Unit Tests</vh>
+<v t="ekr.20040708205640"><vh>Non-file tests</vh>
 <v t="ekr.20040707140849.10"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040708113527" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040708113527"><vh>editBodyTests</vh>
 <v t="ekr.20040708113823"><vh>tempNode</vh></v>
 <v t="ekr.20040708113527.9"><vh>extractSection</vh>
 <v t="ekr.20040708113527.10"><vh>before</vh></v>
@@ -667,6 +250,10 @@
 </v>
 </v>
 </v>
+<v t="EKR.20040529092739"><vh>@test c iters</vh>
+<v t="EKR.20040529093047"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
+<v t="EKR.20040529093047.1"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040707140849.1"><vh>atFileTests...</vh>
 <v t="ekr.20040707141957.3"><vh>@test @file no newline</vh>
 <v t="ekr.20040707141957.4"><vh>@@file</vh></v>
@@ -686,6 +273,9 @@
 </v>
 </v>
 <v t="ekr.20040707083523"><vh>Colorizer tests...</vh>
+<v t="ekr.20040708210045"><vh>@test @comment after @language plain</vh>
+<v t="EKR.20040430162649.19"><vh>Test</vh></v>
+</v>
 <v t="ekr.20040707090019"><vh>@test colorizer Actionscript</vh>
 <v t="ekr.20040707083523.1"><vh>Actionscript</vh></v>
 </v>
@@ -706,6 +296,9 @@
 <v t="ekr.20040707090647.2"><vh>@test colorizer elisp</vh>
 <v t="ekr.20040707083523.7"><vh>elisp</vh></v>
 </v>
+<v t="ekr.20040708211223"><vh>@test colorizer HTML string bug</vh>
+<v t="EKR.20040603103118"><vh>String bug in html</vh></v>
+</v>
 <v t="ekr.20040707090647.3"><vh>@test colorizer HTML1</vh>
 <v t="ekr.20040707083523.8"><vh>HTML1</vh></v>
 </v>
@@ -720,6 +313,20 @@
 </v>
 <v t="ekr.20040707090647.7"><vh>@test colorizer PHP</vh>
 <v t="ekr.20040707083523.12"><vh>PHP</vh></v>
+</v>
+<v t="EKR.20040430160416.1"><vh>@test colorizer python.xml (jEdit)</vh>
+<v t="EKR.20040430160416.5"><vh>python.xml</vh>
+<v t="EKR.20040430160416.6"><vh>&lt;&lt; remarks &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.7"><vh>&lt;&lt; comments &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.8"><vh>&lt;&lt; literals &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.9"><vh>&lt;&lt; operators &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.10"><vh>&lt;&lt; keywords &gt;&gt;</vh>
+<v t="EKR.20040430160416.11"><vh>&lt;&lt; reserved words &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.12"><vh>&lt;&lt; builtins &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.13"><vh>&lt;&lt; exceptions &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.14"><vh>&lt;&lt; types &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040707090647.8"><vh>@test colorizer Python1</vh>
 <v t="ekr.20040707083523.13"><vh>Python1</vh></v>
@@ -736,6 +343,12 @@
 <v t="ekr.20040707090647.12"><vh>@test colorizer shell</vh>
 <v t="ekr.20040707083523.17"><vh>shell</vh></v>
 </v>
+<v t="ekr.20040708205153"><vh>@test colorizer tex.xml (jEdit)</vh>
+<v t="EKR.20040430160416.2"><vh>tex.xml</vh>
+<v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
+<v t="EKR.20040430160416.4"><vh>&lt;&lt; math rules &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20040707090647.13"><vh>@test colorizer wikiTest1</vh>
 <v t="ekr.20040707083523.18"><vh>wikiTest1</vh></v>
 </v>
@@ -744,6 +357,49 @@
 </v>
 <v t="ekr.20040707090647.15"><vh>@test colorizer wikiTest3</vh>
 <v t="ekr.20040707083523.20"><vh>wikiTest3</vh></v>
+</v>
+</v>
+<v t="ekr.20040707140849.26"><vh>Import/Export tests</vh>
+<v t="ekr.20040708173308.1"><vh>@suite Import tests</vh></v>
+<v t="ekr.20040708173549"><vh>@suite Export tests</vh></v>
+<v t="ekr.20040303063549.90"><vh>importTests</vh>
+<v t="ekr.20040708174345"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
+<v t="ekr.20040303063549.92"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.93"><vh>importAtFile</vh>
+<v t="ekr.20040303063549.94"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.95"><vh>importNowebFiles</vh>
+<v t="ekr.20040303063549.96"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.97"><vh>importFlattenedOutline</vh>
+<v t="ekr.20040303063549.98"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.99"><vh>importCWEBFiles</vh>
+<v t="ekr.20040303063549.100"><vh>dialog</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.77"><vh>exportTests</vh>
+<v t="ekr.20040708174345.1"><vh>tempNode</vh></v>
+<v t="ekr.20040303063549.78"><vh>exportHeadlines</vh>
+<v t="ekr.20040303063549.79"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.80"><vh>flattenOutline</vh>
+<v t="ekr.20040303063549.81"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.82"><vh>weave</vh>
+<v t="ekr.20040303063549.83"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.84"><vh>outlineToNoweb</vh>
+<v t="ekr.20040303063549.85"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.86"><vh>outlineToCWEB</vh>
+<v t="ekr.20040303063549.87"><vh>dialog</vh></v>
+</v>
+<v t="ekr.20040303063549.88"><vh>removeSentinels</vh>
+<v t="ekr.20040303063549.89"><vh>dialog</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040707093334"><vh>Mini tests...</vh>
@@ -769,6 +425,24 @@
 <v t="ekr.20040327105955"><vh>@test batch mode</vh></v>
 </v>
 <v t="ekr.20040707091428.1"><vh>Position tests...</vh>
+<v t="EKR.20040528152529"><vh>@test p.iters and v.iters</vh>
+<v t="EKR.20040527073459"><vh>child1</vh>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
+</v>
+<v t="EKR.20040527074524"><vh>c</vh></v>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
+</v>
+<v t="EKR.20040527074524.1"><vh>d</vh>
+<v t="EKR.20040527074524.2"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040529105640"><vh>child2</vh></v>
+<v t="EKR.20040529104307"><vh>&lt;&lt; tests of consistency of p and v iters &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.1"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.2"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040707091428.5"><vh>@test p.comparisons</vh></v>
 <v t="ekr.20040707091428.6"><vh>@test that clones share subtrees</vh></v>
 <v t="ekr.20040707091428.8"><vh>@test consistency of c.allNodes_iter() and p.ThreadNext()</vh></v>
@@ -783,6 +457,308 @@
 <v t="ekr.20040707091428.17"><vh>@test hasParentChild</vh></v>
 <v t="ekr.20040707091428.18"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040707091428.19"><vh>@test vnode list</vh></v>
+</v>
+</v>
+<v t="ekr.20040707140849.35"><vh>Test Leo files...</vh>
+<v t="ekr.20040707140849.39"><vh>@test test.leo</vh></v>
+<v t="ekr.20040707140849.40"><vh>@test LeoPy.leo</vh></v>
+<v t="ekr.20040707140849.41"><vh>@test leoPlugins.leo</vh></v>
+<v t="ekr.20040707140849.42"><vh>@test LeoDocs.leo</vh></v>
+</v>
+<v t="ekr.20040707150427"><vh>Unfinished tests...</vh>
+<v t="ekr.20040707140849.43"><vh>Outline tests (Sometimes fails)</vh>
+<v t="ekr.20040708181226"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
+<v t="ekr.20040708181226.1"><vh>root1</vh>
+<v t="ekr.20040708181226.2"><vh>a</vh>
+<v t="ekr.20040708185414"><vh>c</vh>
+<v t="ekr.20040708203222"><vh>d</vh></v>
+</v>
+</v>
+<v t="ekr.20040708181226.3"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040708212348"><vh>Manual test of testUtils.replaceOutline</vh>
+<v t="ekr.20040708214013"><vh>outline1</vh>
+<v t="ekr.20040708214013.1"><vh>a</vh></v>
+</v>
+<v t="ekr.20040708213736"><vh>outline2</vh>
+<v t="ekr.20040708213736.1"><vh>b</vh></v>
+</v>
+</v>
+<v t="EKR.20040623223148.11"><vh>testUtils.replaceOutline</vh></v>
+<v t="ekr.20040708174955" a="M"><vh>@@ suite Outline/Undo tests</vh>
+<v t="ekr.20040707140849.44"><vh> makeOutlineSuite</vh></v>
+<v t="ekr.20040707140849.45"><vh>class outlineTestCase</vh>
+<v t="ekr.20040707140849.46"><vh>__init__</vh></v>
+<v t="ekr.20040707140849.47"><vh>outlineCommand</vh></v>
+<v t="ekr.20040707140849.48"><vh>runTest</vh></v>
+<v t="ekr.20040707140849.49"><vh>setUp</vh></v>
+<v t="ekr.20040707140849.50"><vh>tearDown</vh></v>
+<v t="ekr.20040708175948"><vh>shortDescription</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.101"><vh>outlineTests</vh>
+<v t="ekr.20040303063549.102"><vh>moveOutlineDown</vh>
+<v t="ekr.20040708215633"><vh>before</vh>
+<v t="ekr.20040708215633.1"><vh>a</vh></v>
+<v t="ekr.20040708215633.2"><vh>move</vh></v>
+<v t="ekr.20040708215633.3"><vh>b</vh></v>
+</v>
+<v t="ekr.20040303063549.107"><vh>after</vh>
+<v t="ekr.20040303063549.108"><vh>a</vh></v>
+<v t="ekr.20040303063549.109"><vh>b</vh></v>
+<v t="ekr.20040303063549.110"><vh>move</vh></v>
+</v>
+<v t="ekr.20040303063549.111"><vh>ref</vh>
+<v t="ekr.20040303063549.112"><vh>a</vh></v>
+<v t="ekr.20040303063549.113"><vh>move</vh></v>
+<v t="ekr.20040303063549.114"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549.115"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
+</v>
+</v>
+<v t="ekr.20040708172357"><vh>Find Command tests...(Not finished)</vh>
+<v t="ekr.20040707140849.19"><vh>@suite Find sommands tests</vh>
+<v t="ekr.20040707140849.21"><vh>class findCommandTestCase</vh>
+<v t="ekr.20040707140849.22"><vh>setUp</vh></v>
+<v t="ekr.20040707140849.23"><vh>testFindCommand</vh></v>
+<v t="ekr.20040707140849.24"><vh>testFindWordCommand</vh></v>
+<v t="ekr.20040707140849.25"><vh>testFindIgnoreCaseCommand</vh></v>
+</v>
+</v>
+<v t="ekr.20040708172802"><vh>findTests</vh></v>
+</v>
+<v t="ekr.20040707140849.51"><vh>test plugins (Not ready yet)</vh>
+<v t="ekr.20040707151028"><vh>doPluginTest</vh></v>
+</v>
+<v t="EKR.20040623200709.75"><vh>OLD Plugin tests</vh>
+<v t="EKR.20040623200709.76"><vh> makePluginsSuite</vh></v>
+<v t="EKR.20040623200709.77"><vh>class pluginTestCase</vh>
+<v t="EKR.20040623200709.78"><vh>__init__</vh></v>
+<v t="EKR.20040623200709.79"><vh>pluginTest</vh></v>
+<v t="EKR.20040623200709.80"><vh>runTest</vh></v>
+<v t="EKR.20040623200709.81"><vh>setUp</vh></v>
+<v t="EKR.20040623200709.82"><vh>shortDescription</vh></v>
+<v t="EKR.20040623200709.83"><vh>tearDown</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040708214530"><vh>@test CheckOutline</vh></v>
+</v>
+<v t="ekr.20040708205841"><vh>Other tests...</vh>
+<v t="ekr.20040414082806"><vh>Clone test</vh>
+<v t="ekr.20040409140301"><vh>clone test</vh>
+<v t="ekr.20040409140301.1"><vh>b</vh>
+<v t="ekr.20040409140301.2"><vh>c</vh>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
+</v>
+<v t="ekr.20040409142028"><vh>sibling</vh></v>
+</v>
+<v t="ekr.20040409140301.3"><vh>a</vh></v>
+</v>
+<v t="ekr.20040409140343"><vh>d</vh>
+<v t="ekr.20040409140301.2"><vh>c</vh>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409142108.1"><vh>secondChild</vh></v>
+</v>
+<v t="ekr.20040409142028.1"><vh>sibling 2</vh></v>
+</v>
+<v t="ekr.20040409142108"><vh>firstChild</vh></v>
+<v t="ekr.20040409140343.1"><vh>last</vh></v>
+</v>
+<v t="EKR.20040523112430"><vh>Cloning headlines</vh>
+<v t="EKR.20040523112430.1"><vh>read me</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523112430.7"><vh>a</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523112430.7"><vh>a</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+<v t="EKR.20040523112430.3"><vh>c</vh>
+<v t="EKR.20040523112430.4"><vh>d</vh></v>
+<v t="EKR.20040523112430.5"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040523112430.6"><vh>g</vh></v>
+</v>
+<v t="EKR.20040523112430.8"><vh>f</vh></v>
+</v>
+<v t="ekr.20040312101720"><vh>Experiments</vh>
+<v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
+<v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
+<v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
+<v t="ekr.20040323082119"><vh>Creating a list of distinct vnodes</vh></v>
+<v t="ekr.20040325082811"><vh>Test that back quotes are not needed in es</vh></v>
+<v t="ekr.20040325130503" a="M"><vh>test of list comparisons</vh></v>
+<v t="ekr.20040325140133"><vh>test that childIndex doesn't mess with p</vh></v>
+<v t="ekr.20040325155043"><vh>Test of __cmp__ vrs equal</vh></v>
+<v t="EKR.20040615070332"><vh>Test print</vh></v>
+</v>
+<v t="ekr.20040707110818"><vh>File Tests...</vh>
+<v t="EKR.20040430162649.23"><vh>(double @root bug)</vh>
+<v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
+<v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
+</v>
+<v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
+<v t="EKR.20040427092657.1"><vh>node 1</vh>
+<v t="EKR.20040428145741"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="EKR.20040428145741.1"><vh>child node 1</vh></v>
+<v t="EKR.20040428145741.2"><vh>child node 2</vh></v>
+</v>
+</v>
+<v t="EKR.20040427092657.2"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="EKR.20040428150018"><vh>organizer node</vh>
+<v t="EKR.20040428145826"><vh>ref child 1</vh></v>
+<v t="EKR.20040428145826.1"><vh>ref child 2</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040625110032"><vh>@ thin c:\prog\test\mixedCommentDelims.txt</vh>
+<v t="EKR.20040625110032.1"><vh>node 1</vh></v>
+<v t="EKR.20040625110032.2"><vh>node 2</vh>
+<v t="EKR.20040625110032.3"><vh>Node 3</vh></v>
+</v>
+</v>
+<v t="ekr.20040419105536"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536.1"><vh>one</vh></v>
+<v t="ekr.20040419105536.2"><vh>two</vh></v>
+</v>
+<v t="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
+<v t="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
+<v t="EKR.20040531110157"><vh>at-file thin tests</vh>
+<v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
+<v t="EKR.20040524050419"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419.1"><vh>Organizer node</vh>
+<v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
+<v t="EKR.20040525083635"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635.1"><vh>orphan</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.12"><vh>REM_ hack and perlpod hacks</vh>
+<v t="EKR.20040430162649.13"><vh>perlpod test</vh>
+<v t="EKR.20040430162649.14"><vh>perlpod test</vh>
+<v t="EKR.20040430162649.15"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.16"><vh>REM test</vh>
+<v t="EKR.20040430162649.17"><vh>@file c:/prog/test/remTest.txt</vh></v>
+</v>
+</v>
+<v t="EKR.20040430162649.20"><vh>Suppress @@ sentinel unless leading @ starts a directive</vh>
+<v t="EKR.20040430162649.21"><vh>@file c:\prog\test\perltest.txt</vh></v>
+</v>
+<v t="ekr.20040704104554"><vh>Test mixed @language directives in a single node</vh>
+<v t="ekr.20040704104554.1"><vh>Mixed script</vh></v>
+<v t="ekr.20040704104554.2"><vh>@thin c:\prog\test\mixedLanguages.txt</vh></v>
+</v>
+<v t="EKR.20040606204316"><vh>Test of @first</vh>
+<v t="EKR.20040606204316.1"><vh>@thin atFirstTest.txt</vh></v>
+</v>
+<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
+<v t="EKR.20040622074004.1"><vh>a</vh>
+<v t="EKR.20040622074004.2" a="M"><vh>b</vh></v>
+<v t="EKR.20040622074004.3"><vh>c</vh></v>
+</v>
+<v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
+</v>
+<v t="ekr.20040701081330"><vh>Test of decendent attributes</vh>
+<v t="ekr.20040701065412"><vh>@ thin c:\prog\test\attribTest.txt</vh>
+<v t="ekr.20040701065412.1" a="M"><vh>Marked</vh></v>
+<v t="ekr.20040701065412.2"><vh>Expanded</vh>
+<v t="ekr.20040701065412.3"><vh>child</vh></v>
+</v>
+<v t="ekr.20040701065412.4" a="M"><vh>Marked and expanded</vh>
+<v t="ekr.20040701065412.5"><vh>child2</vh></v>
+</v>
+<v t="ekr.20040701065424"><vh>Neither Expanded or marked</vh>
+<v t="ekr.20040701065424.1"><vh>child</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
+<v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
+<v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
+<v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
+</v>
+</v>
+<v t="ekr.20040708210442"><vh>Manual tests...</vh>
+<v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
+<v t="EKR.20040430162649.22"><vh>Other Reformat Paragraph tests</vh></v>
+<v t="EKR.20040604082113"><vh>Test of @tabwidth</vh></v>
+<v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
+<v t="EKR.20040610131858"><vh>Test of Paste Node Retaining Clones</vh>
+<v t="EKR.20040615144810"><vh>b</vh></v>
+<v t="EKR.20040615144735"><vh>branch</vh>
+<v t="EKR.20040615144810"><vh>b</vh></v>
+<v t="EKR.20040610131858.1"><vh>a</vh>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+</v>
+<v t="EKR.20040610131858.1"><vh>a</vh>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+</v>
+<v t="EKR.20040610132739"><vh>copied</vh></v>
+</v>
+</v>
+<v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
+<v t="EKR.20040527154402"><vh>Test of undo extract section</vh>
+<v t="EKR.20040528130659"><vh>a</vh></v>
+<v t="EKR.20040528130659"><vh>a</vh></v>
+</v>
+<v t="EKR.20040604170105"><vh>Test of Remove sentinels</vh></v>
 </v>
 <v t="ekr.20040707104245"><vh>Printing tests...</vh>
 <v t="ekr.20040323085933"><vh>Print findAllPotentiallyDirtyNodes</vh></v>
@@ -847,52 +823,46 @@
 <v t="ekr.20040705192610.1"><vh>@thin thin</vh></v>
 </v>
 <v t="ekr.20040323085406"><vh>Print isAnyAtFileNode</vh></v>
-<v t="ekr.20040708135624" a="E"><vh>Print fundChildrenOf and </vh></v>
+<v t="ekr.20040708135624"><vh>Print fundChildrenOf and </vh></v>
+<v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
+<v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
+<v t="EKR.20040526200017" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
+<v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
+<v t="EKR.20040603174633"><vh>test of focus</vh></v>
+<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh></v>
+<v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
+<v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
-<v t="ekr.20040707140849.35"><vh>Test Leo files...</vh>
-<v t="ekr.20040707140849.39"><vh>@test test.leo</vh></v>
-<v t="ekr.20040707140849.40"><vh>@test LeoPy.leo</vh></v>
-<v t="ekr.20040707140849.41"><vh>@test leoPlugins.leo</vh></v>
-<v t="ekr.20040707140849.42"><vh>@test LeoDocs.leo</vh></v>
+<v t="EKR.20040627100615"><vh>Test of error messages when redirecting output</vh></v>
 </v>
-<v t="ekr.20040707150427"><vh>To be converted...</vh>
-<v t="ekr.20040707140849.51"><vh>test plugins (Not ready yet)</vh>
-<v t="ekr.20040707151028"><vh>doPluginTest</vh></v>
+<v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
+<v t="EKR.20040430162649.2"><vh> Tests</vh>
+<v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
+<v t="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
+<v t="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
 </v>
-<v t="ekr.20040707140849.19"><vh>Find Command tests</vh>
-<v t="ekr.20040707140849.20"><vh> makeFindCommandSuite</vh></v>
-<v t="ekr.20040707140849.21"><vh>class findCommandTestCase</vh>
-<v t="ekr.20040707140849.22"><vh>setUp</vh></v>
-<v t="ekr.20040707140849.23"><vh>testFindCommand</vh></v>
-<v t="ekr.20040707140849.24"><vh>testFindWordCommand</vh></v>
-<v t="ekr.20040707140849.25"><vh>testFindIgnoreCaseCommand</vh></v>
-</v>
-</v>
-<v t="ekr.20040707140849.26"><vh>Import/Export tests</vh>
-<v t="ekr.20040707140849.27"><vh>makeImportExportSuite</vh></v>
-<v t="ekr.20040707140849.28"><vh>class importExportTestCase</vh>
-<v t="ekr.20040707140849.29"><vh>__init__</vh></v>
-<v t="ekr.20040707140849.30"><vh>importExport</vh></v>
-<v t="ekr.20040707140849.31"><vh>runTest</vh></v>
-<v t="ekr.20040707140849.32"><vh>setUp</vh></v>
-<v t="ekr.20040707140849.33"><vh>shortDescription</vh></v>
-<v t="ekr.20040707140849.34"><vh>tearDown</vh></v>
+<v t="EKR.20040430162649.6"><vh> Tests</vh>
+<v t="EKR.20040430162649.7"><vh>Import/export tests</vh>
+<v t="EKR.20040430162649.8"><vh>test</vh>
+<v t="EKR.20040430162649.9"><vh>NewHeadlineë</vh></v>
 </v>
 </v>
-<v t="ekr.20040707140849.43"><vh>Outline tests (tests undo)</vh>
-<v t="ekr.20040707140849.44"><vh> makeOutlineSuite</vh></v>
-<v t="ekr.20040707140849.45"><vh>class outlineTestCase</vh>
-<v t="ekr.20040707140849.46"><vh>__init__</vh></v>
-<v t="ekr.20040707140849.47"><vh>outlineCommand</vh></v>
-<v t="ekr.20040707140849.48"><vh>runTest</vh></v>
-<v t="ekr.20040707140849.49"><vh>setUp</vh></v>
-<v t="ekr.20040707140849.50"><vh>tearDown</vh></v>
+<v t="EKR.20040430162649.10"><vh>@file c:/prog/test/unicodeTest.doc</vh>
+<v t="EKR.20040430162649.11"><vh>NewÖ</vh></v>
 </v>
+</v>
+</v>
+<v t="ekr.20040708210636"><vh>User Icon tests... (disrupts representation of outline)</vh>
+<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
+<v t="ekr.20040317101155"><vh>Test of user icons</vh>
+<v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -954,13 +924,18 @@ node 1 last line</t>
 <t tx="EKR.20040428145826"></t>
 <t tx="EKR.20040428145826.1"></t>
 <t tx="EKR.20040428150018">text of organizer node</t>
-<t tx="EKR.20040430160416">@language python
-@tabwidth -4
+<t tx="EKR.20040430160416.1">import leoGlobals as g
 
-@ignore
-</t>
-<t tx="EKR.20040430160416.1">@language html</t>
-<t tx="EKR.20040430160416.2">&lt;!-- ekr uses the MARK_FOLLOWING to mark _anything_ after \ --&gt;
+c = g.top()
+p = c.currentPosition().firstChild()
+
+c.selectVnode(p) # Sets body text.
+val = c.frame.body.colorizer.colorize(p,incremental=False)
+
+assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
+<t tx="EKR.20040430160416.2">@language html
+
+&lt;!-- ekr uses the MARK_FOLLOWING to mark _anything_ after \ --&gt;
 
 &lt;?xml version="1.0"?&gt;
 
@@ -1051,7 +1026,9 @@ node 1 last line</t>
 
 &lt;!-- comments --&gt;
 &lt;EOL_SPAN TYPE="COMMENT1"&gt;%&lt;/EOL_SPAN&gt;</t>
-<t tx="EKR.20040430160416.5">&lt;?xml version="1.0"?&gt;
+<t tx="EKR.20040430160416.5">@language html
+
+&lt;?xml version="1.0"?&gt;
 
 &lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
 &lt;&lt; remarks &gt;&gt;
@@ -1388,37 +1365,6 @@ node 1 last line</t>
 &lt;KEYWORD3&gt;__truediv__&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;__version__&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;__xor__&lt;/KEYWORD3&gt;</t>
-<t tx="EKR.20040430160416.15">@language python
-@markup wiki
-
-""" continued
-string"""
-
-@ ''ab'' __xxx__ ''wx'' __xyz__
-@c
-
-# /* ''ab'' __xxx__ ''wx'' __xyz__ */
-
-# Test
-
-""" ''' """ ''' """'''  # Leo handles the common cases correctly.
-
-''' ''ab'' __xxx__ ''wx'' __xyz__ ''' # No wiki markup in ''' strings.
-
-""" ''ab'' __xxx__ ''wx'' __xyz__ """
-
-# ''ab'' __xxx__ ''wx'' __xyz__
-
-""" ''y'' """
-
-""" text~~#ee00ff:some text~~more text"""
-
-""" {picture file=../Icons/Leoapp.GIF}this """ # There are probdlems \with correct indexing following a graphic.
-
-and if
-
-import leoGlobals as g
-print `g.app().loadDir`</t>
 <t tx="EKR.20040430162649.1"></t>
 <t tx="EKR.20040430162649.2"></t>
 <t tx="EKR.20040430162649.3">@nocolor
@@ -1471,7 +1417,6 @@ code line2
 @ more doc part</t>
 <t tx="EKR.20040430162649.16">@comment REM_</t>
 <t tx="EKR.20040430162649.17">test 6</t>
-<t tx="EKR.20040430162649.18">@ignore</t>
 <t tx="EKR.20040430162649.19">@language plain
 @comment # /* */
 
@@ -2217,7 +2162,7 @@ for t in current.unique_tnodes_iter():
     assert t not in nodes
     nodes.append(t)
     
-print "duplicate tests pass"</t>
+# print "duplicate tests pass"</t>
 <t tx="EKR.20040527083449.2">if 0:
     for v in current.vnodes_iter(): print v
     for v in current.unique_vnodes_iter(): print v
@@ -2253,11 +2198,11 @@ if 0:
     for v in vList1: print v
     for v in vList2: print v
 
-print len(allList),len(vList1),len(vList2)
+if 0:
+    print len(allList),len(vList1),len(vList2)
 
 &lt;&lt; tests of consistency of p and v iters &gt;&gt;
 &lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;
-
 &lt;&lt; print nodes returned by iterators &gt;&gt;</t>
 <t tx="EKR.20040529092739">import leoGlobals as g
 
@@ -2266,8 +2211,9 @@ c = g.top() ; p = c.currentPosition()
 &lt;&lt; coverage tests &gt;&gt;
 &lt;&lt; duplicate tests &gt;&gt;
 
-print "vnodes",len([v for v in c.all_vnodes_iter()]),len([v for v in c.all_unique_vnodes_iter()])
-print "tnodes",len([t for t in c.all_tnodes_iter()]),len([t for t in c.all_unique_tnodes_iter()])
+if 0:
+    print "vnodes",len([v for v in c.all_vnodes_iter()]),len([v for v in c.all_unique_vnodes_iter()])
+    print "tnodes",len([t for t in c.all_tnodes_iter()]),len([t for t in c.all_unique_tnodes_iter()])
 
 if 0: # all nodes
     for v in c.all_vnodes_iter(): print v
@@ -2286,7 +2232,7 @@ t2 = [t for t in c.all_tnodes_iter()]
 for t in t2: assert(t in t1)
 for t in t1: assert(t in t2)
 
-print "coverage tests pass"</t>
+# print "coverage tests pass"</t>
 <t tx="EKR.20040529093047.1">nodes = []
 for v in c.all_unique_vnodes_iter():
     assert v not in nodes
@@ -2297,7 +2243,7 @@ for t in c.all_unique_tnodes_iter():
     assert t not in nodes
     nodes.append(t)
     
-print "duplicate tests pass"</t>
+# print "duplicate tests pass"</t>
 <t tx="EKR.20040529104307">try:
     tag = "test1"
     list1 = [v for v in current.vnodes_iter()]
@@ -2309,14 +2255,15 @@ print "duplicate tests pass"</t>
     list2 = [v   for v in c.all_vnodes_iter()]
     assert(list1==list2)
     
-    print "consistency tests pass"
+    # print "consistency tests pass"
 
 except AssertionError:
     print tag
     print "list1"
     for v in list1: print v
     print "list2"
-    for v in list2: print v</t>
+    for v in list2: print v
+    raise</t>
 <t tx="EKR.20040529105640"></t>
 <t tx="EKR.20040531110157">@ignore</t>
 <t tx="EKR.20040602101648">import leoGlobals as g
@@ -2348,11 +2295,6 @@ for p in c.all_positions_iter():
 b = "cd"
 d
 </t>
-<t tx="EKR.20040603143325">try:
-    assert(0)
-except (AttributeError, AssertionError):
-    print "caught"
-</t>
 <t tx="EKR.20040603174633">import leoGlobals as g
 c = g.top()
 print c.frame.bodyCtrl.focus()</t>
@@ -2364,8 +2306,6 @@ a   b   c   d
 aa  b   c   d
 aaa b   c   d
 end</t>
-<t tx="EKR.20040604143253">@ignore</t>
-<t tx="EKR.20040604143253.1"></t>
 <t tx="EKR.20040604170105">import leoGlobals as g
 import os
 
@@ -2959,235 +2899,6 @@ except IOError:
 <t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
 <t tx="EKR.20040622074004.3"></t>
 <t tx="EKR.20040622102618"></t>
-<t tx="EKR.20040623200709.44"></t>
-<t tx="EKR.20040623200709.45">def makeFindCommandSuite(arg=None,all=True,verbose=False):
-    
-    return unittest.makeSuite(findCommandTestCase,'test')</t>
-<t tx="EKR.20040623200709.46">class findCommandTestCase(unittest.TestCase):
-    
-    """Unit tests for Leo's find commands."""
-    
-    @others</t>
-<t tx="EKR.20040623200709.47">def setUp(self,*args,**keys):
-    
-    import leoGlobals as g
-    
-    u = testUtils()
-    
-    self.c = c = g.top()
-
-    self.verbose = True
-    
-    self.root = c.rootPosition()
-    
-    self.find_p = u.findNodeAnywhere(c,"findTests")
-    
-    assert(self.find_p)
-    
-    c.selectPosition(self.find_p)
-</t>
-<t tx="EKR.20040623200709.48">def testFindCommand (self):
-    
-    g.trace(self.find_p)</t>
-<t tx="EKR.20040623200709.49">def testFindWordCommand (self):
-    
-    pass</t>
-<t tx="EKR.20040623200709.50">def testFindIgnoreCaseCommand (self):
-    
-    pass</t>
-<t tx="EKR.20040623200709.51"></t>
-<t tx="EKR.20040623200709.52">def makeImportExportSuite(testParentHeadline,tempHeadline):
-    
-    """Create an Import/Export test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    root = u.findRootNode(v)
-    temp_v = u.findNodeInTree(root,tempHeadline)
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        dialog = u.findNodeInTree(v,"dialog")
-        test = importExportTestCase(c,v,dialog,temp_v)
-        suite.addTest(test)
-
-    return suite
-</t>
-<t tx="EKR.20040623200709.53">class importExportTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's edit body commands."""
-    
-    @others</t>
-<t tx="EKR.20040623200709.54">def __init__ (self,c,v,dialog,temp_v):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-    
-    self.c = c
-    self.dialog = dialog
-    self.v = v
-    self.temp_v = temp_v
-    
-    self.gui = None
-    self.wasChanged = c.changed
-    self.fileName = ""
-
-    self.old_v = c.currentVnode()
-
-</t>
-<t tx="EKR.20040623200709.55">def importExport (self):
-    
-    c = self.c ; v = self.v
-    
-    g.app.unitTestDict = {}
-
-    commandName = v.headString()
-    command = getattr(c,commandName) # Will fail if command does not exist.
-    command()
-
-    failedMethod = g.app.unitTestDict.get("fail")
-    self.failIf(failedMethod,failedMethod)</t>
-<t tx="EKR.20040623200709.56">def runTest(self):
-    
-    # """Import Export Test Case"""
-
-    self.importExport()</t>
-<t tx="EKR.20040623200709.57">def setUp(self,*args,**keys):
-    
-    c = self.c ; temp_v = self.temp_v ; d = self.dialog
-    
-    temp_v.setTnodeText('',g.app.tkEncoding)
-
-    # Create a node under temp_v.
-    child = temp_v.insertAsLastChild()
-    assert(child)
-    child.setHeadString("import test: " + self.v.headString())
-    c.selectVnode(child)
-
-    assert(d)
-    s = d.bodyString()
-    lines = s.split('\n')
-    name = lines[0]
-    val = lines[1]
-    self.fileName = val
-    dict = {name: val}
-    self.gui = leoGui.unitTestGui(dict,trace=False)
-    
-    </t>
-<t tx="EKR.20040623200709.58">def shortDescription (self):
-    
-    try:
-        return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
-    except:
-        return "ImportExportTestCase"</t>
-<t tx="EKR.20040623200709.59">def tearDown (self):
-    
-    c = self.c ; temp_v = self.temp_v
-    
-    if self.gui:
-        self.gui.destroySelf()
-        self.gui = None
-    
-    temp_v.setTnodeText("",g.app.tkEncoding)
-    temp_v.clearDirty()
-    
-    if not self.wasChanged:
-        c.setChanged (False)
-        
-    if 1: # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
-
-    c.selectVnode(self.old_v)</t>
-<t tx="EKR.20040623200709.67"></t>
-<t tx="EKR.20040623200709.68">def makeOutlineSuite(testParentHeadline,unused=None):
-    
-    """Create an outline test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        before = u.findNodeInTree(v,"before")
-        after  = u.findNodeInTree(v,"after")
-        ref    = u.findNodeInTree(v,"ref")
-        if before and after and ref:
-            test = outlineTestCase(c,v,before,after,ref)
-            suite.addTest(test)
-
-    return suite
-</t>
-<t tx="EKR.20040623200709.69">class outlineTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's outline commands."""
-    
-    @others</t>
-<t tx="EKR.20040623200709.70">def __init__ (self,c,parent,before,after,ref):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.parent = parent
-    self.before = before
-    self.after = after
-    self.ref    = ref
-    
-    self.old_v = c.currentVnode()
-    
-    self.u = testUtils()</t>
-<t tx="EKR.20040623200709.71">def outlineCommand (self):
-    
-    c = self.c ; u = self.u ; tree = c.frame.tree
-    
-    move = u.findNodeInTree(self.before,"move")
-    assert(move)
-    
-    c.selectVnode(move)
-    
-    commandName = self.parent.headString()
-    command = getattr(c,commandName)
-    command()
-
-    assert(u.compareOutlines(self.before,self.after))
-    c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))
-    c.undoer.redo()
-    assert(u.compareOutlines(self.before,self.after))
-    c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))</t>
-<t tx="EKR.20040623200709.72">def runTest(self):
-
-    self.outlineCommand()</t>
-<t tx="EKR.20040623200709.73">def setUp(self,*args,**keys):
-
-    assert(self.before)
-    assert(self.after)
-    assert(self.ref)
-    assert(self.u.compareOutlines(self.before,self.ref))
-    
-    # Batch mode bugs: meaning of move may depend on visibility.
-    self.parent.parent().expand()
-    self.parent.expand()
-    self.before.expand()
-    self.after.expand()</t>
-<t tx="EKR.20040623200709.74">def tearDown (self):
-
-    c = self.c ; u = self.u
-
-    if not u.compareOutlines(self.before,self.ref):
-        u.replaceOutline(c,self.before,self.ref)
-
-    self.before.contract()
-    self.after.contract()
-    self.parent.contract()
-    self.parent.parent().contract()
-
-    self.c.selectVnode(self.old_v)</t>
 <t tx="EKR.20040623200709.75"></t>
 <t tx="EKR.20040623200709.76">def makePluginsSuite(verbose=False,*args,**keys):
     
@@ -3254,7 +2965,19 @@ except IOError:
 <t tx="EKR.20040623200709.83">def tearDown (self):
 
     g.app.gui = self.oldGui</t>
-<t tx="EKR.20040623202054.1"></t>
+<t tx="EKR.20040623223148.11">def replaceOutline (self,c,outline1,outline2):
+    
+    """Replace outline1 by a copy of outline 2,
+    
+    retaining the headline of outline1."""
+
+    u = self
+    h = outline1.headString()
+    copy = outline2.copyTreeAfter()
+    copy.initHeadString(h)
+    copy.unlink()
+    copy.linkAfter(outline1)
+    outline1.doDelete(copy)</t>
 <t tx="EKR.20040625110032">@ignore
 
 @others</t>
@@ -3404,8 +3127,6 @@ v = p.v
 print "before", v, p.v, v is p.v
 p.move()
 print "after ", v, p.v, v is p.v</t>
-<t tx="ekr.20040303063549"> </t>
-<t tx="ekr.20040303063549.1"></t>
 <t tx="ekr.20040303063549.2">@ Each child node will in turn have two or more children:
     
 - a "before" node
@@ -3718,75 +3439,7 @@ the "lead" paragraph.
   
 This paragraph ends the test. It is the
 "final" paragraph.</t>
-<t tx="ekr.20040303063549.63">@ The names of child nodes are the names of commander methods to be called to do the test.
-
-Each child node will in turn have two or more children:
-    
-- a "before" node
-- an "after" node
-- an optional selection node containing two lines giving the selection range in Tk coordinates.
-- An optional insert node containing one line giving the insert point in Tk coordinates.
-@c
-
-import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-# Make sure this is the selected node.
-u = leoTest.testUtils()
-p = u.findUnitTestNode("editBodyTests")
-p.c.selectVnode(p)
-
-suite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
-unittest.TextTestRunner().run(suite)</t>
-<t tx="ekr.20040303063549.64"></t>
-<t tx="ekr.20040303063549.65">line 1
-    line 2
-    line 3
-line 4</t>
-<t tx="ekr.20040303063549.66">line 1
-line 2
-line 3
-line 4</t>
-<t tx="ekr.20040303063549.67">2.0
-3.0 lineend - 1c</t>
-<t tx="ekr.20040303063549.68"></t>
-<t tx="ekr.20040303063549.69">line 1
-line 2
-line 3
-line 4</t>
-<t tx="ekr.20040303063549.70">line 1
-    line 2
-    line 3
-line 4</t>
-<t tx="ekr.20040303063549.71">2.0
-3.0 lineend - 1c</t>
-<t tx="ekr.20040303063549.72"></t>
-<t tx="ekr.20040303063549.73">before
-&lt;&lt; section &gt;&gt;
-sec line 1
-    sec line 2 indented
-sec line 3
-after</t>
-<t tx="ekr.20040303063549.74">before
-&lt;&lt; section &gt;&gt;
-after</t>
-<t tx="ekr.20040303063549.75">sec line 1
-    sec line 2 indented
-sec line 3</t>
-<t tx="ekr.20040303063549.76">2.0
-5.0 lineend -1c</t>
-<t tx="ekr.20040303063549.77">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-# Make sure this is the selected node.
-u = leoTest.testUtils()
-p = u.findUnitTestNode("exportTests")
-p.c.selectVnode(p)
-
-suite = leoTest.makeImportExportSuite("exportTests","tempNode")
-unittest.TextTestRunner().run(suite)</t>
+<t tx="ekr.20040303063549.77"></t>
 <t tx="ekr.20040303063549.78"></t>
 <t tx="ekr.20040303063549.79">saveFileDialog
 c:\\prog\\test\\unittest\\output\\exportHeadlines.txt</t>
@@ -3805,19 +3458,7 @@ c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="ekr.20040303063549.88"></t>
 <t tx="ekr.20040303063549.89">openFileDialog
 c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
-<t tx="ekr.20040303063549.90"># To do: at present this creates a copy of this node as the next sib of tempNode!
-
-import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-# Make sure this is the selected node.
-u = leoTest.testUtils()
-p = u.findUnitTestNode("importTests")
-p.c.selectVnode(p)
-
-suite = leoTest.makeImportExportSuite("importTests","tempNode")
-unittest.TextTestRunner().run(suite)</t>
+<t tx="ekr.20040303063549.90"></t>
 <t tx="ekr.20040303063549.91"></t>
 <t tx="ekr.20040303063549.92">openFileDialog
 c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
@@ -3833,22 +3474,8 @@ c:\\prog\\test\\unittest\\input\\flat.txt</t>
 <t tx="ekr.20040303063549.99"></t>
 <t tx="ekr.20040303063549.100">openFileDialog
 c:\\prog\\test\\unittest\\input\\cweave.w</t>
-<t tx="ekr.20040303063549.101">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-# Make sure this is the selected node.
-u = leoTest.testUtils()
-p = u.findUnitTestNode("outlineTests")
-p.c.selectVnode(p)
-
-suite = leoTest.makeOutlineSuite("outlineTests")
-unittest.TextTestRunner().run(suite)</t>
+<t tx="ekr.20040303063549.101"></t>
 <t tx="ekr.20040303063549.102"></t>
-<t tx="ekr.20040303063549.103"></t>
-<t tx="ekr.20040303063549.104"></t>
-<t tx="ekr.20040303063549.105"></t>
-<t tx="ekr.20040303063549.106"></t>
 <t tx="ekr.20040303063549.107"></t>
 <t tx="ekr.20040303063549.108"></t>
 <t tx="ekr.20040303063549.109"></t>
@@ -4006,17 +3633,6 @@ c = g.top() ; p = c.currentPosition()
 p = p.firstChild()
 assert(p.headString()=="File Conversion")
 p.convertTreeToString()</t>
-<t tx="ekr.20040315202718.2">import unittest
-import leoTest
-reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
-
-# Make sure this is the selected node.
-u = leoTest.testUtils()
-p = u.findUnitTestNode("findCommandTests")
-p.c.selectVnode(p)
-
-suite = leoTest.makeFindCommandSuite()
-unittest.TextTestRunner().run(suite)</t>
 <t tx="ekr.20040315210314"></t>
 <t tx="ekr.20040315210314.1"></t>
 <t tx="ekr.20040315210314.2">@nocolor
@@ -5355,7 +4971,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090300">import leoGlobals as g
 
@@ -5364,7 +4980,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090300.1">import leoGlobals as g
 
@@ -5373,7 +4989,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647">import leoGlobals as g
 
@@ -5382,7 +4998,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.1">import leoGlobals as g
 
@@ -5391,7 +5007,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.2">import leoGlobals as g
 
@@ -5400,7 +5016,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.3">import leoGlobals as g
 
@@ -5409,7 +5025,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.4">import leoGlobals as g
 
@@ -5418,7 +5034,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.5">import leoGlobals as g
 
@@ -5427,7 +5043,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.6">import leoGlobals as g
 
@@ -5436,7 +5052,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.7">import leoGlobals as g
 
@@ -5445,7 +5061,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.8">import leoGlobals as g
 
@@ -5454,7 +5070,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.9">import leoGlobals as g
 
@@ -5463,7 +5079,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.10">import leoGlobals as g
 
@@ -5472,7 +5088,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.11">import leoGlobals as g
 
@@ -5481,7 +5097,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.12">import leoGlobals as g
 
@@ -5490,7 +5106,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.13">import leoGlobals as g
 
@@ -5499,7 +5115,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.14">import leoGlobals as g
 
@@ -5508,7 +5124,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707090647.15">import leoGlobals as g
 
@@ -5517,7 +5133,7 @@ p = c.currentPosition().firstChild()
 
 c.selectVnode(p) # Sets body text.
 val = c.frame.body.colorizer.colorize(p,incremental=False)
-# print "colorizing", p.headString()
+
 assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
 <t tx="ekr.20040707091428"></t>
 <t tx="ekr.20040707091428.1"></t>
@@ -5707,7 +5323,6 @@ for p in c.allNodes_iter():
 <t tx="ekr.20040707093334"></t>
 <t tx="ekr.20040707104245"></t>
 <t tx="ekr.20040707110818"></t>
-<t tx="ekr.20040707140711"></t>
 <t tx="ekr.20040707140849.1"></t>
 <t tx="ekr.20040707140849.10"># Create unit tests in g.app.scriptDict["suite"]
 
@@ -5717,10 +5332,17 @@ import leoTest ; reload(leoTest)
 suite = leoTest.makeEditBodySuite()
 
 g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20040707140849.19"></t>
-<t tx="ekr.20040707140849.20">def makeFindCommandSuite(arg=None,all=True,verbose=False):
-    
-    return unittest.makeSuite(findCommandTestCase,'test')</t>
+<t tx="ekr.20040707140849.19"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+import unittest
+import leoTest ; reload(leoTest)
+
+@others
+
+suite = unittest.makeSuite(findCommandTestCase,'test')
+
+g.app.scriptDict['suite'] = suite</t>
 <t tx="ekr.20040707140849.21">class findCommandTestCase(unittest.TestCase):
     
     """Unit tests for Leo's find commands."""
@@ -5728,25 +5350,15 @@ g.app.scriptDict['suite'] = suite</t>
     @others</t>
 <t tx="ekr.20040707140849.22">def setUp(self,*args,**keys):
     
-    import leoGlobals as g
-    
-    u = testUtils()
-    
+    self.u = u = leoTest.testUtils()
     self.c = c = g.top()
-
-    self.verbose = True
-    
-    self.root = c.rootPosition()
-    
     self.find_p = u.findNodeAnywhere(c,"findTests")
     
     assert(self.find_p)
-    
-    c.selectPosition(self.find_p)
 </t>
 <t tx="ekr.20040707140849.23">def testFindCommand (self):
     
-    g.trace(self.find_p)</t>
+    pass</t>
 <t tx="ekr.20040707140849.24">def testFindWordCommand (self):
     
     pass</t>
@@ -5754,110 +5366,6 @@ g.app.scriptDict['suite'] = suite</t>
     
     pass</t>
 <t tx="ekr.20040707140849.26"></t>
-<t tx="ekr.20040707140849.27">def makeImportExportSuite(testParentHeadline,tempHeadline):
-    
-    """Create an Import/Export test for every descendant of testParentHeadline.."""
-    
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    root = u.findRootNode(v)
-    temp_v = u.findNodeInTree(root,tempHeadline)
-    vList = u.findChildrenOf(testParentHeadline)
-
-    # Create the suite and add all test cases.
-    suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        dialog = u.findNodeInTree(v,"dialog")
-        test = importExportTestCase(c,v,dialog,temp_v)
-        suite.addTest(test)
-
-    return suite
-</t>
-<t tx="ekr.20040707140849.28">class importExportTestCase(unittest.TestCase):
-    
-    """Data-driven unit tests for Leo's edit body commands."""
-    
-    @others</t>
-<t tx="ekr.20040707140849.29">def __init__ (self,c,v,dialog,temp_v):
-    
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-    
-    self.c = c
-    self.dialog = dialog
-    self.v = v
-    self.temp_v = temp_v
-    
-    self.gui = None
-    self.wasChanged = c.changed
-    self.fileName = ""
-
-    self.old_v = c.currentVnode()
-
-</t>
-<t tx="ekr.20040707140849.30">def importExport (self):
-    
-    c = self.c ; v = self.v
-    
-    g.app.unitTestDict = {}
-
-    commandName = v.headString()
-    command = getattr(c,commandName) # Will fail if command does not exist.
-    command()
-
-    failedMethod = g.app.unitTestDict.get("fail")
-    self.failIf(failedMethod,failedMethod)</t>
-<t tx="ekr.20040707140849.31">def runTest(self):
-    
-    # """Import Export Test Case"""
-
-    self.importExport()</t>
-<t tx="ekr.20040707140849.32">def setUp(self,*args,**keys):
-    
-    c = self.c ; temp_v = self.temp_v ; d = self.dialog
-    
-    temp_v.setTnodeText('',g.app.tkEncoding)
-
-    # Create a node under temp_v.
-    child = temp_v.insertAsLastChild()
-    assert(child)
-    child.setHeadString("import test: " + self.v.headString())
-    c.selectVnode(child)
-
-    assert(d)
-    s = d.bodyString()
-    lines = s.split('\n')
-    name = lines[0]
-    val = lines[1]
-    self.fileName = val
-    dict = {name: val}
-    self.gui = leoGui.unitTestGui(dict,trace=False)
-    
-    </t>
-<t tx="ekr.20040707140849.33">def shortDescription (self):
-    
-    try:
-        return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
-    except:
-        return "ImportExportTestCase"</t>
-<t tx="ekr.20040707140849.34">def tearDown (self):
-    
-    c = self.c ; temp_v = self.temp_v
-    
-    if self.gui:
-        self.gui.destroySelf()
-        self.gui = None
-    
-    temp_v.setTnodeText("",g.app.tkEncoding)
-    temp_v.clearDirty()
-    
-    if not self.wasChanged:
-        c.setChanged (False)
-        
-    if 1: # Delete all children of temp node.
-        while temp_v.firstChild():
-            temp_v.firstChild().doDelete(temp_v)
-
-    c.selectVnode(self.old_v)</t>
 <t tx="ekr.20040707140849.35"></t>
 <t tx="ekr.20040707140849.39">import leoGlobals as g
 import leoTest
@@ -5888,22 +5396,24 @@ path = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
 leoTest.runLeoTest(path)
 </t>
 <t tx="ekr.20040707140849.43"></t>
-<t tx="ekr.20040707140849.44">def makeOutlineSuite(testParentHeadline,unused=None):
+<t tx="ekr.20040707140849.44">def makeOutlineSuite(parentHeadline):
     
     """Create an outline test for every descendant of testParentHeadline.."""
     
-    u = testUtils() ; c = g.top() ; v = c.currentVnode()
-    
-    vList = u.findChildrenOf(testParentHeadline)
+    c = g.top() ; v = c.currentVnode()
+    u = leoTest.testUtils()
 
     # Create the suite and add all test cases.
     suite = unittest.makeSuite(unittest.TestCase)
-    for v in vList:
-        before = u.findNodeInTree(v,"before")
-        after  = u.findNodeInTree(v,"after")
-        ref    = u.findNodeInTree(v,"ref")
+    
+    parent = u.findNodeAnywhere(c,parentHeadline)
+    
+    for child in parent.children_iter(copy=True):
+        before = u.findNodeInTree(child,"before")
+        after  = u.findNodeInTree(child,"after")
+        ref    = u.findNodeInTree(child,"ref")
         if before and after and ref:
-            test = outlineTestCase(c,v,before,after,ref)
+            test = outlineTestCase(c,child,before,after,ref)
             suite.addTest(test)
 
     return suite
@@ -5917,36 +5427,33 @@ leoTest.runLeoTest(path)
     
     # Init the base class.
     unittest.TestCase.__init__(self)
+    
+    self.u = leoTest.testUtils()
 
     self.c = c
     self.parent = parent
     self.before = before
     self.after = after
-    self.ref    = ref
-    
-    self.old_v = c.currentVnode()
-    
-    self.u = testUtils()</t>
+    self.ref    = ref</t>
 <t tx="ekr.20040707140849.47">def outlineCommand (self):
     
     c = self.c ; u = self.u ; tree = c.frame.tree
     
     move = u.findNodeInTree(self.before,"move")
-    assert(move)
+    assert move, "no move node"
     
     c.selectVnode(move)
-    
     commandName = self.parent.headString()
     command = getattr(c,commandName)
     command()
 
-    assert(u.compareOutlines(self.before,self.after))
+    assert(u.compareOutlines(self.before,self.after,compareHeadlines=False))
     c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))
+    assert(u.compareOutlines(self.before,self.ref,compareHeadlines=False))
     c.undoer.redo()
-    assert(u.compareOutlines(self.before,self.after))
+    assert(u.compareOutlines(self.before,self.after,compareHeadlines=False))
     c.undoer.undo()
-    assert(u.compareOutlines(self.before,self.ref))</t>
+    assert(u.compareOutlines(self.before,self.ref,compareHeadlines=False))</t>
 <t tx="ekr.20040707140849.48">def runTest(self):
 
     self.outlineCommand()</t>
@@ -5955,7 +5462,8 @@ leoTest.runLeoTest(path)
     assert(self.before)
     assert(self.after)
     assert(self.ref)
-    assert(self.u.compareOutlines(self.before,self.ref))
+    assert self.u.compareOutlines(self.before,self.ref,compareHeadlines=False),\
+        "compare failed"
     
     # Batch mode bugs: meaning of move may depend on visibility.
     self.parent.parent().expand()
@@ -5972,9 +5480,7 @@ leoTest.runLeoTest(path)
     self.before.contract()
     self.after.contract()
     self.parent.contract()
-    self.parent.parent().contract()
-
-    self.c.selectVnode(self.old_v)</t>
+    self.parent.parent().contract()</t>
 <t tx="ekr.20040707140849.51"># To do: create separate unit tests for each plugin...
 
 import leoGlobals as g
@@ -6180,5 +5686,128 @@ for child in children: print child.headString()
 print "subtree", '-' * 20
 descendents = u.findSubnodesOf(p)
 for descendent in descendents: print descendent.headString()</t>
+<t tx="ekr.20040708172357"></t>
+<t tx="ekr.20040708172802">aaa</t>
+<t tx="ekr.20040708173308.1"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+import unittest
+import leoTest ; reload(leoTest)
+
+@others
+
+suite = leoTest.makeImportExportSuite("importTests")
+
+g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20040708173549"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+
+import unittest
+import leoTest ; reload(leoTest)
+
+@others
+
+suite = leoTest.makeImportExportSuite("exportTests")
+
+g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20040708174345"></t>
+<t tx="ekr.20040708174345.1"></t>
+<t tx="ekr.20040708174955"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+import unittest
+import leoTest ; reload(leoTest)
+
+@others
+
+suite = makeOutlineSuite("outlineTests")
+
+g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20040708175948">def shortDescription (self):
+    
+    return self.parent.headString()</t>
+<t tx="ekr.20040708181226">import leoGlobals as g
+import leoNodes
+
+c = g.top();  p = c.currentPosition()
+root1 = p.firstChild()
+
+root2 = root1.copyTreeAfter()
+root2.initHeadString("root2")
+c.checkOutline()
+c.redraw()
+root2.doDelete(root1)
+c.checkOutline()
+c.redraw()</t>
+<t tx="ekr.20040708181226.1"></t>
+<t tx="ekr.20040708181226.2"></t>
+<t tx="ekr.20040708181226.3"></t>
+<t tx="ekr.20040708185414"></t>
+<t tx="ekr.20040708203222"></t>
+<t tx="ekr.20040708205153">import leoGlobals as g
+
+c = g.top()
+p = c.currentPosition().firstChild()
+
+c.selectVnode(p) # Sets body text.
+val = c.frame.body.colorizer.colorize(p,incremental=False)
+
+assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
+<t tx="ekr.20040708205640"></t>
+<t tx="ekr.20040708205841">@language python
+@tabwidth -4
+
+@ignore
+</t>
+<t tx="ekr.20040708210045">import leoGlobals as g
+
+c = g.top()
+p = c.currentPosition().firstChild()
+
+c.selectVnode(p) # Sets body text.
+val = c.frame.body.colorizer.colorize(p,incremental=False)
+
+assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
+<t tx="ekr.20040708210442"></t>
+<t tx="ekr.20040708210636"></t>
+<t tx="ekr.20040708211223">import leoGlobals as g
+
+c = g.top()
+p = c.currentPosition().firstChild()
+
+c.selectVnode(p) # Sets body text.
+val = c.frame.body.colorizer.colorize(p,incremental=False)
+
+assert val=="ok", "colorizer test failed: %s" % p.headString()</t>
+<t tx="ekr.20040708212348">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+c = g.top() ; p = c.currentPosition()
+u = leoTest.testUtils()
+
+outline1 = p.firstChild()
+outline2 = outline1.next()
+assert(outline1.headString()=="outline1")
+assert(outline2.headString()=="outline2")
+
+u.replaceOutline(c,outline1,outline2)
+c.redraw()
+c.checkOutline()</t>
+<t tx="ekr.20040708213736"></t>
+<t tx="ekr.20040708213736.1"></t>
+<t tx="ekr.20040708214013"></t>
+<t tx="ekr.20040708214013.1"></t>
+<t tx="ekr.20040708214530">import leoGlobals as g
+
+c = g.top()
+errors = c.checkOutline(verbose=False,unittest=True,full=True) # Run full check.
+assert errors == 0, "Check Outline reported %d errors" % errors</t>
+<t tx="ekr.20040708215319"></t>
+<t tx="ekr.20040708215633"></t>
+<t tx="ekr.20040708215633.1"></t>
+<t tx="ekr.20040708215633.2"></t>
+<t tx="ekr.20040708215633.3"></t>
 </tnodes>
 </leo_file>

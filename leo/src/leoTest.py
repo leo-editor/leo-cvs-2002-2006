@@ -173,27 +173,28 @@ class testUtils:
         p2 = root2.copy() ; ok = True
         for p1 in root1.self_and_subtree_iter():
             ok = (
-                p1 and p2 and 
+                p1 and p2 and
                 p1.numberOfChildren() == p2.numberOfChildren() and
-                (not compareHeadlines or p1.headString() == p2.headString()) and
+                (not compareHeadlines or (p1.headString() == p2.headString())) and
                 p1.bodyString() == p2.bodyString() and
                 p1.isCloned()   == p2.isCloned()
             )
             if not ok: break
             p2.moveToThreadNext()
     
-        if not ok:
-            g.trace("p1",p1.bodyString())
-            g.trace("p2",p2.bodyString())
+        if 0:
+            if not ok:
+                g.trace("p1",p1.bodyString())
+                g.trace("p2",p2.bodyString())
         return ok
     #@nonl
     #@-node:EKR.20040623223148.1:compareOutlines
     #@+node:EKR.20040623223148.2:Finding nodes...
-    #@+node:EKR.20040623223148.3:fundChildrenOf
+    #@+node:EKR.20040623223148.3:findChildrenOf
     def findChildrenOf (self,root):
         
         return [p.copy() for p in root.children_iter()]
-    #@-node:EKR.20040623223148.3:fundChildrenOf
+    #@-node:EKR.20040623223148.3:findChildrenOf
     #@+node:EKR.20040623223148.4:findSubnodesOf
     def findSubnodesOf (self,root):
         
@@ -233,7 +234,7 @@ class testUtils:
         return c.nullPosition()
     #@nonl
     #@-node:EKR.20040623223148.7:findNodeAnywhere
-    #@+node:EKR.20040623223148.8:findUnitTestNode
+    #@+node:EKR.20040623223148.8:findUnitTestNode (To Be Deleted)
     def findUnitTestNode (self,unitTestName):
         
         c = g.top() ; root = c.rootPosition()
@@ -257,7 +258,7 @@ class testUtils:
     
         return c.nullPosition()
     #@nonl
-    #@-node:EKR.20040623223148.8:findUnitTestNode
+    #@-node:EKR.20040623223148.8:findUnitTestNode (To Be Deleted)
     #@-node:EKR.20040623223148.2:Finding nodes...
     #@+node:EKR.20040623223148.9:numberOfClonesInOutline
     def numberOfClonesInOutline (self):
@@ -282,20 +283,22 @@ class testUtils:
         return n
         
     #@-node:EKR.20040623223148.10:numberOfNodesInOutline
-    #@+node:EKR.20040623223148.11:replaceOutline
+    #@+node:EKR.20040623223148.11:testUtils.replaceOutline
     def replaceOutline (self,c,outline1,outline2):
         
+        """Replace outline1 by a copy of outline 2,
+        
+        retaining the headline of outline1."""
+    
         u = self
-        
-        """Replace outline1 by a copy of outline 2 if not equal."""
-        
-        g.trace()
-        
-        copy = outline2.copyTreeWithNewTnodes()
+        h = outline1.headString()
+        copy = outline2.copyTreeAfter()
+        copy.initHeadString(h)
+        copy.unlink()
         copy.linkAfter(outline1)
-        outline1.doDelete(newVnode=copy)
+        outline1.doDelete(copy)
     #@nonl
-    #@-node:EKR.20040623223148.11:replaceOutline
+    #@-node:EKR.20040623223148.11:testUtils.replaceOutline
     #@-others
 #@nonl
 #@-node:EKR.20040623223148: class testUtils
@@ -905,6 +908,139 @@ class editBodyTestCase(unittest.TestCase):
 #@nonl
 #@-node:ekr.20040707140849.12:class editBodyTestCase
 #@-node:ekr.20040708111644:Edit Body test code (leoTest.py)
+#@+node:ekr.20040708173707:Import/Export test code (leoTest.py)
+#@+node:ekr.20040707140849.27:makeImportExportSuite
+def makeImportExportSuite(parentHeadline):
+    
+    """Create an Import/Export test for every descendant of testParentHeadline.."""
+    
+    c = g.top() ; v = c.currentVnode()
+    u = testUtils()
+  
+    parent = u.findNodeAnywhere(c,parentHeadline)
+    assert(parent)
+    temp = u.findNodeInTree(parent,"tempNode")
+    assert(temp)
+
+    # Create the suite and add all test cases.
+    suite = unittest.makeSuite(unittest.TestCase)
+    
+    for p in parent.children_iter(copy=True):
+        if p == temp: continue
+        dialog = u.findNodeInTree(p,"dialog")
+        assert(dialog)
+        test = importExportTestCase(c,p,dialog,temp)
+        suite.addTest(test)
+
+    return suite
+#@-node:ekr.20040707140849.27:makeImportExportSuite
+#@+node:ekr.20040707140849.28:class importExportTestCase
+class importExportTestCase(unittest.TestCase):
+    
+    """Data-driven unit tests for Leo's edit body commands."""
+    
+    #@    @+others
+    #@+node:ekr.20040707140849.29:__init__
+    def __init__ (self,c,v,dialog,temp_v):
+        
+        # Init the base class.
+        unittest.TestCase.__init__(self)
+        
+        self.c = c
+        self.dialog = dialog
+        self.v = v
+        self.temp_v = temp_v
+        
+        self.gui = None
+        self.wasChanged = c.changed
+        self.fileName = ""
+    
+        self.old_v = c.currentVnode()
+    
+    #@-node:ekr.20040707140849.29:__init__
+    #@+node:ekr.20040707140849.30:importExport
+    def importExport (self):
+        
+        c = self.c ; v = self.v
+        
+        g.app.unitTestDict = {}
+    
+        commandName = v.headString()
+        command = getattr(c,commandName) # Will fail if command does not exist.
+        command()
+    
+        failedMethod = g.app.unitTestDict.get("fail")
+        self.failIf(failedMethod,failedMethod)
+    #@nonl
+    #@-node:ekr.20040707140849.30:importExport
+    #@+node:ekr.20040707140849.31:runTest
+    def runTest(self):
+        
+        # """Import Export Test Case"""
+    
+        self.importExport()
+    #@nonl
+    #@-node:ekr.20040707140849.31:runTest
+    #@+node:ekr.20040707140849.32:setUp
+    def setUp(self,*args,**keys):
+        
+        c = self.c ; temp_v = self.temp_v ; d = self.dialog
+        
+        temp_v.setTnodeText('',g.app.tkEncoding)
+    
+        # Create a node under temp_v.
+        child = temp_v.insertAsLastChild()
+        assert(child)
+        child.setHeadString("import test: " + self.v.headString())
+        c.selectVnode(child)
+    
+        assert(d)
+        s = d.bodyString()
+        lines = s.split('\n')
+        name = lines[0]
+        val = lines[1]
+        self.fileName = val
+        dict = {name: val}
+        self.gui = leoGui.unitTestGui(dict,trace=False)
+        
+        
+    #@nonl
+    #@-node:ekr.20040707140849.32:setUp
+    #@+node:ekr.20040707140849.33:shortDescription
+    def shortDescription (self):
+        
+        try:
+            return "ImportExportTestCase: %s %s" % (self.v.headString(),self.fileName)
+        except:
+            return "ImportExportTestCase"
+    #@nonl
+    #@-node:ekr.20040707140849.33:shortDescription
+    #@+node:ekr.20040707140849.34:tearDown
+    def tearDown (self):
+        
+        c = self.c ; temp_v = self.temp_v
+        
+        if self.gui:
+            self.gui.destroySelf()
+            self.gui = None
+        
+        temp_v.setTnodeText("",g.app.tkEncoding)
+        temp_v.clearDirty()
+        
+        if not self.wasChanged:
+            c.setChanged (False)
+            
+        if 1: # Delete all children of temp node.
+            while temp_v.firstChild():
+                temp_v.firstChild().doDelete(temp_v)
+    
+        c.selectVnode(self.old_v)
+    #@nonl
+    #@-node:ekr.20040707140849.34:tearDown
+    #@-others
+#@nonl
+#@-node:ekr.20040707140849.28:class importExportTestCase
+#@-node:ekr.20040708173707:Import/Export test code (leoTest.py)
 #@-node:ekr.20040708145036:Specific to particular unit tests...
 #@-others
 #@nonl
