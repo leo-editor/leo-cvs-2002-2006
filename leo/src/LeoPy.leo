@@ -14,7 +14,11 @@
 <vnodes>
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
-<v t="ekr.20040105070023.1"><vh>January 2004</vh>
+<v t="ekr.20040105070023.1" a="E"><vh>January 2004</vh>
+<v t="ekr.20040126115428"><vh>1/26</vh>
+<v t="ekr.20040126115428.1"><vh>Added Dave Hein's Reformat Paragraph code.</vh></v>
+<v t="ekr.20040126115428.2"><vh>Fixed Move Up bug involving clones</vh></v>
+</v>
 <v t="ekr.20040108131321"><vh>1/8</vh>
 <v t="ekr.20040108153420"><vh>Esc hides the Find panel</vh></v>
 <v t="ekr.20040108153420.1"><vh>Return in Find panel simuatest the Find button</vh></v>
@@ -536,6 +540,11 @@
 <v t="ekr.20031218072017.402"><vh>Leo and CVS</vh>
 <v t="ekr.20031218072017.403"><vh>Initial post by Steven Schaefer</vh></v>
 <v t="ekr.20040125105904"><vh>aegis: an alternative to cvs</vh></v>
+</v>
+<v t="ekr.20040125121407"><vh>Leo &amp; Emacs</vh>
+<v t="ekr.20040125121407.1"><vh>comment</vh></v>
+<v t="ekr.20040125121407.2"><vh>comment</vh></v>
+<v t="ekr.20040125121407.3"><vh>comment</vh></v>
 </v>
 <v t="ekr.20031218072017.404"><vh>LeoN, Zope &amp; collaboration info</vh>
 <v t="ekr.20031218072017.405"><vh>Kent Tenny Notes</vh></v>
@@ -2594,7 +2603,7 @@
 </v>
 <v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
 <v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1772" a=""><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.1774"><vh>promote</vh></v>
@@ -3124,7 +3133,7 @@
 </v>
 <v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
 <v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1772" a=""><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.1774"><vh>promote</vh></v>
@@ -4132,13 +4141,29 @@
 <v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20040125095950"><vh>(Adding a new command)</vh>
+<v t="ekr.20031218072017.3784" a=""><vh>createMenuItemsFromTable</vh></v>
 </v>
-<v t="ekr.20031219082559"><vh>To do: 4.1 rc4</vh>
-<v t="ekr.20040124073502"><vh>To do now</vh>
+<v t="ekr.20040125120212"><vh>(Fixed Move Up bug involving clones)</vh>
+<v t="ekr.20040125120212.1"><vh>Report</vh></v>
+<v t="ekr.20040126115428.3"><vh>Fix</vh></v>
+<v t="ekr.20031218072017.1772" a=""><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040126115428.4"><vh>Test</vh>
+<v t="ekr.20040126104851.1" a="E"><vh>a</vh>
+<v t="ekr.20040126104851.2"><vh>b </vh></v>
+</v>
+<v t="ekr.20040126104851.1" a="E"><vh>a</vh>
+<v t="ekr.20040126104851.2"><vh>b </vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20031219082559" a="V"><vh>To do: 4.1 rc4</vh>
+<v t="ekr.20031218072017.860"><vh>Remove scripts menu plugin</vh></v>
+<v t="ekr.20040125121521.1" a="M"><vh>Install Leo on Mac</vh></v>
 <v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
-<v t="ekr.20031218072017.860"><vh>Remove scripts menu</vh></v>
-</v>
 <v t="ekr.20040118101339.1"><vh>Plugins</vh>
 <v t="ekr.20040115162445" a="M"><vh>Create plugin to insert status bar</vh></v>
 <v t="ekr.20040117112213.1" a="M"><vh>mod_autosave doesn't work (?)</vh></v>
@@ -4146,6 +4171,17 @@
 <v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
 </v>
 <v t="ekr.20040105064959"><vh>Fix Bugs</vh>
+<v t="ekr.20040125105904.1"><vh>(Eliminating control-v bug on various platforms)</vh>
+<v t="ekr.20040125105904.2"><vh>Reports</vh></v>
+</v>
+<v t="ekr.20040104162835" a="M"><vh>marked nodes: dan winkler</vh>
+<v t="ekr.20040104162835.1"><vh>Reports</vh>
+<v t="ekr.20040104162835.2"><vh>Report</vh></v>
+<v t="ekr.20040104162835.3"><vh>Report 2</vh></v>
+<v t="ekr.20040104162835.4"><vh>Report 3 (latest)</vh></v>
+<v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
+</v>
+</v>
 <v t="ekr.20040106095546.2" a="M"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
 <v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
 <v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
@@ -4199,10 +4235,15 @@
 <v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
 <v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
 </v>
+<v t="ekr.20040125114453"><vh>Bug: control-alt-f of python code misalloctes code</vh></v>
 </v>
+<v t="ekr.20040126103304"><vh>Make Import Derived File command work properly</vh></v>
+<v t="ekr.20040126115447"><vh>Docs</vh>
 <v t="ekr.20040105080119.2"><vh>Document new stuff</vh></v>
+<v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="E"><vh>Code</vh>
+</v>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -5182,7 +5223,7 @@
 </v>
 <v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
 <v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20031218072017.1772"><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1772" a=""><vh>moveOutlineUp</vh>
 <v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.1774"><vh>promote</vh></v>
@@ -7362,9 +7403,9 @@
 <v t="ekr.20031218072017.1141" a=""><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.4166" a="E"><vh>Unit Testing</vh>
+<v t="ekr.20031218072017.4166"><vh>Unit Testing</vh>
 <v t="ekr.20031218072017.4167"><vh>To do</vh></v>
-<v t="ekr.20040126095835.1" a="V" tnodeList="ekr.20040126095835.1,ekr.20040126095835.2,ekr.20040126095835.3,ekr.20040126095835.4,ekr.20040126095835.5,ekr.20040126095835.6,ekr.20040126095835.7,ekr.20040126095835.8,ekr.20040126095835.9,ekr.20040126095835.10,ekr.20040126095835.11,ekr.20040126095835.12,ekr.20040126095835.13,ekr.20040126095835.14,ekr.20040126095835.15,ekr.20040126095835.16,ekr.20040126095835.17,ekr.20040126095835.18,ekr.20040126095835.19,ekr.20040126095835.20,ekr.20040126095835.21,ekr.20040126095835.22,ekr.20040126095835.23,ekr.20040126095835.24,ekr.20040126095835.25,ekr.20040126095835.26,ekr.20040126095835.27,ekr.20040126095835.28,ekr.20040126095835.29,ekr.20040126095835.30,ekr.20040126095835.31,ekr.20040126095835.32,ekr.20040126095835.33,ekr.20040126095835.34,ekr.20040126095835.35,ekr.20040126095835.36,ekr.20040126095835.37,ekr.20040126095835.38,ekr.20040126095835.39,ekr.20040126095835.40,ekr.20040126095835.41,ekr.20040126095835.42,ekr.20040126095835.43,ekr.20040126095835.44,ekr.20040126095835.45,ekr.20040126095835.46,ekr.20040126095835.47,ekr.20040126095835.48,ekr.20040126095835.49,ekr.20040126095835.50,ekr.20040126095835.51,ekr.20040126095835.52,ekr.20040126095835.53,ekr.20040126095835.54,ekr.20040126095835.55,ekr.20040126095835.56,ekr.20040126095835.57,ekr.20040126095835.58,ekr.20040126095835.59,ekr.20040126095835.60,ekr.20040126095835.61,ekr.20040126095835.62,ekr.20040126095835.63,ekr.20040126095835.64,ekr.20040126095835.65,ekr.20040126095835.66,ekr.20040126095835.67,ekr.20040126095835.68,ekr.20040126095835.69,ekr.20040126095835.70,ekr.20040126095835.71,ekr.20040126095835.72,ekr.20040126095835.73,ekr.20040126095835.74,ekr.20040126095835.75,ekr.20040126095835.76,ekr.20040126095835.77,ekr.20040126095835.78,ekr.20040126095835.79,ekr.20040126095835.80,ekr.20040126095835.81,ekr.20040126095835.82,ekr.20040126095835.83,ekr.20040126095835.84,ekr.20040126095835.85,ekr.20040126095835.86,ekr.20040126095835.87,ekr.20040126095835.88,ekr.20040126095835.89,ekr.20040126095835.90,ekr.20040126095835.91,ekr.20040126095835.92,ekr.20040126095835.93,ekr.20040126095835.94,ekr.20040126095835.95,ekr.20040126095835.96,ekr.20040126095835.97"><vh>@file leoTest.py</vh>
+<v t="ekr.20040126095835.1" tnodeList="ekr.20040126095835.1,ekr.20040126095835.2,ekr.20040126095835.3,ekr.20040126095835.4,ekr.20040126095835.5,ekr.20040126095835.6,ekr.20040126095835.7,ekr.20040126095835.8,ekr.20040126095835.9,ekr.20040126095835.10,ekr.20040126095835.11,ekr.20040126095835.12,ekr.20040126095835.13,ekr.20040126095835.14,ekr.20040126095835.15,ekr.20040126095835.16,ekr.20040126095835.17,ekr.20040126095835.18,ekr.20040126095835.19,ekr.20040126095835.20,ekr.20040126095835.21,ekr.20040126095835.22,ekr.20040126095835.23,ekr.20040126095835.24,ekr.20040126095835.25,ekr.20040126095835.26,ekr.20040126095835.27,ekr.20040126095835.28,ekr.20040126095835.29,ekr.20040126095835.30,ekr.20040126095835.31,ekr.20040126095835.32,ekr.20040126095835.33,ekr.20040126095835.34,ekr.20040126095835.35,ekr.20040126095835.36,ekr.20040126095835.37,ekr.20040126095835.38,ekr.20040126095835.39,ekr.20040126095835.40,ekr.20040126095835.41,ekr.20040126095835.42,ekr.20040126095835.43,ekr.20040126095835.44,ekr.20040126095835.45,ekr.20040126095835.46,ekr.20040126095835.47,ekr.20040126095835.48,ekr.20040126095835.49,ekr.20040126095835.50,ekr.20040126095835.51,ekr.20040126095835.52,ekr.20040126095835.53,ekr.20040126095835.54,ekr.20040126095835.55,ekr.20040126095835.56,ekr.20040126095835.57,ekr.20040126095835.58,ekr.20040126095835.59,ekr.20040126095835.60,ekr.20040126095835.61,ekr.20040126095835.62,ekr.20040126095835.63,ekr.20040126095835.64,ekr.20040126095835.65,ekr.20040126095835.66,ekr.20040126095835.67,ekr.20040126095835.68,ekr.20040126095835.69,ekr.20040126095835.70,ekr.20040126095835.71,ekr.20040126095835.72,ekr.20040126095835.73,ekr.20040126095835.74,ekr.20040126095835.75,ekr.20040126095835.76,ekr.20040126095835.77,ekr.20040126095835.78,ekr.20040126095835.79,ekr.20040126095835.80,ekr.20040126095835.81,ekr.20040126095835.82,ekr.20040126095835.83,ekr.20040126095835.84,ekr.20040126095835.85,ekr.20040126095835.86,ekr.20040126095835.87,ekr.20040126095835.88,ekr.20040126095835.89,ekr.20040126095835.90,ekr.20040126095835.91,ekr.20040126095835.92,ekr.20040126095835.93,ekr.20040126095835.94,ekr.20040126095835.95,ekr.20040126095835.96,ekr.20040126095835.97"><vh>@file leoTest.py</vh>
 <v t="ekr.20040126095835.2"><vh> class testUtils</vh>
 <v t="ekr.20040126095835.3"><vh>compareOutlines</vh></v>
 <v t="ekr.20040126095835.4"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
@@ -7385,7 +7426,7 @@
 <v t="ekr.20040126095835.17"><vh>testInsertInsideClone</vh></v>
 <v t="ekr.20040126095835.18"><vh>testDeleteInsideClone</vh></v>
 </v>
-<v t="ekr.20040126095835.19" a="E"><vh>class moveTests</vh></v>
+<v t="ekr.20040126095835.19"><vh>class moveTests</vh></v>
 <v t="ekr.20040126095835.20"><vh>class nodeSanityTests</vh>
 <v t="ekr.20040126095835.21"><vh>testNextBackLinks</vh></v>
 <v t="ekr.20040126095835.22"><vh>testParentChildLinks</vh></v>
@@ -7422,7 +7463,7 @@
 </v>
 <v t="ekr.20040126095835.44"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040126095835.45"><vh>makeReformatParagraphSuite</vh></v>
-<v t="ekr.20040126095835.46" a="E"><vh>class reformatParagraphTestCase</vh>
+<v t="ekr.20040126095835.46"><vh>class reformatParagraphTestCase</vh>
 <v t="ekr.20040126095835.47"><vh>setUp</vh></v>
 <v t="ekr.20040126095835.48"><vh>tearDown</vh></v>
 <v t="ekr.20040126095835.49"><vh>testNoTrailingNewline</vh></v>
@@ -7469,7 +7510,7 @@
 </v>
 <v t="ekr.20040126100852"><vh>Outline tests</vh>
 <v t="ekr.20040126095835.83"><vh> makeOutlineSuite</vh></v>
-<v t="ekr.20040126095835.84" a="E"><vh>class outlineTestCase</vh>
+<v t="ekr.20040126095835.84"><vh>class outlineTestCase</vh>
 <v t="ekr.20040126095835.85"><vh>__init__</vh></v>
 <v t="ekr.20040126095835.86"><vh>outlineCommand</vh></v>
 <v t="ekr.20040126095835.87"><vh>runTest</vh></v>
@@ -7487,38 +7528,6 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20040123103035"><vh>(Dave Hein: reformat paragraph)</vh>
-<v t="ekr.20040123103035.1"><vh>Report 1</vh></v>
-<v t="ekr.20040123103035.2"><vh>Report 2,3,4</vh></v>
-</v>
-<v t="ekr.20040104162835" a="M"><vh>marked nodes: dan winkler</vh>
-<v t="ekr.20040104162835.1"><vh>Reports</vh>
-<v t="ekr.20040104162835.2"><vh>Report</vh></v>
-<v t="ekr.20040104162835.3"><vh>Report 2</vh></v>
-<v t="ekr.20040104162835.4"><vh>Report 3 (latest)</vh></v>
-<v t="ekr.20040104162835.5"><vh>Another clue</vh></v>
-</v>
-</v>
-<v t="ekr.20040125095950"><vh>(Adding a new command)</vh>
-<v t="ekr.20031218072017.3784" a=""><vh>createMenuItemsFromTable</vh></v>
-</v>
-<v t="ekr.20040125105904.1"><vh>(Eliminating control-v bug on various platforms)</vh>
-<v t="ekr.20040125105904.2"><vh>Reports</vh></v>
-</v>
-<v t="ekr.20040125114453"><vh>Bug: control-alt-f of python code misalloctes code</vh></v>
-<v t="ekr.20040125120212"><vh>Cloning bug</vh>
-<v t="ekr.20040125120212.1"><vh>Report</vh></v>
-</v>
-<v t="ekr.20040125121407"><vh>Leo &amp; Emacs</vh>
-<v t="ekr.20040125121407.1"><vh>comment</vh></v>
-<v t="ekr.20040125121407.2"><vh>comment</vh></v>
-<v t="ekr.20040125121407.3"><vh>comment</vh></v>
-</v>
-<v t="ekr.20040125121521" a="E"><vh>asap</vh>
-<v t="ekr.20040125121521.1"><vh>Install Leo on Mac</vh></v>
-<v t="ekr.20040125121521.2"><vh>Get proper commit to cvs</vh></v>
-<v t="ekr.20040125121521.3"><vh>Investigate cvs stuff</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -28910,6 +28919,10 @@ else:
 	back = v.visBack()
 	if not back: return
 	back2 = back.visBack()
+	if v in back2.t.joinList:
+		# 1/26/04: A weird special case: just select back2.
+		c.selectVnode(back2)
+		return
 	c = self
 	c.beginUpdate()
 	if 1: # inside update...
@@ -28922,6 +28935,7 @@ else:
 		c.initJoinedCloneBits(v) # 10/8/03
 	c.endUpdate()
 	c.updateSyntaxColorer(v) # Moving can change syntax coloring.
+
 </t>
 <t tx="ekr.20031218072017.1773"># Remember both the before state and the after state for undo/redo
 oldBack = v.back()
@@ -63894,62 +63908,6 @@ name.
 
 I hope I am clear :)
 Dalius</t>
-<t tx="ekr.20040123103035"></t>
-<t tx="ekr.20040123103035.1">@nocolor
-
-I've checked in updates to the following files:
-
-test/test.leo
-src/leoCommands.py 
-src/leoFrame.py 
-src/leoGlobals.py 
-src/leoTest.py
-src/leoTkinterFrame.py
-
-These implement the unittest (with 13 cases) for reformatParagraph, as
-well as the bug fixes for all the problems identified through the
-unittests.
-
-Unfortunately, I'm getting the following error loading LeoPy.leo (after
-I refreshed it from CVS).  
-
-reading: @file leoTest.py
------ error reading @file leoTest.py
-Mismatched headline.
-Expecting: Reformat Paragraph tests
-got: makeImportExportSuite
-
-I'm not sure how to fix this problem in the leo file.
-
--- 
-Dave Hein &lt;dhein@acm.org&gt;</t>
-<t tx="ekr.20040123103035.2">@nocolor
-
-Well, I saved the copy that had conflicts in it, so I tried resolving
-all the conflicts (in favor of the text from CVS) and that allowed
-things to load.
-
------
-
-OK, I was able to check in the new LeoPy.leo early this afternoon when
-developer CVS access was finally restored.
-
-----
-
-I found another bug in ReformatParagaph, so I added a unit test to cover
-the failing condition and then fixed the bug.
-
-I've checked in new versions of:
-
-src/LeoPy.leo
-src/leoCommands.py
-src/leoTest.py
-test/test.leo
-
--- 
-Dave Hein &lt;dhein@acm.org&gt;
-</t>
-<t tx="ekr.20040124073502"></t>
 <t tx="ekr.20040124073502.2"></t>
 <t tx="ekr.20040124073801"></t>
 <t tx="ekr.20040124073929"></t>
@@ -64197,13 +64155,7 @@ Move the last node (the subnode of the second clone) up. The wrong result:
 
 - ( ) NewHeadline
 |
-- ( ) NewHeadline
-
-What happend to the clones???
-
-Regards,
-Florian Schulze
-</t>
+- ( ) NewHeadline</t>
 <t tx="ekr.20040125121407">@nocolor</t>
 <t tx="ekr.20040125121407.1">https://sourceforge.net/forum/message.php?msg_id=2389876
 By: randomandy
@@ -64297,10 +64249,7 @@ at:
 
  
 </t>
-<t tx="ekr.20040125121521"></t>
 <t tx="ekr.20040125121521.1"></t>
-<t tx="ekr.20040125121521.2"></t>
-<t tx="ekr.20040125121521.3"></t>
 <t tx="ekr.20040126095835.1">"""
 
 Unit tests for Leo.
@@ -65384,5 +65333,17 @@ def getRowCol(self):
 <t tx="ekr.20040126100803"></t>
 <t tx="ekr.20040126100803.1"></t>
 <t tx="ekr.20040126100852"></t>
+<t tx="ekr.20040126103304"></t>
+<t tx="ekr.20040126104851.1"></t>
+<t tx="ekr.20040126104851.2"></t>
+<t tx="ekr.20040126115428"></t>
+<t tx="ekr.20040126115428.1"></t>
+<t tx="ekr.20040126115428.2">The fix was to insert code to test for a special case.
+
+I wonder what this code would look like in the shared-tnode world?
+</t>
+<t tx="ekr.20040126115428.3">The fix was to insert weird special case in the move up code.</t>
+<t tx="ekr.20040126115428.4"></t>
+<t tx="ekr.20040126115447"></t>
 </tnodes>
 </leo_file>

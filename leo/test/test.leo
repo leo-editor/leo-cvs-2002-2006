@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2330" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2331" clone_windows="0"/>
 <globals body_outline_ratio="0.32115869017632243">
-	<global_window_position top="14" left="115" height="990" width="1270"/>
+	<global_window_position top="10" left="126" height="990" width="1072"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2788,7 +2788,7 @@
 <v t="edream.121303091808"><vh>Batch test</vh>
 <v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
@@ -2951,7 +2951,16 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="EV"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
+</v>
+<v t="ekr.20040126105605" a="E"><vh>Clone test</vh>
+<v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
+<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.3" a="V"><vh>b</vh></v>
+</v>
+<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -36171,5 +36180,9 @@ suite = leoTest.makePluginsSuite(verbose=True)
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
 <t tx="edream.121403172715">@ignore</t>
+<t tx="ekr.20040126105605"></t>
+<t tx="ekr.20040126105605.1"></t>
+<t tx="ekr.20040126105605.2"></t>
+<t tx="ekr.20040126105605.3"></t>
 </tnodes>
 </leo_file>
