@@ -47,18 +47,12 @@ import leoPlugins
 
 from leoNodes import *
 
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
 import os
 import threading
 import time
-
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
-#@nonl
+import weakref
 #@-node:ekr.20040915085715:<< imports >>
 #@nl
 
@@ -160,7 +154,7 @@ def addMenu( tag, keywords ):
 #@-node:ekr.20040915085351.7:addMenu
 #@-others
 
-if Tk and weakref:
+if Tk:
     haveseen = weakref.WeakKeyDictionary()
     leoPlugins.registerHandler( ("start2", "open2", "new") , addMenu )
     g.globalDirectiveList.append( 'produce' ) 

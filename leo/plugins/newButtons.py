@@ -15,11 +15,7 @@ import leoGlobals as g
 import leoPlugins
 import leoFind
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:@file-noref newButtons.py
 #@+node:Helper classes

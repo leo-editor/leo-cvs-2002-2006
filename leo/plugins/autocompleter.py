@@ -31,15 +31,10 @@ import re
 import sets 
 import string 
 import threading
+import weakref
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
@@ -881,7 +876,7 @@ def onOpenWindow ():
 #@-node:ekr.20041017105122.2:onOpenWindow
 #@-others
 
-if Pmw and Tk and weakref:
+if Pmw and Tk:
 
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
     leoPlugins.registerHandler(('start2','open2'),initialScan)   

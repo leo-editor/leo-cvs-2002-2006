@@ -48,16 +48,12 @@ range is used internally for sorting alphabetically.
 import leoGlobals as g
 import leoPlugins
 
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
 import ConfigParser
 import glob
 import os
 import sys
-
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
 #@nonl
 #@-node:ekr.20050101090207.10:<< imports >>
 #@nl

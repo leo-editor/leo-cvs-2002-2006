@@ -67,14 +67,10 @@ __version__ = "0.3"
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
 
-Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+import weakref
 #@nonl
 #@-node:ekr.20040916073636.2:<< imports >>
 #@nl
@@ -268,7 +264,7 @@ def addCommand( tag, keywords ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw and weakref:
+if Tk and Pmw:
     leoPlugins.registerHandler(('new2','open2'), addCommand)
     __version__ = ".2"
     g.plugin_signon( __name__ )

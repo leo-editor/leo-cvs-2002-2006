@@ -26,13 +26,10 @@ cases stops the scrolling.
 #@nl
 #@<< imports >>
 #@+node:ekr.20050101090207.5:<< imports >>
+import leoGlobals as g
 import leoTkinterFrame
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
     
 import time
 #@nonl

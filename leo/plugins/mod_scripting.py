@@ -4,32 +4,29 @@
 
 Based on ideas from e's dynabutton plugin."""
 
-__version__ = "0.5"
+__version__ = "0.6"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
 # 
-# 0.3 EKR: Don't mess with button sizes or fonts on MacOs/darwin
-# 
-# 0.4 EKR: Added support for @button, @script and @plugin.
-# 
-# 0.4 EKR: Added patch by Davide Salomoni: added start2 hook and related code.
+# 0.3 EKR:
+#     - Don't mess with button sizes or fonts on MacOs/darwin
+# 0.4 EKR:
+#     -Added support for @button, @script and @plugin.
+# 0.5 EKR:
+#     - Added patch by Davide Salomoni: added start2 hook and related code.
+# 0.5 EKR:
+#     - Use g.importExtention to import Tk.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
 #@nl
 #@<< imports >>
 #@+node:EKR.20040613215415:<< imports >>
-# from __future__ import generators
-
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import sys
 #@nonl

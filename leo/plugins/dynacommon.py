@@ -21,15 +21,10 @@ have to lazy eval the filename creation till after leoID is defined til Leo4.3
 #__all__ = 'tmpfile py ptpath leosrc reindent pycheck2 pycheck '.split()
 #this needs its own dictionary dopylint doreindent
 
-
 import sys, os
 import leoGlobals as g
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 try:
     True and False

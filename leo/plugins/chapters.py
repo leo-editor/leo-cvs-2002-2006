@@ -96,13 +96,8 @@ import leoTkinterFrame
 import leoTkinterMenu
 import leoTkinterTree
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
    
 from leoTkinterFrame import leoTkinterLog
 from leoTkinterFrame import leoTkinterBody

@@ -129,7 +129,7 @@ rst2.py
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
 # Adds tabs to Leo outline.
-    # chapters.py
+#chapters.py
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py
@@ -239,7 +239,7 @@ rst2.py
     # empty_leo_file.py
     
 # Adds #line directives in perl and perlpod programs.
-    # lineNumbers.py
+lineNumbers.py
     
 # Edit @file-nosent nodes: make sure there is a newline at the end
 # of each subnode, replace all tabs with spaces and add a newline before

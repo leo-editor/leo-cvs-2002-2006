@@ -22,18 +22,13 @@ It requires the TabbedLog plugin.
 import leoGlobals as g
 import leoPlugins
 
+Tk        = g.importExtension('Tkinter',  pluginName=__name__,verbose=True)
+Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
+TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
+
 import os
 import urllib
 import weakref
-
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
-TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20040831115918.1:<< imports >>
 #@nl

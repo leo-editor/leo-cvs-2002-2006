@@ -12,23 +12,10 @@ Summon it by pressing button-2 or button-3 on an icon Box in the outline."""
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
     
-try:
-    import Pmw
-except ImportError:
-    g.es("editAttributes.py: can not import Pmw",color="blue")
-    Tk = None
-
-try:
-    import weakref
-except ImportError:
-    g.es("editAttributes.py: can not import weakref",color="blue")
-    weakref = None
+import weakref
 #@nonl
 #@-node:ekr.20040722142445.1:<< editAttributes imports >>
 #@nl
@@ -188,7 +175,7 @@ def addAttrDetection( tag, keywords ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw and weakref and not g.app.unitTesting:
+if Tk and Pmw not g.app.unitTesting:
     leoPlugins.registerHandler('open2', addAttrDetection)
     __version__ = ".0.2"
         # 0.2 EKR: converted to outline.  Fixed some bugs.

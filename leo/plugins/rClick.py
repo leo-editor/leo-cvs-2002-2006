@@ -9,23 +9,25 @@
 #@+node:ekr.20040422081253:<< version history >>
 #@+at
 # 0.1, 0.2: Created by 'e'.
-# 0.3: EKR:
+# 0.3 EKR:
 #     - Converted to 4.2 code style. Use @file node.
 #     - Simplified rClickBinder, rClicker, rc_help.  Disabled signon.
 #     - Removed calls to registerHandler, "by" ivar, rClickNew, and shutdown 
 # code.
 #     - Added select all item for the log pane.
-# 0.4: Maxim Krikun
+# 0.4 Maxim Krikun:
 #     - added context-dependent commands:
 #        open url, jump to reference, pydoc help
 #     - replaced rc_help with context-dependent pydoc help;
 #     - rc_help was not working for me :(
-# 0.5: EKR:
+# 0.5 EKR:
 #     - Style changes.
 #     - Help sends output to console as well as log pane.
 #     - Used code similar to rc_help code in getdoc.
 #       Both kinds of code work for me (using 4.2 code base)
 #     - Simplified crop method.
+# 0.6 EKR:
+#     - Use g.importExtension to import Tk.
 #@-at
 #@nonl
 #@-node:ekr.20040422081253:<< version history >>
@@ -35,11 +37,7 @@
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter')
 
 import re
 import sys
@@ -350,7 +348,7 @@ def getdoc(thing, title='Help on %s', forceload=0):
 #@-node:ekr.20040422072343.9:Utils for context sensitive commands
 #@-others
 
-__version__ = "0.5"
+__version__ = "0.6"
 
 if Tk and not g.app.unitTesting:
     

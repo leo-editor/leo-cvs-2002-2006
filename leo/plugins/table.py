@@ -16,18 +16,13 @@ import leoGlobals as g
 import leoPlugins
 import leoNodes
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-    import tktable as tktab
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+Pmw    = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+Tk     = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+tktab  = g.importExtension('tktable',pluginName=__name__,verbose=True)
 
 import csv
 import cStringIO
+import weakref
 #@nonl
 #@-node:ekr.20041017035937.1:<< imports >>
 #@nl
@@ -204,7 +199,7 @@ def addMenu( tag, keywords ):
 #@-node:ekr.20041017035937.13:addMenu
 #@-others
 
-if Pmw and Tk and tktab and weakref:
+if Pmw and Tk and tktab:
 
     leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu )
     __version__ = ".125"

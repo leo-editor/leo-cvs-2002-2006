@@ -61,13 +61,8 @@ import leoGlobals as g
 import leoPlugins
 import leoTkinterFind
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-aspell = g.importFromPath("aspell",aspell_dir,pluginName=__name__,verbose=True)
+Tk     = g.importExtension('Tkinter',          pluginName=__name__,verbose=True)
+aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
 
 import ConfigParser
 import os

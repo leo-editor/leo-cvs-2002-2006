@@ -36,11 +36,7 @@ __version__ = "0.6"
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import sys
 #@nonl
@@ -254,5 +250,6 @@ if Tk and not g.app.unitTesting:
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler("after-create-leo-frame", onCreate)
         g.plugin_signon("nodenavigator")
+#@nonl
 #@-node:ekr.20040108062655:@thin nodenavigator.py
 #@-leo

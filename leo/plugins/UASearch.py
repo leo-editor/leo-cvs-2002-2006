@@ -17,8 +17,7 @@ __version__ = ".2"
 # 0.2 EKR:
 #     - Style changes.
 #     - Converted to outline.
-#     - Enable this plugin only if TabbedLog, Tk, Pmw and weakref can be 
-# imported.
+#     - Enable this plugin only if TabbedLog, Tkand Pmw can be imported.
 #     - Added found function to handle selecting found nodes properly.
 #@-at
 #@nonl
@@ -29,17 +28,13 @@ __version__ = ".2"
 import leoGlobals as g
 import leoPlugins
 import leoTkinterFrame
-import re
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
+Tk        = g.importExtension('Tkinter',  pluginName=__name__,verbose=True)
 Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
 TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
-weakref   = g.importExtension("weakref",  pluginName=__name__,verbose=True)
+
+import re
+import weakref
 #@nonl
 #@-node:ekr.20040915075530.2:<< imports >>
 #@nl
@@ -149,7 +144,7 @@ def getT( node ):
 #@-node:ekr.20040915075530.5:getT
 #@-others
    
-if TabbedLog and Tk and Pmw and weakref:
+if TabbedLog and Tk and Pmw:
     
     nbs = weakref.WeakKeyDictionary()
     haveseen = weakref.WeakKeyDictionary()

@@ -7,35 +7,36 @@
 #@+at
 # 
 # 0.1: Original version by Davide Salomoni.
-# 0.2: EKR, Color mod by EKR.
-# 0.3: DS, Works with multiple open files.
-# 0.4: EKR: 4.2 coding style, enable or disable buttons, support for unit 
-# tests.
-# 0.5: EKR: Use constant size for non Windows platforms.
+# 0.2 EKR:
+#     - Color mod
+# 0.3 DS:
+#     - Works with multiple open files.
+# 0.4 EKR:
+#     - 4.2 coding style, enable or disable buttons, support for unit tests.
+# 0.5 EKR:
+#     - Use constant size for non Windows platforms.
 # 0.6: EKR:
 #     - Added USE_SIZER and USE_FIXED_SIZES.
 #       When USE_SIZER is False (recommended), the code creates buttons using 
 # c.frame.addIconButton.
-# 0.7: EKR:
+# 0.7 EKR:
 #     - Created a separate class for each commander.
 #     - Simplified the code a bit: no need for independent callbacks.
+# 0.8 EKR:
+#     - Use g.importExtension to import Tkinter as Tk.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511:<< change history >>
 #@nl
 
-__version__ = "0.7"
+__version__ = "0.8"
   
 #@<< hoist.py imports >>
 #@+node:ekr.20040908093511.1:<< hoist.py imports >>
 import leoGlobals as g
 import leoPlugins
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter')
 
 import sys
 #@nonl

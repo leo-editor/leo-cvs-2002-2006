@@ -45,13 +45,8 @@ import leoPlugins
 import os
 import sys
 
-Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
-
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import fnmatch
 import re

@@ -46,17 +46,12 @@ __version__ = "0.5"
 #@nl
 #@<< imports >>
 #@+node:ekr.20040908093511.3:<< imports >>
-
 import leoGlobals as g
 import leoPlugins
 
 import leoFind
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import sys
 #@nonl

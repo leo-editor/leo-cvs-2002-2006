@@ -53,12 +53,7 @@ import sys
 
 # Shows how to test for modules that may not exist...
 
-# WARNING: Tk = g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20040919082800.2:<< imports >>

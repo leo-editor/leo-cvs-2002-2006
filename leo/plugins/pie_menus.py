@@ -5,18 +5,15 @@
 
 #@<< pie_menus imports >>
 #@+node:ekr.20040828122150.1:<< pie_menus imports >>
-import leoPlugins
 import leoGlobals as g
-
-try:
-    import Tkinter as Tk
-    import tkFont
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
-
-import weakref
 import leoTkinterTree
 import leoTkinterFrame
+import leoPlugins
+
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+import weakref
+
 #@-node:ekr.20040828122150.1:<< pie_menus imports >>
 #@nl
 

@@ -59,11 +59,7 @@ except NameError:  #?
 
 import leoGlobals as g
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 #at this point in Leo, code from plugins isn't importable. later it is.
 #replace w/importfromfile

@@ -44,14 +44,10 @@ import leoGlobals as g
 import leoPlugins
 import leoTkinterFrame
 
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
 
-Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
-weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+import weakref
 #@nonl
 #@-node:ekr.20040915074133.1:<< imports >>
 #@nl
@@ -75,7 +71,7 @@ def getPane( name, c ):
 #@-node:ekr.20040915074510.2:getPane
 #@-others
 
-if Tk and Pmw and weakref:
+if Tk and Pmw:
     
     nbs = weakref.WeakKeyDictionary()
     oldCLog = leoTkinterFrame.leoTkinterLog.createControl

@@ -38,17 +38,11 @@
 #@nl
 #@<< imports >>
 #@+node:ekr.20050101090207.7:<< imports >>
-
 import leoGlobals as g
+import leoNodes
 import leoPlugins
 
-import leoNodes
-
-# g.importExtension('Tkinter') does not seem to work.
-try:
-    import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport('Tkinter',pluginName=__name__)
+Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import sched
 import time
