@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoNodes.py
 #@+body
 #@@language python
@@ -268,11 +268,12 @@ class tnode:
 	#@-node:2::t.__init__
 	#@+node:3::t.__del__
 	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "t.__del__"
-		pass
+	if 0: # Interferes with the garbage collector!!
+		def __del__ (self):
+		
+			# Can't trace while destroying.
+			# print "t.__del__"
+			pass
 	#@-body
 	#@-node:3::t.__del__
 	#@+node:4::t.destroy
@@ -514,13 +515,14 @@ class vnode:
 	#@-node:2::v.__init__
 	#@+node:3::v.__del__
 	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "v.__del__" + self
-		try:
-			self.icon_id = None
-		except: pass
+	if 0: # Interferes with the garbage collector!!
+		def __del__ (self):
+		
+			# Can't trace while destroying.
+			# print "v.__del__" + self
+			try:
+				self.icon_id = None
+			except: pass
 	#@-body
 	#@-node:3::v.__del__
 	#@+node:4::v.__repr__ & v.__str__
@@ -751,7 +753,7 @@ class vnode:
 			# No options are valid.
 			return string.strip(h[len(s):])
 		elif match(h,0,"@file"):
-			i,atFileType = scanAtFileOptions(h)
+			i,atFileType,junk = scanAtFileOptions(h)
 			if s == atFileType:
 				# print "s,h:",s,h
 				return string.strip(h[i:])

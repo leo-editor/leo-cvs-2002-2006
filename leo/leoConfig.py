@@ -152,19 +152,16 @@ class config:
 		self.output_newline = "nl"
 		self.create_nonexistent_directories = false
 		self.default_derived_file_encoding = "utf-8"
+		self.load_derived_files_immediately = 0
 		self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
 		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
+		self.thin_at_file_trees = 0
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = 0 # Should _never_ be 1 here!
-		
-		if 1: # To be deleted
-			self.use_relative_node_indices = 1 # Not used. 
-			self.write_clone_indices = 0 # Should be 0 for writes to CVS. Will disappear in 4.0.
-		
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -550,17 +547,21 @@ class config:
 			#@@c
 
 			self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
-				"at_root_bodies_start_in_doc_mode",
-				self.at_root_bodies_start_in_doc_mode)
+				"at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
+				
+			self.create_nonexistent_directories = self.initBooleanConfigParam(
+				"create_nonexistent_directories",self.create_nonexistent_directories)
 				
 			encoding = self.initConfigParam(
-				"default_derived_file_encoding",
-				self.default_derived_file_encoding)
+				"default_derived_file_encoding",self.default_derived_file_encoding)
 			
 			if isValidEncoding(encoding):
 				self.default_derived_file_encoding = encoding
 			else:
 				es("bad default_derived_file_encoding: " + encoding)
+				
+			self.load_derived_files_immediately = self.initBooleanConfigParam(
+				"load_derived_files_immediately",self.load_derived_files_immediately)
 				
 			encoding = self.initConfigParam(
 				"new_leo_file_encoding",
@@ -572,29 +573,28 @@ class config:
 				es("bad new_leo_file_encoding: " + encoding)
 			
 			self.output_initial_comment = self.initConfigParam(
-				"output_initial_comment",
-				self.output_initial_comment)
+				"output_initial_comment",self.output_initial_comment)
 			
 			self.output_newline = self.initConfigParam(
 				"output_newline",self.output_newline)
-			
-			self.create_nonexistent_directories = self.initBooleanConfigParam(
-				"create_nonexistent_directories",
-				self.create_nonexistent_directories)
 			
 			self.read_only = self.initBooleanConfigParam(
 				"read_only",self.read_only)
 			
 			self.relative_path_base_directory = self.initConfigParam(
-				"relative_path_base_directory",
-				self.relative_path_base_directory)
+				"relative_path_base_directory",self.relative_path_base_directory)
+				
+			self.remove_sentinels_extension = self.initConfigParam(
+				"remove_sentinels_extension",self.remove_sentinels_extension)
 			
 			self.save_clears_undo_buffer = self.initBooleanConfigParam(
-				"save_clears_undo_buffer",
-				self.save_clears_undo_buffer)
+				"save_clears_undo_buffer",self.save_clears_undo_buffer)
 				
 			self.stylesheet = self.initConfigParam(
 				"stylesheet",self.stylesheet)
+				
+			self.thin_at_file_trees = self.initBooleanConfigParam(
+				"thin_at_file_trees",self.thin_at_file_trees)
 				
 			encoding = self.initConfigParam(
 				"tk_encoding",self.tkEncoding)
@@ -604,19 +604,9 @@ class config:
 					self.tkEncoding = encoding
 				else:
 					es("bad tk_encoding: " + encoding)
-			
-			self.use_relative_node_indices = self.initBooleanConfigParam(
-				"use_relative_node_indices",self.use_relative_node_indices)
-			
-			self.remove_sentinels_extension = self.initConfigParam(
-				"remove_sentinels_extension",
-				self.remove_sentinels_extension)
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)
-			
-			self.write_clone_indices = self.initBooleanConfigParam(
-				"write_clone_indices",self.write_clone_indices)
 			#@-body
 			#@-node:1::<< get config options >>
 

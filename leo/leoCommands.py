@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoCommands.py
 #@+body
 #@@language python
@@ -21,11 +21,11 @@ class Commands:
 	#@+others
 	#@+node:1::c.__del__
 	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "c.__del__"
-		pass
+	if 0: # Interferes with the garbage collector!!
+		def __del__ (self):
+			# Can't trace while destroying.
+			# print "c.__del__"
+			pass
 	#@-body
 	#@-node:1::c.__del__
 	#@+node:2::c.__init__ & initIvars

@@ -1,6 +1,6 @@
 #line1
 #line2
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoAtFile.py 
 #@+body
 #@@first
@@ -1109,7 +1109,7 @@ class atFile:
 					h = headline.strip()
 					
 					if h[:5] == "@file":
-						i,junk = scanAtFileOptions(h)
+						i,junk,junk = scanAtFileOptions(h)
 						fileName = string.strip(h[i:])
 						if fileName != self.targetFileName:
 							self.readError("File name in @node sentinel does not match file's name")
@@ -1249,7 +1249,7 @@ class atFile:
 					h = headline.strip()
 					
 					if h[:5] == "@file":
-						i,junk = scanAtFileOptions(h)
+						i,junk,junk = scanAtFileOptions(h)
 						fileName = string.strip(h[i:])
 						if 1:  ### testing only
 							fileName += ".txt"
@@ -1804,14 +1804,9 @@ class atFile:
 	#@+node:5::Sentinels
 	#@+node:1::nodeSentinelText
 	#@+body
+	# 4/5/03: config.write_clone_indices no longer used.
+	
 	def nodeSentinelText(self,v):
-	
-		config = app().config
-	
-		if config.write_clone_indices:
-			cloneIndex = v.t.cloneIndex
-			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
-		else: clone_s = ""
 		
 		if v == self.root or not v.parent():
 			index = 0
@@ -1843,7 +1838,7 @@ class atFile:
 		#@-node:1::<< remove comment delims from h if necessary >>
 
 	
-		return str(index) + ':' + clone_s + ':' + h
+		return str(index) + '::' + h
 	#@-body
 	#@-node:1::nodeSentinelText
 	#@+node:2::putCloseNodeSentinel

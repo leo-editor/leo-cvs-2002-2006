@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoGlobals.py
 #@+body
 # Global constants, variables and utility functions used throughout Leo.
@@ -55,7 +55,7 @@ def collectGarbage():
 		try:
 			import gc
 			gc.collect()
-			# es("len(garbage):"+`len(gc.garbage)`)
+			es("len(garbage):"+`len(gc.garbage)`)
 		except:
 			# es_exception()
 			pass
@@ -1813,7 +1813,8 @@ def scanAtFileOptions (h,err_flag=false):
 	assert(match(h,0,"@file"))
 	i = len("@file")
 	atFileType = "@file"
-	
+	optionsList = []
+
 	while match(h,i,'-'):
 		
 		#@<< scan another @file option >>
@@ -1821,7 +1822,12 @@ def scanAtFileOptions (h,err_flag=false):
 		#@+body
 		i += 1 ; err = -1
 		
-		if match(h,i,"noref"): # Just match the prefix.
+		if match_word(h,i,"asis"):
+			if atFileType == "@file":
+				atFileType = "@silentfile"
+			elif err_flag:
+				es("using -asis option in:" + h)
+		elif match(h,i,"noref"): # Just match the prefix.
 			if atFileType == "@file":
 				atFileType = "@rawfile"
 			elif atFileType == "@nosentinelsfile":
@@ -1835,24 +1841,34 @@ def scanAtFileOptions (h,err_flag=false):
 				atFileType = "@silentfile"
 			elif err_flag:
 				es("ignoring redundant -nosent in:" + h)
-		elif match_word(h,i,"asis"):
-			if atFileType == "@file":
-				atFileType = "@silentfile"
-			elif err_flag:
-				es("using -asis option in:" + h)
 		else:
-			err = i-1
+			for option in ("fat","now","thin","wait"):
+				if match_word(h,i,option):
+					optionsList.append(option)
+			if len(option) == 0:
+				err = i-1
 		# Scan to the next minus sign.
 		while i < len(h) and h[i] not in (' ','\t','-'):
 			i += 1
 		if err > -1:
 			es("unknown option:" + h[err:i] + " in " + h)
 		
+		
 		#@-body
 		#@-node:1::<< scan another @file option >>
 
+		
+	# Convert atFileType to a list of options.
+	for fileType,option in (
+		("@silentfile","asis"),
+		("@nosentinelsfile","nosent"),
+		("@rawfile","noref")):
+		if atFileType == fileType:
+			optionsList.append(option)
+			
+	# trace(atFileType,optionsList)
 
-	return i,atFileType
+	return i,atFileType,optionsList
 #@-body
 #@-node:1::scanAtFileOptions
 #@+node:2::scanAtRootOptions

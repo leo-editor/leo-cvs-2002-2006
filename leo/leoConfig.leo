@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="32" left="236" height="25" width="95"/>
+	<global_window_position top="29" left="141" height="25" width="93"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -16,15 +16,15 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
-<v t="T12" a="V"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
+<v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
@@ -103,12 +103,18 @@ create_nonexistent_directories = 0
 #	@file, @rawfile, @root and @silentfile trees, and to filenames
 #	speicied in the @path directory.
 
-default_derived_file_encoding = UTF-8
+default_derived_file_encoding = iso-8859-1
 #	The encoding used for derived files if no @encoding directive is in effect.
 #	This setting is also used to encode files created by the Tangle commands.
 #	Default is UTF-8 (case not important).
 
-new_leo_file_encoding = UTF-8
+load_derived_files_immediately = 0
+#	New for version 4.0
+#	1: Leo loads derived files when loading .leo files.
+#	0: Leo loads derived files when corresponding @file node is first selected.
+#	This setting may be overridden by @file-now or @file-wait options.
+
+new_leo_file_encoding = iso-8859-1
 #	The encoding specified in the following line of new .leo files:
 #	&lt;?xml version="1.0" encoding="UTF-8"&gt;
 #	Default is UTF-8 (upper case for compatibility for old versions of Leo).
@@ -186,7 +192,13 @@ stylesheet =
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
 
-tk_encoding =
+thin_at_file_trees = 0
+#	New for version 4.0
+#	0: Leo writes complete @file tree to .leo file.
+#	1: Leo writes only root of @file tree to .leo file.
+#	This setting may be overridden by @file-thin or @file-fat options.
+
+tk_encoding = cp1252
 #	The encoding that Tk text widgets are assumed for non-ascii character strings.
 #	You would typically use this setting only in an emergency.
 #	Leo assumes that Tk text widgets return:
@@ -194,7 +206,7 @@ tk_encoding =
 #	2. locale.getdefaultlocale()[1] if it is exists.
 #	3. sys.getdefaultencoding()
 
-use_customizeLeo_dot_py = 0
+# use_customizeLeo_dot_py = 0
 #	No longer used.
 
 use_plugins = 1
@@ -204,15 +216,13 @@ use_plugins = 1
 #
 #   0: (The default) Leo disables all plugins.
 
-use_relative_node_indices = 0
+# use_relative_node_indices = 0
 #	No longer used.
 
-write_clone_indices = 0
-#	1: Files derived from @file nodes contain clone indices.
-#	0: Files derived from @file nodes contain no clone indices.
-#	Please specify 0 if you are going to submit files to Leo's CVS site.
+# write_clone_indices = 0
+#	No longer used
 
-xml_version_string = UTF-8
+# xml_version_string = UTF-8
 #	No longer used.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 

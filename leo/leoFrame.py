@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoFrame.py
 #@+body
 # To do: Use config params for window height, width and bar color, relief and width.
@@ -21,15 +21,16 @@ class LeoFrame:
 	#@+body
 	# Warning:  calling del self will not necessarily call this routine.
 	
-	def __del__ (self):
-		
-		# Can't trace while destroying.
-		# print "frame.__del__"
-		
-		self.log = self.body = self.tree = None
-		self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
-		# Menu bars.
-		del self.menus ; self.menus = None
+	if 0: # Interferes with the garbage collector!!
+		def __del__ (self):
+			
+			# Can't trace while destroying.
+			# print "frame.__del__"
+			
+			self.log = self.body = self.tree = None
+			self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
+			# Menu bars.
+			del self.menus ; self.menus = None
 	#@-body
 	#@-node:1::frame.__del__
 	#@+node:2::frame.__init__

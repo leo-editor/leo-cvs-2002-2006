@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoTree.py
 #@+body
 #@@language python
@@ -113,12 +113,13 @@ class leoTree:
 	#@+node:3::Birth & death
 	#@+node:1::tree.__del__
 	#@+body
-	def __del__ (self):
-	
-		# Can't trace while destroying.
-		# print "tree.__del__"
-		self.deleteBindings()
-		pass
+	if 0: # Interferes with the garbage collector!!
+		def __del__ (self):
+		
+			# Can't trace while destroying.
+			print "tree.__del__"
+			self.deleteBindings()
+			pass
 	#@-body
 	#@-node:1::tree.__del__
 	#@+node:2::tree.__init__
@@ -170,6 +171,9 @@ class leoTree:
 	#@-node:2::tree.__init__
 	#@+node:3::tree.deleteBindings
 	#@+body
+	# This code is when redrawing the screen to delete the old bindings.
+	# 4/20/03: I now realize that calling this from __del__ was useless: __del__ would never be called!
+	
 	def deleteBindings (self):
 		
 		if self.recycleBindings:
@@ -184,10 +188,11 @@ class leoTree:
 				t.unbind(binding,id)
 				count += 1
 			self.bindings = []
-			# es("bindings freed:"+`count`)
+			# print("bindings freed:"+`count`)
 		else:
 			self.tagBindings = []
 			self.bindings = []
+	
 	#@-body
 	#@-node:3::tree.deleteBindings
 	#@+node:4::tree.destroy

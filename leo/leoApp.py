@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoApp.py
 #@+body
 #@@language python
@@ -220,6 +220,32 @@ class LeoApp:
 					es_exception()
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
+
+		
+		#@<< set leoId from leoId.txt, creating it if it does not exist >>
+		#@+node:5::<< set leoId from leoId.txt, creating it if it does not exist >>
+		#@+body
+		if 0:
+			# See if leoId.txt exists in the loadDir.
+			dir = app().loadDir
+			
+			# Prompt for a user id.
+			message = (
+				"leoId.txt not found\n" +
+				"Please enter an id that identifies you uniquely\n" +
+				"Your cvs login name is a good choice")
+			d = leoDialog.leoDialog()
+			result = d.askId("Create leoId.txt?", message)
+			if result != None:
+				id = result
+				# write leoId.txt using id.
+			else:
+				message2 = (
+					"Using \"unknown\" as the identifier for all nodes.\n" +
+					"Please create leoId.txt as soon as possible")
+				d.askOk("Using default id for nodes",message2)
+		#@-body
+		#@-node:5::<< set leoId from leoId.txt, creating it if it does not exist >>
 
 		self.config = leoConfig.config()
 		self.nodeIndices = leoNodes.nodeIndices()
