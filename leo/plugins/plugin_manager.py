@@ -796,7 +796,10 @@ class Plugin:
         """
         self.is_plugin = self.hasImport(text, "leoPlugins") 
         self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
-        self.description = self.getPattern(text, r'"""(.*?)"""', "Unknown")
+        # Bug fix: 11/9/04: allow both single and double triple-quoted strings.
+        pat1 = self.getPattern(text, r'"""(.*?)"""',"")
+        pat2 = self.getPattern(text, r"'''(.*?)'''","")
+        self.description = pat1 or pat2 or "Unknown"
         self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
         self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
         if 1: # Just look for the matching .ini file.
