@@ -114,19 +114,23 @@ def run(fileName=None,*args,**keywords):
     g.app.gui.runMainLoop()
 #@+node:ekr.20031218072017.1936:isValidPython
 def isValidPython():
-    
-    import leoGlobals as g
-    
+
     message = """\
-Leo requires Python 2.2 or higher.
-You may download Python 2.2 and Python 2.3 from http://python.org/download/
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
 """
+    
     try:
-        if not g.CheckVersion(sys.version, "2.2"):
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except:
+        print message
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
             g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
-            return False
-        else:
-            return True
+        return ok
     except:
         print "exception getting Python version"
         import traceback ; traceback.print_exc()
