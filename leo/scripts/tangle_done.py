@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #@+leo-ver=4-thin
-#@+node:EKR.20040502194930:@file-thin ../scripts/tangle_done.py
+#@+node:EKR.20040502194930:@thin ../scripts/tangle_done.py
 #@@first
 
 # Example tangle_done.py file.
@@ -70,5 +70,5 @@ def convertRSTfilesToHTML(root_list):
 #@-node:EKR.20040502194930.2:convertRSTfilesToHTML
 #@-others
 #@nonl
-#@-node:EKR.20040502194930:@file-thin ../scripts/tangle_done.py
+#@-node:EKR.20040502194930:@thin ../scripts/tangle_done.py
 #@-leo
