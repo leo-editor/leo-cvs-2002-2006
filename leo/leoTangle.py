@@ -2793,6 +2793,7 @@ class tangleCommands:
 	# 
 	# We use a stack to handle nested expansions.  The outermost level of expansion corresponds to the @root directive that 
 	# created the file.  When the stack is popped, the indent variable is restored.
+	# 
 	# self.root_name is the name of the file mentioned in the @root directive.
 	# 
 	# The caller has deleted all body_ignored_newlines from the text.
@@ -3724,29 +3725,24 @@ class tangleCommands:
 			#@+node:3::<< Test for @path, @pagewidth and @tabwidth >>
 			#@+body
 			if require_path_flag and btest(bits,path_bits)and not btest(old_bits,path_bits):
-				i = dict["path"]
-				j = skip_to_end_of_line(s,i+5) # Point past @path
-				path = string.strip(s[i+5:j])
-				
-				#@<< Remove leading and trailing delims if they exist >>
-				#@+node:1::<< Remove leading and trailing delims if they exist >>
-				#@+body
-				# es(ftag + " path: " + path)
+				k = dict["path"]
+				j = i = k + len("@path")
+				i = skip_to_end_of_line(s,i)
+				path = string.strip(s[j:i])
 				# Remove leading and trailing delims if they exist.
 				if len(path) > 2 and (
 					(path[0]=='<' and path[-1] == '>') or
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
 				path = string.strip(path)
-				#@-body
-				#@-node:1::<< Remove leading and trailing delims if they exist >>
-
+				path = os.path.join(app().loadDir,path) # EKR: 9/5/02
+				# trace("path: " + path)
 				if len(path) > 0:
-					dir = os.path.dirname(path)
+					dir = path # EKR: 9/5/02: was os.path.dirname(path)
 					if dir and len(dir) > 0 and os.path.isabs(dir):
 						if os.path.exists(dir):
 							self.tangle_directory = dir
-							# trace("@path dir:" + `dir`)
+							# trace("@path :" + `dir`)
 						elif issue_error_flag and not self.path_warning_given:
 							self.path_warning_given = true # supress future warnings
 							self.error("invalid directory: " + '"' + s[i:j] + '"')
@@ -3803,7 +3799,7 @@ class tangleCommands:
 		#@+node:5::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
-		#  This code sets self.tangle_directory--it has not already been set by an @path directive.
+		#  This code sets self.tangle_directory if it has not already been set by an @path directive.
 		# 
 		# An absolute file name in an @root directive will override the directory set here.
 		# A relative file name gets appended later to the default directory.
