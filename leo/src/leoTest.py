@@ -10,7 +10,7 @@ Run the unit tests in test.leo using the Execute Script command.
 
 from leoGlobals import *
 
-import leoColor,leoCommands,leoFrame,leoGui,leoNodes
+import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
 import glob,os,sys,unittest
 
@@ -686,7 +686,7 @@ class leoFileTestCase(unittest.TestCase):
 		assert(os_path_exists(fileName))
 		
 		self.oldGui = app.gui
-		app.gui = leoGui.nullGui("nullGui")
+		# app.gui = leoGui.nullGui("nullGui")
 	
 		ok, frame = openWithFileName(fileName,c,enableLog=false)
 		assert(ok)
@@ -848,6 +848,7 @@ class pluginTestCase(unittest.TestCase):
 		unittest.TestCase.__init__(self)
 	
 		self.fileName = fileName
+		self.oldGui = None
 		self.verbose = verbose
 	#@nonl
 	#@-node:__init__
@@ -883,7 +884,8 @@ class pluginTestCase(unittest.TestCase):
 	#@+node:setUp
 	def setUp(self,*args,**keys):
 	
-		pass
+		self.oldGui = app.gui
+		# app.gui = leoTkinterGui.tkinterGui()
 	#@nonl
 	#@-node:setUp
 	#@+node:shortDescription
@@ -895,7 +897,7 @@ class pluginTestCase(unittest.TestCase):
 	#@+node:tearDown
 	def tearDown (self):
 	
-		pass
+		app.gui = self.oldGui
 	#@nonl
 	#@-node:tearDown
 	#@-others
