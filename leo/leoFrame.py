@@ -186,7 +186,7 @@ class LeoFrame:
 			# print "frame.setTabWidth:" + `w` + "," + `tabw`
 			self.body.configure(tabs=tabw)
 		except:
-			# print traceback.print_exc()
+			# es_exception()
 			pass
 	
 	#@-body
@@ -873,7 +873,7 @@ class LeoFrame:
 							if not app().menuWarningsGiven:
 								print "exception binding menu shortcut..."
 								print `bind_shortcut`
-								# traceback.print_exc()
+								# es_exception()
 	#@-body
 	#@-node:8::createMenuEntries
 	#@+node:9::initialRatios
@@ -1387,7 +1387,7 @@ class LeoFrame:
 				return false, None
 		except:
 			es("exceptions opening" + fileName)
-			traceback.print_exc()
+			es_exception()
 			return false, None
 	#@-body
 	#@-node:4::frame.OpenWithFileName
@@ -2213,7 +2213,7 @@ class LeoFrame:
 				image = Tkinter.PhotoImage(file=fileName)
 			except:
 				es("Exception loading: " + fileName)
-				traceback.print_exc()
+				es_exception()
 				image = None
 			if image:
 				# print image.height()
@@ -2804,8 +2804,7 @@ class LeoFrame:
 					es("Probably IDLE is not installed.")
 					es("Run Tools/idle/setup.py to build idlelib.")
 					es("Can not import idle")
-					import traceback
-					traceback.print_exc() # This can fail!!
+					es_exception() # This can fail!!
 				except: pass
 			
 			#@-body
@@ -2836,8 +2835,7 @@ class LeoFrame:
 				try:
 					es("Can not import idle")
 					es("Please add " + `idle_dir` + " to sys.path")
-					import traceback
-					traceback.print_exc() # This can fail!!
+					es_exception() # This can fail!!
 				except: pass
 			#@-body
 			#@-node:2::<< open idle in Windows >>
@@ -2957,7 +2955,7 @@ class LeoFrame:
 						webbrowser.open(url)
 				except:
 					es("exception dowloading sbooks.chm")
-					traceback.print_exc()
+					es_exception()
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -3049,8 +3047,8 @@ class LeoFrame:
 				# Panes arranged horizontally; vertical splitter bar
 				bar.configure(relief=relief,width=w,bg=color,cursor="sb_h_double_arrow")
 		except: # Could be a user error. Use all defaults
-			es("error in user configuration for splitbar")
-			traceback.print_exc()
+			es("exception in user configuration for splitbar")
+			es_exception()
 			if verticalFlag:
 				# Panes arranged vertically; horizontal splitter bar
 				bar.configure(height=7,cursor="sb_v_double_arrow")

@@ -49,7 +49,7 @@ def importFiles (dir, type = None, kind = "@file"):
 			c.importCommands.importFilesCommand(files2,kind)
 	except:
 		es("exception in importFiles script")
-		traceback.print_exc()
+		es_exception()
 #@-body
 #@-node:1::importFiles
 #@-others
@@ -2349,7 +2349,7 @@ class leoImportCommands:
 			file.close()
 		except:
 			es("exception while flattening outline")
-			traceback.print_exc()
+			es_exception()
 	#@-body
 	#@-node:5::flattenOutline
 	#@+node:6::outlineToWeb
@@ -2380,7 +2380,7 @@ class leoImportCommands:
 			file.close()
 		except:
 			es("exception in Outline To noweb command")
-			traceback.print_exc()
+			es_exception()
 	#@-body
 	#@-node:6::outlineToWeb
 	#@+node:7::removeSentinelsCommand
@@ -2399,7 +2399,7 @@ class leoImportCommands:
 			file.close()
 		except:
 			es("exception while reading " + fileName)
-			traceback.print_exc()
+			es_exception()
 			return
 		#@-body
 		#@-node:1::<< Read file into s >>
@@ -2471,7 +2471,7 @@ class leoImportCommands:
 				es("creating: " + newFileName)
 			except:
 				es("exception creating: " + newFileName)
-				traceback.print_exc()
+				es_exception()
 			#@-body
 			#@-node:3::<< Write s into newFileName >>
 	#@-body
@@ -2544,7 +2544,7 @@ class leoImportCommands:
 			if not f: return
 		except:
 			es("exception opening:" + filename)
-			traceback.print_exc()
+			es_exception()
 			return
 		#@-body
 		#@-node:1::<< open filename to f, or return >>

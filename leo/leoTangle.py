@@ -584,14 +584,14 @@ class tangleCommands:
 					tangle_done.run(root_names)
 				except:
 					es("Can not execute tangle_done.run()")
-					traceback.print_exc()
+					es_exception()
 			if not self.tangling and self.untangle_batch_flag:
 				try:
 					import untangle_done
 					untangle_done.run(root_names)
 				except:
 					es("Can not execute tangle_done.run()")
-					traceback.print_exc()
+					es_exception()
 	
 		# Reinitialize the symbol tables and lists.
 		self.tst = {}
@@ -915,7 +915,7 @@ class tangleCommands:
 		except:
 			if f: f.close()
 			es("error reading: " + path)
-			traceback.print_exc()
+			es_exception()
 			self.cleanup()
 			return
 		#@-body
@@ -3942,8 +3942,8 @@ class tangleCommands:
 										self.default_directory = dir
 										break
 									except:
-										self.error("can not create @path directory: " + dir)
-										traceback.print_exc()
+										self.error("exception creating @path directory: " + dir)
+										es_exception()
 								elif issue_error_flag and not self.path_warning_given:
 									self.path_warning_given = true # supress future warnings
 									self.error("invalid directory: " + '"' + s[i:j] + '"')
@@ -4051,8 +4051,8 @@ class tangleCommands:
 									es("creating @root directory:" + dir)
 									self.default_directory = dir ; break
 								except:
-									self.error("can not create @root directory: " + dir)
-									traceback.print_exc()
+									self.error("exception creating @root directory: " + dir)
+									es_exception()
 							elif issue_error_flag:
 								self.warning("ignoring invalid " + kind + " directory: " + dir)
 						#@-body

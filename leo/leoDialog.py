@@ -53,7 +53,7 @@ class leoDialog:
 			text.image_create("1.0",image=image,padx=10)
 		except:
 			es("exception getting icon")
-			traceback.print_exc()
+			es_exception()
 	
 		text.insert("end",version,"version")
 		text.insert("end",copyright,"copyright")

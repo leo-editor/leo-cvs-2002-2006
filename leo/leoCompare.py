@@ -192,7 +192,7 @@ class leoCompare:
 					else:    no.append(f1)
 				except:
 					self.show("exception in filecmp.cmp")
-					traceback.print_exc()
+					es_exception()
 					fail.append(f1)
 			else:
 				fail.append(f1)
@@ -231,7 +231,7 @@ class leoCompare:
 				self.compare_open_files(f1,f2,name1,name2)
 		except:
 			self.show("exception comparing files")
-			traceback.print_exc()
+			es_exception()
 		try:
 			if f1: f1.close()
 			if f2: f2.close()
@@ -239,7 +239,7 @@ class leoCompare:
 				self.outputFile.close() ; self.outputFile = None
 		except:
 			self.show("exception closing files")
-			traceback.print_exc()
+			es_exception()
 	#@-body
 	#@-node:3::compare_files (entry)
 	#@+node:4::compare_lines
@@ -517,7 +517,7 @@ class leoCompare:
 			except:
 				self.outputFile = None
 				self.show("exception opening output file")
-				traceback.print_exc()
+				es_exception()
 	#@-body
 	#@-node:5::openOutputFile (compare)
 	#@+node:6::show

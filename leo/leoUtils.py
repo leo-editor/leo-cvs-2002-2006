@@ -265,12 +265,7 @@ def create_labeled_frame (parent,
 #@-body
 #@-node:3::create_labeled_frame
 #@-node:5::Dialog utilites...
-#@+node:6::A new node, illustrating relative node indices
-#@+body
-# This is body text in the new node.
-#@-body
-#@-node:6::A new node, illustrating relative node indices
-#@+node:7::Dumping, Tracing & Sherlock
+#@+node:6::Dumping, Tracing & Sherlock
 #@+node:1::dump
 #@+body
 def dump(s):
@@ -464,8 +459,8 @@ def trace (s1=None,s2=None):
 #@-body
 #@-node:3::trace
 #@-node:5::Sherlock...
-#@-node:7::Dumping, Tracing & Sherlock
-#@+node:8::ensure_extension
+#@-node:6::Dumping, Tracing & Sherlock
+#@+node:7::ensure_extension
 #@+body
 def ensure_extension (name, ext):
 
@@ -477,8 +472,8 @@ def ensure_extension (name, ext):
 	else:
 		return file + ext
 #@-body
-#@-node:8::ensure_extension
-#@+node:9::findReference
+#@-node:7::ensure_extension
+#@+node:8::findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -499,8 +494,8 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:9::findReference
-#@+node:10::Leading & trailing whitespace...
+#@-node:8::findReference
+#@+node:9::Leading & trailing whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -622,8 +617,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:7::skip_leading_ws_with_indent
-#@-node:10::Leading & trailing whitespace...
-#@+node:11::List utilities...
+#@-node:9::Leading & trailing whitespace...
+#@+node:10::List utilities...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -656,8 +651,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:11::List utilities...
-#@+node:12::Menu utlities...
+#@-node:10::List utilities...
+#@+node:11::Menu utlities...
 #@+node:1::enableMenu & disableMenu & setMenuLabel
 #@+body
 def enableMenu (menu,name,val):
@@ -674,8 +669,8 @@ def setMenuLabel (menu,name,label):
 	menu.entryconfig(name,label=label)
 #@-body
 #@-node:1::enableMenu & disableMenu & setMenuLabel
-#@-node:12::Menu utlities...
-#@+node:13::getBaseDirectory
+#@-node:11::Menu utlities...
+#@+node:12::getBaseDirectory
 #@+body
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
 
@@ -694,8 +689,8 @@ def getBaseDirectory():
 	else:
 		return "" # An error.
 #@-body
-#@-node:13::getBaseDirectory
-#@+node:14::scanError
+#@-node:12::getBaseDirectory
+#@+node:13::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -713,8 +708,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:14::scanError
-#@+node:15::Scanners: calling scanError
+#@-node:13::scanError
+#@+node:14::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1101,8 +1096,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:15::Scanners: calling scanError
-#@+node:16::Scanners: no error messages
+#@-node:14::Scanners: calling scanError
+#@+node:15::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1199,40 +1194,74 @@ def is_special_bits(s,root=None):
 			#@<< set bits for @ directives >>
 			#@+node:1::<< set bits for @ directives >>
 			#@+body
-			ch = s[i+1]
-			if ch == 'c':
-				if   match_word(s,i,"@color"): bits |= color_bits
-				elif match_word(s,i,"@comment"):
-					bits |= comment_bits ; dict["comment"] = i
-			elif ch == 'h':
-				if match_word(s,i,"@header"): bits |= header_bits
-			elif ch == 'i':
-				if match_word(s,i,"@ignore"): bits |= ignore_bits
-			elif ch == 'l':
-				if match_word(s,i,"@language"):
-					# trace(`s[i:]`)
-					bits |= language_bits ; dict ["language"] = i
-			elif ch == 'n':
-				if   match_word(s,i,"@nocolor"):  bits |= nocolor_bits
-				elif match_word(s,i,"@noheader"): bits |= noheader_bits
-			elif ch == 'p':
-				if   match_word(s,i,"@pagewidth"):
-					bits |= page_width_bits ; dict["page_width"] = i
-				elif match_word(s,i,"@path"):
-					bits |= path_bits ; dict["path"] = i
-			elif ch == 'r':
-				if match_word(s,i,"@root"): bits |= root_bits # skip_body finds the root.
-			elif ch == 's':
-				if match_word(s,i,"@silent"): bits |= silent_bits
-			elif ch == 't':
-				if   match_word(s,i,"@tabwidth"):
-					bits |= tab_width_bits ; dict["tab_width"] = i
-				elif match_word(s,i,"@terse"):
-					bits |= terse_bits
-			elif ch == 'u':
-				if match_word(s,i,"@unit"): bits |= unit_bits
-			elif ch == 'v':
-				if match_word(s,i,"@verbose"): bits |= verbose_bits
+			# We really don't need these bits either, we could just test the dict returned by this routine.
+			# And all we really need is a list of directives!
+			
+			directiveDict = {
+				"@color"     : color_bits,
+				"@comment"   : comment_bits,
+				"@header"    : header_bits,
+				"@ignore"    : ignore_bits,
+				"@language"  : language_bits,
+				"@nocolor"   : nocolor_bits,
+				"@noheader"  : noheader_bits,
+				"@pagewidth" : page_width_bits,
+				"@path"      : path_bits,
+				"@quiet"     : quiet_bits,
+				"@root"      : root_bits,
+				"@silent"    : silent_bits,
+				"@tabwidth"  : tab_width_bits,
+				"@terse"     : terse_bits,
+				"@unit"      : unit_bits,
+				"@verbose"   : verbose_bits }
+				
+			if 1: # new code
+				j = skip_c_id(s,i+1)
+				word = s[i:j]
+				try:
+					bits |= directiveDict[word]
+					dict[word[1:]]=i
+					print `word`
+				except: pass
+			else:
+				# This is brain-dead.  A dictionary is faster and clearer.
+				ch = s[i+1]
+				if ch == 'c':
+					if   match_word(s,i,"@color"): bits |= color_bits
+					elif match_word(s,i,"@comment"):
+						bits |= comment_bits ; dict["comment"] = i
+				elif ch == 'h':
+					if match_word(s,i,"@header"): bits |= header_bits
+				elif ch == 'i':
+					if match_word(s,i,"@ignore"): bits |= ignore_bits
+				elif ch == 'l':
+					if match_word(s,i,"@language"):
+						# trace(`s[i:]`)
+						bits |= language_bits ; dict ["language"] = i
+				elif ch == 'n':
+					if   match_word(s,i,"@nocolor"):  bits |= nocolor_bits
+					elif match_word(s,i,"@noheader"): bits |= noheader_bits
+				elif ch == 'p':
+					if   match_word(s,i,"@pagewidth"):
+						bits |= page_width_bits ; dict["page_width"] = i
+					elif match_word(s,i,"@path"):
+						bits |= path_bits ; dict["path"] = i
+				elif ch == 'q': # 10/9/02
+					if match_word(s,i,"@quiet"):
+						bits |= quiet_bits ; dict["quiet"] = i
+				elif ch == 'r':
+					if match_word(s,i,"@root"): bits |= root_bits # skip_body finds the root.
+				elif ch == 's':
+					if match_word(s,i,"@silent"): bits |= silent_bits
+				elif ch == 't':
+					if   match_word(s,i,"@tabwidth"):
+						bits |= tab_width_bits ; dict["tab_width"] = i
+					elif match_word(s,i,"@terse"):
+						bits |= terse_bits
+				elif ch == 'u':
+					if match_word(s,i,"@unit"): bits |= unit_bits
+				elif ch == 'v':
+					if match_word(s,i,"@verbose"): bits |= verbose_bits
 			#@-body
 			#@-node:1::<< set bits for @ directives >>
 
@@ -1448,8 +1477,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:16::Scanners: no error messages
-#@+node:17::shortFileName
+#@-node:15::Scanners: no error messages
+#@+node:16::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1458,8 +1487,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:17::shortFileName
-#@+node:18::sortSequence
+#@-node:16::shortFileName
+#@+node:17::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1498,8 +1527,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:18::sortSequence
-#@+node:19::Timing
+#@-node:17::sortSequence
+#@+node:18::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1514,8 +1543,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:19::Timing
-#@+node:20::Tk.Text selection (utils)
+#@-node:18::Timing
+#@+node:19::Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1564,8 +1593,8 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:3::setTextSelection
-#@-node:20::Tk.Text selection (utils)
-#@+node:21::Unicode...
+#@-node:19::Tk.Text selection (utils)
+#@+node:20::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -1646,8 +1675,8 @@ def returnNonEncodingChar(c,xml_encoding):
 			return c
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:21::Unicode...
-#@+node:22::update_file_if_changed
+#@-node:20::Unicode...
+#@+node:21::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1681,8 +1710,8 @@ def update_file_if_changed(file_name,temp_name):
 				es("***updating: " + file_name)
 			except:
 				es("Rename failed: no file created!")
-				es(`file_name` + " may be read-only")
-				traceback.print_exc()
+				es(`file_name` + " may be read-only or in use")
+				es_exception()
 	else:
 		try:
 			# os.rename(temp_name, file_name)
@@ -1690,11 +1719,11 @@ def update_file_if_changed(file_name,temp_name):
 			es("Creating: " + file_name)
 		except:
 			es("Rename failed: no file created!")
-			es(`file_name` + " may be read-only")
-			traceback.print_exc()
+			es(`file_name` + " may be read-only or in use")
+			es_exception()
 #@-body
-#@-node:22::update_file_if_changed
-#@+node:23::utils_rename
+#@-node:21::update_file_if_changed
+#@+node:22::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1713,8 +1742,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:23::utils_rename
-#@+node:24::version checking (Dave Hein)
+#@-node:22::utils_rename
+#@+node:23::version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1829,8 +1858,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:24::version checking (Dave Hein)
-#@+node:25::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:23::version checking (Dave Hein)
+#@+node:24::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1850,7 +1879,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:25::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:24::readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

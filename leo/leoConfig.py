@@ -742,7 +742,7 @@ class config:
 			pass
 		except:
 			es("Exception opening " + self.configFileName)
-			traceback.print_exc()
+			es_exception()
 			pass
 		self.config = None
 	#@-body
@@ -1025,7 +1025,7 @@ class config:
 				es("can not open: " + self.configFileName)
 		except:
 			es("exception writing: " + self.configFileName)
-			traceback.print_exc()
+			es_exception()
 		self.config = None
 	#@-body
 	#@-node:19::update (config)

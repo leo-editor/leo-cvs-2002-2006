@@ -61,15 +61,16 @@ language_bits = 0x00020
 nocolor_bits =	 0x00040
 noheader_bits = 0x00080
 noweb_bits =    0x00100
-#               0x00200 #unused
-page_width_bits=0x00400
-path_bits =	    0x00800
+page_width_bits=0x00200
+path_bits =	    0x00400
+quiet_bits =    0x00800 # 10/9/02
 root_bits =	    0x01000 # Also represents < < * > > =
 silent_bits =	  0x02000
 tab_width_bits =0x04000
 terse_bits = 	  0x08000
 unit_bits = 	   0x10000
 verbose_bits =	 0x20000
+
 #@-body
 #@-node:1::<< define global constants >>
 

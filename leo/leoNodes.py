@@ -1194,7 +1194,7 @@ class vnode:
 			c.frame.body.insert("1.0", s) # Replace the body text with s.
 			c.recolor()
 			
-		if type(s) == types.UnicodeType: # 10/9
+		if type(s) == types.UnicodeType: # 10/9/02
 			xml_encoding = app().config.xml_version_string
 			s = s.encode(xml_encoding) # result is a string.
 		assert(type(s)==types.StringType)

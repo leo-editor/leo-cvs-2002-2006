@@ -1552,7 +1552,7 @@ class leoColorNamePanel:
 				color = box.get(items[0])
 			except:
 				es("unexpected exception")
-				traceback.print_exc()
+				es_exception()
 	
 		if not color:
 			color = self.color

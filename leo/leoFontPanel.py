@@ -188,7 +188,7 @@ class leoFontPanel:
 				family = box.get(items[0])
 			except:
 				es("unexpected exception")
-				traceback.print_exc()
+				es_exception()
 				font = self.getImpliedFont()
 		# At this point we either have family or font.
 		assert(font or family)

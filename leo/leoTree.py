@@ -258,7 +258,7 @@ class leoTree:
 		except:
 			self.line_height = line_height # was 17 + 2
 			es("exception setting outline line height")
-			traceback.print_exc()
+			es_exception()
 	#@-body
 	#@-node:9::setLineHeight
 	#@+node:10::Drawing
@@ -461,7 +461,7 @@ class leoTree:
 			return image
 		except:
 			es("Exception loading: " + fullname)
-			traceback.print_exc()
+			es_exception()
 			return None
 	#@-body
 	#@-node:9::tree.getIconImage
@@ -1438,20 +1438,20 @@ class leoTree:
 						selectforeground=selfg,selectbackground=selbg,fg=fg, bg=bg)
 					return
 				except:
-					traceback.print_exc()
+					es_exception()
 			elif selfg and selbg:
 				try:
 					v.edit_text.configure(state="normal",highlightthickness=1,
 						selectforeground=selfg,selectbackground=selbg,fg="black",bg="white")
 					return
 				except:
-					traceback.print_exc()
+					es_exception()
 			elif fg and bg:
 				try:
 					v.edit_text.configure(state="normal",highlightthickness=1,fg=fg,bg=bg)
 					return
 				except:
-					traceback.print_exc()
+					es_exception()
 					
 			v.edit_text.configure(state="normal",highlightthickness=1,fg="black",bg="white")
 			#@-body
@@ -1472,7 +1472,7 @@ class leoTree:
 					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
 					return
 				except:
-					traceback.print_exc()
+					es_exception()
 			
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
 			#@-body
@@ -1496,7 +1496,7 @@ class leoTree:
 					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
 					return
 				except:
-					traceback.print_exc()
+					es_exception()
 					
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black", bg="white")
 			#@-body

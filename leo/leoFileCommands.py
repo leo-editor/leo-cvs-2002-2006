@@ -381,7 +381,7 @@ class fileCommands:
 		except:
 			if 0: # testing only: access may not exist on all platforms.
 				es("exception getting file access")
-				traceback.print_exc()
+				es_exception()
 		#@-body
 		#@-node:1::<< warn on read-only files >>
 
@@ -438,7 +438,7 @@ class fileCommands:
 			#@-node:2::<< Create join lists of all vnodes >>
 
 		except BadLeoFile, message: # All other exceptions are Leo bugs
-			# traceback.print_exc()
+			# es_exception()
 			alert(self.mFileName + " is not a valid Leo file: " + `message`)
 			ok = false
 		# Leo2: read all @file nodes and reset orphan bits.
@@ -1035,8 +1035,8 @@ class fileCommands:
 						s = s.encode(xml_encoding)
 						self.outputFile.write(s)
 				except:
-					traceback.print_exc()
 					es("exception writing:" + `s`)
+					es_exception()
 			elif self.outputString != None: # Write to a string
 				self.outputString += s
 	
@@ -1558,7 +1558,7 @@ class fileCommands:
 				at.writeAll(c.rootVnode(), false) # forceFlag
 			except:
 				es("exception writing derived files")
-				traceback.print_exc()
+				es_exception()
 				return false
 				
 		if self.read_only:
@@ -1581,7 +1581,7 @@ class fileCommands:
 					utils_rename(fileName,backupName)
 				except:
 					es("exception creating " + backupName)
-					traceback.print_exc()
+					es_exception()
 					backupName = None
 			else:
 				backupName = None
@@ -1601,7 +1601,7 @@ class fileCommands:
 						os.unlink(backupName)
 					except:
 						es("exception deleting " + backupName)
-						traceback.print_exc()
+						es_exception()
 				
 				#@-body
 				#@-node:2::<< delete backup file >>
@@ -1626,14 +1626,14 @@ class fileCommands:
 			# raise BadLeoFile # testing
 		except:
 			es("exception writing: " + fileName)
-			traceback.print_exc() 
+			es_exception() 
 			if self.outputFile:
 				try:
 					self.outputFile.close()
 					self.outputFile = None
 				except:
 					es("exception closing: " + fileName)
-					traceback.print_exc()
+					es_exception()
 			
 			#@<< erase filename and rename backupName to fileName >>
 			#@+node:3::<< erase filename and rename backupName to fileName >>
@@ -1645,7 +1645,7 @@ class fileCommands:
 					os.unlink(fileName)
 				except:
 					es("exception deleting " + fileName)
-					traceback.print_exc()
+					es_exception()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
@@ -1654,7 +1654,7 @@ class fileCommands:
 					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
-					traceback.print_exc()
+					es_exception()
 			
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>
@@ -1667,7 +1667,7 @@ class fileCommands:
 				self.outputFile = None
 			except:
 				es("exception closing: " + fileName)
-				traceback.print_exc()
+				es_exception()
 			
 			#@<< delete backup file >>
 			#@+node:2::<< delete backup file >>
@@ -1677,7 +1677,7 @@ class fileCommands:
 					os.unlink(backupName)
 				except:
 					es("exception deleting " + backupName)
-					traceback.print_exc()
+					es_exception()
 			
 			#@-body
 			#@-node:2::<< delete backup file >>
@@ -1695,7 +1695,7 @@ class fileCommands:
 					os.unlink(fileName)
 				except:
 					es("exception deleting " + fileName)
-					traceback.print_exc()
+					es_exception()
 					
 			if backupName:
 				es("restoring " + fileName + " from " + backupName)
@@ -1704,7 +1704,7 @@ class fileCommands:
 					utils_rename(backupName, fileName)
 				except:
 					es("exception renaming " + backupName + " to " + fileName)
-					traceback.print_exc()
+					es_exception()
 			
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>
