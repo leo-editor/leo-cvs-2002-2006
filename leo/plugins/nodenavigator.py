@@ -25,13 +25,17 @@ USE_FIXED_SIZES = 1
 
 #@+others
 #@+node:ekr.20040108062655.2:class Navigator
-class Navigator: 
+class Navigator:
+    
     """A node navigation aid for Leo"""
+
     #@    @+others
     #@+node:ekr.20040108062655.3:addWidgets
     def addWidgets(self, tag, keywords): 
         """Add the widgets to the navigation bar""" 
-        self.c = c = keywords['c'] 
+        self.c = c = keywords['new_c']
+        self.recentTnodes = []
+        self.markedTnodes = []
         toolbar = self.c.frame.iconFrame 
         # Main container 
         self.frame = Tk.Frame(toolbar) 
@@ -50,7 +54,7 @@ class Navigator:
         self.recent.pack(side="left",fill="both",expand=1)
         # Recreate the menus immediately.
         self.updateRecent("tag",{"c":c})
-        self.updateMarks("tag",{"c":c})
+        self.initMarks("tag",{"c":c})
     #@nonl
     #@-node:ekr.20040108062655.3:addWidgets
     #@+node:ekr.20040108062655.4:_getSizer
@@ -66,18 +70,11 @@ class Navigator:
             return parent 
     #@nonl
     #@-node:ekr.20040108062655.4:_getSizer
-    #@+node:ekr.20040108062655.5:onSelect
-    def onSelect(self, vnode):
-        """Do the navigation"""
-    
-        self.c.selectVnode(vnode)
-    #@nonl
-    #@-node:ekr.20040108062655.5:onSelect
     #@+node:ekr.20040108091136:updateRecent
     def updateRecent(self,tag,keywords):
+        
         """Update the marks list"""        
         c = keywords.get("c")
-        v = c.rootVnode()
     
         # Clear old marks menu
         try:
@@ -85,47 +82,102 @@ class Navigator:
             menu.delete(0,"end")
         except: return
     
-        # Make sure the node still exists.
-        # Insert only the last cloned node.
-        vnodes = [] ; tnodes = []
-        for v in c.visitedList:
-            if v.exists(c) and v.t not in tnodes:
+        self.recentTnodes = []
+        for p in c.visitedList:
+            if p.exists(c) and p.v.t not in self.recentTnodes:
                 
-                def callback(event=None,self=self,v=v):
-                    return self.onSelect(v)
+                def callback(event=None,self=self,c=c,p=p):
+                    return self.select(c,p)
     
-                menu.add_command(label=v.headString(),command=callback)
-                tnodes.append(v.t)
-                vnodes.append(v)
+                menu.add_command(label=p.headString(),command=callback)
+                self.recentTnodes.append(p.v.t)
     #@nonl
     #@-node:ekr.20040108091136:updateRecent
-    #@+node:ekr.20040108062655.6:updateMarks
-    def updateMarks(self, tag, keywords):
-        """Update the marks list"""        
+    #@+node:ekr.20040730094103:select
+    def select(self,c,p):
+        
+        # g.trace(p.exists(c),p)
+    
+        if p.exists(c):
+            c.beginUpdate()
+            c.frame.tree.expandAllAncestors(p)
+            c.selectPosition(p)
+            c.endUpdate()
+    #@nonl
+    #@-node:ekr.20040730094103:select
+    #@+node:ekr.20040108062655.6:addMark
+    def addMark(self, tag, keywords):
+        
+        """Add a mark to the marks list"""
+        
         c = keywords.get("c")
-        v = c.rootVnode()
+        p = keywords.get("p")
+        if not c or not p: return
+        
+        # g.trace()
+    
+        if p.v.t in self.markedTnodes: return
+        
+        try:
+            menu = self.marks["menu"]
+        except: return
+    
+        def callback(event=None,self=self,c=c,p=p.copy()):
+            self.select(c,p)
+    
+        name = p.headString().strip()
+        menu.add_command(label=name,command=callback)
+        self.markedTnodes.append(p.v.t)
+    #@-node:ekr.20040108062655.6:addMark
+    #@+node:ekr.20040730092357:initMarks
+    def initMarks(self, tag, keywords):
+        
+        """Initialize the marks list."""
+        
+        c = keywords.get("c")
+        if not c : return
     
         # Clear old marks menu
         try:
             menu = self.marks["menu"]
             menu.delete(0,"end")
         except: return
+        
+        # g.trace()
     
         # Find all marked nodes
-        vnodes = [] ; tnodes = []
-        while v:
-            if v.isMarked() and v.t not in tnodes:
-                
-                def callback(event=None,self=self,v=v):
-                    return self.onSelect(v)
-    
-                name = v.headString().strip()
+        self.markedTnodes = []
+        for p in c.all_positions_iter():
+            if p.isMarked() and p.v.t not in self.markedTnodes:
+                def callback(event=None,self=self,c=c,p=p.copy()):
+                    self.select(c,p)
+                name = p.headString().strip()
                 menu.add_command(label=name,command=callback)
-                tnodes.append(v.t)
-                vnodes.append(v)
-            v = v.threadNext()
+                self.markedTnodes.append(p.v.t)
     #@nonl
-    #@-node:ekr.20040108062655.6:updateMarks
+    #@-node:ekr.20040730092357:initMarks
+    #@+node:ekr.20040730093250:clearMark
+    def clearMark(self, tag, keywords):
+        
+        """Remove a mark to the marks list"""
+        
+        c = keywords.get("c")
+        p = keywords.get("p")
+        if not c or not p: return
+        
+        # g.trace(p)
+    
+        if not p.v.t in self.markedTnodes: return
+        
+        try:
+            menu = self.marks["menu"]
+        except: return
+    
+        name = p.headString().strip()
+        menu.delete(name)
+        self.markedTnodes.remove(p.v.t)
+    #@nonl
+    #@-node:ekr.20040730093250:clearMark
     #@-others
 #@-node:ekr.20040108062655.2:class Navigator
 #@-others
@@ -136,8 +188,9 @@ if Tk:
 
     if g.app.gui.guiName() == "tkinter":
         nav = Navigator() 
-        leoPlugins.registerHandler("after-create-leo-frame", nav.addWidgets) 
-        leoPlugins.registerHandler(("set-mark","clear-mark"),nav.updateMarks)
+        leoPlugins.registerHandler(("new","open2"), nav.addWidgets) 
+        leoPlugins.registerHandler("set-mark",nav.addMark)
+        leoPlugins.registerHandler("clear-mark",nav.clearMark)
         leoPlugins.registerHandler("select2",nav.updateRecent)
         g.plugin_signon("nodenavigator")
 #@nonl
