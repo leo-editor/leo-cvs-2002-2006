@@ -1,4 +1,4 @@
-#@+leo-encoding=iso-8859-1.
+#@+leo
 #@+node:0::@file leoFrame.py
 #@+body
 # To do: Use config params for window height, width and bar color, relief and width.
@@ -3091,7 +3091,7 @@ class LeoFrame:
 		c = self.commands ; v = c.currentVnode()
 		s = v.headString().strip()
 		if (s[0:2] == "<<"
-		    or s[-2:] == ">>"): # Must be on separate line.
+			or s[-2:] == ">>"): # Must be on separate line.
 			if s[0:2] == "<<": s = s[2:]
 			if s[-2:] == ">>": s = s[:-2]
 			s = s.strip()
@@ -3883,12 +3883,21 @@ class LeoFrame:
 	#@+body
 	def OnLeoConfig (self,event=None):
 	
-		dir = app().loadDir
-		fileName = os.path.join(dir, "leoConfig.leo")
-		try:
-			self.OpenWithFileName(fileName)
-		except:
-			es("not found: leoConfig.leo")
+		# 4/21/03 new code suggested by fBechmann@web.de
+		loadDir = app().loadDir
+		configDir = app().config.configDir
+		# Look in configDir first.
+		fileName = os.path.join(configDir, "leoConfig.leo")
+		ok, frame = self.OpenWithFileName(fileName)
+		if not ok:
+			if configDir == loadDir:
+				es("leoConfig.leo not found in " + loadDir)
+			else:
+				# Look in loadDir second.
+				fileName = os.path.join(loadDir, "leoConfig.leo")
+				ok, frame = self.OpenWithFileName(fileName)
+				if not ok:
+					es("leoConfig.leo not found in " + configDir + " or " + loadDir)
 		
 	def OnApplyConfig (self,event=None):
 	
