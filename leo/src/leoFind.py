@@ -744,7 +744,8 @@ class leoFind:
             # g.trace("end outline-only")
             v = None ; self.onlyVnode = None
     
-        self.v = v.copy() # used in initNextText().
+        # No copy is needed here because v.threadNext/Back makes a copy.
+        self.v = v # used in initNextText().
         if v: # select v and set the search point within v.
             self.in_headline = c.search_headline_flag
             self.initNextText()
