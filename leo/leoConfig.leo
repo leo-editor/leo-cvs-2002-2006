@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
@@ -13,9 +13,9 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -95,11 +95,8 @@ read_only = 0
 
 xml_version_string = UTF-8
 #	The version used at the start of .leo files.
-#	Default is UTF-8.  Better is ISO-8859-1.
-#	Even better (but less common?) may be ISO-8859-15, the same as ISO-8859-1,
-#	except that it includes the newly defined Euro symbol. 
-
-#	Use UTF-8 (case is significant) to write leo.py 2.x files.
+#	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
+#	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
 
 path_directive_creates_directories = 0
 #	1: @path directive attempts to create directory if it does not exist.

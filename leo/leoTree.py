@@ -1383,8 +1383,13 @@ class leoTree:
 				s = s2 # don't destroy s until we know that all is well.
 			except:
 				s = v.t.bodyString
-				es("exception converting to " + xml_encoding + ":" + s)
-				traceback.print_exc()
+				# es("Can't convert to " + xml_encoding + ":" + string.strip(s))
+				es("Can't convert to " + xml_encoding)
+				printNonEncodingChars(s,xml_encoding)
+				typ,val,tb = sys.exc_info()
+				errList = traceback.format_exception_only(typ,val)
+				for i in errList:
+					es(i)
 	
 		body.insert("1.0", s)
 		self.recolor_now(v)

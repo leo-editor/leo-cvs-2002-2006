@@ -1610,6 +1610,29 @@ def deleteNonEncodingChars(s,xml_encoding):
 	return s2
 #@-body
 #@-node:2::deleteNonEncodingChar/s
+#@+node:3::printNonEncodingChar, returnNonEncodingChar
+#@+body
+def printNonEncodingChars(s,xml_encoding):
+
+	for c in s:
+		s2 = returnNonEncodingChar(c,xml_encoding)
+		if len(s2) > 0:
+			es(s2)
+		
+def returnNonEncodingChar(c,xml_encoding):
+	try:
+		if type(c) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			e = c.encode(xml_encoding)
+			e = unicode(e,xml_encoding)
+			return u""
+		else:
+			s = unicode(c,xml_encoding)
+			return u""
+	except:
+		return c
+#@-body
+#@-node:3::printNonEncodingChar, returnNonEncodingChar
 #@-node:21::Unicode...
 #@+node:22::update_file_if_changed
 #@+body

@@ -3058,7 +3058,7 @@ class LeoFrame:
 	#@-node:8::OnOpenPythonWindow (Dave Hein)
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
-	#@+node:1::OnAbout (version number)
+	#@+node:1::OnAbout (version number & date)
 	#@+body
 	def OnAbout(self,event=None):
 		
@@ -3066,7 +3066,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.6, Build " + build + ", September 11, 2002\n\n"
+		version = "leo.py 3.7, Build " + build + ", October 6, 2002\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -3085,7 +3085,7 @@ class LeoFrame:
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:1::OnAbout (version number)
+	#@-node:1::OnAbout (version number & date)
 	#@+node:2::OnLeoDocumentation
 	#@+body
 	def OnLeoDocumentation (self,event=None):
@@ -3177,12 +3177,10 @@ class LeoFrame:
 	def OnLeoTutorial (self,event=None):
 		
 		import webbrowser
-		
-		version = "?vernum=3.6 beta 2" # not used now.
-		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 	
+		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 		try:
-			webbrowser.open(url) # + version)
+			webbrowser.open(url)
 		except:
 			es("not found: " + url)
 		
