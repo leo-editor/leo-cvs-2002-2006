@@ -15,6 +15,7 @@
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
 <v t="ekr.20040105070023.1"><vh>January 2004</vh>
+<v t="ekr.20040130160615"><vh>1/30 Added script to look for blanks preceding tabs in leading whitespace</vh></v>
 <v t="ekr.20040130112427"><vh>1/30 Fixed several bugs</vh></v>
 <v t="ekr.20040129154656"><vh>1/29</vh>
 <v t="ekr.20040129154656.1"><vh>Only mark ancestor @file nodes dirty when creating,moving,changing nodes</vh></v>
@@ -4442,7 +4443,7 @@
 </v>
 <v t="ekr.20040129133809.1"><vh>(Fixed Indent problem in leoTkinterGui.py)</vh></v>
 <v t="ekr.20040130111957"><vh>(Fixed bug: Convert All Blanks reported too many changes)</vh>
-<v t="ekr.20031218072017.1820" a="E"><vh>Edit Body Text</vh>
+<v t="ekr.20031218072017.1820" a=""><vh>Edit Body Text</vh>
 <v t="ekr.20031218072017.1704" a=""><vh>convertAllBlanks</vh></v>
 <v t="ekr.20031218072017.1705" a=""><vh>convertAllTabs</vh></v>
 <v t="ekr.20031218072017.1821"><vh>convertBlanks</vh></v>
@@ -4483,6 +4484,7 @@
 <v t="ekr.20040126115447"><vh>Docs</vh>
 <v t="ekr.20040105080119.2"><vh>Document new stuff</vh></v>
 <v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
+<v t="ekr.20040130161236"><vh>Document script find/change much better</vh></v>
 </v>
 <v t="ekr.20040129080202"><vh>Mac/Linux  bugs 5</vh>
 <v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
@@ -4647,6 +4649,7 @@
 <v t="ekr.20031218072017.4250"><vh>The script</vh></v>
 </v>
 <v t="ekr.20031218072017.2416"><vh>Editing scripts</vh>
+<v t="ekr.20040130112145"><vh>Script-Find to check for dubious leading whitespace</vh></v>
 <v t="ekr.20031218072017.2417" a=""><vh>doChange...Script</vh></v>
 <v t="ekr.20031218072017.2418" a=""><vh>initScriptFind</vh></v>
 <v t="ekr.20031218072017.2419"><vh>Find script to clean whitespace</vh>
@@ -5251,7 +5254,7 @@
 <v t="ekr.20031218072017.2816"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20031218072017.2582" a=""><vh> version &amp; signon stuff</vh></v>
+<v t="ekr.20031218072017.2582" a="M"><vh> version &amp; signon stuff</vh></v>
 <v t="ekr.20031218072017.2818"><vh>Command handlers...</vh>
 <v t="ekr.20031218072017.2819"><vh>File Menu</vh>
 <v t="ekr.20031218072017.2820"><vh>top level</vh>
@@ -7785,15 +7788,21 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040105080119.3"><vh>Fix Bugs: 6</vh>
-<v t="ekr.20040129133809.4"><vh>Too verbose a message for read-only</vh></v>
+<v t="ekr.20040105080119.3"><vh>Fix Bugs: 5</vh>
 <v t="ekr.20040129133809.3"><vh>Copy/paste not always properly enabled</vh></v>
 <v t="ekr.20040129133809.6"><vh>crash calling launchCmd</vh></v>
 <v t="ekr.20040129133809.5"><vh>Expand/contract may not work after drag</vh></v>
 <v t="ekr.20040129133809.2"><vh>Control-v</vh></v>
 <v t="ekr.20040129133809.8"><vh>top node not saved</vh></v>
 </v>
-<v t="ekr.20040130112145" a="V"><vh>Check indentation script</vh></v>
+<v t="ekr.20040129133809.4" a="V"><vh>(Attempt to shorten error message when saving a a read-only fails)</vh>
+<v t="ekr.20040130161634"><vh>Report</vh></v>
+<v t="ekr.20031218072017.3046" a=""><vh>write_LEO_file</vh>
+<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt; in write_LEO_file</vh></v>
+<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -8581,7 +8590,7 @@ What I did:
 	- Fixed a bug in old write code(!!) @verbatim was not output correctly!
 	- Created top_df.scanDefaultDirectory and top_df.error.
 		- We must have this in order to open files in the proper directory.
- 	- Replaced calls to at.init_ivars by df.init_ivars
+	- Replaced calls to at.init_ivars by df.init_ivars
 	- Created new_df.raw_write
 	- Create top_df write routines.
 	- Created class topLevelDerivedFileCommands
@@ -27848,8 +27857,8 @@ What I did:
 <t tx="ekr.20031218072017.1680"># The following was improperly indented in @nosentinel files.  The expansion of &lt;&lt; class shape declarations &gt;&gt; was indented twice.
 
 class shape(object):
-  	&lt;&lt; class shape declarations &gt;&gt;
-  	# after decls
+	&lt;&lt; class shape declarations &gt;&gt;
+	# after decls
 	
 What I did:
 	
@@ -46718,7 +46727,8 @@ class baseFileCommands:
 	
 class fileCommands (baseFileCommands):
 	"""A class creating the fileCommands subcommander."""
-	pass</t>
+	pass
+</t>
 <t tx="ekr.20031218072017.3019">def __init__(self,c):
 
 	# trace("__init__", "fileCommands.__init__")
@@ -47093,25 +47103,46 @@ if os_path_exists(fileName):
 			os.unlink(backupName)
 		# os.rename(fileName,backupName)
 		utils_rename(fileName,backupName)
+	except OSError:
+		if self.read_only:
+			es("read only",color="red")
+		else:
+			es("exception creating backup file: " + backupName)
+			es_exception()
+		return false
 	except:
 		es("exception creating backup file: " + backupName)
 		es_exception()
 		backupName = None
+		return false
 else:
 	backupName = None</t>
 <t tx="ekr.20031218072017.3048">if backupName and os_path_exists(backupName):
 	try:
 		os.unlink(backupName)
+	except OSError:
+		if self.read_only:
+			es("read only",color="red")
+		else:
+			es("exception deleting backup file:" + backupName)
+			es_exception()
+		return false
 	except:
 		es("exception deleting backup file:" + backupName)
 		es_exception()
-		return false # 1/29/04: Make sure we indicate failure.
+		return false
 </t>
 <t tx="ekr.20031218072017.3049">es("error writing " + fileName)
 
 if fileName and os_path_exists(fileName):
 	try:
 		os.unlink(fileName)
+	except OSError:
+		if self.read_only:
+			es("read only",color="red")
+		else:
+			es("exception deleting: " + fileName)
+			es_exception()
 	except:
 		es("exception deleting: " + fileName)
 		es_exception()
@@ -47120,6 +47151,12 @@ if backupName:
 	es("restoring " + fileName + " from " + backupName)
 	try:
 		utils_rename(backupName, fileName)
+	except OSError:
+		if self.read_only:
+			es("read only",color="red")
+		else:
+			es("exception renaming " + backupName + " to " + fileName)
+			es_exception()
 	except:
 		es("exception renaming " + backupName + " to " + fileName)
 		es_exception()</t>
@@ -65550,9 +65587,7 @@ but the paste does stick if use ^C ^V</t>
 <t tx="ekr.20040129133809.3">sometimes copy &amp; paste is greyed out from the log or if the headline is active
 window, even if selected.
 not sure how or what happens but its frequent.</t>
-<t tx="ekr.20040129133809.4">was busy so I just read protected it.
-now I get a traceback every time it trys to write.
-a simple write protected warning would be enough.</t>
+<t tx="ekr.20040129133809.4"></t>
 <t tx="ekr.20040129133809.5">sometimes after a drag of a node, 
 then the expand/contract doesnt work.
 click or menu has no effect.
@@ -65602,7 +65637,34 @@ The first place it would be useful would be in eliminating calls to the Tk searc
 The problem was in the write logic.</t>
 <t tx="ekr.20040130080552.2"></t>
 <t tx="ekr.20040130111957"># While I was at it, I fixed the code so it marks only changed nodes as dirty.</t>
-<t tx="ekr.20040130112145">from leoGlobals import *</t>
+<t tx="ekr.20040130112145">from leoGlobals import *
+
+c = top() ; v = c.currentVnode()
+done = False
+while v:
+	lines = v.bodyString().split('\n')
+	for s in lines:
+		i = skip_ws(s,0)
+		leading = s[0:i]
+		if leading:
+			blanks, tabs = 0,0
+			for ch in leading:
+				if ch == ' ':
+					blanks += 1
+				if ch == '\t':
+					tabs += 1 ; break
+			if blanks &gt; 0 and tabs &gt; 0:
+				trace(leading)
+				es("blanks precede leading tab: " + v.headString())
+				done = True ; break
+	if done: break
+	v = v.threadNext()
+if done:
+	c.selectVnode(v)
+	c.redraw()
+else:
+	es("done",color="blue")
+app.searchDict["continue"] = False</t>
 <t tx="ekr.20040130112427">- Fixed Dan Winkler's bug with CashRegister.ss.
 
 - Possibly fixed the "Zope Sprint" bug.
@@ -65614,5 +65676,19 @@ The problem was in the write logic.</t>
 - Fixed several problems in the Convert All Blanks/Tabs commands.
 
 </t>
+<t tx="ekr.20040130160615"></t>
+<t tx="ekr.20040130161236">The present documentation is either missing or out-of-date.</t>
+<t tx="ekr.20040130161634">@nocolor
+
+was busy so I just read protected it.
+now I get a traceback every time it trys to write.
+a simple write protected warning would be enough.
+
+What I did:
+	
+Give "read only" message if read_only ivar is set.
+Otherwise, give full traceback.
+
+This is not really a great solution.  Ideally, we would trap the actual OS error message, but that is probably platform-specific.</t>
 </tnodes>
 </leo_file>
