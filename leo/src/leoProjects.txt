@@ -1448,6 +1448,20 @@ def scanForAtIgnore(c,p):
     return False
 #@nonl
 #@-node:ekr.20040715155607:scanForAtIgnore
+#@+node:ekr.20041123094807:g.scanForAtSettings
+def scanForAtSettings(p):
+    
+    """Scan position p and its ancestors looking for @settings nodes."""
+    
+    for p in p.self_and_parents_iter():
+        h = p.headString()
+        h = g.app.config.canonicalizeSettingName(h)
+        if h.startswith("@settings"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20041123094807:g.scanForAtSettings
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     

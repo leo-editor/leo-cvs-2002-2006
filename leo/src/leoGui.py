@@ -89,7 +89,7 @@ class leoGui:
     #@nonl
     #@-node:ekr.20031218072017.3722: leoGui.__init__
     #@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
-    def newLeoCommanderAndFrame(self,fileName):
+    def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
         
         """Create a commander and its view frame for the Leo main window."""
         
@@ -126,7 +126,8 @@ class leoGui:
         # Finish initing the subcommanders.
         c.undoer.clearUndoState() # Menus must exist at this point.
         
-        c.updateRecentFiles(fileName) # 12/01/03
+        if updateRecentFiles:
+            c.updateRecentFiles(fileName)
         
         g.doHook("after-create-leo-frame",c=c)
         return c,frame

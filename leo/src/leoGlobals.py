@@ -383,6 +383,20 @@ def scanForAtIgnore(c,p):
     return False
 #@nonl
 #@-node:ekr.20040715155607:scanForAtIgnore
+#@+node:ekr.20041123094807:g.scanForAtSettings
+def scanForAtSettings(p):
+    
+    """Scan position p and its ancestors looking for @settings nodes."""
+    
+    for p in p.self_and_parents_iter():
+        h = p.headString()
+        h = g.app.config.canonicalizeSettingName(h)
+        if h.startswith("@settings"):
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20041123094807:g.scanForAtSettings
 #@+node:ekr.20040712084911.1:scanForAtLanguage
 def scanForAtLanguage(c,p):
     
@@ -556,7 +570,7 @@ def scanDirectives(c,p=None):
 #@nonl
 #@-node:ekr.20031218072017.1391:scanDirectives (utils)
 #@-node:ekr.20031218072017.1380:Directive utils...
-#@+node:ekr.20031218072017.2052:openWithFileName
+#@+node:ekr.20031218072017.2052:g.openWithFileName
 def openWithFileName(fileName,old_c,enableLog=True):
     
     """Create a Leo Frame for the indicated fileName if the file exists."""
@@ -596,6 +610,9 @@ def openWithFileName(fileName,old_c,enableLog=True):
                 frame.c.fileCommands.open(theFile,fileName) # closes file.
                 app.unlockLog()
                 g.app.config.readSettings(c,settingsFile=False)
+                for frame in g.app.windowList:
+                    # The recent files list has been updated by menu.updateRecentFiles.
+                    frame.c.config.setRecentFiles(frame.c.recentFiles)
             frame.openDirectory = g.os_path_dirname(fileName)
             g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
             return True, frame
@@ -614,7 +631,7 @@ def openWithFileName(fileName,old_c,enableLog=True):
             g.es_exception()
         return False, None
 #@nonl
-#@-node:ekr.20031218072017.2052:openWithFileName
+#@-node:ekr.20031218072017.2052:g.openWithFileName
 #@+node:ekr.20031218072017.3100:wrap_lines
 #@+at 
 #@nonl
@@ -751,11 +768,11 @@ def oldDump(s):
 #@+node:ekr.20031218072017.3110:es_error
 def es_error (s,color=None):
 
-    if color is None and config: # May not exist during initialization.
+    if color is None and g.app.config: # May not exist during initialization.
         color = g.app.config.getColor(None,"log_error_color")
         g.es(s,color=color)
     else:
-        g.es(s,color=color)
+        g.es(s)
 #@nonl
 #@-node:ekr.20031218072017.3110:es_error
 #@+node:ekr.20031218072017.3111:es_event_exception

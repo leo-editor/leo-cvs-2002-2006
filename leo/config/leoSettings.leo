@@ -34,7 +34,7 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
-<v t="ekr.20041119034357.1" a="TV"><vh>@settings</vh>
+<v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041120180154" a="E"><vh>Types</vh>
 <v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
 <v t="ekr.20041120180707" a="E"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
@@ -139,7 +139,7 @@
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
@@ -436,9 +436,8 @@ CheckSpelling    = Alt+Shift+A
 # Idle           = Alt+Shift+I
 # Word           = Alt+Shift+W
 # WordPad        = Alt+Shift+T
-SetColors        = Alt+Shift+C
 #                = Alt+Shift+E
-SetFont          = Alt+Shift+F
+
 
 GoToFirstNode    = Alt+Shift+G
 GoToLastNode     = Alt+Shift+H
@@ -1045,6 +1044,8 @@ ReferenceLeoDocsleo     = None
 RemoveSentinels         = None
 RevertToSaved           = None
 SaveTo                  = None
+SetColors               = None
+SetFont                 = None
 SortChildren            = None
 ToggleAngleBrackets     = None
 ToggleSplitDirection    = None
@@ -1098,13 +1099,7 @@ groove</t>
 <t tx="ekr.20041120180707.4"></t>
 <t tx="ekr.20041120181045">A float value restricted to the range 0.0 to 1.0.</t>
 <t tx="ekr.20041120181045.1"></t>
-<t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes underscore and minus
-characters. Therefore, all the following are equivalent to @ifplatform:
-
-@if-platform
-@if_platform
-@ifPlatform
-
-Take your pick.</t>
+<t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes minus signs.
+Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
 </tnodes>
 </leo_file>

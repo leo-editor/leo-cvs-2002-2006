@@ -699,12 +699,10 @@ class baseCommands:
     
         g.doHook("recentfiles2",c=c,p=v,v=v,fileName=fileName,closeFlag=closeFlag)
     #@-node:ekr.20031218072017.2081:openRecentFile
-    #@+node:ekr.20031218072017.2083:updateRecentFiles
+    #@+node:ekr.20031218072017.2083:c.updateRecentFiles
     def updateRecentFiles (self,fileName):
         
         """Create the RecentFiles menu.  May be called with Null fileName."""
-        
-        # g.trace(fileName)
         
         # Update the recent files list in all windows.
         if fileName:
@@ -718,14 +716,11 @@ class baseCommands:
                 c.recentFiles.insert(0,fileName)
                 # Recreate the Recent Files menu.
                 frame.menu.createRecentFilesMenuItems()
-        else: # 12/01/03
+        else:
             for frame in g.app.windowList:
                 frame.menu.createRecentFilesMenuItems()
-            
-        # Update the config file.
-        self.config.setRecentFiles(self.recentFiles) # Use self, _not_ c.
     #@nonl
-    #@-node:ekr.20031218072017.2083:updateRecentFiles
+    #@-node:ekr.20031218072017.2083:c.updateRecentFiles
     #@-node:ekr.20031218072017.2079:Recent Files submenu & allies
     #@+node:ekr.20031218072017.2838:Read/Write submenu
     #@+node:ekr.20031218072017.2839:readOutlineOnly
@@ -2477,24 +2472,40 @@ class baseCommands:
     def findNext(self):
     
         c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+    
         c.frame.findPanel.findNextCommand(c)
     #@-node:ekr.20031218072017.2889:findNext
     #@+node:ekr.20031218072017.2890:findPrevious
     def findPrevious(self):
     
         c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+    
         c.frame.findPanel.findPreviousCommand(c)
     #@-node:ekr.20031218072017.2890:findPrevious
     #@+node:ekr.20031218072017.2891:replace
     def replace(self):
     
         c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+    
         c.frame.findPanel.changeCommand(c)
     #@-node:ekr.20031218072017.2891:replace
     #@+node:ekr.20031218072017.2892:replaceThenFind
     def replaceThenFind(self):
     
         c = self
+        
+        if not c.frame.findPanel:
+            c.frame.findPanel = g.app.gui.createFindPanel(c)
+    
         c.frame.findPanel.changeThenFindCommand(c)
     #@-node:ekr.20031218072017.2892:replaceThenFind
     #@-node:ekr.20031218072017.2887:Find submenu (frame methods)
@@ -3040,7 +3051,7 @@ class baseCommands:
                 #@nl
     
             if g.scanForAtLanguage(c,p) == "python":
-                if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                if not g.scanForAtSettings(p) and (not ignoreAtIgnore or not g.scanForAtIgnore(c,p)):
                     try:
                         c.checkPythonNode(p,unittest)
                     except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
@@ -5532,16 +5543,34 @@ class configSettings:
         self.setPref("find_string",c.find_text)
     #@nonl
     #@-node:ekr.20041117062717.20:setConfigIvars
-    #@+node:ekr.20041118195812.3:setRecentFiles
+    #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
     def setRecentFiles (self,files):
         
-        return g.app.config.setRecentFiles(self.c,files)
-    #@-node:ekr.20041118195812.3:setRecentFiles
+        c = self.c
+    
+        # Remember the files.
+        self.recentFiles = files
+        
+        # Do nothing if there is no @settings tree or no @recent-files node.
+        p = g.app.config.findSettingsPosition(c,"@recent-files")
+        if not p:
+            # g.trace("no @recent-files node")
+            return
+    
+        # Update the @recent-files entry, leaving c's changed status untouched.
+        changed = c.isChanged()
+        body = '\n'.join(files)
+        p.setBodyStringOrPane (body,encoding=g.app.tkEncoding)
+        c.setChanged(changed)
+    #@nonl
+    #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
     #@+node:ekr.20041118195812.2:setString
     def setString (self,setting,val):
         
+        g.trace()
+        
         return g.app.config.setString(self.c,setting,val)
-    
+    #@nonl
     #@-node:ekr.20041118195812.2:setString
     #@-node:ekr.20041118195812:Setters...
     #@-others

@@ -148,7 +148,6 @@ class baseConfig:
         self.defaultFontFamily = None # Set in gui.getDefaultConfigFont.
         self.dictList = [self.defaultsDict] # List of dictionaries.
         self.inited = False
-        self.recentFiles = [] # List of recent files.
     
         self.initIvarsFromSettings()
         self.initSettingsFiles()
@@ -284,14 +283,13 @@ class baseConfig:
     #@+node:ekr.20041121143823:getValFromDict
     def getValFromDict (self,d,setting,requestedType,found):
     
-        data = d.get(setting)
+        data = d.get(self.canonicalizeSettingName(setting))
         if data:
             found = True
             if len(data) == 2:
-                c = None
-                dType,val = data
+                path = None ; dType,val = data
             else:
-                c,dType,val = data
+                path,dType,val = data
             if dType != requestedType:
                 ok = False
                 #@            << set ok if we can translate one type into the other >>
@@ -519,6 +517,8 @@ class baseConfig:
         
         """Set the setting and make sure its type matches the given type."""
         
+        setting = self.canonicalizeSettingName(setting)
+    
         g.trace(c,setting,type,val)
     
         return ####
@@ -535,6 +535,7 @@ class baseConfig:
             g.trace(setting,type,val)
         
         return val
+    #@nonl
     #@-node:ekr.20041118084146.1:set (config)
     #@+node:ekr.20041118084241:setString
     def setString (self,c,setting,val):
@@ -542,12 +543,6 @@ class baseConfig:
         self.set(c,setting,"string",val)
     #@nonl
     #@-node:ekr.20041118084241:setString
-    #@+node:ekr.20041118123207:setRecentFiles
-    def setRecentFiles (self,c,files):
-    
-        self.recentFiles = files
-    #@nonl
-    #@-node:ekr.20041118123207:setRecentFiles
     #@-node:ekr.20041118084146:Setters
     #@+node:ekr.20041117093246:Scanning @settings
     #@+node:ekr.20041117085625:openSettingsFile
@@ -564,7 +559,7 @@ class baseConfig:
         # Changing g.app.gui here is a major hack.
         oldGui = g.app.gui
         g.app.gui = leoGui.nullGui("nullGui")
-        c,frame = g.app.gui.newLeoCommanderAndFrame(path)
+        c,frame = g.app.gui.newLeoCommanderAndFrame(path,updateRecentFiles=False)
         frame.log.enable(False)
         g.app.setLog(frame.log,"openWithFileName")
         g.app.lockLog()
@@ -628,6 +623,48 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117083857.1:readSettings
     #@-node:ekr.20041117093246:Scanning @settings
+    #@+node:ekr.20041123084849:Utilities (config)
+    #@+node:ekr.20041123070429:canonicalizeSettingName
+    def canonicalizeSettingName (self,name):
+        
+        if name:
+            name = name.lower()
+            name = name.replace('-','')
+            return name
+        else:
+            return None
+    #@nonl
+    #@-node:ekr.20041123070429:canonicalizeSettingName
+    #@+node:ekr.20041120074536:settingsRoot
+    def settingsRoot (self,c):
+    
+        for p in c.allNodes_iter():
+            if p.headString().rstrip() == "@settings":
+                return p.copy()
+        else:
+            return c.nullPosition()
+    #@nonl
+    #@-node:ekr.20041120074536:settingsRoot
+    #@+node:ekr.20041123092357:findSettingsPosition
+    def findSettingsPosition (self,c,setting):
+        
+        """Return the position for the setting in the @settings tree for c."""
+        
+        root = self.settingsRoot(c)
+        if not root:
+            return c.nullPosition()
+            
+        setting = self.canonicalizeSettingName(setting)
+            
+        for p in root.subtree_iter():
+            h = self.canonicalizeSettingName(p.headString())
+            if h == setting:
+                return p.copy()
+        
+        return c.nullPosition()
+    #@nonl
+    #@-node:ekr.20041123092357:findSettingsPosition
+    #@-node:ekr.20041123084849:Utilities (config)
     #@-others
     
 class config (baseConfig):
@@ -665,6 +702,7 @@ class parserBaseClass:
     def __init__ (self,c):
         
         self.c = c
+        self.recentFiles = [] # List of recent files.
         
         # Keys are canonicalized names.
         self.dispatchDict = {
@@ -688,18 +726,6 @@ class parserBaseClass:
         }
     #@nonl
     #@-node:ekr.20041119204700: ctor
-    #@+node:ekr.20041122163039:canonicalizeName
-    def canonicalizeName (self,name):
-        
-        if name:
-            name = name.lower()
-            name = name.replace('_','')
-            name = name.replace('-','')
-            return name
-        else:
-            return None
-    #@nonl
-    #@-node:ekr.20041122163039:canonicalizeName
     #@+node:ekr.20041120103012:error
     def error (self,s):
     
@@ -863,15 +889,20 @@ class parserBaseClass:
         if name and theType:
             data = d.get(name)
             if data:
-                c2,theType2,values2 = data
-                if c.mFileName != c2.mFileName:
-                    g.es("over-riding @type %s" % (name), color="red")
+                if len(data) == 2:
+                    path2 = None ; theType2,values2 = data
+                else:
+                    path2,theType2,values2 = data
+                if c.mFileName != path2:
+                    g.es("over-riding @type %s from %s" % (name,path2), color="red")
             else:
                 # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
                 pass
-            d[name] = c,theType,values
+            # N.B.  We can't use c here: it may not exist later.
+            d[name] = c.mFileName,theType,values
         else:
             g.es("invalid @type: %s" % (p.headString()), color="red")
+    #@nonl
     #@-node:ekr.20041122095745:doType
     #@-node:ekr.20041120094940:kind handlers
     #@+node:ekr.20041119204700.2:oops
@@ -961,18 +992,6 @@ class parserBaseClass:
         return name,theType,values
     #@nonl
     #@-node:ekr.20041122100810:parseType
-    #@+node:ekr.20041120074536:settingsRoot
-    def settingsRoot (self):
-        
-        c = self.c
-        
-        for p in c.allNodes_iter():
-            if p.headString().rstrip() == "@settings":
-                return p.copy()
-        else:
-            return c.nullPosition()
-    #@nonl
-    #@-node:ekr.20041120074536:settingsRoot
     #@+node:ekr.20041120094940.9:set (settingsParser)
     def set (self,kind,name,val):
         
@@ -986,11 +1005,15 @@ class parserBaseClass:
     
         data = d.get(name)
         if data:
-            c2,theType2,val2 = data
-            if c.mFileName != c2.mFileName:
-                g.es("over-riding setting: %s" % (name))
+            if len(data) == 2:
+                path2 = None ; theType2,val2 = data
+            else:
+                path2,theType2,val2 = data
+            if c.mFileName != path2:
+                g.es("over-riding setting: %s from %s" % (name,path2))
     
-        d[name] = c,kind,val
+        # N.B.  We can't use c here: it may not exist later.
+        d[name] = c.mFileName,kind,val
     #@nonl
     #@-node:ekr.20041120094940.9:set (settingsParser)
     #@+node:ekr.20041119204700.1:traverse
@@ -998,7 +1021,7 @@ class parserBaseClass:
         
         c = self.c
         
-        p = self.settingsRoot()
+        p = g.app.config.settingsRoot(c)
         if not p:
             return None
     
@@ -1055,7 +1078,7 @@ class settingsTreeParser (parserBaseClass):
         # g.trace(p.headString())
     
         kind,name,val = self.parseHeadline(p.headString())
-        kind = self.canonicalizeName(kind)
+        kind = g.app.config.canonicalizeSettingName(kind)
     
         if kind == "settings":
             pass
@@ -1067,6 +1090,7 @@ class settingsTreeParser (parserBaseClass):
             try:
                 f(p,kind,name,val)
             except TypeError:
+                g.es_exception()
                 print "*** no handler",kind
         elif name:
             # self.error("unknown type %s for setting %s" % (kind,name))

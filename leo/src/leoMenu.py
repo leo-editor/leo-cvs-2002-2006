@@ -71,7 +71,7 @@ class leoMenu:
         self.editMenuEditHeadlineTable = (
             ("Edit &Headline","Ctrl+H",c.editHeadline),
             ("&End Edit Headline","Escape",f.endEditLabelCommand),
-            ("&Abort Edit Headline","Shift-Escape",f.abortEditLabelCommand),
+            ("&Abort Edit Headline","Shift+Escape",f.abortEditLabelCommand),
             ("Insert Headline Time/&Date","Shift+Ctrl+H",f.insertHeadlineTime),
             # 2/16/04: restore Toggle Angle Brackets command without any default shortcut.
             ("Toggle Angle Brackets",None,c.toggleAngleBrackets))
@@ -102,11 +102,11 @@ class leoMenu:
         self.editMenuTop2Table = (
             ("&Go To Line Number","Alt+G",c.goToLineNumber),
             ("&Execute Script","Alt+Shift+E",c.executeScript),
-            ("Set Fon&t...","Shift+Alt+T",c.fontPanel),
-            ("Set &Colors...","Shift+Alt+C",c.colorPanel),
+            ("Set Fon&t...",None,c.fontPanel), # To be replaced by general settings dialog.
+            ("Set &Colors...",None,c.colorPanel), # To be replaced by general settings dialog.
             (label,"Alt+V",c.viewAllCharacters),
             ("-",None,None),
-            ("Prefere&nces","Ctrl+Y",c.preferences))
+            ("Prefere&nces",None,c.preferences)) # To be replaced by general settings dialog.
         #@nonl
         #@-node:ekr.20031218072017.3757:<< define editMenuTop2Table >>
         #@nl
@@ -194,7 +194,7 @@ class leoMenu:
         #@<< define fileMenuTop3MenuTable >>
         #@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
         self.fileMenuTop3MenuTable = (
-            ("E&xit","Ctrl-Q",g.app.onQuit),)
+            ("E&xit","Ctrl+Q",g.app.onQuit),)
         #@nonl
         #@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
         #@nl
@@ -215,7 +215,7 @@ class leoMenu:
             ("&Insert Node","Ctrl+I",c.insertHeadline),
             ("&Clone Node","Ctrl+`",c.clone),
             ("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
-            ("&Sort Siblings","Alt-A",c.sortSiblings),
+            ("&Sort Siblings","Alt+A",c.sortSiblings),
             ("-",None,None),
             ("&Hoist",None,c.hoist),
             ("D&e-Hoist",None,f.c.dehoist),
@@ -286,7 +286,7 @@ class leoMenu:
         #@<< define outlineMenuMarkMenuTable >>
         #@+node:ekr.20031218072017.3771:<< define outlineMenuMarkMenuTable >>
         self.outlineMenuMarkMenuTable = (
-            ("&Mark","Ctrl-M",c.markHeadline),
+            ("&Mark","Ctrl+M",c.markHeadline),
             ("Mark &Subheads","Alt+S",c.markSubheads),
             ("Mark Changed &Items","Alt+C",c.markChangedHeadlines),
             ("Mark Changed &Roots","Alt+R",c.markChangedRoots),
@@ -311,10 +311,10 @@ class leoMenu:
             ("Go To P&rev Sibling","Alt+Shift+R",c.goToPrevSibling),
             ("Go To Next &Sibling","Alt+Shift+S",c.goToNextSibling),
             ("-",None,None),
-            ("Go To Prev V&isible","Alt-UpArrow",c.selectVisBack),
-            ("Go To Next &Visible","Alt-DnArrow",c.selectVisNext),
-            ("Go To Prev Node","Alt-Shift+UpArrow",c.selectThreadBack),
-            ("Go To Next Node","Alt-Shift-DnArrow",c.selectThreadNext))
+            ("Go To Prev V&isible","Alt+UpArrow",c.selectVisBack),
+            ("Go To Next &Visible","Alt+DnArrow",c.selectVisNext),
+            ("Go To Prev Node","Alt+Shift+UpArrow",c.selectThreadBack),
+            ("Go To Next Node","Alt+Shift+DnArrow",c.selectThreadNext))
         #@nonl
         #@-node:ekr.20031218072017.3772:<< define outlineMenuGoToMenuTable >>
         #@nl
@@ -324,8 +324,8 @@ class leoMenu:
         #@    << define window menu tables >>
         #@+node:ekr.20031218072017.3773:<< define window menu tables >>
         self.windowMenuTopTable = (
-            ("&Equal Sized Panes","Ctrl-E",f.equalSizedPanes),
-            ("Toggle &Active Pane","Ctrl-T",f.toggleActivePane),
+            ("&Equal Sized Panes","Ctrl+E",f.equalSizedPanes),
+            ("Toggle &Active Pane","Ctrl+T",f.toggleActivePane),
             ("Toggle &Split Direction",None,f.toggleSplitDirection),
             ("-",None,None),
             ("Resize To Screen",None,f.resizeToScreen),
