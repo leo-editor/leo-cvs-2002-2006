@@ -15,6 +15,7 @@ import leoTkinterFontPanel
 import leoTkinterFrame
 import leoTkinterPrefs
 import tkFont
+import Tix
 import Tkinter as Tk
 import tkFileDialog
 import string
@@ -50,7 +51,7 @@ class tkinterGui(leoGui.leoGui):
     
         """Create a hidden Tk root window."""
     
-        self.root = root = Tk.Tk()
+        self.root = root = Tix.Tk() # Was Tk.Tk.
         root.title("Leo Main Window")
         root.withdraw()
         
