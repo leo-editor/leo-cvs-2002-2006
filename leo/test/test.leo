@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="ekr.20040303080938"><vh>Diary</vh>
-<v t="ekr.20040315210314"><vh>March 2004</vh>
+<v t="ekr.20040315210314" a="E"><vh>March 2004</vh>
 <v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
 <v t="ekr.20040315210314.2"><vh>3/15: Convert this file to 4.2 format</vh></v>
 <v t="ekr.20040309095121"><vh>3/9: created more position mini tests</vh></v>
@@ -658,7 +658,25 @@
 </v>
 <v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
 <v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
-<v t="EKR.20040526200017" a="ETV" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040526200017" a="E" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040527070914" a="ETV"><vh>Test of p.all_t/vnodes_iter</vh>
+<v t="EKR.20040527073459"><vh>child1</vh>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
+</v>
+<v t="EKR.20040527074524"><vh>c</vh></v>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
+</v>
+<v t="EKR.20040527074524.1" a="E"><vh>d</vh>
+<v t="EKR.20040527074524.2"><vh>e</vh></v>
+</v>
+</v>
+<v t="EKR.20040527073459.1"><vh>child2</vh></v>
+<v t="EKR.20040527083449"><vh>&lt;&lt; tests that node iterators return all nodes &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.1"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.2"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1975,6 +1993,78 @@ if 1:
 	p.v.unknownAttributes = { "myPlugin" : d }
 	
 print repr(p.v.unknownAttributes)</t>
+<t tx="EKR.20040527070914">import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; p = c.currentPosition()
+
+&lt;&lt; tests that node iterators return all nodes &gt;&gt;
+&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;
+&lt;&lt; print nodes returned by iterators &gt;&gt;
+</t>
+<t tx="EKR.20040527072047"></t>
+<t tx="EKR.20040527072047.1"></t>
+<t tx="EKR.20040527073459"></t>
+<t tx="EKR.20040527073459.1"></t>
+<t tx="EKR.20040527074524"></t>
+<t tx="EKR.20040527074524.1"></t>
+<t tx="EKR.20040527074524.2"></t>
+<t tx="EKR.20040527083449">v1 = [p.v for p in c.allNodes_iter()]
+v2 = [v for v in c.all_vnodes_iter()]
+for v in v2: assert(v in v1)
+
+t1 = [p.v.t for p in c.allNodes_iter()]
+t2 = [t for t in c.all_tnodes_iter()]
+for t in t2: assert(t in t1)
+
+v1 = [p.v for p in c.currentPosition().self_and_subtree_iter()]
+v2 = [v for v in c.currentPosition().all_vnodes_iter()]
+for v in v2: assert(v in v1)
+
+t1 = [p.v.t for p in c.currentPosition().self_and_subtree_iter()]
+t2 = [t for t in c.currentPosition().all_tnodes_iter()]
+for t in t2: assert(t in t1)
+
+print "coverage tests pass"</t>
+<t tx="EKR.20040527083449.1">nodes = []
+for v in c.all_vnodes_iter():
+	assert v not in nodes
+	nodes.append(v)
+	
+nodes = []
+for t in c.all_tnodes_iter():
+	assert t not in nodes
+	nodes.append(t)
+	
+nodes = []
+for v in c.currentPosition().all_vnodes_iter():
+	assert v not in nodes
+	nodes.append(v)
+	
+nodes = []
+for t in c.currentPosition().all_tnodes_iter():
+	assert t not in nodes
+	nodes.append(t)
+	
+print "duplicate tests pass"</t>
+<t tx="EKR.20040527083449.2">if 0: # all nodes
+	for v in c.all_vnodes_iter():
+		print v
+	for t in c.all_tnodes_iter():
+		print t
+		
+if 0: # subtree of root node:
+	for v in c.rootPosition().all_vnodes_iter():
+		print v
+	for t in c.rootPosition().all_tnodes_iter():
+		print t
+
+if 0: # child1's tree.  child2 should not be included.
+	child = p.firstChild()
+	for v in child.all_vnodes_iter():
+		print v
+	for t in child.all_tnodes_iter():
+		print t</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
