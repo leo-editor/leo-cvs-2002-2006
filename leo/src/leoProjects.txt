@@ -5150,7 +5150,7 @@ def startElement(self,name,atts):
 #@-node:ekr.20031218072017.1664:startElement
 #@-node:ekr.20031218072017.1658:(Using xml parser)
 #@-node:ekr.20031218072017.984:Unfinished projects
-#@+node:ekr.20040929081120:4.2.1 projects
+#@+node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20040701152235:(Fixed shawdow warnings)
 @killcolor
 
@@ -16452,7 +16452,79 @@ def getFindPanelSettings (self):
 #@nonl
 #@-node:ekr.20031218072017.2064:getFindPanelSettings
 #@-node:ekr.20041121092608:(Eliminated global find panel, inited from @settings)
-#@-node:ekr.20040929081120:4.2.1 projects
+#@+node:ekr.20041215102907:(Removed invalid assert in lastVisible)
+# Leo looped after this assert failed.
+#@nonl
+#@+node:ekr.20031218072017.4146:p.lastVisible & oldLastVisible
+def oldLastVisible(self):
+    """Move to the last visible node of the entire tree."""
+    p = self.c.rootPosition()
+    assert(p.isVisible())
+    last = p.copy()
+    while 1:
+        if g.app.debug: g.trace(last)
+        p.moveToVisNext()
+        if not p: break
+        last = p.copy()
+    return last
+        
+def lastVisible(self):
+    """Move to the last visible node of the entire tree."""
+    p = self.c.rootPosition()
+    # Move to the last top-level node.
+    while p.hasNext():
+        if g.app.debug: g.trace(p)
+        p.moveToNext()
+    assert(p.isVisible())
+    # Move to the last visible child.
+    while p.hasChildren() and p.isExpanded():
+        if g.app.debug: g.trace(p)
+        p.moveToLastChild()
+    if 0: # This assert is invalid.
+        assert(p.isVisible())
+    if g.app.debug: g.trace(p)
+    return p
+#@nonl
+#@-node:ekr.20031218072017.4146:p.lastVisible & oldLastVisible
+#@-node:ekr.20041215102907:(Removed invalid assert in lastVisible)
+#@+node:ekr.20041214073833.1:(Removed g.os_path_norm and g.os_path_normabs)
+@ 
+
+Save As & Save To are broken with new .leo files
+
+c.mFileName was '.'  That should never happen.
+
+I recently added code that set
+
+c.mFileName = g.os_path_norm(fileName) in the ctor, but this converts an empty name to '.' (!!)
+
+I removed g.os_path_norm and g.os_path_normabs.  These caused more problems than they solved.
+#@+node:ekr.20041216060139:Traceback
+exception creating backup file: ..bak
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoFileCommands.py", line 2015, in write_Leo_file
+    g.utils_rename(fileName,backupName)
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 1604, in utils_rename
+    os.rename(src,dst)
+OSError: [Errno 13] Permission denied
+
+--------------
+
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 154, in doCommand
+    command()
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 626, in saveTo
+    defaultextension=".leo")
+  File "C:\prog\leoCVS\leo\src\leoTkinterGui.py", line 228, in runSaveFileDialog
+    filetypes=filetypes)
+  File "c:\python23\lib\lib-tk\tkFileDialog.py", line 131, in asksaveasfilename
+    return SaveAs(**options).show()
+  File "c:\python23\lib\lib-tk\tkCommonDialog.py", line 52, in show
+    s = w.tk.call(self.command, *w._options(self.options))
+TclError: invalid filename "."
+#@-node:ekr.20041216060139:Traceback
+#@-node:ekr.20041214073833.1:(Removed g.os_path_norm and g.os_path_normabs)
+#@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
