@@ -4868,17 +4868,6 @@ tag argument                                              keys in keywords
 "@url1"        yes      before double-click @url node     c,p,v           (note 5)
 "@url2"                 after  double-click @url node     c,p,v           (note 5)
 
-Changes made in 4.2.1: - added p keyword to these hooks: "start2",
-"init-color-markup", "color-optional-markup", "command1", "command2",
-"openwith1", "openwith2", "recentfiles1", "recentfiles2", "save1", "save2",
-"url1", "url2", "scan-directives", "menu2", "clear-mark", "set-mark", "menu1",
-"bodyclick1", "bodyclick2", "bodydclick1", "bodydclick2", "bodyrclick1",
-"bodyrclick2", "bodykey1", "bodykey2", "hyperclick1", "hyperclick2",
-"hyperenter1", "hyperenter2", "hyperleave1", "hyperleave2", "draw-outline-box",
-"draw-outline-icon", "draw-outline-node", "draw-outline-text-box", "draw-sub-outline", 
-"headclick1", "headclick2", "headrclick1", "headrclick2", "headkey1", "headkey2",
-"create-popup-menu", "enable-popup-menu-items", "show-popup-menu", "select1", "select2", "unselect1", "unselect2",
-
 Notes:
 
 (1) "activate" and "deactivate" hooks: These have been removed because they do
@@ -4914,7 +4903,6 @@ Recent Files menu and b) the file is not already open.
 
 (5) "@url1" and "@url2" hooks are only executed if "icondclick1" hook returns None.
 
-
 New in version 3.12:
 
 The following hooks are a new breed of hook, called "stub hooks". Conceptually,
@@ -4930,6 +4918,10 @@ tag argument                                                       keys in keywo
 "color-optional-markup"      yes *     (note 7)                  colorer,p,v,s,i,j,colortag (note 7)
 "create-optional-menus"      no        (note 8)                  c (note 8)
 "destroy-all-global-windows" no        (note 12)                 None
+"draw-outline-box",          yes       when drawing +- box       tree,p,v,x,y
+"draw-outline-icon",         yes       when drawing icon         tree,p,v,x,y
+"draw-outline-node",         yes       when drawing node         tree,p,v,x,y
+"draw-outline-text-box",     yes       when drawing headline     tree,p,v,x,y
 "create-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
 "enable-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
 "init-color-markup"          no        (note 7)                  colorer,p,v (note 7)
