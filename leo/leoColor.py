@@ -304,7 +304,7 @@ perl_keywords = (
 	# Comparison operators
 	"cmp","eq","ge","gt","le","lt","ne",
 	# Matching ooperators
-	"m","s"
+	"m","s",
 	# Unary functions
 	"alarm","caller","chdir","cos","chroot","exit","eval","exp",
 	"getpgrp","getprotobyname","gethostbyname","getnetbyname","gmtime",
@@ -685,18 +685,22 @@ class colorizer:
 		block_comment_start = delim2
 		block_comment_end = delim3
 		
+		# A strong case can be made for making this code as fast as possible.
+		# Whether this is compatible with general language descriptions remains to be seen.
 		has_string = language != "plain"
 		has_pp_directives = language in ["c","cweb"]
 		is_cweb = language == "cweb"
 		is_latex = language == "latex"
 		is_php = language == "php"
+		is_plain = language == "plain"
 		is_python = language == "python"
 		
-		# 08-SEP-2002 DTHEIN: added "php"
+		# The list of languages for which keywords exist.
+		# Eventually we might just use language_delims_dict.keys()
 		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
 		
 		keywords = []
-		if language=="cweb":
+		if is_cweb:
 			for i in c_keywords:
 				keywords.append(i)
 			for i in cweb_keywords:
@@ -705,13 +709,11 @@ class colorizer:
 			for name in languages:
 				exec("if language==name: keywords=%s_keywords" % name)
 		
-		if 1: # 7/8/02: Color plain text unless we are under the control of @nocolor.
-			state = choose(flag,normalState,nocolorState)
-		else: # Stupid: no coloring at all in plain text.
-			state = choose(language=="plain",nocolorState,normalState)
+		# Color plain text unless we are under the control of @nocolor.
+		state = choose(flag,normalState,nocolorState)
 		
-		lb = choose(language=="cweb","@<","<<")
-		rb = choose(language=="cweb","@>",">>")
+		lb = choose(is_cweb,"@<","<<")
+		rb = choose(is_cweb,"@>",">>")
 		#@-body
 		#@-node:2::<< configure language-specific settings >> (colorizer)
 
@@ -832,7 +834,7 @@ class colorizer:
 					else:
 						word = ""
 					
-					if word == "@color" and language != "plain":
+					if word == "@color" and not is_plain:
 						# End of the nocolor part.
 						body.tag_add("leoKeyword", index(n,0), index(n,j))
 						i = j ; state = normalState
@@ -951,7 +953,7 @@ class colorizer:
 					#@-body
 					#@-node:7::<< handle C preprocessor line >>
 
-				elif match(s,i,lb) or (language=="cweb" and match(s,i,"@(")):
+				elif match(s,i,lb) or (is_cweb and match(s,i,"@(")):
 					
 					#@<< handle possible section ref or def >>
 					#@+node:8::<< handle possible section ref or def >>
@@ -1045,7 +1047,7 @@ class colorizer:
 							word = "" # can't be a Leo keyword, even if it looks like it.
 						
 						# 7/8/02: don't color doc parts in plain text.
-						if language != "plain" and (word == "@" or word == "@doc"):
+						if not is_plain and (word == "@" or word == "@doc"):
 							# at-space starts doc part
 							body.tag_add("leoKeyword", index(n,i), index(n,j))
 							# Everything on the line is in the doc part.
