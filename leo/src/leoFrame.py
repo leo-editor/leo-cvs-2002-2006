@@ -2222,140 +2222,6 @@ class baseLeoFrame:
 			i += 1
 	#@-body
 	#@-node:2::createRecentFilesMenuItems
-	#@+node:3::createMenuEntries
-	#@+body
-	#@+at
-	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
-	# The new user-configurable code binds shortcuts here.
-	# 
-	# Centralized tables of shortscuts no longer exist as they did in 
-	# createAccelerators.  To check for duplicates, (possibly arising from 
-	# leoConfig.txt) we add entries to a central dictionary here, and report 
-	# duplicates if an entry for a canonicalized shortcut already exists.
-
-	#@-at
-	#@@c
-
-	def createMenuEntries (self,menu,table,openWith=0):
-		
-		for label,accel,command in table:
-			if label == None or command == None or label == "-":
-				menu.add_separator()
-			else:
-				
-				#@<< set name to the label for doCommand >>
-				#@+node:1::<< set name to the label for doCommand >>
-				#@+body
-				name = label.strip().lower()
-				
-				# Remove special characters from command names.
-				name2 = ""
-				for ch in name:
-					if ch in string.letters or ch in string.digits:
-						name2 = name2 + ch
-				name = name2
-				
-				#@-body
-				#@-node:1::<< set name to the label for doCommand >>
-
-				
-				#@<< set accel to the shortcut for name >>
-				#@+node:2::<< set accel to the shortcut for name >>
-				#@+body
-				config = app().config
-				accel2 = config.getShortcut(name)
-				if accel2 and len(accel2) > 0:
-					accel = accel2
-					# print name,accel
-				else:
-					pass
-					# print "no default:",name
-				#@-body
-				#@-node:2::<< set accel to the shortcut for name >>
-
-				
-				#@<< set bind_shortcut and menu_shortcut using accel >>
-				#@+node:3::<< set bind_shortcut and menu_shortcut using accel >>
-				#@+body
-				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
-				
-				# Kludge: disable the shortcuts for cut, copy, paste.
-				# This has already been bound in leoFrame.__init__
-				# 2/13/03: A _possible_ fix for the Linux control-v bug.
-				
-				if sys.platform not in ("linux1","linux2"):
-					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
-						bind_shortcut = None
-				#@-body
-				#@-node:3::<< set bind_shortcut and menu_shortcut using accel >>
-
-				
-				#@<< define callback function >>
-				#@+node:4::<< define callback function >>
-				#@+body
-				#@+at
-				#  Tkinter will call the callback function with:
-				# 
-				# 	- one event argument if the user uses a menu shortcut.
-				# 	- no arguments otherwise.
-				# 
-				# Therefore, the first parameter must be event, and it must 
-				# default to None.
-
-				#@-at
-				#@@c
-
-				if openWith:
-					def callback(event=None,self=self,data=command):
-						# print "event",`event` ; print "self",`self` ; print "data",`data`
-						return self.OnOpenWith(data=data)
-						
-				else:
-					def callback(event=None,self=self,command=command,label=name):
-						# print "event",`event` ; print "self",`self` ; print "command",`command`
-						return self.doCommand(command,label,event)
-				#@-body
-				#@-node:4::<< define callback function >>
-
-				
-				#@<< set realLabel, amp_index and menu_shortcut >>
-				#@+node:5::<< set realLabel, amp_index and menu_shortcut >>
-				#@+body
-				realLabel = app().getRealMenuName(label)
-				amp_index = realLabel.find("&")
-				realLabel = realLabel.replace("&","")
-				if not menu_shortcut:
-					menu_shortcut = ""
-				#@-body
-				#@-node:5::<< set realLabel, amp_index and menu_shortcut >>
-
-	
-				menu.add_command(label=realLabel,accelerator=menu_shortcut,
-					command=callback,underline=amp_index)
-	
-				if bind_shortcut:
-					
-					#@<< handle bind_shorcut >>
-					#@+node:6::<< handle bind_shorcut >>
-					#@+body
-					if bind_shortcut in self.menuShortcuts:
-						if not app().menuWarningsGiven:
-							print "duplicate shortcut:", accel, bind_shortcut, label
-					else:
-						self.menuShortcuts.append(bind_shortcut)
-						try:
-							self.body.bind(bind_shortcut,callback)
-							self.top.bind (bind_shortcut,callback)
-						except: # could be a user error
-							if not app().menuWarningsGiven:
-								print "exception binding menu shortcut..."
-								print bind_shortcut
-								es_exception()
-								app().menuWarningsGive = true
-					#@-body
-					#@-node:6::<< handle bind_shorcut >>
-	#@-body
-	#@-node:3::createMenuEntries
 	#@-node:2::Recent Files submenu & allies
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly
@@ -4297,7 +4163,144 @@ class baseLeoFrame:
 
 	#@-at
 	#@-body
-	#@+node:1::createMenuItemsFromTable
+	#@+node:1::createMenuEntries
+	#@+body
+	#@+at
+	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
+	# The new user-configurable code binds shortcuts here.
+	# 
+	# Centralized tables of shortscuts no longer exist as they did in 
+	# createAccelerators.  To check for duplicates, (possibly arising from 
+	# leoConfig.txt) we add entries to a central dictionary here, and report 
+	# duplicates if an entry for a canonicalized shortcut already exists.
+
+	#@-at
+	#@@c
+
+	def createMenuEntries (self,menu,table,openWith=0):
+		
+		for label,accel,command in table:
+			if label == None or command == None or label == "-":
+				menu.add_separator()
+			else:
+				
+				#@<< set name to the label for doCommand >>
+				#@+node:1::<< set name to the label for doCommand >>
+				#@+body
+				name = label.strip().lower()
+				
+				# Remove special characters from command names.
+				name2 = ""
+				for ch in name:
+					if ch in string.letters or ch in string.digits:
+						name2 = name2 + ch
+				name = name2
+				
+				#@-body
+				#@-node:1::<< set name to the label for doCommand >>
+
+				
+				#@<< set accel to the shortcut for name >>
+				#@+node:2::<< set accel to the shortcut for name >>
+				#@+body
+				config = app().config
+				accel2 = config.getShortcut(name)
+				
+				# 7/19/03: Make sure "None" overrides the default shortcut.
+				if accel2 == None or len(accel2) == 0:
+					pass # Use default shortcut, if any.
+				elif accel2.lower() == "none":
+					accel = None # Remove the default shortcut.
+				else:
+					accel = accel2 # Override the default shortcut.
+				#@-body
+				#@-node:2::<< set accel to the shortcut for name >>
+
+				
+				#@<< set bind_shortcut and menu_shortcut using accel >>
+				#@+node:3::<< set bind_shortcut and menu_shortcut using accel >>
+				#@+body
+				bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+				
+				# Kludge: disable the shortcuts for cut, copy, paste.
+				# This has already been bound in leoFrame.__init__
+				# 2/13/03: A _possible_ fix for the Linux control-v bug.
+				
+				if sys.platform not in ("linux1","linux2"):
+					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
+						bind_shortcut = None
+				#@-body
+				#@-node:3::<< set bind_shortcut and menu_shortcut using accel >>
+
+				
+				#@<< define callback function >>
+				#@+node:4::<< define callback function >>
+				#@+body
+				#@+at
+				#  Tkinter will call the callback function with:
+				# 
+				# 	- one event argument if the user uses a menu shortcut.
+				# 	- no arguments otherwise.
+				# 
+				# Therefore, the first parameter must be event, and it must 
+				# default to None.
+
+				#@-at
+				#@@c
+
+				if openWith:
+					def callback(event=None,self=self,data=command):
+						# print "event",`event` ; print "self",`self` ; print "data",`data`
+						return self.OnOpenWith(data=data)
+						
+				else:
+					def callback(event=None,self=self,command=command,label=name):
+						# print "event",`event` ; print "self",`self` ; print "command",`command`
+						return self.doCommand(command,label,event)
+				#@-body
+				#@-node:4::<< define callback function >>
+
+				
+				#@<< set realLabel, amp_index and menu_shortcut >>
+				#@+node:5::<< set realLabel, amp_index and menu_shortcut >>
+				#@+body
+				realLabel = app().getRealMenuName(label)
+				amp_index = realLabel.find("&")
+				realLabel = realLabel.replace("&","")
+				if not menu_shortcut:
+					menu_shortcut = ""
+				#@-body
+				#@-node:5::<< set realLabel, amp_index and menu_shortcut >>
+
+	
+				menu.add_command(label=realLabel,accelerator=menu_shortcut,
+					command=callback,underline=amp_index)
+	
+				if bind_shortcut:
+					
+					#@<< handle bind_shorcut >>
+					#@+node:6::<< handle bind_shorcut >>
+					#@+body
+					if bind_shortcut in self.menuShortcuts:
+						if not app().menuWarningsGiven:
+							es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
+							print "duplicate shortcut:", accel, bind_shortcut, label
+					else:
+						self.menuShortcuts.append(bind_shortcut)
+						try:
+							self.body.bind(bind_shortcut,callback)
+							self.top.bind (bind_shortcut,callback)
+						except: # could be a user error
+							if not app().menuWarningsGiven:
+								print "exception binding menu shortcut..."
+								print bind_shortcut
+								es_exception()
+								app().menuWarningsGive = true
+					#@-body
+					#@-node:6::<< handle bind_shorcut >>
+	#@-body
+	#@-node:1::createMenuEntries
+	#@+node:2::createMenuItemsFromTable
 	#@+body
 	def createMenuItemsFromTable (self,menuName,table,openWith=0):
 		
@@ -4313,8 +4316,8 @@ class baseLeoFrame:
 			es("exception creating items for " + `menuName` + " menu")
 			es_exception()
 	#@-body
-	#@-node:1::createMenuItemsFromTable
-	#@+node:2::createNewMenu
+	#@-node:2::createMenuItemsFromTable
+	#@+node:3::createNewMenu
 	#@+body
 	def createNewMenu (self,menuName,parentName="top",before=None):
 		
@@ -4349,8 +4352,8 @@ class baseLeoFrame:
 			es_exception()
 			return None
 	#@-body
-	#@-node:2::createNewMenu
-	#@+node:3::createOpenWithMenuFromTable
+	#@-node:3::createNewMenu
+	#@+node:4::createOpenWithMenuFromTable
 	#@+body
 	#@+at
 	#  Entries in the table passed to createOpenWithMenuFromTable are
@@ -4402,8 +4405,8 @@ class baseLeoFrame:
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
 	
 	#@-body
-	#@-node:3::createOpenWithMenuFromTable
-	#@+node:4::deleteMenu
+	#@-node:4::createOpenWithMenuFromTable
+	#@+node:5::deleteMenu
 	#@+body
 	def deleteMenu (self,menuName):
 	
@@ -4418,8 +4421,8 @@ class baseLeoFrame:
 			es("exception deleting " + menuName + " menu")
 			es_exception()
 	#@-body
-	#@-node:4::deleteMenu
-	#@+node:5::deleteMenuItem
+	#@-node:5::deleteMenu
+	#@+node:6::deleteMenuItem
 	#@+body
 	# Delete itemName from the menu whose name is menuName.
 	def deleteMenuItem (self,itemName,menuName="top"):
@@ -4436,8 +4439,8 @@ class baseLeoFrame:
 			es("exception deleting " + itemName + " from " + menuName + " menu")
 			es_exception()
 	#@-body
-	#@-node:5::deleteMenuItem
-	#@+node:6::setRealMenuNamesFromTable
+	#@-node:6::deleteMenuItem
+	#@+node:7::setRealMenuNamesFromTable
 	#@+body
 	def setRealMenuNamesFromTable (self,table):
 	
@@ -4448,7 +4451,7 @@ class baseLeoFrame:
 			es_exception()
 	
 	#@-body
-	#@-node:6::setRealMenuNamesFromTable
+	#@-node:7::setRealMenuNamesFromTable
 	#@-node:6::Menu Convenience Routines
 	#@+node:7::Menu enablers (Frame)
 	#@+node:1::frame.OnMenuClick (enables and disables all menu items)

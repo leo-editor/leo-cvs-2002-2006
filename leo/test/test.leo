@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="144" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="145" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="60" left="330" height="841" width="843"/>
+	<global_window_position top="201" left="155" height="478" width="621"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -289,7 +289,8 @@
 </v>
 </v>
 </v>
-<v t="T144" a="V"><vh>Leo Unit Tests</vh></v>
+<v t="T144"><vh>Leo Unit Tests</vh></v>
+<v t="T145" a="V"><vh>wx Leo</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -1807,5 +1808,7 @@ else:
 
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
+<t tx="T145">import wxLeo
+reload(wxLeo)</t>
 </tnodes>
 </leo_file>

@@ -359,10 +359,10 @@ class baseConfig:
 	def getShortcut (self,name):
 		
 		val = self.keysDict.get(name)
-		if val == "None":
-			return None
-		else:
-			return val
+		
+		# 7/19/03: Return "None" if the setting is "None"
+		# This allows settings to disable a default shortcut.
+		return val
 	#@-body
 	#@-node:9::getShortcut
 	#@+node:10::init/Boolean/ConfigParam

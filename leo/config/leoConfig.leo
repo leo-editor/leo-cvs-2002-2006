@@ -20,17 +20,17 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="V"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="T14" a="V"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -336,8 +336,8 @@ A shortcut specification has the form:
 commandName = shortcutSpecifier
 
 where commandName is the name of the command in the menu with all non-alphabetic characters removed:
-
-The shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
+	
+If the shortcut specifier is None no shortcut is used.  Otherwise, the shortcut specifier consists of a head followed by a tail.  The head may be empty, or may be a concatenation of the following: Shift+, Alt+, Control+ or Ctrl+.
 
 Case is ignored in commandName, and in the head of the shortcutSpecifier. Case is significant in multi-character tails.  Also, - may be used instead of + in heads.  The following are all equivalent:
 	
@@ -556,9 +556,12 @@ FindPrevious = F2
 AbortEditHeadline = Shift+Esc
 EndEditHeadline = Esc
 </t>
-<t tx="T14">@ These are all comments...
+<t tx="T14"># These entries explicitly overrides whatever default exists.
 
 AboutLeo                = None
+
+@ These are all comments.  They don't override any defaults...
+
 ApplySettings           = None
 Cascade                 = None
 ContractAllChildren     = None
