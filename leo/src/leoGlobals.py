@@ -3436,25 +3436,25 @@ def executeScript (name):
 def importFromPath (name,path):
 	
 	import imp
-	
-	file = None ; module = None
-	try:
-		fn = shortFileName(name)
-		module,ext = os.path.splitext(fn)
-		path = os.path.normpath(path)
-		data = imp.find_module(module,[path])
-		if data:
-			try:
-				file,pathname,description = data
-				module = imp.load_module(module,file,pathname,description)
-			finally:
-				if not module: es_exception()
-				if file: file.close()
-	except:
-		es_exception()
-		
-	return module
 
+	try:
+		file = None ; result = None
+		try:
+			fn = shortFileName(name)
+			mod_name,ext = os.path.splitext(fn)
+			path = os.path.normpath(path)
+			data = imp.find_module(mod_name,[path]) # This can open the file.
+			if data:
+				file,pathname,description = data
+				result = imp.load_module(mod_name,file,pathname,description)
+		except:
+			es_exception()
+
+	# Bug fix: 6/12/03: Put no return statements before here!
+	finally: 
+		if file: file.close()
+
+	return result
 #@-body
 #@-node:14::importFromPath
 #@-others

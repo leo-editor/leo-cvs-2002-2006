@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="42" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="45" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="43" left="329" height="75" width="127"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Previous tests</vh>
+<v t="T1"><vh>Previous tests</vh>
 <v t="T2"><vh>Coloring Test</vh>
 <v t="T3"><vh>Colorizing Test</vh></v>
 <v t="T4"><vh>Color test without images</vh></v>
@@ -50,40 +50,44 @@
 <v t="T26"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T27"><vh>Copy/Clones test</vh>
-<v t="T28" a="C"><vh>a Å</vh>
-<v t="T29" a="C"><vh>b</vh>
-<v t="T30"><vh>c</vh></v>
-</v>
-<v t="T29" a="C"><vh>b</vh>
-<v t="T30"><vh>c</vh></v>
-</v>
-</v>
-<v t="T28" a="C"><vh>a Å</vh>
-<v t="T29" a="C"><vh>b</vh>
-<v t="T30"><vh>c</vh></v>
-</v>
-<v t="T29" a="C"><vh>b</vh>
-<v t="T30"><vh>c</vh></v>
+<v t="T27"><vh>Ignore</vh>
+<v t="T28"><vh>@lineending and @encoding tests</vh></v>
+<v t="T29"><vh>@file test.py</vh>
+<v t="T30"><vh>Outer</vh>
+<v t="T31"><vh>A2</vh></v>
+<v t="T32"><vh>B</vh></v>
 </v>
 </v>
-</v>
-<v t="T31"><vh>Ignore</vh>
-<v t="T32"><vh>@lineending and @encoding tests</vh></v>
-<v t="T33"><vh>@file test.py</vh>
-<v t="T34"><vh>Outer</vh>
-<v t="T35"><vh>A2</vh></v>
-<v t="T36"><vh>B</vh></v>
+<v t="T33"><vh>Check clones links</vh></v>
 </v>
 </v>
-<v t="T37"><vh>Check clones links</vh></v>
+<v t="T34"><vh>New import</vh></v>
+<v t="T35"><vh>timeit (in 2.3b1)</vh></v>
+<v t="T36"><vh>Use xml.sax</vh></v>
+<v t="T37"><vh>Screenshots</vh></v>
+<v t="T38"><vh>Assignment tests</vh></v>
+<v t="T39"><vh>Copy/Clones test</vh>
+<v t="T40" a="C"><vh>a Å</vh>
+<v t="T41" a="C"><vh>b</vh>
+<v t="T42"><vh>c</vh></v>
+</v>
+<v t="T41" a="C"><vh>b</vh>
+<v t="T42"><vh>c</vh></v>
 </v>
 </v>
-<v t="T38"><vh>New import</vh></v>
-<v t="T39"><vh>timeit (in 2.3b1)</vh></v>
-<v t="T40"><vh>Use xml.sax</vh></v>
-<v t="T41"><vh>Screenshots</vh></v>
-<v t="T42"><vh>Assignment tests</vh></v>
+<v t="T40" a="C"><vh>a Å</vh>
+<v t="T41" a="C"><vh>b</vh>
+<v t="T42"><vh>c</vh></v>
+</v>
+<v t="T41" a="C"><vh>b</vh>
+<v t="T42"><vh>c</vh></v>
+</v>
+</v>
+</v>
+<v t="T43" a="E"><vh>Spell checking</vh>
+<v t="T44"><vh>To see it in action</vh></v>
+<v t="T45" a="V"><vh>Spell test node</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -233,28 +237,24 @@ a
 <t tx="T24">This is section a.</t>
 <t tx="T25">&lt;&lt; section a &gt;&gt;</t>
 <t tx="T26"></t>
-<t tx="T27"></t>
-<t tx="T28"></t>
-<t tx="T29"></t>
-<t tx="T30"></t>
-<t tx="T31">@ignore</t>
-<t tx="T32">@lineending nl         (the default, Linux)
+<t tx="T27">@ignore</t>
+<t tx="T28">@lineending nl         (the default, Linux)
 @lineending cr         (Mac)
 @lineending crlf       (Windows)
 @lineending lf          (same as nl, not recommended)
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)
 
 @encoding utf-8</t>
-<t tx="T33"># Test file for cut/paste operations.
+<t tx="T29"># Test file for cut/paste operations.
 
 @others</t>
-<t tx="T34"></t>
-<t tx="T35">node A Text</t>
-<t tx="T36">node B text</t>
-<t tx="T37">from leoGlobals import *
+<t tx="T30"></t>
+<t tx="T31">node A Text</t>
+<t tx="T32">node B text</t>
+<t tx="T33">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T38"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T34"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -277,8 +277,8 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T39">import timeit</t>
-<t tx="T40">from leoGlobals import *
+<t tx="T35">import timeit</t>
+<t tx="T36">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -338,13 +338,13 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T41">import ImageGrab,os # requires PIL 1.1.3 or later
+<t tx="T37">import ImageGrab,os # requires PIL 1.1.3 or later
 
 path = os.path.join(app().loadDir,"../","test","screenshot.gif")
 
 ImageGrab.grab().save(path)
 </t>
-<t tx="T42"># The output of this is 5 5 6
+<t tx="T38"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -354,5 +354,36 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
+<t tx="T39"></t>
+<t tx="T40"></t>
+<t tx="T41"></t>
+<t tx="T42"></t>
+<t tx="T43"></t>
+<t tx="T44">@nocolor
+
+0. Enable the plug-in
+
+1. Click on the "Test node" node
+
+2. CTRL+F
+
+3. Make sure there is text in the "Find" box
+
+4. Make sure the "Search body text" is enabled
+
+5. Click find
+
+6. A dialog opens to let you choose the correct answer
+
+7. Keep pressing Find (for some reason you have to press twice after a correction)
+
+8. When you close Leo you will find lots of garbage around. My Tk code is broken!
+</t>
+<t tx="T45">@nocolor
+
+Here is some teext that kointains many speeeling mistooks. You shud be
+able to go thuu them alll and see the mistooks.
+
+Spelling mistooks are kool. </t>
 </tnodes>
 </leo_file>

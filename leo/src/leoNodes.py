@@ -1328,23 +1328,26 @@ class tnode:
 class vnode:
 	
 	#@<< vnode constants >>
-	#@+node:1::<< vnode constants >>
+	#@+node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
 	#@+body
-	# Define the meaning of vnode status bits.
+	# Define the meaning of status bits in new vnodes.
 	
 	# Archived...
-	clonedBit	 = 0x01 # true: vnode has clone mark.
+	clonedBit	  = 0x01 # true: vnode has clone mark.
 	# not used	 = 0x02
-	expandedBit  = 0x04 # true: vnode is expanded.
-	markedBit	 = 0x08 # true: vnode is marked
-	orphanBit	 = 0x10 # true: vnode saved in .leo file, not derived file.
-	selectedBit  = 0x20 # true: vnode is current vnode.
-	topBit		 = 0x40 # true: vnode was top vnode when saved.
+	expandedBit = 0x04 # true: vnode is expanded.
+	markedBit	  = 0x08 # true: vnode is marked
+	orphanBit	  = 0x10 # true: vnode saved in .leo file, not derived file.
+	selectedBit = 0x20 # true: vnode is current vnode.
+	topBit		    = 0x40 # true: vnode was top vnode when saved.
 	
-	# Not archived
-	visitedBit	 = 0x80
+	# Not archived...
+	dirtyBit    =	0x060
+	richTextBit =	0x080 # Determines whether we use <bt> or <btr> tags.
+	visitedBit	 = 0x100
+	
 	#@-body
-	#@-node:1::<< vnode constants >>
+	#@-node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
 
 
 	#@+others
@@ -3259,7 +3262,69 @@ class vnode:
 	#@-others
 #@-body
 #@-node:6::class vnode
-#@+node:7::class vxnode
+#@+node:7::class newVnode
+#@+body
+class newVnode:
+	
+	#@<< vnode constants >>
+	#@+node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
+	#@+body
+	# Define the meaning of status bits in new vnodes.
+	
+	# Archived...
+	clonedBit	  = 0x01 # true: vnode has clone mark.
+	# not used	 = 0x02
+	expandedBit = 0x04 # true: vnode is expanded.
+	markedBit	  = 0x08 # true: vnode is marked
+	orphanBit	  = 0x10 # true: vnode saved in .leo file, not derived file.
+	selectedBit = 0x20 # true: vnode is current vnode.
+	topBit		    = 0x40 # true: vnode was top vnode when saved.
+	
+	# Not archived...
+	dirtyBit    =	0x060
+	richTextBit =	0x080 # Determines whether we use <bt> or <btr> tags.
+	visitedBit	 = 0x100
+	
+	#@-body
+	#@-node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
+
+
+	#@+others
+	#@+node:2::newv.__init__
+	#@+body
+	def __init__ (self,commands):
+	
+		self.commands = commands # The commander for this vnode.
+	
+		# Structure links
+		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
+	
+		# Links between nodes in the same bag.
+		self.link = None # The link to the target node.
+		self.links = None # List of all link nodes having this node as a target.
+		self.t = self # A dummy link for compatibility with old code.
+	
+		# Content.
+		self.headString = "" # Headline text.
+		self.bodyString = "" # Body text.
+		self.statusBits = 0 # Status bits.
+	
+		# State information for the body pane
+		self.selectionStart = 0 # The start of the selected body text.
+		self.selectionLength = 0 # The length of the selected body text.
+		self.insertSpot = None # Location of previous insert point.
+		self.scrollBarSpot = None # Previous value of scrollbar position.
+	
+		# File stuff.
+		self.gnx = None # Immutable global node index.
+		self.fileIndex = None # An immutable file index: must always exist, even in 4.0.
+	
+	#@-body
+	#@-node:2::newv.__init__
+	#@-others
+#@-body
+#@-node:7::class newVnode
+#@+node:8::class vxnode
 #@+body
 class vxnode:
 	
@@ -3295,7 +3360,7 @@ class vxnode:
 
 
 #@-body
-#@-node:7::class vxnode
+#@-node:8::class vxnode
 #@-others
 #@-body
 #@-node:0::@file leoNodes.py

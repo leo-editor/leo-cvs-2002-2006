@@ -176,7 +176,300 @@ class atFile:
 	
 	#@-body
 	#@-node:2::atFile.__init__& initIvars
-	#@+node:3::Reading
+	#@+node:3::Top level
+	#@+node:1::atFile.readAll
+	#@+body
+	#@+at
+	#  This method scans all vnodes, calling read for every @file node found.  
+	# v should point to the root of the entire tree on entry.
+	# 
+	# Bug fix: 9/19/01 This routine clears all orphan status bits, so we must 
+	# set the dirty bit of orphan @file nodes to force the writing of those 
+	# nodes on saves.  If we didn't do this, a _second_ save of the .leo file 
+	# would effectively wipe out bad @file nodes!
+	# 
+	# 10/19/01: With the "new" Leo2 there are no such problems, and setting 
+	# the dirty bit here is still correct.
+
+	#@-at
+	#@@c
+
+	def readAll(self,root,partialFlag=false):
+	
+		c = self.commands
+		c.endEditing() # Capture the current headline.
+		anyRead = false
+		self.initIvars()
+		v = root
+		if partialFlag: after = v.nodeAfterTree()
+		else: after = None
+		while v and v != after:
+			if v.isAtIgnoreNode():
+				v = v.nodeAfterTree()
+			elif v.isAtFileNode() or v.isAtRawFileNode():
+				anyRead = true
+				if partialFlag:
+					# We are forcing the read.
+					self.read(v)
+				else:
+					# if v is an orphan, we don't expect to see a derived file,
+					# and we shall read a derived file if it exists.
+					wasOrphan = v.isOrphan()
+					ok = self.read(v)
+					if wasOrphan and not ok:
+						# Remind the user to fix the problem.
+						v.setDirty()
+						c.setChanged(true)
+				v = v.nodeAfterTree()
+			else: v = v.threadNext()
+		# Clear all orphan bits.
+		v = root
+		while v:
+			v.clearOrphan()
+			v = v.threadNext()
+			
+		if partialFlag and not anyRead:
+			es("no @file nodes in the selected tree")
+	#@-body
+	#@-node:1::atFile.readAll
+	#@+node:2::atFile.read
+	#@+body
+	#@+at
+	#  This is the entry point to the read code.  The root vnode should be an 
+	# @file node.  If doErrorRecoveryFlag is false we are doing an update.  In 
+	# that case it would be very unwise to do any error recovery which might 
+	# clear clone links.  If doErrorRecoveryFlag is true and there are 
+	# structure errors during the first pass we delete root's children and its 
+	# body text, then rescan.  All other errors indicate potentially serious 
+	# problems with sentinels.
+	# 
+	# The caller has enclosed this code in beginUpdate/endUpdate.
+
+	#@-at
+	#@@c
+	def read(self,root):
+	
+		c = self.commands
+		
+		#@<< set self.targetFileName >>
+		#@+node:5::<< set self.targetFileName >>
+		#@+body
+		if root.isAtFileNode():
+			self.targetFileName = root.atFileNodeName()
+		else:
+			self.targetFileName = root.atRawFileNodeName()
+		#@-body
+		#@-node:5::<< set self.targetFileName >>
+
+		self.root = root ; self.raw = false
+		self.errors = self.structureErrors = 0
+		
+		#@<< open file >>
+		#@+node:1::<< open file >>
+		#@+body
+		self.scanAllDirectives(root) # 1/30/02
+		
+		if not self.targetFileName or len(self.targetFileName) == 0:
+			self.readError("Missing file name.  Restoring @file tree from .leo file.")
+		else:
+			if self.using_gnx: # Testing.
+				self.targetFileName += ".txt"
+		
+			# print self.default_directory, self.targetFileName
+			fn = os.path.join(self.default_directory, self.targetFileName)
+			fn = os.path.normpath(fn)
+			fn = toUnicode(fn,"ascii")
+			
+			try:
+				file = open(fn,'r')
+				if file:
+					
+					#@<< warn on read-only file >>
+					#@+node:1::<< warn on read-only file >>
+					#@+body
+					try:
+						read_only = not os.access(fn,os.W_OK)
+						if read_only:
+							es("read only: " + fn,color="red")
+					except:
+						pass # os.access() may not exist on all platforms.
+					
+					#@-body
+					#@-node:1::<< warn on read-only file >>
+
+			except:
+				self.readError("Can not open: " + '"@file ' + fn + '"')
+		#@-body
+		#@-node:1::<< open file >>
+
+		if self.errors > 0: return 0
+		es("reading: " + root.headString())
+		
+		#@<< Scan the file buffer >>
+		#@+node:2::<< Scan the file buffer  >>
+		#@+body
+		firstLines = self.scanHeader(file) # sets self.using_gnx used by scanText.
+		self.indent = 0
+		self.root_seen = false
+		out = []
+		
+		if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
+			print "reading 4.0 file:", self.targetFileName
+			
+			#@<< quickly unlink and delete all children of root >>
+			#@+node:1::<< quickly unlink and delete all children of root >>
+			#@+body
+			#@+at
+			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
+			# calls c.initAllCloneBits.
+
+			#@-at
+			#@@c
+
+			child = root.firstChild()
+			while child:
+				next = child.next()
+				# The guts of doDelete
+				child.destroyDependents()
+				child.unjoinTree()
+				child.unlink()
+				child = next
+			c.selectVnode(root)
+			#@-body
+			#@-node:1::<< quickly unlink and delete all children of root >>
+
+			
+		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
+		lastLines = self.scanText(file,root,out,atFile.endLeo)
+		
+		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
+		# out no longer holds body text of node.
+		if root.t.hasBody:
+			bodyLines = root.t.bodyString.split('\n')
+			self.completeFirstDirectives(bodyLines,firstLines)
+			self.completeLastDirectives(bodyLines,lastLines)
+			bodyText = '\n'.join(bodyLines)
+			bodyText = bodyText.replace('\r', '')
+			root.t.setTnodeText(bodyText)
+		#@-body
+		#@-node:2::<< Scan the file buffer  >>
+
+		if not self.using_gnx:
+			
+			#@<< Bump mStructureErrors if any vnodes are unvisited >>
+			#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+			#@+body
+			#@+at
+			#  createNthNode marks all nodes in the derived file as visited.  
+			# Any unvisited nodes are either dummies or nodes that don't exist 
+			# in the derived file.
+
+			#@-at
+			#@@c
+
+			next = root.nodeAfterTree()
+			v = root.threadNext()
+			while v and v != next:
+				if not v.isVisited():
+					if 0: # CVS produces to many errors for this to be useful.
+						es("unvisited node: " + v.headString())
+					self.structureErrors += 1
+				v = v.threadNext()
+			
+			#@-body
+			#@-node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+
+		if self.structureErrors > 0 and not self.using_gnx:
+			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
+			self.errors = 0
+			
+			#@<< quickly delete root's tree and body text >>
+			#@+node:4::<< quickly delete root's tree and body text >>
+			#@+body
+			#@+at
+			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
+			# calls c.initAllCloneBits.
+
+			#@-at
+			#@@c
+
+			child = root.firstChild()
+			while child:
+				next = child.next()
+				# The guts of doDelete
+				child.destroyDependents()
+				child.unjoinTree()
+				child.unlink()
+				child = next
+			c.selectVnode(root)
+			
+			root.setBodyStringOrPane("")
+			#@-body
+			#@-node:4::<< quickly delete root's tree and body text >>
+
+			file.seek(0)
+			
+			#@<< Scan the file buffer >>
+			#@+node:2::<< Scan the file buffer  >>
+			#@+body
+			firstLines = self.scanHeader(file) # sets self.using_gnx used by scanText.
+			self.indent = 0
+			self.root_seen = false
+			out = []
+			
+			if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
+				print "reading 4.0 file:", self.targetFileName
+				
+				#@<< quickly unlink and delete all children of root >>
+				#@+node:1::<< quickly unlink and delete all children of root >>
+				#@+body
+				#@+at
+				#  Calling v.doDelete is _way_ too slow here because it 
+				# repeatedly calls c.initAllCloneBits.
+
+				#@-at
+				#@@c
+
+				child = root.firstChild()
+				while child:
+					next = child.next()
+					# The guts of doDelete
+					child.destroyDependents()
+					child.unjoinTree()
+					child.unlink()
+					child = next
+				c.selectVnode(root)
+				#@-body
+				#@-node:1::<< quickly unlink and delete all children of root >>
+
+				
+			root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
+			lastLines = self.scanText(file,root,out,atFile.endLeo)
+			
+			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
+			# out no longer holds body text of node.
+			if root.t.hasBody:
+				bodyLines = root.t.bodyString.split('\n')
+				self.completeFirstDirectives(bodyLines,firstLines)
+				self.completeLastDirectives(bodyLines,lastLines)
+				bodyText = '\n'.join(bodyLines)
+				bodyText = bodyText.replace('\r', '')
+				root.t.setTnodeText(bodyText)
+			#@-body
+			#@-node:2::<< Scan the file buffer  >>
+
+		file.close()
+		if self.errors > 0:
+			# A serious error has occured that has not been corrected.
+			self.readError("----- File may have damaged sentinels!")
+			root.unjoinTree();
+		else: root.clearDirty()
+		return self.errors == 0
+	
+	#@-body
+	#@-node:2::atFile.read
+	#@-node:3::Top level
+	#@+node:4::Reading
 	#@+node:1::completeFirstDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
@@ -867,8 +1160,9 @@ class atFile:
 				oldIndent = self.indent ; self.indent = lineIndent
 				self.scanText(file,child,child_out,atFile.endBody)
 				
-				if child.isOrphan():
-					self.readError("Replacing body text of orphan: " + child.headString())
+				if 0:
+					if child.isOrphan():
+						self.readError("Replacing body text of orphan: " + child.headString())
 				
 				# Set the body, removing cursed newlines.
 				# Note:  This code must be done here, not in the @+node logic.
@@ -1353,300 +1647,8 @@ class atFile:
 		return lastLines # We get here only if there are problems.
 	#@-body
 	#@-node:10::scanText
-	#@+node:11::Top level
-	#@+node:1::atFile.readAll
-	#@+body
-	#@+at
-	#  This method scans all vnodes, calling read for every @file node found.  
-	# v should point to the root of the entire tree on entry.
-	# 
-	# Bug fix: 9/19/01 This routine clears all orphan status bits, so we must 
-	# set the dirty bit of orphan @file nodes to force the writing of those 
-	# nodes on saves.  If we didn't do this, a _second_ save of the .leo file 
-	# would effectively wipe out bad @file nodes!
-	# 
-	# 10/19/01: With the "new" Leo2 there are no such problems, and setting 
-	# the dirty bit here is still correct.
-
-	#@-at
-	#@@c
-
-	def readAll(self,root,partialFlag=false):
-	
-		c = self.commands
-		c.endEditing() # Capture the current headline.
-		anyRead = false
-		self.initIvars()
-		v = root
-		if partialFlag: after = v.nodeAfterTree()
-		else: after = None
-		while v and v != after:
-			if v.isAtIgnoreNode():
-				v = v.nodeAfterTree()
-			elif v.isAtFileNode() or v.isAtRawFileNode():
-				anyRead = true
-				if partialFlag:
-					# We are forcing the read.
-					self.read(v)
-				else:
-					# if v is an orphan, we don't expect to see a derived file,
-					# and we shall read a derived file if it exists.
-					wasOrphan = v.isOrphan()
-					ok = self.read(v)
-					if wasOrphan and not ok:
-						# Remind the user to fix the problem.
-						v.setDirty()
-						c.setChanged(true)
-				v = v.nodeAfterTree()
-			else: v = v.threadNext()
-		# Clear all orphan bits.
-		v = root
-		while v:
-			v.clearOrphan()
-			v = v.threadNext()
-			
-		if partialFlag and not anyRead:
-			es("no @file nodes in the selected tree")
-	#@-body
-	#@-node:1::atFile.readAll
-	#@+node:2::atFile.read
-	#@+body
-	#@+at
-	#  This is the entry point to the read code.  The root vnode should be an 
-	# @file node.  If doErrorRecoveryFlag is false we are doing an update.  In 
-	# that case it would be very unwise to do any error recovery which might 
-	# clear clone links.  If doErrorRecoveryFlag is true and there are 
-	# structure errors during the first pass we delete root's children and its 
-	# body text, then rescan.  All other errors indicate potentially serious 
-	# problems with sentinels.
-	# 
-	# The caller has enclosed this code in beginUpdate/endUpdate.
-
-	#@-at
-	#@@c
-	def read(self,root):
-	
-		c = self.commands
-		
-		#@<< set self.targetFileName >>
-		#@+node:5::<< set self.targetFileName >>
-		#@+body
-		if root.isAtFileNode():
-			self.targetFileName = root.atFileNodeName()
-		else:
-			self.targetFileName = root.atRawFileNodeName()
-		#@-body
-		#@-node:5::<< set self.targetFileName >>
-
-		self.root = root ; self.raw = false
-		self.errors = self.structureErrors = 0
-		
-		#@<< open file >>
-		#@+node:1::<< open file >>
-		#@+body
-		self.scanAllDirectives(root) # 1/30/02
-		
-		if not self.targetFileName or len(self.targetFileName) == 0:
-			self.readError("Missing file name.  Restoring @file tree from .leo file.")
-		else:
-			if self.using_gnx: # Testing.
-				self.targetFileName += ".txt"
-		
-			# print self.default_directory, self.targetFileName
-			fn = os.path.join(self.default_directory, self.targetFileName)
-			fn = os.path.normpath(fn)
-			fn = toUnicode(fn,"ascii")
-			
-			try:
-				file = open(fn,'r')
-				if file:
-					
-					#@<< warn on read-only file >>
-					#@+node:1::<< warn on read-only file >>
-					#@+body
-					try:
-						read_only = not os.access(fn,os.W_OK)
-						if read_only:
-							es("read only: " + fn,color="red")
-					except:
-						pass # os.access() may not exist on all platforms.
-					
-					#@-body
-					#@-node:1::<< warn on read-only file >>
-
-			except:
-				self.readError("Can not open: " + '"@file ' + fn + '"')
-		#@-body
-		#@-node:1::<< open file >>
-
-		if self.errors > 0: return 0
-		es("reading: " + root.headString())
-		
-		#@<< Scan the file buffer >>
-		#@+node:2::<< Scan the file buffer  >>
-		#@+body
-		firstLines = self.scanHeader(file) # sets self.using_gnx used by scanText.
-		self.indent = 0
-		self.root_seen = false
-		out = []
-		
-		if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
-			print "reading 4.0 file:", self.targetFileName
-			
-			#@<< quickly unlink and delete all children of root >>
-			#@+node:1::<< quickly unlink and delete all children of root >>
-			#@+body
-			#@+at
-			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
-			# calls c.initAllCloneBits.
-
-			#@-at
-			#@@c
-
-			child = root.firstChild()
-			while child:
-				next = child.next()
-				# The guts of doDelete
-				child.destroyDependents()
-				child.unjoinTree()
-				child.unlink()
-				child = next
-			c.selectVnode(root)
-			#@-body
-			#@-node:1::<< quickly unlink and delete all children of root >>
-
-			
-		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
-		lastLines = self.scanText(file,root,out,atFile.endLeo)
-		
-		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
-		# out no longer holds body text of node.
-		if root.t.hasBody:
-			bodyLines = root.t.bodyString.split('\n')
-			self.completeFirstDirectives(bodyLines,firstLines)
-			self.completeLastDirectives(bodyLines,lastLines)
-			bodyText = '\n'.join(bodyLines)
-			bodyText = bodyText.replace('\r', '')
-			root.t.setTnodeText(bodyText)
-		#@-body
-		#@-node:2::<< Scan the file buffer  >>
-
-		if not self.using_gnx:
-			
-			#@<< Bump mStructureErrors if any vnodes are unvisited >>
-			#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
-			#@+body
-			#@+at
-			#  createNthNode marks all nodes in the derived file as visited.  
-			# Any unvisited nodes are either dummies or nodes that don't exist 
-			# in the derived file.
-
-			#@-at
-			#@@c
-
-			next = root.nodeAfterTree()
-			v = root.threadNext()
-			while v and v != next:
-				if not v.isVisited():
-					if 0: # CVS produces to many errors for this to be useful.
-						es("unvisited node: " + v.headString())
-					self.structureErrors += 1
-				v = v.threadNext()
-			
-			#@-body
-			#@-node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
-
-		if self.structureErrors > 0 and not self.using_gnx:
-			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
-			self.errors = 0
-			
-			#@<< quickly delete root's tree and body text >>
-			#@+node:4::<< quickly delete root's tree and body text >>
-			#@+body
-			#@+at
-			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
-			# calls c.initAllCloneBits.
-
-			#@-at
-			#@@c
-
-			child = root.firstChild()
-			while child:
-				next = child.next()
-				# The guts of doDelete
-				child.destroyDependents()
-				child.unjoinTree()
-				child.unlink()
-				child = next
-			c.selectVnode(root)
-			
-			root.setBodyStringOrPane("")
-			#@-body
-			#@-node:4::<< quickly delete root's tree and body text >>
-
-			file.seek(0)
-			
-			#@<< Scan the file buffer >>
-			#@+node:2::<< Scan the file buffer  >>
-			#@+body
-			firstLines = self.scanHeader(file) # sets self.using_gnx used by scanText.
-			self.indent = 0
-			self.root_seen = false
-			out = []
-			
-			if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
-				print "reading 4.0 file:", self.targetFileName
-				
-				#@<< quickly unlink and delete all children of root >>
-				#@+node:1::<< quickly unlink and delete all children of root >>
-				#@+body
-				#@+at
-				#  Calling v.doDelete is _way_ too slow here because it 
-				# repeatedly calls c.initAllCloneBits.
-
-				#@-at
-				#@@c
-
-				child = root.firstChild()
-				while child:
-					next = child.next()
-					# The guts of doDelete
-					child.destroyDependents()
-					child.unjoinTree()
-					child.unlink()
-					child = next
-				c.selectVnode(root)
-				#@-body
-				#@-node:1::<< quickly unlink and delete all children of root >>
-
-				
-			root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
-			lastLines = self.scanText(file,root,out,atFile.endLeo)
-			
-			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
-			# out no longer holds body text of node.
-			if root.t.hasBody:
-				bodyLines = root.t.bodyString.split('\n')
-				self.completeFirstDirectives(bodyLines,firstLines)
-				self.completeLastDirectives(bodyLines,lastLines)
-				bodyText = '\n'.join(bodyLines)
-				bodyText = bodyText.replace('\r', '')
-				root.t.setTnodeText(bodyText)
-			#@-body
-			#@-node:2::<< Scan the file buffer  >>
-
-		file.close()
-		if self.errors > 0:
-			# A serious error has occured that has not been corrected.
-			self.readError("----- File may have damaged sentinels!")
-			root.unjoinTree();
-		else: root.clearDirty()
-		return self.errors == 0
-	#@-body
-	#@-node:2::atFile.read
-	#@-node:11::Top level
-	#@-node:3::Reading
-	#@+node:4::Sentinels
+	#@-node:4::Reading
+	#@+node:5::Sentinels
 	#@+node:1::nodeSentinelText
 	#@+body
 	# 4/5/03: config.write_clone_indices no longer used.
@@ -1953,8 +1955,8 @@ class atFile:
 	
 	#@-body
 	#@-node:11::skipSentinelStart
-	#@-node:4::Sentinels
-	#@+node:5::Testing
+	#@-node:5::Sentinels
+	#@+node:6::Testing
 	#@+node:1::scanAll
 	#@+body
 	def scanAll (self):
@@ -2012,8 +2014,8 @@ class atFile:
 	
 	#@-body
 	#@-node:2::scanFile
-	#@-node:5::Testing
-	#@+node:6::Utilites
+	#@-node:6::Testing
+	#@+node:7::Utilites
 	#@+node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+body
 	#@+at
@@ -2366,13 +2368,14 @@ class atFile:
 	
 		if self.errors == 0:
 			es_error("errors writing: " + self.targetFileName)
+	
 		self.error(message)
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body
 	#@-node:6::writeError
-	#@-node:6::Utilites
-	#@+node:7::Writing
+	#@-node:7::Utilites
+	#@+node:8::Writing
 	#@+node:1::Top level
 	#@+node:1::atFile.rawWrite
 	#@+body
@@ -2865,7 +2868,7 @@ class atFile:
 					#@+node:2::<< create self.outputFile >>
 					#@+body
 					try:
-						self.outputFileName = self.targetFileName + ".tmp"
+						self.outputFileName = self.targetFileName + ".leotmp"
 						self.outputFile = open(self.outputFileName,'wb')
 						if self.outputFile == None:
 							self.writeError("can not open " + self.outputFileName)
@@ -3059,14 +3062,25 @@ class atFile:
 				
 				try: # Replace target file with temp file.
 					os.remove(self.targetFileName)
-					utils_rename(self.outputFileName,self.targetFileName)
-					if mode: # 10/3/02: retain the access mode of the previous file.
-						os.chmod(self.targetFileName,mode)
-					es("writing: " + self.shortFileName)
+					try:
+						utils_rename(self.outputFileName,self.targetFileName)
+						if mode != None: # 10/3/02: retain the access mode of the previous file.
+							try:
+								os.chmod(self.targetFileName,mode)
+							except:
+								es("exception in os.chmod(%s)" % (self.targetFileName))
+						es("writing: " + self.shortFileName)
+					except:
+						self.writeError("exception renaming: %s to: " % (self.outputFileName,self.targetFileName))
+						es_exception()
 				except:
-					self.writeError("exception removing and renaming:" + self.outputFileName +
-						" to " + self.targetFileName)
+					self.writeError("exception removing:" + self.targetFileName)
 					es_exception()
+					try: # Delete the temp file when the deleting the target file fails.
+						os.remove(self.outputFileName)
+					except:
+						es("exception deleting:" + self.outputFileName)
+						es_exception()
 				#@-body
 				#@-node:2::<< replace the target file with the output file >>
 
@@ -3758,7 +3772,7 @@ class atFile:
 	#@-body
 	#@-node:4::putIndent
 	#@-node:6::Utils
-	#@-node:7::Writing
+	#@-node:8::Writing
 	#@-others
 
 

@@ -158,7 +158,7 @@ class leoTree:
 		self.popupMenu = None
 		
 		# Incremental redraws:
-		self.allocateOnlyVisibleNodes = true # true: enable incremental redraws.
+		self.allocateOnlyVisibleNodes = false # true: enable incremental redraws.
 		self.trace = false # true enabling of various traces.
 		self.prevMoveToFrac = None
 		self.visibleArea = None

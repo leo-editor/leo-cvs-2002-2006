@@ -153,7 +153,7 @@ class Commands:
 	
 		c = self
 		c.endEditing()
-		# c.fileCommands.assignFileIndices() # Now done after copying the tree.
+		c.fileCommands.assignFileIndices() # Revert to 3.11.1 code.
 		s = c.fileCommands.putLeoOutline()
 		# trace(`s`)
 		app().root.clipboard_clear()
