@@ -5818,14 +5818,15 @@ def clearVisitedInTree (self):
 	for p in self.self_and_subtree_iter():
 		p.clearVisited()
 #@-node:ekr.20040306220634.17:p.clearVisitedInTree
-#@+node:ekr.20031218072017.3388:clearAllVisitedInTree TO POSITION
+#@+node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
 def clearAllVisitedInTree (self):
 	
 	for p in self.self_and_subtree_iter():
 		p.v.clearVisited()
 		p.v.t.clearVisited()
+		p.v.t.clearWriteBit()
 #@nonl
-#@-node:ekr.20031218072017.3388:clearAllVisitedInTree TO POSITION
+#@-node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
 #@-node:ekr.20040312015908:Visited bits
 #@+node:ekr.20040305162628:p.Dirty bits
 #@+node:ekr.20040311113514:p.clearDirty
@@ -10091,7 +10092,7 @@ for index in keys:
 	t = tnodes.get(index)
 	assert(t)
 	# Write only those tnodes whose vnodes were written.
-	if t.isVisited():
+	if t.isWriteBit(): # 5/3/04
 		self.putTnode(t)
 #@nonl
 #@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
@@ -10102,6 +10103,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -10112,7 +10114,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -10136,7 +10138,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -14479,7 +14482,7 @@ for index in keys:
 	t = tnodes.get(index)
 	assert(t)
 	# Write only those tnodes whose vnodes were written.
-	if t.isVisited():
+	if t.isWriteBit(): # 5/3/04
 		self.putTnode(t)
 #@nonl
 #@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
@@ -16369,6 +16372,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -16379,7 +16383,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -16403,7 +16407,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -19633,6 +19638,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -19643,7 +19649,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -19667,7 +19673,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -20105,7 +20112,7 @@ def clearAllVisited (self):
 	for p in c.allNodes_iter():
 		p.v.clearVisited()
 		p.v.t.clearVisited()
-#@nonl
+		p.v.t.clearWriteBit()
 #@-node:ekr.20031218072017.2985:c.clearAllVisited
 #@+node:ekr.20031218072017.3401:t.setVisited
 # Compatibility routine for scripts
@@ -20378,6 +20385,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -20388,7 +20396,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -20412,7 +20420,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -21815,6 +21824,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -21825,7 +21835,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -21849,7 +21859,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -26499,6 +26510,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -26509,7 +26521,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -26533,7 +26545,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -28618,6 +28631,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -28628,7 +28642,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -28652,7 +28666,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -28737,7 +28752,7 @@ for index in keys:
 	t = tnodes.get(index)
 	assert(t)
 	# Write only those tnodes whose vnodes were written.
-	if t.isVisited():
+	if t.isWriteBit(): # 5/3/04
 		self.putTnode(t)
 #@nonl
 #@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
@@ -30738,8 +30753,12 @@ def putBody(self,p,putCloseSentinel=true):
 	""" Generate the body enclosed in sentinel lines."""
 
 	at = self ; s = p.bodyString()
-	p.v.setVisited() # Mark the vnode.
-	p.v.t.setVisited() # Use the tnode for the orphans check.
+	
+	p.v.t.setVisited() # Suppress orphans check.
+	p.v.setVisited() # Make sure v is never expanded again.
+	if not at.thinFile:
+		p.v.t.setWriteBit() # Mark the tnode to be written.
+		
 	if not at.thinFile and not s: return
 	inCode = true
 	<< Make sure all lines end in a newline >>
@@ -30910,7 +30929,7 @@ def putAtAllBody(self,p,putCloseSentinel=true):
 	""" Generate the body enclosed in sentinel lines."""
 
 	at = self ; s = p.bodyString()
-	p.v.setVisited() # Mark the vnode.
+	p.v.setVisited() # Make sure v is never expanded again.
 	p.v.t.setVisited() # Use the tnode for the orphans check.
 	if not at.thinFile and not s: return
 	inCode = true
@@ -30978,8 +30997,6 @@ def putAtAllChild(self,p):
 	
 	at = self
 
-	p.v.t.setVisited() # Suppress orphan warning.
-	
 	at.putOpenNodeSentinel(p,inAtAll=true) # Suppress warnings about @file nodes.
 	at.putAtAllBody(p) 
 	
@@ -31024,8 +31041,6 @@ def inAtOthers(self,p):
 def putAtOthersChild(self,p):
 	
 	at = self
-
-	p.v.setVisited() # Make sure p is never expanded again.
 
 	at.putOpenNodeSentinel(p)
 	at.putBody(p) 
@@ -31486,6 +31501,298 @@ self.active = true
 #@-node:ekr.20031218072017.2337:OnActivate
 #@-node:EKR.20040503072338.1:Event handlers
 #@-node:EKR.20040427074150:(Fixed problems with sboutline only option)
+#@+node:EKR.20040503090928.1:(Don't write top-level body text in @file-thin nodes)
+#@+node:EKR.20040503093407.1:Notes
+#@@nocolor
+
+Ooops.  p.v.t.visitedBit was used for two purposes:
+
+- To mark the nodes to be written.
+- To mark nodes that are not orphan.
+
+What I did:
+
+- Added t.is/set/clearWriteBit.
+- Call t.setWriteBit in putVnode unless we are in a thin node.
+- putTnodes tests for t.writeBit rather than t.visitedBit.
+#@nonl
+#@-node:EKR.20040503093407.1:Notes
+#@+node:ekr.20031218072017.2128:putBody (4.x)
+def putBody(self,p,putCloseSentinel=true):
+	
+	""" Generate the body enclosed in sentinel lines."""
+
+	at = self ; s = p.bodyString()
+	
+	p.v.t.setVisited() # Suppress orphans check.
+	p.v.setVisited() # Make sure v is never expanded again.
+	if not at.thinFile:
+		p.v.t.setWriteBit() # Mark the tnode to be written.
+		
+	if not at.thinFile and not s: return
+	inCode = true
+	<< Make sure all lines end in a newline >>
+	i = 0
+	while i < len(s):
+		next_i = g.skip_line(s,i)
+		assert(next_i > i)
+		kind = at.directiveKind(s,i)
+		<< handle line at s[i] >>
+		i = next_i
+	if not inCode:
+		at.putEndDocLine()
+	if at.sentinels and not trailingNewlineFlag:
+		at.putSentinel("@nonl")
+#@nonl
+#@+node:EKR.20040429084140:<< Make sure all lines end in a newline >>
+# 11/20/03: except in nosentinel mode.
+# 1/30/04: and especially in scripting mode.
+# If we add a trailing newline, we'll generate an @nonl sentinel below.
+
+if s:
+	trailingNewlineFlag = s and s[-1] == '\n'
+	if (at.sentinels or at.scripting) and not trailingNewlineFlag:
+		s = s + '\n'
+else:
+	trailingNewlineFlag = true # don't need to generate an @nonl
+#@nonl
+#@-node:EKR.20040429084140:<< Make sure all lines end in a newline >>
+#@+node:ekr.20031218072017.2129:<< handle line at s[i]  >> (4.x)
+if kind == noDirective:
+	if inCode:
+		hasRef,n1,n2 = at.findSectionName(s,i)
+		if hasRef and not at.raw:
+			at.putRefLine(s,i,n1,n2,p)
+		else:
+			at.putCodeLine(s,i)
+	else:
+		at.putDocLine(s,i)
+elif kind in (docDirective,atDirective):
+	assert(not at.pending)
+	at.putStartDocLine(s,i,kind)
+	inCode = false
+elif kind in (cDirective,codeDirective):
+	# Only @c and @code end a doc part.
+	if not inCode:
+		at.putEndDocLine() 
+	at.putDirective(s,i)
+	inCode = true
+elif kind == allDirective:
+	if inCode: at.putAtAllLine(s,i,p)
+	else: at.putDocLine(s,i)
+elif kind == othersDirective:
+	if inCode: at.putAtOthersLine(s,i,p)
+	else: at.putDocLine(s,i) # 12/7/03
+elif kind == rawDirective:
+	at.raw = true
+	at.putSentinel("@@raw")
+elif kind == endRawDirective:
+	at.raw = false
+	at.putSentinel("@@end_raw")
+	i = g.skip_line(s,i)
+elif kind == miscDirective:
+	at.putDirective(s,i)
+else:
+	assert(0) # Unknown directive.
+#@nonl
+#@-node:ekr.20031218072017.2129:<< handle line at s[i]  >> (4.x)
+#@-node:ekr.20031218072017.2128:putBody (4.x)
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+	"""Write a <v> element corresponding to a vnode."""
+
+	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
+
+	fc.put("<v")
+	<< Put tnode index >>
+	<< Put attribute bits >>
+	<< Put tnodeList and unKnownAttributes >>
+	fc.put(">")
+	<< Write the head text >>
+
+	# New in 4.2: don't write child nodes of @file-thin trees.
+	if p.hasChildren():
+		if isThin and not p.isOrphan():
+			# g.trace("skipping child vnodes for", p.headString())
+			pass
+		else:
+			fc.put_nl()
+			# This optimization eliminates all "recursive" copies.
+			p.moveToFirstChild()
+			while 1:
+				fc.putVnode(p)
+				if p.hasNext(): p.moveToNext()
+				else:           break
+			p.moveToParent()
+
+	fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+	if g.app.use_gnx:
+		gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+		fc.put(" t=") ; fc.put_in_dquotes(gnx)
+	else:
+		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+		
+	# g.trace(v.t)
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+	g.trace(v.t.fileIndex,v)
+	g.es("error writing file(bad v.t.fileIndex)!")
+	g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded():          attr += "E"
+if p.v.isMarked():            attr += "M"
+if p.v.isOrphan():            attr += "O"
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+	# Almost 30% of the entire writing time came from here!!!
+	if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+	if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+	fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+	<< put unknown vnode attributes >>
+#@nonl
+#@+node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
+attrDict = v.unknownAttributes
+keys = attrDict.keys()
+for key in keys:
+	val = attrDict[key]
+	attr = ' %s="%s"' % (key,self.xmlEscape(val))
+	self.put(attr)
+	if 0: # For debugging.
+		s = "putting unknown attribute for " + v.headString()
+		print s ;  g.es(s, color="red")
+		print attr, g.es(attr)
+#@nonl
+#@-node:ekr.20031218072017.1867:<< put unknown vnode attributes >>
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+	fc.put("<vh>")
+	fc.putEscapedString(headString)
+	fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@+node:ekr.20031218072017.1575:putTnodes
+def putTnodes (self):
+	
+	"""Puts all tnodes as required for copy or save commands"""
+
+	c = self.c
+
+	self.put("<tnodes>") ; self.put_nl()
+	<< write only those tnodes that were referenced >>
+	self.put("</tnodes>") ; self.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
+# Populate tnodes
+tnodes = {}
+
+if self.usingClipboard: # write the current tree.
+	root = c.currentPosition()
+else: # write everything
+	root = c.rootPosition()
+
+for p in c.allNodes_iter():
+	index = p.v.t.fileIndex
+	assert(index)
+	tnodes[index] = p.v.t
+
+# Put all tnodes in index order.
+keys = tnodes.keys() ; keys.sort()
+for index in keys:
+	# g.trace(index)
+	t = tnodes.get(index)
+	assert(t)
+	# Write only those tnodes whose vnodes were written.
+	if t.isWriteBit(): # 5/3/04
+		self.putTnode(t)
+#@nonl
+#@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
+#@-node:ekr.20031218072017.1575:putTnodes
+#@+node:ekr.20040128174042:atFile.warnAboutOrpanAndIgnoredNodes
+def warnAboutOrphandAndIgnoredNodes (self):
+	
+	# Always warn, even when language=="cweb"
+	at = self ; root = at.root
+
+	for p in root.self_and_subtree_iter():
+		if not p.v.t.isVisited(): # Check tnode bit, not vnode bit.
+			at.writeError("Orphan node:  " + p.headString())
+			if p.isCloned() and p.hasParent():
+				g.es("parent node: " + p.parent().headString(),color="blue")
+			if not at.thinFile and p.isAtIgnoreNode():
+				at.writeError("@ignore node: " + p.headString())
+				
+	if at.thinFile:
+		p = root.copy() ; after = p.nodeAfterTree()
+		while p and p != after:
+			if p.isAtAllNode():
+				p.moveToNodeAfterTree()
+			else:
+				if p.isAtIgnoreNode():
+					at.writeError("@ignore node: " + p.headString())
+				p.moveToThreadNext()
+#@nonl
+#@-node:ekr.20040128174042:atFile.warnAboutOrpanAndIgnoredNodes
+#@+node:ekr.20031218072017.2985:c.clearAllVisited
+def clearAllVisited (self):
+
+	c = self
+
+	for p in c.allNodes_iter():
+		p.v.clearVisited()
+		p.v.t.clearVisited()
+		p.v.t.clearWriteBit()
+#@-node:ekr.20031218072017.2985:c.clearAllVisited
+#@+node:ekr.20040312015908:Visited bits
+#@+node:ekr.20040312015705:p.clearAllVisited
+# Compatibility routine for scripts.
+
+def clearAllVisited (self):
+	
+	for p in self.allNodes_iter():
+		p.clearVisited()
+#@nonl
+#@-node:ekr.20040312015705:p.clearAllVisited
+#@+node:ekr.20040306220634.17:p.clearVisitedInTree
+# Compatibility routine for scripts.
+
+def clearVisitedInTree (self):
+	
+	for p in self.self_and_subtree_iter():
+		p.clearVisited()
+#@-node:ekr.20040306220634.17:p.clearVisitedInTree
+#@+node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
+def clearAllVisitedInTree (self):
+	
+	for p in self.self_and_subtree_iter():
+		p.v.clearVisited()
+		p.v.t.clearVisited()
+		p.v.t.clearWriteBit()
+#@nonl
+#@-node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
+#@-node:ekr.20040312015908:Visited bits
+#@-node:EKR.20040503090928.1:(Don't write top-level body text in @file-thin nodes)
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
 #@nonl

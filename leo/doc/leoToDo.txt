@@ -1,14 +1,88 @@
 #@+leo-ver=4
 #@+node:ekr.20040117181936:@file-thin ../doc/leoToDo.txt
 #@+all
-#@+node:EKR.20040502194236:Don't write top-level thin node?
-#@-node:EKR.20040502194236:Don't write top-level thin node?
-#@+node:EKR.20040502200304:Anxiety:  putting "outline" stuff in separate files
-#@-node:EKR.20040502200304:Anxiety:  putting "outline" stuff in separate files
+#@+node:EKR.20040503090928:Before LeoPy(ref).leo
+#@+node:EKR.20040503064147.2:Add -thin field to @+leo sentinel
+#@-node:EKR.20040503064147.2:Add -thin field to @+leo sentinel
+#@-node:EKR.20040503090928:Before LeoPy(ref).leo
+#@+node:EKR.20040503091111:Before alpha 2
+- Add -thin to @+leo
+#@nonl
+#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+#@@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ About "@file" untangling and clones   
+2003-11-24 23:55  
+
+ I really like generating source code with the @file directive. I like even most to see it untangle all my changes back to the outline! 
+
+I only wish the untangler would not _only_ use the last instance of a clone in the untangling process...
+
+I understand the difficulty of making it otherwise, but hey, here is my algo anyways...:
+0-before untangling:save a reference copy of a found clone for each clone in the outline!
+1-Start untangling,
+2- once you reach a clone node: compare, if changed update all instances of outline
+3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
+
+so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory & more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
+--
+bolt  
+#@nonl
+#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+#@+node:EKR.20040503091612:Dangers of @file-thin
+#@@nocolor
+
+Using @ignore with @file-thin is asking for trouble.
+If you remove the @ignore and then save, you will lose data.
+
+How to recover the data:
+	- Read Outline.
+	- Remove @ignore
+	- Import derived file... 
+#@nonl
+#@-node:EKR.20040503091612:Dangers of @file-thin
+#@-node:EKR.20040503091111:Before alpha 2
+#@+node:EKR.20040503091111.1:Before beta 1
+- Import derived file supports @file-thin.
+#@nonl
+#@+node:EKR.20040503093407:Import derived file
+#@-node:EKR.20040503093407:Import derived file
+#@-node:EKR.20040503091111.1:Before beta 1
 #@+node:ekr.20031218072017.646:To do...
 #@@ignore
 #@@nocolor
 #@nonl
+#@+node:ekr.20040414093758:Suggestions
+#@@nocolor
+ RE: Leo's reorganized to-do list   
+2004-03-31 05:48  
+
+ in order of most likely to least possible,
+
++1 on defineing __main__ and allowing parameters to scripts.
+
+add python -t to test suite to catch mixed tab & space in derived files.
+leoFind.py: inconsistent use of tabs and spaces 
+
+Edit-> Delete while in headline deletes body text.
+
+unregisterhook()
+
+we can script the find, can we script the compare?
+
+insert/overstrike mode in body
+
+#@@path and other directives accept python expressions
+
+add a Stop button for find/change 
+and other possibly long running scripts.
+possibly a plugin can already do this.
+
+Tabbed log/Find/config window.
+
+ 
+#@-node:ekr.20040414093758:Suggestions
 #@+node:ekr.20040117092727.1: Notes
 #@@nocolor
 #@nonl
@@ -4812,6 +4886,7 @@ def putVnode (self,p):
 	"""Write a <v> element corresponding to a vnode."""
 
 	fc = self ; c = fc.c ; v = p.v
+	isThin = p.isAtThinFileNode()
 
 	fc.put("<v")
 	<< Put tnode index >>
@@ -4822,7 +4897,7 @@ def putVnode (self,p):
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
 	if p.hasChildren():
-		if p.isAtThinFileNode() and not p.isOrphan():
+		if isThin and not p.isOrphan():
 			# g.trace("skipping child vnodes for", p.headString())
 			pass
 		else:
@@ -4846,7 +4921,8 @@ if v.t.fileIndex:
 		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 		
 	# g.trace(v.t)
-	v.t.setVisited() # Indicate we wrote the body text.
+	if not isThin:
+		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
 	g.trace(v.t.fileIndex,v)
 	g.es("error writing file(bad v.t.fileIndex)!")
@@ -5147,7 +5223,6 @@ other times only fix is to exit & restart.
 #@-node:ekr.20040123102724:Can't or wont
 #@-node:ekr.20031218072017.646:To do...
 #@+node:EKR.20040430163619:To Do: 4.2
-#@+node:ekr.20040409164648:Bugs
 #@+node:ekr.20040323170225:General bugs
 #@+node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
 #@+node:ekr.20040327132739.3:Notes
@@ -5826,8 +5901,22 @@ I don't know if this problems does exist on other platforms. Setting encoding in
 These did not harm the actual data.
 #@nonl
 #@-node:ekr.20040403121321:Cutting and pasting created "invalid outline" messages
+#@+node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
+#@@nocolor
+
+By: David McNab - davidmcnab
+ Syntax Colouring Bug - html mode   
+2004-04-22 07:38  
+
+ Hi,
+
+Within an HTML @file node, where I have '@language html' at the top root, I notice that on typing in a triple-double-quote ("""), the text following gets coloured green, as would be appropriate if the node were actually python.
+
+Cheers
+David
+ 
+#@-node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
 #@-node:ekr.20040323170225:General bugs
-#@-node:ekr.20040409164648:Bugs
 #@+node:EKR.20040422132037:Mac/Linux bugs
 #@@nocolor
 #@nonl
@@ -6023,21 +6112,6 @@ R: hilited text appended to headline rather than replacing
 This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
 #@nonl
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@+node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
-#@@nocolor
-
-By: David McNab - davidmcnab
- Syntax Colouring Bug - html mode   
-2004-04-22 07:38  
-
- Hi,
-
-Within an HTML @file node, where I have '@language html' at the top root, I notice that on typing in a triple-double-quote ("""), the text following gets coloured green, as would be appropriate if the node were actually python.
-
-Cheers
-David
- 
-#@-node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
 #@-node:EKR.20040422132037:Mac/Linux bugs
 #@+node:ekr.20040411155746:Quick
 #@+node:ekr.20040105080119.4:Put drawing hooks back in
@@ -8967,28 +9041,6 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@+node:ekr.20031218072017.853:More intelligent untangling of clones
-#@@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- About "@file" untangling and clones   
-2003-11-24 23:55  
-
- I really like generating source code with the @file directive. I like even most to see it untangle all my changes back to the outline! 
-
-I only wish the untangler would not _only_ use the last instance of a clone in the untangling process...
-
-I understand the difficulty of making it otherwise, but hey, here is my algo anyways...:
-0-before untangling:save a reference copy of a found clone for each clone in the outline!
-1-Start untangling,
-2- once you reach a clone node: compare, if changed update all instances of outline
-3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
-
-so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory & more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
---
-bolt  
-#@nonl
-#@-node:ekr.20031218072017.853:More intelligent untangling of clones
 #@-node:ekr.20040409164648.1:Features
 #@+node:ekr.20040325095459:Conversionn & cleanup
 # Is this even necessary??
@@ -9331,8 +9383,6 @@ Convert FAQ to rST
 Convert all docs to rST?
 #@nonl
 #@-node:ekr.20040323195916:Documentation
-#@+node:ekr.20040327103735:Email to Fred Drake re 4.1 final
-#@-node:ekr.20040327103735:Email to Fred Drake re 4.1 final
 #@+node:ekr.20040323195916.1:Tests
 #@@nocolor
 
@@ -9414,36 +9464,6 @@ Currently the script works for C and python files. It looks at the
 file extension to determine if C or python type annotations are
 used. Maybe this information can be centralized.
 #@-node:ekr.20040414093055:Shadow files plugin
-#@+node:ekr.20040414093758:Suggestions
-#@@nocolor
- RE: Leo's reorganized to-do list   
-2004-03-31 05:48  
-
- in order of most likely to least possible,
-
-+1 on defineing __main__ and allowing parameters to scripts.
-
-add python -t to test suite to catch mixed tab & space in derived files.
-leoFind.py: inconsistent use of tabs and spaces 
-
-Edit-> Delete while in headline deletes body text.
-
-unregisterhook()
-
-we can script the find, can we script the compare?
-
-insert/overstrike mode in body
-
-#@@path and other directives accept python expressions
-
-add a Stop button for find/change 
-and other possibly long running scripts.
-possibly a plugin can already do this.
-
-Tabbed log/Find/config window.
-
- 
-#@-node:ekr.20040414093758:Suggestions
 #@-node:EKR.20040430163619:To Do: 4.2
 #@-all
 #@nonl
