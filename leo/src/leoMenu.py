@@ -838,18 +838,20 @@ class leoMenu:
                 #@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
                 realLabel = self.getRealMenuName(label)
                 
-                # 2/8/04: A bad hack:  this does not allow for translations!
+                # A bad hack:  this does not allow for translations!
                 # We need a way of specifying shortcuts, & bindings and translations all in the same place.
-                if rawKey and rawKey != label:
-                    amp_index = rawKey.find("&") + 1
-                else:
+                
+                amp_index = -1
+                if rawKey:
+                    amp_index = rawKey.find("&")
+                if amp_index == -1:
                     amp_index = realLabel.find("&")
                 
                 realLabel = realLabel.replace("&","")
                 
                 if 0: # trace
-                    if realLabel.lower().startswith("sort"):
-                        g.trace(label,realLabel,rawKey,bind_shortcut)
+                    if rawKey and rawKey.lower().startswith("exit"):
+                        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
                 
                 if not menu_shortcut:
                     menu_shortcut = ""
