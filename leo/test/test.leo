@@ -3,13 +3,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6446" clone_windows="0"/>
 <globals body_outline_ratio="0.59649122807">
-	<global_window_position top="12" left="326" height="855" width="907"/>
+	<global_window_position top="38" left="163" height="855" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
+<v t="ekr.20041121151002"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -562,7 +562,7 @@
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
 <v t="EKR.20040424091411"><vh>Compare ignoring newlines</vh></v>
-<v t="EKR.20040517074600.8"><vh>Count pages</vh></v>
+<v t="EKR.20040517074600.8" a="E"><vh>Count pages</vh></v>
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20040319111213"><vh>FilterHoist script</vh>
 <v t="ekr.20040319111213.1"><vh>description</vh></v>
@@ -980,7 +980,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
@@ -1134,7 +1134,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1435,9 +1435,8 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041213074603" a="E"><vh>Settings dialog To do</vh>
-<v t="ekr.20041213172250" a="TV"><vh>Support @strings and @ints NOW</vh></v>
-<v t="ekr.20041130085400.2" a="M"><vh>Finish font stuff</vh></v>
+<v t="ekr.20041213074603" a="TV"><vh>Settings dialog To do</vh>
+<v t="ekr.20041213172250"><vh>Support @strings and @ints NOW</vh></v>
 <v t="ekr.20041130085943.1"><vh>Put settings into effect immediately</vh></v>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
@@ -1445,7 +1444,7 @@
 <v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
 <v t="ekr.20041213115848"><vh>Later or never...</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="EM"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1" a="M"><vh>Settings dialog</vh>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
@@ -1550,7 +1549,7 @@
 </v>
 <v t="ekr.20041126142253.3"><vh>drawTopTree</vh></v>
 </v>
-<v t="ekr.20041127102844"><vh>class parserClass (parserBaseClass)</vh>
+<v t="ekr.20041127102844" a="E"><vh>class parserClass (parserBaseClass)</vh>
 <v t="ekr.20041127102844.1"><vh>ctor</vh></v>
 <v t="ekr.20041127110245"><vh>set</vh></v>
 <v t="ekr.20041127103503"><vh>visitNode</vh></v>
@@ -1576,19 +1575,6 @@
 <v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
 <v t="ekr.20041127103503.18"><vh>doType</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20041213085122"><vh>Font stuff</vh>
-<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
-<v t="ekr.20041127134208.4" a="E"><vh>createFont  &amp; helpers</vh>
-<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213113433"><vh>&lt;&lt; create callback and bind it to widgets &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041213091111"><vh>updateFontDict</vh></v>
 </v>
 </v>
 </vnodes>
@@ -11226,8 +11212,15 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\leodocs.leo
-C:\prog\leoCVS\leo\test\test.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\plugins\leoplugins.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
@@ -12960,6 +12953,7 @@ doPath = doDirectory</t>
 <t tx="ekr.20041127103503.8">def doFont (self,p,kind,name,val):
 
     d = self.parseFont(p)
+    g.trace(d)
     self.set(p,kind,name,d)</t>
 <t tx="ekr.20041127103503.9">def doIgnore(self,p,kind,name,val):
 
@@ -13624,14 +13618,6 @@ print ; print</t>
             c.setRecentFiles(val)
         else:
             g.app.config.set(c,name,kind,val)</t>
-<t tx="ekr.20041130085400.2">The present font logic works only for Tk font specs.  The same is true of the color picker.
-
-- Use Pmw.EntryField to get size.
-
-* On startup, handle @font nodes correctly.
-
-* Update body text of @font nodes in revert/ok/apply logic.
-    Recreate the text from the fontDict.</t>
 <t tx="ekr.20041130085943.1">Leo updates settings files, including the open file if that is appropriate, when the user presses the OK, Apply or Revert buttons.
 
 g.app.config.set does not do anything yet, so settings don't go into effect. This will probably be very easy to fix.
@@ -13685,7 +13671,8 @@ if name in ("OK","Cancel"):</t>
 <t tx="ekr.20041211053539.1">@
 
 </t>
-<t tx="ekr.20041213074603">@killcolor
+<t tx="ekr.20041213074603">@ignore
+@killcolor
 
 - Don't show @page in outline.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
@@ -13697,7 +13684,6 @@ log_text_font_family = None
 log_text_font_size = None
 log_text_font_slant = roman
 log_text_font_weight = normal</t>
-<t tx="ekr.20041213085122"></t>
 <t tx="ekr.20041213090401.1">def createColorPicker (self,f,d):
     
     widgets = {}
