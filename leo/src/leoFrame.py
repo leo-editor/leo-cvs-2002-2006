@@ -165,6 +165,12 @@ class LeoFrame:
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+			
+		# Remove the initially selected node from the list.
+		c.beadPointer = -1
+		c.beadList = []
+		c.visitedList = []
+		doHook("after-create-leo-frame",c=c)
 	#@-body
 	#@-node:1::frame.__init__
 	#@+node:2::frame.__repr__
@@ -201,7 +207,7 @@ class LeoFrame:
 		return title
 	#@-body
 	#@-node:4::frame.setWindowTitle
-	#@+node:5::createLeoFrame
+	#@+node:5::sectionList.createLeoFrame
 	#@+body
 	def createLeoFrame (self,top):
 	
@@ -325,8 +331,9 @@ class LeoFrame:
 		
 		self.createStatusLine()
 		self.putStatusLine("Welcome to Leo")
+	
 	#@-body
-	#@-node:5::createLeoFrame
+	#@-node:5::sectionList.createLeoFrame
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar
@@ -825,14 +832,14 @@ class LeoFrame:
 	#@-node:4::showIconBar
 	#@+node:5::addIconButton
 	#@+body
-	def addIconButton(self,text=None,picture=None,command=None,bg=None):
+	def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
 		
 		"""Add a button containing text or a picture to the icon bar.
 		
 		Pictures take precedence over text"""
 		
 		a = app() ; f = self.iconFrame
-		if not picture and not text: return
+		if not imagefile and not image and not text: return
 	
 		# First define n.	
 		try:
@@ -845,39 +852,45 @@ class LeoFrame:
 			def command(n=n):
 				print "command for widget %s" % (n)
 	
-		if picture:
+		if imagefile or image:
 			
 			#@<< create a picture >>
 			#@+node:1::<< create a picture >>
 			#@+body
 			try:
-				# Create the image.  Throws an exception if file not found
-				photo = Tkinter.PhotoImage(master=app().root, file=picture)
+				if imagefile:
+					# Create the image.  Throws an exception if file not found
+					imagefile = os.path.join(app().loadDir,imagefile)
+					imagefile = os.path.normpath(imagefile)
+					image = Tkinter.PhotoImage(master=app().root,file=imagefile)
+					
+					# Must keep a reference to the image!
+					try:
+						refs = a.iconImageRefs
+					except:
+						refs = a.iconImageRefs = []
 				
-				# Must keep a reference to the image!
-				try:
-					refs = a.iconImageRefs
-				except:
-					refs = a.iconImageRefs = []
-			
-				refs.append(photo)
+					refs.append((imagefile,image),)
 				
 				if not bg:
 					bg = f.cget("bg")
 			
-				b = Tk.Button(f,image=photo,relief="raised",command=command,bg=bg)
+				b = Tk.Button(f,image=image,relief="raised",command=command,bg=bg)
 				b.pack(side="left",fill="y")
+				return b
 				
 			except:
-				print "not found:", picture
-				picture = None
+				es_exception()
+				return None
 			#@-body
 			#@-node:1::<< create a picture >>
 
-	
-		if not picture and text:
+		elif text:
 			b = Tk.Button(f,text=text,relief="raised",command=command)
 			b.pack(side="left",fill="y")
+			return b
+			
+		return None
 	#@-body
 	#@-node:5::addIconButton
 	#@-node:4::Icon area: convenience routines
@@ -946,7 +959,7 @@ class LeoFrame:
 			return self.body
 	#@-body
 	#@-node:7::getFocus
-	#@+node:8:: Menus
+	#@+node:8::Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -1525,6 +1538,9 @@ class LeoFrame:
 		gotoMenu = self.createNewMenu("&Go To...","Outline")
 		
 		table = (
+			("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
+			("Go Forward",None,self.OnGoNextVisitedNode),
+			("-",None,None),
 			("Go To Next &Marked","Alt+M",self.OnGoToNextMarked),
 			("Go To Next C&hanged","Alt+D",self.OnGoToNextChanged),
 			("Go To Next &Clone","Alt+N",self.OnGoToNextClone),
@@ -1537,8 +1553,8 @@ class LeoFrame:
 			("-",None,None),
 			("Go To Prev V&isible","Alt-UpArrow",self.OnGoPrevVisible),
 			("Go To Next &Visible","Alt-DnArrow",self.OnGoNextVisible),
-			("Go &Back","Alt-Shift+UpArrow",self.OnGoBack),
-			("Go &Next","Alt-Shift-DnArrow",self.OnGoNext))
+			("Go To Prev Node","Alt-Shift+UpArrow",self.OnGoBack),
+			("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext))
 			
 		self.createMenuEntries(gotoMenu,table)
 		
@@ -3814,7 +3830,60 @@ class LeoFrame:
 	#@-node:10::OnGoNext
 	#@-node:3::Move/Select
 	#@+node:4::Mark/Goto
-	#@+node:1::OnGoToFirstNode
+	#@+node:1::recentSectionsDialogCallback
+	#@+body
+	def recentSectionsDialogCallback(c):
+			
+		# Bring the dialog to the front if it already exits.
+		for d in app().sectionDialogs:
+			if d.c == c:
+				d.top.deiconify()
+				return
+			
+		# Create and run the dialog.
+		d = leoDialog.recentSectionsDialog(c,"Recent nodes: " + shortFileName(c.frame.mFileName))
+		d.root.wait_window(d.top)
+	
+	#@-body
+	#@-node:1::recentSectionsDialogCallback
+	#@+node:2::OnGoPrevVisitedNode
+	#@+body
+	def OnGoPrevVisitedNode(self,event=None):
+		
+		c = self.commands
+	
+		while c.beadPointer > 0:
+			c.beadPointer -= 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.tree.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.tree.idle_scrollTo(v)
+				return
+	
+	#@-body
+	#@-node:2::OnGoPrevVisitedNode
+	#@+node:3::OnGoNextVisitedNode
+	#@+body
+	def OnGoNextVisitedNode(self,event=None):
+		
+		c = self.commands
+	
+		while c.beadPointer + 1 < len(c.beadList):
+			c.beadPointer += 1
+			v = c.beadList[c.beadPointer]
+			if v.exists(c):
+				c.beginUpdate()
+				c.tree.expandAllAncestors(v)
+				c.selectVnode(v,updateBeadList=false)
+				c.endUpdate()
+				c.tree.idle_scrollTo(v)
+				return
+	#@-body
+	#@-node:3::OnGoNextVisitedNode
+	#@+node:4::OnGoToFirstNode
 	#@+body
 	def OnGoToFirstNode(self,event=None):
 		
@@ -3825,8 +3894,8 @@ class LeoFrame:
 			c.selectVnode(v)
 			c.endUpdate()
 	#@-body
-	#@-node:1::OnGoToFirstNode
-	#@+node:2::OnGoToLastNode
+	#@-node:4::OnGoToFirstNode
+	#@+node:5::OnGoToLastNode
 	#@+body
 	def OnGoToLastNode(self,event=None):
 		
@@ -3841,32 +3910,32 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:2::OnGoToLastNode
-	#@+node:3::OnGoToNextChanged
+	#@-node:5::OnGoToLastNode
+	#@+node:6::OnGoToNextChanged
 	#@+body
 	def OnGoToNextChanged(self,event=None):
 	
 		self.commands.goToNextDirtyHeadline()
 	
 	#@-body
-	#@-node:3::OnGoToNextChanged
-	#@+node:4::OnGoToNextClone
+	#@-node:6::OnGoToNextChanged
+	#@+node:7::OnGoToNextClone
 	#@+body
 	def OnGoToNextClone(self,event=None):
 	
 		self.commands.goToNextClone()
 	
 	#@-body
-	#@-node:4::OnGoToNextClone
-	#@+node:5::OnGoToNextMarked
+	#@-node:7::OnGoToNextClone
+	#@+node:8::OnGoToNextMarked
 	#@+body
 	def OnGoToNextMarked(self,event=None):
 	
 		self.commands.goToNextMarkedHeadline()
 	
 	#@-body
-	#@-node:5::OnGoToNextMarked
-	#@+node:6::OnGoToNextSibling
+	#@-node:8::OnGoToNextMarked
+	#@+node:9::OnGoToNextSibling
 	#@+body
 	def OnGoToNextSibling(self,event=None):
 		
@@ -3879,8 +3948,8 @@ class LeoFrame:
 			c.selectVnode(next)
 			c.endUpdate()
 	#@-body
-	#@-node:6::OnGoToNextSibling
-	#@+node:7::OnGoToParent
+	#@-node:9::OnGoToNextSibling
+	#@+node:10::OnGoToParent
 	#@+body
 	def OnGoToParent(self,event=None):
 		
@@ -3894,8 +3963,8 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:7::OnGoToParent
-	#@+node:8::OnGoToPrevSibling
+	#@-node:10::OnGoToParent
+	#@+node:11::OnGoToPrevSibling
 	#@+body
 	def OnGoToPrevSibling(self,event=None):
 		
@@ -3909,55 +3978,55 @@ class LeoFrame:
 			c.endUpdate()
 	
 	#@-body
-	#@-node:8::OnGoToPrevSibling
-	#@+node:9::OnMark
+	#@-node:11::OnGoToPrevSibling
+	#@+node:12::OnMark
 	#@+body
 	def OnMark(self,event=None):
 	
 		self.commands.markHeadline()
 	
 	#@-body
-	#@-node:9::OnMark
-	#@+node:10::OnMarkChangedItems
+	#@-node:12::OnMark
+	#@+node:13::OnMarkChangedItems
 	#@+body
 	def OnMarkChangedItems(self,event=None):
 	
 		self.commands.markChangedHeadlines()
 	
 	#@-body
-	#@-node:10::OnMarkChangedItems
-	#@+node:11::OnMarkChangedRoots
+	#@-node:13::OnMarkChangedItems
+	#@+node:14::OnMarkChangedRoots
 	#@+body
 	def OnMarkChangedRoots(self,event=None):
 	
 		self.commands.markChangedRoots()
 	
 	#@-body
-	#@-node:11::OnMarkChangedRoots
-	#@+node:12::OnMarkClones
+	#@-node:14::OnMarkChangedRoots
+	#@+node:15::OnMarkClones
 	#@+body
 	def OnMarkClones(self,event=None):
 	
 		self.commands.markClones()
 	
 	#@-body
-	#@-node:12::OnMarkClones
-	#@+node:13::OnMarkSubheads
+	#@-node:15::OnMarkClones
+	#@+node:16::OnMarkSubheads
 	#@+body
 	def OnMarkSubheads(self,event=None):
 	
 		self.commands.markSubheads()
 	
 	#@-body
-	#@-node:13::OnMarkSubheads
-	#@+node:14::OnUnmarkAll
+	#@-node:16::OnMarkSubheads
+	#@+node:17::OnUnmarkAll
 	#@+body
 	def OnUnmarkAll(self,event=None):
 	
 		self.commands.unmarkAll()
 	
 	#@-body
-	#@-node:14::OnUnmarkAll
+	#@-node:17::OnUnmarkAll
 	#@-node:4::Mark/Goto
 	#@-node:3::Outline Menu
 	#@+node:4::Window Menu
@@ -4590,13 +4659,15 @@ class LeoFrame:
 			enableMenu(menu,"Demote",c.canDemote())
 			# Go To submenu
 			menu = self.getMenu("Go To...")
+			enableMenu(menu,"Go Back",c.beadPointer > 1)
+			enableMenu(menu,"Go Forward",c.beadPointer + 1 < len(c.beadList))
 			enableMenu(menu,"Go To Prev Visible",c.canSelectVisBack())
 			enableMenu(menu,"Go To Next Visible",c.canSelectVisNext())
 			enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
 			enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 			enableMenu(menu,"Go To Next Clone",v.isCloned())
-			enableMenu(menu,"Go Back",c.canSelectThreadBack())
-			enableMenu(menu,"Go Next",c.canSelectThreadNext())
+			enableMenu(menu,"Go To Prev Node",c.canSelectThreadBack())
+			enableMenu(menu,"Go To Next Node",c.canSelectThreadNext())
 			enableMenu(menu,"Go To Parent",v.parent() != None)
 			enableMenu(menu,"Go To Prev Sibling",v.back() != None)
 			enableMenu(menu,"Go To Next Sibling",v.next() != None)
@@ -4614,7 +4685,7 @@ class LeoFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:8:: Menus
+	#@-node:8::Menus
 	#@+node:9::notYet
 	#@+body
 	def notYet(self,name):
@@ -4821,7 +4892,7 @@ class LeoFrame:
 		self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
 		statusFrame.pack(fill="x",pady=1)
 		
-		text = "row 0, col 0"
+		text = "line 0, col 0"
 		width = len(text) + 4
 		self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
 		self.statusLabel.pack(side="left",padx=1)
@@ -4892,7 +4963,7 @@ class LeoFrame:
 			col = computeWidth (s,self.tab_width)
 	
 		if row != self.lastStatusRow or col != self.lastStatusCol:
-			s = "row %d, col %d " % (row,col)
+			s = "line %d, col %d " % (row,col)
 			lab.configure(text=s)
 			self.lastStatusRow = row
 			self.lastStatusCol = col
