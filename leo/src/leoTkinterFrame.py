@@ -183,6 +183,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		v.moveToRoot()
 		
 		c.beginUpdate()
+		c.selectVnode(v)
 		c.redraw()
 		c.frame.getFocus()
 		c.editVnode(v)
@@ -192,7 +193,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		#@nl
 	
 		self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-		self.body.createBindings(frame)
 	
 		v = c.currentVnode()
 		if not doHook("menu1",c=c,v=v):
@@ -204,6 +204,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		c.initVersion()
 		c.signOnWithVersion()
+		
+		self.body.createBindings(frame)
 	#@nonl
 	#@-node:f.finishCreate
 	#@+node:Creating the splitter
@@ -1418,9 +1420,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		"""Update the body pane at idle time."""
 	
-		if 0:
-			if ch: trace(ch,ord(ch))
-			else: trace(`ch`)
+		# trace(ch,ord(ch))
 	
 		c = self.c
 		if not c or not v or v != c.currentVnode():
@@ -1447,7 +1447,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			if (ch == None or len(ch) == 0) and body == s[:-1]:
 				return "break"
 			
-		# print `ch`,len(body),len(s)
+		# print repr(ch),len(body),len(s)
 		#@nonl
 		#@-node:<< return if nothing has changed >>
 		#@nl
@@ -1488,7 +1488,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			# trace("true")
 			removeTrailing = true
 			
-		# trace(`ch`+","+`removeTrailing`)
+		# trace(ch,removeTrailing)
 		
 		
 		#@-node:<< set removeTrailing >>
@@ -1540,7 +1540,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			
 					w = computeWidth(prev,c.tab_width)
 					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-					# print "prev w:" + `w` + ", prev chars:" + `prev`
+					# trace("prev w:",w,"prev chars:",prev)
 					c.frame.bodyCtrl.delete("insert -1c")
 					c.frame.bodyCtrl.insert("insert",' ' * w2)
 				
@@ -1557,7 +1557,7 @@ class leoTkinterBody (leoFrame.leoBody):
 					if all_ws:
 						w = computeWidth(prev,c.tab_width)
 						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-						# print "prev w:" + `w` + ", prev chars:" + `prev`
+						# trace("prev w:",w,"prev chars:",prev)
 						c.frame.bodyCtrl.delete("insert -1c")
 						c.frame.bodyCtrl.insert("insert",' ' * w2)
 			#@nonl
@@ -1912,7 +1912,9 @@ class leoTkinterBody (leoFrame.leoBody):
 	def setTextSelection (self,i,j=None):
 		
 		# Allow the user to pass either a 2-tuple or two separate args.
-		if len(i) == 2:
+		if i is None:
+			i,j = "1.0","1.0"
+		elif len(i) == 2:
 			i,j = i
 	
 		app.gui.setTextSelection(self.bodyCtrl,i,j)
@@ -2019,7 +2021,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		return before,sel,after
 	#@nonl
 	#@-node:getSelectionAreas
-	#@+node:getSelectionLines
+	#@+node:getSelectionLines (tkBody)
 	def getSelectionLines (self):
 		
 		"""Return before,sel,after where:
@@ -2047,10 +2049,11 @@ class leoTkinterBody (leoFrame.leoBody):
 		before = toUnicode(t.get("1.0",i),app.tkEncoding)
 		sel    = toUnicode(t.get(i,j),    app.tkEncoding)
 		after  = toUnicode(t.get(j,"end-1c"),app.tkEncoding)
-	
+		
+		# trace(i,j)
 		return before,sel,after
 	#@nonl
-	#@-node:getSelectionLines
+	#@-node:getSelectionLines (tkBody)
 	#@+node:getTextRange
 	def getTextRange (self,index1,index2):
 		
@@ -2098,6 +2101,7 @@ class leoTkinterBody (leoFrame.leoBody):
 			t.insert("end",after)
 	
 		gui.setTextSelection(t,sel_start,sel_end)
+		# trace(sel_start,sel_end)
 		
 		return t.index(sel_start), t.index(sel_end)
 	#@nonl

@@ -59,6 +59,7 @@ def loadHandlers(loadAllFlag=false):
 			file.close()
 		except:
 			es("Can not open: " + manager_path)
+			import leoTest ; leoTest.fail()
 			return
 		#@nonl
 		#@-node:<< set enabled_files from pluginsManager.txt >>

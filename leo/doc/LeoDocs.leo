@@ -64,7 +64,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -85,7 +85,7 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 5</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 5</vh>
 <v t="edream.120403174147"><vh>Changes made in 4.1 beta 5</vh>
 <v t="edream.120403180443"><vh>New and improved features</vh>
 <v t="edream.120403174147.105"><vh>Honor outline/body pane ratio when opening files</vh></v>
@@ -1016,7 +1016,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
+<v t="edream.110203163054.735"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1025,7 +1025,7 @@
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.741"><vh>Legal Notices: Leo uses the Python license</vh></v>
 </v>
-<v t="edream.110203163054.742" a="E"><vh>Chapter 1: Introducing Leo</vh>
+<v t="edream.110203163054.742"><vh>Chapter 1: Introducing Leo</vh>
 <v t="edream.110203163054.743"><vh>Overview</vh></v>
 <v t="edream.110203163054.744"><vh>Leo's main window</vh></v>
 <v t="edream.110203163054.745"><vh>Body text and sections</vh></v>
@@ -1038,7 +1038,7 @@
 </v>
 <v t="edream.110203163054.751"><vh>Clones manage tasks</vh></v>
 <v t="edream.110203163054.752"><vh>Outlines generate derived files</vh></v>
-<v t="edream.120703113515" a="V"><vh>A recommended workflow for using Leo</vh></v>
+<v t="edream.120703113515"><vh>A recommended workflow for using Leo</vh></v>
 </v>
 <v t="edream.110203163054.753"><vh>Chapter 2: Installing Leo</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -1653,6 +1653,9 @@
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
 </v>
+</v>
+<v t="edream.120903151103"><vh>Importing files</vh>
+<v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
 <v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
@@ -24475,5 +24478,18 @@ BTW, I have long wondered whether there was a way to recompile Leo's .py files
 without leaving Leo. Theoretically this is possible using reload, but in
 practice it doesn't work when objects contain state information. The new
 workflow neatly solves the problem while sidestepping the problems.</t>
+<t tx="edream.120903151103"></t>
+<t tx="edream.120903151103.1">@nocolor
+
+There is an importFiles script in LeoPy.leo.  You can use that script as follows:
+
+@color
+
+import leoImport
+leoImport.importFiles(aDirectory, ".py")
+
+@nocolor
+
+This will import all .py files from aDirectory, which should be a full path to a particular directory.  You could use ".c" to import all .c files, etc.</t>
 </tnodes>
 </leo_file>

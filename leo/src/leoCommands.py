@@ -38,6 +38,7 @@ class baseCommands:
 		self.expansionNode = None # The last node we expanded or contracted.
 		self.changed = false # true if any data has been changed since the last save.
 		self.loading = false # true if we are loading a file: disables c.setChanged()
+		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 		
 		# For tangle/untangle
 		self.tangle_errrors = 0

@@ -373,7 +373,6 @@ class leoFrame:
 		# Gui-independent data
 		self.es_newlines = 0 # newline count for this log stream
 		self.openDirectory = ""
-		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 		self.saved=false # True if ever saved
 		self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
 		self.startupWindow=false # True if initially opened window
@@ -1094,7 +1093,6 @@ class nullBody (leoBody):
 		self.selection = 0,len(self.s)
 		
 	def setTextSelection (self,i,j=None):
-		trace(i,j)
 		if i is None:
 			self.selection = 0,0
 		elif j is None:
@@ -1198,7 +1196,7 @@ class nullBody (leoBody):
 		return before,sel,after
 	#@nonl
 	#@-node:getSelectionAreas
-	#@+node:getSelectionLines
+	#@+node:getSelectionLines (nullBody)
 	def getSelectionLines (self):
 		
 		"""Return before,sel,after where:
@@ -1219,15 +1217,16 @@ class nullBody (leoBody):
 		n2 = self.scanToEndOfLine(end)
 	
 		before = self.s[:n1]
-		sel    = self.s[n1:n2+1]
+		sel    = self.s[n1:n2] # 12/8/03 was n2+1
 		after  = self.s[n2+1:]
-		
+	
 		before = toUnicode(before,app.tkEncoding)
 		sel    = toUnicode(sel,   app.tkEncoding)
 		after  = toUnicode(after ,app.tkEncoding)
+		
+		trace(n1,n2)
 		return before,sel,after
-	#@nonl
-	#@-node:getSelectionLines
+	#@-node:getSelectionLines (nullBody)
 	#@+node:Insert...
 	def insertAtInsertPoint (self,s):
 		

@@ -361,9 +361,12 @@ class tkinterGui(leoGui.leoGui):
 		
 		"""Set the focus of the widget in the given commander if it needs to be changed."""
 		
-		focus = c.frame.top.focus_displayof()
-		if focus != widget:
-			widget.focus_set()
+		# trace(c)
+		
+		if c.frame.top:
+			focus = c.frame.top.focus_displayof()
+			if focus != widget:
+				widget.focus_set()
 	#@nonl
 	#@-node:set_focus
 	#@+node:tkGui.getFontFromParams

@@ -258,7 +258,7 @@ class LeoApp:
 		
 		if self.afterHandler != None:
 			# print "finishQuit: cancelling",self.afterHandler
-			if app.gui.guiName == "tkinter":
+			if app.gui.guiName() == "tkinter":
 				self.root.after_cancel(self.afterHandler)
 			self.afterHandler = None
 	
@@ -270,7 +270,6 @@ class LeoApp:
 		self.destroyAllOpenWithFiles()
 		
 		app.gui.destroySelf()
-	#@nonl
 	#@-node:app.finishQuit
 	#@+node:app.forceShutdown
 	def forceShutdown (self):

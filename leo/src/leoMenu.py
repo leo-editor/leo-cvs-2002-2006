@@ -1053,7 +1053,8 @@ class leoMenu:
 		# Create all the other entries.
 		i = 3
 		for name in c.recentFiles:
-			callback = lambda f=frame,name=name:c.openRecentFile(name)
+			def callback (event=None,c=c,name=name): # 12/9/03
+				c.openRecentFile(name)
 			label = "%d %s" % (i-2,computeWindowTitle(name))
 			self.add_command(recentFilesMenu,label=label,command=callback,underline=0)
 			i += 1

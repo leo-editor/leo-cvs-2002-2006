@@ -146,7 +146,6 @@ def createFrame (fileName):
 		if os_path_exists(fileName):
 			ok, frame = openWithFileName(fileName,None)
 			if ok:
-				# print fileName
 				return frame.c,frame
 	
 	# Create a new frame & indicate it is the startup window.
@@ -159,7 +158,6 @@ def createFrame (fileName):
 		es("File not found: " + fileName)
 
 	return c,frame
-#@nonl
 #@-node:createFrame (leo.py)
 #@+node:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):

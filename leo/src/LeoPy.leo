@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3994" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="45" left="359" height="870" width="827"/>
+	<global_window_position top="10" left="390" height="870" width="828"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,10 +12,17 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744" a="V"><vh> Diary</vh>
+<v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.121103121956"><vh>12/11</vh>
+<v t="edream.121103220800"><vh>Fixed big performance bug in removeSentinelLines</vh></v>
+<v t="edream.121103220800.1"><vh>Call leoTest.fail in when import/export routines can't open a file</vh></v>
+<v t="edream.121103121956.1"><vh>created unitTestGui class</vh></v>
+</v>
+<v t="edream.121103121956.2"><vh>12/09</vh>
 <v t="edream.120903113758"><vh>Leo now allows @ignore nodes and orphan nodes in @file-nosent trees</vh></v>
 <v t="edream.120903112324"><vh>Looked at report of import bug</vh></v>
+</v>
 <v t="edream.120803170142"><vh>12/08</vh>
 <v t="edream.120803170142.1"><vh>Investigated &amp; fixed copy/paste bugs</vh></v>
 </v>
@@ -760,6 +767,7 @@
 </v>
 <v t="edream.110203160744.419"><vh> To do...</vh>
 <v t="edream.110203160744.420"><vh>To do: 4.2</vh>
+<v t="edream.121103150801"><vh>Urgent: improve the config manager</vh></v>
 <v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
@@ -1039,7 +1047,8 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1</vh>
-<v t="edream.120803170142.2"><vh>Documentation for recent changes</vh></v>
+<v t="edream.121103044318"><vh>Cleanup</vh></v>
+<v t="edream.120803170142.2"><vh>Document recent changes</vh></v>
 <v t="edream.120303071612"><vh>(maybe) Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
@@ -1227,8 +1236,8 @@
 </v>
 <v t="edream.110203160744.748" a=""><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
-<v t="edream.110203160744.750"><vh>redraw</vh></v>
-<v t="edream.110203160744.751"><vh>force_redraw</vh></v>
+<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
+<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
 <v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
@@ -3376,7 +3385,7 @@
 <v t="edream.112103142020.13"><vh>get...</vh>
 <v t="edream.112103151727"><vh>getInsertLines</vh></v>
 <v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
-<v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
+<v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
 </v>
 <v t="edream.112103142020.14"><vh>Insert...</vh></v>
 <v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
@@ -3490,7 +3499,7 @@
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
 <v t="edream.120303100236"><vh>(Fixed Replace Blanks command)</vh>
-<v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
+<v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
 <v t="edream.110203160744.1801" a=""><vh>convertAllBlanks</vh></v>
 <v t="edream.110203160744.1802" a=""><vh>convertAllTabs</vh></v>
@@ -3611,6 +3620,29 @@
 <v t="edream.120703082927"><vh>(Added dialog to Import Derived File)</vh>
 <v t="edream.110203160744.1120" a="M"><vh>importDerivedFile</vh></v>
 </v>
+<v t="edream.120903094900"><vh>(Allow @ignore and orphans in @file-nosent)</vh>
+<v t="edream.110203160744.2755" a=""><vh>old_df.write</vh>
+<v t="edream.110203160744.2756"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2757"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2758"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
+<v t="edream.110203160744.2748" a=""><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
+<v t="edream.110203160744.2759"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="edream.110203160744.2751" a=""><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
+</v>
+<v t="edream.110203160744.2760"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2761"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="edream.120803101918"><vh>(Corrected counts when replacing tabs/blanks)</vh>
 <v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
 <v t="edream.110203160744.1801" a=""><vh>convertAllBlanks</vh></v>
@@ -3702,35 +3734,15 @@
 <v t="edream.110203160744.3315" a=""><vh>v.moveAfter</vh></v>
 <v t="edream.110203160744.3312" a=""><vh>v.linkAfter</vh></v>
 </v>
+<v t="edream.120903131550"><vh>(Fixed Font panel bug)</vh>
+<v t="edream.120903131550.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1174" a=""><vh>fontPanel</vh></v>
+<v t="edream.111203185521" a=""><vh>bringToFront</vh></v>
+</v>
 <v t="edream.120603162124"><vh>(Fixed inconsistency between how 4.x and 3.x handle @others)</vh>
 <v t="edream.120703181534"><vh>Report</vh></v>
 <v t="edream.110203160744.1622" a=""><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
 <v t="edream.110203160744.2853" a=""><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
-</v>
-<v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
-<v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
-<v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
-</v>
-<v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
-<v t="edream.120803164637"><vh>Report</vh></v>
-<v t="edream.120803164637.1"><vh>Writing</vh>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
-<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
-</v>
-<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
-<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
-</v>
-<v t="edream.120803164637.2"><vh>Reading</vh>
-<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
-<v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
-</v>
 </v>
 <v t="edream.110203160744.3805"><vh>(Fixed minor bugs with copy/paste bugs involving clones)</vh>
 <v t="edream.120403144310"><vh>Notes</vh></v>
@@ -3762,21 +3774,74 @@
 </v>
 </v>
 </v>
-<v t="edream.120803102832"><vh>(Recent files bug: works for me)</vh>
-<v t="edream.120803102832.1"><vh>Report</vh></v>
-<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
-<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
+<v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
+<v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
 </v>
-<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+<v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
+<v t="edream.120803164637"><vh>Report</vh></v>
+<v t="edream.120803164637.1"><vh>Writing</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
 </v>
-<v t="edream.110203160744.1111" a=""><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
+</v>
+<v t="edream.120803164637.2"><vh>Reading</vh>
+<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
+<v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
+</v>
+</v>
+<v t="edream.121003065108"><vh>(Indent/dedent move one extra line when there is no selected text)</vh>
+<v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
+<v t="edream.110203160744.1801" a=""><vh>convertAllBlanks</vh></v>
+<v t="edream.110203160744.1802" a=""><vh>convertAllTabs</vh></v>
+<v t="edream.110203160744.2011"><vh>convertBlanks</vh></v>
+<v t="edream.110203160744.2012"><vh>convertTabs</vh></v>
+<v t="edream.110203160744.2013"><vh>createLastChildNode</vh></v>
+<v t="edream.110203160744.2014"><vh>dedentBody</vh></v>
+<v t="edream.110203160744.1803" a=""><vh>extract</vh>
+<v t="edream.110203160744.1804"><vh>&lt;&lt; Set headline for extract &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1805" a=""><vh>extractSection</vh>
+<v t="edream.110203160744.1806"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1807" a=""><vh>extractSectionNames</vh>
+<v t="edream.110203160744.1808"><vh>&lt;&lt; Find the next section name &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2015"><vh>findBoundParagraph</vh>
+<v t="edream.110203160744.2016"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1185"><vh>findMatchingBracket</vh>
+<v t="edream.110203160744.1186"><vh>findMatchingBracket</vh></v>
+</v>
+<v t="edream.110203160744.1779"><vh>getBodyLines</vh></v>
+<v t="edream.110203160744.2017" a="M"><vh>indentBody</vh></v>
+<v t="edream.110203160744.1188"><vh>insertBodyTime &amp; allies</vh>
+<v t="edream.110203160744.1189"><vh>getTime</vh></v>
+</v>
+<v t="edream.110203160744.2018"><vh>reformatParagraph</vh>
+<v t="edream.110203160744.2019"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
+<v t="edream.110203160744.2020"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
+<v t="edream.110203160744.2021"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
+<v t="edream.110203160744.2022"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
+</v>
+<v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
+<v t="edream.110203160744.2302" a=""><vh>getSelectionLines (tkBody)</vh></v>
 </v>
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458"><vh>Code</vh>
+<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -6084,7 +6149,7 @@
 <v t="edream.112103142020.13"><vh>get...</vh>
 <v t="edream.112103151727"><vh>getInsertLines</vh></v>
 <v t="edream.112103151733"><vh>getSelectionAreas</vh></v>
-<v t="edream.112103153646.3" a=""><vh>getSelectionLines</vh></v>
+<v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
 </v>
 <v t="edream.112103142020.14"><vh>Insert...</vh></v>
 <v t="edream.112103142020.15"><vh>setSelectionAreas</vh></v>
@@ -6108,7 +6173,7 @@
 <v t="edream.112103160840.6"><vh>select</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3526" tnodeList="edream.110203160744.3526,edream.112103084652,edream.110203160744.3528,edream.110203160744.1846,edream.110203160744.1847,edream.111303090743,edream.110203160744.3532,edream.111303090743.1,edream.111303090743.2,edream.111303090743.3,edream.110203160744.3539,edream.111303060636,edream.111303090124,edream.110203160744.2392,edream.110203160744.3534,edream.110203160744.3536,edream.110203160744.3538,edream.112103091508,edream.110203160744.2401,edream.111303082442,edream.110203160744.2398,edream.110203160744.3529,edream.110203160744.3530,edream.112103084652.1,edream.112103154736,edream.112103085124,edream.112103163330.1,edream.112103163330.2,edream.112103154736.1,edream.112103084652.2,edream.112103154310"><vh>@file leoGui.py</vh>
+<v t="edream.110203160744.3526" tnodeList="edream.110203160744.3526,edream.112103084652,edream.110203160744.3528,edream.110203160744.1846,edream.110203160744.1847,edream.111303090743,edream.110203160744.3532,edream.111303090743.1,edream.111303090743.2,edream.111303090743.3,edream.110203160744.3539,edream.111303060636,edream.111303090124,edream.110203160744.2392,edream.110203160744.3534,edream.110203160744.3536,edream.110203160744.3538,edream.112103091508,edream.110203160744.2401,edream.111303082442,edream.110203160744.2398,edream.110203160744.3529,edream.110203160744.3530,edream.112103084652.1,edream.112103154736,edream.112103085124,edream.112103163330.1,edream.112103163330.2,edream.112103154736.1,edream.112103084652.2,edream.112103154310,edream.121103110000,edream.121103111146,edream.121103110123,edream.121103120745,edream.121103110000.1,edream.121103115441"><vh>@file leoGui.py</vh>
 <v t="edream.112103084652"><vh>class leoGui</vh>
 <v t="edream.110203160744.3535"><vh>app.gui Birth &amp; death</vh>
 <v t="edream.110203160744.3528"><vh> leoGui.__init__</vh></v>
@@ -6148,6 +6213,13 @@
 </v>
 <v t="edream.112103084652.2"><vh>oops</vh></v>
 <v t="edream.112103154310"><vh>setScript</vh></v>
+</v>
+<v t="edream.121103110000" a=""><vh>class unitTestGui</vh>
+<v t="edream.121103111146"><vh> test.gui.__init__&amp; destroySelf</vh></v>
+<v t="edream.121103110123"><vh>dialogs (unitTestGui)</vh></v>
+<v t="edream.121103120745"><vh>dummy routines</vh></v>
+<v t="edream.121103110000.1"><vh>oops</vh></v>
+<v t="edream.121103115441"><vh>simulateDialog</vh></v>
 </v>
 </v>
 <v t="edream.110703175037.1" tnodeList="edream.110703175037.1"><vh>@file leoKeys.py</vh></v>
@@ -6400,7 +6472,7 @@
 <v t="edream.111203095127.1"><vh>finishCreate</vh></v>
 <v t="edream.110203160744.2205"><vh>setRevertVars</vh></v>
 </v>
-<v t="edream.111203185521"><vh>bringToFront</vh></v>
+<v t="edream.111203185521" a=""><vh>bringToFront</vh></v>
 <v t="edream.110203160744.3587"><vh>Events</vh>
 <v t="edream.110203160744.3588"><vh>selectFont</vh></v>
 <v t="edream.110203160744.3589"><vh>onSizeEntryKey</vh></v>
@@ -6586,7 +6658,7 @@
 <v t="edream.111103093034"><vh>getCharAtIndex</vh></v>
 <v t="edream.110203160744.2148"><vh>getInsertLines</vh></v>
 <v t="edream.110203160744.2301"><vh>getSelectionAreas</vh></v>
-<v t="edream.110203160744.2302"><vh>getSelectionLines</vh></v>
+<v t="edream.110203160744.2302" a=""><vh>getSelectionLines (tkBody)</vh></v>
 <v t="edream.110203160744.2303"><vh>getTextRange</vh></v>
 </v>
 <v t="edream.111103085737.1"><vh>Insert...</vh>
@@ -6639,7 +6711,7 @@
 </v>
 <v t="edream.110203160744.2402"><vh>Focus</vh>
 <v t="edream.111303093945.2"><vh>get_focus</vh></v>
-<v t="edream.111303093945.3"><vh>set_focus</vh></v>
+<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
 </v>
 <v t="edream.110203160744.3694"><vh>Font</vh>
 <v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
@@ -6760,8 +6832,8 @@
 </v>
 </v>
 <v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
-<v t="edream.110203160744.750"><vh>redraw</vh></v>
-<v t="edream.110203160744.751"><vh>force_redraw</vh></v>
+<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
+<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
 <v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
@@ -6868,15 +6940,22 @@
 <v t="edream.110203160744.879" a=""><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
+</v>
 <v t="edream.110203160744.3717"><vh>Unit Testing &amp; leoTest.py</vh>
-<v t="edream.110203160744.3718"><vh>Notes</vh>
-<v t="edream.110203160744.3719"><vh>Driver scripts are now in test/test.leo</vh></v>
-<v t="edream.110203160744.3720"><vh>@url http://pyunit.sourceforge.net/pyunit.html</vh></v>
+<v t="edream.121103110000" a=""><vh>class unitTestGui</vh>
+<v t="edream.121103111146"><vh> test.gui.__init__&amp; destroySelf</vh></v>
+<v t="edream.121103110123"><vh>dialogs (unitTestGui)</vh></v>
+<v t="edream.121103120745"><vh>dummy routines</vh></v>
+<v t="edream.121103110000.1"><vh>oops</vh></v>
+<v t="edream.121103115441"><vh>simulateDialog</vh></v>
 </v>
-<v t="edream.110203160744.3726"><vh>Unused</vh>
-<v t="edream.110203160744.3727"><vh>class leoTestFrame (not used at present)</vh></v>
+<v t="edream.112303032011"><vh>To do</vh>
+<v t="edream.121103044856.1"><vh>Support for unit testing</vh></v>
+<v t="edream.121103044856.2"><vh>Test all commands &amp; plugins</vh></v>
+<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
 </v>
-<v t="edream.110203160744.3743" tnodeList="edream.110203160744.3743,edream.110203160744.3744,edream.110203160744.3746,edream.110203160744.3747,edream.110203160744.3748,edream.110203160744.3749,edream.110203160744.3750,edream.110203160744.3751,edream.110203160744.3755,edream.110203160744.3756,edream.110203160744.3757,edream.110203160744.3758,edream.110203160744.3759,edream.110203160744.3760,edream.110203160744.3761,edream.110203160744.3762,edream.110203160744.3763,edream.110203160744.3764,edream.110203160744.3765,edream.110203160744.3766,edream.110203160744.3767,edream.110203160744.3768,edream.110203160744.3769,edream.110203160744.3770,edream.110203160744.3771,edream.110203160744.3772,edream.110203160744.3773,edream.110203160744.3774,edream.110203160744.3775,edream.110203160744.3776,edream.110203160744.3777,edream.110203160744.3779,edream.110203160744.3781,edream.110203160744.3782,edream.110203160744.3783,edream.110203160744.3784,edream.110203160744.3785,edream.110203160744.3786,edream.110203160744.3787,edream.110203160744.3789,edream.110203160744.3790,edream.110203160744.3791,edream.110203160744.3792,edream.110203160744.3793,edream.110203160744.3794,edream.110203160744.3795,edream.110203160744.3797,edream.110203160744.3798,edream.110203160744.3799,edream.110203160744.3800,edream.110203160744.3801,edream.110203160744.3802,edream.110203160744.3803,edream.110203160744.3804,edream.110903064923,edream.110903065210,edream.110903065210.1,edream.110903065210.3,edream.110903065210.4,edream.110903065210.5"><vh>@file leoTest.py</vh>
+<v t="edream.110203160744.3743" tnodeList="edream.110203160744.3743,edream.121103212042,edream.110203160744.3744,edream.110203160744.3746,edream.110203160744.3747,edream.110203160744.3748,edream.110203160744.3749,edream.110203160744.3750,edream.110203160744.3751,edream.110203160744.3755,edream.110203160744.3756,edream.110203160744.3757,edream.110203160744.3758,edream.110203160744.3759,edream.110203160744.3760,edream.110203160744.3761,edream.110203160744.3762,edream.110203160744.3763,edream.110203160744.3764,edream.110203160744.3765,edream.110203160744.3766,edream.110203160744.3767,edream.110203160744.3768,edream.110203160744.3769,edream.110203160744.3770,edream.110203160744.3771,edream.110203160744.3772,edream.110203160744.3773,edream.110203160744.3774,edream.110203160744.3775,edream.110203160744.3776,edream.110203160744.3777,edream.110203160744.3779,edream.110203160744.3781,edream.110203160744.3782,edream.110203160744.3783,edream.110203160744.3784,edream.110203160744.3785,edream.110203160744.3786,edream.110203160744.3787,edream.121103112414.1,edream.121103112429,edream.121103112429.1,edream.121103112429.2,edream.121103112429.3,edream.121103112429.4,edream.121103112429.5,edream.110203160744.3789,edream.110203160744.3790,edream.110203160744.3791,edream.110203160744.3792,edream.110203160744.3794,edream.110203160744.3793,edream.110203160744.3795,edream.110203160744.3797,edream.110203160744.3798,edream.110203160744.3799,edream.110203160744.3800,edream.110203160744.3801,edream.110203160744.3802,edream.110203160744.3803,edream.110203160744.3804,edream.110903064923,edream.110903065210,edream.110903065210.1,edream.110903065210.3,edream.110903065210.4,edream.110903065210.5"><vh>@file leoTest.py</vh>
+<v t="edream.121103212042"><vh>fail</vh></v>
 <v t="edream.110203160744.3744"><vh> testUtils</vh>
 <v t="edream.110203160744.3745"><vh>compareNodeAndFile TODO</vh></v>
 <v t="edream.110203160744.3746"><vh>compareOutlines</vh></v>
@@ -6931,17 +7010,27 @@
 <v t="edream.110203160744.3787"><vh>runTest</vh></v>
 </v>
 </v>
+<v t="edream.121103112414"><vh>Import/Export tests</vh>
+<v t="edream.121103112414.1"><vh>makeImportExportSuite</vh></v>
+<v t="edream.121103112429"><vh>class importExportTestCase</vh>
+<v t="edream.121103112429.1"><vh>__init__</vh></v>
+<v t="edream.121103112429.2"><vh>importExport</vh></v>
+<v t="edream.121103112429.3"><vh>tearDown</vh></v>
+<v t="edream.121103112429.4"><vh>setUp</vh></v>
+<v t="edream.121103112429.5"><vh>runTest</vh></v>
+</v>
+</v>
 <v t="edream.110203160744.3788"><vh>Edit body tests</vh>
 <v t="edream.110203160744.3789"><vh> makeEditBodySuite</vh></v>
 <v t="edream.110203160744.3790"><vh>class editBodyTestCase</vh>
 <v t="edream.110203160744.3791"><vh>__init__</vh></v>
 <v t="edream.110203160744.3792"><vh>editBody</vh></v>
-<v t="edream.110203160744.3793"><vh>setUp: TODO: set selection...</vh></v>
 <v t="edream.110203160744.3794"><vh>tearDown</vh></v>
+<v t="edream.110203160744.3793" a="M"><vh>setUp</vh></v>
 <v t="edream.110203160744.3795"><vh>runTest</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3796"><vh>Outline tests (not ready yet??)</vh>
+<v t="edream.110203160744.3796" a="M"><vh>Outline tests (FINISH)</vh>
 <v t="edream.110203160744.3797"><vh> makeOutlineSuite</vh></v>
 <v t="edream.110203160744.3798"><vh>class outlineTestCase</vh>
 <v t="edream.110203160744.3799"><vh>__init__</vh></v>
@@ -6963,32 +7052,38 @@
 </v>
 </v>
 </v>
+<v t="edream.120803102832"><vh>(Recent files bug)</vh>
+<v t="edream.121203093714"><vh>Menu activation traceback</vh></v>
+<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
+<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
+<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="edream.120203124941.1"><vh>Unit tests</vh>
-<v t="edream.112303032011"><vh>New unit test ideas</vh></v>
-<v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
-<v t="edream.120903094900" a="E"><vh>(Allow @ignore and orphans in @file-nosent)</vh>
-<v t="edream.110203160744.2755" a=""><vh>old_df.write</vh>
-<v t="edream.110203160744.2756"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="edream.110203160744.2757"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="edream.110203160744.2758"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
-<v t="edream.110203160744.2748" a=""><vh>&lt;&lt; put all @first lines in root &gt;&gt; (3.x)</vh></v>
-<v t="edream.110203160744.2759"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
-<v t="edream.110203160744.2751" a=""><vh>&lt;&lt; put all @last lines in root &gt;&gt; (3.x)</vh></v>
+<v t="edream.110203160744.1111" a="M"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
+<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
+<v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2760"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="edream.110203160744.2761"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+<v t="edream.110203160744.1884"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
-<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
+<v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
+<v t="edream.121203094533"><vh>Calls to idle_redraw</vh>
+<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
+<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
+<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
 </v>
-<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+<v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
+<v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
+<v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
+<v t="edream.110203160744.1305"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
+<v t="edream.110203160744.1306"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
+<v t="edream.110203160744.1307"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
+<v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
+<v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -16187,6 +16282,7 @@ def inExpandedVisibleArea (self,y1):
 def redraw (self,event=None):
 	
 	# trace()
+	# import traceback ; traceback.print_stack()
 	
 	if self.updateCount == 0 and not self.redrawScheduled:
 		self.redrawScheduled = true
@@ -16218,7 +16314,7 @@ def redraw_now (self):
 		# trace("dragging",self.drag_v)
 		return
 
-	# trace()
+	# trace(frame)
 	# print_bindings("canvas",self.canvas)
 
 	self.expandAllAncestors(self.currentVnode())
@@ -21324,7 +21420,8 @@ closeFlag = (
 	# Create all the other entries.
 	i = 3
 	for name in c.recentFiles:
-		callback = lambda f=frame,name=name:c.openRecentFile(name)
+		def callback (event=None,c=c,name=name): # 12/9/03
+			c.openRecentFile(name)
 		label = "%d %s" % (i-2,computeWindowTitle(name))
 		self.add_command(recentFilesMenu,label=label,command=callback,underline=0)
 		i += 1</t>
@@ -23290,9 +23387,7 @@ def file_date (file,format=None):
 	
 	"""Update the body pane at idle time."""
 
-	if 0:
-		if ch: trace(ch,ord(ch))
-		else: trace(`ch`)
+	# trace(ch,ord(ch))
 
 	c = self.c
 	if not c or not v or v != c.currentVnode():
@@ -23336,7 +23431,7 @@ if ch not in ('\n','\r',chr(8)):
 	if (ch == None or len(ch) == 0) and body == s[:-1]:
 		return "break"
 	
-# print `ch`,len(body),len(s)</t>
+# print repr(ch),len(body),len(s)</t>
 <t tx="edream.110203160744.1304">@ Tk will add a newline only if:
 1. A real change has been made to the Tk.Text widget, and
 2. the change did _not_ result in the widget already containing a newline.
@@ -23364,7 +23459,7 @@ else:
 	# trace("true")
 	removeTrailing = true
 	
-# trace(`ch`+","+`removeTrailing`)
+# trace(ch,removeTrailing)
 
 
 </t>
@@ -23406,7 +23501,7 @@ if undoType != "Change":
 
 		w = computeWidth(prev,c.tab_width)
 		w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-		# print "prev w:" + `w` + ", prev chars:" + `prev`
+		# trace("prev w:",w,"prev chars:",prev)
 		c.frame.bodyCtrl.delete("insert -1c")
 		c.frame.bodyCtrl.insert("insert",' ' * w2)
 	
@@ -23423,7 +23518,7 @@ if undoType != "Change":
 		if all_ws:
 			w = computeWidth(prev,c.tab_width)
 			w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-			# print "prev w:" + `w` + ", prev chars:" + `prev`
+			# trace("prev w:",w,"prev chars:",prev)
 			c.frame.bodyCtrl.delete("insert -1c")
 			c.frame.bodyCtrl.insert("insert",' ' * w2)</t>
 <t tx="edream.110203160744.1307">s = c.frame.body.getAllText()
@@ -27462,7 +27557,6 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 		if os_path_exists(fileName):
 			ok, frame = openWithFileName(fileName,None)
 			if ok:
-				# print fileName
 				return frame.c,frame
 	
 	# Create a new frame &amp; indicate it is the startup window.
@@ -27474,7 +27568,8 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 	if fileName:
 		es("File not found: " + fileName)
 
-	return c,frame</t>
+	return c,frame
+</t>
 <t tx="edream.110203160744.1588">def closeLeoWindow (self,frame):
 	
 	"""Attempt to close a Leo window.
@@ -27512,7 +27607,7 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 	
 	if self.afterHandler != None:
 		# print "finishQuit: cancelling",self.afterHandler
-		if app.gui.guiName == "tkinter":
+		if app.gui.guiName() == "tkinter":
 			self.root.after_cancel(self.afterHandler)
 		self.afterHandler = None
 
@@ -27523,7 +27618,8 @@ You may download Python 2.1 and Python 2.2 from http://python.org/download/
 	
 	self.destroyAllOpenWithFiles()
 	
-	app.gui.destroySelf()</t>
+	app.gui.destroySelf()
+</t>
 <t tx="edream.110203160744.1590">def onQuit (self):
 	
 	app = self
@@ -29305,8 +29401,8 @@ elif ext == ".c" or ext == ".cpp" or ext == ".cxx":
 	s = toUnicode(s,self.encoding)
 	file.close()
 except:
-	es("can not read " + fileName)
-	es_exception()
+	es("can not open " + fileName)
+	import leoTest ; leoTest.fail()
 	return None</t>
 <t tx="edream.110203160744.1711"></t>
 <t tx="edream.110203160744.1712"></t>
@@ -31197,6 +31293,7 @@ self.expansionLevel = 0  # The expansion level of this outline.
 self.expansionNode = None # The last node we expanded or contracted.
 self.changed = false # true if any data has been changed since the last save.
 self.loading = false # true if we are loading a file: disables c.setChanged()
+self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 
 # For tangle/untangle
 self.tangle_errrors = 0
@@ -31727,7 +31824,6 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
 	&lt;&lt; create the first tree node &gt;&gt;
 
 	self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-	self.body.createBindings(frame)
 
 	v = c.currentVnode()
 	if not doHook("menu1",c=c,v=v):
@@ -31738,7 +31834,9 @@ vList = [] ; tDict = {} # Remove these references immediately.</t>
 	app.windowList.append(frame)
 	
 	c.initVersion()
-	c.signOnWithVersion()</t>
+	c.signOnWithVersion()
+	
+	self.body.createBindings(frame)</t>
 <t tx="edream.110203160744.1881">frame.top = top = Tk.Toplevel()
 gui.attachLeoIcon(top)
 top.title(frame.title)
@@ -31797,6 +31895,7 @@ v.initHeadString("NewHeadline")
 v.moveToRoot()
 
 c.beginUpdate()
+c.selectVnode(v)
 c.redraw()
 c.frame.getFocus()
 c.editVnode(v)
@@ -33493,8 +33592,8 @@ Sze Tan</t>
 	s = toUnicode(s,self.encoding)
 	file.close()
 except:
-	es("exception while reading " + fileName)
-	es_exception()
+	es("Can not open " + fileName, color="blue")
+	import leoTest ; leoTest.fail()
 	return</t>
 <t tx="edream.110203160744.2000"># This code is similar to atFile::scanHeader.
 
@@ -36018,16 +36117,8 @@ def getImpliedFont (self):
 <t tx="edream.110203160744.2203">def hide (self):
 	
 	"""Hide the font panel."""
-	
-	c = self.c
-	
-	# c.frame.top.resizable(1,1)
-	
-	if 1: # Hide the window, preserving its position.
-		self.top.withdraw()
-	else: # works.
-		c.frame.fontPanel=None
-		self.top.destroy()</t>
+
+	self.top.withdraw()</t>
 <t tx="edream.110203160744.2204">def revertIvars (self):
 	
 	c = self.c
@@ -36668,7 +36759,8 @@ def deleteRange (self,index1,index2):
 	before = toUnicode(t.get("1.0",i),app.tkEncoding)
 	sel    = toUnicode(t.get(i,j),    app.tkEncoding)
 	after  = toUnicode(t.get(j,"end-1c"),app.tkEncoding)
-
+	
+	# trace(i,j)
 	return before,sel,after</t>
 <t tx="edream.110203160744.2303">def getTextRange (self,index1,index2):
 	
@@ -36695,6 +36787,7 @@ def deleteRange (self,index1,index2):
 		t.insert("end",after)
 
 	gui.setTextSelection(t,sel_start,sel_end)
+	# trace(sel_start,sel_end)
 	
 	return t.index(sel_start), t.index(sel_end)</t>
 <t tx="edream.110203160744.2305">def getBodyPaneHeight (self):
@@ -36769,7 +36862,9 @@ def getBodyPaneWidth (self):
 <t tx="edream.110203160744.2320">def setTextSelection (self,i,j=None):
 	
 	# Allow the user to pass either a 2-tuple or two separate args.
-	if len(i) == 2:
+	if i is None:
+		i,j = "1.0","1.0"
+	elif len(i) == 2:
 		i,j = i
 
 	app.gui.setTextSelection(self.bodyCtrl,i,j)</t>
@@ -48114,8 +48209,10 @@ def importFlattenedOutline (self,files):
 	array = string.split(s,"\n")
 	file.close()
 except:
-	es_exception()
-	array = []</t>
+	es("Can not open " + fileName, color="blue")
+	import leoTest ; leoTest.fail()
+	return
+</t>
 <t tx="edream.110203160744.3121"># return the headline level of s,or -1 if the string is not a MORE headline.
 def moreHeadlineLevel (self,s):
 
@@ -48266,7 +48363,9 @@ while i &lt; len(s):
 	try: # Read the file into s.
 		f = open(fileName)
 		s = f.read()
-	except: s = None
+	except:
+		es("Can not import " + fileName, color="blue")
+		return
 
 	&lt;&lt; Create a symbol table of all section names &gt;&gt;
 	&lt;&lt; Create nodes for limbo text and the root section &gt;&gt;
@@ -49308,7 +49407,7 @@ line_delim, start_delim and end_delim are the comment delimiters.
 
 def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
 
-	i = 0 ; result = "" ; first = true
+	i = 0 ; result = [] ; first = true
 	while i &lt; len(s):
 		start = i # The start of the next syntax element.
 		if first or is_nl(s,i):
@@ -49323,7 +49422,9 @@ def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
 		else:
 			i += 1
 		assert(i==0 or start&lt;i)
-		result += s[start:i]
+		result.append(s[start:i])# 12/11/03: hugely faster than string concatenation.
+
+	result = ''.join(result) 
 	return result</t>
 <t tx="edream.110203160744.3195">i = skip_nl(s,i)
 i = skip_ws(s,i)
@@ -55982,14 +56083,15 @@ def yoffsetTree(self,v,v1):
 			return self.line_height
 
 	return self.line_height</t>
-<t tx="edream.110203160744.3717"></t>
-<t tx="edream.110203160744.3718"></t>
-<t tx="edream.110203160744.3719">@ Run the unit tests from test/test.leo, like this:
+<t tx="edream.110203160744.3717">@nocolor
+
+Run the unit tests from test/test.leo, like this:
 
 - update the tests here
 - save this file (LeoPy.leo)
-- run the tests in test.leo using the Execute Script command.</t>
-<t tx="edream.110203160744.3720"></t>
+- run the tests in test.leo using the Execute Script command.
+
+@color</t>
 <t tx="edream.110203160744.3721">if 0:
 	checkForMismatchedJoinedNodes()
 	
@@ -56063,26 +56165,12 @@ def yoffsetTree(self,v,v1):
 	- Topologies include tnodes somehow.
 	- Topologies include headlines somehow.
 </t>
-<t tx="edream.110203160744.3726"></t>
-<t tx="edream.110203160744.3727">class leoTestFrame (leoFrame.leoFrame):
-	
-	def __init__ (self,title):
-		
-		self.c = None # set in finishCreate
-		self.title = title
-		self.body = leoFrame.leoBody(frame=self,parentFrame=None) # A do-nothing body.
-		self.log  = leoFrame.leoLog (frame=self,parentFrame=None)  # A do-nothing log.
-		self.tree = None
-		
-	def finishCreate(self,c):
-		
-		self.c = c</t>
 <t tx="edream.110203160744.3743">"""Unit tests for Leo"""
 
 from leoGlobals import *
 import unittest
 
-import leoColor,leoCommands,leoFrame,leoNodes
+import leoColor,leoCommands,leoFrame,leoGui,leoNodes
 import Tkinter
 import os,sys
 Tk = Tkinter
@@ -56341,7 +56429,7 @@ class leoNodeError(Exception):
 <t tx="edream.110203160744.3784">def color (self):
 	
 	c = self.c
-	val = c.frame.tree.colorizer.colorize(self.temp_v,incremental=false)
+	val = c.frame.body.colorizer.colorize(self.temp_v,incremental=false)
 	assert(val=="ok")</t>
 <t tx="edream.110203160744.3785">def setUp(self,*args,**keys):
 
@@ -56362,7 +56450,7 @@ class leoNodeError(Exception):
 <t tx="edream.110203160744.3788"></t>
 <t tx="edream.110203160744.3789">def makeEditBodySuite(testParentHeadline,tempHeadline):
 	
-	"""Create a colorizer test for every descendant of testParentHeadline.."""
+	"""Create an Edit Body test for every descendant of testParentHeadline.."""
 	
 	u = testUtils() ; c = top() ; v = c.currentVnode()
 	root = u.findRootNode(v)
@@ -56372,57 +56460,123 @@ class leoNodeError(Exception):
 	# Create the suite and add all test cases.
 	suite = unittest.makeSuite(unittest.TestCase)
 	for v in vList:
-		v1 = v.firstChild()
-		v2 = v1.next()
-		test = editBodyTestCase(c,v,v1,v2,temp_v)
-		suite.addTest(test)
+		before = u.findNodeInTree(v,"before")
+		after  = u.findNodeInTree(v,"after")
+		sel    = u.findNodeInTree(v,"selection")
+		ins    = u.findNodeInTree(v,"insert")
+		if before and after:
+			test = editBodyTestCase(c,v,before,after,sel,ins,temp_v)
+			suite.addTest(test)
+		else:
+			print 'missing "before" or "after" for', v.headString()
 
-	return suite
-</t>
+	return suite</t>
 <t tx="edream.110203160744.3790">class editBodyTestCase(unittest.TestCase):
 	
 	"""Data-driven unit tests for Leo's edit body commands."""
 	
 	@others</t>
-<t tx="edream.110203160744.3791">def __init__ (self,c,parent,v1,v2,temp_v):
+<t tx="edream.110203160744.3791">def __init__ (self,c,parent,before,after,sel,ins,temp_v):
 	
 	# Init the base class.
 	unittest.TestCase.__init__(self)
 
 	self.c = c
 	self.parent = parent
-	self.v1 = v1
-	self.v2 = v2
+	self.before = before
+	self.after  = after
+	self.sel    = sel # Two lines giving the selection range in tk coordinates.
+	self.ins    = ins # One line giveing the insert point in tk coordinate.
 	self.temp_v = temp_v
 	
-	self.old_v = c.currentVnode()</t>
+	self.old_v = c.currentVnode()
+	
+	self.wasChanged = c.changed</t>
 <t tx="edream.110203160744.3792">def editBody (self):
+	
+	c = self.c ; temp_v = self.temp_v ; after = self.after
 
 	# Compute the result in temp_v.bodyString()
 	commandName = self.parent.headString()
-	command = getattr(self.c,commandName)
+	command = getattr(c,commandName)
 	command()
 	
 	# Compare the computed result to the reference result.
-	new_text = self.temp_v.bodyString()
-	ref_text = self.v2.bodyString()
+	new_text = temp_v.bodyString().rstrip()
+	ref_text = after.bodyString().rstrip()
+
 	if new_text != ref_text:
-		print "test failed"
+		print ; print "test failed", commandName
 		trace("new",new_text)
 		trace("ref",ref_text)
+		
+	assert(new_text == ref_text)
+	
+	# Compare subtrees.
+	
+	assert(temp_v.numberOfChildren() == after.numberOfChildren())
+	
+	ref_child = after.firstChild()
+	new_child = temp_v.firstChild()
+	
+	while new_child:
+		new_text = new_child.bodyString().rstrip()
+		ref_text = ref_child.bodyString().rstrip()
 
-	assert(new_text == ref_text)</t>
-<t tx="edream.110203160744.3793">def setUp(self,*args,**keys):
+		if new_text != ref_text:
+			print ; print "test failed", commandName
+			trace("new",new_text)
+			trace("ref",ref_text)
+		
+		assert(new_text == ref_text)
+		
+		new_child = new_child.next()
+		ref_child = ref_child.next()</t>
+<t tx="edream.110203160744.3793"># Warning: this is Tk-specific code.
 
-	# Initialize the text in the temp node.
-	text = self.v1.bodyString()
-	self.c.selectVnode(self.temp_v)
-	self.temp_v.t.setTnodeText(text,app.tkEncoding)
-	self.c.frame.body.setSelectionAreas(None,text,None)</t>
+def setUp(self,*args,**keys):
+	
+	c = self.c ; temp_v = self.temp_v
+	
+	# Delete all children of temp node.
+	while temp_v.firstChild():
+		temp_v.firstChild().doDelete(temp_v)
+
+	text = self.before.bodyString()
+	
+	temp_v.t.setTnodeText(text,app.tkEncoding)
+	c.selectVnode(self.temp_v)
+	
+	t = c.frame.body.bodyCtrl
+	if self.sel:
+		s = self.sel.bodyString()
+		lines = s.split('\n')
+		app.gui.setTextSelection(t,lines[0],lines[1])
+
+	if self.ins:
+		s = self.ins.bodyString()
+		lines = s.split('\n')
+		app.gui.setInsertPoint(t,lines[0])
+		
+	if not self.sel and not self.ins:
+		app.gui.setInsertPoint(t,"1.0")
+		app.gui.setTextSelection(t,"1.0","1.0")
+</t>
 <t tx="edream.110203160744.3794">def tearDown (self):
 	
-	self.temp_v.t.setTnodeText("",app.tkEncoding)
-	self.c.selectVnode(self.old_v)</t>
+	c = self.c ; temp_v = self.temp_v
+	
+	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.clearDirty()
+	
+	if not self.wasChanged:
+		c.setChanged (false)
+		
+	# Delete all children of temp node.
+	while temp_v.firstChild():
+		temp_v.firstChild().doDelete(temp_v)
+
+	c.selectVnode(self.old_v)</t>
 <t tx="edream.110203160744.3795">def runTest(self):
 
 	self.editBody()</t>
@@ -56600,28 +56754,8 @@ elif undoType == "De-Hoist":
 - The selection is not set properly afterwards.</t>
 <t tx="edream.110403112538">@nocolor
 
-- Support enable/disable in base leoLog class.
-
-- nullFrame class must have option to add nullUndoer (don't do this by default).
-	
-Do we need a nullConfig class?
-
-Script-find/change:
-	- Create a utility to preprocess script (for use with find/change scripts)
-	- Backslashes not handled properly in executeScript!!
-
-email re pychecker
-	- Control, setting options, not just new checks.
-
-Regression tests:
-	- For all commands.
-		- Especially import/export read/write commands.
-		- Especially batch find/change commands.
-	- For all plugins.
-	- Script to run pychecker on all plugin .py files.
-
-@color
-</t>
+- Email re Linux install script.
+- Fix recent files bug.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -56980,7 +57114,6 @@ The fix was:
 	# Gui-independent data
 	self.es_newlines = 0 # newline count for this log stream
 	self.openDirectory = ""
-	self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 	self.saved=false # True if ever saved
 	self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
 	self.startupWindow=false # True if initially opened window
@@ -58089,10 +58222,8 @@ self.stopAfterMismatchVar        = Tk.IntVar()</t>
 	
 	"""Bring the tkinter Font Panel to the front."""
 	
-	frame = self.frame
-	frame.top.deiconify()
-	frame.top.lift()
-</t>
+	self.top.deiconify()
+	self.top.lift()</t>
 <t tx="edream.111203201914">At long last I realized that the gui-specific app.gui class should have an associated utils class to handle gui-specific routines that used to be in leoGlobals.py.
 
 The pattern is:
@@ -58237,9 +58368,12 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
 	
-	focus = c.frame.top.focus_displayof()
-	if focus != widget:
-		widget.focus_set()</t>
+	# trace(c)
+	
+	if c.frame.top:
+		focus = c.frame.top.focus_displayof()
+		if focus != widget:
+			widget.focus_set()</t>
 <t tx="edream.111303093945.4">def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 	
 	# trace(idleTimeHookHandler)
@@ -59861,7 +59995,6 @@ def selectAllText (self):
 	self.selection = 0,len(self.s)
 	
 def setTextSelection (self,i,j=None):
-	trace(i,j)
 	if i is None:
 		self.selection = 0,0
 	elif j is None:
@@ -60047,13 +60180,16 @@ def scrollDown (self):
 	n2 = self.scanToEndOfLine(end)
 
 	before = self.s[:n1]
-	sel    = self.s[n1:n2+1]
+	sel    = self.s[n1:n2] # 12/8/03 was n2+1
 	after  = self.s[n2+1:]
-	
+
 	before = toUnicode(before,app.tkEncoding)
 	sel    = toUnicode(sel,   app.tkEncoding)
 	after  = toUnicode(after ,app.tkEncoding)
-	return before,sel,after</t>
+	
+	trace(n1,n2)
+	return before,sel,after
+</t>
 <t tx="edream.112103154310">def setScript (self,script=None,scriptFileName=None):
 
 	self.script = script
@@ -60256,20 +60392,20 @@ class undoer (baseUndoer):
 <t tx="edream.112203191210.1"></t>
 <t tx="edream.112303032011">@nocolor
 
-- (done) create app.unitTestDict for communication between tests and between tests and code.
+- Have all tests start with test: in the headline.
 
-- Use menu table in leoMenu.py to get list of all commands.
+- Create makeGeneralCommandTestSuite
+	- Support the following children:
+		dialog, before, after, etc.
+		input, output,
+		trace, etc.
 
-- Have dialogs return a predefined value if app.unitTestDict.get("dialogName") is not None.
-	(Can this be done at the gui level?)
+- Change selection &amp; insert to tk selection &amp; tk insert
+	- use these only if app.gui.guiName() == "tkinter"
 
-- Do undo after commands that change outline (checking the undo stack first), then check to see whether no changes actually got made.
-
-- Make changes to a null-gui test outine.
-	(Have the nullLog routine test app.unitTestDict.get("disableLog")\
-
-- Have the nullGui create a nullUndoer by default
-	(but allow the possibility of leaving the full undoer in place.)</t>
+- Test outline commands.
+	- Call undo after each command
+</t>
 <t tx="edream.112303042302"># Traces _always_ get printed.</t>
 <t tx="edream.112303052021"></t>
 <t tx="edream.112303052021.1">This "real" test exposed several problems:
@@ -60600,7 +60736,6 @@ tk/Tkinter.py", line 1345, in __call__
 AttributeError: 'NoneType' object has no attribute 'commands'</t>
 <t tx="edream.120203084427"></t>
 <t tx="edream.120203105455"></t>
-<t tx="edream.120203124941.1"># Test each command and plugin.</t>
 <t tx="edream.120203130055"></t>
 <t tx="edream.120203130055.1">from leoGlobals import *
 import leoConfig
@@ -60923,6 +61058,7 @@ try:
 	file.close()
 except:
 	es("Can not open: " + manager_path)
+	import leoTest ; leoTest.fail()
 	return</t>
 <t tx="edream.120603095416"></t>
 <t tx="edream.120603095416.1">Plugins are now loaded in the order in which they appear in pluginsManager.txt.
@@ -61019,22 +61155,6 @@ I do not know which is the "correct behaviour" but the colorizer should be consi
 </t>
 <t tx="edream.120803101918"></t>
 <t tx="edream.120803102832"></t>
-<t tx="edream.120803102832.1">@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2322452
-By: billp9619
-
-The RecentFiles list appears with files listed but when selected nothing happens.
-
-Log pane:
-
-Leo Log Window...
-Leo 4.1 beta 5, build  1.51 , December 5, 2003
-Python 2.2.1, Tk 8.3.2
-
-leoConfig.txt encoding: utf-8
-Text encoding: cp1252
-leoID = id9619</t>
 <t tx="edream.120803143354"></t>
 <t tx="edream.120803161153">@nocolor
 
@@ -61100,12 +61220,269 @@ This is the behavior of both 4.0.3 and 4.1.</t>
 
 In short, the present code appears to be reasonably solid.  I should withdraw the 4.0.4 code asap.</t>
 <t tx="edream.120803170142.2">- pluginsManager.text
+
 - Import Derived File command now puts up a dialog.
+
+- @ignored and orphan nodes now valid in @file-nosent trees.
+
+- Created app.unitTestDict for communication between tests and between tests and code.
 </t>
 <t tx="edream.120903094900"></t>
 <t tx="edream.120903112324"># Line 1108: _multiples = [(2., Numeric.log10(2.)), (5., Numeric.log10(5.))]
 
 I suspect this was a file that contained both tabs and spaces.</t>
 <t tx="edream.120903113758"></t>
+<t tx="edream.120903131550"></t>
+<t tx="edream.120903131550.1">The set font dialog would only come up once.</t>
+<t tx="edream.121003065108"></t>
+<t tx="edream.121103044318">- Support enable/disable in base leoLog class.
+
+- nullFrame class must have option to add nullUndoer (don't do this by default).
+	
+Do we need a nullConfig class?
+
+Script-find/change:
+	- Create a utility to preprocess script (for use with find/change scripts)
+	- Backslashes not handled properly in executeScript!!</t>
+<t tx="edream.121103044856.1">- Have log classes increment a count.
+	Can be used to ensure that messages did or did not occcur.
+
+- Make changes to a null-gui test outine.
+	Have the nullLog routine test app.unitTestDict.get("disableLog")
+
+- Have the nullGui create a nullUndoer by default
+	But allow the possibility of leaving the full undoer in place.</t>
+<t tx="edream.121103044856.2">- Test batch find/change commands.
+
+- Script to run pychecker on all plugin .py files.
+
+- (?) Use menu table in leoMenu.py to get list of all commands.</t>
+<t tx="edream.121103110000">class unitTestGui(leoGui):
+	
+	"""gui class for use by unit tests."""
+	
+	@others</t>
+<t tx="edream.121103110000.1">def oops(self):
+	
+	trace("unitTestGui",callerName(2))
+	
+	if 0: # Fail the unit test.
+		assert 0,"call to undefined method in unitTestMethod class"</t>
+<t tx="edream.121103110123">def runAboutLeoDialog(self,version,copyright,url,email):
+	return self.simulateDialog("aboutLeoDialog")
+	
+def runAskLeoIDDialog(self):
+	return self.simulateDialog("leoIDDialog")
+
+def runAskOkDialog(self,title,message=None,text="Ok"):
+	return self.simulateDialog("okDialog","Ok")
+
+def runAskOkCancelNumberDialog(self,title,message):
+	return self.simulateDialog("numberDialog",-1)
+	
+def runOpenFileDialog(self,title,filetypes,defaultextension):
+	return self.simulateDialog("openFileDialog")
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+	return self.simulateDialog("saveFileDialog")
+
+def runAskYesNoDialog(self,title,message=None):
+	return self.simulateDialog("yesNoDialog","no")
+
+def runAskYesNoCancelDialog(self,title,
+	message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
+	return self.simulateDialog("yesNoCancelDialog","cancel")</t>
+<t tx="edream.121103111146">def __init__ (self,dict,trace=false):
+	
+	self.dict = dict
+	self.oldGui = app.gui
+	self.trace=trace
+	
+	# Init the base class
+	leoGui.__init__ (self,"unitTestGui")
+
+	app.gui = self
+	
+def destroySelf (self):
+	
+	app.gui = self.oldGui</t>
+<t tx="edream.121103112414"></t>
+<t tx="edream.121103112414.1">def makeImportExportSuite(testParentHeadline,tempHeadline):
+	
+	"""Create an Edit Body test for every descendant of testParentHeadline.."""
+	
+	u = testUtils() ; c = top() ; v = c.currentVnode()
+	root = u.findRootNode(v)
+	temp_v = u.findNodeInTree(root,tempHeadline)
+	vList = u.findChildrenOf(testParentHeadline)
+
+	# Create the suite and add all test cases.
+	suite = unittest.makeSuite(unittest.TestCase)
+	for v in vList:
+		dialog = u.findNodeInTree(v,"dialog")
+		test = importExportTestCase(c,v,dialog,temp_v)
+		suite.addTest(test)
+
+	return suite</t>
+<t tx="edream.121103112429">class importExportTestCase(unittest.TestCase):
+	
+	"""Data-driven unit tests for Leo's edit body commands."""
+	
+	@others</t>
+<t tx="edream.121103112429.1">def __init__ (self,c,v,dialog,temp_v):
+	
+	# Init the base class.
+	unittest.TestCase.__init__(self)
+	
+	self.c = c
+	self.dialog = dialog
+	self.v = v
+	self.temp_v = temp_v
+	
+	self.gui = None
+	self.wasChanged = c.changed
+
+	self.old_v = c.currentVnode()
+</t>
+<t tx="edream.121103112429.2">def importExport (self):
+	
+	c = self.c ; v = self.v
+	
+	app.unitTestDict = {}
+
+	commandName = v.headString()
+	command = getattr(c,commandName) # Will fail if command does not exist.
+	command()
+
+	failedMethod = app.unitTestDict.get("fail")
+	self.failIf(failedMethod,failedMethod)</t>
+<t tx="edream.121103112429.3">def tearDown (self):
+	
+	c = self.c ; temp_v = self.temp_v
+	
+	if self.gui:
+		self.gui.destroySelf()
+		self.gui = None
+	
+	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.clearDirty()
+	
+	if not self.wasChanged:
+		c.setChanged (false)
+		
+	# Delete all children of temp node.
+	while temp_v.firstChild():
+		temp_v.firstChild().doDelete(temp_v)
+
+	c.selectVnode(self.old_v)</t>
+<t tx="edream.121103112429.4">def setUp(self,*args,**keys):
+	
+	c = self.c ; temp_v = self.temp_v ; d = self.dialog
+	
+	temp_v.t.setTnodeText('',app.tkEncoding)
+
+	c.selectVnode(temp_v)
+	
+	if d: # Use unitTestDialog.
+		s = d.bodyString()
+		lines = s.split('\n')
+		name = lines[0]
+		val = lines[1]
+		dict = {name: val}
+		self.gui = leoGui.unitTestGui(dict,trace=false)
+	else:
+		self.gui = None</t>
+<t tx="edream.121103112429.5">def runTest(self):
+
+	self.importExport()</t>
+<t tx="edream.121103115441">def simulateDialog (self,key,defaultVal=None):
+	
+	val = self.dict.get(key,defaultVal)
+
+	if self.trace:
+		print key, val
+
+	return val</t>
+<t tx="edream.121103120745">def set_focus(self,c,widget):
+	pass</t>
+<t tx="edream.121103121956"></t>
+<t tx="edream.121103121956.1">Dialogs return a predefined value.</t>
+<t tx="edream.121103121956.2"></t>
+<t tx="edream.121103150801">http://sourceforge.net/forum/message.php?msg_id=2329053
+By: dsalomoni
+
+I would be reluctant to run this script in a linux environment, for the following
+reasons:
+
+1) chmod 666 on the leo config file makes it writable by anybody. 
+
+2) on the other hand, leo is currently IMHO not suitable for generic linux
+installations, because it does not support per-user config files, so you actually
+need to either carve leoconfig.txt in stone (not realistic), or make it writable
+by any user as above (not advisable).
+
+3) having a single dummy leoID defeats its main purpose in a multi-user environment.
+If you could set per-user config files, the leoID could by default simply derived
+from the username.
+
+As a matter of fact, I've been suggesting to friends etc wanting to try out
+leo/install it on their systems not to do that globally.
+
+So, my view is that we could:
+
+1) in the short term, provide a simple per-user installation based for example
+on the script above, but with path defaults pointing to the user's home dir
+(and of course w/o the requirement to be root) -- with leoID generated by default
+looking at the username.
+
+2) in the medium term, provide per-user config possibilities -- this would possibly
+allow for a system-wide installation of leo and still allow configuration, per-user
+plugins, etc. But this is linked I guess to the decommissioning of/changes to
+the leoConfig.leo machinery.
+
+Davide</t>
+<t tx="edream.121103212042">def fail ():
+	
+	"""Mark a unit test as having failed."""
+	
+	app.unitTestDict["fail"] = callerName(2)</t>
+<t tx="edream.121103220800">Replaced string concatenation with list operations.</t>
+<t tx="edream.121103220800.1"></t>
+<t tx="edream.121203093714">@nocolor
+
+Leo functions perfectly normally.  When the File menu is activated,
+we get the output below to standard error.  I would not usually see
+this, since I usually invoke Leo from a button on the task bar.
+
+#----- activate File menu --------------------------------------------------
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "/usr/lib/python2.2/lib-tk/Tkinter.py", line 1316, in __call__
+    return apply(self.func, args)
+  File "/usr/lib/python2.2/lib-tk/Tkinter.py", line 436, in callit
+    apply(func, args)
+  File "leoTkinterTree.py", line 438, in idle_redraw
+    self.drawTopTree()
+  File "leoTkinterTree.py", line 723, in drawTopTree
+    self.drawTree(self.rootVnode(),root_left,root_top,0,0)
+  File "leoTkinterTree.py", line 733, in drawTree
+    h = self.drawNode(v,x,y)
+  File "leoTkinterTree.py", line 622, in drawNode
+    return self.force_draw_node(v,x,y)
+  File "leoTkinterTree.py", line 632, in force_draw_node
+    text_height = self.drawText(v,x+box_width+icon_width,y)
+  File "leoTkinterTree.py", line 656, in drawText
+    self.setNormalLabelState(v)
+  File "leoTkinterTree.py", line 1867, in setNormalLabelState
+    app.gui.set_focus(self.c,v.edit_text())
+  File "leoTkinterGui.py", line 365, in set_focus
+    focus = c.frame.top.focus_displayof()
+  File "/usr/lib/python2.2/lib-tk/Tkinter.py", line 393, in focus_displayof
+    return self._nametowidget(name)
+  File "/usr/lib/python2.2/lib-tk/Tkinter.py", line 987, in nametowidget
+    w = w.children[name]
+KeyError: #135503820#139072620
+#----- activate File menu --------------------------------------------------</t>
+<t tx="edream.121203094533"></t>
 </tnodes>
 </leo_file>
