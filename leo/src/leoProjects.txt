@@ -3040,20 +3040,18 @@ def openWithTempFilePath (self,v,ext):
 #@nonl
 #@-node:ekr.20041019080519:what I did
 #@+node:ekr.20040917061619:g.cantImport
-def cantImport (s,moduleName=""):
+def cantImport (moduleName,pluginName=None,verbose=True):
     
     """Print a "Can't Import" message and return None."""
-    
-    if moduleName and moduleName in g.app.failedPlugins:
-        return
-    
-    if moduleName:
-        message = "Can not import %s from plugin %s" % (s,moduleName)
-        g.app.failedPlugins.append(moduleName)
-    else:
-        message = "Can not import %s from unnamed plugin" % s
 
-    g.es(message,color="blue")
+    # g.trace(verbose,moduleName,repr(pluginName))
+    # if not pluginName: g.printStack()
+    
+    if verbose:
+        s = "Can not import %s" % moduleName
+        if pluginName: s += " from plugin %s" % pluginName
+        print s ; g.es(s,color="blue")
+
     return None
 #@nonl
 #@-node:ekr.20040917061619:g.cantImport
@@ -3307,7 +3305,7 @@ def replaceTargetFileIfDifferent (self):
     assert(self.outputFile is None)
     
     if self.toString:
-        return
+        return False
     
     self.fileChangedFlag = False
     if g.os_path_exists(self.targetFileName):
@@ -3317,8 +3315,10 @@ def replaceTargetFileIfDifferent (self):
         else:
             << report if the files differ only in line endings >>
             << replace the target file with the output file >>
+            return True # bwm
     else:
         << rename the output file to be the target file >>
+        return False
 #@nonl
 #@+node:ekr.20041005105605.213:<< delete the output file >>
 try: # Just delete the temp file.
@@ -3871,15 +3871,17 @@ def initWriteIvars(self,root,targetFileName,
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
-    if self.errors:
-        return
+
     # Init state from arguments.
     self.targetFileName = targetFileName
     self.sentinels = not nosentinels
     self.thinFile = thinFile
     self.toString = toString
     self.root = root
-    self.root.v.t.tnodeList = []
+    
+    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    if not self.errors: 
+        self.root.v.t.tnodeList = []
 #@nonl
 #@+node:ekr.20041005105605.16:<< init ivars for writing >>>
 @
@@ -3925,7 +3927,7 @@ def openFileForReading(self,fileName,fromString=False):
         fn = g.os_path_normpath(fn)
         try:
             # Open the file in binary mode to allow 0x1a in bodies & headlines.
-            at.inputFile = open(fn,'rb')
+            at.inputFile = self.openForRead(fn,'rb') #bwm
             << warn on read-only file >>
         except IOError:
             at.error("can not open: '@file %s'" % (fn))
@@ -4093,6 +4095,22 @@ root.v.t.tempBodyString = s
 #@nonl
 #@-node:ekr.20041005105605.28:<< handle first and last lines >>
 #@-node:ekr.20041005105605.27:readOpenFile
+#@+node:bwmulder.20041231170726:openForRead
+def openForRead(self, *args, **kw):
+    """
+    Hook for the mod_shadow plugin.
+    """
+    return open(*args, **kw)
+#@nonl
+#@-node:bwmulder.20041231170726:openForRead
+#@+node:bwmulder.20050101094804:openForWrite
+def openForWrite(self, *args, **kw):
+    """
+    Hook for the mod_shadow plugin
+    """
+    return open(*args, **kw)
+
+#@-node:bwmulder.20050101094804:openForWrite
 #@-node:ekr.20041005105605.18:Reading (top level)
 #@+node:ekr.20041005105605.29:Reading (3.x)
 #@+node:ekr.20041005105605.30:createNthChild3
@@ -4899,7 +4917,7 @@ def findChild4 (self,headline):
 #@nonl
 #@-node:ekr.20041005105605.73:findChild4
 #@+node:ekr.20041005105605.74:scanText4 & allies
-def scanText4 (self,theFile,p):
+def scanText4 (self,theFile,p,verbose=False):
     
     """Scan a 4.x derived file non-recursively."""
 
@@ -4909,7 +4927,8 @@ def scanText4 (self,theFile,p):
         s = at.readLine(theFile)
         if len(s) == 0: break
         kind = at.sentinelKind4(s)
-        # g.trace(at.sentinelName(kind),s.strip())
+        if verbose:
+            g.trace(at.sentinelName(kind),s.strip())
         if kind == at.noSentinel:
             i = 0
         else:
@@ -5648,9 +5667,10 @@ def badEndSentinel (self,expectedKind):
 
     at = self
     assert(at.endSentinelStack)
-    at.readError("Ignoring %s sentinel.  Expecting %s" %
-        (at.sentinelName(at.endSentinelStack[-1]),
-         at.sentinelName(expectedKind)))
+    s = "Ignoring %s sentinel.  Expecting %s" % (
+        at.sentinelName(at.endSentinelStack[-1]),
+        at.sentinelName(expectedKind))
+    at.readError(s)
          
 def popSentinelStack (self,expectedKind):
     
@@ -5916,8 +5936,8 @@ def readError(self,message):
     if self.errors == 0:
         g.es_error("----- error reading @file " + self.targetFileName)
         self.error(message) # 9/10/02: we must increment self.errors!
-        
-    print message
+    else:
+        print message
 
     if 0: # CVS conflicts create too many messages.
         self.error(message)
@@ -6159,7 +6179,7 @@ def openFileForWritingHelper (self,fileName,toString):
 
     try:
         at.outputFileName = at.targetFileName + ".tmp"
-        at.outputFile = open(at.outputFileName,'wb')
+        at.outputFile = self.openForWrite(at.outputFileName,'wb') # bwm
         if not at.outputFile:
             at.writeError("can not create " + at.outputFileName)
     except:
@@ -6536,6 +6556,8 @@ if kind == at.noDirective:
             at.putDocLine(s,i)
 elif kind in (at.docDirective,at.atDirective):
     assert(not at.pending)
+    if not inCode: # Bug fix 12/31/04: handle adjacent doc parts.
+        at.putEndDocLine() 
     at.putStartDocLine(s,i,kind)
     inCode = False
 elif kind in (at.cDirective,at.codeDirective):
@@ -7504,7 +7526,7 @@ def replaceTargetFileIfDifferent (self):
     assert(self.outputFile is None)
     
     if self.toString:
-        return
+        return False
     
     self.fileChangedFlag = False
     if g.os_path_exists(self.targetFileName):
@@ -7514,8 +7536,10 @@ def replaceTargetFileIfDifferent (self):
         else:
             << report if the files differ only in line endings >>
             << replace the target file with the output file >>
+            return True # bwm
     else:
         << rename the output file to be the target file >>
+        return False
 #@nonl
 #@+node:ekr.20041005105605.213:<< delete the output file >>
 try: # Just delete the temp file.
@@ -7650,6 +7674,9 @@ def writeException (self,root=None):
 def error(self,message):
 
     g.es_error(message)
+    # print
+    print message
+    # print
     self.errors += 1
 #@nonl
 #@-node:ekr.20041005105605.220:error
@@ -8041,7 +8068,7 @@ def replaceTargetFileIfDifferent (self):
     assert(self.outputFile is None)
     
     if self.toString:
-        return
+        return False
     
     self.fileChangedFlag = False
     if g.os_path_exists(self.targetFileName):
@@ -8051,8 +8078,10 @@ def replaceTargetFileIfDifferent (self):
         else:
             << report if the files differ only in line endings >>
             << replace the target file with the output file >>
+            return True # bwm
     else:
         << rename the output file to be the target file >>
+        return False
 #@nonl
 #@+node:ekr.20041005105605.213:<< delete the output file >>
 try: # Just delete the temp file.
@@ -8757,6 +8786,237 @@ except: # could be a user error
 #@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
 #@-node:ekr.20031218072017.1723:createMenuEntries
 #@-node:ekr.20041228060059:(Better handling of duplicate shortcuts)
+#@+node:ekr.20041231083430:(Fixed crasher with invalid path)
+Directory "c:\test" does not exist
+exception writing:C:\prog\leoCVS\leo\test
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2756, in write
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 3020, in writeOpenFile
+    at.putOpenLeoSentinel("@+leo-ver=4")
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 3752, in putOpenLeoSentinel
+    if not at.sentinels:
+AttributeError: atFile instance has no attribute 'sentinels'
+saved: test.leo
+#@+node:ekr.20041005105605.15:initWriteIvars
+def initWriteIvars(self,root,targetFileName,
+    nosentinels=False,
+    thinFile=False,
+    scriptWrite=False,
+    toString=False):
+
+    self.initCommonIvars()
+    << init ivars for writing >>
+    
+    self.scanAllDirectives(root)
+    if scriptWrite:
+        # Force Python comment delims for g.getScript.
+        self.startSentinelComment = "#"
+        self.endSentinelComment = None
+
+    # Init state from arguments.
+    self.targetFileName = targetFileName
+    self.sentinels = not nosentinels
+    self.thinFile = thinFile
+    self.toString = toString
+    self.root = root
+    
+    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    if not self.errors: 
+        self.root.v.t.tnodeList = []
+#@nonl
+#@+node:ekr.20041005105605.16:<< init ivars for writing >>>
+@
+When tangling, we first write to a temporary output file. After tangling is
+temporary file. Otherwise we delete the old target file and rename the temporary
+file to be the target file.
+@c
+
+self.docKind = None
+self.explicitLineEnding = False # True: an @lineending directive specifies the ending.
+self.fileChangedFlag = False # True: the file has actually been updated.
+self.shortFileName = "" # short version of file name used for messages.
+self.thinFile = False
+
+if toString:
+    self.outputFile = g.fileLikeObject()
+    self.stringOutput = ""
+    self.targetFileName = self.outputFileName = "<string-file>"
+else:
+    self.outputFile = None # The temporary output file.
+    self.stringOutput = None
+    self.targetFileName = self.outputFileName = u""
+#@nonl
+#@-node:ekr.20041005105605.16:<< init ivars for writing >>>
+#@-node:ekr.20041005105605.15:initWriteIvars
+#@-node:ekr.20041231083430:(Fixed crasher with invalid path)
+#@+node:ekr.20041231102453.4:(Fixed double doc part bug)
+#@+node:ekr.20041231102453.5:Notes
+@killcolor
+
+There is a bug in how Leo writes adjacent @doc parts in @file trees.  This is the first serious bug in the atFile read/write logic reported in several years. As I write this I realize I don't know whether the @thin logic is affected as well.  I suspect it may be.
+
+The bug happens if any node in an @file tree contains adjacent @doc parts, like this:
+
+@  first doc part
+...
+@ second doc part
+...
+
+Leo fails to write the closing #@-at sentinel that would finish the first @doc part.  (Another fix would be not to write the second #@+at sentinel.)  As a result of this bug, Leo fails to read the @file node properly and 'reverts' to the version of the code found in the .leo file.
+#@nonl
+#@-node:ekr.20041231102453.5:Notes
+#@+node:ekr.20041005105605.161:putBody
+# oneNodeOnly is no longer used.
+
+def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
+    
+    """ Generate the body enclosed in sentinel lines."""
+
+    at = self ; s = p.bodyString()
+    
+    p.v.t.setVisited() # Suppress orphans check.
+    p.v.setVisited() # Make sure v is never expanded again.
+    if not at.thinFile:
+        p.v.t.setWriteBit() # Mark the tnode to be written.
+        
+    if not at.thinFile and not s: return
+    inCode = True
+    << Make sure all lines end in a newline >>
+    i = 0
+    while i < len(s):
+        next_i = g.skip_line(s,i)
+        assert(next_i > i)
+        kind = at.directiveKind4(s,i)
+        << handle line at s[i] >>
+        i = next_i
+    if not inCode:
+        at.putEndDocLine()
+    if at.sentinels and not trailingNewlineFlag:
+        at.putSentinel("@nonl")
+#@nonl
+#@+node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+# 11/20/03: except in nosentinel mode.
+# 1/30/04: and especially in scripting mode.
+# If we add a trailing newline, we'll generate an @nonl sentinel below.
+
+if s:
+    trailingNewlineFlag = s and s[-1] == '\n'
+    if at.sentinels and not trailingNewlineFlag:
+        s = s + '\n'
+else:
+    trailingNewlineFlag = True # don't need to generate an @nonl
+#@nonl
+#@-node:ekr.20041005105605.162:<< Make sure all lines end in a newline >>
+#@+node:ekr.20041005105605.163:<< handle line at s[i]  >>
+if kind == at.noDirective:
+    if not oneNodeOnly:
+        if inCode:
+            hasRef,n1,n2 = at.findSectionName(s,i)
+            if hasRef and not at.raw:
+                at.putRefLine(s,i,n1,n2,p)
+            else:
+                at.putCodeLine(s,i)
+        else:
+            at.putDocLine(s,i)
+elif kind in (at.docDirective,at.atDirective):
+    assert(not at.pending)
+    if not inCode: # Bug fix 12/31/04: handle adjacent doc parts.
+        at.putEndDocLine() 
+    at.putStartDocLine(s,i,kind)
+    inCode = False
+elif kind in (at.cDirective,at.codeDirective):
+    # Only @c and @code end a doc part.
+    if not inCode:
+        at.putEndDocLine() 
+    at.putDirective(s,i)
+    inCode = True
+elif kind == at.allDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtAllLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.othersDirective:
+    if not oneNodeOnly:
+        if inCode: at.putAtOthersLine(s,i,p)
+        else: at.putDocLine(s,i)
+elif kind == at.rawDirective:
+    at.raw = True
+    at.putSentinel("@@raw")
+elif kind == at.endRawDirective:
+    at.raw = False
+    at.putSentinel("@@end_raw")
+    i = g.skip_line(s,i)
+elif kind == at.miscDirective:
+    at.putDirective(s,i)
+else:
+    assert(0) # Unknown directive.
+#@nonl
+#@-node:ekr.20041005105605.163:<< handle line at s[i]  >>
+#@-node:ekr.20041005105605.161:putBody
+#@-node:ekr.20041231102453.4:(Fixed double doc part bug)
+#@+node:ekr.20050101100920:(Fixed deprecation warning when saving .leo files)
+@nocolor
+
+c:\python24\lib\pickle.py:202: DeprecationWarning:
+    The 'bin' argument to Pickler() is deprecated
+
+@color
+#@nonl
+#@+node:ekr.20050101133638:@url http://docs.python.org/lib/module-pickle.html
+#@-node:ekr.20050101133638:@url http://docs.python.org/lib/module-pickle.html
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@+node:EKR.20040526204036.1:getUnknownAttribute
+def getUnknownAttribute(self,nodeType):
+    
+    """Parse an unknown attribute in a <v> or <t> element."""
+    
+    # New in 4.2.  The unknown tag has been pickled and hexlify'd.
+    attr,val = self.getUnknownTag()
+    if not attr:
+        return None,None
+    try:
+        binString = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+    except TypeError:
+        # Assume that Leo 4.1 wrote the attribute.
+        # g.trace('4.1 val:',val2)
+        return attr,val
+    try:
+        # No change needed to support protocols.
+        val2 = pickle.loads(binString)
+        # g.trace('v.3 val:',val2)
+        return attr,val2
+    except (pickle.UnpicklingError,ImportError):
+        return attr,val
+#@nonl
+#@-node:EKR.20040526204036.1:getUnknownAttribute
+#@-node:ekr.20050101100920:(Fixed deprecation warning when saving .leo files)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -8926,15 +9186,17 @@ def initWriteIvars(self,root,targetFileName,
         # Force Python comment delims for g.getScript.
         self.startSentinelComment = "#"
         self.endSentinelComment = None
-    if self.errors:
-        return
+
     # Init state from arguments.
     self.targetFileName = targetFileName
     self.sentinels = not nosentinels
     self.thinFile = thinFile
     self.toString = toString
     self.root = root
-    self.root.v.t.tnodeList = []
+    
+    # Bug fix: 12/31/04: Init all other ivars even if there is an error.
+    if not self.errors: 
+        self.root.v.t.tnodeList = []
 #@nonl
 #@+node:ekr.20041005105605.16:<< init ivars for writing >>>
 @
@@ -10341,7 +10603,7 @@ except ImportError:
     print "Error importing leoConfig.py"
 #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 #@+node:ekr.20040411081633:<< start psycho >>
-if g.app.use_psyco:
+if g.app and g.app.use_psyco:
     try:
         import psyco
         if 0:
@@ -10440,6 +10702,10 @@ def computeHomeDir():
     encoding = startupEncoding()
     dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=dotDir)
+    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=dotDir)
+    
     home = g.os_path_abspath(home,encoding)
     
     if (
@@ -11387,10 +11653,14 @@ def putUnknownAttributes (self,torv,toString=False):
     for key in attrDict.keys():
         try:
             val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
+            try:
+                # Protocol argument is new in Python 2.3
+                # Use protocol 1 for compatibility with bin.
+                s = pickle.dumps(val,protocol=1)
+            except TypeError:
+                s = pickle.dumps(val,bin=True)
             attr = ' %s="%s"' % (key,binascii.hexlify(s))
             self.put(attr)
-
         except pickle.PicklingError:
             # New in 4.2 beta 1: keep going after error.
             g.es("ignoring non-pickleable attribute %s in %s" % (
@@ -11416,42 +11686,41 @@ def doHook(tag,*args,**keywords):
     
     if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
         return None
-    
-    # New in 4.2.  We call the idle-time handlers for all open windows.
-    c = keywords.get("c")
-    
-    if 0: # Don't use trace here!
-        if tag != "idle":
-            print "doHook",tag,c
+        
+    if args:
+        # A minor error in Leo's core.
+        print "***ignoring args param.  tag = %s" % tag
 
     if not g.app.config.use_plugins:
         if tag == "start1":
-            g.es("Plugins disabled: use_plugins is 0",color="blue")
+            s = "Plugins disabled: use_plugins is 0"
+            print s ; g.es(s,color="blue")
         return None
-    elif c and c.hookFunction:
-        try:
-            return c.hookFunction(tag,keywords)
-        except:
-            g.es("exception in c.hookFunction for " + c.frame.getTitle())
-    elif g.app.hookFunction:
-        try:
-            return g.app.hookFunction(tag,keywords)
-        except:
-            g.es("exception in app.hookFunction")
-    else:
-        import leoPlugins
-        try:
-            g.app.hookFunction = leoPlugins.doPlugins
-            return app.hookFunction(tag,keywords)
-        except:
-            g.app.hookFunction = None
-            g.es("exception in plugin")
 
-    # Handle all exceptions.
-    g.es_exception()
-    g.app.hookError = True # Supress this function.
-    g.app.idleTimeHook = False # Supress idle-time hook
-    return None # No return value
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+            
+    # Get the hook handler function.  Usually this is doPlugins.
+    f = (c and c.hookFunction) or g.app.hookFunction
+    if not f:
+        import leoPlugins
+        g.app.hookFunction = f = leoPlugins.doPlugins
+
+    if 0: # Don't use trace here!
+        if 1:
+            old_c = keywords.get('old_c')
+            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
+        else:
+            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
+        
+    try:
+        # Pass the hook to the hook handler.
+        return f(tag,keywords)
+    except Exception:
+        g.es_exception()
+        g.app.hookError = True # Supress this function.
+        g.app.idleTimeHook = False # Supress idle-time hook
+        return None # No return value
 #@nonl
 #@-node:ekr.20031218072017.1596:g.doHook
 #@-node:ekr.20041127055549:(Don't call plugins for null gui's)
@@ -11510,11 +11779,12 @@ def drawTopTree (self):
 #@+node:ekr.20040803072955.53:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=False):
 
-    tree = self ; v = p.v
+    tree = self ; c = self.c ; v = p.v
     yfirst = ylast = y
     h1 = None
     
-    data = g.doHook("draw-sub-outline",tree=tree,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+    data = g.doHook("draw-sub-outline",tree=tree,
+        c=c,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
     if data is not None: return data
     
     while p: # Do not use iterator.
@@ -12029,7 +12299,6 @@ def hash (self):
 
     c = self
     if c.mFileName:
-        # return hash(c.mFileName)
         return g.os_path_abspath(c.mFileName).lower()
     else:
         return 0
@@ -13195,7 +13464,6 @@ def hash (self):
 
     c = self
     if c.mFileName:
-        # return hash(c.mFileName)
         return g.os_path_abspath(c.mFileName).lower()
     else:
         return 0
@@ -17757,6 +18025,7 @@ def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
         << read the file into lines >>
     if n is None:
         << get n, the line number, from a dialog >>
+        n = self.applyLineNumberMappingIfAny(n) #bwm
     if n==1:
         p = root ; n2 = 1 ; found = True
     elif n >= len(lines):
@@ -17815,9 +18084,7 @@ path = d.get("path")
 fileName = g.os_path_join(path,fileName)
 
 try:
-    theFile=open(fileName)
-    lines = theFile.readlines()
-    theFile.close()
+    lines=self.gotoLineNumberOpen(fileName) # bwm
 except:
     g.es("not found: " + fileName)
     return
@@ -18675,8 +18942,24 @@ Doing so gives you a way to add Pmw easily and any other 3rd party libs Leo ever
 These functions use imp.load_module, and that is equivalent to reload!
 
 Calling any of these functions to reload Leo files will crash Leo!
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (moduleName,pluginName=None,verbose=True):
+    
+    """Print a "Can't Import" message and return None."""
+
+    # g.trace(verbose,moduleName,repr(pluginName))
+    # if not pluginName: g.printStack()
+    
+    if verbose:
+        s = "Can not import %s" % moduleName
+        if pluginName: s += " from plugin %s" % pluginName
+        print s ; g.es(s,color="blue")
+
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
 #@+node:ekr.20041219095213.1:g.importModule
-def importModule (moduleName,verbose=False):
+def importModule (moduleName,pluginName=None,verbose=False):
 
     '''Try to import a module as Python's import command does.
 
@@ -18690,39 +18973,39 @@ def importModule (moduleName,verbose=False):
             theFile,pathname,description = data
             module = imp.load_module(moduleName,theFile,pathname,description)
         except ImportError:
-            if verbose and not module:
-                s = "can not import %s" % moduleName
-                print s ; g.es(s,color="blue")
+            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
         except:
             g.es("unexpected exception in g.import",color='blue')
             g.es_exception()
     finally:
         if theFile: theFile.close()
+
     return module
 #@nonl
 #@-node:ekr.20041219095213.1:g.importModule
 #@+node:ekr.20041219071407:g.importExtension
-def importExtension (moduleName,verbose=False):
+def importExtension (moduleName,pluginName=None,verbose=False):
 
     '''Try to import a module.  If that fails,
     try to import the module from Leo's extensions directory.
 
     moduleName is the module's name, without file extension.'''
     
-    module = g.importModule(moduleName,verbose=False)
+    # g.trace(verbose,moduleName,pluginName)
+    
+    module = g.importModule(moduleName,pluginName=pluginName,verbose=False)
 
     if not module:
-        module = g.importFromPath(moduleName,g.app.extensionsDir,verbose=False)
-
-    if verbose and not module:
-        s = "can not import extension %s" % moduleName
-        print s ; g.es(s,color="blue")
+        module = g.importFromPath(moduleName,g.app.extensionsDir,
+            pluginName=pluginName,verbose=verbose)
 
     return module
 #@nonl
 #@-node:ekr.20041219071407:g.importExtension
 #@+node:ekr.20031218072017.2278:g.importFromPath
-def importFromPath (name,path,verbose=False):
+def importFromPath (name,path,pluginName=None,verbose=False):
+    
+    # g.trace(verbose,name,pluginName)
 
     try:
         theFile = None ; data = None ; result = None
@@ -18738,9 +19021,7 @@ def importFromPath (name,path,verbose=False):
             try:
                 data = imp.find_module(mod_name,[path]) # This can open the file.
             except ImportError:
-                if verbose:
-                    s = "Can not import %s from %s" % (mod_name,path)
-                    print s ; g.es(s,color="blue")
+                pass
             if data:
                 theFile,pathname,description = data
                 try:
@@ -18753,9 +19034,10 @@ def importFromPath (name,path,verbose=False):
     # Put no return statements before here!
     finally: 
         if theFile: theFile.close()
-
+        
+    if not result:
+        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
     return result
-#@nonl
 #@-node:ekr.20031218072017.2278:g.importFromPath
 #@-node:ekr.20041219095213:import wrappers
 #@+node:ekr.20031218072017.1934:run & allies
@@ -18846,7 +19128,7 @@ except ImportError:
     print "Error importing leoConfig.py"
 #@-node:ekr.20041219072416.1:<< import leoNodes and leoConfig >>
 #@+node:ekr.20040411081633:<< start psycho >>
-if g.app.use_psyco:
+if g.app and g.app.use_psyco:
     try:
         import psyco
         if 0:
@@ -18945,6 +19227,10 @@ def computeHomeDir():
     encoding = startupEncoding()
     dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=dotDir)
+    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=dotDir)
+    
     home = g.os_path_abspath(home,encoding)
     
     if (
@@ -19089,6 +19375,77 @@ def reportDirectories(verbose):
 #@-node:ekr.20041130093254:reportDirectories
 #@-node:ekr.20031218072017.1934:run & allies
 #@-node:ekr.20041128172446:(added a 3rd party extension mechanism)
+#@+node:ekr.20041231112215:(Patched computeHomeDir to handle references to other vars)
+#@+node:ekr.20041231112215.1:Original posting
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2915750
+By: cmbanker
+
+The HOME environment variable on windows machines is often a referrence to yet
+another environment variable.  i.e.  %HOME% --> %USERENVIRONMENT% --> "C:\Documents
+and Settings\...."
+
+The fix: Patch computeHomeDir() to test the first retrieval of the %HOME% var and grab
+it's results if it is infact another enviroment variable.
+
+@color
+
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    dotDir = g.os_path_abspath('./',encoding)
+    
+    home = os.getenv('HOME',default=dotDir)
+    
+    #verify that we've not got an indirect reference to true home
+    if (home[0]=='%') and ( home[-1]=='%'):
+	    #yep, must be a win32 machine - get this one
+	    home = os.getenv(home[1:-1],default=dotDir)
+
+
+    home = g.os_path_abspath(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    return home
+#@-node:ekr.20041231112215.1:Original posting
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=dotDir)
+    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=dotDir)
+    
+    home = g.os_path_abspath(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@-node:ekr.20041231112215:(Patched computeHomeDir to handle references to other vars)
 #@-node:ekr.20041228052527.2:New features...
 #@+node:ekr.20041228052527.3:Plugins...
 #@+node:EKR.20040424151321:(Improved status line plugin)
@@ -19788,6 +20145,254 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 #@nonl
 #@-node:ekr.20041113113140:loadOnePlugin
 #@-node:ekr.20041022083005:(More flexible plugin manager)
+#@+node:ekr.20050101065403:(Fixed problems loading plugins)
+#@+node:ekr.20050101065403.1:What I did
+@killcolor
+
+*** Alas, using g.importExtension does not seem to work properly with Tkinter.
+
+- plugins_menu.py now checks at runtime to see if the plugin has been successfully loaded before calling the topLevelMenu() function.
+
+- Added pluginName keyword arg to g.importX functions.
+
+    - All such functions now have pluginName and verbose keyword args.
+
+- Used g.cantImport to print all messages in g.importX functions.
+#@nonl
+#@-node:ekr.20050101065403.1:What I did
+#@+node:ekr.20041219095213:import wrappers
+@ Warning:
+
+These functions use imp.load_module, and that is equivalent to reload!
+
+Calling any of these functions to reload Leo files will crash Leo!
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (moduleName,pluginName=None,verbose=True):
+    
+    """Print a "Can't Import" message and return None."""
+
+    # g.trace(verbose,moduleName,repr(pluginName))
+    # if not pluginName: g.printStack()
+    
+    if verbose:
+        s = "Can not import %s" % moduleName
+        if pluginName: s += " from plugin %s" % pluginName
+        print s ; g.es(s,color="blue")
+
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
+#@+node:ekr.20041219095213.1:g.importModule
+def importModule (moduleName,pluginName=None,verbose=False):
+
+    '''Try to import a module as Python's import command does.
+
+    moduleName is the module's name, without file extension.'''
+    
+    try:
+        theFile = None ; module = None
+        import imp
+        try:
+            data = imp.find_module(moduleName) # This can open the file.
+            theFile,pathname,description = data
+            module = imp.load_module(moduleName,theFile,pathname,description)
+        except ImportError:
+            g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+        except:
+            g.es("unexpected exception in g.import",color='blue')
+            g.es_exception()
+    finally:
+        if theFile: theFile.close()
+
+    return module
+#@nonl
+#@-node:ekr.20041219095213.1:g.importModule
+#@+node:ekr.20041219071407:g.importExtension
+def importExtension (moduleName,pluginName=None,verbose=False):
+
+    '''Try to import a module.  If that fails,
+    try to import the module from Leo's extensions directory.
+
+    moduleName is the module's name, without file extension.'''
+    
+    # g.trace(verbose,moduleName,pluginName)
+    
+    module = g.importModule(moduleName,pluginName=pluginName,verbose=False)
+
+    if not module:
+        module = g.importFromPath(moduleName,g.app.extensionsDir,
+            pluginName=pluginName,verbose=verbose)
+
+    return module
+#@nonl
+#@-node:ekr.20041219071407:g.importExtension
+#@+node:ekr.20031218072017.2278:g.importFromPath
+def importFromPath (name,path,pluginName=None,verbose=False):
+    
+    # g.trace(verbose,name,pluginName)
+
+    try:
+        theFile = None ; data = None ; result = None
+        import imp
+        try:
+            fn = g.shortFileName(name)
+            mod_name,ext = g.os_path_splitext(fn)
+            path = g.os_path_normpath(path)
+            if g.CheckVersion(sys.version,"2.3"):
+                path = g.toEncodedString(path,app.tkEncoding)
+            else:
+                path = str(path) # May throw exception.
+            try:
+                data = imp.find_module(mod_name,[path]) # This can open the file.
+            except ImportError:
+                pass
+            if data:
+                theFile,pathname,description = data
+                try:
+                    result = imp.load_module(mod_name,theFile,pathname,description)
+                except ImportError:
+                    g.es_exception()
+        except:
+            g.es_exception()
+
+    # Put no return statements before here!
+    finally: 
+        if theFile: theFile.close()
+        
+    if not result:
+        g.cantImport(mod_name,pluginName=pluginName,verbose=verbose)
+    return result
+#@-node:ekr.20031218072017.2278:g.importFromPath
+#@-node:ekr.20041219095213:import wrappers
+#@-node:ekr.20050101065403:(Fixed problems loading plugins)
+#@+node:ekr.20050101133638.1:(Fixed problem with destroyed ivars)
+Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 1930, in doHook
+    return None # No return value
+  File "C:\prog\leoCVS\leo\src\leoPlugins.py", line 34, in doPlugins
+    return doHandlersForTag(tag,keywords)
+  File "C:\prog\leoCVS\leo\src\leoPlugins.py", line 135, in doHandlersForTag
+    ret = handle_fn(tag,keywords)
+  File "C:\prog\leoCVS\leo\plugins\at_view.py", line 97, in icondclick2
+    hs = self.current.headString()
+  File "C:\prog\leoCVS\leo\src\leoCommands.py", line 5110, in currentPosition
+    if c._currentPosition:
+AttributeError: Commands instance has no attribute '_currentPosition'
+#@nonl
+#@+node:ekr.20050101144712:Notes
+@killcolor
+
+Created callTagHandler.
+
+This checks 'idle' hooks to make sure that any commander referenced by the 'c','new_c' or 'old_c' keywords still exists.
+#@-node:ekr.20050101144712:Notes
+#@+node:ekr.20050102094729:callTagHandler
+def callTagHandler (handler,tag,keywords):
+    
+    if tag == 'idle':
+        # Make sure all commanders exist.
+        for key in ('c','old_c','new_c'):
+            c = keywords.get(key)
+            if c:
+                try:
+                    if c.frame not in g.app.windowList:
+                        return None # c has (or will be) destroyed.
+                except AttributeError:
+                    # c has been destroyed: c.frame ivar does not exist.
+                    return None
+
+    return handler(tag,keywords)
+#@nonl
+#@-node:ekr.20050102094729:callTagHandler
+#@+node:ekr.20031218072017.3442:doHandlersForTag
+def doHandlersForTag (tag,keywords):
+    
+    """Execute all handlers for a given tag, in alphabetical order.
+    
+    All exceptions are caught by the caller, doHook."""
+
+    global handlers
+
+    if g.app.killed:
+        return None
+
+    if handlers.has_key(tag):
+        handle_fns = handlers[tag]
+        handle_fns.sort()
+        for handler in handle_fns:
+            return callTagHandler(handler,tag,keywords)
+
+    if handlers.has_key("all"):
+        handle_fns = handlers["all"]
+        handle_fns.sort()
+        for handler in handle_fns:
+            return callTagHandler(handler,tag,keywords)
+
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3442:doHandlersForTag
+#@+node:ekr.20041001161108:doPlugins
+def doPlugins(tag,keywords):
+    if g.app.killed:
+        return
+    if tag == "start1":
+        loadHandlers()
+    return doHandlersForTag(tag,keywords)
+#@nonl
+#@-node:ekr.20041001161108:doPlugins
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError or (g.app.gui and g.app.gui.isNullGui):
+        return None
+        
+    if args:
+        # A minor error in Leo's core.
+        print "***ignoring args param.  tag = %s" % tag
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            s = "Plugins disabled: use_plugins is 0"
+            print s ; g.es(s,color="blue")
+        return None
+
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+            
+    # Get the hook handler function.  Usually this is doPlugins.
+    f = (c and c.hookFunction) or g.app.hookFunction
+    if not f:
+        import leoPlugins
+        g.app.hookFunction = f = leoPlugins.doPlugins
+
+    if 0: # Don't use trace here!
+        if 1:
+            old_c = keywords.get('old_c')
+            if old_c: print 'doHook %24s %s' % (tag,old_c.shortFileName())
+        else:
+            if tag != "idle": print 'doHook %24s old_c: %s' % (tag,c and c.shortFileName())
+        
+    try:
+        # Pass the hook to the hook handler.
+        return f(tag,keywords)
+    except Exception:
+        g.es_exception()
+        g.app.hookError = True # Supress this function.
+        g.app.idleTimeHook = False # Supress idle-time hook
+        return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@-node:ekr.20050101133638.1:(Fixed problem with destroyed ivars)
 #@-node:ekr.20041228052527.3:Plugins...
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
