@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="ekr.20040303080938"><vh>Diary</vh>
-<v t="ekr.20040315210314" a="E"><vh>March 2004</vh>
+<v t="ekr.20040315210314"><vh>March 2004</vh>
 <v t="ekr.20040315210314.1"><vh>3/15: Created stubs for Find Commands tests</vh></v>
 <v t="ekr.20040315210314.2"><vh>3/15: Convert this file to 4.2 format</vh></v>
 <v t="ekr.20040309095121"><vh>3/9: created more position mini tests</vh></v>
@@ -239,7 +239,7 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040303071432" a="TV"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
@@ -299,10 +299,6 @@
 </v>
 <v t="ekr.20040311125054"><vh>Test that p.t == p.v.t</vh></v>
 <v t="ekr.20040310145919"><vh>Change python keywords</vh></v>
-<v t="ekr.20040317101155"><vh>Test of user icons</vh>
-<v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
 <v t="ekr.20040315030123"><vh>test convertTreeToString and allies</vh>
 <v t="ekr.20040315025315"><vh>File Conversion</vh>
 <v t="ekr.20040315025315.1"><vh>convertTreeToString</vh></v>
@@ -397,7 +393,7 @@
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
 <v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
-<v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
+<v t="EKR.20040524050419.1"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
@@ -480,7 +476,7 @@
 </v>
 <v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
 <v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
-<v t="EKR.20040526200017" a="E" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040526200017" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
 <v t="EKR.20040529092739"><vh>Tests of c iters</vh>
 <v t="EKR.20040529093047"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="EKR.20040529093047.1"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
@@ -494,7 +490,7 @@
 <v t="EKR.20040527072047"><vh>a</vh>
 <v t="EKR.20040527072047.1"><vh>b</vh></v>
 </v>
-<v t="EKR.20040527074524.1" a="E"><vh>d</vh>
+<v t="EKR.20040527074524.1"><vh>d</vh>
 <v t="EKR.20040527074524.2"><vh>e</vh></v>
 </v>
 </v>
@@ -509,12 +505,12 @@
 </v>
 <v t="EKR.20040523112430"><vh>Cloning headlines</vh>
 <v t="EKR.20040523112430.1"><vh>read me</vh>
-<v t="EKR.20040523112430.2" a="E"><vh>b</vh>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.2"><vh>b</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
@@ -523,21 +519,21 @@
 </v>
 <v t="EKR.20040523112430.7"><vh>a</vh>
 <v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
 </v>
 <v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
@@ -546,21 +542,21 @@
 </v>
 <v t="EKR.20040523112430.7"><vh>a</vh>
 <v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
 </v>
 <v t="EKR.20040523112430.2"><vh>b</vh>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523112430.3" a="E"><vh>c</vh>
+<v t="EKR.20040523112430.3"><vh>c</vh>
 <v t="EKR.20040523112430.4"><vh>d</vh></v>
 <v t="EKR.20040523112430.5"><vh>e</vh></v>
 </v>
@@ -623,6 +619,11 @@
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
 <v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
 </v>
+</v>
+<v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
+<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
+<v t="ekr.20040317101155" a="ETV"><vh>Test of user icons</vh>
+<v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2050,6 +2051,25 @@ except AssertionError:
 	for v in list2: print v</t>
 <t tx="EKR.20040529105640"></t>
 <t tx="EKR.20040531110157">@ignore</t>
+<t tx="EKR.20040602101648">import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+def onEnd (tag,keys):
+	print "onEnd",tag,keys
+	
+count = 0
+	
+def onIdle (tag,keys):
+	global count ; count += 1
+	if count % 10 == 0:
+		print "onIdle",count,keys.get("c")
+
+leoPlugins.registerHandler("end1", onEnd)
+print "onEnd registered as end1 hook"
+
+leoPlugins.registerHandler("idle", onIdle)
+print "onIdle registered as idle hook"</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3265,7 +3285,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 
@@ -3280,27 +3300,29 @@ icon1 = g.os_path_join(path,"lt_arrow_enabled.gif")
 icon2 = g.os_path_join(path,"rt_arrow_enabled.gif")
 
 d1 = {
-"type" : "file", "file" : icon1,
-"where" : "beforeIcon",
-"yoffset" : -3,
-# "yoffset" : 5, "ypad" : -5,
-# "height" : 40, # automatically adjust headline y position.
-"xpad": 2, # "yoffset" : -5, , "ypad": 5}
-"onClick" : onClick,
-"onRightClick" : onRightClick,
-"onDoubleClick" : onDoubleClick }
+	"type" : "file", "file" : icon1,
+	"where" : "beforeIcon",
+	"yoffset" : -3,
+	# "yoffset" : 5, "ypad" : -5,
+	# "height" : 40, # automatically adjust headline y position.
+	"xpad": 2
+}
+
+# These can not be pickled...
+	#"onClick" : onClick,
+	#"onRightClick" : onRightClick,
+	#"onDoubleClick" : onDoubleClick }
 
 d2 = {
-"type" : "file", "file" : icon2,
-"where" : "beforeHeadline",
-"yoffset" : -3,
-"xoffset" : 2, "xpad" : -2 }
+	"type" : "file", "file" : icon2,
+	"where" : "beforeHeadline",
+	"yoffset" : -3,
+	"xoffset" : 2, "xpad" : -2 }
 
 a["icons"] = [d1,d2] # [d1,d2]
 a["lineYOffset"] = 3
 
-c.redraw()
-</t>
+c.redraw()</t>
 <t tx="ekr.20040317173327">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
