@@ -47,9 +47,9 @@
 <v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.3" a="E"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
+<v t="ekr.20041119034357.13" a="TV"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
@@ -148,7 +148,7 @@
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
-<v t="ekr.20041119034357.70" a="TV"><vh>@page Syntax coloring</vh>
+<v t="ekr.20041119034357.70"><vh>@page Syntax coloring</vh>
 <v t="ekr.20041119034357.71"><vh>syntax coloring options</vh>
 <v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
 <v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
