@@ -4435,6 +4435,10 @@ class baseNewDerivedFile(oldDerivedFile):
 					s = toEncodedString(s,at.encoding,reportErrors=true) # 3/7/03
 					at.outputStringWithLineEndings(s)
 					
+				# Put an @nonl sentinel if s does not end in a newline.
+				if s and s[-1] != '\n':
+					at.onl() ; at.putSentinel("@nonl")
+				
 				at.putCloseNodeSentinel(v)
 				#@-node:<< Write v's node >>
 				#@nl
