@@ -302,9 +302,14 @@ class leoFind:
 			sel = None
 			if len(s) > 0 and s[-1]=='\n': s = s[:-1]
 			if s != v.headString():
+			
 				if count == 1:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
-				c.undoer.setUndoTypingParams(v,"Change Headline",v.bodyString(),s,sel,sel)
+			
+				# 11/23/03
+				c.undoer.setUndoParams("Change Headline",v,
+					oldText=v.headString(), newText=s,
+					oldSel=sel, newSel=sel)
 			#@nonl
 			#@-node:<< set the undo head params >>
 			#@nl
@@ -321,8 +326,9 @@ class leoFind:
 					c.undoer.setUndoParams("Change All",v) # Tag the start of the Change all.
 					
 				# 11/5/03: Changed setUndoTypingParams to setUndoParams (avoids incremental undo).
-				c.undoer.setUndoParams(
-					"Change",v,oldText=v.bodyString(),newText=s,oldSel=sel,newSel=sel)
+				c.undoer.setUndoParams("Change",v,
+					oldText=v.bodyString(), newText=s,
+					oldSel=sel, newSel=sel)
 			#@nonl
 			#@-node:<< set the undo body typing params >>
 			#@nl
