@@ -110,6 +110,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             #@+node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
             import threading
             import time
+            
             way = 'Down' # global.
             ev = threading.Event()
             

@@ -825,6 +825,7 @@ def es_exception (full=True,c=None,color="red"):
 
     return n
 #@nonl
+#@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20040731204831:getLastTracebackLineNumber
 def getLastTracebackLineNumber():
     
@@ -849,7 +850,6 @@ def getLastTracebackLineNumber():
         return n
 #@nonl
 #@-node:ekr.20040731204831:getLastTracebackLineNumber
-#@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.3113:printBindings
 def print_bindings (name,window):
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5946" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5950" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="106" left="314" height="864" width="913"/>
+	<global_window_position top="71" left="279" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -648,6 +648,19 @@
 </v>
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
+<v t="ekr.20040804104924"><vh>Test of p.__hash__</vh>
+<v t="ekr.20040804105026"><vh>a</vh>
+<v t="ekr.20040804104328"><vh>Script</vh></v>
+<v t="ekr.20040804104328"><vh>Script</vh></v>
+</v>
+<v t="ekr.20040804105026"><vh>a</vh>
+<v t="ekr.20040804104328"><vh>Script</vh></v>
+<v t="ekr.20040804104328"><vh>Script</vh></v>
+</v>
+</v>
+<v t="ekr.20040805101759"><vh>How to use pdb</vh>
+<v t="ekr.20040805102453"><vh>@url http://docs.python.org/lib/debugger-commands.html</vh></v>
+</v>
 </v>
 <v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
@@ -1773,7 +1786,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1902,7 +1915,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9314,5 +9327,41 @@ g.app.tracePositions = tracePositions
 # This trace shows overall position statistics.
 c.frame.tree.trace = traceDrawing
 c.frame.tree.verbose = True</t>
+<t tx="ekr.20040804104328"></t>
+<t tx="ekr.20040804104924"># I'm not sure this works!
+
+import leoGlobals as g
+
+c = g.top()
+
+def vhash(self):  # v.__hash__
+    v = self
+    return "%s,%d" % (str(id(v)),v.childIndex())
+
+def __hash__ (self):  # p.__hash__
+
+    p = self
+    if p.stack:
+        vids = [vhash(v) for v in p.stack]
+        return vhash(p.v) + ':' + ':'.join(vids)
+    else:
+        return vhash(p.v)
+        
+for p in c.currentPosition().self_and_subtree_iter():
+
+    hash = __hash__(p)
+    hash2 = __hash__(p.copy())
+    assert hash==hash2, "hash for equivalent nodes are different: %s, %s" % (hash,hash2)
+    print hash</t>
+<t tx="ekr.20040804105026"></t>
+<t tx="ekr.20040805101759">import leoGlobals as g
+
+print "before"
+
+# This drops you into pdb.  Type command in the console window.
+import pdb ; pdb.set_trace()
+
+print "after"</t>
+<t tx="ekr.20040805102453"></t>
 </tnodes>
 </leo_file>
