@@ -197,7 +197,7 @@ tk_encoding =
 use_customizeLeo_dot_py = 0
 #	No longer used.
 
-use_plugins = 1
+use_plugins = 0
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #	   See the warnings in LeoDocs.leo.
