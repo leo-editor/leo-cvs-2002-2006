@@ -180,7 +180,7 @@ class leoDialog:
 		frame.pack(padx=6,pady=4)
 		label = Tk.Label(frame,text=message)
 		label.pack(pady=10,side="left")
-		self.number_text = txt = Tk.Text(frame,height=1,width=10)
+		self.number_entry = txt = Tk.Entry(frame,width=10)
 		txt.pack(side="left")
 	
 		center = Tk.Frame(top)
@@ -198,7 +198,38 @@ class leoDialog:
 		return self.number
 	#@-body
 	#@-node:5::askOkCancelNumber
-	#@+node:6::askYesNo
+	#@+node:6::askLeoID
+	#@+body
+	def askLeoID(self,title,message):
+	
+		Tk = Tkinter ; root = app().root
+		self.leoID=None
+		self.top = top = Tk.Toplevel(root)
+		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoIDWindow)
+		attachLeoIcon(self.top)
+		top.title(title)
+		top.resizable(0,0) # neither height or width is resizable.
+		frame = Tk.Frame(top)
+		self.top.bind("<Key>", self.OnLeoIDKey) # 1/30/03
+		frame.pack(padx=6,pady=4)
+		label = Tk.Label(frame,text=message)
+		label.pack(pady=10)
+		self.id_entry = txt = Tk.Entry(frame,width=10)
+		txt.pack()
+	
+		center = Tk.Frame(top)
+		center.pack(side="top",padx=30)
+		ok = Tk.Button(center,width=6,text="OK",bd=4, # default button
+			underline=0,command=self.okLeoIDButton)
+		ok.pack(side="left",padx=5,pady=10)
+		self.center() # Do this after packing.
+		top.grab_set() # Make the dialog a modal dialog.
+		txt.focus_force() # Get all keystrokes.
+		root.wait_window(top)
+		return self.leoID
+	#@-body
+	#@-node:6::askLeoID
+	#@+node:7::askYesNo
 	#@+body
 	def askYesNo(self, title, message):
 	
@@ -227,10 +258,11 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:6::askYesNo
-	#@+node:7::askYesNoCancel
+	#@-node:7::askYesNo
+	#@+node:8::askYesNoCancel
 	#@+body
-	def askYesNoCancel(self, title, message):
+	def askYesNoCancel(self, title, message,
+		yesMessage = "Yes", noMessage = "No", defaultButton = "Yes"):
 	
 		Tk = Tkinter ; root = app().root
 		self.answer="cancel"
@@ -245,10 +277,16 @@ class leoDialog:
 		label.pack(pady=10)
 		center = Tk.Frame(frame)
 		center.pack()
-		yes = Tk.Button(center,width=6,text="Yes",bd=4, # default button
+		yes = Tk.Button(center,width=6,text=yesMessage,
 			underline=0,command=self.yesButton)
-		no = Tk.Button(center,width=6,text="No",
+		if defaultButton == "No":
+			no.configure(bd=4) # make it the default button
+		no = Tk.Button(center,width=6,text=noMessage,
 			underline=0,command=self.noButton)
+		if defaultButton == "Yes":
+			yes.configure(bd=4) # make it the default button
+		if defaultButton == "Cancel":
+			no.configure(bd=4) # make it the default button
 		cancel = Tk.Button(center,width=6,text="Cancel",
 			underline=0,command=self.cancelButton)
 		yes.pack(side="left",padx=5,pady=10)
@@ -260,17 +298,25 @@ class leoDialog:
 		root.wait_window(top)
 		return self.answer
 	#@-body
-	#@-node:7::askYesNoCancel
-	#@+node:8::dialog.center
+	#@-node:8::askYesNoCancel
+	#@+node:9::dialog.center
 	#@+body
 	def center(self):
 		
 		center_dialog(self.top)
 		return
 	#@-body
-	#@-node:8::dialog.center
-	#@+node:9::Event handlers & command handlers
-	#@+node:1::cancelButton, noButton, okButton, yesButton
+	#@-node:9::dialog.center
+	#@+node:10::Event handlers & command handlers
+	#@+node:1::OnCloseLeoIDWindow
+	#@+body
+	def OnCloseLeoIDWindow (self):
+		
+		# We disallow this window to be closed.
+		pass
+	#@-body
+	#@-node:1::OnCloseLeoIDWindow
+	#@+node:2::cancelButton, noButton, okButton, yesButton
 	#@+body
 	# Command handlers.
 	
@@ -290,26 +336,30 @@ class leoDialog:
 		self.answer="yes"
 		self.top.destroy() # terminates wait_window
 	#@-body
-	#@-node:1::cancelButton, noButton, okButton, yesButton
-	#@+node:2::okNumberButton, cancelNumberButton
+	#@-node:2::cancelButton, noButton, okButton, yesButton
+	#@+node:3::okLeoIDButton, okNumberButton, cancelNumberButton
 	#@+body
-	def okNumberButton(self):
+	def okLeoIDButton(self):
+		s = self.id_entry.get().strip()
+		if len(s) == 0:
+			return
+		self.leoID = s
+		self.top.destroy() # terminates wait_window
 	
-		s = self.number_text.get("1.0","end")
-		s = s.strip() # 1/30/03
+	def okNumberButton(self):
+		s = self.number_entry.get().strip()
 		try:
 			self.number=int(s)
 		except:
-			es("invalid line number:" + s)
-			self.number=-1
+			self.number=-1 # Cancel the operation.
 		self.top.destroy() # terminates wait_window
 		
 	def cancelButton(self):
 		self.number=-1
 		self.top.destroy() # terminates wait_window
 	#@-body
-	#@-node:2::okNumberButton, cancelNumberButton
-	#@+node:3::On...Key
+	#@-node:3::okLeoIDButton, okNumberButton, cancelNumberButton
+	#@+node:4::On...Key
 	#@+body
 	def OnOkCancelKey(self,event):
 		ch=string.lower(event.char)
@@ -334,14 +384,57 @@ class leoDialog:
 		return "break"
 		
 	def OnOkCancelNumberKey(self,event):
+		
+		#@<< eliminate non-numbers >>
+		#@+node:1::<< eliminate non-numbers >>
+		#@+body
+		t = self.number_entry
+		s = t.get().strip()
+		i = 0 ; ok = true
+		while i < len(s):
+			ch = s[i]
+			if ch not in string.digits:
+				t.delete(`i`)
+				s = t.get()
+				ok = false
+			else:
+				i += 1
+		if not ok: return
+		#@-body
+		#@-node:1::<< eliminate non-numbers >>
+
 		ch=string.lower(event.char)
 		if ch=='\n' or ch=='\r': self.okNumberButton() # The default
 		elif ch=='c': self.cancelButton()
 		elif ch=='o': self.okNumberButton()
 		return "break"
+		
+	def OnLeoIDKey(self,event):
+		
+		#@<< eliminate invalid characters >>
+		#@+node:2::<< eliminate invalid characters >>
+		#@+body
+		t = self.id_entry
+		s = t.get().strip()
+		i = 0 ; ok = true
+		while i < len(s):
+			ch = s[i]
+			if ch not in string.letters and ch not in string.digits:
+				t.delete(`i`)
+				s = t.get()
+				ok = false
+			else:
+				i += 1
+		if not ok: return
+		#@-body
+		#@-node:2::<< eliminate invalid characters >>
+
+		ch=string.lower(event.char)
+		if ch=='\n' or ch=='\r': self.okLeoIDButton() # The default
+		return "break"
 	#@-body
-	#@-node:3::On...Key
-	#@+node:4::setArrowCursor, setDefaultCursor
+	#@-node:4::On...Key
+	#@+node:5::setArrowCursor, setDefaultCursor
 	#@+body
 	def setArrowCursor (self,event=None):
 		
@@ -353,8 +446,8 @@ class leoDialog:
 		if self.text:
 			self.text.configure(cursor="xterm")
 	#@-body
-	#@-node:4::setArrowCursor, setDefaultCursor
-	#@-node:9::Event handlers & command handlers
+	#@-node:5::setArrowCursor, setDefaultCursor
+	#@-node:10::Event handlers & command handlers
 	#@-others
 
 

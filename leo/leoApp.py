@@ -234,12 +234,12 @@ class LeoApp:
 		# This function is now in leoGlobals.py.
 
 		#@-at
-		#@@c 
+		#@@c
 
 		for (encoding,src) in (
 			(self.config.tkEncoding,"config"),
 			#(locale.getdefaultlocale()[1],"locale"),
-			(getpreferredencoding(),"local"),
+			(getpreferredencoding(),"locale"),
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
@@ -248,7 +248,7 @@ class LeoApp:
 				# print self.tkEncoding,src
 				break
 			elif encoding and len(encoding) > 0:
-				print "ignoring invalid " + src + " encoding: ", encoding
+				print "ignoring invalid " + src + " encoding: " + `encoding`
 		
 		
 		#@-body
