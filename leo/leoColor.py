@@ -115,6 +115,7 @@ java_keywords = (
 #If you see two idenitical words, with minor capitalization differences
 #DO NOT ASSUME that they are the same word. For example \vert produces
 #a single vertical line and \Vert produces a double vertical line
+#Marcus A. Martin.
 
 latex_keywords = (
 	#special keyworlds

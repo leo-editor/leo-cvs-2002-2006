@@ -41,7 +41,7 @@ modules.sort()
 #@+body
 
 setup( name="leo",
-	version="3.5",
+	version="3.6 beta 1",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",

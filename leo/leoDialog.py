@@ -41,6 +41,7 @@ class leoDialog:
 		for line in lines:
 			width = max(width,len(line))
 		width = max(width,len(url))
+		width += 10 # 9/9/02
 	
 		frame.pack(padx=6,pady=4)
 		
