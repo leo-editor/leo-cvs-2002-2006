@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1001" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="75" left="315" height="833" width="953"/>
+	<global_window_position top="44" left="233" height="778" width="875"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -99,7 +99,7 @@
 <v t="EKR.20040519090846.8"><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="EKR.20040519090846.9"><vh>@silentfile ../doc/README.TXT</vh></v>
 <v t="EKR.20040519082027.23"><vh>@thin createLeoDist.py</vh></v>
-<v t="EKR.20040519100230"><vh>In leo directory</vh>
+<v t="EKR.20040519100230" a="E"><vh>In leo directory</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="EKR.20040519082027.32"><vh>Linux install/uninstall scripts</vh>
 <v t="EKR.20040519082027.33"><vh>@file-thin ../install</vh></v>
@@ -127,7 +127,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -175,7 +175,7 @@
 </v>
 <v t="ekr.20050118092706"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631" a="ETV"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -636,7 +636,7 @@ Platform: Windows, Linux, Macintosh
 <t tx="EKR.20040519090846.9">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 is the culmination of more than five months of work. In spite
-of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
+of its status, I recommend this release over any 4.2 release.
 
 This alpha 2 release corrects various bugs and distribution problems.
 It also adds these new features:
@@ -701,7 +701,6 @@ include config/leoSettings.leo
 #    Move it to the home directory if you want to use it.
 
 include dist/createLeoDist.py
-include dist/leo-4-2.nsi
 include dist/leo-4-3.nsi
 include dist/leoDist.leo
 include dist/.pycheckrc
@@ -721,8 +720,9 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
-# New in 4.3a2: include path.py.
+# New in 4.3a2: include path.py and sets.py.
 include extensions/path.py
+include extensions/sets.py
 
 # New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py
@@ -3568,6 +3568,7 @@ Delete "$INSTDIR\scripts\*.p*"</t>
 <t tx="ekr.20050118113631"></t>
 <t tx="ekr.20050118122404">File "..\extensions\__init__.py"
 File "..\extensions\path.py"
+File "..\extensions\sets.py"
 
 SetOutPath "$INSTDIR\extensions\Pmw"
 File "..\extensions\Pmw\__init__.py"
@@ -3598,6 +3599,7 @@ File "..\test\test.leo"</t>
 <t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.p*"
 
 Delete "$INSTDIR\extensions\path.p*"
+Delete "$INSTDIR\extensions\sets.p*"
 
 Delete "$INSTDIR\extensions\Pmw\__init__.p*"
 

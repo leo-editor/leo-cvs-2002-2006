@@ -1,7 +1,7 @@
 Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 is the culmination of more than five months of work. In spite
-of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
+of its status, I recommend this release over any 4.2 release.
 
 This alpha 2 release corrects various bugs and distribution problems.
 It also adds these new features:

@@ -22,7 +22,6 @@ include config/leoSettings.leo
 #    Move it to the home directory if you want to use it.
 
 include dist/createLeoDist.py
-include dist/leo-4-2.nsi
 include dist/leo-4-3.nsi
 include dist/leoDist.leo
 include dist/.pycheckrc
@@ -42,8 +41,9 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
-# New in 4.3a2: include path.py.
+# New in 4.3a2: include path.py and sets.py.
 include extensions/path.py
+include extensions/sets.py
 
 # New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py

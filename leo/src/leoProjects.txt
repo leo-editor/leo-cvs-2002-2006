@@ -32310,6 +32310,159 @@ def importFromPath (name,path,pluginName=None,verbose=False):
 #@-node:ekr.20050213112731:(Give better error message when loading an enabled plugin fails)
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
+#@+node:ekr.20050214092455:4.3 a3 projects
+#@+node:ekr.20050214092455.1:Bugs
+#@+node:ekr.20050216052031.1:(Fixed crash in Tangle)
+#@+node:ekr.20050216052031.2:Report & notes
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2998446
+By: djsg
+
+g.create_temp_name() calls tempfile.mktemp or mkstemp(), but these return different values!
+
+mktemp returns the filename(a string); mkstemp returns a tuple (handle,filename)
+
+What I did:
+
+- Changed g.create_temp_name to g.create_temp_file.
+- Removed the file open logic in tangle.put_all_roots (now done in g.create_temp_file)
+- Rewrote g.create_temp_file so it works in both cases.
+- Create test routine for g.create_temp_file
+- Created very simple unit tests in test.leo for tangle and untangle.
+#@nonl
+#@-node:ekr.20050216052031.2:Report & notes
+#@+node:ekr.20031218072017.1151:tangle.put_all_roots
+@ This is the top level method of the second pass. It creates a separate C file for each @root directive in the outline. As will be seen later,the file is actually written only if the new version of the file is different from the old version,or if the file did not exist previously. If changed_only_flag FLAG is True only changed roots are actually written.
+@c
+
+def put_all_roots(self):
+
+    c = self.c ; outline_name = c.mFileName
+
+    for section in self.root_list:
+    
+        # g.trace(section.name)
+        file_name = g.os_path_join(self.tangle_directory,section.name)
+        file_name = g.os_path_normpath(file_name)
+        mode = c.config.output_newline
+        # mode = g.choose(mode=="platform",'w','wb')
+        textMode = mode == 'platform'
+        self.output_file,temp_name = g.create_temp_file(textMode=textMode)
+        if not temp_name:
+            g.es("Can not create temp file")
+            break
+        <<Get root specific attributes>>
+        <<Put @first lines>>
+        if self.use_header_flag and self.print_mode == "verbose":
+            << Write a banner at the start of the output file >>
+        for part in section.parts:
+            if part.is_root:
+                self.tangle_indent = 0 # Initialize global.
+                self.put_part_node(part,False) # output first lws
+        self.onl() # Make sure the file ends with a cr/lf
+        self.output_file.close()
+        self.output_file = None
+        if self.errors == 0:
+            g.update_file_if_changed(file_name,temp_name)
+        else:
+            g.es("unchanged:  " + file_name)
+            << Erase the temporary file >>
+#@nonl
+#@+node:ekr.20031218072017.1152:<<Get root specific attributes>>
+# Stephen Schaefer, 9/2/02
+# Retrieve the full complement of state for the root node
+self.language = section.root_attributes.language
+self.single_comment_string = section.root_attributes.single_comment_string
+self.start_comment_string = section.root_attributes.start_comment_string
+self.end_comment_string = section.root_attributes.end_comment_string
+self.use_header_flag = section.root_attributes.use_header_flag
+self.print_mode = section.root_attributes.print_mode
+self.path = section.root_attributes.path
+self.page_width = section.root_attributes.page_width
+self.tab_width = section.root_attributes.tab_width
+# Stephen P. Schaefer, 9/13/2002
+self.first_lines = section.root_attributes.first_lines
+#@nonl
+#@-node:ekr.20031218072017.1152:<<Get root specific attributes>>
+#@+node:ekr.20031218072017.1153:<<Put @first lines>>
+# Stephen P. Schaefer 9/13/2002
+if self.first_lines:
+    self.os(self.first_lines)
+#@nonl
+#@-node:ekr.20031218072017.1153:<<Put @first lines>>
+#@+node:ekr.20031218072017.1154:<<Write a banner at the start of the output file>>
+if self.single_comment_string:
+    self.os(self.single_comment_string)
+    self.os(" Created by Leo from: ")
+    self.os(outline_name)
+    self.onl() ; self.onl()
+elif self.start_comment_string and self.end_comment_string:
+    self.os(self.start_comment_string)
+    self.os(" Created by Leo from: ")
+    self.os(outline_name)
+    self.oblank() ; self.os(self.end_comment_string)
+    self.onl() ; self.onl()
+#@-node:ekr.20031218072017.1154:<<Write a banner at the start of the output file>>
+#@+node:ekr.20031218072017.1155:<< Erase the temporary file >>
+try: # Just delete the temp file.
+    os.remove(temp_name)
+except: pass
+#@-node:ekr.20031218072017.1155:<< Erase the temporary file >>
+#@-node:ekr.20031218072017.1151:tangle.put_all_roots
+#@+node:ekr.20031218072017.3117:create_temp_file & test
+def create_temp_file (textMode=False):
+    '''Return a tuple (theFile,theFileName)
+
+    theFile: a file object open for writing.
+    theFileName: the name of the temporary file.'''
+    
+    # mktemp is deprecated, but we can't get rid of it
+    # because mkstemp does not exist in Python 2.2.1.
+    __pychecker__ = '--no-deprecate'
+    try:
+        # fd is an handle to an open file as would be returned by os.open()
+        fd,theFileName = tempfile.mkstemp(text=textMode)
+        mode = g.choose(textMode,'w','wb')
+        theFile = os.fdopen(fd,mode)
+        # g.trace(fd,theFile)
+    except AttributeError:
+        # g.trace("mkstemp doesn't exist")
+        theFileName = tempfile.mktemp()
+        try:
+            mode = g.choose(textMode,'w','wb')
+            theFile = file(theFileName,mode)
+        except IOError:
+            theFile,theFileName = None,''
+    except Exception:
+        g.es('Unexpected exception in g.create_temp_file',color='red')
+        g.es_exception()
+        theFile,theFileName = None,''
+
+    return theFile,theFileName
+#@nonl
+#@+node:ekr.20050216052031:test_g_create_temp_file
+def test_g_create_temp_file():
+    
+    __pychecker__ = '--no-reimport'
+    import types
+
+    theFile,theFileName = g.create_temp_file()
+
+    assert type(theFile) == types.FileType, 'not file type'
+    assert type(theFileName) in (types.StringType, types.UnicodeType), 'not string type'
+#@nonl
+#@-node:ekr.20050216052031:test_g_create_temp_file
+#@-node:ekr.20031218072017.3117:create_temp_file & test
+#@-node:ekr.20050216052031.1:(Fixed crash in Tangle)
+#@-node:ekr.20050214092455.1:Bugs
+#@+node:ekr.20050214092455.2:New features
+#@+node:ekr.20050214092455.3:Added sets.py to distribution
+This allows plugins such as plugin_manager.py to work on Python 2.2.x.
+#@nonl
+#@-node:ekr.20050214092455.3:Added sets.py to distribution
+#@-node:ekr.20050214092455.2:New features
+#@-node:ekr.20050214092455:4.3 a3 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

@@ -270,6 +270,7 @@ Section "Leo" SEC01
   ;@+node:ekr.20050118122404:<< install extensions files >>
   File "..\extensions\__init__.py"
   File "..\extensions\path.py"
+  File "..\extensions\sets.py"
   
   SetOutPath "$INSTDIR\extensions\Pmw"
   File "..\extensions\Pmw\__init__.py"
@@ -540,6 +541,7 @@ Section Uninstall
   Delete "$INSTDIR\extensions\__init__.p*"
   
   Delete "$INSTDIR\extensions\path.p*"
+  Delete "$INSTDIR\extensions\sets.p*"
   
   Delete "$INSTDIR\extensions\Pmw\__init__.p*"
   
