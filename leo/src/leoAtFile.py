@@ -2555,6 +2555,23 @@ class baseOldDerivedFile:
 			self.outputFile.close()
 			self.outputFile = None
 	#@-node:atFile.closeWriteFile
+	#@+node:atFile.compareFilesIgnoringLineEndings
+	# This routine is needed to handle cvs stupidities.
+	
+	def compareFilesIgnoringLineEndings (self,path1,path2):
+	
+		"""Compare two text files ignoring line endings."""
+		
+		try:
+			# Opening both files in text mode converts all line endings to '\n'.
+			f1 = open(path1) ; f2 = open(path2)
+			equal = f1.read() == f2.read()
+			f1.close() ; f2.close()
+			return equal
+		except:
+			return false
+	#@nonl
+	#@-node:atFile.compareFilesIgnoringLineEndings
 	#@+node:atFile.handleWriteException
 	def handleWriteException (self,root=None):
 		
@@ -2657,7 +2674,9 @@ class baseOldDerivedFile:
 		
 		self.fileChangedFlag = false
 		if g.os_path_exists(self.targetFileName):
-			if filecmp.cmp(self.outputFileName,self.targetFileName):
+			# if filecmp.cmp(self.outputFileName,self.targetFileName):
+			if self.compareFilesIgnoringLineEndings(
+				self.outputFileName,self.targetFileName):
 				#@			<< delete the output file >>
 				#@+node:<< delete the output file >>
 				try: # Just delete the temp file.
