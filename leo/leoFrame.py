@@ -785,10 +785,8 @@ class LeoFrame:
 		
 		self.recentFiles = app().config.getRecentFiles()
 		
-		for i in xrange(len(self.recentFiles)):
-			name = self.recentFiles[i]
-			f=self.OnOpenRecentFile
-			callback = lambda f=f:f(n=i)
+		for name in self.recentFiles:
+			callback = lambda self=self,name=name:self.OnOpenRecentFile(name)
 			recentFilesMenu.add_command(label=name,command=callback)
 		
 		#@-body
@@ -1224,9 +1222,7 @@ class LeoFrame:
 							else:
 								f = self.doCommand # More compatible with Python 2.1
 								callback=lambda event,f=f,cmd=command,label=name:f(cmd,label,event)
-							# The 2.2 code.  Must be a comment or Python 2.1 will complain.
-							# callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
-							self.body.bind(bind_shortcut,callback) # Necessary to override defaults in body.
+							self.body.bind(bind_shortcut,callback) # To override defaults in body.
 							self.top.bind (bind_shortcut,callback)
 						except: # could be a user error
 							if not app().menuWarningsGiven:
@@ -1510,12 +1506,9 @@ class LeoFrame:
 					recentFilesMenu.delete(0,len(frame.recentFiles))
 					
 					# Recreate Recent Files menu.
-					i = 0
 					for name in frame.recentFiles:
-						f = self.OnOpenRecentFile
-						callback = lambda f=f,n=i,self=self:f(n)
+						callback = lambda self=self,name=name:self.OnOpenRecentFile(name)
 						recentFilesMenu.add_command(label=name,command=callback)
-						i += 1
 					
 				# Update the config file.
 				app().config.setRecentFiles(frame.recentFiles)
@@ -1674,9 +1667,89 @@ class LeoFrame:
 	#@-node:10::frame.OnQuit
 	#@-node:1::top level
 	#@+node:2::Recent Files submenu
-	#@+node:1::frame.OnOpenRecentFile
+	#@+node:1::frame.OpenWithFileName
 	#@+body
-	def OnOpenRecentFile(self,n):
+	def OpenWithFileName(self, fileName):
+	
+		if not fileName or len(fileName) == 0:
+			return false, None
+	
+		# Create a full normalized path name.
+		# Display the file name with case intact.
+		fileName = os.path.join(os.getcwd(), fileName)
+		fileName = os.path.normpath(fileName)
+		oldFileName = fileName 
+		fileName = os.path.normcase(fileName)
+	
+		# If the file is already open just bring its window to the front.
+		list = app().windowList
+		for frame in list:
+			fn = os.path.normcase(frame.mFileName)
+			fn = os.path.normpath(fn)
+			if fileName == fn:
+				frame.top.deiconify()
+				app().log = frame
+				es("This window already open")
+				return true, frame
+				
+		fileName = oldFileName # Use the idiosyncratic file name.
+	
+		try:
+			file = open(fileName,'r')
+			if file:
+				frame = LeoFrame(fileName)
+				flag = handleLeoHook("open1",
+					old_c=self,new_c=frame.commands,fileName=fileName)
+				if flag == None:  # Anything other than None overrides.
+					frame.commands.fileCommands.open(file,fileName) # closes file.
+				frame.openDirectory=os.path.dirname(fileName)
+				
+				#@<< make fileName the most recent file of frame >>
+				#@+node:1::<< make fileName the most recent file of frame >>
+				#@+body
+				# Update the recent files list in all windows.
+				normFileName = os.path.normcase(fileName)
+				
+				for frame in app().windowList:
+				
+					# Make sure we remove all versions of the file name.
+					for name in frame.recentFiles:
+						name2 = os.path.normcase(name)
+						name2 = os.path.normpath(name2)
+						if normFileName == name2:
+							frame.recentFiles.remove(name)
+					frame.recentFiles.insert(0,fileName)
+					
+					# Delete all elements of Recent Files menu.
+					recentFilesMenu = frame.menus.get("Recent Files...")
+					recentFilesMenu.delete(0,len(frame.recentFiles))
+					
+					# Recreate Recent Files menu.
+					for name in frame.recentFiles:
+						callback = lambda self=self,name=name:self.OnOpenRecentFile(name)
+						recentFilesMenu.add_command(label=name,command=callback)
+					
+				# Update the config file.
+				app().config.setRecentFiles(frame.recentFiles)
+				app().config.update()
+				#@-body
+				#@-node:1::<< make fileName the most recent file of frame >>
+
+				handleLeoHook("open2",
+					old_c=self,new_c=frame.commands,fileName=fileName)
+				return true, frame
+			else:
+				es("can not open" + fileName)
+				return false, None
+		except:
+			es("exceptions opening" + fileName)
+			es_exception()
+			return false, None
+	#@-body
+	#@-node:1::frame.OpenWithFileName
+	#@+node:2::frame.OnOpenRecentFile
+	#@+body
+	def OnOpenRecentFile(self,name=None):
 		
 		c = self.commands
 		
@@ -1699,18 +1772,20 @@ class LeoFrame:
 		#@-body
 		#@-node:1::<< Set closeFlag if the only open window is empty >>
 
-		if n < len(self.recentFiles):
-			fileName = self.recentFiles[n]
-			flag = handleLeoHook("recentfiles1",c=c,fileName=fileName,closeFlag=closeFlag)
-			if flag == None:  # Anything other than None overrides.
-				ok, frame = self.OpenWithFileName(fileName)
-				if ok and closeFlag:
-					app().windowList.remove(self)
-					self.destroy() # force the window to go away now.
-					app().log = frame # Sets the log stream for es()
-				handleLeoHook("recentfiles2",c=c,fileName=fileName,closeFlag=closeFlag)
+		if not name:
+			return
+	
+		fileName = name
+		flag = handleLeoHook("recentfiles1",c=c,fileName=fileName,closeFlag=closeFlag)
+		if flag == None:  # Anything other than None overrides.
+			ok, frame = self.OpenWithFileName(fileName)
+			if ok and closeFlag:
+				app().windowList.remove(self)
+				self.destroy() # force the window to go away now.
+				app().log = frame # Sets the log stream for es()
+			handleLeoHook("recentfiles2",c=c,fileName=fileName,closeFlag=closeFlag)
 	#@-body
-	#@-node:1::frame.OnOpenRecentFile
+	#@-node:2::frame.OnOpenRecentFile
 	#@-node:2::Recent Files submenu
 	#@+node:3::Read/Write submenu
 	#@+node:1::fileCommands.OnReadOutlineOnly
