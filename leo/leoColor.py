@@ -1084,8 +1084,8 @@ class colorizer:
 						# Set the bindings to vnode callbacks.
 						# Create the tag.
 						# Create the tag name.
-						tagName = "hyper" + `hyperCount`
-						hyperCount += 1
+						tagName = "hyper" + `self.hyperCount`
+						self.hyperCount += 1
 						body.tag_delete(tagName)
 						body.tag_add(tagName, index(n,i+2), index(n,j))
 						ref.tagName = tagName
