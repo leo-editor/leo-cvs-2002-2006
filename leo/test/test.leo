@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4252" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4253" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="24" left="52" height="881" width="861"/>
+	<global_window_position top="36" left="289" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -642,7 +642,18 @@
 <v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
 <v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 </v>
-<v t="EKR.20040610092248" a="TV"><vh>Test of paste into headline</vh></v>
+<v t="EKR.20040610092248"><vh>Test of paste into headline</vh></v>
+<v t="EKR.20040610131858" a="E"><vh>Test of Paste Node Retaining Clones</vh>
+<v t="EKR.20040610131858.1" a="TV"><vh>a</vh>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+</v>
+<v t="EKR.20040610131858.1"><vh>a</vh>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+<v t="EKR.20040610143643"><vh>b</vh></v>
+</v>
+<v t="EKR.20040610132739"><vh>copied</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -3638,8 +3649,29 @@ def doConsistencyOfFirstChildAndChildrenIter (self,copy):
 	
 	assert(os.path.exists(path))&lt;/t&gt;
 &lt;/tnodes&gt;
+&lt;/leo_file&gt;</t>
+<t tx="EKR.20040610131858"></t>
+<t tx="EKR.20040610131858.1">import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+print p.v.t.fileIndex,p.v.t</t>
+<t tx="EKR.20040610132739">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;leo_file&gt;
+&lt;leo_header file_format="1" tnodes="1" max_tnode_index="1"/&gt;
+&lt;vnodes&gt;
+&lt;v t="EKR.20040610131858.1" a="TV"&gt;&lt;vh&gt;a&lt;/vh&gt;&lt;/v&gt;
+&lt;/vnodes&gt;
+&lt;tnodes&gt;
+&lt;t tx="EKR.20040610131858.1"&gt;import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+print p.v.t.fileIndex&lt;/t&gt;
+&lt;/tnodes&gt;
 &lt;/leo_file&gt;
 </t>
+<t tx="EKR.20040610143643"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -4855,7 +4887,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 

@@ -10786,25 +10786,11 @@ def getTnode (self):
 	# g.trace(t)
 	<< handle unknown attributes >>
 	if t:
-		if self.usingClipboard:
-			<< handle read from clipboard >>
-		else:
-			<< handle read from file >>
+		s = self.getEscapedString()
+		t.setTnodeText(s,encoding=self.leo_file_encoding)
 	else:
 		g.es("no tnode with index: %s.  The text will be discarded" % str(index))
 	self.getTag("</t>")
-#@+node:ekr.20031218072017.1562:<< handle read from file >>
-s = self.getEscapedString()
-t.setTnodeText(s,encoding=self.leo_file_encoding)
-#@nonl
-#@-node:ekr.20031218072017.1562:<< handle read from file >>
-#@+node:ekr.20031218072017.1563:<< handle read from clipboard >>
-if t:
-	s = self.getEscapedString()
-	t.setTnodeText(s,encoding=self.leo_file_encoding)
-	# g.trace(index,len(s))
-#@nonl
-#@-node:ekr.20031218072017.1563:<< handle read from clipboard >>
 #@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
 keys = attrDict.keys()
 if keys:
@@ -10822,11 +10808,14 @@ if keys:
 #@+node:ekr.20040311133449:(Cut/paste outlines)
 #@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 # This method reads a Leo outline from string s in clipboard format.
-def getLeoOutline (self,s):
+def getLeoOutline (self,s,reassignIndices=true):
 
 	self.usingClipboard = true
 	self.fileBuffer = s ; self.fileIndex = 0
 	self.tnodesDict = {}
+	
+	if not reassignIndices:
+		<< recreate tnodesDict >>
 
 	try:
 		self.getXmlVersionTag() # leo.py 3.0
@@ -10836,7 +10825,7 @@ def getLeoOutline (self,s):
 		self.getVnodes()
 		self.getTnodes()
 		self.getTag("</leo_file>")
-		v = self.finishPaste()
+		v = self.finishPaste(reassignIndices)
 	except BadLeoFile:
 		v = None
 
@@ -10845,12 +10834,26 @@ def getLeoOutline (self,s):
 	self.usingClipboard = false
 	self.tnodesDict = {}
 	return v
+#@+node:EKR.20040610134756:<< recreate tnodesDict >>
+nodeIndices = g.app.nodeIndices
+
+for t in self.c.all_tnodes_iter():
+	tref = t.fileIndex
+	if nodeIndices.isGnx(tref):
+		tref = nodeIndices.toString(tref)
+	self.tnodesDict[tref] = t
+	
+if 0:
+	print '-'*40
+	for key in self.tnodesDict.keys():
+		print key,self.tnodesDict[key]
 #@nonl
+#@-node:EKR.20040610134756:<< recreate tnodesDict >>
 #@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 #@+node:ekr.20031218072017.1551:pasteOutline
 # To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 
-def pasteOutline(self):
+def pasteOutline(self,reassignIndices=true):
 
 	c = self ; current = c.currentPosition()
 	
@@ -10862,7 +10865,7 @@ def pasteOutline(self):
 	isLeo = g.match(s,0,g.app.prolog_prefix_string)
 
 	if isLeo:
-		p = c.fileCommands.getLeoOutline(s)
+		p = c.fileCommands.getLeoOutline(s,reassignIndices)
 	else:
 		p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
 		
@@ -10886,13 +10889,17 @@ def pasteOutline(self):
 #@nonl
 #@-node:ekr.20031218072017.1551:pasteOutline
 #@+node:ekr.20031218072017.1557:finishPaste
-# This method finishes pasting the outline from the clipboard.
-def finishPaste(self):
+def finishPaste(self,reassignIndices=true):
+	
+	"""Finish pasting an outline from the clipboard.
+	
+	Retain clone links if reassignIndices is False."""
 
 	c = self.c
 	current = c.currentPosition()
 	c.beginUpdate()
-	<< reassign tnode indices and clear all clone links >>
+	if reassignIndices:
+		<< reassign tnode indices and clear all clone links >>
 	c.selectVnode(current)
 	c.endUpdate()
 	return current
@@ -17956,6 +17963,7 @@ menu = frame.menu.getMenu("Outline")
 enable(menu,"Cut Node",c.canCutOutline())
 enable(menu,"Delete Node",c.canDeleteHeadline())
 enable(menu,"Paste Node",c.canPasteOutline())
+enable(menu,"Paste Retaining Clones",c.canPasteOutline())
 enable(menu,"Clone Node",c.canClone()) # 1/31/04
 enable(menu,"Sort Siblings",c.canSortSiblings())
 enable(menu,"Hoist",c.canHoist())
@@ -32824,25 +32832,11 @@ def getTnode (self):
 	# g.trace(t)
 	<< handle unknown attributes >>
 	if t:
-		if self.usingClipboard:
-			<< handle read from clipboard >>
-		else:
-			<< handle read from file >>
+		s = self.getEscapedString()
+		t.setTnodeText(s,encoding=self.leo_file_encoding)
 	else:
 		g.es("no tnode with index: %s.  The text will be discarded" % str(index))
 	self.getTag("</t>")
-#@+node:ekr.20031218072017.1562:<< handle read from file >>
-s = self.getEscapedString()
-t.setTnodeText(s,encoding=self.leo_file_encoding)
-#@nonl
-#@-node:ekr.20031218072017.1562:<< handle read from file >>
-#@+node:ekr.20031218072017.1563:<< handle read from clipboard >>
-if t:
-	s = self.getEscapedString()
-	t.setTnodeText(s,encoding=self.leo_file_encoding)
-	# g.trace(index,len(s))
-#@nonl
-#@-node:ekr.20031218072017.1563:<< handle read from clipboard >>
 #@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
 keys = attrDict.keys()
 if keys:
@@ -34125,6 +34119,7 @@ def swapLinks (self,v2): # not used.
 #@-node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
 #@-node:EKR.20040528070309.2:(Fixed undoReplaceNodes)
 #@-node:EKR.20040601083927:In 4.2 a3
+#@+node:EKR.20040610102329:In 4.2 a4
 #@+node:ekr.20040330092305.1:(Made "end1" and "ilde"events work again)
 @nocolor
 
@@ -40079,6 +40074,218 @@ def doHook(tag,*args,**keywords):
 #@nonl
 #@-node:ekr.20031218072017.1596:g.doHook
 #@-node:EKR.20040610082855:(Fixed crasher in openRecentFile)
+#@+node:ekr.20040115163454:(Created @killcolor directive)
+#@+node:ekr.20031218072017.1595:<< define leo keywords >>
+# leoKeywords is used by directivesKind, so it should be a module-level symbol.
+
+# leoKeywords must be a list so that plugins may alter it.
+
+leoKeywords = [
+	"@","@all","@c","@code","@color","@comment",
+	"@delims","@doc","@encoding","@end_raw",
+	"@first","@header","@ignore",
+	"@killcolor",
+	"@language","@last","@lineending",
+	"@nocolor","@noheader","@nowrap","@others",
+	"@pagewidth","@path","@quiet","@raw","@root","@root-code","@root-doc",
+	"@silent","@tabwidth","@terse",
+	"@unit","@verbose","@wrap" ]
+#@nonl
+#@-node:ekr.20031218072017.1595:<< define leo keywords >>
+#@+node:EKR.20040610094819:<< define global data structures >>
+# Visible externally so plugins may add to the list of directives.
+
+globalDirectiveList = [
+	"color", "comment", "encoding", "header", "ignore", "killcolor",
+	"language", "lineending", "nocolor", "noheader", "nowrap",
+	"pagewidth", "path", "quiet", "root", "silent",
+	"tabwidth", "terse", "unit", "verbose", "wrap"]
+#@nonl
+#@-node:EKR.20040610094819:<< define global data structures >>
+#@+node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+
+def get_directives_dict(s,root=None):
+	
+	"""Scans root for @directives found in globalDirectivesList.
+
+	Returns a dict containing pointers to the start of each directive"""
+
+	if root: root_node = root[0]
+	dict = {}
+	i = 0 ; n = len(s)
+	while i < n:
+		if s[i] == '@' and i+1 < n:
+			<< set dict for @ directives >>
+		elif root and g.match(s,i,"<<"):
+			<< set dict["root"] for noweb * chunks >>
+		i = g.skip_line(s,i)
+	return dict
+#@nonl
+#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+j = g.skip_c_id(s,i+1)
+word = s[i+1:j]
+if word in g.globalDirectiveList:
+	dict [word] = i
+#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+@ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
+@c
+
+i = g.skip_ws(s,i+2)
+if i < n and s[i] == '*' :
+	i = g.skip_ws(s,i+1) # Skip the '*'
+	if g.match(s,i,">>="):
+		# < < * > > = implies that @root should appear in the headline.
+		i += 3
+		if root_node:
+			dict["root"]=0 # value not immportant
+		else:
+			g.es(g.angleBrackets("*") + "= requires @root in the headline")
+#@nonl
+#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+#@+node:ekr.20031218072017.2805:useSyntaxColoring
+def useSyntaxColoring (self,p):
+	
+	"""Return true unless p is unambiguously under the control of @nocolor."""
+	
+	p = p.copy() ; first = p.copy()
+	val = true ; self.killFlag = false
+	for p in p.self_and_parents_iter():
+		# g.trace(p)
+		s = p.v.t.bodyString
+		dict = g.get_directives_dict(s)
+		no_color = dict.has_key("nocolor")
+		color = dict.has_key("color")
+		kill_color = dict.has_key("killcolor")
+		# A killcolor anywhere disables coloring.
+		if kill_color:
+			val = false ; self.killFlag = true ; break
+		# A color anywhere in the target enables coloring.
+		if color and p == first:
+			val = true ; break
+		# Otherwise, the @nocolor specification must be unambiguous.
+		elif no_color and not color:
+			val = false ; break
+		elif color and not no_color:
+			val = true ; break
+
+	return val
+#@-node:ekr.20031218072017.2805:useSyntaxColoring
+#@+node:ekr.20031218072017.1377:scanColorDirectives
+def scanColorDirectives(self,p):
+	
+	"""Scan position p and p's ancestors looking for @comment, @language and @root directives,
+	setting corresponding colorizer ivars.
+	"""
+
+	p = p.copy() ; c = self.c
+	if c == None: return # self.c may be None for testing.
+
+	language = c.target_language
+	self.language = language # 2/2/03
+	self.comment_string = None
+	self.rootMode = None # None, "code" or "doc"
+	
+	for p in p.self_and_parents_iter():
+		# g.trace(p)
+		s = p.v.t.bodyString
+		dict = g.get_directives_dict(s)
+		<< Test for @comment or @language >>
+		<< Test for @root, @root-doc or @root-code >>
+
+	return self.language # For use by external routines.
+#@nonl
+#@+node:ekr.20031218072017.1378:<< Test for @comment or @language >>
+# 10/17/02: @comment and @language may coexist in the same node.
+
+if dict.has_key("comment"):
+	k = dict["comment"]
+	self.comment_string = s[k:]
+
+if dict.has_key("language"):
+	i = dict["language"]
+	language,junk,junk,junk = g.set_language(s,i)
+	self.language = language # 2/2/03
+
+if dict.has_key("comment") or dict.has_key("language"):
+	break
+#@nonl
+#@-node:ekr.20031218072017.1378:<< Test for @comment or @language >>
+#@+node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
+if dict.has_key("root") and not self.rootMode:
+
+	k = dict["root"]
+	if g.match_word(s,k,"@root-code"):
+		self.rootMode = "code"
+	elif g.match_word(s,k,"@root-doc"):
+		self.rootMode = "doc"
+	else:
+		doc = g.app.config.at_root_bodies_start_in_doc_mode
+		self.rootMode = g.choose(doc,"doc","code")
+#@-node:ekr.20031218072017.1379:<< Test for @root, @root-doc or @root-code >>
+#@-node:ekr.20031218072017.1377:scanColorDirectives
+#@-node:ekr.20040115163454:(Created @killcolor directive)
+#@+node:EKR.20040610123559:(Fixed bug in insertBodyTime)
+#@+node:EKR.20040610123559.1:Report
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2612319
+By: nobody
+
+When I use 'shift+ctl+g', I get the error below:
+
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoCommands.py", line 2136, in getTime
+    s = time.strftime(format,time.localtime())
+NameError: global name 'time' is not defined
+exception executing command
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoCommands.py", line 143, in doCommand
+    command()
+  File "C:\Program Files\Leo\src\leoCommands.py", line 2111, in insertBodyTime
+    s = self.getTime(body=true)
+  File "C:\Program Files\Leo\src\leoCommands.py", line 2139, in getTime
+    s = time.strftime(default_format,time.gmtime())
+NameError: global name 'time' is not defined
+
+I inserted "import time", and while I was at it I improved the error checking.
+#@nonl
+#@-node:EKR.20040610123559.1:Report
+#@+node:ekr.20031218072017.1832:getTime
+def getTime (self,body=true):
+
+	config = g.app.config
+	default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
+	
+	# Try to get the format string from leoConfig.txt.
+	if body:
+		format = config.getWindowPref("body_time_format_string")
+		gmt = config.getBoolWindowPref("body_gmt_time")
+	else:
+		format = config.getWindowPref("headline_time_format_string")
+		gmt = config.getBoolWindowPref("headline_gmt_time")
+
+	if format == None:
+		format = default_format
+
+	try:
+		import time
+		if gmt:
+			s = time.strftime(format,time.gmtime())
+		else:
+			s = time.strftime(format,time.localtime())
+	except (ImportError, NameError):
+		g.es("time.strftime not available on this platform",color="blue")
+		return ""
+	except:
+		g.es_exception() # Probably a bad format string in leoConfig.txt.
+		s = time.strftime(default_format,time.gmtime())
+	return s
+#@-node:ekr.20031218072017.1832:getTime
+#@-node:EKR.20040610123559:(Fixed bug in insertBodyTime)
+#@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

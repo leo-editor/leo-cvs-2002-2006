@@ -16,7 +16,7 @@
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
 <v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="edream.110203150636.3" a="TV"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -26,7 +26,7 @@
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636.13" a="TV"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
@@ -617,6 +617,7 @@ OpenCompareWindow       = None
 OpenfileWith            = None
 OutlineToCWEB           = None
 OutlineToNoweb          = None
+PasteRetainingClones    = None
 ReadfileNodes           = None
 ReferenceLeoDocsleo     = None
 RemoveSentinels         = None
