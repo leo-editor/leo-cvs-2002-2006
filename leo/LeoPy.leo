@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2544" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="17" left="109" height="22" width="94"/>
+	<global_window_position top="9" left="89" height="22" width="94"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,7 +14,7 @@
 <vnodes>
 <v t="T1"><vh>Diary</vh>
 <v><vh>Oct 2002</vh>
-<v a="E"><vh>10/30</vh>
+<v><vh>10/30</vh>
 <v t="T2"><vh>Applied cweb hack to all sentinels</vh></v>
 <v><vh>raw cweb mode in @root trees</vh></v>
 <v t="T3"><vh>simplified Reformat Paragraph command</vh></v>
@@ -3369,7 +3369,7 @@
 </v>
 <v t="T733" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T1333" a="C"><vh>sentinelKind</vh></v>
-<v t="T1499" a="C"><vh>putSentinel (applies cweb hack to all sentinels)</vh></v>
+<v t="T1499" a="C"><vh>putSentinel (applies cweb hack)</vh></v>
 </v>
 <v><vh>(Removing clone indices from derived files)</vh>
 <v t="T1500" a="CM"><vh>nodeSentinelText</vh></v>
@@ -4663,7 +4663,7 @@
 <v t="T1497" a="C"><vh>putRef</vh>
 <v t="T1498"><vh>&lt;&lt; Generate the expansion of the reference &gt;&gt;</vh></v>
 </v>
-<v t="T1499" a="C"><vh>putSentinel (applies cweb hack to all sentinels)</vh></v>
+<v t="T1499" a="C"><vh>putSentinel (applies cweb hack)</vh></v>
 <v t="T1821" a="C"><vh>putOpenLeoSentinel</vh></v>
 <v t="T1490" a="C"><vh>&lt;&lt; handle @others &gt;&gt;</vh></v>
 </v>
@@ -4877,7 +4877,7 @@
 </v>
 <v t="T1886"><vh>doStartRef</vh></v>
 <v t="T1887"><vh>doStartVerbatim</vh></v>
-<v t="T1888" a="E"><vh>doUnknownSentinel</vh></v>
+<v t="T1888"><vh>doUnknownSentinel</vh></v>
 </v>
 </v>
 </v>
@@ -5134,7 +5134,7 @@
 <v t="T1821" a="C"><vh>putOpenLeoSentinel</vh></v>
 <v t="T1827" a="C"><vh>putOpenNodeSentinel</vh></v>
 <v t="T2036"><vh>putOpenSentinels</vh></v>
-<v t="T1499" a="C"><vh>putSentinel (applies cweb hack to all sentinels)</vh></v>
+<v t="T1499" a="C"><vh>putSentinel (applies cweb hack)</vh></v>
 <v t="T1333" a="C"><vh>sentinelKind</vh></v>
 <v t="T1820" a="C"><vh>sentinelName</vh></v>
 <v t="T2037" a="C"><vh>skipSentinelStart</vh></v>
@@ -7113,9 +7113,9 @@
 <v t="T2046" a="C"><vh>putDirective  (handles @delims)</vh>
 <v t="T2047"><vh>&lt;&lt; handle @delims &gt;&gt;</vh></v>
 </v>
-<v t="T1499" a="C"><vh>putSentinel (applies cweb hack to all sentinels)</vh></v>
+<v t="T1499" a="C"><vh>putSentinel (applies cweb hack)</vh></v>
 </v>
-<v a="E"><vh>reading...</vh>
+<v><vh>reading...</vh>
 <v t="T2037" a="C"><vh>skipSentinelStart</vh></v>
 <v t="T1333" a="C"><vh>sentinelKind</vh></v>
 <v t="T1500" a="C"><vh>nodeSentinelText</vh></v>
@@ -26646,11 +26646,14 @@ def putSentinel(self,s):
 	self.onl() ; self.putIndent(self.indent) # Start of sentinel.
 	self.os(self.startSentinelComment)
 
-	if 1: # 10/30/02: The cweb hack: double @ signs if the opening comment delim ends in '@'.
-		start = self.startSentinelComment
-		if start and len(start) &gt; 0 and start[-1] == '@':
-			s = string.replace(s,'@','@@')
-	
+	# 11/1/02: The cweb hack: if the opening comment delim ends in '@',
+	# double all '@' signs except the first, which is "doubled" by the
+	# trailing '@' in the opening comment delimiter.
+	start = self.startSentinelComment
+	if start and len(start) &gt; 0 and start[-1] == '@':
+		assert(s and len(s)&gt;0 and s[0]=='@')
+		s = string.replace(s,'@','@@')[1:]
+
 	self.os(s)
 	self.os(self.endSentinelComment)
 	if self.suppress_newlines:
@@ -34139,10 +34142,6 @@ def putOpenSentinels(self,root,v):
 	# 7/8/02: Support for REM hack
 	i = skip_ws(s,i)
 	assert(i &lt; len(s) and s[i] == '@')
-	# 10/31/02: Support for cweb hack.
-	if start[-1] == '@':
-		assert(match(s,i,"@@"))
-		i += 1
 	return i + 1
 </t>
 <t tx="T2038">def error(self,message):

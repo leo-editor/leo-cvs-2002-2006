@@ -258,7 +258,7 @@ class atFile:
 			last = node
 	#@-body
 	#@-node:6::putOpenSentinels
-	#@+node:7::putSentinel (applies cweb hack to all sentinels)
+	#@+node:7::putSentinel (applies cweb hack)
 	#@+body
 	#@+at
 	#  All sentinels are eventually output by this method.
@@ -287,11 +287,14 @@ class atFile:
 		self.onl() ; self.putIndent(self.indent) # Start of sentinel.
 		self.os(self.startSentinelComment)
 	
-		if 1: # 10/30/02: The cweb hack: double @ signs if the opening comment delim ends in '@'.
-			start = self.startSentinelComment
-			if start and len(start) > 0 and start[-1] == '@':
-				s = string.replace(s,'@','@@')
-		
+		# 11/1/02: The cweb hack: if the opening comment delim ends in '@',
+		# double all '@' signs except the first, which is "doubled" by the
+		# trailing '@' in the opening comment delimiter.
+		start = self.startSentinelComment
+		if start and len(start) > 0 and start[-1] == '@':
+			assert(s and len(s)>0 and s[0]=='@')
+			s = string.replace(s,'@','@@')[1:]
+	
 		self.os(s)
 		self.os(self.endSentinelComment)
 		if self.suppress_newlines:
@@ -299,7 +302,7 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:7::putSentinel (applies cweb hack to all sentinels)
+	#@-node:7::putSentinel (applies cweb hack)
 	#@+node:8::sentinelKind
 	#@+body
 	#@+at
@@ -393,10 +396,6 @@ class atFile:
 		# 7/8/02: Support for REM hack
 		i = skip_ws(s,i)
 		assert(i < len(s) and s[i] == '@')
-		# 10/31/02: Support for cweb hack.
-		if start[-1] == '@':
-			assert(match(s,i,"@@"))
-			i += 1
 		return i + 1
 	
 	#@-body
