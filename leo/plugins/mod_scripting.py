@@ -68,6 +68,8 @@ __version__ = "0.7"
 #     - Added support for 'removeMe' hack.
 #         Buttons can asked to be removed by setting 
 # s.app.scriptDict['removeMe'] = True.
+# 0.8 EKR:
+#     - c.disableCommandsMessage disables buttons.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -199,24 +201,26 @@ def createStandardButtons(c,d):
             
         def commandCallback(event=None,b=b,c=c,p=p.copy(),script=script,statusMessage=statusMessage):
             global bindLate
-            if script is None: script = ""
-            c.frame.clearStatusLine()
-            c.frame.putStatusLine("Executing %s..." % statusMessage)
-            g.app.scriptDict = {}
-            if bindLate:
-                # New in 4.2.1: always use the entire body string.
-                script = g.getScript(c,p,useSelectedText=False)
-            if script:
-                c.executeScript(script=script)
+            if c.disableCommandsMessage:
+                g.es(c.disableCommandsMessage,color='blue')
             else:
-                g.es("No script selected",color="blue")
-                
-            # A useful hack: remove the button if the script asks to be removed.
-            # In particular, this will remove the spelling button if it can't be inited.
-            if g.app.scriptDict.get('removeMe'):
-                g.es("Removing '%s' button at its request" % (buttonText))
-                b.pack_forget()
-                
+                if script is None: script = ""
+                c.frame.clearStatusLine()
+                c.frame.putStatusLine("Executing %s..." % statusMessage)
+                g.app.scriptDict = {}
+                if bindLate:
+                    # New in 4.2.1: always use the entire body string.
+                    script = g.getScript(c,p,useSelectedText=False)
+                if script:
+                    c.executeScript(script=script)
+                else:
+                    g.es("No script selected",color="blue")
+                    
+                # A useful hack: remove the button if the script asks to be removed.
+                # In particular, this will remove the spelling button if it can't be inited.
+                if g.app.scriptDict.get('removeMe'):
+                    g.es("Removing '%s' button at its request" % (buttonText))
+                    b.pack_forget()
             
         def mouseEnterCallback(event=None,c=c,statusMessage=statusMessage):
             mouseEnter(c,statusMessage)
@@ -301,13 +305,16 @@ def createDynamicButton (c,p,d):
         deleteButton(c,key)
         
     def execCommand (event=None,b=b,c=c,script=script,buttonText=buttonText):
-        g.app.scriptDict = {}
-        c.executeScript(script=script)
-        # A useful hack: remove the button if the script asks to be removed.
-        # In particular, this will remove the spelling button if it can't be inited.
-        if g.app.scriptDict.get('removeMe'):
-            g.es("Removing '%s' button at its request" % (buttonText))
-            b.pack_forget()
+        if c.disableCommandsMessage:
+            g.es(c.disableCommandsMessage,color='blue')
+        else:
+            g.app.scriptDict = {}
+            c.executeScript(script=script)
+            # A useful hack: remove the button if the script asks to be removed.
+            # In particular, this will remove the spelling button if it can't be inited.
+            if g.app.scriptDict.get('removeMe'):
+                g.es("Removing '%s' button at its request" % (buttonText))
+                b.pack_forget()
         
     def mouseEnterCallback(event=None,c=c,statusLine=statusLine):
         mouseEnter(c,statusLine)
