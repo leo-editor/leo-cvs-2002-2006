@@ -5,9 +5,9 @@
 	<global_window_position top="15" left="188" height="27" width="71"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -2955,7 +2955,7 @@
 <v t="T1372" a="C"><vh>frame.setTabWidth</vh></v>
 <v t="T1405"><vh>test</vh></v>
 </v>
-<v t="T1406"><vh>Code</vh>
+<v t="T1406" a="E"><vh>Code</vh>
 <v t="T1407"><vh> Overview of code</vh></v>
 <v t="T1408"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
 <v t="T1409"><vh> Batch Files &amp; other @root trees</vh>
@@ -3241,9 +3241,9 @@
 </v>
 </v>
 </v>
-<v t="T1571"><vh>@file leoColor.py</vh>
+<v t="T1571" a="E"><vh>@file leoColor.py</vh>
 <v t="T1572"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="T389" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="T389" a="CV"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
 <v t="T1573"><vh>&lt;&lt; define colorizer functions &gt;&gt;</vh></v>
 <v t="T1574"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
 <v t="T1575"><vh>class colorizer</vh>
@@ -4600,7 +4600,7 @@
 <v t="T2034"><vh>def_node.__repr__</vh></v>
 </v>
 </v>
-<v t="T2035" a="E"><vh>class tangleCommands methods</vh>
+<v t="T2035"><vh>class tangleCommands methods</vh>
 <v t="T2036"><vh>tangle.__init__</vh></v>
 <v t="T672" a="C"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
 <v t="T673"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
@@ -4787,7 +4787,7 @@
 <v t="T637"><vh>&lt;&lt; Remove leading and trailing delims if they exist &gt;&gt;</vh></v>
 </v>
 <v t="T638"><vh>&lt;&lt; Test for @header or @noheader &gt;&gt;</vh></v>
-<v t="T639" a="V"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh></v>
+<v t="T639"><vh>&lt;&lt; Set self.tangle_directory &gt;&gt;</vh></v>
 </v>
 <v t="T723" a="C"><vh>token_type</vh>
 <v t="T724"><vh>&lt;&lt; set token_type in noweb mode &gt;&gt;</vh></v>
@@ -6710,7 +6710,11 @@ for text,value in right_data:
 <t tx="T389">leoKeywords = (
 	# Leo 2 directives.
 	"@","@c","@code","@doc","@color","@comment",
-	"@delims","@first","@language","@nocolor","@others",
+	"@delims","@first",
+	"@header", # Stephen P. Scahefer, 9/2/2002
+	"@language","@nocolor",
+	"@noheader", # Stephen P.Schaefer,9/2/2002
+	"@others",
 	"@pagewidth","@path","@tabwidth",
 	# Leo 1 directives.
 	"@cweb","@ignore","@noweb","@root","@unit","@silent","@terse","@verbose")
