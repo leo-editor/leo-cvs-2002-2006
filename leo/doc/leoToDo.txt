@@ -922,8 +922,112 @@ app.gui.set_focus(c,c.frame.bodyCtrl)
 #@-node:ekr.20041018200728.94:tree.select
 #@-node:ekr.20041018200949:From OLD code
 #@-node:ekr.20041018194900:(Support drawing hooks)
-#@+node:ekr.20041006110656:First 5
+#@+node:ekr.20041022080257:Bugs 3
+#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+@nocolor
+#@nonl
+#@+node:ekr.20040226094105.1:halw
+
+https://sourceforge.net/forum/message.php?msg_id=2437859
+By: halw
+
+David,
+
+I agree that your solution is best -- the problem is it doesn't work. 
+
+If you look at the original post you'll note that the mouse wheel works fine
+in all other Leo panes (which are native text panes, not a custom canvas).
+
+In fact, a stock RH9 system does set up X as those pages indicate. The problem
+is elsewhere, perhaps Tk or Tkinter.
+
+If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
+it into the FAQ, though.
+
+--Hal
+
+#@-node:ekr.20040226094105.1:halw
+#@+node:ekr.20040226094105.2:djsg
+https://sourceforge.net/forum/message.php?msg_id=2435622
+By: djsg
+
+Tk is complying with the behavior of XFree86, and not hiding that behavior. 
+
+Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
+matches it, so 4.3.0 ought to match it also:
+
+http://www.xfree86.org/4.2.0/mouse7.html
+
+An example of configuration for XFree86 3.3.2.
+
+First, the URL: 
+
+http://www.genius-europe.com/service/faq/tuxmouse.htm
+
+o save their bandwidth, the example follows: 
+
+
+All mices with scroll wheel or stick
+
+XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
+The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
+wheel actions.
+Edit /etc/XF86Config with your favorite editor
+Add the following line to the "Pointer" section.
+
+ZAxisMapping 4 5
+
+Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
+or for serial mice set it to "IntelliMouse" or "Auto".
+Example for PS/2 wheel mouse:
+
+Section "Pointer"
+Protocol "IMPS/2"
+Device "/dev/psaux"
+SampleRate 60
+BaudRate 1200
+ZAxisMapping 4 5
+Buttons 3
+EndSection
+
+After XWindows is started run :
+imwheel -k
+
+
+#@-node:ekr.20040226094105.2:djsg
+#@+node:ekr.20040226094105.3:The actual workaround
+
+https://sourceforge.net/forum/message.php?msg_id=2433628
+By: halw
+
+Okay, I have a workaround that works for me with my existing Tk version. My
+Tkinter skills are weak, but I don't think this will hurt anything else :)
+
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
+events, but maps to buttons 4 (up) & 5 (down).
+
+Add to if clause 
+# Handle mouse wheel in the outline pane.
+if sys.platform == "linux2": # This crashes tcl83.dll
+..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+..def mapWheel(e):
+    if e.num == 4:
+    ..e.delta = 120
+    ..return frame.OnMouseWheel(e)
+    elif e.num == 5:
+    ..e.delta = -120
+    ..return frame.OnMouseWheel(e)
+..canvas.bind("<ButtonPress>", mapWheel, add=1)
+#@nonl
+#@-node:ekr.20040226094105.3:The actual workaround
+#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+#@+node:ekr.20041022081937:Get cvs working again on mac
+Just remove the cvs key files?
+#@nonl
+#@-node:ekr.20041022081937:Get cvs working again on mac
 #@+node:ekr.20041007052853:(Fix problems with paste on Linux)
+@color
+#@nonl
 #@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
 #@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
 #@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
@@ -1077,7 +1181,70 @@ def createBindings (self,frame):
     t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
+@nocolor
+
+- This might fix some binding problems on some platforms.
+
+- Might want to define <<localUndo>> for undo in Find Panel.
+
+- Probably should define <<selectAll>> for Find Panel and similar stuff.
+#@nonl
+#@-node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
 #@-node:ekr.20041007052853:(Fix problems with paste on Linux)
+#@+node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@+node:ekr.20041022080455:Report
+@killcolor
+
+There seems to be a bug when setting font preferences on the Mac.  If I 
+check more than one box and then apply a font change, the change is set 
+correctly when I restart Leo but doesn't always preview correctly 
+before that.  I set headline and body text to the same font and the 
+headlines did not change to show the new font until I started up again. 
+  Not a big deal.
+
+-- Dan Windler
+#@-node:ekr.20041022080455:Report
+#@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@-node:ekr.20041022080257:Bugs 3
+#@+node:ekr.20041006110656:Urgent 7
+#@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
+I would like to store unknown
+attributes as a simple string. The reason, is because I am using an unknown
+attribute to carry additional markup information, in this case, to carry color
+information for each node. (I used Joe Orr's XSL stylesheet as a startpoint for
+HTML generation).
+
+In order to achieve my nefarious aim, I have had to edit leoFileCommands.py but
+I would prefer not to have to edit the main source code.
+
+Martin Clifford
+Senior Software Engineer
+Snell & Wilcox
+#@+node:ekr.20041004091238:example file
+Edward
+
+This is a follow up to my email at the end of August, regarding unknown attributes.
+
+I have attached an HTML file (LeoToHTML) hat I generated from a Leo file.
+
+It demonstrates the uses that I have made of unknown attributes.
+
+My hope is that it will provide food for thought in your discussions on the subject.
+
+Regards
+Martin
+#@-node:ekr.20041004091238:example file
+#@-node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
+#@+node:ekr.20041002165019:Emacs-style movement commands
+http://sourceforge.net/forum/message.php?msg_id=2499058
+By: sgbotsford
+
+> Second level would be in implement the movement commands that aren't in leo.
+
+That would be pretty easy in a plugin.  This is probably the most important thing that Leo should have in its core to support "driving" the editor as in Emacs.  The other thing is to support the emacs style of handling keystrokes (writing keystroke info to a status line).  Better feedback on the status line will happen asap.
+#@nonl
+#@-node:ekr.20041002165019:Emacs-style movement commands
 #@+node:ekr.20041004193600:Add safeguards on @button and @script
 #@+node:ekr.20041004193600.1:Paul's first posting
 @killcolor
@@ -1147,11 +1314,11 @@ From what I understand the hexdigest should be different for any change in the
 text. Also no two strings should give the same hash (although I seem to recall
 that someone found a collision recently).
 #@-node:ekr.20041005075955:Pault's second posting
+#@+node:ekr.20041003115036:Add --noscripting command-line option
+This will disable @button, @script, etc.
+#@nonl
+#@-node:ekr.20041003115036:Add --noscripting command-line option
 #@-node:ekr.20041004193600:Add safeguards on @button and @script
-#@+node:ekr.20041003174108.1:Do unit tests based on new atFile code
-#@-node:ekr.20041003174108.1:Do unit tests based on new atFile code
-#@-node:ekr.20041006110656:First 5
-#@+node:ekr.20041001182352.1:Urgent 3
 #@+node:EKR.20040602153716:(Finish drawUserIcons)
 #@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
 Also add corresponding commands.
@@ -1297,769 +1464,6 @@ def putUnknownAttributes (self,torv,toString=False):
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20040916122326.1:Undo...
-#@+node:ekr.20041011092930:Fix undo bug
-http://sourceforge.net/forum/message.php?msg_id=2795653
-
-By: Paul Paterson - paulpaterson
-Bug: minor asymmetry with undo insert node  
-2004-10-08 13:49
-Very minor hangnail,
-
-1. Select a node in the tree
-2. Hit CTRL-I to insert a node
-3. Hit CTRL-Z to undo the insert
-4. There is no longer a node selected in the tree so keyboard tree navigation etc commands don't work until you click on something with the mouse
-
-In an ideal world, after #3 it should be as if #2 never happened.
-
-----------------
-
-http://sourceforge.net/forum/message.php?msg_id=2795656
-By: paulpaterson
-
-Hmm, there's something interesting here after all.
-
-1. Select a node in the tree
-2. Hit CTRL-I to insert a node
-3. Hit CTRL-Z to undo the insert
-4. Hit Hoist before clicking on anything
-
-Now you are hoisted on the recently removed node! The node is dead but his memory
-lives on ...
-#@-node:ekr.20041011092930:Fix undo bug
-#@+node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:EKR.20040606195417.5:To do
-@nocolor
-
-- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
-- Create u.appendSavedNode.
-- Use u.appendSavedNode in Change All command.
-- Unit tests.
-#@nonl
-#@-node:EKR.20040606195417.5:To do
-#@+node:EKR.20040528075307:u.saveTree
-def saveTree (self,p,treeInfo=None):
-    
-    """Create all info needed to handle a general undo operation."""
-
-    # WARNING: read this before doing anything "clever"
-    << about u.saveTree >>
-    
-    u = self ; topLevel = (treeInfo == None)
-    if topLevel: treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Recursively add info for the subtree.
-    child = p.firstChild()
-    while child:
-        self.saveTree(child,treeInfo)
-        child = child.next()
-
-    # if topLevel: g.trace(treeInfo)
-    return treeInfo
-#@+node:EKR.20040530114124:<< about u.saveTree >>
-@ 
-The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
-
-Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
-
-(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
-
-Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
-#@-node:EKR.20040530114124:<< about u.saveTree >>
-#@-node:EKR.20040528075307:u.saveTree
-#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
-def saveNodeAndChildren (self,p):
-    
-    """Create all info needed for a node and all its immediate children."""
-
-    u = self
-    treeInfo = []
-
-    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
-    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    treeInfo.append(data)
-
-    # Add info for all children.
-    child = p.firstChild()
-    while child:
-        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
-        treeInfo.append(data)
-        child = child.next()
-
-    return treeInfo
-
-#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
-#@+node:EKR.20040606195417.1:u.saveNode
-def saveNode (self,p):
-    
-    """Create all info for a single vnode."""
-    
-    u = self
-
-    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.1:u.saveNode
-#@+node:EKR.20040606195417.3:u.saveListOfNodes
-def saveListOfNodes (self,listOfVnodes):
-    
-    """Create all info for a list of vnodes."""
-    
-    u = self ; treeInfo = []
-
-    for v in listOfVnodes:
-        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
-        treeInfo.append(data)
-
-    return treeInfo
-#@nonl
-#@-node:EKR.20040606195417.3:u.saveListOfNodes
-#@-node:EKR.20040601133022.1:(Finish the new undo)
-#@+node:ekr.20040323084434:(Add granularity setting for undo)
-#@+node:ekr.20040328111626:Notes
-@nocolor
-
-- "node" and "line" granularity are easy:
-    - Node: just replace "new" text with present text.
-    - Line: create a new node if the present line isn't the same as the "line" attribute of the undo node.
-        (Very similar to node granularity.
-
-- "word" granularity is still fairly easy:
-    - inWord flag is True or False.
-    - create a new node if we are starting a new word.
-
-- copy/paste always start new undo typing nodes.
-    
-#@nonl
-#@-node:ekr.20040328111626:Notes
-#@+node:ekr.20031218072017.3606:undo.__init__ & clearIvars
-def __init__ (self,c):
-    
-    u = self ; u.c = c
-    
-    # Ivars to transition to new undo scheme...
-    u.debug = False # True: enable debugging code in new undo scheme.
-    u.debug_print = False # True: enable print statements in debug code.
-    u.new_undo = True # True: enable new debug code.
-
-    # Statistics comparing old and new ways (only if u.debug is on).
-    u.new_mem = 0
-    u.old_mem = 0
-
-    # State ivars...
-    u.undoType = "Can't Undo"
-    # These must be set here, _not_ in clearUndoState.
-    u.redoMenuLabel = "Can't Redo"
-    u.undoMenuLabel = "Can't Undo"
-    u.realRedoMenuLabel = "Can't Redo"
-    u.realUndoMenuLabel = "Can't Undo"
-    u.undoing = False # True if executing an Undo command.
-    u.redoing = False # True if executing a Redo command.
-    
-    # New in 4.2...
-    << Define optional ivars >>
-    << define redoDispatchDict >>
-    << define undoDispatchDict >>
-    u.updateSetChangedFlag = True
-    u.redrawFlag = True
-#@nonl
-#@+node:ekr.20031218072017.3607:clearIvars
-def clearIvars (self):
-    
-    u = self
-    
-    u.p = None # The position/node being operated upon for undo and redo.
-    for ivar in u.optionalIvars:
-        setattr(u,ivar,None)
-#@nonl
-#@-node:ekr.20031218072017.3607:clearIvars
-#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
-# New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
-
-u.optionalIvars = [
-    "lastChild",
-    "parent","oldParent",
-    "back","oldBack",
-    "n","oldN","oldV",
-    "oldText","newText",
-    "oldSel","newSel",
-    "sort","select",
-    "oldTree","newTree", # Added newTree 10/14/03
-    "yview",
-    # For incremental undo typing...
-    "leading","trailing",
-    "oldMiddleLines","newMiddleLines",
-    "oldNewlines","newNewlines" ]
-#@nonl
-#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
-#@+node:EKR.20040526072519:<< define redoDispatchDict >>
-u.redoDispatchDict = {
-    "Change":             u.redoTyping,
-    "Change All":         u.redoChangeAll,
-    "Change Headline":    u.redoChangeHeadline,
-    "Clone Node":         u.redoClone,
-    "Convert All Blanks": u.redoReplaceNodesContents,
-    "Convert All Tabs":   u.redoReplaceNodesContents,
-    "Convert Blanks":     u.redoTyping,
-    "Convert Tabs":       u.redoTyping,
-    "Cut":                u.redoTyping,
-    "Cut Node":           u.redoDeleteNode,
-    "De-Hoist":           u.redoDehoist,
-    "Delete":             u.redoTyping,
-    "Delete Node":        u.redoDeleteNode,
-    "Demote":             u.redoDemote,
-    "Drag":               u.redoMoveNode,
-    "Drag & Clone":       u.redoClone,
-    "Extract":            u.redoReplaceNodes,
-    "Extract Names":      u.redoReplaceNodes,
-    "Extract Section":    u.redoReplaceNodes,
-    "Hoist":              u.redoHoist,
-    "Import":             u.redoInsertNodes,
-    "Indent":             u.redoTyping,
-    "Insert Node":        u.redoInsertNodes,
-    "Move Down":          u.redoMoveNode,
-    "Move Left":          u.redoMoveNode,
-    "Move Right":         u.redoMoveNode,
-    "Move Up":            u.redoMoveNode,
-    "Paste":              u.redoTyping,
-    "Paste Node":         u.redoInsertNodes,
-    "Pretty Print":       u.redoChangeAll,
-    "Promote":            u.redoPromote,
-    "Read @file Nodes":   u.redoReplaceNodes,
-    "Reformat Paragraph": u.redoTyping,
-    "Sort Children":      u.redoSortChildren,
-    "Sort Siblings":      u.redoSortSiblings,
-    "Sort Top Level":     u.redoSortTopLevel,
-    "Typing":             u.redoTyping,
-    "Undent":             u.redoTyping }
-#@nonl
-#@-node:EKR.20040526072519:<< define redoDispatchDict >>
-#@+node:EKR.20040526075238:<< define undoDispatchDict >>
-u.undoDispatchDict = {
-    "Change":             u.undoTyping,
-    "Change All":         u.undoChangeAll,
-    "Change Headline":    u.undoChangeHeadline,
-    "Clone Node":         u.undoClone,
-    "Convert All Blanks": u.undoReplaceNodesContents,
-    "Convert All Tabs":   u.undoReplaceNodesContents,
-    "Convert Blanks":     u.undoTyping,
-    "Convert Tabs":       u.undoTyping,
-    "Cut":                u.undoTyping,
-    "Cut Node":           u.undoDeleteNode,
-    "De-Hoist":           u.undoDehoist,
-    "Delete":             u.undoTyping,
-    "Delete Node":        u.undoDeleteNode,
-    "Demote":             u.undoDemote,
-    "Drag":               u.undoMoveNode,
-    "Drag & Clone":       u.undoDragClone, # redo uses redoClone.
-    "Extract":            u.undoReplaceNodes,
-    "Extract Names":      u.undoReplaceNodes,
-    "Extract Section":    u.undoReplaceNodes,
-    "Hoist":              u.undoHoist,
-    "Import":             u.undoInsertNodes,
-    "Indent":             u.undoTyping,
-    "Insert Node":        u.undoInsertNodes,
-    "Move Down":          u.undoMoveNode,
-    "Move Left":          u.undoMoveNode,
-    "Move Right":         u.undoMoveNode,
-    "Move Up":            u.undoMoveNode,
-    "Paste":              u.undoTyping,
-    "Paste Node":         u.undoInsertNodes,
-    "Pretty Print":       u.undoChangeAll,
-    "Promote":            u.undoPromote,
-    "Read @file Nodes":   u.undoReplaceNodes,
-    "Reformat Paragraph": u.undoTyping,
-    "Sort Children":      u.undoSortChildren,
-    "Sort Siblings":      u.undoSortSiblings,
-    "Sort Top Level":     u.undoSortTopLevel,
-    "Typing":             u.undoTyping,
-    "Undent":             u.undoTyping }
-#@nonl
-#@-node:EKR.20040526075238:<< define undoDispatchDict >>
-#@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
-#@+node:ekr.20031218072017.1421:<< get config options >>
-@ Rewritten 10/11/02 as follows:
-
-1. We call initConfigParam and initBooleanConfigParam to get the values.
-
-The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
-
-2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
-@c
-
-self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
-    "at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
-    
-encoding = self.initConfigParam(
-    "config_encoding",self.config_encoding)
-    
-if g.isValidEncoding(encoding):
-    self.config_encoding = encoding
-else:
-    g.es("bad config_encoding: " + encoding)
-    
-self.create_nonexistent_directories = self.initBooleanConfigParam(
-    "create_nonexistent_directories",self.create_nonexistent_directories)
-    
-encoding = self.initConfigParam(
-    "default_derived_file_encoding",self.default_derived_file_encoding)
-
-if g.isValidEncoding(encoding):
-    self.default_derived_file_encoding = encoding
-else:
-    g.es("bad default_derived_file_encoding: " + encoding)
-    
-encoding = self.initConfigParam(
-    "new_leo_file_encoding",
-    self.new_leo_file_encoding)
-
-if g.isValidEncoding(encoding):
-    self.new_leo_file_encoding = encoding
-else:
-    g.es("bad new_leo_file_encoding: " + encoding)
-
-self.output_initial_comment = self.initConfigParam(
-    "output_initial_comment",self.output_initial_comment)
-
-self.output_newline = self.initConfigParam(
-    "output_newline",self.output_newline)
-
-self.read_only = self.initBooleanConfigParam(
-    "read_only",self.read_only)
-
-self.relative_path_base_directory = self.initConfigParam(
-    "relative_path_base_directory",self.relative_path_base_directory)
-    
-self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
-    "redirect_execute_script_output_to_log_pane",
-    self.redirect_execute_script_output_to_log_pane)
-    
-self.remove_sentinels_extension = self.initConfigParam(
-    "remove_sentinels_extension",self.remove_sentinels_extension)
-
-self.save_clears_undo_buffer = self.initBooleanConfigParam(
-    "save_clears_undo_buffer",self.save_clears_undo_buffer)
-    
-self.stylesheet = self.initConfigParam(
-    "stylesheet",self.stylesheet)
-    
-encoding = self.initConfigParam(
-    "tk_encoding",self.tkEncoding)
-    
-if encoding and len(encoding) > 0: # May be None.
-    if g.isValidEncoding(encoding):
-        self.tkEncoding = encoding
-    else:
-        g.es("bad tk_encoding: " + encoding)
-        
-# New in 4.2
-self.trailing_body_newlines = self.initConfigParam(
-    "trailing_body_newlines",self.trailing_body_newlines)
-    
-self.use_plugins = self.initBooleanConfigParam(
-    "use_plugins",self.use_plugins)
-
-self.use_psyco = self.initBooleanConfigParam(
-    "use_psyco",self.use_psyco)
-    
-self.undo_granularity = self.initConfigParam(
-    "undo_granularity",self.undo_granularity)
-
-# New in 4.2
-self.write_strips_blank_lines = self.initBooleanConfigParam(
-    "write_strips_blank_lines",self.write_strips_blank_lines)
-    
-#g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
-#g.trace("trailing_body_newlines",self.trailing_body_newlines)
-#@nonl
-#@-node:ekr.20031218072017.1421:<< get config options >>
-#@+node:ekr.20031218072017.1490:setUndoTypingParams
-@ This routine saves enough information so a typing operation can be undone and redone.
-
-We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
-@c
-
-def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
-    
-    # g.trace(undo_type,p,"old:",oldText,"new:",newText)
-    u = self ; c = u.c
-    << return if there is nothing to do >>
-    << init the undo params >>
-    << compute leading, middle & trailing  lines >>
-    << save undo text info >>
-    << save the selection and scrolling position >>
-    << adjust the undo stack, clearing all forward entries >>
-    u.setUndoTypes() # Recalculate the menu labels.
-    return d
-#@nonl
-#@+node:ekr.20040324061854:<< return if there is nothing to do >>
-if u.redoing or u.undoing:
-    return None
-
-if undo_type == None:
-    return None
-
-if undo_type == "Can't Undo":
-    u.clearUndoState()
-    return None
-
-if oldText == newText:
-    # g.trace("no change")
-    return None
-#@nonl
-#@-node:ekr.20040324061854:<< return if there is nothing to do >>
-#@+node:ekr.20040324061854.1:<< init the undo params >>
-# Clear all optional params.
-for ivar in u.optionalIvars:
-    setattr(u,ivar,None)
-
-# Set the params.
-u.undoType = undo_type
-u.p = p
-#@nonl
-#@-node:ekr.20040324061854.1:<< init the undo params >>
-#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
-
-NB: the number of old and new middle lines may be different.
-@c
-
-old_lines = string.split(oldText,'\n')
-new_lines = string.split(newText,'\n')
-new_len = len(new_lines)
-old_len = len(old_lines)
-min_len = min(old_len,new_len)
-
-i = 0
-while i < min_len:
-    if old_lines[i] != new_lines[i]:
-        break
-    i += 1
-leading = i
-
-if leading == new_len:
-    # This happens when we remove lines from the end.
-    # The new text is simply the leading lines from the old text.
-    trailing = 0
-else:
-    i = 0
-    while i < min_len - leading:
-        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
-            break
-        i += 1
-    trailing = i
-    
-# NB: the number of old and new middle lines may be different.
-if trailing == 0:
-    old_middle_lines = old_lines[leading:]
-    new_middle_lines = new_lines[leading:]
-else:
-    old_middle_lines = old_lines[leading:-trailing]
-    new_middle_lines = new_lines[leading:-trailing]
-    
-# Remember how many trailing newlines in the old and new text.
-i = len(oldText) - 1 ; old_newlines = 0
-while i >= 0 and oldText[i] == '\n':
-    old_newlines += 1
-    i -= 1
-
-i = len(newText) - 1 ; new_newlines = 0
-while i >= 0 and newText[i] == '\n':
-    new_newlines += 1
-    i -= 1
-
-if u.debug_print:
-    g.trace()
-    print "lead,trail",leading,trailing
-    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
-    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
-    #print "lead,trail:",leading,trailing
-    #print "old mid:",old_middle_lines
-    #print "new mid:",new_middle_lines
-    print "---------------------"
-#@nonl
-#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-#@+node:ekr.20031218072017.1492:<< save undo text info >>
-@ This is the start of the incremental undo algorithm.
-
-We must save enough info to do _both_ of the following:
-
-Undo: Given newText, recreate oldText.
-Redo: Given oldText, recreate oldText.
-
-The "given" texts for the undo and redo routines are simply v.bodyString().
-@c
-
-if u.new_undo:
-    if u.debug:
-        # Remember the complete text for comparisons...
-        u.oldText = oldText
-        u.newText = newText
-        # Compute statistics comparing old and new ways...
-        # The old doesn't often store the old text, so don't count it here.
-        u.old_mem += len(newText)
-        s1 = string.join(old_middle_lines,'\n')
-        s2 = string.join(new_middle_lines,'\n')
-        u.new_mem += len(s1) + len(s2)
-    else:
-        u.oldText = None
-        u.newText = None
-else:
-    u.oldText = oldText
-    u.newText = newText
-
-self.leading = leading
-self.trailing = trailing
-self.oldMiddleLines = old_middle_lines
-self.newMiddleLines = new_middle_lines
-self.oldNewlines = old_newlines
-self.newNewlines = new_newlines
-#@nonl
-#@-node:ekr.20031218072017.1492:<< save undo text info >>
-#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#Remember the selection.
-u.oldSel = oldSel
-u.newSel = newSel
-
-# Remember the scrolling position.
-if oldYview:
-    u.yview = oldYview
-else:
-    u.yview = c.frame.body.getYScrollPosition()
-#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
-#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-# Push params on undo stack, clearing all forward entries.
-u.bead += 1
-d = u.setBead(u.bead)
-u.beads[u.bead:] = [d]
-
-# g.trace(len(u.beads), u.bead)
-#@nonl
-#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
-#@-node:ekr.20031218072017.1490:setUndoTypingParams
-#@+node:ekr.20031218072017.2038:<< redo typing cases >>
-elif redoType in ( "Typing",
-    "Change","Convert Blanks","Convert Tabs","Cut",
-    "Delete","Indent","Paste","Reformat Paragraph","Undent"):
-
-    # g.trace(redoType,u.p)
-    # selectVnode causes recoloring, so avoid if possible.
-    if current != u.p:
-        c.selectVnode(u.p)
-    elif redoType in ("Cut","Paste"):
-        c.frame.body.forceFullRecolor()
-
-    self.undoRedoText(
-        u.p,u.leading,u.trailing,
-        u.newMiddleLines,u.oldMiddleLines,
-        u.newNewlines,u.oldNewlines,
-        tag="redo",undoType=redoType)
-    
-    if u.newSel:
-        c.frame.body.setTextSelection(u.newSel)
-    if u.yview:
-        c.frame.body.setYScrollPosition(u.yview)
-    redrawFlag = (current != u.p)
-        
-elif redoType == "Change All":
-
-    count = 0
-    while 1:
-        u.bead += 1
-        d = u.getBead(u.bead+1)
-        assert(d)
-        redoType = u.undoType
-        # g.trace(redoType,u.p,u.newText)
-        if redoType == "Change All":
-            c.selectVnode(u.p)
-            break
-        elif redoType == "Change":
-            u.p.v.setTnodeText(u.newText)
-            u.p.setDirty()
-            count += 1
-        elif redoType == "Change Headline":
-            u.p.initHeadString(u.newText)
-            count += 1
-        else: assert(False)
-    g.es("redo %d instances" % count)
-
-elif redoType == "Change Headline":
-    
-    # g.trace(redoType,u.p,u.newText)
-    u.p.setHeadStringOrHeadline(u.newText)
-    c.selectVnode(u.p)
-#@nonl
-#@-node:ekr.20031218072017.2038:<< redo typing cases >>
-#@+node:ekr.20031218072017.2047:<< undo typing cases >>
-@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
-
-But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
-@c
-    
-elif undoType in ( "Typing",
-    "Change","Convert Blanks","Convert Tabs","Cut",
-    "Delete","Indent","Paste","Reformat Paragraph","Undent"):
-
-    # g.trace(undoType,u.p)
-    # selectVnode causes recoloring, so don't do this unless needed.
-    if current != u.p:
-        c.selectVnode(u.p)
-    elif undoType in ("Cut","Paste"):
-        c.frame.body.forceFullRecolor()
-
-    self.undoRedoText(
-        u.p,u.leading,u.trailing,
-        u.oldMiddleLines,u.newMiddleLines,
-        u.oldNewlines,u.newNewlines,
-        tag="undo",undoType=undoType)
-    if u.oldSel:
-        c.frame.body.setTextSelection(u.oldSel)
-    if u.yview:
-        c.frame.body.setYScrollPosition(u.yview)
-    redrawFlag = (current != u.p)
-        
-elif undoType == "Change All":
-
-    count = 0
-    while 1:
-        u.bead -= 1
-        d = u.getBead(u.bead)
-        assert(d)
-        undoType = u.undoType
-        # g.trace(undoType,u.p,u.oldText)
-        if undoType == "Change All":
-            c.selectVnode(u.p)
-            break
-        elif undoType == "Change":
-            u.p.setTnodeText(u.oldText)  # p.setTnodeText
-            count += 1
-            u.p.setDirty()
-        elif undoType == "Change Headline":
-            u.p.initHeadString(u.oldText)  # p.initHeadString
-            count += 1
-        else: assert(False)
-    g.es("undo %d instances" % count)
-        
-elif undoType == "Change Headline":
-    
-    # g.trace(u.oldText)
-    u.p.setHeadStringOrHeadline(u.oldText)
-    c.selectVnode(u.p)
-#@nonl
-#@-node:ekr.20031218072017.2047:<< undo typing cases >>
-#@+node:ekr.20031218072017.1493:undoRedoText
-# Handle text undo and redo.
-# The terminology is for undo: converts _new_ text into _old_ text.
-
-def undoRedoText (self,p,
-    leading,trailing, # Number of matching leading & trailing lines.
-    oldMidLines,newMidLines, # Lists of unmatched lines.
-    oldNewlines,newNewlines, # Number of trailing newlines.
-    tag="undo", # "undo" or "redo"
-    undoType=None):
-
-    u = self ; c = u.c
-    assert(p == c.currentPosition())
-    v = p.v
-
-    << Incrementally update the Tk.Text widget >>
-    << Compute the result using v's body text >>
-    # g.trace(v)
-    # g.trace("old:",v.bodyString())
-    v.setTnodeText(result)
-    # g.trace("new:",v.bodyString())
-    << Get textResult from the Tk.Text widget >>
-    if textResult == result:
-        if undoType in ("Cut","Paste"):
-            # g.trace("non-incremental undo")
-            c.frame.body.recolor(p,incremental=False)
-        else:
-            # g.trace("incremental undo:",leading,trailing)
-            c.frame.body.recolor_range(p,leading,trailing)
-    else: # 11/19/02: # Rewrite the pane and do a full recolor.
-        if u.debug_print:
-            << print mismatch trace >>
-        # g.trace("non-incremental undo")
-        p.setBodyStringOrPane(result)
-#@nonl
-#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-# Only update the changed lines.
-mid_text = string.join(oldMidLines,'\n')
-new_mid_len = len(newMidLines)
-# Maybe this could be simplified, and it is good to treat the "end" with care.
-if trailing == 0:
-    c.frame.body.deleteLine(leading)
-    if leading > 0:
-        c.frame.body.insertAtEnd('\n')
-    c.frame.body.insertAtEnd(mid_text)
-else:
-    if new_mid_len > 0:
-        c.frame.body.deleteLines(leading,new_mid_len)
-    elif leading > 0:
-        c.frame.body.insertAtStartOfLine(leading,'\n')
-    c.frame.body.insertAtStartOfLine(leading,mid_text)
-# Try to end the Tk.Text widget with oldNewlines newlines.
-# This may be off by one, and we don't care because
-# we never use body text to compute undo results!
-s = c.frame.body.getAllText()
-newlines = 0 ; i = len(s) - 1
-while i >= 0 and s[i] == '\n':
-    newlines += 1 ; i -= 1
-while newlines > oldNewlines:
-    c.frame.body.deleteLastChar()
-    newlines -= 1
-if oldNewlines > newlines:
-    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
-#@nonl
-#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
-#@+node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
-# Recreate the text using the present body text.
-body = v.bodyString()
-body = g.toUnicode(body,"utf-8")
-body_lines = body.split('\n')
-s = []
-if leading > 0:
-    s.extend(body_lines[:leading])
-if len(oldMidLines) > 0:
-    s.extend(oldMidLines)
-if trailing > 0:
-    s.extend(body_lines[-trailing:])
-s = string.join(s,'\n')
-# Remove trailing newlines in s.
-while len(s) > 0 and s[-1] == '\n':
-    s = s[:-1]
-# Add oldNewlines newlines.
-if oldNewlines > 0:
-    s = s + '\n' * oldNewlines
-result = s
-if u.debug_print:
-    print "body:  ",body
-    print "result:",result
-#@nonl
-#@-node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
-#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-textResult = c.frame.body.getAllText()
-
-if textResult != result:
-    # Remove the newline from textResult if that is the only difference.
-    if len(textResult) > 0 and textResult[:-1] == result:
-        textResult = result
-#@nonl
-#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
-#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
-print "undo mismatch"
-print "expected:",result
-print "actual  :",textResult
-#@nonl
-#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
-#@-node:ekr.20031218072017.1493:undoRedoText
-#@-node:ekr.20040323084434:(Add granularity setting for undo)
-#@-node:ekr.20040916122326.1:Undo...
 #@+node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
@@ -3617,8 +3021,829 @@ def putCodeLine (self,s,i):
 #@-node:ekr.20040720075446.1:(write_strips_blank_lines option)
 #@-node:ekr.20040930075920:Whitespace options
 #@-node:ekr.20040919182750.1:Support for CVS
-#@-node:ekr.20041001182352.1:Urgent 3
-#@+node:ekr.20040919101448:Important 5
+#@+node:ekr.20041022083005:More flexible plugin manager
+#@+node:ekr.20041022070154:(To do: options for setting working directory during startup)
+#@+node:ekr.20041022070154.1:Request & response
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2815599
+By: Antonio Pala
+
+All plugins I have tried (notably @run and the @rst variants) have their working
+directory set to my home directory, regardless of the position of the Leo file
+and all @path directives. This renders most of them useless, since I would have
+to use absolute pathnames. Is this the way they were meant to work, or is there
+a bug somewhere? Or maybe I have missed some configuration parameter?
+
+I am using Leo 4.2 with Python 2.3 on Linux.
+
+> All plugins I have tried (notably @run and the @rst variants) have their working directory set to my home directory, regardless of the position of the Leo file and all @path directives.
+
+Directory issues are different on different platforms.
+
+I would welcome specific proposals for setting directories during startup.  Early in the startup process Leo sets g.app.loadDir to the directory from which Leo was loaded.  Plugins can use this directory to set the working directory as they choose.
+
+@path directives will have no effect on plugins:  they are loaded before the outline.
+
+> This renders most [plugins] useless, since I would have to use absolute pathnames.
+
+No, it means you might have to add a few lines of code to your plugin to make it work just as you would like it to work.
+
+> Is this the way they were meant to work?
+
+I don't have much control over how plugins were "meant" to work.  However, an improved plugin manager might have facilities for setting the working directory.
+
+This is a non-trivial issue;   Leo uses and sets paths in many places in the code.  It seems dubious to have plugins change the working directory at random times.  Perhaps an option that inits the working directory would be good.  The new config system will allow per-outline options as well as global option. I believe such options could be loaded before plugins.
+
+Edward
+#@-node:ekr.20041022070154.1:Request & response
+#@-node:ekr.20041022070154:(To do: options for setting working directory during startup)
+#@+node:ekr.20041022083005.1:unregisterhook
+#@-node:ekr.20041022083005.1:unregisterhook
+#@-node:ekr.20041022083005:More flexible plugin manager
+#@-node:ekr.20041006110656:Urgent 7
+#@+node:ekr.20040919101448:Major (Must do) 4
+#@+node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
+@killcolor
+
+Don't try to work exactly like Emacs:
+
+Esc:  puts focus in status line.
+    - Use potentially different binding in status line.
+    - Esc (or Esc Esc?) exists status line.
+    - This should be doable _without_ changing the main bindings.
+    - Create "status-line" commands corresponding to menus...
+        - Find
+        - File
+        - Outline
+        - Edit
+    - We must preserve body state (selection) when switching back and forth.
+    
+#@nonl
+#@-node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
+#@+node:ekr.20040916122326.1:Revise Undo...
+#@+node:ekr.20041011092930:Fix undo bug
+http://sourceforge.net/forum/message.php?msg_id=2795653
+
+By: Paul Paterson - paulpaterson
+Bug: minor asymmetry with undo insert node  
+2004-10-08 13:49
+Very minor hangnail,
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. There is no longer a node selected in the tree so keyboard tree navigation etc commands don't work until you click on something with the mouse
+
+In an ideal world, after #3 it should be as if #2 never happened.
+
+----------------
+
+http://sourceforge.net/forum/message.php?msg_id=2795656
+By: paulpaterson
+
+Hmm, there's something interesting here after all.
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. Hit Hoist before clicking on anything
+
+Now you are hoisted on the recently removed node! The node is dead but his memory
+lives on ...
+#@-node:ekr.20041011092930:Fix undo bug
+#@+node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:EKR.20040606195417.5:To do
+@nocolor
+
+- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
+- Create u.appendSavedNode.
+- Use u.appendSavedNode in Change All command.
+- Unit tests.
+#@nonl
+#@-node:EKR.20040606195417.5:To do
+#@+node:EKR.20040528075307:u.saveTree
+def saveTree (self,p,treeInfo=None):
+    
+    """Create all info needed to handle a general undo operation."""
+
+    # WARNING: read this before doing anything "clever"
+    << about u.saveTree >>
+    
+    u = self ; topLevel = (treeInfo == None)
+    if topLevel: treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Recursively add info for the subtree.
+    child = p.firstChild()
+    while child:
+        self.saveTree(child,treeInfo)
+        child = child.next()
+
+    # if topLevel: g.trace(treeInfo)
+    return treeInfo
+#@+node:EKR.20040530114124:<< about u.saveTree >>
+@ 
+The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
+
+Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
+
+(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+
+Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@-node:EKR.20040530114124:<< about u.saveTree >>
+#@-node:EKR.20040528075307:u.saveTree
+#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+def saveNodeAndChildren (self,p):
+    
+    """Create all info needed for a node and all its immediate children."""
+
+    u = self
+    treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Add info for all children.
+    child = p.firstChild()
+    while child:
+        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
+        treeInfo.append(data)
+        child = child.next()
+
+    return treeInfo
+
+#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
+#@+node:EKR.20040606195417.1:u.saveNode
+def saveNode (self,p):
+    
+    """Create all info for a single vnode."""
+    
+    u = self
+
+    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.1:u.saveNode
+#@+node:EKR.20040606195417.3:u.saveListOfNodes
+def saveListOfNodes (self,listOfVnodes):
+    
+    """Create all info for a list of vnodes."""
+    
+    u = self ; treeInfo = []
+
+    for v in listOfVnodes:
+        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
+        treeInfo.append(data)
+
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:ekr.20040323084434:(Add granularity setting for undo)
+#@+node:ekr.20040328111626:Notes
+@nocolor
+
+- "node" and "line" granularity are easy:
+    - Node: just replace "new" text with present text.
+    - Line: create a new node if the present line isn't the same as the "line" attribute of the undo node.
+        (Very similar to node granularity.
+
+- "word" granularity is still fairly easy:
+    - inWord flag is True or False.
+    - create a new node if we are starting a new word.
+
+- copy/paste always start new undo typing nodes.
+    
+#@nonl
+#@-node:ekr.20040328111626:Notes
+#@+node:ekr.20031218072017.3606:undo.__init__ & clearIvars
+def __init__ (self,c):
+    
+    u = self ; u.c = c
+    
+    # Ivars to transition to new undo scheme...
+    u.debug = False # True: enable debugging code in new undo scheme.
+    u.debug_print = False # True: enable print statements in debug code.
+    u.new_undo = True # True: enable new debug code.
+
+    # Statistics comparing old and new ways (only if u.debug is on).
+    u.new_mem = 0
+    u.old_mem = 0
+
+    # State ivars...
+    u.undoType = "Can't Undo"
+    # These must be set here, _not_ in clearUndoState.
+    u.redoMenuLabel = "Can't Redo"
+    u.undoMenuLabel = "Can't Undo"
+    u.realRedoMenuLabel = "Can't Redo"
+    u.realUndoMenuLabel = "Can't Undo"
+    u.undoing = False # True if executing an Undo command.
+    u.redoing = False # True if executing a Redo command.
+    
+    # New in 4.2...
+    << Define optional ivars >>
+    << define redoDispatchDict >>
+    << define undoDispatchDict >>
+    u.updateSetChangedFlag = True
+    u.redrawFlag = True
+#@nonl
+#@+node:ekr.20031218072017.3607:clearIvars
+def clearIvars (self):
+    
+    u = self
+    
+    u.p = None # The position/node being operated upon for undo and redo.
+    for ivar in u.optionalIvars:
+        setattr(u,ivar,None)
+#@nonl
+#@-node:ekr.20031218072017.3607:clearIvars
+#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
+# New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
+
+u.optionalIvars = [
+    "lastChild",
+    "parent","oldParent",
+    "back","oldBack",
+    "n","oldN","oldV",
+    "oldText","newText",
+    "oldSel","newSel",
+    "sort","select",
+    "oldTree","newTree", # Added newTree 10/14/03
+    "yview",
+    # For incremental undo typing...
+    "leading","trailing",
+    "oldMiddleLines","newMiddleLines",
+    "oldNewlines","newNewlines" ]
+#@nonl
+#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
+#@+node:EKR.20040526072519:<< define redoDispatchDict >>
+u.redoDispatchDict = {
+    "Change":             u.redoTyping,
+    "Change All":         u.redoChangeAll,
+    "Change Headline":    u.redoChangeHeadline,
+    "Clone Node":         u.redoClone,
+    "Convert All Blanks": u.redoReplaceNodesContents,
+    "Convert All Tabs":   u.redoReplaceNodesContents,
+    "Convert Blanks":     u.redoTyping,
+    "Convert Tabs":       u.redoTyping,
+    "Cut":                u.redoTyping,
+    "Cut Node":           u.redoDeleteNode,
+    "De-Hoist":           u.redoDehoist,
+    "Delete":             u.redoTyping,
+    "Delete Node":        u.redoDeleteNode,
+    "Demote":             u.redoDemote,
+    "Drag":               u.redoMoveNode,
+    "Drag & Clone":       u.redoClone,
+    "Extract":            u.redoReplaceNodes,
+    "Extract Names":      u.redoReplaceNodes,
+    "Extract Section":    u.redoReplaceNodes,
+    "Hoist":              u.redoHoist,
+    "Import":             u.redoInsertNodes,
+    "Indent":             u.redoTyping,
+    "Insert Node":        u.redoInsertNodes,
+    "Move Down":          u.redoMoveNode,
+    "Move Left":          u.redoMoveNode,
+    "Move Right":         u.redoMoveNode,
+    "Move Up":            u.redoMoveNode,
+    "Paste":              u.redoTyping,
+    "Paste Node":         u.redoInsertNodes,
+    "Pretty Print":       u.redoChangeAll,
+    "Promote":            u.redoPromote,
+    "Read @file Nodes":   u.redoReplaceNodes,
+    "Reformat Paragraph": u.redoTyping,
+    "Sort Children":      u.redoSortChildren,
+    "Sort Siblings":      u.redoSortSiblings,
+    "Sort Top Level":     u.redoSortTopLevel,
+    "Typing":             u.redoTyping,
+    "Undent":             u.redoTyping }
+#@nonl
+#@-node:EKR.20040526072519:<< define redoDispatchDict >>
+#@+node:EKR.20040526075238:<< define undoDispatchDict >>
+u.undoDispatchDict = {
+    "Change":             u.undoTyping,
+    "Change All":         u.undoChangeAll,
+    "Change Headline":    u.undoChangeHeadline,
+    "Clone Node":         u.undoClone,
+    "Convert All Blanks": u.undoReplaceNodesContents,
+    "Convert All Tabs":   u.undoReplaceNodesContents,
+    "Convert Blanks":     u.undoTyping,
+    "Convert Tabs":       u.undoTyping,
+    "Cut":                u.undoTyping,
+    "Cut Node":           u.undoDeleteNode,
+    "De-Hoist":           u.undoDehoist,
+    "Delete":             u.undoTyping,
+    "Delete Node":        u.undoDeleteNode,
+    "Demote":             u.undoDemote,
+    "Drag":               u.undoMoveNode,
+    "Drag & Clone":       u.undoDragClone, # redo uses redoClone.
+    "Extract":            u.undoReplaceNodes,
+    "Extract Names":      u.undoReplaceNodes,
+    "Extract Section":    u.undoReplaceNodes,
+    "Hoist":              u.undoHoist,
+    "Import":             u.undoInsertNodes,
+    "Indent":             u.undoTyping,
+    "Insert Node":        u.undoInsertNodes,
+    "Move Down":          u.undoMoveNode,
+    "Move Left":          u.undoMoveNode,
+    "Move Right":         u.undoMoveNode,
+    "Move Up":            u.undoMoveNode,
+    "Paste":              u.undoTyping,
+    "Paste Node":         u.undoInsertNodes,
+    "Pretty Print":       u.undoChangeAll,
+    "Promote":            u.undoPromote,
+    "Read @file Nodes":   u.undoReplaceNodes,
+    "Reformat Paragraph": u.undoTyping,
+    "Sort Children":      u.undoSortChildren,
+    "Sort Siblings":      u.undoSortSiblings,
+    "Sort Top Level":     u.undoSortTopLevel,
+    "Typing":             u.undoTyping,
+    "Undent":             u.undoTyping }
+#@nonl
+#@-node:EKR.20040526075238:<< define undoDispatchDict >>
+#@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
+#@+node:ekr.20031218072017.1421:<< get config options >>
+@ Rewritten 10/11/02 as follows:
+
+1. We call initConfigParam and initBooleanConfigParam to get the values.
+
+The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
+
+2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
+@c
+
+self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
+    "at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
+    
+encoding = self.initConfigParam(
+    "config_encoding",self.config_encoding)
+    
+if g.isValidEncoding(encoding):
+    self.config_encoding = encoding
+else:
+    g.es("bad config_encoding: " + encoding)
+    
+self.create_nonexistent_directories = self.initBooleanConfigParam(
+    "create_nonexistent_directories",self.create_nonexistent_directories)
+    
+encoding = self.initConfigParam(
+    "default_derived_file_encoding",self.default_derived_file_encoding)
+
+if g.isValidEncoding(encoding):
+    self.default_derived_file_encoding = encoding
+else:
+    g.es("bad default_derived_file_encoding: " + encoding)
+    
+encoding = self.initConfigParam(
+    "new_leo_file_encoding",
+    self.new_leo_file_encoding)
+
+if g.isValidEncoding(encoding):
+    self.new_leo_file_encoding = encoding
+else:
+    g.es("bad new_leo_file_encoding: " + encoding)
+
+self.output_initial_comment = self.initConfigParam(
+    "output_initial_comment",self.output_initial_comment)
+
+self.output_newline = self.initConfigParam(
+    "output_newline",self.output_newline)
+
+self.read_only = self.initBooleanConfigParam(
+    "read_only",self.read_only)
+
+self.relative_path_base_directory = self.initConfigParam(
+    "relative_path_base_directory",self.relative_path_base_directory)
+    
+self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
+    "redirect_execute_script_output_to_log_pane",
+    self.redirect_execute_script_output_to_log_pane)
+    
+self.remove_sentinels_extension = self.initConfigParam(
+    "remove_sentinels_extension",self.remove_sentinels_extension)
+
+self.save_clears_undo_buffer = self.initBooleanConfigParam(
+    "save_clears_undo_buffer",self.save_clears_undo_buffer)
+    
+self.stylesheet = self.initConfigParam(
+    "stylesheet",self.stylesheet)
+    
+encoding = self.initConfigParam(
+    "tk_encoding",self.tkEncoding)
+    
+if encoding and len(encoding) > 0: # May be None.
+    if g.isValidEncoding(encoding):
+        self.tkEncoding = encoding
+    else:
+        g.es("bad tk_encoding: " + encoding)
+        
+# New in 4.2
+self.trailing_body_newlines = self.initConfigParam(
+    "trailing_body_newlines",self.trailing_body_newlines)
+    
+self.use_plugins = self.initBooleanConfigParam(
+    "use_plugins",self.use_plugins)
+
+self.use_psyco = self.initBooleanConfigParam(
+    "use_psyco",self.use_psyco)
+    
+self.undo_granularity = self.initConfigParam(
+    "undo_granularity",self.undo_granularity)
+
+# New in 4.2
+self.write_strips_blank_lines = self.initBooleanConfigParam(
+    "write_strips_blank_lines",self.write_strips_blank_lines)
+    
+#g.trace("write_strips_blank_lines",self.write_strips_blank_lines)
+#g.trace("trailing_body_newlines",self.trailing_body_newlines)
+#@nonl
+#@-node:ekr.20031218072017.1421:<< get config options >>
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    # g.trace(undo_type,p,"old:",oldText,"new:",newText)
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    u.setUndoTypes() # Recalculate the menu labels.
+    return d
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+    
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    g.trace()
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply v.bodyString().
+@c
+
+if u.new_undo:
+    if u.debug:
+        # Remember the complete text for comparisons...
+        u.oldText = oldText
+        u.newText = newText
+        # Compute statistics comparing old and new ways...
+        # The old doesn't often store the old text, so don't count it here.
+        u.old_mem += len(newText)
+        s1 = string.join(old_middle_lines,'\n')
+        s2 = string.join(new_middle_lines,'\n')
+        u.new_mem += len(s1) + len(s2)
+    else:
+        u.oldText = None
+        u.newText = None
+else:
+    u.oldText = oldText
+    u.newText = newText
+
+self.leading = leading
+self.trailing = trailing
+self.oldMiddleLines = old_middle_lines
+self.newMiddleLines = new_middle_lines
+self.oldNewlines = old_newlines
+self.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+# Push params on undo stack, clearing all forward entries.
+u.bead += 1
+d = u.setBead(u.bead)
+u.beads[u.bead:] = [d]
+
+# g.trace(len(u.beads), u.bead)
+#@nonl
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@+node:ekr.20031218072017.2038:<< redo typing cases >>
+elif redoType in ( "Typing",
+    "Change","Convert Blanks","Convert Tabs","Cut",
+    "Delete","Indent","Paste","Reformat Paragraph","Undent"):
+
+    # g.trace(redoType,u.p)
+    # selectVnode causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif redoType in ("Cut","Paste"):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=redoType)
+    
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+    redrawFlag = (current != u.p)
+        
+elif redoType == "Change All":
+
+    count = 0
+    while 1:
+        u.bead += 1
+        d = u.getBead(u.bead+1)
+        assert(d)
+        redoType = u.undoType
+        # g.trace(redoType,u.p,u.newText)
+        if redoType == "Change All":
+            c.selectVnode(u.p)
+            break
+        elif redoType == "Change":
+            u.p.v.setTnodeText(u.newText)
+            u.p.setDirty()
+            count += 1
+        elif redoType == "Change Headline":
+            u.p.initHeadString(u.newText)
+            count += 1
+        else: assert(False)
+    g.es("redo %d instances" % count)
+
+elif redoType == "Change Headline":
+    
+    # g.trace(redoType,u.p,u.newText)
+    u.p.setHeadStringOrHeadline(u.newText)
+    c.selectVnode(u.p)
+#@nonl
+#@-node:ekr.20031218072017.2038:<< redo typing cases >>
+#@+node:ekr.20031218072017.2047:<< undo typing cases >>
+@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
+
+But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
+@c
+    
+elif undoType in ( "Typing",
+    "Change","Convert Blanks","Convert Tabs","Cut",
+    "Delete","Indent","Paste","Reformat Paragraph","Undent"):
+
+    # g.trace(undoType,u.p)
+    # selectVnode causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif undoType in ("Cut","Paste"):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=undoType)
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+    redrawFlag = (current != u.p)
+        
+elif undoType == "Change All":
+
+    count = 0
+    while 1:
+        u.bead -= 1
+        d = u.getBead(u.bead)
+        assert(d)
+        undoType = u.undoType
+        # g.trace(undoType,u.p,u.oldText)
+        if undoType == "Change All":
+            c.selectVnode(u.p)
+            break
+        elif undoType == "Change":
+            u.p.setTnodeText(u.oldText)  # p.setTnodeText
+            count += 1
+            u.p.setDirty()
+        elif undoType == "Change Headline":
+            u.p.initHeadString(u.oldText)  # p.initHeadString
+            count += 1
+        else: assert(False)
+    g.es("undo %d instances" % count)
+        
+elif undoType == "Change Headline":
+    
+    # g.trace(u.oldText)
+    u.p.setHeadStringOrHeadline(u.oldText)
+    c.selectVnode(u.p)
+#@nonl
+#@-node:ekr.20031218072017.2047:<< undo typing cases >>
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+
+    u = self ; c = u.c
+    assert(p == c.currentPosition())
+    v = p.v
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using v's body text >>
+    # g.trace(v)
+    # g.trace("old:",v.bodyString())
+    v.setTnodeText(result)
+    # g.trace("new:",v.bodyString())
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+# Recreate the text using the present body text.
+body = v.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20040323084434:(Add granularity setting for undo)
+#@-node:ekr.20040916122326.1:Revise Undo...
 #@+node:ekr.20031218072017.828:Rewrite the config manager
 http://sourceforge.net/forum/message.php?msg_id=2329053
 By: dsalomoni
@@ -4365,7 +4590,7 @@ This is like the Spell-check plugin.
 #@-node:ekr.20031218072017.829:gui interface for plugins manager
 #@-node:ekr.20041002150740.2:2.  Set config options using dialogs
 #@-node:ekr.20031218072017.828:Rewrite the config manager
-#@+node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20031218072017.734:Rewrite (threaded) colorizer to use jEdit language descriptionfiles
 #@+node:ekr.20031218072017.735:Option: case insensitive keywords
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2097076
@@ -4378,7 +4603,11 @@ a big problem with modern editors, but it _would_ be nicer...
 
 --Rich
 #@-node:ekr.20031218072017.735:Option: case insensitive keywords
-#@-node:ekr.20031218072017.734:Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20041002112001:Use threaded Colorizer
+#@-node:ekr.20041002112001:Use threaded Colorizer
+#@-node:ekr.20031218072017.734:Rewrite (threaded) colorizer to use jEdit language descriptionfiles
+#@-node:ekr.20040919101448:Major (Must do) 4
+#@+node:ekr.20041001182730:Easy 6
 #@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
 @killcolor
 
@@ -4386,65 +4615,6 @@ Treat @language like @color: ambiguous nodes (nodes containing more than one
 @language directive) should not affect descendent nodes.
 #@nonl
 #@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
-#@+node:ekr.20041002112001:Use threaded Colorizer
-#@-node:ekr.20041002112001:Use threaded Colorizer
-#@+node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
-#@-node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
-#@+node:EKR.20040628085831:@import, etc.
-#@+node:ekr.20040718033104:@shadow
-#@-node:ekr.20040718033104:@shadow
-#@+node:ekr.20040718032616:@import
-#@-node:ekr.20040718032616:@import
-#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
-#@-node:EKR.20040628085831:@import, etc.
-#@+node:ekr.20041016134312.2:Create a proper Weave command
-Use noweb and TeX, or maybe Pyx.
-#@nonl
-#@-node:ekr.20041016134312.2:Create a proper Weave command
-#@-node:ekr.20040919101448:Important 5
-#@+node:ekr.20041001182730:Easy
-#@+node:ekr.20040831092540:Allow uA's to be stored as plain strings
-I would like to store unknown
-attributes as a simple string. The reason, is because I am using an unknown
-attribute to carry additional markup information, in this case, to carry color
-information for each node. (I used Joe Orr's XSL stylesheet as a startpoint for
-HTML generation).
-
-In order to achieve my nefarious aim, I have had to edit leoFileCommands.py but
-I would prefer not to have to edit the main source code.
-
-Martin Clifford
-Senior Software Engineer
-Snell & Wilcox
-#@+node:ekr.20041004091238:example file
-Edward
-
-This is a follow up to my email at the end of August, regarding unknown attributes.
-
-I have attached an HTML file (LeoToHTML) hat I generated from a Leo file.
-
-It demonstrates the uses that I have made of unknown attributes.
-
-My hope is that it will provide food for thought in your discussions on the subject.
-
-Regards
-Martin
-#@-node:ekr.20041004091238:example file
-#@-node:ekr.20040831092540:Allow uA's to be stored as plain strings
-#@+node:ekr.20041003115036:Add --noscripting command-line option
-This will disable @button, @script, etc.
-#@nonl
-#@-node:ekr.20041003115036:Add --noscripting command-line option
-#@+node:ekr.20041002165019:Emacs-style movement commands
-http://sourceforge.net/forum/message.php?msg_id=2499058
-By: sgbotsford
-
-> Second level would be in implement the movement commands that aren't in leo.
-
-That would be pretty easy in a plugin.  This is probably the most important thing that Leo should have in its core to support "driving" the editor as in Emacs.  The other thing is to support the emacs style of handling keystrokes (writing keystroke info to a status line).  Better feedback on the status line will happen asap.
-#@nonl
-#@-node:ekr.20041002165019:Emacs-style movement commands
 #@+node:ekr.20031218072017.801:Zipped .leo files
 By: samcollett ( Sam Collett ) 
  Compressed LEO files   
@@ -4507,400 +4677,32 @@ Maybe a way of doing it:
 into the Task node.
 #@nonl
 #@-node:ekr.20040918165519:Mark Task & Clone To Task commands
-#@-node:ekr.20041001182730:Easy
-#@+node:ekr.20040919101930.3:Other
-#@+node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
-#@+node:ekr.20041001075422:What I did
-@killcolor
+#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
+http://www.reportlab.com
 
-- scanHeader and parseLeoSentinel now return tuples containing derivedFileIsThin.
-- Added special case code in importDerivedFiles to handle thin files.
+import xml.sax
+#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
+#@-node:ekr.20041001182730:Easy 6
+#@+node:ekr.20041022081937.1:Others 3
+#@+node:ekr.20041007081134:Convert Leo to Tix
+http://sourceforge.net/forum/message.php?msg_id=2792402
+By: nobody
+
+- Pmw plays ok with Tix.
+
+- It seems that Tix and Tk can play ok together but the first Toplevel must be
+derived from Tix. Something must happen during that initial creation that sets
+things up. If Tkinter.Tk() is done first, it appears all bets are off.
 #@nonl
-#@-node:ekr.20041001075422:What I did
-#@+node:ekr.20040930112719.3:Notes
-@killcolor
-
-- Check whether the file is a thin derived file.
-- If so, create an @thin node and simulate the Read @file Nodes command.
-
-It's possible that there may be a few glitches in doing this. However, it's
-something that should be attempted immediately.
-#@-node:ekr.20040930112719.3:Notes
-#@+node:ekr.20031218072017.1810:importDerivedFiles
-def importDerivedFiles (self,parent,paths):
-    
-    c = self.c ; at = c.atFileCommands
-    current = c.currentVnode()
-    
-    c.beginUpdate()
-    
-    for fileName in paths:
-        << set isThin if fileName is a thin derived file >>
-        v = parent.insertAfter()
-        if isThin:
-            v.initHeadString("@thin " + fileName)
-            c.undoer.setUndoParams("Import",v,select=current)
-            at.read(v,thinFile=True)
-        else:
-            v.initHeadString("Imported @file " + fileName)
-            c.undoer.setUndoParams("Import",v,select=current)
-            at.read(v,importFileName=fileName)
-        c.selectVnode(v)
-        v.expand()
-
-    c.endUpdate()
-#@nonl
-#@+node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-fileName = g.os_path_normpath(fileName)
-
-try:
-    theFile = open(fileName,'rb')
-    junk,read_new,isThin = at.scanHeader(theFile,fileName)
-    theFile.close()
-
-except IOError:
-    isThin = False
-#@nonl
-#@-node:ekr.20040930135204:<< set isThin if fileName is a thin derived file >>
-#@-node:ekr.20031218072017.1810:importDerivedFiles
-#@+node:ekr.20031218072017.1812:top_df.read
-# The caller has enclosed this code in beginUpdate/endUpdate.
-
-def read(self,root,importFileName=None,thinFile=False):
-    
-    """Common read logic for any derived file."""
-    
-    at = self ; c = at.c
-    at.errors = 0
-    importing = importFileName is not None
-    << set fileName from root and importFileName >>
-    << open file or return False >>
-    g.es("reading: " + root.headString())
-    firstLines,read_new,derivedFileIsThin = at.scanHeader(theFile,fileName)
-    df = g.choose(read_new,at.new_df,at.old_df)
-    # g.trace(g.choose(df==at.new_df,"new","old"))
-    << copy ivars to df >>
-    root.clearVisitedInTree()
-    try:
-        # 1/28/04: Don't set comment delims when importing.
-        # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
-        importing = importFileName is not None
-        df.scanAllDirectives(root,importing=importing,reading=True)
-        df.readOpenFile(root,theFile,firstLines)
-    except:
-        at.error("Unexpected exception while reading derived file")
-        g.es_exception()
-    theFile.close()
-    root.clearDirty() # May be set dirty below.
-    after = root.nodeAfterTree()
-    << warn about non-empty unvisited nodes >>
-    if df.errors == 0:
-        if not df.importing:
-            << copy all tempBodyStrings to tnodes >>
-    << delete all tempBodyStrings >>
-    return df.errors == 0
-#@nonl
-#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-at.scanDefaultDirectory(root,importing=importing)
-if at.errors: return
-
-if importFileName:
-    fileName = importFileName
-elif root.isAnyAtFileNode():
-    fileName = root.anyAtFileNodeName()
-else:
-    fileName = None
-
-if not fileName:
-    at.error("Missing file name.  Restoring @file tree from .leo file.")
-    return False
-#@nonl
-#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-#@+node:ekr.20031218072017.1814:<< open file or return false >>
-fn = g.os_path_join(at.default_directory,fileName)
-fn = g.os_path_normpath(fn)
-
-try:
-    # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-    theFile = open(fn,'rb')
-    if theFile:
-        << warn on read-only file >>
-    else: return False
-except:
-    at.error("Can not open: " + '"@file ' + fn + '"')
-    root.setDirty()
-    return False
-#@nonl
-#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
-try:
-    read_only = not os.access(fn,os.W_OK)
-    if read_only:
-        g.es("read only: " + fn,color="red")
-except:
-    pass # os.access() may not exist on all platforms.
-#@nonl
-#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
-#@-node:ekr.20031218072017.1814:<< open file or return false >>
-#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
-# Telling what kind of file we are reading.
-df.importing = importFileName != None
-df.raw = False
-if importing and df == at.new_df:
-    thinFile = True
-df.thinFile = thinFile
-
-# Set by scanHeader.
-df.encoding = at.encoding
-df.endSentinelComment = at.endSentinelComment
-df.startSentinelComment = at.startSentinelComment
-
-# Set other common ivars.
-df.errors = 0
-df.file = theFile
-df.importRootSeen = False
-df.indent = 0
-df.targetFileName = fileName
-df.root = root
-df.root_seen = False
-df.perfectImportRoot = None # Set only in readOpenFile.
-#@nonl
-#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
-#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-for p in root.self_and_subtree_iter():
-
-    # g.trace(p)
-    try: s = p.v.t.tempBodyString
-    except: s = ""
-    if s and not p.v.t.isVisited():
-        at.error("Not in derived file:" + p.headString())
-        p.v.t.setVisited() # One message is enough.
-#@nonl
-#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-for p in root.self_and_subtree_iter():
-    try: s = p.v.t.tempBodyString
-    except: s = ""
-    if s != p.bodyString():
-        if 0: # For debugging.
-            print ; print "changed: " + p.headString()
-            print ; print "new:",s
-            print ; print "old:",p.bodyString()
-        if thinFile:
-            p.v.setTnodeText(s)
-            if p.v.isDirty():
-                p.setAllAncestorAtFileNodesDirty()
-        else:
-            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-            
-        if not thinFile or (thinFile and p.v.isDirty()):
-            g.es("changed: " + p.headString(),color="blue")
-            p.setMarked()
-#@nonl
-#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-for p in c.allNodes_iter():
-    
-    if hasattr(p.v.t,"tempBodyString"):
-        delattr(p.v.t,"tempBodyString")
-#@nonl
-#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-#@-node:ekr.20031218072017.1812:top_df.read
-#@+node:ekr.20031218072017.2757:new_df.readOpenFile
-def readOpenFile(self,root,theFile,firstLines,perfectImportRoot=None):
-    
-    """Read an open 4.x thick or thin derived file."""
-    
-    at = self
-    
-    # This is safe (just barely) because only this method calls scanText4.
-    at.perfectImportRoot = perfectImportRoot
-
-    # Scan the 4.x file.
-    at.tnodeListIndex = 0
-    # at.thinFile tells scanText4 whether this is a thin file or not.
-    lastLines = at.scanText4(theFile,root)
-    root.v.t.setVisited() # Disable warning about set nodes.
-    
-    # Handle first and last lines.
-    try: body = root.v.t.tempBodyString
-    except: body = ""
-    lines = body.split('\n')
-    at.completeFirstDirectives(lines,firstLines)
-    at.completeLastDirectives(lines,lastLines)
-    s = '\n'.join(lines).replace('\r', '')
-    root.v.t.tempBodyString = s
-#@nonl
-#@-node:ekr.20031218072017.2757:new_df.readOpenFile
-#@+node:ekr.20031218072017.2633:top_df.scanHeader
-def scanHeader(self,theFile,fileName):
-    
-    """Scan the @+leo sentinel.
-    
-    Sets self.encoding, and self.start/endSentinelComment.
-    
-    Returns (firstLines,new_df) where:
-    firstLines contains all @first lines,
-    new_df is True if we are reading a new-format derived file."""
-    
-    at = self
-    firstLines = [] # The lines before @+leo.
-    tag = "@+leo"
-    valid = True ; new_df = False ; derivedFileIsThin = False
-    << skip any non @+leo lines >>
-    if valid:
-        valid,new_df,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
-    if valid:
-        at.startSentinelComment = start
-        at.endSentinelComment = end
-    else:
-        at.error("Bad @+leo sentinel in " + fileName)
-    # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
-    return firstLines,new_df,derivedFileIsThin
-#@nonl
-#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-@ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
-
-We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
-@c
-
-s = at.readLine(theFile)
-while len(s) > 0:
-    j = s.find(tag)
-    if j != -1: break
-    firstLines.append(s) # Queue the line
-    s = at.readLine(theFile)
-    
-n = len(s)
-valid = n > 0
-#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-#@-node:ekr.20031218072017.2633:top_df.scanHeader
-#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
-def parseLeoSentinel (self,s):
-    
-    at = self
-    new_df = False ; valid = True ; n = len(s)
-    derivedFileIsThin = False
-    encoding_tag = "-encoding="
-    version_tag = "-ver="
-    tag = "@+leo"
-    thin_tag = "-thin"
-    << set the opening comment delim >>
-    << make sure we have @+leo >>
-    << read optional version param >>
-    << read optional thin param >>
-    << read optional encoding param >>
-    << set the closing comment delim >>
-    return valid,new_df,start,end,derivedFileIsThin
-#@nonl
-#@+node:EKR.20040604155223:<< set the opening comment delim >>
-# s contains the tag
-i = j = g.skip_ws(s,0)
-
-# The opening comment delim is the initial non-tag
-while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
-    i += 1
-
-if j < i:
-    start = s[j:i]
-else:
-    valid = False
-#@nonl
-#@-node:EKR.20040604155223:<< set the opening comment delim >>
-#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
-@c
-
-if 0: # Make leading whitespace significant.
-    i = g.skip_ws(s,i)
-
-if g.match(s,i,tag):
-    i += len(tag)
-else: valid = False
-#@nonl
-#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-#@+node:ekr.20031218072017.2636:<< read optional version param >>
-new_df = g.match(s,i,version_tag)
-
-if new_df:
-    # Skip to the next minus sign or end-of-line
-    i += len(version_tag)
-    j = i
-    while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
-        i += 1
-
-    if j < i:
-        pass # version = s[j:i]
-    else:
-        valid = False
-#@-node:ekr.20031218072017.2636:<< read optional version param >>
-#@+node:EKR.20040503105354:<< read optional thin param >>
-if g.match(s,i,thin_tag):
-    i += len(tag)
-    derivedFileIsThin = True
-#@nonl
-#@-node:EKR.20040503105354:<< read optional thin param >>
-#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
-# Set the default encoding
-at.encoding = g.app.config.default_derived_file_encoding
-
-if g.match(s,i,encoding_tag):
-    # Read optional encoding param, e.g., -encoding=utf-8,
-    i += len(encoding_tag)
-    # Skip to the next end of the field.
-    j = s.find(",.",i)
-    if j > -1:
-        # The encoding field was written by 4.2 or after:
-        encoding = s[i:j]
-        i = j + 1 # 6/8/04
-    else:
-        # The encoding field was written before 4.2.
-        j = s.find('.',i)
-        if j > -1:
-            encoding = s[i:j]
-            i = j + 1 # 6/8/04
-        else:
-            encoding = None
-    # g.trace("encoding:",encoding)
-    if encoding:
-        if g.isValidEncoding(encoding):
-            at.encoding = encoding
-        else:
-            print "bad encoding in derived file:",encoding
-            g.es("bad encoding in derived file:",encoding)
-    else:
-        valid = False
-#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
-#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
-# The closing comment delim is the trailing non-whitespace.
-i = j = g.skip_ws(s,i)
-while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
-    i += 1
-end = s[j:i]
-#@nonl
-#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
-#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
-#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
-# Skip any non @+leo lines.
-i = 0
-while i < len(s) and not g.find_on_line(s,i,"@+leo"):
-    i = g.skip_line(s,i)
-
-# Get the comment delims from the @+leo sentinel line.
-at = self.c.atFileCommands
-j = g.skip_line(s,i) ; line = s[i:j]
-
-valid,new_df,start_delim,end_delim,derivedFileIsThin = at.parseLeoSentinel(line)
-if not valid:
-    g.es("invalid @+leo sentinel in " + fileName)
-    return
-
-if end_delim:
-    line_delim = None
-else:
-    line_delim,start_delim = start_delim,None
-#@nonl
-#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
-#@-node:ekr.20040930112719.2:(Support @thin nodes in Import Derived Files command: DO THIS IN NEW CODE)
+#@-node:ekr.20041007081134:Convert Leo to Tix
+#@+node:EKR.20040628085831:@import, @shadow
+#@+node:ekr.20040718033104:@shadow
+#@-node:ekr.20040718033104:@shadow
+#@+node:ekr.20040718032616:@import
+#@-node:ekr.20040718032616:@import
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040628085831:@import, @shadow
 #@+node:ekr.20040217153407:User customizeable tangling and untangling
 #@+node:ekr.20031218072017.803:@template directive?
 #@-node:ekr.20031218072017.803:@template directive?
@@ -4918,37 +4720,307 @@ Here are some features I'd like to see:
 -marshall-  
 #@-node:ekr.20031218072017.795:Metatags
 #@-node:ekr.20040217153407:User customizeable tangling and untangling
-#@+node:ekr.20040130073846:Use Python indices instead of Tk indices
-This would really help when writing gui plugins.
-
-The first place it would be useful would be in eliminating calls to the Tk search routine.
-#@nonl
-#@+node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
-#@-node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
-#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-This might be the best way to reliably have Tk move to the next line!
-#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-#@-node:ekr.20040130073846:Use Python indices instead of Tk indices
-#@+node:ekr.20040918093558:Fix Font dialog problems on the Mac
-@killcolor
-
-There seems to be a bug when setting font preferences on the Mac.  If I 
-check more than one box and then apply a font change, the change is set 
-correctly when I restart Leo but doesn't always preview correctly 
-before that.  I set headline and body text to the same font and the 
-headlines did not change to show the new font until I started up again. 
-  Not a big deal.
-
--- Dan Windler
-#@-node:ekr.20040918093558:Fix Font dialog problems on the Mac
-#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
-http://www.reportlab.com
-
-import xml.sax
-#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@-node:ekr.20040919101930.3:Other
+#@-node:ekr.20041022081937.1:Others 3
 #@-node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20040329182535.7:1-2 hour projects
+#@+node:ekr.20040329182535.7:1 hour to 1 day projects
+#@+node:ekr.20041022083833:New commands
+#@+node:ekr.20031218072017.792:Double Click Node command
+#@-node:ekr.20031218072017.792:Double Click Node command
+#@+node:ekr.20040315060557:Declone command
+By: nobody ( Nobody/Anonymous ) 
+ having a declone() method for vnodes?   
+2004-03-15 04:36  
+
+ hi,
+
+Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
+
+1. Making a clone node a normal node.
+
+I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
+#@nonl
+#@-node:ekr.20040315060557:Declone command
+#@+node:ekr.20031218072017.748:Import/Export to yaml
+Need a good yaml parser first: I don't want to write another parser by hand.
+#@nonl
+#@-node:ekr.20031218072017.748:Import/Export to yaml
+#@+node:ekr.20040329094003:Apply patch command
+#@-node:ekr.20040329094003:Apply patch command
+#@-node:ekr.20041022083833:New commands
+#@+node:ekr.20041022083833.1:Better commands
+#@+node:ekr.20041022083005.3:@path and other directives accept python expressions
+#@-node:ekr.20041022083005.3:@path and other directives accept python expressions
+#@+node:ekr.20040213090121:Insert at end
+@nocolor
+
+By: tibi ( Thiébaut Champenier ) 
+ inserting a new node   
+2004-02-13 13:23  
+
+ Hi,
+
+When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
+What do you think ?
+To try it just make this little change:
+RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
+retrieving revision 1.76
+diff -r1.76 leoCommands.py
+2516c2516
+< v = current.insertAsNthChild(0)
+---
+> v = current.insertAsLastChild()  
+#@nonl
+#@-node:ekr.20040213090121:Insert at end
+#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+1. Warn when creating _any_ new file.
+
+2. Warn when rewriting any file that was not read properly.
+
+This prevents "hijacking" an already existing file.
+#@nonl
+#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+#@+node:ekr.20040217090833:Change how Open with works?
+By: rogererens ( Roger Erens ) 
+ RE: Documentation for 4.1rc3   
+2004-02-04 10:04  
+
+@nocolor
+
+It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
+However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
+
+Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
+
+Or, use something else instead of "os.startfile" to really use the intended editor.
+#@nonl
+#@-node:ekr.20040217090833:Change how Open with works?
+#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+add python -t to test suite to catch mixed tab & space in derived files.
+#@nonl
+#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+#@+node:ekr.20040311022923:Make sentinel name in @-node optional
+#@-node:ekr.20040311022923:Make sentinel name in @-node optional
+#@+node:ekr.20031218072017.800:Enhancements to extract section
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1858824
+By: gilshwartz
+Open discusstion
+
+Currently Extract Section is only available if the first line in a selection
+is a section name <<x>>. I would like to propose a few enhancements I think
+should be useful, while I believe most of the code is already implemented in
+Leo.
+
+1. If the first line in a selection is not <<x>>, than Extract Section WILL
+make a section name from the first line (or a version of it, see below), leave
+the section name in the body, create a new node with that section name, and
+will copy the selection including the first line to the new node.
+
+Rational: this is useful when selecting a function or a class. Thus the section
+name becomes the function or the class definition. The section name can either
+be the full first line, or, knowing the language, Leo can make a nice section
+name like it does in import, e.g. "function foo", or "class bar", without the
+parameters list.
+
+2. Even better, when Extract Section is called WITHOUT a selection it will look
+for the first function/class definition before the cursor's position and will
+either use it as a selection and do 1 above, or just mark it as selection, which
+will enable 1 above upon a second Extract Section.
+
+Rational: Leo does it beautifully in import and when a node's code starts to
+build it is most convenient. Also, I think a variation on this was recently
+asked by another user.
+
+3. Add an option Merge Section, which when called from a named section will
+merge it back to all the sections containing it.
+
+Rational: make it easy (together with 2) to create/delete sections until the
+sections picture of a new code becomes clear.
+
+Gil
+
+--
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1859516
+By: nobody
+
+Simpler & more intutive:
+Mark text, select from menu - 'extract section', this presents a dialog box
+in which you fill in the section name. It is too much work to type <<name>>
+then select the whole thing...
+
+As an enhancement, the dialog can show the first line of the selection as the
+default section name, which obviously can be changed.
+
+- Rajiv Bhagwat
+#@-node:ekr.20031218072017.800:Enhancements to extract section
+#@+node:ekr.20031218072017.754:Open text files in text window
+#@-node:ekr.20031218072017.754:Open text files in text window
+#@-node:ekr.20041022083833.1:Better commands
+#@+node:ekr.20041022083226:Better directives
+#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+@nocolor
+
+Open discussion
+By: jasonic ( Jason Cunliffe ) 
+ use of @language   
+2003-07-16 03:40  
+
+I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+
+For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
+
+".py" for python 
+".r" for rebol 
+".as" for actionscript etc.. 
+
+Should anyone need to over-ride those, they could use @language.
+#@nonl
+#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@+node:ekr.20031218072017.745:@@first <n>
+@nocolor
+
+Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
+
+As an example: 
+# 1 
+# 2 
+# 3 
+# 4 
+# 5 
+#@verbatim
+#@+leo 
+#@verbatim
+#@+node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@+body 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@+doc 
+# 
+# How many firsts do I get? 
+
+#@verbatim
+#@-doc 
+#@verbatim
+#@@c 
+Start code. 
+#@verbatim
+#@-body 
+#@verbatim
+#@-node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@-leo 
+
+My fellow co-workers who don't use LEO, aren't exactly loving me here. 
+
+Might we introduce an: 
+
+@@first <num> 
+
+Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
+
+Thanks. 
+
+- ordinarius 
+#@nonl
+#@-node:ekr.20031218072017.745:@@first <n>
+#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+@nocolor
+
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2003457
+By: dsalomoni
+
+Proposal: modify the code for @url so that if you type for example just "@url"
+(no file specified) in a headline, a window pops up allowing you to browse the
+local file system and select the file (similar to what browsers do when you
+want to open a file).
+
+This would be more convenient than manually writing @url
+file://a/long/path/to/the/file. @read-only nodes already allow this, it would
+perhaps be nice if all these types of plugins (@folder might be another one
+for example) and directives (@file etc) had the same behavior (and this should
+probably be specified in some guidelines for writing new plugins -see e.g. the
+jedit plugin guidelines).
+
+Davide
+#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+#@+node:ekr.20040217154134:XML as a @language
+#@-node:ekr.20040217154134:XML as a @language
+#@+node:ekr.20031218072017.797:Allow @file http & @file ftp
+I'd like to see leo's @file can be extended to cover more protocols, like REBOL's "read" does. 
+
+in short, it would be very sweet if the following work: 
+
+@file http://www.somedomain.org/python/foo.py 
+
+@file pass@ftp.sd.org/python/foo.py" target="_blank" target="_new">ftp://user:pass@ftp.sd.org/python/foo.py> 
+
+while we are at it, what about xmlrpc/soap? 
+
+should there be new directive, like @source ?
+#@nonl
+#@+node:ekr.20031218072017.810:Remote access Scott Powell
+I will wait. Here's clarification, when you're ready for it:
+
+All of my projects are stored on remote computers, and accessed via FTP. 
+What I want is basically the ability to open up these projects directly 
+through leo, instead of transferring the files manually between my computer 
+and the computers that hold my projects, preferably through FTP.
+
+My solution: A new menu item called 'FTP' or 'Remote'. Click on this, and an 
+FTP dialog opens up, with an empty list of FTP sites, and the ability to add 
+more. You select a site, and it brings up a list of files. You select a 
+file, and it is added to your project. When you hit 'save', it automatically 
+does an FTP send.
+
+Python makes this a lot easier with the builtin module 'ftplib'. I'm sure 
+there are similar things for C++. I hope you take this idea into 
+consideration.
+
+Scott Powell
+CEO, Dev Designs
+#@-node:ekr.20031218072017.810:Remote access Scott Powell
+#@-node:ekr.20031218072017.797:Allow @file http & @file ftp
+#@-node:ekr.20041022083226:Better directives
+#@+node:ekr.20041022083833.2:Better dialogs
+#@+node:ekr.20031218072017.790:Import dialog improvements
+@nocolor
+
+Other options I though would be really handy:
+
+1. Use an existing node as a source also
+
+2. Use an node from another Leo file.. I am not sure what the syntax for that
+would be exactly
+
+3. From a URL.. this would be really cool. People could post outlines not only
+as existing Leo xml files, but as text files or even dynamic scripts. The code
+to handle these would presumably need to deal with http:// intelligently. But
+that's easy in Python. Rebol is great at that too.
+
+4. Other XML file with valid filepaths in them.
+That's probably a much bigger project like Leo 3.10  
+
+Jason
+#@-node:ekr.20031218072017.790:Import dialog improvements
+#@-node:ekr.20041022083833.2:Better dialogs
+#@+node:ekr.20041022083226.1:Better plugins & config
+#@+node:ekr.20041022083005.5:Define __main__
+#@-node:ekr.20041022083005.5:Define __main__
+#@-node:ekr.20041022083226.1:Better plugins & config
+#@+node:ekr.20041022083226.2:Better scripting
 #@+node:EKR.20040611081747.1:Look at windows scripting
 ------cut openleo.pys
 @path c:\bIn\pys\
@@ -5060,66 +5132,45 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
+#@+node:ekr.20041022083005.6:allowi parameters to scripts
+#@-node:ekr.20041022083005.6:allowi parameters to scripts
+#@+node:ekr.20031218072017.733:Execute scripts like IDE's do
 @nocolor
 
-- This might fix some binding problems on some platforms.
+http://sourceforge.net/forum/message.php?msg_id=2321235
+By: paulpaterson
 
-- Might want to define <<localUndo>> for undo in Find Panel.
+I think I understand what Samir is getting at. 
 
-- Probably should define <<selectAll>> for Find Panel and similar stuff.
+In PythonWin, or other IDE's for other languages, you are able to execute the
+"current program" in a way that it will behave identically to if it had been
+run from the command line.
+
+For Python this requires,
+
+1. That the script run with __name__ == "__main__", so that the standard "if
+__name__ ..." section will be executed properly.
+
+2. You are able to pass command line parameters to the script. In some IDE's
+you are able to set default command line parameters and these are "injected"
+into the sys.argv (or equivalent) so that, as far as the program is concerned,
+it looks like you ran it from the command line with some aruments.
+
+The underlying assumption is that you want to run an entire program from Leo,
+not just a script. I would find this very useful also as I could run unit tests
+or even my entire apps by just hitting, for exampe, F5.
+
+Paul
 #@nonl
-#@-node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
-#@+node:ekr.20040414093758:Suggestions
-@nocolor
- RE: Leo's reorganized to-do list   
-2004-03-31 05:48  
-
- in order of most likely to least possible,
-
-+1 on defining __main__ and allowing parameters to scripts.
-
-add python -t to test suite to catch mixed tab & space in derived files.
-leoFind.py: inconsistent use of tabs and spaces 
-
-Edit-> Delete while in headline deletes body text.
-
-unregisterhook()
-
-we can script the find, can we script the compare?
-
-insert/overstrike mode in body
-
-@path and other directives accept python expressions
-
-add a Stop button for find/change 
-and other possibly long running scripts.
-possibly a plugin can already do this.
-
-Tabbed log/Find/config window.
-
- 
-#@-node:ekr.20040414093758:Suggestions
-#@+node:ekr.20040329190314:Most important
-#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
-@nocolor
-
-Open discussion
-By: jasonic ( Jason Cunliffe ) 
- use of @language   
-2003-07-16 03:40  
-
-I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
-
-For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
-
-".py" for python 
-".r" for rebol 
-".as" for actionscript etc.. 
-
-Should anyone need to over-ride those, they could use @language.
-#@nonl
-#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@-node:ekr.20031218072017.733:Execute scripts like IDE's do
+#@-node:ekr.20041022083226.2:Better scripting
+#@+node:ekr.20041022083226.3:Better windows
+#@+node:ekr.20041022083005.2:add a Stop button for find/change 
+#@-node:ekr.20041022083005.2:add a Stop button for find/change 
+#@+node:ekr.20041022083005.4:insert/overstrike mode in body
+#@-node:ekr.20041022083005.4:insert/overstrike mode in body
+#@+node:ekr.20041022083005.7:Tabbed log/Find/config window
+#@-node:ekr.20041022083005.7:Tabbed log/Find/config window
 #@+node:ekr.20031218072017.746:Minimizing/maximizing windows
 @nocolor
 
@@ -5190,13 +5241,23 @@ it used to do that, but perhaps I am mistaking it for some other software ?
 thanks
 Jason
 #@-node:ekr.20031218072017.746:Minimizing/maximizing windows
-#@+node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
-- Show changes:
-    When a derived file is modified by an editor it would be very nice if Leo would:
-    - flag the file as modified and,
-    - flag (underline, color, diff, whatever) the parts that were modified.
-#@nonl
-#@-node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
+#@+node:ekr.20031218072017.852:Scroll improvement
+@nocolor
+
+By: jwashin ( James Washington ) 
+ Scrolling and the Tree Frame in Linux   
+2003-10-20 12:13  
+
+I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
+
+I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
+
+Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
+
+Thanks for the great program.
+
+-- Jim Washington  
+#@-node:ekr.20031218072017.852:Scroll improvement
 #@+node:ekr.20040220110030:Change cursor when caps lock is down
 @nocolor
 
@@ -5219,265 +5280,6 @@ only allowing Ctrl-Shift-x|c|v in the outline pane would also be acceptable
 to me.
 #@nonl
 #@-node:ekr.20040220110030:Change cursor when caps lock is down
-#@+node:ekr.20040315060557:declone command
-By: nobody ( Nobody/Anonymous ) 
- having a declone() method for vnodes?   
-2004-03-15 04:36  
-
- hi,
-
-Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
-
-1. Making a clone node a normal node.
-
-I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
-#@nonl
-#@-node:ekr.20040315060557:declone command
-#@+node:ekr.20031218072017.792:Double Click Node command
-#@-node:ekr.20031218072017.792:Double Click Node command
-#@+node:ekr.20031218072017.852:Scroll improvement
-@nocolor
-
-By: jwashin ( James Washington ) 
- Scrolling and the Tree Frame in Linux   
-2003-10-20 12:13  
-
-I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
-
-I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
-
-Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
-
-Thanks for the great program.
-
--- Jim Washington  
-#@-node:ekr.20031218072017.852:Scroll improvement
-#@-node:ekr.20040329190314:Most important
-#@+node:ekr.20040329190314.2:Others
-#@+node:ekr.20040213090121:Insert at end
-@nocolor
-
-By: tibi ( Thiébaut Champenier ) 
- inserting a new node   
-2004-02-13 13:23  
-
- Hi,
-
-When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
-What do you think ?
-To try it just make this little change:
-RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
-retrieving revision 1.76
-diff -r1.76 leoCommands.py
-2516c2516
-< v = current.insertAsNthChild(0)
----
-> v = current.insertAsLastChild()  
-#@nonl
-#@-node:ekr.20040213090121:Insert at end
-#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-1. Warn when creating _any_ new file.
-
-2. Warn when rewriting any file that was not read properly.
-
-This prevents "hijacking" an already existing file.
-#@nonl
-#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-#@+node:ekr.20031218072017.745:@@first <n>
-@nocolor
-
-Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
-
-As an example: 
-# 1 
-# 2 
-# 3 
-# 4 
-# 5 
-#@verbatim
-#@+leo 
-#@verbatim
-#@+node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@+body 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@+doc 
-# 
-# How many firsts do I get? 
-
-#@verbatim
-#@-doc 
-#@verbatim
-#@@c 
-Start code. 
-#@verbatim
-#@-body 
-#@verbatim
-#@-node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@-leo 
-
-My fellow co-workers who don't use LEO, aren't exactly loving me here. 
-
-Might we introduce an: 
-
-@@first <num> 
-
-Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
-
-Thanks. 
-
-- ordinarius 
-#@nonl
-#@-node:ekr.20031218072017.745:@@first <n>
-#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-@nocolor
-
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2003457
-By: dsalomoni
-
-Proposal: modify the code for @url so that if you type for example just "@url"
-(no file specified) in a headline, a window pops up allowing you to browse the
-local file system and select the file (similar to what browsers do when you
-want to open a file).
-
-This would be more convenient than manually writing @url
-file://a/long/path/to/the/file. @read-only nodes already allow this, it would
-perhaps be nice if all these types of plugins (@folder might be another one
-for example) and directives (@file etc) had the same behavior (and this should
-probably be specified in some guidelines for writing new plugins -see e.g. the
-jedit plugin guidelines).
-
-Davide
-#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
-#@nonl
-#@+node:ekr.20040226094105.1:halw
-
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-    if e.num == 4:
-    ..e.delta = 120
-    ..return frame.OnMouseWheel(e)
-    elif e.num == 5:
-    ..e.delta = -120
-    ..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
-#@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@+node:ekr.20040217090833:Change how Open with works?
-By: rogererens ( Roger Erens ) 
- RE: Documentation for 4.1rc3   
-2004-02-04 10:04  
-
-@nocolor
-
-It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
-However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
-
-Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
-
-Or, use something else instead of "os.startfile" to really use the intended editor.
-#@nonl
-#@-node:ekr.20040217090833:Change how Open with works?
-#@+node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20040311022923:Make sentinel name in @-node optional
-#@+node:ekr.20040217154134:XML as a @language
-#@-node:ekr.20040217154134:XML as a @language
 #@+node:ekr.20040908104644:Leo splash screen
 To create a splash screen:
     
@@ -5486,40 +5288,7 @@ To create a splash screen:
 #@+node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
 #@-node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
 #@-node:ekr.20040908104644:Leo splash screen
-#@-node:ekr.20040329190314.2:Others
-#@-node:ekr.20040329182535.7:1-2 hour projects
-#@+node:ekr.20040329182535.5:1 day projects
-#@+node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134.1:@url http://wingide.com/
-#@-node:EKR.20040607073134:Download and study wingide
-#@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
-#@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
-#@+node:ekr.20031218072017.748:Import/Export to yaml
-Need a good yaml parser first: I don't want to write another parser by hand.
-#@nonl
-#@-node:ekr.20031218072017.748:Import/Export to yaml
-#@+node:ekr.20031218072017.790:Import dialog improvements
-@nocolor
-
-Other options I though would be really handy:
-
-1. Use an existing node as a source also
-
-2. Use an node from another Leo file.. I am not sure what the syntax for that
-would be exactly
-
-3. From a URL.. this would be really cool. People could post outlines not only
-as existing Leo xml files, but as text files or even dynamic scripts. The code
-to handle these would presumably need to deal with http:// intelligently. But
-that's easy in Python. Rebol is great at that too.
-
-4. Other XML file with valid filepaths in them.
-That's probably a much bigger project like Leo 3.10  
-
-Jason
-#@-node:ekr.20031218072017.790:Import dialog improvements
-#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
+#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix?)
 This is done automatically now!  I may have to use configure events.
 
 > When I have the 'split mode' set to display tree and log on left, and viewpane
@@ -5528,107 +5297,10 @@ on right, I sometimes need to increase the width of the window.
 When I do the resize, the tree/log panes grow in proportion. I don't know about
 others, but I'd much prefer if the tree/log panes stayed at the same width,
 and only the view pane grew.
-#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
-#@+node:ekr.20031218072017.800:Enhancements to extract section
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1858824
-By: gilshwartz
-Open discusstion
-
-Currently Extract Section is only available if the first line in a selection
-is a section name <<x>>. I would like to propose a few enhancements I think
-should be useful, while I believe most of the code is already implemented in
-Leo.
-
-1. If the first line in a selection is not <<x>>, than Extract Section WILL
-make a section name from the first line (or a version of it, see below), leave
-the section name in the body, create a new node with that section name, and
-will copy the selection including the first line to the new node.
-
-Rational: this is useful when selecting a function or a class. Thus the section
-name becomes the function or the class definition. The section name can either
-be the full first line, or, knowing the language, Leo can make a nice section
-name like it does in import, e.g. "function foo", or "class bar", without the
-parameters list.
-
-2. Even better, when Extract Section is called WITHOUT a selection it will look
-for the first function/class definition before the cursor's position and will
-either use it as a selection and do 1 above, or just mark it as selection, which
-will enable 1 above upon a second Extract Section.
-
-Rational: Leo does it beautifully in import and when a node's code starts to
-build it is most convenient. Also, I think a variation on this was recently
-asked by another user.
-
-3. Add an option Merge Section, which when called from a named section will
-merge it back to all the sections containing it.
-
-Rational: make it easy (together with 2) to create/delete sections until the
-sections picture of a new code becomes clear.
-
-Gil
-
---
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1859516
-By: nobody
-
-Simpler & more intutive:
-Mark text, select from menu - 'extract section', this presents a dialog box
-in which you fill in the section name. It is too much work to type <<name>>
-then select the whole thing...
-
-As an enhancement, the dialog can show the first line of the selection as the
-default section name, which obviously can be changed.
-
-- Rajiv Bhagwat
-#@-node:ekr.20031218072017.800:Enhancements to extract section
-#@+node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20040329182535.5:1 day projects
-#@+node:ekr.20040329182535.3:2 day projects
-#@+node:ekr.20041007081134:Convert Leo to Tix
-http://sourceforge.net/forum/message.php?msg_id=2792402
-By: nobody
-
-- Pmw plays ok with Tix.
-
-- It seems that Tix and Tk can play ok together but the first Toplevel must be
-derived from Tix. Something must happen during that initial creation that sets
-things up. If Tkinter.Tk() is done first, it appears all bets are off.
-#@nonl
-#@-node:ekr.20041007081134:Convert Leo to Tix
-#@+node:ekr.20031218072017.733:Execute scripts like IDE's do
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2321235
-By: paulpaterson
-
-I think I understand what Samir is getting at. 
-
-In PythonWin, or other IDE's for other languages, you are able to execute the
-"current program" in a way that it will behave identically to if it had been
-run from the command line.
-
-For Python this requires,
-
-1. That the script run with __name__ == "__main__", so that the standard "if
-__name__ ..." section will be executed properly.
-
-2. You are able to pass command line parameters to the script. In some IDE's
-you are able to set default command line parameters and these are "injected"
-into the sys.argv (or equivalent) so that, as far as the program is concerned,
-it looks like you ran it from the command line with some aruments.
-
-The underlying assumption is that you want to run an entire program from Leo,
-not just a script. I would find this very useful also as I could run unit tests
-or even my entire apps by just hitting, for exampe, F5.
-
-Paul
-#@nonl
-#@-node:ekr.20031218072017.733:Execute scripts like IDE's do
-#@+node:ekr.20031218072017.743:Note windows
+#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix?)
+#@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@+node:ekr.20031218072017.743:Note windows (plugin)
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2205285
 By: nobody
@@ -5648,46 +5320,14 @@ as "<<1>>" could be used.
 ''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
 does nothing for readability in plain text.
 #@nonl
-#@-node:ekr.20031218072017.743:Note windows
-#@+node:ekr.20031218072017.754:Open text files in text window
-#@-node:ekr.20031218072017.754:Open text files in text window
-#@+node:ekr.20031218072017.797:Allow @file http & @file ftp
-I'd like to see leo's @file can be extended to cover more protocols, like REBOL's "read" does. 
-
-in short, it would be very sweet if the following work: 
-
-@file http://www.somedomain.org/python/foo.py 
-
-@file pass@ftp.sd.org/python/foo.py" target="_blank" target="_new">ftp://user:pass@ftp.sd.org/python/foo.py> 
-
-while we are at it, what about xmlrpc/soap? 
-
-should there be new directive, like @source ?
+#@-node:ekr.20031218072017.743:Note windows (plugin)
+#@-node:ekr.20041022083226.3:Better windows
+#@-node:ekr.20040329182535.7:1 hour to 1 day projects
+#@+node:ekr.20040329182535.3:2 day to 2 week projects
+#@+node:ekr.20041016134312.2:Create a proper Weave command
+Use noweb and TeX, or maybe Pyx.
 #@nonl
-#@+node:ekr.20031218072017.810:Remote access Scott Powell
-I will wait. Here's clarification, when you're ready for it:
-
-All of my projects are stored on remote computers, and accessed via FTP. 
-What I want is basically the ability to open up these projects directly 
-through leo, instead of transferring the files manually between my computer 
-and the computers that hold my projects, preferably through FTP.
-
-My solution: A new menu item called 'FTP' or 'Remote'. Click on this, and an 
-FTP dialog opens up, with an empty list of FTP sites, and the ability to add 
-more. You select a site, and it brings up a list of files. You select a 
-file, and it is added to your project. When you hit 'save', it automatically 
-does an FTP send.
-
-Python makes this a lot easier with the builtin module 'ftplib'. I'm sure 
-there are similar things for C++. I hope you take this idea into 
-consideration.
-
-Scott Powell
-CEO, Dev Designs
-#@-node:ekr.20031218072017.810:Remote access Scott Powell
-#@-node:ekr.20031218072017.797:Allow @file http & @file ftp
-#@-node:ekr.20040329182535.3:2 day projects
-#@+node:ekr.20040329182535.1:1-2 week projects
+#@-node:ekr.20041016134312.2:Create a proper Weave command
 #@+node:ekr.20040329182535.4:Leo + zodb
 #@+node:ekr.20041002151816:ZODB docs
 #@+node:ekr.20041002151816.1:What is the ZODB?
@@ -6497,10 +6137,19 @@ Scott
 #@nonl
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20040329182535.4:Leo + zodb
+#@+node:ekr.20040130073846:Use Python indices instead of Tk indices
+This would really help when writing gui plugins.
+
+The first place it would be useful would be in eliminating calls to the Tk search routine.
+#@nonl
+#@+node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
+#@-node:ekr.20040105120208.1:Use string.find or re.find instead of tk.find
+#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+This might be the best way to reliably have Tk move to the next line!
+#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+#@-node:ekr.20040130073846:Use Python indices instead of Tk indices
 #@+node:ekr.20040124074218.3:pyGtk plugin
 #@-node:ekr.20040124074218.3:pyGtk plugin
-#@+node:ekr.20040217153407.1:** Unify @root and @file
-#@-node:ekr.20040217153407.1:** Unify @root and @file
 #@+node:ekr.20040914095432:Use TreeCC to create generalized import
 @killcolor
 
@@ -6533,8 +6182,10 @@ It was developed for DotGNU, but I think you should be able to use it.
 Seth
 
 #@-node:ekr.20040914095432:Use TreeCC to create generalized import
-#@-node:ekr.20040329182535.1:1-2 week projects
+#@-node:ekr.20040329182535.3:2 day to 2 week projects
 #@+node:ekr.20040123102724:Can't or wont
+#@+node:ekr.20040217153407.1:Unify @root and @file
+#@-node:ekr.20040217153407.1:Unify @root and @file
 #@+node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
 @color
 

@@ -16268,6 +16268,24 @@ def replaceBody (self,p,lines):
 #@-node:ekr.20040711135244.5:class prettyPrinter
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20041019111455:(Improved and repacked pretty printing)
+#@+node:ekr.20041022063506:(Fixed file association in leoDist.leo)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2816347
+By: osuchw
+
+I have came upon a small bug related to how *.leo files are registered to be
+open with windows.
+
+Currently the command looks like.
+<pythondir>\pythonw.exe "<leodir>\src\leo.py" %1
+and it should be
+"<pythondir>\pythonw.exe" "<leodir>\src\leo.py" "%1"
+
+The difference is in quotes.  Especially quotes around "%1" seem to matter.
+For example rst2.py plugin fails if it is called from a leo file that has spaces
+in it is path.
+#@-node:ekr.20041022063506:(Fixed file association in leoDist.leo)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
