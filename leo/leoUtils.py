@@ -1484,6 +1484,122 @@ def utils_rename(src,dst):
 
 #@-body
 #@-node:20:C=20:utils_rename
+#@+node:21::version checking
+#@+body
+#@+at
+# 
+# CheckVersion() is a generic version checker.  Assumes a
+# version string of up to four parts, or tokens, with
+# leftmost token being most significant and each token
+# becoming less signficant in sequence to the right.
+# 
+# RETURN VALUE
+# 
+# 1 if comparison is true
+# 0 if comparison is false
+# 
+# PARAMETERS
+# 
+# version: the version string to be tested
+# againstVersion: the reference version string to be
+#                 compared against
+# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+# stringCompare: whether to test a token using only the
+#                leading integer of the token, or using the
+# 			   entire token string.  For example, a value
+# 			   of "0.0.1.0" means that we use the integer
+# 			   value of the first, second, and fourth
+# 			   tokens, but we use a string compare for the
+# 			   third version token.
+# delimiter: the character that separates the tokens in the
+#            version strings.
+# 
+# The comparison uses the precision of the version string
+# with the least number of tokens.  For example a test of
+# "8.4" against "8.3.3" would just compare the first two
+# tokens.
+# 
+# The version strings are limited to a maximum of 4 tokens.
+
+#@-at
+#@@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+	import sre  # Unicode-aware regular expressions
+	#
+	# tokenize the stringCompare flags
+	compareFlag = string.split( stringCompare, '.' )
+	#
+	# tokenize the version strings
+	testVersion = string.split( version, delimiter )
+	testAgainst = string.split( againstVersion, delimiter )
+	#
+	# find the 'precision' of the comparison
+	tokenCount = 4
+	if tokenCount > len(testAgainst):
+		tokenCount = len(testAgainst)
+	if tokenCount > len(testVersion):
+		tokenCount = len(testVersion)
+	#
+	# Apply the stringCompare flags
+	justInteger = sre.compile("^[0-9]+")
+	for i in range(tokenCount):
+		if "0" == compareFlag[i]:
+			m = justInteger.match( testVersion[i] )
+			testVersion[i] = m.group()
+			m = justInteger.match( testAgainst[i] )
+			testAgainst[i] = m.group()
+		elif "1" != compareFlag[i]:
+			errMsg = "stringCompare argument must be of " +\
+				 "the form \"x.x.x.x\" where each " +\
+				 "'x' is either '0' or '1'."
+			raise errMsg
+	#
+	# Compare the versions
+	if condition == ">=":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 1 # it was equal
+	if condition == ">":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 0 # it was equal
+	if condition == "==":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 0 # any token was not equal
+		return 1 # every token was equal
+	if condition == "!=":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 1 # any token was not equal
+		return 0 # every token was equal
+	if condition == "<":
+		for i in range(tokenCount):
+			if testVersion[i] >= testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 0 # it was equal
+	if condition == "<=":
+		for i in range(tokenCount):
+			if testVersion[i] > testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 1 # it was equal
+	#
+	# didn't find a condition that we expected.
+	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+
+#@-body
+#@-node:21::version checking
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py
