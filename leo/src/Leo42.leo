@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4466" clone_windows="0"/>
 <globals body_outline_ratio="0.4888392857142857">
-	<global_window_position top="44" left="290" height="896" width="944"/>
+	<global_window_position top="12" left="239" height="896" width="944"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -5415,12 +5415,6 @@
 <v t="ekr.20040117181936"><vh>To do</vh>
 <v t="ekr.20040321104014"><vh>  Big picture</vh></v>
 <v t="ekr.20040323084434" a="M"><vh>Add granularity setting for undo</vh></v>
-<v t="ekr.20040323170225"><vh>Bugs</vh>
-<v t="ekr.20040323084434.1" a="M"><vh>redraw is being called too many times</vh></v>
-<v t="ekr.20040319102251"><vh>Minor import bug</vh></v>
-<v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
-<v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
-</v>
 <v t="ekr.20040323170225.1"><vh>Cleanup</vh>
 <v t="ekr.20040323090456.1"><vh>Clean up isAnyAtFileNode</vh></v>
 <v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
@@ -5434,12 +5428,19 @@
 <v t="ekr.20040312073921.3"><vh>Use iterators: search for .threadnext</vh></v>
 </v>
 </v>
-<v t="ekr.20040323170225.2"><vh>Features</vh>
+<v t="ekr.20040323170225.2"><vh>Features &amp; minor bugs</vh>
+<v t="ekr.20040323185616"><vh>Features</vh>
 <v t="ekr.20040318150305.1"><vh>Add unchanged message when saving .leo file doesn't change it.</vh></v>
 <v t="ekr.20040317050439" a="M"><vh>Commands to add user-specified attributes and icons</vh></v>
 <v t="ekr.20040315060557"><vh>declone command</vh></v>
 <v t="ekr.20040311022923"><vh>Make sentinel name in @-node optional</vh></v>
 <v t="ekr.20040310092400.1"><vh>Use calltips in outline pane</vh></v>
+</v>
+<v t="ekr.20040323170225"><vh>Minor bugs</vh>
+<v t="ekr.20040319102251"><vh>Minor import bug</vh></v>
+<v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
+<v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
@@ -5745,7 +5746,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -9059,7 +9060,39 @@
 <v t="ekr.20040321064134.5"><vh>createNextChild (thin)</vh></v>
 </v>
 </v>
-<v t="ekr.20040323173147"><vh>(Make sure selecting clones works)</vh></v>
+<v t="ekr.20040323084434.1"><vh>(reduced calls to drawTopTree)</vh>
+<v t="ekr.20040323191536"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1017"><vh>tree.__init__</vh></v>
+<v t="ekr.20031218072017.4061"><vh>get_window_info</vh></v>
+<v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
+<v t="ekr.20031218072017.1553"><vh>getLeoFile</vh>
+<v t="ekr.20031218072017.1554"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1555"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1556"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1473"><vh>tkLog.put &amp; putnl</vh></v>
+<v t="ekr.20031218072017.1019"><vh>tree.select</vh>
+<v t="ekr.20031218072017.1020"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1021"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20031218072017.1022"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1023"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1024"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1025"><vh>&lt;&lt; set the current node and redraw &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.4160"><vh>endEditLabel</vh></v>
+<v t="ekr.20031218072017.1011"><vh>Updating routines (tree)...</vh>
+<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
+<v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
+<v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
+<v t="ekr.20031218072017.1015"><vh>idle_redraw</vh></v>
+<v t="ekr.20031218072017.1016"><vh>idle_second_redraw</vh></v>
+</v>
+</v>
+<v t="ekr.20040323194538" a="V"><vh>(Speeded up Contract All command)</vh>
+<v t="ekr.20031218072017.2900"><vh>contractAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2910"><vh>contractSubtree</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -16465,25 +16498,31 @@ An important complication is the need to avoid creating temporary positions whil
 	
 	# Note: __getattr__ implements p.t.</t>
 <t tx="ekr.20031218072017.893">def __cmp__(self,other):
-	
+
 	"""Return true if two postions are equivalent."""
 
 	p1 = self ; p2 = other
-	
+	equal,notEqual = 0,1
+
 	assert(p1 is not None)
-	
+
 	# g.trace(repr(p1),repr(p2))
+
+	if p2 == None:
+		return notEqual
 	
-	if p2 == None: return 1 # Special case. Not equal.
-	
+	if p1.childIndex() != p2.childIndex():
+		# 3/23/04: Disambiguates clones having the same parents.
+		return notEqual
+
 	if p1.v != p2.v or len(p1.stack) != len(p2.stack):
-		return 1 # Not equal
-		
+		return notEqual
+
 	for i in xrange(len(p1.stack)):
 		if p1.stack[i] != p2.stack[i]:
-			return 1 # Not equal
-			
-	return 0 # Equal</t>
+			return notEqual
+
+	return equal</t>
 <t tx="ekr.20031218072017.915"># These methods are useful abbreviations.
 # Warning: they make copies of positions, so they should be used _sparingly_
 
@@ -17598,21 +17637,33 @@ def redraw (self,event=None):
 		self.canvas.after_idle(self.idle_redraw)</t>
 <t tx="ekr.20031218072017.1013"># Schedules a redraw even if inside beginUpdate/endUpdate
 def force_redraw (self):
+	
+	# g.trace()
+	# import traceback ; traceback.print_stack()
 
 	if not self.redrawScheduled:
 		self.redrawScheduled = true
-		self.canvas.after_idle(self.idle_redraw)</t>
+		self.canvas.after_idle(self.idle_redraw)
+</t>
 <t tx="ekr.20031218072017.1014"># Redraws immediately: used by Find so a redraw doesn't mess up selections.
 # It is up to the caller to ensure that no other redraws are pending.
 
 def redraw_now (self):
+	
+	# g.trace()
 
-	self.idle_redraw()</t>
+	self.idle_redraw()
+</t>
 <t tx="ekr.20031218072017.1015">def idle_redraw (self):
 	
 	c = self.c
 	
 	self.redrawScheduled = false # 7/10/03: Always do this here.
+	
+	if self.disableRedraw:
+		# We have been called as the result of an update_idletasks in the log pane.
+		# Don't do anything now.
+		return
 	
 	if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
 		g.trace(self.updateCount) ; self.updateCount += 1
@@ -17652,7 +17703,8 @@ def redraw_now (self):
 			print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
 		g.doHook("after-redraw-outline",c=self.c)
 
-	self.canvas['cursor'] = oldcursor</t>
+	self.canvas['cursor'] = oldcursor
+</t>
 <t tx="ekr.20031218072017.1016">def idle_second_redraw (self):
 	
 	c = self.c
@@ -17683,6 +17735,7 @@ def redraw_now (self):
 	self.active = false # true if tree is active
 	self._editPosition = None
 	self.lineyoffset = 0 # y offset for this headline.
+	self.disableRedraw = false # True: reschedule a redraw for later.
 	
 	# Set self.font and self.fontName.
 	self.setFontFromConfig()
@@ -24304,7 +24357,9 @@ def put (self,s,color=None):
 		else:
 			self.logCtrl.insert("end",s)
 		self.logCtrl.see("end")
+		self.frame.tree.disableRedraw = true
 		self.logCtrl.update_idletasks()
+		self.frame.tree.disableRedraw = false
 	else:
 		g.app.logWaiting.append((s,color),) # 2/25/03
 		print "Null tkinter log"
@@ -24317,7 +24372,9 @@ def putnl (self):
 	if self.logCtrl:
 		self.logCtrl.insert("end",'\n')
 		self.logCtrl.see("end")
+		self.frame.tree.disableRedraw = true
 		self.logCtrl.update_idletasks()
+		self.frame.tree.disableRedraw = false
 	else:
 		g.app.logWaiting.append(('\n',"black"),) # 6/28/03
 		print "Null tkinter log"
@@ -25481,6 +25538,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=true):
 	except BadLeoFile, message:
 		&lt;&lt; raise an alert &gt;&gt;
 		ok = false
+		
+	c.frame.tree.redraw_now()
 	
 	if ok and atFileNodesFlag:
 		c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
@@ -25492,9 +25551,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=true):
 	c.loading = false # reenable c.changed
 	c.setChanged(c.changed) # Refresh the changed marker.
 	self.tnodesDict = {}
-	return ok, self.ratio
-
-</t>
+	return ok, self.ratio</t>
 <t tx="ekr.20031218072017.1554">try:
 	self.read_only = false
 	self.read_only = not os.access(fileName,os.W_OK)
@@ -32031,7 +32088,8 @@ def hoist(self):
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	g.trace(g.app.copies) ; g.app.copies = 0</t>
+	g.trace(g.app.copies) ; g.app.copies = 0
+	# import traceback ; traceback.print_stack()</t>
 <t tx="ekr.20031218072017.2030">def redo (self):
 
 	u = self ; c = u.c
@@ -44662,22 +44720,19 @@ c.undoer.setUndoParams("Sort Top Level",root,sort=sibs)</t>
 <t tx="ekr.20031218072017.2899"></t>
 <t tx="ekr.20031218072017.2900">def contractAllHeadlines (self):
 
-	c = self ; current = c.currentVnode()
-	v = c.rootVnode()
+	c = self
+	
 	c.beginUpdate()
-
-	while v:
-		c.contractSubtree(v)
-		v = v.next()
-
-	if not current.isVisible():
-		# 1/31/03: Select the topmost ancestor of the presently selected node.
-		v = current
-		while v and v.parent():
-			v = v.parent()
-		c.selectVnode(v)
-
+	if 1: # update...
+		for p in c.allNodes_iter():
+			p.contract()
+		# Select the topmost ancestor of the presently selected node.
+		p = c.currentPosition()
+		while p and p.hasParent():
+			p.moveToParent()
+		c.selectVnode(p)
 	c.endUpdate()
+
 	c.expansionLevel = 1 # Reset expansion level.</t>
 <t tx="ekr.20031218072017.2901">def contractNode (self):
 	
@@ -44762,12 +44817,10 @@ def expandLevel9 (self): self.expandToLevel(9)
 	self.expandToLevel(max(1,c.expansionLevel - 1))
 </t>
 <t tx="ekr.20031218072017.2909"></t>
-<t tx="ekr.20031218072017.2910">def contractSubtree (self,v):
+<t tx="ekr.20031218072017.2910">def contractSubtree (self,p):
 
-	last = v.lastNode()
-	while v and v != last:
-		v.contract()
-		v = v.threadNext()</t>
+	for p in p.subtree_iter():
+		p.contract()</t>
 <t tx="ekr.20031218072017.2911">def expandSubtree (self,v):
 
 	c = self
@@ -60586,11 +60639,11 @@ def undimEditLabel (self):
 	if p and p.v.edit_text():
 		self.setUnselectedLabelState(p)
 		self.setEditPosition(None)
-		
-	if p: # Also redraw ancestor headlines.
-		self.force_redraw() # force a redraw of joined and ancestor headlines.
-	gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
-</t>
+
+		# force a redraw of joined and ancestor headlines.
+		self.force_redraw() 
+
+	gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
 <t tx="ekr.20031218072017.4161">def expandAllAncestors (self,p):
 	
 	redraw_flag = false
@@ -67279,7 +67332,7 @@ The fix was in findAllPotentiallyDirtyNodes:
 	- v.parents is only used if v._parent is None.
 	- Added a code to add v._parent to the list of nodes.</t>
 <t tx="ekr.20040323084434"></t>
-<t tx="ekr.20040323084434.1">in select, probably</t>
+<t tx="ekr.20040323084434.1"></t>
 <t tx="ekr.20040323084605"></t>
 <t tx="ekr.20040323090456"></t>
 <t tx="ekr.20040323090456.1"></t>
@@ -67400,6 +67453,19 @@ These all scan the entire file.  We have two choices:
 	
 Choice two is plenty good enough.</t>
 <t tx="ekr.20040323172420"></t>
-<t tx="ekr.20040323173147"></t>
+<t tx="ekr.20040323185616"></t>
+<t tx="ekr.20040323191536">@nocolor
+
+The call to idle_redraw happens as the result of the call to update_idletasks in tkLog.put.
+
+To fix this I added the disableRedraw lockout ivar to the tk tree class.
+
+This prevents the outline from being redrawn initially, so I added a call to redraw in the fileCommands read code.
+
+endEditLabel calls force_redraw:
+	- I changed this so that force_redraw gets called only if there was really some editing going on.
+
+The call to update_idledraw in get_window_info is harder to disable: it is a dialog util.</t>
+<t tx="ekr.20040323194538"></t>
 </tnodes>
 </leo_file>
