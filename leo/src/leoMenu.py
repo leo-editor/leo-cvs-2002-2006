@@ -24,7 +24,7 @@ class leoMenu:
         self.frame = frame
         self.menus = {} # Menu dictionary.
         self.menuShortcuts = {}
-        
+    
         self.defineMenuTables()
     #@nonl
     #@-node:ekr.20031218072017.3751: leoMenu.__init__
@@ -32,6 +32,8 @@ class leoMenu:
     def defineMenuTables (self):
         
         c = self.c ; f = self.frame
+        
+        # g.trace(c.shortFileName(),self,f)
         
         #@    << define edit menu tables >>
         #@+node:ekr.20031218072017.3753:<< define edit menu tables >>
@@ -900,7 +902,7 @@ class leoMenu:
                     
                     if bunch and not g.app.menuWarningsGiven:
                         if bunch.init:
-                            if 0: # Testing only.
+                            if 1: # Testing only.
                                 s = 'overriding default shortcut\nnew: %s %s\nold: %s %s' % (
                                     accel,label,bunch.accel,bunch.label)
                                 g.es(s,color="red")
@@ -1201,7 +1203,7 @@ class leoMenu:
     #@+node:ekr.20031218072017.3806:deleteMenuItem
     def deleteMenuItem (self,itemName,menuName="top"):
         
-        """Delete itemName from the menu whose name is menuName.."""
+        """Delete itemName from the menu whose name is menuName."""
     
         try:
             menu = self.getMenu(menuName)
@@ -1297,11 +1299,59 @@ class leoMenu:
 class nullMenu(leoMenu):
     
     """A null menu class for testing and batch execution."""
-
+    
+    #@    @+others
+    #@+node:ekr.20050104094308:ctor
+    def __init__ (self,frame):
+        
+        # Init the base class.
+        leoMenu.__init__(self,frame)
+    #@nonl
+    #@-node:ekr.20050104094308:ctor
+    #@+node:ekr.20050104094029:oops
     def oops (self):
-
+    
         g.trace("leoMenu", g.callerName(2))
         pass
+    #@nonl
+    #@-node:ekr.20050104094029:oops
+    #@+node:ekr.20050104093323:Gui-independent menu routines
+    def createMenuEntries (self,menu,table,openWith=False,dontBind=False,init=False):
+        pass
+    def createMenuItemsFromTable (self,menuName,table,openWith=False):
+        pass
+    def createMenusFromTables (self):
+        pass
+    def defineMenuTables (self):
+        pass
+    def createNewMenu (self,menuName,parentName="top",before=None):
+        pass
+    def createRecentFilesMenuItems (self):
+        pass
+    def deleteMenu (self,menuName):
+        pass
+    def deleteMenuItem (self,itemName,menuName="top"):
+        pass
+    def destroyMenu (self,menuName):
+        pass
+    def getMenu (self,menuName):
+        pass
+    def setMenu (self,menuName,menu):
+        pass
+    #@nonl
+    #@-node:ekr.20050104093323:Gui-independent menu routines
+    #@+node:ekr.20050104092958:Gui-independent menu enablers
+    def updateAllMenus (self):
+        pass
+    def updateEditMenu (self):
+        pass
+    def updateFileMenu (self):
+        pass
+    def updateOutlineMenu (self):
+        pass
+    #@nonl
+    #@-node:ekr.20050104092958:Gui-independent menu enablers
+    #@-others
 #@nonl
 #@-node:ekr.20031218072017.3811:class nullMenu
 #@-others
