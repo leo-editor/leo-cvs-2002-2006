@@ -4,36 +4,13 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
-#@+node:ekr.20040323195916.1:Unit tests
-@nocolor
-
-- Unit tests for node iterators.
-
-- Unit tests for undo/redo.
-
-** Test for memory leaks.
-
-- Test tangle/untangle commands.
-
-- Create unit tests for Find commands.
-
-- Create unit tests for all dialogs.
-
-- Run profiler on code.
-#@nonl
-#@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
-#@+node:EKR.20040621184626:Finish unit tests for @asis
-@ - Support toString in asis methods
-#@-node:EKR.20040621184626:Finish unit tests for @asis
-#@-node:ekr.20040323195916.1:Unit tests
 #@+node:ekr.20040803100035:Run Pychecker
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
 @color
 
 # See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
-if 1: # Set to 1 for lint-like testing.
+if 0: # Set to 1 for lint-like testing.
     try:
         import pychecker.checker
         # This works.  We may want to set options here...
@@ -262,17 +239,9 @@ Edward
 #@nonl
 #@-node:EKR.20040616112407:Create a FAQ entry about using @thin in a cooperative environment
 #@-node:EKR.20040609155110:Docs
-#@+node:ekr.20040706080747:Plugins
+#@+node:ekr.20040706080747:Plugins 9
 #@+node:ekr.20040629121906:Don't specify font in buttons on the Mac
 #@-node:ekr.20040629121906:Don't specify font in buttons on the Mac
-#@+node:ekr.20040629121906.1:Fix Node Navagator bugs
-- Names don't show up in the Marks button until a node has been marked.
-
-- Parent nodes don't always get expanded.
-
-- Leaks memory slightly.
-#@nonl
-#@-node:ekr.20040629121906.1:Fix Node Navagator bugs
 #@+node:EKR.20040622060649:Fix plugin bugs
 @killcolor
 
@@ -928,7 +897,7 @@ def printGcRefs (verbose=True):
 #@-node:ekr.20031218072017.1593:printGcRefs
 #@-node:ekr.20031218072017.1588:Garbage Collection
 #@+node:ekr.20031218072017.892:p.__init__
-def __init__ (self,v,stack):
+def __init__ (self,v,stack,trace=True):
 
     """Create a new position."""
     
@@ -937,11 +906,14 @@ def __init__ (self,v,stack):
     self.v = v
     assert(v is None or v.t)
     self.stack = stack[:] # Creating a copy here is safest and best.
-    
+
     g.app.positions += 1
     
+    if g.app.tracePositions and trace:
+        g.trace("%-25s %-25s %s" % (
+            g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+    
     # Note: __getattr__ implements p.t.
-#@nonl
 #@-node:ekr.20031218072017.892:p.__init__
 #@+node:ekr.20031218072017.2812:c.__init__ &  initIvars
 def __init__(self,frame,fileName):
@@ -1017,7 +989,7 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@-node:ekr.20040701041539:(Check plugins for memory leaks & other performance problems)
 #@+node:ekr.20040707060750:RsT plugin should say where files get written
 #@-node:ekr.20040707060750:RsT plugin should say where files get written
-#@-node:ekr.20040706080747:Plugins
+#@-node:ekr.20040706080747:Plugins 9
 #@+node:ekr.20040629110559:Cool Mac stuff
 #@+node:ekr.20040629111136:Native Max OS X Leo app
 
@@ -3724,7 +3696,6 @@ def __init__(self):
     self.commandName = None # The name of the command being executed.
     self.config = None # The leoConfig instance.
     self.count = 0 # General purpose debugging count.
-    self.copies = 0 # Number of calls to position.copy
     self.debug = False # True: enable extra debugging tests (not used at present).
         # WARNING: this could greatly slow things down.
     self.disableSave = False
@@ -3757,6 +3728,7 @@ def __init__(self):
     self.searchDict = {} # For communication between find/change scripts.
     self.scriptDict = {} # For communication between Execute Script command and scripts.
     self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
     self.trace_list = [] # "Sherlock" argument list for tracing().
     self.tkEncoding = "utf-8"
     self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
@@ -4251,7 +4223,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     c = self.c
     if not c: return "break"
     if not p: return "break"
-    if p != c.currentPosition(): return "break"
+    if not c.isCurrentPosition(p): return "break"
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -4572,7 +4544,7 @@ def idle_head_key (self,p,ch=None):
     
     c = self.c
 
-    if not p or p != c.currentPosition():
+    if not p or not p.isCurrentPosition():
         return "break"
         
     edit_text = self.edit_text(p)
@@ -9249,8 +9221,8 @@ if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
     # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl

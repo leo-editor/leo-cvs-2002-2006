@@ -40,7 +40,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     c = self.c
     if not c: return "break"
     if not p: return "break"
-    if p != c.currentPosition(): return "break"
+    if not c.isCurrentPosition(p): return "break"
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -361,7 +361,7 @@ def idle_head_key (self,p,ch=None):
     
     c = self.c
 
-    if not p or p != c.currentPosition():
+    if not p or not p.isCurrentPosition():
         return "break"
         
     edit_text = self.edit_text(p)
@@ -5510,8 +5510,8 @@ if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
     # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl
@@ -6799,8 +6799,8 @@ if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
     # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl
@@ -11486,7 +11486,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     c = self.c
     if not c: return "break"
     if not p: return "break"
-    if p != c.currentPosition(): return "break"
+    if not c.isCurrentPosition(p): return "break"
 
     if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
@@ -11807,7 +11807,7 @@ def idle_head_key (self,p,ch=None):
     
     c = self.c
 
-    if not p or p != c.currentPosition():
+    if not p or not p.isCurrentPosition():
         return "break"
         
     edit_text = self.edit_text(p)
@@ -12114,8 +12114,8 @@ if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
     # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl
@@ -13197,8 +13197,8 @@ if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
     # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl
@@ -13381,6 +13381,654 @@ def writeMissingAtFileNodes (self):
 #@-node:ekr.20031218072017.2013:writeMissingAtFileNodes
 #@-node:ekr.20040803082633.1:From leoFileCommands...
 #@-node:ekr.20040713062342:(Made sure tnodeList is updated properly in all situations)
+#@+node:ekr.20040803110416:(Created isCurrent, isRoot methods in commands and positions classes
+#@+node:ekr.20040803170057:Notes
+@killcolor
+
+The new code takes care to copy positions when needed, and ONLY when needed.
+#@nonl
+#@-node:ekr.20040803170057:Notes
+#@+node:ekr.20040325142015:p.equal & isEqual
+def equal(self,p2):
+
+    """Return True if two postions are equivalent.
+    
+    Use this method when the speed comparisons is crucial
+    
+    N.B. Unlike __cmp__, p2 must not be None.
+    
+    >>> c = g.top() ; p = c.currentPosition() ; root = c.rootPosition()
+    >>> n = g.app.positions
+    >>> assert p.equal(p.copy()) is True
+    >>> assert p.equal(root) is False
+    >>> assert g.app.positions == n + 1
+    >>> 
+    """
+
+    p1 = self
+    
+    # if g.app.trace: "equal",p1.v,p2.v
+
+    # Check entire stack quickly.
+    # The stack contains vnodes, so this does not call p.__cmp__.
+    return (
+        p1.v == p2.v and
+        p1.stack == p2.stack and
+        p1.childIndex() == p2.childIndex())
+        
+isEqual = equal
+#@-node:ekr.20040325142015:p.equal & isEqual
+#@+node:ekr.20040803112200:c.is...Position
+#@+node:ekr.20040803155551:c.currentPositionIsRootPosition
+def currentPositionIsRootPosition (self):
+    
+    """Return True if the current position is the root position.
+    
+    This method is called during idle time, so not generating positions
+    here fixes a major leak.
+    """
+    
+    c = self
+    
+    return (
+        c._currentPosition and c._rootPosition and
+        c._currentPosition == c._rootPosition)
+        
+#@nonl
+#@-node:ekr.20040803155551:c.currentPositionIsRootPosition
+#@+node:ekr.20040803160656:c.currentPositionHasNext
+def currentPositionHasNext (self):
+    
+    """Return True if the current position is the root position.
+    
+    This method is called during idle time, so not generating positions
+    here fixes a major leak.
+    """
+    
+    c = self ; current = c._currentPosition 
+    
+    return current and current.hasNext()
+#@nonl
+#@-node:ekr.20040803160656:c.currentPositionHasNext
+#@+node:ekr.20040803112450:c.isCurrentPosition
+def isCurrentPosition (self,p):
+    
+    """
+    >>> c = g.top() ; p = c.currentPosition()
+    >>> n = g.app.positions
+    >>> assert c.isCurrentPosition(None) is False
+    >>> assert c.isCurrentPosition(p) is True
+    >>> assert g.app.positions == n
+    >>> 
+    """
+    
+    c = self
+    
+    if p is None or c._currentPosition is None:
+        return False
+    else:
+        return p.isEqual(c._currentPosition)
+#@nonl
+#@-node:ekr.20040803112450:c.isCurrentPosition
+#@+node:ekr.20040803112450.1:c.isRootPosition
+def isRootPosition (self,p):
+    
+    """
+    >>> c = g.top() ; p = c.rootPosition()
+    >>> n = g.app.positions
+    >>> assert c.isRootPosition(None) is False
+    >>> assert c.isRootPosition(p) is True
+    >>> assert g.app.positions == n
+    >>> 
+    """
+    
+    c = self
+    
+    if p is None or c._rootPosition is None:
+        return False
+    else:
+        return p.isEqual(c._rootPosition)
+#@nonl
+#@-node:ekr.20040803112450.1:c.isRootPosition
+#@-node:ekr.20040803112200:c.is...Position
+#@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20040803140033:currentPosition
+def currentPosition (self,copy=True):
+    
+    """Return the presently selected position."""
+    
+    c = self
+    
+    if c._currentPosition:
+        if copy:
+            return c._currentPosition.copy() # Must make a second copy now.
+        else:
+            # The caller MUST copy the position if it is passed to any other method.
+            # At present no core method uses copy = False.
+            g.trace("copy=False")
+            return c._currentPosition
+    else:
+        return c.nullPosition()
+    
+# For compatibiility with old scripts.
+currentVnode = currentPosition
+#@nonl
+#@-node:ekr.20040803140033:currentPosition
+#@+node:ekr.20040803140033.1:setCurrentPosition
+def setCurrentPosition (self,p):
+    
+    """Set the presently selected position."""
+    
+    c = self
+    
+    if p:
+        if p.equal(c._currentPosition):
+            pass # We have already made a copy.
+        else: # Must make a copy _now_
+            c._currentPosition = p.copy() 
+    else:
+        c._currentPosition = None
+    
+# For compatibiility with old scripts.
+setCurrentVnode = setCurrentPosition
+#@nonl
+#@-node:ekr.20040803140033.1:setCurrentPosition
+#@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
+#@+node:ekr.20040803140033.2:rootPosition
+def rootPosition(self):
+    
+    """Return the root position."""
+    
+    c = self
+    
+    if self._rootPosition:
+        return self._rootPosition.copy()
+    else:
+        return  c.nullPosition()
+
+# For compatibiility with old scripts.
+rootVnode = rootPosition
+#@nonl
+#@-node:ekr.20040803140033.2:rootPosition
+#@+node:ekr.20040803140033.3:setRootPosition
+def setRootPosition(self,p):
+    
+    """Set the root positioin."""
+
+    c = self
+    
+    if p:
+        if p.equal(c._rootPosition):
+            pass # We have already made a copy.
+        else:
+            # We must make a copy _now_.
+            c._rootPosition = p.copy()
+    else:
+        c._rootPosition = None
+    
+# For compatibiility with old scripts.
+setRootVnode = setRootPosition
+#@nonl
+#@-node:ekr.20040803140033.3:setRootPosition
+#@-node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
+#@+node:ekr.20040803111240:p.isCurrentPosition & isRootPosition
+#@+node:ekr.20040803140033.4:isCurrentPosition
+def isCurrentPosition (self):
+    
+    p = self ; c = p.c
+    
+    return c.isCurrentPosition(p)
+    
+#@-node:ekr.20040803140033.4:isCurrentPosition
+#@+node:ekr.20040803140033.5:isRootPosition
+def isRootPosition (self):
+    
+    p = self ; c = p.c
+    
+    return c.isRootPosition(p)
+#@nonl
+#@-node:ekr.20040803140033.5:isRootPosition
+#@-node:ekr.20040803111240:p.isCurrentPosition & isRootPosition
+#@-node:ekr.20040803110416:(Created isCurrent, isRoot methods in commands and positions classes
+#@+node:ekr.20040803160307:(Fixed several big leaks of positions)
+#@+node:ekr.20040803164816:Notes
+@killcolor
+
+- canHoist and doHook are called at idle time.
+    They must not generate positions!
+
+- Menu enablers generate positions, but this is not serious.
+
+- The only explicit call to p.copy in leoTkinterTree is now in drawTree.
+    - No other methods call p.moveToX.
+
+- Used p.isCurrent in several places in leoTkinterTree.
+
+- onBodyKey and idle_body_key called c.currentPosition.
+    - Only the call to idle_body_key was eliminated.
+
+- putVnode calls self_and_parents_iter().
+    - This iter doesn't make copies anyway, except for the first, so nothing can be done easily.
+#@nonl
+#@-node:ekr.20040803164816:Notes
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.disableSave = False
+    self.globalWindows = []
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_gnx = True # True: generate gnx's instead of tnode indices.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.findFrame = None
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.892:p.__init__
+def __init__ (self,v,stack,trace=True):
+
+    """Create a new position."""
+    
+    if v: self.c = v.c
+    else: self.c = g.top()
+    self.v = v
+    assert(v is None or v.t)
+    self.stack = stack[:] # Creating a copy here is safest and best.
+
+    g.app.positions += 1
+    
+    if g.app.tracePositions and trace:
+        g.trace("%-25s %-25s %s" % (
+            g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+    
+    # Note: __getattr__ implements p.t.
+#@-node:ekr.20031218072017.892:p.__init__
+#@+node:ekr.20040117171654:p.copy
+# Using this routine can generate huge numbers of temporary positions during a tree traversal.
+
+def copy (self):
+    
+    """"Return an independent copy of a position."""
+    
+    if g.app.tracePositions:
+        g.trace("%-25s %-25s %s" % (
+            g.callerName(4),g.callerName(3),g.callerName(2)),align=10)
+
+    return position(self.v,self.stack,trace=False)
+#@nonl
+#@-node:ekr.20040117171654:p.copy
+#@+node:ekr.20040303165342:canHoist & canDehoist
+def canDehoist(self):
+    
+    return len(self.hoistStack) > 0
+        
+def canHoist(self):
+    
+    c = self
+    
+    # N.B.  This is called at idle time, so minimizing positions is crucial!
+
+    if 1: # minimizes positions
+
+        if c.hoistStack:
+            p2,junk = c.hoistStack[-1]
+            return p2 and not p2.isCurrentPosition()
+        elif c.currentPositionIsRootPosition():
+            return c.currentPositionHasNext()
+        else:
+            return True
+
+    else: # old code
+
+        root = c.rootPosition()
+        p = c.currentPosition()
+    
+        if c.hoistStack:
+            p2,junk = c.hoistStack[-1]
+            return p2 != p
+        
+        elif p == root:
+            return p.hasNext()
+        else:
+            return True
+#@nonl
+#@-node:ekr.20040303165342:canHoist & canDehoist
+#@+node:EKR.20040602125018.2:idleTimeHookHandler
+# An internal routine used to dispatch the "idle" hook.
+trace_count = 0
+
+def idleTimeHookHandler(*args,**keys):
+    
+    if 0: # Do not use g.trace here!
+        global trace_count ; trace_count += 1
+        if trace_count % 10 == 0:
+            for w in g.app.windowList:
+                c = w.c
+                print "idleTimeHookHandler",trace_count,c
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed: return
+    
+    for w in g.app.windowList:
+        c = w.c
+        # New in 4.2 Beta 3. Do NOT compute c.currentPosition.
+        # This would be a MAJOR leak of positions.
+        g.doHook("idle",c=c)
+
+    # Requeue this routine after 100 msec.  Faster requeues overload the system.
+    if g.app.idleTimeHook:
+        g.app.gui.setIdleTimeHookAfterDelay(g.app.idleTimeDelay,g.idleTimeHookHandler)
+        # g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
+        g.app.afterHandler = g.idleTimeHookHandler
+    else:
+        g.app.afterHandler = None
+#@-node:EKR.20040602125018.2:idleTimeHookHandler
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError:
+        return None
+    
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+    
+    if 0: # Don't use trace here!
+        if tag != "idle":
+            print "doHook",tag,c
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            g.es("Plugins disabled: use_plugins is 0",color="blue")
+        return None
+    elif c and c.hookFunction:
+        try:
+            return c.hookFunction(tag,keywords)
+        except:
+            g.es("exception in c.hookFunction for " + c.frame.getTitle())
+    elif g.app.hookFunction:
+        try:
+            return g.app.hookFunction(tag,keywords)
+        except:
+            g.es("exception in app.hookFunction")
+    else:
+        import leoPlugins
+        try:
+            g.app.hookFunction = leoPlugins.doPlugins
+            return app.hookFunction(tag,keywords)
+        except:
+            g.app.hookFunction = None
+            g.es("exception in plugin")
+
+    # Handle all exceptions.
+    g.es_exception()
+    g.app.hookError = True # Supress this function.
+    g.app.idleTimeHook = False # Supress idle-time hook
+    return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write the tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+    p.clearOrphan()
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@-node:ekr.20040803160307:(Fixed several big leaks of positions)
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@+node:ekr.20031218072017.984:Unfinished projects
 #@+node:ekr.20031218072017.985:(Button class)
