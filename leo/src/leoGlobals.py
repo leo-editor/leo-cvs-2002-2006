@@ -957,7 +957,8 @@ def file_date (file,format=None):
 			if format == None:
 				format = "%m/%d/%y %H:%M:%S"
 			return time.strftime(format,time.gmtime(n))
-		except: pass
+		except (ImportError,NameError):
+			pass # Time module is platform dependent.
 	return ""
 #@-node:ekr.20031218072017.1317:file/module/plugin_date
 #@+node:ekr.20031218072017.3116:Files & Directories...
