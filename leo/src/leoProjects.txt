@@ -13746,6 +13746,803 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
 #@-node:ekr.20041023055452:(Fixed bug re Paste Retaining Clones)
+#@+node:ekr.20041024090552:(Bernhard Mulder: Added support for Ada)
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@+node:bwmulder.20041023131509:ada keywords
+ada_keywords = [
+    "abort",       "else",       "new",        "return",
+    "abs",         "elsif",      "not",        "reverse",
+    "abstract",    "end",        "null",
+    "accept",      "entry",      "select",
+    "access",      "exception",  "separate",
+    "aliased",     "exit",       "of",         "subtype",
+    "all",                       "or",
+    "and",         "for",        "others",     "tagged",
+    "array",       "function",   "out",        "task",
+    "at",                                      "terminate",
+                   "generic",    "package",    "then",
+    "begin",       "goto",       "pragma",     "type",
+    "body",                      "private",
+                   "if",         "procedure",
+    "case",        "in",         "protected",  "until",
+    "constant",    "is",                       "use",
+                                 "raise",
+    "declare",                   "range",      "when",
+    "delay",       "limited",    "record",     "while",
+    "delta",       "loop",       "rem",        "with",
+    "digits",                    "renames",
+    "do",          "mod",        "requeue",    "xor"
+   ]
+#@nonl
+#@-node:bwmulder.20041023131509:ada keywords
+#@+node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+
+if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+    delim1,delim2,delim3 = g.set_delims_from_language("c")
+elif self.comment_string:
+    delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+elif self.language == "plain": # 1/30/03
+    delim1,delim2,delim3 = None,None,None
+else:
+    delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+
+self.single_comment_start = delim1
+self.block_comment_start = delim2
+self.block_comment_end = delim3
+
+# A strong case can be made for making this code as fast as possible.
+# Whether this is compatible with general language descriptions remains to be seen.
+self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+self.has_string = self.language != "plain"
+if self.language == "plain":
+    self.string_delims = ()
+elif self.language in ("elisp","html"):
+    self.string_delims = ('"')
+else:
+    self.string_delims = ("'",'"')
+self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+
+# The list of languages for which keywords exist.
+# Eventually we might just use language_delims_dict.keys()
+languages = [
+    "actionscript","ada","c","csharp","css","cweb","elisp","html","java","latex",
+    "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
+
+self.keywords = []
+if self.language == "cweb":
+    for i in self.c_keywords:
+        self.keywords.append(i)
+    for i in self.cweb_keywords:
+        self.keywords.append(i)
+else:
+    for name in languages:
+        if self.language==name: 
+            # g.trace("setting keywords for",name)
+            self.keywords = getattr(self, name + "_keywords")
+
+# Color plain text unless we are under the control of @nocolor.
+# state = g.choose(self.flag,"normal","nocolor")
+state = self.setFirstLineState()
+
+if 1: # 10/25/02: we color both kinds of references in cweb mode.
+    self.lb = "<<"
+    self.rb = ">>"
+else:
+    self.lb = g.choose(self.language == "cweb","@<","<<")
+    self.rb = g.choose(self.language == "cweb","@>",">>")
+#@nonl
+#@-node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+#@+node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
+# Frame and title
+w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
+w.pack(padx=2,pady=2,expand=1,fill="x")
+
+# Frames for two columns of radio buttons
+lt = Tk.Frame(target)
+rt = Tk.Frame(target)
+lt.pack(side="left")
+rt.pack(side="right")
+
+# Left column of radio buttons.
+left_data = [
+    ("ActionScript", "actionscript"),
+    ("Ada", "ada"),
+    ("C#",    "csharp"),
+    ("C/C++", "c"),
+    ("CSS",   "css"),
+    ("CWEB",  "cweb"),
+    ("elisp", "elisp"),
+    ("HTML",  "html"),
+    ("Java",  "java"),
+    ("LaTeX", "latex")
+   ]
+
+for text,value in left_data:
+    button = Tk.Radiobutton(lt,anchor="w",text=text,
+        variable=self.lang_var,value=value,command=self.set_lang)
+    button.pack(fill="x")
+
+# Right column of radio buttons.
+right_data = [
+    ("Pascal","pascal"),
+    ("Perl", "perl"),
+    ("Perl+POD",   "perlpod"),
+    ("PHP",        "php"),
+    ("Plain Text", "plain"),
+    ("Python",     "python"),
+    ("RapidQ",     "rapidq"),
+    ("Rebol",      "rebol"),
+    ("Shell",      "shell"),
+    ("tcl/tk",     "tcltk")]
+
+for text,value in right_data:
+    button = Tk.Radiobutton(rt,anchor="w",text=text,
+        variable=self.lang_var,value=value,command=self.set_lang)
+    button.pack(fill="x")
+#@nonl
+#@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
+#@-node:ekr.20041024090552:(Bernhard Mulder: Added support for Ada)
+#@+node:ekr.20041026103240:(Created input modes in status area)
+#@+node:ekr.20031218072017.3960:Creating the status area
+
+
+#@+node:ekr.20031218072017.3961:createStatusLine
+def createStatusLine (self):
+    
+    if self.statusFrame and self.statusLabel:
+        return
+    
+    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
+    statusFrame.pack(fill="x",pady=1)
+    
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
+    self.statusLabel.pack(side="left",padx=1)
+    
+    bg = statusFrame.cget("background")
+    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
+    self.statusText.pack(side="left",expand=1,fill="x")
+
+    # Register an idle-time handler to update the row and column indicators.
+    self.statusFrame.after_idle(self.updateStatusRowCol)
+#@nonl
+#@-node:ekr.20031218072017.3961:createStatusLine
+#@+node:ekr.20031218072017.3962:clearStatusLine
+def clearStatusLine (self):
+    
+    t = self.statusText
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3962:clearStatusLine
+#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
+def disableStatusLine (self,background=None):
+    
+    t = self.statusText
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.statusIsEnabled = False
+    
+def enableStatusLine (self,background="white"):
+    
+    t = self.statusText
+    if t:
+        t.configure(state="normal",background=background)
+        t.focus_set()
+    self.statusIsEnabled = True
+        
+def statusLineIsEnabled(self):
+    return self.statusIsEnabled
+#@nonl
+#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
+#@+node:ekr.20041026132435:getStatusLine
+def getStatusLine (self):
+    
+    t = self.statusText
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@-node:ekr.20041026132435:getStatusLine
+#@+node:ekr.20031218072017.3963:putStatusLine
+def putStatusLine (self,s,color=None):
+    
+    t = self.statusText ; tags = self.statusColorTags
+    if not t: return
+
+    t.configure(state="normal")
+    
+    if "black" not in self.log.colorTags:
+        tags.append("black")
+        
+    if color and color not in tags:
+        tags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3963:putStatusLine
+#@+node:EKR.20040424154804:setFocusStatusLine
+def setFocusStatusLine (self):
+    
+    t = self.statusText
+    if t:
+        t.focus_set()
+#@nonl
+#@-node:EKR.20040424154804:setFocusStatusLine
+#@+node:ekr.20031218072017.1733:updateStatusRowCol
+def updateStatusRowCol (self):
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
+    gui = g.app.gui
+    if not lab: return
+
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed:
+        return
+
+    if 0: # New code
+        index = c.frame.body.getInsertionPoint()
+        row,col = c.frame.body.indexToRowColumn(index)
+        index1 = c.frame.body.rowColumnToIndex(row,0)
+    else:
+        index = body.index("insert")
+        row,col = gui.getindex(body,index)
+    
+    if col > 0:
+        if 0: # new code
+            s = c.frame.body.getRange(index1,index2)
+        else:
+            s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+        col = g.computeWidth (s,self.tab_width)
+
+    if row != self.lastStatusRow or col != self.lastStatusCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastStatusRow = row
+        self.lastStatusCol = col
+
+    if 0: # The caller is now responsible for rescheduling.
+        self.statusFrame.after(500,self.updateStatusRowCol)
+        
+    if c.frame.statusLineIsEnabled():
+        c.frame.setFocusStatusLine()
+#@nonl
+#@-node:ekr.20031218072017.1733:updateStatusRowCol
+#@-node:ekr.20031218072017.3960:Creating the status area
+#@-node:ekr.20041026103240:(Created input modes in status area)
+#@+node:ekr.20041025145856:(Added keyboard shortcuts to find panel)
+#@+node:ekr.20041025145856.1:What I did
+@killcolor
+
+- Tab toggles between the Search to the Replace areas.
+- Control-Tab inserts a tab.
+- Added hot keys for all settings.  Use Alt-x to activate hot key x.
+  (The Enter key activates the Find button.)
+- As usual, Alt-F4 dismisses the Find panel.
+
+To do next:  allow all search settings and commands to be activated from the status line.
+#@nonl
+#@-node:ekr.20041025145856.1:What I did
+#@+node:ekr.20041025152343:class underlinedTkButton
+class underlinedTkButton(Tk.Checkbutton):
+    
+    @others
+#@nonl
+#@+node:ekr.20041025152712:__init__
+def __init__(self,buttonType,parent_widget,**keywords):
+
+    self.buttonType = buttonType
+    self.parent_widget = parent_widget
+    self.hotKey = None
+    text = keywords['text']
+
+	<< set self.hotKey if '&' is in the string >>
+    
+    # Create the button...
+	if self.hotKey:
+        keywords['text'] = text
+        keywords['underline'] = index
+
+    if buttonType.lower() == "button":
+        self.button = Tk.Button(parent_widget,keywords)
+    elif buttonType.lower() == "check":
+        self.button = Tk.Checkbutton(parent_widget,keywords)
+    elif buttonType.lower() == "radio":
+        self.button = Tk.Radiobutton(parent_widget,keywords)
+    else:
+        g.trace("bad buttonType")
+    
+    self.text = text # for traces
+#@nonl
+#@+node:ekr.20041025152712.2:<< set self.hotKey if '&' is in the string >>
+index = text.find('&')
+
+if index > -1:
+
+    if index == len(text)-1:
+        # The word ends in an ampersand.  Ignore it; there is no hot key.
+        text = text[:-1]
+    else:
+        self.hotKey = text [index + 1]
+        text = text[:index] + text[index+1:]
+#@nonl
+#@-node:ekr.20041025152712.2:<< set self.hotKey if '&' is in the string >>
+#@-node:ekr.20041025152712:__init__
+#@+node:ekr.20041026080125:bindHotKey
+def bindHotKey (self,widget):
+    
+    if self.hotKey:
+        for key in (self.hotKey.lower(),self.hotKey.upper()):
+            widget.bind("<Alt-%s>" % key,self.callback)
+#@-node:ekr.20041026080125:bindHotKey
+#@+node:ekr.20041025152717:callback
+# The hot key has been hit.  Call the button's command.
+
+def callback (self, event):
+    
+    g.trace(self.text)
+
+	self.button.invoke ()
+#@-node:ekr.20041025152717:callback
+#@-node:ekr.20041025152343:class underlinedTkButton
+#@+node:ekr.20031218072017.3898:Birth & death
+#@+node:ekr.20031218072017.3899:__init__
+def __init__(self,title="Find/Change",resizeable=False):
+    
+    # Init the base classes...
+
+    leoFind.leoFind.__init__(self)
+    leoTkinterDialog.leoTkinterDialog.__init__(self,title,resizeable)
+
+    << init the tkinter ivars >>
+    
+    self.createTopFrame() # Create the outer tkinter dialog frame.
+    self.createFrame()
+#@nonl
+#@+node:ekr.20031218072017.3900:<< init the tkinter ivars >>
+self.dict = {}
+
+for key in self.intKeys:
+    self.dict[key] = Tk.IntVar()
+
+for key in self.newStringKeys:
+    self.dict[key] = Tk.StringVar()
+    
+self.s_text = Tk.Text() # Used by find.search()
+#@nonl
+#@-node:ekr.20031218072017.3900:<< init the tkinter ivars >>
+#@-node:ekr.20031218072017.3899:__init__
+#@+node:ekr.20031218072017.3901:destroySelf
+def destroySelf (self):
+    
+    self.top.destroy()
+#@nonl
+#@-node:ekr.20031218072017.3901:destroySelf
+#@+node:ekr.20031218072017.3902:find.createFrame
+def createFrame (self):
+
+    # Create the find panel...
+    outer = Tk.Frame(self.frame,relief="groove",bd=2)
+    outer.pack(padx=2,pady=2)
+
+    << Create the Find and Change panes >>
+    << Create four columns of radio and checkboxes >>
+    << Create two rows of buttons >>
+    
+    for widget in (self.find_text, self.change_text):
+        widget.bind ("<1>",  self.resetWrap)
+        widget.bind("<Key>", self.resetWrap)
+        widget.bind("<Control-a>",self.selectAll)
+        #widget.bind(g.virtual_event_name("SelectAll"),self.selectAll)
+    
+    for widget in (outer, self.find_text, self.change_text):
+        widget.bind("<Key-Return>", self.findButton)
+        widget.bind("<Key-Escape>", self.onCloseWindow)
+    
+    self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+#@+node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
+fc = Tk.Frame(outer, bd="1m")
+fc.pack(anchor="n", fill="x", expand=1)
+
+# Removed unused height/width params: using fractions causes problems in some locales!
+fpane = Tk.Frame(fc, bd=1)
+cpane = Tk.Frame(fc, bd=1)
+
+fpane.pack(anchor="n", expand=1, fill="x")
+cpane.pack(anchor="s", expand=1, fill="x")
+
+# Create the labels and text fields...
+flab = Tk.Label(fpane, width=8, text="Find:")
+clab = Tk.Label(cpane, width=8, text="Change:")
+
+# Use bigger boxes for scripts.
+self.find_text   = ftxt = Tk.Text(fpane,bd=1,relief="groove",height=4,width=20)
+self.change_text = ctxt = Tk.Text(cpane,bd=1,relief="groove",height=4,width=20)
+<< Bind Tab and control-tab >>
+
+fBar = Tk.Scrollbar(fpane,name='findBar')
+cBar = Tk.Scrollbar(cpane,name='changeBar')
+
+# Add scrollbars.
+for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
+    txt['yscrollcommand'] = bar.set
+    bar['command'] = txt.yview
+    bar.pack(side="right", fill="y")
+
+flab.pack(side="left")
+clab.pack(side="left")
+ctxt.pack(side="right", expand=1, fill="both")
+ftxt.pack(side="right", expand=1, fill="both")
+#@nonl
+#@+node:ekr.20041026092141:<< Bind Tab and control-tab >>
+def setFocus(w):
+    w.focus_set()
+    g.app.gui.setSelectionRange(w,"1.0","1.0")
+    return "break"
+    
+def toFind(event,w=ftxt): return setFocus(w)
+def toChange(event,w=ctxt): return setFocus(w)
+    
+def insertTab(w):
+    data = g.app.gui.getSelectionRange(w)
+    if data: start,end = data
+    else: start = end = g.app.gui.getInsertPoint(w)
+    g.app.gui.replaceSelectionRangeWithText(w,start,end,"\t")
+    return "break"
+
+def insertFindTab(event,w=ftxt): return insertTab(w)
+def insertChangeTab(event,w=ctxt): return insertTab(w)
+
+ftxt.bind("<Tab>",toChange)
+ctxt.bind("<Tab>",toFind)
+ftxt.bind("<Control-Tab>",insertFindTab)
+ctxt.bind("<Control-Tab>",insertChangeTab)
+#@nonl
+#@-node:ekr.20041026092141:<< Bind Tab and control-tab >>
+#@-node:ekr.20031218072017.3904:<< Create the Find and Change panes >>
+#@+node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
+columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
+columnsFrame.pack(anchor="e",expand=1,padx="7p",pady="2p") # Don't fill.
+
+numberOfColumns = 4 # Number of columns
+columns = [] ; radioLists = [] ; checkLists = []
+for i in xrange(numberOfColumns):
+    columns.append(Tk.Frame(columnsFrame,bd=1))
+    radioLists.append([])
+    checkLists.append([])
+
+for i in xrange(numberOfColumns):
+    columns[i].pack(side="left",padx="1p") # fill="y" Aligns to top. padx expands columns.
+    
+# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
+
+radioLists[0] = [
+    (self.dict["radio-find-type"],"P&Lain Search","plain-search"),  
+    (self.dict["radio-find-type"],"&Pattern Match Search","pattern-search"),
+    (self.dict["radio-find-type"],"&Script Search","script-search")]
+checkLists[0] = [
+    ("Scrip&t Change",self.dict["script_change"])]
+checkLists[1] = [
+    ("&Whole Word",  self.dict["whole_word"]),
+    ("&Ignore Case", self.dict["ignore_case"]),
+    ("Wrap &Around", self.dict["wrap"]),
+    ("&Reverse",     self.dict["reverse"])]
+radioLists[2] = [
+    (self.dict["radio-search-scope"],"&Entire Outline","entire-outine"),
+    (self.dict["radio-search-scope"],"Suboutline &Only","suboutline-only"),  
+    (self.dict["radio-search-scope"],"&Node Only","node-only"),
+    # I don't know what selection-only is supposed to do.
+    (self.dict["radio-search-scope"],"Selection Only",None)] #,"selection-only")]
+checkLists[2] = []
+checkLists[3] = [
+    ("Search &Headline Text", self.dict["search_headline"]),
+    ("Search &Body Text",     self.dict["search_body"]),
+    ("&Mark Finds",           self.dict["mark_finds"]),
+    ("Mark &Changes",         self.dict["mark_changes"])]
+
+for i in xrange(numberOfColumns):
+    for var,name,val in radioLists[i]:
+        box = underlinedTkButton("radio",columns[i],anchor="w",text=name,variable=var,value=val)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        if val == None: box.button.configure(state="disabled")
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+    for name,var in checkLists[i]:
+        box = underlinedTkButton("check",columns[i],anchor="w",text=name,variable=var)
+        box.button.pack(fill="x")
+        box.button.bind("<1>", self.resetWrap)
+        box.bindHotKey(ftxt)
+        box.bindHotKey(ctxt)
+        if var is None: box.button.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3903:<< Create four columns of radio and checkboxes >>
+#@+node:ekr.20031218072017.3905:<< Create two rows of buttons >>
+# Create the button panes
+buttons  = Tk.Frame(outer,bd=1)
+buttons2 = Tk.Frame(outer,bd=1)
+buttons.pack (anchor="n",expand=1,fill="x")
+buttons2.pack(anchor="n",expand=1,fill="x")
+
+# HotKeys used for check/radio buttons:  a,b,c,e,h,i,l,m,n,o,p,r,s,t,w
+# HotKeys used for plain buttons (enter),d,g,t
+
+# Create the first row of buttons
+findButton=Tk.Button(buttons,
+    width=9,text="Find",bd=4,command=self.findButton) # The default.
+findButton.pack(pady="1p",padx="25p",side="left")
+
+contextBox = underlinedTkButton("check",buttons,
+    anchor="w",text="Show Conte&xt",variable=self.dict["batch"])
+contextBox.button.pack(pady="1p",side="left",expand=1)
+contextBox.bindHotKey(ftxt)
+contextBox.bindHotKey(ctxt)
+
+findAllButton = underlinedTkButton("button",buttons,
+    width=9,text="Fin&d All",command=self.findAllButton)
+findAllButton.button.pack(pady="1p",padx="25p",side="right",fill="x")
+findAllButton.bindHotKey(ftxt)
+findAllButton.bindHotKey(ctxt)
+
+# Create the second row of buttons
+changeButton = underlinedTkButton("button",buttons2,
+    width=10,text="Chan&Ge",command=self.changeButton)
+changeButton.button.pack(pady="1p",padx="25p",side="left")
+changeButton.bindHotKey(ftxt)
+changeButton.bindHotKey(ctxt)
+
+changeFindButton = underlinedTkButton("button",buttons2,
+    text="Change, &Then Find",command=self.changeThenFindButton)
+changeFindButton.button.pack(pady="1p",side="left",expand=1)
+changeFindButton.bindHotKey(ftxt)
+changeFindButton.bindHotKey(ctxt)
+    
+changeAllButton = underlinedTkButton("button",buttons2,
+    width=10,text="Change All",command=self.changeAllButton)
+changeAllButton.button.pack(pady="1p",padx="25p",side="right")
+changeAllButton.bindHotKey(ftxt)
+changeAllButton.bindHotKey(ctxt)
+#@nonl
+#@-node:ekr.20031218072017.3905:<< Create two rows of buttons >>
+#@-node:ekr.20031218072017.3902:find.createFrame
+#@+node:ekr.20031218072017.2059:find.init
+def init (self,c):
+
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        val = getattr(c, key + "_flag")
+        val = g.choose(val,1,0) # 2/1/04: work around major Tk problem.
+        self.dict[key].set(val)
+        # g.trace(key,val)
+
+    << set find/change widgets >>
+    << set radio buttons from ivars >>
+#@nonl
+#@+node:ekr.20031218072017.2060:<< set find/change widgets >>
+self.find_text.delete("1.0","end")
+self.find_text.insert("end",c.find_text)
+
+self.change_text.delete("1.0","end")
+self.change_text.insert("end",c.change_text)
+#@nonl
+#@-node:ekr.20031218072017.2060:<< set find/change widgets >>
+#@+node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
+found = False
+for var,setting in (
+    ("pattern_match","pattern-search"),
+    ("script_search","script-search")):
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-find-type"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-find-type"].set("plain-search")
+    
+found = False
+for var,setting in (
+    ("suboutline_only","suboutline-only"),
+    ("node_only","node-only"),
+    ("selection_only","selection-only")): # 11/9/03
+    val = self.dict[var].get()
+    if val:
+        self.dict["radio-search-scope"].set(setting)
+        found = True ; break
+if not found:
+    self.dict["radio-search-scope"].set("entire-outine")
+#@nonl
+#@-node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
+#@-node:ekr.20031218072017.2059:find.init
+#@+node:ekr.20031218072017.1460:find.set_ivars
+def set_ivars (self,c):
+    
+    # N.B.: separate c.ivars are much more convenient than a dict.
+    for key in self.intKeys:
+        val = self.dict[key].get()
+        setattr(c, key + "_flag", val)
+        # g.trace(key,val)
+
+    # Set ivars from radio buttons. 10/2/01: convert these to 1 or 0.
+    find_type = self.dict["radio-find-type"].get()
+    c.pattern_match_flag = g.choose(find_type == "pattern-search",1,0)
+    c.script_search_flag = g.choose(find_type == "script-search",1,0)
+
+    search_scope = self.dict["radio-search-scope"].get()
+    c.suboutline_only_flag = g.choose(search_scope == "suboutline-only",1,0)
+    c.node_only_flag       = g.choose(search_scope == "node-only",1,0)
+    c.selection_only_flag  = g.choose(search_scope == "selection-only",1,0) # 11/9/03
+
+    s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
+    s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+    c.find_text = s
+
+    s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
+    s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+    c.change_text = s
+#@nonl
+#@-node:ekr.20031218072017.1460:find.set_ivars
+#@-node:ekr.20031218072017.3898:Birth & death
+#@-node:ekr.20041025145856:(Added keyboard shortcuts to find panel)
+#@+node:ekr.20041028161201:(Investigated Initing Pmw & Tk)
+#@+node:ekr.20031218072017.4049:createRootWindow & allies
+def createRootWindow(self):
+
+    """Create a hidden Tk root window."""
+
+    self.root = root = Tk.Tk()
+    root.title("Leo Main Window")
+    root.withdraw()
+    
+    self.setDefaultIcon()
+    self.getDefaultConfigFont(g.app.config)
+    self.createGlobalWindows()
+
+    return root
+#@nonl
+#@+node:ekr.20031218072017.1856:setDefaultIcon
+def setDefaultIcon(self):
+    
+    """Set the icon to be used in all Leo windows.
+    
+    This code does nothing for Tk versions before 8.4.3."""
+    
+    gui = self
+
+    try:
+        version = gui.root.getvar("tk_patchLevel")
+        if g.CheckVersion(version,"8.4.3") and sys.platform == "win32": # 12/2/03
+            # tk 8.4.3 or greater: load a 16 by 16 icon.
+            path = g.os_path_join(g.app.loadDir,"..","Icons")
+            if g.os_path_exists(path):
+                theFile = g.os_path_join(path,"LeoApp16.ico")
+                if g.os_path_exists(path):
+                    self.bitmap = Tk.BitmapImage(theFile)
+                else:
+                    g.es("LeoApp16.ico not in Icons directory", color="red")
+            else:
+                g.es("Icons directory not found: "+path, color="red")
+    except:
+        print "exception setting bitmap"
+        import traceback ; traceback.print_exc()
+#@nonl
+#@-node:ekr.20031218072017.1856:setDefaultIcon
+#@+node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
+def getDefaultConfigFont(self,config):
+    
+    """Get the default font from a new text widget."""
+
+    t = Tk.Text()
+    fn = t.cget("font")
+    font = tkFont.Font(font=fn)
+    config.defaultFont = font
+    config.defaultFontFamily = font.cget("family")
+#@nonl
+#@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
+#@+node:ekr.20031218072017.4050:createGlobalWindows
+def createGlobalWindows (self):
+    
+    """Create the global windows for the application."""
+
+    g.app.findFrame = g.app.gui.createFindPanel()
+    g.app.globalWindows.append(g.app.findFrame)
+#@nonl
+#@-node:ekr.20031218072017.4050:createGlobalWindows
+#@-node:ekr.20031218072017.4049:createRootWindow & allies
+#@-node:ekr.20041028161201:(Investigated Initing Pmw & Tk)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl

@@ -3276,25 +3276,7 @@ where clash indicates the incompatibility.  What should it do?  Maybe not load?
 #@-node:ekr.20041024085554:specify load oarder, compatibilty
 #@-node:ekr.20041022083005:More flexible plugin manager
 #@-node:ekr.20041006110656:Urgent 7 + 0
-#@+node:ekr.20040919101448:Major (Must do) 5 + 0
-#@+node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
-@killcolor
-
-Don't try to work exactly like Emacs:
-
-Esc:  puts focus in status line.
-    - Use potentially different binding in status line.
-    - Esc (or Esc Esc?) exists status line.
-    - This should be doable _without_ changing the main bindings.
-    - Create "status-line" commands corresponding to menus...
-        - Find
-        - File
-        - Outline
-        - Edit
-    - We must preserve body state (selection) when switching back and forth.
-    
-#@nonl
-#@-node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
+#@+node:ekr.20040919101448:Major (Must do) 4 + 0
 #@+node:ekr.20040916122326.1:Revise Undo...
 #@+node:ekr.20041011092930:Fix undo bug
 http://sourceforge.net/forum/message.php?msg_id=2795653
@@ -4820,7 +4802,7 @@ a big problem with modern editors, but it _would_ be nicer...
 #@+node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20031218072017.734:Rewrite (threaded) colorizer to use jEdit language descriptionfiles
-#@+node:ekr.20041022164727:Rewrite plugins manager
+#@+node:ekr.20041022164727:Rewrite plugins manager core code
 #@+node:ekr.20041022164727.1:Specify order of plugins
 http://sourceforge.net/forum/message.php?msg_id=2818384
 
@@ -4831,9 +4813,28 @@ plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) )
 This may assist in ensuring that some plugins with dependencies get loaded right. :)
 #@nonl
 #@-node:ekr.20041022164727.1:Specify order of plugins
-#@-node:ekr.20041022164727:Rewrite plugins manager
-#@-node:ekr.20040919101448:Major (Must do) 5 + 0
-#@+node:ekr.20041001182730:Easy 0 + 6
+#@-node:ekr.20041022164727:Rewrite plugins manager core code
+#@-node:ekr.20040919101448:Major (Must do) 4 + 0
+#@+node:ekr.20041001182730:Easy 0 + 7
+#@+node:ekr.20041029083459:Remember Import directory
+By: Kent Tenney - ktenney
+Import to @file request  
+2004-10-28 11:27
+Howdy, 
+ 
+Please ignore if this is a difficult feature to implement. 
+ 
+File->Import->Import to @file  
+always starts in .../leo/src 
+ 
+I would prefer if it opened to the last directory from 
+which a file was imported. 
+ 
+I often find myself importing several files from the same area of the directory tree, and repeatedly navigating there from leo/src gets tiresome. 
+ 
+Thanks, 
+Kent
+#@-node:ekr.20041029083459:Remember Import directory
 #@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
 @killcolor
 
@@ -4908,7 +4909,7 @@ http://www.reportlab.com
 
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@-node:ekr.20041001182730:Easy 0 + 6
+#@-node:ekr.20041001182730:Easy 0 + 7
 #@+node:ekr.20041022081937.1:Others 1 + 2
 #@+node:ekr.20041007081134:* Convert Leo to Tix
 http://sourceforge.net/forum/message.php?msg_id=2792402
