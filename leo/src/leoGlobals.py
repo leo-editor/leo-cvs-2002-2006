@@ -592,7 +592,7 @@ def scanDirectives(c,p=None):
 		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 			
 			w = g.scanAtTabwidthDirective(s,dict)
-			if w and w > 0:
+			if w and w != 0:
 				tab_width = w
 		#@nonl
 		#@-node:ekr.20031218072017.1399:<< Test for @tabwidth >>
