@@ -1774,7 +1774,7 @@ def doHook(tag,*args,**keywords):
 	app.hookError = true # Supress this function.
 	app.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
-
+#@nonl
 #@-node:frame.doHook
 #@+node:plugin_signon
 def plugin_signon(module_name,verbose=false):
