@@ -1410,6 +1410,14 @@ class LeoFrame:
 				elif openType == "exec":
 					command    = "exec("+arg+path+")"
 					exec(arg+path)
+				elif openType == "os.spawnl":
+					filename = os.path.basename(arg)
+					command = "os.spawnl("+arg+","+filename+','+ path+")"
+					apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
+				elif openType == "os.spawnv":
+					filename = os.path.basename(arg)
+					command = "os.spawnv("+arg+",("+filename+','+ path+"))"
+					apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
 				else:
 					command="bad command:"+str(openType)
 				es(command)
