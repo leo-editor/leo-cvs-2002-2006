@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1457" clone_windows="0"/>
-<globals body_outline_ratio="0.43466666666666665">
-	<global_window_position top="42" left="156" height="921" width="957"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1506" clone_windows="0"/>
+<globals body_outline_ratio="0.42888165038002174">
+	<global_window_position top="18" left="232" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,6 +13,10 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
+<v t="ekr.20040119102021"><vh>2004</vh>
+<v t="ekr.20040119102021.1"><vh>1/19 Added http plugin</vh></v>
+</v>
+<v t="ekr.20040119102021.2"><vh>2003</vh>
 <v t="edream.031217094146"><vh>12/17</vh>
 <v t="edream.031216103123"><vh>Fix problems in plugins</vh></v>
 </v>
@@ -30,6 +34,7 @@
 <v t="edream.110703035301"><vh>11/7</vh></v>
 <v t="edream.110203113231.1"><vh>10/27/02</vh></v>
 <v t="edream.110203113231.2"><vh>10/26/03</vh></v>
+</v>
 </v>
 <v t="edream.110203113231.3"><vh>Documentation and security warnings</vh>
 <v t="edream.110203113231.4"><vh>Overview of plugins and hooks</vh></v>
@@ -1515,7 +1520,7 @@
 <v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
-<v t="ekr.20040118081748" a="E" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
 <v t="ekr.20040118081748.1" a="M"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="ekr.20040118081748.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="ekr.20040118081748.3" a="E"><vh>onIconDoubleClick</vh>
@@ -1561,6 +1566,65 @@
 <v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
 <v t="ekr.20040108095351.4"><vh>updateRowColWidget</vh></v>
 </v>
+</v>
+<v t="ekr.20040119044414" a="E"><vh>Minimal http plugin</vh>
+<v t="ekr.20040119044414.1" tnodeList="ekr.20040119044414.1,ekr.20040119102021.3,ekr.20040119044414.3,ekr.20040119044414.5,ekr.20040119044414.6,ekr.20040119044414.7,ekr.20040119044414.8,ekr.20040119044414.9,ekr.20040119044414.10,ekr.20040119044414.11,ekr.20040119044414.12,ekr.20040119044414.13,ekr.20040119044414.14,ekr.20040119044414.17,ekr.20040119044414.15,ekr.20040119044414.16,ekr.20040119044414.18,ekr.20040119044414.19,ekr.20040119044414.20,ekr.20040119044414.22,ekr.20040119044414.23,ekr.20040119044414.24,ekr.20040119044414.25,ekr.20040119044414.26,ekr.20040119044414.27,ekr.20040119044414.28,ekr.20040119044414.29,ekr.20040119044414.30,ekr.20040119044414.31,ekr.20040119044414.32,ekr.20040119044414.33,ekr.20040119044414.34,ekr.20040119044414.35,ekr.20040119044414.36,ekr.20040119044414.37,ekr.20040119044414.38,ekr.20040119044414.39,ekr.20040119044414.40,ekr.20040119044414.41,ekr.20040119064609,ekr.20040119064609.1,ekr.20040119064609.2,ekr.20040119044414.42,ekr.20040119044414.43,ekr.20040119044414.45,ekr.20040119044414.46"><vh>@file mod_http.py</vh>
+<v t="ekr.20040119102021.3"><vh>&lt;&lt; how to use this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040119044414.3"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20040119044414.5"><vh>class delayedSocketStream</vh>
+<v t="ekr.20040119044414.6"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.7"><vh>write</vh></v>
+<v t="ekr.20040119044414.8"><vh>initiate_sending</vh></v>
+<v t="ekr.20040119044414.9"><vh>handle_read</vh></v>
+<v t="ekr.20040119044414.10"><vh>writable</vh></v>
+</v>
+<v t="ekr.20040119044414.11"><vh>class nodeNotFound</vh></v>
+<v t="ekr.20040119044414.12"><vh>class escaped_StringIO</vh>
+<v t="ekr.20040119044414.13"><vh>write_escaped</vh></v>
+</v>
+<v t="ekr.20040119044414.14"><vh>class RequestHandler</vh>
+<v t="ekr.20040119044414.17"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.15"><vh>copyfile</vh></v>
+<v t="ekr.20040119044414.16"><vh>log_message</vh></v>
+<v t="ekr.20040119044414.18"><vh>collect_incoming_data</vh></v>
+<v t="ekr.20040119044414.19"><vh>prepare_POST</vh></v>
+<v t="ekr.20040119044414.20"><vh>handle_post_data</vh></v>
+<v t="ekr.20040119044414.21"><vh>Leo specific code</vh>
+<v t="ekr.20040119044414.22"><vh>add_leo_links</vh></v>
+<v t="ekr.20040119044414.23"><vh>create_href</vh></v>
+<v t="ekr.20040119044414.24"><vh>create_leo_reference</vh></v>
+<v t="ekr.20040119044414.25"><vh>format_leo_node</vh></v>
+<v t="ekr.20040119044414.26"><vh>get_leo_nameparts</vh></v>
+<v t="ekr.20040119044414.27"><vh>get_leo_node</vh></v>
+<v t="ekr.20040119044414.28"><vh>get_leo_windowlist</vh></v>
+<v t="ekr.20040119044414.29"><vh>write_path</vh></v>
+<v t="ekr.20040119044414.30"><vh>send_head</vh></v>
+<v t="ekr.20040119044414.31"><vh>split_leo_path</vh></v>
+</v>
+<v t="ekr.20040119044414.32"><vh>do_GET</vh></v>
+<v t="ekr.20040119044414.33"><vh>do_POST</vh></v>
+<v t="ekr.20040119044414.34"><vh>query</vh></v>
+<v t="ekr.20040119044414.35"><vh>handle_data</vh></v>
+<v t="ekr.20040119044414.36"><vh>handle_request_line</vh></v>
+<v t="ekr.20040119044414.37"><vh>finish</vh></v>
+</v>
+<v t="ekr.20040119044414.38"><vh>class Server</vh>
+<v t="ekr.20040119044414.39"><vh>__init__</vh></v>
+<v t="ekr.20040119044414.40"><vh>handle_accept</vh></v>
+</v>
+<v t="ekr.20040119044414.41" a="M"><vh>poll</vh>
+<v t="ekr.20040119064609"><vh>&lt;&lt; try r, w, e = select.select &gt;&gt;</vh></v>
+<v t="ekr.20040119064609.1"><vh>&lt;&lt; asyncore.read(map.get(fd)) &gt;&gt;</vh></v>
+<v t="ekr.20040119064609.2"><vh>&lt;&lt; asyncore.write(map.get(fd)) &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040119044414.42"><vh>loop</vh></v>
+<v t="ekr.20040119044414.43"><vh>plugin_wrapper</vh></v>
+<v t="ekr.20040119044414.44" a="E"><vh>asynchore_overrides</vh>
+<v t="ekr.20040119044414.45"><vh>a_read</vh></v>
+</v>
+<v t="ekr.20040119044414.46"><vh>applyConfiguration</vh></v>
+</v>
+<v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
 </v>
 </v>
 </vnodes>
@@ -15599,7 +15663,10 @@ rowcol.py
 nodenavigator.py
 searchbox.py
 # word_export.py
-# xemacs.py</t>
+# xemacs.py
+
+# New from Bernhard Mulder
+# mod_http.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -16463,5 +16530,651 @@ def underline(h,level):
 	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
 	return str*max(len(h),4)+'\n'
 </t>
+<t tx="ekr.20040119044414"></t>
+<t tx="ekr.20040119044414.1">@language python
+
+"""
+A minimal http plugin for LEO, based on AsyncHttpServer.py.
+
+Based on the asyncore / asynchat framework.
+"""
+
+# From http://home.pacbell.net/bwmulder/python/Leo/HttpPlugin.leo
+# See also, the related script from the Python Cookbook:
+# http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259148
+
+__version__ = "0.9"
+
+&lt;&lt; how to use this plugin &gt;&gt;
+&lt;&lt; imports &gt;&gt;
+
+sockets_to_close = []
+
+@others
+
+applyConfiguration()
+
+if active:
+	s=Server('',port,RequestHandler)
+	asyncore.read = a_read
+	registerHandler("idle", plugin_wrapper)
+	
+	es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
+</t>
+<t tx="ekr.20040119044414.3">import asynchat,asyncore,socket,SimpleHTTPServer, select, urllib, urlparse
+import posixpath,sys, cgi,cStringIO, os
+
+import exceptions
+import select
+import socket
+import sys
+import time
+
+import shutil
+from StringIO import StringIO
+
+from  leoPlugins import registerHandler
+from leoGlobals import es, app
+
+import ConfigParser
+</t>
+<t tx="ekr.20040119044414.5">class delayedSocketStream(asyncore.dispatcher_with_send):
+	@others
+</t>
+<t tx="ekr.20040119044414.6">def __init__(self,sock):
+	self.socket=sock
+	self.socket.setblocking(0)
+	self.closed=1   # compatibility with SocketServer
+	self.buffer = []
+</t>
+<t tx="ekr.20040119044414.7">def write(self,data):
+	self.buffer.append(data)
+</t>
+<t tx="ekr.20040119044414.8">def initiate_sending(self):
+	self.out_buffer = ''.join(self.buffer)
+	del self.buffer
+	self.set_socket(self.socket, None)
+	self.socket.setblocking(0)
+	self.connected = 1
+	try:
+		self.addr = self.socket.getpeername()
+	except socket.error:
+		# The addr isn't crucial
+		pass
+</t>
+<t tx="ekr.20040119044414.9">def handle_read(self):
+	pass</t>
+<t tx="ekr.20040119044414.10">def writable(self):
+	result = (not self.connected) or len(self.out_buffer)
+	if not result:
+		sockets_to_close.append(self)
+	return result
+</t>
+<t tx="ekr.20040119044414.11">class nodeNotFound(Exception):
+	pass</t>
+<t tx="ekr.20040119044414.12">class escaped_StringIO(StringIO):
+	@others</t>
+<t tx="ekr.20040119044414.13">def write_escaped(self, s):
+	s = s.replace('&amp;', "&amp;amp;")
+	s = s.replace('&lt;', "&amp;lt;")
+	s = s.replace('&gt;', "&amp;gt;")
+	
+	# is there a more elegant way to do this?
+	# Replaces blanks with &amp;nbsp; id they are in
+	# the beginning of the line.
+	lines = s.split('\n')
+	result = []
+	blank = chr(32)
+	for line in lines:
+		if line.startswith(blank):
+			resultchars = []
+			startline = True
+			for char in line:
+				if char == blank:
+					if startline:
+						resultchars.append('&amp;nbsp;')
+					else:
+						resultchars.append(' ')
+				else:
+					startline = False
+					resultchars.append(char)
+			result.append(''.join(resultchars))
+		else:
+			result.append(line)
+	s = '\n'.join(result)
+
+	s = s.replace('\n', '&lt;br&gt;')
+	s = s.replace(chr(9), '&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;')
+	StringIO.write(self, s)
+	</t>
+<t tx="ekr.20040119044414.14">class RequestHandler(
+	asynchat.async_chat,
+	SimpleHTTPServer.SimpleHTTPRequestHandler):
+	@others
+</t>
+<t tx="ekr.20040119044414.15">def copyfile(self, source, outputfile):
+	"""Copy all data between two file objects.
+
+	The SOURCE argument is a file object open for reading
+	(or anything with a read() method) and the DESTINATION
+	argument is a file object open for writing (or
+	anything with a write() method).
+
+	The only reason for overriding this would be to change
+	the block size or perhaps to replace newlines by CRLF
+	-- note however that this the default server uses this
+	to copy binary data as well.
+	 """
+	shutil.copyfileobj(source, outputfile, length=255)
+</t>
+<t tx="ekr.20040119044414.16">def log_message(self, format, *args):
+	"""Log an arbitrary message.
+
+	 This is used by all other logging functions.  Override
+	 it if you have specific logging wishes.
+
+	 The first argument, FORMAT, is a format string for the
+	 message to be logged.  If the format string contains
+	 any % escapes requiring parameters, they should be
+	 specified as subsequent arguments (it's just like
+	 printf!).
+
+	 The client host and current date/time are prefixed to
+	 every message.
+
+	 """
+	message = "%s - - [%s] %s\n" % (
+		self.address_string(),
+		self.log_date_time_string(),
+		format%args)
+	es(message)
+</t>
+<t tx="ekr.20040119044414.17">def __init__(self,conn,addr,server):
+	asynchat.async_chat.__init__(self,conn)
+	self.client_address=addr
+	self.connection=conn
+	self.server=server
+	self.wfile = delayedSocketStream(self.socket)
+	# sets the terminator : when it is received, this means that the
+	# http request is complete ; control will be passed to
+	# self.found_terminator
+	self.set_terminator ('\r\n\r\n')
+	self.buffer=cStringIO.StringIO()
+	self.found_terminator=self.handle_request_line
+</t>
+<t tx="ekr.20040119044414.18">def collect_incoming_data(self,data):
+	"""Collects the data arriving on the connexion"""
+	self.buffer.write(data)
+</t>
+<t tx="ekr.20040119044414.19">def prepare_POST(self):
+	"""Prepare to read the request body"""
+	bytesToRead = int(self.headers.getheader('content-length'))
+	# set terminator to length (will read bytesToRead bytes)
+	self.set_terminator(bytesToRead)
+	self.buffer=cStringIO.StringIO()
+	# control will be passed to a new found_terminator
+	self.found_terminator=self.handle_post_data
+</t>
+<t tx="ekr.20040119044414.20">def handle_post_data(self):
+	"""Called when a POST request body has been read"""
+	self.rfile=cStringIO.StringIO(self.buffer.getvalue())
+	self.do_POST()
+	self.finish()
+</t>
+<t tx="ekr.20040119044414.21"></t>
+<t tx="ekr.20040119044414.22">def add_leo_links(self, window, node, f):
+	"""
+	Given a node 'node', add links to:
+		The next sibling, if any.
+		the next node.
+		the parent.
+		The children, if any.
+	"""
+
+	# Collecting the navigational links.
+	if node is None:
+		# top level
+		child = window.c.rootVnode()
+		children = [child]
+		next = child.next()
+		while next:
+			child = next
+			children.append(child)
+			next = child.next()
+		nodename = window.shortFileName()
+	else:
+		nodename = node.headString()
+		threadNext = node.threadNext()
+		sibling = node.next()
+		parent = node.parent()
+
+		children = []
+		firstChild = node.firstChild()
+		if firstChild:
+			child = firstChild
+			while child:
+				children.append(child)
+				child = child.next()
+
+		if threadNext is not None:
+			self.create_leo_reference(window, threadNext,  "next", f)
+		f.write("&lt;br&gt;")
+		if sibling is not None:
+			self.create_leo_reference(window, sibling, "next Sibling", f)
+		f.write("&lt;br&gt;")
+		if parent is None:
+			self.create_href("/", "Top level", f)
+		else:
+			self.create_leo_reference(window, parent, "Up", f)
+		f.write("&lt;br&gt;")
+		
+	if children:
+		f.write("&lt;h2&gt;")
+		f.write("Children of ")
+		f.write_escaped(nodename)
+		f.write("&lt;/h2&gt;\n")
+		f.write("&lt;ol&gt;\n")
+		for child in children:
+			f.write("&lt;li&gt;\n")
+			self.create_leo_reference(window, child, child.headString(), f)
+		f.write("&lt;/ol&gt;\n")</t>
+<t tx="ekr.20040119044414.23">def create_href(self, href, text, f):
+	f.write('&lt;a href="%s"&gt;' % href)
+	f.write_escaped(text)
+	f.write("&lt;/a&gt;\n")
+
+</t>
+<t tx="ekr.20040119044414.24">def create_leo_reference(self, window, node, text, f):
+	"""
+	Create a reference to 'node' in 'window', displaying 'text'
+	"""
+	parts = [window.shortFileName()] + self.get_leo_nameparts(node)
+	href = '_'.join(parts)
+	self.create_href(href, text, f)
+</t>
+<t tx="ekr.20040119044414.25">def format_leo_node(self, window, node):
+	"""
+	Given a node 'node', return the contents of that node as html text.
+	
+	Include some navigational references too
+	"""
+
+	if node is not None:
+		headString = node.headString()
+		bodyString = node.bodyString()
+	else:
+		headString, bodyString = "Top level", ""
+	f = escaped_StringIO()
+	write, write_escaped = f.write, f.write_escaped
+	write("&lt;title&gt;")
+	write_escaped(window.shortFileName() + ":" + headString)
+	write("&lt;/title&gt;\n")
+	# write navigation
+	self.add_leo_links(window, node, f)
+	# write path
+	self.write_path(node, f)
+	write("&lt;hr&gt;\n") # horizontal rule
+	# f.write('&lt;span style="font-family: monospace;"&gt;')
+	write_escaped(bodyString)
+	# f.write("&lt;/span&gt;\n")
+	return f</t>
+<t tx="ekr.20040119044414.26">def get_leo_nameparts(self, node):
+	"""
+	Given a 'node', construct a list of sibling numbers to get to that node.
+	"""
+	result = []
+	cnode = node
+	parent = cnode.parent()
+	while parent:
+		i = 0
+		child = parent.firstChild()
+		while child != cnode:
+			child = child.next()
+			i += 1
+		result.append(str(i))
+		cnode = parent
+		parent = cnode.parent()
+	i = 0
+	previous = cnode.back()
+	while previous:
+		i += 1
+		previous = previous.back()
+	result.append(str(i))
+	result.reverse()
+	return result
+</t>
+<t tx="ekr.20040119044414.27">def get_leo_node(self, path):
+	"""
+	given a path of the form:
+		&lt;short filename&gt;_&lt;number1&gt;_&lt;number2&gt;...&lt;numbern&gt;
+		identify the leo node which is in that file, and,
+		from top to bottom, is the &lt;number1&gt; child of the topmost
+		node, the &lt;number2&gt; child of that node, and so on.
+		
+		Return None if that node can not be identified that way.
+	"""
+	# Identify the window
+	for w in app().windowList:
+		if w.shortFileName() == path[0]:
+			break
+	else:
+		return None, None
+		
+	node = w.c.rootVnode()
+	
+	if len(path) &gt;= 2:
+		for i in range(int(path[1])):
+			node = node.next()
+			if node is None:
+				raise nodeNotFound
+		# go to the i'th child for each path element.
+		for i in path[2:]:
+			node = node.nthChild(int(i))
+			if node is None:
+				raise nodeNotFound
+	else:
+		node = None
+	return w, node</t>
+<t tx="ekr.20040119044414.28">def get_leo_windowlist(self):
+	"""
+ 
+	"""
+	f = escaped_StringIO()
+	write, write_escaped = f.write, f.write_escaped
+	write("&lt;title&gt;ROOT for LEO HTTP plugin&lt;/title&gt;\n")
+	write("&lt;h2&gt;Windowlist&lt;/h2&gt;\n")
+	write("&lt;hr&gt;\n") # horizontal rule
+	write("&lt;ul&gt;\n")
+	a = app() # get the singleton application instance.
+	windows = a.windowList # get the list of all open frames.
+	for w in windows:
+		write("&lt;li&gt;")
+		shortfilename = w.shortFileName()
+		write('&lt;a href="%s"&gt;' % shortfilename)
+		write("file name: %s" % shortfilename)
+		write("&lt;/a&gt;\n")
+	write("&lt;/ul&gt;\n")
+	write("&lt;hr&gt;\n")
+	return f
+</t>
+<t tx="ekr.20040119044414.29">def write_path(self, node, f):
+	result = []
+	while node:
+		result.append(node.headString())
+		node = node.parent()
+	result.reverse()
+	if result:
+		result2 = result[:-1]
+		if result2:
+			result2 = ' / '.join(result2)
+			f.write("&lt;br&gt;\n")
+			f.write_escaped(result2)
+			f.write("&lt;br&gt;\n")
+		f.write("&lt;h2&gt;")
+		f.write_escaped(result[-1])
+		f.write("&lt;/h2&gt;\n")</t>
+<t tx="ekr.20040119044414.30">def send_head(self):
+	"""Common code for GET and HEAD commands.
+
+	 This sends the response code and MIME headers.
+
+	 Return value is either a file object (which has to be copied
+	 to the outputfile by the caller unless the command was HEAD,
+	 and must be closed by the caller under all circumstances), or
+	 None, in which case the caller has nothing further to do.
+
+	 """
+	try:
+		path = self.split_leo_path(self.path)
+		if path == '/':
+			 f = self.get_leo_windowlist()
+		else:
+			try:
+				window, node = self.get_leo_node(path)
+				if window is None:
+					self.send_error(404, "File not found")
+					return None
+				f = self.format_leo_node(window, node)
+			except nodeNotFound:
+				self.send_error(404, "Node not found")
+				return None
+		length = f.tell()
+		f.seek(0)
+		self.send_response(200)
+		self.send_header("Content-type", "text/html")
+		self.send_header("Content-Length", str(length))
+		self.end_headers()
+		return f
+	except:
+		import traceback
+		traceback.print_exc()
+		raise
+
+</t>
+<t tx="ekr.20040119044414.31">def split_leo_path(self, path):
+	"""
+	A leo node is represented by a string of the form:
+		&lt;number1&gt;_&lt;number2&gt;...&lt;numbern&gt;,
+	where &lt;number&gt; is the number of sibling of the node.
+	"""
+	if path == '/':
+		return '/'
+	if path.startswith("/"):
+		path = path[1:]
+	return path.split('_')</t>
+<t tx="ekr.20040119044414.32">def do_GET(self):
+	"""Begins serving a GET request"""
+	# nothing more to do before handle_data()
+	self.handle_data()
+</t>
+<t tx="ekr.20040119044414.33">def do_POST(self):
+	"""Begins serving a POST request. The request data must be readable
+	 on a file-like object called self.rfile"""
+	ctype, pdict = cgi.parse_header(self.headers.getheader('content-type'))
+	length = int(self.headers.getheader('content-length'))
+	if ctype == 'multipart/form-data':
+		query=cgi.parse_multipart(self.rfile, pdict)
+	elif ctype == 'application/x-www-form-urlencoded':
+		qs=self.rfile.read(length)
+		query=cgi.parse_qs(qs, keep_blank_values=1)
+	else:
+		query = ''                   # Unknown content-type
+	# some browsers send 2 more bytes...
+	[ready_to_read,x,y]=select.select([self.connection],[],[],0)
+	if ready_to_read:
+		self.rfile.read(2)
+
+	self.QUERY.update(self.query(query))
+	self.handle_data()
+</t>
+<t tx="ekr.20040119044414.34">def query(self,parsedQuery):
+	"""Returns the QUERY dictionary, similar to the result of cgi.parse_qs
+	 except that :
+	 - if the key ends with [], returns the value (a Python list)
+	 - if not, returns a string, empty if the list is empty, or with the
+	 first value in the list"""
+	res={}
+	for item in parsedQuery.keys():
+		value=parsedQuery[item] # a Python list
+		if item.endswith("[]"):
+				res[item[:-2]]=value
+		else:
+				if len(value)==0:
+					res[item]=''
+				else:
+					res[item]=value[0]
+	return res
+</t>
+<t tx="ekr.20040119044414.35">def handle_data(self):
+	"""Class to override"""
+	f = self.send_head()
+	if f:
+		self.copyfile(f, self.wfile)
+</t>
+<t tx="ekr.20040119044414.36">def handle_request_line(self):
+	"""Called when the http request line and headers have been received"""
+
+	# prepare attributes needed in parse_request()
+	self.rfile=cStringIO.StringIO(self.buffer.getvalue())
+	self.raw_requestline=self.rfile.readline()
+	self.parse_request()
+
+	# if there is a Query String, decodes it in a QUERY dictionary
+	self.path_without_qs,self.qs=self.path,''
+	if self.path.find('?')&gt;=0:
+		self.qs=self.path[self.path.find('?')+1:]
+		self.path_without_qs=self.path[:self.path.find('?')]
+	self.QUERY=self.query(cgi.parse_qs(self.qs,1))
+
+	if self.command in ['GET','HEAD']:
+		# if method is GET or HEAD, call do_GET or do_HEAD and finish
+		method="do_"+self.command
+		if hasattr(self,method):
+				getattr(self,method)()
+				self.finish()
+	elif self.command=="POST":
+		# if method is POST, call prepare_POST, don't finish before
+		self.prepare_POST()
+	else:
+		self.send_error(501, "Unsupported method (%s)" %self.command)
+</t>
+<t tx="ekr.20040119044414.37">def finish(self):
+	"""Reset terminator (required after POST method), then close"""
+	self.set_terminator ('\r\n\r\n')
+	self.wfile.initiate_sending()
+	# self.close()</t>
+<t tx="ekr.20040119044414.38">class Server(asyncore.dispatcher):
+	"""Copied from http_server in medusa"""
+	@others
+</t>
+<t tx="ekr.20040119044414.39">def __init__ (self, ip, port,handler):
+	self.ip = ip
+	self.port = port
+	self.handler=handler
+	asyncore.dispatcher.__init__ (self)
+	self.create_socket (socket.AF_INET, socket.SOCK_STREAM)
+
+	self.set_reuse_addr()
+	self.bind ((ip, port))
+
+	# lower this to 5 if your OS complains
+	self.listen (1024)
+</t>
+<t tx="ekr.20040119044414.40">def handle_accept (self):
+	try:
+		conn, addr = self.accept()
+	except socket.error:
+		self.log_info ('warning: server accept() threw an exception', 'warning')
+		return
+	except TypeError:
+		self.log_info ('warning: server accept() threw EWOULDBLOCK', 'warning')
+		return
+	# creates an instance of the handler class to handle the request/response
+	# on the incoming connexion
+	self.handler(conn,addr,self)
+</t>
+<t tx="ekr.20040119044414.41">def poll(timeout=0.0):
+	global sockets_to_close
+	map = asyncore.socket_map
+	if not map:
+		return False
+	while 1:
+		r = []; w = []; e = []
+		for fd, obj in map.items():
+			if obj.readable():
+				r.append(fd)
+			if obj.writable():
+				w.append(fd)
+		if not sockets_to_close: # Set by writeable()
+			break
+		for s in sockets_to_close:
+			s.close()
+		sockets_to_close = []
+	if [] == r == w == e:
+		time.sleep(timeout)
+	else:
+		&lt;&lt; try r, w, e = select.select &gt;&gt;
+	for fd in r:
+		&lt;&lt; asyncore.read(map.get(fd)) &gt;&gt;
+	for fd in w:
+		&lt;&lt; asyncore.write(map.get(fd)) &gt;&gt;
+	return len(r) &gt; 0 or len(w) &gt; 0
+</t>
+<t tx="ekr.20040119044414.42">def loop(timeout=5.0, use_poll=0, map=None):
+	"""
+	Override the loop function of asynchore.
+	We poll only until there is not read or
+	write request pending.
+	"""
+	return poll(timeout)</t>
+<t tx="ekr.20040119044414.43">def plugin_wrapper(tag, keywords):
+	first = True
+	while loop(timeout):
+		pass</t>
+<t tx="ekr.20040119044414.44"></t>
+<t tx="ekr.20040119044414.45">def a_read(obj):
+	try:
+		obj.handle_read_event()
+	except asyncore.ExitNow:
+		raise
+	except:
+		obj.handle_error()
+
+
+</t>
+<t tx="ekr.20040119044414.46">def applyConfiguration(config=None):
+
+	"""Called when the user presses the "Apply" button on the Properties form"""
+
+	global timeout, port, active
+
+	if config is None:
+		fileName = os.path.join(app().loadDir,"../","plugins","mod_http.ini")
+		config = ConfigParser.ConfigParser()
+		config.read(fileName)
+
+	timeout = config.getint("Main", "timeout") / 1000.0
+	port = config.getint("Main", "port")
+	active = config.getboolean("Main", "active")</t>
+<t tx="ekr.20040119044414.48">[Main]
+active = True
+# Should serving be enabled?
+
+port = 8080
+# port to be used by the server
+
+timeout = 0
+# timeout in miliseconds
+
+</t>
+<t tx="ekr.20040119064609">try:
+	r, w, e = select.select(r, w, e, timeout)
+except select.error, err:
+	if err[0] != EINTR:
+		raise
+	else:
+		return False # EKR: added return value.</t>
+<t tx="ekr.20040119064609.1">obj = map.get(fd)
+if obj is not None:
+	asyncore.read(obj)</t>
+<t tx="ekr.20040119064609.2"> obj = map.get(fd)
+ if obj is not None:
+	asyncore.write(obj)
+</t>
+<t tx="ekr.20040119102021"></t>
+<t tx="ekr.20040119102021.1"></t>
+<t tx="ekr.20040119102021.2"></t>
+<t tx="ekr.20040119102021.3">@
+Use this plugin is as follows:
+
+1. Start Leo with the plugin enabled.  You will see a purple message that says something like:
+
+"http serving enabled on port 8080, version 0.9"
+
+2. Start a web browser, and enter the following url: http://localhost:8080/
+
+You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
+
+You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.</t>
 </tnodes>
 </leo_file>
