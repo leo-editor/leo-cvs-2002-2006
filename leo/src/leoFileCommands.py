@@ -171,7 +171,7 @@ class baseFileCommands:
         t = self.tnodesDict.get(tref)
         try:
             return t.vnodeList[0]
-        except IndexError:
+        except (IndexError,AttributeError):
             g.es("Missing vnode:",headline,color="red")
             g.es("Probably an outline topology error.")
             # g.trace(tref1,t,t.vnodeList)
