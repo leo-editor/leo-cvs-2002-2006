@@ -644,7 +644,7 @@ class baseUndoer:
                 old_d.get('trailing') != u.trailing
             )
             if granularity == 'word' and not newBead:
-                # Protect that may be changed by the user
+                # Protect the method that may be changed by the user
                 try:
                     #@            << set newBead if the change does not continue a word >>
                     #@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
@@ -662,7 +662,8 @@ class baseUndoer:
                         new_lines = g.splitLines(newText)
                         #g.trace(old_row,old_col,len(old_lines))
                         #g.trace(new_row,new_col,len(new_lines))
-                        if old_row != new_row or old_col != new_col - 1:
+                        # Recognize backspace, del, etc. as contiguous.
+                        if old_row != new_row or abs(old_col-new_col) != 1:
                             # The new and old characters are not contiguous.
                             newBead = True
                         elif old_col == 0 or new_col == 0:
