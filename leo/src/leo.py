@@ -51,16 +51,16 @@ def run(fileName=None,*args,**keywords):
 	app.loadDir = computeLoadDir() # Depends on app.tkEncoding: uses utf-8 for now.
 	app.config = leoConfig.config()
 	app.setEncoding() # 10/20/03: do this earlier
-	if 0: # Testing
-		sys.argv.append("--script")
-		sys.argv.append(r"..\test\batchScript.py")
 	script = getBatchScript()
-	if script: createNullGuiWithScript(script)
+	if script:
+		createNullGuiWithScript(script)
+		fileName = None
 	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
 	if app.killed: return # Support for app.forceShutdown.
 	# Create the default gui if needed.
-	if app.gui == None: app.createTkGui()
+	if app.gui == None:
+		app.createTkGui()
 	if app.use_gnx:
 		if not app.leoID: app.setLeoID() # Forces the user to set app.leoID.
 		app.nodeIndices = leoNodes.nodeIndices()
@@ -77,7 +77,6 @@ def run(fileName=None,*args,**keywords):
 	frame.body.setFocus()
 	app.initing = false # "idle" hooks may now call app.forceShutdown.
 	app.gui.runMainLoop()
-#@nonl
 #@-node:run & allies
 #@+node:isValidPython
 def isValidPython():
@@ -165,11 +164,11 @@ def createFrame (fileName):
 #@+node:createNullGuiWithScript (leo.py)
 def createNullGuiWithScript (script):
 	
+	app.batchMode = true
 	app.gui = leoGui.nullGui("nullGui")
 	app.root = app.gui.createRootWindow()
 	app.gui.finishCreate()
 	app.gui.setScript(script)
-#@nonl
 #@-node:createNullGuiWithScript (leo.py)
 #@+node:getBatchScript
 def getBatchScript ():
@@ -177,7 +176,7 @@ def getBatchScript ():
 	name = None ; i = 1 # Skip the dummy first arg.
 	while i + 1 < len(sys.argv):
 		arg = sys.argv[i].strip().lower()
-		if arg in ("--script","--script"):
+		if arg in ("--script","-script"):
 			name = sys.argv[i+1].strip() ; break
 		i += 1
 
