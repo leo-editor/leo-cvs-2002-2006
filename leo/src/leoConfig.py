@@ -138,6 +138,7 @@ class baseConfig:
 		self.load_derived_files_immediately = 0
 		self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
 		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
+		self.redirect_execute_script_output_to_log_pane = false
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
@@ -532,6 +533,10 @@ class baseConfig:
 			self.relative_path_base_directory = self.initConfigParam(
 				"relative_path_base_directory",self.relative_path_base_directory)
 				
+			self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
+				"redirect_execute_script_output_to_log_pane",
+				self.redirect_execute_script_output_to_log_pane)
+				
 			self.remove_sentinels_extension = self.initConfigParam(
 				"remove_sentinels_extension",self.remove_sentinels_extension)
 			
@@ -558,7 +563,6 @@ class baseConfig:
 				
 			self.write_old_format_derived_files = self.initBooleanConfigParam(
 				"write_old_format_derived_files",self.write_old_format_derived_files)
-			#@nonl
 			#@-node:<< get config options >>
 			#@nl
 			#@		<< get recent files >>

@@ -2499,23 +2499,38 @@ class baseLeoFrame:
 		
 		c = self.commands ; body = self.body ; s = None
 		if v == None:
-			v = c.currentVnode() 
+			v = c.currentVnode()
 	
+		#@	<< get script into s >>
+		#@+node:<< get script into s >>
 		# Assume any selected body text is a script.
+		
 		start,end = getTextSelection(body)
+		
 		if start and end and start != end:
 			s = getSelectedText(body) # 9/28/03
 		else:
 			s = getAllText(body)
-		if s == None:
-			s = ""
+		if s:
+			s = s.strip()
+		#@nonl
+		#@-node:<< get script into s >>
+		#@nl
+		#@	<< redirect output if redirect_execute_script_output_to_log_pane >>
+		#@+node:<< redirect output if redirect_execute_script_output_to_log_pane >>
+		if app.config.redirect_execute_script_output_to_log_pane:
+		
+			from leoGlobals import redirectStdout,redirectStderr
+			redirectStdout() # Redirect stdout
+			redirectStderr() # Redirect stderr
+		#@nonl
+		#@-node:<< redirect output if redirect_execute_script_output_to_log_pane >>
+		#@nl
 	
-		s = s.strip()
-		if s and len(s) > 0:
+		if s:
 			s += '\n' # Make sure we end the script properly.
 			try:
-				# 12/11/02: Use {} to get a pristine environment!
-				exec s in {}
+				exec s in {} # Use {} to get a pristine environment!
 			except:
 				es("exception executing script")
 				es_exception(full=false)
