@@ -847,13 +847,13 @@
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
 </v>
-<v t="ekr.20041001211817" a="TV"><vh>Startup...</vh>
+<v t="ekr.20041001211817" a="E"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
-<v t="ekr.20041230121429"><vh>@button pydoc</vh></v>
+<v t="ekr.20041230121429" a="TV"><vh>@button pydoc</vh></v>
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
@@ -10801,10 +10801,10 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
@@ -11679,21 +11679,17 @@ def printModules():
     
 </t>
 <t tx="ekr.20041230121429">import leoGlobals as g
-import os
-import sys
-import threading
+import os, sys, threading
 
 python = sys.executable
 pythonDir,junk = g.os_path_split(python)
 pydoc = g.os_path_join(pythonDir,'Lib','pydoc.py')
 command = '%s %s -g' % (python,pydoc)
 
-# Must exec this in a separate thread.
-
+# Execute the command in a separate thread.
 def go():
     os.system(command)
     
-t = threading.Thread(target=go)
-t.start()</t>
+threading.Thread(target=go).start()</t>
 </tnodes>
 </leo_file>
