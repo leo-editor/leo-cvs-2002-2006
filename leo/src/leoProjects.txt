@@ -51176,6 +51176,90 @@ closeFlag = (
 #@-node:ekr.20031218072017.2822:<< Set closeFlag if the only open window is empty >>
 #@-node:ekr.20031218072017.2821:open
 #@-node:ekr.20040715094645:(Fix open bug)
+#@+node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
+#@+node:ekr.20040715171241:Report
+@nocolor
+
+when opening a leo document that contains an @file, say like @file helloworld.bas, leo reports upon opening that:
+
+Leo Log Window...
+Leo 4.2 beta 2, build 1.128 , July 5, 2004
+Python 2.3.4, Tk 8.4.3, win32
+File encoding: UTF-8
+reading: D:\Programming\HelloWorld.leo
+reading: @file helloworld.bas
+----- error reading @file helloworld.bas
+Mismatched headline.
+Expecting: @file helloworld
+got: @file helloworld.bas
+leoConfig.txt encoding: utf-8
+@run encoding: mbcs
+13 plugins loaded
+leoID = fil
+#@-node:ekr.20040715171241:Report
+#@+node:ekr.20031218072017.2007:findChild 4.x
+def findChild (self,headline):
+    
+    """Return the next tnode in at.root.t.tnodeList."""
+
+    at = self ; v = at.root.v
+
+    if not hasattr(v.t,"tnodeList"):
+        at.readError("no tnodeList for " + repr(v))
+        g.es("Write the @file node or use the Import Derived File command")
+        g.trace("no tnodeList for ",v)
+        return None
+        
+    if at.tnodeListIndex >= len(v.t.tnodeList):
+        at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
+        g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
+        return None
+        
+    t = v.t.tnodeList[at.tnodeListIndex]
+    assert(t)
+    at.tnodeListIndex += 1
+
+    # Get any vnode joined to t.
+    try:
+        v = t.vnodeList[0]
+    except:
+        at.readError("No vnodeList for tnode: %s" % repr(t))
+        g.trace(at.tnodeListIndex)
+        return None
+        
+    # Don't check the headline.  It simply causes problems.
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+    
+    if 0: # Old code:
+        << Check the headlines >>
+#@nonl
+#@+node:ekr.20040716061450:<< Check the headlines >>
+if headline.strip() == v.headString().strip():
+    t.setVisited() # Supress warning about unvisited node.
+    return t
+else:
+    at.readError(
+        "Mismatched headline.\nExpecting: %s\ngot: %s" %
+        (headline,v.headString()))
+    g.trace("Mismatched headline",headline,v.headString())
+    g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
+    return None
+#@nonl
+#@-node:ekr.20040716061450:<< Check the headlines >>
+#@-node:ekr.20031218072017.2007:findChild 4.x
+#@-node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
+#@+node:ekr.20040718163531:(Fix pretty-printing bug)
+#@+node:ekr.20040718163531.1:Report
+By: Bernhard Mulder - bwmulder
+Python check/pretty printing bug  
+2004-07-18 13:09
+It seems that the new python pretty printing / checking code has problems with triple quoted strings.
+
+I tried this with an (updated) version of the basic_undo code posted on my site. 
+#@nonl
+#@-node:ekr.20040718163531.1:Report
+#@-node:ekr.20040718163531:(Fix pretty-printing bug)
 #@+node:ekr.20040711135244.2:(Finished all commands in the Outline Check submenu)
 @ignore
 @language python
@@ -53802,14 +53886,16 @@ def prettyPrintNode(self,p,dump):
 #@+node:ekr.20040711135244.9:put
 def put (self,s,strip=True):
     
+    """Put s to self.array, and strip trailing whitespace if strip is True."""
+    
     if self.array and strip:
         prev = self.array[-1]
         if len(self.array) == 1:
             if prev.rstrip():
-                # We aren't stripping all leading whitespace.
+                # Stripping trailing whitespace doesn't strip leading whitespace.
                 self.array[-1] = prev.rstrip()
         else:
-            # The previous entry isn't leading whitespace.
+            # The previous entry isn't leading whitespace, so we can strip whitespace.
             self.array[-1] = prev.rstrip()
 
     self.array.append(s)
@@ -53821,9 +53907,9 @@ def putNormalToken (self,token5tuple):
     a = self.array
     t1,t2,t3,t4,t5 = token5tuple
     srow,scol = t3 ; erow,ecol = t4
-    line = t5 # str(t5) # May fail
+    line = t5
     name = token.tok_name[t1].lower()
-    val = t2 # str(t2) # May fail
+    val = t2
     startLine = self.line != srow
     self.line = srow
 
@@ -53831,10 +53917,11 @@ def putNormalToken (self,token5tuple):
         ws = line[0:scol]
         if ws: a.append(ws)
 
+    # g.trace(name,repr(val))
     if name in ("nl","newline","endmarker"):
         if name in ("nl","newline"):
             a.append('\n')
-        self.lines.append(''.join(self.array))
+        self.lines.append(''.join(a))
         self.array = []
     elif name == "op":
         self.putOperator(val)
@@ -53843,8 +53930,16 @@ def putNormalToken (self,token5tuple):
         if self.prevName == "def": # A personal idiosyncracy.
             a.append(' ') # Retain the blank before '('.
         self.prevName = val
-    elif name in ("comment","string","number"):
+    elif name == "number":
         a.append(val)
+    elif name in ("comment","string"):
+        # These may span lines, so duplicate the end-of-line logic.
+        lines = g.splitLines(val)
+        for line in lines:
+            a.append(line)
+            if line and line[-1] == '\n':
+                self.lines.append(''.join(a))
+                self.array = []
     elif name == "errortoken":
         a.append(val)
         if val == '@':
@@ -53926,79 +54021,6 @@ def endUndo (self):
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20040711135959.2:Check Outline submenu...
 #@-node:ekr.20040711135244.2:(Finished all commands in the Outline Check submenu)
-#@+node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
-#@+node:ekr.20040715171241:Report
-@nocolor
-
-when opening a leo document that contains an @file, say like @file helloworld.bas, leo reports upon opening that:
-
-Leo Log Window...
-Leo 4.2 beta 2, build 1.128 , July 5, 2004
-Python 2.3.4, Tk 8.4.3, win32
-File encoding: UTF-8
-reading: D:\Programming\HelloWorld.leo
-reading: @file helloworld.bas
------ error reading @file helloworld.bas
-Mismatched headline.
-Expecting: @file helloworld
-got: @file helloworld.bas
-leoConfig.txt encoding: utf-8
-@run encoding: mbcs
-13 plugins loaded
-leoID = fil
-#@-node:ekr.20040715171241:Report
-#@+node:ekr.20031218072017.2007:findChild 4.x
-def findChild (self,headline):
-    
-    """Return the next tnode in at.root.t.tnodeList."""
-
-    at = self ; v = at.root.v
-
-    if not hasattr(v.t,"tnodeList"):
-        at.readError("no tnodeList for " + repr(v))
-        g.es("Write the @file node or use the Import Derived File command")
-        g.trace("no tnodeList for ",v)
-        return None
-        
-    if at.tnodeListIndex >= len(v.t.tnodeList):
-        at.readError("bad tnodeList index: %d, %s" % (at.tnodeListIndex,repr(v)))
-        g.trace("bad tnodeList index",at.tnodeListIndex,len(v.t.tnodeList),v)
-        return None
-        
-    t = v.t.tnodeList[at.tnodeListIndex]
-    assert(t)
-    at.tnodeListIndex += 1
-
-    # Get any vnode joined to t.
-    try:
-        v = t.vnodeList[0]
-    except:
-        at.readError("No vnodeList for tnode: %s" % repr(t))
-        g.trace(at.tnodeListIndex)
-        return None
-        
-    # Don't check the headline.  It simply causes problems.
-    t.setVisited() # Supress warning about unvisited node.
-    return t
-    
-    if 0: # Old code:
-        << Check the headlines >>
-#@nonl
-#@+node:ekr.20040716061450:<< Check the headlines >>
-if headline.strip() == v.headString().strip():
-    t.setVisited() # Supress warning about unvisited node.
-    return t
-else:
-    at.readError(
-        "Mismatched headline.\nExpecting: %s\ngot: %s" %
-        (headline,v.headString()))
-    g.trace("Mismatched headline",headline,v.headString())
-    g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
-    return None
-#@nonl
-#@-node:ekr.20040716061450:<< Check the headlines >>
-#@-node:ekr.20031218072017.2007:findChild 4.x
-#@-node:ekr.20040712082657:(Removed headline check logic in atFile read logic)
 #@-node:ekr.20040706080316:in 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

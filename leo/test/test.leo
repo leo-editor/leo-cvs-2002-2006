@@ -634,8 +634,9 @@
 <v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"
-marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+marks="ekr.20040716140617.1,"
+expanded="ekr.20040710184602,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
@@ -729,7 +730,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -978,13 +979,12 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 </v>
-<v t="ekr.20040713070526" a="E"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
 <v t="ekr.20040713123617"><vh>tempNode</vh></v>
 <v t="ekr.20040713071919"><vh>before</vh></v>
-<v t="ekr.20040713123828.1" a="ETV"><vh>after</vh></v>
+<v t="ekr.20040713123828.1" a="E"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
-<v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
@@ -992,6 +992,7 @@ marks="ekr.20040716140617.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
+<v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
 <v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
