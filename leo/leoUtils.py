@@ -1455,7 +1455,7 @@ def update_file_if_changed(file_name,temp_name):
 			os.rename(temp_name, file_name)
 			es("Creating: " + file_name)
 		except:
-			es("Rename failed: no file created!
+			es("Rename failed: no file created!")
 			es(`file_name` + " may be read-only)")
 			traceback.print_exc()
 #@-body
