@@ -175,7 +175,7 @@ def addAttrDetection( tag, keywords ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw not g.app.unitTesting:
+if Tk and Pmw and not g.app.unitTesting:
     leoPlugins.registerHandler('open2', addAttrDetection)
     __version__ = ".0.2"
         # 0.2 EKR: converted to outline.  Fixed some bugs.
