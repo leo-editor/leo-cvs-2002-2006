@@ -1067,7 +1067,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
 			v.edit_text().insert("insert",c.getTime(body=false))
-			frame.idle_head_key(v)
+			frame.tree.idle_head_key(v) # DTHEIN: 2004.01.03
 	
 		# A kludge to get around not knowing whether we are editing or not.
 		if h.strip() == v.headString().strip():
