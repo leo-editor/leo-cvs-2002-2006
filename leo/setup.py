@@ -20,7 +20,7 @@ def printReminders ():
 	print
 #@nonl
 #@-node:EKR.20040502193420.2:printReminders
-#@+node:EKR.20040502193420.3:generateModules
+#@+node:EKR.20040502193420.3:generateModules (not used)
 # Generate the list of modules in the distribution.
 
 def generateModules():
@@ -40,7 +40,7 @@ def generateModules():
 	modules.sort()
 	# print "modules:", modules
 	return modules
-#@-node:EKR.20040502193420.3:generateModules
+#@-node:EKR.20040502193420.3:generateModules (not used)
 #@+node:EKR.20040502193420.4:replacePatterns
 def replacePatterns (file,pats):
 
@@ -96,7 +96,7 @@ setup (
 	#@	<< setup info for setup.py >>
 	#@+node:EKR.20040502193420.1:<< setup info for setup.py >> UPDATE BY HAND (no spaces)
 	name="leo",
-	version="4.2-a1",
+	version="4.2-a2",
 	author="Edward K. Ream",
 	author_email="edream@tds.net",
 	url="http://personalpages.tds.net/~edream/front.html",

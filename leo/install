@@ -77,7 +77,7 @@ fi
 # Copy the files
 ################################
 echo ""
-echo Copying files.....
+echo Copying files	.
 
 RESULTS=`cp -rp * $LEO_LIB_DIR/ 2>&1`
 if [ $? -ne 0 ]; then
@@ -99,7 +99,7 @@ rm -rf $LEO_LIB_DIR/config
 ###############################
 # Step 5
 # Don't make a liar out of me in step 4.
-# Copy the files. that you just deleted....   
+# Copy the files. that you just deleted	   
 ###############################
 cp -rp src $LEO_LIB_DIR/.
 cp -rp config $LEO_LIB_DIR/.

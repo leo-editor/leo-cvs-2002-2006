@@ -202,6 +202,43 @@ February 20, 2004
 #@+node:ekr.20031218072017.2583:Previous readme files
 #@@nocolor
 #@nonl
+#@+node:EKR.20040518075419:4.2 a1
+Leo 4.2 alpha 1            April 14, 2004
+
+This is a "semi-public" release of the new 4.2 code base.  I am releasing this code now to create a snapshot.  In particular, I shall use this snapshot to begin development work on the Macintosh.  This will allow me fix long-standing *nix bugs.
+
+This main feature of this release is that Leo represents clones as nodes that
+share trees of vnodes. To make this work Leo introduces _positions_. A position
+is a location in the traversal of an outline.
+
+This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this _is_ alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
+
+See the "4.2 Projects" node in LeoPy.leo for details of what has been done so far.  I shall be updating documentation more fully for the first beta release.
+#@nonl
+#@-node:EKR.20040518075419:4.2 a1
+#@+node:EKR.20040518075419.1:4.1
+Leo 4.1 Final              February 20, 2004
+
+Leo 4.1 Final is the culmination of four months of work. No significant bugs
+have been reported since 4.1 rc4. Several people have contributed nifty plugins
+recently. See leoPlugins.leo for full details.
+
+The highlights of Leo 4.1:
+
+- Leo runs in batch mode when invoked with --script aScriptFile.py
+- Leo supports Unicode characters (e.g. Chinese) in path and file names.
+- @directives and section references are now valid when executing scripts.
+- @ignored and orphan nodes now valid in @file-nosent trees.
+- Script-based find/change commands.
+- Check Outline command.
+- Hoist & DeHoist commands.
+- A new gui-agnostic architecture: useful for batch mode and unit tests.
+- Several new configuration settings.
+- Many new unit tests.
+- Excellent new plugins.
+- A host of bug fixes.
+#@nonl
+#@-node:EKR.20040518075419.1:4.1
 #@+node:ekr.20031218072017.2584:4.0
 Leo 4.0 final                     October 17, 2003
 
@@ -2897,6 +2934,28 @@ tcltk_keywords = [ # Only the tcl keywords are here.
 #@-node:ekr.20031218072017.371:<< define colorizer keywords >> colorizer
 #@-node:ekr.20031218072017.367:How to add support for a new language
 #@-node:ekr.20031218072017.365:How to...
+#@+node:EKR.20040512082621:HTML widgets
+#@+node:EKR.20040512082621.1:htmllib.tcl
+http://sourceforge.net/forum/message.php?msg_id=2565345
+By: nobody
+
+I just met a nice TCL-based html help viewer bundled with the evaluation version
+of Fujitsu-Siemens OpenFT for Unix (see
+fujitsu-siemens.com/products/software/openseas/openft.html)
+
+It is based on a TCL library htmllib.tcl, written by Stephen Uhler in 1995 while
+working in Sun's TCL group.Iit seemts that this lib is owned by Sun and i'm
+not certain about license. It is freely downloadable, anyway.
+
+The usage is really simple -- you have to create a text widget, a string variable
+containing html text and a link callback, then feed all three to the library
+routine. It should be not hard pythonize this process.
+
+see http://www.usenix.org/publications/login/1999-8/features/tclsh.html,
+ftp://ftp.scriptics.com/pub/tcl/misc/html_library-0.3.tar.gz
+or just google for htmllib.tcl
+#@-node:EKR.20040512082621.1:htmllib.tcl
+#@-node:EKR.20040512082621:HTML widgets
 #@+node:ekr.20040125121407:Leo & Emacs
 #@@nocolor
 #@nonl
@@ -3374,7 +3433,7 @@ what can be done, what should be done, and then we will take the best tool.
 
 Anyway my opinion:
 - SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server....
+server	
 - Medusa: usefull, very eficiente, just http server...
 - Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
 new paradigm, a devellopment tool.
@@ -4521,8 +4580,6 @@ The go.bat batch loads leo.py and opens LeoPy.leo by default, so to work on leo.
 The sdist.bat batch file creates a source distribution using distutils and setup.py.
 
 The bdist.bat batch file creates a binary distribution.  It does not work yet.
-
-The manifest.in file contains a list of files to be included in the distutils distribution.
 #@nonl
 #@+node:ekr.20031218072017.436:@silentfile bdist.bat
 rem Create binary distribution using information in setup.py
@@ -4921,7 +4978,6 @@ def __init__ (self,ver,path=r"C:\prog\leoCVS\leo"):
 		"__init__.py",
 		"LeoPy.leo","LeoDocs.leo",
 		"leoConfig.leo","leoConfig.txt",
-		"c2py.py","disStats.py","openLeo.py",
 		"tangle_done.py", "untangle_done.py",
 		"README.TXT","INSTALL.TXT",
 		"LICENSE.TXT","PKG-INFO.TXT",
@@ -7161,7 +7217,7 @@ if sentinel_lines != old_sentinel_lines:
 #@-node:EKR.20040505090056.15:<<final paranoia check>>
 #@-node:EKR.20040505090056.6:OLDpull_source
 #@-node:EKR.20040505090056.4:old code
-#@+node:EKR.20040505090056.16:pull_source 
+#@+node:EKR.20040505090056.16:pull_source
 def pull_source(self,sourcefile,targetfile):
 	"""
 
@@ -7347,7 +7403,7 @@ if sentinel_lines != old_sentinel_lines:
 		"Old sentinel lines:")
 #@nonl
 #@-node:EKR.20040505090056.25:<<final paranoia check>>
-#@-node:EKR.20040505090056.16:pull_source 
+#@-node:EKR.20040505090056.16:pull_source
 #@+node:EKR.20040505090056.26:copy_sentinels
 #@+at 
 #@nonl

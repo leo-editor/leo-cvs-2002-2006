@@ -128,25 +128,37 @@ ok:
   
   SetOutPath $INSTDIR
   File c:\prog\leoCVS\leo\__init__.py
+  File c:\prog\leoCVS\leo\install
+  File c:\prog\leoCVS\leo\manifest.in
+  File c:\prog\leoCVS\leo\preSetup.py
+  File c:\prog\leoCVS\leo\setup.py
+  File c:\prog\leoCVS\leo\postSetup.py
+  File c:\prog\leoCVS\leo\uninstall
+  
   CreateShortCut "$INSTDIR\Shortcut to leo.py.lnk" "$INSTDIR\src\leo.py" "" "$INSTDIR\src\leo.py" 0
 
   SetOutPath $INSTDIR\config
   File c:\prog\leoCVS\leo\config\leoConfig.leo
   File c:\prog\leoCVS\leo\config\leoConfig.txt
+  
+  SetOutPath $INSTDIR\dist
+  File c:\prog\leoCVS\leo\dist\leo.nsi
  
   SetOutPath $INSTDIR\doc
   File c:\prog\leoCVS\leo\doc\LeoDocs.leo
+  File c:\prog\leoCVS\leo\doc\leoDiary.txt
+  File c:\prog\leoCVS\leo\doc\leoNotes.txt
+  File c:\prog\leoCVS\leo\doc\leoToDo.txt
   File c:\prog\leoCVS\leo\doc\README.TXT
   File c:\prog\leoCVS\leo\doc\INSTALL.TXT
   File c:\prog\leoCVS\leo\doc\PKG-INFO.TXT
   File c:\prog\leoCVS\leo\doc\LICENSE.TXT
-  # File c:\prog\leoCVS\leo\doc\manifest.in
   
   SetOutPath $INSTDIR\Icons
   File c:\prog\leoCVS\leo\Icons\*.*
   
   SetOutPath $INSTDIR\examples
-  
+ 
   SetOutPath $INSTDIR\plugins
   File c:\prog\leoCVS\leo\plugins\leoPlugins.leo
   File c:\prog\leoCVS\leo\plugins\*.py
@@ -154,20 +166,13 @@ ok:
   File c:\prog\leoCVS\leo\plugins\*.txt
   
   SetOutPath $INSTDIR\scripts
+  File c:\prog\leoCVS\leo\scripts\leoScripts.txt
   File c:\prog\leoCVS\leo\scripts\*.py
-  
-  # SetOutPath $INSTDIR\scripts\install
-  # File c:\prog\leoCVS\leo\scripts\install\*
-  
-  # SetOutPath $INSTDIR\scripts\other
-  # File c:\prog\leoCVS\leo\scripts\other\*.py
-  
-  # SetOutPath $INSTDIR\scripts\tangle
-  # File c:\prog\leoCVS\leo\scripts\tangle\*.py
   
   SetOutPath $INSTDIR\src
   File c:\prog\leoCVS\leo\src\LeoPy.leo
   File c:\prog\leoCVS\leo\src\leo*.py
+  File c:\prog\leoCVS\leo\src\leoProjects.txt
   
   SetOutPath $INSTDIR\test
   File c:\prog\leoCVS\leo\test\test.leo

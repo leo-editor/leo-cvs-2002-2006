@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3842" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4099" clone_windows="0"/>
 <globals body_outline_ratio="0.427033492823">
-	<global_window_position top="10" left="220" height="836" width="1007"/>
+	<global_window_position top="54" left="149" height="836" width="1007"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,7 +80,7 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="EKR.20040502184354" a="E"><vh>Distribution files</vh>
+<v t="EKR.20040502184354"><vh>Distribution files</vh>
 <v t="EKR.20040502184354.1"><vh>@silentfile LICENSE.TXT</vh></v>
 <v t="EKR.20040502184354.2"><vh>@silentfile INSTALL.TXT</vh>
 <v t="EKR.20040502184354.3"><vh>System requirements</vh></v>
@@ -93,8 +93,16 @@
 <v t="EKR.20040502184354.9"><vh>@silentfile README.TXT</vh></v>
 <v t="EKR.20040502184354.10"><vh>@silentfile ../manifest.in</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="ekr.20040414084511"><vh>4.2 a1</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="EKR.20040518070558" a="ETV"><vh>4.2 a2</vh>
+<v t="EKR.20040518070940.5"><vh>Implemented @file-thin</vh></v>
+<v t="EKR.20040518070824"><vh>Fixed bugs</vh>
+<v t="EKR.20040518071415"><vh>Fixed clone bug that caused parts of outlines to disappear</vh></v>
+<v t="EKR.20040518070940.156"><vh>Fixed long-standing problem with the outline-only command</vh></v>
+<v t="EKR.20040518070824.1"><vh>Made sure file indices are always assigned when writing files.</vh></v>
+<v t="EKR.20040518070940"><vh>Fixed problems with missing tnodeList with @file-noref</vh></v>
+<v t="EKR.20040518070940.164"><vh>Added t.writeBit</vh></v>
+</v>
 <v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="edream.110203163054.891"><vh>Overview</vh></v>
 <v t="edream.110203163054.892"><vh>Basic scripts</vh>
@@ -140,90 +148,7 @@
 <v t="edream.110203163054.907"><vh>Setters</vh></v>
 </v>
 </v>
-<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
-<v t="ekr.20040403183229.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
-<v t="ekr.20040403175011.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.3"><vh>g.es(): write to the log pane</vh>
-<v t="ekr.20040403175257"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403175157.1"><vh>app.windowList: the list of all open frames</vh>
-<v t="ekr.20040403175157.2"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.6"><vh>Getting and setting headline and body text</vh>
-<v t="ekr.20040403180217"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
-<v t="ekr.20040403183934"><vh>@rst</vh>
-<v t="ekr.20040403173920.10"><vh>c.allNodes_iter</vh>
-<v t="ekr.20040403185643"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.13"><vh>p.children_iter</vh>
-<v t="ekr.20040403185803"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.14"><vh>p.parents_iter and p.self_and_parents_iter</vh>
-<v t="ekr.20040403185803.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.15"><vh>p.siblings_iter and p.following_siblings_iter</vh>
-<v t="ekr.20040403185803.2"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
-<v t="ekr.20040403185803.3"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040403173920.17"><vh>Updating the screen</vh>
-<v t="ekr.20040403183934.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.18"><vh>Invoking commands from scripts</vh>
-<v t="ekr.20040403183934.2"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.19"><vh>Getting and setting preferences</vh>
-<v t="ekr.20040403183934.3"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
-<v t="ekr.20040403184306.1"><vh>@rst</vh>
-<v t="ekr.20040403191729"><vh>g.findAll</vh>
-<v t="ekr.20040403173920.22"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403191729.1"><vh>g.reFindall</vh>
-<v t="ekr.20040403173920.23"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040403173920.24"><vh>Running Leo in batch mode</vh>
-<v t="ekr.20040403184306.2"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
-<v t="ekr.20040403184306.3"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
-<v t="ekr.20040403183718"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
-<v t="ekr.20040411151245"><vh>Iterators</vh>
-<v t="ekr.20040411151245.1"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.27"><vh>Getters</vh>
-<v t="ekr.20040403192653"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
-<v t="ekr.20040403192653.1"><vh>@rst</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040216151748"><vh>4.1 final</vh>
-<v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
-<v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
-<v t="ekr.20040216153725"><vh>Changed Undo/Redo messages</vh></v>
-<v t="ekr.20040217075627"><vh>Fixed clone bug when pasting nodes</vh></v>
-<v t="ekr.20040217085036.1"><vh>Investigated encoding problem: it's a Python 2.3 bug</vh></v>
+<v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
@@ -1959,18 +1884,18 @@
 </v>
 <v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
-<v t="ekr.20040414163815" a="E"><vh>Table of Contents</vh>
+<v t="ekr.20040414163815"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040414172212" a="E"><vh>@rst frontMatter.html</vh>
-<v t="ekr.20040414172218.2" a="E"><vh>Preface</vh>
+<v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
 <v t="ekr.20040416070800"><vh>@rst</vh></v>
 <v t="ekr.20040416070800.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040414172218.4" a="E"><vh>Acknowledgements</vh>
-<v t="ekr.20040414172617" a="E"><vh>@rst</vh></v>
+<v t="ekr.20040414172218.4"><vh>Acknowledgements</vh>
+<v t="ekr.20040414172617"><vh>@rst</vh></v>
 <v t="ekr.20040416075437"><vh>@rst</vh></v>
 <v t="ekr.20040416080538"><vh>@rst</vh></v>
 </v>
@@ -1982,7 +1907,7 @@
 </v>
 </v>
 <v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
-<v t="ekr.20040403183229" a="E"><vh>Overview</vh>
+<v t="ekr.20040403183229"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
@@ -2044,15 +1969,15 @@
 <v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
+<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4"><vh>@rst</vh>
 <v t="ekr.20040411151245"><vh>Iterators</vh>
 <v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.28" a="E"><vh>Setters</vh>
+<v t="ekr.20040403173920.28"><vh>Setters</vh>
 <v t="ekr.20040403192653.1"><vh>@rst</vh></v>
 </v>
 </v>
@@ -2064,7 +1989,7 @@
 <t tx="EKR.20040502184354">@nocolor</t>
 <t tx="EKR.20040502184354.1">Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
 
-Copyright (c) 1997-2003 by Edward K. Ream. All Rights Reserved.
+Copyright (c) 1997-2004 by Edward K. Ream. All Rights Reserved.
 
 Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Leo or Edward K. Ream not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
 
@@ -2176,7 +2101,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040502184354.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.2-a1
+Version: 4.2-a2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -2196,54 +2121,65 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040502184354.9">Important note: See INSTALL.TXT for installation instructions.
+<t tx="EKR.20040502184354.9">Leo 4.2 alpha 2           May 18, 2004
 
-Leo is available at:  http://sourceforge.net/projects/leo/
-Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
-Leo will work on Linux, Windows and MacOs X Jaguar.
+This is an important milestone in Leo's history; the two defining features of the 4.2 code base are complete:
 
-Leo 4.2 alpha 1            April 14, 2004
+1. This is the first stable version using the "shared nodes" code base.
 
-This is a "semi-public" release of the new 4.2 code base.  I am releasing this code now to create a snapshot.  In particular, I shall use this snapshot to begin development work on the Macintosh.  This will allow me fix long-standing *nix bugs.
+Shared nodes dramatically improve the time needed to insert, delete, and move nodes.  Moreover, the new code base is code compatible with the old.  Indeed, significant parts of Leo still use the old code base.
 
-This main feature of this release is that Leo represents clones as nodes that
-share trees of vnodes. To make this work Leo introduces _positions_. A position
-is a location in the traversal of an outline.
+2. This is the first version to use @file-thin for most derived files.
 
-This code appears stable.  I have been using the 4.2 code base for several weeks for all my work with no significant problems.  Nevertheless, this _is_ alpha (or even pre-alpha) quality code.  Use at your own risk.  Make frequent backups.
+@file-thin makes it possible to use Leo effectively in a cvs environment.  Indeed, cvs now contains only a "dummy" version of LeoPy.leo.  The idea is that:
 
-See the "4.2 Projects" node in LeoPy.leo for details of what has been done so far.  I shall be updating documentation more fully for the first beta release.
+- LeoPyRef.leo hardly ever changes.  Developers will download LeoPyRef.leo once from cvs, then rename LeoPyRef.leo to be LeoPy.leo.  LeoPy.leo is private to each developer.
 
-Leo 4.1 Final              February 20, 2004
+- Developers will commit and update to cvs only thin derived files.  There is no longer any need to keep .leo files and the files derived from them "in synch".
 
-Leo 4.1 Final is the culmination of four months of work. No significant bugs
-have been reported since 4.1 rc4. Several people have contributed nifty plugins
-recently. See leoPlugins.leo for full details.
+- Similar remarks apply to LeoPlugins.leo.  Cvs contains only LeoPluginsRef.leo, and contributors will need only to submit thin derived files.
 
-The highlights of Leo 4.1:
+I have been using the new code base without incident for weeks now, and I am fairly confident that it is safe to use.  Nevertheless, I would suggest routine caution when dealing with this version until more people have tested it.
 
-- Leo runs in batch mode when invoked with --script aScriptFile.py
-- Leo supports Unicode characters (e.g. Chinese) in path and file names.
-- @directives and section references are now valid when executing scripts.
-- @ignored and orphan nodes now valid in @file-nosent trees.
-- Script-based find/change commands.
-- Check Outline command.
-- Hoist &amp; DeHoist commands.
-- A new gui-agnostic architecture: useful for batch mode and unit tests.
-- Several new configuration settings.
-- Many new unit tests.
-- Excellent new plugins.
-- A host of bug fixes.</t>
+Known bugs
+
+- Cutting and pasting an @file-thin node does not work properly.  This will be easy to fix, I think.
+
+- The present algorithm for reading thin derived files probably does not handle properly the situation in which a named node is some kind of grand child of the referencing node rather than being an immediate child of the referencing node.  This is a rare situation, easily avoided, and it doesn't happen at all in LeoPy.leo.  Nevertheless, something must be done.
+
+Other improvements:
+
+- Fixed a number of problems with using Leo on MacOS X.  In particular, Leo now uses the clover key as is usual on the Mac.  More Mac and *nix specific improvements are coming.
+
+Still to do:
+
+- Perfect import and @import.
+- Make the Go To Line Number command work with @file-thin files.
+- Fix minor bugs and add new features
+  See the "To Do: 4.2" node in the leoToDo.txt node in LeoPy.leo.
+</t>
 <t tx="EKR.20040502184354.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns!  Be careful:  .. may not work.
 
 include __init__.py
+include install
+include uninstall
+include manifest.in
+include MANIFEST
+include preSetup.py
+include setup.py
+include postSetup.py
 
 include config/leoConfig.leo
 include config/leoConfig.txt
 
+include dist/leo.nsi
+
 include doc/LeoDocs.leo
+include doc/leoDiary.txt
+include doc/leoNotes.txt
+include doc/leoToDo.txt
 include doc/README.TXT
 include doc/INSTALL.TXT
 include doc/PKG-INFO.TXT
@@ -2252,25 +2188,117 @@ include doc/LICENSE.TXT
 include Icons/*.*
 
 include plugins/*.*
+exclude leoPluginsRef.leo
 exclude plugins/*.pyc
 
 include src/LeoPy.leo
 include src/leo*.py
+include src/leoProjects.txt
 
-include scripts/*
-include scripts/install/*.py
-include scripts/other/*.py
-include scripts/tangle/*.py
+include scripts/leoScripts.txt
+include scripts/tangle_done.py
+include scripts/untangle_done.py
 
-include test/test.leo
+include test/test.leo</t>
+<t tx="EKR.20040518070558">Leo 4.2 alpha 2           May 18, 2004
 
-include install
-include uninstall
-include manifest.in
-include MANIFEST
+This is an important milestone in Leo's history; the two defining features of the 4.2 code base are complete:
 
-# Setup is more confusing than helpful.
-exclude setup.py</t>
+1. This is the first stable version using the "shared nodes" code base.
+
+Shared nodes dramatically improve the time needed to insert, delete, and move nodes.  Moreover, the new code base is code compatible with the old.  Indeed, much of Leo still uses the old code base.  See Chapter 7 for full details of how to script Leo with the 4.2 code base.
+
+2. This is the first version to use @file-thin for most derived files.
+
+@file-thin makes it possible to use Leo effectively in a cvs environment.  Indeed, cvs now contains only a "dummy" version of LeoPy.leo.  The idea is that:
+
+- LeoPyRef.leo hardly ever changes.  Developers will download LeoPyRef.leo once from cvs, then rename LeoPyRef.leo to be LeoPy.leo.  LeoPy.leo is private to each developer.
+
+- Developers will commit and update to cvs only thin derived files.  There is no longer any need to keep .leo files and the files derived from them "in synch".
+
+- Similar remarks apply to LeoPlugins.leo.  Cvs contains only LeoPluginsRef.leo, and contributors will need only to submit thin derived files.
+
+I have been using the new code base without incident for weeks now, and I am fairly confident that it is safe to use.  Nevertheless, I would suggest routine caution when dealing with this version until more people have tested it.
+
+Known bugs
+
+- Cutting and pasting an @file-thin node does not work properly.  This will be easy to fix, I think.
+
+- The present algorithm for reading thin derived files probably does not handle properly the situation in which a named node is some kind of grand child of the referencing node rather than being an immediate child of the referencing node.  This is a rare situation, easily avoided, and it doesn't happen at all in LeoPy.leo.  Nevertheless, something must be done.
+
+Other improvements:
+
+- Fixed a number of problems with using Leo on MacOS X.  In particular, Leo now uses the clover key as is usual on the Mac.  More Mac and *nix specific improvements are coming.
+
+Still to do:
+
+- Perfect import and @import.
+- Make the Go To Line Number command work with @file-thin files.
+- Fix minor bugs and add new features
+  See the "To Do: 4.2" node in the leoToDo.txt node in LeoPy.leo.</t>
+<t tx="EKR.20040518070824"></t>
+<t tx="EKR.20040518070824.1">- Moved call to assignFileIndices into write_Leo_file.
+- Called assignFileIndices in writeAtFileNodes, writeDirtyAtFileNodes, writeMissingAtFileNodes</t>
+<t tx="EKR.20040518070940"></t>
+<t tx="EKR.20040518070940.5">What I did:
+
+File format
+
+Added -thin field to @+leo sentinel
+
+Recognizers
+
+- Added vnode recognizers for @file-thin option.
+- Added position proxies for vnode recognizers.
+
+Directives &amp; sentinels
+- Added support for @all.
+
+Writing
+
+- Added top-level atFile code to write @file-thin tree.
+- DO write @file-thin vnodes if there was an error writing the derived file.
+	- No autosave for @file-thin.
+ 	- Leo writes @file nodes first, so this is not a problem.
+	- putVnode checks orphan bit, which gets set if there was an error.
+- Don't write vnodes (or related tnodes) for @file-thin trees. (fileCommands).
+- Do write empty nodes in @thin trees.
+- Don't generate close node sentinels until all children have been generated.
+
+Reading
+
+- Set at.thinFile when reading thin files.
+- Suppressed changed message and related items for thin files.
+- Modified scanText4 and allies to read thin derived files.
+	- Don't look for tnodeList for thin files.
+	- Initially, at.lastThinNode is at.root.v
+	- readStartNode calls createThinChild
+	- createThinChild makes a child of at.lastThinNode if needed and sets at.lastThinNode.
+- Updated fc.tnodesDict in at.createThinChild.
+	Otherwise clones existing only in two thin files won't be linked properly.</t>
+<t tx="EKR.20040518070940.156">After a match, the find-next command searched only in the suboutline where the first match occured.
+To fix this, we call g.app.findFrame.handleUserClick in various Tk event handlers.</t>
+<t tx="EKR.20040518070940.164">@nocolor
+
+
+p.v.t.visitedBit was used for two purposes:
+
+- To mark the nodes to be written.
+- To mark nodes that are not orphan.
+
+What I did:
+
+- Added t.is/set/clearWriteBit.
+- Call t.setWriteBit in putVnode unless we are in a thin node.
+- putTnodes tests for t.writeBit rather than t.visitedBit.</t>
+<t tx="EKR.20040518071415">Leo did not handle moving a node to the root position of the outline correctly.</t>
+<t tx="EKR.20040518075457">Using @ignore with @file-thin is asking for trouble.
+If you remove the @ignore and then save, you will lose data.
+
+How to recover the data:
+	- Read Outline.
+	- Remove @ignore
+	- Import derived file... </t>
 <t tx="edream.031216084930">The heart of the file format is the &lt;vnodes&gt; element containing possibly nested &lt;v&gt; elements, and the &lt;tnodes&gt; element containing a list of (non-nested) &lt;t&gt; elements.  &lt;v&gt; elements refer to &lt;t&gt; elements using "t" attributes in &lt;v&gt; elements corresponding to "tx" attributes in &lt;t&gt; elements.
 
 &lt;v&gt; and &lt;t&gt; elements in .leo files correspond directly to vnodes and tnodes in memory when Leo is running.  For full information about these see @file leoNodes.py in LeoPy.leo.  For full information about exactly what Leo is doing when reading and writing files, see @file leoFileCommands.py in LeoPy.leo.
@@ -12921,7 +12949,6 @@ Iterators exist only in the position class:
 	p.following_siblings_iter  # returns all siblings following p.
 	p.subtree_iter             # returns all positions in p's subtree, excluding p.
 	p.self_and_subtree_iter    # returns all positions in p's subtree, including p.</t>
-<t tx="ekr.20040414084511"></t>
 <t tx="ekr.20040414161647">@nocolor
 @ignore
 

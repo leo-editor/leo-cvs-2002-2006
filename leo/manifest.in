@@ -3,11 +3,23 @@
 # Note: these are glob patterns!  Be careful:  .. may not work.
 
 include __init__.py
+include install
+include uninstall
+include manifest.in
+include MANIFEST
+include preSetup.py
+include setup.py
+include postSetup.py
 
 include config/leoConfig.leo
 include config/leoConfig.txt
 
+include dist/leo.nsi
+
 include doc/LeoDocs.leo
+include doc/leoDiary.txt
+include doc/leoNotes.txt
+include doc/leoToDo.txt
 include doc/README.TXT
 include doc/INSTALL.TXT
 include doc/PKG-INFO.TXT
@@ -16,22 +28,15 @@ include doc/LICENSE.TXT
 include Icons/*.*
 
 include plugins/*.*
+exclude leoPluginsRef.leo
 exclude plugins/*.pyc
 
 include src/LeoPy.leo
 include src/leo*.py
+include src/leoProjects.txt
 
-include scripts/*
-include scripts/install/*.py
-include scripts/other/*.py
-include scripts/tangle/*.py
+include scripts/leoScripts.txt
+include scripts/tangle_done.py
+include scripts/untangle_done.py
 
 include test/test.leo
-
-include install
-include uninstall
-include manifest.in
-include MANIFEST
-
-# Setup is more confusing than helpful.
-exclude setup.py

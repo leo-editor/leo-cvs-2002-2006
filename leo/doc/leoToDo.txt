@@ -1,14 +1,9 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040117181936:@file-thin ../doc/leoToDo.txt
-#@+all
-#@+node:EKR.20040504144045:Have @thin be a synonym for @file-thin
-#@-node:EKR.20040504144045:Have @thin be a synonym for @file-thin
-#@+node:EKR.20040503091111:Before alpha 2 May 7
-- Add -thin to @+leo
-#@nonl
-#@+node:EKR.20040503091612:Dangers of @file-thin
 #@@nocolor
 
+#@+all
+#@+node:EKR.20040503091612:Dangers of @file-thin
 Using @ignore with @file-thin is asking for trouble.
 If you remove the @ignore and then save, you will lose data.
 
@@ -18,17 +13,63 @@ How to recover the data:
 	- Import derived file... 
 #@nonl
 #@-node:EKR.20040503091612:Dangers of @file-thin
-#@-node:EKR.20040503091111:Before alpha 2 May 7
-#@+node:EKR.20040503091111.1:Before beta 1 May 14
+#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+By: nobody ( Nobody/Anonymous ) 
+ About "@file" untangling and clones   
+2003-11-24 23:55  
+
+ I really like generating source code with the @file directive. I like even most to see it untangle all my changes back to the outline! 
+
+I only wish the untangler would not _only_ use the last instance of a clone in the untangling process...
+
+I understand the difficulty of making it otherwise, but hey, here is my algo anyways...:
+0-before untangling:save a reference copy of a found clone for each clone in the outline!
+1-Start untangling,
+2- once you reach a clone node: compare, if changed update all instances of outline
+3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
+
+so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process. I understand it would need some memory & more process time for each clone in an outline! but I dont care if untangle takes 3 minutes instead of 3 seconds... and it just doubles the memory requirements... but untangling is a killer-Feature.
+--
+bolt  
+#@nonl
+#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+#@+node:EKR.20040517112409:Bug copying @file-thin node
+#@@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2573178
+By: bwmulder
+
+Copying a "@file-thin" node just gives you the node, not the tree, even if the
+file is read in in the outline.
+#@nonl
+#@-node:EKR.20040517112409:Bug copying @file-thin node
+#@+node:EKR.20040504144045:Have @thin be a synonym for @file-thin
+#@-node:EKR.20040504144045:Have @thin be a synonym for @file-thin
+#@+node:EKR.20040507093503:Fix problems saving unknownAttribute field
+By: Bernhard Mulder - bwmulder
+ unknownAttributes   
+2004-05-06 00:32  
+
+ The 4.1 documentation of unknownAttributes says:
+
+> Each plugin should create its own dictionary _inside_ any tempAttributes or unknownAttributes dictionaries that it intends to create or modify.
+
+This does not seem to work since the write code tries to call 'replace' on the value of those attributes. It seems that unknownAttributes can only contain string / string key / value pairs.
+
+For now, I am trying to use the pickle module to convert my dictionary into a string.  
+#@nonl
+#@-node:EKR.20040507093503:Fix problems saving unknownAttribute field
+#@+node:EKR.20040503160843:@directory-import
+#@-node:EKR.20040503160843:@directory-import
+#@+node:EKR.20040503091111.1:Before beta 1 May 28
 - Import derived file supports @file-thin.
 #@nonl
 #@+node:EKR.20040503093407:Import derived file
 #@-node:EKR.20040503093407:Import derived file
-#@-node:EKR.20040503091111.1:Before beta 1 May 14
+#@+node:EKR.20040514104902:Go To Line Number
+#@-node:EKR.20040514104902:Go To Line Number
+#@-node:EKR.20040503091111.1:Before beta 1 May 28
 #@+node:ekr.20031218072017.646:To do...
-#@@ignore
-#@@nocolor
-#@nonl
 #@+node:ekr.20040414093758:Suggestions
 #@@nocolor
  RE: Leo's reorganized to-do list   
@@ -59,6 +100,10 @@ Tabbed log/Find/config window.
 
  
 #@-node:ekr.20040414093758:Suggestions
+#@+node:EKR.20040517090625:Suggestions for user interface improvement
+#@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@-node:EKR.20040517090625:Suggestions for user interface improvement
 #@+node:ekr.20040117092727.1: Notes
 #@@nocolor
 #@nonl
@@ -897,7 +942,7 @@ Davide
 https://sourceforge.net/forum/message.php?msg_id=2355843
 By: rodrigo_b
 
-At least pluginManager should be there too....
+At least pluginManager should be there too	
 
 (or both files could be merged... who knows)
 
@@ -1007,7 +1052,7 @@ combobox for option2, with options bla, blo, bli
 option3 = rodrigo # text   <= trivial, etc...
 
 The comment after the option could allow to specify python code for conditions,
-etc, etc....
+etc, etc	
 Obviously the comment can be placed, the line before, or the line after, or
 under what ever format required.
 
@@ -2860,7 +2905,7 @@ By: halw
 Okay, I have a workaround that works for me with my existing Tk version. My
 Tkinter skills are weak, but I don't think this will hurt anything else :)
 
-Turns out this Tk version (or X or Tkinter or ....) doesn't generate MouseWheel
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
 events, but maps to buttons 4 (up) & 5 (down).
 
 Add to if clause 
@@ -2868,12 +2913,12 @@ Add to if clause
 if sys.platform == "linux2": # This crashes tcl83.dll
 ..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
 ..def mapWheel(e):
-....if e.num == 4:
-......e.delta = 120
-......return frame.OnMouseWheel(e)
-....elif e.num == 5:
-......e.delta = -120
-......return frame.OnMouseWheel(e)
+	if e.num == 4:
+	..e.delta = 120
+	..return frame.OnMouseWheel(e)
+	elif e.num == 5:
+	..e.delta = -120
+	..return frame.OnMouseWheel(e)
 ..canvas.bind("<ButtonPress>", mapWheel, add=1)
 #@nonl
 #@-node:ekr.20040226094105.3:The actual workaround
@@ -3250,7 +3295,7 @@ By: ksejlod ( Peter Barrel )
  RE: I Have a (maybe) great idea!   
 2004-02-15 04:35  
 
- The tree i tried to draw in ascii did not came out the way i did it, sourceforge "eated" leading spaces sorry a, b and c are children of their "+" node just above them.........
+ The tree i tried to draw in ascii did not came out the way i did it, sourceforge "eated" leading spaces sorry a, b and c are children of their "+" node just above them		.
 --
 k  
 #@nonl
@@ -4921,6 +4966,13 @@ if attr: fc.put(' a="%s"' % attr)
 # Write tnodeList only for @file nodes.
 # New in 4.2: tnode list is in tnode.
 
+if 0: # Debugging.
+	if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+		if hasattr(v.t,"tnodeList"):
+			g.trace(v.headString(),len(v.t.tnodeList))
+		else:
+			g.trace(v.headString(),"no tnodeList")
+
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
@@ -5199,6 +5251,54 @@ other times only fix is to exit & restart.
 #@-node:ekr.20040123102724:Can't or wont
 #@-node:ekr.20031218072017.646:To do...
 #@+node:EKR.20040430163619:To Do: 4.2
+#@+node:EKR.20040517074454:To do: Load plugins only from plugins menu
+#@@nocolor
+
+1. The sys.path variable has been reset when the plugins are run. It
+is set so that *only* the plugins directory is in the path. This means
+that no import of standard modules will work in plugins.
+
+In plugins_menu: createPluginsMenu
+
+replace:
+path = os.path.join(g.app().loadDir,"..","plugins")
+sys.path = path
+
+by:
+
+path = os.path.join(g.app().loadDir,"..","plugins")
+newpath = old_path; newpath.append(path)
+sys.path = newpath
+#@-node:EKR.20040517074454:To do: Load plugins only from plugins menu
+#@+node:EKR.20040512084726:Can't put dictionaries in unknownAttributes dict
+http://sourceforge.net/forum/message.php?msg_id=2556550
+By: bwmulder
+
+The 4.1 documentation of unknownAttributes says:
+
+> Each plugin should create its own dictionary _inside_ any tempAttributes or
+unknownAttributes dictionaries that it intends to create or modify.
+
+This does not seem to work since the write code tries to call 'replace' on the
+value of those attributes. It seems that unknownAttributes can only contain
+string / string key / value pairs.
+
+For now, I am trying to use the pickle module to convert my dictionary into
+a string.
+
+-------------
+
+Follow up:
+
+http://sourceforge.net/forum/message.php?msg_id=2558114
+By: bwmulder
+
+No, pickling is also not the answer: the pickled string can not contain a double
+quote.
+
+Pickling and hexlifying should do the trick, though.
+#@nonl
+#@-node:EKR.20040512084726:Can't put dictionaries in unknownAttributes dict
 #@+node:ekr.20040323170225:General bugs
 #@+node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
 #@+node:ekr.20040327132739.3:Notes
@@ -5892,6 +5992,31 @@ Cheers
 David
  
 #@-node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
+#@+node:EKR.20040512081330.1:Misleading message in Import Derived File
+#@@nocolor
+
+By: Kent Tenney - ktenney
+ 'Import Derived File' error   
+2004-05-06 13:38  
+
+ Howdy,
+
+In my Leo file is a node with the headline;
+@file c:\cygwin\home\ktenney\work\ImageWords\ImageWords.py
+
+When I start a new Leo file and choose; File->Import->Import Derived File
+
+and open the file derived from the first Leo file, I get a node with the headline;
+Imported @file C:/Python23/Lib/site-packages/leo/plugins/run_nodes.py
+
+.. no body.
+
+The message pane says;
+imported C:/cygwin/home/ktenney/work/ImageWords/ImageWords.py
+No absolute directory specified anywhere.
+
+ 
+#@-node:EKR.20040512081330.1:Misleading message in Import Derived File
 #@-node:ekr.20040323170225:General bugs
 #@+node:EKR.20040422132037:Mac/Linux bugs
 #@@nocolor
@@ -6098,7 +6223,7 @@ By: rodrigo_b
 Today I was trying to clen some of the hooks of LeoN and I tried the
 "draw-outline-text-box" that appears in the plugins documentation. But this
 hook was not called when expected, in fact it was not called at all. I search
-inside the code of 4.1rc1 and did not found any reference to it....
+inside the code of 4.1rc1 and did not found any reference to it	
 
 I would like to try to use "draw-outline-text-box" instead of overwriting the
 tree.drawText method as I actually do.
