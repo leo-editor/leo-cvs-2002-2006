@@ -20,10 +20,10 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
+<v t="EKR.20040623200709" a="E"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040303063549" a="E"><vh>Unit test scripts (Must be located here)</vh>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
@@ -252,7 +252,7 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125" a="TV"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
 </v>
@@ -735,13 +735,13 @@
 <v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
 <v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
 <v t="EKR.20040627103902" a="E"><vh>Test of user icons</vh></v>
-<v t="EKR.20040627103801" descendentTnodeUnknownAttributes="7d71005812000000454b522e323030343036323731323233313871017d710228550b6c696e65594f666673657471034b03550569636f6e7371045d7105287d7106285504747970657107550466696c65710855047870616471094b0255057768657265710a550a6265666f726549636f6e710b6808582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e676966710c5507796f6666736574710d4afdffffff757d710e2868076808680d4afdffffff6808582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710f68094afeffffff680a550e6265666f7265486561646c696e6571105507786f666673657471114b02756575732e"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
+<v t="EKR.20040627103801" descendentTnodeUnknownAttributes="7d71005812000000454b522e323030343036323731323233313871017d710228550b6c696e65594f666673657471034b03550569636f6e7371045d7105287d710628550577686572657107550a6265666f726549636f6e710855047870616471094b02550474797065710a550466696c65710b680b582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e676966710c5507796f6666736574710d4afdffffff757d710e28680a680b680d4afdffffff680b582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710f68094afeffffff6807550e6265666f7265486561646c696e6571105507786f666673657471114b02756575732e"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
 </v>
 <v t="EKR.20040626212434" a="E"><vh>drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
 <v t="EKR.20040626213007"><vh>Paul Klee</vh></v>
-<v t="EKR.20040627150213" a="ETV"><vh>Complex functions</vh></v>
+<v t="EKR.20040627150213" a="E"><vh>Complex functions</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2791,7 +2791,7 @@ import leoGlobals as g
 reload(leoTest)
 
 # We need real nodes to pass to the tests.
-suite = leoTest.makeLeoFilesSuite("atFileTests")
+suite = leoTest.makeAtFileSuite("atFileTests")
 unittest.TextTestRunner().run(suite)</t>
 <t tx="EKR.20040621100553">Line 1
 
@@ -2939,7 +2939,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -4005,7 +4005,7 @@ unittest.TextTestRunner().run(suite)</t>
 import leoTest
 reload(leoTest)
 
-if 1: # Run test cases by name.
+if 0: # Run test cases by name.
 
     suite = unittest.TestSuite()
     for name in ("test1","test2","test3","test4"):
@@ -4036,7 +4036,7 @@ for f,arg in (
     (leoTest.makeImportExportSuite,"exportTests"),
     (leoTest.makeImportExportSuite,"importTests"),
     (leoTest.makeOutlineSuite,"outlineTests"),
-    (leoTest.makeLeoFilesSuite,"leoFileTests"),
+    (leoTest.makeAtFileSuite,None),
     (leoTest.makePositionSuite,None),
     (leoTest.makeReformatParagraphSuite,None)
     # 
@@ -4045,6 +4045,9 @@ for f,arg in (
 ):
     suite = f(arg,"tempNode")
     mainSuite.addTest(suite)
+    
+suite = unittest.makeSuite(leoTest.leoFileTests)
+mainSuite.addTest(suite)
     
 unittest.TextTestRunner().run(mainSuite)</t>
 <t tx="ekr.20040303071432">@language python
@@ -4062,6 +4065,7 @@ p.c.selectVnode(p)
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
 for f,arg in (
+    (leoTest.makeAtFileSuite,None),
     (leoTest.makeBatchModeSuite,"dummy"),
     (leoTest.makeColorSuite,"colorizerTests"),
     (leoTest.makeEditBodySuite,"editBodyTests"),
@@ -4240,7 +4244,7 @@ unittest.TextTestRunner().run(suite)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
