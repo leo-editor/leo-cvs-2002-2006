@@ -30,6 +30,7 @@ class LeoApp:
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+		self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = root # The hidden main window

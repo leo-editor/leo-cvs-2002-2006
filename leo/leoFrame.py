@@ -3495,18 +3495,17 @@ class LeoFrame:
 	def createOpenWithMenuFromTable (self,table):
 		
 		menuName = "Open With..."
-		
-		# for s in table: print s
-		parent = self.menus.get("File")
-		# print "parent:",`parent`
+		a = app()
+		a.openWithTable = table # Override any previous table.
 	
 		# Delete the previous entry.
+		parent = self.menus.get("File")
 		index = parent.index(menuName)
 		parent.delete(index)
 		# Create the "Open With..." menu.
 		openWithMenu = Tkinter.Menu(parent,tearoff=0)
 		self.menus[menuName] = openWithMenu
-		label=app().realMenuName(menuName)
+		label=a.realMenuName(menuName)
 		parent.insert_cascade(index,label=label,menu=openWithMenu)
 		# Populate the "Open With..." menu.
 		shortcut_table = []

@@ -1265,42 +1265,36 @@ class leoTree:
 			self.popupMenu = None
 		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
 		
-		#@<< create the menu >>
-		#@+node:1::<< create the menu >>
+		#@<< create the popup menu >>
+		#@+node:1::<< create the popup menu >>
 		#@+body
-		menu.add_command(label="Open With", command=frame.OnOpenWith)
-		menu.add_command(label="Read @file Nodes", command=frame.OnReadAtFileNodes)
-		menu.add_command(label="Write @file Nodes",command=frame.OnWriteAtFileNodes)
-		menu.add_separator()
+		a = app()
+		# Add the Open With entries if they exist.
+		if a.openWithTable:
+			frame.createMenuEntries(menu,a.openWithTable,openWith=1)
+			table = (("-",None,None),)
+			frame.createMenuEntries(menu,table)
+		# Create the rest of the popup menu.
+		table = (
+			("Read @file Nodes",None,frame.OnReadAtFileNodes),
+			("Write @file Nodes",None,frame.OnWriteAtFileNodes),
+			("-",None,None),
+			("Tangle","Shift+Ctrl+T",frame.OnTangle),
+			("Untangle","Shift+Ctrl+U",frame.OnUntangle),
+			("-",None,None),
+			("Cut Node","Shift+Ctrl+X",frame.OnCutNode),
+			("Copy Node","Shift+Ctrl+C",frame.OnCopyNode),
+			("Paste Node","Shift+Ctrl+V",frame.OnPasteNode),
+			("Delete Node","Shift+Ctrl+BkSp",frame.OnDeleteNode),
+			("-",None,None),
+			("Insert Node","Ctrl+I",frame.OnInsertNode),
+			("Clone Node","Ctrl+`",frame.OnCloneNode),
+			("Sort Children",None,frame.OnSortChildren),
+			("Sort Siblings","Alt-A",frame.OnSortSiblings),
+			("-",None,None),
+			("Contract Parent","Alt+0",frame.OnContractParent))
 		
-		menu.add_command(label="Tangle",
-			accelerator="Shift+Ctrl+T",command=frame.OnTangle)
-		menu.add_command(label="Untangle",
-			accelerator="Shift+Ctrl+U",command=frame.OnUntangle)
-		menu.add_separator()
-		
-		menu.add_command(label="Cut Node",
-			accelerator="Shift+Ctrl+X",command=frame.OnCutNode)
-		menu.add_command(label="Copy Node",
-			accelerator="Shift+Ctrl+C",command=frame.OnCopyNode)
-		menu.add_command(label="Paste Node",
-			accelerator="Shift+Ctrl+V",command=frame.OnPasteNode)
-		menu.add_command(label="Delete Node",
-			accelerator="Shift+Ctrl+BkSp",command=frame.OnDeleteNode)
-		menu.add_separator()
-		
-		menu.add_command(label="Insert Node",
-			accelerator="Ctrl+I",command=frame.OnInsertNode)
-		menu.add_command(label="Clone Node",
-			accelerator="Ctrl+`",command=frame.OnCloneNode)
-		menu.add_command(label="Sort Children",
-			command=frame.OnSortChildren)
-		menu.add_command(label="Sort Siblings",
-			accelerator="Alt-A",command=frame.OnSortSiblings)
-		menu.add_separator()
-		
-		menu.add_command(label="Contract Parent",
-			accelerator="Alt+0",command=frame.OnContractParent)
+		frame.createMenuEntries(menu,table)
 		
 		# Enable and disable.
 		
@@ -1337,7 +1331,7 @@ class leoTree:
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		enableMenu(menu,"Contract Parent",c.canContractParent())
 		#@-body
-		#@-node:1::<< create the menu >>
+		#@-node:1::<< create the popup menu >>
 
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
