@@ -2099,7 +2099,6 @@ class atFile:
 				#@+node:2::<< put @verbatim sentinel if necessary >>
 				#@+body
 				if match (s,i,self.startSentinelComment + '@'):
-					print "verbatim"
 					self.putSentinel("verbatim")
 				#@-body
 				#@-node:2::<< put @verbatim sentinel if necessary >>
