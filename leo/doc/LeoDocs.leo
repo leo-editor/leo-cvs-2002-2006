@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="10897" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11025" clone_windows="0"/>
 <globals body_outline_ratio="0.456937799043">
 	<global_window_position top="67" left="208" height="836" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -82,8 +82,16 @@
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="EKR.20040628095213" a="TV"><vh>4.2 beta 1 &amp; beta 2</vh>
+<v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
-<v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
+<v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
+<v t="ekr.20040705111716.1" a="E"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
+<v t="ekr.20040705111716.45" a="E"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
+<v t="ekr.20040705111716.126" a="E"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
+<v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
+</v>
+<v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
+<v t="EKR.20040628095213.513"><vh>Changed *nix install script</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
 <v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
 <v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
@@ -125,7 +133,6 @@
 <v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
 <v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
 <v t="EKR.20040628095213.282"><vh>Added Paste Retaining Clones command</vh></v>
-<v t="EKR.20040628095213.311"><vh>Made mass code changes to test.leo, leoPy.leo and leoPlugins.leo</vh></v>
 <v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
 <v t="EKR.20040628095213.334"><vh>Much better error handling in executeScript</vh></v>
 <v t="EKR.20040628095213.377"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
@@ -137,19 +144,21 @@
 <v t="EKR.20040628095213.493"><vh>Improved error handling for unknownAttributes</vh></v>
 <v t="EKR.20040628095213.501"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
 </v>
-<v t="EKR.20040628095213.513"><vh>(Changed install script as suggested by Scott Beardsley)</vh>
-<v t="EKR.20040628095213.514"><vh>Report1</vh>
-<v t="EKR.20040628095213.515"><vh>(done) Use @first #!/bin/sh</vh></v>
-<v t="EKR.20040628095213.516"><vh>(done) bin dir is not created</vh></v>
-</v>
-<v t="EKR.20040628095213.517"><vh>(done) Report 2</vh></v>
 </v>
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="EKR.20040628095213"><vh>4.2 beta 1 &amp; beta 2</vh>
+<v t="EKR.20040628095213.311"><vh>New coding conventions</vh></v>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
-<v t="ekr.20040629164557"><vh>New coding conventions in 4.2</vh></v>
+<v t="ekr.20040705111716"><vh>in 4.2 b2</vh>
+<v t="ekr.20040705111716.1" a="E"><vh>Savedmarks and expantion state in &lt;v&gt; elements for @thin nodes</vh></v>
+<v t="ekr.20040705111716.45" a="E"><vh>Marked all related @thin nodes dirty when a node changesd</vh></v>
+<v t="ekr.20040705111716.126" a="E"><vh>Fixed bug when reading  4.1 files with topology errors</vh></v>
+<v t="ekr.20040705150130"><vh>Leo passes all important pychecker tests</vh></v>
+</v>
+<v t="ekr.20040705112148"><vh>in 4.2 b1</vh>
+<v t="EKR.20040628095213.513"><vh>Changed *nix install script</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
 <v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
 <v t="EKR.20040628095213.23"><vh>Put drawing hooks back in</vh></v>
@@ -191,7 +200,6 @@
 <v t="EKR.20040628095213.264"><vh>Import now creates absolute path</vh></v>
 <v t="EKR.20040628095213.269"><vh>Created @killcolor directive</vh></v>
 <v t="EKR.20040628095213.282"><vh>Added Paste Retaining Clones command</vh></v>
-<v t="EKR.20040628095213.311"><vh>Made mass code changes to test.leo, leoPy.leo and leoPlugins.leo</vh></v>
 <v t="EKR.20040628095213.314"><vh>Added readLineGenerator &amp; readLineClass to leoGlobals</vh></v>
 <v t="EKR.20040628095213.334"><vh>Much better error handling in executeScript</vh></v>
 <v t="EKR.20040628095213.377"><vh>Recovered nodes when reading .leo files containing topology errors</vh></v>
@@ -203,12 +211,6 @@
 <v t="EKR.20040628095213.493"><vh>Improved error handling for unknownAttributes</vh></v>
 <v t="EKR.20040628095213.501"><vh>Read and write all t.unknownAttributes in top vnode of an @thin tree</vh></v>
 </v>
-<v t="EKR.20040628095213.513"><vh>(Changed install script as suggested by Scott Beardsley)</vh>
-<v t="EKR.20040628095213.514"><vh>Report1</vh>
-<v t="EKR.20040628095213.515"><vh>(done) Use @first #!/bin/sh</vh></v>
-<v t="EKR.20040628095213.516"><vh>(done) bin dir is not created</vh></v>
-</v>
-<v t="EKR.20040628095213.517"><vh>(done) Report 2</vh></v>
 </v>
 </v>
 <v t="EKR.20040601084317"><vh>4.2 a3</vh>
@@ -6656,20 +6658,28 @@ Here are the differences between @file and @thin:
 The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
 
 The great advantage of using @thin is that people can collaborate without having to continually update .leo files:  collaborators only need to commit thin derived files to cvs.</t>
-<t tx="EKR.20040628095213">Leo 4.2 beta 2           July 2, 2004
+<t tx="EKR.20040628095213">Leo 4.2 beta 2           July 5, 2004
 Leo 4.2 beta 1           June 30, 2004
 
 The highlights of 4.2 beta 2:
 
 - Leo now writes the entire contents of @ignore'd @thin trees to the .leo file.
 This change ensures that users can create and remove @ignore directives without
-any chance of losing data inadvertantly
+any chance of losing data inadvertently.
 
 - Leo now saves and restores marks and the expansion state of nodes in @thin trees.
+
+- Leo marks @thin nodes as dirty whenever they become "newly unignored", i.e.,
+when an @thin node no longer falls in the range of an @ignore directive.
 
 Beta 1 completes all fundamental work in the 4.2 code base. All essential code
 is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
 month ago.
+
+Known bugs in 4.2 beta 2:
+
+- Not all plugins work correctly.
+- Some plugins leak memory very slightly.
 
 The highlights of Leo 4.2:
 
@@ -6683,7 +6693,17 @@ operations are much faster. To support this organization, scripts that traverse
 Leo's data structures must now use a positions rather than vnodes. Old scripts
 that appear to use vnodes will still work because methods like c.currentVnode
 that appear to return vnodes actually return positions.
-</t>
+
+Other features of 4.2:
+
+- Leo is now much more friendly to using spaces instead of tabs.
+- The Execute Script command reports erroneous lines more clearly.
+- The usual assortment of bug features and minor features.
+
+Coming soon in 4.2:
+
+- Perfect Import will guarantee that Leo imports file perfectly.
+- @import will allows you to study files using Leo without changing those files.</t>
 <t tx="EKR.20040628095213.3">@nocolor
 
 - Leo calls g.enableIdleTimeHook at end of startup code.
@@ -6764,17 +6784,9 @@ This was not good when @tabwidth -4 was in effect.</t>
 <t tx="EKR.20040628095213.308"></t>
 <t tx="EKR.20040628095213.311">@nocolor
 
-What I did:
-    
-- Removed from leoGlobals import true,false
-- Replaced true,false with True,False
-- Properly import Tkinter as follows:
+- Leo now uses True and False everywhere instead of true and false.
 
-try: import Tkinter as Tk
-except ImportError: Tk = None
-
-- Removed all assignments: Tk = Tkinter
-- Converted leading tabs to spaces</t>
+- All of Leo's code uses spaces instead of tabs for indentation.</t>
 <t tx="EKR.20040628095213.312"></t>
 <t tx="EKR.20040628095213.314"></t>
 <t tx="EKR.20040628095213.324">- Set removeTrailing to True unless ch is a newline.
@@ -6846,81 +6858,6 @@ The effect of this is to make all vnodes identical, as far as using unknownAttri
 
 The code is pretty fragile; it should handle either None or "", but in fact it requires "".</t>
 <t tx="EKR.20040628095213.513"></t>
-<t tx="EKR.20040628095213.514">@nocolor
-
-By: Scott Beardsley - sbeards
- install script broken in leo-4.2-a3   
-2004-06-10 12:19  
-
-Two issues with the install script...
-
-
-</t>
-<t tx="EKR.20040628095213.515">1) Will not run when using non-borne shells
-Install script should probably contain an @first directive.
-
-The first three lines are currently:
-#@+leo-ver=4-thin
-#@+node:EKR.20040519082027.33:@file-thin ../install
-#!/bin/sh
-
-In shell scripts however the '#!/bin/sh' should *always* be on the first line. Otherwise you get messages in csh like:
-
-%./install
-LEO_PREFIX=/usr/local: Command not found.
-LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
-LEO_PREFIX: Undefined variable.
-</t>
-<t tx="EKR.20040628095213.516">2) bin dir is not created (for this I modified step 2 a tad)
-
-################################
-# Step 2
-# Make the directory structure
-################################
-if [ ! -d $LEO_LIB_DIR ]; then
-...echo ""
-...echo Making directory structure $LEO_LIB_DIR
-
-...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2&gt;&amp;1`
-...if [ $? -ne 0 ]; then
-    ..echo Failure making directory $LEO_LIB_DIR!
-    ..exit 0;
-...fi
-fi
-
-if [ ! -d $LEO_PREFIX/bin ]; then
-...echo ""
-...echo Making directory structure $LEO_PREFIX/bin
-...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2&gt;&amp;1`
-...if [ $? -ne 0 ]; then
-    ..echo Failure making directory $LEO_PREFIX/bin!
-    ..exit 0;
-...fi
-fi
-</t>
-<t tx="EKR.20040628095213.517">@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2618344
-By: sbeards
-
-Another minor issue:
-
-3) leo executable will error out on files with spaces
-
-when attempting to open a leo file that has spaces in the filename (ie leo /tmp/foobar.leo) you'll get the following error in the log pane:
-
-File not found: /tmp/foo
-
-To fix change line 131 in install script:
-
-echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \"\$1\"" &gt; $LEO_RUN_SCRIPT_OUTPUT
-
-(Note: added escaped double quotes around $1)
-
-If you don't want to reinstall just add double-quotes around the $1 in the leo
-executable (defaults to /usr/local/bin/leo).
-
-</t>
 <t tx="EKR.20040628100535">@killcolor</t>
 <t tx="EKR.20040628100535.1"></t>
 <t tx="edream.110203163054">@nocolor
@@ -15152,15 +15089,21 @@ My brother, David Speed Ream, tested Leo and made many useful suggestions.
 Rebecca, James and Linda make it all worthwhile.
 It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo.
 That was a crucial first step.</t>
-<t tx="ekr.20040629164557">- By default, leoConfig.leo and leoConfig.txt specify that Leo will indent using
-spaces instead of tabs.
+<t tx="ekr.20040705111716"></t>
+<t tx="ekr.20040705111716.1">Leo will write only t.unknownAttributes to the .leo file when writing the &lt;v&gt; element corresponding to the root of an @thin tree.  Leo will do this by writing a new xml attribute, say descendentTnodeUnknownAttributes, in &lt;v&gt; element.
 
-- The preferred way to import leoGlobals is:
+The reason that Leo will only write t.unknownAttributes and not v.unknownAttributes is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  This being so, it seems pointless to "pretend" to be writing v.unknownAttributes.
 
-import leoGlobals as g
+The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  As I've stated in the past, this won't do if, for example, a plugin is trying create an arbitrary directed graph between vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.
 
-To access any symbol x in leoGlobals, the code uses g.x.
+7/1/04:
 
-- leoGlobals no longer defines true and false.  Code should use True and False instead.</t>
+- Leo now writes "marks" and "expanded" attributes in the root &lt;v&gt; element for @thin trees.
+
+- VERY IMPORTANT.  Leo now writes entire tree of @ignored @thin nodes.  This fixes a major bug.</t>
+<t tx="ekr.20040705111716.45">Leo marks as dirty all @file nodes when they become "newly unignored".</t>
+<t tx="ekr.20040705111716.126"></t>
+<t tx="ekr.20040705112148"></t>
+<t tx="ekr.20040705150130">Leo now generates no warnings with all significant tests enabled.  Some tests have been disabled in bases classes, and in a few cases pychecker gives erroneous warnings that have been suppressed directly in the source code using the __pychecker__ = arg syntax.</t>
 </tnodes>
 </leo_file>

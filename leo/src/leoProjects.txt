@@ -2199,7 +2199,13 @@ def get_directives_dict(s,root=None):
 j = g.skip_c_id(s,i+1)
 word = s[i+1:j]
 if word in g.globalDirectiveList:
-    dict [word] = i
+    if dict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        dict [word] = i
+#@nonl
 #@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
 #@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
 @ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
@@ -2776,7 +2782,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -3112,6 +3118,12 @@ def idle_redraw (self,scroll=True):
     g.doHook("after-redraw-outline",c=self.c)
 
     self.canvas['cursor'] = oldcursor
+    
+    # g.collectGarbage()
+    g.printGc()
+    # import gc ; print len(gc.get_referents(frame))
+    # g.printGcRefs(verbose=False)
+    # g.trace("positions",g.app.positions)
 #@+node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
 if self.disableRedraw:
     # We have been called as the result of an update_idletasks in the log pane.
@@ -3141,12 +3153,10 @@ self.drawTopTree()
 x0, y0, x1, y1 = self.canvas.bbox("all")
 self.canvas.configure(scrollregion=(0, 0, x1, y1))
 
-# g.printGc()
-
 # Do a scrolling operation after the scrollbar is redrawn
 if scroll:
     self.canvas.after_idle(self.idle_scrollTo)
-#@nonl
+
 #@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
 #@-node:ekr.20031218072017.1015:idle_redraw
 #@+node:ekr.20031218072017.1016:idle_second_redraw
@@ -3291,6 +3301,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -3310,6 +3321,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -4290,7 +4303,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -8458,6 +8471,7 @@ def __init__(self):
     self.openWithFiles = [] # List of data used by Open With command.
     self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
     self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
     self.quitting = False # True if quitting.  Locks out some events.
     self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
     self.root = None # The hidden main window. Set later.
@@ -9988,6 +10002,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -10007,6 +10022,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -10237,6 +10254,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -10256,6 +10274,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -11212,6 +11232,7 @@ def __init__(self):
     self.openWithFiles = [] # List of data used by Open With command.
     self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
     self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
     self.quitting = False # True if quitting.  Locks out some events.
     self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
     self.root = None # The hidden main window. Set later.
@@ -12097,6 +12118,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -12116,6 +12138,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -12242,7 +12266,7 @@ def deleteWidgets (self):
         w.destroy() 
 
     self.widgets = []
-    
+
     # g.trace("done")
 #@nonl
 #@-node:ekr.20031218072017.4143:tree.deleteWidgets
@@ -12545,6 +12569,7 @@ def __init__(self):
     self.openWithFiles = [] # List of data used by Open With command.
     self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
     self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
     self.quitting = False # True if quitting.  Locks out some events.
     self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
     self.root = None # The hidden main window. Set later.
@@ -13376,6 +13401,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -13395,6 +13421,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -14772,6 +14800,8 @@ def canExtract (self):
 canExtractSectionNames = canExtract
         
 def canExtractSection (self):
+    
+    __pychecker__ = '--no-implicitreturns' # Suppress bad warning.
 
     c = self ; body = c.frame.body
     if not body: return False
@@ -15041,7 +15071,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -16746,6 +16776,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -16765,6 +16796,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -16949,6 +16982,12 @@ def idle_redraw (self,scroll=True):
     g.doHook("after-redraw-outline",c=self.c)
 
     self.canvas['cursor'] = oldcursor
+    
+    # g.collectGarbage()
+    g.printGc()
+    # import gc ; print len(gc.get_referents(frame))
+    # g.printGcRefs(verbose=False)
+    # g.trace("positions",g.app.positions)
 #@+node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
 if self.disableRedraw:
     # We have been called as the result of an update_idletasks in the log pane.
@@ -16978,12 +17017,10 @@ self.drawTopTree()
 x0, y0, x1, y1 = self.canvas.bbox("all")
 self.canvas.configure(scrollregion=(0, 0, x1, y1))
 
-# g.printGc()
-
 # Do a scrolling operation after the scrollbar is redrawn
 if scroll:
     self.canvas.after_idle(self.idle_scrollTo)
-#@nonl
+
 #@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
 #@-node:ekr.20031218072017.1015:idle_redraw
 #@+node:ekr.20031218072017.1016:idle_second_redraw
@@ -17042,6 +17079,12 @@ def idle_redraw (self,scroll=True):
     g.doHook("after-redraw-outline",c=self.c)
 
     self.canvas['cursor'] = oldcursor
+    
+    # g.collectGarbage()
+    g.printGc()
+    # import gc ; print len(gc.get_referents(frame))
+    # g.printGcRefs(verbose=False)
+    # g.trace("positions",g.app.positions)
 #@+node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
 if self.disableRedraw:
     # We have been called as the result of an update_idletasks in the log pane.
@@ -17071,12 +17114,10 @@ self.drawTopTree()
 x0, y0, x1, y1 = self.canvas.bbox("all")
 self.canvas.configure(scrollregion=(0, 0, x1, y1))
 
-# g.printGc()
-
 # Do a scrolling operation after the scrollbar is redrawn
 if scroll:
     self.canvas.after_idle(self.idle_scrollTo)
-#@nonl
+
 #@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
 #@-node:ekr.20031218072017.1015:idle_redraw
 #@+node:ekr.20031218072017.1553:getLeoFile
@@ -17705,7 +17746,7 @@ def getExistingVnode (self,tref,headline):
     t = self.tnodesDict.get(tref)
     try:
         return t.vnodeList[0]
-    except IndexError:
+    except (IndexError,AttributeError):
         g.es("Missing vnode:",headline,color="red")
         g.es("Probably an outline topology error.")
         # g.trace(tref1,t,t.vnodeList)
@@ -18147,7 +18188,7 @@ def deleteWidgets (self):
         w.destroy() 
 
     self.widgets = []
-    
+
     # g.trace("done")
 #@nonl
 #@-node:ekr.20031218072017.4143:tree.deleteWidgets
@@ -18616,7 +18657,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -19198,6 +19239,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -19217,6 +19259,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -20281,6 +20325,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -20300,6 +20345,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -20441,7 +20488,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -31803,7 +31850,7 @@ def drawBox (self,p,x,y):
             self.tagBindings.append((id,id3,"<1>"),)
     
         id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+        id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
         
         # Remember the bindings so deleteBindings can delete them.
         self.tagBindings.append((id,id1,"<1>"),)
@@ -37232,7 +37279,13 @@ def get_directives_dict(s,root=None):
 j = g.skip_c_id(s,i+1)
 word = s[i+1:j]
 if word in g.globalDirectiveList:
-    dict [word] = i
+    if dict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        dict [word] = i
+#@nonl
 #@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
 #@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
 @ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
@@ -38365,6 +38418,7 @@ def select (self,p,updateBeadList=True):
     << define vars and stop editing >>
     
     # g.trace(p)
+    # g.printGc()
 
     if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
         << unselect the old node >>
@@ -38384,6 +38438,8 @@ def select (self,p,updateBeadList=True):
     
     g.doHook("select2",c=c,new_v=p,old_v=old_p)
     g.doHook("select3",c=c,new_v=p,old_v=old_p)
+    
+    # g.printGc()
 #@nonl
 #@+node:ekr.20031218072017.1020:<< define vars and stop editing >>
 c = self.c
@@ -40683,7 +40739,7 @@ def getExistingVnode (self,tref,headline):
     t = self.tnodesDict.get(tref)
     try:
         return t.vnodeList[0]
-    except IndexError:
+    except (IndexError,AttributeError):
         g.es("Missing vnode:",headline,color="red")
         g.es("Probably an outline topology error.")
         # g.trace(tref1,t,t.vnodeList)
@@ -43892,6 +43948,398 @@ else:
 #@nonl
 #@-node:EKR.20040625104908.1:<< handle @comment >>
 #@-node:ekr.20031218072017.2779:readDirective
+#@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1382:set_delims_from_language
+# Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+
+    val = app.language_delims_dict.get(language)
+    if val:
+        delim1,delim2,delim3 = g.set_delims_from_string(val)
+        if delim2 and not delim3:
+            return None,delim1,delim2
+        else: # 0,1 or 3 params.
+            return delim1,delim2,delim3
+    else:
+        return None, None, None # Indicate that no change should be made
+#@-node:ekr.20031218072017.1382:set_delims_from_language
+#@+node:ekr.20031218072017.1383:set_delims_from_string
+def set_delims_from_string(s):
+
+    """Returns (delim1, delim2, delim2), the delims following the @comment directive.
+    
+    This code can be called from @languge logic, in which case s can point at @comment"""
+
+    # Skip an optional @comment
+    tag = "@comment"
+    i = 0
+    if g.match_word(s,i,tag):
+        i += len(tag)
+        
+    count = 0 ; delims = [None, None, None]
+    while count < 3 and i < len(s):
+        i = j = g.skip_ws(s,i)
+        while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+            i += 1
+        if j == i: break
+        delims[count] = s[j:i]
+        count += 1
+        
+    # 'rr 09/25/02
+    if count == 2: # delims[0] is always the single-line delim.
+        delims[2] = delims[1]
+        delims[1] = delims[0]
+        delims[0] = None
+
+    # 7/8/02: The "REM hack": replace underscores by blanks.
+    # 9/25/02: The "perlpod hack": replace double underscores by newlines.
+    for i in xrange(0,3):
+        if delims[i]:
+            delims[i] = string.replace(delims[i],"__",'\n') 
+            delims[i] = string.replace(delims[i],'_',' ')
+
+    return delims[0], delims[1], delims[2]
+#@nonl
+#@-node:ekr.20031218072017.1383:set_delims_from_string
+#@+node:ekr.20031218072017.1384:set_language
+def set_language(s,i,issue_errors_flag=False):
+    
+    """Scan the @language directive that appears at s[i:].
+
+    Returns (language, delim1, delim2, delim3)
+    """
+
+    tag = "@language"
+    # g.trace(g.get_line(s,i))
+    assert(i != None)
+    assert(g.match_word(s,i,tag))
+    i += len(tag) ; i = g.skip_ws(s, i)
+    # Get the argument.
+    j = i ; i = g.skip_c_id(s,i)
+    # Allow tcl/tk.
+    arg = string.lower(s[j:i])
+    if app.language_delims_dict.get(arg):
+        language = arg
+        delim1, delim2, delim3 = g.set_delims_from_language(language)
+        return language, delim1, delim2, delim3
+    
+    if issue_errors_flag:
+        g.es("ignoring: " + g.get_line(s,i))
+
+    return None, None, None, None,
+#@nonl
+#@-node:ekr.20031218072017.1384:set_language
+#@-node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1385:findReference
+@ We search the descendents of v looking for the definition node matching name.
+There should be exactly one such node (descendents of other definition nodes are not searched).
+@c
+
+def findReference(name,root):
+
+    for p in root.subtree_iter():
+        assert(p!=root)
+        if p.matchHeadline(name) and not p.isAtIgnoreNode():
+            return p
+
+    # g.trace("not found:",name,root)
+    return root.c.nullPosition()
+#@nonl
+#@-node:ekr.20031218072017.1385:findReference
+#@+node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+
+def get_directives_dict(s,root=None):
+    
+    """Scans root for @directives found in globalDirectivesList.
+
+    Returns a dict containing pointers to the start of each directive"""
+
+    if root: root_node = root[0]
+    dict = {}
+    i = 0 ; n = len(s)
+    while i < n:
+        if s[i] == '@' and i+1 < n:
+            << set dict for @ directives >>
+        elif root and g.match(s,i,"<<"):
+            << set dict["root"] for noweb * chunks >>
+        i = g.skip_line(s,i)
+    return dict
+#@nonl
+#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+j = g.skip_c_id(s,i+1)
+word = s[i+1:j]
+if word in g.globalDirectiveList:
+    if dict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        dict [word] = i
+#@nonl
+#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+@ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
+@c
+
+i = g.skip_ws(s,i+2)
+if i < n and s[i] == '*' :
+    i = g.skip_ws(s,i+1) # Skip the '*'
+    if g.match(s,i,">>="):
+        # < < * > > = implies that @root should appear in the headline.
+        i += 3
+        if root_node:
+            dict["root"]=0 # value not immportant
+        else:
+            g.es(g.angleBrackets("*") + "= requires @root in the headline")
+#@nonl
+#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+#@+node:ekr.20031218072017.1386:getOutputNewline
+def getOutputNewline (lineending = None):
+    
+    """Convert the name of a line ending to the line ending itself.
+    Use the output_newline configuration option if no lineending is given.
+    """
+    
+    if lineending:
+        s = lineending
+    else:
+        s = app.config.output_newline
+
+    s = s.lower()
+    if s in ( "nl","lf"): s = '\n'
+    elif s == "cr": s = '\r'
+    elif s == "platform": s = os.linesep  # 12/2/03: emakital
+    elif s == "crlf": s = "\r\n"
+    else: s = '\n' # Default for erroneous values.
+    return s
+#@nonl
+#@-node:ekr.20031218072017.1386:getOutputNewline
+#@+node:ekr.20031218072017.1387:scanAtEncodingDirective
+def scanAtEncodingDirective(s,dict):
+    
+    """Scan the @encoding directive at s[dict["encoding"]:].
+
+    Returns the encoding name or None if the encoding name is invalid.
+    """
+
+    k = dict["encoding"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@encoding")
+    encoding = s[k+j:i].strip()
+    if g.isValidEncoding(encoding):
+        # g.trace(encoding)
+        return encoding
+    else:
+        g.es("invalid @encoding:"+encoding,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1387:scanAtEncodingDirective
+#@+node:ekr.20031218072017.1388:scanAtLineendingDirective
+def scanAtLineendingDirective(s,dict):
+    
+    """Scan the @lineending directive at s[dict["lineending"]:].
+
+    Returns the actual lineending or None if the name of the lineending is invalid.
+    """
+
+    k = dict["lineending"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@lineending")
+    j = g.skip_ws(s,j)
+    e = s[k+j:i].strip()
+
+    if e in ("cr","crlf","lf","nl","platform"):
+        lineending = g.getOutputNewline(e)
+        # g.trace(e,lineending)
+        return lineending
+    else:
+        # g.es("invalid @lineending directive:"+e,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1388:scanAtLineendingDirective
+#@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
+def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["pagewidth"]
+    j = i = k + len("@pagewidth")
+    i, val = g.skip_long(s,i)
+    if val != None and val > 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            j = g.skip_to_end_of_line(s,k)
+            g.es("ignoring " + s[k:j],color="red")
+        return None
+#@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
+#@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
+def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["tabwidth"]
+    i = k + len("@tabwidth")
+    i, val = g.skip_long(s, i)
+    if val != None and val != 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            i = g.skip_to_end_of_line(s,k)
+            g.es("Ignoring " + s[k:i],color="red")
+        return None
+
+#@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20031218072017.1391:scanDirectives (utils)
+@ Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
+@c
+
+def scanDirectives(c,p=None):
+    
+    """Scan vnode v and v's ancestors looking for directives.
+
+    Returns a dict containing the results, including defaults."""
+
+    if c == None or g.top() == None:
+        return {} # For unit tests.
+    if p is None:
+        p = c.currentPosition()
+
+    << Set local vars >>
+    old = {}
+    pluginsList = [] # 5/17/03: a list of items for use by plugins.
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @comment and @language >>
+        << Test for @encoding >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @path >>
+        << Test for @tabwidth >>
+        << Test for @wrap and @nowrap >>
+        g.doHook("scan-directives",c=c,v=p,s=s,
+            old_dict=old,dict=dict,pluginsList=pluginsList)
+        old.update(dict)
+
+    if path == None: path = g.getBaseDirectory()
+
+    return {
+        "delims"    : (delim1,delim2,delim3),
+        "encoding"  : encoding,
+        "language"  : language,
+        "lineending": lineending,
+        "pagewidth" : page_width,
+        "path"      : path,
+        "tabwidth"  : tab_width,
+        "pluginsList": pluginsList,
+        "wrap"      : wrap }
+#@nonl
+#@+node:ekr.20031218072017.1392:<< Set local vars >>
+page_width = c.page_width
+tab_width  = c.tab_width
+language = c.target_language
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+path = None
+encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
+lineending = g.getOutputNewline() # 4/24/03 initialize from config settings.
+wrap = app.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
+#@nonl
+#@-node:ekr.20031218072017.1392:<< Set local vars >>
+#@+node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+# @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and dict.has_key("comment"):
+    k = dict["comment"]
+    delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and dict.has_key("language"):
+    k = dict["language"]
+    language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.1394:<< Test for @encoding >>
+if not old.has_key("encoding") and dict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        encoding = e
+#@-node:ekr.20031218072017.1394:<< Test for @encoding >>
+#@+node:ekr.20031218072017.1395:<< Test for @lineending >>
+if not old.has_key("lineending") and dict.has_key("lineending"):
+    
+    e = g.scanAtLineendingDirective(s,dict)
+    if e:
+        lineending = e
+#@-node:ekr.20031218072017.1395:<< Test for @lineending >>
+#@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,dict)
+    if w and w > 0:
+        page_width = w
+#@nonl
+#@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.1397:<< Test for @path >>
+if not path and not old.has_key("path") and dict.has_key("path"):
+
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        
+#@nonl
+#@+node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+
+path = string.strip(path)
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+#@-node:ekr.20031218072017.1397:<< Test for @path >>
+#@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,dict)
+    if w and w != 0:
+        tab_width = w
+#@nonl
+#@-node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+if not old.has_key("wrap") and not old.has_key("nowrap"):
+    
+    if dict.has_key("wrap"):
+        wrap = True
+    elif dict.has_key("nowrap"):
+        wrap = False
+#@nonl
+#@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+#@-node:ekr.20031218072017.1391:scanDirectives (utils)
+#@-node:ekr.20031218072017.1380:Directive utils...
 #@-node:EKR.20040623101617.4:(Handled inner @language and @comment properly)
 #@-node:EKR.20040625092523:6/25
 #@+node:EKR.20040626110541:6/28
@@ -44670,6 +45118,671 @@ def readEndNode (self,s,i,middle=False):
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:EKR.20040524053657.1:(Better reporting of body text conflicts)
 #@-node:EKR.20040628084530:6/29
+#@+node:EKR.20040623101617.4:(Handled inner @language and @comment properly)
+#@+node:EKR.20040625095103.1:Notes
+@killcolor
+
+There is a small hole in the format of derived files.  Leo presently assumes that comment delimiters do not change within any particular derived file.
+
+This assumption is not necessarily true in files like leoProjects.txt.
+
+What I did:
+
+- putDirective and readDirective now check for @langauge and @comment, and change comment delims appropriately.
+
+This is slightly dubious: after all, an @langauge directive in the middle of most derived files will cause havoc.  However, one could say that this is the users problem :-)
+
+BTW, this doesn't really solve all problems in @all trees: Leo can still get mightily confused about comment delims if the user doesn't put proper @language directives in @all trees.
+#@-node:EKR.20040625095103.1:Notes
+#@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1382:set_delims_from_language
+# Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+
+    val = app.language_delims_dict.get(language)
+    if val:
+        delim1,delim2,delim3 = g.set_delims_from_string(val)
+        if delim2 and not delim3:
+            return None,delim1,delim2
+        else: # 0,1 or 3 params.
+            return delim1,delim2,delim3
+    else:
+        return None, None, None # Indicate that no change should be made
+#@-node:ekr.20031218072017.1382:set_delims_from_language
+#@+node:ekr.20031218072017.1383:set_delims_from_string
+def set_delims_from_string(s):
+
+    """Returns (delim1, delim2, delim2), the delims following the @comment directive.
+    
+    This code can be called from @languge logic, in which case s can point at @comment"""
+
+    # Skip an optional @comment
+    tag = "@comment"
+    i = 0
+    if g.match_word(s,i,tag):
+        i += len(tag)
+        
+    count = 0 ; delims = [None, None, None]
+    while count < 3 and i < len(s):
+        i = j = g.skip_ws(s,i)
+        while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+            i += 1
+        if j == i: break
+        delims[count] = s[j:i]
+        count += 1
+        
+    # 'rr 09/25/02
+    if count == 2: # delims[0] is always the single-line delim.
+        delims[2] = delims[1]
+        delims[1] = delims[0]
+        delims[0] = None
+
+    # 7/8/02: The "REM hack": replace underscores by blanks.
+    # 9/25/02: The "perlpod hack": replace double underscores by newlines.
+    for i in xrange(0,3):
+        if delims[i]:
+            delims[i] = string.replace(delims[i],"__",'\n') 
+            delims[i] = string.replace(delims[i],'_',' ')
+
+    return delims[0], delims[1], delims[2]
+#@nonl
+#@-node:ekr.20031218072017.1383:set_delims_from_string
+#@+node:ekr.20031218072017.1384:set_language
+def set_language(s,i,issue_errors_flag=False):
+    
+    """Scan the @language directive that appears at s[i:].
+
+    Returns (language, delim1, delim2, delim3)
+    """
+
+    tag = "@language"
+    # g.trace(g.get_line(s,i))
+    assert(i != None)
+    assert(g.match_word(s,i,tag))
+    i += len(tag) ; i = g.skip_ws(s, i)
+    # Get the argument.
+    j = i ; i = g.skip_c_id(s,i)
+    # Allow tcl/tk.
+    arg = string.lower(s[j:i])
+    if app.language_delims_dict.get(arg):
+        language = arg
+        delim1, delim2, delim3 = g.set_delims_from_language(language)
+        return language, delim1, delim2, delim3
+    
+    if issue_errors_flag:
+        g.es("ignoring: " + g.get_line(s,i))
+
+    return None, None, None, None,
+#@nonl
+#@-node:ekr.20031218072017.1384:set_language
+#@-node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1921:putDirective  (handles @delims,@comment,@language) 4.x
+@ It is important for PHP and other situations that @first and @last directives get translated to verbatim lines that do _not_ include what follows the @first & @last directives.
+@c
+
+def putDirective(self,s,i):
+    
+    """Output a sentinel a directive or reference s."""
+
+    tag = "@delims"
+    assert(i < len(s) and s[i] == '@')
+    k = i
+    j = g.skip_to_end_of_line(s,i)
+    directive = s[i:j]
+
+    if g.match_word(s,k,"@delims"):
+        << handle @delims >>
+    elif g.match_word(s,k,"@language"):
+        << handle @language >>
+    elif g.match_word(s,k,"@comment"):
+        << handle @comment >>
+    elif g.match_word(s,k,"@last"):
+        self.putSentinel("@@last") # 10/27/03: Convert to an verbatim line _without_ anything else.
+    elif g.match_word(s,k,"@first"):
+        self.putSentinel("@@first") # 10/27/03: Convert to an verbatim line _without_ anything else.
+    else:
+        self.putSentinel("@" + directive)
+
+    i = g.skip_line(s,k)
+    return i
+#@nonl
+#@+node:ekr.20031218072017.1922:<< handle @delims >>
+# Put a space to protect the last delim.
+self.putSentinel(directive + " ") # 10/23/02: put @delims, not @@delims
+
+# Skip the keyword and whitespace.
+j = i = g.skip_ws(s,k+len(tag))
+
+# Get the first delim.
+while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+    i += 1
+if j < i:
+    self.startSentinelComment = s[j:i]
+    # Get the optional second delim.
+    j = i = g.skip_ws(s,i)
+    while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+        i += 1
+    self.endSentinelComment = g.choose(j<i, s[j:i], "")
+else:
+    self.writeError("Bad @delims directive")
+#@nonl
+#@-node:ekr.20031218072017.1922:<< handle @delims >>
+#@+node:EKR.20040625103148:<< handle @language >>
+self.putSentinel("@" + directive)
+
+# Skip the keyword and whitespace.
+i = k + len("@language")
+i = g.skip_ws(s,i)
+j = g.skip_c_id(s,i)
+language = s[i:j]
+
+delim1,delim2,delim3 = g.set_delims_from_language(language)
+
+# g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = ""
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @language directive: %s" % line,color="blue")
+#@nonl
+#@-node:EKR.20040625103148:<< handle @language >>
+#@+node:EKR.20040625103148.1:<< handle @comment >>
+self.putSentinel("@" + directive)
+
+j = g.skip_line(s,i)
+line = s[i:j]
+delim1,delim2,delim3 = g.set_delims_from_string(line)
+
+# g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = None
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    g.es("Ignoring bad @comment directive: %s" % line,color="blue")
+#@nonl
+#@-node:EKR.20040625103148.1:<< handle @comment >>
+#@-node:ekr.20031218072017.1921:putDirective  (handles @delims,@comment,@language) 4.x
+#@+node:ekr.20031218072017.2779:readDirective
+def readDirective (self,s,i):
+    
+    """Read an @@sentinel."""
+    
+    at = self
+    assert(g.match(s,i,"@")) # The first '@' has already been eaten.
+    
+    if g.match_word(s,i,"@raw"):
+        at.raw = True
+    elif g.match_word(s,i,"@end_raw"):
+        at.raw = False
+    
+    e = at.endSentinelComment
+    s2 = s[i:]
+    if len(e) > 0:
+        k = s.rfind(e,i)
+        if k != -1:
+            s2 = s[i:k] + '\n'
+        
+    start = at.startSentinelComment
+    if start and len(start) > 0 and start[-1] == '@':
+        s2 = s2.replace('@@','@')
+        
+    if g.match_word(s,i,"@language"):
+        << handle @language >>
+    elif g.match_word(s,i,"@comment"):
+        << handle @comment >>
+
+    at.out.append(s2)
+#@nonl
+#@+node:EKR.20040625104908:<< handle @language >>
+# Skip the keyword and whitespace.
+i += len("@language")
+i = g.skip_ws(s,i)
+j = g.skip_c_id(s,i)
+language = s[i:j]
+
+delim1,delim2,delim3 = g.set_delims_from_language(language)
+
+#g.trace(g.get_line(s,i))
+#g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    at.startSentinelComment = delim1
+    at.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    at.startSentinelComment = delim2
+    at.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @@language sentinel: %s" % line,color="red")
+#@nonl
+#@-node:EKR.20040625104908:<< handle @language >>
+#@+node:EKR.20040625104908.1:<< handle @comment >>
+j = g.skip_line(s,i)
+line = s[i:j]
+delim1,delim2,delim3 = g.set_delims_from_string(line)
+
+#g.trace(g.get_line(s,i))
+#g.trace(delim1,delim2,delim3)
+
+# Returns a tuple (single,start,end) of comment delims
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else:
+    line = g.get_line(s,i)
+    g.es("Ignoring bad @comment sentinel: %s" % line,color="red")
+#@nonl
+#@-node:EKR.20040625104908.1:<< handle @comment >>
+#@-node:ekr.20031218072017.2779:readDirective
+#@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1382:set_delims_from_language
+# Returns a tuple (single,start,end) of comment delims
+
+def set_delims_from_language(language):
+
+    val = app.language_delims_dict.get(language)
+    if val:
+        delim1,delim2,delim3 = g.set_delims_from_string(val)
+        if delim2 and not delim3:
+            return None,delim1,delim2
+        else: # 0,1 or 3 params.
+            return delim1,delim2,delim3
+    else:
+        return None, None, None # Indicate that no change should be made
+#@-node:ekr.20031218072017.1382:set_delims_from_language
+#@+node:ekr.20031218072017.1383:set_delims_from_string
+def set_delims_from_string(s):
+
+    """Returns (delim1, delim2, delim2), the delims following the @comment directive.
+    
+    This code can be called from @languge logic, in which case s can point at @comment"""
+
+    # Skip an optional @comment
+    tag = "@comment"
+    i = 0
+    if g.match_word(s,i,tag):
+        i += len(tag)
+        
+    count = 0 ; delims = [None, None, None]
+    while count < 3 and i < len(s):
+        i = j = g.skip_ws(s,i)
+        while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
+            i += 1
+        if j == i: break
+        delims[count] = s[j:i]
+        count += 1
+        
+    # 'rr 09/25/02
+    if count == 2: # delims[0] is always the single-line delim.
+        delims[2] = delims[1]
+        delims[1] = delims[0]
+        delims[0] = None
+
+    # 7/8/02: The "REM hack": replace underscores by blanks.
+    # 9/25/02: The "perlpod hack": replace double underscores by newlines.
+    for i in xrange(0,3):
+        if delims[i]:
+            delims[i] = string.replace(delims[i],"__",'\n') 
+            delims[i] = string.replace(delims[i],'_',' ')
+
+    return delims[0], delims[1], delims[2]
+#@nonl
+#@-node:ekr.20031218072017.1383:set_delims_from_string
+#@+node:ekr.20031218072017.1384:set_language
+def set_language(s,i,issue_errors_flag=False):
+    
+    """Scan the @language directive that appears at s[i:].
+
+    Returns (language, delim1, delim2, delim3)
+    """
+
+    tag = "@language"
+    # g.trace(g.get_line(s,i))
+    assert(i != None)
+    assert(g.match_word(s,i,tag))
+    i += len(tag) ; i = g.skip_ws(s, i)
+    # Get the argument.
+    j = i ; i = g.skip_c_id(s,i)
+    # Allow tcl/tk.
+    arg = string.lower(s[j:i])
+    if app.language_delims_dict.get(arg):
+        language = arg
+        delim1, delim2, delim3 = g.set_delims_from_language(language)
+        return language, delim1, delim2, delim3
+    
+    if issue_errors_flag:
+        g.es("ignoring: " + g.get_line(s,i))
+
+    return None, None, None, None,
+#@nonl
+#@-node:ekr.20031218072017.1384:set_language
+#@-node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
+#@+node:ekr.20031218072017.1385:findReference
+@ We search the descendents of v looking for the definition node matching name.
+There should be exactly one such node (descendents of other definition nodes are not searched).
+@c
+
+def findReference(name,root):
+
+    for p in root.subtree_iter():
+        assert(p!=root)
+        if p.matchHeadline(name) and not p.isAtIgnoreNode():
+            return p
+
+    # g.trace("not found:",name,root)
+    return root.c.nullPosition()
+#@nonl
+#@-node:ekr.20031218072017.1385:findReference
+#@+node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
+
+def get_directives_dict(s,root=None):
+    
+    """Scans root for @directives found in globalDirectivesList.
+
+    Returns a dict containing pointers to the start of each directive"""
+
+    if root: root_node = root[0]
+    dict = {}
+    i = 0 ; n = len(s)
+    while i < n:
+        if s[i] == '@' and i+1 < n:
+            << set dict for @ directives >>
+        elif root and g.match(s,i,"<<"):
+            << set dict["root"] for noweb * chunks >>
+        i = g.skip_line(s,i)
+    return dict
+#@nonl
+#@+node:ekr.20031218072017.1261:<< set dict for @ directives >>
+j = g.skip_c_id(s,i+1)
+word = s[i+1:j]
+if word in g.globalDirectiveList:
+    if dict.has_key(word):
+        # Ignore second value.
+        pass
+        # g.es("Warning: conflicting values for %s" % (word), color="blue")
+    else:
+        dict [word] = i
+#@nonl
+#@-node:ekr.20031218072017.1261:<< set dict for @ directives >>
+#@+node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+@ The following looks for chunk definitions of the form < < * > > =. If found, we take this to be equivalent to @root filename if the headline has the form @root filename.
+@c
+
+i = g.skip_ws(s,i+2)
+if i < n and s[i] == '*' :
+    i = g.skip_ws(s,i+1) # Skip the '*'
+    if g.match(s,i,">>="):
+        # < < * > > = implies that @root should appear in the headline.
+        i += 3
+        if root_node:
+            dict["root"]=0 # value not immportant
+        else:
+            g.es(g.angleBrackets("*") + "= requires @root in the headline")
+#@nonl
+#@-node:ekr.20031218072017.1262:<< set dict["root"] for noweb * chunks >>
+#@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
+#@+node:ekr.20031218072017.1386:getOutputNewline
+def getOutputNewline (lineending = None):
+    
+    """Convert the name of a line ending to the line ending itself.
+    Use the output_newline configuration option if no lineending is given.
+    """
+    
+    if lineending:
+        s = lineending
+    else:
+        s = app.config.output_newline
+
+    s = s.lower()
+    if s in ( "nl","lf"): s = '\n'
+    elif s == "cr": s = '\r'
+    elif s == "platform": s = os.linesep  # 12/2/03: emakital
+    elif s == "crlf": s = "\r\n"
+    else: s = '\n' # Default for erroneous values.
+    return s
+#@nonl
+#@-node:ekr.20031218072017.1386:getOutputNewline
+#@+node:ekr.20031218072017.1387:scanAtEncodingDirective
+def scanAtEncodingDirective(s,dict):
+    
+    """Scan the @encoding directive at s[dict["encoding"]:].
+
+    Returns the encoding name or None if the encoding name is invalid.
+    """
+
+    k = dict["encoding"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@encoding")
+    encoding = s[k+j:i].strip()
+    if g.isValidEncoding(encoding):
+        # g.trace(encoding)
+        return encoding
+    else:
+        g.es("invalid @encoding:"+encoding,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1387:scanAtEncodingDirective
+#@+node:ekr.20031218072017.1388:scanAtLineendingDirective
+def scanAtLineendingDirective(s,dict):
+    
+    """Scan the @lineending directive at s[dict["lineending"]:].
+
+    Returns the actual lineending or None if the name of the lineending is invalid.
+    """
+
+    k = dict["lineending"]
+    i = g.skip_to_end_of_line(s,k)
+    j = len("@lineending")
+    j = g.skip_ws(s,j)
+    e = s[k+j:i].strip()
+
+    if e in ("cr","crlf","lf","nl","platform"):
+        lineending = g.getOutputNewline(e)
+        # g.trace(e,lineending)
+        return lineending
+    else:
+        # g.es("invalid @lineending directive:"+e,color="red")
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1388:scanAtLineendingDirective
+#@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
+def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @pagewidth directive at s[dict["pagewidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["pagewidth"]
+    j = i = k + len("@pagewidth")
+    i, val = g.skip_long(s,i)
+    if val != None and val > 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            j = g.skip_to_end_of_line(s,k)
+            g.es("ignoring " + s[k:j],color="red")
+        return None
+#@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
+#@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
+def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
+    
+    """Scan the @tabwidth directive at s[dict["tabwidth"]:].
+
+    Returns the value of the width or None if the width is invalid.
+    """
+    
+    k = dict["tabwidth"]
+    i = k + len("@tabwidth")
+    i, val = g.skip_long(s, i)
+    if val != None and val != 0:
+        # g.trace(val)
+        return val
+    else:
+        if issue_error_flag:
+            i = g.skip_to_end_of_line(s,k)
+            g.es("Ignoring " + s[k:i],color="red")
+        return None
+
+#@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20031218072017.1391:scanDirectives (utils)
+@ Perhaps this routine should be the basis of atFile.scanAllDirectives and tangle.scanAllDirectives, but I am loath to make any further to these two already-infamous routines.  Also, this code does not check for @color and @nocolor directives: leoColor.useSyntaxColoring does that.
+@c
+
+def scanDirectives(c,p=None):
+    
+    """Scan vnode v and v's ancestors looking for directives.
+
+    Returns a dict containing the results, including defaults."""
+
+    if c == None or g.top() == None:
+        return {} # For unit tests.
+    if p is None:
+        p = c.currentPosition()
+
+    << Set local vars >>
+    old = {}
+    pluginsList = [] # 5/17/03: a list of items for use by plugins.
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @comment and @language >>
+        << Test for @encoding >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @path >>
+        << Test for @tabwidth >>
+        << Test for @wrap and @nowrap >>
+        g.doHook("scan-directives",c=c,v=p,s=s,
+            old_dict=old,dict=dict,pluginsList=pluginsList)
+        old.update(dict)
+
+    if path == None: path = g.getBaseDirectory()
+
+    return {
+        "delims"    : (delim1,delim2,delim3),
+        "encoding"  : encoding,
+        "language"  : language,
+        "lineending": lineending,
+        "pagewidth" : page_width,
+        "path"      : path,
+        "tabwidth"  : tab_width,
+        "pluginsList": pluginsList,
+        "wrap"      : wrap }
+#@nonl
+#@+node:ekr.20031218072017.1392:<< Set local vars >>
+page_width = c.page_width
+tab_width  = c.tab_width
+language = c.target_language
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+path = None
+encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
+lineending = g.getOutputNewline() # 4/24/03 initialize from config settings.
+wrap = app.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
+#@nonl
+#@-node:ekr.20031218072017.1392:<< Set local vars >>
+#@+node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+# @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and dict.has_key("comment"):
+    k = dict["comment"]
+    delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and dict.has_key("language"):
+    k = dict["language"]
+    language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.1393:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.1394:<< Test for @encoding >>
+if not old.has_key("encoding") and dict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        encoding = e
+#@-node:ekr.20031218072017.1394:<< Test for @encoding >>
+#@+node:ekr.20031218072017.1395:<< Test for @lineending >>
+if not old.has_key("lineending") and dict.has_key("lineending"):
+    
+    e = g.scanAtLineendingDirective(s,dict)
+    if e:
+        lineending = e
+#@-node:ekr.20031218072017.1395:<< Test for @lineending >>
+#@+node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,dict)
+    if w and w > 0:
+        page_width = w
+#@nonl
+#@-node:ekr.20031218072017.1396:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.1397:<< Test for @path >>
+if not path and not old.has_key("path") and dict.has_key("path"):
+
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        
+#@nonl
+#@+node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+
+path = string.strip(path)
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
+#@-node:ekr.20031218072017.1397:<< Test for @path >>
+#@+node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,dict)
+    if w and w != 0:
+        tab_width = w
+#@nonl
+#@-node:ekr.20031218072017.1399:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+if not old.has_key("wrap") and not old.has_key("nowrap"):
+    
+    if dict.has_key("wrap"):
+        wrap = True
+    elif dict.has_key("nowrap"):
+        wrap = False
+#@nonl
+#@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
+#@-node:ekr.20031218072017.1391:scanDirectives (utils)
+#@-node:ekr.20031218072017.1380:Directive utils...
+#@-node:EKR.20040623101617.4:(Handled inner @language and @comment properly)
 #@-node:ekr.20040629162758:June 2004
 #@-node:EKR.20040610102329:In 4.2 b1
 #@+node:ekr.20040701065235:in 4.2 b2
@@ -45314,6 +46427,1768 @@ else:
 (fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:2047: No class attribute (writeError) found
 #@nonl
 #@-node:ekr.20040701212305:(Fixed still more pychecker errors)
+#@+node:ekr.20040702080759:(Marked all related @thin nodes dirty when a node changesd)
+#@+node:ekr.20040702090737:Notes
+@
+The following code would be way to expensive to insert in findAllPotentiallyDirtyNodes!
+Also, it marks almost all @file nodes as dirty in LeoPy.leo.
+@c
+
+ if setDescendentsDirty:
+    child = v2.firstChild()
+    while child:
+        if child not in nodes and child not in addedNodes:
+            addedNodes.append(child)
+        child = child.next()
+        
+@ Instead, p.setAllAncestorAtFileNodesDirty only marks direct descendent nodes as potential candidates.  This will do what is needed in most cases, but perhaps not in all cases involving clones.  It's an interesting proof...
+
+Still, I think the present code will be good enough;  it plugs all the obvious holes.
+#@nonl
+#@-node:ekr.20040702090737:Notes
+#@+node:ekr.20031218072017.2039:undo & allies
+def undo (self):
+
+    """Undo the operation described by the undo parmaters."""
+    
+    u = self ; c = u.c
+    if not u.canUndo(): return
+    if not u.getBead(u.bead): return
+    if not c.currentPosition(): return
+    # g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
+
+    c.endEditing()# Make sure we capture the headline for a redo.
+    u.undoing = True
+    u.redrawFlag = True
+    u.updateSetChangedFlag = True
+
+    c.beginUpdate()
+    if 1: # update...
+        try:
+            func = u.undoDispatchDict[u.undoType]
+        except KeyError:
+            s = "Unknown undo key: %s" % u.undoType
+            g.trace(s) ; g.es(s, color="red")
+            func = None
+        if func:
+            func()
+            if u.updateSetChangedFlag:
+                c.setChanged(True)
+                if u.p: u.p.setDirty(setDescendentsDirty=False)
+    c.endUpdate(u.redrawFlag)
+
+    u.undoing = False
+    u.bead -= 1
+    u.setUndoTypes()
+#@nonl
+#@+node:EKR.20040526090701.5:undoChangeAll
+def undoChangeAll (self):
+    
+    u = self ; c = u.c
+
+    count = 0
+    while 1:
+        u.bead -= 1
+        d = u.getBead(u.bead)
+        assert(d)
+        # g.trace(u.undoType,u.p,u.oldText)
+        if u.undoType == "Change All":
+            c.selectVnode(u.p)
+            break
+        elif u.undoType == "Change":
+            u.p.setTnodeText(u.oldText)
+            count += 1
+            u.p.setDirty()
+        elif u.undoType == "Change Headline":
+            u.p.initHeadString(u.oldText)
+            count += 1
+        else: assert(False)
+
+    g.es("undo %d instances" % count)
+#@nonl
+#@-node:EKR.20040526090701.5:undoChangeAll
+#@+node:EKR.20040526090701.6:undoChangeHeadline
+def undoChangeHeadline (self):
+    
+    u = self ; c = u.c
+    
+    # g.trace(u.oldText)
+
+    u.p.setHeadStringOrHeadline(u.oldText)
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526090701.6:undoChangeHeadline
+#@+node:EKR.20040526083847:undoClone & undoDragClone
+def undoClone (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+    c.selectVnode(u.back)
+
+def undoDragClone (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+    c.selectVnode(u.oldV)
+#@nonl
+#@-node:EKR.20040526083847:undoClone & undoDragClone
+#@+node:EKR.20040526083847.1:undoDeleteNode
+@ Deleting a clone is _not_ the same as undoing a clone:
+the clone may have been moved, so there is no necessary relationship between the two nodes.
+@c
+
+def undoDeleteNode (self):
+    
+    u = self ; c = u.c
+    
+    if u.back:
+        u.p.linkAfter(u.back)
+    elif u.parent:
+        u.p.linkAsNthChild(u.parent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526083847.1:undoDeleteNode
+#@+node:ekr.20031218072017.3620:undoDemote
+def undoDemote (self):
+    
+    u = self ; c = u.c
+
+    p   = u.p.copy()
+    ins = u.p.copy()
+    last = u.lastChild
+    assert(p.hasFirstChild)
+    child = p.firstChild()
+    
+    # Do not undemote children up to last.
+    # Do not use an iterator here.
+    if last:
+        while child and child != last:
+            child = child.next()
+        if child:
+            child = child.next()
+
+    while child:
+        next = child.next()
+        child.moveAfter(ins)
+        ins = child
+        child = next
+    c.selectVnode(p)
+#@nonl
+#@-node:ekr.20031218072017.3620:undoDemote
+#@+node:EKR.20040526083847.2:undoHoist and undoDehoist
+def undoHoist (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.dehoist()
+    u.updateSetChangedFlag = False
+
+def undoDehoist (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.hoist()
+    u.updateSetChangedFlag = False
+#@-node:EKR.20040526083847.2:undoHoist and undoDehoist
+#@+node:EKR.20040526084140:undoInsertNodes
+def undoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+    if u.select:
+        c.selectVnode(u.select)
+#@nonl
+#@-node:EKR.20040526084140:undoInsertNodes
+#@+node:EKR.20040526084140.1:undoMoveNode
+def undoMoveNode (self):
+    
+    u = self ; c = u.c
+
+    # g.trace("oldParent",u.oldParent)
+
+    if u.oldParent:
+        u.p.moveToNthChildOf(u.oldParent,u.oldN)
+    elif u.oldBack:
+        u.p.moveAfter(u.oldBack)
+    else:
+        oldRoot = c.rootPosition() # Bug fix: 4/9/04
+        u.p.moveToRoot(oldRoot)
+
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526084140.1:undoMoveNode
+#@+node:ekr.20031218072017.3621:undoPromote
+# Undoes the previous promote operation.
+def undoPromote (self):
+    
+    u = self ; c = u.c
+    next = u.p.next()
+    last = u.lastChild
+    assert(next)
+    
+    while next: # don't use an iterator here.
+        p2 = next
+        next = p2.next()
+        n = u.p.numberOfChildren()
+        p2.moveToNthChildOf(u.p,n)
+        if p2 == last: break
+    c.selectVnode(u.p)
+#@nonl
+#@-node:ekr.20031218072017.3621:undoPromote
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+
+    u = self ; c = u.c
+    assert(p == c.currentPosition())
+    v = p.v
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using v's body text >>
+    # g.trace(v)
+    # g.trace("old:",v.bodyString())
+    v.setTnodeText(result)
+    # g.trace("new:",v.bodyString())
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+# Recreate the text using the present body text.
+body = v.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@+node:ekr.20031218072017.1714:undoReplace
+@ This routine implements undo for any kind of operation, no matter how complex.  Just do:
+
+    v_copy = c.undoer.saveTree(v)
+    ...make arbitrary changes to p's tree.
+    c.undoer.setUndoParams("Op Name",p,select=current,oldTree=v_copy)
+@c
+
+def undoReplace (self,p,new_data,old_data):
+
+    """Replace p.v and its subtree using old_data during undo."""
+
+    u = self ; c = u.c
+    if 0:
+        # g.trace(u.undoType,"u.bead",u.bead)
+        g.trace("new_data:",new_data)
+        g.trace("old_data:",old_data)
+
+    if new_data == None:
+        # This is the first time we have undone the operation.
+        # Put the new data in the bead.
+        d = u.beads[u.bead]
+        d["newTree"] = u.saveTree(p.copy())
+        u.beads[u.bead] = d
+
+    # Replace data in tree with old data.
+    u.restoreTree(old_data)
+    p.setBodyStringOrPane(p.bodyString())
+
+    return p # Nothing really changes.
+#@nonl
+#@-node:ekr.20031218072017.1714:undoReplace
+#@+node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
+def undoReplaceNodes (self):
+    
+    u = self ; c = u.c
+
+    u.p = self.undoReplace(u.p,u.newTree,u.oldTree)
+    c.selectVnode(u.p) # Does full recolor.
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+    
+def undoReplaceNodesContents (self):
+    
+    u = self ; c = u.c
+    
+    u.undoReplaceNodes()
+    u.redrawFlag = False
+#@nonl
+#@-node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
+#@+node:ekr.20031218072017.3622:undoSortChildren
+def undoSortChildren (self):
+
+    u = self ; c = u.c
+    assert(u.p)
+
+    c.endEditing()
+    index = 0
+    for child in u.sort:
+        child.moveToNthChildOf(u.p,index)
+        index += 1
+#@nonl
+#@-node:ekr.20031218072017.3622:undoSortChildren
+#@+node:ekr.20031218072017.3623:undoSortSiblings
+def undoSortSiblings (self):
+    
+    u = self ; c = u.c
+
+    parent = u.p.parent()
+    assert(u.p and parent)
+    
+    c.endEditing()
+    index = 0
+    for sib in u.sort:
+        sib.moveToNthChildOf(parent,index)
+        index += 1
+    parent.setDirty()
+#@nonl
+#@-node:ekr.20031218072017.3623:undoSortSiblings
+#@+node:ekr.20031218072017.3624:undoSortTopLevel
+def undoSortTopLevel (self):
+    
+    u = self ; c = u.c
+    root = c.rootPosition()
+    
+    c.endEditing()
+    v = u.sort[0]
+    v.moveToRoot(oldRoot=root)
+    for next in u.sort[1:]:
+        next.moveAfter(v)
+        v = next
+        
+    u.p = None # don't mark u.p dirty
+#@nonl
+#@-node:ekr.20031218072017.3624:undoSortTopLevel
+#@+node:EKR.20040526090701.4:undoTyping
+def undoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # g.trace(u.undoType,u.p)
+    # selectVnode causes recoloring, so don't do this unless needed.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif u.undoType in ("Cut","Paste"):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.oldMiddleLines,u.newMiddleLines,
+        u.oldNewlines,u.newNewlines,
+        tag="undo",undoType=u.undoType)
+    if u.oldSel:
+        c.frame.body.setTextSelection(u.oldSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+        
+    u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526090701.4:undoTyping
+#@-node:ekr.20031218072017.2039:undo & allies
+#@+node:ekr.20031218072017.2030:redo & allies
+def redo (self):
+
+    u = self ; c = u.c
+    if not u.canRedo(): return
+    if not u.getBead(u.bead+1): return
+    if not  c.currentPosition(): return
+    # g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
+
+    u.redoing = True 
+    u.redrawFlag = True
+    u.updateSetChangedFlag = True
+    
+    c.beginUpdate()
+    if 1: # update...
+        try:
+            func = u.redoDispatchDict[u.undoType]
+        except KeyError:
+            s = "Unknown redo key: %s" % u.undoType
+            g.trace(s) ; g.es(s, color="red")
+            func = None
+        if func:
+            func()
+            if u.updateSetChangedFlag:
+                c.setChanged(True)
+                if u.p: u.p.setDirty(setDescendentsDirty=False)
+    c.endUpdate(u.redrawFlag)
+
+    u.redoing = False
+    u.bead += 1
+    u.setUndoTypes()
+#@nonl
+#@+node:EKR.20040526090701.1:redoChangeAll
+def redoChangeAll (self):
+    
+    u = self ; c = u.c
+
+    count = 0
+    while 1:
+        u.bead += 1
+        d = u.getBead(u.bead+1)
+        assert(d)
+        # g.trace(u.undoType,u.p,u.newText)
+        if u.undoType == "Change All":
+            c.selectVnode(u.p)
+            break
+        elif u.undoType == "Change":
+            u.p.v.setTnodeText(u.newText)
+            u.p.setDirty()
+            count += 1
+        elif u.undoType == "Change Headline":
+            u.p.initHeadString(u.newText)
+            count += 1
+        else: assert(False)
+
+    g.es("redo %d instances" % count)
+#@nonl
+#@-node:EKR.20040526090701.1:redoChangeAll
+#@+node:EKR.20040526090701.2:redoChangeHeadline
+def redoChangeHeadline (self):
+    
+    u = self ; c = u.c
+    
+    # g.trace(u.undoType,u.p,u.newText)
+    u.p.setHeadStringOrHeadline(u.newText)
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526090701.2:redoChangeHeadline
+#@+node:EKR.20040526072519.1:redoClone
+def redoClone (self):
+    
+    u = self ; c = u.c
+    
+    if u.back:
+        u.p.linkAfter(u.back)
+    elif u.parent:
+        u.p.linkAsNthChild(u.parent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526072519.1:redoClone
+#@+node:EKR.20040526072519.2:redoDeleteNode
+def redoDeleteNode (self):
+    
+    u = self ; c = u.c
+
+    c.selectVnode(u.p)
+    c.deleteOutline()
+#@nonl
+#@-node:EKR.20040526072519.2:redoDeleteNode
+#@+node:EKR.20040526072519.3:redoHoist & redoDehoist
+def redoHoist (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.hoist()
+    u.updateSetChangedFlag = False
+    
+def redoDehoist (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.dehoist()
+    u.updateSetChangedFlag = False
+#@nonl
+#@-node:EKR.20040526072519.3:redoHoist & redoDehoist
+#@+node:EKR.20040526072519.4:redoInsertNodes
+def redoInsertNodes (self):
+    
+    u = self ; c = u.c
+
+    if u.back:
+        u.p.linkAfter(u.back)
+    elif u.parent:
+        u.p.linkAsNthChild(u.parent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526072519.4:redoInsertNodes
+#@+node:EKR.20040526075238.1:redoMoveNode
+def redoMoveNode (self):
+    
+    u = self ; c = u.c
+
+    # g.trace(u.p)
+    if u.parent:
+        u.p.moveToNthChildOf(u.parent,u.n)
+    elif u.back:
+        u.p.moveAfter(u.back)
+    else:
+        oldRoot = c.rootPosition() # Bug fix: 4/9/04
+        u.p.moveToRoot(oldRoot)
+
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526075238.1:redoMoveNode
+#@+node:EKR.20040526075238.2:redoDemote & redoPromote
+def redoDemote (self):
+    
+    u = self ; c = u.c
+
+    c.selectVnode(u.p)
+    c.demote()
+    
+def redoPromote (self):
+    
+    u = self ; c = u.c
+
+    c.selectVnode(u.p)
+    c.promote()
+#@nonl
+#@-node:EKR.20040526075238.2:redoDemote & redoPromote
+#@+node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
+def redoReplaceNodes (self):
+    
+    """Redo replacement of multiple nodes."""
+    
+    u = self ; c = u.c
+
+    u.p = self.undoReplace(u.p,u.oldTree,u.newTree)
+    c.selectVnode(u.p) # Does full recolor.
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+        
+def redoReplaceNodesContents (self):
+    
+    """Redo replacement of body text of multiple nodes."""
+    
+    u = self
+    u.redoReplaceNodes()
+    u.redrawFlag = False
+#@-node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
+#@+node:EKR.20040526075238.4:redoSortChildren/Siblings/TopLevel
+def redoSortChildren (self):
+    
+    u = self ; c = u.c
+
+    c.selectVnode(u.p)
+    c.sortChildren()
+
+def redoSortSiblings (self):
+    
+    u = self ; c = u.c
+
+    c.selectVnode(u.p)
+    c.sortSiblings()
+    
+def redoSortTopLevel (self):
+    
+    u = self ; c = u.c
+    
+    c.selectVnode(u.p)
+    c.sortTopLevel()
+    u.p = None # don't mark u.p dirty
+#@nonl
+#@-node:EKR.20040526075238.4:redoSortChildren/Siblings/TopLevel
+#@+node:EKR.20040526075238.5:redoTyping
+def redoTyping (self):
+    
+    u = self ; c = u.c ; current = c.currentPosition()
+
+    # selectVnode causes recoloring, so avoid if possible.
+    if current != u.p:
+        c.selectVnode(u.p)
+    elif u.undoType in ("Cut","Paste"):
+        c.frame.body.forceFullRecolor()
+
+    self.undoRedoText(
+        u.p,u.leading,u.trailing,
+        u.newMiddleLines,u.oldMiddleLines,
+        u.newNewlines,u.oldNewlines,
+        tag="redo",undoType=u.undoType)
+    
+    if u.newSel:
+        c.frame.body.setTextSelection(u.newSel)
+    if u.yview:
+        c.frame.body.setYScrollPosition(u.yview)
+        
+    u.redrawFlag = (current != u.p)
+#@nonl
+#@-node:EKR.20040526075238.5:redoTyping
+#@-node:ekr.20031218072017.2030:redo & allies
+#@+node:ekr.20040305162628:p.Dirty bits
+#@+node:ekr.20040311113514:p.clearDirty
+def clearDirty (self):
+
+    p = self
+    p.v.clearDirty()
+#@nonl
+#@-node:ekr.20040311113514:p.clearDirty
+#@+node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
+def findAllPotentiallyDirtyNodes(self):
+    
+    p = self 
+    
+    # Start with all nodes in the vnodeList.
+    nodes = []
+    newNodes = p.v.t.vnodeList[:]
+
+    # Add nodes until no more are added.
+    while newNodes:
+        addedNodes = []
+        nodes.extend(newNodes)
+        for v in newNodes:
+            for v2 in v.t.vnodeList:
+                if v2 not in nodes and v2 not in addedNodes:
+                    addedNodes.append(v2)
+                for v3 in v2.directParents():
+                    if v3 not in nodes and v3 not in addedNodes:
+                        addedNodes.append(v3)
+        newNodes = addedNodes[:]
+
+    # g.trace(len(nodes))
+    return nodes
+#@nonl
+#@-node:ekr.20040318125934:p.findAllPotentiallyDirtyNodes
+#@+node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+def setAllAncestorAtFileNodesDirty (self,setDescendentsDirty=False):
+
+    p = self ; c = p.c
+    changed = False
+    
+    # Calculate all nodes that are joined to v or parents of such nodes.
+    nodes = p.findAllPotentiallyDirtyNodes()
+    
+    if setDescendentsDirty:
+        # N.B. Only mark _direct_ descendents of nodes.
+        # Using the findAllPotentiallyDirtyNodes algorithm would mark way too many nodes.
+        for p2 in p.subtree_iter():
+            # Only @thin nodes need to be marked.
+            if p2.v not in nodes and p2.isAtThinFileNode():
+                nodes.append(p2.v)
+    
+    c.beginUpdate()
+    if 1: # update...
+        count = 0 # for debugging.
+        for v in nodes:
+            if not v.t.isDirty() and v.isAnyAtFileNode():
+                # g.trace(v)
+                changed = True
+                v.t.setDirty() # Do not call v.setDirty here!
+                count += 1
+        # g.trace(count,changed)
+    c.endUpdate(changed)
+    return changed
+#@nonl
+#@-node:ekr.20040303214038:p.setAllAncestorAtFileNodesDirty
+#@+node:ekr.20040303163330:p.setDirty
+# Ensures that all ancestor and descentent @file nodes are marked dirty.
+# It is much safer to do it this way.
+
+def setDirty (self,setDescendentsDirty=True):
+
+    p = self ; c = p.c
+    
+    # g.trace(g.app.count) ; g.app.count += 1
+
+    c.beginUpdate()
+    if 1: # update...
+        changed = False
+        if not p.v.t.isDirty():
+            p.v.t.setDirty()
+            changed = True
+        # N.B. This must be called even if p.v is already dirty.
+        # Typing can change the @ignore state!
+        if p.setAllAncestorAtFileNodesDirty(setDescendentsDirty):
+            changed = True
+    c.endUpdate(changed)
+
+    return changed
+#@nonl
+#@-node:ekr.20040303163330:p.setDirty
+#@+node:ekr.20040702104823:p.inAtIgnoreRange
+def inAtIgnoreRange (self):
+    
+    """Returns True if position p or one of p's parents is an @ignore node."""
+    
+    p = self
+    
+    for p in p.self_and_parents_iter():
+        if p.isAtIgnoreNode():
+            return True
+
+    return False
+#@nonl
+#@-node:ekr.20040702104823:p.inAtIgnoreRange
+#@-node:ekr.20040305162628:p.Dirty bits
+#@+node:ekr.20031218072017.1319:(Key handlers)
+@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
+#@+node:ekr.20031218072017.1320:body key handlers
+@ The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+
+1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if so.  This is the clean and safe way.
+
+2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1321:idle_body_key
+def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Update the body pane at idle time."""
+
+    # g.trace(ch,ord(ch))
+    c = self.c
+    if not c: return "break"
+    if not p: return "break"
+    if p != c.currentPosition(): return "break"
+    v = p.v # used only to get p.iconVal.
+
+    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        return "break" # The hook claims to have handled the event.
+    body = p.bodyString()
+    if not newSel:
+        newSel = c.frame.body.getTextSelection()
+    if oldText != None:
+        s = oldText
+    else:
+        s = c.frame.body.getAllText()
+    << return if nothing has changed >>
+    << set removeTrailing >>
+    if ch in ('\t','\n','\r',chr(8)):
+        d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+        tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+        if ch in ('\n','\r'):
+            << Do auto indent >>
+        elif ch == '\t' and tab_width < 0:
+            << convert tab to blanks >>
+        elif ch in (chr(8)) and tab_width < 0:
+            << handle backspace with negative tab_width >>
+    << set s to widget text, removing trailing newlines if necessary >>
+    if undoType: # 11/6/03: set oldText properly when oldText param exists.
+        if not oldText: oldText = body
+        newText = s
+        c.undoer.setUndoTypingParams(p,undoType,oldText,newText,oldSel,newSel,oldYview=oldYview)
+    p.v.setTnodeText(s)
+    p.v.t.insertSpot = c.frame.body.getInsertionPoint()
+    << recolor the body >>
+    if not c.changed:
+        c.setChanged(True)
+    << redraw the screen if necessary >>
+    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    return "break"
+#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
+# 6/22/03: Make sure we handle delete key properly.
+if ch not in ('\n','\r',chr(8)):
+
+    if s == body:
+        return "break"
+
+    # Do nothing for control characters.
+    if (ch == None or len(ch) == 0) and body == s[:-1]:
+        return "break"
+#@nonl
+#@-node:ekr.20031218072017.1322:<< return if nothing has changed >>
+#@+node:ekr.20031218072017.1323:<< set removeTrailing >>
+@ Tk will add a newline only if:
+1. A real change has been made to the Tk.Text widget, and
+2. the change did _not_ result in the widget already containing a newline.
+
+It's not possible to tell, given the information available, what Tk has actually done. We need only make a reasonable guess here.   setUndoTypingParams stores the number of trailing newlines in each undo bead, so whatever we do here can be faithfully undone and redone.
+@c
+new = s ; old = body
+
+if len(new) == 0 or new[-1] != '\n':
+    # There is no newline to remove.  Probably will never happen.
+    removeTrailing = False
+elif len(old) == 0:
+    # Ambigous case.  Formerly always returned False.
+    if new == "\n\n":
+        removeTrailing = True # Handle a very strange special case.
+    else:
+        removeTrailing = ch not in ('\r','\n')
+elif old == new[:-1]:
+    # A single trailing character has been added.
+    removeTrailing = ch not in ('\r','\n') # 6/12/04: Was false.
+else:
+    # The text didn't have a newline, and now it does.
+    # Moveover, some other change has been made to the text,
+    # So at worst we have misrepresented the user's intentions slightly.
+    removeTrailing = True
+
+if 0:
+    print removeTrailing
+    print repr(ch)
+    print repr(oldText)
+    print repr(old)
+    print repr(new)
+#@nonl
+#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
+#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+    # Get the previous line.
+    s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+    # Add the leading whitespace to the present line.
+    junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+    if s and len(s) > 0 and s[-1]==':':
+        # For Python: increase auto-indent after colons.
+        if self.colorizer.scanColorDirectives(p) == "python":
+            width += abs(tab_width)
+    if g.app.config.getBoolWindowPref("smart_auto_indent"):
+        # Added Nov 18 by David McNab, david@rebirthing.co.nz
+        # Determine if prev line has unclosed parens/brackets/braces
+        brackets = [width]
+        tabex = 0
+        for i in range(0, len(s)):
+            if s[i] == '\t':
+                tabex += tab_width - 1
+            if s[i] in '([{':
+                brackets.append(i+tabex + 1)
+            elif s[i] in '}])' and len(brackets) > 1:
+                brackets.pop()
+        width = brackets.pop()
+        # end patch by David McNab
+    ws = g.computeLeadingWhitespace (width,tab_width)
+    if ws and len(ws) > 0:
+        c.frame.bodyCtrl.insert("insert", ws)
+        removeTrailing = False # bug fix: 11/18
+#@nonl
+#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+# Do nothing if we are executing a Change command.
+if undoType != "Change":
+    
+    # Get the characters preceeding the tab.
+    prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+    
+    if 1: # 6/26/03: Convert tab no matter where it is.
+
+        w = g.computeWidth(prev,tab_width)
+        w2 = (abs(tab_width) - (w % abs(tab_width)))
+        # g.trace("prev w:",w,"prev chars:",prev)
+        c.frame.bodyCtrl.delete("insert -1c")
+        c.frame.bodyCtrl.insert("insert",' ' * w2)
+    
+    else: # Convert only leading tabs.
+    
+        # Get the characters preceeding the tab.
+        prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+
+        # Do nothing if there are non-whitespace in prev:
+        all_ws = True
+        for ch in prev:
+            if ch != ' ' and ch != '\t':
+                all_ws = False
+        if all_ws:
+            w = g.computeWidth(prev,tab_width)
+            w2 = (abs(tab_width) - (w % abs(tab_width)))
+            # g.trace("prev w:",w,"prev chars:",prev)
+            c.frame.bodyCtrl.delete("insert -1c")
+            c.frame.bodyCtrl.insert("insert",' ' * w2)
+#@nonl
+#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+#@+node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+# Get the preceeding characters.
+prev   =c.frame.bodyCtrl.get("insert linestart","insert")
+allPrev=c.frame.bodyCtrl.get("1.0","insert")
+n = len(allPrev)
+try:
+    oldAllPrev = body[:n]
+    assert(allPrev==oldAllPrev)
+    deletedChar = body[n:n+1]
+except (IndexError,AssertionError):
+    deletedChar = None
+
+if deletedChar in (u' ',' '):
+    n = len(prev) ; w = abs(tab_width)
+    n2 = n % w # Delete up to n2 - 1 spaces.
+    if n2 == w - 1: # Delete spaces only if they could have come from a tab.
+        count = 0
+        while n2 > 0:
+            n2 -= 1
+            ch = prev[n-count-1]
+            # g.trace(count,repr(ch))
+            if ch in (u' ',' '): count += 1
+            else: break
+        # g.trace(count,(n%w))
+        if count > 0:
+            c.frame.bodyCtrl.delete("insert -%dc" % count,"insert")
+#@nonl
+#@-node:EKR.20040604090913:<< handle backspace with negative tab_width >>
+#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+s = c.frame.body.getAllText()
+if len(s) > 0 and s[-1] == '\n' and removeTrailing:
+    s = s[:-1]
+    
+# Major change: 6/12/04
+if s == body:
+    # print "no real change"
+    return "break"
+#@nonl
+#@-node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
+#@+node:ekr.20031218072017.1327:<< recolor the body >>
+self.frame.scanForTabWidth(p)
+
+incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
+self.frame.body.recolor_now(p,incremental=incremental)
+
+self.forceFullRecolorFlag = False
+#@nonl
+#@-node:ekr.20031218072017.1327:<< recolor the body >>
+#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+redraw_flag = False
+
+c.beginUpdate()
+
+# Update dirty bits.
+if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
+    redraw_flag = True
+    
+# Update icons.
+val = p.computeIcon()
+if val != v.iconVal:
+    v.iconVal = val
+    redraw_flag = True
+
+c.endUpdate(redraw_flag) # redraw only if necessary
+#@nonl
+#@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
+#@-node:ekr.20031218072017.1321:idle_body_key
+#@+node:ekr.20031218072017.1329:onBodyChanged (called from core)
+# Called by command handlers that have already changed the text.
+
+def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+    
+    """Handle a change to the body pane."""
+    
+    c = self.c
+    if not p:
+        p = c.currentPosition()
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    self.idle_body_key(p,oldSel,undoType,oldYview=oldYview,newSel=newSel,oldText=oldText)
+#@nonl
+#@-node:ekr.20031218072017.1329:onBodyChanged (called from core)
+#@+node:ekr.20031218072017.1330:onBodyKey
+def onBodyKey (self,event):
+    
+    """Handle any key press event in the body pane."""
+
+    c = self.c ; ch = event.char 
+    oldSel = c.frame.body.getTextSelection()
+    
+    p = c.currentPosition()
+
+    # g.trace(repr(ch))
+
+    if 0: # won't work when menu keys are bound.
+        self.handleStatusLineKey(event)
+        
+    # g.trace(p)
+        
+    # We must execute this even if len(ch) > 0 to delete spurious trailing newlines.
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
+
+#@+node:ekr.20040105223536:handleStatusLineKey
+def handleStatusLineKey (self,event):
+    
+    c = self.c ; frame = c.frame
+    ch = event.char ; keysym = event.keysym
+    keycode = event.keycode ; state = event.state
+
+    if 1: # ch and len(ch)>0:
+        << trace the key event >>
+
+    try:
+        status = self.keyStatus
+    except:
+        status = [] ; frame.clearStatusLine()
+    
+    for sym,name in (
+        ("Alt_L","Alt"),("Alt_R","Alt"),
+        ("Control_L","Control"),("Control_R","Control"),
+        ("Escape","Esc"),
+        ("Shift_L","Shift"), ("Shift_R","Shift")):
+        if keysym == sym:
+            if name not in status:
+                status.append(name)
+                frame.putStatusLine(name + ' ')
+            break
+    else:
+        status = [] ; frame.clearStatusLine()
+
+    self.keyStatus = status
+#@nonl
+#@+node:ekr.20040105223536.1:<< trace the key event >>
+try:    self.keyCount += 1
+except: self.keyCount  = 1
+
+printable = g.choose(ch == keysym and state < 4,"printable","")
+
+print "%4d %s %d %s %x %s" % (
+    self.keyCount,repr(ch),keycode,keysym,state,printable)
+#@nonl
+#@-node:ekr.20040105223536.1:<< trace the key event >>
+#@-node:ekr.20040105223536:handleStatusLineKey
+#@-node:ekr.20031218072017.1330:onBodyKey
+#@+node:ekr.20031218072017.1331:onBodyWillChange
+# Called by command handlers that change the text just before idle time.
+
+def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
+    
+    """Queue the body changed idle handler."""
+    
+    c = self.c
+
+    if not oldSel:
+        oldSel = c.frame.body.getTextSelection()
+
+    if not p:
+        p = c.currentPosition()
+
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
+#@nonl
+#@-node:ekr.20031218072017.1331:onBodyWillChange
+#@-node:ekr.20031218072017.1320:body key handlers
+#@+node:ekr.20031218072017.1332:headline key handlers (tree)
+@ The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the work later.
+@c
+
+@others
+#@nonl
+#@+node:ekr.20031218072017.1333:onHeadChanged
+def onHeadChanged (self,p):
+    
+    """Handle a change to headline text."""
+    
+    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+
+#@-node:ekr.20031218072017.1333:onHeadChanged
+#@+node:ekr.20031218072017.1334:OnHeadlineKey
+def OnHeadlineKey (self,p,event):
+    
+    """Handle a key event in a headline."""
+
+    ch = event.char
+    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+
+
+#@-node:ekr.20031218072017.1334:OnHeadlineKey
+#@+node:ekr.20031218072017.1335:idle_head_key
+def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; v = p.v
+
+    if not p or not p.edit_text() or p != c.currentPosition():
+        return "break"
+        
+    edit_text = p.edit_text()
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    << set head to vnode text >>
+    done = ch in ('\r','\n')
+    if done:
+        << set the widget text to head >>
+    << set s to the widget text >>
+    changed = s != head
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+        << update v and all nodes joined to v >>
+    if done or changed:
+        << reconfigure v and all nodes joined to v >>
+        << update the screen >>
+
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"
+#@nonl
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")
+#@nonl
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:EKR.20040614075003:<< set the widget text to head >>
+edit_text.delete("1.0","end")
+edit_text.insert("end",head)
+edit_text.mark_set("insert",index)
+#@nonl
+#@-node:EKR.20040614075003:<< set the widget text to head >>
+#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    if len(s) > 250:
+        g.es("Truncating headline to 250 characters",color="blue")
+        s = s[:250]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
+#@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+c.beginUpdate()
+if 1: # update...
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    if not p.isDirty():
+        p.setDirty()
+    # Update v.
+    v.initHeadString(s)
+    edit_text.delete("1.0","end")
+    edit_text.insert("end",s)
+    edit_text.mark_set("insert",index)
+c.endUpdate(False) # do not redraw now.
+#@nonl
+#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+# Reconfigure v's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(v))
+#@nonl
+#@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1340:<< update the screen >>
+if done:
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
+
+elif changed:
+    # Update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20031218072017.1340:<< update the screen >>
+#@-node:ekr.20031218072017.1335:idle_head_key
+#@-node:ekr.20031218072017.1332:headline key handlers (tree)
+#@-node:ekr.20031218072017.1319:(Key handlers)
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@+node:ekr.20031218072017.1766:Move... (Commands)
+#@+node:ekr.20031218072017.1767:demote
+def demote(self):
+
+    c = self ; p = c.currentPosition()
+    if not p or not p.hasNext(): return
+
+    last = p.lastChild()
+    # Make sure all the moves will be valid.
+    for child in p.children_iter():
+        if not c.checkMoveWithParentWithWarning(child,p,True):
+            return
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        while p.hasNext(): # Do not use iterator here.
+            child = p.next()
+            child.moveToNthChildOf(p,p.numberOfChildren())
+        p.expand()
+        c.selectVnode(p)
+        # Even if p is an @ignore node there is no need to mark the demoted children dirty.
+        p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+    c.endUpdate()
+    c.undoer.setUndoParams("Demote",p,lastChild=last)
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@-node:ekr.20031218072017.1767:demote
+#@+node:ekr.20031218072017.1768:moveOutlineDown
+@ Moving down is more tricky than moving up; we can't move p to be a child of itself.  An important optimization:  we don't have to call checkMoveWithParentWithWarning() if the parent of the moved node remains the same.
+@c
+
+def moveOutlineDown(self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    if not c.canMoveOutlineDown(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+        
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    # Set next to the node after which p will be moved.
+    next = p.visNext()
+    while next and p.isAncestorOf(next):
+        next = next.visNext()
+    if not next: return
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        p.setAllAncestorAtFileNodesDirty()
+        << Move v down >>
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            p.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            p.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(p)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@nonl
+#@+node:ekr.20031218072017.1769:<< Move v down >>
+# Remember both the before state and the after state for undo/redo
+oldBack = p.back()
+oldParent = p.parent()
+oldN = p.childIndex()
+
+if next.hasChildren() and next.isExpanded():
+    # Attempt to move p to the first child of next.
+    if c.checkMoveWithParentWithWarning(p,next,True):
+        p.moveToNthChildOf(next,0)
+        c.undoer.setUndoParams("Move Down",p,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+else:
+    # Attempt to move p after next.
+    if c.checkMoveWithParentWithWarning(p,next.parent(),True):
+        p.moveAfter(next)
+        c.undoer.setUndoParams("Move Down",p,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+#@nonl
+#@-node:ekr.20031218072017.1769:<< Move v down >>
+#@-node:ekr.20031218072017.1768:moveOutlineDown
+#@+node:ekr.20031218072017.1770:moveOutlineLeft
+def moveOutlineLeft(self):
+    
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    if not c.canMoveOutlineLeft(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+    
+    if not p.hasParent(): return
+    # Remember both the before state and the after state for undo/redo
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    parent = p.parent()
+    oldBack = p.back()
+    oldParent = p.parent()
+    oldN = p.childIndex()
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        p.setAllAncestorAtFileNodesDirty()
+        p.moveAfter(parent)
+        c.undoer.setUndoParams("Move Left",p,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            p.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            p.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(p)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@-node:ekr.20031218072017.1770:moveOutlineLeft
+#@+node:ekr.20031218072017.1771:moveOutlineRight
+def moveOutlineRight(self):
+    
+    c = self ; p = c.currentPosition()
+    if not p: return
+    
+    if not c.canMoveOutlineRight(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+    
+    if not p.hasBack: return
+    back = p.back()
+    if not c.checkMoveWithParentWithWarning(p,back,True): return
+
+    # Remember both the before state and the after state for undo/redo
+    oldBack = back
+    oldParent = p.parent()
+    oldN = p.childIndex()
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        p.setAllAncestorAtFileNodesDirty()
+        n = back.numberOfChildren()
+        p.moveToNthChildOf(back,n)
+        c.undoer.setUndoParams("Move Right",p,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        # Moving an outline right can never bring it outside the range of @ignore.
+        p.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(p)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.1771:moveOutlineRight
+#@+node:ekr.20031218072017.1772:moveOutlineUp
+def moveOutlineUp(self):
+
+    c = self ; p = c.currentPosition()
+    if not p: return
+
+    if not c.canMoveOutlineUp(): # 11/4/03: Support for hoist.
+        if c.hoistStack: g.es("Can't move node out of hoisted outline",color="blue")
+        return
+    back = p.visBack()
+    if not back: return
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    back2 = back.visBack()
+    # A weird special case: just select back2.
+    if back2 and p.v in back2.v.t.vnodeList:
+        # g.trace('-'*20,"no move, selecting visBack")
+        c.selectVnode(back2)
+        return
+    c = self
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        p.setAllAncestorAtFileNodesDirty()
+        << Move v up >>
+        if inAtIgnoreRange and not p.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            p.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            p.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(p)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@nonl
+#@+node:ekr.20031218072017.1773:<< Move v up >>
+# Remember both the before state and the after state for undo/redo
+oldBack = p.back()
+oldParent = p.parent()
+oldN = p.childIndex()
+if 0:
+    g.trace("visBack",back)
+    g.trace("visBack2",back2)
+    g.trace("oldParent",oldParent)
+    g.trace("back2.hasChildren",back2.hasChildren())
+    g.trace("back2.isExpanded",back2.isExpanded())
+
+if not back2:
+    # p will be the new root node
+    p.moveToRoot(c.rootVnode())
+    c.undoer.setUndoParams("Move Up",p,
+        oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+elif back2.hasChildren() and back2.isExpanded():
+    if c.checkMoveWithParentWithWarning(p,back2,True):
+        p.moveToNthChildOf(back2,0)
+        c.undoer.setUndoParams("Move Up",p,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+elif c.checkMoveWithParentWithWarning(p,back2.parent(),True):
+    # Insert after back2.
+    p.moveAfter(back2)
+    c.undoer.setUndoParams("Move Up",p,
+        oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+#@nonl
+#@-node:ekr.20031218072017.1773:<< Move v up >>
+#@-node:ekr.20031218072017.1772:moveOutlineUp
+#@+node:ekr.20031218072017.1774:promote
+def promote(self):
+
+    c = self ; p = c.currentPosition()
+    if not p or not p.hasChildren(): return
+
+    last = p.lastChild()
+    isAtIgnoreNode = p.isAtIgnoreNode()
+    inAtIgnoreRange = p.inAtIgnoreRange()
+    c.beginUpdate()
+    if 1: # update...
+        c.endEditing()
+        after = p
+        while p.hasChildren(): # Don't use an iterator.
+            child = p.firstChild()
+            child.moveAfter(after)
+            after = child
+        if not inAtIgnoreRange and isAtIgnoreNode:
+            # The promoted nodes have just become newly unignored.
+            p.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+        c.selectVnode(p)
+    c.endUpdate()
+    c.undoer.setUndoParams("Promote",p,lastChild=last)
+    c.updateSyntaxColorer(p) # Moving can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.1774:promote
+#@-node:ekr.20031218072017.1766:Move... (Commands)
+#@+node:ekr.20031218072017.2945:Dragging (commands)
+#@+node:ekr.20031218072017.2353:c.dragAfter
+def dragAfter(self,v,after):
+
+    c = self
+    if not c.checkMoveWithParentWithWarning(v,after.parent(),True): return
+    # Remember both the before state and the after state for undo/redo
+    inAtIgnoreRange = v.inAtIgnoreRange()
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.beginUpdate()
+    if 1: # inside update...
+        c.endEditing()
+        # v.setDirty()
+        v.setAllAncestorAtFileNodesDirty() # 1/12/04
+        v.moveAfter(after)
+        c.undoer.setUndoParams("Drag",v,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        if inAtIgnoreRange and not v.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            v.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            v.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(v)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2353:c.dragAfter
+#@+node:ekr.20031218072017.2946:c.dragCloneToNthChildOf (changed in 3.11.1)
+def dragCloneToNthChildOf (self,v,parent,n):
+
+    c = self
+    c.beginUpdate()
+    if 1: # Update range...
+        # g.trace("v,parent,n:",v.headString(),parent.headString(),n)
+        clone = v.clone(v) # Creates clone & dependents, does not set undo.
+        if not c.checkMoveWithParentWithWarning(clone,parent,True):
+            clone.doDelete(v) # Destroys clone and makes v the current node.
+            c.endUpdate(False) # Nothing has changed.
+            return
+        # Remember both the before state and the after state for undo/redo
+        inAtIgnoreRange = v.inAtIgnoreRange()
+        oldBack = v.back()
+        oldParent = v.parent()
+        oldN = v.childIndex()
+        c.endEditing()
+        # clone.setDirty()
+        clone.setAllAncestorAtFileNodesDirty() # 1/12/04
+        clone.moveToNthChildOf(parent,n)
+        c.undoer.setUndoParams("Drag & Clone",clone,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+        if inAtIgnoreRange and not v.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            v.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            v.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(clone)
+        c.setChanged(True)
+        c.endUpdate()
+    c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2946:c.dragCloneToNthChildOf (changed in 3.11.1)
+#@+node:ekr.20031218072017.2947:c.dragToNthChildOf
+def dragToNthChildOf(self,v,parent,n):
+
+    c = self
+    if not c.checkMoveWithParentWithWarning(v,parent,True): return
+    # Remember both the before state and the after state for undo/redo
+    inAtIgnoreRange = v.inAtIgnoreRange()
+    oldBack = v.back()
+    oldParent = v.parent()
+    oldN = v.childIndex()
+    c.beginUpdate()
+    if 1: # inside update...
+        c.endEditing()
+        v.setAllAncestorAtFileNodesDirty()
+        v.moveToNthChildOf(parent,n)
+        c.undoer.setUndoParams("Drag",v,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+        if inAtIgnoreRange and not v.inAtIgnoreRange():
+            # The moved nodes have just become newly unignored.
+            v.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            v.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(v)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2947:c.dragToNthChildOf
+#@+node:ekr.20031218072017.2948:c.dragCloneAfter
+def dragCloneAfter (self,v,after):
+
+    c = self
+    c.beginUpdate()
+    if 1: # Update range...
+        clone = v.clone(v) # Creates clone.  Does not set undo.
+        # g.trace("v,after:",v.headString(),after.headString())
+        if not c.checkMoveWithParentWithWarning(clone,after.parent(),True):
+            g.trace("invalid clone move")
+            clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
+            c.endUpdate(False) # Nothing has changed.
+            return
+        # Remember both the before state and the after state for undo/redo
+        inAtIgnoreRange = clone.inAtIgnoreRange()
+        oldBack = v.back()
+        oldParent = v.parent()
+        oldN = v.childIndex()
+        c.endEditing()
+        clone.setAllAncestorAtFileNodesDirty()
+        clone.moveAfter(after)
+        c.undoer.setUndoParams("Drag & Clone",clone,
+            oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
+        if inAtIgnoreRange and not clone.inAtIgnoreRange():
+            # The moved node have just become newly unignored.
+            clone.setDirty() # Mark descendent @thin nodes dirty.
+        else: # No need to mark descendents dirty.
+            clone.setAllAncestorAtFileNodesDirty()
+        c.selectVnode(clone)
+        c.setChanged(True)
+    c.endUpdate()
+    c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+#@nonl
+#@-node:ekr.20031218072017.2948:c.dragCloneAfter
+#@-node:ekr.20031218072017.2945:Dragging (commands)
+#@-node:ekr.20040702080759:(Marked all related @thin nodes dirty when a node changesd)
+#@+node:ekr.20040704102411:(Fixed bug when reading  4.1 files with topology errors)
+#@+node:ekr.20040326063413:getExistingVnode
+def getExistingVnode (self,tref,headline):
+
+    tref1 = tref
+    assert(tref > -1)
+    tref = self.canonicalTnodeIndex(tref)
+    t = self.tnodesDict.get(tref)
+    try:
+        return t.vnodeList[0]
+    except (IndexError,AttributeError):
+        g.es("Missing vnode:",headline,color="red")
+        g.es("Probably an outline topology error.")
+        # g.trace(tref1,t,t.vnodeList)
+        return None
+#@nonl
+#@-node:ekr.20040326063413:getExistingVnode
+#@-node:ekr.20040704102411:(Fixed bug when reading  4.1 files with topology errors)
 #@-node:ekr.20040701065235:in 4.2 b2
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

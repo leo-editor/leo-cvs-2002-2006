@@ -20,10 +20,10 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
+<v t="ekr.20040303063549" a="E"><vh>Unit test scripts (Must be located here)</vh>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
@@ -252,7 +252,7 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125" a="TV"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
 </v>
@@ -757,12 +757,16 @@
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
-<v t="ekr.20040702082243" a="E"><vh>Test of setDirty &amp; new findAllPotentiallyDirtyNodes logic</vh>
+<v t="ekr.20040702082243"><vh>Test of setDirty &amp; new findAllPotentiallyDirtyNodes logic</vh>
 <v t="ekr.20040702085724" a="E"><vh>Intermediate node</vh>
 <v t="ekr.20040702082243.1" a="E"><vh>@thin c:\prog\test\ignoreTest.txt</vh>
-<v t="ekr.20040702085809" a="TV"><vh>maybe an orphan node</vh></v>
+<v t="ekr.20040702085809"><vh>maybe an orphan node</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20040704104554" a="E"><vh>Test of mixed @language directives in a single node</vh>
+<v t="ekr.20040704104554.1"><vh>Mixed script</vh></v>
+<v t="ekr.20040704104554.2"><vh>@thin c:\prog\test\mixedLanguages.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -5102,5 +5106,11 @@ print '-'*50</t>
 @others</t>
 <t tx="ekr.20040702085724"></t>
 <t tx="ekr.20040702085809"># It depends on whether the parent has an @others or not.</t>
+<t tx="ekr.20040704104554">@ignore</t>
+<t tx="ekr.20040704104554.1">@language html
+@language python
+</t>
+<t tx="ekr.20040704104554.2">@language python
+@language html</t>
 </tnodes>
 </leo_file>
