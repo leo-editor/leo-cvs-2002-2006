@@ -33,8 +33,7 @@ def set_delims_from_language(language):
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
 		(shell_language, "#"),
 		(python_language, "#"),
-		(tcltk_language, "#"), # 7/18/02
-		(php_language, "//") ]:  #DTHEIN
+		(tcltk_language, "#") ]: # 7/18/02
 		if lang == language:
 			# trace(`val`)
 			delim1,delim2,delim3 = set_delims_from_string(val)
@@ -133,8 +132,7 @@ def set_language(s,i,issue_errors_flag):
 			("plain", plain_text_language), # 7/8/02
 			("python", python_language),
 			("shell", shell_language),
-			("tcl", tcltk_language), # 7/18/02.  Note: this also matches tcl/tk.
-			("php", php_language) ]: # 08-SEP-2002 DTHEIN
+			("tcl", tcltk_language) ]: # 7/18/02.  Note: this also matches tcl/tk.
 		
 			if arg == name:
 				delim1, delim2, delim3 = set_delims_from_language(language)
@@ -860,120 +858,7 @@ def skip_pascal_string(s,i):
 	return i
 #@-body
 #@-node:7::skip_pascal_string : called by tangle
-#@+node:8:C=11:skip_pp_directive
-#@+body
-# Now handles continuation lines and block comments.
-
-def skip_pp_directive(s,i):
-
-	while i < len(s):
-		if is_nl(s,i):
-			if escaped(s,i): i = skip_nl(s,i)
-			else: break
-		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
-		elif match(s,i,"/*"): i = skip_block_comment(s,i)
-		else: i += 1
-	return i
-#@-body
-#@-node:8:C=11:skip_pp_directive
-#@+node:9:C=12:skip_pp_if
-#@+body
-# Skips an entire if or if def statement, including any nested statements.
-
-def skip_pp_if(s,i):
-	
-	start_line = get_line(s,i) # used for error messages.
-	# trace(start_line)
-
-	assert(
-		match_word(s,i,"#if") or
-		match_word(s,i,"#ifdef") or
-		match_word(s,i,"#ifndef"))
-
-	i = skip_line(s,i)
-	i,delta1 = skip_pp_part(s,i)
-	i = skip_ws(s,i)
-	if match_word(s,i,"#else"):
-		i = skip_line(s,i)
-		i = skip_ws(s,i)
-		i,delta2 = skip_pp_part(s,i)
-		if delta1 != delta2:
-			es("#if and #else parts have different braces: " + start_line)
-	i = skip_ws(s,i)
-	if match_word(s,i,"#endif"):
-		i = skip_line(s,i)
-	else:
-		es("no matching #endif: " + start_line)
-		
-	# trace(`delta1` + ":" + start_line)
-	return i,delta1
-
-#@-body
-#@-node:9:C=12:skip_pp_if
-#@+node:10:C=13:skip_pp_part
-#@+body
-# Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
-
-def skip_pp_part(s,i):
-		
-	start_line = get_line(s,i) # used for error messages.
-	# trace(start_line)
-	
-	delta = 0
-	while i < len(s):
-		c = s[i]
-		if 0:
-			if c == '\n':
-				trace(`delta` + ":" + get_line(s,i))
-		if match_word(s,i,"#if") or match_word(s,i,"#ifdef") or match_word(s,i,"#ifndef"):
-			i,delta1 = skip_pp_if(s,i)
-			delta += delta1
-		elif match_word(s,i,"#else") or match_word(s,i,"#endif"):
-			return i,delta
-		elif c == '\'' or c == '"': i = skip_string(s,i)
-		elif c == '{':
-			delta += 1 ; i += 1
-		elif c == '}':
-			delta -= 1 ; i += 1
-		elif match(s,i,"//"): i = skip_line(s,i)
-		elif match(s,i,"/*"): i = skip_block_comment(s,i)
-		else: i += 1
-	return i,delta
-#@-body
-#@-node:10:C=13:skip_pp_part
-#@+node:11::skip_python_string
-#@+body
-def skip_python_string(s,i):
-
-	if match(s,i,"'''") or match(s,i,'"""'):
-		j = i ; delim = s[i]*3 ; i += 3
-		k = string.find(s,delim,i)
-		if k > -1: return k+3
-		scanError("Run on triple quoted string: " + s[j:i])
-		return len(s)
-	else:
-		return skip_string(s,i)
-#@-body
-#@-node:11::skip_python_string
-#@+node:12::skip_string : called by tangle
-#@+body
-def skip_string(s,i):
-	
-	j = i ; delim = s[i] ; i += 1
-	assert(delim == '"' or delim == '\'')
-	n = len(s)
-	while i < n and s[i] != delim:
-		if s[i] == '\\' : i += 2
-		else: i += 1
-
-	if i >= n:
-		scanError("Run on string: " + s[j:i])
-	elif s[i] == delim:
-		i += 1
-	return i
-#@-body
-#@-node:12::skip_string : called by tangle
-#@+node:13::skip_heredoc_string : called by php import
+#@+node:8::skip_heredoc_string : called by php import
 #@+body
 #@+at
 #  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
@@ -1011,7 +896,120 @@ def skip_heredoc_string(s,i):
 		i += len(delim)
 	return i
 #@-body
-#@-node:13::skip_heredoc_string : called by php import
+#@-node:8::skip_heredoc_string : called by php import
+#@+node:9:C=11:skip_pp_directive
+#@+body
+# Now handles continuation lines and block comments.
+
+def skip_pp_directive(s,i):
+
+	while i < len(s):
+		if is_nl(s,i):
+			if escaped(s,i): i = skip_nl(s,i)
+			else: break
+		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
+		elif match(s,i,"/*"): i = skip_block_comment(s,i)
+		else: i += 1
+	return i
+#@-body
+#@-node:9:C=11:skip_pp_directive
+#@+node:10:C=12:skip_pp_if
+#@+body
+# Skips an entire if or if def statement, including any nested statements.
+
+def skip_pp_if(s,i):
+	
+	start_line = get_line(s,i) # used for error messages.
+	# trace(start_line)
+
+	assert(
+		match_word(s,i,"#if") or
+		match_word(s,i,"#ifdef") or
+		match_word(s,i,"#ifndef"))
+
+	i = skip_line(s,i)
+	i,delta1 = skip_pp_part(s,i)
+	i = skip_ws(s,i)
+	if match_word(s,i,"#else"):
+		i = skip_line(s,i)
+		i = skip_ws(s,i)
+		i,delta2 = skip_pp_part(s,i)
+		if delta1 != delta2:
+			es("#if and #else parts have different braces: " + start_line)
+	i = skip_ws(s,i)
+	if match_word(s,i,"#endif"):
+		i = skip_line(s,i)
+	else:
+		es("no matching #endif: " + start_line)
+		
+	# trace(`delta1` + ":" + start_line)
+	return i,delta1
+
+#@-body
+#@-node:10:C=12:skip_pp_if
+#@+node:11:C=13:skip_pp_part
+#@+body
+# Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
+
+def skip_pp_part(s,i):
+		
+	start_line = get_line(s,i) # used for error messages.
+	# trace(start_line)
+	
+	delta = 0
+	while i < len(s):
+		c = s[i]
+		if 0:
+			if c == '\n':
+				trace(`delta` + ":" + get_line(s,i))
+		if match_word(s,i,"#if") or match_word(s,i,"#ifdef") or match_word(s,i,"#ifndef"):
+			i,delta1 = skip_pp_if(s,i)
+			delta += delta1
+		elif match_word(s,i,"#else") or match_word(s,i,"#endif"):
+			return i,delta
+		elif c == '\'' or c == '"': i = skip_string(s,i)
+		elif c == '{':
+			delta += 1 ; i += 1
+		elif c == '}':
+			delta -= 1 ; i += 1
+		elif match(s,i,"//"): i = skip_line(s,i)
+		elif match(s,i,"/*"): i = skip_block_comment(s,i)
+		else: i += 1
+	return i,delta
+#@-body
+#@-node:11:C=13:skip_pp_part
+#@+node:12::skip_python_string
+#@+body
+def skip_python_string(s,i):
+
+	if match(s,i,"'''") or match(s,i,'"""'):
+		j = i ; delim = s[i]*3 ; i += 3
+		k = string.find(s,delim,i)
+		if k > -1: return k+3
+		scanError("Run on triple quoted string: " + s[j:i])
+		return len(s)
+	else:
+		return skip_string(s,i)
+#@-body
+#@-node:12::skip_python_string
+#@+node:13::skip_string : called by tangle
+#@+body
+def skip_string(s,i):
+	
+	j = i ; delim = s[i] ; i += 1
+	assert(delim == '"' or delim == '\'')
+	n = len(s)
+	while i < n and s[i] != delim:
+		if s[i] == '\\' : i += 2
+		else: i += 1
+
+	if i >= n:
+		scanError("Run on string: " + s[j:i])
+	elif s[i] == delim:
+		i += 1
+	return i
+#@-body
+#@-node:13::skip_string : called by tangle
 #@+node:14::skip_to_semicolon
 #@+body
 # Skips to the next semicolon that is not in a comment or a string.

@@ -562,10 +562,13 @@ class atFile:
 	#@+body
 	def readError(self,message):
 	
-		if 0: # This is more irritating than useful.
-			if self.errors == 0:
-				es("----- error reading @file " + self.targetFileName)
-		self.error(message)
+		# This is useful now that we don't print the actual messages.
+		if self.errors == 0:
+			es("----- error reading @file " + self.targetFileName)
+	
+		if 0: # CVS conflicts create too many messages.
+			self.error(message)
+		
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body

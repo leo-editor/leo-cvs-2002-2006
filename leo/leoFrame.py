@@ -91,6 +91,7 @@ class LeoFrame:
 
 		self.top = top = Tk.Toplevel()
 		top.withdraw() # 7/15/02
+		# print `top`
 		
 		if sys.platform=="win32":
 			self.hwnd = top.frame()
@@ -175,7 +176,7 @@ class LeoFrame:
 	def destroy (self):
 	
 		# don't trace during shutdown logic.
-		# print "frame.destroy:", `self`
+		# print "frame.destroy:", `self`, `self.top`
 		self.tree.destroy()
 		self.tree = None
 		self.commands.destroy()
@@ -2586,24 +2587,25 @@ class LeoFrame:
 	#@+node:7:C=44:OnOpenPythonWindow
 	#@+body
 	def OnOpenPythonWindow(self,event=None):
-
-		# 07-SEP-2002 DHEIN: Open Python window under linux
-		# NOTE: is this platform test valid, or should it
-		#       be != "win32" or whatever?
-		# NOTE2: Is there any reason to set app().idle_imported
-		#        to true and not do the import if true??
+	
 		if sys.platform == "linux2":
+			
+			#@<< open idle in Linux >>
+			#@+node:1::<< open idle in Linux >>
+			#@+body
+			# 07-SEP-2002 DHEIN: Open Python window under linux
+			
 			try:
 				from idlelib import IdleConf
 			except:
 				es("idlelib could not be imported.")
 				es("Probably IDLE is not installed.")
 				es("Run Tools/idle/setup.py to build idlelib.")
-				return
+				return "break" # inhibit further command processing.
 			
 			idle_dir = os.path.dirname(IdleConf.__file__)
 			IdleConf.load(idle_dir)
-
+			
 			# defer importing Pyshell until IdleConf is loaded
 			from idlelib import PyShell
 			pathToLeo = os.path.join(app().loadDir,"leo.py")
@@ -2612,32 +2614,65 @@ class LeoFrame:
 			# "-t" means title
 			sys.argv = ["leo","-d","-t", pathToLeo, pathToLeo]
 			PyShell.main()
-			return
+			#@-body
+			#@-node:1::<< open idle in Linux >>
 
-		try:
-			executable_dir = os.path.dirname(sys.executable)
-			idle_dir=os.path.join(executable_dir,"Tools","idle")
-			if idle_dir not in sys.path:
-				sys.path.append(idle_dir)
-			# Set argv so idle will rerun leopy.leo as a script.
-			sys.argv = [os.path.join(app().loadDir,"leo.py")]
+		else:
+			
+			#@<< open idle in Windows >>
+			#@+node:2::<< open idle in Windows >>
+			#@+body
 			try:
-				import idle # Must do this even if we have done so before.
+				executable_dir = os.path.dirname(sys.executable)
+				idle_dir=os.path.join(executable_dir,"Tools","idle")
+				if idle_dir not in sys.path:
+					sys.path.append(idle_dir)
+				# Initialize argv: the -t option sets the title of the Idle interp window.
+				# pathToLeo = os.path.join(app().loadDir,"leo.py")
+				sys.argv = ["leo","-t","leo"]
+				import PyShell
+				if app().idle_imported:
+					reload(idle)
+					app().idle_imported = true
+				if 1: # Mostly works, but causes problems when opening other .leo files.
+					PyShell.main()
+				else: # Doesn't work: destroys all of Leo when Idle closes.
+					self.leoPyShellMain()
 			except:
-				from idlelib import idle # This may be better on Linux.
-			if app().idle_imported:
-				reload(idle)
-			app().idle_imported = true
-		except:
-			try:
-				es("Can not import idle")
-				es("Please add " + `idle_dir` + " to sys.path")
-				import traceback
-				traceback.print_exc() # This can fail!!
-			except: pass
+				try:
+					es("Can not import idle")
+					es("Please add " + `idle_dir` + " to sys.path")
+					import traceback
+					traceback.print_exc() # This can fail!!
+				except: pass
+			#@-body
+			#@-node:2::<< open idle in Windows >>
+
 	
 		return "break" # inhibit further command processing.
 	#@-body
+	#@+node:3::leoPyShellMain
+	#@+body
+	#@+at
+	#  The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
+	# 
+	# This does _not_ work.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
+
+	#@-at
+	#@@c
+	
+	def leoPyShellMain(self):
+		
+		import PyShell
+		root = app().root
+		PyShell.fixwordbreaks(root)
+		flist = PyShell.PyShellFileList(root)
+		shell = PyShell.PyShell(flist)
+		interp = shell.interp
+		flist.pyshell = shell
+		shell.begin()
+	#@-body
+	#@-node:3::leoPyShellMain
 	#@-node:7:C=44:OnOpenPythonWindow
 	#@-node:4::Window Menu
 	#@+node:5::Help Menu
