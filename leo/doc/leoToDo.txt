@@ -64,8 +64,7 @@ http://sourceforge.net/forum/message.php?msg_id=2859149
 By: genthaler
 
 I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out. What do I have to
-do to make this happen?
+than doing it by hand every time a new version comes out.
 
 http://sourceforge.net/forum/message.php?msg_id=2859156
 By: genthaler
@@ -83,37 +82,11 @@ installed in /System/Library/Frameworks/Python.framework, and that requires
 an installer package and admin privileges.
 
 Günther
-
+#@nonl
 #@-node:ekr.20041130125213.2:Requests & follow up
 #@-node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@-node:ekr.20050206042705:Distribution
-#@+node:ekr.20050119072551.1:Docs
-#@+node:ekr.20050206120754:Improve documentation in leoSettings.leo
-@killcolor
-
-Documentation problem in "Leo\config\leoSettings.leo", headline == 
-"@bool write_strips_blank_lines = True"
-and in "@settings-->Window options-->@page Outline pane options-->@bool
-allow_clone_drags = False"
-and "@settings-->Window options-->@page Outline pane options-->@bool
-enable_drag_messages = False"
-
-The body text shows 1: & 0: as selections, not True/False.
-
-------------------------------------------
-
-Documentation in "Leo\config\leoSettings.leo", path == "@settings-->@page Find/Change
-panel options-->Checkboxes-->@bool script_change = None"
-
-?? What's a 'script change' ? That is, all the @bool nodes under "Checkboxes"
-could use descriptions.
-
-------------------------------------------
-Path == "@settings-->Colors-->@page Syntax colors & options" 
-It would be nice if there were spaces before & after the "=" to allow easier
-double-click selection of just the colors.
-#@-node:ekr.20050206120754:Improve documentation in leoSettings.leo
-#@+node:ekr.20050110094511.1:Improve docs as suggested by JasonC.
+#@+node:ekr.20050206164308:OLD: Improve docs as suggested by JasonC
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2928991
@@ -222,198 +195,8 @@ And include from there a link to an freshly updated Installatian page in the
 Users Guide.
 to  
 http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
-
-
-
-I had thought that the User Guide was automaticailly codrevied and converted
-to HTML from Leo somewhere.
-Pehasp it is harder than that and requires advanced XSLT voodoo onboard. 
- 
-
--------------------------
-@nothing-just-do-it ....
-
-MINIMALIST  PROPOSAL
-I suggest changing and simplifying Leo's default behavior so that sub-nodes
-and sections are always included UNLESS some directive prevents it.
-
-Why do we even need @others?
-if you DON't want a node inlcuded insert @ignore
-
-To create a derived file, just start an @file or @thin node. Then nest nodes
-under that.
-
-If there is no text at all in the  @file node, all the sub-nodes wil be included
-in their current order.
-
-If the @file or any sub-node  includes text and  NAMED section references, then
-that order will over-ride the actual node tree order in the top pane.
-
-SUMMARY
-Leo seems to grow increasingly elegant and robust. 
-I suspect recommeneded usasge style can now be hugely simplified, especially
-for more general outlining uses.
-
-For beginners there is much that seems unclear and thus unneccessary. The core
-idea of derived files, subnodes, named sectoin and CLONES is plenty.
-Why not let those relationships work by themselves
-and reduce the need for directives wherever possible?
-
-I realize there are many subtle and sophsticated permutations to Leo use, and
-pragmatic need for advanced programmers and legacy support.
-
-For thoese situations, the full family of directives is necessarily a wonderful
-thing.
-
-
-
-Jason
-
-______________________________________________________________________
-You are receiving this email because you elected to monitor this forum.
-To stop monitoring this forum, login to SourceForge.net and visit: 
-https://sourceforge.net/forum/unmonitor.php?forum_id=10226
-
-#@-node:ekr.20050110094511.1:Improve docs as suggested by JasonC.
-#@+node:ekr.20050110091055:Update description of xml file formats in LeoDocs.leo
-#@-node:ekr.20050110091055:Update description of xml file formats in LeoDocs.leo
-#@+node:ekr.20050105065157:Tip
-@killcolor
-http://sourceforge.net/forum/message.php?msg_id=2923560
-By: nobody
-
-> What is fastest way to display graphic media from Leo? For example jpeg photos,
-digital video movies, Flash swf files... Shoudl I just wrap all those in html
-and link from there?
-
-One way is to link directly to the media file from a Leo node (with @url) and
-write a scriptbutton to wrap all URL-nodes under the current node in a single
-HTML page (using the HTML browser trick at
-http://sourceforge.net/forum/forum.php?thread_id=1201579&forum_id=10226 ).
-
-Then, you can view your media in two ways: individually or in a group.
-
-Individually, you can directly click on the @url link to display the media in
-the browser (assuming you have your MIME/filetype associations set up correctly
-for your browser).
-
-In a group, you can click on a scriptbutton (you have to code this yourself,
-very simple) which should collect all @url nodes under the current node and
-dynamically generate a HTML page displaying either links to or embedded versions
-of the media (using the HTML trick described above to invoke the browser). This
-way, you can create collections of @url nodes under a single node (like a bookmark
-folder), and press a single button to view the @url-collection as a single entity
-in the browser (with all browser capabilities like displaying the media).
-
-You could probably generalize this idea of "collect all @url-nodes under current
-node and display as HTML in browser" into a general-purpose plugin. However,
-the plugin would have to be somewhat smart in mapping a link to its corresponding
-HTML code (e.g. an image link gets mapped to an <img> HTML tag, a link to a
-Flash file gets mapped to an <embed> tag, etc).
-#@-node:ekr.20050105065157:Tip
-#@+node:ekr.20050127094324:To run Leo on Macintosh OS X 10.3
-To run Leo on Macintosh OS X 10.3
-
-1) download and install "MacPython 2.3 for Panther addons" Python is  
-already included in OS X 10.3 so only the addons are necessary
-
-	http://www.cwi.nl/~jack/macpython.html
-
-2) download and install TclTkAqua
-
-	http://tcltkaqua.sourceforge.net/
-
-3) run the PackageManager found in /Applications/MacPython-2.3 and  
-install "_tkinter-2.3-binary" by clicking on the package in the list  
-and clicking the [Install:] button with "Install dependencies" checked
-
-4) download leo (platform independent source.zip)
-
-	http://leo.sourceforge.net/
-
-5) unzip the contents into a directory by double-clicking the  
-downloaded file
-
-6) control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
-PythonLauncher
-
-7) it is a good idea to set PythonLauncher as the default program to  
-open python scripts by clicking on "leo.py", choosing Get Info from the  
-Finder's File menu, and selecting "PythonLauncher" as the default  
-program to "Open With:"
-
-By clicking the "Change All..." button, all python scripts will be  
-opened with PythonLauncher
-
-8) in order to use the Preferences, Pmw must be installed
-
-	http://pmw.sourceforge.net/
-
-download and drag the downloaded gzip file into  
-/System/Library/Frameworks/Python.framework/Versions/2.3/lib/python2.3/ 
-site-packages and double click on it to unzip and untar the file into a  
-folder to make it available to Python
-
-
-- Randall Voth
-
-#@-node:ekr.20050127094324:To run Leo on Macintosh OS X 10.3
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
-
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
-
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
-
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
 #@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@-node:ekr.20050119072551.1:Docs
+#@-node:ekr.20050206164308:OLD: Improve docs as suggested by JasonC
 #@-node:ekr.20050119072551:4.3 a2 TO DO
 #@+node:ekr.20050126101301:4.3 a3 Plugins & config...
 #@+node:ekr.20050128065405:Study Leo2Ascii
