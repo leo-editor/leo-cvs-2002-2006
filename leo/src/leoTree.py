@@ -164,6 +164,7 @@ class baseLeoTree:
 		self.prevMoveToFrac = None
 		self.visibleArea = None
 		self.expandedVisibleArea = None
+		self.forceFullRecolorFlag = false
 		
 		self.allocatedNodes = 0 # A crucial statistic.
 			# Incremental drawing allocates visible nodes at most twice.
@@ -854,6 +855,12 @@ class baseLeoTree:
 			es_exception()
 	#@nonl
 	#@-node:setLineHeight
+	#@+node:tree.forceRecolor
+	def forceFullRecolor (self):
+		
+		self.forceFullRecolorFlag = true
+	#@nonl
+	#@-node:tree.forceRecolor
 	#@+node:tree.getFont,setFont,setFontFromConfig
 	def getFont (self):
 	
@@ -1287,9 +1294,12 @@ class baseLeoTree:
 		v.t.insertSpot = c.body.index("insert")
 		#@	<< recolor the body >>
 		#@+node:<< recolor the body >>
+		# if self.forceFullRecolorFlag: trace(undoType,"full recolor")
+		
 		self.scanForTabWidth(v)
-		incremental = undoType not in ("Cut","Paste")
+		incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
 		self.recolor_now(v,incremental=incremental)
+		self.forceFullRecolorFlag = false
 		#@nonl
 		#@-node:<< recolor the body >>
 		#@nl
