@@ -2635,9 +2635,10 @@ class atFile:
 							traceback.print_exc()
 						es("unchanged: " + self.shortFileName)
 					else:
-						try: # 10/3/02: retain the access mode of the previous file.
-							# 10/6/02: add required second param.
-							mode = os.access(self.targetFileName, os.R_OK | os.W_OK | os.X_OK)
+						try:
+							# 10/6/02: retain the access mode of the previous file,
+							# removing any setuid, setgid, and sticky bits.
+							mode = (os.stat(filename))[0] & 0777
 						except:  # does not exist on all platforms.
 							# traceback.print_exc()
 							mode = None
