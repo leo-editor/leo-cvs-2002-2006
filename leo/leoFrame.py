@@ -2339,6 +2339,11 @@ class LeoFrame:
 		#@<< read the file into lines >>
 		#@+node:2::<< read the file into lines >>
 		#@+body
+		# 1/26/03: calculate the full path.
+		d = scanDirectives(c)
+		path = d.get("path")
+		fileName = os.path.join(path,fileName)
+		
 		try:
 			file=open(fileName)
 			lines = file.readlines()

@@ -537,6 +537,8 @@ def scanDirectives(c,v=None):
 
 		old.update(dict)
 		v = v.parent()
+
+	if path == None: path = ""
 	return {
 		"delims"    : (delim1,delim2,delim3),
 		"encoding"  : encoding,
