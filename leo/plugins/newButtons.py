@@ -13,6 +13,7 @@ __name__ = "New Buttons"
 __version__ = "0.3"
 # 0.2 EKR: Converted to @file-noref
 # 0.3 EKR: Added 6 new plugin templates.  Added init function.
+# 0.4 EKR: Added importLeoGlobals function.
  
 import leoGlobals as g
 import leoPlugins
@@ -218,6 +219,29 @@ def init():
 '''
 #@nonl
 #@-node:GENERIC_INIT_FUNCTION_BODY
+#@+node:IMPORT_LEO_GLOBALS_BODY
+IMPORT_LEO_GLOBALS_BODY = """def importLeoGlobals():
+    
+    '''
+    Try to import leoGlobals from the leo/src directory, assuming that
+    the script using this function is in a subdirectory of the leo directory.
+    '''
+    
+    plugins_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),'..','src'))
+    
+    if plugins_path in sys.path:
+        return None
+    else:
+        sys.path.append(plugins_path)
+        try:
+            import leoGlobals as g
+            return g
+        except ImportError:
+            print 'can not import leoGlobals from %s' % (plugins_path)
+            return None
+"""
+#@-node:IMPORT_LEO_GLOBALS_BODY
 #@+node:PLUGIN_ROOT_BODY
 PLUGIN_ROOT_BODY = '''
 << docstring >>
@@ -340,64 +364,6 @@ def setUp(self):
 '''
 #@nonl
 #@-node:body text used by AddTestModule & AddTestClass
-#@+node:class AddTestModule
-class AddTestModule(NodeAdder):
-
-    """Add unit testing node"""
-
-    button_name = "test module"
-
-    nodes = [
-        Node(
-            name="testxxx.py",
-            body=TEST_NODE_BODY,
-            subnodes=[ 
-                Node(
-                    name="TestXXX",
-                    body=TEST_CLASS_BODY,
-                    subnodes=[ 
-                        Node(name="setUp",
-                        body=TEST_SETUP_BODY)])])]
-#@nonl
-#@-node:class AddTestModule
-#@+node:class AddTestClass
-class AddTestClass(NodeAdder):
-
-    """Add unit testing class"""
-
-    button_name = "test class"
-
-    nodes = [
-        Node(
-            name="TestXXX",
-            body=TEST_CLASS_BODY,
-            subnodes=[
-                Node(
-                    name="setUp",
-                    body=TEST_SETUP_BODY)])]
-#@nonl
-#@-node:class AddTestClass
-#@+node:class AddTestMethod
-TEST_METHOD_BODY = '''
-def testXXX(self):
-
-    """testXXX: TestDescriptionGoesHere"""
-
-'''
-
-class AddTestMethod(NodeAdder):
-
-    """Add unit testing method"""
-
-    button_name = "test method"
-
-    nodes = [
-    Node(
-        name="testXXX",
-        body=TEST_METHOD_BODY,
-        inherit=0)] # EKR: was 1.
-#@nonl
-#@-node:class AddTestMethod
 #@+node:class AddClass
 NEW_CLASS_BODY = '''
 class XXX:
@@ -482,6 +448,21 @@ class AddGenericPlugin(NodeAdder):
     ]
 #@nonl
 #@-node:class AddGenericPlugin
+#@+node:class AddImportLeoGlobalsFunction
+class AddImportLeoGlobalsFunction(NodeAdder):
+
+    '''Add importLeoGlobals function.'''
+
+    button_name = "<<importLeoGlobals>>"
+
+    nodes = [
+        Node(
+            name="<< define importLeoGlobals >>",
+            body=IMPORT_LEO_GLOBALS_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddImportLeoGlobalsFunction
 #@+node:class AddPluginImportsSection
 class AddPluginImportsSection(NodeAdder):
 
@@ -512,6 +493,94 @@ class AddPluginInitFunction(NodeAdder):
     )]
 #@nonl
 #@-node:class AddPluginInitFunction
+#@+node:class AddPluginTkInitFunction
+class AddPluginTkInitFunction(NodeAdder):
+
+    '''Add plugin init(tk).'''
+
+    button_name = "plugin init(tk)"
+
+    nodes = [
+        Node(
+            name="init",
+            body=TK_INIT_FUNCTION_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginTkInitFunction
+#@+node:class AddPluginVersionHistorySection
+class AddPluginVersionHistorySection(NodeAdder):
+
+    '''Add plugin version history section.'''
+
+    button_name = "<<version history>>"
+
+    nodes = [
+        Node(
+            name="<< version history >>",
+            body=VERSION_HISTORY_BODY,
+            inherit=0
+    )]
+#@nonl
+#@-node:class AddPluginVersionHistorySection
+#@+node:class AddTestClass
+class AddTestClass(NodeAdder):
+
+    """Add unit testing class"""
+
+    button_name = "test class"
+
+    nodes = [
+        Node(
+            name="TestXXX",
+            body=TEST_CLASS_BODY,
+            subnodes=[
+                Node(
+                    name="setUp",
+                    body=TEST_SETUP_BODY)])]
+#@nonl
+#@-node:class AddTestClass
+#@+node:class AddTestMethod
+TEST_METHOD_BODY = '''
+def testXXX(self):
+
+    """testXXX: TestDescriptionGoesHere"""
+
+'''
+
+class AddTestMethod(NodeAdder):
+
+    """Add unit testing method"""
+
+    button_name = "test method"
+
+    nodes = [
+    Node(
+        name="testXXX",
+        body=TEST_METHOD_BODY,
+        inherit=0)] # EKR: was 1.
+#@nonl
+#@-node:class AddTestMethod
+#@+node:class AddTestModule
+class AddTestModule(NodeAdder):
+
+    """Add unit testing node"""
+
+    button_name = "test module"
+
+    nodes = [
+        Node(
+            name="testxxx.py",
+            body=TEST_NODE_BODY,
+            subnodes=[ 
+                Node(
+                    name="TestXXX",
+                    body=TEST_CLASS_BODY,
+                    subnodes=[ 
+                        Node(name="setUp",
+                        body=TEST_SETUP_BODY)])])]
+#@nonl
+#@-node:class AddTestModule
 #@+node:class AddTkPlugin
 class AddTkPlugin(NodeAdder):
 
@@ -552,36 +621,6 @@ class AddTkPlugin(NodeAdder):
     ]
 #@nonl
 #@-node:class AddTkPlugin
-#@+node:class AddPluginTkInitFunction
-class AddPluginTkInitFunction(NodeAdder):
-
-    '''Add plugin init(tk).'''
-
-    button_name = "plugin init(tk)"
-
-    nodes = [
-        Node(
-            name="init",
-            body=TK_INIT_FUNCTION_BODY,
-            inherit=0
-    )]
-#@nonl
-#@-node:class AddPluginTkInitFunction
-#@+node:class AddPluginVersionHistorySection
-class AddPluginVersionHistorySection(NodeAdder):
-
-    '''Add plugin version history section.'''
-
-    button_name = "<<version history>>"
-
-    nodes = [
-        Node(
-            name="<< version history >>",
-            body=VERSION_HISTORY_BODY,
-            inherit=0
-    )]
-#@nonl
-#@-node:class AddPluginVersionHistorySection
 #@+node:init
 def init():
     
@@ -599,6 +638,8 @@ def init():
         AddPluginTkInitFunction(),
         AddPluginImportsSection(),
         AddPluginVersionHistorySection(),
+        # EKR, v0.4...
+        AddImportLeoGlobalsFunction(),
     )
 
     ok = Tk is not None
