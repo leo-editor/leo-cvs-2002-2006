@@ -169,9 +169,15 @@ class LeoApp:
         Return False if the user veto's the close."""
         
         c = frame.c
+        
+        if c.promptingForClose:
+            # There is already a dialog open asking what to do.
+            return False
     
         if c.changed:
+            c.promptingForClose = True
             veto = frame.promptForSave()
+            c.promptingForClose = False
             if veto: return False
     
         g.app.setLog(None) # no log until we reactive a window.
