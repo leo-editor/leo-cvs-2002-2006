@@ -134,7 +134,7 @@ def windows():
 #@-body
 #@-node:6::windows
 #@-node:2::Most common functions
-#@+node:3::Commands, Dialogs, Directives & Menus...
+#@+node:3::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::get_window_info
 #@+body
@@ -608,8 +608,89 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:3::Commands, Dialogs, Directives & Menus...
-#@+node:4::Dumping, Timing, Tracing & Sherlock
+#@-node:3::Commands, Dialogs, Directives, & Menus...
+#@+node:4::Hooks
+#@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+body
+def enableIdleTimeHook(idleTimeDelay=100):
+	app().idleTimeHook = true
+	app().idleTimeDelay = idleTimeDelay # Delay in msec.
+	app().root.after_idle(idleTimeHookHandler)
+
+def disableIdleTimeHook():
+	app().idleTimeHook = false
+	
+def idleTimeHookHandler(*args):
+	a = app()
+	handleLeoHook("idle")
+	# Requeue this routine after 100 msec.
+	# Faster requeues overload the system.
+	if a.idleTimeHook:
+		a.root.after(a.idleTimeDelay,idleTimeHookHandler)
+#@-body
+#@-node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
+#@+node:2::handleLeoHook
+#@+body
+#@+at
+#  This global function calls a hook routine.  Hooks are identified by the tag param.
+# Returns the value returned by the hook routine, or None if the there is an exception.
+# 
+# We look for a hook routine in three places:
+# 1. top().hookFunction
+# 2. app().hookFunction
+# 3. customizeLeo.customizeLeo()
+# We set app().hookError on all exceptions.  Scripts that reset 
+# app().hookError to try again.
+
+#@-at
+#@@c
+
+def handleLeoHook(tag,**keywords):
+
+	a = app() ; c = top() # c may be None during startup.
+	
+	if not app().config.use_configureLeo_dot_py:
+		return None # not enabled.
+
+	if a.hookError:
+		return None
+	elif c and c.hookFunction:
+		try:
+			title = c.frame.top.title()
+			return c.hookFunction(tag)
+		except:
+			es("exception in hook function for " + title)
+	elif a.hookFunction:
+		try:
+			return a.hookFunction(tag,keywords)
+		except:
+			es("exception in app().hookFunction")
+	else:
+		try:
+			from customizeLeo import customizeLeo
+			try:
+				a.hookFunction = customizeLeo
+				return customizeLeo(tag,keywords)
+			except:
+				a.hookFunction = None
+				es("exception in customizeLeo")
+		except exceptions.SyntaxError:
+			es("syntax error in customizeLeo")
+		except:
+			# Import failed.  This is not an error.
+			a.hookError = true # Supress this function.
+			a.idleTimeHook = false # Supress idle-time hook
+			return None
+
+	# Handle all exceptions except import failure.
+	es_exception()
+	a.hookError = true # Supress this function.
+	a.idleTimeHook = false # Supress idle-time hook
+	return None # No return value
+#@-body
+#@-node:2::handleLeoHook
+#@-node:4::Hooks
+#@+node:5::Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -883,8 +964,8 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:10::Timing
-#@-node:4::Dumping, Timing, Tracing & Sherlock
-#@+node:5::Files & Directories...
+#@-node:5::Dumping, Timing, Tracing & Sherlock
+#@+node:6::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1111,8 +1192,8 @@ def utils_rename(src,dst):
 
 #@-body
 #@-node:9::utils_rename
-#@-node:5::Files & Directories...
-#@+node:6::Lists...
+#@-node:6::Files & Directories...
+#@+node:7::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1145,8 +1226,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:6::Lists...
-#@+node:7::Scanning, selection, text & whitespace...
+#@-node:7::Lists...
+#@+node:8::Scanning, selection, text & whitespace...
 #@+node:1::scanError
 #@+body
 #@+at
@@ -2154,8 +2235,8 @@ def returnNonEncodingChar(c,xml_encoding):
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
 #@-node:6::Unicode...
-#@-node:7::Scanning, selection, text & whitespace...
-#@+node:8::Startup & initialization...
+#@-node:8::Scanning, selection, text & whitespace...
+#@+node:9::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -2272,65 +2353,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 
 #@-body
 #@-node:1::CheckVersion (Dave Hein)
-#@+node:2::handleLeoHook
-#@+body
-#@+at
-#  This global function calls a hook routine.  Hooks are identified by the tag param.
-# Returns the value returned by the hook routine, or None if the there is an exception.
-# 
-# We look for a hook routine in three places:
-# 1. top().hookFunction
-# 2. app().hookFunction
-# 3. customizeLeo.customizeLeo()
-# We set app().hookError on all exceptions.  Scripts that reset 
-# app().hookError to try again.
-
-#@-at
-#@@c
-
-def handleLeoHook(tag,**keywords):
-
-	a = app() ; c = top() # c may be None during startup.
-	
-	if not app().config.use_configureLeo_dot_py:
-		return None # not enabled.
-
-	if a.hookError:
-		return None
-	elif c and c.hookFunction:
-		try:
-			title = c.frame.top.title()
-			return c.hookFunction(tag)
-		except:
-			es("exception in hook function for " + title)
-	elif a.hookFunction:
-		try:
-			return a.hookFunction(tag,keywords)
-		except:
-			es("exception in app().hookFunction")
-	else:
-		try:
-			from customizeLeo import customizeLeo
-			try:
-				a.hookFunction = customizeLeo
-				return customizeLeo(tag,keywords)
-			except:
-				a.hookFunction = None
-				es("exception in customizeLeo")
-		except exceptions.SyntaxError:
-			es("syntax error in customizeLeo")
-		except:
-			# Import failed.  This is not an error.
-			a.hookError = true # Supress this function.
-			return None
-
-	# Handle all exceptions except import failure.
-	es_exception()
-	a.hookError = true # Supress this function.
-	return None # No return value
-#@-body
-#@-node:2::handleLeoHook
-#@+node:3::unloadAll
+#@+node:2::unloadAll
 #@+body
 #@+at
 #  Unloads all of Leo's modules.  Based on code from the Python Cookbook.
@@ -2363,8 +2386,8 @@ def unloadAll():
 		es_exception()
 
 #@-body
-#@-node:3::unloadAll
-#@-node:8::Startup & initialization...
+#@-node:2::unloadAll
+#@-node:9::Startup & initialization...
 #@-others
 
 

@@ -22,6 +22,8 @@ class LeoApp:
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle
+		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
