@@ -3,6 +3,7 @@ LeoPy.leo
 README.txt
 __init__.py
 c2py.py
+disStats.py
 leo.py
 leo.rc
 leo.res

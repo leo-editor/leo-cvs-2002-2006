@@ -9,7 +9,7 @@ Download tk/tcl from http://www.tcl.tk/software/tcltk/downloadnow83.tml
 To do this, you will need to generate leoConfig.txt from leoConfig.leo.
 
 
-leo.py 3.6 beta 2                             September 10, 2002
+leo.py 3.6                                   September 11, 2002
 
 Highlights:
 
