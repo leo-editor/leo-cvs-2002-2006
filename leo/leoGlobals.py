@@ -810,7 +810,23 @@ def es_exception (full=false):
 	traceback.print_exc()
 #@-body
 #@-node:4::es_exception
-#@+node:5::get_line & get_line_after
+#@+node:5::es_event_exception
+#@+body
+def es_event_exception (eventName,full=false):
+
+	import traceback
+	es("exception handling ", eventName, " event")
+	typ,val,tb = sys.exc_info()
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es(i)
+	traceback.print_exc()
+#@-body
+#@-node:5::es_event_exception
+#@+node:6::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -834,8 +850,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:5::get_line & get_line_after
-#@+node:6::printBindings
+#@-node:6::get_line & get_line_after
+#@+node:7::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -845,8 +861,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:6::printBindings
-#@+node:7::printGlobals
+#@-node:7::printBindings
+#@+node:8::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -861,8 +877,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:7::printGlobals
-#@+node:8::printLeoModules
+#@-node:8::printGlobals
+#@+node:9::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -881,8 +897,8 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:8::printLeoModules
-#@+node:9::Sherlock...
+#@-node:9::printLeoModules
+#@+node:10::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -1051,8 +1067,8 @@ def trace_tag (name, *args):
 
 #@-body
 #@-node:5::trace_tag
-#@-node:9::Sherlock...
-#@+node:10::Timing
+#@-node:10::Sherlock...
+#@+node:11::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1067,7 +1083,7 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:10::Timing
+#@-node:11::Timing
 #@-node:4::Dumping, Timing, Tracing & Sherlock
 #@+node:5::Files & Directories...
 #@+node:1::create_temp_name
@@ -1426,8 +1442,10 @@ def disableIdleTimeHook():
 	
 # An internal routine used to dispatch the "idle" hook.
 def idleTimeHookHandler(*args):
-	a = app()
-	handleLeoHook("idle")
+	a = app() ; c = top()
+	if c: v = c.currentVnode()
+	else: v = None
+	handleLeoHook("idle",c=c,v=v)
 	# Requeue this routine after 100 msec.
 	# Faster requeues overload the system.
 	if a.idleTimeHook:

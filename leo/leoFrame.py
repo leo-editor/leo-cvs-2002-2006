@@ -126,7 +126,8 @@ class LeoFrame:
 		#@-body
 		#@-node:2::<< create the first tree node >>
 
-		if handleLeoHook("menu1") == None:
+		v = c.currentVnode()
+		if handleLeoHook("menu1",c=c,v=v) == None:
 			self.createMenuBar(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
@@ -139,14 +140,19 @@ class LeoFrame:
 	
 		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoEvent)
 		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
+		
 		self.top.bind("<Activate>", self.OnActivateLeoEvent) # Doesn't work on windows.
 		self.top.bind("<Deactivate>", self.OnDeactivateLeoEvent) # Doesn't work on windows.
+	
 		self.top.bind("<Control-KeyPress>",self.OnControlKeyDown)
 		self.top.bind("<Control-KeyRelease>",self.OnControlKeyUp)
+		
 		self.tree.canvas.bind("<Button-1>", self.OnActivateTree)
-		self.body.bind("<Button-1>", self.OnActivateBody)
-		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
 		self.log.bind("<Button-1>", self.OnActivateLog)
+		
+		self.body.bind("<Button-1>", self.OnBodyClick) # 2/8/03
+		self.body.bind("<Button-3>", self.OnBodyRClick) # 2/8/03
+		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
 		self.body.bind("<Key>", self.tree.OnBodyKey)
 	
 		self.body.bind(virtual_event_name("Cut"), self.OnCut)
@@ -388,134 +394,94 @@ class LeoFrame:
 	
 	def OnCloseLeoEvent(self):
 	
-		# trace(`self in app().windowList` + ":" + `self`)
-		veto=false
-		c = self.commands ; frame = c.frame
-		if c.changed:
+		try:
 			
-			#@<< Prompt for change.  Set veto if the user cancels >>
-			#@+node:1::<< Prompt for change.  Set veto if the user cancels >>
+			#@<< handle request to close a leo window >>
+			#@+node:1::<< handle request to close a leo window >>
 			#@+body
-			name = choose(self.mFileName, self.mFileName, self.title)
-			type = choose(app().quitting, "quitting?", "closing?")
-			
-			d = leoDialog.leoDialog()
-			answer = d.askYesNoCancel("Confirm",
-				'Save changes to "' + name + '" before ' + type)
-			
-			if answer=="yes":
-				if not self.mFileName or self.mFileName == "":
-					
-					#@<< Put up a file save dialog; set veto if the user cancels >>
-					#@+node:1::<< Put up a file save dialog; set veto if the user cancels >>
-					#@+body
-					# Make sure we never pass None to the ctor.
-					if not self.title:
-						self.title = ""
+			# trace(`self in app().windowList` + ":" + `self`)
+			veto=false
+			c = self.commands ; frame = c.frame
+			if c.changed:
+				
+				#@<< Prompt for change.  Set veto if the user cancels >>
+				#@+node:1::<< Prompt for change.  Set veto if the user cancels >>
+				#@+body
+				name = choose(self.mFileName, self.mFileName, self.title)
+				type = choose(app().quitting, "quitting?", "closing?")
+				
+				d = leoDialog.leoDialog()
+				answer = d.askYesNoCancel("Confirm",
+					'Save changes to "' + name + '" before ' + type)
+				
+				if answer=="yes":
+					if not self.mFileName or self.mFileName == "":
 						
-					self.mFileName = tkFileDialog.asksaveasfilename(
-						initialfile = self.mFileName,
-						title="Save",
-						filetypes=[("Leo files", "*.leo")],
-						defaultextension=".leo")
+						#@<< Put up a file save dialog; set veto if the user cancels >>
+						#@+node:1::<< Put up a file save dialog; set veto if the user cancels >>
+						#@+body
+						# Make sure we never pass None to the ctor.
+						if not self.title:
+							self.title = ""
+							
+						self.mFileName = tkFileDialog.asksaveasfilename(
+							initialfile = self.mFileName,
+							title="Save",
+							filetypes=[("Leo files", "*.leo")],
+							defaultextension=".leo")
+							
+						if not self.mFileName:
+							veto = true
 						
-					if not self.mFileName:
-						veto = true
-					
-					#@-body
-					#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
+						#@-body
+						#@-node:1::<< Put up a file save dialog; set veto if the user cancels >>
 
-				if veto==false and self.mFileName and self.mFileName != "":
-					self.commands.fileCommands.save( self.mFileName )
+					if veto==false and self.mFileName and self.mFileName != "":
+						self.commands.fileCommands.save( self.mFileName )
+				
+				elif answer=="cancel":
+					veto = true #The user wants to cancel the close.
+				
+				else: veto = false # The user wants to close without saving.
+				#@-body
+				#@-node:1::<< Prompt for change.  Set veto if the user cancels >>
+
+			if veto: return false
+			app().log = None # no log until we reactive a window.
+			# Destroy all windows attached to this windows.
+			# This code will be executed if we haven't explicitly closed the windows.
+			if self.comparePanel:
+				self.comparePanel.top.destroy()
+			if self.colorPanel:
+				self.colorPanel.top.destroy()
+			if self.fontPanel:
+				self.fontPanel.top.destroy()
+			if self.prefsPanel:
+				self.prefsPanel.top.destroy()
 			
-			elif answer=="cancel":
-				veto = true #The user wants to cancel the close.
+			if self in app().windowList:
+				app().windowList.remove(self)
+				self.destroy() # force the window to go away now.
+			if app().windowList:
+				# Pick a window to activate so we can set the log.
+				w = app().windowList[0]
+				w.top.deiconify()
+				w.top.lift()
+				app().log = w
+			else:
+				app().quit()
 			
-			else: veto = false # The user wants to close without saving.
 			#@-body
-			#@-node:1::<< Prompt for change.  Set veto if the user cancels >>
+			#@-node:1::<< handle request to close a leo window >>
 
-		if veto: return false
-		app().log = None # no log until we reactive a window.
-		# Destroy all windows attached to this windows.
-		# This code will be executed if we haven't explicitly closed the windows.
-		if self.comparePanel:
-			self.comparePanel.top.destroy()
-		if self.colorPanel:
-			self.colorPanel.top.destroy()
-		if self.fontPanel:
-			self.fontPanel.top.destroy()
-		if self.prefsPanel:
-			self.prefsPanel.top.destroy()
+			return true
+		except:
+			es_event_exception("close window")
+			return false
 	
-		if self in app().windowList:
-			app().windowList.remove(self)
-			self.destroy() # force the window to go away now.
-		if app().windowList:
-			# Pick a window to activate so we can set the log.
-			w = app().windowList[0]
-			w.top.deiconify()
-			w.top.lift()
-			app().log = w
-		else:
-			app().quit()
-		return true
 	#@-body
 	#@-node:1::frame.OnCloseLeoEvent
-	#@+node:2::OnActivateBody & OnBodyDoubleClick
-	#@+body
-	def OnActivateBody (self,event=None):
-	
-		c=self.commands ; v = c.currentVnode()
-		
-		app().log = self
-		self.tree.OnDeactivate()
-		# trace(`app().log`)
-	
-	def OnBodyDoubleClick (self,event=None):
-	
-		if event: # 8/4/02: prevent wandering insertion point.
-			index = "@%d,%d" % (event.x, event.y) # Find where we clicked
-		body = self.body
-		start = body.index(index + " wordstart")
-		end = body.index(index + " wordend")
-		setTextSelection(self.body,start,end)
-		return "break" # Inhibit all further event processing.
-	#@-body
-	#@-node:2::OnActivateBody & OnBodyDoubleClick
-	#@+node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+body
-	def OnActivateLeoEvent(self,event=None):
-	
-		app().log = self
-		# trace(`app().log`)
-	
-	def OnDeactivateLeoEvent(self,event=None):
-		
-		app().log = None
-		# trace(`app().log`)
-	#@-body
-	#@-node:3::OnActivateLeoEvent, OnDeactivateLeoEvent
-	#@+node:4::OnActivateLog
-	#@+body
-	def OnActivateLog (self,event=None):
-	
-		app().log = self
-		self.tree.OnDeactivate()
-		# trace(`app().log`)
-	#@-body
-	#@-node:4::OnActivateLog
-	#@+node:5::OnActivateTree
-	#@+body
-	def OnActivateTree (self,event=None):
-	
-		app().log = self
-		self.tree.undimEditLabel()
-		self.tree.canvas.focus_set()
-		# trace(`app().log`)
-	#@-body
-	#@-node:5::OnActivateTree
-	#@+node:6::frame.OnControlKeyUp/Down
+	#@+node:2::frame.OnControlKeyUp/Down
 	#@+body
 	def OnControlKeyDown (self,event=None):
 		
@@ -526,21 +492,8 @@ class LeoFrame:
 		self.controlKeyIsDown = false
 	
 	#@-body
-	#@-node:6::frame.OnControlKeyUp/Down
-	#@+node:7::OnMouseWheel (Tomaz Ficko)
-	#@+body
-	# Contributed by Tomaz Ficko.  This works on some systems.
-	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
-	
-	def OnMouseWheel(self, event=None):
-	
-		if event.delta < 1:
-			self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
-		else:
-			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
-	#@-body
-	#@-node:7::OnMouseWheel (Tomaz Ficko)
-	#@+node:8::frame.OnVisibility
+	#@-node:2::frame.OnControlKeyUp/Down
+	#@+node:3::frame.OnVisibility
 	#@+body
 	# Handle the "visibility" event and attempt to attach the Leo icon.
 	# This code must be executed whenever the window is redrawn.
@@ -552,7 +505,125 @@ class LeoFrame:
 			# print "OnVisibility"
 			self.icon.attach(self.top)
 	#@-body
-	#@-node:8::frame.OnVisibility
+	#@-node:3::frame.OnVisibility
+	#@+node:4::OnActivateBody
+	#@+body
+	def OnActivateBody (self,event=None):
+	
+		try:
+			c = self.commands ; v = c.currentVnode()
+			app().log = self
+			self.tree.OnDeactivate()
+			# trace(`app().log`)
+		except:
+			es_event_exception("activate body")
+	
+	#@-body
+	#@-node:4::OnActivateBody
+	#@+node:5::OnActivateLeoEvent, OnDeactivateLeoEvent
+	#@+body
+	def OnActivateLeoEvent(self,event=None):
+	
+		try:
+			app().log = self
+			# trace(`app().log`)
+		except:
+			es_event_exception("activate Leo")
+	
+	def OnDeactivateLeoEvent(self,event=None):
+	
+		try:
+			app().log = None
+			# trace(`app().log`)
+		except:
+			es_event_exception("deactivate Leo")
+	#@-body
+	#@-node:5::OnActivateLeoEvent, OnDeactivateLeoEvent
+	#@+node:6::OnActivateLog
+	#@+body
+	def OnActivateLog (self,event=None):
+	
+		try:
+			app().log = self
+			self.tree.OnDeactivate()
+			# trace(`app().log`)
+		except:
+			es_event_exception("activate log")
+	#@-body
+	#@-node:6::OnActivateLog
+	#@+node:7::OnActivateTree
+	#@+body
+	def OnActivateTree (self,event=None):
+	
+		try:
+			app().log = self
+			self.tree.undimEditLabel()
+			self.tree.canvas.focus_set()
+			# trace(`app().log`)
+		except:
+			es_event_exception("activate tree")
+	
+	#@-body
+	#@-node:7::OnActivateTree
+	#@+node:8::OnBodyClick, OnBodyRClick (Events)
+	#@+body
+	def OnBodyClick (self,event=None):
+		try:
+			c = self.commands ; v = c.currentVnode()
+			if handleLeoHook("bodyclick1",c=c,v=v,event=event) == None:
+				self.OnActivateBody(event=event)
+			handleLeoHook("bodyclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("bodyclick")
+			
+	def OnBodyRClick(self,event=None):
+		try:
+			c = self.commands ; v = c.currentVnode()
+			if handleLeoHook("bodyrclick1",c=c,v=v,event=event) == None:
+				pass # By default Leo does nothing.
+			handleLeoHook("bodyrclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("iconrclick")
+	#@-body
+	#@-node:8::OnBodyClick, OnBodyRClick (Events)
+	#@+node:9::OnBodyDoubleClick (Events)
+	#@+body
+	def OnBodyDoubleClick (self,event=None):
+	
+		try:
+			c = self.commands ; v = c.currentVnode()
+			if handleLeoHook("bodydclick1",c=c,v=v,event=event) == None:
+				if event: # 8/4/02: prevent wandering insertion point.
+					index = "@%d,%d" % (event.x, event.y) # Find where we clicked
+				body = self.body
+				start = body.index(index + " wordstart")
+				end = body.index(index + " wordend")
+				setTextSelection(self.body,start,end)
+			handleLeoHook("bodydclick1",c=c,v=v,event=event)
+		except:
+			es_event_exception("bodydclick")
+	
+		return "break" # Inhibit all further event processing.
+	#@-body
+	#@-node:9::OnBodyDoubleClick (Events)
+	#@+node:10::OnMouseWheel (Tomaz Ficko)
+	#@+body
+	# Contributed by Tomaz Ficko.  This works on some systems.
+	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
+	
+	def OnMouseWheel(self, event=None):
+	
+		try:
+			if event.delta < 1:
+				self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+			else:
+				self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
+		except:
+			es_event_exception("scroll wheel")
+	
+		return "break"
+	#@-body
+	#@-node:10::OnMouseWheel (Tomaz Ficko)
 	#@-node:3::Event handlers (Frame)
 	#@+node:4::Menus
 	#@+node:1::canonicalizeShortcut
@@ -1314,8 +1385,11 @@ class LeoFrame:
 		# A horrible kludge: set app().log to cover for a possibly missing activate event.
 		app().log = self
 	
+		if label == "cantredo": label = "redo"
+		if label == "cantundo": label = "undo"
 		app().commandName = label
-		if handleLeoHook("command1",label=label) == None:
+		c = self.commands ; v = c.currentVnode() # 2/8/03
+		if handleLeoHook("command1",c=c,v=v,label=label) == None:
 			try:
 				command(event)
 			except:
@@ -1323,7 +1397,7 @@ class LeoFrame:
 				print "exception executing command"
 				es_exception()
 		
-		handleLeoHook("command2",label=label)
+		handleLeoHook("command2",c=c,v=v,label=label)
 				
 		return "break" # Inhibit all other handlers.
 	#@-body
@@ -1824,7 +1898,7 @@ class LeoFrame:
 	#@+body
 	def OnOpenRecentFile(self,name=None):
 		
-		c = self.commands
+		c = self.commands ; v = c.currentVnode()
 		
 		#@<< Set closeFlag if the only open window is empty >>
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
@@ -1849,13 +1923,13 @@ class LeoFrame:
 			return
 	
 		fileName = name
-		if handleLeoHook("recentfiles1",c=c,fileName=fileName,closeFlag=closeFlag)==None:
+		if handleLeoHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag)==None:
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
 				app().windowList.remove(self)
 				self.destroy() # force the window to go away now.
 				app().log = frame # Sets the log stream for es()
-		handleLeoHook("recentfiles2",c=c,fileName=fileName,closeFlag=closeFlag)
+		handleLeoHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
 	#@-node:2::frame.OnOpenRecentFile
 	#@-node:2::Recent Files submenu
@@ -3909,7 +3983,8 @@ class LeoFrame:
 		app().log = self
 		
 		# Allow the user first crack at updating menus.
-		if handleLeoHook("menu2") == None:
+		c = self.commands ; v = c.currentVnode() # 2/8/03
+		if handleLeoHook("menu2",c=c,v=v) == None:
 			self.updateFileMenu()
 			self.updateEditMenu()
 			self.updateOutlineMenu()

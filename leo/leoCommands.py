@@ -2035,7 +2035,7 @@ class Commands:
 				child = v.next()
 				child.moveToNthChildOf(v,v.numberOfChildren())
 				last = child # For undo.
-			c.expandVnode(v)
+			v.expand()
 			c.selectVnode(v)
 			v.setDirty()
 			c.setChanged(true)

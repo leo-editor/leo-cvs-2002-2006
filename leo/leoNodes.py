@@ -545,7 +545,7 @@ class vnode:
 			self.box_id = self.icon_id = self.edit_text_id = None
 	#@-body
 	#@-node:6::v.destroy
-	#@+node:7::v.Callbacks
+	#@+node:7::v.Callbacks (handles event hooks)
 	#@+body
 	#@+at
 	#  These callbacks are vnode methods so we can pass the vnode back to the 
@@ -553,127 +553,169 @@ class vnode:
 
 	#@-at
 	#@-body
-	#@+node:1::OnBoxClick, OnIconDoubleClick
+	#@+node:1::OnBoxClick
 	#@+body
 	# Called when the box is clicked.
 	
 	def OnBoxClick(self,event=None):
 	
-		if handleLeoHook("event1",kind="boxClick",v=self,event=event) == None:
-			self.commands.tree.OnBoxClick(self)
-		handleLeoHook("event2",kind="boxClick",v=self,event=event)
-		
-	# Called when the icon is double-clicked.
-		
-	def OnIconDoubleClick(self,event=None):
-	
-		if handleLeoHook("event1",kind="iconDoubleClick",v=self,event=event) == None:
-			self.commands.tree.OnIconDoubleClick(self)
-		handleLeoHook("event2",kind="iconDoubleClick",v=self,event=event)
-	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("boxclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnBoxClick(self)
+			handleLeoHook("boxclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("xxx")
 	#@-body
-	#@-node:1::OnBoxClick, OnIconDoubleClick
+	#@-node:1::OnBoxClick
 	#@+node:2::OnDrag
 	#@+body
 	def OnDrag(self,event=None):
 		
-		if handleLeoHook("event1",kind="drag",v=self,event=event) == None:
-			self.commands.tree.OnDrag(self,event)
-		handleLeoHook("event2",kind="drag",v=self,event=event)
-	
-	
+		try:
+			v = self ; c = v.commands
+			if c.frame.tree.dragging:
+				if handleLeoHook("dragging1",c=c,v=v,event=event) == None:
+					self.commands.tree.OnDrag(self,event)
+				handleLeoHook("dragging2",c=c,v=v,event=event)
+			else:
+				if handleLeoHook("drag1",c=c,v=v,event=event) == None:
+					self.commands.tree.OnDrag(self,event)
+				handleLeoHook("drag2",c=c,v=v,event=event)
+		except:
+			es_event_exception("drag")
 	#@-body
 	#@-node:2::OnDrag
 	#@+node:3::OnEndDrag
 	#@+body
 	def OnEndDrag(self,event=None):
 		
-		if handleLeoHook("event1",kind="endDrag",v=self,event=event) == None:
-			self.commands.tree.OnEndDrag(self,event)
-		handleLeoHook("event2",kind="endDrag",v=self,event=event)
-	
-	
+		try:
+			v = self ; c = v.commands
+			if c.frame.tree.dragging:
+				if handleLeoHook("enddrag1",c=c,v=v,event=event) == None:
+					self.commands.tree.OnEndDrag(self,event)
+				handleLeoHook("enddrag2",c=c,v=v,event=event)
+		except:
+			es_event_exception("enddrag")
 	#@-body
 	#@-node:3::OnEndDrag
-	#@+node:4::OnHeadlineClick & OnHeadlinePopup
+	#@+node:4::OnHeadlineClick & OnHeadlineRightClick
 	#@+body
 	def OnHeadlineClick(self,event=None):
-	
-		if handleLeoHook("event1",kind="headClick",v=self,event=event) == None:
-			self.commands.tree.OnActivate(self)
-		handleLeoHook("event2",kind="headClick",v=self,event=event)
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("headclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnActivate(self)
+			handleLeoHook("headclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("headclick")
 		
-	def OnHeadlinePopup(self,event=None):
-	
-		if handleLeoHook("event1",kind="headPopup",v=self,event=event) == None:
-			self.commands.tree.OnActivate(self)
-			self.commands.tree.OnPopup(self,event)
-		handleLeoHook("event2",kind="headPopup",v=self,event=event)
-	
-	
+	def OnHeadlineRightClick(self,event=None):
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("headrclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnActivate(self)
+				self.commands.tree.OnPopup(self,event)
+			handleLeoHook("headrclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("headrclick")
 	#@-body
-	#@-node:4::OnHeadlineClick & OnHeadlinePopup
+	#@-node:4::OnHeadlineClick & OnHeadlineRightClick
 	#@+node:5::OnHeadlineKey
 	#@+body
 	def OnHeadlineKey (self,event=None):
 	
-		if handleLeoHook("event1",kind="headKey",v=self,event=event) == None:
-			self.commands.tree.OnHeadlineKey(self,event)
-		handleLeoHook("event2",kind="headKey",v=self,event=event)
-	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("headkey1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnHeadlineKey(self,event)
+			handleLeoHook("headkey2",c=c,v=v,event=event)
+		except:
+			es_event_exception("headkey")
 	#@-body
 	#@-node:5::OnHeadlineKey
 	#@+node:6::OnHyperLinkControlClick
 	#@+body
 	def OnHyperLinkControlClick (self,event):
 	
-		c = self.commands ; v = self
-		
-		if handleLeoHook("event1",kind="hyperLinkControlClick",v=self,event=event) == None:
-			c.beginUpdate()
-			c.selectVnode(v)
-			c.endUpdate()
-			c.body.mark_set("insert","1.0")
-		handleLeoHook("event2",kind="hyperLinkControlClick",v=self,event=event)
-	
-	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("hypercclick1",c=c,v=v,event=event) == None:
+				c.beginUpdate()
+				c.selectVnode(v)
+				c.endUpdate()
+				c.body.mark_set("insert","1.0")
+			handleLeoHook("hypercclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("hypercclick")
 	#@-body
 	#@-node:6::OnHyperLinkControlClick
 	#@+node:7::OnHyperLinkEnter
 	#@+body
 	def OnHyperLinkEnter (self,event=None):
 	
-		if 0: # This works, and isn't very useful.
-			if handleLeoHook("event1",kind="hyperLinkEnter",v=self,event=event) == None:
-				c = self.commands ; v = self
-				c.body.tag_config(v.tagName,background="green")
-			handleLeoHook("event2",kind="hyperLinkEnter",v=self,event=event)
-	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("hyperenter1",c=c,v=v,event=event) == None:
+				if 0: # This works, and isn't very useful.
+					c.body.tag_config(v.tagName,background="green")
+			handleLeoHook("hyperenter2",c=c,v=v,event=event)
+		except:
+			es_event_exception("hyperenter")
 	#@-body
 	#@-node:7::OnHyperLinkEnter
 	#@+node:8::OnHyperLinkLeave
 	#@+body
 	def OnHyperLinkLeave (self,event=None):
 	
-		if 0: # This works, and isn't very useful.
-			if handleLeoHook("event1",kind="hyperLinkLeave",v=self,event=event) == None:
-				c = self.commands ; v = self
-				c.body.tag_config(v.tagName,background="white")
-			handleLeoHook("event2",kind="hyperLinkLeave",v=self,event=event)
-	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("hyperleave1",c=c,v=v,event=event) == None:
+				if 0: # This works, and isn't very useful.
+					c.body.tag_config(v.tagName,background="white")
+			handleLeoHook("hyperleave2",c=c,v=v,event=event)
+		except:
+			es_event_exception("hyperleave")
 	#@-body
 	#@-node:8::OnHyperLinkLeave
-	#@+node:9::OnIconClick
+	#@+node:9::OnIconClick & OnIconRightClick
 	#@+body
 	def OnIconClick(self,event=None):
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("iconclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnIconClick(self,event)
+			handleLeoHook("iconclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("iconclick")
 		
-		if handleLeoHook("event1",kind="iconClick",v=self,event=event) == None:
-			self.commands.tree.OnIconClick(self,event)
-		handleLeoHook("event2",kind="iconClick",v=self,event=event)
+	def OnIconRightClick(self,event=None):
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("iconrclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnIconRightClick(self,event)
+			handleLeoHook("iconrclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("iconrclick")
 	
 	#@-body
-	#@-node:9::OnIconClick
-	#@-node:7::v.Callbacks
+	#@-node:9::OnIconClick & OnIconRightClick
+	#@+node:10::OnIconDoubleClick
+	#@+body
+	def OnIconDoubleClick(self,event=None):
+	
+		try:
+			v = self ; c = v.commands
+			if handleLeoHook("icondclick1",c=c,v=v,event=event) == None:
+				self.commands.tree.OnIconDoubleClick(self)
+			handleLeoHook("icondclick2",c=c,v=v,event=event)
+		except:
+			es_event_exception("icondclick")
+	
+	#@-body
+	#@-node:10::OnIconDoubleClick
+	#@-node:7::v.Callbacks (handles event hooks)
 	#@+node:8::Comparisons (vnode)
 	#@+node:1::afterHeadlineMatch
 	#@+body

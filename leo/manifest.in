@@ -11,6 +11,7 @@ include openLeo.py
 include tangle_done.py
 include untangle_done.py
 include __init__.py
+include install
 include README.TXT
 include INSTALL.TXT
 include PKG-INFO.TXT
@@ -19,3 +20,6 @@ include Icons/*.*
 include leo.rc
 include leo.res
 include manifest.in
+
+# Setup is more confusing than helpful.
+exclude setup.py

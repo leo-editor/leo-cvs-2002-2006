@@ -319,7 +319,7 @@ class leoTree:
 		#@-node:1::<< configure the text depending on state >>
 
 		id1 = t.bind("<1>", v.OnHeadlineClick)
-		id2 = t.bind("<3>", v.OnHeadlinePopup) # 9/11/02.
+		id2 = t.bind("<3>", v.OnHeadlineRightClick) # 9/11/02.
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
 			t.bind("<Double-1>", v.OnBoxClick)
 		id3 = t.bind("<Key>", v.OnHeadlineKey)
@@ -486,9 +486,11 @@ class leoTree:
 			v.icon_id = id
 		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
 		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick) # 2/8/03
 		if self.recycleBindings:
 			self.tagBindings.append((id,id1,"<1>"),)
 			self.tagBindings.append((id,id2,"<Double-1>"),)
+			self.tagBindings.append((id,id3,"<3>"),) # 2/8/03
 	
 		return 0 # dummy icon height
 	
@@ -719,8 +721,9 @@ class leoTree:
 	#@+node:1::OnActivate
 	#@+body
 	def OnActivate (self,v,event=None):
-		
-		if handleLeoHook("event1",kind="activate",v=v,event=event) == None:
+	
+		try:
+			c = self.commands
 			
 			#@<< activate this window >>
 			#@+node:1::<< activate this window >>
@@ -748,8 +751,8 @@ class leoTree:
 			#@-body
 			#@-node:1::<< activate this window >>
 
-		handleLeoHook("event2",kind="activate",v=v,event=event)
-	
+		except:
+			es_event_exception("activate tree")
 	#@-body
 	#@-node:1::OnActivate
 	#@+node:2::OnBoxClick
@@ -757,6 +760,8 @@ class leoTree:
 	# Called on click in box and double-click in headline.
 	
 	def OnBoxClick (self,v):
+	
+		# Note: "boxclick" hooks handled by vnode callback routine.
 	
 		if v.isExpanded():
 			v.contract()
@@ -773,12 +778,12 @@ class leoTree:
 	#@+body
 	def OnDeactivate (self,event=None):
 	
-		if handleLeoHook("event1",kind="deactivate",event=event) == None:
+		try:
 			self.endEditLabel()
 			self.dimEditLabel()
 			self.active = false
-		handleLeoHook("event2",kind="deactivate",event=event)
-	
+		except:
+			es_event_exception("deactivate tree")
 	#@-body
 	#@-node:3::OnDeactivate
 	#@+node:4::tree.findVnodeWithIconId
@@ -1001,49 +1006,59 @@ class leoTree:
 	#@+node:6::tree.OnContinueDrag
 	#@+body
 	def OnContinueDrag(self,v,event):
-		
-		# trace(`v`)
-		assert(v == self.drag_v)
-		
-		c = self.commands 
-		canvas = self.canvas
-		frame = self.commands.frame
-		
-		if event:
-			x,y = event.x,event.y
-		else:
-			x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
-			if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
 	
-		canvas_x = canvas.canvasx(x)
-		canvas_y = canvas.canvasy(y)
-		
-		id = self.canvas.find_closest(canvas_x,canvas_y)
-	
-		# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
-		if self.drag_id: # This gets cleared by OnEndDrag()
+		try:
 			
-			#@<< scroll the canvas as needed >>
-			#@+node:1::<< scroll the canvas as needed >>
+			#@<< continue dragging >>
+			#@+node:1::<< continue dragging >>
 			#@+body
-			# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
-			h = canvas.winfo_height()
-			if y < 0 or y > h:
-				lo, hi = frame.treeBar.get()
-				n = self.savedNumberOfVisibleNodes
-				line_frac = 1.0 / float(n)
-				frac = choose(y < 0, lo - line_frac, lo + line_frac)
-				frac = min(frac,1.0)
-				frac = max(frac,0.0)
-				# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
-				canvas.yview("moveto", frac)
+			# trace(`v`)
+			assert(v == self.drag_v)
+			
+			c = self.commands 
+			canvas = self.canvas
+			frame = self.commands.frame
+			
+			if event:
+				x,y = event.x,event.y
+			else:
+				x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+				if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
+			
+			canvas_x = canvas.canvasx(x)
+			canvas_y = canvas.canvasy(y)
+			
+			id = self.canvas.find_closest(canvas_x,canvas_y)
+			
+			# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
+			if self.drag_id: # This gets cleared by OnEndDrag()
 				
-				# Queue up another event to keep scrolling while the cursor is outside the canvas.
-				lo, hi = frame.treeBar.get()
-				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-					canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
+				#@<< scroll the canvas as needed >>
+				#@+node:1::<< scroll the canvas as needed >>
+				#@+body
+				# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+				h = canvas.winfo_height()
+				if y < 0 or y > h:
+					lo, hi = frame.treeBar.get()
+					n = self.savedNumberOfVisibleNodes
+					line_frac = 1.0 / float(n)
+					frac = choose(y < 0, lo - line_frac, lo + line_frac)
+					frac = min(frac,1.0)
+					frac = max(frac,0.0)
+					# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
+					canvas.yview("moveto", frac)
+					
+					# Queue up another event to keep scrolling while the cursor is outside the canvas.
+					lo, hi = frame.treeBar.get()
+					if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+						canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
+				#@-body
+				#@-node:1::<< scroll the canvas as needed >>
 			#@-body
-			#@-node:1::<< scroll the canvas as needed >>
+			#@-node:1::<< continue dragging >>
+
+		except:
+			es_event_exception("continue drag")
 	#@-body
 	#@-node:6::tree.OnContinueDrag
 	#@+node:7::tree.OnCtontrolT
@@ -1062,6 +1077,8 @@ class leoTree:
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
 	
 	def OnDrag(self,v,event):
+	
+		# Note: "drag" hooks handled by vnode callback routine.
 		
 		c = self.commands
 		assert(v == self.drag_v)
@@ -1081,6 +1098,7 @@ class leoTree:
 					es("dragged node will be cloned")
 				else:
 					es("dragged node will be moved")
+			self.canvas['cursor'] = "hand2" # "center_ptr"
 	
 		self.OnContinueDrag(v,event)
 	#@-body
@@ -1088,6 +1106,8 @@ class leoTree:
 	#@+node:9::tree.OnEndDrag
 	#@+body
 	def OnEndDrag(self,v,event):
+		
+		# Note: "enddrag" hooks handled by vnode callback routine.
 		
 		# es("tree.OnEndDrag" + `v`)
 		assert(v == self.drag_v)
@@ -1233,13 +1253,13 @@ class leoTree:
 		return "break"
 	#@-body
 	#@-node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
-	#@+node:11::tree.OnIconClick
+	#@+node:11::tree.OnIconClick & OnIconRightClick
 	#@+body
 	def OnIconClick (self,v,event):
 	
+		# Note: "iconclick" hooks handled by vnode callback routine.
+	
 		canvas = self.canvas
-		# print "OnIconClick1:", v
-		
 		if event:
 			canvas_x = canvas.canvasx(event.x)
 			canvas_y = canvas.canvasy(event.y)
@@ -1249,14 +1269,19 @@ class leoTree:
 				self.drag_v = v
 				canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
 				canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
-				self.canvas['cursor'] = "hand2" # "center_ptr"
+		self.select(v)
+		
+	def OnIconRightClick (self,v,event):
 	
 		self.select(v)
+	
 	#@-body
-	#@-node:11::tree.OnIconClick
+	#@-node:11::tree.OnIconClick & OnIconRightClick
 	#@+node:12::tree.OnIconDoubleClick (@url)
 	#@+body
 	def OnIconDoubleClick (self,v,event=None):
+	
+		# Note: "icondclick" hooks handled by vnode callback routine.
 	
 		c = self.commands
 		s = v.headString().strip()
@@ -1353,10 +1378,15 @@ class leoTree:
 	
 	def OnPopup (self,v,event):
 		
-		# print v,event
-		if event == None: return
-		
+		# Note: "headrclick" hooks handled by vnode callback routine.
+	
+		if event == None:
+			return
 		c = self.commands ; frame = c.frame
+		
+		#@<< create the popup menu >>
+		#@+node:1::<< create the popup menu >>
+		#@+body
 		# 20-SEP-2002 DTHEIN: If we are going to recreate it, we'd
 		#                     better destroy it.
 		if self.popupMenu:
@@ -1364,8 +1394,8 @@ class leoTree:
 			self.popupMenu = None
 		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
 		
-		#@<< create the popup menu >>
-		#@+node:1::<< create the popup menu >>
+		#@<< create the popup menu items >>
+		#@+node:1::<< create the popup menu items>>
 		#@+body
 		a = app()
 		# Add the Open With entries if they exist.
@@ -1432,18 +1462,20 @@ class leoTree:
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		enableMenu(menu,"Contract Parent",c.canContractParent())
 		#@-body
-		#@-node:1::<< create the popup menu >>
+		#@-node:1::<< create the popup menu items>>
 
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
 		menu.post(event.x_root, event.y_root)
 		# 20-SEP-2002 DTHEIN: make certain we have focus so we know when we lose it.
 		#                     I think this is OK for all OSes.
-		menu.focus_set() 
+		menu.focus_set()
+		#@-body
+		#@-node:1::<< create the popup menu >>
+
 		return "break"
 	
 	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux
-	
 	def OnPopupFocusLost(self,event=None):
 		self.popupMenu.unpost()
 	#@-body

@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -29,8 +29,8 @@
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T16" a="V"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
@@ -96,7 +96,7 @@ at_root_bodies_start_in_doc_mode = 1
 #	0: Body text in @root trees start in code mode.
 #      (This way makes @root trees more compatible with @file trees.)
 
-create_nonexistent_directories = 0
+create_nonexistent_directories = 1
 #	1: Leo attempts to create directories if they do not exist.
 #	0: Leo never attempts to create directories
 #	This option applies to directories specified in filenames in
@@ -233,17 +233,17 @@ xml_version_string = UTF-8
 
 # ----- Options specifying files for the Compare panel.
 
-compare_file_1 = c:/prog/test/compareTest1/file1.txt
+compare_file_1 =
 #	Path to the first file or directory to be compared.
 #	Directory compares ignore a filename part of the path, if present.
 #	E.g., c:/directory1/spam.py is valid for directory compares.
 
-compare_file_2 = c:/prog/test/compareTest2/file2.txt
+compare_file_2 =
 #	Path to the second file or directory to be compared.
 #	Directory compares ignore a filename part of the path, if present.
 #	E.g., c:/directory2/spam.py is valid for directory compares
 
-output_file = c:/prog/test/compareResults.txt
+output_file =
 #	Path to the output file.
 #	Leo will silently write to this file, regardless of whether it already exists.
 #	Leo will write to the log pane if this path is empty or invalid.

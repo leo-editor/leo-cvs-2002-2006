@@ -1,6 +1,8 @@
+#! /usr/bin/env python
 #@+leo
 #@+node:0::@file leo.py 
 #@+body
+#@@first
 # Entry point for Leo in Python.
 
 
@@ -109,9 +111,11 @@ def leoOpen(fileName=None,*args):
 		frame1.title = fileName
 		frame1.top.title(fileName)
 		frame1.commands.redraw() # Bug fix: 12/12/02
+		frame = frame1
 	init_sherlock(args)
 	issueHookWarning()
-	handleLeoHook("start2",fileName=fileName)
+	c = frame.commands ; v = c.currentVnode() # 2/8/03
+	handleLeoHook("start2",c=c,v=v,fileName=fileName)
 	root.mainloop()
 #@-body
 #@-node:3::leo.leoOpen

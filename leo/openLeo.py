@@ -1,6 +1,8 @@
+#! /usr/bin/env python
 #@+leo
 #@+node:0::@file openLeo.py
 #@+body
+#@@first
 #@@language python
 
 
