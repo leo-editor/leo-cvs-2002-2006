@@ -42,19 +42,30 @@ __version__ = "1.0"
 #@nl
 #@<< imports >>
 #@+node:ekr.20040919082800.2:<< imports >>
-# Almost all plugins will use these two imports.
-import leoGlobals as g
-import leoPlugins
+try:
+    # Almost all plugins will use these two imports.
+    import leoGlobals as g
+    import leoPlugins
+    
+    # Please put imports on a separate line.
+    # Please do not use 'from x import y' or 'from x import *'.
+    import os
+    import sys
+    
+    # Shows how to test for modules that may not exist...
+    Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+    Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
+    
+    ok = Tk and Pmw # Or just set ok to True if you don't call g.importExtension.
 
-# Please put imports on a separate line.
-# Please do not use 'from x import y' or 'from x import *'.
-import os
-import sys
-
-# Shows how to test for modules that may not exist...
-
-Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
-Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
+except Exception:
+    import sys
+    s = '%s: %s: %s' % (__name__,sys.exc_type,sys.exc_value)
+    print s ; g.es(s,color='blue')
+    if 1: # Use this if your plugin has an init method.
+        ok = False
+    else:
+        raise # This will also work.
 #@nonl
 #@-node:ekr.20040919082800.2:<< imports >>
 #@nl
@@ -96,11 +107,7 @@ Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
 #@-at
 #@@c
 def init ():
-    if 1: # Use something like this if the plugin might not load properly.
-        ok = Tk and Pmw 
-    else: # Just set ok to True if the plugin will always load properly.
-        ok = True
-
+    # ok was set by the import code.
     if ok:
         g.trace('style_guide')
         # The following three lines needed only if the plugin uses a gui.
