@@ -214,7 +214,7 @@ class baseCommands:
 	
 		fileName = app.gui.runOpenFileDialog(
 			title="Open",
-			filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
 			defaultextension=".leo")
 	
 		if fileName and len(fileName) > 0:
@@ -625,7 +625,7 @@ class baseCommands:
 	
 		fileName = app.gui.runOpenFileDialog(
 			title="Read Outline Only",
-			filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
 			defaultextension=".leo")
 	
 		if not fileName:
@@ -671,7 +671,7 @@ class baseCommands:
 		c = self ; frame = c.frame ; v = c.currentVnode()
 		
 		types = [
-			("All files","*.*"),
+			("All files","*"),
 			("C/C++ files","*.c"),
 			("C/C++ files","*.cpp"),
 			("C/C++ files","*.h"),
@@ -792,7 +792,7 @@ class baseCommands:
 		c = self
 		
 		types = [
-			("All files","*.*"),
+			("All files","*"),
 			("C/C++ files","*.c"),
 			("C/C++ files","*.cpp"),
 			("C/C++ files","*.h"),
@@ -817,7 +817,7 @@ class baseCommands:
 		c = self
 	
 		types = [
-			("All files","*.*"),
+			("All files","*"),
 			("C/C++ files","*.c"),
 			("C/C++ files","*.cpp"),
 			("C/C++ files","*.h"),
@@ -844,7 +844,7 @@ class baseCommands:
 		filetypes = [
 			("CWEB files", "*.w"),
 			("Text files", "*.txt"),
-			("All files", "*.*")]
+			("All files", "*")]
 	
 		fileName = app.gui.runOpenFileDialog(
 			title="Import CWEB Files",
@@ -860,7 +860,7 @@ class baseCommands:
 		
 		c = self
 		
-		types = [("Text files","*.txt"), ("All files","*.*")]
+		types = [("Text files","*.txt"), ("All files","*")]
 	
 		fileName = app.gui.runOpenFileDialog(
 			title="Import MORE Text",
@@ -879,7 +879,7 @@ class baseCommands:
 		filetypes = [
 			("Noweb files", "*.nw"),
 			("Text files", "*.txt"),
-			("All files", "*.*")]
+			("All files", "*")]
 	
 		fileName = app.gui.runOpenFileDialog(
 			title="Import Noweb Files",
@@ -938,7 +938,7 @@ class baseCommands:
 		c = self
 		
 		types = [
-			("All files","*.*"),
+			("All files","*"),
 			("C/C++ files","*.c"),
 			("C/C++ files","*.cpp"),
 			("C/C++ files","*.h"),
@@ -955,6 +955,7 @@ class baseCommands:
 		if fileName and len(fileName) > 0:
 			# alas, askopenfilename returns only a single name.
 			c.importCommands.removeSentinelsCommand (fileName)
+	
 	#@-node:removeSentinels
 	#@+node:weave
 	def weave (self):
@@ -1038,7 +1039,7 @@ class baseCommands:
 				if s.strip():
 					app.scriptDict["script1"]=s
 					df = c.atFileCommands.new_df
-					df.scanAllDirectives(v)
+					df.scanAllDirectives(v,scripting=true)
 					# Force Python comment delims.
 					df.startSentinelComment = "#"
 					df.endSentinelComment = None
