@@ -328,12 +328,12 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.change_ctrl.delete("1.0","end")
         
         # New in 4.3: Get setting from @settings.
-        for w,setting in (
-            (self.find_ctrl,"find_text"),
-            (self.change_ctrl,"change_text"),
+        for w,setting,defaultText in (
+            (self.find_ctrl,"find_text",'<find pattern here>'),
+            (self.change_ctrl,"change_text",''),
         ):
             s = c.config.getString(setting)
-            if s is None: s = ""
+            if not s: s = defaultText
             w.insert("end",s)
         #@nonl
         #@-node:ekr.20031218072017.2060:<< set find/change widgets >>
@@ -409,6 +409,8 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         """Bring the tkinter Find Panel to the front."""
         
         c = self.c ; t = self.find_ctrl ; gui = g.app.gui
+        
+        g.trace()
                 
         self.top.withdraw() # Helps bring the window to the front.
         self.top.deiconify()
