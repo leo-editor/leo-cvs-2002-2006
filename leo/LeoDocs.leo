@@ -817,7 +817,7 @@
 <v t="T137" a="C"><vh>@verbose, @terse, @quiet and @silent directives control comments in @root trees</vh></v>
 </v>
 </v>
-<v t="T498" a="V"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="T498" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
 <v><vh> The File Menu</vh>
 <v t="T499"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="T500"><vh>Communicating with external editors</vh>
@@ -832,11 +832,11 @@
 <v t="T504"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="T505"><vh>Quitting Leo</vh></v>
 </v>
-<v><vh> The Edit Menu</vh>
+<v a="E"><vh> The Edit Menu</vh>
 <v t="T506"><vh>Undoing changes</vh></v>
 <v t="T507"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="T508"><vh>Shifting body text</vh></v>
-<v t="T509"><vh>Creating nodes from body text</vh></v>
+<v t="T509" a="V"><vh>Creating nodes from body text</vh></v>
 <v t="T510"><vh>Converting leading blanks and tabs in body text</vh></v>
 <v t="T511"><vh>Executing Python scripts in body text</vh></v>
 <v t="T512"><vh>Finding and changing text</vh>
@@ -864,7 +864,7 @@
 <v t="T529"><vh>LaTex keywords</vh></v>
 </v>
 </v>
-<v a="E"><vh> The Outline Menu</vh>
+<v><vh> The Outline Menu</vh>
 <v t="T530"><vh> Creating and deleting headlines</vh></v>
 <v t="T531"><vh> Cutting, pasting and deleting headlines</vh></v>
 <v t="T532"><vh> Expanding and contracting headlines</vh></v>
@@ -5877,11 +5877,11 @@ The Select All command selects all text in the body pane.
 <t tx="T508">The Shift Left and Shift Right commands shift selected lines in the body text left or right one tab position. The entire line is shifted if any characters of the line are selected.</t>
 <t tx="T509">The Extract, Extract Section and Extract Section Names commands create child nodes whose headline is the first line of the selected body text.
 
-The Extract command creates a new node whose headline is the first line of selected body text and whose body is all following lines of body text.  All selected text is deleted from the original body text.
+The Extract command creates a new node whose headline is the first line of selected body text and whose body is all following lines of body text.  All selected text is deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets) on a line by itself.
 
-The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name on a line by itself.
+The Extract Section command creates a new node whose headline is the first line of selected text and whose body is @code followed by all the other lines of selected text.  All selected text lines except the first line are deleted from the original body text. This command is enabled only if the first line contains a section name (enclosed in angle brackets), on a line by itself.
 
-The Extract Section Names command creates one or more child nodes, one for each section name in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
+The Extract Section Names command creates one or more child nodes, one for each section name (enclosed in angle brackets) in the selected body text.  The headline of each created node is the section name and the body text of each created node is just @code followed by a newline.</t>
 <t tx="T510">New in leo.py v2.5.
 
 The Convert Tabs command converts leading tabs to blanks in a single node.  The Convert Blanks command converts blanks to tabs in a single node.  The Convert All Tabs converts leading tabs to blanks throughout the selected tree.  The Convert All Blanks command converts leading blanks to tabs throughout the selected tree.
