@@ -42,6 +42,10 @@ configuration file.
 Configuraton:
     verbosity >= 1: print logon message in status pane.
     verbosity >= 2: print message each time the subfolder is used.
+    
+You can specify a prefix for the shadow files. This is so that the py.test script
+does not pick up test scripts twice (once the file without Leo sentinels, once the
+shadow file).
 """
 #@-node:bwmulder.20041017125718.1:<< docstring >>
 #@nl
@@ -72,6 +76,8 @@ __version__ = "0.9"
 # 
 # 0.9 Adapt to cvs post 4.2 by Bernhard Mulder
 # - fixed assertion in original_replaceTargetFileIfDifferent
+# 
+# 0.9.1 Added prefix option.
 #@-at
 #@nonl
 #@-node:ekr.20041110090700:<< version history >>
@@ -85,6 +91,8 @@ print_copy_operations = True # True: tell when files are copied.
 do_backups = False # True: always make backups of each file.
 
 shadow_subdir = "Leo" # subdirectory for shadow files.
+
+prefix = "" # Prefix to be used for shadow files, if any.
 
 active = True # The plugin can be switched off by this switch
 
@@ -655,7 +663,8 @@ class sentinel_squasher:
             assert reader_leo_file.i==mapping[i1_internal_file]
             
             # These checks are a little bit costly.
-            if testing: 
+            if testing and 0:
+                # Must check if that still holds.
                 t_sourcelines, t_sentinel_lines = push_filter_lines(writer_new_sourcefile.lines,marker)
                 # Check that we have all the modifications so far.
                 assert t_sourcelines==reader_modified_file.lines[:i1_modified_file]
@@ -825,7 +834,7 @@ def applyConfiguration (config=None):
    
     Not sure yet if we need configuration options for this plugin."""
 
-    global active, testing, print_copy_operations, do_backups, shadow_subdir, verbosity
+    global active, testing, print_copy_operations, do_backups, shadow_subdir, verbosity, prefix
    
     if config is None:
         fileName = os.path.join(g.app.loadDir,"..","plugins","mod_shadow.ini")
@@ -836,6 +845,7 @@ def applyConfiguration (config=None):
         active = config.getboolean("Main","Active")
         testing = config.getboolean("Main", "testing")
         verbosity = config.getint("Main", "verbosity")
+        prefix = config.get("Main", "prefix")
         print_copy_operations = config.get("Main", "print_copy_operations")
         shadow_subdir = config.get("Main", "shadow_subdir")
 
@@ -852,16 +862,16 @@ def check_for_shadow_file (self,filename):
     dir, simplename = os.path.split(filename)
     rootname, ext = os.path.splitext(simplename)
     if ext=='.tmp':
-        shadow_filename = os.path.join(dir,shadow_subdir,rootname)
+        shadow_filename = os.path.join(dir,shadow_subdir,prefix + rootname)
         if os.path.exists(shadow_filename):
-            resultname = os.path.join(dir,shadow_subdir,simplename)
+            resultname = os.path.join(dir,shadow_subdir,prefix + simplename)
             return resultname, False 
         else:
             return '', False 
     else:
-        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,prefix + simplename)
         if os.path.exists(shadow_filename):
-            return shadow_filename, os.path.getsize(filename)==0
+            return shadow_filename, os.path.getsize(filename)<= 2
         else:
             return '', False 
 #@-node:bwmulder.20041017184636:check_for_shadow_file
@@ -879,7 +889,7 @@ def openForRead (self,filename,rb):
     """
     try:
         dir, simplename = os.path.split(filename)
-        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,prefix + simplename)
         if os.path.exists(shadow_filename):
             file_to_read_from = shadow_filename 
             if os.path.exists(filename)and os.path.getsize(filename)<=2:
@@ -912,13 +922,13 @@ def openForWrite (self,filename,wb):
     dir, simplename = os.path.split(filename)
     rootname, ext = os.path.splitext(simplename)
     assert ext=='.tmp'
-    shadow_filename = os.path.join(dir,shadow_subdir,rootname)
+    shadow_filename = os.path.join(dir,shadow_subdir,prefix + rootname)
     self.writing_to_shadow_directory = os.path.exists(shadow_filename)
     if self.writing_to_shadow_directory:
         self.shadow_filename = shadow_filename 
         if verbosity >= 2: 
             g.es("Using shadow file in folder %s" % shadow_subdir,color="orange")
-        file_to_use = os.path.join(dir,shadow_subdir,simplename)
+        file_to_use = os.path.join(dir,shadow_subdir,prefix + simplename)
     else:
         file_to_use = filename 
     return open(file_to_use,'wb')
@@ -933,7 +943,7 @@ def gotoLineNumberOpen (self,filename):
     """
     try:
         dir, simplename = os.path.split(filename)
-        shadow_filename = os.path.join(dir,shadow_subdir,simplename)
+        shadow_filename = os.path.join(dir,shadow_subdir,prefix + simplename)
         if os.path.exists(shadow_filename):
             lines = file(shadow_filename).readlines()
             self.line_mapping = push_filter_mapping(lines,marker_from_extension(simplename))
@@ -1026,10 +1036,12 @@ def stop_testing ():
    global testing 
    testing = False 
 #@-node:bwmulder.20041017125718.39:stop_testing
-#@-others
-
+#@+node:bwmulder.20050120235957:main
+def main():
+    global active, verbosity
 try:
     g.app
+    assert g.app is not None
     # if g.app is not defined, we are not
     # imported from Leo
 except:
@@ -1042,6 +1054,12 @@ if active and not g.app.unitTesting: # Not safe for unit testing: changes Leo's 
    # leoPlugins.registerHandler("idle", autosave)
    if verbosity >= 1:
       g.es("Shadow plugin enabled!",color="orange")
+    
+#@nonl
+#@-node:bwmulder.20050120235957:main
+#@-others
+
+main()
 #@nonl
 #@-node:bwmulder.20041017125718:@thin mod_shadow.py
 #@-leo
