@@ -16,10 +16,10 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="T7" a="V"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
@@ -304,9 +304,11 @@ print_trailing_lines = 1
 
 change_string = 
 # 	The change string (without the quotes unless quotes are part of the string).
+#	N.B. Leo requires utf-8 encoding for any non-ascii characters.
 
 find_string = 
 # 	The find string (without the quotes unless quotes are part of the string).
+#	N.B. Leo requires utf-8 encoding for any non-ascii characters.
 
 # ----- 0/1 settings for checkboxes in the Find/Change panel.
 

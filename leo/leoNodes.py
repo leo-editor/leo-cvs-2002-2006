@@ -329,13 +329,12 @@ class tnode:
 	#@+body
 	def saveBodyPaneToTnode (self, body):
 	
-		self.bodyString = body.GetValue()
+		self.setTnodeText(body.GetValue()) # 1/20/03
+	
 		# Set the selection.
-		i, j = body.GetSelection()
+		i,j = body.GetSelection()
 		if i > j:
-			temp = i
-			i = j
-			j = temp
+			i,j = j,i
 		self.selectionStart = i
 		self.selectionLength = j - i
 	#@-body
@@ -344,10 +343,13 @@ class tnode:
 	#@+body
 	# This sets the text in the tnode from the given string.
 	
-	def setTnodeText (self,s):
+	def setTnodeText (self,s,encoding="UTF-8"):
+		
+		if type(s) == type(""):
+			s = unicode(s,encoding,"replace")
 	
-		s,junk = convertUnicodeToString(s)
 		self.bodyString = s
+	
 	#@-body
 	#@-node:2::setTnodeText
 	#@+node:3::setSelection

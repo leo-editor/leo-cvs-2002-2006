@@ -57,6 +57,9 @@ class LeoApp:
 		self.prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
 		self.prolog_postfix_string = "?>"
 		
+		# leo.py 3.11
+		self.use_unicode = true # true: use new unicode logic.
+		
 		#@-body
 		#@-node:1::<< define global constants >>
 

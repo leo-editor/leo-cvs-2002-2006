@@ -28,7 +28,7 @@ class Commands:
 		pass
 	#@-body
 	#@-node:1::c.__del__
-	#@+node:2::c.__init__
+	#@+node:2::c.__init__ & initIvars
 	#@+body
 	def __init__(self,frame):
 	
@@ -81,7 +81,7 @@ class Commands:
 		#@-body
 		#@-node:1::<< initialize ivars >>
 	#@-body
-	#@-node:2::c.__init__
+	#@-node:2::c.__init__ & initIvars
 	#@+node:3::c.__repr__
 	#@+body
 	def __repr__ (self):

@@ -4197,9 +4197,9 @@ class LeoFrame:
 	def put (self,s):
 		if app().quitting > 0: return
 		if self.log:
-				self.log.insert("end",s)
-				self.log.see("end")
-				self.log.update_idletasks()
+			self.log.insert("end",s)
+			self.log.see("end")
+			self.log.update_idletasks()
 		else:
 			print "Null log"
 			print s

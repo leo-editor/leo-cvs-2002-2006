@@ -857,6 +857,9 @@ class fileCommands:
 	# 
 	# For example, given: <?xml version="1.0" encoding="UTF-8"?>
 	# the version string is the string UTF-8 (without the quotes)
+	# 
+	# 1/20/03: Leo will only write utf-8 encoding.  The encoding has always 
+	# been ignored anyway(!!)
 
 	#@-at
 	#@@c
@@ -867,10 +870,12 @@ class fileCommands:
 	
 		self.getTag(a.prolog_prefix_string)
 		version = self.getDqString()
-		# config.version overrides the version in the .leo file.
-		if not config.xml_version_string:
-			config.xml_version_string = version
 		self.getTag(a.prolog_postfix_string)
+	
+		if 0: # 1/20/03: This has never been significant.
+			# config.version overrides the version in the .leo file.
+			if not config.xml_version_string:
+				config.xml_version_string = version	
 	
 	#@-body
 	#@-node:19::getXmlVersionTag
@@ -1390,16 +1395,19 @@ class fileCommands:
 		#@<< Put the <?xml...?> line >>
 		#@+node:1::<< Put the <?xml...?> line >>
 		#@+body
-		version = config.xml_version_string
-		if not version or len(version) == 0:
-			# This is used only for new files without leoConfig.txt.
-			if 0: # "UTF-8"
-				version = a.prolog_version_string1 # leo.py 2.x
-			else: # "ISO-8859-1"
-				version = a.prolog_version_string2 # leo.py 3.0
+		if 1: # 1/20/02: We always use utf-8 encoding for .leo files.
+			version = "UTF-8"
+		else:
+			version = config.xml_version_string
+			if not version or len(version) == 0:
+				# This is used only for new files without leoConfig.txt.
+				if 0: # "UTF-8"
+					version = a.prolog_version_string1 # leo.py 2.x
+				else: # "ISO-8859-1"
+					version = a.prolog_version_string2 # leo.py 3.0
 		
-		self.put(a.prolog_prefix_string) ; self.put_dquote()
-		self.put(version) ; self.put_dquote()
+		self.put(a.prolog_prefix_string)
+		self.put_dquote() ; self.put(version) ; self.put_dquote()
 		self.put(a.prolog_postfix_string) ; self.put_nl()
 		#@-body
 		#@-node:1::<< Put the <?xml...?> line >>

@@ -626,8 +626,27 @@ class config:
 							dict[string.lower(opt)]=config.get(section,opt)
 					except: pass
 			
+			#@<< convert find/change options to unicode >>
+			#@+node:3::<< convert find/change options to unicode >>
+			#@+body
+			find = self.findDict.get("find_string")
+			if find:
+				# Leo always writes utf-8 encoding, but users may not.
+				find = unicode(find,"utf-8","replace")
+				self.findDict["find_string"] = find
+			
+			change = self.findDict.get("change_string")
+			if change:
+				# Leo always writes utf-8 encoding, but users may not.
+				change = unicode(change,"utf-8","replace")
+				self.findDict["change_string"] = change
+			
+			#@-body
+			#@-node:3::<< convert find/change options to unicode >>
+
+			
 			#@<< print options >>
-			#@+node:3::<< print options >>
+			#@+node:4::<< print options >>
 			#@+body
 			if 0:
 				print "\n\ncolorsDict:\n" ,self.colorsDict
@@ -644,7 +663,7 @@ class config:
 				for i in self.windowDict.keys():
 					print i
 			#@-body
-			#@-node:3::<< print options >>
+			#@-node:4::<< print options >>
 
 			cf.close()
 			self.configsExist = true
@@ -722,7 +741,10 @@ class config:
 		keys.sort() # Not effective.
 		for name in keys:
 			val = dict [name]
+			if type(val) == type(u""):
+				val = val.encode("utf-8","replace")
 			config.set(section,name,val)
+	
 	#@-body
 	#@-node:6::update_section
 	#@-others

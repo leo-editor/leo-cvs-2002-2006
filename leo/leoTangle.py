@@ -555,6 +555,7 @@ class tangleCommands:
 		# Stephen P. Schaefer 9/13/2002
 		# support @first directive
 		self.first_lines = ""
+		self.encoding = "utf-8" # 2/21/03
 		#@-body
 		#@-node:3::<< init directive ivars >> (tangle)
 	#@-body
@@ -3941,8 +3942,29 @@ class tangleCommands:
 			#@-node:2::<< Test for @comment and @language >>
 
 			
+			#@<< Test for @encoding >>
+			#@+node:3::<< Test for @encoding >>
+			#@+body
+			if not old.has_key("encoding") and dict.has_key("encoding"):
+				
+				k = dict["encoding"]
+				j = len("@encoding")
+				i = skip_to_end_of_line(s,i)
+				encoding = s[k+j:i].strip()
+				trace("encoding:",encoding)
+			
+				try: # Make sure the encoding is known.
+					u = unicode("a",encoding)
+					self.encoding = encoding
+				except:
+					es("invalid @encoding:", encoding)
+			
+			#@-body
+			#@-node:3::<< Test for @encoding >>
+
+			
 			#@<< Test for print modes directives >>
-			#@+node:3::<< Test for print modes directives >>
+			#@+node:4::<< Test for print modes directives >>
 			#@+body
 			#@+at
 			#  It is valid to have more than one of these directives in the 
@@ -3959,11 +3981,11 @@ class tangleCommands:
 						break
 			
 			#@-body
-			#@-node:3::<< Test for print modes directives >>
+			#@-node:4::<< Test for print modes directives >>
 
 			
 			#@<< Test for @path >>
-			#@+node:4::<< Test for @path >>
+			#@+node:5::<< Test for @path >>
 			#@+body
 			if require_path_flag and not old.has_key("path") and dict.has_key("path"):
 			
@@ -4022,11 +4044,11 @@ class tangleCommands:
 					self.error("ignoring empty @path")
 			
 			#@-body
-			#@-node:4::<< Test for @path >>
+			#@-node:5::<< Test for @path >>
 
 			
 			#@<< Test for @pagewidth >>
-			#@+node:5::<< Test for @pagewidth >>
+			#@+node:6::<< Test for @pagewidth >>
 			#@+body
 			if not old.has_key("pagewidth") and dict.has_key("pagewidth"):
 			
@@ -4040,11 +4062,11 @@ class tangleCommands:
 						es("ignoring " + s[i:j])
 			
 			#@-body
-			#@-node:5::<< Test for @pagewidth >>
+			#@-node:6::<< Test for @pagewidth >>
 
 			
 			#@<< Test for @root >>
-			#@+node:6::<< Test for @root >>
+			#@+node:7::<< Test for @root >>
 			#@+body
 			#@+at
 			#  10/27/02: new code:  self.root may not be defined here, so any 
@@ -4060,11 +4082,11 @@ class tangleCommands:
 				# i += len("@root")
 				self.setRootFromText(s[i:],issue_error_flag)
 			#@-body
-			#@-node:6::<< Test for @root >>
+			#@-node:7::<< Test for @root >>
 
 			
 			#@<< Test for @tabwidth >>
-			#@+node:7::<< Test for @tabwidth >>
+			#@+node:8::<< Test for @tabwidth >>
 			#@+body
 			if not old.has_key("tabwidth") and dict.has_key("tabwidth"):
 			
@@ -4078,11 +4100,11 @@ class tangleCommands:
 						es("ignoring " + s[i:j])
 			
 			#@-body
-			#@-node:7::<< Test for @tabwidth >>
+			#@-node:8::<< Test for @tabwidth >>
 
 			
 			#@<< Test for @header and @noheader >>
-			#@+node:8::<< Test for @header and @noheader >>
+			#@+node:9::<< Test for @header and @noheader >>
 			#@+body
 			if old.has_key("header") or old.has_key("noheader"):
 				pass # Do nothing more.
@@ -4098,13 +4120,13 @@ class tangleCommands:
 				self.use_header_flag = false
 			
 			#@-body
-			#@-node:8::<< Test for @header and @noheader >>
+			#@-node:9::<< Test for @header and @noheader >>
 
 			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set self.tangle_directory >>
-		#@+node:9::<< Set self.tangle_directory >>
+		#@+node:10::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
 		#  This code sets self.tangle_directory if it has not already been set 
@@ -4165,7 +4187,7 @@ class tangleCommands:
 			self.pathError("No absolute directory specified by @root, @path or Preferences.")
 		
 		#@-body
-		#@-node:9::<< Set self.tangle_directory >>
+		#@-node:10::<< Set self.tangle_directory >>
 	#@-body
 	#@-node:17::tangle.scanAllDirectives
 	#@+node:18::token_type

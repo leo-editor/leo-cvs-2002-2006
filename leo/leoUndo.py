@@ -336,7 +336,7 @@ class undoer:
 			u.clearUndoState()
 			return None
 		if oldText == newText:
-			# trace("no change")
+			trace("no change")
 			return None
 		# Clear all optional params.
 		for ivar in optionalIvars:

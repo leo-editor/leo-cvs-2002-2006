@@ -228,7 +228,7 @@ def create_labeled_frame (parent,
 #@-body
 #@-node:4::create_labeled_frame
 #@-node:1::Dialog utils...
-#@+node:2::Directives...
+#@+node:2::Directive utils...
 #@+node:1::@language and @comment directives (leoUtils)
 #@+node:1::set_delims_from_language
 #@+body
@@ -354,7 +354,7 @@ def get_directives_dict(s,root=None):
 			#@+body
 			# EKR: rewritten 10/10/02
 			directiveList = (
-				"color", "comment", "header", "ignore",
+				"color", "comment", "encoding", "header", "ignore",
 				"language", "nocolor", "noheader",
 				"pagewidth", "path", "quiet", "root", "silent",
 				"tabwidth", "terse", "unit", "verbose")
@@ -427,6 +427,7 @@ def scanDirectives(c,v=None):
 	language = c.target_language
 	delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 	path = None
+	encoding = "utf-8" # 1/21/03
 	
 	#@-body
 	#@-node:1::<< Set local vars >>
@@ -454,8 +455,29 @@ def scanDirectives(c,v=None):
 		#@-node:2::<< Test for @comment and @language >>
 
 		
+		#@<< Test for @encoding >>
+		#@+node:3::<< Test for @encoding >>
+		#@+body
+		if not old.has_key("encoding") and dict.has_key("encoding"):
+			
+			k = dict["encoding"]
+			j = len("@encoding")
+			i = skip_to_end_of_line(s,i)
+			encoding = s[k+j:i].strip()
+			trace("encoding",encoding)
+		
+			try: # Make sure the encoding is known.
+				u = unicode("a",encoding)
+			except:
+				es("invalid @encoding:", encoding)
+				encoding = "utf-8" # revert to default encoding
+		
+		#@-body
+		#@-node:3::<< Test for @encoding >>
+
+		
 		#@<< Test for @pagewidth >>
-		#@+node:3::<< Test for @pagewidth >>
+		#@+node:4::<< Test for @pagewidth >>
 		#@+body
 		if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 		
@@ -465,11 +487,11 @@ def scanDirectives(c,v=None):
 			if val != None and val > 0:
 				page_width = val
 		#@-body
-		#@-node:3::<< Test for @pagewidth >>
+		#@-node:4::<< Test for @pagewidth >>
 
 		
 		#@<< Test for @path >>
-		#@+node:4::<< Test for @path >>
+		#@+node:5::<< Test for @path >>
 		#@+body
 		if not path and not old.has_key("path") and dict.has_key("path"):
 		
@@ -498,11 +520,11 @@ def scanDirectives(c,v=None):
 				base = getBaseDirectory() # returns "" on error.
 				path = os.path.join(base,path)
 		#@-body
-		#@-node:4::<< Test for @path >>
+		#@-node:5::<< Test for @path >>
 
 		
 		#@<< Test for @tabwidth >>
-		#@+node:5::<< Test for @tabwidth >>
+		#@+node:6::<< Test for @tabwidth >>
 		#@+body
 		if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 		
@@ -512,12 +534,13 @@ def scanDirectives(c,v=None):
 			if val != None and val != 0:
 				tab_width = val
 		#@-body
-		#@-node:5::<< Test for @tabwidth >>
+		#@-node:6::<< Test for @tabwidth >>
 
 		old.update(dict)
 		v = v.parent()
 	return {
 		"delims"    : (delim1,delim2,delim3),
+		"encoding"  : encoding,
 		"language"  : language,
 		"pagewidth" : page_width,
 		"path"      : path,
@@ -547,7 +570,7 @@ def findReference(name,root):
 
 #@-body
 #@-node:4::findReference
-#@-node:2::Directives...
+#@-node:2::Directive utils...
 #@+node:3::Menus...
 #@+node:1::canonicalizeMenuName
 #@+body
@@ -1550,17 +1573,17 @@ def enl():
 		log.es_newlines += 1
 		log.putnl()
 
-def es(s,*args,**keys): # newline=true,
+def es(s,*args,**keys):
 	newline = keys.get("newline",true)
-	if type(s) != type(""):
+	if type(s) != type("") and type(s) != type(u""): # 1/20/03
 		s = repr(s)
 	for arg in args:
-		if type(arg) != type(""):
+		if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
 			arg = repr(arg)
 		s = s + ", " + arg
 	log = app().log
 	if log:
-		log.put(s) # No change needed for Unicode!
+		log.put(s)
 		# 6/2/02: This logic will fail if log is None.
 		for ch in s:
 			if ch == '\n': log.es_newlines += 1

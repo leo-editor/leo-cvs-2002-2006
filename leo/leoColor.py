@@ -38,7 +38,7 @@ default_colors_dict = {
 #@+body
 leoKeywords = (
 	"@","@c","@code","@color","@comment",
-	"@delims","@doc","@end_raw",
+	"@delims","@doc","@encoding","@end_raw",
 	"@first","@header","@ignore",
 	"@language","@last",
 	"@nocolor","@noheader","@others",

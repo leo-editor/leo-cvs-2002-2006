@@ -852,20 +852,8 @@ class leoTree:
 		s = c.body.get("1.0", "end")
 		first,last = getTextSelection(c.body)
 		newSel = (first,last)
-		body,junk = convertUnicodeToString(body)
-		s,u       = convertUnicodeToString(s)
-		if u: # u is s with invalid chars replaced by '?'
-			
-			#@<< replace body text by u >>
-			#@+node:1::<< replace body text by u >>
-			#@+body
-			ins = c.body.index("insert")
-			c.body.delete("1.0","end")
-			c.body.insert("end",u) # Always put unicode in the Tk.Text widget!
-			c.body.mark_set("insert",ins)
-			#@-body
-			#@-node:1::<< replace body text by u >>
-
+		if type(s) != type(u""):
+			s = unicode(s,"UTF-8","replace")
 		# Do nothing if nothing has changed.
 		if s == body: return "break"
 		# Do nothing for control characters.
@@ -873,7 +861,7 @@ class leoTree:
 		# print ch,len(body),len(s)
 		
 		#@<< set removeTrailing >>
-		#@+node:2::<< set removeTrailing >>
+		#@+node:1::<< set removeTrailing >>
 		#@+body
 		#@+at
 		#  Tk will add a newline only if:
@@ -912,13 +900,13 @@ class leoTree:
 		
 		
 		#@-body
-		#@-node:2::<< set removeTrailing >>
+		#@-node:1::<< set removeTrailing >>
 
-		# trace(`ch`)
+		# trace(`ch`) ; print type(s)
 		if ch == '\r' or ch == '\n':
 			
 			#@<< Do auto indent >>
-			#@+node:3::<< Do auto indent >> (David McNab)
+			#@+node:2::<< Do auto indent >> (David McNab)
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -952,12 +940,12 @@ class leoTree:
 					c.body.insert("insert", ws)
 					removeTrailing = false # bug fix: 11/18
 			#@-body
-			#@-node:3::<< Do auto indent >> (David McNab)
+			#@-node:2::<< Do auto indent >> (David McNab)
 
 		elif ch == '\t' and c.tab_width < 0:
 			
 			#@<< convert leading tab to blanks >>
-			#@+node:4::<< convert leading tab to blanks >>
+			#@+node:3::<< convert leading tab to blanks >>
 			#@+body
 			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
 			if self.colorizer.useSyntaxColoring(v) and undoType != "Change":
@@ -975,16 +963,19 @@ class leoTree:
 					c.body.delete("insert -1c")
 					c.body.insert("insert",' ' * w2)
 			#@-body
-			#@-node:4::<< convert leading tab to blanks >>
+			#@-node:3::<< convert leading tab to blanks >>
 
 		s = c.body.get("1.0", "end")
-		s,junk = convertUnicodeToString(s)
+		if app().use_unicode:
+			if type(s) != type(u""):
+				s = unicode(s,"UTF-8","replace")
+		else:
+			s,junk = convertUnicodeToString(s)
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
-		v.t.bodyString = s
+		v.t.setTnodeText(s) # 1/20/03
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
-		# print v.t.insertSpot,v
 		# Recolor the body.
 		self.scanForTabWidth(v) # 9/13/02
 		self.recolor_now(v,incremental=true)

@@ -152,6 +152,9 @@ class atFile:
 		
 		# For tracing problems involing indentation and blank lines.
 		self.trace = false
+		
+		# The encoding used to convert from unicode to a byte stream.
+		self.encoding = "utf-8"
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -483,7 +486,7 @@ class atFile:
 			dict = get_directives_dict(s)
 			
 			#@<< Test for @path >>
-			#@+node:5::<< Test for @path >>
+			#@+node:6::<< Test for @path >>
 			#@+body
 			# We set the current director to a path so future writes will go to that directory.
 			
@@ -537,7 +540,28 @@ class atFile:
 				else:
 					self.error("ignoring empty @path")
 			#@-body
-			#@-node:5::<< Test for @path >>
+			#@-node:6::<< Test for @path >>
+
+			
+			#@<< Test for @encoding >>
+			#@+node:4::<< Test for @encoding >>
+			#@+body
+			if not old.has_key("encoding") and dict.has_key("encoding"):
+				
+				k = dict["encoding"]
+				j = len("@encoding")
+				i = skip_to_end_of_line(s,k)
+				encoding = s[k+j:i].strip()
+				trace("encoding:",encoding)
+			
+				try: # Make sure the encoding is known.
+					u = unicode("a",encoding)
+					self.encoding = encoding
+				except:
+					es("invalid @encoding:", encoding)
+			
+			#@-body
+			#@-node:4::<< Test for @encoding >>
 
 			
 			#@<< Test for @comment and @language >>
@@ -561,17 +585,17 @@ class atFile:
 
 			
 			#@<< Test for @header and @noheader >>
-			#@+node:4::<< Test for @header and @noheader >>
+			#@+node:5::<< Test for @header and @noheader >>
 			#@+body
 			# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 			if dict.has_key("header") and dict.has_key("noheader"):
 				es("conflicting @header and @noheader directives")
 			#@-body
-			#@-node:4::<< Test for @header and @noheader >>
+			#@-node:5::<< Test for @header and @noheader >>
 
 			
 			#@<< Test for @pagewidth >>
-			#@+node:6::<< Test for @pagewidth >>
+			#@+node:7::<< Test for @pagewidth >>
 			#@+body
 			if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 			
@@ -584,11 +608,11 @@ class atFile:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
 			#@-body
-			#@-node:6::<< Test for @pagewidth >>
+			#@-node:7::<< Test for @pagewidth >>
 
 			
 			#@<< Test for @tabwidth >>
-			#@+node:7::<< Test for @tabwidth >>
+			#@+node:8::<< Test for @tabwidth >>
 			#@+body
 			if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 			
@@ -602,13 +626,13 @@ class atFile:
 					self.error("Ignoring " + s[k:i])
 			
 			#@-body
-			#@-node:7::<< Test for @tabwidth >>
+			#@-node:8::<< Test for @tabwidth >>
 
 			old.update(dict)
 			v = v.parent()
 		
 		#@<< Set current directory >>
-		#@+node:8::<< Set current directory >>
+		#@+node:9::<< Set current directory >>
 		#@+body
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
@@ -628,11 +652,11 @@ class atFile:
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
 		#@-body
-		#@-node:8::<< Set current directory >>
+		#@-node:9::<< Set current directory >>
 
 		
 		#@<< Set comment Strings from delims >>
-		#@+node:9::<< Set comment Strings from delims >>
+		#@+node:10::<< Set comment Strings from delims >>
 		#@+body
 		# Use single-line comments if we have a choice.
 		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
@@ -650,7 +674,7 @@ class atFile:
 			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
 		#@-body
-		#@-node:9::<< Set comment Strings from delims >>
+		#@-node:10::<< Set comment Strings from delims >>
 	#@-body
 	#@-node:1::atFile.scanAllDirectives (calls writeError on errors)
 	#@+node:2::directiveKind
@@ -1340,14 +1364,19 @@ class atFile:
 	#@@c
 	def scanHeader(self,file):
 	
-		valid = true ; tag = "@+leo"
-		firstLines = [] # DTHEIN: the first lines, before @+leo
-		# Skip any non @+leo lines.
+		valid = true
+		tag = "@+leo"
+		encoding_tag = "-encoding="
+		
+		#@<< skip any non @+leo lines >>
+		#@+node:1::<< skip any non @+leo lines >>
+		#@+body
+		firstLines = [] # The lines before @+leo.
 		s = readlineForceUnixNewline(file)
 		while len(s) > 0:
 			j = s.find(tag)
 			if j != -1: break
-			firstLines.append(s) # DTHEIN: queue the line
+			firstLines.append(s) # Queue the line
 			s = readlineForceUnixNewline(file)
 		n = len(s)
 		valid = n > 0
@@ -1355,26 +1384,63 @@ class atFile:
 		i = j = skip_ws(s,0)
 		# The opening comment delim is the initial non-whitespace.
 		# 7/8/02: The opening comment delim is the initial non-tag
-		while i < n and not match(s,i,tag) and not is_nl(s,i): # and not is_ws(s[i]) :
+		while i < n and not match(s,i,tag) and not is_nl(s,i):
 			i += 1
 		if j < i:
 			self.startSentinelComment = s[j:i]
 		else: valid = false
-		# Make sure we have @+leo
+		#@-body
+		#@-node:1::<< skip any non @+leo lines >>
+
+		
+		#@<< make sure we have @+leo >>
+		#@+node:2::<< make sure we have @+leo >>
+		#@+body
 		if 0:# 7/8/02: make leading whitespace significant.
-			i = skip_ws(s, i)
-		if match(s, i, tag):
+			i = skip_ws(s,i)
+		
+		if match(s,i,tag):
 			i += len(tag)
 		else: valid = false
+		#@-body
+		#@-node:2::<< make sure we have @+leo >>
+
+		
+		#@<< read optional encoding param >>
+		#@+node:3::<< read optional encoding param >>
+		#@+body
+		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
+		
+		if match(s,i,encoding_tag):
+			i += len(encoding_tag)
+			# Skip to the next comma
+			j = i ;
+			while i < len(s) and not is_nl(s,i) and s[i] != ',':
+				i += 1
+			if match(s,i,','):
+				self.encoding = s[j:i]
+				print "encoding:",self.encoding
+				i += 1
+			else:
+				valid = false
+		#@-body
+		#@-node:3::<< read optional encoding param >>
+
+		
+		#@<< set the closing comment delim >>
+		#@+node:4::<< set the closing comment delim >>
+		#@+body
 		# The closing comment delim is the trailing non-whitespace.
 		i = j = skip_ws(s,i)
 		while i < n and not is_ws(s[i]) and not is_nl(s,i):
 			i += 1
 		self.endSentinelComment = s[j:i]
+		#@-body
+		#@-node:4::<< set the closing comment delim >>
+
 		if not valid:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
 		return firstLines
-	
 	#@-body
 	#@-node:6::scanHeader
 	#@+node:7::completeFirstDirectives (Dave Hein)

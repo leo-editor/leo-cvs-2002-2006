@@ -263,13 +263,21 @@ class LeoFind:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		if type(s) == types.UnicodeType:
-			s = s.encode('utf-8')
+		if app().use_unicode: # use unicode for everything
+			if type(s) == type(""):
+				s = unicode(s,"utf-8","replace")
+		else:
+			if type(s) == types.UnicodeType:
+				s = s.encode('utf-8')
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		if type(s) == types.UnicodeType:
-			s = s.encode('utf-8')
+		if app().use_unicode:
+			if type(s) == type(""):
+				s = unicode(s,"utf-8","replace")
+		else:
+			if type(s) == types.UnicodeType:
+				s = s.encode('utf-8')
 		c.change_text = s
 	
 	#@-body
@@ -627,7 +635,6 @@ class LeoFind:
 			if self.wrapping:
 				es("end of wrapped search")
 			else:
-				# 8/3/02: don't put c.find_text in backquotes: that shows Unicode escape sequences.
 				es("not found: " + "'" + c.find_text + "'")
 			self.restore(data)
 	#@-body
