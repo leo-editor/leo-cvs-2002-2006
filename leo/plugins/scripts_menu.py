@@ -77,14 +77,16 @@ def createScriptsMenu (tag,keywords):
 #@-node:EKR.20040517080555.37:createScriptsMenu
 #@-others
 
-# EKR:  I don't like the scripts menu now.
-# The new Execute Script command seems much safer and more convenient.
+if not g.app.unitTesting:
 
-# Register the handlers...
-leoPlugins.registerHandler("create-optional-menus",createScriptsMenu)
-
-__version__ = "1.4"
-g.plugin_signon(__name__)
+    # EKR:  I don't like the scripts menu now.
+    # The new Execute Script command seems much safer and more convenient.
+    
+    # Register the handlers...
+    leoPlugins.registerHandler("create-optional-menus",createScriptsMenu)
+    
+    __version__ = "1.4"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080555.36:@thin scripts_menu.py
 #@-leo

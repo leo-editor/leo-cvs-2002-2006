@@ -99,7 +99,7 @@ def doKey(c,event,key):
 #@-node:EKR.20040424152057.2:doKey
 #@-others
 
-if Tk: # Register the handlers...
+if Tk and not g.app.unitTesting: # Register the handlers...
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)

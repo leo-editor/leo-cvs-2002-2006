@@ -346,7 +346,8 @@ def getdoc(thing, title='Help on %s', forceload=0):
 
 __version__ = "0.5"
 
-if Tk:
+if Tk and not g.app.unitTesting:
+    
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 
@@ -354,6 +355,5 @@ if Tk:
         leoPlugins.registerHandler("after-create-leo-frame",rClickbinder)
         leoPlugins.registerHandler("bodyrclick1",rClicker)
         g.plugin_signon(__name__)
-#@nonl
 #@-node:ekr.20040422072343:@thin rClick.py
 #@-leo

@@ -50,11 +50,13 @@ def openWithTempFilePath (self,v,ext):
 #@-node:EKR.20040517075715.3:openWithTempFilePath
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("start2", onStart)
+if not g.app.unitTesting:
 
-__version__ = "1.3"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("start2", onStart)
+    
+    __version__ = "1.3"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517075715.1:@thin mod_tempfname.py
 #@-leo

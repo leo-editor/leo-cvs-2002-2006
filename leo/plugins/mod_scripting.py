@@ -180,7 +180,7 @@ def createButtons (tag, keys):
 #@-node:EKR.20040613215415.2:createButtons
 #@-others
 
-if Tk:
+if Tk and not g.app.unitTesting:
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 

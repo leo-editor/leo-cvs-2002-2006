@@ -118,7 +118,7 @@ def cmd_Export(event=None):
 #@-node:EKR.20040517075715.19:cmd_Export
 #@-others
 
-if client: # Register the handlers...
+if client and not g.app.unitTesting: # Register the handlers...
 
     # No hooks, we just use the cmd_Export to trigger an export
     __version__ = "0.1"

@@ -10,11 +10,22 @@ import leoPlugins
 
 #@<< imports for wx plugin >>
 #@+node:edream.110203113231.303:<< imports for wx plugin >>
-import leoColor,leoCommands,leoFind,leoFrame,leoGui,leoMenu,leoNodes,leoTree
-import os,sys,traceback
+import leoColor
+import leoCommands
+import leoFind
+import leoFrame
+import leoGui
+import leoMenu
+import leoNodes
 
-try: from wxPython import wx
-except: wx = None
+import os
+import sys
+import traceback
+
+try:
+    from wxPython import wx
+except ImportError:
+    wx = None
 #@nonl
 #@-node:edream.110203113231.303:<< imports for wx plugin >>
 #@nl
@@ -44,7 +55,7 @@ def const(name):
 #@-node:edream.110203113231.259:<< constants for wx plugin >>
 #@nl
 
-if wx: # Enable the plugin (only if wxPython has been imported)...
+if wx and not g.app.unitTesting: # Enable the plugin (only if wxPython has been imported)...
 
     #@    @+others
     #@+node:edream.110203113231.305:wxGui class

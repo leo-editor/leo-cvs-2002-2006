@@ -114,11 +114,13 @@ def launchxTerm(not_used):
 #@-node:EKR.20040517080049.11:launchxTerm
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("after-create-leo-frame", load_menu)
+if not g.app.unitTesting:
 
-__version__ = "1.4"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("after-create-leo-frame", load_menu)
+    
+    __version__ = "1.4"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080049.4:@thin open_shell.py
 #@-leo

@@ -210,11 +210,13 @@ def underline(h,level):
 #@-node:edream.111803100242.8:underline
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-    
-__version__ = "1.5" # Set version for the plugin handler.
-g.plugin_signon(__name__)
+if not g.app.unitTesting:
+
+    # Register the handlers...
+    leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+        
+    __version__ = "1.5" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.111803100242:@thin rst.py
 #@-leo

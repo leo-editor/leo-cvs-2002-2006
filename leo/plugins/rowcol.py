@@ -81,7 +81,7 @@ class rowColClass:
 #@-node:ekr.20040108095351.1:class rowColClass
 #@-others
 
-if Tk: 
+if Tk and not g.app.unitTesting:
 
     if g.app.gui is None: 
         g.app.createTkGui(__file__)

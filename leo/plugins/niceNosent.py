@@ -81,11 +81,13 @@ def onPostSave(tag=None, keywords=None):
 #@-node:ekr.20040331151007.2:onPostSave
 #@-others
 
-leoPlugins.registerHandler("save1",onPreSave)
-leoPlugins.registerHandler("save2",onPostSave)
+if not g.app.unitTesting:
 
-__version__ = "0.1"
-g.plugin_signon(__name__)
+    leoPlugins.registerHandler("save1",onPreSave)
+    leoPlugins.registerHandler("save2",onPostSave)
+    
+    __version__ = "0.1"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331151007:@thin niceNosent.py
 #@-leo

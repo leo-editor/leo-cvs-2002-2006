@@ -726,7 +726,8 @@ def applyConfiguration(config=None):
 
 applyConfiguration()
 
-if active:
+if active and not g.app.unitTesting:
+
     s=Server('',port,RequestHandler)
     asyncore.read = a_read
     leoPlugins.registerHandler("idle", plugin_wrapper)

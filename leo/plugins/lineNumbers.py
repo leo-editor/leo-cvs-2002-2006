@@ -55,11 +55,13 @@ g.funcToMethod(skipLineNumberDirective,
 #@-node:ekr.20040419105219.2:reading derived files
 #@-others
 
-__version__ = "0.2"
-    # 0.1: Mark Ng
-    # 0.2: EKR: Convert to new coding conventions.
+if not g.app.unitTesting:
 
-g.plugin_signon(__name__)
+    __version__ = "0.2"
+        # 0.1: Mark Ng
+        # 0.2: EKR: Convert to new coding conventions.
+    
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040419105219:@thin lineNumbers.py
 #@-leo

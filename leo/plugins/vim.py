@@ -72,14 +72,18 @@ def open_in_vim (tag,keywords):
 #@-node:EKR.20040517075715.11:open_in_vim
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("iconclick2", open_in_vim)
+if not g.app.unitTesting:
 
-# if you want to start a (g)vim server when leo is started
-# uncomment this line:
-# os.system("gvim --servername LEO")
-
-__version__ = "1.4" # Set version for the plugin handler.
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("iconclick2", open_in_vim)
+    
+    # if you want to start a (g)vim server when leo is started
+    # uncomment this line:
+    # os.system("gvim --servername LEO")
+    
+    __version__ = "1.4" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
+    
+#@nonl
 #@-node:EKR.20040517075715.10:@thin vim.py
 #@-leo

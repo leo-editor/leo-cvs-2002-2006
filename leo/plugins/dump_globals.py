@@ -24,11 +24,13 @@ def onStart (tag,keywords):
 #@-node:edream.110203113231.731:onStart
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("start2", onStart)
+if not g.app.unitTesting:
 
-__version__ = "1.2"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("start2", onStart)
+    
+    __version__ = "1.2"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.730:@thin dump_globals.py
 #@-leo

@@ -237,7 +237,7 @@ class QuickFind(leoFind.leoFind):
 #@-node:ekr.20040107092135.6:class QuickFind
 #@-others
 
-if Tk:
+if Tk and not g.app.unitTesting:
     search = SearchBox()
     
     if g.app.gui is None:

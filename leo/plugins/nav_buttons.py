@@ -15,7 +15,7 @@ except ImportError: Tk = None
 
 import os
 
-if Tk: # Register the handlers...
+if Tk and not g.app.unitTesting: # Register the handlers...
 
     #@    @+others
     #@+node:edream.110203113231.759:class commanderInfoClass

@@ -171,10 +171,13 @@ def onMenu (tag,keywords):
 #@-node:EKR.20040517080202.4:onMenu
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("menu1", onMenu)
+if not g.app.unitTesting:
 
-__version__ = "1.4" # Set version for the plugin handler.
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("menu1", onMenu)
+    
+    __version__ = "1.4" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
+#@nonl
 #@-node:EKR.20040517080202.3:@thin french_fm.py
 #@-leo

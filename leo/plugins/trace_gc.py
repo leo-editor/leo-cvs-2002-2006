@@ -20,23 +20,25 @@ def printIdleGC(tag,keywords):
     # Calling printGc is too expensive to do on every idle call.
     if g.app.killed:
         return # Work around a Tk bug.
-    elif if tag == "idle":
+    elif tag == "idle":
         global gcCount ; gcCount += 1
         if (gcCount % 20) == 0:
             g.printGc(tag,onlyPrintChanges=True)
     else:
         g.printGc(tag,onlyPrintChanges=False)
+        
+if not g.app.unitTesting:
 
-# Register the handlers...
-if 1: # Very effective.
-    leoPlugins.registerHandler("idle", printIdleGC)
-else: # Very precise.
-    leoPlugins.registerHandler("all", printIdleGC)
-if 0: # Another idea.
-    leoPlugins.registerHandler("command2", printIdleRefs)
-
-__version__ = "1.3"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    if 1: # Very effective.
+        leoPlugins.registerHandler("idle", printIdleGC)
+    else: # Very precise.
+        leoPlugins.registerHandler("all", printIdleGC)
+    if 0: # Another idea.
+        leoPlugins.registerHandler("command2", printIdleRefs)
+    
+    __version__ = "1.3"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.735:@thin trace_gc.py
 #@-leo

@@ -125,7 +125,7 @@ class HoistButtons:
 #@-node:ekr.20040331072607.1:class HoistButtons
 #@-others
 
-if Tk:
+if Tk and not g.app.unitTesting:
     hoist = HoistButtons()
 
     if g.app.gui is None:

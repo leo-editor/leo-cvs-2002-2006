@@ -53,12 +53,14 @@ def scanPluginDirectives (tag, keywords):
 #@-node:edream.110203113231.743:scanPluginDirectives
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("start1",addPluginDirectives)
-leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
+if not g.app.unitTesting:
 
-__version__ = "1.1"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("start1",addPluginDirectives)
+    leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
+    
+    __version__ = "1.1"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.741:@thin add_directives.py
 #@-leo

@@ -14,7 +14,7 @@ except ImportError: Tk = None
 import os,string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
 
-if Tk: # Register the handlers...
+if Tk and not g.app.unitTesting: # Register the handlers...
 
     #@    @+others
     #@+node:edream.110403140857.9:initAnyMarkup

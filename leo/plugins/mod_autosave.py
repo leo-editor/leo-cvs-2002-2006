@@ -50,17 +50,19 @@ def autosave(tag, keywords):
 #@-node:edream.110203113231.726:autosave
 #@-others
 
-# Register the handlers...
-AUTOSAVE_INTERVAL = 600
-ACTIVE = "Yes"
-LAST_AUTOSAVE = time.time()
-applyConfiguration()
+if not g.app.unitTesting:
 
-# Register the handlers...
-leoPlugins.registerHandler("idle", autosave)
-
-__version__ = "0.2"
-g.es("auto save enabled",color="orange")
+    # Register the handlers...
+    AUTOSAVE_INTERVAL = 600
+    ACTIVE = "Yes"
+    LAST_AUTOSAVE = time.time()
+    applyConfiguration()
+    
+    # Register the handlers...
+    leoPlugins.registerHandler("idle", autosave)
+    
+    __version__ = "0.2"
+    g.es("auto save enabled",color="orange")
 #@nonl
 #@-node:edream.110203113231.724:@thin mod_autosave.py
 #@-leo

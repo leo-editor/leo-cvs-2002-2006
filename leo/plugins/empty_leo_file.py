@@ -23,6 +23,7 @@ empty_leo_file = """<?xml version="1.0" encoding="UTF-8"?>
 #@nonl
 #@-node:EKR.20040517080049.2:<< define minimal .leo file >>
 #@nl
+
 #@+others
 #@+node:EKR.20040517080049.3:onOpen
 def onOpen (tag,keywords):
@@ -41,11 +42,13 @@ def onOpen (tag,keywords):
 #@-node:EKR.20040517080049.3:onOpen
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("open1", onOpen)
+if not g.app.unitTesting:
 
-__version__ = "1.2"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("open1", onOpen)
+    
+    __version__ = "1.2"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080049.1:@thin empty_leo_file.py
 #@-leo

@@ -18,7 +18,7 @@ except ImportError: Tk = None
 
 import ConfigParser,os,popen2,re,sys,traceback
 
-if Tk: # Register the handlers...
+if Tk and not g.app.unitTesting: # Register the handlers...
 
     #@    @+others
     #@+node:edream.110203113231.934:Functions

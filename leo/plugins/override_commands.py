@@ -19,11 +19,13 @@ def onCommand (tag,keywords):
 #@-node:edream.110203113231.920:onCommand
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("command1", onCommand)
+if not g.app.unitTesting:
 
-__version__ = "1.2"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("command1", onCommand)
+    
+    __version__ = "1.2"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.919:@thin override_commands.py
 #@-leo

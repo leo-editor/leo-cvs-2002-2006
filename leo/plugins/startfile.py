@@ -104,14 +104,16 @@ def onIconDoubleClick(tag,keywords):
 #@-node:EKR.20040422094618.3:onIconDoubleClick
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+if not g.app.unitTesting:
 
-__version__ = "1.3"
-g.plugin_signon(__name__)
-
-def unitTest ():
-    pass
+    # Register the handlers...
+    leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+    
+    __version__ = "1.3"
+    g.plugin_signon(__name__)
+    
+    def unitTest ():
+        pass
 #@nonl
 #@-node:EKR.20040422094618:@thin startfile.py
 #@-leo

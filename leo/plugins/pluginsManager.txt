@@ -10,7 +10,8 @@
 #@+others
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
-    add_directives.py
+    # tested with 4.2
+    add_directives.py 
     
 # Automatically executes Save commands every so often.
     # mod_autosave.py
@@ -39,9 +40,11 @@
     
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
+    # tested with 4.2
     color_markup.py
 
 # Allows images within body panes.
+    # tested with 4.2
     image.py
     
 # Checks spelling while you type.
@@ -52,21 +55,25 @@
 # newButtons.py
     
 # Allows right clicks in the body pane.
+    # tested with 4.2
     rClick.py
 #@nonl
 #@-node:ekr.20040722122459.3:Enhance the body pane
 #@+node:ekr.20040722122459.2:Enhance the icon or status areas
 # Creates Hoist and De-Hoist buttons.
+    # tested with 4.2
 	hoist.py
 
 # Adds "run Script" and "scriptButton" buttons to the icon area.
     # Highly recommended for all Python programmers.
+    # tested with 4.2
     mod_scripting.py
     
 # Automatically add nodes for common tasks.
     # newButtons.py
 
 # Creates "Recent" and "Marks" popups in the icon area.
+    # tested with 4.2
     nodenavigator.py
 
 # Adds nav buttons to icon area:
@@ -74,6 +81,7 @@
     # nav_buttons.py
     
 # Creates a search box and a "go" button in the icon area.
+    # tested with 4.2
     searchbox.py
 
 # Creates row-column indicators in the status area.
@@ -82,6 +90,7 @@
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040722121404:Experimental plugins
 # A plugin to test optimizations in Leo's outline redraw code.
+    # tested with 4.2
      __outlineExperiments.py
 
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
@@ -114,6 +123,7 @@
 	# open_shell.py
 
 # Creates the Open With menu.
+    # tested with 4.2
     open_with.py
     
 # Launches (starts) a file with the name of the headline on double-clicking it.
@@ -139,6 +149,7 @@
     # french_fm.py
 
 # Creates the plugins menu.
+    # tested with 4.2
     plugins_menu.py
     
 # Creates a scripts menu.
@@ -154,6 +165,7 @@
 	# ** requires docutils: http://docutils.sourceforge.net/
 	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
     # See also, rst3.py
+    # tested with 4.2
 	rst2.py
 #@nonl
 #@-node:ekr.20040722140829:New kinds of nodes
@@ -161,8 +173,13 @@
 # Adds #line directives in perl and perlpod programs.
 	# lineNumbers.py
     
+#
 	# niceNosent.py
+
+#
 	# scheduler.py
+    
+#
 	# fastgotonode.py
 #@nonl
 #@-node:ekr.20040722121404.1:Other plugins

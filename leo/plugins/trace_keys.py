@@ -19,11 +19,13 @@ def onKey (tag,keywords):
 #@-node:edream.110203113231.737:onKey
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+if not g.app.unitTesting:
 
-__version__ = "1.2"
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+    
+    __version__ = "1.2"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.736:@thin trace_keys.py
 #@-leo

@@ -49,11 +49,13 @@ def trace_tags (tag,keywords):
 #@-node:edream.110203113231.739:trace_tags
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("all", trace_tags)
+if not g.app.unitTesting:
 
-__version__ = "1.2" # Set version for the plugin handler.
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("all", trace_tags)
+    
+    __version__ = "1.2" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.738:@thin trace_tags.py
 #@-leo

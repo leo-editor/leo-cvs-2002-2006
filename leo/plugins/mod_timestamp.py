@@ -22,10 +22,12 @@ def timestamp(tag=None, keywords=None):
 #@-node:edream.110203113231.728:timestamp
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("command1", timestamp)
-__version__ = "0.1"
-g.plugin_signon(__name__)
+if not g.app.unitTesting:
+
+    # Register the handlers...
+    leoPlugins.registerHandler("command1", timestamp)
+    __version__ = "0.1"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.727:@thin mod_timestamp.py
 #@-leo

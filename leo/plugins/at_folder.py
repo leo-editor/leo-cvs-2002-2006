@@ -66,12 +66,14 @@ def onSelect (tag,keywords):
     h = v.headString()
     if g.match_word(h,0,"@folder"):
         sync_node_to_folder(v,h[8:])
+        
+if not g.app.unitTesting:
 
-# Register the handlers...
-leoPlugins.registerHandler("select1", onSelect)
-
-__version__ = "1.2" # Set version for the plugin handler.
-g.plugin_signon(__name__)
+    # Register the handlers...
+    leoPlugins.registerHandler("select1", onSelect)
+    
+    __version__ = "1.2" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.873:@thin at_folder.py
 #@-leo
