@@ -1943,6 +1943,7 @@ def scanDirectives(c,v=None):
 		
 		if not old.has_key("language") and dict.has_key("language"):
 			k = dict["language"]
+			issue_error_flag = false # DTHEIN 3-NOV-2002: define var before function call
 			language, delim1, delim2, delim3 = set_language(s,k,issue_error_flag)
 		#@-body
 		#@-node:2::<< Test for @comment and @language >>
