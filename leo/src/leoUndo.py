@@ -797,8 +797,10 @@ class baseUndoer:
         
         u = self ; c = u.c
         
-        # g.trace(u.undoType,u.p,u.newText)
+        # g.trace(u.newText)
+        
         u.p.setHeadStringOrHeadline(u.newText)
+        
         c.selectVnode(u.p)
     #@nonl
     #@-node:EKR.20040526090701.2:redoChangeHeadline
@@ -1034,9 +1036,12 @@ class baseUndoer:
         u = self ; c = u.c
         
         # g.trace(u.oldText)
-    
+        
         u.p.setHeadStringOrHeadline(u.oldText)
+        
         c.selectVnode(u.p)
+    
+        
     #@nonl
     #@-node:EKR.20040526090701.6:undoChangeHeadline
     #@+node:EKR.20040526083847:undoClone & undoDragClone
