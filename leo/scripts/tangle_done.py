@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:EKR.20040502194930:@file-thin ../scripts/tangle_done.py
 #@@first
 

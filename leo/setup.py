@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:EKR.20040502193420:@file-thin ../setup.py
 #@@first
 

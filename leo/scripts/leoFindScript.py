@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:EKR.20040502195118:@file-thin ../scripts/leoFindScript.py
 # This file contains functions for non-interactive searching.
 # You might find these useful while running other scripts.

@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:EKR.20040502190716:@file-thin ../dist/leo.nsi
 #@@comment ;
 

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.2567:@file-thin ../preSetup.py
 #@@first
 
