@@ -87,6 +87,7 @@ class LeoApp:
         #@+node:ekr.20031218072017.368:<< define global data structures >> app
         # Internally, lower case is used for all language names.
         self.language_delims_dict = {
+            "ada" : "--",
             "actionscript" : "// /* */", #jason 2003-07-03
             "c" : "// /* */", # C, C++ or objective C.
             "csharp" : "// /* */",	# C#
@@ -112,6 +113,7 @@ class LeoApp:
             "unknown" : "#" } # Set when @comment is seen.
         
         self.language_extension_dict = {
+            "ada" : "ads",
             "actionscript" : "as", #jason 2003-07-03
             "c" : "c",
             "css" : "css", # 4/1/04
@@ -138,6 +140,8 @@ class LeoApp:
             "unknown" : "txt" } # Set when @comment is seen.
             
         self.extension_dict = {
+            "ads"   : "ada",
+            "adb"   : "ada",
             "as"    : "actionscript",
             "bas"   : "rapidq",
             "c"     : "c",

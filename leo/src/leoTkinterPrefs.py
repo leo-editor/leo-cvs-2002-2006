@@ -134,6 +134,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
         # Left column of radio buttons.
         left_data = [
             ("ActionScript", "actionscript"),
+            ("Ada", "ada"),
             ("C#",    "csharp"),
             ("C/C++", "c"),
             ("CSS",   "css"),
@@ -141,8 +142,8 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
             ("elisp", "elisp"),
             ("HTML",  "html"),
             ("Java",  "java"),
-            ("LaTeX", "latex"),
-            ("Pascal","pascal")]
+            ("LaTeX", "latex")
+           ]
         
         for text,value in left_data:
             button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -151,6 +152,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
         
         # Right column of radio buttons.
         right_data = [
+            ("Pascal","pascal"),
             ("Perl", "perl"),
             ("Perl+POD",   "perlpod"),
             ("PHP",        "php"),

@@ -72,6 +72,33 @@ class baseColorizer:
     ]
     #@nonl
     #@-node:ekr.20031218072017.372:actionscript keywords
+    #@+node:bwmulder.20041023131509:ada keywords
+    ada_keywords = [
+        "abort",       "else",       "new",        "return",
+        "abs",         "elsif",      "not",        "reverse",
+        "abstract",    "end",        "null",
+        "accept",      "entry",      "select",
+        "access",      "exception",  "separate",
+        "aliased",     "exit",       "of",         "subtype",
+        "all",                       "or",
+        "and",         "for",        "others",     "tagged",
+        "array",       "function",   "out",        "task",
+        "at",                                      "terminate",
+                       "generic",    "package",    "then",
+        "begin",       "goto",       "pragma",     "type",
+        "body",                      "private",
+                       "if",         "procedure",
+        "case",        "in",         "protected",  "until",
+        "constant",    "is",                       "use",
+                                     "raise",
+        "declare",                   "range",      "when",
+        "delay",       "limited",    "record",     "while",
+        "delta",       "loop",       "rem",        "with",
+        "digits",                    "renames",
+        "do",          "mod",        "requeue",    "xor"
+       ]
+    #@nonl
+    #@-node:bwmulder.20041023131509:ada keywords
     #@+node:ekr.20040206072057:c# keywords
     csharp_keywords = [
         "abstract","as",
@@ -979,7 +1006,7 @@ class baseColorizer:
             # The list of languages for which keywords exist.
             # Eventually we might just use language_delims_dict.keys()
             languages = [
-                "actionscript","c","csharp","css","cweb","elisp","html","java","latex",
+                "actionscript","ada", "c","csharp","css","cweb","elisp","html","java","latex",
                 "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
             
             self.keywords = []
