@@ -3,7 +3,7 @@
 """Autocompletion plugin"""
 
 #@@language python 
-#@@tabwidth-4
+#@@tabwidth -4
 
 #@<<autocompleter imports>>
 #@+node:ekr.20040722105941:<< autocompleter imports >>
@@ -452,7 +452,7 @@ def newCreateControl (self,frame,parentFrame):
     f = Tk.Frame(c)
     c.create_window(0,0,window=f,anchor='nw')
     f.pack_configure(fill='both',expand=1)
-    body = olCreateControl(self,frame,f)
+    body = oldCreateControl(self,frame,f)
     c.on = False 
     sel = lambda event, c = c, body = body:select(event,c,body)
     ai = lambda event, c = c, body = body, colorizer = frame.body:add_item(event,c,body,colorizer.getColorizer())
@@ -468,13 +468,13 @@ def newCreateControl (self,frame,parentFrame):
 #@-node:ekr.20040722105941.15:newCreateControl
 #@-others
 
-olCreateControl = leoTkinterFrame.leoTkinterBody.createControl 
+oldCreateControl = leoTkinterFrame.leoTkinterBody.createControl
 
 if Tk and Pmw and sets and not g.app.unitTesting:
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
     leoPlugins.registerHandler('open2',initialScan) # EKR: We _must_ remove the start2 hook!
-    __version__ = ".150"
-    print "autocompleter v%s installed" % __version__
+    __version__ = "0.15"
+    print "autocompleter %s" % __version__
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040722104914:@thin autocompleter.py

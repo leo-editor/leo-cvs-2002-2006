@@ -30,13 +30,16 @@ Still to do:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.4"
+__version__ = "0.5"
 
 #@<< version history >>
 #@+node:ekr.20040908094021.3:<< version history >>
 #@+at
 # 
 # 0.4 EKR: Don't mess with button width on MacOS/darwin.
+# 
+# 0.5 EKR: Create a separate SearchBox instance for each open window.
+#     This eliminates problems when multiple windows are open.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021.3:<< version history >>
@@ -85,10 +88,26 @@ OPTION_DICT = dict(OPTION_LIST)
 #@nl
 
 #@+others
+#@+node:ekr.20040909132007:onCreate
+def onCreate(tag, keywords):
+
+    c = keywords.get("c")
+    search = SearchBox(c)
+    search.addWidgets()
+#@nonl
+#@-node:ekr.20040909132007:onCreate
 #@+node:ekr.20040107092135.3:class SearchBox
 class SearchBox:
+
     """A search box for Leo"""
+
     #@    @+others
+    #@+node:ekr.20040909132007.1:ctor
+    def __init__ (self,c):
+        
+        self.c = c
+    #@nonl
+    #@-node:ekr.20040909132007.1:ctor
     #@+node:ekr.20040108054555.4:_getSizer
     def _getSizer(self, parent, height, width):
         """Return a sizer object to force a Tk widget to be the right size"""
@@ -102,10 +121,10 @@ class SearchBox:
     #@nonl
     #@-node:ekr.20040108054555.4:_getSizer
     #@+node:ekr.20040108054555.3:addWidgets
-    def addWidgets(self, tags, keywords):
+    def addWidgets(self):
         """Add the widgets to the navigation bar"""
-        self.c = keywords['c'] 
-        toolbar = self.c.frame.iconFrame
+        
+        c = self.c ; toolbar = c.frame.iconFrame
         # Button.
         self.go = Tk.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
         self.go.pack(side="right", fill="both", expand=1)
@@ -122,7 +141,6 @@ class SearchBox:
         self.search.bind("<Return>", self.onKey)
         # Store a list of the last searches.
         self.search_list = []
-    
     #@-node:ekr.20040108054555.3:addWidgets
     #@+node:ekr.20040107092135.5:doSearch
     def doSearch(self,*args,**keys):
@@ -255,14 +273,12 @@ class QuickFind(leoFind.leoFind):
 #@-others
 
 if Tk and not g.app.unitTesting:
-    search = SearchBox()
-    
+
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        # g.es("Starting searchbox", color="orange")
-        leoPlugins.registerHandler("after-create-leo-frame", search.addWidgets)
+        leoPlugins.registerHandler("after-create-leo-frame", onCreate)
         g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040107092135.2:@thin searchbox.py

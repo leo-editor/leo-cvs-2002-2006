@@ -21,14 +21,29 @@ as @file nodes or children ..."""
 # 
 # Current limitations ...
 # 
-# 1. Not tested on Mac OS X ...
-# 2. On win32, the cmd window will not open in the right directory if the 
-# @file location is on a different drive than the .leo file that is being 
-# edited.
-# 3. On linux, xterm must be in your path.
+# - Not tested on Mac OS X ...
+# 
+# - On linux, xterm must be in your path.
 #@-at
 #@-node:EKR.20040517080049.5:<< about the open shell plugin >>
 #@nl
+
+__version__ = "1.5"
+
+#@<< version history >>
+#@+node:ekr.20040909100119:<< version history >>
+#@+at
+# 
+# 0.5 EKR:
+#     - Generalized the code for any kind of @file node.
+#     - Changed _getpath so that explicit paths in @file nodes override @path 
+# directives.
+#@-at
+#@nonl
+#@-node:ekr.20040909100119:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20040909100226:<< imports >>
 
 import leoGlobals as g
 import leoPlugins
@@ -36,9 +51,18 @@ import leoPlugins
 import leo
 import os
 import sys
+#@nonl
+#@-node:ekr.20040909100226:<< imports >>
+#@nl
 
-pathToExplorer = 'c:/windows/explorer.exe'
-pathToCmd = 'c:/windows/system32/cmd.exe'
+# Changes these as required.
+if sys.platform == "win32":
+    pathToExplorer = 'c:/windows/explorer.exe'
+    pathToCmd = 'c:/windows/system32/cmd.exe'
+else:
+    # FIXME: Set these...
+    pathToExplorer = ''
+    pathToCmd = ''
 
 #@+others
 #@+node:EKR.20040517080049.6:load_menu
@@ -56,33 +80,30 @@ def load_menu(tag,keywords):
 #@-node:EKR.20040517080049.6:load_menu
 #@+node:EKR.20040517080049.7:_getpath
 def _getpath(c,v):
+
     dict = g.scanDirectives(c,p=v)
     d = dict.get("path")
+    
+    if v.isAnyAtFileNode():
+        filename = v.anyAtFileNodeName()
+        filename = g.os_path_join(d,filename)
+        if filename:
+            d = g.os_path_dirname(filename)
 
-    if d == None:
-
-        if v.isAtFileNode():
-            filename = v.atFileNodeName()
-        if v.isAtNoSentinelsFileNode():
-            filename = v.atNoSentinelsFileNodeName()
-        if v.isAtRawFileNode():
-            filename = v.atRawFileNodeName()
-        if v.isAtSilentFileNode():
-            filename = v.atSilentFileNodeName()
-
-        d = os.path.dirname(filename)
-
-    d = os.path.normpath(d)
-    return d
+    if d is None:
+        return ""
+    else:
+        return g.os_path_normpath(d)
+#@nonl
 #@-node:EKR.20040517080049.7:_getpath
-#@+node:EKR.20040517080049.8:_getcurrentnodepath
+#@+node:EKR.20040517080049.8:_getCurrentNodePath
 def _getCurrentNodePath():
-    c = leo.top()
+
+    c = g.top()
     v = c.currentVnode()
-    f = v.atFileNodeName()
     d = _getpath(c,v)
     return d
-#@-node:EKR.20040517080049.8:_getcurrentnodepath
+#@-node:EKR.20040517080049.8:_getCurrentNodePath
 #@+node:EKR.20040517080049.9:launchCmd
 def launchCmd(event=None):
     
@@ -118,8 +139,7 @@ if not g.app.unitTesting:
 
     # Register the handlers...
     leoPlugins.registerHandler("after-create-leo-frame", load_menu)
-    
-    __version__ = "1.4"
+
     g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080049.4:@thin open_shell.py

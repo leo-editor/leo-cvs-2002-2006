@@ -8,8 +8,25 @@
 # File names may be indented as desired.
 
 #@+others
+#@+node:ekr.20040909092620:To be enabled in distribution
+# add_directives.py
+# color_markup.py
+# image.py
+# rClick.py
+# hoist.py
+# nodenavigator.py
+# searchbox.py
+# open_with.py
+# mod_scripting.py
+# plugins_menu.py
+# rst2.py
+# run_nodes.py
+# spellpyx.py
+#@nonl
+#@-node:ekr.20040909092620:To be enabled in distribution
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
+    # Required by the syntax check unit test.
     add_directives.py 
     
 # Automatically executes Save commands every so often.
@@ -88,7 +105,7 @@
 # schedule commands for later execution."""
     # scheduler.py
     
-# An plugin to create an Emacs-like status line.
+# A plugin to create an Emacs-like status line.
     # Not ready yet: probably interferes with auto-completion
     # status_line.py
     
@@ -98,6 +115,12 @@
 #@nonl
 #@-node:ekr.20040722121404:Experimental plugins
 #@+node:ekr.20040722134535.1:External editors & Open With
+# Replaces Commands.openWithTempFilePath so Leo opens temporary files with a
+# filename that begins with the headline text, and located in a "username_Leo"
+# subdirectory of the temporary directory. The "LeoTemp" prefix is omitted.
+# Use this with the open_with plugin.
+    # mod_tempfname.py
+
 # Opens a windows shell.
     # open_shell.py
 
@@ -110,16 +133,22 @@
 # vim handler.
     # vim.py
     
-# Allows you to export text to Word using the Plugins:Word Export:Export menu item.
+# Formats and exports the selected outline to Word.
+# Do this using the Plugins:Word Export:Export menu item.
     # word_export.py
 #@nonl
 #@-node:ekr.20040722134535.1:External editors & Open With
 #@+node:ekr.20040722140105:Files
-# Replaces Commands.openWithTempFilePath so Leo opens temporary files with a
-# filename that begins with the headline text, and located in a "username_Leo"
-# subdirectory of the temporary directory. The "LeoTemp" prefix is omitted. This
-# makes it easier to see which temporary file is related to which outline node.
-    # mod_tempfname.py
+# Open any empty file as a minimal .leo file
+    # empty_leo_file.py
+    
+# Adds #line directives in perl and perlpod programs.
+    # lineNumbers.py
+    
+# Edit @file-nosent nodes: make sure there is a newline at the end
+# of each subnode, replace all tabs with spaces and add a newline before
+# class and functions in the derived file.
+    # niceNosent.py
 #@nonl
 #@-node:ekr.20040722140105:Files
 #@+node:ekr.20040722135618:Menus & translations
@@ -141,31 +170,26 @@
 # The predecessor to rst2.py
     # rst.py
 
-# A plugin to create output files from restructured text.
+# Creates output files from restructured text.
     # Double-click @rst nodes to process the restructured text.
     # ** requires docutils: http://docutils.sourceforge.net/
     # ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
     # See also, rst3.py
     rst2.py
     
+# Double clicking the icon of an @run <command> node will launch <command>
+    # The '#' character terminates the command.
+    # Child nodes may contain other @run nodes.
+    # Child @arg nodes contribute headline text as an argument to the command.
+    # Child @in nodes are ignored.
+    # All other child nodes contribute body text as an argument to the command.
+    # @in or @input nodes (anywhere) can be used to send input to the running process.
+    run_nodes.py
+    
 # Lauches (starts) a file with the name of the headline on double-clicking it.
     # This does not work on Linux because os.startfile does not exist.
     # startfile.py
 #@-node:ekr.20040722140829:New kinds of nodes
-#@+node:ekr.20040722121404.1:Other plugins
-# Adds #line directives in perl and perlpod programs.
-    # lineNumbers.py
-    
-#
-    # niceNosent.py
-
-#
-    # scheduler.py
-    
-#
-    # fastgotonode.py
-#@nonl
-#@-node:ekr.20040722121404.1:Other plugins
 #@+node:ekr.20040810065413:Spell checking
 # Both these plugins check spelling.
     # Both share the same code base.
@@ -176,7 +200,7 @@
     # mod_spelling.py
     
 # Newer, faster.  Requires aspell.pyd configured for Python and aspell.
-# Present version of aspell.py works only with Python 2.3.
+# The present version of aspell.py works only with Python 2.3.
     spellpyx.py
 #@nonl
 #@-node:ekr.20040810065413:Spell checking

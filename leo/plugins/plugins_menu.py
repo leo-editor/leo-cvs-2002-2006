@@ -36,7 +36,7 @@ class PlugIn:
         # Do not use the imp module: we only want to import these files once!
         self.mod = self.doc = self.version = None
         try:
-            self.mod = __import__(os.path.splitext(os.path.basename(filename))[0])
+            self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
             if not self.mod:
                 return
             self.name = self.mod.__name__

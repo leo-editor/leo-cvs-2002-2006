@@ -7,6 +7,7 @@
 
 import leoGlobals as g
 import leoPlugins
+import os
 
 #@<< define minimal .leo file >>
 #@+node:EKR.20040517080049.2:<< define minimal .leo file >>
@@ -28,7 +29,6 @@ empty_leo_file = """<?xml version="1.0" encoding="UTF-8"?>
 #@+node:EKR.20040517080049.3:onOpen
 def onOpen (tag,keywords):
 
-    import os
     file_name = keywords.get('fileName')
 
     if file_name and os.path.getsize(file_name)==0:

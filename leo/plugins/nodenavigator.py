@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Node Navigator"
-__version__ = "0.5"
+__version__ = "0.6"
 
 #@<< version history >>
 #@+node:ekr.20040908093511.2:<< version history >>
@@ -21,6 +21,12 @@ __version__ = "0.5"
 # 
 # 0.5 EKR:
 # - Use constant spacing for buttons on MacOs/darwin.
+# 
+# 0.6 EKR:
+# - Create a separate Navigator instance for each open window.
+#     This eliminates problems when multiple windows are open.
+# - Limit size of recent menu to 25 entries.
+# - Limit width of entries to 40 characters.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511.2:<< version history >>
@@ -41,9 +47,18 @@ import sys
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
 USE_FIXED_SIZES = sys.platform != "darwin"
 
-inited = {}
-
 #@+others
+#@+node:ekr.20040909132810:onCreate
+def onCreate(tag, keywords):
+
+    c = keywords.get("c")
+    nav = Navigator(c)
+    nav.addWidgets()
+    leoPlugins.registerHandler("set-mark",nav.addMark)
+    leoPlugins.registerHandler("clear-mark",nav.clearMark)
+    leoPlugins.registerHandler("select3",nav.updateRecent)
+#@nonl
+#@-node:ekr.20040909132810:onCreate
 #@+node:ekr.20040108062655.2:class Navigator
 class Navigator:
     
@@ -90,24 +105,26 @@ class Navigator:
         if p.v.t in marks: return
     
         menu = self.marksMenus.get(c)
-        if menu is None: return # This should never happen.
+        if menu is None: return
         menu = menu["menu"]
     
         def callback(event=None,self=self,c=c,p=p.copy()):
             self.select(c,p)
+    
         name = p.headString().strip()
-        menu.add_command(label=name,command=callback)
+        menu.add_command(label=name[:40],command=callback)
         marks.append(p.v.t)
     
         # Unlike the recent menu, which gets recreated each time, we remember the marks.
         self.markLists[c] = marks
+    #@nonl
     #@-node:ekr.20040108062655.6:addMark
     #@+node:ekr.20040108062655.3:addWidgets
-    def addWidgets(self, tag, keywords):
+    def addWidgets(self): ##, tag, keywords):
     
         """Add the widgets to the navigation bar"""
     
-        self.c = c = keywords['new_c']
+        c = self.c
         # Create the main container.
         self.frame = Tk.Frame(self.c.frame.iconFrame) 
         self.frame.pack(side="left")
@@ -166,9 +183,8 @@ class Navigator:
     
         # Clear old marks menu
         menu = self.marksMenus.get(c)
-        if menu is None:
-            g.trace("Can't happen")
-            return
+        if menu is None: return
+    
         menu = menu["menu"]
         menu.delete(0,"end")
     
@@ -206,14 +222,15 @@ class Navigator:
         # Clear old recent menu
         menu = self.recentMenus.get(c)
         if not menu: return
+    
         menu = menu["menu"]
         menu.delete(0,"end")
     
-        for p in c.visitedList:
+        for p in c.visitedList[:25]:
             if p.exists(c):
                 def callback(event=None,self=self,c=c,p=p):
                     self.select(c,p)
-                menu.add_command(label=p.headString(),command=callback)
+                menu.add_command(label=p.headString()[:40],command=callback)
     #@nonl
     #@-node:ekr.20040108091136:updateRecent
     #@-others
@@ -232,15 +249,7 @@ if Tk and not g.app.unitTesting:
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        c = g.top()
-        if not inited.get(c):
-            inited[c] = True # Disable further inits during unit tests.
-            nav = Navigator(c)
-            leoPlugins.registerHandler(("new","open2"), nav.addWidgets) 
-            leoPlugins.registerHandler("set-mark",nav.addMark)
-            leoPlugins.registerHandler("clear-mark",nav.clearMark)
-            leoPlugins.registerHandler("select3",nav.updateRecent)
-            g.plugin_signon("nodenavigator")
-#@nonl
+        leoPlugins.registerHandler("after-create-leo-frame", onCreate)
+        g.plugin_signon("nodenavigator")
 #@-node:ekr.20040108062655:@thin nodenavigator.py
 #@-leo

@@ -1,15 +1,34 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.14:@thin word_export.py
-"""Exports an outline to a word document.
+"""Formats and exports the selected outline to a Word document.
 
 Make sure word is running with an open (empty) document.
 
-Click "plugins ... word export ... export"
-to export the selected outline to Word."""
+Use the Export menu item to do the actual export.
+"""
+
+# Note: the Export menu is a submenu of the Scripts:Word Export menu.
 
 #@@language python
 #@@tabwidth -4
 
+__name__ = "Word Export"
+__version__ = "0.3"
+
+#@<< version history >>
+#@+node:ekr.20040909110753:<< version history >>
+#@+at
+# 
+# 0.3 EKR:
+#     - Changed os.path.x to g.os_path_x for better handling of unicode 
+# filenames.
+#     - Better error messages.
+#@-at
+#@nonl
+#@-node:ekr.20040909110753:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20040909105522:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -19,6 +38,9 @@ try:
 except ImportError:
     client = None
 import ConfigParser
+#@nonl
+#@-node:ekr.20040909105522:<< imports >>
+#@nl
 
 #@+others
 #@+node:EKR.20040517075715.15:getConfiguration
@@ -26,7 +48,7 @@ def getConfiguration():
     
     """Called when the user presses the "Apply" button on the Properties form"""
 
-    fileName = os.path.join(g.app.loadDir,"../","plugins","word_export.ini")
+    fileName = g.os_path_join(g.app.loadDir,"../","plugins","word_export.ini")
     config = ConfigParser.ConfigParser()
     config.read(fileName)
     return config
@@ -37,11 +59,12 @@ def getWordConnection():
     """Get a connection to Word"""
 
     g.es("Trying to connect to Word")
+    
     try:
         word = win32com.client.Dispatch("Word.Application")
         return word
     except Exception, err:
-        # g.es("Failed to connect to Word: %s", err)
+        raise
         g.es("Failed to connect to Word",color="blue")
         g.es("Please make sure word is running with an open (empty) document.")
         return None
@@ -112,18 +135,15 @@ def cmd_Export(event=None):
                 "")						 
             g.es("Done!")
     except Exception,err:
-        g.es("Failed to connect to Word",color="blue")
-        g.es("Please make sure an empty word document is open.")
+        g.es("Exception writing Word",color="blue")
+        g.es_exception()
 #@nonl
 #@-node:EKR.20040517075715.19:cmd_Export
 #@-others
 
-if client and not g.app.unitTesting: # Register the handlers...
+if client and not g.app.unitTesting:
 
     # No hooks, we just use the cmd_Export to trigger an export
-    __version__ = "0.1"
-    __name__ = "Word Export"
-
     g.plugin_signon("word_export")
 #@nonl
 #@-node:EKR.20040517075715.14:@thin word_export.py

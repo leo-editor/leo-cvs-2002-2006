@@ -13,10 +13,8 @@ docutils installed, it will generate HTML or LaTeX, respectively."""
 # By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
 
 # EKR: The code now lets other plugins handle @folder and @url nodes.
-
 import leoGlobals as g
 import leoPlugins
-
 import os
 
 #@<< about this plugin >>
@@ -83,6 +81,8 @@ import os
 # 
 # - 2003-11-02 Added generation of LaTeX files, just make the extension of the 
 # filename '.tex'. --Timo Honkasalo
+# 
+# - EKR 2004-9-9 Minor mods to support 4.2 code base.
 #@-at
 #@nonl
 #@-node:edream.111803100242.2:<< change log >>
@@ -98,7 +98,7 @@ import os
 
 def onIconDoubleClick(tag,keywords):
 
-    v = keywords.get("v")
+    v = keywords.get("p") or keywords.get("v")
     c = keywords.get("c")
     h = v.headString().strip()
     if g.match_word(h,0,"@rst"):
