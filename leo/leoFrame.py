@@ -3720,8 +3720,12 @@ class LeoFrame:
 		# Populate the "Open With..." menu.
 		shortcut_table = []
 		for name,shortcut,data in table:
-			data2 = (name,shortcut,data)
-			shortcut_table.append(data2)
+			try:
+				data2 = (name,shortcut,data)
+				shortcut_table.append(data2)
+			except:
+				es("createOpenWithMenuFromTable: invalid data")
+				return
 		# for i in shortcut_table: print i
 		self.createMenuItemsFromTable("Open &With...",shortcut_table,openWith=1)
 	
