@@ -14496,6 +14496,8 @@ def createRootWindow(self):
     self.setDefaultIcon()
     if g.app.config:
         self.getDefaultConfigFont(g.app.config)
+        
+    root.withdraw()
 
     return root
 #@nonl
@@ -14531,11 +14533,17 @@ def getDefaultConfigFont(self,config):
     
     """Get the default font from a new text widget."""
 
-    t = Tk.Text()
-    fn = t.cget("font")
-    font = tkFont.Font(font=fn)
-    config.defaultFont = font
-    config.defaultFontFamily = font.cget("family")
+    if not self.defaultFontFamily:
+        # WARNING: retain NO references to widgets or fonts here!
+        t = Tk.Text()
+        fn = t.cget("font")
+        font = tkFont.Font(font=fn) 
+        family = font.cget("family")
+        self.defaultFontFamily = family[:]
+        # print '***** getDefaultConfigFont',repr(family)
+
+    config.defaultFont = None
+    config.defaultFontFamily = self.defaultFontFamily
 #@nonl
 #@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
 #@+node:ekr.20041125050302:<< fix problems with menus (XP) >>

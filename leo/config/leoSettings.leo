@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="90" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="91" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="65" left="45" height="704" width="857"/>
+	<global_window_position top="64" left="279" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -26,7 +26,7 @@
 </v>
 <v t="ekr.20041119035704.1"><vh> Organizer nodes</vh></v>
 <v t="ekr.20041119035931"><vh>@if expression</vh></v>
-<v t="ekr.20041120175840" a="E"><vh>@ifgui gui-name</vh></v>
+<v t="ekr.20041120175840"><vh>@ifgui gui-name</vh></v>
 <v t="ekr.20041119110141"><vh>@ifplatform platform-name</vh></v>
 <v t="ekr.20041119035704.2"><vh>@ignore comment</vh></v>
 <v t="ekr.20041119035931.1"><vh>@page comment</vh></v>
@@ -37,7 +37,7 @@
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
 <v t="ekr.20041120180154"><vh>Types</vh>
 <v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
-<v t="ekr.20041120180707" a="E"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
+<v t="ekr.20041120180707"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
 <v t="ekr.20041120180707.1"><vh>@type family: string</vh></v>
 <v t="ekr.20041120180707.2"><vh>@type size: int</vh></v>
 <v t="ekr.20041120180707.3"><vh>@type slant: string = roman, italic</vh></v>
@@ -47,9 +47,9 @@
 <v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.3" a="E"><vh>@page General configuration options</vh>
+<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
-<v t="ekr.20041119034357.13" a="TV"><vh>@bool use_plugins = True</vh></v>
+<v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
@@ -77,8 +77,7 @@
 <v t="ekr.20041119050749.10"><vh>@string headline_time_format_string = %m/%d</vh></v>
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
 </v>
-<v t="ekr.20041119043713"><vh>Dialogs</vh>
-<v t="ekr.20041119034357.16"><vh>@page Compare panel</vh>
+<v t="ekr.20041119034357.16"><vh>@page Compare panel options</vh>
 <v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
 <v t="ekr.20041119043902"><vh>@path compare_file_1 = None</vh></v>
 <v t="ekr.20041119043902.1"><vh>@path compare_file_2 = None</vh></v>
@@ -103,7 +102,7 @@
 <v t="ekr.20041119043902.15"><vh>@bool print_trailing_lines = True</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.20"><vh>@page Find/Change panel</vh>
+<v t="ekr.20041119034357.20"><vh>@page Find/Change panel options</vh>
 <v t="ekr.20041119050105.1"><vh>@string change_text = None</vh></v>
 <v t="ekr.20041119050105.2"><vh>@string find_text = None</vh></v>
 <v t="ekr.20041119050105.3"><vh>Checkboxes</vh>
@@ -128,16 +127,15 @@
 <v t="ekr.20041120152900.2"><vh>@bool script_search = None</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.28"><vh>@page Preferences panel</vh>
+<v t="ekr.20041119034357.28"><vh>@page Preferences panel options</vh>
 <v t="ekr.20041119034357.29"><vh>@directory default_tangle_directory = None</vh></v>
 <v t="ekr.20041119034357.30"><vh>@language default_target_language = Python</vh></v>
 <v t="ekr.20041119034357.31"><vh>@int tab_width = -4</vh></v>
-<v t="ekr.20041119034357.32"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041119034357.32"><vh>@int page_width = 90</vh></v>
 <v t="ekr.20041119034357.33"><vh>@bool output_doc_chunks = True</vh></v>
 <v t="ekr.20041119034357.34"><vh>@bool tangle_outputs_header = True</vh></v>
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
-</v>
 </v>
 <v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
@@ -148,15 +146,36 @@
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
 <v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
-<v t="ekr.20041119034357.70"><vh>@page Syntax coloring</vh>
-<v t="ekr.20041119034357.71"><vh>syntax coloring options</vh>
-<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
-<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
-<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
-<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
-<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
+<v t="ekr.20041213105007" a="E"><vh>@page Fonts</vh>
+<v t="ekr.20041213105508"><vh>@font log font</vh></v>
+<v t="ekr.20041119034357.45" a="E"><vh>@font body text font</vh></v>
+<v t="ekr.20041119051246.4" a="ETV"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20041119034357.77"><vh>syntax colors</vh>
+<v t="ekr.20041213105007.1"><vh>Colors</vh>
+<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
+<v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
+<v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
+<v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
+</v>
+<v t="ekr.20041213105007.2"><vh>@page Body pane colors</vh>
+<v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
+<v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
+<v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
+<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
+<v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
+</v>
+<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = white</vh></v>
+<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = black</vh></v>
+<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = gray80</vh></v>
+<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = black</vh></v>
+<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = white</vh></v>
+<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = black</vh></v>
+<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = white</vh></v>
+<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
+<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = None</vh></v>
+</v>
+<v t="ekr.20041119034357.70"><vh>@page Syntax colors &amp; options</vh>
 <v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
 <v t="ekr.20041119034357.79"><vh>@color cweb_section_name_color=red</vh></v>
 <v t="ekr.20041119034357.80"><vh>@color directive_color=blue</vh></v>
@@ -170,70 +189,26 @@
 <v t="ekr.20041119034357.87"><vh>@color show_invisibles_tab_foreground_color=Gray80</vh></v>
 <v t="ekr.20041119034357.88"><vh>@color string_color=#00aa00</vh></v>
 <v t="ekr.20041119034357.89"><vh>@color undefined_section_name_color=red</vh></v>
+<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
+<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
+<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
+<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
+<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
 </v>
+<v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
-<v t="ekr.20041119034357.37"><vh>Window options</vh>
-<v t="ekr.20041119050749.1"><vh>body pane</vh>
-<v t="ekr.20041119034357.38" a="E"><vh>@page body options</vh>
+<v t="ekr.20041213105954"><vh>Window options</vh>
+<v t="ekr.20041119034357.38"><vh>@page Body pane options</vh>
 <v t="ekr.20041119034357.39"><vh>@bool body_pane_wraps = True</vh></v>
-<v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
-<v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.42"><vh>@string body_time_format_string = %m/%d/%Y %H:%M:%S</vh></v>
 <v t="ekr.20041119034357.43"><vh>@bool body_gmt_time = False</vh></v>
 <v t="ekr.20041119034357.44"><vh>@bool smart_auto_indent = False</vh></v>
 <v t="ekr.20041119034357.53"><vh>@int additional_body_text_border = 0</vh></v>
 </v>
-<v t="ekr.20041119050749.2"><vh>@page body colors</vh>
-<v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
-<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
-<v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
-</v>
-<v t="ekr.20041119034357.45" a="E"><vh>@page body text font</vh>
-<v t="ekr.20041119034357.47"><vh>@family body_text_font_family = Courier New</vh></v>
-<v t="ekr.20041119034357.51"><vh>@size body_text_font_size = None</vh></v>
-<v t="ekr.20041119034357.46"><vh>@slant body_text_font_slant = roman</vh></v>
-<v t="ekr.20041119034357.52"><vh>@weight body_text_font_weight = normal</vh></v>
-</v>
-</v>
-<v t="ekr.20041119051246"><vh>outline pane</vh>
-<v t="ekr.20041119034357.54"><vh>@page outline options</vh>
-<v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
-<v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
-<v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
-<v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
-<v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
-</v>
-<v t="ekr.20041119051246.1"><vh>@page outline colors</vh>
-<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = white</vh></v>
-<v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = black</vh></v>
-<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = gray80</vh></v>
-<v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = black</vh></v>
-<v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = white</vh></v>
-<v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = black</vh></v>
-<v t="ekr.20041119050749.9"><vh>@color headline_text_editing_selection_foreground_color = white</vh></v>
-<v t="ekr.20041119051901.1"><vh>@color headline_text_editing_selection_background_color = DarkBlue</vh></v>
-<v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = None</vh></v>
-</v>
-<v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh>
-<v t="ekr.20041119050749.13"><vh>@family headline_text_font_family = None</vh></v>
-<v t="ekr.20041119050749.14"><vh>@size headline_text_font_size = None</vh></v>
-<v t="ekr.20041119050749.16"><vh>@weight headline_text_font_weight = normal</vh></v>
-<v t="ekr.20041119050749.15"><vh>@slant headline_text_font_slant = roman</vh></v>
-</v>
-</v>
-<v t="ekr.20041119034357.55"><vh>@page log pane options</vh>
+<v t="ekr.20041213105954.1"><vh>@page Log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
-<v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
-<v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
-<v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
-<v t="ekr.20041119052015.3"><vh>@page log font</vh>
-<v t="ekr.20041119052015.4"><vh>@family log_text_font_family = None</vh></v>
-<v t="ekr.20041119052015.5"><vh>@size log_text_font_size = None</vh></v>
-<v t="ekr.20041119052015.6"><vh>@slant log_text_font_slant = roman</vh></v>
-<v t="ekr.20041119052015.7"><vh>@weight log_text_font_weight = normal</vh></v>
 </v>
-</v>
-<v t="ekr.20041119034357.56"><vh>@page options for new windows</vh>
+<v t="ekr.20041119034357.56"><vh>@page Options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@orientation initial_splitter_orientation = vertical</vh></v>
@@ -244,8 +219,14 @@
 <v t="ekr.20041119034357.64"><vh>@int initial_window_top = 20</vh></v>
 <v t="ekr.20041119034357.65"><vh>@int initial_window_width = 800</vh></v>
 </v>
-<v t="ekr.20041119034357.66" a="E"><vh>@page splitter options</vh>
-<v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
+<v t="ekr.20041119034357.54"><vh>@page Outline pane options</vh>
+<v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
+<v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
+<v t="ekr.20041119050749.5"><vh>@bool expanded_click_area = True</vh></v>
+<v t="ekr.20041119050749.17"><vh>@bool look_for_control_drag_on_mouse_down = True</vh></v>
+<v t="ekr.20041119050749.18"><vh>@bool outline_pane_scrolls_horizontally = False</vh></v>
+</v>
+<v t="ekr.20041213105954.2"><vh>@page Splitter options</vh>
 <v t="ekr.20041119034357.68"><vh>@relief split_bar_relief = groove</vh></v>
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>
 </v>
@@ -543,10 +524,6 @@ Valid values: any nonzero positive integer.</t>
 <t tx="ekr.20041119034357.34">True: Explicit Tangle commands output file header.</t>
 <t tx="ekr.20041119034357.35">True: Run tangle_done.py after explicit Tangle commands.</t>
 <t tx="ekr.20041119034357.36">True: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="ekr.20041119034357.37">Options that affect the appearance of windows.
-
-Options that require pixel values can be any Python expression that yields an int.
-Warning: the number of pixels per inch varies...</t>
 <t tx="ekr.20041119034357.38"></t>
 <t tx="ekr.20041119034357.39">True: Wrap body text.
 
@@ -576,25 +553,18 @@ False: use local time.
 <t tx="ekr.20041119034357.44">True:  auto-indent aligns with open ({[ brackets
 
 False: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="ekr.20041119034357.45"></t>
-<t tx="ekr.20041119034357.46">The Tk -slant setting: roman or italic.  Default is roman.</t>
-<t tx="ekr.20041119034357.47">Font family for body text.
-
-Default is default font for Tk.Text widgets.
-
-Tk translates invalid font names to another font in a system-dependent way.</t>
+<t tx="ekr.20041119034357.45">body_text_font_family = Courier New
+body_text_font_size = None
+body_text_font_slant = None
+body_text_font_weight = None
+</t>
 <t tx="ekr.20041119034357.48">Foreground colors of body text.</t>
 <t tx="ekr.20041119034357.49">Background color of body text.</t>
 <t tx="ekr.20041119034357.50">Color of insertion cursor
 
 </t>
-<t tx="ekr.20041119034357.51">Size of body text. Must be an integer.
-
-Default is 12 for Linux, 9 for Windows.</t>
-<t tx="ekr.20041119034357.52">The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="ekr.20041119034357.53">Additional border in body text pane, in pixels.</t>
 <t tx="ekr.20041119034357.54"></t>
-<t tx="ekr.20041119034357.55"></t>
 <t tx="ekr.20041119034357.56">These options apply only to windows opened with the New command.</t>
 <t tx="ekr.20041119034357.57">The ratio of tree pane size to body pane size when splitting primary panes horizontally.
 
@@ -631,12 +601,15 @@ Valid values: 0.0 to 1.0.</t>
 <t tx="ekr.20041119034357.65">Width window in pixels.
 
 </t>
-<t tx="ekr.20041119034357.66"></t>
 <t tx="ekr.20041119034357.67">The color of the split bar. gray90 also looks good.</t>
 <t tx="ekr.20041119034357.68">The Tk -relief option for the split bar.</t>
 <t tx="ekr.20041119034357.69">The width of the split bar, in pixels (must be an integer).</t>
-<t tx="ekr.20041119034357.70"></t>
-<t tx="ekr.20041119034357.71"></t>
+<t tx="ekr.20041119034357.70">Syntax colors may be any valid Tk color name or color value.
+
+For example, "00aa00" is the dark green used by IDLE.
+
+See http://www.tcl.tk/man/tcl8.3/TkCmd/colors.htm for a list of valid color
+names. These names are case sensitive, for example: BlanchedAlmond.</t>
 <t tx="ekr.20041119034357.72">True:  Leo colors @space, @* and @** sections in cweb mode as black with LaTeX keywords highlighted.
 False: Leo colors @space, @* and @** sections in cweb mode as comments (default is red).
 
@@ -654,12 +627,6 @@ Only functional if use_hyperlinks = 0
 </t>
 <t tx="ekr.20041119034357.76">True:  underline "live" links.
 False: (recommended): Underline undefined section names.</t>
-<t tx="ekr.20041119034357.77">Syntax colors may be any valid Tk color name or color value.
-
-For example, "00aa00" is the dark green used by IDLE.
-
-See http://www.tcl.tk/man/tcl8.3/TkCmd/colors.htm for a list of valid color
-names. These names are case sensitive, for example: BlanchedAlmond.</t>
 <t tx="ekr.20041119034357.78">The color of comments in code parts.</t>
 <t tx="ekr.20041119034357.79">The color of name in @&lt;name@&gt;</t>
 <t tx="ekr.20041119034357.80">The color of C/C++ preprocessor directive lines.</t>
@@ -823,7 +790,6 @@ Leo assumes that Tk text widgets return:
 1. The value specified by the tk_encoding parameter, if it exists.
 2. locale.getdefaultlocale()[1] if it is exists.
 3. sys.getdefaultencoding()</t>
-<t tx="ekr.20041119043713"></t>
 <t tx="ekr.20041119043902">The path to the first file or directory to be compared.
 
 Directory compares ignore a filename part of the path, if present.
@@ -905,8 +871,6 @@ N.B. Leo requires utf-8 encoding for any non-ascii characters.
 <t tx="ekr.20041119050105.14"></t>
 <t tx="ekr.20041119050105.15"></t>
 <t tx="ekr.20041119050105.16"></t>
-<t tx="ekr.20041119050749.1"></t>
-<t tx="ekr.20041119050749.2"></t>
 <t tx="ekr.20041119050749.3">
 1: Allows control-dragging to create clones.
 0: All drags move nodes.
@@ -954,27 +918,12 @@ Thu, 30 Jan 2003 16:57:12
 
 False: use local time.</t>
 <t tx="ekr.20041119050749.12">Background color of outline pane itself.</t>
-<t tx="ekr.20041119050749.13">Font family for headline text.
-
-Default is default font for Tk.Text widgets.
-
-Tk translates invalid font names to another font in a system-dependent way.</t>
-<t tx="ekr.20041119050749.14">Size of headline text.
-
-Default is 12 for Linux, 9 for Windows.</t>
-<t tx="ekr.20041119050749.15">The Tk -slant setting: roman or italic.
-
-</t>
-<t tx="ekr.20041119050749.16">The Tk -weight setting: normal or bold.
-
-</t>
 <t tx="ekr.20041119050749.17">This option controls the interpretation of the control key when dragging nodes in the outline pane.
 
 True: A drag is a control-drag if the control key is down at the start of the drag.
 
 False: A drag is a control-drag if the control key is down at the end of the drag.</t>
 <t tx="ekr.20041119050749.18">True: Use horizontal scrollbar in outline pane.</t>
-<t tx="ekr.20041119051246"></t>
 <t tx="ekr.20041119051246.1"></t>
 <t tx="ekr.20041119051246.2">Background color of unselected headline text.
 
@@ -982,7 +931,11 @@ Foreground color must also be specified for either setting to take effect.</t>
 <t tx="ekr.20041119051246.3">Background color of selected headline text that is not being edited.
 
 Foreground color must also be specified for either setting to take effect.</t>
-<t tx="ekr.20041119051246.4"></t>
+<t tx="ekr.20041119051246.4">headline_text_font_family = None
+headline_text_font_size = None
+headline_text_font_slant = roman
+headline_text_font_weight = normal
+</t>
 <t tx="ekr.20041119051901">Background color of unselected headline text in a headline that is being edited.
 
 Foreground color must also be specified for either setting to take effect.</t>
@@ -996,21 +949,6 @@ Foreground must also be specified for either setting to take effect.</t>
 <t tx="ekr.20041119052015.2">Foreground color of log text.
 
 </t>
-<t tx="ekr.20041119052015.3"></t>
-<t tx="ekr.20041119052015.4">Font family for text in the log pane.
-
-Default is default font for Tk.Text widgets.
-
-Tk translates invalid font names to another font in a system-dependent way.</t>
-<t tx="ekr.20041119052015.5">Size of text in the log pane.
-
-Default is 12 for Linux, 8 otherwise.
-
-</t>
-<t tx="ekr.20041119052015.6">The Tk -slant setting: roman or italic.
-
-</t>
-<t tx="ekr.20041119052015.7">The Tk -weight setting: normal or bold.</t>
 <t tx="ekr.20041119053445">Background color of log text.</t>
 <t tx="ekr.20041119054938">ApplySettings           = None
 Cascade                 = None
@@ -1101,5 +1039,23 @@ groove</t>
 <t tx="ekr.20041120181045.1"></t>
 <t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes minus signs.
 Therefore, @if-platform and @ifPlatformare equivalent to @ifplatform.</t>
+<t tx="ekr.20041213105007"></t>
+<t tx="ekr.20041213105007.1"></t>
+<t tx="ekr.20041213105007.2"></t>
+<t tx="ekr.20041213105007.3"></t>
+<t tx="ekr.20041213105508"># The font for the log pane. Default is default font for Tk.Text widgets.
+# Tk translates invalid font names to another font in a system-dependent way.
+# 
+# Default size is 12 for Linux, 8 otherwise.
+
+log_text_font_family = None
+log_text_font_size = None
+log_text_font_slant = roman
+log_text_font_weight = normal
+</t>
+<t tx="ekr.20041213105954">Options that require pixel values can be any Python expression that yields an int.
+Warning: the number of pixels per inch varies...</t>
+<t tx="ekr.20041213105954.1"></t>
+<t tx="ekr.20041213105954.2"></t>
 </tnodes>
 </leo_file>

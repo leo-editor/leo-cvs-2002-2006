@@ -5918,7 +5918,9 @@ def __init__ (self):
     self.bitmap_name = None
     self.bitmap = None
     self.win32clipboard = None
-    
+    self.defaultFont = None
+    self.defaultFontFamily = None
+
     if 0: # This seems both dangerous and non-functional.
         if sys.platform == "win32":
             try:
