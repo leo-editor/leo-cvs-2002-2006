@@ -6,12 +6,14 @@
 
 
 #@+at
-#  This class implements a tree control similar to Windows explorer.  The draw code is based on code found in Python's IDLE 
-# program.  Thank you Guido van Rossum!
+#  This class implements a tree control similar to Windows explorer.  The draw 
+# code is based on code found in Python's IDLE program.  Thank you Guido van Rossum!
 # 
-# The tree class knows about vnodes.  The vnode class could be split into a base class (say a treeItem class) containing the ivars 
-# known to the tree class, and a derived class containing everything else, including, e.g., the bodyString ivar.  I haven't chosen 
-# to split the vnode class this way because nothing would be gained in Leo.
+# The tree class knows about vnodes.  The vnode class could be split into a 
+# base class (say a treeItem class) containing the ivars known to the tree 
+# class, and a derived class containing everything else, including, e.g., the 
+# bodyString ivar.  I haven't chosen to split the vnode class this way because 
+# nothing would be gained in Leo.
 
 #@-at
 #@@c
@@ -26,45 +28,64 @@ import os, string, Tkinter, tkFont, traceback, types
 #@+node:1::<< about drawing and events >>
 #@+body
 #@+at
-#  Leo must redraw the outline pane when commands are executed and as the result of mouse and keyboard events.  The main 
-# challenges are eliminating flicker and handling events properly.  These topics are interrelated.
+#  Leo must redraw the outline pane when commands are executed and as the 
+# result of mouse and keyboard events.  The main challenges are eliminating 
+# flicker and handling events properly.  These topics are interrelated.
 # 
-# Eliminating flicker.  Leo must update the outline pane with minimum flicker.  Various versions of Leo have approached this 
-# problem in different ways.  The drawing code in leo.py is robust, flexible, relatively simple and should work in almost any 
-# conceivable environment.
+# Eliminating flicker.  Leo must update the outline pane with minimum 
+# flicker.  Various versions of Leo have approached this problem in different 
+# ways.  The drawing code in leo.py is robust, flexible, relatively simple and 
+# should work in almost any conceivable environment.
 # 
-# Leo assumes that all code that changes the outline pane will be enclosed in matching calls to the c.beginUpdate and c.endUpdate  
-# methods of the Commands class. c.beginUpdate() inhibits drawing until the matching c.endUpdate().  These calls may be nested; 
-# only the outermost call to c.endUpdate() calls c.redraw() to force a redraw of the outline pane.
+# Leo assumes that all code that changes the outline pane will be enclosed in 
+# matching calls to the c.beginUpdate and c.endUpdate  methods of the Commands 
+# class. c.beginUpdate() inhibits drawing until the matching c.endUpdate().  
+# These calls may be nested; only the outermost call to c.endUpdate() calls 
+# c.redraw() to force a redraw of the outline pane.
 # 
-# In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo redraws the screen only if flag is true.  This allows 
-# code to suppress redrawing entirely when needed.  For example, study the idle_body_key event handler to see how Leo 
-# conditionally redraws the outline pane.
+# In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo 
+# redraws the screen only if flag is true.  This allows code to suppress 
+# redrawing entirely when needed.  For example, study the idle_body_key event 
+# handler to see how Leo conditionally redraws the outline pane.
 # 
-# The leoTree class redraws all icons automatically when c.redraw() is called.  This is a major simplification compared to 
-# previous versions of Leo.  The entire machinery of drawing icons in the vnode class has been eliminated.  The v.computeIcon 
-# method tells what the icon should be.  The v.iconVal ivar that tells what the present icon is. The event handler simply compares 
-# these two values and sets redraw_flag if they don't match.
+# The leoTree class redraws all icons automatically when c.redraw() is 
+# called.  This is a major simplification compared to previous versions of 
+# Leo.  The entire machinery of drawing icons in the vnode class has been 
+# eliminated.  The v.computeIcon method tells what the icon should be.  The 
+# v.iconVal ivar that tells what the present icon is. The event handler simply 
+# compares these two values and sets redraw_flag if they don't match.
 # 
-# Handling events. Besides redrawing the screen, Leo must handle events or commands that change the text in the outline or body 
-# panes.  It is surprisingly difficult to ensure that headline and body text corresponds to the vnode and tnode corresponding to 
-# presently selected outline, and vice versa. For example, when the user selects a new headline in the outline pane, we must 
-# ensure that 1) the vnode and tnode of the previously selected node have up-to-date information and 2) the body pane is loaded 
-# from the correct data in the corresponding tnode.  Early versions of Leo attempted to satisfy these conditions when the user 
-# switched outline nodes.  Such attempts never worked well; there were too many special cases.  Later versions of Leo, including 
-# leo.py, use a much more direct approach.  The event handlers make sure that the vnode and tnode corresponding to the presently 
-# selected node are always kept up-to-date.  In particular, every keystroke in the body pane causes the presently selected tnode 
-# to be updated immediately.  There is no longer any need for the c.synchVnode method, though that method still exists for 
-# compatibility with old scripts.
+# Handling events. Besides redrawing the screen, Leo must handle events or 
+# commands that change the text in the outline or body panes.  It is 
+# surprisingly difficult to ensure that headline and body text corresponds to 
+# the vnode and tnode corresponding to presently selected outline, and vice 
+# versa. For example, when the user selects a new headline in the outline 
+# pane, we must ensure that 1) the vnode and tnode of the previously selected 
+# node have up-to-date information and 2) the body pane is loaded from the 
+# correct data in the corresponding tnode.  Early versions of Leo attempted to 
+# satisfy these conditions when the user switched outline nodes.  Such 
+# attempts never worked well; there were too many special cases.  Later 
+# versions of Leo, including leo.py, use a much more direct approach.  The 
+# event handlers make sure that the vnode and tnode corresponding to the 
+# presently selected node are always kept up-to-date.  In particular, every 
+# keystroke in the body pane causes the presently selected tnode to be updated 
+# immediately.  There is no longer any need for the c.synchVnode method, 
+# though that method still exists for compatibility with old scripts.
 # 
-# The leoTree class contains all the event handlers for the body and outline panes.  The actual work is done in the idle_head_key 
-# and idle_body_key methods.  These routines are surprisingly complex; they must handle all the tasks mentioned above, as well as 
-# others. The idle_head_key and idle_body_key methods should not be called outside the leoTree class.  However, it often happens 
-# that code that handles user commands must simulate an event.  That is, the code needs to indicate that headline or body text has 
-# changed so that the screen may be redrawn properly.   The leoTree class defines the following simplified event handlers: 
-# onBodyChanged, onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders and subcommanders call these event 
-# handlers to indicate that a command has changed, or will change, the headline or body text.  Calling event handlers rather than 
-# c.beginUpdate and c.endUpdate ensures that the outline pane is redrawn only when needed.
+# The leoTree class contains all the event handlers for the body and outline 
+# panes.  The actual work is done in the idle_head_key and idle_body_key 
+# methods.  These routines are surprisingly complex; they must handle all the 
+# tasks mentioned above, as well as others. The idle_head_key and 
+# idle_body_key methods should not be called outside the leoTree class.  
+# However, it often happens that code that handles user commands must simulate 
+# an event.  That is, the code needs to indicate that headline or body text 
+# has changed so that the screen may be redrawn properly.   The leoTree class 
+# defines the following simplified event handlers: onBodyChanged, 
+# onBodyWillChange, onBodyKey, onHeadChanged and onHeadlineKey.  Commanders 
+# and subcommanders call these event handlers to indicate that a command has 
+# changed, or will change, the headline or body text.  Calling event handlers 
+# rather than c.beginUpdate and c.endUpdate ensures that the outline pane is 
+# redrawn only when needed.
 
 #@-at
 #@-body
@@ -104,6 +125,7 @@ class leoTree:
 		self.bodyKeepsFocus = true # true if body keeps focus when tree canvas clicked
 		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
+		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		
 		# We use the system defaults below if self.font == None.
 		config = app().config
@@ -247,21 +269,28 @@ class leoTree:
 	#@+at
 	#  About drawing and updating strategy.
 	# 
-	# This version of Leo draws the outline "by hand" using the Tk canvas widget.  Surprisingly, this is not only easy, but 
-	# simplifies the vnode and Commands classes.
+	# This version of Leo draws the outline "by hand" using the Tk canvas 
+	# widget.  Surprisingly, this is not only easy, but simplifies the vnode 
+	# and Commands classes.
 	# 
-	# 1.  Updating and redraw.  The tree.redraw() method is called automatically from the "outermost" call to tree.endUpdate.  
-	# Moreover, calling .tree.redraw() inside a tree.beginUpdate/tree.endUpdate pair does nothing.  c.redraw(), c.beginUpdate() 
-	# and c.endUpdate() just call the corresponding tree methods.  Finally, beginUpdate()/endUpdate(false) can be used to suppress 
-	# redrawing entirely.
+	# 1.  Updating and redraw.  The tree.redraw() method is called 
+	# automatically from the "outermost" call to tree.endUpdate.  Moreover, 
+	# calling .tree.redraw() inside a tree.beginUpdate/tree.endUpdate pair 
+	# does nothing.  c.redraw(), c.beginUpdate() and c.endUpdate() just call 
+	# the corresponding tree methods.  Finally, beginUpdate()/endUpdate(false) 
+	# can be used to suppress redrawing entirely.
 	# 
-	# Therefore, the Commands class never needs to worry about extra calls to tree.redraw() provided all code that draws to the 
-	# tree is enclosed in a tree.beginUpdate/tree.endUpdate pair.  The tree.idle_body_key event handler manages redrawing "by 
-	# hand" by maintaining a redraw_flag and then calling endUpdate(redraw_flag).
+	# Therefore, the Commands class never needs to worry about extra calls to 
+	# tree.redraw() provided all code that draws to the tree is enclosed in a 
+	# tree.beginUpdate/tree.endUpdate pair.  The tree.idle_body_key event 
+	# handler manages redrawing "by hand" by maintaining a redraw_flag and 
+	# then calling endUpdate(redraw_flag).
 	# 
-	# 2.  The tree.redraw() method deletes all old canvas items and recomputes all data, including v.iconVal.  This means that 
-	# v.doDelete need not actually delete vnodes for them to disappear from the screen.  Indeed, vnode are never actually deleted, 
-	# only unlinked.  It would be valid for "dependent" vnodes to be deleted, but there really is no need to do so.
+	# 2.  The tree.redraw() method deletes all old canvas items and recomputes 
+	# all data, including v.iconVal.  This means that v.doDelete need not 
+	# actually delete vnodes for them to disappear from the screen.  Indeed, 
+	# vnode are never actually deleted, only unlinked.  It would be valid for 
+	# "dependent" vnodes to be deleted, but there really is no need to do so.
 
 	#@-at
 	#@-body
@@ -448,7 +477,8 @@ class leoTree:
 	#@+node:10::headWidth
 	#@+body
 	#@+at
-	#  Returns the proper width of the entry widget for the headline. This has been a problem.
+	#  Returns the proper width of the entry widget for the headline. This has 
+	# been a problem.
 
 	#@-at
 	#@@c
@@ -574,12 +604,15 @@ class leoTree:
 	#@+node:17:C=17:tree.idle_scrollTo
 	#@+body
 	#@+at
-	#  This scrolls the canvas so that v is in view.  This is done at idle time after a redraw so that treeBar.get() will return 
-	# proper values.  Earlier versions of this routine were called _before_ a redraw so that the calls to yoffset() were 
-	# required.  We could use v.icony instead, and that might be better.
+	#  This scrolls the canvas so that v is in view.  This is done at idle 
+	# time after a redraw so that treeBar.get() will return proper values.  
+	# Earlier versions of this routine were called _before_ a redraw so that 
+	# the calls to yoffset() were required.  We could use v.icony instead, and 
+	# that might be better.
 	# 
-	# Another approach would be to add a "draw" flat to the drawing routines so that they just compute a height if the draw flag 
-	# is false.  However, that would complicate the drawing logic quite a bit.
+	# Another approach would be to add a "draw" flat to the drawing routines 
+	# so that they just compute a height if the draw flag is false.  However, 
+	# that would complicate the drawing logic quite a bit.
 
 	#@-at
 	#@@c
@@ -610,8 +643,8 @@ class leoTree:
 	#@+node:18:C=18:tree.yoffset
 	#@+body
 	#@+at
-	#  We can't just return icony because the tree hasn't been redrawn yet.  For the same reason we can't rely on any TK canvas 
-	# methods here.
+	#  We can't just return icony because the tree hasn't been redrawn yet.  
+	# For the same reason we can't rely on any TK canvas methods here.
 
 	#@-at
 	#@@c
@@ -712,15 +745,20 @@ class leoTree:
 	#@+node:4:C=21:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+body
 	#@+at
-	#  The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
+	#  The <Key> event generates the event before the body text is changed(!), 
+	# so we register an idle-event handler to do the work later.
 	# 
-	# 1/17/02: Rather than trying to figure out whether the control or alt keys are down, we always schedule the idle_handler.  
-	# The idle_handler sees if any change has, in fact, been made to the body text, and sets the changed and dirty bits only if 
-	# so.  This is the clean and safe way.
+	# 1/17/02: Rather than trying to figure out whether the control or alt 
+	# keys are down, we always schedule the idle_handler.  The idle_handler 
+	# sees if any change has, in fact, been made to the body text, and sets 
+	# the changed and dirty bits only if so.  This is the clean and safe way.
 	# 
-	# 2/19/02: We must distinguish between commands like "Find, Then Change", that call onBodyChanged, and commands like "Cut" and 
-	# "Paste" that call onBodyWillChange.  The former commands have already changed the body text, and that change must be 
-	# captured immediately.  The latter commands have not changed the body text, and that change may only be captured at idle time.
+	# 2/19/02: We must distinguish between commands like "Find, Then Change", 
+	# that call onBodyChanged, and commands like "Cut" and "Paste" that call 
+	# onBodyWillChange.  The former commands have already changed the body 
+	# text, and that change must be captured immediately.  The latter commands 
+	# have not changed the body text, and that change may only be captured at 
+	# idle time.
 
 	#@-at
 	#@@c
@@ -988,8 +1026,8 @@ class leoTree:
 	#@+node:8:C=25:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+body
 	#@+at
-	#  The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the 
-	# work later.
+	#  The <Key> event generates the event before the headline text is 
+	# changed(!), so we register an idle-event handler to do the work later.
 
 	#@-at
 	#@@c
@@ -1233,7 +1271,25 @@ class leoTree:
 		self.setSelectedLabelState(v)
 	#@-body
 	#@-node:1::dimEditLabel, undimEditLabel
-	#@+node:2:C=29:editLabel
+	#@+node:2::abortEditLabelCommand
+	#@+body
+	def abortEditLabelCommand (self):
+		
+		v = self.currentVnode
+		
+		if self.revertHeadline and v.edit_text and v == self.editVnode:
+			
+			# trace(`self.revertHeadline`)
+			v.edit_text.delete("1.0","end")
+			v.edit_text.insert("end",self.revertHeadline)
+			self.idle_head_key(v) # Must be done immediately.
+			self.revertHeadline = None
+			self.select(v)
+			if v and v.joinList:
+				self.redraw_now() # force a redraw of joined headlines.
+	#@-body
+	#@-node:2::abortEditLabelCommand
+	#@+node:3:C=29:editLabel
 	#@+body
 	# Start editing v.edit_text
 	
@@ -1242,37 +1298,44 @@ class leoTree:
 		# End any previous editing
 		if self.editVnode and v != self.editVnode:
 			self.endEditLabel()
+			self.revertHeadline = None
 			
 		# Start editing
 		if v and v.edit_text:
-			# es("editLabel" + `v`)
+			# trace(`v`)
 			self.setNormalLabelState(v)
 			v.edit_text.tag_remove("sel","1.0","end")
 			v.edit_text.tag_add("sel","1.0","end")
 			v.edit_text.focus_force()
 			self.editVnode = v
+			self.revertHeadline = v.headString() # 9/24/02
 		else:
 			self.editVnode = None
 	#@-body
-	#@-node:2:C=29:editLabel
-	#@+node:3:C=30:endEditLab (es here helps set focus properly!)
+	#@-node:3:C=29:editLabel
+	#@+node:4:C=30:endEditLabel & endEditLabelCommand
 	#@+body
 	# End editing for self.editText
 	
 	def endEditLabel (self):
 	
 		v = self.editVnode
-		# es("EndEditLabel" + `v`)
-		
 		if v and v.edit_text:
 			self.setUnselectedLabelState(v)
 			self.editVnode = None
-		
+		if v and v.joinList:
+			self.redraw_now() # force a redraw of joined headlines.
+			
+	def endEditLabelCommand (self):
+	
+		v = self.editVnode
+		if v and v.edit_text:
+			self.select(v)
 		if v and v.joinList:
 			self.redraw_now() # force a redraw of joined headlines.
 	#@-body
-	#@-node:3:C=30:endEditLab (es here helps set focus properly!)
-	#@+node:4:C=31:tree.select
+	#@-node:4:C=30:endEditLabel & endEditLabelCommand
+	#@+node:5:C=31:tree.select
 	#@+body
 	#@+at
 	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
@@ -1317,8 +1380,8 @@ class leoTree:
 		else:
 			self.canvas.focus_set()
 	#@-body
-	#@-node:4:C=31:tree.select
-	#@+node:5:C=32:tree.set...LabelState
+	#@-node:5:C=31:tree.select
+	#@+node:6:C=32:tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
@@ -1339,8 +1402,8 @@ class leoTree:
 		if v and v.edit_text:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
-	#@-node:5:C=32:tree.set...LabelState
-	#@+node:6:C=33:tree.scanForTabWidth
+	#@-node:6:C=32:tree.set...LabelState
+	#@+node:7:C=33:tree.scanForTabWidth
 	#@+body
 	# Similar to code in scanAllDirectives.
 	
@@ -1374,7 +1437,7 @@ class leoTree:
 	
 		c.frame.setTabWidth(w)
 	#@-body
-	#@-node:6:C=33:tree.scanForTabWidth
+	#@-node:7:C=33:tree.scanForTabWidth
 	#@-node:12:C=28:Selecting & editing (tree)
 	#@-others
 #@-body

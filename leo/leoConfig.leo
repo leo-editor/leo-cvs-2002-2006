@@ -2,12 +2,12 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="1" left="62" height="26" width="84"/>
+	<global_window_position top="22" left="150" height="26" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="80" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -20,11 +20,11 @@
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
-<v t="T9" a="V"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
+<v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; F-keys &gt;&gt;</vh></v>
+<v t="T13" a="V"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
@@ -260,7 +260,7 @@ See the section called "About keyboard shortcuts" for a full discussion of what 
 &lt;&lt; About keyboard shortcuts &gt;&gt;
 &lt;&lt; Alt and Shift-Alt &gt;&gt;
 &lt;&lt; Control &gt;&gt;
-&lt;&lt; F-keys &gt;&gt;
+&lt;&lt; F-keys and others &gt;&gt;
 &lt;&lt; Shift-Control &gt;&gt;
 &lt;&lt; None &gt;&gt;
 </t>
@@ -431,6 +431,9 @@ CantRedo        = Shift+Ctrl+Z</t>
 
 FindNext     = F3
 FindPrevious = F4
+
+AbortEditHeadline = Shift+Esc
+EndEditHeadline = Esc
 </t>
 <t tx="T14">@ These are all comments...
 AboutLeo                = None
