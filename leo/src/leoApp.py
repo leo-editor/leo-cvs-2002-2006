@@ -444,8 +444,8 @@ class LeoApp:
         g.app.leoID = g.app.gui.runAskLeoIDDialog()
         g.app.gui = None
         
-        g.trace(g.app.leoID)
-        g.es("leoID=",repr(g.app.leoID),color="blue")
+        # g.trace(g.app.leoID)
+        g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
         #@nonl
         #@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
         #@nl
@@ -454,16 +454,15 @@ class LeoApp:
         dirs = []
         
         for theDir in (homeDir,globalConfigDir,loadDir):
-            cant = "can not create leoID.txt in %s" % theDir
+            cant = "can not create %s in %s" % (tag,theDir)
             try:
-                # Look in globalConfigDir first.
-                fn = g.os_path_join(theDir, tag)
+                fn = g.os_path_join(theDir,tag)
                 f = open(fn,'w')
                 if f:
                     f.write(g.app.leoID)
                     f.close()
                     if g.os_path_exists(fn):
-                        g.es("created leoID.txt in %s" % (theDir), color="red")
+                        g.es("created %s in %s" % (tag,theDir), color="red")
                         return
                     else:
                         g.es(cant,color='red')
