@@ -2442,11 +2442,6 @@ class baseCommands:
 							g.enl()
 						
 						#@+others
-						#@+node:assert that simple and complex position methods are equivalent
-						assert p.simpleLevel()==p.level(), "simpleLevel==level"
-						
-						assert p.oldLastNode()==p.lastNode(), "oldLastNode==lastNode"
-						#@-node:assert that simple and complex position methods are equivalent
 						#@+node:assert consistency of threadNext & threadBack links
 						threadBack = p.threadBack()
 						threadNext = p.threadNext()
