@@ -150,9 +150,9 @@ ok:
   File c:\prog\leoCVS\leo\doc\leoDiary.txt
   File c:\prog\leoCVS\leo\doc\leoNotes.txt
   File c:\prog\leoCVS\leo\doc\leoToDo.txt
-  File c:\prog\leoCVS\leo\doc\leoUsersGuide.txt
-  File c:\prog\leoCVS\leo\doc\leoFAQ.txt
-  File c:\prog\leoCVS\leo\doc\leoLeaps.txt
+  ## File c:\prog\leoCVS\leo\doc\leoUsersGuide.txt
+  ## File c:\prog\leoCVS\leo\doc\leoFAQ.txt
+  ## File c:\prog\leoCVS\leo\doc\leoLeaps.txt
   File c:\prog\leoCVS\leo\doc\README.TXT
   File c:\prog\leoCVS\leo\doc\INSTALL.TXT
   File c:\prog\leoCVS\leo\doc\PKG-INFO.TXT

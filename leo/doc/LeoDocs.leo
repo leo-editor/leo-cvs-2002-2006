@@ -6703,7 +6703,7 @@ Other features of 4.2:
 Coming soon in 4.2:
 
 - Perfect Import will guarantee that Leo imports file perfectly.
-- @import will allows you to study files using Leo without changing those files.</t>
+- @import will allow you to study files using Leo without changing those files.</t>
 <t tx="EKR.20040628095213.3">@nocolor
 
 - Leo calls g.enableIdleTimeHook at end of startup code.
