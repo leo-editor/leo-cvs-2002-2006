@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6458" clone_windows="0"/>
-<globals body_outline_ratio="0.363528009535">
-	<global_window_position top="18" left="234" height="839" width="907"/>
+<globals body_outline_ratio="0.503636363636">
+	<global_window_position top="120" left="207" height="662" width="814"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -439,7 +439,7 @@
 </v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
-<v t="ekr.20041125145818.1"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1" a="E"><vh>Settings dialog</vh>
 <v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
 <v t="ekr.20041220102317"><vh>Support for generalized widget settings?</vh></v>
 <v t="ekr.20041213115848"><vh>Later or never ...</vh>
@@ -450,7 +450,7 @@
 </v>
 </v>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
 <v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
 </v>
@@ -469,10 +469,10 @@
 </v>
 <v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
 </v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
+<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; helpers</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2"><vh>createColor</vh>
+<v t="ekr.20041127134208.2" a="E"><vh>createColor</vh>
 <v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
 <v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
@@ -1149,7 +1149,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1450,7 +1450,13 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041126055818.2" a="TV"><vh>pyclbr module (parses python)</vh></v>
+<v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
+<v t="ekr.20041220172118" a="TV"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
+<v t="ekr.20041220172118.2" a="E"><vh>Conflicts not involving sentinels</vh></v>
+<v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
+<v t="ekr.20041220173748"><vh>Design notes</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2071,7 +2077,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2202,7 +2208,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10841,12 +10847,12 @@ else:
         createMenu()
         check()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
@@ -11764,7 +11770,7 @@ colorBox.configure(selectioncommand=colorCallback)</t>
     if rgb or val:
         # g.trace(rgb,val)
         self.colorSettingDict[munge(name)] = val
-        menuButton.configure(background=val,activebackground=val,text=val)
+        colorSample.configure(background=val,activebackground=val,text=val)
 
 b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
 b.pack(side="left")</t>
@@ -12512,5 +12518,79 @@ g.setGeneralTkSetting(widget,setting_name) would do the following:
     - get the setting_name and the associated list of tuples/bunches from the config class.
     - safetly set the widget's setting using the settings list as is done in the prototype code.</t>
 <t tx="ekr.20041220165048"></t>
+<t tx="ekr.20041220172118">@ignore</t>
+<t tx="ekr.20041220172118.1">@nocolor
+
+** The orginal file is .#localFileName.1.nnn
+** The file modified by CVS is localFileName
+
+'&lt;' * 7 localFileName
+...
+'=' * 7
+...
+'&gt;' * 7 1.nnn
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; cvsConflict.py
+def spam-cvs1():
+    pass # changed 1
+=======
+def spam2():
+    pass
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.2</t>
+<t tx="ekr.20041220172118.2">@ These do not affect outline structure.  
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; cvsConflict.py
+def spam-cvs1():
+    pass # changed 1
+=======
+def spam2():
+    pass
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.2</t>
+<t tx="ekr.20041220173231"># ------- These do affect outline structure. ------
+# Leo does pretty well reading these, all things considered.
+
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; cvsConflict.py
+#@+node:ekr.20041220170413.1:spam-1b
+def spam():
+=======
+#@+node:ekr.20041220170413.1:spam-2b
+def spam2():
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.3 # ------------------------------ duplicate sentinels above and below.
+    pass
+#@nonl
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; cvsConflict.py
+#@-node:ekr.20041220170413.1:spam-1b
+#@+node:ekr.20041220170413.2:eggs-1b
+=======
+#@-node:ekr.20041220170413.1:spam-2b
+#@+node:ekr.20041220170413.2:eggs-2b
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.3
+def eggs():
+    pass
+#@nonl
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; cvsConflict.py
+#@-node:ekr.20041220170413.2:eggs-1b
+=======
+#@-node:ekr.20041220170413.2:eggs-2b
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.3</t>
+<t tx="ekr.20041220173748">@killcolor
+
+- There are no real problems unless sentinels are involved.
+
+- cvs does _not_ show a clean version of the new file on cvs.
+
+- A script could create the new version from the old and "conflict" versions.
+    - This might be a useful starting point.
+        - old:  fileName.1.nnn
+        - conflict: fileName
+        - new: created by script
+    
+- How can Leo know that a conflict exists???
+    - Look for '&lt;' * 7 and '&gt;' * 7.  What if these exist in an unconflicted file?
+    - No.  Look for fileName.1.nnn files.
+
+- Maybe the atFile read logic could detect a conflict?
+    - Only after detecting a fileName.1.nnn file.
+    - Only if 'repair_cvs_conflict' option is set.</t>
 </tnodes>
 </leo_file>

@@ -5761,21 +5761,33 @@ else: # Use plain click.
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
 #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
 #@+node:ekr.20041221075743:onPmwResizeSplitter1/2
-def onPmwResizeSplitter1 (self,sizes):
+@ These methods cause problems because Pmw.PanedWidget's calls these methods way too often.
+
+We don't need to remember changes to pane sizes, for several reasons:
     
-    if not self.initing:
-        n1,n2 = sizes
-        n1,n2 = float(n1),float(n2)
-        self.ratio = n1/(n1+n2)
-        # g.trace(self.ratio)
+1. The initial secondary ratio is always set by leoFrame.initialRatios().
+    - Remembering this ratio implies a change to the file format and is not worth the cost.
+    - The user can set these initial ratios with user options.
+2. The only benefit of remembering the secondary ratio is when using the Equal Sized Panes command.
+    - But resetting the secondary ratio to the default secondary ratio is good enough.
+3. Not remembering these ratios simplifies the code enough to be worth doing.
+@c
+
+def onPmwResizeSplitter1 (self,sizes):
+    if 0: # Don't try to remember size changes.
+        if not self.initing:
+            n1,n2 = sizes
+            n1,n2 = float(n1),float(n2)
+            self.ratio = n1/(n1+n2)
+            # g.trace(self.ratio)
     
 def onPmwResizeSplitter2 (self,sizes):
-
-	if not self.initing:
-        n1,n2 = sizes
-        n1,n2 = float(n1),float(n2)
-        self.secondary_ratio = n1/(n1+n2)
-        # g.trace(self.secondary_ratio)
+    if 0: # Don't try to remember size changes.
+        if not self.initing:
+            n1,n2 = sizes
+            n1,n2 = float(n1),float(n2)
+            self.secondary_ratio = n1/(n1+n2)
+            # g.trace(self.secondary_ratio)
 #@nonl
 #@-node:ekr.20041221075743:onPmwResizeSplitter1/2
 #@+node:ekr.20031218072017.2176:f.finishCreate
@@ -5784,27 +5796,18 @@ def finishCreate (self,c):
     frame = self ; frame.c = c ; gui = g.app.gui
     
     # This must be done after creating the commander.
-    self.initing = True # To supress onPmwResize until resizePanesToRatio gets called.
     self.splitVerticalFlag,self.ratio,self.secondary_ratio = frame.initialRatios()
-
     << create the toplevel frame >>
     << create all the subframes >>
     << create the first tree node >>
-
     self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-
     v = c.currentVnode()
-
     if not g.doHook("menu1",c=c,p=v,v=v):
         frame.menu.createMenuBar(self)
-
     g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-
     g.app.windowList.append(frame)
-    
     c.initVersion()
     c.signOnWithVersion()
-    
     self.body.createBindings(frame)
 #@nonl
 #@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
@@ -5957,10 +5960,9 @@ def createLeoTkSplitter (self,parent,verticalFlag):
 def resizePanesToRatio(self,ratio,ratio2):
     
     if Pmw:
+        # g.trace(ratio,ratio2)
         self.ratio = ratio
         self.secondary_ratio = ratio2
-        self.initing = True
-        # g.trace(self.splitVerticalFlag,ratio,ratio2)
         splitter1 = self.componentsDict.get('splitter1')
         splitter2 = self.componentsDict.get('splitter2')
 
@@ -5978,11 +5980,6 @@ def resizePanesToRatio(self,ratio,ratio2):
             # Use ratio2 to set outline height.
             size = ratio2 * float(splitter2.winfo_height())
             splitter2.configurepane('outline',size=int(size))
-
-        # Wait until idle time to clear self.initing.
-        def callback(event=None):
-            self.initing = False
-        self.outerFrame.after_idle(callback)
 #@nonl
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@-node:ekr.20041221195402:Pmw only...
