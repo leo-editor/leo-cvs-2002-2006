@@ -20,21 +20,21 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
-<v t="T12" a="V"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
+<v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
-<v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
+<v t="T21" a="V"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
@@ -839,13 +839,11 @@ log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
 <t tx="T21"># Leo now properly opens windows for existing files where they were last positioned.
 
-initial_window_height = 75
-#	Height of window, Tk grid units, that is, pixels. (must be an integer).
-#	Grid units must be specified because Leo windows are gridded.
+initial_window_height = 600
+#	Height of window in pixels. (must be an integer).
 	
-initial_window_width = 100
-#	Width window, in Tk grid units, that is, pixels. (must be an integer).
-#	Grid units must be specified because Leo windows are gridded.
+initial_window_width = 800
+#	Width window in pixels. (must be an integer).
 
 initial_window_left = 20
 #	Distance from left of screen of window, in pixels (must be an integer).
