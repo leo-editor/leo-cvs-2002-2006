@@ -4,35 +4,6 @@
 
 #@+all
 #@+node:ekr.20041130125500:First
-#@+node:ekr.20041130094657:(Finish g.app.config.set)
-#@+node:ekr.20041118084146.1:set (g.app.config)
-def set (self,c,setting,type,val):
-    
-    """Set the setting and make sure its type matches the given type."""
-    
-    munge = self.munge
-    
-    setting = munge(setting)
-
-    g.trace(c,setting,type,val)
-
-    return ####
-    
-    ## To do: also search c's settings dict.
-    data = self.defaultsDict.get(setting)
-    
-    if data:
-        theType,val = data
-    else:
-        theType,val = None,None
-
-    if setting is None:
-        g.trace(setting,type,val)
-    
-    return val
-#@nonl
-#@-node:ekr.20041118084146.1:set (g.app.config)
-#@-node:ekr.20041130094657:(Finish g.app.config.set)
 #@+node:ekr.20041130103128:(killcolor also kills autoindenting )
 By: Roger Erens - rogererens
 @
@@ -129,6 +100,25 @@ It should also be fine to add a directive or a menu under the plugins_menu"
 to change the language and reinitialise the spell_checker for spelling multilingual
 documents.....
 #@-node:ekr.20041130125213:(Fix minor bugs in spelling plugin)
+#@+node:ekr.20041201072431:(Can hoist cause a hang?)
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2876473
+
+I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
+exactly as described here.
+
+I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
+plugin_manager, and plugins_menu. It seems that I never experience the lockups
+if I disable the hoist plugin, but that I do sometimes experience the lockups
+if I enable hoist. Maybe a quick review of hoist might be in order to see if
+anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
+feel might be able to lead to lockups of this sort.
+
+Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
+up totally, so hopefully this small data tidbit will help flush out this bug.
+#@nonl
+#@-node:ekr.20041201072431:(Can hoist cause a hang?)
 #@-node:ekr.20041130125500:First
 #@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 http://sourceforge.net/forum/message.php?msg_id=2871977
@@ -6233,7 +6223,7 @@ Dalius
 #@nonl
 #@-node:ekr.20040123102724.6:daliuslt
 #@-node:ekr.20040123102724.2:Templates
-#@+node:ekr.20040329185649:Bugs: can't be fixed or can wait
+#@+node:ekr.20040329185649:Known Bugs: can't be fixed or can wait
 #@+node:ekr.20031218072017.663:Bug: can't be fixed
 #@+node:ekr.20031218072017.664:Cut/paste bug on X windows (waiting for help)
 @nocolor
@@ -6316,6 +6306,23 @@ Note the work-around/patch in the followup post at the bottom of that page. Comm
 #@+node:ekr.20031218072017.673:Tk bugs
 The following bugs can not be fixed because they are Tk bugs.
 #@nonl
+#@+node:ekr.20041201071145:Tk Freezes on debean when libtk is compiled with thread support
+http://sourceforge.net/forum/message.php?msg_id=2876797
+By: skal
+
+By: Grossé Pascal - skal
+RE: Leo freezing up  
+2004-12-01 06:15
+
+The freezing problem on debian sid (which is also my current OS) is caused by a bug in Tkinter: Tkinter does not work when libtk is compiled with thread support, which is the case on debian sid for tk8.4 
+I compiled my own non-threaded libtk with the corresponding python/tkinter, and the freeze magically vanished.  
+ 
+This is a known bug in debian bugtrack: 
+ 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=171353 
+ 
+Skal
+#@-node:ekr.20041201071145:Tk Freezes on debean when libtk is compiled with thread support
 #@+node:EKR.20040523192553:(Crash when pasting large text into headlines)
 #@+node:EKR.20040606104355:Report
 @nocolor
@@ -8136,7 +8143,7 @@ other times only fix is to exit & restart.
 #@nonl
 #@-node:ekr.20040129133809.5:Expand/contract may not work after drag (works for me)
 #@-node:ekr.20040105064959:Bugs: can wait
-#@-node:ekr.20040329185649:Bugs: can't be fixed or can wait
+#@-node:ekr.20040329185649:Known Bugs: can't be fixed or can wait
 #@-node:ekr.20040123102724:Can't or wont
 #@-node:ekr.20041112155009:Others
 #@-all
