@@ -291,7 +291,7 @@
 </v>
 </v>
 </v>
-<v t="T195"><vh>Users Guide</vh>
+<v t="T195" a="V"><vh>Users Guide</vh>
 <v t="T196"><vh>An overview of Leo</vh></v>
 <v t="T197"><vh>Front material</vh>
 <v t="T198"><vh>Title Page &amp; Summary</vh></v>
@@ -433,7 +433,7 @@
 </v>
 <v t="T257"><vh>Tangling @root trees with the Tangle commands</vh></v>
 <v t="T258"><vh>Untangling @root trees with the Untangle commands</vh></v>
-<v t="T259" a="CE"><vh>More about directives</vh>
+<v t="T259" a="E"><vh>More about directives</vh>
 <v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -652,16 +652,6 @@
 <v t="T376"><vh>Tangle and Untangle commands</vh></v>
 <v t="T377"><vh>Unlimited undo</vh></v>
 </v>
-</v>
-<v t="T259" a="CE"><vh>More about directives</vh>
-<v t="T260"><vh>@CWEB and @noweb specify the source language</vh></v>
-<v t="T261"><vh>@color and @nocolor control syntax coloring</vh></v>
-<v t="T262"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
-<v t="T263" a="V"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
-<v t="T264"><vh>@first directive allows preliminary lines in @file trees</vh></v>
-<v t="T265"><vh>@language specifying the target language</vh></v>
-<v t="T266"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
-<v t="T267"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
 </v>
 <v t="T378"><vh>FAQ</vh>
 <v t="T379"><vh>What's the best way to learn to use Leo?</vh></v>

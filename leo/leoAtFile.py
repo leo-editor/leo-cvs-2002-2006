@@ -293,10 +293,7 @@ class atFile:
 			i += len(self.startSentinelComment)
 		else:
 			return atFile.noSentinel
-		if 0: # Do not skip whitespace here!
-			pass
-		else: # 7/8/02: we must allow whitespace here to support the REM hack.
-			i = skip_ws(s,i) 
+		# Do not skip whitespace here!
 		if match(s,i,"@<<"): return atFile.startRef
 		if match(s,i,"@@"): return atFile.startDirective
 		if not match(s,i,'@'): return atFile.noSentinel
@@ -1117,12 +1114,16 @@ class atFile:
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
 	#@-node:5::scanDoc
-	#@+node:6::scanHeader
+	#@+node:6:C=8:scanHeader
 	#@+body
 	#@+at
 	#  This method sets self.startSentinelComment and self.endSentinelComment based on the first @+leo sentinel line of the file.  
 	# We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written 
 	# "verbatim", so nothing more needs to be done!
+	# 
+	# 7/8/02: Leading whitespace is now significant here before the @+leo.  This is part of the "REM hack".  We do this so that 
+	# sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as 
+	# possible about what is recognized as a sentinel.  This minimizes false matches.
 
 	#@-at
 	#@@c
@@ -1140,13 +1141,15 @@ class atFile:
 		# s contains the tag
 		i = j = skip_ws(s,0)
 		# The opening comment delim is the initial non-whitespace.
-		while i < n and not match(s,i,tag) and not is_ws(s[i]) and not is_nl(s,i):
+		# 7/8/02: The opening comment delim is the initial non-tag
+		while i < n and not match(s,i,tag) and not is_nl(s,i): # and not is_ws(s[i]) :
 			i += 1
 		if j < i:
 			self.startSentinelComment = s[j:i]
 		else: valid = false
 		# Make sure we have @+leo
-		i = skip_ws(s, i)
+		if 0:# 7/8/02: make leading whitespace significant.
+			i = skip_ws(s, i)
 		if match(s, i, tag):
 			i += len(tag)
 		else: valid = false
@@ -1158,7 +1161,7 @@ class atFile:
 		if not valid:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
 	#@-body
-	#@-node:6::scanHeader
+	#@-node:6:C=8:scanHeader
 	#@+node:7::scanText
 	#@+body
 	#@+at
@@ -1378,7 +1381,7 @@ class atFile:
 				
 				#@<< scan @+node >>
 				#@+node:6::start sentinels
-				#@+node:5:C=8:<< scan @+node >>
+				#@+node:5:C=9:<< scan @+node >>
 				#@+body
 				assert(match(s,i,"+node:"))
 				i += 6
@@ -1493,7 +1496,7 @@ class atFile:
 					if len(s) == 1: # don't discard newline
 						continue
 				#@-body
-				#@-node:5:C=8:<< scan @+node >>
+				#@-node:5:C=9:<< scan @+node >>
 				#@-node:6::start sentinels
 
 			elif kind == atFile.startOthers:
@@ -1614,7 +1617,7 @@ class atFile:
 	#@-node:7::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1:C=9:os, onl, etc.
+	#@+node:1:C=10:os, onl, etc.
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -1636,7 +1639,7 @@ class atFile:
 	def otabs(self,n):
 		self.os('\t' * n)
 	#@-body
-	#@-node:1:C=9:os, onl, etc.
+	#@-node:1:C=10:os, onl, etc.
 	#@+node:2::putBody
 	#@+body
 	#@+at
@@ -1694,7 +1697,7 @@ class atFile:
 		self.putSentinel("@-body")
 	#@-body
 	#@-node:3::putBodyPart (removes trailing lines)
-	#@+node:4:C=10:putCodePart & allies
+	#@+node:4:C=11:putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except at-others.  It expands references and at-others and 
@@ -1891,7 +1894,7 @@ class atFile:
 				"\n\treferenced from: " + v.headString())
 	#@-body
 	#@-node:7::putRef
-	#@-node:4:C=10:putCodePart & allies
+	#@-node:4:C=11:putCodePart & allies
 	#@+node:5::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
@@ -1964,7 +1967,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:6::putDoc
-	#@+node:7:C=11:putDocPart
+	#@+node:7:C=12:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2032,7 +2035,7 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7:C=11:putDocPart
+	#@-node:7:C=12:putDocPart
 	#@+node:8::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
@@ -2048,7 +2051,7 @@ class atFile:
 			self.oblanks(n)
 	#@-body
 	#@-node:8::putIndent
-	#@+node:9:C=12:atFile.write
+	#@+node:9:C=13:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2186,7 +2189,7 @@ class atFile:
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
-	#@-node:9:C=12:atFile.write
+	#@-node:9:C=13:atFile.write
 	#@+node:10::writeAll
 	#@+body
 	#@+at
