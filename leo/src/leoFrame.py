@@ -81,6 +81,9 @@ class leoBody:
 	def initialRatios (self):
 		self.oops()
 		
+	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+		self.oops()
+		
 	def setBodyFontFromConfig (self):
 		self.oops()
 		
@@ -396,9 +399,6 @@ class leoTree:
 	# These should all be internal to the tkinter.frame class.
 	
 	def OnActivateHeadline(self,v):
-		self.oops()
-		
-	def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
 		self.oops()
 		
 	def onHeadChanged(self,v):

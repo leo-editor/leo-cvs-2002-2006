@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3886" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="15" left="192" height="872" width="893"/>
+	<global_window_position top="12" left="438" height="872" width="893"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -945,7 +945,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538" a="V"><vh>To do: 4.1 beta 4</vh>
+<v t="edream.110403112538"><vh>To do: 4.1 beta 4</vh>
 <v t="edream.110903124134"><vh>First</vh>
 <v t="edream.111803100627"><vh>(Fix problems with @file)</vh>
 <v t="edream.111803100627.1"><vh>Reports</vh></v>
@@ -6374,6 +6374,9 @@
 <v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.111903184104"><vh>(Fix reorg bugs)</vh></v>
+<v t="edream.111903185335"><vh>(Fix bug initing the font of the body pane)</vh></v>
+<v t="edream.111903191616" a="V"><vh>About html plugin</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -56927,6 +56930,9 @@ def createControl (self,frame,parentFrame):
 def initialRatios (self):
 	self.oops()
 	
+def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
+	self.oops()
+	
 def setBodyFontFromConfig (self):
 	self.oops()
 	
@@ -58195,9 +58201,6 @@ def topVnode(self):
 def OnActivateHeadline(self,v):
 	self.oops()
 	
-def onBodyChanged (self,v,undoType,oldSel=None,oldYview=None,newSel=None,oldText=None):
-	self.oops()
-	
 def onHeadChanged(self,v):
 	self.oops()
 
@@ -58788,5 +58791,58 @@ Created app.scriptDict to communicate between the Execute Script command and the
 app.script["script1"] contains the original script.
 
 app.script["script2"] contains the preprocessed script.  This will contain Leo sentinel lines.</t>
+<t tx="edream.111903184104">@nocolor
+
+- (fixed) I noticed this in leoConfig.leo: config_encoding = iso-8859-1
+
+- (fixed) ImportError: No module named leoDialog.
+
+- (fixed) TypeError: about() takes exactly 2 arguments (1 given) (plugin_menu plugin)
+
+- (fixed) mod_spelling plugin: several bugs.</t>
+<t tx="edream.111903185335"># From time to time the body pane of .leo files becomes bold.
+
+# Probably a fairly simple reorg bug.</t>
+<t tx="edream.111903191616">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2295621
+By: billp9619
+
+As I was explaining my ideas about opml it occurred to me that it uses DIV tags
+and a Javascript as the output of the stylesheet.
+
+But then that is what ALL the HTML collapsing outlines use! So the html behavior
+is nothing special to opml...it is a behavior of scripted DIV tags in html.
+
+I found a style sheet named outline_leo,xsl on my computer. This is really tiny
+and works pretty good. Don't know where I got it from though.
+ 
+Anyway, as I expected the insertion of a html FORM  and a  TEXTAREA box into
+one of these DIV tags would collapse out of sight then reappear when clicked
+just like any other node.. Actually this is one of those odd things that maybe
+noone ever thought of trying,,,,I've never seen it in one of these html outlines
+before.
+
+Interestingly, the familiar collapsing xml display in Internet Explorer is really
+just a xsl stylesheet and  produces DIV tags and a script like all these other
+html outlines. Somewhere I found a version with minor revisions to make it work
+with standard xpath.
+
+There is a program called xpathvisualizer that runs in IE and gives basically
+the same xml display but highlights an inputted xpath expression. With this
+you can view source and see the script and DIV tags.
+
+At the end of the day the only benefit to opml is that others are using
+it (standard?) and perhaps  there is something especially good about its Javascript
+implementation.
+
+BTW, to load leo into internet explorer just save a copy with an .xml file extension.
+Then drag it to IE.
+And of course the file  could have an embedded xml-stylesheet instruction to
+use leo_outline.xsl which just shows headlines, etc,
+
+Also BTW... I have been using Python for some time now but I don't know if i
+can handle plug-in development at this stage.  :-)
+
+(But I might be up to refining the html/script environment further. )</t>
 </tnodes>
 </leo_file>
