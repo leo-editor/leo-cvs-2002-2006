@@ -232,9 +232,10 @@ class baseTnode (object):
 	"""The base class of the tnode class."""
 	#@	<< tnode constants >>
 	#@+node:ekr.20031218072017.3322:<< tnode constants >>
-	dirtyBit =		0x01
+	dirtyBit    =		0x01
 	richTextBit =	0x02 # Determines whether we use <bt> or <btr> tags.
-	visitedBit =	0x04
+	visitedBit  =	0x04
+	writeBit    = 0x08 # Set: write the tnode.
 	#@nonl
 	#@-node:ekr.20031218072017.3322:<< tnode constants >>
 	#@nl
@@ -306,6 +307,12 @@ class baseTnode (object):
 		return (self.statusBits & self.visitedBit) != 0
 	#@nonl
 	#@-node:ekr.20031218072017.3330:isVisited
+	#@+node:EKR.20040503094727:isWriteBit
+	def isWriteBit (self):
+	
+		return (self.statusBits & self.writeBit) != 0
+	#@nonl
+	#@-node:EKR.20040503094727:isWriteBit
 	#@-node:ekr.20031218072017.3327:Status bits
 	#@-node:ekr.20031218072017.3325:Getters
 	#@+node:ekr.20031218072017.3331:Setters
@@ -345,6 +352,12 @@ class baseTnode (object):
 		self.statusBits &= ~ self.visitedBit
 	#@nonl
 	#@-node:ekr.20031218072017.3335:clearVisited
+	#@+node:EKR.20040503093844:clearWriteBit
+	def clearWriteBit (self):
+	
+		self.statusBits &= ~ self.writeBit
+	#@nonl
+	#@-node:EKR.20040503093844:clearWriteBit
 	#@+node:ekr.20031218072017.3336:setDirty
 	def setDirty (self):
 	
@@ -363,6 +376,12 @@ class baseTnode (object):
 		self.statusBits |= self.visitedBit
 	#@nonl
 	#@-node:ekr.20031218072017.3338:setVisited
+	#@+node:EKR.20040503094727.1:setWriteBit
+	def setWriteBit (self):
+	
+		self.statusBits |= self.writeBit
+	#@nonl
+	#@-node:EKR.20040503094727.1:setWriteBit
 	#@-node:ekr.20031218072017.3332:Status bits
 	#@+node:ekr.20031218072017.3339:setCloneIndex (used in 3.x)
 	def setCloneIndex (self, index):
@@ -1981,14 +2000,15 @@ class position (object):
 		for p in self.self_and_subtree_iter():
 			p.clearVisited()
 	#@-node:ekr.20040306220634.17:p.clearVisitedInTree
-	#@+node:ekr.20031218072017.3388:clearAllVisitedInTree TO POSITION
+	#@+node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
 	def clearAllVisitedInTree (self):
 		
 		for p in self.self_and_subtree_iter():
 			p.v.clearVisited()
 			p.v.t.clearVisited()
+			p.v.t.clearWriteBit()
 	#@nonl
-	#@-node:ekr.20031218072017.3388:clearAllVisitedInTree TO POSITION
+	#@-node:ekr.20031218072017.3388:p.clearAllVisitedInTree (4.2)
 	#@-node:ekr.20040312015908:Visited bits
 	#@+node:ekr.20040305162628:p.Dirty bits
 	#@+node:ekr.20040311113514:p.clearDirty

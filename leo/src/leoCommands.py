@@ -4313,7 +4313,7 @@ class baseCommands:
 		for p in c.allNodes_iter():
 			p.v.clearVisited()
 			p.v.t.clearVisited()
-	#@nonl
+			p.v.t.clearWriteBit()
 	#@-node:ekr.20031218072017.2985:c.clearAllVisited
 	#@+node:ekr.20031218072017.2986:c.fileName
 	# Compatibility with scripts

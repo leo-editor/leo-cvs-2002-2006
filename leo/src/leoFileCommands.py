@@ -1240,8 +1240,8 @@ class baseFileCommands:
 		
 		for p in c.currentPosition().self_and_subtree_iter():
 			t = p.v.t
-			if t and not t.isVisited():
-				t.setVisited()
+			if t and not t.isWriteBit():
+				t.setWriteBit()
 				tnodes += 1
 		#@nonl
 		#@-node:ekr.20031218072017.1972:<< count the number of tnodes >>
@@ -1574,7 +1574,7 @@ class baseFileCommands:
 			t = tnodes.get(index)
 			assert(t)
 			# Write only those tnodes whose vnodes were written.
-			if t.isVisited():
+			if t.isWriteBit(): # 5/3/04
 				self.putTnode(t)
 		#@nonl
 		#@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
@@ -1588,6 +1588,7 @@ class baseFileCommands:
 		"""Write a <v> element corresponding to a vnode."""
 	
 		fc = self ; c = fc.c ; v = p.v
+		isThin = p.isAtThinFileNode()
 	
 		fc.put("<v")
 		#@	<< Put tnode index >>
@@ -1600,7 +1601,8 @@ class baseFileCommands:
 				fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
 				
 			# g.trace(v.t)
-			v.t.setVisited() # Indicate we wrote the body text.
+			if not isThin:
+				v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 		else:
 			g.trace(v.t.fileIndex,v)
 			g.es("error writing file(bad v.t.fileIndex)!")
@@ -1664,7 +1666,7 @@ class baseFileCommands:
 	
 		# New in 4.2: don't write child nodes of @file-thin trees.
 		if p.hasChildren():
-			if p.isAtThinFileNode() and not p.isOrphan():
+			if isThin and not p.isOrphan():
 				# g.trace("skipping child vnodes for", p.headString())
 				pass
 			else:

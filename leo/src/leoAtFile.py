@@ -4747,8 +4747,12 @@ class baseNewDerivedFile(oldDerivedFile):
 		""" Generate the body enclosed in sentinel lines."""
 	
 		at = self ; s = p.bodyString()
-		p.v.setVisited() # Mark the vnode.
-		p.v.t.setVisited() # Use the tnode for the orphans check.
+		
+		p.v.t.setVisited() # Suppress orphans check.
+		p.v.setVisited() # Make sure v is never expanded again.
+		if not at.thinFile:
+			p.v.t.setWriteBit() # Mark the tnode to be written.
+			
 		if not at.thinFile and not s: return
 		inCode = true
 		#@	<< Make sure all lines end in a newline >>
@@ -4849,7 +4853,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		""" Generate the body enclosed in sentinel lines."""
 	
 		at = self ; s = p.bodyString()
-		p.v.setVisited() # Mark the vnode.
+		p.v.setVisited() # Make sure v is never expanded again.
 		p.v.t.setVisited() # Use the tnode for the orphans check.
 		if not at.thinFile and not s: return
 		inCode = true
@@ -4919,8 +4923,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		at = self
 	
-		p.v.t.setVisited() # Suppress orphan warning.
-		
 		at.putOpenNodeSentinel(p,inAtAll=true) # Suppress warnings about @file nodes.
 		at.putAtAllBody(p) 
 		
@@ -4965,8 +4967,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	def putAtOthersChild(self,p):
 		
 		at = self
-	
-		p.v.setVisited() # Make sure p is never expanded again.
 	
 		at.putOpenNodeSentinel(p)
 		at.putBody(p) 
