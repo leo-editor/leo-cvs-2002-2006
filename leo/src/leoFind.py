@@ -412,12 +412,12 @@ class leoFind:
 		c.beginUpdate()
 		if c.mark_changes_flag:
 			v.setMarked()
-			c.frame.tree.drawIcon(v) # redraw only the icon.
 		# update node, undo status, dirty flag, changed mark & recolor
 		if self.in_headline:
 			c.frame.tree.idle_head_key(v) # 1/7/04
 		else:
 			c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
+		c.frame.tree.drawIcon(v) # redraw only the icon.
 		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
 		return true
 	#@nonl
