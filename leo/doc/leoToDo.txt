@@ -3583,6 +3583,14 @@ Guenther.
 #@-node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629110559:Cool Mac stuff
 #@+node:EKR.20040617105034:To do before 4.2 beta 2: feature complete
+#@+node:ekr.20040630070900.1:Save marks and expantion state in <v> elements for @thin nodes
+@killcolor
+
+We might use the exising descendentTnodeUnknownAttributes mechanism.
+
+I am leaning towards adding new "marks" and "expanded" attributes.  Some experimentation will be needed.
+#@nonl
+#@-node:ekr.20040630070900.1:Save marks and expantion state in <v> elements for @thin nodes
 #@+node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
 #@-node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
 #@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
@@ -5340,7 +5348,7 @@ def goToLineNumber (self,root=None,lines=None,n=None):
         vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
         found = True
         if not vnodeName:
-            g.es("invalid derived file: " + fileName)
+            g.es("error handling: " + root.headString())
             return
         << set p to the node given by vnodeName and gnx or childIndex or n >>
     << select p and make it visible >>

@@ -35250,7 +35250,7 @@ def dedentBody (self):
         return
 
     d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+    tab_width = d.get("tabwidth",c.tab_width)
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     result = [] ; changed = False
     for line in lines:
@@ -35274,7 +35274,7 @@ def indentBody (self):
         return
 
     d = g.scanDirectives(c,p) # Support @tab_width directive properly.
-    tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+    tab_width = d.get("tabwidth",c.tab_width)
     head,lines,tail,oldSel,oldYview = self.getBodyLines()
     result = [] ; changed = False
     for line in lines:
@@ -35953,7 +35953,7 @@ def goToLineNumber (self,root=None,lines=None,n=None):
         vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
         found = True
         if not vnodeName:
-            g.es("invalid derived file: " + fileName)
+            g.es("error handling: " + root.headString())
             return
         << set p to the node given by vnodeName and gnx or childIndex or n >>
     << select p and make it visible >>
@@ -38410,7 +38410,7 @@ def goToLineNumber (self,root=None,lines=None,n=None):
         vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
         found = True
         if not vnodeName:
-            g.es("invalid derived file: " + fileName)
+            g.es("error handling: " + root.headString())
             return
         << set p to the node given by vnodeName and gnx or childIndex or n >>
     << select p and make it visible >>

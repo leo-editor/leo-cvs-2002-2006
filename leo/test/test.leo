@@ -69,7 +69,7 @@
 </v>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="EKR.20040621100553"><vh>@  file c:\prog\test\tempOutput.txt</vh></v>
-<v t="EKR.20040619134504" a="M"><vh>atFileTests (revised)</vh>
+<v t="EKR.20040619134504"><vh>atFileTests</vh>
 <v t="EKR.20040624112329"><vh>Script to create expected output</vh></v>
 <v t="EKR.20040624103339.1"><vh>testAtLast1 no newline</vh>
 <v t="EKR.20040624103339.2"><vh>@@file</vh></v>
@@ -151,7 +151,7 @@
 <v t="ekr.20040303063549.89"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.120" a="TV"><vh>leoFileTests (revised)</vh></v>
+<v t="ekr.20040303063549.120"><vh>leoFileTests</vh></v>
 <v t="ekr.20040315202718.2"><vh>findCommandTests</vh></v>
 <v t="ekr.20040303063549.90"><vh>importTests</vh>
 <v t="ekr.20040303063549.91"><vh>importAtRoot</vh>
@@ -252,7 +252,7 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125" a="TV"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
 </v>
@@ -4030,9 +4030,10 @@ import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 # Make sure this is the selected node.
-u = leoTest.testUtils()
+c = g.top() ; u = leoTest.testUtils()
 p = u.findUnitTestNode("Run all tests")
 p.c.selectVnode(p)
+changed = c.isChanged()
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
@@ -4055,8 +4056,10 @@ for f,arg in (
     
 suite = unittest.makeSuite(leoTest.leoFileTests)
 mainSuite.addTest(suite)
-    
-unittest.TextTestRunner().run(mainSuite)</t>
+
+unittest.TextTestRunner().run(mainSuite)
+c.setChanged(changed) # Restore changed state.
+</t>
 <t tx="ekr.20040303071432">@language python
 @tabwidth -4</t>
 <t tx="ekr.20040303080010">import leoGlobals as g
@@ -4065,9 +4068,10 @@ import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
 # Make sure this is the selected node.
-u = leoTest.testUtils()
+c = g.top() ; u = leoTest.testUtils()
 p = u.findUnitTestNode("Run all non-file tests")
 p.c.selectVnode(p)
+changed = c.isChanged()
 
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
@@ -4085,7 +4089,8 @@ for f,arg in (
     suite = f(arg,"tempNode")
     mainSuite.addTest(suite)
 
-unittest.TextTestRunner().run(mainSuite)</t>
+unittest.TextTestRunner().run(mainSuite)
+c.setChanged(changed) # Restore changed state.</t>
 <t tx="ekr.20040303080938"></t>
 <t tx="ekr.20040303080938.1"></t>
 <t tx="ekr.20040309095121"></t>
