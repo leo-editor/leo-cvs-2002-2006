@@ -430,14 +430,14 @@ class leoTkinterTree (leoFrame.leoTree):
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections.
 	# It is up to the caller to ensure that no other redraws are pending.
 	
-	def redraw_now (self):
+	def redraw_now (self,scroll=true):
 		
 		# g.trace()
 	
-		self.idle_redraw()
+		self.idle_redraw(scroll=scroll)
 	#@-node:redraw_now
 	#@+node:idle_redraw
-	def idle_redraw (self):
+	def idle_redraw (self,scroll=true):
 		
 		c = self.c ; frame = c.frame
 	
@@ -488,7 +488,8 @@ class leoTkinterTree (leoFrame.leoTree):
 			# g.printGc()
 			
 			# Do a scrolling operation after the scrollbar is redrawn
-			self.canvas.after_idle(self.idle_scrollTo)
+			if scroll:
+				self.canvas.after_idle(self.idle_scrollTo)
 			#@nonl
 			#@-node:<< Erase and redraw the entire tree >>
 			#@nl
@@ -755,7 +756,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		else:
 			self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 			
-		g.trace(g.app.copies) ; g.app.copies = 0
+		# g.trace(g.app.copies) ; g.app.copies = 0
 		# import traceback ; traceback.print_stack()
 	#@nonl
 	#@-node:drawTopTree
