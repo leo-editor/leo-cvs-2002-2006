@@ -176,7 +176,7 @@ class cleoController:
         
         print "Installing overrides for",self.c.shortFileName()
     
-        tree = self.c.frame.tree ## leoTkinterTree.leoTkinterTree
+        tree = self.c.frame.tree # NOT leoTkinterTree.leoTkinterTree
         
         g.funcToMethod(self.setUnselectedHeadlineColors,tree)
         
