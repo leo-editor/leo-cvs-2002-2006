@@ -174,7 +174,7 @@ class tkinterGui(leoGui.leoGui):
 		"""Create and run an askYesNoCancel dialog ."""
 		d = leoTkinterDialog.tkinterAskYesNoCancel(
 			title,message,yesMessage,noMessage,defaultButton)
-	 	return d.run(modal=true)
+		return d.run(modal=true)
 	#@nonl
 	#@-node:app.gui.Tkinter dialogs
 	#@+node:app.gui.Tkinter file dialogs
