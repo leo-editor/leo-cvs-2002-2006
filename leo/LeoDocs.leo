@@ -47,7 +47,7 @@
 <v t="T30"><vh>Kent Tenney</vh></v>
 <v t="T31"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T32" a="E"><vh>Release Notes</vh>
+<v t="T32"><vh>Release Notes</vh>
 <v t="T33"><vh>Warnings</vh></v>
 <v t="T34"><vh>Installation notes</vh>
 <v t="T35" a="C"><vh>System requirements</vh></v>
@@ -61,8 +61,8 @@
 <v t="T42" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="T43" a="C"><vh>Quick start</vh></v>
 </v>
-<v a="E"><vh>Latest version</vh>
-<v t="T44" a="CEV"><vh>3.10</vh>
+<v><vh>Latest version</vh>
+<v t="T44" a="C"><vh>3.10</vh>
 <v t="T45"><vh>Fixed bugs</vh>
 <v t="T46"><vh>Allowed abbreviated xml tags.</vh></v>
 <v t="T47"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
@@ -703,6 +703,35 @@
 <v t="T464"><vh>Setters</vh></v>
 </v>
 </v>
+</v>
+<v t="T87" a="CV"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T88" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
+<v t="T89" a="E"><vh>Using customizeLeo.py</vh>
+<v t="T90"><vh>About hooks</vh></v>
+<v t="T91"><vh>SECURITY WARNINGS</vh>
+<v t="T92"><vh>The danger of trusting code in shared .leo files</vh></v>
+<v t="T93"><vh>NEVER use this kind of code in a hook!!</vh></v>
+<v t="T94"><vh>Don't use rexec !!</vh>
+<v t="T95"><vh>&lt;&lt; change all instances of rexec to exec in v's body &gt;&gt;</vh></v>
+<v t="T96"><vh>&lt;&lt; delete thisNode &gt;&gt;</vh></v>
+<v t="T97"><vh>&lt;&lt; clear the undo stack &gt;&gt;</vh></v>
+</v>
+<v t="T98"><vh>Protect your copy of customizeLeo.py !!</vh></v>
+</v>
+<v t="T99"><vh>Convenience routines for customizeLeo.py</vh>
+<v t="T100"><vh>Convenience functions to enable and disable the "idle" hook</vh></v>
+<v t="T101"><vh>Convenience methods to create, destroy and modify menus</vh>
+<v t="T102"><vh>createMenuItemsFromTable</vh></v>
+<v t="T103"><vh>createNewMenu</vh></v>
+<v t="T104"><vh>createOpenWithMenuFromTable</vh></v>
+<v t="T105"><vh>deleteMenu</vh></v>
+<v t="T106"><vh>deleteMenuItem</vh></v>
+<v t="T107"><vh>Example: how to create a menu</vh></v>
+</v>
+</v>
+<v t="T108"><vh>Translating menus into other languages</vh></v>
+</v>
+<v t="T42" a="C"><vh>Putting the Leo icon in Leo windows</vh></v>
 </v>
 <v t="T465"><vh>Users Guide</vh>
 <v t="T466"><vh>An overview of Leo</vh></v>
@@ -2283,7 +2312,7 @@ See the Appendices for a concise summary of information about Leo.</t>
 
 This version of Leo corrects bugs, improves Leo's documentation and adds many new features:
 
-- Rewrote Scripting Chapter in Leo's Users Guide.
+- Rewrote the Scripting Chapter in Leo's Users Guide.
 - Improved the Customization Chapter of the Users Guide.
 - Adds several customizations contributed by Leo's users.
   Among these: @read-only nodes. Reading empty .leo files.
@@ -2302,13 +2331,11 @@ This version of Leo corrects bugs, improves Leo's documentation and adds many ne
   @file-nosent = @nosentinelsfile ; @file-noref = @rawfile.
 - Leo now supports navigation of menus using underlined menus.
 - Added an easy way to replace any Leo method by a function.
-  The code in customizeLeo.py can now override part of Leo's code!
+  The code in customizeLeo.py can now override any part of Leo's code!
 - Added routines to redirect stderr and stdout to Leo's log pane.
   These routines can be called from customizeLeo.py.
 - Added "event1" and "event2" hooks for customize event handling.
 - Improved Leo's window icon, and improved how that icon is loaded.
-- Added contributed code to support @read-only nodes.
-  This code show how easy it is to customize Leo.
 - The usual assortment of bug fixes and minor improvements.
   Actually, this release fixes more than the usual number of bugs.
 
@@ -2589,15 +2616,17 @@ tag argument                                             keys in keywords
 "menu1"        yes      before creating menus
 "menu2"        yes      before updating menus
 "open1"        yes      before opening any file         old_c,new_c,fileName
-"open2"                 after opening any file          old_c,new_c,fileName
+"open2"                 after  opening any file         old_c,new_c,fileName
 "openwith1"    yes      before Open With command        c,v,openType,arg,ext
-"openwith2"             after Open With command         c,v,openType,arg,ext
+"openwith2"             after  Open With command        c,v,openType,arg,ext
 "recentfiles1" yes      before Recent Files command     c,fileName,closeFlag
-"recentfiles2"          after Recent Files command      c,fileName,closeFlag
-"select1"      yes      before selecting a vnode        c,v,new_v
-"select2"               after selecting a vnode         c,v,old_v
+"recentfiles2"          after  Recent Files command     c,fileName,closeFlag
+"select1"      yes      before selecting a vnode        c,old_v,new_v
+"select2"               after selecting a vnode         c,old_v,new_v
 "start1"       no       after app.finishCreate()
 "start2"                after opening first Leo window  fileName
+"unselect1"             before unselecting a node       c,old_v,new_v
+"unselect1"             after  unselecting a node       c,old_v,new_v
 "@url1"        yes      before double-click @url node   c,v
 "@url2"                 after double-click @url node    c,v
 
