@@ -59,18 +59,13 @@ class LeoFrame:
 		self.commands = None
 		
 		self.tree = None
-		
 		self.f1 = self.f2 = None
 		self.log = None  ; self.logBar = None
 		self.body = None ; self.bodyBar = None
 		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
 		
-		# Menu bars
-		self.topMenu = self.fileMenu = self.editMenu = None
-		self.outlineMenu = self.windowMenu = self.helpMenu = None
-		# Submenus
-		self.editBodyMenu = self.editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
+		self.menus = {} # Menu dictionary.
 		self.menuShortcuts = None # List of menu shortcuts for warnings.
 		
 		# Used by event handlers...
@@ -153,10 +148,7 @@ class LeoFrame:
 		self.log = self.body = self.tree = None
 		self.treeBar = self.canvas = self.splitter1 = self.splitter2 = None
 		# Menu bars.
-		self.topMenu = self.fileMenu = self.editMenu = None
-		self.outlineMenu = self.windowMenu = self.helpMenu = None
-		# Submenus.
-		self.editBodyMenu = self.editHeadlineMenu = self.moveSelectMenu = self.markGotoMenu = None
+		del self.menus ; self.menus = None
 	#@-body
 	#@-node:2::frame.__del__
 	#@+node:3::frame.__repr__
@@ -393,17 +385,14 @@ class LeoFrame:
 	
 		c = self.commands
 		Tk = Tkinter
-		self.topMenu = menu = Tk.Menu(top,postcommand=self.OnMenuClick)
+		self.menus["top"] = topMenu = Tk.Menu(top,postcommand=self.OnMenuClick)
 		self.menuShortcuts = []
-	
 		# To do: use Meta rathter than Control for accelerators for Unix
 		
 		#@<< create the file menu >>
 		#@+node:2::<< create the file menu >>
 		#@+body
-		self.fileMenu = fileMenu = Tk.Menu(menu,tearoff=0)
-		menu.add_cascade(label="File",menu=fileMenu)
-		
+		fileMenu = self.createNewMenu("File")
 		
 		#@<< create the top-level file entries >>
 		#@+node:1::<< create the top-level file entries >>
@@ -435,8 +424,7 @@ class LeoFrame:
 		#@<< create the recent files submenu >>
 		#@+node:2::<< create the recent files submenu >>
 		#@+body
-		recentFilesMenu = self.recentFilesMenu = Tk.Menu(fileMenu,tearoff=0)
-		fileMenu.add_cascade(label="Recent Files...", menu=recentFilesMenu)
+		recentFilesMenu = self.createNewMenu("Recent Files...","File")
 		
 		self.recentFiles = app().config.getRecentFiles()
 		
@@ -454,8 +442,7 @@ class LeoFrame:
 		#@<< create the read/write submenu >>
 		#@+node:3::<< create the read/write submenu >>
 		#@+body
-		readWriteMenu = Tk.Menu(fileMenu,tearoff=0)
-		fileMenu.add_cascade(label="Read/Write...", menu=readWriteMenu)
+		readWriteMenu = self.createNewMenu("Read/Write...","File")
 		
 		table = (
 			("Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
@@ -472,8 +459,7 @@ class LeoFrame:
 		#@<< create the tangle submenu >>
 		#@+node:4::<< create the tangle submenu >>
 		#@+body
-		tangleMenu = Tk.Menu(fileMenu,tearoff=0)
-		fileMenu.add_cascade(label="Tangle...", menu=tangleMenu)
+		tangleMenu = self.createNewMenu("Tangle...","File")
 		
 		table = (
 			("Tangle All","Shift+Ctrl+A",self.OnTangleAll),
@@ -489,8 +475,7 @@ class LeoFrame:
 		#@<< create the untangle submenu >>
 		#@+node:5::<< create the untangle submenu >>
 		#@+body
-		untangleMenu = Tk.Menu(fileMenu,tearoff=0)
-		fileMenu.add_cascade(label="Untangle...", menu=untangleMenu)
+		untangleMenu = self.createNewMenu("Untangle...","File")
 		
 		table = (
 			("Untangle All",None,self.OnUntangleAll),
@@ -506,8 +491,7 @@ class LeoFrame:
 		#@<< create the import submenu >>
 		#@+node:6::<< create the import submenu >>
 		#@+body
-		importMenu = Tk.Menu(fileMenu,tearoff=0)
-		fileMenu.add_cascade(label="Import/Export...", menu=importMenu)
+		importMenu = self.createNewMenu("Import/Export...","File")
 		
 		table = (
 			("Import To @file","Shift+Ctrl+F",self.OnImportAtFile),
@@ -539,9 +523,7 @@ class LeoFrame:
 		#@<< create the edit menu >>
 		#@+node:1::<< create the edit menu >>
 		#@+body
-		self.editMenu = editMenu = Tk.Menu(menu,tearoff=0)
-		menu.add_cascade(label="Edit", menu=editMenu)
-		
+		editMenu = self.createNewMenu("Edit")
 		
 		#@<< create the first top-level edit entries >>
 		#@+node:1::<< create the first top-level edit entries >>
@@ -566,10 +548,8 @@ class LeoFrame:
 		#@<< create the edit body submenu >>
 		#@+node:2::<< create the edit body submenu >>
 		#@+body
-		self.editBodyMenu = editBodyMenu = Tk.Menu(editMenu,tearoff=0)
-		editMenu.add_cascade(label="Edit Body...", menu=editBodyMenu)
+		editBodyMenu = self.createNewMenu("Edit Body...","Edit")
 		
-		# DTHEIN 27-OCT-2002: added reformat paragraph
 		table = (
 			("Extract Section","Shift+Ctrl+E",self.OnExtractSection),
 			("Extract Names","Shift+Ctrl+N",self.OnExtractNames),
@@ -596,8 +576,7 @@ class LeoFrame:
 		#@<< create the edit headline submenu >>
 		#@+node:3::<< create the edit headline submenu >>
 		#@+body
-		self.editHeadlineMenu = editHeadlineMenu = Tk.Menu(editMenu,tearoff=0)
-		editMenu.add_cascade(label="Edit Headline...", menu=editHeadlineMenu)
+		editHeadlineMenu = self.createNewMenu("Edit Headline...","Edit")
 		
 		table = (
 			("Edit Headline","Ctrl+H",self.OnEditHeadline),
@@ -606,6 +585,7 @@ class LeoFrame:
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
+		
 		#@-body
 		#@-node:3::<< create the edit headline submenu >>
 
@@ -613,11 +593,7 @@ class LeoFrame:
 		#@<< create the find submenu >>
 		#@+node:4::<< create the find submenu >>
 		#@+body
-		findMenu = Tk.Menu(editMenu,tearoff=0)
-		editMenu.add_cascade(label="Find...", menu=findMenu)
-		
-		#It is no longer possible to specify two shortcuts for exactly the same command name.
-		#("Find Next","Ctrl+G",self.OnFindNext),
+		findMenu = self.createNewMenu("Find...","Edit")
 		
 		table = (
 			("Find Panel","Ctrl+F",self.OnFindPanel),
@@ -637,7 +613,7 @@ class LeoFrame:
 		#@+node:5::<< create the last top-level edit entries >>
 		#@+body
 		label = choose(c.tree.colorizer.showInvisibles,"Hide Invisibles","Show Invisibles")
-			
+		
 		table = (
 			("Execute Script","Alt+E",self.OnExecuteScript),
 			("Set Font...","Shift+Alt+T",self.OnFontPanel),
@@ -657,9 +633,7 @@ class LeoFrame:
 		#@<< create the outline menu >>
 		#@+node:3::<< create the outline menu >>
 		#@+body
-		self.outlineMenu = outlineMenu = Tk.Menu(menu,tearoff=0)
-		menu.add_cascade(label="Outline", menu=outlineMenu)
-		
+		outlineMenu = self.createNewMenu("Outline")
 		
 		#@<< create top-level outline menu >>
 		#@+node:1::<< create top-level outline menu >>
@@ -684,8 +658,7 @@ class LeoFrame:
 		#@<< create expand/contract submenu >>
 		#@+node:2::<< create expand/contract submenu >>
 		#@+body
-		self.expandContractMenu = expandContractMenu = Tk.Menu(outlineMenu,tearoff=0)
-		outlineMenu.add_cascade(label="Expand/Contract...", menu=expandContractMenu)
+		expandContractMenu = self.createNewMenu("Expand/Contract...","Outline")
 		
 		table = (
 			("Expand All","Alt+9",self.OnExpandAll),
@@ -715,8 +688,7 @@ class LeoFrame:
 		#@<< create move/select submenu >>
 		#@+node:3::<< create move/select submenu >>
 		#@+body
-		self.moveSelectMenu = moveSelectMenu = Tk.Menu(outlineMenu,tearoff=0)
-		outlineMenu.add_cascade(label="Move/Select...", menu=moveSelectMenu)
+		moveSelectMenu = self.createNewMenu("Move/Select...","Outline")
 		
 		table = (
 			("Move Down", "Ctrl+D",self.OnMoveDown),
@@ -742,8 +714,7 @@ class LeoFrame:
 		#@<< create mark/goto submenu >>
 		#@+node:4::<< create mark/goto submenu >>
 		#@+body
-		self.markGotoMenu = markGotoMenu = Tk.Menu(outlineMenu,tearoff=0)
-		outlineMenu.add_cascade(label="Mark/Go To...", menu=markGotoMenu)
+		markGotoMenu = self.createNewMenu("Mark/Go To...","Outline")
 		
 		table = (
 			("Mark","Ctrl-M",self.OnMark),
@@ -766,8 +737,7 @@ class LeoFrame:
 		#@<< create the window menu >>
 		#@+node:4::<< create the window menu >>
 		#@+body
-		self.windowMenu = windowMenu = Tk.Menu(menu,tearoff=0)
-		menu.add_cascade(label="Window", menu=windowMenu)
+		windowMenu = self.createNewMenu("Window")
 		
 		table = (
 			("Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
@@ -789,14 +759,14 @@ class LeoFrame:
 		#@<< create the help menu >>
 		#@+node:5::<< create the help menu >>
 		#@+body
-		self.helpMenu = helpMenu = Tk.Menu(menu,tearoff=0)
-		menu.add_cascade(label="Help", menu=helpMenu)
+		helpMenu = self.createNewMenu("Help")
 		
 		table = (
 			("About Leo...",None,self.OnAbout),
 			("Online Home Page",None,self.OnLeoHome),
 			("-",None,None),
 			("Open Online Tutorial",None,self.OnLeoTutorial))
+		
 		self.createMenuEntries(helpMenu,table)
 		
 		if sys.platform=="win32":
@@ -808,11 +778,12 @@ class LeoFrame:
 			("-",None,None),
 			("Open LeoConfig.leo",None,self.OnLeoConfig),
 			("Apply Settings",None,self.OnApplyConfig))
+		
 		self.createMenuEntries(helpMenu,table)
 		#@-body
 		#@-node:5::<< create the help menu >>
 
-		top.config(menu=menu) # Display the menu.
+		top.config(menu=topMenu) # Display the menu.
 		app().menuWarningsGiven = true
 	#@-body
 	#@-node:7::createMenuBar
@@ -1172,7 +1143,7 @@ class LeoFrame:
 		if not c: return
 		v = c.currentVnode()
 		
-		menu = self.fileMenu
+		menu = self.menus.get("File")
 		enableMenu(menu,"Revert To Saved", c.canRevert())
 	
 	#@-body
@@ -1183,7 +1154,7 @@ class LeoFrame:
 	
 		c = self.commands
 		if not c: return
-		menu = self.editMenu
+		menu = self.menus.get("Edit")
 		# Top level entries.
 		c.undoer.enableMenuItems()
 		if 0: # Always on for now.
@@ -1197,7 +1168,7 @@ class LeoFrame:
 			enableMenu(menu,"Replace",flag)
 			enableMenu(menu,"Replace, Then Find",flag)
 		# Edit Body submenu
-		menu = self.editBodyMenu
+		menu = self.menus.get("Edit Body...")
 		enableMenu(menu,"Extract Section",c.canExtractSection())
 		enableMenu(menu,"Extract Names",c.canExtractSectionNames())
 		enableMenu(menu,"Extract",c.canExtract())
@@ -1211,16 +1182,16 @@ class LeoFrame:
 		c = self.commands ; v = c.currentVnode()
 		if not c: return
 	
-		menu = self.outlineMenu
+		menu = self.menus.get("Outline")
 		enableMenu(menu,"Cut Node",c.canCutOutline())
 		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
 		enableMenu(menu,"Paste Node",c.canPasteOutline())
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		# Expand/Contract submenu
-		menu = self.expandContractMenu
+		menu = self.menus.get("Expand/Contract...")
 		enableMenu(menu,"Contract Parent",c.canContractParent())
 		# Move/Select submenu
-		menu = self.moveSelectMenu
+		menu = self.menus.get("Move/Select...")
 		enableMenu(menu,"Move Down",c.canMoveOutlineDown())
 		enableMenu(menu,"Move Left",c.canMoveOutlineLeft())
 		enableMenu(menu,"Move Right",c.canMoveOutlineRight())
@@ -1232,7 +1203,7 @@ class LeoFrame:
 		enableMenu(menu,"Go Back",c.canSelectThreadBack())
 		enableMenu(menu,"Go Next",c.canSelectThreadNext())
 		# Mark/Go To submenu
-		menu = self.markGotoMenu
+		menu = self.menus.get("Mark/Go To...")
 		label = choose(v and v.isMarked(),"Unmark","Mark")
 		setMenuLabel(menu,0,label)
 		enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
@@ -1473,15 +1444,16 @@ class LeoFrame:
 							frame.recentFiles.remove(name)
 					frame.recentFiles.insert(0,fileName)
 					
-					# Delete all elements of frame.recentFilesMenu.
-					frame.recentFilesMenu.delete(0,len(frame.recentFiles))
+					# Delete all elements of Recent Files menu.
+					recentFilesMenu = frame.menus.get("Recent Files...")
+					recentFilesMenu.delete(0,len(frame.recentFiles))
 					
-					# Recreate frame.recentFilesMenu.
+					# Recreate Recent Files menu.
 					i = 0
 					for name in frame.recentFiles:
 						# 9/15/02: Added self=self to remove Python 2.1 warning.
 						callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
-						frame.recentFilesMenu.add_command(label=name,command=callback)
+						recentFilesMenu.add_command(label=name,command=callback)
 						i += 1
 					
 				# Update the config file.
@@ -3125,7 +3097,88 @@ class LeoFrame:
 	#@-node:6::OnLeoConfig, OnApplyConfig
 	#@-node:5::Help Menu
 	#@-node:17::Menu Command Handlers
-	#@+node:18::Configuration
+	#@+node:18::Menu Convenience Routines
+	#@+body
+	#@+at
+	#  These are intended for use by scripts, and some are used by Leo.
+
+	#@-at
+	#@-body
+	#@+node:1::createNewMenu
+	#@+body
+	def createNewMenu (self,menuName,parentName="top"):
+		
+		import Tkinter
+		try:
+			parent = self.menus.get(parentName)
+			if parent == None:
+				es("unknown parent menu: " + parentName)
+				return None
+			menu = self.menus.get(menuName)
+			if menu:
+				es("menu already exists: " + menuName)
+			else:
+				menu = Tkinter.Menu(parent,tearoff=0)
+				self.menus[menuName] = menu
+				parent.add_cascade(label=menuName,menu=menu)
+				return menu
+		except:
+			es("exception creating " + menuName + " menu")
+			es_exception()
+			return None
+	
+	
+	#@-body
+	#@-node:1::createNewMenu
+	#@+node:2::createMenuItemsFromTable
+	#@+body
+	def createMenuItemsFromTable (self,menuName,table):
+		
+		try:
+			menu = self.menus.get(menuName)
+			if menu == None:
+				es("menu does not exist: " + menuName)
+				return
+			self.createMenuEntries(menu,table)
+		except:
+			es("exception creating items for " + menuName + " menu")
+			es_exception()
+	
+	#@-body
+	#@-node:2::createMenuItemsFromTable
+	#@+node:3::deleteMenu
+	#@+body
+	def deleteMenu (self,menuName):
+	
+		try:
+			menu = self.menus.get(menuName)
+			if menu:
+				menu.destroy()
+				del self.menus[menuName]
+			else:
+				es("can't delete menu: " + menuName)
+		except:
+			es("exception deleting " + menuName + " menu")
+			es_exception()
+	#@-body
+	#@-node:3::deleteMenu
+	#@+node:4::deleteMenuItem
+	#@+body
+	def deleteMenuItem (self,itemName,menuName="top"):
+	
+		try:
+			menu = self.menus.get(menuName)
+			if menu:
+				menu.delete(itemName)
+			else:
+				es("menu not found: " + menuName)
+		except:
+			es("exception deleting " + itemName + " from " + menuName + " menu")
+			es_exception()
+	#@-body
+	#@-node:4::deleteMenuItem
+	#@-node:18::Menu Convenience Routines
+	#@+node:19::Configuration
 	#@+node:1::f.configureBar
 	#@+body
 	def configureBar (self, bar, verticalFlag):
@@ -3298,8 +3351,8 @@ class LeoFrame:
 		self.log.configure(bd=border)
 	#@-body
 	#@-node:7::reconfigurePanes (use config bar_width)
-	#@-node:18::Configuration
-	#@+node:19::Splitter stuff
+	#@-node:19::Configuration
+	#@+node:20::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3556,7 +3609,7 @@ class LeoFrame:
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
 	#@-node:7::placeSplitter
-	#@-node:19::Splitter stuff
+	#@-node:20::Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -113,7 +113,7 @@ class undoer:
 	#@+body
 	def enableMenuItems (self):
 	
-		u = self ; c = u.commands ; menu = c.frame.editMenu
+		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
 		enableMenu(menu,u.redoMenuLabel,u.canRedo())
 		enableMenu(menu,u.undoMenuLabel,u.canUndo())
 	#@-body
@@ -202,7 +202,7 @@ class undoer:
 	# These routines update both the ivar and the menu label.
 	def setRedoType (self,type):
 	
-		u = self ; c = u.commands ; menu = c.frame.editMenu
+		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
 		name = u.redoMenuName(type)
 		if name != u.redoMenuLabel:
 			# Update menu using old name.
@@ -211,7 +211,7 @@ class undoer:
 	
 	def setUndoType (self,type):
 	
-		u = self ; c = u.commands ; menu = c.frame.editMenu
+		u = self ; c = u.commands ; menu = c.frame.menus.get("Edit")
 		name = u.undoMenuName(type)
 		if name != u.undoMenuLabel:
 			# Update menu using old name.
