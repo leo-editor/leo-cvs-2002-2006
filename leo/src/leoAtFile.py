@@ -680,7 +680,6 @@ class baseAtFile:
 	def writeMissing(self,v):
 	
 		at = self
-		if at.trace: trace("old_df",v)
 	
 		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
@@ -846,9 +845,6 @@ class baseOldDerivedFile:
 		self.raw = false # true: in @raw mode
 		self.sentinels = true # true: output sentinels while expanding refs.
 		
-		# Enables tracing (debugging only).
-		self.trace = false
-		
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app.config.default_derived_file_encoding
 		
@@ -886,7 +882,6 @@ class baseOldDerivedFile:
 		"""Read an open 3.x derived file."""
 		
 		at = self
-		if at.trace: trace("old_df",root)
 	
 		# Scan the file buffer
 		lastLines = at.scanText(file,root,[],endLeo)
@@ -2253,8 +2248,6 @@ class baseOldDerivedFile:
 	#@+node:old_df.rawWrite
 	def rawWrite(self,root):
 	
-		if self.trace: trace("old_df",root)
-		
 		c = self.c ; self.root = root
 		self.errors = 0
 		self.sentinels = true # 10/1/03
@@ -2366,8 +2359,6 @@ class baseOldDerivedFile:
 	#@+node:old_df.silentWrite
 	def silentWrite(self,root):
 	
-		if self.trace: trace("old_df",root)
-	
 		c = self.c ; self.root = root
 		self.errors = 0
 		c.endEditing() # Capture the current headline.
@@ -2410,11 +2401,9 @@ class baseOldDerivedFile:
 	
 	def write(self,root,nosentinels=false):
 		
-		if self.trace: trace("old_df",root)
-		
 		# Remove any old tnodeList.
 		if hasattr(root,"tnodeList"):
-			if self.trace: trace("removing tnodeList for " + `root`)
+			# trace("removing tnodeList for " + `root`)
 			delattr(root,"tnodeList")
 	
 		c = self.c
@@ -2612,7 +2601,7 @@ class baseOldDerivedFile:
 		if valid and os_path_exists(self.targetFileName):
 			try:
 				if not os.access(self.targetFileName,os.W_OK):
-					self.writeError("read only: " + self.targetFileName)
+					self.writeError("can not create: read only: " + self.targetFileName)
 					valid = false
 			except:
 				pass # os.access() may not exist on all platforms.
@@ -2622,16 +2611,17 @@ class baseOldDerivedFile:
 				self.outputFileName = self.targetFileName + ".tmp"
 				self.outputFile = open(self.outputFileName,'wb')
 				if self.outputFile is None:
-					self.writeError("can not open " + self.outputFileName)
+					self.writeError("can not create " + self.outputFileName)
 					valid = false
 			except:
-				es("exception opening:" + self.outputFileName)
+				es("exception creating:" + self.outputFileName)
 				es_exception()
 				valid = false
-		
+	
 		if not valid:
 			root.setOrphan()
 			root.setDirty()
+			self.outputFile = None # 1/29/04
 		
 		return valid
 	#@nonl
@@ -3417,7 +3407,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Read an open 4.x derived file."""
 		
 		at = self
-		if at.trace: trace("new_df",root)
 	
 		# Scan the 4.x file.
 		at.tnodeListIndex = 0
@@ -4281,7 +4270,6 @@ class baseNewDerivedFile(oldDerivedFile):
 		"""Write a 4.x derived file."""
 		
 		at = self ; c = at.c
-		if at.trace: trace("new_df",root)
 	
 		at.sentinels = not nosentinels
 		#@	<< initialize >>
@@ -4428,7 +4416,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	def rawWrite(self,root):
 	
 		at = self
-		if at.trace: trace("new_df",root)
 	
 		c = at.c ; at.root = root
 		at.errors = 0
