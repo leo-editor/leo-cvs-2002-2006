@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.10"
+__version__ = "0.11"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -64,15 +64,41 @@ __plugin_group__ = "Core"
 #     - Set __plugin_group__ to "Core"
 #     - Renamed active/inactive to on/off as this works better with the groups
 #     - Added version history display to plugin view
-# 
 # 0.10 Paul Paterson:
 #     - Changed the names in the plugin list view to remove at_, mod_ and 
 # capitalized
 #     - Remove dblClick event from plugin list - it wasn't doing anything
 #     - Can now be run stand-alone to aid in debugging problems
-# 
+# 0.11 EKR:
+#     - Use stand-alone leoGlobals module to simplify code.
 #@-at
+#@nonl
 #@-node:pap.20041006184225.2:<< version history >>
+#@nl
+#@<< define importLeoGlobals >>
+#@+node:ekr.20050329035844:<< define importLeoGlobals >>
+def importLeoGlobals():
+    
+    '''
+    Try to import leoGlobals from the leo/src directory, assuming that
+    the script using this function is in a subdirectory of the leo directory.
+    '''
+    
+    plugins_path = os.path.abspath(
+        os.path.join(os.path.dirname(__file__),'..','src'))
+    
+    if plugins_path in sys.path:
+        return None
+    else:
+        sys.path.append(plugins_path)
+        try:
+            import leoGlobals as g
+            return g
+        except ImportError:
+            print 'can not import leoGlobals from %s' % (plugins_path)
+            return None
+#@nonl
+#@-node:ekr.20050329035844:<< define importLeoGlobals >>
 #@nl
 #@<< imports >>
 #@+node:pap.20041006184225.3:<< imports >>
@@ -89,32 +115,25 @@ import threading
 import webbrowser
 import traceback
 
-#
-# Try to import Leo - if this doesn't work then we are stand-alone
 try:
     import leoGlobals as g
-    import leoPlugins
-except ImportError:
-    # Standalone!
-    import Pmw
-    import Tkinter as Tk
-    import sets
-    ok = True
-    standalone = True
-else:
-    # Inside Leo!
     standalone = False
+except ImportError:
+    standalone = True
+    g = importLeoGlobals()
+
+ok = g is not None
+if ok:
     try:
         Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
         Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
         sets = g.importExtension('sets',  pluginName=__name__,verbose=True)
-        ok = True
     except Exception:
         import sys
         s = 'plugins_manager.py: %s: %s' % (sys.exc_type,sys.exc_value)
         print s ; g.es(s,color='blue')
         ok = False
-
+#@nonl
 #@-node:pap.20041006184225.3:<< imports >>
 #@nl
 #@<< todo >>
@@ -191,71 +210,75 @@ def inColumns(data, columnwidths):
     #
     return format % data
 #@-node:pap.20050305144720:inColumns
-#@+node:pap.20050317185409:Standalone Operation
-#@+node:pap.20050317185716:class NameSpace
-class NameSpace:
-    """Just an object to dump properties in"""
-    
+#@+node:pap.20050317185409:Standalone Operation (no longer used)
+if 0:
     #@    @+others
-    #@+node:pap.20050317190909:__init__
-    def __init__(self, **kw):
-        self.__dict__.update(kw)
-    #@nonl
-    #@-node:pap.20050317190909:__init__
-    #@-others
-#@nonl
-#@-node:pap.20050317185716:class NameSpace
-#@+node:pap.20050317190014:class BlackHole
-class BlackHole:
-    """Try to call a method on this and it will just dissapear into the void!"""
-    
-    #@    @+others
-    #@+node:pap.20050317190014.1:__getattr__
-    def __getattr__(self, name):
-        """Return a black hole!"""
-        return BlackHole()
-    #@nonl
-    #@-node:pap.20050317190014.1:__getattr__
-    #@+node:pap.20050317190014.2:__call__
-    def __call__(self, *args, **kw):
-        """Call this .... """
-        return None
-    #@nonl
-    #@-node:pap.20050317190014.2:__call__
-    #@-others
-#@nonl
-#@-node:pap.20050317190014:class BlackHole
-#@+node:pap.20050317185409.1:class FakeLeoGlobals
-class FakeLeoGlobals:
-    """A class to represent leoGlobals when were are running in standalone mode"""
-    
-    #@    @+others
-    #@+node:pap.20050317185716.1:__init__
-    def __init__(self):
-        """Initialize the fake object"""
-        self.app = NameSpace()
-        self.app.root = Tk.Tk()
-        self.app.gui = BlackHole()  
-        self.app.loadDir = os.path.join(os.path.split(__file__)[0], "..", "src")
-    
-        self.Bunch = NameSpace
+    #@+node:pap.20050317185716:class NameSpace
+    class NameSpace:
+        """Just an object to dump properties in"""
         
-        for name in dir(os.path):
-            setattr(self, "os_path_%s" % name, getattr(os.path, name))
+        #@    @+others
+        #@+node:pap.20050317190909:__init__
+        def __init__(self, **kw):
+            self.__dict__.update(kw)
+        #@nonl
+        #@-node:pap.20050317190909:__init__
+        #@-others
+    #@nonl
+    #@-node:pap.20050317185716:class NameSpace
+    #@+node:pap.20050317190014:class BlackHole
+    class BlackHole:
+        """Try to call a method on this and it will just dissapear into the void!"""
         
+        #@    @+others
+        #@+node:pap.20050317190014.1:__getattr__
+        def __getattr__(self, name):
+            """Return a black hole!"""
+            return BlackHole()
+        #@nonl
+        #@-node:pap.20050317190014.1:__getattr__
+        #@+node:pap.20050317190014.2:__call__
+        def __call__(self, *args, **kw):
+            """Call this .... """
+            return None
+        #@nonl
+        #@-node:pap.20050317190014.2:__call__
+        #@-others
     #@nonl
-    #@-node:pap.20050317185716.1:__init__
-    #@+node:pap.20050317191929:choose
-    def choose(self, cond, a, b): # warning: evaluates all arguments
-    
-        if cond: return a
-        else: return b
+    #@-node:pap.20050317190014:class BlackHole
+    #@+node:pap.20050317185409.1:class FakeLeoGlobals
+    class FakeLeoGlobals:
+        """A class to represent leoGlobals when were are running in standalone mode"""
+        
+        #@    @+others
+        #@+node:pap.20050317185716.1:__init__
+        def __init__(self):
+            """Initialize the fake object"""
+            self.app = NameSpace()
+            self.app.root = Tk.Tk()
+            self.app.gui = BlackHole()  
+            self.app.loadDir = os.path.join(os.path.split(__file__)[0], "..", "src")
+        
+            self.Bunch = NameSpace
+            
+            for name in dir(os.path):
+                setattr(self, "os_path_%s" % name, getattr(os.path, name))
+            
+        #@nonl
+        #@-node:pap.20050317185716.1:__init__
+        #@+node:pap.20050317191929:choose
+        def choose(self, cond, a, b): # warning: evaluates all arguments
+        
+            if cond: return a
+            else: return b
+        #@nonl
+        #@-node:pap.20050317191929:choose
+        #@-others
     #@nonl
-    #@-node:pap.20050317191929:choose
+    #@-node:pap.20050317185409.1:class FakeLeoGlobals
     #@-others
 #@nonl
-#@-node:pap.20050317185409.1:class FakeLeoGlobals
-#@-node:pap.20050317185409:Standalone Operation
+#@-node:pap.20050317185409:Standalone Operation (no longer used)
 #@+node:pap.20041009140132:UI
 #@+node:pap.20041008224318:class PluginView
 class PluginView(Tk.Frame):
@@ -1708,8 +1731,8 @@ class EnableManager:
 #@-others
 
 if __name__ == "__main__":
-    if standalone:
-        g = FakeLeoGlobals()
+    if ok:
+        g.createStandAloneApp(pluginName=__name__)
         topLevelMenu()
 #@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py
