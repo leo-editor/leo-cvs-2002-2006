@@ -3039,7 +3039,7 @@ class position (object):
         
         p = self
         
-        # if p.v._parent: g.trace(len(p.v._parent.t.vnodeList),p.v._parent)
+        if not p: return p # 10/30/04
     
         if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
             p.v = p.v._parent
