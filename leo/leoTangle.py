@@ -1687,15 +1687,18 @@ class tangleCommands:
 
 						line_width += word_width
 					else:
-						self.onl() ; self.otab()
-						line_width = abs(self.tab_width)
+						self.onl()
 						if use_single_comment:
-							self.os(self.single_comment_string) ; self.oblank()
-							line_width += len(self.single_comment_string)+ 1
+							self.os(self.single_comment_string) ; self.otab()
+							line_width = (single_w / abs(self.tab_width) + 1) * abs(self.tab_width)
+						else:
+							self.otab()
+							line_width = abs(self.tab_width)
 						words = 0
 						self.put_leading_ws(self.tangle_indent)
 				 		# tangle_indent is in spaces.
 						line_width += max(0,self.tangle_indent)
+
 				#@-body
 				#@-node:1::<<put the doc part>>
 
