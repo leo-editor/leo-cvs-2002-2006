@@ -203,7 +203,7 @@
 </v>
 <v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
-<v t="edream.120603093808" a="E"><vh>@thin pluginsManager.txt</vh></v>
+<v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
 <v t="ekr.20040919094459"><vh> PLEASE follow this style guide</vh>
 <v t="ekr.20040919081244"><vh>@thin style_guide.py</vh></v>
@@ -346,9 +346,9 @@
 <v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
 <v t="ekr.20041017103205"><vh>To do</vh></v>
-<v t="EKR.20040605181725.1" a="E"><vh>Configuration</vh>
+<v t="EKR.20040605181725.1"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1" a="E"><vh>.ato files in the autocompleter folder</vh></v>
+<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
 <v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
@@ -545,7 +545,7 @@ marks="ekr.20040915145407.9,ekr.20040915145407.16,"><vh>@thin chapters.py</vh></
 <v t="EKR.20040517075715.10"><vh>@thin vim.py</vh></v>
 <v t="EKR.20040517075715.12"><vh>@thin xemacs.py</vh></v>
 <v t="EKR.20040517075715.13"><vh>Word export</vh>
-<v t="EKR.20040517075715.14" a="E"><vh>@thin word_export.py</vh></v>
+<v t="EKR.20040517075715.14"><vh>@thin word_export.py</vh></v>
 <v t="EKR.20040517075715.20" tnodeList="EKR.20040517075715.20"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
@@ -555,7 +555,18 @@ marks="ekr.20040915145407.9,ekr.20040915145407.16,"><vh>@thin chapters.py</vh></
 <v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
 </v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
-<v t="ekr.20040828105233"><vh>@thin chinese_menu.py</vh></v>
+<v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
+<v t="ekr.20040828105233" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
+<v t="ekr.20040828105233.1"><vh>onMenu</vh>
+<v t="ekr.20040828105233.2"><vh>file menu</vh></v>
+<v t="ekr.20040828105233.3"><vh>edit menu</vh></v>
+<v t="ekr.20040828105233.4"><vh>outline menu</vh></v>
+<v t="ekr.20040828105233.5"><vh>plugins menu</vh></v>
+<v t="ekr.20040828105233.6"><vh>window menu</vh></v>
+<v t="ekr.20040828105233.7"><vh>help menu</vh></v>
+</v>
+</v>
+</v>
 <v t="EKR.20040517080202.3"><vh>@thin french_fm.py</vh></v>
 <v t="EKR.20040517080555.36"><vh>@thin scripts_menu.py</vh></v>
 </v>
@@ -592,10 +603,8 @@ marks="ekr.20040910070811.10,"><vh>@thin run_nodes.py</vh></v>
 </v>
 <v t="ekr.20041009112303"><vh>Plugins manager &amp; menu</vh>
 <v t="EKR.20040517080555.1"><vh> Plugins menu</vh>
-<v t="EKR.20040517080555.2"
-expanded="EKR.20040517080555.3,EKR.20040517080555.23,"><vh>@thin plugins_menu.py</vh></v>
-<v t="EKR.20040517080555.25"
-expanded="EKR.20040517080555.28,EKR.20040517080555.30,"><vh>@thin pluginsTest.py</vh></v>
+<v t="EKR.20040517080555.2"><vh>@thin plugins_menu.py</vh></v>
+<v t="EKR.20040517080555.25"><vh>@thin pluginsTest.py</vh></v>
 <v t="EKR.20040517080555.32"><vh>Notes re plugins menu</vh>
 <v t="EKR.20040517080555.33"><vh> Changes made by E.K.Ream</vh></v>
 <v t="EKR.20040517080555.34"><vh> Design</vh></v>
@@ -621,24 +630,21 @@ expanded="EKR.20040517080555.28,EKR.20040517080555.30,"><vh>@thin pluginsTest.py
 <v t="pap.20041009234256.1"><vh>&lt;&lt; create the OptionMenu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="pap.20041006184225"
-expanded="pap.20041008224318,pap.20041006192557,"><vh>@thin plugin_manager.py</vh></v>
+<v t="pap.20041006184225"><vh>@thin plugin_manager.py</vh></v>
 </v>
 <v t="ekr.20041001210557"><vh>Scripting</vh>
-<v t="EKR.20040613213623"
-expanded="ekr.20041001183818,EKR.20040618091543.2,ekr.20041001184024,"><vh>@thin mod_scripting.py</vh></v>
+<v t="EKR.20040613213623"><vh>@thin mod_scripting.py</vh></v>
 </v>
 <v t="edream.110203113231.930"><vh>Spell Checking</vh>
 <v t="ekr.20040809165421"><vh>Read me or suffer</vh></v>
 <v t="edream.110203113231.932"><vh>@thin mod_spelling.ini</vh></v>
 <v t="ekr.20041009165858"><vh>@thin spellpyx.ini</vh></v>
 <v t="edream.110203113231.933"><vh>@thin mod_spelling.py</vh></v>
-<v t="ekr.20040809151600" a="E"><vh>spellpyx</vh>
+<v t="ekr.20040809151600"><vh>spellpyx</vh>
 <v t="ekr.20040809165421.1"><vh>Installing this plugin</vh></v>
 <v t="ekr.20040809151600.4"><vh>Notes: e</vh></v>
 <v t="ekr.20040809151600.1"
-marks="ekr.20040915052810,"
-expanded="ekr.20040809151600.10,ekr.20040809151600.11,ekr.20040809151600.16,ekr.20040809151600.17,"><vh>@thin spellpyx.py</vh></v>
+marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 <v t="ekr.20040809151600.52"><vh>aspell-1.1</vh>
 <v t="ekr.20040809160744"><vh>Notes: e</vh></v>
 <v t="ekr.20040809161108"><vh>Notes: Gary Bishop</vh></v>
@@ -660,14 +666,17 @@ expanded="ekr.20040809151600.10,ekr.20040809151600.11,ekr.20040809151600.16,ekr.
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 <v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
-<v t="EKR.20040605181725" a="TV"><vh>Autocompleter</vh>
+<v t="EKR.20040605181725"><vh>Autocompleter</vh>
 <v t="ekr.20041017103205"><vh>To do</vh></v>
-<v t="EKR.20040605181725.1" a="E"><vh>Configuration</vh>
+<v t="EKR.20040605181725.1"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
-<v t="EKR.20040608070256.1" a="E"><vh>.ato files in the autocompleter folder</vh></v>
+<v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
 <v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
+<v t="bwmulder.20041017125718"
+expanded="bwmulder.20041018233934.1,bwmulder.20041018233934.2,bwmulder.20041018224835,"><vh>@thin mod_shadow.py</vh></v>
+<v t="ekr.20041019072849" a="TV"><vh>Note:  word_export.ini mysteriously changed</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -7386,6 +7395,217 @@ It would be quite dangerous to create a dictionary in an @asis node here: only t
 - Copy aspell.pyd to this directory
 
 ** python pyd compiled dlls are python version specific.</t>
+<t tx="ekr.20040828105233">@first # -*- coding: utf-8 -*-
+@language python
+@tabwidth -4
+
+"""
+Translate a few menu items into Simplified Chinese
+本插件将部分Leo菜单翻译成简体中文
+   By Zhang Le &lt;ejoy@xinhuanet.com&gt;
+   
+"""
+
+# Chinese translation completed by Zhang Le, May 2004
+# based on the french_fm.py
+
+# NOTE: The accelerated key (&amp;) failed to work on Chinese text, probably because 
+# the width of one Chinese character is 2 not 1, which confuses Tk. I'm not sure 
+# whether this is a bug of Tk or a bug of Leo. Although I do not use &amp; in the 
+# Chinese menu, Tk places an underline below the first character of each menu
+# entry. Another bug in Tk?
+
+# Note 2 (EKR):  The menu names themselves did not translate on my XP machine.
+# All the headlines appear as "??".
+
+import leoPlugins
+import leoGlobals as g
+
+@others
+
+# Register the handlers...
+leoPlugins.registerHandler("menu1", onMenu)
+
+__version__ = "1.1" # Set version for the plugin handler.
+g.plugin_signon(__name__)</t>
+<t tx="ekr.20040828105233.1">def onMenu (tag,keywords):
+
+    c = keywords.get("c")
+    table = (
+        @others
+    )
+
+    # Call the convenience routine to do the work.
+    c.frame.menu.setRealMenuNamesFromTable(table)</t>
+<t tx="ekr.20040828105233.2">("File","File文件"),
+    ("New","新建"),
+    ("Open...","打开"),
+    ("Open With...","用程序打开..."),
+    ("Close","关闭"),
+    ("Save","保存"),
+    ("Save As","另存为..."),
+    ("Save To","另存到..."),
+    ("Revert To Saved","恢复到保存的文件"),
+    ("Recent Files...","最近访问的文件..."),
+        ("Clear Recent Files","清除最近访问文件列表"),
+    ("Read/Write...", "读取/写入..."),
+        ("Read Outline Only", "只读取大纲"),
+        ("Read @file Nodes", "读取 @file 结点"),
+        ("Write Dirty @file Nodes", "保存改动的 @file 结点"),
+        ("Write missing @file Nodes", "保存缺少的(missing) @file 结点"),
+        ("Write Outline Only", "仅保存大纲"),
+        ("Write @file Nodes", "保存 @file 结点"),
+        ("Write 4.x Derived Files", "保存 4.x 版本的文件"),
+        ("Write 3.x Derived Files", "保存 3.x 版本的文件"),
+    ("Tangle...", "Tangle 操作..."),
+        ("Tangle All", "全部 Tangle"),
+        ("Tangle Marked", "只 Tangle 书签结点"),
+        ("Tangle", "Tangle 当前结点"),
+    ("Untangle...", "Untangle 操作..."),
+        ("Untangle All", "全部 Untangle"),
+        ("Untangle Marked", "只 Untangle 书签结点"),
+        ("Untangle", "Untangle 当前结点"),
+    ("Import...", "导入..."),
+        ("Import Derived File", "导入生成的文件"),
+        ("Import To @file", "导入到 @file"),
+        ("Import To @root", "导入到 @root"),
+        ("Import CWEB Files", "导入 CWEB 文件"),
+        ("Import noweb Files", "导入 noweb 文件"),
+        ("Import Flattened Outline", "导入平坦 (Flattened) 大纲文件 (MORE 格式)"),
+    ("Export...", "导出..."),
+        ("Export Headlines", "导出标题 (Headlines)"),
+        ("Outline To CWEB", "导出大纲到 CWEB"),
+        ("Outline To Noweb", "导出大纲到 Noweb"),
+        ("Flatten Outline", "导出平坦 (Flattened) 大纲 (MORE 格式)"),
+        ("Remove Sentinels", "删除导出文件中的特殊大纲标记 (Sentinelles)"),
+        ("Weave", "导出为 Weave 格式 (Listing)"),
+        ("Export all to AsciiDoc", "全部导出为 AsciiDoc 文件"),
+        ("Export current tree to AsciiDoc", "将当前树导出为 AsciiDoc 文件"),
+    ("Exit","退出"),
+</t>
+<t tx="ekr.20040828105233.3">("Edit","Edit编辑"),
+    ("Undo Typing","撤销键入"),
+    ("Undo Cut Node","撤销剪切结点"),
+    ("Redo Typing","重做键入"),
+    ("Can't Undo", "无法撤销"),
+    ("Can't Redo", "无法重做"),
+    ("Cut", "剪切"),
+    ("Copy", "复制"),
+    ("Paste", "粘贴"),
+    ("Delete", "删除"),
+    ("Select All", "全选"),
+    ("Edit Body...", "编辑文本域..."),
+        ("Extract Section", "Extract Section"),
+        ("Extract Names", "Extract Names"),
+        ("Extract", "Extract"),
+        ("Convert All Blanks", "Convert All Blanks"),
+        ("Convert All Tabs", "Convert All Tabs"),
+        ("Convert Blanks", "Convert Blanks"),
+        ("Convert Tabs", "Convert Tabs"),
+        ("Insert Body Time/Date", "插入当前日期/时间"),
+        ("Reformat Paragraph", "重新格式化段落"),
+        ("Indent", "增加缩进"),
+        ("Unindent", "减少缩进"),
+        ("Match Brackets", "括号匹配"), #  &lt;({["), #EKR
+    ("Edit Headline...", "编辑标题..."),
+        ("Edit Headline", "编辑标题"),
+        ("End Edit Headline", "结束编辑标题"),
+        ("Abort Edit Headline", "放弃编辑标题"),
+        ("Insert Headline Time/Date", "插入当前日期/时间"),
+        ("Toggle Angle Brackets", "切换尖括号标记"),
+    ("Find...", "查找..."),
+        ("Find Panel", "查找对话框"),
+        ("Find Next", "查找下一个"),
+        ("Find Previous", "查找前一个"),
+        ("Replace", "替换"),
+        ("Replace, Then Find", "替换后查找"),
+    ("Go To Line Number", "跳转到行..."),
+    ("Execute Script", "执行Python脚本"),
+    ("Set Font...", "设置字体..."),
+    ("Set Colors...", "设置颜色..."),
+    ("Show Invisibles", "显示不可见域"),
+    ("Hide Invisibles", "隐藏不可见域"),
+    ("Preferences", "偏好设置"),
+</t>
+<t tx="ekr.20040828105233.4">("Outline", "Outline大纲"),
+    ("Cut Node", "剪切结点"),
+    ("Copy Node", "拷贝结点"),
+    ("Paste Node", "粘贴结点"),
+    ("Delete Node", "删除结点"),
+    ("Insert Node", "插入结点"),
+    ("Clone Node", "克隆结点"),
+    ("Sort Children", "排序孩子结点"),
+    ("Sort Siblings", "排序兄弟结点"),
+    ("Check Outline", "校验大纲"),
+    ("Dump Outline", "大纲转储 (Dump)"),
+    ("Hoist", "提升结点 (Hoist)"),
+    ("De-Hoist", "下降结点 (De-Hoist)"),
+    ("Expand/Contract...", "扩展/收缩"),
+        ("Contract All", "全部收缩"),
+        ("Contract Node", "收缩当前结点"),
+        ("Contract Parent", "收缩父结点"),
+        ("Expand Prev Level", "扩展到上一级"),
+        ("Expand Next Level", "扩展到下一级"),
+        ("Expand To Level 1", "扩展到第1级"),
+        ("Expand To Level 2", "扩展到第2级"),
+        ("Expand To Level 3", "扩展到第3级"),
+        ("Expand To Level 4", "扩展到第4级"),
+        ("Expand To Level 5", "扩展到第5级"),
+        ("Expand To Level 6", "扩展到第6级"),
+        ("Expand To Level 7", "扩展到第7级"),
+        ("Expand To Level 8", "扩展到第8级"),
+        ("Expand All", "扩展全部"),
+        ("Expand Node", "扩展当前结点"),
+    ("Move...", "移动..."),
+        ("Move Down", "下移"),
+        ("Move Left", "左移"),
+        ("Move Right", "右移"),
+        ("Move Up", "上移"),
+        ("Promote", "Promote"),
+        ("Demote", "Demote"),
+    ("Mark/Unmark...", "书签功能..."),
+        ("Mark", "标记书签"),
+        ("Unmark", "删除书签"),
+        ("Mark Subheads", "标记子标题"),
+        ("Mark Changed Items", "标记已修改的结点"),
+        ("Mark Changed Roots", "标记已修改的根结点 (Roots)"),
+        ("Mark Clones", "标记克隆"),
+        ("Unmark All", "删除所有书签"),
+    ("Go To...", "跳转到..."),
+        ("Go Back", "后退"),
+        ("Go Forward", "前进"),
+        ("Go To Next Marked", "跳转到下一个书签"),
+        ("Go To Next Changed", "跳转到下一个已修改结点"),
+        ("Go To Next Clone", "跳转到下一个克隆结点"),
+        ("Go To First Node", "跳转到第一个结点"),
+        ("Go To Last Node", "跳转到最后一个结点"),
+        ("Go To Parent", "跳转到父结点"),
+        ("Go To Prev Sibling", "跳转到上一个兄弟结点"),
+        ("Go To Next Sibling", "跳转到下一个兄弟结点"),
+        ("Go To Prev Visible", "跳转到上一个可见结点"),
+        ("Go To Next Visible", "跳转到下一个可见结点"),
+        ("Go To Prev Node", "跳转到上一结点"),
+        ("Go To Next Node", "跳转到下一结点"),</t>
+<t tx="ekr.20040828105233.5">("Plugins", "Plugins插件"),
+    ("chinese", "Chinese (汉化)"),
+</t>
+<t tx="ekr.20040828105233.6">("Window", "Window窗口"),
+    ("Equal Sized Panes", "使各面板大小相等"),
+    ("Toggle Active Pane", "切换激活面板"),
+    ("Toggle Split Direction", "切换面板分割方向"),
+    ("Cascade", "级联排列窗体"),
+    ("Minimize All", "全部最小化"),
+    ("Open Compare Window", "打开文件比较窗口..."),
+    ("Open Python Window", "打开Python集成环境(IDLE)..."),
+</t>
+<t tx="ekr.20040828105233.7">("Help", "Help帮助"),
+    ("About Leo...", "关于Leo..."),
+    ("Online Home Page", "访问在线主页"),
+    ("Open Online Tutorial", "访问在线教程"),
+    ("Open Offline Tutorial", "访问离线教程 (CHM文件)"),
+    ("Open LeoDocs.leo", "打开 LeoDocs.leo"),
+    ("Open LeoConfig.leo", "打开 LeoConfig.leo"),
+    ("Apply Settings", "应用设置")</t>
 <t tx="ekr.20040915073259"></t>
 <t tx="ekr.20040915144649"></t>
 <t tx="ekr.20040915144649.1">@killcolor
@@ -8706,6 +8926,8 @@ frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
 - Tell the name of the plugin that contains the failed import.
 - Give only one message per plugin.</t>
 <t tx="ekr.20041017103205">Bug:  Hitting escape followed by control key inserts text.</t>
+<t tx="ekr.20041019072632"></t>
+<t tx="ekr.20041019072849"></t>
 <t tx="pap.20041006194759">def getDetails(self, text):
     """Get the details of the plugin
     
