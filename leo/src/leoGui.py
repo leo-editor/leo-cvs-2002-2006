@@ -294,7 +294,8 @@ class leoGui:
     #@+node:ekr.20031218072017.3736:Font
     def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
         
-        self.oops()
+        pass
+        # self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3736:Font
     #@+node:ekr.20031218072017.3737:Focus
