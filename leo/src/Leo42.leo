@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4466" clone_windows="0"/>
 <globals body_outline_ratio="0.4888392857142857">
-	<global_window_position top="21" left="176" height="896" width="944"/>
+	<global_window_position top="44" left="290" height="896" width="944"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4841,7 +4841,7 @@
 <v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
 <v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
+<v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040306214240.3"><vh>p.hasChildren</vh></v>
 <v t="ekr.20031218072017.2896"><vh>c.sortTopLevel</vh>
 <v t="ekr.20031218072017.2897"><vh>&lt;&lt; Set the undo info for sortTopLevel &gt;&gt;</vh></v>
@@ -5358,26 +5358,75 @@
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="ekr.20040323084605"><vh>(Speeded up menu enablers)</vh>
+<v t="ekr.20040323171453"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3776"><vh>Gui-independent menu enablers</vh>
+<v t="ekr.20031218072017.3777"><vh>updateAllMenus</vh></v>
+<v t="ekr.20031218072017.3778"><vh>updateFileMenu</vh></v>
+<v t="ekr.20031218072017.836"><vh>updateEditMenu</vh>
+<v t="ekr.20040130164211"><vh>&lt;&lt; enable cut/paste &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3779"><vh>updateOutlineMenu</vh>
+<v t="ekr.20040131171020"><vh>&lt;&lt; enable top level outline menu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.1"><vh>&lt;&lt; enable expand/Contract submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.2"><vh>&lt;&lt; enable move submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.3"><vh>&lt;&lt; enable go to submenu &gt;&gt;</vh></v>
+<v t="ekr.20040131171020.4"><vh>&lt;&lt; enable mark submenu &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3780"><vh>hasSelection</vh></v>
+</v>
+<v t="ekr.20031218072017.2955"><vh>Enabling Menu Items</vh>
+<v t="ekr.20040323172420"><vh>Slow routines: no longer used</vh>
+<v t="ekr.20031218072017.2966"><vh>canGoToNextDirtyHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2967"><vh>canGoToNextMarkedHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2968"><vh>canMarkChangedHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2969"><vh>canMarkChangedRoots (slow)</vh></v>
+</v>
+<v t="ekr.20040131170659"><vh>canClone (new for hoist)</vh></v>
+<v t="ekr.20031218072017.2956"><vh>canContractAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2957"><vh>canContractAllSubheads</vh></v>
+<v t="ekr.20031218072017.2958"><vh>canContractParent</vh></v>
+<v t="ekr.20031218072017.2959"><vh>canContractSubheads</vh></v>
+<v t="ekr.20031218072017.2960"><vh>canCutOutline &amp; canDeleteHeadline</vh></v>
+<v t="ekr.20031218072017.2961"><vh>canDemote</vh></v>
+<v t="ekr.20031218072017.2962"><vh>canExpandAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2963"><vh>canExpandAllSubheads</vh></v>
+<v t="ekr.20031218072017.2964"><vh>canExpandSubheads</vh></v>
+<v t="ekr.20031218072017.2287"><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
+<v t="ekr.20031218072017.2965"><vh>canFindMatchingBracket</vh></v>
+<v t="ekr.20040303165342"><vh>canHoist &amp; canDehoist</vh></v>
+<v t="ekr.20031218072017.2970"><vh>canMoveOutlineDown (changed for hoist)</vh></v>
+<v t="ekr.20031218072017.2971"><vh>canMoveOutlineLeft (changed for hoist)</vh></v>
+<v t="ekr.20031218072017.2972"><vh>canMoveOutlineRight (changed for hoist)</vh></v>
+<v t="ekr.20031218072017.2973"><vh>canMoveOutlineUp (changed for hoist)</vh></v>
+<v t="ekr.20031218072017.2974"><vh>canPasteOutline</vh></v>
+<v t="ekr.20031218072017.2975"><vh>canPromote</vh></v>
+<v t="ekr.20031218072017.2976"><vh>canRevert</vh></v>
+<v t="ekr.20031218072017.2977"><vh>canSelect....</vh></v>
+<v t="ekr.20031218072017.2978"><vh>canShiftBodyLeft/Right</vh></v>
+<v t="ekr.20031218072017.2979"><vh>canSortChildren, canSortSiblings</vh></v>
+<v t="ekr.20031218072017.2980"><vh>canUndo &amp; canRedo</vh></v>
+<v t="ekr.20031218072017.2981"><vh>canUnmarkAll</vh></v>
+</v>
+</v>
 </v>
 </v>
 <v t="ekr.20040228154544"><vh>(Transition to 4.2)</vh>
 <v t="ekr.20040117181936"><vh>To do</vh>
-<v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
-<v t="ekr.20040323090456.1"><vh>Clean up isAnyAtFileNode</vh></v>
-<v t="ekr.20040323084434"><vh>Add granularity setting for undo</vh></v>
-<v t="ekr.20040323084434.1"><vh>redraw is being called too many times</vh></v>
-<v t="ekr.20040318150305"><vh>Remove back quotes</vh></v>
-<v t="ekr.20040318150305.1"><vh>Add unchanged message when saving .leo file doesn't change it.</vh></v>
-<v t="ekr.20040315073818" a="M"><vh>create find-script to complete transition</vh></v>
-<v t="ekr.20040314110927.2"><vh>Test all commands</vh>
-<v t="ekr.20040312092455.1"><vh>(Fix bug in Go To Line Number)</vh></v>
-<v t="ekr.20040312021644"><vh>Test tangle/untangle commands</vh></v>
-<v t="ekr.20040315073818.1"><vh>Find commands (unit tests)</vh></v>
+<v t="ekr.20040321104014"><vh>  Big picture</vh></v>
+<v t="ekr.20040323084434" a="M"><vh>Add granularity setting for undo</vh></v>
+<v t="ekr.20040323170225"><vh>Bugs</vh>
+<v t="ekr.20040323084434.1" a="M"><vh>redraw is being called too many times</vh></v>
+<v t="ekr.20040319102251"><vh>Minor import bug</vh></v>
+<v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
+<v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
 </v>
+<v t="ekr.20040323170225.1"><vh>Cleanup</vh>
+<v t="ekr.20040323090456.1"><vh>Clean up isAnyAtFileNode</vh></v>
+<v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
+<v t="ekr.20040318150305"><vh>Remove back quotes</vh></v>
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
-<v t="ekr.20040314110927"><vh>AT END OF TRANSITION</vh>
-<v t="ekr.20040311124726.2"><vh>Re-enable p.__getattr__ DO THIS LAST</vh></v>
-<v t="ekr.20040310085820"><vh>Write script to use p proxy methods</vh></v>
+<v t="ekr.20040315073818" a="M"><vh>create find-script to complete transition</vh></v>
 <v t="ekr.20040312092039"><vh>Convert all code DO THIS LATER</vh>
 <v t="ekr.20040312094553" a="M"><vh>Change v to p</vh></v>
 <v t="ekr.20040311165928" a="M"><vh>Search for root/currentVnode SHOWS WHAT NEEDS TO BE CHANGED</vh></v>
@@ -5385,18 +5434,15 @@
 <v t="ekr.20040312073921.3"><vh>Use iterators: search for .threadnext</vh></v>
 </v>
 </v>
-<v t="ekr.20040310100905"><vh>Bugs and feature requests</vh>
-<v t="ekr.20040319102251"><vh>Minor import bug</vh></v>
+<v t="ekr.20040323170225.2"><vh>Features</vh>
+<v t="ekr.20040318150305.1"><vh>Add unchanged message when saving .leo file doesn't change it.</vh></v>
 <v t="ekr.20040317050439" a="M"><vh>Commands to add user-specified attributes and icons</vh></v>
 <v t="ekr.20040315060557"><vh>declone command</vh></v>
 <v t="ekr.20040311022923"><vh>Make sentinel name in @-node optional</vh></v>
-<v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
-<v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
 <v t="ekr.20040310092400.1"><vh>Use calltips in outline pane</vh></v>
 </v>
-<v t="ekr.20040321104014"><vh>  Big picture</vh></v>
 </v>
-<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
+<v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040301192211"><vh>What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
 <v t="ekr.20040302083805"><vh>Added app.sharedNodes and app.disableSave</vh></v>
@@ -5517,7 +5563,7 @@
 <v t="ekr.20040228094013"><vh> ctor &amp; other special methods...</vh>
 <v t="ekr.20031218072017.892"><vh>p.__init__</vh></v>
 <v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
-<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
+<v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
 <v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
 <v t="ekr.20040310153624"><vh>p.dump</vh></v>
@@ -5699,7 +5745,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -7998,7 +8044,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040323155951,ekr.20040313151511,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040323155951.1,ekr.20040323161837,ekr.20040323162707,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20040303165342,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
+<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040323155951,ekr.20040313151511,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040323155951.1,ekr.20040323161837,ekr.20040323162707,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20040303165342,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
 <v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -8290,6 +8336,12 @@
 <v t="ekr.20031218072017.2954"><vh>redraw &amp; repaint</vh></v>
 </v>
 <v t="ekr.20031218072017.2955"><vh>Enabling Menu Items</vh>
+<v t="ekr.20040323172420"><vh>Slow routines: no longer used</vh>
+<v t="ekr.20031218072017.2966"><vh>canGoToNextDirtyHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2967"><vh>canGoToNextMarkedHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2968"><vh>canMarkChangedHeadline (slow)</vh></v>
+<v t="ekr.20031218072017.2969"><vh>canMarkChangedRoots (slow)</vh></v>
+</v>
 <v t="ekr.20040131170659"><vh>canClone (new for hoist)</vh></v>
 <v t="ekr.20031218072017.2956"><vh>canContractAllHeadlines</vh></v>
 <v t="ekr.20031218072017.2957"><vh>canContractAllSubheads</vh></v>
@@ -8302,11 +8354,7 @@
 <v t="ekr.20031218072017.2964"><vh>canExpandSubheads</vh></v>
 <v t="ekr.20031218072017.2287"><vh>canExtract, canExtractSection &amp; canExtractSectionNames</vh></v>
 <v t="ekr.20031218072017.2965"><vh>canFindMatchingBracket</vh></v>
-<v t="ekr.20031218072017.2966"><vh>canGoToNextDirtyHeadline</vh></v>
-<v t="ekr.20031218072017.2967"><vh>canGoToNextMarkedHeadline</vh></v>
 <v t="ekr.20040303165342"><vh>canHoist &amp; canDehoist</vh></v>
-<v t="ekr.20031218072017.2968"><vh>canMarkChangedHeadline</vh></v>
-<v t="ekr.20031218072017.2969"><vh>canMarkChangedRoots</vh></v>
 <v t="ekr.20031218072017.2970"><vh>canMoveOutlineDown (changed for hoist)</vh></v>
 <v t="ekr.20031218072017.2971"><vh>canMoveOutlineLeft (changed for hoist)</vh></v>
 <v t="ekr.20031218072017.2972"><vh>canMoveOutlineRight (changed for hoist)</vh></v>
@@ -8611,7 +8659,7 @@
 <v t="ekr.20040228094013"><vh> ctor &amp; other special methods...</vh>
 <v t="ekr.20031218072017.892"><vh>p.__init__</vh></v>
 <v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
-<v t="ekr.20040117170612"><vh>p.__getattr__  (used only for p.t) ON (must be ON if use_plugins)</vh></v>
+<v t="ekr.20040117170612"><vh>p.__getattr__  ON:  must be ON if use_plugins</vh></v>
 <v t="ekr.20040117173448"><vh>p.__nonzero__</vh></v>
 <v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
 <v t="ekr.20040310153624"><vh>p.dump</vh></v>
@@ -9011,7 +9059,7 @@
 <v t="ekr.20040321064134.5"><vh>createNextChild (thin)</vh></v>
 </v>
 </v>
-<v t="ekr.20040323084605" a="V"><vh>(Speed up menu enablers)</vh></v>
+<v t="ekr.20040323173147"><vh>(Make sure selecting clones works)</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -44803,12 +44851,17 @@ def expandLevel9 (self): self.expandToLevel(9)
 	v = current.threadNext()
 	while v and not v.isDirty():
 		v = v.threadNext()
+
 	if not v:
+		# Wrap around.
 		v = c.rootVnode()
 		while v and not v.isDirty():
 			v = v.threadNext()
+
 	if v:
-		c.selectVnode(v)</t>
+		c.selectVnode(v)
+	else:
+		g.es("done",color="blue")</t>
 <t tx="ekr.20031218072017.2918">def goToNextMarkedHeadline(self):
 
 	c = self ; current = c.currentVnode()
@@ -44817,11 +44870,14 @@ def expandLevel9 (self): self.expandToLevel(9)
 	v = current.threadNext()
 	while v and not v.isMarked():
 		v = v.threadNext()
+
 	if v:
 		c.beginUpdate()
 		c.endEditing()
 		c.selectVnode(v)
-		c.endUpdate()</t>
+		c.endUpdate()
+	else:
+		g.es("done",color="blue")</t>
 <t tx="ekr.20031218072017.2919">def goToNextSibling(self):
 	
 	c = self
@@ -61978,7 +62034,7 @@ Python 2.3.2 on Linux.
 
 	return true
 </t>
-<t tx="ekr.20040117170612">if 0: # Good for compatibility, bad for finding conversion problems.
+<t tx="ekr.20040117170612">if 1: # Good for compatibility, bad for finding conversion problems.
 
 	def __getattr__ (self,attr):
 		
@@ -62010,7 +62066,12 @@ def __nonzero__ ( self):
 	"""Return true if a position is valid."""
 
 	return self.v is not None</t>
-<t tx="ekr.20040117181936">@nocolor</t>
+<t tx="ekr.20040117181936">@nocolor
+
+Tests:
+
+- Test tangle/untangle commands.
+- Create unit tests for Find commands.</t>
 <t tx="ekr.20040118090055">https://sourceforge.net/forum/message.php?msg_id=2380238
 By: dthein
 
@@ -63757,8 +63818,9 @@ enable(menu,"Go Back",c.beadPointer &gt; 1)
 enable(menu,"Go Forward",c.beadPointer + 1 &lt; len(c.beadList))
 enable(menu,"Go To Prev Visible",c.canSelectVisBack())
 enable(menu,"Go To Next Visible",c.canSelectVisNext())
-enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
-enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+if 0: # These are too slow.
+	enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+	enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
 enable(menu,"Go To Next Clone",isCloned)
 enable(menu,"Go To Prev Node",c.canSelectThreadBack())
 enable(menu,"Go To Next Node",c.canSelectThreadNext())
@@ -63769,10 +63831,10 @@ enable(menu,"Go To Next Sibling",hasNext)</t>
 label = g.choose(isMarked,"Unmark","Mark")
 frame.menu.setMenuLabel(menu,0,label)
 enable(menu,"Mark Subheads",hasChildren)
-enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
-enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
-enable(menu,"Mark Clones",isCloned)
-</t>
+if 0: # These are too slow.
+	enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+	enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+enable(menu,"Mark Clones",isCloned)</t>
 <t tx="ekr.20040201061928"># Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
 from leoGlobals import true,false
@@ -66272,12 +66334,6 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 		p.dump(p,label="p")
 		if parent: p.dump(parent,label="parent")</t>
 <t tx="ekr.20040310062415.1"></t>
-<t tx="ekr.20040310085820">Script to change p.v.x to p.x for all proxy methods x.w
-
-**** Warning: do not use this script in leoNodes.py !!
-
-Also p.v.t to p.t ?
-</t>
 <t tx="ekr.20040310091144">@nocolor
 
 By: dalcolmo ( Josef Dalcolmo ) 
@@ -66355,7 +66411,6 @@ Read the comments in the code for potential drawbacks on some platforms.
 
 Regards, Myles.
 </t>
-<t tx="ekr.20040310100905"></t>
 <t tx="ekr.20040310104639"></t>
 <t tx="ekr.20040310153624">def dumpLink (self,link):
 	return g.choose(link,link,"&lt;none&gt;")
@@ -66408,9 +66463,6 @@ p.x for most methods v.x.
 
 p.t ivar simulated by p.__getattr__
 </t>
-<t tx="ekr.20040311124726.2">This masks convertion problems.
-
-It is useful for compatibility.</t>
 <t tx="ekr.20040311133449"></t>
 <t tx="ekr.20040311143141"></t>
 <t tx="ekr.20040311160938"></t>
@@ -66438,7 +66490,6 @@ def clearAllVisited (self):
 	for p in self.allNodes_iter():
 		p.clearVisited()</t>
 <t tx="ekr.20040312015908"></t>
-<t tx="ekr.20040312021644"></t>
 <t tx="ekr.20040312024615">@ This was a nasty one.  The problem was in linkAsRoot, not linkAfter.</t>
 <t tx="ekr.20040312073921"></t>
 <t tx="ekr.20040312073921.1"></t>
@@ -66454,7 +66505,6 @@ def clearAllVisited (self):
 	return c.rootPosition().allNodes_iter(copy)
 </t>
 <t tx="ekr.20040312092039"></t>
-<t tx="ekr.20040312092455.1"></t>
 <t tx="ekr.20040312092455.2">@
 
 What I did:
@@ -66609,7 +66659,6 @@ While I was at it, I improved the code as follows:
 - The hoist plugin now dims/undims the buttons.
 
 @color</t>
-<t tx="ekr.20040314110927"></t>
 <t tx="ekr.20040314110927.1">@
 
 - All unit tests now pass with p.__getattr__ ON or OFF.
@@ -66619,7 +66668,6 @@ While I was at it, I improved the code as follows:
 
 - Added verbose and unittest params to c.checkOutline:
 	- Don't run long tests during unit testing.</t>
-<t tx="ekr.20040314110927.2"></t>
 <t tx="ekr.20040314111426"></t>
 <t tx="ekr.20040315023430">@
 - convertTreeToString and moreHead can't be vnode methods because they uses level().
@@ -66725,7 +66773,6 @@ change v to p
 Look for exceptions.
 	
 	</t>
-<t tx="ekr.20040315073818.1"></t>
 <t tx="ekr.20040316075317"></t>
 <t tx="ekr.20040316075317.1"></t>
 <t tx="ekr.20040317050439">&gt; Any thoughts on Chapters?  I assume this probably has been presented before under a different name. :)
@@ -67233,7 +67280,7 @@ The fix was in findAllPotentiallyDirtyNodes:
 	- Added a code to add v._parent to the list of nodes.</t>
 <t tx="ekr.20040323084434"></t>
 <t tx="ekr.20040323084434.1">in select, probably</t>
-<t tx="ekr.20040323084605">Only scan the file once!</t>
+<t tx="ekr.20040323084605"></t>
 <t tx="ekr.20040323090456"></t>
 <t tx="ekr.20040323090456.1"></t>
 <t tx="ekr.20040323090456.2">@nocolor
@@ -67327,5 +67374,32 @@ if count % 2000 == 0:
 		assert(id(v.t._firstChild) == id(childv))</t>
 <t tx="ekr.20040323164902"></t>
 <t tx="ekr.20040323164902.1"></t>
+<t tx="ekr.20040323170225"></t>
+<t tx="ekr.20040323170225.1"></t>
+<t tx="ekr.20040323170225.2"></t>
+<t tx="ekr.20040323171453">@nocolor
+
+The following calls slow down the menu enablers too much:
+
+@color
+
+enable(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
+enable(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+
+enable(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
+enable(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+
+@nocolor
+
+These all scan the entire file.  We have two choices:
+	
+1. scan the entire file once.
+
+2. Always enable the above 4 commands.
+	- Add a log message for these commands if there is no node found.
+	
+Choice two is plenty good enough.</t>
+<t tx="ekr.20040323172420"></t>
+<t tx="ekr.20040323173147"></t>
 </tnodes>
 </leo_file>
