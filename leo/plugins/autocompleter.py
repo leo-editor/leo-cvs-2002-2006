@@ -117,6 +117,8 @@ __version__ = ".73"
 #     - Added init function.
 # .74 EKR:
 #     - Changed 'start2' hook to 'new' hook.
+# .75 EKR:
+#     - Disable scan during unit testing.
 #@-at
 #@nonl
 #@-node:ekr.20041017102904:<<version history>>
@@ -435,15 +437,14 @@ def initialScan (tag,keywords):
     
     # Use a thread to do the initial scan so as not to interfere with the user.            
     def scan():
-        
         #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
-        readOutline( c )
+        # During unit testing c gets destroyed before the scan finishes.
+        if not g.app.unitTesting:
+            readOutline( c )
         
     t = threading.Thread( target = scan )
     t.setDaemon(True)
     t.start()
-
-
 #@-node:ekr.20041017043622.10:initialScan
 #@+node:mork.20041105115626:has read config file meths
 #These functions determine if the config and language files have been read or not.  No need to read it more than once.
