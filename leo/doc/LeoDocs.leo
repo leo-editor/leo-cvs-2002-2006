@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="10166" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="10380" clone_windows="0"/>
 <globals body_outline_ratio="0.427033492823">
 	<global_window_position top="43" left="218" height="836" width="1007"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,7 +80,51 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="EKR.20040601084317" a="TV"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
+<v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
+<v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
+<v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
+<v t="EKR.20040601084317.142"><vh>Fixed problems saving unknownAttribute field</vh></v>
+<v t="EKR.20040601102115"><vh>Fixed unicode problem in the Dump Outline command</vh></v>
+</v>
+<v t="EKR.20040601101227"><vh>New Features</vh>
+<v t="EKR.20040601101227.1"><vh>Leo ignores all directives in @all trees</vh></v>
+<v t="EKR.20040601101430.1"><vh>@+-middle sentinels allow sections to be defined in grandchildren</vh></v>
+<v t="EKR.20040601101510"><vh>@clone sentinel allows siblings to be cloned</vh></v>
+<v t="EKR.20040601101547"><vh>Created @thin, @nosent, @noref and @asis abbreviations</vh>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+</v>
+<v t="EKR.20040601084317.102"><vh>Made undo extensible</vh></v>
+<v t="EKR.20040601102703"><vh>Started work on simple new undo scheme</vh></v>
+<v t="EKR.20040601084317.161"><vh>Created new c, p, v iterators</vh></v>
+</v>
+<v t="EKR.20040601102808"><vh>Known bugs</vh></v>
+</v>
+</v>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="EKR.20040601084317"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
+<v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
+<v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
+<v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
+<v t="EKR.20040601084317.142"><vh>Fixed problems saving unknownAttribute field</vh></v>
+<v t="EKR.20040601102115"><vh>Fixed unicode problem in the Dump Outline command</vh></v>
+</v>
+<v t="EKR.20040601101227"><vh>New Features</vh>
+<v t="EKR.20040601101227.1"><vh>Leo ignores all directives in @all trees</vh></v>
+<v t="EKR.20040601101430.1"><vh>@+-middle sentinels allow sections to be defined in grandchildren</vh></v>
+<v t="EKR.20040601101510"><vh>@clone sentinel allows siblings to be cloned</vh></v>
+<v t="EKR.20040601101547"><vh>Created @thin, @nosent, @noref and @asis abbreviations</vh>
+<v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
+</v>
+<v t="EKR.20040601084317.102"><vh>Made undo extensible</vh></v>
+<v t="EKR.20040601102703"><vh>Started work on simple new undo scheme</vh></v>
+<v t="EKR.20040601084317.161"><vh>Created new c, p, v iterators</vh></v>
+</v>
+<v t="EKR.20040601102808"><vh>Known bugs</vh></v>
+</v>
 <v t="EKR.20040518070558"><vh>4.2 a2</vh>
 <v t="EKR.20040518070940.5"><vh>Implemented @file-thin</vh></v>
 <v t="EKR.20040518070824"><vh>Fixed bugs</vh>
@@ -137,8 +181,6 @@
 </v>
 <v t="EKR.20040518075457"><vh>Dangers of @file-thin</vh></v>
 </v>
-</v>
-<v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -1082,7 +1124,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
@@ -1306,6 +1348,91 @@ How to recover the data:
 <t tx="EKR.20040524104904">@nocolor
 
 This outline contains the latest documentation available for Leo.</t>
+<t tx="EKR.20040524104904.92">An @asis tree is a tree whose root headline starts with @asis &lt;filename&gt;.  Similarly, for @noref and @nosent trees.
+
+New in 4.2:  The following terms are equivalent.  The first form is preferred in each case.
+
+@asis, @file-asis, @silent
+@nosent, @file-nosent and @nosentinelsfile
+@noref, @file-noref and @rawfile
+
+You can get any combination of sentinels/no sentinels and references/no references using @file, @nosent, @noref and @asis trees:
+
+                 Derived files        Sections and 
+Type of tree   contain sentinels?   @others expanded?
+------------   ------------------   -----------------
+       @file   yes                  yes
+     @nosent   no                   yes
+      @noref   yes                  no
+       @asis   no                   no
+
+Leo can not update the outline from changes made from derived files unless those files contain sentinels.  The primary source for @nosent and @asis trees are the outlines from which those files were derived.
+
+Leo creates files derived from @noref and @asis trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. However, Leo recognizes the @ignore directive in the _ancestors_ of @noref or @asis nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
+
+Notes:
+
+1. When writing @noref trees, Leo writes only the @+leo, @-leo, @+node, @-node, @+body and @-body sentinels.
+
+2. Within @asis trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
+
+3. Files derived from @asis trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.</t>
+<t tx="EKR.20040601084317">Leo 4.2 alpha 3           June 1, 2004
+
+This version fixes completes the essential features of version 4.2.  All known incompletions and bugs involving shared nodes and Leo's new file format have been fixed.  BTW, this version of Leo completes Leaps 201 and 202.
+
+It should be safe to use this version for collaboration between Leo's developers.  I hereby encourage people to start using cvs for collaboration.  Only by doing so will we discover any possible problems.
+
+The only item that must be completed before releasing 4.2 beta is fixing the Go To Line Number command so it supports thin derived files.
+
+There are many known bugs in this version: most are minor bugs that have been around for a long time.  All known bugs will be fixed by the first release candidate.  See the to-do list in LeoPy.leo for the complete list.
+
+The highlights of this version:
+
+- All features of @file-thin are now complete and appear to be stable.
+	- Leo ignores all directives within the range of the @all directive.
+	- The @+middle and @-middle sentinels allow sections to be defined in any descendant node.
+	- The @clone sentinel marks duplicate cloned siblings.
+- The beginnings of a new undo scheme are in place.
+- @thin, @nosent, @noref and @asis are abbreviations for @file-thin, @file-nosent, @file-noref and @file-asis.
+- Created new iterators that return lists of vnodes and tnodes, including iterators that remove all duplicates from those lists.</t>
+<t tx="EKR.20040601084317.2"></t>
+<t tx="EKR.20040601084317.99">This happened after write errors such as orphan nodes.</t>
+<t tx="EKR.20040601084317.102">Added u.registerUndoHandlers.
+
+This will become largely unnecessary in the new undo scheme.  It's good to have though.</t>
+<t tx="EKR.20040601084317.142">When writing .leo files Leo now pickle's and hexlify's all data in the v.unknownAttribute and t.unknownAttribute dictionaries.  When reading .leo files Leo does the reverse.
+
+Leo ignores all elements in these dictionaries if some element can not be pickled.</t>
+<t tx="EKR.20040601084317.161">I have fallen madly in love with generators.  The following new iterators are defined with generators.
+
+c.all_positions_iter
+c.all_tnodes_iter
+c.all_vnodes_iter
+c.all_unique_tnodes_iter
+c.all_unique_vnodes_iter
+
+p.tnodes_iter
+p.vnodes_iter
+p.unique_tnodes_iter
+p.unique_vnodes_iter
+
+v.self_and__subtree_iter
+v.self_and_unique_subtree_iter</t>
+<t tx="EKR.20040601101118">If the copied node was an @thin or @file-thin node node only the root node was copied.</t>
+<t tx="EKR.20040601101227"></t>
+<t tx="EKR.20040601101227.1"></t>
+<t tx="EKR.20040601101430">This bug exists in 4.1 final.  Leo did not properly show the found text in headlines.  The fix was in the code that redraws the screen, not in the find/change code itself.</t>
+<t tx="EKR.20040601101430.1"></t>
+<t tx="EKR.20040601101510"></t>
+<t tx="EKR.20040601101547"></t>
+<t tx="EKR.20040601102115"></t>
+<t tx="EKR.20040601102703">The new scheme simply saves all inforamation in one or more vnodes and their associated tnodes.  This is a general scheme that can be used by almost any command.
+
+At present only the u.saveTree method exists.  Coming soon, u.saveNode, u.saveNodeAndChildren and u.saveListOfNodes.</t>
+<t tx="EKR.20040601102808">See the to-do list in LeoPy.leo for a list of known bugs in this version.
+
+None of these bugs is serious:  I consider this version to be suitable for day-to-day work.</t>
 <t tx="edream.110203163054">@nocolor
 
 Leo is:

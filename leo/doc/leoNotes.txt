@@ -5440,8 +5440,64 @@ if os.path.exists(targetfilename):
 #@-node:EKR.20040505090056.48:<< make backup file >>
 #@-node:EKR.20040505090056.47:write_if_changed
 #@-node:EKR.20040505090056:From perfect import script
-#@+node:EKR.20040526093044:From undo class
-#@+node:EKR.20040526082333:old undo/redo code
+#@+node:EKR.20040528080541:From undo
+#@+node:ekr.20031218072017.3324:t.extraAttributes & setExtraAttributes (no longer used)
+def extraAttributes (self):
+
+	try:    return self.unknownAttributes
+	except: return None
+	
+def setExtraAttributes (self,attributes):
+	
+	if attributes != None:
+		self.unknownAttributes = attributes
+#@nonl
+#@-node:ekr.20031218072017.3324:t.extraAttributes & setExtraAttributes (no longer used)
+#@+node:ekr.20031218072017.3358:v.extraAttributes & setExtraAttributes (no longer used)
+def extraAttributes (self):
+
+	# New in 4.2: tnode list is in tnode.
+	try:    tnodeList = self.t.tnodeList
+	except: tnodeList = None
+	
+	try:    unknownAttributes = self.unknownAttributes
+	except: unknownAttributes = None
+
+	return tnodeList, unknownAttributes
+	
+def setExtraAttributes (self,data):
+	
+	tnodeList, unknownAttributes = data
+
+	if tnodeList != None:
+		self.tnodeList = tnodeList
+
+	if unknownAttributes != None:
+		self.unknownAttributes = unknownAttributes
+#@nonl
+#@-node:ekr.20031218072017.3358:v.extraAttributes & setExtraAttributes (no longer used)
+#@+node:ekr.20031218072017.3618: u.saveTree, restoreExtraAttributes (no longer used)
+def saveTree (self,p):
+
+	new_tree = p.v.copyTree()
+	headlines = []
+	bodies = []
+	extraAttributes = []
+	for p in p.self_and_subtree_iter(copy=true):
+		g.trace(p.v)
+		headlines.append(p.headString())
+		bodies.append(p.bodyString())
+		data = p.v.extraAttributes(), p.v.t.extraAttributes()
+		extraAttributes.append(data)
+
+	return new_tree, headlines, bodies, extraAttributes
+
+def restoreExtraAttributes (self,v,extraAttributes):
+
+	v_extraAttributes, t_extraAttributes = extraAttributes
+	v.setExtraAttributes(v_extraAttributes)
+	v.t.setExtraAttributes(t_extraAttributes)
+#@-node:ekr.20031218072017.3618: u.saveTree, restoreExtraAttributes (no longer used)
 #@+node:EKR.20040526082333.1:from redo
 	else:
 		<< redo clone cases >>
@@ -5826,8 +5882,115 @@ elif undoType == "Change Headline":
 #@nonl
 #@-node:ekr.20031218072017.2047:<< undo typing cases >>
 #@-node:EKR.20040526080520:old undo cases
-#@-node:EKR.20040526082333:old undo/redo code
-#@-node:EKR.20040526093044:From undo class
+#@+node:EKR.20040528075936:v.copy
+def copy (self,copyLinks=true):
+	
+	"""Create an exact copy of a vnode, including a copy of its tnode."""
+	
+	v = self
+	new_t = v.t.copy(copyLinks=copyLinks)
+	new_v = vnode(v.c,new_t)
+
+
+	# Copy all ivars.
+	new_v.statusBits = v.statusBits
+	
+	if copyLinks:
+		new_v._parent = v._parent
+		new_v._next   = v._next
+		new_v._back   = v._back
+	else:
+		new_v._parent = new_v._next = new_v._back = None
+	
+	try: new_v.unknownAttributes = t.unknownAttributes
+	except: pass
+
+	return new_v
+#@nonl
+#@-node:EKR.20040528075936:v.copy
+#@+node:EKR.20040528074559:t.copy
+def copy (self,copyLinks=true):
+	
+	"""Create an exact copy of a tnode."""
+	
+	t = self ; new_t = tnode()
+	
+	# Essential fields.
+	new_t.cloneIndex   = t.cloneIndex
+	new_t.fileIndex    = t.fileIndex
+	new_t.headString   = t.headString
+	new_t.bodyString   = t.bodyString
+	new_t.vnodeList    = t.vnodeList[:] # Must be updated by caller.
+	new_t.statusBits   = t.statusBits
+	new_t._firstChild  = g.choose(copyLinks,t._firstChild,None)
+
+	try: new_t.unknownAttributes = t.unknownAttributes
+	except: pass
+
+	if 0: # probably not needed for undo.
+		new_t.insertSpot      = t.insertSpot
+		new_t.scrollBarSpot   = t.scrollBarSpot
+		new_t.selectionLength = t.selectionLength
+		new_t.selectionStart  = t.selectionStart
+		
+	# g.trace(new_t)
+	return new_t
+#@-node:EKR.20040528074559:t.copy
+#@+node:EKR.20040528151551.4:v.updateVnodeListsFrom
+def updateVnodeListsFrom (self,v2):
+	
+	"""Update the vnodeLists in a vnode tree copied from v2.
+	
+	Only data in the v1 tree should change. """
+	
+	v1 = self
+	
+	# Create correspondences between elements of v1 and v2.
+	nodes1 = [v for v in v1.self_and_subtree_iter()]
+	nodes2 = [v for v in v2.self_and_subtree_iter()]
+	assert(len(nodes1) == len(nodes2))
+	
+	# Doesn't handle clones properly...Or maybe it is copyTree that is the problem.
+		
+	# Replace in _v1_ vnodeList references to nodes in v2 by references to nodes in v1.
+	for v1 in nodes1:
+		vnodeList = v1.t.vnodeList
+		for v in vnodeList[:]:
+			try:
+				n = nodes2.index(v)
+				vnodeList.remove(v)
+				vnodeList.append(nodes1[n])
+				print "vnodeList replace",v,nodes1[n]
+			except ValueError:
+				pass # v not in nodes2.
+#@nonl
+#@-node:EKR.20040528151551.4:v.updateVnodeListsFrom
+#@+node:EKR.20040530114124.1:<< old code >> from v.copyTree
+"""Returns a free-standing copy of a vnode and all its descendents.
+	
+New in 4.2: we also make a copy of each tnode and we update v.t.vnodeList's."""
+
+### Doesn't join clones properly...
+
+new_v = old_v.copy(copyLinks=false)
+
+# Recursively copy and link all children.
+old_child = old_v.firstChild()
+n = 0
+while old_child:
+	new_child = old_child.copyTree(topLevel=false)
+	new_child.linkAsNthChild(new_v,n)
+	old_child = old_child.next()
+	n += 1
+	
+if topLevel:
+	new_v.updateVnodeListsFrom(old_v)
+	
+# g.trace(new_v)
+return new_v
+#@nonl
+#@-node:EKR.20040530114124.1:<< old code >> from v.copyTree
+#@-node:EKR.20040528080541:From undo
 #@-node:ekr.20040311143141:No longer used in 4.2
 #@-node:ekr.20031218072017.434:Unused code
 #@-all

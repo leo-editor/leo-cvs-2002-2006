@@ -34285,6 +34285,7 @@ for line in lines[j+1:k+1]:
 #@-node:ekr.20031218072017.2122:new_df.norefWrite
 #@-node:EKR.20040517084551:(problems with tnodeList)
 #@-node:EKR.20040519080820:In 4.2 a2
+#@+node:EKR.20040601083927:In 4.2 a3
 #@+node:EKR.20040519073926.1:(Fixed @file-thin copy bug)
 # putVnode must test for self.usingClipboard in two places.
 #@nonl
@@ -37569,6 +37570,981 @@ def dump (self,label=""):
 #@nonl
 #@-node:ekr.20040312145256:v.dump
 #@-node:EKR.20040529124312:(Fixed bugs in Dump Outline command)
+#@+node:EKR.20040525135323:(Created c, p, v iterators)
+#@+node:ekr.20040312090934:c.iterators
+#@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
+def allNodes_iter(self,copy=false):
+	
+	c = self
+	return c.rootPosition().allNodes_iter(copy)
+	
+all_positions_iter = allNodes_iter
+#@nonl
+#@-node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
+#@+node:EKR.20040529091232.1:c.all_tnodes_iter
+def all_tnodes_iter(self):
+	
+	c = self
+	for p in c.all_positions_iter():
+		yield p.v.t
+
+	# return c.rootPosition().all_tnodes_iter(all=true)
+#@nonl
+#@-node:EKR.20040529091232.1:c.all_tnodes_iter
+#@+node:EKR.20040529091232.2:c.all_unique_tnodes_iter
+def all_unique_tnodes_iter(self):
+	
+	c = self ; marks = {}
+	
+	for p in c.all_positions_iter():
+		if not p.v.t in marks:
+			marks[p.v.t] = p.v.t
+			yield p.v.t
+#@nonl
+#@-node:EKR.20040529091232.2:c.all_unique_tnodes_iter
+#@+node:EKR.20040529091232.3:c.all_vnodes_iter
+def all_vnodes_iter(self):
+	
+	c = self
+	for p in c.all_positions_iter():
+		yield p.v
+#@nonl
+#@-node:EKR.20040529091232.3:c.all_vnodes_iter
+#@+node:EKR.20040529091232.4:c.all_unique_vnodes_iter
+def all_unique_vnodes_iter(self):
+	
+	c = self ; marks = {}
+	for p in c.all_positions_iter():
+		if not p.v in marks:
+			marks[p.v] = p.v
+			yield p.v
+#@nonl
+#@-node:EKR.20040529091232.4:c.all_unique_vnodes_iter
+#@-node:ekr.20040312090934:c.iterators
+#@+node:ekr.20040305162628.1:p.Iterators
+@ 3/18/04: a crucial optimization:
+
+Iterators make no copies at all if they would return an empty sequence.
+@c
+
+@others
+#@nonl
+#@+node:EKR.20040529103843:p.tnodes_iter & unique_tnodes_iter
+def tnodes_iter(self):
+	
+	"""Return all tnode's in a positions subtree."""
+	
+	p = self
+	for p in p.self_and_subtree_iter():
+		yield p.v
+		
+def unique_tnodes_iter(self):
+	
+	"""Return all unique tnode's in a positions subtree."""
+	
+	p = self
+	marks = {}
+	for p in p.self_and_subtree_iter():
+		if p.v not in marks:
+			marks[p.v] = p.v
+			yield p.v
+#@nonl
+#@-node:EKR.20040529103843:p.tnodes_iter & unique_tnodes_iter
+#@+node:EKR.20040529103945:p.vnodes_iter & unique_vnodes_iter
+def vnodes_iter(self):
+	
+	"""Return all vnode's in a positions subtree."""
+	
+	p = self
+	for p in p.self_and_subtree_iter():
+		yield p.v
+		
+def unique_vnodes_iter(self):
+	
+	"""Return all unique vnode's in a positions subtree."""
+	
+	p = self
+	marks = {}
+	for p in p.self_and_subtree_iter():
+		if p.v not in marks:
+			marks[p.v] = p.v
+			yield p.v
+#@nonl
+#@-node:EKR.20040529103945:p.vnodes_iter & unique_vnodes_iter
+#@+node:ekr.20040305171133:p.allNodes_iter
+class allNodes_iter_class:
+
+	"""Returns a list of positions in the entire outline."""
+
+	@others
+
+def allNodes_iter (self,copy=false):
+	
+	return self.allNodes_iter_class(self,copy)
+#@nonl
+#@+node:ekr.20040305171133.1:__init__ & __iter__
+def __init__(self,p,copy):
+
+	self.first = p.c.rootPosition().copy()
+	self.p = None
+	self.copy = copy
+	
+def __iter__(self):
+
+	return self
+#@-node:ekr.20040305171133.1:__init__ & __iter__
+#@+node:ekr.20040305171133.3:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		self.p.moveToThreadNext()
+
+	if self.p:
+		if self.copy: return self.p.copy()
+		else:         return self.p
+	else: raise StopIteration
+#@nonl
+#@-node:ekr.20040305171133.3:next
+#@-node:ekr.20040305171133:p.allNodes_iter
+#@+node:ekr.20040305173559:p.subtree_iter
+class subtree_iter_class:
+
+	"""Returns a list of positions in a subtree, possibly including the root of the subtree."""
+
+	@others
+
+def subtree_iter (self,copy=false):
+	
+	return self.subtree_iter_class(self,copy,includeSelf=false)
+	
+def self_and_subtree_iter (self,copy=false):
+	
+	return self.subtree_iter_class(self,copy,includeSelf=true)
+#@nonl
+#@+node:ekr.20040305173559.1:__init__ & __iter__
+def __init__(self,p,copy,includeSelf):
+	
+	if includeSelf:
+		self.first = p.copy()
+		self.after = p.nodeAfterTree()
+	elif p.hasChildren():
+		self.first = p.copy().moveToFirstChild() 
+		self.after = p.nodeAfterTree()
+	else:
+		self.first = None
+		self.after = None
+
+	self.p = None
+	self.copy = copy
+	
+def __iter__(self):
+
+	return self
+#@-node:ekr.20040305173559.1:__init__ & __iter__
+#@+node:ekr.20040305173559.2:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		self.p.moveToThreadNext()
+
+	if self.p and self.p != self.after:
+		if self.copy: return self.p.copy()
+		else:         return self.p
+	else:
+		raise StopIteration
+#@nonl
+#@-node:ekr.20040305173559.2:next
+#@-node:ekr.20040305173559:p.subtree_iter
+#@+node:ekr.20040305172211.1:p.children_iter
+class children_iter_class:
+
+	"""Returns a list of children of a position."""
+
+	@others
+
+def children_iter (self,copy=false):
+	
+	return self.children_iter_class(self,copy)
+#@nonl
+#@+node:ekr.20040305172211.2:__init__ & __iter__
+def __init__(self,p,copy):
+
+	if p.hasChildren():
+		self.first = p.copy().moveToFirstChild()
+	else:
+		self.first = None
+
+	self.p = None
+	self.copy = copy
+
+def __iter__(self):
+	
+	return self
+#@-node:ekr.20040305172211.2:__init__ & __iter__
+#@+node:ekr.20040305172211.3:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		self.p.moveToNext()
+
+	if self.p:
+		if self.copy: return self.p.copy()
+		else:         return self.p
+	else: raise StopIteration
+#@nonl
+#@-node:ekr.20040305172211.3:next
+#@-node:ekr.20040305172211.1:p.children_iter
+#@+node:ekr.20040305172855:p.parents_iter
+class parents_iter_class:
+
+	"""Returns a list of positions of a position."""
+
+	@others
+
+def parents_iter (self,copy=false):
+	
+	p = self
+
+	return self.parents_iter_class(self,copy,includeSelf=false)
+	
+def self_and_parents_iter(self,copy=false):
+	
+	return self.parents_iter_class(self,copy,includeSelf=true)
+#@nonl
+#@+node:ekr.20040305172855.1:__init__ & __iter__
+def __init__(self,p,copy,includeSelf):
+
+	if includeSelf:
+		self.first = p.copy()
+	elif p.hasParent():
+		self.first = p.copy().moveToParent()
+	else:
+		self.first = None
+
+	self.p = None
+	self.copy = copy
+
+def __iter__(self):
+
+	return self
+#@nonl
+#@-node:ekr.20040305172855.1:__init__ & __iter__
+#@+node:ekr.20040305172855.2:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		self.p.moveToParent()
+
+	if self.p:
+		if self.copy: return self.p.copy()
+		else:         return self.p
+	else:
+		raise StopIteration
+#@-node:ekr.20040305172855.2:next
+#@-node:ekr.20040305172855:p.parents_iter
+#@+node:ekr.20040305173343:p.siblings_iter
+class siblings_iter_class:
+
+	"""Returns a list of siblings of a position."""
+
+	@others
+
+def siblings_iter (self,copy=false,following=false):
+	
+	return self.siblings_iter_class(self,copy,following)
+	
+self_and_siblings_iter = siblings_iter
+	
+def following_siblings_iter (self,copy=false):
+	
+	return self.siblings_iter_class(self,copy,following=true)
+#@nonl
+#@+node:ekr.20040305173343.1:__init__ & __iter__
+def __init__(self,p,copy,following):
+	
+	# We always include p, even if following is true.
+	
+	if following:
+		self.first = p.copy()
+	else:
+		p = p.copy()
+		while p.hasBack():
+			p.moveToBack()
+		self.first = p
+
+	self.p = None
+	self.copy = copy
+
+def __iter__(self):
+	
+	return self
+
+#@-node:ekr.20040305173343.1:__init__ & __iter__
+#@+node:ekr.20040305173343.2:next
+def next(self):
+	
+	if self.first:
+		self.p = self.first
+		self.first = None
+
+	elif self.p:
+		self.p.moveToNext()
+
+	if self.p:
+		if self.copy: return self.p.copy()
+		else:         return self.p
+	else: raise StopIteration
+#@nonl
+#@-node:ekr.20040305173343.2:next
+#@-node:ekr.20040305173343:p.siblings_iter
+#@-node:ekr.20040305162628.1:p.Iterators
+#@+node:EKR.20040528151551:v.Iterators
+#@+node:EKR.20040528151551.2:self_subtree_iter
+def subtree_iter(self):
+
+	"""Return all nodes of self's tree in outline order."""
+	
+	v = self
+
+	if v:
+		yield v
+		child = v.t._firstChild
+		while child:
+			for v1 in child.subtree_iter():
+				yield v1
+			child = child.next()
+			
+self_and_subtree_iter = subtree_iter
+#@nonl
+#@-node:EKR.20040528151551.2:self_subtree_iter
+#@+node:EKR.20040528151551.3:unique_subtree_iter
+def unique_subtree_iter(self,marks=None):
+
+	"""Return all vnodes in self's tree, discarding duplicates """
+	
+	v = self
+
+	if marks == None: marks = {}
+
+	if v and v not in marks:
+		marks[v] = v
+		yield v
+		if v.t._firstChild:
+			for v1 in v.t._firstChild.unique_subtree_iter(marks):
+				yield v1
+		v = v._next
+		while v:
+			for v in v.unique_subtree_iter(marks):
+				yield v
+			v = v._next
+			
+self_and_unique_subtree_iter = unique_subtree_iter
+#@nonl
+#@-node:EKR.20040528151551.3:unique_subtree_iter
+#@-node:EKR.20040528151551:v.Iterators
+#@-node:EKR.20040525135323:(Created c, p, v iterators)
+#@+node:EKR.20040528070309.2:(Fixed undoReplaceNodes)
+#@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+def currentPosition (self,copy=true):
+	
+	"""Return the presently selected position."""
+	
+	return self._currentPosition.copy()
+	
+def setCurrentPosition (self,p):
+	
+	"""Set the presently selected position."""
+
+	self._currentPosition = p
+	
+# Define these for compatibiility with old scripts.
+currentVnode = currentPosition
+setCurrentVnode = setCurrentPosition
+#@nonl
+#@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+#@+node:ekr.20031218072017.1708:extractSection
+def extractSection(self):
+
+	c = self ; body = c.frame.body ; current = v = c.currentVnode()
+	
+	if g.app.batchMode:
+		c.notValidInBatchMode("Extract Section")
+		return
+
+	head,lines,tail,oldSel,oldYview = self.getBodyLines()
+	if not lines: return
+	headline = lines[0] ; del lines[0]
+	junk, ws = g.skip_leading_ws_with_indent(headline,0,c.tab_width)
+	line1 = "\n" + headline
+	# Create copy for undo.
+	v_copy = c.undoer.saveTree(v)
+	oldText = body.getAllText()
+	oldSel = body.getTextSelection()
+	<< Set headline for extractSection >>
+	# Remove leading whitespace from all body lines.
+	result = []
+	for line in lines:
+		# Remove the whitespace on the first line
+		line = g.removeLeadingWhitespace(line,ws,c.tab_width)
+		result.append(line)
+	# Create a new node from lines.
+	newBody = string.join(result,'\n')
+	if head and len(head) > 0:
+		head = string.rstrip(head)
+	c.beginUpdate()
+	if 1: # update range...
+		c.createLastChildNode(v,headline,newBody)
+		# g.trace(v)
+		undoType = None # Set undo params later.
+		c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
+		newText = body.getAllText()
+		newSel = body.getTextSelection()
+		c.undoer.setUndoParams("Extract Section",v,
+			select=current,oldTree=v_copy,
+			oldText=oldText,newText=newText,
+			oldSel=oldSel,newSel=newSel)
+	c.endUpdate()
+#@nonl
+#@+node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+if 0: # I have no idea why this was being done.
+	while len(headline) > 0 and headline[0] == '/':
+		headline = headline[1:]
+
+headline = headline.strip()
+
+if len(headline) < 5:
+	oops = true
+else:
+	head1 = headline[0:2] == '<<'
+	head2 = headline[0:2] == '@<'
+	tail1 = headline[-2:] == '>>'
+	tail2 = headline[-2:] == '@>'
+	oops = not (head1 and tail1) and not (head2 and tail2)
+
+if oops:
+	g.es("Selected text should start with a section name",color="blue")
+	return
+#@nonl
+#@-node:ekr.20031218072017.1709:<< Set headline for extractSection >>
+#@-node:ekr.20031218072017.1708:extractSection
+#@+node:ekr.20031218072017.1823:createLastChildNode
+def createLastChildNode (self,parent,headline,body):
+	
+	c = self
+	if body and len(body) > 0:
+		body = string.rstrip(body)
+	if not body or len(body) == 0:
+		body = ""
+	v = parent.insertAsLastChild()
+	v.initHeadString(headline)
+	v.setTnodeText(body)
+	v.setDirty()
+	c.validateOutline()
+#@nonl
+#@-node:ekr.20031218072017.1823:createLastChildNode
+#@+node:EKR.20040530115450:v.createUndoInfo
+def createUndoInfo (self):
+	
+	"""Create a dict containing all info needed to recreate a vnode for undo."""
+	
+	v = self ; d = {}
+	
+	# Copy all ivars.
+	d ["v"] = v
+	d ["statusBits"] = v.statusBits
+	d ["parent"] = v._parent
+	d ["next"] = v._next
+	d ["back"] = v._back
+	# The tnode never changes so there is no need to save it here.
+	
+	try: d ["unknownAttributes"] = v.unknownAttributes
+	except: pass
+
+	return d
+#@nonl
+#@-node:EKR.20040530115450:v.createUndoInfo
+#@+node:EKR.20040530121847:v.restoreUndoInfo
+def restoreUndoInfo (self,d):
+	
+	"""Restore all ivars saved in dict d."""
+	
+	v = d ["v"] ; assert(v == self)
+
+	v.statusBits = d ["statusBits"]
+	v._parent    = d ["parent"] 
+	v._next      = d ["next"] 
+	v._back      = d ["back"]
+	
+	try:
+		v.unknownAttributes = d ["unknownAttributes"]
+	except KeyError:
+		pass
+#@nonl
+#@-node:EKR.20040530121847:v.restoreUndoInfo
+#@+node:EKR.20040530120245:t.createUndoInfo
+def createUndoInfo (self,copyLinks=true):
+	
+	"""Create a dict containing all info needed to recreate a vnode."""
+	
+	t = self ; d = {}
+	
+	# Essential fields.
+	d ["t"] = t
+	d ["headString"] = t.headString
+	d ["bodyString"] = t.bodyString
+	d ["vnodeList"]  = t.vnodeList[:]
+	d ["statusBits"] = t.statusBits
+	d ["firstChild"] = t._firstChild
+
+	try: d ["unknownAttributes"] = t.unknownAttributes
+	except: pass
+	
+	if 0: # These neve change, so no need to save/restore them.
+		# In fact, it would be wrong to undo changes made to them!
+		d ["cloneIndex"]  = t.cloneIndex
+		d ["fileIndex"]  = t.fileIndex
+
+	if 0: # probably not needed for undo.
+		d ["insertSpot"]      = t.insertSpot
+		d ["scrollBarSpot"]   = t.scrollBarSpot
+		d ["selectionLength"] = t.selectionLength
+		d ["selectionStart"]  = t.selectionStart
+
+	return d
+#@-node:EKR.20040530120245:t.createUndoInfo
+#@+node:EKR.20040530121847.2:t.restoreUndoInfo
+def restoreUndoInfo (self,d):
+	
+	t = d ["t"] ; assert(t == self)
+
+	t.headString  = d ["headString"]
+	t.bodyString  = d ["bodyString"]
+	t.vnodeList   = d ["vnodeList"]
+	t.statusBits  = d ["statusBits"]
+	t._firstChild = d ["firstChild"]
+
+	try:
+		t.unknownAttributes = d ["unknownAttributes"]
+	except KeyError:
+		pass
+#@nonl
+#@-node:EKR.20040530121847.2:t.restoreUndoInfo
+#@+node:EKR.20040528075307:u.saveTree
+def saveTree (self,p,treeInfo=None):
+	
+	"""Create all info needed to handle a general undo operation."""
+
+	# WARNING: read this before doing anything "clever"
+	<< about u.saveTree >>
+	
+	u = self ; c = u.c ; topLevel = (treeInfo == None)
+	if topLevel: treeInfo = []
+
+	# Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+	data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+	treeInfo.append(data)
+
+	# Recursively add info for the subtree.
+	child = p.firstChild()
+	while child:
+		self.saveTree(child,treeInfo)
+		child = child.next()
+
+	# if topLevel: g.trace(treeInfo)
+	return treeInfo
+#@+node:EKR.20040530114124:<< about u.saveTree >>
+@ 
+The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
+
+Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
+
+(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+
+Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@-node:EKR.20040530114124:<< about u.saveTree >>
+#@-node:EKR.20040528075307:u.saveTree
+#@+node:EKR.20040530121329:u.restoreTree
+def restoreTree (self,treeInfo):
+	
+	"""Use the tree info to restore all vnode and tnode data,
+	including all links."""
+	
+	# This effectively relinks all vnodes.
+	
+	for v,vInfo,tInfo in treeInfo:
+		v.restoreUndoInfo(vInfo)
+		v.t.restoreUndoInfo(tInfo)
+#@nonl
+#@-node:EKR.20040530121329:u.restoreTree
+#@+node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
+def redoReplaceNodes (self):
+	
+	"""Redo replacement of multiple nodes."""
+	
+	u = self ; c = u.c
+
+	u.p = self.undoReplace(u.p,u.oldTree,u.newTree,u.newText)
+	c.selectVnode(u.p) # Does full recolor.
+	if u.newSel:
+		c.frame.body.setTextSelection(u.newSel)
+		
+def redoReplaceNodesContents (self):
+	
+	"""Redo replacement of body text of multiple nodes."""
+	
+	u = self
+	u.redoReplaceNodes()
+	u.redrawFlag = false
+#@-node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
+#@+node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
+def undoReplaceNodes (self):
+	
+	u = self ; c = u.c
+
+	u.p = self.undoReplace(u.p,u.newTree,u.oldTree,u.oldText)
+	c.selectVnode(u.p) # Does full recolor.
+	if u.oldSel:
+		c.frame.body.setTextSelection(u.oldSel)
+	
+def undoReplaceNodesContents (self):
+	
+	u = self ; c = u.c
+	
+	u.undoReplaceNodes()
+	u.redrawFlag = false
+#@nonl
+#@-node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
+#@+node:ekr.20031218072017.1714:undoReplace
+@ This routine implements undo for any kind of operation, no matter how complex.  Just do:
+
+	v_copy = c.undoer.saveTree(v)
+	...make arbitrary changes to p's tree.
+	c.undoer.setUndoParams("Op Name",p,select=current,oldTree=v_copy)
+@c
+
+def undoReplace (self,p,new_data,old_data,text):
+
+	"""Replace p.v and its subtree using old_data during undo."""
+
+	u = self ; c = u.c
+	if 0:
+		# g.trace(u.undoType,"u.bead",u.bead)
+		g.trace("new_data:",new_data)
+		g.trace("old_data:",old_data)
+
+	if new_data == None:
+		# This is the first time we have undone the operation.
+		# Put the new data in the bead.
+		d = u.beads[u.bead]
+		d["newTree"] = u.saveTree(p.copy())
+		u.beads[u.bead] = d
+
+	# Replace data in tree with old data.
+	u.restoreTree(old_data)
+	p.setBodyStringOrPane(p.bodyString())
+
+	return p # Nothing really changes.
+#@nonl
+#@-node:ekr.20031218072017.1714:undoReplace
+#@+node:ekr.20031218072017.2072:c.checkOutline
+def checkOutline (self,verbose=true,unittest=false):
+	
+	"""Report any possible clone errors in the outline.
+	
+	Remove any unused tnodeLists."""
+	
+	c = self ; count = 1 ; errors = 0 ; full = true
+	if full and not unittest:
+		g.es("all tests enabled: this may take awhile",color="blue")
+
+	p = c.rootPosition()
+	<< assert equivalence of lastVisible methods >>
+	for p in c.allNodes_iter():
+		try:
+			count += 1
+			<< remove unused tnodeList >>
+			if not unittest: # this would be very slow.
+				if full: # For testing only.
+					<< do full tests >>
+		except AssertionError,message:
+			errors += 1
+			<< give test failed message >>
+	if not unittest:
+		<< print summary message >>
+	return errors
+#@nonl
+#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+if 0:
+	g.app.debug = true
+
+	p1 = p.oldLastVisible()
+	p2 = p.lastVisible()
+	
+	if p1 != p2:
+		print "oldLastVisible",p1
+		print "   lastVisible",p2
+	
+	assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+	assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+	
+	g.app.debug = false
+#@nonl
+#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+#@+node:ekr.20040313150633:<< remove unused tnodeList >>
+# Empty tnodeLists are not errors.
+v = p.v
+
+# New in 4.2: tnode list is in tnode.
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
+	s = "deleting tnodeList for " + repr(v)
+	print s ; g.es(s,color="blue")
+	delattr(v.t,"tnodeList")
+#@nonl
+#@-node:ekr.20040313150633:<< remove unused tnodeList >>
+#@+node:ekr.20040323155951:<< do full tests >>
+if count % 100 == 0:
+	g.es('.',newline=false)
+if count % 2000 == 0:
+	g.enl()
+
+@others
+#@+node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+threadBack = p.threadBack()
+threadNext = p.threadNext()
+
+if threadBack:
+	assert p == threadBack.threadNext(), "p==threadBack.threadNext"
+
+if threadNext:
+	assert p == threadNext.threadBack(), "p==threadNext.threadBack"
+#@nonl
+#@-node:ekr.20040314035615:assert consistency of threadNext & threadBack links
+#@+node:ekr.20040314035615.1:assert consistency of next and back links
+back = p.back()
+next = p.next()
+
+if back:
+	assert p == back.next(), "p==back.next"
+		
+if next:
+	assert p == next.back(), "p==next.back"
+#@nonl
+#@-node:ekr.20040314035615.1:assert consistency of next and back links
+#@+node:ekr.20040314035615.2:assert consistency of parent and child links
+if p.hasParent():
+	n = p.childIndex()
+	assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
+	
+for child in p.children_iter():
+	assert p == child.parent(), "p==child.parent"
+
+if p.hasNext():
+	assert p.next().parent() == p.parent(), "next.parent==parent"
+	
+if p.hasBack():
+	assert p.back().parent() == p.parent(), "back.parent==parent"
+#@nonl
+#@-node:ekr.20040314035615.2:assert consistency of parent and child links
+#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
+if p.hasParent():
+	t = p.parent().v.t
+	for v in p.directParents():
+		try:
+			assert v.t == t
+		except:
+			print "p",p
+			print "p.directParents",p.directParents()
+			print "v",v
+			print "v.t",v.t
+			print "t = p.parent().v.t",t
+			raise AssertionError,"v.t == t"
+#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
+#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+if p.isCloned():
+	parents = p.v.t.vnodeList
+	for child in p.children_iter():
+		vparents = child.directParents()
+		assert len(parents) == len(vparents), "len(parents) == len(vparents)"
+		for parent in parents:
+			assert parent in vparents, "parent in vparents"
+		for parent in vparents:
+			assert parent in parents, "parent in parents"
+#@nonl
+#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
+#@+node:ekr.20040323162707:assert that clones actually share subtrees
+if p.isCloned() and p.hasChildren():
+	childv = p.firstChild().v
+	assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+	assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
+	for v in p.v.t.vnodeList:
+		assert v.t._firstChild == childv, "v.t._firstChild == childv"
+		assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
+#@nonl
+#@-node:ekr.20040323162707:assert that clones actually share subtrees
+#@+node:ekr.20040314043623:assert consistency of vnodeList
+vnodeList = p.v.t.vnodeList
+	
+for v in vnodeList:
+	
+	try:
+		assert v.t == p.v.t
+	except AssertionError:
+		print "p",p
+		print "v",v
+		print "p.v",p.v
+		print "v.t",v.t
+		print "p.v.t",p.v.t
+		raise AssertionError, "v.t == p.v.t"
+
+	if p.v.isCloned():
+		assert v.isCloned(), "v.isCloned"
+		assert len(vnodeList) > 1, "len(vnodeList) > 1"
+	else:
+		assert not v.isCloned(), "not v.isCloned"
+		assert len(vnodeList) == 1, "len(vnodeList) == 1"
+#@nonl
+#@-node:ekr.20040314043623:assert consistency of vnodeList
+#@-node:ekr.20040323155951:<< do full tests >>
+#@+node:ekr.20040314043900:<<print summary message >>
+if full:
+	print
+	g.enl()
+
+s = "%d nodes checked, %d errors" % (count,errors)
+if errors or verbose:
+	print s ; g.es(s,color="red")
+elif verbose:
+	g.es(s,color="green")
+#@nonl
+#@-node:ekr.20040314043900:<<print summary message >>
+#@+node:ekr.20040314044652:<< give test failed message >>
+if 1: # errors == 1:
+	s = "test failed: %s %s" % (message,repr(p))
+	print s ; print
+	g.es(s,color="red")
+#@nonl
+#@-node:ekr.20040314044652:<< give test failed message >>
+#@-node:ekr.20031218072017.2072:c.checkOutline
+#@+node:EKR.20040528151551.4:v.updateVnodeListsFrom
+def updateVnodeListsFrom (self,v2):
+	
+	"""Update the vnodeLists in a vnode tree copied from v2.
+	
+	Only data in the v1 tree should change. """
+	
+	v1 = self
+	
+	# Create correspondences between elements of v1 and v2.
+	nodes1 = [v for v in v1.self_and_subtree_iter()]
+	nodes2 = [v for v in v2.self_and_subtree_iter()]
+	assert(len(nodes1) == len(nodes2))
+	
+	# Doesn't handle clones properly...Or maybe it is copyTree that is the problem.
+		
+	# Replace in _v1_ vnodeList references to nodes in v2 by references to nodes in v1.
+	for v1 in nodes1:
+		vnodeList = v1.t.vnodeList
+		for v in vnodeList[:]:
+			try:
+				n = nodes2.index(v)
+				vnodeList.remove(v)
+				vnodeList.append(nodes1[n])
+				print "vnodeList replace",v,nodes1[n]
+			except ValueError:
+				pass # v not in nodes2.
+#@nonl
+#@-node:EKR.20040528151551.4:v.updateVnodeListsFrom
+#@+node:EKR.20040528151551:v.Iterators
+#@+node:EKR.20040528151551.2:self_subtree_iter
+def subtree_iter(self):
+
+	"""Return all nodes of self's tree in outline order."""
+	
+	v = self
+
+	if v:
+		yield v
+		child = v.t._firstChild
+		while child:
+			for v1 in child.subtree_iter():
+				yield v1
+			child = child.next()
+			
+self_and_subtree_iter = subtree_iter
+#@nonl
+#@-node:EKR.20040528151551.2:self_subtree_iter
+#@+node:EKR.20040528151551.3:unique_subtree_iter
+def unique_subtree_iter(self,marks=None):
+
+	"""Return all vnodes in self's tree, discarding duplicates """
+	
+	v = self
+
+	if marks == None: marks = {}
+
+	if v and v not in marks:
+		marks[v] = v
+		yield v
+		if v.t._firstChild:
+			for v1 in v.t._firstChild.unique_subtree_iter(marks):
+				yield v1
+		v = v._next
+		while v:
+			for v in v.unique_subtree_iter(marks):
+				yield v
+			v = v._next
+			
+self_and_unique_subtree_iter = unique_subtree_iter
+#@nonl
+#@-node:EKR.20040528151551.3:unique_subtree_iter
+#@-node:EKR.20040528151551:v.Iterators
+#@+node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
+def swapIntoTree (self,v2):
+	
+	"""Link a vnode into the tree in place of v2."""
+	
+	v1 = self
+
+	# Set the links in v1.
+	v1._next = v2._next
+	v1._back = v2._back 
+	v1._parent = v2._parent
+	
+	# Set links in other nodes to v1.
+	if v1._next: v1._next._back = v1
+	if v1._back: v1._back._next = v1
+	if v1._parent and v2 == v1._parent.t._firstChild:
+		v1._parent.t._firstChild = v1
+
+def swapLinks (self,v2): # not used.
+	
+	"""Swap the next/back links of two vnodes."""
+	
+	v1 = self
+	
+	v1._next,   v2._next   = v2._next,  v1._next
+	v1._back,   v2._back   = v2._back,  v1._back
+	v1._parent, v2._parent = v2._parent,v1._parent
+#@nonl
+#@-node:EKR.20040528111420.1:v.swapIntoTree, v.swapLinks
+#@-node:EKR.20040528070309.2:(Fixed undoReplaceNodes)
+#@-node:EKR.20040601083927:In 4.2 a3
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

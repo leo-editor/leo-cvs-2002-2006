@@ -20,30 +20,30 @@ Leap 101: How to administer Leaps.
 #@-node:edream.110203163054.1655:Leap 102: LeoCon 1
 #@-node:edream.110203163054.1654:100's administering Leaps (and LeoCon)
 #@+node:edream.110203163054.1656:200's single-user Leo
-#@+node:edream.110203163054.1657:Leap 201. (abandoned) Prototype link nodes and vxnodes
-- Project abandoned.  Prototypes largely complete.
-- Assigned to EKR.
-- Remove tnodes as a fundamental part of Leo. 
-- Represent clones as link nodes and target nodes. 
-- Create vxnodes as needed. (Some new thoughts about this are coming). 
+#@+node:edream.110203163054.1657:Leap 201. (Finished)  Represent clones as shared trees of vnodes
+Project finished in Leo 4.2.
 
-#@-node:edream.110203163054.1657:Leap 201. (abandoned) Prototype link nodes and vxnodes
-#@+node:edream.110203163054.1658:Leap 202. (abandoned) Create cvs-friendly file format for derived files
-- Project abandoned.
+- Cloned vnodes share the same tnode.  That tnode forms the root of a shared tree of vnodes.
 
-- Assigned to EKR.
-- Sentinels are immutable, with mutable information following on separate lines. 
-- We could create such a file format without Leap 201. 
-- Leap 201, if implemented, will imply changes to this Leap. 
+- Code must use positions to traverse the tree.
 
-#@-node:edream.110203163054.1658:Leap 202. (abandoned) Create cvs-friendly file format for derived files
-#@+node:edream.110203163054.1659:Leap 203. Use Python Mega Widgets
-- Assigned to EKR.
+- c.rootVnode and c.curreentPosition return positions, not vnodes.
+
+- Positions are proxies for vnodes.
+
+For more details, see leoNodes.py in LeoPy.leo.
+#@-node:edream.110203163054.1657:Leap 201. (Finished)  Represent clones as shared trees of vnodes
+#@+node:edream.110203163054.1658:Leap 202. (Finished) Create cvs-friendly file format for derived files
+Project finished in Leo 4.2.
+
+The new file format uses gnx's (global node indices) to represent nodes uniquely.
+#@nonl
+#@-node:edream.110203163054.1658:Leap 202. (Finished) Create cvs-friendly file format for derived files
+#@+node:edream.110203163054.1659:Leap 203. (Open) Use Python Mega Widgets
 - More flexible and more powerful than present hand-drawn code. 
 - Ideally, it would be a path to anygui. 
-- No firm commitment to this Leap: it depends on further study. 
-
-#@-node:edream.110203163054.1659:Leap 203. Use Python Mega Widgets
+#@nonl
+#@-node:edream.110203163054.1659:Leap 203. (Open) Use Python Mega Widgets
 #@-node:edream.110203163054.1656:200's single-user Leo
 #@+node:edream.110203163054.1661:300's LeoN and beyond
 #@+node:edream.110203163054.1662:Leap 301: Use central server

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4252" clone_windows="0"/>
-<globals body_outline_ratio="0.427922814983">
-	<global_window_position top="30" left="218" height="881" width="861"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="10" left="268" height="881" width="861"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -22,7 +22,6 @@
 </v>
 <v t="ekr.20040303062846.2"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
-<v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
@@ -92,7 +91,7 @@
 <v t="ekr.20040303063549.61"><vh>wikiTest2</vh></v>
 <v t="ekr.20040303063549.62"><vh>wikiTest3</vh></v>
 </v>
-<v t="ekr.20040303063549.63" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040303063549.63" a="M"><vh>editBodyTests</vh>
 <v t="ekr.20040303063549.64"><vh>dedentBody</vh>
 <v t="ekr.20040303063549.65"><vh>before</vh></v>
 <v t="ekr.20040303063549.66"><vh>after</vh></v>
@@ -177,7 +176,7 @@
 <v t="ekr.20040303063549.116"><vh>moveOutlineRight</vh></v>
 <v t="ekr.20040303063549.117"><vh>moveOutlineUp</vh></v>
 </v>
-<v t="ekr.20040303063549.118" a="M"><vh>pluginsTests</vh></v>
+<v t="ekr.20040303063549.118"><vh>pluginsTests</vh></v>
 <v t="ekr.20040303063549.119"><vh>positionTests</vh></v>
 <v t="ekr.20040303063549.2"><vh>reformatParagraphsTests</vh>
 <v t="ekr.20040303063549.3"><vh>testNoTrailingNewline</vh>
@@ -240,7 +239,7 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
+<v t="ekr.20040303071432" a="TV"><vh>Mini tests, scripts &amp; experiments</vh>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
 <v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
@@ -372,7 +371,7 @@
 <v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
 <v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
-<v t="ekr.20040319111213"><vh>FilterHoise script</vh>
+<v t="ekr.20040319111213"><vh>FilterHoist script</vh>
 <v t="ekr.20040319111213.1"><vh>description</vh></v>
 <v t="ekr.20040319142708"><vh>filter</vh></v>
 <v t="ekr.20040319142202"><vh>old code</vh>
@@ -393,6 +392,18 @@
 <v t="EKR.20040517074600.12"><vh>getFontSettings</vh></v>
 </v>
 <v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
+</v>
+</v>
+<v t="EKR.20040531110157"><vh>at-file thin tests</vh>
+<v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
+<v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
+<v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
+<v t="EKR.20040525083635" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
 </v>
 </v>
@@ -467,60 +478,34 @@
 <v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
 <v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
 </v>
+<v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
+<v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
+<v t="EKR.20040526200017" a="E" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040529092739"><vh>Tests of c iters</vh>
+<v t="EKR.20040529093047"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
+<v t="EKR.20040529093047.1"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
 </v>
-<v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
-<v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
-<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
-<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
-<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
+<v t="EKR.20040528152529"><vh>Tests of p and v iters</vh>
+<v t="EKR.20040527073459"><vh>child1</vh>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
 </v>
-<v t="EKR.20040504083716.51"><vh>insert tests</vh>
-<v t="EKR.20040504083716.52"><vh>class insert_test</vh>
-<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
+<v t="EKR.20040527074524"><vh>c</vh></v>
+<v t="EKR.20040527072047"><vh>a</vh>
+<v t="EKR.20040527072047.1"><vh>b</vh></v>
 </v>
-</v>
-<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
-<v t="EKR.20040504083716.56"><vh>class replace_test</vh>
-<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.59"><vh>class replace_test2</vh>
-<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.62"><vh>class replace_test3</vh>
-<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
-</v>
-<v t="EKR.20040504083716.65"><vh>class replace_test4</vh>
-<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
+<v t="EKR.20040527074524.1" a="E"><vh>d</vh>
+<v t="EKR.20040527074524.2"><vh>e</vh></v>
 </v>
 </v>
-<v t="EKR.20040504083716.68"><vh>regression tests</vh>
-<v t="EKR.20040504083716.69"><vh>class regression_test_1</vh>
-<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
-<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
+<v t="EKR.20040529105640"><vh>child2</vh></v>
+<v t="EKR.20040529104307"><vh>&lt;&lt; tests of consistency of p and v iters &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.1"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
+<v t="EKR.20040527083449.2"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="EKR.20040504083716.72"><vh>main</vh></v>
-</v>
-<v t="EKR.20040504083716.73"><vh>not used</vh>
-<v t="EKR.20040504083716.74" tnodeList="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
-<v t="EKR.20040504083716.75"><vh>tests to write</vh>
-<v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
-<v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
-<v t="EKR.20040504083716.78"><vh>Creation of backup files.</vh></v>
-</v>
-</v>
-</v>
-<v t="EKR.20040504083716"><vh>Mulder Update script</vh>
-<v t="EKR.20040504083716.39"><vh>sync</vh>
-<v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
-<v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
-</v>
+<v t="EKR.20040527154402"><vh>Test of undo extract section</vh>
+<v t="EKR.20040528130659"><vh>a</vh></v>
+<v t="EKR.20040528130659"><vh>a</vh></v>
 </v>
 <v t="EKR.20040523112430"><vh>Cloning headlines</vh>
 <v t="EKR.20040523112430.1"><vh>read me</vh>
@@ -584,98 +569,60 @@
 </v>
 <v t="EKR.20040523112430.8"><vh>f</vh></v>
 </v>
-<v t="EKR.20040523110004"><vh>Cloning headlines</vh>
-<v t="EKR.20040523110004.1"><vh>read me</vh>
-<v t="EKR.20040523110004.2"><vh>b</vh>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
 </v>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
+<v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
+<v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
+<v t="EKR.20040504083716.48"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.49"><vh>setup_inputfile</vh></v>
+<v t="EKR.20040504083716.50"><vh>setup_configfile</vh></v>
 </v>
-</v>
-<v t="EKR.20040523110004.6"><vh>g</vh></v>
-</v>
-<v t="EKR.20040523110004.7"><vh>a</vh>
-<v t="EKR.20040523110004.2"><vh>b</vh>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.51"><vh>insert tests</vh>
+<v t="EKR.20040504083716.52"><vh>class insert_test</vh>
+<v t="EKR.20040504083716.53"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.54"><vh>runTest</vh></v>
 </v>
 </v>
-<v t="EKR.20040523110004.2"><vh>b</vh>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.55"><vh>replacement tests</vh>
+<v t="EKR.20040504083716.56"><vh>class replace_test</vh>
+<v t="EKR.20040504083716.57"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.58"><vh>runTest</vh></v>
 </v>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.59"><vh>class replace_test2</vh>
+<v t="EKR.20040504083716.60"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.61"><vh>runTest</vh></v>
 </v>
+<v t="EKR.20040504083716.62"><vh>class replace_test3</vh>
+<v t="EKR.20040504083716.63"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.64"><vh>runTest</vh></v>
 </v>
-<v t="EKR.20040523110004.6"><vh>g</vh></v>
-</v>
-<v t="EKR.20040523110004.7"><vh>a</vh>
-<v t="EKR.20040523110004.2"><vh>b</vh>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.65"><vh>class replace_test4</vh>
+<v t="EKR.20040504083716.66"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.67"><vh>runTest</vh></v>
 </v>
 </v>
-<v t="EKR.20040523110004.2"><vh>b</vh>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
-</v>
-<v t="EKR.20040523110004.3"><vh>c</vh>
-<v t="EKR.20040523110004.4"><vh>d</vh></v>
-<v t="EKR.20040523110004.5"><vh>e</vh></v>
+<v t="EKR.20040504083716.68"><vh>regression tests</vh>
+<v t="EKR.20040504083716.69"><vh>class regression_test_1</vh>
+<v t="EKR.20040504083716.70"><vh>setUp</vh></v>
+<v t="EKR.20040504083716.71"><vh>runTest</vh></v>
 </v>
 </v>
-<v t="EKR.20040523110004.6"><vh>g</vh></v>
+<v t="EKR.20040504083716.72"><vh>main</vh></v>
 </v>
-<v t="EKR.20040523110004.8"><vh>f</vh></v>
-</v>
-<v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
-<v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
-<v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
-<v t="EKR.20040525083635.1"><vh>orphan</vh></v>
-</v>
-<v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
-<v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
-<v t="EKR.20040526200017" a="E" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
-<v t="EKR.20040527070914" a="ETV"><vh>Test of p.all_t/vnodes_iter</vh>
-<v t="EKR.20040527073459"><vh>child1</vh>
-<v t="EKR.20040527072047"><vh>a</vh>
-<v t="EKR.20040527072047.1"><vh>b</vh></v>
-</v>
-<v t="EKR.20040527074524"><vh>c</vh></v>
-<v t="EKR.20040527072047"><vh>a</vh>
-<v t="EKR.20040527072047.1"><vh>b</vh></v>
-</v>
-<v t="EKR.20040527074524.1" a="E"><vh>d</vh>
-<v t="EKR.20040527074524.2"><vh>e</vh></v>
+<v t="EKR.20040504083716.73"><vh>not used</vh>
+<v t="EKR.20040504083716.74" tnodeList="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
+<v t="EKR.20040504083716.75"><vh>tests to write</vh>
+<v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
+<v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
+<v t="EKR.20040504083716.78"><vh>Creation of backup files.</vh></v>
 </v>
 </v>
-<v t="EKR.20040527073459.1"><vh>child2</vh></v>
-<v t="EKR.20040527083449"><vh>&lt;&lt; tests that node iterators return all nodes &gt;&gt;</vh></v>
-<v t="EKR.20040527083449.1"><vh>&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;</vh></v>
-<v t="EKR.20040527083449.2"><vh>&lt;&lt; print nodes returned by iterators &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040504083716"><vh>Mulder Update script</vh>
+<v t="EKR.20040504083716.39"><vh>sync</vh>
+<v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
+<v t="EKR.20040504153320.1"><vh>&lt;&lt; compute operation &gt;&gt;</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1913,15 +1860,6 @@ if 0:
 font = g.app.config.defaultFont
 
 print font.cget("family"), font.cget("weight")</t>
-<t tx="EKR.20040523110004"></t>
-<t tx="EKR.20040523110004.1"></t>
-<t tx="EKR.20040523110004.2"></t>
-<t tx="EKR.20040523110004.3"></t>
-<t tx="EKR.20040523110004.4"></t>
-<t tx="EKR.20040523110004.5"></t>
-<t tx="EKR.20040523110004.6"></t>
-<t tx="EKR.20040523110004.7"></t>
-<t tx="EKR.20040523110004.8"></t>
 <t tx="EKR.20040523112430"></t>
 <t tx="EKR.20040523112430.1"></t>
 <t tx="EKR.20040523112430.2"></t>
@@ -1993,78 +1931,125 @@ if 1:
 	p.v.unknownAttributes = { "myPlugin" : d }
 	
 print repr(p.v.unknownAttributes)</t>
-<t tx="EKR.20040527070914">import leoGlobals as g
-from leoGlobals import true,false
-
-c = g.top() ; p = c.currentPosition()
-
-&lt;&lt; tests that node iterators return all nodes &gt;&gt;
-&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;
-&lt;&lt; print nodes returned by iterators &gt;&gt;
-</t>
 <t tx="EKR.20040527072047"></t>
 <t tx="EKR.20040527072047.1"></t>
 <t tx="EKR.20040527073459"></t>
-<t tx="EKR.20040527073459.1"></t>
 <t tx="EKR.20040527074524"></t>
 <t tx="EKR.20040527074524.1"></t>
 <t tx="EKR.20040527074524.2"></t>
-<t tx="EKR.20040527083449">v1 = [p.v for p in c.allNodes_iter()]
-v2 = [v for v in c.all_vnodes_iter()]
-for v in v2: assert(v in v1)
-
-t1 = [p.v.t for p in c.allNodes_iter()]
-t2 = [t for t in c.all_tnodes_iter()]
-for t in t2: assert(t in t1)
-
-v1 = [p.v for p in c.currentPosition().self_and_subtree_iter()]
-v2 = [v for v in c.currentPosition().all_vnodes_iter()]
-for v in v2: assert(v in v1)
-
-t1 = [p.v.t for p in c.currentPosition().self_and_subtree_iter()]
-t2 = [t for t in c.currentPosition().all_tnodes_iter()]
-for t in t2: assert(t in t1)
-
-print "coverage tests pass"</t>
 <t tx="EKR.20040527083449.1">nodes = []
-for v in c.all_vnodes_iter():
+for v in current.unique_vnodes_iter():
 	assert v not in nodes
 	nodes.append(v)
 	
 nodes = []
-for t in c.all_tnodes_iter():
-	assert t not in nodes
-	nodes.append(t)
-	
-nodes = []
-for v in c.currentPosition().all_vnodes_iter():
-	assert v not in nodes
-	nodes.append(v)
-	
-nodes = []
-for t in c.currentPosition().all_tnodes_iter():
+for t in current.unique_tnodes_iter():
 	assert t not in nodes
 	nodes.append(t)
 	
 print "duplicate tests pass"</t>
-<t tx="EKR.20040527083449.2">if 0: # all nodes
-	for v in c.all_vnodes_iter():
-		print v
-	for t in c.all_tnodes_iter():
-		print t
-		
+<t tx="EKR.20040527083449.2">if 0:
+	for v in current.vnodes_iter(): print v
+	for v in current.unique_vnodes_iter(): print v
+
 if 0: # subtree of root node:
-	for v in c.rootPosition().all_vnodes_iter():
-		print v
-	for t in c.rootPosition().all_tnodes_iter():
-		print t
+	root = c.rootPosition()
+	for v in root.vnodes_iter(): print v
+	for t in root.tnodes_iter(): print t
 
 if 0: # child1's tree.  child2 should not be included.
-	child = p.firstChild()
-	for v in child.all_vnodes_iter():
-		print v
-	for t in child.all_tnodes_iter():
-		print t</t>
+	for v in child.vnodes_iter(): print v
+	for t in child.tnodes_iter(): print t</t>
+<t tx="EKR.20040527154402">line 1
+
+&lt;&lt; sec &gt;&gt;
+sec line 1
+sec line 2
+
+last line</t>
+<t tx="EKR.20040528130659">d</t>
+<t tx="EKR.20040528152529">import leoNodes
+import leoGlobals as g
+
+c = g.top()
+current = c.currentPosition()
+child = current.firstChild()
+
+allList = [p.v for p in c.all_positions_iter()]
+vList1 = [v for v in current.vnodes_iter()]
+vList2 = [v for v in current.unique_vnodes_iter()]
+
+if 0:
+	for v in vList1: print v
+	for v in vList2: print v
+
+print len(allList),len(vList1),len(vList2)
+
+&lt;&lt; tests of consistency of p and v iters &gt;&gt;
+&lt;&lt; tests that node iterators return no duplicate nodes &gt;&gt;
+
+&lt;&lt; print nodes returned by iterators &gt;&gt;</t>
+<t tx="EKR.20040529092739">import leoGlobals as g
+from leoGlobals import true,false
+
+c = g.top() ; p = c.currentPosition()
+
+&lt;&lt; coverage tests &gt;&gt;
+&lt;&lt; duplicate tests &gt;&gt;
+
+print "vnodes",len([v for v in c.all_vnodes_iter()]),len([v for v in c.all_unique_vnodes_iter()])
+print "tnodes",len([t for t in c.all_tnodes_iter()]),len([t for t in c.all_unique_tnodes_iter()])
+
+if 0: # all nodes
+	for v in c.all_vnodes_iter(): print v
+	for t in c.all_tnodes_iter(): print t
+		
+if 0: # unique nodes
+	for v in c.all_unique_vnodes_iter(): print v
+	for t in c.all_unique_tnodes_iter(): print t</t>
+<t tx="EKR.20040529093047">v1 = [p.v for p in c.all_positions_iter()]
+v2 = [v for v in c.all_vnodes_iter()]
+for v in v2: assert(v in v1)
+for v in v1: assert(v in v2)
+
+t1 = [p.v.t for p in c.all_positions_iter()]
+t2 = [t for t in c.all_tnodes_iter()]
+for t in t2: assert(t in t1)
+for t in t1: assert(t in t2)
+
+print "coverage tests pass"</t>
+<t tx="EKR.20040529093047.1">nodes = []
+for v in c.all_unique_vnodes_iter():
+	assert v not in nodes
+	nodes.append(v)
+	
+nodes = []
+for t in c.all_unique_tnodes_iter():
+	assert t not in nodes
+	nodes.append(t)
+	
+print "duplicate tests pass"</t>
+<t tx="EKR.20040529104307">try:
+	tag = "test1"
+	list1 = [v for v in current.vnodes_iter()]
+	list2 = [v for v in current.v.self_and_subtree_iter()]
+	assert(list1==list2)
+	
+	tag = "test2"
+	list1 = [p.v for p in c.all_positions_iter()]
+	list2 = [v   for v in c.all_vnodes_iter()]
+	assert(list1==list2)
+	
+	print "consistency tests pass"
+
+except AssertionError:
+	print tag
+	print "list1"
+	for v in list1: print v
+	print "list2"
+	for v in list2: print v</t>
+<t tx="EKR.20040529105640"></t>
+<t tx="EKR.20040531110157">@ignore</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -2089,7 +2074,15 @@ print "after ", v, p.v, v is p.v</t>
 <t tx="ekr.20040302092753.2"></t>
 <t tx="ekr.20040302092753.3"></t>
 <t tx="ekr.20040302092753.4"></t>
-<t tx="ekr.20040303063549"></t>
+<t tx="ekr.20040303063549">@nocolor
+
+Notes:
+
+The following contain undo tests:
+	- Outline tests
+	- Edit body tests
+
+@color</t>
 <t tx="ekr.20040303063549.1"></t>
 <t tx="ekr.20040303063549.2">@ 
 # DTHEIN 2004.01.11: Added script
@@ -3110,11 +3103,6 @@ runner.run(mainSuite)</t>
 <t tx="ekr.20040303080938"></t>
 <t tx="ekr.20040303080938.1"></t>
 <t tx="ekr.20040309095121"></t>
-<t tx="ekr.20040309101454">@
-	
-- Test undo/redo for all commands.
-	
-- Test read logic: test created tree against already existing tree.</t>
 <t tx="ekr.20040309111054">import leoGlobals as g
 from leoGlobals import true,false
 import leoNodes
