@@ -493,7 +493,46 @@ class leoTree:
 	
 	#@-body
 	#@-node:14::tree.drawIcon (tag_bind))
-	#@+node:15::tree.getFont,setFont,setFontFromConfig
+	#@+node:15::tree.findDown
+	#@+body
+	def findDown (self):
+		pass
+	#@-body
+	#@-node:15::tree.findDown
+	#@+node:16::tree.findUp
+	#@+body
+	def findUp (self):
+		
+		c = self.commands ; frame = c.frame ; body = frame.body
+		ins = body.index("insert")
+		bbox = body.bbox(ins)
+		line = int(float(ins))
+		#char = int(float(ins)-line) # won't work
+		print "ins,line,bbox:",`ins`,`line`,`bbox`
+		# bbox is empty if character does not appear on the screen.
+		if len(bbox) > 0:
+			x,y,w,h = bbox
+		
+	
+		return ##
+		s = body.get("1.0","1.0 lineend")
+		print s
+		n = 0 ; last = None
+		while n < 500:
+			index = body.index("@0," + str(n))
+			print "%3d" % (n),index, #`body.get("@0," + str(n))`,
+			print `body.bbox(index)`,
+			print body.get(index,index + " lineend")
+			if last and last == index:
+				break
+			last = index
+			n += 20
+			
+	
+	
+	#@-body
+	#@-node:16::tree.findUp
+	#@+node:17::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
 	
@@ -520,8 +559,8 @@ class leoTree:
 	
 		self.setFont(font)
 	#@-body
-	#@-node:15::tree.getFont,setFont,setFontFromConfig
-	#@+node:16::tree.getIconImage
+	#@-node:17::tree.getFont,setFont,setFontFromConfig
+	#@+node:18::tree.getIconImage
 	#@+body
 	def getIconImage (self, name):
 	
@@ -547,8 +586,8 @@ class leoTree:
 			es_exception()
 			return None
 	#@-body
-	#@-node:16::tree.getIconImage
-	#@+node:17::tree.idle_scrollTo
+	#@-node:18::tree.getIconImage
+	#@+node:19::tree.idle_scrollTo
 	#@+body
 	#@+at
 	#  This scrolls the canvas so that v is in view.  This is done at idle 
@@ -586,8 +625,8 @@ class leoTree:
 			# print "h1, h2, frac, hi, lo:", h1, h2, frac, hi, lo
 			self.canvas.yview("moveto", frac)
 	#@-body
-	#@-node:17::tree.idle_scrollTo
-	#@+node:18::tree.numberOfVisibleNodes
+	#@-node:19::tree.idle_scrollTo
+	#@+node:20::tree.numberOfVisibleNodes
 	#@+body
 	def numberOfVisibleNodes(self):
 		
@@ -597,8 +636,8 @@ class leoTree:
 			v = v.visNext()
 		return n
 	#@-body
-	#@-node:18::tree.numberOfVisibleNodes
-	#@+node:19::tree.recolor, recolor_now, recolor_range
+	#@-node:20::tree.numberOfVisibleNodes
+	#@+node:21::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -619,8 +658,8 @@ class leoTree:
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:19::tree.recolor, recolor_now, recolor_range
-	#@+node:20::tree.redraw , force_redraw, redraw_now
+	#@-node:21::tree.recolor, recolor_now, recolor_range
+	#@+node:22::tree.redraw , force_redraw, redraw_now
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
@@ -667,8 +706,8 @@ class leoTree:
 			if self.recycleBindings:
 				collectGarbage()
 	#@-body
-	#@-node:20::tree.redraw , force_redraw, redraw_now
-	#@+node:21::tree.yoffset
+	#@-node:22::tree.redraw , force_redraw, redraw_now
+	#@+node:23::tree.yoffset
 	#@+body
 	#@+at
 	#  We can't just return icony because the tree hasn't been redrawn yet.  
@@ -704,7 +743,7 @@ class leoTree:
 			v = v.next()
 		return h, false
 	#@-body
-	#@-node:21::tree.yoffset
+	#@-node:23::tree.yoffset
 	#@-node:4::Drawing
 	#@+node:5::Event handers (tree)
 	#@+body
@@ -1886,6 +1925,64 @@ class leoTree:
 	#@-body
 	#@-node:8::tree.set...LabelState
 	#@-node:6::Selecting & editing (tree)
+	#@+node:7::tree.moveUpDown
+	#@+body
+	def OnUpKey   (self,event=None): self.moveUpDown("up")
+	def OnDownKey (self,event=None): self.moveUpDown("down")
+	
+	def moveUpDown (self,upOrDown):
+	
+		c = self.commands ; body = c.frame.body
+		# Make the insertion cursor visible so bbox doesn't return empty list.
+		body.see("insert")
+	
+		# Find the coordinates of the cursor and set the new height.
+		# There will be errors rounding off, since
+	    # coordinates don't match character positions exactly.
+		ins =  body.index("insert")
+		lines,char = scanf(ins,"%d.%d")
+		trace("entry:  %s.%s" % (lines,char))
+		x,y,junk,textH = body.bbox("insert")
+		bodyW,bodyH = body.winfo_width(),body.winfo_height()
+		junk,maxy,junk,junk = body.bbox("@%d,%d" % (bodyW,bodyH))
+		#trace("@%d.%d = bbox(maxy):%d" % (bodyW,bodyH,maxy))
+	
+		# When updating position, make sure y is within text boundaries
+		if upOrDown == "up":
+			if y <= textH:
+				# $textWidget yview scroll -1 units
+				trace("scroll -1 unit")
+				pass ### body.yview(..._)
+			else:
+				y = max(y-textH,0)
+		else:
+			if y >= maxy:
+				# $textWidget yview scroll 1 units
+				trace("scroll -1 unit")
+				pass ### body.yview(...)
+			else:
+				y = min(y+textH,maxy)
+	
+		newx,newy,width,junk = body.bbox("@%d,%d" % (x,y))
+		# trace("@%d.%d = bbox(newx,newy,height):%d %d %d" % (x,y,newx,newy,height))
+	
+		# Position the cursor on the proper side of the characters.
+		if x > newx + width/2:
+			x = newx + width + 1
+	
+		result = body.index("@%d,%d" % (x,y))
+		
+		body.mark_set("insert",result)
+		if 0: # Colors the expected character, so we are getting the coorect result.
+			body.tag_config("tag", background="yellow")
+			body.tag_add("tag",result)
+		trace("result:",result)
+		trace("insert:",body.index("insert"))
+	
+		return "break" # Does not seem to inhibit previous bindings!
+	
+	#@-body
+	#@-node:7::tree.moveUpDown
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py

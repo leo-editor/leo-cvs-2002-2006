@@ -973,7 +973,7 @@ def trace (*args):
 		if type(arg) != type(""):
 			arg = repr(arg)
 		if len(s) > 0:
-			s = s + ", " + arg
+			s = s + " " + arg
 		else:
 			s = arg
 	message = s
@@ -1720,7 +1720,29 @@ def scanError(s):
 	es(s)
 #@-body
 #@-node:3::scanError
-#@+node:4::Scanners: calling scanError
+#@+node:4::scanf
+#@+body
+# A quick and dirty sscanf.  Understands only %s and %d.
+
+def scanf (s,pat):
+	import re
+	count = pat.count("%s") + pat.count("%d")
+	pat = pat.replace("%s","(\S+)")
+	pat = pat.replace("%d","(\d+)")
+	parts = re.split(pat,s)
+	result = []
+	for part in parts:
+		if len(part) > 0 and len(result) < count:
+			result.append(part)
+	# trace("scanf returns:",result)
+	return result
+	
+if 0: # testing
+	from leoGlobals import trace
+	scanf("1.0","%d.%d",)
+#@-body
+#@-node:4::scanf
+#@+node:5::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -2107,8 +2129,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:4::Scanners: calling scanError
-#@+node:5::Scanners: no error messages
+#@-node:5::Scanners: calling scanError
+#@+node:6::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -2382,8 +2404,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:5::Scanners: no error messages
-#@+node:6::Tk.Text selection (utils)
+#@-node:6::Scanners: no error messages
+#@+node:7::Tk.Text selection (utils)
 #@+node:1::bound_paragraph
 #@+body
 def bound_paragraph(t=None):
@@ -2491,8 +2513,8 @@ def setTextSelection (t,start,end):
 
 #@-body
 #@-node:4::setTextSelection
-#@-node:6::Tk.Text selection (utils)
-#@+node:7::Whitespace...
+#@-node:7::Tk.Text selection (utils)
+#@+node:8::Whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -2627,7 +2649,7 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:8::skip_leading_ws_with_indent
-#@-node:7::Whitespace...
+#@-node:8::Whitespace...
 #@-node:9::Scanning, selection & whitespace...
 #@+node:10::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)

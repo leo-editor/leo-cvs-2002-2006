@@ -148,6 +148,11 @@ class LeoFrame:
 		self.body.bind("<Double-Button-1>", self.OnBodyDoubleClick)
 		self.log.bind("<Button-1>", self.OnActivateLog)
 		self.body.bind("<Key>", self.tree.OnBodyKey)
+		
+		if 0: # No joy.  Previous bindings also are fired!
+			self.body.bind("<Up>",   self.tree.OnUpKey)
+			self.body.bind("<Down>", self.tree.OnDownKey)
+	
 		self.body.bind(virtual_event_name("Cut"), self.OnCut)
 		self.body.bind(virtual_event_name("Copy"), self.OnCopy)
 		self.body.bind(virtual_event_name("Paste"), self.OnPaste)
@@ -155,6 +160,8 @@ class LeoFrame:
 		# Handle mouse wheel in the outline pane.
 		if sys.platform == "linux2": # This crashes tcl83.dll
 			self.tree.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+	
+	
 	#@-body
 	#@-node:2::frame.__init__
 	#@+node:3::frame.__repr__
@@ -2801,7 +2808,7 @@ class LeoFrame:
 		
 		c = self.commands
 		
-		filetypes = [("Gif", "*.gif"),("All files", "*.*")]
+		filetypes = [("Gif", "*.gif")]
 			# Only Gif images are allowed.
 			#("Bitmap", "*.bmp"),
 			#("Icon", "*.ico"),
