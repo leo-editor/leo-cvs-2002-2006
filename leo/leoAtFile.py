@@ -120,7 +120,9 @@ class atFile:
 		#@@c
 		self.shortFileName = "" # short version of file name used for messages.
 		self.targetFileName = ""
+		self.targetFileNameW = "" #GS 12/15/02: unicode name
 		self.outputFileName = ""
+		self.outputFileNameW = "" #GS 12/15/02: unicode name
 		self.outputFile = None # The temporary output file.
 		
 
@@ -918,8 +920,9 @@ class atFile:
 			# print self.default_directory, self.targetFileName
 			fn = os.path.join(self.default_directory, self.targetFileName)
 			fn = os.path.normpath(fn)
+			fnW = unicode(fn, app().config.xml_version_string) #GS 12/15/02
 			try:
-				file = open(fn,'r')
+				file = open(fnW,'r') #GS 12/15/02
 				if file:
 					
 					#@<< warn on read-only file >>
@@ -927,7 +930,7 @@ class atFile:
 					#@+body
 					# 8/13/02
 					try:
-						read_only = not os.access(fn,os.W_OK)
+						read_only = not os.access(fnW,os.W_OK) #GS 12/15/02
 						if read_only:
 							es("read only: " + fn)
 					except: pass # os.access() may not exist on all platforms.
@@ -2680,7 +2683,7 @@ class atFile:
 		
 		if self.outputFileName != None:
 			try: # Just delete the temp file.
-				os.remove(self.outputFileName)
+				os.remove(self.outputFileNameW) #GS 12/15/02
 			except:
 				es("exception deleting:" + self.outputFileName)
 				es_exception()
@@ -2697,10 +2700,9 @@ class atFile:
 	
 	def openWriteFile (self,root):
 	
+		encoding = app().config.xml_version_string # EKR: 12/15/02
 		try:
 			self.scanAllDirectives(root)
-			#print `self.startSentinelComment`
-			#print `self.endSentinelComment`
 			valid = self.errors == 0
 		except:
 			es("exception in atFile.scanAllDirectives")
@@ -2713,9 +2715,11 @@ class atFile:
 				self.shortFileName = fn # name to use in status messages.
 				self.targetFileName = os.path.join(self.default_directory,fn)
 				self.targetFileName = os.path.normpath(self.targetFileName)
+				self.targetFileNameW = unicode(self.targetFileName,encoding) #GS 12/15/02
 				path = os.path.dirname(self.targetFileName)
+				pathW = unicode(path,encoding) #GS 12/15/02
 				if path and len(path) > 0:
-					valid = os.path.exists(path)
+					valid = os.path.exists(pathW) #GS 12/15/02
 					if not valid:
 						self.writeError("path does not exist: " + path)
 				else:
@@ -2726,9 +2730,9 @@ class atFile:
 				valid = false
 		
 		if valid:
-			if os.path.exists(self.targetFileName):
+			if os.path.exists(self.targetFileNameW): #GS 12/15/02
 				try:
-					read_only = not os.access(self.targetFileName,os.W_OK)
+					read_only = not os.access(self.targetFileNameW,os.W_OK) #GS 12/15/02
 					if read_only:
 						es("read only: " + self.targetFileName)
 						valid = false
@@ -2737,7 +2741,8 @@ class atFile:
 		if valid:
 			try:
 				self.outputFileName = self.targetFileName + ".tmp"
-				self.outputFile = open(self.outputFileName, 'wb')
+				self.outputFileNameW = unicode(self.outputFileName,encoding) #GS 12/15/02
+				self.outputFile = open(self.outputFileNameW,'wb') #GS 12/15/02
 				valid = self.outputFile != None
 				if not valid:
 					self.writeError("can not open " + self.outputFileName)
@@ -2759,14 +2764,14 @@ class atFile:
 		
 		assert(self.outputFile == None)
 		
-		if os.path.exists(self.targetFileName):
-			if filecmp.cmp(self.outputFileName, self.targetFileName):
+		if os.path.exists(self.targetFileNameW): #GS 12/15/02
+			if filecmp.cmp(self.outputFileNameW, self.targetFileNameW): #GS 12/15/02
 				
 				#@<< delete the output file >>
 				#@+node:1::<< delete the output file >>
 				#@+body
 				try: # Just delete the temp file.
-					os.remove(self.outputFileName)
+					os.remove(self.outputFileNameW) #GS 12/15/02
 				except:
 					es("exception deleting:" + self.outputFileName)
 					es_exception()
@@ -2785,15 +2790,15 @@ class atFile:
 				try:
 					# 10/6/02: retain the access mode of the previous file,
 					# removing any setuid, setgid, and sticky bits.
-					mode = (os.stat(self.targetFileName))[0] & 0777
+					mode = (os.stat(self.targetFileNameW))[0] & 0777 #GS 12/15/02
 				except:
 					mode = None
 				
 				try: # Replace target file with temp file.
-					os.remove(self.targetFileName)
-					utils_rename(self.outputFileName, self.targetFileName)
+					os.remove(self.targetFileNameW) #GS 12/15/02
+					utils_rename(self.outputFileNameW, self.targetFileNameW) #GS 12/15/02
 					if mode: # 10/3/02: retain the access mode of the previous file.
-						os.chmod(self.targetFileName,mode)
+						os.chmod(self.targetFileNameW,mode) #GS 12/15/02
 					es("writing: " + self.shortFileName)
 				except:
 					self.writeError("exception removing and renaming:" + self.outputFileName +
@@ -2812,7 +2817,7 @@ class atFile:
 			#@+body
 			try:
 				# os.rename(self.outputFileName, self.targetFileName)
-				utils_rename(self.outputFileName, self.targetFileName)
+				utils_rename(self.outputFileNameW, self.targetFileNameW) #GS 12/15/02
 				es("creating: " + self.targetFileName)
 			
 			except:
@@ -2984,7 +2989,7 @@ class atFile:
 			if self.errors > 0 or self.root.isOrphan():
 				root.setOrphan()
 				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
-				os.remove(self.outputFileName) # Delete the temp file.
+				os.remove(self.outputFileNameW) # Delete the temp file. #GS 12/15/02
 				es("Not written: " + self.outputFileName)
 			else:
 				root.clearOrphan()
