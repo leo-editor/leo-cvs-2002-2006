@@ -287,30 +287,40 @@ class baseConfig:
         data = d.get(setting)
         if data:
             found = True
-            dType,val = data
+            if len(data) == 2:
+                c = None
+                dType,val = data
+            else:
+                c,dType,val = data
             if dType != requestedType:
                 ok = False
+                #@            << set ok if we can translate one type into the other >>
+                #@+node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
                 for toBeTranslatedType,otherType in (
-                    (requestedType,dType),(dType,requestedType)
-                ):
+                    (requestedType,dType),(dType,requestedType)):
                     data = self.types_dict.get(toBeTranslatedType)
                     if data:
                         transType,validValues = data
                         ok = transType == otherType
                         if ok:
-                            g.trace("translated %12s to %s for %s" %
-                                (toBeTranslatedType,transType,setting))
+                            # g.trace("translated %12s to %s for %s" % (toBeTranslatedType,transType,setting))
                             break
-                if not ok: # Give warning for the first time (setting,dType) is seen.
+                #@nonl
+                #@-node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
+                #@nl
+                if not ok:
+                    #@                << give warning the first time (setting,dType) is seen >>
+                    #@+node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
                     wTypes = self.warningsDict.get(setting,[])
                     if dType not in wTypes:
                         wTypes.append(dType)
                         self.warningsDict[setting] = wTypes
                         g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
                         # g.print_stack()
-    
+                    #@nonl
+                    #@-node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
+                    #@nl
             if val not in (u'None',u'none','None','none','',None):
-                # g.trace(theType,repr(val))
                 return val,found
     
         return None,found
@@ -846,17 +856,20 @@ class parserBaseClass:
     #@+node:ekr.20041122095745:doType
     def doType (self,p,kind,name,val):
     
-        d =  g.app.config.types_dict
+        c = p.c ; d = g.app.config.types_dict
     
         name,theType,values = self.parseType(p)
     
         if name and theType:
-            if d.get(name):
-                g.es("over-riding @type %s" % (name), color="red")
+            data = d.get(name)
+            if data:
+                c2,theType2,values2 = data
+                if c.mFileName != c2.mFileName:
+                    g.es("over-riding @type %s" % (name), color="red")
             else:
                 # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
                 pass
-            d[name] = theType,values
+            d[name] = c,theType,values
         else:
             g.es("invalid @type: %s" % (p.headString()), color="red")
     #@-node:ekr.20041122095745:doType
@@ -965,14 +978,19 @@ class parserBaseClass:
         
         """Init the setting for name to val."""
         
+        c = self.c
+        
         # g.trace("%10s %15s %s" %(kind,val,name))
         
         d = self.settingsDict
     
-        if d.get(name):
-            g.es("overriding setting: %s" % (name))
-        
-        d[name] = kind,val
+        data = d.get(name)
+        if data:
+            c2,theType2,val2 = data
+            if c.mFileName != c2.mFileName:
+                g.es("over-riding setting: %s" % (name))
+    
+        d[name] = c,kind,val
     #@nonl
     #@-node:ekr.20041120094940.9:set (settingsParser)
     #@+node:ekr.20041119204700.1:traverse
