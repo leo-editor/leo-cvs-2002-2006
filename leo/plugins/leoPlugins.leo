@@ -89,7 +89,7 @@
 <v t="T63"><vh>newMoreHead</vh></v>
 </v>
 </v>
-<v t="T64"><vh>Debugging</vh>
+<v t="T64" a="E"><vh>Debugging</vh>
 <v t="T65"><vh>@file dump_globals.py</vh>
 <v t="T66"><vh>onStart</vh></v>
 </v>
@@ -100,7 +100,7 @@
 <v t="T70"><vh>@file trace_keys.py</vh>
 <v t="T71"><vh>onKey</vh></v>
 </v>
-<v t="T72"><vh>@file trace_tags.py</vh>
+<v t="T72" a="EV"><vh>@file trace_tags.py</vh>
 <v t="T73"><vh>trace_tags</vh></v>
 </v>
 </v>
@@ -110,7 +110,7 @@
 <v t="T77"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="T78" a="V"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="T78"><vh>Drawing, graphics &amp; styled text</vh>
 <v t="T79"><vh>@file color_markup.py</vh>
 <v t="T80"><vh>initAnyMarkup</vh></v>
 <v t="T81"><vh>colorWikiMarkup</vh></v>
@@ -1470,10 +1470,10 @@ if 0: # Register the handlers...
 		c = keywords.get("c")
 		v = keywords.get("v")
 		if not c:
-			print tag, "c = None"
+			print tagCount,tag, "c = None"
 		if not v:
 			if tag not in ("select1","select2","unselect1","unselect2"):
-				print tag, "v = None"
+				print tagCount,tag, "v = None"
 	
 	if tag not in (
 		"bodykey1","bodykey2","dragging1","dragging2",
