@@ -10123,11 +10123,11 @@ if c.frame and not self.default_directory:
 				else: # 9/25/02
 					self.default_directory = g.makeAllNonExistentDirectories(dir)
 
-if not self.default_directory and not scripting:
+if not self.default_directory and not scripting and not importing:
 	# This should never happen: c.openDirectory should be a good last resort.
+	g.trace()
 	self.error("No absolute directory specified anywhere.")
 	self.default_directory = ""
-#@nonl
 #@-node:ekr.20031218072017.2399:<< Set current directory >>
 #@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 # Use single-line comments if we have a choice.
@@ -11156,15 +11156,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -11432,15 +11436,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -18648,15 +18656,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -19878,15 +19890,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1553:getLeoFile
 # The caller should enclose this in begin/endUpdate.
@@ -22020,15 +22036,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -23306,15 +23326,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@-node:ekr.20040331074940:(Fixed bug in hoist)
 #@-node:ekr.20040331080343:3/31
@@ -26812,6 +26836,7 @@ def readOpenFile(self,root,file,firstLines):
 	at.completeLastDirectives(lines,lastLines)
 	s = '\n'.join(lines).replace('\r', '')
 	root.v.t.tempBodyString = s
+#@nonl
 #@-node:ekr.20031218072017.2757:new_df.readOpenFile
 #@+node:ekr.20031218072017.1812:top_df.read
 # The caller has enclosed this code in beginUpdate/endUpdate.
@@ -26822,15 +26847,13 @@ def read(self,root,importFileName=None,thinFile=false):
 	
 	at = self ; c = at.c
 	at.errors = 0
-	at.scanDefaultDirectory(root)
-	if at.errors: return
+	importing = importFileName is not None
 	<< set fileName from root and importFileName >>
 	<< open file or return false >>
 	g.es("reading: " + root.headString())
 	firstLines,read_new = at.scanHeader(file,fileName)
 	df = g.choose(read_new,at.new_df,at.old_df)
 	# g.trace(g.choose(df==at.new_df,"new","old"))
-	# import traceback ; traceback.print_stack()
 	<< copy ivars to df >>
 	root.clearVisitedInTree()
 	try:
@@ -26853,6 +26876,9 @@ def read(self,root,importFileName=None,thinFile=false):
 	return df.errors == 0
 #@nonl
 #@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+at.scanDefaultDirectory(root,importing=importing)
+if at.errors: return
+
 if importFileName:
 	fileName = importFileName
 elif root.isAnyAtFileNode():
@@ -26894,6 +26920,8 @@ except:
 # Telling what kind of file we are reading.
 df.importing = importFileName != None
 df.raw = false
+if importing and df == at.new_df:
+	thinFile = true
 df.thinFile = thinFile
 
 # Set by scanHeader.
@@ -27696,7 +27724,7 @@ def readEndNode (self,s,i,middle=false):
 	at.indent = at.indentStack.pop()
 	at.out = at.outStack.pop()
 	at.t = at.tStack.pop()
-	if at.thinFile:
+	if at.thinFile and not at.importing:
 		at.lastThinNode = at.thinNodeStack.pop()
 
 	at.popSentinelStack(endNode)
@@ -28204,7 +28232,7 @@ def readEndNode (self,s,i,middle=false):
 	at.indent = at.indentStack.pop()
 	at.out = at.outStack.pop()
 	at.t = at.tStack.pop()
-	if at.thinFile:
+	if at.thinFile and not at.importing:
 		at.lastThinNode = at.thinNodeStack.pop()
 
 	at.popSentinelStack(endNode)
@@ -30226,11 +30254,11 @@ if c.frame and not self.default_directory:
 				else: # 9/25/02
 					self.default_directory = g.makeAllNonExistentDirectories(dir)
 
-if not self.default_directory and not scripting:
+if not self.default_directory and not scripting and not importing:
 	# This should never happen: c.openDirectory should be a good last resort.
+	g.trace()
 	self.error("No absolute directory specified anywhere.")
 	self.default_directory = ""
-#@nonl
 #@-node:ekr.20031218072017.2399:<< Set current directory >>
 #@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 # Use single-line comments if we have a choice.
@@ -30849,7 +30877,7 @@ def readEndNode (self,s,i,middle=false):
 	at.indent = at.indentStack.pop()
 	at.out = at.outStack.pop()
 	at.t = at.tStack.pop()
-	if at.thinFile:
+	if at.thinFile and not at.importing:
 		at.lastThinNode = at.thinNodeStack.pop()
 
 	at.popSentinelStack(endNode)
@@ -31215,7 +31243,7 @@ def readEndNode (self,s,i,middle=false):
 	at.indent = at.indentStack.pop()
 	at.out = at.outStack.pop()
 	at.t = at.tStack.pop()
-	if at.thinFile:
+	if at.thinFile and not at.importing:
 		at.lastThinNode = at.thinNodeStack.pop()
 
 	at.popSentinelStack(endNode)
@@ -34803,15 +34831,19 @@ def drawTopTree (self):
 	
 	c = self.c
 	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
 	if c.hoistStack:
 		p,junk = c.hoistStack[-1]
 		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
+	
 #@-node:ekr.20031218072017.2029:drawTopTree
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
@@ -37403,6 +37435,1020 @@ c.endUpdate(redraw_flag) # redraw only if necessary
 #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
 #@-node:ekr.20031218072017.1321:idle_body_key
 #@-node:ekr.20031218072017.744:(Fixed bugs in @tab_width: support backspace with negative tab width)
+#@+node:EKR.20040523193958:(Fixed bugs in Remove Sentinel command)
+#@+node:EKR.20040604160917:Report & What I did
+@nocolor
+
+By: Poor Yorick - pooryorick
+ Bug: Remove Sentinels   
+2004-05-21 09:57  
+
+ The Remove Sentinels function also converts windows newlines into unix newlines.
+
+Comment:  actually, everything should work properly if the output_newline option is "platform" or "crlf" rather than nl.
+
+- Created at.parseLeoSentinel so we don't have to duplicate code.
+#@nonl
+#@-node:EKR.20040604160917:Report & What I did
+#@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
+def parseLeoSentinel (self,s):
+	
+	at = self
+	new_df = false ; valid = true ; n = len(s)
+	encoding_tag = "-encoding="
+	version_tag = "-ver="
+	tag = "@+leo"
+	thin_tag = "-thin"
+	<< set the opening comment delim >>
+	<< make sure we have @+leo >>
+	<< read optional version param >>
+	<< read optional thin param >>
+	<< read optional encoding param >>
+	<< set the closing comment delim >>
+	return valid,new_df,start,end
+#@nonl
+#@+node:EKR.20040604155223:<< set the opening comment delim >>
+# s contains the tag
+i = j = g.skip_ws(s,0)
+
+# The opening comment delim is the initial non-tag
+while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
+	i += 1
+
+if j < i:
+	start = s[j:i]
+else:
+	valid = false
+#@nonl
+#@-node:EKR.20040604155223:<< set the opening comment delim >>
+#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
+@c
+
+if 0: # Make leading whitespace significant.
+	i = g.skip_ws(s,i)
+
+if g.match(s,i,tag):
+	i += len(tag)
+else: valid = false
+#@nonl
+#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
+#@+node:ekr.20031218072017.2636:<< read optional version param >>
+new_df = g.match(s,i,version_tag)
+
+if new_df:
+	# Skip to the next minus sign or end-of-line
+	i += len(version_tag)
+	j = i
+	while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
+		i += 1
+
+	if j < i:
+		pass # version = s[j:i]
+	else:
+		valid = false
+#@-node:ekr.20031218072017.2636:<< read optional version param >>
+#@+node:EKR.20040503105354:<< read optional thin param >>
+if g.match(s,i,thin_tag):
+	i += len(tag)
+#@nonl
+#@-node:EKR.20040503105354:<< read optional thin param >>
+#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
+# Set the default encoding
+at.encoding = g.app.config.default_derived_file_encoding
+
+if g.match(s,i,encoding_tag):
+	# Read optional encoding param, e.g., -encoding=utf-8,
+	i += len(encoding_tag)
+	# Skip to the next end of the field.
+	j = s.find(",.",i)
+	if j > -1:
+		# The encoding field was written by 4.2 or after:
+		encoding = s[i:j]
+	else:
+		# The encoding field was written before 4.2.
+		j = s.find('.',i)
+		if j > -1:
+			encoding = s[i:j]
+		else:
+			encoding = None
+	# g.trace("encoding:",encoding)
+	if encoding:
+		if g.isValidEncoding(encoding):
+			at.encoding = encoding
+		else:
+			print "bad encoding in derived file:",encoding
+			g.es("bad encoding in derived file:",encoding)
+	else:
+		valid = false
+#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
+#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
+# The closing comment delim is the trailing non-whitespace.
+i = j = g.skip_ws(s,i)
+while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
+	i += 1
+end = s[j:i]
+#@nonl
+#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
+#@-node:EKR.20040604155223.1:top_df.parseLeoSentinel
+#@+node:ekr.20031218072017.2633:top_df.scanHeader
+def scanHeader(self,file,fileName):
+	
+	"""Scan the @+leo sentinel.
+	
+	Sets self.encoding, and self.start/endSentinelComment.
+	
+	Returns (firstLines,new_df) where:
+	firstLines contains all @first lines,
+	new_df is true if we are reading a new-format derived file."""
+	
+	at = self
+	firstLines = [] # The lines before @+leo.
+	tag = "@+leo"
+	valid = true ; new_df = false
+	<< skip any non @+leo lines >>
+	if valid:
+		valid,new_df,start,end = at.parseLeoSentinel(s)
+	if valid:
+		at.startSentinelComment = start
+		at.endSentinelComment = end
+	else:
+		at.error("Bad @+leo sentinel in " + fileName)
+	# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
+	return firstLines, new_df
+#@nonl
+#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
+@ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
+
+We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
+@c
+
+s = at.readLine(file)
+while len(s) > 0:
+	j = s.find(tag)
+	if j != -1: break
+	firstLines.append(s) # Queue the line
+	s = at.readLine(file)
+	
+n = len(s)
+valid = n > 0
+#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
+#@-node:ekr.20031218072017.2633:top_df.scanHeader
+#@+node:ekr.20031218072017.3300:removeSentinelsCommand
+def removeSentinelsCommand (self,fileName):
+
+	self.setEncoding()
+	path, self.fileName = g.os_path_split(fileName) # path/fileName
+	<< Read file into s >>
+	<< set delims from the header line >>
+	# g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
+	s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
+	ext = g.app.config.remove_sentinels_extension
+	if ext == None or len(ext) == 0:
+		ext = ".txt"
+	if ext[0] == '.':
+		newFileName = g.os_path_join(path,fileName+ext)
+	else:
+		head,ext2 = g.os_path_splitext(fileName) 
+		newFileName = g.os_path_join(path,head+ext+ext2)
+	# g.trace(repr(s))
+	<< Write s into newFileName >>
+#@nonl
+#@+node:ekr.20031218072017.3301:<< Read file into s >>
+try:
+	file = open(fileName)
+	s = file.read()
+	s = g.toUnicode(s,self.encoding)
+	file.close()
+except:
+	g.es("Can not open " + fileName, color="blue")
+	import leoTest ; leoTest.fail()
+	return
+#@nonl
+#@-node:ekr.20031218072017.3301:<< Read file into s >>
+#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
+# Skip any non @+leo lines.
+i = 0
+while i < len(s) and not g.find_on_line(s,i,"@+leo"):
+	i = g.skip_line(s,i)
+
+# Get the comment delims from the @+leo sentinel line.
+at = self.c.atFileCommands
+j = g.skip_line(s,i) ; line = s[i:j]
+
+valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
+if not valid:
+	g.es("invalid @+leo sentinel in " + fileName)
+	return
+
+if end_delim:
+	line_delim = None
+else:
+	line_delim,start_delim = start_delim,None
+#@nonl
+#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
+#@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
+try:
+	mode = g.app.config.output_newline
+	mode = g.choose(mode=="platform",'w','wb')
+	file = open(newFileName,mode)
+	s = g.toEncodedString(s,self.encoding,reportErrors=true)
+	file.write(s)
+	file.close()
+	g.es("created: " + newFileName)
+except:
+	g.es("exception creating: " + newFileName)
+	g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1149:<< Write s into newFileName >>
+#@-node:ekr.20031218072017.3300:removeSentinelsCommand
+#@+node:ekr.20031218072017.3303:removeSentinelLines
+@ Properly removes all sentinel lines in s.  Only leading single-line comments may be sentinels.
+
+line_delim, start_delim and end_delim are the comment delimiters.
+@c
+
+def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
+
+	i = 0 ; result = [] ; nlSeen = true
+	while i < len(s):
+		# g.trace(i,nlSeen,g.get_line_after(s,i))
+		start = i # The start of the next syntax element.
+		if nlSeen or g.is_nl(s,i):
+			nlSeen = false
+			<< handle possible sentinel >>
+		if line_delim and g.match(s,i,line_delim):
+			i = g.skip_to_end_of_line(s,i)
+		elif start_delim and end_delim and g.match(s,i,start_delim):
+			i = g.skip_matching_delims(s,i,start_delim,end_delim)
+		elif g.match(s,i,"'") or g.match(s,i,'"'):
+			i = g.skip_string(s,i)
+		else:
+			i += 1
+		assert(i == 0 or start<i)
+		result.append(s[start:i])# 12/11/03: hugely faster than string concatenation.
+
+	result = ''.join(result)
+	return result
+#@nonl
+#@+node:ekr.20031218072017.3304:<< handle possible sentinel >>
+if g.is_nl(s,i):
+	i = g.skip_nl(s,i)
+	nlSeen = true
+i = g.skip_ws(s,i)
+# g.trace(i,g.get_line(s,i))
+if line_delim:
+	if g.match(s,i,line_delim):
+		j = i+len(line_delim)
+		if g.match(s,j,"@"):
+			i = g.skip_line(s,i)
+			nlSeen = true
+			continue # Remove the entire sentinel line, including the newline.
+		else:
+			i = g.skip_to_end_of_line(s,i)
+elif start_delim:
+	if g.match(s,i,start_delim):
+		j = i+len(start_delim)
+		i = g.skip_matching_delims(s,i,start_delim,end_delim)
+		if g.match(s,j,"@"):
+			continue # Remove the sentinel
+elif nlSeen and start < i:
+	# Put the newline that was at the start of this line.
+	result.append(s[start:i])
+	continue
+#@nonl
+#@-node:ekr.20031218072017.3304:<< handle possible sentinel >>
+#@-node:ekr.20031218072017.3303:removeSentinelLines
+#@-node:EKR.20040523193958:(Fixed bugs in Remove Sentinel command)
+#@+node:EKR.20040512081330.1:(Eliminated spurious error in Import Derived File)
+#@+node:EKR.20040605172003:Report
+@nocolor
+
+No absolute directory specified anywhere.
+
+By: Kent Tenney - ktenney
+ 'Import Derived File' error   
+2004-05-06 13:38  
+
+In my Leo file is a node with the headline;
+@file c:\cygwin\home\ktenney\work\ImageWords\ImageWords.py
+
+When I start a new Leo file and choose; File->Import->Import Derived File
+
+and open the file derived from the first Leo file, I get a node with the headline;
+Imported @file C:/Python23/Lib/site-packages/leo/plugins/run_nodes.py
+
+.. no body.
+
+The message pane says;
+imported C:/cygwin/home/ktenney/work/ImageWords/ImageWords.py
+No absolute directory specified anywhere.
+#@nonl
+#@-node:EKR.20040605172003:Report
+#@+node:EKR.20040605173101:What I did
+@nocolor
+
+This message is from top_df.scanDefaultDirectory and old_df.scanAllDirectives.
+
+The solution is to disable this message in these routine when importing.
+#@nonl
+#@-node:EKR.20040605173101:What I did
+#@+node:ekr.20031218072017.1810:importDerivedFiles
+def importDerivedFiles (self,parent,fileName):
+	
+	c = self.c ; at = c.atFileCommands
+	current = c.currentVnode()
+	
+	c.beginUpdate()
+	v = parent.insertAfter()
+	v.initHeadString("Imported @file " + fileName)
+	c.undoer.setUndoParams("Import",v,select=current)
+	at.read(v,importFileName=fileName)
+	c.selectVnode(v)
+	v.expand()
+	c.endUpdate()
+#@-node:ekr.20031218072017.1810:importDerivedFiles
+#@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=false,importing=false,reading=false):
+	
+	"""Scan position p and p's ancestors looking for directives,
+	setting corresponding atFile ivars.
+	"""
+
+	c = self.c
+	<< Set ivars >>
+	<< Set path from @file node >>
+	old = {}
+	for p in p.self_and_parents_iter():
+		s = p.v.t.bodyString
+		dict = g.get_directives_dict(s)
+		<< Test for @path >>
+		<< Test for @encoding >>
+		<< Test for @comment and @language >>
+		<< Test for @header and @noheader >>
+		<< Test for @lineending >>
+		<< Test for @pagewidth >>
+		<< Test for @tabwidth >>
+		old.update(dict)
+	<< Set current directory >>
+	if not importing and not reading:
+		# 5/19/04: don't override comment delims when reading!
+		<< Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20031218072017.2388:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = g.app.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+#@nonl
+#@-node:ekr.20031218072017.2388:<< Set ivars >>
+#@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+dir = g.choose(name,g.os_path_dirname(name),None)
+
+if dir and len(dir) > 0 and g.os_path_isabs(dir):
+	if g.os_path_exists(dir):
+		self.default_directory = dir
+	else: # 9/25/02
+		self.default_directory = g.makeAllNonExistentDirectories(dir)
+		if not self.default_directory:
+			self.error("Directory \"" + dir + "\" does not exist")
+#@nonl
+#@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and dict.has_key("comment"):
+	k = dict["comment"]
+	# 11/14/02: Similar to fix below.
+	delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and dict.has_key("language"):
+	k = dict["language"]
+	# 11/14/02: Fix bug reported by J.M.Gilligan.
+	self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
+#@+node:ekr.20031218072017.2391:<< Test for @encoding >>
+if not old.has_key("encoding") and dict.has_key("encoding"):
+	
+	e = g.scanAtEncodingDirective(s,dict)
+	if e:
+		self.encoding = e
+#@nonl
+#@-node:ekr.20031218072017.2391:<< Test for @encoding >>
+#@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if dict.has_key("header") and dict.has_key("noheader"):
+	g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
+#@+node:ekr.20031218072017.2393:<< Test for @lineending >>
+if not old.has_key("lineending") and dict.has_key("lineending"):
+	
+	lineending = g.scanAtLineendingDirective(s,dict)
+	if lineending:
+		self.output_newline = lineending
+#@-node:ekr.20031218072017.2393:<< Test for @lineending >>
+#@+node:ekr.20031218072017.2394:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
+
+	k = dict["path"]
+	<< compute relative path from s[k:] >>
+	if path and len(path) > 0:
+		base = g.getBaseDirectory() # returns "" on error.
+		path = g.os_path_join(base,path)
+		if g.os_path_isabs(path):
+			<< handle absolute path >>
+		else:
+			self.error("ignoring bad @path: " + path)
+	else:
+		self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+	(path[0]=='<' and path[-1] == '>') or
+	(path[0]=='"' and path[-1] == '"') ):
+	path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+	path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2396:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+	self.default_directory = path
+else: # 9/25/02
+	self.default_directory = g.makeAllNonExistentDirectories(path)
+	if not self.default_directory:
+		self.error("invalid @path: " + path)
+#@-node:ekr.20031218072017.2396:<< handle absolute path >>
+#@-node:ekr.20031218072017.2394:<< Test for @path >>
+#@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
+	
+	w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=true)
+	if w and w > 0:
+		self.page_width = w
+#@nonl
+#@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
+#@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
+	
+	w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=true)
+	if w and w != 0:
+		self.tab_width = w
+
+#@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
+#@+node:ekr.20031218072017.2399:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+	base = g.getBaseDirectory() # returns "" on error.
+	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+		if dir and len(dir) > 0:
+			dir = g.os_path_join(base,dir)
+			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+				if g.os_path_exists(dir):
+					self.default_directory = dir ; break
+				else: # 9/25/02
+					self.default_directory = g.makeAllNonExistentDirectories(dir)
+
+if not self.default_directory and not scripting and not importing:
+	# This should never happen: c.openDirectory should be a good last resort.
+	g.trace()
+	self.error("No absolute directory specified anywhere.")
+	self.default_directory = ""
+#@-node:ekr.20031218072017.2399:<< Set current directory >>
+#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+# Use single-line comments if we have a choice.
+# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+if delim1:
+	self.startSentinelComment = delim1
+	self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+	self.startSentinelComment = delim2
+	self.endSentinelComment = delim3
+else: # Emergency!
+	# assert(0)
+	g.es("Unknown language: using Python comment delimiters")
+	g.es("c.target_language:",c.target_language)
+	g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+	self.startSentinelComment = "#" # This should never happen!
+	self.endSentinelComment = ""
+	
+# g.trace(self.startSentinelComment)
+#@nonl
+#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
+#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
+#@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
+def scanDefaultDirectory(self,p,importing=false):
+	
+	"""Set default_directory ivar by looking for @path directives."""
+
+	at = self ; c = at.c
+	at.default_directory = None
+	<< Set path from @file node >>
+	if at.default_directory:
+		return
+		
+	for p in p.self_and_parents_iter():
+		s = p.v.t.bodyString
+		dict = g.get_directives_dict(s)
+		if dict.has_key("path"):
+			<< handle @path >>
+			return
+
+	<< Set current directory >>
+	if not at.default_directory and not importing:
+		# This should never happen: c.openDirectory should be a good last resort.
+		g.trace()
+		at.error("No absolute directory specified anywhere.")
+		at.default_directory = ""
+#@nonl
+#@+node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+	
+dir = g.choose(name,g.os_path_dirname(name),None)
+
+if dir and g.os_path_isabs(dir):
+	if g.os_path_exists(dir):
+		at.default_directory = dir
+	else:
+		at.default_directory = g.makeAllNonExistentDirectories(dir)
+		if not at.default_directory:
+			at.error("Directory \"" + dir + "\" does not exist")
+#@nonl
+#@-node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
+#@+node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
+# We set the current director to a path so future writes will go to that directory.
+
+k = dict["path"]
+<< compute relative path from s[k:] >>
+
+if path and len(path) > 0:
+	base = g.getBaseDirectory() # returns "" on error.
+	path = g.os_path_join(base,path)
+	
+	if g.os_path_isabs(path):
+		<< handle absolute path >>
+	else:
+		at.error("ignoring bad @path: " + path)
+else:
+	at.error("ignoring empty @path")
+
+#@+node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+	(path[0]=='<' and path[-1] == '>') or
+	(path[0]=='"' and path[-1] == '"') ):
+	path = path[1:-1]
+
+path = path.strip()
+#@nonl
+#@-node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
+#@+node:ekr.20031218072017.2631:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+	at.default_directory = path
+else:
+	at.default_directory = g.makeAllNonExistentDirectories(path)
+	if not at.default_directory:
+		at.error("invalid @path: " + path)
+#@nonl
+#@-node:ekr.20031218072017.2631:<< handle absolute path >>
+#@-node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
+#@+node:ekr.20031218072017.2632:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+assert(not at.default_directory)
+
+if c.frame :
+	base = g.getBaseDirectory() # returns "" on error.
+	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+		if dir and len(dir) > 0:
+			dir = g.os_path_join(base,dir)
+			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+				if g.os_path_exists(dir):
+					at.default_directory = dir ; break
+				else:
+					at.default_directory = g.makeAllNonExistentDirectories(dir)
+#@-node:ekr.20031218072017.2632:<< Set current directory >>
+#@-node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
+#@+node:ekr.20031218072017.1812:top_df.read
+# The caller has enclosed this code in beginUpdate/endUpdate.
+
+def read(self,root,importFileName=None,thinFile=false):
+	
+	"""Common read logic for any derived file."""
+	
+	at = self ; c = at.c
+	at.errors = 0
+	importing = importFileName is not None
+	<< set fileName from root and importFileName >>
+	<< open file or return false >>
+	g.es("reading: " + root.headString())
+	firstLines,read_new = at.scanHeader(file,fileName)
+	df = g.choose(read_new,at.new_df,at.old_df)
+	# g.trace(g.choose(df==at.new_df,"new","old"))
+	<< copy ivars to df >>
+	root.clearVisitedInTree()
+	try:
+		# 1/28/04: Don't set comment delims when importing.
+		# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
+		importing = importFileName is not None
+		df.scanAllDirectives(root,importing=importing,reading=true)
+		df.readOpenFile(root,file,firstLines)
+	except:
+		at.error("Unexpected exception while reading derived file")
+		g.es_exception()
+	file.close()
+	root.clearDirty() # May be set dirty below.
+	after = root.nodeAfterTree()
+	<< warn about non-empty unvisited nodes >>
+	if df.errors == 0:
+		if not df.importing:
+			<< copy all tempBodyStrings to tnodes >>
+	<< delete all tempBodyStrings >>
+	return df.errors == 0
+#@nonl
+#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+at.scanDefaultDirectory(root,importing=importing)
+if at.errors: return
+
+if importFileName:
+	fileName = importFileName
+elif root.isAnyAtFileNode():
+	fileName = root.anyAtFileNodeName()
+else:
+	fileName = None
+
+if not fileName:
+	at.error("Missing file name.  Restoring @file tree from .leo file.")
+	return false
+#@nonl
+#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+#@+node:ekr.20031218072017.1814:<< open file or return false >>
+fn = g.os_path_join(at.default_directory,fileName)
+fn = g.os_path_normpath(fn)
+
+try:
+	# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+	file = open(fn,'rb')
+	if file:
+		<< warn on read-only file >>
+	else: return false
+except:
+	at.error("Can not open: " + '"@file ' + fn + '"')
+	root.setDirty()
+	return false
+#@nonl
+#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
+try:
+	read_only = not os.access(fn,os.W_OK)
+	if read_only:
+		g.es("read only: " + fn,color="red")
+except:
+	pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
+#@-node:ekr.20031218072017.1814:<< open file or return false >>
+#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
+# Telling what kind of file we are reading.
+df.importing = importFileName != None
+df.raw = false
+if importing and df == at.new_df:
+	thinFile = true
+df.thinFile = thinFile
+
+# Set by scanHeader.
+df.encoding = at.encoding
+df.endSentinelComment = at.endSentinelComment
+df.startSentinelComment = at.startSentinelComment
+
+# Set other common ivars.
+df.errors = 0
+df.file = file
+df.importRootSeen = false
+df.indent = 0
+df.targetFileName = fileName
+df.root = root
+df.root_seen = false
+#@nonl
+#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
+#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+for p in root.self_and_subtree_iter():
+
+	# g.trace(p)
+	try: s = p.v.t.tempBodyString
+	except: s = ""
+	if s and not p.v.t.isVisited():
+		at.error("Not in derived file:" + p.headString())
+		p.v.t.setVisited() # One message is enough.
+#@nonl
+#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+for p in root.self_and_subtree_iter():
+	try: s = p.v.t.tempBodyString
+	except: s = ""
+	if s != p.bodyString():
+		if 0: # For debugging.
+			print ; print "changed: " + p.headString()
+			print ; print "new:",s
+			print ; print "old:",p.bodyString()
+		if thinFile:
+			p.v.setTnodeText(s)
+		else:
+			g.es("changed: " + p.headString(),color="blue")
+			p.setMarked()
+			p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+#@nonl
+#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+for p in c.allNodes_iter():
+	if hasattr(p.v.t,"tempBodyString"):
+		delattr(p.v.t,"tempBodyString")
+#@nonl
+#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+#@-node:ekr.20031218072017.1812:top_df.read
+#@-node:EKR.20040512081330.1:(Eliminated spurious error in Import Derived File)
+#@+node:EKR.20040605173241:(Removed gnx in headlines when importing thin derived files)
+#@+node:EKR.20040605175309:Report
+@nocolor
+
+The Import Derived File command was showing the gnx field in the headlines.
+
+This was because top_df.read was not setting at.thinFile when importing thin files.
+
+What I did:
+
+- Set at.thinFile in top_df.read.<<copy ivars to df>> when importing.
+- Don't pop thinNodeStack when importing in readEndNode.
+	- readStartNode doesn't push this stack when importing.
+#@nonl
+#@-node:EKR.20040605175309:Report
+#@+node:ekr.20031218072017.1812:top_df.read
+# The caller has enclosed this code in beginUpdate/endUpdate.
+
+def read(self,root,importFileName=None,thinFile=false):
+	
+	"""Common read logic for any derived file."""
+	
+	at = self ; c = at.c
+	at.errors = 0
+	importing = importFileName is not None
+	<< set fileName from root and importFileName >>
+	<< open file or return false >>
+	g.es("reading: " + root.headString())
+	firstLines,read_new = at.scanHeader(file,fileName)
+	df = g.choose(read_new,at.new_df,at.old_df)
+	# g.trace(g.choose(df==at.new_df,"new","old"))
+	<< copy ivars to df >>
+	root.clearVisitedInTree()
+	try:
+		# 1/28/04: Don't set comment delims when importing.
+		# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
+		importing = importFileName is not None
+		df.scanAllDirectives(root,importing=importing,reading=true)
+		df.readOpenFile(root,file,firstLines)
+	except:
+		at.error("Unexpected exception while reading derived file")
+		g.es_exception()
+	file.close()
+	root.clearDirty() # May be set dirty below.
+	after = root.nodeAfterTree()
+	<< warn about non-empty unvisited nodes >>
+	if df.errors == 0:
+		if not df.importing:
+			<< copy all tempBodyStrings to tnodes >>
+	<< delete all tempBodyStrings >>
+	return df.errors == 0
+#@nonl
+#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+at.scanDefaultDirectory(root,importing=importing)
+if at.errors: return
+
+if importFileName:
+	fileName = importFileName
+elif root.isAnyAtFileNode():
+	fileName = root.anyAtFileNodeName()
+else:
+	fileName = None
+
+if not fileName:
+	at.error("Missing file name.  Restoring @file tree from .leo file.")
+	return false
+#@nonl
+#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
+#@+node:ekr.20031218072017.1814:<< open file or return false >>
+fn = g.os_path_join(at.default_directory,fileName)
+fn = g.os_path_normpath(fn)
+
+try:
+	# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+	file = open(fn,'rb')
+	if file:
+		<< warn on read-only file >>
+	else: return false
+except:
+	at.error("Can not open: " + '"@file ' + fn + '"')
+	root.setDirty()
+	return false
+#@nonl
+#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
+try:
+	read_only = not os.access(fn,os.W_OK)
+	if read_only:
+		g.es("read only: " + fn,color="red")
+except:
+	pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
+#@-node:ekr.20031218072017.1814:<< open file or return false >>
+#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
+# Telling what kind of file we are reading.
+df.importing = importFileName != None
+df.raw = false
+if importing and df == at.new_df:
+	thinFile = true
+df.thinFile = thinFile
+
+# Set by scanHeader.
+df.encoding = at.encoding
+df.endSentinelComment = at.endSentinelComment
+df.startSentinelComment = at.startSentinelComment
+
+# Set other common ivars.
+df.errors = 0
+df.file = file
+df.importRootSeen = false
+df.indent = 0
+df.targetFileName = fileName
+df.root = root
+df.root_seen = false
+#@nonl
+#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
+#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+for p in root.self_and_subtree_iter():
+
+	# g.trace(p)
+	try: s = p.v.t.tempBodyString
+	except: s = ""
+	if s and not p.v.t.isVisited():
+		at.error("Not in derived file:" + p.headString())
+		p.v.t.setVisited() # One message is enough.
+#@nonl
+#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
+#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+for p in root.self_and_subtree_iter():
+	try: s = p.v.t.tempBodyString
+	except: s = ""
+	if s != p.bodyString():
+		if 0: # For debugging.
+			print ; print "changed: " + p.headString()
+			print ; print "new:",s
+			print ; print "old:",p.bodyString()
+		if thinFile:
+			p.v.setTnodeText(s)
+		else:
+			g.es("changed: " + p.headString(),color="blue")
+			p.setMarked()
+			p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+#@nonl
+#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
+#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+for p in c.allNodes_iter():
+	if hasattr(p.v.t,"tempBodyString"):
+		delattr(p.v.t,"tempBodyString")
+#@nonl
+#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
+#@-node:ekr.20031218072017.1812:top_df.read
+#@+node:ekr.20031218072017.2772:readEndNode
+def readEndNode (self,s,i,middle=false):
+	
+	"""Handle end-of-node processing for @-others and @-ref sentinels."""
+
+	at = self
+	
+	# End raw mode.
+	at.raw = false
+	
+	# Set the temporary body text.
+	s = ''.join(at.out)
+	s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+
+	if at.importing:
+		at.t.bodyString = s
+	elif middle: 
+		pass # Middle sentinels never alter text.
+	else:
+		at.t.tempBodyString = s
+
+	# Indicate that the tnode has been set in the derived file.
+	at.t.setVisited()
+
+	# End the previous node sentinel.
+	at.indent = at.indentStack.pop()
+	at.out = at.outStack.pop()
+	at.t = at.tStack.pop()
+	if at.thinFile and not at.importing:
+		at.lastThinNode = at.thinNodeStack.pop()
+
+	at.popSentinelStack(endNode)
+#@nonl
+#@-node:ekr.20031218072017.2772:readEndNode
+#@-node:EKR.20040605173241:(Removed gnx in headlines when importing thin derived files)
+#@+node:EKR.20040605181231:(Made sure change all doesn't keep redrawing the screen)
+# This is not the cause of any slowness.
+#@nonl
+#@+node:ekr.20031218072017.3069:changeAll
+def changeAll(self):
+
+	c = self.c ; st = self.s_text ; gui = g.app.gui
+	if not self.checkArgs():
+		return
+	self.initInHeadline()
+	data = self.save()
+	self.initBatchCommands()
+	count = 0
+	c.beginUpdate()
+	while 1:
+		pos1, pos2 = self.findNextMatch()
+		if pos1:
+			count += 1
+			self.batchChange(pos1,pos2,count)
+			line = gui.getLineContainingIndex(st,pos1)
+			self.printLine(line,allFlag=true)
+		else: break
+	c.endUpdate()
+	# Make sure the headline and body text are updated.
+	v = c.currentVnode()
+	c.frame.tree.onHeadChanged(v)
+	c.frame.body.onBodyChanged(v,"Can't Undo")
+	if count > 0:
+		# A change was made.  Tag the end of the Change All command.
+		c.undoer.setUndoParams("Change All",v)
+	g.es("changed: ",count)
+	self.restore(data)
+#@nonl
+#@-node:ekr.20031218072017.3069:changeAll
+#@+node:ekr.20031218072017.2029:drawTopTree
+def drawTopTree (self):
+	
+	"""Draws the top-level tree, taking into account the hoist state."""
+	
+	c = self.c
+	
+	if 0:
+		try: self.redrawCount += 1
+		except: self.radrawCount = 1
+		g.trace(self.redrawCount)
+	# import traceback ; traceback.print_stack()
+	
+	if c.hoistStack:
+		p,junk = c.hoistStack[-1]
+		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
+	else:
+		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
+		
+	
+#@-node:ekr.20031218072017.2029:drawTopTree
+#@-node:EKR.20040605181231:(Made sure change all doesn't keep redrawing the screen)
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all

@@ -633,7 +633,8 @@
 <v t="EKR.20040604143253" a="E"><vh>Test of Remove sentinels</vh>
 <v t="EKR.20040604143253.1" a="E"><vh>@thin removeSentTest.txt</vh></v>
 </v>
-<v t="EKR.20040604170105" a="TV"><vh>Mini test of Remove sentinels</vh></v>
+<v t="EKR.20040604170105"><vh>Mini test of Remove sentinels</vh></v>
+<v t="EKR.20040605200750" a="TV"><vh>autocompleter test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2115,6 +2116,7 @@ c = g.top()
 print os.getcwd()
 name = g.os_path_join("test","removeSentTest.txt")
 c.importCommands.removeSentinelsCommand(name)</t>
+<t tx="EKR.20040605200750">string.join</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
