@@ -2657,7 +2657,6 @@ class baseOldDerivedFile:
 	#@+node:atFile.replaceTargetFileIfDifferent
 	def replaceTargetFileIfDifferent (self):
 		
-		trace()
 		assert(self.outputFile == None)
 		
 		self.fileChangedFlag = false
@@ -4389,7 +4388,7 @@ class baseNewDerivedFile(oldDerivedFile):
 					next = root.nodeAfterTree()
 					v = root
 					while v and v != next:
-						if not v.isVisited():
+						if not v.t.isVisited(): # 1/24/04: check tnode bit, not vnode bit.
 							at.writeError("Orphan node:  " + v.headString())
 						if v.isAtIgnoreNode():
 							at.writeError("@ignore node: " + v.headString())
@@ -4550,7 +4549,8 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		at = self ; s = v.bodyString()
 		
-		v.setVisited() # Mark the node for the orphans check.
+		v.setVisited() # Mark the node.
+		v.t.setVisited() # 1/24/04: Use tnode for the orphans check.
 		if not s: return
 	
 		inCode = true
