@@ -5,6 +5,295 @@
 #@+all
 #@+node:EKR.20040612172916:Make sure people use cvs to get latest plugins
 #@-node:EKR.20040612172916:Make sure people use cvs to get latest plugins
+#@+node:EKR.20040430163619:To do: 4.2
+#@+node:EKR.20040617070323:To do before 4.2 beta 1
+#@+node:EKR.20040524053657.1:(Handle conflicts in different clones)
+#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ About "@file" untangling and clones   
+2003-11-24 23:55  
+
+0-before untangling:save a reference copy of a found clone for each clone in the outline!
+1-Start untangling,
+2- once you reach a clone node: compare, if changed update all instances of outline
+3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
+
+so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process.
+
+- bolt
+
+EKR comments:
+
+- We can probably use something like this even for @file-thin.  In most cases, a text from a derived file should override the text in the outline.
+
+- The actual algorithm is easier than this.  There is only one tnode per set of clones, so "updating all clones" is trivial.  Moreover, we don't need to compute "reference text", we merely need to know where text comes from:  outline or derived file.
+
+- leoFileCommands.getLeoFile reads all derived files after reading the .leo file, which is exactly what we want.
+
+In short, the algorithm is this:  When creating/updating tnode text, if the "new" text is different from the "old", do the following:
+
+1.  Create a tempRefText attribute (ivar) in tnode if it doesn't already exist,  put the old text into it, and put the new text into the tnode.  (Actually, the text gets put into another temp ivar, but that's not particularly significant).
+
+2.  If the tempRefText attribute already exists, then it contains what you originally called the "reference copy".  If the "new" text is the same as the reference copy, do _not_ update the cloned text.  Otherwise, we have multiple conflicting updates to the same clone.  Issue a warning and do something arbitrary.
+#@nonl
+#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+#@-node:EKR.20040524053657.1:(Handle conflicts in different clones)
+#@+node:EKR.20040610125924:(Fix install script)
+#@+node:EKR.20040617074620:Fix install script
+#@+node:EKR.20040610125924.1:Report
+@nocolor
+
+By: Scott Beardsley - sbeards
+ install script broken in leo-4.2-a3   
+2004-06-10 12:19  
+
+Two issues with the install script...
+
+1) Will not run when using non-borne shells
+Install script should probably contain an @first directive.
+
+The first three lines are currently:
+#@verbatim
+#@+leo-ver=4-thin
+#@verbatim
+#@+node:EKR.20040519082027.33:@file-thin ../install
+#!/bin/sh
+
+In shell scripts however the '#!/bin/sh' should *always* be on the first line. Otherwise you get messages in csh like:
+
+%./install
+LEO_PREFIX=/usr/local: Command not found.
+LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
+LEO_PREFIX: Undefined variable.
+
+2) bin dir is not created (for this I modified step 2 a tad)
+
+################################
+# Step 2
+# Make the directory structure
+################################
+if [ ! -d $LEO_LIB_DIR ]; then
+...echo ""
+...echo Making directory structure $LEO_LIB_DIR
+
+...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_LIB_DIR!
+......exit 0;
+...fi
+fi
+
+if [ ! -d $LEO_PREFIX/bin ]; then
+...echo ""
+...echo Making directory structure $LEO_PREFIX/bin
+...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_PREFIX/bin!
+......exit 0;
+...fi
+fi
+#@-node:EKR.20040610125924.1:Report
+#@+node:EKR.20040617074620.1:Report 1
+@killcolor
+Open Discussion
+
+http://sourceforge.net/forum/message.php?msg_id=2612428
+By: sbeards
+
+Two issues with the install script...
+
+1) Will not run when using non-borne shells
+Install script should probably contain an @first directive.
+                                                                           
+The first three lines are currently:
+#@verbatim
+#@+leo-ver=4-thin
+#@verbatim
+#@+node:EKR.20040519082027.33:@file-thin ../install
+#!/bin/sh
+                                                                           
+In shell scripts however the '#!/bin/sh' should *always* be on the first line.
+Otherwise you get messages in csh like:
+                                                                           
+%./install
+LEO_PREFIX=/usr/local: Command not found.
+LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
+LEO_PREFIX: Undefined variable.
+                                                                           
+2) bin dir is not created (for this I modified step 2 a tad)
+
+################################
+# Step 2
+# Make the directory structure
+################################
+if [ ! -d $LEO_LIB_DIR ]; then
+...echo ""
+...echo Making directory structure $LEO_LIB_DIR
+                                                                           
+...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_LIB_DIR!
+......exit 0;
+...fi
+fi
+                                                                           
+if [ ! -d $LEO_PREFIX/bin ]; then
+...echo ""
+...echo Making directory structure $LEO_PREFIX/bin
+...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_PREFIX/bin!
+......exit 0;
+...fi
+fi
+#@-node:EKR.20040617074620.1:Report 1
+#@+node:EKR.20040617074620.2:Report 2
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2618344
+By: sbeards
+
+Another minor issue:
+
+3) leo executable will error out on files with spaces
+
+when attempting to open a leo file that has spaces in the filename (ie leo /tmp/foobar.leo) you'll get the following error in the log pane:
+
+File not found: /tmp/foo
+
+To fix change line 131 in install script:
+echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \\\" > $LEO_RUN_SCRIPT_OUTPUT
+
+(Note: added escaped double quotes around $1)
+
+If you don't want to reinstall just add double-quotes around the $1 in the leo
+executable (defaults to /usr/local/bin/leo).
+
+#@-node:EKR.20040617074620.2:Report 2
+#@-node:EKR.20040617074620:Fix install script
+#@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+self.fileMenuTop3MenuTable = (
+    ("E&xit","Ctrl-Q",g.app.onQuit),)
+#@nonl
+#@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+#@+node:ekr.20031218072017.1723:createMenuEntries
+@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
+    
+    for label,accel,command in table:
+        if label == None or command == None or label == "-":
+            self.add_separator(menu)
+        else:
+            << set name to the label for doCommand >>
+            << set accel to the shortcut for name >>
+            << set bind_shortcut and menu_shortcut using accel >>
+            << define callback function >>
+            << set realLabel, amp_index and menu_shortcut >>
+    
+            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                command=callback,underline=amp_index)
+                
+            if 0: # testing
+                dontBind = True
+
+            if bind_shortcut and not dontBind:
+                << handle bind_shorcut >>
+#@nonl
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+config = g.app.config
+rawKey,accel2 = config.getShortcut(name)
+
+# 7/19/03: Make sure "None" overrides the default shortcut.
+if accel2 == None or len(accel2) == 0:
+    pass # Use default shortcut, if any.
+elif accel2.lower() == "none":
+    accel = None # Remove the default shortcut.
+else:
+    accel = accel2 # Override the default shortcut.
+#@nonl
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+
+# Kludge: disable the shortcuts for cut, copy, paste.
+# This has already been bound in leoTkinterFrame.__init__
+# 2/13/03: A _possible_ fix for the Linux control-v bug.
+
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
+    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
+        bind_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    callback = self.defineOpenWithMenuCallback(command)
+else:
+    callback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+# A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, & bindings and translations all in the same place.
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&")
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+
+if 0: # trace
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
+
+if not menu_shortcut:
+    menu_shortcut = ""
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+if bind_shortcut in self.menuShortcuts:
+    if not g.app.menuWarningsGiven:
+        g.es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
+        print "duplicate shortcut:", accel, bind_shortcut, label
+else:
+    self.menuShortcuts.append(bind_shortcut)
+    try:
+        self.frame.body.bind(bind_shortcut,callback)
+        self.bind(bind_shortcut,callback)
+    except: # could be a user error
+        if not g.app.menuWarningsGiven:
+            print "exception binding menu shortcut..."
+            print bind_shortcut
+            g.es_exception()
+            g.app.menuWarningsGive = True
+#@nonl
+#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@-node:EKR.20040610125924:(Fix install script)
+#@+node:EKR.20040618070817:Install latest version of dynabutton
+#@+node:EKR.20040618070854:@url http://rclick.netfirms.com/rCpython.htm
+#@-node:EKR.20040618070854:@url http://rclick.netfirms.com/rCpython.htm
+#@-node:EKR.20040618070817:Install latest version of dynabutton
+#@-node:EKR.20040617070323:To do before 4.2 beta 1
 #@+node:EKR.20040617105034:To do before beta 2: (feature complete)
 #@+node:EKR.20040506075328.3:(Perfect Import)
 #@+node:EKR.20040506091116: Notes
@@ -1707,9 +1996,6 @@ def saveListOfNodes (self,listOfVnodes):
 #@-node:EKR.20040606195417.3:u.saveListOfNodes
 #@-node:EKR.20040601133022.1:(Finish the new undo)
 #@-node:EKR.20040617105034:To do before beta 2: (feature complete)
-#@+node:EKR.20040430163619:To do: 4.2
-#@+node:EKR.20040617083816:Ask for bugs not on to-do list
-#@-node:EKR.20040617083816:Ask for bugs not on to-do list
 #@+node:EKR.20040422132037:Mac/Linux: 7
 @nocolor
 #@nonl
@@ -1924,8 +2210,6 @@ Günther
 #@nonl
 #@-node:EKR.20040512090759:Leo.app for MacOS X
 #@-node:EKR.20040422132037:Mac/Linux: 7
-#@+node:EKR.20040610190953:Finish/Cleanup
-#@-node:EKR.20040610190953:Finish/Cleanup
 #@+node:EKR.20040609155110:Docs, etc
 #@+node:ekr.20040323195916:Documentation
 @nocolor
