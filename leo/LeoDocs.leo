@@ -2551,7 +2551,7 @@ This is the minimum you need to use Leo effectively.
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="T53">leo.py 3.11 beta 2                       February 24, 2003
 
-leo.py 3.11 beta 1 is now available at:  http://sourceforge.net/projects/leo/
+leo.py 3.11 beta 2 is now available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
