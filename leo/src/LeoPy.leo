@@ -16,6 +16,7 @@
 <v t="ekr.20040105070023"><vh>2004</vh>
 <v t="ekr.20040305161150"><vh>March 2004</vh>
 <v t="ekr.20040325095227"><vh>4/25 Released 4.2 a1</vh>
+<v t="ekr.20040325183515"><vh>Fix three major performance bugs</vh></v>
 <v t="ekr.20040318150305"><vh>Removed all  back quotes</vh></v>
 </v>
 <v t="ekr.20040322112731"><vh>3/22</vh>
@@ -4966,6 +4967,7 @@
 </v>
 <v t="ekr.20031218072017.2177"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040325203859"><vh>3/11 to 3/20/04</vh>
 <v t="ekr.20040302094109"><vh>(p.level bug)</vh>
 <v t="ekr.20040227214711"><vh>p.level &amp; simpleLevel</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
@@ -5183,6 +5185,8 @@
 <v t="ekr.20031218072017.1861"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20040325203859.1"><vh>3/21/04</vh>
 <v t="ekr.20040312024615"><vh>(Fixed bug in sortTopLevel)</vh>
 <v t="ekr.20040312145256"><vh>v.dump</vh></v>
 <v t="ekr.20040310153624"><vh>p.dump</vh></v>
@@ -5236,7 +5240,7 @@
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040312120107"><vh>(Fixed move/drawing/level bugs) *****</vh>
+<v t="ekr.20040312120107"><vh>(Fixed move/drawing/level bugs) </vh>
 <v t="ekr.20040312213623"><vh> Notes</vh></v>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -5427,6 +5431,8 @@
 </v>
 </v>
 </v>
+</v>
+<v t="ekr.20040325203859.2"><vh>3/22/04</vh>
 <v t="ekr.20040318112729"><vh>(trace p.copy)</vh>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -5627,6 +5633,8 @@
 <v t="ekr.20040322115523"><vh>getGoToFileName</vh></v>
 </v>
 </v>
+</v>
+<v t="ekr.20040325203859.3"><vh>3/24/04</vh>
 <v t="ekr.20040323072005"><vh>(Fixed select headline bug)</vh>
 <v t="ekr.20031218072017.3716"><vh>Getters/Setters (tree)</vh></v>
 <v t="ekr.20031218072017.4157"><vh>Selecting &amp; editing (tree)</vh>
@@ -5764,6 +5772,112 @@
 <v t="ekr.20031218072017.2900"><vh>contractAllHeadlines</vh></v>
 <v t="ekr.20031218072017.2910"><vh>contractSubtree</vh></v>
 </v>
+<v t="ekr.20040323090456.1"><vh>(Cleaned up isAnyAtFileNode &amp; related routines)</vh>
+<v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
+<v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
+<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
+<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
+<v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
+<v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
+<v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
+<v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040325203859.4"><vh>3/25/04</vh>
+<v t="ekr.20040325104344"><vh>(Optimized drawing and saving recursions)</vh>
+<v t="ekr.20031218072017.4144"><vh>Drawing (tkTree)</vh>
+<v t="ekr.20031218072017.4145"><vh>About drawing and updating</vh></v>
+<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
+<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
+<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
+</v>
+<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
+<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2029" a="M"><vh>drawTopTree</vh></v>
+<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
+<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
+<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
+<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
+<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
+<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
+<v t="ekr.20031218072017.1010"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
+<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
+<v t="ekr.20040322122232"><vh>tree.scrollTo</vh></v>
+<v t="ekr.20031218072017.1018"><vh>tree.idle_scrollTo</vh>
+<v t="ekr.20040314092716"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040314092716.1"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.4148"><vh>tree.numberOfVisibleNodes</vh></v>
+<v t="ekr.20031218072017.4149"><vh>tree.yoffset</vh></v>
+</v>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040325111920"><vh>(Drastically reduced positions created by Read Outline Only)</vh>
+<v t="ekr.20040325115038"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3398" a="M"><vh>setMarked &amp; initMarkedBit</vh></v>
+<v t="ekr.20031218072017.1565"><vh>getVnodes</vh></v>
+<v t="ekr.20031218072017.1860"><vh>createVnode (changed for 4.2)</vh>
+<v t="ekr.20031218072017.1861"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1566"><vh>getVnode changed for 4.2)</vh>
+<v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040324080004"><vh>(Improved speed of Save command)</vh>
+<v t="ekr.20040324085927"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.3137"><vh>Timing</vh></v>
+<v t="ekr.20031218072017.893" a="M"><vh>p.__cmp__ MUCH slower than p.equal (!!)</vh></v>
+<v t="ekr.20040325142015"><vh>p.equal</vh></v>
+<v t="ekr.20031218072017.1765"><vh>c.validateOutline</vh></v>
+<v t="ekr.20040303175026.13"><vh>p.validateOutlineWithParent</vh>
+<v t="ekr.20040303175026.14"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
+<v t="ekr.20040303175026.15"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
+<v t="ekr.20040303175026.16"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303212445"><vh>p.childIndex</vh></v>
+<v t="ekr.20031218072017.2985"><vh>c.clearAllVisited</vh></v>
+<v t="ekr.20031218072017.3401"><vh>t.setVisited</vh></v>
+<v t="ekr.20031218072017.1999"><vh>toString</vh></v>
+<v t="ekr.20031218072017.3046"><vh>write_Leo_file</vh>
+<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
+<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
+<v t="ekr.20040324080359.2"><vh>&lt;&lt; create the output file &gt;&gt;</vh>
+<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040324080819"><vh>&lt;&lt; update leoConfig.txt &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.1" a="M"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.2"><vh>&lt;&lt; report the exception &gt;&gt;</vh></v>
+<v t="ekr.20040324080819.3"><vh>&lt;&lt; close the output file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
+<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
+</v>
+</v>
 <v t="ekr.20040323084434.1"><vh>(reduced calls to drawTopTree)</vh>
 <v t="ekr.20040323191536"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.1017"><vh>tree.__init__</vh></v>
@@ -5796,23 +5910,27 @@
 <v t="ekr.20031218072017.1016"><vh>idle_second_redraw</vh></v>
 </v>
 </v>
-<v t="ekr.20040323090456.1"><vh>(Cleaned up isAnyAtFileNode &amp; related routines)</vh>
-<v t="ekr.20031218072017.3346"><vh>Comparisons (vnode)</vh>
-<v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3348"><vh>at...FileNodeName</vh></v>
-<v t="ekr.20040325073709"><vh>isAt...FileNode</vh></v>
-<v t="ekr.20031218072017.3350" a="M"><vh>isAnyAtFileNode &amp; anyAtFileNodeName</vh></v>
-<v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
-<v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
-<v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
+<v t="ekr.20040325125426"><vh>(Fixed problem with first screen draw) </vh>
+<v t="ekr.20040325203859.5"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1015"><vh>idle_redraw</vh>
+<v t="ekr.20040324090957"><vh>&lt;&lt; return if disabled, or quitting or dragging &gt;&gt;</vh></v>
+<v t="ekr.20040324090957.1"><vh>&lt;&lt; Erase and redraw the entire tree &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1553"><vh>getLeoFile</vh>
+<v t="ekr.20031218072017.1554"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1555"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1556"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </v>
 </v>
 <v t="ekr.20040117181936"><vh>To do: 4.2</vh>
 <v t="ekr.20040321104014"><vh>  Big picture</vh></v>
+<v t="ekr.20040323170225.1"><vh>Cleanup (do this first)</vh>
+<v t="ekr.20040325203859.6"><vh>Eliminate calls to p.__cmp__ with p2==None</vh></v>
+<v t="ekr.20040325152209"><vh>Improve speed of Load command by eliminating p.__cmp__ ?</vh></v>
 <v t="ekr.20040324093353" a="M"><vh>(Restore current node)</vh></v>
-<v t="ekr.20040323170225.1"><vh>Cleanup</vh>
 <v t="ekr.20040302084553.2"><vh>Clean up setDirty logic</vh></v>
 <v t="ekr.20040323090456"><vh>Break position links at app.shutdown code?</vh></v>
 </v>
@@ -5965,7 +6083,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -9232,102 +9350,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040325104344"><vh>(Optimized drawing and saving recursions)</vh>
-<v t="ekr.20031218072017.4144"><vh>Drawing (tkTree)</vh>
-<v t="ekr.20031218072017.4145"><vh>About drawing and updating</vh></v>
-<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
-<v t="ekr.20031218072017.1004"><vh>drawNode &amp; force_draw_node (good trace)</vh>
-<v t="ekr.20040317171729"><vh>force_draw_node (new)</vh></v>
-<v t="ekr.20040318090335"><vh>force_draw_node (old)</vh></v>
-</v>
-<v t="ekr.20031218072017.1005"><vh>drawText (bind)</vh>
-<v t="ekr.20031218072017.1006"><vh>&lt;&lt; configure the text depending on state &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2029" a="M"><vh>drawTopTree</vh></v>
-<v t="ekr.20031218072017.1008"><vh>drawTree</vh>
-<v t="ekr.20031218072017.1009"><vh>&lt;&lt; draw vertical line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040317095510"><vh>drawUserIcon</vh>
-<v t="ekr.20040317173849"><vh>&lt;&lt; set offsets and pads &gt;&gt;</vh></v>
-<v t="ekr.20040317095153"><vh>&lt;&lt; draw the icon in string s &gt;&gt;</vh></v>
-<v t="ekr.20040317095153.1"><vh>&lt;&lt; draw the icon at url &gt;&gt;</vh></v>
-<v t="ekr.20040317100702"><vh>&lt;&lt; draw the icon at file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040317094609"><vh>drawUserIcons</vh></v>
-<v t="ekr.20031218072017.1010"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
-<v t="ekr.20031218072017.4147"><vh>tree.getIconImage</vh></v>
-<v t="ekr.20040322122232"><vh>tree.scrollTo</vh></v>
-<v t="ekr.20031218072017.1018"><vh>tree.idle_scrollTo</vh>
-<v t="ekr.20040314092716"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
-<v t="ekr.20040314092716.1"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.4148"><vh>tree.numberOfVisibleNodes</vh></v>
-<v t="ekr.20031218072017.4149"><vh>tree.yoffset</vh></v>
-</v>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040325111920"><vh>(Drastically reduced positions created by Read Outline Only)</vh>
-<v t="ekr.20040325115038"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3398" a="M"><vh>setMarked &amp; initMarkedBit</vh></v>
-<v t="ekr.20031218072017.1565"><vh>getVnodes</vh></v>
-<v t="ekr.20031218072017.1860"><vh>createVnode (changed for 4.2)</vh>
-<v t="ekr.20031218072017.1861"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1566"><vh>getVnode changed for 4.2)</vh>
-<v t="ekr.20031218072017.1567"><vh>&lt;&lt; Handle vnode attribute bits  &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1568"><vh>&lt;&lt; Set the remembered status bits &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040324080004"><vh>(Improved speed of Save command)</vh>
-<v t="ekr.20040324085927"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3137"><vh>Timing</vh></v>
-<v t="ekr.20031218072017.893" a="M"><vh>p.__cmp__ MUCH slower than p.equal (!!)</vh></v>
-<v t="ekr.20040325142015"><vh>p.equal</vh></v>
-<v t="ekr.20031218072017.1765"><vh>c.validateOutline</vh></v>
-<v t="ekr.20040303175026.13"><vh>p.validateOutlineWithParent</vh>
-<v t="ekr.20040303175026.14"><vh>&lt;&lt; validate parent ivar &gt;&gt;</vh></v>
-<v t="ekr.20040303175026.15"><vh>&lt;&lt; validate childIndex ivar &gt;&gt;</vh></v>
-<v t="ekr.20040303175026.16"><vh>&lt;&lt; validate x ivar &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040303212445"><vh>p.childIndex</vh></v>
-<v t="ekr.20031218072017.2985"><vh>c.clearAllVisited</vh></v>
-<v t="ekr.20031218072017.3401"><vh>t.setVisited</vh></v>
-<v t="ekr.20031218072017.1999"><vh>toString</vh></v>
-<v t="ekr.20031218072017.3046"><vh>write_Leo_file</vh>
-<v t="ekr.20040324080359"><vh>&lt;&lt; write all @file nodes &gt;&gt;</vh></v>
-<v t="ekr.20040324080359.1"><vh>&lt;&lt; return if the .leo file is read-only &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3047"><vh>&lt;&lt; create backup file &gt;&gt;</vh></v>
-<v t="ekr.20040324080359.2"><vh>&lt;&lt; create the output file &gt;&gt;</vh>
-<v t="ekr.20031218072017.3048"><vh>&lt;&lt; delete backup file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040324080819"><vh>&lt;&lt; update leoConfig.txt &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.1" a="M"><vh>&lt;&lt; put the .leo file &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.2"><vh>&lt;&lt; report the exception &gt;&gt;</vh></v>
-<v t="ekr.20040324080819.3"><vh>&lt;&lt; close the output file &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3049"><vh>&lt;&lt; erase filename and rename backupName to fileName &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2002"><vh>putTnodeList (4.0,4.2)</vh></v>
-<v t="ekr.20031218072017.1579"><vh>putVnodes</vh></v>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040325125426"><vh>First screen draw gets messed up</vh></v>
-<v t="ekr.20040325152209"><vh>Improve speed of Load command by eliminating p.__cmp__ ?</vh></v>
-<v t="ekr.20040325153504" a="V"><vh>Search for ###</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20031218072017">@ignore
@@ -16736,25 +16758,20 @@ An important complication is the need to avoid creating temporary positions whil
 	"""Return true if two postions are equivalent."""
 	
 	# The speed of this routine is critical!
-
 	p1 = self
-	
-	assert(p1 is not None)
 	
 	if p2 is None:
 		if p1.v: return 1 # not equal
 		else:    return 0 # equal
 
-	# g.trace(p1,p2)
-
-	# 3/25/04: Check entire stack quickly.
+	# Check entire stack quickly.
 	# The stack contains vnodes, so this is not a recursive call.
 	if p1.v != p2.v or p1.stack != p2.stack:
 		return 1 # notEqual
 
-	# This is very slow: do this last!
+	# This is slow: do this last!
 	if p1.childIndex() != p2.childIndex():
-		# 3/23/04: Disambiguate clones having the same parents.
+		# Disambiguate clones having the same parents.
 		return 1 # notEqual
 
 	return 0 # equal</t>
@@ -17867,13 +17884,13 @@ def force_redraw (self):
 <t tx="ekr.20031218072017.1014"># Redraws immediately: used by Find so a redraw doesn't mess up selections.
 # It is up to the caller to ensure that no other redraws are pending.
 
-def redraw_now (self):
+def redraw_now (self,scroll=true):
 	
 	# g.trace()
 
-	self.idle_redraw()
+	self.idle_redraw(scroll=scroll)
 </t>
-<t tx="ekr.20031218072017.1015">def idle_redraw (self):
+<t tx="ekr.20031218072017.1015">def idle_redraw (self,scroll=true):
 	
 	c = self.c ; frame = c.frame
 
@@ -25713,7 +25730,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=true):
 		&lt;&lt; raise an alert &gt;&gt;
 		ok = false
 
-	c.frame.tree.redraw_now()
+	c.frame.tree.redraw_now(scroll=false)
 	
 	if ok and atFileNodesFlag:
 		c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
@@ -30089,7 +30106,7 @@ if keys:
 	&lt;&lt; Write the head text &gt;&gt;
 
 	# New in 4.2: don't write child nodes of @file-thin trees.
-	if p.hasChildren(): ### and not p.isAtThinFileNode():
+	if p.hasChildren() and not p.isAtThinFileNode():
 		fc.put_nl()
 		# This optimization eliminates all "recursive" copies.
 		p.moveToFirstChild()
@@ -32261,7 +32278,7 @@ def hoist(self):
 	else:
 		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 		
-	g.trace(g.app.copies) ; g.app.copies = 0
+	# g.trace(g.app.copies) ; g.app.copies = 0
 	# import traceback ; traceback.print_stack()</t>
 <t tx="ekr.20031218072017.2030">def redo (self):
 
@@ -67967,23 +67984,17 @@ config.setConfigFindIvars(c)
 c.setIvarsFromPrefs()
 config.setCommandsIvars(c)
 config.update()</t>
-<t tx="ekr.20040324080819.1">start = g.getTime()
+<t tx="ekr.20040324080819.1"># start = g.getTime()
 self.putProlog()
 self.putHeader()
 self.putGlobals()
 self.putPrefs()
 self.putFindSettings()
-
-start = g.printDiffTime("headers",start)
-
+# start = g.printDiffTime("headers",start)
 self.putVnodes()
-
-start = g.printDiffTime("vnodes ",start)
-
+# start = g.printDiffTime("vnodes ",start)
 self.putTnodes()
-
-start = g.printDiffTime("tnodes ",start)
-
+# start = g.printDiffTime("tnodes ",start)
 self.putPostlog()</t>
 <t tx="ekr.20040324080819.2">g.es("exception writing: " + fileName)
 g.es_exception() 
@@ -68003,7 +68014,7 @@ except:
 <t tx="ekr.20040324082713"># Write tnodeList only for @file nodes.
 # New in 4.2: tnode list is in tnode.
 
-if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0: ### and v.isAnyAtFileNode():
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) &gt; 0 and v.isAnyAtFileNode():
 	fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
@@ -68064,7 +68075,8 @@ self.canvas.configure(scrollregion=(0, 0, x1, y1))
 # g.printGc()
 
 # Do a scrolling operation after the scrollbar is redrawn
-self.canvas.after_idle(self.idle_scrollTo)</t>
+if scroll:
+	self.canvas.after_idle(self.idle_scrollTo)</t>
 <t tx="ekr.20040324092619">if 0: # Replaced by isAnyAtFileNode
 
 	def anyAtFileNodeName (self):
@@ -68122,7 +68134,28 @@ I'm not sure why this generated go many positions, but it did.</t>
 		p1.v == p2.v and
 		p1.stack == p2.stack and
 		p1.childIndex() == p2.childIndex())</t>
-<t tx="ekr.20040325152209"></t>
-<t tx="ekr.20040325153504"></t>
+<t tx="ekr.20040325152209">Search for == in leoNodes, leoFileCommands</t>
+<t tx="ekr.20040325183515">1. Reduced copies of positions in drawTree.
+
+Allocated copies in drawTree rather than in drawBox, drawIcon and drawText.  This reduces the numbef of copies by one third.
+
+2. Eliminated extraneous positions in fileCommands read logic.
+
+This was due to calling v.setMarked rather than v.initMarked, which calls c.doHook.  I don't know why this allocates so many positions, and it does.
+
+3. Speeded up fileCommands write logic by 30% (or more?)
+
+This was a weird one.  p.__cmp__ is up to 10 times slower than p.equal.  I don't think there is any recursive code in p.__cmp__, and I suppose there might be...</t>
+<t tx="ekr.20040325203859"></t>
+<t tx="ekr.20040325203859.1"></t>
+<t tx="ekr.20040325203859.2"></t>
+<t tx="ekr.20040325203859.3"></t>
+<t tx="ekr.20040325203859.4"></t>
+<t tx="ekr.20040325203859.5">@nocolor
+
+The first screen draw got messed up if there was a scrollling operation.
+This happened as the result of the call to idle_scrollTo.
+To fix this, I added the scroll arg to redraw_now and idle_redraw.</t>
+<t tx="ekr.20040325203859.6"></t>
 </tnodes>
 </leo_file>

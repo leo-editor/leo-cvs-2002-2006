@@ -1400,25 +1400,20 @@ class position:
 		"""Return true if two postions are equivalent."""
 		
 		# The speed of this routine is critical!
-	
 		p1 = self
-		
-		assert(p1 is not None)
 		
 		if p2 is None:
 			if p1.v: return 1 # not equal
 			else:    return 0 # equal
 	
-		# g.trace(p1,p2)
-	
-		# 3/25/04: Check entire stack quickly.
+		# Check entire stack quickly.
 		# The stack contains vnodes, so this is not a recursive call.
 		if p1.v != p2.v or p1.stack != p2.stack:
 			return 1 # notEqual
 	
-		# This is very slow: do this last!
+		# This is slow: do this last!
 		if p1.childIndex() != p2.childIndex():
-			# 3/23/04: Disambiguate clones having the same parents.
+			# Disambiguate clones having the same parents.
 			return 1 # notEqual
 	
 		return 0 # equal
