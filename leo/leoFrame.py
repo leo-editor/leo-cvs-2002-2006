@@ -1984,7 +1984,7 @@ class LeoFrame:
 	#@-body
 	#@+node:1::findMatchingBracket
 	#@+body
-	# Test  unmatched)
+	# Test  unmatched())
 	def findMatchingBracket(self,ch,body,index):
 	
 		open_brackets  = "([{"
@@ -2013,7 +2013,7 @@ class LeoFrame:
 			index = body.index(index)
 	# Test  (
 	# ([(x){y}]))
-	# Test  (x)(unmatched
+	# Test  ((x)(unmatched
 	#@-body
 	#@-node:1::findMatchingBracket
 	#@-node:7:C=37:OnFindMatchingBracket
@@ -2601,7 +2601,7 @@ class LeoFrame:
 		
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		version = "leo.py 3.5, August 14, 2002\n\n"
+		version = "leo.py 3.5, Build $Revision$, August 14, 2002\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
