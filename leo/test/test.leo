@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4925" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4926" clone_windows="0"/>
 <globals body_outline_ratio="0.482406356413">
 	<global_window_position top="13" left="422" height="881" width="836"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -20,10 +20,10 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040303063549" a="E"><vh>Unit test scripts (Must be located here)</vh>
+<v t="ekr.20040303063549"><vh>Unit test scripts (Must be located here)</vh>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
@@ -252,7 +252,7 @@
 <v t="ekr.20040303063549.44"><vh>after</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.125" a="TV"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all non-file tests</vh></v>
 </v>
 </v>
@@ -345,9 +345,9 @@
 <v t="ekr.20040325073120"><vh>Test that isAt...FileNode works</vh>
 <v t="ekr.20040325073120.1"><vh>@thinfile thinfile.txt</vh></v>
 </v>
-<v t="ekr.20040330103006" tnodeList="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
+<v t="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
 <v t="ekr.20040327105955"><vh>test of batch mode</vh></v>
-<v t="ekr.20040419105536" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
 <v t="ekr.20040419105536.1"><vh>one</vh></v>
 <v t="ekr.20040419105536.2"><vh>two</vh></v>
 </v>
@@ -389,13 +389,13 @@
 </v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
 <v t="EKR.20040524050419.1"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635" tnodeList="EKR.20040525083635,EKR.20040525083635.1"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
 </v>
@@ -591,7 +591,7 @@
 <v t="EKR.20040504083716.72"><vh>main</vh></v>
 </v>
 <v t="EKR.20040504083716.73"><vh>not used</vh>
-<v t="EKR.20040504083716.74" tnodeList="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
+<v t="EKR.20040504083716.74"><vh>@file testtesting.ini</vh></v>
 <v t="EKR.20040504083716.75"><vh>tests to write</vh>
 <v t="EKR.20040504083716.76"><vh>Insert tests.</vh></v>
 <v t="EKR.20040504083716.77"><vh>deletion tests.</vh></v>
@@ -624,7 +624,7 @@
 </v>
 <v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
 <v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
-<v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
+<v t="EKR.20040608095146.1" a="M"><vh>@file login_process.cfm</vh></v>
 <v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
 <v t="EKR.20040610131858"><vh>Test of Paste Node Retaining Clones</vh>
 <v t="EKR.20040615144810"><vh>b</vh></v>
@@ -708,6 +708,7 @@
 <v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
 <v t="EKR.20040613162717"><vh>Report newlines</vh></v>
+<v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
 <v t="EKR.20040612095237"><vh>Prototypes of new commands</vh>
 <v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
@@ -764,9 +765,23 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040704104554" a="E"><vh>Test of mixed @language directives in a single node</vh>
+<v t="ekr.20040704104554"><vh>Test of mixed @language directives in a single node</vh>
 <v t="ekr.20040704104554.1"><vh>Mixed script</vh></v>
 <v t="ekr.20040704104554.2"><vh>@thin c:\prog\test\mixedLanguages.txt</vh></v>
+</v>
+<v t="ekr.20040705191805" a="TV"><vh>Test of abbreviations</vh>
+<v t="ekr.20040705212227"><vh>@file file</vh></v>
+<v t="ekr.20040705192522" a="M"><vh>@silentfile silentfile</vh></v>
+<v t="ekr.20040705192522.1"><vh>@file-asis file-asis</vh></v>
+<v t="ekr.20040705192522.2"><vh>@asis asis</vh></v>
+<v t="ekr.20040705192522.3" a="M"><vh>@nosentinelsfile nosentinelsfile</vh></v>
+<v t="ekr.20040705191805.1"><vh>@file-nosent file-nosent</vh></v>
+<v t="ekr.20040705191805.2"><vh>@nosent nosent</vh></v>
+<v t="ekr.20040705192610" a="M"><vh>@rawfile rawfile</vh></v>
+<v t="ekr.20040705192522.4"><vh>@file-noref file-noref</vh></v>
+<v t="ekr.20040705192522.5"><vh>@noref noref</vh></v>
+<v t="ekr.20040705192522.6"><vh>@file-thin file-thin</vh></v>
+<v t="ekr.20040705192610.1"><vh>@thin thin</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -5112,5 +5127,54 @@ print '-'*50</t>
 </t>
 <t tx="ekr.20040704104554.2">@language python
 @language html</t>
+<t tx="ekr.20040705191805">@ignore
+
+import leoGlobals as g
+import leoNodes
+
+c = g.top()
+p = c.currentPosition()
+
+print '-' * 20
+format = "%18s"
+for child in p.children_iter():
+    print ; print child.headString()
+    print format % "isAnyAtFileNode",   child.isAnyAtFileNode()
+    print format % "anyAtFileNodeName", child.anyAtFileNodeName()
+    print format % "isAtFileNode",      child.isAtFileNode()
+    print format % "isAtNoSentFileNode",child.isAtNoSentFileNode()
+    print format % "isAtNorefFileNode", child.isAtNorefFileNode()
+    print format % "isAtAsisFileNode",  child.isAtAsisFileNode()
+    print format % "isAtThinFileNode",  child.isAtThinFileNode()</t>
+<t tx="ekr.20040705191805.1"></t>
+<t tx="ekr.20040705191805.2"></t>
+<t tx="ekr.20040705192522"></t>
+<t tx="ekr.20040705192522.1"></t>
+<t tx="ekr.20040705192522.2"></t>
+<t tx="ekr.20040705192522.3"></t>
+<t tx="ekr.20040705192522.4"></t>
+<t tx="ekr.20040705192522.5"></t>
+<t tx="ekr.20040705192522.6"></t>
+<t tx="ekr.20040705192610"></t>
+<t tx="ekr.20040705192610.1"></t>
+<t tx="ekr.20040705212227"></t>
+<t tx="ekr.20040706071823"># This works, and doesn't seem convenient for Leo's importers.
+
+import leoGlobals as g
+
+try:
+    import parser
+    import pprint
+    path = r"c:\prog\test\importIndentTest.py"
+    f = open(path)
+    s = f.read()
+    f.close()
+    ast = parser.suite(s)
+    tup = ast.totuple()
+    print `ast`
+    pprint.pprint(tup)
+except:
+    import traceback
+    traceback.print_exc()</t>
 </tnodes>
 </leo_file>
