@@ -1512,16 +1512,17 @@ class nullLog (leoLog):
         g.trace("nullLog:", g.callerName(2))
         
     #@-node:ekr.20041012083237.2:oops
-    #@+node:ekr.20041012083237.3:put and putnl
+    #@+node:ekr.20041012083237.3:put and putnl (nullLog)
     def put (self,s,color=None):
         if self.enabled:
+            # g.trace('nullLog',s)
             g.rawPrint(s)
     
     def putnl (self):
         if self.enabled:
             g.rawPrint("")
     #@nonl
-    #@-node:ekr.20041012083237.3:put and putnl
+    #@-node:ekr.20041012083237.3:put and putnl (nullLog)
     #@+node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
     def setFontFromConfig (self):
         pass
