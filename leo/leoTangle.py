@@ -1665,7 +1665,7 @@ class tangleCommands:
 			width = max(0,self.tangle_indent) + 20
 		# Skip Initial white space in the doc part.
 		i = skip_ws_and_nl(s,0)
-		if i < len(s) and self.print_mode == "verbose" or self.print_mode == "quiet":
+		if i < len(s) and (self.print_mode == "verbose" or self.print_mode == "quiet"):
 			use_block_comment = self.start_comment_string and self.end_comment_string
 			use_single_comment = not use_block_comment and self.single_comment_string
 			# javadoc_comment = use_block_comment and self.start_comment_string == "/**"
