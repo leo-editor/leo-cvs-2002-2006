@@ -143,7 +143,7 @@
 <v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20041213105007.1" a="E"><vh>Colors</vh>
-<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
+<v t="ekr.20041213105007.3" a="E"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
@@ -153,13 +153,13 @@
 <v t="ekr.20041119034357.41"><vh>@color body_cursor_background_color = None</vh></v>
 <v t="ekr.20041119034357.40"><vh>@color body_cursor_foreground_color = None</vh></v>
 <v t="ekr.20041119034357.50"><vh>@color body_insertion_cursor_color = None</vh></v>
-<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = #ffecea</vh></v>
+<v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
 <v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
-<v t="ekr.20041119051246.2" a="TV"><vh>@color headline_text_unselected_background_color = #ffffe1</vh></v>
+<v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffe1</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
-<v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = None</vh></v>
+<v t="ekr.20041119051246.3" a="TV"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 <v t="ekr.20041119050749.7"><vh>@color headline_text_selected_foreground_color = None</vh></v>
 <v t="ekr.20041119051901"><vh>@color headline_text_editing_background_color = None</vh></v>
 <v t="ekr.20041119050749.8"><vh>@color headline_text_editing_foreground_color = None</vh></v>

@@ -3,132 +3,6 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20041130125500:To do misc
-#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
-By: Roger Erens - rogererens
-@
-2004-11-25 09:14
-On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
-Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
-When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
-I think it is unreasonable for @killcolor to interfere with indenting.
-#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
-#@+node:ekr.20041130123243:(Add clear undo command)
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859273
-e
-
-theres a config option to clear undo on save.
-can that be a menu choice as well? 
-clear undo now.
-enable clear undo on save.
-moot as it will be with the new config options
-and any undo changes on the table.
-maybe there is a single point to involke clear 
-undo that could be run from a button?
-
-with py2.3 after allot of small edits on an open leo after a few hours gc can
-hit unexpectedly and last several minutes
-and return at any time lasting several more minutes.
-I think its gc related because the memory use and disk grinding demanding I
-free up memory or kill python.
-
-I have no idea if undo is the cause,
- just guessing.
-using cvs of last week. I just updated, 
-will let you know if it happens again.
-(new error reporting jump to error is great)
-
-usually I don't edit in the same process that long.
-I have run scripts from leo that run 6, 12 
-or 24 hours no problem. 
-maybe I can turn on some internals reporting and
-get some feedback on whats going on from python if it happens again. 
-or run the gc script before and after.
-
- win98 128meg w/maxmem memory defrager that works well.
-but I go from 50% free to 10% when this starts happening.
-I haven't noticed this problem yet in py2.4, and it is peppier,
-but don't use py2.4 enough. it doesn't happen every day.
-I reboot at least once a day for various reasons.
-so it isn't that either. 
-you do need to reboot and or exit python once it starts.
-this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
-I don't really have any other long running python processes to compare to Leo. 
-can't say what it is.
-Aha, progress. 
-this started sometime early in 4.2 or late 4.1
-but I can still be persuaded something in my 
-local system is to blame, some install or dll update. or script, psyco or plugin
-related.
-
-nonwithstanding, I should be taking better advantage Moore's law in my CPU and
-memory.
-I only notice this when I'm running the same leo over a few hours of constant
-editing and running scrips.
-and when I exit python and restart leo everything returns to normal.
-more a supporting anomaly report 
-than a bug report or feature request.
-#@nonl
-#@-node:ekr.20041130123243:(Add clear undo command)
-#@+node:ekr.20041201072431:(Can hoist cause a hang?)
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2876473
-
-I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
-exactly as described here.
-
-I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
-plugin_manager, and plugins_menu. It seems that I never experience the lockups
-if I disable the hoist plugin, but that I do sometimes experience the lockups
-if I enable hoist. Maybe a quick review of hoist might be in order to see if
-anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
-feel might be able to lead to lockups of this sort.
-
-Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
-up totally, so hopefully this small data tidbit will help flush out this bug.
-#@nonl
-#@-node:ekr.20041201072431:(Can hoist cause a hang?)
-#@+node:ekr.20041201084142:It is possible to change individual headlines directly
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2877106
-
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
-
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
-#@nonl
-#@-node:ekr.20041201084142:It is possible to change individual headlines directly
-#@+node:ekr.20041211022140:Specify key binding  in @button
-@killcolor
-
-- Specify the binding in the headline:  @button(alt-shift-9)
-- Change createDynamicButton in the script plugin to honor the binding.
-#@nonl
-#@-node:ekr.20041211022140:Specify key binding  in @button
-#@-node:ekr.20041130125500:To do misc
-#@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
-http://sourceforge.net/forum/message.php?msg_id=2871977
-
-One thing to think about is to add a 3rd party extension mechanism for Leo.
-
-Have a directory called 'ext', and have Leo automatically add that directory to the import path.
-
-Then you could dump Pmw into that directory and have Leo easily import it from there. Doing so gives you a way to add Pmw easily and any other 3rd party libs Leo ever needs.
-#@nonl
-#@-node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 #@+node:ekr.20041126102902:(Handle blanks better in imports)
 @
 
@@ -136,107 +10,8 @@ Then you could dump Pmw into that directory and have Leo easily import it from t
 - Convert tabs to blanks if tab width < 0.
 #@nonl
 #@-node:ekr.20041126102902:(Handle blanks better in imports)
-#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
-#@+node:ekr.20041214131745:Python 2.4 installer problem
-#@+node:ekr.20041214131745.1:Notes
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2877749
-By: djsg
-
-The Leo 4.2-final installer checks a Windows Registry key to figure out the
-location of Python home folder. It handles the format of the data left in that
-key by the Python 2.3.4 installer, but does not handle the format of the data
-left in some cases by the Python 2.4-final installer.
-
-http://sourceforge.net/forum/message.php?msg_id=2875823
-By: djsg
-
-The installer for Python 2.3.4 is a Nullsoft installer. 
-
-The installer for Python 2.4 Final is a Microsoft installer. 
-
-The leo.nsi file that creates the installer for Leo 2.4-final finds the installed
-copy of Python by checking the Registry key
-HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Python.NoConFile\shell\open\command -- for
-a value left by the installer for Python.  The format of the Registry key value
-stored by the installer for Python 2.4 Final does not match the for Python
-2.3.4.
-
-To prove this: 
-
-A. install Python 2.3.4 for all users;
-B. use RegEdit to export this Registry key to a file called "23key.reg". 
-C. uninstall Python 2.3.4
-D. install Python 2.4 Final
-E. Use RegEdit to export this registry key to a file called "24key.reg". 
-
-The 23key.reg file gives the key the value @="C:\Python23\pythonw.exe \%1\
-%*
-
-where the 24key.reg file gives it the value 
-@="\C:\Python23\pythonw.exe\ \%1\ %*
-
-I duplicated Srdjan's problem, and installed Leo 4.2-final by: 
-
-1. creating a copy of the 23key.reg file called 24keyhack.reg;
-
-2. Editing 24keyhack.reg, changing the value of the key to point at the C:\Python24
-folder -- i.e., changing it to
-@="C:\Python24\pythonw.exe \%1\ %*
-
-3. Right-clicking the 24keyhack.reg file and merging it -- thereby changing
-the value of the Registry key.
-
-4. Running the Leosetup-4-2 installer. No problem this time!
-
-5. Right-clicking the 24key.reg file and merging it -- thereby restoring the
-orthodox Python 2.4 value of the Registry key.
-
-Looks to me as though the 2.4 key surrounds the path to pythonw.exe in quotation
-marks. Perhaps this allows the Microsoft Installer to install Python in a folder
-whose name includes a space.
-#@-node:ekr.20041214131745.1:Notes
-#@-node:ekr.20041214131745:Python 2.4 installer problem
-#@+node:ekr.20041214135556:How to use Tile
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=2882718
-By: nobody
-
-if anyone is interested here is some code that Tilefied my Leo instance, its
-does some patching in the LeoGui program.
-
-@color
-
-def createRootWindow(self):
-
-    """Create a hidden Tk root window."""
-    #import Tix
-    self.root = root = Tk.Tk()
-    root.tk.call( 'package', 'require', 'tile' )
-    #root.tk.call( 'namespace', 'import', '-force', 'ttk::*' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::scrollbar' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::label' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::entry' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::menu' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::button' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::frame' )
-    root.tk.call( 'namespace', 'import', '-force', 'ttk::menubutton' )
-    root.tk.call( 'tile::setTheme', 'clam' )
-    #self.root = root = Tix.Tk()
-    root.title("Leo Main Window")
-    root.withdraw()
-    
-    self.setDefaultIcon()
-    self.getDefaultConfigFont(g.app.config)
-    self.createGlobalWindows()
-
-    return root
-#@nonl
-#@-node:ekr.20041214135556:How to use Tile
 #@+node:ekr.20041214132052:Mac issues
-#@+node:ekr.20041214132052.1:NewHeadline
+#@+node:ekr.20041214132052.1:Mac packages
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2881302
@@ -249,7 +24,37 @@ with. I'm not familiar enough with the SF way of doing things to know what I
 should provide, access to CVS etc. I also don't know whether you bundle things
 up a home and post them on SF, or if you do the compile/archive on the SF boxen.
 #@nonl
-#@-node:ekr.20041214132052.1:NewHeadline
+#@-node:ekr.20041214132052.1:Mac packages
+#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130125213.2:Requests & follow up
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859149
+By: genthaler
+
+I'd really like to have Mac OS X packages available as a download option, rather
+than doing it by hand every time a new version comes out. What do I have to
+do to make this happen?
+
+http://sourceforge.net/forum/message.php?msg_id=2859156
+By: genthaler
+
+BTW, I wasn't the first to do this and publish it - heres a link to an older
+version - http://www.wordtech-software.com/leo.html
+ 
+http://sourceforge.net/forum/message.php?msg_id=2859153
+By: genthaler
+
+On Mac OS X, it's quite easy to have a double-clickable application bundle with
+its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
+IIRC. More sensible to use the OS's version, but that requires Tkinter to be
+installed in /System/Library/Frameworks/Python.framework, and that requires
+an installer package and admin privileges.
+
+Günther
+
+#@-node:ekr.20041130125213.2:Requests & follow up
+#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@-node:ekr.20041214132052:Mac issues
 #@+node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20041018195347:Docs
@@ -407,7 +212,161 @@ if sys.platform == "linux2": # This crashes tcl83.dll
 #@-node:ekr.20040226094105.3:The actual workaround
 #@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
 #@-node:ekr.20041018195347:Docs
-#@+node:ekr.20041120153700:Cleanup
+#@+node:ekr.20041130125500:To do misc
+#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
+By: Roger Erens - rogererens
+@
+2004-11-25 09:14
+On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
+Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
+When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
+I think it is unreasonable for @killcolor to interfere with indenting.
+#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
+#@+node:ekr.20041130123243:(Add clear undo command)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859273
+e
+
+theres a config option to clear undo on save.
+can that be a menu choice as well? 
+clear undo now.
+enable clear undo on save.
+moot as it will be with the new config options
+and any undo changes on the table.
+maybe there is a single point to involke clear 
+undo that could be run from a button?
+
+with py2.3 after allot of small edits on an open leo after a few hours gc can
+hit unexpectedly and last several minutes
+and return at any time lasting several more minutes.
+I think its gc related because the memory use and disk grinding demanding I
+free up memory or kill python.
+
+I have no idea if undo is the cause,
+ just guessing.
+using cvs of last week. I just updated, 
+will let you know if it happens again.
+(new error reporting jump to error is great)
+
+usually I don't edit in the same process that long.
+I have run scripts from leo that run 6, 12 
+or 24 hours no problem. 
+maybe I can turn on some internals reporting and
+get some feedback on whats going on from python if it happens again. 
+or run the gc script before and after.
+
+ win98 128meg w/maxmem memory defrager that works well.
+but I go from 50% free to 10% when this starts happening.
+I haven't noticed this problem yet in py2.4, and it is peppier,
+but don't use py2.4 enough. it doesn't happen every day.
+I reboot at least once a day for various reasons.
+so it isn't that either. 
+you do need to reboot and or exit python once it starts.
+this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
+I don't really have any other long running python processes to compare to Leo. 
+can't say what it is.
+Aha, progress. 
+this started sometime early in 4.2 or late 4.1
+but I can still be persuaded something in my 
+local system is to blame, some install or dll update. or script, psyco or plugin
+related.
+
+nonwithstanding, I should be taking better advantage Moore's law in my CPU and
+memory.
+I only notice this when I'm running the same leo over a few hours of constant
+editing and running scrips.
+and when I exit python and restart leo everything returns to normal.
+more a supporting anomaly report 
+than a bug report or feature request.
+#@nonl
+#@-node:ekr.20041130123243:(Add clear undo command)
+#@+node:ekr.20041201072431:(Can hoist cause a hang?)
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2876473
+
+I'm using 4.2 final, build 1.173, on Linux, and experience intermittent lockups
+exactly as described here.
+
+I've turned off almost all plugins, except for mod_tempfname, nodenavigator,
+plugin_manager, and plugins_menu. It seems that I never experience the lockups
+if I disable the hoist plugin, but that I do sometimes experience the lockups
+if I enable hoist. Maybe a quick review of hoist might be in order to see if
+anything looks suspicious. I believe hoist uses an idle handler, which I vaguely
+feel might be able to lead to lockups of this sort.
+
+Anyway, I'm not sure about this, but it is kind of frustrating to have leo lock
+up totally, so hopefully this small data tidbit will help flush out this bug.
+#@nonl
+#@-node:ekr.20041201072431:(Can hoist cause a hang?)
+#@+node:ekr.20041201084142:It is possible to change individual headlines directly
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2877106
+
+By: Paul Paterson - paulpaterson
+RE: Can I color the headline text ?  
+2004-12-01 08:01
+
+The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
+ 
+Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
+ 
+Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
+ 
+Between the two of them there should be enough information to help you achieve what you want. 
+ 
+It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+#@nonl
+#@-node:ekr.20041201084142:It is possible to change individual headlines directly
+#@+node:ekr.20041211022140:Specify key binding  in @button
+@killcolor
+
+- Specify the binding in the headline:  @button(alt-shift-9)
+- Change createDynamicButton in the script plugin to honor the binding.
+#@nonl
+#@-node:ekr.20041211022140:Specify key binding  in @button
+#@+node:ekr.20041214135556:How to use Tile
+@nocolor
+https://sourceforge.net/forum/message.php?msg_id=2882718
+By: nobody
+
+if anyone is interested here is some code that Tilefied my Leo instance, its
+does some patching in the LeoGui program.
+
+@color
+
+def createRootWindow(self):
+
+    """Create a hidden Tk root window."""
+    #import Tix
+    self.root = root = Tk.Tk()
+    root.tk.call( 'package', 'require', 'tile' )
+    #root.tk.call( 'namespace', 'import', '-force', 'ttk::*' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::scrollbar' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::label' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::entry' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::menu' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::button' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::frame' )
+    root.tk.call( 'namespace', 'import', '-force', 'ttk::menubutton' )
+    root.tk.call( 'tile::setTheme', 'clam' )
+    #self.root = root = Tix.Tk()
+    root.title("Leo Main Window")
+    root.withdraw()
+    
+    self.setDefaultIcon()
+    self.getDefaultConfigFont(g.app.config)
+    self.createGlobalWindows()
+
+    return root
+#@nonl
+#@-node:ekr.20041214135556:How to use Tile
+#@+node:ekr.20041126102946:(Use pyclbr to parse Python imports)
+#@-node:ekr.20041126102946:(Use pyclbr to parse Python imports)
+#@-node:ekr.20041130125500:To do misc
+#@+node:ekr.20041120153700:Cleanup 2
 #@+node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
 In:
 
@@ -416,7 +375,9 @@ In:
 - leoTkinterDialog code.
 #@nonl
 #@-node:ekr.20041120153700.1:Change g.app.gui to c.frame.gui
-#@-node:ekr.20041120153700:Cleanup
+#@+node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
+#@-node:ekr.20041123100100.1:Remove Preferences, Set Colors, Set Font commands
+#@-node:ekr.20041120153700:Cleanup 2
 #@+node:ekr.20041006110656:First (completion) 3
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
 I would like to store unknown
@@ -666,7 +627,7 @@ def putUnknownAttributes (self,torv,toString=False):
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040602153716:(Finish drawUserIcons)
 #@-node:ekr.20041006110656:First (completion) 3
-#@+node:ekr.20040919101448:Major (Must do) 5
+#@+node:ekr.20040919101448:Major (Must do) 4
 #@+node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
@@ -3019,7 +2980,7 @@ I personally prefer the wiki way [[name of section]].
 
 @setlink-tag [[ ]] 
 #@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
-#@-node:ekr.20040919101448:Major (Must do) 5
+#@-node:ekr.20040919101448:Major (Must do) 4
 #@+node:ekr.20041001182730:Easy 6
 #@+node:ekr.20041022091645.1:Find Next Clone command
 #@-node:ekr.20041022091645.1:Find Next Clone command
@@ -3395,36 +3356,6 @@ Edward
 Including, e.g., Undo messages.
 #@nonl
 #@-node:ekr.20040216153659.1:Find some way to translate all other Leo messages.
-#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@+node:ekr.20041130125213.2:Requests & follow up
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out. What do I have to
-do to make this happen?
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-
-#@-node:ekr.20041130125213.2:Requests & follow up
-#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@+node:ekr.20041130104552:(Support bird-track programs/comments?)
 @killcolor
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6457" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6458" clone_windows="0"/>
 <globals body_outline_ratio="0.410011918951">
 	<global_window_position top="72" left="237" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -10,7 +10,7 @@
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20041121151002" a="E"><vh>@settings</vh>
-<v t="ekr.20041121151002.1" a="TV"><vh>@recentfiles </vh></v>
+<v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -1579,33 +1579,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
-<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
-<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2"><vh>createColor</vh>
-<v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
-<v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
-<v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont </vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
-<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
-<v t="ekr.20041218100021"><vh>createInts</vh></v>
-<v t="ekr.20041127134208.7"><vh>createPath</vh></v>
-<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles</vh></v>
-<v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
-<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
-<v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
-<v t="ekr.20041127134613.1"><vh>createString</vh></v>
-<v t="ekr.20041218100121"><vh>createStrings</vh></v>
+<v t="ekr.20041219074843" a="E"><vh>Tests of g.importExtension</vh>
+<v t="ekr.20041219074843.1"><vh>@thin ../extensions/testExtension.py</vh></v>
+<v t="ekr.20041219074454"><vh>test of using exec to do imports</vh></v>
+<v t="ekr.20041219075144" a="TV"><vh>test of g.importExtension</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2227,7 +2204,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2358,7 +2335,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11242,14 +11219,14 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13239,8 +13216,7 @@ self.setterLabel = sc.component('label')
 
     def recentFilesCallback():
         files = recentFilesBox.get(0,'end')
-        files = [theFile.strip() for theFile in files]
-        # g.trace(repr(files))
+        files = [theFile.strip() for theFile in files if theFile.strip()]
         return files
 
     self.initValue(p,name,kind,vals,recentFilesCallback)
@@ -13699,6 +13675,12 @@ if name in ("OK","Cancel"):</t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
+- Use Bunch class to simplify code.
+
+- Support for generalized widget settings
+
+    how to do pass 'name = setting' to w.configure ??  Use Bunch??
+
 - Unit tests: there are too many cases to test by hand.
 
 - Move code into Leo's core.
@@ -13983,5 +13965,23 @@ headline_text_font_size = None
 headline_text_font_slant = roman
 headline_text_font_weight = normal
 </t>
+<t tx="ekr.20041219074454">import leoGlobals as g
+
+moduleName = 'leoNodes'
+
+exec 'import %s ; module = %s' % (moduleName,moduleName)
+
+print module</t>
+<t tx="ekr.20041219074843"></t>
+<t tx="ekr.20041219075144">import leoGlobals as g
+
+print g.importExtension('testExtension')
+
+print g.importModule('leoNodes')
+
+print g.importExtension('leoNodes')
+
+g.importModule('xyzzy',verbose=True)
+g.importExtension('xyzzy',verbose=True)</t>
 </tnodes>
 </leo_file>
