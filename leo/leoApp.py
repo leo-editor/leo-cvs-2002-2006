@@ -49,26 +49,22 @@ class LeoApp:
 		#@+node:1::<< return false if not v2.2 or above >>
 		#@+body
 		try:
-			version = sys.version
-			vlist = string.split(version,".")
-			v0 = int(vlist[0])
-			v1 = int(vlist[1])
-			v22 = v0 > 2 or (v0 == 2 and v1 > 1)
-		except:
-			print "exception getting version"
-			traceback.print_exc()
-			v22 = true # Just hope
-			
-		if not v22:
-			d = leoDialog.leoDialog()
-			d.askOk("Python version error",
+			# 04-SEP-2002 DHEIN: simplify version check
+			if not CheckVersion(sys.version, "2.2"):
+				d = leoDialog.leoDialog()
+				d.askOk("Python version error",
 		"""
 		leo.py requires Python 2.2 or higher.
 		
 		You may download Python 2.2 from http://python.org/download/
 		""",
-				text="Exit")
-			return false
+					text="Exit")
+				return false
+		except:
+			print "exception getting version"
+			traceback.print_exc()
+			v22 = true # Just hope
+
 		#@-body
 		#@-node:1::<< return false if not v2.2 or above >>
 
@@ -111,25 +107,10 @@ class LeoApp:
 			#@<< set v834 if version is 8.3.4 or greater >>
 			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
 			#@+body
-			# A compare version utility would be good.
-			
-			# Tk version is of the form 9.9.9, or 9.9b9,
-			# or 9.9.9b9.  The "9b9" form is used for beta
-			# releases.  This string splitting logic handles
-			# both normal and beta releases.
-			vlist = string.split(version,".")
-			v0 = int(vlist[0])
-			vlistb = string.split(vlist[1], "b")
-			v1 = int(vlistb[0])
-			if len(vlist) > 2: 
-				vlistb = string.split(vlist[2], "b")
-				v2 = int(vlistb[0])
-			else:
-				v2 = 0
-			
-			v834 = v0 > 8 or (
-				(v0 == 8 and v1 > 3) or (
-				(v0 == 8 and v1 == 3 and v2 >= 4 )))
+			# 04-SEP-2002 DHEIN: simplify version check
+			if CheckVersion(version, "8.3.4"):
+				v834 = true
+
 			#@-body
 			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
 
