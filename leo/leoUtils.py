@@ -366,10 +366,13 @@ def oldDump(s):
 #@-node:1::dump
 #@+node:2::es_exception
 #@+body
-def es_exception ():
+def es_exception (full=false):
 
 	typ,val,tb = sys.exc_info()
-	errList = traceback.format_exception_only(typ,val)
+	if full:
+		errList = traceback.format_exception(typ,val,tb)
+	else:
+		errList = traceback.format_exception_only(typ,val)
 	for i in errList:
 		es(i)
 	traceback.print_exc()

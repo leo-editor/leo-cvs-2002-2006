@@ -2029,7 +2029,9 @@ class LeoFrame:
 		if s and len(s) > 0:
 			try:
 				exec(s) # globals(), locals()
-			except: es_exception()
+			except:
+				full = true # Send the entire exception to the log.
+				es_exception(full)
 		else:
 			es("no script selected")
 	
