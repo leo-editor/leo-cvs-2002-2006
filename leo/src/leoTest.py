@@ -22,12 +22,15 @@ import leoGui
 import leoNodes
 import leoTkinterGui
 
+import compiler
 import doctest
 import glob
 import os
 import profile
 import pstats
 import sys
+import tabnanny
+import tokenize
 import unittest
 
 try: import timeit
@@ -1414,6 +1417,86 @@ def runPerfectImportTest(c,p,
 #@nonl
 #@-node:ekr.20040716140617.1:runPerfectImportTest
 #@-node:ekr.20040716140617:Perfect Import test code (leoTest.py)
+#@+node:ekr.20040801140146:Plugin tests... (leoTest.py)
+#@+node:ekr.20040801145719:getAllPluginFilenames
+def getAllPluginFilenames ():
+
+    path = g.os_path_join(g.app.loadDir,"..","plugins")
+
+    files = glob.glob(g.os_path_join(path,"*.py"))
+    files = [g.os_path_abspath(f) for f in files]
+    files.sort()
+    return files
+#@nonl
+#@-node:ekr.20040801145719:getAllPluginFilenames
+#@+node:ekr.20040801124822:testPlugin
+def testPlugin (fileName,verbose=False):
+        
+    path = g.os_path_join(g.app.loadDir,"..","plugins")
+    path = g.os_path_abspath(path)
+    
+    g.app.unitTesting = True
+    
+    try:
+
+        module = g.importFromPath(fileName,path)
+        assert module, "Can not import %s" % path
+        
+        # Run any unit tests in the module itself.
+        if hasattr(module,"unitTest"):
+            if verbose:
+                g.trace("Executing unitTest in plugins/%s..." % fileName)
+    
+            module.unitTest(verbose=verbose)
+            
+    finally:
+        g.app.unitTesting = False
+#@nonl
+#@-node:ekr.20040801124822:testPlugin
+#@+node:ekr.20040801135348:checkFileSyntax
+def checkFileSyntax (fileName,s):
+    
+    try:
+        compiler.parse(s + '\n')
+    except SyntaxError:
+        g.es("Syntax error in: %s" % fileName,color="blue")
+        g.es_exception(full=False,color="black")
+        raise
+#@nonl
+#@-node:ekr.20040801135348:checkFileSyntax
+#@+node:ekr.20040801135348.1:checkFileTabs
+def checkFileTabs (fileName,s):
+
+    try:
+        readline = g.readLinesClass(s).next
+        tabnanny.process_tokens(tokenize.generate_tokens(readline))
+
+    except tokenize.TokenError, msg:
+        s = "Token error in %s" % fileName
+        print s ; g.es(s,color="blue")
+        s = str(msg)
+        print s ; g.es(s)
+        assert 0, "test failed"
+
+    except tabnanny.NannyNag, nag:
+        badline = nag.get_lineno()
+        line    = nag.get_line()
+        message = nag.get_msg()
+        s = "Indentation error in %s, line %d" % (fileName, badline)
+        print s ; g.es(s,color="blue")
+        print message ; g.es(message)
+        s = "offending line:\n%s" % repr(str(line))[1:-1]
+        print s ; g.es(s)
+        assert 0, "test failed"
+
+    except:
+        s = "unexpected exception"
+        print s ; g.trace(s)
+        g.es_exception()
+        assert 0, "test failed"
+#@nonl
+#@-node:ekr.20040801135348.1:checkFileTabs
+#@-node:ekr.20040801140146:Plugin tests... (leoTest.py)
 #@-node:ekr.20040708145036:Specific to particular unit tests...
 #@+node:ekr.20040710184602:Test of doctest
 #@+node:ekr.20040710183515:factorial
