@@ -369,8 +369,21 @@ class baseTnode (object):
     
     def setTnodeText (self,s,encoding="utf-8"):
         
+        """Set the body text of a tnode to the given string."""
+        
         s = g.toUnicode(s,encoding,reportErrors=True)
+        
+        if 0: # DANGEROUS:  This automatically converts everything when reading files.
+    
+            option = g.app.config.trailing_body_newlines
+            
+            if option == "one":
+                s = s.rstrip() + '\n'
+            elif option == "zero":
+                s = s.rstrip()
+        
         self.bodyString = s
+    #@nonl
     #@-node:ekr.20031218072017.1485:setTnodeText
     #@+node:ekr.20031218072017.1486:setSelection
     def setSelection (self,start,length):
