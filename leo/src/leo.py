@@ -193,6 +193,7 @@ def createNullGuiWithScript (script):
 	
 	import leoGlobals as g
 	from leoGlobals import true,false
+	import leoGui
 	
 	g.app.batchMode = true
 	g.app.gui = leoGui.nullGui("nullGui")
