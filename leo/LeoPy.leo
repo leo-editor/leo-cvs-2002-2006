@@ -3165,7 +3165,7 @@
 <v t="T933"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
 </v>
 <v t="T1413" a="C"><vh>Menus, Commands &amp; Shortcuts</vh>
-<v t="T1414" a="E"><vh>canonicalizeShortcut</vh>
+<v t="T1414"><vh>canonicalizeShortcut</vh>
 <v t="T1415"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
 <v t="T1416"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
 <v t="T1417"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
@@ -4898,7 +4898,7 @@
 </v>
 </v>
 </v>
-<v t="T1923"><vh>Code</vh>
+<v t="T1923" a="V"><vh>Code</vh>
 <v t="T1924"><vh>  Overview of code</vh>
 <v t="T1925" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T1926" a="C"><vh> &lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -5926,7 +5926,7 @@
 <v t="T1239"><vh>OnMouseWheel (Tomaz Ficko)</vh></v>
 <v t="T1240" a="C"><vh>frame.OnVisibility</vh></v>
 </v>
-<v t="T1413" a="CE"><vh>Menus, Commands &amp; Shortcuts</vh>
+<v t="T1413" a="C"><vh>Menus, Commands &amp; Shortcuts</vh>
 <v t="T1414"><vh>canonicalizeShortcut</vh>
 <v t="T1415"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
 <v t="T1416"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
@@ -5964,14 +5964,14 @@
 <v t="T923"><vh>&lt;&lt; get menu and bind shortcuts &gt;&gt;</vh></v>
 </v>
 <v t="T1441" a="C"><vh>frame.doCommand</vh></v>
-<v t="T1442" a="CE"><vh>Menu Command Handlers</vh>
-<v t="T1443" a="E"><vh>File Menu</vh>
-<v t="T1444" a="E"><vh>top level</vh>
+<v t="T1442" a="C"><vh>Menu Command Handlers</vh>
+<v t="T1443"><vh>File Menu</vh>
+<v t="T1444"><vh>top level</vh>
 <v t="T1207" a="C"><vh>OnNew</vh></v>
 <v t="T1349" a="C"><vh>frame.OnOpen</vh>
 <v t="T1350"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T1445" a="CE"><vh>frame.OnOpenWith</vh>
+<v t="T1445" a="C"><vh>frame.OnOpenWith</vh>
 <v t="T1446"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
 <v t="T1447"><vh>&lt;&lt; set path to the full pathname of a temp file using ext &gt;&gt;</vh></v>
 <v t="T1448" a="M"><vh>&lt;&lt; execute a command to open path &gt;&gt;</vh></v>
@@ -6201,7 +6201,7 @@
 <v><vh>trace is defined below</vh></v>
 <v t="T2351"><vh>windows</vh></v>
 </v>
-<v a="E"><vh>Commands, Dialogs, Directives, &amp; Menus...</vh>
+<v><vh>Commands, Dialogs, Directives, &amp; Menus...</vh>
 <v><vh>Dialog utils...</vh>
 <v t="T2352"><vh>attachLeoIcon &amp; allies</vh>
 <v t="T2353"><vh>onVisibility</vh></v>
@@ -7104,7 +7104,7 @@
 </v>
 </v>
 </v>
-<v t="T2688" a="E"><vh>(Hooks and leoCustomize.py)</vh>
+<v t="T2688"><vh>(Hooks and leoCustomize.py)</vh>
 <v t="T2689"><vh>Hooks (do not delete)</vh></v>
 <v t="T2358" a="C"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
 <v t="T2359" a="CM"><vh>handleLeoHook</vh></v>
@@ -7115,7 +7115,7 @@
 <v t="T498" a="C"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1283"><vh>&lt;&lt; define global data structures &gt;&gt;</vh></v>
 </v>
-<v a="E"><vh>Code containing hooks</vh>
+<v><vh>Code containing hooks</vh>
 <v t="T904" a="C"><vh>app.quit</vh></v>
 <v t="T931" a="C"><vh>frame.__init__</vh>
 <v t="T932" a="C"><vh>&lt;&lt; set the LeoFrame ivars &gt;&gt;</vh></v>
@@ -7126,10 +7126,10 @@
 <v t="T1453" a="C"><vh>frame.OnOpenRecentFile</vh>
 <v t="T1454"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
-<v t="T1445" a="CE"><vh>frame.OnOpenWith</vh>
+<v t="T1445" a="C"><vh>frame.OnOpenWith</vh>
 <v t="T1446"><vh>&lt;&lt; set ext based on the present language &gt;&gt;</vh></v>
 <v t="T1447"><vh>&lt;&lt; set path to the full pathname of a temp file using ext &gt;&gt;</vh></v>
-<v t="T1448" a="V"><vh>&lt;&lt; execute a command to open path &gt;&gt;</vh></v>
+<v t="T1448"><vh>&lt;&lt; execute a command to open path &gt;&gt;</vh></v>
 </v>
 <v t="T927" a="C"><vh>frame.OpenWithFileName</vh>
 <v t="T928"><vh>&lt;&lt; make fileName the most recent file of frame &gt;&gt;</vh></v>
@@ -25017,7 +25017,7 @@ self.recentFiles = app().config.getRecentFiles()
 for i in xrange(len(self.recentFiles)):
 	name = self.recentFiles[i]
 	f=self.OnOpenRecentFile
-	callback = lambda f=f:f(n=n)
+	callback = lambda f=f:f(n=i)
 	recentFilesMenu.add_command(label=name,command=callback)
 </t>
 <t tx="T1430">readWriteMenu = self.createNewMenu("Read/Write...","File")

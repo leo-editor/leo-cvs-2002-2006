@@ -773,7 +773,7 @@ class LeoFrame:
 		for i in xrange(len(self.recentFiles)):
 			name = self.recentFiles[i]
 			f=self.OnOpenRecentFile
-			callback = lambda f=f:f(n=n)
+			callback = lambda f=f:f(n=i)
 			recentFilesMenu.add_command(label=name,command=callback)
 		
 		#@-body
