@@ -29,7 +29,7 @@ def set_delims_from_language(language):
 		(latex_language,"%"),
 		(pascal_language, "// { }"),
 		(perl_language, "#"),
-		(perlpod_language, "# =pod =cut"),
+		(perlpod_language, "# __=pod__ __=cut__"), # 9/25/02: The perlpod hack.
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
 		(shell_language, "#"),
 		(python_language, "#"),
@@ -84,8 +84,10 @@ def set_delims_from_string(s):
 			delims[0], delims[1], delims[2] = "//", "/*", "*/"
 
 	# 7/8/02: The "REM hack": replace underscores by blanks.
+	# 9/25/02: The "perlpod hack": replace double underscores by newlines.
 	for i in xrange(0,3):
 		if delims[i]:
+			delims[i] = string.replace(delims[i],"__",'\n') 
 			delims[i] = string.replace(delims[i],'_',' ')
 
 	return delims[0], delims[1], delims[2]
