@@ -2123,6 +2123,8 @@ def initFrom(self, location):
     # Initial properties
     self.filename = location
     self.name = self.getName(location)
+    
+    # g.trace(self.name)
 
     # Get the contents of the file
     try:

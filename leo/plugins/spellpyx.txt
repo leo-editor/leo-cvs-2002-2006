@@ -299,8 +299,10 @@ aspell_dir
 aspell_return
 assignFileIndices
 ast
+atButtonNodes
 atFile
 atFileCommands
+atPluginNodes
 auto_save
 autoload
 autosave
