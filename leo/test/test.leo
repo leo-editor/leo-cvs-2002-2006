@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6023" clone_windows="0"/>
 <globals body_outline_ratio="0.353009259259">
-	<global_window_position top="48" left="175" height="864" width="907"/>
+	<global_window_position top="49" left="332" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -401,6 +401,9 @@
 <v t="ekr.20041109164251"><vh>Test of template plugin</vh>
 <v t="ekr.20041109174338"><vh>The template</vh></v>
 <v t="ekr.20041109174338.1" a="E"><vh>A node that uses the template</vh></v>
+</v>
+<v t="ekr.20041111084431"><vh>test of using changes to Go To Line number to handle scripts</vh>
+<v t="ekr.20041111084431.1" a="E"><vh>node that throws exception</vh></v>
 </v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
@@ -1276,8 +1279,10 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041111084431" a="ETV"><vh>test of using changes to Go To Line number to handle scripts</vh>
-<v t="ekr.20041111084431.1" a="E"><vh>node that throws exception</vh></v>
+<v t="ekr.20041111130231" a="E"><vh>Registering &amp; unregistering the "new" drawing hooks</vh>
+<v t="ekr.20041111124032" a="TV"><vh>Register all new hooks</vh></v>
+<v t="ekr.20041111124353"><vh>Unregister all new hooks</vh></v>
+<v t="ekr.20041111130231.1"><vh>Print all new hooks</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10449,5 +10454,72 @@ import leoGlobals as g
 a = 1/0 # ZeroDivisionError
 
 b = 2</t>
+<t tx="ekr.20041111124032">import leoGlobals as g
+import leoPlugins as plugins
+
+def traceHook(tag,event):
+    g.trace(tag)
+    
+tags = (
+    "boxclick1","boxclick2",
+    "drag1","drag2",
+    "dragging1","dragging2",
+    "enddrag1","enddrag2",
+    "iconclick1","iconclick2"  , 
+    "iconrclick1","iconrclick2",
+    "icondclick1","icondclick2",
+)
+
+plugins.registerHandler(tags,traceHook)
+
+handlers = plugins.getHandlersForTag(tags)
+if handlers:
+    print "-" * 20
+    for h in handlers:
+        print h</t>
+<t tx="ekr.20041111124353">import leoGlobals as g
+import leoPlugins as plugins
+
+tags = (
+    "boxclick1","boxclick2",
+    "drag1","drag2",
+    "dragging1","dragging2",
+    "enddrag1","enddrag2",
+    "iconclick1","iconclick2"  , 
+    "iconrclick1","iconrclick2",
+    "icondclick1","icondclick2",
+)
+
+for tag in tags:
+    handlers = plugins.getHandlersForTag(tag)
+    if handlers:
+        print handlers
+        for f in handlers:
+            plugins.unregisterHandler(tag,f)
+
+handlers = plugins.getHandlersForTag(tags)
+if handlers:
+    print "-" * 20
+    for h in handlers:
+        print h</t>
+<t tx="ekr.20041111130231"></t>
+<t tx="ekr.20041111130231.1">import leoGlobals as g
+import leoPlugins as plugins
+
+tags = (
+    "boxclick1","boxclick2",
+    "drag1","drag2",
+    "dragging1","dragging2",
+    "enddrag1","enddrag2",
+    "iconclick1","iconclick2"  , 
+    "iconrclick1","iconrclick2",
+    "icondclick1","icondclick2",
+)
+
+handlers = plugins.getHandlersForTag(tags)
+if handlers:
+    print "-" * 20
+    for h in handlers:
+        print h</t>
 </tnodes>
 </leo_file>

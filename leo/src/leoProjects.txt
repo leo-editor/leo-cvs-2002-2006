@@ -5139,7 +5139,7 @@ def startElement(self,name,atts):
 #@-node:ekr.20031218072017.1664:startElement
 #@-node:ekr.20031218072017.1658:(Using xml parser)
 #@-node:ekr.20031218072017.984:Unfinished projects
-#@+node:ekr.20040929081120:4.3 a1 projects
+#@+node:ekr.20040929081120:4.2.1 projects
 #@+node:ekr.20040701152235:(Fixed shawdow warnings)
 @killcolor
 
@@ -15287,7 +15287,900 @@ for text,value in right_data:
 #@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
 #@-node:ekr.20041107103007.2:In leoTkinterPrefs.py
 #@-node:ekr.20041107093219:(Added support for Forth)
-#@-node:ekr.20040929081120:4.3 a1 projects
+#@+node:ekr.20041029085429.1:(Improved Go To Line Number and Execute Script commands)
+#@+node:ekr.20041111100436:Notes
+@killcolor
+
+What I did:
+
+- Go To Line Number command now assumes the presently selected node is a script if there is no ancestor @file node.
+
+- Execute Script command uses this new logic to select the proper node and line in a script if there is an error.
+
+How did we ever live without this?
+
+- Added sciptFind ivar and related logic to goToLineNumber and it allies.
+#@nonl
+#@-node:ekr.20041111100436:Notes
+#@+node:ekr.20031218072017.3112:es_exception
+def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+    
+    full = full or g.app.debugSwitch > 0
+
+    if full: lines = traceback.format_exception(typ,val,tb)
+    else:    lines = traceback.format_exception_only(typ,val)
+        
+    fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+            
+    if g.app.debugSwitch > 1:
+        import pdb ; pdb.set_trace()
+
+    return fileName,n
+#@nonl
+#@-node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script ")
+            fileName,n = g.es_exception(full=False,c=c)
+            if fileName not in (None,"<string>"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            else:
+                << dump the lines near the error >>
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = None
+        # Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            at = c.atFileCommands
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
+            # g.trace(script)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@+node:EKR.20040612232221:goToScriptLineNumber
+def goToScriptLineNumber (self,root,script,n):
+
+    """Go to line n of a script."""
+
+    c = self
+    
+    # g.trace(n,root)
+    
+    lines = g.splitLines(script)
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
+#@nonl
+#@-node:EKR.20040612232221:goToScriptLineNumber
+#@+node:ekr.20031218072017.2864:goToLineNumber & allies
+def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
+
+    c = self ; p = c.currentPosition()
+    root1 = root
+    if root is None:
+        << set root >>
+    if lines is None:
+        << read the file into lines >>
+    if n is None:
+        << get n, the line number, from a dialog >>
+    if n==1:
+        p = root ; n2 = 1 ; found = True
+    elif n >= len(lines):
+        p = root ; found = False
+        n2 = p.bodyString().count('\n')
+    elif root.isAtAsisFileNode():
+        << count outline lines, setting p,n2,found >>
+    else:
+        vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root,scriptFind)
+        found = True
+        if not vnodeName:
+            g.es("error handling: " + root.headString())
+            return
+        << set p to the node given by vnodeName, etc. >>
+    << select p and make it visible >>
+    << put the cursor on line n2 of the body text >>
+#@nonl
+#@+node:ekr.20031218072017.2865:<< set root >>
+# First look for ancestor @file node.
+fileName = None
+for p in p.self_and_parents_iter():
+    fileName = p.anyAtFileNodeName()
+    if fileName: break
+
+# New in 4.2: Search the entire tree for joined nodes.
+if not fileName:
+    p1 = c.currentPosition()
+    for p in c.all_positions_iter():
+        if p.v.t == p1.v.t and p != p1:
+            # Found a joined position.
+            for p in p.self_and_parents_iter():
+                fileName = p.anyAtFileNodeName()
+                # New in 4.2 b3: ignore @all nodes.
+                if fileName and not p.isAtAllNode(): break
+        if fileName: break
+
+if fileName:
+    root = p.copy()
+else:
+    # New in 4.2.1: assume the c.currentPosition is the root of a script.
+    root = c.currentPosition()
+    g.es("No ancestor @file node: using script line numbers", color="blue")
+    scriptFind = True
+    lines = g.getScript (c,root,useSelectedText=False)
+    lines = g.splitLines(lines)
+    if 1:
+        for line in lines:
+            print line,
+#@nonl
+#@-node:ekr.20031218072017.2865:<< set root >>
+#@+node:ekr.20031218072017.2866:<< read the file into lines >>
+# 1/26/03: calculate the full path.
+d = g.scanDirectives(c)
+path = d.get("path")
+
+fileName = g.os_path_join(path,fileName)
+
+try:
+    theFile=open(fileName)
+    lines = theFile.readlines()
+    theFile.close()
+except:
+    g.es("not found: " + fileName)
+    return
+#@nonl
+#@-node:ekr.20031218072017.2866:<< read the file into lines >>
+#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
+if n == -1:
+    return
+#@nonl
+#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
+#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+p = lastv = root
+prev = 0 ; found = False
+
+for p in p.self_and_subtree_iter():
+    lastv = p.copy()
+    s = p.bodyString()
+    lines = s.count('\n')
+    if len(s) > 0 and s[-1] != '\n':
+        lines += 1
+    # print lines,prev,p
+    if prev + lines >= n:
+        found = True ; break
+    prev += lines
+
+p = lastv
+n2 = max(1,n-prev)
+#@nonl
+#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
+#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
+if scriptFind:
+    << just scan for the node name >>
+elif gnx:
+    << 4.2: get node from gnx >>
+elif childIndex == -1:
+    << 4.x: scan for the node using tnodeList and n >>
+else:
+    << 3.x: scan for the node with the given childIndex >>
+#@nonl
+#@+node:ekr.20041111093404:<< just scan for the node name >>
+# This is safe enough because clones are not much of an issue.
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        found = True ; break
+#@nonl
+#@-node:ekr.20041111093404:<< just scan for the node name >>
+#@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
+found = False
+gnx = g.app.nodeIndices.scanGnx(gnx,0)
+
+# g.trace(vnodeName)
+# g.trace(gnx)
+
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        # g.trace(p.v.t.fileIndex)
+        if p.v.t.fileIndex == gnx:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:EKR.20040609110138:<< 4.2: get node from gnx >>
+#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+# This is about the best that can be done without replicating the entire atFile write logic.
+
+ok = True
+
+if not hasattr(root.v.t,"tnodeList"):
+    s = "no child index for " + root.headString()
+    print s ; g.es(s, color="red")
+    ok = False
+
+if ok:
+    tnodeList = root.v.t.tnodeList
+    << set tnodeIndex to the number of +node sentinels before line n >>
+    tnodeIndex = max(0,tnodeIndex)
+    << set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = False >>
+            
+if not ok:
+    # Fall back to the old logic.
+    << set p to the first node whose headline matches vnodeName >>
+#@nonl
+#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+tnodeIndex = -1 # Don't count the @file node.
+scanned = 0 # count of lines scanned.
+
+for s in lines:
+    if scanned >= n:
+        break
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        i += len(delim)
+        if g.match(s,i,"+node"):
+            # g.trace(tnodeIndex,s.rstrip())
+            tnodeIndex += 1
+    scanned += 1
+#@nonl
+#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
+#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
+
+However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
+
+The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
+@c
+
+# g.trace("tnodeIndex",tnodeIndex)
+if tnodeIndex < len(tnodeList):
+    t = tnodeList[tnodeIndex]
+    # Find the first vnode whose tnode is t.
+    found = False
+    for p in root.self_and_subtree_iter():
+        if p.v.t == t:
+            found = True ; break
+    if not found:
+        s = "tnode not found for " + vnodeName
+        print s ; g.es(s, color="red") ; ok = False
+    elif p.headString().strip() != vnodeName:
+        if 0: # Apparently this error doesn't prevent a later scan for working properly.
+            s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
+            print s ; g.es(s, color="red")
+        ok = False
+else:
+    if root1 is None: # Kludge: disable this message when called by goToScriptLineNumber.
+        s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+        print s ; g.es(s, color = "red")
+    ok = False
+#@nonl
+#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        found = True ; break
+
+if not found:
+    s = "not found: " + vnodeName
+    print s ; g.es(s, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
+#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
+#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+found = False
+for p in root.self_and_subtree_iter():
+    if p.matchHeadline(vnodeName):
+        if childIndex <= 0 or p.childIndex() + 1 == childIndex:
+            found = True ; break
+
+if not found:
+    g.es("not found: " + vnodeName, color="red")
+    return
+#@nonl
+#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
+#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
+#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
+c.beginUpdate()
+c.frame.tree.expandAllAncestors(p)
+c.selectVnode(p)
+c.endUpdate()
+#@nonl
+#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
+#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+if found:
+    c.frame.body.setInsertPointToStartOfLine(n2-1)
+else:
+    c.frame.body.setInsertionPointToEnd()
+    g.es("%d lines" % len(lines), color="blue")
+
+c.frame.body.makeInsertPointVisible()
+#@nonl
+#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
+#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
+
+Returns (vnodeName,offset)
+
+vnodeName: the name found in the previous @+body sentinel.
+offset: the offset within p of the desired line.
+@c
+
+def convertLineToVnodeNameIndexLine (self,lines,n,root,scriptFind):
+    
+    """Convert a line number n to a vnode name, (child index or gnx) and line number."""
+    
+    c = self ; at = c.atFileCommands
+    childIndex = 0 ; gnx = None ; newDerivedFile = False
+    thinFile = root.isAtThinFileNode()
+    << set delim, leoLine from the @+leo line >>
+    if not delim:
+        g.es("bad @+leo sentinel")
+        return None,None,None,None,None
+    << scan back to @+node, setting offset,nodeSentinelLine >>
+    if nodeSentinelLine == -1:
+        # The line precedes the first @+node sentinel
+        # g.trace("before first line")
+        return root.headString(),0,gnx,1,delim # 10/13/03
+    s = lines[nodeSentinelLine]
+    # g.trace(s)
+    << set vnodeName and (childIndex or gnx) from s >>
+    # g.trace("childIndex,offset",childIndex,offset,vnodeName)
+    return vnodeName,childIndex,gnx,offset,delim
+#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+# Find the @+leo line.
+tag = "@+leo"
+i = 0 
+while i < len(lines) and lines[i].find(tag)==-1:
+    i += 1
+leoLine = i # Index of the line containing the leo sentinel
+
+if leoLine < len(lines):
+    s = lines[leoLine]
+    valid,newDerivedFile,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
+    if valid: delim = start + '@'
+    else:     delim = None
+else:
+    delim = None
+#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
+#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+offset = 0 # This is essentially the Tk line number.
+nodeSentinelLine = -1
+line = n - 1
+while line >= 0:
+    s = lines[line]
+    # g.trace(s)
+    i = g.skip_ws(s,0)
+    if g.match(s,i,delim):
+        << handle delim while scanning backward >>
+    else:
+        offset += 1 # Assume the line is real.  A dubious assumption.
+    line -= 1
+#@nonl
+#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+if line == n:
+    g.es("line "+str(n)+" is a sentinel line")
+i += len(delim)
+
+if g.match(s,i,"-node"):
+    # The end of a nested section.
+    line = self.skipToMatchingNodeSentinel(lines,line,delim)
+elif g.match(s,i,"+node"):
+    nodeSentinelLine = line
+    break
+elif g.match(s,i,"<<") or g.match(s,i,"@first"):
+    offset += 1 # Count these as a "real" lines.
+#@nonl
+#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
+#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
+#@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+if scriptFind:
+    # The vnode name follows the first ':'
+    i = s.find(':',i)
+    if i > -1:
+        vnodeName = s[i+1:].strip()
+    childIndex = -1
+elif newDerivedFile:
+    i = 0
+    if thinFile:
+        # gnx is lies between the first and second ':':
+        i = s.find(':',i)
+        if i > 0:
+            i += 1
+            j = s.find(':',i)
+            if j > 0:
+                gnx = s[i:j]
+            else: i = len(s)
+        else: i = len(s)
+    # vnode name is everything following the first or second':'
+    # childIndex is -1 as a flag for later code.
+    i = s.find(':',i)
+    if i > -1: vnodeName = s[i+1:].strip()
+    else: vnodeName = None
+    childIndex = -1
+else:
+    # vnode name is everything following the third ':'
+    i = 0 ; colons = 0
+    while i < len(s) and colons < 3:
+        if s[i] == ':':
+            colons += 1
+            if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
+                junk,childIndex = g.skip_long(s,i+1)
+        i += 1
+    vnodeName = s[i:].strip()
+    
+# g.trace("gnx",gnx,"vnodeName:",vnodeName)
+if not vnodeName:
+    vnodeName = None
+    g.es("bad @+node sentinel")
+#@nonl
+#@-node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
+#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
+#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+def skipToMatchingNodeSentinel (self,lines,n,delim):
+    
+    s = lines[n]
+    i = g.skip_ws(s,0)
+    assert(g.match(s,i,delim))
+    i += len(delim)
+    if g.match(s,i,"+node"):
+        start="+node" ; end="-node" ; delta=1
+    else:
+        assert(g.match(s,i,"-node"))
+        start="-node" ; end="+node" ; delta=-1
+    # Scan to matching @+-node delim.
+    n += delta ; level = 0
+    while 0 <= n < len(lines):
+        s = lines[n] ; i = g.skip_ws(s,0)
+        if g.match(s,i,delim):
+            i += len(delim)
+            if g.match(s,i,start):
+                level += 1
+            elif g.match(s,i,end):
+                if level == 0: break
+                else: level -= 1
+        n += delta
+        
+    # g.trace(n)
+    return n
+#@nonl
+#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
+#@-node:ekr.20031218072017.2864:goToLineNumber & allies
+#@-node:ekr.20041029085429.1:(Improved Go To Line Number and Execute Script commands)
+#@+node:ekr.20041018194900:(Restored drawing/event hooks)
+#@+node:ekr.20041111114148.1:What I did
+Added the following back:
+    
+"boxclick1"     before click in +- box            c,p,v,event
+"boxclick2"     after  click in +- box            c,p,v,event
+"drag1"         before start of drag              c,p,v,event
+"drag2"         after  start of drag              c,p,v,event
+"dragging1"     before continuing to drag         c,p,v,event
+"dragging2"     after  continuing to drag         c,p,v,event
+"enddrag1"      before end of drag                c,p,v,event
+"enddrag2"      after  end of drag                c,p,v,event
+
+The following already existed.  I added v=p keyword params:
+
+"iconclick1"    before single click in icon box   c,p,v,event
+"iconclick2"    after  single click in icon box   c,p,v,event
+"iconrclick1"   before right click in icon box    c,p,v,event
+"iconrclick2"   after  right click in icon box    c,p,v,event
+"icondclick1"   before double click in icon box   c,p,v,event
+"icondclick2"   after  double click in icon box   c,p,v,event
+
+Added leoPlugins.unregisterHandler and getHandlersFor tag for testing.
+#@nonl
+#@-node:ekr.20041111114148.1:What I did
+#@+node:ekr.20041111125613:New plugins code
+#@+node:ekr.20041111124831:getHandlersForTag
+def getHandlersForTag(tags):
+    
+    import types
+
+    if type(tags) in (types.TupleType,types.ListType):
+        result = []
+        for tag in tags:
+            fn = getHandlersForOneTag(tag)
+            result.append((tag,fn),)
+        return result
+    else:
+        return getHandlersForOneTag(tags)
+
+def getHandlersForOneTag (tag):
+
+    global handlers
+    
+    return handlers.get(tag)
+#@nonl
+#@-node:ekr.20041111124831:getHandlersForTag
+#@+node:ekr.20041111123313:unregisterHandler
+def unregisterHandler(tags,fn):
+    
+    import types
+
+    if type(tags) in (types.TupleType,types.ListType):
+        for tag in tags:
+            unregisterOneHandler(tag,fn)
+    else:
+        unregisterOneHandler(tags,fn)
+
+def unregisterOneHandler (tag,fn):
+
+    global handlers
+
+    fn_list = handlers.get(tag)
+    if fn_list:
+        while fn in fn_list:
+            fn_list.remove(fn)
+        handlers[tag] = fn_list
+        # g.trace(handlers.get(tag))
+#@nonl
+#@-node:ekr.20041111123313:unregisterHandler
+#@-node:ekr.20041111125613:New plugins code
+#@+node:ekr.20041111121907:Changed code
+#@+node:ekr.20040803072955.99:Dragging
+#@+node:ekr.20041111115908:endDrag
+def endDrag (self,event):
+    
+    """The official helper of the onEndDrag event handler."""
+    
+    c = self.c ; p = self.drag_p
+    canvas = self.canvas ; config = g.app.config
+    if not event: return
+
+    << set vdrag, childFlag >>
+    if config.getBoolWindowPref("allow_clone_drags"):
+        if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
+            self.controlDrag = c.frame.controlKeyIsDown
+
+    if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
+        << drag p to vdrag >>
+    elif self.trace and self.verbose:
+        g.trace("Cancel drag")
+    
+    # Reset the old cursor by brute force.
+    self.canvas['cursor'] = "arrow"
+    self.dragging = False
+    self.drag_p = None
+#@+node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+x,y = event.x,event.y
+canvas_x = canvas.canvasx(x)
+canvas_y = canvas.canvasy(y)
+
+theId = self.canvas.find_closest(canvas_x,canvas_y)
+# theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+
+vdrag = self.findPositionWithIconId(theId)
+childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+#@nonl
+#@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+#@+node:ekr.20041111114148:<< drag p to vdrag >>
+if self.trace and self.verbose:
+    g.trace("*** end drag   ***",\
+        theId,x,y,p.headString(),vdrag.headString())
+if self.controlDrag: # Clone p and move the clone.
+    if childFlag:
+        c.dragCloneToNthChildOf(p,vdrag,0)
+    else:
+        c.dragCloneAfter(p,vdrag)
+else: # Just drag p.
+    if childFlag:
+        c.dragToNthChildOf(p,vdrag,0)
+    else:
+        c.dragAfter(p,vdrag)
+#@nonl
+#@-node:ekr.20041111114148:<< drag p to vdrag >>
+#@-node:ekr.20041111115908:endDrag
+#@+node:ekr.20041111114944:startDrag
+# This precomputes numberOfVisibleNodes(), a significant optimization.
+# We also indicate where findPositionWithIconId() should start looking for tree id's.
+
+def startDrag (self,event):
+    
+    """The official helper of the onDrag event handler."""
+    
+    c = self.c ; canvas = self.canvas
+    assert(not self.drag_p)
+    x = canvas.canvasx(event.x)
+    y = canvas.canvasy(event.y)
+    theId = canvas.find_closest(x,y)
+    # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+    if theId is None: return
+    try: theId = theId[0]
+    except: pass
+    p = self.ids.get(theId)
+    if not p: return
+    self.drag_p = p.copy() # defensive programming: not needed.
+    self.dragging = True
+    if self.trace and self.verbose:
+        g.trace("*** start drag ***",theId,self.drag_p.headString())
+    windowPref = g.app.config.getBoolWindowPref
+    # Only do this once: greatly speeds drags.
+    self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+    if windowPref("allow_clone_drags"):
+        self.controlDrag = c.frame.controlKeyIsDown
+        if windowPref("look_for_control_drag_on_mouse_down"):
+            if windowPref("enable_drag_messages"):
+                if self.controlDrag:
+                    g.es("dragged node will be cloned")
+                else:
+                    g.es("dragged node will be moved")
+    else: self.controlDrag = False
+    self.canvas['cursor'] = "hand2" # "center_ptr"
+#@nonl
+#@-node:ekr.20041111114944:startDrag
+#@+node:ekr.20040803072955.100:onContinueDrag
+def onContinueDrag(self,event):
+    
+    p = self.drag_p
+    if not p: return
+
+    try:
+        canvas = self.canvas ; frame = self.c.frame
+        if event:
+            x,y = event.x,event.y
+        else:
+            x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+            # Stop the scrolling if we go outside the entire window.
+            if x == -1 or y == -1: return 
+        if self.dragging: # This gets cleared by onEndDrag()
+            << scroll the canvas as needed >>
+    except:
+        g.es_event_exception("continue drag")
+#@nonl
+#@+node:ekr.20040803072955.101:<< scroll the canvas as needed >>
+# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
+h = canvas.winfo_height()
+
+if y < 0 or y > h:
+    lo, hi = frame.treeBar.get()
+    n = self.savedNumberOfVisibleNodes
+    line_frac = 1.0 / float(n)
+    frac = g.choose(y < 0, lo - line_frac, lo + line_frac)
+    frac = min(frac,1.0)
+    frac = max(frac,0.0)
+    # g.es("lo,hi,frac:",lo,hi,frac)
+    canvas.yview("moveto", frac)
+    
+    # Queue up another event to keep scrolling while the cursor is outside the canvas.
+    lo, hi = frame.treeBar.get()
+    if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
+        canvas.after_idle(self.onContinueDrag,None) # Don't propagate the event.
+#@nonl
+#@-node:ekr.20040803072955.101:<< scroll the canvas as needed >>
+#@-node:ekr.20040803072955.100:onContinueDrag
+#@+node:ekr.20040803072955.102:onDrag
+def onDrag(self,event):
+    
+    c = self.c ; p = self.drag_p
+    if not event: return
+    
+    if not self.dragging:
+        if not g.doHook("drag1",c=c,p=p,v=p,event=event):
+            self.startDrag(event)
+        g.doHook("drag2",c=c,p=p,v=p,event=event)
+        
+    if not g.doHook("dragging1",c=c,p=p,v=p,event=event):
+        self.onContinueDrag(event)
+    g.doHook("dragging2",c=c,p=p,v=p,event=event)
+#@nonl
+#@-node:ekr.20040803072955.102:onDrag
+#@+node:ekr.20040803072955.103:onEndDrag
+def onEndDrag(self,event):
+    
+    """Tree end-of-drag handler called from vnode event handler."""
+    
+    c = self.c ; p = self.drag_p
+    if not p: return
+    
+    if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
+        self.endDrag(event)
+    g.doHook("enddrag2",c=c,p=p,v=p,event=event)
+#@nonl
+#@-node:ekr.20040803072955.103:onEndDrag
+#@-node:ekr.20040803072955.99:Dragging
+#@+node:ekr.20040803072955.79:onClickBoxClick
+def onClickBoxClick (self,event):
+    
+    c = self.c ; gui = g.app.gui
+    
+    if self.trace and self.verbose: g.trace()
+    p = self.eventToPosition(event)
+    if not p: return
+
+    if not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
+        if p.isExpanded(): p.contract()
+        else:              p.expand()
+        self.active = True
+        # Schedule the redraw _before_ calling select.
+        # This disables any call that would configure old text widgets.
+        self.redraw()
+        self.select(p)
+        g.app.findFrame.handleUserClick(p)
+        gui.set_focus(c,c.frame.bodyCtrl)
+    g.doHook("boxclick2",c=c,p=p,v=p,event=event)
+#@nonl
+#@-node:ekr.20040803072955.79:onClickBoxClick
+#@+node:ekr.20040803072955.80:Icon Box...
+#@+node:ekr.20040803072955.81:onIconBoxClick
+def onIconBoxClick (self,event):
+    
+    c = self.c ; gui = g.app.gui
+    tree = self ; canvas = tree.canvas
+    
+    p = self.eventToPosition(event)
+    if not p: return
+    
+    if self.trace and self.verbose: g.trace()
+    
+    if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
+        if event:
+            self.onDrag(event)
+        tree.select(p)
+        g.app.findFrame.handleUserClick(p) # 4/3/04
+    g.doHook("iconclick2",c=c,p=p,v=p,event=event)
+        
+    return "break" # disable expanded box handling.
+#@nonl
+#@-node:ekr.20040803072955.81:onIconBoxClick
+#@+node:ekr.20040803072955.89:onIconBoxRightClick
+def onIconBoxRightClick (self,event):
+    
+    """Handle a right click in any outline widget."""
+
+    c = self.c ; w = event.widget
+    
+    p = self.eventToPosition(event)
+    if not p: return
+
+    try:
+        if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
+            self.OnActivate(p)
+            self.endEditLabel()
+            self.OnPopup(p,event)
+        g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("iconrclick")
+        
+    return "continue"
+#@nonl
+#@-node:ekr.20040803072955.89:onIconBoxRightClick
+#@+node:ekr.20040803072955.82:onIconBoxDoubleClick
+def onIconBoxDoubleClick (self,event):
+    
+    c = self.c
+
+    p = self.eventToPosition(event)
+    if not p: return
+    
+    if self.trace and self.verbose: g.trace()
+    
+    try:
+        if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
+            self.OnIconDoubleClick(p) # Call the method in the base class.
+        g.doHook("icondclick2",c=c,p=p,v=p,event=event)
+    except:
+        g.es_event_exception("icondclick")
+#@-node:ekr.20040803072955.82:onIconBoxDoubleClick
+#@-node:ekr.20040803072955.80:Icon Box...
+#@-node:ekr.20041111121907:Changed code
+#@-node:ekr.20041018194900:(Restored drawing/event hooks)
+#@-node:ekr.20040929081120:4.2.1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
