@@ -18,6 +18,8 @@ class baseConfig:
 	#@@c
 	
 	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
+	defaultLogFontSize  = choose(sys.platform=="win32",8,12)
+	defaultTreeFontSize = choose(sys.platform=="win32",9,12)
 	
 	defaultsDict = {
 		# compare options...
@@ -46,10 +48,10 @@ class baseConfig:
 		"body_text_font_slant" : "roman",
 		"body_text_font_weight" : "normal",
 		"enable_drag_messages" : 1,
-		"headline_text_font_size" : 12,
+		"headline_text_font_size" : defaultTreeFontSize,
 		"headline_text_font_slant" : "roman",
 		"headline_text_font_weight" : "normal",
-		"log_text_font_size" : 12,
+		"log_text_font_size" : defaultLogFontSize,
 		"log_text_font_slant" : "roman",
 		"log_text_font_weight" : "normal",
 		"initial_window_height" : 600, # 7/24/03: In pixels.
@@ -290,7 +292,7 @@ class baseConfig:
 	#@nonl
 	#@-node:get/setWindowPrefs
 	#@+node:config.getFontFromParams
-	def getFontFromParams(self,family,size,slant,weight,tag=""):
+	def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag=""):
 	
 		"""Compute a font from font parameters.
 	
@@ -305,7 +307,7 @@ class baseConfig:
 			family = self.defaultFontFamily
 			
 		size = self.getIntWindowPref(size)
-		if size in (None,0): size = 12
+		if size in (None,0): size = defaultSize
 		
 		slant = self.getWindowPref(slant)
 		if slant in (None,""): slant = "roman"
@@ -316,7 +318,7 @@ class baseConfig:
 		# if app.trace: trace(tag,family,size,slant,weight)
 		
 		return app.gui.getFontFromParams(family,size,slant,weight)
-	
+	#@nonl
 	#@-node:config.getFontFromParams
 	#@+node:getShortcut
 	def getShortcut (self,name):
