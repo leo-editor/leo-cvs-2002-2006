@@ -2886,6 +2886,28 @@ if 0: # No longer used
         return leoTkinterPrefs.leoTkinterPrefs(c)
 #@nonl
 #@-node:ekr.20050129113217:Unused code from leoTkinterGui & leoGui
+#@+node:ekr.20050225154536:Unused from AtFile.read
+#@+node:ekr.20050225105352:<< delete all unvisited nodes >>
+@ This can never happen because only the root vnode of @thin trees get written.
+@c
+p = root.firstChild()
+after = root.nodeAfterTree()
+
+# We can't use an iterator because we may delete node.
+while p and not p.isEqual(after):
+    if p.v.t.isVisited():
+        p.moveToThreadNext()
+    else:
+        # This copy will happen rarely.
+        next = p.nodeAfterTree()
+        s = 'To be deleted: %s' % p.headString()
+        print s ; g.es(s,color='red')
+        if 0: # Actually delete the tree.
+            p.doDelete(next)
+        p = next
+#@nonl
+#@-node:ekr.20050225105352:<< delete all unvisited nodes >>
+#@-node:ekr.20050225154536:Unused from AtFile.read
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

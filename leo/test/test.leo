@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6662" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6672" clone_windows="0"/>
 <globals body_outline_ratio="0.521970705726">
-	<global_window_position top="131" left="237" height="751" width="931"/>
+	<global_window_position top="80" left="306" height="751" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002"><vh>@settings</vh>
+<v t="ekr.20041121151002" annotate="7d71002e"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
@@ -32,9 +32,9 @@
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 <v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709"
-expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
+<v t="EKR.20040623200709" annotate="7d71002e"
+expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040721153143" annotate="7d71002e"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
 <v t="ekr.20040901072339"><vh>&lt;&lt; scan for #@count &gt;&gt;</vh></v>
@@ -44,7 +44,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" annotate="7d71002e"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -181,13 +181,13 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419"><vh>@file fatGrandChildTest.txt</vh>
-<v t="EKR.20040524050419.1"><vh>Organizer node</vh>
+<v t="EKR.20040524050419" a="E"><vh>@file fatGrandChildTest.txt</vh>
+<v t="EKR.20040524050419.1" a="E"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="EKR.20040524050438"><vh>@thin grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635"><vh>@file orphanMessageTest.txt</vh>
+<v t="EKR.20040525083635" a="E"><vh>@file orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
 </v>
@@ -232,7 +232,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 </v>
 </v>
-<v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
+<v t="EKR.20040627103732" a="E"><vh>Test of writing descendent uA's</vh>
 <v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
 <v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
 <v t="EKR.20040627103801"><vh>@thin uaTest.txt</vh></v>
@@ -548,7 +548,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050220024614"><vh>Mini test of g.pdb</vh></v>
 <v t="ekr.20050220034025"><vh>Mini test of g.es_exception</vh></v>
 </v>
-<v t="ekr.20041126132604"><vh>Prototypes</vh>
+<v t="ekr.20041126132604" annotate="7d71002e"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
@@ -597,7 +597,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1012,7 +1012,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
 </v>
-<v t="ekr.20041001211817"><vh>Startup...</vh>
+<v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
@@ -1022,7 +1022,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 <v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" annotate="7d71002e"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1128,7 +1128,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20041130092210"><vh>Batch mode tests</vh>
+<v t="ekr.20041130092210" a="E"><vh>Batch mode tests</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20040712101754.186"><vh>@test batch mode</vh>
 <v t="ekr.20041012084201"><vh>removeFile</vh></v>
@@ -1142,11 +1142,11 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
 <v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
 </v>
-<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
+<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10"><vh>importTests</vh>
-<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
+<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1169,8 +1169,8 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1195,9 +1195,9 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1218,9 +1218,9 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1610,7 +1610,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -1654,7 +1654,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106080304" annotate="7d71002e"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>
@@ -1683,6 +1683,24 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
+<v t="ekr.20050225110104" annotate="7d71002e"><vh>How to do this test</vh>
+<v t="ekr.20050225080606" annotate="55ae37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353039363137323633363836353734373937303635373130383238363830323666373130393638303736323735326571002e"><vh>@thin deletedNodeTest.py</vh></v>
+<v t="ekr.20050225110307" a="E" annotate="7d71002e"><vh>b</vh></v>
+</v>
+<v t="ekr.20050225161940" annotate="7d71002e"><vh>Move executeFile into core</vh>
+<v t="ekr.20050225161940.1" annotate="7d71002e"><vh>@test __name__</vh></v>
+<v t="ekr.20050225162123" a="E" annotate="55ea37643731303032383535303837303732363936663732363937343739373130313238363336333663363536663061353436623530363936333662366336353536363137323061373130323666373130333464306632373632353530343665366636343635373130353238363830323666373130363535303037313037363235353032363236373731303832383638303236663731303936383037363235353039363137323633363836353734373937303635373130613238363830323666373130623638303736323535303236363637373130633238363830323666373130643638303736323735326571002e"><vh>@thin executeFileTest.py</vh></v>
+<v t="ekr.20050225161940.2" a="E" annotate="7d71002e"><vh>Script</vh>
+<v t="ekr.20050225161940.3" annotate="7d71002e"><vh>&lt;&lt; docstring &gt;&gt;</vh></v>
+<v t="ekr.20050225171553" annotate="7d71002e"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20050225161940.5" a="E" annotate="7d71002e"><vh>getAtFileName</vh></v>
+<v t="ekr.20050225161940.4" annotate="7d71002e"><vh>executeFile</vh>
+<v t="ekr.20050225164423"><vh>&lt;&lt; define subprocess_wrapper &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
+</v>
+</v>
+<v t="ekr.20050301084943" labels="553a3238363437303330306135333237343534623532366336313632363536633237306137303331306135333237323730613730333230613733326571002e"><vh>Test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2303,7 +2321,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2458,7 +2476,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10972,8 +10990,8 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -14312,5 +14330,153 @@ except AssertionError:
     self.dump(result)
     return result
 </t>
+<t tx="ekr.20050225110104">@nocolor
+
+Create a tree with two nodes.
+Save test.leo file, creating the derived file.
+Delete node b.
+Write the derived file, but do _not_ write test.leo
+Quit
+Restart test.leo
+
+@color</t>
+<t tx="ekr.20050225110307">b text</t>
+<t tx="ekr.20050225161940"></t>
+<t tx="ekr.20050225161940.1">assert __name__ == '__builtin__', '__name__ is %s' % __name__</t>
+<t tx="ekr.20050225161940.2">&lt;&lt; docstring &gt;&gt;
+&lt;&lt; imports &gt;&gt;
+
+@others
+
+doatest()</t>
+<t tx="ekr.20050225161940.3">"""this script will run python from Leo with @file somefile.py
+using the py2.4 (2.3 compatible) subprocess module
+to verify and code correct in the quickest possible manner.
+unittests or other w/stdout stderr redirected to log.
+wimped out for the moment on making it virtual.
+
+If the presently selected node is an @test or @suite node this script runs them,
+otherwise the script expects the node to a valid @file node that has been
+written to disk and updated.
+
+less complicated and thus more advanced unittesting:
+py.test, similar to unittest as far as adding support.
+and @test and @suite, many examples in test.leo
+and my own dutest in dyna_menu with redirection to log
+which calls leoTest.py on @test and @suite nodes 
+otherwise for doctesting w/o needing an @file written.
+
+good overview, see Recent Posts:
+http://agiletesting.blogspot.com
+http://agiletesting.blogspot.com/2005/01/
+Python unit testing part 3: the py.test tool and library 
+python-unit-testing-part-2-doctest part-1 unittest
+
+tested win9x Leo4.3a2 py2.4 2.3
+tested but little and probably not completely.
+if it works once its done, right?
+make an @button or add to a menu or plugin
+
+Note: 
+you may see some extraneous traceback 
+vrs run outside Leo, can't be helped.
+
+Warning: this may run arbitrary code.
+no warranty expressed or implied!
+"""
+</t>
+<t tx="ekr.20050225161940.4">def executeFile(filename, options= ''):
+
+    if not os.access(filename, os.R_OK): return
+    
+    cwd = os.getcwdu()
+    fdir, fname = g.os_path_split(filename)
+    
+    if subprocess: # Only exists in Python 2.4.
+        &lt;&lt; define subprocess_wrapper &gt;&gt;
+        rc, so, se = subprocess_wrapper('%s %s %s'%(sys.executable, fname, options))
+        if rc:
+             print 'return code', rc
+        print so, se
+    else:
+        if fdir: os.chdir(fdir)
+        d = {'__name__': '__main__'}
+        execfile(fname, d)  #, globals()
+        os.system('%s %s' % (sys.executable, fname))
+        if fdir: os.chdir(cwd)
+
+g.executeFile = executeFile</t>
+<t tx="ekr.20050225161940.5">def getAtFileName():
+    
+    '''Return the full path from any kind of @file node and applicable @path directives.'''
+    
+    # should return cwd, cd to files path
+    # script should return cwd after run
+
+    fname = p.anyAtFileNodeName()
+    if fname:
+        d = g.scanDirectives(c)
+        path = d.get("path")
+        fname = g.os_path_abspath(g.os_path_normpath(g.os_path_join(path, fname)))
+
+    return fname</t>
+<t tx="ekr.20050225161940.6">def doatest():
+
+    _sosav = sys.__stdout__
+    _sesav = sys.__stderr__
+    sys.stdout = sys.__stdout__ = g.fileLikeObject()
+    sys.stderr = sys.__stderr__ = g.fileLikeObject()
+
+    h = p.headString()
+    if h.startswith('@suite') or h.startswith('@test'):
+        leoTest.doTests(all= False,verbosity=2)
+    else: # Try to run an @file unittest.
+        name = getAtFileName()
+        if name:
+            g.executeFile(name,'-v')
+        else:
+            g.es('Expecting @test, @suite or any @file node',color='blue')
+
+    oo = sys.stdout.get()
+    oe = sys.stderr.get()
+    sys.stdout.close()
+    sys.stderr.close()
+    sys.stdout = sys.__stdout__ = _sosav
+    sys.stderr = sys.__stderr__ = _sesav
+    lines = g.splitLines(oo + oe)
+    empty = True
+    for line in lines:
+        if line.rstrip():
+            empty = False
+    if lines and not empty:
+        g.es('Output from test...',color='blue')
+        for line in lines:
+            g.es(line.rstrip())
+    g.es('Test done',color='blue')
+
+    c.frame.putStatusLine(' fini ', color= 'DodgerBlue')</t>
+<t tx="ekr.20050225164423">def subprocess_wrapper(cmdlst):
+    
+    # g.trace(cmdlst, fdir)
+    # g.trace(subprocess.list2cmdline([cmdlst]))
+
+    p = subprocess.Popen(cmdlst, cwd=fdir,
+        universal_newlines=True,
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+    stdo, stde = p.communicate()
+    return p.wait(), stdo, stde</t>
+<t tx="ekr.20050225171553">import leoTest
+
+try:
+    import subprocess # Exists only in Python 2.4.
+except ImportError:
+    subprocess = None
+
+import os
+import StringIO
+import sys
+import unittest</t>
+<t tx="ekr.20050301084943">print 'hi',c</t>
 </tnodes>
 </leo_file>

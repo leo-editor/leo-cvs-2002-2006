@@ -9,7 +9,7 @@
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040519091259"><vh>Annoucnements</vh>
+<v t="EKR.20040519091259" a="TV"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -128,10 +128,10 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050118103207" a="E"><vh>Keeping installer/uninstallers in synch</vh>
+<v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
 <v t="ekr.20050118104149.1"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
@@ -139,7 +139,7 @@
 </v>
 <v t="ekr.20050118104149.3" a="E"><vh>dist files</vh>
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
-<v t="ekr.20050118104149.5" a="TV"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
+<v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20050118104901"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
@@ -3807,9 +3807,6 @@ project manager for the free/standard Python IDE's like Idle. Leo
 clearly solves that problem and in a way that commercial tools can't
 touch." -- Marshall Parsons
 
-"[Leo has] become my main development platform, and I do this for a
-living. -- Nicola Larosa
-
 "I have been using Leo for about 3 weeks and I hardly use my other
 programming editor anymore...I find it easy and enjoyable to use. I
 plan to adopt it as my presentation tool for code reviews." -- Jim
@@ -3852,7 +3849,6 @@ Home:     http://sourceforge.net/projects/leo/
 Download: http://sourceforge.net/project/showfiles.php?group_id=3458
 CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
-Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
 January 25, 2005

@@ -3,284 +3,12 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050126101301:4.3 a4 Plugins, etc.
-#@+node:ekr.20050212040628:First: Always use a file-like object for writing!!
-#@-node:ekr.20050212040628:First: Always use a file-like object for writing!!
-#@+node:ekr.20050224072347:Fix problem shown in gcg.leo
-#@-node:ekr.20050224072347:Fix problem shown in gcg.leo
-#@+node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
-RE: bizarre data loss: no big deal
-
-http://sourceforge.net/forum/forum.php?thread_id=1214682&forum_id=10228
-
-Leo can _appear_ to be losing data after a cvs-update when in fact nothing
-serious has happened. This issue goes back at least to 4.2.
-
-This is confusing, and I plan to fix this for the a3 release, but it doesn't
-'really' lose data so I don't consider it serious.
-
-Here is what is happening:
-
-1. There must be a clone in the outline _outside_ of an @thin node, and a
-corresponding clone inside an @thin node.
-
-2. One or more of the cloned nodes are _deleted_ in a checked out copy of the
-thin derived file. The change is then committed.
-
-3. The data 'loss' happens when reading the updating the file (on another
-machine). Leo's read code 'sees' the deleted node because it exists in the
-outline outside of the @thin tree, but there is nothing in the node because Leo
-intentionally doesn't write a node if it is cloned in any thin file.
-
-So the node looks as if its data has mysteriously disappeared when in fact the
-node itself should have been deleted.
-
-The fix will be to remove all 'unreferenced' nodes. I'm not sure why I didn't do
-this a long time ago; it may have been an oversight, but I have some dim memory
-of this issue. I suspect the reason I didn't do anything is that removing
-unreferenced nodes must be done in a post-pass, after all nodes have been read.
-This will slow down reading a bit, but that can't be helped.
-#@-node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
-#@+node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
-#@-node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
-#@+node:ekr.20050222045210:Better @path conventions
-#@+node:ekr.20031218072017.1416:app.__init__
-def __init__(self):
-
-    # These ivars are the global vars of this program.
-    self.afterHandler = None
-    self.batchMode = False # True: run in batch mode.
-    self.commandName = None # The name of the command being executed.
-    self.config = None # The leoConfig instance.
-    self.count = 0 # General purpose debugging count.
-    self.debug = False # True: enable extra debugging tests (not used at present).
-        # WARNING: this could greatly slow things down.
-    self.debugSwitch = 0
-        # 0: default behavior
-        # 1: full traces in g.es_exception.
-        # 2: call pdb.set_trace in g.es_exception, etc.
-    self.disableSave = False
-    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
-    self.gui = None # The gui class.
-    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
-    self.hookError = False # True: suppress further calls to hooks.
-    self.hookFunction = None # Application wide hook function.
-    self.homeDir = None # The user's home directory.
-    self.idle_imported = False # True: we have done an import idle
-    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
-    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
-    self.initing = True # True: we are initiing the app.
-    self.killed = False # True: we are about to destroy the root window.
-    self.leoID = None # The id part of gnx's.
-    self.loadDir = None # The directory from which Leo was loaded.
-    self.loadedPlugins = [] # List of loaded plugins that have signed on.
-    self.log = None # The LeoFrame containing the present log.
-    self.logIsLocked = False # True: no changes to log are allowed.
-    self.logWaiting = [] # List of messages waiting to go to a log.
-    self.menuWarningsGiven = False # True: supress warnings in menu code.
-    self.nodeIndices = None # Singleton node indices instance.
-    self.numberOfWindows = 0 # Number of opened windows.
-    self.openWithFiles = [] # List of data used by Open With command.
-    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
-    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
-    self.positions = 0 # Count of the number of positions generated.
-    self.quitting = False # True if quitting.  Locks out some events.
-    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
-    self.root = None # The hidden main window. Set later.
-    self.searchDict = {} # For communication between find/change scripts.
-    self.scriptDict = {} # For communication between Execute Script command and scripts.
-    self.trace = False # True: enable debugging traces.
-    self.tracePositions = False
-    self.trace_list = [] # "Sherlock" argument list for tracing().
-    self.tkEncoding = "utf-8"
-    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
-    self.unitTestDict = {} # For communication between unit tests and code.
-    self.unitTesting = False # True if unit testing.
-    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
-    self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
-    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
-
-    # Global panels.  Destroyed when Leo ends.
-    self.pythonFrame = None
-    
-    << Define global constants >>
-    << Define global data structures >>
+#@+node:ekr.20050126101301:4.3 Plugins, etc.
+  
 #@nonl
-#@+node:ekr.20031218072017.1417:<< define global constants >>
-self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-
-# New in leo.py 3.0
-self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
-self.prolog_postfix_string = "?>"
-
-# leo.py 3.11
-self.use_unicode = True # True: use new unicode logic.
-#@-node:ekr.20031218072017.1417:<< define global constants >>
-#@+node:ekr.20031218072017.368:<< define global data structures >> app
-# Internally, lower case is used for all language names.
-self.language_delims_dict = {
-    "ada" : "--",
-    "actionscript" : "// /* */", #jason 2003-07-03
-    "c" : "// /* */", # C, C++ or objective C.
-    "csharp" : "// /* */",	# C#
-    "css" : "/* */", # 4/1/04
-    "cweb" : "@q@ @>", # Use the "cweb hack"
-    "elisp" : ";",
-    "forth" : "\\_ _(_ _)", # Use the "REM hack"
-    "fortran" : "C",
-    "fortran90" : "!",
-    "html" : "<!-- -->",
-    "java" : "// /* */",
-    "latex" : "%",
-    "pascal" : "// { }",
-    "perl" : "#",
-    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
-    "php" : "//",
-    "plain" : "#", # We must pick something.
-    "python" : "#",
-    "rapidq" : "'", # fil 2004-march-11
-    "rebol" : ";",  # jason 2003-07-03
-    "shell" : "#",  # shell scripts
-    "tcltk" : "#",
-    "unknown" : "#" } # Set when @comment is seen.
-
-self.language_extension_dict = {
-    "ada" : "ads",
-    "actionscript" : "as", #jason 2003-07-03
-    "c" : "c",
-    "css" : "css", # 4/1/04
-    "cweb" : "w",
-    "elisp" : "el",
-    "forth" : "forth",
-    "fortran" : "f",
-    "fortran90" : "f",
-    "html" : "html",
-    "java" : "java",
-    "latex" : "tex", # 1/8/04
-    "noweb" : "nw",
-    "pascal" : "p",
-    "perl" : "perl",
-    "perlpod" : "perl",
-    "php" : "php",
-    "plain" : "txt",
-    "python" : "py",
-    "rapidq" : "bas", # fil 2004-march-11
-    "rebol" : "r",    # jason 2003-07-03
-    "shell" : "sh",   # DS 4/1/04
-    "tex" : "tex",
-    "tcltk" : "tcl",
-    "unknown" : "txt" } # Set when @comment is seen.
-    
-self.extension_dict = {
-    "ads"   : "ada",
-    "adb"   : "ada",
-    "as"    : "actionscript",
-    "bas"   : "rapidq",
-    "c"     : "c",
-    "css"   : "css",
-    "el"    : "elisp",
-    "forth" : "forth",
-    "f"     : "fortran90", # or fortran ?
-    "html"  : "html",
-    "java"  : "java",
-    "noweb" : "nw",
-    "p"     : "pascal",
-    "perl"  : "perl",
-    "php"   : "php",
-    "py"    : "python",
-    "r"     : "rebol",
-    "sh"    : "shell",
-    "tex"   : "tex",
-    "txt"   : "plain",
-    "tcl"   : "tcltk",
-    "w"     : "cweb" }
-#@-node:ekr.20031218072017.368:<< define global data structures >> app
-#@-node:ekr.20031218072017.1416:app.__init__
-#@+node:ekr.20031218072017.1264:getBaseDirectory
-# Handles the conventions applying to the "relative_path_base_directory" configuration option.
-
-def getBaseDirectory(c=None):
-
-    base = app.config.relative_path_base_directory
-
-    if base and base == "!":
-        base = app.loadDir
-    elif base and base == ".":
-        base = c.openDirectory
-
-    # g.trace(base)
-    if base and len(base) > 0 and g.os_path_isabs(base):
-        return base # base need not exist yet.
-    else:
-        return "" # No relative base given.
-#@-node:ekr.20031218072017.1264:getBaseDirectory
-#@-node:ekr.20050222045210:Better @path conventions
-#@+node:ekr.20050217083136:Fix bug:  see gcg.leo
-#@+node:ekr.20050217083136.1:Email
-I wrote in the leo help forum that html comment -->after >> bugging me when i  save my .leo file.
-
-@delim javascript didn't resolve the problem when i reload my xml text 
-section is always  succeded by -->.
-
-You have proposed to have a glance to my .leo file
-I send you this gcg.leo file by mail perhaps have you a moment to elucidate 
-this problem.
-
-Sébastien BRICE
-Équipe recherche & dévellopement SEDRE
-INRIA LORRAINE
-#@-node:ekr.20050217083136.1:Email
-#@-node:ekr.20050217083136:Fix bug:  see gcg.leo
-#@+node:ekr.20050207063254:Plugins...
-#@+node:ekr.20050216095444:Finish work on aspell & spellpyx
-#@-node:ekr.20050216095444:Finish work on aspell & spellpyx
-#@+node:ekr.20050128065405:Study Leo2Ascii
-@killcolor
-
-I know it involves a boatload of supporting software, but I'd like to remind folks of Michael Dawson's Leo2Ascii (http://www.marshallresearch.com/michael-dawson/os/leo.html). 
-The output is particularly handsome. Perhaps there's somening in his design we can learn from?
-#@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
-#@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
-#@-node:ekr.20050128065405:Study Leo2Ascii
-#@+node:ekr.20050125075757:Fix plugin problems
-#@+node:ekr.20050125075757.1:Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2957679
-Dany
-
-Here are my preliminary tests :
-
-- mod_http didn't work with 2.4 (ok with 2.3.4)
-
-- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
-to use them
-
-- open_shell didn't work but it was easy to fix
-   (system path from c:\windows to c:\winnt)
-
-- word_export : doesn't work (I have a non-English version of Word so that might
-explain it)
-
-I have to do some more testings for the other plugins.
-#@nonl
-#@-node:ekr.20050125075757.1:Report
-#@-node:ekr.20050125075757:Fix plugin problems
-#@+node:ekr.20041231102453.1:Move emacs commands into core
-#@-node:ekr.20041231102453.1:Move emacs commands into core
-#@+node:ekr.20050218021731:Add test routines for plugins
- 
-#@nonl
-#@-node:ekr.20050218021731:Add test routines for plugins
-#@-node:ekr.20050207063254:Plugins...
-#@+node:ekr.20050207063254.1:New features
-#@+node:ekr.20050211173540:Finish changes to c.executeScript & at.write
-At present g.executeScript does not call at.write if the script came from a selection.
-
-In fact, at.write assumes the 'root' node is c.currentPosition(). This must
-change if selections are to support Leo directives and section references.
-#@nonl
-#@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+#@+node:ekr.20050225160112:First
+#@+node:ekr.20050212040628:Always use a file-like object for writing?
+#@-node:ekr.20050212040628:Always use a file-like object for writing?
 #@+node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
 #@+node:ekr.20050207062841:Report
 @killcolor
@@ -462,6 +190,370 @@ def pasteOutlineRetainingClones (self):
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
 #@-node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
+#@+node:ekr.20050116094523:Option not to write marks/expansion attributes
+#@-node:ekr.20050116094523:Option not to write marks/expansion attributes
+#@+node:ekr.20050225161957:Move executeFile into core
+#@-node:ekr.20050225161957:Move executeFile into core
+#@-node:ekr.20050225160112:First
+#@+node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+At present g.executeScript does not call at.write if the script came from a selection.
+
+In fact, at.write assumes the 'root' node is c.currentPosition(). This must
+change if selections are to support Leo directives and section references.
+#@nonl
+#@+node:ekr.20050228093753:e post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3017712
+
+maybe not yet, except as a conditional script.
+its really only a very first draft.
+py2.4 ok
+py2.3 if you put subprocess.py in extensions
+and their compiled extension from effbot.org
+unless pywin32 is installed one or the other.
+no extension needed for nix.
+2.2 not even sure.
+but worse, subprocess doesn't work well under puthonw.exe
+I emailed the author, no one filed a bug report!
+
+and the redirection is external you'll notice,
+that should be internal or the results should
+be passed back. print to console otherwise is useless.
+good enough in this application but not ready for primetime.
+
+I see subprocess is used in temacs plugin too.
+so subprocess should be in extensions in any case. and the merge of both use
+functions should
+be possible in a general way we can all use.
+#@nonl
+#@-node:ekr.20050228093753:e post 1
+#@+node:ekr.20050228093753.1:e post 2
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3018068
+
+a few other considerations,
+executeFile is now a misnomer. I originally expected
+to only need to make __name__ = '__main__',
+but then what about options?
+what about running another program than python?
+the other sticky problem from Leo, what about packing 
+sys.args for the spawned program? which I didn't attempt.
+and to duplicate the experience many programs expect args.
+execfile() was not going to cut it.
+
+the fallback for pythonw for now is:
+
+.    child_stdin, child_stdout, child_stderr = os.popen3(cmds)
+.    output = child_stdout.read()
+.    outerr = child_stderr.read()
+.    return output, outerr
+
+but, no return code? maybe popen4 is required for that.
+subprocess handles it allot better.
+not to mention piping the output from one program into another.
+we don't want to have people tripping over shell
+escaping problems to do simple things in a secure way.
+and did I read in another thread the mac has pythonw?
+does it suffer the same lack of stdout/stderr as 
+windows' pythonw?
+no one problem insurmountable. I could imagine 
+python.org taking the compatibility lead providing
+a py2224.zip with a few of the missing pieces.
+subprocess, datetime, sets, itertools, csv what have you.
+then instead of everyone incompletely trying
+to piece together compatibility those that want it
+could install a compete package.
+then there would only be PMW.
+we probably need elementtree and celementtree too.
+#@nonl
+#@-node:ekr.20050228093753.1:e post 2
+#@+node:ekr.20050302072742:iPython support (more powerful execute script)
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3023147
+By: e
+
+a little IPython integration woulden't be a bad thing.
+not with IPython code as much as in its execution.
+
+there '%' is now the magic char (was @) 
+
+you can also have automagic enabled.
+in scripting we have the static approach where you have
+to carefully think about what function to call
+the system and if it works on this or that OS.
+how to construct the call, list or string, 
+do I need to escape etc.
+
+what about a less static:
+filename = 'whatever.py'
+%python filename > <<details>>
+%cat <<details>> | sort
+
+maybe that would make too much work
+for executeScript.  just a thought.
+code to follow RSN.
+
+>>I'll discuss them in detail when getting around to moving this work into Leo's core
+
+there are many places in Leo code, 
+openwith g.executeScript and various plugins
+all doing similar things in multitues of ways.
+a little more centralization might be called for.
+by then maybe subprocess will be updated.
+#@nonl
+#@-node:ekr.20050302072742:iPython support (more powerful execute script)
+#@-node:ekr.20050211173540:Finish changes to c.executeScript & at.write
+#@+node:ekr.20050207063254:Plugins...
+#@+node:ekr.20050226190907:Test plugins
+@killcolor
+
+*** test table.py
+    - Uses tkhtml.dll.zip (in Installers:Leo Stuff)
+#@nonl
+#@-node:ekr.20050226190907:Test plugins
+#@+node:ekr.20050216095444:Finish work on aspell & spellpyx
+#@-node:ekr.20050216095444:Finish work on aspell & spellpyx
+#@+node:ekr.20050128065405:Study Leo2Ascii
+@killcolor
+
+I know it involves a boatload of supporting software, but I'd like to remind folks of Michael Dawson's Leo2Ascii (http://www.marshallresearch.com/michael-dawson/os/leo.html). 
+The output is particularly handsome. Perhaps there's somening in his design we can learn from?
+#@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
+#@-node:ekr.20050128065405:Study Leo2Ascii
+#@+node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20050125075757.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2957679
+Dany
+
+Here are my preliminary tests :
+
+- mod_http didn't work with 2.4 (ok with 2.3.4)
+
+- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
+to use them
+
+- open_shell didn't work but it was easy to fix
+   (system path from c:\windows to c:\winnt)
+
+- word_export : doesn't work (I have a non-English version of Word so that might
+explain it)
+
+I have to do some more testings for the other plugins.
+#@nonl
+#@-node:ekr.20050125075757.1:Report
+#@-node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20041231102453.1:Move emacs commands into core
+#@-node:ekr.20041231102453.1:Move emacs commands into core
+#@+node:ekr.20050218021731:Add test routines for plugins
+ 
+#@nonl
+#@-node:ekr.20050218021731:Add test routines for plugins
+#@-node:ekr.20050207063254:Plugins...
+#@+node:ekr.20050207063254.1:New features
+#@+node:ekr.20050225070857:@path stuff
+#@+node:ekr.20050121081635:Request:  cumulative @path directives
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=2936513
+By: ktenney
+
+In the @view plugin is a method, currentPath() which examines the current headline
+and body, and the headlines and bodies of it's parents, looking for @path and
+@view directives. It builds a path from them and checks for validity.
+
+if a top level node contains;
+@path /home/ktenney
+
+and a descendant of that node contains;
+@path projects/myproject
+
+Then a node further down the tree which contains;
+@view readme.txt
+
+will display /home/ktenney/projects/myproject/readme.txt
+
+I like this principle of cumulative paths, and would like other plugins to work
+the same way ... @image, @url etc.
+
+This brings me to my question, would it make sense for Leo to offer a 'Plugin'
+class to inherit from? It seems that there are some operations that are being
+re-written in many plugins.
+#@-node:ekr.20050121081635:Request:  cumulative @path directives
+#@+node:ekr.20050222045210:Better @path conventions
+#@+node:ekr.20031218072017.1416:app.__init__
+def __init__(self):
+
+    # These ivars are the global vars of this program.
+    self.afterHandler = None
+    self.batchMode = False # True: run in batch mode.
+    self.commandName = None # The name of the command being executed.
+    self.config = None # The leoConfig instance.
+    self.count = 0 # General purpose debugging count.
+    self.debug = False # True: enable extra debugging tests (not used at present).
+        # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
+    self.disableSave = False
+    self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
+    self.gui = None # The gui class.
+    self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+    self.hookError = False # True: suppress further calls to hooks.
+    self.hookFunction = None # Application wide hook function.
+    self.homeDir = None # The user's home directory.
+    self.idle_imported = False # True: we have done an import idle
+    self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
+    self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+    self.initing = True # True: we are initiing the app.
+    self.killed = False # True: we are about to destroy the root window.
+    self.leoID = None # The id part of gnx's.
+    self.loadDir = None # The directory from which Leo was loaded.
+    self.loadedPlugins = [] # List of loaded plugins that have signed on.
+    self.log = None # The LeoFrame containing the present log.
+    self.logIsLocked = False # True: no changes to log are allowed.
+    self.logWaiting = [] # List of messages waiting to go to a log.
+    self.menuWarningsGiven = False # True: supress warnings in menu code.
+    self.nodeIndices = None # Singleton node indices instance.
+    self.numberOfWindows = 0 # Number of opened windows.
+    self.openWithFiles = [] # List of data used by Open With command.
+    self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
+    self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
+    self.positions = 0 # Count of the number of positions generated.
+    self.quitting = False # True if quitting.  Locks out some events.
+    self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
+    self.root = None # The hidden main window. Set later.
+    self.searchDict = {} # For communication between find/change scripts.
+    self.scriptDict = {} # For communication between Execute Script command and scripts.
+    self.trace = False # True: enable debugging traces.
+    self.tracePositions = False
+    self.trace_list = [] # "Sherlock" argument list for tracing().
+    self.tkEncoding = "utf-8"
+    self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
+    self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
+    self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
+    self.wantedCommander = None # Used by leoTkinterFrame logic to manage calls to g.app.gui.set_focus.
+    self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+
+    # Global panels.  Destroyed when Leo ends.
+    self.pythonFrame = None
+    
+    << Define global constants >>
+    << Define global data structures >>
+#@nonl
+#@+node:ekr.20031218072017.1417:<< define global constants >>
+self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+
+# New in leo.py 3.0
+self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+self.prolog_postfix_string = "?>"
+
+# leo.py 3.11
+self.use_unicode = True # True: use new unicode logic.
+#@-node:ekr.20031218072017.1417:<< define global constants >>
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20031218072017.1416:app.__init__
+#@+node:ekr.20031218072017.1264:getBaseDirectory
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory(c=None):
+
+    base = app.config.relative_path_base_directory
+
+    if base and base == "!":
+        base = app.loadDir
+    elif base and base == ".":
+        base = c.openDirectory
+
+    # g.trace(base)
+    if base and len(base) > 0 and g.os_path_isabs(base):
+        return base # base need not exist yet.
+    else:
+        return "" # No relative base given.
+#@-node:ekr.20031218072017.1264:getBaseDirectory
+#@-node:ekr.20050222045210:Better @path conventions
+#@-node:ekr.20050225070857:@path stuff
 #@+node:ekr.20041228090344:Config improvements
 - Cancel should revert all settings.
     (Revert doesn't work after a node changes:this is confusing and dangerous.)
@@ -541,35 +633,6 @@ g.setGeneralTkSetting(widget,setting_name) would do the following:
 #@nonl
 #@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
 #@-node:ekr.20041228090344:Config improvements
-#@+node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@-node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@+node:ekr.20050121081635:Request:  cumulative @path directives
-@killcolor
-https://sourceforge.net/forum/message.php?msg_id=2936513
-By: ktenney
-
-In the @view plugin is a method, currentPath() which examines the current headline
-and body, and the headlines and bodies of it's parents, looking for @path and
-@view directives. It builds a path from them and checks for validity.
-
-if a top level node contains;
-@path /home/ktenney
-
-and a descendant of that node contains;
-@path projects/myproject
-
-Then a node further down the tree which contains;
-@view readme.txt
-
-will display /home/ktenney/projects/myproject/readme.txt
-
-I like this principle of cumulative paths, and would like other plugins to work
-the same way ... @image, @url etc.
-
-This brings me to my question, would it make sense for Leo to offer a 'Plugin'
-class to inherit from? It seems that there are some operations that are being
-re-written in many plugins.
-#@-node:ekr.20050121081635:Request:  cumulative @path directives
 #@+node:ekr.20050214072400.1:Request for comment region
 @killcolor
 https://sourceforge.net/forum/message.php?msg_id=2994708
@@ -589,8 +652,70 @@ Wouldn't need to be overly complex:
    each selected line are comments, and if so, remove them
 #@nonl
 #@-node:ekr.20050214072400.1:Request for comment region
+#@+node:ekr.20041228092223.1:Used tabbed log for find dialog?
+#@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
+#@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
 #@-node:ekr.20050207063254.1:New features
+#@+node:ekr.20050226063714:Improve Mac distribution
+#@+node:ekr.20050301165204:Post 1
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3016680
+By: wordtech
+
+I'd suggest a some revisions to your approach. 
+
+1. Unless you're putting files over several directories, there's no reason to
+use PackageMaker. As far as I can tell, you're doing a large folder called "leo"
+and installing it in /. PackageMaker is for complex installations, i.e. a GUI
+front end in /Applications, the supporting files in /usr/local, and man pages
+in /usr/share/man, or something like that.
+
+In fact, people are advised not to move stuff installed by PackageMaker, but
+if they leave the default installation alone (in /), your launcher tool won't
+work. I thought this was a bug, because the launcher tool looks for ~/leo, until
+I saw your docs here.
+
+2. It isn't necessary to stuff everything into the app bundle with py2app. I
+used to maintain a nice Mac-native bundle of Leo that only wrapped your files,
+but left other stuff like Tcl/Tk out. (I removed it from my site because no
+one downloaded it.) I did a quick wrap of the new version and it seems to work
+fine. Although I don't have any interest in putting this on my site anymore,
+I'd be willing to provide a package for you to include at your Sourceforge site.
+
+(See http://www.wordtech-software.com/python-applet-tutorial.html for a description
+of my packaging method: it's a front-end to the older bundlebuilder method.
+Please contact me at my Sourceforge address if you have questions.)
+
+At a minimum, consider wrapping the /leo directory in a tar or zip file and
+advise people to move it to their home directory after they download it. That
+would make installation much smoother.
+#@nonl
+#@-node:ekr.20050301165204:Post 1
+#@+node:ekr.20050301165204.1:Post 2
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3024408
+By: bowerymarc
+
+I saw a message in the bug tracker saying to post bugs here instead, so here
+it is:
+
+Tried to install Leo-4-3-a3.pkg.  Instructions for MacLeo say, you have to install
+Leo in your *home* directory (which by the way is rediculous - normally you
+install in the Applications directory on OSX.  In any case the facility exists
+to discover where an app is installed....)
+
+So I tried that.  Trouble is, it won't let me.  Why?  Perhaps because I have
+FileVault turned on, which turns your home directory into a crypto-fs type mount.
+Apparently its method of dealing with your home directory can't deal with that.
+#@nonl
+#@-node:ekr.20050301165204.1:Post 2
+#@-node:ekr.20050226063714:Improve Mac distribution
 #@+node:ekr.20050211080215:Docs
+#@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
+#@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
+#@-node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
 #@+node:ekr.20050210103758:Create better download pages
 http://sourceforge.net/forum/message.php?msg_id=2928991
 By: jasonic
@@ -611,6 +736,8 @@ http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
 #@nonl
 #@-node:ekr.20050210103758:Create better download pages
 #@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
+@killcolor
+
 Jon Schull <jschull@softlock.com>  
 Date:  2003/12/30 Tue PM 05:50:51 EST 
 To:  edreamleo@charter.net 
@@ -697,235 +824,101 @@ By: jasonic
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
 #@-node:ekr.20050211080215:Docs
-#@+node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
-#@+node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
-#@-node:ekr.20050217080914.1:@url http://mail.python.org/pipermail/python-list/2003-November/193740.html
-#@-node:ekr.20050217080914:Rework 'Ultimate Scripting Tool' posting & put it on web site
-#@+node:ekr.20040104162835.16:Put Leo on Fink Commander
-FC gets its list of packages from the servers listed in 
-/sw/etc/apt/sources.list.  So you can put Leo into any server and 
-people can add it to their sources.list or you can talk to the people 
-who run the default servers and get Leo hosted there (better).
-#@-node:ekr.20040104162835.16:Put Leo on Fink Commander
-#@-node:ekr.20050126101301:4.3 a4 Plugins, etc.
-#@+node:ekr.20050104083128:4.3 b1 drawing and uA's
-#@+node:ekr.20041231102453:Design new uA scheme
-#@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-I would like to store unknown
-attributes as a simple string. The reason, is because I am using an unknown
-attribute to carry additional markup information, in this case, to carry color
-information for each node. (I used Joe Orr's XSL stylesheet as a startpoint for
-HTML generation).
-
-In order to achieve my nefarious aim, I have had to edit leoFileCommands.py but
-I would prefer not to have to edit the main source code.
-
-Martin Clifford
-Senior Software Engineer
-Snell & Wilcox
-#@+node:ekr.20041004091238:example file
-Edward
-
-This is a follow up to my email at the end of August, regarding unknown attributes.
-
-I have attached an HTML file (LeoToHTML) hat I generated from a Leo file.
-
-It demonstrates the uses that I have made of unknown attributes.
-
-My hope is that it will provide food for thought in your discussions on the subject.
-
-Regards
-Martin
-#@-node:ekr.20041004091238:example file
-#@-node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-#@-node:ekr.20041231102453:Design new uA scheme
-#@+node:ekr.20041228074125:Drawing...
-#@+node:ekr.20041228092223:Play with wiki markup
-http://sourceforge.net/forum/message.php?msg_id=2205285
-From: Rich
-
-Color ''and'' italic/bold characters with @markup. One thing I'd like to
-''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
-does nothing for readability in plain text.
-#@nonl
-#@-node:ekr.20041228092223:Play with wiki markup
-#@+node:EKR.20040602153716:(Finish drawUserIcons)
-# Create a better way of writing user icons.
-#@nonl
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-#@nonl
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            try:
-                # Protocol argument is new in Python 2.3
-                # Use protocol 1 for compatibility with bin.
-                s = pickle.dumps(val,protocol=1)
-            except TypeError:
-                s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@-node:EKR.20040602153716:(Finish drawUserIcons)
-#@+node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
+#@+node:ekr.20050228095252:xml tools mentioned in posts
+#@+node:ekr.20050228095252.1:@url http://www.xml.com/pub/a/2003/02/12/py-xml.html
 @killcolor
+http://sourceforge.net/forum/message.php?msg_id=3019151
+By: e
 
-http://sourceforge.net/forum/message.php?msg_id=2877106
+>>code to parse and write XML ? 
 
-By: Paul Paterson - paulpaterson
-RE: Can I color the headline text ?  
-2004-12-01 08:01
+something like this to get started?
+Simple XML Processing With elementtree
+<http://www.xml.com/pub/a/2003/02/12/py-xml.html>
+look at some plugin source for a bunch
+of ways to insert nodes and move them 
+programatically. the piemenu is on the forum 
+somewhere has nearly everything you would need.
+BTW, I've got a u3 event I use all the time:
+one click, insert body and headline from the clipboard.
 
-The cleo plugin makes a permanent change to the headline appearance (using node attributes) while the footprints plugin makes a temporary change in the current session. Footprints was derived from cleo, although you might not be able to tell from looking at it! 
- 
-Cleo: http://sourceforge.net/forum/message.php?msg_id=2617221 
- 
-Footprints: http://sourceforge.net/forum/message.php?msg_id=2813450 
- 
-Between the two of them there should be enough information to help you achieve what you want. 
- 
-It is possible to do pretty much anything you want but you will have to provide the infrastructure yourself because Leo doesn't natively support it.  
+... def u3(event ):  
+... ... #insert paste body 
+... ... #and create headline, cheap extract
+... ... c.selectVnode(v )
+... ... c.insertHeadline()
+... ... #c.moveOutlineRight()
+... ... cv = c.currentVnode()
+... ... cv.setBodyStringOrPane(
+... ... ... g.app.gui.getTextFromClipboard())
+... ... s = g.app.gui.getTextFromClipboard()[:25].strip()
+... ... s = ' '.join(s.split()[:3])  
+... ... #later skip punctuation somehow make smarter
+... ... cv.setHeadString(s)
+... self.u3.bind('<Button-1>', u3 )  
+THANKS! this hack saves bunches of time daily.
+would work other places than the piemenu too.
+
+I won't attempt to reiterate what many other blogs
+and articles have said about elementtree.
+besides which I know next to nothing deep about XML.
+no clue how it compares to sax or anything else.
+I will say it's great for parsing and creating and
+modifying XML and HTML in the few short examples
+I've read from years past and some recent. 
+lately there is also a c module,
+works in conjunction with Elementtree.py
+very clean code compiles easily w/o error.
+light, fast. how does he do it?
+<http://effbot.org/zone/element-index.htm>
+
+its html tree can work with Tidy, I actually started
+a very similar project to parse HTML into nodes:
+html, head, script, body, table or form etc.
+using pullparser then beautifulsoup.
+I got lost where if you insert a node, 
+then a body then another node malformed HTML
+can really screw you up. Tidy helps somewhat.
+XML is probably much better formed,
+I like the comment about keeping the tags in the body.
+maybe easier to verify later body by body
+rather than trying to match nodes & subnodes.
+funny how a comment can change your perspective
+of the problem from mostly chaos back to mostly order.
+the really funny part is, as I pictured the node headline
+it was just descriptive, the tags were in the body
+but the confusion won.
+
+the html import in Leo as many know is to a single node.
+so many parsing/web scraping projects would go 
+that much easier if you could isolate sections 
+via a Leo import so it must happen under 
+program control to be useful and non tedious.
+will have to try again w/elementtree.
+its parser will do all the work I didn't want to
+have to do building a stack of elements and bodys.
+sometimes it pays to wait for a better solution.
+well formed html is not the norm.
+maybe you will post your code first and I can adapt it!
 #@nonl
-#@-node:ekr.20041201084142:Add convenience methods to change individual headlines color directly
-#@+node:ekr.20041228092223.1:Used tabbed log for find dialog?
-#@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
-#@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
-#@-node:ekr.20041228092223.1:Used tabbed log for find dialog?
-#@-node:ekr.20041228074125:Drawing...
-#@-node:ekr.20050104083128:4.3 b1 drawing and uA's
+#@-node:ekr.20050228095252.1:@url http://www.xml.com/pub/a/2003/02/12/py-xml.html
+#@+node:ekr.20050228095252.2:@url http://gnosis.cx
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3019245
+By: paulpaterson
+
+I haven't used ElementTree but I do make extensive use of the gnosis XML tools.
+The XML_Objectify function turns any XML into an object where the attributes
+are child properties and nodes.
+
+Just another toolkit to consider!
+
+http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@+node:ekr.20050228095252.3:@url http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@-node:ekr.20050228095252.3:@url http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@-node:ekr.20050228095252.2:@url http://gnosis.cx
+#@-node:ekr.20050228095252:xml tools mentioned in posts
+#@-node:ekr.20050126101301:4.3 Plugins, etc.
 #@+node:ekr.20041228073219:4.3.n...
 #@+node:ekr.20040919182750.1:4.3.1 better handling of whitespace
 #@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
@@ -9233,10 +9226,10 @@ def putVnodes (self):
     self.topPosition     = c.topPosition()
 
     if self.usingClipboard:
-        self.putVnode(self.currentPosition,ignored=False) # Write only current tree.
+        self.putVnode(self.currentPosition) # Write only current tree.
     else:
         for p in c.rootPosition().self_and_siblings_iter():
-            self.putVnode(p,ignored=False) # Write the next top-level node.
+            self.putVnode(p) # Write the next top-level node.
 
     self.put("</vnodes>") ; self.put_nl()
 #@nonl
@@ -9366,19 +9359,17 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p,ignored):
+def putVnode (self,p):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    # Must check all parents.
     isIgnore = False
-    if 0: # Wrong: must check all parents.
-        ignored = ignored or p.isAtIgnoreNode()
-    else:
-        for p2 in p.self_and_parents_iter():
-            if p2.isAtIgnoreNode():
-                isIgnore = True ; break
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -9399,7 +9390,7 @@ def putVnode (self,p,ignored):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p,ignored)
+                fc.putVnode(p)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
