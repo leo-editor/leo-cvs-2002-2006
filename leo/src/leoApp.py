@@ -196,8 +196,6 @@ class LeoApp:
 		
 		self.findFrame = None
 		self.pythonFrame = None
-			
-		g.doHook("destroy-all-global-windows")
 	#@-node:ekr.20031218072017.2611:app.destroyAllGlobalWindows
 	#@+node:ekr.20031218072017.2612:app.destroyAllOpenWithFiles
 	def destroyAllOpenWithFiles (self):
@@ -257,22 +255,30 @@ class LeoApp:
 	#@+node:ekr.20031218072017.1732:app.finishQuit
 	def finishQuit(self):
 		
-		self.killed = true # Disable after events.
-		
-		if self.afterHandler != None:
-			# print "finishQuit: cancelling",self.afterHandler
-			if g.app.gui.guiName() == "tkinter":
-				self.root.after_cancel(self.afterHandler)
-			self.afterHandler = None
-	
-		# Wait until everything is quiet before really quitting.
-		g.doHook("end1")
+		# forceShutdown may already have fired the "end1" hook.
+		if not g.app.killed:
+			g.doHook("end1")
 	
 		self.destroyAllGlobalWindows()
-		
 		self.destroyAllOpenWithFiles()
 		
-		g.app.gui.destroySelf()
+		if g.app.gui:
+			g.app.gui.destroySelf()
+			
+		g.app.killed = true
+			# Disable all further hooks and events.
+			# Alas, "idle" events can still be called even after the following code.
+	
+		if 0: # Do not use g.trace here!
+			print "finishQuit",g.app.killed
+			
+		if g.app.afterHandler:
+			# TK bug: This appears to have no effect, at least on Windows.
+			# print "finishQuit: cancelling",g.app.afterHandler
+			if g.app.gui and g.app.gui.guiName() == "tkinter":
+				self.root.after_cancel(g.app.afterHandler)
+			g.app.afterHandler = None
+	#@nonl
 	#@-node:ekr.20031218072017.1732:app.finishQuit
 	#@+node:ekr.20031218072017.2616:app.forceShutdown
 	def forceShutdown (self):
@@ -281,8 +287,11 @@ class LeoApp:
 		
 		In particular, may be called from plugins during startup."""
 		
+		# Wait until everything is quiet before really quitting.
+		g.doHook("end1")
+		
 		self.log = None # Disable writeWaitingLog
-		self.killed = true
+		self.killed = true # Disable all further hooks.
 		
 		for w in self.windowList[:]:
 			self.destroyWindow(w)
