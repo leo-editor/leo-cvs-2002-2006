@@ -651,7 +651,7 @@ class baseColorizer:
     def disable (self):
     
         print "disabling all syntax coloring"
-        self.enabled=false
+        self.enabled=False
     
     def __init__(self,c):
     
