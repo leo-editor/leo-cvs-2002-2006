@@ -1,4 +1,4 @@
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file leoTangle.py
 #@+body
 #@@language python
@@ -371,7 +371,7 @@ class root_attributes:
 	def __repr__ (self):
 	
 		return ("root_attributes: language: " + self.language +
-	        ", single_comment_string: " + self.single_comment_string +
+			", single_comment_string: " + self.single_comment_string +
 			", start_comment_string: " +	self.start_comment_string +
 			", end_comment_string: " +	self.end_comment_string +
 			", use_header_flag: " + choose(self.use_header_flag, "true", "false") +
@@ -1793,7 +1793,7 @@ class tangleCommands:
 							i = skip_nl(s,i)
 							words = 0
 							self.put_leading_ws(self.tangle_indent)
-					 		# tangle_indent is in spaces.
+							# tangle_indent is in spaces.
 							line_width += max(0,self.tangle_indent)
 					
 					#@-body
@@ -1837,7 +1837,7 @@ class tangleCommands:
 							line_width = abs(self.tab_width)
 						words = 0
 						self.put_leading_ws(self.tangle_indent)
-				 		# tangle_indent is in spaces.
+						# tangle_indent is in spaces.
 						line_width += max(0,self.tangle_indent)
 				
 				#@-body
@@ -2273,7 +2273,7 @@ class tangleCommands:
 				if part.code and multiple_parts_flag == disallow_multiple_parts:
 					# Give the message only for non-empty parts.
 					self.error("Multiple parts not allowed for " + name)
-				  	return 0 # part number
+					return 0 # part number
 			
 				if self.tangling and code and code == part.code:
 					es("Warning: possible duplicate definition of: <<" +
@@ -2613,8 +2613,8 @@ class tangleCommands:
 	
 		if 0:
 			trace(`name`+":"+`part`+
-			      "\n1:"+`get_line(s1,0)`+
-			      "\n2:"+ `get_line(s2,0)`)
+				  "\n1:"+`get_line(s1,0)`+
+				  "\n2:"+ `get_line(s2,0)`)
 		s1 = toUnicode(s1,self.encoding) # 4/4/03
 		s2 = toUnicode(s2,self.encoding) # 4/4/03
 		

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file c2py.py
 #@+body
 #@@first
@@ -781,7 +781,7 @@ def massageFunctionHead(head):
 				gClassName = listToString(prevWord)
 				# print "class name:", gClassName
 				i = skipWs(head, i+2)
-			 	if i < len(head) and (head[i]=='~' or head[i] in string.letters):
+				if i < len(head) and (head[i]=='~' or head[i] in string.letters):
 					j = skipPastWord(head,i)
 					if head[i:j] == prevWord:
 						for item in list("__init__"): result.append(item)

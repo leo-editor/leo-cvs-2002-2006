@@ -2889,17 +2889,17 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 # 
 # version: the version string to be tested
 # againstVersion: the reference version string to be
-#                 compared against
+# 				compared against
 # condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
 # stringCompare: whether to test a token using only the
-#                leading integer of the token, or using the
+# 			   leading integer of the token, or using the
 # 			   entire token string.  For example, a value
 # 			   of "0.0.1.0" means that we use the integer
 # 			   value of the first, second, and fourth
 # 			   tokens, but we use a string compare for the
 # 			   third version token.
 # delimiter: the character that separates the tokens in the
-#            version strings.
+# 		   version strings.
 # 
 # The comparison uses the precision of the version string
 # with the least number of tokens.  For example a test of

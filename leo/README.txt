@@ -96,19 +96,19 @@ This is one of the most interesting versions of Leo ever released:
 * Major improvements in customizing Leo:
   - Leo looks in the file customizeLeo.py for user-specific customizations.
   - Leo calls "hook routines" in customizeLeo.py for all commands and events.
-    These hook routines can modify or replace any command or event.
+	These hook routines can modify or replace any command or event.
   - New convenience routines simplify creating and modifying menus.
   - Easy translation of menus to other languages using customizeLeo.py.
 
 * Better integration with other tools:
   - The Open With command allows you to communicate back and forth to other editors.
   - The Go To Line Number command converts lines numbers in derived files
-    to locations in the outline.
+	to locations in the outline.
   - Double-clicking the icon of a @url node launches any url in your web browser.
   - The Execute Script command executes Python code in any body pane.
-    This is much more convenient than opening Leo's Idle window.
+	This is much more convenient than opening Leo's Idle window.
   - Much better support for cweb. At last, Leo has a power user of cweb.
-    By default, @space, @* and @** sections are colored as latex text.
+	By default, @space, @* and @** sections are colored as latex text.
 	Leo properly generates @q..@> sentinels.
   - @nosentinelfile is like @file except Leo writes no sentinel lines.
 
@@ -116,9 +116,9 @@ This is one of the most interesting versions of Leo ever released:
   - Optional Emacs-style auto-indent.
   - Reformat Paragraph command.
   - Leo will optionally create nonexistent directories specified in
-    @file, @root or @path, including all nonexistent parent directories.
+	@file, @root or @path, including all nonexistent parent directories.
   - Leo will place its own icon in Leo windows provided that you have
-    installed Fredrik Lundh's PIL and tkIcon packages.
+	installed Fredrik Lundh's PIL and tkIcon packages.
   - The usual assortment of bug fixes.
 
 leo.py 3.8                                 October 29, 2002

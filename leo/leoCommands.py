@@ -674,13 +674,13 @@ class Commands:
 		if 1 == (lastLine - firstLine):
 			leading_ws[1] = leading_ws[0]
 	
-	    # Put the leading unchanged lines.
+		# Put the leading unchanged lines.
 		for i in range(0,firstLine):
 			result.append(lines[i])
 			
 		# Wrap the lines, decreasing the page width by indent.
 		wrapped_lines = \
-		    wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
+			wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
 		lineCount = len(wrapped_lines)
 			
 		i = 0

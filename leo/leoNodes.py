@@ -1529,7 +1529,7 @@ class vnode:
 	
 	def initExpandedBit (self):
 	
-	    self.statusBits |= self.expandedBit
+		self.statusBits |= self.expandedBit
 	#@-body
 	#@-node:9::contract & expand & initExpandedBit
 	#@+node:10::initStatus

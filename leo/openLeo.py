@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-#@+leo
+#@+leo-encoding=iso-8859-1.
 #@+node:0::@file openLeo.py
 #@+body
 #@@first
