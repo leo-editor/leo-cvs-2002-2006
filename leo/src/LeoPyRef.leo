@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5049" clone_windows="0"/>
-<globals body_outline_ratio="0.532741398446">
-	<global_window_position top="10" left="262" height="901" width="920"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5056" clone_windows="0"/>
+<globals body_outline_ratio="0.604883462819">
+	<global_window_position top="15" left="383" height="901" width="840"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -18,11 +18,11 @@
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
-<v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
-<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
-</v>
-<v t="EKR.20040519090151.3"><vh>Projects</vh>
+<v t="EKR.20040519090151.3" a="TV"><vh>Projects</vh>
 <v t="EKR.20040429143933"><vh>@thin leoProjects.txt</vh></v>
+</v>
+<v t="EKR.20040519090151.2"><vh>To do</vh>
+<v t="ekr.20040117181936"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh></v>
@@ -42,10 +42,10 @@
 <v t="ekr.20031218072017.2810"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3001"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3052"><vh>@thin leoFind.py</vh></v>
-<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3749"><vh>@thin leoMenu.py</vh></v>
 <v t="ekr.20031218072017.3439"><vh>@thin leoPlugins.py</vh></v>
 <v t="ekr.20031218072017.3446"><vh>@thin leoTangle.py</vh></v>
+<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
 </v>
 <v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
 <v t="ekr.20031218072017.3626"><vh>@thin leoColorPanel.py</vh></v>
@@ -67,14 +67,14 @@
 <v t="ekr.20031218072017.4099"><vh>@thin leoTkinterKeys.py</vh></v>
 <v t="ekr.20031218072017.4100"><vh>@thin leoTkinterMenu.py</vh></v>
 <v t="ekr.20031218072017.4122"><vh>@thin leoTkinterPrefs.py</vh></v>
-<v t="ekr.20031218072017.4138"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 <v t="EKR.20040503105354.1"><vh>Active</vh>
 <v t="ekr.20031218072017.2620"><vh>@thin leoAtFile.py </vh></v>
 <v t="ekr.20031218072017.3018"><vh>@thin leoFileCommands.py</vh></v>
 <v t="ekr.20031218072017.3093"><vh>@thin leoGlobals.py</vh></v>
+<v t="ekr.20031218072017.3206"><vh>@thin leoImport.py</vh></v>
 <v t="ekr.20031218072017.3320"><vh>@thin leoNodes.py</vh></v>
-<v t="ekr.20031218072017.3603"><vh>@thin leoUndo.py</vh></v>
+<v t="ekr.20031218072017.4138"><vh>@thin leoTkinterTree.py</vh></v>
 </v>
 </v>
 </vnodes>
@@ -85,6 +85,7 @@
 <t tx="EKR.20040519090151.2"></t>
 <t tx="EKR.20040519090151.3"></t>
 <t tx="ekr.20031218072017.2406">@language python
+@tabwidth -4
 @pagewidth 80
 
 @ This section contains all the source code of leo.py.
@@ -106,96 +107,95 @@ v:  a vnode
 See the child of this node called "Overview of Code" for more documentation.</t>
 <t tx="ekr.20031218072017.2415"></t>
 <t tx="ekr.20031218072017.2418">def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
-	script_search=true,script_change=true):
-	
-	import leoTest
-	import leoGlobals as g
-	from leoGlobals import true,false
-	
-	# Find the scripts.
-	c = g.top() ; p = c.currentPosition()
-	u = leoTest.testUtils()
-	find_p = u.findNodeInTree(p,findHeadline)
-	if find_p:
-		find_text = find_p.bodyString()
-	else:
-		g.es("no Find script node",color="red")
-		return
-	if changeHeadline:
-		change_p = u.findNodeInTree(p,changeHeadline)
-	else:
-		change_p = None
-	if change_p:
-		change_text = change_p.bodyString()
-	else:
-		change_text = ""
-	# print find_p,change_p
-	
-	# Initialize the find panel.
-	c.script_search_flag = script_search
-	c.script_change_flag = script_change and change_text
-	if script_search:
-		c.find_text = find_text.strip() + "\n"
-	else:
-		c.find_text = find_text
-	if script_change:
-		c.change_text = change_text.strip() + "\n"
-	else:
-		c.change_text = change_text
-	g.app.findFrame.init(c)
-	c.findPanel()</t>
+    script_search=True,script_change=True):
+    
+    import leoTest
+    import leoGlobals as g
+    
+    # Find the scripts.
+    c = g.top() ; p = c.currentPosition()
+    u = leoTest.testUtils()
+    find_p = u.findNodeInTree(p,findHeadline)
+    if find_p:
+        find_text = find_p.bodyString()
+    else:
+        g.es("no Find script node",color="red")
+        return
+    if changeHeadline:
+        change_p = u.findNodeInTree(p,changeHeadline)
+    else:
+        change_p = None
+    if change_p:
+        change_text = change_p.bodyString()
+    else:
+        change_text = ""
+    # print find_p,change_p
+    
+    # Initialize the find panel.
+    c.script_search_flag = script_search
+    c.script_change_flag = script_change and change_text
+    if script_search:
+        c.find_text = find_text.strip() + "\n"
+    else:
+        c.find_text = find_text
+    if script_change:
+        c.change_text = change_text.strip() + "\n"
+    else:
+        c.change_text = change_text
+    g.app.findFrame.init(c)
+    c.findPanel()</t>
 <t tx="ekr.20031218072017.2582">def getBuildNumber(self):
-	c = self
-	return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
+    c = self
+    return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
 
 def getSignOnLine (self):
-	c = self
-	return "Leo 4.2 alpha 2a, build %s, May 19, 2004" % c.getBuildNumber()
-	
+    c = self
+    return "Leo 4.2 alpha 3, build %s, June 1, 2004" % c.getBuildNumber()
+    
 def initVersion (self):
-	c = self
-	c.ver = "$Revision: 1.99 $" # CVS will update this.
-	
+    c = self
+    c.ver = "$Revision: 1.116 $" # CVS will update this.
+    
 def signOnWithVersion (self):
 
-	c = self
-	color = g.app.config.getWindowPref("log_error_color")
-	signon = c.getSignOnLine()
-	n1,n2,n3,junk,junk=sys.version_info
-	tkLevel = c.frame.top.getvar("tk_patchLevel")
-	
-	g.es("Leo Log Window...",color=color)
-	g.es(signon)
-	g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
-	g.enl()</t>
+    c = self
+    color = g.app.config.getWindowPref("log_error_color")
+    signon = c.getSignOnLine()
+    n1,n2,n3,junk,junk=sys.version_info
+    tkLevel = c.frame.top.getvar("tk_patchLevel")
+    
+    g.es("Leo Log Window...",color=color)
+    g.es(signon)
+    g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
+    g.enl()</t>
 <t tx="ekr.20031218072017.2604"></t>
 <t tx="ekr.20031218072017.3625"></t>
 <t tx="ekr.20031218072017.3821"></t>
 <t tx="ekr.20040321065415">def findNodeInTree(p,headline):
 
-	"""Search for a node in v's tree matching the given headline."""
-	
-	c = p.c
-	for p in p.subtree_iter():
-		if p.headString().strip() == headline.strip():
-			return p.copy()
-	return c.nullPosition()
+    """Search for a node in v's tree matching the given headline."""
+    
+    c = p.c
+    for p in p.subtree_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()
 
 def findNodeAnywhere(headline):
-	
-	c = g.top()
-	for p in c.allNodes_iter():
-		if p.headString().strip() == headline.strip():
-			return p.copy()
-	return c.nullPosition()
-	
+    
+    c = g.top()
+    for p in c.allNodes_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()
+    
 def findTopLevelNode(headline):
-	
-	c = g.top()
-	for p in c.rootPosition().self_and_siblings_iter():
-		if p.headString().strip() == headline.strip():
-			return p.copy()
-	return c.nullPosition()</t>
+    
+    c = g.top()
+    for p in c.rootPosition().self_and_siblings_iter():
+        if p.headString().strip() == headline.strip():
+            return p.copy()
+    return c.nullPosition()</t>
 <t tx="ekr.20040327103735.2"></t>
 </tnodes>
 </leo_file>

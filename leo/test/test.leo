@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4256" clone_windows="0"/>
 <globals body_outline_ratio="0.414301929625">
-	<global_window_position top="16" left="146" height="881" width="1011"/>
+	<global_window_position top="130" left="330" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -690,9 +690,10 @@
 </v>
 <v t="EKR.20040611083703" a="E"><vh>Using a generator instead of readLinesClass</vh></v>
 </v>
-<v t="EKR.20040612150543" a="E"><vh>Test of better error messages in Execute Script command</vh>
-<v t="EKR.20040612215136" a="TV"><vh>Contains error</vh></v>
+<v t="EKR.20040612150543"><vh>Test of better error messages in Execute Script command</vh>
+<v t="EKR.20040612215136"><vh>Contains error</vh></v>
 </v>
+<v t="EKR.20040613162717" a="TV"><vh>gtk test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2698,6 +2699,7 @@ print ; print '-' * 20</t>
 print "hello"
 c = b
 </t>
+<t tx="EKR.20040613162717">import gtk</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3915,7 +3917,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 

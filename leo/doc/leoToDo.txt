@@ -3,6 +3,2541 @@
 #@@nocolor
 
 #@+all
+#@+node:EKR.20040612172916:Make sure people use cvs to get latest plugins
+#@-node:EKR.20040612172916:Make sure people use cvs to get latest plugins
+#@+node:EKR.20040430163619:To do: 4.2
+#@+node:EKR.20040611081747:To do First
+#@+node:EKR.20040524053657.1:(Handle conflicts in different clones)
+#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ About "@file" untangling and clones   
+2003-11-24 23:55  
+
+0-before untangling:save a reference copy of a found clone for each clone in the outline!
+1-Start untangling,
+2- once you reach a clone node: compare, if changed update all instances of outline
+3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
+
+so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process.
+
+- bolt
+
+EKR comments:
+
+- We can probably use something like this even for @file-thin.  In most cases, a text from a derived file should override the text in the outline.
+
+- The actual algorithm is easier than this.  There is only one tnode per set of clones, so "updating all clones" is trivial.  Moreover, we don't need to compute "reference text", we merely need to know where text comes from:  outline or derived file.
+
+- leoFileCommands.getLeoFile reads all derived files after reading the .leo file, which is exactly what we want.
+
+In short, the algorithm is this:  When creating/updating tnode text, if the "new" text is different from the "old", do the following:
+
+1.  Create a tempRefText attribute (ivar) in tnode if it doesn't already exist,  put the old text into it, and put the new text into the tnode.  (Actually, the text gets put into another temp ivar, but that's not particularly significant).
+
+2.  If the tempRefText attribute already exists, then it contains what you originally called the "reference copy".  If the "new" text is the same as the reference copy, do _not_ update the cloned text.  Otherwise, we have multiple conflicting updates to the same clone.  Issue a warning and do something arbitrary.
+#@nonl
+#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
+#@-node:EKR.20040524053657.1:(Handle conflicts in different clones)
+#@+node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
+@
+
+- Put readLinesClass in leoGlobals.py or find similar code in an existing Python module.
+- Create and test the actual commands.
+#@nonl
+#@+node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
+#@-node:EKR.20040611074752:use standard alternative for readLinesClass or put in leoGlobals
+#@-node:ekr.20031218072017.791:(Finish Check Tabs, Check Python Syntax and PrettyPrint Python commands)
+#@+node:EKR.20040610125924:(Fix install script)
+#@+node:EKR.20040610125924.1:Report
+@nocolor
+
+By: Scott Beardsley - sbeards
+ install script broken in leo-4.2-a3   
+2004-06-10 12:19  
+
+Two issues with the install script...
+
+1) Will not run when using non-borne shells
+Install script should probably contain an @first directive.
+
+The first three lines are currently:
+#@verbatim
+#@+leo-ver=4-thin
+#@verbatim
+#@+node:EKR.20040519082027.33:@file-thin ../install
+#!/bin/sh
+
+In shell scripts however the '#!/bin/sh' should *always* be on the first line. Otherwise you get messages in csh like:
+
+%./install
+LEO_PREFIX=/usr/local: Command not found.
+LEO_RUN_SCRIPT_SOURCE=./scripts/install/leo-script.txt: Command not found.
+LEO_PREFIX: Undefined variable.
+
+2) bin dir is not created (for this I modified step 2 a tad)
+
+################################
+# Step 2
+# Make the directory structure
+################################
+if [ ! -d $LEO_LIB_DIR ]; then
+...echo ""
+...echo Making directory structure $LEO_LIB_DIR
+
+...RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_LIB_DIR!
+......exit 0;
+...fi
+fi
+
+if [ ! -d $LEO_PREFIX/bin ]; then
+...echo ""
+...echo Making directory structure $LEO_PREFIX/bin
+...RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2>&1`
+...if [ $? -ne 0 ]; then
+......echo Failure making directory $LEO_PREFIX/bin!
+......exit 0;
+...fi
+fi
+#@-node:EKR.20040610125924.1:Report
+#@+node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+self.fileMenuTop3MenuTable = (
+    ("E&xit","Ctrl-Q",g.app.onQuit),)
+#@nonl
+#@-node:ekr.20031218072017.3766:<< define fileMenuTop3MenuTable >>
+#@+node:ekr.20031218072017.1723:createMenuEntries
+@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
+    
+    for label,accel,command in table:
+        if label == None or command == None or label == "-":
+            self.add_separator(menu)
+        else:
+            << set name to the label for doCommand >>
+            << set accel to the shortcut for name >>
+            << set bind_shortcut and menu_shortcut using accel >>
+            << define callback function >>
+            << set realLabel, amp_index and menu_shortcut >>
+    
+            self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
+                command=callback,underline=amp_index)
+                
+            if 0: # testing
+                dontBind = True
+
+            if bind_shortcut and not dontBind:
+                << handle bind_shorcut >>
+#@nonl
+#@+node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+name = label.strip().lower()
+
+# Remove special characters from command names.
+name2 = ""
+for ch in name:
+    if ch in string.ascii_letters or ch in string.digits:
+        name2 = name2 + ch
+name = name2
+#@-node:ekr.20031218072017.1724:<< set name to the label for doCommand >>
+#@+node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+config = g.app.config
+rawKey,accel2 = config.getShortcut(name)
+
+# 7/19/03: Make sure "None" overrides the default shortcut.
+if accel2 == None or len(accel2) == 0:
+    pass # Use default shortcut, if any.
+elif accel2.lower() == "none":
+    accel = None # Remove the default shortcut.
+else:
+    accel = accel2 # Override the default shortcut.
+#@nonl
+#@-node:ekr.20031218072017.1725:<< set accel to the shortcut for name >>
+#@+node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+bind_shortcut,menu_shortcut = self.canonicalizeShortcut(accel)
+
+# Kludge: disable the shortcuts for cut, copy, paste.
+# This has already been bound in leoTkinterFrame.__init__
+# 2/13/03: A _possible_ fix for the Linux control-v bug.
+
+if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
+    if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
+        bind_shortcut = None
+#@nonl
+#@-node:ekr.20031218072017.1726:<< set bind_shortcut and menu_shortcut using accel >>
+#@+node:ekr.20031218072017.1727:<< define callback function >>
+if openWith:
+    callback = self.defineOpenWithMenuCallback(command)
+else:
+    callback = self.defineMenuCallback(command,name)
+#@nonl
+#@-node:ekr.20031218072017.1727:<< define callback function >>
+#@+node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+realLabel = self.getRealMenuName(label)
+
+# A bad hack:  this does not allow for translations!
+# We need a way of specifying shortcuts, & bindings and translations all in the same place.
+
+amp_index = -1
+if rawKey:
+    amp_index = rawKey.find("&")
+if amp_index == -1:
+    amp_index = realLabel.find("&")
+
+realLabel = realLabel.replace("&","")
+
+if 0: # trace
+    if rawKey and rawKey.lower().startswith("exit"):
+        g.trace(amp_index,rawKey,label,realLabel,menu_shortcut)
+
+if not menu_shortcut:
+    menu_shortcut = ""
+#@nonl
+#@-node:ekr.20031218072017.1728:<< set realLabel, amp_index and menu_shortcut >>
+#@+node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+if bind_shortcut in self.menuShortcuts:
+    if not g.app.menuWarningsGiven:
+        g.es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
+        print "duplicate shortcut:", accel, bind_shortcut, label
+else:
+    self.menuShortcuts.append(bind_shortcut)
+    try:
+        self.frame.body.bind(bind_shortcut,callback)
+        self.bind(bind_shortcut,callback)
+    except: # could be a user error
+        if not g.app.menuWarningsGiven:
+            print "exception binding menu shortcut..."
+            print bind_shortcut
+            g.es_exception()
+            g.app.menuWarningsGive = True
+#@nonl
+#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
+#@-node:ekr.20031218072017.1723:createMenuEntries
+#@-node:EKR.20040610125924:(Fix install script)
+#@+node:ekr.20040105103517:Importing @file issues
+#@+node:ekr.20040129094501:Reports
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2355533
+By: sbeards
+
+So, here is a summary of these issues.
+
+Scott
+#@nonl
+#@+node:ekr.20040129100453:Imported @files have an extra newline in the body
+This is a bit more complicated than I first thought. We found that this issue
+does not cause a "cannot send headers" warning for a PHP file. This problem
+is caused when you have more than one character after the ?> (a newline or any
+other character will do it). I must have had some other problem with my source
+file.
+
+Further, Leo does _not_ add a newline at the end of the body text for imported
+files. When there is a newline at the end of the source file Leo acts as TextPad
+acts (shows the last valid cursor position as the beginning of the line after
+the last line). When there is no newline at the end of the source file Leo will
+show the last valid cursor position as the end of the last line. This is the
+expected behavior.
+#@nonl
+#@-node:ekr.20040129100453:Imported @files have an extra newline in the body
+#@+node:ekr.20040129100453.1:@last fails with multiple newlines
+The ending ?> will not exist in the derived file when multiple newlines exist
+after the @last directive.
+Test body text:
+@last
+
+Test derived file output:
+#@verbatim
+#@+leo-ver=4
+#@verbatim
+#@+node:@file test.txt
+#@verbatim
+#@@last
+                                                                           
+#@verbatim
+#@-node:@file test.txt
+#@verbatim
+#@-leo
+#@-node:ekr.20040129100453.1:@last fails with multiple newlines
+#@+node:ekr.20040129100453.2:derived files with @last always end with a newline character
+When using @last the last character in a derived file is always a newline
+(when using @file or @file-nosent and maybe always?).
+
+This will only be a problem in special cases when you do not want the derived
+file to end in a newline (when generating binary files maybe?).
+#@nonl
+#@-node:ekr.20040129100453.2:derived files with @last always end with a newline character
+#@-node:ekr.20040129094501:Reports
+#@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+# If the file does not begin with <?php or end with ?> then
+# it is simply appended like a generic import would do.
+
+s.strip() # Remove inadvertent whitespace.
+
+if (
+    not (
+        s.startswith("<?P") or
+        s.startswith("<?p") or
+        s.startswith("<?=") or
+        s.startswith("<?\n") or
+        s.startswith("<?\r") or
+        s.startswith("<? ") or
+        s.startswith("<?\t")
+    ) or not (
+        s.endswith("?>\n") or
+        s.endswith("?>\r") or
+        s.endswith("?>\r\n")
+    )
+):
+    g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
+    parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
+    return
+#@nonl
+#@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+#@+node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
+# 08-SEP-2002 DTHEIN: Added for PHP import support.
+#
+# PHP uses both # and // as line comments, and /* */ as block comments
+
+def scanPHPText (self,s,parent):
+
+    """Creates a child of parent for each class and function definition seen."""
+
+    import re
+    << Append file if not pure PHP >>
+
+    << define scanPHPText vars >>
+    # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+    parent.appendStringToBody("@first ")	
+    parent.appendStringToBody(s[:startOfCode])
+    scan_start = i = startOfCode
+    while i < endOfCode:
+        # line = g.get_line(s,i) ; g.trace(line)
+        ch = s[i]
+        # These cases skip tokens.
+        if ch == '/' or ch == '#':
+            << handle possible PHP comments >>
+        elif ch == '<':
+            << handle possible heredoc string >>
+        elif ch == '"' or ch == '\'':
+            i = g.skip_string(s,i)
+        # These cases help determine where functions start.
+        # FIXME: probably want to capture 'var's as class member data
+        elif ch == 'f' or ch =='c':
+            << handle possible class or function >>
+        elif class_start and (ch == '}'):
+            << handle end of class >>
+        else: i += 1
+    << Append any unused text to the parent's body text >>
+    # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+    parent.appendStringToBody("@last ")	
+    parent.appendStringToBody(s[endOfCode:])
+#@nonl
+#@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+# If the file does not begin with <?php or end with ?> then
+# it is simply appended like a generic import would do.
+
+s.strip() # Remove inadvertent whitespace.
+
+if (
+    not (
+        s.startswith("<?P") or
+        s.startswith("<?p") or
+        s.startswith("<?=") or
+        s.startswith("<?\n") or
+        s.startswith("<?\r") or
+        s.startswith("<? ") or
+        s.startswith("<?\t")
+    ) or not (
+        s.endswith("?>\n") or
+        s.endswith("?>\r") or
+        s.endswith("?>\r\n")
+    )
+):
+    g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
+    parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
+    return
+#@nonl
+#@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+#@+node:ekr.20031218072017.3244:<< define scanPHPText vars >>
+scan_start = 0
+class_start = 0
+function_start = 0
+i = 0
+class_body = ""
+class_node = ""
+phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+
+# 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
+startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
+endOfCode = s.rfind("?>") # this should be the line containing the last ?>
+#@-node:ekr.20031218072017.3244:<< define scanPHPText vars >>
+#@+node:ekr.20031218072017.3245:<< handle possible heredoc string >>
+if g.match(s,i,"<<<"):
+    i = g.skip_heredoc_string(s,i)
+else:
+    i += 1
+#@-node:ekr.20031218072017.3245:<< handle possible heredoc string >>
+#@+node:ekr.20031218072017.3246:<< handle possible PHP comments >>
+if g.match(s,i,"//"):
+    i = g.skip_line(s,i)
+elif g.match(s,i,"#"):
+    i = g.skip_line(s,i)
+elif g.match(s,i,"/*"):
+    i = g.skip_block_comment(s,i)
+else:
+    i += 1
+#@nonl
+#@-node:ekr.20031218072017.3246:<< handle possible PHP comments >>
+#@+node:ekr.20031218072017.3247:<< handle possible class or function >>
+@ In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
+
+Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
+@c
+if g.match(s,i,"function "):
+    #we want to make the function a subnode of either the @file node or a class node
+    # 1. get the function name
+    # 2. make a reference in the parent
+    # 3. create the child node, and dump the function in it.
+    function_start = i
+    m = phpFunctionName.match(s[i:])
+    if (None == m): # function keyword without function name
+        i += len("function ")
+    else:
+        headline = g.angleBrackets(" function " + m.group(1) + " ")
+        # find the end of the function
+        openingBrace = s.find('{',i)
+        function_end = g.skip_php_braces(s,openingBrace)
+        function_end = g.skip_to_end_of_line(s,function_end - 1) + 1 # include the line end
+        # Insert skipped text into parent's body.
+        if class_start:
+            class_body += s[scan_start:function_start]
+        else:
+            parent.appendStringToBody(s[scan_start:function_start])
+        # Append the headline to the parent's body.
+        if class_start:
+            class_body += (headline + "\n")
+        else:
+            parent.appendStringToBody(headline + "\n")
+        # Backup to capture leading whitespace (for undent purposes)
+        while (function_start > 0) and (s[function_start - 1] in [" ", "\t"]):
+            function_start -= 1
+        # Get the body and undent it
+        function_body = s[function_start:function_end]
+        function_body = self.undentBody(function_body)
+        if self.treeType != "@file":
+            function_body = "@code\n\n" + function_body
+        # Create the new node
+        if class_start:
+            self.createHeadline(class_node,function_body,headline)
+        else:
+            self.createHeadline(parent,function_body,headline)
+        i = function_end
+        scan_start = i
+        function_end = 0
+        function_start = 0 #done with this function
+        function_body = ""
+        
+elif g.match(s,i,"class "):
+    # we want to make the class a subnode of the @file node
+    # 1. get the class name
+    # 2. make a reference in the parent
+    # 3. create the child node and dump the function in it
+    class_start = i
+    class_body = ""
+    m = phpClassName.match(s[i:])
+    if (None == m): # class keyword without class name
+        i += len("class ")
+    else:
+        # Insert skipped text into parent's body.
+        parent.appendStringToBody(s[scan_start:class_start])
+        # create the headline name
+        headline = g.angleBrackets(" class " + m.group(1) + " ")
+        # find the place to start looking for methods (functions)
+        openingBrace = s.find('{',i)
+        # find the end of the class
+        class_end = g.skip_php_braces(s,openingBrace)
+        class_end = g.skip_to_end_of_line(s,class_end - 1) + 1 # include the line end
+        # Append the headline to the parent's body.
+        parent.appendStringToBody(headline + "\n")
+        # Backup to capture leading whitespace (for undent purposes)
+        while (class_start > 0) and (s[class_start - 1] in [" ", "\t"]):
+            class_start -= 1
+        scan_start = class_start
+        # Create the new node
+        class_node = self.createHeadline(parent,"",headline)
+        i = openingBrace
+    
+else:
+    i += 1
+#@nonl
+#@-node:ekr.20031218072017.3247:<< handle possible class or function >>
+#@+node:ekr.20031218072017.3248:<< handle end of class >>
+# Capture the rest of the body
+class_body += s[scan_start:class_end]
+# insert the class node's body
+if self.treeType != "@file":
+    class_body = "@code\n\n" + class_body
+class_body = self.undentBody(class_body)
+class_node.appendStringToBody(class_body)
+# reset the indices
+i = class_end
+scan_start = i
+class_end = 0
+class_start = 0 #done with this class
+class_body=""
+#@-node:ekr.20031218072017.3248:<< handle end of class >>
+#@+node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
+parent.appendStringToBody(s[scan_start:endOfCode])
+#@-node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
+#@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
+#@-node:ekr.20040105103517:Importing @file issues
+#@+node:EKR.20040612094712:(Check problem with prefs panel)
+@nocolor
+
+The "Replace Tabs With Spaces" setting may not be reliable.
+#@nonl
+#@-node:EKR.20040612094712:(Check problem with prefs panel)
+#@+node:EKR.20040612081353:Remove app.use_gnx??
+@
+
+This implies:
+    
+- Deprecating old-style file formats.
+- Removing commands that write old-style formats.
+#@nonl
+#@-node:EKR.20040612081353:Remove app.use_gnx??
+#@-node:EKR.20040611081747:To do First
+#@+node:EKR.20040611070048:Feature complete by Beta 2
+#@-node:EKR.20040611070048:Feature complete by Beta 2
+#@+node:EKR.20040422132037:Mac/Linux: 7
+@nocolor
+#@nonl
+#@+node:EKR.20040422132037.2:Install Leo in the site-packages directory
+#@-node:EKR.20040422132037.2:Install Leo in the site-packages directory
+#@+node:EKR.20040422132037.3:small bug in install script
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2370629
+By: tyndal
+
+I found a small bug in the leo install script.
+It doesnt check to see that the $LEO_PREFIX/bin exists before trying to install
+the "leo" script into it, giving an error.
+
+you just need to make a small check similar to the one for the lib directory..
+(i've included it below)
+
+Thanks,
+-Tyndal
+
+#------------------------------
+echo ""
+echo Making directory structure $LEO_PREFIX/bin
+
+RESULTS=`mkdir -p $LEO_PREFIX/bin 2>&1`
+if [ $? -ne 0 ]; then
+    echo Failure making directory $LEO_PREFIX/bin
+    exit 0;
+fi
+#
+#-----------------------------
+#@-node:EKR.20040422132037.3:small bug in install script
+#@+node:EKR.20040422132037.4:config problem on Linux
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2373816
+By: sbeards
+
+A related issue is that leoConfig.txt gets auto-tangled and overwritten on startup.
+This will be a problem if Leo is run by a non-root user or the file is not readable.
+For example, I get the following traceback after starting Leo (when leoConfig.txt
+is read-only):
+
+Traceback (most recent call last):
+  File "/usr/local/share/leo-4.1-rc3/src/leoConfig.py", line 672, in update
+    cf = open(self.configFileName,mode)
+IOError: [Errno 13] Permission denied:
+'/usr/local/share/leo-4.1-rc3/src/../config/leoConfig.txt'
+
+Is there a reason leoConfig.txt gets auto-tangled on startup? Is there anyway
+to disable this? Is this by design?
+#@-node:EKR.20040422132037.4:config problem on Linux
+#@+node:EKR.20040422132037.5:Backspace problems on Linux
+Shift+Ctrl+BkSp doesn't delete node   
+#@nonl
+#@+node:EKR.20040422132037.6:Dave Hein: fix
+By: dthein ( Dave Hein ) 
+ RE: BUG: Shift+Ctrl+BkSp doesn't delete node   
+2004-01-15 03:30  
+
+ OK, the cause of the keymapping problem is a issue with the X11 keyboard mapping, not with Tk.
+
+If you have this problem on your system, issue the command:
+
+xmodmap -pke 
+
+and look in the results for the line for keycode 22. I'll bet it shows something like:
+
+keycode 22 = BackSpace Terminate_Server
+
+That second token ("Terminate_Server") is what is supposed to be mapped to Shift-Backspace. You want this second token to be either not present or to be BackSpace.
+
+To fix this, create a file (e.g. .Xmodmap) and give it the content:
+
+keycode 22 = BackSpace
+
+then run the command:
+
+xmodmap .Xmodmap
+
+And you'll have fixed the problem.
+
+Now, on my system this also disables the ability to terminate the X server using Ctrl-Alt-BackSpace ... this is because of some conflict with xdb (xdb is the newer keyboard mapping facility in XFree86 ... xmodmap is the old original X11 keyboard mapping facility). I'm still working on that.
+
+I'm also not able to get xmodmap to make this change during X11 startup (again because of conflicts with xdb). But I'm working on that as well.
+#@nonl
+#@-node:EKR.20040422132037.6:Dave Hein: fix
+#@-node:EKR.20040422132037.5:Backspace problems on Linux
+#@+node:EKR.20040422132037.7:Bug: vpython and mac
+Jon Schull <jschull@softlock.com>  
+Date:  2003/12/30 Tue PM 05:50:51 EST 
+To:  edreamleo@charter.net 
+Subject:  Leo, Mac OS X 10.3, and VPython 
+             
+I've been evaluating leo or vpython programming on  Mac OS X 10.3, and 
+have some observations and a suggestion.
+
+Observations.
+		Leo runs under X11 as well as under OS X.
+		My X11 python configuration was created using the recipe at XXX 
+(which enables vpython).
+		The OS X configuration is vanilla MacPython from MacPython.org, along 
+with AquaTclTk batteries included XXX.
+		In both environments I can run leo under python leo.py and under idle.
+		Under OS X we get font smoothing, but we can't run visual python 
+programs (python crashes;  this is a known incompatibility with 
+MacPython.)
+	
+		Under X11 we can run visual python programs like this one
+			#box.py
+			from visual import *
+			box()
+			
+    And we can even run them under leo (under X11). HOWEVER, when the 
+visual python program is terminated, leo vanishes (leo and the vp 
+program apparently run in the same space)
+	
+	Under x11, we can keep leo alive by putting the vp program in its own 
+space:
+	
+		os.popen3('/sw/bin/python /Users/jis/box.py')
+	
+	However,  this doesn't let us see the output of stderr and stdout.  
+Those text streams are available...
+		
+		def do(cmd='ls'):
+			from os import popen3
+			pIn,pOut,pErr=0,1,2
+			popenResults=popen3(cmd)
+			print popenResults[pOut].read()
+			print popenResults[pErr].read()
+		
+		import os	
+		do('/sw/bin/python /Users/jis/box.py')
+		
+	...but only when the vpython program terminates.
+	
+	Here's the good news:  if we execute our vp program with 
+/sw/bin/idle.py rather than with python, we get to see the program 
+output in real time (under idle, under X11).
+	
+		import os	
+		os.chdir('/sw/lib/python2.3/idlelib')
+		os.popen3('/sw/bin/python idle.py -r /Users/jis/box.py')
+		
+		#this runs as an executed script in leo, and produces a live idle 
+with real time ongoing output.
+	
+	Now, while idle is running, leo sits in suspended animation.  But when 
+the vpython program terminates, we are left in idle, and when idle is 
+terminated, leo becomes active again.
+	
+	It would be even better if leo were not suspended (using os.spawn, 
+perhaps) but the real point is that I would really really like leo's 
+"Execute script" command to execute code this way and spare me having 
+to  hard-write the path to box.py.  It ought to be possible to 
+eliminate os.chdir as well.
+
+------------------
+Jon Schull, Ph.D.
+Associate Professor
+Information Technology
+Rochester Institute of Technology
+schull@digitalgoods.com 585-738-6696
+#@-node:EKR.20040422132037.7:Bug: vpython and mac
+#@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
+@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)
+#@nonl
+#@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
+#@+node:EKR.20040512090759:Leo.app for MacOS X
+@nocolor
+
+Hi Ed,
+
+
+I've created a Leo.app that I'm using reasonably successfully. Hopefully 
+you'll be able to take the pattern for a Mac OS X binary download option!
+
+
+http://idisk.mac.com/genthaler-Public/Leo.zip
+(WebDAV)
+
+Regards,
+
+Günther
+#@nonl
+#@-node:EKR.20040512090759:Leo.app for MacOS X
+#@-node:EKR.20040422132037:Mac/Linux: 7
+#@+node:EKR.20040610190953:Finish/Cleanup
+#@+node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+Also add corresponding commands.
+#@nonl
+#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
+#@+node:ekr.20040317184631:Design
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2477913
+By: edream
+
+A better design for user icons
+
+Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
+to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
+than a list of tuples.  Each of these "subsidiary" dictionaries could have the
+following keys:
+
+"type"
+
+"file", "icon" or "url".  At present my prototype code uses "file" to specify
+the location of an icon.
+
+"where":
+
+"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
+where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
+means before the plus/minus box.  "beforeIcon" means before the standard icon.
+
+"height":
+
+the height of the icon to use when calculating the line height.  Default: get
+from the icon itself, if possible.
+
+"width":
+
+the width of the icon to use when calculating where to put the following element.
+Default: get from the icon, if possible.
+
+"xoffset"
+
+Leo draws the icon at x + xoffset, where x is determined by the where param
+above.  Default 0.
+
+"xpad"
+
+The amount of extra space following the icon.  Default 0.
+
+"yoffset"
+
+Leo draws the icon at y + yoffset.  Default 0.
+
+"ypad"
+
+The amount of extra vertical space to add to the line height.  Default 0.
+
+These offset and pad values are integer pixel values and may be positive or
+negative.
+
+"lineHeight"  NOT USED.
+
+Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+
+Edward
+
+P.S.  Other gui's might not be able to support all these options.  That's ok.
+The drawing code in gui plugins should degrade gracefully.
+
+EKR
+#@nonl
+#@-node:ekr.20040317184631:Design
+#@+node:ekr.20040317184631.2:Changes
+@nocolor
+
+"lineHeight"
+
+This key won't be used.
+
+t.unknownAttributes["lineYOffset"] 
+
+An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
+#@nonl
+#@-node:ekr.20040317184631.2:Changes
+#@+node:ekr.20040317184631.1:To do
+@nocolor
+
+"onClick", "onRightClick", "onDoubleClick"
+
+commands to call when the specified event happens.  By default, the "onRightClick"
+icon will be bound to a popup menu that offers the user a chance to delete the
+icon,  and maybe other options such as "nudging" the icon up or down, left or
+right.
+
+"popUpMenu"
+
+a list of items to put in a popup menu.  This would be a convenience to avoid
+having to use "onRightClick".
+
+I think you get the idea.  We want the drawing code to support lots of common
+things that plugins would like to do.  I'll probably think of other goodies,
+but this already is a big step forward.  Note that each of these keys will have
+a default, so plugins only need to specify keys that have non-default values.
+#@nonl
+#@-node:ekr.20040317184631.1:To do
+#@+node:ekr.20031218072017.4140:<< drawing constants >>
+box_padding = 5 # extra padding between box and icon
+box_width = 9 + box_padding
+icon_width = 20
+icon_padding = 2
+text_indent = 4 # extra padding between icon and tex
+child_indent = 28 # was 20
+hline_y = 7 # Vertical offset of horizontal line
+root_left = 7 + box_width
+root_top = 2
+hiding = True # True if we don't reallocate items
+line_height = 17 + 2 # To be replaced by Font height
+#@nonl
+#@-node:ekr.20031218072017.4140:<< drawing constants >>
+#@+node:ekr.20040317094609:drawUserIcons
+def drawUserIcons(self,p,where,x,y):
+    
+    """Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
+    
+    h,w = 0,0 ; t = p.v.t
+    
+    if not hasattr(t,"unknownAttributes"):
+        return h,w
+    
+    iconsList = t.unknownAttributes.get("icons")
+    # g.trace(iconsList)
+    
+    try:
+        for dict in iconsList:
+            h2,w2 = self.drawUserIcon(where,x+w,y,dict)
+            h = max(h,h2) ; w += w2
+    except:
+        g.es_exception()
+
+    return h,w
+#@nonl
+#@-node:ekr.20040317094609:drawUserIcons
+#@+node:ekr.20040317095510:drawUserIcon
+def drawUserIcon (self,where,x,y,dict):
+    
+    h,w = 0,0
+
+    if where != dict.get("where","beforeHeadline"):
+        return h,w
+        
+    # g.trace(where,x,y,dict)
+    
+    << set offsets and pads >>
+    type = dict.get("type")
+    if type == "icon":
+        s = dict.get("icon")
+        << draw the icon in string s >>
+    elif type == "file":
+        file = dict.get("file")
+        << draw the icon at file >>
+    elif type == "url":
+        url = dict.get("url")
+        << draw the icon at url >>
+        
+    # Allow user to specify height, width explicitly.
+    h = dict.get("height",h)
+    w = dict.get("width",w)
+
+    return h,w
+#@nonl
+#@+node:ekr.20040317173849:<< set offsets and pads >>
+xoffset = dict.get("xoffset")
+try:    xoffset = int(xoffset)
+except: xoffset = 0
+
+yoffset = dict.get("yoffset")
+try:    yoffset = int(yoffset)
+except: yoffset = 0
+
+xpad = dict.get("xpad")
+try:    xpad = int(xpad)
+except: xpad = 0
+
+ypad = dict.get("ypad")
+try:    ypad = int(ypad)
+except: ypad = 0
+#@nonl
+#@-node:ekr.20040317173849:<< set offsets and pads >>
+#@+node:ekr.20040317095153:<< draw the icon in string s >>
+pass
+#@nonl
+#@-node:ekr.20040317095153:<< draw the icon in string s >>
+#@+node:ekr.20040317095153.1:<< draw the icon at url >>
+pass
+#@nonl
+#@-node:ekr.20040317095153.1:<< draw the icon at url >>
+#@+node:ekr.20040317100702:<< draw the icon at file >>
+try:
+    image = self.iconimages[file]
+    # Get the image from the cache if possible.
+except KeyError:
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas,file=fullname)
+        self.iconimages[fullname] = image
+    except:
+        #g.es("Exception loading: " + fullname)
+        #g.es_exception()
+        image = None
+        
+if image:
+    id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
+    self.canvas.lift(id)
+    h = image.height() + yoffset + ypad
+    w = image.width()  + xoffset + xpad
+#@nonl
+#@-node:ekr.20040317100702:<< draw the icon at file >>
+#@-node:ekr.20040317095510:drawUserIcon
+#@+node:ekr.20031218072017.4147:tree.getIconImage
+def getIconImage (self, name):
+
+    # Return the image from the cache if possible.
+    if self.iconimages.has_key(name):
+        return self.iconimages[name]
+        
+    try:
+        fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
+        fullname = g.os_path_normpath(fullname)
+        image = Tk.PhotoImage(master=self.canvas, file=fullname)
+        self.iconimages[name] = image
+        return image
+    except:
+        g.es("Exception loading: " + fullname)
+        g.es_exception()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.4147:tree.getIconImage
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv):
+    
+    import binascii,pickle
+    
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+        
+    attrs = []
+    for key in attrDict.keys():
+        val = attrDict[key]
+        try:
+            s = pickle.dumps(val,bin=True)
+        except pickle.PicklingError:
+            g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+            g.es(key,val)
+            return
+        attr = ' %s="%s"' % (key,binascii.hexlify(s))
+        if 0: # This is not general enough
+            attr = ' %s="%s"' % (key,self.xmlEscape(val))
+        attrs.append(attr)
+
+    for attr in attrs:
+        self.put(attr)
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:EKR.20040606195417.5:To do
+@nocolor
+
+- (done) Create u.saveNode, u.saveNodeAndChildren, u.saveListOfNodes.
+- Create u.appendSavedNode.
+- Use u.appendSavedNode in Change All command.
+- Unit tests.
+#@nonl
+#@-node:EKR.20040606195417.5:To do
+#@+node:EKR.20040528075307:u.saveTree
+def saveTree (self,p,treeInfo=None):
+    
+    """Create all info needed to handle a general undo operation."""
+
+    # WARNING: read this before doing anything "clever"
+    << about u.saveTree >>
+    
+    u = self ; topLevel = (treeInfo == None)
+    if topLevel: treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Recursively add info for the subtree.
+    child = p.firstChild()
+    while child:
+        self.saveTree(child,treeInfo)
+        child = child.next()
+
+    # if topLevel: g.trace(treeInfo)
+    return treeInfo
+#@+node:EKR.20040530114124:<< about u.saveTree >>
+@ 
+The old code made a free-standing copy of the tree using v.copy and t.copy.  This looks "elegant" and is WRONG.  The problem is that it can not handle clones properly, especially when some clones were in the "undo" tree and some were not.   Moreover, it required complex adjustments to t.vnodeLists.
+
+Instead of creating new nodes, the new code creates all information needed to properly restore the vnodes and tnodes.  It creates a list of tuples, on tuple for each vnode in the tree.  Each tuple has the form,
+
+(vnodeInfo, tnodeInfo) where vnodeInfo and tnodeInfo are dicts contain all info needed to recreate the nodes.  The v.createUndoInfoDict and t.createUndoInfoDict methods correspond to the old v.copy and t.copy methods.
+
+Aside:  Prior to 4.2 Leo used a scheme that was equivalent to the createUndoInfoDict info, but quite a bit uglier.
+#@-node:EKR.20040530114124:<< about u.saveTree >>
+#@-node:EKR.20040528075307:u.saveTree
+#@+node:EKR.20040606195417.2:u.saveNodeAndChildren
+def saveTree (self,p):
+    
+    """Create all info needed for a node and all its immediate children."""
+
+    u = self
+    treeInfo = []
+
+    # Add info for p.v and p.v.t.  Duplicate tnode info is harmless.
+    data = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    treeInfo.append(data)
+
+    # Add info for all children.
+    child = p.firstChild()
+    while child:
+        data = (child.v,child.v.createUndoInfo(),child.v.t.createUndoInfo())
+        treeInfo.append(data)
+        child = child.next()
+
+    return treeInfo
+
+#@-node:EKR.20040606195417.2:u.saveNodeAndChildren
+#@+node:EKR.20040606195417.1:u.saveNode
+def saveNode (self,p):
+    
+    """Create all info for a single vnode."""
+    
+    u = self
+
+    treeInfo = (p.v,p.v.createUndoInfo(),p.v.t.createUndoInfo())
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.1:u.saveNode
+#@+node:EKR.20040606195417.3:u.saveListOfNodes
+def saveListOfNodes (self,listOfVnodes):
+    
+    """Create all info for a list of vnodes."""
+    
+    u = self ; treeInfo = []
+
+    for v in listOfVnodes:
+        data = (v,v.createUndoInfo(),v.t.createUndoInfo())
+        treeInfo.append(data)
+
+    return treeInfo
+#@nonl
+#@-node:EKR.20040606195417.3:u.saveListOfNodes
+#@-node:EKR.20040601133022.1:(Finish the new undo)
+#@+node:ekr.20031218072017.848:Cleanup Pychecker stuff
+#@+node:EKR.20040603144102:What I did
+@nocolor
+
+- except type1,type2: does not work!  It should be except (type1,type2):
+- removed "text" arg from undoReplace
+#@-node:EKR.20040603144102:What I did
+#@+node:EKR.20040603143011:Undo
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:40: Imported module (types) not used
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:211: Using a conditional statement with a constant value ((hasattr, u, (func, __name__)))
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:212: Local variable (AssertionError) not used
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:212: Setting exception to builtin (AssertionError), consider () around exceptions
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:221: Format string argument count (3) doesn't match arguments (2)
+
+(ignore) C:/prog/leoCVS/leo/src\leoUndo.py:1132: Parameter (newNewlines) not used
+(fixed) C:/prog/leoCVS/leo/src\leoUndo.py:1250: Parameter (text) not used
+
+(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1389: Parameter (n) not used
+(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1392: Parameter (n) not used
+(dummy args) C:/prog/leoCVS/leo/src\leoUndo.py:1395: Parameter (n) not used
+#@-node:EKR.20040603143011:Undo
+#@-node:ekr.20031218072017.848:Cleanup Pychecker stuff
+#@-node:EKR.20040610190953:Finish/Cleanup
+#@+node:EKR.20040603115948:New Features: 3
+#@+node:EKR.20040506075328.3:(Perfect Import)
+#@+node:EKR.20040506091116: Notes
+@nocolor
+
+2.  Write a _virtual output file_ to a string.  This is easily done:  we pass a file-like-object to Leo's atFile.write routines.  This virtual file will have @file-thin sentinels.  In other words, the virtual file will specify _all_ aspects of the structure of the newly imported outline.
+
+3.  Convert the string got by writing the virtual output file to a list of lines.  This will become the fat_lines argument.
+
+The strategy is simple:  we want to make corrections to fat_lines using Bernhard's algorithm.  If in fact the fat_lines has changed, we will delete root's outline and recreate the outline using the atFile.read code applied to the virtual output file, i.e., fat_lines.
+
+4.  Set i_lines to the contents of the virtual output file (fat_lines) stripped of sentinels.  Set j_lines to the lines of the original imported file.  As stated above, set fat_lines to the lines of the virtual output file.  Call propagateDiffsToSentinelsLines to update fat_lines to make it equivalent to the original imported file.  Replace root's outline if a real change has happened.
+#@-node:EKR.20040506091116: Notes
+#@+node:ekr.20040414093055: Shadow files plugin
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2521345
+By: bwmulder
+
+I am working on a plugin which works with shadow files in a Leo subdirectory.
+
+This is really the same code posted integrated with Leo. New is that
+the goto linenumber command works properly as well.
+
+The new code only kicks in if:
+   - A leo subdirectory exists, and
+   - both directories contain the file in question.
+   
+To get things started, create a Leo subdirectory, move the source
+files there, and then create zero length strings instead of the moved
+files. Whenever you change something in the sourcefile, both files
+will be brought up to date automatically.
+
+In the future, I might provide a script which provides this initial
+setup automatically.
+
+Implementation notes (relative to 4.1):
+
+In order to use this mechanism to annotate foreign code, I am missing
+two pieces:
+   
+   - The import command should import the source *exactly*.
+   - I would like to add comments to the source which are *not* output into
+source,
+     and live in Leo only (or the shadowfile under Leo sentinel comments).
+     
+I changed the "message_comment" function to do nothing.
+
+I do not think that this function is a good idea, since Leo can not know
+if the line structure in a comment.
+
+There might be more to do in this area.
+
+It seems that I can get around the second limitation by writing "//@"
+at the beginning of the line in the code sections, since this is
+filtered away by the plugin.
+
+Is there some other way to put comments only in the Leo document, but
+not in the derived file?
+
+I had to copy quite a bit of source code for the gotolinenr
+command. It probably won't work for the next version of Leo
+
+It seems that Leo somewhat encourages a coding style with long
+routines, since complexity can be tugged away into subnodes rather
+than creating functions to structure the code.
+
+For the read and write command, I decided to inject a new "open"
+function into the global namespace of leoAtFile.py. This function
+checks if the caller is the read or write function of leoAtFile.py. In
+this case, some special processing for synchronization is done.
+
+I did this strange programming since I did not want to copy large
+amounts of code and just add a few lines.
+
+Currently the script works for C and python files. It looks at the
+file extension to determine if C or python type annotations are
+used. Maybe this information can be centralized.
+#@-node:ekr.20040414093055: Shadow files plugin
+#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+import difflib,shutil
+
+class mulderUpdateAlgorithm:
+    
+    """A class to update derived files using
+    diffs in files without sentinels."""
+    
+    @others
+    
+def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+
+    mu = mulderUpdateAlgorithm()
+
+    mu.pull_source(sourcefilename,targetfilename)
+    mu.copy_time(targetfilename,sourcefilename)
+#@nonl
+#@+node:EKR.20040505103527:TO DO
+@
+
+- is_sentinel is not strictly correct.  There must be an atFile method that does the job absolutely correctly.
+
+- Similarly, marker_from_extension can probably be replaced by a call to some method in leoGlobals.py.
+#@-node:EKR.20040505103527:TO DO
+#@+node:EKR.20040504150046.3:__init__
+def __init__ (self,testing=False,verbose=False):
+    
+    self.testing = testing
+    self.verbose = False
+    self.do_backups = False
+#@nonl
+#@-node:EKR.20040504150046.3:__init__
+#@+node:EKR.20040504150046.9:copy_sentinels
+@ This script retains _all_ sentinels.  If lines are replaced, or deleted,
+we restore deleted sentinel lines by checking for gaps in the mapping.
+@c
+
+def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+    """
+    
+    Copy sentinel lines from fat_lines to write_lines.
+
+    Copy all sentinels _after_ the current reader postion up to,
+    but not including, mapping[endline].
+
+    """
+
+    j_last = mapping[startline]
+    i = startline + 1
+    while i <= endline:
+        j = mapping[i]
+        if j_last + 1 != j:
+            fat_pos = j_last + 1
+            # Copy the deleted sentinels that comprise the gap.
+            while fat_pos < j:
+                line = fat_lines[fat_pos]
+                write_lines.append(line)
+                if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
+                fat_pos += 1
+        j_last = j ; i += 1
+
+    fat_pos = mapping[endline]
+    return fat_pos
+#@nonl
+#@-node:EKR.20040504150046.9:copy_sentinels
+#@+node:EKR.20040504155109:copy_time
+def copy_time(self,sourcefilename,targetfilename):
+    
+    """
+    Set the target file's modification time to
+    that of the source file.
+    """
+
+    st = os.stat(sourcefilename)
+    if hasattr(os, 'utime'):
+        os.utime(targetfilename, (st.st_atime, st.st_mtime))
+    elif hasattr(os, 'mtime'):
+        os.mtime(targetfilename, st.st_mtime)
+    else:
+        g.trace("Can not set modification time")
+#@nonl
+#@-node:EKR.20040504155109:copy_time
+#@+node:EKR.20040504150046.6:create_mapping
+def create_mapping (self,lines,marker):
+    """
+
+    'lines' is a list of lines of a file with sentinels.
+ 
+    Returns:
+
+    result: lines with all sentinels removed.
+
+    mapping: a list such that result[mapping[i]] == lines[i]
+    for all i in range(len(result))
+
+    """
+
+    mapping = [] ; result = []
+    for i in xrange(len(lines)):
+        line = lines[i]
+        if not self.is_sentinel(line,marker):
+            result.append(line)
+            mapping.append(i)
+
+    # Create a last mapping entry for copy_sentinels.
+    mapping.append(i)
+
+    return result, mapping
+#@nonl
+#@-node:EKR.20040504150046.6:create_mapping
+#@+node:EKR.20040504154039:is_sentinel NOT CORRECT
+def is_sentinel (self,line,marker):
+    
+    """
+    Check if line starts with a sentinel comment.
+    """
+    
+    return line.lstrip().startswith(marker)
+#@-node:EKR.20040504154039:is_sentinel NOT CORRECT
+#@+node:EKR.20040504150046.4:marker_from_extension
+def marker_from_extension(self,filename):
+    """
+    Tries to guess the sentinel leadin
+    comment from the filename extension.
+    
+    This code should probably be shared
+    with the main Leo code.
+    """
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+    if ext in ('.h', '.c'):
+        marker = "//@"
+    elif ext in (".py", ".cfg", ".bat", ".ksh"):
+        marker = "#@"
+    else:
+        g.trace("unknown extension %s" % ext)
+        marker = None
+
+    return marker
+#@nonl
+#@-node:EKR.20040504150046.4:marker_from_extension
+#@+node:EKR.20040505080156:Get or remove sentinel lines
+# These routines originally were part of push_filter & push_filter_lines.
+#@nonl
+#@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
+def separateSentinelsFromFile (self,filename):
+    
+    """Separate the lines of the file into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the file."""
+    
+    lines = file(filename).readlines()
+    marker = self.marker_from_extension(filename)
+    
+    return self.separateSentinelsFromLines(lines,marker)
+    
+def separateSentinelsFromLines (self,lines,marker):
+    
+    """Separate lines (a list of lines) into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the original list."""
+    
+    strippedLines = self.removeSentinelsFromLines(lines,marker)
+    sentinelLines = self.getSentinelsFromLines(lines,marker)
+    
+    return strippedLines,sentinelLines
+#@nonl
+#@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
+#@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+def removeSentinelsFromFile (self,filename):
+    
+    """Return a copy of file with all sentinels removed."""
+    
+    lines = file(filename).readlines()
+    marker = self.marker_from_extension(filename)
+    
+    return removeSentinelsFromLines(lines,marker)
+    
+def removeSentinelsFromLines (self,lines,marker):
+
+    """Return a copy of lines with all sentinels removed."""
+    
+    return [line for line in lines if not self.is_sentinel(line,marker)]
+#@nonl
+#@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
+#@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+def getSentinelsFromFile (self,filename,marker):
+    
+    """Returns all sentinels lines in a file."""
+    
+    lines = file(filename).readlines()
+    marker = self.marker_from_extension(filename)
+
+    return getSentinelsFromLines(lines,marker)
+    
+def getSentinelsFromLines (self,lines,marker):
+    
+    """Returns all sentinels lines in lines."""
+    
+    return [line for line in lines if self.is_sentinel(line,marker)]
+#@nonl
+#@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
+#@-node:EKR.20040505080156:Get or remove sentinel lines
+#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
+    
+    << init propagateDiffsToSentinelsFile vars >>
+    
+    write_lines = self.propagateDiffsToSentinelsLines(
+        i_lines,j_lines,fat_lines,mapping)
+        
+    # Update _source_ file if it is not the same as write_lines.
+    written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
+    if written:
+        << paranoia check>>
+#@nonl
+#@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+# Get the sentinel comment marker.
+marker = self.marker_from_extension(sourcefilename)
+if not marker:
+    return
+
+try:
+    # Create the readers.
+    sfile = file(sourcefilename)
+    tfile = file(targetfilename)
+    
+    fat_lines = sfile.readlines() # Contains sentinels.
+    j_lines   = tfile.readlines() # No sentinels.
+    
+    i_lines,mapping = self.create_mapping(fat_lines,marker)
+    
+    sfile.close()
+    tfile.close()
+except:
+    g.es_exception("can not open files")
+    return
+#@nonl
+#@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
+#@+node:EKR.20040504150046.12:<<paranoia check>>
+# Check that 'push' will re-create the changed file.
+strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
+
+if strippedLines != j_lines:
+    self.report_mismatch(strippedLines, j_lines,
+        "Propagating diffs did not work as expected",
+        "Content of sourcefile:",
+        "Content of modified file:")
+
+# Check that no sentinels got lost.
+fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
+
+if sentinel_lines != fat_sentinel_lines:
+    self.report_mismatch(sentinel_lines,fat_sentinel_lines,
+        "Propagating diffs modified sentinel lines:",
+        "Current sentinel lines:",
+        "Old sentinel lines:")
+#@nonl
+#@-node:EKR.20040504150046.12:<<paranoia check>>
+#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
+#@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
+    
+    """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
+    'write_lines' making sure that all sentinels of 'fat_lines' are copied.
+
+    i/j_lines have no sentinels.  fat_lines does."""
+
+    << init propagateDiffsToSentinelsLines vars >>
+    << copy the sentinels at the beginning of the file >>
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if testing:
+            if verbose: print
+            print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
+            if verbose: print
+        << update and check the loop invariant >>
+        if tag == 'equal':
+            << handle 'equal' tag >>
+        elif tag == 'replace':
+            << handle 'replace' tag >>
+        elif tag == 'delete':
+            << handle 'delete' tag >>
+        elif tag == 'insert':
+            << handle 'insert' tag >>
+        else: assert 0,"bad tag"
+    << copy the sentinels at the end of the file >>
+    return write_lines
+#@nonl
+#@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+# Indices into i_lines, j_lines & fat_lines.
+i_pos = j_pos = fat_pos = 0
+
+# These vars check that all ranges returned by get_opcodes() are contiguous.
+i2_old = j2_old = -1
+
+# Create the output lines.
+write_lines = []
+
+matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
+
+testing = self.testing
+verbose = self.verbose
+#@nonl
+#@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
+#@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+while fat_pos < mapping[0]:
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing and verbose: print "copy initial line",fat_pos,line,
+    fat_pos += 1
+#@nonl
+#@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
+#@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
+# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+# We also need the ranges not to overlap.
+
+assert(i2_old in (-1,i1))
+assert(j2_old in (-1,j1))
+
+i2_old = i2 ; j2_old = j2
+
+# Check the loop invariants.
+assert i_pos == i1
+assert j_pos == j1
+assert fat_pos == mapping[i1]
+
+if 0: # not yet.
+    if testing: # A bit costly.
+        t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
+        # Check that we have all the modifications so far.
+        assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+        # Check that we kept all sentinels so far.
+        assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
+#@nonl
+#@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
+#@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
+# Copy the lines, including sentinels.
+while fat_pos <= mapping[i2-1]:
+    line = fat_lines[fat_pos]
+    if 0: # too verbose.
+        if testing: print "Equal: copying ", line,
+    write_lines.append(line)
+    fat_pos += 1
+
+if testing and verbose:
+    print "Equal: synch i", i_pos,i2
+    print "Equal: synch j", j_pos,j2
+
+i_pos = i2
+j_pos = j2
+
+# Copy the sentinels which might follow the lines.       
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
+#@nonl
+#@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
+#@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
+@ Replace lines that may span sentinels.
+
+For now, we put all the new contents after the first sentinel.
+
+A more complex approach: run the difflib across the different lines and try to
+construct a mapping changed line => orignal line.
+@c
+
+while j_pos < j2:
+    line = j_lines[j_pos]
+    if testing:
+        print "Replace i:",i_pos,repr(i_lines[i_pos])
+        print "Replace j:",j_pos,repr(line)
+        i_pos += 1
+
+    write_lines.append(line)
+    j_pos += 1
+
+i_pos = i2
+
+# Copy the sentinels which might be between the changed code.         
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+#@nonl
+#@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
+#@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
+if testing and verbose:
+    print "delete: i",i_pos,i1
+    print "delete: j",j_pos,j1
+
+j_pos = j2
+i_pos = i2
+
+# Restore any deleted sentinels.
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
+#@nonl
+#@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
+#@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
+while j_pos < j2:
+    line = j_lines[j_pos]
+    if testing: print "Insert:", line,
+    write_lines.append(line)
+    j_pos += 1
+
+# The input streams are already in synch.
+#@nonl
+#@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
+#@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+while fat_pos < len(fat_lines):
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing and verbose: print "Append last line",line
+    fat_pos += 1
+#@nonl
+#@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
+#@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
+#@+node:EKR.20040504150046.5:report_mismatch
+def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+
+    """
+    Generate a report when something goes wrong.
+    """
+
+    print '='*20
+    print message
+    
+    if 0:
+        print lines1_message
+        print '-'*20
+        for line in lines1:
+          print line,
+         
+        print '='*20
+    
+        print lines2_message
+        print '-'*20
+        for line in lines2:
+            print line,
+#@nonl
+#@-node:EKR.20040504150046.5:report_mismatch
+#@+node:EKR.20040504160820:write_if_changed
+def write_if_changed(self,lines,sourcefilename,targetfilename):
+    """
+    
+    Replaces target file if it is not the same as 'lines',
+    and makes the modification date of target file the same as the source file.
+    
+    Optionally backs up the overwritten file.
+
+    """
+    
+    copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+        
+    if self.testing:
+        if copy:
+            print "Writing",targetfilename,"without sentinals"
+        else:
+            print "Files are identical"
+
+    if copy:
+        if self.do_backups:
+            << make backup file >>
+        outfile = open(targetfilename, "w")
+        for line in lines:
+            outfile.write(line)
+        outfile.close()
+        self.copy_time(sourcefilename,targetfilename)
+    return copy
+#@+node:EKR.20040504160820.1:<< make backup file >>
+if os.path.exists(targetfilename):
+    count = 0
+    backupname = "%s.~%s~" % (targetfilename,count)
+    while os.path.exists(backupname):
+        count += 1
+        backupname = "%s.~%s~" % (targetfilename,count)
+    os.rename(targetfilename, backupname)
+    if testing:
+        print "backup file in ", backupname
+#@nonl
+#@-node:EKR.20040504160820.1:<< make backup file >>
+#@-node:EKR.20040504160820:write_if_changed
+#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
+#@+node:ekr.20040331083824.1:fileLikeObject
+class fileLikeObject:
+    
+    """Define a file-like object for redirecting i/o."""
+    
+    # Used by Execute Script command and rClick plugin.
+    
+    def __init__(self): self.s = ""
+    def clear (self):   self.s = ""
+    def close (self):   pass
+    def flush (self):   pass
+        
+    def get (self):
+        return self.s
+        
+    def write (self,s):
+        if s:
+            self.s = self.s + s
+#@nonl
+#@-node:ekr.20040331083824.1:fileLikeObject
+#@+node:ekr.20031218072017.3212:importFilesCommand
+def importFilesCommand (self,files,treeType):
+
+    c = self.c
+    if c == None: return
+    v = current = c.currentVnode()
+    if current == None: return
+    if len(files) < 1: return
+    self.treeType = treeType
+    c.beginUpdate()
+    if 1: # range of update...
+        if len(files) == 2:
+            << Create a parent for two files having a common prefix >>
+        for i in xrange(len(files)):
+            fileName = files[i]
+            v = self.createOutline(fileName,current)
+            self.perfectImport(fileName,v)
+            if v: # 8/11/02: createOutline may fail.
+                g.es("imported " + fileName)
+                v.contract()
+                v.setDirty()
+                c.setChanged(True)
+        c.validateOutline()
+        current.expand()
+    c.endUpdate()
+    c.selectVnode(current)
+#@nonl
+#@+node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+@ The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+@c
+
+name0 = files[0]
+name1 = files[1]
+prefix0, junk = g.os_path_splitext(name0)
+prefix1, junk = g.os_path_splitext(name1)
+if len(prefix0) > 0 and prefix0 == prefix1:
+    current = current.insertAsLastChild()
+    junk, nameExt = g.os_path_split(prefix1)
+    name,ext = g.os_path_splitext(prefix1)
+    current.initHeadString(name)
+#@nonl
+#@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
+#@-node:ekr.20031218072017.3212:importFilesCommand
+#@+node:EKR.20040506075328.2:perfectImport
+def perfectImport (self,fileName,p):
+    
+    return ### not ready yet.
+
+    g.trace(fileName,p)
+    
+    << write p to a virtual thin derived file s >>
+    if not s: return
+    
+    mu = g.mulderUpdateAlgorithm(testing=True)
+    marker = mu.marker_from_extension(fileName)
+
+    fat_lines = s.splitlines(True) # Keep line endings.
+    
+    i_lines,mapping = mu.create_mapping(fat_lines,marker)
+    j_lines = file(fileName).readlines()
+    
+    if i_lines != j_lines:
+        g.trace("correcting import")
+        write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+        << replace root's tree using write_lines >>
+    else:
+        g.trace("imported lines are perfect")
+#@+node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
+try:
+    df = self.c.atFileCommands.new_df
+    df.targetFileName = "<virtual-file>"
+    df.outputFile = fo = g.fileLikeObject()
+    df.writeOpenFile(p)
+    s = fo.get()
+except:
+    g.es("Exception in Perfect Import (write)")
+    g.es_exception()
+    s = None
+#@-node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
+#@+node:EKR.20040506115229:<< replace root's tree using write_lines >>
+if 0: # Not ready yet.
+
+    # Remove all of root's tree.
+    while p.hasChildren():
+        child = p.firstChild()
+        child.doDelete(p)
+        
+    p.setBodyStringOrPane("")
+
+    try:
+        df = self.c.atFileCommands.new_df
+        df.targetFileName = "<virtual-file>"
+        df.inputFile = fo = g.fileLikeObject()
+        fo.set(string.join(write_lines))
+        df.readOpenFile(p)
+    except:
+        g.es("Exception in Perfect Import (read)")
+        g.es_exception()
+        s = None
+#@nonl
+#@-node:EKR.20040506115229:<< replace root's tree using write_lines >>
+#@-node:EKR.20040506075328.2:perfectImport
+#@-node:EKR.20040506075328.3:(Perfect Import)
+#@+node:ekr.20040323084434:(Add granularity setting for undo)
+#@+node:ekr.20040328111626:Notes
+@nocolor
+
+- "node" and "line" granularity are easy:
+	- Node: just replace "new" text with present text.
+	- Line: create a new node if the present line isn't the same as the "line" attribute of the undo node.
+		(Very similar to node granularity.
+
+- "word" granularity is still fairly easy:
+	- inWord flag is True or False.
+	- create a new node if we are starting a new word.
+
+- copy/paste always start new undo typing nodes.
+	
+#@nonl
+#@-node:ekr.20040328111626:Notes
+#@+node:ekr.20031218072017.3606:undo.__init__ & clearIvars
+def __init__ (self,c):
+    
+    u = self ; u.c = c
+    
+    # Ivars to transition to new undo scheme...
+    u.debug = False # True: enable debugging code in new undo scheme.
+    u.debug_print = False # True: enable print statements in debug code.
+    u.new_undo = True # True: enable new debug code.
+
+    # Statistics comparing old and new ways (only if u.debug is on).
+    u.new_mem = 0
+    u.old_mem = 0
+
+    # State ivars...
+    u.undoType = "Can't Undo"
+    # These must be set here, _not_ in clearUndoState.
+    u.redoMenuLabel = "Can't Redo"
+    u.undoMenuLabel = "Can't Undo"
+    u.realRedoMenuLabel = "Can't Redo"
+    u.realUndoMenuLabel = "Can't Undo"
+    u.undoing = False # True if executing an Undo command.
+    u.redoing = False # True if executing a Redo command.
+    
+    # New in 4.2...
+    << Define optional ivars >>
+    << define redoDispatchDict >>
+    << define undoDispatchDict >>
+    u.updateSetChangedFlag = True
+    u.redrawFlag = True
+#@nonl
+#@+node:ekr.20031218072017.3607:clearIvars
+def clearIvars (self):
+    
+    u = self
+    
+    u.p = None # The position/node being operated upon for undo and redo.
+    for ivar in u.optionalIvars:
+        setattr(u,ivar,None)
+#@nonl
+#@-node:ekr.20031218072017.3607:clearIvars
+#@+node:ekr.20031218072017.3604:<< Define optional ivars >>
+# New in 4.2: this is now an ivar, not a global, and it's a list, not a tuple.
+
+u.optionalIvars = [
+    "lastChild",
+    "parent","oldParent",
+    "back","oldBack",
+    "n","oldN","oldV",
+    "oldText","newText",
+    "oldSel","newSel",
+    "sort","select",
+    "oldTree","newTree", # Added newTree 10/14/03
+    "yview",
+    # For incremental undo typing...
+    "leading","trailing",
+    "oldMiddleLines","newMiddleLines",
+    "oldNewlines","newNewlines" ]
+#@nonl
+#@-node:ekr.20031218072017.3604:<< Define optional ivars >>
+#@+node:EKR.20040526072519:<< define redoDispatchDict >>
+u.redoDispatchDict = {
+    "Change":             u.redoTyping,
+    "Change All":         u.redoChangeAll,
+    "Change Headline":    u.redoChangeHeadline,
+    "Clone Node":         u.redoClone,
+    "Convert All Blanks": u.redoReplaceNodesContents,
+    "Convert All Tabs":   u.redoReplaceNodesContents,
+    "Convert Blanks":     u.redoTyping,
+    "Convert Tabs":       u.redoTyping,
+    "Cut":                u.redoTyping,
+    "Cut Node":           u.redoDeleteNode,
+    "De-Hoist":           u.redoDehoist,
+    "Delete":             u.redoTyping,
+    "Delete Node":        u.redoDeleteNode,
+    "Demote":             u.redoDemote,
+    "Drag":               u.redoMoveNode,
+    "Drag & Clone":       u.redoClone,
+    "Extract":            u.redoReplaceNodes,
+    "Extract Names":      u.redoReplaceNodes,
+    "Extract Section":    u.redoReplaceNodes,
+    "Hoist":              u.redoHoist,
+    "Import":             u.redoInsertNodes,
+    "Indent":             u.redoTyping,
+    "Insert Node":        u.redoInsertNodes,
+    "Move Down":          u.redoMoveNode,
+    "Move Left":          u.redoMoveNode,
+    "Move Right":         u.redoMoveNode,
+    "Move Up":            u.redoMoveNode,
+    "Paste":              u.redoTyping,
+    "Paste Node":         u.redoInsertNodes,
+    "Promote":            u.redoPromote,
+    "Read @file Nodes":   u.redoReplaceNodes,
+    "Reformat Paragraph": u.redoTyping,
+    "Sort Children":      u.redoSortChildren,
+    "Sort Siblings":      u.redoSortSiblings,
+    "Sort Top Level":     u.redoSortTopLevel,
+    "Typing":             u.redoTyping,
+    "Undent":             u.redoTyping }
+#@nonl
+#@-node:EKR.20040526072519:<< define redoDispatchDict >>
+#@+node:EKR.20040526075238:<< define undoDispatchDict >>
+u.undoDispatchDict = {
+    "Change":             u.undoTyping,
+    "Change All":         u.undoChangeAll,
+    "Change Headline":    u.undoChangeHeadline,
+    "Clone Node":         u.undoClone,
+    "Convert All Blanks": u.undoReplaceNodesContents,
+    "Convert All Tabs":   u.undoReplaceNodesContents,
+    "Convert Blanks":     u.undoTyping,
+    "Convert Tabs":       u.undoTyping,
+    "Cut":                u.undoTyping,
+    "Cut Node":           u.undoDeleteNode,
+    "De-Hoist":           u.undoDehoist,
+    "Delete":             u.undoTyping,
+    "Delete Node":        u.undoDeleteNode,
+    "Demote":             u.undoDemote,
+    "Drag":               u.undoMoveNode,
+    "Drag & Clone":       u.undoDragClone, # redo uses redoClone.
+    "Extract":            u.undoReplaceNodes,
+    "Extract Names":      u.undoReplaceNodes,
+    "Extract Section":    u.undoReplaceNodes,
+    "Hoist":              u.undoHoist,
+    "Import":             u.undoInsertNodes,
+    "Indent":             u.undoTyping,
+    "Insert Node":        u.undoInsertNodes,
+    "Move Down":          u.undoMoveNode,
+    "Move Left":          u.undoMoveNode,
+    "Move Right":         u.undoMoveNode,
+    "Move Up":            u.undoMoveNode,
+    "Paste":              u.undoTyping,
+    "Paste Node":         u.undoInsertNodes,
+    "Promote":            u.undoPromote,
+    "Read @file Nodes":   u.undoReplaceNodes,
+    "Reformat Paragraph": u.undoTyping,
+    "Sort Children":      u.undoSortChildren,
+    "Sort Siblings":      u.undoSortSiblings,
+    "Sort Top Level":     u.undoSortTopLevel,
+    "Typing":             u.undoTyping,
+    "Undent":             u.undoTyping }
+#@nonl
+#@-node:EKR.20040526075238:<< define undoDispatchDict >>
+#@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
+#@+node:ekr.20031218072017.1421:<< get config options >>
+@ Rewritten 10/11/02 as follows:
+
+1. We call initConfigParam and initBooleanConfigParam to get the values.
+
+The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
+
+2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
+@c
+
+self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
+    "at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
+    
+encoding = self.initConfigParam(
+    "config_encoding",self.config_encoding)
+    
+if g.isValidEncoding(encoding):
+    self.config_encoding = encoding
+else:
+    g.es("bad config_encoding: " + encoding)
+    
+self.create_nonexistent_directories = self.initBooleanConfigParam(
+    "create_nonexistent_directories",self.create_nonexistent_directories)
+    
+encoding = self.initConfigParam(
+    "default_derived_file_encoding",self.default_derived_file_encoding)
+
+if g.isValidEncoding(encoding):
+    self.default_derived_file_encoding = encoding
+else:
+    g.es("bad default_derived_file_encoding: " + encoding)
+    
+self.load_derived_files_immediately = self.initBooleanConfigParam(
+    "load_derived_files_immediately",self.load_derived_files_immediately)
+    
+encoding = self.initConfigParam(
+    "new_leo_file_encoding",
+    self.new_leo_file_encoding)
+
+if g.isValidEncoding(encoding):
+    self.new_leo_file_encoding = encoding
+else:
+    g.es("bad new_leo_file_encoding: " + encoding)
+
+self.output_initial_comment = self.initConfigParam(
+    "output_initial_comment",self.output_initial_comment)
+
+self.output_newline = self.initConfigParam(
+    "output_newline",self.output_newline)
+
+self.read_only = self.initBooleanConfigParam(
+    "read_only",self.read_only)
+
+self.relative_path_base_directory = self.initConfigParam(
+    "relative_path_base_directory",self.relative_path_base_directory)
+    
+self.redirect_execute_script_output_to_log_pane = self.initBooleanConfigParam(
+    "redirect_execute_script_output_to_log_pane",
+    self.redirect_execute_script_output_to_log_pane)
+    
+self.remove_sentinels_extension = self.initConfigParam(
+    "remove_sentinels_extension",self.remove_sentinels_extension)
+
+self.save_clears_undo_buffer = self.initBooleanConfigParam(
+    "save_clears_undo_buffer",self.save_clears_undo_buffer)
+    
+self.stylesheet = self.initConfigParam(
+    "stylesheet",self.stylesheet)
+    
+encoding = self.initConfigParam(
+    "tk_encoding",self.tkEncoding)
+    
+if encoding and len(encoding) > 0: # May be None.
+    if g.isValidEncoding(encoding):
+        self.tkEncoding = encoding
+    else:
+        g.es("bad tk_encoding: " + encoding)
+        
+# g.trace("config.self.tkEncoding",self.tkEncoding)
+
+g.app.use_gnx = self.initBooleanConfigParam(
+    "use_gnx",g.app.use_gnx)
+# g.trace("g.app.use_gnx",g.app.use_gnx)
+    
+self.use_plugins = self.initBooleanConfigParam(
+    "use_plugins",self.use_plugins)
+
+self.use_psyco = self.initBooleanConfigParam(
+    "use_psyco",self.use_psyco)
+    
+self.undo_granularity = self.initConfigParam(
+    "undo_granularity",self.undo_granularity)
+    
+self.write_old_format_derived_files = self.initBooleanConfigParam(
+    "write_old_format_derived_files",self.write_old_format_derived_files)
+#@-node:ekr.20031218072017.1421:<< get config options >>
+#@+node:ekr.20031218072017.1490:setUndoTypingParams
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
+
+def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+    
+    # g.trace(undo_type,p,"old:",oldText,"new:",newText)
+    u = self ; c = u.c
+    << return if there is nothing to do >>
+    << init the undo params >>
+    << compute leading, middle & trailing  lines >>
+    << save undo text info >>
+    << save the selection and scrolling position >>
+    << adjust the undo stack, clearing all forward entries >>
+    u.setUndoTypes() # Recalculate the menu labels.
+    return d
+#@nonl
+#@+node:ekr.20040324061854:<< return if there is nothing to do >>
+if u.redoing or u.undoing:
+    return None
+
+if undo_type == None:
+    return None
+
+if undo_type == "Can't Undo":
+    u.clearUndoState()
+    return None
+
+if oldText == newText:
+    # g.trace("no change")
+    return None
+#@nonl
+#@-node:ekr.20040324061854:<< return if there is nothing to do >>
+#@+node:ekr.20040324061854.1:<< init the undo params >>
+# Clear all optional params.
+for ivar in u.optionalIvars:
+    setattr(u,ivar,None)
+
+# Set the params.
+u.undoType = undo_type
+u.p = p
+#@nonl
+#@-node:ekr.20040324061854.1:<< init the undo params >>
+#@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
+
+old_lines = string.split(oldText,'\n')
+new_lines = string.split(newText,'\n')
+new_len = len(new_lines)
+old_len = len(old_lines)
+min_len = min(old_len,new_len)
+
+i = 0
+while i < min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading = i
+
+if leading == new_len:
+    # This happens when we remove lines from the end.
+    # The new text is simply the leading lines from the old text.
+    trailing = 0
+else:
+    i = 0
+    while i < min_len - leading:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing = i
+    
+# NB: the number of old and new middle lines may be different.
+if trailing == 0:
+    old_middle_lines = old_lines[leading:]
+    new_middle_lines = new_lines[leading:]
+else:
+    old_middle_lines = old_lines[leading:-trailing]
+    new_middle_lines = new_lines[leading:-trailing]
+    
+# Remember how many trailing newlines in the old and new text.
+i = len(oldText) - 1 ; old_newlines = 0
+while i >= 0 and oldText[i] == '\n':
+    old_newlines += 1
+    i -= 1
+
+i = len(newText) - 1 ; new_newlines = 0
+while i >= 0 and newText[i] == '\n':
+    new_newlines += 1
+    i -= 1
+
+if u.debug_print:
+    g.trace()
+    print "lead,trail",leading,trailing
+    print "old mid,nls:",len(old_middle_lines),old_newlines,oldText
+    print "new mid,nls:",len(new_middle_lines),new_newlines,newText
+    #print "lead,trail:",leading,trailing
+    #print "old mid:",old_middle_lines
+    #print "new mid:",new_middle_lines
+    print "---------------------"
+#@nonl
+#@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
+#@+node:ekr.20031218072017.1492:<< save undo text info >>
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply v.bodyString().
+@c
+
+if u.new_undo:
+    if u.debug:
+        # Remember the complete text for comparisons...
+        u.oldText = oldText
+        u.newText = newText
+        # Compute statistics comparing old and new ways...
+        # The old doesn't often store the old text, so don't count it here.
+        u.old_mem += len(newText)
+        s1 = string.join(old_middle_lines,'\n')
+        s2 = string.join(new_middle_lines,'\n')
+        u.new_mem += len(s1) + len(s2)
+    else:
+        u.oldText = None
+        u.newText = None
+else:
+    u.oldText = oldText
+    u.newText = newText
+
+self.leading = leading
+self.trailing = trailing
+self.oldMiddleLines = old_middle_lines
+self.newMiddleLines = new_middle_lines
+self.oldNewlines = old_newlines
+self.newNewlines = new_newlines
+#@nonl
+#@-node:ekr.20031218072017.1492:<< save undo text info >>
+#@+node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#Remember the selection.
+u.oldSel = oldSel
+u.newSel = newSel
+
+# Remember the scrolling position.
+if oldYview:
+    u.yview = oldYview
+else:
+    u.yview = c.frame.body.getYScrollPosition()
+#@-node:ekr.20040324061854.2:<< save the selection and scrolling position >>
+#@+node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+# Push params on undo stack, clearing all forward entries.
+u.bead += 1
+d = u.setBead(u.bead)
+u.beads[u.bead:] = [d]
+
+# g.trace(len(u.beads), u.bead)
+#@nonl
+#@-node:ekr.20040324061854.3:<< adjust the undo stack, clearing all forward entries >>
+#@-node:ekr.20031218072017.1490:setUndoTypingParams
+#@+node:ekr.20031218072017.2038:<< redo typing cases >>
+elif redoType in ( "Typing",
+	"Change","Convert Blanks","Convert Tabs","Cut",
+	"Delete","Indent","Paste","Reformat Paragraph","Undent"):
+
+	# g.trace(redoType,u.p)
+	# selectVnode causes recoloring, so avoid if possible.
+	if current != u.p:
+		c.selectVnode(u.p)
+	elif redoType in ("Cut","Paste"):
+		c.frame.body.forceFullRecolor()
+
+	self.undoRedoText(
+		u.p,u.leading,u.trailing,
+		u.newMiddleLines,u.oldMiddleLines,
+		u.newNewlines,u.oldNewlines,
+		tag="redo",undoType=redoType)
+	
+	if u.newSel:
+		c.frame.body.setTextSelection(u.newSel)
+	if u.yview:
+		c.frame.body.setYScrollPosition(u.yview)
+	redrawFlag = (current != u.p)
+		
+elif redoType == "Change All":
+
+	count = 0
+	while 1:
+		u.bead += 1
+		d = u.getBead(u.bead+1)
+		assert(d)
+		redoType = u.undoType
+		# g.trace(redoType,u.p,u.newText)
+		if redoType == "Change All":
+			c.selectVnode(u.p)
+			break
+		elif redoType == "Change":
+			u.p.v.setTnodeText(u.newText)
+			u.p.setDirty()
+			count += 1
+		elif redoType == "Change Headline":
+			u.p.initHeadString(u.newText)
+			count += 1
+		else: assert(False)
+	g.es("redo %d instances" % count)
+
+elif redoType == "Change Headline":
+	
+	# g.trace(redoType,u.p,u.newText)
+	u.p.setHeadStringOrHeadline(u.newText)
+	c.selectVnode(u.p)
+#@nonl
+#@-node:ekr.20031218072017.2038:<< redo typing cases >>
+#@+node:ekr.20031218072017.2047:<< undo typing cases >>
+@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
+
+But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
+@c
+	
+elif undoType in ( "Typing",
+	"Change","Convert Blanks","Convert Tabs","Cut",
+	"Delete","Indent","Paste","Reformat Paragraph","Undent"):
+
+	# g.trace(undoType,u.p)
+	# selectVnode causes recoloring, so don't do this unless needed.
+	if current != u.p:
+		c.selectVnode(u.p)
+	elif undoType in ("Cut","Paste"):
+		c.frame.body.forceFullRecolor()
+
+	self.undoRedoText(
+		u.p,u.leading,u.trailing,
+		u.oldMiddleLines,u.newMiddleLines,
+		u.oldNewlines,u.newNewlines,
+		tag="undo",undoType=undoType)
+	if u.oldSel:
+		c.frame.body.setTextSelection(u.oldSel)
+	if u.yview:
+		c.frame.body.setYScrollPosition(u.yview)
+	redrawFlag = (current != u.p)
+		
+elif undoType == "Change All":
+
+	count = 0
+	while 1:
+		u.bead -= 1
+		d = u.getBead(u.bead)
+		assert(d)
+		undoType = u.undoType
+		# g.trace(undoType,u.p,u.oldText)
+		if undoType == "Change All":
+			c.selectVnode(u.p)
+			break
+		elif undoType == "Change":
+			u.p.setTnodeText(u.oldText)  # p.setTnodeText
+			count += 1
+			u.p.setDirty()
+		elif undoType == "Change Headline":
+			u.p.initHeadString(u.oldText)  # p.initHeadString
+			count += 1
+		else: assert(False)
+	g.es("undo %d instances" % count)
+		
+elif undoType == "Change Headline":
+	
+	# g.trace(u.oldText)
+	u.p.setHeadStringOrHeadline(u.oldText)
+	c.selectVnode(u.p)
+#@nonl
+#@-node:ekr.20031218072017.2047:<< undo typing cases >>
+#@+node:ekr.20031218072017.1493:undoRedoText
+# Handle text undo and redo.
+# The terminology is for undo: converts _new_ text into _old_ text.
+
+def undoRedoText (self,p,
+    leading,trailing, # Number of matching leading & trailing lines.
+    oldMidLines,newMidLines, # Lists of unmatched lines.
+    oldNewlines,newNewlines, # Number of trailing newlines.
+    tag="undo", # "undo" or "redo"
+    undoType=None):
+
+    u = self ; c = u.c
+    assert(p == c.currentPosition())
+    v = p.v
+
+    << Incrementally update the Tk.Text widget >>
+    << Compute the result using v's body text >>
+    # g.trace(v)
+    # g.trace("old:",v.bodyString())
+    v.setTnodeText(result)
+    # g.trace("new:",v.bodyString())
+    << Get textResult from the Tk.Text widget >>
+    if textResult == result:
+        if undoType in ("Cut","Paste"):
+            # g.trace("non-incremental undo")
+            c.frame.body.recolor(p,incremental=False)
+        else:
+            # g.trace("incremental undo:",leading,trailing)
+            c.frame.body.recolor_range(p,leading,trailing)
+    else: # 11/19/02: # Rewrite the pane and do a full recolor.
+        if u.debug_print:
+            << print mismatch trace >>
+        # g.trace("non-incremental undo")
+        p.setBodyStringOrPane(result)
+#@nonl
+#@+node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+# Only update the changed lines.
+mid_text = string.join(oldMidLines,'\n')
+new_mid_len = len(newMidLines)
+# Maybe this could be simplified, and it is good to treat the "end" with care.
+if trailing == 0:
+    c.frame.body.deleteLine(leading)
+    if leading > 0:
+        c.frame.body.insertAtEnd('\n')
+    c.frame.body.insertAtEnd(mid_text)
+else:
+    if new_mid_len > 0:
+        c.frame.body.deleteLines(leading,new_mid_len)
+    elif leading > 0:
+        c.frame.body.insertAtStartOfLine(leading,'\n')
+    c.frame.body.insertAtStartOfLine(leading,mid_text)
+# Try to end the Tk.Text widget with oldNewlines newlines.
+# This may be off by one, and we don't care because
+# we never use body text to compute undo results!
+s = c.frame.body.getAllText()
+newlines = 0 ; i = len(s) - 1
+while i >= 0 and s[i] == '\n':
+    newlines += 1 ; i -= 1
+while newlines > oldNewlines:
+    c.frame.body.deleteLastChar()
+    newlines -= 1
+if oldNewlines > newlines:
+    c.frame.body.insertAtEnd('\n'*(oldNewlines-newlines))
+#@nonl
+#@-node:ekr.20031218072017.1494:<< Incrementally update the Tk.Text widget >>
+#@+node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+# Recreate the text using the present body text.
+body = v.bodyString()
+body = g.toUnicode(body,"utf-8")
+body_lines = body.split('\n')
+s = []
+if leading > 0:
+    s.extend(body_lines[:leading])
+if len(oldMidLines) > 0:
+    s.extend(oldMidLines)
+if trailing > 0:
+    s.extend(body_lines[-trailing:])
+s = string.join(s,'\n')
+# Remove trailing newlines in s.
+while len(s) > 0 and s[-1] == '\n':
+    s = s[:-1]
+# Add oldNewlines newlines.
+if oldNewlines > 0:
+    s = s + '\n' * oldNewlines
+result = s
+if u.debug_print:
+    print "body:  ",body
+    print "result:",result
+#@nonl
+#@-node:ekr.20031218072017.1495:<< Compute the result using v's body text >>
+#@+node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+textResult = c.frame.body.getAllText()
+
+if textResult != result:
+    # Remove the newline from textResult if that is the only difference.
+    if len(textResult) > 0 and textResult[:-1] == result:
+        textResult = result
+#@nonl
+#@-node:ekr.20031218072017.1496:<< Get textResult from the Tk.Text widget >>
+#@+node:ekr.20031218072017.1497:<< print mismatch trace >>
+print "undo mismatch"
+print "expected:",result
+print "actual  :",textResult
+#@nonl
+#@-node:ekr.20031218072017.1497:<< print mismatch trace >>
+#@-node:ekr.20031218072017.1493:undoRedoText
+#@-node:ekr.20040323084434:(Add granularity setting for undo)
+#@+node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040503160843:@directory-import (Generalization of @import)
+#@-node:EKR.20040603115948:New Features: 3
+#@+node:EKR.20040609155110:Docs, etc
+#@+node:ekr.20040323195916:Documentation
+@nocolor
+
+Update acknowledgements.
+
+Link to new scripting chapter.
+
+Convert FAQ to rST
+
+Convert all docs to rST?
+#@nonl
+#@+node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
+Using @ignore with @file-thin is asking for trouble.
+If you remove the @ignore and then save, you will lose data.
+
+How to recover the data:
+	- Read Outline.
+	- Remove @ignore
+	- Import derived file... 
+#@nonl
+#@-node:EKR.20040503091612:Dangers of @file-thin: converting to @file-thin
+#@+node:ekr.20031218072017.756:Document how to use pdb plugin
+#@-node:ekr.20031218072017.756:Document how to use pdb plugin
+#@-node:ekr.20040323195916:Documentation
+#@+node:EKR.20040608091618:Document @thin and @all on Leo's web site
+#@-node:EKR.20040608091618:Document @thin and @all on Leo's web site
+#@+node:EKR.20040610130112:Document @killcolor on Leo's web site
+#@-node:EKR.20040610130112:Document @killcolor on Leo's web site
+#@+node:EKR.20040610143355:Document Paste Retaining Clones
+#@-node:EKR.20040610143355:Document Paste Retaining Clones
+#@+node:EKR.20040609101343:Contribute to Python success stories
+#@+node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
+#@-node:EKR.20040609101343.1:@url http://python.oreilly.com/news/python_success_stories.pdf
+#@-node:EKR.20040609101343:Contribute to Python success stories
+#@+node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134.1:@url http://wingide.com/
+#@-node:EKR.20040607073134:Download and study wingide
+#@+node:EKR.20040611081747.1:Look at windows scripting
+------cut openleo.pys
+@path c:\bIn\pys\
+@lineending crnl
+@
+w04609p09:57:19 a pys to open leo and do something.
+you need the win32 extensions and you have to enable 
+the script engine. details how on google or on the win32 page.
+
+the sendkeys method can insert any test or control codes
+msdn or microsoft.com/scripting
+
+@c
+pypath = r'C:\c\py\Python233'
+py =  pypath + r'\python.exe -itOO '
+leosrc = r'c:\c\leo\leo4CVS233\src'
+name = "blank.leo"
+
+WshShell = WScript.CreateObject("WScript.Shell")
+
+#look like it comes up untitled 
+# if it cant find an existing leo of that name?
+
+WshShell.Run(py + leosrc + r'\Leo.py ../' + name)
+WScript.Sleep(4900) 
+
+wname = "untitled"
+
+WshShell.AppActivate(wname);  WScript.Sleep(2100)
+WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
+
+---end openleo.pys
+#@nonl
+#@-node:EKR.20040611081747.1:Look at windows scripting
+#@-node:EKR.20040609155110:Docs, etc
+#@+node:ekr.20040323195916.1:Tests
+@nocolor
+
+- Unit tests for node iterators.
+
+- Unit tests for undo/redo.
+
+** Test for memory leaks.
+
+- Test tangle/untangle commands.
+- Create unit tests for Find commands.
+
+- Test all changed code:
+	- Make a list of the code that has changed.
+
+- Run profiler on code.
+#@nonl
+#@-node:ekr.20040323195916.1:Tests
+#@-node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040609091327:To do: 4.3: configuration, plugins & translation
 #@+node:ekr.20031218072017.828:(Must do) Rewrite the config manager
 http://sourceforge.net/forum/message.php?msg_id=2329053
