@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6433" clone_windows="0"/>
 <globals body_outline_ratio="0.550925925926">
-	<global_window_position top="41" left="297" height="864" width="907"/>
+	<global_window_position top="25" left="111" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1431,9 +1431,9 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="MTV"><vh>Pmw dialog</vh>
-<v t="ekr.20041127231319"><vh>To do</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
+<v t="ekr.20041127231319" a="TV"><vh>To do</vh></v>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
@@ -1469,7 +1469,7 @@
 </v>
 <v t="ekr.20041128042051" a="M"><vh>value handlers &amp; callbacks...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041126104958" a="E"><vh>onAnyButton</vh></v>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
 <v t="ekr.20041128082112"><vh>revert</vh></v>
 <v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
 <v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
@@ -13223,11 +13223,28 @@ self.setterLabel = sc.component('label')
 
 - set dialog geometry.
 
-- Confirm if user quits a changed panel.
+- Disable window close box: just do nothing if button type is None.
+
+** Aha: use non-modal dialog.
+    - Much more convenient for user.
+    - Can write to c.log.
+    - Code must check for changed tree in underlying outline.
+    - Add refresh button: self.refresh recreates and redraws dialog's outline.
+    - Add check settings button:  checks for duplicate shortcuts, bad settings, etc.
+    - Create self.es, self.es_exception, self.error write to underlying log.
+
+- Don't create overall root node or non-existent files.
+
+** Replace injected ivars with filesInfoDict.
+    - Associate nodes with commanders and (open?) files.
 
 - Actually write settings to the proper @settings tree.
-    - Keep track of the filenames somehow.
-    - Find the proper node and update.</t>
+    - Use filesInfoDict to open file and find its settings tree.
+    - Find the proper node and update.
+        - writeSettingToHead(setting,kind,val,p)
+        - writeSettingToBody(setting,kind,val,p)
+
+- Move code into Leo's core:  remove old dialogParser class.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
 <t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
     
