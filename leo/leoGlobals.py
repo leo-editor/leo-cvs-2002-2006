@@ -1276,7 +1276,7 @@ def handleLeoHook(tag,**keywords):
 	elif c and c.hookFunction:
 		try:
 			title = c.frame.top.title()
-			return c.hookFunction(tag)
+			return c.hookFunction(tag,keywords)
 		except:
 			es("exception in hook function for " + title)
 	elif a.hookFunction:
