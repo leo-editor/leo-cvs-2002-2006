@@ -902,8 +902,9 @@ class baseColorizer:
                     if line and line[0] != '\\':
                         extras.append(line)
                 if extras:
-                    if not g.app.unitTesting and not g.app.batchMode:
-                        print "Found extra forth %s" % typ + ": " + " ".join(extras)
+                    if 0: # I find this annoying.  YMMV.
+                        if not g.app.unitTesting and not g.app.batchMode:
+                            print "Found extra forth %s" % typ + ": " + " ".join(extras)
                     lst.extend(extras)
             except IOError:
                 # print "Not found",path
