@@ -34,19 +34,10 @@
 <v t="ekr.20041119035704.3"><vh>@type type-name: base-type = [list of valid values]</vh></v>
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
+<v t="ekr.20041120180154" a="E"><vh>Types</vh>
+<v t="ekr.20041120181045.1" a="TV"><vh>@type orientation: string = vertical, horizontal</vh></v>
+</v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041120180154"><vh>Types</vh>
-<v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
-<v t="ekr.20041120180707"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
-<v t="ekr.20041120180707.1"><vh>@type family: string</vh></v>
-<v t="ekr.20041120180707.2"><vh>@type size: int</vh></v>
-<v t="ekr.20041120180707.3"><vh>@type slant: string = roman, italic</vh></v>
-<v t="ekr.20041120180707.4"><vh>@type weight: string = normal, bold</vh></v>
-</v>
-<v t="ekr.20041120180154.2"><vh>@type relief: string</vh></v>
-<v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
-</v>
-</v>
 <v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = True</vh></v>
@@ -149,7 +140,7 @@
 <v t="ekr.20041213105007" a="E"><vh>@page Fonts</vh>
 <v t="ekr.20041213105508"><vh>@font log font</vh></v>
 <v t="ekr.20041119034357.45" a="E"><vh>@font body text font</vh></v>
-<v t="ekr.20041119051246.4" a="ETV"><vh>@font outline font</vh></v>
+<v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20041213105007.1"><vh>Colors</vh>
 <v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
@@ -1023,18 +1014,6 @@ Autments the settings parser and the dialog creator with scripts.</t>
 
 This would be a natural way to implement gui-dependent settings.</t>
 <t tx="ekr.20041120180154"></t>
-<t tx="ekr.20041120180154.1"></t>
-<t tx="ekr.20041120180154.2">raised
-sunken
-flat
-ridge
-solid
-groove</t>
-<t tx="ekr.20041120180707"></t>
-<t tx="ekr.20041120180707.1"></t>
-<t tx="ekr.20041120180707.2"></t>
-<t tx="ekr.20041120180707.3"></t>
-<t tx="ekr.20041120180707.4"></t>
 <t tx="ekr.20041120181045">A float value restricted to the range 0.0 to 1.0.</t>
 <t tx="ekr.20041120181045.1"></t>
 <t tx="ekr.20041122163623">When looking at @x, Leo converts to lower case and removes minus signs.
