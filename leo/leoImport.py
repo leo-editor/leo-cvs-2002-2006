@@ -1664,7 +1664,7 @@ class leoImportCommands:
 				#@@c
 
 				i += 1 # skip the '='
-				function_start = None # We can't be in a function.
+				function_start = 0 # 3/23/03: (bug fix: was None) We can't be in a function.
 				lparen = None   # We have not seen an argument list yet.
 				if match(s,i,'='):
 					i = skip_braces(s,i)
