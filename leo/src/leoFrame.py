@@ -660,13 +660,15 @@ class leoTree:
 	"""The base class for the outline pane in Leo windows."""
 	
 	#@	@+others
-	#@+node:  tree.__init__
+	#@+node:  tree.__init__ (base class)
 	def __init__ (self,frame):
 		
 		self.frame = frame
 		self.c = c = frame.c
 	
-		self.edit_text_dict = {} # New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
+		self.edit_text_dict = {}
+			# New in 3.12: keys vnodes, values are edit_text (Tk.Text widgets)
+			# New in 4.2: keys are vnodes, values are pairs (p,Tk.Text).
 		
 		# "public" ivars: correspond to setters & getters.
 		self._dragging = false
@@ -677,7 +679,7 @@ class leoTree:
 		self.redrawCount = 0 # For traces
 		self.redrawScheduled = false # true if redraw scheduled.
 	#@nonl
-	#@-node:  tree.__init__
+	#@-node:  tree.__init__ (base class)
 	#@+node:Drawing
 	def drawIcon(self,v,x=None,y=None):
 		self.oops()
@@ -768,8 +770,9 @@ class leoTree:
 		return self._dragging
 	
 	def getEditTextDict(self,v):
-		return self.edit_text_dict.get(v)
-		
+		# New in 4.2: the default is an empty list.
+		return self.edit_text_dict.get(v,[])
+	
 	def editPosition(self):
 		return self._editPosition
 		
