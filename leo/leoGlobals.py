@@ -107,7 +107,7 @@ def choose(cond, a, b): # warning: evaluates all arguments
 	else: return b
 #@-body
 #@-node:4::choose
-#@+node:5::es, enl, ecnl
+#@+node:5:C=2:es, enl, ecnl
 #@+body
 def ecnl():
 	ecnls(1)
@@ -128,7 +128,7 @@ def es(s):
 	if s == None or len(s) == 0: return
 	log = app().log
 	if log:
-		log.put(s)
+		log.put(s) # No change needed for Unicode!
 		# 6/2/02: This logic will fail if log is None.
 		for ch in s:
 			if ch == '\n': log.es_newlines += 1
@@ -136,9 +136,8 @@ def es(s):
 		ecnl() # only valid here
 	else:
 		print "Null log:", s
-
 #@-body
-#@-node:5::es, enl, ecnl
+#@-node:5:C=2:es, enl, ecnl
 #@+node:6::print_stack
 #@+body
 def print_stack():

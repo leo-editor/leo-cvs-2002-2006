@@ -692,7 +692,7 @@ class colorizer:
 				if has_string and ch == '"' or ch == "'":
 					
 					#@<< handle string >>
-					#@+node:4:C=7:<< handle string >>
+					#@+node:4::<< handle string >>
 					#@+body
 					if language == python_language:
 						j, state = self.skip_python_string(s,i)
@@ -703,7 +703,7 @@ class colorizer:
 						body.tag_add("string", index(n,i), index(n,j))
 						i = j
 					#@-body
-					#@-node:4:C=7:<< handle string >>
+					#@-node:4::<< handle string >>
 
 				elif single_comment_start and match(s,i,single_comment_start):
 					
@@ -897,7 +897,7 @@ class colorizer:
 	#@+node:3::Multiline State Handlers
 	#@-node:3::Multiline State Handlers
 	#@-node:4:C=4:colorizeAnyLanguage
-	#@+node:5:C=8:scanColorDirectives
+	#@+node:5:C=7:scanColorDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for @color and @nocolor directives.
@@ -942,7 +942,7 @@ class colorizer:
 		# trace(`language`)
 		return language
 	#@-body
-	#@-node:5:C=8:scanColorDirectives
+	#@-node:5:C=7:scanColorDirectives
 	#@+node:6::color.schedule
 	#@+body
 	def schedule(self,v,body):
@@ -986,7 +986,7 @@ class colorizer:
 		return word
 	#@-body
 	#@-node:7::getCwebWord
-	#@+node:8:C=9:updateSyntaxColorer
+	#@+node:8:C=8:updateSyntaxColorer
 	#@+body
 	# Returns (flag,language)
 	# flag is true unless an unambiguous @nocolor is seen.
@@ -999,7 +999,7 @@ class colorizer:
 		return flag,language
 
 	#@-body
-	#@-node:8:C=9:updateSyntaxColorer
+	#@-node:8:C=8:updateSyntaxColorer
 	#@+node:9::useSyntaxColoring
 	#@+body
 	# Return true if v unless v is unambiguously under the control of @nocolor.
@@ -1048,7 +1048,7 @@ class colorizer:
 
 	#@-body
 	#@-node:1::skip_id
-	#@+node:2:C=10:skip_python_string
+	#@+node:2::skip_python_string
 	#@+body
 	def skip_python_string(self,s,i):
 	
@@ -1062,8 +1062,8 @@ class colorizer:
 		else:
 			return self.skip_string(s,i)
 	#@-body
-	#@-node:2:C=10:skip_python_string
-	#@+node:3:C=11:skip_string
+	#@-node:2::skip_python_string
+	#@+node:3::skip_string
 	#@+body
 	def skip_string(self,s,i):
 	
@@ -1085,12 +1085,12 @@ class colorizer:
 		return i,normalState
 
 	#@-body
-	#@-node:3:C=11:skip_string
+	#@-node:3::skip_string
 	#@-node:10::Utils
 	#@-others
 #@-body
 #@-node:5::class colorizer
-#@+node:6:C=12:class leoColorPanel
+#@+node:6:C=9:class leoColorPanel
 #@+body
 class leoColorPanel:
 
@@ -1205,7 +1205,7 @@ class leoColorPanel:
 		np.run(name,color)
 	#@-body
 	#@-node:4::showColorName
-	#@+node:5:C=13:colorPanel.onOk, onCancel, onRevert
+	#@+node:5:C=10:colorPanel.onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		# Update the revert colors
@@ -1243,7 +1243,7 @@ class leoColorPanel:
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:5:C=13:colorPanel.onOk, onCancel, onRevert
+	#@-node:5:C=10:colorPanel.onOk, onCancel, onRevert
 	#@+node:6::update
 	#@+body
 	def update (self,name,val):
@@ -1271,7 +1271,7 @@ class leoColorPanel:
 	#@-node:6::update
 	#@-others
 #@-body
-#@-node:6:C=12:class leoColorPanel
+#@-node:6:C=9:class leoColorPanel
 #@+node:7::class leoColorNamePanel
 #@+body
 class leoColorNamePanel:

@@ -46,7 +46,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import Tkinter
+import Tkinter, types
 
 # Abbreviations
 set_undo_params = true ; dont_set_undo_params = false
@@ -231,26 +231,33 @@ class LeoFind:
 		# trace("__init__", "find.init")
 	#@-body
 	#@-node:3:C=3:find.init
-	#@+node:4::find.set_ivars
+	#@+node:4:C=4:find.set_ivars
 	#@+body
 	def set_ivars (self,c):
 	
 		for var in ivars:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
 	
-		c.find_text = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		c.change_text = self.change_text.get("1.0","end - 1c") # Remove trailing newline
+		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
+		if type(s) == types.UnicodeType:
+			s = s.encode('utf-8')
+		c.find_text = s
+	
+		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
+		if type(s) == types.UnicodeType:
+			s = s.encode('utf-8')
+		c.change_text = s
 
 	#@-body
-	#@-node:4::find.set_ivars
-	#@+node:5:C=4:resetWrap
+	#@-node:4:C=4:find.set_ivars
+	#@+node:5:C=5:resetWrap
 	#@+body
 	def resetWrap (self,event=None):
 	
 		self.wrapVnode = None
 		self.onlyVnode = None
 	#@-body
-	#@-node:5:C=4:resetWrap
+	#@-node:5:C=5:resetWrap
 	#@+node:6::OnCloseFindEvent
 	#@+body
 	def OnCloseFindEvent(self):
@@ -258,7 +265,7 @@ class LeoFind:
 		self.top.withdraw()
 	#@-body
 	#@-node:6::OnCloseFindEvent
-	#@+node:7:C=5:Top Level Commands
+	#@+node:7:C=6:Top Level Commands
 	#@+node:1::changeButton
 	#@+body
 	
@@ -383,9 +390,9 @@ class LeoFind:
 		c.setIvarsFromFind()
 	#@-body
 	#@-node:11::setup_command
-	#@-node:7:C=5:Top Level Commands
-	#@+node:8:C=6:Utilities
-	#@+node:1:C=7:batchChange
+	#@-node:7:C=6:Top Level Commands
+	#@+node:8:C=7:Utilities
+	#@+node:1:C=8:batchChange
 	#@+body
 	#@+at
 	#  This routine performs a single batch change operation, updating the head or body string of v and leaving the result in 
@@ -450,7 +457,7 @@ class LeoFind:
 			c.setChanged(true)
 		v.setDirty()
 	#@-body
-	#@-node:1:C=7:batchChange
+	#@-node:1:C=8:batchChange
 	#@+node:2::change
 	#@+body
 	def change(self):
@@ -460,7 +467,7 @@ class LeoFind:
 			self.changeSelection()
 	#@-body
 	#@-node:2::change
-	#@+node:3:C=8:changeAll
+	#@+node:3:C=9:changeAll
 	#@+body
 	def changeAll(self):
 	
@@ -492,8 +499,8 @@ class LeoFind:
 		es("changed: " + `count`)
 		self.restore(data)
 	#@-body
-	#@-node:3:C=8:changeAll
-	#@+node:4:C=9:changeSelection
+	#@-node:3:C=9:changeAll
+	#@+node:4:C=10:changeSelection
 	#@+body
 	# Replace selection with c.change_text.
 	# If no selection, insert c.change_text at the cursor.
@@ -533,7 +540,7 @@ class LeoFind:
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		return true
 	#@-body
-	#@-node:4:C=9:changeSelection
+	#@-node:4:C=10:changeSelection
 	#@+node:5::changeThenFind
 	#@+body
 	def changeThenFind(self):
@@ -570,7 +577,7 @@ class LeoFind:
 		self.restore(data)
 	#@-body
 	#@-node:6::findAll
-	#@+node:7::findNext
+	#@+node:7:C=11:findNext
 	#@+body
 	def findNext(self,initFlag = true):
 	
@@ -595,10 +602,11 @@ class LeoFind:
 			if self.wrapping:
 				es("end of wrapped search")
 			else:
-				es("not found: " + `c.find_text`)
+				# 8/3/02: don't put c.find_text in backquotes: that shows Unicode escape sequences.
+				es("not found: " + "'" + c.find_text + "'")
 			self.restore(data)
 	#@-body
-	#@-node:7::findNext
+	#@-node:7:C=11:findNext
 	#@+node:8::findNextMatch
 	#@+body
 	# Resumes the search where it left off.
@@ -918,7 +926,7 @@ class LeoFind:
 		return (self.in_headline,v,t,insert,start,end)
 	#@-body
 	#@-node:8::save
-	#@+node:9:C=10:showSuccess
+	#@+node:9:C=12:showSuccess
 	#@+body
 	#@+at
 	#  This is used for displaying the final result.  It returns self.dummy_vnode, v.edit_text or c.body with "insert" and "sel" 
@@ -955,9 +963,9 @@ class LeoFind:
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
 	#@-body
-	#@-node:9:C=10:showSuccess
+	#@-node:9:C=12:showSuccess
 	#@-node:11::Initializing & finalizing & selecting
-	#@-node:8:C=6:Utilities
+	#@-node:8:C=7:Utilities
 	#@-others
 #@-body
 #@-node:0::@file leoFind.py

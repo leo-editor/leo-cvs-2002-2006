@@ -19,7 +19,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoColor
-import os, string, Tkinter, tkFont, traceback
+import os, string, Tkinter, tkFont, traceback, types
 
 
 #@<< about drawing and events >>
@@ -895,8 +895,15 @@ class leoTree:
 			trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
 		# Ignore characters that don't change the body text.
 		s = c.body.get("1.0", "end")
+		
+		# This may be all that is needed to support Unicode !!
+		if type(s) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding)
+			
 		if len(s) > 0 and s[-1]=='\n': s = s[:-1]
-		if s == v.bodyString(): return
+		body = v.bodyString()
+		if s == body: return
 		# trace(`ch`)
 		# trace(`ch` + ":" + `s`)
 		# trace(c.body.index("insert")+":"+c.body.get("insert linestart","insert lineend"))
@@ -1006,6 +1013,9 @@ class leoTree:
 		# remove all newlines and update the vnode
 		s = string.replace(s,'\n','')
 		s = string.replace(s,'\r','')
+		if type(s) == types.UnicodeType:
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding)
 		if not s: s = ""
 		changed = s != v.headString()
 		done = ch and (ch == '\r' or ch == '\n')

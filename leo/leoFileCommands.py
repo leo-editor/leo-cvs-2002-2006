@@ -147,7 +147,7 @@ class fileCommands:
 	#@-body
 	#@-node:2::finishPaste (creating join lists could be a problem)
 	#@+node:3::get routines
-	#@+node:1::get & match (basic)
+	#@+node:1:C=1:get & match (basic)(leoFileCommands)
 	#@+body
 	def getBool (self):
 		self.skipWs() # guarantees at least one more character.
@@ -230,7 +230,7 @@ class fileCommands:
 		else:
 			return false
 	#@-body
-	#@-node:1::get & match (basic)
+	#@-node:1:C=1:get & match (basic)(leoFileCommands)
 	#@+node:2::getClipboardHeader
 	#@+body
 	def getClipboardHeader (self):
@@ -279,7 +279,7 @@ class fileCommands:
 			return self.xmlUnescape(self.fileBuffer[i:j])
 	#@-body
 	#@-node:4::getEscapedString
-	#@+node:5:C=1:getFindPanelSettings
+	#@+node:5:C=2:getFindPanelSettings
 	#@+body
 	def getFindPanelSettings (self):
 	
@@ -327,8 +327,8 @@ class fileCommands:
 		# Update the settings immediately.
 		app().findFrame.init(c)
 	#@-body
-	#@-node:5:C=1:getFindPanelSettings
-	#@+node:6:C=2:getGlobals
+	#@-node:5:C=2:getFindPanelSettings
+	#@+node:6:C=3:getGlobals
 	#@+body
 	def getGlobals (self):
 	
@@ -355,8 +355,8 @@ class fileCommands:
 	
 		self.getTag("</globals>")
 	#@-body
-	#@-node:6:C=2:getGlobals
-	#@+node:7:C=3:getLeoFile (Leo2)
+	#@-node:6:C=3:getGlobals
+	#@+node:7:C=4:getLeoFile (Leo2)
 	#@+body
 	def getLeoFile (self,frame,atFileNodesFlag):
 	
@@ -427,7 +427,7 @@ class fileCommands:
 		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
-	#@-node:7:C=3:getLeoFile (Leo2)
+	#@-node:7:C=4:getLeoFile (Leo2)
 	#@+node:8::getLeoHeader
 	#@+body
 	def getLeoHeader (self):
@@ -451,7 +451,7 @@ class fileCommands:
 				break
 	#@-body
 	#@-node:8::getLeoHeader
-	#@+node:9:C=4:getLeoOutline (from clipboard)
+	#@+node:9:C=5:getLeoOutline (from clipboard)
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
 	def getLeoOutline (self,s):
@@ -475,7 +475,7 @@ class fileCommands:
 		self.usingClipboard = false
 		return v
 	#@-body
-	#@-node:9:C=4:getLeoOutline (from clipboard)
+	#@-node:9:C=5:getLeoOutline (from clipboard)
 	#@+node:10::getPosition
 	#@+body
 	def getPosition (self):
@@ -495,7 +495,7 @@ class fileCommands:
 		return top, left, height, width
 	#@-body
 	#@-node:10::getPosition
-	#@+node:11:C=5:getPrefs
+	#@+node:11:C=6:getPrefs
 	#@+body
 	def getPrefs (self):
 	
@@ -527,7 +527,7 @@ class fileCommands:
 				self.getDquote()
 				
 				#@<< check for syntax coloring prefs >>
-				#@+node:1:C=6:<< check for syntax coloring prefs >>
+				#@+node:1:C=7:<< check for syntax coloring prefs >>
 				#@+body
 				# Must match longer tags before short prefixes.
 				language = c_language # default
@@ -557,7 +557,7 @@ class fileCommands:
 				
 				c.target_language = language
 				#@-body
-				#@-node:1:C=6:<< check for syntax coloring prefs >>
+				#@-node:1:C=7:<< check for syntax coloring prefs >>
 
 			elif self.matchTag("use_header_flag="):
 				self.getDquote() ; c.use_header_flag = self.getBool() ; self.getDquote()
@@ -580,7 +580,7 @@ class fileCommands:
 		if config.configsExist:
 			config.setCommandsIvars(c)
 	#@-body
-	#@-node:11:C=5:getPrefs
+	#@-node:11:C=6:getPrefs
 	#@+node:12::getSize
 	#@+body
 	def getSize (self):
@@ -718,7 +718,7 @@ class fileCommands:
 		self.getTag("</vnodes>")
 	#@-body
 	#@-node:17::getVnodes
-	#@+node:18:C=7:getXmlVersionTag
+	#@+node:18:C=8:getXmlVersionTag
 	#@+body
 	#@+at
 	#  Parses the xml version string, and sets the xml version string.
@@ -740,7 +740,7 @@ class fileCommands:
 		self.getTag(prolog_postfix_string)
 
 	#@-body
-	#@-node:18:C=7:getXmlVersionTag
+	#@-node:18:C=8:getXmlVersionTag
 	#@+node:19::skipWs
 	#@+body
 	def skipWs (self):
@@ -794,7 +794,7 @@ class fileCommands:
 		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
 	#@-body
 	#@-node:5::readAtFileNodes
-	#@+node:6:C=8:fileCommands.readOutlineOnly
+	#@+node:6:C=9:fileCommands.readOutlineOnly
 	#@+body
 	def readOutlineOnly (self,file,fileName):
 	
@@ -804,7 +804,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=9:<< Set the default directory >>
+		#@+node:1:C=10:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -817,7 +817,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=9:<< Set the default directory >>
+		#@-node:1:C=10:<< Set the default directory >>
 
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(self.frame, false) # readAtFileNodes
@@ -834,8 +834,8 @@ class fileCommands:
 		self.fileBuffer = ""
 		return ok
 	#@-body
-	#@-node:6:C=8:fileCommands.readOutlineOnly
-	#@+node:7:C=10:fileCommands.open
+	#@-node:6:C=9:fileCommands.readOutlineOnly
+	#@+node:7:C=11:fileCommands.open
 	#@+body
 	def open(self,file,fileName):
 	
@@ -846,7 +846,7 @@ class fileCommands:
 		self.fileIndex = 0
 		
 		#@<< Set the default directory >>
-		#@+node:1:C=9:<< Set the default directory >>
+		#@+node:1:C=10:<< Set the default directory >>
 		#@+body
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
@@ -859,7 +859,7 @@ class fileCommands:
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-		#@-node:1:C=9:<< Set the default directory >>
+		#@-node:1:C=10:<< Set the default directory >>
 
 		# esDiffTime("open:read all", t)
 		es("reading: " + fileName)
@@ -880,7 +880,7 @@ class fileCommands:
 		# esDiffTime("open: exit",t)
 		return ok
 	#@-body
-	#@-node:7:C=10:fileCommands.open
+	#@-node:7:C=11:fileCommands.open
 	#@+node:8::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
@@ -987,20 +987,22 @@ class fileCommands:
 		self.put("/>") ; self.put_nl()
 	#@-body
 	#@-node:1::putClipboardHeader
-	#@+node:2:C=11:put (basic)
+	#@+node:2:C=12:put (basic)(leoFileCommands)
 	#@+body
-	# All output eventually comes here
+	# All output eventually comes here.
 	def put (self,s):
 		if s and len(s) > 0:
 			if self.outputFile: # Write to a file
-				try: # 5/27/02: We can get Unicode strings here via cut/paste.
+				try:
 					try:
 						self.outputFile.write(s)
 					except UnicodeError:
-						self.outputFile.write(`s`)
+						xml_encoding = app().config.xml_version_string
+						s = s.encode(xml_encoding)
+						self.outputFile.write(s)
 				except:
 					traceback.print_exc()
-					es("error writing:" + `s`)
+					es("exception writing:" + `s`)
 			elif self.outputString != None: # Write to a string
 				self.outputString += s
 	
@@ -1039,7 +1041,7 @@ class fileCommands:
 			self.put("\t")
 			n -= 1
 	#@-body
-	#@-node:2:C=11:put (basic)
+	#@-node:2:C=12:put (basic)(leoFileCommands)
 	#@+node:3::putEscapedString
 	#@+body
 	#@+at
@@ -1054,7 +1056,7 @@ class fileCommands:
 			self.put(self.xmlEscape(s))
 	#@-body
 	#@-node:3::putEscapedString
-	#@+node:4:C=12:putFindSettings
+	#@+node:4:C=13:putFindSettings
 	#@+body
 	def putFindSettings (self):
 	
@@ -1096,7 +1098,7 @@ class fileCommands:
 		#
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
-	#@-node:4:C=12:putFindSettings
+	#@-node:4:C=13:putFindSettings
 	#@+node:5::putGlobals
 	#@+body
 	def putGlobals (self):
@@ -1116,7 +1118,7 @@ class fileCommands:
 		self.put(">") ; self.put_nl()
 		
 		#@<< put the position of this frame >>
-		#@+node:2:C=13:<< put the position of this frame >>
+		#@+node:2:C=14:<< put the position of this frame >>
 		#@+body
 		width,height,left,top = get_window_info(self.frame.top)
 		# print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
@@ -1129,7 +1131,7 @@ class fileCommands:
 		self.put(" width=") ; self.put_in_dquotes(`width`)
 		self.put("/>") ; self.put_nl()
 		#@-body
-		#@-node:2:C=13:<< put the position of this frame >>
+		#@-node:2:C=14:<< put the position of this frame >>
 
 		
 		#@<< put the position of the log window >>
@@ -1183,7 +1185,7 @@ class fileCommands:
 		return s
 	#@-body
 	#@-node:7::putLeoOutline (to clipboard)
-	#@+node:8:C=14:putPrefs
+	#@+node:8:C=15:putPrefs
 	#@+body
 	def putPrefs (self):
 	
@@ -1252,8 +1254,8 @@ class fileCommands:
 
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-	#@-node:8:C=14:putPrefs
-	#@+node:9:C=15:putProlog
+	#@-node:8:C=15:putPrefs
+	#@+node:9:C=16:putProlog
 	#@+body
 	def putProlog (self):
 	
@@ -1276,7 +1278,7 @@ class fileCommands:
 			self.put("<leo_file>") ; self.put_nl()
 
 	#@-body
-	#@-node:9:C=15:putProlog
+	#@-node:9:C=16:putProlog
 	#@+node:10::putPostlog
 	#@+body
 	def putPostlog (self):
@@ -1506,23 +1508,28 @@ class fileCommands:
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
 	#@-node:10::writeOutlineOnly
-	#@+node:11:C=16:write_LEO_file
+	#@+node:11:C=17:write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
 		c=self.commands
 		
-		try:
-			# Leo2: write all @file nodes and set orphan bits.
-			if not outlineOnlyFlag:
+		if not outlineOnlyFlag:
+			try:
+				# Leo2: write all @file nodes and set orphan bits.
 				at = c.atFileCommands
 				at.writeAll(c.rootVnode(), false) # forceFlag
+			except:
+				es("exception writing derived files")
+				traceback.print_exc()
+				return false
+	
+		try:
 			
 			#@<< create backup file >>
 			#@+node:1::<< create backup file >>
 			#@+body
 			# rename fileName to fileName.bak if fileName exists.
-			
 			if os.path.exists(fileName):
 				try:
 					backupName = os.path.join(app().loadDir,fileName)
@@ -1551,7 +1558,7 @@ class fileCommands:
 					try:
 						os.unlink(backupName)
 					except:
-						es("error deleting " + backupName)
+						es("exception deleting " + backupName)
 						traceback.print_exc()
 
 				#@-body
@@ -1619,7 +1626,7 @@ class fileCommands:
 				try:
 					os.unlink(backupName)
 				except:
-					es("error deleting " + backupName)
+					es("exception deleting " + backupName)
 					traceback.print_exc()
 
 			#@-body
@@ -1653,7 +1660,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:11:C=16:write_LEO_file
+	#@-node:11:C=17:write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

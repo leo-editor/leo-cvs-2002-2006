@@ -1598,7 +1598,7 @@ class atFile:
 	#@-node:7::scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1:C=10:os, onl, etc.
+	#@+node:1:C=10:os, onl, etc. (leoAtFile)
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -1615,12 +1615,21 @@ class atFile:
 			self.newline_pending = false
 			s = "\n" + s
 		if self.outputFile:
-			self.outputFile.write(s)
+			try:
+				try:
+					self.outputFile.write(s)
+				except UnicodeError: # This might never happen.
+					xml_encoding = app().config.xml_version_string
+					s = s.encode(xml_encoding)
+					self.outputFile.write(s)
+			except:
+				traceback.print_exc()
+				es("exception writing:" + `s`)
 	
 	def otabs(self,n):
 		self.os('\t' * abs(n))
 	#@-body
-	#@-node:1:C=10:os, onl, etc.
+	#@-node:1:C=10:os, onl, etc. (leoAtFile)
 	#@+node:2::putBody
 	#@+body
 	#@+at
@@ -2053,152 +2062,176 @@ class atFile:
 		self.root = root
 		c.endEditing() # Capture the current headline.
 		self.targetFileName = root.atFileNodeName()
-		
-		#@<< Open files.  Set orphan and dirty flags and return on errors >>
-		#@+node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
-		#@+body
 		try:
-			self.scanAllDirectives(root)
-			valid = self.errors == 0
-		except:
-			es("exception in atFile.scanAllDirectives")
-			traceback.print_exc()
-			valid = false
-		
-		if valid:
-			try:
-				fn = root.atFileNodeName()
-				self.shortFileName = fn # name to use in status messages.
-				self.targetFileName = os.path.join(self.default_directory,fn)
-				self.targetFileName = os.path.normpath(self.targetFileName)
-				path = os.path.dirname(self.targetFileName)
-				if len(path) > 0:
-					valid = os.path.exists(path)
-					if not valid:
-						self.writeError("Path does not exist: " + path)
-				else:
-					valid = false
-			except:
-				es("exception creating path:" + fn)
-				traceback.print_exc()
-				valid = false
-		
-		if valid:
-			try:
-				self.outputFileName = self.targetFileName + ".tmp"
-				self.outputFile = open(self.outputFileName, 'w')
-				valid = self.outputFile != None
-				if not valid:
-					self.writeError("Can not open " + self.outputFileName)
-			except:
-				es("exception opening:" + self.outputFileName)
-				traceback.print_exc()
-				valid = false
-		
-		if not valid:
-			root.setOrphan()
-			root.setDirty()
-			return
-		#@-body
-		#@-node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
-
-		# unvisited nodes will be orphans.
-		root.clearVisitedInTree()
-		next = root.nodeAfterTree()
-		self.updateCloneIndices(root, next)
-		
-		#@<< put all @first lines in root >>
-		#@+node:2::<< put all @first lines in root >>
-		#@+body
-		#@+at
-		#  Write any @first lines to ms.  These lines are also converted to @verbatim lines, so the read logic simply ignores 
-		# these lines.
-
-		#@-at
-		#@@c
-		
-		s = root.t.bodyString
-		tag = "@first"
-		i = 0
-		while match(s,i,"@first"):
-			i += len(tag)
-			i = skip_ws(s,i)
-			j = i
-			i = skip_to_end_of_line(s,i)
-			if i > j:
-				line = s[j:i]
-				self.os(line) ; self.onl()
-			i = skip_nl(s,i)
-		#@-body
-		#@-node:2::<< put all @first lines in root >>
-
-		if 1: # write the entire file
-			self.putOpenLeoSentinel("@+leo")
-			self.putOpenNodeSentinel(root)
-			self.putBodyPart(root)
-			root.setVisited()
-			self.putCloseNodeSentinel(root)
-			self.putSentinel("@-leo")
-		if self.outputFile:
-			if self.suppress_newlines and self.newline_pending:
-				self.newline_pending = false
-				self.onl() # Make sure file ends with a newline.
-			self.outputFile.flush()
-			self.outputFile.close()
-			self.outputFile = None
-		
-		#@<< Warn about @ignored and orphans >>
-		#@+node:3::<< Warn about @ignored and orphans  >>
-		#@+body
-		next = root.nodeAfterTree()
-		v = root
-		while v and v != next:
-			if not v.isVisited():
-				self.writeError("Orphan node:  " + v.headString())
-			if v.isAtIgnoreNode():
-				self.writeError("@ignore node: " + v.headString())
-			v = v.threadNext()
-		#@-body
-		#@-node:3::<< Warn about @ignored and orphans  >>
-
-		if self.errors > 0 or self.root.isOrphan():
-			root.setOrphan()
-			root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
-			os.remove(self.outputFileName) # Delete the temp file.
-		else:
-			root.clearOrphan()
-			root.clearDirty()
 			
-			#@<< Replace the target with the temp file if different >>
-			#@+node:4::<< Replace the target with the temp file if different >>
+			#@<< Open files.  Set orphan and dirty flags and return on errors >>
+			#@+node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
 			#@+body
-			if os.path.exists(self.targetFileName):
-				if filecmp.cmp(self.outputFileName, self.targetFileName):
-					try: # Just delete the temp file.
-						os.remove(self.outputFileName)
-					except:
-						es("exception deleting:" + self.outputFileName)
-						traceback.print_exc()
-					es("unchanged: " + self.shortFileName)
+			try:
+				self.scanAllDirectives(root)
+				valid = self.errors == 0
+			except:
+				es("exception in atFile.scanAllDirectives")
+				traceback.print_exc()
+				valid = false
+			
+			if valid:
+				try:
+					fn = root.atFileNodeName()
+					self.shortFileName = fn # name to use in status messages.
+					self.targetFileName = os.path.join(self.default_directory,fn)
+					self.targetFileName = os.path.normpath(self.targetFileName)
+					path = os.path.dirname(self.targetFileName)
+					if len(path) > 0:
+						valid = os.path.exists(path)
+						if not valid:
+							self.writeError("Path does not exist: " + path)
+					else:
+						valid = false
+				except:
+					es("exception creating path:" + fn)
+					traceback.print_exc()
+					valid = false
+			
+			if valid:
+				try:
+					self.outputFileName = self.targetFileName + ".tmp"
+					self.outputFile = open(self.outputFileName, 'w')
+					valid = self.outputFile != None
+					if not valid:
+						self.writeError("Can not open " + self.outputFileName)
+				except:
+					es("exception opening:" + self.outputFileName)
+					traceback.print_exc()
+					valid = false
+			
+			if not valid:
+				root.setOrphan()
+				root.setDirty()
+				return
+			#@-body
+			#@-node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
+
+			# unvisited nodes will be orphans.
+			root.clearVisitedInTree()
+			next = root.nodeAfterTree()
+			self.updateCloneIndices(root, next)
+			
+			#@<< put all @first lines in root >>
+			#@+node:2::<< put all @first lines in root >>
+			#@+body
+			#@+at
+			#  Write any @first lines to ms.  These lines are also converted to @verbatim lines, so the read logic simply ignores 
+			# these lines.
+
+			#@-at
+			#@@c
+			
+			s = root.t.bodyString
+			tag = "@first"
+			i = 0
+			while match(s,i,"@first"):
+				i += len(tag)
+				i = skip_ws(s,i)
+				j = i
+				i = skip_to_end_of_line(s,i)
+				if i > j:
+					line = s[j:i]
+					self.os(line) ; self.onl()
+				i = skip_nl(s,i)
+			#@-body
+			#@-node:2::<< put all @first lines in root >>
+
+			if 1: # write the entire file
+				self.putOpenLeoSentinel("@+leo")
+				self.putOpenNodeSentinel(root)
+				self.putBodyPart(root)
+				root.setVisited()
+				self.putCloseNodeSentinel(root)
+				self.putSentinel("@-leo")
+			if self.outputFile:
+				if self.suppress_newlines and self.newline_pending:
+					self.newline_pending = false
+					self.onl() # Make sure file ends with a newline.
+				self.outputFile.flush()
+				self.outputFile.close()
+				self.outputFile = None
+			
+			#@<< Warn about @ignored and orphans >>
+			#@+node:3::<< Warn about @ignored and orphans  >>
+			#@+body
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				if not v.isVisited():
+					self.writeError("Orphan node:  " + v.headString())
+				if v.isAtIgnoreNode():
+					self.writeError("@ignore node: " + v.headString())
+				v = v.threadNext()
+			#@-body
+			#@-node:3::<< Warn about @ignored and orphans  >>
+
+			if self.errors > 0 or self.root.isOrphan():
+				root.setOrphan()
+				root.setDirty() # 2/9/02: make _sure_ we try to rewrite this file.
+				os.remove(self.outputFileName) # Delete the temp file.
+			else:
+				root.clearOrphan()
+				root.clearDirty()
+				
+				#@<< Replace the target with the temp file if different >>
+				#@+node:4::<< Replace the target with the temp file if different >>
+				#@+body
+				assert(self.outputFile == None)
+				
+				if os.path.exists(self.targetFileName):
+					if filecmp.cmp(self.outputFileName, self.targetFileName):
+						try: # Just delete the temp file.
+							os.remove(self.outputFileName)
+						except:
+							es("exception deleting:" + self.outputFileName)
+							traceback.print_exc()
+						es("unchanged: " + self.shortFileName)
+					else:
+						try: # Replace target file with temp file.
+							os.remove(self.targetFileName)
+							os.rename(self.outputFileName, self.targetFileName)
+							es("writing: " + self.shortFileName)
+						except:
+							self.writeError("exception removing and renaming:" + self.outputFileName +
+								" to " + self.targetFileName)
+							traceback.print_exc()
 				else:
-					try: # Replace target file with temp file.
-						os.remove(self.targetFileName)
+					try:
 						os.rename(self.outputFileName, self.targetFileName)
-						es("writing: " + self.shortFileName)
+						es("creating: " + self.targetFileName)
 					except:
-						self.writeError("exception removing and renaming:" + self.outputFileName +
+						self.writeError("exception renaming:" + self.outputFileName +
 							" to " + self.targetFileName)
 						traceback.print_exc()
-			else:
-				try:
-					os.rename(self.outputFileName, self.targetFileName)
-					es("creating: " + self.targetFileName)
+				#@-body
+				#@-node:4::<< Replace the target with the temp file if different >>
+
+		except:
+			
+			#@<< handle all exceptions during the write >>
+			#@+node:5::<< handle all exceptions during the write >>
+			#@+body
+			es("exception writing:" + self.targetFileName)
+			traceback.print_exc()
+			
+			if self.outputFile: # 8/2/02
+				self.outputFile.close()
+				self.outputFile = None
+			
+			if self.outputFileName != None:
+				try: # Just delete the temp file.
+					os.remove(self.outputFileName)
 				except:
-					self.writeError("exception renaming:" + self.outputFileName +
-						" to " + self.targetFileName)
+					es("exception deleting:" + self.outputFileName)
 					traceback.print_exc()
 			#@-body
-			#@-node:4::<< Replace the target with the temp file if different >>
+			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
 	#@-node:9:C=17:atFile.write
 	#@+node:10::writeAll

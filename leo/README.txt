@@ -1,3 +1,12 @@
+leo.py 3.3                                    August 3, 2002
+
+This version of Leo:
+
+- Adds support for Unicode.
+- Improved the Import commands.
+- Fixed numerous bugs related to configuration settings.
+- Fixed the "Javadoc" bug and several latent bugs related to it.
+
 leo.py 3.2                                     July 30, 2002
 
 This version generalizes the @others directive, improves the Import command and fixes several bugs.  See the children of this node for full details.
