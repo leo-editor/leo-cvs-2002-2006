@@ -50,6 +50,12 @@ default_colors_dict = {
 #@nonl
 #@-node:ekr.20031218072017.2795:<< define colorizer constants >>
 #@nl
+#@<< define global colorizer data >>
+#@+node:EKR.20040623090054:<< define global colorizer data >>
+case_insensitiveLanguages = []
+#@nonl
+#@-node:EKR.20040623090054:<< define global colorizer data >>
+#@nl
 
 #@+others
 #@+node:ekr.20031218072017.2796:class colorizer
@@ -691,6 +697,7 @@ class baseColorizer:
         self.single_comment_start = None
         self.block_comment_start = None
         self.block_comment_end = None
+        self.case_sensitiveLanguage = True
         self.has_string = None
         self.string_delims = ("'",'"')
         self.has_pp_directives = None
@@ -959,6 +966,7 @@ class baseColorizer:
             
             # A strong case can be made for making this code as fast as possible.
             # Whether this is compatible with general language descriptions remains to be seen.
+            self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
             self.has_string = self.language != "plain"
             if self.language == "plain":
                 self.string_delims = ()
@@ -1500,7 +1508,7 @@ class baseColorizer:
         j = self.skip_id(s,i+1,chars="-") # to handle @root-code, @root-doc
         word = s[i:j]
         word = word.lower()
-        if i != 0 and word != "@others":
+        if i != 0 and word not in ("@others","@all"):
             word = "" # can't be a Leo keyword, even if it looks like it.
         
         # 7/8/02: don't color doc parts in plain text.
@@ -1611,6 +1619,9 @@ class baseColorizer:
                     j = self.skip_id(s,i)
                 
                 word = s[i:j]
+                if not self.case_sensitiveLanguage:
+                    word = word.lower()
+                
                 if word in self.keywords:
                     self.tag("keyword",i,j)
                 elif self.language == "php":
