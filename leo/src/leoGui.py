@@ -237,7 +237,7 @@ class leoGui:
 		self.oops()
 	#@-node:Dialog utils
 	#@+node:Font
-	def getFontFromParams(self,family,size,slant,weight):
+	def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
 		
 		self.oops()
 	#@nonl

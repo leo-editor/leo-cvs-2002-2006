@@ -1355,7 +1355,7 @@ class leoTkinterBody (leoFrame.leoBody):
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
 			"body_text_font_slant",  "body_text_font_weight",
-			tag = "body")
+			config.defaultBodyFontSize, tag = "body")
 	
 		if app.trace:
 			trace(body.cget("font"),font.cget("family"),font.cget("weight"))
@@ -2269,7 +2269,8 @@ class leoTkinterLog (leoFrame.leoLog):
 	
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",
-			"log_text_font_slant",  "log_text_font_weight")
+			"log_text_font_slant",  "log_text_font_weight",
+			config.defaultLogFontSize)
 		
 		logCtrl.configure(font=font)
 	

@@ -925,7 +925,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		font = app.config.getFontFromParams(
 			"headline_text_font_family", "headline_text_font_size",
-			"headline_text_font_slant",  "headline_text_font_weight")
+			"headline_text_font_slant",  "headline_text_font_weight",
+			app.config.defaultTreeFontSize)
 	
 		self.setFont(font)
 	#@nonl

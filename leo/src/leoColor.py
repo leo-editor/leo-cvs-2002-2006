@@ -658,21 +658,24 @@ class baseColorizer:
 		#@+node:<< define fonts and data for wiki tags >>
 		self.bold_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
+			"body_text_font_slant",  "body_text_font_weight",
+			config.defaultBodyFontSize)
 		
 		if self.bold_font:
 			self.bold_font.configure(weight="bold")
 		
 		self.italic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
+			"body_text_font_slant",  "body_text_font_weight",
+			config.defaultBodyFontSize)
 			
 		if self.italic_font:
 			self.italic_font.configure(slant="italic",weight="normal")
 		
 		self.bolditalic_font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
+			"body_text_font_slant",  "body_text_font_weight",
+			config.defaultBodyFontSize)
 			
 		if self.bolditalic_font:
 			self.bolditalic_font.configure(weight="bold",slant="italic")

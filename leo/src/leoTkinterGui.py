@@ -374,7 +374,7 @@ class tkinterGui(leoGui.leoGui):
 	#@nonl
 	#@-node:set_focus
 	#@+node:tkGui.getFontFromParams
-	def getFontFromParams(self,family,size,slant,weight):
+	def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
 		
 		family_name = family
 		
@@ -386,7 +386,7 @@ class tkinterGui(leoGui.leoGui):
 			es("exception setting font from " + `family_name`)
 			es("family,size,slant,weight:"+
 				`family`+':'+`size`+':'+`slant`+':'+`weight`)
-			es_exception()
+			# es_exception() # 12/15/03: This just confuses people.
 			return app.config.defaultFont
 	#@nonl
 	#@-node:tkGui.getFontFromParams
