@@ -16,12 +16,15 @@
 #     - Added USE_SIZER and USE_FIXED_SIZES.
 #       When USE_SIZER is False (recommended), the code creates buttons using 
 # c.frame.addIconButton.
+# 0.7: EKR:
+#     - Created a separate class for each commander.
+#     - Simplified the code a bit: no need for independent callbacks.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511:<< change history >>
 #@nl
 
-__version__ = "0.6"
+__version__ = "0.7"
   
 #@<< hoist.py imports >>
 #@+node:ekr.20040908093511.1:<< hoist.py imports >>
@@ -48,6 +51,16 @@ SIZER_HEIGHT = 23 # was 25
 SIZER_WIDTH = 55 # was 70
 
 #@+others
+#@+node:ekr.20050104063423:onCreate
+def onCreate (tag,keys):
+    
+    c = keys.get('c')
+    
+    hoist = HoistButtons(c)
+    hoist.addWidgets()
+    leoPlugins.registerHandler("idle",hoist.onIdle)
+#@nonl
+#@-node:ekr.20050104063423:onCreate
 #@+node:ekr.20040331072607.1:class HoistButtons
 class HoistButtons:
 
@@ -55,10 +68,12 @@ class HoistButtons:
 
     #@    @+others
     #@+node:ekr.20040331072607.2:__init__
-    def __init__(self):
+    def __init__(self,c):
     
+        self.c = c
         self.hoistOn = {}
         self.hoistOff = {}
+    #@nonl
     #@-node:ekr.20040331072607.2:__init__
     #@+node:ekr.20040331072607.3:_getSizer
     def _getSizer(self, parent, height, width):
@@ -75,18 +90,18 @@ class HoistButtons:
     #@nonl
     #@-node:ekr.20040331072607.3:_getSizer
     #@+node:ekr.20040331072607.4:addWidgets
-    def addWidgets(self, tags, keywords):
+    def addWidgets(self):
     
         """Add the widgets to the toolbar."""
     
-        c = keywords['c'] 
+        c = self.c
         toolbar = c.frame.iconFrame
         
-        def hoistOffCallback(self=self,c=c):
-            self.doHoistOff(c)
-            
-        def hoistOnCallback(self=self,c=c):
-            self.doHoistOn(c)
+        def hoistOffCallback():
+            c.dehoist()
+    
+        def hoistOnCallback():
+            c.hoist()
     
         if USE_SIZER: # original code
             self.hoistOff[c] = b = Tk.Button(
@@ -110,35 +125,23 @@ class HoistButtons:
         self.activeBgColor = self.hoistOn[c]["activebackground"]
     #@nonl
     #@-node:ekr.20040331072607.4:addWidgets
-    #@+node:ekr.20040331072607.5:doHoistOn
-    def doHoistOn (self,c,*args,**keys):
-        
-        c.hoist()
-    
-    #@-node:ekr.20040331072607.5:doHoistOn
-    #@+node:ekr.20040331072607.6:doHoistOff
-    def doHoistOff (self,c,*args,**keys):
-        
-        c.dehoist()
-    #@nonl
-    #@-node:ekr.20040331072607.6:doHoistOff
     #@+node:ekr.20040331072607.7:onIdle
-    def onIdle(self, tag, keywords):
+    def onIdle(self,tag,keywords):
+        
+        c = self.c
         
         # This should not be necessary, and it is.
         if g.app.killed:
             return
-        
-        c = keywords.get('c')
     
-        if not c or not hasattr(c,"hoistStack"):
+        if not hasattr(c,"hoistStack"):
             return
-            
+    
         on_widget  = self.hoistOn.get(c)
         off_widget = self.hoistOff.get(c)
     
         if not on_widget or not off_widget:
-            return # This can happend during unit tests.
+            return # This can happen during unit tests.
     
         state = g.choose(c.canHoist(),"normal","disabled")
         on_widget.config(state=state)
@@ -154,6 +157,7 @@ class HoistButtons:
             on_widget.config(bg=self.bgColor,
                 activebackground=self.activeBgColor,
                 text="Hoist")
+    #@nonl
     #@-node:ekr.20040331072607.7:onIdle
     #@-others
 #@nonl
@@ -161,14 +165,12 @@ class HoistButtons:
 #@-others
 
 if Tk and not g.app.unitTesting:
-    hoist = HoistButtons()
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
     
     if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler("after-create-leo-frame", hoist.addWidgets)
-        leoPlugins.registerHandler("idle", hoist.onIdle)
+        leoPlugins.registerHandler("after-create-leo-frame",onCreate)
         g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331072607:@thin hoist.py
