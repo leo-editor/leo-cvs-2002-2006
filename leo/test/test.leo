@@ -1433,7 +1433,7 @@
 </v>
 <v t="ekr.20041125145818.1" a="MTV"><vh>Pmw dialog</vh>
 <v t="ekr.20041127231319"><vh>To do</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
@@ -1446,10 +1446,10 @@
 <v t="ekr.20041127081146"><vh>&lt;&lt; inject ivars into p.v &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127112925" a="M"><vh>createWidgets &amp; allies</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2" a="M"><vh>createColor</vh>
+<v t="ekr.20041127134208.2"><vh>createColor</vh>
 <v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
 <v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
 <v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
@@ -1460,20 +1460,19 @@
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles </vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
 <v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
-<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
+<v t="ekr.20041127134613"><vh>createShortcuts (finish)</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
 <v t="ekr.20041128042051" a="M"><vh>value handlers &amp; callbacks...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041128043411"><vh>traceNameVal</vh></v>
-<v t="ekr.20041128045021"><vh>def onApply</vh></v>
-<v t="ekr.20041128043411.1"><vh>onOk</vh></v>
-<v t="ekr.20041128043411.2"><vh>onCancel (also handles Revert)</vh></v>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+<v t="ekr.20041126104958" a="E"><vh>onAnyButton</vh></v>
+<v t="ekr.20041128082112"><vh>revert</vh></v>
+<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars</vh></v>
 </v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
 <v t="ekr.20041127112806"><vh>printWidgets</vh></v>
@@ -2154,7 +2153,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2285,7 +2284,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -12541,33 +12540,30 @@ for fileName in fileNames:
 <t tx="ekr.20041126104958">def onAnyButton(self,name):
     
     dispatchDict = {
-        None:       self.onCancel,
-        "OK":       self.onOk,
-        "Cancel":   self.onCancel,
-        "Apply":    self.onApply,
-        "Revert":   self.onCancel,
+        "Apply":    self.writeChangedVars,
+        "Cancel":   None, # Do nothing.
+        "OK":       self.writeChangedVars,
+        "Revert":   self.revert,
     }
     
     f = dispatchDict.get(name)
-    if f:
-        f()
-    else:
-        g.trace("No handler",name)
+    if f: f()
 
     if name in (None,"OK","Cancel"):
-        self.dialog.destroy()
-</t>
+        self.dialog.destroy()</t>
 <t tx="ekr.20041126110057">class settingsController:
     
     @others</t>
 <t tx="ekr.20041126110158">def __init__ (self,c):
     
     self.c = c
+    self.p = None # Used to revert settings.
     title = "Settings for %s" % g.shortFileName(c.fileName())
 
     self._settingsPosition = p = self.createSettingsTree()
     self.colorSettingDict = {} # Contains entries for all changed colors.
-    self.initValueDict = {} # Contains all data needed to track changes to settings.
+    self.initValueDict = {} # Initial value of settings in present pane.
+    self.fileValueDict = {} # Values of settings written to file.
     self.parser = parserClass(c,p,self)
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
@@ -12645,6 +12641,7 @@ treeCanvas.configure(background='white')
 self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)</t>
 <t tx="ekr.20041126124710">def onTreeClick (self,p):
     
+    self.p = p.copy()
     self.updateSetter(p)</t>
 <t tx="ekr.20041126130336">def expandAllAncestors (self,p):
     
@@ -12691,14 +12688,16 @@ text.configure(background=background,borderwidth=0)</t>
     canvas.lift("clickBox")
     canvas.lift("iconBox") # Higest.
     self.redrawing = False</t>
-<t tx="ekr.20041126153101">def updateSetter (self,p):
+<t tx="ekr.20041126153101">def updateSetter (self,p,updateDicts=True):
     
     """Create a setter pane for position p."""
     
     sc = self.sc ; interior = sc.interior()
     
-    self.initValueDict = {}
-    self.colorSettingDict = {}
+    if updateDicts:
+        self.fileValueDict = {}
+        self.initValueDict = {}
+        self.colorSettingDict = {}
     
     # Destroy the previous widgets
     for w in interior.winfo_children():
@@ -13021,23 +13020,22 @@ self.setterLabel = sc.component('label')
     'type':         self.createType,
 }</t>
 <t tx="ekr.20041127134208.1">def createBool (self,parent,p,kind,name,val):
-
-    # Convert val to a 1,0.
+    
     val = g.choose(val.lower()=='true',1,0)
 
-    # Inits the checkbutton widget.
+    # Inits the checkbutton widget. 
     var = Tk.IntVar()
     var.set(val)
+
+    def boolCallback():
+        val2 = g.choose(var.get(),True,False)
+        # g.trace(name,val2)
+        return val2
     
-    def callback():
-        val = var.get()
-        val = g.choose(val,True,False)
-        # g.trace(name,val)
-        return val
-        
     val = g.choose(val,True,False)
-    self.initValue(p,name,kind,val,callback)
-    box = Tk.Checkbutton(parent,text=name,variable=var,command=callback)
+    self.initValue(p,name,kind,val,boolCallback)
+
+    box = Tk.Checkbutton(parent,text=name,variable=var)
 
     self.sc.create_window(10,self.h,anchor='w',window=box)
     self.h += 20</t>
@@ -13051,11 +13049,10 @@ self.setterLabel = sc.component('label')
     &lt;&lt; munge val and add val to colorNamesList &gt;&gt;
     &lt;&lt; create optionMenu and callback &gt;&gt;
     &lt;&lt; create picker button and callback &gt;&gt;
-    label = Tk.Label(f,text=name)
-    label.pack(side='left')
+    Tk.Label(f,text=name).pack(side='left')
     
     self.colorSettingDict [munge(name)] = val
-    
+
     def getColorCallback ():
         return self.colorSettingDict.get(munge(name))
 
@@ -13068,56 +13065,60 @@ self.setterLabel = sc.component('label')
     self.createString(parent,p,kind,name,val)</t>
 <t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,name,val):
     
-    # Creating this var inits the Entry widget.
-    stringVar = Tk.StringVar()
-    stringVar.set(val)
+    # Inits the Entry widget.
+    var = Tk.StringVar()
+    var.set(val)
 
     f = Tk.Frame(parent) # No need to pack.
-
-    label = Tk.Label(f,text=name)
-    label.pack(side='top')
+    Tk.Label(f,text=name).pack(side='top')
 
     self.sc.create_window(15, self.h,anchor='w',window = f)
     self.h += 50</t>
 <t tx="ekr.20041127134208.5">def createInt (self,parent,p,kind,name,val):
-    
-    try:
-        val = int(val)
-    except TypeError:
-        val = 0
 
-    # Setting this var inits the entry widget.
-    intVar = Tk.IntVar()
-    intVar.set(val)
-    
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
     f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name).pack(side='left')
 
-    e = Tk.Entry(f,textvariable=intVar)
-    e.pack(side='left',pady=2)
+    def intCallback():
+        val2 = var.get()
+        g.trace(name,val2)
+        try:
+            int(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
     
-    label = Tk.Label(f,text=name)
-    label.pack(side='left')
+    self.initValue(p,name,kind,val,intCallback)
     
     self.sc.create_window(10,self.h,anchor='w',window=f)
     self.h += 20</t>
 <t tx="ekr.20041127134208.6">def createFloat (self,parent,p,kind,name,val):
-   
-    try:
-        val = float(val)
-    except TypeError:
-        val = 0
 
-    # Setting this var inits the entry widget.
-    intVar = Tk.IntVar()
-    intVar.set(val)
-    
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
     f = Tk.Frame(parent)
-
-    e = Tk.Entry(f,textvariable=intVar)
-    e.pack(side='left',pady=2)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name).pack(side='left')
     
-    label = Tk.Label(f,text=name)
-    label.pack(side='left')
+    def floatCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            float(val2)
+            return val2
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+            
+    self.initValue(p,name,kind,val,floatCallback)
     
     self.sc.create_window(10,self.h,anchor='w',window=f)
     self.h += 20</t>
@@ -13126,7 +13127,28 @@ self.setterLabel = sc.component('label')
     self.createString(parent,p,kind,name,val)</t>
 <t tx="ekr.20041127134208.8">def createRatio (self,parent,p,kind,name,val):
     
-    self.createFloat(parent,p,kind,name,val)</t>
+    # Inits the entry widget.
+    var = Tk.StringVar()
+    var.set(val)
+
+    f = Tk.Frame(parent)
+    Tk.Entry(f,textvariable=var).pack(side='left')
+    Tk.Label(f,text=name).pack(side='left')
+    
+    def ratioCallback():
+        val2 = var.get()
+        # g.trace(name,val2)
+        try:
+            float(val2)
+            return g.choose(0.0 &lt;= val2 &lt;= 1.0,val2,val)
+        except TypeError:
+            g.trace("bad val:",val2)
+            return val
+            
+    self.initValue(p,name,kind,val,ratioCallback)
+    
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 20</t>
 <t tx="ekr.20041127134208.9">def createRecentFiles (self,parent,p,kind,name,vals):
     
     s = p.bodyString()
@@ -13145,8 +13167,7 @@ self.setterLabel = sc.component('label')
     g.trace(name,val)
     
     if name:
-        self.createString(parent,p,kind,name,val)
-</t>
+        self.createString(parent,p,kind,name,val)</t>
 <t tx="ekr.20041127134613">def createShortcuts (self,parent,p,kind,name,vals):
     
     s = p.bodyString()
@@ -13160,27 +13181,23 @@ self.setterLabel = sc.component('label')
                 
     self.suppressComments = p.copy()</t>
 <t tx="ekr.20041127134613.1">def createString (self,parent,p,kind,name,val):
+
+    if val in (None,'None'): val = ""
     
-    # g.trace(name,val)
-    
-    # Creating this var inits the Entry widget.
+    # Inits the Entry widget.
     var = Tk.StringVar()
     var.set(val)
     
     f = Tk.Frame(parent) # No need to pack.
+    Tk.Entry(f,textvariable=var,width=40).pack(side='left')
+    Tk.Label(f,text=name).pack(side='left')
     
-    def callback():
+    def stringCallback():
         val = var.get()
-        self.traceNameVal(name,val)
+        # g.trace(name,val)
         return val
 
-    e = Tk.Entry(f,textvariable=var,width=40,validate='key',validatecommand=callback)
-    e.pack(side='left')
-    
-    label = Tk.Label(f,text=name)
-    label.pack(side='left')
-
-    self.initValue(p,name,kind,val,callback)
+    self.initValue(p,name,kind,val,stringCallback)
     
     self.sc.create_window(15,self.h,anchor='w',window=f)
     self.h += 22</t>
@@ -13205,64 +13222,20 @@ self.setterLabel = sc.component('label')
 @killcolor
 
 - set dialog geometry.
-- precompute color names.
-- Add common names red,blue,green,white,orange,yellow,black,pink etc.
 
-- Start remembering what the user did...</t>
+- Confirm if user quits a changed panel.
+
+- Actually write settings to the proper @settings tree.
+    - Keep track of the filenames somehow.
+    - Find the proper node and update.</t>
 <t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
 <t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
     
     munge = g.app.config.munge
     
-    self.traceNameVal(name,val)
+    # g.trace(name,val)
     
     self.initValueDict [munge(name)] = (p,name,kind,val,getValueCallback)</t>
-<t tx="ekr.20041128043411">def traceNameVal (self,name,val):
-    
-    if 0:
-        g.trace("%-10s %s" % (val,name))</t>
-<t tx="ekr.20041128043411.1">def onOk (self):
-    
-    g.trace()
-    
-    d = self.initValueDict
-    
-    for key in d.keys():
-        
-        data = d.get(key)
-        p,name,kind,val,getValueCallback = data
-        newVal = getValueCallback()
-        
-        if val != newVal:
-            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
-<t tx="ekr.20041128043411.2">def onCancel (self):
-    
-    g.trace()
-    
-    d = self.initValueDict
-    
-    for key in d.keys():
-        
-        data = d.get(key)
-        p,name,kind,val,getValueCallback = data
-        newVal = getValueCallback()
-        
-        if val != newVal:
-            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
-<t tx="ekr.20041128045021">def onApply (self):
-    
-    g.trace()
-    
-    d = self.initValueDict
-    
-    for key in d.keys():
-        
-        data = d.get(key)
-        p,name,kind,val,getValueCallback = data
-        newVal = getValueCallback()
-        
-        if val != newVal:
-            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
 <t tx="ekr.20041128061452">def createSpacerFrame (self,parent,size=10):
     
     f = Tk.Frame(parent)
@@ -13291,8 +13264,7 @@ if val:
 # Callback uses optionMenu and menuButton.
 def optionMenuCallback (newName):
     self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
-    if newName is noColor:
-        newName = f.cget('background')
+    if newName is noColor: newName = f.cget('background')
     menuButton.configure(background=newName,activebackground=newName)
 
 optionMenu.configure(command=optionMenuCallback)</t>
@@ -13306,5 +13278,69 @@ optionMenu.configure(command=optionMenuCallback)</t>
 
 b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
 b.pack(side="left")</t>
+<t tx="ekr.20041128081018">def printChangedVars (self):
+
+    d = self.initValueDict
+    
+    for key in d.keys():
+        
+        data = d.get(key)
+        p,name,kind,val,getValueCallback = data
+        newVal = getValueCallback()
+        
+        if val != newVal:
+            print "%10s -&gt; %10s %s" % (str(val),str(newVal),name)</t>
+<t tx="ekr.20041128081018.1">def writeChangedVars (self):
+
+    fDict = self.fileValueDict
+    iDict = self.initValueDict
+    munge = g.app.config.munge
+    
+    for key in iDict.keys():
+        
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+        
+        newVal = getValueCallback()
+    
+        fData = fDict.get(key)
+        if fData:
+            fp,fname,fkind,fval,junk = fData
+            assert(ip==fp and iname==fname and ikind==fkind)
+            changed = fval != newVal ; oldVal = fval
+        else:
+            changed = ival != newVal ; oldVal = ival
+            fval = '&lt;none&gt;'
+
+        if changed:
+            # print "write","key","ival",ival,"fval",fval
+            print "write  %10s -&gt; %10s %s" % (str(oldVal),str(newVal),iname)
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback</t>
+<t tx="ekr.20041128082112">def revert (self):
+    
+    """Restores written vars to initial value and re-inits all widgets."""
+    
+    iDict = self.initValueDict
+    fDict = self.fileValueDict
+    munge = g.app.config.munge
+    
+    for key in fDict.keys():
+        
+        fData = fDict.get(key)
+        fp,fname,fkind,fval,getValueCallback = fData
+        
+        iData = iDict.get(key)
+        ip,iname,ikind,ival,getValueCallback = iData
+
+        assert(ip==fp and iname==fname and ikind==fkind)
+        
+        # print "revert",key,"ival",ival,"fval",fval
+        
+        if ival != fval:
+            print "revert %10s -&gt; %10s %s" % (str(fval),str(ival),fname)
+            self.fileValueDict [munge(iname)] = ip,iname,ikind,ival,getValueCallback
+
+    self.updateSetter(self.p,updateDicts=False)
+    </t>
 </tnodes>
 </leo_file>
