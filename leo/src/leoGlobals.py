@@ -408,6 +408,7 @@ def scanForAtLanguage(c,p):
 
     Returns the language found, or c.target_language."""
     
+    # Unlike the code in x.scanAllDirectives, this code ignores @comment directives.
 
     if c and p:
         for p in p.self_and_parents_iter():
@@ -462,15 +463,17 @@ def scanDirectives(c,p=None):
         dict = g.get_directives_dict(s)
         #@        << Test for @comment and @language >>
         #@+node:ekr.20031218072017.1393:<< Test for @comment and @language >>
-        # @language and @comment may coexist in @file trees.
-        # For this to be effective the @comment directive should follow the @language directive.
+        # 1/23/05: Any previous @language or @comment prevents processing up the tree.
+        # This code is now like the code in tangle.scanAlldirectives.
         
-        if not old.has_key("comment") and dict.has_key("comment"):
+        if old.has_key("comment") or old.has_key("language"):
+            pass
+        
+        elif dict.has_key("comment"):
             k = dict["comment"]
             delim1,delim2,delim3 = g.set_delims_from_string(s[k:])
         
-        # Reversion fix: 12/06/02: We must use elif here, not if.
-        elif not old.has_key("language") and dict.has_key("language"):
+        elif dict.has_key("language"):
             k = dict["language"]
             language,delim1,delim2,delim3 = g.set_language(s,k)
         #@nonl

@@ -4570,15 +4570,18 @@ class atFile:
             # 10/17/02: @language and @comment may coexist in @file trees.
             # For this to be effective the @comment directive should follow the @language directive.
             
-            if not old.has_key("comment") and theDict.has_key("comment"):
+            # 1/23/05: Any previous @language or @comment prevents processing up the tree.
+            # This code is now like the code in tangle.scanAlldirectives.
+            
+            if old.has_key("comment") or old.has_key("language"):
+                 pass # Do nothing more.
+            
+            elif theDict.has_key("comment"):
                 k = theDict["comment"]
-                # 11/14/02: Similar to fix below.
                 delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
             
-            # Reversion fix: 12/06/02: We must use elif here, not if.
-            elif not old.has_key("language") and theDict.has_key("language"):
+            elif theDict.has_key("language"):
                 k = theDict["language"]
-                # 11/14/02: Fix bug reported by J.M.Gilligan.
                 self.language,delim1,delim2,delim3 = g.set_language(s,k)
             #@nonl
             #@-node:ekr.20041005105605.229:<< Test for @comment and @language >>
