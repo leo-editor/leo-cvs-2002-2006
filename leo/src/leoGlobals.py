@@ -3843,7 +3843,10 @@ class fileLikeObject:
     
     The caller is responsible for handling newlines correctly."""
 
-    def __init__(self): self.list = []
+    def __init__(self):
+        self.list = []
+        self.ptr = 0
+
     def clear (self):   self.list = []
 
     def close (self): pass
@@ -3851,6 +3854,14 @@ class fileLikeObject:
 
     def get (self):
         return ''.join(self.list)
+        
+    def readline(self): # New for read-from-string (readOpenFile).
+        if self.ptr < len(self.list):
+            line = self.list[self.ptr]
+            # g.trace(repr(line))
+            self.ptr += 1
+            return line
+        else: return ""
 
     def write (self,s):
         if s: self.list.append(s)
