@@ -49,9 +49,13 @@ def run(fileName=None,*args,**keywords):
     import leoApp ; leoGlobals.app = leoApp.LeoApp()
     g = leoGlobals ; assert(g.app) # NOW we can set g.
     g.app.loadDir = computeLoadDir() # Depends on g.app.tkEncoding: uses utf-8 for now.
-    import leoConfig
-    g.app.config = leoConfig.config()
-    g.app.setEncoding() # 10/20/03: do this earlier
+    g.app.homeDir = computeHomeDir()
+    g.app.globalConfigDir = computeGlobalConfigDir()
+    g.app.setLeoID() # Force the user to set g.app.leoID.
+    import leoNodes ; g.app.nodeIndices = leoNodes.nodeIndices(g.app.leoID)
+    import leoConfig ; g.app.config = leoConfig.config()
+    g.app.config.readSettingsFiles() # Must be done after setting g.app.config.
+    g.app.setEncoding()
     script = getBatchScript()
     if script:
         createNullGuiWithScript(script)
@@ -59,9 +63,8 @@ def run(fileName=None,*args,**keywords):
     else:
         #@        << print encoding info >>
         #@+node:ekr.20031218072017.1935:<< print encoding info >>
-        g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
-        
         if 0: # This is just confusing for users.
+            g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
             g.es("Text encoding: " + g.app.tkEncoding, color="blue")
         #@nonl
         #@-node:ekr.20031218072017.1935:<< print encoding info >>
@@ -72,16 +75,12 @@ def run(fileName=None,*args,**keywords):
     # Create the default gui if needed.
     if g.app.gui == None:
         g.app.createTkGui()
-    if not g.app.leoID:
-        g.app.setLeoID() # Forces the user to set g.app.leoID.
-    import leoNodes
-    g.app.nodeIndices = leoNodes.nodeIndices()
     # Initialize tracing and statistics.
     g.init_sherlock(args)
     g.clear_stats()
     #@    << start psycho >>
     #@+node:ekr.20040411081633:<< start psycho >>
-    if g.app.config.use_psyco:
+    if g.app.use_psyco:
         try:
             import psyco
             if 0:
@@ -137,36 +136,81 @@ You may download Python from http://python.org/download/
         return False
 #@nonl
 #@-node:ekr.20031218072017.1936:isValidPython
+#@+node:ekr.20041117155521:computeGlobalConfigDir
+def computeGlobalConfigDir():
+    
+    import leoGlobals as g
+    
+    encoding = startupEncoding()
+
+    try:
+        theDir = sys.leo_config_directory
+    except AttributeError:
+        theDir = g.os_path_join(g.app.loadDir,"..","config")
+        
+    if theDir:
+        theDir = g.os_path_normabs(theDir)
+        
+    if (
+        not theDir or
+        not g.os_path_exists(theDir,encoding) or
+        not g.os_path_isdir(theDir,encoding)
+    ):
+        theDir = None
+
+    g.es("global config dir: %s" % (theDir),color="blue")
+    
+    return theDir
+#@nonl
+#@-node:ekr.20041117155521:computeGlobalConfigDir
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = startupEncoding()
+    dotDir = g.os_path_normabs('./',encoding)
+    home = os.getenv('HOME',default=dotDir)
+    home = g.os_path_normabs(home,encoding)
+    
+    if (
+        not home or
+        not g.os_path_exists(home,encoding) or
+        not g.os_path_isdir(home,encoding)
+    ):
+        home = None
+
+    g.es("home dir: %s" % (home),color="blue")
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
 #@+node:ekr.20031218072017.1937:computeLoadDir
 def computeLoadDir():
     
     """Returns the directory containing leo.py."""
     
     import leoGlobals as g
-    
-    # g.trace(g.app.tkEncoding)
-    
+
     try:
         import leo
-        path = g.os_path_abspath(leo.__file__)
-
-        if sys.platform=="win32": # "mbcs" exists only on Windows.
-            path = g.toUnicode(path,"mbcs")
-        elif sys.platform=="dawwin":
-            path = g.toUnicode(path,"utf-8")
-        else:
-            path = g.toUnicode(path,g.app.tkEncoding)
-
+        encoding = startupEncoding()
+        path = g.os_path_normabs(leo.__file__,encoding)
         if path:
-            loadDir = g.os_path_dirname(path)
-        else:
-            loadDir = None
-        if not loadDir:
-            loadDir = g.os_path_abspath(os.getcwd())
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
             print "Using emergency loadDir:",repr(loadDir)
-
-        encoding = g.choose(sys.platform=="dawwin","utf-8",g.app.tkEncoding) # 11/18/03
-        loadDir = g.toUnicode(loadDir,encoding) # 10/20/03
+        
+        loadDir = g.os_path_normabs(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
         return loadDir
     except:
         print "Exception getting load directory"
@@ -174,6 +218,21 @@ def computeLoadDir():
         return None
 #@nonl
 #@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20041117151301.1:startupEncoding
+def startupEncoding ():
+    
+    import sys
+    
+    if sys.platform=="win32": # "mbcs" exists only on Windows.
+        encoding = "mbcs"
+    elif sys.platform=="dawwin":
+        encoding = "utf-8"
+    else:
+        encoding = g.app.tkEncoding
+        
+    return encoding
+#@nonl
+#@-node:ekr.20041117151301.1:startupEncoding
 #@+node:ekr.20031218072017.1624:createFrame (leo.py)
 def createFrame (fileName):
     
@@ -213,7 +272,8 @@ def createNullGuiWithScript (script):
     
     g.app.batchMode = True
     g.app.gui = leoGui.nullGui("nullGui")
-    g.app.root = g.app.gui.createRootWindow()
+    if not g.app.root:
+        g.app.root = g.app.gui.createRootWindow()
     g.app.gui.finishCreate()
     g.app.gui.setScript(script)
 #@-node:ekr.20031218072017.1938:createNullGuiWithScript (leo.py)

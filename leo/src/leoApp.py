@@ -34,11 +34,13 @@ class LeoApp:
             # 2: call pdb.set_trace in g.es_exception, etc.
         self.disableSave = False
         self.failedPlugins = [] # List of loaded plugins that have failed to load.
+        self.globalConfigDir = None # The directory that is assumed to contain the global configuration files.
         self.globalWindows = []
         self.gui = None # The gui class.
         self.hasOpenWithMenu = False # True: open with plugin has been loaded.
         self.hookError = False # True: suppress further calls to hooks.
         self.hookFunction = None # Application wide hook function.
+        self.homeDir = None # The user's home directory.
         self.idle_imported = False # True: we have done an import idle
         self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
         self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
@@ -69,6 +71,7 @@ class LeoApp:
         self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
         self.unitTestDict = {} # For communication between unit tests and code.
         self.unitTesting = False # True if unit testing.
+        self.use_psyco = False # Can't be a config param because it is used before config module can be inited.
         self.windowList = [] # Global list of all frames.  Does not include hidden root window.
     
         # Global panels.  Destroyed when Leo ends.
@@ -283,10 +286,11 @@ class LeoApp:
             
         g.app.destroyOpenWithFilesForFrame(frame)
     
-        g.app.windowList.remove(frame)
+        if frame in g.app.windowList:
+            g.app.windowList.remove(frame)
     
         # force the window to go away now.
-        frame.destroySelf() 
+        frame.destroySelf()
     #@nonl
     #@-node:ekr.20031218072017.2615:app.destroyWindow
     #@+node:ekr.20031218072017.1732:app.finishQuit
@@ -385,8 +389,10 @@ class LeoApp:
     def setLeoID (self):
     
         tag = ".leoID.txt"
+        homeDir = g.app.homeDir
+        globalConfigDir = g.app.globalConfigDir
         loadDir = g.app.loadDir
-        configDir = g.app.config.configDir
+    
         #@    << return if we can set self.leoID from sys.leoID >>
         #@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
         # This would be set by in Python's sitecustomize.py file.
@@ -408,7 +414,7 @@ class LeoApp:
         #@nl
         #@    << return if we can set self.leoID from "leoID.txt" >>
         #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
-        for theDir in (configDir,loadDir):
+        for theDir in (homeDir,globalConfigDir,loadDir):
             try:
                 fn = g.os_path_join(theDir, tag)
                 f = open(fn,'r')
@@ -423,17 +429,27 @@ class LeoApp:
                         g.es("empty " + tag + " in " + theDir, color = "red")
             except:
                 g.app.leoID = None
+                
+        dirs = []
         
-        if configDir == loadDir:
-            g.es(tag + " not found in " + loadDir, color="red")
-        else:
-            g.es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+        for theDir in (globalConfigDir,homeDir):
+            if theDir not in dirs:
+                dirs.append(theDir)
         
+        g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+        #@nonl
         #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
         #@nl
+    
         #@    << put up a dialog requiring a valid id >>
         #@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
-        g.app.gui.runAskLeoIDDialog() # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+        # New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+        
+        # Create an emergency gui and a Tk root window.
+        g.app.createTkGui("startup")
+        g.app.gui.runAskLeoIDDialog()
+        g.app.gui = None
+        
         g.trace(g.app.leoID)
         g.es("leoID=",repr(g.app.leoID),color="blue")
         #@nonl
@@ -441,7 +457,7 @@ class LeoApp:
         #@nl
         #@    << attempt to create leoID.txt >>
         #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-        for theDir in (configDir,loadDir):
+        for theDir in (homeDir,globalConfigDir,loadDir):
             try:
                 # Look in configDir first.
                 fn = g.os_path_join(theDir, tag)
@@ -451,16 +467,21 @@ class LeoApp:
                     f.close()
                     g.es("created leoID.txt in " + theDir, color="red")
                     return
-            except: pass
-            
-        if configDir == loadDir:
-            g.es("can not create leoID.txt in " + loadDir, color="red")
-        else:
-            g.es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+            except IOError: pass
         
+        dirs = []
+        
+        for theDir in (configDir,homeDir,loadDir):
+            if theDir not in dirs:
+                dirs.append(theDir)
+        
+        g.es("can not create leoID.txt in %s" % (repr(dirs)), color="red")
+        #@nonl
         #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
         #@nl
-    #@nonl
+        
+        # Destroy the emergency gui.
+        
     #@-node:ekr.20031218072017.1978:app.setLeoID
     #@+node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
     def setLog (self,log,tag=""):
