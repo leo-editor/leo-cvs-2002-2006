@@ -1141,9 +1141,24 @@ class leoTree:
 			accelerator="Alt+0",command=frame.OnContractParent)
 		
 		# Enable and disable.
-		isAtFile = v.isAtFileNode()
+		
+		#@<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+		#@+node:1::<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+		#@+body
+		isAtFile = false ; isAtRoot = false
+		next = v.nodeAfterTree()
+		v2 = v
+		while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
+			if v2.isAtFileNode():
+				isAtFile = true
+			isRoot, junk = is_special(v2.bodyString(),0,"@root")
+			if isRoot:
+				isAtRoot = true
+			v2 = v2.threadNext()
+		#@-body
+		#@-node:1::<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+
 		isAtFile = choose(isAtFile,1,0)
-		isAtRoot, junk = is_special(v.bodyString(),0,"@root")
 		isAtRoot = choose(isAtRoot,1,0)
 		canContract = v.parent() != None
 		canContract = choose(canContract,1,0)
