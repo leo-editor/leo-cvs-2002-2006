@@ -6695,7 +6695,7 @@ def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines
     
     << about this algorithm >>
     c = p.c ; root = p.copy()
-    df = c.atFileCommands.new_df
+    at = c.atFileCommands
     if testing:
         << clear all dirty bits >>
     << Assign file indices >>
@@ -6761,8 +6761,8 @@ for p2 in root.self_and_subtree_iter():
 #@nonl
 #@-node:ekr.20040716064333:<< Assign file indices  >>
 #@+node:ekr.20040716064333.1:<< Write root's tree to to string s >>
-df.write(root,thinFile=True,toString=True)
-s = df.stringOutput
+at.write(root,thinFile=True,toString=True)
+s = at.stringOutput
 if not s: return
 #@-node:ekr.20040716064333.1:<< Write root's tree to to string s >>
 #@+node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
@@ -6782,16 +6782,16 @@ code also marks changed nodes.
 @c
 
 try:
-    df.correctedLines = 0
-    df.targetFileName = "<perfectImport string-file>"
-    df.inputFile = fo = g.fileLikeObject()
-    df.file = fo # Strange, that this is needed.  Should be cleaned up.
+    at.correctedLines = 0
+    at.targetFileName = "<perfectImport string-file>"
+    at.inputFile = fo = g.fileLikeObject()
+    at.file = fo # Strange, that this is needed.  Should be cleaned up.
     for line in write_lines:
         fo.write(line)
-    firstLines,junk,junk = c.atFileCommands.scanHeader(fo,df.targetFileName)
+    firstLines,junk,junk = c.atFileCommands.scanHeader(fo,at.targetFileName)
     # To do: pass params to readEndNode.
-    df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
-    n = df.correctedLines
+    at.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
+    n = at.correctedLines
     if verbose:
         g.es("%d marked node%s corrected" % (n,g.choose(n==1,'','s')),color="blue")
 except:
@@ -6808,8 +6808,8 @@ try:
     before.close()
     
     # Write the tree into after_lines.
-    df.write(root,thinFile=True,toString=True)
-    after_lines1 = g.splitLines(df.stringOutput)
+    at.write(root,thinFile=True,toString=True)
+    after_lines1 = g.splitLines(at.stringOutput)
     
     # Strip sentinels from after_lines and compare.
     after_lines = mu.removeSentinelsFromLines(after_lines1,delims)
@@ -9298,6 +9298,127 @@ class fileLikeObject:
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@-node:ekr.20041004095703:(Added support for readFromString to fileLikeObject)
 #@-node:ekr.20040929081120:4.3 a1 projects
+#@+node:ekr.20041005110502:(Converted to new leoAtFile code)
+#@+node:ekr.20041005112818.2:What I did
+@killcolor
+
+- Made sense of initialization:
+    - ctor inits only permanent ivars.
+    - All initing for reads and writes happens explicitly.
+    - Separate initiing for reads and writes.
+    - All non-permanent ivars deleted before all reads and writes (when testing).
+
+- Move all constants into class.  No more module-level constants.
+
+- All code is now in a single class.
+    - This is _so_ much clearer than before.
+    - There were only a few name conflicts:  resolved by renaming x to x3 or x4.
+
+- Use methods rather than sections where possible.
+
+- Removed unused oneNodeOnly args, except for putBody method.
+
+- Tested reading 3.x files.  This passes simple tests.  I doubt if anyone actually using these old files....
+
+- Added fromString arg to g.fileLikeObject ctor.
+
+- Not much new is needed to support read/write from string.
+    - Official methods that plugins can override:
+        read, asisWrite, writeOpenFile
+#@nonl
+#@-node:ekr.20041005112818.2:What I did
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = None
+        # 7/7/04: Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            # df = c.atFileCommands.new_df
+            at = c.atFileCommands
+            if 0: # now done in 
+                # Force Python comment delims.
+                at.scanAllDirectives(p,scripting=True)
+                at.startSentinelComment = "#"
+                at.endSentinelComment = None
+            at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
+            script = at.stringOutput
+            assert(p)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20041005105605.15:initWriteIvars
+def initWriteIvars(self,root,targetFileName,
+    nosentinels=False,
+    thinFile=False,
+    scriptWrite=False,
+    toString=False):
+
+    self.initCommonIvars()
+    << init ivars for writing >>
+    
+    self.scanAllDirectives(root)
+    if scriptWrite:
+        # Force Python comment delims for g.getScript.
+        self.startSentinelComment = "#"
+        self.endSentinelComment = None
+    if self.errors:
+        return
+    # Init state from arguments.
+    self.targetFileName = targetFileName
+    self.sentinels = not nosentinels
+    self.thinFile = thinFile
+    self.toString = toString
+    self.root = root
+    self.root.v.t.tnodeList = []
+#@nonl
+#@+node:ekr.20041005105605.16:<< init ivars for writing >>>
+@
+When tangling, we first write to a temporary output file. After tangling is
+temporary file. Otherwise we delete the old target file and rename the temporary
+file to be the target file.
+@c
+
+self.docKind = None
+self.fileChangedFlag = False # True: the file has actually been updated.
+self.shortFileName = "" # short version of file name used for messages.
+self.thinFile = False
+
+if toString:
+    self.outputFile = g.fileLikeObject()
+    self.stringOutput = ""
+    self.targetFileName = self.outputFileName = "<string-file>"
+else:
+    self.outputFile = None # The temporary output file.
+    self.stringOutput = None
+    self.targetFileName = self.outputFileName = u""
+#@nonl
+#@-node:ekr.20041005105605.16:<< init ivars for writing >>>
+#@-node:ekr.20041005105605.15:initWriteIvars
+#@-node:ekr.20041005110502:(Converted to new leoAtFile code)
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

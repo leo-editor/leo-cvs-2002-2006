@@ -4,6 +4,256 @@
 
 #@+all
 #@+node:EKR.20040609091327:To do: 4.3
+#@+node:ekr.20041006110656:First 3
+#@+node:ekr.20041004094706:Better error reporting in executeScript
+#@+node:ekr.20041004094706.1:Traceback
+Unexpected end of file. Expecting @-leosentinel
+AttributeError: 'NoneType' object has no attribute 'setOrphan'
+
+--------------------
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "c:\python23\lib\lib-tk\Tkinter.py", line 1345, in __call__
+    return self.func(*args)
+  File "C:\prog\leoCVS\leo\plugins\mod_scripting.py", line 113, in execCommand
+    c.executeScript(c.currentPosition())
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 1171, in executeScript
+    s = "line %d: %s" % (n,lines[n-1])
+IndexError: list index out of range
+#@-node:ekr.20041004094706.1:Traceback
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "line %d: %s" % (n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "line %d" % (n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20040731204831:getLastTracebackLineNumber
+def getLastTracebackLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return lineno
+        except:
+            g.trace("bad line number")
+            return 0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        item = data[-1]
+        n = item[1]
+        return n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackLineNumber
+#@+node:ekr.20031218072017.3112:es_exception
+def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+
+    if full:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        n = g.getLastTracebackLineNumber()
+    else:
+        # old, kludgy code...
+        << look for lines containing a specific message >>
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+
+    return n
+#@nonl
+#@+node:ekr.20040731211839:<< look for lines containing a specific message >>
+errList = traceback.format_exception(typ,val,tb)
+
+print ; print "es_exception (format_exception)"
+for item in errList:
+    print item
+# Strip cruft lines.
+s1 = "Traceback (most recent call last):"
+s2 = "exec script in {}"
+lines = []
+for line in errList[-4:]:
+    if n is None:
+        tag = 'File "<string>", line'
+        i = line.find(tag)
+        if i > -1:
+            << compute n from the line >>
+    if not g.match(line,0,s1) and line.find(s2) == -1:
+        lines.append(line)
+#@nonl
+#@+node:EKR.20040612223431:<< compute n from the line >>
+i += len(tag)
+j = line.find(',',i)
+if j > i: n = line[i:j]
+else:     n = line[i:].strip()
+# g.trace(n)
+try: n = int(n)
+except (TypeError,ValueError): n = None
+#@nonl
+#@-node:EKR.20040612223431:<< compute n from the line >>
+#@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+#@-node:ekr.20031218072017.3112:es_exception
+#@-node:ekr.20041004094706:Better error reporting in executeScript
+#@+node:ekr.20041004193600:Add safeguards on @button and @script
+#@+node:ekr.20041004193600.1:Paul's first posting
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2788477
+By: paulpaterson
+
+Perhaps some minor bridling ...
+
+What about managing the security of scripts using some algorithm like this,
+
+1. When Leo scans for @buttons, @scripts etc it makes a list of scripts
+2. For each script ...
+3.   Calculate a secure hash of the script contents
+4.   Consult central repository to see if hash is recognized
+5.   If hash recognized
+6.     Accept it
+7.   Else
+8.     Force user to acknowledge the script or disable it
+
+The cental repository could be a file in your Leo directory which stores "approved"
+hashes.
+
+Clicking on a @buttons, @script node and selecting "Approve script" would add
+the hash to the repository. Selecting "Disable script" would remove it. There
+could also be a menu item to bring up a window of approved/not approved script
+nodes so that you could centrally manage them.
+
+
+Additional housekeeping on the list of hashes is possible but probably isn't
+required since the size is small and there shouldn't be any collisions. If required
+you could just blow away the file and then re-enable all scripts.
+
+Using this approach, no new script would be able to run without being enabled
+by the user. There is still the possibility that another plugin or script could
+disable the security mechanism or tamper with the repository but with Leo's
+architecture a plugin could already do anything anyway so this isn't an additional
+hole.
+
+It would protect from 
+
+@script
+import os
+os.system("del *.*")
+
+being submitted to an OS project!
+#@nonl
+#@-node:ekr.20041004193600.1:Paul's first posting
+#@+node:ekr.20041005075955:Pault's second posting
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2789123
+By: paulpaterson
+
+I'm not an expert but from the Python docs this looks like the way to do it,
+
+> import sha
+> s = sha.sha("hello there")
+> s.hexdigest()
+'6e71b3cac15d32fe2d36c270887df9479c25c640'
+
+> s = sha.sha("hello there hacked")
+'a42837bba84c53cabd52a98f3671809d475c707f'
+
+It looks like the md5 module offers a similar function but uses less bits.
+
+From what I understand the hexdigest should be different for any change in the
+text. Also no two strings should give the same hash (although I seem to recall
+that someone found a collision recently).
+#@-node:ekr.20041005075955:Pault's second posting
+#@-node:ekr.20041004193600:Add safeguards on @button and @script
+#@+node:ekr.20041003174108.1:Do unit tests based on new atFile code
+#@-node:ekr.20041003174108.1:Do unit tests based on new atFile code
+#@-node:ekr.20041006110656:First 3
 #@+node:ekr.20041001182352.1:Urgent 3
 #@+node:EKR.20040602153716:(Finish drawUserIcons)
 #@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
@@ -2619,6 +2869,35 @@ I'm using leo on both windows and Linux, and leo is in the vfat partition to use
 
 -Sanori 
 #@-node:ekr.20031218072017.656:Different fonts settings for Linux/Mac
+#@+node:ekr.20041005083816:Use g.bunch to encapsulate plugins options
+http://sourceforge.net/forum/message.php?msg_id=2789076
+By: e
+
+can we add some notation to style guide:
+instead of globals, try to arrange your code
+so that various True/False or numeric constants
+can be captured in a python dict type.
+myconfig = g.Bunch(
+  latebinding = True,
+  enablebuttons = True,
+  enableplugins = False,
+  etc,
+  )
+
+this way you are already setup to save options in config
+under your plugin name. and the user will be able to override
+the defaults without editing the plugin source with @options.
+mod_scripting come to mind with several T/F of note.
+local options could be preceeded with _ 
+and ignored by the config code.
+maybe g.plugin_signon could do something usefull
+and collect these options compare them with previous
+local and global ini and pass back the results to the plugin.
+the spellpyx plugin is another bad example, 
+in spite of its using mod_spelling.ini, 
+c:\aspell is hardcoded in the plugin.
+
+#@-node:ekr.20041005083816:Use g.bunch to encapsulate plugins options
 #@-node:ekr.20041002150740:0. Design
 #@+node:ekr.20041002150740.1:1.  Search for settings in various places
 #@+node:ekr.20040922073523:comments from e
