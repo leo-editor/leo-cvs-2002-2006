@@ -1,12 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040623200709:@thin ../src/leoTest.py
-"""
- 
-Classes used for Leo's unit testing.
+'''Classes for Leo's unit testing.
 
-Run the unit tests in test.leo using the Execute Script command.
-
-"""
+Run the unit tests in test.leo using the Execute Script command.'''
 
 #@@language python
 #@@tabwidth -4
@@ -44,9 +40,11 @@ except ImportError: gc = None
 #@-node:EKR.20040623200709.2:<< leoTest imports >>
 #@nl
 
-import leoPlugins
-newAtFile = leoPlugins.isLoaded("___proto_atFile")
-# print "leoTest.py:newAtFile", newAtFile
+if g.app: # Make sure we can import this module stand-alone.
+    import leoPlugins
+    newAtFile = leoPlugins.isLoaded("___proto_atFile")
+else:
+    newAtFile = False
 
 #@+others
 #@+node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
