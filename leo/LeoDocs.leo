@@ -71,7 +71,7 @@
 <v t="T52" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T53" a="EMV"><vh>3.11 beta 1</vh>
+<v t="T53" a="MV"><vh>3.11 beta 2</vh>
 <v t="T54"><vh>** Leo now uses unicode internally</vh>
 <v t="T55" a="C"><vh>How Leo handles unicode</vh></v>
 <v t="T56" a="C"><vh>Unicode settings</vh></v>
@@ -2549,11 +2549,17 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T53">leo.py 3.11 beta 1                       February 16, 2003
+<t tx="T53">leo.py 3.11 beta 2                       February 24, 2003
 
 leo.py 3.11 beta 1 is now available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
+
+This version of Leo fixes some unicode problems when the system encoding is not "utf-8".
+
+For all other details, see below.
+
+leo.py 3.11 beta 1                       February 16, 2003
 
 This version of Leo contains a very large number of improvements.  The highlights:
 
