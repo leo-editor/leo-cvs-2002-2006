@@ -8,7 +8,8 @@ plugin does and how to use it.
 """
 
 # This node and its decendents form a style guide for plugins.
-# NOTE: Do NOT include either these initial comments or any of Python comments below.
+# NOTE 1: Do NOT include either these initial comments or any of Python comments below.
+# Note 2: There is no need to use sections if they are empty.
 
 #@@language python
 #@@tabwidth -4
@@ -200,18 +201,24 @@ def onStart2 (tag, keywords):
 # You need this if statement ONLY if your plugin depends on modules that might not be available.
 # See the imports section for more discussion.
 if Tk and Pmw:
-    # If your plugin needs to access data from a commander, it is almost always a bad
-    # idea to use g.top() to get the commander of the presently selected frame.
-    # Instead, use the onCreate function to create a class that binds self.c.
-    leoPlugins.registerHandler("after-create-leo-frame", onCreate)
     
-    # If your plugin acts globally (rather than on particular windows)
-    # it is safe to define hook handlers here.  For example:
-    leoPlugins.registerHandler("start2", onStart2)
-    
-    # Note: use g.plugin_signon, NOT leoPlugins.plugin_signon.
-    # Please do not set __name__ explicitly.
-    g.plugin_signon(__name__)
+    # You need the following three lines ONLY if your plugin uses a gui.
+    # If you don't need them, just use the code following these three lines.
+    if g.app.gui is None: 
+        g.app.createTkGui(__file__)
+    if g.app.gui.guiName() == "tkinter":
+        # If your plugin needs to access data from a commander, it is almost always a bad
+        # idea to use g.top() to get the commander of the presently selected frame.
+        # Instead, use the onCreate function to create a class that binds self.c.
+        leoPlugins.registerHandler("after-create-leo-frame", onCreate)
+        
+        # If your plugin acts globally (rather than on particular windows)
+        # it is safe to define hook handlers here.  For example:
+        leoPlugins.registerHandler("start2", onStart2)
+        
+        # Note: use g.plugin_signon, NOT leoPlugins.plugin_signon.
+        # Please do not set __name__ explicitly.
+        g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040919081244:@thin style_guide.py
 #@-leo
