@@ -127,8 +127,8 @@ class baseAtFile:
 		at.initIvars()
 		p = root.copy()
 		if partialFlag: after = p.nodeAfterTree()
-		else: after = None
-		while p and p != after: # Don't use iterator.
+		else: after = c.nullPosition()
+		while p and not p.equal(after): # Don't use iterator.
 			if p.isAtIgnoreNode():
 				p.moveToNodeAfterTree()
 			elif p.isAtFileNode() or p.isAtRawFileNode():
@@ -153,7 +153,6 @@ class baseAtFile:
 			
 		if partialFlag and not anyRead:
 			g.es("no @file nodes in the selected tree")
-	#@nonl
 	#@-node: top_df.readAll
 	#@+node:top_df.read
 	# The caller has enclosed this code in beginUpdate/endUpdate.
