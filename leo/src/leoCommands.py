@@ -545,7 +545,8 @@ class baseCommands:
 		oldYview = c.frame.body.yview()
 		i, j = oldSel = getTextSelection(c.body)
 		# if selection was made from back to front, then i and j are reversed
-		if i and j: # Convert all lines containing any part of the selection.
+		if i and j and i != j: # 7/7/03
+			# Convert all lines containing any part of the selection.
 			if c.body.compare(i,">",j): i,j = j,i
 			i = c.body.index(i + "linestart")
 			# 12-SEP-2002 DTHEIN: don't include following line in selection
@@ -654,8 +655,10 @@ class baseCommands:
 			result.append(lines[i])
 			
 		# Wrap the lines, decreasing the page width by indent.
-		wrapped_lines = \
-			wrap_lines(lines[firstLine:lastLine],pageWidth-indents[1],pageWidth-indents[0])
+		wrapped_lines = wrap_lines(
+			lines[firstLine:lastLine],
+			pageWidth-indents[1],
+			pageWidth-indents[0])
 		lineCount = len(wrapped_lines)
 			
 		i = 0
@@ -699,6 +702,7 @@ class baseCommands:
 	
 		# Make sure we can see the new cursor.
 		body.see("insert-5l")
+	
 	#@-body
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)

@@ -3241,7 +3241,7 @@ def getindex(text, index):
 def getSelectedText (t):
 
 	start, end = getTextSelection(t)
-	if start and end:
+	if start and end and start != end: # 7/7/03
 		return t.get(start,end)
 	else:
 		return None

@@ -3371,7 +3371,7 @@ class baseLeoFrame:
 		
 		c = self.commands ; v = c.currentVnode()
 		sel1,sel2 = oldSel = getTextSelection(c.body)
-		if sel1 and sel2:
+		if sel1 and sel2 and sel1 != sel2: # 7/7/03
 			c.body.delete(sel1,sel2)
 		c.body.insert("insert",self.getTime(body=true))
 		c.tree.onBodyChanged(v,"Typing",oldSel=oldSel)
@@ -3383,7 +3383,7 @@ class baseLeoFrame:
 	
 		if v.edit_text():
 			sel1,sel2 = getTextSelection(v.edit_text())
-			if sel1 and sel2:
+			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
 			v.edit_text().insert("insert",self.getTime(body=false))
 			c.tree.idle_head_key(v)

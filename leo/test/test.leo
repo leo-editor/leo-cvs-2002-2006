@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="70" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="72" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="63" left="468" height="734" width="662"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -115,11 +115,12 @@
 </v>
 <v t="T67"><vh>Undo typing tests</vh></v>
 <v t="T68"><vh>Use xml.sax</vh></v>
-<v t="T69" a="E"><vh>@encoding test</vh>
+<v t="T69"><vh>@encoding test</vh>
 <v t="T70" a="E"><vh>@file c:\prog\test\encodingTest.txt</vh>
-<v a="V"><vh>Umlaut in headline ë</vh></v>
+<v t="T71"><vh>Umlaut in headline ë</vh></v>
 </v>
 </v>
+<v t="T72" a="V"><vh>reformatParagraph test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -602,5 +603,21 @@ finally:
 <t tx="T70">@others
 
 This is an umlaute ë</t>
+<t tx="T71"></t>
+<t tx="T72">@language plain
+@pagewidth 72
+@tabwidth 2
+
+The intent of this tool is to provide 
+an aid to memorization practice.  The 
+tool is directed at memorization of 
+prose or poetry, not music or 
+mathematics.  It would probably not 
+be useful for memorization of dialog.  The 
+purpose of such memorization is 
+to be able to recreate a chunk of 
+text in your head or on paper, and perhaps verbally.
+
+The steps might be as follows:</t>
 </tnodes>
 </leo_file>
