@@ -37,28 +37,38 @@ of this issue. I suspect the reason I didn't do anything is that removing
 unreferenced nodes must be done in a post-pass, after all nodes have been read.
 This will slow down reading a bit, but that can't be helped.
 #@-node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files
-#@+node:ekr.20050202052911.2:First: Figure out what is going on with tnodeLists (!!!)
-#@-node:ekr.20050202052911.2:First: Figure out what is going on with tnodeLists (!!!)
-#@+node:ekr.20050210103758:Create better download pages
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-Even Clicking on the hompage link download and and people face a huge list of
-files to choose from.
-
-http://sourceforge.net/project/showfiles.php?group_id=3458
-
-I suggest changing  the dedicated link on Leo homepage where it says
-
-"Download Leo[4.2 final]"
-
-Insead of linking directly to the sourceforge page, better to go to a small page
-with precise links for the correct packages needed for each OS. And include from
-there a link to an freshly updated Installatian page in the Users Guide. to
-http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
-#@nonl
-#@-node:ekr.20050210103758:Create better download pages
+#@+node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
+#@-node:ekr.20050202052911.2:First: Full documentation of tnodeLists & potential problems
 #@+node:ekr.20050207063254:Plugins...
+#@+node:ekr.20050211083009:Fix problems with node navigator
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=2989776
+By: bwmulder
+
+I like to use the node navigator to jump around to nodes which have been
+marked.
+
+However, after loading an outline, the node navigator does not display any marked
+nodes.
+
+I see two possible fixes"
+
+- Leo could send the appropriate mark events to the plugin after loading an
+outline.
+- The plugin could scan the outline for marked notes after activation.
+
+What should be changed?
+
+[In general, I advocate smooth integration of plugins with Leos main code: to
+the user, it should not matter if something is implemented as a plugin, or part
+of the core functionality.
+
+Having different views as to what is marked or not seems to violate that
+principle].
+#@nonl
+#@-node:ekr.20050211083009:Fix problems with node navigator
+#@+node:ekr.20050209095131:Get spellpyx plugin working (Need this to check leoDocs.leo)
+#@-node:ekr.20050209095131:Get spellpyx plugin working (Need this to check leoDocs.leo)
 #@+node:ekr.20050128065405:Study Leo2Ascii
 @killcolor
 
@@ -383,6 +393,26 @@ class to inherit from? It seems that there are some operations that are being
 re-written in many plugins.
 #@-node:ekr.20050121081635:Request:  cumulative @path directives
 #@-node:ekr.20050207063254.1:New features
+#@+node:ekr.20050211080215:Docs
+#@+node:ekr.20050210103758:Create better download pages
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+Even Clicking on the hompage link download and and people face a huge list of
+files to choose from.
+
+http://sourceforge.net/project/showfiles.php?group_id=3458
+
+I suggest changing  the dedicated link on Leo homepage where it says
+
+"Download Leo[4.2 final]"
+
+Insead of linking directly to the sourceforge page, better to go to a small page
+with precise links for the correct packages needed for each OS. And include from
+there a link to an freshly updated Installatian page in the Users Guide. to
+http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
+#@nonl
+#@-node:ekr.20050210103758:Create better download pages
 #@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
 Jon Schull <jschull@softlock.com>  
 Date:  2003/12/30 Tue PM 05:50:51 EST 
@@ -469,6 +499,7 @@ By: jasonic
 @nosent is an abbreviation for @file-nosentinels.
 Very hadny very cool but does not seem be much docs anywhere on this.
 #@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+#@-node:ekr.20050211080215:Docs
 #@-node:ekr.20050126101301:4.3 a3...
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme

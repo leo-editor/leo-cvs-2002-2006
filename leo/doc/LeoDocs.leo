@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -50,40 +50,41 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
 <v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
-<v t="ekr.20050209141626.4" a="E"><vh>Fixed very old bug in Undo Insert Node </vh></v>
-<v t="ekr.20050209141626.8" a="E"><vh>Made sure to remove duplicates from recent files</vh></v>
+<v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
+<v t="ekr.20050209141626.8"><vh>Made sure to remove duplicates from recent files</vh></v>
 <v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
-<v t="ekr.20050209141626.13" a="E"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
-<v t="ekr.20050209141626.16" a="E"><vh>Investigated recent files problems</vh></v>
-<v t="ekr.20050209141626.23" a="E"><vh>Improved queuing of log messages</vh></v>
+<v t="ekr.20050209141626.13"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
+<v t="ekr.20050209141626.16"><vh>Investigated recent files problems</vh></v>
+<v t="ekr.20050209141626.23"><vh>Improved queuing of log messages</vh></v>
 <v t="ekr.20050209141626.42"><vh>Fixed crasher in Change All command</vh></v>
-<v t="ekr.20050209141626.43" a="E"><vh>Fixed crasher in script button</vh></v>
-<v t="ekr.20050209141626.46" a="E"><vh>Fixed print problems on the Mac</vh></v>
+<v t="ekr.20050209141626.43"><vh>Fixed crasher in script button</vh></v>
+<v t="ekr.20050209141626.46"><vh>Fixed print problems on the Mac</vh></v>
 <v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
 <v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
-<v t="ekr.20050209141626.55" a="E"><vh>Made local config settings work again</vh></v>
+<v t="ekr.20050209141626.55"><vh>Made local config settings work again</vh></v>
 <v t="ekr.20050209141626.91"><vh>Fix problems searching for nothing but whitespace</vh></v>
 <v t="ekr.20050210101318"><vh>Fixed problems with typing return in the Find panel</vh></v>
 <v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
-<v t="ekr.20050209141626.102" a="E"><vh>Fixed bug in delayed focus logic</vh></v>
-<v t="ekr.20050209141626.105" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050209141626.113" a="E"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
-<v t="ekr.20050209141626.114" a="E"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
+<v t="ekr.20050209141626.102"><vh>Fixed bug in delayed focus logic</vh></v>
+<v t="ekr.20050209141626.105"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
+<v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
+<v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
 </v>
 <v t="ekr.20050209141626.150"><vh>New features...</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
-<v t="ekr.20050209141626.185" a="E"><vh>Added support for top-level init function in plugins</vh></v>
-<v t="ekr.20050209141626.190" a="E"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
+<v t="ekr.20050209141626.185"><vh>Added support for top-level init function in plugins</vh></v>
+<v t="ekr.20050209141626.190"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
 <v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
 <v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
 <v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196" a="E"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
+<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
 <v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
@@ -196,36 +197,37 @@
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
 <v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
-<v t="ekr.20050209141626.4" a="E"><vh>Fixed very old bug in Undo Insert Node </vh></v>
-<v t="ekr.20050209141626.8" a="E"><vh>Made sure to remove duplicates from recent files</vh></v>
+<v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
+<v t="ekr.20050209141626.8"><vh>Made sure to remove duplicates from recent files</vh></v>
 <v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
-<v t="ekr.20050209141626.13" a="E"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
-<v t="ekr.20050209141626.16" a="E"><vh>Investigated recent files problems</vh></v>
-<v t="ekr.20050209141626.23" a="E"><vh>Improved queuing of log messages</vh></v>
+<v t="ekr.20050209141626.13"><vh>Changed leoConfig.txt to leoSettings.leo in Help menu, etc.</vh></v>
+<v t="ekr.20050209141626.16"><vh>Investigated recent files problems</vh></v>
+<v t="ekr.20050209141626.23"><vh>Improved queuing of log messages</vh></v>
 <v t="ekr.20050209141626.42"><vh>Fixed crasher in Change All command</vh></v>
-<v t="ekr.20050209141626.43" a="E"><vh>Fixed crasher in script button</vh></v>
-<v t="ekr.20050209141626.46" a="E"><vh>Fixed print problems on the Mac</vh></v>
+<v t="ekr.20050209141626.43"><vh>Fixed crasher in script button</vh></v>
+<v t="ekr.20050209141626.46"><vh>Fixed print problems on the Mac</vh></v>
 <v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
 <v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
-<v t="ekr.20050209141626.55" a="E"><vh>Made local config settings work again</vh></v>
+<v t="ekr.20050209141626.55"><vh>Made local config settings work again</vh></v>
 <v t="ekr.20050209141626.91"><vh>Fix problems searching for nothing but whitespace</vh></v>
 <v t="ekr.20050210101318"><vh>Fixed problems with typing return in the Find panel</vh></v>
 <v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
-<v t="ekr.20050209141626.102" a="E"><vh>Fixed bug in delayed focus logic</vh></v>
-<v t="ekr.20050209141626.105" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
-<v t="ekr.20050209141626.113" a="E"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
-<v t="ekr.20050209141626.114" a="E"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
+<v t="ekr.20050209141626.102"><vh>Fixed bug in delayed focus logic</vh></v>
+<v t="ekr.20050209141626.105"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050209141626.113"><vh>Leo now prints unicode characters properly in the log pane</vh></v>
+<v t="ekr.20050209141626.114"><vh>Fixed various problems with opening files with Unicode filenames</vh></v>
+<v t="ekr.20050211095754"><vh>Fixed bug reading encoding field in derived files</vh></v>
 </v>
 <v t="ekr.20050209141626.150"><vh>New features...</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
-<v t="ekr.20050209141626.185" a="E"><vh>Added support for top-level init function in plugins</vh></v>
-<v t="ekr.20050209141626.190" a="E"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
+<v t="ekr.20050209141626.185"><vh>Added support for top-level init function in plugins</vh></v>
+<v t="ekr.20050209141626.190"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
 <v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
 <v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
 <v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
-<v t="ekr.20050209141626.196" a="E"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
+<v t="ekr.20050209141626.196"><vh>Predefined c,g &amp; p in scripts and unit tests</vh></v>
 <v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
@@ -16393,7 +16395,7 @@ release corrects various bugs and distribution problems.
 a2 also adds several new features:
 
 - Adds 'word', 'line' and 'node' undo granularities.
-- Predefines 'c','g', and 'p' in all scripts and unit tests.
+- Predefines 'c','g', and 'p' in scripts and unit tests.
 - Added support for top-level init functions in plugins.
 - Buttons can remove themselves when their scripts fail.
 
@@ -16691,5 +16693,22 @@ p = c.currentPosition()</t>
 <t tx="ekr.20050210102150"></t>
 <t tx="ekr.20050210102150.1"></t>
 <t tx="ekr.20050210102358"></t>
+<t tx="ekr.20050211095754">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2990951
+Milan Melena
+
+I think, I found two bugs:
+
+1) leoAtFile.py:
+&lt;&lt; read optional encoding param &gt;&gt;
+changed first instance of i = j + 1 to i = j + 2
+
+2) leoGlobals.py
+g.getScript now returns with
+
+if at.output_newline == 'crlf':
+    return script.replace("\r\n","\n")
+else:
+    return script</t>
 </tnodes>
 </leo_file>
