@@ -664,14 +664,23 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 #@+node:4::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
+#@+at
+#  Enables the "idle" hook.
+# After enableIdleTimeHook is called, Leo will call the "idle" hook
+# approximately every idleTimeDelay milliseconds.
+
+#@-at
+#@@c
 def enableIdleTimeHook(idleTimeDelay=100):
 	app().idleTimeHook = true
 	app().idleTimeDelay = idleTimeDelay # Delay in msec.
 	app().root.after_idle(idleTimeHookHandler)
-
+	
+# Disables the "idle" hook.
 def disableIdleTimeHook():
 	app().idleTimeHook = false
 	
+# An internal routine used to dispatch the "idle" hook.
 def idleTimeHookHandler(*args):
 	a = app()
 	handleLeoHook("idle")
@@ -2426,7 +2435,7 @@ def unloadAll():
 #@-body
 #@-node:2::unloadAll
 #@-node:9::Startup & initialization...
-#@+node:10::Unicode...
+#@+node:10::Unicode... (utils)
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -2557,7 +2566,7 @@ def replaceNonEncodingChars(s,c2,xml_encoding):
 	return s2
 #@-body
 #@-node:5::replaceNonEncodingChar/s
-#@-node:10::Unicode...
+#@-node:10::Unicode... (utils)
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

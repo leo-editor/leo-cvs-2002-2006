@@ -3428,7 +3428,12 @@ class LeoFrame:
 	#@+node:6::Menu Convenience Routines
 	#@+body
 	#@+at
-	#  These are intended for use by scripts, and some are used by Leo.
+	#  The following convenience routines make creating menus easier.
+	# 
+	# The two most important routines are createMenuItemsFromTable and createOpenWithMenuFromTable.
+	# 
+	# The file customizeLeo.py shows gives examples of how to use these 
+	# routines to create custom menus and to add items to the Open With menu.
 
 	#@-at
 	#@-body
@@ -3474,11 +3479,26 @@ class LeoFrame:
 			es_exception()
 			return None
 	
-	
 	#@-body
 	#@-node:2::createNewMenu
 	#@+node:3::createOpenWithMenuFromTable
 	#@+body
+	#@+at
+	#  Entries in the table passed to createOpenWithMenuFromTable are
+	# tuples of the form (commandName,shortcut,data).
+	# 
+	# - command is one of "os.system", "os.startfile", "os.spawnl", 
+	# "os.spawnv" or "exec".
+	# - shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
+	# - data is a tuple of the form (command,arg,ext).
+	# 
+	# Leo executes command(arg+path) where path is the full path to the temp file.
+	# If ext is not None, the temp file has the given extension.
+	# Otherwise, Leo computes an extension based on the @language directive in effect.
+
+	#@-at
+	#@@c
+
 	def createOpenWithMenuFromTable (self,table):
 		
 		menuName = "Open With..."
@@ -3521,6 +3541,7 @@ class LeoFrame:
 	#@-node:4::deleteMenu
 	#@+node:5::deleteMenuItem
 	#@+body
+	# Delete itemName from the menu whose name is menuName.
 	def deleteMenuItem (self,itemName,menuName="top"):
 	
 		from leoGlobals import app
