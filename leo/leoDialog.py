@@ -101,9 +101,9 @@ class leoDialog:
 		
 		try:
 			import webbrowser
-			webbrowser.open("mailto:" + self.url)
+			webbrowser.open("mailto:" + self.email)
 		except:
-			es("not found: " + self.url)
+			es("not found: " + self.email)
 	#@-body
 	#@-node:2::onAboutLeoEmail
 	#@-node:2::aboutLeo
