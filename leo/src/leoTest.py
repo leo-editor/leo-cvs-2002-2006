@@ -648,7 +648,7 @@ def runAtFileTest(c,p):
     child2 = child1.next()
     h1 = child1.headString().lower().strip()
     h2 = child2.headString().lower().strip()
-    assert(g.match(h1,0,"@@"))
+    assert(g.match(h1,0,"#@"))
     assert(g.match(h2,0,"output"))
     expected = child2.bodyString()
 
@@ -662,7 +662,7 @@ def runAtFileTest(c,p):
 
     if theType == "@asis":
         at.asisWrite(child1,toString=True)
-    elif theType == "noref":
+    elif theType == "@noref":
         at.norefWrite(child1,toString=True)
     else:
         at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
