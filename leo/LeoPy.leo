@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2779" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2781" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="26" left="183" height="26" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -3782,7 +3782,7 @@
 </v>
 </v>
 </v>
-<v t="T1951"><vh>Code</vh>
+<v t="T1951" a="V"><vh>Code</vh>
 <v t="T1952"><vh>  Overview of code</vh>
 <v t="T1953" a="C"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="T1954" a="C"><vh> &lt;&lt; About drawing and events &gt;&gt;</vh></v>
@@ -6015,7 +6015,7 @@
 </v>
 </v>
 </v>
-<v t="T2740" a="V"><vh> Customizing Leo</vh>
+<v t="T2740"><vh> Customizing Leo</vh>
 <v t="T2741"><vh>Documentation and security warnings</vh>
 <v t="T2742"><vh>Intro to scripts</vh></v>
 <v t="T2743"><vh>About hooks</vh></v>
@@ -6084,6 +6084,10 @@
 <v t="T2779"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
 </v>
 </v>
+</v>
+<v><vh>(leoConfig problems)</vh>
+<v t="T2780"><vh>ctrl+uparrow, ctrl+dnarrow </vh></v>
+<v t="T2781"><vh>leoConfig problem   </vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -43265,13 +43269,15 @@ else: # Import only the essentials.
 Python makes this is almost too easy :-)
 @c
 
-import leoFrame
+if tag == "start1":
 
-# Replace frame.put with newPut.
-funcToMethod(newPut,leoFrame.LeoFrame,"put")
-
-# Replace frame.putnl with newPutNl.
-funcToMethod(newPutNl,leoFrame.LeoFrame,"putnl")</t>
+	import leoFrame
+	
+	# Replace frame.put with newPut.
+	funcToMethod(newPut,leoFrame.LeoFrame,"put")
+	
+	# Replace frame.putnl with newPutNl.
+	funcToMethod(newPutNl,leoFrame.LeoFrame,"putnl")</t>
 <t tx="T2751">if tag == "start2":
 
 	# Announce the presence of this file.
@@ -43698,5 +43704,42 @@ for line in lines:
 print "\n\nSpellCheckText\n"
 for line in lines:
 	print line, SpellCheckText(line)</t>
+<t tx="T2780">@nocolor
+
+By: dalcolmo ( Josef Dalcolmo ) 
+ ctrl+uparrow, ctrl+dnarrow   
+2002-12-09 09:45  
+I use the following definitions in my leoConfig.leo: 
+
+GoNextVisible = Ctrl+DnArrow 
+GoPrevVisible = Ctrl+UpArrow 
+
+Since my last update of Leo, these do not work any more (instead these work with alt-DnArrow, alt-uparrow) 
+
+I did the update in my usual way, which may be flawed: I download LeoPy.leo, open it in an empty folder, write @file nodes, then copy the resulting files into the Leo system folder. 
+
+This worked fine so far. I also have renamed leoConfig.leo to MyleoConfig.leo, so it won't get overwritten. After the file copy, I open MyleoConfig.leo and tangle. The definitions are correctly in leoConfig.txt. 
+
+- Josef
+
+I forgot to say, this was build 1.284, upgrading from a plain Leo 3.9 dist,
+or from 1.272 - I am not sure any more.
+
+</t>
+<t tx="T2781">@nocolor
+
+By: nobody ( Nobody/Anonymous ) 
+ leoConfig problem   
+2002-12-09 18:01  
+From: Rich 
+I'm using Leo 3.9 rel. 1.284. I noticed that two related shortcut-key options are not operating any longer. 
+
+Because Windoze like to convert Alt+arrow keys to characters, I modified configLeo so Ctrl+. means "GoNextVisible" and Ctrl+, means "GoPrevVisible". 
+
+When I open the Outline|Goto menu selection, my changes for "gonext" and "goback" are there; the changes for "GoNextVisible" and "GoprevVisible" are not. 
+
+Help! 
+
+--Rich</t>
 </tnodes>
 </leo_file>
