@@ -34,6 +34,7 @@ include Icons/*.*
 include plugins/*.*
 exclude plugins/leoPluginsRef.leo
 exclude plugins/*.pyc
+include plugins/aspell.pyd
 
 include src/LeoPy.leo
 # Exclude LeoPyRef.leo.

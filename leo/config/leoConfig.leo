@@ -909,7 +909,7 @@ write_old_format_derived_files = 0
 write_strips_blank_lines = 1
 # 1:    Leo strips blanks and tabs from otherwise blank lines.
 # 0:    Leo retains whitespace even in otherwise blank lines.</t>
-<t tx="ekr.20040720065653.3">use_plugins = 1
+<t tx="ekr.20040720065653.3">use_plugins = 0
 # 1:    Leo enables plugins.
 #       Warning: Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #       See further warnings in LeoDocs.leo.
