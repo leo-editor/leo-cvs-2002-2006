@@ -1662,7 +1662,7 @@ def update_file_if_changed(file_name,temp_name):
 				os.remove(file_name)
 				utils_rename(temp_name, file_name)
 				if mode: # 10/3/02: retain the access mode of the previous file.
-					os.chmod(file_name,mode)
+					pass ## os.chmod(file_name,mode)
 				es("***updating: " + file_name)
 			except:
 				es("Rename failed: no file created!")
