@@ -49,7 +49,7 @@ except ImportError:
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
-__version__ = ".71"
+__version__ = ".72"
 #@<<version history>>
 #@+node:ekr.20041017102904:<<version history>>
 #@+at
@@ -97,22 +97,33 @@ __version__ = ".71"
 #    -added a section about how to configure autocompleter
 #    -switched the patterns from using '+' to add pieces together to using 
 # '%s'.
-#  .71
-#     investigated and hopefully fixed startup bug on Windows. Changes that 
+# .71 investigated and hopefully fixed startup bug on Windows. Changes that 
 # appear to have fixed it:
-#     1. We synchronize with an threading Event object.  IO acting screw on 
+# 1. We synchronize with an threading Event object.  IO acting screw on 
 # windows in a thread.
-#     2. There is a global flag indicating whether the config file needs to be 
+# 2. There is a global flag indicating whether the config file needs to be 
 # read again.
-#     3. Explicitly set the file type to 't'.  This could all be attributed to 
-# a bug in ConfigParser.  I looked at the source and it doesnt write its data 
+# 3. Explicitly set the file type to 't'.  This could all be attributed to a 
+# bug in ConfigParser.  I looked at the source and it doesnt write its data 
 # with a 't'.  This indicates trouble with windows.
-#     4. Make the 'aini' path composed of os.sep instead of the char '/'.  Im 
+# 4. Make the 'aini' path composed of os.sep instead of the char '/'.  Im 
 # uncertain if the config file ever got read on Windows at this point because 
 # of the explicit '/' , instead of using os.path.
-#     5. Moved createConfig part out of thread.
-#     problems seems centered on Windows/IO/Threading.
+# 5. Moved createConfig part out of thread. problems seems centered on 
+# Windows/IO/Threading.
+# 
+#  .72 The thesis and experiments to confirm the problem identified in .71 
+# appear
+# completely wrong. I could not recreate threading+writeIO staling on XP at 
+# all.
+# Windows 98 didnt even work. But after commenting out g.es calls it did work. 
+# My
+# new target for the problem is now focused on keeping g.es calls out of the
+# initialScan thread. This will just entail moving all the reading and writing 
+# of
+# the config and language files out of the thread.
 #@-at
+#@nonl
 #@-node:ekr.20041017102904:<<version history>>
 #@nl
 #@<<a note on newCreateControl>>
@@ -398,42 +409,36 @@ def initialScan (tag,keywords):
         return 
 
     haveseen[c] = None 
-
+    
+    #This part used to be in its own thread until problems were encountered on Windows 98 and XP with g.es
     pth = os.path.split(g.app.loadDir)  
     aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )    
-    ev = threading.Event()
-    
-    def scan ():
-        #pth = os.path.split(g.app.loadDir)  
-        #aini = pth[0]+r"%splugins%sautocompleter.ini" % ( os.sep, os.sep )
-
-        try:
-            if not hasReadConfig():
-                if os.path.exists(aini):
-                    readConfigFile(aini) 
-                #else: #Weird errors on windows if done here.  IO writing + windows + thread == hang.
-                #    createConfigFile( aini )
-
-                bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
-                readLanguageFiles(bankpath)
-        finally:
-            setReadConfig()
-            ev.set()
-
-        readOutline(c)
-
     if not os.path.exists(aini):
         createConfigFile( aini )
+    try:
+        if not hasReadConfig():
+            if os.path.exists(aini):
+                readConfigFile(aini) 
+
+            bankpath = pth[0]+r"%splugins%sautocompleter%s" % ( os.sep, os.sep, os.sep )
+            readLanguageFiles(bankpath)#This could be too expensive to do here if the user has many and large language files.
+    finally:
+        setReadConfig()
     
     # Use a thread to do the initial scan so as not to interfere with the user.            
-    t = threading.Thread(target=scan)
+    def scan():
+        
+        #g.es( "This is for testing if g.es blocks in a thread", color = 'pink' )
+        readOutline( c )
+        
+    t = threading.Thread( target = scan )
     t.setDaemon(True)
     t.start()
-    ev.wait() #Wait for IO reading to finish.
+
 
 #@-node:ekr.20041017043622.10:initialScan
 #@+node:mork.20041105115626:has read config file meths
-#These functions determine if the config file has been read or not.  No need to read it more than once.
+#These functions determine if the config and language files have been read or not.  No need to read it more than once.
 def hasReadConfig():
     return configfilesread
     
@@ -532,7 +537,7 @@ def readOutline (c):
     autocompleter draws its autocompletion options
     c is a commander in this case'''
     global lang
-    if 'Chapters'in g.app.loadedPlugins:
+    if 'Chapters'in g.app.loadedPlugins: #Chapters or chapters needs work for this function properly again.
         import chapters 
         it = chapters.walkChapters()
         for x in it:
