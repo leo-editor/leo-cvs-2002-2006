@@ -2211,7 +2211,7 @@ class leoTkinterTree (leoFrame.leoTree):
             if p in c.visitedList:
                 c.visitedList.remove(p)
             
-            c.visitedList.insert(0,p)
+            c.visitedList.insert(0,p.copy())
             #@nonl
             #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
             #@nl
