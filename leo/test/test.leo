@@ -239,6 +239,17 @@
 <v t="edream.120903113034.1"><vh>@ignore</vh></v>
 </v>
 </v>
+<v t="ekr.20040128180619"><vh>4.1 rc4 tests</vh>
+<v t="ekr.20040128174521"><vh>Test of orphan node</vh>
+<v t="ekr.20040128174521.1" a="E" tnodeList="ekr.20040128174521.1"><vh>@file orphanIgnoredTest.txt</vh>
+<v t="ekr.20040128174521.2" a=""><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
+<v t="ekr.20040128175919" a="E"><vh>a</vh>
+<v t="ekr.20040128174521.2" a=""><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126121831"><vh>Test of exception-handling inside commands</vh></v>
+</v>
 </v>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
@@ -2953,7 +2964,7 @@
 </v>
 <v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
-<v t="ekr.20040126105605" a="E"><vh>Clone test</vh>
+<v t="ekr.20040126105605"><vh>Clone test</vh>
 <v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
 <v t="ekr.20040126105605.2" a="E"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
@@ -2962,7 +2973,7 @@
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="ekr.20040126121831" a="V"><vh>Test of exception-handling inside commands</vh></v>
+<v t="ekr.20040128182006" a="V"><vh>Import derived file test</vh></v>
 </vnodes>
 <tnodes>
 <t tx="dthein.20040108213304">@ 
@@ -36201,5 +36212,11 @@ c = top()
 
 # Note: the error recovery scheme will not work if the call to doCommand itself appears in a begin/endUpdate pair.
 c.doCommand(throwException,"Throw Exception")</t>
+<t tx="ekr.20040128174521">@ignore</t>
+<t tx="ekr.20040128174521.1"># test</t>
+<t tx="ekr.20040128174521.2"></t>
+<t tx="ekr.20040128175919"></t>
+<t tx="ekr.20040128180619"></t>
+<t tx="ekr.20040128182006"></t>
 </tnodes>
 </leo_file>

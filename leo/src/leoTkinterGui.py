@@ -638,13 +638,13 @@ class tkinterGui(leoGui.leoGui):
 		return toUnicode(line,app.tkEncoding)
 	#@nonl
 	#@-node:getLineContainingIndex
-	#@+node:replaceSelectionRangeWithText
+	#@+node:replaceSelectionRangeWithText (leoTkinterGui)
 	def replaceSelectionRangeWithText (self,t,start,end,text):
 	
 		t.delete(start,end)
 		t.insert(start,text)
 	#@nonl
-	#@-node:replaceSelectionRangeWithText
+	#@-node:replaceSelectionRangeWithText (leoTkinterGui)
 	#@+node:makeIndexVisible
 	def makeIndexVisible(self,t,index):
 	

@@ -276,7 +276,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		gui.setTextSelection (t,"1.0","end") # Thanks Rich.
 	#@nonl
 	#@-node:bringToFront
-	#@+node:Tkinter wrappers (leoTkinterFind) (replace by app.gui.utils)
+	#@+node:Tkinter wrappers (leoTkinterFind)
 	def gui_search (self,t,*args,**keys):
 		return t.search(*args,**keys)
 	
@@ -286,7 +286,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		t.insert("end",s)
 		t.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
 		return t
-	#@-node:Tkinter wrappers (leoTkinterFind) (replace by app.gui.utils)
+	#@-node:Tkinter wrappers (leoTkinterFind)
 	#@-others
 #@nonl
 #@-node:@file leoTkinterFind.py
