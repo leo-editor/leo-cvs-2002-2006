@@ -977,7 +977,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
@@ -1131,7 +1131,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1433,7 +1433,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="TV"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1" a="E"><vh>Pmw dialog</vh>
 <v t="ekr.20041130085400"><vh>Status: read me</vh>
 <v t="ekr.20041130095005"><vh>bugs, etc</vh></v>
 <v t="ekr.20041130085943"><vh>buttons</vh></v>
@@ -1441,7 +1441,7 @@
 <v t="ekr.20041130085400.2" a="M"><vh>fonts</vh></v>
 <v t="ekr.20041130085400.3" a="M"><vh>types</vh></v>
 </v>
-<v t="ekr.20041127231319"><vh>To do</vh></v>
+<v t="ekr.20041127231319" a="TV"><vh>To do</vh></v>
 <v t="ekr.20041128225703"><vh>Notes</vh></v>
 <v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
@@ -1509,6 +1509,7 @@
 </v>
 <v t="ekr.20041130061955.3"><vh>utilities...</vh>
 <v t="ekr.20041129182726"><vh>es</vh></v>
+<v t="ekr.20041130191836"><vh>copyExpansionState</vh></v>
 <v t="ekr.20041128230425"><vh>get_window_info</vh></v>
 <v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
 <v t="ekr.20041127112806"><vh>printWidgets</vh></v>
@@ -2184,7 +2185,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2315,7 +2316,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11199,14 +11200,7 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
-<t tx="ekr.20041121151002.1">c:\prog\leocvs\leo\doc\LeoDocs.leo
-c:\prog\leocvs\leo\plugins\leoPlugins.leo
-c:\prog\leocvs\leo\src\LeoPy.leo
-c:\prog\leocvs\leo\dist\leoDist.leo
-c:\prog\leocvs\leo\test\unittest\minimalLeoFile3.leo
-c:\prog\leocvs\leo\test\unittest\minimalLeoFile2.leo
-c:\prog\leocvs\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -12801,6 +12795,8 @@ else:
 if root2:
     root2.copyTreeFromSelfTo(p)  # replace p by root2.
 
+self.copyExpansionState(root2,p)
+
 &lt;&lt; add entry for p to filesInfoDict &gt;&gt;
 
 path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
@@ -13274,19 +13270,23 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127231319">@
 @killcolor
 
-** Complete g.app.config.set.
-
-** Expand dialog tree to match underlying @settings tree.
-
-* Figure out why findSettingsRoot doesn't work if no summary node.
-    - May be a problem with copying positions.
-
-* Use p.v rather than p as keys in filesInfoDict.
+(done) Expand dialog tree to match underlying @settings tree.
 
 - Finish font stuff.
+    This is important:  it will determine how much type machinery is needed.
+
+- Fix recent files problems:
+    - Make recent files an extensible list.
+        At present there is no way to add entries from the dialog.
+    - The recent-files entry is updated properly, but it doesn't "take".
+
+- (maybe) Copy expansion state when updating @settings tree.
+
+* Fix bug: findSettingsRoot doesn't work if no summary node.
+    - May be a problem with copying positions.
 
 - Support new buttons:
-    - Refresh recreates and redraws dialog's outline.
+    - (maybe) Refresh recreates and redraws dialog's outline.
     - Check button checks for duplicate shortcuts, bad settings, etc.
 
 - (last) Move code into Leo's core.
@@ -13395,9 +13395,8 @@ b.pack(side="left")</t>
     munge = g.app.config.munge
     
     changedList = []
-    
     for key in fDict.keys():
-        
+
         fData = fDict.get(key)
         fp,fname,fkind,fval,getValueCallback = fData
         
@@ -13405,7 +13404,6 @@ b.pack(side="left")</t>
         ip,iname,ikind,ival,getValueCallback = iData
 
         assert(ip==fp and iname==fname and ikind==fkind)
-        
         # print "revert",key,"ival",ival,"fval",fval
         
         if ival != fval:
@@ -13415,7 +13413,7 @@ b.pack(side="left")</t>
 
     self.updateSetter(self.p,updateDicts=False)
     self.writeChangedList(changedList,"revert")
-    </t>
+    self.updateSetter(self.p) # Redraw the widgets in the pane.</t>
 <t tx="ekr.20041128225055">splitter2 = self.panes.get('splitter2')
 
 self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
@@ -13677,5 +13675,18 @@ A general way to put settings into effect would be good, but may not be easy.</t
 <t tx="ekr.20041130095005">@
 
 A number of bugs remain, but that's not too important in a prototype.  See the To do list...</t>
+<t tx="ekr.20041130191836">def copyExpansionState(self,p1,p2):
+ 
+    # Don't depend on p.nodeAfterTree, etc.
+    if p1.isExpanded():
+        # g.trace("p1",p1)
+        # g.trace("p2",p2)
+        p2.expand()
+        child1 = p1.firstChild()
+        child2 = p2.firstChild()
+        while child1:
+            self.copyExpansionState(child1,child2)
+            child1 = child1.next()
+            child2 = child2.next()</t>
 </tnodes>
 </leo_file>
