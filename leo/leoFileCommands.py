@@ -163,6 +163,7 @@ class fileCommands:
 	#@-node:2::finishPaste (creating join lists could be a problem)
 	#@+node:3::get routines
 	#@+node:1::get & match (basic)(leoFileCommands)
+	#@+node:1::get routines
 	#@+body
 	def getBool (self):
 		self.skipWs() # guarantees at least one more character.
@@ -234,11 +235,47 @@ class fileCommands:
 		raise BadLeoFile("expecting string terminated by " + tag)
 		return ""
 		
+	# Look ahead for collapsed tag: tag may or may not end in ">"
+	# Skips tag and /> if found, otherwise does not alter index.
+	def getOpenTag (self,tag):
+		if tag[-1] == ">":
+			# Only the tag itself or a collapsed tag are valid.
+			if self.matchTag(tag):
+				return false # Not a collapsed tag.
+			elif self.matchTag(tag[:-1]):
+				# It must be a collapsed tag.
+				self.skipWs()
+				if self.matchTag("/>"):
+					return true
+			print "getOpenTag(", tag, ") failed:"
+			raise BadLeoFile("expecting" + tag)
+		else:
+			# The tag need not be followed by "/>"
+			if self.matchTag(tag):
+				old_index = self.fileIndex
+				self.skipWs()
+				if self.matchTag("/>"):
+					return true
+				else:
+					self.fileIndex = old_index
+					return false
+			else:
+				print "getOpenTag(", tag, ") failed:"
+				raise BadLeoFile("expecting" + tag)
+		
+	# 11/24/02: Look ahead for closing />
+	# Return true if found.
 	def getTag (self,tag):
-		if not self.matchTag(tag):
+		if self.matchTag(tag):
+			return
+		else:
 			print "getTag(", tag, ") failed:"
 			raise BadLeoFile("expecting" + tag)
-			
+	
+	#@-body
+	#@-node:1::get routines
+	#@+node:2::match routines
+	#@+body
 	def matchChar (self,ch):
 		self.skipWs() # guarantees at least one more character.
 		if ch == self.fileBuffer[self.fileIndex]:
@@ -268,14 +305,18 @@ class fileCommands:
 			return true
 		else:
 			return false
+	
 	#@-body
+	#@-node:2::match routines
 	#@-node:1::get & match (basic)(leoFileCommands)
 	#@+node:2::getClipboardHeader
 	#@+body
 	def getClipboardHeader (self):
 	
-		self.getTag("<leo_header")
-		# New in version 1.7: fields may appear in any order.
+		trace()
+		if self.getOpenTag("<leo_header"):
+			return # 11/24/02
+	
 		while 1:
 			if self.matchTag("file_format="):
 				self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
@@ -294,14 +335,17 @@ class fileCommands:
 	
 	def getCloneWindows (self):
 	
-		if self.matchTag("<clone_windows>"):
-			while self.matchTag("<clone_window vtag=\"V"):
-				self.getLong() ; self.getDquote() ; self.getTag(">")
+		if not self.matchTag("<clone_windows>"):
+			return
+	
+		while self.matchTag("<clone_window vtag=\"V"):
+			self.getLong() ; self.getDquote() ; self.getTag(">")
+			if not self.getCollapsedOpenTag("<global_window_position"):
 				self.getTag("<global_window_position")
 				self.getPosition()
 				self.getTag("/>")
-				self.getTag("</clone_window>")
-			self.getTag("</clone_windows>")
+			self.getTag("</clone_window>")
+		self.getTag("</clone_windows>")
 	#@-body
 	#@-node:3::getCloneWindows
 	#@+node:4::getEscapedString
@@ -335,31 +379,31 @@ class fileCommands:
 		#@-body
 		#@-node:1::<< Set defaults of all flags >>
 
-		self.getTag("<find_panel_settings")
-		while 1:
-			if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
-			elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
-			elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
-			elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
-			elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
-			elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
-			elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
-			elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
-			elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
-			elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
-			elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
-			else: break
-		self.getTag(">")
-		#
-		self.getTag("<find_string>")
-		c.find_text = self.getEscapedString()
-		self.getTag("</find_string>")
-		#
-		self.getTag("<change_string>")
-		c.change_text = self.getEscapedString()
-		self.getTag("</change_string>")
-		#
-		self.getTag("</find_panel_settings>")
+		if not self.getOpenTag("<find_panel_settings"):
+			while 1:
+				if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
+				elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
+				elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
+				elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
+				elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
+				elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
+				elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
+				elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
+				elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
+				elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
+				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+				else: break
+			self.getTag(">")
+			#
+			self.getTag("<find_string>")
+			c.find_text = self.getEscapedString()
+			self.getTag("</find_string>")
+			#
+			self.getTag("<change_string>")
+			c.change_text = self.getEscapedString()
+			self.getTag("</change_string>")
+			#
+			self.getTag("</find_panel_settings>")
 		
 		# Override .leo file's preferences if settings are in leoConfig.txt.
 		config.setCommandsFindIvars(c)
@@ -371,7 +415,8 @@ class fileCommands:
 	#@+body
 	def getGlobals (self):
 	
-		self.getTag("<globals")
+		if self.getOpenTag("<globals"):
+			return
 	
 		self.getTag("body_outline_ratio=\"")
 		self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
@@ -390,7 +435,8 @@ class fileCommands:
 		self.frame.top.update()
 	
 		self.getTag("<global_log_window_position")
-		self.getPosition() ; self.getTag("/>") # no longer used.
+		self.getPosition() ;
+		self.getTag("/>") # no longer used.
 	
 		self.getTag("</globals>")
 	#@-body
@@ -499,7 +545,9 @@ class fileCommands:
 		# Set defaults.
 		self.maxTnodeIndex = 0
 		self.numberOfTnodes = 0
-		self.getTag("<leo_header")
+		if self.getOpenTag("<leo_header"):
+			return
+	
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
 			if self.matchTag("file_format="):
@@ -545,6 +593,7 @@ class fileCommands:
 	#@+body
 	def getPosition (self):
 	
+		trace()
 		top = left = height = width = 0
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
@@ -566,7 +615,9 @@ class fileCommands:
 	
 		a = app() ; c = self.commands ; config = a.config
 		
-		self.getTag("<preferences")
+		if self.getOpenTag("<preferences"):
+			return
+	
 		while 1:
 			if self.matchTag("allow_rich_text="):
 				self.getDquote() ; self.getBool() ; self.getDquote() #ignored
@@ -684,10 +735,14 @@ class fileCommands:
 	#@+body
 	def getTnodes (self):
 	
-		if self.matchTag("<tnodes>"):
-			while self.matchTag("<t"):
-				self.getTnode()
-			self.getTag("</tnodes>")
+		# A slight change: we require a tnode element.  But Leo always writes this.
+		if self.getOpenTag("<tnodes>"):
+			return
+			
+		while self.matchTag("<t"):
+			self.getTnode()
+		self.getTag("</tnodes>")
+	
 	#@-body
 	#@-node:15::getTnodes
 	#@+node:16::getVnode (Leo2)
@@ -762,9 +817,12 @@ class fileCommands:
 		else:
 			back = None ; parent = None
 	
-		self.getTag("<vnodes>")
+		if self.getOpenTag("<vnodes>"):
+			return
+	
 		while self.matchTag("<v"):
 			back = self.getVnode(parent,back)
+	
 		self.getTag("</vnodes>")
 	#@-body
 	#@-node:17::getVnodes

@@ -368,7 +368,75 @@ def set_language(s,i,issue_errors_flag=false):
 #@-body
 #@-node:3::set_language
 #@-node:1::@language and @comment directives (leoUtils)
-#@+node:2::scanDirectives (utils)
+#@+node:2::get_directives_dict
+#@+body
+#@+at
+#  Scans root for @directives and returns a dict containing pointers to the 
+# start of each directive.
+# 
+# The caller passes [root_node] or None as the second arg.  This allows us to 
+# distinguish between None and [None].
+
+#@-at
+#@@c
+
+def get_directives_dict(s,root=None):
+
+	if root: root_node = root[0]
+	dict = {}
+	i = 0 ; n = len(s)
+	while i < n:
+		if s[i] == '@' and i+1 < n:
+			
+			#@<< set dict for @ directives >>
+			#@+node:1::<< set dict for @ directives >>
+			#@+body
+			# EKR: rewritten 10/10/02
+			directiveList = (
+				"color", "comment", "header", "ignore",
+				"language", "nocolor", "noheader",
+				"pagewidth", "path", "quiet", "root", "silent",
+				"tabwidth", "terse", "unit", "verbose")
+			
+			j = skip_c_id(s,i+1)
+			word = s[i+1:j]
+			if word in directiveList:
+				dict [word] = i
+			
+			#@-body
+			#@-node:1::<< set dict for @ directives >>
+
+		elif root and match(s,i,"<<"):
+			
+			#@<< set dict["root"] for noweb * chunks >>
+			#@+node:2::<< set dict["root"] for noweb * chunks >>
+			#@+body
+			#@+at
+			#  The following looks for chunk definitions of the form < < * > > 
+			# =. If found, we take this to be equivalent to @root filename if 
+			# the headline has the form @root filename.
+
+			#@-at
+			#@@c
+
+			i = skip_ws(s,i+2)
+			if i < n and s[i] == '*' :
+				i = skip_ws(s,i+1) # Skip the '*'
+				if match(s,i,">>="):
+					# < < * > > = implies that @root should appear in the headline.
+					i += 3
+					if root_node:
+						dict["root"]=0 # value not immportant
+					else:
+						es(angleBrackets("*") + "= requires @root in the headline")
+			#@-body
+			#@-node:2::<< set dict["root"] for noweb * chunks >>
+
+		i = skip_line(s,i)
+	return dict
+#@-body
+#@-node:2::get_directives_dict
+#@+node:3::scanDirectives (utils)
 #@+body
 #@+at
 #  A general-purpose routine that scans v and its ancestors for directives.  
@@ -494,8 +562,8 @@ def scanDirectives(c,v=None):
 		"tabwidth"  : tab_width }
 
 #@-body
-#@-node:2::scanDirectives (utils)
-#@+node:3::findReference
+#@-node:3::scanDirectives (utils)
+#@+node:4::findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -516,7 +584,7 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:3::findReference
+#@-node:4::findReference
 #@-node:2::Directives...
 #@+node:3::enableMenu & disableMenu & setMenuLabel
 #@+body
@@ -1053,75 +1121,7 @@ def ensure_extension (name, ext):
 		return file + ext
 #@-body
 #@-node:2::ensure_extension
-#@+node:3::get_directives_dict
-#@+body
-#@+at
-#  Scans root for @directives and returns a dict containing pointers to the 
-# start of each directive.
-# 
-# The caller passes [root_node] or None as the second arg.  This allows us to 
-# distinguish between None and [None].
-
-#@-at
-#@@c
-
-def get_directives_dict(s,root=None):
-
-	if root: root_node = root[0]
-	dict = {}
-	i = 0 ; n = len(s)
-	while i < n:
-		if s[i] == '@' and i+1 < n:
-			
-			#@<< set dict for @ directives >>
-			#@+node:1::<< set dict for @ directives >>
-			#@+body
-			# EKR: rewritten 10/10/02
-			directiveList = (
-				"color", "comment", "header", "ignore",
-				"language", "nocolor", "noheader",
-				"pagewidth", "path", "quiet", "root", "silent",
-				"tabwidth", "terse", "unit", "verbose")
-			
-			j = skip_c_id(s,i+1)
-			word = s[i+1:j]
-			if word in directiveList:
-				dict [word] = i
-			
-			#@-body
-			#@-node:1::<< set dict for @ directives >>
-
-		elif root and match(s,i,"<<"):
-			
-			#@<< set dict["root"] for noweb * chunks >>
-			#@+node:2::<< set dict["root"] for noweb * chunks >>
-			#@+body
-			#@+at
-			#  The following looks for chunk definitions of the form < < * > > 
-			# =. If found, we take this to be equivalent to @root filename if 
-			# the headline has the form @root filename.
-
-			#@-at
-			#@@c
-
-			i = skip_ws(s,i+2)
-			if i < n and s[i] == '*' :
-				i = skip_ws(s,i+1) # Skip the '*'
-				if match(s,i,">>="):
-					# < < * > > = implies that @root should appear in the headline.
-					i += 3
-					if root_node:
-						dict["root"]=0 # value not immportant
-					else:
-						es(angleBrackets("*") + "= requires @root in the headline")
-			#@-body
-			#@-node:2::<< set dict["root"] for noweb * chunks >>
-
-		i = skip_line(s,i)
-	return dict
-#@-body
-#@-node:3::get_directives_dict
-#@+node:4::getBaseDirectory
+#@+node:3::getBaseDirectory
 #@+body
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
 
@@ -1141,8 +1141,8 @@ def getBaseDirectory():
 		return "" # No relative base given.
 
 #@-body
-#@-node:4::getBaseDirectory
-#@+node:5::getUserNewline
+#@-node:3::getBaseDirectory
+#@+node:4::getUserNewline
 #@+body
 def getOutputNewline ():
 	
@@ -1155,8 +1155,8 @@ def getOutputNewline ():
 	return s
 
 #@-body
-#@-node:5::getUserNewline
-#@+node:6::makeAllNonExistentDirectories
+#@-node:4::getUserNewline
+#@+node:5::makeAllNonExistentDirectories
 #@+body
 #@+at
 #  This is a generalization of os.makedir.
@@ -1195,8 +1195,8 @@ def makeAllNonExistentDirectories (dir):
 				return None
 	return dir1 # All have been created.
 #@-body
-#@-node:6::makeAllNonExistentDirectories
-#@+node:7::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:5::makeAllNonExistentDirectories
+#@+node:6::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1216,8 +1216,8 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:7::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:8::sanitize_filename
+#@-node:6::readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:7::sanitize_filename
 #@+body
 #@+at
 #  This prepares string s to be a valid file name:
@@ -1240,8 +1240,8 @@ def sanitize_filename(s):
 	s = ws.sub('_',s)
 	return s[:128]
 #@-body
-#@-node:8::sanitize_filename
-#@+node:9::shortFileName
+#@-node:7::sanitize_filename
+#@+node:8::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1250,8 +1250,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:9::shortFileName
-#@+node:10::update_file_if_changed
+#@-node:8::shortFileName
+#@+node:9::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1297,8 +1297,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:10::update_file_if_changed
-#@+node:11::utils_rename
+#@-node:9::update_file_if_changed
+#@+node:10::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1320,7 +1320,7 @@ def utils_rename(src,dst):
 		from distutils.file_util import move_file
 		move_file(src,dst)
 #@-body
-#@-node:11::utils_rename
+#@-node:10::utils_rename
 #@-node:6::Files & Directories...
 #@+node:7::Lists...
 #@+node:1::appendToList

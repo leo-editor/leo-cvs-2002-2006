@@ -26,13 +26,13 @@ leoFindScript.py
 leoFontPanel.py
 leoFrame.py
 leoGlobals.py
+leoHacks.py
 leoImport.py
 leoNodes.py
 leoPrefs.py
 leoTangle.py
 leoTree.py
 leoUndo.py
-leoUtils.py
 manifest.in
 openLeo.py
 setup.py
@@ -40,8 +40,8 @@ tangle_done.py
 untangle_done.py
 Icons\LeoApp.ico
 Icons\LeoDoc.ico
+Icons\LeoDoc64.ICO
 Icons\Leoapp.GIF
-Icons\Thumbs.db
 Icons\box00.GIF
 Icons\box00.bmp
 Icons\box01.GIF
