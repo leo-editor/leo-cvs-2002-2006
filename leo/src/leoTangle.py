@@ -844,11 +844,11 @@ class baseTangleCommands:
 		#@	<< return if @silent or unknown language >>
 		#@+node:<< return if @silent or unknown language >>
 		if self.language == "unknown":
-			es("**Unknown language for " + path)
+			es("@comment disables Untangle for " + path, color="blue")
 			return
 		
 		if self.print_mode in ("quiet","silent"):
-			es("@" + self.print_mode +  " inhibits untangle for " + path)
+			es("@" + self.print_mode +  " inhibits Untangle for " + path, color="blue")
 			return
 		#@-node:<< return if @silent or unknown language >>
 		#@nl
