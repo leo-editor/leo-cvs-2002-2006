@@ -405,7 +405,7 @@ class baseCommands:
 					app.openWithFiles.remove(d)
 			#@nonl
 			#@-node:<< remove previous entry from app.openWithFiles if it exists >>
-	#@afterref
+			#@afterref
  # 4/22/03
 			app.openWithFiles.append(dict)
 			return path
@@ -972,6 +972,7 @@ class baseCommands:
 		
 		We execute the selected text, or the entire body text if no text is selected."""
 		
+		error = false
 		c = self ; s = None
 		if v == None:
 			v = c.currentVnode()
@@ -1016,6 +1017,7 @@ class baseCommands:
 			if s.strip():
 				app.scriptDict["script1"]=s
 				df = c.atFileCommands.new_df
+				df.scanAllDirectives(v)
 				# Force Python comment delims.
 				df.startSentinelComment = "#"
 				df.endSentinelComment = None
@@ -1024,6 +1026,8 @@ class baseCommands:
 				df.write(v,nosentinels=false,scriptFile=fo)
 				s = fo.get()
 				app.scriptDict["script2"]=s
+				error = len(s) == 0
+		
 		finally:
 			v.t.setTnodeText(old_body)
 		#@nonl
@@ -1047,7 +1051,7 @@ class baseCommands:
 			except:
 				es("exception executing script")
 				es_exception(full=false)
-		else:
+		elif not error:
 			es("no script selected",color="blue")
 	#@nonl
 	#@-node:executeScript
@@ -2137,7 +2141,7 @@ class baseCommands:
 		if v.edit_text():
 			v.edit_text().delete("1.0","end")
 			v.edit_text().insert("1.0",s)
-			c.frame.onHeadChanged(v)
+			c.frame.tree.onHeadChanged(v)
 	#@-node:toggleAngleBrackets
 	#@+node:findPanel
 	def findPanel(self):
