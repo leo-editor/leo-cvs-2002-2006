@@ -2354,6 +2354,8 @@ class LeoFrame:
 		split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
 		# Switch directions.
 		verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
+		orientation = choose(verticalFlag,"vertical","horizontal")
+		app().config.setWindowPref("initial_splitter_orientation",orientation)
 		# Reconfigure the bars.
 		bar1.place_forget()
 		bar2.place_forget()

@@ -2,17 +2,17 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1990" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="30" left="169" height="24" width="79"/>
+	<global_window_position top="6" left="63" height="24" width="96"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
 <find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Diary</vh>
+<v t="T1"><vh>Diary</vh>
 <v><vh>Aug 2002</vh>
 <v t="T2"><vh>8/6 Leo writes prefs if leoConfig.txt is read-only</vh></v>
 <v t="T3"><vh>8/5 Leo honors pane ratio stored in .leo files</vh></v>
@@ -754,7 +754,7 @@
 <v t="T473"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="T474" a="E"><vh>To do</vh>
+<v t="T474"><vh>To do</vh>
 <v><vh>Check Java import</vh></v>
 <v><vh>Make unlimited undo an option</vh></v>
 <v><vh>After 3.4</vh>
@@ -805,7 +805,7 @@
 </v>
 </v>
 </v>
-<v t="T492"><vh>(Project Views)</vh>
+<v t="T492" a="E"><vh>(Project Views)</vh>
 <v><vh> Bugs</vh>
 <v><vh>(ConvertOutlineToNoweb crash)</vh>
 <v t="T493"><vh>OutlineToNoweb crash</vh></v>
@@ -973,7 +973,7 @@
 <v t="T606" a="C"><vh>showSuccess</vh></v>
 </v>
 </v>
-<v><vh> Commands &amp; utilities</vh>
+<v a="E"><vh> Commands &amp; utilities</vh>
 <v t="T607" a="C"><vh> Sherlock...</vh>
 <v t="T608"><vh>get_Sherlock_args</vh></v>
 <v t="T609"><vh>init_trace</vh></v>
@@ -1496,11 +1496,11 @@
 <v t="T508" a="C"><vh>v.sortChildren</vh></v>
 </v>
 </v>
-<v><vh> Window menu</vh>
+<v a="E"><vh> Window menu</vh>
 <v t="T899"><vh>(Cascade)</vh>
 <v t="T900" a="C"><vh>OnCascade</vh></v>
 </v>
-<v t="T901"><vh>(Toggle Split direction)</vh>
+<v t="T901" a="E"><vh>(Toggle Split direction)</vh>
 <v t="T902" a="C"><vh>c.__init__</vh>
 <v t="T903"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
 </v>
@@ -1509,7 +1509,7 @@
 <v t="T757"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
 </v>
 <v t="T904" a="C"><vh>resizePanesToRatio</vh></v>
-<v t="T905" a="C"><vh>OnToggleSplitDirection</vh></v>
+<v t="T905" a="CMV"><vh>OnToggleSplitDirection</vh></v>
 <v t="T906" a="C"><vh>Splitter stuff</vh>
 <v t="T907"><vh>bindBar</vh></v>
 <v t="T908" a="C"><vh>configureBar</vh></v>
@@ -3973,7 +3973,7 @@
 <v t="T1914"><vh>update_file_if_changed</vh></v>
 </v>
 </v>
-<v t="T1915"><vh>@file leoConfig.py</vh>
+<v t="T1915" a="E"><vh>@file leoConfig.py</vh>
 <v t="T1276" a="C"><vh>&lt;&lt; define default tables for settings &gt;&gt;</vh></v>
 <v t="T1275" a="CM"><vh>&lt;&lt; Define names of settings &gt;&gt;</vh></v>
 <v t="T1064" a="C"><vh>config.__init__</vh>
@@ -15644,6 +15644,8 @@ def OnToggleSplitDirection(self,event=None):
 	split2Pane1,split2Pane2 = self.split2Pane1,self.split2Pane2
 	# Switch directions.
 	verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
+	orientation = choose(verticalFlag,"vertical","horizontal")
+	app().config.setWindowPref("initial_splitter_orientation",orientation)
 	# Reconfigure the bars.
 	bar1.place_forget()
 	bar2.place_forget()
