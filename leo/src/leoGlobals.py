@@ -1627,7 +1627,26 @@ def update_file_if_changed(file_name,temp_name):
             g.es_exception()
 #@-node:ekr.20031218072017.1241:update_file_if_changed
 #@+node:ekr.20031218072017.1263:utils_rename
-# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
+#@+at 
+#@nonl
+# Here is the Python 2.4 documentation for rename (same as Python 2.3)
+# 
+# Rename the file or directory src to dst.  If dst is a directory, OSError 
+# will be raised.
+# 
+# On Unix, if dst exists and is a file, it will be removed silently if the 
+# user
+# has permission. The operation may fail on some Unix flavors if src and dst 
+# are
+# on different filesystems. If successful, the renaming will be an atomic
+# operation (this is a POSIX requirement).
+# 
+# On Windows, if dst already exists, OSError will be raised even if it is a 
+# file;
+# there may be no way to implement an atomic rename when dst names an existing
+# file.
+#@-at
+#@@c
 
 def utils_rename(src,dst):
 
@@ -1636,12 +1655,16 @@ def utils_rename(src,dst):
     head,tail=g.os_path_split(dst)
     if head and len(head) > 0:
         g.makeAllNonExistentDirectories(head)
-    
-    if sys.platform=="win32":
+        
+    if 1: # Use rename in all cases.
         os.rename(src,dst)
     else:
-        from distutils.file_util import move_file
-        move_file(src,dst)
+        # This isn't a great solution: distutils.file_util may not exist.
+        if sys.platform=="win32":
+            os.rename(src,dst)
+        else:
+            from distutils.file_util import move_file
+            move_file(src,dst)
 #@nonl
 #@-node:ekr.20031218072017.1263:utils_rename
 #@-node:ekr.20031218072017.3116:Files & Directories...
