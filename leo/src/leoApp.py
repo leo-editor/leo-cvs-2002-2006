@@ -325,6 +325,19 @@ class LeoApp:
 			self.root.quit()
 	#@nonl
 	#@-node:app.finishQuit
+	#@+node:app.forceShutdown
+	def forceShutdown (self):
+		
+		"""Forces an immediate shutdown of Leo at any time.
+		
+		In particular, may be called from plugins during startup."""
+		
+		for w in self.windowList[:]:
+			self.destroyWindow(w)
+	
+		self.finishQuit()
+	#@nonl
+	#@-node:app.forceShutdown
 	#@+node:app.get/setRealMenuName & setRealMenuNamesFromTable
 	# Returns the translation of a menu name or an item name.
 	
