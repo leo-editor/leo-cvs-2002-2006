@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:edream.110203113231:@file-thin pluginsNotes.txt
+#@+node:edream.110203113231:@thin pluginsNotes.txt
 #@@nocolor
 #@+all
 #@+node:edream.110203113231.3:Documentation and security warnings
@@ -2103,5 +2103,5 @@ def writeConfiguration(self):
 #@-node:EKR.20040608102548:(Fixed unicode bug in plugins_menu.py)
 #@-all
 #@nonl
-#@-node:edream.110203113231:@file-thin pluginsNotes.txt
+#@-node:edream.110203113231:@thin pluginsNotes.txt
 #@-leo
