@@ -5,7 +5,7 @@
 
 from leoGlobals import *
 import leo,leoConfig,leoDialog,leoFind
-import os, sys, Tkinter, traceback
+import os,sys,Tkinter,traceback
 
 class LeoApp:
 
@@ -41,6 +41,69 @@ class LeoApp:
 		# Global panels.  Destroyed when Leo ends.
 		self.findFrame = None
 		self.pythonFrame = None
+		
+		
+		#@<< Define global constants >>
+		#@+node:1::<< define global constants >>
+		#@+body
+		self.prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+		
+		# New in leo.py 3.0
+		self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
+		self.prolog_version_string1 = "UTF-8" # for leo.py 2.x
+		self.prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
+		self.prolog_postfix_string = "?>"
+		
+		#@-body
+		#@-node:1::<< define global constants >>
+
+		
+		#@<< Define global data structures >>
+		#@+node:2::<< define global data structures >>
+		#@+body
+		# Internally, lower case is used for all language names.
+		self.language_delims_dict = {
+			"c" : "// /* */", # C, C++ or objective C.
+			"cweb" : "@q@ @>", # Use the "cweb hack"
+			"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+			"fortran" : "C",
+			"fortran90" : "!",
+			"html" : "<!-- -->",
+			"java" : "// /* */",
+			"latex" : "%",
+			"pascal" : "// { }",
+			"perl" : "#",
+			"perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+			"php" : "//",
+			"plain" : "#", # We must pick something.
+			"python" : "#",
+			"shell" : "#",  # shell scripts
+			"tcltk" : "#",
+			"unknown" : "#" } # Set when @comment is seen.
+			
+		self.language_extension_dict = {
+			"c" : "c", 
+			"cweb" : "w",
+			"forth" : "forth",
+			"fortran" : "f",
+			"fortran90" : "f",
+			"html" : "html",
+			"java" : "java",
+			"latex" : "latex",
+			"noweb" : "nw",
+			"pascal" : "p",
+			"perl" : "perl",
+			"perlpod" : "perl", 
+			"php" : "php",
+			"plain" : "txt",
+			"python" : "py",
+			"shell" : "txt",
+			"tex" : "tex",
+			"tcltk" : "tcl",
+			"unknown" : "txt" } # Set when @comment is seen.
+		
+		#@-body
+		#@-node:2::<< define global data structures >>
 	#@-body
 	#@-node:1::app.__init__
 	#@+node:2::app.destroyAllGlobalWindows

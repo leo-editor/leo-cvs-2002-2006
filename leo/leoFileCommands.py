@@ -564,7 +564,7 @@ class fileCommands:
 	#@+body
 	def getPrefs (self):
 	
-		c = self.commands ; config = app().config
+		a = app() ; c = self.commands ; config = a.config
 		
 		self.getTag("<preferences")
 		while 1:
@@ -598,7 +598,7 @@ class fileCommands:
 				
 				language = "c" # default
 				
-				for name in language_delims_dict.keys():
+				for name in a.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
 						s = string.lower(name)
 						language = string.replace(name,"/","")
@@ -806,13 +806,14 @@ class fileCommands:
 
 	def getXmlVersionTag (self):
 		
-		config = app().config
-		self.getTag(prolog_prefix_string)
+		a = app() ; config = a.config
+	
+		self.getTag(a.prolog_prefix_string)
 		version = self.getDqString()
 		# config.version overrides the version in the .leo file.
 		if not config.xml_version_string:
 			config.xml_version_string = version
-		self.getTag(prolog_postfix_string)
+		self.getTag(a.prolog_postfix_string)
 	
 	#@-body
 	#@-node:19::getXmlVersionTag
@@ -1325,7 +1326,7 @@ class fileCommands:
 	#@+body
 	def putProlog (self):
 	
-		c = self.commands ; config = app().config
+		a = app() ; c = self.commands ; config = a.config
 	
 		
 		#@<< Put the <?xml...?> line >>
@@ -1335,13 +1336,13 @@ class fileCommands:
 		if not version or len(version) == 0:
 			# This is used only for new files without leoConfig.txt.
 			if 0: # "UTF-8"
-				version = prolog_version_string1 # leo.py 2.x
+				version = a.prolog_version_string1 # leo.py 2.x
 			else: # "ISO-8859-1"
-				version = prolog_version_string2 # leo.py 3.0
+				version = a.prolog_version_string2 # leo.py 3.0
 		
-		self.put(prolog_prefix_string) ; self.put_dquote()
+		self.put(a.prolog_prefix_string) ; self.put_dquote()
 		self.put(version) ; self.put_dquote()
-		self.put(prolog_postfix_string) ; self.put_nl()
+		self.put(a.prolog_postfix_string) ; self.put_nl()
 		#@-body
 		#@-node:1::<< Put the <?xml...?> line >>
 

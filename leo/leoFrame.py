@@ -7,7 +7,7 @@
 #@@language python 
 
 from leoGlobals import *
-import leoColor, leoCompare, leoDialog, leoFontPanel, leoNodes, leoPrefs
+import leoColor,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs
 import os,string,sys,traceback,Tkinter,tkFileDialog,tkFont
 
 # Needed for menu commands
@@ -1336,7 +1336,7 @@ class LeoFrame:
 		#@+body
 		dict = scanDirectives(c)
 		language = dict.get("language")
-		ext = language_extension_dict.get(language)
+		ext = a.language_extension_dict.get(language)
 		if ext == None: ext = "txt"
 		ext = "." + ext
 		# trace(language)

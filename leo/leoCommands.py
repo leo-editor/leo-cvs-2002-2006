@@ -172,18 +172,17 @@ class Commands:
 
 	def pasteOutline(self):
 	
-		c = self ; current = c.currentVnode()
+		a = app() ; c = self ; current = c.currentVnode()
 		
 		try:
-			s = app().root.selection_get(selection="CLIPBOARD")
+			s = a.root.selection_get(selection="CLIPBOARD")
 		except:
 			s = None # This should never happen.
 	
 		if not s or not c.canPasteOutline(s):
 			return # This should never happen.
 	
-		# isLeo = len(s)>=len(prolog_string) and prolog_string==s[0:len(prolog_string)]
-		isLeo = match(s,0,prolog_prefix_string)
+		isLeo = match(s,0,a.prolog_prefix_string)
 	
 		# trace(`s`)
 		if isLeo:
@@ -1006,17 +1005,15 @@ class Commands:
 	#@+body
 	def canPasteOutline (self,s=None):
 	
-		c = self
+		a = app() ; c = self
+	
 		if s == None:
 			try:
-				s = app().root.selection_get(selection="CLIPBOARD")
+				s = a.root.selection_get(selection="CLIPBOARD")
 			except:
 				return false
-	
-		# trace(`s`)
-		# if len(s) >= len(prolog_string) and s[0:len(prolog_string)] == prolog_string:
 			
-		if match(s,0,prolog_prefix_string):
+		if match(s,0,a.prolog_prefix_string):
 			return true
 		elif len(s) > 0:
 			return c.importCommands.stringIsValidMoreFile(s)

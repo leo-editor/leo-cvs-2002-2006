@@ -4,7 +4,7 @@
 #@@language python
 
 from leoGlobals import *
-import exceptions, os, string, sys, traceback, ConfigParser, tkFont
+import ConfigParser,exceptions,os,string,sys,tkFont,traceback
 
 class config:
 	
@@ -444,7 +444,7 @@ class config:
 	
 	def setCommandsIvars (self,c):
 	
-		config = self
+		config = self ; a = app()
 		
 		#@<< set prefs ivars >>
 		#@+node:1::<< set prefs ivars >>
@@ -483,7 +483,7 @@ class config:
 				val = string.lower(val)
 				if 1: # new
 					val = string.replace(val,"/","")
-					if language_delims_dict.get(val):
+					if a.language_delims_dict.get(val):
 						c.target_language = val
 				else: #old
 					for language,name in self.languageNameDict.items():
@@ -526,8 +526,10 @@ class config:
 	
 	def setConfigIvars (self,c):
 		
+		a = app()
+		
 		if 1: # new 
-			if c.target_language and language_delims_dict.get(c.target_language):
+			if c.target_language and a.language_delims_dict.get(c.target_language):
 				language = c.target_language
 			else:
 				language = "plain"

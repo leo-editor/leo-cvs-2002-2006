@@ -1,42 +1,40 @@
 #@+leo
 #@+node:0::@file leoGlobals.py
 #@+body
+# Global constants, variables and utility functions used throughout Leo.
+
+
 #@@language python
 
+import exceptions,os,string,sys,time,types,Tkinter,traceback
 
-#@+at
-#  Global constants, variables and utility functions used throughout Leo.
-# 
-# Most modules now do:
-# 
-# 	from leoGlobals import *
-# 
-# ?? Coming soon:
-# 
-# 	from leoGlobals import true,false,app,choose,es,enl,top,trace
-# 	import leoGlobals as g
-# 	(refer to most globals x using g.x)
 
-#@-at
-#@@c
+#@<< define general constants >>
+#@+node:1::<< define general constants >>
+#@+body
+body_newline = '\n'
+body_ignored_newline = '\r'
 
-import os,string,sys,time,types,Tkinter,traceback
+try:
+	true = True
+	false = False
+except:
+	print "True and False not defined"
+	true = 1
+	false = 0 # Better than None
+
+assert(false!=None)
+#@-body
+#@-node:1::<< define general constants >>
+
 
 
 #@+others
-#@+node:1::Most common functions
+#@+node:2::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 #@-body
-#@+node:1::true and false
-#@+body
-true = 1
-false = 0 # Better than None
-
-
-#@-body
-#@-node:1::true and false
-#@+node:2::app, setApp
+#@+node:1::app, setApp
 #@+body
 # *** Note *** the global statement makes sense only within functions!
 
@@ -48,16 +46,16 @@ def setApp(app):
 	global gApp
 	gApp = app
 #@-body
-#@-node:2::app, setApp
-#@+node:3::choose
+#@-node:1::app, setApp
+#@+node:2::choose
 #@+body
 def choose(cond, a, b): # warning: evaluates all arguments
 
 	if cond: return a
 	else: return b
 #@-body
-#@-node:3::choose
-#@+node:4::es, enl, ecnl
+#@-node:2::choose
+#@+node:3::es, enl, ecnl
 #@+body
 def ecnl():
 	ecnls(1)
@@ -88,8 +86,8 @@ def es(s):
 		# print "Null log:",
 		print s
 #@-body
-#@-node:4::es, enl, ecnl
-#@+node:5::top
+#@-node:3::es, enl, ecnl
+#@+node:4::top
 #@+body
 #@+at
 #  11/6/02: app().log is now set correctly when there are multiple windows.
@@ -124,77 +122,17 @@ def top():
 		return None
 
 #@-body
-#@-node:5::top
-#@+node:6::trace is defined below
-#@-node:6::trace is defined below
-#@+node:7::windows
+#@-node:4::top
+#@+node:5::trace is defined below
+#@-node:5::trace is defined below
+#@+node:6::windows
 #@+body
 def windows():
 	return app().windowList
 #@-body
-#@-node:7::windows
-#@-node:1::Most common functions
-#@+node:2::Global constants
-#@+body
-# General constants...
-body_newline = '\n'
-body_ignored_newline = '\r'
-prolog_string = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-
-# New in leo.py 3.0
-prolog_prefix_string = "<?xml version=\"1.0\" encoding="
-prolog_version_string1 = "UTF-8" # for leo.py 2.x
-prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
-prolog_postfix_string = "?>"
-
-#@-body
-#@-node:2::Global constants
-#@+node:3::Global dictionaries
-#@+body
-# Internally, lower case is used for all language names.
-language_delims_dict = {
-	"c" : "// /* */", # C, C++ or objective C.
-	"cweb" : "@q@ @>", # Use the "cweb hack"
-	"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
-	"fortran" : "C",
-	"fortran90" : "!",
-	"html" : "<!-- -->",
-	"java" : "// /* */",
-	"latex" : "%",
-	"pascal" : "// { }",
-	"perl" : "#",
-	"perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
-	"php" : "//",
-	"plain" : "#", # We must pick something.
-	"python" : "#",
-	"shell" : "#",  # shell scripts
-	"tcltk" : "#",
-	"unknown" : "#" } # Set when @comment is seen.
-	
-language_extension_dict = {
-	"c" : "c", 
-	"cweb" : "w",
-	"forth" : "forth",
-	"fortran" : "f",
-	"fortran90" : "f",
-	"html" : "html",
-	"java" : "java",
-	"latex" : "latex",
-	"noweb" : "nw",
-	"pascal" : "p",
-	"perl" : "perl",
-	"perlpod" : "perl", 
-	"php" : "php",
-	"plain" : "txt",
-	"python" : "py",
-	"shell" : "txt",
-	"tex" : "tex",
-	"tcltk" : "tcl",
-	"unknown" : "txt" } # Set when @comment is seen.
-
-#@-body
-#@-node:3::Global dictionaries
-#@+node:4::Commands, Dialogs, Directives & Menus...
+#@-node:6::windows
+#@-node:2::Most common functions
+#@+node:3::Commands, Dialogs, Directives & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::get_window_info
 #@+body
@@ -287,7 +225,9 @@ def create_labeled_frame (parent,
 
 def set_delims_from_language(language):
 	
-	val = language_delims_dict.get(language)
+	a = app()
+	
+	val = a.language_delims_dict.get(language)
 	if val:
 		delim1,delim2,delim3 = set_delims_from_string(val)
 		if delim2 and not delim3:
@@ -356,6 +296,7 @@ def set_delims_from_string(s):
 
 def set_language(s,i,issue_errors_flag):
 
+	a = app()
 	tag = "@language"
 	# trace(`get_line(s,i)`)
 	assert(i != None)
@@ -365,7 +306,7 @@ def set_language(s,i,issue_errors_flag):
 	j = i ; i = skip_c_id(s,i)
 	# Allow tcl/tk.
 	arg = string.lower(s[j:i])
-	if language_delims_dict.get(arg):
+	if a.language_delims_dict.get(arg):
 		language = arg
 		delim1, delim2, delim3 = set_delims_from_language(language)
 		return language, delim1, delim2, delim3
@@ -665,8 +606,8 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:4::Commands, Dialogs, Directives & Menus...
-#@+node:5::Dumping, Timing, Tracing & Sherlock
+#@-node:3::Commands, Dialogs, Directives & Menus...
+#@+node:4::Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -939,8 +880,8 @@ def esDiffTime(message, start):
 	return time.clock()
 #@-body
 #@-node:10::Timing
-#@-node:5::Dumping, Timing, Tracing & Sherlock
-#@+node:6::Files & Directories...
+#@-node:4::Dumping, Timing, Tracing & Sherlock
+#@+node:5::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1167,8 +1108,8 @@ def utils_rename(src,dst):
 
 #@-body
 #@-node:9::utils_rename
-#@-node:6::Files & Directories...
-#@+node:7::Lists...
+#@-node:5::Files & Directories...
+#@+node:6::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1201,8 +1142,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:7::Lists...
-#@+node:8::Scanning, selection, text & whitespace...
+#@-node:6::Lists...
+#@+node:7::Scanning, selection, text & whitespace...
 #@+node:1::scanError
 #@+body
 #@+at
@@ -1215,9 +1156,7 @@ def listToString(theList):
 def scanError(s):
 
 	# Bump the error count in the tangle command.
-	import leo
-	c = leo.topCommands()
-	c.tangleCommands.errors += 1
+	top().tangleCommands.errors += 1
 
 	es(s)
 #@-body
@@ -2212,8 +2151,8 @@ def returnNonEncodingChar(c,xml_encoding):
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
 #@-node:6::Unicode...
-#@-node:8::Scanning, selection, text & whitespace...
-#@+node:9::Startup & initialization...
+#@-node:7::Scanning, selection, text & whitespace...
+#@+node:8::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -2348,9 +2287,6 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 
 def handleLeoHook(tag):
 
-	from leoGlobals import es,es_exception
-	from leoGlobals import app,top
-	import exceptions
 	a = app() ; c = top() # c may be None during startup.
 
 	if a.hookError == true:
@@ -2422,10 +2358,8 @@ def unloadAll():
 
 #@-body
 #@-node:3::unloadAll
-#@-node:9::Startup & initialization...
+#@-node:8::Startup & initialization...
 #@-others
-
-
 
 
 #@-body

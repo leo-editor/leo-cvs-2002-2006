@@ -4,7 +4,7 @@
 #@@language python
 
 from leoGlobals import *
-import string, Tkinter
+import string,Tkinter
 
 # Public constants used for defaults when leoConfig.txt can not be read.
 default_page_width = 132

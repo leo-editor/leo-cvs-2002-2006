@@ -57,7 +57,7 @@
 
 
 from leoGlobals import *
-import Tkinter, types
+import Tkinter,types
 
 # Abbreviations
 set_undo_params = true ; dont_set_undo_params = false

@@ -6,7 +6,7 @@
 # Syntax coloring routines for Leo.py
 
 from leoGlobals import *
-import string, Tkinter, tkColorChooser, traceback
+import string,Tkinter,tkColorChooser,traceback
 
 
 #@<< define colorizer constants >>

@@ -1,11 +1,10 @@
 #@+leo
 #@+node:0::@file leo.py 
 #@+body
+# Entry point for Leo in Python.
+
+
 #@@language python
-
-# Top level of leo.py
-
-
 #@<< Import pychecker >>
 #@+node:1::<< Import pychecker >>
 #@+body
@@ -34,8 +33,9 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-node:1::<< Import pychecker >>
 
 from leoGlobals import *
-import leoApp,leoFrame,Tkinter
-import os,string,sys
+import leoApp,leoFrame
+import os,string,sys,Tkinter
+
 
 #@+others
 #@+node:2::go
