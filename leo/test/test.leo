@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6023" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6024" clone_windows="0"/>
 <globals body_outline_ratio="0.37962962963">
 	<global_window_position top="27" left="273" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -400,13 +400,26 @@
 <v t="ekr.20041105091229"><vh>test of g.pdb</vh></v>
 <v t="ekr.20041109164251"><vh>Test of template plugin</vh>
 <v t="ekr.20041109174338"><vh>The template</vh></v>
-<v t="ekr.20041109174338.1" a="E"><vh>A node that uses the template</vh></v>
+<v t="ekr.20041109174338.1"><vh>A node that uses the template</vh></v>
 </v>
 <v t="ekr.20041111084431"><vh>test of using changes to Go To Line number to handle scripts</vh>
-<v t="ekr.20041111084431.1" a="E"><vh>node that throws exception</vh></v>
+<v t="ekr.20041111084431.1"><vh>node that throws exception</vh></v>
+</v>
+<v t="ekr.20041111130231"><vh>Registering &amp; unregistering the "new" drawing hooks</vh>
+<v t="ekr.20041111124032"><vh>Register all new hooks</vh></v>
+<v t="ekr.20041111124353"><vh>Unregister all new hooks</vh></v>
+<v t="ekr.20041111130231.1"><vh>Print all new hooks</vh></v>
+</v>
+<v t="ekr.20041112094406.2"><vh>Mini test arguments to hooks</vh>
+<v t="ekr.20041112103504"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
+<v t="ekr.20041112094406.3"><vh>&lt;&lt; define hookData &gt;&gt;</vh></v>
+<v t="ekr.20041112100255"><vh>&lt;&lt; define typeData &gt;&gt;</vh></v>
+<v t="ekr.20041112102151"><vh>&lt;&lt; defineCheckHook &gt;&gt;</vh></v>
+<v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="E"><vh>Scripts &amp; buttons</vh>
+<v t="ekr.20041113113555" a="TV"><vh>@button spell check</vh></v>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -991,7 +1004,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -1278,18 +1291,6 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
-</v>
-<v t="ekr.20041111130231"><vh>Registering &amp; unregistering the "new" drawing hooks</vh>
-<v t="ekr.20041111124032"><vh>Register all new hooks</vh></v>
-<v t="ekr.20041111124353"><vh>Unregister all new hooks</vh></v>
-<v t="ekr.20041111130231.1"><vh>Print all new hooks</vh></v>
-</v>
-<v t="ekr.20041112094406.2" a="E"><vh>Mini test arguments to hooks</vh>
-<v t="ekr.20041112103504"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041112094406.3" a="E"><vh>&lt;&lt; define hookData &gt;&gt;</vh></v>
-<v t="ekr.20041112100255" a="E"><vh>&lt;&lt; define typeData &gt;&gt;</vh></v>
-<v t="ekr.20041112102151" a="ETV"><vh>&lt;&lt; defineCheckHook &gt;&gt;</vh></v>
-<v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10717,5 +10718,23 @@ import Tkinter as Tk</t>
         (arg_type is type(val)) or
         (arg_type == types.StringType and type(val) is types.UnicodeType) or
         (type(arg_type) == types.ClassType and isinstance(val,arg_type)))</t>
+<t tx="ekr.20041113113555">import leoGlobals as g
+import leoPlugins
+
+def check():
+    spellpyx.spellFrame.checkSpelling()
+    
+def createMenu():
+    spellpyx.createSpellMenu("tag",keywords={"c":g.top()})
+
+spellpyx = leoPlugins.getPluginModule("spellpyx")
+
+if spellpyx:
+    check()
+else:
+    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose = True)
+    if spellpyx:
+        createMenu()
+        check()</t>
 </tnodes>
 </leo_file>

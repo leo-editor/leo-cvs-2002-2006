@@ -171,6 +171,8 @@ def getHandlersForOneTag (tag):
 #@+node:ekr.20041114113029:getPluginModule
 def getPluginModule (moduleName):
     
+    global loadedModules
+    
     return loadedModules.get(moduleName)
 #@nonl
 #@-node:ekr.20041114113029:getPluginModule

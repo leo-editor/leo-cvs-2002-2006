@@ -11,13 +11,17 @@
 # 0.3: DS, Works with multiple open files.
 # 0.4: EKR: 4.2 coding style, enable or disable buttons, support for unit 
 # tests.
-# 0.5: EKR: Use constant size for non Windows platforms
+# 0.5: EKR: Use constant size for non Windows platforms.
+# 0.6: EKR:
+#     - Added USE_SIZER and USE_FIXED_SIZES.
+#       When USE_SIZER is False (recommended), the code creates buttons using 
+# c.frame.addIconButton.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511:<< change history >>
 #@nl
 
-__version__ = "0.5"
+__version__ = "0.6"
   
 #@<< hoist.py imports >>
 #@+node:ekr.20040908093511.1:<< hoist.py imports >>
