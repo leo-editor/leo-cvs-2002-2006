@@ -1,24 +1,19 @@
 #@+leo
 
 #@+node:0::@file leoCompare.py
-
 #@+body
-
 #@+at
 #  This file contains compare routines used for testing and I hack away as needed.  To save typing, I usually invoke the go() from 
 # the Python interpreter.
 
 #@-at
-
 #@@c
 
 import difflib, filecmp, os, string
 
 
 #@+others
-
 #@+node:1::choose
-
 #@+body
 def choose(cond, a, b): # warning: evaluates all arguments
 
@@ -26,11 +21,8 @@ def choose(cond, a, b): # warning: evaluates all arguments
 	else: return b
 
 #@-body
-
 #@-node:1::choose
-
 #@+node:2::cmp
-
 #@+body
 def cmp(name1,name2):
 
@@ -45,11 +37,8 @@ def cmp(name1,name2):
 
 	return val
 #@-body
-
 #@-node:2::cmp
-
 #@+node:3::compare
-
 #@+body
 def compare(f1,f2,name1,name2,verbose):
 
@@ -62,10 +51,8 @@ def compare(f1,f2,name1,name2,verbose):
 			s2 = string.lstrip(s2)
 		if 1: # LeoCB doesn't delete whitespace as well as leo.py.
 			
-#@<< ignore blank lines >>
-
+			#@<< ignore blank lines >>
 			#@+node:1::<< ignore blank lines >>
-
 			#@+body
 			while 1:
 				s = string.rstrip(s1)
@@ -80,7 +67,6 @@ def compare(f1,f2,name1,name2,verbose):
 					if len(s1) == 0: break
 				else: break
 			#@-body
-
 			#@-node:1::<< ignore blank lines >>
 
 		n1 = len(s1) ; n2 = len(s2)
@@ -101,11 +87,8 @@ def compare(f1,f2,name1,name2,verbose):
 	if n1>0: dumpEnd("1",f1)
 	if n2>0: dumpEnd("2",f2)
 #@-body
-
 #@-node:3::compare
-
 #@+node:4::compare_files
-
 #@+body
 def compare_files (name1,name2,verbose):
 	
@@ -118,11 +101,8 @@ def compare_files (name1,name2,verbose):
 		f2.close()
 	except: pass
 #@-body
-
 #@-node:4::compare_files
-
 #@+node:5::compare_lines
-
 #@+body
 def compare_lines(s1,s2):
 
@@ -136,11 +116,8 @@ def compare_lines(s1,s2):
 		s2 = string.strip(s2)
 	return s1==s2
 #@-body
-
 #@-node:5::compare_lines
-
 #@+node:6::compareDirs
-
 #@+body
 def compareDirs(dir1,dir2): # make ".py" an arg.
 
@@ -173,11 +150,8 @@ def compareDirs(dir1,dir2): # make ".py" an arg.
   print ; print "not found:",
   for f in fail: print f,
 #@-body
-
 #@-node:6::compareDirs
-
 #@+node:7::compare_directories
-
 #@+body
 def compare_directories(path1,path2,verbose):
 
@@ -204,11 +178,8 @@ def compare_directories(path1,path2,verbose):
 			f1.close() ; f2.close()
 			## return ## just one
 #@-body
-
 #@-node:7::compare_directories
-
 #@+node:8::crlf & count_crlf
-
 #@+body
 def crlf(f1,f2):
 	s1=f1.read() ; s2=f2.read()
@@ -225,11 +196,8 @@ def count_crlf(s):
 	return cr,lf
 
 #@-body
-
 #@-node:8::crlf & count_crlf
-
 #@+node:9::diff (does not exist!)
-
 #@+body
 def diff(f1,f2):
 
@@ -238,11 +206,8 @@ def diff(f1,f2):
 	delta = s.compare(s1,s2)
 	print len(delta)
 #@-body
-
 #@-node:9::diff (does not exist!)
-
 #@+node:10::doOpen
-
 #@+body
 def doOpen(name):
 
@@ -253,11 +218,8 @@ def doOpen(name):
 		print "can not open:", `name`
 		return None
 #@-body
-
 #@-node:10::doOpen
-
 #@+node:11::dump
-
 #@+body
 def dump(tag,line,mark,s):
 
@@ -277,11 +239,8 @@ def dump(tag,line,mark,s):
 	print out
 
 #@-body
-
 #@-node:11::dump
-
 #@+node:12::dumpEnd
-
 #@+body
 def dumpEnd(tag,f):
 
@@ -294,11 +253,8 @@ def dumpEnd(tag,f):
 
 	print "file", tag, "has", lines, "trailing lines"
 #@-body
-
 #@-node:12::dumpEnd
-
 #@+node:13::go()
-
 #@+body
 def go(name=None):
 
@@ -313,11 +269,8 @@ def go(name=None):
 		verbose = 0
 		compare_files(name1,name2,verbose)
 #@-body
-
 #@-node:13::go()
-
 #@+node:14::sequence (hangs)
-
 #@+body
 def sequence(f1,f2):
 
@@ -329,13 +282,9 @@ def sequence(f1,f2):
 	# print s.ratio() # hangs
 
 #@-body
-
 #@-node:14::sequence (hangs)
-
 #@-others
 
 #@-body
-
 #@-node:0::@file leoCompare.py
-
 #@-leo

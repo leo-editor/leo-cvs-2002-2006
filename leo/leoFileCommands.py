@@ -1,7 +1,6 @@
 #@+leo
 
 #@+node:0::@file leoFileCommands.py
-
 #@+body
 from leoGlobals import *
 from leoUtils import *
@@ -17,14 +16,12 @@ class BadLeoFile:
 	def __init__(self, message):
 		self.message = message
 	def __str__(self):
-		return "Bad Leo File:" + message
+		return "Bad Leo File:" + self.message
 
 class fileCommands:
 
 	#@+others
-
 	#@+node:1::ctor leoFileCommands
-
 	#@+body
 	def __init__(self,commands):
 	
@@ -54,62 +51,9 @@ class fileCommands:
 		self.openDirectory = None
 		self.usingClipboard = false
 	#@-body
-
 	#@-node:1::ctor leoFileCommands
-
 	#@+node:2::Reading
-
-	#@+node:1::checkAllFileDates
-
-	#@+body
-	def checkAllFileDates ( self ):
-	
-		return # disable all this: disabling is very dangerous!
-	
-		c=self.commands
-		at = c.atFileCommands
-		# es("Checking @file dates...")
-		changed = FALSE
-		v = c.tree.rootVnode
-		while v:
-			if v.isAtIgnoreNode():
-				v = v.nodeAfterTree()
-			elif v.isAtFileNode():
-				
-	#@<< update v if it has changed since last load >>
-
-				#@+node:1::<< update v if it has changed since last load >>
-
-				#@+body
-				if not v.isOrphan() and v.fileDate != -1:
-					fileName = v.atFileNodeName()
-					if FileExists(fileName):
-						fileDate = FileAge(fileName)
-						if fileDate > v.fileDate:
-							es("Updating " + fileName)
-							ok = at.read(v,0) # no error recovery
-							if ok:
-								v .setDirty()
-								changed = true
-				#@-body
-
-				#@-node:1::<< update v if it has changed since last load >>
-
-				v = v.nodeAfterTree();
-			else: v = v.threadNext();
-		
-		if changed and c.tree.currentVnode:
-			v = c.tree.currentVnode
-			t = v.t
-			if t.bodyString() != c.body.GetValue():
-				# This will mark _always_ mark the current node as dirty.
-				t.loadBodyPaneFromTnode(c.body)
-	#@-body
-
-	#@-node:1::checkAllFileDates
-
-	#@+node:2::createVnode
-
+	#@+node:1::createVnode
 	#@+body
 	def createVnode(self,parent,back,tref,headline):
 	
@@ -133,29 +77,24 @@ class fileCommands:
 		v.initHeadString(headline)
 		return v
 	#@-body
-
-	#@-node:2::createVnode
-
-	#@+node:3::finishPaste (creating join lists could be a problem)
-
+	#@-node:1::createVnode
+	#@+node:2::finishPaste (creating join lists could be a problem)
 	#@+body
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
 	
 		c=self.commands
-		current = c.tree.currentVnode
+		current = c.currentVnode()
 		after = current.nodeAfterTree()
 		c.beginUpdate()
 		if 1: # inside update...
 			if 0: # Warning: this will only join pasted clones, and is very dangerous.
 				
-	#@<< Create join lists of all pasted vnodes >>
-
+				#@<< Create join lists of all pasted vnodes >>
 				#@+node:1::<< Create join lists of all pasted vnodes >>
-
 				#@+body
 				# Pass 1: create all join lists using tnode::joinHead
-				v = c.tree.currentVnode
+				v = c.currentVnode()
 				while v and v != after:
 					# Put v at the head of t's list of joined vnodes.
 					v.setJoinList(v.t.joinHead)
@@ -163,7 +102,7 @@ class fileCommands:
 					v = v.threadNext()
 					
 				# Pass 2: circularize each join list.
-				v = c.tree.currentVnode
+				v = c.currentVnode()
 				while v and v != after:
 					head = v.t.joinHead
 					if not head:
@@ -182,32 +121,25 @@ class fileCommands:
 					# Link last to head.
 					last.setJoinList(head)
 					v = v.threadNext()
-
 				#@-body
-
 				#@-node:1::<< Create join lists of all pasted vnodes >>
 
 			
-	#@<< Recompute clone bits for pasted vnodes >>
-
+			#@<< Recompute clone bits for pasted vnodes >>
 			#@+node:2::<< Recompute clone bits for pasted vnodes >>
-
 			#@+body
-
 			#@+at
 			#  This must be done after the join lists have been created.  The saved clone bit is unreliable for pasted nodes.
 
 			#@-at
-
 			#@@c
 			
-			v = c.tree.currentVnode
+			v = c.currentVnode()
 			while v and v != after:
 				v.initClonedBit(v.shouldBeClone())
 				v.clearDirty()
 				v = v.threadNext()
 			#@-body
-
 			#@-node:2::<< Recompute clone bits for pasted vnodes >>
 
 			self.compactFileIndices()
@@ -215,15 +147,11 @@ class fileCommands:
 		c.endUpdate()
 		return current
 	#@-body
-
-	#@-node:3::finishPaste (creating join lists could be a problem)
-
-	#@+node:4::get routines
-
+	#@-node:2::finishPaste (creating join lists could be a problem)
+	#@+node:3::get routines
 	#@+node:1::get & match (basic)
-
 	#@+body
-	def getBool(self):
+	def getBool (self):
 		self.skipWs() # guarantees at least one more character.
 		ch = self.fileBuffer[self.fileIndex]
 		if ch == '0':
@@ -237,7 +165,7 @@ class fileCommands:
 		self.getDquote() ; val = self.getBool() ; self.getDquote()
 		return val
 	
-	def getDouble(self):
+	def getDouble (self):
 		self.skipWs()
 		i = self.fileIndex ; buf = self.fileBuffer
 		floatChars = string.digits + 'e' + 'E' + '.' + '+' + '-'
@@ -250,15 +178,15 @@ class fileCommands:
 		self.fileIndex = i
 		return val
 	
-	def getDquote(self):
+	def getDquote (self):
 		self.getTag('"')
 		
-	def getIndex(self):
+	def getIndex (self):
 		val = self.getLong()
 		if val < 0: raise BadLeoFile("expecting index")
 		return val
 		
-	def getLong(self):
+	def getLong (self):
 		self.skipWs() # guarantees at least one more character.
 		i = self.fileIndex
 		if self.fileBuffer[i] == '-':
@@ -272,12 +200,12 @@ class fileCommands:
 		self.fileIndex = i
 		return val
 	
-	def getTag(self,tag):
+	def getTag (self,tag):
 		if not self.matchTag(tag):
 			print "getTag(", tag, ") failed:"
 			raise BadLeoFile("expecting" + tag)
 			
-	def matchChar(self,ch):
+	def matchChar (self,ch):
 		self.skipWs() # guarantees at least one more character.
 		if ch == self.fileBuffer[self.fileIndex]:
 			self.fileIndex += 1 ; return true
@@ -285,7 +213,7 @@ class fileCommands:
 	
 	# Warning: does not check for end-of-word,
 	# so caller must match prefixes first.
-	def matchTag(self,tag):
+	def matchTag (self,tag):
 		self.skipWsAndNl() # guarantees at least one more character.
 		i = self.fileIndex
 		# if string.find(self.fileBuffer,tag,i,i+len(tag)) == i:
@@ -295,13 +223,10 @@ class fileCommands:
 		else:
 			return false
 	#@-body
-
 	#@-node:1::get & match (basic)
-
 	#@+node:2::getClipboardHeader
-
 	#@+body
-	def getClipboardHeader(self):
+	def getClipboardHeader (self):
 	
 		self.getTag("<leo_header")
 		# New in version 1.7: fields may appear in any order.
@@ -316,15 +241,12 @@ class fileCommands:
 				self.getTag("/>")
 				break
 	#@-body
-
 	#@-node:2::getClipboardHeader
-
 	#@+node:3::getCloneWindows
-
 	#@+body
 	# For compatibility with old file formats.
 	
-	def getCloneWindows(self):
+	def getCloneWindows (self):
 	
 		if self.matchTag("<clone_windows>"):
 			while self.matchTag("<clone_window vtag=\"V"):
@@ -335,13 +257,10 @@ class fileCommands:
 				self.getTag("</clone_window>")
 			self.getTag("</clone_windows>")
 	#@-body
-
 	#@-node:3::getCloneWindows
-
 	#@+node:4::getEscapedString
-
 	#@+body
-	def getEscapedString(self):
+	def getEscapedString (self):
 	
 		# The next '<' begins the ending tag.
 		i = self.fileIndex
@@ -352,20 +271,15 @@ class fileCommands:
 			# Allocates memory
 			return self.xmlUnescape(self.fileBuffer[i:j])
 	#@-body
-
 	#@-node:4::getEscapedString
-
 	#@+node:5::getFindPanelSettings
-
 	#@+body
-	def getFindPanelSettings(self):
+	def getFindPanelSettings (self):
 	
 		c = self.commands
 		
-	#@<< Set defaults of all flags >>
-
+		#@<< Set defaults of all flags >>
 		#@+node:1::<< Set defaults of all flags >>
-
 		#@+body
 		import leoFind
 		
@@ -373,7 +287,6 @@ class fileCommands:
 			exec("c.%s_flag = false" % var)
 
 		#@-body
-
 		#@-node:1::<< Set defaults of all flags >>
 
 		self.getTag("<find_panel_settings")
@@ -404,13 +317,10 @@ class fileCommands:
 		# Update the settings immediately.
 		app().findFrame.init(c)
 	#@-body
-
 	#@-node:5::getFindPanelSettings
-
 	#@+node:6::getGlobals
-
 	#@+body
-	def getGlobals(self):
+	def getGlobals (self):
 	
 		self.getTag("<globals")
 		#
@@ -433,13 +343,10 @@ class fileCommands:
 		#
 		self.getTag("</globals>")
 	#@-body
-
 	#@-node:6::getGlobals
-
 	#@+node:7::getLeoFile (Leo2)
-
 	#@+body
-	def getLeoFile(self,frame,atFileNodesFlag):
+	def getLeoFile (self,frame,atFileNodesFlag):
 	
 		c=self.commands
 		self.mFileName = frame.mFileName
@@ -458,20 +365,18 @@ class fileCommands:
 			self.getCloneWindows()
 			self.getTag("</leo_file>")
 			
-	#@<< Create join lists of all vnodes >>
-
+			#@<< Create join lists of all vnodes >>
 			#@+node:1::<< Create join lists of all vnodes >>
-
 			#@+body
 			# Pass 1: create all join lists using the joinHead field in each tnode
-			v = c.tree.rootVnode
+			v = c.rootVnode()
 			while v:
 				v.setJoinList(v.t.joinHead)
 				v.t.setJoinHead(v)
 				v = v.threadNext()
 			
 			# Pass 2: Circularize each join list.
-			v = c.tree.rootVnode
+			v = c.rootVnode()
 			while v:
 				head = v.t.joinHead
 				if not head:
@@ -492,7 +397,6 @@ class fileCommands:
 				last.setJoinList(head)
 				v = v.threadNext()
 			#@-body
-
 			#@-node:1::<< Create join lists of all vnodes >>
 
 		except BadLeoFile, message: # All other exceptions are Leo bugs
@@ -501,7 +405,7 @@ class fileCommands:
 		# Leo2: read all @file nodes and reset orphan bits.
 		if ok and atFileNodesFlag:
 			at = c.atFileCommands
-			at.readAll(c.tree.rootVnode, false) # partialFlag
+			at.readAll(c.rootVnode(), false) # partialFlag
 		if not c.tree.currentVnode:
 			c.tree.currentVnode = c.tree.rootVnode
 		c.selectVnode(c.tree.currentVnode) # load body pane
@@ -510,15 +414,11 @@ class fileCommands:
 		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
-
 	#@-node:7::getLeoFile (Leo2)
-
 	#@+node:8::getLeoHeader
-
 	#@+body
-	def getLeoHeader(self):
+	def getLeoHeader (self):
 	
-		c=self.commands
 		# Set defaults.
 		self.maxTnodeIndex = 0
 		self.numberOfTnodes = 0
@@ -537,14 +437,11 @@ class fileCommands:
 				self.getTag("/>")
 				break
 	#@-body
-
 	#@-node:8::getLeoHeader
-
 	#@+node:9::getLeoOutline (from clipboard)
-
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
-	def getLeoOutline(self,s):
+	def getLeoOutline (self,s):
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
@@ -565,13 +462,10 @@ class fileCommands:
 		self.usingClipboard = false
 		return v
 	#@-body
-
 	#@-node:9::getLeoOutline (from clipboard)
-
 	#@+node:10::getPosition
-
 	#@+body
-	def getPosition(self):
+	def getPosition (self):
 	
 		top = left = height = width = 0
 		# New in version 1.7: attributes may appear in any order.
@@ -587,13 +481,10 @@ class fileCommands:
 			else: break
 		return top, left, height, width
 	#@-body
-
 	#@-node:10::getPosition
-
 	#@+node:11:C=1:fileCommands.getPrefs
-
 	#@+body
-	def getPrefs(self):
+	def getPrefs (self):
 	
 		c = self.commands
 		prefs = app().prefsFrame
@@ -622,10 +513,8 @@ class fileCommands:
 				# New in version 0.15
 				self.getDquote()
 				
-	#@<< check for syntax coloring prefs >>
-
+				#@<< check for syntax coloring prefs >>
 				#@+node:1::<< check for syntax coloring prefs >>
-
 				#@+body
 				# Must match longer tags before short prefixes.
 				language = c_language # default
@@ -651,7 +540,6 @@ class fileCommands:
 				
 				c.target_language = language
 				#@-body
-
 				#@-node:1::<< check for syntax coloring prefs >>
 
 			elif self.matchTag("use_header_flag="):
@@ -672,13 +560,10 @@ class fileCommands:
 		self.getTag("</preferences>")
 		prefs.init(c)
 	#@-body
-
 	#@-node:11:C=1:fileCommands.getPrefs
-
 	#@+node:12::getSize
-
 	#@+body
-	def getSize(self):
+	def getSize (self):
 	
 		# New in version 1.7: attributes may appear in any order.
 		height = 0 ; width = 0
@@ -690,26 +575,20 @@ class fileCommands:
 			else: break
 		return height, width
 	#@-body
-
 	#@-node:12::getSize
-
 	#@+node:13::getT
-
 	#@+body
-	def getT(self,index):
+	def getT (self,index):
 	
 		if self.tnodesDict.has_key(index):
 			return self.tnodesDict[index]
 		else:
 			return None
 	#@-body
-
 	#@-node:13::getT
-
 	#@+node:14::getTnode
-
 	#@+body
-	def getTnode(self):
+	def getTnode (self):
 	
 		# we have already matched <t.
 		index = -1
@@ -717,8 +596,8 @@ class fileCommands:
 		while 1:
 			if self.matchTag("tx=\"T"):
 				index = self.getIndex() ; self.getDquote()
-			elif self.matchTag("rtf=\"1\""): rtf = true # ignored
-			elif self.matchTag("rtf=\"0\""): rtf = false # ignored
+			elif self.matchTag("rtf=\"1\""): pass # ignored
+			elif self.matchTag("rtf=\"0\""): pass # ignored
 			else: break
 		self.getTag(">")
 		t = self.getT(index)
@@ -726,30 +605,24 @@ class fileCommands:
 			s = self.getEscapedString()
 			t.setTnodeText(s)
 		else: # No vnode refers to this tnode.
-			es("No tnode with index: ", `index`, ".  The text will be discarded")
+			es("No tnode with index: " + `index` + ".  The text will be discarded")
 			self.getEscapedString()
 		self.getTag("</t>")
 	#@-body
-
 	#@-node:14::getTnode
-
 	#@+node:15::getTnodes
-
 	#@+body
-	def getTnodes(self):
+	def getTnodes (self):
 	
 		if self.matchTag("<tnodes>"):
 			while self.matchTag("<t"):
 				self.getTnode()
 			self.getTag("</tnodes>")
 	#@-body
-
 	#@-node:15::getTnodes
-
 	#@+node:16::getVnode (Leo2)
-
 	#@+body
-	def getVnode(self,parent,back):
+	def getVnode (self,parent,back):
 	
 		# trace("parent:" + `parent` + ", back:" + `back`)
 		c=self.commands
@@ -767,13 +640,11 @@ class fileCommands:
 			if self.matchTag("t=\"T"):
 				tref = self.getIndex() ; self.getDquote()
 			elif self.matchTag("vtag=\"V"):
-				vtag = self.getIndex() ; self.getDquote()
+				self.getIndex() ; self.getDquote() # ignored
 			elif self.matchTag("a=\""):
 				
-	#@<< Handle vnode attribute bits >>
-
+				#@<< Handle vnode attribute bits >>
 				#@+node:1::<< Handle vnode attribute bits  >>
-
 				#@+body
 				# The a=" has already been seen.
 				while 1:
@@ -787,7 +658,6 @@ class fileCommands:
 					else: break
 				self.getDquote()
 				#@-body
-
 				#@-node:1::<< Handle vnode attribute bits  >>
 
 			else: break
@@ -810,18 +680,15 @@ class fileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-
 	#@-node:16::getVnode (Leo2)
-
 	#@+node:17::getVnodes
-
 	#@+body
-	def getVnodes(self):
+	def getVnodes (self):
 	
 		c=self.commands
 		if  self.usingClipboard:
 			# Paste after the current vnode.
-			back = c.tree.currentVnode ; parent = back.parent()
+			back = c.currentVnode() ; parent = back.parent()
 		else:
 			back = None ; parent = None
 	
@@ -830,13 +697,10 @@ class fileCommands:
 			back = self.getVnode(parent,back)
 		self.getTag("</vnodes>")
 	#@-body
-
 	#@-node:17::getVnodes
-
 	#@+node:18::skipWs
-
 	#@+body
-	def skipWs(self):
+	def skipWs (self):
 	
 		while self.fileIndex < len(self.fileBuffer):
 			ch = self.fileBuffer[self.fileIndex]
@@ -848,13 +712,10 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-
 	#@-node:18::skipWs
-
 	#@+node:19::skipWsAndNl
-
 	#@+body
-	def skipWsAndNl(self):
+	def skipWsAndNl (self):
 	
 		while self.fileIndex < len(self.fileBuffer):
 			ch = self.fileBuffer[self.fileIndex]
@@ -866,13 +727,9 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-
 	#@-node:19::skipWsAndNl
-
-	#@-node:4::get routines
-
-	#@+node:5::newTnode
-
+	#@-node:3::get routines
+	#@+node:4::newTnode
 	#@+body
 	def newTnode(self,index):
 	
@@ -885,22 +742,16 @@ class fileCommands:
 			self.tnodesDict[index] = t
 			return t
 	#@-body
-
-	#@-node:5::newTnode
-
-	#@+node:6::readAtFileNodes
-
+	#@-node:4::newTnode
+	#@+node:5::readAtFileNodes
 	#@+body
 	def readAtFileNodes (self):
 	
 		c = self.commands
-		c.atFileCommands.readAll(c.tree.currentVnode, true) # partialFlag
+		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
 	#@-body
-
-	#@-node:6::readAtFileNodes
-
-	#@+node:7:C=2:fileCommands.readOutlineOnly
-
+	#@-node:5::readAtFileNodes
+	#@+node:6:C=2:fileCommands.readOutlineOnly
 	#@+body
 	def readOutlineOnly (self,file,fileName):
 	
@@ -909,25 +760,20 @@ class fileCommands:
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
 		
-	#@<< Set the default directory >>
-
+		#@<< Set the default directory >>
 		#@+node:1:C=3:<< Set the default directory >>
-
 		#@+body
-
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
 		# has specified the "Default Directory" preference that will over-ride what we are about to set.
 
 		#@-at
-
 		#@@c
 		
 		dir = os.path.dirname(fileName) 
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-
 		#@-node:1:C=3:<< Set the default directory >>
 
 		c.beginUpdate()
@@ -945,40 +791,32 @@ class fileCommands:
 		self.fileBuffer = ""
 		return ok
 	#@-body
-
-	#@-node:7:C=2:fileCommands.readOutlineOnly
-
-	#@+node:8:C=4:fileCommands.open
-
+	#@-node:6:C=2:fileCommands.readOutlineOnly
+	#@+node:7:C=4:fileCommands.open
 	#@+body
 	def open(self,file,fileName):
 	
 		c=self.commands
 		# Read the entire file into the buffer
-		# t = setTime()
+		# t = getTime()
 		self.fileBuffer = file.read() ; file.close()
 		self.fileIndex = 0
 		# esDiffTime("open:read all", t)
 		
-	#@<< Set the default directory >>
-
+		#@<< Set the default directory >>
 		#@+node:1:C=3:<< Set the default directory >>
-
 		#@+body
-
 		#@+at
 		#  The most natural default directory is the directory containing the .leo file that we are about to open.  If the user 
 		# has specified the "Default Directory" preference that will over-ride what we are about to set.
 
 		#@-at
-
 		#@@c
 		
 		dir = os.path.dirname(fileName) 
 		if len(dir) > 0:
 			c.openDirectory = dir
 		#@-body
-
 		#@-node:1:C=3:<< Set the default directory >>
 
 		es("reading: " + fileName)
@@ -999,11 +837,8 @@ class fileCommands:
 		# esDiffTime("open: exit",t)
 		return ok
 	#@-body
-
-	#@-node:8:C=4:fileCommands.open
-
-	#@+node:9::xmlUnescape
-
+	#@-node:7:C=4:fileCommands.open
+	#@+node:8::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
 	
@@ -1014,20 +849,14 @@ class fileCommands:
 			s = string.replace(s, "&amp;", '&')
 		return s
 	#@-body
-
-	#@-node:9::xmlUnescape
-
+	#@-node:8::xmlUnescape
 	#@-node:2::Reading
-
 	#@+node:3::Writing
-
 	#@+node:1::assignFileIndices
-
 	#@+body
-	def assignFileIndices(self):
+	def assignFileIndices (self):
 	
-		c=self.commands
-		v = c.tree.rootVnode
+		c=self.commands ; v = c.rootVnode()
 		while v:
 			t = v.t
 			# 8/28/99.  Write shared tnodes even if they are empty.
@@ -1039,21 +868,17 @@ class fileCommands:
 				t.setFileIndex(0)
 			v = v.threadNext()
 	#@-body
-
 	#@-node:1::assignFileIndices
-
 	#@+node:2::compactFileIndices
-
 	#@+body
-	def compactFileIndices(self):
+	def compactFileIndices (self):
 	
-		c=self.commands
+		c = self.commands ; v = c.rootVnode()
 		self.maxTnodeIndex = 0
-		v = c.tree.rootVnode
 		while v: # Clear all indices.
 			v.t.setFileIndex(0)
 			v = v.threadNext()
-		v = c.tree.rootVnode
+		v = c.rootVnode()
 		while v: # Set indices for all tnodes that will be written.
 			t = v.t
 			if t.hasBody() or v.getJoinList(): # 8/28/99. Write shared tnodes even if they are empty.
@@ -1062,26 +887,21 @@ class fileCommands:
 					t.setFileIndex(self.maxTnodeIndex)
 			v = v.threadNext()
 	#@-body
-
 	#@-node:2::compactFileIndices
-
 	#@+node:3::shouldCompactOnSave
-
 	#@+body
-
 	#@+at
 	#  This method sets policy for when we should compact a file before doing a Save Command.
 
 	#@-at
-
 	#@@c
 	
-	def shouldCompactOnSave(self):
+	def shouldCompactOnSave (self):
 	
 		c=self.commands
 		# Count the number of tnodes used
 		c.clearAllVisited()
-		v = c.tree.rootVnode ; tnodesUsed = 0
+		v = c.rootVnode() ; tnodesUsed = 0
 		while v:
 			t = v.t
 			if t and not t.isVisited():
@@ -1091,28 +911,22 @@ class fileCommands:
 		tnodesUnused = self.maxTnodeIndex - tnodesUsed
 		return tnodesUnused > 100
 	#@-body
-
 	#@-node:3::shouldCompactOnSave
-
 	#@+node:4::put routines
-
 	#@+node:1::putClipboardHeader
-
 	#@+body
-	def putClipboardHeader(self):
+	def putClipboardHeader (self):
 	
 		tnodes = 0
 		
-	#@<< count the number of tnodes >>
-
+		#@<< count the number of tnodes >>
 		#@+node:1::<< count the number of tnodes >>
-
 		#@+body
 		c=self.commands
 		c.clearAllVisited()
 		
 		# Count the vnode and tnodes.
-		v = c.tree.currentVnode
+		v = c.currentVnode()
 		after = v.nodeAfterTree()
 		while v and v != after:
 			t = v.t
@@ -1121,7 +935,6 @@ class fileCommands:
 				tnodes += 1
 			v = v.threadNext()
 		#@-body
-
 		#@-node:1::<< count the number of tnodes >>
 
 		self.put('<leo_header file_format="1" tnodes=')
@@ -1129,76 +942,64 @@ class fileCommands:
 		self.put(" max_tnode_index=")
 		self.put_in_dquotes(`tnodes`)
 		self.put("/>") ; self.put_nl()
-
 	#@-body
-
 	#@-node:1::putClipboardHeader
-
 	#@+node:2::put (basic)
-
 	#@+body
 	# All output eventually comes here
-	def put(self,s):
+	def put (self,s):
 		if s and len(s) > 0:
 			if self.outputFile: # Write to a file
 				self.outputFile.write(s) 
 			elif self.outputString != None: # Write to a string
 				self.outputString += s
 						
-	def put_dquote(self):
+	def put_dquote (self):
 		self.put('"')
 			
-	def put_dquoted_bool(self,b):
+	def put_dquoted_bool (self,b):
 		if b: self.put('"1"')
 		else: self.put('"0"')
 			
-	def put_flag(self,a,b):
+	def put_flag (self,a,b):
 		if a:
 			self.put(" ") ; self.put(b) ; self.put('="1"')
 			
-	def put_in_dquotes(self,a):
+	def put_in_dquotes (self,a):
 		self.put('"')
 		if a: self.put(a) # will always be true if we use backquotes.
 		else: self.put('0')
 		self.put('"')
 	
-	def put_nl(self):
+	def put_nl (self):
 		self.put("\n")
 		
-	def put_tab(self):
+	def put_tab (self):
 		self.put("\t")
 		
-	def put_tabs(self,n):
+	def put_tabs (self,n):
 		while n > 0:
 			self.put("\t")
 			n -= 1
 	#@-body
-
 	#@-node:2::put (basic)
-
 	#@+node:3::putEscapedString
-
 	#@+body
-
 	#@+at
 	#  Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
 
 	#@-at
-
 	#@@c
 	
-	def putEscapedString(self,s):
+	def putEscapedString (self,s):
 	
 		if s and len(s) > 0:
 			self.put(self.xmlEscape(s))
 	#@-body
-
 	#@-node:3::putEscapedString
-
 	#@+node:4::putFindSettings
-
 	#@+body
-	def putFindSettings(self):
+	def putFindSettings (self):
 	
 		c = self.commands
 		c.setIvarsFromFind()
@@ -1225,37 +1026,28 @@ class fileCommands:
 		self.put("</change_string>") ; self.put_nl()
 		#
 		self.put("</find_panel_settings>") ; self.put_nl()
-
 	#@-body
-
 	#@-node:4::putFindSettings
-
 	#@+node:5::putGlobals
-
 	#@+body
-	def putGlobals(self):
+	def putGlobals (self):
 	
 		c=self.commands
 		self.put("<globals")
 		
-	#@<< put the body/outline ratio >>
-
+		#@<< put the body/outline ratio >>
 		#@+node:1::<< put the body/outline ratio >>
-
 		#@+body
 		# Puts an innumerate number of digits
 		
 		self.put(" body_outline_ratio=") ; self.put_in_dquotes(`c.frame.ratio`)
 		#@-body
-
 		#@-node:1::<< put the body/outline ratio >>
 
 		self.put(">") ; self.put_nl()
 		
-	#@<< put the position of this frame >>
-
+		#@<< put the position of this frame >>
 		#@+node:2::<< put the position of this frame >>
-
 		#@+body
 		width = self.frame.top.winfo_width()
 		height = self.frame.top.winfo_height()
@@ -1269,14 +1061,11 @@ class fileCommands:
 		self.put(" width=") ; self.put_in_dquotes(`width`)
 		self.put("/>") ; self.put_nl()
 		#@-body
-
 		#@-node:2::<< put the position of this frame >>
 
 		
-	#@<< put the position of the log window >>
-
+		#@<< put the position of the log window >>
 		#@+node:3::<< put the position of the log window >>
-
 		#@+body
 		top = left = height = width = 0 # no longer used
 		self.put_tab()
@@ -1287,41 +1076,17 @@ class fileCommands:
 		self.put(" width=") ; self.put_in_dquotes(`width`)
 		self.put("/>") ; self.put_nl()
 		#@-body
-
 		#@-node:3::<< put the position of the log window >>
 
 		self.put("</globals>") ; self.put_nl()
 	#@-body
-
 	#@-node:5::putGlobals
-
 	#@+node:6::putHeader
-
 	#@+body
-	def putHeader(self):
+	def putHeader (self):
 	
-		c=self.commands
-		tnodes = 0 ; clone_windows = 0
-		if 0: # not used in Leo2.
-			
-	#@<< count the number of tnodes and clone windows >>
-
-			#@+node:1::<< count the number of tnodes and clone windows >>
-
-			#@+body
-			c.clearAllVisited()
-			v = c.tree.rootVnode
-			while v:
-				t = v.t
-				# 8/28/99: we write all shared tnodes, even if empty.
-				if t and not t.isVisited() and (t.hasBody() or v.getJoinList()):
-					t.setVisited()
-					tnodes += 1
-					v = v.threadNext()
-			#@-body
-
-			#@-node:1::<< count the number of tnodes and clone windows >>
-
+		tnodes = 0 ; clone_windows = 0 # Always zero in Leo2.
+	
 		self.put("<leo_header")
 		self.put(" file_format=") ; self.put_in_dquotes("2")
 		self.put(" tnodes=") ; self.put_in_dquotes(`tnodes`)
@@ -1329,15 +1094,12 @@ class fileCommands:
 		self.put(" clone_windows=") ; self.put_in_dquotes(`clone_windows`)
 		self.put("/>") ; self.put_nl()
 	#@-body
-
 	#@-node:6::putHeader
-
 	#@+node:7::putLeoOutline (to clipboard)
-
 	#@+body
 	# Writes a Leo outline to s in a format suitable for pasting to the clipboard.
 	
-	def putLeoOutline(self):
+	def putLeoOutline (self):
 	
 		self.outputString = "" ; self.outputFile = None
 		self.usingClipboard = true
@@ -1352,13 +1114,10 @@ class fileCommands:
 		self.usingClipboard = false
 		return s
 	#@-body
-
 	#@-node:7::putLeoOutline (to clipboard)
-
 	#@+node:8::putPrefs
-
 	#@+body
-	def putPrefs(self):
+	def putPrefs (self):
 	
 		c = self.commands
 		c.setIvarsFromPrefs()
@@ -1372,10 +1131,8 @@ class fileCommands:
 		self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 		# New in version 0.15
 		
-	#@<< put syntax coloring prefs >>
-
+		#@<< put syntax coloring prefs >>
 		#@+node:1::<< put syntax coloring prefs >>
-
 		#@+body
 		languageNameDict = {
 			c_language: "C", cweb_language: "CWEB",
@@ -1390,7 +1147,6 @@ class fileCommands:
 		else:
 			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes("Plain")
 		#@-body
-
 		#@-node:1::<< put syntax coloring prefs >>
 
 		# New in version 0.18
@@ -1403,66 +1159,52 @@ class fileCommands:
 		self.put_tab()
 		# New in version 0.16
 		
-	#@<< put default directory >>
-
+		#@<< put default directory >>
 		#@+node:2::<< put default directory >>
-
 		#@+body
 		if len(c.tangle_directory) > 0:
 			self.put("<defaultDirectory>")
 			self.putEscapedString(c.tangle_directory)
 			self.put("</defaultDirectory>")
 		#@-body
-
 		#@-node:2::<< put default directory >>
 
 		self.put_nl()
 		#
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-
 	#@-node:8::putPrefs
-
 	#@+node:9::putProlog
-
 	#@+body
-	def putProlog(self):
+	def putProlog (self):
 	
 		self.put(prolog_string) ; self.put_nl()
 		# internal or external DTD goes here
 		self.put("<leo_file>") ; self.put_nl()
 	#@-body
-
 	#@-node:9::putProlog
-
 	#@+node:10::putPostlog
-
 	#@+body
-	def putPostlog(self):
+	def putPostlog (self):
 	
 		self.put("</leo_file>") ; self.put_nl()
 	#@-body
-
 	#@-node:10::putPostlog
-
 	#@+node:11::putTnodes (Leo2)
-
 	#@+body
-
 	#@+at
 	#  This method puts all tnodes in index order.  All tnode indices must have been assigned at this point.
 
 	#@-at
-
 	#@@c
-	def putTnodes(self):
+	def putTnodes (self):
 	
 		c=self.commands
 		tnodes = {}
 		if self.usingClipboard: # write the current tree.
-			v = c.tree.currentVnode ; after = v.nodeAfterTree()
+			v = c.currentVnode() ; after = v.nodeAfterTree()
 		else: # write everything
-			v = c.tree.rootVnode ; after = None
+			v = c.rootVnode() ; after = None
 		# Populate tnodes
 		while v and v != after:
 			index = v.t.fileIndex
@@ -1481,13 +1223,10 @@ class fileCommands:
 		#
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
-
 	#@-node:11::putTnodes (Leo2)
-
 	#@+node:12::putTnode
-
 	#@+body
-	def putTnode(self,t):
+	def putTnode (self,t):
 	
 		self.put("<t tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
@@ -1495,21 +1234,16 @@ class fileCommands:
 			self.putEscapedString(t.bodyString)
 		self.put("</t>") ; self.put_nl()
 	#@-body
-
 	#@-node:12::putTnode
-
 	#@+node:13::putVnodes (Leo2)
-
 	#@+body
-
 	#@+at
 	#  This method puts all vnodes by starting the recursion.  putVnode will write all vnodes in the order in which they appear in 
 	# the outline.
 
 	#@-at
-
 	#@@c
-	def putVnodes(self):
+	def putVnodes (self):
 	
 		c=self.commands
 		c.clearAllVisited()
@@ -1517,10 +1251,10 @@ class fileCommands:
 		self.put("<vnodes>") ; self.put_nl()
 		if self.usingClipboard:
 			self.putVnode(
-				c.tree.currentVnode, # Write only current tree.
+				c.currentVnode(), # Write only current tree.
 				None) # Don't write top vnode status bit.
 		else: 
-			v = c.tree.rootVnode
+			v = c.rootVnode()
 			while v:
 				self.putVnode(
 					v, # Write the next top-level node.
@@ -1528,31 +1262,23 @@ class fileCommands:
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@-body
-
 	#@-node:13::putVnodes (Leo2)
-
 	#@+node:14::putVnode (Leo2)
-
 	#@+body
-
 	#@+at
 	#  This writes full headline and body text for all vnodes, even orphan and @ignored nodes.  This allows all Leo outlines to be 
 	# used as backup files.
 
 	#@-at
-
 	#@@c
 	
-	def putVnode(self,v,topVnode):
+	def putVnode (self,v,topVnode):
 	
 		c = self.commands
-		at = c.atFileCommands
 		self.put("<v")
 		
-	#@<< Put tnode index if this vnode has body text >>
-
+		#@<< Put tnode index if this vnode has body text >>
 		#@+node:1::<< Put tnode index if this vnode has body text >>
-
 		#@+body
 		t = v.t
 		if t and (t.hasBody() or v.getJoinList()):
@@ -1563,17 +1289,14 @@ class fileCommands:
 				es("error writing file(bad vnode)!")
 				es("Try using the Save To command")
 		#@-body
-
 		#@-node:1::<< Put tnode index if this vnode has body text >>
 
 		
-	#@<< Put attribute bits >>
-
+		#@<< Put attribute bits >>
 		#@+node:2::<< Put attribute bits >>
-
 		#@+body
 		# Dummy vnodes carry all attributes.
-		current = c.tree.currentVnode
+		current = c.currentVnode()
 		top = topVnode
 		if ( v.isCloned() or v.isExpanded() or v.isMarked() or
 			v == current or v == top ):
@@ -1586,15 +1309,12 @@ class fileCommands:
 			if v == current: self.put("V")
 			self.put_dquote()
 		#@-body
-
 		#@-node:2::<< Put attribute bits >>
 
 		self.put(">")
 		
-	#@<< write the head text >>
-
+		#@<< write the head text >>
 		#@+node:3::<< write the head text >>
-
 		#@+body
 		headString = v.headString()
 		if len(headString) > 0:
@@ -1602,7 +1322,6 @@ class fileCommands:
 			self.putEscapedString(headString)
 			self.put("</vh>")
 		#@-body
-
 		#@-node:3::<< write the head text >>
 
 		child = v.firstChild()
@@ -1613,13 +1332,9 @@ class fileCommands:
 				child = child.next()
 		self.put("</v>") ; self.put_nl()
 	#@-body
-
 	#@-node:14::putVnode (Leo2)
-
 	#@-node:4::put routines
-
 	#@+node:5::save
-
 	#@+body
 	def save(self,fileName):
 	
@@ -1633,11 +1348,8 @@ class fileCommands:
 				es("saved: " + fileName)
 		c.endUpdate()
 	#@-body
-
 	#@-node:5::save
-
 	#@+node:6::saveAs
-
 	#@+body
 	def saveAs(self,fileName):
 	
@@ -1651,11 +1363,8 @@ class fileCommands:
 				es("saved: " + fileName)
 		c.endUpdate()
 	#@-body
-
 	#@-node:6::saveAs
-
 	#@+node:7::saveTo
-
 	#@+body
 	def saveTo (self,fileName):
 	
@@ -1668,11 +1377,8 @@ class fileCommands:
 				es("saved: " + fileName)
 		c.endUpdate()
 	#@-body
-
 	#@-node:7::saveTo
-
 	#@+node:8::xmlEscape
-
 	#@+body
 	# Surprisingly, this is a time critical routine.
 	
@@ -1685,25 +1391,18 @@ class fileCommands:
 		s = string.replace(s, '>', "&gt;")
 		return s
 	#@-body
-
 	#@-node:8::xmlEscape
-
 	#@+node:9::writeAtFileNodes
-
 	#@+body
 	def writeAtFileNodes (self):
 	
-		c=self.commands
-		v = c.tree.currentVnode
+		c = self.commands ; v = c.currentVnode()
 		if v:
 			at = c.atFileCommands
 			at.writeAll(v,true) # partialFlag
 	#@-body
-
 	#@-node:9::writeAtFileNodes
-
 	#@+node:10::writeOutlineOnly
-
 	#@+body
 	def writeOutlineOnly (self):
 	
@@ -1712,11 +1411,8 @@ class fileCommands:
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
-
 	#@-node:10::writeOutlineOnly
-
 	#@+node:11:C=5:fileCommands.write_LEO_file
-
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1724,7 +1420,7 @@ class fileCommands:
 		# Leo2: write all @file nodes and set orphan bits.
 		if not outlineOnlyFlag:
 			at = c.atFileCommands
-			at.writeAll(c.tree.rootVnode, false) # forceFlag
+			at.writeAll(c.rootVnode(), false) # forceFlag
 		self.mFileName = fileName
 		self.outputFile = open(fileName, 'w')
 		if not self.outputFile:
@@ -1747,15 +1443,10 @@ class fileCommands:
 		else:
 			return false
 	#@-body
-
 	#@-node:11:C=5:fileCommands.write_LEO_file
-
 	#@-node:3::Writing
-
 	#@-others
 
 #@-body
-
 #@-node:0::@file leoFileCommands.py
-
 #@-leo

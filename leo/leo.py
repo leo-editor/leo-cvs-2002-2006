@@ -1,9 +1,33 @@
 #@+leo
 
 #@+node:0::@file leo.py
-
 #@+body
 # Top level of leo.py
+
+
+#@<< Import pychecker >>
+#@+node:1::<< Import pychecker >>
+#@+body
+#@+at
+#  pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
+# 
+# in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines 
+# are Tkinter callbacks.
+# 
+# in leoApp.py and leoUtils.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
+# 
+# several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
+# 
+
+#@-at
+#@@c
+
+if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
+	try:
+		import pychecker.checker
+	except: pass
+#@-body
+#@-node:1::<< Import pychecker >>
 
 import leoGlobals # Can't import * here: app() is not defined yet!
 import leoApp, leoFrame, leoUtils, Tkinter
@@ -13,9 +37,7 @@ app = leoGlobals.app
 	
 
 #@+others
-
-#@+node:1::Functions for scripts
-
+#@+node:2::Functions for scripts
 #@+body
 def windows():
 	return app().windowList
@@ -26,13 +48,11 @@ def getCommands():
 		c.append(w.commands)
 		
 def topCommands():
-	return top() # defined in leoGlobals.
+	import leoGlobals
+	return leoGlobals.top()
 #@-body
-
-#@-node:1::Functions for scripts
-
-#@+node:2::go
-
+#@-node:2::Functions for scripts
+#@+node:3::go
 #@+body
 # This is useful for reloading after a file has been changed.
 
@@ -43,11 +63,16 @@ def go(*args):
 		args = args[0] # Strip the outer tuple.
 	run(args)
 #@-body
-
-#@-node:2::go
-
-#@+node:3::open
-
+#@-node:3::go
+#@+node:4::init_sherlock
+#@+body
+def init_sherlock (args):
+	
+	leoUtils.init_trace(args)
+	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
+#@-body
+#@-node:4::init_sherlock
+#@+node:5::open
 #@+body
 def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
 
@@ -56,10 +81,8 @@ def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
 	
-#@<< set the icon image >>
-
+	#@<< set the icon image >>
 	#@+node:1:C=1:<< set the icon image >>
-
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -71,7 +94,6 @@ def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-
 	#@-node:1:C=1:<< set the icon image >>
 
 	root.title("Leo Main Window")
@@ -97,27 +119,19 @@ def open(fileName="c:\prog\LeoPy\LeoPy.leo",*args):
 		frame1.top.deiconify()
 		app.log = frame1
 		leoGlobals.es("File not found: " + fileName)
-
-	# Initialize "Sherlock"
-	leoUtils.init_trace(args)
-	# leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
+	init_sherlock(args)
 	root.mainloop()
 #@-body
-
-#@-node:3::open
-
-#@+node:4:C=2:leo.run
-
+#@-node:5::open
+#@+node:6:C=2:leo.run
 #@+body
 def run(*args):
 
 	# Create a hidden main window: this window never becomes visible!
 	root = Tkinter.Tk()
 	
-#@<< set the icon image >>
-
+	#@<< set the icon image >>
 	#@+node:1:C=1:<< set the icon image >>
-
 	#@+body
 	if 0: # not yet
 		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
@@ -129,7 +143,6 @@ def run(*args):
 		trace(`image`)
 		root.iconbitmap(image)
 	#@-body
-
 	#@-node:1:C=1:<< set the icon image >>
 
 	root.title("Leo Main Window")
@@ -141,41 +154,43 @@ def run(*args):
 	# Create the first Leo window
 	frame = leoFrame.LeoFrame()
 	frame.startupWindow = leoGlobals.true
-	# Initialize "Sherlock"
-	leoUtils.init_trace(args)
-	leoUtils.trace("argv", "sys.argv: " + `sys.argv`)
+	init_sherlock(args)
 	root.mainloop()
 #@-body
-
-#@-node:4:C=2:leo.run
-
-#@+node:5::reload_all
-
+#@-node:6:C=2:leo.run
+#@+node:7:C=3:reload_all
 #@+body
 def reload_all ():
 
-	mods = [ "", "App", "AtFile", "Color", "Commands", "Compare",
+	return ##
+
+	modules = [ "", "App", "AtFile", "Color", "Commands", "Compare",
 		"Dialog", "FileCommands", "Frame", "Find", "Globals",
-		"Nodes", "Prefs", "Tangle", "Tree", "Utils" ]
+		"Import", "Nodes", "Prefs", "Tangle", "Tree", "Undo", "Utils" ]
 	
 	print "reloading all modules"
-	for m in mods:
+	for m in modules:
 		exec("import leo%s" % m)
 		exec("reload(leo%s)" % m)
+		
 
-	from leoGlobals import *
-	from leoUtils import *
+#@+at
+#  Warning: Python version 2.2 warns if import * is done outside the module level.  Alas, for reasons that are not clear to me, it 
+# appears necessary to do an import * whenever leoGlobals or leoUtils change.  The workaround is to quit Python and then reload 
+# leo.py from scratch.  Sigh.
+
+#@-at
+#@@c 
+	if 0: # invalid past 2.1: import * must be at the module level.
+		from leoGlobals import *
+		from leoUtils import *
 #@-body
-
-#@-node:5::reload_all
-
+#@-node:7:C=3:reload_all
 #@-others
 
 
 if __name__ == "__main__":
 	run()
 #@-body
-
 #@-node:0::@file leo.py
-
 #@-leo

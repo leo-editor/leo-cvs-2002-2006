@@ -1,15 +1,11 @@
 #@+leo
 
 #@+node:0::@file leoNodes.py
-
 #@+body
 
 #@<< About the vnode and tnode classes >>
-
 #@+node:1::<< About the vnode and tnode classes >>
-
 #@+body
-
 #@+at
 #  The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  
 # That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a 
@@ -22,18 +18,13 @@
 # words, tnodes are the "unit of sharing" of body text.
 
 #@-at
-
 #@-body
-
 #@-node:1::<< About the vnode and tnode classes >>
 
 
 #@<< About clones >>
-
 #@+node:2::<< About clones >>
-
 #@+body
-
 #@+at
 #  This is the design document for clones in Leo. It covers all important aspects of clones. Clones are inherently complex, and 
 # this paper will include several different definitions of clones and related concepts.
@@ -185,28 +176,21 @@
 # Moving cloned nodes is slow in the YB version of Leo because join lists are recomputed whenever needed.
 
 #@-at
-
 #@-body
-
 #@-node:2::<< About clones >>
 
 
 from leoGlobals import *
 from leoUtils import *
-import leoTree
 
 class vnode:
 	
-#@<< vnode members >>
-
+	#@<< vnode members >>
 	#@+node:4::<< vnode members >>
-
 	#@+body
 	
 	#@<< vnode constants >>
-
 	#@+node:1::<< vnode constants >>
-
 	#@+body
 	# Define the meaning of vnode status bits.
 	
@@ -222,24 +206,19 @@ class vnode:
 	# Not archived
 	visitedBit	 = 0x80
 	#@-body
-
 	#@-node:1::<< vnode constants >>
 
 	
 
 	#@+others
-
 	#@+node:2:C=1:v.__init__
-
 	#@+body
 	def __init__ (self, commands, t):
 	
 		assert(t and commands)
 		
-	#@<< initialize vnode data members >>
-
+		#@<< initialize vnode data members >>
 		#@+node:1::<< initialize vnode data members >>
-
 		#@+body
 		self.commands = commands # The commander for this vnode.
 		self.joinList = None # vnodes on the same joinlist are updated together.
@@ -259,17 +238,13 @@ class vnode:
 			self.box_id = self.icon_id = None
 			self.edit_text_id = None # The editable text field for this vnode.
 		#@-body
-
 		#@-node:1::<< initialize vnode data members >>
 
 		if app().deleteOnClose:
 			self.commands.tree.vnode_alloc_list.append(self)
 	#@-body
-
 	#@-node:2:C=1:v.__init__
-
 	#@+node:3::v.__del__
-
 	#@+body
 	def __del__ (self):
 	
@@ -277,39 +252,30 @@ class vnode:
 		# print "v.__del__" + `self`
 		pass
 	#@-body
-
 	#@-node:3::v.__del__
-
 	#@+node:4::vnode.__repr__
-
 	#@+body
 	def __repr__ (self):
 	
 		return "v: " + self.mHeadString
 	#@-body
-
 	#@-node:4::vnode.__repr__
-
 	#@+node:5::vnode.__cmp__ (not used)
-
 	#@+body
-	if 0: # Unlike the SWIG code, this is not needed.
+	if 0: # not used
 		def __cmp__(self,other):
+			
+			trace(`self` + "," + `other`)
 			return not (self is other) # Must return 0, 1 or -1
 	#@-body
-
 	#@-node:5::vnode.__cmp__ (not used)
-
 	#@+node:6:C=2:v.destroy
-
 	#@+body
-
 	#@+at
 	#  This routine immediately removes all links from this node to other objects.  We expect this routine to be called only from 
 	# tree.destroy when a window is being closed.
 
 	#@-at
-
 	#@@c
 	
 	def destroy (self):
@@ -325,22 +291,15 @@ class vnode:
 		if 0: # These no longer exist
 			self.box_id = self.icon_id = self.edit_text_id = None
 	#@-body
-
 	#@-node:6:C=2:v.destroy
-
 	#@+node:7:C=3:v.Callbacks
-
 	#@+body
-
 	#@+at
 	#  These callbacks are vnode methods so we can pass the vnode back to the tree class.
 
 	#@-at
-
 	#@-body
-
 	#@+node:1::OnBoxClick
-
 	#@+body
 	# Called when the box is clicked or the icon or headline are double-clicked.
 	
@@ -348,31 +307,22 @@ class vnode:
 	
 		self.commands.tree.OnBoxClick(self)
 	#@-body
-
 	#@-node:1::OnBoxClick
-
 	#@+node:2::OnHeadlineClick
-
 	#@+body
 	def OnHeadlineClick(self,event=None):
 	
 		self.commands.tree.OnActivate(self)
 	#@-body
-
 	#@-node:2::OnHeadlineClick
-
 	#@+node:3::OnHeadlineKey
-
 	#@+body
 	def OnHeadlineKey (self,event):
 	
 		self.commands.tree.OnHeadlineKey(self,event)
 	#@-body
-
 	#@-node:3::OnHeadlineKey
-
 	#@+node:4::OnHyperLinkControlClick
-
 	#@+body
 	def OnHyperLinkControlClick (self,event):
 	
@@ -382,11 +332,8 @@ class vnode:
 		c.endUpdate()
 		c.body.mark_set("insert","1.0")
 	#@-body
-
 	#@-node:4::OnHyperLinkControlClick
-
 	#@+node:5::OnHyperLinkEnter
-
 	#@+body
 	def OnHyperLinkEnter (self,event):
 	
@@ -394,11 +341,8 @@ class vnode:
 		if 0: # This works, and isn't very useful.
 			c.body.tag_config(v.tagName,background="green")
 	#@-body
-
 	#@-node:5::OnHyperLinkEnter
-
 	#@+node:6::OnHyperLinkLeave
-
 	#@+body
 	def OnHyperLinkLeave (self,event):
 	
@@ -406,32 +350,22 @@ class vnode:
 		if 0: # This works, and isn't very useful.
 			c.body.tag_config(v.tagName,background="white")
 	#@-body
-
 	#@-node:6::OnHyperLinkLeave
-
 	#@+node:7::OnIconClick
-
 	#@+body
 	def OnIconClick(self,event=None):
 	
 		self.commands.tree.select(self)
 	#@-body
-
 	#@-node:7::OnIconClick
-
 	#@-node:7:C=3:v.Callbacks
-
 	#@+node:8::Comparisons
-
 	#@+node:1::atFileNodeName
-
 	#@+body
-
 	#@+at
 	#  Returns the filename following @file in the receivers's headline, or the empty string if the receiver is not an @file node.
 
 	#@-at
-
 	#@@c
 	
 	def atFileNodeName (self):
@@ -443,11 +377,8 @@ class vnode:
 		else:
 			return ""
 	#@-body
-
 	#@-node:1::atFileNodeName
-
 	#@+node:2::isAtFileNode
-
 	#@+body
 	# Returns true if the receiver's headline starts with @file.
 	
@@ -456,18 +387,13 @@ class vnode:
 		s = self.atFileNodeName()
 		return len(s) > 0
 	#@-body
-
 	#@-node:2::isAtFileNode
-
 	#@+node:3::isAtIgnoreNode
-
 	#@+body
-
 	#@+at
 	#  Returns true if the receiver contains @ignore in its body at the start of a line.
 
 	#@-at
-
 	#@@c
 	
 	def isAtIgnoreNode (self):
@@ -475,18 +401,13 @@ class vnode:
 		flag, i = is_special(self.t.bodyString, 0, "@ignore")
 		return flag
 	#@-body
-
 	#@-node:3::isAtIgnoreNode
-
 	#@+node:4::isAtOthersNode
-
 	#@+body
-
 	#@+at
 	#  Returns true if the receiver contains @others in its body at the start of a line.
 
 	#@-at
-
 	#@@c
 	
 	def isAtOthersNode (self):
@@ -494,19 +415,14 @@ class vnode:
 		flag, i = is_special(self.t.bodyString, 0, "@others")
 		return flag
 	#@-body
-
 	#@-node:4::isAtOthersNode
-
 	#@+node:5::matchHeadline
-
 	#@+body
-
 	#@+at
 	#  Returns true if the headline matches the pattern ignoring whitespace and case.  The headline may contain characters 
 	# following the successfully matched pattern.
 
 	#@-at
-
 	#@@c
 	
 	def matchHeadline (self,pattern):
@@ -522,85 +438,64 @@ class vnode:
 		# ignore characters in the headline following the match
 		return p == h[0:len(p)]
 	#@-body
-
 	#@-node:5::matchHeadline
-
 	#@-node:8::Comparisons
-
 	#@+node:9::File Conversion (vnode)
-
 	#@+node:1::convertTreeToString
-
 	#@+body
 	# Converts the outline to a string in "MORE" format
 	
 	def convertTreeToString (self):
 	
-		newline = "\r\n"
 		v = self
 		level1 = v.level()
 		after = v.nodeAfterTree()
 		s = ""
 		while v and v != after:
-			s += v.moreHead(level1)
-			s += newline
+			s += v.moreHead(level1) + "\n"
 			body = v.moreBody()
 			if len(body) > 0:
-				s += body
-				s += newline
+				s += body + "\n"
 			v = v.threadNext()
 		return s
 	#@-body
-
 	#@-node:1::convertTreeToString
-
 	#@+node:2::moreHead
-
 	#@+body
 	# Returns the headline string in MORE format.
 	
 	def moreHead (self, firstLevel):
 	
-		s = ""
+		v = self
 		level = self.level() - firstLevel
-		if level > 0:
-			s += "\t" * level
-		s += choose(self.hasChildren(), "+ ", "- ")
-		s += self.mHeadString
+		if level > 0: s = "\t" * level
+		else: s = ""
+		s += choose(v.hasChildren(), "+ ", "- ")
+		s += v.headString()
 		return s
 	#@-body
-
 	#@-node:2::moreHead
-
 	#@+node:3::moreBody
-
 	#@+body
-
 	#@+at
 	#  Returns the body string in MORE format.  It inserts a backslash before any leading plus, minus or backslash.
 
 	#@-at
-
 	#@@c
 	
 	def moreBody (self):
 	
-		list = []
-		for c in self.t.bodyString:
-			if c == '+' or c == '-' or c == '\\':
+		v = self ; list = []
+		for ch in v.t.bodyString:
+			if ch == '+' or ch == '-' or ch == '\\':
 				list.append('\\')
-			list.append(c)
+			list.append(ch)
 		return string.join(list,'')
 	#@-body
-
 	#@-node:3::moreBody
-
 	#@-node:9::File Conversion (vnode)
-
 	#@+node:10::Getters
-
 	#@+node:1::bodyString
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -608,33 +503,26 @@ class vnode:
 	
 		return self.t.bodyString
 	#@-body
-
 	#@-node:1::bodyString
-
 	#@+node:2::Children
-
 	#@+node:1::childIndex
-
 	#@+body
 	# childIndex and nthChild are zero-based.
 	
 	def childIndex (self):
 	
 		parent=self.parent()
-		if not parent: return 0 # This index is never used.
+		if not parent: return 0
 	
 		child = parent.firstChild()
 		n = 0
 		while child:
 			if child == self: return n
 			n += 1 ; child = child.next()
-		assert(0)
+		assert(false)
 	#@-body
-
 	#@-node:1::childIndex
-
 	#@+node:2::firstChild
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -642,21 +530,15 @@ class vnode:
 	
 		return self.mFirstChild
 	#@-body
-
 	#@-node:2::firstChild
-
 	#@+node:3::hasChildren
-
 	#@+body
 	def hasChildren (self):
 	
 		return self.firstChild() != None
 	#@-body
-
 	#@-node:3::hasChildren
-
 	#@+node:4::lastChild
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -667,11 +549,8 @@ class vnode:
 			child = child.next()
 		return child
 	#@-body
-
 	#@-node:4::lastChild
-
 	#@+node:5::nthChild
-
 	#@+body
 	# childIndex and nthChild are zero-based.
 	
@@ -684,11 +563,8 @@ class vnode:
 			child = child.next()
 		return child
 	#@-body
-
 	#@-node:5::nthChild
-
 	#@+node:6::numberOfChildren (n)
-
 	#@+body
 	def numberOfChildren (self):
 	
@@ -699,13 +575,9 @@ class vnode:
 			child = child.next()
 		return n
 	#@-body
-
 	#@-node:6::numberOfChildren (n)
-
 	#@-node:2::Children
-
 	#@+node:3::currentVnode (vnode)
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -713,11 +585,8 @@ class vnode:
 	
 		return self.commands.tree.currentVnode
 	#@-body
-
 	#@-node:3::currentVnode (vnode)
-
 	#@+node:4::findRoot
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -726,21 +595,15 @@ class vnode:
 		return self.commands.tree.rootVnode
 
 	#@-body
-
 	#@-node:4::findRoot
-
 	#@+node:5::getJoinList
-
 	#@+body
 	def getJoinList (self):
 	
 		return self.joinList
 	#@-body
-
 	#@-node:5::getJoinList
-
 	#@+node:6::headString
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -750,11 +613,8 @@ class vnode:
 	
 
 	#@-body
-
 	#@-node:6::headString
-
 	#@+node:7::isAncestorOf
-
 	#@+body
 	def isAncestorOf (self, v):
 	
@@ -767,93 +627,65 @@ class vnode:
 			v = v.parent()
 		return false
 	#@-body
-
 	#@-node:7::isAncestorOf
-
 	#@+node:8::isRoot
-
 	#@+body
 	def isRoot (self):
 	
 		return not self.parent() and not self.back()
 	#@-body
-
 	#@-node:8::isRoot
-
 	#@+node:9::Status Bits
-
 	#@+node:1::isCloned
-
 	#@+body
 	def isCloned (self):
 	
 		return ( self.statusBits & vnode.clonedBit ) != 0
 	#@-body
-
 	#@-node:1::isCloned
-
 	#@+node:2::isDirty
-
 	#@+body
 	def isDirty (self):
 	
 		return self.t.isDirty()
 	#@-body
-
 	#@-node:2::isDirty
-
 	#@+node:3::isExpanded
-
 	#@+body
 	def isExpanded (self):
 	
 		return ( self.statusBits & self.expandedBit ) != 0
 	#@-body
-
 	#@-node:3::isExpanded
-
 	#@+node:4::isMarked
-
 	#@+body
 	def isMarked (self):
 	
 		return ( self.statusBits & vnode.markedBit ) != 0
 	#@-body
-
 	#@-node:4::isMarked
-
 	#@+node:5::isOrphan
-
 	#@+body
 	def isOrphan (self):
 	
 		return ( self.statusBits & vnode.orphanBit ) != 0
 	#@-body
-
 	#@-node:5::isOrphan
-
 	#@+node:6::isSelected
-
 	#@+body
 	def isSelected (self):
 	
 		return ( self.statusBits & vnode.selectedBit ) != 0
 	#@-body
-
 	#@-node:6::isSelected
-
 	#@+node:7::isTopBitSet
-
 	#@+body
 	def isTopBitSet (self):
 	
 		return ( self.statusBits & self.topBit ) != 0
 	#@-body
-
 	#@-node:7::isTopBitSet
-
 	#@+node:8::isVisible
-
 	#@+body
 	# Returns true if all parents are expanded.
 	
@@ -866,35 +698,24 @@ class vnode:
 			v = v.parent()
 		return true
 	#@-body
-
 	#@-node:8::isVisible
-
 	#@+node:9::isVisited
-
 	#@+body
 	def isVisited (self):
 	
 		return ( self.statusBits & vnode.visitedBit ) != 0
 	#@-body
-
 	#@-node:9::isVisited
-
 	#@+node:10::status
-
 	#@+body
 	def status (self):
 	
 		return self.statusBits
 	#@-body
-
 	#@-node:10::status
-
 	#@-node:9::Status Bits
-
 	#@+node:10::Structure Links
-
 	#@+node:1::back
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -902,11 +723,8 @@ class vnode:
 	
 		return self.mBack
 	#@-body
-
 	#@-node:1::back
-
 	#@+node:2::lastNode
-
 	#@+body
 	def lastNode (self):
 	
@@ -922,19 +740,14 @@ class vnode:
 	
 		return result
 	#@-body
-
 	#@-node:2::lastNode
-
 	#@+node:3::level
-
 	#@+body
-
 	#@+at
 	#  This function returns the indentation level of the receiver. The root nodes have level 0, their children have level 1, and 
 	# so on.
 
 	#@-at
-
 	#@@c
 	
 	def level (self):
@@ -945,11 +758,8 @@ class vnode:
 			parent = parent.parent()
 		return level
 	#@-body
-
 	#@-node:3::level
-
 	#@+node:4::next
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -957,11 +767,8 @@ class vnode:
 	
 		return self.mNext
 	#@-body
-
 	#@-node:4::next
-
 	#@+node:5::nodeAfterTree
-
 	#@+body
 	# Returns the vnode following the tree whose root is the receiver.
 	
@@ -976,11 +783,8 @@ class vnode:
 	
 		return next
 	#@-body
-
 	#@-node:5::nodeAfterTree
-
 	#@+node:6::parent
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -988,11 +792,8 @@ class vnode:
 	
 		return self.mParent
 	#@-body
-
 	#@-node:6::parent
-
 	#@+node:7::threadBack
-
 	#@+body
 	# Returns the previous element of the outline, or None if at the start of the outline.
 	
@@ -1008,11 +809,8 @@ class vnode:
 		else:
 			return self.parent()
 	#@-body
-
 	#@-node:7::threadBack
-
 	#@+node:8::threadNext
-
 	#@+body
 	def threadNext (self):
 	
@@ -1033,11 +831,8 @@ class vnode:
 				p = p.parent()
 			return None
 	#@-body
-
 	#@-node:8::threadNext
-
 	#@+node:9::visBack
-
 	#@+body
 	def visBack (self):
 	
@@ -1046,11 +841,8 @@ class vnode:
 			v = v.threadBack()
 		return v
 	#@-body
-
 	#@-node:9::visBack
-
 	#@+node:10::visNext
-
 	#@+body
 	def visNext (self):
 	
@@ -1059,19 +851,12 @@ class vnode:
 			v = v.threadNext()
 		return v
 	#@-body
-
 	#@-node:10::visNext
-
 	#@-node:10::Structure Links
-
 	#@-node:10::Getters
-
 	#@+node:11::Setters
-
 	#@+node:1::Head and body text
-
 	#@+node:1::appendStringToBody
-
 	#@+body
 	def appendStringToBody (self, s):
 	
@@ -1079,11 +864,8 @@ class vnode:
 		body = self.t.bodyString + s
 		self.setBodyStringOrPane(body)
 	#@-body
-
 	#@-node:1::appendStringToBody
-
 	#@+node:2::setBodyStringOrPane & setBodyTextOrPane
-
 	#@+body
 	def setBodyStringOrPane (self, s):
 	
@@ -1094,34 +876,31 @@ class vnode:
 			c.frame.body.insert("1.0", s) # Replace the body text with s.
 			c.recolor()
 		# Keep the body text in the tnode up-to-date.
-		v.t.setTnodeText(s)
-		v.t.setSelection(0,0)
-		v.setDirty()
-		if not c.isChanged():
-			c.setChanged(true)
+		if v.t.bodyString != s: # 3/4/02
+			v.t.setTnodeText(s)
+			v.t.setSelection(0,0)
+			v.setDirty()
+			if not c.isChanged():
+				c.setChanged(true)
 	
 	setBodyTextOrPane = setBodyStringOrPane # Compatibility with old scripts
 	#@-body
-
 	#@-node:2::setBodyStringOrPane & setBodyTextOrPane
-
 	#@+node:3::setHeadString & initHeadString
-
 	#@+body
 	def setHeadString(self, s):
 	
+		if not s: s = ""
 		self.mHeadString = s
 		self.setDirty()
 	
 	def initHeadString (self, s):
 	
+		if not s: s = ""
 		self.mHeadString = s
 	#@-body
-
 	#@-node:3::setHeadString & initHeadString
-
 	#@+node:4::setHeadStringOrHeadline
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1131,13 +910,9 @@ class vnode:
 		c.endEditing()
 		self.setHeadString(s)
 	#@-body
-
 	#@-node:4::setHeadStringOrHeadline
-
 	#@-node:1::Head and body text
-
 	#@+node:2::computeIcon & setIcon
-
 	#@+body
 	def computeIcon (self):
 	
@@ -1152,26 +927,19 @@ class vnode:
 	
 		pass # Compatibility routine for old scripts
 	#@-body
-
 	#@-node:2::computeIcon & setIcon
-
 	#@+node:3::Status bits
-
 	#@+node:1::clearAllVisited
-
 	#@+body
 	# Compatibility routine for scripts
 	
 	def clearAllVisited (self):
 		
-		c = self.commands.clearAllVisited()
+		self.commands.clearAllVisited()
 
 	#@-body
-
 	#@-node:1::clearAllVisited
-
 	#@+node:2::clearAllVisitedInTree
-
 	#@+body
 	def clearAllVisitedInTree (self):
 	
@@ -1186,21 +954,15 @@ class vnode:
 		c.endUpdate()
 
 	#@-body
-
 	#@-node:2::clearAllVisitedInTree
-
 	#@+node:3::clearClonedBit
-
 	#@+body
 	def clearClonedBit (self):
 	
 		self.statusBits &= ~ self.clonedBit
 	#@-body
-
 	#@-node:3::clearClonedBit
-
 	#@+node:4::clearDirty & clearDirtyJoined
-
 	#@+body
 	def clearDirty (self):
 	
@@ -1219,41 +981,29 @@ class vnode:
 				v2 = v2.getJoinList()
 		c.endUpdate() # recomputes all icons
 	#@-body
-
 	#@-node:4::clearDirty & clearDirtyJoined
-
 	#@+node:5::clearMarked
-
 	#@+body
 	def clearMarked (self):
 	
 		self.statusBits &= ~ self.markedBit
 	#@-body
-
 	#@-node:5::clearMarked
-
 	#@+node:6::clearOrphan
-
 	#@+body
 	def clearOrphan (self):
 	
 		self.statusBits &= ~ self.orphanBit
 	#@-body
-
 	#@-node:6::clearOrphan
-
 	#@+node:7::clearVisited
-
 	#@+body
 	def clearVisited (self):
 	
 		self.statusBits &= ~ self.visitedBit
 	#@-body
-
 	#@-node:7::clearVisited
-
 	#@+node:8::clearVisitedInTree
-
 	#@+body
 	def clearVisitedInTree (self):
 	
@@ -1263,11 +1013,8 @@ class vnode:
 			v.clearVisited()
 			v = v.threadNext()
 	#@-body
-
 	#@-node:8::clearVisitedInTree
-
 	#@+node:9::contract & expand & initExpandedBit
-
 	#@+body
 	def contract(self):
 	
@@ -1281,23 +1028,16 @@ class vnode:
 	
 	    self.statusBits |= self.expandedBit
 	#@-body
-
 	#@-node:9::contract & expand & initExpandedBit
-
 	#@+node:10::initStatus
-
 	#@+body
 	def initStatus (self, status):
 	
 		self.statusBits = status
 	#@-body
-
 	#@-node:10::initStatus
-
 	#@+node:11:C=4:setAncestorAtFileNodeDirty
-
 	#@+body
-
 	#@+at
 	#  This is called from the key-event handler, so we must not force a redraw of the screen here. We avoid redraw in most cases 
 	# by passing redraw_flag to c.endUpdate().
@@ -1307,7 +1047,6 @@ class vnode:
 	# 
 
 	#@-at
-
 	#@@c
 	def setAncestorAtFileNodeDirty(self):
 	
@@ -1323,11 +1062,8 @@ class vnode:
 		c.endUpdate(redraw_flag) # A crucial optimization!
 		return redraw_flag # Allow caller to do the same optimization.
 	#@-body
-
 	#@-node:11:C=4:setAncestorAtFileNodeDirty
-
 	#@+node:12::setClonedBit & initClonedBit
-
 	#@+body
 	def setClonedBit (self):
 	
@@ -1340,19 +1076,14 @@ class vnode:
 		else:
 			self.statusBits &= ~ self.clonedBit
 	#@-body
-
 	#@-node:12::setClonedBit & initClonedBit
-
 	#@+node:13:C=5:setDirty & initDirtyBit
-
 	#@+body
-
 	#@+at
 	#  This now ensures that all cloned nodes are marked dirty and that all ancestor @file nodes are marked dirty.  It is much 
 	# safer to do it this way.
 
 	#@-at
-
 	#@@c
 	
 	def setDirty (self):
@@ -1382,11 +1113,8 @@ class vnode:
 	def initDirtyBit (self):
 		self.t.setDirty()
 	#@-body
-
 	#@-node:13:C=5:setDirty & initDirtyBit
-
 	#@+node:14::setMarked & initMarkedBit
-
 	#@+body
 	def setMarked (self):
 	
@@ -1396,21 +1124,15 @@ class vnode:
 	
 		self.statusBits |= self.markedBit
 	#@-body
-
 	#@-node:14::setMarked & initMarkedBit
-
 	#@+node:15::setOrphan
-
 	#@+body
 	def setOrphan (self):
 	
 		self.statusBits |= self.orphanBit
 	#@-body
-
 	#@-node:15::setOrphan
-
 	#@+node:16::setSelected (vnode, new)
-
 	#@+body
 	# This only sets the selected bit.
 	
@@ -1418,11 +1140,8 @@ class vnode:
 	
 		self.statusBits |= self.selectedBit
 	#@-body
-
 	#@-node:16::setSelected (vnode, new)
-
 	#@+node:17::setVisited
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1430,34 +1149,24 @@ class vnode:
 	
 		self.statusBits |= self.visitedBit
 	#@-body
-
 	#@-node:17::setVisited
-
 	#@-node:3::Status bits
-
 	#@+node:4::setJoinList
-
 	#@+body
 	def setJoinList (self, v):
 	
 		assert(not self.joinList)
 		self.joinList = v
 	#@-body
-
 	#@-node:4::setJoinList
-
 	#@+node:5::setSelection
-
 	#@+body
 	def setSelection (self, start, length):
 	
 		self.t.setSelection ( start, length )
 	#@-body
-
 	#@-node:5::setSelection
-
 	#@+node:6::setT
-
 	#@+body
 	def setT (self, t):
 	
@@ -1465,84 +1174,86 @@ class vnode:
 			del self.t
 			self.t = t
 	#@-body
-
 	#@-node:6::setT
-
 	#@+node:7:C=6:v.sortChildren
-
 	#@+body
 	def sortChildren (self):
-	
-		v = self
-		# Create a sorted list of all child names
-		names = [] ; children = []
+		
+		# Create a list of vnode, headline tuples
+		v = self ; pairs = []
 		child = v.firstChild()
 		if not child: return
 		while child:
-			children.append(child)
-			names.append(string.lower(child.headString()))
+			pairs.append((string.lower(child.headString()), child))
 			child = child.next()
-		names.sort()
-		# Create a list of children sorted by name.
-		sortedChildren = []
-		for name in names:
-			for child in children:
-				if name == string.lower(child.headString()):
-					sortedChildren.append(child)
-					children.remove(child)
+		# Sort the list on the headlines.
+		sortedChildren = sortSequence(pairs,0)
 		# Move the children.
 		index = 0
-		for child in sortedChildren:
+		for headline,child in sortedChildren:
 			child.moveToNthChildOf(v,index)
 			index += 1
+		
+	if 0:
+		def oldSortChildren (self):
+		
+			v = self
+			# Create a sorted list of all child names
+			names = [] ; children = []
+			child = v.firstChild()
+			if not child: return
+			while child:
+				children.append(child)
+				names.append(string.lower(child.headString()))
+				child = child.next()
+			names.sort()
+			# Create a list of children sorted by name.
+			sortedChildren = []
+			for name in names:
+				for child in children:
+					if name == string.lower(child.headString()):
+						sortedChildren.append(child)
+						children.remove(child)
+			# Move the children.
+			index = 0
+			for child in sortedChildren:
+				child.moveToNthChildOf(v,index)
+				index += 1
 	#@-body
-
 	#@-node:7:C=6:v.sortChildren
-
 	#@+node:8::trimTrailingLines
-
 	#@+body
-
 	#@+at
 	#  This trims trailing blank lines from a node.  It is surprising difficult to do this during Untangle.
 
 	#@-at
-
 	#@@c
 	
 	def trimTrailingLines (self):
 	
-		return ## not ready yet
-	
-		s = self.t.bodyString
-		newlines = 0
-		ws = 0
-		i = len - 1
+		v = self
+		body = v.bodyString()
+		# trace(`body`)
+		lines = string.split(body,'\n')
+		i = len(lines) - 1 ; changed = false
 		while i >= 0:
-			c = s[i]
-			if is_ws(c): len += 1 ; ws += 1
-			elif c == '\r': len -= 1
-			elif c == '\n': len -= 1; newlines += 1
+			line = lines[i]
+			j = skip_ws(line,0)
+			if j + 1 == len(line):
+				del lines[i]
+				i -= 1 ; changed = true
 			else: break
-			i -= 1
-	
-		if newlines > 1 or newlines > 0 and ws > 0:
-			s2 = s[:len]
-			if newlines > 0: s2.append('\n')
-			self.setBodyStringOrPane (s2)
+		if changed:
+			body = string.join(body,'') + '\n' # Add back one last newline.
+			# trace(`body`)
+			v.setBodyStringOrPane(body)
 			# Don't set the dirty bit: it would just be annoying.
 	#@-body
-
 	#@-node:8::trimTrailingLines
-
 	#@-node:11::Setters
-
 	#@+node:12::Moving, Inserting, Deleting, Cloning
-
 	#@+node:1::Entry Points (vnode)
-
 	#@+node:1::vnode::clone
-
 	#@+body
 	# Creates a clone of back and insert it as the next sibling of back.
 	
@@ -1559,19 +1270,14 @@ class vnode:
 			v = v.joinList
 		return clone
 	#@-body
-
 	#@-node:1::vnode::clone
-
 	#@+node:2::doDelete
-
 	#@+body
-
 	#@+at
 	#  This is the main delete routine.  It deletes the receiver's entire tree from the screen.  Because of the undo command we 
 	# never actually delete vnodes or tnodes.
 
 	#@-at
-
 	#@@c
 	
 	def doDelete (self, newVnode):
@@ -1589,11 +1295,8 @@ class vnode:
 		c.initAllCloneBits()
 		return self # We no longer need dvnodes: vnodes contain all needed info.
 	#@-body
-
 	#@-node:2::doDelete
-
 	#@+node:3::insertAfter
-
 	#@+body
 	def insertAfter (self, t = None):
 	
@@ -1606,11 +1309,8 @@ class vnode:
 		v.linkAfter(self)
 		return v
 	#@-body
-
 	#@-node:3::insertAfter
-
 	#@+node:4::insertAsLastChild
-
 	#@+body
 	def insertAsLastChild (self,t = None):
 	
@@ -1621,11 +1321,8 @@ class vnode:
 			t = tnode()
 		return self.insertAsNthChild(n,t)
 	#@-body
-
 	#@-node:4::insertAsLastChild
-
 	#@+node:5::insertAsNthChild
-
 	#@+body
 	def insertAsNthChild (self, n, t=None):
 	
@@ -1640,11 +1337,8 @@ class vnode:
 		v.linkAsNthChild(self,n)
 		return v
 	#@-body
-
 	#@-node:5::insertAsNthChild
-
 	#@+node:6::moveAfter
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1659,11 +1353,8 @@ class vnode:
 		v.linkAfter(a)
 		v.createDependents()
 	#@-body
-
 	#@-node:6::moveAfter
-
 	#@+node:7::moveToRoot
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1678,11 +1369,8 @@ class vnode:
 		v.linkAsRoot()
 		v.createDependents()
 	#@-body
-
 	#@-node:7::moveToRoot
-
 	#@+node:8::moveToNthChildOf
-
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1697,11 +1385,8 @@ class vnode:
 		v.linkAsNthChild(p, n)
 		v.createDependents()
 	#@-body
-
 	#@-node:8::moveToNthChildOf
-
 	#@+node:9::restoreOutlineFromDVnodes (test)
-
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
 	
@@ -1715,17 +1400,11 @@ class vnode:
 			dv.linkAsRoot()
 		return dv
 	#@-body
-
 	#@-node:9::restoreOutlineFromDVnodes (test)
-
 	#@-node:1::Entry Points (vnode)
-
 	#@+node:2::Public helper functions
-
 	#@+node:1::copyTree
-
 	#@+body
-
 	#@+at
 	#  This method copies all subtrees of oldRoot to the subtrees of newRoot.  The caller is responsible for copying the headline 
 	# text from oldRoot to newRoot.
@@ -1733,7 +1412,6 @@ class vnode:
 	# This method must be given the new root as well as the old:  the wxWindows classes do not allow us to create an unattached outline.
 
 	#@-at
-
 	#@@c
 	
 	def copyTree (self, oldTree, newTree):
@@ -1759,19 +1437,14 @@ class vnode:
 			new_v = new_v.next()
 		assert(new_v == None)
 	#@-body
-
 	#@-node:1::copyTree
-
 	#@+node:2::joinTreeTo
-
 	#@+body
-
 	#@+at
 	#  This function joins all nodes in the receiver and tree2.  This code makes no assumptions about the two trees, and some or 
 	# all of the nodes may already have been joined.  The assert's guarantee that both trees have the same topology.
 
 	#@-at
-
 	#@@c
 	
 	def joinTreeTo (self, tree2):
@@ -1790,13 +1463,9 @@ class vnode:
 			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
-
 	#@-node:2::joinTreeTo
-
 	#@+node:3::shouldBeClone
-
 	#@+body
-
 	#@+at
 	#  This function returns true if the receiver should be a clone.  This can be done quickly using the receiver's join list.
 	# 
@@ -1807,7 +1476,6 @@ class vnode:
 	# "survivor" logic in commands::deleteHeadline.
 
 	#@-at
-
 	#@@c
 	
 	def shouldBeClone (self,verbose=0):
@@ -1843,11 +1511,8 @@ class vnode:
 		if verbose: es("shouldBeClone returns false")
 		return false
 	#@-body
-
 	#@-node:3::shouldBeClone
-
 	#@+node:4::validateOutlineWithParent
-
 	#@+body
 	# This routine checks the structure of the receiver's tree.
 	
@@ -1857,22 +1522,17 @@ class vnode:
 		parent = self.parent()
 		childIndex = self.childIndex()
 		
-	#@<< validate parent ivar >>
-
+		#@<< validate parent ivar >>
 		#@+node:1::<< validate parent ivar >>
-
 		#@+body
 		if parent != p:
 			self.invalidOutline ( "Invalid parent link: " + parent.description() )
 		#@-body
-
 		#@-node:1::<< validate parent ivar >>
 
 		
-	#@<< validate childIndex ivar >>
-
+		#@<< validate childIndex ivar >>
 		#@+node:2::<< validate childIndex ivar >>
-
 		#@+body
 		if p:
 			if childIndex < 0:
@@ -1882,19 +1542,15 @@ class vnode:
 		elif childIndex < 0:
 			self.invalidOutline ( "negative childIndex" + childIndex )
 		#@-body
-
 		#@-node:2::<< validate childIndex ivar >>
 
 		
-	#@<< validate x ivar >>
-
+		#@<< validate x ivar >>
 		#@+node:3::<< validate x ivar >>
-
 		#@+body
 		if not self.t and p:
 			self.invalidOutline ( "Empty t" )
 		#@-body
-
 		#@-node:3::<< validate x ivar >>
 
 	
@@ -1906,15 +1562,10 @@ class vnode:
 			child = child.next()
 		return result
 	#@-body
-
 	#@-node:4::validateOutlineWithParent
-
 	#@-node:2::Public helper functions
-
 	#@+node:3::Private helper functions
-
 	#@+node:1::cloneTree
-
 	#@+body
 	# This method creates a cloned tree after oldTree.
 	
@@ -1928,11 +1579,8 @@ class vnode:
 		oldTree.copyCloneBitsTo(newTree)
 		return newTree
 	#@-body
-
 	#@-node:1::cloneTree
-
 	#@+node:2::copyCloneBitsTo
-
 	#@+body
 	# This methods propagates clone bits from the receiver's tree to tree2.
 	
@@ -1958,22 +1606,16 @@ class vnode:
 			child2 = child2.next()
 		assert(child2 == None)
 	#@-body
-
 	#@-node:2::copyCloneBitsTo
-
 	#@+node:3::copyNode
-
 	#@+body
 	def copyNode (self, old_node, new_node):
 	
 		new_node.mHeadString = old_node.mHeadString
 		new_node.iconVal = old_node.iconVal
 	#@-body
-
 	#@-node:3::copyNode
-
 	#@+node:4::createDependents (bug fix: 4/22/01)
-
 	#@+body
 	# This method creates all nodes that depend on the receiver.
 	def createDependents (self):
@@ -1992,11 +1634,8 @@ class vnode:
 			v.joinTreeTo(copy)
 			p = p.joinList
 	#@-body
-
 	#@-node:4::createDependents (bug fix: 4/22/01)
-
 	#@+node:5::destroyDependents
-
 	#@+body
 	# Destroys all dependent vnodes and tree nodes associated with the receiver.
 	
@@ -2016,13 +1655,9 @@ class vnode:
 				child.destroyTree()
 			join = join.joinList
 	#@-body
-
 	#@-node:5::destroyDependents
-
 	#@+node:6::destroyTree (does nothing!)
-
 	#@+body
-
 	#@+at
 	#  This method destroys (irrevocably deletes) a vnode tree.
 	# 
@@ -2030,18 +1665,14 @@ class vnode:
 	# dependent trees.
 
 	#@-at
-
 	#@@c
 	
 	def destroyTree (self):
 	
 		pass
 	#@-body
-
 	#@-node:6::destroyTree (does nothing!)
-
 	#@+node:7::invalidOutline
-
 	#@+body
 	def invalidOutline (self, message):
 	
@@ -2055,21 +1686,15 @@ class vnode:
 	
 		alert ( s )
 	#@-body
-
 	#@-node:7::invalidOutline
-
 	#@+node:8::isJoinedTo
-
 	#@+body
 	def isJoinedTo (self, v):
 	
 		return v and self.t == v.t
 	#@-body
-
 	#@-node:8::isJoinedTo
-
 	#@+node:9::isOnJoinListOf
-
 	#@+body
 	# Returns true if the nodes v1 and v2 are on the same join list.
 	def isOnJoinListOf (self, v2):
@@ -2091,19 +1716,14 @@ class vnode:
 	
 		return false
 	#@-body
-
 	#@-node:9::isOnJoinListOf
-
 	#@+node:10::joinNodeTo
-
 	#@+body
-
 	#@+at
 	#  This method joins the receiver to v2 if the two nodes have not already been joined. Joining involves placing each vnode on 
 	# the others join list.
 
 	#@-at
-
 	#@@c
 	
 	def joinNodeTo (self, v2):
@@ -2128,11 +1748,8 @@ class vnode:
 			v2.joinList = v1
 		assert(v1.joinList and v2.joinList)
 	#@-body
-
 	#@-node:10::joinNodeTo
-
 	#@+node:11::linkAfter
-
 	#@+body
 	# Links the receiver after v
 	
@@ -2146,11 +1763,8 @@ class vnode:
 		if self.mNext:
 			self.mNext.mBack = self
 	#@-body
-
 	#@-node:11::linkAfter
-
 	#@+node:12::linkAsNthChild
-
 	#@+body
 	def linkAsNthChild (self, p, n):
 	
@@ -2174,11 +1788,8 @@ class vnode:
 			if v.mNext:
 				v.mNext.mBack = v
 	#@-body
-
 	#@-node:12::linkAsNthChild
-
 	#@+node:13::linkAsRoot
-
 	#@+body
 	def linkAsRoot(self):
 	
@@ -2191,57 +1802,8 @@ class vnode:
 		v.mNext = None
 		tree.rootVnode = v
 	#@-body
-
 	#@-node:13::linkAsRoot
-
-	#@+node:14::saveOutlineWithLevel
-
-	#@+body
-
-	#@+at
-	#  This method is called just before destroying a tree.  It copies the data into the dvnodes so headlines can be restored if 
-	# the deleted is undone.
-
-	#@-at
-
-	#@@c
-	
-	# returns dvnode
-	def saveOutlineWithLevel (self, level):
-	
-		v = self
-		dv = root = dvnode(level, v.mHeadString, v)
-		child = self.firstChild()
-		while child:
-			# Recursively create a list of dvnodes for child's subtree.
-			dv.next = child.saveOutlineWithLevel(level + 1)
-			# Move dv to the end of the list of dvnodes.
-			while dv and dv.next:
-				dv = dv.next
-			child = child.next()
-		return root
-	#@-body
-
-	#@-node:14::saveOutlineWithLevel
-
-	#@+node:15::setThreadLinks (not used, untested)
-
-	#@+body
-	def setThreadLinks (self,v):
-	
-		"""Sets the thread links in v and v.threadBack() after inserting v somewhere"""
-	
-		back = v.threadBack()
-		if back:
-			assert(v == self.threadNext(back))
-			back.threadNext = v
-		v.threadNext = self.threadNext(v)
-	#@-body
-
-	#@-node:15::setThreadLinks (not used, untested)
-
-	#@+node:16::unlink
-
+	#@+node:14::unlink
 	#@+body
 	def unlink (self):
 	
@@ -2266,18 +1828,13 @@ class vnode:
 		# Clear the links in this node
 		v.mParent = v.mNext = v.mBack = None
 	#@-body
-
-	#@-node:16::unlink
-
-	#@+node:17::unjoinNode
-
+	#@-node:14::unlink
+	#@+node:15::unjoinNode
 	#@+body
-
 	#@+at
 	#  This code carefully unlinks the receiver from its join list.  We can not assume that all such links will eventually be cleared.
 
 	#@-at
-
 	#@@c
 	
 	def unjoinNode (self):
@@ -2292,18 +1849,14 @@ class vnode:
 		else:
 			prev = None
 			
-	#@<< Set prev to the node that points to self >>
-
+			#@<< Set prev to the node that points to self >>
 			#@+node:1::<< Set prev to the node that points to self >>
-
 			#@+body
-
 			#@+at
 			#  We guard against any cycles in the join list, which would cause self loop to hang.  It's much better to cause an 
 			# assert to fail.
 
 			#@-at
-
 			#@@c
 			
 			self.commands.clearAllVisited()
@@ -2314,18 +1867,14 @@ class vnode:
 				prev.setVisited()
 				prev = prev.joinList
 			#@-body
-
 			#@-node:1::<< Set prev to the node that points to self >>
 
 			# Remove self from the join list.
 			prev.joinList = next
 			self.joinList = None
 	#@-body
-
-	#@-node:17::unjoinNode
-
-	#@+node:18::unjoinTree
-
+	#@-node:15::unjoinNode
+	#@+node:16::unjoinTree
 	#@+body
 	# This function unjoins all nodes of the receiver's tree.
 	
@@ -2337,46 +1886,34 @@ class vnode:
 			v.unjoinNode()
 			v = v.threadNext()
 	#@-body
-
-	#@-node:18::unjoinTree
-
+	#@-node:16::unjoinTree
 	#@-node:3::Private helper functions
-
 	#@-node:12::Moving, Inserting, Deleting, Cloning
-
 	#@-others
 	
 	#@-body
-
 	#@-node:4::<< vnode members >>
 
 
 class tnode:
 	
-#@<< tnode members >>
-
+	#@<< tnode members >>
 	#@+node:3::<< tnode members >>
-
 	#@+body
 	
 	#@<< tnode constants >>
-
 	#@+node:1::<< tnode constants >>
-
 	#@+body
 	dirtyBit =		0x01
 	richTextBit =	0x02 # Determines whether we use <bt> or <btr> tags.
 	visitedBit =	0x04
 	#@-body
-
 	#@-node:1::<< tnode constants >>
 
 	
 
 	#@+others
-
 	#@+node:2::t.__init__
-
 	#@+body
 	# All params have defaults, so t = tnode() is valid.
 	
@@ -2390,11 +1927,8 @@ class tnode:
 		self.selectionLength = 0 # The length of the selected body text.
 		self.cloneIndex = 0 # Zero for @file nodes
 	#@-body
-
 	#@-node:2::t.__init__
-
 	#@+node:3::t.__del__
-
 	#@+body
 	def __del__ (self):
 	
@@ -2402,33 +1936,23 @@ class tnode:
 		# print "t.__del__"
 		pass
 	#@-body
-
 	#@-node:3::t.__del__
-
 	#@+node:4::t.destroy
-
 	#@+body
 	def destroy (self):
 	
 		self.joinHead = None
 	#@-body
-
 	#@-node:4::t.destroy
-
 	#@+node:5::Getters
-
 	#@+node:1::hasBody
-
 	#@+body
 	def hasBody (self):
 	
 		return self.bodyString and len(self.bodyString) > 0
 	#@-body
-
 	#@-node:1::hasBody
-
 	#@+node:2::loadBodyPaneFromTnode
-
 	#@+body
 	def loadBodyPaneFromTnode(self, body):
 	
@@ -2443,51 +1967,34 @@ class tnode:
 			body.delete(1,"end")
 			#self.selectionStart = self.selectionLength = 0
 	#@-body
-
 	#@-node:2::loadBodyPaneFromTnode
-
 	#@+node:3::Status bits
-
 	#@+node:1::isDirty
-
 	#@+body
 	def isDirty (self):
 	
 		return (self.statusBits & self.dirtyBit) != 0
 	#@-body
-
 	#@-node:1::isDirty
-
 	#@+node:2::isRichTextBit
-
 	#@+body
 	def isRichTextBit (self):
 	
 		return (self.statusBits & self.richTextBit) != 0
 	#@-body
-
 	#@-node:2::isRichTextBit
-
 	#@+node:3::isVisited
-
 	#@+body
 	def isVisited (self):
 	
 		return (self.statusBits & self.visitedBit) != 0
 	#@-body
-
 	#@-node:3::isVisited
-
 	#@-node:3::Status bits
-
 	#@-node:5::Getters
-
 	#@+node:6::Setters
-
 	#@+node:1::Setting body text
-
 	#@+node:1::saveBodyPaneToTnode
-
 	#@+body
 	def saveBodyPaneToTnode (self, body):
 	
@@ -2501,11 +2008,8 @@ class tnode:
 		self.selectionStart = i
 		self.selectionLength = j - i
 	#@-body
-
 	#@-node:1::saveBodyPaneToTnode
-
 	#@+node:2::setTnodeText
-
 	#@+body
 	# This sets the text in the tnode from the given string.
 	
@@ -2514,126 +2018,86 @@ class tnode:
 		assert(type(s)==type(""))
 		self.bodyString = s
 	#@-body
-
 	#@-node:2::setTnodeText
-
 	#@+node:3::setSelection
-
 	#@+body
 	def setSelection (self, start, length):
 	
 		self.selectionStart = start
 		self.selectionLength = length
 	#@-body
-
 	#@-node:3::setSelection
-
 	#@-node:1::Setting body text
-
 	#@+node:2::Status bits
-
 	#@+node:1::clearDirty
-
 	#@+body
 	def clearDirty (self):
 	
 		self.statusBits &= ~ self.dirtyBit
 	#@-body
-
 	#@-node:1::clearDirty
-
 	#@+node:2::clearRichTextBit
-
 	#@+body
 	def clearRichTextBit (self):
 	
 		self.statusBits &= ~ self.richTextBit
 	#@-body
-
 	#@-node:2::clearRichTextBit
-
 	#@+node:3::clearVisited
-
 	#@+body
 	def clearVisited (self):
 	
 		self.statusBits &= ~ self.visitedBit
 	#@-body
-
 	#@-node:3::clearVisited
-
 	#@+node:4::setDirty
-
 	#@+body
 	def setDirty (self):
 	
 		self.statusBits |= self.dirtyBit
 	#@-body
-
 	#@-node:4::setDirty
-
 	#@+node:5::setRichTextBit
-
 	#@+body
 	def setRichTextBit (self):
 	
 		self.statusBits |= self.richTextBit
 	#@-body
-
 	#@-node:5::setRichTextBit
-
 	#@+node:6::setVisited
-
 	#@+body
 	def setVisited (self):
 	
 		self.statusBits |= self.visitedBit
 	#@-body
-
 	#@-node:6::setVisited
-
 	#@-node:2::Status bits
-
 	#@+node:3::setCloneIndex
-
 	#@+body
 	def setCloneIndex (self, index):
 	
 		self.cloneIndex = index
 	#@-body
-
 	#@-node:3::setCloneIndex
-
 	#@+node:4::setFileIndex
-
 	#@+body
 	def setFileIndex (self, index):
 	
 		self.fileIndex = index
 	#@-body
-
 	#@-node:4::setFileIndex
-
 	#@+node:5::setJoinHead
-
 	#@+body
 	def setJoinHead (self, v):
 	
 		self.joinHead = v
 	#@-body
-
 	#@-node:5::setJoinHead
-
 	#@-node:6::Setters
-
 	#@-others
 	
 	#@-body
-
 	#@-node:3::<< tnode members >>
-
 #@-body
-
 #@-node:0::@file leoNodes.py
-
 #@-leo

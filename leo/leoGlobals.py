@@ -1,23 +1,18 @@
 #@+leo
 
 #@+node:0::@file leoGlobals.py
-
 #@+body
-
 #@+at
 #  Global constants and variables used throughout Leo2.
 # Most modules should do from leoGlobals import *
 # NB: Use app().ivar instead of using global variables
 
 #@-at
-
 #@@c
 	
 
 #@<< define global constants >>
-
 #@+node:1::<< define global constants >>
-
 #@+body
 # General constants...
 true = 1
@@ -65,15 +60,12 @@ terse_bits = 	  0x08000
 unit_bits = 	   0x10000
 verbose_bits =	 0x20000
 #@-body
-
 #@-node:1::<< define global constants >>
 
 
 
 #@+others
-
 #@+node:2::alert
-
 #@+body
 def alert(message):
 
@@ -83,11 +75,8 @@ def alert(message):
 	tkMessageBox.showwarning("Alert", message)
 
 #@-body
-
 #@-node:2::alert
-
 #@+node:3::app, setApp
-
 #@+body
 # gApp is the only global in the application, and gApp is accessed only via app().
 
@@ -99,46 +88,16 @@ def setApp(app):
 	global gApp
 	gApp = app
 #@-body
-
 #@-node:3::app, setApp
-
-#@+node:4::appendToList
-
-#@+body
-def appendToList(out, s):
-
-	for i in s:
-		out.append(i)
-#@-body
-
-#@-node:4::appendToList
-
-#@+node:5::choose
-
+#@+node:4::choose
 #@+body
 def choose(cond, a, b): # warning: evaluates all arguments
 
 	if cond: return a
 	else: return b
 #@-body
-
-#@-node:5::choose
-
-#@+node:6::listToString
-
-#@+body
-def listToString(list):
-
-	if list:
-		return string.join(list,"")
-	else:
-		return ""
-#@-body
-
-#@-node:6::listToString
-
-#@+node:7::es, enl, ecnl
-
+#@-node:4::choose
+#@+node:5::es, enl, ecnl
 #@+body
 def ecnl():
 	ecnls(1)
@@ -168,35 +127,25 @@ def es(s):
 	ecnl() # only valid here
 
 #@-body
-
-#@-node:7::es, enl, ecnl
-
-#@+node:8::print_stack
-
+#@-node:5::es, enl, ecnl
+#@+node:6::print_stack
 #@+body
 def print_stack():
 
 	import traceback
 	traceback.print_stack()
 #@-body
-
-#@-node:8::print_stack
-
-#@+node:9::top
-
+#@-node:6::print_stack
+#@+node:7::top
 #@+body
 def top():
 
 	frame = app().log # the current frame
 	return frame.commands
 #@-body
-
-#@-node:9::top
-
+#@-node:7::top
 #@-others
 
 #@-body
-
 #@-node:0::@file leoGlobals.py
-
 #@-leo

@@ -1,7 +1,6 @@
 #@+leo
 
 #@+node:0::@file leoPrefs.py
-
 #@+body
 from leoGlobals import *
 from leoUtils import *
@@ -20,18 +19,14 @@ ivars = [
 class LeoPrefs:
 
 	#@+others
-
 	#@+node:1:C=1:prefs.__init__
-
 	#@+body
 	def __init__ (self):
 	
 		Tk = Tkinter
 		
-	#@<< set ivars >>
-
+		#@<< set ivars >>
 		#@+node:1::<< Set ivars >>
-
 		#@+body
 		# These ivars have the same names as the corresponding ivars in commands class.
 		
@@ -56,17 +51,14 @@ class LeoPrefs:
 		self.target_language = python_language
 		self.lang_var = Tk.IntVar()
 		#@-body
-
 		#@-node:1::<< Set ivars >>
 
 		self.top = top = Tk.Toplevel()
 		self.top.title("Leo Preferences")
 		top.resizable(0,0) # neither height or width is resizable.
 		
-	#@<< Create the Global Options frame >>
-
+		#@<< Create the Global Options frame >>
 		#@+node:2::<< Create the Global Options frame >>
-
 		#@+body
 		glob = Tk.Frame(top, bd="2", relief="groove") 
 		glob.pack(anchor="n", pady=2, ipadx="1m", expand=1, fill="x")
@@ -101,14 +93,11 @@ class LeoPrefs:
 		doneBox.pack(fill="x")
 		unBox.pack(fill="x")
 		#@-body
-
 		#@-node:2::<< Create the Global Options frame >>
 
 		
-	#@<< Create the Tangle Options frame >>
-
+		#@<< Create the Tangle Options frame >>
 		#@+node:3::<< Create the Tangle Options frame >>
-
 		#@+body
 		# Frame and title
 		tangle = Tk.Frame(top, bd="2", relief="groove")
@@ -134,14 +123,11 @@ class LeoPrefs:
 		header.pack(fill="x")
 		doc.pack(fill="x")
 		#@-body
-
 		#@-node:3::<< Create the Tangle Options frame >>
 
 		
-	#@<< Create the Target Language frame >>
-
+		#@<< Create the Target Language frame >>
 		#@+node:4::<< Create the Target Language frame >>
-
 		#@+body
 		# Frame and title
 		target = Tk.Frame(top, bd="2", relief="groove")
@@ -176,17 +162,13 @@ class LeoPrefs:
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
 		#@-body
-
 		#@-node:4::<< Create the Target Language frame >>
 
 		self.top.protocol("WM_DELETE_WINDOW", self.OnClosePrefsFrame)
 		# es("Prefs.__init__")
 	#@-body
-
 	#@-node:1:C=1:prefs.__init__
-
 	#@+node:2:C=2:prefs.init
-
 	#@+body
 	def init(self,c):
 	
@@ -195,10 +177,8 @@ class LeoPrefs:
 			exec("self.%s = c.%s" % (var,var))
 			
 		
-	#@<< set widgets >>
-
+		#@<< set widgets >>
 		#@+node:1::<< set widgets >>
-
 		#@+body
 		# Global options
 		self.tangle_batch_var.set(c.tangle_batch_flag)
@@ -215,25 +195,19 @@ class LeoPrefs:
 		# Default Target Language
 		self.lang_var.set(c.target_language)
 		#@-body
-
 		#@-node:1::<< set widgets >>
 
 		# print "init" ; print self.print_ivars()
 	#@-body
-
 	#@-node:2:C=2:prefs.init
-
 	#@+node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
-
 	#@+body
 	def set_ivars (self,c=None):
 	
 		if c == None: c = top()
 		
-	#@<< update ivars >>
-
+		#@<< update ivars >>
 		#@+node:1::<< update ivars >>
-
 		#@+body
 		# Global options
 		w = self.pageWidthText.get("1.0","end")
@@ -258,7 +232,6 @@ class LeoPrefs:
 		# Default Target Language
 		self.target_language = self.lang_var.get()
 		#@-body
-
 		#@-node:1::<< update ivars >>
 
 		for var in ivars:
@@ -277,11 +250,8 @@ class LeoPrefs:
 		for var in ivars:
 			exec("print self.%s, '%s'" % (var,var))
 	#@-body
-
 	#@-node:3:C=3:prefs.set_ivars & idle_set_ivars & print_ivars
-
 	#@+node:4:C=4:set_lang
-
 	#@+body
 	def set_lang (self):
 		
@@ -291,23 +261,16 @@ class LeoPrefs:
 		c.tree.recolor(v)
 		# print "set_lang" ; print self.print_ivars()
 	#@-body
-
 	#@-node:4:C=4:set_lang
-
 	#@+node:5::OnClosePrefsFrame
-
 	#@+body
 	def OnClosePrefsFrame(self):
 	
 		self.top.withdraw() # Just hide the window.
 	#@-body
-
 	#@-node:5::OnClosePrefsFrame
-
 	#@-others
 
 #@-body
-
 #@-node:0::@file leoPrefs.py
-
 #@-leo

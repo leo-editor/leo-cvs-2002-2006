@@ -1,21 +1,18 @@
 #@+leo
 
 #@+node:0::@file leoApp.py
-
 #@+body
 from leoGlobals import *
 from leoUtils import *
-import leo, leoFind, leoFrame, leoPrefs
+import leo, leoFind, leoPrefs
 import os
 
 class LeoApp:
 
 	#@+others
-
 	#@+node:1:C=1:app.__init__
-
 	#@+body
-	def __init__(self, root, master=None):
+	def __init__(self, root):
 	
 		# These ivars are the global vars of this program.
 		self.root = root # The hidden main window
@@ -38,21 +35,16 @@ class LeoApp:
 		self.findFrame = None
 		self.pythonFrame = None
 	#@-body
-
 	#@-node:1:C=1:app.__init__
-
 	#@+node:2:C=2:app.finishCreate
-
 	#@+body
 	# Called when the gApp global has been defined.
 	
 	def finishCreate(self):
 	
 		
-	#@<< set loaddir >>
-
+		#@<< set loaddir >>
 		#@+node:1:C=3:<< set loaddir >>
-
 		#@+body
 		# loaddir should be the directory that contains leo.py
 		
@@ -69,7 +61,6 @@ class LeoApp:
 		# Trace hasn't been enabled yet.
 		# print `self.loadDir`
 		#@-body
-
 		#@-node:1:C=3:<< set loaddir >>
 
 		
@@ -80,11 +71,8 @@ class LeoApp:
 		self.prefsFrame = leoPrefs.LeoPrefs()
 		self.prefsFrame.top.withdraw()
 	#@-body
-
 	#@-node:2:C=2:app.finishCreate
-
 	#@+node:3::destroyAllGlobalWindows
-
 	#@+body
 	def destroyAllGlobalWindows (self):
 	
@@ -94,11 +82,8 @@ class LeoApp:
 		if self.prefsFrame:
 			self.prefsFrame.top.destroy()
 	#@-body
-
 	#@-node:3::destroyAllGlobalWindows
-
 	#@+node:4:C=4:app.quit
-
 	#@+body
 	def quit(self):
 	
@@ -109,13 +94,18 @@ class LeoApp:
 		else: # closes Python window.
 			self.root.quit()
 	#@-body
-
 	#@-node:4:C=4:app.quit
-
+	#@+node:5::app.testDialogs
+	#@+body
+	def testDialogs (self):
+	
+		import leoDialog
+		d = leoDialog.leoDialog()
+		d.testDialogs()
+	#@-body
+	#@-node:5::app.testDialogs
 	#@-others
 
 #@-body
-
 #@-node:0::@file leoApp.py
-
 #@-leo
