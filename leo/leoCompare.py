@@ -15,14 +15,6 @@ false = 0 # Better than none.
 
 
 #@+others
-#@-others
-
-
-
-#@<< define functions >>
-#@+node:1::<< define functions >>
-#@+body
-#@+others
 #@+node:1::choose
 #@+body
 def choose(cond, a, b): # warning: evaluates all arguments
@@ -72,16 +64,10 @@ def go (self,name=None):
 		cmp.compare_files(name1,name2)
 #@-body
 #@-node:2::go
-#@-others
-#@-body
-#@-node:1::<< define functions >>
-
-
+#@+node:3::class leoCompare
+#@+body
 class leoCompare:
-	
-	#@<< class leoCompare methods >>
-	#@+node:2::<< class leoCompare methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::compare.__init__
 	#@+body
@@ -577,16 +563,12 @@ class leoCompare:
 	#@-node:7::showIvars
 	#@-node:7::utils...
 	#@-others
-	
-	#@-body
-	#@-node:2::<< class leoCompare methods >>
-
-	
+#@-body
+#@-node:3::class leoCompare
+#@+node:4::class leoComparePanel
+#@+body
 class leoComparePanel:
-	
-	#@<< class leoComparePanel methods >>
-	#@+node:3::<< class leoComparePanel methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::browser
 	#@+body
@@ -1054,11 +1036,11 @@ class leoComparePanel:
 	#@-node:4::onPrintMatchedLines
 	#@-node:7::Event handlers...
 	#@-others
-	
-	#@-body
-	#@-node:3::<< class leoComparePanel methods >>
+#@-body
+#@-node:4::class leoComparePanel
+#@-others
 
-	
+
 if __name__ == "__main__":
 	pass
 #@-body

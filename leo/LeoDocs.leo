@@ -35,11 +35,11 @@
 <v t="T16" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T17" a="CEV"><vh>leo.py 3.3</vh>
+<v t="T17" a="CE"><vh>leo.py 3.3</vh>
 <v t="T18"><vh>Added support for Unicode</vh></v>
 <v t="T19"><vh>Improved the Import commands &amp; fixed Javadoc problem</vh></v>
 <v t="T20"><vh>Fixed crasher when Tangling</vh></v>
-<v t="T21"><vh>Fixed problems with negative tab widths</vh></v>
+<v t="T21" a="V"><vh>Fixed problems with negative tab widths</vh></v>
 <v t="T22"><vh>Fixed numerous problems related to configuration settings</vh></v>
 </v>
 </v>
@@ -1946,7 +1946,7 @@ See the Appendices for a concise summary of information about Leo.</t>
 
 This version of Leo:
 
-- Adds support for Unicode.
+- Added support for Unicode.
 - Improved the Import commands.
 - Fixed numerous bugs related to configuration settings.
 - Fixed the "Javadoc" bug and several latent bugs related to it.
@@ -1978,7 +1978,7 @@ Now gets redered as
 The comment will be reconstituted properly when rewritten.
 </t>
 <t tx="T20">This never happened before because all languages had either 1 or 3 delims.  But Java now has only 2 delims to force block comments.</t>
-<t tx="T21">Leo should handle negative tab widths properly.</t>
+<t tx="T21">Leo should now handle negative tab widths properly.</t>
 <t tx="T22">- Negative tab widths are now honored properly.
 
 - Made 'additional_body_text_border' setting functional.

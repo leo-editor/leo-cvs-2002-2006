@@ -1361,7 +1361,7 @@ class Commands:
 		if not newNode: return
 		c.endEditing()# Make sure we capture the headline for Undo.
 		c.beginUpdate()
-		v.setDirty() # 1/30/02: Mark @file nodes dirty!
+		v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
 		# Reinsert v after back, or as the first child of parent, or as the root.
 		c.undoer.setUndoParams(op_name,v,select=newNode)
 		v.doDelete(newNode) # doDelete destroys dependents.

@@ -134,14 +134,13 @@ if 1: # A single enum...
 #@-node:2::<< constants & synonyms >>
 
 
-#@<< define node classes >>
-#@+node:3::<< define node classes >>
+
+#@+others
+#@+node:3::node classes
+#@+node:1::class tst_node
 #@+body
 class tst_node:
-	
-	#@<< tst_node methods >>
-	#@+node:1::<< tst_node methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::tst_node.__init__
 	#@+body
@@ -162,16 +161,14 @@ class tst_node:
 	#@-body
 	#@-node:2::tst_node.__repr__
 	#@-others
-	
-	#@-body
-	#@-node:1::<< tst_node methods >>
 
-	
+
+#@-body
+#@-node:1::class tst_node
+#@+node:2::class part_node
+#@+body
 class part_node:
-	
-	#@<< part_node methods >>
-	#@+node:2::<< part_node methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::part_node.__init__
 	#@+body
@@ -193,16 +190,12 @@ class part_node:
 	#@-body
 	#@-node:2::part_node.__repr__
 	#@-others
-	
-	#@-body
-	#@-node:2::<< part_node methods >>
-
-
+#@-body
+#@-node:2::class part_node
+#@+node:3::class ust_node
+#@+body
 class ust_node:
-	
-	#@<< ust_node methods >>
-	#@+node:3::<< ust_node methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::ust_node.__init__
 	#@+body
@@ -233,16 +226,12 @@ class ust_node:
 	#@-body
 	#@-node:2::ust_node.__repr__
 	#@-others
-	
-	#@-body
-	#@-node:3::<< ust_node methods >>
-
-	
+#@-body
+#@-node:3::class ust_node
+#@+node:4::class def_node
+#@+body
 class def_node:
-	
-	#@<< def_node methods >>
-	#@+node:4::<< def_node methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::def_node.__init__
 	#@+body
@@ -275,18 +264,15 @@ class def_node:
 	#@-body
 	#@-node:2::def_node.__repr__
 	#@-others
-	
-	#@-body
-	#@-node:4::<< def_node methods >>
+
+
 #@-body
-#@-node:3::<< define node classes >>
-
-
+#@-node:4::class def_node
+#@-node:3::node classes
+#@+node:4::class tangleCommands methods
+#@+body
 class tangleCommands:
-	
-	#@<< tangleCommands methods >>
-	#@+node:4::<< tangleCommands methods >>
-	#@+body
+
 	#@+others
 	#@+node:1::tangle.__init__
 	#@+body
@@ -3806,9 +3792,12 @@ class tangleCommands:
 	#@-node:18:C=19:token_type
 	#@-node:8:C=17:utility methods
 	#@-others
-	
-	#@-body
-	#@-node:4::<< tangleCommands methods >>
+#@-body
+#@-node:4::class tangleCommands methods
+#@-others
+
+
+
 #@-body
 #@-node:0::@file leoTangle.py
 #@-leo
