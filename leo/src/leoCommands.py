@@ -2185,10 +2185,14 @@ class baseCommands:
 			format = default_format
 	
 		try:
+			import time
 			if gmt:
 				s = time.strftime(format,time.gmtime())
 			else:
 				s = time.strftime(format,time.localtime())
+		except (ImportError, NameError):
+			g.es("time.strftime not available on this platform",color="blue")
+			return ""
 		except:
 			g.es_exception() # Probably a bad format string in leoConfig.txt.
 			s = time.strftime(default_format,time.gmtime())
