@@ -129,7 +129,7 @@ class baseCommands:
 			except:
 				es("exception executing command")
 				print "exception executing command"
-				es_exception()
+				es_exception(c=c)
 				c.redraw() # 11/23/03
 		
 		doHook("command2",c=c,v=v,label=label)
@@ -160,7 +160,7 @@ class baseCommands:
 		
 		es("Leo Log Window...",color=color)
 		es(signon)
-		es("Python %d.%d.%d, Tk %s" % (n1,n2,n3,tkLevel))
+		es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
 		enl()
 	#@nonl
 	#@-node: version & signon stuff
@@ -1071,7 +1071,7 @@ class baseCommands:
 				exec s in {} # Use {} to get a pristine environment!
 			except:
 				es("exception executing script")
-				es_exception(full=false)
+				es_exception(full=false,c=c)
 		elif not error:
 			es("no script selected",color="blue")
 	#@nonl
