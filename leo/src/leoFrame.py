@@ -5,7 +5,7 @@
 These classes should be overridden to create frames for a particular gui."""
 
 from leoGlobals import *
-import leoColor,leoMenu
+import leoColor,leoMenu,leoUndo
 import os,string,sys,time
 
 #@<< About handling events >>
@@ -1212,6 +1212,8 @@ class nullFrame (leoFrame):
 		self.body = nullBody(frame=self,parentFrame=None)
 		self.log  = nullLog (frame=self,parentFrame=None)
 		self.menu = leoMenu.nullMenu(frame=self)
+		assert(c.undoer)
+		c.undoer = leoUndo.nullUndoer(c)
 		
 	def oops(self):
 		# trace("nullFrame:", callerName(2))
@@ -1224,7 +1226,13 @@ class nullLog (leoLog):
 	def __init__ (self,frame=None,parentFrame=None):
 		
 		leoLog.__init__(self,frame,parentFrame) # Init the base class.
-		self.enabled = true
+		if app.batchMode:
+			if app.log: self.enabled = app.log.enabled
+			else:       self.enabled = true
+			app.log = self
+		else:
+			self.enabled = true
+		# trace("nullLog",self.enabled)
 		
 	def createControl (self,parentFrame):
 		pass
@@ -1247,6 +1255,7 @@ class nullLog (leoLog):
 		
 	def setFontFromConfig (self):
 		pass
+#@nonl
 #@-node:class nullLog
 #@+node:class nullTree
 class nullTree (leoTree):
