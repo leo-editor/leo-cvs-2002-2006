@@ -348,7 +348,8 @@ class baseFileCommands:
 	#@+node:EKR.20040526204036.1:getUnknownAttribute
 	def getUnknownAttribute(self):
 		
-		import binascii,pickle
+		import binascii
+		import pickle
 		
 		# New in 4.2.  The unknown tag has been pickled and hexlify'd.
 		attr,val = self.getUnknownTag()
@@ -358,7 +359,7 @@ class baseFileCommands:
 		try:
 			bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
 			val2 = pickle.loads(bin)
-		except TypeError, UnpicklingError:
+		except (TypeError, pickle.UnpicklingError):
 			# The unknownAtrribute was written before 4.2.
 			val2 = val
 			
