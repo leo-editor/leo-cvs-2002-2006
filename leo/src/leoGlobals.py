@@ -2119,6 +2119,19 @@ def os_path_norm(path,encoding=None):
     return path
 #@nonl
 #@-node:ekr.20031218072017.2155:os_path_norm
+#@+node:ekr.20041115103456:os_path_normabs (new in 4.3)
+def os_path_normabs (path,encoding=None):
+    
+    """Convert the file name to a fully normalized absolute path.
+    
+    There is no exact analog to this in os.path"""
+    
+    path = g.os_path_abspath(path,encoding = encoding)
+    path = g.os_path_norm(path,encoding = encoding)
+
+    return path
+#@nonl
+#@-node:ekr.20041115103456:os_path_normabs (new in 4.3)
 #@+node:ekr.20031218072017.2156:os_path_normcase
 def os_path_normcase(path,encoding=None):
     
