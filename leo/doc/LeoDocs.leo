@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3378" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3379" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="32" left="356" height="836" width="837"/>
+	<global_window_position top="111" left="398" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -22,8 +22,9 @@
 </v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7" a=""><vh>Acknowledgements</vh></v>
-<v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
-<v t="edream.110203163054.9" a="M"><vh>Quote of the Month</vh>
+<v t="edream.110203163054.8" a="E"><vh>What people are saying about Leo</vh>
+<v t="edream.110203163054.9" a="EM"><vh>Quote of the Month</vh>
+<v t="edream.121503192354.1" a="V"><vh>John Benson (not yet)</vh></v>
 <v t="edream.120703081642"><vh>Anon</vh></v>
 <v t="edream.120503073304"><vh>From Michael Dawson</vh></v>
 <v t="edream.110203163054.10"><vh>From David Nichols</vh></v>
@@ -64,7 +65,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -84,9 +85,9 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="edream.121403160546" a="V"><vh>4.1 final</vh>
-<v t="edream.121403165221" a="E"><vh>Bugs fixed in this release</vh></v>
+<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.121403160546"><vh>4.1 final</vh>
+<v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
 <v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="edream.121403161017.1"><vh>New code-level features</vh></v>
 <v t="edream.121403161017.2"><vh>New configuration settings</vh></v>
@@ -1418,6 +1419,7 @@
 <v t="edream.110203163054.958"><vh>@comment</vh></v>
 <v t="edream.110203163054.959"><vh>@delims (not valid in @root or @unit trees)</vh></v>
 <v t="edream.110203163054.960"><vh>@doc and @(space)</vh></v>
+<v t="edream.121503192354.2"><vh>@encoding</vh></v>
 <v t="edream.110203163054.961"><vh>@file (not valid in @root or @unit trees)</vh></v>
 <v t="edream.110203163054.962"><vh>@first (not valid in @root or @unit trees)</vh></v>
 <v t="edream.110203163054.963"><vh>@ignore  (not valid in @file trees)</vh></v>
@@ -24510,5 +24512,21 @@ or cause an assert to fail. Leo's plugins test suite takes care of the rest.</t>
   This bug prevented Leo from untangling some valid html/xml files.
 - Leo now puts class docstrings in class nodes when importing .py files.
 - Fixed several reorg bugs.</t>
+<t tx="edream.121503192354.1">&lt;humanreadablestuff&gt;
+&lt;&lt; thanks,&gt;&gt;
+@doc
+for bringing Literate Programming to the unwashed masses, and helping me enjoy writing
+@code
+again
+&lt;/humanreadablestuff&gt;</t>
+<t tx="edream.121503192354.2">You may use the @encoding directive to specify the encoding used in a derived file.  You can't mix encodings in a single derived file.  For example,
+
+@encoding iso-8859-1
+
+If the encoding used in a derived file is not "utf-8" it is represented in the @+leo sentinel line, like this:
+
+#@+leo-encoding=iso-8859-1.
+
+The "utf-8" encoding is used by default.  The "utf-8" encoding is a "lossless" encoding (it can represent all unicode code points), so encoding and decoding to and from utf-8 plain strings will never cause a problem.  When reading or writing a character not in a "lossy" encoding (such as iso-8859-1), Leo converts such characters to '?' and issues a warning. </t>
 </tnodes>
 </leo_file>
