@@ -1345,15 +1345,15 @@ class leoTree:
 		if v and v.edit_text:
 			self.setUnselectedLabelState(v)
 			self.editVnode = None
-		if v and v.joinList:
-			self.redraw_now() # force a redraw of joined headlines.
+		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
+			self.redraw_now() # force a redraw of joined and ancestor headlines.
 			
 	def endEditLabelCommand (self):
 	
 		v = self.editVnode
 		if v and v.edit_text:
 			self.select(v)
-		if v and v.joinList:
+		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			self.redraw_now() # force a redraw of joined headlines.
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand

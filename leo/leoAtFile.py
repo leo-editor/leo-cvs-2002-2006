@@ -2483,7 +2483,7 @@ class atFile:
 					self.targetFileName = os.path.join(self.default_directory,fn)
 					self.targetFileName = os.path.normpath(self.targetFileName)
 					path = os.path.dirname(self.targetFileName)
-					if len(path) > 0:
+					if path and len(path) > 0:
 						valid = os.path.exists(path)
 						if not valid:
 							self.writeError("path does not exist: " + path)
@@ -2685,7 +2685,185 @@ class atFile:
 			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
 	#@-node:9::atFile.write
-	#@+node:10::writeAll
+	#@+node:10::atFile.rawWrite
+	#@+body
+	def rawWrite(self,root):
+	
+		# trace(`root`)
+		c = self.commands
+		self.errors = 0
+		c.endEditing() # Capture the current headline.
+		self.targetFileName = root.atRawFileNodeName()
+		try:
+			
+			#@<< Open files.  Set orphan and dirty flags and return on errors >>
+			#@+node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
+			#@+body
+			# We honor all directives in _ancestor nodes_ so we can set self.default_directory.
+			try:
+				self.scanAllDirectives(root.parent()) # Don't scan root!
+				valid = self.errors == 0
+			except:
+				es("exception in atFile.scanAllDirectives")
+				traceback.print_exc()
+				valid = false
+			
+			try:
+				fn = root.atRawFileNodeName()
+				self.shortFileName = fn # name to use in status messages.
+				self.targetFileName = os.path.join(self.default_directory,fn)
+				self.targetFileName = os.path.normpath(self.targetFileName)
+				path = os.path.dirname(self.targetFileName)
+				if path and len(path) > 0:
+					valid = os.path.exists(path)
+					if not valid:
+						self.writeError("path does not exist: " + path)
+				else:
+					valid = false
+			except:
+				es("exception creating path:" + fn)
+				traceback.print_exc()
+				valid = false
+			
+			if valid:
+				if os.path.exists(self.targetFileName):
+					try:
+						read_only = not os.access(self.targetFileName,os.W_OK)
+						if read_only:
+							es("read only: " + self.targetFileName)
+							valid = false
+					except: pass # os.access() may not exist on all platforms.
+				
+			if valid:
+				try:
+					self.outputFileName = self.targetFileName + ".tmp"
+					self.outputFile = open(self.outputFileName, 'wb')
+					valid = self.outputFile != None
+					if not valid:
+						self.writeError("can not open " + self.outputFileName)
+				except:
+					es("exception opening:" + self.outputFileName)
+					traceback.print_exc()
+					valid = false
+			
+			if not valid:
+				root.setOrphan()
+				root.setDirty()
+				return
+			#@-body
+			#@-node:1::<< Open files.  Set orphan and dirty flags and return on errors >>
+
+			next = root.nodeAfterTree()
+			v = root
+			while v and v != next:
+				
+				#@<< Write v's headline if it starts with @@ >>
+				#@+node:2::<< Write v's headline if it starts with @@ >>
+				#@+body
+				h = v.headString()
+				if match(h,0,"@@"):
+					s = string.strip(h[2:])
+					self.outputFile.write(s + '\n')
+				#@-body
+				#@-node:2::<< Write v's headline if it starts with @@ >>
+
+				
+				#@<< Write v's body >>
+				#@+node:3::<< Write v's body >>
+				#@+body
+				s = string.strip(v.bodyString())
+				self.outputFile.write(s + '\n')
+				#@-body
+				#@-node:3::<< Write v's body >>
+
+				v = v.threadNext()
+			
+			#@<< close the output file >>
+			#@+node:4::<< close the output file >>
+			#@+body
+			if self.outputFile:
+				if self.suppress_newlines and self.newline_pending:
+					self.newline_pending = false
+					self.onl() # Make sure file ends with a newline.
+				self.outputFile.flush()
+				self.outputFile.close()
+				self.outputFile = None
+			#@-body
+			#@-node:4::<< close the output file >>
+
+			root.clearOrphan()
+			root.clearDirty()
+			
+			#@<< Replace the target with the temp file if different >>
+			#@+node:5::<< Replace the target with the temp file if different >>
+			#@+body
+			assert(self.outputFile == None)
+			
+			if os.path.exists(self.targetFileName): 
+				if filecmp.cmp(self.outputFileName, self.targetFileName):
+					try: # Just delete the temp file.
+						os.remove(self.outputFileName)
+					except:
+						es("exception deleting:" + self.outputFileName)
+						traceback.print_exc()
+					es("unchanged: " + self.shortFileName)
+				else:
+					try:
+						# 10/6/02: retain the access mode of the previous file,
+						# removing any setuid, setgid, and sticky bits.
+						mode = (os.stat(self.targetFileName))[0] & 0777
+					except:
+						mode = None
+					try: # Replace target file with temp file.
+						os.remove(self.targetFileName)
+						utils_rename(self.outputFileName, self.targetFileName)
+						if mode: # 10/3/02: retain the access mode of the previous file.
+							os.chmod(self.targetFileName,mode)
+						es("writing: " + self.shortFileName)
+					except:
+						self.writeError("exception removing and renaming:" + self.outputFileName +
+							" to " + self.targetFileName)
+						traceback.print_exc()
+			else:
+				try:
+					# os.rename(self.outputFileName, self.targetFileName)
+					utils_rename(self.outputFileName, self.targetFileName)
+					es("creating: " + self.targetFileName)
+				except:
+					self.writeError("exception renaming:" + self.outputFileName +
+						" to " + self.targetFileName)
+					traceback.print_exc()
+			#@-body
+			#@-node:5::<< Replace the target with the temp file if different >>
+
+		except:
+			
+			#@<< handle all exceptions during the write >>
+			#@+node:6::<< handle all exceptions during the write >>
+			#@+body
+			es("exception writing:" + self.targetFileName)
+			traceback.print_exc()
+			
+			if self.outputFile:
+				self.outputFile.flush()
+				self.outputFile.close()
+				self.outputFile = None
+			
+			if self.outputFileName != None:
+				try: # Just delete the temp file.
+					os.remove(self.outputFileName)
+				except:
+					es("exception deleting:" + self.outputFileName)
+					traceback.print_exc()
+					
+			# Make sure we try to rewrite this file.
+			root.setOrphan()
+			root.setDirty()
+			#@-body
+			#@-node:6::<< handle all exceptions during the write >>
+	#@-body
+	#@-node:10::atFile.rawWrite
+	#@+node:11::writeAll
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling write for every @file node 
@@ -2721,7 +2899,12 @@ class atFile:
 
 		written = false
 		while v and v != after:
-			if v.isAtIgnoreNode():
+			if v.isAtRawFileNode(): # @ignore not recognised in @rawfile nodes.
+				if v.isDirty() or partialFlag:
+					self.rawWrite(v)
+					written = true
+				v = v.nodeAfterTree()
+			elif v.isAtIgnoreNode():
 				v = v.nodeAfterTree()
 			elif v.isAtFileNode():
 				if v.isDirty() or partialFlag:
@@ -2732,7 +2915,7 @@ class atFile:
 		if partialFlag and not written:
 			es("no @file nodes in the selected tree")
 	#@-body
-	#@-node:10::writeAll
+	#@-node:11::writeAll
 	#@-node:6::Writing
 	#@+node:7::Testing
 	#@+node:1::scanAll

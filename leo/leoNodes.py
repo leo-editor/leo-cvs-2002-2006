@@ -637,26 +637,31 @@ class vnode:
 	#@-node:9::v.OnIconClick
 	#@-node:7::v.Callbacks
 	#@+node:8::Comparisons
-	#@+node:1::atFileNodeName
+	#@+node:1::atFileNodeName, atRawFileNodeName
 	#@+body
 	#@+at
-	#  Returns the filename following @file in the receivers's headline, or 
-	# the empty string if the receiver is not an @file node.
+	#  Returns the filename following @file or @rawfile, in the receivers's 
+	# headline, or the empty string if the receiver is not an @file node.
 
 	#@-at
 	#@@c
 
 	def atFileNodeName (self):
+		return self.afterHeadlineMatch("@file")
+		
+	def atRawFileNodeName (self):
+		return self.afterHeadlineMatch("@rawfile")
+	
+	def afterHeadlineMatch(self,s):
 	
 		h = self.mHeadString
-		if match(h,0,"@file"):
-			s = h[5:]
-			return string.strip(s)
+		if match(h,0,s):
+			return string.strip(h[len(s):])
 		else:
 			return ""
 	#@-body
-	#@-node:1::atFileNodeName
-	#@+node:2::isAtFileNode
+	#@-node:1::atFileNodeName, atRawFileNodeName
+	#@+node:2::isAtFileNode, isAtRawFileNode
 	#@+body
 	# Returns true if the receiver's headline starts with @file.
 	
@@ -664,8 +669,16 @@ class vnode:
 	
 		s = self.atFileNodeName()
 		return len(s) > 0
+		
+	# Returns true if the receiver's headline starts with @rawfile.
+	
+	def isAtRawFileNode (self):
+	
+		s = self.atRawFileNodeName()
+		return len(s) > 0
+	
 	#@-body
-	#@-node:2::isAtFileNode
+	#@-node:2::isAtFileNode, isAtRawFileNode
 	#@+node:3::isAtIgnoreNode
 	#@+body
 	#@+at
@@ -1411,9 +1424,9 @@ class vnode:
 		redraw_flag = false
 		c.beginUpdate()
 		while v:
-			if not v.isDirty() and v.isAtFileNode():
+			if not v.isDirty() and (v.isAtFileNode() or v.isAtRawFileNode()):
 				redraw_flag = true
-				#trace(`v`)
+				# trace(`v`)
 				v.t.setDirty() # Do not call v.setDirty here!
 			v = v.parent()
 		c.endUpdate(redraw_flag) # A crucial optimization!

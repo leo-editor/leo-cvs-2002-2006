@@ -1333,7 +1333,7 @@ class Commands:
 		if not changedFlag:
 			v = c.rootVnode()
 			while v:
-				if v.isDirty() and not v.isAtFileNode():
+				if v.isDirty() and not (v.isAtFileNode() or v.isAtRawFileNode()):
 					v.clearDirtyJoined()
 				v = v.threadNext()
 		# Update all derived changed markers.
