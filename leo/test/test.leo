@@ -1020,9 +1020,9 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20041125145818.1"><vh>@button settings...</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
-<v t="ekr.20050210180937"><vh>@ button jython</vh></v>
+<v t="ekr.20050210180937"><vh>@button jython</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -1654,7 +1654,7 @@ expanded="ekr.20040721114839,ekr.20040707210849,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
-<v t="ekr.20050106080304" a="TV"><vh>@suite run all test routines</vh>
+<v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
 <v t="ekr.20050106094854"><vh>class commanderTestCase</vh>
 <v t="ekr.20050106094854.1"><vh>__init__</vh></v>

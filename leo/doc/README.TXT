@@ -1,15 +1,10 @@
-Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
+Leo 4.3 alpha 3                                  February 24, 2005
 
-Leo 4.3 is the culmination of more than five months of work. In spite
-of its status, I recommend this release over any 4.2 release.
+Leo 4.3 alpha 3 is now available at http://sourceforge.net/projects/leo/
 
-This alpha 2 release corrects various bugs and distribution problems.
-It also adds these new features:
-
-- Adds 'word', 'line' and 'node' undo granularities.
-- Predefines 'c','g', and 'p' in scripts and unit tests.
-- Added support for top-level init functions in plugins.
-- Buttons can remove themselves when their scripts fail.
+Leo 4.3 is the culmination of more than five months of work. This alpha 3
+release corrects various bugs in Leo's core and in plugins. This is the
+first release that include an installer for MacOSX.
 
 The defining features of Leo 4.3:
 ---------------------------------

@@ -56,17 +56,25 @@ Python is already included in OS X 10.3 so only the addons are necessary
 install "_tkinter-2.3-binary" by clicking on the package in the list  
 and clicking the [Install:] button with "Install dependencies" checked
 
-4) Download Leo (platform independent source.zip).
+4)  Install Leo.  There are two ways to do this.
+
+a)  The NEW way: Download Leo-version-number.pkg from
+
+    http://leo.sourceforge.net/
+
+Double-click Leo.pkg to install the Leo folder. I recommend that you install Leo
+in your home directory.
+
+b) The OLD way: Download Leo-version-number.zip:
 
 	http://leo.sourceforge.net/
 
-5) Unzip the contents into a directory by double-clicking the  
-downloaded file.
+Unzip the contents into the desired directory by double-clicking the downloaded file.
 
-6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
-PythonLauncher.
+5) Run Leo by ontrol-clicking on /path_to_unzipped_dir/leo/src/leo.py and open
+with PythonLauncher.
 
-7) It is a good idea to set PythonLauncher as the default program to  
+6) It is a good idea to set PythonLauncher as the default program to  
 open python scripts by clicking on "leo.py", choosing Get Info from the  
 Finder's File menu, and selecting "PythonLauncher" as the default  
 program to "Open With:"
@@ -74,7 +82,7 @@ program to "Open With:"
 By clicking the "Change All..." button, all python scripts will be  
 opened with PythonLauncher.
 
-8) Download and install Pmw.
+8) (optional) Download and install Pmw. (Leo now contains Pmw in the extensions folder).
 
     http://pmw.sourceforge.net/
 

@@ -1125,60 +1125,74 @@ def createRootWindow(self):
 #@nonl
 #@-node:ekr.20041214135556:How to use Tile
 #@-node:ekr.20031218072017.365:How to...
-#@+node:ekr.20040104162835.8:Mac notes: Dan Winkler
-#@+node:ekr.20040104162835.9:Porting notes
-Here's Apple's documentation on making Unix software run on OS X:
+#@+node:ekr.20050214055018:Mac Notes
+#@+node:ekr.20050221054932:Detailed Mac instructions
+ @killcolor
+http://sourceforge.net/forum/message.php?msg_id=3007062
+By: jgleeson
 
-http://developer.apple.com/documentation/Porting/Conceptual/ 
-PortingUnix/index.html
-#@-node:ekr.20040104162835.9:Porting notes
-#@+node:ekr.20040104162835.10:$Path, etc.
-In general, Unix commands can go anywhere and they're found by the 
-shell using the $PATH variable.  To know what your path is, type "echo 
-$PATH" at the shell.
+Sorry to take so long to reply.  I've been buried in work and haven't kept up
+with some email.
 
-Typically you'll have new things added to your path by a file called 
-.login in your home directory.  This runs when you log in and then the 
-settings are inherited by all the shells you run.
+Here's the link to the site where I posted the folder you have:
+<http://homepage.mac.com/jdgleeson/>  It's the small file named "Leo.zip" (23
+KB), not the large file "Leo-4.3-alpha-2.dmg" (20 MB).
 
-You can also type the full path to something if you want to invoke it 
-that way, such as "/usr/local/bin/python".
+I agree that I did not write very clear instructions, beginnng with the first
+step, where I should have also said:  "It is important to use version 1.1.8
+of py2app, which is only available through svn.  The version on the py2app website
+is 1.1.7, which creates buggy Tkinter apps. If you try to use version 1.1.7,
+the Leo app it creates will give you a message saying that Tkinter is not properly
+installed.  Your installation is fine; otherwise you could not have even built
+Leo.app with py2app, because py2app copies the essential parts of Tcl/Tk into
+the application bundle to make the app completely standalone."
 
-Fink puts everything underneath /sw so as to avoid conflicting with 
-Apple's versions of things.
+I haven't tried intalling the Fink subversion -- I'm using DarwinPorts
+<http://darwinports.opendarwin.org/>.  But there's a simpler alternative than
+DarwinPorts. Metissian releases OS X packages of Subversion clients
+<http://metissian.com/projects/macosx/subversion/>
 
-If you can't invoke a file, it might be that it's not set to be 
-executable.  If you do "ls -l" you'll see files listed with their 
-permissions.  You'll see some of r, w, and x meaning read, write and 
-execute.  These appear three times for owner, group, and everyone.  You 
-can do "chmod +x filename" to make it executable for the owner or you 
-can use numbers as in "chmod 755 file name" which sets rwx for the 
-owner (7 = 111 in binary = rwx) and rx for group and everyone (5 = 101 
-in binary = r_x).
+AFAIK, the command "python setup.py bdist_mpkg --open" only applies to the py2app
+1.1.8 distribution.  By the way, bdist_mpkg is distributed with py2app. It creates
+a package around the setup.py script (more specialized than Platypus).  I don't
+have any experience with bdist_mpkg yet.
 
-I know this might seem confusing at first but the fact that things 
-won't execute without being set executable is a big curb on viruses.  
-In fact, there are no OS X viruses yet.  Anyway, it's all a matter of 
-what you're used to.  Windows seems confusing to someone new to it too.
+'Copy the leo folder into this directory' is horrible. I'm glad you figured
+it out -- I'm not sure I could have.
 
-#@-node:ekr.20040104162835.10:$Path, etc.
-#@+node:ekr.20040104162835.11:which python
-You can type "which python" to find out which version of python (or any 
-other command) will run.
-#@-node:ekr.20040104162835.11:which python
-#@+node:ekr.20040104162835.12:get info
-That error message (from import _tkinter) makes it sound like you are 
-somehow running the text-only version of Python that came with OS X... 
-except you said you deleted that.
+"python setup.py py2app -a" should be run in the folder with the readme file,
+which also contains the setup.py file that the command refers to.  Most importantly,
+the folder in which this command is run must contain the leo folder -- which
+it does only if you are brilliant enough to decode my instructions.   ;) 
 
-You can use "get info" in the finder to check and set which program 
-will be used to open a given file.  So you can select your main leo.py 
-file (or whichever the one you start with is), do get info on it, and 
-tell it to open with the MacPython launcher that you want.  Then you 
-should be able to double click it to open it.  That's what I do to run 
-Leo on my Mac.
+HTH
 
-#@-node:ekr.20040104162835.12:get info
+-John
+#@nonl
+#@-node:ekr.20050221054932:Detailed Mac instructions
+#@+node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
+http://sourceforge.net/forum/message.php?msg_id=2980056
+By: jgleeson
+
+To make .leo files double-clickable, you need to set CFBundleTypeExtensions to
+"leo" in the info.plist file.
+
+It would also be useful to set CFBundleTypeName, which shows up as "Kind" in
+file descriptions.
+
+Here's an example from the setup.py script I use with py2app
+
+<html://pythonmac.org/wiki/py2app>:
+
+    CFBundleTypeExtensions=["leo"],
+    CFBundleTypeName="Leo Outline File",
+#@nonl
+#@-node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
+#@+node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
+#@-node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
+#@+node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
+#@-node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
+#@+node:ekr.20040104162835.8:Linux/Mac notes: Dan Winkler
 #@+node:ekr.20040104162835.13:Fink & aqua
 Yes, fink does have pre-built Pythons, both 2.1 and 2.2.  (If you don't 
 see them it probably means you don't have the right servers listed in 
@@ -1254,13 +1268,8 @@ idea behind this is that an application can look like just one opaque
 icon in the finder but actually have all its resources nicely organized 
 in subfolders.
 #@-node:ekr.20040104162835.15:Double clicking on Linux
-#@+node:ekr.20040104162835.16:Getting Leo on Fink Commander
-FC gets its list of packages from the servers listed in 
-/sw/etc/apt/sources.list.  So you can put Leo into any server and 
-people can add it to their sources.list or you can talk to the people 
-who run the default servers and get Leo hosted there (better).
-#@-node:ekr.20040104162835.16:Getting Leo on Fink Commander
-#@-node:ekr.20040104162835.8:Mac notes: Dan Winkler
+#@-node:ekr.20040104162835.8:Linux/Mac notes: Dan Winkler
+#@-node:ekr.20050214055018:Mac Notes
 #@+node:ekr.20031218072017.392:Python Notes...
 #@+node:ekr.20031218072017.393:What's new for each version:
 New in 2.2 (Do not use)

@@ -3,107 +3,17 @@
 #@@nocolor
 
 #@+all
-#@+node:ekr.20050217094008:4.3 a3
-#@+node:ekr.20050214055018:Mac stuff
-#@+node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
-http://sourceforge.net/forum/message.php?msg_id=2980056
-By: jgleeson
-
-To make .leo files double-clickable, you need to set CFBundleTypeExtensions to
-"leo" in the info.plist file.
-
-It would also be useful to set CFBundleTypeName, which shows up as "Kind" in
-file descriptions.
-
-Here's an example from the setup.py script I use with py2app
-
-<html://pythonmac.org/wiki/py2app>:
-
-    CFBundleTypeExtensions=["leo"],
-    CFBundleTypeName="Leo Outline File",
-#@nonl
-#@-node:ekr.20050214055018.1:Make .leo files double-clickable (and document how to do this)
-#@+node:ekr.20050214055018.2:Requests & follow up
- @killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2859149
-By: genthaler
-
-I'd really like to have Mac OS X packages available as a download option, rather
-than doing it by hand every time a new version comes out.
-
-http://sourceforge.net/forum/message.php?msg_id=2859156
-By: genthaler
-
-BTW, I wasn't the first to do this and publish it - heres a link to an older
-version - http://www.wordtech-software.com/leo.html
- 
-http://sourceforge.net/forum/message.php?msg_id=2859153
-By: genthaler
-
-On Mac OS X, it's quite easy to have a double-clickable application bundle with
-its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
-IIRC. More sensible to use the OS's version, but that requires Tkinter to be
-installed in /System/Library/Frameworks/Python.framework, and that requires
-an installer package and admin privileges.
-
-Günther
-#@nonl
-#@-node:ekr.20050214055018.2:Requests & follow up
-#@+node:ekr.20050214055018.3:Native Max OS X Leo app
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2630116
-By: genthaler
-
-Hi Mac OS X users,
-
-I've put a native Mac OS X Leo application at
-
-http://idisk.mac.com/genthaler-Public/Leo.zip
-
-Just unzip it and put it in /Applications or ~/Applications
-
-The Leo version I've used is 4.2a3 i.e. the latest version on SF. Living on
-the edge...
-
-It includes application and document icons (just the 32*32 ones, I don't have
-time to create 128*128) as well as .leo extension associations.
-
-AFAIK, it requires 10.3 (it uses the python in
-/System/Library/Frameworks/Python.framework) and the MacPython-Panther addon
-(http://ftp.cwi.nl/jack/python/mac/MacPython-Panther-2.3-2.dmg).
-It also requires Aqua Tcl/Tk - I used the BI version from
-http://prdownloads.sourceforge.net/tcltkaqua/TclTkAquaBI-8.4.6.1.dmg?download
-The standard version should work, though.
-
-Once they're installed, use /Applications/MacPython-2.3/PackageManager to install
-_tkinter.
-
-The control -> command key swapping announced above works nicely too. I changed
-EditHeadline in leoConfig.leo (<< F-keys and others >>) to Ctrl+Command+H so
-that Command-H still hides the application in standard fashion.
-
-An accidental goodness is that the Leo plugins folder coincides with the standard
-Mac OS X application bundle plugins folder - this means that you can use the
-Finder's Get Info window to add, delete, enable & disable Leo plugins!
-
-One minor unpleasantness is that you can only double-click or drag-drop a document
-icon when Leo isn't open, and Leo closes when the last document is closed. You
-can still use Leo's File->Open to open multiple documents, though.
-
-Ed, feel free to copy this into the download area.
-
-Guenther.
-#@nonl
-#@-node:ekr.20050214055018.3:Native Max OS X Leo app
-#@+node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@-node:ekr.20050214055018.4:@url http://idisk.mac.com/genthaler-Public/Leo.zip (download)
-#@+node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20050214055018.5:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
-#@-node:ekr.20050214055018:Mac stuff
-#@-node:ekr.20050217094008:4.3 a3
 #@+node:ekr.20050126101301:4.3 a4 Plugins, etc.
+#@+node:ekr.20050224072156:Mac stuff
+#@+node:ekr.20040104162835.16:Put Leo on Fink Commander
+FC gets its list of packages from the servers listed in 
+/sw/etc/apt/sources.list.  So you can put Leo into any server and 
+people can add it to their sources.list or you can talk to the people 
+who run the default servers and get Leo hosted there (better).
+#@-node:ekr.20040104162835.16:Put Leo on Fink Commander
+#@+node:ekr.20050224072156.1:Document how to use platypus
+#@-node:ekr.20050224072156.1:Document how to use platypus
+#@-node:ekr.20050224072156:Mac stuff
 #@+node:ekr.20050212040628:First: Always use a file-like object for writing!!
 #@-node:ekr.20050212040628:First: Always use a file-like object for writing!!
 #@+node:ekr.20050209094854:First: Remove unreferenced clone nodes when reading thin derived files

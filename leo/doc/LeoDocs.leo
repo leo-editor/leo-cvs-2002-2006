@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="46" left="353" height="782" width="931"/>
+	<global_window_position top="71" left="287" height="782" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -16816,17 +16816,11 @@ fileMenu = c.frame.menu.getMenu('File')
 fileMenu.insert(3,'command',label='Test2',command=callback)</t>
 <t tx="ekr.20050219093156.1"></t>
 <t tx="ekr.20050219093156.2">The authoritative source for information.</t>
-<t tx="ekr.20050221104844">Leo 4.3 alpha 3                 February 22, 2005
+<t tx="ekr.20050221104844">Leo 4.3 alpha 3                 February 24, 2005
 
 Leo 4.3 is the culmination of more than five months of work. This alpha 3
-release corrects various bugs in Leo's core and in plugins.
-
-Leo 4.3 a3 adds several new features:
-
-- The 'extensions' folder contains sets.py from Python 2.4.
-  This allows the Plugin Manager plugin to work on Python 2.2.x.
-- g.es does nothing if color=='suppress'.  A useful hack.
-- This is the first release that include installers for MacOSX.
+release corrects various bugs in Leo's core and in plugins. This is the first
+release that include an installer for MacOSX.
 
 The defining features of Leo 4.3:
 

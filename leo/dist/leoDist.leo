@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1001" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1002" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
 	<global_window_position top="44" left="233" height="778" width="875"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -17,8 +17,9 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
+<v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a3</vh></v>
+<v t="ekr.20050224070230"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
-<v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="EKR.20040519091259.5"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="EKR.20040519091259.30"><vh>Previous announcements</vh>
 <v t="ekr.20040922074043"><vh>ANN: Leo 4.2 final: An outlining editor</vh></v>
@@ -87,19 +88,19 @@
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files</vh>
+<v t="EKR.20040519090846"><vh>Distribution files (update for each release)</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
 <v t="EKR.20040519090846.5"><vh>Windows installation</vh></v>
-<v t="EKR.20040519090846.6"><vh>MacOS installation</vh></v>
+<v t="EKR.20040519090846.6" a="E"><vh>MacOS installation</vh></v>
 <v t="EKR.20040519090846.7"><vh>Shell &amp; batch scripts</vh></v>
 </v>
 <v t="EKR.20040519090846.1"><vh>@silentfile ../doc/LICENSE.TXT</vh></v>
 <v t="EKR.20040519090846.8"><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="EKR.20040519090846.9"><vh>@silentfile ../doc/README.TXT</vh></v>
 <v t="EKR.20040519082027.23"><vh>@thin createLeoDist.py</vh></v>
-<v t="EKR.20040519100230" a="E"><vh>In leo directory</vh>
+<v t="EKR.20040519100230"><vh>In leo directory</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="EKR.20040519082027.32"><vh>Linux install/uninstall scripts</vh>
 <v t="EKR.20040519082027.33"><vh>@file-thin ../install</vh></v>
@@ -127,7 +128,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -178,7 +179,7 @@
 <v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
-<v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
+<v t="ekr.20050117032444" a="TV"><vh>@button Create Leo-4.3.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -449,7 +450,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.3-a2", # No spaces here!
+version="4.3-a3", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -564,17 +565,25 @@ Python is already included in OS X 10.3 so only the addons are necessary
 install "_tkinter-2.3-binary" by clicking on the package in the list  
 and clicking the [Install:] button with "Install dependencies" checked
 
-4) Download Leo (platform independent source.zip).
+4)  Install Leo.  There are two ways to do this.
+
+a)  The NEW way: Download Leo-version-number.pkg from
+
+    http://leo.sourceforge.net/
+
+Double-click Leo.pkg to install the Leo folder. I recommend that you install Leo
+in your home directory.
+
+b) The OLD way: Download Leo-version-number.zip:
 
 	http://leo.sourceforge.net/
 
-5) Unzip the contents into a directory by double-clicking the  
-downloaded file.
+Unzip the contents into the desired directory by double-clicking the downloaded file.
 
-6) Control-click on /path_to_unzipped_dir/leo/src/leo.py and open with  
-PythonLauncher.
+5) Run Leo by ontrol-clicking on /path_to_unzipped_dir/leo/src/leo.py and open
+with PythonLauncher.
 
-7) It is a good idea to set PythonLauncher as the default program to  
+6) It is a good idea to set PythonLauncher as the default program to  
 open python scripts by clicking on "leo.py", choosing Get Info from the  
 Finder's File menu, and selecting "PythonLauncher" as the default  
 program to "Open With:"
@@ -582,7 +591,7 @@ program to "Open With:"
 By clicking the "Change All..." button, all python scripts will be  
 opened with PythonLauncher.
 
-8) Download and install Pmw.
+8) (optional) Download and install Pmw. (Leo now contains Pmw in the extensions folder).
 
     http://pmw.sourceforge.net/
 
@@ -614,7 +623,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-a2
+Version: 4.3-a3
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -633,18 +642,13 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
+<t tx="EKR.20040519090846.9">Leo 4.3 alpha 3                                  February 24, 2005
 
-Leo 4.3 is the culmination of more than five months of work. In spite
-of its status, I recommend this release over any 4.2 release.
+Leo 4.3 alpha 3 is now available at http://sourceforge.net/projects/leo/
 
-This alpha 2 release corrects various bugs and distribution problems.
-It also adds these new features:
-
-- Adds 'word', 'line' and 'node' undo granularities.
-- Predefines 'c','g', and 'p' in scripts and unit tests.
-- Added support for top-level init functions in plugins.
-- Buttons can remove themselves when their scripts fail.
+Leo 4.3 is the culmination of more than five months of work. This alpha 3
+release corrects various bugs in Leo's core and in plugins. This is the
+first release that include an installer for MacOSX.
 
 The defining features of Leo 4.3:
 ---------------------------------
@@ -3340,6 +3344,7 @@ Leo: http://webpages.charter.net/edreamleo/front.html
 @tabwidth -4
 
 # REMINDER:  Update &lt; &lt; setup info for createLeoDist.py &gt; &gt;
+# REMINDER: Remove 'chinese' directory from test/unittest.
 
 print ; print '-' * 60
 &lt;&lt; imports &gt;&gt;
@@ -3445,7 +3450,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a2.exe"
+OutFile "LeoSetup-4-3-a3.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3614,7 +3619,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a2"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a3"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -3732,7 +3737,161 @@ Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
 </t>
-<t tx="ekr.20050212054125">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
+<t tx="ekr.20050212054125">Leo 4.3 alpha 3 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 is the culmination of more than five months of work. This alpha 3
+release corrects various bugs in Leo's core and in plugins. This is the
+first release that include an installer for MacOSX.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose
+headline is '@settings'. When opening a .leo file, Leo looks for
+@settings trees not only in the outline being opened but also in
+various leoSettings.leo files.
+
+Users can create arbitrarily complex user options with @settings
+trees. Leo settings outlines are, in fact, infinitely more flexible
+and powerful than any scheme based on flat text. Readers of Python's
+configParser shootout take note.
+
+2. The Preferences command temporarily replaces the outline pane with
+an outline showing all the @settings trees in effect. The Preferences
+command also replaces the body pane with a "settings pane". This
+settings pane allows you to change the settings selected in the
+outline pane using standard gui widgets.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support
+user-defined tangling and untangling. This is a major cleanup of
+Leo's core.
+
+4. Leo now boasts an excellent Plugins Manager plugin. This plugin
+enables and disables plugins automatically and tells you everything
+you need to know about each plugin. This plugin also lets you download
+plugins from Leo's cvs site.
+
+5. You can install third-party extensions in Leo's extensions
+directory. Leo will attempt to import such extensions from the
+extensions directory when normal imports fail. The distribution contains
+Python Mega Widgets in the extensions directory.
+
+What people are saying about Leo
+--------------------------------
+"[Leo] should either replace or greatly augment the development tools
+that I use." -- Zak Greant
+
+"Leo is a marriage of outlining and literate programming. Pure genius.
+The main reason I am impressed with this tool is that it doesn't
+affect your choice of tools. You can use whatever IDE for whatever
+language and switch back and forth between Leo and it." -- Austin
+King
+
+"Leo is the best IDE that I have had the pleasure to use. I have been
+using it now for about 2--3 months. It has totally changed not only
+the way that I program, but also the way that I store and organize all
+of the information that I need for the job that I do." -- Ian Mulvany
+
+"I only have one week of Leo experience but I already know it will be
+my default IDE/project manager...people complain about the lack of a
+project manager for the free/standard Python IDE's like Idle. Leo
+clearly solves that problem and in a way that commercial tools can't
+touch." -- Marshall Parsons
+
+"[Leo has] become my main development platform, and I do this for a
+living. -- Nicola Larosa
+
+"I have been using Leo for about 3 weeks and I hardly use my other
+programming editor anymore...I find it easy and enjoyable to use. I
+plan to adopt it as my presentation tool for code reviews." -- Jim
+Vickroy
+
+"I'm absolutely astounded by the power of such a simple idea! It works
+great and I can immediately see the benefits of using Leo in place of
+the standard flat file editor." -- Tom Lee, &lt;tomlee@bigpond.net.au&gt;
+
+I think you're really showing what open source can do and your current
+trajectory puts you on track to kick Emacs into the dustbin of
+computing history. -- Dan Winkler
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+January 25, 2005
+--------------------------------------------------------------------
+Edward K. Ream   email:  edreamleo@charter.net
+Leo: Literate Editor with Outlines
+Leo: http://webpages.charter.net/edreamleo/front.html
+--------------------------------------------------------------------
+</t>
+<t tx="ekr.20050212143754"></t>
+<t tx="ekr.20050212143754.1">@killcolor
+
+I solved two problems by brute force:
+
+1. Suppressed warnings for non-existent pre-defined vars in test routines.
+2. Suppressed warnings about the following supposedly non-existent vars: 'leo_config_directory','CODESET','mtime'</t>
+<t tx="ekr.20050212143754.2">@color</t>
+<t tx="ekr.20050212143754.3">def _checkGlobal(operand, module, func, code, err, main = 0) :
+    if not _hasGlobal(operand, module, func, main) :
+        
+        # EKR: suppress warnings for pre-defined vars in test routines.
+        if str(func).startswith('test_') and str(operand) in ('g','c','p'):
+            # print 'ekr',str(func),repr(operand)
+            return
+
+        code.addWarning(err % operand)
+        if not cfg().reportAllGlobals :
+            func.function.func_globals[operand] = operand</t>
+<t tx="ekr.20050212143754.4">def _checkModuleAttribute(attr, module, code, ref) :
+    
+    # EKR: This is the only way I know of getting rid of these!
+    if str(attr) in ('leo_config_directory','CODESET','mtime'): return
+    
+    try:
+        if attr not in module.modules[ref].attributes and not utils.endswith(ref, '.' + attr) :
+            code.addWarning(msgs.INVALID_MODULE_ATTR % attr)
+    except (KeyError, TypeError):
+        # if ref isn't found, or ref isn't even hashable, we don't care
+        # we may not know, or ref could be something funky [e for e].method()
+        pass
+
+    try:
+        _checkClassAttribute(attr, module.classes[ref], code)
+    except (KeyError, TypeError):
+        # if ref isn't found, or ref isn't even hashable, we don't care
+        # we may not know, or ref could be something funky [e for e].method()
+        pass
+</t>
+<t tx="ekr.20050224070230">Leo 4.3 alpha 2 is now available at http://sourceforge.net/projects/leo/
 
 Leo 4.3 is the culmination of more than five months of work. In spite
 of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
@@ -3839,45 +3998,6 @@ Edward K. Ream   email:  edreamleo@charter.net
 Leo: Literate Editor with Outlines
 Leo: http://webpages.charter.net/edreamleo/front.html
 --------------------------------------------------------------------
-</t>
-<t tx="ekr.20050212143754"></t>
-<t tx="ekr.20050212143754.1">@killcolor
-
-I solved two problems by brute force:
-
-1. Suppressed warnings for non-existent pre-defined vars in test routines.
-2. Suppressed warnings about the following supposedly non-existent vars: 'leo_config_directory','CODESET','mtime'</t>
-<t tx="ekr.20050212143754.2">@color</t>
-<t tx="ekr.20050212143754.3">def _checkGlobal(operand, module, func, code, err, main = 0) :
-    if not _hasGlobal(operand, module, func, main) :
-        
-        # EKR: suppress warnings for pre-defined vars in test routines.
-        if str(func).startswith('test_') and str(operand) in ('g','c','p'):
-            # print 'ekr',str(func),repr(operand)
-            return
-
-        code.addWarning(err % operand)
-        if not cfg().reportAllGlobals :
-            func.function.func_globals[operand] = operand</t>
-<t tx="ekr.20050212143754.4">def _checkModuleAttribute(attr, module, code, ref) :
-    
-    # EKR: This is the only way I know of getting rid of these!
-    if str(attr) in ('leo_config_directory','CODESET','mtime'): return
-    
-    try:
-        if attr not in module.modules[ref].attributes and not utils.endswith(ref, '.' + attr) :
-            code.addWarning(msgs.INVALID_MODULE_ATTR % attr)
-    except (KeyError, TypeError):
-        # if ref isn't found, or ref isn't even hashable, we don't care
-        # we may not know, or ref could be something funky [e for e].method()
-        pass
-
-    try:
-        _checkClassAttribute(attr, module.classes[ref], code)
-    except (KeyError, TypeError):
-        # if ref isn't found, or ref isn't even hashable, we don't care
-        # we may not know, or ref could be something funky [e for e].method()
-        pass
 </t>
 </tnodes>
 </leo_file>

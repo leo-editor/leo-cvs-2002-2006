@@ -71,6 +71,7 @@ doc\leo_rst.css
 doc\silver_city.css
 extensions\__init__.py
 extensions\path.py
+extensions\sets.py
 extensions\Pmw\__init__.py
 extensions\Pmw\Pmw_1_2\__init__.py
 extensions\Pmw\Pmw_1_2\bin\bundlepmw.py
@@ -319,6 +320,7 @@ plugins\at_produce.py
 plugins\at_view.py
 plugins\autocompleter.ini
 plugins\autocompleter.py
+plugins\bibtex.py
 plugins\chapters.py
 plugins\chinese_menu.py
 plugins\color_markup.py
