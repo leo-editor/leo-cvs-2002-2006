@@ -3929,10 +3929,11 @@ class tangleCommands:
 				#@-body
 				#@-node:1::<< compute path from s[k:] >>
 
-				if len(path) > 0:
+				dir = path
+				if len(dir) > 0:
 					base = getBaseDirectory() # returns "" on error.
 					if dir and len(dir) > 0:
-						dir = os.path.join(base,path)
+						dir = os.path.join(base,dir)
 						if os.path.isabs(dir):
 							
 							#@<< handle absolute @path >>
