@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3897:@file-thin leoTkinterFind.py
 import leoGlobals as g
 from leoGlobals import true,false

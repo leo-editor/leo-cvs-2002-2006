@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.2810:@file-thin leoCommands.py
 #@@language python
 

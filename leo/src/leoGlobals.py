@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3093:@file-thin leoGlobals.py
 #@@first
 

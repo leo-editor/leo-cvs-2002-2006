@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.4100:@file-thin leoTkinterMenu.py
 """Tkinter menu handling for Leo."""
 

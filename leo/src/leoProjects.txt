@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:EKR.20040429143933:@file-thin leoProjects.txt
 #@+at 
 #@nonl
@@ -13667,18 +13667,19 @@ def scanHeader(self,file,fileName):
 	new_df = false # Set default.
 	firstLines = [] # The lines before @+leo.
 	version_tag = "-ver="
+	thin_tag = "-thin"
 	tag = "@+leo" ; encoding_tag = "-encoding="
 	valid = true
 	<< skip any non @+leo lines >>
 	<< make sure we have @+leo >>
 	<< read optional version param >>
+	<< read optional thin param >>
 	<< read optional encoding param >>
 	<< set the closing comment delim >>
 	if not valid:
 		at.error("Bad @+leo sentinel in " + fileName)
 	# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
 	return firstLines, new_df
-#@nonl
 #@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 #@+at 
 #@nonl
@@ -13746,6 +13747,11 @@ if new_df:
 	else:
 		valid = false
 #@-node:ekr.20031218072017.2636:<< read optional version param >>
+#@+node:EKR.20040503105354:<< read optional thin param >>
+if g.match(s,i,thin_tag):
+	i += len(tag)
+#@nonl
+#@-node:EKR.20040503105354:<< read optional thin param >>
 #@+node:ekr.20031218072017.2637:<< read optional encoding param >>
 # Set the default encoding
 at.encoding = g.app.config.default_derived_file_encoding
@@ -13793,6 +13799,9 @@ def putOpenLeoSentinel(self,s):
 	
 	if not at.sentinels:
 		return # Handle @nosentinelsfile.
+		
+	if at.thinFile:
+		s = s + "-thin"
 
 	encoding = at.encoding.lower()
 	if encoding != "utf-8":
@@ -14130,7 +14139,7 @@ def write(self,root,nosentinels=false,scriptFile=None,thinFile=false):
 	try:
 		<< open the file; return on error >>
 		root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
-		<< write then entire @file tree >>
+		<< write the entire @file tree >>
 		if scriptFile != None:
 			at.root.v.t.tnodeList = []
 		else:
@@ -14184,7 +14193,7 @@ if not ok:
 	return
 #@nonl
 #@-node:ekr.20031218072017.2116:<< open the file; return on error >>
-#@+node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+#@+node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 # unvisited nodes will be orphans, except in cweb trees.
 root.clearVisitedInTree()
 
@@ -14248,7 +14257,7 @@ for line in lines[j+1:k+1]:
 	self.os(line[i:]) ; self.onl()
 #@nonl
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
-#@-node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+#@-node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 #@+node:ekr.20031218072017.2121:<< finish writing >>
 #@+at 
 #@nonl
@@ -29236,18 +29245,19 @@ def scanHeader(self,file,fileName):
 	new_df = false # Set default.
 	firstLines = [] # The lines before @+leo.
 	version_tag = "-ver="
+	thin_tag = "-thin"
 	tag = "@+leo" ; encoding_tag = "-encoding="
 	valid = true
 	<< skip any non @+leo lines >>
 	<< make sure we have @+leo >>
 	<< read optional version param >>
+	<< read optional thin param >>
 	<< read optional encoding param >>
 	<< set the closing comment delim >>
 	if not valid:
 		at.error("Bad @+leo sentinel in " + fileName)
 	# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
 	return firstLines, new_df
-#@nonl
 #@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 #@+at 
 #@nonl
@@ -29315,6 +29325,11 @@ if new_df:
 	else:
 		valid = false
 #@-node:ekr.20031218072017.2636:<< read optional version param >>
+#@+node:EKR.20040503105354:<< read optional thin param >>
+if g.match(s,i,thin_tag):
+	i += len(tag)
+#@nonl
+#@-node:EKR.20040503105354:<< read optional thin param >>
 #@+node:ekr.20031218072017.2637:<< read optional encoding param >>
 # Set the default encoding
 at.encoding = g.app.config.default_derived_file_encoding
@@ -29428,7 +29443,7 @@ def write(self,root,nosentinels=false,scriptFile=None,thinFile=false):
 	try:
 		<< open the file; return on error >>
 		root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
-		<< write then entire @file tree >>
+		<< write the entire @file tree >>
 		if scriptFile != None:
 			at.root.v.t.tnodeList = []
 		else:
@@ -29482,7 +29497,7 @@ if not ok:
 	return
 #@nonl
 #@-node:ekr.20031218072017.2116:<< open the file; return on error >>
-#@+node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+#@+node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 # unvisited nodes will be orphans, except in cweb trees.
 root.clearVisitedInTree()
 
@@ -29546,7 +29561,7 @@ for line in lines[j+1:k+1]:
 	self.os(line[i:]) ; self.onl()
 #@nonl
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
-#@-node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+#@-node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 #@+node:ekr.20031218072017.2121:<< finish writing >>
 #@+at 
 #@nonl

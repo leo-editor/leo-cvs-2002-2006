@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.4122:@file-thin leoTkinterPrefs.py
 #@@language python
 

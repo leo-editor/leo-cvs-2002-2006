@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.2620:@file-thin leoAtFile.py 
 """Classes to read and write @file nodes."""
 
@@ -429,6 +429,7 @@ class baseAtFile:
 		new_df = false # Set default.
 		firstLines = [] # The lines before @+leo.
 		version_tag = "-ver="
+		thin_tag = "-thin"
 		tag = "@+leo" ; encoding_tag = "-encoding="
 		valid = true
 		#@	<< skip any non @+leo lines >>
@@ -504,6 +505,13 @@ class baseAtFile:
 				valid = false
 		#@-node:ekr.20031218072017.2636:<< read optional version param >>
 		#@nl
+		#@	<< read optional thin param >>
+		#@+node:EKR.20040503105354:<< read optional thin param >>
+		if g.match(s,i,thin_tag):
+			i += len(tag)
+		#@nonl
+		#@-node:EKR.20040503105354:<< read optional thin param >>
+		#@nl
 		#@	<< read optional encoding param >>
 		#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
 		# Set the default encoding
@@ -549,7 +557,6 @@ class baseAtFile:
 			at.error("Bad @+leo sentinel in " + fileName)
 		# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
 		return firstLines, new_df
-	#@nonl
 	#@-node:ekr.20031218072017.2633:top_df.scanHeader
 	#@+node:ekr.20031218072017.2639:top_df.readLine
 	def readLine (self,file):
@@ -4318,6 +4325,9 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		if not at.sentinels:
 			return # Handle @nosentinelsfile.
+			
+		if at.thinFile:
+			s = s + "-thin"
 	
 		encoding = at.encoding.lower()
 		if encoding != "utf-8":
@@ -4517,8 +4527,8 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@-node:ekr.20031218072017.2116:<< open the file; return on error >>
 			#@nl
 			root.clearAllVisitedInTree() # 1/28/04: clear both vnode and tnode bits.
-			#@		<< write then entire @file tree >>
-			#@+node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+			#@		<< write the entire @file tree >>
+			#@+node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 			# unvisited nodes will be orphans, except in cweb trees.
 			root.clearVisitedInTree()
 			
@@ -4586,7 +4596,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 			#@nl
 			#@nonl
-			#@-node:ekr.20031218072017.2117:<< write then entire @file tree >> (4.x)
+			#@-node:ekr.20031218072017.2117:<< write the entire @file tree >> (4.x)
 			#@nl
 			if scriptFile != None:
 				at.root.v.t.tnodeList = []

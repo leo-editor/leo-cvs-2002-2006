@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20040303062846.2:@file-thin ../src/leoTest.py
 """
 

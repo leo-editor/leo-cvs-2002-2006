@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3749:@file-thin leoMenu.py
 """Gui-independent menu handling for Leo."""
 

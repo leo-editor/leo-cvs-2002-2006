@@ -1,4 +1,4 @@
-#@+leo-ver=4
+#@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3858:@file-thin leoTkinterDialog.py
 #@@language python
 
