@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="11731" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
-	<global_window_position top="95" left="266" height="860" width="988"/>
+	<global_window_position top="24" left="270" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1231,7 +1231,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1591,9 +1591,9 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
+<v t="EKR.20040524104904.213" a="E"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
 <v t="EKR.20040524104904.215"><vh>New plugin architecture</vh>
 <v t="EKR.20040524104904.216"><vh>@file plugins/mod_open_with.py</vh>
@@ -1608,7 +1608,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.223"><vh>About hooks</vh></v>
+<v t="EKR.20040524104904.223" a="TV"><vh>About hooks</vh></v>
 <v t="EKR.20040524104904.224"><vh>SECURITY WARNINGS</vh>
 <v t="EKR.20040524104904.225"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="EKR.20040524104904.226"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -4802,67 +4802,82 @@ The following table summarizes the arguments passed to hooks: ( Overrides is
 "yes" if returning anything other than None overrides Leo's normal command or
 event processing.)
 
+N.B. New in version 4.2: the v, old_v and new_p keyword arguments contain
+_positions_, not vnodes. These keyword arguments are deprecated and may be
+removed in later versions.
+
 tag argument                                              keys in keywords
 (hook name)  overrides       when called                  dictionary argument
 ---------    ---------       -----------                  -------------------
-"bodyclick1"   yes      before normal click in body       c,v,event
-"bodyclick2"            after  normal click in body       c,v,event
-"bodydclick1"  yes      before double click in body       c,v,event
-"bodydclick2"           after  double click in body       c,v,event
-"bodykey1"     yes      before body keystrokes            c,v,ch,oldSel,undoType
-"bodykey2"              after  body keystrokes            c,v,ch,oldSel,undoType
-"bodyrclick1"  yes      before right click in body        c,v,event
-"bodyrclick2"           after  right click in body        c,v,event
-"boxclick1"    yes      before click in +- box            c,v,event
-"boxclick2"             after  click in +- box            c,v,event
-"command1"     yes      before each command               c,v,label (note 2)
-"command2"              after  each command               c,v,label (note 2)
-"drag1"        yes      before start of drag              c,v,event
-"drag2"                 after  start of drag              c,v,event
-"dragging1"    yes      before continuing to drag         c,v,event
-"dragging2"             after  continuing to drag         c,v,event
+"bodyclick1"   yes      before normal click in body       c,p,v,event
+"bodyclick2"            after  normal click in body       c,p,v,event
+"bodydclick1"  yes      before double click in body       c,p,v,event
+"bodydclick2"           after  double click in body       c,p,v,event
+"bodykey1"     yes      before body keystrokes            c,p,v,ch,oldSel,undoType
+"bodykey2"              after  body keystrokes            c,p,v,ch,oldSel,undoType
+"bodyrclick1"  yes      before right click in body        c,p,v,event
+"bodyrclick2"           after  right click in body        c,p,v,event
+"boxclick1"    yes      before click in +- box            c,p,v,event
+"boxclick2"             after  click in +- box            c,p,v,event
+"command1"     yes      before each command               c,p,v,label (note 2)
+"command2"              after  each command               c,p,v,label (note 2)
+"drag1"        yes      before start of drag              c,p,v,event
+"drag2"                 after  start of drag              c,p,v,event
+"dragging1"    yes      before continuing to drag         c,p,v,event
+"dragging2"             after  continuing to drag         c,p,v,event
 "end1"                  start of app.quit()
-"enddrag1"     yes      before end of drag                c,v,event
-"enddrag2"              after  end of drag                c,v,event
-"headclick1"   yes      before normal click in headline   c,v,event
-"headclick2"            after  normal click in headline   c,v,event
-"headrclick1"  yes      before right click in headline    c,v,event
-"headrclick2"           after  right click in headline    c,v,event
-"headkey1"     yes      before headline keystrokes        c,v,ch
-"headkey2"              after  headline keystrokes        c,v,ch
-"hypercclick1" yes      before control click in hyperlink c,v,event
-"hypercclick2"          after  control click in hyperlink c,v,event
-"hyperenter1"  yes      before entering hyperlink         c,v,event
-"hyperenter2"           after  entering hyperlink         c,v,event
-"hyperleave1"  yes      before leaving  hyperlink         c,v,event
-"hyperleave2"           after  leaving  hyperlink         c,v,event
-"iconclick1"   yes      before single click in icon box   c,v,event
-"iconclick2"            after  single click in icon box   c,v,event
-"iconrclick1"  yes      before right click in icon box    c,v,event
-"iconrclick2"           after  right click in icon box    c,v,event
-"icondclick1"  yes      before double click in icon box   c,v,event
-"icondclick2"           after  double click in icon box   c,v,event
-"idle"                  periodically (at idle time)       c,v
-"menu1"        yes      before creating menus             c,v        (note 3)
-"menu2"        yes      before updating menus             c,v
+"enddrag1"     yes      before end of drag                c,p,v,event
+"enddrag2"              after  end of drag                c,p,v,event
+"headclick1"   yes      before normal click in headline   c,p,v,event
+"headclick2"            after  normal click in headline   c,p,v,event
+"headrclick1"  yes      before right click in headline    c,p,v,event
+"headrclick2"           after  right click in headline    c,p,v,event
+"headkey1"     yes      before headline keystrokes        c,p,v,ch
+"headkey2"              after  headline keystrokes        c,p,v,ch
+"hypercclick1" yes      before control click in hyperlink c,p,v,event
+"hypercclick2"          after  control click in hyperlink c,p,v,event
+"hyperenter1"  yes      before entering hyperlink         c,p,v,event
+"hyperenter2"           after  entering hyperlink         c,p,v,event
+"hyperleave1"  yes      before leaving  hyperlink         c,p,v,event
+"hyperleave2"           after  leaving  hyperlink         c,p,v,event
+"iconclick1"   yes      before single click in icon box   c,p,v,event
+"iconclick2"            after  single click in icon box   c,p,v,event
+"iconrclick1"  yes      before right click in icon box    c,p,v,event
+"iconrclick2"           after  right click in icon box    c,p,v,event
+"icondclick1"  yes      before double click in icon box   c,p,v,event
+"icondclick2"           after  double click in icon box   c,p,v,event
+"idle"                  periodically (at idle time)       c
+"menu1"        yes      before creating menus             c,p,v        (note 3)
+"menu2"        yes      before updating menus             c,p,v
 "open1"        yes      before opening any file           old_c,new_c,fileName (note 4)
 "open2"                 after  opening any file           old_c,new_c,fileName (note 4)
-"openwith1"    yes      before Open With command          c,v,openType,arg,ext
-"openwith2"             after  Open With command          c,v,openType,arg,ext
-"recentfiles1" yes      before Recent Files command       c,v,fileName,closeFlag
-"recentfiles2"          after  Recent Files command       c,v,fileName,closeFlag
-"save1"        yes      before any Save command           c,v,fileName
-"save2"                 after  any Save command           c,v,fileName
-"select1"      yes      before selecting a vnode          c,new_v,new_v
-"select2"               after  selecting a vnode          c,new_v,old_v
-"select3"               after  selecting a vnode          c,new_v,old_v
-"set-mark"     no       when a mark is set                c,v           (new)
+"openwith1"    yes      before Open With command          c,p,v,openType,arg,ext
+"openwith2"             after  Open With command          c,p,v,openType,arg,ext
+"recentfiles1" yes      before Recent Files command       c,p,v,fileName,closeFlag
+"recentfiles2"          after  Recent Files command       c,p,v,fileName,closeFlag
+"save1"        yes      before any Save command           c,p,v,fileName
+"save2"                 after  any Save command           c,p,v,fileName
+"select1"      yes      before selecting a vnode          c,new_p,old_p,new_v,new_v
+"select2"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
+"select3"               after  selecting a vnode          c,new_p,old_p,new_v,old_v
+"set-mark"     no       when a mark is set                c,p,v           (new)
 "start1"       no       after app.finishCreate()
-"start2"                after opening first Leo window    c,v,fileName
-"unselect1"    yes      before unselecting a vnode        c,new_v,old_v
-"unselect2"             after  unselecting a vnode        c,old_v,old_v
-"@url1"        yes      before double-click @url node     c,v           (note 5)
-"@url2"                 after  double-click @url node     c,v           (note 5)
+"start2"                after opening first Leo window    c,p,v,fileName
+"unselect1"    yes      before unselecting a vnode        c,new_p,old_p,new_v,old_v
+"unselect2"             after  unselecting a vnode        c,new_p,old_p,old_v,old_v
+"@url1"        yes      before double-click @url node     c,p,v           (note 5)
+"@url2"                 after  double-click @url node     c,p,v           (note 5)
+
+Changes made in 4.2.1: - added p keyword to these hooks: "start2",
+"init-color-markup", "color-optional-markup", "command1", "command2",
+"openwith1", "openwith2", "recentfiles1", "recentfiles2", "save1", "save2",
+"url1", "url2", "scan-directives", "menu2", "clear-mark", "set-mark", "menu1",
+"bodyclick1", "bodyclick2", "bodydclick1", "bodydclick2", "bodyrclick1",
+"bodyrclick2", "bodykey1", "bodykey2", "hyperclick1", "hyperclick2",
+"hyperenter1", "hyperenter2", "hyperleave1", "hyperleave2", "draw-outline-box",
+"draw-outline-icon", "draw-outline-node", "draw-outline-text-box", "draw-sub-outline", 
+"headclick1", "headclick2", "headrclick1", "headrclick2", "headkey1", "headkey2",
+"create-popup-menu", "enable-popup-menu-items", "show-popup-menu", "select1", "select2", "unselect1", "unselect2",
 
 Notes:
 
@@ -4910,19 +4925,19 @@ tag argument                                                       keys in keywo
 (hook name)               overrides        when called           dictionary argument
 ---------                 ---------        -----------           -------------------
 "after-redraw-outline"       no        end of tree.redraw        c (note 6)
-"clear-mark"                 no        when mark is set          c,v
+"clear-mark"                 no        when mark is set          c,p,v
 "close-frame"                no        in app.closeLeoWindow     c
-"color-optional-markup"      yes *     (note 7)                  colorer,v (note 7)
-"create-optional-menus"      no        (note 8)                  (note 8)
+"color-optional-markup"      yes *     (note 7)                  colorer,p,v,s,i,j,colortag (note 7)
+"create-optional-menus"      no        (note 8)                  c (note 8)
 "destroy-all-global-windows" no        (note 12)                 None
-"create-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
-"enable-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
-"init-color-markup"          no        (note 7)                  colorer,v,s,i,j,colortag (note 7)
+"create-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
+"enable-popup-menu-items"    no        in tree.OnPopup           c,p,v,event (new)
+"init-color-markup"          no        (note 7)                  colorer,p,v (note 7)
 "new"                        no        start of New command      old_c,new_c (note 9)
 "redraw-entire-outline"      yes       start of tree.redraw      c (note 6)
-"scan-directives"            no        in scanDirectives         c,v,s,old_dict,dict,pluginsList (note 10)
-"set-mark"                   no        when mark is set          c,v
-"show-popup-menu"            no        in tree.OnPopup           c,v,event
+"scan-directives"            no        in scanDirectives         c,p,v,s,old_dict,dict,pluginsList (note 10)
+"set-mark"                   no        when mark is set          c,p,v
+"show-popup-menu"            no        in tree.OnPopup           c,p,v,event
 
 Notes:
 

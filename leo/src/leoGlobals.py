@@ -537,7 +537,7 @@ def scanDirectives(c,p=None):
         #@nonl
         #@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
         #@nl
-        g.doHook("scan-directives",c=c,v=p,s=s,
+        g.doHook("scan-directives",c=c,p=p,v=p,s=s,
             old_dict=old,dict=dict,pluginsList=pluginsList)
         old.update(dict)
 

@@ -1116,7 +1116,7 @@ class baseColorizer:
             #@nonl
             #@-node:ekr.20031218072017.1602:<< initialize ivars & tags >> colorizeAnyLanguage
             #@nl
-            g.doHook("init-color-markup",colorer=self,v=self.p)
+            g.doHook("init-color-markup",colorer=self,p=self.p,v=self.p)
             self.color_pass = 0
             if self.incremental and (
                 #@            << all state ivars match >>
@@ -1424,7 +1424,7 @@ class baseColorizer:
                 self.doLatexLine(s,i,j)
             else:
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="comment"):
                     self.tag("comment",i,j)
             return j,"blockComment" # skip the rest of the line.
     
@@ -1436,7 +1436,7 @@ class baseColorizer:
                 self.tag("comment",j,j+k)
             else:
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j+k,colortag="comment"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j+k,colortag="comment"):
                     self.tag("comment",i,j+k)
             i = j + k
             return i,"normal"
@@ -1535,7 +1535,7 @@ class baseColorizer:
                 # The entire line is in the doc part.
                 j = len(s)
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j,colortag="docPart"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="docPart"):
                     self.tag("docPart",i,j)
                 i = j # skip the rest of the line.
             #@-node:ekr.20031218072017.1616:<< handle noweb doc part >>
@@ -1584,7 +1584,7 @@ class baseColorizer:
             j = len(s)
             if continueState == "string3d":
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="string"):
                     self.tag("string",i,j)
             else:
                 self.tag("string",i,j)
@@ -1593,7 +1593,7 @@ class baseColorizer:
         else: # End the string
             if continueState == "string3d":
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="string"):
                     self.tag("string",i,j+3)
                 else:
                     self.tag("string",i,j+3)
@@ -1619,7 +1619,7 @@ class baseColorizer:
             self.tag("leoKeyword",i,j)
             k = len(s) # Everything on the line is in the doc part.
             if not g.doHook("color-optional-markup",
-                colorer=self,v=self.p,s=s,i=j,j=k,colortag="docPart"):
+                colorer=self,p=self.p,v=self.p,s=s,i=j,j=k,colortag="docPart"):
                 self.tag("docPart",j,k)
             return k,"doc"
         elif word == "@nocolor":
@@ -1850,7 +1850,7 @@ class baseColorizer:
             else:
                 j = len(s)
                 if not g.doHook("color-optional-markup",
-                    colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
+                    colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="comment"):
                     self.tag("comment",i,j)
                 i = j
             #@nonl
@@ -1864,7 +1864,7 @@ class baseColorizer:
             k = len(self.block_comment_start)
             
             if not g.doHook("color-optional-markup",
-                colorer=self,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
+                colorer=self,p=self.p,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
                 self.tag("comment",i,i+k)
             
             i += k ; state = "blockComment"
@@ -1911,7 +1911,7 @@ class baseColorizer:
                 if delim == '"""':
                     # Only handle wiki items in """ strings.
                     if not g.doHook("color-optional-markup",
-                        colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
+                        colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="string"):
                         self.tag("string",i,j)
                 else:
                     self.tag("string",i,j)

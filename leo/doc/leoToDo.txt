@@ -4,7 +4,7 @@
 
 #@+all
 #@+node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041018195347:Docs 2
+#@+node:ekr.20041018195347:Docs
 #@+node:ekr.20041018195347.1:Improve MacOS Docs
 I just succeeded at installing Leo under os x (10.2.8) by folliwing  
 your instructions with modification.  It would be nice to get the  
@@ -158,206 +158,12 @@ if sys.platform == "linux2": # This crashes tcl83.dll
 #@nonl
 #@-node:ekr.20040226094105.3:The actual workaround
 #@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@-node:ekr.20041018195347:Docs 2
-#@+node:ekr.20041022080257:Mac Bugs 3
-#@+node:ekr.20041022081937:Get cvs working again on mac
-Just remove the cvs key files?
+#@-node:ekr.20041018195347:Docs
+#@+node:ekr.20041022091645:Top ROTI
+ROTI: Return on Time Investment
 #@nonl
-#@-node:ekr.20041022081937:Get cvs working again on mac
-#@+node:ekr.20041007052853:(Fix problems with paste on Linux)
-@color
-#@nonl
-#@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
-#@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
-#@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
-@
-
-The following are called only when g.app.gui.win32clipboard is not None, and
-presently that never happens.
-#@nonl
-#@+node:ekr.20031218072017.845:replaceClipboardWith
-def replaceClipboardWith (self,s):
-
-    # g.app.gui.win32clipboard is always None.
-    wcb = g.app.gui.win32clipboard
-
-    if wcb:
-        try:
-            wcb.OpenClipboard(0)
-            wcb.EmptyClipboard()
-            wcb.SetClipboardText(s)
-            wcb.CloseClipboard()
-        except:
-            g.es_exception()
-    else:
-        self.root.clipboard_clear()
-        self.root.clipboard_append(s)
-#@nonl
-#@-node:ekr.20031218072017.845:replaceClipboardWith
-#@+node:ekr.20031218072017.846:getTextFromClipboard
-def getTextFromClipboard (self):
-    
-    # g.app.gui.win32clipboard is always None.
-    wcb = g.app.gui.win32clipboard
-    
-    if wcb:
-        try:
-            wcb.OpenClipboard(0)
-            data = wcb.GetClipboardData()
-            wcb.CloseClipboard()
-            # g.trace(data)
-            return data
-        except TypeError:
-            # g.trace(None)
-            return None
-        except:
-            g.es_exception()
-            return None
-    else:
-        try:
-            s = self.root.selection_get(selection="CLIPBOARD")
-            return s
-        except:
-            return None
-#@nonl
-#@-node:ekr.20031218072017.846:getTextFromClipboard
-#@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
-#@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
-#@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
-def OnCut (self,event=None):
-    
-    """The handler for the virtual Cut event."""
-
-    frame = self ; c = frame.c ; v = c.currentVnode()
-    
-    if 0: # g.app.gui.win32clipboard is always None.
-        if g.app.gui.win32clipboard:
-            data = frame.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-
-    # Activate the body key handler by hand.
-    frame.body.forceFullRecolor()
-    frame.body.onBodyWillChange(v,"Cut")
-
-def OnCutFromMenu (self):
-    
-    w = self.getFocus()
-    w.event_generate(g.virtual_event_name("Cut"))
-    
-    frame = self ; c = frame.c ; v = c.currentVnode()
-
-    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-        frame.tree.onHeadChanged(v)
-
-
-
-#@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
-#@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-def OnCopy (self,event=None):
-    
-    frame = self
-
-    if 0: # g.app.gui.win32clipboard is always None.
-        if g.app.gui.win32clipboard:
-            data = frame.body.getSelectedText()
-            if data:
-                g.app.gui.replaceClipboardWith(data)
-        
-    # Copy never changes dirty bits or syntax coloring.
-    
-def OnCopyFromMenu (self):
-
-    frame = self
-    w = frame.getFocus()
-    w.event_generate(g.virtual_event_name("Copy"))
-#@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
-def OnPaste (self,event=None):
-    
-    frame = self ; c = frame.c ; v = c.currentVnode()
-    
-    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
-        bodyCtrl = frame.body.bodyCtrl
-        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
-        bodyCtrl.insert('insert', s)
-        bodyCtrl.event_generate('<Key>')
-        bodyCtrl.update_idletasks()
-    else:
-        # Activate the body key handler by hand.
-        frame.body.forceFullRecolor()
-        frame.body.onBodyWillChange(v,"Paste")
-    
-def OnPasteFromMenu (self):
-    
-    frame = self ; c = frame.c ; v = c.currentVnode()
-
-    w = self.getFocus()
-    w.event_generate(g.virtual_event_name("Paste"))
-    
-    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-        frame.tree.onHeadChanged(v)
-#@nonl
-#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
-#@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
-#@+node:ekr.20031218072017.838:tkBody.createBindings
-def createBindings (self,frame):
-    
-    t = self.bodyCtrl
-    
-    # Event handlers...
-    t.bind("<Button-1>", frame.OnBodyClick)
-    if sys.platform == "win32":
-        # Support Linux middle-button paste easter egg.
-        t.bind("<Button-2>", frame.OnPaste)
-    t.bind("<Button-3>", frame.OnBodyRClick)
-    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
-    t.bind("<Key>", frame.body.onBodyKey)
-
-    # Gui-dependent commands...
-    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
-#@nonl
-#@-node:ekr.20031218072017.838:tkBody.createBindings
-#@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
-@nocolor
-
-- This might fix some binding problems on some platforms.
-
-- Might want to define <<localUndo>> for undo in Find Panel.
-
-- Probably should define <<selectAll>> for Find Panel and similar stuff.
-#@nonl
-#@-node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
-#@-node:ekr.20041007052853:(Fix problems with paste on Linux)
-#@+node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
-#@+node:ekr.20041022080455:Report
-@killcolor
-
-There seems to be a bug when setting font preferences on the Mac.  If I 
-check more than one box and then apply a font change, the change is set 
-correctly when I restart Leo but doesn't always preview correctly 
-before that.  I set headline and body text to the same font and the 
-headlines did not change to show the new font until I started up again. 
-  Not a big deal.
-
--- Dan Windler
-#@-node:ekr.20041022080455:Report
-#@+node:ekr.20041030082554:Report 2
-
-http://sourceforge.net/forum/message.php?msg_id=2823643
-
-there are two bugs with the setting of the font.
-
-1. it does not get saved, if you exit leo without saving the file. or in other
-words: you have to save a file, otherwise the font settings are not saved.
-
-2. the outline font does not change until you restart leo.
-#@-node:ekr.20041030082554:Report 2
-#@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
-#@-node:ekr.20041022080257:Mac Bugs 3
-#@+node:ekr.20041006110656:Urgent 7 + 0
+#@-node:ekr.20041022091645:Top ROTI
+#@+node:ekr.20041006110656:First (completion) 4
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
 I would like to store unknown
 attributes as a simple string. The reason, is because I am using an unknown
@@ -386,15 +192,6 @@ Regards
 Martin
 #@-node:ekr.20041004091238:example file
 #@-node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
-#@+node:ekr.20041002165019:Emacs-style movement commands
-http://sourceforge.net/forum/message.php?msg_id=2499058
-By: sgbotsford
-
-> Second level would be in implement the movement commands that aren't in leo.
-
-That would be pretty easy in a plugin.  This is probably the most important thing that Leo should have in its core to support "driving" the editor as in Emacs.  The other thing is to support the emacs style of handling keystrokes (writing keystroke info to a status line).  Better feedback on the status line will happen asap.
-#@nonl
-#@-node:ekr.20041002165019:Emacs-style movement commands
 #@+node:ekr.20041004193600:Add safeguards on @button and @script
 #@+node:ekr.20041004193600.1:Paul's first posting
 @killcolor
@@ -614,6 +411,67 @@ def putUnknownAttributes (self,torv,toString=False):
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040602153716:(Finish drawUserIcons)
+#@+node:ekr.20041022083005:More flexible plugin manager
+#@+node:ekr.20041022070154:(options for setting working directory during startup)
+#@+node:ekr.20041022070154.1:Request & response
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2815599
+By: Antonio Pala
+
+All plugins I have tried (notably @run and the @rst variants) have their working
+directory set to my home directory, regardless of the position of the Leo file
+and all @path directives. This renders most of them useless, since I would have
+to use absolute pathnames. Is this the way they were meant to work, or is there
+a bug somewhere? Or maybe I have missed some configuration parameter?
+
+I am using Leo 4.2 with Python 2.3 on Linux.
+
+> All plugins I have tried (notably @run and the @rst variants) have their working directory set to my home directory, regardless of the position of the Leo file and all @path directives.
+
+Directory issues are different on different platforms.
+
+I would welcome specific proposals for setting directories during startup.  Early in the startup process Leo sets g.app.loadDir to the directory from which Leo was loaded.  Plugins can use this directory to set the working directory as they choose.
+
+@path directives will have no effect on plugins:  they are loaded before the outline.
+
+> This renders most [plugins] useless, since I would have to use absolute pathnames.
+
+No, it means you might have to add a few lines of code to your plugin to make it work just as you would like it to work.
+
+> Is this the way they were meant to work?
+
+I don't have much control over how plugins were "meant" to work.  However, an improved plugin manager might have facilities for setting the working directory.
+
+This is a non-trivial issue;   Leo uses and sets paths in many places in the code.  It seems dubious to have plugins change the working directory at random times.  Perhaps an option that inits the working directory would be good.  The new config system will allow per-outline options as well as global option. I believe such options could be loaded before plugins.
+
+Edward
+#@-node:ekr.20041022070154.1:Request & response
+#@-node:ekr.20041022070154:(options for setting working directory during startup)
+#@+node:ekr.20041024085554:specify load oarder, compatibilty
+https://sourceforge.net/forum/message.php?msg_id=2818661
+
+One thing to think about is to have the plugin author be able to specify if the plugin needs to be loaded before or after a set of plugins. Something like: 
+ 
+plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) ) 
+ 
+This may assist in ensuring that some plugins with dependencies get loaded right. :)
+
+----------
+
+http://sourceforge.net/forum/message.php?msg_id=2818661
+
+maybe it would be good for some flag to indicate plugins the plugin is incompatible with.
+
+plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ),
+clash = ( 'webpage_machine' ) )
+
+where clash indicates the incompatibility.  What should it do?  Maybe not load?
+#@nonl
+#@-node:ekr.20041024085554:specify load oarder, compatibilty
+#@-node:ekr.20041022083005:More flexible plugin manager
+#@-node:ekr.20041006110656:First (completion) 4
+#@+node:ekr.20040919101448:Major (Must do) 6
 #@+node:ekr.20040919182750.1:Support for CVS
 #@+node:ekr.20040916122326:Check Import command
 - Ignore position of blank lines wrt sentinels.
@@ -1704,7 +1562,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
 
-    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
     body = p.bodyString()
     if not newSel:
@@ -1735,7 +1593,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c.changed:
         c.setChanged(True)
     << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return "break"
 #@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
 # 6/22/03: Make sure we handle delete key properly.
@@ -2031,7 +1889,7 @@ def idle_head_key (self,p,ch=None):
     edit_text = self.edit_text(p)
     index = edit_text.index("insert")
 
-    if g.doHook("headkey1",c=c,p=p,ch=ch):
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
         return "break" # The hook claims to have handled the event.
         
     << set head to vnode text >>
@@ -2047,7 +1905,7 @@ def idle_head_key (self,p,ch=None):
         << reconfigure p and all nodes joined to p >>
         << update the screen >>
 
-    g.doHook("headkey2",c=c,p=p,ch=ch)
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     return "break"
 #@nonl
 #@+node:ekr.20040803072955.92:<< set head to vnode text >>
@@ -2179,69 +2037,6 @@ def putCodeLine (self,s,i):
 #@-node:ekr.20040720075446.1:(write_strips_blank_lines option)
 #@-node:ekr.20040930075920:Whitespace options
 #@-node:ekr.20040919182750.1:Support for CVS
-#@+node:ekr.20041022083005:More flexible plugin manager
-#@+node:ekr.20041022070154:(To do: options for setting working directory during startup)
-#@+node:ekr.20041022070154.1:Request & response
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2815599
-By: Antonio Pala
-
-All plugins I have tried (notably @run and the @rst variants) have their working
-directory set to my home directory, regardless of the position of the Leo file
-and all @path directives. This renders most of them useless, since I would have
-to use absolute pathnames. Is this the way they were meant to work, or is there
-a bug somewhere? Or maybe I have missed some configuration parameter?
-
-I am using Leo 4.2 with Python 2.3 on Linux.
-
-> All plugins I have tried (notably @run and the @rst variants) have their working directory set to my home directory, regardless of the position of the Leo file and all @path directives.
-
-Directory issues are different on different platforms.
-
-I would welcome specific proposals for setting directories during startup.  Early in the startup process Leo sets g.app.loadDir to the directory from which Leo was loaded.  Plugins can use this directory to set the working directory as they choose.
-
-@path directives will have no effect on plugins:  they are loaded before the outline.
-
-> This renders most [plugins] useless, since I would have to use absolute pathnames.
-
-No, it means you might have to add a few lines of code to your plugin to make it work just as you would like it to work.
-
-> Is this the way they were meant to work?
-
-I don't have much control over how plugins were "meant" to work.  However, an improved plugin manager might have facilities for setting the working directory.
-
-This is a non-trivial issue;   Leo uses and sets paths in many places in the code.  It seems dubious to have plugins change the working directory at random times.  Perhaps an option that inits the working directory would be good.  The new config system will allow per-outline options as well as global option. I believe such options could be loaded before plugins.
-
-Edward
-#@-node:ekr.20041022070154.1:Request & response
-#@-node:ekr.20041022070154:(To do: options for setting working directory during startup)
-#@+node:ekr.20041022083005.1:unregisterhook
-#@-node:ekr.20041022083005.1:unregisterhook
-#@+node:ekr.20041024085554:specify load oarder, compatibilty
-https://sourceforge.net/forum/message.php?msg_id=2818661
-
-One thing to think about is to have the plugin author be able to specify if the plugin needs to be loaded before or after a set of plugins. Something like: 
- 
-plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) ) 
- 
-This may assist in ensuring that some plugins with dependencies get loaded right. :)
-
-----------
-
-http://sourceforge.net/forum/message.php?msg_id=2818661
-
-maybe it would be good for some flag to indicate plugins the plugin is incompatible with.
-
-plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ),
-clash = ( 'webpage_machine' ) )
-
-where clash indicates the incompatibility.  What should it do?  Maybe not load?
-#@nonl
-#@-node:ekr.20041024085554:specify load oarder, compatibilty
-#@-node:ekr.20041022083005:More flexible plugin manager
-#@-node:ekr.20041006110656:Urgent 7 + 0
-#@+node:ekr.20040919101448:Major (Must do) 4 + 0
 #@+node:ekr.20040916122326.1:Revise Undo...
 #@+node:ekr.20041011092930:Fix undo bug
 http://sourceforge.net/forum/message.php?msg_id=2795653
@@ -3768,19 +3563,36 @@ a big problem with modern editors, but it _would_ be nicer...
 #@-node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20031218072017.734:Rewrite (threaded) colorizer to use jEdit language descriptionfiles
 #@+node:ekr.20041022164727:Rewrite plugins manager core code
-#@+node:ekr.20041022164727.1:Specify order of plugins
-http://sourceforge.net/forum/message.php?msg_id=2818384
-
-One thing to think about is to have the plugin author be able to specify if the plugin needs to be loaded before or after a set of plugins. Something like: 
- 
-plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) ) 
- 
-This may assist in ensuring that some plugins with dependencies get loaded right. :)
-#@nonl
-#@-node:ekr.20041022164727.1:Specify order of plugins
 #@-node:ekr.20041022164727:Rewrite plugins manager core code
-#@-node:ekr.20040919101448:Major (Must do) 4 + 0
-#@+node:ekr.20041001182730:Easy 0 + 7
+#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
+Maybe the section operator could be customizable, 
+I personally prefer the wiki way [[name of section]]. 
+
+@setlink-tag [[ ]] 
+#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
+#@-node:ekr.20040919101448:Major (Must do) 6
+#@+node:ekr.20041001182730:Easy 6
+#@+node:ekr.20041022091645.1:Find Next Clone command
+#@-node:ekr.20041022091645.1:Find Next Clone command
+#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+@nocolor
+
+Open discussion
+By: jasonic ( Jason Cunliffe ) 
+ use of @language   
+2003-07-16 03:40  
+
+I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+
+For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
+
+".py" for python 
+".r" for rebol 
+".as" for actionscript etc.. 
+
+Should anyone need to over-ride those, they could use @language.
+#@nonl
+#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
 #@+node:ekr.20041029083459:Remember Import directory
 By: Kent Tenney - ktenney
 Import to @file request  
@@ -3809,7 +3621,7 @@ Treat @language like @color: ambiguous nodes (nodes containing more than one
 #@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
 #@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
 #@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
-#@+node:ekr.20031218072017.801:Zipped .leo files
+#@+node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
 By: samcollett ( Sam Collett ) 
  Compressed LEO files   
 2003-01-07 16:57
@@ -3838,13 +3650,7 @@ module to uncompress/compress the file, saving a lot of disk space.
 
 What do you think of this?
 #@-node:ekr.20040226092546:Saving .leo files with file compression
-#@-node:ekr.20031218072017.801:Zipped .leo files
-#@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
-Maybe the section operator could be customizable, 
-I personally prefer the wiki way [[name of section]]. 
-
-@setlink-tag [[ ]] 
-#@-node:ekr.20031218072017.805:Allow other section delims besides << and >>
+#@-node:ekr.20031218072017.801:Zipped .leo files (see chapters plugin for how to do this)
 #@+node:ekr.20040918165519:Mark Task & Clone To Task commands
 @nocolor
 
@@ -3869,24 +3675,13 @@ Maybe a way of doing it:
 into the Task node.
 #@nonl
 #@-node:ekr.20040918165519:Mark Task & Clone To Task commands
+#@-node:ekr.20041001182730:Easy 6
+#@+node:ekr.20041022081937.1:Others (Maybe)
 #@+node:ekr.20031218072017.736:Use xml parser to read .leo files
 http://www.reportlab.com
 
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@-node:ekr.20041001182730:Easy 0 + 7
-#@+node:ekr.20041022081937.1:Others 1 + 2
-#@+node:ekr.20041007081134:* Convert Leo to Tix
-http://sourceforge.net/forum/message.php?msg_id=2792402
-By: nobody
-
-- Pmw plays ok with Tix.
-
-- It seems that Tix and Tk can play ok together but the first Toplevel must be
-derived from Tix. Something must happen during that initial creation that sets
-things up. If Tkinter.Tk() is done first, it appears all bets are off.
-#@nonl
-#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:EKR.20040628085831:@import, @shadow
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
@@ -3912,47 +3707,207 @@ Here are some features I'd like to see:
 -marshall-  
 #@-node:ekr.20031218072017.795:Metatags
 #@-node:ekr.20040217153407:User customizeable tangling and untangling
-#@-node:ekr.20041022081937.1:Others 1 + 2
-#@-node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041022091645:Top ROTI
-ROTI: Return on Time Investment
+#@+node:ekr.20041022080257:Mac Bugs 3
+#@+node:ekr.20041022081937:Get cvs working again on mac
+Just remove the cvs key files?
 #@nonl
-#@+node:ekr.20041022091645.1:* Find Next Clone command
-#@-node:ekr.20041022091645.1:* Find Next Clone command
-#@+node:ekr.20041007081134:* Convert Leo to Tix
-http://sourceforge.net/forum/message.php?msg_id=2792402
-By: nobody
-
-- Pmw plays ok with Tix.
-
-- It seems that Tix and Tk can play ok together but the first Toplevel must be
-derived from Tix. Something must happen during that initial creation that sets
-things up. If Tkinter.Tk() is done first, it appears all bets are off.
+#@-node:ekr.20041022081937:Get cvs working again on mac
+#@+node:ekr.20041007052853:(Fix problems with paste on Linux)
+@color
 #@nonl
-#@-node:ekr.20041007081134:* Convert Leo to Tix
-#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.
+#@nonl
+#@+node:ekr.20031218072017.845:replaceClipboardWith
+def replaceClipboardWith (self,s):
+
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)
+#@nonl
+#@-node:ekr.20031218072017.845:replaceClipboardWith
+#@+node:ekr.20031218072017.846:getTextFromClipboard
+def getTextFromClipboard (self):
+    
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+    
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
+        except:
+            return None
+#@nonl
+#@-node:ekr.20031218072017.846:getTextFromClipboard
+#@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+def OnCut (self,event=None):
+    
+    """The handler for the virtual Cut event."""
+
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+
+    # Activate the body key handler by hand.
+    frame.body.forceFullRecolor()
+    frame.body.onBodyWillChange(v,"Cut")
+
+def OnCutFromMenu (self):
+    
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Cut"))
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+
+
+
+#@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+#@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+def OnCopy (self,event=None):
+    
+    frame = self
+
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+        
+    # Copy never changes dirty bits or syntax coloring.
+    
+def OnCopyFromMenu (self):
+
+    frame = self
+    w = frame.getFocus()
+    w.event_generate(g.virtual_event_name("Copy"))
+#@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+def OnPaste (self,event=None):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+        bodyCtrl = frame.body.bodyCtrl
+        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+        bodyCtrl.insert('insert', s)
+        bodyCtrl.event_generate('<Key>')
+        bodyCtrl.update_idletasks()
+    else:
+        # Activate the body key handler by hand.
+        frame.body.forceFullRecolor()
+        frame.body.onBodyWillChange(v,"Paste")
+    
+def OnPasteFromMenu (self):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Paste"))
+    
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+#@nonl
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
 @nocolor
 
-Open discussion
-By: jasonic ( Jason Cunliffe ) 
- use of @language   
-2003-07-16 03:40  
+- This might fix some binding problems on some platforms.
 
-I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+- Might want to define <<localUndo>> for undo in Find Panel.
 
-For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
-
-".py" for python 
-".r" for rebol 
-".as" for actionscript etc.. 
-
-Should anyone need to over-ride those, they could use @language.
+- Probably should define <<selectAll>> for Find Panel and similar stuff.
 #@nonl
-#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
-#@-node:ekr.20041022091645:Top ROTI
+#@-node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
+#@-node:ekr.20041007052853:(Fix problems with paste on Linux)
+#@+node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@+node:ekr.20041022080455:Report
+@killcolor
+
+There seems to be a bug when setting font preferences on the Mac.  If I 
+check more than one box and then apply a font change, the change is set 
+correctly when I restart Leo but doesn't always preview correctly 
+before that.  I set headline and body text to the same font and the 
+headlines did not change to show the new font until I started up again. 
+  Not a big deal.
+
+-- Dan Windler
+#@-node:ekr.20041022080455:Report
+#@+node:ekr.20041030082554:Report 2
+
+http://sourceforge.net/forum/message.php?msg_id=2823643
+
+there are two bugs with the setting of the font.
+
+1. it does not get saved, if you exit leo without saving the file. or in other
+words: you have to save a file, otherwise the font settings are not saved.
+
+2. the outline font does not change until you restart leo.
+#@-node:ekr.20041030082554:Report 2
+#@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@-node:ekr.20041022080257:Mac Bugs 3
+#@-node:ekr.20041022081937.1:Others (Maybe)
+#@-node:EKR.20040609091327:To do: 4.3
 #@+node:ekr.20041022091645.2:Top Big Picture
-#@+node:ekr.20041022091645.3:Drive Leo using only keystrokes
-#@-node:ekr.20041022091645.3:Drive Leo using only keystrokes
 #@+node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
 #@+node:ekr.20041022144159:Q: Pymacs bridge
 I'm trying to use the Pymacs bridge to add a symbol completion facility to
@@ -4014,19 +3969,6 @@ So, maybe try
                                (py-find-global-imports))))
 #@-node:ekr.20041022144159.1:A: pymacs-forget-mutability
 #@-node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
-#@+node:ekr.20041022092601:Get more comfortable with Linux/Emacs
-#@-node:ekr.20041022092601:Get more comfortable with Linux/Emacs
-#@+node:ekr.20041007081134:* Convert Leo to Tix
-http://sourceforge.net/forum/message.php?msg_id=2792402
-By: nobody
-
-- Pmw plays ok with Tix.
-
-- It seems that Tix and Tk can play ok together but the first Toplevel must be
-derived from Tix. Something must happen during that initial creation that sets
-things up. If Tkinter.Tk() is done first, it appears all bets are off.
-#@nonl
-#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:ekr.20040329182535.4:Leo + zodb
 #@+node:ekr.20041002151816:ZODB docs
 #@+node:ekr.20041002151816.1:What is the ZODB?
@@ -4839,8 +4781,6 @@ Scott
 #@-node:ekr.20041022091645.2:Top Big Picture
 #@+node:ekr.20040329182535.7:1 hour to 1 day projects
 #@+node:ekr.20041022083833:New commands 1
-#@+node:ekr.20041022091645.1:* Find Next Clone command
-#@-node:ekr.20041022091645.1:* Find Next Clone command
 #@+node:ekr.20031218072017.792:Double Click Node command
 #@-node:ekr.20031218072017.792:Double Click Node command
 #@+node:ekr.20040315060557:Declone command
@@ -4978,25 +4918,6 @@ add python -t to test suite to catch mixed tab & space in derived files.
 #@-node:ekr.20031218072017.754:Open text files in text window
 #@-node:ekr.20041022083833.1:Better commands 1
 #@+node:ekr.20041022083226:Better directives 1
-#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
-@nocolor
-
-Open discussion
-By: jasonic ( Jason Cunliffe ) 
- use of @language   
-2003-07-16 03:40  
-
-I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
-
-For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
-
-".py" for python 
-".r" for rebol 
-".as" for actionscript etc.. 
-
-Should anyone need to over-ride those, they could use @language.
-#@nonl
-#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
 #@+node:ekr.20031218072017.745:@@first <n>
 @nocolor
 
@@ -5443,6 +5364,17 @@ does nothing for readability in plain text.
 #@-node:ekr.20041022083226.3:Better windows
 #@-node:ekr.20040329182535.7:1 hour to 1 day projects
 #@+node:ekr.20040329182535.3:2 day to 2 week projects
+#@+node:ekr.20041007081134:* Convert Leo to Tix
+http://sourceforge.net/forum/message.php?msg_id=2792402
+By: nobody
+
+- Pmw plays ok with Tix.
+
+- It seems that Tix and Tk can play ok together but the first Toplevel must be
+derived from Tix. Something must happen during that initial creation that sets
+things up. If Tkinter.Tk() is done first, it appears all bets are off.
+#@nonl
+#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:ekr.20040329182535.4:Leo + zodb
 #@+node:ekr.20041002151816:ZODB docs
 #@+node:ekr.20041002151816.1:What is the ZODB?

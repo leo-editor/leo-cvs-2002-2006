@@ -349,7 +349,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
             try:
                 p = self ; c = p.c
-                if not g.doHook("hypercclick1",c=c,p=p,event=event):
+                if not g.doHook("hypercclick1",c=c,p=p,v=p,event=event):
                     # New in recycled nodes code:
                     # Call self.redraw to inhibit calls to setLabelState.
                     c.frame.tree.redraw()
@@ -357,7 +357,7 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.selectVnode(p)
                     c.endUpdate()
                     c.frame.bodyCtrl.mark_set("insert","1.0")
-                g.doHook("hypercclick2",c=c,p=p,event=event)
+                g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hypercclick")
                 
@@ -371,10 +371,10 @@ class leoTkinterTree (leoFrame.leoTree):
         
             try:
                 p = self ; c = p.c
-                if not g.doHook("hyperenter1",c=c,p=p,event=event):
+                if not g.doHook("hyperenter1",c=c,p=p,v=p,event=event):
                     if 0: # This works, and isn't very useful.
                         c.frame.bodyCtrl.tag_config(p.tagName,background="green")
-                g.doHook("hyperenter2",c=c,p=p,event=event)
+                g.doHook("hyperenter2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hyperenter")
                 
@@ -388,10 +388,10 @@ class leoTkinterTree (leoFrame.leoTree):
         
             try:
                 p = self ; c = p.c
-                if not g.doHook("hyperleave1",c=c,p=p,event=event):
+                if not g.doHook("hyperleave1",c=c,p=p,v=p,event=event):
                     if 0: # This works, and isn't very useful.
                         c.frame.bodyCtrl.tag_config(p.tagName,background="white")
-                g.doHook("hyperleave2",c=c,p=p,event=event)
+                g.doHook("hyperleave2",c=c,p=p,v=p,event=event)
             except:
                 g.es_event_exception("hyperleave")
                 
@@ -780,7 +780,7 @@ class leoTkinterTree (leoFrame.leoTree):
         tree = self ; canvas = self.canvas
         y += 7 # draw the box at x, y+7
         
-        theId = g.doHook("draw-outline-box",tree=tree,p=p,v=p.v,x=x,y=y)
+        theId = g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y)
             
         if theId is None:
             iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
@@ -869,7 +869,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20040803072955.40:<< compute x,y and iconVal >>
         #@nl
     
-        if not g.doHook("draw-outline-icon",tree=self,p=p,v=p.v,x=x,y=y):
+        if not g.doHook("draw-outline-icon",tree=self,p=p,v=p,x=x,y=y):
     
             # Get the image.
             imagename = "box%02d.GIF" % val
@@ -891,7 +891,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         canvas = self.canvas
         
-        data = g.doHook("draw-outline-node",tree=self,p=p,v=p.v,x=x,y=y)
+        data = g.doHook("draw-outline-node",tree=self,p=p,v=p,x=x,y=y)
         if data is not None: return data
         
         if self.trace and self.verbose:
@@ -964,7 +964,7 @@ class leoTkinterTree (leoFrame.leoTree):
         h = self.line_height
         x += self.text_indent
         
-        data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p.v,x=x,y=y)
+        data = g.doHook("draw-outline-text-box",tree=self,p=p,v=p,x=x,y=y)
         if data is not None: return data
         
         t = self.newText(p,x,y+self.lineyoffset)
@@ -1180,7 +1180,7 @@ class leoTkinterTree (leoFrame.leoTree):
         yfirst = ylast = y
         h1 = None
         
-        data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+        data = g.doHook("draw-sub-outline",tree=tree,p=p,v=p,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
         if data is not None: return data
         
         while p: # Do not use iterator.
@@ -1735,9 +1735,9 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.trace and self.verbose: g.trace(p)
         
         try:
-            if not g.doHook("headclick1",c=c,p=p,event=event):
+            if not g.doHook("headclick1",c=c,p=p,v=p,event=event):
                 self.OnActivate(p)
-            g.doHook("headclick2",c=c,p=p,event=event)
+            g.doHook("headclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("headclick")
             
@@ -1773,11 +1773,11 @@ class leoTkinterTree (leoFrame.leoTree):
             return "continue"
     
         try:
-            if not g.doHook("headrclick1",c=c,p=p,event=event):
+            if not g.doHook("headrclick1",c=c,p=p,v=p,event=event):
                 self.OnActivate(p)
                 self.endEditLabel()
                 self.OnPopup(p,event)
-            g.doHook("headrclick2",c=c,p=p,event=event)
+            g.doHook("headrclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("headrclick")
             
@@ -1798,7 +1798,7 @@ class leoTkinterTree (leoFrame.leoTree):
         edit_text = self.edit_text(p)
         index = edit_text.index("insert")
     
-        if g.doHook("headkey1",c=c,p=p,ch=ch):
+        if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
             return "break" # The hook claims to have handled the event.
             
         #@    << set head to vnode text >>
@@ -1900,7 +1900,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.97:<< update the screen >>
             #@nl
     
-        g.doHook("headkey2",c=c,p=p,ch=ch)
+        g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
         return "break"
     #@nonl
     #@-node:ekr.20040803072955.91:idle_head_key
@@ -2175,11 +2175,11 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if event != None:
             c = self.c
-            if not g.doHook("create-popup-menu",c=c,p=p,event=event):
+            if not g.doHook("create-popup-menu",c=c,p=p,v=p,event=event):
                 self.createPopupMenu(event)
-            if not g.doHook("enable-popup-menu-items",c=c,p=p,event=event):
+            if not g.doHook("enable-popup-menu-items",c=c,p=p,v=p,event=event):
                 self.enablePopupMenuItems(p,event)
-            if not g.doHook("show-popup-menu",c=c,p=p,event=event):
+            if not g.doHook("show-popup-menu",c=c,p=p,v=p,event=event):
                 self.showPopupMenu(event)
     
         return "break"
@@ -2534,7 +2534,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         if self.trace and self.verbose: g.trace(p.headString())
     
-        if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
+        if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
             #@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
             # Remember the position of the scrollbar before making any changes.
@@ -2553,9 +2553,9 @@ class leoTkinterTree (leoFrame.leoTree):
             #@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
             #@nl
     
-        g.doHook("unselect2",c=c,new_v=p,old_v=old_p)
+        g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         
-        if not g.doHook("select1",c=c,new_v=p,old_v=old_p):
+        if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << select the new node >>
             #@+node:ekr.20040803072955.130:<< select the new node >>
             frame.setWrap(p)
@@ -2625,8 +2625,8 @@ class leoTkinterTree (leoFrame.leoTree):
         #@-node:ekr.20040803072955.133:<< set the current node >>
         #@nl
         
-        g.doHook("select2",c=c,new_v=p,old_v=old_p)
-        g.doHook("select3",c=c,new_v=p,old_v=old_p)
+        g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+        g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
         
         # g.printGc()
     #@nonl

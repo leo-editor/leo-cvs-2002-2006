@@ -378,7 +378,7 @@ class leoMenu:
         # Allow the user first crack at updating menus.
         c = self.c ; v = c.currentVnode()
     
-        if not g.doHook("menu2",c=c,v=v):
+        if not g.doHook("menu2",c=c,p=v,v=v):
             self.updateFileMenu()
             self.updateEditMenu()
             self.updateOutlineMenu()

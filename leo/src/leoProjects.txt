@@ -42,7 +42,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not p: return "break"
     if not c.isCurrentPosition(p): return "break"
 
-    if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+    if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
         return "break" # The hook claims to have handled the event.
     body = p.bodyString()
     if not newSel:
@@ -73,7 +73,7 @@ def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldT
     if not c.changed:
         c.setChanged(True)
     << redraw the screen if necessary >>
-    g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+    g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
     return "break"
 #@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
 # 6/22/03: Make sure we handle delete key properly.
@@ -369,7 +369,7 @@ def idle_head_key (self,p,ch=None):
     edit_text = self.edit_text(p)
     index = edit_text.index("insert")
 
-    if g.doHook("headkey1",c=c,p=p,ch=ch):
+    if g.doHook("headkey1",c=c,p=p,v=p,ch=ch):
         return "break" # The hook claims to have handled the event.
         
     << set head to vnode text >>
@@ -385,7 +385,7 @@ def idle_head_key (self,p,ch=None):
         << reconfigure p and all nodes joined to p >>
         << update the screen >>
 
-    g.doHook("headkey2",c=c,p=p,ch=ch)
+    g.doHook("headkey2",c=c,p=p,v=p,ch=ch)
     return "break"
 #@nonl
 #@+node:ekr.20040803072955.92:<< set head to vnode text >>
@@ -1499,7 +1499,7 @@ def scanDirectives(c,p=None):
         << Test for @path >>
         << Test for @tabwidth >>
         << Test for @wrap and @nowrap >>
-        g.doHook("scan-directives",c=c,v=p,s=s,
+        g.doHook("scan-directives",c=c,p=p,v=p,s=s,
             old_dict=old,dict=dict,pluginsList=pluginsList)
         old.update(dict)
 
@@ -5721,7 +5721,7 @@ def finishCreate (self,c):
 
     v = c.currentVnode()
 
-    if not g.doHook("menu1",c=c,v=v):
+    if not g.doHook("menu1",c=c,p=v,v=v):
         frame.menu.createMenuBar(self)
 
     g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
@@ -7143,7 +7143,7 @@ def OnHyperLinkControlClick (self,event):
 
     try:
         p = self ; c = p.c
-        if not g.doHook("hypercclick1",c=c,p=p,event=event):
+        if not g.doHook("hypercclick1",c=c,p=p,v=p,event=event):
             # New in recycled nodes code:
             # Call self.redraw to inhibit calls to setLabelState.
             c.frame.tree.redraw()
@@ -7151,7 +7151,7 @@ def OnHyperLinkControlClick (self,event):
             c.selectVnode(p)
             c.endUpdate()
             c.frame.bodyCtrl.mark_set("insert","1.0")
-        g.doHook("hypercclick2",c=c,p=p,event=event)
+        g.doHook("hypercclick2",c=c,p=p,v=p,event=event)
     except:
         g.es_event_exception("hypercclick")
         
@@ -7604,11 +7604,11 @@ def openWith(self,data=None):
     if not data or len(data) != 3: return # 6/22/03
     try:
         openType,arg,ext=data
-        if not g.doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
+        if not g.doHook("openwith1",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext):
             << set ext based on the present language >>
             << create or reopen temp file, testing for conflicting changes >>
             << execute a command to open path in external editor >>
-        g.doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+        g.doHook("openwith2",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext)
     except:
         g.es("exception in openWith")
         g.es_exception()
@@ -15067,7 +15067,7 @@ elif self.language == "shell" and (i>0 and s[i-1]=='$'):
 else:
     j = len(s)
     if not g.doHook("color-optional-markup",
-        colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
+        colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="comment"):
         self.tag("comment",i,j)
     i = j
 #@nonl
@@ -15076,7 +15076,7 @@ else:
 k = len(self.block_comment_start)
 
 if not g.doHook("color-optional-markup",
-    colorer=self,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
+    colorer=self,p=self.p,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
     self.tag("comment",i,i+k)
 
 i += k ; state = "blockComment"
@@ -15111,7 +15111,7 @@ if self.language == "python":
     if delim == '"""':
         # Only handle wiki items in """ strings.
         if not g.doHook("color-optional-markup",
-            colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
+            colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="string"):
             self.tag("string",i,j)
     else:
         self.tag("string",i,j)
@@ -15519,7 +15519,7 @@ else:
     scriptFind = True
     lines = g.getScript (c,root,useSelectedText=False)
     lines = g.splitLines(lines)
-    if 1:
+    if 0:
         for line in lines:
             print line,
 #@nonl

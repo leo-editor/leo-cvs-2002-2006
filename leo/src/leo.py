@@ -105,8 +105,8 @@ def run(fileName=None,*args,**keywords):
     if g.app.disableSave:
         g.es("disabling save commands",color="red")
     g.app.writeWaitingLog()
-    v = c.currentVnode()
-    g.doHook("start2",c=c,v=v,fileName=fileName)
+    p = c.currentPosition()
+    g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
     g.enableIdleTimeHook()
     frame.tree.redraw()
     frame.body.setFocus()

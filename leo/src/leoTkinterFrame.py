@@ -244,7 +244,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         v = c.currentVnode()
     
-        if not g.doHook("menu1",c=c,v=v):
+        if not g.doHook("menu1",c=c,p=v,v=v):
             frame.menu.createMenuBar(self)
     
         g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
@@ -990,9 +990,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodyclick1",c=c,v=v,event=event):
+            if not g.doHook("bodyclick1",c=c,p=v,v=v,event=event):
                 self.OnActivateBody(event=event)
-            g.doHook("bodyclick2",c=c,v=v,event=event)
+            g.doHook("bodyclick2",c=c,p=v,v=v,event=event)
         except:
             g.es_event_exception("bodyclick")
     
@@ -1000,9 +1000,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         try:
             c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodyrclick1",c=c,v=v,event=event):
+            if not g.doHook("bodyrclick1",c=c,p=v,v=v,event=event):
                 pass # By default Leo does nothing.
-            g.doHook("bodyrclick2",c=c,v=v,event=event)
+            g.doHook("bodyrclick2",c=c,p=v,v=v,event=event)
         except:
             g.es_event_exception("iconrclick")
     #@nonl
@@ -1012,7 +1012,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
     
         try:
             c = self.c ; v = c.currentVnode()
-            if not g.doHook("bodydclick1",c=c,v=v,event=event):
+            if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
                 if event: # 8/4/02: prevent wandering insertion point.
                     index = "@%d,%d" % (event.x, event.y) # Find where we clicked
                     # 7/9/04
@@ -1021,7 +1021,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
                 start = body.index(index + " wordstart")
                 end = body.index(index + " wordend")
                 self.body.setTextSelection(start,end)
-            g.doHook("bodydclick2",c=c,v=v,event=event)
+            g.doHook("bodydclick2",c=c,p=v,v=v,event=event)
         except:
             g.es_event_exception("bodydclick")
             
@@ -1566,7 +1566,7 @@ class leoTkinterBody (leoFrame.leoBody):
         if not p: return "break"
         if not c.isCurrentPosition(p): return "break"
     
-        if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
+        if g.doHook("bodykey1",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
         body = p.bodyString()
         if not newSel:
@@ -1793,7 +1793,7 @@ class leoTkinterBody (leoFrame.leoBody):
         #@nonl
         #@-node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
         #@nl
-        g.doHook("bodykey2",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
+        g.doHook("bodykey2",c=c,p=p,v=p,ch=ch,oldSel=oldSel,undoType=undoType)
         return "break"
     #@-node:ekr.20031218072017.1321:idle_body_key
     #@+node:ekr.20031218072017.1329:onBodyChanged (called from core)

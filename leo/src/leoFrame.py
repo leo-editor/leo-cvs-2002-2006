@@ -809,7 +809,7 @@ class leoTree:
         c = self.c
         s = v.headString().strip()
         if g.match_word(s,0,"@url"):
-            if not g.doHook("@url1",c=c,v=v):
+            if not g.doHook("@url1",c=c,p=v,v=v):
                 url = s[4:].strip()
                 #@            << stop the url after any whitespace >>
                 #@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
@@ -885,7 +885,7 @@ class leoTree:
                 
                 #@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
                 #@nl
-            g.doHook("@url2",c=c,v=v)
+            g.doHook("@url2",c=c,p=v,v=v)
     #@nonl
     #@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
     #@+node:ekr.20040106095546.1:tree.enableDrawingAfterException

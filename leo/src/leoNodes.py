@@ -2007,7 +2007,7 @@ class position (object):
     # Dirty bits are handled carefully by the position class.
     
     def clearMarked  (self):
-        g.doHook("clear-mark",c=self.c,p=self)
+        g.doHook("clear-mark",c=self.c,p=self,v=self)
         return self.v.clearMarked()
     
     def clearOrphan  (self): return self.v.clearOrphan()
@@ -2021,7 +2021,7 @@ class position (object):
     def initStatus (self, status): return self.v.initStatus()
         
     def setMarked (self):
-        g.doHook("set-mark",c=self.c,p=self)
+        g.doHook("set-mark",c=self.c,p=self,v=self)
         return self.v.setMarked()
     
     def setOrphan   (self): return self.v.setOrphan()

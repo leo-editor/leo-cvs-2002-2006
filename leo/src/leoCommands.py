@@ -165,7 +165,7 @@ class baseCommands:
         if label == "cantundo": label = "undo"
         g.app.commandName = label
     
-        if not g.doHook("command1",c=c,v=p,label=label):
+        if not g.doHook("command1",c=c,p=p,v=p,label=label):
             try:
                 command()
             except:
@@ -177,7 +177,7 @@ class baseCommands:
         c = g.top() # 6/17/04: The command can change the commander.
         if c:
             p = c.currentPosition()
-            g.doHook("command2",c=c,v=p,label=label)
+            g.doHook("command2",c=c,p=p,v=p,label=label)
                 
         return "break" # Inhibit all other handlers.
     #@nonl
@@ -347,7 +347,7 @@ class baseCommands:
         if not data or len(data) != 3: return # 6/22/03
         try:
             openType,arg,ext=data
-            if not g.doHook("openwith1",c=c,v=v,openType=openType,arg=arg,ext=ext):
+            if not g.doHook("openwith1",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext):
                 #@            << set ext based on the present language >>
                 #@+node:ekr.20031218072017.2824:<< set ext based on the present language >>
                 if not ext:
@@ -482,7 +482,7 @@ class baseCommands:
                 #@nonl
                 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
                 #@nl
-            g.doHook("openwith2",c=c,v=v,openType=openType,arg=arg,ext=ext)
+            g.doHook("openwith2",c=c,p=v,v=v,openType=openType,arg=arg,ext=ext)
         except:
             g.es("exception in openWith")
             g.es_exception()
@@ -716,14 +716,14 @@ class baseCommands:
         #@nl
         
         fileName = name
-        if not g.doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
+        if not g.doHook("recentfiles1",c=c,p=v,v=v,fileName=fileName,closeFlag=closeFlag):
             ok, frame = g.openWithFileName(fileName,c)
             if ok and closeFlag:
                 g.app.destroyWindow(c.frame) # 12/12/03
                 g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
                 c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
     
-        g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
+        g.doHook("recentfiles2",c=c,p=v,v=v,fileName=fileName,closeFlag=closeFlag)
     #@-node:ekr.20031218072017.2081:openRecentFile
     #@+node:ekr.20031218072017.2083:updateRecentFiles
     def updateRecentFiles (self,fileName):
@@ -1261,7 +1261,7 @@ class baseCommands:
                 scriptFind = True
                 lines = g.getScript (c,root,useSelectedText=False)
                 lines = g.splitLines(lines)
-                if 1:
+                if 0:
                     for line in lines:
                         print line,
             #@nonl
