@@ -182,11 +182,13 @@ def createFrame (fileName):
     import leoGlobals as g
     
     # g.trace(g.app.tkEncoding,fileName)
-    
+
     # Try to create a frame for the file.
     if fileName:
         fileName = g.os_path_join(os.getcwd(),fileName)
         fileName = g.os_path_normpath(fileName)
+        head,ext = g.os_path_splitext(fileName)
+        if not ext:fileName = fileName + ".leo"
         if g.os_path_exists(fileName):
             ok, frame = g.openWithFileName(fileName,None)
             if ok:
