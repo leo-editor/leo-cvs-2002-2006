@@ -2992,14 +2992,19 @@ class LeoFrame:
 		# Try to get the format string from leoConfig.txt.
 		if body:
 			format = config.getWindowPref("body_time_format_string")
+			gmt = config.getBoolWindowPref("body_gmt_time")
 		else:
 			format = config.getWindowPref("headline_time_format_string")
+			gmt = config.getBoolWindowPref("headline_gmt_time")
 	
 		if format == None:
 			format = default_format
 	
 		try:
-			s = time.strftime(format,time.gmtime())
+			if gmt:
+				s = time.strftime(format,time.gmtime())
+			else:
+				s = time.strftime(format,time.localtime())
 		except:
 			es_exception() # Probably a bad format string in leoConfig.txt.
 			s = time.strftime(default_format,time.gmtime())

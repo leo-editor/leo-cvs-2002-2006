@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="85" height="25" width="95"/>
+	<global_window_position top="24" left="124" height="25" width="95"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -31,7 +31,7 @@
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
@@ -746,6 +746,10 @@ body_time_format_string = %m/%d/%Y %H:%M:%S
 #	Thu, 30 Jan 2003 16:57:12
 #		%a, %d %b %Y %H:%M:%S
 
+body_gmt_time = 0
+# 	1: use gmt time
+#	0: use local time.
+
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
@@ -779,6 +783,10 @@ headline_time_format_string = %m/%d
 #		%m/%d/%y %H:%M:%S
 #	Thu, 30 Jan 2003 16:57:12
 #		%a, %d %b %Y %H:%M:%S
+
+headline_gmt_time = 0
+# 	1: use gmt time
+#	0: use local time.
 
 outline_pane_background_color =
 #	Background color of outline pane itself.
