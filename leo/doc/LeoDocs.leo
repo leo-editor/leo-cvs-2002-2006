@@ -1018,6 +1018,10 @@
 <v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
 </v>
+<v t="ekr.20050219093156"><vh>How do I add a new menu item from a plugin?</vh>
+<v t="ekr.20050219093156.1"><vh>@url http://www.pythonware.com/library/tkinter/introduction/index.htm</vh></v>
+<v t="ekr.20050219093156.2"><vh>@url http://www.tcl.tk/man/tcl8.4/TkCmd/contents.htm</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
@@ -2198,6 +2202,10 @@
 <v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
 <v t="ekr.20041220095419"><vh>How do I submit a plugin?</vh></v>
+<v t="ekr.20050219093156"><vh>How do I add a new menu item from a plugin?</vh>
+<v t="ekr.20050219093156.1"><vh>@url http://www.pythonware.com/library/tkinter/introduction/index.htm</vh></v>
+<v t="ekr.20050219093156.2"><vh>@url http://www.tcl.tk/man/tcl8.4/TkCmd/contents.htm</vh></v>
+</v>
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
@@ -2248,6 +2256,10 @@
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
 <v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+<v t="ekr.20050219093156"><vh>How do I add a new menu item from a plugin?</vh>
+<v t="ekr.20050219093156.1"><vh>@url http://www.pythonware.com/library/tkinter/introduction/index.htm</vh></v>
+<v t="ekr.20050219093156.2"><vh>@url http://www.tcl.tk/man/tcl8.4/TkCmd/contents.htm</vh></v>
 </v>
 </v>
 </v>
@@ -7371,13 +7383,20 @@ You're my hero!  Thank you so much.</t>
 <t tx="edream.110203163054.46">@nocolor</t>
 <t tx="edream.110203163054.47">Please be aware of the following problems with leo:
 
-1. leo.py v3.0 and Borland v2.6 create derived files that can not be read by older versions of Leo!  leo.py v2.0 and Borland v2.6 can read all previous derived files.
+1. leo.py v3.0 and Borland v2.6 create derived files that can not be read by
+older versions of Leo! leo.py v2.0 and Borland v2.6 can read all previous
+derived files.
 
-2. Leo will report read errors when opening a .leo file that is not "in synch" with derived files.  This can happen when opening a backup copy of a .leo file.  When such errors happen you have two choice:
+2. Leo will report read errors when opening a .leo file that is not "in synch"
+with derived files. This can happen when opening a backup copy of a .leo file.
+When such errors happen you have two choices:
 
-Choice 1: Use the "Read Outline Only" command to recover the outline using only the .leo file.  This is the recommend way because it preserves all clone links.
+Choice 1: Use the "Read Outline Only" command to recover the outline using only
+the .leo file. This is the recommend way because it preserves all clone links.
 
-Choice 2: Use one or move "Read @file Nodes" commands to update the outline from derived files.  This way is will break any clone links from the outline into the </t>
+Choice 2: Use one or move "Read @file Nodes" commands to update the outline from
+derived files. This way is will break any clone links from the outline into the
+derived file.</t>
 <t tx="edream.110203163054.48">New in version 4.1: The first time you start Leo, Leo will ask you for a unique
 identifier. If you are using cvs, use your cvs login name. Otherwise your
 initials will do.
@@ -14975,7 +14994,10 @@ Iterators exist only in the position class:
 <t tx="ekr.20040414161647">@nocolor
 @ignore
 
-Double-click the top-level @rst x.html nodes to generate the files</t>
+Double-click the top-level @rst x.html nodes to generate the files.
+
+The rst2.py plugin must be installed for this to work.
+Also Silver City should be installed (it only works with Python 2.3 on my machine.)</t>
 <t tx="ekr.20040414162124">###################
 Leo's Users Guide
 ###################
@@ -16739,5 +16761,30 @@ else:
         
 5. (removed code) from &lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;
     - last_p is None at first, so last_p.insertAfter does not make sense.</t>
+<t tx="ekr.20050219093156">@nocolor
+
+c.frame.menu.createMenuItemsFromTable will append items to the end of an existing menu.  For example, the following script will add a new item at the end of the 'File' menu. 
+@color
+
+def callback(*args,**keys):
+    g.trace()
+
+table = (("Test1",None,callback),)
+
+c.frame.menu.createMenuItemsFromTable('File',table)
+
+@nocolor
+Plugins can do anything that can be done with Tk using the menu returned by c.frame.menu.getMenu.  For example, here is a script that adds a Test menu item after the 'Open With' menu item in the File menu.
+@color
+
+def callback(*args,**keys):
+    g.trace()
+
+fileMenu = c.frame.menu.getMenu('File')
+
+# 3 is the position in the menu.  Other kinds of indices are possible.
+fileMenu.insert(3,'command',label='Test2',command=callback)</t>
+<t tx="ekr.20050219093156.1"></t>
+<t tx="ekr.20050219093156.2">The authoritative source for information.</t>
 </tnodes>
 </leo_file>
