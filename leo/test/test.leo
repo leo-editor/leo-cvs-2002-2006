@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6145" clone_windows="0"/>
 <globals body_outline_ratio="0.475694444444">
-	<global_window_position top="48" left="106" height="864" width="907"/>
+	<global_window_position top="37" left="147" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -355,7 +355,6 @@
 <v t="ekr.20040915111853"><vh>leo*.py</vh></v>
 </v>
 <v t="ekr.20040922064156"><vh>Test of reportBadChars</vh></v>
-<v t="ekr.20040920104357"><vh>Tix Tests</vh></v>
 <v t="ekr.20041012091500"><vh>@test g.rawPrint</vh></v>
 <v t="ekr.20041011160953"><vh>Test of xsltWithNodes plugin</vh>
 <v t="ekr.20041011160953.1"><vh>stylesheet</vh>
@@ -391,7 +390,6 @@
 </v>
 <v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
 <v t="ekr.20041028152830"><vh>Gui tests</vh>
-<v t="ekr.20041022195304"><vh>Tix</vh></v>
 <v t="ekr.20041022201417"><vh>Pmw dialog</vh></v>
 <v t="ekr.20041022200902"><vh>Pmw example</vh></v>
 </v>
@@ -766,7 +764,7 @@
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
-<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -840,7 +838,7 @@
 </v>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
 <v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
@@ -993,7 +991,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1296,7 +1294,7 @@
 <v t="ekr.20041114121805.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041114165932"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20041114172553"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
-<v t="ekr.20041114124739.23" a="E"><vh>class configDialog</vh>
+<v t="ekr.20041114124739.23"><vh>class configDialog</vh>
 <v t="ekr.20041114124739.24"><vh>ctor</vh></v>
 <v t="ekr.20041114124739.25"><vh>createTopLevel</vh></v>
 <v t="ekr.20041114121805.3"><vh>createConfigDialog</vh>
@@ -1311,6 +1309,12 @@
 </v>
 <v t="ekr.20041114172553.1"><vh>run</vh></v>
 <v t="ekr.20041114134217"><vh>setDirties</vh></v>
+</v>
+</v>
+<v t="ekr.20040920104357" a="E"><vh>Tix Tests</vh>
+<v t="ekr.20041124102349" a="E"><vh>class tixDialog (leoTkinterDialog)</vh>
+<v t="ekr.20041124102349.1"><vh>ctor</vh></v>
+<v t="ekr.20041124103531" a="TV"><vh>createFrame</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1933,7 +1937,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2064,7 +2068,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9778,13 +9782,18 @@ print "%3d.%-3d %4s" % (n1,n2,' '),pyRowColToTkIndex(s,n1,n2)</t>
 two
 three
 </t>
-<t tx="ekr.20040920104357">import Tix
-root = Tix.Tk()
-print repr(root)
-root.tk.eval('package require Tix')
+<t tx="ekr.20040920104357">import leoGlobals as g
+import leoTkinterDialog
 
-tree = Tix.Tree(root)
-tree.pack()</t>
+import Tkinter as Tk
+import Tix
+# from Tkconstants import *
+
+@others
+
+c = g.top()
+d = tixDialog(c)
+d.run(modal=True)</t>
 <t tx="ekr.20040922064156">import leoGlobals as g
 
 s = u"ß"
@@ -10382,13 +10391,6 @@ last line</t>
 <t tx="ekr.20041021065903.1">section line 1</t>
 <t tx="ekr.20041021065903.2">unnamed node line 1</t>
 <t tx="ekr.20041021071036"></t>
-<t tx="ekr.20041022195304">import Tix
-from Tkconstants import *
-root = Tix.Tk()
-
-tree = Tix.Tree(root)
-print tree.hlist
-tree.pack()</t>
 <t tx="ekr.20041022200902">import Tkinter
 import Pmw
 
@@ -10932,7 +10934,40 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">c:\prog\leocvs\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
+<t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
+    
+    @others</t>
+<t tx="ekr.20041124102349.1">def __init__ (self,c):
+    
+    self.c = c
+    
+    base = leoTkinterDialog.leoTkinterDialog
+    
+    # Init the base class
+    base.__init__(self)
+    
+    # Create the top-level frame in the base class.  No need to override.
+    base.createTopFrame(self)
+
+    self.createFrame()</t>
+<t tx="ekr.20041124103531">def createFrame (self):
+    
+    # g.trace("tixDialog")
+    
+    outer = Tk.Frame(self.top)
+    outer.pack()
+    
+    lt = Tk.Frame(outer)
+    rt = Tk.Frame(outer)
+    lt.pack(side="left",expand=1,fill="both")
+    rt.pack(side="right",expand=1,fill="both")
+    
+    tree=Tix.Tree(lt)
+    tree.pack(expand=1,fill="both")
+    
+    text = Tk.Text(rt)
+    text.pack(expand=1,fill="both")</t>
 </tnodes>
 </leo_file>
