@@ -10237,16 +10237,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -10255,18 +10257,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -10288,6 +10291,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
 def assignFileIndices (self):
@@ -10442,11 +10452,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -10506,6 +10513,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -10517,10 +10528,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.1579:putVnodes
 def putVnodes (self):
@@ -10557,6 +10564,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
     
@@ -10577,6 +10585,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
+    << restore unknown attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -10618,6 +10628,17 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t:
+            t.unknownAttributes = resultDict[gnx]
+        else:
+            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+#@nonl
+#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.1565:getVnodes
 def getVnodes (self):
@@ -10687,6 +10708,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -10877,6 +10904,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     self.usingClipboard = True
     self.fileBuffer = s ; self.fileIndex = 0
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     
     if not reassignIndices:
         << recreate tnodesDict >>
@@ -11052,6 +11080,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -14269,6 +14303,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -16644,11 +16684,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -16708,6 +16745,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -16719,10 +16760,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:ekr.20040318164450:(Saving a .leo file created too many positions)
 #@-node:ekr.20040325203859.2:3/22
@@ -19005,11 +19042,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -19069,6 +19103,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -19080,10 +19118,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:ekr.20040325104344:(Optimized drawing and saving recursions)
 #@+node:ekr.20040325111920:(Drastically reduced positions created by Read Outline Only)
@@ -19218,6 +19252,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -19757,11 +19797,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -19821,6 +19858,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -19832,10 +19873,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:ekr.20040324080004:(Improved speed of Save command)
 #@+node:ekr.20040323084434.1:(reduced calls to drawTopTree)
@@ -19956,6 +19993,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
     
@@ -19976,6 +20014,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
+    << restore unknown attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -20017,6 +20057,17 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t:
+            t.unknownAttributes = resultDict[gnx]
+        else:
+            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+#@nonl
+#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
 # All output to the log stream eventually comes here.
@@ -20451,6 +20502,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
     
@@ -20471,6 +20523,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
+    << restore unknown attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -20512,6 +20566,17 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t:
+            t.unknownAttributes = resultDict[gnx]
+        else:
+            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+#@nonl
+#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20040325125426:(Fixed problem with first screen draw)
 #@-node:ekr.20040325203859.4:3/25
@@ -20978,6 +21043,7 @@ def initIvars(self):
     self.fileDate = -1
     self.leo_file_encoding = g.app.config.new_leo_file_encoding
     # For reading
+    self.descendentUnknownAttributesDictList = []
     self.fileFormatNumber = 0
     self.ratio = 0.5
     self.fileBuffer = None ; self.fileIndex = 0
@@ -21103,6 +21169,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -21198,11 +21270,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -21262,6 +21331,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -21273,10 +21346,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.1579:putVnodes
 def putVnodes (self):
@@ -23430,16 +23499,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -23448,18 +23519,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -23481,6 +23553,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20040403091954:(Problems with marking nodes in a script)
 #@-node:ekr.20040403104315.3:4/3
@@ -23979,16 +24058,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -23997,18 +24078,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -24030,6 +24112,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.1934:run & allies
 def run(fileName=None,*args,**keywords):
@@ -24305,11 +24394,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -24369,6 +24455,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -24380,10 +24470,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.1193:c.deleteOutline
 def deleteOutline (self,op_name="Delete Node"):
@@ -26133,6 +26219,7 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
     
@@ -26153,6 +26240,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
+    << restore unknown attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -26194,6 +26283,17 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t:
+            t.unknownAttributes = resultDict[gnx]
+        else:
+            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+#@nonl
+#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.3046:write_Leo_file
 def write_Leo_file(self,fileName,outlineOnlyFlag):
@@ -26427,11 +26527,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -26491,6 +26588,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -26502,10 +26603,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.1575:putTnodes
 def putTnodes (self):
@@ -29390,11 +29487,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -29454,6 +29548,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -29465,10 +29563,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.1575:putTnodes
 def putTnodes (self):
@@ -30201,11 +30295,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -30265,6 +30356,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -30276,10 +30371,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:EKR.20040519073926.1:(Fixed @file-thin copy bug)
 #@+node:EKR.20040519083814:(Fixed bug reading leo.nsi)
@@ -33117,11 +33208,8 @@ def getUnknownAttribute(self,nodeType):
         return attr,val2
 
     except (TypeError,pickle.UnpicklingError,ImportError):
-        # Ignore the attribute:
-        g.es("Ignoring mal-formaed %s attribute: %s" % (nodeType,attr),color="blue")
-        return None,None
-
-   
+        # Assume that Leo 4.1 wrote the attribute.
+        return attr,val
 #@nonl
 #@-node:EKR.20040526204036.1:getUnknownAttribute
 #@+node:ekr.20031218072017.1561:getTnode
@@ -33190,6 +33278,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -33309,11 +33403,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -33373,6 +33464,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -33384,18 +33479,13 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv):
+def putUnknownAttributes (self,torv,toString=False):
     
     """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-
-    import binascii,pickle
     
+    result = []
     attrDict = torv.unknownAttributes
     if type(attrDict) != type({}):
         g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
@@ -40611,6 +40701,7 @@ def getLeoOutline (self,s,reassignIndices=True):
     self.usingClipboard = True
     self.fileBuffer = s ; self.fileIndex = 0
     self.tnodesDict = {}
+    self.descendentUnknownAttributesDictList = []
     
     if not reassignIndices:
         << recreate tnodesDict >>
@@ -41874,16 +41965,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -41892,18 +41985,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -41925,6 +42019,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:ekr.20031218072017.3112:es_exception
 def es_exception (full=True,c=None):
@@ -42408,16 +42509,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -42426,18 +42529,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -42459,6 +42563,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:EKR.20040614071102:(Created getScript)
 #@+node:EKR.20040614072333:(Fixed headline key handling)
@@ -42974,16 +43085,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -42992,18 +43105,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -43025,6 +43139,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:EKR.20040615105613.2:(Fixed Problems executing script)
 #@+node:EKR.20040617072908:(Fixed problem with PHP and @last)
@@ -43641,6 +43762,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
         elif self.matchTag("tnodeList="):
             s = self.getDqString()
             tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -43933,16 +44060,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -43951,18 +44080,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -43984,6 +44114,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@clone 2
 #@+node:EKR.20040506075328:new_df.writeOpenFile
@@ -45029,11 +45166,8 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin:
-            if p.isOrphan():
-                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-            else:
-                << write unknownAttributes for all descendent tnodes >>
+        if isThin and p.isOrphan():
+            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
         if not isThin or p.isOrphan() or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
@@ -45093,6 +45227,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
+    
+if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -45104,10 +45242,6 @@ if headString:
     fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@+node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
-pass
-#@nonl
-#@-node:EKR.20040625170343:<< write unknownAttributes for all descendent tnodes >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.3046:write_Leo_file
 def write_Leo_file(self,fileName,outlineOnlyFlag):
@@ -45391,16 +45525,18 @@ def executeScript(self,p=None,script=None):
 
     if not script:
         script = g.getScript(c,p)
-    << redirect output if redirect_execute_script_output_to_log_pane >>
+    << redirect output >>
     if script:
         script = script.strip()
     if script:
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
             if not script1:
                 g.es("end of script",color="purple")
         except:
+            << unredirect output >>
             g.es("exception executing script")
             n = g.es_exception(full=False,c=c)
             if n is not None:
@@ -45409,18 +45545,19 @@ def executeScript(self,p=None,script=None):
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
     elif not error:
+        << unredirect output >>
         g.es("no script selected",color="blue")
         
     # Force a redraw _after_ all messages have been output.
     c.redraw() 
 #@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@+node:ekr.20031218072017.2143:<< redirect output >>
 if g.app.config.redirect_execute_script_output_to_log_pane:
 
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
 #@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+#@-node:ekr.20031218072017.2143:<< redirect output >>
 #@+node:EKR.20040612215018:<< dump the lines of script near the error >>
 lines = g.splitLines(script)
 
@@ -45442,6 +45579,13 @@ else:
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@+node:EKR.20040614071102.1:g.getScript
 def getScript (c,p):
@@ -47141,6 +47285,413 @@ def readEndNode (self,s,i,middle=False):
 #@-node:ekr.20031218072017.2772:readEndNode (4.x)
 #@-node:EKR.20040524053657.1:(Better reporting of body text conflicts)
 #@-node:EKR.20040625092523:6/25/04
+#@+node:EKR.20040626110541:6/28/04
+#@+node:EKR.20040623102728:(Improved error handling for unknownAttributes)
+#@+node:EKR.20040623102728.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2631522
+By: m4rkng
+
+> I thought that is what the code does. 
+
+Thats what I thought too. ;) but it corrupts pickled objects.
+
+This sequence of actions will reveal the problem:
+0. Mark some t.leo file using cleo.  Exit leo.
+1. Disable cleo, load t.leo. Leo loads it no worries. Do some random edits.
+Save the file.  Exit leo.
+2. Re-enable cleo, then load t.leo.  You will get exceptions about strings being
+treated as objects.  All the markings done in step 0 was "corrupted" in step 1.
+
+The cause is that cleo uses pickled objects (I was lazy ;)and leo (from the
+above patch) treats the pickled objects as strings when it failed to import
+cleo during the unpickling process, which causes putUnknownAttributes when saving
+to pickle the already pickled data twice, hence the corruption.
+
+
+Cleo can be made not use pickled objects, but I believe the problem is best
+solved up a level in leo.
+
+> What changes would you suggest?
+
+I can't find a clean and fast solution;  the vals that failed to unpickle
+(ImportErrors) should be tagged so that the putUnknowAttributes knows not to
+pickled them twice.
+
+Here is the diff that fixes it.  It is a hack, but atm I can't find a better
+solution.  Let me know if you refactored into something more palatable. ;)
+
+Is there a better way to paste py diffs on SF ?
+
+#@-node:EKR.20040623102728.1:Report
+#@+node:EKR.20040623102728.2:Patch (Won't do)
+*** leoFileCommands.py.orig     Wed Jun 23 18:43:34 2004
+--- leoFileCommands.py  Wed Jun 23 18:43:50 2004
+
+*************** getUnknownAttribute
+*** 372,381 ****
+          try:
+              bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+              val2 = pickle.loads(bin)
+          except (TypeError,pickle.UnpicklingError,ImportError):
+              # The unknownAtrribute was written before 4.2.
+              val2 = val             
+          return attr,val2
+      
+--- 372,390 ----
+          try:
+              bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+              val2 = pickle.loads(bin)
++ 
++         # Maybe ImportError should be handled separately
+          except (TypeError,pickle.UnpicklingError,ImportError):
+              # The unknownAtrribute was written before 4.2.
++             print "Failed to unpickle attribute: %s" % attr
++             if not hasattr(self,"badPickles"):
++                 self.badPickles = []
++ 
++             # storing attr could cause should-be-pickled-when-saving data to
++             # not be pickled. ie: badPickles should be specific
++             self.badPickles.append(val) # hack
+              val2 = val
+!                         
+          return attr,val2
+
+*************** putUnknownAttribute
+*** 1661,1667 ****
+--- 1670,1686 ----
+              
+          attrs = []
+          for key in attrDict.keys():
++             print "> put attribute: %s" % key
+              val = attrDict[key]
++             # skip badPickles
++             # XXX the changes of a picklable val being the same as as an unpickle-able
++             #   val should be quite slim. ;)
++             if hasattr(self, 'badPickles') and (val in self.badPickles):
++                 print "    Not pickling non-unpicklable attribute: %s" % key
++                 attr = ' %s="%s"' % (key,val)  # val is already hex'ed and escaped
++                 attrs.append(attr)
++                 continue
++                 
+              try:
+                  s = pickle.dumps(val,bin=True)
+              except pickle.PicklingError:
+#@nonl
+#@-node:EKR.20040623102728.2:Patch (Won't do)
+#@+node:ekr.20031218072017.1561:getTnode
+def getTnode (self):
+
+    # we have already matched <t.
+    index = -1 ; attrDict = {}
+    # New in version 1.7: attributes may appear in any order.
+    while 1:	
+        if self.matchTag("tx="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            index = self.getDqString()
+        elif self.matchTag("rtf=\"1\""): pass # ignored
+        elif self.matchTag("rtf=\"0\""): pass # ignored
+        elif self.matchTag(">"):         break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute("tnode")
+            if attr: attrDict[attr] = val
+            
+    if g.app.use_gnx:
+        # index might be Tnnn, nnn, or gnx.
+        id,time,n = g.app.nodeIndices.scanGnx(index,0)
+        if time == None: # A pre-4.1 file index.
+            if index[0] == "T":
+                index = index[1:]
+
+    index = self.canonicalTnodeIndex(index)
+    t = self.tnodesDict.get(index)
+    # g.trace(t)
+    << handle unknown attributes >>
+    if t:
+        s = self.getEscapedString()
+        t.setTnodeText(s,encoding=self.leo_file_encoding)
+    else:
+        g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+    self.getTag("</t>")
+#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
+keys = attrDict.keys()
+if keys:
+    t.unknownAttributes = attrDict
+    if 0: # For debugging.
+        s = "unknown attributes for tnode"
+        print s ; g.es(s, color = "blue")
+        for key in keys:
+            s = "%s = %s" % (key,attrDict.get(key))
+            print s ; g.es(s)
+#@nonl
+#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
+#@-node:ekr.20031218072017.1561:getTnode
+#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
+
+    c = self.c ; v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+    # we have already matched <v.
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = self.getDqString()
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag("descendentTnodeUnknownAttributes="):
+            # New for 4.2
+            s = self.getDqString()
+            dict = self.getDescendentUnknownAttributes(s)
+            if dict:
+                self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute("vnode")
+            if attr: attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
+    
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    if skip:
+        v = self.getExistingVnode(tref,headline)
+    if v is None:
+        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
+        skip = skip or skip2
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+
+    << Set the remembered status bits >>
+
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
+
+    # End this vnode.
+    self.getTag("</v>")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+# The a=" has already been seen.
+while 1:
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
+
+self.getDquote()
+#@nonl
+#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+if setCurrent:
+    self.currentVnodeStack = [v]
+
+if setTop:
+    self.topVnodeStack = [v]
+    
+if setExpanded:
+    v.initExpandedBit()
+    
+if setMarked:
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+
+if setOrphan:
+    v.setOrphan()
+#@nonl
+#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+#@+node:ekr.20040326055828:<< Append to current or top stack >>
+if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
+if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
+#@nonl
+#@-node:ekr.20040326055828:<< Append to current or top stack >>
+#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+#@+node:EKR.20040526204036:getUnknownTag
+def getUnknownTag(self):
+    
+    self.skipWsAndNl() # guarantees at least one more character.
+    tag = self.getStringToTag('=')
+    if not tag:
+        print "getUnknownTag failed"
+        raise BadLeoFile("unknown tag not followed by '='")
+
+    self.fileIndex += 1
+    val = self.getDqString()
+    # g.trace(tag,val)
+    return tag,val
+#@nonl
+#@-node:EKR.20040526204036:getUnknownTag
+#@+node:EKR.20040526204036.1:getUnknownAttribute
+def getUnknownAttribute(self,nodeType):
+    
+    """Parse an unknown attribute in a <v> or <t> element."""
+    
+    import binascii
+    import pickle
+    
+    # New in 4.2.  The unknown tag has been pickled and hexlify'd.
+    attr,val = self.getUnknownTag()
+    if not attr:
+        return None,None
+    
+    try:
+        bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+        val2 = pickle.loads(bin)
+        return attr,val2
+
+    except (TypeError,pickle.UnpicklingError,ImportError):
+        # Assume that Leo 4.1 wrote the attribute.
+        return attr,val
+#@nonl
+#@-node:EKR.20040526204036.1:getUnknownAttribute
+#@+node:EKR.20040526202501:putUnknownAttributes
+def putUnknownAttributes (self,torv,toString=False):
+    
+    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
+    
+    result = []
+    attrDict = torv.unknownAttributes
+    if type(attrDict) != type({}):
+        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+        return
+
+    for key in attrDict.keys():
+        try:
+            val = attrDict[key]
+            s = pickle.dumps(val,bin=True)
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            self.put(attr)
+
+        except pickle.PicklingError:
+            # New in 4.2 beta 1: keep going after error.
+            g.es("ignoring non-pickleable attribute %s in %s" % (
+                key,torv),color="blue")
+#@nonl
+#@-node:EKR.20040526202501:putUnknownAttributes
+#@-node:EKR.20040623102728:(Improved error handling for unknownAttributes)
+#@+node:EKR.20040623101617:(Fixed double print in Execute Script command)
+#@+node:EKR.20040623101617.1:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2631282
+By: nobody
+
+traceback causes double print of line number
+with redirect script io to log enabled.
+there is print s,; g.es(s, ...) in executeScript
+in a few places.
+from test.leo, executescript on
+"Test of better error messages in Execute Script command"
+
+hello
+exception executing script
+  File "<string>", line 9, in ?
+NameError: name 'b' is not defined
+--------------------
+--------------------
+line 9: c = b
+line 9: c = b
+#@nonl
+#@-node:EKR.20040623101617.1:Report
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    if script:
+        script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:EKR.20040623101617:(Fixed double print in Execute Script command)
+#@-node:EKR.20040626110541:6/28/04
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040621075314:June 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
