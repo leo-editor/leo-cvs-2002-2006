@@ -15,6 +15,7 @@ import leoGlobals as g # So code can use g below.
 if 0: # Don't import this here: it messes up Leo's startup code.
     import leoTest
 
+import exceptions
 import os
 import string
 import sys
@@ -773,14 +774,23 @@ def es_event_exception (eventName,full=False):
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
-   
-    n = None ; lines = []
 
     if full:
         lines = traceback.format_exception(typ,val,tb)
     else:
-        # Kludgy, but it seems to work.
+        lines = traceback.format_exception_only(typ,val)
+        
+    if 1:
+        n = g.getLastTracebackLineNumber()
+    else:
+        # old, kludgy code...
+        #@        << look for lines containing a specific message >>
+        #@+node:ekr.20040731211839:<< look for lines containing a specific message >>
         errList = traceback.format_exception(typ,val,tb)
+        
+        print ; print "es_exception (format_exception)"
+        for item in errList:
+            print item
         # Strip cruft lines.
         s1 = "Traceback (most recent call last):"
         s2 = "exec script in {}"
@@ -790,7 +800,7 @@ def es_exception (full=True,c=None,color="red"):
                 tag = 'File "<string>", line'
                 i = line.find(tag)
                 if i > -1:
-                    #@                    << compute n from the line >>
+                    #@            << compute n from the line >>
                     #@+node:EKR.20040612223431:<< compute n from the line >>
                     i += len(tag)
                     j = line.find(',',i)
@@ -804,6 +814,9 @@ def es_exception (full=True,c=None,color="red"):
                     #@nl
             if not g.match(line,0,s1) and line.find(s2) == -1:
                 lines.append(line)
+        #@nonl
+        #@-node:ekr.20040731211839:<< look for lines containing a specific message >>
+        #@nl
 
     for line in lines:
         g.es_error(line,color=color)
@@ -812,6 +825,30 @@ def es_exception (full=True,c=None,color="red"):
 
     return n
 #@nonl
+#@+node:ekr.20040731204831:getLastTracebackLineNumber
+def getLastTracebackLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return lineno
+        except:
+            g.trace("bad line number")
+            return 0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        item = data[-1]
+        n = item[1]
+        return n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackLineNumber
 #@-node:ekr.20031218072017.3112:es_exception
 #@+node:ekr.20031218072017.3113:printBindings
 def print_bindings (name,window):
