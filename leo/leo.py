@@ -198,6 +198,21 @@ def run(*args):
 	root.mainloop()
 #@-body
 #@-node:7:C=4:run (leo.py)
+#@+node:8::profile
+#@+body
+def profile ():
+
+	import profile, pstats
+	
+	name = "c:/prog/test/leoProfile.txt"
+	profile.run('leo.run()',name)
+
+	p = pstats.Stats(name)
+	p.strip_dirs()
+	p.sort_stats('cum','file','name')
+	p.print_stats()
+#@-body
+#@-node:8::profile
 #@-others
 
 
