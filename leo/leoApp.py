@@ -23,6 +23,7 @@ class LeoApp:
 		self.idle_imported = false # true: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
 		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
+		self.leoID = None # Set by setLeoID().  The id for all global node indices.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.log = None # The LeoFrame containing the present log.
 		self.logWaiting = [] # List of messages waiting to go to a log.
