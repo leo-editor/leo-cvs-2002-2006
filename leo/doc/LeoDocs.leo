@@ -1157,7 +1157,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735" a="E"><vh>Users Guide</vh>
+<v t="edream.110203163054.735"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1944,15 +1944,15 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647" a="ETV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815" a="E"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040414172212" a="E"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2" a="E"><vh>Preface</vh>
-<v t="ekr.20040414172336" a="TV"><vh>@rst</vh></v>
+<v t="ekr.20040414172336"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040414172218.3"><vh>Leo's Design Goals</vh>
 <v t="ekr.20040414172336.2"><vh>@rst</vh></v>
