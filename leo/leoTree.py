@@ -198,7 +198,8 @@ class leoTree:
 		while v:
 			if v.icon_id == id or (v.icon_id,) == id:
 				return v
-			v = v.threadNext()
+			else: v = v.visNext()
+			
 		return None
 	#@-body
 	#@-node:7:C=4:tree.findVnodeWithIconId
@@ -669,45 +670,42 @@ class leoTree:
 	#@-node:2::OnBoxClick
 	#@+node:3:C=17:tree.OnDrag
 	#@+body
-	#@+at
-	#  Auto-scrolls the canvas as needed and opens nodes if the control key is down.
-
-	#@-at
-	#@@c
+	# This precomputes numberOfVisibleNodes(), a significant optimization.
+	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
 	
 	def OnDrag(self,v,event):
 		
-		# es("tree.OnDrag" + `v`)
 		assert(v == self.drag_v)
 	
+		if event:
+			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+			self.OnContinueDrag(v,event)
+	#@-body
+	#@-node:3:C=17:tree.OnDrag
+	#@+node:4:C=18:tree.OnContinueDrag
+	#@+body
+	def OnContinueDrag(self,v,event):
+		
+		# es("tree.OnContinueDrag" + `v`)
+		assert(v == self.drag_v)
 		if not event: return
-		c = self.commands ; canvas = self.canvas ; frame = self.commands.frame
+		
+		c = self.commands 
+		canvas = self.canvas
+		frame = self.commands.frame
 		x,y = event.x,event.y
 	
-		
-		#@<< set vdrag and expandFlag >>
-		#@+node:1::<< set vdrag and expandFlag >>
-		#@+body
-		#@+at
-		#  vdrag is the node presently under the cursor.  childFlag is set if vdrag could be expanded.
-
-		#@-at
-		#@@c
-		
 		canvas_x = canvas.canvasx(x)
 		canvas_y = canvas.canvasy(y)
-		
 		id = self.canvas.find_closest(canvas_x,canvas_y)
-		vdrag = self.findVnodeWithIconId(id)
-		expandFlag = vdrag and vdrag.hasChildren() and not vdrag.isExpanded()
-		#@-body
-		#@-node:1::<< set vdrag and expandFlag >>
-
+	
 		if 0: # Confusing: we should only do this if a modifier key is down.
+			# Moreover, this would slow down dragging a lot.
+			vdrag = self.findVnodeWithIconId(id)
 			if vdrag and vdrag != v and expandFlag:
 				
 				#@<< expand vdrag and redraw >>
-				#@+node:2::<< expand vdrag and redraw >>
+				#@+node:1::<< expand vdrag and redraw >> (not used)
 				#@+body
 				# redrawing will change id's.
 				if self.drag_id:
@@ -729,19 +727,20 @@ class leoTree:
 				else:
 					self.canvas['cursor'] = self.oldcursor
 				#@-body
-				#@-node:2::<< expand vdrag and redraw >>
+				#@-node:1::<< expand vdrag and redraw >> (not used)
 
 	
-		if self.drag_id: # OnEndDrag can stop the scheduling of more events.
+		# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
+		if self.drag_id: # This gets cleared by OnEndDrag()
 			
 			#@<< scroll the canvas as needed >>
-			#@+node:3::<< scroll the canvas as needed >>
+			#@+node:2::<< scroll the canvas as needed >>
 			#@+body
 			# Scroll the screen up or down one line if the cursor (y) is outside the canvas.
 			h = canvas.winfo_height()
 			if y < 0 or y > h:
 				lo, hi = frame.treeBar.get()
-				n = self.numberOfVisibleNodes()
+				n = self.savedNumberOfVisibleNodes
 				line_frac = 1.0 / float(n)
 				frac = choose(y < 0, lo - line_frac, lo + line_frac)
 				frac = min(frac,1.0)
@@ -749,17 +748,15 @@ class leoTree:
 				# es("lo,hi,frac:" + `lo` + " " + `hi` + " " + `frac`)
 				canvas.yview("moveto", frac)
 				
-			# Queue up another event to keep scrolling while the cursor is outside the canvas.
-			# OnEndDrag() halts the scrolling by clearing self.drag_id when the mouse button goes up.
-			if 0: # This doesn't work very well.  Just moving the cursor to force scrolling seems better.
+				# Queue up another event to keep scrolling while the cursor is outside the canvas.
 				lo, hi = frame.treeBar.get()
 				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-					canvas.after_idle(self.OnDrag,v,event)
+					canvas.after_idle(self.OnContinueDrag,v,event)
 			#@-body
-			#@-node:3::<< scroll the canvas as needed >>
+			#@-node:2::<< scroll the canvas as needed >>
 	#@-body
-	#@-node:3:C=17:tree.OnDrag
-	#@+node:4:C=18:tree.OnEndDrag
+	#@-node:4:C=18:tree.OnContinueDrag
+	#@+node:5:C=19:tree.OnEndDrag
 	#@+body
 	def OnEndDrag(self,v,event):
 		
@@ -798,8 +795,8 @@ class leoTree:
 			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
 			self.drag_id = None
 	#@-body
-	#@-node:4:C=18:tree.OnEndDrag
-	#@+node:5:C=19:tree.OnIconClick
+	#@-node:5:C=19:tree.OnEndDrag
+	#@+node:6:C=20:tree.OnIconClick
 	#@+body
 	def OnIconClick (self,v,event):
 	
@@ -820,8 +817,8 @@ class leoTree:
 	
 		self.select(v)
 	#@-body
-	#@-node:5:C=19:tree.OnIconClick
-	#@+node:6:C=20:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@-node:6:C=20:tree.OnIconClick
+	#@+node:7:C=21:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
@@ -949,8 +946,8 @@ class leoTree:
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
 	#@-body
-	#@-node:6:C=20:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
-	#@+node:7::OnDeactivate
+	#@-node:7:C=21:tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
+	#@+node:8::OnDeactivate
 	#@+body
 	def OnDeactivate (self, event=None):
 	
@@ -958,8 +955,8 @@ class leoTree:
 		self.dimEditLabel()
 		self.active = false
 	#@-body
-	#@-node:7::OnDeactivate
-	#@+node:8:C=21:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:8::OnDeactivate
+	#@+node:9:C=22:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is changed(!), so we register an idle-event handler to do the 
@@ -1043,7 +1040,7 @@ class leoTree:
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
 	#@-body
-	#@-node:8:C=21:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:9:C=22:tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@-node:10::Event handers
 	#@+node:11::Selecting & editing (tree)
 	#@+node:1::dimEditLabel, undimEditLabel
@@ -1061,7 +1058,7 @@ class leoTree:
 		self.setSelectedLabelState(v)
 	#@-body
 	#@-node:1::dimEditLabel, undimEditLabel
-	#@+node:2:C=22:editLabel
+	#@+node:2:C=23:editLabel
 	#@+body
 	# Start editing v.edit_text
 	
@@ -1082,8 +1079,8 @@ class leoTree:
 		else:
 			self.editVnode = None
 	#@-body
-	#@-node:2:C=22:editLabel
-	#@+node:3:C=23:endEditLab (es here helps set focus properly!)
+	#@-node:2:C=23:editLabel
+	#@+node:3:C=24:endEditLab (es here helps set focus properly!)
 	#@+body
 	# End editing for self.editText
 	
@@ -1099,8 +1096,8 @@ class leoTree:
 		if v and v.joinList:
 			self.redraw_now() # force a redraw of joined headlines.
 	#@-body
-	#@-node:3:C=23:endEditLab (es here helps set focus properly!)
-	#@+node:4:C=24:tree.select
+	#@-node:3:C=24:endEditLab (es here helps set focus properly!)
+	#@+node:4:C=25:tree.select
 	#@+body
 	#@+at
 	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
@@ -1128,8 +1125,8 @@ class leoTree:
 		else:
 			self.canvas.focus_set()
 	#@-body
-	#@-node:4:C=24:tree.select
-	#@+node:5:C=25:tree.set...LabelState
+	#@-node:4:C=25:tree.select
+	#@+node:5:C=26:tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
@@ -1149,7 +1146,7 @@ class leoTree:
 		if v and v.edit_text:
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
-	#@-node:5:C=25:tree.set...LabelState
+	#@-node:5:C=26:tree.set...LabelState
 	#@-node:11::Selecting & editing (tree)
 	#@-others
 #@-body

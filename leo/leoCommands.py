@@ -266,6 +266,9 @@ class Commands:
 		
 		c = self ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
+		anyChanged = false
 		while v and v != next:
 			if v == current:
 				c.convertBlanks()
@@ -275,13 +278,18 @@ class Commands:
 				lines = string.split(text, '\n')
 				for line in lines:
 					s = optimizeLeadingWhitespace(line,c.tab_width)
-					if s != line: changed = true
+					if s != line:
+						changed = true ; anyChanged = true
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
 			v.setDirty()
 			v = v.threadNext()
+		if anyChanged:
+			c.undoer.setUndoParams("Convert All Blanks",current,select=current,oldTree=v_copy)
+		else:
+			es("nothing changed")
 	#@-body
 	#@-node:1:C=5:convertAllBlanks
 	#@+node:2:C=6:convertAllTabs
@@ -290,6 +298,9 @@ class Commands:
 	
 		c = self ; v = current = c.currentVnode()
 		next = v.nodeAfterTree()
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
+		anyChanged = false
 		while v and v != next:
 			if v == current:
 				self.convertTabs()
@@ -300,13 +311,18 @@ class Commands:
 				for line in lines:
 					i,w = skip_leading_ws_with_indent(line,0,c.tab_width)
 					s = computeLeadingWhitespace(w,-abs(c.tab_width)) + line[i:] # use negative width.
-					if s != line: changed = true
+					if s != line:
+						changed = true ; anyChanged = true
 					result.append(s)
 				if changed:
 					result = string.join(result,'\n')
 					v.t.setTnodeText(result)
 			v.setDirty()
 			v = v.threadNext()
+		if anyChanged:
+			c.undoer.setUndoParams("Convert All Tabs",current,select=current,oldTree=v_copy)
+		else:
+			es("nothing changed")
 	#@-body
 	#@-node:2:C=6:convertAllTabs
 	#@+node:3:C=7:convertBlanks
@@ -314,6 +330,8 @@ class Commands:
 	def convertBlanks (self):
 	
 		c = self ; v = current = c.currentVnode()
+		# Create copy for undo.
+		v_copy = c.copyTree(v)
 		head, lines, tail = c.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
@@ -322,7 +340,7 @@ class Commands:
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Blanks")
+			c.updateBodyPane(head,result,tail,"Convert Blanks") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 	#@-body
 	#@-node:3:C=7:convertBlanks
@@ -340,7 +358,7 @@ class Commands:
 			result.append(s)
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Tabs")
+			c.updateBodyPane(head,result,tail,"Convert Tabs") # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 	#@-body
 	#@-node:4:C=8:convertTabs
@@ -378,7 +396,7 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Undent")
 	#@-body
 	#@-node:6::dedentBody
-	#@+node:7::extract (not undoable)
+	#@+node:7::extract
 	#@+body
 	def extract(self):
 	
@@ -416,8 +434,8 @@ class Commands:
 		c.undoer.setUndoParams("Extract",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
-	#@-node:7::extract (not undoable)
-	#@+node:8::extractSection (not undoable)
+	#@-node:7::extract
+	#@+node:8::extractSection
 	#@+body
 	def extractSection(self):
 	
@@ -458,8 +476,8 @@ class Commands:
 		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
-	#@-node:8::extractSection (not undoable)
-	#@+node:9::extractSectionNames (not undoable)
+	#@-node:8::extractSection
+	#@+node:9::extractSectionNames
 	#@+body
 	def extractSectionNames(self):
 	
@@ -501,7 +519,7 @@ class Commands:
 		setTextSelection(c.body,i,j)
 		c.body.focus_force()
 	#@-body
-	#@-node:9::extractSectionNames (not undoable)
+	#@-node:9::extractSectionNames
 	#@+node:10::getBodyLines
 	#@+body
 	def getBodyLines (self):
@@ -549,7 +567,7 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Indent")
 	#@-body
 	#@-node:12::indentBody
-	#@+node:13:C=9:updateBodyPane
+	#@+node:13:C=9:updateBodyPane (handles undo)
 	#@+body
 	def updateBodyPane (self,head,middle,tail,undoType):
 		
@@ -588,7 +606,7 @@ class Commands:
 		c.body.focus_force()
 		c.recolor() # 7/5/02
 	#@-body
-	#@-node:13:C=9:updateBodyPane
+	#@-node:13:C=9:updateBodyPane (handles undo)
 	#@-node:9:C=4:Edit Body Text
 	#@+node:10:C=10:Enabling Menu Items (Commands)
 	#@+node:1::canContractAllHeadlines

@@ -56,9 +56,8 @@ change_string =
 find_string = 
 # 	The find string (without the quotes unless quotes are part of the string).
 
-#
-# The following are all 0/1 settings for checkboxes in the Find/Change panel.
-#
+
+# ----- 0/1 settings for checkboxes in the Find/Change panel.
 
 batch = 0
 ignore_case = 0

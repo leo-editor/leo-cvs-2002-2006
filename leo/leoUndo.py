@@ -223,6 +223,7 @@ class undoer:
 	
 	def setUndoParams (self,undo_type,v,**keywords):
 	
+		# trace(`undo_type`)
 		u = self
 		if u.redoing or u.undoing: return None
 		if undo_type == "Can't Undo":
@@ -422,7 +423,12 @@ class undoer:
 			#@<< redo replace cases >>
 			#@+node:6::<< redo replace cases >>
 			#@+body
-			elif type in ["Extract", "Extract Names", "Extract Section"]:
+			elif type in [
+				"Convert All Blanks",
+				"Convert All Tabs",
+				"Extract",
+				"Extract Names",
+				"Extract Section"]:
 				
 				# Same as undo except we interchange u.oldTree and u.v in the call to undoReplace.
 				self.undoReplace(u.oldTree,u.v)
@@ -455,9 +461,11 @@ class undoer:
 			#@<< redo typing cases >>
 			#@+node:8::<< redo typing cases >>
 			#@+body
-			elif type in [
-				"Typing","Change","Cut","Paste","Delete",
-				"Convert Blanks","Indent","Undent"]:
+			elif type in [ "Typing",
+				"Change",
+				"Convert Blanks", "Convert Tabs",
+				"Cut", "Paste", "Delete",
+				"Indent", "Undent" ]:
 			
 				# trace(`type` + ":" + `u.v`)
 				c.selectVnode(u.v)
@@ -627,7 +635,12 @@ class undoer:
 			#@<< undo replace cases >>
 			#@+node:6::<< undo replace cases >>
 			#@+body
-			elif type in ["Extract", "Extract Names", "Extract Section"]:
+			elif type in [
+				"Convert All Blanks",
+				"Convert All Tabs",
+				"Extract",
+				"Extract Names",
+				"Extract Section"]:
 				
 				self.undoReplace(u.v,u.oldTree)
 				u.v,u.oldTree = u.oldTree,u.v
@@ -664,9 +677,11 @@ class undoer:
 			#@<< undo typing cases >>
 			#@+node:8::<< undo typing cases >>
 			#@+body
-			elif type in [
-				"Typing","Change","Cut","Paste","Delete",
-				"Convert Blanks","Indent","Undent"]:
+			elif type in [ "Typing"
+				"Change",
+				"Convert Blanks", "Convert Tabs",
+				"Cut", "Paste", "Delete",
+				"Indent", "Undent" ]:
 			
 				# trace(`type` + ":" + `u.v`)
 				c.selectVnode(u.v)
