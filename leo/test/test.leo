@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2334" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2338" clone_windows="0"/>
 <globals body_outline_ratio="0.44343434343434346">
 	<global_window_position top="10" left="95" height="990" width="1071"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -257,6 +257,10 @@
 <v t="ekr.20040130110810.1"><vh>one</vh></v>
 <v t="ekr.20040130110810.2"><vh>two</vh></v>
 </v>
+</v>
+<v t="ekr.20040217090013"><vh>4.1 final tests</vh>
+<v t="ekr.20040216160720"><vh>double traceback test</vh></v>
+<v t="ekr.20040217075905" tnodeList="ekr.20040217075905"><vh>@file c:\prog\test\encodingTest.py</vh></v>
 </v>
 </v>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
@@ -2816,7 +2820,7 @@
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2119" a="TV"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
@@ -2981,7 +2985,7 @@
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
+<v t="edream.110203161858.2153" a="ETV"><vh>Run all tests</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -36293,5 +36297,25 @@ set setq
 t type-of 
 unless 
 when while</t>
+<t tx="ekr.20040216160720">from leoGlobals import *
+
+if 0:
+	redirectStderr()
+else:
+	restoreStderr()
+
+try:
+	a = 1/0
+except:
+	# print "error"
+	es_exception()</t>
+<t tx="ekr.20040217075905">@ignore
+
+@first # -*- coding: iso-8859-1 -*-
+
+# This is a test
+
+print "hello"</t>
+<t tx="ekr.20040217090013"></t>
 </tnodes>
 </leo_file>

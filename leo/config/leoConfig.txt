@@ -117,7 +117,7 @@ stylesheet =
 at_root_bodies_start_in_doc_mode = 1
 write_old_format_derived_files = 0
 create_nonexistent_directories = 0
-use_plugins = 1
+use_plugins = 0
 save_clears_undo_buffer = 0
 thin_at_file_trees = 0
 use_gnx = 1
@@ -127,7 +127,6 @@ writefilenodes = Shift+Ctrl+W
 markchangeditems = Alt+C
 markclones = Alt+K
 extractnames = Shift+Ctrl+N
-toggleanglebrackets = Ctrl+B
 marksubheads = Alt+S
 deletenode = Shift+Ctrl+BkSp
 promote = Ctrl+{
@@ -220,9 +219,9 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\Documents and Settings\default\My Documents\ekr.leo
+file3 = C:\prog\leoCVS\leo\test\test.leo
 file2 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file1 = C:\prog\leoCVS\leo\test\test.leo
+file1 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
 
 [find/change options]
@@ -237,7 +236,7 @@ batch = 0
 search_headline = 0
 script_change = 0
 search_body = 1
-find_string = def getRealMenuName
+find_string = @first
 pattern_match = 0
 wrap = 0
 mark_finds = 0

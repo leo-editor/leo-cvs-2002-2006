@@ -20,19 +20,19 @@
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636.13" a="TV"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="edream.110203150636.18" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -519,7 +519,7 @@ Promote          = Ctrl+{
 Demote           = Ctrl+}
 
 SelectAll        = Ctrl+A
-ToggleAngleBrackets = Ctrl+B
+# Unused         = Ctrl+B
 Copy             = Ctrl+C
 MoveDown         = Ctrl+D
 ExecuteScript    = Ctrl+E
@@ -619,6 +619,7 @@ RemoveSentinels         = None
 RevertToSaved           = None
 SaveTo                  = None
 SortChildren            = None
+ToggleAngleBrackets     = None
 ToggleSplitDirection    = None
 UntangleAll             = None
 UntangleMarked          = None

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1507" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1514" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="10" left="253" height="921" width="957"/>
+	<global_window_position top="42" left="186" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1355,7 +1355,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.872"><vh>New kinds of nodes</vh>
+<v t="edream.110203113231.872" a="E"><vh>New kinds of nodes</vh>
 <v t="edream.110203113231.873" tnodeList="edream.110203113231.873,edream.110203113231.874,edream.110203113231.875"><vh>@file at_folder.py</vh>
 <v t="edream.110203113231.874"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="edream.110203113231.875"><vh>sync_node_to_folder</vh></v>
@@ -1392,10 +1392,10 @@
 <v t="edream.110203113231.899"><vh>on_select1</vh></v>
 <v t="edream.110203113231.900"><vh>on_select2</vh></v>
 </v>
-<v t="edream.111803100242" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
+<v t="edream.111803100242" a="E" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
 <v t="edream.111803100242.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="edream.111803100242.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="edream.111803100242.3"><vh>onIconDoubleClick</vh>
+<v t="edream.111803100242.3" a="E"><vh>onIconDoubleClick</vh>
 <v t="edream.111803100242.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
 <v t="edream.111803100242.5"><vh>&lt;&lt; convert rST to HTML/LaTeX &gt;&gt;</vh></v>
 </v>
@@ -1525,10 +1525,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
-<v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040118081748" a="E" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
 <v t="ekr.20040118081748.1" a="M"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="ekr.20040118081748.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="ekr.20040118081748.3" a="E"><vh>onIconDoubleClick</vh>
@@ -1537,7 +1537,7 @@
 </v>
 <v t="ekr.20040118081748.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040118081748.7"><vh>writeTreeAsRst</vh></v>
+<v t="ekr.20040118081748.7" a="TV"><vh>writeTreeAsRst</vh></v>
 <v t="ekr.20040118081748.8"><vh>underline</vh></v>
 </v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
@@ -1652,6 +1652,15 @@
 <v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
 <v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
+<v t="ekr.20040211080148" tnodeList="ekr.20040211080148,ekr.20040211080148.1,ekr.20040211080148.2,ekr.20040211080148.3,ekr.20040211080148.4,ekr.20040211080148.5,ekr.20040211080148.6"><vh>@file hoist.py</vh>
+<v t="ekr.20040211080148.1"><vh>class HoistButtons</vh>
+<v t="ekr.20040211080148.2"><vh>_getSizer</vh></v>
+<v t="ekr.20040211080148.3"><vh>addWidgets</vh></v>
+<v t="ekr.20040211080148.4"><vh>doHoistOn</vh></v>
+<v t="ekr.20040211080148.5"><vh>doHoistOff</vh></v>
+<v t="ekr.20040211080148.6"><vh>onIdle</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040205071616"><vh>mnplugins.py</vh>
 <v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
@@ -1665,7 +1674,7 @@
 <v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
-<v t="edream.120603093808" a="MTV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -15718,7 +15727,10 @@ plugin_signon(__name__)</t>
 	# newButtons.py
 
 # New from Bernhard Mulder
-	# mod_http.py</t>
+	# mod_http.py
+	
+# New from Davide Salomoni
+	hoist.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -16516,7 +16528,7 @@ docutils.parsers.rst.directives.register_directive('code-block', code_block)
 writeTreeAsRst(rstFile, fname, v, c)
 rstFile.close()
 es('written: '+str(fname))</t>
-<t tx="ekr.20040118081748.7">def writeTreeAsRst(rstFile, fname, vnode, c, syntax):
+<t tx="ekr.20040118081748.7">def writeTreeAsRst(rstFile, fname, vnode, c, syntax=None):
 	'Writes the tree under vnode to the file rstFile (fname is the filename)'
 	# we don't write a title, so the titlepage can be customized
 	# use '#' for title under/overline
@@ -17707,5 +17719,85 @@ if Tkinter:
 		("insOK",'Ctrl+Shift+O',c.insertOKcmd)]
 
 	c.frame.menu.createMenuEntries(c.pluginMenu,table)</t>
+<t tx="ekr.20040211080148">"""Add Hoist/De-Hoist buttons to the toolbar.
+"""
+
+# By Davide Salomoni.
+
+__version__ = "0.2" # Color mod by EKR.
+
+from leoPlugins import *
+from leoGlobals import *
+
+try:
+	import Tkinter
+except ImportError:
+	Tkinter = None
+Tk = Tkinter
+
+activeHoistColor = "pink1" # The Tk color to use for the active hoist button.
+
+# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
+USE_FIXED_SIZES = 1 
+
+@others
+
+if Tkinter:
+	hoist = HoistButtons()
+	
+	if app.gui is None:
+		app.createTkGui(__file__)
+	
+	if app.gui.guiName() == "tkinter":
+		registerHandler("after-create-leo-frame", hoist.addWidgets)
+		registerHandler("idle", hoist.onIdle)
+		plugin_signon(__name__)
+</t>
+<t tx="ekr.20040211080148.1">class HoistButtons:
+	"""Hoist/dehoist buttons for the toolbar."""
+	@others</t>
+<t tx="ekr.20040211080148.2">def _getSizer(self, parent, height, width):
+	"""Return a sizer object to force a Tk widget to be the right size"""
+	if USE_FIXED_SIZES: 
+		sizer = Tkinter.Frame(parent, height=height, width=width)
+		sizer.pack_propagate(0) # don't shrink 
+		sizer.pack(side="right")
+		return sizer
+	else:
+		return parent</t>
+<t tx="ekr.20040211080148.3">def addWidgets(self, tags, keywords):
+	"""Add the widgets to the toolbar."""
+	self.c = keywords['c'] 
+	toolbar = self.c.frame.iconFrame
+	# Button De-Hoist
+	self.hoistOff = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="De-Hoist", command=self.doHoistOff)
+	self.hoistOff.pack(side="right", fill="both", expand=1)
+	# Button Hoist
+	self.hoistOn = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="Hoist", command=self.doHoistOn)
+	self.hoistOn.pack(side="left", fill="both", expand=1)
+	self.bgColor = self.hoistOn["background"]
+	self.activeBgColor = self.hoistOn["activebackground"]
+</t>
+<t tx="ekr.20040211080148.4">def doHoistOn(self, *args, **keys):
+	self.c.hoist()
+</t>
+<t tx="ekr.20040211080148.5">def doHoistOff(self, *args, **keys):
+	self.c.dehoist()
+</t>
+<t tx="ekr.20040211080148.6">def onIdle(self, tag, keywords):
+	
+	c = self.c
+
+	if not hasattr(c,"hoistStack"):
+		return
+	
+	if len(c.hoistStack) &gt; 0:
+		self.hoistOn.config(bg=activeHoistColor)
+		self.hoistOn.config(activebackground=activeHoistColor)
+		self.hoistOn.config(text="Hoist %s" % len(c.hoistStack))
+	else:
+		self.hoistOn.config(bg=self.bgColor)
+		self.hoistOn.config(activebackground=self.activeBgColor)
+		self.hoistOn.config(text="Hoist")</t>
 </tnodes>
 </leo_file>
