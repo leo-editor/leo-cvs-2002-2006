@@ -1882,8 +1882,8 @@ if not g.app.unitTesting:
                     if not c.changed:
                         c.setChanged(True)
                     # Update all dirty bits.
-                    if not p.isDirty():
-                        p.setDirty()
+                    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+                    p.setDirty()
                     # Update p.
                     p.initHeadString(s)
                     self.setText(edit_text,s,tag="idle_head_key2")

@@ -1579,8 +1579,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 if not c.changed:
                     c.setChanged(True)
                 # Update all dirty bits.
-                if not p.isDirty():
-                    p.setDirty()
+                # 8/2/04: Do this even if p is already dirty!
+                p.setDirty()
                 # Update v.
                 v.initHeadString(s)
                 edit_text.delete("1.0","end")
