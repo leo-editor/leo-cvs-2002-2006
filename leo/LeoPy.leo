@@ -2,19 +2,19 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2088" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="6" left="109" height="27" width="71"/>
+	<global_window_position top="35" left="118" height="37" width="105"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
-	<find_string>createLeoSplitter</find_string>
+<find_panel_settings>
+	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>Diary</vh>
 <v a="E"><vh>Sept 2002</vh>
-<v t="T2" a="V"><vh>Added support for MouseWheel (Linux only)</vh></v>
+<v t="T2"><vh>Added support for MouseWheel (Linux only)</vh></v>
 <v><vh>9/3</vh>
 <v><vh>Experimented with CVS Revision keyword in About box.</vh></v>
 <v><vh>Added Find Matching Bracket command</vh></v>
@@ -2979,7 +2979,7 @@
 <v t="T986"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T1417"><vh>Code</vh>
+<v t="T1417" a="E"><vh>Code</vh>
 <v t="T1418"><vh> Overview of code</vh></v>
 <v t="T1419"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
 <v t="T1420"><vh> Batch Files &amp; other @root trees</vh>
@@ -3265,9 +3265,9 @@
 </v>
 </v>
 </v>
-<v t="T1582"><vh>@file leoColor.py</vh>
+<v t="T1582" a="E"><vh>@file leoColor.py</vh>
 <v t="T1583"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="T392" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
+<v t="T392" a="CV"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
 <v t="T1584"><vh>&lt;&lt; define colorizer functions &gt;&gt;</vh></v>
 <v t="T1585"><vh>&lt;&lt; define color panel data &gt;&gt;</vh></v>
 <v t="T1586"><vh>class colorizer</vh>
@@ -6860,7 +6860,7 @@ latex_keywords = (
 	"\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
 	"\\hrulefill",	"\\hspace", "\\huge",	"\\Huge",	"\\hyphenation"
 	#I
-	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\inf", "\\infty", 
+	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\index", "\\inf", "\\infty", 
 	"\\input", "\\int", "\\iota",	"\\it", "\\item", "\\itshape",
 	#J
 	"\\jmath", "\\Join",
@@ -6875,7 +6875,7 @@ latex_keywords = (
 	"\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
 	"\\Longrightarrow",	"longrightarrow",
 	#M
-	"\\mainmatter", "\\makebox", "\\maketitle", "\\markboth", "\\markright",
+	"\\mainmatter", "\\makebox", "\\makeglossary", "\\makeindex","\\maketitle", "\\markboth", "\\markright",
 	"\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
 	"\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
 	"\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
@@ -6892,7 +6892,7 @@ latex_keywords = (
 	"\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
 	"\\par", "\\parbox",	"\\paragraph", "\\parindent", "\\parskip", "\\part", 
 	"\\partial", "\\per", "\\Phi", 	"\\phi",	"\\Pi", "\\pi", "\\pm", 
-	"\\pmod", "\\pounds", "\\prime", "\\prod", "\\propto", "\\protext", 
+	"\\pmod", "\\pounds", "\\prime", "\\printindex", "\\prod", "\\propto", "\\protext", 
 	"\\providecomamnd", "\\Psi",	"\\psi", "\\put",
 	#Q
 	"\\qbezier", "\\quoteblbase", "\\quotesinglbase",

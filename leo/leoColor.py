@@ -157,7 +157,7 @@ latex_keywords = (
 	"\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
 	"\\hrulefill",	"\\hspace", "\\huge",	"\\Huge",	"\\hyphenation"
 	#I
-	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\inf", "\\infty", 
+	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\index", "\\inf", "\\infty", 
 	"\\input", "\\int", "\\iota",	"\\it", "\\item", "\\itshape",
 	#J
 	"\\jmath", "\\Join",
@@ -172,7 +172,7 @@ latex_keywords = (
 	"\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
 	"\\Longrightarrow",	"longrightarrow",
 	#M
-	"\\mainmatter", "\\makebox", "\\maketitle", "\\markboth", "\\markright",
+	"\\mainmatter", "\\makebox", "\\makeglossary", "\\makeindex","\\maketitle", "\\markboth", "\\markright",
 	"\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
 	"\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
 	"\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
@@ -189,7 +189,7 @@ latex_keywords = (
 	"\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
 	"\\par", "\\parbox",	"\\paragraph", "\\parindent", "\\parskip", "\\part", 
 	"\\partial", "\\per", "\\Phi", 	"\\phi",	"\\Pi", "\\pi", "\\pm", 
-	"\\pmod", "\\pounds", "\\prime", "\\prod", "\\propto", "\\protext", 
+	"\\pmod", "\\pounds", "\\prime", "\\printindex", "\\prod", "\\propto", "\\protext", 
 	"\\providecomamnd", "\\Psi",	"\\psi", "\\put",
 	#Q
 	"\\qbezier", "\\quoteblbase", "\\quotesinglbase",

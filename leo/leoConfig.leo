@@ -2,18 +2,18 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="16" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="162" height="20" width="77"/>
+	<global_window_position top="116" left="87" height="20" width="77"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
@@ -24,7 +24,7 @@
 <v t="T10" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T11"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T13" a="V"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T15"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
