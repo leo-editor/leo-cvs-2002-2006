@@ -5389,7 +5389,7 @@ class baseCommands:
             c.selectVnode(v)
             c.endUpdate()
     #@-node:ekr.20031218072017.2996:selectVisNext
-    #@+node:ekr.20031218072017.2997:selectVnode (calls tree.select)
+    #@+node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
     def selectVnode(self,p,updateBeadList=True):
         
         """Select a new vnode."""
@@ -5403,7 +5403,7 @@ class baseCommands:
         
     selectPosition = selectVnode
     #@nonl
-    #@-node:ekr.20031218072017.2997:selectVnode (calls tree.select)
+    #@-node:ekr.20031218072017.2997:selectVnode & selectPosition (calls tree.select)
     #@+node:ekr.20031218072017.2998:selectVnodeWithEditing
     # Selects the given node and enables editing of the headline if editFlag is True.
     

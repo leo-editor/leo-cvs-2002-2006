@@ -2507,7 +2507,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if not p: return
         
-        if self.trace and self.verbose: g.trace(p.headString())
+        # g.trace(len(p.bodyString()),p.headString())
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
@@ -2535,7 +2535,7 @@ class leoTkinterTree (leoFrame.leoTree):
             #@+node:ekr.20040803072955.130:<< select the new node >>
             frame.setWrap(p)
             
-            # 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+            # Always do this.  Otherwise there can be problems with trailing hewlines.
             s = g.toUnicode(p.v.t.bodyString,"utf-8")
             self.setText(body,s,tag="select:set body",isHeadline=False)
             
