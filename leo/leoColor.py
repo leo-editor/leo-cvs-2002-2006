@@ -71,7 +71,7 @@ c_keywords = (
 	"default","do","double","else","enum","extern",
 	"float","for","goto","if","int","long","register","return",
 	"short","signed","sizeof","static","struct","switch",
-	"typedef","union","unsigned","void","volatile","while"
+	"typedef","union","unsigned","void","volatile","while",
 	# C++ keywords
 	"asm","bool","catch","class","const_cast",
 	"delete","dynamic_cast","explicit","false","friend",
