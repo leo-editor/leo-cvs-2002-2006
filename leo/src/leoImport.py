@@ -2439,48 +2439,30 @@ class baseLeoImportCommands:
 		#@nonl
 		#@-node:ekr.20031218072017.3301:<< Read file into s >>
 		#@nl
-		valid = true
-		line_delim = start_delim = end_delim = None
 		#@	<< set delims from the header line >>
 		#@+node:ekr.20031218072017.3302:<< set delims from the header line >>
-		# This code is similar to atFile::scanHeader.
-		
-		tag = "@+leo" ; tag2 = "-ver="
 		# Skip any non @+leo lines.
 		i = 0
-		while i < len(s) and not g.find_on_line(s,i,tag):
+		while i < len(s) and not g.find_on_line(s,i,"@+leo"):
 			i = g.skip_line(s,i)
-		# We should be at the @+leo line.
-		i = j = g.skip_ws(s,i)
-		# The opening comment delim is the initial non-whitespace.
-		while i < len(s) and not g.match(s,i,tag) and not g.is_ws(s[i]) and not g.is_nl(s,i):
-			i += 1
-		if j < i: line_delim = s[j:i]
-		else: valid = false
-		# Make sure we have @+leo
-		i = g.skip_ws(s,i)
-		if g.match(s,i,tag): i += len(tag)
-		else: valid = false
-		# Skip a version tag. Bug fix: 10/15/03
-		if valid and g.match(s,i,tag2):
-			i += len(tag2) + 1 # Skip the tag and the actual version.
-		# The closing comment delim is the trailing non-whitespace.
-		i = j = g.skip_ws(s,i)
-		while i < len(s) and not g.is_ws(s[i]) and not g.is_nl(s,i):
-			i += 1
-		if j < i:
-			start_delim = line_delim
-			end_delim = s[j:i]
+		
+		# Get the comment delims from the @+leo sentinel line.
+		at = self.c.atFileCommands
+		j = g.skip_line(s,i) ; line = s[i:j]
+		
+		valid,new_df,start_delim,end_delim = at.parseLeoSentinel(line)
+		if not valid:
+			g.es("invalid @+leo sentinel in " + fileName)
+			return
+		
+		if end_delim:
 			line_delim = None
+		else:
+			line_delim,start_delim = start_delim,None
 		#@nonl
 		#@-node:ekr.20031218072017.3302:<< set delims from the header line >>
 		#@nl
-		if valid == false:
-			g.es("invalid @+leo sentinel in " + fileName)
-			return
-	
 		# g.trace("line: '%s', start: '%s', end: '%s'" % (line_delim,start_delim,end_delim))
-	
 		s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
 		ext = g.app.config.remove_sentinels_extension
 		if ext == None or len(ext) == 0:
@@ -2490,6 +2472,7 @@ class baseLeoImportCommands:
 		else:
 			head,ext2 = g.os_path_splitext(fileName) 
 			newFileName = g.os_path_join(path,head+ext+ext2)
+		# g.trace(repr(s))
 		#@	<< Write s into newFileName >>
 		#@+node:ekr.20031218072017.1149:<< Write s into newFileName >>
 		try:
@@ -2499,7 +2482,7 @@ class baseLeoImportCommands:
 			s = g.toEncodedString(s,self.encoding,reportErrors=true)
 			file.write(s)
 			file.close()
-			g.es("creating: " + newFileName)
+			g.es("created: " + newFileName)
 		except:
 			g.es("exception creating: " + newFileName)
 			g.es_exception()
@@ -2520,43 +2503,53 @@ class baseLeoImportCommands:
 	
 	def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
 	
-		i = 0 ; result = [] ; first = true
+		i = 0 ; result = [] ; nlSeen = true
 		while i < len(s):
+			# g.trace(i,nlSeen,g.get_line_after(s,i))
 			start = i # The start of the next syntax element.
-			if first or g.is_nl(s,i):
-				first = false
+			if nlSeen or g.is_nl(s,i):
+				nlSeen = false
 				#@			<< handle possible sentinel >>
 				#@+node:ekr.20031218072017.3304:<< handle possible sentinel >>
-				i = g.skip_nl(s,i)
+				if g.is_nl(s,i):
+					i = g.skip_nl(s,i)
+					nlSeen = true
 				i = g.skip_ws(s,i)
-				
+				# g.trace(i,g.get_line(s,i))
 				if line_delim:
 					if g.match(s,i,line_delim):
-						j = i + len(line_delim)
-						i = g.skip_to_end_of_line(s,i)
+						j = i+len(line_delim)
 						if g.match(s,j,"@"):
-							continue # Remove the sentinel.
+							i = g.skip_line(s,i)
+							nlSeen = true
+							continue # Remove the entire sentinel line, including the newline.
+						else:
+							i = g.skip_to_end_of_line(s,i)
 				elif start_delim:
 					if g.match(s,i,start_delim):
-						j = i + len(start_delim)
+						j = i+len(start_delim)
 						i = g.skip_matching_delims(s,i,start_delim,end_delim)
 						if g.match(s,j,"@"):
-							continue # Remove the sentinel.
+							continue # Remove the sentinel
+				elif nlSeen and start < i:
+					# Put the newline that was at the start of this line.
+					result.append(s[start:i])
+					continue
 				#@nonl
 				#@-node:ekr.20031218072017.3304:<< handle possible sentinel >>
 				#@nl
-			elif g.match(s,i,line_delim):
+			if line_delim and g.match(s,i,line_delim):
 				i = g.skip_to_end_of_line(s,i)
-			elif g.match(s,i,start_delim):
+			elif start_delim and end_delim and g.match(s,i,start_delim):
 				i = g.skip_matching_delims(s,i,start_delim,end_delim)
 			elif g.match(s,i,"'") or g.match(s,i,'"'):
 				i = g.skip_string(s,i)
 			else:
 				i += 1
-			assert(i==0 or start<i)
+			assert(i == 0 or start<i)
 			result.append(s[start:i])# 12/11/03: hugely faster than string concatenation.
 	
-		result = ''.join(result) 
+		result = ''.join(result)
 		return result
 	#@nonl
 	#@-node:ekr.20031218072017.3303:removeSentinelLines
