@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="901" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1214" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="9" left="496" height="791" width="773"/>
+	<global_window_position top="24" left="406" height="791" width="769"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -217,8 +217,8 @@
 </v>
 </v>
 <v t="T155"><vh>Menus</vh>
-<v t="T156" a="E"><vh> Plugins menu</vh>
-<v t="T157" a="E"><vh>@file plugins_menu.py</vh>
+<v t="T156"><vh> Plugins menu</vh>
+<v t="T157"><vh>@file plugins_menu.py</vh>
 <v t="T158"><vh>class Plugin</vh>
 <v t="T159"><vh>__init__</vh>
 <v t="T160"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -421,14 +421,14 @@
 <v t="T306"><vh>To do</vh>
 <v t="T307" a="E"><vh>(Improve Spell Checking)</vh></v>
 </v>
-<v t="T308"><vh>(Settings menu)</vh>
+<v t="T308" a="V"><vh>(Settings menu)</vh>
 <v t="T309"><vh>To do</vh></v>
 <v t="T310"><vh>Design of Settings menu</vh></v>
-<v t="T311" a="E"><vh>@file settings_menu.py</vh>
+<v t="T311"><vh>@file settings_menu.py</vh>
 <v t="T312"><vh>createSettingsMenu</vh></v>
 </v>
 </v>
-<v t="T313" a="E"><vh>(4.0 project)</vh>
+<v t="T313"><vh>(4.0 project)(Not ready yet)</vh>
 <v t="T314"><vh>To do</vh></v>
 <v t="T315"><vh>Reference code</vh>
 <v t="T316"><vh>leoFileCommands.py</vh>
@@ -728,7 +728,7 @@
 </v>
 </v>
 <v t="T564"><vh>funcToMethod</vh></v>
-<v t="T565" a="E"><vh>leoAtFile.py </vh>
+<v t="T565"><vh>leoAtFile.py </vh>
 <v t="T566"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
 <v t="T567"><vh>Birth &amp; death</vh>
 <v t="T568"><vh>atFile.__init__&amp; initIvars</vh>
@@ -929,7 +929,7 @@
 </v>
 </v>
 </v>
-<v t="T724" a="E"><vh>Utils</vh>
+<v t="T724"><vh>Utils</vh>
 <v t="T725"><vh>putBuffered</vh></v>
 <v t="T726"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T727"><vh>putDirective  (handles @delims)</vh>
@@ -1039,126 +1039,507 @@
 <v t="T805"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T806" a="V"><vh>@file gnx_code.py</vh>
-<v t="T807"><vh>app.setLeoID</vh>
-<v t="T808"><vh>&lt;&lt; return if we can set self.leoID from sys.leoID&gt;&gt;</vh></v>
-<v t="T809"><vh>&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;</vh></v>
-<v t="T810"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
-<v t="T811"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
+<v t="T806" a="M"><vh>Unused code from atFile::scanText</vh>
+<v t="T807"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
+<v t="T808"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="T809"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="T810"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
+<v t="T811"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
+<v t="T812"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
+<v t="T813"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
+<v t="T814"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
+<v t="T815"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
+<v t="T816"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
+<v t="T817"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
+<v t="T818" a="M"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
+<v t="T819"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
+<v t="T820"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
+<v t="T821"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
+<v t="T822"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="T823"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
 </v>
-<v t="T812"><vh>onAfterFinishCreate</vh></v>
-<v t="T813"><vh>onCreateExtraMenus (will be part of leoFrame class eventually)</vh>
-<v t="T814"><vh>&lt;&lt; extend the read/write submenu &gt;&gt;</vh></v>
-<v t="T815"><vh>&lt;&lt; extend the export submenu &gt;&gt;</vh></v>
+<v t="T824"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
 </v>
-<v t="T816"><vh>class askLeoID</vh>
-<v t="T817"><vh>askLeoID.__init__</vh></v>
-<v t="T818"><vh>askLeoID.createFrame</vh></v>
-<v t="T819"><vh>onCloseWindow</vh></v>
-<v t="T820"><vh>onButton</vh></v>
-<v t="T821"><vh>onKey</vh>
-<v t="T822"><vh>&lt;&lt; eliminate invalid characters &gt;&gt;</vh></v>
-<v t="T823"><vh>&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;</vh></v>
+<v t="T825"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
+<v t="T826"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
+<v t="T827"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
+<v t="T828"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
+<v t="T829"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
+<v t="T830"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="T824" a="EM"><vh>class myAtFile</vh>
-<v t="T825"><vh>myAtFile.__init__</vh></v>
-<v t="T826" a="E"><vh>Reading...</vh>
-<v t="T827"><vh>createChild (4.0) ?? How to use proper tnode??</vh></v>
-<v t="T828" a="E"><vh>atFile.read</vh>
-<v t="T829"><vh>&lt;&lt; init read vars &gt;&gt;</vh></v>
-<v t="T830"><vh>&lt;&lt; open file &gt;&gt;</vh>
-<v t="T831"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
-</v>
-<v t="T832" a="M"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh>
-<v t="T833"><vh>&lt;&lt; unlink all children of root &gt;&gt;</vh></v>
-</v>
-<v t="T834"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
-<v t="T835"><vh>&lt;&lt; quickly delete root's tree and body text &gt;&gt;</vh></v>
-</v>
-<v t="T836"><vh>scanHeader</vh>
-<v t="T837"><vh>&lt;&lt; skip any non @+leo lines &gt;&gt;</vh></v>
-<v t="T838"><vh>&lt;&lt; make sure we have @+leo &gt;&gt;</vh></v>
-<v t="T839"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
-<v t="T840"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
-<v t="T841"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
-</v>
-<v t="T842"><vh>scanText</vh>
-<v t="T843"><vh>&lt;&lt; put the next line into s &gt;&gt;</vh></v>
-<v t="T844"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
-<v t="T845"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
-<v t="T846"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
-<v t="T847" a="E"><vh>&lt;&lt; handle the line in s &gt;&gt;</vh>
-<v t="T848"><vh>&lt;&lt; append non-sentinel line &gt;&gt;</vh></v>
-<v t="T849" a="E"><vh>&lt;&lt; handle common sentinels &gt;&gt;</vh>
-<v t="T850"><vh>&lt;&lt; handle an ending sentinel &gt;&gt;</vh></v>
-<v t="T851"><vh>&lt;&lt; scan old ref &gt;&gt; (3.0)</vh></v>
-<v t="T852"><vh>&lt;&lt; scan @+at &gt;&gt;</vh></v>
-<v t="T853"><vh>&lt;&lt; scan @+body &gt;&gt;</vh></v>
-<v t="T854"><vh>&lt;&lt; scan @+doc &gt;&gt;</vh></v>
-<v t="T855" a="M"><vh>&lt;&lt; scan @+node &gt;&gt;</vh>
-<v t="T856"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
-<v t="T857"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
-<v t="T858"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
-<v t="T859"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
-<v t="T860"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
-</v>
-<v t="T861"><vh>&lt;&lt; scan @+others &gt;&gt;</vh></v>
-</v>
-<v t="T862" a="E"><vh>&lt;&lt; handle rare sentinels &gt;&gt;</vh>
-<v t="T863"><vh>&lt;&lt; scan @+leo &gt;&gt;</vh></v>
-<v t="T864"><vh>&lt;&lt; scan @@ &gt;&gt;</vh></v>
-<v t="T865"><vh>&lt;&lt; scan @comment &gt;&gt;</vh></v>
-<v t="T866"><vh>&lt;&lt; scan @delims &gt;&gt;</vh></v>
-<v t="T867"><vh>&lt;&lt; scan @verbatim &gt;&gt;</vh></v>
-</v>
-<v t="T868"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
+<v t="T831"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="T832"><vh>@file gnx_code.py</vh>
+<v t="T833"><vh>app.setLeoID</vh>
+<v t="T834"><vh>&lt;&lt; return if we can set self.leoID from sys.leoID&gt;&gt;</vh></v>
+<v t="T835"><vh>&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;</vh></v>
+<v t="T836"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
+<v t="T837"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
 </v>
-<v t="T869" a="E"><vh>Writing...</vh>
-<v t="T870"><vh>atFile.write</vh>
-<v t="T871"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="T872"><vh>&lt;&lt; open the file; return on error &gt;&gt; (Testing code)</vh></v>
-<v t="T873"><vh>&lt;&lt; write then entire @file tree &gt;&gt;</vh>
-<v t="T874"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="T875"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
-<v t="T876"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="T838"><vh>onAfterFinishCreate</vh></v>
+<v t="T839"><vh>onCreateExtraMenus (will be part of leoFrame class eventually)</vh>
+<v t="T840"><vh>&lt;&lt; extend the read/write submenu &gt;&gt;</vh></v>
+<v t="T841"><vh>&lt;&lt; extend the export submenu &gt;&gt;</vh></v>
 </v>
-<v t="T877"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
-<v t="T878"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+<v t="T842"><vh>class askLeoID</vh>
+<v t="T843"><vh>askLeoID.__init__</vh></v>
+<v t="T844"><vh>askLeoID.createFrame</vh></v>
+<v t="T845"><vh>onCloseWindow</vh></v>
+<v t="T846"><vh>onButton</vh></v>
+<v t="T847"><vh>onKey</vh>
+<v t="T848"><vh>&lt;&lt; eliminate invalid characters &gt;&gt;</vh></v>
+<v t="T849"><vh>&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T850" a="M"><vh>class myAtFile</vh>
+<v t="T851"><vh>myAtFile.__init__</vh></v>
+<v t="T852"><vh>Reading...</vh>
+<v t="T853"><vh>createChild (4.0) ?? How to use proper tnode??</vh></v>
+<v t="T854"><vh>atFile.read</vh>
+<v t="T855"><vh>&lt;&lt; init read vars &gt;&gt;</vh></v>
+<v t="T856"><vh>&lt;&lt; open file &gt;&gt;</vh>
+<v t="T857"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
+</v>
+<v t="T858" a="M"><vh>&lt;&lt; Scan the file buffer  &gt;&gt;</vh>
+<v t="T859"><vh>&lt;&lt; unlink all children of root &gt;&gt;</vh></v>
+</v>
+<v t="T860"><vh>&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;</vh></v>
+<v t="T861"><vh>&lt;&lt; quickly delete root's tree and body text &gt;&gt;</vh></v>
+</v>
+<v t="T862"><vh>scanHeader</vh>
+<v t="T863"><vh>&lt;&lt; skip any non @+leo lines &gt;&gt;</vh></v>
+<v t="T864"><vh>&lt;&lt; make sure we have @+leo &gt;&gt;</vh></v>
+<v t="T865"><vh>&lt;&lt; read optional version param &gt;&gt;</vh></v>
+<v t="T866"><vh>&lt;&lt; read optional encoding param &gt;&gt;</vh></v>
+<v t="T867"><vh>&lt;&lt; set the closing comment delim &gt;&gt;</vh></v>
+</v>
+<v t="T868" a="M"><vh>scanText (see todo)</vh>
+<v t="T869" a="M"><vh>&lt;&lt; init ivars for scanText &gt;&gt; (new)</vh></v>
+<v t="T870"><vh>&lt;&lt; Set self.leading_ws &gt;&gt;</vh></v>
+<v t="T871"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T872"><vh>doEndAt &amp; doEndDoc</vh></v>
+<v t="T873"><vh>doEndLeo</vh></v>
+<v t="T874"><vh>doEndOthers &amp; doEndRef</vh></v>
+<v t="T875"><vh>doBadEndSentinel</vh></v>
+<v t="T876"><vh>doPlainLine</vh></v>
+<v t="T877"><vh>doStartComment</vh></v>
+<v t="T878"><vh>doStartDelims</vh></v>
+<v t="T879"><vh>doVerbatim</vh></v>
+<v t="T880"><vh>doStartAt &amp; startDoc</vh></v>
+<v t="T881"><vh>doStartDirective</vh></v>
+<v t="T882"><vh>doStartLeo</vh></v>
+<v t="T883"><vh>doStartNode</vh>
+<v t="T884"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
+<v t="T885"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+</v>
+<v t="T886"><vh>doStartOthers</vh></v>
+<v t="T887"><vh>doStartRef</vh></v>
+<v t="T888"><vh>scanDoc (removed file &amp; out params)</vh>
+<v t="T889"><vh>&lt;&lt; Skip the opening sentinel &gt;&gt;</vh></v>
+<v t="T890"><vh>&lt;&lt; Skip an opening block delim &gt;&gt;</vh></v>
+<v t="T891"><vh>&lt;&lt; Skip the leading stuff &gt;&gt;</vh></v>
+<v t="T892"><vh>&lt;&lt; Append s to out &gt;&gt;</vh></v>
+<v t="T893"><vh>&lt;&lt; Remove a closing block delim from out &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="T894"><vh>Writing...</vh>
+<v t="T895"><vh>atFile.write</vh>
+<v t="T896"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="T897"><vh>&lt;&lt; open the file; return on error &gt;&gt; (Testing code)</vh></v>
+<v t="T898"><vh>&lt;&lt; write then entire @file tree &gt;&gt;</vh>
+<v t="T899"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="T900"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
+<v t="T901"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+</v>
+<v t="T902"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="T903"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
 </v>
 <v t="T633" a="C"><vh>putOpenNodeSentinel</vh></v>
 </v>
-<v t="T879"><vh>Sentinels...</vh>
-<v t="T880"><vh>nodeSentinelText</vh>
-<v t="T881"><vh>&lt;&lt; remove comment delims from h if necessary &gt;&gt;</vh></v>
+<v t="T904"><vh>Sentinels...</vh>
+<v t="T905"><vh>nodeSentinelText</vh>
+<v t="T906"><vh>&lt;&lt; remove comment delims from h if necessary &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T882"><vh>class myFileCommands</vh>
-<v t="T883"><vh>myFileCommands.__init__</vh></v>
-<v t="T884"><vh>assignAllGnx</vh></v>
+<v t="T907"><vh>class myFileCommands</vh>
+<v t="T908"><vh>myFileCommands.__init__</vh></v>
+<v t="T909"><vh>assignAllGnx</vh></v>
 </v>
-<v t="T885"><vh>class myFrame</vh>
-<v t="T886"><vh>myFrame.__init__</vh></v>
-<v t="T887"><vh>OnClearAllNodeIndices</vh></v>
-<v t="T888"><vh>OnWriteGnxFile</vh></v>
-<v t="T889"><vh>OnReadGnxFile</vh></v>
-<v t="T890"><vh>OnWriteOldOutline</vh></v>
+<v t="T910"><vh>class myFrame</vh>
+<v t="T911"><vh>myFrame.__init__</vh></v>
+<v t="T912"><vh>OnClearAllNodeIndices</vh></v>
+<v t="T913"><vh>OnWriteGnxFile</vh></v>
+<v t="T914"><vh>OnReadGnxFile</vh></v>
+<v t="T915"><vh>OnWriteOldOutline</vh></v>
 </v>
-<v t="T891"><vh>class myTnode</vh>
-<v t="T892"><vh>myTnode.__init__</vh></v>
-<v t="T893"><vh>t.getGnx</vh></v>
+<v t="T916"><vh>class myTnode</vh>
+<v t="T917"><vh>myTnode.__init__</vh></v>
+<v t="T918"><vh>t.getGnx</vh></v>
 </v>
-<v t="T894"><vh>class nodeIndices</vh>
-<v t="T895"><vh>nodeIndices.__init__</vh></v>
-<v t="T896"><vh>areEqual</vh></v>
-<v t="T897"><vh>get/setDefaultId</vh></v>
-<v t="T898"><vh>getNewIndex</vh></v>
-<v t="T899"><vh>scanGnx</vh></v>
-<v t="T900"><vh>setTimeString</vh></v>
-<v t="T901"><vh>toString</vh></v>
+<v t="T919"><vh>class nodeIndices</vh>
+<v t="T920"><vh>nodeIndices.__init__</vh></v>
+<v t="T921"><vh>areEqual</vh></v>
+<v t="T922"><vh>get/setDefaultId</vh></v>
+<v t="T923"><vh>getNewIndex</vh></v>
+<v t="T924"><vh>scanGnx</vh></v>
+<v t="T925"><vh>setTimeString</vh></v>
+<v t="T926"><vh>toString</vh></v>
+</v>
+</v>
+</v>
+<v t="T927"><vh>(wxStuff: not a plugin yet)</vh>
+<v t="T928"><vh>wxTests</vh>
+<v t="T929"><vh>@file c:\prog\test\wxTest.py</vh></v>
+</v>
+<v t="T930"><vh>old wxLeo code (imported C++ code)</vh>
+<v t="T931"><vh>alert.cpp</vh>
+<v t="T932"><vh>alert</vh></v>
+<v t="T933"><vh>assertFailedDialog</vh></v>
+</v>
+<v t="T934"><vh>FindPanel.cpp</vh>
+<v t="T935"><vh>&lt;&lt; FindPanel declarations &gt;&gt;</vh></v>
+<v t="T936" a="M"><vh>BEGIN_EVENT_TABLE</vh></v>
+<v t="T937" a="M"><vh>ctor</vh></v>
+<v t="T938"><vh>OnActivateFindFrame</vh></v>
+<v t="T939"><vh>OnSetFocus</vh></v>
+<v t="T940"><vh>OnCloseFindFrame</vh></v>
+<v t="T941"><vh>OnChangeButton</vh></v>
+<v t="T942"><vh>OnChangeAllButton</vh></v>
+<v t="T943"><vh>OnChangeThenFindButton</vh></v>
+<v t="T944"><vh>OnFindButton</vh></v>
+<v t="T945"><vh>OnFindAllButton</vh></v>
+<v t="T946"><vh>OnBatchCheckBox</vh></v>
+<v t="T947"><vh>OnIgnoreCaseCheckBox</vh></v>
+<v t="T948"><vh>OnMarkChangesCheckBox</vh></v>
+<v t="T949"><vh>OnMarkFindsCheckBox</vh></v>
+<v t="T950"><vh>OnPatternMatchCheckBox</vh></v>
+<v t="T951"><vh>OnReverseCheckBox</vh></v>
+<v t="T952"><vh>OnSearchBodyTextCheckBox</vh></v>
+<v t="T953"><vh>OnSearchHeadlineCheckBox</vh></v>
+<v t="T954"><vh>OnSuboutlineOnlyCheckBox</vh></v>
+<v t="T955"><vh>OnWrapAroundCheckBox</vh></v>
+<v t="T956"><vh>OnWholeWordCheckBox</vh></v>
+<v t="T957"><vh>OnChangeText</vh></v>
+<v t="T958"><vh>OnFindText</vh></v>
+<v t="T959"><vh>set_check_boxes</vh></v>
+<v t="T960"><vh>FindPanel</vh></v>
+</v>
+<v t="T961" a="M"><vh>LeoApp.cpp</vh>
+<v t="T962" a="M"><vh>Event table</vh></v>
+<v t="T963"><vh>OnInit</vh>
+<v t="T964"><vh>&lt;&lt; Switch to the other running copy of Leo if one is already open &gt;&gt;</vh></v>
+<v t="T965"><vh>&lt;&lt; Set gAppDirectory &gt;&gt;</vh></v>
+<v t="T966"><vh>&lt;&lt; Open a file when double-clicking an icon &gt;&gt;</vh></v>
+<v t="T967"><vh>&lt;&lt; Create a frame and link it into the global frame list &gt;&gt;</vh></v>
+<v t="T968"><vh>&lt;&lt; Initialize Sherlock &gt;&gt;</vh></v>
+<v t="T969"><vh>&lt;&lt; Dump the command line &gt;&gt;</vh></v>
+</v>
+<v t="T970"><vh>OnExit</vh></v>
+<v t="T971"><vh>init_args</vh></v>
+<v t="T972"><vh>wxFindAppPath</vh></v>
+<v t="T973"><vh>log_open</vh></v>
+<v t="T974"><vh>put_cstring_to_log_window</vh></v>
+</v>
+<v t="T975" a="M"><vh>LeoFrame.cpp</vh>
+<v t="T976" a="M"><vh>BEGIN_EVENT_TABLE</vh>
+<v t="T977"><vh>&lt;&lt; Declare menu events &gt;&gt;</vh></v>
+</v>
+<v t="T978" a="M"><vh>ctor</vh>
+<v t="T979"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
+<v t="T980"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
+<v t="T981"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh></v>
+<v t="T982"><vh>&lt;&lt; Create the accelerator table &gt;&gt;</vh></v>
+<v t="T983"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
+<v t="T984"><vh>&lt;&lt; Set the window Icon &gt;&gt;</vh></v>
+<v t="T985"><vh>&lt;&lt; Set the caret blink rate &gt;&gt;</vh></v>
+<v t="T986"><vh>&lt;&lt; Add root node to the tree view &gt;&gt;</vh></v>
+</v>
+<v t="T987"><vh>createMenus</vh></v>
+<v t="T988"><vh>SetUntitledNumber</vh></v>
+<v t="T989"><vh>putToLog</vh></v>
+<v t="T990"><vh>getLogText</vh></v>
+<v><vh>event handlers</vh>
+<v t="T991"><vh>onActivate</vh></v>
+<v t="T992"><vh>OnSetFocus</vh></v>
+<v t="T993"><vh>onResize</vh></v>
+<v t="T994"><vh>onBodyTextUpdated</vh></v>
+<v t="T995"><vh>onCloseLeoFrame</vh></v>
+<v t="T996"><vh>onTreeChanged</vh></v>
+<v t="T997"><vh>onTreeChanging</vh></v>
+<v t="T998"><vh>onTreeKeyDown</vh></v>
+<v t="T999"><vh>onTreeBeginDrag</vh></v>
+<v t="T1000"><vh>onTreeEndDrag</vh></v>
+<v t="T1001"><vh>onTreeBeginLabelEdit</vh></v>
+<v t="T1002"><vh>onTreeEndLabelEdit</vh></v>
+<v t="T1003"><vh>updateJoinedHeadlines</vh></v>
+<v t="T1004"><vh>OnUpdateRevert</vh></v>
+<v t="T1005"><vh>OnNew</vh></v>
+<v t="T1006"><vh>OnOpen</vh></v>
+<v t="T1007"><vh>OpenWithFileName</vh></v>
+<v t="T1008"><vh>OnClose</vh></v>
+<v t="T1009"><vh>OnSave</vh></v>
+<v t="T1010"><vh>OnSaveAs</vh></v>
+<v t="T1011"><vh>OnSaveTo</vh></v>
+<v t="T1012"><vh>OnRevert</vh></v>
+<v t="T1013"><vh>OnPageSetup</vh></v>
+<v t="T1014"><vh>OnPrint</vh></v>
+<v t="T1015"><vh>OnTangleSubmenu</vh></v>
+<v t="T1016"><vh>OnUntangleSubmenu</vh></v>
+<v t="T1017"><vh>OnImportExportSubmenu</vh></v>
+<v t="T1018"><vh>OnQuit</vh></v>
+<v t="T1019"><vh>OnReadOutlineOnly</vh></v>
+<v t="T1020"><vh>readOutlineOnly</vh></v>
+<v t="T1021"><vh>OnReadAtFileNodes</vh></v>
+<v t="T1022"><vh>OnWriteOutlineOnly</vh></v>
+<v t="T1023"><vh>OnWriteAtFileNodes</vh></v>
+<v t="T1024"><vh>OnTangleAll</vh></v>
+<v t="T1025"><vh>OnTangleMarked</vh></v>
+<v t="T1026"><vh>OnTangle</vh></v>
+<v t="T1027"><vh>OnUntangleAll</vh></v>
+<v t="T1028"><vh>OnUntangleMarked</vh></v>
+<v t="T1029"><vh>OnUntangle</vh></v>
+<v t="T1030"><vh>OnImportFiles</vh></v>
+<v t="T1031"><vh>OnImportCWEBFiles</vh></v>
+<v t="T1032"><vh>OnImportNowebFiles</vh></v>
+<v t="T1033"><vh>OnImportMoreText</vh></v>
+<v t="T1034"><vh>OnFlattenOutline</vh></v>
+<v t="T1035"><vh>OnUpdateCopy</vh></v>
+<v t="T1036"><vh>OnUpdateCut</vh></v>
+<v t="T1037"><vh>OnUpdateDelete</vh></v>
+<v t="T1038"><vh>OnUpdateExtract</vh></v>
+<v t="T1039"><vh>OnUpdateExtractNames</vh></v>
+<v t="T1040"><vh>OnUpdateExtractSection</vh></v>
+<v t="T1041"><vh>OnUpdateFind</vh></v>
+<v t="T1042"><vh>OnUpdatePaste</vh></v>
+<v t="T1043"><vh>OnUpdateRedo</vh></v>
+<v t="T1044"><vh>OnUpdateReplace</vh></v>
+<v t="T1045"><vh>OnUpdateSelectAll</vh></v>
+<v t="T1046"><vh>OnUpdateUndo</vh></v>
+<v t="T1047"><vh>hasSelection</vh></v>
+<v t="T1048"><vh>OnUndo</vh></v>
+<v t="T1049"><vh>OnRedo</vh></v>
+<v t="T1050"><vh>OnCut</vh></v>
+<v t="T1051"><vh>OnCopy</vh></v>
+<v t="T1052"><vh>OnPaste</vh></v>
+<v t="T1053"><vh>OnDelete</vh></v>
+<v t="T1054"><vh>OnSelectAll</vh></v>
+<v t="T1055"><vh>OnEditHeadline</vh></v>
+<v t="T1056"><vh>OnFontPanel</vh></v>
+<v t="T1057"><vh>OnSyntaxColoring</vh></v>
+<v t="T1058"><vh>OnPreferences</vh></v>
+<v t="T1059"><vh>OnConvertBlanks</vh></v>
+<v t="T1060"><vh>OnExtractSection</vh></v>
+<v t="T1061"><vh>OnExtractNames</vh></v>
+<v t="T1062"><vh>OnExtract</vh></v>
+<v t="T1063"><vh>OnFindPanel</vh></v>
+<v t="T1064"><vh>OnFindNext</vh></v>
+<v t="T1065"><vh>OnFindPrevious</vh></v>
+<v t="T1066"><vh>OnReplace</vh></v>
+<v t="T1067"><vh>OnReplaceThenFind</vh></v>
+<v t="T1068"><vh>OnUpdateCutNode</vh></v>
+<v t="T1069"><vh>OnUpdateDeleteNode</vh></v>
+<v t="T1070"><vh>OnUpdatePasteNode</vh></v>
+<v t="T1071"><vh>OnUpdateSortNode</vh></v>
+<v t="T1072"><vh>OnUpdateExpandAll</vh></v>
+<v t="T1073"><vh>OnUpdateExpandAllChildren</vh></v>
+<v t="T1074"><vh>OnUpdateExpandChildren</vh></v>
+<v t="T1075"><vh>OnUpdateContractAll</vh></v>
+<v t="T1076"><vh>OnUpdateContractAllChildren</vh></v>
+<v t="T1077"><vh>OnUpdateContractChildren</vh></v>
+<v t="T1078"><vh>OnUpdateMoveDown</vh></v>
+<v t="T1079"><vh>OnUpdateMoveLeft</vh></v>
+<v t="T1080"><vh>OnUpdateMoveRight</vh></v>
+<v t="T1081"><vh>OnUpdateMoveUp</vh></v>
+<v t="T1082"><vh>OnUpdatePromote</vh></v>
+<v t="T1083"><vh>OnUpdateDemote</vh></v>
+<v t="T1084"><vh>OnUpdateGoPrevVisible</vh></v>
+<v t="T1085"><vh>OnUpdateGoNextVisible</vh></v>
+<v t="T1086"><vh>OnUpdateGoBack</vh></v>
+<v t="T1087"><vh>OnUpdateGoNext</vh></v>
+<v t="T1088"><vh>OnUpdateMark</vh></v>
+<v t="T1089"><vh>OnUpdateMarkSubheads</vh></v>
+<v t="T1090"><vh>OnUpdateMarkChangedItems</vh></v>
+<v t="T1091"><vh>OnUpdateMarkChangedRoots</vh></v>
+<v t="T1092"><vh>OnUpdateGoToNextMarked</vh></v>
+<v t="T1093"><vh>OnUpdateGoToNextChanged</vh></v>
+<v t="T1094"><vh>OnCutNode</vh></v>
+<v t="T1095"><vh>OnCopyNode</vh></v>
+<v t="T1096"><vh>OnPasteNode</vh></v>
+<v t="T1097"><vh>OnDeleteNode</vh></v>
+<v t="T1098"><vh>OnInsertNode</vh></v>
+<v t="T1099"><vh>OnCloneNode</vh></v>
+<v t="T1100"><vh>OnSortNode</vh></v>
+<v t="T1101"><vh>OnExpandAll</vh></v>
+<v t="T1102"><vh>OnExpandAllChildren</vh></v>
+<v t="T1103"><vh>OnExpandChildren</vh></v>
+<v t="T1104"><vh>OnContractAll</vh></v>
+<v t="T1105"><vh>OnContractAllChildren</vh></v>
+<v t="T1106"><vh>OnContractChildren</vh></v>
+<v t="T1107"><vh>OnExpandNextLevel</vh></v>
+<v t="T1108"><vh>OnExpandToLevel1</vh></v>
+<v t="T1109"><vh>OnExpandToLevel2</vh></v>
+<v t="T1110"><vh>OnExpandToLevel3</vh></v>
+<v t="T1111"><vh>OnExpandToLevel4</vh></v>
+<v t="T1112"><vh>OnExpandToLevel5</vh></v>
+<v t="T1113"><vh>OnExpandToLevel6</vh></v>
+<v t="T1114"><vh>OnExpandToLevel7</vh></v>
+<v t="T1115"><vh>OnExpandToLevel8</vh></v>
+<v t="T1116"><vh>OnExpandToLevel9</vh></v>
+<v t="T1117"><vh>OnMoveDown</vh></v>
+<v t="T1118"><vh>OnMoveLeft</vh></v>
+<v t="T1119"><vh>OnMoveRight</vh></v>
+<v t="T1120"><vh>OnMoveUp</vh></v>
+<v t="T1121"><vh>OnPromote</vh></v>
+<v t="T1122"><vh>OnDemote</vh></v>
+<v t="T1123"><vh>OnGoPrevVisible</vh></v>
+<v t="T1124"><vh>OnGoNextVisible</vh></v>
+<v t="T1125"><vh>OnGoBack</vh></v>
+<v t="T1126"><vh>OnGoNext</vh></v>
+<v t="T1127"><vh>OnMark</vh></v>
+<v t="T1128"><vh>OnMarkSubheads</vh></v>
+<v t="T1129"><vh>OnMarkChangedItems</vh></v>
+<v t="T1130"><vh>OnMarkChangedRoots</vh></v>
+<v t="T1131"><vh>OnMarkAllAtFileNodesDirty</vh></v>
+<v t="T1132"><vh>OnMarkAtFileNodesDirty</vh></v>
+<v t="T1133"><vh>OnUnmarkAll</vh></v>
+<v t="T1134"><vh>OnGoToNextMarked</vh></v>
+<v t="T1135"><vh>OnGoToNextChanged</vh></v>
+<v t="T1136"><vh>OnEqualSizedPanes</vh></v>
+<v t="T1137"><vh>OnToggleActivePane</vh></v>
+<v t="T1138"><vh>OnChangeDirection</vh></v>
+<v t="T1139"><vh>OnCascade</vh></v>
+<v t="T1140"><vh>OnMinimizeAll</vh></v>
+<v t="T1141"><vh>OnOpenPythonWindow</vh></v>
+<v t="T1142"><vh>OnRecentWindows</vh></v>
+<v t="T1143"><vh>OnAbout</vh></v>
+</v>
+</v>
+<v t="T1144"><vh>LeoPrefs.cpp</vh>
+<v t="T1145"><vh>&lt;&lt; LeoPrefs declarations &gt;&gt;</vh></v>
+<v t="T1146"><vh>BEGIN_EVENT_TABLE</vh></v>
+<v t="T1147"><vh>ctor</vh></v>
+<v t="T1148"><vh>initialize</vh></v>
+<v t="T1149"><vh>targetToLanguage</vh></v>
+<v t="T1150"><vh>languageToTarget</vh></v>
+<v t="T1151"><vh>OnActivatePrefsFrame</vh></v>
+<v t="T1152"><vh>OnClosePrefsFrame</vh></v>
+<v t="T1153"><vh>OnPageWidthText</vh></v>
+<v t="T1154"><vh>OnDoneBatCheckBox</vh></v>
+<v t="T1155"><vh>OnUnBatCheckBox</vh></v>
+<v t="T1156"><vh>OnTangleDirectoryText</vh></v>
+<v t="T1157"><vh>OnHeaderCheckBox</vh></v>
+<v t="T1158"><vh>OnDocChunksCheckBox</vh></v>
+<v t="T1159"><vh>OnTargetLanguageRadioBox</vh></v>
+<v t="T1160"><vh>PrefsPanel</vh></v>
+</v>
+</v>
+<v t="T1161"><vh>wxPython docs: local @urls</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx26.htm#classref</vh></v>
+<v><vh>@url file:c:\prog\wxDocs\index.htm</vh></v>
+<v a="M"><vh>@url file:///C:\Python22\Lib\site-packages\wxPython\docs\wxPythonManual.html</vh></v>
+<v><vh>app, color, icon, sizer, xmlresource</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx30.htm#wxapp</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx63.htm#wxcolour</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx216.htm#wxicon</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx343.htm#wxsizer</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx418.htm#wxxmlresource</vh></v>
+</v>
+<v><vh>dialog, frame, panel, splitter,window</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx109.htm#wxdialog</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx163.htm#wxframe</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx291.htm#wxpanel</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx411.htm#wxwindow</vh></v>
+</v>
+<v><vh>events</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx130.htm#wxevent</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx264.htm#wxmenuevent</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx356.htm#wxsplitterevent</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx400.htm#wxtreeevent</vh></v>
+</v>
+<v><vh>menu</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx262.htm#wxmenu</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx263.htm#wxmenubar</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx265.htm#wxmenuitem</vh></v>
+</v>
+<v><vh>tree</vh>
+<v a="M"><vh>@url file:///C:/prog/wxDocs/wx399.htm#wxtreectrl</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx401.htm#wxtreeitemdata</vh></v>
+</v>
+<v><vh>widgets</vh>
+<v><vh>@url file:///C:/prog/wxDocs/wx46.htm#wxbutton</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx52.htm#wxcheckbox</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx212.htm#wxhtmlwindow</vh></v>
+<v><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
+<v a="M"><vh>@url file:///C:/prog/wxDocs/wx381.htm#wxtextctrl</vh></v>
+</v>
+<v t="T1162"><vh>wx Questions</vh></v>
+</v>
+<v t="T1163"><vh>Leo wx prototype</vh>
+<v t="T1164"><vh>@file c:\prog\test\wxLeo.py</vh>
+<v t="T1165"><vh>app</vh>
+<v t="T1166"><vh>OnInit</vh></v>
+</v>
+<v t="T1167"><vh>frame</vh>
+<v t="T1168"><vh>__init__</vh></v>
+<v t="T1169"><vh>createMenus (old code: explicit id's)</vh>
+<v t="T1170"><vh>&lt;&lt; Create the File menu &gt;&gt;</vh>
+<v t="T1171"><vh>&lt;&lt; Create the initial items of the file menu &gt;&gt;</vh></v>
+<v t="T1172"><vh>&lt;&lt; Create the Read/Write submenu &gt;&gt;</vh></v>
+<v t="T1173"><vh>&lt;&lt; Create the Tangle submenu &gt;&gt;</vh></v>
+<v t="T1174"><vh>&lt;&lt; Create the Untangle submenu &gt;&gt;</vh></v>
+<v t="T1175"><vh>&lt;&lt; Create the Import Files submenu &gt;&gt;</vh></v>
+</v>
+<v t="T1176"><vh>&lt;&lt; Create the Edit menu &gt;&gt;</vh>
+<v t="T1177"><vh>&lt;&lt; Create the initial items of the Edit menu &gt;&gt;</vh></v>
+<v t="T1178"><vh>&lt;&lt; Create the Find submenu &gt;&gt;</vh></v>
+<v t="T1179"><vh>&lt;&lt; Create the final items of the Edit menu &gt;&gt;</vh></v>
+<v t="T1180"><vh>&lt;&lt; Create the Edit Body submenu &gt;&gt;</vh></v>
+</v>
+<v t="T1181"><vh>&lt;&lt; Create the Outline menu &gt;&gt;</vh>
+<v t="T1182"><vh>&lt;&lt; Create the initial items of the Outline menu &gt;&gt;</vh></v>
+<v t="T1183"><vh>&lt;&lt; Create the Expand/Contract submenu &gt;&gt;</vh></v>
+<v t="T1184"><vh>&lt;&lt; Create the Move/Select submenu &gt;&gt;</vh></v>
+<v t="T1185"><vh>&lt;&lt; Create the Mark/Go To submenu &gt;&gt;</vh></v>
+</v>
+<v t="T1186"><vh>&lt;&lt; Create the Window menu &gt;&gt;</vh></v>
+<v t="T1187"><vh>&lt;&lt; Create the Help menu &gt;&gt;</vh></v>
+</v>
+<v t="T1188"><vh>createMenuBar</vh>
+<v t="T1189"><vh>&lt;&lt; create the edit menu &gt;&gt;</vh>
+<v t="T1190"><vh>&lt;&lt; create the first top-level edit entries &gt;&gt;</vh></v>
+<v t="T1191"><vh>&lt;&lt; create the edit body submenu &gt;&gt;</vh></v>
+<v t="T1192"><vh>&lt;&lt; create the edit headline submenu &gt;&gt;</vh></v>
+<v t="T1193"><vh>&lt;&lt; create the find submenu &gt;&gt;</vh></v>
+<v t="T1194"><vh>&lt;&lt; create the last top-level edit entries &gt;&gt;</vh></v>
+</v>
+<v t="T1195"><vh>&lt;&lt; create the file menu &gt;&gt;</vh>
+<v t="T1196"><vh>&lt;&lt; create the top-level file entries &gt;&gt;</vh></v>
+<v t="T1197"><vh>&lt;&lt; create the recent files submenu &gt;&gt;</vh></v>
+<v t="T1198"><vh>&lt;&lt; create the read/write submenu &gt;&gt;</vh></v>
+<v t="T1199"><vh>&lt;&lt; create the tangle submenu &gt;&gt;</vh></v>
+<v t="T1200"><vh>&lt;&lt; create the untangle submenu &gt;&gt;</vh></v>
+<v t="T1201"><vh>&lt;&lt; create the import submenu &gt;&gt;</vh></v>
+<v t="T1202"><vh>&lt;&lt; create the export submenu &gt;&gt;</vh></v>
+</v>
+<v t="T1203"><vh>&lt;&lt; create the outline menu &gt;&gt;</vh>
+<v t="T1204"><vh>&lt;&lt; create top-level outline menu &gt;&gt;</vh></v>
+<v t="T1205"><vh>&lt;&lt; create expand/contract submenu &gt;&gt;</vh></v>
+<v t="T1206"><vh>&lt;&lt; create move submenu &gt;&gt;</vh></v>
+<v t="T1207"><vh>&lt;&lt; create mark submenu &gt;&gt;</vh></v>
+<v t="T1208"><vh>&lt;&lt; create goto submenu &gt;&gt;</vh></v>
+</v>
+<v t="T1209"><vh>&lt;&lt; create the window menu &gt;&gt;</vh></v>
+<v t="T1210"><vh>&lt;&lt; create the help menu &gt;&gt;</vh></v>
+</v>
+<v t="T1211"><vh>createNewMenu</vh></v>
+<v t="T1212"><vh>createMenuEntries</vh></v>
+<v t="T1213"><vh>OnAbout</vh></v>
+</v>
+<v t="T1214"><vh>const</vh></v>
 </v>
 </v>
 </v>
@@ -12115,504 +12496,20 @@ if self.using_gnx:
 
 	
 </t>
-<t tx="T806">"""New code for 4.0"""
-
-from leoPlugins import *
-from leoGlobals import *
-
-import leoApp,leoAtFile,leoDialog,leoFileCommands,leoFrame,leoNodes
-
-if 0: # Register the handlers...
-
-	@others
-	
-	registerHandler("start1",onAfterFinishCreate)
-	registerHandler("create-optional-menus",onCreateExtraMenus)
-
-	__version__ = "0.1a1"
-	plugin_signon(__name__)</t>
-<t tx="T807">def setLeoID (self):
-	
-	print "setLeoID"
-	
-	if not self.use_gnx:
-		return # Used only in 4.x.
-		
-	tag = ".leoID.txt"
-	loadDir = app().loadDir
-	configDir = app().config.configDir
-	&lt;&lt; return if we can set self.leoID from sys.leoID &gt;&gt;
-	&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;
-	&lt;&lt; put up a dialog requiring a valid id &gt;&gt;
-	&lt;&lt; attempt to create leoID.txt &gt;&gt;</t>
-<t tx="T808"># This would be set by in Python's sitecustomize.py file.
-try:
-	self.leoID = sys.leoID
-	es("leoID = " + self.leoID, color="blue")
-	return
-except:
-	self.leoID = None</t>
-<t tx="T809">for dir in (configDir,loadDir):
-	try:
-		fn = os.path.join(dir, tag)
-		f = open(fn,'r')
-		if f:
-			s = f.readline()
-			f.close()
-			if s and len(s) &gt; 0:
-				self.leoID = s
-				es("leoID = " + self.leoID, color="blue")
-				return
-			else:
-				es("empty " + tag + " in " + dir, color = "red")
-	except: self.leoID = None
-		
-if configDir == loadDir:
-	es(tag + " not found in " + loadDir, color="red")
-else:
-	es(tag + " not found in " + configDir + " or " + loadDir, color="red")
-</t>
-<t tx="T810">self.leoID = leoDialog.askLeoID().run(modal=true)
-
-es("leoID = " + `self.leoID`, color="blue")</t>
-<t tx="T811">for dir in (configDir,loadDir):
-	try:
-		# Look in configDir first.
-		fn = os.path.join(dir, tag)
-		f = open(fn,'w')
-		if f:
-			f.write(self.leoID)
-			f.close()
-			es("created leoID.txt in " + dir, color="red")
-			return
-	except: pass
-	
-if configDir == loadDir:
-	es("can not create leoID.txt in " + loadDir, color="red")
-else:
-	es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
-
-</t>
-<t tx="T812">def onAfterFinishCreate (tag,keywords):
-	
-	"""Handle processing that should be added to app.finishCreate."""
-	
-	a = app()
-
-	a.use_gnx = true # true: enable 4.x code.
-
-	# Add setLeoID to the LeoApp class and call it.
-	funcToMethod(setLeoID,leoApp.LeoApp)
-	a.setLeoID()
-
-	# Create the single nodeIndices class.
-	a.nodeIndices = leoNodes.nodeIndices()</t>
-<t tx="T813">def onCreateExtraMenus (tag,keywords):
-	
-	c = keywords.get("c")
-	self = c.frame # This code should really be part of the leoFrame class.
-	
-	&lt;&lt; extend the read/write submenu &gt;&gt;
-	&lt;&lt; extend the export submenu &gt;&gt;
-</t>
-<t tx="T814">if app().use_gnx: # Testing.
-
-	table2 = (
-		("-",None,None),
-		("Read 4.0 Derived File",None,self.OnReadGnxFile),
-		("Write 4.0 Derived File",None,self.OnWriteGnxFile),
-		("Clear All Node Indices",None,self.OnClearAllNodeIndices))
-
-	if 1: # pluging code.
-		readWriteMenu = self.getMenu("ReadWrite")
-		self.createMenuEntries (readWriteMenu,table2)
-	else: # native code.
-		table.extend(table2)</t>
-<t tx="T815">if app().use_gnx:
-	
-	table2 = (
-		("-",None,None),
-		("Write Old Format Outline",None,self.OnWriteOldOutline))
-	
-	if 1: # pluging code.
-		exportMenu = self.getMenu("Export")
-		self.createMenuEntries(exportMenu,table2)
-	else: # native code.
-		table.extend(table2)</t>
-<t tx="T816">class askLeoID (leoDialog):
-	
-	"""A class to create and run a dialog that asks for Id for gnx's."""
-	
-	@others
-
-leoDialog.askLeoID = askLeoID</t>
-<t tx="T817">def __init__(self):
-	
-	"""Create the Leo Id dialog."""
-	
-	leoDialog.__init__(self,"Enter unique id",resizeable=false) # Initialize the base class.
-	self.id_entry = None
-	self.answer = None
-
-	self.createTopFrame()
-	self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
-	self.top.bind("&lt;Key&gt;", self.onKey)
-	
-	message = (
-		"leoID.txt not found\n\n" +
-		"Please enter an id that identifies you uniquely.\n" +
-		"Your cvs login name is a good choice.\n\n" +
-		"Your id must contain only letters and numbers\n" +
-		"and must be at least 4 characters in length.")
-	self.createFrame(message)
-	self.focus_widget = self.id_entry
-
-	buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
-	buttonList = self.createButtons(buttons)
-	self.ok_button = buttonList[0]</t>
-<t tx="T818">def createFrame(self,message):
-	
-	"""Create the frame for the Leo Id dialog."""
-	
-	f = self.frame
-
-	label = Tk.Label(f,text=message)
-	label.pack(pady=10)
-
-	self.id_entry = text = Tk.Entry(f,width=20)
-	text.pack()</t>
-<t tx="T819">def onCloseWindow (self):
-	
-	"""Prevent the Leo Id dialog from closing by ignoring close events."""
-
-	pass</t>
-<t tx="T820">def onButton(self):
-	
-	"""Handle clicks in the Leo Id close button."""
-
-	s = self.id_entry.get().strip()
-	if len(s) &lt; 4:  # Require at least 4 characters in an id.
-		return
-
-	self.answer = s
-	self.top.destroy() # terminates wait_window</t>
-<t tx="T821">def onKey(self,event):
-	
-	"""Handle keystrokes in the Leo Id dialog."""
-	
-	&lt;&lt; eliminate invalid characters &gt;&gt;
-	&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;
-	
-	ch = event.char.lower()
-	if ch in ('\n','\r'):
-		self.onButton()
-	return "break"
-
-</t>
-<t tx="T822">e = self.id_entry
-s = e.get().strip()
-i = 0 ; ok = true
-while i &lt; len(s):
-	ch = s[i]
-	if ch not in string.letters and ch not in string.digits:
-		e.delete(`i`)
-		s = e.get()
-		ok = false
-	else:
-		i += 1
-if not ok: return</t>
-<t tx="T823">e = self.id_entry
-b = self.ok_button
-
-if len(e.get().strip()) &gt;= 4:
-	b.configure(state="normal")
-else:
-	b.configure(state="disabled")</t>
-<t tx="T824">class myAtFile(leoAtFile.baseAtFile):
-	@others
-
-leoAtFile.atFile = myAtFile
-
-atFile = myAtFile</t>
-<t tx="T825">def __init__(self,theCommander):
-	
-	"""Ctor for myAtFile class (gnx code)."""
-	
-	# print "myAtFile ctor",self
-	leoAtFile.baseAtFile.__init__(self,theCommander) # Initialize the base class.
-	
-	# New in 4.x...
-	self.nodeIndices = app().nodeIndices
-	self.using_gnx = false # true: present derived file uses gnxs.
-	self.root_seen = false # true: root vnode has been handled in this file.
-	self.unlinkedChildren = [] # List of children unlinked from the file before reading.
-	self.readChildIndex = 0 # Index into self.root.tnodeList.</t>
-<t tx="T826"></t>
-<t tx="T827">def createChild (self,parent,headline):
-	
-	""" Create a 4.0 child vnode of parent."""
-
-	trace("parent,headline:",`parent`,`headline`)
-	if 1: # Dummy code.
-		t = leoNodes.tnode() # Allocating a new tnode here breaks clone links.
-	else:
-		if self.readChildIndex &lt; len(self.root.tnodeList):
-			t = self.root.tnodeList[self.readChildIndex]
-			self.readChildIndex += 1
-		else:
-			self.readError("Bad readChildIndex")
-			t = leoNodes.tnode()
-	v = parent.insertAsLastChild(t=t)
-	v.initHeadString(headline)
-	return v</t>
-<t tx="T828">@ This is the entry point to the read code.  The root vnode should be an @file node.  If doErrorRecoveryFlag is false we are doing an update.  In that case it would be very unwise to do any error recovery which might clear clone links.  If doErrorRecoveryFlag is true and there are structure errors during the first pass we delete root's children and its body text, then rescan.  All other errors indicate potentially serious problems with sentinels.
-
-The caller has enclosed this code in beginUpdate/endUpdate.
-@c
-def read(self,root):
-	&lt;&lt; init read vars &gt;&gt;
-	&lt;&lt; open file &gt;&gt;
-	if self.errors &gt; 0: return 0
-	es("reading: " + root.headString())
-	&lt;&lt; Scan the file buffer &gt;&gt;
-	if not (app().use_gnx and self.using_gnx):
-		#### All this is going away for good ####
-		&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;
-		if self.structureErrors &gt; 0:
-			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
-			self.errors = 0
-			&lt;&lt; quickly delete root's tree and body text &gt;&gt;
-			file.seek(0)
-			&lt;&lt; Scan the file buffer &gt;&gt;
-	file.close()
-	if self.errors &gt; 0:
-		# A serious error has occured that has not been corrected.
-		self.readError("----- File may have damaged sentinels!")
-		root.unjoinTree();
-	else: root.clearDirty()
-	return self.errors == 0</t>
-<t tx="T829">c = self.commands
-self.root = root
-self.raw = false
-self.root_seen = false
-self.readChildIndex = 0
-self.errors = self.structureErrors = 0
-
-# set self.targetFileName
-if root.isAtFileNode():
-	self.targetFileName = root.atFileNodeName()
-else:
-	self.targetFileName = root.atRawFileNodeName()</t>
-<t tx="T830">self.scanAllDirectives(root) # 1/30/02
-
-if not self.targetFileName or len(self.targetFileName) == 0:
-	self.readError("Missing file name.  Restoring @file tree from .leo file.")
-else:
-
-	# print self.default_directory, self.targetFileName
-	fn = os.path.join(self.default_directory, self.targetFileName)
-	fn = os.path.normpath(fn)
-	fn = toUnicode(fn,"ascii")
-	
-	try:
-		file = open(fn,'r')
-		if file:
-			&lt;&lt; warn on read-only file &gt;&gt;
-	except:
-		self.readError("Can not open: " + '"@file ' + fn + '"')</t>
-<t tx="T831">try:
-	read_only = not os.access(fn,os.W_OK)
-	if read_only:
-		es("read only: " + fn,color="red")
-except:
-	pass # os.access() may not exist on all platforms.
-</t>
-<t tx="T832">firstLines = self.scanHeader(file)
-self.indent = 0
-self.root_seen = false
-out = []
-	
-root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
-
-if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
-	print "reading 4.0 file:", self.targetFileName
-	self.unlinkedChildren = []
-	&lt;&lt; unlink all children of root &gt;&gt;
-
-lastLines = self.scanText(file,root,out,atFile.endLeo)
-
-# 18-SEP-2002 DTHEIN: update the bodyString directly, because
-# out no longer holds body text of node.
-if root.t.hasBody:
-	bodyLines = root.t.bodyString.split('\n')
-	self.completeFirstDirectives(bodyLines,firstLines)
-	self.completeLastDirectives(bodyLines,lastLines)
-	bodyText = '\n'.join(bodyLines)
-	bodyText = bodyText.replace('\r', '')
-	root.t.setTnodeText(bodyText)</t>
-<t tx="T833">if 1: # New code: remember the unlinked children for the simulated Read Outline Only command.
-	child = root.firstChild()
-	while child:
-		self.unlinkedChildren.append(child)
-		next = child.next()
-		child.unlink()
-		child = next
-	c.selectVnode(root)
-
-else: # old code: we must not delete anything here.
-	# Calling v.doDelete is way too slow here because it repeatedly calls c.initAllCloneBits.
-	child = root.firstChild()
-	while child:
-		next = child.next()
-		# The guts of doDelete
-		child.destroyDependents()
-		child.unjoinTree()
-		child.unlink()
-		child = next
-	c.selectVnode(root)</t>
-<t tx="T834">@ createNthNode marks all nodes in the derived file as visited.  Any unvisited nodes are either dummies or nodes that don't exist in the derived file.
-@c
-
-next = root.nodeAfterTree()
-v = root.threadNext()
-while v and v != next:
-	if not v.isVisited():
-		if 0: # CVS produces to many errors for this to be useful.
-			es("unvisited node: " + v.headString())
-		self.structureErrors += 1
-	v = v.threadNext()
-</t>
-<t tx="T835">@ Calling v.doDelete is _way_ too slow here because it repeatedly calls c.initAllCloneBits.
-@c
-
-child = root.firstChild()
-while child:
-	next = child.next()
-	# The guts of doDelete
-	child.destroyDependents()
-	child.unjoinTree()
-	child.unlink()
-	child = next
-c.selectVnode(root)
-
-root.setBodyStringOrPane("")</t>
-<t tx="T836">@ This method sets self.startSentinelComment and self.endSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
-
-7/8/02: Leading whitespace is now significant here before the @+leo.  This is part of the "REM hack".  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
-
-14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
-@c
-def scanHeader(self,file):
-	
-	self.using_gnx = false # 4.0
-	version_tag = "-ver="
-	valid = true
-	tag = "@+leo"
-	encoding_tag = "-encoding="
-	&lt;&lt; skip any non @+leo lines &gt;&gt;
-	&lt;&lt; make sure we have @+leo &gt;&gt;
-	&lt;&lt; read optional version param &gt;&gt;
-	&lt;&lt; read optional encoding param &gt;&gt;
-	&lt;&lt; set the closing comment delim &gt;&gt;
-	if not valid:
-		self.readError("Bad @+leo sentinel in " + self.targetFileName)
-	return firstLines</t>
-<t tx="T837">firstLines = [] # The lines before @+leo.
-s = self.readLine(file)
-while len(s) &gt; 0:
-	j = s.find(tag)
-	if j != -1: break
-	firstLines.append(s) # Queue the line
-	s = self.readLine(file)
-n = len(s)
-valid = n &gt; 0
-# s contains the tag
-i = j = skip_ws(s,0)
-# The opening comment delim is the initial non-whitespace.
-# 7/8/02: The opening comment delim is the initial non-tag
-while i &lt; n and not match(s,i,tag) and not is_nl(s,i):
-	i += 1
-if j &lt; i:
-	self.startSentinelComment = s[j:i]
-else: valid = false</t>
-<t tx="T838">if 0:# 7/8/02: make leading whitespace significant.
-	i = skip_ws(s,i)
-
-if match(s,i,tag):
-	i += len(tag)
-else: valid = false</t>
-<t tx="T839">self.using_gnx = match(s,i,version_tag)
-
-if self.using_gnx:
-	trace("reading gnx file")
-	i += len(version_tag)
-	# Skip to the next minus sign or end-of-line
-	j = i
-	while i &lt; len(s) and not is_nl(s,i) and s[i] != '-':
-		i += 1
-	if j &lt; i:
-		version = s[j:i]
-	else:
-		valid = false
-
-	
-</t>
-<t tx="T840"># 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
-
-# Set the default encoding
-self.encoding = app().config.default_derived_file_encoding
-
-if match(s,i,encoding_tag):
-	i += len(encoding_tag)
-	# Skip to the next comma
-	j = i
-	while i &lt; len(s) and not is_nl(s,i) and s[i] not in (',','.'):
-		i += 1
-	if match(s,i,',') or match(s,i,'.'):
-		encoding = s[j:i]
-		i += 1
-		# print "@+leo-encoding=",encoding
-		if isValidEncoding(encoding):
-			self.encoding = encoding
-		else:
-			es("bad encoding in derived file:",encoding)
-	else:
-		valid = false
-</t>
-<t tx="T841"># The closing comment delim is the trailing non-whitespace.
-i = j = skip_ws(s,i)
-while i &lt; n and not is_ws(s[i]) and not is_nl(s,i):
-	i += 1
-self.endSentinelComment = s[j:i]</t>
-<t tx="T842">@ This method is the read code.
-
-scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
-
-@c
-def scanText (self,file,v,out,endSentinelKind,nextLine=None):
-
-	a = app() ; c = self.commands ; config = a.config
-	ver4 = a.use_gnx and self.using_gnx
-	lastLines = [] # The lines after @-leo
-	lineIndent = 0 ; linep = 0 # Changed only for sentinels.
-	while 1:
-		&lt;&lt; put the next line into s &gt;&gt;
-		&lt;&lt; set kind, nextKind &gt;&gt;
-		if kind != atFile.noSentinel:
-			&lt;&lt; set lineIndent, linep and leading_ws &gt;&gt;
-			i = self.skipSentinelStart(s,0)
-		&lt;&lt; handle the line in s &gt;&gt;
-	&lt;&lt; handle unexpected end of text &gt;&gt;
-	assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
-	return lastLines # We get here only if there are problems.</t>
-<t tx="T843">if nextLine:
+<t tx="T806">&lt;&lt; put the next line into s &gt;&gt;
+&lt;&lt; set kind, nextKind &gt;&gt;
+if kind != atFile.noSentinel:
+	&lt;&lt; set lineIndent, linep and leading_ws &gt;&gt;
+	i = self.skipSentinelStart(s,0)
+&lt;&lt; handle the line in s &gt;&gt;</t>
+<t tx="T807">if nextLine:
 	s = nextLine ; nextLine = None
 else:
 	s = self.readLine(file)
 	if len(s) == 0: break
 
 # trace(`s`)</t>
-<t tx="T844">@ For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a non-sentinel line belongs to the next sentinel.
+<t tx="T808">@ For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a non-sentinel line belongs to the next sentinel.
 @c
 
 assert(nextLine==None)
@@ -12627,7 +12524,7 @@ else:
 
 # nextLine != None only if we have a non-sentinel line.
 # Therefore, nextLine == None whenever scanText returns.</t>
-<t tx="T845">@ lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
+<t tx="T809">@ self.lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
 @c
 
 # Point linep past the first self.indent whitespace characters.
@@ -12636,28 +12533,24 @@ if self.raw: # 10/15/02
 else:
 	linep = self.skipIndent(s,0,self.indent)
 
-# Set lineIndent to the total indentation on the line.
-lineIndent = 0 ; i = 0
+# Set self.lineIndent to the total indentation on the line.
+self.lineIndent = 0 ; i = 0
 while i &lt; len(s):
-	if s[i] == '\t': lineIndent += (abs(self.tab_width) - (lineIndent % abs(self.tab_width)))
-	elif s[i] == ' ': lineIndent += 1
+	if s[i] == '\t': self.lineIndent += (abs(self.tab_width) - (self.lineIndent % abs(self.tab_width)))
+	elif s[i] == ' ': self.lineIndent += 1
 	else: break
 	i += 1
-# trace("lineIndent:" +`lineIndent` + ", " + `s`)
+# trace("self.lineIndent:" +`self.lineIndent` + ", " + `s`)
 
-# Set leading_ws to the additional indentation on the line.
-leading_ws = s[linep:i]</t>
-<t tx="T846"># Issue the error.
-name = self.sentinelName(endSentinelKind)
-self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
-</t>
-<t tx="T847">if kind == atFile.noSentinel:
+# Set self.leading_ws to the additional indentation on the line.
+self.leading_ws = s[linep:i]</t>
+<t tx="T810">if kind == atFile.noSentinel:
 	&lt;&lt; append non-sentinel line &gt;&gt;
 &lt;&lt; handle common sentinels &gt;&gt;
 &lt;&lt; handle rare sentinels &gt;&gt;
 else:
 	&lt;&lt; warn about unknown sentinel &gt;&gt;</t>
-<t tx="T848"># We don't output the trailing newline if the next line is a sentinel.
+<t tx="T811"># We don't output the trailing newline if the next line is a sentinel.
 if self.raw: # 10/15/02
 	i = 0
 else:
@@ -12672,7 +12565,7 @@ else:
 	line = s[i:-1] # don't output the newline
 	out.append(line)
 </t>
-<t tx="T849">elif kind in (
+<t tx="T812">elif kind in (
 	atFile.endAt,  atFile.endBody, atFile.endDoc,
 	atFile.endLeo, atFile.endNode, atFile.endOthers):
 		&lt;&lt; handle an ending sentinel &gt;&gt;
@@ -12688,7 +12581,7 @@ elif kind == atFile.startDoc:
 	&lt;&lt; scan @+doc &gt;&gt;
 elif kind == atFile.startOthers:
 	&lt;&lt; scan @+others &gt;&gt;</t>
-<t tx="T850"># trace("end sentinel:", self.sentinelName(kind))
+<t tx="T813"># trace("end sentinel:", self.sentinelName(kind))
 
 if kind == endSentinelKind:
 	if kind == atFile.endLeo:
@@ -12709,7 +12602,7 @@ else:
 	name = self.sentinelName(kind)
 	expect = self.sentinelName(endSentinelKind)
 	self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)</t>
-<t tx="T851">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
+<t tx="T814">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
 @c
 
 assert(match(s,i,"&lt;&lt;"))
@@ -12726,12 +12619,12 @@ if start and len(start) &gt; 0 and start[-1] == '@':
 	line = line.replace('@@','@')
 
 out.append(line)</t>
-<t tx="T852">assert(match(s,i,"+at"))
+<t tx="T815">assert(match(s,i,"+at"))
 self.scanDoc(file,s,i,out,kind)</t>
-<t tx="T853">assert(match(s,i,"+body"))
+<t tx="T816">assert(match(s,i,"+body"))
 
 child_out = [] ; child = v # Do not change out or v!
-oldIndent = self.indent ; self.indent = lineIndent
+oldIndent = self.indent ; self.indent = self.lineIndent
 self.scanText(file,child,child_out,atFile.endBody)
 
 if 0:
@@ -12744,9 +12637,9 @@ body = string.join(child_out, "")
 body = body.replace('\r', '')
 child.t.setTnodeText(body)
 self.indent = oldIndent</t>
-<t tx="T854">assert(match(s,i,"+doc"))
+<t tx="T817">assert(match(s,i,"+doc"))
 self.scanDoc(file,s,i,out,kind)</t>
-<t tx="T855">assert(match(s,i,"+node:"))
+<t tx="T818">assert(match(s,i,"+node:"))
 i += 6
 
 if not ver4: # 3.x code
@@ -12780,7 +12673,7 @@ else: # 3.x code
 		self.scanText(file,child,out,atFile.endNode)
 
 &lt;&lt; look for sentinels that may follow a reference &gt;&gt;</t>
-<t tx="T856">i = skip_ws(s,i) ; j = i
+<t tx="T819">i = skip_ws(s,i) ; j = i
 while i &lt; len(s) and s[i] in string.digits:
 	i += 1
 
@@ -12798,7 +12691,7 @@ if match(s,i,':'):
 	i += 1 # Skip the ":".
 else:
 	self.readError("Bad child index in @+node")</t>
-<t tx="T857">while i &lt; len(s) and s[i] != ':' and not is_nl(s,i):
+<t tx="T820">while i &lt; len(s) and s[i] != ':' and not is_nl(s,i):
 	if match(s,i,"C="):
 		# set cloneIndex from the C=nnn, field
 		i += 2 ; j = i
@@ -12812,7 +12705,7 @@ if match(s,i,":"):
 	i += 1
 else:
 	self.readError("Bad attribute field in @+node")</t>
-<t tx="T858"># Set headline to the rest of the line.
+<t tx="T821"># Set headline to the rest of the line.
 # 6/22/03: don't strip leading whitespace.
 if len(self.endSentinelComment) == 0:
 	headline = s[i:-1].rstrip()
@@ -12832,7 +12725,7 @@ if 0: # no longer used
 	if match(s,i,"&lt;&lt;"):
 		k = s.find("&gt;&gt;",i)
 		if k != -1: ref = s[i:k+2]</t>
-<t tx="T859">h = headline.strip()
+<t tx="T822">h = headline.strip()
 
 if h[:5] == "@file":
 	i,junk,junk = scanAtFileOptions(h)
@@ -12846,7 +12739,7 @@ elif h[:8] == "@rawfile":
 else:
 	self.readError("Missing @file in root @node sentinel")
 </t>
-<t tx="T860">s = self.readLine(file)
+<t tx="T823">s = self.readLine(file)
 kind = self.sentinelKind(s)
 
 if len(s) &gt; 1 and kind == atFile.startVerbatimAfterRef:
@@ -12858,13 +12751,13 @@ elif len(s) &gt; 1 and self.sentinelKind(s) == atFile.noSentinel:
 else:
 	nextLine = s # Handle the sentinel or blank line later.
 </t>
-<t tx="T861">assert(match(s,i,"+others"))
+<t tx="T824">assert(match(s,i,"+others"))
 
 # Make sure that the generated at-others is properly indented.
-out.append(leading_ws + "@others")
+out.append(self.leading_ws + "@others")
 
 self.scanText(file,v,out,atFile.endOthers)</t>
-<t tx="T862">elif kind == atFile.startComment:
+<t tx="T825">elif kind == atFile.startComment:
 	&lt;&lt; scan @comment &gt;&gt;
 elif kind == atFile.startDelims:
 	&lt;&lt; scan @delims &gt;&gt;
@@ -12874,9 +12767,9 @@ elif kind == atFile.startLeo:
 	&lt;&lt; scan @+leo &gt;&gt;
 elif kind == atFile.startVerbatim:
 	&lt;&lt; scan @verbatim &gt;&gt;</t>
-<t tx="T863">assert(match(s,i,"+leo"))
+<t tx="T826">assert(match(s,i,"+leo"))
 self.readError("Ignoring unexpected @+leo sentinel")</t>
-<t tx="T864"># The first '@' has already been eaten.
+<t tx="T827"># The first '@' has already been eaten.
 assert(match(s,i,"@"))
 
 if match_word(s,i,"@raw"):
@@ -12896,11 +12789,11 @@ if start and len(start) &gt; 0 and start[-1] == '@':
 	s2 = s2.replace('@@','@')
 out.append(s2)
 # trace(`s2`)</t>
-<t tx="T865">assert(match(s,i,"comment"))
+<t tx="T828">assert(match(s,i,"comment"))
 
 # We need do nothing more to ignore the comment line!
 </t>
-<t tx="T866">assert(match(s,i-1,"@delims"));
+<t tx="T829">assert(match(s,i-1,"@delims"));
 
 # Skip the keyword and whitespace.
 i0 = i-1
@@ -12936,7 +12829,7 @@ else:
 	self.readError("Bad @delims")
 	# Append the bad @delims line to the body text.
 	out.append("@delims")</t>
-<t tx="T867">assert(match(s,i,"verbatim"))
+<t tx="T830">assert(match(s,i,"verbatim"))
 
 # Skip the sentinel.
 s = self.readLine(file) 
@@ -12945,12 +12838,924 @@ s = self.readLine(file)
 i = self.skipIndent(s,0,self.indent)
 out.append(s[i:])
 </t>
-<t tx="T868">j = i
+<t tx="T831">j = i
 i = skip_line(s,i)
 line = s[j:i]
 self.readError("Unknown sentinel: " + line)</t>
-<t tx="T869"></t>
-<t tx="T870"># This is the entry point to the write code.  root should be an @file vnode.
+<t tx="T832">"""New code for 4.0"""
+
+from leoPlugins import *
+from leoGlobals import *
+
+import leoApp,leoAtFile,leoDialog,leoFileCommands,leoFrame,leoNodes
+
+# ********** Warning: incomplete and untested code. ***********
+
+# To do:
+# - Read both 3.x sentinels and 4.x sentinels.
+#   (The present code only handles 4.x sentinels.)
+# - See main to-do list above.
+
+if 0: # Register the handlers...
+
+	@others
+	
+	registerHandler("start1",onAfterFinishCreate)
+	registerHandler("create-optional-menus",onCreateExtraMenus)
+
+	__version__ = "0.1a1"
+	plugin_signon(__name__)</t>
+<t tx="T833">def setLeoID (self):
+	
+	print "setLeoID"
+	
+	if not self.use_gnx:
+		return # Used only in 4.x.
+		
+	tag = ".leoID.txt"
+	loadDir = app().loadDir
+	configDir = app().config.configDir
+	&lt;&lt; return if we can set self.leoID from sys.leoID &gt;&gt;
+	&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;
+	&lt;&lt; put up a dialog requiring a valid id &gt;&gt;
+	&lt;&lt; attempt to create leoID.txt &gt;&gt;</t>
+<t tx="T834"># This would be set by in Python's sitecustomize.py file.
+try:
+	self.leoID = sys.leoID
+	es("leoID = " + self.leoID, color="blue")
+	return
+except:
+	self.leoID = None</t>
+<t tx="T835">for dir in (configDir,loadDir):
+	try:
+		fn = os.path.join(dir, tag)
+		f = open(fn,'r')
+		if f:
+			s = f.readline()
+			f.close()
+			if s and len(s) &gt; 0:
+				self.leoID = s
+				es("leoID = " + self.leoID, color="blue")
+				return
+			else:
+				es("empty " + tag + " in " + dir, color = "red")
+	except: self.leoID = None
+		
+if configDir == loadDir:
+	es(tag + " not found in " + loadDir, color="red")
+else:
+	es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+</t>
+<t tx="T836">self.leoID = leoDialog.askLeoID().run(modal=true)
+
+es("leoID = " + `self.leoID`, color="blue")</t>
+<t tx="T837">for dir in (configDir,loadDir):
+	try:
+		# Look in configDir first.
+		fn = os.path.join(dir, tag)
+		f = open(fn,'w')
+		if f:
+			f.write(self.leoID)
+			f.close()
+			es("created leoID.txt in " + dir, color="red")
+			return
+	except: pass
+	
+if configDir == loadDir:
+	es("can not create leoID.txt in " + loadDir, color="red")
+else:
+	es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+
+</t>
+<t tx="T838">def onAfterFinishCreate (tag,keywords):
+	
+	"""Handle processing that should be added to app.finishCreate."""
+	
+	a = app()
+
+	a.use_gnx = true # true: enable 4.x code.
+
+	# Add setLeoID to the LeoApp class and call it.
+	funcToMethod(setLeoID,leoApp.LeoApp)
+	a.setLeoID()
+
+	# Create the single nodeIndices class.
+	a.nodeIndices = leoNodes.nodeIndices()</t>
+<t tx="T839">def onCreateExtraMenus (tag,keywords):
+	
+	c = keywords.get("c")
+	self = c.frame # This code should really be part of the leoFrame class.
+	
+	&lt;&lt; extend the read/write submenu &gt;&gt;
+	&lt;&lt; extend the export submenu &gt;&gt;
+</t>
+<t tx="T840">if app().use_gnx: # Testing.
+
+	table2 = (
+		("-",None,None),
+		("Read 4.0 Derived File",None,self.OnReadGnxFile),
+		("Write 4.0 Derived File",None,self.OnWriteGnxFile),
+		("Clear All Node Indices",None,self.OnClearAllNodeIndices))
+
+	if 1: # pluging code.
+		readWriteMenu = self.getMenu("ReadWrite")
+		self.createMenuEntries (readWriteMenu,table2)
+	else: # native code.
+		table.extend(table2)</t>
+<t tx="T841">if app().use_gnx:
+	
+	table2 = (
+		("-",None,None),
+		("Write Old Format Outline",None,self.OnWriteOldOutline))
+	
+	if 1: # pluging code.
+		exportMenu = self.getMenu("Export")
+		self.createMenuEntries(exportMenu,table2)
+	else: # native code.
+		table.extend(table2)</t>
+<t tx="T842">class askLeoID (leoDialog):
+	
+	"""A class to create and run a dialog that asks for Id for gnx's."""
+	
+	@others
+
+leoDialog.askLeoID = askLeoID</t>
+<t tx="T843">def __init__(self):
+	
+	"""Create the Leo Id dialog."""
+	
+	leoDialog.__init__(self,"Enter unique id",resizeable=false) # Initialize the base class.
+	self.id_entry = None
+	self.answer = None
+
+	self.createTopFrame()
+	self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+	self.top.bind("&lt;Key&gt;", self.onKey)
+	
+	message = (
+		"leoID.txt not found\n\n" +
+		"Please enter an id that identifies you uniquely.\n" +
+		"Your cvs login name is a good choice.\n\n" +
+		"Your id must contain only letters and numbers\n" +
+		"and must be at least 4 characters in length.")
+	self.createFrame(message)
+	self.focus_widget = self.id_entry
+
+	buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
+	buttonList = self.createButtons(buttons)
+	self.ok_button = buttonList[0]</t>
+<t tx="T844">def createFrame(self,message):
+	
+	"""Create the frame for the Leo Id dialog."""
+	
+	f = self.frame
+
+	label = Tk.Label(f,text=message)
+	label.pack(pady=10)
+
+	self.id_entry = text = Tk.Entry(f,width=20)
+	text.pack()</t>
+<t tx="T845">def onCloseWindow (self):
+	
+	"""Prevent the Leo Id dialog from closing by ignoring close events."""
+
+	pass</t>
+<t tx="T846">def onButton(self):
+	
+	"""Handle clicks in the Leo Id close button."""
+
+	s = self.id_entry.get().strip()
+	if len(s) &lt; 4:  # Require at least 4 characters in an id.
+		return
+
+	self.answer = s
+	self.top.destroy() # terminates wait_window</t>
+<t tx="T847">def onKey(self,event):
+	
+	"""Handle keystrokes in the Leo Id dialog."""
+	
+	&lt;&lt; eliminate invalid characters &gt;&gt;
+	&lt;&lt; enable the ok button if there are 4 or more valid characters &gt;&gt;
+	
+	ch = event.char.lower()
+	if ch in ('\n','\r'):
+		self.onButton()
+	return "break"
+
+</t>
+<t tx="T848">e = self.id_entry
+s = e.get().strip()
+i = 0 ; ok = true
+while i &lt; len(s):
+	ch = s[i]
+	if ch not in string.letters and ch not in string.digits:
+		e.delete(`i`)
+		s = e.get()
+		ok = false
+	else:
+		i += 1
+if not ok: return</t>
+<t tx="T849">e = self.id_entry
+b = self.ok_button
+
+if len(e.get().strip()) &gt;= 4:
+	b.configure(state="normal")
+else:
+	b.configure(state="disabled")</t>
+<t tx="T850">class myAtFile(leoAtFile.baseAtFile):
+	@others
+
+leoAtFile.atFile = myAtFile
+
+atFile = myAtFile</t>
+<t tx="T851">def __init__(self,theCommander):
+	
+	"""Ctor for myAtFile class (gnx code)."""
+	
+	# print "myAtFile ctor",self
+	leoAtFile.baseAtFile.__init__(self,theCommander) # Initialize the base class.
+	
+	# New in 4.x...
+	self.done = false # true when @-leo seen.
+	self.lastLines = []
+	self.leading_ws = 0
+	self.lineIndent = 0 # Changed only for sentinels.
+	self.nodeIndices = app().nodeIndices
+	self.readChildIndex = 0 # Index into self.root.tnodeList.
+	self.root_seen = false # true: root vnode has been handled in this file.
+	self.unlinkedChildren = [] # List of children unlinked from the file before reading.
+	self.using_gnx = false # true: present derived file uses gnxs.
+	
+	# These replace params in the formerly recursive call to scanText.
+	self.endSentinelKind = None
+	self.endSentinelStack = []
+	self.v = None
+	self.vStack = []
+	self.out = None
+	self.outStack = []
+	
+	# The dispatch dictionary used by scanText.
+	self.dispatch_dict = {
+		endAt: doEndAt,
+		endDoc: doEndDoc,
+		endLeo: doEndLeo,
+		# endNode:
+		endOthers: doEndOthers,
+		noSentinel: doPlainLine,
+		startComment: doStartComment,
+		startDelims: doStartDelims,
+		startDirective: doStartDirective,
+		startVerbatim: doVerbatim,
+		# startVerbatimAfterRef:
+		startAt: doStartAt,
+		# startBody:  endBody:
+		startDoc: doStartDoc,
+		startLeo: doStartLeo,
+		startNode: doStartNode,
+		startOthers: doStartOthers,
+		startRef: doStartRef }</t>
+<t tx="T852"></t>
+<t tx="T853">def createChild (self,parent,headline):
+	
+	""" Create a 4.0 child vnode of parent."""
+
+	trace("parent,headline:",`parent`,`headline`)
+	if 1: # Dummy code.
+		t = leoNodes.tnode() # Allocating a new tnode here breaks clone links.
+	else:
+		if self.readChildIndex &lt; len(self.root.tnodeList):
+			t = self.root.tnodeList[self.readChildIndex]
+			self.readChildIndex += 1
+		else:
+			self.readError("Bad readChildIndex")
+			t = leoNodes.tnode()
+	v = parent.insertAsLastChild(t=t)
+	v.initHeadString(headline)
+	return v</t>
+<t tx="T854">@ This is the entry point to the read code.  The root vnode should be an @file node.  If doErrorRecoveryFlag is false we are doing an update.  In that case it would be very unwise to do any error recovery which might clear clone links.  If doErrorRecoveryFlag is true and there are structure errors during the first pass we delete root's children and its body text, then rescan.  All other errors indicate potentially serious problems with sentinels.
+
+The caller has enclosed this code in beginUpdate/endUpdate.
+@c
+def read(self,root):
+	&lt;&lt; init read vars &gt;&gt;
+	&lt;&lt; open file &gt;&gt;
+	if self.errors &gt; 0: return 0
+	es("reading: " + root.headString())
+	&lt;&lt; Scan the file buffer &gt;&gt;
+	if not (app().use_gnx and self.using_gnx):
+		#### All this is going away for good ####
+		&lt;&lt; Bump mStructureErrors if any vnodes are unvisited &gt;&gt;
+		if self.structureErrors &gt; 0:
+			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
+			self.errors = 0
+			&lt;&lt; quickly delete root's tree and body text &gt;&gt;
+			file.seek(0)
+			&lt;&lt; Scan the file buffer &gt;&gt;
+	file.close()
+	if self.errors &gt; 0:
+		# A serious error has occured that has not been corrected.
+		self.readError("----- File may have damaged sentinels!")
+		root.unjoinTree();
+	else: root.clearDirty()
+	return self.errors == 0</t>
+<t tx="T855">c = self.commands
+self.root = root
+self.raw = false
+self.root_seen = false
+self.readChildIndex = 0
+self.errors = self.structureErrors = 0
+
+# set self.targetFileName
+if root.isAtFileNode():
+	self.targetFileName = root.atFileNodeName()
+else:
+	self.targetFileName = root.atRawFileNodeName()</t>
+<t tx="T856">self.scanAllDirectives(root) # 1/30/02
+
+if not self.targetFileName or len(self.targetFileName) == 0:
+	self.readError("Missing file name.  Restoring @file tree from .leo file.")
+else:
+
+	# print self.default_directory, self.targetFileName
+	fn = os.path.join(self.default_directory, self.targetFileName)
+	fn = os.path.normpath(fn)
+	fn = toUnicode(fn,"ascii")
+	
+	try:
+		file = open(fn,'r')
+		if file:
+			&lt;&lt; warn on read-only file &gt;&gt;
+	except:
+		self.readError("Can not open: " + '"@file ' + fn + '"')</t>
+<t tx="T857">try:
+	read_only = not os.access(fn,os.W_OK)
+	if read_only:
+		es("read only: " + fn,color="red")
+except:
+	pass # os.access() may not exist on all platforms.
+</t>
+<t tx="T858">firstLines = self.scanHeader(file)
+self.indent = 0
+self.root_seen = false
+out = []
+	
+root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
+
+if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
+	print "reading 4.0 file:", self.targetFileName
+	self.unlinkedChildren = []
+	&lt;&lt; unlink all children of root &gt;&gt;
+
+lastLines = self.scanText(file,root,out,atFile.endLeo)
+
+# 18-SEP-2002 DTHEIN: update the bodyString directly, because
+# out no longer holds body text of node.
+if root.t.hasBody:
+	bodyLines = root.t.bodyString.split('\n')
+	self.completeFirstDirectives(bodyLines,firstLines)
+	self.completeLastDirectives(bodyLines,lastLines)
+	bodyText = '\n'.join(bodyLines)
+	bodyText = bodyText.replace('\r', '')
+	root.t.setTnodeText(bodyText)</t>
+<t tx="T859">if 1: # New code: remember the unlinked children for the simulated Read Outline Only command.
+	child = root.firstChild()
+	while child:
+		self.unlinkedChildren.append(child)
+		next = child.next()
+		child.unlink()
+		child = next
+	c.selectVnode(root)
+
+else: # old code: we must not delete anything here.
+	# Calling v.doDelete is way too slow here because it repeatedly calls c.initAllCloneBits.
+	child = root.firstChild()
+	while child:
+		next = child.next()
+		# The guts of doDelete
+		child.destroyDependents()
+		child.unjoinTree()
+		child.unlink()
+		child = next
+	c.selectVnode(root)</t>
+<t tx="T860">@ createNthNode marks all nodes in the derived file as visited.  Any unvisited nodes are either dummies or nodes that don't exist in the derived file.
+@c
+
+next = root.nodeAfterTree()
+v = root.threadNext()
+while v and v != next:
+	if not v.isVisited():
+		if 0: # CVS produces to many errors for this to be useful.
+			es("unvisited node: " + v.headString())
+		self.structureErrors += 1
+	v = v.threadNext()
+</t>
+<t tx="T861">@ Calling v.doDelete is _way_ too slow here because it repeatedly calls c.initAllCloneBits.
+@c
+
+child = root.firstChild()
+while child:
+	next = child.next()
+	# The guts of doDelete
+	child.destroyDependents()
+	child.unjoinTree()
+	child.unlink()
+	child = next
+c.selectVnode(root)
+
+root.setBodyStringOrPane("")</t>
+<t tx="T862">@ This method sets self.startSentinelComment and self.endSentinelComment based on the first @+leo sentinel line of the file.  We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
+
+7/8/02: Leading whitespace is now significant here before the @+leo.  This is part of the "REM hack".  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
+
+14-SEP-2002 DTHEIN:  Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
+@c
+def scanHeader(self,file):
+	
+	self.using_gnx = false # 4.0
+	version_tag = "-ver="
+	valid = true
+	tag = "@+leo"
+	encoding_tag = "-encoding="
+	&lt;&lt; skip any non @+leo lines &gt;&gt;
+	&lt;&lt; make sure we have @+leo &gt;&gt;
+	&lt;&lt; read optional version param &gt;&gt;
+	&lt;&lt; read optional encoding param &gt;&gt;
+	&lt;&lt; set the closing comment delim &gt;&gt;
+	if not valid:
+		self.readError("Bad @+leo sentinel in " + self.targetFileName)
+	return firstLines</t>
+<t tx="T863">firstLines = [] # The lines before @+leo.
+s = self.readLine(file)
+while len(s) &gt; 0:
+	j = s.find(tag)
+	if j != -1: break
+	firstLines.append(s) # Queue the line
+	s = self.readLine(file)
+n = len(s)
+valid = n &gt; 0
+# s contains the tag
+i = j = skip_ws(s,0)
+# The opening comment delim is the initial non-whitespace.
+# 7/8/02: The opening comment delim is the initial non-tag
+while i &lt; n and not match(s,i,tag) and not is_nl(s,i):
+	i += 1
+if j &lt; i:
+	self.startSentinelComment = s[j:i]
+else: valid = false</t>
+<t tx="T864">if 0:# 7/8/02: make leading whitespace significant.
+	i = skip_ws(s,i)
+
+if match(s,i,tag):
+	i += len(tag)
+else: valid = false</t>
+<t tx="T865">self.using_gnx = match(s,i,version_tag)
+
+if self.using_gnx:
+	trace("reading gnx file")
+	i += len(version_tag)
+	# Skip to the next minus sign or end-of-line
+	j = i
+	while i &lt; len(s) and not is_nl(s,i) and s[i] != '-':
+		i += 1
+	if j &lt; i:
+		version = s[j:i]
+	else:
+		valid = false
+
+	
+</t>
+<t tx="T866"># 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
+
+# Set the default encoding
+self.encoding = app().config.default_derived_file_encoding
+
+if match(s,i,encoding_tag):
+	i += len(encoding_tag)
+	# Skip to the next comma
+	j = i
+	while i &lt; len(s) and not is_nl(s,i) and s[i] not in (',','.'):
+		i += 1
+	if match(s,i,',') or match(s,i,'.'):
+		encoding = s[j:i]
+		i += 1
+		# print "@+leo-encoding=",encoding
+		if isValidEncoding(encoding):
+			self.encoding = encoding
+		else:
+			es("bad encoding in derived file:",encoding)
+	else:
+		valid = false
+</t>
+<t tx="T867"># The closing comment delim is the trailing non-whitespace.
+i = j = skip_ws(s,i)
+while i &lt; n and not is_ws(s[i]) and not is_nl(s,i):
+	i += 1
+self.endSentinelComment = s[j:i]</t>
+<t tx="T868">@ This method is the read code.
+
+scanText reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+
+### removed out,endSentinelKind,nextLine params.
+
+#### To do: read 3.x sentinels!!
+
+@c
+def scanText (self,file,v):
+
+	a = app() ; c = self.commands ; config = a.config
+	ver4 = a.use_gnx and self.using_gnx
+	&lt;&lt; init ivars for scanText &gt;&gt;
+	while not self.done:
+		s = self.readLine(file)
+		if len(s) == 0: break
+		&lt;&lt; Set self.leading_ws &gt;&gt;
+		i, self.lineIndent = skip_leading_ws_with_indent(s,0,self.tab_width)
+		kind = self.sentinelKind(s)
+		func = self.dispatch_dict[kind]
+		func(s,i)
+	if not done:
+		&lt;&lt; handle unexpected end of text &gt;&gt;
+	return self.lastLines</t>
+<t tx="T869"># Unstacked ivars...
+self.done = false
+self.lastLines = [] # The lines after @-leo
+self.leading_ws = 0
+self.lineIndent = 0 # Changed only for sentinels.
+self.readChildIndex = 0
+self.rootSeen = false
+
+# Stacked ivars...
+self.endSentinelKind = atFile.endLeo # We have already handled the @+leo sentinel.
+self.endSentinelStack = []
+self.out = []
+self.outStack = []
+self.v = v
+self.vStack = []</t>
+<t tx="T870">@ self.lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  linep points to the first "real" character of a line, the character following the "indent" whitespace.
+@c
+
+# Point linep past the first self.indent whitespace characters.
+if self.raw:
+	linep = 0
+else:
+	linep = self.skipIndent(s,0,self.indent)
+	
+# Set self.leading_ws to the additional indentation on the line.
+self.leading_ws = s[linep:i]</t>
+<t tx="T871">name = self.sentinelName(endSentinelKind)
+self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
+</t>
+<t tx="T872">def doEndAt (self,s,i):
+	
+	"""Read an @-at sentinel."""
+
+	if self.endSentinelKind != atFile.endAt:
+		self.doBadEndSentinel(atFile.endAt)
+	else:
+		self.endSentinelKind = self.endSentinelStack.pop()
+		
+def doEndDoc (self,s,i):
+	
+	"""Read an @-doc sentinel."""
+
+	if self.endSentinelKind != atFile.endDoc:
+		self.doBadEndSentinel(atFile.endDoc)
+	else:
+		self.endSentinelKind = self.endSentinelStack.pop()
+</t>
+<t tx="T873">def doEndLeo (self,s,i):
+	
+	"""Read an @-leo sentinel."""
+
+	# Ignore everything after @-leo.
+	# Such lines were presumably written by @last.
+	while 1:
+		s = self.readLine(file)
+		if len(s) == 0: break
+		self.lastLines.append(s) # Capture all trailing lines, even if empty.
+
+	self.done = true</t>
+<t tx="T874">def doEndOthers (self,s,i):
+	
+	"""Read an @-others sentinel."""
+	self.doEndNode(atFile.endOthers)
+	
+def doEndRef (self,s,i):
+	
+	"""Read an @-ref sentinel."""
+	self.doEndNode(atFile.endRef)
+	
+def doEndNode (self,kind):
+	
+	"""Handle end-of-node processing for @-others and @-ref sentinels."""
+
+	self.raw = false
+	
+	# End the previous node sentinel.
+	self.v.setBodyText(self.out)
+	self.v = self.vStack.pop()
+	self.out = self.outStack.pop()
+	
+	if self.endSentinelKind != atFile.startNode:
+		self.doBadEndSentinel(kind)
+	else:
+		self.endSentinelKind = self.endSentinelStack.pop()
+
+	# End the sentinel.
+	if self.endSentinelKind != kind:
+		self.doBadEndSentinel(kind)
+	else:
+		self.endSentinelKind = self.endSentinelStack.pop()</t>
+<t tx="T875">def doBadEndSentinel (self,kind):
+	
+	"""Handle a mismatched ending sentinel."""
+
+	name = self.sentinelName(kind)
+	expect = self.sentinelName(endSentinelKind)
+	self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)</t>
+<t tx="T876">def doPlainLine (self,s,i):
+	
+	"""Read a non-sentinel line."""
+
+	if self.raw:
+		i = 0
+	else:
+		i = self.skipIndent(s,0,self.indent)
+	
+	self.out.append(s[i:])</t>
+<t tx="T877">def doStartComment (self,s,i):
+	
+	"""Read an @comment sentinel."""
+	assert(match(s,i,"comment"))
+
+	# Just ignore the comment line!
+</t>
+<t tx="T878">def doStartDelims (self,s,i):
+	
+	"""Read an @delims sentinel."""
+	
+	assert(match(s,i-1,"@delims"));
+
+	# Skip the keyword and whitespace.
+	i0 = i-1
+	i = skip_ws(s,i-1+7)
+		
+	# Get the first delim.
+	j = i
+	while i &lt; len(s) and not is_ws(s[i]) and not is_nl(s,i):
+		i += 1
+	
+	if j &lt; i:
+		self.startSentinelComment = s[j:i]
+		# print "delim1:", self.startSentinelComment
+	
+		# Get the optional second delim.
+		j = i = skip_ws(s,i)
+		while i &lt; len(s) and not is_ws(s[i]) and not is_nl(s,i):
+			i += 1
+		end = choose(j&lt;i,s[j:i],"")
+		i2 = skip_ws(s,i)
+		if end == self.endSentinelComment and (i2 &gt;= len(s) or is_nl(s,i2)):
+			self.endSentinelComment = "" # Not really two params.
+			line = s[i0:j]
+			line = line.rstrip()
+			self.out.append(line+'\n')
+		else:
+			self.endSentinelComment = end
+			# print "delim2:",end
+			line = s[i0:i]
+			line = line.rstrip()
+			self.out.append(line+'\n')
+	else:
+		self.readError("Bad @delims")
+		# Append the bad @delims line to the body text.
+		self.out.append("@delims")</t>
+<t tx="T879">def doVerbatim (self,s,i):
+	
+	"""Read an @verbatim sentinel."""
+	
+	assert(match(s,i,"verbatim"))
+	
+	# Skip the sentinel.
+	s = self.readLine(file) 
+	
+	# Append the next line to the text.
+	i = self.skipIndent(s,0,self.indent)
+	self.out.append(s[i:])</t>
+<t tx="T880">def doStartAt (self,s,i):
+	
+	"""Read an @+at sentinel."""
+	
+	assert(match(s,i,"+at"))
+	self.endSentinelStack.append(self.endSentinelKind)
+	self.endSentinelKind = atFile.endAt
+	self.scanDoc(s,i,startAt)
+	
+def doStartDoc (self,s,i):
+	
+	"""Read an @+doc sentinel."""
+
+	assert(match(s,i,"+doc"))
+	self.endSentinelStack.append(self.endSentinelKind)
+	self.endSentinelKind = atFile.endDoc
+	self.scanDoc(s,i,startDoc)</t>
+<t tx="T881">def doStartDirective (self,s,i):
+	
+	"""Read an @@sentinel."""
+	
+	# The first '@' has already been eaten.
+	assert(match(s,i,"@"))
+	
+	if match_word(s,i,"@raw"):
+		self.raw = true
+	elif match_word(s,i,"@end_raw"):
+		self.raw = false
+	
+	e = self.endSentinelComment
+	s2 = s[i:]
+	if len(e) &gt; 0:
+		k = s.rfind(e,i)
+		if k != -1:
+			s2 = s[i:k] + '\n'
+		
+	start = self.startSentinelComment
+	if start and len(start) &gt; 0 and start[-1] == '@':
+		s2 = s2.replace('@@','@')
+
+	self.out.append(s2)
+	# trace(`s2`)</t>
+<t tx="T882">def doStartLeo (self,s,i):
+	
+	"""Read an unexpected @+leo sentinel."""
+
+	assert(match(s,i,"+leo"))
+	self.readError("Ignoring unexpected @+leo sentinel")</t>
+<t tx="T883">def doStartNode (self,s,i):
+	
+	"""Read an @node sentinel."""
+	assert(match(s,i,"node:"))
+	i += 5
+
+	headline = ""
+	&lt;&lt; Set headline and ref &gt;&gt;
+
+	if not self.root_seen:
+		self.root_seen = true
+		&lt;&lt; Check the filename in the sentinel &gt;&gt;
+		newV = v
+	else:
+		newV = self.createChild(v,headline)
+
+	## self.scanText(file,v,out,atFile.endNode)
+	if self.endSentinelKind != atFile.endNode:
+		self.endSentinelStack.append(self.endSentinelKind)
+		self.endSentinelKind = atFile.endNode
+		self.outStack.append(self.out)
+		self.out = []
+		self.vStack.append(self.v)
+		self.v = newV</t>
+<t tx="T884"># Set headline to the rest of the line.
+# 6/22/03: don't strip leading whitespace.
+if len(self.endSentinelComment) == 0:
+	headline = s[i:-1].rstrip()
+else:
+	# 10/24/02: search from the right, not the left.
+	k = s.rfind(self.endSentinelComment,i)
+	headline = s[i:k].rstrip() # works if k == -1
+	
+# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
+if self.startSentinelComment[-1:] == '@':
+	headline = headline.replace('@@','@')
+
+# Set reference if it exists.
+i = skip_ws(s,i)
+
+if 0: # no longer used
+	if match(s,i,"&lt;&lt;"):
+		k = s.find("&gt;&gt;",i)
+		if k != -1: ref = s[i:k+2]</t>
+<t tx="T885">h = headline.strip()
+
+if h[:5] == "@file":
+	i,junk,junk = scanAtFileOptions(h)
+	fileName = string.strip(h[i:])
+	if fileName != self.targetFileName:
+		self.readError("File name in @node sentinel does not match file's name")
+elif h[:8] == "@rawfile":
+	fileName = string.strip(h[8:])
+	if fileName != self.targetFileName:
+		self.readError("File name in @node sentinel does not match file's name")
+else:
+	self.readError("Missing @file in root @node sentinel")</t>
+<t tx="T886">def doStartOthers (self,s,i):
+	
+	"""."""
+
+	assert(match(s,i,"+others"))
+
+	# Make sure that the generated at-others is properly indented.
+	self.out.append(self.leading_ws + "@others")
+	
+	## self.scanText(file,v,out,atFile.endOthers)
+	self.doEndNode(atFile.endOthers)
+	self.endSentinelStack.append(self.endSentinelKind)
+	self.endSentinelKind = atFile.endOthers
+</t>
+<t tx="T887">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
+@c
+
+def doStartRef (self,s,i):
+	
+	"""Handle an @&lt;&lt; sentinel."""
+	
+	assert(match(s,i,"&lt;&lt;"))
+	
+	if len(self.endSentinelComment) == 0:
+		line = s[i:-1] # No trailing newline
+	else:
+		k = s.find(self.endSentinelComment,i)
+		line = s[i:k] # No trailing newline, whatever k is.
+			
+	# 10/30/02: undo cweb hack here
+	start = self.startSentinelComment
+	if start and len(start) &gt; 0 and start[-1] == '@':
+		line = line.replace('@@','@')
+	
+	self.out.append(line)
+
+	self.endSentinelStack.append(self.endSentinelKind)
+	self.endSentinelKind = atFile.endRef</t>
+<t tx="T888"># Scans the doc part and appends the text to self.out.
+# s,i point to the present line on entry.
+
+def scanDoc(self,s,i,kind):
+
+	## endKind = choose(kind == atFile.startDoc, atFile.endDoc, atFile.endAt)
+	endKind = self.endSentinelKind
+	single = len(self.endSentinelComment) == 0
+	&lt;&lt; Skip the opening sentinel &gt;&gt;
+	&lt;&lt; Skip an opening block delim &gt;&gt;
+	nextLine = None ; kind = atFile.noSentinel
+	while len(s) &gt; 0:
+		kind = self.sentinelKind(s)
+		if kind == endKind: break
+		&lt;&lt; Skip the leading stuff &gt;&gt;
+		&lt;&lt; Append s to out &gt;&gt;
+		s = self.readLine(self.file)
+	if kind != endKind:
+		self.readError("Missing " + self.sentinelName(endKind) + " sentinel")
+	&lt;&lt; Remove a closing block delim from out &gt;&gt;</t>
+<t tx="T889">assert(match(s,i,choose(kind == atFile.startDoc, "+doc", "+at")))
+
+out.append(choose(kind == atFile.startDoc, "@doc", "@"))
+s = self.readLine(file)
+</t>
+<t tx="T890">if not single:
+	j = skip_ws(s,0)
+	if match(s,j,self.startSentinelComment):
+		s = self.readLine(file)</t>
+<t tx="T891"># Point i to the start of the real line.
+
+if single: # Skip the opening comment delim and a blank.
+	i = skip_ws(s,0)
+	if match(s,i,self.startSentinelComment):
+		i += len(self.startSentinelComment)
+		if match(s,i," "): i += 1
+else:
+	i = self.skipIndent(s,0, self.indent)
+</t>
+<t tx="T892"># Append the line with a newline if it is real
+
+line = s[i:-1] # remove newline for rstrip.
+
+if line == line.rstrip():
+	# no trailing whitespace: the newline is real.
+	out.append(line + '\n')
+else:
+	# trailing whitespace: the newline is not real.
+	out.append(line)
+</t>
+<t tx="T893"># This code will typically only be executed for HTML files.
+
+if not single:
+
+	delim = self.endSentinelComment
+	n = len(delim)
+	
+	# Remove delim and possible a leading newline.
+	s = string.join(out,"")
+	s = s.rstrip()
+	if s[-n:] == delim:
+		s = s[:-n]
+	if s[-1] == '\n':
+		s = s[:-1]
+		
+	# Rewrite out in place.
+	del out[:]
+	out.append(s)
+</t>
+<t tx="T894"></t>
+<t tx="T895"># This is the entry point to the write code.  root should be an @file vnode.
 
 def write(self,root,nosentinels=false):
 
@@ -12965,7 +13770,7 @@ def write(self,root,nosentinels=false):
 		&lt;&lt; finish writing &gt;&gt;
 	except:
 		self.handleWriteException()</t>
-<t tx="T871">self.errors = 0
+<t tx="T896">self.errors = 0
 c.setIvarsFromPrefs()
 self.root = root
 self.raw = false
@@ -12976,14 +13781,14 @@ self.nodeIndices.setTimestamp()
 
 # Create the list that associates the nth node in the derived file with the proper tnode.
 self.root.tnodeList = []</t>
-<t tx="T872">if nosentinels:
+<t tx="T897">if nosentinels:
 	self.targetFileName = root.atNoSentinelsFileNodeName()
 else:
 	self.targetFileName = root.atFileNodeName()
 
 ok = self.openWriteFile(root)
 if not ok: return</t>
-<t tx="T873"># unvisited nodes will be orphans, except in cweb trees.
+<t tx="T898"># unvisited nodes will be orphans, except in cweb trees.
 root.clearVisitedInTree()
 next = root.nodeAfterTree()
 
@@ -12992,7 +13797,7 @@ next = root.nodeAfterTree()
 &lt;&lt; put all @last lines in root &gt;&gt;
 
 root.setVisited()</t>
-<t tx="T874">@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
+<t tx="T899">@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
 @c
 
 s = root.t.bodyString
@@ -13007,7 +13812,7 @@ while match(s,i,tag):
 	line = s[j:i]
 	self.putBuffered(line) ; self.onl()
 	i = skip_nl(s,i)</t>
-<t tx="T875">tag1 = choose(self.using_gnx,"@+leo-ver=2","@+leo")
+<t tx="T900">tag1 = choose(self.using_gnx,"@+leo-ver=2","@+leo")
 
 self.putOpenLeoSentinel(tag1)
 self.putInitialComment()
@@ -13015,7 +13820,7 @@ self.putOpenNodeSentinel(root)
 self.putBodyPart(root)
 self.putCloseNodeSentinel(root)
 self.putSentinel("@-leo")</t>
-<t tx="T876">@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
+<t tx="T901">@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
 @c
 
 tag = "@last"
@@ -13033,7 +13838,7 @@ while j &gt;= 0:
 for line in lines[j+1:k+1]:
 	i = len(tag) ; i = skip_ws(line,i)
 	self.putBuffered(line[i:]) ; self.onl()</t>
-<t tx="T877"># 10/26/02: Always warn, even when language=="cweb"
+<t tx="T902"># 10/26/02: Always warn, even when language=="cweb"
 
 next = root.nodeAfterTree()
 v = root
@@ -13044,7 +13849,7 @@ while v and v != next:
 		self.writeError("@ignore node: " + v.headString())
 	v = v.threadNext()
 </t>
-<t tx="T878">@ We set the orphan and dirty flags if there are problems writing the file to force Commands::write_LEO_file to write the tree to the .leo file.
+<t tx="T903">@ We set the orphan and dirty flags if there are problems writing the file to force Commands::write_LEO_file to write the tree to the .leo file.
 @c
 
 if self.errors &gt; 0 or self.root.isOrphan():
@@ -13056,8 +13861,8 @@ else:
 	root.clearOrphan()
 	root.clearDirty()
 	self.replaceTargetFileIfDifferent()</t>
-<t tx="T879"></t>
-<t tx="T880">def nodeSentinelText(self,v):
+<t tx="T904"></t>
+<t tx="T905">def nodeSentinelText(self,v):
 	
 	t = v.t ; h = v.headString()
 	&lt;&lt; remove comment delims from h if necessary &gt;&gt;
@@ -13074,7 +13879,7 @@ else:
 		else:
 			index = str(v.childIndex() + 1)
 		return "%s::%s" % (index,h)</t>
-<t tx="T881">@ Bug fix 1/24/03:
+<t tx="T906">@ Bug fix 1/24/03:
 
 If the present @language/@comment settings do not specify a single-line comment we remove all block comment delims from h.  This prevents headline text from interfering with the parsing of node sentinels.
 @c
@@ -13085,11 +13890,11 @@ end = self.endSentinelComment
 if end and len(end) &gt; 0:
 	h = h.replace(start,"")
 	h = h.replace(end,"")</t>
-<t tx="T882">class myFileCommands(leoFileCommands.baseFileCommands):
+<t tx="T907">class myFileCommands(leoFileCommands.baseFileCommands):
 	@others
 
 leoFileCommands.fileCommands = myFileCommands</t>
-<t tx="T883">def __init__(self,theCommander):
+<t tx="T908">def __init__(self,theCommander):
 	
 	"""Ctor for myFileCommands class (gnx code)."""
 	
@@ -13098,7 +13903,7 @@ leoFileCommands.fileCommands = myFileCommands</t>
 	
 	self.a = app()
 	self.nodeIndices = self.a.nodeIndices</t>
-<t tx="T884">def assignAllGnx (self,root=None):
+<t tx="T909">def assignAllGnx (self,root=None):
 	
 	"""Assign a gnx to tnodes that don't have one"""
 	
@@ -13112,16 +13917,16 @@ leoFileCommands.fileCommands = myFileCommands</t>
 		if not v.t.gnx:
 			v.t.gnx = nodeIndices.getNewIndex()
 		v = v.threadNext()</t>
-<t tx="T885">class myFrame(leoFrame.baseLeoFrame):
+<t tx="T910">class myFrame(leoFrame.baseLeoFrame):
 	@others
 
 leoFrame.LeoFrame = myFrame</t>
-<t tx="T886">def __init__(self, title = None):
+<t tx="T911">def __init__(self, title = None):
 	
 	"""Ctor for myFrame class (gnx code)."""
 
 	leoFrame.baseLeoFrame.__init__(self,title) # Initialize the base class.</t>
-<t tx="T887">def OnClearAllNodeIndices (self,event=None):
+<t tx="T912">def OnClearAllNodeIndices (self,event=None):
 	
 	c = self.commands ; root = c.rootVnode()
 	v = root
@@ -13129,7 +13934,7 @@ leoFrame.LeoFrame = myFrame</t>
 		v.t.gnx = None
 		v = v.threadNext()
 	es("all tnode indices cleared",color="red")</t>
-<t tx="T888">def OnWriteGnxFile (self,event=None):
+<t tx="T913">def OnWriteGnxFile (self,event=None):
 	
 	c = self.commands ; v = c.currentVnode()
 
@@ -13138,7 +13943,7 @@ leoFrame.LeoFrame = myFrame</t>
 	c.atFileCommands.using_gnx = false
 	es("finished")
 </t>
-<t tx="T889">def OnReadGnxFile (self,event=None):
+<t tx="T914">def OnReadGnxFile (self,event=None):
 	
 	c = self.commands ; v = c.currentVnode()
 	c.beginUpdate()
@@ -13150,7 +13955,7 @@ leoFrame.LeoFrame = myFrame</t>
 	c.recolor()
 	es("finished")
 </t>
-<t tx="T890"># Based on the Save As code.
+<t tx="T915"># Based on the Save As code.
 
 def OnWriteOldOutline (self,event=None):
 	
@@ -13174,19 +13979,19 @@ def OnWriteOldOutline (self,event=None):
 		self.commands.fileCommands.saveTo(fileName)
 		self.updateRecentFiles(self.mFileName)
 		a.use_gnx = old</t>
-<t tx="T891">class myTnode(leoNodes.baseTnode):
+<t tx="T916">class myTnode(leoNodes.baseTnode):
 	@others
 	
 leoNodes.tnode = myTnode</t>
-<t tx="T892">def __init__ (self,index=0,bodyString=None,headString=None):
+<t tx="T917">def __init__ (self,index=0,bodyString=None,headString=None):
 	
 	leoNodes.baseTnode.__init__(self,index,bodyString,headString)
 	self.gnx = None #  Will be set later.</t>
-<t tx="T893">def getGnx(self):
+<t tx="T918">def getGnx(self):
 	
 	return self.gnx
 </t>
-<t tx="T894"># Indices are Python dicts containing 'id','loc','time' and 'n' keys.
+<t tx="T919"># Indices are Python dicts containing 'id','loc','time' and 'n' keys.
 
 import time
 
@@ -13194,7 +13999,7 @@ class nodeIndices:
 	@others
 	
 leoNodes.nodeIndices = nodeIndices</t>
-<t tx="T895">def __init__ (self):
+<t tx="T920">def __init__ (self):
 	
 	"""ctor for nodeIndices class"""
 	
@@ -13202,14 +14007,14 @@ leoNodes.nodeIndices = nodeIndices</t>
 	self.defaultId = app().leoID # This probably will change.
 	self.lastIndex = None
 	self.timeString = None</t>
-<t tx="T896">def areEqual (self,gnx1,gnx2):
+<t tx="T921">def areEqual (self,gnx1,gnx2):
 	
 	"""Return True if all fields of gnx1 and gnx2 are equal"""
 
 	id1,time1,n1 = gnx1
 	id2,time2,n2 = gnx2
 	return id1==id2 and time1==time2 and n1==n2</t>
-<t tx="T897"># These are used by the fileCommands read/write code.
+<t tx="T922"># These are used by the fileCommands read/write code.
 
 def getDefaultId (self):
 	
@@ -13221,7 +14026,7 @@ def setDefaultId (self,id):
 	"""Set the id to be used by default in all gnx's"""
 	self.defaultId = id
 </t>
-<t tx="T898">def getNewIndex (self):
+<t tx="T923">def getNewIndex (self):
 	
 	"""Create a new gnx using self.timeString and self.lastIndex"""
 	
@@ -13242,7 +14047,7 @@ def setDefaultId (self,id):
 	self.lastIndex = d
 	trace(d)
 	return d</t>
-<t tx="T899">def scanGnx (self,s,i):
+<t tx="T924">def scanGnx (self,s,i):
 	
 	"""Create a gnx from its string representation"""
 
@@ -13265,14 +14070,14 @@ def setDefaultId (self,id):
 	d = (id,t,n)
 
 	return d</t>
-<t tx="T900">def setTimestamp (self):
+<t tx="T925">def setTimestamp (self):
 
 	"""Set the timestamp string to be used by getNewIndex until further notice"""
 
 	self.timeString = time.strftime(
 		"%m%d%y%H%M%S",  # compact timestamp is best
 		time.localtime())</t>
-<t tx="T901">def toString (self,index,removeDefaultId=false):
+<t tx="T926">def toString (self,index,removeDefaultId=false):
 	
 	"""Convert a gnx (a tuple) to its string representation"""
 
@@ -13285,5 +14090,5159 @@ def setDefaultId (self,id):
 		return "%s.%s" % (id,t)
 	else:
 		return "%s.%s.%d" % (id,t,n)</t>
+<t tx="T927">@ignore
+
+@ This code will soon become a plugin replaces Tk widgets with wxPython widgets.
+
+To do:
+	
+- Convert the code in wxLeo.py to a plugin that overrides Leo's actual code.
+
+- Override all of Leo's classes that contain Tk code, replacing Tk code with equivalent wxWindows code.
+
+This will include the LeoDialog, LeoFrame and leoTree classes, and many others.  In particular, the colorizer will have to be rewritten.</t>
+<t tx="T928"># Executing the following script executes some example wxWindows code.
+# Just do the Execute Script command from here.
+# For this to work the path to wxTest.py must be in sys.path.
+
+# The first time you do this the window is created twice: once for the import and once for the reload.
+# Thereafter only the reload takes effect, so only one window gets created.
+# The purpose of reload is so you can change the code without restarting Leo.
+
+import wxTest
+reload(wxTest)</t>
+<t tx="T929">from wxPython.wx import *
+
+class Form1(wxPanel):
+    def __init__(self, parent, id):
+        wxPanel.__init__(self, parent, -1)
+        self.quote = wxStaticText(self, -1, "Your quote :",wxPoint(20, 30))
+
+        # A multiline TextCtrl
+        self.logger = wxTextCtrl(self,5, "",wxPoint(300,20), wxSize(200,300),wxTE_MULTILINE | wxTE_READONLY)
+
+        # A button
+        self.button =wxButton(self, 10, "Save", wxPoint(200, 300))
+        EVT_BUTTON(self, 10, self.OnClick)
+
+        # the edit control - one line version.
+        self.lblname = wxStaticText(self, -1, "Your name :",wxPoint(20,60))
+        self.editname = wxTextCtrl(self, 20, "Enter here your name", wxPoint(150, 60), wxSize(150, -1))
+        EVT_TEXT(self, 20, self.EvtText)
+        EVT_CHAR(self.editname, self.EvtChar)
+
+        # the combobox Control
+        self.sampleList = ['friends', 'advetising', 'Websearch', 'yellowpages']
+        self.lblhear = wxStaticText(self,-1,"How did you hear from us ?",wxPoint(20, 90))
+        self.edithear=wxComboBox(self, 30, "", wxPoint(150, 90), wxSize(95, -1),
+                   self.sampleList, wxCB_DROPDOWN)
+        EVT_COMBOBOX(self, 30, self.EvtComboBox)
+        EVT_TEXT(self, 30, self.EvtText)
+        # Checkbox
+        self.insure = wxCheckBox(self, 40, "Do you want Insured Shipment ?",wxPoint(20,180))
+        EVT_CHECKBOX(self, 40,   self.EvtCheckBox)
+        # Radio Boxes
+        self.radioList = ['blue', 'red', 'yellow', 'orange', 'green', 'purple',
+                      'navy blue', 'black', 'gray']
+
+        rb = wxRadioBox(self, 50, "What color would you like ?", wxPoint(20, 210), wxDefaultSize,
+                        self.radioList, 3, wxRA_SPECIFY_COLS)
+        EVT_RADIOBOX(self, 50, self.EvtRadioBox)
+    def EvtRadioBox(self, event):
+        self.logger.AppendText('EvtRadioBox: %d\n' % event.GetInt())
+    def EvtComboBox(self, event):
+        self.logger.AppendText('EvtComboBox: %s\n' % event.GetString())
+    def OnClick(self,event):
+        self.logger.AppendText(" Click on object with Id %d\n" %event.GetId())
+    def EvtText(self, event):
+        self.logger.AppendText('EvtText: %s\n' % event.GetString())
+    def EvtChar(self, event):
+        self.logger.AppendText('EvtChar: %d\n' % event.GetKeyCode())
+        event.Skip()
+    def EvtCheckBox(self, event):
+        self.logger.AppendText('EvtCheckBox: %d\n' % event.Checked())
+
+class Form2(wxPanel):
+    def __init__(self, parent, id):
+        wxPanel.__init__(self, parent, -1)
+        self.sampleList = ['friends', 'advetising', 'Websearch', 'yellowpages']
+        self.radioList = ['blue', 'red', 'yellow', 'orange', 'green', 'purple',
+                      'navy blue', 'black', 'gray']
+        gs = wxFlexGridSizer(5,2,5,5)
+        gs.Add(wxStaticText(self, -1, "Your name :"),0,wxEXPAND)
+        self.editname=wxTextCtrl(self, 20, "Enter here your name")
+        gs.Add(self.editname,0,wxEXPAND)
+        EVT_TEXT(self, 20, self.EvtText)
+        EVT_CHAR(self.editname, self.EvtChar)
+        gs.Add(wxStaticText(self,-1,"How did you hear from us ?"),0,wxEXPAND)
+        gs.Add(wxComboBox(self, 30, "", wxPoint(-1,-1),wxSize(-1,-1), self.sampleList, wxCB_DROPDOWN),0,wxEXPAND)
+        EVT_COMBOBOX(self, 30, self.EvtComboBox)
+        EVT_TEXT(self, 30, self.EvtText)
+        gs.Add(60, 20, 0, wxEXPAND)
+        gs.Add(wxCheckBox(self, 40, "Do you want Insured Shipment ?"),0,wxEXPAND)
+        EVT_CHECKBOX(self, 40,   self.EvtCheckBox)
+        gs.Add(60, 20, 0, wxEXPAND)
+        gs.Add(wxRadioBox(self, 50, "What color would you like ?", wxPoint(-1,-1),wxDefaultSize,
+                        self.radioList, 3, wxRA_SPECIFY_COLS),0,wxEXPAND)
+        EVT_RADIOBOX(self, 50, self.EvtRadioBox)
+        gs.Add(60, 20, 0, wxEXPAND)
+        gs.Add(wxButton(self, 10, "Save"),0,wxALIGN_CENTER)
+        EVT_BUTTON(self, 10, self.OnClick)
+        # gs.AddGrowableRow(0)
+        boxh = wxBoxSizer(wxHORIZONTAL)
+        boxh.Add(gs,0,wxEXPAND)
+
+        self.logger=wxTextCtrl(self,5, "",wxPoint(-1,-1),wxSize(-1,-1),wxTE_MULTILINE | wxTE_READONLY)
+        boxh.Add( self.logger
+                  ,1,wxEXPAND)
+
+        self.sizer = boxh
+        self.sizer.Fit(self)
+        self.SetAutoLayout(true)
+        self.SetSizer(self.sizer)
+    def EvtRadioBox(self, event):
+        self.logger.AppendText('EvtRadioBox: %d\n' % event.GetInt())
+    def EvtComboBox(self, event):
+        self.logger.AppendText('EvtComboBox: %s\n' % event.GetString())
+    def OnClick(self,event):
+        self.logger.AppendText(" Click on object with Id %d\n" %event.GetId())
+    def EvtText(self, event):
+        self.logger.AppendText('EvtText: %s\n' % event.GetString())
+    def EvtChar(self, event):
+        self.logger.AppendText('EvtChar: %d\n' % event.GetKeyCode())
+        event.Skip()
+    def EvtCheckBox(self, event):
+        self.logger.AppendText('EvtCheckBox: %d\n' % event.Checked())
+
+
+app = wxPySimpleApp()
+frame = wxFrame(None,-1," Demo with Notebook")
+nb = wxNotebook(frame,-1)
+form1=Form1(nb, -1)
+form2=Form2(nb,-1)
+nb.AddPage(form1, "Absolute Positionning")
+nb.AddPage(form2, "Sizers")
+frame.Show(True)
+app.MainLoop()</t>
+<t tx="T930">@language c
+
+@ For reference only: I have deleted the C++ cruft such as importing .h files.
+
+To do:
+- convert wxWindows code to wxPython code.
+- move the wxPython code to the wx plugin that doesn't exist yet.</t>
+<t tx="T931">@others</t>
+<t tx="T932">void alert ( const char * message )
+{
+	wxMessageDialog * d = new wxMessageDialog( (wxWindow*) NULL,
+		message,
+		"Alert",
+		wxOK |wxCENTRE,
+		wxDefaultPosition);
+
+	d -&gt; ShowModal();
+	delete d;
+}
+</t>
+<t tx="T933">void assertFailedDialog ( const char * message )
+{
+	wxMessageDialog * d = new wxMessageDialog( (wxWindow*) NULL,
+		message,
+		"Leo assert failed",
+		wxOK |wxCENTRE,
+		wxDefaultPosition);
+
+	d -&gt; ShowModal();
+	delete d;
+}
+</t>
+<t tx="T934">&lt;&lt; FindPanel declarations &gt;&gt;
+
+@others
+</t>
+<t tx="T935">// &lt;&lt; FindPanel public globals &gt;&gt;
+bool reset_search_flag ;
+bool batch_flag ;
+bool wrap_flag ;
+bool whole_word_flag ;
+bool ignore_case_flag ;
+bool pattern_match_flag ;
+bool search_headline_flag ;
+bool search_body_flag ;
+bool suboutline_only_flag ;
+bool mark_changes_flag ;
+bool mark_finds_flag ;
+bool reverse_flag ;
+wxString find_text ("")  ;
+wxString change_text ("") ;
+</t>
+<t tx="T936">BEGIN_EVENT_TABLE(FindFrame, wxFrame)
+
+	#ifdef __WXMSW__ // Activate events exist only on windows.
+		EVT_ACTIVATE( FindFrame::OnActivateFindFrame )
+	#else
+		EVT_SET_FOCUS( FindFrame::OnSetFocus )
+	#endif
+
+	EVT_CLOSE( FindFrame::OnCloseFindFrame)
+
+	EVT_BUTTON( cChangeButton,			FindFrame::OnChangeButton )
+	EVT_BUTTON( cChangeAllButton,		FindFrame::OnChangeAllButton )
+	EVT_BUTTON( cChangeThenFindButton,	FindFrame::OnChangeThenFindButton )
+	EVT_BUTTON( cFindButton,			FindFrame::OnFindButton )
+	EVT_BUTTON( cFindAllButton,			FindFrame::OnFindAllButton )
+
+	EVT_CHECKBOX ( cBatchCheckBox,		FindFrame::OnBatchCheckBox )
+	EVT_CHECKBOX ( cIgnoreCaseCheckBox, FindFrame::OnIgnoreCaseCheckBox )
+	EVT_CHECKBOX ( cMarkChangesCheckBox,FindFrame::OnMarkChangesCheckBox )
+	EVT_CHECKBOX ( cMarkFindsCheckBox, 	FindFrame::OnMarkFindsCheckBox )
+	EVT_CHECKBOX ( cPatternMatchCheckBox, FindFrame::OnPatternMatchCheckBox )
+	EVT_CHECKBOX ( cReverseCheckBox, 	FindFrame::OnReverseCheckBox )
+	EVT_CHECKBOX ( cSearchHeadlineCheckBox,	FindFrame::OnSearchHeadlineCheckBox )
+	EVT_CHECKBOX ( cSearchBodyTextCheckBox, FindFrame::OnSearchBodyTextCheckBox )
+	EVT_CHECKBOX ( cSuboutlineOnlyCheckBox, FindFrame::OnSuboutlineOnlyCheckBox )
+	EVT_CHECKBOX ( cWrapAroundCheckBox,	FindFrame::OnWrapAroundCheckBox )
+	EVT_CHECKBOX ( cWholeWordCheckBox,	FindFrame::OnWholeWordCheckBox )
+
+	EVT_TEXT ( cFindTextCtrl,	FindFrame::OnFindText )
+	EVT_TEXT ( cChangeTextCtrl, FindFrame::OnChangeText )
+
+END_EVENT_TABLE()</t>
+<t tx="T937">FindFrame::FindFrame()
+
+	: wxFrame((wxFrame *)NULL, -1, "Leo Find/Change",
+		wxPoint(50, 50), wxDefaultSize,
+		wxMINIMIZE_BOX | wxTHICK_FRAME | wxSYSTEM_MENU | wxCAPTION)
+{
+	mFindPanel = new FindPanel(this);
+
+	// Resize to fit the panel.
+	wxBoxSizer * sizer = new wxBoxSizer(wxVERTICAL);
+	sizer -&gt; Add ( mFindPanel );
+	SetAutoLayout( TRUE );  // tell dialog to use sizer
+	SetSizer( sizer );  // actually set the sizer
+	sizer -&gt; Fit( this ); // set size to minimum size as calculated by the sizer
+	sizer -&gt; SetSizeHints( this ); // set size hints to honour mininum size
+
+	// Set the window icon.
+	#ifdef __WXMSW__
+	  this -&gt;SetIcon(wxIcon("LeoIcon"));
+	#endif
+
+	// Set the focus.
+	if (mFindPanel &amp;&amp; mFindPanel -&gt; mFindText )
+		mFindPanel -&gt; mFindText -&gt; SetFocus();
+}
+</t>
+<t tx="T938">@ &lt;&lt; FindPanel methods &gt;&gt; (2 of 23)
+@c
+
+#ifdef __WXMSW__ // This event exists only on Windows.
+
+void FindFrame::OnActivateFindFrame(wxActivateEvent&amp; event)
+{
+	if ( event . GetActive() ) {
+		this -&gt; set_check_boxes();
+		assert(mFindPanel &amp;&amp; mFindPanel -&gt; mFindText);
+		wxTextCtrl *c = mFindPanel -&gt; mFindText ;
+		wxString s = c -&gt; GetValue() ;
+			c -&gt; SetFocus();
+		c -&gt; SetSelection ( 0, s.Length() ) ;
+	}
+}
+</t>
+<t tx="T939">
+#else
+
+void FindFrame::OnSetFocus (wxFocusEvent&amp; WXUNUSED(event))
+{
+	this -&gt; set_check_boxes();
+	assert(mFindPanel &amp;&amp; mFindPanel -&gt; mFindText);
+	wxTextCtrl *c = mFindPanel -&gt; mFindText ;
+	wxString s = c -&gt; GetValue() ;
+		c -&gt; SetFocus();
+	c -&gt; SetSelection ( 0, s.Length() ) ;
+}
+</t>
+<t tx="T940">
+#endif
+// &lt;&lt; FindPanel methods &gt;&gt; (3 of 23)
+/*
+	This is an event handler function called when the user has tried to close a frame or dialog box. It is called via the 
+	wxWindow::Close function, so that the application can also invoke the handler programmatically.
+	
+	You should check whether the application is forcing the deletion of the window using CanVeto. If CanVeto returns FALSE, it is 
+	not possible to skip window deletion; destroy the window using wxWindow::Destroy. If not, it is up to you whether you respond 
+	by destroying the window.
+	
+	If you don't destroy the window, you should call wxCloseEvent::Veto to let the calling code know that you did not destroy the 
+	window. This allows the wxWindow::Close function to return TRUE or FALSE depending on whether the close instruction was 
+	honoured or not.
+*/
+void FindFrame::OnCloseFindFrame(wxCloseEvent&amp; event)
+{
+	if ( event.CanVeto() ) {
+		event.Veto();  // Did not destroy the window.
+		this -&gt; Show(FALSE);  // Just hide the window.
+	}
+	else {
+		this -&gt; Destroy();
+		gFindFrame = NULL ;
+	}
+}
+</t>
+<t tx="T941">@ &lt;&lt; FindPanel methods &gt;&gt; (4 of 23)
+@c
+
+void FindFrame::OnChangeButton (wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; doChangeButton() ;
+}
+</t>
+<t tx="T942">@ &lt;&lt; FindPanel methods &gt;&gt; (5 of 23)
+@c
+
+void FindFrame::OnChangeAllButton (wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; doChangeAllButton() ;
+}
+</t>
+<t tx="T943">@ &lt;&lt; FindPanel methods &gt;&gt; (6 of 23)
+@c
+
+void FindFrame::OnChangeThenFindButton (wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; doChangeThenFindButton() ;
+}
+</t>
+<t tx="T944">@ &lt;&lt; FindPanel methods &gt;&gt; (7 of 23)
+@c
+
+void FindFrame::OnFindButton (wxCommandEvent&amp; WXUNUSED(event))
+{
+	// This is the default button, so make sure there is find text.
+	if ( gActiveFrame &amp;&amp; find_text.Length() &gt; 0 )
+		gActiveFrame -&gt; mCommands -&gt; doFindButton() ;
+}
+</t>
+<t tx="T945">@ &lt;&lt; FindPanel methods &gt;&gt; (8 of 23)
+@c
+
+void FindFrame::OnFindAllButton (wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; doFindAllButton() ;
+}
+</t>
+<t tx="T946">@ &lt;&lt; FindPanel methods &gt;&gt; (9 of 23)
+@c
+
+void FindFrame::OnBatchCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	batch_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T947">@ &lt;&lt; FindPanel methods &gt;&gt; (10 of 23)
+@c
+
+void FindFrame::OnIgnoreCaseCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	ignore_case_flag = box -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T948">@ &lt;&lt; FindPanel methods &gt;&gt; (11 of 23)
+@c
+
+void FindFrame::OnMarkChangesCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	mark_changes_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T949">@ &lt;&lt; FindPanel methods &gt;&gt; (12 of 23)
+@c
+
+void FindFrame::OnMarkFindsCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	mark_finds_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T950">@ &lt;&lt; FindPanel methods &gt;&gt; (13 of 23)
+@c
+
+void FindFrame::OnPatternMatchCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	pattern_match_flag = box -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T951">@ &lt;&lt; FindPanel methods &gt;&gt; (14 of 23)
+@c
+
+void FindFrame::OnReverseCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	reverse_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T952">@ &lt;&lt; FindPanel methods &gt;&gt; (15 of 23)
+@c
+
+void FindFrame::OnSearchBodyTextCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	search_body_flag = box -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T953">@ &lt;&lt; FindPanel methods &gt;&gt; (16 of 23)
+@c
+
+void FindFrame::OnSearchHeadlineCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	search_headline_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T954">@ &lt;&lt; FindPanel methods &gt;&gt; (17 of 23)
+@c
+
+void FindFrame::OnSuboutlineOnlyCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	suboutline_only_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T955">@ &lt;&lt; FindPanel methods &gt;&gt; (18 of 23)
+@c
+
+void FindFrame::OnWrapAroundCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	wrap_flag = box -&gt; GetValue();
+}
+</t>
+<t tx="T956">@ &lt;&lt; FindPanel methods &gt;&gt; (19 of 23)
+@c
+
+void FindFrame::OnWholeWordCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	whole_word_flag = box -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T957">@ &lt;&lt; FindPanel methods &gt;&gt; (20 of 23)
+@c
+
+void FindFrame::OnChangeText (wxCommandEvent&amp; event)
+{
+	wxTextCtrl * text = (wxTextCtrl *) event.GetEventObject() ;
+	change_text = text -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T958">@ &lt;&lt; FindPanel methods &gt;&gt; (21 of 23)
+@c
+
+void FindFrame::OnFindText (wxCommandEvent&amp; event)
+{
+	wxTextCtrl * text = (wxTextCtrl *) event.GetEventObject() ;
+	find_text = text -&gt; GetValue();
+	if ( gActiveFrame )
+		gActiveFrame -&gt; mCommands -&gt; setup (TRUE) ; // reset the search.
+}
+</t>
+<t tx="T959">@ &lt;&lt; FindPanel methods &gt;&gt; (22 of 23)
+@c
+
+void FindFrame::set_check_boxes ( void )
+{
+	assert(mFindPanel);
+	mFindPanel -&gt; mBatchCheckBox -&gt; SetValue(batch_flag);
+	mFindPanel -&gt; mWrapAroundCheckBox -&gt; SetValue(wrap_flag);
+	mFindPanel -&gt; mWholeWordCheckBox -&gt; SetValue(whole_word_flag);
+	mFindPanel -&gt; mIgnoreCaseCheckBox -&gt; SetValue(ignore_case_flag);
+	mFindPanel -&gt; mPatternMatchCheckBox -&gt; SetValue(pattern_match_flag);
+	mFindPanel -&gt; mSearchHeadlineCheckBox -&gt; SetValue(search_headline_flag);
+	mFindPanel -&gt; mSearchBodyTextCheckBox -&gt; SetValue(search_body_flag);
+	mFindPanel -&gt; mSuboutlineOnlyCheckBox -&gt; SetValue(suboutline_only_flag);
+	mFindPanel -&gt; mMarkChangesCheckBox -&gt; SetValue(mark_changes_flag);
+	mFindPanel -&gt; mMarkFindsCheckBox -&gt; SetValue(mark_finds_flag);
+	mFindPanel -&gt; mReverseCheckBox -&gt; SetValue(reverse_flag);
+	mFindPanel -&gt; mFindText -&gt; SetValue(find_text);
+	mFindPanel -&gt; mChangeText -&gt; SetValue(change_text);
+}
+</t>
+<t tx="T960">@ &lt;&lt; FindPanel methods &gt;&gt; (23 of 23)
+@c
+
+FindPanel::FindPanel(wxFrame *frame)
+	   : wxPanel(frame, -1)
+{
+	// &lt;&lt; Create the find controls &gt;&gt;
+	wxBoxSizer * topSizer = new wxBoxSizer(wxVERTICAL);
+
+	topSizer -&gt; Add ( 0, 10 ) ;
+	// &lt;&lt; Create the find text box &gt;&gt;
+	wxBoxSizer * findSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	findSizer -&gt; Add ( 5, 5 ) ; // Extra space.
+
+	// Label.
+	findSizer -&gt; Add (
+		new wxStaticText(this, -1, "Find:",
+			wxPoint(-1,10), wxSize(50,25), 0, ""),
+		0, wxBORDER | wxTOP, 15);  // Vertical offset.
+
+	findSizer -&gt; Add ( 10, 0 ) ; // Width.
+
+	// Text.
+	mFindText = new wxTextCtrl(this,
+		cFindTextCtrl, "",
+		wxDefaultPosition, wxSize(300,60),
+		wxTE_PROCESS_TAB | wxTE_MULTILINE,
+		wxDefaultValidator, "") ;
+	findSizer -&gt; Add ( mFindText );
+	findSizer -&gt; Add ( 5, 0 ) ; // Width.
+
+	topSizer -&gt; Add ( findSizer );
+	topSizer -&gt; Add ( 0, 10 );
+	// -- end -- &lt;&lt; Create the find text box &gt;&gt;
+	// &lt;&lt; Create the change text box &gt;&gt;
+	wxBoxSizer * changeSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	changeSizer -&gt; Add ( 5, 5 ) ; // Extra space.
+
+	// Label.
+	changeSizer -&gt; Add (
+		new wxStaticText(this, -1, "Change:",
+			wxPoint(-1,10), wxSize(50,25), 0, ""),
+		0, wxBORDER | wxTOP, 15);  // Vertical offset.
+	changeSizer -&gt; Add ( 10, 0 ) ; // Width.
+
+	// Text.
+	mChangeText = new wxTextCtrl(this,
+		cChangeTextCtrl, "",
+		wxDefaultPosition, wxSize(300,60),
+		wxTE_PROCESS_TAB | wxTE_MULTILINE,
+		wxDefaultValidator, "") ;
+	changeSizer -&gt; Add ( mChangeText ) ;
+	changeSizer -&gt; Add ( 5, 0 ) ; // Width.
+
+	topSizer -&gt; Add ( changeSizer );
+	topSizer -&gt; Add ( 0, 10 );
+	// -- end -- &lt;&lt; Create the change text box &gt;&gt;
+	// &lt;&lt; Create all the find check boxes &gt;&gt;
+	wxBoxSizer * col1Sizer = new wxBoxSizer(wxVERTICAL);
+	// &lt;&lt; Create the first column of check boxes &gt;&gt;
+	mBatchCheckBox = new wxCheckBox(this,
+		cBatchCheckBox,
+		"Batch",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col1Sizer -&gt; Add ( mBatchCheckBox,
+		0, wxBORDER | wxLEFT, 50);
+
+	mWrapAroundCheckBox = new wxCheckBox(this,
+		cWrapAroundCheckBox,
+		"Wrap Around",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col1Sizer -&gt; Add ( mWrapAroundCheckBox,
+		0, wxBORDER | wxLEFT, 50);
+
+	mWholeWordCheckBox = new wxCheckBox(this,
+		cWholeWordCheckBox,
+		"Whole Word",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col1Sizer -&gt; Add ( mWholeWordCheckBox,
+		0, wxBORDER | wxLEFT, 50);
+
+	mIgnoreCaseCheckBox = new wxCheckBox(this,
+		cIgnoreCaseCheckBox,
+		"Ignore Case",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col1Sizer -&gt; Add ( mIgnoreCaseCheckBox,
+		0, wxBORDER | wxLEFT, 50);
+
+	mPatternMatchCheckBox = new wxCheckBox(this,
+		cPatternMatchCheckBox,
+		"Pattern Match",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col1Sizer -&gt; Add ( mPatternMatchCheckBox,
+		0, wxBORDER | wxLEFT, 50);
+	// -- end -- &lt;&lt; Create the first column of check boxes &gt;&gt;
+	wxBoxSizer * col2Sizer = new wxBoxSizer(wxVERTICAL);
+	// &lt;&lt; Create the second column of check boxes &gt;&gt;
+	mSearchHeadlineCheckBox = new wxCheckBox(this,
+		cSearchHeadlineCheckBox,
+		"Search Headline Text",
+		wxDefaultPosition, wxSize(150,25),
+		0, wxDefaultValidator, "") ;
+	col2Sizer -&gt; Add ( mSearchHeadlineCheckBox ) ;
+
+	mSearchBodyTextCheckBox = new wxCheckBox(this,
+		cSearchBodyTextCheckBox,
+		"Search Body Text",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col2Sizer -&gt; Add ( mSearchBodyTextCheckBox );
+
+	mSuboutlineOnlyCheckBox = new wxCheckBox(this,
+		cSuboutlineOnlyCheckBox,
+		"Suboutline Only",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col2Sizer -&gt; Add ( mSuboutlineOnlyCheckBox );
+
+	mMarkChangesCheckBox = new wxCheckBox(this,
+		cMarkChangesCheckBox,
+		"Mark Changes",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col2Sizer -&gt; Add ( mMarkChangesCheckBox );
+
+	mMarkFindsCheckBox = new wxCheckBox(this,
+		cMarkFindsCheckBox,
+		"Mark Finds",
+		wxDefaultPosition, wxSize(150,25), 0,
+		wxDefaultValidator, "") ;
+	col2Sizer -&gt; Add ( mMarkFindsCheckBox );
+	// -- end -- &lt;&lt; Create the second column of check boxes &gt;&gt;
+
+	// Pack the two columns
+	wxBoxSizer * checkBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+
+	checkBoxSizer -&gt; Add (col1Sizer);
+	checkBoxSizer -&gt; Add (col2Sizer);
+	topSizer -&gt; Add(checkBoxSizer);
+	topSizer -&gt; Add ( 0, 10 );
+	// -- end -- &lt;&lt; Create all the find check boxes &gt;&gt;
+	// &lt;&lt; Create all the find buttons &gt;&gt;
+	/*
+		The row sizers are a bit dim:  they should distribute the buttons automatically.
+	*/
+	wxBoxSizer * row1Sizer = new wxBoxSizer(wxHORIZONTAL);
+	// &lt;&lt; Create the first row of buttons &gt;&gt;
+	row1Sizer -&gt; Add (20,0);
+
+	mFindButton = new wxButton(this,
+		cFindButton, "Find",
+		wxDefaultPosition, wxSize(80,25), 0,
+		wxDefaultValidator, "") ;
+	row1Sizer -&gt; Add ( mFindButton );
+	row1Sizer -&gt; Add (24 + 22 ,0);
+
+	mReverseCheckBox = new wxCheckBox(this,
+		cReverseCheckBox, "Reverse",
+		wxDefaultPosition, wxSize(100,25), 0,
+		wxDefaultValidator, "") ;
+	row1Sizer -&gt; Add ( mReverseCheckBox );
+	row1Sizer -&gt; Add (24,0);
+
+	mFindAllButton = new wxButton(this,
+		cFindAllButton, "Find All",
+		wxDefaultPosition, wxSize(80,25), 0,
+		wxDefaultValidator, "") ;
+	row1Sizer -&gt; Add ( mFindAllButton );
+	// -- end -- &lt;&lt; Create the first row of buttons &gt;&gt;
+	wxBoxSizer * row2Sizer = new wxBoxSizer(wxHORIZONTAL);
+	// &lt;&lt; Create the second row of buttons &gt;&gt;
+	row2Sizer -&gt; Add (20,0);
+
+	mChangeButton = new wxButton(this,
+		cChangeButton, "Change",
+		wxDefaultPosition, wxSize(80,25), 0,
+		wxDefaultValidator, "") ;
+	row2Sizer -&gt; Add ( mChangeButton );
+	row2Sizer -&gt; Add (24,0);
+
+	mChangeThenFindButton = new wxButton(this,
+		cChangeThenFindButton, "Change, Then Find",
+		wxDefaultPosition, wxSize(122,25), 0,
+		wxDefaultValidator, "") ;
+	row2Sizer -&gt; Add ( mChangeThenFindButton );
+	row2Sizer -&gt; Add (24,0);
+
+	mChangeAllButton = new wxButton(this,
+		cChangeAllButton, "Change All",
+		wxDefaultPosition, wxSize(80,25), 0,
+		wxDefaultValidator, "") ;
+	row2Sizer -&gt; Add ( mChangeAllButton );
+	// -- end -- &lt;&lt; Create the second row of buttons &gt;&gt;
+
+	// Pack the two rows
+	wxBoxSizer * buttonSizer = new wxBoxSizer(wxVERTICAL);
+
+	buttonSizer -&gt; Add (row1Sizer);
+	buttonSizer -&gt; Add (0, 10);
+	buttonSizer -&gt; Add (row2Sizer);
+	topSizer -&gt; Add(buttonSizer);
+	topSizer -&gt; Add ( 0, 10 );
+	// -- end -- &lt;&lt; Create all the find buttons &gt;&gt;
+
+	SetAutoLayout( TRUE );  // tell dialog to use sizer
+	SetSizer( topSizer );  // actually set the sizer
+	topSizer -&gt; Fit( this ); // set size to minimum size as calculated by the sizer
+	topSizer -&gt; SetSizeHints( this ); // set size hints to honour mininum size
+	// -- end -- &lt;&lt; Create the find controls &gt;&gt;
+}
+</t>
+<t tx="T961">@others
+</t>
+<t tx="T962">BEGIN_EVENT_TABLE( LeoApp, wxApp)
+
+// EVT_EXIT ( LeoApp::OnExit )
+
+END_EVENT_TABLE()</t>
+<t tx="T963">bool LeoApp::OnInit()
+{
+	long argc = wxTheApp -&gt; argc ;
+	long filesLoaded = 0 ;
+
+	this -&gt; SetAppName("LeoWx");
+	&lt;&lt; Set gAppDirectory &gt;&gt;
+	&lt;&lt; Switch to the other running copy of Leo if one is already open &gt;&gt;
+	&lt;&lt; Open a file when double-clicking an icon &gt;&gt;
+	if ( filesLoaded == 0 ) {
+		&lt;&lt; Create a frame and link it into the global frame list &gt;&gt;
+	}
+	# Create the find panel, but do not show it &gt;&gt;
+	gFindFrame = new FindFrame ();
+	&lt;&lt; Initialize Sherlock &gt;&gt;
+	&lt;&lt; Dump the command line &gt;&gt;
+	TRACEP("assert_test", assert(0));
+	return TRUE;
+}</t>
+<t tx="T964">#if 0 //// Not yet: compiles, but lpCmdLine is a dummy !!!!
+
+	LPSTR lpCmdLine = NULL ;  //// Was param to main routine...
+
+	// Try to open the mutex.
+	HANDLE hMutex = OpenMutex(MUTEX_ALL_ACCESS, 0, "LeoWxApp");
+
+	// If hMutex is 0 then the mutex doesn't exist. Create it.
+	if (!hMutex)
+		hMutex = CreateMutex(0, 0, "LeoWxApp");
+	else {
+		// This is a second instance. Bring the original
+		// instance to the top.
+		HWND hWnd = FindWindow(0, "LeoWx");
+		if (hWnd == 0 ) return 0 ;  ////
+
+		SetForegroundWindow(hWnd);
+
+		// Send the command line in a WM_COPYDATA message.
+		if (strlen(lpCmdLine) != 0) {
+			COPYDATASTRUCT cds;
+			cds.cbData = strlen(lpCmdLine) + 1;
+			cds.lpData = lpCmdLine;
+			SendMessage(hWnd, WM_COPYDATA, 0, (LPARAM)&amp;cds);
+		}
+		return 0; ////
+	}
+#endif //// not yet</t>
+<t tx="T965">wxString cwd = ::wxGetCwd();
+gAppDirectory = wxFindAppPath( cwd ) ;
+
+// Make sure the directory does not end with a directory separator.
+size_t len = gAppDirectory.Length() ;
+if ( len &gt; 0 &amp;&amp; gAppDirectory.Last() == wxFILE_SEP_PATH)
+	gAppDirectory = gAppDirectory.Truncate(len - 1);</t>
+<t tx="T966">gIniting = TRUE ; // Disable error message if file not found.
+
+for ( int i = 1 ; i &lt; argc ; ++ i ) {
+	wxString arg = wxTheApp -&gt; argv[i] ;
+	LeoFrame *frame = LeoFrame::OpenWithFileName( arg );
+	if (frame) ++filesLoaded;
+}
+
+gIniting = FALSE ;</t>
+<t tx="T967">LeoFrame *frame = new LeoFrame();
+
+++gNumberOfUntitledWindows ;
+frame -&gt; SetTitle("untitled");
+frame -&gt; Show(TRUE);
+SetTopWindow(frame);
+gCommands = frame -&gt; mCommands ;
+gActiveFrame = frame ; // Allow writes to log pane.
+
+// Set the current node in the _new_ form!.
+vnode *v = frame -&gt; mCommands -&gt; rootVnode();
+assert(v);
+frame -&gt; mCommands -&gt; setCurrentVnode ( v ) ;
+frame -&gt; mCommands -&gt; editVnode( v ) ;
+frame -&gt; mCommands -&gt; mFirstWindowAndNeverSaved = TRUE ;</t>
+<t tx="T968">#ifdef SHERLOCK
+	gIniting = TRUE ; // Disable auto open of window during signon.
+		SL_INIT () ;
+		wxString path("./LeoArgs");
+		if ( gAppDirectory.Length() &gt; 0 )
+			path = gAppDirectory + "/LeoArgs" ;
+		init_args ( &amp;sArgc, &amp;sArgv, (char *) path.c_str() ) ;
+
+		// argv will still be NULL if LeoArgs can not be found.
+		if ( sArgv ) {
+			SL_PARSE ( sArgc, (char **) sArgv , "++" , "--" ) ;
+		}
+	gIniting = FALSE ;
+#endif</t>
+<t tx="T969">TRACEP("dump_argv", 
+	ecnl(); es("argc: "); elong(argc); enl();
+	for ( int i = 0 ; i &lt;= argc ; ++ i ) {
+		wxString arg = wxTheApp -&gt; argv[i] ;
+		es("argv["); elong(i); es("]: "); es(arg.c_str()); enl();
+	}
+);</t>
+<t tx="T970">@ &lt;&lt; LeoApp methods &gt;&gt; (2 of 2)
+@c
+
+int LeoApp::OnExit()
+{
+	return TRUE ;
+}
+</t>
+<t tx="T971">@ Initialize the argv vector from a file. This routine is declared in sl.h. init_arg_parse is defined in sl.c.
+@c
+
+void init_args ( int *argc, char ***argvp, char *file_name )
+{
+	// Open the file.  The ctor may throw an exception if it fails, so we test first.
+	if ( ! wxFileExists ( file_name ) ) return ;
+	wxFile file ( file_name, wxFile::read ) ;
+	if ( ! file . IsOpened() ) return ;
+
+	// Allocate the buffer.
+	long file_size = file . Length() ;
+	char * file_buf = ( char * ) calloc ( 1, file_size + 2 ) ;
+	if (file_buf == NULL) return ;
+
+	// Read the open file into file_buf.
+	long count = file . Read ( file_buf, file_size ) ;
+	if ( count != file_size ) return ;
+
+	// End the buffer with a zero byte.
+	file_buf [ file_size ] = '\0';
+
+	// Create and return the arguments in a made-up argv vector.
+	init_massage ( file_buf ) ;
+	*argc = init_arg_parse ( argvp, file_buf ) ;
+}
+</t>
+<t tx="T972">@ &lt;&lt; LeoApp functions &gt;&gt; (2 of 2)
+Returns the absolute path containing this app, or an empty string if the path can not be determined.  cwd should be the current working directory at startup, _not_ the present current working directory.
+@c
+
+wxString wxFindAppPath(wxString&amp; cwd)
+{
+	// 1. Try the environment variable.
+	wxString s = wxGetenv("Leo");
+	if (!s.IsEmpty()) return s ;
+
+	// 2. Try the path in argv0.
+	wxString argv0 = wxTheApp -&gt; argv[0] ;
+	if ( argv0.IsEmpty() ) return wxEmptyString ;
+
+	if (wxIsAbsolutePath(argv0))
+		return wxPathOnly(argv0);
+	else {
+		// Resolve the relative path.
+		if (cwd.Last() != wxFILE_SEP_PATH)
+			cwd += wxFILE_SEP_PATH;
+		cwd += argv0;
+		if (wxFileExists(cwd)) return wxPathOnly(cwd);
+	}
+
+	// 3. Search the PATH  var for the path in argv0.
+	wxPathList pathList;
+	pathList.AddEnvList(wxT("PATH"));
+	s = pathList.FindAbsoluteValidPath(argv0);
+	if ( s.IsEmpty() )
+			return wxEmptyString ;
+	else
+			return wxPathOnly(s) ;
+}
+</t>
+<t tx="T973">@ -- end -- &lt;&lt; LeoApp functions &gt;&gt;
+@c
+
+#include "LIBes.h"
+// &lt;&lt; log bridge functions &gt;&gt; (1 of 2)
+void log_open ( const char * filename )
+{
+	// Carefull: the Log window may not exist during startup or shutdown.
+	#if 0 // no longer needed.
+	if ( gLogFrame )
+		gLogFrame -&gt; open(filename);
+	#endif
+}
+</t>
+<t tx="T974">@ &lt;&lt; log bridge functions &gt;&gt; (2 of 2)
+@c
+
+void put_cstring_to_log_window ( const char * s )
+{
+	if ( gActiveFrame )
+		gActiveFrame -&gt; putToLog(s);
+	//// else this -&gt; bufferLogMessage(s) ;
+}
+</t>
+<t tx="T975">@others</t>
+<t tx="T976">BEGIN_EVENT_TABLE(LeoFrame, wxFrame)
+
+@ The following commands are processed by default event handlers in wxTextCtrl:
+wxID_CUT, wxID_COPY, wxID_PASTE, wxID_UNDO, wxID_REDO.
+The associated UI update events are also processed automatically, when the control has the focus.
+@c
+
+// General window events...
+#ifdef __WXMSW__ // Activate events exist only on Windows.
+	EVT_ACTIVATE( LeoFrame::onActivate )
+#else
+	EVT_SET_FOCUS ( LeoFrame::OnSetFocus )
+#endif
+
+EVT_CLOSE( LeoFrame::onCloseLeoFrame)
+EVT_SIZE( LeoFrame::onResize)
+
+// Events in the text control...
+EVT_TEXT( cBodyCtrl, LeoFrame::onBodyTextUpdated)
+	// Fires whenever text changes.
+
+// Events in the tree control...
+EVT_TREE_KEY_DOWN(cTreeCtrl, LeoFrame::onTreeKeyDown)
+	// Control keys do not fire this event.
+
+EVT_TREE_SEL_CHANGED(cTreeCtrl, LeoFrame::onTreeChanged) 
+EVT_TREE_SEL_CHANGING(cTreeCtrl, LeoFrame::onTreeChanging)
+
+EVT_TREE_BEGIN_DRAG(cTreeCtrl, LeoFrame::onTreeBeginDrag)
+EVT_TREE_END_DRAG(cTreeCtrl, LeoFrame::onTreeEndDrag)
+
+EVT_TREE_BEGIN_LABEL_EDIT(cTreeCtrl, LeoFrame::onTreeBeginLabelEdit)
+EVT_TREE_END_LABEL_EDIT(cTreeCtrl, LeoFrame::onTreeEndLabelEdit)
+&lt;&lt; Declare menu events &gt;&gt;
+
+END_EVENT_TABLE()</t>
+<t tx="T977">// Menu enablers...
+EVT_UPDATE_UI(cRevertMenuItem, LeoFrame::OnUpdateRevert )
+
+// Command handlers...
+EVT_MENU(cNewMenuItem,		LeoFrame::OnNew)
+EVT_MENU(cOpenMenuItem,		LeoFrame::OnOpen)
+EVT_MENU(cCloseMenuItem,	LeoFrame::OnClose)
+EVT_MENU(cSaveMenuItem,		LeoFrame::OnSave)
+EVT_MENU(cSaveAsMenuItem,	LeoFrame::OnSaveAs)
+EVT_MENU(cSaveToMenuItem,	LeoFrame::OnSaveTo)
+EVT_MENU(cRevertMenuItem,	LeoFrame::OnRevert)
+
+EVT_MENU(cPageSetupMenuItem,LeoFrame::OnPageSetup)
+EVT_MENU(cPrintMenuItem,  	LeoFrame::OnPrint)
+
+// Read/Write submenu
+
+	EVT_MENU(cReadOutlineOnlyMenuItem,		LeoFrame::OnReadOutlineOnly)
+	EVT_MENU(cReadAtFileNodesMenuItem,		LeoFrame::OnReadAtFileNodes)
+	EVT_MENU(cWriteOutlineOnlyMenuItem,		LeoFrame::OnWriteOutlineOnly)
+	EVT_MENU(cWriteAtFileNodesMenuItem,		LeoFrame::OnWriteAtFileNodes)
+
+// EVT_MENU(cTangleSubmenuItem,	LeoFrame::OnTangleSubmenu)
+
+	EVT_MENU(cTangleAllMenuItem,		LeoFrame::OnTangleAll)
+	EVT_MENU(cTangleMarkedMenuItem,		LeoFrame::OnTangleMarked)
+	EVT_MENU(cTangleMenuItem,			LeoFrame::OnTangle)
+
+// EVT_MENU(cUntangleSubmenuItem,  LeoFrame::OnUntangleSubmenu)
+
+	EVT_MENU(cUntangleAllMenuItem,		LeoFrame::OnUntangleAll)
+	EVT_MENU(cUntangleMarkedMenuItem,	LeoFrame::OnUntangleMarked)
+	EVT_MENU(cUntangleMenuItem,			LeoFrame::OnUntangle)
+
+// EVT_MENU(cImportExportSubmenuItem,  LeoFrame::OnImportExportSubmenu)
+
+	EVT_MENU(cImportFilesMenuItem,		LeoFrame::OnImportFiles)
+	EVT_MENU(cImportCWEBFilesMenuItem,	LeoFrame::OnImportCWEBFiles)
+	EVT_MENU(cImportNowebFilesMenuItem,	LeoFrame::OnImportNowebFiles)
+	EVT_MENU(cImportMORETextMenuItem,	LeoFrame::OnImportMoreText)
+	EVT_MENU(cFlattenOutlineMenuItem,	LeoFrame::OnFlattenOutline)
+
+EVT_MENU(cQuitMenuItem,  LeoFrame::OnQuit)
+
+// Menu enablers...
+EVT_UPDATE_UI(cUndoMenuItem,	LeoFrame::OnUpdateUndo )
+
+#ifndef __WXGTK__ // For now, neither tree nor text controls support Redo.
+EVT_UPDATE_UI(cRedoMenuItem,	LeoFrame::OnUpdateRedo )
+#endif
+
+EVT_UPDATE_UI(cCutMenuItem,		LeoFrame::OnUpdateCut )
+EVT_UPDATE_UI(cCopyMenuItem,	LeoFrame::OnUpdateCopy )
+EVT_UPDATE_UI(cPasteMenuItem,	LeoFrame::OnUpdatePaste )
+EVT_UPDATE_UI(cDeleteMenuItem,	LeoFrame::OnUpdateDelete )
+EVT_UPDATE_UI(cDeleteMenuItem,	LeoFrame::OnUpdateSelectAll )
+
+EVT_UPDATE_UI(cExtractMenuItem,	LeoFrame::OnUpdateExtract )
+EVT_UPDATE_UI(cExtractSectionMenuItem,	LeoFrame::OnUpdateExtractSection )
+EVT_UPDATE_UI(cExtractNamesMenuItem,	LeoFrame::OnUpdateExtractNames )
+
+EVT_UPDATE_UI(cFindNextMenuItem,		LeoFrame::OnUpdateFind) 
+EVT_UPDATE_UI(cFindNextMenuItem2,		LeoFrame::OnUpdateFind)
+EVT_UPDATE_UI(cFindPreviousMenuItem,	LeoFrame::OnUpdateFind)
+EVT_UPDATE_UI(cReplaceMenuItem,			LeoFrame::OnUpdateReplace) 
+EVT_UPDATE_UI(cReplaceThenFindMenuItem,	LeoFrame::OnUpdateReplace) 
+
+// Command handlers...
+
+// Top level
+EVT_MENU(cUndoMenuItem,			LeoFrame::OnUndo)
+EVT_MENU(cRedoMenuItem,			LeoFrame::OnRedo)
+EVT_MENU(cCutMenuItem,			LeoFrame::OnCut)
+EVT_MENU(cCopyMenuItem,			LeoFrame::OnCopy)
+EVT_MENU(cPasteMenuItem,		LeoFrame::OnPaste)
+EVT_MENU(cDeleteMenuItem,		LeoFrame::OnDelete)
+EVT_MENU(cSelectAllMenuItem,	LeoFrame::OnSelectAll)
+EVT_MENU(cEditHeadlineMenuItem,	LeoFrame::OnEditHeadline)
+EVT_MENU(cFontPanelMenuItem,		LeoFrame::OnFontPanel)
+EVT_MENU(cSyntaxColoringMenuItem,	LeoFrame::OnSyntaxColoring)
+EVT_MENU(cPreferencesMenuItem,		LeoFrame::OnPreferences)
+
+// Edit Body submenu
+EVT_MENU(cExtractSectionMenuItem,	LeoFrame::OnExtractSection)
+EVT_MENU(cExtractNamesMenuItem,		LeoFrame::OnExtractNames)
+EVT_MENU(cExtractMenuItem,			LeoFrame::OnExtract)
+EVT_MENU(cConvertBlanksMenuItem,	LeoFrame::OnConvertBlanks)
+
+// Find submenu
+EVT_MENU(cFindPanelMenuItem,		LeoFrame::OnFindPanel)
+EVT_MENU(cFindNextMenuItem,			LeoFrame::OnFindNext)
+EVT_MENU(cFindNextMenuItem2,		LeoFrame::OnFindNext)
+EVT_MENU(cFindPreviousMenuItem,		LeoFrame::OnFindPrevious)
+EVT_MENU(cReplaceMenuItem,			LeoFrame::OnReplace)
+EVT_MENU(cReplaceThenFindMenuItem,	LeoFrame::OnReplaceThenFind)
+
+// Menu enablers...
+// Top level
+EVT_UPDATE_UI(cCutNodeMenuItem,		LeoFrame::OnUpdateCutNode)
+EVT_UPDATE_UI(cDeleteNodeMenuItem,	LeoFrame::OnUpdateDeleteNode)
+EVT_UPDATE_UI(cPasteNodeMenuItem,	LeoFrame::OnUpdatePasteNode)
+EVT_UPDATE_UI(cSortNodeMenuItem,	LeoFrame::OnUpdateSortNode)
+
+// Expand/Contract submenu
+EVT_UPDATE_UI(cExpandAllMenuItem,			LeoFrame::OnUpdateExpandAll)
+EVT_UPDATE_UI(cExpandAllChildrenMenuItem,	LeoFrame::OnUpdateExpandAllChildren)
+EVT_UPDATE_UI(cExpandChilrenMenuItem,		LeoFrame::OnUpdateExpandChildren)
+EVT_UPDATE_UI(cContractAllMenuItem,			LeoFrame::OnUpdateContractAll)
+EVT_UPDATE_UI(cContractAllChildrenMenuItem,	LeoFrame::OnUpdateContractAllChildren)
+EVT_UPDATE_UI(cContractChilrenMenuItem,		LeoFrame::OnUpdateContractChildren)
+
+// Move/Select submenu
+EVT_UPDATE_UI(cMoveDownMenuItem,	LeoFrame::OnUpdateMoveDown)
+EVT_UPDATE_UI(cMoveLeftMenuItem,	LeoFrame::OnUpdateMoveLeft)
+EVT_UPDATE_UI(cMoveRightMenuItem,	LeoFrame::OnUpdateMoveRight)
+EVT_UPDATE_UI(cMoveUpMenuItem,		LeoFrame::OnUpdateMoveUp)
+EVT_UPDATE_UI(cPromoteMenuItem,		LeoFrame::OnUpdatePromote)
+EVT_UPDATE_UI(cDemoteMenuItem,		LeoFrame::OnUpdateDemote)
+EVT_UPDATE_UI(cGoPrevVisibleMenuItem,LeoFrame::OnUpdateGoPrevVisible)
+EVT_UPDATE_UI(cGoNextVisibleMenuItem,LeoFrame::OnUpdateGoNextVisible)
+EVT_UPDATE_UI(cGoBackMenuItem,		LeoFrame::OnUpdateGoBack)
+EVT_UPDATE_UI(cGoNextMenuItem,		LeoFrame::OnUpdateGoNext)
+
+// Mark/Go To submenu
+EVT_UPDATE_UI(cMarkMenuItem,			LeoFrame::OnUpdateMark)
+EVT_UPDATE_UI(cMarkSubheadsMenuItem,	LeoFrame::OnUpdateMarkSubheads)
+EVT_UPDATE_UI(cMarkChangedItemsMenuItem,LeoFrame::OnUpdateMarkChangedItems)
+EVT_UPDATE_UI(cMarkChangedRootsMenuItem,LeoFrame::OnUpdateMarkChangedRoots)
+EVT_UPDATE_UI(cGoToNextMarkedMenuItem,	LeoFrame::OnUpdateGoToNextMarked)
+EVT_UPDATE_UI(cGoToNextChangedMenuItem,	LeoFrame::OnUpdateGoToNextChanged)
+
+// Command handlers...
+EVT_MENU(cCutNodeMenuItem,		LeoFrame::OnCutNode)
+EVT_MENU(cCopyNodeMenuItem,		LeoFrame::OnCopyNode)
+EVT_MENU(cPasteNodeMenuItem,	LeoFrame::OnPasteNode)
+EVT_MENU(cDeleteNodeMenuItem,	LeoFrame::OnDeleteNode)
+
+EVT_MENU(cInsertNodeMenuItem,	LeoFrame::OnInsertNode)
+EVT_MENU(cCloneNodeMenuItem,	LeoFrame::OnCloneNode)
+EVT_MENU(cSortNodeMenuItem,		LeoFrame::OnSortNode)
+
+// Expand/Contract submenu
+EVT_MENU(cExpandAllMenuItem,			LeoFrame::OnExpandAll)
+EVT_MENU(cExpandAllChildrenMenuItem,	LeoFrame::OnExpandAllChildren)
+EVT_MENU(cExpandChilrenMenuItem,		LeoFrame::OnExpandChildren)
+EVT_MENU(cContractAllMenuItem,			LeoFrame::OnContractAll)
+EVT_MENU(cContractAllChildrenMenuItem,	LeoFrame::OnContractAllChildren)
+EVT_MENU(cContractChilrenMenuItem,		LeoFrame::OnContractChildren)
+
+EVT_MENU(cExpandNextLevelMenuItem,	LeoFrame::OnExpandNextLevel)
+EVT_MENU(cExpandToLevel1MenuItem,	LeoFrame::OnExpandToLevel1)
+EVT_MENU(cExpandToLevel2MenuItem,	LeoFrame::OnExpandToLevel2)
+EVT_MENU(cExpandToLevel3MenuItem,	LeoFrame::OnExpandToLevel3)
+EVT_MENU(cExpandToLevel4MenuItem,	LeoFrame::OnExpandToLevel4)
+EVT_MENU(cExpandToLevel5MenuItem,	LeoFrame::OnExpandToLevel5)
+EVT_MENU(cExpandToLevel6MenuItem,	LeoFrame::OnExpandToLevel6)
+EVT_MENU(cExpandToLevel7MenuItem,	LeoFrame::OnExpandToLevel7)
+EVT_MENU(cExpandToLevel8MenuItem,	LeoFrame::OnExpandToLevel8)
+EVT_MENU(cExpandToLevel9MenuItem,	LeoFrame::OnExpandToLevel9)
+
+// Move/Select submenu
+EVT_MENU(cMoveDownMenuItem,		LeoFrame::OnMoveDown)
+EVT_MENU(cMoveLeftMenuItem,		LeoFrame::OnMoveLeft)
+EVT_MENU(cMoveRightMenuItem,	LeoFrame::OnMoveRight)
+EVT_MENU(cMoveUpMenuItem,		LeoFrame::OnMoveUp)
+EVT_MENU(cPromoteMenuItem,		LeoFrame::OnPromote)
+EVT_MENU(cDemoteMenuItem,		LeoFrame::OnDemote)
+EVT_MENU(cGoPrevVisibleMenuItem,	LeoFrame::OnGoPrevVisible)
+EVT_MENU(cGoNextVisibleMenuItem,	LeoFrame::OnGoNextVisible)
+EVT_MENU(cGoBackMenuItem,	LeoFrame::OnGoBack)
+EVT_MENU(cGoNextMenuItem,	LeoFrame::OnGoNext)
+
+// Mark/Go To submenu
+EVT_MENU(cMarkMenuItem,				LeoFrame::OnMark)
+EVT_MENU(cMarkSubheadsMenuItem,		LeoFrame::OnMarkSubheads)
+EVT_MENU(cMarkChangedItemsMenuItem,	LeoFrame::OnMarkChangedItems)
+EVT_MENU(cMarkChangedRootsMenuItem,	LeoFrame::OnMarkChangedRoots)
+
+EVT_MENU(cMarkAllAtFileNodesDirtyMenuItem,	LeoFrame::OnMarkAllAtFileNodesDirty)
+EVT_MENU(cMarkAtFileNodesDirtyMenuItem,	LeoFrame::OnMarkAtFileNodesDirty)
+
+EVT_MENU(cUnmarkAllMenuItem,		LeoFrame::OnUnmarkAll)
+EVT_MENU(cGoToNextMarkedMenuItem,	LeoFrame::OnGoToNextMarked)
+EVT_MENU(cGoToNextChangedMenuItem,	LeoFrame::OnGoToNextChanged)
+
+// Command handlers...
+EVT_MENU(cEqualSizedPanesMenuItem,	LeoFrame::OnEqualSizedPanes)
+EVT_MENU(cToggleActivePaneMenuItem,	LeoFrame::OnToggleActivePane)
+EVT_MENU(cSplitPaneDirectionMenuItem, LeoFrame::OnChangeDirection)
+
+EVT_MENU(cCascadeMenuItem, 		LeoFrame::OnCascade)
+EVT_MENU(cMinimizeAllMenuItem,	LeoFrame::OnMinimizeAll)
+
+#ifdef __WXMSW__
+EVT_MENU(cOpenPythonWindowMenuItem,LeoFrame::OnOpenPythonWindow)
+#endif
+
+EVT_MENU(cRecentWindowsMenuItem,LeoFrame::OnRecentWindows)
+
+EVT_MENU(cAboutLeoMenuItem, LeoFrame::OnAbout)</t>
+<t tx="T978">LeoFrame::LeoFrame()
+	: wxFrame((wxFrame *)NULL, -1, "LeoWX", wxDefaultPosition, wxSize(550, 600)),
+	mFileName ( "" ),
+	mDefaultDirectory ( "" ),
+	mOpenDirectory ( "" )
+{
+	// Link the new frame into the list of frames.
+	mIniting = TRUE ; // Lock out resize events.
+	long width = 600 ; // initial size
+	if ( gLeoFrameList ) gLeoFrameList -&gt; mPrevFrame = this ;
+	this -&gt; mNextFrame = gLeoFrameList ;
+	this -&gt; mPrevFrame = NULL ;
+	gLeoFrameList = this ;
+	&lt;&lt; Initialize the private vars &gt;&gt;
+	&lt;&lt; Initialize the argument settings &gt;&gt;
+	this -&gt; createMenus() ;
+	&lt;&lt; Create the splitter windows &gt;&gt;
+	&lt;&lt; Create the accelerator table &gt;&gt;
+	&lt;&lt; Create the status bar &gt;&gt;
+	&lt;&lt; Set the window Icon &gt;&gt;
+	&lt;&lt; Set the caret blink rate &gt;&gt;
+
+	mCommands = new Commands(this, mTreeCtrl, mBodyCtrl) ;
+	&lt;&lt; Add root node to the tree view &gt;&gt;
+	gActiveFrame = this ;
+	mIniting = FALSE ; // allow resize events.
+	es("Leo Log Window...\n\n");
+}</t>
+<t tx="T979">mTextChanging = 0 ;
+mCopying = 0 ;
+mDraggedItem =  0L ;
+mReverting = FALSE ;</t>
+<t tx="T980">mOutputDocFlag = TRUE ;
+mTangleBatchFlag = FALSE ;
+mUntangleBatchFlag = FALSE ;
+mUseHeaderFlag = TRUE ;
+mPageWidth = 132 ;
+mTabWidth = 4;
+mPresentLanguage = c_language ;
+mTargetLanguage = c_language ;</t>
+<t tx="T981">mSplitter1 = new wxSplitterWindow(this, cSplitterWindow,
+	wxDefaultPosition,  wxDefaultSize,
+	wxSP_BORDER | wxSP_3D, 
+	"splitterWindow");
+
+mSplitter2 = new wxSplitterWindow( mSplitter1, -1,
+	wxDefaultPosition,  wxDefaultSize,
+	wxSP_BORDER | wxSP_3D, "splitterWindow");
+
+mSplitter1 -&gt; SetMinimumPaneSize(4);
+mSplitter2 -&gt; SetMinimumPaneSize(4);
+
+mTreeCtrl = new wxTreeCtrl (mSplitter2, cTreeCtrl,
+	wxDefaultPosition,  wxDefaultSize,
+	wxTR_HAS_BUTTONS | wxTR_EDIT_LABELS, wxDefaultValidator, "treeCtrl");
+
+// &lt;&lt; Set the image list &gt;&gt;
+/*
+	Warning: the width and height must match the underlying .bmp files.
+*/
+// width: 20, height: 11, mask:TRUE, count:16
+#if defined(__WXMSW__) || defined(__WXGTK__)
+	wxImageList * im = new wxImageList(20, 11, TRUE, 16);
+	wxBitmap box(20,11);
+
+	// Add 16 bitmaps to the image list.
+	for ( int i = 0 ; i &lt; 16 ; ++ i ) {
+
+		#if  defined(__WXMSW__)
+			wxString s("box");
+			s &lt;&lt; i;
+			box.LoadFile(s, wxBITMAP_TYPE_BMP_RESOURCE);
+		#elif defined(__WXGTK__)
+			wxString s("./Icons/box");  // Assume we are launched from ./ directory.
+			if ( gAppDirectory.Length() &gt; 0 )
+				s = gAppDirectory + "/Icons/box" ;
+			if ( i &lt; 10 ) s &lt;&lt; "0" ;
+			s &lt;&lt; i;
+			s &lt;&lt; ".bmp" ;
+			box.LoadFile(s, wxBITMAP_TYPE_BMP);
+		#endif
+		im -&gt; Add ( box );
+	}
+	mTreeCtrl -&gt; SetImageList(im);
+#endif
+// -- end -- &lt;&lt; Set the image list &gt;&gt;
+
+mBodyCtrl = new wxTextCtrl( mSplitter1, cBodyCtrl, "",
+	wxDefaultPosition,  wxDefaultSize, wxTE_MULTILINE );
+
+mLogCtrl = new wxTextCtrl( mSplitter2, cLogCtrl, "",
+	wxDefaultPosition,  wxDefaultSize, wxTE_MULTILINE );
+
+// &lt;&lt; Set the body font &gt;&gt;
+#ifdef __WXMSW__  // This is a fixed-width font and works well.
+
+	// size, family, style, weight.
+	wxFont font (9, wxMODERN, wxNORMAL, wxNORMAL) ; 
+
+#else
+
+	// size, family, style, weight.
+	// wxFont font (9, wxMODERN, wxNORMAL, wxNORMAL) ; 
+
+	// Try to use lucidatypewriter.
+	wxFont font (12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, FALSE,
+		"lucidatypewriter", wxFONTENCODING_ISO8859_1);
+
+	#if 0 // none of these work
+		wxFont font(14, 74, 90, 90, FALSE,
+		"terminal",
+		// "-bitstream-terminal-medium-r-normal-*-*-140-*-*-c-*-iso8859-1",
+		// "-Bitstream-Terminal-Medium-R-Normal--18-140-100-100-C-*-ISO8859-1",
+		wxFONTENCODING_ISO8859_1);
+	#endif
+#endif
+
+TRACEP("font_info",
+	es("face: "); es( font . GetFaceName() . c_str() ) ; ecs();
+	es("family: "); es( font . GetFamilyString() . c_str() ) ; enl();
+	es("size: "); eint( font . GetPointSize() ) ; ecs();
+	es("style: "); es( font. GetStyleString() . c_str() ) ; ecs();
+	es("weight: "); es( font . GetWeightString() . c_str() ) ; enl();
+);
+
+mBodyCtrl -&gt; SetFont ( font ) ;
+// -- end -- &lt;&lt; Set the body font &gt;&gt;
+
+// Attach the controls to the splitter.
+mSplitter1 -&gt; SplitHorizontally(mSplitter2, mBodyCtrl, 0);
+mSplitter2 -&gt; SplitVertically(mTreeCtrl, mLogCtrl, width/2);</t>
+<t tx="T982">#ifdef __WXGTK__ // Windows version handles shortcuts properly
+
+enum {
+	// &lt;&lt; accelerator constants &gt;&gt;
+	alt = wxACCEL_ALT,
+	normal = wxACCEL_NORMAL,
+	ctrl = wxACCEL_CTRL,
+	shift = wxACCEL_SHIFT,
+	shift_alt = (wxACCEL_ALT | wxACCEL_SHIFT),
+	shift_ctrl = (wxACCEL_CTRL | wxACCEL_SHIFT),
+	// -- end -- &lt;&lt; accelerator constants &gt;&gt;
+	cFirstEntry = -1, // So first real index starts at 0.
+	// &lt;&lt; accelerator indices &gt;&gt; (1 of 12)
+	cQuit,
+	// &lt;&lt; accelerator indices &gt;&gt; (2 of 12)
+	cNew,
+
+	// cOpen, cClose, cSave, cSaveAs,
+	// &lt;&lt; accelerator indices &gt;&gt; (3 of 12)
+	cTangleAll, cTangleMarked, cTangle,
+	// &lt;&lt; accelerator indices &gt;&gt; (4 of 12)
+	cUntangle,
+	// &lt;&lt; accelerator indices &gt;&gt; (5 of 12)
+	cImportFiles,
+	// &lt;&lt; accelerator indices &gt;&gt; (6 of 12)
+	cEditHeadline,
+	// &lt;&lt; accelerator indices &gt;&gt; (7 of 12)
+	cExtractSection, cExtractNames, cExtract, cConvertBlanks,
+	// &lt;&lt; accelerator indices &gt;&gt; (8 of 12)
+	cFindPanel, cFindNext, cFindPrev, cReplace, cReplaceThenFind,
+	// &lt;&lt; accelerator indices &gt;&gt; (9 of 12)
+	// cFontPanel, cSyntaxColoring, cPreferences,
+	// &lt;&lt; accelerator indices &gt;&gt; (10 of 12)
+	// cInsertNode, cCloneNode,
+	// &lt;&lt; accelerator indices &gt;&gt; (11 of 12)
+	#ifdef __WXMSW__
+		cGoPrevVisibleMenuItem, cGoNextVisibleMenuItem,
+	#endif
+	// &lt;&lt; accelerator indices &gt;&gt; (12 of 12)
+	// Conflicts with Extract command.
+	// cEqualSizedPanes,
+
+	cToggleActivePane,
+	// -- end -- &lt;&lt; accelerator indices &gt;&gt;
+	cAcceleratorEntries // one more than the largest index.
+};
+
+assert(cQuit==0);
+
+wxAcceleratorEntry entries [cAcceleratorEntries];
+
+// &lt;&lt; accelerator entries &gt;&gt; (1 of 12)
+entries[cQuit].	Set( ctrl, (int)'Q', cQuitMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (2 of 12)
+entries[cNew].   Set( ctrl, (int)'N', cNewMenuItem);
+
+#if 0 // Not needed, and might conflict with Outline menu
+entries[cOpen].  Set( ctrl, (int)'O', cOpenMenuItem );
+entries[cClose]. Set( ctrl, (int)'W', cCloseMenuItem );
+entries[cSave].	 Set( ctrl, (int)'S', cSaveMenuItem );
+#endif
+
+#if 0 // Conflicts with Outline menu.
+entries[cSaveAs].Set( shift-ctrl, (int)'S', cSaveAsMenuItem );
+#endif
+// &lt;&lt; accelerator entries &gt;&gt; (3 of 12)
+entries[cTangleAll].	Set( shift_ctrl, (int)'A', cTangleAllMenuItem );
+entries[cTangleMarked].	Set( shift_ctrl, (int)'M', cTangleMarkedMenuItem );
+entries[cTangle].		Set( shift_ctrl, (int)'T', cTangleMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (4 of 12)
+entries[cUntangle].Set( shift_ctrl, (int)'U', cUntangleMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (5 of 12)
+entries[cImportFiles].Set( shift_ctrl, (int)'F', cImportFilesMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (6 of 12)
+entries[cEditHeadline].	Set( shift-ctrl, (int)'H', cEditHeadlineMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (7 of 12)
+entries[cExtractSection].	Set( shift-ctrl, (int)'E', cExtractSectionMenuItem );
+entries[cExtractNames].	Set( shift-ctrl, (int)'N', cExtractNamesMenuItem );
+entries[cExtract].	Set( shift-ctrl, (int)'D', cExtractMenuItem );
+entries[cConvertBlanks].	Set( shift-ctrl, (int)'B', cConvertBlanksMenuItem );
+// &lt;&lt; accelerator entries &gt;&gt; (8 of 12)
+entries[cFindPanel].Set( ctrl,   (int) 'F', cFindPanelMenuItem );
+
+#if 1 // shift F-keys don't seem to work on Linux
+	entries[cFindNext].	Set( normal, (int) WXK_F3, cFindNextMenuItem );
+	entries[cFindPrev].	Set( shift,  (int) WXK_F4, cFindPreviousMenuItem );
+	entries[cReplace].	Set( normal, (int) WXK_F5, cReplaceMenuItem );
+  entries[cReplaceThenFind].Set( normal, (int) WXK_F6, cReplaceThenFindMenuItem );
+#else
+	entries[cFindNext].	Set( normal, (int) WXK_F3, cFindNextMenuItem );
+	entries[cFindPrev].	Set( shift,  (int) WXK_F3, cFindPreviousMenuItem );
+	entries[cReplace].	Set( normal, (int) WXK_F4, cReplaceMenuItem );
+  entries[cReplaceThenFind].Set( shift,  (int) WXK_F4, cReplaceThenFindMenuItem );
+#endif
+// &lt;&lt; accelerator entries &gt;&gt; (9 of 12)
+#if 0 // works now, and would conflict with other settings.
+	entries[cFontPanel].     Set( shift-alt, (int)'T', cFontPanelMenuItem );
+	entries[cSyntaxColoring].Set( shift-alt, (int)'S', cSyntaxColoringMenuItem );
+	entries[cPreferences].	 Set(      ctrl, (int)'Y', cPreferencesMenuItem );
+#endif
+// &lt;&lt; accelerator entries &gt;&gt; (10 of 12)
+#if 0 // Conflicts with Outline pane.
+entries[cInsertNode].Set( ctrl,       (int) 'I', cInsertNodeMenuItem );
+entries[cCloneNode] .Set( shift_ctrl, (int) 'I', cCloneNodeMenuItem );
+#endif
+// &lt;&lt; accelerator entries &gt;&gt; (11 of 12)
+#ifdef __WXMSW__
+	// Without these wxTreeCtrl handles the up/down keys itself, wrongly.
+	entries[cGoPrevVisibleMenuItem].Set( normal, WXK_UP,   cGoPrevVisibleMenuItem );
+	entries[cGoNextVisibleMenuItem].Set( normal, WXK_DOWN, cGoNextVisibleMenuItem );
+#endif
+// &lt;&lt; accelerator entries &gt;&gt; (12 of 12)
+// Show log works without accel
+// Conflicts with Extract command.
+// entries[cEqualSizedPanes].Set( ctrl, (int) 'E', cEqualSizedPanesMenuItem );
+entries[cToggleActivePane].Set( ctrl, (int) 'T', cToggleActivePaneMenuItem );
+// -- end -- &lt;&lt; accelerator entries &gt;&gt;
+
+wxAcceleratorTable accel(cAcceleratorEntries, entries);
+
+this -&gt; SetAcceleratorTable(accel);
+mBodyCtrl -&gt; SetAcceleratorTable(accel);
+mTreeCtrl -&gt; SetAcceleratorTable(accel);
+mSplitter1 -&gt; SetAcceleratorTable(accel);
+
+#endif</t>
+<t tx="T983">CreateStatusBar(2);
+SetStatusText("");</t>
+<t tx="T984">#ifdef __WXMSW__
+  this -&gt;SetIcon(wxIcon("LeoIcon"));
+#endif</t>
+<t tx="T985">/*
+	Blinking happens on Windows without a problem.  Furthermore, setting the rate here affects _all_ windows.
+*/
+#ifdef __WXGTK__ // Doesn't seem to work.
+	wxCaret * caret = mBodyCtrl -&gt; GetCaret();
+	caret -&gt; SetBlinkTime (500) ;
+#endif</t>
+<t tx="T986">wxTreeItemId root = mTreeCtrl -&gt; AddRoot( "untitled" ) ;
+tnode *t = new tnode() ;
+vnode *v = new vnode( mCommands, t );
+v -&gt; setTreeID ( root ) ;
+mCommands -&gt; mCurrentVnode = v ;
+mTreeCtrl -&gt; SetItemData(root, (wxTreeItemData *) v);
+
+// Set icons: it appears to be necessary to set all here.
+// Otherwise, we might take an exception...
+v -&gt; setIconVal(0);
+
+#if defined(__WXMSW__)
+	// Workaround bug in wxTreectrl.
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Normal);
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Selected);
+#elif defined(__WXGTK__)
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Normal);
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Selected);
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_Expanded);
+	mTreeCtrl -&gt; SetItemImage(root, 0, wxTreeItemIcon_SelectedExpanded);
+#endif</t>
+<t tx="T987">@ &lt;&lt; LeoFrame methods &gt;&gt; (2 of 157)
+@c
+
+void LeoFrame::createMenus ( void )
+{
+	wxMenuBar *menuBar = new wxMenuBar;
+	// &lt;&lt; Create the File menu &gt;&gt;
+	wxMenu *fileMenu = new wxMenu;
+
+	// &lt;&lt; Create the initial items of the file menu &gt;&gt;
+	fileMenu -&gt; Append ( cNewMenuItem, "&amp;New\tCtrl-N",
+		"Open new Leo window" );
+	fileMenu -&gt; Append ( cOpenMenuItem,
+		"&amp;Open\tCtrl-O", "Open Leo file");
+
+	fileMenu -&gt; AppendSeparator();
+
+	fileMenu -&gt; Append ( cCloseMenuItem,
+		"&amp;Close\tCtrl-W", "Close window" );
+	fileMenu -&gt; Append ( cSaveMenuItem,
+		"&amp;Save\tCtrl-S", "Save window" );
+	fileMenu -&gt; Append ( cSaveAsMenuItem,
+		"Save &amp;As\tShift-Ctrl-S", "Save window as" );
+	fileMenu -&gt; Append ( cSaveToMenuItem,
+		"Save &amp;To", "Save window to" );
+	fileMenu -&gt; Append ( cRevertMenuItem,
+		"&amp;Revert", "Revert window to saved" );
+
+	fileMenu -&gt; AppendSeparator();
+
+	fileMenu -&gt; Append ( cPageSetupMenuItem,
+		"Page S&amp;etup\tShift-Ctrl-P", "Specify printer settings" );
+	fileMenu -&gt; Append ( cPrintMenuItem,
+		"&amp;Print\tCtrl-P", "Print (Weave) window" );
+
+	// Disabled unused items
+	fileMenu -&gt; Enable(cPrintMenuItem, FALSE);
+	fileMenu -&gt; Enable(cPageSetupMenuItem, FALSE);
+
+	fileMenu -&gt; AppendSeparator();
+	// -- end -- &lt;&lt; Create the initial items of the file menu &gt;&gt;
+	// &lt;&lt; Create the Read/Write submenu &gt;&gt;
+	wxMenu *readWriteMenu = new wxMenu;
+
+	readWriteMenu -&gt; Append (cReadOutlineOnlyMenuItem,
+		"Read Outline Only", "Read outline only");
+	readWriteMenu -&gt; Append (cReadAtFileNodesMenuItem,
+		"Read @file Nodes", "Read @file nodes");
+	readWriteMenu -&gt; Append (cWriteOutlineOnlyMenuItem,
+		"Write Outline Only", "Write outline only");
+	readWriteMenu -&gt; Append (cWriteAtFileNodesMenuItem,
+		"Write @file Nodes", "Write @file nodes");
+
+	fileMenu -&gt; Append(cReadWriteSubmenuItem, "Read/Write...", readWriteMenu, "");
+	// -- end -- &lt;&lt; Create the Read/Write submenu &gt;&gt;
+	// &lt;&lt; Create the Tangle submenu &gt;&gt;
+	wxMenu *tangleMenu = new wxMenu;
+
+	tangleMenu -&gt; Append (cTangleAllMenuItem,
+		"Tangle &amp;All\tShift-Ctrl-A", "Tangle all roots");
+	tangleMenu -&gt; Append (cTangleMarkedMenuItem,
+		"Tangle &amp;Marked\tShift-Ctrl-M", "Tangle all marked roots");
+	tangleMenu -&gt; Append (cTangleMenuItem,
+		"&amp;Tangle\tShift-Ctrl-T", "Tangle selected headline");
+
+	fileMenu -&gt; Append(cTangleSubmenuItem, "&amp;Tangle...", tangleMenu, "");
+
+	// Doesn't work either.
+	fileMenu -&gt; SetHelpString(cTangleSubmenuItem, "Tangle commands...");
+	// -- end -- &lt;&lt; Create the Tangle submenu &gt;&gt;
+	// &lt;&lt; Create the Untangle submenu &gt;&gt;
+	wxMenu *untangleMenu = new wxMenu;
+
+	untangleMenu -&gt; Append (cUntangleAllMenuItem,
+		"Untangle &amp;All", "Tangle all roots");
+	untangleMenu -&gt; Append (cUntangleMarkedMenuItem,
+		"Untangle &amp;Marked", "Tangle all marked roots");
+	untangleMenu -&gt; Append (cUntangleMenuItem,
+		"&amp;Untangle\tShift-Ctrl-U", "Tangle selected headline");
+
+	fileMenu -&gt; Append(cUntangleSubmenuItem, "&amp;Untangle...", untangleMenu, "");
+	// -- end -- &lt;&lt; Create the Untangle submenu &gt;&gt;
+	// &lt;&lt; Create the Import Files submenu &gt;&gt;
+	wxMenu *importMenu = new wxMenu;
+
+	importMenu -&gt; Append (cImportFilesMenuItem,
+		"Import Files\tShift-Ctrl-F", "Convert source files to outline" );
+	importMenu -&gt; Append (cImportCWEBFilesMenuItem,
+		"Import CWEB Files", "Convert CWEB file to outline");
+	importMenu -&gt; Append (cImportNowebFilesMenuItem,
+		"Import noweb Files", "Convert noweb file to outline");
+
+	importMenu -&gt; Enable(cImportNowebFilesMenuItem, FALSE);
+
+	importMenu -&gt; Append (cImportMORETextMenuItem,
+		"Import MORE Text", "Convert MORE file to outline");
+	importMenu -&gt; Append (cFlattenOutlineMenuItem,
+		"Flatten Outline", "Write Leo outline to text file");
+
+	fileMenu -&gt; Append(cImportExportSubmenuItem,
+		"&amp;Import Files...", importMenu, "Import commands");
+	// -- end -- &lt;&lt; Create the Import Files submenu &gt;&gt;
+	fileMenu -&gt; AppendSeparator();
+
+	fileMenu -&gt; Append(cQuitMenuItem, "E&amp;xit\tCtrl-Q", "Quit Leo");
+	// -- end -- &lt;&lt; Create the File menu &gt;&gt;
+	// &lt;&lt; Create the Edit menu &gt;&gt;
+	wxMenu *editMenu = new wxMenu;
+
+	// &lt;&lt; Create the initial items of the Edit menu &gt;&gt;
+	editMenu -&gt; Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" );
+
+	#ifndef __WXGTK__ // For now, neither tree nor text controls support Redo.
+		editMenu -&gt; Append ( cRedoMenuItem,
+			"&amp;Redo\tShift-Ctrl-Z", "Redo previous operation" );
+	#endif
+
+	editMenu -&gt; AppendSeparator();
+
+	editMenu -&gt; Append ( cCutMenuItem,
+		"Cu&amp;t\tCtrl-X", "Cut text" );
+	editMenu -&gt; Append ( cCopyMenuItem,
+		"&amp;Copy\tCtrl-C", "Copy text" );
+	editMenu -&gt; Append ( cPasteMenuItem,
+		"&amp;Paste\tCtrl-V", "Paste text" );
+	editMenu -&gt; Append ( cDeleteMenuItem,
+		"&amp;Delete", "Delete text" );
+	editMenu -&gt; Append ( cSelectAllMenuItem,
+		"Select A&amp;ll\tCtrl-A", "Select all" );
+
+	editMenu -&gt; AppendSeparator();
+
+	editMenu -&gt; Append ( cEditHeadlineMenuItem,
+		"Edit &amp;Headline\tShift-Ctrl-H", "Edit headline text" );
+	// -- end -- &lt;&lt; Create the initial items of the Edit menu &gt;&gt;
+	// &lt;&lt; Create the Edit Body submenu &gt;&gt;
+	wxMenu *editBodyMenu = new wxMenu;
+
+	editBodyMenu -&gt; Append ( cExtractSectionMenuItem,
+		"&amp;Extract Section\tShift-Ctrl-E",
+		"Extract section to child" );
+	editBodyMenu -&gt; Append ( cExtractNamesMenuItem,
+		"Extract Section &amp;Names\tShift-Ctrl-N",
+		"Extract section names to children" );
+	editBodyMenu -&gt; Append ( cExtractMenuItem,
+		"Extract\tShift-Ctrl-D",
+		"Extract section text to child" );
+	editBodyMenu -&gt; Append ( cConvertBlanksMenuItem,
+		"&amp;Convert Blanks\tShift-Ctrl-B", "Convert blanks" );
+
+	editMenu -&gt; Append(cEditBodySubmenuItem, "&amp;Edit Body...", editBodyMenu, "");
+	// -- end -- &lt;&lt; Create the Edit Body submenu &gt;&gt;
+	// &lt;&lt; Create the Find submenu &gt;&gt;
+	wxMenu *findMenu = new wxMenu;
+
+	findMenu -&gt; Append ( cFindPanelMenuItem,
+		"&amp;Find Panel\tCtrl-F", "Open Find panel" );
+
+	findMenu -&gt; AppendSeparator();
+
+	#ifdef __WXGTK__  // bugs: can't recognize shift-F keys
+		findMenu -&gt; Append ( cFindNextMenuItem,
+			"Find &amp;Next\tF3", "Find next" );
+		findMenu -&gt; Append ( cFindPreviousMenuItem,
+			"Find &amp;Prev\tF4", "Find previous" );
+		findMenu -&gt; Append ( cReplaceMenuItem,
+			"&amp;Replace\tF5", "Replace" );
+		findMenu -&gt; Append ( cReplaceThenFindMenuItem,
+			"Replace &amp;Then Find\tF6", "Replace, then find again" );
+	#else
+		findMenu -&gt; Append ( cFindNextMenuItem,
+			"Find &amp;Next\tF3", "Find next" );
+		findMenu -&gt; Append ( cFindPreviousMenuItem,
+			"Find &amp;Prev\tShift-F3", "Find previous" );
+		findMenu -&gt; Append ( cReplaceMenuItem,
+			"&amp;Replace\tF4", "Replace" );
+		findMenu -&gt; Append ( cReplaceThenFindMenuItem,
+			"Replace &amp;Then Find\tShift-F4", "Replace, then find again" );
+	#endif
+
+	editMenu -&gt; Append( cFindSubmenuItem,
+		"&amp;Find...", findMenu, "");
+	// -- end -- &lt;&lt; Create the Find submenu &gt;&gt;
+	// &lt;&lt; Create the final items of the Edit menu &gt;&gt;
+	editMenu -&gt; Append ( cFontPanelMenuItem,
+		"&amp;Font Panel\tAlt-Shift-T", "Open Font panel" );
+
+	editMenu -&gt; Append ( cSyntaxColoringMenuItem,
+		"&amp;Syntax Coloring...\tAlt-Shift-S", "Set syntax coloring options" );
+
+	editMenu -&gt; Enable(cSyntaxColoringMenuItem, FALSE);
+
+	editMenu -&gt; AppendSeparator();
+
+	editMenu -&gt; Append ( cPreferencesMenuItem,
+		"Preferences\tCtrl-Y", "Open Preferences panel" );
+	// -- end -- &lt;&lt; Create the final items of the Edit menu &gt;&gt;
+	// -- end -- &lt;&lt; Create the Edit menu &gt;&gt;
+	// &lt;&lt; Create the Outline menu &gt;&gt;
+	wxMenu *outlineMenu = new wxMenu;
+
+	// &lt;&lt; Create the initial items of the Outline menu &gt;&gt;
+	outlineMenu -&gt; Append ( cCutNodeMenuItem,
+		"Cu&amp;t Node\tShift-Ctrl-X", "Cut node");
+	outlineMenu -&gt; Append ( cCopyNodeMenuItem,
+		"&amp;Copy Node\tShift-Ctrl-C", "Copy node" );
+	outlineMenu -&gt; Append ( cPasteNodeMenuItem,
+		"&amp;Paste Node\tShift-Ctrl-V", "Paste node" );
+	outlineMenu -&gt; Append ( cDeleteNodeMenuItem,
+		// Shift-Ctrl-BkSp not validcPreferencesMenuItem
+		"&amp;Delete Node", "Delete node" );
+
+	outlineMenu -&gt; AppendSeparator();
+
+	outlineMenu -&gt; Append ( cInsertNodeMenuItem,
+		"&amp;Insert Node\tCtrl-I", "Insert new node" );
+
+	outlineMenu -&gt; Append ( cCloneNodeMenuItem,
+		"&amp;Clone Node\tShift-Ctrl-I", "Clone node" );
+
+	outlineMenu -&gt; Append ( cSortNodeMenuItem,
+		"&amp;Sort Node", "Sort node's childdren" );
+
+	outlineMenu -&gt; AppendSeparator();
+	// -- end -- &lt;&lt; Create the initial items of the Outline menu &gt;&gt;
+	// &lt;&lt; Create the Expand/Contract submenu &gt;&gt;
+	wxMenu *expandContractMenu = new wxMenu;
+
+	expandContractMenu -&gt; Append ( cExpandAllChildrenMenuItem,
+		"Expand All Children", "Expand node fully" );
+	expandContractMenu -&gt; Append ( cExpandChilrenMenuItem,
+		"Expand Children", "Expand node" );
+
+	expandContractMenu -&gt; AppendSeparator();
+
+	expandContractMenu -&gt; Append ( cContractAllChildrenMenuItem,
+		"Contract All Children", "Contract node fully" );
+	expandContractMenu -&gt; Append ( cContractChilrenMenuItem,
+		"Contract Children", "Contract node" );
+
+	expandContractMenu -&gt; AppendSeparator();
+
+	expandContractMenu -&gt; Append ( cExpandNextLevelMenuItem,
+		"Expand &amp;Next Level\tAlt-N", "Expand outline another level" );
+	expandContractMenu -&gt; Append ( cExpandToLevel1MenuItem,  // better than contract all
+		"Contract All\tAlt-1", "Contract all" );
+	expandContractMenu -&gt; Append ( cExpandToLevel2MenuItem,
+		"Expand To Level 2\tAlt-2", "Expand to level 2" );
+	expandContractMenu -&gt; Append ( cExpandToLevel3MenuItem,
+		"Expand To Level 3\tAlt-3", "Expand to level 3" );
+	expandContractMenu -&gt; Append ( cExpandToLevel4MenuItem,
+		"Expand To Level 4\tAlt-4", "Expand to level 4" );
+	expandContractMenu -&gt; Append ( cExpandToLevel5MenuItem,
+		"Expand To Level 5\tAlt-5", "Expand to level 5" );
+	expandContractMenu -&gt; Append ( cExpandToLevel6MenuItem,
+		"Expand To Level 6\tAlt-6", "Expand to level 6" );
+	expandContractMenu -&gt; Append ( cExpandToLevel7MenuItem,
+		"Expand To Level 7\tAlt-7", "Expand to level 7" );
+	expandContractMenu -&gt; Append ( cExpandToLevel8MenuItem,
+		"Expand To Level 8\tAlt-8", "Expand to level 8" );
+	expandContractMenu -&gt; Append ( cExpandAllMenuItem,
+		"Expand All\tAlt-9", "Expand all" );
+
+	outlineMenu -&gt; Append(cExpandContractSubmenuItem,
+		"Expand/Contract...", expandContractMenu, "");
+	// -- end -- &lt;&lt; Create the Expand/Contract submenu &gt;&gt;
+	// &lt;&lt; Create the Move/Select submenu &gt;&gt;
+	wxMenu *moveSelectMenu = new wxMenu;
+
+	moveSelectMenu -&gt; Append ( cMoveDownMenuItem,
+		"Move &amp;Down\tCtrl-D", "Move node down" );
+	moveSelectMenu -&gt; Append ( cMoveLeftMenuItem,
+		"Move &amp;Left\tCtrl-L", "Move node left" );
+	moveSelectMenu -&gt; Append ( cMoveRightMenuItem,
+		"Move &amp;Right\tCtrl-R", "Move node right" );
+	moveSelectMenu -&gt; Append ( cMoveUpMenuItem,
+		"Move &amp;Up\tCtrl-U", "Move node up" );
+
+	moveSelectMenu -&gt; AppendSeparator();
+
+	// Can't use control-] and control-[ anywhere.
+	moveSelectMenu -&gt; Append ( cPromoteMenuItem,
+		"&amp;Promote", "Promote children" );
+
+	moveSelectMenu -&gt; Append ( cDemoteMenuItem,
+		"&amp;Demote", "Demote following siblings" );
+
+	moveSelectMenu -&gt; AppendSeparator();
+
+	#ifdef __WXMSW__  // Up and down keys handled by tree &amp; text control
+		moveSelectMenu -&gt; Append ( cGoPrevVisibleMenuItem,
+			"Go Prev Visible\tUp", "Select previous visible node" );
+		moveSelectMenu -&gt; Append ( cGoNextVisibleMenuItem,
+			"Go Next Visible\tDown", "Select next visible node" );
+	#else
+	 	moveSelectMenu -&gt; Append ( cGoPrevVisibleMenuItem,
+			"Go Prev Visible", "Select previous visible node" );
+		moveSelectMenu -&gt; Append ( cGoNextVisibleMenuItem,
+			"Go Next Visible", "Select next visible node" );
+	#endif
+
+	moveSelectMenu -&gt; AppendSeparator();
+
+	moveSelectMenu -&gt; Append ( cGoBackMenuItem,
+		"Go Prev", "Select previous node" );
+	moveSelectMenu -&gt; Append ( cGoNextMenuItem,
+		"Go Next", "Select next node" );
+
+	outlineMenu -&gt; Append(cMoveSelectSubmenuItem,
+		"Move/&amp;Select...", moveSelectMenu, "");
+	// -- end -- &lt;&lt; Create the Move/Select submenu &gt;&gt;
+	// &lt;&lt; Create the Mark/Go To submenu &gt;&gt;
+	wxMenu *markGoToMenu = new wxMenu;
+
+	markGoToMenu -&gt; Append ( cMarkMenuItem,
+		"&amp;Mark\tCtrl-M", "Mark node" );
+	markGoToMenu -&gt; Append ( cMarkSubheadsMenuItem,
+		"Mark &amp;Subheads\tAlt-S", "Mark children of node" );
+	markGoToMenu -&gt; Append ( cMarkChangedItemsMenuItem,
+		"Mark &amp;Changed Items\tAlt-C", "Mark all changed nodes" );
+	markGoToMenu -&gt; Append ( cMarkChangedRootsMenuItem,
+		"Mark Changed &amp;Roots\tAlt-R", "Mark all changed root nodes" );
+	markGoToMenu -&gt; Append ( cMarkAllAtFileNodesDirtyMenuItem,
+		"Mark All @file Nodes Dirty", "Mark all @file nodes" );
+	markGoToMenu -&gt; Append ( cMarkAtFileNodesDirtyMenuItem,
+		"Mark @file Nodes Dirty", "Mark @file nodes" );
+
+	markGoToMenu -&gt; AppendSeparator();
+
+	markGoToMenu -&gt; Append ( cUnmarkAllMenuItem,
+		"&amp;Unmark All\tAlt-U", "Unmark all nodes" );
+	markGoToMenu -&gt; Append ( cGoToNextMarkedMenuItem,
+		"&amp;Go To Next Marked\tAlt-M", "Select next marked node" );
+	markGoToMenu -&gt; Append ( cGoToNextChangedMenuItem,
+		"Go To Next Changed\tAlt-D", "Select next changed node" );
+
+	outlineMenu -&gt; Append(cMarkGotoSubmenuItem,
+		"&amp;Mark/Go To...", markGoToMenu, "");
+	// -- end -- &lt;&lt; Create the Mark/Go To submenu &gt;&gt;
+	// -- end -- &lt;&lt; Create the Outline menu &gt;&gt;
+	// &lt;&lt; Create the Window menu &gt;&gt;
+	wxMenu *windowMenu = new wxMenu;
+
+	windowMenu -&gt; Append ( cEqualSizedPanesMenuItem,
+		#ifdef __WXGTK__  // Control-E conflicts with shift-control-E
+			"&amp;Equal Sized Panes", "Make each pane the same size");
+		#else
+			"&amp;Equal Sized Panes\tCtrl-E", "Make each pane the same size");
+		#endif
+
+	windowMenu -&gt; Append ( cToggleActivePaneMenuItem,
+		"&amp;Toggle Active Pane\tCtrl-T", "Switch the active pane");
+
+	#ifdef __WXGTK__
+		windowMenu -&gt; Enable(cToggleActivePaneMenuItem, FALSE);
+	#endif
+
+	windowMenu -&gt; Append ( cSplitPaneDirectionMenuItem,
+		"&amp;Split Pane Vertically", "Change orientation of pane");
+
+	windowMenu -&gt; AppendSeparator();
+
+	windowMenu -&gt; Append ( cCascadeMenuItem,
+		"&amp;Cascade Windows", "Cascade all open windows");
+
+	windowMenu -&gt; Append ( cMinimizeAllMenuItem,
+		"Minimize &amp;All Windows", "Minimize all open windows");
+
+	windowMenu -&gt; AppendSeparator();
+
+	#ifdef __WXMSW__
+	windowMenu -&gt; Append ( cOpenPythonWindowMenuItem,
+		"Open &amp;Python Window\tAlt-P", "Open the Python window");
+	#endif
+
+	#if 0 // Not ready yet: use wxFileHistory
+		windowMenu -&gt; AppendSeparator();
+
+		windowMenu -&gt; Append ( cRecentWindowsMenuItem,
+			"Recent Windows", "List of recent windows");
+	#endif
+	// -- end -- &lt;&lt; Create the Window menu &gt;&gt;
+	// &lt;&lt; Create the Help menu &gt;&gt;
+	wxMenu *helpMenu = new wxMenu;
+
+	helpMenu -&gt; Append(cAboutLeoMenuItem,
+		"&amp;About Leo...",
+		"Show about dialog");
+	// -- end -- &lt;&lt; Create the Help menu &gt;&gt;
+	menuBar-&gt;Append(fileMenu, "&amp;File");
+	menuBar-&gt;Append(editMenu, "&amp;Edit");
+	menuBar-&gt;Append(outlineMenu, "&amp;Outline");
+	menuBar-&gt;Append(windowMenu, "&amp;Window");
+	menuBar-&gt;Append(helpMenu, "&amp;Help");
+	SetMenuBar(menuBar);  // attach the menu bar to the frame
+}
+</t>
+<t tx="T988">@ &lt;&lt; LeoFrame methods &gt;&gt; (3 of 157)
+@c
+
+void LeoFrame::SetUntitledNumber ( long n )
+{
+	wxString s ( "untitled") ;
+	if ( n &gt; 0 )
+		s += wxString::Format("%d",n);
+	this -&gt; SetTitle(s) ;
+}
+</t>
+<t tx="T989">@ &lt;&lt; LeoFrame methods &gt;&gt; (4 of 157)
+@c
+
+void LeoFrame::putToLog ( const char * s )
+{
+	mLogCtrl -&gt; AppendText(s);
+}
+</t>
+<t tx="T990">@ &lt;&lt; LeoFrame methods &gt;&gt; (5 of 157)
+@c
+
+wxString LeoFrame::getLogText ( void )
+{
+	return mLogCtrl -&gt; GetValue();
+}
+</t>
+<t tx="T991">@ &lt;&lt; LeoFrame methods &gt;&gt; (6 of 157)
+@c
+
+#ifdef __WXMSW__
+
+void LeoFrame::onActivate(wxActivateEvent &amp;event)
+{
+	if ( event . GetActive() ) {
+		gActiveFrame = this ;
+		if ( this -&gt; mCommands )
+			this -&gt; mCommands -&gt; checkAllFileDates();
+	}
+}
+</t>
+<t tx="T992">
+#else
+
+void LeoFrame::OnSetFocus(wxFocusEvent&amp; WXUNUSED(event))
+{
+	gActiveFrame = this ;
+	if ( this -&gt; mCommands )
+		this -&gt; mCommands -&gt; checkAllFileDates();
+}
+</t>
+<t tx="T993">
+#endif
+// &lt;&lt; LeoFrame methods &gt;&gt; (7 of 157)
+void LeoFrame::onResize(wxSizeEvent&amp; WXUNUSED(event))
+{
+	if ( mIniting )
+		return ; // Can be called during initialization.
+
+	// Resize splitter1 with equal sized panes.
+	wxSize size = this -&gt; GetClientSize();
+	mSplitter1 -&gt; SetClientSize(size);
+	long w = size.GetWidth();
+	long h = size.GetHeight();
+	if ( mSplitter1 -&gt; GetSplitMode() == wxSPLIT_VERTICAL )
+		mSplitter1 -&gt; SetSashPosition(w/2, TRUE);
+	else
+		mSplitter1 -&gt; SetSashPosition(h/2, TRUE);
+
+	// Resize splitter2 with equal sized panes.
+	size = mSplitter2 -&gt; GetClientSize();
+	w = size.GetWidth();
+	h = size.GetHeight();
+	if ( mSplitter2 -&gt; GetSplitMode() == wxSPLIT_VERTICAL )
+		mSplitter2 -&gt; SetSashPosition((3*w)/5, TRUE);
+	else
+		mSplitter2 -&gt; SetSashPosition((3*h)/5, TRUE);
+}
+</t>
+<t tx="T994">@ &lt;&lt; LeoFrame methods &gt;&gt; (8 of 157)
+@c
+
+static long sDisableTextUpdates = 0 ;
+
+void LeoFrame::onBodyTextUpdated(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Changing text should never cause a recursive entry.
+	assert(mTextChanging == 0);
+	assert(mCopying == 0);
+
+	if ( sDisableTextUpdates &gt; 0 ) return ; // 3/19/01
+	if ( mCommands == NULL ) return ;
+	vnode * v = mCommands -&gt; currentVnode();
+	if ( v == NULL ) return ;
+
+	TRACEP("events", es("OnBodyTextUpdated"); enl());
+	++ mTextChanging ;
+
+	// &lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;
+	if (
+		! v -&gt; isDirty() &amp;&amp;
+		mBodyCtrl -&gt; GetValue() != v -&gt; bodyString()
+	) {
+		v -&gt; initDirtyBit () ;  // Avoid calling setIcon.
+		if ( ! mCommands -&gt; isChanged() )
+			mCommands -&gt; setChanged (TRUE) ;
+	}
+	// -- end -- &lt;&lt; Set the dirty bit and/or the file-changed mark if the text has changed &gt;&gt;
+
+	// Update the tnode so nodes are always synched.
+	v -&gt; t() -&gt; saveBodyPaneToTnode ( mBodyCtrl ) ;
+	v -&gt; setAncestorAtFileNodeDirty();
+
+	// Update the syntax colorer if needed.
+	mCommands -&gt; updateSyntaxColorer ( v );
+
+	// &lt;&lt; Update icons &gt;&gt;
+	/*
+		It is very important to eliminate flicker here.
+	*/
+	long val = v -&gt; computeIcon();
+	bool repaint = FALSE ;
+
+	if ( ! mCommands -&gt; isChanged() ) {
+		mCommands -&gt; setChanged (TRUE);
+		repaint = TRUE ;
+	}
+
+	if ( val &gt;= 0 &amp;&amp; val != v -&gt; iconVal() ) {
+		repaint = TRUE ;
+
+		v -&gt; setIconWithVal(val);
+
+		// Update all joined nodes.
+		for (
+			vnode * v2 = v -&gt; joinList();
+			v2 &amp;&amp; v2 != v ;
+			v2 = v2 -&gt; joinList()
+		)
+			v2 -&gt; setIconWithVal(val);
+	}
+
+	if (repaint)
+		mTreeCtrl -&gt; Refresh();
+	// -- end -- &lt;&lt; Update icons &gt;&gt;
+	-- mTextChanging ;
+}
+</t>
+<t tx="T995">@ &lt;&lt; LeoFrame methods &gt;&gt; (9 of 157)
+@c
+
+void LeoFrame::onCloseLeoFrame(wxCloseEvent&amp; event)
+{
+	// Veto the close if the Frame has been changed and the user cancels.
+
+	if ( mCommands -&gt; isChanged() ) {
+		bool veto = FALSE ;
+		if ( ! mReverting ) {
+			// &lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;
+			// Use the window title:  mFileName may not exist.
+			wxString title = this -&gt; GetTitle();
+			if ( title.Length() &gt; 0 &amp;&amp; title[0UL] == '*')
+				title = title.Mid(1);
+
+			wxString message("Save changes to \"");
+			message += title ;
+
+			if ( gQuitting )
+				message += "\" before quitting?" ;
+			else
+				message += "\" before closing?"  ;
+
+			wxMessageDialog * dialog = new wxMessageDialog(
+				this, message, "LeoWX", wxYES_NO|wxCANCEL);
+			int answer = dialog-&gt;ShowModal();
+			dialog-&gt;Destroy();
+
+			switch (answer)
+			{
+			case wxID_YES:
+				// The user want's to save the file before closing.
+				if ( mFileName == wxString("") ) {
+					// Put up the save dialog.
+					wxFileDialog d (
+						NULL, "Save",
+						"", // default directory
+						title + ".leo", // default file
+						"*.leo", // wildcard
+						wxSAVE | wxOVERWRITE_PROMPT,  // style of dialog.
+						wxDefaultPosition);
+
+					if ( d.ShowModal() == wxID_OK ) {
+						wxArrayString paths;
+						d.GetPaths(paths);
+						if ( paths.Count() == 1 ) {
+							wxString path = paths.Item(0);
+							mFileName = path ;
+							this -&gt; SetTitle(path);
+							mCommands -&gt; save (path);
+						}
+						else veto = TRUE ;
+					}
+					else veto = TRUE ;
+				}
+				else mCommands -&gt; save( mFileName ) ;
+				break;
+
+			case wxID_NO:
+				// The user does not want to save the frame.
+				break;
+
+				// The user want's to cancel the close.
+			case wxID_CANCEL:
+			default:
+				veto = TRUE ;
+				break;
+			}
+			// -- end -- &lt;&lt; Prompt for change.  Set veto if the user cancels &gt;&gt;
+		}
+		if ( veto &amp;&amp; event.CanVeto() ) {
+				event.Veto();  // veto the close.
+				return ;
+			}
+	}
+
+	// Unlink this frame from the list of frames.
+	if ( mNextFrame )
+		mNextFrame -&gt; mPrevFrame = mPrevFrame ;
+	if ( mPrevFrame )
+		mPrevFrame -&gt; mNextFrame = mNextFrame ;
+	else
+		gLeoFrameList = mNextFrame ;
+
+	if ( gLeoFrameList == NULL ) {
+		// &lt;&lt; Close the permanent frames &gt;&gt;
+		if ( gPrefsFrame ) {
+			gPrefsFrame -&gt; Destroy();
+			gPrefsFrame = NULL ;
+		}
+
+		if ( gFindFrame ) {
+			gFindFrame -&gt; Destroy();
+			gFindFrame = NULL ;
+		}
+
+		#ifdef __WXMSW__
+		wxPythonFrame::destroy();
+		#endif
+		// -- end -- &lt;&lt; Close the permanent frames &gt;&gt;
+	}
+
+	// Clear the active form.  It will be set on the next activate event.
+	gActiveFrame = NULL ;
+	gCommands = NULL ;
+
+	// Set all vnodes to NULL so they are not destroyed.
+	#if 0 ///// why shouldn't they be destroyed ?????
+	  wxTreeCtrl * tree = mTreeCtrl;
+	  vnode * v = mCommands -&gt; rootVnode();
+	  while ( v ) {
+		  vnode * next = v -&gt; threadNext();
+		  wxTreeItemId id = v -&gt; treeID();
+		  assert(id);
+		  tree -&gt; SetItemData(id, NULL);
+		  v = next ;
+	  }
+	#endif
+
+	this -&gt; Destroy();
+}
+</t>
+<t tx="T996">@ &lt;&lt; LeoFrame methods &gt;&gt; (10 of 157)
+@c
+
+void LeoFrame::onTreeChanged(wxTreeEvent&amp; event)
+{
+ 	TRACEP("events", es("onTreeChanged"); enl());
+	assert(mTreeCtrl);
+	assert(mCommands);
+	if (mCommands -&gt; mInhibitOnTreeChanged) return ;
+	// &lt;&lt; Define old_id, new_id, old_v, new_v &gt;&gt;
+	/*
+		I used to think that new_id and old_id had to exist, but that is not so: either might be 0 depending on circumstances.
+	*/
+	wxTreeItemId new_id = event.GetItem();
+	TRACEP("events", es("new item: "); elong( long(new_id) ) ; enl() ) ;
+
+	if ( ! new_id.IsOk() ) return ;
+	vnode * new_v = (vnode *)( mTreeCtrl -&gt; GetItemData(new_id) ) ;
+	if ( new_v == NULL ) return ;
+
+	#if 0 // no longer used
+
+		// old_id may not exist if we are activating the first node.
+		wxTreeItemId old_id = event.GetOldItem();
+		TRACEP("events", es("old item: "); elong( long(old_id) ) ; enl() ) ;
+		vnode * old_v = NULL ;
+
+		if ( old_id.IsOk() ) {
+			old_v = (vnode *) ( mTreeCtrl -&gt; GetItemData(old_id) ) ;
+			#ifdef __WXMSW__
+				assert(old_v);
+			#endif
+		}
+
+	#endif
+	// -- end -- &lt;&lt; Define old_id, new_id, old_v, new_v &gt;&gt;
+	// &lt;&lt; Put the new text into the body pane &gt;&gt;
+	/*
+		Apparently in wxWindows this does _not_ fire the text changed event! But in wxGTK it does.  We must prevent the update 
+		event handler from messing with the old text!
+	*/
+	++ sDisableTextUpdates ;
+		// Clear the old text.
+		mBodyCtrl -&gt; Clear();
+
+		// Put the text of the new node into the body pane.
+		new_v -&gt; t() -&gt; loadBodyPaneFromTnode ( mBodyCtrl ) ;
+
+		// Clear the undo stack.
+		mBodyCtrl -&gt; DiscardEdits();
+	-- sDisableTextUpdates ;
+
+	// Update the Commander's idea of the current node.
+	mCommands -&gt; mCurrentVnode = new_v ;
+
+	// Update the syntax colorer if needed.
+	mCommands -&gt; updateSyntaxColorer ( new_v ) ;
+	// -- end -- &lt;&lt; Put the new text into the body pane &gt;&gt;
+}
+</t>
+<t tx="T997">@ &lt;&lt; LeoFrame methods &gt;&gt; (11 of 157)
+@c
+
+void LeoFrame::onTreeChanging(wxTreeEvent&amp; WXUNUSED(event))
+{
+	// No recursion should be possible here.
+	assert(mTextChanging == 0);
+	assert(mCopying == 0);
+}
+</t>
+<t tx="T998">@ &lt;&lt; LeoFrame methods &gt;&gt; (12 of 157)
+@c
+
+void LeoFrame::onTreeKeyDown(wxTreeEvent&amp; WXUNUSED(event))
+{
+
+}
+</t>
+<t tx="T999">@ &lt;&lt; LeoFrame methods &gt;&gt; (13 of 157)
+@c
+
+void LeoFrame::onTreeBeginDrag(wxTreeEvent&amp; event)
+{
+	assert(mTreeCtrl);
+	if ( event.GetItem() != mTreeCtrl -&gt; GetRootItem() ) {
+		mDraggedItem = event.GetItem();
+		event.Allow();
+	}
+}
+</t>
+<t tx="T1000">@ &lt;&lt; LeoFrame methods &gt;&gt; (14 of 157)
+@c
+
+void LeoFrame::onTreeEndDrag(wxTreeEvent&amp; event)
+{
+	// &lt;&lt; Define onTreeEndDrag vars &gt;&gt;
+	assert(mTreeCtrl);
+	assert(mCommands);
+
+	wxTreeItemId dst = event.GetItem();
+	wxTreeItemId src = mDraggedItem;
+	mDraggedItem = 0L;
+	if ( ! dst.IsOk() || ! src.IsOk() ) return ;
+
+	vnode * src_v = (vnode *) ( mTreeCtrl -&gt; GetItemData(src) );
+	if (src_v == NULL) return ;
+
+	vnode * dst_v = (vnode *) ( mTreeCtrl -&gt; GetItemData(dst) );
+	if (dst_v == NULL) return ;
+
+	wxTreeItemId parent = mTreeCtrl -&gt; GetParent(dst);
+	vnode * parent_v = NULL ;
+	// -- end -- &lt;&lt; Define onTreeEndDrag vars &gt;&gt;
+	if ( src == 0 || dst == 0 ) return ;
+	long cookie;
+	if (
+		// dst is the root
+		!parent.IsOk() ||
+		// dst has visible children and dst isn't the first child.
+		mTreeCtrl -&gt; ItemHasChildren(dst) &amp;&amp; mTreeCtrl -&gt; IsExpanded(dst) &amp;&amp;
+		mTreeCtrl -&gt; GetFirstChild(dst, cookie) != src ||
+		// back(src) == dst (would otherwise be a do-nothing)
+		mTreeCtrl -&gt; GetPrevSibling(src) == dst
+	) {
+		// &lt;&lt; Insert src as the first child of dst &gt;&gt;
+		// Make sure the drag will be valid.
+		parent_v = (vnode *) ( mTreeCtrl -&gt; GetItemData(dst) );
+		if ( ! mCommands -&gt; checkMoveWithParentWithWarning ( src_v, parent_v, TRUE ) ) return ;
+
+		src_v -&gt; moveToNthChildOf( dst_v, 0);
+		// -- end -- &lt;&lt; Insert src as the first child of dst &gt;&gt;
+	}
+	else {
+		// Not the root and no visible children.
+		// &lt;&lt; Insert src after dst &gt;&gt;
+		// Do nothing if dst is a child of src.
+		for (wxTreeItemId p = parent; p.IsOk(); p = mTreeCtrl -&gt; GetParent(p) )
+			if ( p == src )
+				return ;
+
+		// Do nothing if dst is joined to src.
+		if ( dst_v -&gt; isJoinedTo(src_v) )
+			return ;
+
+		// Make sure the drag will be valid.
+		parent_v = (vnode *) ( mTreeCtrl -&gt; GetItemData(parent) );
+		if ( ! mCommands -&gt; checkMoveWithParentWithWarning ( src_v, parent_v, TRUE ) ) return ;
+
+		src_v -&gt; moveAfter(dst_v);
+		// -- end -- &lt;&lt; Insert src after dst &gt;&gt;
+	}
+
+	mCommands -&gt; selectVnode(src_v);
+	mCommands -&gt; setChanged(TRUE);
+}
+</t>
+<t tx="T1001">@ &lt;&lt; LeoFrame methods &gt;&gt; (15 of 157)
+Editing will not be allowed if this routine does not exist.
+@c
+
+void LeoFrame::onTreeBeginLabelEdit(wxTreeEvent&amp; WXUNUSED(event))
+{
+	// Doing nothing is is enough to enable the edit.
+}
+</t>
+<t tx="T1002">@ &lt;&lt; LeoFrame methods &gt;&gt; (16 of 157)
+Editing will not be allowed if this routine does not exist.
+@c
+
+void LeoFrame::onTreeEndLabelEdit(wxTreeEvent&amp; event)
+{
+	// Doing nothing is enough to enable the edit.
+
+	wxString s = event.GetLabel();
+	wxTreeItemId item = event.GetItem();
+	vnode * v = (vnode *) ( mTreeCtrl -&gt; GetItemData(item) );
+
+	// Set the dirty bit and the file-changed mark if the headline has changed.
+	if ( ! v -&gt; isDirty() &amp;&amp; s != v -&gt; headString() ) {
+		v -&gt; setDirty () ;
+		if ( ! mCommands -&gt; isChanged() )
+			mCommands -&gt; setChanged (TRUE) ;
+	}
+
+	// Update all joined headlines.
+	for ( vnode * j = v -&gt; joinList(); j &amp;&amp; j != v; j = j -&gt; joinList() )
+		j -&gt; setHeadString(s);
+}
+</t>
+<t tx="T1003">@ &lt;&lt; LeoFrame methods &gt;&gt; (17 of 157)
+This updates the text of joined _headlines_, not body text.
+@c
+
+#if 0 // no longer used
+
+void LeoFrame::updateJoinedHeadlines ( wxString text, vnode * v )
+{
+	static long guard = 0 ;
+	if ( guard &gt; 0 ) return ;
+	++ guard ;
+		for (
+			vnode * v2 = v -&gt; joinList() ;
+			v2 &amp;&amp; v2 != v ;
+			v2 = v2 -&gt; joinList()
+		)  {
+			wxTreeItemId id = v2 -&gt; treeID();
+			assert(id);
+			mTreeCtrl -&gt; SetItemText(id, text) ;
+		}
+	-- guard ;
+}
+</t>
+<t tx="T1004">
+#endif
+// &lt;&lt; LeoFrame methods &gt;&gt; (18 of 157)
+void LeoFrame::OnUpdateRevert( wxUpdateUIEvent &amp;event )
+{
+	event.Enable(mCommands -&gt; canRevert()) ;
+}
+</t>
+<t tx="T1005">@ &lt;&lt; LeoFrame methods &gt;&gt; (19 of 157)
+@c
+
+void LeoFrame::OnNew(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create a frame and link it into the global frame list.
+	LeoFrame *frame = new LeoFrame();
+	wxString s("untitled");
+	if ( ++gNumberOfUntitledWindows &gt; 1 )
+		s += wxString::Format("%d", gNumberOfUntitledWindows);
+	frame -&gt; SetTitle(s);
+	frame -&gt; mFileName = wxString("") ;  // No real file associated with this window.
+	frame -&gt; Show(TRUE);
+
+	// Set the current node in the _new_ form!.
+	vnode *v = frame -&gt; mCommands -&gt; rootVnode();
+	assert(v);
+	frame -&gt; mCommands -&gt; setCurrentVnode ( v ) ;
+	frame -&gt; mCommands -&gt; editVnode( v ) ;
+}
+</t>
+<t tx="T1006">@ &lt;&lt; LeoFrame methods &gt;&gt; (20 of 157)
+@c
+
+void LeoFrame::OnOpen(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Choose a Leo file",
+		"", // default directory
+		"", // default file
+		"*.leo", // wildcard
+		wxOPEN | wxMULTIPLE ,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		long count = paths.Count();
+		for ( long i = 0 ; i &lt; count ; ++ i )
+			LeoFrame::OpenWithFileName ( paths.Item(i) ) ;
+	}
+}
+</t>
+<t tx="T1007">@ &lt;&lt; LeoFrame methods &gt;&gt; (21 of 157)
+@c
+
+LeoFrame * LeoFrame::OpenWithFileName( wxString fileName )
+{
+	// If the file is already open just bring its window to the front.
+	LeoFrame * frame = gLeoFrameList ;
+	while ( frame ) {
+		if ( frame -&gt; mFileName == fileName ) {
+			frame -&gt; Show();
+			gActiveFrame = frame ;
+			return frame ;
+		}
+		frame = frame -&gt; mNextFrame ;
+	}
+
+	// Don't take an exception if the file doesn't exist.
+	if ( ! ::wxFileExists ( fileName ) ) {
+		wxString m("Can not open: ") ;
+		m += fileName ;
+		alert ( m.c_str() ) ;
+		return NULL ;
+	}
+
+	try {
+		// &lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;
+		#if 0 // not used at present.
+		LeoFrame * closeFrame = gLeoFrameList ;
+
+		bool closeEmptyFrameFlag =
+			// There is only one window open at present.
+			gNumberOfUntitledWindows == 1 &amp;&amp;
+
+			// The window was opened on startup and has never been saved.
+			closeFrame &amp;&amp;
+			closeFrame -&gt; mCommands -&gt; mFirstWindowAndNeverSaved &amp;&amp;
+
+			// The window is empty.
+			! ( closeFrame -&gt; mCommands-&gt; isChanged() ) ;
+		#endif
+		// -- end -- &lt;&lt; Set closeEmptyFrameFlag if the only open window is empty &gt;&gt;
+		LeoFrame * frame = new LeoFrame ();
+		#if 0 // Don't show frame until it has been fully opened.
+			frame -&gt; Show(TRUE);
+		#endif
+		frame -&gt; mCommands -&gt; open( fileName ) ;
+		frame -&gt; mFileName = fileName ;
+		// Automatically close an empty frame that was created on entry.
+		#if 0 //// There is still something wrong here!
+		if ( closeEmptyFrameFlag &amp;&amp; closeFrame )
+			closeFrame -&gt; Close ( ) ;
+		#endif
+		gActiveFrame = frame ;
+		return frame ;
+	}
+	catch ( ... )
+	{
+		wxString m("Error opening: ") ;
+		m += fileName ;
+		alert ( m.c_str() ) ;
+		return NULL ;
+	}
+}
+</t>
+<t tx="T1008">@ &lt;&lt; LeoFrame methods &gt;&gt; (22 of 157)
+@c
+
+void LeoFrame::OnClose(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Close the frame, giving the close handler a chance to veto.
+	this -&gt; Close();
+}
+</t>
+<t tx="T1009">@ &lt;&lt; LeoFrame methods &gt;&gt; (23 of 157)
+@c
+
+void LeoFrame::OnSave(wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( mFileName == wxString("") ) {
+		// Create the Save dialog.
+		wxFileDialog d (
+			NULL, "Save",
+			wxString(""), // default directory
+			mFileName, // default file
+			wxString("*.leo"), // wildcard
+			wxSAVE | wxOVERWRITE_PROMPT,  // style of dialog.
+			wxDefaultPosition);
+
+		if ( d.ShowModal() == wxID_OK ) {
+			wxString path = d.GetPath();
+			mFileName = path ;
+			this -&gt; SetLabel(path);
+			mCommands -&gt; save (path);
+		}
+	}
+	else mCommands -&gt; save ( mFileName ) ;
+}
+</t>
+<t tx="T1010">@ &lt;&lt; LeoFrame methods &gt;&gt; (24 of 157)
+@c
+
+void LeoFrame::OnSaveAs(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Save dialog.
+	wxFileDialog d (
+		NULL, "Save As",
+		wxString(""), // default directory
+		mFileName, // default file
+		wxString("*.leo"), // wildcard
+		wxSAVE | wxOVERWRITE_PROMPT,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxString path = d.GetPath();
+		mFileName = path ;
+		this -&gt; SetLabel(path);
+		mCommands -&gt; saveAs (path);
+	}
+}
+</t>
+<t tx="T1011">@ &lt;&lt; LeoFrame methods &gt;&gt; (25 of 157)
+@c
+
+void LeoFrame::OnSaveTo(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Save dialog.
+	wxFileDialog d (
+		NULL, "Save To",
+		wxString(""), // default directory
+		mFileName, // default file
+		wxString("*.leo"), // wildcard
+		wxSAVE | wxOVERWRITE_PROMPT,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxString fileName = d.GetPath();
+		mCommands -&gt; saveACopyAs(fileName);
+	}
+}
+</t>
+<t tx="T1012">@ &lt;&lt; LeoFrame methods &gt;&gt; (26 of 157)
+@c
+
+void LeoFrame::OnRevert(wxCommandEvent&amp; WXUNUSED(event))
+{
+   // Make sure the user wants to Revert.
+	wxString prompt ("Revert to previous version of ");
+	prompt += mFileName + "?" ;
+	int answer = wxMessageBox( prompt, "Revert to saved?", wxYES_NO ) ;
+	if (answer == wxNO) return ;
+
+	// Kludge: rename this frame so OpenWithFileName won't think it is open.
+	wxString fileName = mFileName ;
+	mFileName = wxString("") ;
+
+	// Create a new frame before deleting this frame.
+	LeoFrame * frame = LeoFrame::OpenWithFileName( fileName );
+
+	// Delete the form.
+	mReverting = TRUE ; // Indicate that no prompt is needed.
+	this -&gt; Close();
+	mReverting = FALSE ;
+
+	// Bring the already-opened frame to the front.
+	frame -&gt; Show(FALSE);
+	frame -&gt; Show(TRUE);
+}
+</t>
+<t tx="T1013">@ &lt;&lt; LeoFrame methods &gt;&gt; (27 of 157)
+@c
+
+void LeoFrame::OnPageSetup(wxCommandEvent&amp; WXUNUSED(event))
+{
+	////
+}
+</t>
+<t tx="T1014">@ &lt;&lt; LeoFrame methods &gt;&gt; (28 of 157)
+@c
+
+void LeoFrame::OnPrint(wxCommandEvent&amp; WXUNUSED(event))
+{
+	////
+}
+</t>
+<t tx="T1015">@ &lt;&lt; LeoFrame methods &gt;&gt; (29 of 157)
+@c
+
+void LeoFrame::OnTangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
+{
+
+}
+</t>
+<t tx="T1016">@ &lt;&lt; LeoFrame methods &gt;&gt; (30 of 157)
+@c
+
+void LeoFrame::OnUntangleSubmenu(wxCommandEvent&amp; WXUNUSED(event))
+{
+
+}
+</t>
+<t tx="T1017">@ &lt;&lt; LeoFrame methods &gt;&gt; (31 of 157)
+@c
+
+void LeoFrame::OnImportExportSubmenu(wxCommandEvent&amp; WXUNUSED(event))
+{
+
+}
+</t>
+<t tx="T1018">@ &lt;&lt; LeoFrame methods &gt;&gt; (32 of 157)
+@c
+
+void LeoFrame::OnQuit(wxCommandEvent&amp; WXUNUSED(event))
+{
+	gQuitting = TRUE ;
+
+		// Closing all windows terminates Leo.  Stop if the user aborts.
+		while ( gLeoFrameList )
+			if ( ! gLeoFrameList -&gt; Close() )
+				break ; // User cancelled a close.
+
+	gQuitting = FALSE ;
+}
+</t>
+<t tx="T1019">@ &lt;&lt; LeoFrame methods &gt;&gt; (33 of 157)
+@c
+
+void LeoFrame::OnReadOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Choose a Leo file",
+		"", // default directory
+		"", // default file
+		"*.leo", // wildcard
+		wxOPEN | wxMULTIPLE ,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		long count = paths.Count();
+		for ( long i = 0 ; i &lt; count ; ++ i )
+			this -&gt; readOutlineOnly ( paths.Item(i) ) ;
+	}
+}
+</t>
+<t tx="T1020">@ &lt;&lt; LeoFrame methods &gt;&gt; (34 of 157)
+@c
+
+void LeoFrame::readOutlineOnly ( wxString fileName )
+{
+	// If the file is already open just bring its window to the front.
+	LeoFrame * frame = gLeoFrameList ;
+	while ( frame ) {
+		if ( frame -&gt; mFileName == fileName ) {
+			frame -&gt; Show();
+			gActiveFrame = frame ;
+		}
+		frame = frame -&gt; mNextFrame ;
+	}
+
+	// Don't take an exception if the file doesn't exist.
+	if ( ! ::wxFileExists ( fileName ) ) {
+		wxString m("Can not open: ") ;
+		m += fileName ;
+		alert ( m.c_str() ) ;
+		return ;
+	}
+
+	try {
+		LeoFrame * frame = new LeoFrame ();
+		frame -&gt; mCommands -&gt; readOutlineOnly( fileName ) ;
+		frame -&gt; Show(TRUE);
+		frame -&gt; mFileName = fileName ;
+		gActiveFrame = frame ;
+	}
+	catch ( ... )
+	{
+		wxString m("Error opening: ") ;
+		m += fileName ;
+		alert ( m.c_str() ) ;
+	}
+}
+</t>
+<t tx="T1021">@ &lt;&lt; LeoFrame methods &gt;&gt; (35 of 157)
+@c
+
+void LeoFrame::OnReadAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; readAtFileNodes();
+}
+</t>
+<t tx="T1022">@ &lt;&lt; LeoFrame methods &gt;&gt; (36 of 157)
+@c
+
+void LeoFrame::OnWriteOutlineOnly(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; writeOutlineOnly();
+}
+</t>
+<t tx="T1023">@ &lt;&lt; LeoFrame methods &gt;&gt; (37 of 157)
+@c
+
+void LeoFrame::OnWriteAtFileNodes(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; writeAtFileNodes();
+}
+</t>
+<t tx="T1024">@ &lt;&lt; LeoFrame methods &gt;&gt; (38 of 157)
+@c
+
+void LeoFrame::OnTangleAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; tangleAll();
+}
+</t>
+<t tx="T1025">@ &lt;&lt; LeoFrame methods &gt;&gt; (39 of 157)
+@c
+
+void LeoFrame::OnTangleMarked(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; tangleMarked();
+}
+</t>
+<t tx="T1026">@ &lt;&lt; LeoFrame methods &gt;&gt; (40 of 157)
+@c
+
+void LeoFrame::OnTangle(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; tangle();
+}
+</t>
+<t tx="T1027">@ &lt;&lt; LeoFrame methods &gt;&gt; (41 of 157)
+@c
+
+void LeoFrame::OnUntangleAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; untangleAll();
+}
+</t>
+<t tx="T1028">@ &lt;&lt; LeoFrame methods &gt;&gt; (42 of 157)
+@c
+
+void LeoFrame::OnUntangleMarked(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; untangleMarked();
+}
+</t>
+<t tx="T1029">@ &lt;&lt; LeoFrame methods &gt;&gt; (43 of 157)
+@c
+
+void LeoFrame::OnUntangle(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; untangle();
+}
+</t>
+<t tx="T1030">@ &lt;&lt; LeoFrame methods &gt;&gt; (44 of 157)
+@c
+
+void LeoFrame::OnImportFiles(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Import Files",
+		"", // default directory
+		"", // default file
+		"*.*", // wildcard
+		wxOPEN | wxMULTIPLE | wxFILE_MUST_EXIST,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		mCommands -&gt; ImportFilesCommand (&amp;paths);
+	}
+}
+</t>
+<t tx="T1031">@ &lt;&lt; LeoFrame methods &gt;&gt; (45 of 157)
+@c
+
+void LeoFrame::OnImportCWEBFiles(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Import CWEB Files",
+		"", // default directory
+		"", // default file
+		"*.*", // wildcard
+		wxOPEN | wxMULTIPLE | wxFILE_MUST_EXIST,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		mCommands -&gt; CWEBToOutlineCommand (&amp;paths);
+	}
+}
+</t>
+<t tx="T1032">@ &lt;&lt; LeoFrame methods &gt;&gt; (46 of 157)
+@c
+
+void LeoFrame::OnImportNowebFiles(wxCommandEvent&amp; WXUNUSED(event))
+{
+	////
+}
+</t>
+<t tx="T1033">@ &lt;&lt; LeoFrame methods &gt;&gt; (47 of 157)
+@c
+
+void LeoFrame::OnImportMoreText(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Import MORE Text",
+		"", // default directory
+		"", // default file
+		"*.*", // wildcard
+		wxOPEN | wxFILE_MUST_EXIST,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		mCommands -&gt; importMoreText (&amp;paths);
+	}
+}
+</t>
+<t tx="T1034">@ &lt;&lt; LeoFrame methods &gt;&gt; (48 of 157)
+@c
+
+void LeoFrame::OnFlattenOutline(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// Create the Open dialog.
+	wxFileDialog d (
+		NULL, "Flatten Outline",
+		"", // default directory
+		"flat.txt", // default file
+		"*.*", // wildcard
+		wxSAVE | wxOVERWRITE_PROMPT,  // style of dialog.
+		wxDefaultPosition);
+
+	if ( d.ShowModal() == wxID_OK ) {
+		wxArrayString paths;
+		d.GetPaths(paths);
+		mCommands -&gt; flattenOutline (&amp;paths);
+	}
+}
+</t>
+<t tx="T1035">@ &lt;&lt; LeoFrame methods &gt;&gt; (49 of 157)
+@c
+
+void LeoFrame::OnUpdateCopy ( wxUpdateUIEvent&amp; event )
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w &amp;&amp; w == mBodyCtrl )
+		event.Enable( mBodyCtrl-&gt; CanCopy( ) ) ;
+	else if ( w &amp;&amp; w == mLogCtrl )
+		event.Enable( mLogCtrl-&gt; CanCopy( ) ) ;
+	else
+		event.Enable( FALSE ) ;
+}
+</t>
+<t tx="T1036">@ &lt;&lt; LeoFrame methods &gt;&gt; (50 of 157)
+@c
+
+void LeoFrame::OnUpdateCut ( wxUpdateUIEvent&amp; event )
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w &amp;&amp; w == mBodyCtrl )
+		event.Enable( mBodyCtrl-&gt; CanCut( ) ) ;
+	else if ( w &amp;&amp; w == mLogCtrl )
+		event.Enable( mLogCtrl-&gt; CanCut( ) ) ;
+	else
+		event.Enable( FALSE ) ;
+}
+</t>
+<t tx="T1037">@ &lt;&lt; LeoFrame methods &gt;&gt; (51 of 157)
+@c
+
+void LeoFrame::OnUpdateDelete ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanCut( ) ) ;
+}
+</t>
+<t tx="T1038">@ &lt;&lt; LeoFrame methods &gt;&gt; (52 of 157)
+@c
+
+void LeoFrame::OnUpdateExtract ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExtract() ) ;
+}
+</t>
+<t tx="T1039">@ &lt;&lt; LeoFrame methods &gt;&gt; (53 of 157)
+@c
+
+void LeoFrame::OnUpdateExtractNames ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExtractSectionNames() ) ;
+}
+</t>
+<t tx="T1040">@ &lt;&lt; LeoFrame methods &gt;&gt; (54 of 157)
+@c
+
+void LeoFrame::OnUpdateExtractSection ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExtractSection() ) ;
+}
+</t>
+<t tx="T1041">@ &lt;&lt; LeoFrame methods &gt;&gt; (55 of 157)
+@c
+
+void LeoFrame::OnUpdateFind ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( find_text . Length() &gt; 0 ) ;
+}
+</t>
+<t tx="T1042">@ &lt;&lt; LeoFrame methods &gt;&gt; (56 of 157)
+@c
+
+void LeoFrame::OnUpdatePaste ( wxUpdateUIEvent&amp; event )
+{
+	#ifdef __WXMSW__ // apparent bug.
+		event.Enable(TRUE);
+	#else
+		wxWindow * w = this -&gt; FindFocus();
+
+		if ( w &amp;&amp; w == mBodyCtrl )
+			event.Enable( mBodyCtrl-&gt; CanPaste( ) ) ;
+		else if ( w &amp;&amp; w == mLogCtrl )
+			event.Enable( mLogCtrl-&gt; CanPaste( ) ) ;
+		else
+			event.Enable( FALSE ) ;
+	#endif
+}
+</t>
+<t tx="T1043">@ &lt;&lt; LeoFrame methods &gt;&gt; (57 of 157)
+@c
+
+void LeoFrame::OnUpdateRedo ( wxUpdateUIEvent&amp; event )
+{
+	bool enabled = FALSE ;
+
+	// The Tree view does not support redo.
+
+	#ifdef __WXGTK__ // text control does not support undo/redo on wxGTK
+		enabled = FALSE ;
+	#else
+		enabled = ( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanRedo() ) ;
+	#endif
+
+	event.Enable( enabled ) ;
+}
+</t>
+<t tx="T1044">@ &lt;&lt; LeoFrame methods &gt;&gt; (58 of 157)
+@c
+
+void LeoFrame::OnUpdateReplace ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; changeIsEnabled() ) ;
+}
+</t>
+<t tx="T1045">@ &lt;&lt; LeoFrame methods &gt;&gt; (59 of 157)
+@c
+
+void LeoFrame::OnUpdateSelectAll ( wxUpdateUIEvent&amp; event )
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	event.Enable( w &amp;&amp; ( w == mBodyCtrl || w == mLogCtrl ) ) ;
+}
+</t>
+<t tx="T1046">@ &lt;&lt; LeoFrame methods &gt;&gt; (60 of 157)
+@c
+
+void LeoFrame::OnUpdateUndo ( wxUpdateUIEvent&amp; event )
+{
+	wxWindow * w = this -&gt; FindFocus();
+	bool enabled = FALSE ;
+
+	// FindFocus seems to be a bit flakey, so use it only when absolutely needed.
+
+	if ( w == mTreeCtrl )
+		enabled = mCommands -&gt; canUndo() ;
+	else
+		// Don't use FindFocus.
+		#ifdef __WXGTK__ // text control does not support undo/redo on wxGTK
+			enabled = FALSE ;
+		#else
+			enabled = ( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanUndo() ) ;
+		#endif
+
+	event.Enable( enabled ) ;
+}
+</t>
+<t tx="T1047">@ &lt;&lt; LeoFrame methods &gt;&gt; (61 of 157)
+@c
+
+bool LeoFrame::hasSelection ( void )
+{
+
+	 if ( mBodyCtrl ) {
+		long from, to ;
+		mBodyCtrl  -&gt; GetSelection(&amp;from, &amp;to);
+		return from != to ;
+	}
+	else return FALSE ;
+
+#if 0 // old code:  now we just test mBodyCtrl.
+	wxWindow * w = this -&gt; FindFocus();
+	if ( w == NULL )
+		return FALSE ;
+	else if ( w == mBodyCtrl ) {
+		long from, to ;
+		mBodyCtrl  -&gt; GetSelection(&amp;from, &amp;to);
+		return from != to ;
+	}
+	else if ( w == mTreeCtrl ) {
+		#ifdef __WXMSW__
+		wxTextCtrl * text = mTreeCtrl -&gt; GetEditControl() ;
+		if ( text ) {
+				long from, to ;
+				text  -&gt; GetSelection(&amp;from, &amp;to);
+				return from != to ;
+		}
+		#endif
+	}
+
+	return FALSE ;
+#endif
+
+}
+</t>
+<t tx="T1048">@ &lt;&lt; LeoFrame methods &gt;&gt; (62 of 157)
+@c
+
+void LeoFrame::OnUndo(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	// FindFocus seems to be a bit flakey, so use it only when absolutely needed.
+
+	if ( w == mTreeCtrl )
+		mCommands -&gt; undo();
+
+#ifndef __WXGTK__ // text control does not support undo/redo on wxGTK
+	else if ( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanUndo() )
+		mBodyCtrl -&gt; Undo();
+#endif
+
+}
+</t>
+<t tx="T1049">@ &lt;&lt; LeoFrame methods &gt;&gt; (63 of 157)
+@c
+
+void LeoFrame::OnRedo(wxCommandEvent&amp; WXUNUSED(event))
+{
+	// The tree control does not support redo.
+
+#ifndef __WXGTK__ // text control does not support undo/redo on wxGTK
+	if ( mBodyCtrl &amp;&amp; mBodyCtrl -&gt; CanRedo() )
+		mBodyCtrl -&gt; Redo();
+#endif
+
+}
+</t>
+<t tx="T1050">@ &lt;&lt; LeoFrame methods &gt;&gt; (64 of 157)
+@c
+
+void LeoFrame::OnCut(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w &amp;&amp; w == mBodyCtrl )
+		mBodyCtrl-&gt; Cut( ) ;
+	else if ( w &amp;&amp; w == mLogCtrl )
+		mLogCtrl-&gt; Cut( ) ;
+}
+</t>
+<t tx="T1051">@ &lt;&lt; LeoFrame methods &gt;&gt; (65 of 157)
+@c
+
+void LeoFrame::OnCopy(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w &amp;&amp; w == mBodyCtrl )
+		mBodyCtrl-&gt; Copy( ) ;
+	else if ( w &amp;&amp; w == mLogCtrl )
+		mLogCtrl-&gt; Copy( ) ;
+}
+</t>
+<t tx="T1052">@ &lt;&lt; LeoFrame methods &gt;&gt; (66 of 157)
+@c
+
+void LeoFrame::OnPaste(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w &amp;&amp; w == mBodyCtrl )
+		mBodyCtrl-&gt; Paste( ) ;
+	else if ( w &amp;&amp; w == mLogCtrl )
+		mLogCtrl-&gt; Paste( ) ;
+}
+</t>
+<t tx="T1053">@ &lt;&lt; LeoFrame methods &gt;&gt; (67 of 157)
+@c
+
+void LeoFrame::OnDelete(wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( mBodyCtrl ) {
+		long from, to ;
+		mBodyCtrl -&gt; GetSelection(&amp;from, &amp;to);
+		if ( from &lt; to )
+			mBodyCtrl -&gt; Remove(from, to);
+		else
+			mBodyCtrl -&gt; Remove(to, from);
+	}
+}
+</t>
+<t tx="T1054">@ &lt;&lt; LeoFrame methods &gt;&gt; (68 of 157)
+@c
+
+void LeoFrame::OnSelectAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w == mBodyCtrl ) {
+		long to = mBodyCtrl -&gt; GetLastPosition();
+		mBodyCtrl -&gt; SetSelection(0, to);
+	}
+	else if ( w == mLogCtrl ) {
+		long to = mLogCtrl -&gt; GetLastPosition();
+		mLogCtrl -&gt; SetSelection(0, to);
+	}
+}
+</t>
+<t tx="T1055">@ &lt;&lt; LeoFrame methods &gt;&gt; (69 of 157)
+@c
+
+void LeoFrame::OnEditHeadline(wxCommandEvent&amp; WXUNUSED(event))
+{
+#ifndef __WXMSW__ // EditLabel is buggy.  Hitting a control key or tab will crash.
+	wxTreeItemId item = mTreeCtrl-&gt;GetSelection();
+	if ( item )
+		mTreeCtrl-&gt;EditLabel( item );
+#endif
+}
+</t>
+<t tx="T1056">@ &lt;&lt; LeoFrame methods &gt;&gt; (70 of 157)
+@c
+
+void LeoFrame::OnFontPanel(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxFontData data;
+	data.SetInitialFont(mBodyCtrl -&gt; GetFont());
+	data.SetColour(mBodyCtrl -&gt; GetForegroundColour());
+
+	wxFontDialog dialog(this, &amp;data);
+	#ifndef __WXGTK__  // Causes problems on GTK+ version of wxWindows.
+		dialog.CentreOnScreen();
+	#endif
+
+	if (dialog.ShowModal() != wxID_OK)  return ;
+
+	wxFontData retData = dialog.GetFontData();
+	wxFont font = retData.GetChosenFont();
+	wxColour color = retData.GetColour();
+
+	// On Linux, SetFont apparently clears the text control's text string!
+
+	#ifdef __WXGTK__
+		wxString contents = mBodyCtrl -&gt; GetValue();
+		mBodyCtrl -&gt; SetFont ( font ) ;
+		mBodyCtrl -&gt; SetForegroundColour(color);
+		mBodyCtrl -&gt; SetValue(contents);
+	#else
+		mBodyCtrl -&gt; SetFont ( font ) ;
+		mBodyCtrl -&gt; SetForegroundColour(color);
+	#endif
+
+	this -&gt; Refresh();
+
+	TRACEP("font_info",
+		es("face: "); es( font . GetFaceName() . c_str() ) ; ecs();
+		es("family: "); es( font . GetFamilyString() . c_str() ) ; enl();
+		es("size: "); eint( font . GetPointSize() ) ; ecs();
+		es("style: "); es( font. GetStyleString() . c_str() ) ; ecs();
+		es("weight: "); es( font . GetWeightString() . c_str() ) ; enl();
+	);
+}
+</t>
+<t tx="T1057">@ &lt;&lt; LeoFrame methods &gt;&gt; (71 of 157)
+@c
+
+void LeoFrame::OnSyntaxColoring(wxCommandEvent&amp; WXUNUSED(event))
+{
+	////
+}
+</t>
+<t tx="T1058">@ &lt;&lt; LeoFrame methods &gt;&gt; (72 of 157)
+@c
+
+void LeoFrame::OnPreferences(wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gPrefsFrame == NULL ) {
+		gPrefsFrame = new PrefsFrame ();
+		gPrefsFrame -&gt; initialize();
+	}
+
+	gPrefsFrame -&gt; CenterOnScreen();
+	gPrefsFrame -&gt; Show(TRUE);
+	gPrefsFrame -&gt; Raise();
+}
+</t>
+<t tx="T1059">@ &lt;&lt; LeoFrame methods &gt;&gt; (73 of 157)
+@c
+
+void LeoFrame::OnConvertBlanks(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; convertBlanks();
+}
+</t>
+<t tx="T1060">@ &lt;&lt; LeoFrame methods &gt;&gt; (74 of 157)
+@c
+
+void LeoFrame::OnExtractSection(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; extractSection();
+}
+</t>
+<t tx="T1061">@ &lt;&lt; LeoFrame methods &gt;&gt; (75 of 157)
+@c
+
+void LeoFrame::OnExtractNames(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; extractSectionNames();
+}
+</t>
+<t tx="T1062">@ &lt;&lt; LeoFrame methods &gt;&gt; (76 of 157)
+@c
+
+void LeoFrame::OnExtract(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; extract();
+}
+</t>
+<t tx="T1063">@ &lt;&lt; LeoFrame methods &gt;&gt; (77 of 157)
+@c
+
+void LeoFrame::OnFindPanel(wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gFindFrame == NULL )
+		gFindFrame = new FindFrame ();
+
+	// On windows, this activates the frame.
+	gFindFrame -&gt; Show();
+	gFindFrame -&gt; Raise();
+}
+</t>
+<t tx="T1064">@ &lt;&lt; LeoFrame methods &gt;&gt; (78 of 157)
+@c
+
+void LeoFrame::OnFindNext(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; doFindNextCommand();
+}
+</t>
+<t tx="T1065">@ &lt;&lt; LeoFrame methods &gt;&gt; (79 of 157)
+@c
+
+void LeoFrame::OnFindPrevious(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; doFindPreviousCommand();
+}
+</t>
+<t tx="T1066">@ &lt;&lt; LeoFrame methods &gt;&gt; (80 of 157)
+@c
+
+void LeoFrame::OnReplace(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; doChangeCommand();
+}
+</t>
+<t tx="T1067">@ &lt;&lt; LeoFrame methods &gt;&gt; (81 of 157)
+@c
+
+void LeoFrame::OnReplaceThenFind(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; doChangeThenFindCommand();
+}
+</t>
+<t tx="T1068">@ &lt;&lt; LeoFrame methods &gt;&gt; (82 of 157)
+@c
+
+void LeoFrame::OnUpdateCutNode ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canCutOutline() ) ;
+}
+</t>
+<t tx="T1069">@ &lt;&lt; LeoFrame methods &gt;&gt; (83 of 157)
+@c
+
+void LeoFrame::OnUpdateDeleteNode ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canDeleteHeadline() ) ;
+}
+</t>
+<t tx="T1070">@ &lt;&lt; LeoFrame methods &gt;&gt; (84 of 157)
+@c
+
+void LeoFrame::OnUpdatePasteNode ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canPasteOutline() ) ;
+}
+</t>
+<t tx="T1071">@ &lt;&lt; LeoFrame methods &gt;&gt; (85 of 157)
+@c
+
+void LeoFrame::OnUpdateSortNode ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canSort() ) ;
+}
+</t>
+<t tx="T1072">@ &lt;&lt; LeoFrame methods &gt;&gt; (86 of 157)
+@c
+
+void LeoFrame::OnUpdateExpandAll ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExpandAllHeadlines() ) ;
+}
+</t>
+<t tx="T1073">@ &lt;&lt; LeoFrame methods &gt;&gt; (87 of 157)
+@c
+
+void LeoFrame::OnUpdateExpandAllChildren ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExpandAllSubheads() ) ;
+}
+</t>
+<t tx="T1074">@ &lt;&lt; LeoFrame methods &gt;&gt; (88 of 157)
+@c
+
+void LeoFrame::OnUpdateExpandChildren ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canExpandAllSubheads() ) ;
+}
+</t>
+<t tx="T1075">@ &lt;&lt; LeoFrame methods &gt;&gt; (89 of 157)
+@c
+
+void LeoFrame::OnUpdateContractAll ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canContractAllHeadlines() ) ;
+}
+</t>
+<t tx="T1076">@ &lt;&lt; LeoFrame methods &gt;&gt; (90 of 157)
+@c
+
+void LeoFrame::OnUpdateContractAllChildren ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canContractAllSubheads() ) ;
+}
+</t>
+<t tx="T1077">@ &lt;&lt; LeoFrame methods &gt;&gt; (91 of 157)
+@c
+
+void LeoFrame::OnUpdateContractChildren ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canContractSubheads() ) ;
+}
+</t>
+<t tx="T1078">@ &lt;&lt; LeoFrame methods &gt;&gt; (92 of 157)
+@c
+
+void LeoFrame::OnUpdateMoveDown ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMoveOutlineDown() ) ;
+}
+</t>
+<t tx="T1079">@ &lt;&lt; LeoFrame methods &gt;&gt; (93 of 157)
+@c
+
+void LeoFrame::OnUpdateMoveLeft ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMoveOutlineLeft() ) ;
+}
+</t>
+<t tx="T1080">@ &lt;&lt; LeoFrame methods &gt;&gt; (94 of 157)
+@c
+
+void LeoFrame::OnUpdateMoveRight ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMoveOutlineRight() ) ;
+}
+</t>
+<t tx="T1081">@ &lt;&lt; LeoFrame methods &gt;&gt; (95 of 157)
+@c
+
+void LeoFrame::OnUpdateMoveUp ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMoveOutlineUp() ) ;
+}
+</t>
+<t tx="T1082">@ &lt;&lt; LeoFrame methods &gt;&gt; (96 of 157)
+@c
+
+void LeoFrame::OnUpdatePromote ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canPromote() ) ;
+}
+</t>
+<t tx="T1083">@ &lt;&lt; LeoFrame methods &gt;&gt; (97 of 157)
+@c
+
+void LeoFrame::OnUpdateDemote ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canDemote() ) ;
+}
+</t>
+<t tx="T1084">@ &lt;&lt; LeoFrame methods &gt;&gt; (98 of 157)
+@c
+
+void LeoFrame::OnUpdateGoPrevVisible ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canSelectVisBack() ) ;
+}
+</t>
+<t tx="T1085">@ &lt;&lt; LeoFrame methods &gt;&gt; (99 of 157)
+@c
+
+void LeoFrame::OnUpdateGoNextVisible ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canSelectVisNext() ) ;
+}
+</t>
+<t tx="T1086">@ &lt;&lt; LeoFrame methods &gt;&gt; (100 of 157)
+@c
+
+void LeoFrame::OnUpdateGoBack ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canSelectThreadBack() ) ;
+}
+</t>
+<t tx="T1087">@ &lt;&lt; LeoFrame methods &gt;&gt; (101 of 157)
+@c
+
+void LeoFrame::OnUpdateGoNext ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canSelectThreadNext() ) ;
+}
+</t>
+<t tx="T1088">@ &lt;&lt; LeoFrame methods &gt;&gt; (102 of 157)
+@c
+
+void LeoFrame::OnUpdateMark ( wxUpdateUIEvent&amp; event )
+{
+	vnode * v = mCommands -&gt; currentVnode();
+	event.SetText( ( v &amp;&amp; v-&gt;isMarked()) ? "Unmark" : "Mark") ;
+}
+</t>
+<t tx="T1089">@ &lt;&lt; LeoFrame methods &gt;&gt; (103 of 157)
+@c
+
+void LeoFrame::OnUpdateMarkSubheads ( wxUpdateUIEvent&amp; event )
+{
+	vnode * v = mCommands -&gt; currentVnode();
+	event.Enable( v &amp;&amp; v -&gt; hasChildren() ) ;
+}
+</t>
+<t tx="T1090">@ &lt;&lt; LeoFrame methods &gt;&gt; (104 of 157)
+@c
+
+void LeoFrame::OnUpdateMarkChangedItems ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMarkChangedHeadlines() ) ;
+}
+</t>
+<t tx="T1091">@ &lt;&lt; LeoFrame methods &gt;&gt; (105 of 157)
+@c
+
+void LeoFrame::OnUpdateMarkChangedRoots ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canMarkChangedRoots() ) ;
+}
+</t>
+<t tx="T1092">@ &lt;&lt; LeoFrame methods &gt;&gt; (106 of 157)
+@c
+
+void LeoFrame::OnUpdateGoToNextMarked ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canGoToNextMarkedHeadline() ) ;
+}
+</t>
+<t tx="T1093">@ &lt;&lt; LeoFrame methods &gt;&gt; (107 of 157)
+@c
+
+void LeoFrame::OnUpdateGoToNextChanged ( wxUpdateUIEvent&amp; event )
+{
+	event.Enable( mCommands -&gt; canGoToNextDirtyHeadline() ) ;
+}
+</t>
+<t tx="T1094">@ &lt;&lt; LeoFrame methods &gt;&gt; (108 of 157)
+@c
+
+void LeoFrame::OnCutNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; cutOutline();
+}
+</t>
+<t tx="T1095">@ &lt;&lt; LeoFrame methods &gt;&gt; (109 of 157)
+@c
+
+void LeoFrame::OnCopyNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; copyOutline();
+}
+</t>
+<t tx="T1096">@ &lt;&lt; LeoFrame methods &gt;&gt; (110 of 157)
+@c
+
+void LeoFrame::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; pasteOutline();
+}
+</t>
+<t tx="T1097">@ &lt;&lt; LeoFrame methods &gt;&gt; (111 of 157)
+@c
+
+void LeoFrame::OnDeleteNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; deleteHeadline();
+}
+</t>
+<t tx="T1098">@ &lt;&lt; LeoFrame methods &gt;&gt; (112 of 157)
+@c
+
+void LeoFrame::OnInsertNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; insertHeadline();
+}
+</t>
+<t tx="T1099">@ &lt;&lt; LeoFrame methods &gt;&gt; (113 of 157)
+@c
+
+void LeoFrame::OnCloneNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; clone();
+}
+</t>
+<t tx="T1100">@ &lt;&lt; LeoFrame methods &gt;&gt; (114 of 157)
+@c
+
+void LeoFrame::OnSortNode(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; sort();
+}
+</t>
+<t tx="T1101">@ &lt;&lt; LeoFrame methods &gt;&gt; (115 of 157)
+@c
+
+void LeoFrame::OnExpandAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandAllHeadlines();
+}
+</t>
+<t tx="T1102">@ &lt;&lt; LeoFrame methods &gt;&gt; (116 of 157)
+@c
+
+void LeoFrame::OnExpandAllChildren(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandAllSubheads();
+}
+</t>
+<t tx="T1103">@ &lt;&lt; LeoFrame methods &gt;&gt; (117 of 157)
+@c
+
+void LeoFrame::OnExpandChildren(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandSubheads();
+}
+</t>
+<t tx="T1104">@ &lt;&lt; LeoFrame methods &gt;&gt; (118 of 157)
+@c
+
+void LeoFrame::OnContractAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; contractAllHeadlines();
+}
+</t>
+<t tx="T1105">@ &lt;&lt; LeoFrame methods &gt;&gt; (119 of 157)
+@c
+
+void LeoFrame::OnContractAllChildren(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; contractAllSubheads();
+}
+</t>
+<t tx="T1106">@ &lt;&lt; LeoFrame methods &gt;&gt; (120 of 157)
+@c
+
+void LeoFrame::OnContractChildren(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; contractSubheads();
+}
+</t>
+<t tx="T1107">@ &lt;&lt; LeoFrame methods &gt;&gt; (121 of 157)
+@c
+
+void LeoFrame::OnExpandNextLevel(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandNextLevel();
+}
+</t>
+<t tx="T1108">@ &lt;&lt; LeoFrame methods &gt;&gt; (122 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel1(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel1();
+}
+</t>
+<t tx="T1109">@ &lt;&lt; LeoFrame methods &gt;&gt; (123 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel2(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel2();
+}
+</t>
+<t tx="T1110">@ &lt;&lt; LeoFrame methods &gt;&gt; (124 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel3(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel3();
+}
+</t>
+<t tx="T1111">@ &lt;&lt; LeoFrame methods &gt;&gt; (125 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel4(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel4();
+}
+</t>
+<t tx="T1112">@ &lt;&lt; LeoFrame methods &gt;&gt; (126 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel5(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel5();
+}
+</t>
+<t tx="T1113">@ &lt;&lt; LeoFrame methods &gt;&gt; (127 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel6(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel6();
+}
+</t>
+<t tx="T1114">@ &lt;&lt; LeoFrame methods &gt;&gt; (128 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel7(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel7();
+}
+</t>
+<t tx="T1115">@ &lt;&lt; LeoFrame methods &gt;&gt; (129 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel8(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel8();
+}
+</t>
+<t tx="T1116">@ &lt;&lt; LeoFrame methods &gt;&gt; (130 of 157)
+@c
+
+void LeoFrame::OnExpandToLevel9(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; expandLevel9();
+}
+</t>
+<t tx="T1117">@ &lt;&lt; LeoFrame methods &gt;&gt; (131 of 157)
+@c
+
+void LeoFrame::OnMoveDown(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; moveOutlineDown();
+}
+</t>
+<t tx="T1118">@ &lt;&lt; LeoFrame methods &gt;&gt; (132 of 157)
+@c
+
+void LeoFrame::OnMoveLeft(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; moveOutlineLeft();
+}
+</t>
+<t tx="T1119">@ &lt;&lt; LeoFrame methods &gt;&gt; (133 of 157)
+@c
+
+void LeoFrame::OnMoveRight(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; moveOutlineRight();
+}
+</t>
+<t tx="T1120">@ &lt;&lt; LeoFrame methods &gt;&gt; (134 of 157)
+@c
+
+void LeoFrame::OnMoveUp(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; moveOutlineUp();
+}
+</t>
+<t tx="T1121">@ &lt;&lt; LeoFrame methods &gt;&gt; (135 of 157)
+@c
+
+void LeoFrame::OnPromote(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; promote();
+}
+</t>
+<t tx="T1122">@ &lt;&lt; LeoFrame methods &gt;&gt; (136 of 157)
+@c
+
+void LeoFrame::OnDemote(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; demote();
+}
+</t>
+<t tx="T1123">@ &lt;&lt; LeoFrame methods &gt;&gt; (137 of 157)
+@c
+
+void LeoFrame::OnGoPrevVisible(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; moveOutlineUp();
+}
+</t>
+<t tx="T1124">@ &lt;&lt; LeoFrame methods &gt;&gt; (138 of 157)
+@c
+
+void LeoFrame::OnGoNextVisible(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; selectVisNext();
+}
+</t>
+<t tx="T1125">@ &lt;&lt; LeoFrame methods &gt;&gt; (139 of 157)
+@c
+
+void LeoFrame::OnGoBack(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; selectThreadBack();
+}
+</t>
+<t tx="T1126">@ &lt;&lt; LeoFrame methods &gt;&gt; (140 of 157)
+@c
+
+void LeoFrame::OnGoNext(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; selectThreadNext();
+}
+</t>
+<t tx="T1127">@ &lt;&lt; LeoFrame methods &gt;&gt; (141 of 157)
+@c
+
+void LeoFrame::OnMark(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markHeadline();
+}
+</t>
+<t tx="T1128">@ &lt;&lt; LeoFrame methods &gt;&gt; (142 of 157)
+@c
+
+void LeoFrame::OnMarkSubheads(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markSubheads();
+}
+</t>
+<t tx="T1129">@ &lt;&lt; LeoFrame methods &gt;&gt; (143 of 157)
+@c
+
+void LeoFrame::OnMarkChangedItems(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markChangedHeadlines();
+}
+</t>
+<t tx="T1130">@ &lt;&lt; LeoFrame methods &gt;&gt; (144 of 157)
+@c
+
+void LeoFrame::OnMarkChangedRoots(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markChangedRoots();
+}
+</t>
+<t tx="T1131">@ &lt;&lt; LeoFrame methods &gt;&gt; (145 of 157)
+@c
+
+void LeoFrame::OnMarkAllAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markAllAtFileNodesDirty();
+}
+</t>
+<t tx="T1132">@ &lt;&lt; LeoFrame methods &gt;&gt; (146 of 157)
+@c
+
+void LeoFrame::OnMarkAtFileNodesDirty(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; markAtFileNodesDirty();
+}
+</t>
+<t tx="T1133">@ &lt;&lt; LeoFrame methods &gt;&gt; (147 of 157)
+@c
+
+void LeoFrame::OnUnmarkAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; unmarkAll();
+}
+</t>
+<t tx="T1134">@ &lt;&lt; LeoFrame methods &gt;&gt; (148 of 157)
+@c
+
+void LeoFrame::OnGoToNextMarked(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; goToNextMarkedHeadline();
+}
+</t>
+<t tx="T1135">@ &lt;&lt; LeoFrame methods &gt;&gt; (149 of 157)
+@c
+
+void LeoFrame::OnGoToNextChanged(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; goToNextDirtyHeadline();
+}
+</t>
+<t tx="T1136">@ &lt;&lt; LeoFrame methods &gt;&gt; (150 of 157)
+@c
+
+void LeoFrame::OnEqualSizedPanes(wxCommandEvent&amp; WXUNUSED(event))
+{
+	mCommands -&gt; equalSizedPanes();
+}
+</t>
+<t tx="T1137">@ &lt;&lt; LeoFrame methods &gt;&gt; (151 of 157)
+@c
+
+void LeoFrame::OnToggleActivePane(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxWindow * w = this -&gt; FindFocus();
+
+	if ( w == NULL || w == mTreeCtrl )
+		mBodyCtrl -&gt; SetFocus();
+	else
+		mTreeCtrl -&gt; SetFocus();
+}
+</t>
+<t tx="T1138">@ &lt;&lt; LeoFrame methods &gt;&gt; (152 of 157)
+@c
+
+void LeoFrame::OnChangeDirection(wxCommandEvent&amp; WXUNUSED(event))
+{
+	int mode = mSplitter1 -&gt; GetSplitMode();
+	mSplitter1 -&gt; Unsplit(); // Hides the text control.
+
+	if ( mode == wxSPLIT_VERTICAL )
+		mSplitter1 -&gt; SplitHorizontally(mTreeCtrl, mBodyCtrl, 0);
+	else
+		mSplitter1 -&gt; SplitVertically(mTreeCtrl, mBodyCtrl, 0);
+
+	mBodyCtrl -&gt; Show();
+	mBodyCtrl -&gt; SetFocus();
+}
+</t>
+<t tx="T1139">@ &lt;&lt; LeoFrame methods &gt;&gt; (153 of 157)
+@c
+
+void LeoFrame::OnCascade(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxPoint p ( 10, 10 ) ;
+
+	for ( LeoFrame * f = gLeoFrameList ; f ; f = f -&gt; mNextFrame ) {
+		f -&gt; Move ( p ) ;
+		p.x += 30 ;
+		p.y += 30 ;
+		if ( p.x &gt; 200 ) {
+			p.x = 10 ;
+			p.y = 40 ;
+		}
+	}
+}
+</t>
+<t tx="T1140">@ &lt;&lt; LeoFrame methods &gt;&gt; (154 of 157)
+@c
+
+void LeoFrame::OnMinimizeAll(wxCommandEvent&amp; WXUNUSED(event))
+{
+	if ( gPrefsFrame )
+		gPrefsFrame -&gt; Iconize();
+	if ( gFindFrame )
+		gFindFrame -&gt; Iconize();
+	if ( gPythonFrame )
+		gPythonFrame -&gt; Iconize();
+
+	for ( LeoFrame * f = gLeoFrameList ; f ; f = f -&gt; mNextFrame )
+		f -&gt; Iconize();
+
+}
+</t>
+<t tx="T1141">@ &lt;&lt; LeoFrame methods &gt;&gt; (155 of 157)
+@c
+
+#ifdef __WXMSW__
+#define SWIGEXPORT(a,b) a _export b
+extern "C" SWIGEXPORT(void,initleoc)();
+#else
+extern "C" void initleoc();
+#endif
+
+#ifdef __WXMSW__
+void LeoFrame::OnOpenPythonWindow(wxCommandEvent&amp; WXUNUSED(event))
+{
+	gPythonFrame = wxPythonFrame::create((char *)"leoc", (char *)"leo", (void (*)()) initleoc);
+	gPythonFrame -&gt; Show(TRUE);
+}
+</t>
+<t tx="T1142">#endif // __WXMSW__
+// &lt;&lt; LeoFrame methods &gt;&gt; (156 of 157)
+void LeoFrame::OnRecentWindows(wxCommandEvent&amp; WXUNUSED(event))
+{
+	//// Not ready yet.
+}
+</t>
+<t tx="T1143">@ &lt;&lt; LeoFrame methods &gt;&gt; (157 of 157)
+@c
+
+void LeoFrame::OnAbout(wxCommandEvent&amp; WXUNUSED(event))
+{
+	wxString message =
+"wxLeo Version 0.08 (beta), October 24, 2001\n\
+Copyright © 2001 by Edward K. Ream\n\
+All Rights Reserved \n\
+Leo is distributed under the Python License";
+
+	wxMessageBox(
+		message,"About Leo",
+		wxCenter,
+		this);
+}
+</t>
+<t tx="T1144">&lt;&lt; LeoPrefs declarations &gt;&gt;
+
+@others
+</t>
+<t tx="T1145">// &lt;&lt; LeoPrefs private constants &gt;&gt;
+/*
+	These must match the order of items in the wxRadioBox.
+	These are _not_ the same as vars in args.h.
+*/
+enum {
+	c_target = 0,
+	cweb_target,
+	html_target,
+	java_target,
+	pascal_target,
+	perl_target,
+	perlpod_target,
+	plain_text_target,
+	python_target,
+	bad_last_target
+} ;
+</t>
+<t tx="T1146">BEGIN_EVENT_TABLE(PrefsFrame, wxFrame)
+
+	EVT_ACTIVATE ( PrefsFrame::OnActivatePrefsFrame)
+	EVT_CLOSE( PrefsFrame::OnClosePrefsFrame)
+
+	// Global options panel...
+	EVT_TEXT ( cPrefsPageWidthText, PrefsFrame::OnPageWidthText )
+	EVT_CHECKBOX ( cPrefsDoneBatCheckBox, PrefsFrame::OnDoneBatCheckBox )
+	EVT_CHECKBOX ( cPrefsUnBatCheckBox, PrefsFrame::OnUnBatCheckBox )
+
+	// Tangle options panel...
+	EVT_TEXT ( cPrefsTangleDirectoryText, PrefsFrame::OnTangleDirectoryText )
+	EVT_CHECKBOX ( cPrefsHeaderCheckBox, PrefsFrame::OnHeaderCheckBox )
+	EVT_CHECKBOX ( cPrefsDocChunksCheckBox, PrefsFrame::OnDocChunksCheckBox )
+
+	// Target language panel...
+	EVT_RADIOBOX ( cPrefsTargetLanguageRadioBox, PrefsFrame::OnTargetLanguageRadioBox )
+
+END_EVENT_TABLE()
+
+BEGIN_EVENT_TABLE(PrefsPanel, wxPanel)
+
+END_EVENT_TABLE()</t>
+<t tx="T1147">PrefsFrame::PrefsFrame()
+
+	: wxFrame((wxFrame *)NULL, -1, "Leo Preferences",
+		wxPoint(50, 50), wxDefaultSize,
+		wxMINIMIZE_BOX | wxTHICK_FRAME | wxSYSTEM_MENU | wxCAPTION)
+{
+	mPrefsPanel = new PrefsPanel(this);
+
+	// Resize to fit the panel.
+	wxBoxSizer * sizer = new wxBoxSizer(wxVERTICAL);
+	sizer -&gt; Add ( mPrefsPanel );
+	SetAutoLayout( TRUE );  // tell dialog to use sizer
+	SetSizer( sizer );  // actually set the sizer
+	sizer -&gt; Fit( this ); // set size to minimum size as calculated by the sizer
+	sizer -&gt; SetSizeHints( this ); // set size hints to honour mininum size
+
+	// Set the window icon.
+	#ifdef __WXMSW__
+	  this -&gt;SetIcon(wxIcon("LeoIcon"));
+	#endif
+}
+</t>
+<t tx="T1148">@ &lt;&lt; LeoPrefs methods &gt;&gt; (2 of 14)
+@c
+
+void PrefsFrame::initialize( void )
+{
+	// This may be called during construction.
+	if ( ! gPrefsFrame ) return ;
+
+	wxString s("");
+
+	if ( gActiveFrame ) {
+		s += wxString::Format("%d", gActiveFrame -&gt; mPageWidth);
+		mPrefsPanel -&gt; mPrefsPageWidthText -&gt;
+			SetValue(s) ;
+		mPrefsPanel -&gt; mPrefsDoneBatCheckBox -&gt;
+			SetValue(gActiveFrame -&gt; mTangleBatchFlag) ;
+		mPrefsPanel -&gt; mPrefsUnBatCheckBox -&gt;
+			SetValue(gActiveFrame -&gt; mUntangleBatchFlag) ;
+
+		mPrefsPanel -&gt; mPrefsTangleDirectoryText -&gt;
+			SetValue(gActiveFrame -&gt; mDefaultDirectory) ;
+		mPrefsPanel -&gt; mPrefsHeaderCheckBox -&gt;
+			SetValue(gActiveFrame -&gt; mUseHeaderFlag) ;
+		mPrefsPanel -&gt; mPrefsDocChunksCheckBox -&gt;
+			SetValue(gActiveFrame -&gt; mOutputDocFlag) ;
+
+		mPrefsPanel -&gt; mTargetLanguageRadioBox -&gt;
+			SetSelection(languageToTarget(gActiveFrame -&gt; mTargetLanguage)) ;
+	}
+	else {
+		s += wxString::Format("%d", arg_page_width);
+		mPrefsPanel -&gt; mPrefsPageWidthText -&gt; SetValue(s) ;
+		mPrefsPanel -&gt; mPrefsDoneBatCheckBox -&gt; SetValue(arg_tangle_batch) ;
+		mPrefsPanel -&gt; mPrefsUnBatCheckBox -&gt; SetValue(arg_untangle_batch) ;
+
+		// No global setting for director.
+		mPrefsPanel -&gt; mPrefsHeaderCheckBox -&gt; SetValue(arg_use_header_flag) ;
+		mPrefsPanel -&gt; mPrefsDocChunksCheckBox -&gt; SetValue(arg_output_doc_flag) ;
+
+		mPrefsPanel -&gt; mTargetLanguageRadioBox -&gt;
+			SetSelection(languageToTarget(arg_target_language)) ;
+	}
+}
+</t>
+<t tx="T1149">@ &lt;&lt; LeoPrefs methods &gt;&gt; (3 of 14)
+@c
+
+long PrefsFrame::targetToLanguage ( long target )
+{
+	switch ( target ) {
+	case c_target :     return c_language ;
+	case cweb_target:   return cweb_language ;
+	case html_target:   return html_language ;
+	case java_target:   return java_language ;
+	case perl_target:   return perl_language ;
+	case perlpod_target: return perlpod_language ;
+	case pascal_target: return pascal_language ;
+	case plain_text_target: return plain_text_language ;
+	case python_target: return python_language ;
+	default:            return plain_text_language ;
+	}
+}
+</t>
+<t tx="T1150">@ &lt;&lt; LeoPrefs methods &gt;&gt; (4 of 14)
+@c
+
+long PrefsFrame::languageToTarget ( long language )
+{
+	switch ( language ) {
+	case c_language:      return c_target ;
+	case cweb_language:   return cweb_target ;
+	case html_language:   return html_target ;
+	case java_language:   return java_target ;
+	case pascal_language: return pascal_target ;
+	case perl_language:   return perl_target ;
+	case perlpod_language: return perlpod_target ;
+	case plain_text_language: return plain_text_target ;
+	case python_language: return python_target ;
+	default:              return plain_text_target ;
+	}
+}
+</t>
+<t tx="T1151">@ &lt;&lt; LeoPrefs methods &gt;&gt; (5 of 14)
+@c
+
+void PrefsFrame::OnActivatePrefsFrame(wxActivateEvent&amp; event)
+{
+	if ( gPrefsFrame &amp;&amp; event.GetActive() )
+		gPrefsFrame -&gt; initialize();
+}
+</t>
+<t tx="T1152">@ &lt;&lt; LeoPrefs methods &gt;&gt; (6 of 14)
+This is an event handler function called when the user has tried to close a frame or dialog box. It is called via the  wxWindow::Close function, so that the application can also invoke the handler programmatically.  You should check whether the application is forcing the deletion of the window using CanVeto. If CanVeto returns FALSE, it is  not possible to skip window deletion; destroy the window using wxWindow::Destroy. If not, it is up to you whether you respond  by destroying the window.  If you don't destroy the window, you should call wxCloseEvent::Veto to let the calling code know that you did not destroy the  window. This allows the wxWindow::Close function to return TRUE or FALSE depending on whether the close instruction was  honoured or not.
+@c
+
+void PrefsFrame::OnClosePrefsFrame(wxCloseEvent&amp; event)
+{
+	if ( event.CanVeto() ) {
+		event.Veto();  // Did not destroy the window.
+		this -&gt; Show(FALSE);  // Just hide the window.
+	}
+	else {
+		this -&gt; Destroy();
+		gPrefsFrame = NULL ;
+	}
+}
+</t>
+<t tx="T1153">@ &lt;&lt; LeoPrefs methods &gt;&gt; (7 of 14)
+@c
+
+void PrefsFrame::OnPageWidthText (wxCommandEvent&amp; event)
+{
+	wxTextCtrl * text = (wxTextCtrl *) event.GetEventObject() ;
+	wxString s = text -&gt; GetValue();
+	long n = 0 ;
+	if ( s.ToLong(&amp;n) ) {
+		arg_page_width = default_page_width = n ;
+		if ( gActiveFrame )
+			gActiveFrame -&gt; mPageWidth = arg_page_width ;
+	}
+}
+</t>
+<t tx="T1154">@ &lt;&lt; LeoPrefs methods &gt;&gt; (8 of 14)
+@c
+
+void PrefsFrame::OnDoneBatCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	arg_tangle_batch = default_tangle_batch = box -&gt; GetValue() ;
+	if ( gActiveFrame ) gActiveFrame -&gt; mTangleBatchFlag = arg_tangle_batch ;
+}
+</t>
+<t tx="T1155">@ &lt;&lt; LeoPrefs methods &gt;&gt; (9 of 14)
+@c
+
+void PrefsFrame::OnUnBatCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	arg_untangle_batch = default_untangle_batch = box -&gt; GetValue() ;
+	if ( gActiveFrame ) gActiveFrame -&gt; mUntangleBatchFlag = arg_untangle_batch ;
+}
+</t>
+<t tx="T1156">@ &lt;&lt; LeoPrefs methods &gt;&gt; (10 of 14)
+@c
+
+void PrefsFrame::OnTangleDirectoryText (wxCommandEvent&amp; event)
+{
+	wxTextCtrl * text = (wxTextCtrl *) event.GetEventObject() ;
+	wxString s = text -&gt; GetValue();
+	if ( gActiveFrame ) {
+		gActiveFrame -&gt; mDefaultDirectory = s ;
+		if ( gActiveFrame -&gt; mDefaultDirectory . Length() &gt; 0 )
+			wxSetWorkingDirectory ( gActiveFrame -&gt; mDefaultDirectory ) ;
+		else if ( gActiveFrame -&gt; mOpenDirectory . Length() &gt; 0 )
+			wxSetWorkingDirectory ( gActiveFrame -&gt; mOpenDirectory ) ;
+	}
+}
+</t>
+<t tx="T1157">@ &lt;&lt; LeoPrefs methods &gt;&gt; (11 of 14)
+@c
+
+void PrefsFrame::OnHeaderCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	arg_use_header_flag = default_use_header_flag = box -&gt; GetValue() ;
+	if ( gActiveFrame ) gActiveFrame -&gt; mUseHeaderFlag = arg_use_header_flag ;
+}
+</t>
+<t tx="T1158">@ &lt;&lt; LeoPrefs methods &gt;&gt; (12 of 14)
+@c
+
+void PrefsFrame::OnDocChunksCheckBox (wxCommandEvent&amp; event)
+{
+	wxCheckBox * box = (wxCheckBox *)event.GetEventObject() ;
+	arg_output_doc_flag = default_output_doc_flag = box -&gt; GetValue();
+	if ( gActiveFrame ) gActiveFrame -&gt; mOutputDocFlag = arg_output_doc_flag ;
+}
+</t>
+<t tx="T1159">@ &lt;&lt; LeoPrefs methods &gt;&gt; (13 of 14)
+@c
+
+void PrefsFrame::OnTargetLanguageRadioBox (wxCommandEvent&amp; event)
+{
+	wxRadioBox * box = (wxRadioBox *)event.GetEventObject() ;
+	long targetIndex = box -&gt; GetSelection();
+	default_target_language = arg_target_language = targetToLanguage(targetIndex );
+
+	// Careful:  The @language or @nocolor will override this.
+	if ( gActiveFrame ) {
+		gActiveFrame -&gt; mTargetLanguage = arg_target_language ;
+		Commands * commands = gActiveFrame -&gt; mCommands ;
+		vnode * v = commands -&gt; currentVnode();
+		gActiveFrame -&gt; mCommands -&gt; scanAllDirectives( v,
+			cDontRequirePath, cDontIssueErrors );
+
+		#if 0 //// syntax coloring
+		TSyntaxMemoParser * parser = NULL ;
+		if ( commands -&gt; useSyntaxColoring(v) )
+			parser = commands -&gt; TSMParser ( arg_present_language ) ;
+		else
+			parser = commands -&gt; TSMParser ( plain_text_language )  ;
+
+		commands -&gt; mSyntaxMemo -&gt; Parser1 = parser ;
+		gActiveFrame -&gt; mParser = parser ;
+		#endif
+	}
+}
+</t>
+<t tx="T1160">@ &lt;&lt; LeoPrefs methods &gt;&gt; (14 of 14)
+@c
+
+PrefsPanel::PrefsPanel(wxFrame *frame)
+	   : wxPanel(frame, -1)
+{
+	// &lt;&lt; Create the preferences controls &gt;&gt;
+	wxBoxSizer * topSizer = new wxBoxSizer(wxVERTICAL);
+
+	// &lt;&lt; Create the Global Options static box &gt;&gt;
+	wxStaticBox * globalOptionsBox = new wxStaticBox(this, -1,
+		"Global Options",
+		wxPoint(10,10), wxSize(250,110), 0, "" );
+
+	wxStaticBoxSizer * sizer = new wxStaticBoxSizer(globalOptionsBox, wxVERTICAL);
+	wxBoxSizer * lineSizer = new wxBoxSizer(wxHORIZONTAL);
+	sizer -&gt; Add ( 0, 5 ) ; // Extra vertical space.
+
+	// Text control.
+	mPrefsPageWidthText = new wxTextCtrl(this,
+		cPrefsPageWidthText, "132",
+		wxDefaultPosition, wxSize(50,25), 0,
+		wxDefaultValidator, "") ;
+	lineSizer -&gt; Add ( mPrefsPageWidthText );
+	lineSizer -&gt; Add ( 20, 0 ) ; // Width.
+
+	// Label for text control.
+	lineSizer -&gt; Add (
+		new wxStaticText(this, -1, "Page Width",
+			wxPoint(-1,10), wxSize(100,25), 0, "") ,
+		0, wxBORDER | wxTOP, 5);  // Vertical offset 5.
+	sizer -&gt; Add ( lineSizer );
+
+	mPrefsDoneBatCheckBox = new wxCheckBox(this,
+		cPrefsDoneBatCheckBox,
+		"Execute Leo_done.bat after Tangle",
+		wxDefaultPosition, wxSize(235,25), 0,
+		wxDefaultValidator, "") ;
+	sizer -&gt; Add ( mPrefsDoneBatCheckBox );
+
+	mPrefsUnBatCheckBox = new wxCheckBox(this,
+		cPrefsUnBatCheckBox,
+		"Execute Leo_un.bat after Untangle",
+		wxDefaultPosition, wxSize(235,25), 0,
+		wxDefaultValidator, "") ;
+	sizer -&gt; Add ( mPrefsUnBatCheckBox );
+	// -- end -- &lt;&lt; Create the Global Options static box &gt;&gt;
+	topSizer -&gt; Add ( sizer );
+	topSizer -&gt; Add ( 0, 10 );
+	// &lt;&lt; Create the Default Tangle Options static box &gt;&gt;
+	wxStaticBox * optionsBox = new wxStaticBox(this, -1,
+		"Default Tangle Options",
+		wxDefaultPosition, wxSize(250,210),
+		0, "zzzz" );
+
+	wxStaticBoxSizer * sizer2 = new wxStaticBoxSizer(optionsBox, wxVERTICAL);
+	sizer2 -&gt; Add ( 0, 10 ) ;  // Vertical space.
+
+	// Label.
+	sizer2 -&gt; Add (
+		new wxStaticText(this, -1,
+			"Default Tangle directory",
+			wxDefaultPosition, wxSize(165,25), 0, ""),
+		0, wxBORDER | wxLEFT, 30);  // Indent 30.
+
+	mPrefsTangleDirectoryText = new wxTextCtrl(this,
+		cPrefsTangleDirectoryText, "",
+		wxDefaultPosition, wxSize(230,25), 0,
+		wxDefaultValidator, "") ;
+	sizer2 -&gt; Add ( mPrefsTangleDirectoryText );
+
+	mPrefsHeaderCheckBox = new wxCheckBox(this,
+		cPrefsHeaderCheckBox,
+		"Tangle outputs header line",
+		wxDefaultPosition, wxSize(235,25), 0,
+		wxDefaultValidator, "") ;
+	sizer2 -&gt; Add ( mPrefsHeaderCheckBox );
+
+	mPrefsDocChunksCheckBox = new wxCheckBox(this,
+		cPrefsDocChunksCheckBox,
+		"Tangle outputs document chunks",
+		wxDefaultPosition, wxSize(235,25), 0,
+		wxDefaultValidator, "") ;
+	sizer2 -&gt; Add ( mPrefsDocChunksCheckBox );
+	// -- end -- &lt;&lt; Create the Default Tangle Options static box &gt;&gt;
+	topSizer -&gt; Add ( sizer2 );
+	topSizer -&gt; Add ( 0, 10 );
+	// &lt;&lt; Create the Default Target Language radio buttons &gt;&gt;
+	wxString targetLanguageChoices[] = {
+		"C/C++", "CWEB", "HTML", "Java",
+		"Pascal", "Perl", "Perl + POD", "Plain text", "Python",
+	};
+
+	// We specify rows so that items will be sorted down the columns.
+	mTargetLanguageRadioBox = new wxRadioBox( this,
+		cPrefsTargetLanguageRadioBox,
+		"Default Target Language",
+		wxDefaultPosition, wxSize( 245, 145 ),
+		WXSIZEOF(targetLanguageChoices),
+		targetLanguageChoices,
+		5, wxRA_SPECIFY_ROWS);
+	// -- end -- &lt;&lt; Create the Default Target Language radio buttons &gt;&gt;
+	topSizer -&gt; Add ( mTargetLanguageRadioBox );
+
+	SetAutoLayout( TRUE );  // tell dialog to use sizer
+	SetSizer( topSizer );  // actually set the sizer
+	topSizer -&gt; Fit( this ); // set size to minimum size as calculated by the sizer
+	topSizer -&gt; SetSizeHints( this ); // set size hints to honour mininum size
+	// -- end -- &lt;&lt; Create the preferences controls &gt;&gt;
+}
+</t>
+<t tx="T1161">@ You may have to change the paths to the wxWindows docs by hand:  find/change doesn't work in headlines.
+</t>
+<t tx="T1162">Will I ever have to use wxArray, wxList, wxStream, wxString.
+
+In particular, can I use Python strings instead of wxStrings?
+
+Can I create multiple windows without using the wxDoc classes?</t>
+<t tx="T1163"># Executing the following script creates a wxWindows prototype of Leo.
+# Just do the Execute Script command from here.
+# For this to work the path to wxLeo.py must be in sys.path.
+
+# The first time you do this the window is created twice: once for the import and once for the reload.
+# Thereafter only the reload takes effect, so only one window gets created.
+# The purpose of reload is so you can change the prototype code without restarting Leo.
+
+# To do:
+# - convert this to a plugin that overrides Leo's actual code.
+# - Create an icons area and put row/column numbers in the status area.
+	
+
+import wxLeo
+reload(wxLeo)
+</t>
+<t tx="T1164">from wxPython import wx
+
+true  = 1==1
+false = 1==0
+
+cSplitterWindow = 101
+cTreeCtrl = 102
+cBodyCtrl = 103
+cLogCtrl = 104
+cOuterFrame = 105
+cIconFrame = 106
+
+cAboutLeoMenuItem = 1001
+
+width = 600 
+
+@others
+
+def trace(): print "trace"
+
+app = leoApp()
+frame = leoFrame()
+app.SetTopWindow(frame)
+frame.Show(true)
+app.MainLoop()</t>
+<t tx="T1165">class leoApp (wx.wxApp):
+	
+	@others
+</t>
+<t tx="T1166">def OnInit(self):
+	# print "leoApp:OnInit"
+	return true</t>
+<t tx="T1167">class leoFrame(wx.wxFrame):
+	@others</t>
+<t tx="T1168">def __init__ (self):
+	
+	wx.wxFrame.__init__(self, None, -1, "leoFrame")
+		# wx.wxDefaultPosition, wx.wxDefaultSize,
+		#wx.wxSUNKEN_BORDER,
+		#wx.wxNO_3D # hangs.
+		#"leoFrame")
+
+	#self.outerPanel = wx.wxPanel(self,-1)
+	
+	##self.iconPanel = wx.wxPanel(self.outerPanel, -1, "iconPanel")
+	
+	self.CreateStatusBar()
+	#self.createMenus()
+	self.createMenuBar()
+	
+	self.splitter1 = wx.wxSplitterWindow(self,
+		cSplitterWindow,
+		wx.wxDefaultPosition, wx.wxDefaultSize,
+		wx.wxSP_NOBORDER)
+		
+	# No effect.
+	self.splitter1.SetForegroundColour(wx.wxRED)
+	self.splitter1.SetBackgroundColour(wx.wxRED)
+
+	self.splitter2 = wx.wxSplitterWindow(self.splitter1, -1,
+		wx.wxDefaultPosition, wx.wxDefaultSize,
+		wx.wxSP_NOBORDER)
+		# wx.wxSP_BORDER | wx.wxSP_3D, "splitterWindow");
+	
+	self.splitter1.SetMinimumPaneSize(4)
+	self.splitter2.SetMinimumPaneSize(4)
+	
+	self.tree = wx.wxTreeCtrl(self.splitter2, cTreeCtrl,
+		wx.wxDefaultPosition, wx.wxDefaultSize,
+		wx.wxTR_HAS_BUTTONS | wx.wxTR_EDIT_LABELS, wx.wxDefaultValidator, "treeCtrl")
+
+	self.body = wx.wxTextCtrl(self.splitter1, cBodyCtrl, "",
+		wx.wxDefaultPosition, wx.wxDefaultSize,
+		wx.wxTE_MULTILINE)
+	
+	self.log = wx.wxTextCtrl(self.splitter2, cLogCtrl, "",
+		wx.wxDefaultPosition, wx.wxDefaultSize, wx.wxTE_MULTILINE )
+	
+	# Attach the controls to the splitter.
+	self.splitter1.SplitHorizontally(self.splitter2, self.body, 0)
+	self.splitter2.SplitVertically(self.tree, self.log, width/2)</t>
+<t tx="T1169">def createMenus(self):
+
+	menuBar = wx.wxMenuBar()
+	if 0: # Constants not defined yet.
+		&lt;&lt; Create the File menu &gt;&gt;
+		&lt;&lt; Create the Edit menu &gt;&gt;
+		&lt;&lt; Create the Outline menu &gt;&gt;
+		&lt;&lt; Create the Window menu &gt;&gt;
+	&lt;&lt; Create the Help menu &gt;&gt;
+	if 0:
+		menuBar.Append(fileMenu, "&amp;File")
+		menuBar.Append(editMenu, "&amp;Edit")
+		menuBar.Append(outlineMenu, "&amp;Outline")
+		menuBar.Append(windowMenu, "&amp;Window")
+		
+	menuBar.Append(helpMenu, "&amp;Help")
+	self.SetMenuBar(menuBar)  # attach the menu bar to the frame</t>
+<t tx="T1170">fileMenu = wx.wxMenu()
+&lt;&lt; Create the initial items of the file menu &gt;&gt;
+&lt;&lt; Create the Read/Write submenu &gt;&gt;
+&lt;&lt; Create the Tangle submenu &gt;&gt;
+&lt;&lt; Create the Untangle submenu &gt;&gt;
+&lt;&lt; Create the Import Files submenu &gt;&gt;
+
+fileMenu.AppendSeparator()
+
+fileMenu.Append(cQuitMenuItem, "E&amp;xit\tCtrl-Q", "Quit Leo")</t>
+<t tx="T1171">fileMenu.Append ( cNewMenuItem, "&amp;New\tCtrl-N",
+	"Open new Leo window" )
+fileMenu.Append ( cOpenMenuItem,
+	"&amp;Open\tCtrl-O", "Open Leo file")
+
+fileMenu.AppendSeparator()
+
+fileMenu.Append ( cCloseMenuItem,
+	"&amp;Close\tCtrl-W", "Close window" )
+fileMenu.Append ( cSaveMenuItem,
+	"&amp;Save\tCtrl-S", "Save window" )
+fileMenu.Append ( cSaveAsMenuItem,
+	"Save &amp;As\tShift-Ctrl-S", "Save window as" )
+fileMenu.Append ( cSaveToMenuItem,
+	"Save &amp;To", "Save window to" )
+fileMenu.Append ( cRevertMenuItem,
+	"&amp;Revert", "Revert window to saved" )
+
+fileMenu.AppendSeparator()
+
+fileMenu.Append ( cPageSetupMenuItem,
+	"Page S&amp;etup\tShift-Ctrl-P", "Specify printer settings" )
+fileMenu.Append ( cPrintMenuItem,
+	"&amp;Print\tCtrl-P", "Print (Weave) window" )
+
+# Disabled unused items
+fileMenu.Enable(cPrintMenuItem, FALSE)
+fileMenu.Enable(cPageSetupMenuItem, FALSE)
+
+fileMenu.AppendSeparator()</t>
+<t tx="T1172">readWriteMenu = wx.wxMenu()
+
+readWriteMenu.Append (cReadOutlineOnlyMenuItem,
+	"Read Outline Only", "Read outline only")
+readWriteMenu.Append (cReadAtFileNodesMenuItem,
+	"Read @file Nodes", "Read @file nodes")
+readWriteMenu.Append (cWriteOutlineOnlyMenuItem,
+	"Write Outline Only", "Write outline only")
+readWriteMenu.Append (cWriteAtFileNodesMenuItem,
+	"Write @file Nodes", "Write @file nodes")
+
+fileMenu.Append(cReadWriteSubmenuItem, "Read/Write...", readWriteMenu, "")</t>
+<t tx="T1173">tangleMenu = wx.wxMenu()
+
+tangleMenu.Append (cTangleAllMenuItem,
+	"Tangle &amp;All\tShift-Ctrl-A", "Tangle all roots")
+tangleMenu.Append (cTangleMarkedMenuItem,
+	"Tangle &amp;Marked\tShift-Ctrl-M", "Tangle all marked roots")
+tangleMenu.Append (cTangleMenuItem,
+	"&amp;Tangle\tShift-Ctrl-T", "Tangle selected headline")
+
+fileMenu.Append(cTangleSubmenuItem, "&amp;Tangle...", tangleMenu, "")
+
+# Doesn't work either.
+fileMenu.SetHelpString(cTangleSubmenuItem, "Tangle commands...")</t>
+<t tx="T1174">untangleMenu = wx.wxMenu()
+
+untangleMenu.Append (cUntangleAllMenuItem,
+	"Untangle &amp;All", "Tangle all roots")
+untangleMenu.Append (cUntangleMarkedMenuItem,
+	"Untangle &amp;Marked", "Tangle all marked roots")
+untangleMenu.Append (cUntangleMenuItem,
+	"&amp;Untangle\tShift-Ctrl-U", "Tangle selected headline")
+
+fileMenu.Append(cUntangleSubmenuItem, "&amp;Untangle...", untangleMenu, "")</t>
+<t tx="T1175">importMenu = wx.wxMenu()
+
+importMenu.Append (cImportFilesMenuItem,
+	"Import Files\tShift-Ctrl-F", "Convert source files to outline" )
+importMenu.Append (cImportCWEBFilesMenuItem,
+	"Import CWEB Files", "Convert CWEB file to outline")
+importMenu.Append (cImportNowebFilesMenuItem,
+	"Import noweb Files", "Convert noweb file to outline")
+
+importMenu.Enable(cImportNowebFilesMenuItem, FALSE)
+
+importMenu.Append (cImportMORETextMenuItem,
+	"Import MORE Text", "Convert MORE file to outline")
+importMenu.Append (cFlattenOutlineMenuItem,
+	"Flatten Outline", "Write Leo outline to text file")
+
+fileMenu.Append(cImportExportSubmenuItem,
+	"&amp;Import Files...", importMenu, "Import commands")</t>
+<t tx="T1176">editMenu = wx.wxMenu()
+&lt;&lt; Create the initial items of the Edit menu &gt;&gt;
+&lt;&lt; Create the Edit Body submenu &gt;&gt;
+&lt;&lt; Create the Find submenu &gt;&gt;
+&lt;&lt; Create the final items of the Edit menu &gt;&gt;</t>
+<t tx="T1177">editMenu.Append ( cUndoMenuItem, "&amp;Undo\tCtrl-Z", "Undo last operation" )
+
+if 0: #ifndef __WXGTK__ # For now, neither tree nor text controls support Redo.
+	editMenu.Append ( cRedoMenuItem,
+		"&amp;Redo\tShift-Ctrl-Z", "Redo previous operation" )
+
+editMenu.AppendSeparator()
+
+editMenu.Append ( cCutMenuItem,
+	"Cu&amp;t\tCtrl-X", "Cut text" )
+editMenu.Append ( cCopyMenuItem,
+	"&amp;Copy\tCtrl-C", "Copy text" )
+editMenu.Append ( cPasteMenuItem,
+	"&amp;Paste\tCtrl-V", "Paste text" )
+editMenu.Append ( cDeleteMenuItem,
+	"&amp;Delete", "Delete text" )
+editMenu.Append ( cSelectAllMenuItem,
+	"Select A&amp;ll\tCtrl-A", "Select all" )
+
+editMenu.AppendSeparator()
+
+editMenu.Append ( cEditHeadlineMenuItem,
+	"Edit &amp;Headline\tShift-Ctrl-H", "Edit headline text" )</t>
+<t tx="T1178">findMenu = wx.wxMenu()
+
+findMenu.Append ( cFindPanelMenuItem,
+	"&amp;Find Panel\tCtrl-F", "Open Find panel" )
+
+findMenu.AppendSeparator()
+
+if 0: #ifdef __WXGTK__  # bugs: can't recognize shift-F keys
+	findMenu.Append ( cFindNextMenuItem,
+		"Find &amp;Next\tF3", "Find next" )
+	findMenu.Append ( cFindPreviousMenuItem,
+		"Find &amp;Prev\tF4", "Find previous" )
+	findMenu.Append ( cReplaceMenuItem,
+		"&amp;Replace\tF5", "Replace" )
+	findMenu.Append ( cReplaceThenFindMenuItem,
+		"Replace &amp;Then Find\tF6", "Replace, then find again" )
+else:
+	findMenu.Append ( cFindNextMenuItem,
+		"Find &amp;Next\tF3", "Find next" )
+	findMenu.Append ( cFindPreviousMenuItem,
+		"Find &amp;Prev\tShift-F3", "Find previous" )
+	findMenu.Append ( cReplaceMenuItem,
+		"&amp;Replace\tF4", "Replace" )
+	findMenu.Append ( cReplaceThenFindMenuItem,
+		"Replace &amp;Then Find\tShift-F4", "Replace, then find again" )
+
+editMenu.Append( cFindSubmenuItem,
+	"&amp;Find...", findMenu, "")</t>
+<t tx="T1179">editMenu.Append ( cFontPanelMenuItem,
+	"&amp;Font Panel\tAlt-Shift-T", "Open Font panel" )
+
+editMenu.Append ( cSyntaxColoringMenuItem,
+	"&amp;Syntax Coloring...\tAlt-Shift-S", "Set syntax coloring options" )
+
+editMenu.Enable(cSyntaxColoringMenuItem, FALSE)
+
+editMenu.AppendSeparator()
+
+editMenu.Append ( cPreferencesMenuItem,
+	"Preferences\tCtrl-Y", "Open Preferences panel" )</t>
+<t tx="T1180">editBodyMenu = wx.wxMenu()
+
+editBodyMenu.Append ( cExtractSectionMenuItem,
+	"&amp;Extract Section\tShift-Ctrl-E",
+	"Extract section to child" )
+editBodyMenu.Append ( cExtractNamesMenuItem,
+	"Extract Section &amp;Names\tShift-Ctrl-N",
+	"Extract section names to children" )
+editBodyMenu.Append ( cExtractMenuItem,
+	"Extract\tShift-Ctrl-D",
+	"Extract section text to child" )
+editBodyMenu.Append ( cConvertBlanksMenuItem,
+	"&amp;Convert Blanks\tShift-Ctrl-B", "Convert blanks" )
+
+editMenu.Append(cEditBodySubmenuItem, "&amp;Edit Body...", editBodyMenu, "")</t>
+<t tx="T1181">outlineMenu = wx.wxMenu()
+&lt;&lt; Create the initial items of the Outline menu &gt;&gt;
+&lt;&lt; Create the Expand/Contract submenu &gt;&gt;
+&lt;&lt; Create the Move/Select submenu &gt;&gt;
+&lt;&lt; Create the Mark/Go To submenu &gt;&gt;
+</t>
+<t tx="T1182">outlineMenu.Append ( cCutNodeMenuItem,
+	"Cu&amp;t Node\tShift-Ctrl-X", "Cut node")
+outlineMenu.Append ( cCopyNodeMenuItem,
+	"&amp;Copy Node\tShift-Ctrl-C", "Copy node" )
+outlineMenu.Append ( cPasteNodeMenuItem,
+	"&amp;Paste Node\tShift-Ctrl-V", "Paste node" )
+outlineMenu.Append ( cDeleteNodeMenuItem,
+	# Shift-Ctrl-BkSp not validcPreferencesMenuItem
+	"&amp;Delete Node", "Delete node" )
+
+outlineMenu.AppendSeparator()
+
+outlineMenu.Append ( cInsertNodeMenuItem,
+	"&amp;Insert Node\tCtrl-I", "Insert new node" )
+
+outlineMenu.Append ( cCloneNodeMenuItem,
+	"&amp;Clone Node\tShift-Ctrl-I", "Clone node" )
+
+outlineMenu.Append ( cSortNodeMenuItem,
+	"&amp;Sort Node", "Sort node's childdren" )
+
+outlineMenu.AppendSeparator()</t>
+<t tx="T1183">expandContractMenu = wx.wxMenu()
+
+expandContractMenu.Append ( cExpandAllChildrenMenuItem,
+	"Expand All Children", "Expand node fully" )
+expandContractMenu.Append ( cExpandChilrenMenuItem,
+	"Expand Children", "Expand node" )
+
+expandContractMenu.AppendSeparator()
+
+expandContractMenu.Append ( cContractAllChildrenMenuItem,
+	"Contract All Children", "Contract node fully" )
+expandContractMenu.Append ( cContractChilrenMenuItem,
+	"Contract Children", "Contract node" )
+
+expandContractMenu.AppendSeparator()
+
+expandContractMenu.Append ( cExpandNextLevelMenuItem,
+	"Expand &amp;Next Level\tAlt-N", "Expand outline another level" )
+expandContractMenu.Append ( cExpandToLevel1MenuItem,  # better than contract all
+	"Contract All\tAlt-1", "Contract all" )
+expandContractMenu.Append ( cExpandToLevel2MenuItem,
+	"Expand To Level 2\tAlt-2", "Expand to level 2" )
+expandContractMenu.Append ( cExpandToLevel3MenuItem,
+	"Expand To Level 3\tAlt-3", "Expand to level 3" )
+expandContractMenu.Append ( cExpandToLevel4MenuItem,
+	"Expand To Level 4\tAlt-4", "Expand to level 4" )
+expandContractMenu.Append ( cExpandToLevel5MenuItem,
+	"Expand To Level 5\tAlt-5", "Expand to level 5" )
+expandContractMenu.Append ( cExpandToLevel6MenuItem,
+	"Expand To Level 6\tAlt-6", "Expand to level 6" )
+expandContractMenu.Append ( cExpandToLevel7MenuItem,
+	"Expand To Level 7\tAlt-7", "Expand to level 7" )
+expandContractMenu.Append ( cExpandToLevel8MenuItem,
+	"Expand To Level 8\tAlt-8", "Expand to level 8" )
+expandContractMenu.Append ( cExpandAllMenuItem,
+	"Expand All\tAlt-9", "Expand all" )
+
+outlineMenu.Append(cExpandContractSubmenuItem,
+	"Expand/Contract...", expandContractMenu, "")</t>
+<t tx="T1184">moveSelectMenu = wx.wxMenu()
+
+moveSelectMenu.Append ( cMoveDownMenuItem,
+	"Move &amp;Down\tCtrl-D", "Move node down" )
+moveSelectMenu.Append ( cMoveLeftMenuItem,
+	"Move &amp;Left\tCtrl-L", "Move node left" )
+moveSelectMenu.Append ( cMoveRightMenuItem,
+	"Move &amp;Right\tCtrl-R", "Move node right" )
+moveSelectMenu.Append ( cMoveUpMenuItem,
+	"Move &amp;Up\tCtrl-U", "Move node up" )
+
+moveSelectMenu.AppendSeparator()
+
+# Can't use control-] and control-[ anywhere.
+moveSelectMenu.Append ( cPromoteMenuItem,
+	"&amp;Promote", "Promote children" )
+
+moveSelectMenu.Append ( cDemoteMenuItem,
+	"&amp;Demote", "Demote following siblings" )
+
+moveSelectMenu.AppendSeparator()
+
+if 1: #ifdef __WXMSW__  # Up and down keys handled by tree &amp; text control
+	moveSelectMenu.Append ( cGoPrevVisibleMenuItem,
+		"Go Prev Visible\tUp", "Select previous visible node" )
+	moveSelectMenu.Append ( cGoNextVisibleMenuItem,
+		"Go Next Visible\tDown", "Select next visible node" )
+else:
+ 	moveSelectMenu.Append ( cGoPrevVisibleMenuItem,
+		"Go Prev Visible", "Select previous visible node" )
+	moveSelectMenu.Append ( cGoNextVisibleMenuItem,
+		"Go Next Visible", "Select next visible node" )
+
+moveSelectMenu.AppendSeparator()
+
+moveSelectMenu.Append ( cGoBackMenuItem,
+	"Go Prev", "Select previous node" )
+moveSelectMenu.Append ( cGoNextMenuItem,
+	"Go Next", "Select next node" )
+
+outlineMenu.Append(cMoveSelectSubmenuItem,
+	"Move/&amp;Select...", moveSelectMenu, "")</t>
+<t tx="T1185">markGoToMenu = wx.wxMenu()
+
+markGoToMenu.Append ( cMarkMenuItem,
+	"&amp;Mark\tCtrl-M", "Mark node" )
+markGoToMenu.Append ( cMarkSubheadsMenuItem,
+	"Mark &amp;Subheads\tAlt-S", "Mark children of node" )
+markGoToMenu.Append ( cMarkChangedItemsMenuItem,
+	"Mark &amp;Changed Items\tAlt-C", "Mark all changed nodes" )
+markGoToMenu.Append ( cMarkChangedRootsMenuItem,
+	"Mark Changed &amp;Roots\tAlt-R", "Mark all changed root nodes" )
+markGoToMenu.Append ( cMarkAllAtFileNodesDirtyMenuItem,
+	"Mark All @file Nodes Dirty", "Mark all @file nodes" )
+markGoToMenu.Append ( cMarkAtFileNodesDirtyMenuItem,
+	"Mark @file Nodes Dirty", "Mark @file nodes" )
+
+markGoToMenu.AppendSeparator()
+
+markGoToMenu.Append ( cUnmarkAllMenuItem,
+	"&amp;Unmark All\tAlt-U", "Unmark all nodes" )
+markGoToMenu.Append ( cGoToNextMarkedMenuItem,
+	"&amp;Go To Next Marked\tAlt-M", "Select next marked node" )
+markGoToMenu.Append ( cGoToNextChangedMenuItem,
+	"Go To Next Changed\tAlt-D", "Select next changed node" )
+
+outlineMenu.Append(cMarkGotoSubmenuItem,
+	"&amp;Mark/Go To...", markGoToMenu, "")</t>
+<t tx="T1186">windowMenu = wx.wxMenu()
+
+if 0: #ifdef __WXGTK__  # Control-E conflicts with shift-control-E
+
+	windowMenu.Append ( cEqualSizedPanesMenuItem,
+		"&amp;Equal Sized Panes", "Make each pane the same size")
+else:
+	windowMenu.Append ( cEqualSizedPanesMenuItem,
+		"&amp;Equal Sized Panes\tCtrl-E", "Make each pane the same size")
+
+windowMenu.Append ( cToggleActivePaneMenuItem,
+	"&amp;Toggle Active Pane\tCtrl-T", "Switch the active pane")
+
+if 0: #ifdef __WXGTK__
+	windowMenu.Enable(cToggleActivePaneMenuItem, FALSE)
+
+windowMenu.Append ( cSplitPaneDirectionMenuItem,
+	"&amp;Split Pane Vertically", "Change orientation of pane")
+
+windowMenu.AppendSeparator()
+
+windowMenu.Append ( cCascadeMenuItem,
+	"&amp;Cascade Windows", "Cascade all open windows")
+
+windowMenu.Append ( cMinimizeAllMenuItem,
+	"Minimize &amp;All Windows", "Minimize all open windows")
+
+windowMenu.AppendSeparator()
+
+if 1: #ifdef __WXMSW__
+	windowMenu.Append ( cOpenPythonWindowMenuItem,
+		"Open &amp;Python Window\tAlt-P", "Open the Python window")
+
+if 0: # Not ready yet: use wxFileHistory
+	windowMenu.AppendSeparator()
+
+	windowMenu.Append ( cRecentWindowsMenuItem,
+		"Recent Windows", "List of recent windows")</t>
+<t tx="T1187">helpMenu = wx.wxMenu()
+
+helpMenu.Append(cAboutLeoMenuItem,
+	"&amp;About Leo...",
+	"Show about dialog")</t>
+<t tx="T1188">def createMenuBar(self):
+	
+	menuBar = wx.wxMenuBar()
+	
+	self.menuShortcuts = []
+	if 0: # not ready yet: methods in tables must be defined
+		&lt;&lt; create the file menu &gt;&gt;
+		&lt;&lt; create the edit menu &gt;&gt;
+		&lt;&lt; create the outline menu &gt;&gt;
+		doHook("create-optional-menus",c=c)
+		&lt;&lt; create the window menu &gt;&gt;
+	&lt;&lt; create the help menu &gt;&gt;
+
+	if 0:
+		menuBar.Append(fileMenu, "&amp;File")
+		menuBar.Append(editMenu, "&amp;Edit")
+		menuBar.Append(outlineMenu, "&amp;Outline")
+		menuBar.Append(windowMenu, "&amp;Window")
+		
+	menuBar.Append(helpMenu, "&amp;Help")
+	self.SetMenuBar(menuBar)  # attach the menu bar to the frame
+	
+	# app().menuWarningsGiven = true</t>
+<t tx="T1189">editMenu = self.createNewMenu("&amp;Edit")
+&lt;&lt; create the first top-level edit entries &gt;&gt;
+&lt;&lt; create the edit body submenu &gt;&gt;
+&lt;&lt; create the edit headline submenu &gt;&gt;
+&lt;&lt; create the find submenu &gt;&gt;
+&lt;&lt; create the last top-level edit entries &gt;&gt;
+</t>
+<t tx="T1190">table = (
+	("Can't Undo","Ctrl+Z",self.OnUndo), # &amp;U reserved for Undo
+	("Can't Redo","Shift+Ctrl+Z",self.OnRedo), # &amp;R reserved for Redo
+	("-",None,None),
+	("Cu&amp;t","Ctrl+X",self.OnCutFromMenu), 
+	("Cop&amp;y","Ctrl+C",self.OnCopyFromMenu),
+	("&amp;Paste","Ctrl+V",self.OnPasteFromMenu),
+	("&amp;Delete",None,self.OnDelete),
+	("Select &amp;All","Ctrl+A",self.OnSelectAll),
+	("-",None,None))
+
+self.createMenuEntries(editMenu,table)
+</t>
+<t tx="T1191">editBodyMenu = self.createNewMenu("Edit &amp;Body...","Edit")
+
+table = (
+	("Extract &amp;Section","Shift+Ctrl+E",self.OnExtractSection),
+	("Extract &amp;Names","Shift+Ctrl+N",self.OnExtractNames),
+	("&amp;Extract","Shift+Ctrl+D",self.OnExtract),
+	("-",None,None),
+	("Convert All B&amp;lanks",None,self.OnConvertAllBlanks),
+	("Convert All T&amp;abs",None,self.OnConvertAllTabs),
+	("Convert &amp;Blanks","Shift+Ctrl+B",self.OnConvertBlanks),
+	("Convert &amp;Tabs","Shift+Ctrl+J",self.OnConvertTabs),
+	("Insert Body Time/&amp;Date","Shift+Ctrl+G",self.OnInsertBodyTime),
+	("&amp;Reformat Paragraph","Shift+Ctrl+P",self.OnReformatParagraph),
+	("-",None,None),
+	("&amp;Indent","Ctrl+]",self.OnIndent),
+	("&amp;Unindent","Ctrl+[",self.OnDedent),
+	("&amp;Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
+	
+self.createMenuEntries(editBodyMenu,table)
+
+</t>
+<t tx="T1192">editHeadlineMenu = self.createNewMenu("Edit &amp;Headline...","Edit")
+
+table = (
+	("Edit &amp;Headline","Ctrl+H",self.OnEditHeadline),
+	("&amp;End Edit Headline","Escape",self.OnEndEditHeadline),
+	("&amp;Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
+	("Insert Headline Time/&amp;Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
+	
+	# 5/16/03 EKR: I dislike this command.
+	#("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets)
+	
+self.createMenuEntries(editHeadlineMenu,table)
+
+</t>
+<t tx="T1193">findMenu = self.createNewMenu("&amp;Find...","Edit")
+
+table = (
+	("&amp;Find Panel","Ctrl+F",self.OnFindPanel),
+	("-",None,None),
+	("Find &amp;Next","F3",self.OnFindNext),
+	("Find &amp;Previous","F4",self.OnFindPrevious),
+	("&amp;Replace","Ctrl+=",self.OnReplace),
+	("Replace, &amp;Then Find","Ctrl+-",self.OnReplaceThenFind))
+
+self.createMenuEntries(findMenu,table)
+</t>
+<t tx="T1194">label = choose(c.tree.colorizer.showInvisibles,"Hide In&amp;visibles","Show In&amp;visibles")
+
+table = (
+	("&amp;Go To Line Number","Alt+G",self.OnGoToLineNumber),
+	("&amp;Execute Script","Alt+Shift+E",self.OnExecuteScript),
+	("Set Fon&amp;t...","Shift+Alt+T",self.OnFontPanel),
+	("Set &amp;Colors...","Shift+Alt+C",self.OnColorPanel),
+	(label,"Alt+V",self.OnViewAllCharacters),
+	("-",None,None),
+	("Prefere&amp;nces","Ctrl+Y",self.OnPreferences))
+
+self.createMenuEntries(editMenu,table)</t>
+<t tx="T1195">fileMenu = self.createNewMenu("&amp;File")
+&lt;&lt; create the top-level file entries &gt;&gt;
+&lt;&lt; create the recent files submenu &gt;&gt;
+fileMenu.add_separator()
+&lt;&lt; create the read/write submenu &gt;&gt;
+&lt;&lt; create the tangle submenu &gt;&gt;
+&lt;&lt; create the untangle submenu &gt;&gt;
+&lt;&lt; create the import submenu &gt;&gt;
+&lt;&lt; create the export submenu &gt;&gt;
+fileMenu.add_separator()
+# Create the last entries.
+exitTable = (("E&amp;xit","Ctrl-Q",self.OnQuit),)
+self.createMenuEntries(fileMenu,exitTable)
+
+</t>
+<t tx="T1196">@ leo.py will probably never have a Print command.  Instead, export text files that may be formatted and printed as desired.
+@c
+
+table = (
+	("&amp;New","Ctrl+N",self.OnNew),
+	("&amp;Open...","Ctrl+O",self.OnOpen))
+self.createMenuEntries(fileMenu,table)
+
+# 7/1/03: Create a new menu rather than call OnOpenWith.
+self.createNewMenu("Open &amp;With...","File")
+
+table = (
+	("-",None,None),
+	("&amp;Close","Ctrl+W",self.OnClose),
+	("&amp;Save","Ctrl+S",self.OnSave),
+	("Save &amp;As","Shift+Ctrl+S",self.OnSaveAs),
+	("Save To",None,self.OnSaveTo), # &amp;Tangle
+	("Re&amp;vert To Saved",None,self.OnRevert)) # &amp;Read/Write
+self.createMenuEntries(fileMenu,table)</t>
+<t tx="T1197">recentFilesMenu = self.createNewMenu("Recent &amp;Files...","File")
+self.recentFiles = app().config.getRecentFiles()
+self.createRecentFilesMenuItems()
+
+</t>
+<t tx="T1198">readWriteMenu = self.createNewMenu("&amp;Read/Write...","File")
+
+table = [
+		("&amp;Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
+		("Read @file &amp;Nodes",None,self.OnReadAtFileNodes),
+		("-",None,None),
+		("Write &amp;Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
+		("Write &amp;Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
+		("Write &amp;Outline Only",None,self.OnWriteOutlineOnly),
+		("&amp;Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
+
+self.createMenuEntries(readWriteMenu,table)</t>
+<t tx="T1199">tangleMenu = self.createNewMenu("&amp;Tangle...","File")
+
+table = (
+	("Tangle &amp;All","Shift+Ctrl+A",self.OnTangleAll),
+	("Tangle &amp;Marked","Shift+Ctrl+M",self.OnTangleMarked),
+	("&amp;Tangle","Shift+Ctrl+T",self.OnTangle))
+
+self.createMenuEntries(tangleMenu,table)
+
+</t>
+<t tx="T1200">untangleMenu = self.createNewMenu("&amp;Untangle...","File")
+
+table = (
+	("Untangle &amp;All",None,self.OnUntangleAll),
+	("Untangle &amp;Marked",None,self.OnUntangleMarked),
+	("&amp;Untangle","Shift+Ctrl+U",self.OnUntangle))
+	
+self.createMenuEntries(untangleMenu,table)
+
+</t>
+<t tx="T1201">importMenu = self.createNewMenu("&amp;Import...","File")
+
+table = (
+	("Import To @&amp;file","Shift+Ctrl+F",self.OnImportAtFile),
+	("Import To @&amp;root",None,self.OnImportAtRoot),
+	("Import &amp;CWEB Files",None,self.OnImportCWEBFiles),
+	("Import &amp;noweb Files",None,self.OnImportNowebFiles),
+	("Import Flattened &amp;Outline",None,self.OnImportFlattenedOutline))
+
+self.createMenuEntries(importMenu,table)
+
+</t>
+<t tx="T1202">exportMenu = self.createNewMenu("&amp;Export...","File")
+
+table = [
+	("Export &amp;Headlines",None,self.OnExportHeadlines),
+	("Outline To &amp;CWEB",None,self.OnOutlineToCWEB),
+	("Outline To &amp;Noweb",None,self.OnOutlineToNoweb),
+	("&amp;Flatten Outline",None,self.OnFlattenOutline),
+	("&amp;Remove Sentinels",None,self.OnRemoveSentinels),
+	("&amp;Weave",None,self.OnWeave)]
+
+self.createMenuEntries(exportMenu,table)
+</t>
+<t tx="T1203">outlineMenu = self.createNewMenu("&amp;Outline")
+&lt;&lt; create top-level outline menu &gt;&gt;
+&lt;&lt; create expand/contract submenu &gt;&gt;
+&lt;&lt; create move submenu &gt;&gt;
+&lt;&lt; create mark submenu &gt;&gt;
+&lt;&lt; create goto submenu &gt;&gt;</t>
+<t tx="T1204">table = (
+	("C&amp;ut Node","Shift+Ctrl+X",self.OnCutNode),
+	("C&amp;opy Node","Shift+Ctrl+C",self.OnCopyNode),
+	("&amp;Paste Node","Shift+Ctrl+V",self.OnPasteNode),
+	("&amp;Delete Node","Shift+Ctrl+BkSp",self.OnDeleteNode),
+	("-",None,None),
+	("&amp;Insert Node","Ctrl+I",self.OnInsertNode),
+	("&amp;Clone Node","Ctrl+`",self.OnCloneNode),
+	("Sort C&amp;hildren",None,self.OnSortChildren),
+	("&amp;Sort Siblings","Alt-A",self.OnSortSiblings),
+	("-",None,None))
+
+self.createMenuEntries(outlineMenu,table)</t>
+<t tx="T1205">expandMenu = self.createNewMenu("&amp;Expand/Contract...","Outline")
+
+table = (
+	("&amp;Contract All","Alt+-",self.OnContractAll),
+	("Contract &amp;Node","Alt+[",self.OnContractNode),
+	("Contract &amp;Parent","Alt+0",self.OnContractParent),
+	("-",None,None),
+	("Expand P&amp;rev Level","Alt+.",self.OnExpandPrevLevel),
+	("Expand N&amp;ext Level","Alt+=",self.OnExpandNextLevel),
+	("-",None,None),
+	("Expand To Level &amp;1","Alt+1",self.OnExpandToLevel1),
+	("Expand To Level &amp;2","Alt+2",self.OnExpandToLevel2),
+	("Expand To Level &amp;3","Alt+3",self.OnExpandToLevel3),
+	("Expand To Level &amp;4","Alt+4",self.OnExpandToLevel4),
+	("Expand To Level &amp;5","Alt+5",self.OnExpandToLevel5),
+	("Expand To Level &amp;6","Alt+6",self.OnExpandToLevel6),
+	("Expand To Level &amp;7","Alt+7",self.OnExpandToLevel7),
+	("Expand To Level &amp;8","Alt+8",self.OnExpandToLevel8),
+	# ("Expand To Level &amp;9","Alt+9",self.OnExpandToLevel9),
+	("-",None,None),
+	("Expand &amp;All","Alt+9",self.OnExpandAll),
+	("Expand N&amp;ode","Alt+]",self.OnExpandNode))
+
+
+self.createMenuEntries(expandMenu,table)</t>
+<t tx="T1206">moveSelectMenu = self.createNewMenu("&amp;Move...","Outline")
+
+table = (
+	("Move &amp;Down", "Ctrl+D",self.OnMoveDown),
+	("Move &amp;Left", "Ctrl+L",self.OnMoveLeft),
+	("Move &amp;Right","Ctrl+R",self.OnMoveRight),
+	("Move &amp;Up",   "Ctrl+U",self.OnMoveUp),
+	("-",None,None),
+	("&amp;Promote","Ctrl+{",self.OnPromote),
+	("&amp;Demote", "Ctrl+}",self.OnDemote))
+	
+self.createMenuEntries(moveSelectMenu,table)
+</t>
+<t tx="T1207">markMenu = self.createNewMenu("M&amp;ark/Unmark...","Outline")
+
+table = (
+	("&amp;Mark","Ctrl-M",self.OnMark),
+	("Mark &amp;Subheads","Alt+S",self.OnMarkSubheads),
+	("Mark Changed &amp;Items","Alt+C",self.OnMarkChangedItems),
+	("Mark Changed &amp;Roots","Alt+R",self.OnMarkChangedRoots),
+	("Mark &amp;Clones","Alt+K",self.OnMarkClones),
+	("&amp;Unmark All","Alt+U",self.OnUnmarkAll))
+	
+self.createMenuEntries(markMenu,table)
+</t>
+<t tx="T1208">gotoMenu = self.createNewMenu("&amp;Go To...","Outline")
+
+table = (
+	("Go Back",None,self.OnGoPrevVisitedNode), # Usually use buttons for this.
+	("Go Forward",None,self.OnGoNextVisitedNode),
+	("-",None,None),
+	("Go To Next &amp;Marked","Alt+M",self.OnGoToNextMarked),
+	("Go To Next C&amp;hanged","Alt+D",self.OnGoToNextChanged),
+	("Go To Next &amp;Clone","Alt+N",self.OnGoToNextClone),
+	("-",None,None),
+	("Go To &amp;First Node","Alt+Shift+G",self.OnGoToFirstNode),
+	("Go To &amp;Last Node","Alt+Shift+H",self.OnGoToLastNode),
+	("Go To &amp;Parent","Alt+Shift+P",self.OnGoToParent),
+	("Go To P&amp;rev Sibling","Alt+Shift+R",self.OnGoToPrevSibling),
+	("Go To Next &amp;Sibling","Alt+Shift+S",self.OnGoToNextSibling),
+	("-",None,None),
+	("Go To Prev V&amp;isible","Alt-UpArrow",self.OnGoPrevVisible),
+	("Go To Next &amp;Visible","Alt-DnArrow",self.OnGoNextVisible),
+	("Go To Prev Node","Alt-Shift+UpArrow",self.OnGoBack),
+	("Go To Next Node","Alt-Shift-DnArrow",self.OnGoNext))
+	
+self.createMenuEntries(gotoMenu,table)
+</t>
+<t tx="T1209">windowMenu = self.createNewMenu("&amp;Window")
+
+table = (
+	("&amp;Equal Sized Panes","Ctrl-E",self.OnEqualSizedPanes),
+	("Toggle &amp;Active Pane","Ctrl-T",self.OnToggleActivePane),
+	("Toggle &amp;Split Direction",None,self.OnToggleSplitDirection),
+	("-",None,None),
+	("Casca&amp;de",None,self.OnCascade),
+	("&amp;Minimize All",None,self.OnMinimizeAll),
+	("-",None,None),
+	("Open &amp;Compare Window",None,self.OnOpenCompareWindow),
+	("Open &amp;Python Window","Alt+P",self.OnOpenPythonWindow))
+
+self.createMenuEntries(windowMenu,table)
+</t>
+<t tx="T1210">helpMenu = self.createNewMenu("&amp;Help")
+
+table = (
+	("&amp;About Leo...",None,self.OnAbout),)
+	#("Online &amp;Home Page",None,self.OnLeoHome),
+	#("-",None,None),
+	#("Open Online &amp;Tutorial",None,self.OnLeoTutorial))
+
+self.createMenuEntries(helpMenu,table)
+
+if 0: # not ready yet.
+
+	if sys.platform=="win32":
+		table = (("Open &amp;Offline Tutorial",None,self.OnLeoHelp),)
+		self.createMenuEntries(helpMenu,table)
+	
+	table = (
+		("Open Leo&amp;Docs.leo",None,self.OnLeoDocumentation),
+		("-",None,None),
+		("Open Leo&amp;Config.leo",None,self.OnLeoConfig),
+		("Apply &amp;Settings",None,self.OnApplyConfig))
+
+	self.createMenuEntries(helpMenu,table)</t>
+<t tx="T1211">def createNewMenu(self,name):
+	
+	return wx.wxMenu()</t>
+<t tx="T1212">@ The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
+
+Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a canonicalized shortcut already exists.
+@c
+
+def createMenuEntries (self,menu,table,openWith=0):
+	
+	for label,accel,command in table:
+		id = const(label)
+		menu.Append(id,label,label)
+		
+		if 1:
+			wx.EVT_MENU(self,id,command)
+
+		else: # Doesn't help: methods must be defined in the table.
+			def generalCommand(event=None,label=label):
+				print "generalCommand",label # ,event
+			wx.EVT_MENU(self,id,generalCommand)</t>
+<t tx="T1213">def OnAbout (self,event=None):
+	
+	print "OnAbout" # ,event</t>
+<t tx="T1214">const_dict = {}
+const_lastVal = 100
+	
+def const(name):
+	
+	"""Return the wx id associated with name"""
+	
+	# Should this canonicalize the label?  Just remove '&amp;' ??
+	
+	id = const_dict.get(name)
+	if id != None:
+		return id
+	else:
+		global const_lastVal
+		const_lastVal += 1
+		return const_lastVal</t>
 </tnodes>
 </leo_file>
