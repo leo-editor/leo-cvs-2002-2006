@@ -577,8 +577,9 @@ class Commands:
 			c.body.insert("end",head)
 			start = c.body.index("end-1c")
 		else: start = "1.0"
-		if middle and len(middle) > 0:
-			middle = string.rstrip(middle)
+		if 0: # 9/12/02: Do not gratuitously remove newlines!
+			if middle and len(middle) > 0:
+				middle = string.rstrip(middle)
 		if middle and len(middle) > 0:
 			c.body.insert("end",middle)
 			end = c.body.index("end-1c")
