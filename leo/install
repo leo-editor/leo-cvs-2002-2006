@@ -121,16 +121,12 @@ cp -rp config $LEO_LIB_DIR/.
 ###############################
 # Step 6
 # Add in symbolic links to point to 
-# leoConfig and LeoDocs.   
+# leoSettings and LeoDocs.   
 ###############################
 #mkdir -p /usr/lib/config 
 #chmod 777 /usr/lib/config
-#ln -sf /$LEO_LIB_DIR/leoConfig.leo /usr/lib/config/leoConfig.leo
-#chmod 666 /$LEO_LIB_DIR/leoConfig.leo  
-#
-#ln -sf /$LEO_LIB_DIR/leoConfig.txt /usr/lib/config/leoConfig.txt
-#chmod 666 /$LEO_LIB_DIR/leoConfig.txt  
-#
+#ln -sf /$LEO_LIB_DIR/leoSettings.leo /usr/lib/config/leoSettings.leo
+#chmod 666 /$LEO_LIB_DIR/leoSettings.leo  
 #mkdir -p /usr/lib/doc
 #ln -sf $LEO_LIB_DIR/doc/LeoDocs.leo /usr/lib/doc/LeoDocs.leo
 #chmod 666 $LEO_LIB_DIR/doc/LeoDocs.leo 

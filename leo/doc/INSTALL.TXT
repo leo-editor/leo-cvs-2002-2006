@@ -20,7 +20,7 @@ Leo is distributed as a single compressed (.zip) folder.  Simply uncompress this
 	leo.go() # runs leo.py after reloading all modules.
 	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
 
-You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+You may specify options using the configuration file called leoSettings.leo.
 Installing the leo.py on Windows
 --------------------------------
 
@@ -33,7 +33,7 @@ Leo is distributed as a single compressed (.zip) folder.  Uncompress this folder
 	leo.go() # runs leo.py after reloading all modules.
 	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
 
-You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+You may specify options using the configuration file called leoSettings.leo.
 
 Installing leo.py on MacOs
 --------------------------

@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.3-alpha-2"
+!define PRODUCT_VERSION "4.3-a2"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -235,11 +235,10 @@ Section "Leo" SEC01
   SetOutPath "$INSTDIR\dist"
   ;@  << install dist files >>
   ;@+node:ekr.20050118104149.4:<< install dist files >>
-  ; Do not remove leo-4.2.nsi: leoDist.leo must have it.
-  
   File "createLeoDist.py"
+  
   File "leoDist.leo"
-  File "leo-4-2.nsi"
+  
   File "leo-4-3.nsi"
   
   File ".pycheckrc"
@@ -270,6 +269,31 @@ Section "Leo" SEC01
   ;@  << install extensions files >>
   ;@+node:ekr.20050118122404:<< install extensions files >>
   File "..\extensions\__init__.py"
+  File "..\extensions\path.py"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw"
+  File "..\extensions\Pmw\__init__.py"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2"
+  File "..\extensions\Pmw\Pmw_1_2\__init__.py"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\bin"
+  File "..\extensions\Pmw\Pmw_1_2\bin\*.*"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib"
+  File "..\extensions\Pmw\Pmw_1_2\contrib\*.*"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\demos"
+  File "..\extensions\Pmw\Pmw_1_2\demos\*.*"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\doc"
+  File "..\extensions\Pmw\Pmw_1_2\doc\*.*"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\lib"
+  File "..\extensions\Pmw\Pmw_1_2\lib\*.*"
+  
+  SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\tests"
+  File "..\extensions\Pmw\Pmw_1_2\tests\*.*"
   ;@nonl
   ;@-node:ekr.20050118122404:<< install extensions files >>
   ;@nl
@@ -483,9 +507,9 @@ Section Uninstall
   ;@  << uninstall dist files >>
   ;@+node:ekr.20050118104149.5:<< uninstall dist files >>
   Delete "$INSTDIR\dist\createLeoDist.py"
+  
   Delete "$INSTDIR\dist\leoDist.leo"
   
-  Delete "$INSTDIR\dist\leo-4-2.nsi"
   Delete "$INSTDIR\dist\leo-4-3.nsi"
   
   Delete "$INSTDIR\dist\.pycheckrc"
@@ -514,6 +538,18 @@ Section Uninstall
   ;@  << uninstall extensions files >>
   ;@+node:ekr.20050118122740.1:<< uninstall extensions files >>
   Delete "$INSTDIR\extensions\__init__.py"
+  Delete "$INSTDIR\extensions\path.py"
+  
+  Delete "$INSTDIR\extensions\Pmw\__init__.py"
+  
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.py"
+  
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\bin\*.*"
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib\*.*"
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\demos\*.*"
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\doc\*.*"
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\lib\*.*"
+  Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"
   ;@nonl
   ;@-node:ekr.20050118122740.1:<< uninstall extensions files >>
   ;@nl
@@ -585,7 +621,19 @@ Section Uninstall
   RMDir "$INSTDIR\config"
   RMDir "$INSTDIR\dist"
   RMDir "$INSTDIR\doc"
+  
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\bin"
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib"
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\demos"
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\doc"
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\lib"
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2\tests"
+  
+  RMDir "$INSTDIR\extensions\Pmw\Pmw_1_2"
+  RMDir "$INSTDIR\extensions\Pmw"
+  
   RMDir "$INSTDIR\extensions"
+  
   RMDir "$INSTDIR\icons"
   RMDir "$INSTDIR\src"
   RMDir "$INSTDIR\scripts"

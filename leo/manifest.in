@@ -11,8 +11,7 @@ include install
 include uninstall
 exclude createLeoDist.py
 
-# New in Leo 4.3: use leoSettings.leo instead of leoConfig.*
-
+# New in Leo 4.3: use leoSettings.leo
 include config/leoSettings.leo
 
 # New in Leo 4.3:
@@ -29,7 +28,6 @@ include dist/leoDist.leo
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
-include doc/LeoDiary.txt
 
 include doc/LeoDocs.leo
 include doc/leoNotes.txt
@@ -44,7 +42,38 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
+# New in 4.3a2: include path.py.
+include extensions/path.py
+
+# New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py
+
+include extensions/Pmw/__init__.py
+
+include extensions/Pmw/Pmw_1_2/__init__.py
+
+include extensions/Pmw/Pmw_1_2/bin/*.*
+include extensions/Pmw/Pmw_1_2/contrib/*.*
+include extensions/Pmw/Pmw_1_2/demos/*.*
+include extensions/Pmw/Pmw_1_2/doc/*.*
+include extensions/Pmw/Pmw_1_2/lib/*.*
+include extensions/Pmw/Pmw_1_2/tests/*.*
+
+# These will typically generate sdist warnings.
+exclude extensions/Pmw/Pmw_1_2/bin/*.pyc
+exclude extensions/Pmw/Pmw_1_2/contrib/*.pyc
+exclude extensions/Pmw/Pmw_1_2/demos/*.pyc
+exclude extensions/Pmw/Pmw_1_2/doc/*.pyc
+exclude extensions/Pmw/Pmw_1_2/lib/*.pyc
+exclude extensions/Pmw/Pmw_1_2/tests/*.pyc
+
+# These will typically generate sdist warnings.
+exclude extensions/Pmw/Pmw_1_2/bin/*.pyo
+exclude extensions/Pmw/Pmw_1_2/contrib/*.pyo
+exclude extensions/Pmw/Pmw_1_2/demos/*.pyo
+exclude extensions/Pmw/Pmw_1_2/doc/*.pyo
+exclude extensions/Pmw/Pmw_1_2/lib/*.pyo
+exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 

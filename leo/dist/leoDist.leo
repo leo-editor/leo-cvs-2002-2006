@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1001" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="59" left="54" height="833" width="953"/>
+	<global_window_position top="61" left="195" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -104,15 +104,15 @@
 <v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
 <v t="ekr.20050212143754"><vh>*** Mods to pychecker in python23/site-packages ***</vh>
 <v t="ekr.20050212143754.1"><vh>What I did</vh></v>
-<v t="ekr.20050212143754.2" a="E"><vh>CodeChecks.py (modified)</vh>
+<v t="ekr.20050212143754.2"><vh>CodeChecks.py (modified)</vh>
 <v t="ekr.20050212143754.3"><vh>_checkGlobal (modified)</vh></v>
 <v t="ekr.20050212143754.4"><vh>_checkModuleAttribute (modified)</vh></v>
 </v>
 </v>
 <v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
-<v t="ekr.20040701193853" a="E"><vh>blacklist</vh></v>
+<v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
-<v t="ekr.20040701193853.2" a="E"><vh>max...</vh></v>
+<v t="ekr.20040701193853.2"><vh>max...</vh></v>
 <v t="ekr.20040701193853.3" a="M"><vh>suppressions</vh></v>
 <v t="ekr.20040701193853.4"><vh>unusedNames</vh></v>
 <v t="ekr.20040701193853.5"><vh>variablesToIgnore</vh></v>
@@ -121,54 +121,9 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050119113603"><vh>Leo 4.2 installer</vh>
-<v t="ekr.20050117030411"><vh>What I did</vh></v>
-<v t="ekr.20050119113603.1"><vh>@silentfile ../manifest-4-2.in</vh></v>
-<v t="ekr.20050119113603.2"><vh>Keeping 4.2 installer/uninstallers in synch</vh>
-<v t="ekr.20050119113603.3"><vh>config files</vh>
-<v t="ekr.20050119113603.4"><vh>&lt;&lt; install config files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.5"><vh>&lt;&lt; uninstall config files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.6"><vh>dist files</vh>
-<v t="ekr.20050119113603.7"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.8"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.9"><vh>doc files</vh>
-<v t="ekr.20050119113603.10"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.11"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.12"><vh>icons</vh>
-<v t="ekr.20050119113603.13"><vh>&lt;&lt; install icons &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.14"><vh>&lt;&lt; uninstall icons &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.15"><vh>plugins</vh>
-<v t="ekr.20050119113603.16"><vh>&lt;&lt; install plugins &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.17"><vh>&lt;&lt; uninstall plugins &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.18"><vh>scripts</vh>
-<v t="ekr.20050119113603.19"><vh>&lt;&lt; install scripts &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.20"><vh>&lt;&lt; uninstall scripts &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.21"><vh>src files</vh>
-<v t="ekr.20050119113603.22"><vh>&lt;&lt; install src files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.23"><vh>&lt;&lt; uninstall src files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.24"><vh>test files</vh>
-<v t="ekr.20050119113603.25"><vh>&lt;&lt; install test files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.26"><vh>&lt;&lt; uninstall test files &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20050119113603.27"><vh>top-level</vh>
-<v t="ekr.20050119113603.28"><vh>&lt;&lt; install top-level files &gt;&gt;</vh></v>
-<v t="ekr.20050119113603.29"><vh>&lt;&lt; uninistall top-level files &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20050119113603.30"
-marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
-</v>
-<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021" a="E"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
-<v t="ekr.20050118094209"><vh>What I did</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050118104149"><vh>config files</vh>
@@ -212,10 +167,11 @@ marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@
 <v t="ekr.20050118103447.1"><vh>&lt;&lt; uninstall top-level files &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050118092706"
-marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
+<v t="ekr.20050118092706" a="E"
+marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
+expanded="ekr.20050118092706.13,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -228,12 +184,13 @@ marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.200501
 <v t="ekr.20050117032444.3"><vh>&lt;&lt; remove temp createLeoDist.py &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050116151024"><vh>To do</vh>
+<v t="ekr.20050116151024"><vh>To do (someday)</vh>
 <v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
 <v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
 <v t="ekr.20050118125236" a="M"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
+<v t="ekr.20050213082753"><vh>print path</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040519080201.1">@color
@@ -425,8 +382,6 @@ unusedNames = [
 
 # list of strings: ignore warnings generated from these modules
 blacklist = [
-	'leoGlobals',
-	'leoConfig',
 	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
 	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
 
@@ -497,11 +452,11 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4.3-alpha-2", # No spaces here!
+version="4.3-a2", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
-py_modules=modules, # leo*.py also included in manifest
+py_modules=[], # The manifest specifies everything.
 description = "Leo: Literate Editor with Outlines",
 license="Python", # licence [sic] changed to license in Python 2.3
 platforms=["Windows, Linux, Macintosh"],
@@ -574,7 +529,7 @@ Leo is distributed as a single compressed (.zip) folder.  Simply uncompress this
 	leo.go() # runs leo.py after reloading all modules.
 	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
 
-You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.</t>
+You may specify options using the configuration file called leoSettings.leo.</t>
 <t tx="EKR.20040519090846.5">
 Installing the leo.py on Windows
 --------------------------------
@@ -588,7 +543,7 @@ Leo is distributed as a single compressed (.zip) folder.  Uncompress this folder
 	leo.go() # runs leo.py after reloading all modules.
 	leo.leoOpen(fileName) # runs leo.py, reloads all modules, and opens fileName.
 
-You may specify options using the configuration file called leoConfig.txt.  You should generate this file using leoConfig.leo.
+You may specify options using the configuration file called leoSettings.leo.
 </t>
 <t tx="EKR.20040519090846.6">
 Installing leo.py on MacOs
@@ -662,7 +617,7 @@ c:\python22\python &lt;leopath&gt;leo.py %1
 </t>
 <t tx="EKR.20040519090846.8">Metadata-Version: 1.0
 Name: leo
-Version: 4.3-alpha-2
+Version: 4.3-a2
 Summary: Leo: Literate Editor with Outlines
 Home-page: http://webpages.charter.net/edreamleo/front.html
 Author: Edward K. Ream
@@ -738,8 +693,7 @@ include install
 include uninstall
 exclude createLeoDist.py
 
-# New in Leo 4.3: use leoSettings.leo instead of leoConfig.*
-
+# New in Leo 4.3: use leoSettings.leo
 include config/leoSettings.leo
 
 # New in Leo 4.3:
@@ -756,7 +710,6 @@ include dist/leoDist.leo
 include dist/.pycheckrc
 
 include doc/LeoDiary.leo
-include doc/LeoDiary.txt
 
 include doc/LeoDocs.leo
 include doc/leoNotes.txt
@@ -771,7 +724,38 @@ include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
 
+# New in 4.3a2: include path.py.
+include extensions/path.py
+
+# New in 4.3a2: include all Pmw files (except .pyc and .pyo files)
 include extensions/__init__.py
+
+include extensions/Pmw/__init__.py
+
+include extensions/Pmw/Pmw_1_2/__init__.py
+
+include extensions/Pmw/Pmw_1_2/bin/*.*
+include extensions/Pmw/Pmw_1_2/contrib/*.*
+include extensions/Pmw/Pmw_1_2/demos/*.*
+include extensions/Pmw/Pmw_1_2/doc/*.*
+include extensions/Pmw/Pmw_1_2/lib/*.*
+include extensions/Pmw/Pmw_1_2/tests/*.*
+
+# These will typically generate sdist warnings.
+exclude extensions/Pmw/Pmw_1_2/bin/*.pyc
+exclude extensions/Pmw/Pmw_1_2/contrib/*.pyc
+exclude extensions/Pmw/Pmw_1_2/demos/*.pyc
+exclude extensions/Pmw/Pmw_1_2/doc/*.pyc
+exclude extensions/Pmw/Pmw_1_2/lib/*.pyc
+exclude extensions/Pmw/Pmw_1_2/tests/*.pyc
+
+# These will typically generate sdist warnings.
+exclude extensions/Pmw/Pmw_1_2/bin/*.pyo
+exclude extensions/Pmw/Pmw_1_2/contrib/*.pyo
+exclude extensions/Pmw/Pmw_1_2/demos/*.pyo
+exclude extensions/Pmw/Pmw_1_2/doc/*.pyo
+exclude extensions/Pmw/Pmw_1_2/lib/*.pyo
+exclude extensions/Pmw/Pmw_1_2/tests/*.pyo
 
 include Icons/*.*
 
@@ -3005,7 +2989,6 @@ no-varlist=
 no-version</t>
 <t tx="ekr.20040701193853"># list of strings: ignore warnings generated from these modules
 blacklist = [
-	# 'leoConfig', # Pychecker has lots of problems with this file...
 	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK',\
 ]
 </t>
@@ -3350,27 +3333,6 @@ Leo: http://webpages.charter.net/edreamleo/front.html
 </t>
 <t tx="ekr.20050116150710.90"></t>
 <t tx="ekr.20050116151024">@nocolor</t>
-<t tx="ekr.20050117030411">@killcolor
-
-Changed manifest.in as follows:
-    - Changed leoDistRef.leo to leoDist.leo.
-        - Keeping this files in synch would be too difficult.
-        - Only leoDist.leo is on cvs.
-    - Changed createLeoDist.py to dist/createLeoDist.py
-        - It is distributed in the dist folder but executed in the leo folder.
-    - Removed dist/preSetup.py
-    - Removed dist/postSetup.py
-    - Added config/leoSettings.leo
-    - Removed config/leoConfig.leo
-    - Removed config/leoConfig.txt
-    - Added doc/default.css
-    - Added doc/leo_rst.css
-    - Added doc/silver_city.css
-    - Changed doc/LeoDiary.txt to doc/leoDiary.leo
-    - Added .pycheckrc (copied from leoCvs directory to leo directory)
-        - This is NOT a full solution!
-    - Added dist/leo-4-2.nsi and dist/leo-4-3.nsi
-    - Removed include dist/leo.nsi</t>
 <t tx="ekr.20050117031116"></t>
 <t tx="ekr.20050117032444"># Main distribution script.  Creates leo-nn.zip using createLeoDist.py
 
@@ -3385,6 +3347,9 @@ Changed manifest.in as follows:
 print ; print '-' * 60
 &lt;&lt; imports &gt;&gt;
 &lt;&lt; define files &amp; directories &gt;&gt;
+
+print 'topDir',topDir
+
 os.chdir(topDir) # Change to the top directory.
 &lt;&lt; copy createLeoDist.py to top directory &gt;&gt;
 &lt;&lt; run createLeoDist from the top directory &gt;&gt;
@@ -3412,19 +3377,15 @@ destPycheckerFile = g.os_path_abspath(g.os_path_join(topDir,'.pycheckrc'))</t>
 # Copy dist/createLeoDist.py to leo directory.
 print 'copying %s to %s' % (srcFile,topDir)
 
-if 1:
-    if g.os_path_exists(dstFile):
-        os.remove(dstFile)
-    src = file(srcFile,'r')
-    s = src.read()
-    src.close()
-    dst = file(dstFile,'w')
-    dst.write(s)
-    dst.close()
-        
-else:
-    os.system('copy %s %s' % (srcFile,topDir))
-</t>
+if g.os_path_exists(dstFile):
+    os.remove(dstFile)
+
+src = file(srcFile,'r')
+s = src.read()
+src.close()
+dst = file(dstFile,'w')
+dst.write(s)
+dst.close()</t>
 <t tx="ekr.20050117032444.3"># Remove the temp copy of createLeoDist.py
 print 'removing %s' % dstFile
 os.remove(dstFile)</t>
@@ -3456,7 +3417,9 @@ createLeoDist.py to the leo folder.
     
 The section called &lt; &lt; setup info for createLeoDist.py &gt; &gt; contains further
 information. Make sure to update this information before running this script.</t>
-<t tx="ekr.20050118082301">import leoGlobals as g
+<t tx="ekr.20050118082301">
+
+import leoGlobals as g
 
 import os
 import sys</t>
@@ -3496,21 +3459,6 @@ LicenseText "If you accept all the terms of the agreement, choose I Agree to con
 LicenseData "..\doc\License.txt"
 ShowInstDetails show
 ShowUnInstDetails show</t>
-<t tx="ekr.20050118094209">@killcolor
-
-- Removed &lt; &lt; delete previously installed files &gt; &gt; section from .onInit
-- Changed leoConfig.leo to leoSettings.leo.
-- Removed leoConfig.txt
-- Removed  preSetup.py and postSetup.py.
-- Added leoSetup.py to dist directory.
-- Removed doc\leoDiary.txt
-- Changed leo/.pycheckrc to leo/dist/.pycheckrc
-- Changed location of uninst.ico to: c:\prog\leoCVS\leo\Icons\uninst.ico
-- Added dist/leo-4-2.nsi and dist/leo-4-3.nsi
-- Changed: OutFile "LeoSetupNSIS203.exe" to: OutFile "LeoSetup-4-3.exe"
-- Created test and extensions folders.
-- Added __init__.py to extensions, src and test folders.
-- Added Delete "$DESKTOP\Leo.lnk" to uninstaller script.</t>
 <t tx="ekr.20050118095021"></t>
 <t tx="ekr.20050118103207">@comment ;</t>
 <t tx="ekr.20050118103207.1">File "..\__init__.py"
@@ -3536,18 +3484,17 @@ Delete "$INSTDIR\uninstall"
 <t tx="ekr.20050118104149.2">Delete "$INSTDIR\config\leoSettings.leo"
 Delete "$INSTDIR\config\.leoID.txt"</t>
 <t tx="ekr.20050118104149.3"></t>
-<t tx="ekr.20050118104149.4">; Do not remove leo-4.2.nsi: leoDist.leo must have it.
+<t tx="ekr.20050118104149.4">File "createLeoDist.py"
 
-File "createLeoDist.py"
 File "leoDist.leo"
-File "leo-4-2.nsi"
+
 File "leo-4-3.nsi"
 
 File ".pycheckrc"</t>
 <t tx="ekr.20050118104149.5">Delete "$INSTDIR\dist\createLeoDist.py"
+
 Delete "$INSTDIR\dist\leoDist.leo"
 
-Delete "$INSTDIR\dist\leo-4-2.nsi"
 Delete "$INSTDIR\dist\leo-4-3.nsi"
 
 Delete "$INSTDIR\dist\.pycheckrc"</t>
@@ -3625,192 +3572,53 @@ File "..\scripts\*.py"</t>
 Delete "$INSTDIR\scripts\*.py"
 Delete "$INSTDIR\scripts\*.pyc"</t>
 <t tx="ekr.20050118113631"></t>
-<t tx="ekr.20050118122404">File "..\extensions\__init__.py"</t>
+<t tx="ekr.20050118122404">File "..\extensions\__init__.py"
+File "..\extensions\path.py"
+
+SetOutPath "$INSTDIR\extensions\Pmw"
+File "..\extensions\Pmw\__init__.py"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2"
+File "..\extensions\Pmw\Pmw_1_2\__init__.py"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\bin"
+File "..\extensions\Pmw\Pmw_1_2\bin\*.*"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib"
+File "..\extensions\Pmw\Pmw_1_2\contrib\*.*"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\demos"
+File "..\extensions\Pmw\Pmw_1_2\demos\*.*"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\doc"
+File "..\extensions\Pmw\Pmw_1_2\doc\*.*"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\lib"
+File "..\extensions\Pmw\Pmw_1_2\lib\*.*"
+
+SetOutPath "$INSTDIR\extensions\Pmw\Pmw_1_2\tests"
+File "..\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122404.1">File "..\test\__init__.py"
 File "..\test\test.leo"</t>
 <t tx="ekr.20050118122740"></t>
-<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.py"</t>
+<t tx="ekr.20050118122740.1">Delete "$INSTDIR\extensions\__init__.py"
+Delete "$INSTDIR\extensions\path.py"
+
+Delete "$INSTDIR\extensions\Pmw\__init__.py"
+
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\__init__.py"
+
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\bin\*.*"
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\contrib\*.*"
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\demos\*.*"
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\doc\*.*"
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\lib\*.*"
+Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha-2"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a2"</t>
 <t tx="ekr.20050118125236"></t>
-<t tx="ekr.20050119113603"></t>
-<t tx="ekr.20050119113603.1"># The manifest template: specifies all files to be included in the distribution.
-
-# Note: these are glob patterns.
-# There seems to be a bug in distutils: ../ doesn't get handled properly.
-# manifest.in must be in the current directory.
-
-include __init__.py
-include manifest.in
-include MANIFEST
-include install
-include uninstall
-exclude createLeoDist.py
-
-include config/leoConfig.leo
-include config/leoConfig.txt
-
-# New in Leo 4.2.1:
-# 1. createLeoDist.py is distributed in dist directory.
-#   - The distribution script temporarily copies createLeoDist.py to the leo directory.
-# 2. Distribute leoDist.leo, not leoDistRef.leo.
-# 3. .pycheckrc is created and distributed in dist directory.
-#   (The user should move it to the home directory if he/she wants to use it.)
-
-include dist/createLeoDist.py
-include dist/leo-4-2.nsi
-include dist/leoDist.leo
-include dist/.pycheckrc
-
-include doc/LeoDiary.leo
-include doc/LeoDocs.leo
-include doc/leoNotes.txt
-include doc/leoToDo.txt
-
-include doc/README.TXT
-include doc/INSTALL.TXT
-include doc/PKG-INFO.TXT
-include doc/LICENSE.TXT
-
-include doc/default.css
-include doc/leo_rst.css
-include doc/silver_city.css
-
-include Icons/*.*
-
-include plugins/aspell.pyd
-include plugins/leoPlugins.leo
-include plugins/*.ini
-include plugins/*.txt
-include plugins/*.py
-
-include scripts/leoScripts.txt
-include scripts/*.py
-
-include src/__init__.py
-include src/LeoPy.leo
-include src/leo*.py
-include src/leoProjects.txt
-include src/oldLeoProjects.leo
-
-include test/__init__.py
-include test/test.leo</t>
-<t tx="ekr.20050119113603.2">@comment ;</t>
-<t tx="ekr.20050119113603.3"></t>
-<t tx="ekr.20050119113603.4">File "..\config\leoConfig.leo"
-File "..\config\leoConfig.txt"</t>
-<t tx="ekr.20050119113603.5">Delete "$INSTDIR\config\leoConfig.txt"
-Delete "$INSTDIR\config\leoConfig.leo"
-Delete "$INSTDIR\config\.leoID.txt"</t>
-<t tx="ekr.20050119113603.6"></t>
-<t tx="ekr.20050119113603.7">File "createLeoDist.py"
-File "leoDist.leo"
-File "leo-4-2.nsi"
-File ".pycheckrc"</t>
-<t tx="ekr.20050119113603.8">Delete "$INSTDIR\dist\createLeoDist.py"
-Delete "$INSTDIR\dist\leoDist.leo"
-Delete "$INSTDIR\dist\leo-4-2.nsi"
-Delete "$INSTDIR\dist\.pycheckrc"</t>
-<t tx="ekr.20050119113603.9"></t>
-<t tx="ekr.20050119113603.10">File "..\doc\leoDiary.leo"
-File "..\doc\LeoDocs.leo"
-
-File "..\doc\leoNotes.txt"
-File "..\doc\leoToDo.txt"
-
-File "..\doc\Readme.txt"
-File "..\doc\Pkg-info.txt"
-File "..\doc\Install.txt"
-File "..\doc\License.txt"
-
-File "..\doc\default.css"
-File "..\doc\leo_rst.css"
-File "..\doc\silver_city.css"</t>
-<t tx="ekr.20050119113603.11">Delete "$INSTDIR\doc\leoDiary.leo"
-Delete "$INSTDIR\doc\LeoDocs.leo"
-
-Delete "$INSTDIR\doc\leoNotes.txt"
-Delete "$INSTDIR\doc\leoToDo.txt"
-
-Delete "$INSTDIR\doc\License.txt"
-Delete "$INSTDIR\doc\Install.txt"
-Delete "$INSTDIR\doc\Pkg-info.txt"
-Delete "$INSTDIR\doc\Readme.txt"
-
-Delete "$INSTDIR\doc\silver_city.css"
-Delete "$INSTDIR\doc\leo_rst.css"
-Delete "$INSTDIR\doc\default.css"
-</t>
-<t tx="ekr.20050119113603.12"></t>
-<t tx="ekr.20050119113603.13">File "..\Icons\*.*"</t>
-<t tx="ekr.20050119113603.14">Delete "$INSTDIR\icons\*.*"</t>
-<t tx="ekr.20050119113603.15"></t>
-<t tx="ekr.20050119113603.16">File "..\plugins\aspell.pyd"
-File "..\plugins\leoPlugins.leo"
-
-File "..\plugins\*.ini"
-File "..\plugins\*.txt"
-
-File "..\plugins\*.py"
-</t>
-<t tx="ekr.20050119113603.17">Delete "$INSTDIR\plugins\aspell.pyd"
-Delete "$INSTDIR\plugins\leoPlugins.leo"
-
-Delete "$INSTDIR\plugins\*.ini"
-Delete "$INSTDIR\plugins\*.txt"
-
-Delete "$INSTDIR\plugins\*.py"
-Delete "$INSTDIR\plugins\*.pyc"
-</t>
-<t tx="ekr.20050119113603.18"></t>
-<t tx="ekr.20050119113603.19">File "..\scripts\leoScripts.txt"
-
-File "..\scripts\*.py"</t>
-<t tx="ekr.20050119113603.20">Delete "$INSTDIR\scripts\leoScripts.txt"
-
-Delete "$INSTDIR\scripts\*.py"
-Delete "$INSTDIR\scripts\*.pyc"</t>
-<t tx="ekr.20050119113603.21"></t>
-<t tx="ekr.20050119113603.22">File "..\src\oldLeoProjects.leo"
-File "..\src\leoProjects.txt"
-
-File "..\src\LeoPy.leo"
-
-File "..\src\leo*.py"
-
-</t>
-<t tx="ekr.20050119113603.23">Delete "$INSTDIR\src\oldLeoProjects.leo"
-Delete "$INSTDIR\src\leoProjects.txt"
-
-Delete "$INSTDIR\src\LeoPy.leo"
-
-Delete "$INSTDIR\src\leo*.py"
-Delete "$INSTDIR\src\leo*.pyc"</t>
-<t tx="ekr.20050119113603.24"></t>
-<t tx="ekr.20050119113603.25">File "..\test\__init__.py"
-
-File "..\test\test.leo"</t>
-<t tx="ekr.20050119113603.26">Delete "$INSTDIR\test\__init__.py"
-
-Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050119113603.27"></t>
-<t tx="ekr.20050119113603.28">File "..\__init__.py"
-
-File "..\install"
-File "..\manifest.in"
-File "..\MANIFEST"
-File "..\uninstall"</t>
-<t tx="ekr.20050119113603.29">Delete "$INSTDIR\__init__.py"
-
-Delete "$INSTDIR\install"
-Delete "$INSTDIR\manifest.in"
-Delete "$INSTDIR\MANIFEST"
-Delete "$INSTDIR\uninstall"
-
-Delete "$INSTDIR\uninst.exe"
-</t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
 
@@ -4074,5 +3882,8 @@ I solved two problems by brute force:
         # we may not know, or ref could be something funky [e for e].method()
         pass
 </t>
+<t tx="ekr.20050213082753">import sys
+for s in sys.path:
+    print s</t>
 </tnodes>
 </leo_file>

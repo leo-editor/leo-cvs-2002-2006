@@ -2,12 +2,14 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040519082027.23:@thin createLeoDist.py
 #@@first
-
 #@@color
-#@+at
+
+#@+at 
+#@nonl
 # The main distribution script executes this file as follows:
 # 
 #     'python createLeoDist.py sdist <args>'
+# 
 # to create Leo's main distribution file, leo-nn.zip.
 # 
 # N.B. This file is distributed in the dist directory, but it must be run from 
@@ -18,20 +20,17 @@
 #@-at
 #@@c
 
-import leoGlobals as g
 import distutils.core
-import os,sys
 
-modules = []
 distutils.core.setup (
     #@    << setup info for createLeoDist.py >>
     #@+node:EKR.20040519082027.28:<< setup info for createLeoDist.py >>
     name="leo",
-    version="4.3-alpha-2", # No spaces here!
+    version="4.3-a2", # No spaces here!
     author="Edward K. Ream",
     author_email="edreamleo@charter.net",
     url="http://webpages.charter.net/edreamleo/front.html",
-    py_modules=modules, # leo*.py also included in manifest
+    py_modules=[], # The manifest specifies everything.
     description = "Leo: Literate Editor with Outlines",
     license="Python", # licence [sic] changed to license in Python 2.3
     platforms=["Windows, Linux, Macintosh"],
