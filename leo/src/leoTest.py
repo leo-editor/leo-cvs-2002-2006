@@ -25,14 +25,33 @@ import leoTkinterGui
 import doctest
 import glob
 import os
+import profile
+import pstats
 import sys
 import unittest
+
+try: import timeit
+except ImportError: timeit = None
+
+try: import gc
+except ImportError: gc = None
 #@nonl
 #@-node:EKR.20040623200709.2:<< leoTest imports >>
 #@nl
 
 #@+others
-#@+node:ekr.20040707210849:doTests
+#@+node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
+#@+node:ekr.20040707071542.2:isSuiteNode and isTestNode
+def isSuiteNode (p):
+    h = p.headString().lower()
+    return g.match_word(h,0,"@suite")
+
+def isTestNode (p):
+    h = p.headString().lower()
+    return g.match_word(h,0,"@test")
+#@nonl
+#@-node:ekr.20040707071542.2:isSuiteNode and isTestNode
+#@+node:ekr.20040707210849:doTests...
 def doTests(all):
     
     c = g.top() ; p1 = p = c.currentPosition()
@@ -59,16 +78,6 @@ def doTests(all):
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
 #@nonl
-#@+node:ekr.20040707071542.2:isSuiteNode & isTestNode
-def isSuiteNode (p):
-    h = p.headString()
-    return g.match_word(h,0,"@suite")
-
-def isTestNode (p):
-    h = p.headString()
-    return g.match_word(h,0,"@test")
-#@nonl
-#@-node:ekr.20040707071542.2:isSuiteNode & isTestNode
 #@+node:ekr.20040707073029:generalTestCase
 class generalTestCase(unittest.TestCase):
     
@@ -161,7 +170,184 @@ def makeTestCase (c,p):
         return None
 #@nonl
 #@-node:ekr.20040707072447:makeTestCase
-#@-node:ekr.20040707210849:doTests
+#@-node:ekr.20040707210849:doTests...
+#@+node:ekr.20040721113538.1:runProfileOnNode Not used
+def runProfileOnNode (p,outputPath,):
+    
+    s = p.bodyString().rstrip() + '\n'
+
+    profile.run(s,outputPath)
+    
+    stats = pstats.Stats(outputPath)
+    stats.strip_dirs()
+    stats.sort_stats('cum','file','name')
+    stats.print_stats()
+#@nonl
+#@-node:ekr.20040721113538.1:runProfileOnNode Not used
+#@+node:ekr.20040721115051.1:runTimerOnNode Not used
+def runTimerOnNode (p,count):
+    
+    s = p.bodyString().rstrip() + '\n'
+    t = timeit.Timer(s)
+    
+    try:
+        if count is None:
+            count = 1000000
+        result = t.timeit(count)
+        print "count: %d time: %f %s" % (count,result,p.headString())
+    except:
+        t.print_exc()
+#@nonl
+#@-node:ekr.20040721115051.1:runTimerOnNode Not used
+#@-node:ekr.20040721114839:Support @profile, @suite, @profile, @timer
+#@+node:ekr.20040721144439:run gc
+#@+node:ekr.20040721145855:runGC
+lastObjectCount = 0
+lastObjectsDict = {}
+lastTypesDict = {}
+lastFunctionsDict = {}
+
+# Adapted from similar code in leoGlobals.g.
+def runGc(disable=False):
+
+    if gc is None:
+        print "@gc: can not import gc"
+        return
+    
+    gc.enable()
+    set_debugGc()
+    gc.collect()
+    printGc(message="@gc",onlyPrintChanges=False)
+    if disable:
+        gc.disable()
+    # makeObjectList()
+        
+runGC = runGc
+#@nonl
+#@-node:ekr.20040721145855:runGC
+#@+node:ekr.20040721145258:enableGc
+def set_debugGc ():
+    
+    gc.set_debug(
+        gc.DEBUG_STATS | # prints statistics.
+        # gc.DEBUG_LEAK | # Same as all below.
+        # gc.DEBUG_COLLECTABLE
+        # gc.DEBUG_UNCOLLECTABLE
+        gc.DEBUG_INSTANCES |
+        gc.DEBUG_OBJECTS
+        # gc.DEBUG_SAVEALL
+    )
+#@nonl
+#@-node:ekr.20040721145258:enableGc
+#@+node:ekr.20040721144439.3:makeObjectList
+def makeObjectList():
+    
+    # WARNING: this id trick is not proper: newly allocated objects can have the same address as old objets.
+    global lastObjectsDict
+    objects = gc.get_objects()
+    
+    newObjects = [o for o in objects if not lastObjectsDict.has_key(id(o))]
+    
+    lastObjectsDict = {}
+    for o in objects:
+        lastObjectsDict[id(o)]=o
+    
+    print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
+#@nonl
+#@-node:ekr.20040721144439.3:makeObjectList
+#@+node:ekr.20040721144439.5:printGc
+def printGc(message=None,onlyPrintChanges=False):
+
+    if not message:
+        message = g.callerName(n=2)
+    
+    global lastObjectCount
+
+    n = len(gc.garbage)
+    n2 = len(gc.get_objects())
+    delta = n2-lastObjectCount
+
+    print '-' * 30
+    print "garbage: %d" % n
+    print "%6d =%7d %s" % (delta,n2,"totals")
+    
+    #@    << print number of each type of object >>
+    #@+node:ekr.20040721144439.6:<< print number of each type of object >>
+    global lastTypesDict
+    typesDict = {}
+    
+    for obj in gc.get_objects():
+        n = typesDict.get(type(obj),0)
+        typesDict[type(obj)] = n + 1
+        
+    # Create the union of all the keys.
+    keys = typesDict.keys()
+    for key in lastTypesDict.keys():
+        if key not in keys:
+            keys.append(key)
+    
+    keys.sort()
+    for key in keys:
+        n1 = lastTypesDict.get(key,0)
+        n2 = typesDict.get(key,0)
+        delta2 = n2-n1
+        if delta2 != 0:
+            print "%+6d =%7d %s" % (delta2,n2,key)
+        
+    lastTypesDict = typesDict
+    typesDict = {}
+    #@nonl
+    #@-node:ekr.20040721144439.6:<< print number of each type of object >>
+    #@nl
+    if 0:
+        #@        << print added functions >>
+        #@+node:ekr.20040721144439.7:<< print added functions >>
+        import types
+        import inspect
+        
+        global lastFunctionsDict
+        
+        funcDict = {}
+        
+        for obj in gc.get_objects():
+            if type(obj) == types.FunctionType:
+                key = repr(obj) # Don't create a pointer to the object!
+                funcDict[key]=None 
+                if not lastFunctionsDict.has_key(key):
+                    print ; print obj
+                    args, varargs, varkw,defaults  = inspect.getargspec(obj)
+                    print "args", args
+                    if varargs: print "varargs",varargs
+                    if varkw: print "varkw",varkw
+                    if defaults:
+                        print "defaults..."
+                        for s in defaults: print s
+        
+        lastFunctionsDict = funcDict
+        funcDict = {}
+        #@nonl
+        #@-node:ekr.20040721144439.7:<< print added functions >>
+        #@nl
+
+    lastObjectCount = n2
+    return delta
+#@nonl
+#@-node:ekr.20040721144439.5:printGc
+#@+node:ekr.20040721144439.8:printGcRefs
+def printGcRefs (verbose=True):
+
+    refs = gc.get_referrers(app.windowList[0])
+    print '-' * 30
+
+    if verbose:
+        print "refs of", app.windowList[0]
+        for ref in refs:
+            print type(ref)
+    else:
+        print "%d referers" % len(refs)
+#@nonl
+#@-node:ekr.20040721144439.8:printGcRefs
+#@-node:ekr.20040721144439:run gc
 #@+node:EKR.20040623223148: class testUtils
 class testUtils:
     
@@ -400,6 +586,8 @@ class testUtils:
 def fail ():
     
     """Mark a unit test as having failed."""
+    
+    import leoGlobals as g
     
     g.app.unitTestDict["fail"] = g.callerName(2)
 #@nonl

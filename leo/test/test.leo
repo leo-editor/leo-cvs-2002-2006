@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5902" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5914" clone_windows="0"/>
 <globals body_outline_ratio="0.572077185017">
-	<global_window_position top="27" left="322" height="864" width="913"/>
+	<global_window_position top="51" left="301" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -631,12 +631,11 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
-<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"
-marks="ekr.20040716140617.1,"
-expanded="ekr.20040708145036,ekr.20040716140617,"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+expanded="ekr.20040721144439.5,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
@@ -992,7 +991,7 @@ expanded="ekr.20040708145036,ekr.20040716140617,"><vh>@thin ../src/leoTest.py</v
 <v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.274" a="MTV"><vh>@suite run all doctests in leo*.py</vh></v>
+<v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
 <v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
@@ -1076,7 +1075,13 @@ expanded="ekr.20040708145036,ekr.20040716140617,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20040707081532.1" a="E"><vh>Do @test</vh></v>
+</v>
+<v t="ekr.20040721153143" a="E"><vh>Main testing scripts</vh>
+<v t="ekr.20040707081532.1" a="EM"><vh>Do @test</vh></v>
+<v t="ekr.20040721113934" a="E"><vh>runProfile</vh></v>
+<v t="ekr.20040721114839.1" a="TV"><vh>runTimeit</vh></v>
+<v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
+<v t="ekr.20040721160556"><vh>Test of profile</vh></v>
 </v>
 <v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
@@ -1094,12 +1099,15 @@ expanded="ekr.20040708145036,ekr.20040716140617,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20040716092802"><vh>testUtils.compareIgnoringNodeNames</vh></v>
 <v t="ekr.20040716140617" a="E"><vh>Perfect Import test code (leoTest.py)</vh>
 <v t="ekr.20040717074817"><vh>About the Perfect Import tests</vh></v>
-<v t="ekr.20040716140617.1" a="M"><vh>runPerfectImportTest</vh></v>
+<v t="ekr.20040716140617.1"><vh>runPerfectImportTest</vh></v>
 </v>
 </v>
 <v t="ekr.20040716062608" a="E"><vh>Perfect Import Script</vh></v>
 </v>
 <v t="ekr.20040719155722"><vh>Script for doctest</vh></v>
+<v t="ekr.20040721094335"><vh>profile mini-test </vh></v>
+<v t="ekr.20040721115141"><vh>timeit mini-test </vh></v>
+<v t="ekr.20040721144323"><vh>To do: bind keystrokes to "button" scripts</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1767,7 +1775,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -1905,7 +1913,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -9220,5 +9228,59 @@ mu = g.mulderUpdateAlgorithm()
 
 delims = ('#',None,None)
 g.es(mu.is_sentinel("#@+node",delims))</t>
+<t tx="ekr.20040721094335">for i in xrange(10000):
+    if i % 1000 == 0:
+        print i</t>
+<t tx="ekr.20040721113934">import leoGlobals as g
+import profile
+import pstats
+
+# Note: the profiled code should do all needed imports.
+
+path = "c:/prog/test/leoProfile.txt"
+
+c = g.top() ; p = c.currentPosition()
+
+if p.bodyString().rstrip():
+    s = p.bodyString().rstrip() + '\n'
+    profile.run(s,path)
+    print '-' * 40
+    print "Profiling info sent to %s" % path
+    stats = pstats.Stats(path)
+    stats.strip_dirs()
+    stats.sort_stats('cum','file','name')
+    stats.print_stats()
+</t>
+<t tx="ekr.20040721114839.1">try: import timeit # Exists only in Python 2.3 and above.
+except ImportError: 
+    timeit = None
+    print "Can not import timeit"
+import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+if timeit and p.bodyString().strip():
+    s = p.bodyString().rstrip() + '\n'
+    t = timeit.Timer(s)
+    try:
+        count = 1000000 # The default is 1 million.
+        result = t.timeit(count)
+        print "count: %d time: %f %s" % (count,result,p.headString().strip())
+    except:
+        t.print_exc()</t>
+<t tx="ekr.20040721115141"># There will never be an overflow here, no matter how many times timeit executes this.
+
+try:
+    i = 0
+    i += 1
+except OverflowError:
+    pass</t>
+<t tx="ekr.20040721144323"></t>
+<t tx="ekr.20040721145258.1">import leoTest
+reload(leoTest)
+
+leoTest.runGc(disable=True)</t>
+<t tx="ekr.20040721153143"></t>
+<t tx="ekr.20040721160556">import leoGlobals as g; c=g.top(); p=c.currentPosition()</t>
 </tnodes>
 </leo_file>
