@@ -4441,7 +4441,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			a.logWaiting.append((),) # 2/16/03
+			a.logWaiting.append((s),) # 2/16/03
 			print "Null log"
 			print s
 	
