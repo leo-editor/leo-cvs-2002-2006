@@ -294,7 +294,17 @@ def oldDump(s):
 	return out
 #@-body
 #@-node:1::dump
-#@+node:2::get_line & get_line_after
+#@+node:2::es_exception
+#@+body
+def es_exception ():
+
+	typ,val,tb = sys.exc_info()
+	errList = traceback.format_exception_only(typ,val)
+	for i in errList:
+		es(i)
+#@-body
+#@-node:2::es_exception
+#@+node:3::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -318,8 +328,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:2::get_line & get_line_after
-#@+node:3::printBindings
+#@-node:3::get_line & get_line_after
+#@+node:4::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -329,8 +339,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print `b`
 #@-body
-#@-node:3::printBindings
-#@+node:4::Sherlock...
+#@-node:4::printBindings
+#@+node:5::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -453,7 +463,7 @@ def trace (s1=None,s2=None):
 			message()
 #@-body
 #@-node:3::trace
-#@-node:4::Sherlock...
+#@-node:5::Sherlock...
 #@-node:7::Dumping, Tracing & Sherlock
 #@+node:8::ensure_extension
 #@+body
@@ -1581,9 +1591,9 @@ def convertStringToXMLCharRef(s,xml_encoding):
 	return s2
 #@-body
 #@-node:1::convertChar/String/ToXMLCharRef
-#@+node:2::deleteNonEncodingChar/s
+#@+node:2::replaceNonEncodingChar/s
 #@+body
-def deleteNonEncodingChar(c,xml_encoding):
+def replaceNonEncodingChar(c,c2,xml_encoding):
 
 	try:
 		if type(c) == types.UnicodeType:
@@ -1595,24 +1605,24 @@ def deleteNonEncodingChar(c,xml_encoding):
 			s = unicode(c,xml_encoding)
 			return s
 	except:
-		# traceback.print_exc()
-		m = "invalid in "+xml_encoding+": "
-		c2 = c.encode("utf-8")
-		m = unicode(m,"utf-8") + unicode(c2,"utf-8")
-		es(m)
-		return u""
+		if 0:
+			m = "invalid in "+xml_encoding+": "
+			c2 = c.encode("utf-8")
+			m = unicode(m,"utf-8") + unicode(c2,"utf-8")
+			es(m)
+		return c2
 			
-def deleteNonEncodingChars(s,xml_encoding):
+def replaceNonEncodingChars(s,c2,xml_encoding):
 	
 	s2 = u""
 	for c in s:
-		s2 += deleteNonEncodingChar(c,xml_encoding)
+		s2 += replaceNonEncodingChar(c,c2,xml_encoding)
 	return s2
 #@-body
-#@-node:2::deleteNonEncodingChar/s
-#@+node:3::printNonEncodingChar, returnNonEncodingChar
+#@-node:2::replaceNonEncodingChar/s
+#@+node:3::es_nonEncodingChar, returnNonEncodingChar
 #@+body
-def printNonEncodingChars(s,xml_encoding):
+def es_nonEncodingChars(s,xml_encoding):
 
 	for c in s:
 		s2 = returnNonEncodingChar(c,xml_encoding)
@@ -1630,9 +1640,12 @@ def returnNonEncodingChar(c,xml_encoding):
 			unicode(c,xml_encoding)
 			return u""
 	except:
-		return c
+		if ord(c) < 32 or ord(c) >= 128:
+			return c + "=" + hex(ord(c))
+		else:
+			return c
 #@-body
-#@-node:3::printNonEncodingChar, returnNonEncodingChar
+#@-node:3::es_nonEncodingChar, returnNonEncodingChar
 #@-node:21::Unicode...
 #@+node:22::update_file_if_changed
 #@+body

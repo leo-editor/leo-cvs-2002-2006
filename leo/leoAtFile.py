@@ -421,8 +421,8 @@ class atFile:
 						self.default_directory = dir
 						es("creating @path directory:" + dir)
 					except:
-						self.error("can not create @path directory: " + dir)
-						traceback.print_exc()
+						self.error("exception creating @path directory: " + dir)
+						es_exception()
 				else:
 					self.error("Directory \"" + dir + "\" does not exist")
 		
@@ -480,8 +480,8 @@ class atFile:
 									self.default_directory = path
 									es("creating @path directory:" + dir)
 								except:
-									self.error("can not create @path directory: " + path)
-									traceback.print_exc()
+									self.error("exception creating @path directory: " + path)
+									es_exception()
 							else:
 								self.error("invalid @path: " + path)
 						
@@ -568,8 +568,8 @@ class atFile:
 									es("creating @file directory:" + dir)
 									self.default_directory = dir ; break
 								except:
-									self.error("can not create @file directory: " + dir)
-									traceback.print_exc()
+									self.error("exception creating @file directory: " + dir)
+									es_exception()
 		
 		if not self.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.
@@ -1880,8 +1880,8 @@ class atFile:
 					s = s.encode(xml_encoding)
 					self.outputFile.write(s)
 			except:
-				traceback.print_exc()
 				es("exception writing:" + `s`)
+				es_exception()
 	
 	def otabs(self,n):
 		self.os('\t' * abs(n))
@@ -2473,7 +2473,7 @@ class atFile:
 				valid = self.errors == 0
 			except:
 				es("exception in atFile.scanAllDirectives")
-				traceback.print_exc()
+				es_exception()
 				valid = false
 			
 			if valid:
@@ -2491,7 +2491,7 @@ class atFile:
 						valid = false
 				except:
 					es("exception creating path:" + fn)
-					traceback.print_exc()
+					es_exception()
 					valid = false
 			
 			if valid:
@@ -2512,7 +2512,7 @@ class atFile:
 						self.writeError("can not open " + self.outputFileName)
 				except:
 					es("exception opening:" + self.outputFileName)
-					traceback.print_exc()
+					es_exception()
 					valid = false
 			
 			if not valid:
@@ -2632,7 +2632,7 @@ class atFile:
 							os.remove(self.outputFileName)
 						except:
 							es("exception deleting:" + self.outputFileName)
-							traceback.print_exc()
+							es_exception()
 						es("unchanged: " + self.shortFileName)
 					else:
 						try:
@@ -2650,7 +2650,7 @@ class atFile:
 						except:
 							self.writeError("exception removing and renaming:" + self.outputFileName +
 								" to " + self.targetFileName)
-							traceback.print_exc()
+							es_exception()
 				else:
 					try:
 						# os.rename(self.outputFileName, self.targetFileName)
@@ -2659,7 +2659,7 @@ class atFile:
 					except:
 						self.writeError("exception renaming:" + self.outputFileName +
 							" to " + self.targetFileName)
-						traceback.print_exc()
+						es_exception()
 				#@-body
 				#@-node:4::<< Replace the target with the temp file if different >>
 
@@ -2669,7 +2669,7 @@ class atFile:
 			#@+node:5::<< handle all exceptions during the write >>
 			#@+body
 			es("exception writing:" + self.targetFileName)
-			traceback.print_exc()
+			es_exception()
 			
 			if self.outputFile: # 8/2/02
 				self.outputFile.close()
@@ -2680,7 +2680,7 @@ class atFile:
 					os.remove(self.outputFileName)
 				except:
 					es("exception deleting:" + self.outputFileName)
-					traceback.print_exc()
+					es_exception()
 			#@-body
 			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
@@ -2705,7 +2705,7 @@ class atFile:
 				valid = self.errors == 0
 			except:
 				es("exception in atFile.scanAllDirectives")
-				traceback.print_exc()
+				es_exception()
 				valid = false
 			
 			if valid:
@@ -2723,7 +2723,7 @@ class atFile:
 						valid = false
 				except:
 					es("exception creating path:" + fn)
-					traceback.print_exc()
+					es_exception()
 					valid = false
 			
 			if valid:
@@ -2744,7 +2744,7 @@ class atFile:
 						self.writeError("can not open " + self.outputFileName)
 				except:
 					es("exception opening:" + self.outputFileName)
-					traceback.print_exc()
+					es_exception()
 					valid = false
 			
 			if not valid:
@@ -2809,7 +2809,7 @@ class atFile:
 						os.remove(self.outputFileName)
 					except:
 						es("exception deleting:" + self.outputFileName)
-						traceback.print_exc()
+						es_exception()
 					es("unchanged: " + self.shortFileName)
 				else:
 					try:
@@ -2827,7 +2827,7 @@ class atFile:
 					except:
 						self.writeError("exception removing and renaming:" + self.outputFileName +
 							" to " + self.targetFileName)
-						traceback.print_exc()
+						es_exception()
 			else:
 				try:
 					# os.rename(self.outputFileName, self.targetFileName)
@@ -2836,7 +2836,7 @@ class atFile:
 				except:
 					self.writeError("exception renaming:" + self.outputFileName +
 						" to " + self.targetFileName)
-					traceback.print_exc()
+					es_exception()
 			#@-body
 			#@-node:5::<< Replace the target with the temp file if different >>
 
@@ -2846,7 +2846,7 @@ class atFile:
 			#@+node:6::<< handle all exceptions during the write >>
 			#@+body
 			es("exception writing:" + self.targetFileName)
-			traceback.print_exc()
+			es_exception()
 			
 			if self.outputFile:
 				self.outputFile.flush()
@@ -2858,7 +2858,7 @@ class atFile:
 					os.remove(self.outputFileName)
 				except:
 					es("exception deleting:" + self.outputFileName)
-					traceback.print_exc()
+					es_exception()
 					
 			# Make sure we try to rewrite this file.
 			root.setOrphan()

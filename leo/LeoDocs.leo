@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1163" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="6" left="143" height="27" width="74"/>
+	<global_window_position top="6" left="143" height="27" width="87"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -45,7 +45,7 @@
 <v t="T28"><vh>Kent Tenney</vh></v>
 <v t="T29"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T30" a="E"><vh>Release Notes</vh>
+<v t="T30"><vh>Release Notes</vh>
 <v t="T31"><vh>Warnings</vh></v>
 <v t="T32"><vh>Installation notes</vh>
 <v t="T33" a="C"><vh>System requirements</vh></v>
@@ -62,7 +62,7 @@
 <v t="T42" a="C"><vh>Quick start</vh></v>
 </v>
 <v a="E"><vh>Latest version</vh>
-<v t="T43" a="CEV"><vh>leo.py 3.7</vh>
+<v t="T43" a="CE"><vh>leo.py 3.7</vh>
 <v t="T44"><vh>Fixed Bugs</vh>
 <v t="T45"><vh>Language and syntax coloring bugs</vh>
 <v t="T46" a="CE"><vh>Fixed @comment bug</vh></v>
@@ -530,7 +530,7 @@
 </v>
 </v>
 </v>
-<v t="T348"><vh>Users Guide</vh>
+<v t="T348" a="E"><vh>Users Guide</vh>
 <v t="T349"><vh>An overview of Leo</vh></v>
 <v t="T350"><vh>Front material</vh>
 <v t="T351"><vh>Title Page &amp; Summary</vh></v>
@@ -619,9 +619,9 @@
 <v t="T381"><vh>Resizing panes</vh></v>
 <v t="T382"><vh>Undoing operations</vh></v>
 </v>
-<v t="T383"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T383" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T384" a="M"><vh>Overview</vh></v>
-<v t="T385" a="M"><vh>Sections and section references</vh></v>
+<v t="T385" a="MV"><vh>Sections and section references</vh></v>
 <v t="T386"><vh>Organizing @file trees.</vh>
 <v t="T387"><vh>Examples</vh>
 <v t="T388"><vh>@file f.c</vh>
@@ -5413,11 +5413,11 @@ Body text may contain zero or more sections in any order.  A code section is nam
 @ This method puts an open node sentinel for node v.
 @c
 def putOpenNodeSentinel(self,v):
-    if v.isAtFileNode() and v != self.root:
-       &lt;&lt; issue an error message &gt;&gt;
-    else:
-        s = self.nodeSentinelText(v)
-        self.putSentinel("@+node:" + s)
+	if v.isAtFileNode() and v != self.root:
+		&lt;&lt; issue an error message &gt;&gt;
+	else:
+		s = self.nodeSentinelText(v)
+		self.putSentinel("@+node:" + s)
 
 @nocolor
 An @c directive is optional at the start of body text, so:
@@ -5425,14 +5425,14 @@ An @c directive is optional at the start of body text, so:
 
 @c
 def hasChildren(self):
-    return self.firstChild() != None
+	return self.firstChild() != None
 
 @nocolor
 is equivalent to the following text without any markup:
 @color
 
 def hasChildren(self):
-    return self.firstChild() != None
+	return self.firstChild() != None
 
 @nocolor
 The @c directive is needed here:
@@ -5441,7 +5441,7 @@ The @c directive is needed here:
 @ Returns true if the receiver has child nodes.
 @c
 def hasChildren(self):
-    return self.firstChild() != None
+	return self.firstChild() != None
 
 @nocolor
 However, we could replace the doc part with a comment, like this:
@@ -5449,7 +5449,7 @@ However, we could replace the doc part with a comment, like this:
 
 # Returns true if the receiver has child nodes.
 def hasChildren(self):
-    return self.firstChild() != None
+	return self.firstChild() != None
 
 @nocolor
 The choice of using doc parts or comments is a matter of style.  Doc parts are convenient for longer comments that would be tedious to format by hand.

@@ -803,7 +803,8 @@ class leoTree:
 				s2 = s.encode(xml_encoding) # result is a string.
 				s = s2 # don't destroy s until we know that all is well.
 		except:
-			u = deleteNonEncodingChars(s,xml_encoding)
+			es_nonEncodingChars(s,xml_encoding)
+			u = replaceNonEncodingChars(s,"?",xml_encoding)
 			s = u.encode(xml_encoding) # result is a string.
 			ins = c.body.index("insert")
 			c.body.delete("1.0","end")
@@ -1067,7 +1068,9 @@ class leoTree:
 				s2 = s.encode(xml_encoding) # result is a string.
 				s = s2 # don't destroy s until we know that all is well.
 			except:
-				u = deleteNonEncodingChars(s,xml_encoding)
+				es_exception()
+				es_nonEncodingChars(s,xml_encoding)
+				u = replaceNonEncodingChars(s,"?",xml_encoding)
 				s = u.encode(xml_encoding) # result is a string.
 				ins = v.edit_text.index("insert")
 				v.edit_text.delete("1.0","end")
@@ -1383,13 +1386,11 @@ class leoTree:
 				s = s2 # don't destroy s until we know that all is well.
 			except:
 				s = v.t.bodyString
-				# es("Can't convert to " + xml_encoding + ":" + string.strip(s))
-				es("Can't convert to " + xml_encoding)
-				printNonEncodingChars(s,xml_encoding)
-				typ,val,tb = sys.exc_info()
-				errList = traceback.format_exception_only(typ,val)
-				for i in errList:
-					es(i)
+				es("can't convert to " + xml_encoding)
+				es_exception()
+				es_nonEncodingChars(s,xml_encoding)
+				s = replaceNonEncodingChars(s,"?",xml_encoding)
+				v.setBodyStringOrPane(s)
 	
 		body.insert("1.0", s)
 		self.recolor_now(v)

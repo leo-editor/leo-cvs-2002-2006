@@ -1193,6 +1193,12 @@ class vnode:
 			c.frame.body.delete("1.0","end")
 			c.frame.body.insert("1.0", s) # Replace the body text with s.
 			c.recolor()
+			
+		if type(s) == types.UnicodeType: # 10/9
+			xml_encoding = app().config.xml_version_string
+			s = s.encode(xml_encoding) # result is a string.
+		assert(type(s)==types.StringType)
+	
 		# Keep the body text in the tnode up-to-date.
 		if v.t.bodyString != s: # 3/4/02
 			v.t.setTnodeText(s)
