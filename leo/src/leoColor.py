@@ -1549,6 +1549,7 @@ class baseColorizer:
 			(ch == '$' and self.language=="rapidq")
 		):
 			#@		<< handle possible keyword >>
+			#@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@+node:ekr.20031218072017.1898:<< handle possible  keyword >>
 			if self.language == "latex":
 				#@	<< handle possible latex keyword >>
@@ -1617,11 +1618,13 @@ class baseColorizer:
 			i = j
 			#@nonl
 			#@-node:ekr.20031218072017.1898:<< handle possible  keyword >>
+			#@-middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@nl
 		elif g.match(s,i,self.lb):
 			i = self.doNowebSecRef(s,i)
 		elif ch == '@':
 			#@		<< handle at keyword >>
+			#@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@+node:ekr.20031218072017.1902:<< handle at keyword >>
 			if self.language == "cweb":
 				if g.match(s,i,"@(") or g.match(s,i,"@<"):
@@ -1674,9 +1677,11 @@ class baseColorizer:
 				i,state = self.doAtKeyword(s,i)
 			#@nonl
 			#@-node:ekr.20031218072017.1902:<< handle at keyword >>
+			#@-middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@nl
 		elif g.match(s,i,self.single_comment_start):
 			#@		<< handle single-line comment >>
+			#@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@+node:ekr.20031218072017.1617:<< handle single-line comment >>
 			# print "single-line comment i,s:",i,s
 			
@@ -1695,9 +1700,11 @@ class baseColorizer:
 				i = j
 			#@nonl
 			#@-node:ekr.20031218072017.1617:<< handle single-line comment >>
+			#@-middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@nl
 		elif g.match(s,i,self.block_comment_start):
 			#@		<< start block comment >>
+			#@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@+node:ekr.20031218072017.1619:<< start block comment >>
 			k = len(self.block_comment_start)
 			
@@ -1708,9 +1715,11 @@ class baseColorizer:
 			i += k ; state = "blockComment"
 			#@nonl
 			#@-node:ekr.20031218072017.1619:<< start block comment >>
+			#@-middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@nl
 		elif ch == '%' and self.language=="cweb":
 			#@		<< handle latex line >>
+			#@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@+node:ekr.20031218072017.1905:<< handle latex line >>
 			self.tag("keyword",i,i+1)
 			i += 1 # Skip the %
@@ -1718,9 +1727,11 @@ class baseColorizer:
 			i = len(s)
 			#@nonl
 			#@-node:ekr.20031218072017.1905:<< handle latex line >>
+			#@-middle:ekr.20031218072017.1897:Valid regardless of latex mode
 			#@nl
 		elif self.language=="latex":
 			#@		<< handle latex normal character >>
+			#@+middle:ekr.20031218072017.1906:Vaid only in latex mode
 			#@+node:ekr.20031218072017.1907:<< handle latex normal character >>
 			if self.language=="cweb":
 				self.tag("latexModeBackground",i,i+1)
@@ -1729,10 +1740,12 @@ class baseColorizer:
 			i += 1
 			#@nonl
 			#@-node:ekr.20031218072017.1907:<< handle latex normal character >>
+			#@-middle:ekr.20031218072017.1906:Vaid only in latex mode
 			#@nl
 		# ---- From here on self.language != "latex" -----
 		elif ch in self.string_delims:
 			#@		<< handle string >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1612:<< handle string >>
 			if self.language == "python":
 			
@@ -1752,9 +1765,11 @@ class baseColorizer:
 				self.tag("string",i,j)
 				i = j
 			#@-node:ekr.20031218072017.1612:<< handle string >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 		elif ch == '#' and self.has_pp_directives:
 			#@		<< handle C preprocessor line >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1909:<< handle C preprocessor line >>
 			# 10/17/02: recognize comments in preprocessor lines.
 			j = i
@@ -1766,10 +1781,12 @@ class baseColorizer:
 			self.tag("pp",j,i)
 			#@nonl
 			#@-node:ekr.20031218072017.1909:<< handle C preprocessor line >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 		elif self.language == "php" and (g.match(s,i,"<") or g.match(s,i,"?")):
 			# g.trace("%3d" % i,php_re.match(s,i),s)
 			#@		<< handle special php keywords >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1910:<< handle special php keywords >>
 			if g.match(s.lower(),i,"<?php"):
 				self.tag("keyword",i,i+5)
@@ -1781,32 +1798,39 @@ class baseColorizer:
 				i += 1
 			
 			#@-node:ekr.20031218072017.1910:<< handle special php keywords >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 		elif ch == ' ':
 			#@		<< handle blank >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1911:<< handle blank >>
 			if self.showInvisibles:
 				self.tag("blank",i,i+1)
 			i += 1
 			#@nonl
 			#@-node:ekr.20031218072017.1911:<< handle blank >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 		elif ch == '\t':
 			#@		<< handle tab >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1912:<< handle tab >>
 			if self.showInvisibles:
 				self.tag("tab",i,i+1)
 			i += 1
 			#@nonl
 			#@-node:ekr.20031218072017.1912:<< handle tab >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 		else:
 			#@		<< handle normal character >>
+			#@+middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@+node:ekr.20031218072017.1913:<< handle normal character >>
 			# self.tag("normal",i,i+1)
 			i += 1
 			#@nonl
 			#@-node:ekr.20031218072017.1913:<< handle normal character >>
+			#@-middle:ekr.20031218072017.1908:Valid when not in latex_mode
 			#@nl
 	
 		if 0: # This can fail harmlessly when using wxPython plugin.  Don't know exactly why.
