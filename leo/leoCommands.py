@@ -2126,12 +2126,6 @@ class Commands:
 		c = self
 		c.tree.endEditLabel()
 		c.tree.select(v)
-		if v.t.insertSpot != None: # 9/1/02
-			c.body.mark_set("insert",v.t.insertSpot)
-			c.body.see(v.t.insertSpot)
-		else:
-			c.body.mark_set("insert","1.0")
-		# c.body.see("1.0")
 		c.body.focus_force()
 		self.editing = false
 	#@-body

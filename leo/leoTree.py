@@ -833,6 +833,7 @@ class leoTree:
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
 		v.t.bodyString = s
 		v.t.insertSpot = c.body.index("insert") # 9/1/02
+		# print `v.t.insertSpot`,`v`
 		# Recolor the body.
 		self.scanForTabWidth(v) # 9/13/02
 		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
@@ -1284,6 +1285,7 @@ class leoTree:
 		c = self.commands ; frame = c.frame ; body = frame.body
 		# Remember the position of the scrollbar before making any changes.
 		yview=body.yview()
+		insertSpot = c.body.index("insert") # 9/21/02
 		# Replace body text
 		body.delete("1.0", "end")
 		body.insert("1.0", v.t.bodyString)
@@ -1294,11 +1296,18 @@ class leoTree:
 		if old and old != v and old.edit_text:
 			self.setUnselectedLabelState(old)
 			old.t.scrollBarSpot = yview
+			old.t.insertSpot = insertSpot # 9/21/02
 			# print yview,`old`
 		if v and v.t.scrollBarSpot != None:
 			first,last = v.t.scrollBarSpot
 			body.yview("moveto",first)
 			# print first,last,`v`
+		if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+			# print `v.t.insertSpot`,`v`
+			c.body.mark_set("insert",v.t.insertSpot)
+			c.body.see(v.t.insertSpot)
+		else:
+			c.body.mark_set("insert","1.0")
 		self.currentVnode = v
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02
