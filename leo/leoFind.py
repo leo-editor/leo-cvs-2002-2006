@@ -733,12 +733,29 @@ class LeoFind:
 				stopindex=stopindex,backwards=c.reverse_flag,
 				regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
 			if not pos:
-				# trace("not found")
 				return None, None
 			newpos = pos + "+" + `len(c.find_text)` + "c"
+			if c.reverse_flag and t.compare(newpos,"==",index): # 10/3/02
+				
+				#@<< search again after getting stuck going backward >>
+				#@+node:1::<< search again after getting stuck going backward >>
+				#@+body
+				# print "stuck"
+				index = newpos + "-" + `len(c.find_text)` + "c"
+				pos = t.search(c.find_text,index,
+					stopindex=stopindex,backwards=c.reverse_flag,
+					regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
+				
+				if not pos:
+					return None, None
+				newpos = pos + "+" + `len(c.find_text)` + "c"
+				#@-body
+				#@-node:1::<< search again after getting stuck going backward >>
+
+			# trace(`pos`+":"+`newpos`)
 			
 			#@<< return if we are passed the wrap point >>
-			#@+node:1::<< return if we are passed the wrap point >>
+			#@+node:2::<< return if we are passed the wrap point >>
 			#@+body
 			if self.wrapping and self.wrapPos and self.wrapVnode and self.v == self.wrapVnode:
 				if c.reverse_flag and t.compare(pos, "<", self.wrapPos):
@@ -747,13 +764,13 @@ class LeoFind:
 				if not c.reverse_flag and t.compare(newpos, ">", self.wrapPos):
 					return None, None
 			#@-body
-			#@-node:1::<< return if we are passed the wrap point >>
+			#@-node:2::<< return if we are passed the wrap point >>
 
 			if c.whole_word_flag:
 				index = t.index(choose(c.reverse_flag,pos,newpos))
 				
 				#@<< test for whole word match >>
-				#@+node:2::<< test for whole word match >>
+				#@+node:3::<< test for whole word match >>
 				#@+body
 				# Set pos to None if word characters preceed or follow the selection.
 				
@@ -768,7 +785,7 @@ class LeoFind:
 				if after  and is_c_id(after)  and last  and is_c_id(last):
 					pos = None
 				#@-body
-				#@-node:2::<< test for whole word match >>
+				#@-node:3::<< test for whole word match >>
 
 				if not pos: continue
 			# trace("found:" + `pos` + ":" + `newpos` + ":" + `v`)
