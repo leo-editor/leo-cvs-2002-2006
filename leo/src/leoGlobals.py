@@ -1413,24 +1413,50 @@ def printDiffTime(message, start):
 #@-node:ekr.20031218072017.3137:Timing
 #@-node:ekr.20031218072017.3104:Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:ekr.20031218072017.3116:Files & Directories...
-#@+node:ekr.20031218072017.3117:create_temp_name
-# Returns a temporary file name.
+#@+node:ekr.20031218072017.3117:create_temp_file & test
+def create_temp_file (textMode=False):
+    '''Return a tuple (theFile,theFileName)
 
-def create_temp_name ():
+    theFile: a file object open for writing.
+    theFileName: the name of the temporary file.'''
     
     # mktemp is deprecated, but we can't get rid of it
     # because mkstemp does not exist in Python 2.2.1.
     __pychecker__ = '--no-deprecate'
-    
     try:
-        temp = tempfile.mkstemp()
+        # fd is an handle to an open file as would be returned by os.open()
+        fd,theFileName = tempfile.mkstemp(text=textMode)
+        mode = g.choose(textMode,'w','wb')
+        theFile = os.fdopen(fd,mode)
+        # g.trace(fd,theFile)
     except AttributeError:
-        # g.trace('tempfile.mkstemp does not exist')
-        temp = tempfile.mktemp()
+        # g.trace("mkstemp doesn't exist")
+        theFileName = tempfile.mktemp()
+        try:
+            mode = g.choose(textMode,'w','wb')
+            theFile = file(theFileName,mode)
+        except IOError:
+            theFile,theFileName = None,''
+    except Exception:
+        g.es('Unexpected exception in g.create_temp_file',color='red')
+        g.es_exception()
+        theFile,theFileName = None,''
 
-    return temp
+    return theFile,theFileName
 #@nonl
-#@-node:ekr.20031218072017.3117:create_temp_name
+#@+node:ekr.20050216052031:test_g_create_temp_file
+def test_g_create_temp_file():
+    
+    __pychecker__ = '--no-reimport'
+    import types
+
+    theFile,theFileName = g.create_temp_file()
+
+    assert type(theFile) == types.FileType, 'not file type'
+    assert type(theFileName) in (types.StringType, types.UnicodeType), 'not string type'
+#@nonl
+#@-node:ekr.20050216052031:test_g_create_temp_file
+#@-node:ekr.20031218072017.3117:create_temp_file & test
 #@+node:ekr.20031218072017.3118:ensure_extension
 def ensure_extension (name, ext):
 
