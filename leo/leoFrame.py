@@ -837,8 +837,6 @@ class LeoFrame:
 				#@<< get menu and bind shortcuts >>
 				#@+node:1::<< get menu and bind shortcuts >>
 				#@+body
-				# To do:  see if the leoConfig.txt specifies a shortcut.
-				
 				name = string.strip(label)
 				name = string.lower(name)
 				# Remove special characters from command names.
@@ -878,8 +876,13 @@ class LeoFrame:
 					else:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
-							self.body.bind(bind_shortcut,command) # Necessary to override defaults in body.
-							self.top.bind (bind_shortcut,command)
+							if 1: # try using bind_all.
+								self.top.bind_all(bind_shortcut,command)
+								# This should work, and doesn't.
+								# self.body.bind_class(bind_shortcut,command) # For headlines created later.
+							else:
+								self.body.bind(bind_shortcut,command) # Necessary to override defaults in body.
+								self.top.bind (bind_shortcut,command)
 						except: # could be a user error
 							if not app().menuWarningsGiven:
 								print "exception binding menu shortcut..."

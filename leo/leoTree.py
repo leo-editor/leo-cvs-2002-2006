@@ -415,6 +415,7 @@ class leoTree:
 		if 0: # 6/15/02: Bill Drissel objects to this binding.
 			t.bind("<Double-1>", v.OnBoxClick)
 		t.bind("<Key>", v.OnHeadlineKey)
+		t.bind("<Control-t>",self.OnControlT) # 10/16/02: Stamp out the erroneous control-t binding.
 		id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		if 0: # don't create this reference!
 			v.edit_text_id = id
@@ -774,6 +775,7 @@ class leoTree:
 		v = c.currentVnode() ; ch = event.char 
 		oldSel = c.body.index("insert")
 		# trace(`oldSel`)
+		# if event: print "sym,code:",event.keysym,event.keycode
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
 	
 	# Does the real work of updating the body pane.
@@ -974,7 +976,17 @@ class leoTree:
 			#@-node:2::<< scroll the canvas as needed >>
 	#@-body
 	#@-node:5::tree.OnContinueDrag
-	#@+node:6::tree.OnDrag
+	#@+node:6::tree.OnCtontrolT
+	#@+body
+	# This works around an apparent Tk bug.
+	
+	def OnControlT (self,event=None):
+	
+		# If we don't inhibit further processing the Tx.Text widget switches characters!
+		return "break"
+	#@-body
+	#@-node:6::tree.OnCtontrolT
+	#@+node:7::tree.OnDrag
 	#@+body
 	# This precomputes numberOfVisibleNodes(), a significant optimization.
 	# We also indicate where findVnodeWithIconId() should start looking for tree id's.
@@ -987,8 +999,8 @@ class leoTree:
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
 			self.OnContinueDrag(v,event)
 	#@-body
-	#@-node:6::tree.OnDrag
-	#@+node:7::tree.OnEndDrag
+	#@-node:7::tree.OnDrag
+	#@+node:8::tree.OnEndDrag
 	#@+body
 	def OnEndDrag(self,v,event):
 		
@@ -1020,15 +1032,17 @@ class leoTree:
 				if v and vdrag == None: es("not dragged: " + v.headString())
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(v)
-			self.canvas['cursor'] = self.oldcursor
+		
+		# 10/26/02: always do this.
+		self.canvas['cursor'] = self.oldcursor
 	
 		if self.drag_id:
 			canvas.tag_unbind(self.drag_id , "<B1-Motion>")
 			canvas.tag_unbind(self.drag_id , "<Any-ButtonRelease-1>")
 			self.drag_id = None
 	#@-body
-	#@-node:7::tree.OnEndDrag
-	#@+node:8::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:8::tree.OnEndDrag
+	#@+node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is 
@@ -1138,8 +1152,8 @@ class leoTree:
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
 	#@-body
-	#@-node:8::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
-	#@+node:9::tree.OnIconClick
+	#@-node:9::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@+node:10::tree.OnIconClick
 	#@+body
 	def OnIconClick (self,v,event):
 	
@@ -1160,8 +1174,8 @@ class leoTree:
 	
 		self.select(v)
 	#@-body
-	#@-node:9::tree.OnIconClick
-	#@+node:10::tree.OnPopup
+	#@-node:10::tree.OnIconClick
+	#@+node:11::tree.OnPopup
 	#@+body
 	# 20-SEP-2002 DTHEIN:
 	# On Linux we must do something special to make the popup menu
@@ -1274,7 +1288,7 @@ class leoTree:
 	def OnPopupFocusLost(self,event=None):
 		self.popupMenu.unpost()
 	#@-body
-	#@-node:10::tree.OnPopup
+	#@-node:11::tree.OnPopup
 	#@-node:11::Event handers
 	#@+node:12::Selecting & editing (tree)
 	#@+node:1::dimEditLabel, undimEditLabel
