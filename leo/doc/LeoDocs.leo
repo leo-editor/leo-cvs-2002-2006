@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13048" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
 	<global_window_position top="37" left="202" height="782" width="932"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -51,18 +51,264 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.110203163054.63" a="TV"><vh>Latest versions</vh>
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336"><vh>Still to do</vh>
 <v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
 </v>
+<v t="ekr.20050209141626.3"><vh>Bugs</vh>
+<v t="ekr.20050209141626.4"><vh>(Fixed very old bug in Undo Insert Node )</vh>
+<v t="ekr.20050209141626.5"><vh>Report</vh></v>
+<v t="ekr.20050209141626.6"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20050209141626.7"><vh>undoInsertNodes</vh></v>
+</v>
+<v t="ekr.20050209141626.8"><vh>(Made sure to remove duplicates from recent files)</vh>
+<v t="ekr.20050209141626.9"><vh>config.appendToRecentFiles</vh></v>
+<v t="ekr.20050209141626.10"><vh>c.updateRecentFiles</vh></v>
+<v t="ekr.20050209141626.11"><vh>g.openWithFileName</vh></v>
+</v>
+<v t="ekr.20050209141626.12"><vh>Fixed indentation problems in leoTkinterFind.py</vh></v>
+<v t="ekr.20050209141626.13"><vh>(Changed Help menu &amp; related code to handle leoSettings.leo instead of leoConfig.leo)</vh>
+<v t="ekr.20050209141626.14"><vh>&lt;&lt; compute directories &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.15"><vh>leoConfig</vh></v>
+</v>
+<v t="ekr.20050209141626.16" a="E"><vh>(Investigated recent files problems)</vh>
+<v t="ekr.20050209141626.17"><vh>Report</vh></v>
+<v t="ekr.20050209141626.18"><vh>Added to @recentfile documentation</vh></v>
+<v t="ekr.20050209141626.19" a="E"><vh>Setters</vh>
+<v t="ekr.20050209141626.20"><vh>set (g.app.config)</vh></v>
+<v t="ekr.20050209141626.21"><vh>setString</vh></v>
+<v t="ekr.20050209141626.22"><vh>setIvarsFromSettings (g.app.config)</vh></v>
+<v t="ekr.20050209141626.9"><vh>config.appendToRecentFiles</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.23"><vh>(Improved queuing of log messages)</vh>
+<v t="ekr.20050209141626.24"><vh>What I did</vh></v>
+<v t="ekr.20050209141626.25"><vh>es &amp; related logic...</vh>
+<v t="ekr.20050209141626.11"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20050209141626.26" a="M"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="ekr.20050209141626.27"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.28"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.29"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.30"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.31"><vh>forceLogUpdate</vh></v>
+</v>
+<v t="ekr.20050209141626.32"><vh>es, enl, ecnl</vh></v>
+<v t="ekr.20050209141626.33"><vh>app.writeWaitingLog</vh></v>
+</v>
+<v t="ekr.20050209141626.34"><vh>Added silent keyword to severl methods</vh>
+<v t="ekr.20050209141626.35"><vh>open</vh>
+<v t="ekr.20050209141626.36"><vh>&lt;&lt; Set the default directory &gt;&gt; in fileCommands.readOutlineOnly</vh></v>
+</v>
+<v t="ekr.20050209141626.37"><vh>getLeoFile</vh>
+<v t="ekr.20050209141626.38"><vh>&lt;&lt; warn on read-only files &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.39"><vh>&lt;&lt; scan all the xml elements &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.40"><vh>&lt;&lt; raise an alert &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.41"><vh>&lt;&lt; restore attributes in descendent tnodes &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050209141626.42"><vh>(Fixed crasher in Change All command)</vh></v>
+<v t="ekr.20050209141626.43"><vh>(Fixed crasher in script button)</vh>
+<v t="ekr.20050209141626.44"><vh>Traceback</vh></v>
+<v t="ekr.20050209141626.45"><vh>putOpenNodeSentinel (sets tnodeList) 4.x</vh></v>
+</v>
+<v t="ekr.20050209141626.46"><vh>(Fixed print problems on the Mac)</vh>
+<v t="ekr.20050209141626.47"><vh>What I did</vh></v>
+<v t="ekr.20050209141626.48"><vh>(g.es called print on the Mac)</vh>
+<v t="ekr.20050209141626.32"><vh>es, enl, ecnl</vh></v>
+<v t="ekr.20050209141626.49"><vh>put (leoTkinterFrame)</vh></v>
+<v t="ekr.20050209141626.50"><vh>put and putnl (nullLog)</vh></v>
+<v t="ekr.20050209141626.51"><vh>class logClass</vh>
+<v t="ekr.20050209141626.52"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050209141626.26" a="M"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="ekr.20050209141626.27"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.28"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.29"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.30"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.31"><vh>forceLogUpdate</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050209141626.53"><vh>leoTest.runTests now makes copies of all positions</vh></v>
+<v t="ekr.20050209141626.54"><vh>Fixed problems with unit test file paths</vh></v>
+<v t="ekr.20050209141626.55"><vh>(Made local config settings work again)</vh>
+<v t="ekr.20050209141626.56"><vh>Notes</vh></v>
+<v t="ekr.20050209141626.57"><vh>&lt;&lt;  baseConfig data &gt;&gt;</vh>
+<v t="ekr.20050209141626.58"><vh>defaultsDict</vh></v>
+<v t="ekr.20050209141626.59"><vh>define encodingIvarsDict</vh></v>
+<v t="ekr.20050209141626.60"><vh>ivarsDict</vh></v>
+</v>
+<v t="ekr.20050209141626.61"><vh>get &amp; allies (g.app.config)</vh>
+<v t="ekr.20050209141626.62"><vh>getValFromDict</vh></v>
+</v>
+<v t="ekr.20050209141626.63" a="M"><vh>c.executeScript</vh>
+<v t="ekr.20050209141626.64"><vh>&lt;&lt; redirect output &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.65"><vh>&lt;&lt; unredirect output &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.66"><vh>&lt;&lt; dump the lines near the error &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050209141626.67"><vh>redirecting stderr and stdout</vh>
+<v t="ekr.20050209141626.68"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh>
+<v t="ekr.20050209141626.69"><vh>redirectClass.__init__</vh></v>
+<v t="ekr.20050209141626.70"><vh>isRedirected</vh></v>
+<v t="ekr.20050209141626.71"><vh>flush</vh></v>
+<v t="ekr.20050209141626.72"><vh>rawPrint</vh></v>
+<v t="ekr.20050209141626.73"><vh>redirect</vh></v>
+<v t="ekr.20050209141626.74"><vh>undirect</vh></v>
+<v t="ekr.20050209141626.75"><vh>write</vh></v>
+</v>
+<v t="ekr.20050209141626.76"><vh>&lt;&lt; define convenience methods for redirecting streams &gt;&gt;</vh>
+<v t="ekr.20050209141626.77"><vh>redirectStderr &amp; redirectStdout</vh></v>
+<v t="ekr.20050209141626.78"><vh>restoreStderr &amp; restoreStdout</vh></v>
+<v t="ekr.20050209141626.79"><vh>stdErrIsRedirected &amp; stdOutIsRedirected</vh></v>
+<v t="ekr.20050209141626.80"><vh>rawPrint</vh></v>
+</v>
+<v t="ekr.20050209141626.81"><vh>&lt;&lt; test code &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050209141626.82"><vh>class configSettings</vh>
+<v t="ekr.20050209141626.83"><vh>configSettings.__init__</vh>
+<v t="ekr.20050209141626.84"><vh>initIvar</vh></v>
+<v t="ekr.20050209141626.85"><vh>initEncoding</vh></v>
+</v>
+<v t="ekr.20050209141626.86"><vh>Getters</vh></v>
+<v t="ekr.20050209141626.87"><vh>Setters...</vh>
+<v t="ekr.20050209141626.88"><vh>setRecentFiles (configSettings)</vh></v>
+<v t="ekr.20050209141626.89"><vh>set &amp; setString</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050209141626.90"><vh>(Investigated redirection from scripts.  All appears well.)</vh>
+<v t="ekr.20050209141626.67"><vh>redirecting stderr and stdout</vh>
+<v t="ekr.20050209141626.68"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh>
+<v t="ekr.20050209141626.69"><vh>redirectClass.__init__</vh></v>
+<v t="ekr.20050209141626.70"><vh>isRedirected</vh></v>
+<v t="ekr.20050209141626.71"><vh>flush</vh></v>
+<v t="ekr.20050209141626.72"><vh>rawPrint</vh></v>
+<v t="ekr.20050209141626.73"><vh>redirect</vh></v>
+<v t="ekr.20050209141626.74"><vh>undirect</vh></v>
+<v t="ekr.20050209141626.75"><vh>write</vh></v>
+</v>
+<v t="ekr.20050209141626.76"><vh>&lt;&lt; define convenience methods for redirecting streams &gt;&gt;</vh>
+<v t="ekr.20050209141626.77"><vh>redirectStderr &amp; redirectStdout</vh></v>
+<v t="ekr.20050209141626.78"><vh>restoreStderr &amp; restoreStdout</vh></v>
+<v t="ekr.20050209141626.79"><vh>stdErrIsRedirected &amp; stdOutIsRedirected</vh></v>
+<v t="ekr.20050209141626.80"><vh>rawPrint</vh></v>
+</v>
+<v t="ekr.20050209141626.81"><vh>&lt;&lt; test code &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.91"><vh>(Fix url problems)</vh>
+<v t="ekr.20050209141626.92"><vh>Note: it just ran slowly &amp; silently</vh></v>
+<v t="ekr.20050209141626.93"><vh>tree.OnIconDoubleClick (@url)</vh>
+<v t="ekr.20050209141626.94"><vh>&lt;&lt; stop the url after any whitespace  &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.95"><vh>&lt;&lt; check the url; return if bad &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.96"><vh>&lt;&lt; pass the url to the web browser &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20050209141626.97"><vh>findAllButton</vh></v>
+<v t="ekr.20050209141626.98"><vh>findAll</vh></v>
+<v t="ekr.20050209141626.99"><vh>findNextMatch</vh></v>
+<v t="ekr.20050209141626.100"><vh>selectNextVnode</vh></v>
+<v t="ekr.20050209141626.26" a="M"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="ekr.20050209141626.27"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.28"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.29"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.30"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.31"><vh>forceLogUpdate</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.101"><vh>Buttons no longer work in toolbars when settings dialog is open</vh></v>
+<v t="ekr.20050209141626.102"><vh>(Fixed bug: Focus shifted from body to headline</vh>
+<v t="ekr.20050209141626.103"><vh>Report</vh></v>
+<v t="ekr.20050209141626.104"><vh>set_focus (tkFrame)</vh></v>
+</v>
+<v t="ekr.20050209141626.105"><vh>(Made sure Leo asks for leoID at most once)</vh>
+<v t="ekr.20050209141626.106"><vh>Report</vh></v>
+<v t="ekr.20050209141626.107"><vh>What I did</vh></v>
+<v t="ekr.20050209141626.108"><vh>app.setLeoID</vh>
+<v t="ekr.20050209141626.109"><vh>&lt;&lt; return if we can set self.leoID from sys.leoID&gt;&gt;</vh></v>
+<v t="ekr.20050209141626.110"><vh>&lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.111"><vh>&lt;&lt; put up a dialog requiring a valid id &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.112"><vh>&lt;&lt; attempt to create leoID.txt &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.113"><vh>(Leo now prints unicode characters properly in the log pane)</vh>
+<v t="ekr.20050209141626.32"><vh>es, enl, ecnl</vh></v>
+<v t="ekr.20050209141626.26" a="M"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="ekr.20050209141626.27"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.28"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.29"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.30"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.31"><vh>forceLogUpdate</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.114"><vh>(Fixed various problems with Unicode filenames)</vh>
+<v t="ekr.20050209141626.115"><vh>Report</vh></v>
+<v t="ekr.20050209141626.116"><vh>atFile.printError &amp; test_printError</vh></v>
+<v t="ekr.20050209141626.117"><vh>Unicode utils...</vh>
+<v t="ekr.20050209141626.118"><vh>isUnicode</vh></v>
+<v t="ekr.20050209141626.119"><vh>isValidEncoding</vh></v>
+<v t="ekr.20050209141626.120"><vh>reportBadChars</vh></v>
+<v t="ekr.20050209141626.121"><vh>toUnicode &amp; toEncodedString (and tests)</vh>
+<v t="ekr.20050209141626.122"><vh>toEncodedString</vh></v>
+<v t="ekr.20050209141626.123"><vh>toEncodedStringWithErrorCode</vh></v>
+<v t="ekr.20050209141626.124"><vh>toUnicode</vh></v>
+<v t="ekr.20050209141626.125"><vh>toUnicodeWithErrorCode</vh></v>
+<v t="ekr.20050209141626.126"><vh>test_round_trip_toUnicode_toEncodedString</vh></v>
+<v t="ekr.20050209141626.127"><vh>test_failure_with_ascii_encodings</vh></v>
+</v>
+<v t="ekr.20050209141626.128"><vh>getpreferredencoding from 2.3a2</vh>
+<v t="ekr.20050209141626.129"><vh>&lt;&lt; define getpreferredencoding using _locale &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.130"><vh>&lt;&lt; define getpreferredencoding for *nix &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20050209141626.131"><vh>os.path wrappers (leoGlobals.py)</vh>
+<v t="ekr.20050209141626.132"><vh>os_path_abspath</vh></v>
+<v t="ekr.20050209141626.133"><vh>os_path_basename</vh></v>
+<v t="ekr.20050209141626.134"><vh>os_path_dirname</vh></v>
+<v t="ekr.20050209141626.135"><vh>os_path_exists</vh></v>
+<v t="ekr.20050209141626.136"><vh>os_path_getmtime</vh></v>
+<v t="ekr.20050209141626.137"><vh>os_path_isabs</vh></v>
+<v t="ekr.20050209141626.138"><vh>os_path_isdir</vh></v>
+<v t="ekr.20050209141626.139"><vh>os_path_isfile</vh></v>
+<v t="ekr.20050209141626.140"><vh>os_path_join</vh></v>
+<v t="ekr.20050209141626.141"><vh>os_path_norm NOT USED</vh></v>
+<v t="ekr.20050209141626.142"><vh>os_path_normabs NOT USED</vh></v>
+<v t="ekr.20050209141626.143"><vh>os_path_normcase</vh></v>
+<v t="ekr.20050209141626.144"><vh>os_path_normpath</vh></v>
+<v t="ekr.20050209141626.145"><vh>os_path_split</vh></v>
+<v t="ekr.20050209141626.146"><vh>os_path_splitext</vh></v>
+<v t="ekr.20050209141626.147"><vh>toUnicodeFileEncoding</vh></v>
+</v>
+<v t="ekr.20050209141626.11"><vh>g.openWithFileName</vh></v>
+<v t="ekr.20050209141626.148"><vh>app.setEncoding</vh></v>
+</v>
+<v t="ekr.20050209141626.149"><vh>(Fixed unicode problems on the Mac)</vh>
+<v t="ekr.20050209141626.26" a="M"><vh>tkLog.put &amp; putnl &amp; forceLogUpdate</vh>
+<v t="ekr.20050209141626.27"><vh>&lt;&lt; put s to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.28"><vh>&lt;&lt; put s to logWaiting and print s &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.29"><vh>&lt;&lt; put newline to log control &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.30"><vh>&lt;&lt; put newline to logWaiting and print newline &gt;&gt;</vh></v>
+<v t="ekr.20050209141626.31"><vh>forceLogUpdate</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050209141626.150"><vh>New features...</vh>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
+</v>
+<v t="ekr.20050209141626.185" a="E"><vh>Added support for top-level init function in plugins</vh></v>
+<v t="ekr.20050209141626.190" a="E"><vh>Changed name of Paste Retaining Clones to Paste Node As Clone</vh></v>
+<v t="ekr.20050209141626.193"><vh>Added leoPlugins.leo to Help menu</vh></v>
+<v t="ekr.20050209141626.194"><vh>Script buttons can request to be removed</vh></v>
+<v t="ekr.20050209141626.195"><vh>Improved documentation in several nodes in leoSettings.leo</vh></v>
+<v t="ekr.20050209141626.196" a="E"><vh>c,g &amp; p are predefined for the Execute Script command and for unit tests</vh></v>
+<v t="ekr.20050209141626.198"><vh>Changed name of Preferences command to Settings</vh></v>
 </v>
 </v>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
 <v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -168,7 +414,7 @@
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
 <v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -302,7 +548,7 @@
 </v>
 </v>
 <v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
-<v t="ekr.20040804165258.1" a="E"><vh>Bug fixes</vh>
+<v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
 <v t="ekr.20040804164600.56"><vh>Added 3 .cascading style sheets to the distribution list</vh></v>
@@ -426,9 +672,9 @@
 <v t="EKR.20040518070940"><vh>Fixed problems with missing tnodeList with @file-noref</vh></v>
 <v t="EKR.20040518070940.164"><vh>Added t.writeBit</vh></v>
 </v>
-<v t="edream.110203163054.890" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="edream.110203163054.891"><vh>Overview</vh></v>
-<v t="edream.110203163054.892" a="E"><vh>Basic scripts</vh>
+<v t="edream.110203163054.892"><vh>Basic scripts</vh>
 <v t="ekr.20040403051340"><vh>Writing to log window</vh></v>
 <v t="edream.110203163054.893"><vh>Getting commanders and frames</vh></v>
 <v t="edream.110203163054.894"><vh>Redirecting output from scripts</vh></v>
@@ -840,8 +1086,8 @@
 <v t="edream.110203163054.272"><vh>Worked around bugs in Python 2.3 a1</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.273" a="E"><vh>3.10</vh>
-<v t="edream.110203163054.274" a="E"><vh>Fixed bugs</vh>
+<v t="edream.110203163054.273"><vh>3.10</vh>
+<v t="edream.110203163054.274"><vh>Fixed bugs</vh>
 <v t="edream.110203163054.275"><vh>Allowed abbreviated xml tags.</vh></v>
 <v t="edream.110203163054.276"><vh>Changed shortcut to Find Previous so Alt - F4 closes Leo</vh></v>
 <v t="edream.110203163054.277"><vh>Changed url of help file</vh></v>
@@ -886,13 +1132,13 @@
 <v t="edream.110203163054.312"><vh>Fixed bugs when importing Java files.</vh></v>
 <v t="edream.110203163054.313"><vh>Convert All Blanks/Tabs  commands honor @tabwidth directives</vh></v>
 </v>
-<v t="edream.110203163054.314" a="E"><vh>New documentation for leo.py 3.9</vh>
+<v t="edream.110203163054.314"><vh>New documentation for leo.py 3.9</vh>
 <v t="edream.110203163054.315"><vh>Major performance improvements</vh>
 <v t="edream.110203163054.316"><vh>Incremental syntax coloring speeds redraws</vh></v>
 <v t="edream.110203163054.317"><vh>Incremental undo reduces memory usages significantly</vh></v>
 </v>
-<v t="edream.110203163054.318" a="E"><vh>Major configuration improvements</vh>
-<v t="edream.110203163054.319" a="E"><vh>Chapter 8: Customizing Leo</vh>
+<v t="edream.110203163054.318"><vh>Major configuration improvements</vh>
+<v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
@@ -946,12 +1192,12 @@
 </v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
-<v t="edream.110203163054.350" a="E"><vh>New commands &amp; features</vh>
+<v t="edream.110203163054.350"><vh>New commands &amp; features</vh>
 <v t="edream.110203163054.351"><vh>@url</vh></v>
 <v t="edream.110203163054.352"><vh>Execute Script command</vh></v>
 <v t="edream.110203163054.353"><vh>Go To Line Number command</vh></v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
-<v t="edream.110203163054.354" a="E"><vh>Much better support for cweb</vh>
+<v t="edream.110203163054.354"><vh>Much better support for cweb</vh>
 <v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
 <v t="edream.110203163054.356"><vh>Open With command</vh>
@@ -1019,7 +1265,7 @@
 <v t="edream.110203163054.402"><vh>Coming soon: Leo 4.0, a major improvement</vh></v>
 </v>
 <v t="edream.110203163054.403"><vh>leo.py 3.7</vh>
-<v t="edream.110203163054.404" a="E"><vh>Fixed Bugs</vh>
+<v t="edream.110203163054.404"><vh>Fixed Bugs</vh>
 <v t="edream.110203163054.405"><vh>Language and syntax coloring bugs</vh>
 <v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.407"><vh>Fixed colorizing for "while" in C</vh></v>
@@ -1033,7 +1279,7 @@
 <v t="edream.110203163054.406"><vh>Fixed @comment bug</vh></v>
 <v t="edream.110203163054.414"><vh>Fixed a bug that affected wrapping in doc parts</vh></v>
 </v>
-<v t="edream.110203163054.415" a="E"><vh>Other bugs</vh>
+<v t="edream.110203163054.415"><vh>Other bugs</vh>
 <v t="edream.110203163054.416"><vh>Fixed reversion in Tangle/Untangle code</vh></v>
 <v t="edream.110203163054.417"><vh>Fixed undo cloned headline bug</vh></v>
 <v t="edream.110203163054.418"><vh>Fixed Find previous bug</vh></v>
@@ -1069,7 +1315,7 @@
 </v>
 <v t="edream.110203163054.443"><vh>leo.py 3.6</vh>
 <v t="edream.110203163054.444"><vh>Known bug: problems with Python window</vh></v>
-<v t="edream.110203163054.445" a="E"><vh>Bug fixes</vh>
+<v t="edream.110203163054.445"><vh>Bug fixes</vh>
 <v t="edream.110203163054.446"><vh>Fixed problems with opening and writing leoConfig.txt on Linux</vh></v>
 <v t="edream.110203163054.447"><vh>Fixed problems renaming files on Linux</vh></v>
 <v t="edream.110203163054.448"><vh>Fixed missing headline bug on startup</vh></v>
@@ -1112,7 +1358,7 @@
 </v>
 </v>
 <v t="edream.110203163054.480"><vh>leo.py 3.4</vh>
-<v t="edream.110203163054.481" a="E"><vh>Configuration settings and leoConfig.leo</vh>
+<v t="edream.110203163054.481"><vh>Configuration settings and leoConfig.leo</vh>
 <v t="edream.110203163054.482"><vh>Added comments to leoConfig.txt about split direction and ratio</vh></v>
 <v t="edream.110203163054.483"><vh>Added save_clears_undo_buffer config option</vh></v>
 <v t="edream.110203163054.484"><vh>Corrected spelling of limit_directory_search_extenstion </vh></v>
@@ -1156,7 +1402,7 @@
 <v t="edream.110203163054.516"><vh>Fixed problems with negative tab widths</vh></v>
 <v t="edream.110203163054.517"><vh>Fixed numerous problems related to configuration settings</vh></v>
 </v>
-<v t="edream.110203163054.518" a="E"><vh>leo.py 3.2</vh>
+<v t="edream.110203163054.518"><vh>leo.py 3.2</vh>
 <v t="edream.110203163054.519"><vh>Nested @others directives now valid</vh>
 <v t="edream.110203163054.520"><vh>@file test.txt</vh>
 <v t="edream.110203163054.521"><vh>class a</vh>
@@ -1177,7 +1423,7 @@
 <v t="edream.110203163054.532"><vh>Added email address &amp; URL to About Leo dialog</vh></v>
 <v t="edream.110203163054.533"><vh>added disStats.py</vh></v>
 </v>
-<v t="edream.110203163054.534" a="E"><vh>leo.py 3.1</vh>
+<v t="edream.110203163054.534"><vh>leo.py 3.1</vh>
 <v t="edream.110203163054.535"><vh>Added compare panel</vh></v>
 <v t="edream.110203163054.536"><vh>Added new settings to leoConfig.txt</vh></v>
 <v t="edream.110203163054.537"><vh>Changed precedence scheme for preferences</vh></v>
@@ -1417,7 +1663,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1489,7 +1735,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.26" a="E"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="EKR.20040524104904.26"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="EKR.20040524104904.27"><vh>Cloning headlines</vh>
 <v t="EKR.20040524104904.28"><vh>read me</vh></v>
 <v t="EKR.20040524104904.29"><vh>a</vh>
@@ -1556,7 +1802,7 @@
 <v t="EKR.20040524104904.47"><vh>Resizing panes</vh></v>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
-<v t="EKR.20040524104904.49" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="EKR.20040524104904.49"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="EKR.20040524104904.50"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.51"><vh>Sections and section references</vh></v>
 <v t="EKR.20040524104904.52"><vh>Organizing @file trees.</vh>
@@ -1598,7 +1844,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904.79" a="E"><vh>More about directives</vh>
+<v t="EKR.20040524104904.79"><vh>More about directives</vh>
 <v t="EKR.20040608091134"><vh>@all directive copies all nodes in @thin trees</vh></v>
 <v t="EKR.20040524104904.80"><vh>@color, @nocolor and @killcolor control syntax coloring</vh></v>
 <v t="EKR.20040524104904.81"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -1614,7 +1860,7 @@
 </v>
 <v t="EKR.20040524104904.91"><vh>About cweb mode</vh></v>
 <v t="EKR.20040524104904.92"><vh>Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees</vh></v>
-<v t="EKR.20040524104904.93" a="E"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
+<v t="EKR.20040524104904.93"><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
 <v t="EKR.20040524104904.94"><vh>@root vs. @file trees</vh></v>
 <v t="EKR.20040524104904.95"><vh>Sections and section definitions</vh></v>
 <v t="EKR.20040524104904.96"><vh>Tangling @root trees with the Tangle commands</vh></v>
@@ -1623,7 +1869,7 @@
 </v>
 <v t="EKR.20040608091134.1"><vh>Appendix 3 to Chapter 4: Using @thin instead of @file</vh></v>
 </v>
-<v t="EKR.20040524104904.99" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="EKR.20040524104904.99"><vh>Chapter 5: Using Leo's Commands</vh>
 <v t="EKR.20040524104904.100"><vh> The File Menu</vh>
 <v t="EKR.20040524104904.101"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="EKR.20040524104904.102"><vh>Communicating with external editors</vh>
@@ -1638,7 +1884,7 @@
 <v t="EKR.20040524104904.109"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="EKR.20040524104904.110"><vh>Quitting Leo</vh></v>
 </v>
-<v t="EKR.20040524104904.111" a="E"><vh> The Edit Menu</vh>
+<v t="EKR.20040524104904.111"><vh> The Edit Menu</vh>
 <v t="EKR.20040524104904.112"><vh>Undoing changes</vh></v>
 <v t="EKR.20040524104904.113"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="EKR.20040524104904.114"><vh>Shifting body text</vh></v>
@@ -1671,7 +1917,7 @@
 <v t="EKR.20040524104904.138"><vh>Reformat Paragraph command</vh></v>
 </v>
 <v t="EKR.20040524104904.139"><vh>Matching brackets and parenthesis</vh></v>
-<v t="EKR.20040524104904.140" a="E"><vh>Specifying settings</vh>
+<v t="EKR.20040524104904.140"><vh>Specifying settings</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.141"><vh>PHP keywords</vh></v>
 <v t="EKR.20040524104904.142"><vh>LaTex keywords</vh></v>
@@ -1773,9 +2019,9 @@
 </v>
 <v t="EKR.20040524104904.181"><vh>How Leo Changes the Notion of Literate Programming</vh></v>
 </v>
-<v t="EKR.20040524104904.182" a="E"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="EKR.20040524104904.182"><vh>Chapter 7: Scripting Leo with Python</vh>
 <v t="EKR.20040524104904.183"><vh>Overview of Leo's code</vh></v>
-<v t="EKR.20040524104904.184" a="E"><vh>Basic scripts</vh>
+<v t="EKR.20040524104904.184"><vh>Basic scripts</vh>
 <v t="EKR.20040524104904.185"><vh>Writing to log window</vh></v>
 <v t="EKR.20040524104904.186"><vh>Getting commanders and frames</vh></v>
 <v t="EKR.20040524104904.187"><vh>Redirecting output from scripts</vh></v>
@@ -1820,8 +2066,8 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="E"><vh>Chapter 8: Customizing Leo</vh>
-<v t="ekr.20050122090016" a="E"><vh>Setting options...</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
+<v t="ekr.20050122090016"><vh>Setting options...</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="EKR.20040524104904.212"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
 </v>
@@ -1893,7 +2139,7 @@
 <v t="EKR.20040524104904.260"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="EKR.20040524104904.261" a="E"><vh>Chapter 10: Theory of Operation</vh>
+<v t="EKR.20040524104904.261"><vh>Chapter 10: Theory of Operation</vh>
 <v t="EKR.20040524104904.262"><vh>Overview</vh></v>
 <v t="EKR.20040524104904.263"><vh>Nodes</vh></v>
 <v t="EKR.20040524104904.264"><vh>Drawing and events</vh></v>
@@ -1904,7 +2150,7 @@
 <v t="EKR.20040524104904.269"><vh>Unlimited undo</vh></v>
 <v t="EKR.20040524104904.273"><vh>4.0 Theory of operation</vh></v>
 </v>
-<v t="EKR.20040524104904.274" a="E"><vh>Appendices</vh>
+<v t="EKR.20040524104904.274"><vh>Appendices</vh>
 <v t="EKR.20040524104904.275"><vh>Code hidden in leo.py</vh>
 <v t="EKR.20040524104904.276"><vh>c2py.py</vh></v>
 <v t="EKR.20040524104904.277"><vh>disStats.py</vh></v>
@@ -1914,7 +2160,7 @@
 <v t="EKR.20040524104904.281"><vh>Tree code</vh></v>
 </v>
 <v t="EKR.20040524104904.282"><vh>Converting @root trees to @file trees</vh></v>
-<v t="EKR.20040524104904.283" a="E"><vh>Directives</vh>
+<v t="EKR.20040524104904.283"><vh>Directives</vh>
 <v t="EKR.20040524104904.284"><vh>@c and @code</vh></v>
 <v t="EKR.20040524104904.285"><vh>@chapter (Macintosh only)</vh></v>
 <v t="EKR.20040524104904.286"><vh>@color</vh></v>
@@ -1929,7 +2175,7 @@
 <v t="EKR.20040524104904.295"><vh>@nocolor</vh></v>
 <v t="EKR.20040524104904.296"><vh>@others (valid only in @file trees)</vh></v>
 <v t="EKR.20040524104904.297"><vh>@pagewidth</vh></v>
-<v t="EKR.20040524104904.298" a="TV"><vh>@path</vh></v>
+<v t="EKR.20040524104904.298"><vh>@path</vh></v>
 <v t="EKR.20040524104904.299"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="EKR.20040524104904.300"><vh>@section (Macintosh only)</vh></v>
 <v t="EKR.20040524104904.301"><vh>@silent (not valid in @file trees)</vh></v>
@@ -16457,5 +16703,1963 @@ Only use Tcl with the default "threads not enabled" case.
 For more details, see:
 
 http://sourceforge.net/forum/message.php?msg_id=1685399</t>
+<t tx="ekr.20050209141626.3"></t>
+<t tx="ekr.20050209141626.4"></t>
+<t tx="ekr.20050209141626.5">http://sourceforge.net/forum/message.php?msg_id=2795653
+
+By: Paul Paterson - paulpaterson
+Bug: minor asymmetry with undo insert node  
+2004-10-08 13:49
+Very minor hangnail,
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. There is no longer a node selected in the tree so keyboard tree navigation etc commands don't work until you click on something with the mouse
+
+In an ideal world, after #3 it should be as if #2 never happened.
+
+----------------
+
+http://sourceforge.net/forum/message.php?msg_id=2795656
+By: paulpaterson
+
+Hmm, there's something interesting here after all.
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. Hit Hoist before clicking on anything
+
+Now you are hoisted on the recently removed node! The node is dead but his memory
+lives on ...
+</t>
+<t tx="ekr.20050209141626.6"># Inserts a vnode after the current vnode.  All details are handled by the vnode class.
+
+def insertHeadline (self,op_name="Insert Node"):
+
+    c = self ; p = c.currentPosition()
+    hasChildren = p.hasChildren()
+    isExpanded  = p.isExpanded()
+    if not p: return
+
+    c.beginUpdate()
+    if 1: # inside update...
+        old_p = p.copy()
+        if (
+            # 1/31/04: Make sure new node is visible when hoisting.
+            (hasChildren and isExpanded) or
+            (c.hoistStack and p == c.hoistStack[-1].p)
+        ):
+            p = p.insertAsNthChild(0)
+        else:
+            p = p.insertAfter()
+        c.undoer.setUndoParams(op_name,p,select=old_p)
+            # Bug fix!!: 1/25/05 (was: select=p)
+        c.selectVnode(p)
+        c.editPosition(p)
+        p.setAllAncestorAtFileNodesDirty()
+        c.setChanged(True)
+    c.endUpdate()</t>
+<t tx="ekr.20050209141626.7">def undoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+
+    if u.select:
+        c.selectVnode(u.select)
+        
+    # New in 4.3: Support for Paste As Clone.
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old</t>
+<t tx="ekr.20050209141626.8"></t>
+<t tx="ekr.20050209141626.9">def appendToRecentFiles (self,files):
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+    
+    for name in files:
+        # Remove all variants of name.
+        for name2 in self.recentFiles:
+            if munge(name) == munge(name2):
+                self.recentFiles.remove(name2)
+
+        self.recentFiles.append(name)</t>
+<t tx="ekr.20050209141626.10">def updateRecentFiles (self,fileName):
+    
+    """Create the RecentFiles menu.  May be called with Null fileName."""
+    
+    if g.app.unitTesting: return
+    
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Update the recent files list in all windows.
+    if fileName:
+        compareFileName = munge(fileName)
+        # g.trace(fileName)
+        for frame in g.app.windowList:
+            c = frame.c
+            # Remove all versions of the file name.
+            for name in c.recentFiles:
+                if compareFileName == munge(name):
+                    c.recentFiles.remove(name)
+            c.recentFiles.insert(0,fileName)
+            # g.trace(fileName)
+            # Recreate the Recent Files menu.
+            frame.menu.createRecentFilesMenuItems()
+    else:
+        for frame in g.app.windowList:
+            frame.menu.createRecentFilesMenuItems()</t>
+<t tx="ekr.20050209141626.11">def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
+    
+    """Create a Leo Frame for the indicated fileName if the file exists."""
+
+    if not fileName or len(fileName) == 0:
+        return False, None
+        
+    def munge(name):
+        name = name or ''
+        return g.os_path_normpath(name).lower()
+
+    # Create a full, normalized, Unicode path name, preserving case.
+    fileName = g.os_path_normpath(g.os_path_abspath(fileName))
+
+    # If the file is already open just bring its window to the front.
+    list = app.windowList
+    for frame in list:
+        if munge(fileName) == munge(frame.c.mFileName):
+            frame.bringToFront()
+            app.setLog(frame.log,"openWithFileName")
+            # g.es("This window already open")
+            return True, frame
+    try:
+        # Open the file in binary mode to allow 0x1a in bodies &amp; headlines.
+        theFile = open(fileName,'rb')
+        c,frame = app.gui.newLeoCommanderAndFrame(fileName)
+        frame.log.enable(enableLog)
+        g.app.writeWaitingLog() # New in 4.3: write queued log first.
+        if not g.doHook("open1",old_c=old_c,new_c=c,fileName=fileName):
+            app.setLog(frame.log,"openWithFileName")
+            app.lockLog()
+            frame.c.fileCommands.open(
+                theFile,fileName,
+                readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+            app.unlockLog()
+            for frame in g.app.windowList:
+                # The recent files list has been updated by menu.updateRecentFiles.
+                frame.c.config.setRecentFiles(g.app.config.recentFiles)
+        frame.openDirectory = g.os_path_dirname(fileName)
+        g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
+        return True, frame
+    except IOError:
+        # Do not use string + here: it will fail for non-ascii strings!
+        if not g.app.unitTesting:
+            g.es("can not open: %s" % (fileName), color="blue")
+        return False, None
+    except Exception:
+        g.es("exceptions opening: %s" % (fileName),color="red")
+        g.es_exception()
+        return False, None</t>
+<t tx="ekr.20050209141626.12">@killcolor
+
+&gt; leo\src\leoTkinterFind.py:  
+inconsistent use of tabs and spaces in indentation.
+ 
+much of PMW has inconsistent use of tabs and spaces in indentation in various files .py </t>
+<t tx="ekr.20050209141626.13"></t>
+<t tx="ekr.20050209141626.14">g.app.loadDir = computeLoadDir()
+    # Depends on g.app.tkEncoding: uses utf-8 for now.
+
+g.app.homeDir = computeHomeDir()
+
+g.app.extensionsDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','extensions'))
+
+g.app.globalConfigDir = computeGlobalConfigDir()
+
+g.app.testDir = g.os_path_abspath(
+    g.os_path_join(g.app.loadDir,'..','test'))</t>
+<t tx="ekr.20050209141626.15">def leoConfig (self):
+
+    c = self
+    name = 'leoSettings.leo'
+    homeDir = g.app.homeDir
+    configDir = g.app.globalConfigDir
+
+    # Look in configDir first.
+    fileName = g.os_path_join(configDir,name)
+
+    # Look in homeDir second.
+    ok, frame = g.openWithFileName(fileName,c)
+    if not ok:
+        if configDir == loadDir:
+            g.es("%s not found in %s" % (name,configDir))
+        else:
+            fileName = g.os_path_join(homeDir,name)
+            ok, frame = g.openWithFileName(fileName,c)
+            if not ok:
+                g.es("%s not found in %s or %s" % (name,configDir,homeDir))</t>
+<t tx="ekr.20050209141626.16"></t>
+<t tx="ekr.20050209141626.17">http://sourceforge.net/forum/message.php?msg_id=2966541
+By: jasonic
+
+"Recent Files"  is not remembering files after one closes all open leo sessions.
+
+But it does update the "Recent Files" list while leo is open in the same session.
+If one opens more files it adds them to the list. But close all files and Leo
+forgets them all.
+
+With chapters 0.66 enabled -- same behavior. 
+
+Jason</t>
+<t tx="ekr.20050209141626.18">Warning: The following features of @recentfiles nodes are confusing and probably
+will be changed:
+
+- Leo does not save recent file information unless the open .leo file has an
+@settings tree and an @recentfiles node within the @settings tree. That is, Leo
+does not save recent files information in leoSettings.leo files.
+
+- Changing the @rencentfiles node doesn't mark the Leo file as dirty, so if you
+don't save the .leo file the recent files information will not be updated.</t>
+<t tx="ekr.20050209141626.19"></t>
+<t tx="ekr.20050209141626.20">def set (self,c,setting,kind,val):
+    
+    '''Set the setting.  Not called during initialization.'''
+
+    found = False ;  key = self.munge(setting)
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d: found = True
+
+    if not found:
+        theHash = c.hash()
+        for d in self.localOptionsList:
+            hash2 = d.get('_hash')
+            if theHash == hash2:
+                found = True ; break
+
+    if not found:
+        d = self.dictList [0]
+
+    d[key] = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
+    # g.trace(d.get(key).toString())
+
+    if 0:
+        dkind = d.get('_hash','&lt;no hash: %s&gt;' % c.hash())
+        g.trace(dkind,setting,kind,val)</t>
+<t tx="ekr.20050209141626.21">def setString (self,c,setting,val):
+    
+    self.set(c,setting,"string",val)</t>
+<t tx="ekr.20050209141626.22">def setIvarsFromSettings (self,c):
+
+    '''Init g.app.config ivars or c's ivars from settings.
+    
+    - Called from readSettingsFiles with c = None to init g.app.config ivars.
+    - Called from c.__init__ to init corresponding commmander ivars.'''
+    
+    # Ingore temporary commanders created by readSettingsFiles.
+    if not self.inited: return
+
+    # g.trace(c)
+    d = self.ivarsDict
+    for key in d:
+        if key != '_hash':
+            bunch = d.get(key)
+            if bunch:
+                ivar = bunch.ivar # The actual name of the ivar.
+                kind = bunch.kind
+                val = self.get(c,key,kind) # Don't use bunch.val!
+                if c:
+                    # g.trace("%20s %s = %s" % (g.shortFileName(c.mFileName),ivar,val))
+                    setattr(c,ivar,val)
+                else:
+                    # g.trace("%20s %s = %s" % ('g.app.config',ivar,val))
+                    setattr(self,ivar,val)</t>
+<t tx="ekr.20050209141626.23"></t>
+<t tx="ekr.20050209141626.24">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2960328
+
+Symptom
+
+Can not import messages were not being sent to the console, even though there is a call to es in g.cantImport.
+
+What I did
+
+- The code in g.es now checks for nullLog as well as log == None when deciding when to queue messages.
+
+- g.openWithFileName now calls g.app.writeWaitingLog immediately after enabling the new log.
+
+This writes the queued log messages in the proper order: a major advance in clarity.
+
+- Added silent param to two methods.
+
+This allows the 'reading settings from' message to be sent to the log instead of the default 'reading' message.
+</t>
+<t tx="ekr.20050209141626.25"></t>
+<t tx="ekr.20050209141626.26"># All output to the log stream eventually comes here.
+def put (self,s,color=None):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting: return
+    elif self.logCtrl:
+        &lt;&lt; put s to log control &gt;&gt;
+    else:
+        &lt;&lt; put s to logWaiting and print s &gt;&gt;
+
+def putnl (self):
+    if g.app.quitting: return
+    elif self.logCtrl:
+        &lt;&lt; put newline to log control &gt;&gt;
+    else:
+        &lt;&lt; put newline to logWaiting and print newline &gt;&gt;</t>
+<t tx="ekr.20050209141626.27">if 0:
+    # Do this later, or not at all.
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        self.logCtrl.tag_config("black",foreground="black")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate(s)</t>
+<t tx="ekr.20050209141626.28">g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s</t>
+<t tx="ekr.20050209141626.29">self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+self.forceLogUpdate('\n')</t>
+<t tx="ekr.20050209141626.30">g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print</t>
+<t tx="ekr.20050209141626.31">def forceLogUpdate (self,s):
+
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        try:
+            print s, # Don't add a newline.
+        except UnicodeError:
+            # g.app may not be inited during scripts!
+            print g.toEncodedString(s,'utf-8')
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False</t>
+<t tx="ekr.20050209141626.32">def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines &lt; n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,</t>
+<t tx="ekr.20050209141626.33">def writeWaitingLog (self):
+
+    if self.log:
+        for s,color in self.logWaiting:
+            g.es(s,color=color,newline=0) # The caller must write the newlines.
+        self.logWaiting = []
+    else:
+        print 'writeWaitingLog: still no log!'</t>
+<t tx="ekr.20050209141626.34"></t>
+<t tx="ekr.20050209141626.35">def open(self,theFile,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = theFile.read() ; theFile.close()
+    self.fileIndex = 0
+    &lt;&lt; Set the default directory &gt;&gt;
+    self.topPosition = None
+    c.beginUpdate()
+    ok, ratio = self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    c.endUpdate()
+    # delete the file buffer
+    self.fileBuffer = ""
+    return ok</t>
+<t tx="ekr.20050209141626.36">@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
+
+theDir = g.os_path_dirname(fileName)
+
+if len(theDir) &gt; 0:
+    c.openDirectory = theDir</t>
+<t tx="ekr.20050209141626.37"># The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,readAtFileNodesFlag=True,silent=False):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    &lt;&lt; warn on read-only files &gt;&gt;
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        &lt;&lt; scan all the xml elements &gt;&gt;
+    except BadLeoFile, message:
+        &lt;&lt; raise an alert &gt;&gt;
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    # g.trace(readAtFileNodesFlag,c.mFileName)
+    
+    if ok and readAtFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    &lt;&lt; restore attributes in descendent tnodes &gt;&gt;
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio</t>
+<t tx="ekr.20050209141626.38"># os.access may not exist on all platforms.
+
+try:
+    self.read_only = not os.access(fileName,os.W_OK)
+except AttributeError:
+    self.read_only = False
+except UnicodeError:
+    self.read_only = False
+        
+if self.read_only:
+    g.es("read only: " + fileName,color="red")</t>
+<t tx="ekr.20050209141626.39">self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+
+self.getTag("&lt;leo_file&gt;") # Must match exactly.
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio)
+if not silent:
+    g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("&lt;/leo_file&gt;")</t>
+<t tx="ekr.20050209141626.40"># All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))</t>
+<t tx="ekr.20050209141626.41">for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    # else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()</t>
+<t tx="ekr.20050209141626.42"></t>
+<t tx="ekr.20050209141626.43"></t>
+<t tx="ekr.20050209141626.44">@killcolor
+
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 2794, in write        
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 2794, in write    
+    at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3060, in writeOpenFile
+    at.putOpenNodeSentinel(root)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3060, in writeOpenFile
+    at.putOpenNodeSentinel(root)
+    
+File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 3830, in putOpenNodeSentinel
+    at.root.v.t.tnodeList.append(p.v.t)
+    
+AttributeError: 'tnode' object has no attribute 'tnodeList'</t>
+<t tx="ekr.20050209141626.45">def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
+    
+    """Write @+node sentinel for p."""
+    
+    at = self
+
+    if not inAtAll and p.isAtFileNode() and p != at.root:
+        at.writeError("@file not valid in: " + p.headString())
+        return
+        
+    # g.trace(at.thinFile,p)
+        
+    s = at.nodeSentinelText(p)
+    
+    if middle:
+        at.putSentinel("@+middle:" + s)
+    else:
+        at.putSentinel("@+node:" + s)
+
+    if not at.thinFile:
+        # Append the n'th tnode to the root's tnode list.
+        # It may not exist when executing scripts.
+        try: 
+            at.root.v.t.tnodeList.append(p.v.t)
+        except AttributeError:
+            pass # Do nothing.  We are creating a script.</t>
+<t tx="ekr.20050209141626.46"># The button callback just calls c.executeScript</t>
+<t tx="ekr.20050209141626.47">@killcolor
+
+The message 'command for widget 5' was a message from Tk saying in effect that no command was bound to the button.
+
+Indeed, this was so: a recent botch in a change in mod_scripting.py prevented the binding.</t>
+<t tx="ekr.20050209141626.48"># The problem was simply some extra print statements. No idea why they were there.</t>
+<t tx="ekr.20050209141626.49">def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()</t>
+<t tx="ekr.20050209141626.50">def put (self,s,color=None):
+    if self.enabled:
+        # g.trace('nullLog',s)
+        g.rawPrint(s)
+
+def putnl (self):
+    if self.enabled:
+        g.rawPrint("")</t>
+<t tx="ekr.20050209141626.51">class logClass:
+    
+    def __init__ (self,textWidget):
+        self.textWidget = textWidget
+        self.colorTags = []
+        
+    def put(self,s,color=None):
+        w = self.textWidget
+        &lt;&lt; put s to w &gt;&gt;
+        
+    def putnl (self):
+        w = self.textWidget
+        if sys.platform == "darwin": print
+        w.insert("end",'\n')
+        w.see("end")
+        w.update_idletasks()</t>
+<t tx="ekr.20050209141626.52">if type(s) == type(u""):
+    s = g.toEncodedString(s,g.app.tkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        w.tag_config(color,foreground=color)
+    w.insert("end",s)
+    w.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        w.tag_config("black",foreground="black")
+    w.tag_add("black","end")
+else:
+    w.insert("end",s)
+
+w.see("end")
+w.update_idletasks()</t>
+<t tx="ekr.20050209141626.53">@killcolor
+
+This makes the test more robust in case of failure.</t>
+<t tx="ekr.20050209141626.54">@killcolor
+
+Changed the setup code for the import/export test cases so that it uses os.path.sep when it sees \\ in the test nodes.
+
+With this change all unit tests pass.</t>
+<t tx="ekr.20050209141626.55"></t>
+<t tx="ekr.20050209141626.56">@killcolor
+
+*None* of the local settings were working(!!)
+
+The old init code in the configSettings class had no chance of working. We must
+use the full g.app.config.get logic.
+
+Added some very simple unit tests to make sure the basics will never break
+again so easily.</t>
+<t tx="ekr.20050209141626.57">@others
+    
+# List of dictionaries to search.  Order not too important.
+dictList = [ivarsDict,encodingIvarsDict,defaultsDict]
+
+# Keys are commanders.  Values are optionsDicts.
+localOptionsDict = {}
+
+localOptionsList = []
+    
+# Keys are setting names, values are type names.
+warningsDict = {} # Used by get() or allies.</t>
+<t tx="ekr.20050209141626.58">@ This contains only the "interesting" defaults.
+Ints and bools default to 0, floats to 0.0 and strings to "".
+@c
+
+defaultBodyFontSize = g.choose(sys.platform=="win32",9,12)
+defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
+defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
+
+defaultsDict = {'_hash':'defaultsDict'}
+
+defaultsData = (
+    # compare options...
+    ("ignore_blank_lines","bool",True),
+    ("limit_count","int",9),
+    ("print_mismatching_lines","bool",True),
+    ("print_trailing_lines","bool",True),
+    # find/change options...
+    ("search_body","bool",True),
+    ("whole_word","bool",True),
+    # Prefs panel.
+    ("default_target_language","language","Python"),
+    ("tab_width","int",-4),
+    ("page_width","int",132),
+    ("output_doc_chunks","bool",True),
+    ("tangle_outputs_header","bool",True),
+    # Syntax coloring options...
+    # Defaults for colors are handled by leoColor.py.
+    ("color_directives_in_plain_text","bool",True),
+    ("underline_undefined_section_names","bool",True),
+    # Window options...
+    ("allow_clone_drags","bool",True),
+    ("body_pane_wraps","bool",True),
+    ("body_text_font_family","family","Courier"),
+    ("body_text_font_size","size",defaultBodyFontSize),
+    ("body_text_font_slant","slant","roman"),
+    ("body_text_font_weight","weight","normal"),
+    ("enable_drag_messages","bool",True),
+    ("headline_text_font_family","string",None),
+    ("headline_text_font_size","size",defaultLogFontSize),
+    ("headline_text_font_slant","slant","roman"),
+    ("headline_text_font_weight","weight","normal"),
+    ("log_text_font_family","string",None),
+    ("log_text_font_size","size",defaultLogFontSize),
+    ("log_text_font_slant","slant","roman"),
+    ("log_text_font_weight","weight","normal"),
+    ("initial_window_height","int",600),
+    ("initial_window_width","int",800),
+    ("initial_window_left","int",10),
+    ("initial_window_top","int",10),
+    ("initial_splitter_orientation","orientation","vertical"),
+    ("initial_vertical_ratio","ratio",0.5),
+    ("initial_horizontal_ratio","ratio",0.3),
+    ("initial_horizontal_secondary_ratio","ratio",0.5),
+    ("initial_vertical_secondary_ratio","ratio",0.7),
+    ("outline_pane_scrolls_horizontally","bool",False),
+    ("split_bar_color","color","LightSteelBlue2"),
+    ("split_bar_relief","relief","groove"),
+    ("split_bar_width","int",7),
+)</t>
+<t tx="ekr.20050209141626.59">encodingIvarsDict = {'_hash':'encodingIvarsDict'}
+
+encodingIvarsData = (
+    ("default_derived_file_encoding","string","utf-8"),
+    ("new_leo_file_encoding","string","UTF-8"),
+        # Upper case for compatibility with previous versions.
+    ("tkEncoding","string",None),
+        # Defaults to None so it doesn't override better defaults.
+)</t>
+<t tx="ekr.20050209141626.60"># Each of these settings sets the corresponding ivar.
+# Also, the c.configSettings settins class inits the corresponding commander ivar.
+ivarsDict = {'_hash':'ivarsDict'}
+
+ivarsData = (
+    ("at_root_bodies_start_in_doc_mode","bool",True),
+        # For compatibility with previous versions.
+    ("create_nonexistent_directories","bool",False),
+    ("output_initial_comment","string",""),
+        # "" for compatibility with previous versions.
+    ("output_newline","string","nl"),
+    ("page_width","int","132"),
+    ("read_only","bool",True),
+        # Make sure we don't alter an illegal leoConfig.txt file!
+    ("redirect_execute_script_output_to_log_pane","bool",False),
+    ("relative_path_base_directory","string","!"),
+    ("remove_sentinels_extension","string",".txt"),
+    ("save_clears_undo_buffer","bool",False),
+    ("stylesheet","string",None),
+    ("tab_width","int",-4),
+    ("trailing_body_newlines","string","asis"),
+    ("use_plugins","bool",True),
+        # New in 4.3: use_plugins = True by default.
+    # use_pysco can not be set by 4.3:  config processing happens too late.
+        # ("use_psyco","bool",False),
+    ("undo_granularity","string","word"),
+        # "char","word","line","node"
+    ("write_strips_blank_lines","bool",False),
+)</t>
+<t tx="ekr.20050209141626.61">def get (self,c,setting,kind):
+    
+    """Get the setting and make sure its type matches the expected type."""
+    
+    found = False
+    if c:
+        d = self.localOptionsDict.get(c.hash())
+        if d:
+            val,found = self.getValFromDict(d,setting,kind,found)
+            if val is not None:
+                # g.trace(c.shortFileName(),setting,val)
+                return val
+                
+    for d in self.localOptionsList:
+        val,found = self.getValFromDict(d,setting,kind,found)
+        if val is not None:
+            kind = d.get('_hash','&lt;no hash&gt;')
+            # g.trace(kind,setting,val)
+            return val
+
+    for d in self.dictList:
+        val,found = self.getValFromDict(d,setting,kind,found)
+        if val is not None:
+            kind = d.get('_hash','&lt;no hash&gt;')
+            # g.trace(kind,setting,val)
+            return val
+                
+    if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
+        # Don't warn if None was specified.
+        if not found:
+            g.trace("Not found:",setting)
+
+    return None</t>
+<t tx="ekr.20050209141626.62">def getValFromDict (self,d,setting,requestedType,found):
+
+    bunch = d.get(self.munge(setting))
+    if bunch:
+        # g.trace(setting,requestedType,bunch.toString())
+        found = True ; val = bunch.val
+        if val not in (u'None',u'none','None','none','',None):
+            # g.trace(setting,val)
+            return val,found
+
+    # Do NOT warn if not found here.  It may be in another dict.
+    return None,found</t>
+<t tx="ekr.20050209141626.63">def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    &lt;&lt; redirect output &gt;&gt;
+    # g.trace(script)
+    if script:
+        script = script.strip()
+    if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
+            &lt;&lt; unredirect output &gt;&gt;
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            &lt;&lt; unredirect output &gt;&gt;
+            g.es("exception executing script ")
+            fileName,n = g.es_exception(full=False,c=c)
+            if fileName not in (None,"&lt;string&gt;"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "&lt;string&gt;":
+                c.goToScriptLineNumber(p,script,n)
+            else:
+                &lt;&lt; dump the lines near the error &gt;&gt;
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        &lt;&lt; unredirect output &gt;&gt;
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() </t>
+<t tx="ekr.20050209141626.64">if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr</t>
+<t tx="ekr.20050209141626.65">if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()</t>
+<t tx="ekr.20050209141626.66">if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i &lt; j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1</t>
+<t tx="ekr.20050209141626.67">class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
+    &lt;&lt; redirectClass methods &gt;&gt;
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+&lt;&lt; define convenience methods for redirecting streams &gt;&gt;
+
+if 0: # Test code: may be executed in the child node.
+    &lt;&lt; test code &gt;&gt;</t>
+<t tx="ekr.20050209141626.68">@others</t>
+<t tx="ekr.20050209141626.69">def __init__ (self):
+    
+    self.old = None</t>
+<t tx="ekr.20050209141626.70">def isRedirected (self):
+
+    return self.old != None</t>
+<t tx="ekr.20050209141626.71"># For LeoN: just for compatibility.
+
+def flush(self, *args):
+    return 
+
+</t>
+<t tx="ekr.20050209141626.72">def rawPrint (self,s):
+
+    if self.old:
+        self.old.write(s+'\n')
+    else:
+        print s</t>
+<t tx="ekr.20050209141626.73">def redirect (self,stdout=1):
+
+    import sys
+
+    if g.app.batchMode:
+        # Redirection is futile in batch mode.
+        return
+
+    if not self.old:
+        if stdout:
+            self.old,sys.stdout = sys.stdout,self
+        else:
+            self.old,sys.stderr = sys.stderr,self</t>
+<t tx="ekr.20050209141626.74">def undirect (self,stdout=1):
+
+    import sys
+
+    if self.old:
+        if stdout:
+            sys.stdout,self.old = self.old,None
+        else:
+            sys.stderr,self.old = self.old,None</t>
+<t tx="ekr.20050209141626.75">def write(self,s):
+
+    if self.old:
+        if app.log:
+            app.log.put(s)
+        else:
+            self.old.write(s+'\n')
+    else:
+        # Can happen when g.batchMode is True.
+        print s</t>
+<t tx="ekr.20050209141626.76">@others</t>
+<t tx="ekr.20050209141626.77"># Redirect streams to the current log window.
+def redirectStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.redirect(stdout=False)
+
+def redirectStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.redirect()</t>
+<t tx="ekr.20050209141626.78"># Restore standard streams.
+def restoreStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.undirect(stdout=False)
+    
+def restoreStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.undirect()</t>
+<t tx="ekr.20050209141626.79">def stdErrIsRedirected():
+    global redirectStdErrObj
+    return redirectStdErrObj.isRedirected()
+    
+def stdOutIsRedirected():
+    global redirectStdOutObj
+    return redirectStdOutObj.isRedirected()</t>
+<t tx="ekr.20050209141626.80"># Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)</t>
+<t tx="ekr.20050209141626.81">import leoGlobals as g ; import sys
+print &gt;&gt; sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print &gt;&gt; sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stderr
+import leoGlobals as g ; import sys
+g.redirectStderr()
+print &gt;&gt; sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print &gt;&gt; sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.restoreStderr()
+print &gt;&gt; sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print &gt;&gt; sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stdout
+import leoGlobals as g ; import sys
+g.restoreStdout()
+print &gt;&gt; sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print &gt;&gt; sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.redirectStdout()
+print &gt;&gt; sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print &gt;&gt; sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+</t>
+<t tx="ekr.20050209141626.82">class configSettings:
+    
+    """A class to hold config settings for commanders."""
+    
+    @others</t>
+<t tx="ekr.20050209141626.83">def __init__ (self,c):
+    
+    self.c = c
+    
+    self.defaultBodyFontSize = g.app.config.defaultBodyFontSize
+    self.defaultLogFontSize  = g.app.config.defaultLogFontSize
+    self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
+    
+    for key in g.app.config.encodingIvarsDict.keys():
+        if key != '_hash':
+            self.initEncoding(key)
+        
+    for key in g.app.config.ivarsDict.keys():
+        if key != '_hash':
+            self.initIvar(key)</t>
+<t tx="ekr.20050209141626.84">def initIvar(self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.ivarsDict.get(key)
+    ivarName = bunch.ivar
+    val = g.app.config.get(c,ivarName,kind=None) # kind is ignored anyway.
+
+    if val or not hasattr(self,ivarName):
+        # g.trace('c.configSettings',c.shortFileName(),ivarName,val)
+        setattr(self,ivarName,val)</t>
+<t tx="ekr.20050209141626.85">def initEncoding (self,key):
+    
+    c = self.c
+    
+    # N.B. The key is munged.
+    bunch = g.app.config.encodingIvarsDict.get(key)
+    encodingName = bunch.ivar
+    encoding = g.app.config.get(c,encodingName,kind='string')
+
+    if encoding or not hasattr(self,encodingName):
+        # g.trace('c.configSettings',c.shortFileName(),encodingName,encoding)
+        setattr(self,encodingName,encoding)
+
+    if encoding and not g.isValidEncoding(encoding):
+        g.es("bad %s: %s" % (encodingName,encoding))</t>
+<t tx="ekr.20050209141626.86">def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag="configSetting"):
+    return g.app.config.getFontFromParams(self.c,
+        family,size,slant,weight,defaultSize=defaultSize,tag=tag)
+
+def getRecentFiles (self):
+    return g.app.config.getRecentFiles(self.c)
+
+def get(self,setting,theType):
+    return g.app.config.get(self.c,setting,theType)
+
+def getBool      (self,setting): return g.app.config.getBool     (self.c,setting)
+def getColor     (self,setting): return g.app.config.getColor    (self.c,setting)
+def getDirectory (self,setting): return g.app.config.getDirectory(self.c,setting)
+def getInt       (self,setting): return g.app.config.getInt      (self.c,setting)
+def getFloat     (self,setting): return g.app.config.getFloat    (self.c,setting)
+def getFontDict  (self,setting): return g.app.config.getFontDict (self.c,setting)
+def getLanguage  (self,setting): return g.app.config.getLanguage (self.c,setting)
+def getRatio     (self,setting): return g.app.config.getRatio    (self.c,setting)
+def getShortcut  (self,setting): return g.app.config.getShortcut (self.c,setting)
+def getString    (self,setting): return g.app.config.getString   (self.c,setting)</t>
+<t tx="ekr.20050209141626.87"></t>
+<t tx="ekr.20050209141626.88">def setRecentFiles (self,files):
+    
+    c = self.c
+    
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+    
+    # Do nothing if there is no @settings tree or no @recent-files node.
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        # g.trace("no @recent-files node for ",c.mFileName)
+        return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
+    
+    # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
+    changed = c.isChanged()
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+    c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)</t>
+<t tx="ekr.20050209141626.89">def set (self,p,setting,val):
+    
+    return g.app.config.setString(self.c,setting,val)
+    
+setString = set</t>
+<t tx="ekr.20050209141626.90">redirect script IO to log pane setting isn't working, </t>
+<t tx="ekr.20050209141626.91"></t>
+<t tx="ekr.20050209141626.92"></t>
+<t tx="ekr.20050209141626.93">def OnIconDoubleClick (self,v,event=None):
+
+    # Note: "icondclick" hooks handled by vnode callback routine.
+
+    c = self.c
+    s = v.headString().strip()
+    if g.match_word(s,0,"@url"):
+        if not g.doHook("@url1",c=c,p=v,v=v):
+            url = s[4:].strip()
+            &lt;&lt; stop the url after any whitespace &gt;&gt;
+            &lt;&lt; check the url; return if bad &gt;&gt;
+            &lt;&lt; pass the url to the web browser &gt;&gt;
+        g.doHook("@url2",c=c,p=v,v=v)</t>
+<t tx="ekr.20050209141626.94"># For safety, the URL string should end at the first whitespace.
+
+url = url.replace('\t',' ')
+i = url.find(' ')
+if i &gt; -1:
+    if 0: # No need for a warning.  Assume everything else is a comment.
+        g.es("ignoring characters after space in url:"+url[i:])
+        g.es("use %20 instead of spaces")
+    url = url[:i]
+</t>
+<t tx="ekr.20050209141626.95">if not url or len(url) == 0:
+    g.es("no url following @url")
+    return
+    
+@ A valid url is (according to D.T.Hein):
+
+3 or more lowercase alphas, followed by,
+one ':', followed by,
+one or more of: (excludes !"#;&lt;&gt;[\]^`|)
+  $%&amp;'()*+,-./0-9:=?@A-Z_a-z{}~
+followed by one of: (same as above, except no minus sign or comma).
+  $%&amp;'()*+/0-9:=?@A-Z_a-z}~
+@c
+
+urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+import re
+# 4/21/03: Add http:// if required.
+if not re.match('^([a-z]{3,}:)',url):
+    url = 'http://' + url
+if not re.match(urlPattern,url):
+    g.es("invalid url: "+url)
+    return
+</t>
+<t tx="ekr.20050209141626.96">@ Most browsers should handle the following urls:
+  ftp://ftp.uu.net/public/whatever.
+  http://localhost/MySiteUnderDevelopment/index.html
+  file://home/me/todolist.html
+@c
+
+try:
+    import os
+    os.chdir(g.app.loadDir)
+
+    if g.match(url,0,"file:") and url[-4:]==".leo":
+        ok,frame = g.openWithFileName(url[5:],c)
+        if ok:
+            frame.bringToFront()
+    else:
+        import webbrowser
+        
+        # Mozilla throws a weird exception, then opens the file!
+        try: webbrowser.open(url)
+        except: pass
+except:
+    g.es("exception opening " + url)
+    g.es_exception()
+
+</t>
+<t tx="ekr.20050209141626.97"># The user has pushed the "Find All" button from the find panel.
+
+def findAllButton(self):
+
+    c = self.setup_button()
+    c.clearAllVisited() # Clear visited for context reporting.
+
+    if self.script_search:
+        self.doFindAllScript()
+    elif self.selection_only:
+        self.findNext()
+    else:
+        self.findAll()</t>
+<t tx="ekr.20050209141626.98">def findAll(self):
+
+    c = self.c ; t = self.s_ctrl ; gui = g.app.gui
+    if not self.checkArgs():
+        return
+    self.initInHeadline()
+    data = self.save()
+    self.initBatchCommands()
+    count = 0
+    c.beginUpdate()
+    while 1:
+        pos, newpos = self.findNextMatch()
+        if pos:
+            # g.trace(pos,newpos,self.v.headString())
+            count += 1
+            line = gui.getLineContainingIndex(t,pos)
+            self.printLine(line,allFlag=True)
+        else: break
+    c.endUpdate()
+    g.es("found: %d matches" % (count))
+    self.restore(data)</t>
+<t tx="ekr.20050209141626.99"># Resumes the search where it left off.
+# The caller must call set_first_incremental_search or set_first_batch_search.
+
+def findNextMatch(self):
+
+    c = self.c
+
+    if not self.search_headline and not self.search_body:
+        return None, None
+
+    if len(self.find_text) == 0:
+        return None, None
+
+    v = self.v
+    while v:
+        pos, newpos = self.search()
+        if pos:
+            if self.mark_finds:
+                v.setMarked()
+                c.frame.tree.drawIcon(v) # redraw only the icon.
+            return pos, newpos
+        elif self.errors:
+            return None,None # Abort the search.
+        elif self.node_only:
+            return None,None # We are only searching one node.
+        else:
+            v = self.v = self.selectNextVnode()
+    return None, None</t>
+<t tx="ekr.20050209141626.100"># Selects the next node to be searched.
+
+def selectNextVnode(self):
+
+    c = self.c ; v = self.v
+
+    if self.selection_only:
+        return None
+
+    # Start suboutline only searches.
+    if self.suboutline_only and not self.onlyVnode:
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.onlyVnode = v 
+
+    # Start wrapped searches.
+    if self.wrapping and not self.wrapVnode:
+        assert(self.wrapPos != None)
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.wrapVnode = v 
+
+    if self.in_headline and self.search_body:
+        # just switch to body pane.
+        self.in_headline = False
+        self.initNextText()
+        # g.trace(v)
+        return v
+
+    if self.reverse: v = v.threadBack()
+    else:            v = v.threadNext()
+    
+    # New in 4.3: restrict searches to hoisted area.
+    # End searches outside hoisted area.
+    if c.hoistStack:
+        if not v:
+            if self.wrapping:
+                g.es('Wrap disabled in hoisted outlines',color='blue')
+            return
+        bunch = c.hoistStack[-1]
+        if not bunch.p.isAncestorOf(v):
+            g.es('Found match outside of hoisted outline',color='blue')
+            return None
+
+    # Wrap if needed.
+    if not v and self.wrapping and not self.suboutline_only:
+        v = c.rootVnode()
+        if self.reverse:
+            # Set search_v to the last node of the tree.
+            while v and v.next():
+                v = v.next()
+            if v: v = v.lastNode()
+
+    # End wrapped searches.
+    if self.wrapping and v and v == self.wrapVnode:
+        # g.trace("ending wrapped search")
+        v = None ; self.resetWrap()
+
+    # End suboutline only searches.
+    if (self.suboutline_only and self.onlyVnode and v and
+        (v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
+        # g.trace("end outline-only")
+        v = None ; self.onlyVnode = None
+
+    # v.copy not needed because the find code never calls p.moveToX.
+    # Furthermore, v might be None, so v.copy() would be wrong!
+    self.v = v # used in initNextText().
+    if v: # select v and set the search point within v.
+        self.in_headline = self.search_headline
+        self.initNextText()
+    return v</t>
+<t tx="ekr.20050209141626.101"></t>
+<t tx="ekr.20050209141626.102"></t>
+<t tx="ekr.20050209141626.103">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2958470
+By: nobody
+
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+I opened a new .leo file, and the cursor was flashing in the text box. I started
+typing "@language", and found that the first character is in the text box, and
+the rest is in the headline!
+
+What I did:
+
+This was the result of a race condition in the new scheme for setting focus. I
+rewrote set_focus so the delayed callback always sets the last requested focus.
+The new code also takes care to clear the last request after fulfilling it.</t>
+<t tx="ekr.20050209141626.104">@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                self.outerFrame.after(100,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None</t>
+<t tx="ekr.20050209141626.105"></t>
+<t tx="ekr.20050209141626.106">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2958470
+By: nobody
+
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Opened a new .leo file. It asked for an ID, and said it saved it. Closed the
+new leo file &amp; tried opening "Leo\config\leoSettings.leo". _It_ is asking for
+a leoID!</t>
+<t tx="ekr.20050209141626.107">@killcolor
+
+All changes were to g.app.leoID():
+
+- Fixed bug:  set g.app.leoID in &lt;&lt; put up a dialog requiring a valid id &gt;&gt;.
+- Improved signon message.
+- Better error handling and reporting. </t>
+<t tx="ekr.20050209141626.108">def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    &lt;&lt; return if we can set self.leoID from sys.leoID &gt;&gt;
+    &lt;&lt; return if we can set self.leoID from "leoID.txt" &gt;&gt;
+
+    &lt;&lt; put up a dialog requiring a valid id &gt;&gt;
+    &lt;&lt; attempt to create leoID.txt &gt;&gt;</t>
+<t tx="ekr.20050209141626.109"># This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr &amp; getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None</t>
+<t tx="ekr.20050209141626.110">for theDir in (homeDir,globalConfigDir,loadDir):
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'r')
+        s = f.readline()
+        f.close()
+        if s and len(s) &gt; 0:
+            g.app.leoID = s
+            if verbose:
+                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+            return
+        elif verbose:
+            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+    except IOError:
+        g.app.leoID = None
+    except Exception:
+        g.app.leoID = None
+        g.es('Unexpected exception in app.setLeoID',color='red')
+        g.es_esception()
+        
+dirs = []
+
+for theDir in (globalConfigDir,homeDir):
+    if theDir not in dirs:
+        dirs.append(theDir)
+
+g.es("%s not found in %s" % (tag,repr(dirs)),color="red")</t>
+<t tx="ekr.20050209141626.111"># New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+g.app.gui = None
+
+g.trace(g.app.leoID)
+g.es("leoID=",repr(g.app.leoID),color="blue")</t>
+<t tx="ekr.20050209141626.112">dirs = []
+
+for theDir in (homeDir,globalConfigDir,loadDir):
+    cant = "can not create leoID.txt in %s" % theDir
+    try:
+        # Look in globalConfigDir first.
+        fn = g.os_path_join(theDir, tag)
+        f = open(fn,'w')
+        if f:
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                g.es("created leoID.txt in %s" % (theDir), color="red")
+                return
+            else:
+                g.es(cant,color='red')
+    except IOError:
+        g.es(cant,color='red')
+
+    if theDir not in dirs:
+        dirs.append(theDir)</t>
+<t tx="ekr.20050209141626.113"># This now works: g.es('ﺻﺱ',color='red')</t>
+<t tx="ekr.20050209141626.114"></t>
+<t tx="ekr.20050209141626.115">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2983923
+By: tyndal
+
+I tried again with the a2 cvs and it still isnt working correctly, the "reduced"
+leo window is still showing up, however the error messages are different:
+
+---------------
+
+Leo Log Window...
+Leo 4.3 alpha 2, build  1.217 , January 30, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+exception executing command
+Traceback (most recent call last):
+  File "D:\scratch\leo\leo_cvs_2005feb07\src\leoCommands.py", line 170,
+in doCommand
+    command()
+  File "D:\scratch\leo\leo_cvs_2005feb07\src\leoCommands.py", line 328, in open
+    ok, frame = g.openWithFileName(fileName,c)
+  File "D:\scratch\leo\leo_cvs_2005feb07\src\leoGlobals.py", line 637,
+in openWithFileName
+    g.es("exceptions opening: %s" % g.toEncodedString(fileName),color="red")
+TypeError: toEncodedString() takes at least 2 arguments (1 given)
+
+---------------
+
+However, opening a regular file after failing to open a file now seems to work
+correctly.
+
+-Tyndal
+
+</t>
+<t tx="ekr.20050209141626.116">def printError (self,message):
+
+    '''Print an error message that may contain non-ascii characters.'''
+
+    if self.errors == 0:
+        g.es_error(message)
+    else:
+        try:
+            print message
+        except UnicodeError:
+            print g.toEncodedString(message,g.app.tkEncoding)
+            
+def test_printError(self):
+
+    import leoGlobals as g
+    
+    c = g.top() ; at = c.atFileCommands
+    
+    at.errors = 0
+    at.printError(
+        "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")</t>
+<t tx="ekr.20050209141626.117"></t>
+<t tx="ekr.20050209141626.118">def isUnicode(s):
+    
+    return s is None or type(s) == type(u' ')</t>
+<t tx="ekr.20050209141626.119">def isValidEncoding (encoding):
+    
+    try:
+        if len(encoding) == 0:
+            return False
+        unicode("a",encoding)
+        return True
+    except:
+        return False
+</t>
+<t tx="ekr.20050209141626.120">def reportBadChars (s,encoding):
+    
+    errors = 0
+    if type(s) == type(u""):
+        for ch in s:
+            try: ch.encode(encoding,"strict")
+            except: errors += 1
+        if errors:
+            # traceback.print_stack()
+            g.es("%d errors converting %s to %s" % 
+                (errors, s.encode(encoding,"replace"),encoding))
+
+    elif type(s) == type(""):
+        for ch in s:
+            try: unicode(ch,encoding,"strict")
+            except: errors += 1
+        if errors:
+            g.es("%d errors converting %s (%s encoding) to unicode" % 
+                (errors, unicode(s,encoding,"replace"),encoding)) # 10/23/03</t>
+<t tx="ekr.20050209141626.121"></t>
+<t tx="ekr.20050209141626.122">def toEncodedString (s,encoding,reportErrors=False):
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = s.encode(encoding,"replace")
+    return s</t>
+<t tx="ekr.20050209141626.123">def toEncodedStringWithErrorCode (s,encoding):
+    
+    ok = True
+
+    if type(s) == type(u""):
+        try:
+            s = s.encode(encoding,"strict")
+        except UnicodeError:
+            s = s.encode(encoding,"replace")
+            ok = False
+
+    return s,ok</t>
+<t tx="ekr.20050209141626.124">def toUnicode (s,encoding,reportErrors=False):
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
+        try:
+            s = unicode(s,encoding,"strict")
+        except UnicodeError:
+            if reportErrors:
+                g.reportBadChars(s,encoding)
+            s = unicode(s,encoding,"replace")
+    return s
+    
+</t>
+<t tx="ekr.20050209141626.125">def toUnicodeWithErrorCode (s,encoding):
+    
+    ok = True
+    
+    if s is None:
+        s = u""
+    if type(s) == type(""):
+        try:
+            s = unicode(s,encoding,"strict")
+        except UnicodeError:
+            s = unicode(s,encoding,"replace")
+            ok = False
+
+    return s,ok</t>
+<t tx="ekr.20050209141626.126">def test_round_trip_toUnicode_toEncodedString ():
+
+    import leoGlobals as g
+    
+    for s,encoding in (
+        ('a',    'utf-8'),
+        ('a',    'ascii'),
+        ('äöü',  'utf-8'),
+        ('äöü',  'mbcs'),
+        ('炰',   'utf-8'),
+        ('炰',   'mbcs'),
+    ):
+        if g.isValidEncoding(encoding):
+            s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+            assert ok, 'toUnicodeWithErrorCode fails for %s' %s
+            s3,ok = g.toEncodedStringWithErrorCode(s2,encoding)
+            assert ok, 'toEncodedStringWithErrorCode fails for %s' % s2
+            assert s3 == s, 'Round-trip one failed for %s' %s
+            
+            s2 = g.toUnicode(s,encoding)
+            s3 = g.toEncodedString(s2,encoding)
+            assert s3 == s, 'Round-trip two failed for %s' %s</t>
+<t tx="ekr.20050209141626.127">def test_failure_with_ascii_encodings():
+
+    import leoGlobals as g
+    
+    encoding = 'ascii'
+    
+    s = '炰'
+    s2,ok = g.toUnicodeWithErrorCode(s,encoding)
+    assert not ok, 'toUnicodeWithErrorCode returns True for %s with ascii encoding' % s
+    
+    s = u'炰'
+    s3,ok = g.toEncodedStringWithErrorCode(s,encoding)
+    assert not ok, 'toEncodedStringWithErrorCode returns True for %s with ascii encoding' % s</t>
+<t tx="ekr.20050209141626.128">try:
+    # Use Python's version of getpreferredencoding if it exists.
+    # It is new in Python 2.3.
+    import locale
+    getpreferredencoding = locale.getpreferredencoding
+except:
+    # Use code copied from locale.py in Python 2.3alpha2.
+    if sys.platform in ('win32', 'darwin', 'mac'):
+        &lt;&lt; define getpreferredencoding using _locale &gt;&gt;
+    else:
+        &lt;&lt; define getpreferredencoding for *nix &gt;&gt;
+</t>
+<t tx="ekr.20050209141626.129"># On Win32, this will return the ANSI code page
+# On the Mac, it should return the system encoding;
+# it might return "ascii" instead.
+
+def getpreferredencoding(do_setlocale = True):
+    """Return the charset that the user is likely using."""
+    try:
+        import _locale
+        return _locale._getdefaultlocale()[1]
+    except:
+        return None</t>
+<t tx="ekr.20050209141626.130"># On Unix, if CODESET is available, use that.
+try:
+    local.CODESET
+except NameError:
+    # Fall back to parsing environment variables :-(
+    def getpreferredencoding(do_setlocale = True):
+        """Return the charset that the user is likely using,
+        by looking at environment variables."""
+        try:
+            return locale.getdefaultlocale()[1]
+        except:
+            return None
+else:
+    def getpreferredencoding(do_setlocale = True):
+        """Return the charset that the user is likely using,
+        according to the system configuration."""
+        try:
+            if do_setlocale:
+                oldloc = locale.setlocale(LC_CTYPE)
+                locale.setlocale(LC_CTYPE, "")
+                result = locale.nl_langinfo(CODESET)
+                locale.setlocale(LC_CTYPE, oldloc)
+                return result
+            else:
+                return locale.nl_langinfo(CODESET)
+        except:
+            return None</t>
+<t tx="ekr.20050209141626.131">@ Note: all these methods return Unicode strings. It is up to the user to
+convert to an encoded string as needed, say when opening a file.</t>
+<t tx="ekr.20050209141626.132">def os_path_abspath(path,encoding=None):
+    
+    """Convert a path to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    path = os.path.abspath(path)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+    
+    return path</t>
+<t tx="ekr.20050209141626.133">def os_path_basename(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    path = os.path.basename(path)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+    
+    return path</t>
+<t tx="ekr.20050209141626.134">def os_path_dirname(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    path = os.path.dirname(path)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+    
+    return path</t>
+<t tx="ekr.20050209141626.135">def os_path_exists(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return os.path.exists(path)</t>
+<t tx="ekr.20050209141626.136">def os_path_getmtime(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return os.path.getmtime(path)</t>
+<t tx="ekr.20050209141626.137">def os_path_isabs(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return os.path.isabs(path)</t>
+<t tx="ekr.20050209141626.138">def os_path_isdir(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return os.path.isdir(path)</t>
+<t tx="ekr.20050209141626.139">def os_path_isfile(path,encoding=None):
+    
+    """Normalize the path and convert it to an absolute path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return os.path.isfile(path)</t>
+<t tx="ekr.20050209141626.140">def os_path_join(*args,**keys):
+    
+    encoding = keys.get("encoding")
+
+    uargs = [g.toUnicodeFileEncoding(arg,encoding) for arg in args]
+    
+    # Note:  This is exactly the same convention as used by getBaseDirectory.
+    if uargs and uargs[0] == '!!':
+        uargs[0] = g.app.loadDir
+    elif uargs and uargs[0] == '.':
+        c = keys.get('c')
+        if c and c.openDirectory:
+            uargs[0] = c.openDirectory
+            g.trace(c.openDirectory)
+
+    path = os.path.join(*uargs)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    return path</t>
+<t tx="ekr.20050209141626.141">if 0:  # A bad idea.
+    
+    def os_path_norm(path,encoding=None):
+    
+        """Normalize both the path and the case."""
+    
+        path = g.toUnicodeFileEncoding(path,encoding)
+    
+        path = os.path.normcase(path)
+        path = os.path.normpath(path)
+        
+        path = g.toUnicodeFileEncoding(path,encoding)
+        
+        return path</t>
+<t tx="ekr.20050209141626.142">if 0: # A bad idea.
+
+    def os_path_normabs (path,encoding=None):
+    
+        """Convert the file name to a fully normalized absolute path.
+        
+        There is no exact analog to this in os.path"""
+        
+        path = g.os_path_abspath(path,encoding = encoding)
+        path = g.os_path_norm(path,encoding = encoding)
+    
+        return path</t>
+<t tx="ekr.20050209141626.143">def os_path_normcase(path,encoding=None):
+    
+    """Normalize the path's case."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    path = os.path.normcase(path)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+    
+    return path</t>
+<t tx="ekr.20050209141626.144">def os_path_normpath(path,encoding=None):
+    
+    """Normalize the path."""
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    path = os.path.normpath(path)
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+    
+    return path</t>
+<t tx="ekr.20050209141626.145">def os_path_split(path,encoding=None):
+    
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    head,tail = os.path.split(path)
+
+    head = g.toUnicodeFileEncoding(head,encoding)
+    tail = g.toUnicodeFileEncoding(tail,encoding)
+
+    return head,tail</t>
+<t tx="ekr.20050209141626.146">def os_path_splitext(path,encoding=None):
+
+    path = g.toUnicodeFileEncoding(path,encoding)
+
+    head,tail = os.path.splitext(path)
+
+    head = g.toUnicodeFileEncoding(head,encoding)
+    tail = g.toUnicodeFileEncoding(tail,encoding)
+
+    return head,tail</t>
+<t tx="ekr.20050209141626.147">def toUnicodeFileEncoding(path,encoding):
+
+    if not encoding:
+        if sys.platform == "win32":
+            # encoding = "mbcs" # Leo 4.2 and previous.
+            encoding = 'utf-8' # New in Leo 4.3
+        else:
+            encoding = app.tkEncoding
+
+    # Yes, this is correct.  All os_path_x functions return Unicode strings.
+    return g.toUnicode(path,encoding)</t>
+<t tx="ekr.20050209141626.148">@ According to Martin v. Löwis, getdefaultlocale() is broken, and cannot be fixed. The workaround is to copy the g.getpreferredencoding() function from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+@c
+
+def setEncoding (self):
+    
+    """Set g.app.tkEncoding."""
+
+    for (encoding,src) in (
+        (self.config.tkEncoding,"config"),
+        #(locale.getdefaultlocale()[1],"locale"),
+        (g.getpreferredencoding(),"locale"),
+        (sys.getdefaultencoding(),"sys"),
+        ("utf-8","default")):
+    
+        if g.isValidEncoding (encoding): # 3/22/03
+            self.tkEncoding = encoding
+            # g.trace(self.tkEncoding,src)
+            break
+        elif encoding and len(encoding) &gt; 0:
+            g.trace("ignoring invalid ",src," encoding: ",encoding)
+            
+    color = g.choose(self.tkEncoding=="ascii","red","blue")</t>
+<t tx="ekr.20050209141626.149"></t>
+<t tx="ekr.20050209141626.150"></t>
+<t tx="ekr.20050209141626.185">When loading plugins, the Leo checks to see if the plugin has an init function at the top level (the module level).  If so, Leo calls the init function.  This function should return True (or equivalent) if the module loaded correctly.
+
+If the top-level init function does not exist, Leo assumes the module loaded correctly.</t>
+<t tx="ekr.20050209141626.190"></t>
+<t tx="ekr.20050209141626.193"></t>
+<t tx="ekr.20050209141626.194">A script in an @button node or script node can now request to be removed by
+setting g.app.scriptDict['removeMe'] = True. Leo checks this value after
+executing the script in the button.</t>
+<t tx="ekr.20050209141626.195"></t>
+<t tx="ekr.20050209141626.196">@nocolor
+
+Added define_p param in executeScript.  When True (the default), the script or unit test is run in an environment in which c, p and g are all defined.
+
+Therefore, the following lines need never appear in scripts(!)
+
+@color
+
+import leoGlobals as g
+c = g.top() ; c = c.currentPosition()</t>
+<t tx="ekr.20050209141626.198"></t>
 </tnodes>
 </leo_file>
