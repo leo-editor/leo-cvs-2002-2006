@@ -2494,7 +2494,7 @@ into the Task node.
 
  in order of most likely to least possible,
 
-+1 on defineing __main__ and allowing parameters to scripts.
++1 on defining __main__ and allowing parameters to scripts.
 
 add python -t to test suite to catch mixed tab & space in derived files.
 leoFind.py: inconsistent use of tabs and spaces 
@@ -4138,7 +4138,7 @@ def OnCopyFromMenu (self):
 	w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-#@+node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
 	
 	frame = self ; c = frame.c ; v = c.currentVnode()
@@ -4156,8 +4156,7 @@ def OnPasteFromMenu (self):
 	
 	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
 		frame.tree.onHeadChanged(v)
-#@nonl
-#@-node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
 #@+node:ekr.20031218072017.844:Clipboard (tkGui)
 #@+node:ekr.20031218072017.845:replaceClipboardWith
@@ -4593,6 +4592,7 @@ def onHeadChanged (self,p):
 	"""Handle a change to headline text."""
 	
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
@@ -4636,15 +4636,32 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
+
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
+
+if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+	# Another kludge: remove one or two trailing newlines before warning of truncation.
+	if s and s[-1] == '\n': s = s[:-1]
+	if s and s[-1] == '\n': s = s[:-1]
+	i = s.find('\n')
+	if i > -1:
+		# g.trace(i,len(s),repr(s))
+		g.es("Truncating headline to one line",color="blue")
+		s = s[:i]
+	if len(s) > 250:
+		g.es("Truncating headline to 250 characters",color="blue")
+		s = s[:250]
+
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 
 if not s:
 	s = u""
-s = s.replace('\n','')
-s = s.replace('\r','')
-# g.trace(s)
+	
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+	s = s.replace('\n','')
+	s = s.replace('\r','')
+#@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
 head = p.headString()

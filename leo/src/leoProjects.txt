@@ -229,7 +229,7 @@ def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
 	self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,undoType,oldYview)
 #@nonl
 #@-node:ekr.20031218072017.1331:onBodyWillChange
-#@+node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
 	
 	frame = self ; c = frame.c ; v = c.currentVnode()
@@ -247,8 +247,7 @@ def OnPasteFromMenu (self):
 	
 	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
 		frame.tree.onHeadChanged(v)
-#@nonl
-#@-node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@+node:ekr.20031218072017.1321:idle_body_key
 def idle_body_key (self,p,oldSel,undoType,ch=None,oldYview=None,newSel=None,oldText=None):
 	
@@ -838,6 +837,7 @@ def onHeadChanged (self,p):
 	"""Handle a change to headline text."""
 	
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
@@ -881,15 +881,32 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
+
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
+
+if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+	# Another kludge: remove one or two trailing newlines before warning of truncation.
+	if s and s[-1] == '\n': s = s[:-1]
+	if s and s[-1] == '\n': s = s[:-1]
+	i = s.find('\n')
+	if i > -1:
+		# g.trace(i,len(s),repr(s))
+		g.es("Truncating headline to one line",color="blue")
+		s = s[:i]
+	if len(s) > 250:
+		g.es("Truncating headline to 250 characters",color="blue")
+		s = s[:250]
+
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 
 if not s:
 	s = u""
-s = s.replace('\n','')
-s = s.replace('\r','')
-# g.trace(s)
+	
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+	s = s.replace('\n','')
+	s = s.replace('\r','')
+#@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
 head = p.headString()
@@ -8380,6 +8397,7 @@ def onHeadChanged (self,p):
 	"""Handle a change to headline text."""
 	
 	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
@@ -8423,15 +8441,32 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
+
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
+
+if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+	# Another kludge: remove one or two trailing newlines before warning of truncation.
+	if s and s[-1] == '\n': s = s[:-1]
+	if s and s[-1] == '\n': s = s[:-1]
+	i = s.find('\n')
+	if i > -1:
+		# g.trace(i,len(s),repr(s))
+		g.es("Truncating headline to one line",color="blue")
+		s = s[:i]
+	if len(s) > 250:
+		g.es("Truncating headline to 250 characters",color="blue")
+		s = s[:250]
+
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 
 if not s:
 	s = u""
-s = s.replace('\n','')
-s = s.replace('\r','')
-# g.trace(s)
+	
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+	s = s.replace('\n','')
+	s = s.replace('\r','')
+#@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
 head = p.headString()
@@ -21765,15 +21800,32 @@ def idle_head_key (self,p,ch=None):
 
 	g.doHook("headkey2",c=c,p=p,ch=ch)
 	return "break"
+
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
+
+if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+	# Another kludge: remove one or two trailing newlines before warning of truncation.
+	if s and s[-1] == '\n': s = s[:-1]
+	if s and s[-1] == '\n': s = s[:-1]
+	i = s.find('\n')
+	if i > -1:
+		# g.trace(i,len(s),repr(s))
+		g.es("Truncating headline to one line",color="blue")
+		s = s[:i]
+	if len(s) > 250:
+		g.es("Truncating headline to 250 characters",color="blue")
+		s = s[:250]
+
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 
 if not s:
 	s = u""
-s = s.replace('\n','')
-s = s.replace('\r','')
-# g.trace(s)
+	
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+	s = s.replace('\n','')
+	s = s.replace('\r','')
+#@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
 head = p.headString()
@@ -25099,7 +25151,7 @@ def OnCopyFromMenu (self):
 	w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-#@+node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
 	
 	frame = self ; c = frame.c ; v = c.currentVnode()
@@ -25117,8 +25169,7 @@ def OnPasteFromMenu (self):
 	
 	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
 		frame.tree.onHeadChanged(v)
-#@nonl
-#@-node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
 #@+node:ekr.20031218072017.3982:endEditLabelCommand
 def endEditLabelCommand (self):
@@ -40285,6 +40336,246 @@ def getTime (self,body=true):
 	return s
 #@-node:ekr.20031218072017.1832:getTime
 #@-node:EKR.20040610123559:(Fixed bug in insertBodyTime)
+#@+node:EKR.20040603074929:(Added Paste Retaining Clones command)
+#@+node:EKR.20040610131603:What I did
+@nocolor
+
+- By default, finishPaste command reassigns all indices in copied nodes.
+- Created pasteOutlineRetainingClones.
+- Added reassignIndices arg to pasteOutline, getLeoOutline and finishPaste.
+- Added << recreate tnodesDict >> in getLeoOutline.
+- Simplified getTnode slightly: the "if t" code is the same for both kinds of reads.
+#@nonl
+#@-node:EKR.20040610131603:What I did
+#@+node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+self.outlineMenuTopMenuTable = (
+	("C&ut Node","Shift+Ctrl+X",c.cutOutline),
+	("C&opy Node","Shift+Ctrl+C",c.copyOutline),
+	("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+	("Paste &Retaining Clones",None,c.pasteOutlineRetainingClones),
+	("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+	("-",None,None),
+	("&Insert Node","Ctrl+I",c.insertHeadline),
+	("&Clone Node","Ctrl+`",c.clone),
+	("Sort Childre&n",None,c.sortChildren), # Conflicted with Hoist.
+	("&Sort Siblings","Alt-A",c.sortSiblings),
+	("Chec&k Outline",None,c.checkOutline),
+	("Du&mp Outline",None,c.dumpOutline),
+	("-",None,None),
+	("&Hoist",None,c.hoist),
+	("D&e-Hoist",None,f.c.dehoist),
+	("-",None,None))
+	
+# Ampersand bindings:  c,d,e,h,i,k,m,n,o,p,r,s,u
+#@-node:ekr.20031218072017.3768:<< define outlineMenuTopMenuTable >>
+#@+node:ekr.20031218072017.1557:finishPaste
+def finishPaste(self,reassignIndices=true):
+	
+	"""Finish pasting an outline from the clipboard.
+	
+	Retain clone links if reassignIndices is False."""
+
+	c = self.c
+	current = c.currentPosition()
+	c.beginUpdate()
+	if reassignIndices:
+		<< reassign tnode indices and clear all clone links >>
+	c.selectVnode(current)
+	c.endUpdate()
+	return current
+#@nonl
+#@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+@ putLeoOutline calls assignFileIndices (when copying nodes) so that vnode can be associated with tnodes.
+However, we must _reassign_ the indices here so that no "false clones" are created.
+@c
+
+current.clearVisitedInTree()
+
+for p in current.self_and_subtree_iter():
+	t = p.v.t
+	if not t.isVisited():
+		t.setVisited()
+		self.maxTnodeIndex += 1
+		t.setFileIndex(self.maxTnodeIndex)
+#@nonl
+#@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+#@-node:ekr.20031218072017.1557:finishPaste
+#@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
+# This method reads a Leo outline from string s in clipboard format.
+def getLeoOutline (self,s,reassignIndices=true):
+
+	self.usingClipboard = true
+	self.fileBuffer = s ; self.fileIndex = 0
+	self.tnodesDict = {}
+	
+	if not reassignIndices:
+		<< recreate tnodesDict >>
+
+	try:
+		self.getXmlVersionTag() # leo.py 3.0
+		self.getXmlStylesheetTag() # 10/25/02
+		self.getTag("<leo_file>")
+		self.getClipboardHeader()
+		self.getVnodes()
+		self.getTnodes()
+		self.getTag("</leo_file>")
+		v = self.finishPaste(reassignIndices)
+	except BadLeoFile:
+		v = None
+
+	# Clean up.
+	self.fileBuffer = None ; self.fileIndex = 0
+	self.usingClipboard = false
+	self.tnodesDict = {}
+	return v
+#@+node:EKR.20040610134756:<< recreate tnodesDict >>
+nodeIndices = g.app.nodeIndices
+
+for t in self.c.all_tnodes_iter():
+	tref = t.fileIndex
+	if nodeIndices.isGnx(tref):
+		tref = nodeIndices.toString(tref)
+	self.tnodesDict[tref] = t
+	
+if 0:
+	print '-'*40
+	for key in self.tnodesDict.keys():
+		print key,self.tnodesDict[key]
+#@nonl
+#@-node:EKR.20040610134756:<< recreate tnodesDict >>
+#@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
+#@+node:ekr.20031218072017.2004:canonicalTnodeIndex
+def canonicalTnodeIndex(self,index):
+	
+	"""Convert Tnnn to nnn, leaving gnx's unchanged."""
+
+	# index might be Tnnn, nnn, or gnx.
+	id,time,n = g.app.nodeIndices.scanGnx(index,0)
+	if time == None: # A pre-4.1 file index.
+		if index[0] == "T":
+			index = index[1:]
+
+	return index
+#@nonl
+#@-node:ekr.20031218072017.2004:canonicalTnodeIndex
+#@+node:ekr.20031218072017.1561:getTnode
+def getTnode (self):
+
+	# we have already matched <t.
+	index = -1 ; attrDict = {}
+	# New in version 1.7: attributes may appear in any order.
+	while 1:	
+		if self.matchTag("tx="):
+			# New for 4.1.  Read either "Tnnn" or "gnx".
+			index = self.getDqString()
+		elif self.matchTag("rtf=\"1\""): pass # ignored
+		elif self.matchTag("rtf=\"0\""): pass # ignored
+		elif self.matchTag(">"):         break
+		else: # New for 4.0: allow unknown attributes.
+			# New in 4.2: allow pickle'd and hexlify'ed values.
+			attr,val = self.getUnknownAttribute()
+			attrDict[attr] = val
+			
+	if g.app.use_gnx:
+		# index might be Tnnn, nnn, or gnx.
+		id,time,n = g.app.nodeIndices.scanGnx(index,0)
+		if time == None: # A pre-4.1 file index.
+			if index[0] == "T":
+				index = index[1:]
+
+	index = self.canonicalTnodeIndex(index)
+	t = self.tnodesDict.get(index)
+	# g.trace(t)
+	<< handle unknown attributes >>
+	if t:
+		s = self.getEscapedString()
+		t.setTnodeText(s,encoding=self.leo_file_encoding)
+	else:
+		g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+	self.getTag("</t>")
+#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
+keys = attrDict.keys()
+if keys:
+	t.unknownAttributes = attrDict
+	if 0: # For debugging.
+		s = "unknown attributes for tnode"
+		print s ; g.es(s, color = "blue")
+		for key in keys:
+			s = "%s = %s" % (key,attrDict.get(key))
+			print s ; g.es(s)
+#@nonl
+#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
+#@-node:ekr.20031218072017.1561:getTnode
+#@+node:ekr.20031218072017.1548:Cut & Paste Outlines
+#@+node:ekr.20031218072017.1549:cutOutline
+def cutOutline(self):
+
+	c = self
+	if c.canDeleteHeadline():
+		c.copyOutline()
+		c.deleteOutline("Cut Node")
+		c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1549:cutOutline
+#@+node:ekr.20031218072017.1550:copyOutline
+def copyOutline(self):
+
+	# Copying an outline has no undo consequences.
+	c = self
+	c.endEditing()
+	c.fileCommands.assignFileIndices()
+	s = c.fileCommands.putLeoOutline()
+	g.app.gui.replaceClipboardWith(s)
+#@nonl
+#@-node:ekr.20031218072017.1550:copyOutline
+#@+node:ekr.20031218072017.1551:pasteOutline
+# To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
+
+def pasteOutline(self,reassignIndices=true):
+
+	c = self ; current = c.currentPosition()
+	
+	s = g.app.gui.getTextFromClipboard()
+
+	if not s or not c.canPasteOutline(s):
+		return # This should never happen.
+
+	isLeo = g.match(s,0,g.app.prolog_prefix_string)
+
+	if isLeo:
+		p = c.fileCommands.getLeoOutline(s,reassignIndices)
+	else:
+		p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+		
+	if p:
+		c.endEditing()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.validateOutline()
+			c.selectVnode(p)
+			p.setDirty()
+			c.setChanged(true)
+			# paste as first child if back is expanded.
+			back = p.back()
+			if back and back.isExpanded():
+				p.moveToNthChildOf(back,0)
+			c.undoer.setUndoParams("Paste Node",p)
+		c.endUpdate()
+		c.recolor()
+	else:
+		g.es("The clipboard is not a valid " + g.choose(isLeo,"Leo","MORE") + " file")
+#@nonl
+#@-node:ekr.20031218072017.1551:pasteOutline
+#@+node:EKR.20040610130943:pasteOutlineRetainingClones
+def pasteOutlineRetainingClones (self):
+	
+	c = self
+	
+	return c.pasteOutline(reassignIndices=false)
+#@nonl
+#@-node:EKR.20040610130943:pasteOutlineRetainingClones
+#@-node:ekr.20031218072017.1548:Cut & Paste Outlines
+#@-node:EKR.20040603074929:(Added Paste Retaining Clones command)
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects

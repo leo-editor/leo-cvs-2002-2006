@@ -1060,7 +1060,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		w.event_generate(g.virtual_event_name("Copy"))
 	
 	#@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
-	#@+node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 	def OnPaste (self,event=None):
 		
 		frame = self ; c = frame.c ; v = c.currentVnode()
@@ -1078,8 +1078,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		
 		if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
 			frame.tree.onHeadChanged(v)
-	#@nonl
-	#@-node:ekr.20031218072017.843:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 	#@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
 	#@+node:ekr.20031218072017.3982:endEditLabelCommand
 	def endEditLabelCommand (self):
