@@ -1594,8 +1594,8 @@ class baseFileCommands:
 			# 8/13/02: Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives.
 			
 			if not c.openDirectory or len(c.openDirectory) == 0:
-				dir = os.path.dirname(fileName) 
-				if len(dir) > 0 and os.path.isabs(fileName) and os.path.exists(fileName):
+				dir = os.path.dirname(fileName)
+				if len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
 					c.openDirectory = dir
 			#@-body
 			#@-node:1::<< Set the default directory for new files >>
