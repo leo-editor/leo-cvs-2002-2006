@@ -2682,9 +2682,9 @@ class LeoFrame:
 		
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		ver = "$Revision$"
+		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.5, Build " + build + ", September 3, 2002\n\n"
+		version = "leo.py 3.6 beta 1, Build " + build + ", September 10, 2002\n\n"
 		copyright = (
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -2796,7 +2796,7 @@ class LeoFrame:
 		
 		import webbrowser
 		
-		version = "?vernum=3.5"
+		version = "?vernum=3.6 beta 1"
 		url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
 	
 		try:

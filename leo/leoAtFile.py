@@ -650,7 +650,8 @@ class atFile:
 		# Create any needed dummy children.
 		dummies = n - parent.numberOfChildren() - 1
 		if dummies > 0:
-			es("dummy created")
+			if 0: # CVS produces to many errors for this to be useful.
+				es("dummy created")
 			self.structureErrors += 1
 		while dummies > 0:
 			dummies -= 1
@@ -662,9 +663,10 @@ class atFile:
 			result = parent.nthChild(n-1)
 			resulthead = result.headString()
 			if string.strip(headline) != string.strip(resulthead):
-				es("headline mismatch:")
-				es("head1:" + `string.strip(headline)`)
-				es("head2:" + `string.strip(resulthead)`)
+				if 0: # CVS produces to many errors for this to be useful.
+					es("headline mismatch:")
+					es("head1:" + `string.strip(headline)`)
+					es("head2:" + `string.strip(resulthead)`)
 				self.structureErrors += 1
 		else:
 			# This is using a dummy; we should already have bumped structureErrors.
@@ -795,7 +797,8 @@ class atFile:
 		v = root.threadNext()
 		while v and v != next:
 			if not v.isVisited():
-				es("unvisited node: " + v.headString())
+				if 0: # CVS produces to many errors for this to be useful.
+					es("unvisited node: " + v.headString())
 				self.structureErrors += 1
 			v = v.threadNext()
 
