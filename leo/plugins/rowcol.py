@@ -21,8 +21,8 @@ except ImportError: Tk = None
 #@nl
 #@<< version history >>
 #@+node:ekr.20041120114651:<< version history >>
-#@+at
 #@@killcolor
+#@+at
 # 
 # 0.1 Initial version.
 # 
