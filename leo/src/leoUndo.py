@@ -298,6 +298,7 @@ class baseUndoer:
 		if undo_type == "Can't Undo":
 			u.clearUndoState()
 			return None
+		# trace(undo_type,v)
 		# Set the type: set the menu labels later.
 		u.undoType = undo_type
 		# Calculate the standard derived information.
@@ -623,10 +624,11 @@ class baseUndoer:
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section"):
 				
-				# Same as undo except we interchange u.oldTree and u.v in the call to undoReplace.
-				u.v = self.undoReplace(u.v,u.oldTree)
-				# u.v.setBodyStringOrPane(u.v.bodyString())
+				u.v = self.undoReplace(u.oldTree,u.v,u.newText)
 				c.selectVnode(u.v) # Does full recolor.
+				if u.newSel:
+					start,end=u.newSel
+					setTextSelection(c.frame.body,start,end)
 				redrawFlag = redoType in ("Extract","Extract Names","Extract Section")
 			
 			#@-body
@@ -858,13 +860,12 @@ class baseUndoer:
 			elif undoType in (
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section"):
-				
-				# Major bug: this restores the copy, so further undos don't work properly.
-				u.v = self.undoReplace(u.oldTree,u.v)
-				#trace(`current`)
-				#trace(`u.v`)
-				# u.v.setBodyStringOrPane(u.v.bodyString())
+					
+				u.v = self.undoReplace(u.v,u.oldTree,u.oldText)
 				c.selectVnode(u.v) # Does full recolor.
+				if u.oldSel:
+					start,end=u.oldSel
+					setTextSelection(c.frame.body,start,end)
 				redrawFlag = true
 			#@-body
 			#@-node:6::<< undo replace cases >>
@@ -1038,54 +1039,57 @@ class baseUndoer:
 	#@+node:4::undoReplace
 	#@+body
 	#@+at
-	#  This routine implements undo by properly replacing v's tree by the oldv 
-	# tree.  For redo, just call this routine with these two variables interchanged.
+	#  This routine implements undo for any kind of operation, no matter how 
+	# complex.  Just do:
 	# 
-	# This routine shows how to implement undo for any kind of operation, no 
-	# matter how complex.  Just do:
-	# 
-	# 	v_copy = c.copyTree(v)
-	# 	< < make arbitrary changes to v's tree > >
+	# 	v_copy = v.copyTree(v)
+	# 	(make arbitrary changes to v's tree.)
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
-	# 
-	# This way is more elegant than calling v.destroyDependents and v.createDependents.
-	# Yes, entire trees are copied, but in the most general case that is necessary.
 
 	#@-at
 	#@@c
 
-	def undoReplace (self,v,oldv):
+	def undoReplace (self,new_v,old_v,text):
+		
+		"""Replace new_v with old_v during undo."""
 	
-		#trace("v   :%s" % v)
-		#trace("oldv:%s" % oldv)
-		assert(v)
-		assert(oldv)
+		# trace("new_v:%s" % new_v)
+		# trace("old_v:%s" % old_v)
+		# trace("text:",text)
+		assert(new_v and old_v)
+		assert(text is not None)
 		u = self ; c = u.commands
-		copies = []
+		joinList = new_v.t.joinList[:]
+		if 0:
+			trace("joinList")
+			for j in joinList:
+				print '\t',j
+		assert(new_v in joinList)
+		result = None
+		for v in joinList:
+			if v == new_v: result = copy = old_v
+			else: copy = old_v.copyTree()
+			# Remember how to link the new node.
+			parent = v.parent()
+			prev = v.back()
+			next = v.next()
+			n = v.childIndex()
+			# Unlink the old tree.
+			v.unjoinTree()
+			v.unlink()
+			# Link in the new tree.
+			if parent: copy.linkAsNthChild(parent,n)
+			elif prev: copy.linkAfter(prev)
+			else:      copy.linkAsRoot(oldRoot=next)
+			copy.addTreeToJoinLists()
+			assert(copy in copy.t.joinList)
 	
-		# For each node joined to v, swap in a copy of oldv.
-		# trace("old" + `oldv.t.joinList`)
-		# trace("new" + `v.t.joinList`)
-		joinList = v.t.joinList[:] # Copy the join list: it will change.
-		for j in joinList:
-			if j != v:
-				copy = c.copyTree(oldv)
-				copies.append(copy)
-				j.swap_links(copy,j)
+		assert(result == old_v)
+		result.t.setTnodeText(text)
+		result.setBodyStringOrPane(text)
 	
-		# Swap v and oldv.
-		# trace("final swap")
-		v.swap_links(v,oldv)
-		# trace("new linked tree:"+`v`)
-		
-		# Join v to all copies.
-		for copy in copies:
-			v.joinTreeTo(copy)
-			
-		# Restore all clone bits.
 		c.initAllCloneBits()
-		
-		return v
+		return result
 	#@-body
 	#@-node:4::undoReplace
 	#@+node:5::undoRedoText
