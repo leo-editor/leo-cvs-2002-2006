@@ -3409,7 +3409,6 @@ class baseCommands:
 			c.setChanged(true)
 		c.endUpdate()
 		c.updateSyntaxColorer(p) # Moving can change syntax coloring.
-	#@nonl
 	#@-node:ekr.20031218072017.1770:moveOutlineLeft
 	#@+node:ekr.20031218072017.1771:moveOutlineRight
 	def moveOutlineRight(self):
@@ -4340,7 +4339,7 @@ class baseCommands:
 		
 		"""Set the root positioin."""
 	
-		self._rootPosition = p
+		self._rootPosition = p.copy() # Potential bug fix: 5/2/04
 		
 	# Define these for compatibiility with old scripts.
 	rootVnode = rootPosition
