@@ -3583,16 +3583,6 @@ Guenther.
 #@-node:ekr.20040629111733.1:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20040629110559:Cool Mac stuff
 #@+node:EKR.20040617105034:To do before 4.2 beta 2: feature complete
-#@+node:ekr.20040630070900.1:Save marks and expantion state in <v> elements for @thin nodes
-@killcolor
-
-We might use the exising descendentTnodeUnknownAttributes mechanism.
-
-I am leaning towards adding new "marks" and "expanded" attributes.  Some experimentation will be needed.
-#@nonl
-#@-node:ekr.20040630070900.1:Save marks and expantion state in <v> elements for @thin nodes
-#@+node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
-#@-node:EKR.20040629084516:Use multiple sandboxes to test how Leo handles cvs conflicts
 #@+node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
 #@-node:EKR.20040628085616.1:Test error recovery when reading descendentTnodeUa's
 #@+node:EKR.20040628091308:Install Leo in site-packages directory
@@ -12396,6 +12386,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -12481,6 +12477,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -12491,9 +12493,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -12514,7 +12519,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -12553,9 +12558,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>

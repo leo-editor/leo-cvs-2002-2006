@@ -6802,6 +6802,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -6812,9 +6818,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -6835,7 +6844,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -6874,9 +6883,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -6924,6 +6934,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
@@ -6945,8 +6957,10 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
-    << restore unknown attributes in descendent tnodes >>
+    << restore attributes in descendent tnodes >>
     self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -6988,17 +7002,35 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 for resultDict in self.descendentUnknownAttributesDictList:
     for gnx in resultDict.keys():
         tref = self.canonicalTnodeIndex(gnx)
         t = self.tnodesDict.get(tref)
-        if t:
-            t.unknownAttributes = resultDict[gnx]
-        else:
-            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+        if t: t.unknownAttributes = resultDict[gnx]
+        else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = [] ; expanded = []
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+if marks or expanded:
+    for p in c.all_positions_iter():
+        if p.v.t in marks:
+            p.setMarked()
+            # g.trace("mark",str(p.headString()))
+        if p.v.t in expanded:
+            p.expand()
+            # g.trace("expand",str(p.headString()))
 #@nonl
-#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.1565:getVnodes
 def getVnodes (self):
@@ -7074,6 +7106,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -7446,6 +7484,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -10657,6 +10701,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -13015,6 +13065,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -13025,9 +13081,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -13048,7 +13107,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -13087,9 +13146,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -15354,6 +15414,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -15364,9 +15430,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -15387,7 +15456,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -15426,9 +15495,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -15580,6 +15650,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -16109,6 +16185,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -16119,9 +16201,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -16142,7 +16227,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -16181,9 +16266,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -16315,6 +16401,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
@@ -16336,8 +16424,10 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
-    << restore unknown attributes in descendent tnodes >>
+    << restore attributes in descendent tnodes >>
     self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -16379,17 +16469,35 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 for resultDict in self.descendentUnknownAttributesDictList:
     for gnx in resultDict.keys():
         tref = self.canonicalTnodeIndex(gnx)
         t = self.tnodesDict.get(tref)
-        if t:
-            t.unknownAttributes = resultDict[gnx]
-        else:
-            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+        if t: t.unknownAttributes = resultDict[gnx]
+        else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = [] ; expanded = []
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+if marks or expanded:
+    for p in c.all_positions_iter():
+        if p.v.t in marks:
+            p.setMarked()
+            # g.trace("mark",str(p.headString()))
+        if p.v.t in expanded:
+            p.expand()
+            # g.trace("expand",str(p.headString()))
 #@nonl
-#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
 # All output to the log stream eventually comes here.
@@ -16824,6 +16932,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
@@ -16845,8 +16955,10 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
-    << restore unknown attributes in descendent tnodes >>
+    << restore attributes in descendent tnodes >>
     self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -16888,17 +17000,35 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 for resultDict in self.descendentUnknownAttributesDictList:
     for gnx in resultDict.keys():
         tref = self.canonicalTnodeIndex(gnx)
         t = self.tnodesDict.get(tref)
-        if t:
-            t.unknownAttributes = resultDict[gnx]
-        else:
-            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+        if t: t.unknownAttributes = resultDict[gnx]
+        else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = [] ; expanded = []
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+if marks or expanded:
+    for p in c.all_positions_iter():
+        if p.v.t in marks:
+            p.setMarked()
+            # g.trace("mark",str(p.headString()))
+        if p.v.t in expanded:
+            p.expand()
+            # g.trace("expand",str(p.headString()))
 #@nonl
-#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20040325125426:(Fixed problem with first screen draw)
 #@-node:ekr.20040325203859.4:3/25
@@ -17365,8 +17495,10 @@ def initIvars(self):
     self.fileDate = -1
     self.leo_file_encoding = g.app.config.new_leo_file_encoding
     # For reading
-    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.fileFormatNumber = 0
+    self.descendentUnknownAttributesDictList = []
     self.ratio = 0.5
     self.fileBuffer = None ; self.fileIndex = 0
     self.currentVnodeStack = [] # A stack of vnodes giving the current position.
@@ -17497,6 +17629,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -17582,6 +17720,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -17592,9 +17736,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -17615,7 +17762,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -17654,9 +17801,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -20706,6 +20854,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -20716,9 +20870,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -20739,7 +20896,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -20778,9 +20935,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -22529,6 +22687,8 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     << warn on read-only files >>
     self.mFileName = c.mFileName
     self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.descendentUnknownAttributesDictList = []
     ok = True
     c.loading = True # disable c.changed
@@ -22550,8 +22710,10 @@ def getLeoFile (self,fileName,atFileNodesFlag=True):
     c.selectVnode(c.currentPosition()) # load body pane
     c.loading = False # reenable c.changed
     c.setChanged(c.changed) # Refresh the changed marker.
-    << restore unknown attributes in descendent tnodes >>
+    << restore attributes in descendent tnodes >>
     self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
     self.tnodesDict = {}
     return ok, self.ratio
 #@nonl
@@ -22593,17 +22755,35 @@ g.es_exception()
 g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
 #@nonl
 #@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 for resultDict in self.descendentUnknownAttributesDictList:
     for gnx in resultDict.keys():
         tref = self.canonicalTnodeIndex(gnx)
         t = self.tnodesDict.get(tref)
-        if t:
-            t.unknownAttributes = resultDict[gnx]
-        else:
-            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+        if t: t.unknownAttributes = resultDict[gnx]
+        else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = [] ; expanded = []
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks.append(t)
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+if marks or expanded:
+    for p in c.all_positions_iter():
+        if p.v.t in marks:
+            p.setMarked()
+            # g.trace("mark",str(p.headString()))
+        if p.v.t in expanded:
+            p.expand()
+            # g.trace("expand",str(p.headString()))
 #@nonl
-#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@+node:ekr.20031218072017.3046:write_Leo_file
 def write_Leo_file(self,fileName,outlineOnlyFlag):
@@ -22827,6 +23007,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -22837,9 +23023,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -22860,7 +23049,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -22899,9 +23088,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -25789,6 +25979,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -25799,9 +25995,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -25822,7 +26021,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -25861,9 +26060,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -26599,6 +26799,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -26609,9 +26815,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -26632,7 +26841,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -26671,9 +26880,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -29598,6 +29808,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -29707,6 +29923,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -29717,9 +29939,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -29740,7 +29965,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -29779,9 +30004,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -40087,6 +40313,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -41475,6 +41707,12 @@ def putVnode (self,p):
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
+    isIgnore = False
+    for p2 in p.self_and_parents_iter():
+        if p2.isAtIgnoreNode():
+            isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
     fc.put("<v")
     << Put tnode index >>
@@ -41485,9 +41723,12 @@ def putVnode (self,p):
 
     # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
     if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
+        if isThin and forceWrite:
+            if isIgnore:
+                g.es("Writing @ignore'd: %s" % p.headString(),color="blue")
+            else:
+                g.es("Writing erroneous: %s" % p.headString(),color="blue")
+        if forceWrite or self.usingClipboard:
             fc.put_nl()
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
@@ -41508,7 +41749,7 @@ if v.t.fileIndex:
         fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
         
     # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
+    if forceWrite or self.usingClipboard:
         v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
     g.trace(v.t.fileIndex,v)
@@ -41547,9 +41788,10 @@ if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 if hasattr(v,"unknownAttributes"): # New in 4.0
     self.putUnknownAttributes(v)
     
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
     # We put the entire tree when using the clipboard, so no need for this.
     self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
@@ -43410,6 +43652,104 @@ else:
 #@-node:EKR.20040623101617.4:(Handled inner @language and @comment properly)
 #@-node:EKR.20040625092523:6/25
 #@+node:EKR.20040626110541:6/28
+#@+node:EKR.20040623101617:(Fixed double print in Execute Script command)
+#@+node:EKR.20040623101617.1:Report
+@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2631282
+By: nobody
+
+traceback causes double print of line number
+with redirect script io to log enabled.
+there is print s,; g.es(s, ...) in executeScript
+in a few places.
+from test.leo, executescript on
+"Test of better error messages in Execute Script command"
+
+hello
+exception executing script
+  File "<string>", line 9, in ?
+NameError: name 'b' is not defined
+--------------------
+--------------------
+line 9: c = b
+line 9: c = b
+#@nonl
+#@-node:EKR.20040623101617.1:Report
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p)
+    << redirect output >>
+    if script:
+        script = script.strip()
+    if script:
+        script += '\n' # Make sure we end the script properly.
+        try:
+            exec script in {} # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except:
+            << unredirect output >>
+            g.es("exception executing script")
+            n = g.es_exception(full=False,c=c)
+            if n is not None:
+                << dump the lines of script near the error >>
+                if p and not script1:
+                    c.goToScriptLineNumber(p,script,n)
+            c.frame.tree.redrawAfterException()
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
+lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 1:
+    # Just print the error line.
+    s = "line %d: %s" % (n,lines[n-1])
+    print s, ; g.es(s,newline=False)
+else:
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        print s, ; g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if g.app.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@-node:EKR.20040623101617:(Fixed double print in Execute Script command)
 #@+node:EKR.20040623102728:(Improved error handling for unknownAttributes)
 #@+node:EKR.20040623102728.1:Report
 @killcolor
@@ -43576,6 +43916,12 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             dict = self.getDescendentUnknownAttributes(s)
             if dict:
                 self.descendentUnknownAttributesDictList.append(dict)
+        elif self.matchTag("expanded="): # New in 4.2
+            s = self.getDqString()
+            self.descendentExpandedList.extend(self.getDescendentAttributes(s,tag="expanded"))
+        elif self.matchTag("marks="): # New in 4.2
+            s = self.getDqString()
+            self.descendentMarksList.extend(self.getDescendentAttributes(s,tag="marks"))
         elif self.matchTag(">"):
             break
         else: # New for 4.0: allow unknown attributes.
@@ -43717,534 +44063,6 @@ def putUnknownAttributes (self,torv,toString=False):
 #@nonl
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040623102728:(Improved error handling for unknownAttributes)
-#@+node:EKR.20040623101617:(Fixed double print in Execute Script command)
-#@+node:EKR.20040623101617.1:Report
-@killcolor
-
-https://sourceforge.net/forum/message.php?msg_id=2631282
-By: nobody
-
-traceback causes double print of line number
-with redirect script io to log enabled.
-there is print s,; g.es(s, ...) in executeScript
-in a few places.
-from test.leo, executescript on
-"Test of better error messages in Execute Script command"
-
-hello
-exception executing script
-  File "<string>", line 9, in ?
-NameError: name 'b' is not defined
---------------------
---------------------
-line 9: c = b
-line 9: c = b
-#@nonl
-#@-node:EKR.20040623101617.1:Report
-#@+node:ekr.20031218072017.2140:c.executeScript
-def executeScript(self,p=None,script=None):
-
-    """This executes body text as a Python script.
-    
-    We execute the selected text, or the entire body text if no text is selected."""
-    
-    c = self ; error = False ; s = None ; script1 = script
-
-    if not script:
-        script = g.getScript(c,p)
-    << redirect output >>
-    if script:
-        script = script.strip()
-    if script:
-        script += '\n' # Make sure we end the script properly.
-        try:
-            exec script in {} # Use {} to get a pristine environment!
-            << unredirect output >>
-            if not script1:
-                g.es("end of script",color="purple")
-        except:
-            << unredirect output >>
-            g.es("exception executing script")
-            n = g.es_exception(full=False,c=c)
-            if n is not None:
-                << dump the lines of script near the error >>
-                if p and not script1:
-                    c.goToScriptLineNumber(p,script,n)
-            c.frame.tree.redrawAfterException()
-    elif not error:
-        << unredirect output >>
-        g.es("no script selected",color="blue")
-        
-    # Force a redraw _after_ all messages have been output.
-    c.redraw() 
-#@nonl
-#@+node:ekr.20031218072017.2143:<< redirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.redirectStdout() # Redirect stdout
-    g.redirectStderr() # Redirect stderr
-#@nonl
-#@-node:ekr.20031218072017.2143:<< redirect output >>
-#@+node:EKR.20040612215018:<< dump the lines of script near the error >>
-lines = g.splitLines(script)
-
-s = '-' * 20
-print s; g.es(s)
-
-if 1:
-    # Just print the error line.
-    s = "line %d: %s" % (n,lines[n-1])
-    print s, ; g.es(s,newline=False)
-else:
-    i = max(0,n-2)
-    j = min(n+2,len(lines))
-    # g.trace(n,i,j)
-    while i < j:
-        ch = g.choose(i==n-1,'*',' ')
-        s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
-        i += 1
-#@nonl
-#@-node:EKR.20040612215018:<< dump the lines of script near the error >>
-#@+node:EKR.20040627100424:<< unredirect output >>
-if g.app.config.redirect_execute_script_output_to_log_pane:
-
-    g.restoreStderr()
-    g.restoreStdout()
-#@nonl
-#@-node:EKR.20040627100424:<< unredirect output >>
-#@-node:ekr.20031218072017.2140:c.executeScript
-#@-node:EKR.20040623101617:(Fixed double print in Execute Script command)
-#@+node:EKR.20040614151841.2:(Read and write all t.unknownAttributes in top vnode of an @thin tree)
-# all
-#@nonl
-#@+node:EKR.20040626110728:Notes
-@killcolor
-
-Leo will write only t.unknownAttributes to the .leo file when writing the <v> element corresponding to the root of an @thin tree.  Leo will do this by writing a new xml attribute, say descendentTnodeUnknownAttributes, in <v> element.
-
-The reason that Leo will only write t.unknownAttributes and not v.unknownAttributes is that only tnodes have gnx's in thin derived files.  In effect, vnodes are anonymous.  We could attempt to get around this by identifying vnodes by their corresponding tnodes, but that's not a general solution and it is, in effect, equivalent to writing only t.unknownAttributes.  This being so, it seems pointless to "pretend" to be writing v.unknownAttributes.
-
-The effect of this is to make all vnodes identical, as far as using unknownAttributes is concerned.  As I've stated in the past, this won't do if, for example, a plugin is trying create an arbitrary directed graph between vnodes.  In that case, the plugin should confine itself to @file trees, or just vnodes in .leo files, for that matter.
-#@nonl
-#@-node:EKR.20040626110728:Notes
-#@+node:ekr.20031218072017.1577:putTnode
-def putTnode (self,t):
-
-    self.put("<t")
-    self.put(" tx=")
-
-    if g.app.use_gnx:
-        gnx = g.app.nodeIndices.toString(t.fileIndex)
-        self.put_in_dquotes(gnx)
-    else:
-        self.put_in_dquotes("T" + str(t.fileIndex))
-
-    if hasattr(t,"unknownAttributes"):
-        self.putUnknownAttributes(t)
-
-    self.put(">")
-
-    # g.trace(t)
-    if t.bodyString:
-        self.putEscapedString(t.bodyString)
-
-    self.put("</t>") ; self.put_nl()
-#@nonl
-#@-node:ekr.20031218072017.1577:putTnode
-#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
-
-    """Write a <v> element corresponding to a vnode."""
-
-    fc = self ; c = fc.c ; v = p.v
-    isThin = p.isAtThinFileNode()
-
-    fc.put("<v")
-    << Put tnode index >>
-    << Put attribute bits >>
-    << Put tnodeList and unKnownAttributes >>
-    fc.put(">")
-    << Write the head text >>
-
-    # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
-    if p.hasChildren():
-        if isThin and p.isOrphan():
-            g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
-        if not isThin or p.isOrphan() or self.usingClipboard:
-            fc.put_nl()
-            # This optimization eliminates all "recursive" copies.
-            p.moveToFirstChild()
-            while 1:
-                fc.putVnode(p)
-                if p.hasNext(): p.moveToNext()
-                else:           break
-            p.moveToParent()
-
-    fc.put("</v>") ; fc.put_nl()
-#@nonl
-#@+node:ekr.20031218072017.1864:<< Put tnode index >>
-if v.t.fileIndex:
-    if g.app.use_gnx:
-        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
-        fc.put(" t=") ; fc.put_in_dquotes(gnx)
-    else:
-        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
-        
-    # g.trace(v.t)
-    if not isThin or p.isOrphan() or self.usingClipboard:
-        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
-else:
-    g.trace(v.t.fileIndex,v)
-    g.es("error writing file(bad v.t.fileIndex)!")
-    g.es("try using the Save To command")
-#@nonl
-#@-node:ekr.20031218072017.1864:<< Put tnode index >>
-#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
-attr = ""
-if p.v.isExpanded(): attr += "E"
-if p.v.isMarked():   attr += "M"
-if p.v.isOrphan():   attr += "O"
-
-if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
-    # Almost 30% of the entire writing time came from here!!!
-    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
-
-if attr: fc.put(' a="%s"' % attr)
-#@nonl
-#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
-#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-# Write tnodeList only for @file nodes.
-# New in 4.2: tnode list is in tnode.
-
-if 0: # Debugging.
-    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
-        if hasattr(v.t,"tnodeList"):
-            g.trace(v.headString(),len(v.t.tnodeList))
-        else:
-            g.trace(v.headString(),"no tnodeList")
-
-if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-    fc.putTnodeList(v) # New in 4.0
-
-if hasattr(v,"unknownAttributes"): # New in 4.0
-    self.putUnknownAttributes(v)
-    
-if p.hasChildren() and isThin and not p.isOrphan() and not self.usingClipboard:
-    # We put the entire tree when using the clipboard, so no need for this.
-    self.putDescendentUnknownAttributes(p)
-#@nonl
-#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-#@+node:ekr.20031218072017.1866:<< Write the head text >>
-headString = p.v.headString()
-
-if headString:
-    fc.put("<vh>")
-    fc.putEscapedString(headString)
-    fc.put("</vh>")
-#@nonl
-#@-node:ekr.20031218072017.1866:<< Write the head text >>
-#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-#@+node:EKR.20040526202501:putUnknownAttributes
-def putUnknownAttributes (self,torv,toString=False):
-    
-    """Put pickleable values for all keys in torv.unknownAttributes dictionary."""
-    
-    result = []
-    attrDict = torv.unknownAttributes
-    if type(attrDict) != type({}):
-        g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-        return
-
-    for key in attrDict.keys():
-        try:
-            val = attrDict[key]
-            s = pickle.dumps(val,bin=True)
-            attr = ' %s="%s"' % (key,binascii.hexlify(s))
-            self.put(attr)
-
-        except pickle.PicklingError:
-            # New in 4.2 beta 1: keep going after error.
-            g.es("ignoring non-pickleable attribute %s in %s" % (
-                key,torv),color="blue")
-#@nonl
-#@-node:EKR.20040526202501:putUnknownAttributes
-#@+node:EKR.20040627113418:putDescendentUnknownAttributes
-def putDescendentUnknownAttributes (self,p):
-
-    # Create a list of all tnodes having a valid unknownAttributes dict.
-    tnodes = []
-    for p2 in p.subtree_iter():
-        t = p2.v.t
-        if hasattr(t,"unknownAttributes"):
-            if t not in tnodes :
-                tnodes.append((p,t),)    
-    # g.trace(tnodes)
-    
-    # Create a list of pairs (t,d) where d contains only pickleable entries.
-    data = []
-    for p,t in tnodes:
-        if type(t.unknownAttributes) != type({}):
-             g.es("ignoring non-dictionary unknownAttributes for",p,color="blue")
-        else:
-            # Create a new dict containing only entries that can be pickled.
-            d = dict(t.unknownAttributes) # Copy the dict.
-            for key in d.keys():
-                try: pickle.dumps(d[key],bin=True)
-                except pickle.PicklingError:
-                    del d[key]
-                    g.es("ignoring bad unknownAttributes key %s in %s" % (
-                        key,p),color="blue")
-            data.append((t,d),)
-            
-    # Create resultDict, an enclosing dict to hold all the data.
-    resultDict = {}
-    nodeIndices = g.app.nodeIndices
-    for t,d in data:
-        gnx = nodeIndices.toString(t.fileIndex)
-        resultDict[gnx]=d
-    
-    if 0:
-        print "resultDict"
-        for key in resultDict:
-            print ; print key,resultDict[key]
-        
-    # Pickle and hexlify resultDict.
-    if resultDict:
-        try:
-            tag = "descendentTnodeUnknownAttributes"
-            s = pickle.dumps(resultDict,bin=True)
-            field = ' %s="%s"' % (tag,binascii.hexlify(s))
-            self.put(field)
-        except pickle.PicklingError:
-            g.trace("can't happen",color="red")
-#@nonl
-#@-node:EKR.20040627113418:putDescendentUnknownAttributes
-#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
-def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
-
-    c = self.c ; v = None
-    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
-    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
-    # we have already matched <v.
-    while 1:
-        if self.matchTag("a=\""):
-            << Handle vnode attribute bits >>
-        elif self.matchTag("t="):
-            # New for 4.1.  Read either "Tnnn" or "gnx".
-            tref = self.getDqString()
-        elif self.matchTag("vtag=\"V"):
-            self.getIndex() ; self.getDquote() # ignored
-        elif self.matchTag("tnodeList="):
-            s = self.getDqString()
-            tnodeList = self.getTnodeList(s) # New for 4.0
-        elif self.matchTag("descendentTnodeUnknownAttributes="):
-            # New for 4.2
-            s = self.getDqString()
-            dict = self.getDescendentUnknownAttributes(s)
-            if dict:
-                self.descendentUnknownAttributesDictList.append(dict)
-        elif self.matchTag(">"):
-            break
-        else: # New for 4.0: allow unknown attributes.
-            # New in 4.2: allow pickle'd and hexlify'ed values.
-            attr,val = self.getUnknownAttribute("vnode")
-            if attr: attrDict[attr] = val
-    # Headlines are optional.
-    if self.matchTag("<vh>"):
-        headline = self.getEscapedString() ; self.getTag("</vh>")
-    
-    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-    if skip:
-        v = self.getExistingVnode(tref,headline)
-    if v is None:
-        v,skip2 = self.createVnode(parent,back,tref,headline,attrDict)
-        skip = skip or skip2
-        if tnodeList:
-            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-
-    << Set the remembered status bits >>
-
-    # Recursively create all nested nodes.
-    parent = v ; back = None
-    while self.matchTag("<v"):
-        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
-        append2 = appendToTopStack and len(self.topVnodeStack) == 0
-        back = self.getVnode(parent,back,skip,
-            appendToCurrentStack=append1,appendToTopStack=append2)
-            
-    << Append to current or top stack >>
-
-    # End this vnode.
-    self.getTag("</v>")
-    return v
-#@nonl
-#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-# The a=" has already been seen.
-while 1:
-    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
-    elif self.matchChar('D'): pass # Not used.
-    elif self.matchChar('E'): setExpanded = True
-    elif self.matchChar('M'): setMarked = True
-    elif self.matchChar('O'): setOrphan = True
-    elif self.matchChar('T'): setTop = True
-    elif self.matchChar('V'): setCurrent = True
-    else: break
-
-self.getDquote()
-#@nonl
-#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-if setCurrent:
-    self.currentVnodeStack = [v]
-
-if setTop:
-    self.topVnodeStack = [v]
-    
-if setExpanded:
-    v.initExpandedBit()
-    
-if setMarked:
-    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
-
-if setOrphan:
-    v.setOrphan()
-#@nonl
-#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-#@+node:ekr.20040326055828:<< Append to current or top stack >>
-if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
-    #g.trace("append current",v)
-    self.currentVnodeStack.append(v)
-    
-if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
-    #g.trace("append top",v)
-    self.topVnodeStack.append(v)
-#@nonl
-#@-node:ekr.20040326055828:<< Append to current or top stack >>
-#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-#@+node:EKR.20040526204036.1:getUnknownAttribute
-def getUnknownAttribute(self,nodeType):
-    
-    """Parse an unknown attribute in a <v> or <t> element."""
-    
-    import binascii
-    import pickle
-    
-    # New in 4.2.  The unknown tag has been pickled and hexlify'd.
-    attr,val = self.getUnknownTag()
-    if not attr:
-        return None,None
-    
-    try:
-        bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
-        val2 = pickle.loads(bin)
-        return attr,val2
-
-    except (TypeError,pickle.UnpicklingError,ImportError):
-        # Assume that Leo 4.1 wrote the attribute.
-        return attr,val
-#@nonl
-#@-node:EKR.20040526204036.1:getUnknownAttribute
-#@+node:EKR.20040627114602:getDescendentUnknownAttributes
-def getDescendentUnknownAttributes (self,s):
-    
-    try:
-        bin = binascii.unhexlify(s) # Throws a TypeError if val is not a hex string.
-        val = pickle.loads(bin)
-        return val
-
-    except (TypeError,pickle.UnpicklingError,ImportError):
-        return None
-#@nonl
-#@-node:EKR.20040627114602:getDescendentUnknownAttributes
-#@+node:ekr.20031218072017.1553:getLeoFile
-# The caller should enclose this in begin/endUpdate.
-
-def getLeoFile (self,fileName,atFileNodesFlag=True):
-
-    c = self.c
-    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
-    << warn on read-only files >>
-    self.mFileName = c.mFileName
-    self.tnodesDict = {}
-    self.descendentUnknownAttributesDictList = []
-    ok = True
-    c.loading = True # disable c.changed
-    
-    try:
-        << scan all the xml elements >>
-    except BadLeoFile, message:
-        << raise an alert >>
-        ok = False
-
-    c.frame.tree.redraw_now(scroll=False)
-    
-    if ok and atFileNodesFlag:
-        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
-
-    if not c.currentPosition():
-        c.setCurrentPosition(c.rootPosition())
-
-    c.selectVnode(c.currentPosition()) # load body pane
-    c.loading = False # reenable c.changed
-    c.setChanged(c.changed) # Refresh the changed marker.
-    << restore unknown attributes in descendent tnodes >>
-    self.descendentUnknownAttributesDictList = []
-    self.tnodesDict = {}
-    return ok, self.ratio
-#@nonl
-#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
-try:
-    self.read_only = False
-    self.read_only = not os.access(fileName,os.W_OK)
-    if self.read_only:
-        g.es("read only: " + fileName,color="red")
-except:
-    if 0: # testing only: access may not exist on all platforms.
-        g.es("exception getting file access")
-        g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
-#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
-self.getXmlVersionTag()
-self.getXmlStylesheetTag()
-self.getTag("<leo_file>")
-self.getLeoHeader()
-self.getGlobals()
-self.getPrefs()
-self.getFindPanelSettings()
-
-# Causes window to appear.
-c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
-g.es("reading: " + fileName)
-
-self.getVnodes()
-self.getTnodes()
-self.getCloneWindows()
-self.getTag("</leo_file>")
-#@nonl
-#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
-#@+node:ekr.20031218072017.1556:<< raise an alert >>
-# All other exceptions are Leo bugs.
-
-g.es_exception()
-g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
-#@nonl
-#@-node:ekr.20031218072017.1556:<< raise an alert >>
-#@+node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
-for resultDict in self.descendentUnknownAttributesDictList:
-    for gnx in resultDict.keys():
-        tref = self.canonicalTnodeIndex(gnx)
-        t = self.tnodesDict.get(tref)
-        if t:
-            t.unknownAttributes = resultDict[gnx]
-        else:
-            g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-#@nonl
-#@-node:EKR.20040627120120:<< restore unknown attributes in descendent tnodes >>
-#@-node:ekr.20031218072017.1553:getLeoFile
-#@-node:EKR.20040614151841.2:(Read and write all t.unknownAttributes in top vnode of an @thin tree)
 #@-node:EKR.20040626110541:6/28
 #@+node:EKR.20040628084530:6/29
 #@+node:EKR.20040628080251.2:(Fixed bug reading leo.nsi)
@@ -44614,6 +44432,8 @@ def readEndNode (self,s,i,middle=False):
 #@-node:EKR.20040628084530:6/29
 #@-node:ekr.20040629162758:June 2004
 #@-node:EKR.20040610102329:In 4.2 b1
+#@+node:ekr.20040701065235:in 4.2 b2
+#@-node:ekr.20040701065235:in 4.2 b2
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
 #@nonl
