@@ -18,13 +18,19 @@ __plugin_requires__ = ["plugin_menu"]
 #@+node:pap.20041006184225.2:<< version history >>
 #@+at
 # 
-# 0.1: Paul Paterson - Initial version
+# 0.1 Paul Paterson: - Initial version
 # 
-# 0.2: EKR:
+# 0.2 EKR:
 #     - The check for .ini files looks for the actual x.ini file.
 #       (This required that spellpyx uses spellpyx.ini rather than 
 # mod_spelling.ini.)
 #     - Minor stylistic changes.
+# 0.4 EKR:
+#     - Added USE_PRIORITY switch.
+#       Priority is non-functional, and isn't needed.
+#       Leo loads plugins in the order in which they appear in 
+# pluginsManager.txt.
+#       Furthermore, this plugin preserves that order.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -82,6 +88,8 @@ Done
 #@nonl
 #@-node:pap.20041009141528:<< todo >>
 #@nl
+
+USE_PRIORITY = False # True: show non-functional priority field.
 
 #@+others
 #@+node:pap.20041006185727:topLevelMenu
@@ -165,12 +173,13 @@ class PluginView(Tk.Frame):
         #@nonl
         #@-node:pap.20041009135426:Has Top level
         #@+node:pap.20041009135426.1:Priority
-        self.priority = Pmw.EntryField(self.top,
+        if USE_PRIORITY:
+            self.priority = Pmw.EntryField(self.top,
                 labelpos = 'w',
                 label_text = 'Priority:',
-        )
-        
-        self.priority.pack(side="top", fill="x", expand=0)
+            )
+            
+            self.priority.pack(side="top", fill="x", expand=0)
         #@nonl
         #@-node:pap.20041009135426.1:Priority
         #@+node:pap.20041008231028.1:Description
@@ -228,9 +237,17 @@ class PluginView(Tk.Frame):
         #@-node:pap.20041009224739:Requires
         #@-others
         
-        Pmw.alignlabels([self.name, self.version, self.status, self.filename,
-                         self.has_ini, self.has_toplevel, self.priority])        
-        
+        if USE_PRIORITY:
+            Pmw.alignlabels([
+                self.name, self.version, self.status,
+                self.filename, self.has_ini, self.has_toplevel,
+                self.priority, 
+            ])
+        else:
+             Pmw.alignlabels([
+                self.name, self.version, self.status,
+                self.filename, self.has_ini, self.has_toplevel,
+            ])
     #@nonl
     #@-node:pap.20041008224318.1:PluginView.__init__
     #@+node:pap.20041008224625:showPlugin
@@ -244,7 +261,8 @@ class PluginView(Tk.Frame):
             g.choose(plugin.has_config,"Yes","No"))
         self.has_toplevel.setentry(
             g.choose(plugin.has_toplevel,"Yes","No"))
-        self.priority.setentry(plugin.priority)
+        if USE_PRIORITY:
+            self.priority.setentry(plugin.priority)
         self.description.settext(plugin.description.strip())
         self.commands.setlist(plugin.commands)
         self.handlers.setlist(plugin.handlers)
@@ -724,7 +742,6 @@ class ListReportDialog:
 #@-node:pap.20041009140132:UI
 #@+node:pap.20041009140132.1:Implementation
 #@+node:pap.20041006184225.6:class Plugin
-
 class Plugin:   
     """Represents a single plugin instance"""
     
@@ -770,19 +787,24 @@ class Plugin:
         self.getDetails(text)
     #@nonl
     #@-node:pap.20041006193013:initFrom
+    #@+node:ekr.20041113095851:Must be overridden in subclasses...
     #@+node:pap.20041006212105:getName
     def getName(self, location):
+    
         """Determine the plugin name from the location"""
+    
         raise NotImplementedError("Must Override")
     #@-node:pap.20041006212105:getName
     #@+node:pap.20041006193239:getContents
-    
     def getContents(self):
+    
         """Return the contents of the file"""
+    
         raise NotImplementedError("Must override")    
         
     #@nonl
     #@-node:pap.20041006193239:getContents
+    #@-node:ekr.20041113095851:Must be overridden in subclasses...
     #@+node:pap.20041006194759:getDetails
     def getDetails(self, text):
         """Get the details of the plugin
@@ -792,7 +814,6 @@ class Plugin:
             hooks
             config
             commands
-            
         """
         self.is_plugin = self.hasImport(text, "leoPlugins") 
         self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
@@ -802,30 +823,31 @@ class Plugin:
         self.description = pat1 or pat2 or "Unknown"
         self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
         self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
-        if 1: # Just look for the matching .ini file.
-            ini_file_name = g.os_path_join(
-                g.app.loadDir,"..","plugins",self.getName(self.filename)+".ini")
-            ini_file_name = g.os_path_abspath(ini_file_name)
-            self.has_config = g.os_path_exists(ini_file_name)
-            # g.trace(self.has_config,ini_file_name)
-        else:
-            self.has_config = self.hasImport(text, "ConfigParser") 
+        # Look for the matching .ini file.
+        ini_file_name = g.os_path_join(
+            g.app.loadDir,"..","plugins",
+            self.getName(self.filename)+".ini")
+        ini_file_name = g.os_path_abspath(ini_file_name)
+        self.has_config = g.os_path_exists(ini_file_name)
         self.hash = sha.sha(text).hexdigest()
         self.can_read = True
-        self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
-        self.has_toplevel = self.hasPattern(text, "def topLevelMenu") 
+        if USE_PRIORITY:
+            self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
+        self.has_toplevel = self.hasPattern(text, "def topLevelMenu")
+    #@nonl
     #@-node:pap.20041006194759:getDetails
     #@+node:pap.20041006200000:hasPattern
-    
     def hasPattern(self, text, pattern):
+        
         """Return True if the text contains the pattern"""
+    
         return self.getPattern(text, pattern) is not None
     #@nonl
     #@-node:pap.20041006200000:hasPattern
     #@+node:pap.20041009230351:hasImport
-    
     def hasImport(self, text, module_name):
-        """Return True if the next includes an import of the module"""
+    
+        """Return True if the text includes an import of the module"""
         if self.hasPattern(text, "import %s" % module_name):
             return True
     
@@ -836,9 +858,10 @@ class Plugin:
     #@nonl
     #@-node:pap.20041009230351:hasImport
     #@+node:pap.20041006194759.1:getPattern
-    
     def getPattern(self, text, pattern, default=None):
+    
         """Return a single match for the specified pattern in the text or the default"""
+    
         matches = self.getPatterns(text, pattern)
         if matches:
             return matches[0]
@@ -847,17 +870,20 @@ class Plugin:
     #@nonl
     #@-node:pap.20041006194759.1:getPattern
     #@+node:pap.20041006194917:getPatterns
-    
     def getPatterns(self, text, pattern):
+    
         """Return all matches of the pattern in the text"""
+    
         exp = re.compile(pattern, re.MULTILINE + re.DOTALL)
+    
         return exp.findall(text)
     #@nonl
     #@-node:pap.20041006194917:getPatterns
     #@+node:pap.20041006220611:asString
-    
     def asString(self, detail=False):
+        
         """Return a string representation"""
+    
         if not detail:
             return "%(enabled)s - %(name)s (v%(version)s)" % self.__dict__
         else:
@@ -872,28 +898,30 @@ class Plugin:
                 "Commands: %(commands)s\n"
                 "Handlers: %(handlers)s\n" % self.__dict__
             )
+    #@nonl
     #@-node:pap.20041006220611:asString
     #@+node:pap.20041009023004:writeTo
-    
     def writeTo(self, location):
+    
         """Write this plugin to the file location"""
+    
         filename = os.path.join(location, "%s.py" % self.name)
         try:
             f = file(filename, "w")
         except (IOError, OSError), err:
-            raise InvalidPlugin("Unable to open plugin file '%s': %s" % 
-                                    (filename, err))
+            raise InvalidPlugin(
+                "Unable to open plugin file '%s': %s" % (filename, err))
         try:
             try:
                 f.write(self.text)
             finally:
                 f.close()
         except Exception, err:
-            raise InvalidPlugin("Unable to write plugin file '%s': %s" % 
-                                    (filename, err))              
+            raise InvalidPlugin(
+                "Unable to write plugin file '%s': %s" % (filename, err))
+    #@nonl
     #@-node:pap.20041009023004:writeTo
     #@+node:pap.20041009225149:getRequiredModules
-    
     def getRequiredModules(self, plugin_collection):
         """Determine which modules are also required by this plugin
         
@@ -958,7 +986,6 @@ class Plugin:
 #@nonl
 #@-node:pap.20041006184225.6:class Plugin
 #@+node:pap.20041006192557:class LocalPlugin
-
 class LocalPlugin(Plugin):
     """A plugin on the local file system"""
     
@@ -975,9 +1002,10 @@ class LocalPlugin(Plugin):
     #@nonl
     #@-node:pap.20041006212131:getName
     #@+node:pap.20041006193459.1:getContents
-    
     def getContents(self):
+    
         """Return the contents of the file"""
+    
         try:
             f = file(self.filename, "r")
         except (IOError, OSError), err:
@@ -998,29 +1026,29 @@ class LocalPlugin(Plugin):
 #@nonl
 #@-node:pap.20041006192557:class LocalPlugin
 #@+node:pap.20041006203049:class CVSPlugin
-
 class CVSPlugin(Plugin):
      """A plugin on CVS"""
      
      #@     @+others
      #@+node:pap.20041006212238:getName
-     
      def getName(self, location):
+     
          """Determine the plugin name from the location"""
+     
          return re.match("(.*)/(.*?)\.py\?", location).groups()[1]
      #@nonl
      #@-node:pap.20041006212238:getName
      #@+node:pap.20041006213006:getContents
-     
      def getContents(self):
+     
          """Return the contents of the file"""
-         #
+     
          # Connect to CVS
          try:
              url = urllib.urlopen(self.filename)
          except Exception, err:
              raise InvalidPlugin("Could not get connection to CVS: %s" % err)
-         #
+     
          # Get the page with file content
          try:
              try:
@@ -1031,40 +1059,34 @@ class CVSPlugin(Plugin):
              raise InvalidPlugin("Could not read file '%s' from CVS: %s" % (self.filename, err))
              
          return text        
-             
      #@nonl
      #@-node:pap.20041006213006:getContents
      #@+node:pap.20041009224435:getViewFilename
-     
      def getViewFilename(self):
-         """Return the url to view the file"""
-         return self.filename.replace(r"/*checkout*", "") + "&view=markup"
          
-     #@nonl
+         """Return the url to view the file"""
+     
+         return self.filename.replace(r"/*checkout*", "") + "&view=markup"
      #@-node:pap.20041009224435:getViewFilename
      #@-others
 #@nonl
 #@-node:pap.20041006203049:class CVSPlugin
 #@+node:pap.20041006190628:class PluginCollection
-
 class PluginCollection(dict):
+
     """Represents a collection of plugins"""
     
     plugin_class = None
     
     #@    @+others
     #@+node:pap.20041006192257:__init__
-    
     def __init__(self):
         """Initialize the plugin collection"""
     #@-node:pap.20041006192257:__init__
     #@+node:pap.20041006191239:initFrom
-    
     def initFrom(self, location, callback=None):
-        """Initialize the collection from the filesystem location
-        
+        """Initialize the collection from the filesystem location.
         Returns a list of errors that occured.
-        
         """
         if callback: callback("Looking for list of plugins")
         errors = []
@@ -1072,43 +1094,43 @@ class PluginCollection(dict):
         for plugin_file in plugin_files:
             if callback: callback("Processing %s" % plugin_file)    
             plugin = self.plugin_class()
-            #
             # Get details
             try:
                 plugin.initFrom(plugin_file)
             except Exception, err:
                 errors.append((plugin_file, err))
-            #
             # Store anything that looks like a plugin
             if plugin.is_plugin:
                 self[plugin.name] = plugin
-        #
+    
         # Now we have to go back through and check for dependencies
         # We cannot do this up front because we need to know the names
         # of other plugins to detect the dependencies
         for plugin in self.values():
             plugin.getRequiredModules(self)
-        #
+    
         return errors
     #@-node:pap.20041006191239:initFrom
     #@+node:pap.20041006191829:getAllFiles
-    
     def getAllFiles(self, location):
+        
         """Return all the files in the location"""
+    
         raise NotImplementedError("Must override")    
     #@-node:pap.20041006191829:getAllFiles
     #@+node:pap.20041006221438:sortedNames
-    
     def sortedNames(self):
+    
         """Return a list of the plugin names sorted alphabetically"""
+    
         names = [item.name for item in self.values()]
         names.sort()
         return names
     #@nonl
     #@-node:pap.20041006221438:sortedNames
     #@+node:pap.20041008220723:setEnabledStateFrom
-    
     def setEnabledStateFrom(self, enabler):
+    
         """Set the enabled state of each plugin using the enabler object"""
         for name in self:
             if name in enabler.actives:
@@ -1120,7 +1142,6 @@ class PluginCollection(dict):
     #@nonl
     #@-node:pap.20041008220723:setEnabledStateFrom
     #@+node:pap.20041008233947:enablePlugin
-    
     def enablePlugin(self, plugin, enabler):
         """Enable a plugin"""
         plugin.enabled = "Active"
@@ -1128,7 +1149,6 @@ class PluginCollection(dict):
     #@nonl
     #@-node:pap.20041008233947:enablePlugin
     #@+node:pap.20041008234033:disablePlugin
-    
     def disablePlugin(self, plugin, enabler):
         """Enable a plugin"""
         plugin.enabled = "Inactive"
@@ -1136,14 +1156,16 @@ class PluginCollection(dict):
     #@nonl
     #@-node:pap.20041008234033:disablePlugin
     #@+node:pap.20041009025708.1:getConflicts
-    
     def getConflicts(self, plugin):
+    
         """Find conflicting hook handlers for this plugin"""
+    
         conflicts = []
         for this_plugin in self.values():
             if this_plugin.name <> plugin.name:
                 for conflict in plugin.handlers.intersection(this_plugin.handlers):
                     conflicts.append((this_plugin.name, conflict))
+    
         return conflicts
             
     #@nonl
@@ -1151,7 +1173,6 @@ class PluginCollection(dict):
     #@-others
 #@-node:pap.20041006190628:class PluginCollection
 #@+node:pap.20041006190817:class LocalPluginCollection
-
 class LocalPluginCollection(PluginCollection):
     """Represents a plugin collection based on the local file system"""
     
@@ -1159,32 +1180,33 @@ class LocalPluginCollection(PluginCollection):
     
     #@    @+others
     #@+node:pap.20041006191803:getFilesMatching
-    
     def getFilesMatching(self, location):
+    
         """Return all the files matching the pattern"""
+    
         return [filename for filename in self.getAllFiles(location)
                     if fnmatch.fnmatch(filename, "*.py")]
     #@nonl
     #@-node:pap.20041006191803:getFilesMatching
     #@+node:pap.20041006191803.1:getAllFiles
-    
     def getAllFiles(self, location):
+    
         """Return all the files in the location"""
+    
         return [os.path.join(location, filename) for filename in os.listdir(location)]
     #@nonl
     #@-node:pap.20041006191803.1:getAllFiles
     #@-others
 #@-node:pap.20041006190817:class LocalPluginCollection
 #@+node:pap.20041006201849:class CVSPluginCollection
-
 class CVSPluginCollection(PluginCollection):
+
     """Represents a plugin collection based located in a CVS repository"""
     
     plugin_class = CVSPlugin
     
     #@    @+others
     #@+node:pap.20041006202102:getFilesMatching
-    
     def getFilesMatching(self, location):
         """Return all the files in the location"""
         #
@@ -1196,7 +1218,6 @@ class CVSPluginCollection(PluginCollection):
                     for item in filename.findall(text)]
     #@-node:pap.20041006202102:getFilesMatching
     #@+node:pap.20041006202703:getListingPage
-    
     def getListingPage(self, location):
         """Return the HTML page with files listed"""
         #
@@ -1218,7 +1239,6 @@ class CVSPluginCollection(PluginCollection):
     #@nonl
     #@-node:pap.20041006202703:getListingPage
     #@+node:pap.20041009021201:setEnabledStateFrom
-    
     def setEnabledStateFrom(self, collection):
         """Set the enabled state based on another collection"""
         for plugin in self.values():
@@ -1237,17 +1257,16 @@ class CVSPluginCollection(PluginCollection):
     #@-others
 #@-node:pap.20041006201849:class CVSPluginCollection
 #@+node:pap.20041006232717:class EnableManager
-
 class EnableManager:
+
     """Manages the enabled/disabled status of plugins"""
     
     #@    @+others
     #@+node:pap.20041006232717.1:initFrom
-    
     def initFrom(self, location):
         """Initialize the manager from a folder"""
         manager_filename = os.path.join(location, "pluginsManager.txt")
-        #
+    
         # Get the text of the plugin manager file
         try:
             f = file(manager_filename, "r")
@@ -1266,11 +1285,10 @@ class EnableManager:
     #@nonl
     #@-node:pap.20041006232717.1:initFrom
     #@+node:pap.20041009003552:writeFile
-    
     def writeFile(self, location):
         """Initialize the manager from a folder"""
         manager_filename = os.path.join(location, "pluginsManager.txt")
-        #
+    
         # Get the text of the plugin manager file
         try:
             f = file(manager_filename, "w")
@@ -1289,35 +1307,33 @@ class EnableManager:
     #@nonl
     #@-node:pap.20041009003552:writeFile
     #@+node:pap.20041008200028:parseManagerText
-    
     def parseManagerText(self, text):
         """Parse the text in the manager file"""
-        #
+    
         # Regular expressions for scanning the file
         find_active = re.compile(r"^\s*(\w+)\.py", re.MULTILINE)
         find_inactive = re.compile(r"^\s*#\s*(\w+)\.py", re.MULTILINE)
         find_manager = re.compile(r"^\s*plugin_manager\.py", re.MULTILINE)
-        #
+    
         # Get active plugin defintions
         self.actives = dict([(match.groups()[0], match) 
                 for match in find_active.finditer(text)])
-        #
+    
         # Get inactive plugin definitions
         self.inactives = dict([(match.groups()[0], match) 
                 for match in find_inactive.finditer(text)])
-        #
+    
         # List of all plugins
         self.all = {}
         self.all.update(self.actives)
         self.all.update(self.inactives)
-        #
+    
         # Locaction of the plugin_manager.py plugin - this is where
         # we add additional files
         self.manager = find_manager.search(text)
     #@nonl
     #@-node:pap.20041008200028:parseManagerText
     #@+node:pap.20041008234256:updateState
-    
     def updateState(self, plugin):
         """Update the state for the given plugin"""
         # Get the filename for the new entry
@@ -1325,22 +1341,22 @@ class EnableManager:
             newentry = "%s.py" % plugin.name
         else:
             newentry = "#%s.py" % plugin.name 
-        #
+    
         if plugin.name in self.all:
             # Plugin exists in the management file
             item = self.all[plugin.name]
             # TODO: Unicode issues with the following line??
             self.text = "%s%s%s" % (
-                            self.text[:item.start()],
-                            str(newentry),
-                            self.text[item.end():])      
+                self.text[:item.start()],
+                str(newentry),
+                self.text[item.end():])      
         else:
-            # Plugin doesn't exist - we have to add it at a suitale
-            # place
+            # Plugin doesn't exist - add it at a suitale place
             self.text = "%s%s\n%s" % (
-                            self.text[:self.manager.start()],
-                            str(newentry),
-                            self.text[self.manager.start():])
+                self.text[:self.manager.start()],
+                str(newentry),
+                self.text[self.manager.start():])
+    
         self.writeFile(g.os_path_join(g.app.loadDir,"..","plugins"))
     #@nonl
     #@-node:pap.20041008234256:updateState
