@@ -57,6 +57,12 @@ def set_delims_from_string(s):
 		if j == i: break
 		delims[count] = s[j:i]
 		count += 1
+		
+	# 'rr 09/25/02
+	if count == 2: # delims[0] is always the single-line delim.
+		delims[2] = delims[1]
+		delims[1] = delims[0]
+		delims[0] = None
 
 	# 7/8/02: The "REM hack": replace underscores by blanks.
 	# 9/25/02: The "perlpod hack": replace double underscores by newlines.
