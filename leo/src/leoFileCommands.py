@@ -520,6 +520,9 @@ class fileCommands:
 	#@+body
 	# This method reads a Leo outline from string s in clipboard format.
 	def getLeoOutline (self,s):
+		
+		es("can't paste trees yet in 4.0",color="red")
+		return None ## This will create another error message.  Harmless for now.
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
@@ -1534,13 +1537,15 @@ class fileCommands:
 	
 		self.put("<vnodes>") ; self.put_nl()
 		if self.usingClipboard:
-			# Bug fix for 4.0: Put a _copy_ of the selected tree so we don't link tnodes!
-			old_v = c.currentVnode()
-			new_v = old_v.copyTreeWithNewTnodes()
-			self.assignFileIndices(new_v)
-			self.putVnode(
-				new_v,None) # Don't write top vnode status bit.
-			self.copiedTree = new_v
+			es("can't copy trees yet in 4.0",color="red")
+			if 0: # This appears to be extremely dangerous.  Don't know why yet.
+				# Bug fix for 4.0: Put a _copy_ of the selected tree so we don't link tnodes!
+				old_v = c.currentVnode()
+				new_v = old_v.copyTreeWithNewTnodes()
+				self.assignFileIndices(new_v)
+				self.putVnode(
+					new_v,None) # Don't write top vnode status bit.
+				self.copiedTree = new_v
 		else: 
 			v = c.rootVnode()
 			while v:
