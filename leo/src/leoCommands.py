@@ -284,6 +284,7 @@ class baseCommands:
         c.endUpdate()
     
         frame.body.setFocus()
+        return c # For unit test.
     #@nonl
     #@-node:ekr.20031218072017.1623:new
     #@+node:ekr.20031218072017.2821:open

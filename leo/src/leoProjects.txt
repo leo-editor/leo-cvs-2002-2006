@@ -4188,7 +4188,7 @@ def cantImport (moduleName,pluginName=None,verbose=True):
     # g.trace(verbose,moduleName,repr(pluginName))
     # if not pluginName: g.printStack()
     
-    if verbose:
+    if verbose and not g.app.unitTesting:
         s = "Can not import %s" % moduleName
         if pluginName: s += " from plugin %s" % pluginName
         print s ; g.es(s,color="blue")
@@ -10488,6 +10488,108 @@ The difference is in quotes.  Especially quotes around "%1" seem to matter.
 For example rst2.py plugin fails if it is called from a leo file that has spaces
 in it is path.
 #@-node:ekr.20041022063506:(Fixed file association in leoDist.leo)
+#@+node:ekr.20050106032427:(g.import wrappers return module if it is in sys.modules)
+#@+node:ekr.20041219095213:import wrappers
+@ 1/6/05: The problem with Tkinter is that imp.load_module is equivalent to reload.
+
+The solutions is easy: simply return sys.modules.get(moduleName) if moduleName is in sys.modules!
+#@nonl
+#@+node:ekr.20040917061619:g.cantImport
+def cantImport (moduleName,pluginName=None,verbose=True):
+    
+    """Print a "Can't Import" message and return None."""
+
+    # g.trace(verbose,moduleName,repr(pluginName))
+    # if not pluginName: g.printStack()
+    
+    if verbose and not g.app.unitTesting:
+        s = "Can not import %s" % moduleName
+        if pluginName: s += " from plugin %s" % pluginName
+        print s ; g.es(s,color="blue")
+
+    return None
+#@nonl
+#@-node:ekr.20040917061619:g.cantImport
+#@+node:ekr.20041219095213.1:g.importModule
+def importModule (moduleName,pluginName=None,verbose=False):
+
+    '''Try to import a module as Python's import command does.
+
+    moduleName is the module's name, without file extension.'''
+    
+    module = sys.modules.get(moduleName)
+    if not module:
+        try:
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+            except Exception:
+                g.es("unexpected exception in g.import",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally:
+            if theFile: theFile.close()
+    return module
+#@nonl
+#@-node:ekr.20041219095213.1:g.importModule
+#@+node:ekr.20041219071407:g.importExtension
+def importExtension (moduleName,pluginName=None,verbose=False):
+
+    '''Try to import a module.  If that fails,
+    try to import the module from Leo's extensions directory.
+
+    moduleName is the module's name, without file extension.'''
+    
+    # g.trace(verbose,moduleName,pluginName)
+    
+    module = g.importModule(moduleName,pluginName=pluginName,verbose=False)
+
+    if not module:
+        module = g.importFromPath(moduleName,g.app.extensionsDir,
+            pluginName=pluginName,verbose=verbose)
+
+    return module
+#@nonl
+#@-node:ekr.20041219071407:g.importExtension
+#@+node:ekr.20031218072017.2278:g.importFromPath
+def importFromPath (name,path,pluginName=None,verbose=False):
+    
+    fn = g.shortFileName(name)
+    moduleName,ext = g.os_path_splitext(fn)
+    path = g.os_path_normpath(path)
+    path = g.toEncodedString(path,app.tkEncoding)
+    
+    # g.trace(verbose,name,pluginName)
+    module = sys.modules.get(moduleName)
+    if not module:
+        try:
+            theFile = None
+            import imp
+            try:
+                data = imp.find_module(moduleName,[path]) # This can open the file.
+                theFile,pathname,description = data
+                module = imp.load_module(moduleName,theFile,pathname,description)
+            except ImportError:
+                pass
+            except Exception:
+                g.es("unexpected exception in g.importFromPath",color='blue')
+                g.es_exception()
+        # Put no return statements before here!
+        finally: 
+            if theFile: theFile.close()
+        
+    if not module:
+        g.cantImport(moduleName,pluginName=pluginName,verbose=verbose)
+    return module
+#@nonl
+#@-node:ekr.20031218072017.2278:g.importFromPath
+#@-node:ekr.20041219095213:import wrappers
+#@-node:ekr.20050106032427:(g.import wrappers return module if it is in sys.modules)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -11307,6 +11409,956 @@ c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
 #@nonl
 #@-node:ekr.20040701152235.18:leoCommands (done)
 #@-node:ekr.20040701152235:(Fixed shawdow warnings)
+#@+node:ekr.20050101093544:(Always use os.rename in utils_rename)
+#@+node:ekr.20050104110100:Notes
+@killcolor
+
+Apparently distutils.file_util is not present in all Python distributions!
+
+New approaches:
+    - Fall back on code in distutils.file_util if import fails.
+    - Make sure the src and dst volumes are the same (so Linux os.rename will always work)
+    - Simplify replaceTargetFileIfDifferent by creating new routines.
+
+What I did:
+    - Rewrote replaceTargetFileIfDifferent in terms of atFile.rename, atFile.remove, etc.
+    - Rewrote update_file_if_changed in terms of g.utils_rename, g.utils_remove, etc.
+#@nonl
+#@-node:ekr.20050104110100:Notes
+#@+node:ekr.20050104135720:Used by tangle code & leoFileCommands
+#@+node:ekr.20031218072017.1241:g.update_file_if_changed
+# This is part of the tangle code.
+
+def update_file_if_changed(file_name,temp_name):
+
+    """Compares two files.
+    
+    If they are different, we replace file_name with temp_name.
+    Otherwise, we just delete temp_name. Both files should be closed."""
+
+    if g.os_path_exists(file_name):
+        import filecmp
+        if filecmp.cmp(temp_name, file_name):
+            kind = 'unchanged'
+            ok = g.utils_remove(temp_name)
+        else:
+            kind = '***updating'
+            mode = g.utils_stat(file_name)
+            ok = g.utils_rename(temp_name,file_name,mode)
+    else:
+        kind = 'creating'
+        ok = g.utils_rename(temp_name,file_name)
+        
+    if ok:
+        g.es('%12s: %s' % (kind,file_name))
+    else:
+        g.es("rename failed: no file created!",color="red")
+        g.es(file_name," may be read-only or in use")
+#@nonl
+#@-node:ekr.20031218072017.1241:g.update_file_if_changed
+#@+node:ekr.20050104123726.3:g.utils_remove & test
+def utils_remove (fileName,verbose=True):
+
+    try:
+        os.remove(fileName)
+        return True
+    except:
+        if verbose:
+            g.es("exception removing:" + fileName)
+            g.es_exception()
+        return False
+#@nonl
+#@+node:ekr.20050107084901:test_utils_remove
+def test_utils_remove():
+    
+    import leoGlobals as g
+    import os
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@-node:ekr.20050107084901:test_utils_remove
+#@-node:ekr.20050104123726.3:g.utils_remove & test
+#@+node:ekr.20031218072017.1263:g.utils_rename & test
+<< about os.rename >>
+
+def utils_rename(src,dst,mode=None,verbose=True):
+
+    '''Platform independent rename.'''
+    
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if g.os_path_exists(dst):
+        if not g.utils_remove(dst):
+            return False
+        
+    try:
+        if 1: # Use rename in all cases.
+            os.rename(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+        else:
+            # This isn't a great solution: distutils.file_util may not exist.
+            if sys.platform=="win32":
+                os.rename(src,dst)
+            else:
+                from distutils.file_util import move_file
+                move_file(src,dst)
+            if mode:
+                g.utils_chmod(dst,mode,verbose)
+            return True
+
+    except Exception:
+        if verbose:
+            g.es('Exception renaming %s to %s' % (src,dst),color='red')
+            g.es_exception()
+        return False
+#@nonl
+#@+node:ekr.20050104123726.1:<< about os.rename >>
+@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
+
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
+
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
+
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.
+#@nonl
+#@-node:ekr.20050104123726.1:<< about os.rename >>
+#@+node:ekr.20050107085710.1:test_utils_rename
+def test_utils_rename():
+
+    import leoGlobals as g
+    import os
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not g.utils_remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert g.utils_remove(path,verbose=True)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710.1:test_utils_rename
+#@-node:ekr.20031218072017.1263:g.utils_rename & test
+#@+node:ekr.20050104124903:g.utils_chmod
+def utils_chmod (fileName,mode,verbose=True):
+    
+    if mode is None:
+        return
+
+    try:
+        os.chmod(fileName,mode)
+    except:
+        if verbose:
+            g.es("exception in os.chmod(%s)" % (fileName))
+            g.es_exception()
+#@nonl
+#@-node:ekr.20050104124903:g.utils_chmod
+#@+node:ekr.20050104123726.4:g.utils_stat
+def utils_stat (fileName):
+
+    '''Return the access mode of named file, removing any setuid, setgid, and sticky bits.'''
+
+    try:
+        mode = (os.stat(fileName))[0] & 0777
+    except:
+        mode = None
+        
+    return mode
+#@nonl
+#@-node:ekr.20050104123726.4:g.utils_stat
+#@-node:ekr.20050104135720:Used by tangle code & leoFileCommands
+#@+node:ekr.20031218072017.3046:write_Leo_file
+def write_Leo_file(self,fileName,outlineOnlyFlag):
+
+    c = self.c
+
+    self.assignFileIndices()
+    if not outlineOnlyFlag:
+        << write all @file nodes >>
+    << return if the .leo file is read-only >>
+    try:
+        << create backup file >>
+        self.mFileName = fileName
+        << create the output file >>
+        << put the .leo file >>
+    except:
+        << report the exception >>
+        << erase filename and rename backupName to fileName >>
+        return False
+    if self.outputFile:
+        << close the output file >>
+        << delete backup file >>
+        return True
+    else: # This probably will never happen because errors should raise exceptions.
+        << erase filename and rename backupName to fileName >>
+        return False
+        
+write_LEO_file = write_Leo_file # For compatibility with old plugins.
+#@nonl
+#@+node:ekr.20040324080359:<< write all @file nodes >>
+try:
+    # Write all @file nodes and set orphan bits.
+    c.atFileCommands.writeAll()
+except:
+    g.es_error("exception writing derived files")
+    g.es_exception()
+    return False
+#@nonl
+#@-node:ekr.20040324080359:<< write all @file nodes >>
+#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+# self.read_only is not valid for Save As and Save To commands.
+
+if g.os_path_exists(fileName):
+    try:
+        if not os.access(fileName,os.W_OK):
+            g.es("can not create: read only: " + fileName,color="red")
+            return False
+    except:
+        pass # os.access() may not exist on all platforms.
+#@nonl
+#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+#@+node:ekr.20031218072017.3047:<< create backup file >>
+# rename fileName to fileName.bak if fileName exists.
+if g.os_path_exists(fileName):
+    backupName = g.os_path_join(g.app.loadDir,fileName)
+    backupName = fileName + ".bak"
+    if g.os_path_exists(backupName):
+        g.utils_remove(backupName)
+    ok = g.utils_rename(fileName,backupName)
+    if not ok:
+        if self.read_only:
+            g.es("read only",color="red")
+        return False
+else:
+    backupName = None
+#@nonl
+#@-node:ekr.20031218072017.3047:<< create backup file >>
+#@+node:ekr.20040324080359.2:<< create the output file >>
+self.outputFile = open(fileName, 'wb') # 9/18/02
+if not self.outputFile:
+    g.es("can not open " + fileName)
+    << delete backup file >>
+    return False
+#@nonl
+#@+node:ekr.20031218072017.3048:<< delete backup file >>
+if backupName and g.os_path_exists(backupName):
+    try:
+        os.remove(backupName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting backup file:" + backupName)
+            g.es_exception()
+        return False
+    except:
+        g.es("exception deleting backup file:" + backupName)
+        g.es_exception()
+        return False
+#@-node:ekr.20031218072017.3048:<< delete backup file >>
+#@-node:ekr.20040324080359.2:<< create the output file >>
+#@+node:ekr.20040324080819.1:<< put the .leo file >>
+self.putProlog()
+self.putHeader()
+self.putGlobals()
+self.putPrefs()
+self.putFindSettings()
+#start = g.getTime()
+self.putVnodes()
+#start = g.printDiffTime("vnodes ",start)
+self.putTnodes()
+#start = g.printDiffTime("tnodes ",start)
+self.putPostlog()
+#@nonl
+#@-node:ekr.20040324080819.1:<< put the .leo file >>
+#@+node:ekr.20040324080819.2:<< report the exception >>
+g.es("exception writing: " + fileName)
+g.es_exception() 
+if self.outputFile:
+    try:
+        self.outputFile.close()
+        self.outputFile = None
+    except:
+        g.es("exception closing: " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.2:<< report the exception >>
+#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+g.es("error writing " + fileName)
+
+if fileName and g.os_path_exists(fileName):
+    try:
+        os.remove(fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception deleting: " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception deleting: " + fileName)
+        g.es_exception()
+        
+if backupName:
+    g.es("restoring " + fileName + " from " + backupName)
+    try:
+        g.utils_rename(backupName, fileName)
+    except OSError:
+        if self.read_only:
+            g.es("read only",color="red")
+        else:
+            g.es("exception renaming " + backupName + " to " + fileName)
+            g.es_exception()
+    except:
+        g.es("exception renaming " + backupName + " to " + fileName)
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+#@+node:ekr.20040324080819.3:<< close the output file >>
+try:
+    self.outputFile.close()
+    self.outputFile = None
+except:
+    g.es("exception closing: " + fileName)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20040324080819.3:<< close the output file >>
+#@-node:ekr.20031218072017.3046:write_Leo_file
+#@+node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+def replaceTargetFileIfDifferent (self):
+    
+    '''Create target file as follows:
+    1. If target file does not exist, rename output file to target file.
+    2. If target file is identical to output file, remove the output file.
+    3. If target file is different from output file,
+       remove target file, then rename output file to be target file.'''
+    
+    assert(self.outputFile is None)
+    
+    self.fileChangedFlag = False
+    
+    if self.toString: return self.fileChangedFlag
+
+    if g.os_path_exists(self.targetFileName):
+        if (
+            << files are identical >>
+        ):
+            self.remove(self.outputFileName)
+            g.es('%-10s %s' % ('unchanged:',self.shortFileName))
+            return False
+        else:
+            << report if the files differ only in line endings >>
+            mode = self.stat(self.targetFileName)
+            ok = self.rename(self.outputFileName,self.targetFileName,mode)
+            if ok:
+                g.es('%-10s %s' % ('writing:',self.shortFileName))
+                self.fileChangedFlag = True
+            return True # bwm
+    else:
+        # Rename the output file.
+        ok = self.rename(self.outputFileName,self.targetFileName)
+        if ok:
+            g.es('%-10s %s' % ('creating:',self.targetFileName))
+            self.fileChangedFlag = True
+        return False
+#@nonl
+#@+node:ekr.20050104131343:<< files are identical >>
+self.compareFiles(
+    self.outputFileName,
+    self.targetFileName,
+    not self.explicitLineEnding)
+#@nonl
+#@-node:ekr.20050104131343:<< files are identical >>
+#@+node:ekr.20041019090322:<< report if the files differ only in line endings >>
+if (
+    self.explicitLineEnding and
+    self.compareFiles(
+        self.outputFileName,
+        self.targetFileName,
+        ignoreLineEndings=True)):
+
+    g.es("correcting line endings in: " + self.targetFileName,color="blue")
+#@nonl
+#@-node:ekr.20041019090322:<< report if the files differ only in line endings >>
+#@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
+#@+node:ekr.20041005105605.217:writeError
+def writeError(self,message=None):
+
+    if self.errors == 0:
+        g.es_error("errors writing: " + self.targetFileName)
+
+    self.error(message)
+
+    self.root.setOrphan()
+    self.root.setDirty()
+#@nonl
+#@-node:ekr.20041005105605.217:writeError
+#@+node:ekr.20041005105605.220:error
+def error(self,message):
+
+    if message:
+        g.es_error(message)
+        print message
+
+    self.errors += 1
+#@nonl
+#@-node:ekr.20041005105605.220:error
+#@+node:ekr.20041005105605.219:Uilites... (atFile)
+#@+node:ekr.20050104131929:file operations...
+@ The difference, if any, between these methods and the corresponding g.utils_x
+functions is that these methods may call self.error.
+#@nonl
+#@+node:ekr.20050104131820:chmod
+def chmod (self,fileName,mode):
+    
+    # Do _not_ call self.error here.
+    return g.utils_chmod(fileName,mode)
+#@nonl
+#@-node:ekr.20050104131820:chmod
+#@+node:ekr.20050104131929.1:rename & test
+<< about os.rename >>
+
+def rename (self,src,dst,mode=None,verbose=True):
+
+    '''remove dst if it exists, then rename src to dst.
+    
+    Change the mode of the renamed file if mode is given.
+    
+    Return True if all went well.'''
+
+    head,tail=g.os_path_split(dst)
+    if head and len(head) > 0:
+        g.makeAllNonExistentDirectories(head)
+        
+    if g.os_path_exists(dst):
+        if not self.remove(dst,verbose=verbose):
+            return False
+
+    try:
+        os.rename(src,dst)
+        if mode != None:
+            self.chmod(dst,mode)
+        return True
+    except Exception:
+        if verbose:
+            self.error("exception renaming: %s to: %s" % (
+                self.outputFileName,self.targetFileName))
+            g.es_exception()
+        return False
+#@nonl
+#@+node:ekr.20050104131929.2:<< about os.rename >>
+@ Here is the Python 2.4 documentation for rename (same as Python 2.3)
+
+Rename the file or directory src to dst.  If dst is a directory, OSError will be raised.
+
+On Unix, if dst exists and is a file, it will be removed silently if the user
+has permission. The operation may fail on some Unix flavors if src and dst are
+on different filesystems. If successful, the renaming will be an atomic
+operation (this is a POSIX requirement).
+
+On Windows, if dst already exists, OSError will be raised even if it is a file;
+there may be no way to implement an atomic rename when dst names an existing
+file.
+#@nonl
+#@-node:ekr.20050104131929.2:<< about os.rename >>
+#@+node:ekr.20050107085710:test_atFile_rename
+def test_atFile_rename (self):
+
+    import leoGlobals as g
+    import os
+    
+    c = g.top() ; at = c.atFileCommands
+
+    exists = g.os_path_exists
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    path2 = g.os_path_join(g.app.testDir,'xyzzy2')
+    
+    # Create both paths.
+    for p in (path,path2):
+        if exists(p):
+            os.remove(p)
+        assert not exists(p)
+        f = file(p,'w')
+        f.write('test %s' % p)
+        f.close()
+        assert exists(p)
+    
+    assert at.rename(path,path2,verbose=True)
+    assert exists(path2)
+    f = file(path2)
+    s = f.read()
+    f.close()
+    # print 'Contents of %s: %s' % (path2,s)
+    assert s == 'test %s' % path
+    os.remove(path2)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107085710:test_atFile_rename
+#@-node:ekr.20050104131929.1:rename & test
+#@+node:ekr.20050104132018:remove & test
+def remove (self,fileName,verbose=True):
+
+    try:
+        os.remove(fileName)
+        return True
+    except:
+        if verbose:
+            self.error("exception removing:" + fileName)
+            g.es_exception()
+        return False
+#@nonl
+#@+node:ekr.20050107090156:test_atFile_remove
+def test_atFile_remove(self):
+    
+    import leoGlobals as g
+    import os
+    
+    c = g.top() ; at = c.atFileCommands
+    
+    exists = g.os_path_exists
+    
+    path = g.os_path_join(g.app.testDir,'xyzzy')
+    if exists(path):
+        os.remove(path)
+        
+    assert not exists(path)
+    assert not at.remove(path,verbose=False)
+    
+    f = file(path,'w')
+    f.write('test')
+    f.close()
+    
+    assert exists(path)
+    assert at.remove(path)
+    assert not exists(path)
+#@nonl
+#@-node:ekr.20050107090156:test_atFile_remove
+#@-node:ekr.20050104132018:remove & test
+#@+node:ekr.20050104132026:stat
+def stat (self,fileName):
+
+    '''Return the access mode of named file, removing any setuid, setgid, and sticky bits.'''
+    
+    # Do _not_ call self.error here.
+    return g.utils_stat(fileName)
+#@nonl
+#@-node:ekr.20050104132026:stat
+#@-node:ekr.20050104131929:file operations...
+#@+node:ekr.20041005105605.220:error
+def error(self,message):
+
+    if message:
+        g.es_error(message)
+        print message
+
+    self.errors += 1
+#@nonl
+#@-node:ekr.20041005105605.220:error
+#@+node:ekr.20041005105605.221:exception
+def exception (self,message):
+    
+    self.error(message)
+    g.es_exception()
+#@nonl
+#@-node:ekr.20041005105605.221:exception
+#@+node:ekr.20041005105605.222:atFile.scanAllDirectives
+@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
+
+This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
+@c
+
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
+
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(theDict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
+#@nonl
+#@+node:ekr.20041005105605.223:<< Set ivars >>
+self.page_width = self.c.page_width
+self.tab_width  = self.c.tab_width
+
+self.default_directory = None # 8/2: will be set later.
+
+delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
+self.language = c.target_language
+
+self.encoding = c.config.default_derived_file_encoding
+self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+#@nonl
+#@-node:ekr.20041005105605.223:<< Set ivars >>
+#@+node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+
+theDir = g.choose(name,g.os_path_dirname(name),None)
+
+if theDir and len(theDir) > 0 and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        self.default_directory = theDir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(theDir)
+        if not self.default_directory:
+            self.error("Directory \"" + theDir + "\" does not exist")
+#@nonl
+#@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
+#@+node:ekr.20041005105605.225:<< Test for @path >>
+# We set the current director to a path so future writes will go to that directory.
+
+if not self.default_directory and not old.has_key("path") and theDict.has_key("path"):
+
+    k = theDict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
+#@nonl
+#@+node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+path = path.strip()
+
+if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
+    path = g.os_path_join(g.app.loadDir,path)
+#@nonl
+#@-node:ekr.20041005105605.226:<< compute relative path from s[k:] >>
+#@+node:ekr.20041005105605.227:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    self.default_directory = path
+else: # 9/25/02
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
+#@-node:ekr.20041005105605.227:<< handle absolute path >>
+#@-node:ekr.20041005105605.225:<< Test for @path >>
+#@+node:ekr.20041005105605.228:<< Test for @encoding >>
+if not old.has_key("encoding") and theDict.has_key("encoding"):
+    
+    e = g.scanAtEncodingDirective(s,theDict)
+    if e:
+        self.encoding = e
+#@nonl
+#@-node:ekr.20041005105605.228:<< Test for @encoding >>
+#@+node:ekr.20041005105605.229:<< Test for @comment and @language >>
+# 10/17/02: @language and @comment may coexist in @file trees.
+# For this to be effective the @comment directive should follow the @language directive.
+
+if not old.has_key("comment") and theDict.has_key("comment"):
+    k = theDict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+
+# Reversion fix: 12/06/02: We must use elif here, not if.
+elif not old.has_key("language") and theDict.has_key("language"):
+    k = theDict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
+#@nonl
+#@-node:ekr.20041005105605.229:<< Test for @comment and @language >>
+#@+node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
+if theDict.has_key("header") and theDict.has_key("noheader"):
+    g.es("conflicting @header and @noheader directives")
+#@nonl
+#@-node:ekr.20041005105605.230:<< Test for @header and @noheader >>
+#@+node:ekr.20041005105605.231:<< Test for @lineending >>
+if not old.has_key("lineending") and theDict.has_key("lineending"):
+    
+    lineending = g.scanAtLineendingDirective(s,theDict)
+    if lineending:
+        self.explicitLineEnding = True
+        self.output_newline = lineending
+#@-node:ekr.20041005105605.231:<< Test for @lineending >>
+#@+node:ekr.20041005105605.232:<< Test for @pagewidth >>
+if theDict.has_key("pagewidth") and not old.has_key("pagewidth"):
+    
+    w = g.scanAtPagewidthDirective(s,theDict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
+#@nonl
+#@-node:ekr.20041005105605.232:<< Test for @pagewidth >>
+#@+node:ekr.20041005105605.233:<< Test for @tabwidth >>
+if theDict.has_key("tabwidth") and not old.has_key("tabwidth"):
+    
+    w = g.scanAtTabwidthDirective(s,theDict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
+
+#@-node:ekr.20041005105605.233:<< Test for @tabwidth >>
+#@+node:ekr.20041005105605.234:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+if c.frame and not self.default_directory:
+    base = g.getBaseDirectory() # returns "" on error.
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    self.default_directory = theDir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(theDir)
+
+if not self.default_directory and not scripting and not importing:
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
+#@-node:ekr.20041005105605.234:<< Set current directory >>
+#@+node:ekr.20041005105605.235:<< Set comment strings from delims >>
+if scripting:
+    # Force Python language.
+    delim1,delim2,delim3 = g.set_delims_from_language("python")
+    self.language = "python"
+    
+# Use single-line comments if we have a choice.
+# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+
+if delim1:
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
+elif delim2 and delim3:
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
+else: # Emergency!
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
+# g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
+#@nonl
+#@-node:ekr.20041005105605.235:<< Set comment strings from delims >>
+#@-node:ekr.20041005105605.222:atFile.scanAllDirectives
+#@+node:ekr.20041005105605.236:scanDefaultDirectory
+def scanDefaultDirectory(self,p,importing=False):
+    
+    """Set default_directory ivar by looking for @path directives."""
+
+    at = self ; c = at.c
+    at.default_directory = None
+    << Set path from @file node >>
+    if at.default_directory:
+        return
+        
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        theDict = g.get_directives_dict(s)
+        if theDict.has_key("path"):
+            << handle @path >>
+            return
+
+    << Set current directory >>
+    if not at.default_directory and not importing:
+        # This should never happen: c.openDirectory should be a good last resort.
+        g.trace()
+        at.error("No absolute directory specified anywhere.")
+        at.default_directory = ""
+#@nonl
+#@+node:ekr.20041005105605.237:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
+# An absolute path in an @file node over-rides everything else.
+# A relative path gets appended to the relative path by the open logic.
+
+name = p.anyAtFileNodeName() # 4/28/04
+    
+theDir = g.choose(name,g.os_path_dirname(name),None)
+
+if theDir and g.os_path_isabs(theDir):
+    if g.os_path_exists(theDir):
+        at.default_directory = theDir
+    else:
+        at.default_directory = g.makeAllNonExistentDirectories(theDir)
+        if not at.default_directory:
+            at.error("Directory \"" + theDir + "\" does not exist")
+#@nonl
+#@-node:ekr.20041005105605.237:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
+#@+node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
+# We set the current director to a path so future writes will go to that directory.
+
+k = theDict["path"]
+<< compute relative path from s[k:] >>
+
+if path and len(path) > 0:
+    base = g.getBaseDirectory() # returns "" on error.
+    path = g.os_path_join(base,path)
+    
+    if g.os_path_isabs(path):
+        << handle absolute path >>
+    else:
+        at.error("ignoring bad @path: " + path)
+else:
+    at.error("ignoring empty @path")
+
+#@+node:ekr.20041005105605.239:<< compute relative path from s[k:] >>
+j = i = k + len("@path")
+i = g.skip_to_end_of_line(s,i)
+path = string.strip(s[j:i])
+
+# Remove leading and trailing delims if they exist.
+if len(path) > 2 and (
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
+
+path = path.strip()
+#@nonl
+#@-node:ekr.20041005105605.239:<< compute relative path from s[k:] >>
+#@+node:ekr.20041005105605.240:<< handle absolute path >>
+# path is an absolute path.
+
+if g.os_path_exists(path):
+    at.default_directory = path
+else:
+    at.default_directory = g.makeAllNonExistentDirectories(path)
+    if not at.default_directory:
+        at.error("invalid @path: " + path)
+#@nonl
+#@-node:ekr.20041005105605.240:<< handle absolute path >>
+#@-node:ekr.20041005105605.238:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
+#@+node:ekr.20041005105605.241:<< Set current directory >>
+# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+
+assert(not at.default_directory)
+
+if c.frame :
+    base = g.getBaseDirectory() # returns "" on error.
+    for theDir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if theDir and len(theDir) > 0:
+            theDir = g.os_path_join(base,theDir)
+            if g.os_path_isabs(theDir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(theDir):
+                    at.default_directory = theDir ; break
+                else:
+                    at.default_directory = g.makeAllNonExistentDirectories(theDir)
+#@-node:ekr.20041005105605.241:<< Set current directory >>
+#@-node:ekr.20041005105605.236:scanDefaultDirectory
+#@+node:ekr.20041005105605.242:scanForClonedSibs (reading & writing)
+def scanForClonedSibs (self,v):
+    
+    """Scan the siblings of vnode v looking for clones of v.
+    Return the number of cloned sibs and n where p is the n'th cloned sibling."""
+
+    clonedSibs = 0 # The number of cloned siblings of p, including p.
+    thisClonedSibIndex = 0 # Position of p in list of cloned siblings.
+
+    if v and v.isCloned():
+        sib = v
+        while sib.back():
+            sib = sib.back()
+        while sib:
+            if sib.t == v.t:
+                clonedSibs += 1
+                if sib == v:
+                    thisClonedSibIndex = clonedSibs
+            sib = sib.next()
+            
+    # g.trace(clonedSibs,thisClonedSibIndex)
+
+    return clonedSibs,thisClonedSibIndex
+#@nonl
+#@-node:ekr.20041005105605.242:scanForClonedSibs (reading & writing)
+#@+node:ekr.20041005105605.243:sentinelName
+# Returns the name of the sentinel for warnings.
+
+def sentinelName(self, kind):
+    
+    at = self
+
+    sentinelNameDict = {
+        at.noSentinel:    "<no sentinel>",
+        at.startAt:       "@+at",     at.endAt:     "@-at",
+        at.startBody:     "@+body",   at.endBody:   "@-body", # 3.x only.
+        at.startDoc:      "@+doc",    at.endDoc:    "@-doc",
+        at.startLeo:      "@+leo",    at.endLeo:    "@-leo",
+        at.startNode:     "@+node",   at.endNode:   "@-node",
+        at.startOthers:   "@+others", at.endOthers: "@-others",
+        at.startAll:      "@+all",    at.endAll:    "@-all", # 4.x
+        at.startMiddle:   "@+middle", at.endMiddle: "@-middle", # 4.x
+        at.startAfterRef: "@afterref", # 4.x
+        at.startComment:  "@comment",
+        at.startDelims:   "@delims",
+        at.startDirective:"@@",
+        at.startNl:       "@nl",   # 4.x
+        at.startNonl:     "@nonl", # 4.x
+        at.startClone:    "@clone", # 4.2
+        at.startRef:      "@<<",
+        at.startVerbatim: "@verbatim",
+        at.startVerbatimAfterRef: "@verbatimAfterRef" } # 3.x only.
+
+    return sentinelNameDict.get(kind,"<unknown sentinel!>")
+#@nonl
+#@-node:ekr.20041005105605.243:sentinelName
+#@-node:ekr.20041005105605.219:Uilites... (atFile)
+#@-node:ekr.20050101093544:(Always use os.rename in utils_rename)
 #@-node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20041115111203:Config...
 # 2004
@@ -15979,7 +17031,7 @@ iconBar = self.iconBarClass(c,outerFrame)
 self.iconFrame = iconBar.iconFrame
 
 self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,outerFrame,
+    self.iconBarComponentName,iconBar.iconFrame,
     iconBar,iconBar.pack,iconBar.unpack)
 
 self.iconBar.show()
@@ -16245,7 +17297,7 @@ iconBar = self.iconBarClass(c,outerFrame)
 self.iconFrame = iconBar.iconFrame
 
 self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,outerFrame,
+    self.iconBarComponentName,iconBar.iconFrame,
     iconBar,iconBar.pack,iconBar.unpack)
 
 self.iconBar.show()
@@ -16963,7 +18015,7 @@ iconBar = self.iconBarClass(c,outerFrame)
 self.iconFrame = iconBar.iconFrame
 
 self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,outerFrame,
+    self.iconBarComponentName,iconBar.iconFrame,
     iconBar,iconBar.pack,iconBar.unpack)
 
 self.iconBar.show()
@@ -20178,7 +21230,7 @@ def getHandlersForTag(tags):
     if type(tags) in (types.TupleType,types.ListType):
         result = []
         for tag in tags:
-            fn = getHandlersForOneTag(tag)
+            fn = getHandlersForOneTag(tag) 
             result.append((tag,fn),)
         return result
     else:
@@ -20187,8 +21239,9 @@ def getHandlersForTag(tags):
 def getHandlersForOneTag (tag):
 
     global handlers
-    
-    return handlers.get(tag)
+
+    bunch = handlers.get(tag)
+    return bunch.fn
 #@nonl
 #@-node:ekr.20041111124831:getHandlersForTag
 #@+node:ekr.20041111123313:unregisterHandler
@@ -20205,13 +21258,18 @@ def unregisterHandler(tags,fn):
 def unregisterOneHandler (tag,fn):
 
     global handlers
-
-    fn_list = handlers.get(tag)
-    if fn_list:
-        while fn in fn_list:
-            fn_list.remove(fn)
-        handlers[tag] = fn_list
-        # g.trace(handlers.get(tag))
+    
+    if 1: # New code
+        bunches = handlers.get(tag)
+        bunches = [bunch for bunch in bunches if bunch.fn != fn]
+        handlers[tag] = bunches
+    else:
+        fn_list = handlers.get(tag)
+        if fn_list:
+            while fn in fn_list:
+                fn_list.remove(fn)
+            handlers[tag] = fn_list
+            # g.trace(handlers.get(tag))
 #@nonl
 #@-node:ekr.20041111123313:unregisterHandler
 #@-node:ekr.20041111125613:New plugins code
@@ -20678,7 +21736,7 @@ def cantImport (moduleName,pluginName=None,verbose=True):
     # g.trace(verbose,moduleName,repr(pluginName))
     # if not pluginName: g.printStack()
     
-    if verbose:
+    if verbose and not g.app.unitTesting:
         s = "Can not import %s" % moduleName
         if pluginName: s += " from plugin %s" % pluginName
         print s ; g.es(s,color="blue")
@@ -21286,7 +22344,7 @@ iconBar = self.iconBarClass(c,outerFrame)
 self.iconFrame = iconBar.iconFrame
 
 self.iconBar = self.componentClass(c,
-    self.iconBarComponentName,outerFrame,
+    self.iconBarComponentName,iconBar.iconFrame,
     iconBar,iconBar.pack,iconBar.unpack)
 
 self.iconBar.show()
@@ -21870,6 +22928,7 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
         moduleName = moduleOrFileName [:-3]
     else:
         moduleName = moduleOrFileName
+    moduleName = g.shortFileName(moduleName)
 
     if isLoaded(moduleName):
         module = loadedModules.get(moduleName)
@@ -21877,18 +22936,24 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
     moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
+    
+    # This import typically results in calls to registerHandler.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
     result = g.importFromPath(moduleName,plugins_path)
+    loadingModuleNameStack.pop()
+
     if result:
         loadedModules[moduleName] = result
     
     if verbose:
         if result is None:
-            g.es("can not load %s plugin" % moduleName,color="blue")
+            s = 'can not load %s plugin' % moduleName
+            print s ; g.es(s,color="blue")
         else:
-            g.es("loaded %s plugin" % moduleName,color="blue")
+            print 'loaded %s plugin' % moduleName
     
     return result
-#@nonl
 #@-node:ekr.20041113113140:loadOnePlugin
 #@-node:ekr.20041022083005:(More flexible plugin manager)
 #@+node:ekr.20050101065403:(Fixed problems loading plugins)
@@ -21919,7 +22984,7 @@ def cantImport (moduleName,pluginName=None,verbose=True):
     # g.trace(verbose,moduleName,repr(pluginName))
     # if not pluginName: g.printStack()
     
-    if verbose:
+    if verbose and not g.app.unitTesting:
         s = "Can not import %s" % moduleName
         if pluginName: s += " from plugin %s" % pluginName
         print s ; g.es(s,color="blue")
@@ -22029,13 +23094,11 @@ Created callTagHandler.
 This checks 'idle' hooks to make sure that any commander referenced by the 'c','new_c' or 'old_c' keywords still exists.
 #@-node:ekr.20050101144712:Notes
 #@+node:ekr.20050102094729:callTagHandler
-def callTagHandler (handler,tag,keywords):
+def callTagHandler (bunch,tag,keywords):
+    
+    handler = bunch.fn ; moduleName = bunch.moduleName
     
     if tag == 'idle':
-        
-        if 0:
-            c = keywords.get('c')
-            g.trace(c.shortFileName(),handler)
 
         # Make sure all commanders exist.
         for key in ('c','old_c','new_c'):
@@ -22047,8 +23110,13 @@ def callTagHandler (handler,tag,keywords):
                 except AttributeError:
                     # c has been destroyed: c.frame ivar does not exist.
                     return None
-
-    return handler(tag,keywords)
+                    
+    # Calls to registerHandler from inside the handler belong to moduleName.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
+    result = handler(tag,keywords)
+    loadingModuleNameStack.pop()
+    return result
 #@nonl
 #@-node:ekr.20050102094729:callTagHandler
 #@+node:ekr.20031218072017.3442:doHandlersForTag
@@ -22064,18 +23132,18 @@ def doHandlersForTag (tag,keywords):
         return None
 
     if handlers.has_key(tag):
-        fns = handlers.get(tag)
+        bunches = handlers.get(tag)
         # Execute hooks in some random order.
         # Return if one of them returns a non-None result.
-        for fn in fns:
-            val = callTagHandler(fn,tag,keywords)
+        for bunch in bunches:
+            val = callTagHandler(bunch,tag,keywords)
             if val is not None:
                 return val
 
     if handlers.has_key("all"):
-        fns = handlers.get("all")
-        for fn in fns:
-            callTagHandler(fn,tag,keywords)
+        bunches = handlers.get('all')
+        for bunch in bunches:
+            callTagHandler(bunch.fn,tag,keywords)
 
     return None
 #@nonl
@@ -22293,13 +23361,11 @@ def idleTimeHookHandler(*args,**keys):
 #@-node:EKR.20040602125018.2:idleTimeHookHandler
 #@-node:ekr.20031218072017.1315:idle time functions (leoGlobals)
 #@+node:ekr.20050102094729:callTagHandler
-def callTagHandler (handler,tag,keywords):
+def callTagHandler (bunch,tag,keywords):
+    
+    handler = bunch.fn ; moduleName = bunch.moduleName
     
     if tag == 'idle':
-        
-        if 0:
-            c = keywords.get('c')
-            g.trace(c.shortFileName(),handler)
 
         # Make sure all commanders exist.
         for key in ('c','old_c','new_c'):
@@ -22311,8 +23377,13 @@ def callTagHandler (handler,tag,keywords):
                 except AttributeError:
                     # c has been destroyed: c.frame ivar does not exist.
                     return None
-
-    return handler(tag,keywords)
+                    
+    # Calls to registerHandler from inside the handler belong to moduleName.
+    global loadingModuleNameStack
+    loadingModuleNameStack.append(moduleName)
+    result = handler(tag,keywords)
+    loadingModuleNameStack.pop()
+    return result
 #@nonl
 #@-node:ekr.20050102094729:callTagHandler
 #@+node:ekr.20041001161108:doPlugins
@@ -22338,18 +23409,18 @@ def doHandlersForTag (tag,keywords):
         return None
 
     if handlers.has_key(tag):
-        fns = handlers.get(tag)
+        bunches = handlers.get(tag)
         # Execute hooks in some random order.
         # Return if one of them returns a non-None result.
-        for fn in fns:
-            val = callTagHandler(fn,tag,keywords)
+        for bunch in bunches:
+            val = callTagHandler(bunch,tag,keywords)
             if val is not None:
                 return val
 
     if handlers.has_key("all"):
-        fns = handlers.get("all")
-        for fn in fns:
-            callTagHandler(fn,tag,keywords)
+        bunches = handlers.get('all')
+        for bunch in bunches:
+            callTagHandler(bunch.fn,tag,keywords)
 
     return None
 #@nonl
@@ -22358,7 +23429,7 @@ def doHandlersForTag (tag,keywords):
 def registerHandler(tags,fn):
     
     """ Register one or more handlers"""
-    
+
     import types
 
     if type(tags) in (types.TupleType,types.ListType):
@@ -22370,12 +23441,19 @@ def registerHandler(tags,fn):
 def registerOneHandler(tag,fn):
     
     """Register one handler"""
-
-    global handlers
     
+    global handlers, loadingModuleNameStack
+    moduleName = loadingModuleNameStack[-1]
+    
+    if 0:
+        if g.app.unitTesting: print
+        print '%6s %15s %25s %s' % (g.app.unitTesting,moduleName,tag,fn.__name__)
+
     items = handlers.get(tag,[])
     if fn not in items:
-        items.append(fn)
+        
+        bunch = g.Bunch(fn=fn,moduleName=moduleName,tag='handler')
+        items.append(bunch)
         
     # g.trace(tag) ; g.printList(items)
     handlers[tag] = items
