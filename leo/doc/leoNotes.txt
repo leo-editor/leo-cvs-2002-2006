@@ -433,6 +433,7 @@ self.block_comment_end = delim3
 
 # A strong case can be made for making this code as fast as possible.
 # Whether this is compatible with general language descriptions remains to be seen.
+self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
 self.has_string = self.language != "plain"
 if self.language == "plain":
     self.string_delims = ()
@@ -4648,7 +4649,7 @@ def readEndBody (self,s,i):
 		at.ignoreOldSentinel(s,i)
 #@nonl
 #@-node:EKR.20040427103239:readEndBody (not used)
-#@+node:ekr.20040321064134.3:thinSentinels (4.2) NOT USED
+#@+node:ekr.20040321064134.3:thinSentinels (4.2)
 #@+node:EKR.20040429083147:putCloseThinSentinels
 def putCloseThinSentinels (self,p):
 
@@ -4684,7 +4685,25 @@ def reverseParentsList (self,p):
 		return parentsList
 #@nonl
 #@-node:EKR.20040429083147.2:reverseParentsList
-#@-node:ekr.20040321064134.3:thinSentinels (4.2) NOT USED
+#@-node:ekr.20040321064134.3:thinSentinels (4.2)
+#@+node:EKR.20040507095329:top_df.writeToString NO LONGER USED
+def writeToString (self,p,nosentinels=False,thinFile=False):
+    
+    at = self ; df = at.new_df
+    
+    g.trace(p)
+
+    if 1: # new code, using generalized string-output logic.
+        df.write(p,toString=True)
+        return df.stringOutput
+    
+    else: # old code (works)
+        df.targetFileName = "<string-file>"
+        df.outputFile = fo = g.fileLikeObject()
+        df.writeOpenFile(p)
+        return fo.get()
+#@nonl
+#@-node:EKR.20040507095329:top_df.writeToString NO LONGER USED
 #@-node:EKR.20040427175808:From atFile class
 #@+node:EKR.20040505090056:From perfect import script
 @ignore

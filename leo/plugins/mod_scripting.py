@@ -16,27 +16,16 @@ except: Tk = None
 #@nonl
 #@-node:EKR.20040613215415:<< mod_scripting imports >>
 #@nl
-#@<< to do >>
-#@+node:EKR.20040613224458:<< to do >>
-#@+at
-# 
-# How to set shortcut for menu items?
-# 
-# ** Factor out getScript from executeScript.
-#     - Use this when saving script text.
-# 
-# - Some scripts assume that they are the presently selected headline.
-#     - In particular, some top-level unit tests.
-# 
-# - Implement @script and @addScriptButton nodes.
-#     - Possibly @addAllScriptButtons.
-#@-at
-#@nonl
-#@-node:EKR.20040613224458:<< to do >>
-#@nl
+
+# To do:
+#   - @script, @addScriptButton nodes.
+#   - (maybe) @addAllScriptButtons.
 
 data = {} # Global data: contains one dict for each commander.
 buttons = 0 # Total number of buttons created.
+bindLate = True
+    # True:  bind script when script is executed.
+    # False: bind script when button is created.
 
 #@+others
 #@+node:EKR.20040613215415.2:createButtons
@@ -50,30 +39,16 @@ def createButtons (tag, keys):
     script = p.bodyString()
 
     #@    @+others
-    #@+node:EKR.20040614002229:outer callbacks
-    def deleteButton(c,kind):
-        global data ; d = data.get(c)
-        #g.trace(kind)
-        if d:
-            button = d.get(kind)
-            if button:
-                button.pack_forget()
-                # button.destroy()
-                
-    def mouseEnter(c,status):
-        c.frame.clearStatusLine()
-        c.frame.putStatusLine(status)
-    
-    def mouseLeaveCallback(event=None,c=c):
-        c.frame.clearStatusLine()
-    #@nonl
-    #@-node:EKR.20040614002229:outer callbacks
-    #@+node:EKR.20040613222712.1:command handlers
+    #@+node:EKR.20040613222712.1:Command handlers
+        
+    #@+node:EKR.20040618091543.1:execCommand
     def execCommand (event=None,c=c):
         
         p = c.currentPosition()
         c.executeScript(p)
-        
+    #@nonl
+    #@-node:EKR.20040618091543.1:execCommand
+    #@+node:EKR.20040618091543.2:addScriptButtonCommand
     def addScriptButtonCommand (event=None,c=c,p=p,script=script):
         
         # Create permanent bindings for callbacks.
@@ -85,26 +60,36 @@ def createButtons (tag, keys):
         text = h
         statusMessage = "Run script: %s" % p.headString()
     
-        #@    @+others
-        #@+node:EKR.20040613231552:Callbacks
+        #@    << define callbacks for addScriptButton >>
+        #@+node:EKR.20040613231552:<< define callbacks for addScriptButton >>
         def deleteButtonCallback(event=None,c=c,buttonName=buttonName):
         
             deleteButton(c,buttonName)
             
         def commandCallback(event=None,c=c,p=p,script=script,statusMessage=statusMessage):
             
+            global bindLate
+            
             # N.B. p and script are bound at the time this callback is created.
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Executing %s..." % statusMessage)
+            if 0: # A bad idea.
+                # We want to be able to bring the script to the data.
+                # If the script should be the selected node, it should select itself.
+                c.selectVnode(p)
+            if bindLate:
+                script = g.getScript(c,p)
             c.executeScript(p=p,script=script)
             c.frame.putStatusLine("Finished!")
             
         def mouseEnterCallback(event=None,c=c,statusMessage=statusMessage):
-        
             mouseEnter(c,statusMessage)
+            
+        def mouseLeaveCallback(event=None,c=c):
+            mouseLeave(c)
         #@nonl
-        #@-node:EKR.20040613231552:Callbacks
-        #@-others
+        #@-node:EKR.20040613231552:<< define callbacks for addScriptButton >>
+        #@nl
         
         # Create the button.
         b = c.frame.addIconButton(text=text)
@@ -117,11 +102,41 @@ def createButtons (tag, keys):
         b.bind('<Enter>', mouseEnterCallback)
         b.bind('<Leave>', mouseLeaveCallback)
         data[c] = d
-        
+    #@-node:EKR.20040618091543.2:addScriptButtonCommand
+    #@+node:EKR.20040618091543.3:addScriptItemCommand
     def addScriptItemCommand (event=None,c=c,p=p,script=script):
         
         g.trace(c) # Not ready yet.
-    #@-node:EKR.20040613222712.1:command handlers
+    #@nonl
+    #@-node:EKR.20040618091543.3:addScriptItemCommand
+    #@-node:EKR.20040613222712.1:Command handlers
+    #@+node:EKR.20040618091629:Utilities for callbacks
+    #@+node:EKR.20040614002229:deleteButton
+    def deleteButton(c,key):
+        
+        """Delete the button at data[key]."""
+        
+        global data ; d = data.get(c)
+    
+        if d:
+            button = d.get(key)
+            if button:
+                button.pack_forget()
+                # button.destroy()
+    #@nonl
+    #@-node:EKR.20040614002229:deleteButton
+    #@+node:EKR.20040618091543:mouseEnter/Leave
+    def mouseEnter(c,status):
+    
+        c.frame.clearStatusLine()
+        c.frame.putStatusLine(status)
+        
+    def mouseLeave(c):
+    
+        c.frame.clearStatusLine()
+    #@nonl
+    #@-node:EKR.20040618091543:mouseEnter/Leave
+    #@-node:EKR.20040618091629:Utilities for callbacks
     #@-others
     
     global data ; d = data.get(c,{})
@@ -130,19 +145,22 @@ def createButtons (tag, keys):
         ("execButton","run Script","Execute script in: %s" % c.currentPosition().headString(),
             execCommand,'MistyRose1'),
         ("addScriptButton","script Button","Add script button",
-            addScriptButtonCommand,'gold1'),
+            addScriptButtonCommand,"#ffffcc")
         # ("addScriptMenu","scriptMenu","Add script menu item",
         #    addScriptItemCommand,'gold1')
     ):
-        #@        << define button-specific callbacks >>
-        #@+node:EKR.20040614000551:<< define button-specific callbacks >>
+        #@        << define callbacks for standard buttons >>
+        #@+node:EKR.20040614000551:<< define callbacks for standard buttons >>
         def deleteButtonCallback(event=None,c=c,key=key):
             deleteButton(c,key)
             
         def mouseEnterCallback(event=None,c=c,statusLine=statusLine):
             mouseEnter(c,statusLine)
+            
+        def mouseLeaveCallback(event=None,c=c):
+            mouseLeave(c)
         #@nonl
-        #@-node:EKR.20040614000551:<< define button-specific callbacks >>
+        #@-node:EKR.20040614000551:<< define callbacks for standard buttons >>
         #@nl
         b = c.frame.addIconButton(text=text)
         d [key] = b
@@ -164,7 +182,7 @@ if Tk:
 
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler(('open2','new'),createButtons)
-        __version__ = "0.1"
+        __version__ = "0.2" # Minor reorg.
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040613213623:@thin mod_scripting.py

@@ -375,7 +375,7 @@ class baseFileCommands:
         except (TypeError,pickle.UnpicklingError,ImportError):
             # The unknownAtrribute was written before 4.2.
             val2 = val
-            
+    
         return attr,val2
     #@nonl
     #@-node:EKR.20040526204036.1:getUnknownAttribute
