@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="13163" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
-	<global_window_position top="7" left="194" height="900" width="1023"/>
+	<global_window_position top="16" left="252" height="900" width="1023"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -1002,7 +1002,7 @@
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
+<v t="edream.110203163054.321" a="E"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
@@ -2243,7 +2243,7 @@
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="edream.110203163054.320"><vh>Obsolete: Using leoConfig.leo and leoConfig.txt</vh></v>
-<v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
+<v t="edream.110203163054.321" a="E"><vh>Using plugins and hooks</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.323"><vh>New plugin architecture</vh>
 <v t="edream.110203163054.324"><vh>@file plugins/mod_open_with.py</vh>
@@ -8160,7 +8160,9 @@ plugins.
 tag argument                                                       keys in keywords
 (hook name)               overrides        when called           dictionary argument
 ---------                 ---------        -----------           -------------------
+"after-create-leo-frame"     no   before calling f.finishCreate  c
 "after-redraw-outline"       no        end of tree.redraw        c (note 6)
+"before-create-leo-frame"    no    after calling f.finishCreate  c
 "clear-mark"                 no        when mark is set          c,v
 "close-frame"                no        in app.closeLeoWindow     c
 "color-optional-markup"      yes *     (note 7)                  colorer,v (note 7)
