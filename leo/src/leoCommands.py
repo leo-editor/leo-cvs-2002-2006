@@ -5465,13 +5465,12 @@ class configSettings:
         
         munge = g.app.config.canonicalizeSettingName
     
-        data = g.app.config.ivarsDict.get(munge(ivarName))
-        
-        ivarName,theType,val = data
+        bunch = g.app.config.ivarsDict.get(munge(ivarName))
+        ivar = bunch.ivar ; val = bunch.val
     
-        # g.trace(ivarName,val)
+        # g.trace(self.c.hash(),bunch.toString())
     
-        setattr(self,ivarName,val)
+        setattr(self,ivar,val)
     #@nonl
     #@-node:ekr.20041118104240:initIvar
     #@+node:ekr.20041118104414:initEncoding
@@ -5479,13 +5478,11 @@ class configSettings:
         
         munge = g.app.config.canonicalizeSettingName
     
-        data = g.app.config.encodingIvarsDict.get(munge(encodingName))
+        bunch = g.app.config.encodingIvarsDict.get(munge(encodingName))
+        ivar = bunch.ivar ; encoding = bunch.encoding
     
-        ivarName,theType,encoding = data
-    
-        # g.trace(ivarName,encodingName,encoding)
-    
-        setattr(self,ivarName,encoding)
+        # g.trace(bunch.toString())
+        setattr(self,ivar,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
             g.es("bad %s: %s" % (encodingName,encoding))

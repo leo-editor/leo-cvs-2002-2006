@@ -161,14 +161,14 @@ class baseConfig:
     #@+node:ekr.20041117062717.2:ctor & init
     def __init__ (self):
     
-        for key,type,val in self.defaultsData:
-            self.defaultsDict[self.munge(key)] = type,val
+        for key,kind,val in self.defaultsData:
+            self.defaultsDict[self.munge(key)] = g.Bunch(setting=key,kind=kind,val=val,tag='defaults')
             
-        for key,type,val in self.ivarsData:
-            self.ivarsDict[self.munge(key)] = key,type,val
+        for key,kind,val in self.ivarsData:
+            self.ivarsDict[self.munge(key)] = g.Bunch(ivar=key,kind=kind,val=val,tag='ivars')
     
-        for key,type,val in self.encodingIvarsData:
-            self.encodingIvarsDict[self.munge(key)] = key,type,val
+        for key,kind,val in self.encodingIvarsData:
+            self.encodingIvarsDict[self.munge(key)] = g.Bunch(ivar=key,kind=kind,encoding=val,tag='encodings')
     
         self.init()
     
@@ -192,13 +192,15 @@ class baseConfig:
     #@+node:ekr.20041117065611.1:initEncoding
     def initEncoding (self,encodingName):
         
-        data = self.encodingIvarsDict.get(self.munge(encodingName))
-        ivarName,theType,encoding = data
+        bunch = self.encodingIvarsDict.get(self.munge(encodingName))
+        encoding = bunch.encoding ; ivar = bunch.ivar
+        
+        # ivarName,theType,encoding = data
     
         # g.trace(ivarName,encodingName,encoding)
-        
-        if ivarName:
-            setattr(self,ivarName,encoding)
+    
+        if ivar:
+            setattr(self,ivar,encoding)
     
         if encoding and not g.isValidEncoding(encoding):
             g.es("bad %s: %s" % (encodingName,encoding))
@@ -207,12 +209,15 @@ class baseConfig:
     #@+node:ekr.20041117065611:initIvar
     def initIvar(self,ivarName):
         
-        data = self.ivarsDict.get(self.munge(ivarName))
-        ivarName,theType,val = data
+        bunch = self.ivarsDict.get(self.munge(ivarName))
+        ivar = bunch.ivar
+        val = bunch.val
+        
+        # ivarName,theType,val = data
     
         # g.trace(ivarName,val)
     
-        setattr(self,ivarName,val)
+        setattr(self,ivar,val)
     #@nonl
     #@-node:ekr.20041117065611:initIvar
     #@+node:ekr.20041117065611.2:initIvarsFromSettings
@@ -322,24 +327,24 @@ class baseConfig:
             if d:
                 val,found = self.getValFromDict(d,setting,theType,found)
                 if val is not None:
-                    # g.trace(c.hash())
+                    # g.trace(c.hash(),setting,val)
                     return val
                     
         for d in self.localOptionsList:
             val,found = self.getValFromDict(d,setting,theType,found)
             if val is not None:
-                dType = d.get('_hash','<no hash>')
-                # g.trace(dType,val)
+                kind = d.get('_hash','<no hash>')
+                #  g.trace(kind,setting,val)
                 return val
     
         for d in self.dictList:
             val,found = self.getValFromDict(d,setting,theType,found)
             if val is not None:
-                dType = d.get('_hash','<no hash>')
-                # g.trace(dType,setting,val)
+                kind = d.get('_hash','<no hash>')
+                # g.trace(kind,setting,val)
                 return val
                     
-        if 1: # Good for debugging leoSettings.leo.  This is NOT an error.
+        if 0: # Good for debugging leoSettings.leo.  This is NOT an error.
             # Don't warn if None was specified.
             if not found and self.inited:
                 g.trace("Not found:",setting)
@@ -349,17 +354,10 @@ class baseConfig:
     #@+node:ekr.20041121143823:getValFromDict
     def getValFromDict (self,d,setting,requestedType,found):
     
-        data = d.get(self.munge(setting))
-        if data:
+        bunch = d.get(self.munge(setting))
+        if bunch:
             # g.trace(setting,requestedType,data)
-            found = True
-            if len(data) == 2:
-                path = None ; dType,val = data
-            elif len(data) == 3:
-                path,dType,val = data
-            else:
-                g.trace("bad tuple",data)
-                return None,found
+            found = True ; val = bunch.val
             if val not in (u'None',u'none','None','none','',None):
                 # g.trace(setting,val)
                 return val,found
@@ -573,7 +571,8 @@ class baseConfig:
         if not found:
             d = self.dictList [0]
     
-        d[self.munge(setting)] = kind,val
+        d[self.munge(setting)] = bunch = g.Bunch(setting=setting,kind=kind,val=val,tag='setting')
+        # g.trace(bunch.toString())
     
         if 0:
             dkind = d.get('_hash','<no hash: %s>' % c.hash())
@@ -654,10 +653,9 @@ class baseConfig:
                             #@+node:ekr.20041201081440:<< update recent files from d >>
                             for key in d.keys():
                                 if munge(key) == "recentfiles":
-                                    data = d.get(key)
                                     # Entries were created by parserBaseClass.set.
-                                    # They have the form: path,kind,val
-                                    path,kind,files = data
+                                    bunch = d.get(key)
+                                    files = bunch.val
                                     files = [file.strip() for file in files]
                                     if 0:
                                         print "config.readSettingsFiles.  recent files..."
@@ -1086,33 +1084,30 @@ class parserBaseClass:
     #@-node:ekr.20041120112043:parseShortcutLine
     #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (settingsParser)
+    # p used in subclasses, not here.
+    
     def set (self,p,kind,name,val):
         
         """Init the setting for name to val."""
         
-        # p used in subclasses, not here.
-        
         c = self.c
-        
         # g.trace("settingsParser %10s %15s %s" %(kind,val,name))
-        
         d = self.settingsDict
-    
-        data = d.get(self.munge(name))
-        if data:
-            if len(data) == 2: path2 = None
-            else: path2 = data[0]
-            if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path2):
-                g.es("over-riding setting: %s from %s" % (name,path2))
+        bunch = d.get(self.munge(name))
+        if bunch:
+            path = bunch.path
+            if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path):
+                g.es("over-riding setting: %s from %s" % (name,path))
     
         # N.B.  We can't use c here: it may be destroyed!
-        d[self.munge(name)] = c.mFileName,kind,val
-        
-        data = g.app.config.ivarsDict.get(self.munge(name))
-        if data:
-            ivarName = data[0]
-            # g.trace("g.app.%s = %s" % (ivarName,val))
-            setattr(g.app.config,ivarName,val)
+        d[self.munge(name)] = bunch = g.Bunch(path=c.mFileName,kind=kind,val=val,tag='setting')
+        # g.trace(bunch.toString())
+    
+        bunch = g.app.config.ivarsDict.get(self.munge(name))
+        if bunch:
+            ivar = bunch.ivar # Don't use the values in bunch!
+            # g.trace("g.app.%s = %s" % (ivar,val))
+            setattr(g.app.config,ivar,val)
     #@nonl
     #@-node:ekr.20041120094940.9:set (settingsParser)
     #@+node:ekr.20041119204700.1:traverse
