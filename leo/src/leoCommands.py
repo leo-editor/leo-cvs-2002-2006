@@ -252,11 +252,14 @@ class baseCommands:
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
-		v_copy = c.copyTree(v)
+		v_copy = v.copyTree()
+		oldText = c.body.get("1.0","end") # 7/11/03
+		oldSel = getTextSelection(c.body) # 7/11/03
 		anyChanged = false
 		while v and v != next:
 			if v == current:
-				c.convertBlanks()
+				if c.convertBlanks():
+					anyChanged = true # 7/11/03
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
@@ -272,7 +275,12 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if anyChanged:
-			c.undoer.setUndoParams("Convert All Blanks",current,select=current,oldTree=v_copy)
+			newText = c.body.get("1.0","end") # 7/11/03
+			newSel = getTextSelection(c.body) # 7/11/03
+			c.undoer.setUndoParams("Convert All Blanks",
+				current,select=current,oldTree=v_copy,
+				oldText=oldText,newText=newText,
+				oldSel=oldSel,newSel=newSel)
 		else:
 			es("nothing changed")
 	#@-body
@@ -286,11 +294,14 @@ class baseCommands:
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
-		v_copy = c.copyTree(v)
+		v_copy = v.copyTree()
+		oldText = c.body.get("1.0","end") # 7/11/03
+		oldSel = getTextSelection(c.body) # 7/11/03
 		anyChanged = false
 		while v and v != next:
 			if v == current:
-				self.convertTabs()
+				if self.convertTabs():
+					anyChanged = true # 7/11/03
 			else:
 				result = [] ; changed = false
 				text = v.t.bodyString
@@ -307,11 +318,14 @@ class baseCommands:
 			v.setDirty()
 			v = v.threadNext()
 		if anyChanged:
-			c.undoer.setUndoParams("Convert All Tabs",current,select=current,oldTree=v_copy)
+			newText = c.body.get("1.0","end") # 7/11/03
+			newSel = getTextSelection(c.body) # 7/11/03
+			c.undoer.setUndoParams("Convert All Tabs",
+				current,select=current,oldTree=v_copy,
+				oldText=oldText,newText=newText,
+				oldSel=oldSel,newSel=newSel)
 		else:
 			es("nothing changed")
-	
-	
 	#@-body
 	#@-node:2::convertAllTabs
 	#@+node:3::convertBlanks
@@ -341,6 +355,8 @@ class baseCommands:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Convert Blanks",oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
+			
+		return changed
 	
 	#@-body
 	#@-node:3::convertBlanks
@@ -373,6 +389,8 @@ class baseCommands:
 			result = string.join(result,'\n')
 			c.updateBodyPane(head,result,tail,"Convert Tabs",oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
+			
+		return changed
 	#@-body
 	#@-node:4::convertTabs
 	#@+node:5::createLastChildNode
@@ -409,7 +427,7 @@ class baseCommands:
 			c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
 	#@-body
 	#@-node:6::dedentBody
-	#@+node:7::extract (undo clears undo buffer)
+	#@+node:7::extract
 	#@+body
 	def extract(self):
 	
@@ -419,7 +437,9 @@ class baseCommands:
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		# Create copy for undo.
-		v_copy = c.copyTree(v)
+		v_copy = v.copyTree()
+		oldText = c.body.get("1.0","end") # 7/11/03
+		oldSel = getTextSelection(c.body) # 7/11/03
 		
 		#@<< Set headline for extract >>
 		#@+node:1::<< Set headline for extract >>
@@ -442,14 +462,20 @@ class baseCommands:
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
-		c.createLastChildNode(v,headline,body)
-		undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
-		c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
-		c.undoer.setUndoParams("Extract",v,select=current,oldTree=v_copy)
+		if 1: # update range...
+			c.createLastChildNode(v,headline,body)
+			undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
+			c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
+			newText = c.body.get("1.0","end") # 7/11/03
+			newSel = getTextSelection(c.body) # 7/11/03
+			c.undoer.setUndoParams("Extract",
+				v,select=current,oldTree=v_copy,
+				oldText=oldText,newText=newText,
+				oldSel=oldSel,newSel=newSel)
 		c.endUpdate()
 	#@-body
-	#@-node:7::extract (undo clears undo buffer)
-	#@+node:8::extractSection (undo clears undo buffer)
+	#@-node:7::extract
+	#@+node:8::extractSection
 	#@+body
 	def extractSection(self):
 	
@@ -460,9 +486,11 @@ class baseCommands:
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		line1 = "\n" + headline
 		# Create copy for undo.
-		v_copy = c.copyTree(v)
-		#trace("v:     " + `v`)
-		#trace("v_copy:" + `v_copy`)
+		v_copy = v.copyTree()
+		# trace("v:     " + `v`)
+		# trace("v_copy:" + `v_copy`)
+		oldText = c.body.get("1.0","end") # 7/11/03
+		oldSel = getTextSelection(c.body) # 7/11/03
 		
 		#@<< Set headline for extractSection >>
 		#@+node:1::<< Set headline for extractSection >>
@@ -487,14 +515,19 @@ class baseCommands:
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
-		c.createLastChildNode(v,headline,body)
-		undoType =  "Can't Undo" # 2/8/02: None enables further undoes, but there are bugs now.
-		c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
-		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
+		if 1: # update range...
+			c.createLastChildNode(v,headline,body)
+			undoType = None # Set undo params later.
+			c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
+			newText = c.body.get("1.0","end") # 7/11/03
+			newSel = getTextSelection(c.body) # 7/11/03
+			c.undoer.setUndoParams("Extract Section",v,
+				select=current,oldTree=v_copy,
+				oldText=oldText,newText=newText,
+				oldSel=oldSel,newSel=newSel)
 		c.endUpdate()
-	
 	#@-body
-	#@-node:8::extractSection (undo clears undo buffer)
+	#@-node:8::extractSection
 	#@+node:9::extractSectionNames
 	#@+body
 	def extractSectionNames(self):
@@ -502,36 +535,42 @@ class baseCommands:
 		c = self ; current = v = c.currentVnode()
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
-		# Save the selection.
-		i, j = self.getBodySelection()
 		# Create copy for undo.
-		v_copy = c.copyTree(v)
+		v_copy = v.copyTree()
+		# No change to body or selection of this node.
+		oldText = newText = c.body.get("1.0","end") # 7/11/03
+		i, j = oldSel = newSel = self.getBodySelection()
 		c.beginUpdate()
-		for s in lines:
-			
-			#@<< Find the next section name >>
-			#@+node:1::<< Find the next section name >>
-			#@+body
-			head1 = string.find(s,"<<")
-			if head1 > -1:
-				head2 = string.find(s,">>",head1)
-			else:
-				head1 = string.find(s,"@<")
+		if 1: # update range...
+			for s in lines:
+				
+				#@<< Find the next section name >>
+				#@+node:1::<< Find the next section name >>
+				#@+body
+				head1 = string.find(s,"<<")
 				if head1 > -1:
-					head2 = string.find(s,"@>",head1)
-					
-			if head1 == -1 or head2 == -1 or head1 > head2:
-				name = None
-			else:
-				name = s[head1:head2+2]
-			#@-body
-			#@-node:1::<< Find the next section name >>
+					head2 = string.find(s,">>",head1)
+				else:
+					head1 = string.find(s,"@<")
+					if head1 > -1:
+						head2 = string.find(s,"@>",head1)
+						
+				if head1 == -1 or head2 == -1 or head1 > head2:
+					name = None
+				else:
+					name = s[head1:head2+2]
+				#@-body
+				#@-node:1::<< Find the next section name >>
 
-			if name: self.createLastChildNode(v,name,None)
-		c.selectVnode(v)
-		c.validateOutline()
+				if name: self.createLastChildNode(v,name,None)
+			c.selectVnode(v)
+			c.validateOutline()
 		c.endUpdate()
-		c.undoer.setUndoParams("Extract Names",v,select=current,oldTree=v_copy)
+		# No change to body or selection
+		c.undoer.setUndoParams("Extract Names",
+			v,select=current,oldTree=v_copy,
+			oldText=oldText,newText=newText,
+			oldSel=oldSel,newSel=newSel)
 		# Restore the selection.
 		setTextSelection(c.body,i,j)
 		set_focus(c.body)
@@ -718,9 +757,6 @@ class baseCommands:
 			c.body.insert("end",head)
 			start = c.body.index("end-1c")
 		else: start = "1.0"
-		if 0: # 9/12/02: Do not gratuitously remove newlines!
-			if middle and len(middle) > 0:
-				middle = string.rstrip(middle)
 		if middle and len(middle) > 0:
 			c.body.insert("end",middle)
 			end = c.body.index("end-1c")
@@ -1499,38 +1535,15 @@ class baseCommands:
 		if not v: return
 		c.beginUpdate()
 		clone = v.clone(v)
-		if clone:
-			clone.setDirty() # essential in Leo2
-			c.setChanged(true)
-			if c.validateOutline():
-				c.selectVnode(clone)
-				c.undoer.setUndoParams("Clone",clone)
+		clone.setDirty() # essential in Leo2
+		c.setChanged(true)
+		if c.validateOutline():
+			c.selectVnode(clone)
+			c.undoer.setUndoParams("Clone",clone)
 		c.endUpdate() # updates all icons
 	#@-body
 	#@-node:4::c.clone
-	#@+node:5::c.copyTree
-	#@+body
-	# This creates a free-floating copy of v's tree for undo.
-	# The copied trees must use different tnodes than the original.
-	
-	def copyTree(self,root):
-	
-		c = self
-		# Create the root vnode.
-		result = v = leoNodes.vnode(c,root.t)
-		# Copy the headline and icon values
-		v.copyNode(root,v)
-		# Copy the rest of tree.
-		v.copyTree(root,v)
-		# Replace all tnodes in v by copies.
-		assert(v.nodeAfterTree() == None)
-		while v:
-			v.t = leoNodes.tnode(0, v.t.bodyString)
-			v = v.threadNext()
-		return result
-	#@-body
-	#@-node:5::c.copyTree
-	#@+node:6::initAllCloneBits (changed in 4.0)
+	#@+node:5::initAllCloneBits (changed in 4.0)
 	#@+body
 	def initAllCloneBits (self):
 		
@@ -1549,8 +1562,8 @@ class baseCommands:
 		c.endUpdate()
 	
 	#@-body
-	#@-node:6::initAllCloneBits (changed in 4.0)
-	#@+node:7::c.initJoinedClonedBits (changed in 3.11.1)
+	#@-node:5::initAllCloneBits (changed in 4.0)
+	#@+node:6::c.initJoinedClonedBits (changed in 3.11.1)
 	#@+body
 	# Initializes all clone bits in the all nodes joined to v.
 	
@@ -1572,8 +1585,8 @@ class baseCommands:
 		c.endUpdate()
 	
 	#@-body
-	#@-node:7::c.initJoinedClonedBits (changed in 3.11.1)
-	#@+node:8::validateOutline
+	#@-node:6::c.initJoinedClonedBits (changed in 3.11.1)
+	#@+node:7::validateOutline
 	#@+body
 	# Makes sure all nodes are valid.
 	
@@ -1585,7 +1598,7 @@ class baseCommands:
 		else:
 			return true
 	#@-body
-	#@-node:8::validateOutline
+	#@-node:7::validateOutline
 	#@-node:10::Insert, Delete & Clone (Commands)
 	#@+node:11::Mark & Unmark & goto
 	#@+node:1::goToNextDirtyHeadline
