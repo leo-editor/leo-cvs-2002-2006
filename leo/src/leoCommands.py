@@ -2556,8 +2556,6 @@ class baseCommands:
                 c.undoer.setUndoParams("Paste Node",p)
             c.endUpdate()
             c.recolor()
-        else:
-            g.es("The clipboard is not a valid " + g.choose(isLeo,"Leo","MORE") + " file")
     #@nonl
     #@-node:ekr.20031218072017.1551:pasteOutline
     #@+node:EKR.20040610130943:pasteOutlineRetainingClones
