@@ -1696,7 +1696,7 @@ class baseFileCommands:
                 fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
                 
             # g.trace(v.t)
-            if not isThin or self.usingClipboard:
+            if not isThin or p.isOrphan() or self.usingClipboard:
                 v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
         else:
             g.trace(v.t.fileIndex,v)
@@ -1756,10 +1756,9 @@ class baseFileCommands:
     
         # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
         if p.hasChildren():
-            if isThin and not p.isOrphan() and not self.usingClipboard:
-                # g.trace("skipping child vnodes for", p.headString())
-                pass
-            else:
+            if isThin and p.isOrphan():
+                g.es("Writing entire tree for %s to outline" % p.headString(),color="blue")
+            if not isThin or p.isOrphan() or self.usingClipboard:
                 fc.put_nl()
                 # This optimization eliminates all "recursive" copies.
                 p.moveToFirstChild()
