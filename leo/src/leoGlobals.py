@@ -3523,7 +3523,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
     raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 #@nonl
 #@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
-#@+node:ekr.20031218072017.3098:class Bunch
+#@+node:ekr.20031218072017.3098:class Bunch (object)
 #@+at 
 #@nonl
 # From The Python Cookbook:  Often we want to just collect a bunch of stuff 
@@ -3543,7 +3543,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 
 import operator
 
-class Bunch:
+class Bunch (object):
     
     """A class that represents a colection of things.
     
@@ -3578,7 +3578,7 @@ class Bunch:
         
 bunch = Bunch
 #@nonl
-#@-node:ekr.20031218072017.3098:class Bunch
+#@-node:ekr.20031218072017.3098:class Bunch (object)
 #@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 import difflib,shutil
 
