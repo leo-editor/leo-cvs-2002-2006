@@ -159,8 +159,12 @@ class baseConfig:
 	#@+node:get...FromDict & setDict
 	def getBoolFromDict (self,name,dict):
 		val = self.getIntFromDict(name,dict)
-		if val and val != None and val != 0: val = 1
+		if val != None:
+			if val: val = 1
+			else: val = 0
 		return val
+		#if val and val != None and val != 0: val = 1
+		#return val
 	
 	def getFloatFromDict (self,name,dict):
 		val = self.getFromDict(name,dict)
@@ -419,23 +423,23 @@ class baseConfig:
 	#@nonl
 	#@-node:setCommandsIvars
 	#@+node:setConfigFindIvars
-	# Sets config ivars from c.
-	
 	def setConfigFindIvars (self,c):
+		
+		"""Set the config ivars from the commander."""
 		
 		findFrame = app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
 			val = getattr(c,s+"_flag")
-			# trace(val,s+"_flag")
 			self.setFindPref(s,val)
+			# trace(s,val)
 		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@nonl
 	#@-node:setConfigFindIvars
-	#@+node:setConfigIvars
+	#@+node:c.setConfigIvars
 	# Sets config ivars from c.
 	
 	def setConfigIvars (self,c):
@@ -459,6 +463,8 @@ class baseConfig:
 		self.setFindPref("mark_finds",`c.mark_finds_flag`)
 		self.setFindPref("pattern_match",`c.pattern_match_flag`)
 		self.setFindPref("reverse",`c.reverse_flag`)
+		self.setFindPref("script_change",`c.script_change_flag`)
+		self.setFindPref("script_search",`c.script_search_flag`)
 		self.setFindPref("search_body",`c.search_body_flag`)
 		self.setFindPref("search_headline",`c.search_headline_flag`)
 		self.setFindPref("suboutline_only",`c.suboutline_only_flag`)
@@ -468,7 +474,7 @@ class baseConfig:
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@nonl
-	#@-node:setConfigIvars
+	#@-node:c.setConfigIvars
 	#@+node:open
 	def open (self):
 		
