@@ -138,7 +138,7 @@ class leoDialog:
 			self.top.resizable(0,0) # neither height or width is resizable.
 	
 		self.frame = Tk.Frame(self.top)
-		self.frame.pack()
+		self.frame.pack(side="top",expand=1,fill="both")
 	#@-body
 	#@-node:6::createTopFrame
 	#@+node:7::run

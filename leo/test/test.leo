@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="57" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="36" left="344" height="75" width="97"/>
+	<global_window_position top="36" left="542" height="75" width="97"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -87,21 +87,21 @@
 </v>
 </v>
 </v>
+<v t="T46"><vh>alloc tests</vh></v>
 </v>
-<v t="T46"><vh>Dialog tests</vh>
-<v t="T47"><vh>Test askOk</vh></v>
-<v t="T48"><vh>Test aboutLeo</vh></v>
-<v t="T49"><vh>Test askLeoID</vh></v>
-<v t="T50"><vh>Test askOkCancelNumber</vh></v>
-<v t="T51"><vh>Test askOkCancel</vh></v>
-<v t="T52"><vh>Test askYesNo</vh></v>
-<v t="T53"><vh>Test askYesNoCancel</vh></v>
+<v t="T47"><vh>Dialog tests</vh>
+<v t="T48"><vh>Test askOk</vh></v>
+<v t="T49"><vh>Test aboutLeo</vh></v>
+<v t="T50"><vh>Test askLeoID</vh></v>
+<v t="T51"><vh>Test askOkCancelNumber</vh></v>
+<v t="T52"><vh>Test askOkCancel</vh></v>
+<v t="T53"><vh>Test askYesNo</vh></v>
+<v t="T54"><vh>Test askYesNoCancel</vh></v>
 </v>
-<v t="T54" a="E"><vh>Expand/Contract Tests</vh>
-<v t="T55"><vh>a</vh></v>
+<v t="T55" a="EV"><vh>Spell test</vh>
+<v t="T56"><vh>node two</vh></v>
+<v t="T57"><vh>node two no misspellings</vh></v>
 </v>
-<v t="T56"><vh>v.edit_text() tests</vh></v>
-<v t="T57" a="V"><vh>alloc tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1"></t>
@@ -398,84 +398,7 @@ es(m,color="red")</t>
 <t tx="T43"></t>
 <t tx="T44"></t>
 <t tx="T45"></t>
-<t tx="T46"></t>
-<t tx="T47">from leoGlobals import *
-import leoDialog
-
-if 1: # passed
-	print leoDialog.askOk(
-		"My Test Dialog",
-		"Please hit return to test this dialog.",
-		text="whoopee",
-		resizeable=false).run(modal=true)
-	
-if 1: # passed
-	message = "leo.py requires Python 2.1 or higher"
-	print leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
-	
-if 1: # passed
-	fileName = "xyzzy"
-	print leoDialog.askOk("Read-only ouline",
-		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
-<t tx="T48">from leoGlobals import *
-import leoDialog
-
-ver = "version 3.14159 "
-build = "-3.8" 
-version = "leo.py 4.0 alpha 2, Build " + build + ", June 13, 2003\n\n"
-copyright = (
-	"Copyright 1999-2003 by Edward K. Ream\n" +
-	"All Rights Reserved\n" +
-	"Leo is distributed under the Python License")
-url = "http://webpages.charter.net/edreamleo/front.html"
-email = "edreamleo@charter.net"
-
-leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
-<t tx="T49">import leoDialog
-
-print leoDialog.askLeoID().run(modal=1)</t>
-<t tx="T50">import leoDialog
-
-print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
-</t>
-<t tx="T51">import leoDialog
-
-print leoDialog.askOkCancel("Proceed?",
-	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
-<t tx="T52">import leoDialog
-
-if 1: # passed
-	message = "Replace changed outline with external changes?"
-	print leoDialog.askYesNo("Conflict!",message).run(modal=1)
-	
-if 1: # passed
-	print leoDialog.askYesNo("Revert",
-		"Revert to previous version of xyzzy?").run(modal=1)
-		
-if 1: # passed
-	print leoDialog.askYesNo(
-		"Download Tutorial?",
-		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
-<t tx="T53">import leoDialog
-
-if 1: # passed
-	print leoDialog.askYesNoCancel("Confirm",
-		'Save changes to xyzzy before crashing?').run(modal=1)
-		
-if 1: # passed
-	message = (
-		"Conflicting changes in outline and temp file\n\n" +
-		"Do you want to use the code in the outline or the temp file?\n\n")
-	
-	print leoDialog.askYesNoCancel(
-		"Conflict!", message,
-		yesMessage = "Outline",
-		noMessage = "File",
-		defaultButton = "Cancel").run(modal=1)</t>
-<t tx="T54"></t>
-<t tx="T55"></t>
-<t tx="T56">Test of something.</t>
-<t tx="T57">import gc,Tkinter
+<t tx="T46">import gc,Tkinter
 
 # gc.set_debug(gc.DEBUG_STATS)
 
@@ -515,5 +438,89 @@ printGarbage("end 2")
 top = frame = canvas = None
 gc.collect()
 printGarbage("end 3")</t>
+<t tx="T47"></t>
+<t tx="T48">from leoGlobals import *
+import leoDialog
+
+if 1: # passed
+	print leoDialog.askOk(
+		"My Test Dialog",
+		"Please hit return to test this dialog.",
+		text="whoopee",
+		resizeable=false).run(modal=true)
+	
+if 1: # passed
+	message = "leo.py requires Python 2.1 or higher"
+	print leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
+	
+if 1: # passed
+	fileName = "xyzzy"
+	print leoDialog.askOk("Read-only ouline",
+		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
+<t tx="T49">from leoGlobals import *
+import leoDialog
+
+ver = "version 3.14159 "
+build = "-3.8" 
+version = "leo.py 4.0 alpha 2, Build " + build + ", June 13, 2003\n\n"
+copyright = (
+	"Copyright 1999-2003 by Edward K. Ream\n" +
+	"All Rights Reserved\n" +
+	"Leo is distributed under the Python License")
+url = "http://webpages.charter.net/edreamleo/front.html"
+email = "edreamleo@charter.net"
+
+leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
+<t tx="T50">import leoDialog
+
+print leoDialog.askLeoID().run(modal=1)</t>
+<t tx="T51">import leoDialog
+
+print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
+</t>
+<t tx="T52">import leoDialog
+
+print leoDialog.askOkCancel("Proceed?",
+	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
+<t tx="T53">import leoDialog
+
+if 1: # passed
+	message = "Replace changed outline with external changes?"
+	print leoDialog.askYesNo("Conflict!",message).run(modal=1)
+	
+if 1: # passed
+	print leoDialog.askYesNo("Revert",
+		"Revert to previous version of xyzzy?").run(modal=1)
+		
+if 1: # passed
+	print leoDialog.askYesNo(
+		"Download Tutorial?",
+		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
+<t tx="T54">import leoDialog
+
+if 1: # passed
+	print leoDialog.askYesNoCancel("Confirm",
+		'Save changes to xyzzy before crashing?').run(modal=1)
+		
+if 1: # passed
+	message = (
+		"Conflicting changes in outline and temp file\n\n" +
+		"Do you want to use the code in the outline or the temp file?\n\n")
+	
+	print leoDialog.askYesNoCancel(
+		"Conflict!", message,
+		yesMessage = "Outline",
+		noMessage = "File",
+		defaultButton = "Cancel").run(modal=1)</t>
+<t tx="T55">a b leoDialog modal end
+line tooo</t>
+<t tx="T56">this is another test.
+
+hello there jkk this is werg
+		
+the cht sat on the marh
+the cat was sitting phew, another day. by zz z z
+two</t>
+<t tx="T57">everything good.</t>
 </tnodes>
 </leo_file>

@@ -2936,20 +2936,12 @@ endsWithNL: true if the paragraph ends with a newline"""
 	return start, end, endsWithNL
 #@-body
 #@-node:1::bound_paragraph
-#@+node:2::getTextSelection
+#@+node:2::getindex
 #@+body
-# t is a Tk.Text widget.  Returns the selected range of t.
-
-def getTextSelection (t):
-
-	# To get the current selection
-	sel = t.tag_ranges("sel")
-	if len(sel) == 2:
-		start, end = sel # unpack tuple.
-		return start, end
-	else: return None, None
+def getindex(text, index):
+		return tuple(map(int,string.split(text.index(index), ".")))
 #@-body
-#@-node:2::getTextSelection
+#@-node:2::getindex
 #@+node:3::getSelectedText
 #@+body
 # t is a Tk.Text widget.  Returns the text of the selected range of t.
@@ -2963,7 +2955,21 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:3::getSelectedText
-#@+node:4::setTextSelection
+#@+node:4::getTextSelection
+#@+body
+# t is a Tk.Text widget.  Returns the selected range of t.
+
+def getTextSelection (t):
+
+	# To get the current selection
+	sel = t.tag_ranges("sel")
+	if len(sel) == 2:
+		start, end = sel # unpack tuple.
+		return start, end
+	else: return None, None
+#@-body
+#@-node:4::getTextSelection
+#@+node:5::setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -2984,7 +2990,7 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 
 #@-body
-#@-node:4::setTextSelection
+#@-node:5::setTextSelection
 #@-node:8::Tk.Text selection (utils)
 #@+node:9::Whitespace...
 #@+node:1::computeLeadingWhitespace
