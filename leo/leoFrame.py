@@ -557,13 +557,11 @@ class LeoFrame:
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
-	#  This code "canonicalizes" both the shortcuts that appear in menus and 
-	# the arguments to bind, mostly ignoring case and the order in which 
-	# special keys are specified in leoConfig.txt.
+	#  This code "canonicalizes" both the shortcuts that appear in menus and the arguments to bind, mostly ignoring case and the 
+	# order in which special keys are specified in leoConfig.txt.
 	# 
-	# For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may 
-	# appear in leoConfig.txt.  Each generates Shift+Ctrl-A in the menu and 
-	# Control+A as the argument to bind.
+	# For example, Ctrl+Shift+a is the same as Shift+Control+A.  Either may appear in leoConfig.txt.  Each generates Shift+Ctrl-A 
+	# in the menu and Control+A as the argument to bind.
 	# 
 	# Returns (bind_shortcut, menu_shortcut)
 
@@ -688,11 +686,9 @@ class LeoFrame:
 			
 
 			#@+at
-			#   The following are not translated, so what appears in the menu 
-			# is the same as what is passed to Tk.  Case is significant.
+			#   The following are not translated, so what appears in the menu is the same as what is passed to Tk.  Case is significant.
 			# 
-			# Note: the Tk documentation states that not all of these may be 
-			# available on all platforms.
+			# Note: the Tk documentation states that not all of these may be available on all platforms.
 			# 
 			# F1,F2,F3,F4,F5,F6,F7,F8,F9,F10,
 			# BackSpace, Break, Clear, Delete, Escape, Linefeed, Return, Tab,
@@ -762,9 +758,8 @@ class LeoFrame:
 		#@+node:1::<< create the top-level file entries >>
 		#@+body
 		#@+at
-		#  It is doubtful that leo.py will ever support a Print command 
-		# directly.  Rather, users can use export commands to create text 
-		# files that may then be formatted and printed as desired.
+		#  It is doubtful that leo.py will ever support a Print command directly.  Rather, users can use export commands to create 
+		# text files that may then be formatted and printed as desired.
 
 		#@-at
 		#@@c
@@ -1197,13 +1192,11 @@ class LeoFrame:
 	#@+node:3::createMenuEntries
 	#@+body
 	#@+at
-	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  
-	# The new user-configurable code binds shortcuts here.
+	#  The old, non-user-configurable code bound shortcuts in createMenuBar.  The new user-configurable code binds shortcuts here.
 	# 
-	# Centralized tables of shortscuts no longer exist as they did in 
-	# createAccelerators.  To check for duplicates, (possibly arising from 
-	# leoConfig.txt) we add entries to a central dictionary here, and report 
-	# duplicates if an entry for a canonicalized shortcut already exists.
+	# Centralized tables of shortscuts no longer exist as they did in createAccelerators.  To check for duplicates, (possibly 
+	# arising from leoConfig.txt) we add entries to a central dictionary here, and report duplicates if an entry for a 
+	# canonicalized shortcut already exists.
 
 	#@-at
 	#@@c
@@ -1302,9 +1295,8 @@ class LeoFrame:
 	#  Executes the given command, invoking hooks and catching exceptions.
 	# Command handlers no longer need to return "break".  Yippee!
 	# 
-	# The code assumes that customizeLeo("command1") has completely handled 
-	# the command if customizeLeo("command1") returns false.  This provides a 
-	# very simple mechanism for overriding commands.
+	# The code assumes that customizeLeo("command1") has completely handled the command if customizeLeo("command1") returns 
+	# false.  This provides a very simple mechanism for overriding commands.
 
 	#@-at
 	#@@c
@@ -1396,9 +1388,8 @@ class LeoFrame:
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
 		#@+body
 		#@+at
-		#  If this is the only open window was opened when the app started, 
-		# and the window has never been written to or saved, then we will 
-		# automatically close that window if this open command completes successfully.
+		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, 
+		# then we will automatically close that window if this open command completes successfully.
 
 		#@-at
 		#@@c
@@ -1465,52 +1456,67 @@ class LeoFrame:
 			#@+node:2::<< set path to the full pathname of a temp file using ext >>
 			#@+body
 			#@+at
-			#  1/26/03.  Experimental new code creates only one temp file for 
-			# each node, reopening previously created temp files if they 
-			# already exists.
+			#  1/26/03.  Experimental new code creates only one temp file for each node, reopening previously created temp files 
+			# if they already exists.
 			# 
-			# Warning: this is not a complete solution to the problem of 
-			# editing multiple copies of a node: temp files will typically 
-			# have different file extensions for different editors.
+			# Warning: this is not a complete solution to the problem of editing multiple copies of a node: temp files will 
+			# typically have different file extensions for different editors.
 
 			#@-at
 			#@@c
 
 			if 1: # new code.
+				path = None
 				
-				#@<< new code >>
-				#@+node:1::<< new code >>
+				#@<< if a temp file already refers to v.t set path to it >>
+				#@+node:1::<< if a temp file already refers to v.t set path to it >>
 				#@+body
-				name = "LeoTemp_" + str(id(v)) + '_' + sanitize_filename(v.headString()) + ext
-				td = os.path.abspath(tempfile.gettempdir())
-				path = os.path.join(td,name)
-				# If the path exists we will simply try to reopen it.
-				if os.path.exists(path):
-					es("reopening: " + shortFileName(path))
-				else:
-					try:
-						file = open(path,"w")
-						file.write(v.bodyString())
-						file.flush()
-						file.close()
-						try:    time=os.path.getmtime(path)
-						except: time=None
-						es("creating:  " + shortFileName(path))
-						# es("time: " + str(time))
-						dict = {"c":c, "v":v, "f":file, "path":path, "time":time}
-						a.openWithFiles.append(dict)
-					except:
-						file = None
-						es("exception opening temp file")
-						es_exception()
-						return
+				for dict in a.openWithFiles:
+					v2 = dict.get("v")
+					if v.t == v2.t:
+						path = dict.get("path")
+						if os.path.exists(path):
+							es("reopening: " + shortFileName(path))
+							break
 				#@-body
-				#@-node:1::<< new code >>
+				#@-node:1::<< if a temp file already refers to v.t set path to it >>
+
+				if path == None:
+					
+					#@<< create a temp file for v.t and set path >>
+					#@+node:2::<< create a temp file for v.t and set path >>
+					#@+body
+					name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
+					td = os.path.abspath(tempfile.gettempdir())
+					path = os.path.join(td,name)
+					# If the path exists we will simply try to reopen it.
+					if os.path.exists(path):
+						# 1/28/03: this will never be executed.
+						es("reopening: " + shortFileName(path))
+					else:
+						try:
+							file = open(path,"w")
+							file.write(v.bodyString())
+							file.flush()
+							file.close()
+							try:    time=os.path.getmtime(path)
+							except: time=None
+							es("creating:  " + shortFileName(path))
+							# es("time: " + str(time))
+							dict = {"c":c, "v":v, "f":file, "path":path, "time":time}
+							a.openWithFiles.append(dict)
+						except:
+							file = None
+							es("exception opening temp file")
+							es_exception()
+							return
+					#@-body
+					#@-node:2::<< create a temp file for v.t and set path >>
 
 			else:
 				
 				#@<< old code >>
-				#@+node:2::<< old code >>
+				#@+node:3::<< old code >>
 				#@+body
 				file = None
 				open_with_file_num = 0
@@ -1543,7 +1549,7 @@ class LeoFrame:
 					open_with_file_num += 1
 				if not file: return
 				#@-body
-				#@-node:2::<< old code >>
+				#@-node:3::<< old code >>
 			#@-body
 			#@-node:2::<< set path to the full pathname of a temp file using ext >>
 
@@ -1876,9 +1882,8 @@ class LeoFrame:
 		#@+node:1::<< Set closeFlag if the only open window is empty >>
 		#@+body
 		#@+at
-		#  If this is the only open window was opened when the app started, 
-		# and the window has never been written to or saved, then we will 
-		# automatically close that window if this open command completes successfully.
+		#  If this is the only open window was opened when the app started, and the window has never been written to or saved, 
+		# then we will automatically close that window if this open command completes successfully.
 
 		#@-at
 		#@@c
@@ -2326,8 +2331,7 @@ class LeoFrame:
 	#@+node:7::OnExecuteScript
 	#@+body
 	#@+at
-	#  This executes body text as a Python script.  We execute the selected 
-	# text, or the entire body text if no text is selected.
+	#  This executes body text as a Python script.  We execute the selected text, or the entire body text if no text is selected.
 
 	#@-at
 	#@@c
@@ -2501,14 +2505,11 @@ class LeoFrame:
 	#@+node:8::convertLineToVnodeAndLine
 	#@+body
 	#@+at
-	#  This routine converts a line number, n, in a derived file to a vnode 
-	# and offset within the vnode
+	#  This routine converts a line number, n, in a derived file to a vnode and offset within the vnode
 	# 
-	# We count "real" lines in the derived files, ignoring all sentinels that 
-	# do not arise from source lines.  When the indicated line is found, we 
-	# scan backwards for an @+body line, get the vnode's name from that line 
-	# and set v to the indicated vnode.  This will fail if vnode names have 
-	# been changed, and that can't be helped.
+	# We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated 
+	# line is found, we scan backwards for an @+body line, get the vnode's name from that line and set v to the indicated vnode.  
+	# This will fail if vnode names have been changed, and that can't be helped.
 	# 
 	# Returns vnodeName,n2,found
 	# vnodeName: the name found in the previous @+body sentinel.
@@ -3506,11 +3507,9 @@ class LeoFrame:
 	#@+node:3::leoPyShellMain
 	#@+body
 	#@+at
-	#  The key parts of Pyshell.main(), but using Leo's root window instead of 
-	# a new Tk root window.
+	#  The key parts of Pyshell.main(), but using Leo's root window instead of a new Tk root window.
 	# 
-	# This does _not_ work.  Using Leo's root window means that Idle will shut 
-	# down Leo without warning when the Idle window is closed!
+	# This does _not_ work.  Using Leo's root window means that Idle will shut down Leo without warning when the Idle window is closed!
 
 	#@-at
 	#@@c
@@ -3676,8 +3675,8 @@ class LeoFrame:
 	#@+at
 	#  The following convenience routines make creating menus easier.
 	# 
-	# The file customizeLeo.py shows gives examples of how to use these 
-	# routines to create custom menus and to add items to the Open With menu.
+	# The file customizeLeo.py shows gives examples of how to use these routines to create custom menus and to add items to the 
+	# Open With menu.
 
 	#@-at
 	#@-body
@@ -3733,8 +3732,7 @@ class LeoFrame:
 	#  Entries in the table passed to createOpenWithMenuFromTable are
 	# tuples of the form (commandName,shortcut,data).
 	# 
-	# - command is one of "os.system", "os.startfile", "os.spawnl", 
-	# "os.spawnv" or "exec".
+	# - command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or "exec".
 	# - shortcut is a string describing a shortcut, just as for createMenuItemsFromTable.
 	# - data is a tuple of the form (command,arg,ext).
 	# 
@@ -3954,10 +3952,8 @@ class LeoFrame:
 	# 1. self.splitVerticalFlag tells the alignment of the main splitter and
 	# 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
 	# 
-	# Only the general-purpose divideAnySplitter routine doesn't know about 
-	# these invariants.  So most of this code is specialized for Leo's 
-	# window.  OTOH, creating a single splitter window would be much easier 
-	# than this code.
+	# Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized 
+	# for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
 
 	#@-at
 	#@-body
