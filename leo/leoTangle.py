@@ -3954,12 +3954,12 @@ class tangleCommands:
 				j = len("@encoding")
 				i = skip_to_end_of_line(s,i)
 				e = s[k+j:i].strip()
-				trace("encoding:",e)
+				# trace("encoding:",e)
 			
 				if isValidEncoding(e):
-					encoding = e
+					self.encoding = e # 3/4/03
 				else:
-					es("invalid @encoding:", e)
+					es("invalid @encoding:" + e)
 			
 			#@-body
 			#@-node:3::<< Test for @encoding >>
