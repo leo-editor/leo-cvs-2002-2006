@@ -204,6 +204,7 @@ class baseAtFile:
 			else: return false
 		except:
 			at.error("Can not open: " + '"@file ' + fn + '"')
+			root.setDirty()
 			return false
 		#@nonl
 		#@-node:<< open file or return false >>
