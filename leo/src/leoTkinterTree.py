@@ -941,7 +941,8 @@ class leoTkinterTree (leoFrame.leoTree):
             return h,w
         
         iconsList = t.unknownAttributes.get("icons")
-        # g.trace(iconsList)
+        if not iconsList:
+            return h,w
         
         try:
             for dict in iconsList:
