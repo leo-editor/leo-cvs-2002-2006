@@ -1,4 +1,4 @@
-#@+leo-ver=4-thin
+#@+leo-ver=4-thin-encoding=iso-8859-15,.
 #@+node:edream.110203113231.873:@thin at_folder.py
 """Synchronize @folder nodes with folders"""
 
@@ -7,6 +7,7 @@
 
 import leoGlobals as g
 import leoPlugins
+import os  # added JD 2004-09-10
 
 #@<< about this plugin >>
 #@+node:edream.110203113231.874:<< about this plugin >>
@@ -72,7 +73,7 @@ if not g.app.unitTesting:
     # Register the handlers...
     leoPlugins.registerHandler("select1", onSelect)
     
-    __version__ = "1.2" # Set version for the plugin handler.
+    __version__ = "1.3" # Set version for the plugin handler.
     g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.873:@thin at_folder.py
