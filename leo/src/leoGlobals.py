@@ -1111,14 +1111,14 @@ def print_dict(d):
     keys = d.keys()
     keys.sort()
     for key in keys:
-        print key, d.get(key)
-    
+        print "%s: %s" % key,d.get(key)
+
 printDict = print_dict
 
 def dictToString(d):
     keys = d.keys()
     keys.sort()
-    lines = ["%s %s" % (key,d.get(key)) for key in keys]
+    lines = ["%s: %s" % (key,d.get(key)) for key in keys]
     return '\n'.join(lines)
 #@nonl
 #@-node:ekr.20041126060136:print_dict & dictToString
