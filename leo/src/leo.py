@@ -40,8 +40,9 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 
 # Warning: do not import any Leo modules here!
 # Doing so would make g.app invalid in the imported files.
-
-import os,string,sys
+import os
+import string
+import sys
 
 #@+others
 #@+node:ekr.20031218072017.1934:run & allies

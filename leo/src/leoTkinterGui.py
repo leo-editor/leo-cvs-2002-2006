@@ -152,9 +152,9 @@ class tkinterGui(leoGui.leoGui):
     #@-node:ekr.20031218072017.4055:runMainLoop
     #@-node:ekr.20031218072017.4048:app.gui.Tkinter birth & death
     #@+node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
-    def runAboutLeoDialog(self,version,copyright,url,email):
+    def runAboutLeoDialog(self,version,theCopyright,url,email):
         """Create and run a Tkinter About Leo dialog."""
-        d = leoTkinterDialog.tkinterAboutLeo(version,copyright,url,email)
+        d = leoTkinterDialog.tkinterAboutLeo(version,theCopyright,url,email)
         return d.run(modal=False)
         
     def runAskLeoIDDialog(self):

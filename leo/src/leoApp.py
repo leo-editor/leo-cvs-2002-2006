@@ -353,12 +353,18 @@ class LeoApp:
         #@    << return if we can set self.leoID from sys.leoID >>
         #@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
         # This would be set by in Python's sitecustomize.py file.
-        try:
-            g.app.leoID = sys.leoID
+        
+        # 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+        # We also have to use a "non-constant" attribute to suppress another warning!
+        
+        nonConstantAttr = "leoID"
+        
+        if hasattr(sys,nonConstantAttr):
+            g.app.leoID = getattr(sys,nonConstantAttr)
             if not g.app.batchMode:
                 g.es("leoID = " + g.app.leoID, color="orange")
             return
-        except:
+        else:
             g.app.leoID = None
         #@nonl
         #@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>

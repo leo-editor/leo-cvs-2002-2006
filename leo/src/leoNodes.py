@@ -1924,8 +1924,9 @@ class position (object):
         while 1:
             if g.app.debug: g.trace(last)
             p.moveToVisNext()
-            if not p: return last
+            if not p: break
             last = p.copy()
+        return last
             
     def lastVisible(self):
         """Move to the last visible node of the entire tree."""
@@ -1970,7 +1971,8 @@ class position (object):
             else:
                 if verbose: g.trace(level,"level %2d, n: %2d" % (level,n))
                 # if g.app.debug: assert(level==simpleLevel)
-                return level
+                break
+        return level
     #@nonl
     #@-node:ekr.20040227214711:p.level & simpleLevel
     #@-node:ekr.20040306212636:Getters

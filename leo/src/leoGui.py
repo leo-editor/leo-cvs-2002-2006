@@ -185,7 +185,7 @@ class leoGui:
     #@-node:ekr.20031218072017.3723:stubs
     #@-node:ekr.20031218072017.3721:app.gui Birth & death
     #@+node:ekr.20031218072017.3730:app.gui dialogs
-    def runAboutLeoDialog(self,version,copyright,url,email):
+    def runAboutLeoDialog(self,version,theCopyright,url,email):
         """Create and run Leo's About Leo dialog."""
         self.oops()
         
@@ -462,7 +462,7 @@ class unitTestGui(leoGui):
     #@nonl
     #@-node:ekr.20031218072017.3743: test.gui.__init__& destroySelf
     #@+node:ekr.20031218072017.3744:dialogs (unitTestGui)
-    def runAboutLeoDialog(self,version,copyright,url,email):
+    def runAboutLeoDialog(self,version,theCopyright,url,email):
         return self.simulateDialog("aboutLeoDialog")
         
     def runAskLeoIDDialog(self):

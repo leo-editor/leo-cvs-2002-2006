@@ -159,13 +159,13 @@ class tkinterAboutLeo (leoTkinterDialog):
 
     #@    @+others
     #@+node:ekr.20031218072017.3868:tkinterAboutLeo.__init__
-    def __init__ (self,version,copyright,url,email):
+    def __init__ (self,version,theCopyright,url,email):
         
         """Create a Tkinter About Leo dialog."""
     
         leoTkinterDialog.__init__(self,"About Leo",resizeable=True) # Initialize the base class.
         
-        self.copyright = copyright
+        self.copyright = theCopyright
         self.email = email
         self.url = url
         self.version = version
@@ -179,11 +179,11 @@ class tkinterAboutLeo (leoTkinterDialog):
         """Create the frame for an About Leo dialog."""
         
         frame = self.frame
-        copyright = self.copyright ; email = self.email
+        theCopyright = self.copyright ; email = self.email
         url = self.url ; version = self.version
         
         # Calculate the approximate height & width. (There are bugs in Tk here.)
-        lines = string.split(copyright,'\n')
+        lines = string.split(theCopyright,'\n')
         height = len(lines) + 8 # Add lines for version,url,email,spacing.
         width = 0
         for line in lines:
@@ -205,7 +205,7 @@ class tkinterAboutLeo (leoTkinterDialog):
             g.es_exception()
     
         text.insert("end",version,"version")
-        text.insert("end",copyright,"copyright")
+        text.insert("end",theCopyright,"copyright")
         text.insert("end",'\n')
         text.insert("end",url,"url") # Add "url" tag.
         text.insert("end",'\n')

@@ -932,9 +932,6 @@ class baseFileCommands:
         
         """Parse an unknown attribute in a <v> or <t> element."""
         
-        import binascii
-        import pickle
-        
         # New in 4.2.  The unknown tag has been pickled and hexlify'd.
         attr,val = self.getUnknownTag()
         if not attr:

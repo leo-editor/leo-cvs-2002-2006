@@ -3801,14 +3801,14 @@ class baseCommands:
         # Don't use triple-quoted strings or continued strings here.
         # Doing so would add unwanted leading tabs.
         version = c.getSignOnLine() + "\n\n"
-        copyright = (
+        theCopyright = (
             "Copyright 1999-2004 by Edward K. Ream\n" +
             "All Rights Reserved\n" +
             "Leo is distributed under the Python License")
         url = "http://webpages.charter.net/edreamleo/front.html"
         email = "edreamleo@charter.net"
     
-        g.app.gui.runAboutLeoDialog(version,copyright,url,email)
+        g.app.gui.runAboutLeoDialog(version,theCopyright,url,email)
     #@nonl
     #@-node:ekr.20031218072017.2939:about (version number & date)
     #@+node:ekr.20031218072017.2940:leoDocumentation
