@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4507" clone_windows="0"/>
 <globals body_outline_ratio="0.566995768688">
-	<global_window_position top="25" left="10" height="709" width="919"/>
+	<global_window_position top="44" left="220" height="709" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1" a="E"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -5862,6 +5862,56 @@
 </v>
 <v t="EKR.20040422101256"><vh>4/22</vh>
 <v t="EKR.20040422101256.1"><vh>changed v=v to p=v in some calls to scanDirectives</vh></v>
+<v t="EKR.20040422130619.1"><vh>(Added ResizeToScreen command)</vh>
+<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
+<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
+<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
+<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
+<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
+<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
+</v>
+<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
+<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
+<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
+<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
+<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
+<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
+<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
+<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
+</v>
+<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
+<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
+<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
+<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="EKR.20040422131742"><vh>(Improved Find dialog)</vh>
+<v t="EKR.20040422131742.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="EKR.20040422131742.2" a="M"><vh>double-paste in searchbox</vh></v>
+<v t="ekr.20031218072017.3082"><vh>Initing &amp; finalizing</vh>
+<v t="ekr.20031218072017.3083"><vh>checkArgs</vh></v>
+<v t="ekr.20031218072017.3084"><vh>initBatchCommands</vh></v>
+<v t="ekr.20031218072017.3085"><vh>initBatchText &amp; initNextText</vh></v>
+<v t="ekr.20031218072017.3086"><vh>initInHeadline</vh></v>
+<v t="ekr.20031218072017.3087"><vh>initInteractiveCommands</vh></v>
+<v t="ekr.20031218072017.3088"><vh>printLine</vh></v>
+<v t="ekr.20031218072017.3089"><vh>restore</vh></v>
+<v t="ekr.20031218072017.3090"><vh>save</vh></v>
+<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
+</v>
+<v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
+<v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -6120,7 +6170,7 @@
 <v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
 <v t="ekr.20040414093758"><vh>Suggestions</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -9410,6 +9460,7 @@
 </v>
 </v>
 <v t="EKR.20040422132037"><vh>Mac/Linux bugs</vh>
+<v t="EKR.20040422131023" a="M"><vh>(Force update of log pane when reading derived files)</vh></v>
 <v t="EKR.20040422132037.1" a="M"><vh>Use clover keys for Mac</vh></v>
 <v t="EKR.20040422132037.2"><vh>Install Leo in the site-packages directory</vh></v>
 <v t="EKR.20040422132037.3"><vh>small bug in install script</vh></v>
@@ -9420,61 +9471,8 @@
 <v t="EKR.20040422132037.7"><vh>Bug: vpython and mac</vh></v>
 <v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies  </vh></v>
 </v>
-<v t="EKR.20040422091601"><vh>New bugs</vh>
+<v t="EKR.20040422091601" a="TV"><vh>New bugs</vh>
 <v t="EKR.20040422091601.1"><vh>Syntax Colouring Bug - html mode   </vh></v>
-</v>
-<v t="EKR.20040422130257"><vh>to be committed to cvs</vh>
-<v t="EKR.20040422131023"><vh>(Force update of log pane when reading derived files)</vh></v>
-<v t="EKR.20040422130619.1"><vh>(ResizeToScreen command)</vh>
-<v t="ekr.20031218072017.3979"><vh>Gui-dependent commands</vh>
-<v t="ekr.20031218072017.3980"><vh>Edit Menu...</vh>
-<v t="ekr.20031218072017.3981"><vh>abortEditLabelCommand</vh></v>
-<v t="ekr.20031218072017.840"><vh>Cut/Copy/Paste body text</vh>
-<v t="ekr.20031218072017.841"><vh>frame.OnCut, OnCutFrom Menu</vh></v>
-<v t="ekr.20031218072017.842"><vh>frame.OnCopy, OnCopyFromMenu</vh></v>
-<v t="ekr.20031218072017.843"><vh>frame.OnPaste, OnPasteNode, OnPasteFromMenu</vh></v>
-</v>
-<v t="ekr.20031218072017.3982"><vh>endEditLabelCommand</vh></v>
-<v t="ekr.20031218072017.3983"><vh>insertHeadlineTime</vh></v>
-</v>
-<v t="ekr.20031218072017.3984"><vh>Window Menu...</vh>
-<v t="ekr.20031218072017.3985"><vh>toggleActivePane</vh></v>
-<v t="ekr.20031218072017.3986"><vh>cascade</vh></v>
-<v t="ekr.20031218072017.3987"><vh>equalSizedPanes</vh></v>
-<v t="ekr.20031218072017.3988"><vh>hideLogWindow</vh></v>
-<v t="ekr.20031218072017.3989"><vh>minimizeAll</vh></v>
-<v t="ekr.20031218072017.3990"><vh>toggleSplitDirection</vh></v>
-<v t="EKR.20040422130619"><vh>resizeToScreen</vh></v>
-</v>
-<v t="ekr.20031218072017.3991"><vh>Help Menu...</vh>
-<v t="ekr.20031218072017.3992"><vh>leoHelp</vh>
-<v t="ekr.20031218072017.3993"><vh>showProgressBar</vh>
-<v t="ekr.20031218072017.3994"><vh>&lt;&lt; create the scale widget &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="EKR.20040422131742"><vh>(Improve Find dialog)</vh>
-<v t="EKR.20040422131742.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="EKR.20040422131742.2" a="M"><vh>double-paste in searchbox</vh></v>
-<v t="ekr.20031218072017.3082"><vh>Initing &amp; finalizing</vh>
-<v t="ekr.20031218072017.3083"><vh>checkArgs</vh></v>
-<v t="ekr.20031218072017.3084"><vh>initBatchCommands</vh></v>
-<v t="ekr.20031218072017.3085"><vh>initBatchText &amp; initNextText</vh></v>
-<v t="ekr.20031218072017.3086"><vh>initInHeadline</vh></v>
-<v t="ekr.20031218072017.3087"><vh>initInteractiveCommands</vh></v>
-<v t="ekr.20031218072017.3088"><vh>printLine</vh></v>
-<v t="ekr.20031218072017.3089"><vh>restore</vh></v>
-<v t="ekr.20031218072017.3090"><vh>save</vh></v>
-<v t="ekr.20031218072017.3091"><vh>showSuccess</vh></v>
-</v>
-<v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
-<v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
-</v>
-</v>
 </v>
 </vnodes>
 <tnodes>
@@ -9495,7 +9493,6 @@ David
 </t>
 <t tx="EKR.20040422101256"></t>
 <t tx="EKR.20040422101256.1"></t>
-<t tx="EKR.20040422130257"></t>
 <t tx="EKR.20040422130619">def resizeToScreen (self):
 	
 	top = self.top
