@@ -20,7 +20,7 @@ import leoGlobals as g
 try: import Tkinter as Tk
 except ImportError:
 	g.es("Can not load autocompleter.py...",color="blue")
-	g.es("can not import Tkinter",color="blue")
+	g.es("Can not import Tkinter",color="blue")
 	Tk = None
 
 try: import Pmw
@@ -50,10 +50,16 @@ pats['perl']   = re.compile(r'sub\s+' + end)
 pats['c++']    = re.compile(r'((virtual\s+)?\w+'+ space + end +')')
 pats['c']      = re.compile(r'\w+'+ space + end)
 
-pat = re.compile(r'(\b[^.\s]+?\.[^.\s]+?\W)')
+if 1: # new code.
+	r = string.punctuation.replace('(','').replace('.','')
+	pt = string.digits + string.letters + r
+	pat = re.compile(r'([%s]+?\.[^.\s]+?\W)' % pt)
+else:
+	pat = re.compile(r'(\b[^.\s]+?\.[^.\s]+?\W)')
 
 lang = None
 scanning = False # A lockout.
+#@nonl
 #@-node:EKR.20040605183135.1:<< autocompleter globals >>
 #@nl
 #@<< changes made by EKR >>
@@ -423,11 +429,11 @@ def doScan (c):
 
 	bankpath = pth[0] + r"/plugins/autocompleter/"
 	for z in pats:
-		bpath = bankpath +z + '.ato' 
+		bpath = bankpath + z + '.ato' 
 		if g.os_path_exists(bpath):
 			f = open(bpath)
 			lang = str(z)
-			g.trace("z",z)
+			# g.trace("scanning " + lang + ".ato")
 			for x in f:
 				scanText(x)
 			f.close()
@@ -444,22 +450,16 @@ def doScan (c):
 			setLanguage(v) 
 			scanText(v.bodyString())
 			v = v.threadNext()
-
+#@nonl
 #@-node:EKR.20040605184409.1:doScan
 #@-node:EKR.20040605182632.4:Scanning...
 #@+node:EKR.20040607074710:Utilities...
 #@+node:EKR.20040605182906:calculatePlace
-def calculatePlace (body,cwidg,canvas,f):
+def calculatePlace(body,cwidg,canvas,f ):
 
-	label = Tk.Label(body)
-	body.window_create("insert",window=label)
-	body.update_idletasks()
-
-	lwh = label.winfo_height()
-	x, y = label.winfo_x() , label.winfo_y() + lwh
-	body.delete(label)
-
-	rwidth = cwidg.winfo_reqwidth()
+	x,y,lww,lwh = body.bbox('insert -1c')
+	x,y = x + lww, y + lwh
+	rwidth  = cwidg.winfo_reqwidth()
 	rheight = cwidg.winfo_reqheight()
 	if body.winfo_width() < x + rwidth:
 		x = x - rwidth
@@ -467,7 +467,6 @@ def calculatePlace (body,cwidg,canvas,f):
 		h2 = rheight
 		h3 = h2 + lwh
 		y = y - h3
-
 	canvas.i = canvas.create_window(x,y,window=f,anchor='nw')
 #@nonl
 #@-node:EKR.20040605182906:calculatePlace
@@ -558,7 +557,9 @@ if Tk and Pmw:
 
 	leoPlugins.registerHandler('open2',initialScan)
 
-	__version__ = ".126a" # Mods made by EKR.
+	__version__ = ".128"
+		# .127: Use pattern to allow string methods.
+		# .128: Use bbox in calculatePlace
 	__name__ = 'autocompleter'
 	g.plugin_signon(__name__)
 #@nonl
