@@ -500,7 +500,7 @@
 <v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
 </v>
 </v>
-<v t="ekr.20040414082806" a="TV"><vh>Clone test</vh>
+<v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
 <v t="ekr.20040409140301.2" a="E"><vh>c</vh>
@@ -520,6 +520,10 @@
 </v>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
 <v t="ekr.20040409140343.1"><vh>last</vh></v>
+</v>
+<v t="ekr.20040419105536" a="ETV" tnodeList="ekr.20040419105536,ekr.20040419105536.1,ekr.20040419105536.2"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536.1"><vh>one</vh></v>
+<v t="ekr.20040419105536.2"><vh>two</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -4142,5 +4146,12 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="ekr.20040414082422.2"></t>
 <t tx="ekr.20040414082806"></t>
+<t tx="ekr.20040419105536">@ignore
+
+@language perl
+
+@others</t>
+<t tx="ekr.20040419105536.1">line 1</t>
+<t tx="ekr.20040419105536.2">line 2</t>
 </tnodes>
 </leo_file>
