@@ -1126,6 +1126,7 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2143:<< redirect output >>
         #@nl
+        # g.trace(script)
         if script:
             script = script.strip()
         if script:
@@ -1489,7 +1490,7 @@ class baseCommands:
         
         if leoLine < len(lines):
             s = lines[leoLine]
-            valid,newDerivedFile,start,end = at.parseLeoSentinel(s)
+            valid,newDerivedFile,start,end,derivedFileIsThin = at.parseLeoSentinel(s)
             if valid: delim = start + '@'
             else:     delim = None
         else:
