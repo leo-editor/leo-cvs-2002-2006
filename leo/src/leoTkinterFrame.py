@@ -1509,7 +1509,6 @@ class leoTkinterBody (leoFrame.leoBody):
 		#@	<< return if nothing has changed >>
 		#@+node:ekr.20031218072017.1322:<< return if nothing has changed >>
 		# 6/22/03: Make sure we handle delete key properly.
-		
 		if ch not in ('\n','\r',chr(8)):
 		
 			if s == body:
@@ -1561,80 +1560,82 @@ class leoTkinterBody (leoFrame.leoBody):
 			removeTrailing = true
 			
 		# g.trace(ch,removeTrailing)
-		
-		
+		#@nonl
 		#@-node:ekr.20031218072017.1323:<< set removeTrailing >>
 		#@nl
-		if ch in ('\n','\r'):
-			#@		<< Do auto indent >>
-			#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
-			# Do nothing if we are in @nocolor mode or if we are executing a Change command.
-			if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
-				# Get the previous line.
-				s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
-				# Add the leading whitespace to the present line.
-				junk,width = g.skip_leading_ws_with_indent(s,0,c.tab_width)
-				if s and len(s) > 0 and s[-1]==':':
-					# For Python: increase auto-indent after colons.
-					if self.colorizer.scanColorDirectives(p) == "python":
-						width += abs(c.tab_width)
-				if g.app.config.getBoolWindowPref("smart_auto_indent"):
-					# Added Nov 18 by David McNab, david@rebirthing.co.nz
-					# Determine if prev line has unclosed parens/brackets/braces
-					brackets = [width]
-					tabex = 0
-					for i in range(0, len(s)):
-						if s[i] == '\t':
-							tabex += c.tab_width - 1
-						if s[i] in '([{':
-							brackets.append(i+tabex + 1)
-						elif s[i] in '}])' and len(brackets) > 1:
-							brackets.pop()
-					width = brackets.pop()
-					# end patch by David McNab
-				ws = g.computeLeadingWhitespace (width,c.tab_width)
-				if ws and len(ws) > 0:
-					c.frame.bodyCtrl.insert("insert", ws)
-					removeTrailing = false # bug fix: 11/18
-			#@nonl
-			#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
-			#@nl
-		elif ch == '\t' and c.tab_width < 0:
-			#@		<< convert tab to blanks >>
-			#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
-			# Do nothing if we are executing a Change command.
-			if undoType != "Change":
-				
-				# Get the characters preceeding the tab.
-				prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-				
-				if 1: # 6/26/03: Convert tab no matter where it is.
-			
-					w = g.computeWidth(prev,c.tab_width)
-					w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
-					# g.trace("prev w:",w,"prev chars:",prev)
-					c.frame.bodyCtrl.delete("insert -1c")
-					c.frame.bodyCtrl.insert("insert",' ' * w2)
-				
-				else: # Convert only leading tabs.
-				
+		if ch in ('\t','\n','\r'):
+			d = g.scanDirectives(c,p) # Support @tab_width directive properly.
+			tab_width = d.get("tabwidth",c.tab_width) # ; g.trace(tab_width)
+			if ch in ('\n','\r'):
+				#@			<< Do auto indent >>
+				#@+node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+				# Do nothing if we are in @nocolor mode or if we are executing a Change command.
+				if self.frame.body.colorizer.useSyntaxColoring(p) and undoType != "Change":
+					# Get the previous line.
+					s=c.frame.bodyCtrl.get("insert linestart - 1 lines","insert linestart -1c")
+					# Add the leading whitespace to the present line.
+					junk,width = g.skip_leading_ws_with_indent(s,0,tab_width)
+					if s and len(s) > 0 and s[-1]==':':
+						# For Python: increase auto-indent after colons.
+						if self.colorizer.scanColorDirectives(p) == "python":
+							width += abs(tab_width)
+					if g.app.config.getBoolWindowPref("smart_auto_indent"):
+						# Added Nov 18 by David McNab, david@rebirthing.co.nz
+						# Determine if prev line has unclosed parens/brackets/braces
+						brackets = [width]
+						tabex = 0
+						for i in range(0, len(s)):
+							if s[i] == '\t':
+								tabex += tab_width - 1
+							if s[i] in '([{':
+								brackets.append(i+tabex + 1)
+							elif s[i] in '}])' and len(brackets) > 1:
+								brackets.pop()
+						width = brackets.pop()
+						# end patch by David McNab
+					ws = g.computeLeadingWhitespace (width,tab_width)
+					if ws and len(ws) > 0:
+						c.frame.bodyCtrl.insert("insert", ws)
+						removeTrailing = false # bug fix: 11/18
+				#@nonl
+				#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
+				#@nl
+			elif tab_width < 0:
+				#@			<< convert tab to blanks >>
+				#@+node:ekr.20031218072017.1325:<< convert tab to blanks >>
+				# Do nothing if we are executing a Change command.
+				if undoType != "Change":
+					
 					# Get the characters preceeding the tab.
 					prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
-			
-					# Do nothing if there are non-whitespace in prev:
-					all_ws = true
-					for ch in prev:
-						if ch != ' ' and ch != '\t':
-							all_ws = false
-					if all_ws:
-						w = g.computeWidth(prev,c.tab_width)
-						w2 = (abs(c.tab_width) - (w % abs(c.tab_width)))
+					
+					if 1: # 6/26/03: Convert tab no matter where it is.
+				
+						w = g.computeWidth(prev,tab_width)
+						w2 = (abs(tab_width) - (w % abs(tab_width)))
 						# g.trace("prev w:",w,"prev chars:",prev)
 						c.frame.bodyCtrl.delete("insert -1c")
 						c.frame.bodyCtrl.insert("insert",' ' * w2)
-			#@nonl
-			#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
-			#@nl
+					
+					else: # Convert only leading tabs.
+					
+						# Get the characters preceeding the tab.
+						prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
+				
+						# Do nothing if there are non-whitespace in prev:
+						all_ws = true
+						for ch in prev:
+							if ch != ' ' and ch != '\t':
+								all_ws = false
+						if all_ws:
+							w = g.computeWidth(prev,tab_width)
+							w2 = (abs(tab_width) - (w % abs(tab_width)))
+							# g.trace("prev w:",w,"prev chars:",prev)
+							c.frame.bodyCtrl.delete("insert -1c")
+							c.frame.bodyCtrl.insert("insert",' ' * w2)
+				#@nonl
+				#@-node:ekr.20031218072017.1325:<< convert tab to blanks >>
+				#@nl
 		#@	<< set s to widget text, removing trailing newlines if necessary >>
 		#@+node:ekr.20031218072017.1326:<< set s to widget text, removing trailing newlines if necessary >>
 		s = c.frame.body.getAllText()
@@ -2032,8 +2033,13 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@-node:ekr.20031218072017.4022:hasTextSelection
 	#@+node:ekr.20031218072017.4023:selectAllText
 	def selectAllText (self):
-		
-		g.app.gui.setTextSelection(self.bodyCtrl,"1.0","end")
+	
+		try:
+			w = self.bodyCtrl.focus_get()
+			g.app.gui.setTextSelection(w,"1.0","end")
+		except:
+			pass
+	#@nonl
 	#@-node:ekr.20031218072017.4023:selectAllText
 	#@+node:ekr.20031218072017.4024:setTextSelection
 	def setTextSelection (self,i,j=None):
