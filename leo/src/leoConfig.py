@@ -879,7 +879,7 @@ class parserBaseClass:
         
             name = name[j+1:].strip()
             kind = "ints[%s]" % (','.join([str(item) for item in items]))
-            g.trace(repr(kind),repr(name),val)
+            # g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
             self.set(p,kind,name,val)
@@ -956,7 +956,7 @@ class parserBaseClass:
     
             name = name[j+1:].strip()
             kind = "strings[%s]" % (','.join(items))
-            g.trace(repr(kind),repr(name),val)
+            # g.trace(repr(kind),repr(name),val)
     
             # At present no checking is done.
             self.set(p,kind,name,val)
