@@ -3,6 +3,133 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20041130125500:First
+#@+node:ekr.20041130094657:(Finish g.app.config.set)
+#@+node:ekr.20041118084146.1:set (g.app.config)
+def set (self,c,setting,type,val):
+    
+    """Set the setting and make sure its type matches the given type."""
+    
+    munge = self.munge
+    
+    setting = munge(setting)
+
+    g.trace(c,setting,type,val)
+
+    return ####
+    
+    ## To do: also search c's settings dict.
+    data = self.defaultsDict.get(setting)
+    
+    if data:
+        theType,val = data
+    else:
+        theType,val = None,None
+
+    if setting is None:
+        g.trace(setting,type,val)
+    
+    return val
+#@nonl
+#@-node:ekr.20041118084146.1:set (g.app.config)
+#@-node:ekr.20041130094657:(Finish g.app.config.set)
+#@+node:ekr.20041130103128:(killcolor also kills autoindenting )
+By: Roger Erens - rogererens
+@
+2004-11-25 09:14
+On leo4.2, winXP, my default language is Python and smart_auto_indent=0. 
+Normally, after ending a line with a colon, the next line gets indented by 1 tab, also in comment-sections. 
+When using an @killcolor directive in a node, the line following one that ends with a colon starts at column zero. 
+I think it is unreasonable for @killcolor to interfere with indenting.
+#@-node:ekr.20041130103128:(killcolor also kills autoindenting )
+#@+node:ekr.20041130123243:(Add clear undo command)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859273
+e
+
+theres a config option to clear undo on save.
+can that be a menu choice as well? 
+clear undo now.
+enable clear undo on save.
+moot as it will be with the new config options
+and any undo changes on the table.
+maybe there is a single point to involke clear 
+undo that could be run from a button?
+
+with py2.3 after allot of small edits on an open leo after a few hours gc can
+hit unexpectedly and last several minutes
+and return at any time lasting several more minutes.
+I think its gc related because the memory use and disk grinding demanding I
+free up memory or kill python.
+
+I have no idea if undo is the cause,
+ just guessing.
+using cvs of last week. I just updated, 
+will let you know if it happens again.
+(new error reporting jump to error is great)
+
+usually I don't edit in the same process that long.
+I have run scripts from leo that run 6, 12 
+or 24 hours no problem. 
+maybe I can turn on some internals reporting and
+get some feedback on whats going on from python if it happens again. 
+or run the gc script before and after.
+
+ win98 128meg w/maxmem memory defrager that works well.
+but I go from 50% free to 10% when this starts happening.
+I haven't noticed this problem yet in py2.4, and it is peppier,
+but don't use py2.4 enough. it doesn't happen every day.
+I reboot at least once a day for various reasons.
+so it isn't that either. 
+you do need to reboot and or exit python once it starts.
+this was never an issue with py2.2 and Leo 4.1 or less with only 64 megs.
+I don't really have any other long running python processes to compare to Leo. 
+can't say what it is.
+Aha, progress. 
+this started sometime early in 4.2 or late 4.1
+but I can still be persuaded something in my 
+local system is to blame, some install or dll update. or script, psyco or plugin
+related.
+
+nonwithstanding, I should be taking better advantage Moore's law in my CPU and
+memory.
+I only notice this when I'm running the same leo over a few hours of constant
+editing and running scrips.
+and when I exit python and restart leo everything returns to normal.
+more a supporting anomaly report 
+than a bug report or feature request.
+#@nonl
+#@-node:ekr.20041130123243:(Add clear undo command)
+#@+node:ekr.20041130125213:(Fix minor bugs in spelling plugin)
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2866490
+
+I've noticed that even if the mod_speling.ini is changed, the language is alway
+set as en_US !
+
+to Correct this and being able to launch the correct language, i've changed
+he following code :
+
+''''''Ctor for the Aspell clas.''''''
+self.sc = aspell.spell_checker(prefix=aspell_dir)
+
+by :
+''''''Ctor for the Aspell clas.''''''
+self.sc = aspell.spell_checker(prefix=aspell_dir, lang=local_language_code)
+
+..................
+This seem to work on my install !
+
+BUT
+the hardcodding of the aspell_dir in the plugin code is UGLY !!!
+
+It should also be fine to add a directive or a menu under the plugins_menu"
+to change the language and reinitialise the spell_checker for spelling multilingual
+documents.....
+#@-node:ekr.20041130125213:(Fix minor bugs in spelling plugin)
+#@-node:ekr.20041130125500:First
 #@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 http://sourceforge.net/forum/message.php?msg_id=2871977
 
@@ -3170,6 +3297,48 @@ Edward
 Including, e.g., Undo messages.
 #@nonl
 #@-node:ekr.20040216153659.1:Find some way to translate all other Leo messages.
+#@+node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130125213.2:Requests & follow up
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2859149
+By: genthaler
+
+I'd really like to have Mac OS X packages available as a download option, rather
+than doing it by hand every time a new version comes out. What do I have to
+do to make this happen?
+
+http://sourceforge.net/forum/message.php?msg_id=2859156
+By: genthaler
+
+BTW, I wasn't the first to do this and publish it - heres a link to an older
+version - http://www.wordtech-software.com/leo.html
+ 
+http://sourceforge.net/forum/message.php?msg_id=2859153
+By: genthaler
+
+On Mac OS X, it's quite easy to have a double-clickable application bundle with
+its own private Python and TclTk frameworks, but it's huge; about 20MB unpacked
+IIRC. More sensible to use the OS's version, but that requires Tkinter to be
+installed in /System/Library/Frameworks/Python.framework, and that requires
+an installer package and admin privileges.
+
+Günther
+
+#@-node:ekr.20041130125213.2:Requests & follow up
+#@-node:ekr.20041130125213.1:(Create Mac package for Leo)
+#@+node:ekr.20041130104552:(Support bird-track programs/comments?)
+@killcolor
+
+By: Guenther Enthaler - genthaler
+RE: Haskell support  
+2004-11-18 22:55
+
+There's a literate programming mode in Haskell (and in a number of other functional programming languages such as Clean & Curry), where the program is in a comment, usually where the line starts with ">" (bird track style, I think it's called), and the comments/documentation are freeform. It would be difficult but cool if Leo could support it, if only because the sentinels in the derived files wouldn't make whole file look so busy. 
+ 
+Günther 
+#@nonl
+#@-node:ekr.20041130104552:(Support bird-track programs/comments?)
 #@-node:ekr.20041022081937.1:Others (Maybe)
 #@+node:EKR.20040606193130:(Fix problems with negative tab width in prefs)
 #@+node:EKR.20040606193323:Report
