@@ -389,9 +389,10 @@ class config:
 	
 	def setCommandsFindIvars (self,c):
 	
-		config = self
+		config = self ; findFrame = app().findFrame
 	
-		for s in leoFind.ivars:
+		# N.B.: separate c.ivars are much more convenient than a dict.
+		for s in findFrame.intKeys:
 			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
 			val = config.getBoolFindPref(s)
 			if val: 
@@ -468,12 +469,15 @@ class config:
 	# Sets config ivars from c.
 	
 	def setConfigFindIvars (self,c):
+		
+		findFrame = app().findFrame
 	
-		for s in leoFind.ivars:
+		# N.B.: separate c.ivars are much more convenient than a dict.
+		for s in findFrame.intKeys:
 			# This exec is safe because leoFind.ivars does not depend on leoConfig.txt.
 			exec("val=str(c."+s+"_flag)")
 			self.setFindPref(s,val)
-	
+		
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@-body

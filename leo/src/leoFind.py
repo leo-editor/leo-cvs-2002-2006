@@ -59,19 +59,6 @@
 from leoGlobals import *
 import sys,Tkinter,types
 
-# Abbreviations
-set_undo_params = true ; dont_set_undo_params = false
-all = true
-
-#define is_word(c)(isalnum(c)or(c)== '_')
-
-# The names of the actual ivars have "_flag" appended to these.
-# Note: batch_flag now records the "context" checkbox.
-ivars = [
-	"batch", "wrap", "whole_word", "ignore_case", "node_only",
-	"pattern_match", "search_headline", "search_body",
-	"suboutline_only", "mark_changes", "mark_finds", "reverse" ]
-
 class LeoFind:
 
 	#@+others
@@ -84,9 +71,23 @@ class LeoFind:
 		#@<< Initialize the leoFind ivars >>
 		#@+node:1::<< Initialize the leoFind ivars >>
 		#@+body
-		# Initialize the ivars for the find panel.
-		for var in ivars:
-			exec ("self.%s_flag = Tk.IntVar()" % var)
+		self.dict = {}
+		
+		# Order is important for compatibility with 3.x.  Sheesh.
+		self.intKeys = [
+			"batch", "wrap", "whole_word", "ignore_case", "node_only",
+			"pattern_match", "search_headline", "search_body",
+			"suboutline_only", "mark_changes", "mark_finds", "reverse"]
+		self.newIntKeys = ["script_change"]
+		self.newStringKeys = ["radio-find-type", "radio-search-scope"]
+		# self.stringKeys = ["change_text","find_text"]
+		
+		for key in self.intKeys:
+			self.dict[key] = Tk.IntVar()
+		for key in self.newIntKeys:
+			self.dict[key] = Tk.IntVar()
+		for key in self.newStringKeys:
+			self.dict[key] = Tk.StringVar()
 			
 		# The c.x_flag ivars contain the user preferences.
 		# These are updated just before executing any find/change command.
@@ -138,8 +139,19 @@ class LeoFind:
 		# Create the labels and text fields...
 		flab = Tk.Label(fpane, width=8, text="Find:")
 		clab = Tk.Label(cpane, width=8, text="Change:")
-		self.find_text   = ftxt = Tk.Text(fpane, height=2, width=20)
-		self.change_text = ctxt = Tk.Text(cpane, height=2, width=20)
+		
+		# Use bigger boxes for scripts.
+		self.find_text   = ftxt = Tk.Text(fpane, height=10, width=80)
+		self.change_text = ctxt = Tk.Text(cpane, height=10, width=80)
+		
+		fBar = Tk.Scrollbar(fpane,name='findBar')
+		cBar = Tk.Scrollbar(cpane,name='changeBar')
+		
+		# Add scrollbars.
+		for bar,txt in ((fBar,ftxt),(cBar,ctxt)):
+			txt['yscrollcommand'] = bar.set
+			bar['command'] = txt.yview
+			bar.pack(side="right", fill="y")
 		
 		flab.pack(side="left")
 		clab.pack(side="left")
@@ -149,75 +161,84 @@ class LeoFind:
 		#@-node:2::<< Create the Find and Change panes >>
 
 		
-		#@<< Create two columns of checkboxes >>
-		#@+node:3::<< Create two columns of checkboxes >>
+		#@<< Create four columns of radio and checkboxes >>
+		#@+node:3::<< Create four columns of radio and checkboxes >>
 		#@+body
-		boxes = Tk.Frame(outer, bd="1m")
-		boxes.pack(anchor="n", expand=1, fill="x")
+		columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
+		columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
 		
-		lt = Tk.Frame(boxes, bd=1)
-		rt = Tk.Frame(boxes, bd=1)
-		lt.pack(side="left", padx="5m")
-		rt.pack(side="right", ipadx="2m")
+		numberOfColumns = 4 # Number of columns
+		columns = [] ; radioLists = [] ; checkLists = []
+		for i in xrange(numberOfColumns):
+			columns.append(Tk.Frame(columnsFrame,bd=1))
+			radioLists.append([])
+			checkLists.append([])
 		
-		lt_list = [
-			("Show Context", "batch"), # batch flag now records Show context.
-			("Wrap Around", "wrap"),
-			("Whole Word", "whole_word"),
-			("Ignore Case", "ignore_case"),
-			("Pattern Match", "pattern_match"),
-			("Reverse", "reverse")]
+		for i in xrange(numberOfColumns):
+			columns[i].pack(side="left",padx="1m") # fill="y" Aligns to top. padx expands columns.
 		
-		rt_list = [
-			("Search Headline Text", "search_headline"),
-			("Search Body Text", "search_body"),
-			("Suboutline Only", "suboutline_only"),
-			("Node Only", "node_only"),
-			("Mark Changes", "mark_changes"),
-			("Mark Finds", "mark_finds") ]
+		radioLists[0] = [
+			(self.dict["radio-find-type"],"Plain Search","plain-search"),  
+			(self.dict["radio-find-type"],"Pattern Match Search","pattern-search"),
+			(self.dict["radio-find-type"],"Script Search","script-search")]
+		checkLists[0] = [
+			("Script Change",self.dict["script_change"]),]
+		checkLists[1] = [
+			("Whole Word",  self.dict["whole_word"]),
+			("Ignore Case", self.dict["ignore_case"]),
+			("Wrap Around", self.dict["wrap"]),
+			("Reverse",     self.dict["reverse"])]
+		radioLists[2] = [
+			(self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
+			(self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
+			(self.dict["radio-search-scope"],"Node Only","snode-only"),           
+			(self.dict["radio-search-scope"],"Selection Only","selected-text-only")]
+		checkLists[2] = []
+		checkLists[3] = [
+			("Search Headline Text", self.dict["search_headline"]),
+			("Search Body Text",     self.dict["search_body"]),
+			("Mark Finds",           self.dict["mark_finds"]),
+			("Mark Changes",         self.dict["mark_changes"])]
 		
-		for name, var in lt_list:
-			exec ( 'box = Tk.Checkbutton(lt, anchor="w", text="' + name +
-				'", variable=self.' + var + "_flag)" )
-			box.pack(fill="x")
-			box.bind("<1>", self.resetWrap)
-			
-		for name, var in rt_list:
-			exec ( 'box = Tk.Checkbutton(rt, anchor="w", text="' + name +
-				'", variable=self.' + var + "_flag)" )
-			box.pack(fill="x")
-			box.bind("<1>", self.resetWrap)
-		
+		for i in xrange(numberOfColumns):
+			for var,name,val in radioLists[i]:
+				box = Tk.Radiobutton(columns[i],anchor="w",text=name,variable=var,value=val)
+				box.pack(fill="x")
+				box.bind("<1>", self.resetWrap)
+			for name, var in checkLists[i]:
+				box = Tk.Checkbutton(columns[i],anchor="w",text=name,variable=var)
+				box.pack(fill="x")
+				box.bind("<1>", self.resetWrap)
 		#@-body
-		#@-node:3::<< Create two columns of checkboxes >>
+		#@-node:3::<< Create four columns of radio and checkboxes >>
 
 		
 		#@<< Create two rows of buttons >>
 		#@+node:4::<< Create two rows of buttons >>
 		#@+body
 		# Create the button panes
-		buttons  = Tk.Frame(outer, bd=1)
-		buttons2 = Tk.Frame(outer, bd=1)
-		buttons.pack (anchor="n", expand=1, fill="x")
-		buttons2.pack(anchor="n", expand=1, fill="x")
+		buttons  = Tk.Frame(outer,bd=1)
+		buttons2 = Tk.Frame(outer,bd=1)
+		buttons.pack (anchor="n",expand=1,fill="x")
+		buttons2.pack(anchor="n",expand=1,fill="x")
 		
 		# Create the first row of buttons
-		findButton   =Tk.Button(buttons,width=8,text="Find",command=self.findButton,
-			bd=4) # bd=4 represents default button
+		findButton=Tk.Button(buttons,width=8,text="Find",command=self.findButton)
+		contextBox=Tk.Checkbutton(buttons,anchor="w",text="Show Context",variable=self.dict["batch"])
 		findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 		
-		findButton.pack   (pady="1m",padx="1m",side="left")
-		# reverseBox.pack   (pady="1m",          side="left",expand=1)
-		findAllButton.pack(pady="1m",padx="1m",fill="x",side="right")
+		findButton.pack   (pady="1m",padx="25m",side="left")
+		contextBox.pack   (pady="1m",          side="left",expand=1)
+		findAllButton.pack(pady="1m",padx="25m",side="right",fill="x",)
 		
 		# Create the second row of buttons
 		changeButton    =Tk.Button(buttons2,width=8,text="Change",command=self.changeButton)
 		changeFindButton=Tk.Button(buttons2,        text="Change, Then Find",command=self.changeThenFindButton)
 		changeAllButton =Tk.Button(buttons2,width=8,text="Change All",command=self.changeAllButton)
 		
-		changeButton.pack    (pady="1m",padx="1m",side="left")
+		changeButton.pack    (pady="1m",padx="25m",side="left")
 		changeFindButton.pack(pady="1m",          side="left",expand=1)
-		changeAllButton.pack (pady="1m",padx="1m",side="right")
+		changeAllButton.pack (pady="1m",padx="25m",side="right")
 		#@-body
 		#@-node:4::<< Create two rows of buttons >>
 
@@ -226,15 +247,21 @@ class LeoFind:
 		self.change_text.bind("<1>", self.resetWrap)
 		self.find_text.bind  ("<Key>", self.resetWrap)
 		self.change_text.bind("<Key>", self.resetWrap)
-		self.top.bind("<Return>", self.OnReturnKey) # 1/30/03
+		
+		if 0: # Allow returns in the expanded Find/Change text panes.
+			self.top.bind("<Return>", self.OnReturnKey)
+			
+		center_dialog(top)
+	
 	#@-body
 	#@-node:2::find.__init__ (creates find panel)
 	#@+node:3::find.init
 	#@+body
 	def init (self,c):
 	
-		for var in ivars:
-			exec("self.%s_flag.set(c.%s_flag)" % (var,var))
+		# N.B.: separate c.ivars are much more convenient than a dict.
+		for key in self.intKeys:
+			exec("self.dict['%s'].set(c.%s_flag)" % (key,key))
 	
 		
 		#@<< set widgets >>
@@ -249,15 +276,27 @@ class LeoFind:
 		#@-node:1::<< set widgets >>
 
 		
-		# trace("__init__", "find.init")
+		# Set radio buttons from ivars.
+		val = self.dict["pattern_match"].get()
+		self.dict["radio-find-type"].set(
+			choose(val,"pattern-search","plain-search"))
+	
+		val = self.dict["suboutline_only"].get()
+		self.dict["radio-search-scope"].set(
+			choose(val,"suboutline-only","entire-outine"))
 	#@-body
 	#@-node:3::find.init
 	#@+node:4::find.set_ivars
 	#@+body
 	def set_ivars (self,c):
+		
+		# N.B.: separate c.ivars are much more convenient than a dict.
+		for key in self.intKeys:
+			exec("c.%s_flag = self.dict['%s'].get()" % (key,key))
 	
-		for var in ivars:
-			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
+		# Set ivars from radio buttons.
+		c.pattern_match_flag   = self.dict["radio-find-type"].get()    == "pattern-search"
+		c.suboutline_only_flag = self.dict["radio-search-scope"].get() == "suboutline-only"
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
@@ -266,7 +305,6 @@ class LeoFind:
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
 		c.change_text = s
-	
 	#@-body
 	#@-node:4::find.set_ivars
 	#@+node:5::resetWrap
@@ -284,7 +322,7 @@ class LeoFind:
 		self.top.withdraw()
 	#@-body
 	#@-node:6::OnCloseFindEvent
-	#@+node:7::OnReturnKey
+	#@+node:7::OnReturnKey (no longer used)
 	#@+body
 	def OnReturnKey (self,event):
 		
@@ -298,7 +336,7 @@ class LeoFind:
 		self.findNextCommand(top())
 		return "break"
 	#@-body
-	#@-node:7::OnReturnKey
+	#@-node:7::OnReturnKey (no longer used)
 	#@+node:8::Top Level Commands
 	#@+node:1::changeButton
 	#@+body
@@ -521,7 +559,7 @@ class LeoFind:
 				count += 1
 				self.batchChange(pos1,pos2,count)
 				line = st.get(pos1 + " linestart", pos1 + " lineend")
-				self.printLine(line,all)
+				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate() # self.restore
 		# Make sure the headline and body text are updated.
@@ -605,7 +643,7 @@ class LeoFind:
 			if pos:
 				count += 1
 				line = st.get(pos + " linestart", pos + " lineend")
-				self.printLine(line,all)
+				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
 		es("found: " + `count`)

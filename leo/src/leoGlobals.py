@@ -3267,7 +3267,36 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 
 #@-body
 #@-node:9::CheckVersion (Dave Hein)
-#@+node:10::collectGarbage
+#@+node:10::class Bunch
+#@+body
+# From The Python Cookbook.
+
+import operator
+
+class Bunch:
+	
+	"""A class that represents a colection of things.
+	
+	Especially useful for representing a collection of related variables."""
+	
+	def __init__(self, **keywords):
+		self.__dict__.update (keywords)
+
+	def ivars(self):
+		return self.__dict__.keys()
+		
+	def __setitem__ (self,key,value):
+		return operator.setitem(self.__dict__,key,value)
+		
+	def __getitem__ (self,key):
+		return operator.getitem(self.__dict__,key)
+		
+		
+		
+
+#@-body
+#@-node:10::class Bunch
+#@+node:11::collectGarbage
 #@+body
 def collectGarbage():
 	
@@ -3281,8 +3310,8 @@ def collectGarbage():
 			pass
 
 #@-body
-#@-node:10::collectGarbage
-#@+node:11::executeScript
+#@-node:11::collectGarbage
+#@+node:12::executeScript
 #@+body
 def executeScript (name):
 	
@@ -3305,8 +3334,8 @@ def executeScript (name):
 
 
 #@-body
-#@-node:11::executeScript
-#@+node:12::importFromPath
+#@-node:12::executeScript
+#@+node:13::importFromPath
 #@+body
 def importFromPath (name,path):
 	
@@ -3331,7 +3360,7 @@ def importFromPath (name,path):
 	return module
 
 #@-body
-#@-node:12::importFromPath
+#@-node:13::importFromPath
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

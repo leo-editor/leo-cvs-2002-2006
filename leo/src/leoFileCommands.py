@@ -331,14 +331,12 @@ class fileCommands:
 	#@+body
 	def getFindPanelSettings (self):
 	
-		c = self.commands ; config = app().config
+		c = self.commands ; config = app().config ; findFrame = app().findFrame
 		
 		#@<< Set defaults of all flags >>
 		#@+node:1::<< Set defaults of all flags >>
 		#@+body
-		import leoFind
-		
-		for var in leoFind.ivars:
+		for var in findFrame.intKeys:
 			exec("c.%s_flag = false" % var)
 		
 		#@-body
@@ -359,6 +357,7 @@ class fileCommands:
 				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
 				elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
 				else: break
+						
 			self.getTag(">")
 			#
 			self.getTag("<find_string>")
@@ -992,7 +991,8 @@ class fileCommands:
 		
 		"""Update all join links in the tree"""
 		
-		trace(root)
+		# trace(root)
+	
 		if root: # Only update the subtree.
 			after = root.nodeAfterTree()
 			while v and v != after:
@@ -1252,7 +1252,7 @@ class fileCommands:
 		#@+node:2::<< put the position of this frame >>
 		#@+body
 		width,height,left,top = get_window_info(self.frame.top)
-		# print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
+		#print ("t,l,h,w:" + `top` + ":" + `left` + ":" + `height` + ":" + `width`)
 		
 		self.put_tab()
 		self.put("<global_window_position")
@@ -1722,10 +1722,7 @@ class fileCommands:
 	#@+body
 	def writeAtFileNodes (self):
 	
-		c = self.commands
-		if v:
-			at = c.atFileCommands
-			at.writeAll(writeAtFileNodesFlag=true)
+		self.commands.atFileCommands.writeAll(writeAtFileNodesFlag=true)
 	#@-body
 	#@-node:9::writeAtFileNodes
 	#@+node:10::writeDirtyAtFileNodes

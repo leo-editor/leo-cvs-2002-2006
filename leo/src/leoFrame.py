@@ -93,7 +93,7 @@ class LeoFrame:
 		top.minsize(30,10) # In grid units. This doesn't work as I expect.
 		
 		c = None # Make sure we don't mess with c yet.
-		self.createBothLeoSplitters(top)
+		self.createLeoFrame(top)
 		self.commands = c = leoCommands.Commands(self)
 		self.tree = leoTree.leoTree(self.commands, self.canvas)
 		c.tree = self.tree
@@ -189,6 +189,138 @@ class LeoFrame:
 		return title
 	#@-body
 	#@-node:4::frame.setWindowTitle
+	#@+node:5::createLeoFrame
+	#@+body
+	def createLeoFrame (self,top):
+	
+		Tk = Tkinter ; config = app().config
+	
+		new_frames = true
+		
+		if new_frames:
+			outerFrame = Tk.Frame(top)
+			outerFrame.pack(expand=1,fill="both")
+	
+			iconFrame = Tk.Frame(outerFrame,height="5m",bd=2,relief="groove")
+			iconFrame.pack(fill="x",pady=2)
+		else: outerFrame = top
+	
+		# Splitter 1 is the main splitter containing splitter2 and the body pane.
+		f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
+		self.f1,self.bar1 = f1,bar1
+		self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
+		# Splitter 2 is the secondary splitter containing the tree and log panes.
+		f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
+		self.f2,self.bar2 = f2,bar2
+		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
+		
+		#@<< create the body pane >>
+		#@+node:1::<< create the body pane >>
+		#@+body
+		# A light selectbackground value is needed to make syntax coloring look good.
+		wrap = config.getBoolWindowPref('body_pane_wraps')
+		wrap = choose(wrap,"word","none")
+		
+		self.body = body = Tk.Text(split1Pane2,name='body',
+			bd=2,bg="white",relief="flat",
+			setgrid=1,wrap=wrap, selectbackground="Gray80")
+		
+		self.setBodyFontFromConfig()
+		
+		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
+		body['yscrollcommand'] = bodyBar.set
+		bodyBar['command'] = body.yview
+		bodyBar.pack(side="right", fill="y")
+		
+		if wrap == "none":
+			bodyXBar = Tk.Scrollbar(
+				split1Pane2,name='bodyXBar',orient="horizontal")
+			body['xscrollcommand'] = bodyXBar.set
+			bodyXBar['command'] = body.xview
+			bodyXBar.pack(side="bottom", fill="x")
+			
+		body.pack(expand=1, fill="both")
+		#@-body
+		#@-node:1::<< create the body pane >>
+
+		
+		#@<< create the tree pane >>
+		#@+node:2::<< create the tree pane >>
+		#@+body
+		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+		scrolls = choose(scrolls,1,0)
+		
+		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
+			bd=0,bg="white",relief="flat")
+			
+		self.setTreeColorsFromConfig()
+		
+		# The font is set in the tree code.
+		
+		# These do nothing...
+		# selectborderwidth=0,selectforeground="white",selectbackground="white")
+		self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
+		
+		# Bind mouse wheel event to canvas
+		if sys.platform != "win32": # Works on 98, crashes on XP.
+			self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
+		
+		tree['yscrollcommand'] = treeBar.set
+		treeBar['command'] = tree.yview
+		
+		treeBar.pack(side="right", fill="y")
+		if scrolls: 
+			treeXBar = Tk.Scrollbar( 
+				split2Pane1,name='treeXBar',orient="horizontal") 
+			tree['xscrollcommand'] = treeXBar.set 
+			treeXBar['command'] = tree.xview 
+			treeXBar.pack(side="bottom", fill="x")
+		tree.pack(expand=1,fill="both")
+		#@-body
+		#@-node:2::<< create the tree pane >>
+
+		
+		#@<< create the log pane >>
+		#@+node:3::<< create the log pane >>
+		#@+body
+		wrap = config.getBoolWindowPref('log_pane_wraps')
+		wrap = choose(wrap,"word","none")
+		
+		self.log = log = Tk.Text(split2Pane2,name="log",
+			setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
+			
+		self.setLogFontFromConfig()
+		
+		self.logBar = logBar = Tk.Scrollbar(split2Pane2,name="logBar")
+		
+		log['yscrollcommand'] = logBar.set
+		logBar['command'] = log.yview
+		
+		logBar.pack(side="right", fill="y")
+		# rr 8/14/02 added horizontal elevator 
+		if wrap == "none": 
+			logXBar = Tk.Scrollbar( 
+				split2Pane2,name='logXBar',orient="horizontal") 
+			log['xscrollcommand'] = logXBar.set 
+			logXBar['command'] = log.xview 
+			logXBar.pack(side="bottom", fill="x")
+		log.pack(expand=1, fill="both")
+		#@-body
+		#@-node:3::<< create the log pane >>
+
+		# Give the log and body panes the proper borders.
+		self.reconfigurePanes()
+		
+		if new_frames:
+			statusFrame = Tk.Frame(outerFrame,bd=2)
+			lab = Tk.Label(statusFrame,text="status")
+			lab.pack(side="left")
+			statusText = Tk.Entry(statusFrame)
+			statusText.pack(side="left",expand=1,fill="x")
+			statusFrame.pack(fill="x",pady=1)
+	
+	#@-body
+	#@-node:5::createLeoFrame
 	#@-node:1::Birth & Death
 	#@+node:2::Configuration
 	#@+node:1::f.configureBar
@@ -4330,142 +4462,35 @@ class LeoFrame:
 			bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 	#@-body
 	#@-node:2::bindBar
-	#@+node:3::createBothLeoSplitters
+	#@+node:3::createLeoSplitter
 	#@+body
-	def createBothLeoSplitters (self,top):
-	
-		Tk = Tkinter ; config = app().config
-	
-		# Splitter 1 is the main splitter containing splitter2 and the body pane.
-		f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(top, self.splitVerticalFlag)
-		self.f1,self.bar1 = f1,bar1
-		self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-		# Splitter 2 is the secondary splitter containing the tree and log panes.
-		f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
-		self.f2,self.bar2 = f2,bar2
-		self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
-		
-		#@<< create the body pane >>
-		#@+node:1::<< create the body pane >>
-		#@+body
-		# A light selectbackground value is needed to make syntax coloring look good.
-		wrap = config.getBoolWindowPref('body_pane_wraps')
-		wrap = choose(wrap,"word","none")
-		
-		self.body = body = Tk.Text(split1Pane2,name='body',
-			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap=wrap, selectbackground="Gray80")
-		
-		self.setBodyFontFromConfig()
-		
-		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
-		body['yscrollcommand'] = bodyBar.set
-		bodyBar['command'] = body.yview
-		bodyBar.pack(side="right", fill="y")
-		
-		if wrap == "none":
-			bodyXBar = Tk.Scrollbar(
-				split1Pane2,name='bodyXBar',orient="horizontal")
-			body['xscrollcommand'] = bodyXBar.set
-			bodyXBar['command'] = body.xview
-			bodyXBar.pack(side="bottom", fill="x")
-			
-		body.pack(expand=1, fill="both")
-		#@-body
-		#@-node:1::<< create the body pane >>
-
-		
-		#@<< create the tree pane >>
-		#@+node:2::<< create the tree pane >>
-		#@+body
-		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
-		scrolls = choose(scrolls,1,0)
-		
-		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
-			bd=0,bg="white",relief="flat")
-			
-		self.setTreeColorsFromConfig()
-		
-		# The font is set in the tree code.
-		
-		# These do nothing...
-		# selectborderwidth=0,selectforeground="white",selectbackground="white")
-		self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
-		
-		# Bind mouse wheel event to canvas
-		if sys.platform != "win32": # Works on 98, crashes on XP.
-			self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
-		
-		tree['yscrollcommand'] = treeBar.set
-		treeBar['command'] = tree.yview
-		
-		treeBar.pack(side="right", fill="y")
-		if scrolls: 
-			treeXBar = Tk.Scrollbar( 
-				split2Pane1,name='treeXBar',orient="horizontal") 
-			tree['xscrollcommand'] = treeXBar.set 
-			treeXBar['command'] = tree.xview 
-			treeXBar.pack(side="bottom", fill="x")
-		tree.pack(expand=1,fill="both")
-		#@-body
-		#@-node:2::<< create the tree pane >>
-
-		
-		#@<< create the log pane >>
-		#@+node:3::<< create the log pane >>
-		#@+body
-		wrap = config.getBoolWindowPref('log_pane_wraps')
-		wrap = choose(wrap,"word","none")
-		
-		self.log = log = Tk.Text(split2Pane2,name="log",
-			setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
-			
-		self.setLogFontFromConfig()
-		
-		self.logBar = logBar = Tk.Scrollbar(split2Pane2,name="logBar")
-		
-		log['yscrollcommand'] = logBar.set
-		logBar['command'] = log.yview
-		
-		logBar.pack(side="right", fill="y")
-		# rr 8/14/02 added horizontal elevator 
-		if wrap == "none": 
-			logXBar = Tk.Scrollbar( 
-				split2Pane2,name='logXBar',orient="horizontal") 
-			log['xscrollcommand'] = logXBar.set 
-			logXBar['command'] = log.xview 
-			logXBar.pack(side="bottom", fill="x")
-		log.pack(expand=1, fill="both")
-		#@-body
-		#@-node:3::<< create the log pane >>
-
-		# Give the log and body panes the proper borders.
-		self.reconfigurePanes()
-	#@-body
-	#@-node:3::createBothLeoSplitters
-	#@+node:4::createLeoSplitter
-	#@+body
-	# Create a splitter window and panes into which the caller packs widgets.
-	# Returns (f, bar, pane1, pane2)
+	# 5/20/03: Removed the ancient kludge for forcing the height & width of f.
+	# The code in leoFileCommands.getGlobals now works!
 	
 	def createLeoSplitter (self, parent, verticalFlag):
+		
+		"""Create a splitter window and panes into which the caller packs widgets.
+		
+		Returns (f, bar, pane1, pane2) """
 	
 		Tk = Tkinter
+		
 		# Create the frames.
-		f = Tk.Frame(parent,width="8i",height="6.5i",bd=0,bg="white",relief="flat")
-		f.pack(expand=1,fill="both")
-		pane1 = Tk.Frame(f,bd=0,bg="white",relief="flat")
-		pane2 = Tk.Frame(f,bg="white",relief="flat")
+		f = Tk.Frame(parent,bd=0,relief="flat")
+		f.pack(expand=1,fill="both",pady=1)
+		pane1 = Tk.Frame(f)
+		pane2 = Tk.Frame(f)
 		bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
+	
 		# Configure and place the frames.
 		self.configureBar(bar,verticalFlag)
 		self.bindBar(bar,verticalFlag)
 		self.placeSplitter(bar,pane1,pane2,verticalFlag)
-		
+	
 		return f, bar, pane1, pane2
 	#@-body
-	#@-node:4::createLeoSplitter
-	#@+node:5::divideAnySplitter
+	#@-node:3::createLeoSplitter
+	#@+node:4::divideAnySplitter
 	#@+body
 	# This is the general-purpose placer for splitters.
 	# It is the only general-purpose splitter code in Leo.
@@ -4483,8 +4508,8 @@ class LeoFrame:
 			pane1.place(relwidth=frac)
 			pane2.place(relwidth=1-frac)
 	#@-body
-	#@-node:5::divideAnySplitter
-	#@+node:6::divideLeoSplitter
+	#@-node:4::divideAnySplitter
+	#@+node:5::divideLeoSplitter
 	#@+body
 	# Divides the main or secondary splitter, using the key invariant.
 	def divideLeoSplitter (self, verticalFlag, frac):
@@ -4505,8 +4530,8 @@ class LeoFrame:
 		self.divideAnySplitter (frac, verticalFlag,
 			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@-body
-	#@-node:6::divideLeoSplitter
-	#@+node:7::initialRatios
+	#@-node:5::divideLeoSplitter
+	#@+node:6::initialRatios
 	#@+body
 	def initialRatios (self):
 	
@@ -4528,8 +4553,8 @@ class LeoFrame:
 		# print (`r`,`r2`)
 		return verticalFlag,r,r2
 	#@-body
-	#@-node:7::initialRatios
-	#@+node:8::onDrag...
+	#@-node:6::initialRatios
+	#@+node:7::onDrag...
 	#@+body
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
@@ -4566,8 +4591,8 @@ class LeoFrame:
 		# trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@-body
-	#@-node:8::onDrag...
-	#@+node:9::placeSplitter
+	#@-node:7::onDrag...
+	#@+node:8::placeSplitter
 	#@+body
 	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 	
@@ -4584,7 +4609,7 @@ class LeoFrame:
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
-	#@-node:9::placeSplitter
+	#@-node:8::placeSplitter
 	#@-node:5::Splitter stuff
 	#@+node:6::frame.longFileName & shortFileName
 	#@+body
