@@ -735,7 +735,7 @@ class baseCommands:
                     if compareFileName == g.os_path_normpath(g.os_path_abspath(name)):
                         c.recentFiles.remove(name)
                 c.recentFiles.insert(0,fileName)
-                g.trace(fileName)
+                # g.trace(fileName)
                 # Recreate the Recent Files menu.
                 frame.menu.createRecentFilesMenuItems()
         else:
