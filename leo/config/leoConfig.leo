@@ -14,7 +14,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
-<v t="edream.110203150636.1" a="ETV"><vh>@root leoConfig.txt</vh>
+<v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh>
 <v t="ekr.20040720065653.6"><vh>&lt;&lt; .leo file options &gt;&gt;</vh></v>
@@ -28,9 +28,9 @@
 <v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.7" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="edream.110203150636.9" a="TV"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
@@ -349,7 +349,9 @@ ExpandNode        = Alt+]
 ExpandPrevLevel   = Alt+.
 ContractAll       = Alt+-
 ContractNode      = Alt+[
+ContractOrGoLeft  = Alt+LtArrow
 ContractParent    = Alt+0
+ExpandOrGoRight   = Alt+RtArrow
 ExpandToLevel1    = Alt+1
 ExpandToLevel2    = Alt+2
 ExpandToLevel3    = Alt+3

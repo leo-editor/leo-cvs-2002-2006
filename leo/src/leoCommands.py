@@ -3440,6 +3440,19 @@ class baseCommands:
         v.contract()
         c.endUpdate()
     #@-node:ekr.20031218072017.2901:contractNode
+    #@+node:ekr.20040930064232:contractNodeOrGoToParent
+    def contractNodeOrGoToParent(self):
+        
+        """Simulate the left Arrow Key in folder of Windows Explorer."""
+    
+        c = self ; v = c.currentVnode()
+     
+        if v.hasChildren() and v.isExpanded():
+            c.contractNode()
+        elif v.hasParent():
+            c.goToParent()
+    #@nonl
+    #@-node:ekr.20040930064232:contractNodeOrGoToParent
     #@+node:ekr.20031218072017.2902:contractParent
     def contractParent (self):
         
@@ -3515,6 +3528,22 @@ class baseCommands:
         c.endUpdate()
     
     #@-node:ekr.20031218072017.2907:expandNode
+    #@+node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
+    def expandNodeOrGoToFirstChild(self):
+        
+        """Simulate the Right Arrow Key in folder of Windows Explorer."""
+    
+        c = self ; v = c.currentVnode()
+        if not v.hasChildren(): return
+    
+        if v.isExpanded():
+            c.beginUpdate()
+            c.selectVnode(v.firstChild())
+            c.endUpdate()
+        else:
+            c.expandNode()
+    #@nonl
+    #@-node:ekr.20040930064232.1:expandNodeOrGoToFirstChild
     #@+node:ekr.20031218072017.2908:expandPrevLevel
     def expandPrevLevel (self):
     

@@ -249,9 +249,11 @@ class leoMenu:
             ("&Contract All","Alt+-",c.contractAllHeadlines),
             ("Contract &Node","Alt+[",c.contractNode),
             ("Contract &Parent","Alt+0",c.contractParent),
+            ("Contract Or Go Left","Alt+LtArrow",c.contractNodeOrGoToParent),
             ("-",None,None),
             ("Expand P&rev Level","Alt+.",c.expandPrevLevel),
             ("Expand N&ext Level","Alt+=",c.expandNextLevel),
+            ("Expand Or Go Right","Alt+RtArrow",c.expandNodeOrGoToFirstChild),
             ("-",None,None),
             ("Expand To Level &1","Alt+1",c.expandLevel1),
             ("Expand To Level &2","Alt+2",c.expandLevel2),
@@ -479,10 +481,12 @@ class leoMenu:
             menu = frame.menu.getMenu("Expand/Contract...")
             enable(menu,"Contract Parent",c.canContractParent())
             enable(menu,"Contract Node",hasChildren and isExpanded)
+            enable(menu,"Contract Or Go Left",(hasChildren and isExpanded) or hasParent)
             enable(menu,"Expand Node",hasChildren and not isExpanded)
             enable(menu,"Expand Prev Level",hasChildren and isExpanded)
             enable(menu,"Expand Next Level",hasChildren)
             enable(menu,"Expand To Level 1",hasChildren and isExpanded)
+            enable(menu,"Expand Or Go Right",hasChildren)
             for i in xrange(2,9):
                 frame.menu.enableMenu(menu,"Expand To Level " + str(i), hasChildren)
             #@nonl
