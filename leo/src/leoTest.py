@@ -63,13 +63,13 @@ def doTests(all):
 
     g.app.unitTestDict["fail"] = False
 
-    if all: iter = c.all_positions_iter()
-    else:   iter = p.self_and_subtree_iter()
+    if all: theIter = c.all_positions_iter()
+    else:   theIter = p.self_and_subtree_iter()
 
     changed = c.isChanged()
     suite = unittest.makeSuite(unittest.TestCase)
 
-    for p in iter:
+    for p in theIter:
         if isTestNode(p):
             test = makeTestCase(c,p)
             if test: suite.addTest(test)
