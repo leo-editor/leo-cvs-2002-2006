@@ -1082,8 +1082,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1" a="E"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
@@ -1097,7 +1097,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.1653" a="ETV"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
+<v t="edream.110203163054.1653"><vh>Leaps (Leo Enhancement and Advancement Proposals)</vh>
 <v t="EKR.20040524105100"><vh>@file-thin leoLeaps.txt</vh></v>
 </v>
 <v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>

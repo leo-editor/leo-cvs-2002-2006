@@ -1024,45 +1024,46 @@ By default, at_root_bodies_start_in_doc_mode = 1 for compatibility for old @root
 New in version 3.12: By default, the body_pane_wraps setting in leoConfig.txt controls whether body text wraps.  You may override this setting for a particular tree using the @wrap and @nowrap directives.
 #@-node:EKR.20040524104904.90:@wrap and @nowrap directives control line wrapping in the body pane
 #@-node:EKR.20040524104904.79:More about directives
-#@+node:EKR.20040524104904.91:About cweb mode 
+#@+node:EKR.20040524104904.91:About cweb mode
 Cweb mode refers to how Leo tangles an outline when @language cweb is in effect or the cweb option in the Preferences Panel is in effect.
 
 Leo treats _all_ cweb code in cweb mode as unevaluated text.  That is, Leo treats cweb control codes, including @<...@>, @<...@>=, @c, @space, @* and @** as "raw" text within cweb mode.  Leo does _not_ expand _cweb_ section references when writing derived files in cweb mode.  However, Leo _does_ expand _noweb_ section references, so you may use noweb sections to organize cweb files! You can create _noweb_ code and doc sections using the @code and @doc directives in place of @c and @space directives.
 
 By default, cweb colors @space, @* and @** sections using the same syntax coloring as for LaTeX.  In addition, cweb colors C // and /*..*/ comments using LaTeX coloring by default.  You may change these defaults using the color_cweb_doc_parts_with_latex and color_cweb_comments_with_latex options in leoConfig.py.
 #@nonl
-#@-node:EKR.20040524104904.91:About cweb mode 
-#@+node:EKR.20040524104904.92:Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees
-An @rawfile tree is a tree whose root headline starts with @rawfile <filename>.  Similarly, for @silentfile and @nosentinelsfile trees.
+#@-node:EKR.20040524104904.91:About cweb mode
+#@+node:EKR.20040524104904.92:Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees
+An @asis tree is a tree whose root headline starts with @asis <filename>.  Similarly, for @noref and @nosent trees.
 
-Leo creates files derived from @file and @nosentinelsfile trees in exactly the same way.  The _only_ difference is that files derived from @file trees contain sentinels, while files derived from @nosentinelsfile trees do not.  Therefore, Leo can not update outlines from changed made from files derived from @nosentinelfile trees.
+New in 4.2:  The following terms are equivalent.  The first form is preferred in each case.
 
-Leo creates files derived from @rawfile and @silentfile trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. However, Leo recognizes the @ignore directive in the _ancestors_ of @rawfile or @silentfile nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
+@asis, @file-asis, @silent
+@nosent, @file-nosent and @nosentinelsfile
+@noref, @file-noref and @rawfile
 
-There are several difference between @rawfile and @silentfile trees:
+You can get any combination of sentinels/no sentinels and references/no references using @file, @nosent, @noref and @asis trees:
 
-1. Leo writes no sentinel lines when writing @silentfile trees.  When writing @rawfile trees, Leo writes only the @+leo, @-leo, @+node, @-node, @+body and @-body sentinels. Therefore, Leo can update @rawfile trees, but _not_ @silentfile trees from changes made in derived files. Unlike @file and @rawfile trees, the primary source of information for an @silentfile tree is the outline containing it.
+                 Derived files        Sections and 
+Type of tree   contain sentinels?   @others expanded?
+------------   ------------------   -----------------
+       @file   yes                  yes
+     @nosent   no                   yes
+      @noref   yes                  no
+       @asis   no                   no
 
-2. Within @silentfile trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
+Leo can not update the outline from changes made from derived files unless those files contain sentinels.  The primary source for @nosent and @asis trees are the outlines from which those files were derived.
 
-3. Files derived from @silentfile trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.
+Leo creates files derived from @noref and @asis trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. However, Leo recognizes the @ignore directive in the _ancestors_ of @noref or @asis nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
 
-In short, you can get any combination of sentinels/no sentinels and references/no references using @file, @nosentinelsfile, @rawfile and @silentfile trees.  This is shown in the following table:
+Notes:
 
-                     Derived files        Sections and 
-    Type of tree   contain sentinels?   @others expanded?
-    ------------   ------------------   -----------------
-           @file   yes                  yes
-@nosentinelsfile   no                   yes
-        @rawfile   yes                  no
-     @silentfile   no                   no
+1. When writing @noref trees, Leo writes only the @+leo, @-leo, @+node, @-node, @+body and @-body sentinels.
 
-New in Leo 3.10:
+2. Within @asis trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
 
-@file-asis is a synonym for @silentfile.
-@file-nosent is a synonym for @nosentinelsfile.
-@file-noref is a synonym for @rawfile.
-#@-node:EKR.20040524104904.92:Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees
+3. Files derived from @asis trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.
+#@nonl
+#@-node:EKR.20040524104904.92:Appendix 1 to Chapter 4: Using @asis, @noref and @nosent trees
 #@+node:EKR.20040524104904.93:Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling
 #@+node:EKR.20040524104904.94:@root vs. @file trees
 @file trees are much easier to use than @root trees:
@@ -4786,7 +4787,7 @@ The following sections describe the comment lines embedded in derived files.  It
 2. Do not alter sentinel lines in derived files.  Doing so will corrupt the outline structure!
 3. Do not alter blank lines in front of, behind or between sentinels.  Doing so will corrupt the outline structure in older versions of Leo.
 #@nonl
-#@+node:EKR.20040524104904.339:The @delims directive 
+#@+node:EKR.20040524104904.339:The @delims directive
 The @delims directive changes the comment strings used to mark sentinel lines.  The @delims directive contains one or two delimiters, separated by whitespace.  If only one delim is present it delimits single-line comments.  If two delims are present they delimit block comments. The @delim directive can _not_ be used to change the comment strings at the start of the derived file, that is, the comment strings for the @+leo sentinel and the initial @+body and @+node sentinels.
 
 NB: Leo can not revert to previous delimiters automatically; you must change back to previous delimiters using another @delims directive.  For example:
@@ -4795,7 +4796,7 @@ NB: Leo can not revert to previous delimiters automatically; you must change bac
 Javascript stuff
 @delims <-- -->
 HTML stuff
-#@-node:EKR.20040524104904.339:The @delims directive 
+#@-node:EKR.20040524104904.339:The @delims directive
 #@+node:EKR.20040524104904.340:@leo & comment delimiters
 A file produced by an @file node begins with an @+leo sentinel.  The last lines of the file should be the matching @-leo sentinel
 

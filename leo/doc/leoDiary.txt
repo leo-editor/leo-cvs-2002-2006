@@ -1,5 +1,5 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20031218072017:@file-thin ../doc/leoDiary.txt
+#@+node:ekr.20031218072017:@thin ../doc/leoDiary.txt
 #@@nocolor
 
 Older diary entries are in LeoDocs.leo.
@@ -345,5 +345,5 @@ Created tree.enableDrawingAfterException and called it in es_exception.
 #@-node:ekr.20040105070023:2004
 #@-others
 #@nonl
-#@-node:ekr.20031218072017:@file-thin ../doc/leoDiary.txt
+#@-node:ekr.20031218072017:@thin ../doc/leoDiary.txt
 #@-leo
