@@ -1089,7 +1089,7 @@ class baseCommands:
             pass
     #@nonl
     #@-node:ekr.20031218072017.2863:delete
-    #@+node:ekr.20031218072017.2140:executeScript
+    #@+node:ekr.20031218072017.2140:c.executeScript
     def executeScript(self,p=None,script=None):
     
         """This executes body text as a Python script.
@@ -1099,46 +1099,7 @@ class baseCommands:
         c = self ; error = False ; s = None ; script1 = script
     
         if not script:
-            #@        << get script into script >>
-            #@+node:ekr.20031218072017.2142:<< get script into script >>
-            try:
-                try:
-                    if not p:
-                        p = c.currentPosition()
-                
-                    old_body = p.bodyString()
-            
-                    if c.frame.body.hasTextSelection():
-                        # Temporarily replace v's body text with just the selected text.
-                        s = c.frame.body.getSelectedText()
-                        p.v.setTnodeText(s) 
-                    else:
-                        s = c.frame.body.getAllText()
-                
-                    if s.strip():
-                        g.app.scriptDict["script1"]=s
-                        df = c.atFileCommands.new_df
-                        df.scanAllDirectives(p,scripting=True)
-                        # Force Python comment delims.
-                        df.startSentinelComment = "#"
-                        df.endSentinelComment = None
-                        # Write the "derived file" into fo.
-                        fo = g.fileLikeObject()
-                        # nosentinels=False makes it much easier to find the proper line.
-                        df.write(p.copy(),nosentinels=False,scriptFile=fo) 
-                        assert(p)
-                        script = fo.get()
-                        g.app.scriptDict["script2"]=s
-                        error = len(script) == 0
-                except:
-                    s = "unexpected exception"
-                    print s ; g.es(s)
-                    g.es_exception()
-            finally:
-                p.v.setTnodeText(old_body)
-            #@nonl
-            #@-node:ekr.20031218072017.2142:<< get script into script >>
-            #@nl
+            script = g.getScript(c,p)
         #@    << redirect output if redirect_execute_script_output_to_log_pane >>
         #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
         if g.app.config.redirect_execute_script_output_to_log_pane:
@@ -1148,7 +1109,8 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
         #@nl
-        script = script.strip()
+        if script:
+            script = script.strip()
         if script:
             script += '\n' # Make sure we end the script properly.
             try:
@@ -1191,7 +1153,7 @@ class baseCommands:
         # Force a redraw _after_ all messages have been output.
         c.redraw() 
     #@nonl
-    #@-node:ekr.20031218072017.2140:executeScript
+    #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
     def goToLineNumber (self,root=None,lines=None,n=None):
     

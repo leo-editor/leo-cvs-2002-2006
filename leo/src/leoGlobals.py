@@ -3556,7 +3556,26 @@ class nullObject:
     def __setattr__(self,attr,val): return self
 #@nonl
 #@-node:ekr.20031219074948.1:class nullObject
-#@+node:ekr.20031218072017.3103:computeWindowTitle
+#@+node:EKR.20040612114220.4:class readLinesClass
+class readLinesClass:
+    
+    """A class whose next method provides a readline method for Python's tokenize module."""
+
+    def __init__ (self,s):
+        self.lines = g.splitLines(s)
+        self.i = 0
+
+    def next(self):
+        if self.i < len(self.lines):
+            line = self.lines[self.i]
+            self.i += 1
+        else:
+            line = ''
+        # g.trace(self.i,line)
+        return line
+#@nonl
+#@-node:EKR.20040612114220.4:class readLinesClass
+#@+node:ekr.20031218072017.3103:g,computeWindowTitle
 def computeWindowTitle (fileName):
 
     if fileName == None:
@@ -3569,8 +3588,8 @@ def computeWindowTitle (fileName):
             title = fn
         return title
 #@nonl
-#@-node:ekr.20031218072017.3103:computeWindowTitle
-#@+node:ekr.20031218072017.3138:executeScript
+#@-node:ekr.20031218072017.3103:g,computeWindowTitle
+#@+node:ekr.20031218072017.3138:g,executeScript
 def executeScript (name):
     
     """Execute a script whose short python file name is given"""
@@ -3590,28 +3609,8 @@ def executeScript (name):
     if file:
         file.close()
 
-#@-node:ekr.20031218072017.3138:executeScript
-#@+node:ekr.20040331083824.1:fileLikeObject
-class fileLikeObject:
-    
-    """Define a file-like object for redirecting i/o."""
-    
-    # Used by Execute Script command and rClick plugin.
-    
-    def __init__(self): self.s = ""
-    def clear (self):   self.s = ""
-    def close (self):   pass
-    def flush (self):   pass
-        
-    def get (self):
-        return self.s
-        
-    def write (self,s):
-        if s:
-            self.s = self.s + s
-#@nonl
-#@-node:ekr.20040331083824.1:fileLikeObject
-#@+node:ekr.20031218072017.3126:funcToMethod
+#@-node:ekr.20031218072017.3138:g,executeScript
+#@+node:ekr.20031218072017.3126:g,funcToMethod
 #@+at 
 #@nonl
 # The following is taken from page 188 of the Python Cookbook.
@@ -3634,8 +3633,8 @@ def funcToMethod(f,theClass,name=None):
     setattr(theClass,name or f.__name__,f)
     # g.trace(name)
 #@nonl
-#@-node:ekr.20031218072017.3126:funcToMethod
-#@+node:ekr.20031218072017.2278:importFromPath
+#@-node:ekr.20031218072017.3126:g,funcToMethod
+#@+node:ekr.20031218072017.2278:g,importFromPath
 def importFromPath (name,path):
     
     import imp
@@ -3664,8 +3663,8 @@ def importFromPath (name,path):
 
     return result
 #@nonl
-#@-node:ekr.20031218072017.2278:importFromPath
-#@+node:ekr.20031218072017.3144:makeDict
+#@-node:ekr.20031218072017.2278:g,importFromPath
+#@+node:ekr.20031218072017.3144:g,makeDict
 # From the Python cookbook.
 
 def makeDict(**keys):
@@ -3674,34 +3673,74 @@ def makeDict(**keys):
 
     return keys
 #@nonl
-#@-node:ekr.20031218072017.3144:makeDict
-#@+node:EKR.20040612114220.4:readLinesClass
-class readLinesClass:
+#@-node:ekr.20031218072017.3144:g,makeDict
+#@+node:ekr.20040331083824.1:g.fileLikeObject
+class fileLikeObject:
     
-    """A class whose next method provides a readline method for Python's tokenize module."""
-
-    def __init__ (self,s):
-        self.lines = g.splitLines(s)
-        self.i = 0
-
-    def next(self):
-        if self.i < len(self.lines):
-            line = self.lines[self.i]
-            self.i += 1
-        else:
-            line = ''
-        # g.trace(self.i,line)
-        return line
+    """Define a file-like object for redirecting i/o."""
+    
+    # Used by Execute Script command and rClick plugin.
+    
+    def __init__(self): self.s = ""
+    def clear (self):   self.s = ""
+    def close (self):   pass
+    def flush (self):   pass
+        
+    def get (self):
+        return self.s
+        
+    def write (self,s):
+        if s:
+            self.s = self.s + s
 #@nonl
-#@-node:EKR.20040612114220.4:readLinesClass
-#@+node:EKR.20040612114220.3:readLinesGenerator
+#@-node:ekr.20040331083824.1:g.fileLikeObject
+#@+node:EKR.20040614071102.1:g.getScript
+def getScript (c,p):
+    
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        if c.frame.body.hasTextSelection():
+            # Temporarily replace v's body text with just the selected text.
+            s = c.frame.body.getSelectedText()
+            p.v.setTnodeText(s) 
+        else:
+            s = c.frame.body.getAllText()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            df = c.atFileCommands.new_df
+            df.scanAllDirectives(p,scripting=True)
+            # Force Python comment delims.
+            df.startSentinelComment = "#"
+            df.endSentinelComment = None
+            # Write the "derived file" into fo.
+            fo = g.fileLikeObject()
+            # nosentinels=False makes it much easier to find the proper line.
+            df.write(p.copy(),nosentinels=False,scriptFile=fo) 
+            assert(p)
+            script = fo.get()
+            g.app.scriptDict["script2"]=s
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = None
+
+    p.v.setTnodeText(old_body)
+    return script
+#@nonl
+#@-node:EKR.20040614071102.1:g.getScript
+#@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):
 
     for line in g.splitLines(s):
         yield line
     yield ''
 #@nonl
-#@-node:EKR.20040612114220.3:readLinesGenerator
+#@-node:EKR.20040612114220.3:g.readLinesGenerator
 #@-node:EKR.20040612114220:Utility classes, functions & objects...
 #@+node:ekr.20031218072017.3197:Whitespace...
 #@+node:ekr.20031218072017.3198:computeLeadingWhitespace
