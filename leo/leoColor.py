@@ -881,7 +881,9 @@ class colorizer:
 		self.incremental = false
 		self.lines = []
 		self.states = []
+		self.last_flag = "unknown"
 		self.last_language = "unknown"
+		self.last_comment = "unknown"
 		
 		#@<< ivars for communication between colorAllDirectives and its allies >>
 		#@+node:1::<< ivars for communication between colorAllDirectives and its allies >>
@@ -1016,8 +1018,10 @@ class colorizer:
 		if self.enabled:
 			# print "colorize:incremental",incremental
 			self.incremental=incremental
-			flag,language = self.updateSyntaxColorer(v)
-			self.colorizeAnyLanguage(v,body,language,flag)
+			#flag,language = self.updateSyntaxColorer(v)
+			#self.colorizeAnyLanguage(v,body,language,flag)
+			self.updateSyntaxColorer(v)
+			self.colorizeAnyLanguage(v,body)
 			
 	# Called from incremental undo code.
 	# Colorizes the lines between the leading and trailing lines.
@@ -1027,10 +1031,11 @@ class colorizer:
 		if self.enabled:
 			# print "recolor_range:leading,trailing",leading,trailing
 			self.incremental=true
-			flag,language = self.updateSyntaxColorer(v)
-			self.colorizeAnyLanguage(
-				v,body,language,flag,
-				leading=leading,trailing=trailing)
+			#flag,language = self.updateSyntaxColorer(v)
+			#self.colorizeAnyLanguage(
+			#	v,body,language,flag,leading=leading,trailing=trailing)
+			self.updateSyntaxColorer(v)
+			sself.colorizeAnyLanguage(v,body,leading=leading,trailing=trailing)
 	
 	#@-body
 	#@-node:3::colorize & recolor_range
@@ -1043,7 +1048,7 @@ class colorizer:
 	#@-at
 	#@@c
 
-	def colorizeAnyLanguage (self,v,body,language,flag,leading=None,trailing=None):
+	def colorizeAnyLanguage (self,v,body,leading=None,trailing=None):
 		
 		try:
 			if 0:
@@ -1057,9 +1062,6 @@ class colorizer:
 			# Copy the arguments.
 			self.v = v
 			self.body = body
-			self.language = language
-			self.flag = flag
-			
 			s = body.get("1.0","end")
 			sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
@@ -1199,7 +1201,11 @@ class colorizer:
 			#@-body
 			#@-node:1::<< initialize ivars & tags >>
 
-			if self.incremental and self.last_language==language:
+			if self.incremental and (
+				self.flag == self.last_flag and
+				self.last_language == self.language and
+				self.comment_string == self.last_comment):
+				# trace("incremental coloring")
 				
 				#@<< incrementally color the text >>
 				#@+node:2::<< incrementally color the text >>
@@ -1223,6 +1229,8 @@ class colorizer:
 				#@-at
 				#@@c
 
+				
+				
 				old_lines = self.lines
 				old_states = self.states
 				new_lines = lines
@@ -1402,13 +1410,18 @@ class colorizer:
 				#@-node:2::<< incrementally color the text >>
 
 			else:
+				# trace("batch coloring")
 				self.line_index = 1 # The Tk line number for indices, as in n.i
 				for s in lines:
 					state = self.colorizeLine(s,state)
-					self.line_index += 1		
-			self.last_language = language
+					self.line_index += 1
+			self.last_flag = self.flag
+			self.last_language = self.language
+			self.last_comment = self.comment_string
 		except:
+			self.last_flag = "unknown"
 			self.last_language = "unknown"
+			self.last_comment = "unknown"
 			es_exception()
 	#@-body
 	#@+node:3::colorizeLine & allies
@@ -2056,6 +2069,7 @@ class colorizer:
 	
 		c = self.commands
 		language = c.target_language
+		self.language = language # 2/2/03
 		self.comment_string = None
 		self.rootMode = None # None, "code" or "doc"
 		while v:
@@ -2074,6 +2088,7 @@ class colorizer:
 			if dict.has_key("language"):
 				i = dict["language"]
 				language,junk,junk,junk = set_language(s,i)
+				self.language = language # 2/2/03
 			
 			if dict.has_key("comment") or dict.has_key("language"):
 				break
@@ -2099,8 +2114,7 @@ class colorizer:
 			#@-node:2::<< Test for @root, @root-doc or @root-code >>
 
 			v = v.parent()
-		# trace(`language`)
-		return language
+	
 	#@-body
 	#@-node:5::scanColorDirectives
 	#@+node:6::color.schedule
@@ -2149,15 +2163,12 @@ class colorizer:
 	#@-node:7::getCwebWord
 	#@+node:8::updateSyntaxColorer
 	#@+body
-	# Returns (flag,language)
-	# flag is true unless an unambiguous @nocolor is seen.
+	# self.flag is true unless an unambiguous @nocolor is seen.
 	
 	def updateSyntaxColorer (self,v):
 		
-		# 7/8/02: return a tuple.
-		flag = self.useSyntaxColoring(v)
-		language = self.scanColorDirectives(v)
-		return flag,language
+		self.flag = self.useSyntaxColoring(v)
+		self.scanColorDirectives(v)
 	
 	#@-body
 	#@-node:8::updateSyntaxColorer
