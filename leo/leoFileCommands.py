@@ -1448,6 +1448,19 @@ class fileCommands:
 		if 1: # within update...
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices() # 1/14/02: always recompute file indices
+			
+			#@<< Set the default directory for new files >>
+			#@+node:1::<< Set the default directory for new files >>
+			#@+body
+			# 8/13/02: Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives.
+			
+			if not c.openDirectory or len(c.openDirectory) == 0:
+				dir = os.path.dirname(fileName) 
+				if len(dir) > 0 and os.path.isabs(fileName) and os.path.exists(fileName):
+					c.openDirectory = dir
+			#@-body
+			#@-node:1::<< Set the default directory for new files >>
+
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))

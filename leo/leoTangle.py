@@ -3067,18 +3067,22 @@ class tangleCommands:
 		dn.code += s
 	#@-body
 	#@-node:2::copy
-	#@+node:3::error & warning
+	#@+node:3:C=18:error, pathError, warning
 	#@+body
 	def error (self,s):
-	
 		self.errors += 1
 		es(s)
 		
+	def pathError (self,s):
+		if not self.path_warning_given:
+			self.path_warning_given = true
+			self.error("invalid " + kind + " directory: " + dir)
+		
 	def warning (self,s):
-	
 		es(s)
+
 	#@-body
-	#@-node:3::error & warning
+	#@-node:3:C=18:error, pathError, warning
 	#@+node:4::is_end_of_directive
 	#@+body
 	# This function returns true if we are at the end of preprocessor directive.
@@ -3508,7 +3512,7 @@ class tangleCommands:
 		return name
 	#@-body
 	#@-node:16::standardize_name
-	#@+node:17:C=18:tangle.scanAllDirectives
+	#@+node:17:C=19:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3611,15 +3615,19 @@ class tangleCommands:
 
 				if len(path) > 0:
 					dir = os.path.dirname(path)
-					if len(dir) > 0 and os.path.exists(dir):
-						self.tangle_directory = dir
-						# trace("@path dir:" + `dir`)
+					if dir and len(dir) > 0 and os.isabs(dir):
+						if os.path.exists(dir):
+							self.tangle_directory = dir
+							# trace("@path dir:" + `dir`)
+						elif issue_error_flag and not self.path_warning_given:
+							self.path_warning_given = true # supress future warnings
+							self.error("invalid directory: " + '"' + s[i:j] + '"')
 					elif issue_error_flag and not self.path_warning_given:
 						self.path_warning_given = true # supress future warnings
-						self.error("Invalid directory: " + '"' + s[i:j] + '"')
+						self.error("ignoring relative path: " + '"' + s[i:j] + '"')
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
-					self.error("Empty @path")
+					self.error("ignoring empty @path")
 			
 			if btest(bits,page_width_bits) and not btest(old_bits,page_width_bits):
 				i = dict["page_width"] # 7/18/02 (!)
@@ -3662,63 +3670,42 @@ class tangleCommands:
 
 			old_bits |= bits
 			v = v.parent()
+		
+		#@<< Set self.tangle_directory >>
+		#@+node:5::<< Set self.tangle_directory >>
+		#@+body
+		#@+at
+		#  This code sets self.tangle_directory--it has not already been set by an @path directive.
+		# 
+		# An absolute file name in an @root directive will override the directory set here.
+		# A relative file name gets appended later to the default directory.
+		# That is, the final file name will be os.path.join(self.tangle_directory,fileName)
+
+		#@-at
+		#@@c
+		
 		if c.frame and require_path_flag and not self.tangle_directory:
-			# No path is in effect.
-			
-			#@<< Set self.tangle_directory >>
-			#@+node:5::<< Set self.tangle_directory >>
-			#@+body
-			#@+at
-			#  This code sets self.tangle_directory--it has not already been set by an @path directive.
-			# 
-			# An explicit file name in an @root directive will override the directory set here.  The final file name will be os.path.join(self.tangle_directory,fileName)
-			# 
-			# If no @path directive is in effect we use the following directories:
-			# 1. The directory in the @root directive (self.root_name)
-			# 2. The Tangle Default Directory specified in the Preferences panel.
-			# 3. The directory set by the Open command
-
-			#@-at
-			#@@c
-			
-			# Always check @root directory if it exists.
-			if self.root_name and len(self.root_name) > 0:
-				dir = os.path.dirname(self.root_name)
-				if len(dir) > 0 and os.path.exists(dir):
-					self.tangle_directory = dir
-					# trace("@root directory:" + `dir`)
-				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
-					self.path_warning_given = true
-					self.error("@root directory missing or invalid: " + dir)
-			
-			if not self.tangle_directory and c.tangle_directory and len(c.tangle_directory) > 0:
-				dir = c.tangle_directory
-				if len(dir) > 0 and os.path.exists(dir):
-					self.tangle_directory = dir
-					# trace("Default tangle directory:" + `dir`)
-				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
-					self.path_warning_given = true
-					self.error("Invalid Default Tangle Directory: " + dir)
-			
-			if not self.tangle_directory and c.frame.openDirectory and len(c.frame.openDirectory) > 0:
-				dir = c.frame.openDirectory # Try the directory used in the Open command
-				if len(dir) > 0 and os.path.exists(dir):
-					self.tangle_directory = dir
-					# trace("Open directory:" + `dir`)
-				elif len(dir) > 0 and issue_error_flag and not self.path_warning_given:
-					self.path_warning_given = true
-					self.error("Invalid Open directory: " + dir)
-			
-			if not self.tangle_directory and issue_error_flag and not self.path_warning_given:
-				self.path_warning_given = true
-				self.error("No directory specified by @root, @path or Preferences.")
-			#@-body
-			#@-node:5::<< Set self.tangle_directory >>
-
-		# trace(`self.tangle_directory`)
+			for dir,kind in (
+				(self.root_name,"@root"),
+				(c.tangle_directory,"default tangle"),
+				(c.frame.openDirectory,"open")):
+					
+				if dir and len(dir) > 0:
+					if os.path.isabs(dir):
+						if os.path.exists(dir):
+							self.tangle_directory = dir ; break
+						elif issue_error_flag:
+							self.warning("ignoring invalid " + kind + " directory: " + dir)
+					elif issue_error_flag:
+						self.warning("ignoring relative path: " + dir)
+		
+		if not self.tangle_directory and issue_error_flag:
+			self.pathError("No directory specified by @root, @path or Preferences.")
+		#@-body
+		#@-node:5::<< Set self.tangle_directory >>
 	#@-body
-	#@-node:17:C=18:tangle.scanAllDirectives
-	#@+node:18:C=19:token_type
+	#@-node:17:C=19:tangle.scanAllDirectives
+	#@+node:18:C=20:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3794,7 +3781,7 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:18:C=19:token_type
+	#@-node:18:C=20:token_type
 	#@-node:8:C=17:utility methods
 	#@-others
 #@-body

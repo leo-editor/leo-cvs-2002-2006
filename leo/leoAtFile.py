@@ -373,19 +373,16 @@ class atFile:
 		#@<< Set path from @file node >>
 		#@+node:2::<< Set path from @file node >>
 		#@+body
-		# A directory in an @file node over-rides everything else.
+		# An absolute path in an @file node over-rides everything else.
+		# A relative path gets appended to the relative path by the open logic.
 		
 		name = v.atFileNodeName()
 		dir = os.path.dirname(name)
-		if dir and len(dir) > 0:
-			
-			if 1: # 8/13/02
-				path_directory = dir # This may be a partial path.
+		if dir and len(dir) > 0 and os.path.isabs(dir):
+			if os.path.exists(dir):
+				self.default_directory = dir
 			else:
-				if os.path.exists(dir):
-					self.default_directory = dir
-				else:
-					self.error("Directory \"" + dir + "\" does not exist")
+				self.error("Directory \"" + dir + "\" does not exist")
 		#@-body
 		#@-node:2::<< Set path from @file node >>
 
@@ -413,11 +410,14 @@ class atFile:
 					path = path[1:-1]
 				path = string.strip(path)
 				path = os.path.join(loadDir,path)
-				if len(path) > 0:
-					if os.path.exists(path):
-						self.default_directory = path
+				if path and len(path) > 0:
+					if os.path.isabs(path):
+						if os.path.exists(path):
+							self.default_directory = path
+						else:
+							self.error("invalid @path: " + path)
 					else:
-						self.error("Directory does not exist: " + path)
+						self.error("ignoring relative @path: " + path)
 				else:
 					self.error("ignoring empty @path")
 			#@-body
@@ -475,50 +475,25 @@ class atFile:
 
 			old_bits |= bits
 			v = v.parent()
-		if c.frame and not self.default_directory and not path_directory:
-			# No path in @file headline and no @path directive.
-			
-			#@<< Set current directory >>
-			#@+node:6::<< Set current directory >>
-			#@+body
-			# This code is executed if no valid path was specified in the @file node or in an @path directive.
-			
-			# 6/4/02: Use c.openDirectory as the initial default.
-			dir = c.openDirectory
-			if dir and len(dir) > 0:
-				if os.path.exists(dir):
-					self.default_directory = dir
-				else:
-					# self.error("Invalid open directory: " + `dir`)
-					pass
-			
-			dir = c.tangle_directory # Try the directory in the Preferences panel
-			if dir and len(dir) > 0:
-				if os.path.exists(dir):
-					self.default_directory = dir
-				# It is not an error if this is not correct.
-				else:
-					# self.error("Invalid Default Tangle Directory: " + `dir`)
-					pass
-			
-			dir = c.frame.openDirectory # Try the directory used in the Open command
-			if not self.default_directory and dir and len(dir) > 0:
-				if os.path.exists(dir):
-					self.default_directory = dir
-				else:
-					# self.error("Open directory no longer valid: " + `dir`)
-					pass
-					
-			if not self.default_directory:
-				# 6/4/02: This message will almost never happen.
-				self.error("No directory specified by @file, @path or Preferences.")
-				self.default_directory = ""
-			#@-body
-			#@-node:6::<< Set current directory >>
-
-		if self.default_directory == None:
+		
+		#@<< Set current directory >>
+		#@+node:6::<< Set current directory >>
+		#@+body
+		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
+		
+		if c.frame and not self.default_directory:
+			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+				if dir and len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
+					self.default_directory = dir ; break
+		
+		if not self.default_directory:
+			# This should never happen: c.openDirectory should be a good last resort.
+			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
-	
+
+		#@-body
+		#@-node:6::<< Set current directory >>
+
 		
 		#@<< Set comment Strings from delims >>
 		#@+node:7::<< Set comment Strings from delims >>
@@ -780,7 +755,7 @@ class atFile:
 					#@-node:1::<< warn on read-only file >>
 
 			except:
-				self.readError("Can not open: " + '"' + root.headString() + '"')
+				self.readError("Can not open: " + '"@file ' + fn + '"')
 		#@-body
 		#@-node:1::<< open file >>
 
@@ -2128,12 +2103,13 @@ class atFile:
 					valid = false
 			
 			if valid:
-				try: # 8/13/02
-					read_only = not os.access(self.targetFileName,os.W_OK)
-					if read_only:
-						es("read only: " + self.targetFileName)
-						valid = false
-				except: pass # os.access() may not exist on all platforms.
+				if os.path.exists(self.targetFileName):
+					try: # 8/13/02
+						read_only = not os.access(self.targetFileName,os.W_OK)
+						if read_only:
+							es("read only: " + self.targetFileName)
+							valid = false
+					except: pass # os.access() may not exist on all platforms.
 				
 			if valid:
 				try:
