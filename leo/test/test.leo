@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6484" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6489" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="44" left="268" height="804" width="943"/>
+	<global_window_position top="73" left="266" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -847,13 +847,14 @@
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
 </v>
-<v t="ekr.20041001211817" a="E"><vh>Startup...</vh>
+<v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 <v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
-<v t="ekr.20041230121429" a="TV"><vh>@button pydoc</vh></v>
+<v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
+<v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
@@ -1406,7 +1407,19 @@
 </v>
 </v>
 <v t="ekr.20041230085841"><vh>test that of standalone imports of leo files</vh></v>
-<v t="ekr.20041230090756"><vh>Script to run in Idle</vh></v>
+<v t="ekr.20041230090756" a="E"><vh>Script to run in Idle</vh></v>
+<v t="ekr.20041231083027" a="E"><vh>Test of double @doc parts</vh>
+<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083651.1"><vh>foo</vh></v>
+<v t="ekr.20041231083651.2"><vh>bar</vh></v>
+<v t="ekr.20041231083651.3"><vh>spam</vh></v>
+</v>
+<v t="ekr.20041231083027.1" a="E" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083027.2"><vh>foo</vh></v>
+<v t="ekr.20041231083027.3" a="TV"><vh>bar</vh></v>
+<v t="ekr.20041231083027.4"><vh>spam</vh></v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -2027,7 +2040,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2158,7 +2171,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10801,12 +10814,12 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
@@ -11691,5 +11704,40 @@ def go():
     os.system(command)
     
 threading.Thread(target=go).start()</t>
+<t tx="ekr.20041230143535">import threading
+
+# This is not too useful :-)
+def doHelp():
+    help('leo')
+
+threading.Thread(target=doHelp).start()</t>
+<t tx="ekr.20041231083027"></t>
+<t tx="ekr.20041231083027.1">@others</t>
+<t tx="ekr.20041231083027.2">def foo():
+    pass</t>
+<t tx="ekr.20041231083027.3">def bar():
+    pass
+    
+@ doc part 1
+more
+@c
+
+@ doc part 2
+still more</t>
+<t tx="ekr.20041231083027.4">def spam():
+    pass</t>
+<t tx="ekr.20041231083651">@others</t>
+<t tx="ekr.20041231083651.1">def foo():
+    pass</t>
+<t tx="ekr.20041231083651.2">def bar():
+    pass
+    
+@ doc part 1
+more
+
+@ doc part 2
+still more</t>
+<t tx="ekr.20041231083651.3">def spam():
+    pass</t>
 </tnodes>
 </leo_file>
