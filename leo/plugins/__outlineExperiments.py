@@ -1034,7 +1034,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         except:
             g.es_exception()
             
-        g.trace(where,h,w)
+        # g.trace(where,h,w)
     
         return h,w
     #@nonl
@@ -1172,7 +1172,6 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         tree = self ; v = p.v
         yfirst = ylast = y
-        if level==0: yfirst += 10
         h1 = None
         
         data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
@@ -1182,7 +1181,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
         
         while p: # Do not use iterator.
             h,indent = self.drawNode(p,x,y)
-            if h1 is None: h1 = g.choose(level==0,0,h/2)
+            if h1 is None: h1 = h
             y += h ; ylast = y
             if p.isExpanded() and p.hasFirstChild():
                 # Must make an additional copy here by calling firstChild.
@@ -1191,7 +1190,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
             else:         p = p.next()
             
         # Draw the vertical line.
-        self.drawLine(None,x,yfirst-max(self.hline_y,h1),x,ylast+self.hline_y-h)
+        if level==0: # Special case to get exposed first line exactly right.
+            self.drawLine(None,x,yfirst+(h1-1)/2,x,ylast+self.hline_y-h)
+        else:
+            self.drawLine(None,x,yfirst-h1/2-1,x,ylast+self.hline_y-h)
         return y
     #@nonl
     #@-node:ekr.20040723101121.15:drawTree
