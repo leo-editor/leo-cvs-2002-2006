@@ -1629,6 +1629,13 @@ class baseFileCommands:
 		# Write tnodeList only for @file nodes.
 		# New in 4.2: tnode list is in tnode.
 		
+		if 0: # Debugging.
+			if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+				if hasattr(v.t,"tnodeList"):
+					g.trace(v.headString(),len(v.t.tnodeList))
+				else:
+					g.trace(v.headString(),"no tnodeList")
+		
 		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
 			fc.putTnodeList(v) # New in 4.0
 		
