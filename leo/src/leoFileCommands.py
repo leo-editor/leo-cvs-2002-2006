@@ -911,6 +911,10 @@ class baseFileCommands:
 		self.setAllJoinLinks(current) # 5/3/03
 		c.initAllCloneBits() # 5/3/03
 		c.redraw() # 4/4/03
+		
+		# 7/8/03: force an update of the body pane.
+		current.setBodyStringOrPane(current.bodyString())
+		c.tree.onBodyChanged(current,undoType=None)
 	#@-body
 	#@-node:5::readAtFileNodes
 	#@+node:6::fileCommands.readOutlineOnly
