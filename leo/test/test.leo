@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6518" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="73" left="266" height="804" width="943"/>
+	<global_window_position top="85" left="320" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -30,6 +30,7 @@
 <v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
+<v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
@@ -10880,14 +10881,11 @@ if spellpyx:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12396,5 +12394,9 @@ def doIndent (self):
     #self.srow,self.scol = t3 # row &amp; col where the token begins in the source.
     #self.erow,self.ecol = t4 # row &amp; col where the token ends in the source.
 </t>
+<t tx="ekr.20050104095950"># Switch EqualSizedPanes and ExecuteScript
+
+# EqualSizedPanes = Ctrl+E
+# ExecuteScript = Alt+Ctrl+E</t>
 </tnodes>
 </leo_file>
