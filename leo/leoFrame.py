@@ -1481,7 +1481,19 @@ class LeoFrame:
 				#@<< new code >>
 				#@+node:1::<< new code >>
 				#@+body
-				name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
+				# Compute a unique prefix number for the file.
+				try:
+					n = v.openWithIndex
+				except:
+					n = 1
+					current = c.currentVnode()
+					v = c.rootVnode()
+					while v and v != current:
+						n += 1
+						v = v.threadNext()
+					v.openWithIndex = n
+				
+				name = "LeoTemp_" + str(n) + '_' + sanitize_filename(v.headString()) + ext
 				td = os.path.abspath(tempfile.gettempdir())
 				path = os.path.join(td,name)
 				# If the path exists we will simply try to reopen it.

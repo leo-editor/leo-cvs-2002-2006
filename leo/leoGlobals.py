@@ -1320,7 +1320,7 @@ def sanitize_filename(s):
 	import re
 	s = s.strip()
 	ws = re.compile('[ \t]')
-	bad_chars = re.compile('[\\/&<>\'"`@|?*:]') # 1/7/03 Rich Ries: make colon a bad char.
+	bad_chars = re.compile('[()\\/&<>\'"`@|?*:]') # 1/7/03 Rich Ries: make colon a bad char.
 	s = bad_chars.sub('',s)
 	s = s.strip()
 	s = ws.sub('_',s)
@@ -2879,7 +2879,7 @@ def toUnicode (s,encoding,reportErrors=false):
 	return s
 	
 def toEncodedString (s,encoding,reportErrors=false):
-	
+
 	if type(s) == type(u""):
 		try:
 			s = s.encode(encoding,"strict")
@@ -2888,7 +2888,6 @@ def toEncodedString (s,encoding,reportErrors=false):
 				reportBadChars(s,encoding)
 			s = s.encode(encoding,"replace")
 	return s
-
 #@-body
 #@-node:3::toUnicode & toEncodedString
 #@-node:11::Unicode utils...
