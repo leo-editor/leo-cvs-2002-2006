@@ -227,6 +227,7 @@ if g.app.config.use_psyco:
     except ImportError: pass
 
 import string
+import sys
 import time
 
 #@+others
@@ -1524,9 +1525,13 @@ class position (object):
     
             if attr=="t":
                 return self.v.t
+            elif attr=="__del__":
+                # This works around a Python 2.2 wierdness.
+                return AttributeError # Silently ignore this.
             else:
                 # Only called when normal lookup fails.
-                print "unknown attribute",attr
+                print "unknown position attribute:",attr
+                # import traceback ; traceback.print_stack()
                 raise AttributeError
     #@nonl
     #@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
