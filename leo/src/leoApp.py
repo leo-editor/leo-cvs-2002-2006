@@ -135,7 +135,28 @@ class LeoApp:
             "tex" : "tex",
             "tcltk" : "tcl",
             "unknown" : "txt" } # Set when @comment is seen.
-        #@nonl
+            
+        self.extension_dict = {
+            "as"    : "actionscript",
+            "bas"   : "rapidq",
+            "c"     : "c",
+            "css"   : "css",
+            "el"    : "elisp",
+            "forth" : "forth",
+            "f"     : "fortran90", # or fortran ?
+            "html"  : "html",
+            "java"  : "java",
+            "noweb" : "nw",
+            "p"     : "pascal",
+            "perl"  : "perl",
+            "php"   : "php",
+            "py"    : "python",
+            "r"     : "rebol",
+            "sh"    : "shell",
+            "tex"   : "tex",
+            "txt"   : "plain",
+            "tcl"   : "tcltk",
+            "w"     : "cweb" }
         #@-node:ekr.20031218072017.368:<< define global data structures >> app
         #@nl
     #@nonl
