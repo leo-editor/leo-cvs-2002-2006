@@ -111,7 +111,7 @@ class LeoApp:
 			"fortran90" : "f",
 			"html" : "html",
 			"java" : "java",
-			"latex" : "latex",
+			"latex" : "tex", # 1/8/04
 			"noweb" : "nw",
 			"pascal" : "p",
 			"perl" : "perl",
