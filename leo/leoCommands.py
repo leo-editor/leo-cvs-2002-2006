@@ -522,7 +522,7 @@ class Commands:
 		c.body.focus_force()
 	#@-body
 	#@-node:9::extractSectionNames
-	#@+node:10::getBodyLines (Dave Hein)
+	#@+node:10::getBodyLines
 	#@+body
 	def getBodyLines (self):
 		
@@ -558,10 +558,8 @@ class Commands:
 			lines = string.split(lines, '\n')
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head, lines, tail
-	
-	
 	#@-body
-	#@-node:10::getBodyLines (Dave Hein)
+	#@-node:10::getBodyLines
 	#@+node:11::getBodySelection
 	#@+body
 	def getBodySelection (self):
@@ -592,7 +590,20 @@ class Commands:
 	#@-node:12::indentBody
 	#@+node:13::reformatParagraph
 	#@+body
-	# DTHEIN 27-OCT-2002:
+	#@+at
+	#  EKR: To do:
+	# 
+	# 1. Use the values returned by getBodyLines when there is a real selection.
+	# This should be safe, especially because of undo!
+	# 
+	# 2. tnodes are always up-to-date, so that the body text is c.currentVnode().bodyString().
+	# It should be much easier to deal with a tuple or list of lines than to 
+	# deal with the Tk.Text widget!
+	# 
+
+	#@-at
+	#@@c
+
 	def reformatParagraph(self):
 		"""Reformat a text paragraph in a Tk.Text widget
 	
@@ -608,114 +619,57 @@ class Commands:
 	
 	Returns None.
 	"""
-		c = self
-		t = c.frame.body
+		c = self ; body = c.frame.body
 		pageWidth = c.page_width
 		tabWidth = c.tab_width
-		x = t.index("current")
+		x = body.index("current")
 		head, lines, tail = self.getBodyLines()
-		result = [] ; changed = false
+		result = []
 	
-		if 0: # This doesn't help much
-			assert(t)
-			assert(pageWidth)
-			assert(type(1) == type(pageWidth))
-			assert(0 < pageWidth)
-			assert(0 < tabWidth)
-			assert(tabWidth < pageWidth)
-	
-		# If active selection, then don't attempt a reformat
-		selStart, selEnd = getTextSelection(t)
+		# If active selection, then don't attempt a reformat.
+		### EKR: Why bail out?
+		selStart, selEnd = getTextSelection(body)
 		if selStart != selEnd: return
 	
-		# find the paragraph range
-		data = bound_paragraph(t)
-		if 0: print `data`
-		if not data: return
-		start, end, endsWithNL, wsFirst, wsSecond = data
+		# Find the paragraph range
+		data = bound_paragraph(body)
+		if data:
+			start, end, endsWithNL = data
+			firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
+			lastLine = int(float(end)) - 1
+		else: return
 		
-		# count indentation
-		indentLenFirst = 0
-		for i in range(len(wsFirst)):
-			if " " == wsFirst[i]:
-				indentLenFirst += 1
-			elif "\t" == wsFirst[i]:
-				indentLenFirst += tabWidth
-		indentLenSecond = 0
-		for i in range(len(wsSecond)):
-			if " " == wsSecond[i]:
-				indentLenSecond += 1
-			elif "\t" == wsSecond[i]:
-				indentLenSecond += tabWidth
-		if indentLenSecond < indentLenFirst:
-			indentLenSecond = indentLenFirst
-			wsSecond = wsFirst
-		ws = wsSecond
-		textLenFirst = pageWidth - indentLenFirst
-		textLen = pageWidth - indentLenSecond
+		# EKR: bound_paragraph should only find the boundaries of the paragraph.
+		# EKR: use computeWidth utility to properly measure leading whitespace.
+		indents = [0,0]
+		for i in (0,1):
+			if firstLine + i < len(lines):
+				ws = get_leading_ws(lines[firstLine+i])
+				indents[i] = computeWidth(ws,tabWidth)
+		indent = max(indents)
 	
-		# make into one big string
-		if 0: print `start`,`end`
-		if 0: print `lines`
-		
-		firstLine = int(float(start)) - 1 # subtract 1 to get on zero basis
-		lastLine = int(float(end)) - 1
-		para = ""
-		
-		for i in range(firstLine,lastLine):
-			s = lines[i]
-			para += s.strip() + " "
-		s = para
-		s.rstrip() #remove the trailing space
-	
-	    # put the leading unchanged lines
+	    # put the leading unchanged lines.
 		for i in range(0,firstLine):
 			result.append(lines[i])
-	
-		# create the wrapped lines
-		lineCount = 0
-		i = 0
-		while i < len(s):
-			#find the line break
-			if i > 0:
-				j = i + textLen
-			else:
-				j = i + textLenFirst
-			if j >= len(s):
-				j = len(s)
-			elif s[j].isspace():
-				while (j > i) and s[j].isspace():
-					j -= 1
-				j += 1
-			else:
-				while (j > i) and not s[j].isspace():
-					j -= 1
-				while (j > i) and s[j].isspace():
-					j -= 1
-				j += 1
-			# write the line
-			if i > 0:
-				result.append(ws + s[i:j])
-			else:
-				result.append(wsFirst + s[i:j])
-			lineCount += 1
-			# find the start of next line
-			i = j
-			while (i < len(s)) and s[i].isspace():
-				i += 1
+			
+		# EKR: wrap the lines, decreasing the page width by indent.
+		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indent)
+		lineCount = len(wrapped_lines)
 		
-		# put the trailing unchanged lines
+		# EKR: Add the leading whitespace to the wrapped lines.
+		leading_ws = computeLeadingWhitespace(indent,tabWidth)
+		for line in wrapped_lines:
+			result.append(leading_ws + line)
+	
+		# Put the trailing unchanged lines
 		for i in range(lastLine,len(lines)):
 			result.append(lines[i])
 	
 		# was there a change?
+		changed = false
 		for i in range(firstLine,lineCount+firstLine):
-			if i >= lastLine:
-				changed = true
-				break
-			if lines[i] != result[i]:
-				changed = true
-				break
+			if i >= lastLine or lines[i] != result[i]:
+				changed = true ; break
 	
 		# replace current text
 		if changed:
@@ -727,27 +681,27 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
 	
 		# Set the new insert at the start of the next paragraph
+		# EKR: very ugly.
 		lastLine = firstLine + lineCount
 		if not endsWithNL:
 			insPos = str(lastLine) + ".0lineend"
 		else:
-			endPos = t.index("end")
+			endPos = body.index("end")
 			endLine = int(float(endPos))
 			lastLine += 1
 			insPos = str(lastLine) + ".0"
 			while lastLine < endLine:
-				s = t.get(insPos,insPos + "lineend")
+				s = body.get(insPos,insPos + "lineend")
 				if s and (0 < len(s)) and not s.isspace():
 					break;
 				lastLine += 1
 				insPos = str(lastLine) + ".0"
-		setTextSelection(t,insPos,insPos)
+		setTextSelection(body,insPos,insPos)
 	
 		# Make sure we can see the new insert cursor
-		t.see("insert")
+		body.see("insert")
 	
 		return
-	
 	#@-body
 	#@-node:13::reformatParagraph
 	#@+node:14::updateBodyPane (handles undo)

@@ -710,24 +710,13 @@ def computeWidth (s, tab_width):
 #@+body
 def get_leading_ws(s):
 	
-	"""Returns a string containing the leading tabs and
-spaces from 's'.
-"""
+	"""Returns the leading whitespace of 's'."""
 
-	if 0: # EKR
-		i = 0 ; n = len(s)
-		while i < n and s[i] in (' ','\t'):
-			i += 1
-		return s[0:i]
-	
-	else: # DTHEIN
-		s2 = s.lstrip()
-		diff = len(s) - len(s2)
-		if diff:
-			ws = s[0:diff]
-		else:
-			ws = ""
-		return ws
+	i = 0 ; n = len(s)
+	while i < n and s[i] in (' ','\t'):
+		i += 1
+	return s[0:i]
+
 #@-body
 #@-node:3::get_leading_ws
 #@+node:4::optimizeLeadingWhitespace
@@ -1535,7 +1524,17 @@ def skip_nl (s,i):
 	else: return i
 #@-body
 #@-node:17::skip_nl
-#@+node:18::skip_pascal_braces
+#@+node:18::skip_non_ws
+#@+body
+def skip_non_ws (s,i):
+
+	n = len(s)
+	while i < n and not is_ws(s[i]):
+		i += 1
+	return i
+#@-body
+#@-node:18::skip_non_ws
+#@+node:19::skip_pascal_braces
 #@+body
 # Skips from the opening { to the matching }.
 
@@ -1546,8 +1545,8 @@ def skip_pascal_braces(s,i):
 	if i == -1: return len(s)
 	else: return k
 #@-body
-#@-node:18::skip_pascal_braces
-#@+node:19::skip_ws, skip_ws_and_nl
+#@-node:19::skip_pascal_braces
+#@+node:20::skip_ws, skip_ws_and_nl
 #@+body
 def skip_ws(s,i):
 
@@ -1563,7 +1562,7 @@ def skip_ws_and_nl(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:19::skip_ws, skip_ws_and_nl
+#@-node:20::skip_ws, skip_ws_and_nl
 #@-node:19::Scanners: no error messages
 #@+node:20::shortFileName
 #@+body
@@ -1634,82 +1633,63 @@ def esDiffTime(message, start):
 #@+node:23::Tk.Text selection (utils)
 #@+node:1::bound_paragraph
 #@+body
+# EKR: There is no need to compute the leading whitespace here.
+# This utility is strengthened by doing only one thing.
+
 def bound_paragraph(t=None):
-	"""Find the bounds of the text paragraph that contains
-the current cursor position.
+	"""Find the bounds of the text paragraph that contains the current cursor position.
+	
+t: a Tk.Text widget
 
-Returns a list of values: the paragraph starting position,
-the paragraph ending position, and a flag indicating 
-whether the paragraph ends with a newline, the leading
-whitespace for each line, and the leading whitespace
-for the first line.  Returns None if the cursor is on
-a whitespace line or a delimeter line.
+Returns:
+	None if the cursor is on a whitespace line or a delimeter line.
+	Otherwise: (start,end,endsWithNL,wsFirst,wsSecond)
 
-Parameters:
-  t   a reference to a Tk.Text widget
-"""
-	if not t:
-		trace("Null t")
-		return None
-		
-	# get the current position
+start: the paragraph starting position,
+end: the paragraph ending position,
+endsWithNL: true if the paragraph ends with a newline"""
+
+	if not t: return None
 	x=t.index("insert")
 	
-	# if line is whitespace, get out
+	# Return if the selected line is all whitespace or a Leo directive.
 	s = t.get(x+"linestart",x+"lineend")
-	if s.isspace() or (0 == len(s)):
+	if len(s)==0 or s.isspace() or s[0] == '@':
 		return None	
-		
-	# if line is a delimiter, get out
-	if "@" == s[0]:
-		return None
 
-	# current start and end defined by current line
+	# Point start and end at the start and end of the selected line.
 	start = t.index(x+"linestart")
 	tmpLine = int(float(start))
 	end = str(tmpLine + 1) + ".0"
+	
+	# EKR: This is needlessly complex.
+	# It would be much easier to use a list of lines,
+	# rather than asking TK to do so much work.
 
-	# find the start of the paragraph
+	# Set start to the start of the paragraph.
 	while (tmpLine > 1):
 		tmpLine -= 1
 		tmp = str(tmpLine) + ".0"
 		s = t.get(tmp,tmp+"lineend")
-		if s.isspace() or (0 == len(s)):
-			break
-		if "@" == s[0]:
+		if len(s)==0 or s.isspace() or s[0] == '@':
 			break
 		start = tmp
 
-	# find the end of the paragraph
+	# Set end to the end of the paragraph.
 	tmpLine = int(float(end))
 	bodyEnd = t.index("end")
+
 	while end != bodyEnd:
 		end = str(tmpLine) + ".0"
 		s = t.get(end,end+"lineend")
-		if s.isspace() or (0 == len(s)):
-			break
-		if "@" == s[0]:
+		if len(s)==0 or s.isspace() or s[0] == '@':
 			break
 		tmpLine += 1
 
 	# do we insert a trailing NL?
 	endsWithNL = len(t.get(end))
-	
-	# find the first whitespace
-	s = t.get(start,start+"lineend")
-	wsFirst = get_leading_ws(s)
-	# find the second whitespace
-	second = str(int(float(start)) + 1) + ".0"
-	if (second == end) or (float(second) > float(end)):
-		wsSecond = wsFirst
-	else:
-		s = t.get(second,second+"lineend")
-		wsSecond = get_leading_ws(s)
-	
-	# return the start and end positions
-	# return the ending NL state
-	# return the first and second line leading WS
-	return start, end, endsWithNL, wsFirst, wsSecond
+
+	return start, end, endsWithNL
 #@-body
 #@-node:1::bound_paragraph
 #@+node:2::getTextSelection
@@ -1911,6 +1891,76 @@ def utils_rename(src,dst):
 
 #@-body
 #@-node:26::utils_rename
+#@+node:27::wrap_lines
+#@+body
+#@+at
+#  Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
+# 
+# Important note: this routine need not deal with leading whitespace.  
+# Instead, the caller should simply reduce pageWidth by the width of leading 
+# whitespace wanted, then add that whitespace to the lines returned here.
+# 
+# The key to this code is the invarient that line never ends in whitespace.
+
+#@-at
+#@@c
+
+def wrap_lines (lines,pageWidth):
+
+	# trace(`lines`)
+	result = [] # The lines of the result.
+	line = "" # The line being formed.  It never ends in whitespace.
+	for s in lines:
+		i = 0
+		while i < len(s):
+			assert(len(line) < pageWidth)
+			j = skip_ws(s,i)     ;   ws = s[i:j]
+			k = skip_non_ws(s,j) ; word = s[j:k]
+			assert(k>i)
+			i = k
+			if len(ws) + len(word) + len(line) < pageWidth:
+				if len(word) > 0:
+					
+					#@<< place ws and word on the present line >>
+					#@+node:1::<< place ws and word on the present line >>
+					#@+body
+					if len(line) == 0:
+						# Just add the word to the start of the line.
+						line = word
+					else:
+						# Add the word, preceeded by at least one blank.
+						if len(ws) == 0: ws = ' '
+						line = string.join((line,ws,word),'')
+					#@-body
+					#@-node:1::<< place ws and word on the present line >>
+
+				else: pass # discard the trailing whitespace.
+			else:
+				
+				#@<< place word on a new line >>
+				#@+node:2::<< place word on a new line >>
+				#@+body
+				# End the previous line.
+				if len(line) > 0:
+					result.append(line)
+					
+				# Discard the whitespace and put the word on a new line.
+				line = word
+				
+				# Careful: the word may be longer than a line.
+				if len(line) >= pageWidth:
+					result.append(line)
+					line = ""
+				
+				#@-body
+				#@-node:2::<< place word on a new line >>
+
+	if len(line) > 0:
+		result.append(line)
+	# trace(`result`)
+	return result
+#@-body
+#@-node:27::wrap_lines
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py
