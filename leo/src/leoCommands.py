@@ -1146,6 +1146,8 @@ class baseCommands:
         if script:
             script = script.strip()
         if script:
+            # 9/14/04: Temporarily add the open directory to sys.path.
+            sys.path.insert(0,c.frame.openDirectory)
             script += '\n' # Make sure we end the script properly.
             try:
                 exec script in {} # Use {} to get a pristine environment!
@@ -1199,6 +1201,7 @@ class baseCommands:
                     if p and not script1:
                         c.goToScriptLineNumber(p,script,n)
                 c.frame.tree.redrawAfterException()
+            del sys.path[0]
         elif not error:
             #@        << unredirect output >>
             #@+node:EKR.20040627100424:<< unredirect output >>
