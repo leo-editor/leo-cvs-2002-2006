@@ -83,7 +83,7 @@ class baseLeoFrame:
 		return self.ver[10:-1] # Strip off "$Reversion" and the trailing "$"
 	
 	def getSignOnLine (self):
-		return "Leo 4.0 beta 3 build %s, October 9, 2003" % self.getBuildNumber()
+		return "Leo 4.0 beta 4 build %s, October 9, 2003" % self.getBuildNumber()
 		
 	def initVersion (self):
 		self.ver = "$Revision$" # CVS will update this.
@@ -1989,8 +1989,6 @@ class baseLeoFrame:
 	
 		# Make sure the user wants to Revert.
 		if not c.mFileName:
-			c.mFileName = ""
-		if len(c.mFileName)==0:
 			return
 	
 		reply = leoDialog.askYesNo("Revert",
@@ -2470,11 +2468,6 @@ class baseLeoFrame:
 		self.tree.forceFullRecolor()
 		self.tree.onBodyWillChange(v,"Paste")
 		
-	def OnPasteNode (self,event=None):
-	
-		# trace(`event`)
-		pass
-		
 	def OnPasteFromMenu (self,event=None):
 	
 		w = self.getFocus()
@@ -2839,7 +2832,7 @@ class baseLeoFrame:
 		if nodeSentinelLine == -1:
 			# The line precedes the first @+node sentinel
 			# trace("before first line")
-			return root.headString(),0,1
+			return root.headString(),0,1,delim # 10/13/03
 		s = lines[nodeSentinelLine]
 		# trace(s)
 		#@	<< set vnodeName and childIndex from s >>

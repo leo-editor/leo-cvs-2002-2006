@@ -4,10 +4,22 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
+Leo 4.0 beta 4                      October 13, 2003
+
+This is the third public release of Leo 4.0. There are no known serious bugs in
+this version of Leo.  This will be the last beta release before 4.0 final.
+
+Changes made in 4.0 beta 4
+--------------------------
+
+- Changed all instances of string.letters to string.ascii_letters.
+  string.letters can cause crashes in some locales (Unicode environments).
+- Fixed several bugs that caused clone marks not to be set properly.
+
 Leo 4.0 beta 3                      October 9, 2003
 
 This is the third public release of Leo 4.0. There are no known serious bugs in
-this version of Leo. This will likely be the last beta release before 4.0 final.
+this version of Leo.
 
 Highlights of 4.0 beta 3
 ------------------------
