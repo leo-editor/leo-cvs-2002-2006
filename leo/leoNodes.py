@@ -2526,8 +2526,7 @@ class nodeIndices:
 	#@+body
 	def __init__ (self):
 		
-		self.defaultId = ""  ## testing only
-		self.defaultLoc = ""
+		self.defaultId = app().leoID
 		self.lastIndex = None
 	#@-body
 	#@-node:1::nodeIndices.__init__
@@ -2536,51 +2535,40 @@ class nodeIndices:
 	def toString (self,index):
 		
 		id  = index.get('id',"")
-		loc = index.get('loc',"")
 		t   = index.get('time',"")
 		n   = index.get('n',None)
 	
 		if n == None:
-			return "%s.%s.%s" % (id,loc,t)
+			return "%s.%s" % (id,t)
 		else:
-			return "%s.%s.%s.%d" % (id,loc,t,n)
+			return "%s.%s.%d" % (id,t,n)
 	
 	#@-body
 	#@-node:2::toString
 	#@+node:3::getNewIndex
 	#@+body
-	def getNewIndex (self,id=None,loc=None):
+	def getNewIndex (self,id=None):
 		
 		import time
+		if id == None: id=self.defaultId
+		t = time.strftime("%m%d%y%H%M%S",time.localtime()) # compact timestamp is best
 	
-		if id  == None: id  = self.defaultId
-		if id == "": id = None
-		
-		if loc == None: loc = self.defaultLoc
-		if loc == "": loc = None
-		
-		t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
-	
-		# Set n if all other fields match the previous index.
-		
+		# Set n if id and time match the previous index.
 		last = self.lastIndex
-		if (last and id == last.get('id') and
-			loc == last.get('loc') and t == last.get('time')):
+		if last and id==last.get('id') and t==last.get('time'):
 			n = last.get('n')
 			if n == None: n = 1
 			else: n += 1
 		else: n = None
 		
 		d = {'time':t}
-		for key, val in (('id',id),('loc',loc),('n',n)):
+		for key, val in (('id',id),('n',n)):
 			if val != None and val != "":
 				d[key] = val
 	
 		self.lastIndex = d
 		trace(d)
 		return d
-	
-	
 	
 	#@-body
 	#@-node:3::getNewIndex
@@ -2594,9 +2582,6 @@ class nodeIndices:
 		
 	def setDefaultId (self,id):
 		self.defaultId = id
-		
-	def setDefaultLoc (self,loc):
-		self.defaultLoc = loc
 	
 	#@-body
 	#@-node:4::getters & setters
@@ -2608,9 +2593,9 @@ class nodeIndices:
 			s = s[:-1]
 	
 		# Set then entries of d from s.
-		d = {} ; keys = ('id','loc','time','n')
+		d = {} ; keys = ('id','time','n')
 		n = 0
-		while n < 4 and i < len(s):
+		while n < 3 and i < len(s):
 			i,val = skip_to_char(s,i,'.')
 			if val:
 				d[keys[n]] = val
