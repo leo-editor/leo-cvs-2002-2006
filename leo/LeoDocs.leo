@@ -2769,15 +2769,15 @@ This is the minimum you need to use Leo effectively.
 4. Many command key abbreviations are specified in the Syntax Coloring panel.
 
 See the Appendices for a concise summary of information about Leo.</t>
-<t tx="T57">leo.py 3.11 beta 4                       March 26, 2003
+<t tx="T57">leo.py 3.11 beta 4                       March 31, 2003
 
 leo.py 3.11 beta 4 is now available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
+This will be the last beta release before 3.11 final.
+
 - Fixed several minor problems with unicode.
-	The way Leo handles unicode has proven to be correct.
-	This will be the last beta release before 3.11 final.
 - Fixed a _huge_ performance bug that slowed moving nodes left.
 - Added several new plugins:
 	- Support for the VIM editor.
