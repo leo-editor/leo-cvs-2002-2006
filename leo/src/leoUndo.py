@@ -48,10 +48,15 @@ class baseUndoer:
     def __init__ (self,c):
         
         u = self ; u.c = c
-        
-        # Ivars to transition to new undo scheme...
+    
         u.debug = False # True: enable debugging code in new undo scheme.
         u.debug_print = False # True: enable print statements in debug code.
+    
+        u.granularity = c.config.getString('undo_granularity')
+        if u.granularity: u.granularity.lower()
+        if u.granularity not in ('node','line','word','char'):
+            u.granularity = 'line'
+        # g.trace('undoer',u.granularity)
     
         # Statistics comparing old and new ways (only if u.debug is on).
         u.new_mem = 0
@@ -433,7 +438,7 @@ class baseUndoer:
         u.setUndoTypes()
         return d
     #@-node:ekr.20031218072017.3615:setUndoParams
-    #@+node:ekr.20031218072017.1490:setUndoTypingParams
+    #@+node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
     #@+at 
     #@nonl
     # This routine saves enough information so a typing operation can be 
@@ -614,9 +619,7 @@ class baseUndoer:
         #@-at
         #@@c
         
-        granularity = 'word'
-        if granularity not in ('node','line','word','char'):
-            granularity = 'word'
+        granularity = self.granularity
         
         old_d = u.peekBead(u.bead)
         old_p = old_d and old_d.get('v')
@@ -641,7 +644,8 @@ class baseUndoer:
                 old_d.get('trailing') != u.trailing
             )
             if granularity == 'word' and not newBead:
-                try:  # This should never fail, but what the heck...
+                # Protect that may be changed by the user
+                try:
                     #@            << set newBead if the change does not continue a word >>
                     #@+node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
                     old_start,old_end = oldSel
@@ -669,18 +673,9 @@ class baseUndoer:
                             old_ch = old_s[old_col-1]
                             new_ch = new_s[new_col-1]
                             # g.trace(repr(old_ch),repr(new_ch))
-                            if 1: # This is the best way.
-                                sep = string.whitespace
-                                if old_ch not in sep and new_ch in sep:
-                                    newBead = True # new_ch begins whitespace + word
-                            elif 1:
-                                sep = string.whitespace #  + string.punctuation
-                                if old_ch in sep and new_ch not in sep:
-                                    newBead = True # new_ch begins a word.
-                            else:
-                                word_chars = string.letters + string.digits + '_'
-                                if new_ch in word_chars and not old_ch in word_chars:
-                                    newBead = True # new_ch begins a word.
+                            newBead = self.recognizeStartOfTypingWord(
+                                old_lines,old_row,old_col,old_ch,
+                                new_lines,new_row,new_col,new_ch)
                     #@nonl
                     #@-node:ekr.20050125203937:<< set newBead if the change does not continue a word >>
                     #@nl
@@ -717,7 +712,40 @@ class baseUndoer:
         u.setUndoTypes() # Recalculate the menu labels.
         return d
     #@nonl
-    #@-node:ekr.20031218072017.1490:setUndoTypingParams
+    #@+node:ekr.20050126081529:recognizeStartOfTypingWord
+    def recognizeStartOfTypingWord (self,
+        old_lines,old_row,old_col,old_ch, 
+        new_lines,new_row,new_col,new_ch):
+            
+        ''' A potentially user-modifiable method that should return True if the
+        typing indicated by the params starts a new 'word' for the purposes of
+        undo with 'word' granularity.
+        
+        u.setUndoTypingParams calls this method only when the typing could possibly
+        continue a previous word. In other words, undo will work safely regardless
+        of the value returned here.
+        
+        old_ch is the char at the given (Tk) row, col of old_lines.
+        new_ch is the char at the given (Tk) row, col of new_lines.
+        
+        The present code uses only old_ch and new_ch. The other arguments are given
+        for use by more sophisticated algorithms.'''
+        
+        ws = string.whitespace
+        word_chars = string.letters + string.digits + '_'
+    
+        if 1: # This seems like the best way.
+            # Start a word if new_ch begins whitespace + word
+            return old_ch not in ws and new_ch in ws
+    
+        if 0: # Problems with punctuation within words.
+            return old_ch in ws and new_ch not in ws
+    
+        if 0: # Problems with punctuation within words.
+            return new_ch in word_chars and not old_ch in word_chars
+    #@nonl
+    #@-node:ekr.20050126081529:recognizeStartOfTypingWord
+    #@-node:ekr.20031218072017.1490:setUndoTypingParams & recognizeStartOfTypingWord
     #@+node:EKR.20040528075307:u.saveTree
     def saveTree (self,p,treeInfo=None):
         

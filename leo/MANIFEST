@@ -110,8 +110,6 @@ plugins\import_cisco_config.py
 plugins\leo-forthstringwords.txt
 plugins\leo-forthwords.txt
 plugins\leoPlugins.leo
-plugins\leoPlugins.pdf
-plugins\library.dbm
 plugins\lineNumbers.py
 plugins\macros.py
 plugins\maximizeNewWindows.py
@@ -175,6 +173,11 @@ plugins\word_export.ini
 plugins\word_export.py
 plugins\xemacs.py
 plugins\xsltWithNodes.py
+scripts\LinixInstall.py
+scripts\__init__.py
+scripts\c2py.py
+scripts\disStats.py
+scripts\leoFindScript.py
 scripts\leoScripts.txt
 scripts\tangle_done.py
 scripts\untangle_done.py

@@ -1,31 +1,38 @@
-Leo 4.2 Final       September 20, 2004
+Leo 4.3-alpha-1      January 24, 2005
 
-Leo 4.2 Final is now available at http://sourceforge.net/projects/leo/
+Leo 4.3-alpha-1 is now available at http://sourceforge.net/projects/leo/ Leo 4.3
+is the culmination of more than four months of work. 
 
-The highlights of Leo 4.2:
+The major defining features of Leo 4.3:
 
-- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
-be committed to cvs and updated from cvs without having to commit or update the
-corresponding .leo file. There is no longer any need to keep .leo files and
-derived files in synch.
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
 
-- Leo's data structures have been reorganized. As a result, all outline
-operations are much faster. To support this organization, scripts that traverse
-Leo's data structures must now use a positions rather than vnodes. Old scripts
-that appear to use vnodes will still work because methods like c.currentVnode
-that appear to return vnodes actually return positions.
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
 
-- A new mod_scripting plugin is a big advance in scripting and testing.
-test.leo now uses @test and @script nodes to define unit tests without
-explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
-tests now takes a few seconds!
+2. The Preferences command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Preferences command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
 
-- Leo draws large outlines more quickly with less memory used.
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
 
-- A much faster and more robust spell checker plugin. (requires Python 2.3)
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 
-- Leo is now much more friendly to using spaces instead of tabs.
+5. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail.
 
-- The Execute Script command reports erroneous lines more clearly.
-
-- Dozens of other improvements.
+As usual, version 4.3 contains many other improvements and bug fixes.

@@ -2,13 +2,13 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="994" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="53" left="255" height="833" width="953"/>
+	<global_window_position top="23" left="64" height="833" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="EKR.20040519091259"><vh>Annoucnements</vh>
+<v t="EKR.20040519091259" a="E"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -16,9 +16,10 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20040922074043"><vh>ANN: Leo 4.2 final: An outlining editor</vh></v>
+<v t="ekr.20050124083006" a="TV"><vh>ANN: Leo 4.3-a1</vh></v>
 <v t="EKR.20040519091259.5"><vh>FAQ for comp.prog.literate</vh></v>
 <v t="EKR.20040519091259.30"><vh>Previous announcements</vh>
+<v t="ekr.20040922074043"><vh>ANN: Leo 4.2 final: An outlining editor</vh></v>
 <v t="ekr.20040908073013"><vh>ANN: Leo 4.2 RC1: An outlining editor</vh></v>
 <v t="ekr.20040810104041"><vh>ANN: Leo 4.2 Beta 3: An outlining editor</vh></v>
 <v t="ekr.20040630103409"><vh>ANN: Leo 4.2 Beta 1: An outlining editor</vh></v>
@@ -98,9 +99,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040629175400" a="E"><vh>Pychecker stuff</vh>
-<v t="ekr.20040629173419.1" a="E" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
-<v t="ekr.20040701193853" a="TV"><vh>blacklist</vh></v>
+<v t="ekr.20040629175400"><vh>Pychecker stuff</vh>
+<v t="ekr.20040629173419.1" tnodeList="ekr.20040629173419.1,ekr.20040701193853,ekr.20040701193853.1,ekr.20040701193853.2,ekr.20040701193853.3,ekr.20040701193853.4,ekr.20040701193853.5"><vh>@file .pycheckrc</vh>
+<v t="ekr.20040701193853"><vh>blacklist</vh></v>
 <v t="ekr.20040701193853.1"><vh>defaults</vh></v>
 <v t="ekr.20040701193853.2"><vh>max...</vh></v>
 <v t="ekr.20040701193853.3" a="M"><vh>suppressions</vh></v>
@@ -154,11 +155,11 @@
 </v>
 </v>
 <v t="ekr.20050119113603.30"
-marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"
-expanded="ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
+marks="ekr.20050119113603.41,ekr.20050119113603.42,ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
 </v>
 <v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
+<v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118094209"><vh>What I did</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
@@ -205,9 +206,9 @@ expanded="ekr.20050119113603.53,"><vh>@thin leo-4-2.nsi</vh></v>
 </v>
 <v t="ekr.20050118092706"
 marks="ekr.20050118092706.3,ekr.20050118092706.5,ekr.20050118092706.6,ekr.20050118092706.10,ekr.20050118092706.11,ekr.20050118092706.13,ekr.20050118092706.22,"
-expanded="ekr.20050118092706.1,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh></v>
+expanded="ekr.20050118092706.1,"><vh>@thin leo-4-3.nsi</vh></v>
 </v>
-<v t="ekr.20050118113631"><vh>Main distribution script</vh>
+<v t="ekr.20050118113631" a="E"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
@@ -220,12 +221,11 @@ expanded="ekr.20050118092706.1,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh
 <v t="ekr.20050117032444.3"><vh>&lt;&lt; remove temp createLeoDist.py &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20050116151024" a="E"><vh>To do</vh>
-<v t="ekr.20050119191232"><vh>Announce 4.2.1 beta 1 to SF, comp.lang.python, etc.</vh></v>
+<v t="ekr.20050116151024"><vh>To do</vh>
 <v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
 <v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
-<v t="ekr.20050118125236" a="M"><vh>To do:  write a script to make sure .nsi and main install scripts create the same files</vh></v>
-<v t="ekr.20050119191034"><vh>To do:  create manifest.in from manifest-nn.in</vh></v>
+<v t="ekr.20050118125236" a="M"><vh>Write a script to make sure .nsi and main install scripts create the same files</vh></v>
+<v t="ekr.20050119191034"><vh>Create manifest.in from manifest-nn.in</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -519,15 +519,30 @@ definable shortcuts for all menu commands.
 @lineending nl
 @language shell</t>
 <t tx="EKR.20040519090846">@nocolor</t>
-<t tx="EKR.20040519090846.1">Leo is Open Software and is distributed under the terms of the Python License. The gist of the license is that Leo is absolutely free, even for commercial use (including resale). There is no GNU-like "copyleft" restriction. The Open Source Initiative board has voted to certify the Python license as Open Source. This license is compatible with the GPL.
+<t tx="EKR.20040519090846.1">Leo is Open Software and is distributed under the terms of the Python License.
+The gist of the license is that Leo is absolutely free, even for commercial use
+(including resale). There is no GNU-like "copyleft" restriction. The Open Source
+Initiative board has voted to certify the Python license as Open Source. This
+license is compatible with the GPL.
 
-Copyright (c) 1997-2004 by Edward K. Ream. All Rights Reserved.
+Copyright (c) 1997-2005 by Edward K. Ream. All Rights Reserved.
 
-Permission to use, copy, modify, and distribute this software and its documentation for any purpose and without fee is hereby granted, provided that the above copyright notice appear in all copies and that both that copyright notice and this permission notice appear in supporting documentation, and that the names of Leo or Edward K. Ream not be used in advertising or publicity pertaining to distribution of the software without specific, written prior permission.
+Permission to use, copy, modify, and distribute this software and its
+documentation for any purpose and without fee is hereby granted, provided that
+the above copyright notice appear in all copies and that both that copyright
+notice and this permission notice appear in supporting documentation, and that
+the names of Leo or Edward K. Ream not be used in advertising or publicity
+pertaining to distribution of the software without specific, written prior
+permission.
 
 DISCLAIMER OF WARRANTIES
 
-EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE, INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER DAMAGES.</t>
+EDWARD K. REAM (REAM) SPECIFICALLY DISCLAIMS ALL WARRANTIES, EXPRESSED OR
+IMPLIED, WITH RESPECT TO THIS COMPUTER SOFTWARE, INCLUDING BUT NOT LIMITED TO
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. IN
+NO EVENT SHALL REAM BE LIABLE FOR ANY LOSS OF PROFIT OR ANY COMMERCIAL DAMAGE,
+INCLUDING BUT NOT LIMITED TO SPECIAL, INCIDENTAL, CONSEQUENTIAL OR OTHER
+DAMAGES.</t>
 <t tx="EKR.20040519090846.2"></t>
 <t tx="EKR.20040519090846.3">System requirements for leo.py
 ------------------------------
@@ -653,37 +668,44 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Platform: Windows, Linux, Macintosh
 </t>
-<t tx="EKR.20040519090846.9">Leo 4.2 Final       September 20, 2004
+<t tx="EKR.20040519090846.9">Leo 4.3-alpha-1      January 24, 2005
 
-Leo 4.2 Final is now available at http://sourceforge.net/projects/leo/
+Leo 4.3-alpha-1 is now available at http://sourceforge.net/projects/leo/ Leo 4.3
+is the culmination of more than four months of work. 
 
-The highlights of Leo 4.2:
+The major defining features of Leo 4.3:
 
-- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
-be committed to cvs and updated from cvs without having to commit or update the
-corresponding .leo file. There is no longer any need to keep .leo files and
-derived files in synch.
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
 
-- Leo's data structures have been reorganized. As a result, all outline
-operations are much faster. To support this organization, scripts that traverse
-Leo's data structures must now use a positions rather than vnodes. Old scripts
-that appear to use vnodes will still work because methods like c.currentVnode
-that appear to return vnodes actually return positions.
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
 
-- A new mod_scripting plugin is a big advance in scripting and testing.
-test.leo now uses @test and @script nodes to define unit tests without
-explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
-tests now takes a few seconds!
+2. The Preferences command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Preferences command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
 
-- Leo draws large outlines more quickly with less memory used.
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
 
-- A much faster and more robust spell checker plugin. (requires Python 2.3)
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
 
-- Leo is now much more friendly to using spaces instead of tabs.
+5. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail.
 
-- The Execute Script command reports erroneous lines more clearly.
-
-- Dozens of other improvements.</t>
+As usual, version 4.3 contains many other improvements and bug fixes.</t>
 <t tx="EKR.20040519090846.10"># The manifest template: specifies all files to be included in the distribution.
 
 # Note: these are glob patterns.
@@ -753,14 +775,15 @@ include test/__init__.py
 include test/test.leo</t>
 <t tx="EKR.20040519091259">@pagewidth 70
 @killcolor</t>
-<t tx="EKR.20040519091259.1">4.1rc3 setup-rc4: 870  rc4.zip: 630
-4.1 b5: setup-b5: 195,  b5.zip: 128
-4.0.4:  setup: 340, zip 385
-4.0 leo-4.0.zip 382
-3.12 leosetup 953,
-3.12.zip 592
-3.11.zip 102
-3.10.zip 1193</t>
+<t tx="EKR.20040519091259.1">4.2-final   setup: 1828 zip: 1508
+4.2b3       setup: 563, zip: 338
+4.1rc3      setup: 870  zip: 630
+4.1 b5      setup: 195, zip: 128
+4.0.4       setup: 340, zip: 385
+4.0                     zip: 382
+3.12        setup: 953  zip: 592
+3.11                    zip: 102
+3.10                    zip: 1193</t>
 <t tx="EKR.20040519091259.2"></t>
 <t tx="EKR.20040519091259.3">I like Leo more the more I use it...It's an unexpected pleasure to
 see my (linearly written) code outlined in Leo. I can't wait to use
@@ -3439,6 +3462,29 @@ This allows us to distribute .pycheckrc somewhere, even if it isn't in correct p
   
 - This script temporarily copies createLeoDist.py from the dist folder to the leo folder.
 </t>
+<t tx="ekr.20050118092706.4">; settings taken from Version 1.0 of NSIS Script for Leo
+Caption "Leo Installer"
+AutoCloseWindow false 
+SilentInstall normal
+CRCCheck on ; FIXME shouldn't this be CRCCheck force ? Why give user option of using corrupted installer?
+SetCompress auto ; FIXME this is disabled for solid compression, which comes with BZip2 and LZMA compression
+SetDatablockOptimize on
+; SetOverwrite ifnewer
+WindowIcon off
+
+; settings from HM NIS Edit Wizard
+Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+OutFile "LeoSetup-4-3-a1.exe"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
+InstallDir "$PROGRAMFILES\Leo"
+Icon "..\Icons\leo_inst.ico"
+; Version 1.0 of NSIS Script for Leo comes with its own uninstall icon
+; UninstallIcon "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+DirText "Setup will install $(^Name) in the following folder.$\r$\n$\r$\nTo install in a different folder, click Browse and select another folder."
+LicenseText "If you accept all the terms of the agreement, choose I Agree to continue. You must accept the agreement to install $(^Name)."
+LicenseData "..\doc\License.txt"
+ShowInstDetails show
+ShowUnInstDetails show</t>
 <t tx="ekr.20050118094209">@killcolor
 
 - Removed &lt; &lt; delete previously installed files &gt; &gt; section from .onInit
@@ -3576,7 +3622,7 @@ File "..\test\test.leo"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha 1"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-alpha-1"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119113603"></t>
 <t tx="ekr.20050119113603.1"># The manifest template: specifies all files to be included in the distribution.
@@ -3755,6 +3801,120 @@ Delete "$INSTDIR\uninstall"
 Delete "$INSTDIR\uninst.exe"
 </t>
 <t tx="ekr.20050119191034"></t>
-<t tx="ekr.20050119191232"></t>
+<t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
+
+Leo 4.3 is the culmination of more than four months of work. In spite
+of its alpha status, I recommend Leo 4.3a1 over any 4.2 release.
+
+The defining features of Leo 4.3:
+---------------------------------
+1. Leo now stores options in @settings trees, that is, outlines whose
+headline is '@settings'. When opening a .leo file, Leo looks for
+@settings trees not only in the outline being opened but also in
+various leoSettings.leo files.
+
+Users can create arbitrarily complex user options with @settings
+trees. Leo settings outlines are, in fact, infinitely more flexible
+and powerful than any scheme based on flat text. Readers of Python's
+configParser shootout take note.
+
+2. The Preferences command temporarily replaces the outline pane with
+an outline showing all the @settings trees in effect. The Preferences
+command also replaces the body pane with a "settings pane". This
+settings pane allows you to change the settings selected in the
+outline pane using standard gui widgets.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support
+user-defined tangling and untangling. This is a major cleanup of
+Leo's core.
+
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin
+enables and disables plugins automatically and tells you everything
+you need to know about each plugin. This plugin also lets you download
+plugins from Leo's cvs site.
+
+5. You can install third-party extensions in Leo's extensions
+directory. Leo will attempt to import such extensions from the
+extensions directory if normal imports fail.
+
+As usual, version 4.3 contains many other improvements and bug fixes.
+
+What people are saying about Leo
+--------------------------------
+"I am using Leo since a few weeks and I brim over with enthusiasm for
+it. I think it is the most amazing software since the invention of the
+spreadsheet." -- juergen_r
+
+"We who use Leo know that it is a breakthrough tool and a whole new
+way of writing code."  -- Joe Orr
+
+"I am a huge fan of Leo. I think it's quite possibly the most
+revolutionary programming tool I have ever used and it (along with the
+Python language) has utterly changed my view of programming (indeed of
+writing) forever."  -- Shakeeb Alireza
+
+"Thank you very much for Leo. I think my way of working with data will
+change forever...I am certain [Leo] will be a revolution. The
+revolution is as important as the change from sequential linear
+organization of a book into a web-like hyperlinked pages. The main
+concept that impress me is that the source listing isn't the main
+focus any more. You focus on the non-linear, hierarchical, collapsible
+outline of the source code."  -- Korakot Chaovavanich 
+
+"Leo is a quantum leap for me in terms of how many projects I can
+manage and how much information I can find and organize and store in a
+useful way."  -- Dan Winkler
+
+"Wow, wow, and wow...I finally understand how to use clones and I
+realized that this is exactly how I want to organize my information.
+Multiple views on my data, fully interlinkable just like my thoughts."
+-- Anon.
+
+"A few years back I would have said Zope was #1 Python showcase, but I
+agree 100% that Leo is tops now." -- Jason Cunliffe
+
+"Leo is the most interesting Python project I know of...I see lots of
+stuff posted on the Daily Python page, but I usually yawn and come
+over to this forum to see what's cooking."  -- Anon
+
+More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
+
+What makes Leo special?
+-----------------------
+- Leo's outlines add a new dimension to programming.
+- Leo shows you your code and data the way _you_ want to see them.
+- Leo extends, completes and simplifies literate programming.
+- Leo's script buttons bring scripts to data. 
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.2.1 or above and tcl/tk 8.4 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+January 25, 2005
+--------------------------------------------------------------------
+Edward K. Ream   email:  edreamleo@charter.net
+Leo: Literate Editor with Outlines
+Leo: http://webpages.charter.net/edreamleo/front.html
+--------------------------------------------------------------------
+</t>
 </tnodes>
 </leo_file>
