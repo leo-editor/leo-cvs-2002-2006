@@ -11,6 +11,7 @@ if g.app.config.use_psyco:
 	except ImportError: pass
 
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
+import os
 import string
 import sys
 import tempfile
@@ -404,7 +405,7 @@ class baseCommands:
 			file = open(path,"w")
 			# 3/7/03: convert s to whatever encoding is in effect.
 			s = v.bodyString()
-			dict = g.scanDirectives(c,v=v)
+			dict = g.scanDirectives(c,p=v)
 			encoding = dict.get("encoding",None)
 			if encoding == None:
 				encoding = g.app.config.default_derived_file_encoding
