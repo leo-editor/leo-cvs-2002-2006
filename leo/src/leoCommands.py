@@ -1143,10 +1143,8 @@ class baseCommands:
         #@nonl
         #@-node:ekr.20031218072017.2143:<< redirect output >>
         #@nl
-        # g.trace(script)
-        if script:
-            script = script.strip()
-        if script:
+        # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
+        if script.strip():
             # 9/14/04: Temporarily add the open directory to sys.path.
             sys.path.insert(0,c.frame.openDirectory)
             script += '\n' # Make sure we end the script properly.
@@ -1165,7 +1163,7 @@ class baseCommands:
                 #@nl
                 if not script1:
                     g.es("end of script",color="purple")
-            except:
+            except Exception:
                 #@            << unredirect output >>
                 #@+node:EKR.20040627100424:<< unredirect output >>
                 if c.config.redirect_execute_script_output_to_log_pane:
@@ -1176,6 +1174,10 @@ class baseCommands:
                 #@-node:EKR.20040627100424:<< unredirect output >>
                 #@nl
                 g.es("exception executing script ")
+                if 0:
+                    print 'script...'
+                    for line in g.splitLines(script):
+                        print repr(line)
                 fileName,n = g.es_exception(full=False,c=c)
                 if fileName not in (None,"<string>"):
                     g.es("exception in file %s, line: %d" % (fileName,n))
