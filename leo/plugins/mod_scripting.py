@@ -5,16 +5,7 @@
 """A plugin to create script buttons and @button, @plugin and @script nodes.
 
 This plugin puts two buttons in the icon area: a button called 'run Script' and
-a button called 'script Button'.  See below for more details.
-
-This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
-whenever a .leo file is opened. @button nodes create script buttons, @plugin
-nodes cause plugins to be loaded and @script nodes cause the script to be
-executed just after the window has been opened.
-
-These @button, @plugin and @script nodes may be security risks. This plugin
-scans for such nodes only if the corresponding atButtonNodes, atPluginNodes,
-atScriptNodes constants are set to True in this plugin.
+a button called 'script Button'.
 
 The 'run Script' button is simply another way of doing the Execute Script
 command: it executes the selected text of the presently selected node, or the
@@ -31,9 +22,18 @@ For example, to run a script on any part of an outline do the following:
 3.  Select the node on which you want to run the script.
 4.  Push button X.
 
-That's all.
+That's all.  You can delete a script button by right-clicking on it.
 
-You can delete a script button by right-clicking on it.
+This plugin optionally scans for @button nodes, @plugin nodes and @script nodes
+whenever a .leo file is opened.
+
+- @button nodes create script buttons.
+- @plugin nodes cause plugins to be loaded.
+- @script nodes cause a script to be executed when opening a .leo file.
+
+Such nodes may be security risks. This plugin scans for such nodes only if the
+corresponding atButtonNodes, atPluginNodes, and atScriptNodes constants are set
+to True in this plugin.
 
 Notes:
     
