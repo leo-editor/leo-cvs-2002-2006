@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2256" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
-	<global_window_position top="10" left="82" height="936" width="1147"/>
+	<global_window_position top="10" left="82" height="784" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -28,9 +28,9 @@
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6"><vh>Tests...</vh>
-<v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
-<v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
+<v t="edream.110203161858.25" a="E"><vh>Body pane &amp; typing</vh>
+<v t="edream.110203161858.26" a="V"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
 <v t="edream.110203161858.28"><vh>nowrap node</vh></v>
 </v>
@@ -2721,7 +2721,7 @@
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
 </v>
 <v t="edream.120603125057" a="E"><vh>4.1 beta 6 tests</vh>
-<v t="edream.120603112201"><vh>clone-drag bug</vh>
+<v t="edream.120603112201" a="E"><vh>clone-drag bug</vh>
 <v t="edream.120603112201.1" a=""><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
 <v t="edream.120603112201.2"><vh>b</vh></v>
@@ -2733,7 +2733,7 @@
 <v t="edream.120603113726"><vh>c</vh></v>
 </v>
 </v>
-<v t="edream.120603125159" a="V"><vh>ItemTemplate</vh>
+<v t="edream.120603125159"><vh>ItemTemplate</vh>
 <v t="edream.120603125159.1"><vh>&lt;&lt; html_body &gt;&gt;</vh>
 <v t="edream.120603125159.2"><vh>&lt;&lt; head  &gt;&gt;</vh></v>
 <v t="edream.120603125159.3"><vh>&lt;&lt; body &gt;&gt;</vh>

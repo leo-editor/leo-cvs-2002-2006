@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="39" left="397" height="870" width="827"/>
+	<global_window_position top="33" left="430" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,8 +12,11 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203160744"><vh> Diary</vh>
+<v t="edream.110203160744" a="V"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.120703115300"><vh>12/07</vh>
+<v t="edream.120703115300.1"><vh>Changed logControl to logCtrl</vh></v>
+</v>
 <v t="edream.120603095416"><vh>12/06</vh>
 <v t="edream.120603140102"><vh>Fixed bug when untangling html</vh></v>
 <v t="edream.120603140102.1"><vh>Fixed clone-dragging bug</vh></v>
@@ -3152,7 +3155,7 @@
 <v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
 <v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
 <v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
@@ -3653,6 +3656,9 @@
 <v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
 <v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
+</v>
+<v t="edream.120703061418"><vh>(Fixed 2 new reorg bugs)</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -4429,7 +4435,7 @@
 <v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
 <v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
 <v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
 </v>
@@ -6866,7 +6872,10 @@
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.120603162124" a="V"><vh>Colorizer bug</vh></v>
+<v t="edream.120603162124"><vh>Colorizer bug</vh></v>
+<v t="edream.120703082927"><vh>Add dialog to Import Derived File</vh></v>
+<v t="edream.120703113459"><vh>Make sure that Reformat Paragraph makes the new insertion point visible</vh></v>
+<v t="edream.120703114619"><vh>Execute scripts like IDE's do</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -21181,7 +21190,7 @@ except:
 	
 closeFlag = (
 	c.frame.startupWindow==true and # The window was open on startup
-	c.changed==false and c.saved==false and # The window has never been changed
+	c.changed==false and c.frame.saved==false and # The window has never been changed
 	app.numberOfWindows == 1) # Only one untitled window has ever been opened</t>
 <t tx="edream.110203160744.1111">def createRecentFilesMenuItems (self):
 	
@@ -21262,7 +21271,7 @@ closeFlag = (
 	
 	"""Create a new outline from a 4.0 derived file."""
 	
-	frame = self ; c = frame.c ; v = c.currentVnode()
+	c = self ; frame = c.frame ; v = c.currentVnode()
 	
 	if v.isAtFileNode():
 		fileName = v.atFileNodeName()
@@ -25323,25 +25332,24 @@ if 0: #test
 <t tx="edream.110203160744.1455"># All output to the log stream eventually comes here.
 
 def put (self,s,color=None):
-	# print `app.quitting`,`self.logControl`
 	if app.quitting: return
-	if self.logControl:
+	if self.logCtrl:
 		if type(s) == type(u""): # 3/18/03
 			s = toEncodedString(s,app.tkEncoding)
 		if color:
 			if color not in self.colorTags:
 				self.colorTags.append(color)
-				self.logControl.tag_config(color,foreground=color)
-			self.logControl.insert("end",s)
-			self.logControl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+				self.logCtrl.tag_config(color,foreground=color)
+			self.logCtrl.insert("end",s)
+			self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
 			if "black" not in self.colorTags:
 				self.colorTags.append("black")
-				self.logControl.tag_config("black",foreground="black")
-			self.logControl.tag_add("black","end")
+				self.logCtrl.tag_config("black",foreground="black")
+			self.logCtrl.tag_add("black","end")
 		else:
-			self.logControl.insert("end",s)
-		self.logControl.see("end")
-		self.logControl.update_idletasks()
+			self.logCtrl.insert("end",s)
+		self.logCtrl.see("end")
+		self.logCtrl.update_idletasks()
 	else:
 		app.logWaiting.append((s,color),) # 2/25/03
 		print "Null tkinter log"
@@ -25351,10 +25359,10 @@ def put (self,s,color=None):
 
 def putnl (self):
 	if app.quitting: return
-	if self.logControl:
-		self.logControl.insert("end",'\n')
-		self.logControl.see("end")
-		self.logControl.update_idletasks()
+	if self.logCtrl:
+		self.logCtrl.insert("end",'\n')
+		self.logCtrl.see("end")
+		self.logCtrl.update_idletasks()
 	else:
 		app.logWaiting.append(('\n',"black"),) # 6/28/03
 		print "Null tkinter log"
@@ -36662,7 +36670,7 @@ def scrollDown (self):
 	self.c = frame.c
 	self.newlines = 0
 
-	self.logControl = self.createControl(parentFrame)
+	self.logCtrl = self.createControl(parentFrame)
 	self.setFontFromConfig()
 </t>
 <t tx="edream.110203160744.2325">def configure (self,*args,**keys):
@@ -36708,14 +36716,14 @@ def putnl (self):
 	
 	self.colorTags = [] # list of color names used as tags in log window.
 	
-	self.logControl.bind("&lt;Button-1&gt;", self.onActivateLog)</t>
+	self.logCtrl.bind("&lt;Button-1&gt;", self.onActivateLog)</t>
 <t tx="edream.110203160744.2334">def configureBorder(self,border):
 	
-	self.logControl.configure(bd=border)
+	self.logCtrl.configure(bd=border)
 	
 def configureFont(self,font):
 
-	self.logControl.configure(font=font)</t>
+	self.logCtrl.configure(font=font)</t>
 <t tx="edream.110203160744.2335">def createControl (self,parentFrame):
 	
 	config = app.config
@@ -36744,12 +36752,12 @@ def configureFont(self,font):
 	return log</t>
 <t tx="edream.110203160744.2336">def getFontConfig (self):
 
-	font = self.logControl.cget("font")
+	font = self.logCtrl.cget("font")
 	# trace(font)
 	return font</t>
 <t tx="edream.110203160744.2337">def hasFocus (self):
 	
-	return app.gui.get_focus(self.frame) == self.logControl</t>
+	return app.gui.get_focus(self.frame) == self.logCtrl</t>
 <t tx="edream.110203160744.2338">def onActivateLog (self,event=None):
 
 	try:
@@ -36759,7 +36767,7 @@ def configureFont(self,font):
 		es_event_exception("activate log")</t>
 <t tx="edream.110203160744.2339">def setFontFromConfig (self):
 
-	logCtrl = self.logControl ; config = app.config
+	logCtrl = self.logCtrl ; config = app.config
 
 	font = config.getFontFromParams(
 		"log_text_font_family", "log_text_font_size",
@@ -60823,5 +60831,67 @@ more snap code
 in the output file "more snap code" will be NOT commented, but in Leo that line will appear as a red comment line.
 I do not know which is the "correct behaviour" but the colorizer should be consisten with it.
 </t>
+<t tx="edream.120703061418">http://sourceforge.net/forum/message.php?msg_id=2321348
+By: rodrigo_b
+
+Traceback (most recent call last):
+  File "/home/rodrigob/projets/leon/leo/leo-4.1-beta-5/src/leoCommands.py",
+line 127, in doCommand
+    command()
+  File "/home/rodrigob/projets/leon/leo/leo-4.1-beta-5/src/leoCommands.py",
+line 670, in importDerivedFile
+    frame = self ; c = frame.c ; v = c.currentVnode()
+AttributeError: Commands instance has no attribute 'c'
+
+(Fixed)  change to c = self ; frame = c.frame
+
+------------------
+
+http://sourceforge.net/forum/message.php?msg_id=2321489
+By: bwmulder
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "C:\Python23\lib\lib-tk\Tkinter.py", line 1345, in __call__
+    return self.func(*args)
+  File "C:\bwm\ftproot\Cleo-4.1-beta-5\src\leoMenu.py", line 1056, in &lt;lambda&gt;
+    callback = lambda f=frame,name=name:c.openRecentFile(name)
+  File "C:\bwm\ftproot\Cleo-4.1-beta-5\src\leoCommands.py", line 576, in openRecentFile
+    closeFlag = (
+AttributeError: Commands instance has no attribute 'saved'
+
+(Fixed) change c.saved to c.frame.saved
+</t>
+<t tx="edream.120703082927"></t>
+<t tx="edream.120703113459"></t>
+<t tx="edream.120703114619">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2321235
+By: paulpaterson
+
+I think I understand what Samir is getting at. 
+
+In PythonWin, or other IDE's for other languages, you are able to execute the
+"current program" in a way that it will behave identically to if it had been
+run from the command line.
+
+For Python this requires,
+
+1. That the script run with __name__ == "__main__", so that the standard "if
+__name__ ..." section will be executed properly.
+
+2. You are able to pass command line parameters to the script. In some IDE's
+you are able to set default command line parameters and these are "injected"
+into the sys.argv (or equivalent) so that, as far as the program is concerned,
+it looks like you ran it from the command line with some aruments.
+
+
+The underlying assumption is that you want to run an entire program from Leo,
+not just a script. I would find this very useful also as I could run unit tests
+or even my entire apps by just hitting, for exampe, F5.
+
+Paul</t>
+<t tx="edream.120703115300"></t>
+<t tx="edream.120703115300.1"></t>
 </tnodes>
 </leo_file>

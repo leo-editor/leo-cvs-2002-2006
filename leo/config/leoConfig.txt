@@ -220,25 +220,26 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file2 = C:\prog\leoCVS\leo\test\test.leo
+file3 = C:\prog\leoCVS\leo\test\test.leo
+file2 = C:\Documents and Settings\default\Desktop\Paul Paterson plugin\test.leo
 file1 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
 file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file4 = C:\prog\leoCVS\leo\config\leoConfig.leo
+file5 = C:\prog\leoCVS\leo\config\leoConfig.leo
+file4 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 
 [find/change options]
 mark_changes = 0
 ignore_case = 0
-change_string = 
+change_string = logCtrl
 whole_word = 1
 script_search = 0
 node_only = 0
 selection_only = 0
 batch = 0
-search_headline = 1
+search_headline = 0
 script_change = 0
-search_body = 0
-find_string = << set the private global matching vars >>
+search_body = 1
+find_string = logControl
 pattern_match = 0
 wrap = 0
 mark_finds = 0
