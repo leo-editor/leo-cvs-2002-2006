@@ -83,20 +83,6 @@ there a link to an freshly updated Installatian page in the Users Guide. to
 http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
 #@nonl
 #@-node:ekr.20050206210832.2:Create better download pages
-#@-node:ekr.20050206042705:Distribution 4...
-#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2928991
-By: jasonic
-
-@nosent is an abbreviation for @file-nosentinels.
-Very hadny very cool but does not seem be much docs anywhere on this.
-#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
-#@+node:ekr.20050207091724:Make sure string % is better than string +
-#@-node:ekr.20050207091724:Make sure string % is better than string +
-#@+node:ekr.20050207092137:Make sure mini tests of Unicode filenames work
-#@-node:ekr.20050207092137:Make sure mini tests of Unicode filenames work
 #@+node:ekr.20050207101928:Posting re Cool Mac stuff
 #@+node:ekr.20050207101928.1:Native Max OS X Leo app
 @killcolor
@@ -150,6 +136,7 @@ Guenther.
 #@+node:ekr.20050207101928.3:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20050207101928.3:@url http://www.wordtech-software.com/leo.html  (Mac Bundle)
 #@-node:ekr.20050207101928:Posting re Cool Mac stuff
+#@-node:ekr.20050206042705:Distribution 4...
 #@+node:ekr.20050208043313:Add documentation for init method to Style Guide
 #@-node:ekr.20050208043313:Add documentation for init method to Style Guide
 #@-node:ekr.20050119072551:4.3 a2 To do
@@ -556,6 +543,15 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
+#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+@nosent is an abbreviation for @file-nosentinels.
+Very hadny very cool but does not seem be much docs anywhere on this.
+#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
 #@-node:ekr.20050126101301:4.3 a3 Plugins & config...
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme
