@@ -3270,8 +3270,11 @@ class leoTkinterLog (leoFrame.leoLog):
         elif self.logCtrl:
             #@        << put s to log control >>
             #@+node:EKR.20040423082910:<< put s to log control >>
-            if type(s) == type(u""): # 3/18/03
-                s = g.toEncodedString(s,g.app.tkEncoding)
+            if 0:
+                # Do this later, or not at all.
+                # Doing this here messes up the display in the log pane.
+                if type(s) == type(u""):
+                    s = g.toEncodedString(s,g.app.TkEncoding)
             
             if color:
                 if color not in self.colorTags:
@@ -3298,8 +3301,10 @@ class leoTkinterLog (leoFrame.leoLog):
             g.app.logWaiting.append((s,color),)
             
             print "Null tkinter log"
-            if type(s) == type(u""): # 3/18/03
+            
+            if type(s) == type(u""):
                 s = g.toEncodedString(s,"ascii")
+            
             print s
             #@nonl
             #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -3328,6 +3333,7 @@ class leoTkinterLog (leoFrame.leoLog):
             
     def forceLogUpdate (self,s):
         if sys.platform == "darwin": # Does not work on MacOS X.
+            
             print s, # Don't add a newline.
         else:
             self.frame.tree.disableRedraw = True
