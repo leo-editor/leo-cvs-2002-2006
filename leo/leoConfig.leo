@@ -123,12 +123,12 @@ relative_path_base_directory = .
 #		Relative paths would be dangerous because their meaning
 #		would depend on the chaning value of the current working directory.
 
-write_clone_indices = 1
+write_clone_indices = 0
 #	1: Files derived from @file nodes contain clone indices.
 #	0: Files derived from @file nodes contain no clone indices.
 #	Please specify 0 if you are going to submit files to Leo's CVS site.
 
-use_relative_node_indices = 0
+use_relative_node_indices = 1
 #	1: Files derived from @file nodes use relative node indices.
 #	0: Files derived from @file nodes use absolute node indices.
 #	Please specify 1 if you are going to submit files to Leo's CVS site.
