@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4461" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4464" clone_windows="0"/>
 <globals body_outline_ratio="0.644721906924">
 	<global_window_position top="10" left="199" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -724,12 +724,16 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040622074004" a="E"><vh>Test of conflicting node defs</vh>
-<v t="EKR.20040622074004.1" a="TV"><vh>a</vh>
+<v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
+<v t="EKR.20040622074004.1"><vh>a</vh>
 <v t="EKR.20040622074004.2"><vh>b</vh></v>
 <v t="EKR.20040622074004.3"><vh>c</vh></v>
 </v>
 <v t="EKR.20040622102618" a="E"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
+</v>
+<v t="EKR.20040626212434" a="ETV"><vh>drawing experiments</vh>
+<v t="EKR.20040626212434.1"><vh>First</vh></v>
+<v t="EKR.20040626212434.2"><vh>Second</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2850,6 +2854,59 @@ last line 1: no newline</t>
 
 @comment &lt;!-- --&gt;</t>
 <t tx="EKR.20040625110032.3"></t>
+<t tx="EKR.20040626212434"></t>
+<t tx="EKR.20040626212434.1">import leoGlobals as g
+import Tkinter as Tk
+import random as r
+
+top = Tk.Toplevel(None) ; top.title("Drawing")
+canvas = Tk.Canvas(top, height = "5i", width = "9i") # ,background="white")
+canvas.pack() ; top.update()
+rand = r.randint
+
+mincolor=125
+maxcolor=225
+
+for n in xrange(5000):
+    x = r.randint(0,900)
+    y = r.randint(0,500)
+    w = r.randint(1,10)
+    h = w * r.uniform(0.5,1.5)
+    color = "#%02x%02x%02x" % (rand(mincolor,maxcolor),rand(mincolor,maxcolor),rand(mincolor,maxcolor))
+    kind = rand(1,3)
+    sign = rand(-1,1) # rand(0,2)-1
+    if kind == 1:
+        canvas.create_rectangle(x,y,x+w,y+h,fill=color,width=0)
+    elif kind == 2:
+        canvas.create_oval(x,y,x+w,y+h,fill=color,width=0)
+    else:
+        canvas.create_line(x,y,x+sign*5*w,y+5*h,fill=color)
+    if 0: # Redrawing slows things down a lot.
+        if (n % 1000) == 0: top.update()
+</t>
+<t tx="EKR.20040626212434.2">import leoGlobals as g
+import Tkinter as Tk
+import random as r
+
+top = Tk.Toplevel(None) ; top.title("Drawing")
+canvas = Tk.Canvas(top, height = "5i", width = "9i")
+canvas.pack() ; top.update()
+rand = r.randint
+
+x,y = 10,10
+mincolor=125
+maxcolor=225
+
+for n in xrange(2000):
+    x2 = r.randint(10,900)
+    y2 = r.randint(10,500)
+    color = "#%02x%02x%02x" % (rand(mincolor,maxcolor),rand(mincolor,maxcolor),rand(mincolor,maxcolor))
+    width = "%fm" % r.uniform(0.1,0.6)
+    canvas.create_line(x,y,x2,y2,fill=color,width=width)
+    extent = rand(180,270)
+    canvas.create_arc(x,y,x2,y2,outline=color,width=width,style="arc",extent=extent)
+    x,y = x2,y2
+    # if (n % 1000) == 0: top.update()</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -4101,7 +4158,7 @@ unittest.TextTestRunner().run(suite)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
