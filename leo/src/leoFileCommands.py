@@ -572,6 +572,8 @@ class baseFileCommands:
             self.read_only = not os.access(fileName,os.W_OK)
         except AttributeError:
             self.read_only = False
+        except UnicodeError:
+            self.read_only = False
                 
         if self.read_only:
             g.es("read only: " + fileName,color="red")
