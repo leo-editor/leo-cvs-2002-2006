@@ -26321,7 +26321,7 @@ def handleUserClick (self,p):
     try:
         if self.c and self.c.suboutline_only_flag:
             # g.trace(p)
-            self.onlyVnode = p
+            self.onlyVnode = p.copy() # Bug fix: 7/26/04
     except: pass
 #@nonl
 #@-node:EKR.20040503070514:handleUserClick
@@ -31138,13 +31138,13 @@ def currentPosition (self,copy=True):
     
     """Return the presently selected position."""
     
-    return self._currentPosition.copy()
+    return self._currentPosition.copy() # Must make the second copy now.
     
 def setCurrentPosition (self,p):
     
     """Set the presently selected position."""
 
-    self._currentPosition = p
+    self._currentPosition = p.copy() # Must make the first copy _now_
     
 # Define these for compatibiility with old scripts.
 currentVnode = currentPosition

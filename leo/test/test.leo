@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5921" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="45" left="251" height="864" width="913"/>
+	<global_window_position top="43" left="232" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -637,13 +637,13 @@
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
@@ -1093,7 +1093,7 @@
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
 </v>
-<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040608095146" a="E"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
 <v t="EKR.20040504083716.39"><vh>sync</vh>
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
@@ -1114,7 +1114,7 @@
 </v>
 <v t="ekr.20040716062608"><vh>Perfect Import Script</vh></v>
 </v>
-<v t="ekr.20040723065021"><vh>stripBlankLines</vh>
+<v t="ekr.20040723065021" a="ETV"><vh>stripBlankLines</vh>
 <v t="ekr.20040723065047"><vh>Test</vh></v>
 </v>
 <v t="ekr.20040723095151"><vh>Tk tests</vh></v>
