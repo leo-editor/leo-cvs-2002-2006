@@ -16,13 +16,15 @@ class LeoApp:
 	
 	#@	@+others
 	#@+node:app.__init__
-	def __init__(self, root):
+	def __init__(self):
 	
 		# These ivars are the global vars of this program.
 		self.afterHandler = None
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
+		self.gui = "tkinter" # Name of the gui in use.
+		self.guiDispatcher = None # Class used to dispatch gui calls to proper object.
 		self.hasOpenWithMenu = false # True: open with plugin has been loaded.
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
@@ -42,7 +44,7 @@ class LeoApp:
 		self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
 		self.quitting = false # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
-		self.root = root # The hidden main window
+		self.root = None # The hidden main window. Set later.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8" # Set by finishCreate
 		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
@@ -284,13 +286,12 @@ class LeoApp:
 		top.destroy() # force the window to go away now.
 	#@nonl
 	#@-node:app.destroyWindow
-	#@+node:app.finishCreate
-	# Called when the gApp global has been defined.
+	#@+node:app.startCreate
+	# Called just after the gApp global has been defined.
 	
-	def finishCreate(self):
-	
+	def startCreate(self):
+		
 		a = self
-	
 		#@	<< return false if not v2.1 or above >>
 		#@+node:<< return false if not v2.1 or above >>
 		# Python 2.1 support.
@@ -329,75 +330,18 @@ class LeoApp:
 			else: # Linux, or whatever.
 				a.loadDir = "LeoPy"
 			print "Setting load directory to:", a.loadDir
+		#@nonl
 		#@-node:<< set loadDir >>
 		#@nl
-		#@	<< set the default Leo icon >>
-		#@+node:<< set the default Leo icon >>
-		try: # 6/2/02: Try to set the default bitmap.
-			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
-			bitmap = Tkinter.BitmapImage(bitmap_name)
-		except:
-			print "exception creating bitmap"
-			import traceback
-			traceback.print_exc()
-		
-		try:
-			version = a.root.getvar("tk_patchLevel")
-			# print "tcl version:", version
-			#@	<< set v834 if version is 8.3.4 or greater >>
-			#@+node:<< set v834 if version is 8.3.4 or greater >>
-			# 04-SEP-2002 DHEIN: simplify version check
-			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
-			v834 = CheckVersion(version, "8.3.4")
-			#@-node:<< set v834 if version is 8.3.4 or greater >>
-			#@nl
-		except:
-			print "exception getting version"
-			import traceback
-			traceback.print_exc()
-			v834 = None # 6/18/02
-			
-		if v834:
-			try:
-				if sys.platform=="win32": # Windows
-					top.wm_iconbitmap(bitmap,default=1)
-				else:
-					top.wm_iconbitmap(bitmap)
-			except:
-				if 0: # Let's ignore this for now until I understand the issues better.
-					es("exception setting bitmap")
-					es_exception()
-		#@nonl
-		#@-node:<< set the default Leo icon >>
-		#@nl
-		a.config = leoConfig.config()
-		#@	<< set app.tkEncoding >>
-		#@+node:<< set app.tkEncoding >>
-		#@+at 
-		#@nonl
-		# According to Martin v. Löwis, getdefaultlocale() is broken, and 
-		# cannot be fixed. The workaround is to copy the 
-		# getpreferredencoding() function from locale.py in Python 2.3a2.  
-		# This function is now in leoGlobals.py.
-		#@-at
-		#@@c
-		
-		for (encoding,src) in (
-			(a.config.tkEncoding,"config"),
-			#(locale.getdefaultlocale()[1],"locale"),
-			(getpreferredencoding(),"locale"),
-			(sys.getdefaultencoding(),"sys"),
-			("utf-8","default")):
-		
-			if isValidEncoding (encoding): # 3/22/03
-				a.tkEncoding = encoding
-				# print a.tkEncoding,src
-				break
-			elif encoding and len(encoding) > 0:
-				print "ignoring invalid " + src + " encoding: " + `encoding`
-		
-		#@-node:<< set app.tkEncoding >>
-		#@nl
+		return true
+	#@nonl
+	#@-node:app.startCreate
+	#@+node:app.finishCreate
+	# Called when the gApp global has been defined.
+	
+	def finishCreate(self):
+	
+		a = self
 	
 		# Create the global windows
 		a.findFrame = leoFind.leoFind()
@@ -405,11 +349,9 @@ class LeoApp:
 		a.globalWindows.append(a.findFrame)
 		
 		# New 4.0 stuff.
-		if 0: # Not using leoID.txt would be more convenient for the user.
+		if 0: # Not using leoID.txt is more convenient for the user.
 			a.setLeoID()
 			a.nodeIndices = leoNodes.nodeIndices()
-	
-		return true # all went well.
 	#@nonl
 	#@-node:app.finishCreate
 	#@+node:app.finishQuit

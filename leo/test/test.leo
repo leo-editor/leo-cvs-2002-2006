@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2170" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2171" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="54" left="228" height="835" width="981"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -259,9 +259,9 @@
 </v>
 <v t="T160"><vh>wx Leo</vh></v>
 </v>
-<v t="T161" a="EV"><vh>4.0 Test files</vh>
+<v t="T161"><vh>4.0 Test files</vh>
 <v t="T162"><vh>Script to compare 3.x and 4.x derived files</vh></v>
-<v t="T163" a="E"><vh>Test Files...</vh>
+<v t="T163"><vh>Test Files...</vh>
 <v t="T164" a="E"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
 <v t="T165"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 <v t="T166"><vh>others</vh></v>
@@ -2726,6 +2726,7 @@
 </v>
 </v>
 </v>
+<v t="T2171" a="V"><vh>leoGui tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -33784,5 +33785,29 @@ print "actual  :",`textResult`
 	c.setChanged(true)
 	c.endUpdate()
 </t>
+<t tx="T2171">import leoGui
+from leoGlobals import *
+
+if 0:
+	class tkinterGuiClass:
+		def f(self,*args,**keys):
+			print "tkinter: f",`args`,`keys`
+			
+class aquaGuiClass:
+	def f(self,*args,**keys):
+		print "aqua: f",`args`,`keys`
+
+print ; print
+a = 5
+
+aquaGui = aquaGuiClass()
+tkinterGui = leoGui.tkinterGuiClass()
+
+app().guiDispatcher = leoGui.guiDispatcher(aquaGui,"aqua")
+gui("f",a,6,b=2)
+
+guiDispatcher = leoGui.guiDispatcher(tkinterGui,"tk")
+gui("f",a)
+gui("g",a,b=2)</t>
 </tnodes>
 </leo_file>

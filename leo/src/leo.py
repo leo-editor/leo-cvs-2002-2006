@@ -2,7 +2,8 @@
 #@+leo-ver=4
 #@+node:@file leo.py 
 #@@first #! /usr/bin/env python
-# Entry point for Leo in Python.
+
+"""Entry point for Leo in Python."""
 
 #@@language python
 #@<< Import pychecker >>
@@ -33,8 +34,8 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@-node:<< Import pychecker >>
 #@nl
 from leoGlobals import *
-import leoApp,leoFrame
-import os,string,sys,Tkinter
+import leoApp,leoConfig,leoFrame,leoGui
+import os,string,sys
 
 #@+others
 #@+node:runMainLoop
@@ -50,25 +51,31 @@ def runMainLoop(root):
 def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
-
-	printGc("before creating root")
-	root = createTkRoot()
-	printGc("after creating root")
-	if not root: return
 	
-	app = createAppObject(root)
-	printGc("after creating app")
+	# Create the application object.
+	app = leoApp.LeoApp()
 	if not app: return
+	setApp(app)
+	if not app.startCreate(): return
+	app.runMainLoop = runMainLoop # For LeoN.
 	
-	# Set this ivar so LeoN may override it.
-	app.runMainLoop = runMainLoop
+	app.config = leoConfig.config() # No longer contains gui code.
 	
-	doHook("start1")
-	printGc("after loading plugins")
-	
+	# Create default gui and the gui's main window.
+	app.gui = gui = leoGui.tkinterGuiClass()
+	app.root = gui.createRootWindow()
+	gui.unknownMethod() # Unknown methods shouldn't cause crashes.
+
+	# To do: plugins should test app.gui.
+	doHook("start1") # Load plugins.
+
+	gui.setDefaultIcon()
+	gui.getDefaultConfigFont(app.config)
+	gui.setEncoding()
+	app.finishCreate() # No longer contains gui code.
+
 	initSherlock(app,args)
 	frame = createFrame(app,fileName)
-	printGc("after creating frames")
 	if not frame: return
 
 	# Write queued output and redraw the screen.
@@ -80,53 +87,8 @@ def run(fileName=None,*args,**keywords):
 	frame.commands.redraw()
 	set_focus(frame.commands,frame.body)
 
-	app.runMainLoop(root)
-#@nonl
+	app.runMainLoop(app.root)
 #@-node:run & allies
-#@+node:createTkRoot
-def createTkRoot ():
-	
-	"""Step 1 of Leo startup process:
-	
-	Create a hidden Tk root window and the app object"""
-	
-	# Create a hidden main window: this window never becomes visible!
-	root = Tkinter.Tk()
-
-	#@	<< set the icon image >>
-	#@+node:<< set the icon image >>
-	if 0: # not yet
-		fullname = r"c:\prog\LeoPy\Icons\box05.GIF"
-		image = Tkinter.PhotoImage(file=fullname)
-		trace(`image`)
-		image = Tkinter.BitmapImage(image)
-		trace(`image`)
-		image = Tkinter.BitmapImage("stop")
-		trace(`image`)
-		root.iconbitmap(image)
-	#@nonl
-	#@-node:<< set the icon image >>
-	#@nl
-	root.title("Leo Main Window")
-	root.withdraw()
-	return root
-	
-#@-node:createTkRoot
-#@+node:createAppObject
-def createAppObject(root):
-
-	# Create the application object.
-	app = leoApp.LeoApp(root)
-	setApp(app)
-	
-	# Finish the creation of the app object after app() exists.
-	if not app.finishCreate(): 
-		root.destroy()
-		root = None
-
-	return app
-#@nonl
-#@-node:createAppObject
 #@+node:createFrame (leo.py)
 def createFrame (app,fileName):
 	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="662" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="664" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="19" left="287" height="886" width="873"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -47,7 +47,7 @@
 <v t="T27"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="T28"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
-<v t="T29"><vh>Plugins</vh>
+<v t="T29" a="E"><vh>Plugins</vh>
 <v t="T30" a="M"><vh> To do</vh>
 <v t="T31"><vh>(Improve Spell Checking)</vh></v>
 </v>
@@ -133,7 +133,7 @@
 <v t="T96"><vh>trace_tags</vh></v>
 </v>
 </v>
-<v t="T97"><vh>Directives</vh>
+<v t="T97" a="E"><vh>Directives</vh>
 <v t="T98"><vh>@file add_directives.py</vh>
 <v t="T99"><vh>addPluginDirectives</vh></v>
 <v t="T100"><vh>scanPluginDirectives</vh></v>
@@ -151,7 +151,7 @@
 </v>
 <v t="T109"><vh>insertWikiPicture</vh></v>
 </v>
-<v t="T110"><vh>@file image.py</vh>
+<v t="T110" tnodeList="110,111,112,113,114"><vh>@file image.py</vh>
 <v t="T111"><vh>onSelect</vh>
 <v t="T112"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
@@ -465,7 +465,7 @@
 <v t="T340"><vh>createSettingsMenu</vh></v>
 </v>
 </v>
-<v t="T341" a="V"><vh>(wxStuff: not a plugin yet)</vh>
+<v t="T341"><vh>(wxStuff: not a plugin yet)</vh>
 <v t="T342"><vh>wxTests</vh>
 <v t="T343"><vh>@file c:\prog\test\wxTest.py</vh></v>
 </v>
@@ -817,6 +817,9 @@
 <v t="T662"><vh>const</vh></v>
 </v>
 </v>
+</v>
+<v t="T663" a="EV"><vh>leoGui.py</vh>
+<v t="T664"><vh>dispatcher (to leoGlobals)</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -10758,5 +10761,39 @@ def const(name):
 		global const_lastVal
 		const_lastVal += 1
 		return const_lastVal</t>
+<t tx="T663"></t>
+<t tx="T664">from leoGlobals import *
+import traceback
+
+class tkinterGuiClass:
+	def f(self,*args,**keys):
+		print "tkinter: f",`args`,`keys`
+		
+class aquaGuiClass:
+	def f(self,*args,**keys):
+		print "aqua: f",`args`,`keys`
+
+class guiDispatcher:
+	
+	def __init__(self,gui,guiName):
+		self.gui = gui
+		self.guiName = guiName
+
+	def __call__(self,fname,*args,**keys):
+		if hasattr(self.gui,fname):
+			func = getattr(self.gui,fname)
+			func(*args,**keys)
+		else:
+			print "no %s gui method: %s" % (self.guiName,fname)
+
+print ; print
+a = 5
+aquaGui = aquaGuiClass()
+tkinterGui = tkinterGuiClass()
+gui = guiDispatcher(aquaGui,"aqua")
+gui("f",a,6,b=2)
+gui = guiDispatcher(tkinterGui,"tk")
+gui("f",a)
+gui("g",a,b=2)</t>
 </tnodes>
 </leo_file>

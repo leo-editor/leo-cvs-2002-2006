@@ -1979,6 +1979,17 @@ def printGcRefs (verbose=true):
 #@-node:printGcRefs
 #@-others
 #@-node:Garbage Collection
+#@+node:gui
+if 0: # There is no need to use a dispatcher!
+	def gui(functionName,*args,**keys):
+	
+		"""A global function to call a method of the app().gui instance.
+		
+		The first argument must be the name of a method."""
+	
+		return app().guiDispatcher(functionName,*args,**keys)
+#@nonl
+#@-node:gui
 #@+node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+at 
 #@nonl

@@ -4,7 +4,7 @@
 
 from leoGlobals import *
 import leoFind
-import ConfigParser,exceptions,os,string,sys,tkFont
+import ConfigParser,exceptions,os,string,sys
 
 class baseConfig:
 	"""The base class for Leo's configuration handler."""
@@ -69,19 +69,7 @@ class baseConfig:
 	#@	@+others
 	#@+node:config.__init__
 	def __init__ (self):
-		
-		#@	<< get the default font >>
-		#@+node:<< get the default font >>
-		# Get the default font from a new text widget.
-		# This should only be done once.
-		
-		t = Tkinter.Text()
-		fn = t.cget("font")
-		font = tkFont.Font(font=fn)
-		self.defaultFont = font
-		self.defaultFontFamily = font.cget("family")
-		#@-node:<< get the default font >>
-		#@nl
+	
 		self.init()
 	
 	def init (self):
@@ -90,6 +78,7 @@ class baseConfig:
 			self.configDir = sys.leo_config_directory
 		except:
 			self.configDir = os.path.join(app().loadDir,"..","config")
+	
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
@@ -316,17 +305,7 @@ class baseConfig:
 		weight = self.getWindowPref(weight)
 		if not weight or weight == "": weight = "normal"
 		
-		try:
-			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-		except:
-			es("exception setting font from " + `family_name`)
-			es("family,size,slant,weight:"+
-				`family`+':'+`size`+':'+`slant`+':'+`weight`)
-			es_exception()
-			return self.defaultFont
-		#print family_name,family,size,slant,weight
-		#print "actual_name:",font.cget("family")
-		return font
+		return app().gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
 	#@-node:config.getFontFromParams
 	#@+node:getShortcut
