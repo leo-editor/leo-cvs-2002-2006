@@ -767,6 +767,7 @@ class leoImportCommands:
 			prefix = ""
 		else:
 			prefix = angleBrackets(" " + self.methodName + " methods ") + "=\n\n"
+			self.methodsSeen = true
 		
 		# i points just after the class line.
 		body = s[start:i]
@@ -904,6 +905,7 @@ class leoImportCommands:
 			prefix = ""
 		else:
 			prefix = angleBrackets(" " + savedMethodName + " methods ") + "=\n\n"
+			self.methodsSeen = true
 		
 		# Create body.
 		start = skip_blank_lines(s,start)
@@ -912,6 +914,8 @@ class leoImportCommands:
 		
 		# Create the node.
 		self.createHeadline(parent,prefix + body,headline)
+		
+		
 		#@-body
 		#@-node:3::<< Create def node >>
 
@@ -991,6 +995,7 @@ class leoImportCommands:
 	def scanPythonText (self,s,parent):
 	
 		decls_seen = false ; start = i = 0
+		self.methodsSeen = false
 		while i < len(s):
 			progress = i
 			# line = get_line(s,i) ; trace(`line`)
@@ -1022,13 +1027,13 @@ class leoImportCommands:
 
 			else: i += 1
 			assert(progress < i)
+		if not decls_seen: # 2/17/03
+			parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
 		
 		#@<< Append a reference to the methods of this file >>
 		#@+node:2::<< Append a reference to the methods of this file >>
 		#@+body
-		if self.treeType == "@file":
-			pass
-		else:
+		if self.treeType == "@root" and self.methodsSeen:
 			parent.appendStringToBody(
 				angleBrackets(" " + self.methodName + " methods ") + "\n\n")
 		#@-body
