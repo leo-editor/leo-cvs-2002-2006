@@ -604,7 +604,7 @@ class baseLeoFrame:
 	def getColorizer(self): return self.tree.colorizer
 	def recolor_now(self,v): return self.tree.recolor_now(v)
 	def recolor_range(self,v,leading,trailing): return self.tree.recolor_range(v,leading,trailing)
-	def recolor(self,v): return self.tree.recolor(v)
+	def recolor(self,v,incremental): return self.tree.recolor(v,incremental)
 	def updateSyntaxColorer(self,v): return self.tree.colorizer.updateSyntaxColorer(v)
 	
 	# Drawing.
@@ -2435,11 +2435,13 @@ class baseLeoFrame:
 	
 		# Activate the body key handler by hand.
 		c = self.commands ; v = c.currentVnode()
+		self.tree.forceFullRecolor()
 		self.tree.onBodyWillChange(v,"Cut")
 	
 	def OnCutFromMenu (self,event=None):
 	
 		w = self.getFocus()
+		self.tree.forceFullRecolor()
 		w.event_generate(virtual_event_name("Cut"))
 		
 		# 11/2/02: Make sure the event sticks.
@@ -2463,6 +2465,7 @@ class baseLeoFrame:
 	
 		# Activate the body key handler by hand.
 		c = self.commands ; v = c.currentVnode()
+		self.tree.forceFullRecolor()
 		self.tree.onBodyWillChange(v,"Paste")
 		
 	def OnPasteNode (self,event=None):
@@ -2477,6 +2480,7 @@ class baseLeoFrame:
 		
 		# 10/23/02: Make sure the event sticks.
 		c = self.commands ; v = c.currentVnode()
+		self.tree.forceFullRecolor()
 		c.frame.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
 	#@+node:OnDelete
@@ -2582,7 +2586,7 @@ class baseLeoFrame:
 			n2 = v.bodyString().count('\n')
 		elif root.isAtSilentFileNode():
 			#@		<< count outline lines, setting v,n2,found >>
-			#@+node:<< count outline lines, setting v,n2,found >>
+			#@+node:<< count outline lines, setting v,n2,found >> (@file-nosent only)
 			v = lastv = root ; after = root.nodeAfterTree()
 			prev = 0 ; found = false
 			while v and v != after:
@@ -2600,47 +2604,132 @@ class baseLeoFrame:
 			v = lastv
 			n2 = max(1,n-prev)
 			#@nonl
-			#@-node:<< count outline lines, setting v,n2,found >>
+			#@-node:<< count outline lines, setting v,n2,found >> (@file-nosent only)
 			#@nl
 		else:
-			# To do: choose a "suitable line" for searching.
-			vnodeName,childIndex,n2 = self.convertLineToVnodeNameIndexLine(lines,n,root)
+			vnodeName,childIndex,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
 			found = true
 			if not vnodeName:
 				es("invalid derived file: " + fileName)
 				return
-			#@		<< set v to the node given by vnodeName and childIndex >>
-			#@+node:<< set v to the node given by vnodeName and childIndex >>
-			#@+at 
-			#@nonl
-			# New for 4.0:  childIndex will be -1.
-			# 
-			# What we should do in that case is to use the tnodeList to get 
-			# the proper node.
-			# This will require a new line-counting pass that counts @+body 
-			# sentinels.
-			# The present code just takes the first node that matches, and 
-			# that isn't correct.
-			#@-at
-			#@@c
-			
-			if childIndex == -1 and not hasattr(root,"tnodeList"):
-				es("not child index for " + root.headString(), color="red")
-			
+			#@		<< set v to the node given by vnodeName and childIndex or n >>
+			#@+node:<< set v to the node given by vnodeName and childIndex or n >>
 			after = root.nodeAfterTree()
-			while v and v != after:
-				if v.matchHeadline(vnodeName):
-					if childIndex <= 0 or v.childIndex() + 1 == childIndex:
-						break
-				v = v.threadNext()
 			
-			if not v or v == after:
-				es("not found: " + vnodeName, color="red")
-				return
+			if childIndex == -1:
+				#@	<< 4.x: scan for the node using tnodeList and n >>
+				#@+node:<< 4.x: scan for the node using tnodeList and n >>
+				# This is about the best that can be done without replicating the entire atFile write logic.
+				
+				ok = true
+				
+				if not hasattr(root,"tnodeList"):
+					s = "no child index for " + root.headString()
+					print s ; es(s, color="red") ; ok = false
+				
+				if ok:
+					tnodeList = root.tnodeList
+					#@	<< set tnodeIndex to the number of +node sentinels before line n >>
+					#@+node:<< set tnodeIndex to the number of +node sentinels before line n >>
+					tnodeIndex = -1 # Don't count the @file node.
+					scanned = 0 # count of lines scanned.
+					
+					for s in lines:
+						if scanned >= n:
+							break
+						i = skip_ws(s,0)
+						if match(s,i,delim):
+							i += len(delim)
+							if match(s,i,"+node"):
+								# trace(tnodeIndex,s.rstrip())
+								tnodeIndex += 1
+						scanned += 1
+					#@nonl
+					#@-node:<< set tnodeIndex to the number of +node sentinels before line n >>
+					#@nl
+					tnodeIndex = max(0,tnodeIndex)
+					#@	<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@+node:<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@+at 
+					#@nonl
+					# We use the tnodeList to find a _tnode_ corresponding to 
+					# the proper node, so the user will for sure be editing 
+					# the proper text, even if several nodes happen to have 
+					# the same headline.  This is really all that we need.
+					# 
+					# However, this code has no good way of distinguishing 
+					# between different cloned vnodes in the file: they all 
+					# have the same tnode.  So this code just picks v = 
+					# t.joinList[0] and leaves it at that.
+					# 
+					# The only way to do better is to scan the outline, 
+					# replicating the write logic to determine which vnode 
+					# created the given line.  That's way too difficult, and 
+					# it would create an unwanted dependency in this code.
+					#@-at
+					#@@c
+					
+					# trace("tnodeIndex",tnodeIndex)
+					if tnodeIndex < len(tnodeList):
+						t = tnodeList[tnodeIndex]
+						# Find the first vnode whose tnode is t.
+						v = root
+						while v and v != after:
+							if v.t == t:
+								break
+							v = v.threadNext()
+						if not v:
+							s = "tnode not found for " + vnodeName
+							print s ; es(s, color="red") ; ok = false
+						elif v.headString().strip() != vnodeName:
+							s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (v.headString(),vnodeName)
+							print s ; es(s, color="red") ; ok = false
+					else:
+						s = "Invalid computed tnodeIndex: %d" % tnodeIndex
+						print s ; es(s, color = "red") ; ok = false
+					#@nonl
+					#@-node:<< set v to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
+					#@nl
+							
+				if not ok:
+					# Fall back to the old logic.
+					#@	<< set v to the first node whose headline matches vnodeName >>
+					#@+node:<< set v to the first node whose headline matches vnodeName >>
+					v = root
+					while v and v != after:
+						if v.matchHeadline(vnodeName):
+							break
+						v = v.threadNext()
+					
+					if not v or v == after:
+						s = "not found: " + vnodeName
+						print s ; es(s, color="red")
+						return
+					#@nonl
+					#@-node:<< set v to the first node whose headline matches vnodeName >>
+					#@nl
+				#@nonl
+				#@-node:<< 4.x: scan for the node using tnodeList and n >>
+				#@nl
+			else:
+				#@	<< 3.x: scan for the node with the given childIndex >>
+				#@+node:<< 3.x: scan for the node with the given childIndex >>
+				v = root
+				while v and v != after:
+					if v.matchHeadline(vnodeName):
+						if childIndex <= 0 or v.childIndex() + 1 == childIndex:
+							break
+					v = v.threadNext()
+				
+				if not v or v == after:
+					es("not found: " + vnodeName, color="red")
+					return
+				#@nonl
+				#@-node:<< 3.x: scan for the node with the given childIndex >>
+				#@nl
 			#@nonl
-			#@-node:<< set v to the node given by vnodeName and childIndex >>
+			#@-node:<< set v to the node given by vnodeName and childIndex or n >>
 			#@nl
-		# To do: search for the "suitable line".
 		#@	<< select v and make it visible >>
 		#@+node:<< select v and make it visible >>
 		c.beginUpdate()
@@ -2657,6 +2746,7 @@ class baseLeoFrame:
 		else:
 			c.frame.body.mark_set("insert","end-1c")
 			es("%d lines" % len(lines), color="blue")
+		c.frame.body.see("insert")
 		#@nonl
 		#@-node:<< put the cursor on line n2 of the body text >>
 		#@nl
@@ -2710,7 +2800,7 @@ class baseLeoFrame:
 		#@nl
 		if not delim:
 			es("bad @+leo sentinel")
-			return None,None,None
+			return None,None,None,None
 		#@	<< scan back to @+node, setting offset,nodeSentinelLine >>
 		#@+node:<< scan back to  @+node, setting offset,nodeSentinelLine >>
 		offset = 0 # This is essentially the Tk line number.
@@ -2777,7 +2867,7 @@ class baseLeoFrame:
 		#@-node:<< set vnodeName and childIndex from s >>
 		#@nl
 		# trace("childIndex,offset",childIndex,offset,vnodeName)
-		return vnodeName,childIndex,offset
+		return vnodeName,childIndex,offset,delim
 	#@nonl
 	#@-node:convertLineToVnodeNameIndexLine
 	#@+node:skipToMatchingNodeSentinel
