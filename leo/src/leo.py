@@ -68,23 +68,7 @@ def run(fileName=None,*args,**keywords):
     #@nonl
     #@-node:ekr.20041219072112:<< import leoGlobals and leoApp >>
     #@nl
-    #@    << compute directories >>
-    #@+node:ekr.20041219072416:<< compute directories >>
-    g.app.loadDir = computeLoadDir()
-        # Depends on g.app.tkEncoding: uses utf-8 for now.
-    
-    g.app.homeDir = computeHomeDir()
-    
-    g.app.extensionsDir = g.os_path_abspath(
-        g.os_path_join(g.app.loadDir,'..','extensions'))
-    
-    g.app.globalConfigDir = computeGlobalConfigDir()
-    
-    g.app.testDir = g.os_path_abspath(
-        g.os_path_join(g.app.loadDir,'..','test'))
-    #@nonl
-    #@-node:ekr.20041219072416:<< compute directories >>
-    #@nl
+    g.computeStandardDirectories()
     script = getBatchScript() # Do early so we can compute verbose next.
     verbose = script is None
     g.app.setLeoID(verbose=verbose) # Force the user to set g.app.leoID.
@@ -203,113 +187,6 @@ def completeFileName (fileName):
     return fileName
 #@nonl
 #@-node:ekr.20041124083125:completeFileName (leo.py)
-#@+node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117155521:computeGlobalConfigDir
-def computeGlobalConfigDir():
-    
-    # None of these suppresses warning about sys.leo_config_directory
-    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
-    
-    import leoGlobals as g
-    
-    encoding = startupEncoding()
-
-    try:
-        theDir = sys.leo_config_directory
-    except AttributeError:
-        theDir = g.os_path_join(g.app.loadDir,"..","config")
-        
-    if theDir:
-        theDir = g.os_path_abspath(theDir)
-        
-    if (
-        not theDir or
-        not g.os_path_exists(theDir,encoding) or
-        not g.os_path_isdir(theDir,encoding)
-    ):
-        theDir = None
-    
-    return theDir
-#@nonl
-#@-node:ekr.20041117155521:computeGlobalConfigDir
-#@+node:ekr.20041117151301:computeHomeDir
-def computeHomeDir():
-    
-    """Returns the user's home directory."""
-    
-    import leoGlobals as g
-
-    encoding = startupEncoding()
-    # dotDir = g.os_path_abspath('./',encoding)
-    home = os.getenv('HOME',default=None)
-
-    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
-	    # Get the indirect reference to the true home.
-	    home = os.getenv(home[1:-1],default=None)
-
-    if home:
-        # N.B. This returns the _working_ directory if home is None!
-        # This was the source of the 4.3 .leoID.txt problems.
-        home = g.os_path_abspath(home,encoding)
-        if (
-            not g.os_path_exists(home,encoding) or
-            not g.os_path_isdir(home,encoding)
-        ):
-            home = None
-
-    # g.trace(home)
-    return home
-#@nonl
-#@-node:ekr.20041117151301:computeHomeDir
-#@+node:ekr.20031218072017.1937:computeLoadDir
-def computeLoadDir():
-    
-    """Returns the directory containing leo.py."""
-    
-    import leoGlobals as g
-
-    try:
-        import leo
-        encoding = startupEncoding()
-        path = g.os_path_abspath(leo.__file__,encoding)
-        if path:
-            loadDir = g.os_path_dirname(path,encoding)
-        else: loadDir = None
-            
-        if (
-            not loadDir or
-            not g.os_path_exists(loadDir,encoding) or
-            not g.os_path_isdir(loadDir,encoding)
-        ):
-            loadDir = os.getcwd()
-            print "Using emergency loadDir:",repr(loadDir)
-        
-        loadDir = g.os_path_abspath(loadDir,encoding)
-        # g.es("load dir: %s" % (loadDir),color="blue")
-        return loadDir
-    except:
-        print "Exception getting load directory"
-        import traceback ; traceback.print_exc()
-        return None
-#@nonl
-#@-node:ekr.20031218072017.1937:computeLoadDir
-#@-node:ekr.20050304072744:compute directories...
-#@+node:ekr.20041117151301.1:startupEncoding
-def startupEncoding ():
-    
-    import leoGlobals as g
-    import sys
-    
-    if sys.platform=="win32": # "mbcs" exists only on Windows.
-        encoding = "mbcs"
-    elif sys.platform=="dawwin":
-        encoding = "utf-8"
-    else:
-        encoding = g.app.tkEncoding
-        
-    return encoding
-#@nonl
-#@-node:ekr.20041117151301.1:startupEncoding
 #@+node:ekr.20031218072017.1624:createFrame (leo.py)
 def createFrame (fileName):
     

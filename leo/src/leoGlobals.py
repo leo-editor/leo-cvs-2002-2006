@@ -62,6 +62,22 @@ globalDirectiveList = [
 app = None # The singleton app object.
 
 #@+others
+#@+node:ekr.20050328133058:g.createStandAloneApp
+def createStandAloneApp(pluginName=''):
+    
+    '''Create a version of the g.app object for 'stand-alone' plugins.'''
+    
+    if not g.app:
+        Tk = g.importExtension('Tkinter',pluginName=pluginName,verbose=True)
+        if Tk:
+            import leoApp, leoGui
+            g.app = leoApp.LeoApp()
+            g.app.root = Tk.Tk()
+            g.app.gui = leoGui.nullGui('<stand-alone app gui>')
+            g.computeStandardDirectories()
+    return g.app
+#@nonl
+#@-node:ekr.20050328133058:g.createStandAloneApp
 #@+node:ekr.20031218072017.3095:Checking Leo Files...
 #@+node:ekr.20031218072017.822:createTopologyList
 def createTopologyList (c=None,root=None,useHeadlines=False):
@@ -84,6 +100,132 @@ def createTopologyList (c=None,root=None,useHeadlines=False):
 #@-node:ekr.20031218072017.822:createTopologyList
 #@-node:ekr.20031218072017.3095:Checking Leo Files...
 #@+node:ekr.20031218072017.3099:Commands & Directives
+#@+node:ekr.20050304072744:Compute directories... (leoGlobals)
+#@+node:ekr.20041117155521:computeGlobalConfigDir
+def computeGlobalConfigDir():
+    
+    # None of these suppresses warning about sys.leo_config_directory
+    # __pychecker__ = '--no-objattrs --no-modulo1 --no-moddefvalue'
+    
+    import leoGlobals as g
+    
+    encoding = g.startupEncoding()
+
+    try:
+        theDir = sys.leo_config_directory
+    except AttributeError:
+        theDir = g.os_path_join(g.app.loadDir,"..","config")
+        
+    if theDir:
+        theDir = g.os_path_abspath(theDir)
+        
+    if (
+        not theDir or
+        not g.os_path_exists(theDir,encoding) or
+        not g.os_path_isdir(theDir,encoding)
+    ):
+        theDir = None
+    
+    return theDir
+#@nonl
+#@-node:ekr.20041117155521:computeGlobalConfigDir
+#@+node:ekr.20041117151301:computeHomeDir
+def computeHomeDir():
+    
+    """Returns the user's home directory."""
+    
+    import leoGlobals as g
+
+    encoding = g.startupEncoding()
+    # dotDir = g.os_path_abspath('./',encoding)
+    home = os.getenv('HOME',default=None)
+
+    if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=None)
+
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
+    return home
+#@nonl
+#@-node:ekr.20041117151301:computeHomeDir
+#@+node:ekr.20031218072017.1937:computeLoadDir
+def computeLoadDir():
+    
+    """Returns the directory containing leo.py."""
+    
+    import leoGlobals as g
+
+    try:
+        import leo
+        encoding = g.startupEncoding()
+        path = g.os_path_abspath(leo.__file__,encoding)
+        if path:
+            loadDir = g.os_path_dirname(path,encoding)
+        else: loadDir = None
+            
+        if (
+            not loadDir or
+            not g.os_path_exists(loadDir,encoding) or
+            not g.os_path_isdir(loadDir,encoding)
+        ):
+            loadDir = os.getcwd()
+            print "Using emergency loadDir:",repr(loadDir)
+        
+        loadDir = g.os_path_abspath(loadDir,encoding)
+        # g.es("load dir: %s" % (loadDir),color="blue")
+        return loadDir
+    except:
+        print "Exception getting load directory"
+        import traceback ; traceback.print_exc()
+        return None
+#@nonl
+#@-node:ekr.20031218072017.1937:computeLoadDir
+#@+node:ekr.20050328133444:computeStandardDirectories
+def computeStandardDirectories():
+    
+    '''Set g.app.loadDir, g.app.homeDir and g.app.globalConfigDir.'''
+    
+    g.app.loadDir = g.computeLoadDir()
+        # Depends on g.app.tkEncoding: uses utf-8 for now.
+    
+    g.app.homeDir = g.computeHomeDir()
+    
+    g.app.extensionsDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','extensions'))
+    
+    g.app.globalConfigDir = g.computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
+#@nonl
+#@-node:ekr.20050328133444:computeStandardDirectories
+#@+node:ekr.20041117151301.1:startupEncoding
+def startupEncoding ():
+    
+    import leoGlobals as g
+    import sys
+    
+    if sys.platform=="win32": # "mbcs" exists only on Windows.
+        encoding = "mbcs"
+    elif sys.platform=="dawwin":
+        encoding = "utf-8"
+    else:
+        encoding = g.app.tkEncoding
+        
+    return encoding
+#@nonl
+#@-node:ekr.20041117151301.1:startupEncoding
+#@-node:ekr.20050304072744:Compute directories... (leoGlobals)
 #@+node:ekr.20031218072017.1380:Directive utils...
 #@+node:EKR.20040504150046.4:g.comment_delims_from_extension
 def comment_delims_from_extension(filename):
