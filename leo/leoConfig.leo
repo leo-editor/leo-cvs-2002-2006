@@ -1,21 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="35" left="191" height="25" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
+<preferences allow_rich_text="0">
 </preferences>
-<find_panel_settings search_body="1" whole_word="1">
+<find_panel_settings>
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="EV"><vh>leoConfig.leo</vh>
+<v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -99,6 +99,16 @@ xml_version_string = UTF-8
 #	The version used at the start of .leo files.
 #	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
 #	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
+
+output_newline = nl
+#	Valid values for this option:
+#	nl:  The default: all lines end with "\n"
+#	cr:	 All lines end with "\r"
+#	crlf:	All lines end with "\r\n"
+#	platform: Lines end in platform-specific way.
+#		Leo opens output files "w" mode rather than "wb" mode.
+#
+#	Please specify nl when uploading files to Leo's CVS site.
 
 path_directive_creates_directories = 0
 #	1: @path directive attempts to create directory if it does not exist.

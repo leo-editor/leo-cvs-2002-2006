@@ -1258,7 +1258,7 @@ class fileCommands:
 			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
 			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
 			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-			self.put(" defaultTargetLanguage=") ; self.put(language)
+			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language) # 10/11/02: fix reversion.
 		
 		self.put(">") ; self.put_nl()
 		# New in version 0.16

@@ -9,112 +9,46 @@ import exceptions, os, string, sys, traceback, ConfigParser, tkFont
 
 class config:
 	
-	#@<< define default tables for settings >>
-	#@+node:1::<< define default tables for settings >>
+	#@<< define defaultsDict >>
+	#@+node:1::<< define defaultsDict >>
 	#@+body
-	if 0:
-		defaultConfigDict = {
-			"path_directive_creates_directories" : 0,
-			"read_only" : 1,
-			"remove_sentinels_extension" : None, # New style: this module won't know defaults.
-			"save_clears_undo_buffer" : 0,
-			"xml_version_string" : "UTF-8" } # By default, we write leo.py 2.x files.
+	#@+at
+	#  This contains only the "interesting" defaults.
+	# Ints and bools default to 0, floats to 0.0 and strings to "".
+
+	#@-at
+	#@@c
+
+	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
 	
-	defaultRecentFiles = {}
-	for i in xrange(0,10):
-		defaultRecentFiles ["file" + `i`] = None
-		
-	defaultCompareDict = {
-		"append_output_to_output_file" : 0,
-		"compare_file_1" : None,
-		"compare_file_2" : None,
+	defaultsDict = {
+		# compare options...
 		"ignore_blank_lines" : 1,
-		"ignore_first_line_of_file_1" : 0,
-		"ignore_first_line_of_file_2" : 0,
-		"ignore_interior_whitespace" : 0,
-		"ignore_leading_whitespace" : 0,
-		"ignore_sentinel_lines" : 0,
 		"limit_count" : 9,
-		"limit_directory_search_extension" : None,
-		"make_whitespace_visible" : 0,
-		"output_file" : None,
-		"print_both_lines_for_matches" : 0,
-		"print_matching_lines" : 0,
 		"print_mismatching_lines" : 1,
-		"print_trailing_lines" : 1 }
-	
-	defaultFindDict = {
-		"change_string" : None,
-		"find_string" : None,
-		"batch" : 0,
-		"ignore_case" : 0,
-		"mark_changes" : 0,
-		"mark_finds" : 0,
-		"pattern_match" : 0,
-		"reverse" : 0,
+		"print_trailing_lines" : 1,
+		# find/change options...
 		"search_body" : 1,
-		"search_headline" : 0,
-		"suboutline_only" : 0,
 		"whole_word" : 1,
-		"wrap" : 0 }
-	
-	defaultPrefsDict = {
-		"default_tangle_directory" : None,
+		# Prefs panel.
 		"default_target_language" : "Python",
 		"tab_width" : 4,
 		"page_width" : 132,
 		"output_doc_chunks" : 1,
 		"tangle_outputs_header" : 1,
-		"run_tangle_done.py" : 0,
-		"run_untangle_done.py" : 0 }
-	
-	defaultColorsDict = {
+		# Syntax coloring options...
+		# Defaults for colors are handled by leoColor.py.
 		"color_directives_in_plain_text" : 1,
 		"underline_undefined_section_names" : 1,
-		"use_hyperlinks" : 0,
-		"comment_color" : "firebrick3",
-		"cweb_section_name_color" : "red",
-		"directive_color" : "blue",
-		"doc_part_color" : "firebrick3",
-		"keyword_color" : "blue",
-		"leo_keyword_color" : "#00aa00",
-		"section_name_color" : "red",
-		"section_name_brackets_color" : "blue",
-		"string_color" : "#00aa00",
-		"undefined_section_name_color" : "red" }
-		
-	defaultBodyFontSize = choose(sys.platform=="win32",9,12)
-	
-	defaultWindowDict = {
-		"body_cursor_foreground_color" : None,
-		"body_cursor_background_color" : None,
-		"additional_body_text_border" : 0,
+		# Window options...
 		"body_pane_wraps" : 1,
 		"body_text_font_family" : "Courier",
-		"body_text_foreground_color": None,
-		"body_text_background_color": None,
 		"body_text_font_size" : defaultBodyFontSize,
 		"body_text_font_slant" : "roman",
 		"body_text_font_weight" : "normal",
-		
-		"headline_text_unselected_foreground_color" : None,
-		"headline_text_unselected_background_color" : None,
-		"headline_text_selected_foreground_color" : None,
-		"headline_text_selected_background_color" : None,
-		"headline_text_editing_foreground_color" : None,
-		"headline_text_editing_background_color" : None,
-		"headline_text_editing_selection_foreground_color" : None,
-		"headline_text_editing_selection_background_color" : None,
-		
-		"headline_text_font_family" : None,
 		"headline_text_font_size" : 12,
 		"headline_text_font_slant" : "roman",
 		"headline_text_font_weight" : "normal",
-		"outline_pane_background_color" : None,
-		"log_pane_wraps" : 0,
-		"log_text_foreground_color": None,
-		"log_text_background_color": None,
-		"log_text_font_family" : None,
 		"log_text_font_size" : 12,
 		"log_text_font_slant" : "roman",
 		"log_text_font_weight" : "normal",
@@ -132,171 +66,11 @@ class config:
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }
 	#@-body
-	#@-node:1::<< define default tables for settings >>
-
-	
-	#@<< Define names of settings >>
-	#@+node:2::<< Define names of settings >>
-	#@+body
-	#@+at
-	#  Used only by open.  Update just writes whatever is in the various dicts.
-	# 
-	# These tables seem redundant, and eliminating them would be hard:
-	# 1. We need these various tables to indicate types.
-	# 2. It won't be easy to split the dicts by type because the set routines 
-	# use a single dict.
-
-	#@-at
-	#@@c
-
-	if 0: # Not used in code.
-		boolConfigNames = (
-			"path_directive_creates_directories",
-			"read_only",
-			"remove_sentinels_extension",
-			"save_clears_undo_buffer")
-		stringConfigNames = ( "xml_version_string", )
-	
-	# Compare section
-	boolCompareNames = (
-		"append_output_to_output_file",
-		"ignore_blank_lines",
-		"ignore_first_line_of_file_1",
-		"ignore_first_line_of_file_2",
-		"ignore_interior_whitespace",
-		"ignore_leading_whitespace",
-		"ignore_sentinel_lines",
-		"make_whitespace_visible",
-		"print_both_lines_for_matches",
-		"print_matching_lines",
-		"print_mismatching_lines",
-		"print_trailing_lines" )
-	
-	intCompareNames = ( "limit_count", )
-	
-	stringCompareNames = (
-	"compare_file_1",
-	"compare_file_2",
-	"limit_directory_search_extension",
-	"output_file" )
-	
-	# Find section...
-	boolFindNames = (
-	"batch",
-	"ignore_case",
-	"mark_changes",
-	"mark_finds",
-	"pattern_match",
-	"reverse",
-	"search_body",
-	"search_headline",
-	"suboutline_only",
-	"whole_word", "wrap" )
-	
-	stringFindNames = (
-	"change_string",
-	"find_string" )
-	
-	if 0: # We get default shortcuts from the menu code.
-		stringKeysNames = ()
-	
-	# Prefs section...
-	boolPrefsNames = (
-	"output_doc_chunks",
-	"run_tangle_done.py",
-	"run_untangle_done.py",
-	"tangle_outputs_header" )
-	
-	intPrefsNames = (
-	"page_width",
-	"tab_width" )
-	
-	stringPrefsNames = (
-	"default_tangle_directory",
-	"default_target_language" )
-	
-	# Syntax coloring section...
-	boolColoringNames = (
-	"color_directives_in_plain_text",
-	"underline_undefined_section_names",
-	"use_hyperlinks" )
-	
-	stringColoringNames = (
-	# Tk color values also allowed.
-	"comment_color",
-	"cweb_section_name_color",
-	"directive_color",
-	"doc_part_color",
-	"keyword_color",
-	"leo_keyword_color",
-	"section_name_color",
-	"section_name_brackets_color",
-	"string_color",
-	"undefined_section_name_color" )
-	
-	# Window section...
-	boolWindowNames = (
-	"body_pane_wraps",
-	"log_pane_wraps",
-	"outline_pane_scrolls_horizontally")
-	
-	intWindowNames = (
-	"additional_body_text_border",
-	"body_text_font_size",
-	"headline_text_font_size",
-	"log_text_font_size" )
-	
-	floatWindowNames = (
-	"initial_horizontal_ratio",
-	"initial_horizontal_secondary_ratio",
-	"initial_vertical_ratio",
-	"initial_vertical_secondary_ratio")
-	
-	stringWindowNames = (
-	"body_cursor_foreground_color",
-	"body_cursor_background_color",
-	"body_text_foreground_color",
-	"body_text_background_color",
-	"body_text_font_family",
-	"body_text_font_slant",
-	"body_text_font_weight",
-	
-	"headline_text_unselected_foreground_color",
-	"headline_text_unselected_background_color",
-	"headline_text_selected_foreground_color",
-	"headline_text_selected_background_color",
-	"headline_text_editing_foreground_color",
-	"headline_text_editing_background_color",
-	"headline_text_editing_selection_foreground_color",
-	"headline_text_editing_selection_background_color",
-	
-	"headline_text_font_family",
-	"headline_text_font_slant",
-	"headline_text_font_weight",
-	
-	"initial_splitter_orientation", # "horizontal" or "vertical"
-	"initial_window_height",
-	"initial_window_left",
-	"initial_window_top",
-	"initial_window_width",
-	
-	"log_text_foreground_color",
-	"log_text_background_color",
-	"log_text_font_family",
-	"log_text_font_slant",
-	"log_text_font_weight",
-	
-	"outline_pane_background_color",
-	
-	"split_bar_color",
-	"split_bar_relief",
-	"split_bar_width" )
-	#@-body
-	#@-node:2::<< Define names of settings >>
+	#@-node:1::<< define defaultsDict >>
 
 
 	#@+others
-	#@+node:3::config.__init__
+	#@+node:2::config.__init__
 	#@+body
 	def __init__ (self):
 		
@@ -306,9 +80,11 @@ class config:
 		except:
 			self.configDir = app().loadDir
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
+		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
-		#@<< initialize constant ivars >>
-		#@+node:1::<< initialize constant ivars >> (leoConfig)
+		
+		#@<< initialize constant ivars, lists & dicts >>
+		#@+node:1::<< initialize constant ivars, lists & dicts >> (leoConfig)
 		#@+body
 		# Names of sections.
 		self.configSection = "config options"
@@ -320,147 +96,162 @@ class config:
 		self.colorsSection = "syntax coloring options"
 		self.windowSection = "window options"
 		
-		#@-body
-		#@-node:1::<< initialize constant ivars >> (leoConfig)
-
-	
-		# Initialize settings in each section.
-		self.configsExist = false # True when we successfully open leoConfig.txt.
-		self.config = None # The current instance of ConfigParser
-		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
-		self.path_directive_creates_directories = false
-		self.relative_path_base_directory = "!"
-		self.save_clears_undo_buffer = false
-		self.use_relative_node_indices = 1
-		self.remove_sentinels_extension = ".txt" # 10/4/02
-		self.write_clone_indices = 0
-		self.xml_version_string = "utf-8" # 10/4/02
+		# List of recent files.
+		self.recentFiles = []
+		
+		# Section dictionaries
 		self.compareDict = {}
+		self.configDict = {} # 10/11/02: we use a dict even for ivars.
 		self.findDict = {}
 		self.keysDict = {}
 		self.prefsDict = {}
-		self.recentFiles = []
 		self.colorsDict = {}
 		self.windowDict = {}
+		
+		# Associations of sections and dictionaries.
+		self.sectionInfo = (
+			(self.configSection,self.configDict),
+			(self.compareSection,self.compareDict),
+			(self.findSection,self.findDict),
+			(self.keysSection,self.keysDict),
+			(self.prefsSection,self.prefsDict),
+			(self.recentFilesSection,None),
+			(self.colorsSection,self.colorsDict),
+			(self.windowSection,self.windowDict) )
+		#@-body
+		#@-node:1::<< initialize constant ivars, lists & dicts >> (leoConfig)
+
+		
+		#@<< initialize ivars that may be set by config options >>
+		#@+node:2::<< initialize ivars that may be set by config options >>
+		#@+body
+		# 10/11/02: Defaults are specified only here.
+		
+		self.config = None # The current instance of ConfigParser
+		self.output_newline = "nl"
+		self.path_directive_creates_directories = false
+		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
+		self.relative_path_base_directory = "!"
+		self.remove_sentinels_extension = ".txt"
+		self.save_clears_undo_buffer = false
+		self.use_relative_node_indices = 1
+		self.write_clone_indices = 0
+		self.xml_version_string = "UTF-8" # Must be upper case for compatibility with Borland version of Leo.
+		#@-body
+		#@-node:2::<< initialize ivars that may be set by config options >>
+
 	
-		# Initialize the ivars from the config file.
-		self.open()
+		self.open() # read and process the configuration file.
 	#@-body
-	#@-node:3::config.__init__
-	#@+node:4::get...FromDict & setDict
+	#@-node:2::config.__init__
+	#@+node:3::getters/setters
+	#@+node:1::get...FromDict & setDict
 	#@+body
-	def getBoolFromDict (self,name,dict,defaultDict):
-		val = self.getIntFromDict(name,dict,defaultDict)
+	def getBoolFromDict (self,name,dict):
+		val = self.getIntFromDict(name,dict)
 		if val and val != None and val != 0: val = 1
 		return val
 	
-	def getFloatFromDict (self,name,dict,defaultDict):
-		val = self.getFromDict(name,dict,defaultDict)
+	def getFloatFromDict (self,name,dict):
+		val = self.getFromDict(name,dict)
 		if val:
 			try: val = float(val)
 			except: val = None
 		return val
 	
-	def getFromDict (self,name,dict,defaultDict):
-		if name in dict.keys(): # Python 2.1 support.
-			val = dict[name]
-			if val == "ignore":
-				val = None
-			return val
-		elif defaultDict and name in defaultDict.keys(): # Python 2.1 support.
-			val = defaultDict[name]
-			if val == "ignore":
-				val = None
-			return val
-		else:
-			return None
+	def getFromDict (self,name,dict):
+		val = dict.get(name)
+		if val == "ignore":
+			val = None
+		elif val == None:
+			val = self.defaultsDict.get(name)
+		return val
 	
-	def getIntFromDict (self,name,dict,defaultDict):
-		val = self.getFromDict(name,dict,defaultDict)
+	def getIntFromDict (self,name,dict):
+		val = self.getFromDict(name,dict)
 		if val:
 			try: val = int(val)
 			except: val = None
 		return val
 	
 	def setDict (self,name,val,dict):
-	
-		# print `name`, `val`
 		dict [name] = val
 			
 	getStringFromDict = getFromDict
+	
 	#@-body
-	#@-node:4::get...FromDict & setDict
-	#@+node:5::get/setColors
+	#@-node:1::get...FromDict & setDict
+	#@+node:2::get/setColors
 	#@+body
 	def getBoolColorsPref (self,name):
-		return self.getBoolFromDict(name,self.colorsDict,self.defaultColorsDict)
+		return self.getBoolFromDict(name,self.colorsDict)
 		
 	# Basic getters and setters.
 	
 	def getColorsPref (self,name):
-		return self.getFromDict(name,self.colorsDict,self.defaultColorsDict)
+		return self.getFromDict(name,self.colorsDict)
 	
 	def setColorsPref (self,name,val):
 		self.setDict(name,val,self.colorsDict)
 		
 	getStringColorsPref = getColorsPref
 	#@-body
-	#@-node:5::get/setColors
-	#@+node:6::get/setComparePref
+	#@-node:2::get/setColors
+	#@+node:3::get/setComparePref
 	#@+body
 	def getBoolComparePref (self,name):
-		return self.getBoolFromDict(name,self.compareDict,self.defaultCompareDict)
+		return self.getBoolFromDict(name,self.compareDict)
 		
 	def getIntComparePref (self,name):
-		return self.getIntFromDict(name,self.compareDict,self.defaultCompareDict)
+		return self.getIntFromDict(name,self.compareDict)
 	
 	# Basic getters and setters.
 	
 	def getComparePref (self,name):
-		return self.getFromDict(name,self.compareDict,self.defaultCompareDict)
+		return self.getFromDict(name,self.compareDict)
 	
 	def setComparePref (self,name,val):
 		self.setDict(name,val,self.compareDict)
 		
 	getStringComparePref = getComparePref
 	#@-body
-	#@-node:6::get/setComparePref
-	#@+node:7::get/setFindPref
+	#@-node:3::get/setComparePref
+	#@+node:4::get/setFindPref
 	#@+body
 	def getBoolFindPref (self,name):
-		return self.getBoolFromDict(name,self.findDict,self.defaultFindDict)
+		return self.getBoolFromDict(name,self.findDict)
 	
 	# Basic getters and setters.
 	
 	def getFindPref (self,name):
-		return self.getFromDict(name,self.findDict,self.defaultFindDict)
+		return self.getFromDict(name,self.findDict)
 	
 	def setFindPref (self,name,val):
 		self.setDict(name,val,self.findDict)
 		
 	getStringFindPref = getFindPref
 	#@-body
-	#@-node:7::get/setFindPref
-	#@+node:8::get/setPref
+	#@-node:4::get/setFindPref
+	#@+node:5::get/setPref
 	#@+body
 	def getBoolPref (self,name):
-		return self.getBoolFromDict(name,self.prefsDict,self.defaultPrefsDict)
+		return self.getBoolFromDict(name,self.prefsDict)
 	
 	def getIntPref (self,name):
-		return self.getIntFromDict(name,self.prefsDict,self.defaultPrefsDict)
+		return self.getIntFromDict(name,self.prefsDict)
 		
 	# Basic getters and setters.
 	
 	def getPref (self,name):
-		return self.getFromDict(name,self.prefsDict,self.defaultPrefsDict)
+		return self.getFromDict(name,self.prefsDict)
 	
 	def setPref (self,name,val):
 		self.setDict(name,val,self.prefsDict)
 		
 	getStringPref = getPref
 	#@-body
-	#@-node:8::get/setPref
-	#@+node:9::get/setRecentFiles
+	#@-node:5::get/setPref
+	#@+node:6::get/setRecentFiles
 	#@+body
 	def getRecentFiles (self):
 		
@@ -471,37 +262,41 @@ class config:
 		self.recentFiles = files
 	
 	#@-body
-	#@-node:9::get/setRecentFiles
-	#@+node:10::get/setWindowPrefs
+	#@-node:6::get/setRecentFiles
+	#@+node:7::get/setWindowPrefs
 	#@+body
 	def getBoolWindowPref (self,name):
-		return self.getBoolFromDict(name,self.windowDict,self.defaultWindowDict)
+		return self.getBoolFromDict(name,self.windowDict)
 		
 	def getFloatWindowPref (self,name):
-		return self.getFloatFromDict(name,self.windowDict,self.defaultWindowDict)
+		return self.getFloatFromDict(name,self.windowDict)
 		
 	def getIntWindowPref (self,name):
-		return self.getIntFromDict(name,self.windowDict,self.defaultWindowDict)
+		return self.getIntFromDict(name,self.windowDict)
 		
 	# Basic getters and setters.
 	
 	def getWindowPref (self,name):
-		return self.getFromDict(name,self.windowDict,self.defaultWindowDict)
+		return self.getFromDict(name,self.windowDict)
 	
 	def setWindowPref (self,name,val):
-		#print "setWindowPref:", `name`, `val`
 		self.setDict(name,val,self.windowDict)
 		
 	getStringWindowPref = getWindowPref
 	#@-body
-	#@-node:10::get/setWindowPrefs
-	#@+node:11::getFontFromParams
+	#@-node:7::get/setWindowPrefs
+	#@+node:8::getFontFromParams
 	#@+body
-	# A convenience method that computes a font from font parameters.
+	#@+at
+	#  A convenience method that computes a font from font parameters.
 	# Arguments are the names of settings to be use.
-	# We return None if there is no family setting so we can use system default fonts.
+	# We return None if there is no family setting so we can use system 
+	# default fonts.
 	# We default to size=12, slant="roman", weight="normal"
-	
+
+	#@-at
+	#@@c
+
 	def getFontFromParams(self,family,size,slant,weight):
 		
 		family = self.getWindowPref(family)
@@ -523,242 +318,38 @@ class config:
 		
 		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
 		return font
-	
-	
 	#@-body
-	#@-node:11::getFontFromParams
-	#@+node:12::getShortcut
+	#@-node:8::getFontFromParams
+	#@+node:9::getShortcut
 	#@+body
-	# This code is simple because only the caller knows about defaults.
-	
 	def getShortcut (self,name):
 		
-		if self.keysDict.has_key(name):
-			val = self.keysDict[name]
-			if val == "None":
-				return None
-			else:
-				return val
-		else:
+		val = self.keysDict.get(name)
+		if val == "None":
 			return None
+		else:
+			return val
+	#@-body
+	#@-node:9::getShortcut
+	#@+node:10::init/Boolean/ConfigParam
+	#@+body
+	def initConfigParam (self,name,defaultVal):
+		try:
+			val = self.config.get(self.configSection,name)
+		except:
+			val = defaultVal
+		return val
+	
+	def initBooleanConfigParam (self,name,defaultVal):
+		try:
+			val = self.config.getboolean(self.configSection,name)
+		except:
+			val = defaultVal
+		return val
 	
 	#@-body
-	#@-node:12::getShortcut
-	#@+node:13::open
-	#@+body
-	def open (self):
-		
-		config = ConfigParser.ConfigParser()
-		self.config = config
-		try:
-			cf = open(self.configFileName)
-			config.readfp(cf)
-			
-			#@<< get config options >>
-			#@+node:1::<< get config options >>
-			#@+body
-			try: self.path_directive_creates_directories = config.get(
-				self.configSection, "path_directive_creates_directories")
-			except: self.path_directive_creates_directories = false
-			
-			try: self.read_only = config.getboolean(
-				self.configSection,"read_only")
-			except: self.read_only = false
-			
-			try: self.relative_path_base_directory = config.get(
-				self.configSection,"relative_path_base_directory")
-			except: self.relative_path_base_directory = "!"
-				
-			try: self.save_clears_undo_buffer = config.getboolean(
-				self.configSection,"save_clears_undo_buffer")
-			except: self.save_clears_undo_buffer = false
-				
-			try:self.xml_version_string = config.get(
-				self.configSection,"xml_version_string")
-			except: self.xml_version_string = "utf-8" # 10/4/02
-			
-			try: self.use_relative_node_indices = config.getboolean(
-				self.configSection,"use_relative_node_indices")
-			except: self.use_relative_node_indices = 1
-			
-			try: self.remove_sentinels_extension = config.get(
-				self.configSection,"remove_sentinels_extension")
-			except: self.remove_sentinels_extension = ".txt"
-			
-			try: self.write_clone_indices = config.getboolean(
-				self.configSection,"write_clone_indices")
-			except: self.write_clone_indices = 0
-			
-			#@-body
-			#@-node:1::<< get config options >>
-
-			
-			#@<< get recent files >>
-			#@+node:2::<< get recent files >>
-			#@+body
-			section = self.recentFilesSection
-			
-			if 0: # elegant, but may be a security hole.
-				self.recentFiles = eval(config.get(section, "recentFiles"))
-			else: # easier to read in the config file.
-				try:
-					for i in xrange(10):
-						self.recentFiles.append(config.get(section, "file" + `i`))
-				except: pass
-			#@-body
-			#@-node:2::<< get recent files >>
-
-			
-			#@<< get compare prefs >>
-			#@+node:3::<< get compare prefs >>
-			#@+body
-			section = self.compareSection
-			dict = self.compareDict
-			
-			self.setAllDicts(dict,section,
-				bools=self.boolCompareNames,
-				ints=self.intCompareNames,
-				strings=self.stringCompareNames)
-			
-			#@-body
-			#@-node:3::<< get compare prefs >>
-
-			
-			#@<< get keyboard shortcut prefs >>
-			#@+node:6::<< get keyboard shortcut prefs >>
-			#@+body
-			#@+at
-			#  Just put all user values in dict.
-			# 
-			# The menu code knows the defaults, so nothing more needs to be 
-			# done here.
-
-			#@-at
-			#@@c
-
-			section = self.keysSection
-			dict = self.keysDict
-			config = self.config
-			assert(config)
-			
-			try: # The section may not exist.
-				for name in config.options(section):
-					try: # The user may have made a syntax error.
-						dict[name] = config.get(section,name)
-					except: pass
-			except: pass
-			
-			#@-body
-			#@-node:6::<< get keyboard shortcut prefs >>
-
-			
-			#@<< get prefs >>
-			#@+node:4::<< get prefs >>
-			#@+body
-			section = self.prefsSection
-			dict = self.prefsDict
-			
-			self.setAllDicts(dict,section,
-				bools=self.boolPrefsNames,
-				ints=self.intPrefsNames,
-				strings=self.stringPrefsNames)
-			
-			#@-body
-			#@-node:4::<< get prefs >>
-
-			
-			#@<< get find prefs >>
-			#@+node:5::<< get find prefs >>
-			#@+body
-			section = self.findSection
-			dict = self.findDict
-			
-			self.setAllDicts(dict,section,
-				bools=self.boolFindNames,
-				strings=self.stringFindNames)
-			
-			#@-body
-			#@-node:5::<< get find prefs >>
-
-			
-			#@<< get syntax coloring prefs >>
-			#@+node:7::<< get syntax coloring prefs >>
-			#@+body
-			section = self.colorsSection
-			dict = self.colorsDict
-			
-			self.setAllDicts(dict,section,
-				bools=self.boolColoringNames,
-				strings=self.stringColoringNames)
-			#@-body
-			#@-node:7::<< get syntax coloring prefs >>
-
-			
-			#@<< get window prefs >>
-			#@+node:8::<< get window prefs >>
-			#@+body
-			section = self.windowSection
-			dict = self.windowDict
-			
-			self.setAllDicts(dict,section,
-				bools=self.boolWindowNames,
-				floats=self.floatWindowNames,
-				ints=self.intWindowNames,
-				strings=self.stringWindowNames)
-			#@-body
-			#@-node:8::<< get window prefs >>
-
-			# print `self.recentFiles`
-			if 0:
-				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
-				print "\n\ncompareDict:\n\n"+ `self.compareDict`
-				print "\n\nfindDict:\n\n"   + `self.findDict` 
-				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
-				print "\n\nwindowDict:\n\n" + `self.windowDict`
-			if 0:
-				print "\n\nkeysDict:\n\n"
-				for i in self.keysDict.items():
-					print `i`
-			if 0:
-				print "\n\nwindowDict:\n\n"
-				for i in self.windowDict.keys():
-					print i
-			cf.close()
-			self.configsExist = true
-		except exceptions.IOError:
-			pass
-		except:
-			es("Exception opening " + self.configFileName)
-			es_exception()
-			pass
-		self.config = None
-	#@-body
-	#@-node:13::open
-	#@+node:14::setAllDicts
-	#@+body
-	def setAllDicts (self, dict, section,
-		bools=(),floats=(),ints=(),strings=()):
-			
-		config = self.config
-		assert(config)
-			
-		for name in bools:
-			try: dict[name] = config.getboolean(section,name)
-			except: pass
-		for name in ints:
-			try: dict[name] = config.getint(section,name)
-			except: pass
-		for name in floats:
-			try: dict[name] = config.getfloat(section,name)
-			except: pass
-		for name in strings:
-			try: dict[name] = config.get(section,name)
-			except: pass
-			
-		# print "setAllDicts:" + `dict`
-	#@-body
-	#@-node:14::setAllDicts
-	#@+node:15::setCommandsFindIvars
+	#@-node:10::init/Boolean/ConfigParam
+	#@+node:11::setCommandsFindIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -813,8 +404,8 @@ class config:
 
 		app().findFrame.init(c)
 	#@-body
-	#@-node:15::setCommandsFindIvars
-	#@+node:16::setCommandsIvars
+	#@-node:11::setCommandsFindIvars
+	#@+node:12::setCommandsIvars
 	#@+body
 	# Sets ivars of c that can be overridden by leoConfig.txt
 	
@@ -870,8 +461,8 @@ class config:
 		#@-body
 		#@-node:1::<< set prefs ivars >>
 	#@-body
-	#@-node:16::setCommandsIvars
-	#@+node:17::setConfigFindIvars
+	#@-node:12::setCommandsIvars
+	#@+node:13::setConfigFindIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -895,8 +486,8 @@ class config:
 		self.setFindPref("find_string",c.find_text)
 	
 	#@-body
-	#@-node:17::setConfigFindIvars
-	#@+node:18::setConfigIvars
+	#@-node:13::setConfigFindIvars
+	#@+node:14::setConfigIvars
 	#@+body
 	# Sets config ivars from c.
 	
@@ -937,8 +528,129 @@ class config:
 		self.setFindPref("change_string",c.change_text)
 		self.setFindPref("find_string",c.find_text)
 	#@-body
-	#@-node:18::setConfigIvars
-	#@+node:19::update (config)
+	#@-node:14::setConfigIvars
+	#@-node:3::getters/setters
+	#@+node:4::open
+	#@+body
+	def open (self):
+		
+		config = ConfigParser.ConfigParser()
+		self.config = config
+		try:
+			cf = open(self.configFileName)
+			config.readfp(cf)
+			
+			#@<< get config options >>
+			#@+node:1::<< get config options >>
+			#@+body
+			#@+at
+			#  Rewritten 10/11/02 as follows:
+			# 
+			# 1. We call initConfigParam and initBooleanConfigParam to get the values.
+			# 
+			# The general purpose code will enter all these values into 
+			# configDict.  This allows update() to write the configuration 
+			# section without special case code.  configDict is not accessible 
+			# by the user.  Rather, for greater speed the user access these 
+			# values via the ivars of this class.
+			# 
+			# 2. We pass the ivars themselves as params so that default 
+			# initialization is done in the ctor, as would normally be expected.
+
+			#@-at
+			#@@c
+
+			self.output_newline = self.initConfigParam(
+				"output_newline",self.output_newline)
+			
+			self.path_directive_creates_directories = self.initBooleanConfigParam(
+				"path_directive_creates_directories",
+				self.path_directive_creates_directories)
+			
+			self.read_only = self.initBooleanConfigParam(
+				"read_only",self.read_only)
+			
+			self.relative_path_base_directory = self.initConfigParam(
+				"relative_path_base_directory",
+				self.relative_path_base_directory)
+			
+			self.save_clears_undo_buffer = self.initBooleanConfigParam(
+				"save_clears_undo_buffer",
+				self.save_clears_undo_buffer)
+			
+			self.xml_version_string = self.initConfigParam(
+				"xml_version_string",
+				self.xml_version_string)
+			
+			self.use_relative_node_indices = self.initBooleanConfigParam(
+				"use_relative_node_indices",
+				self.use_relative_node_indices)
+			
+			self.remove_sentinels_extension = self.initConfigParam(
+				"remove_sentinels_extension",
+				self.remove_sentinels_extension)
+			
+			self.write_clone_indices = self.initBooleanConfigParam(
+				"write_clone_indices",
+				self.write_clone_indices)
+			
+			#@-body
+			#@-node:1::<< get config options >>
+
+			
+			#@<< get recent files >>
+			#@+node:2::<< get recent files >>
+			#@+body
+			section = self.recentFilesSection
+			
+			if 0: # elegant, but may be a security hole.
+				self.recentFiles = eval(config.get(section, "recentFiles"))
+			else: # easier to read in the config file.
+				try:
+					for i in xrange(10):
+						self.recentFiles.append(config.get(section, "file" + `i`))
+				except: pass
+			#@-body
+			#@-node:2::<< get recent files >>
+
+			for section, dict in self.sectionInfo:
+				if dict != None:
+					for opt in config.options(section):
+						dict[string.lower(opt)]=config.get(section,opt)
+			
+			#@<< print options >>
+			#@+node:3::<< print options >>
+			#@+body
+			# print `self.recentFiles`
+			if 0:
+				print "\n\ncolorsDict:\n\n" + `self.colorsDict`
+				print "\n\ncompareDict:\n\n"+ `self.compareDict`
+				print "\n\nfindDict:\n\n"   + `self.findDict` 
+				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
+				print "\n\nwindowDict:\n\n" + `self.windowDict`
+			if 0:
+				print "\n\nkeysDict:\n\n"
+				for i in self.keysDict.items():
+					print `i`
+			if 0:
+				print "\n\nwindowDict:\n\n"
+				for i in self.windowDict.keys():
+					print i
+			#@-body
+			#@-node:3::<< print options >>
+
+			cf.close()
+			self.configsExist = true
+		except exceptions.IOError:
+			pass
+		except:
+			es("Exception opening " + self.configFileName)
+			es_exception()
+			pass
+		self.config = None
+	#@-body
+	#@-node:4::open
+	#@+node:5::update (config)
 	#@+body
 	# Rewrites the entire config file from ivars.
 	# This is called when a .leo file is written and when the preferences panel changes.
@@ -962,25 +674,8 @@ class config:
 			if cf:
 				config.readfp(cf)
 				
-				#@<< write config section >>
-				#@+node:1::<< write config section >>
-				#@+body
-				section = self.configSection
-				
-				if config.has_section(section):
-					config.remove_section(section)
-				config.add_section(section)
-				
-				config.set(section,"read_only",self.read_only)
-				config.set(section,"save_clears_undo_buffer",self.save_clears_undo_buffer)
-				config.set(section,"xml_version_string",self.xml_version_string)
-				
-				#@-body
-				#@-node:1::<< write config section >>
-
-				
 				#@<< write recent files section >>
-				#@+node:2::<< write recent files section >>
+				#@+node:1::<< write recent files section >>
 				#@+body
 				section = self.recentFilesSection
 				files = self.recentFiles
@@ -995,26 +690,11 @@ class config:
 					for i in xrange(len(files)):
 						config.set(section, "file"+`i`, files[i])
 				#@-body
-				#@-node:2::<< write recent files section >>
+				#@-node:1::<< write recent files section >>
 
-				
-				#@<< write prefs section >>
-				#@+node:3::<< write prefs section >>
-				#@+body
-				self.update_section(config,self.prefsSection,self.prefsDict)
-				#@-body
-				#@-node:3::<< write prefs section >>
-
-				self.update_section(config,
-					self.compareSection,self.compareDict)
-				self.update_section(config,
-					self.findSection,self.findDict)
-				self.update_section(config,
-					self.colorsSection,self.colorsDict)
-				self.update_section(config,
-					self.keysSection,self.keysDict)
-				self.update_section(config,
-					self.windowSection,self.windowDict)
+				for section,dict in self.sectionInfo:
+					if dict:
+						self.update_section(config,section,dict)
 				config.write(cf)
 				cf.flush()
 				cf.close()
@@ -1025,8 +705,8 @@ class config:
 			es_exception()
 		self.config = None
 	#@-body
-	#@-node:19::update (config)
-	#@+node:20::update_section
+	#@-node:5::update (config)
+	#@+node:6::update_section
 	#@+body
 	def update_section (self,config,section,dict):
 		
@@ -1040,7 +720,7 @@ class config:
 			val = dict [name]
 			config.set(section,name,val)
 	#@-body
-	#@-node:20::update_section
+	#@-node:6::update_section
 	#@-others
 #@-body
 #@-node:0::@file leoConfig.py

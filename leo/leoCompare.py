@@ -677,6 +677,7 @@ class leoComparePanel:
 		self.ignoreFirstLine2Var.set(b)
 		
 		b = config.getBoolComparePref("append_output_to_output_file")
+		if b == None: b = 0
 		self.appendOutputVar.set(b)
 	
 		ext = config.getComparePref("limit_directory_search_extension")
@@ -712,6 +713,7 @@ class leoComparePanel:
 	
 		# Whitespace options.
 		b = config.getBoolComparePref("ignore_blank_lines")
+		if b == None: b = 1
 		self.ignoreBlankLinesVar.set(b)
 		
 		b = config.getBoolComparePref("ignore_interior_whitespace")
