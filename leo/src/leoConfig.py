@@ -290,7 +290,7 @@ class baseConfig:
 	#@nonl
 	#@-node:get/setWindowPrefs
 	#@+node:config.getFontFromParams
-	def getFontFromParams(self,family,size,slant,weight):
+	def getFontFromParams(self,family,size,slant,weight,tag=""):
 	
 		"""Compute a font from font parameters.
 	
@@ -300,23 +300,23 @@ class baseConfig:
 		We return None if there is no family setting so we can use system default fonts."""
 	
 		family = self.getWindowPref(family)
-		if not family or family == "":
+		if family in (None,""):
 			# print tag,"using default"
 			family = self.defaultFontFamily
 			
 		size = self.getIntWindowPref(size)
-		if not size or size == 0: size = 12
+		if size in (None,0): size = 12
 		
 		slant = self.getWindowPref(slant)
-		if not slant or slant == "": slant = "roman"
+		if slant in (None,""): slant = "roman"
 		
 		weight = self.getWindowPref(weight)
-		if not weight or weight == "": weight = "normal"
+		if weight in (None,""): weight = "normal"
 		
-		# trace(family,size,slant,weight)
+		# if app.trace: trace(tag,family,size,slant,weight)
 		
 		return app.gui.getFontFromParams(family,size,slant,weight)
-	#@nonl
+	
 	#@-node:config.getFontFromParams
 	#@+node:getShortcut
 	def getShortcut (self,name):
@@ -378,10 +378,7 @@ class baseConfig:
 		#@	<< set prefs ivars >>
 		#@+node:<< set prefs ivars >>
 		val = config.getIntPref("tab_width")
-		if val:
-			c.tab_width = val
-			if 0: # 9/20/02: don't actually redraw.
-				c.frame.setTabWidth(c.tab_width)
+		if val: c.tab_width = val
 		
 		val = config.getIntPref("page_width")
 		if val: c.page_width = val
