@@ -483,6 +483,8 @@ class tangleCommands:
 		#@@c
 		self.code_seen = false # true if @code seen in body text.
 		
+		# Support of output_newline option
+		self.output_newline = getOutputNewline()
 		#@-body
 		#@-node:1::<< init tangle ivars >>
 
@@ -1420,7 +1422,7 @@ class tangleCommands:
 			self.output_file.write(' ' * abs(n))
 			
 	def onl(self):
-		self.os('\n')
+		self.os(self.output_newline)
 			
 	def os (self,s):
 		s = string.replace(s,body_ignored_newline,body_newline)
@@ -1466,7 +1468,10 @@ class tangleCommands:
 				es("Can not create temp file")
 				break
 			# Set the output_file global.
-			self.output_file = open(temp_name,"wb")
+			# Use "text" mode for platform-specific newlines.
+			mode = app().config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			self.output_file = open(temp_name,mode)
 			if not self.output_file:
 				es("Can not create: " + temp_name)
 				break

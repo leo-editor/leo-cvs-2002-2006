@@ -712,7 +712,21 @@ def get_directives_dict(s,root=None):
 	return dict
 #@-body
 #@-node:13::get_directives_dict
-#@+node:14::scanError
+#@+node:14::getUserNewline
+#@+body
+def getOutputNewline ():
+	
+	s = app().config.output_newline
+	s = string.lower(s)
+	if s == "nl" or s == "lf": s = '\n'
+	elif s == "cr": s = '\r'
+	elif s == "crlf": s = "\r\n"
+	else: s = '\n'
+	return s
+
+#@-body
+#@-node:14::getUserNewline
+#@+node:15::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -730,8 +744,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:14::scanError
-#@+node:15::Scanners: calling scanError
+#@-node:15::scanError
+#@+node:16::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1118,8 +1132,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:15::Scanners: calling scanError
-#@+node:16::Scanners: no error messages
+#@-node:16::Scanners: calling scanError
+#@+node:17::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1373,8 +1387,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:19::skip_ws, skip_ws_and_nl
-#@-node:16::Scanners: no error messages
-#@+node:17::shortFileName
+#@-node:17::Scanners: no error messages
+#@+node:18::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1383,8 +1397,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:17::shortFileName
-#@+node:18::sortSequence
+#@-node:18::shortFileName
+#@+node:19::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1423,8 +1437,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:18::sortSequence
-#@+node:19::Timing
+#@-node:19::sortSequence
+#@+node:20::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1439,8 +1453,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:19::Timing
-#@+node:20::Tk.Text selection (utils)
+#@-node:20::Timing
+#@+node:21::Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1489,8 +1503,8 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:3::setTextSelection
-#@-node:20::Tk.Text selection (utils)
-#@+node:21::Unicode...
+#@-node:21::Tk.Text selection (utils)
+#@+node:22::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -1571,8 +1585,8 @@ def returnNonEncodingChar(c,xml_encoding):
 			return c
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:21::Unicode...
-#@+node:22::update_file_if_changed
+#@-node:22::Unicode...
+#@+node:23::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1618,8 +1632,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:22::update_file_if_changed
-#@+node:23::utils_rename
+#@-node:23::update_file_if_changed
+#@+node:24::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1638,8 +1652,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:23::utils_rename
-#@+node:24::version checking (Dave Hein)
+#@-node:24::utils_rename
+#@+node:25::version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1754,8 +1768,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:24::version checking (Dave Hein)
-#@+node:25::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:25::version checking (Dave Hein)
+#@+node:26::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1775,7 +1789,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:25::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:26::readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

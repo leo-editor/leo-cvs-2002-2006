@@ -131,6 +131,9 @@ class atFile:
 		# Ivars used to suppress newlines between sentinels.
 		self.suppress_newlines = true # true: enable suppression of newlines.
 		self.newline_pending = false # true: newline is pending on read or write.
+		
+		# Support of output_newline option
+		self.output_newline = getOutputNewline()
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -1880,13 +1883,13 @@ class atFile:
 		self.os(' ' * abs(n))
 	
 	def onl(self):
-		self.os("\n")
+		self.os(self.output_newline)
 	
 	def os(self,s):
 		if s is None or len(s) == 0: return
 		if self.suppress_newlines and self.newline_pending:
 			self.newline_pending = false
-			s = "\n" + s
+			s = self.output_newline + s
 		if self.outputFile:
 			try:
 				try:
@@ -2522,7 +2525,10 @@ class atFile:
 			if valid:
 				try:
 					self.outputFileName = self.targetFileName + ".tmp"
-					self.outputFile = open(self.outputFileName, 'wb') # 9/18/02: Output '\n' as '\n' always.
+					# Use "text" mode for platform-specific newlines.
+					mode = app().config.output_newline
+					mode = choose(mode=="platform",'w','wb')
+					self.outputFile = open(self.outputFileName, mode)
 					valid = self.outputFile != None
 					if not valid:
 						self.writeError("can not open " + self.outputFileName)

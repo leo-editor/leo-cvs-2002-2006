@@ -102,11 +102,11 @@ xml_version_string = UTF-8
 
 output_newline = nl
 #	Valid values for this option:
-#	nl:  The default: all lines end with "\n"
+#	nl or lf:  The default: all lines end with "\n"
 #	cr:	 All lines end with "\r"
 #	crlf:	All lines end with "\r\n"
-#	platform: Lines end in platform-specific way.
-#		Leo opens output files "w" mode rather than "wb" mode.
+#	platform: Lines end in platform-specific way, i.e.,
+#	Leo opens output files in "w" mode rather than "wb" mode and writes '\n'
 #
 #	Please specify nl when uploading files to Leo's CVS site.
 
