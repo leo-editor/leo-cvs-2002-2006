@@ -1497,7 +1497,6 @@ class leoTkinterBody (leoFrame.leoBody):
         if not c: return "break"
         if not p: return "break"
         if p != c.currentPosition(): return "break"
-        v = p.v # used only to get p.iconVal.
     
         if g.doHook("bodykey1",c=c,v=p,ch=ch,oldSel=oldSel,undoType=undoType):
             return "break" # The hook claims to have handled the event.
@@ -1715,8 +1714,11 @@ class leoTkinterBody (leoFrame.leoBody):
             
         # Update icons.
         val = p.computeIcon()
-        if val != v.iconVal:
-            v.iconVal = val
+        
+        # 7/8/04: During unit tests the node may not have been drawn,
+        # So p.v.iconVal may not exist yet.
+        if not hasattr(p.v,"iconVal") or val != p.v.iconVal:
+            p.v.iconVal = val
             redraw_flag = True
         
         c.endUpdate(redraw_flag) # redraw only if necessary
