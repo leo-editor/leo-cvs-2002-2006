@@ -718,7 +718,7 @@ class leoMenu:
 	#@-at
 	#@@c
 	
-	def createMenuEntries (self,menu,table,openWith=false):
+	def createMenuEntries (self,menu,table,openWith=false,dontBind=false):
 		
 		for label,accel,command in table:
 			if label == None or command == None or label == "-":
@@ -788,7 +788,7 @@ class leoMenu:
 				self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
 					command=callback,underline=amp_index)
 	
-				if bind_shortcut:
+				if bind_shortcut and not dontBind:
 					#@				<< handle bind_shorcut >>
 					#@+node:<< handle bind_shorcut >>
 					if bind_shortcut in self.menuShortcuts:
