@@ -209,7 +209,7 @@ def fail ():
 #@-node:EKR.20040623200709.15: fail
 #@+node:EKR.20040624113742:atFileTests
 #@+node:EKR.20040624113742.1:makeAtFileSuite
-def makeLeoFilesSuite(nodeName,*ignored):
+def makeAtFileSuite(nodeName,*ignored):
     
     c = g.top()
     u = testUtils()
