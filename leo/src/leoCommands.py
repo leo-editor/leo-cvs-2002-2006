@@ -1804,44 +1804,55 @@ class baseCommands:
     #@+node:ekr.20031218072017.1704:convertAllBlanks
     def convertAllBlanks (self):
         
-        c = self ; body = c.frame.body ; v = current = c.currentVnode()
+        c = self ; body = c.frame.body ; current = c.currentPosition()
         
         if g.app.batchMode:
             c.notValidInBatchMode("Convert All Blanks")
             return
-        next = v.nodeAfterTree()
-        theDict = g.scanDirectives(c)
-        tabWidth  = theDict.get("tabwidth")
+        
+        d = g.scanDirectives(c)
+        tabWidth  = d.get("tabwidth")
         # Create copy for undo.
-        v_copy = c.undoer.saveTree(v)
-        oldText = body.getAllText()
-        oldSel = body.getTextSelection()
+        if 1: # new undo code
+            data = c.undoer.beforeChangeTree(current)
+        else:
+            v_copy = c.undoer.saveTree(current)
+            oldText = body.getAllText()
+            oldSel = body.getTextSelection()
         count = 0
-        while v and v != next:
-            if v == current:
+        #next = p.nodeAfterTree()
+        #while p and p != next:
+        for p in current.self_and_subtree_iter():
+            g.trace(p,tabWidth)
+            if p == current:
                 if c.convertBlanks(setUndoParams=False):
-                    count += 1 ; v.setDirty()
+                    count += 1 ; p.setDirty()
             else:
                 changed = False ; result = []
-                text = v.t.bodyString
+                text = p.t.bodyString
                 assert(g.isUnicode(text))
                 lines = string.split(text, '\n')
                 for line in lines:
-                    s = g.optimizeLeadingWhitespace(line,tabWidth)
+                    # s = g.optimizeLeadingWhitespace(line,tabWidth)
+                    i,w = g.skip_leading_ws_with_indent(line,0,tabWidth)
+                    s = g.computeLeadingWhitespace(w,abs(tabWidth)) + line[i:] # use positive width.
                     if s != line: changed = True
                     result.append(s)
                 if changed:
-                    count += 1 ; v.setDirty()
+                    count += 1 ; p.setDirty()
                     result = string.join(result,'\n')
-                    v.setTnodeText(result)
-            v = v.threadNext()
+                    p.setTnodeText(result)
+            # p = p.threadNext()
         if count > 0:
-            newText = body.getAllText()
-            newSel = body.getTextSelection()
-            c.undoer.setUndoParams("Convert All Blanks",
-                current,select=current,oldTree=v_copy,
-                oldText=oldText,newText=newText,
-                oldSel=oldSel,newSel=newSel)
+            if 1:
+                c.undoer.afterChangeTree(current,'Convert All Blanks',data)
+            else:
+                newText = body.getAllText()
+                newSel = body.getTextSelection()
+                c.undoer.setUndoParams("Convert All Blanks",
+                    current,select=current,oldTree=v_copy,
+                    oldText=oldText,newText=newText,
+                    oldSel=oldSel,newSel=newSel)
         g.es("blanks converted to tabs in %d nodes" % count)
     #@nonl
     #@-node:ekr.20031218072017.1704:convertAllBlanks
@@ -1916,6 +1927,8 @@ class baseCommands:
             result = string.join(result,'\n')
             undoType = g.choose(setUndoParams,"Convert Blanks",None)
             c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
+            
+        g.trace(changed)
     
         return changed
     #@nonl
