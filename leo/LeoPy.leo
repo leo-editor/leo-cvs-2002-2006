@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2473" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2504" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="20" left="91" height="27" width="95"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,9 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="V"><vh>Diary</vh>
-<v a="E"><vh>Oct 2002</vh>
-<v a="E"><vh>10/28</vh>
+<v t="T1"><vh>Diary</vh>
+<v><vh>Oct 2002</vh>
+<v><vh>10/28</vh>
 <v><vh>Don't recognize @* in cweb mode</vh></v>
 <v><vh>Completed documentation for 3.8</vh></v>
 </v>
@@ -1047,9 +1047,9 @@
 </v>
 </v>
 <v t="T607"><vh>To do</vh>
-<v a="E"><vh>3.8 (Requested features)</vh>
+<v><vh>3.8 (Requested features)</vh>
 <v t="T608"><vh>Update docs on web site</vh></v>
-<v t="T609" a="EM"><vh>Document 3.8</vh>
+<v t="T609" a="M"><vh>Document 3.8</vh>
 <v t="T610" a="C"><vh>@silentfile README.TXT</vh></v>
 <v t="T611"><vh>ANN: Leo 3.8 outlining editor</vh></v>
 </v>
@@ -4058,7 +4058,7 @@
 <v t="T851" a="C"><vh>find.set_ivars</vh></v>
 <v t="T1016" a="C"><vh>findNext</vh></v>
 </v>
-<v a="E"><vh>**Recent</vh>
+<v><vh>**Recent</vh>
 <v t="T1709"><vh>(@delims bug)</vh>
 <v t="T1710"><vh>initial report</vh></v>
 <v t="T1711"><vh>second report</vh>
@@ -4867,7 +4867,7 @@
 <v t="T1855" a="E"><vh>(Suppress @@ sentinel unless leading @ starts a directive)</vh>
 <v t="T1856"><vh>@file c:\prog\test\perltest.txt</vh></v>
 <v t="T1493" a="C"><vh>&lt;&lt; put @verbatim sentinel if necessary &gt;&gt;</vh></v>
-<v t="T1691" a="C"><vh>directiveKind</vh></v>
+<v t="T1691" a="CV"><vh>directiveKind</vh></v>
 </v>
 <v t="T1857"><vh>Code</vh>
 <v t="T1858"><vh>  Overview of code</vh></v>
@@ -5209,7 +5209,7 @@
 </v>
 <v t="T1996"><vh>@file leoColor.py</vh>
 <v t="T1997"><vh>&lt;&lt; define colorizer constants &gt;&gt;</vh></v>
-<v t="T468" a="CE"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
+<v t="T468" a="C"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh>
 <v t="T469"><vh>&lt;&lt; leo keywords &gt;&gt;</vh></v>
 <v t="T470"><vh>&lt;&lt; c keywords &gt;&gt;</vh></v>
 <v t="T471"><vh>&lt;&lt; html keywords &gt;&gt;</vh></v>
@@ -6875,6 +6875,44 @@
 </v>
 <v t="T821" a="C"><vh>update_file_if_changed</vh></v>
 <v t="T818" a="C"><vh>utils_rename</vh></v>
+</v>
+</v>
+<v t="T2474"><vh>(4.0 notes)</vh>
+<v><vh>app().gid ivar, set from leoID.txt</vh></v>
+<v><vh>tnodes: gti ivar</vh></v>
+<v t="T2475"><vh>reading/writing .leo files</vh>
+<v t="T2476"><vh>Derived file format</vh></v>
+<v t="T2477"><vh>Code</vh>
+<v t="T2478"><vh>readDerivedFile</vh></v>
+<v t="T2479"><vh>readTnodes &amp; allies</vh>
+<v t="T2480"><vh>&lt;&lt; set the ivars for this invocation &gt;&gt;</vh></v>
+<v t="T2481"><vh>&lt;&lt; define the dispatching table &gt;&gt;</vh></v>
+<v t="T2482"><vh>&lt;&lt; get the next line into s or break &gt;&gt;</vh></v>
+<v t="T2483"><vh>&lt;&lt; handle unexpected end of text &gt;&gt;</vh></v>
+<v t="T2484"><vh>&lt;&lt; set kind, nextKind &gt;&gt;</vh></v>
+<v t="T2485"><vh>&lt;&lt; Set lineIndent, linep and leading_ws &gt;&gt;</vh></v>
+<v t="T2486"><vh>doEndSentinel (should make _caller_ return self.lastLines or break)</vh></v>
+<v t="T2487"><vh>doNormalLine</vh></v>
+<v t="T2488"><vh>doStartAt</vh></v>
+<v t="T2489"><vh>doStartBody</vh></v>
+<v t="T2490"><vh>doStartComment</vh></v>
+<v t="T2491"><vh>doStartDelims</vh></v>
+<v t="T2492"><vh>doStartDirective</vh></v>
+<v t="T2493"><vh>doStartDoc</vh></v>
+<v t="T2494"><vh>doStartLeo</vh></v>
+<v t="T2495"><vh>doStartNode (rewrite)</vh>
+<v t="T2496"><vh>&lt;&lt; Set childIndex &gt;&gt;</vh></v>
+<v t="T2497"><vh>&lt;&lt; Set cloneIndex &gt;&gt;</vh></v>
+<v t="T2498"><vh>&lt;&lt; Set headline and ref &gt;&gt;</vh></v>
+<v t="T2499"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+<v t="T2500"><vh>&lt;&lt; look for sentinels that may follow a reference &gt;&gt;</vh></v>
+</v>
+<v t="T2501"><vh>doStartOthers</vh></v>
+<v t="T2502"><vh>doStartRef</vh></v>
+<v t="T2503"><vh>doStartVerbatim</vh></v>
+<v t="T2504" a="E"><vh>doUnknownSentinel</vh></v>
+</v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -28492,8 +28530,11 @@ def directiveKind(self,s,i):
 		return choose(self.language=="cweb",
 			atFile.noDirective,atFile.atDirective)
 
-	# 10/28/02: @c and @* are not recognized in cweb mode.
-	if self.language=="cweb" and (match_word(s,i,"@c") or match(s,i,"@*")):
+	# 10/28/02: @c and @(nonalpha) are not recognized in cweb mode.
+	# We treat @(nonalpha) separately because @ is in the colorizer table.
+	if self.language=="cweb" and (
+		match_word(s,i,"@c") or
+		i+1&gt;= n or s[i+1] not in string.ascii_letters):
 		return atFile.noDirective
 
 	for name,directive in table:
@@ -28503,6 +28544,7 @@ def directiveKind(self,s,i):
 	for name in leoColor.leoKeywords:
 		if match_word(s,i,name):
 			return atFile.miscDirective
+
 	return atFile.noDirective</t>
 <t tx="T1692">def putCWEB (self,root):
 
@@ -39308,5 +39350,440 @@ def getTime():
 def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()</t>
+<t tx="T2474">@ignore
+@nocolor</t>
+<t tx="T2475">Leo 4.0 will write only 4.0 files, but be able to read old and new files.</t>
+<t tx="T2476">We use single-line comments by default.
+If a language has only block comments, then we must know how to escape the ending delim.
+	This solves the problem of creating a general-purpose escape mechanisme.
+Everything between the @+-xml_header sentinels will be valid xml when stripped of comment delims.
+
+#@+leo_preamble
+&lt;leo_preamble&gt;
+	&lt;leo_settings&gt;...&lt;/leo_settings&gt;
+	&lt;vnodes&gt;...&lt;/vnodes&gt;
+&lt;/leo_preamble&gt;
+#@-leo_preamble
+
+The format of vnodes will be similar (same?) as used in 4.x .leo files:
+&lt;v a="..." gti="..."&gt;&lt;vh&gt;headline&lt;/vh&gt;&lt;/v&gt;
+
+As in previous versions of Leo, the headline is redundant, and nice to have anyway.
+
+Following the preamble is code interspersed with sentinels:
+
+@@+body gti="..." nonewline=1
+# (The actual headline)
+...code...
+@@-body gti="..." nonewline=1  (or just @@-body??)
+
+I think it is best _not_ to follow @@-body sentinels by headlines.
+
+As usual, directives get turned into sentinels:
+
+@@nocolor
+@@others
+</t>
+<t tx="T2477">@color
+
+@ Read code will use a dispatch dictionary rather than if,elif code.</t>
+<t tx="T2478">def readDerivdFile(f)
+
+	scanXmlPreamble()
+	scanTnodes()</t>
+<t tx="T2479">@ This method is the heart of the 4.x read code.  It reads lines from the file until the given ending sentinel is found, and warns if any other ending sentinel is found instead.  It calls itself recursively to handle most nested sentinels.
+
+On entry, self.v, self.out and self.file must be set properly.  (Is this right?  Is this all?)
+
+To do:
+	
+- change v to self.v (how to do this?)
+- doEndSentinel must tell whether to return or break.
+- must rewrite code that handles +body and -body sentinels.
+
+@c
+def scanTnodeDoc (self,s,i,kind):
+	return self.scanDoc(self.file,s,i,self.out,kind)
+	
+def scanTnodes (self,v,endSentinelKind):
+
+	&lt;&lt; set the ivars for this invocation &gt;&gt;
+	&lt;&lt; define the dispatching table &gt;&gt;
+	try:
+		while 1:
+			&lt;&lt; get the next line into s or break &gt;&gt;
+			&lt;&lt; set kind, nextKind &gt;&gt;
+			if kind != atFile.noSentinel:
+				&lt;&lt; set lineIndent, linep and leading_ws &gt;&gt;
+				i = self.skipSentinelStart(s,0)
+			func = dispatch_table.get(kind)
+			if not func:
+				func = self.doUnknownSentinel
+			func(s,i)
+		&lt;&lt; handle unexpected end of text &gt;&gt;
+		assert(len(s)==0 and self.nextLine==None) # We get here only if readline fails.
+	except:
+		es_exception()
+		
+	# Restore the endSentinelKind.
+	self.endSentinelKind = oldEndSentinelKind 
+	return self.lastLines
+</t>
+<t tx="T2480">self.lastLines = []
+self.lineIndent = 0 ; self.linep = 0 # Changed only for sentinels.
+self.nextLine = None
+
+# We must save the previous endSentinelKind so we can restore it on exit.
+oldEndSentinelKind = self.endSentinelKind
+self.endSentinelKind = endSentinelKind</t>
+<t tx="T2481">dispatch_table = {
+	noSentinel : self.doNormalLine,
+	startAt : self.doStartAt,
+	startBody : self.doStartBody,
+	startComment : self.doStartComment,
+	startDelims : self.doStartDelims,
+	startDirective : self.doStartDirective,
+	startDoc : self.doStartDoc,
+	startLeo : self.doStartLeo,
+	startNode : self.doStartNode,
+	startOthers : self.doStartOthers,
+	startRef : self.doStartRef,
+	startVerbatim : self.doStartVerbatim }
+
+for kind in (endAt, endBody, endDoc, endLeo, endNode, endOthers):
+	dispatch_table [kind] = self.doEndSentinel
+</t>
+<t tx="T2482">if self.nextLine:
+	s = self.nextLine ; self.nextLine = None
+else:
+	s = readlineForceUnixNewline(self.file)
+	if len(s) == 0: break
+
+# trace(`s`)</t>
+<t tx="T2483"># Issue the error.
+name = self.sentinelName(self.endSentinelKind)
+self.readError("Unexpected end of file. Expecting " + name + "sentinel" )
+</t>
+<t tx="T2484">@ For non-sentinel lines we look ahead to see whether the next line is a sentinel.  If so, the newline that ends a non-sentinel line belongs to the next sentinel.
+@c
+
+assert(self.nextLine==None)
+
+kind = self.sentinelKind(s)
+
+if kind == atFile.noSentinel:
+	self.nextLine = readlineForceUnixNewline(self.file)
+	nextKind = self.sentinelKind(self.nextLine)
+else:
+	self.nextLine = nextKind = None
+
+# self.nextLine != None only if we have a non-sentinel line.
+# Therefore, self.nextLine == None whenever scanTnodes returns.</t>
+<t tx="T2485">@ self.lineIndent is the total indentation on a sentinel line.  The first "self.indent" portion of that must be removed when recreating text.  leading_ws is the remainder of the leading whitespace.  self.linep points to the first "real" character of a line, the character following the "indent" whitespace.
+@c
+
+# Point self.linep past the first self.indent whitespace characters.
+if self.raw:
+	self.linep = 0
+else:
+	self.linep = self.skipIndent(s,0,self.indent)
+
+# Set self.lineIndent to the total indentation on the line.
+self.lineIndent = 0 ; i = 0
+while i &lt; len(s):
+	if s[i] == '\t': self.lineIndent += (abs(self.tab_width) - (self.lineIndent % abs(self.tab_width)))
+	elif s[i] == ' ': self.lineIndent += 1
+	else: break
+	i += 1
+# trace("self.lineIndent:" +`self.lineIndent` + ", " + `s`)
+
+# Set leading_ws to the additional indentation on the line.
+leading_ws = s[self.linep:i]</t>
+<t tx="T2486">def doEndSentinel (self,s,i):
+
+	if kind == self.endSentinelKind:
+		if kind == atFile.endLeo:
+			# 9/11/02: ignore everything after @-leo.
+			# Such lines were presumably written by @last
+			while 1:
+				s = readlineForceUnixNewline(self.file)
+				if len(s) == 0: break #####
+				# Capture _all_ the trailing lines, even if empty
+				self.lastLines.append(s) # Capture the trailing lines
+		elif kind == atFile.endBody:
+			self.raw = false
+		# self.nextLine != None only if we have a non-sentinel line.
+		# Therefore, self.nextLine == None whenever scanTnodes returns.
+		assert(self.nextLine==None)
+		return self.lastLines ###### Return the captured lines after @-leo
+	else:
+		# Tell of the structure error.
+		name = self.sentinelName(kind)
+		expect = self.sentinelName(self.endSentinelKind)
+		self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)
+</t>
+<t tx="T2487">def doNormalLine (self,s,i):
+
+	# We don't output the trailing newline if the next line is a sentinel.
+	if self.raw:
+		i = 0
+	else:
+		i = self.skipIndent(s,0,self.indent)
+	
+	assert(self.nextLine != None)
+	
+	if nextKind == atFile.noSentinel:
+		line = s[i:]
+		self.out.append(line)
+	else:
+		line = s[i:-1] # don't output the newline
+		self.out.append(line)
+</t>
+<t tx="T2488">def doStartAt (self,s,i):
+
+	assert(match(s,i,"+at"))
+	self.scanTnodeDoc(s,i,kind)</t>
+<t tx="T2489">def doStartBody (self,s,i):
+	
+	assert(match(s,i,"+body"))
+
+	# Save ivars before recursive call.
+	oldIndent = self.indent ; 
+	old_out = self.out
+	
+	# Set the ivars for the recursive call.
+	self.indent = self.lineIndent
+	self.out = [] 
+	child = v # Do not change v!
+	self.scanTnodes(child,atFile.endBody)
+
+	if 0: # Probably not needed in 4.0
+		if child.isOrphan():
+			self.readError("Replacing body text of orphan: " + child.headString())
+
+	# Set the body, removing cursed newlines.
+	# This must be done here, not in the @+node logic.
+	body = string.join(self.out, "")
+	body = string.replace(body, '\r', '')
+	child.t.setTnodeText(body)
+	
+	# Restore ivars from recursive call.
+	self.indent = oldIndent
+	self.out = old_out
+</t>
+<t tx="T2490">def doStartComment (self,s,i):
+	
+	assert(match(s,i,"comment"))
+	# Do nothing more!
+</t>
+<t tx="T2491">def doStartDelims (self,s,i):
+
+	tag = "@delims"
+	assert(match(s,i-1,tag));
+	
+	# Skip the keyword and whitespace.
+	i0 = i-1
+	i = skip_ws(s,i-1+len(tag))
+
+	# Get the first delim.
+	j = i
+	while i &lt; len(s) and not is_ws(s[i]) and not is_nl(s,i):
+		i += 1
+	
+	if j &lt; i:
+		self.startSentinelComment = s[j:i]
+		# print "delim1:", self.startSentinelComment
+	
+		# Get the optional second delim.
+		j = i = skip_ws(s,i)
+		while i &lt; len(s) and not is_ws(s[i]) and not is_nl(s,i):
+			i += 1
+		end = choose(j&lt;i,s[j:i],"")
+		i2 = skip_ws(s,i)
+		if end == self.endSentinelComment and (i2 &gt;= len(s) or is_nl(s,i2)):
+			self.endSentinelComment = "" # Not really two params.
+			line = s[i0:j]
+			line = string.rstrip(line)
+			self.out.append(line+'\n')
+		else:
+			self.endSentinelComment = end
+			# print "delim2:",end
+			line = s[i0:i]
+			line = string.rstrip(line)
+			self.out.append(line+'\n')
+	else:
+		self.readError("Bad @delims")
+		# Append the bad @delims line to the body text.
+		self.out.append("@delims")
+</t>
+<t tx="T2492">def doStartDirective (self,s,i):
+
+	assert(match(s,i,"@"))
+	
+	if match_word(s,i,"@raw"):
+		self.raw = true
+	elif match_word(s,i,"@end_raw"):
+		self.raw = false
+	
+	# The first '@' has already been eaten.
+	if len(self.endSentinelComment) == 0:
+		self.out.append(s[i:])
+	else:
+		# 10/2/04: changed find to rfind, per suggestion of Rich Ries
+		k = string.rfind(s,self.endSentinelComment,i)
+		if k == -1:
+			self.out.append(s[i:])
+		else:
+			self.out.append(s[i:k] + '\n')
+</t>
+<t tx="T2493">def doStartDoc (self,s,i):
+
+	assert(match(s,i,"+doc"))
+	self.scanTnodeDoc(s,i,kind)
+</t>
+<t tx="T2494">def doStartLeo (self,s,i):
+
+	assert(match(s,i,"+leo"))
+	self.readError("Ignoring unexpected @+leo sentinel")
+</t>
+<t tx="T2495">def doStartNode (self,s,i):
+
+	assert(match(s,i,"+node:"))
+	i += 6
+	
+	childIndex = 0 ; cloneIndex = 0
+	&lt;&lt; Set childIndex &gt;&gt;
+	&lt;&lt; Set cloneIndex &gt;&gt;
+	headline = ""
+	&lt;&lt; Set headline and ref &gt;&gt;
+	
+	# print `childIndex`,`headline`
+	
+	if childIndex == 0: # The root node.
+		&lt;&lt; Check the filename in the sentinel &gt;&gt;
+		# Put the text of the root node in the current node.
+		self.scanTnodes(v,atFile.endNode)
+		v.t.setCloneIndex(cloneIndex)
+		# if cloneIndex &gt; 0: trace("clone index:" + `cloneIndex` + ", " + `v`)
+	else:
+		# NB: this call to createNthChild is the bottleneck!
+		child = self.createNthChild(childIndex,v,headline)
+		child.t.setCloneIndex(cloneIndex)
+		# if cloneIndex &gt; 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
+		self.scanTnodes(child,atFile.endNode)
+	
+	&lt;&lt; look for sentinels that may follow a reference &gt;&gt;
+</t>
+<t tx="T2496">i = skip_ws(s,i) ; j = i
+while i &lt; len(s) and s[i] in string.digits:
+	i += 1
+
+if j == i:
+	self.readError("Bad child index in @+node")
+else:
+	childIndex = int(s[j:i])
+
+if match(s,i,':'):
+	i += 1 # Skip the ":".
+else:
+	self.readError("Bad child index in @+node")
+</t>
+<t tx="T2497">while i &lt; len(s) and s[i] != ':' and not is_nl(s,i):
+	if match(s,i,"C="):
+		# set cloneIndex from the C=nnn, field
+		i += 2 ; j = i
+		while i &lt; len(s) and s[i] in string.digits:
+			i += 1
+		if j &lt; i:
+			cloneIndex = int(s[j:i])
+	else: i += 1 # Ignore unknown status bits.
+
+if match(s,i,":"):
+	i += 1
+else:
+	self.readError("Bad attribute field in @+node")</t>
+<t tx="T2498"># Set headline to the rest of the line.
+if len(self.endSentinelComment) == 0:
+	headline = string.strip(s[i:-1])
+else:
+	# 10/24/02: search from the right, not the left.
+	k = string.rfind(s,self.endSentinelComment,i)
+	headline = string.strip(s[i:k]) # works if k == -1
+	
+# 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
+if self.startSentinelComment[-1:] == '@':
+	headline = string.replace(headline,'@@','@')
+
+# Set reference if it exists.
+i = skip_ws(s,i)</t>
+<t tx="T2499">fileName = string.strip(headline)
+
+if fileName[:5] == "@file":
+	fileName = string.strip(fileName[5:])
+	if fileName != self.targetFileName:
+		self.readError("File name in @node sentinel does not match file's name")
+elif fileName[:8] == "@rawfile":
+	fileName = string.strip(fileName[8:])
+	if fileName != self.targetFileName:
+		self.readError("File name in @node sentinel does not match file's name")
+else:
+	self.readError("Missing @file in root @node sentinel")</t>
+<t tx="T2500">s = readlineForceUnixNewline(self.file)
+kind = self.sentinelKind(s)
+
+if len(s) &gt; 1 and kind == atFile.startVerbatimAfterRef:
+	s = readlineForceUnixNewline(self.file)
+	# trace("verbatim:"+`s`)
+	self.out.append(s)
+elif kind == atFile.startNewline:
+	self.out.append('\n')
+	s = readlineForceUnixNewline(self.file)
+	nextline = s
+	trace(`s`)
+elif kind == atFile.startNoNewline:
+	s = readlineForceUnixNewline(self.file)
+	nextline = s
+elif len(s) &gt; 1 and self.sentinelKind(s) == atFile.noSentinel:
+	self.out.append(s)
+else:
+	self.nextLine = s # Handle the sentinel or blank line later.
+</t>
+<t tx="T2501">def doStartOthers (self,s,i):
+
+	assert(match(s,i,"+others"))
+	
+	self.out.append(leading_ws + "@others")
+	self.scanTnodes(v,atFile.endOthers)
+</t>
+<t tx="T2502">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
+@c
+
+def doStartRef (self,s,i):
+
+	assert(match(s,i,"&lt;&lt;"))
+	
+	if len(self.endSentinelComment) == 0:
+		line = s[i:-1] # No trailing newline
+	else:
+		k = string.find(s,self.endSentinelComment,i)
+		line = s[i:k] # No trailing newline, whatever k is.
+		
+	self.out.append(line)
+</t>
+<t tx="T2503">def doStartVerbatim (self,s,i):
+
+	assert(match(s,i,"verbatim"))
+	
+	# Skip the sentinel.
+	s = readlineForceUnixNewline(self.file) 
+	
+	# Append the next line to the text.
+	i = self.skipIndent(s,0,self.indent)
+	self.out.append(s[i:])
+</t>
+<t tx="T2504">def doUnknownSentinel (self,s,i):
+
+	self.readError("Unknown sentinel: " + get_line(s,i))
+</t>
 </tnodes>
 </leo_file>

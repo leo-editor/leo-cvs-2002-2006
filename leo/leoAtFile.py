@@ -672,8 +672,11 @@ class atFile:
 			return choose(self.language=="cweb",
 				atFile.noDirective,atFile.atDirective)
 	
-		# 10/28/02: @c and @* are not recognized in cweb mode.
-		if self.language=="cweb" and (match_word(s,i,"@c") or match(s,i,"@*")):
+		# 10/28/02: @c and @(nonalpha) are not recognized in cweb mode.
+		# We treat @(nonalpha) separately because @ is in the colorizer table.
+		if self.language=="cweb" and (
+			match_word(s,i,"@c") or
+			i+1>= n or s[i+1] not in string.ascii_letters):
 			return atFile.noDirective
 	
 		for name,directive in table:
@@ -683,6 +686,7 @@ class atFile:
 		for name in leoColor.leoKeywords:
 			if match_word(s,i,name):
 				return atFile.miscDirective
+	
 		return atFile.noDirective
 	#@-body
 	#@-node:2::directiveKind
