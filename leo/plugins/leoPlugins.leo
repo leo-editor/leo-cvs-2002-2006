@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1432" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="30" left="426" height="856" width="709"/>
+	<global_window_position top="31" left="469" height="856" width="709"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1511,7 +1511,26 @@
 </v>
 </v>
 </v>
-<v t="edream.120603093808" a="V" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="ekr.20040107092135" a="E"><vh>Quick search</vh>
+<v t="ekr.20040107092135.1"><vh>report</vh></v>
+<v t="ekr.20040107104213"><vh>changes made</vh></v>
+<v t="ekr.20040107112230" a="V"><vh>to do</vh></v>
+<v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040107092135.3,ekr.20040107092135.4,ekr.20040107092135.5,ekr.20040107110154,ekr.20040107111307,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
+<v t="ekr.20040107092135.3" a="E"><vh>class SearchBox</vh>
+<v t="ekr.20040107092135.4"><vh>addWidgets</vh></v>
+<v t="ekr.20040107092135.5"><vh>doSearch</vh></v>
+<v t="ekr.20040107110154"><vh>onKey</vh></v>
+<v t="ekr.20040107111307"><vh>onBackSpace</vh></v>
+</v>
+<v t="ekr.20040107092135.6" a="E"><vh>class quickFind</vh>
+<v t="ekr.20040107092135.7"><vh>__init__</vh></v>
+<v t="ekr.20040107092135.8"><vh>set_ivars</vh></v>
+<v t="ekr.20040107103252"><vh>init_s_text</vh></v>
+<v t="ekr.20040107103339"><vh>gui_search</vh></v>
+</v>
+</v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="edream.031216103123">@nocolor
@@ -15513,7 +15532,8 @@ open_with.py
 color_markup.py
 image.py
 nav_buttons.py
-plugins_menu.py</t>
+plugins_menu.py
+searchbox.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">@language python
 
@@ -15593,5 +15613,198 @@ if Tkinter and app.gui.guiName() == "tkinter":
 		last_key = keycode
 	else:
 		last_key = None</t>
+<t tx="ekr.20040107092135"></t>
+<t tx="ekr.20040107092135.1">Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2362505
+By: paulpaterson
+
+This simple plugin adds a web style one-line search box to the top right hand
+edge of the Leo toolbar, allowing rapid searches without opening the Find
+dialog.
+
+
+To activate, save the text below in your plugins folder (as "searchbox.py) with
+the "...." (4 dots) replaced with "    " (4 spaces) and then update your
+pluginsManager.txt file.
+
+Riders,
+
+- only works with Tkinter
+- only tested on 4.1rc3
+- look carefully and you might see the search dialog coming and going ... 
+
+Comments and suggestions are welcome,
+
+Paul
+
+</t>
+<t tx="ekr.20040107092135.2">"""Add a quick search to the toolbar in Leo
+
+A search box which behaves like a web site search is added, along with
+a "GO" button to do quick searches right from the main Leo window. All the
+current search options are retained except that "search body text" is
+explicitely set - mainly because this is by far the most common use case.
+
+Still to do:
+
+- having a list of previous searches
+- incremental search
+"""
+
+__version__ = "0.2"
+
+from leoPlugins import *
+from leoGlobals import *
+import leoFind
+# import leoTkinterFind
+
+try:	import Tkinter
+except: Tkinter = None
+Tk = Tkinter
+
+@others
+
+if Tkinter:
+	search = SearchBox()
+	
+	if app.gui is None:
+		app.createTkGui(__file__)
+
+	if app.gui.guiName() == "tkinter":
+		es("Starting searchbox", color="orange")
+		registerHandler("after-create-leo-frame", search.addWidgets)
+		plugin_signon(__name__)</t>
+<t tx="ekr.20040107092135.3">class SearchBox:
+	"""A search box for Leo"""
+	@others</t>
+<t tx="ekr.20040107092135.4">def addWidgets(self, tags, keywords):
+
+	"""Add the widgets to the navigation bar"""
+
+	self.commander = keywords['c']
+	toolbar = self.commander.frame.iconFrame
+
+	# Button
+	self.go = self.commander.frame.addIconButton(text="GO",command=self.doSearch)
+	self.go.pack(side="right")
+
+	# Text entry
+	self.search = Tkinter.Entry(toolbar, width=15)
+	self.search.pack(side="right", padx=10)
+	
+	self.search.bind("&lt;Key-Return&gt;",self.onKey)
+	self.search.bind("&lt;Key-BackSpace&gt;",self.onBackSpace)
+
+	if 0: # Doesn't work well yet.
+		self.search.bind("&lt;Key&gt;",self.onKey)</t>
+<t tx="ekr.20040107092135.5">def doSearch(self,*args,**keys):
+	
+	"""Do the actual search"""
+	
+	# import pdb; pdb.set_trace()
+	
+	text = self.search.get()
+
+	# Remove the old find frame so its options don't compete with ours.
+	new_find = quickFind(text)
+	old_find, app.findFrame = app.findFrame, new_find
+
+	# Do the search.
+	self.commander.findNext()
+
+	# Restore the find frame.
+	app.findFrame = old_find
+	
+	if 0: # This doesn't work yet: the user can't see the match.
+		self.search.focus_set()</t>
+<t tx="ekr.20040107092135.6"># class QuickFind(leoTkinterFind.leoTkinterFind):
+	
+class quickFind(leoFind.leoFind):
+	
+	"""A class for quick searching"""
+	
+	@others</t>
+<t tx="ekr.20040107092135.7">def __init__(self, text, search_body_flag=1):
+	
+	"""Initialize the finder"""
+
+	leoFind.leoFind.__init__(self)
+	
+	self.s_text = Tk.Text() # Used by find.search()
+
+	self.__find_text = text
+	self.__search_body_flag = search_body_flag
+</t>
+<t tx="ekr.20040107092135.8">def set_ivars(self, c):
+
+	"""Set the ivars for the find"""
+
+	# Modified from leoTkinterFind.set_ivars
+	for key in self.intKeys:
+		setattr(c, key + "_flag", 0)
+
+	c.change_text = ""
+
+	# Paul's original code.
+	c.find_text = self.__find_text
+	c.search_body_flag = self.__search_body_flag</t>
+<t tx="ekr.20040107103252">def init_s_text (self,s):
+
+	c = self.c ; t = self.s_text	
+	t.delete("1.0","end")
+	t.insert("end",s)
+	t.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
+	return t
+</t>
+<t tx="ekr.20040107103339">def gui_search (self,t,*args,**keys):
+
+	return t.search(*args,**keys)</t>
+<t tx="ekr.20040107104213">@nocolor
+
+Here is how to eliminate the flash:
+
+- import leoFind rather than leoTkinterFind.
+
+- Derive quickFind from leoFind rather than leoTkinterFind.
+
+- Call leoFind.__init__ rather than leoTkinterFind.__init__
+
+- Create self.s_text = Tk.Text() # Used by find.search()
+
+- Copy init_s_text and gui_search from leoTkinterFind to quick find.
+
+- Add the following code to quickFind.set_ivars:
+
+@color
+	# Modified from leoTkinterFind.set_ivars
+	for key in self.intKeys:
+		setattr(c, key + "_flag", 0)
+	c.change_text = ""
+@nocolor
+
+- Remove the call to new_find.onCloseWindow()</t>
+<t tx="ekr.20040107110154">def onKey (self,event=None):
+	
+	self.search.after_idle(self.doSearch)</t>
+<t tx="ekr.20040107111307">def onBackSpace (self,event=None):
+	
+	trace()
+</t>
+<t tx="ekr.20040107112230">@nocolor
+
+I was thinking that a nice way to add options without cluttering things up would
+be to have a combo box to the right of the text box selecting the search mode
+... viz
+
+[search box] [combo search mode] [GO button]
+
+The combo search modes could be,
+
+- Simple (as it is now)
+- Whole word 
+- Hot search (incremental - don't need to press GO)
+- Headlines only
+- Headlines and Body
+</t>
 </tnodes>
 </leo_file>
