@@ -849,37 +849,7 @@ class baseColorizer:
         #@nonl
         #@-node:ekr.20031218072017.1607:<< define dispatch dicts >>
         #@nl
-        #@    << define fonts and data for wiki tags >>
-        #@+node:ekr.20031218072017.1608:<< define fonts and data for wiki tags >>
-        self.bold_font = c.config.getFontFromParams(
-            "body_text_font_family", "body_text_font_size",
-            "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize)
-        
-        if self.bold_font:
-            self.bold_font.configure(weight="bold")
-        
-        self.italic_font = c.config.getFontFromParams(
-            "body_text_font_family", "body_text_font_size",
-            "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize)
-            
-        if self.italic_font:
-            self.italic_font.configure(slant="italic",weight="normal")
-        
-        self.bolditalic_font = c.config.getFontFromParams(
-            "body_text_font_family", "body_text_font_size",
-            "body_text_font_slant",  "body_text_font_weight",
-            c.config.defaultBodyFontSize)
-            
-        if self.bolditalic_font:
-            self.bolditalic_font.configure(weight="bold",slant="italic")
-        
-        self.color_tags_list = []
-        self.image_references = []
-        #@nonl
-        #@-node:ekr.20031218072017.1608:<< define fonts and data for wiki tags >>
-        #@nl
+        self.setFontFromConfig()
         #@    << extend forth words from files >>
         #@+node:ekr.20041107094252:<< extend forth words from files >>
         # Associate files with lists: probably no need to edit this.
@@ -914,6 +884,39 @@ class baseColorizer:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.1605:color.__init__
+    #@+node:ekr.20041217041016:setFontFromConfig
+    def setFontFromConfig (self):
+        
+        c = self.c
+        
+        self.bold_font = c.config.getFontFromParams(
+            "body_text_font_family", "body_text_font_size",
+            "body_text_font_slant",  "body_text_font_weight",
+            c.config.defaultBodyFontSize, tag = "colorer bold")
+        
+        if self.bold_font:
+            self.bold_font.configure(weight="bold")
+        
+        self.italic_font = c.config.getFontFromParams(
+            "body_text_font_family", "body_text_font_size",
+            "body_text_font_slant",  "body_text_font_weight",
+            c.config.defaultBodyFontSize, tag = "colorer italic")
+            
+        if self.italic_font:
+            self.italic_font.configure(slant="italic",weight="normal")
+        
+        self.bolditalic_font = c.config.getFontFromParams(
+            "body_text_font_family", "body_text_font_size",
+            "body_text_font_slant",  "body_text_font_weight",
+            c.config.defaultBodyFontSize, tag = "colorer bold italic")
+            
+        if self.bolditalic_font:
+            self.bolditalic_font.configure(weight="bold",slant="italic")
+            
+        self.color_tags_list = []
+        self.image_references = []
+    #@nonl
+    #@-node:ekr.20041217041016:setFontFromConfig
     #@+node:ekr.20031218072017.2801:colorize & recolor_range
     # The main colorizer entry point.
     

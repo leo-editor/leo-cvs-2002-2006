@@ -1499,12 +1499,12 @@ class leoTkinterBody (leoFrame.leoBody):
             "body_text_font_family", "body_text_font_size",
             "body_text_font_slant",  "body_text_font_weight",
             c.config.defaultBodyFontSize, tag = "body")
-    
-        if g.app.trace:
-            g.trace(body.cget("font"),font.cget("family"),font.cget("weight"))
-    
-        body.configure(font=font)
         
+        self.fontRef = font # ESSENTIAL: retain a link to font.
+        body.configure(font=font)
+    
+        # g.trace("BODY",body.cget("font"),font.cget("family"),font.cget("weight"))
+    
         bg = c.config.getColor("body_text_background_color")
         if bg:
             try: body.configure(bg=bg)
@@ -2569,9 +2569,12 @@ class leoTkinterLog (leoFrame.leoLog):
         font = c.config.getFontFromParams(
             "log_text_font_family", "log_text_font_size",
             "log_text_font_slant",  "log_text_font_weight",
-            c.config.defaultLogFontSize)
-        
+            c.config.defaultLogFontSize, tag = "log")
+    
+        self.fontRef = font # ESSENTIAL: retain a link to font.
         logCtrl.configure(font=font)
+        
+        # g.trace("LOG",logCtrl.cget("font"),font.cget("family"),font.cget("weight"))
     
         bg = c.config.getColor("log_text_background_color")
         if bg:

@@ -510,7 +510,7 @@ class leoTkinterTree (leoFrame.leoTree):
         return theId
     #@nonl
     #@-node:ekr.20040803072955.10:newLine
-    #@+node:ekr.20040803072955.11:newText
+    #@+node:ekr.20040803072955.11:newText (leoTkinterTree)
     def newText (self,p,x,y):
         
         canvas = self.canvas ; tag = "textBox"
@@ -529,6 +529,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 assert(theId)
                 assert(t.leo_position == p2)
                 canvas.coords(theId,x,y)
+                t.configure(font=self.font) # 12/17/04
                 found = True ; break
                 
         if not found:
@@ -569,7 +570,7 @@ class leoTkinterTree (leoFrame.leoTree):
         # g.trace(p,t)
         return t
     #@nonl
-    #@-node:ekr.20040803072955.11:newText
+    #@-node:ekr.20040803072955.11:newText (leoTkinterTree)
     #@+node:ekr.20040803072955.12:recycleWidgets
     def recycleWidgets (self):
         
@@ -652,8 +653,9 @@ class leoTkinterTree (leoFrame.leoTree):
         return self.font
             
     # Called by leoFontPanel.
-    def setFont (self, font=None, fontName=None):
+    def setFont (self,font=None, fontName=None):
         
+        # ESSENTIAL: retain a link to font.
         if fontName:
             self.fontName = fontName
             self.font = tkFont.Font(font=fontName)
@@ -669,8 +671,8 @@ class leoTkinterTree (leoFrame.leoTree):
         font = c.config.getFontFromParams(
             "headline_text_font_family", "headline_text_font_size",
             "headline_text_font_slant",  "headline_text_font_weight",
-            c.config.defaultTreeFontSize)
-    
+            c.config.defaultTreeFontSize, tag = "tree")
+        
         self.setFont(font)
     #@nonl
     #@-node:ekr.20040803072955.27:tree.getFont,setFont,setFontFromConfig

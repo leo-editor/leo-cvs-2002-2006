@@ -35,7 +35,9 @@ class tkinterGui(leoGui.leoGui):
         self.bitmap_name = None
         self.bitmap = None
         self.win32clipboard = None
-        
+        self.defaultFont = None
+        self.defaultFontFamily = None
+    
         if 0: # This seems both dangerous and non-functional.
             if sys.platform == "win32":
                 try:
@@ -75,6 +77,8 @@ class tkinterGui(leoGui.leoGui):
         self.setDefaultIcon()
         if g.app.config:
             self.getDefaultConfigFont(g.app.config)
+            
+        root.withdraw()
     
         return root
     #@nonl
@@ -110,11 +114,17 @@ class tkinterGui(leoGui.leoGui):
         
         """Get the default font from a new text widget."""
     
-        t = Tk.Text()
-        fn = t.cget("font")
-        font = tkFont.Font(font=fn)
-        config.defaultFont = font
-        config.defaultFontFamily = font.cget("family")
+        if not self.defaultFontFamily:
+            # WARNING: retain NO references to widgets or fonts here!
+            t = Tk.Text()
+            fn = t.cget("font")
+            font = tkFont.Font(font=fn) 
+            family = font.cget("family")
+            self.defaultFontFamily = family[:]
+            # print '***** getDefaultConfigFont',repr(family)
+    
+        config.defaultFont = None
+        config.defaultFontFamily = self.defaultFontFamily
     #@nonl
     #@-node:ekr.20031218072017.2186:tkGui.getDefaultConfigFont
     #@-node:ekr.20031218072017.4049:createRootWindow & allies
@@ -434,7 +444,7 @@ class tkinterGui(leoGui.leoGui):
         except:
             g.es("exception setting font from ",family_name)
             g.es("family,size,slant,weight:",family,size,slant,weight)
-            # g.es_exception() # 12/15/03: This just confuses people.
+            # g.es_exception() # This just confuses people.
             return g.app.config.defaultFont
     #@nonl
     #@-node:ekr.20031218072017.2187:tkGui.getFontFromParams

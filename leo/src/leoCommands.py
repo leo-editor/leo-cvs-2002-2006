@@ -128,7 +128,8 @@ class baseCommands:
     
         c = self
         if c.mFileName:
-            return hash(c.mFileName)
+            # return hash(c.mFileName)
+            return g.os_path_abspath(c.mFileName).lower()
         else:
             return 0
     #@nonl
@@ -5452,10 +5453,12 @@ class configSettings:
         self.defaultTreeFontSize = g.app.config.defaultTreeFontSize
         
         for ivar in g.app.config.encodingIvarsDict.keys():
-            self.initEncoding(ivar)
+            if ivar != '_hash':
+                self.initEncoding(ivar)
             
         for ivar in g.app.config.ivarsDict.keys():
-            self.initIvar(ivar)
+            if ivar != '_hash':
+                self.initIvar(ivar)
     #@nonl
     #@+node:ekr.20041118104240:initIvar
     def initIvar(self,ivarName):
@@ -5490,7 +5493,7 @@ class configSettings:
     #@-node:ekr.20041118104414:initEncoding
     #@-node:ekr.20041118104831.2:configSettings.__init__
     #@+node:ekr.20041118053731:Getters
-    def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag=""):
+    def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag="configSetting"):
         return g.app.config.getFontFromParams(self.c,
             family,size,slant,weight,defaultSize=defaultSize,tag=tag)
     

@@ -721,6 +721,9 @@ class leoTree:
         
     def setFont(self,font=None,fontName=None):
         self.oops()
+        
+    def setFontFromConfig (self):
+        self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3709:Fonts
     #@+node:ekr.20031218072017.3710:Notifications
@@ -1293,6 +1296,11 @@ class nullBody (leoBody):
     #@nonl
     #@-node:ekr.20031218072017.2216:Visibility & scrolling
     #@-node:ekr.20031218072017.2197:Must be overriden in subclasses
+    #@+node:ekr.20041217074557:setFontFromConfig
+    def setFontFromConfig (self):
+        pass
+    #@nonl
+    #@-node:ekr.20041217074557:setFontFromConfig
     #@+node:ekr.20031218072017.2217:oops
     def oops(self):
     
@@ -1512,6 +1520,9 @@ class nullTree (leoTree):
     
         self.font = font
         self.fontName = fontName
+        
+    def setFontFromConfig (self):
+        pass
     #@nonl
     #@-node:ekr.20031218072017.2241:getFont & setFont
     #@+node:ekr.20031218072017.2242:select
