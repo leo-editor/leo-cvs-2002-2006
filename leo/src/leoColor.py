@@ -907,7 +907,7 @@ class baseColorizer:
 				self.markup_string == self.last_markup
 				#@nonl
 				#@-node:<< all state ivars match >>
-	#@afterref
+				#@afterref
  ):
 				#@			<< incrementally color the text >>
 				#@+node:<< incrementally color the text >>

@@ -220,11 +220,12 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\test\test.leo
-file2 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-file1 = c:\prog\leoCVS\leo\config\leoConfig.leo
-file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file4 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
+file3 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file2 = C:\prog\leoCVS\leo\test\test.leo
+file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file0 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
+file5 = c:\prog\leoCVS\leo\config\leoConfig.leo
+file4 = C:\Documents and Settings\default\My Documents\ekr.leo
 
 [find/change options]
 mark_changes = 0
@@ -238,10 +239,10 @@ batch = 0
 search_headline = 0
 script_change = 0
 search_body = 1
-find_string = def onBodyChanged
-pattern_match = 0
+find_string = scanAllDirectives
+pattern_match = 1
 wrap = 0
 mark_finds = 0
-suboutline_only = 0
+suboutline_only = 1
 reverse = 0
 

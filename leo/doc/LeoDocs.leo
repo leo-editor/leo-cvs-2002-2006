@@ -83,7 +83,7 @@
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
-<v t="edream.110603185805" a="V"><vh>4.1 beta 3</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 4</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -101,10 +101,11 @@
 <v t="edream.110603190322.10"><vh>Leo now writes node_only find prefs</vh></v>
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
-<v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.110603192009.1" a="E"><vh>New &amp; improved commands</vh>
+<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.111803060152" a="E"><vh>Added script-based find/change commands</vh>
+<v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
 <v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
@@ -118,7 +119,7 @@
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 3</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 4</vh>
 <v t="edream.110603190234.1"><vh>Code-level features</vh>
 <v t="edream.110603190125.3"><vh>Regression tests started</vh></v>
 <v t="edream.110603190125.4"><vh>Code reorganized to support other guis</vh></v>
@@ -137,6 +138,7 @@
 <v t="edream.110603190125.1"><vh>.leo files are now cvs-friendly</vh></v>
 </v>
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
+<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
 <v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
@@ -1145,7 +1147,7 @@
 <v t="edream.110203163054.830"><vh>Shifting body text</vh></v>
 <v t="edream.110203163054.831"><vh>Creating nodes from body text</vh></v>
 <v t="edream.110203163054.832"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="edream.110203163054.833"><vh>Executing Python scripts in body text</vh></v>
+<v t="edream.110203163054.833" a=""><vh>Executing Python scripts in body text</vh></v>
 <v t="edream.110203163054.834"><vh>Finding and changing text</vh>
 <v t="edream.110603190322.6" a=""><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
@@ -9727,7 +9729,13 @@ The Convert Tabs command converts leading tabs to blanks in a single node.  The 
 All these commands convert between tabs and blanks using the tab width shown in the Preferences panel.</t>
 <t tx="edream.110203163054.833">The Execute Script command executes body text as a Python script.  Leo execute the selected text, or the entire body text if no text is selected.
 
-Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.</t>
+Scripts are executed in a "pristine" environment, that is, with __builtins__ as both the local and global environments.
+
+New in version 4.1:  Body text may now contain @directives and section references. This is a major step forward: you can now use all of Leo's features to organize scripts that you execute interactively.
+
+Section definitions must appear in the node containing the script or in descendent nodes.  Leo "preprocesses" all scripts by simulating the writing of a derived file to a string.  The resulting string will contain many comments corresponding to sentinel lines.
+
+The Execute Script command sets app.scriptDict["script1"] to the value of the script before preprocessing, and sets app.scriptDict["script2"] to the value of the script after preprocessing.  Scripts may examine and change app.scriptDict as they please.</t>
 <t tx="edream.110203163054.834">The Edit menu contains four commands for searching and replacing text.  The Find and Find Again commands search through the outline for text and the Change and Change, Then Find commands change selected text.
 
 The following check boxes options appear in the search dialog and control the operations of the find and change commands.
@@ -24136,16 +24144,27 @@ Still to do:
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 3                   November 18, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 4                   November 20, 2003
 
-This is the third official release of the reorganized 4.1 code base. The code appears solid, and has not been widely tested. Please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+This is the fourth official release of the reorganized 4.1 code base. The code appears solid, and has not been widely tested. Please use caution when using this code. Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-- Beta 3 fixes a LaTeX coloring bug. Beta 3 also completes the reorg, making _many_ changes to the code.
+Note: there have been problems reported with using plugins on Linux.  As far as I know those problems have _not_ been fixed.
+
+Beta 4:
+  - Fixes several "reorg" bugs, some of which affected plugins.
+  - Allows @directives and section references when executing scripts!
+  - More than one section reference may now appear on the same line.
+  - Uses "utf-8" encoding for filenames under MacOS (Darwin)
+  - Allows command or cmnd prefix for menu shortcuts under Darwin.
+  - Replaces all os.path routines by routines that convert path names to Unicode.
+    This is necessary (but not sufficient?) to support Chinese file and directory names.
+	  
+Beta 3 fixes a LaTeX coloring bug. Beta 3 also completes the reorg, making _many_ changes to the code.
 
 The __wx_gui.py plugin is mostly functional except for gui-dependent commands like Toggle-Split Direction.
 WARNING: treat the this plugin with _extreme_ caution until further notice. The possibility exists that bugs in the code could cause body text to be cleared improperly when changing nodes.
 
-- Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
+Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
 Highlights of 4.1:
 -----------------

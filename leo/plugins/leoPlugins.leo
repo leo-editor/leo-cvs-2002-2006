@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1419" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1420" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="27" left="308" height="856" width="795"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -30,7 +30,7 @@
 <v t="edream.110203113231.7"><vh>Hooks should never blindly Python scripts</vh></v>
 <v t="edream.110203113231.8"><vh>NEVER use this kind of code in a hook!!</vh></v>
 </v>
-<v t="edream.110203113231.9"><vh>Unfinished projects</vh>
+<v t="edream.110203113231.9" a="V"><vh>Unfinished projects</vh>
 <v t="edream.110203113231.10"><vh>(Settings menu)</vh>
 <v t="edream.110203113231.11"><vh>To do</vh></v>
 <v t="edream.110203113231.12"><vh>Design of Settings menu</vh></v>
@@ -553,6 +553,7 @@
 </v>
 </v>
 <v t="edream.110803170600"><vh>Count pages</vh></v>
+<v t="edream.112003032318"><vh>About html plugin</vh></v>
 </v>
 <v t="edream.110203113231.233"><vh>wxPython plugin (alpha quality)</vh>
 <v t="edream.110203113231.234"><vh> Diary</vh>
@@ -954,7 +955,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618" a="V"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -15262,5 +15263,46 @@ def underline(h,level):
 <t tx="edream.111903105454"></t>
 <t tx="edream.111903190444"></t>
 <t tx="edream.111903190444.1"></t>
+<t tx="edream.112003032318">@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2295621
+By: billp9619
+
+As I was explaining my ideas about opml it occurred to me that it uses DIV tags
+and a Javascript as the output of the stylesheet.
+
+But then that is what ALL the HTML collapsing outlines use! So the html behavior
+is nothing special to opml...it is a behavior of scripted DIV tags in html.
+
+I found a style sheet named outline_leo,xsl on my computer. This is really tiny
+and works pretty good. Don't know where I got it from though.
+ 
+Anyway, as I expected the insertion of a html FORM  and a  TEXTAREA box into
+one of these DIV tags would collapse out of sight then reappear when clicked
+just like any other node.. Actually this is one of those odd things that maybe
+noone ever thought of trying,,,,I've never seen it in one of these html outlines
+before.
+
+Interestingly, the familiar collapsing xml display in Internet Explorer is really
+just a xsl stylesheet and  produces DIV tags and a script like all these other
+html outlines. Somewhere I found a version with minor revisions to make it work
+with standard xpath.
+
+There is a program called xpathvisualizer that runs in IE and gives basically
+the same xml display but highlights an inputted xpath expression. With this
+you can view source and see the script and DIV tags.
+
+At the end of the day the only benefit to opml is that others are using
+it (standard?) and perhaps  there is something especially good about its Javascript
+implementation.
+
+BTW, to load leo into internet explorer just save a copy with an .xml file extension.
+Then drag it to IE.
+And of course the file  could have an embedded xml-stylesheet instruction to
+use leo_outline.xsl which just shows headlines, etc,
+
+Also BTW... I have been using Python for some time now but I don't know if i
+can handle plug-in development at this stage.  :-)
+
+(But I might be up to refining the html/script environment further. )</t>
 </tnodes>
 </leo_file>

@@ -6,15 +6,20 @@ Leo will work on Linux, Windows and MacOs X Jaguar.
 
 Leo 4.1 beta 4                   November 20, 2003
 
-This is the third official release of the reorganized 4.1 code base.
+This is the fourth official release of the reorganized 4.1 code base.
 
-The code appears solid, and has not been widely tested.  Please use caution when using this code.
+Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
 
-N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
+Beta 4:
+  - Fixes several "reorg" bugs, some of which affected plugins.
+  - Allows @directives and section references when executing scripts!
+  - More than one section reference may now appear on the same line.
+  - Uses "utf-8" encoding for filenames under MacOS (Darwin)
+  - Allows command or cmnd prefix for menu shortcuts under Darwin.
+  - Wraps all os.path calls to that file and directory names can be converted to Unicode.
+    This is necessary (but not sufficient?) to support Chinese file and directory names.
 
-Beta 4 wraps all calls to os.path routines and fixes several bugs.
-
-Beta 3 completes the reorg, making _many_ changes to the code.  Also fixes a LaTeX coloring bug.
+Beta 3 completes the reorg: many changes to the code.  Also fixes a LaTeX coloring bug.
 
 Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
 
