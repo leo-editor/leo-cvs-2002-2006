@@ -11,7 +11,7 @@ import exceptions, os, sys, traceback, ConfigParser, tkFont
 class config:
 	
 	#@<< Define names of settings >>
-	#@+node:1:C=1:<< Define names of settings >>
+	#@+node:2:C=2:<< Define names of settings >>
 	#@+body
 	#@+at
 	#  Used only by open.  Update just writes whatever is in the various dicts.
@@ -21,8 +21,8 @@ class config:
 	
 	# Config section... (Not used in the code)
 	
-	boolConfigNames = ( "read_only" )
-	stringConfigNames = ( "xml_version_string" )
+	boolConfigNames = ( "read_only", )
+	stringConfigNames = ( "xml_version_string", )
 	
 	# Compare section
 	boolCompareNames = (
@@ -39,7 +39,7 @@ class config:
 		"print_mismatching_lines",
 		"print_trailing_lines" )
 	
-	intCompareNames = ( "limit_count" )
+	intCompareNames = ( "limit_count", )
 	
 	stringCompareNames = (
 		"compare_file_1",
@@ -99,10 +99,10 @@ class config:
 		"undefined_section_name_color" )
 		
 	# Window section...
-	boolWindowNames = ( "body_pane_wraps" )
+	boolWindowNames = ( "body_pane_wraps", )
 	
 	intWindowNames = (
-		"additional_body_text_border ",
+		"additional_body_text_border",
 		"body_text_font_size",
 		"headline_text_font_size",
 		"log_text_font_size" )
@@ -134,11 +134,11 @@ class config:
 		"split_bar_relief",
 		"split_bar_width" )
 	#@-body
-	#@-node:1:C=1:<< Define names of settings >>
+	#@-node:2:C=2:<< Define names of settings >>
 
 	
 	#@<< define default tables for settings >>
-	#@+node:2:C=2:<< define default tables for settings >>
+	#@+node:1:C=1:<< define default tables for settings >>
 	#@+body
 	defaultConfigDict = {
 		"read_only" : 1,
@@ -235,7 +235,7 @@ class config:
 		"split_bar_relief" : "groove",
 		"split_bar_width" : 7 }
 	#@-body
-	#@-node:2:C=2:<< define default tables for settings >>
+	#@-node:1:C=1:<< define default tables for settings >>
 
 
 	#@+others
@@ -595,6 +595,10 @@ class config:
 				print "\n\nfindDict:\n\n"   + `self.findDict` 
 				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
+			if 0:
+				print "\n\nwindowDict:\n\n"
+				for i in self.windowDict:
+					print i
 			cf.close()
 			self.configsExist = true
 		except exceptions.IOError:

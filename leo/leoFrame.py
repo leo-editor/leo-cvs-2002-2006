@@ -2462,7 +2462,7 @@ class LeoFrame:
 		tkMessageBox.showinfo("About Leo",
 		# Don't use triple-quoted strings or continued strings here.
 		# Doing so would add unwanted leading tabs.
-		" leo.py 3.2, July 30, 2002\n\n" +
+		" leo.py 3.3 beta 1, August 1, 2002\n\n" +
 	
 		"Copyright 1999-2002 by\n" +
 		"Edward K. Ream, edream@tds.net\n" +
@@ -2563,9 +2563,12 @@ class LeoFrame:
 		#@+node:1::<< create the body pane >>
 		#@+body
 		# A light selectbackground value is needed to make syntax coloring look good.
+		wrap = config.getBoolWindowPref('body_pane_wraps')
+		wrap = choose(wrap,"word","none")
+		
 		self.body = body = Tk.Text(split1Pane2,name='body',
 			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap="word",selectbackground="Gray80")
+			setgrid=1,wrap=wrap,selectbackground="Gray80")
 			
 		font = config.getFontFromParams(
 			"body_text_font_family", "body_text_font_size",
@@ -2575,11 +2578,17 @@ class LeoFrame:
 			body.configure(font=font)
 		
 		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
-		
 		body['yscrollcommand'] = bodyBar.set
 		bodyBar['command'] = body.yview
-		
 		bodyBar.pack(side="right", fill="y")
+		
+		if wrap == "none":
+			self.bodyXBar = bodyXBar = Tk.Scrollbar(
+				split1Pane2,name='bodyXBar',orient="horizontal")
+			body['xscrollcommand'] = bodyXBar.set
+			bodyXBar['command'] = body.xview
+			bodyXBar.pack(side="bottom", fill="x")
+			
 		body.pack(expand=1, fill="both")
 		#@-body
 		#@-node:1::<< create the body pane >>
@@ -2758,8 +2767,11 @@ class LeoFrame:
 	#@+body
 	def reconfigurePanes (self):
 		
+		border = app().config.getIntWindowPref('additional_body_text_border')
+		if border == None: border = 0
+		
 		# The body pane needs a _much_ bigger border when tiling horizontally.
-		border = choose(self.splitVerticalFlag,2,6)
+		border = choose(self.splitVerticalFlag,2+border,6+border)
 		self.body.configure(bd=border)
 		
 		# The log pane needs a slightly bigger border when tiling vertically.

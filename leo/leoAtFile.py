@@ -85,13 +85,17 @@ class atFile:
 		
 
 		#@+at
-		#  Set by atFile.scanAllDirectives
+		#  Initialized by atFile.scanAllDirectives.  8/1/02: set all to None here.
 
 		#@-at
 		#@@c
 		self.default_directory = None
-		self.tab_width = leoPrefs.default_tab_width
-		self.page_width = leoPrefs.default_page_width
+		self.page_width = None
+		self.tab_width  = None
+		self.presentLanguage = None
+		self.targetLanguage = None
+		self.startSentinelComment = None
+		self.endSentinelComment = None
 		
 
 		#@+at
@@ -114,23 +118,6 @@ class atFile:
 		#@-at
 		#@@c
 		self.indent = 0  # The unit of indentation is spaces, not tabs.
-		
-
-		#@+at
-		#  The strings specifying the beginning and end of sentinel comments. endSentinelComment is empty for single-line comment 
-		# before and after the <leo> tag in the first line of the file.
-
-		#@-at
-		#@@c
-		self.startSentinelComment = "//"
-		self.endSentinelComment = ""
-		
-		# Used to parse @language and @comment directives.
-		self.presentLanguage = python_language
-		self.targetLanguage = python_language ## Should be set from the preferences panel.
-		self.singleCommentString = "#"
-		self.startCommentString = ""
-		self.endCommentString = ""
 		
 		# The root of tree being written.
 		self.root = None
@@ -369,18 +356,22 @@ class atFile:
 		c = self.commands
 		bits = 0 ; old_bits = 0 ; val = 0
 		
-		#@<< Set delims to default values >>
-		#@+node:1:C=5:<< Set delims to default values >>
+		#@<< Set ivars >>
+		#@+node:1:C=5:<< Set ivars >>
 		#@+body
-		self.page_width = leoPrefs.default_page_width
-		self.tab_width = leoPrefs.default_tab_width
-		
-		self.presentLanguage = self.targetLanguage = leoPrefs.default_target_language
+		if 1: # 8/2/02
+			self.page_width = self.commands.page_width
+			self.tab_width = self.commands.tab_width
+			self.presentLanguage = self.targetLanguage = c.target_language
+		else:
+			self.page_width = leoPrefs.default_page_width
+			self.tab_width = leoPrefs.default_tab_width
+			self.presentLanguage = self.targetLanguage = leoPrefs.default_target_language
+			
 		self.default_directory = leoPrefs.default_default_directory
-		
 		delim1, delim2, delim3 = set_delims_from_language(self.presentLanguage)
 		#@-body
-		#@-node:1:C=5:<< Set delims to default values >>
+		#@-node:1:C=5:<< Set ivars >>
 
 		
 		#@<< Set path from @file node >>
@@ -438,16 +429,19 @@ class atFile:
 			
 			elif self.btest(comment_bits, bits):
 				k = dict["comment"] # 7/8/02, not "language!"
-				delim1, delim2, delim3 = set_delims_from_string(s[k:])
-				# @comment effectively disables Untangle.
-				self.presentLanguage = unknown_language
+				d1, d2, d3 = set_delims_from_string(s[k:])
+				if delim1:
+					# @comment effectively disables Untangle.
+					delim1, delim2, delim3 = d1, d2, d3
+					self.presentLanguage = unknown_language
 				
 			elif self.btest(language_bits, bits):
 				k = dict["language"]
 				issue_error_flag = false
-				language, delim1, delim2, delim3 = set_language(
-					s,k,issue_error_flag,self.targetLanguage)
+				language, d1, d2, d3 = set_language(s,k,issue_error_flag,self.targetLanguage)
+				# print `delim1`,`delim2`,`delim3`
 				if delim1:
+					delim1, delim2, delim3 = d1, d2, d3
 					self.targetLanguage = self.presentLanguage = language
 			#@-body
 			#@-node:3::<< Test for @comment or @language >>
@@ -525,20 +519,17 @@ class atFile:
 		#@+node:7::<< Set comment Strings from delims >>
 		#@+body
 		# Use single-line comments if we have a choice.
-		
-		if delim3:
-			# choice
+		# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
+		if delim1:
 			self.startSentinelComment = delim1
+			self.endSentinelComment = "" # Must not be None.
+		elif delim2 and delim3:
+			self.startSentinelComment = delim2
+			self.endSentinelComment = delim3
+		else: # Emergency!
+			assert(0)
+			self.startSentinelComment = "#" # This should never happen!
 			self.endSentinelComment = ""
-		elif delim2:
-			# no choice
-			self.startSentinelComment = delim1
-			self.endSentinelComment = delim2
-		elif delim1:
-			# no choice
-			self.startSentinelComment = delim1
-			self.endSentinelComment = ""
-		else: pass
 		#@-body
 		#@-node:7::<< Set comment Strings from delims >>
 	#@-body
@@ -1622,7 +1613,7 @@ class atFile:
 		self.os(' ')
 	
 	def oblanks(self,n):
-		self.os(' ' * n)
+		self.os(' ' * abs(n))
 	
 	def onl(self):
 		self.os("\n")
@@ -1636,7 +1627,7 @@ class atFile:
 			self.outputFile.write(s)
 	
 	def otabs(self,n):
-		self.os('\t' * n)
+		self.os('\t' * abs(n))
 	#@-body
 	#@-node:1:C=10:os, onl, etc.
 	#@+node:2::putBody
@@ -2040,22 +2031,22 @@ class atFile:
 			self.onl() # Note: no trailing whitespace.
 	#@-body
 	#@-node:7:C=15:putDocPart
-	#@+node:8::putIndent
+	#@+node:8:C=16:putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
 	def putIndent(self,n):
 	
 		c = self.commands
-		w = abs(self.tab_width)
+		w = self.tab_width
 		if w > 1:
-			self.otabs  (n / w)
-			self.oblanks(n % w)
+			self.otabs(int(n / w)) # To handle future division.
+			self.oblanks  (n % w)
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:8::putIndent
-	#@+node:9:C=16:atFile.write
+	#@-node:8:C=16:putIndent
+	#@+node:9:C=17:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2194,7 +2185,7 @@ class atFile:
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
-	#@-node:9:C=16:atFile.write
+	#@-node:9:C=17:atFile.write
 	#@+node:10::writeAll
 	#@+body
 	#@+at

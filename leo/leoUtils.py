@@ -21,16 +21,28 @@ def set_delims_from_language(language):
 	# trace(`language`)
 
 	for lang, val in [ (cweb_language, "// /* */"),
-		(c_language, "// /* */"), (java_language, "// /* */"),
-		(fortran_language, "C"), (fortran90_language, "!"),
-		(html_language, "<!-- -->"), (pascal_language, "// { }"),
-		(perl_language, "#"), (perlpod_language, "# =pod =cut"),
+		(c_language, "// /* */"),
+		(java_language, "/* */"), # 7/31/02: force block comments to handle java's lousy comment style.
+		(fortran_language, "C"),
+		(fortran90_language, "!"),
+		(html_language, "<!-- -->"),
+		(pascal_language, "// { }"),
+		(perl_language, "#"),
+		(perlpod_language, "# =pod =cut"),
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
-		(shell_language, "#"), (python_language, "#"),
+		(shell_language, "#"),
+		(python_language, "#"),
 		(tcltk_language, "#") ]: # 7/18/02
 		if lang == language:
 			# trace(`val`)
-			return set_delims_from_string(val)
+			delim1,delim2,delim3 = set_delims_from_string(val)
+			# 8/1/02: fix the "delims botch".
+			# Exactly 2 params delimit block params.
+			# This greatly simplifies the logic in the callers.
+			if delim2 and not delim3:
+				return None,delim1,delim2
+			else: # 0,1 or 3 params.
+				return delim1,delim2,delim3
 
 	return None, None, None # Indicate that no change should be made
 #@-body
@@ -65,8 +77,9 @@ def set_delims_from_string(s):
 		count += 1
 		
 	# Restore defaults if nothing specified
-	if not delims[0]:
-		delims[0], delims[1], delims[2] = "//", "/*", "*/"
+	if 0: # 8/1/02: no longer uses hard-code "default"
+		if not delims[0]:
+			delims[0], delims[1], delims[2] = "//", "/*", "*/"
 
 	# 7/8/02: The "REM hack": replace underscores by blanks.
 	for i in xrange(0,3):
@@ -99,13 +112,20 @@ def set_language(s,i,issue_errors_flag,default_language):
 	# Allow tcl/tk.
 	arg = string.lower(s[j:i])
 	if len(arg) > 0:
-		for name, language in [ ("ada", ada_language),
-			("c", c_language), ("c++", c_language),
-			("cweb", cweb_language), ("default", default_language),
-			("fortran", fortran_language), ("fortran90", fortran90_language),
-			("html", html_language), ("java", java_language),
-			("lisp", lisp_language), ("objective-c", c_language),
-			("pascal", pascal_language), ("perl", perl_language),
+		for name, language in [
+			("ada", ada_language),
+			("c", c_language),
+			("c++", c_language),
+			("cweb", cweb_language),
+			("default", default_language),
+			("fortran", fortran_language),
+			("fortran90", fortran90_language),
+			("html", html_language),
+			("java", java_language),
+			("lisp", lisp_language),
+			("objective-c", c_language),
+			("pascal", pascal_language),
+			("perl", perl_language),
 			("perlpod", perlpod_language),
 			("plain", plain_text_language), # 7/8/02
 			("python", python_language),

@@ -466,13 +466,15 @@ class colorizer:
 
 		
 		#@<< configure language-specific settings >>
-		#@+node:2:C=6:<< configure language-specific settings >>
+		#@+node:2:C=6:<< configure language-specific settings >> (colorizer)
 		#@+body
 		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
 		
-		(single_comment_start,
-			block_comment_start,
-			block_comment_end) = set_delims_from_language(language)
+		delim1,delim2,delim3 = set_delims_from_language(language)
+		# 8/1/02: this now works as expected.
+		single_comment_start = delim1
+		block_comment_start = delim2
+		block_comment_end = delim3
 		
 		has_string = language != plain_text_language
 		
@@ -496,7 +498,7 @@ class colorizer:
 		lb = choose(language==cweb_language,"@<","<<")
 		rb = choose(language==cweb_language,"@>",">>")
 		#@-body
-		#@-node:2:C=6:<< configure language-specific settings >>
+		#@-node:2:C=6:<< configure language-specific settings >> (colorizer)
 
 		self.count += 1
 		
@@ -931,7 +933,7 @@ class colorizer:
 			elif btest(language_bits,bits):
 				issue_error_flag = false
 				i = dict["language"]
-				language, delim1, delim2, delim3 = set_language(s,i,issue_error_flag,c.target_language)
+				language, junk, junk, junk = set_language(s,i,issue_error_flag,c.target_language)
 				break
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>

@@ -399,7 +399,7 @@ class tangleCommands:
 		c = self.commands
 		
 		#@<< init directive ivars >>
-		#@+node:3:C=2:<< init directive ivars >>
+		#@+node:3:C=2:<< init directive ivars >> (tangle)
 		#@+body
 		if 0: # not used in this version of Leo
 			self.allow_rich_text = default_allow_rich_text
@@ -419,9 +419,13 @@ class tangleCommands:
 		
 		# Default tangle language
 		self.language = c.target_language
-		(	self.single_comment_string,
-			self.start_comment_string,
-			self.end_comment_string ) = set_delims_from_language(self.language)
+		delim1,delim2,delim3 = set_delims_from_language(self.language)
+		# print `delim1`,`delim2`,`delim3`
+		
+		# 8/1/02: this now works as expected.
+		self.single_comment_string = delim1
+		self.start_comment_string = delim2
+		self.end_comment_string = delim3
 		
 		# Abbreviations for self.language
 		self.use_cweb_flag = self.language == cweb_language
@@ -430,7 +434,7 @@ class tangleCommands:
 		# Set only from directives.
 		self.print_bits = verbose_bits
 		#@-body
-		#@-node:3:C=2:<< init directive ivars >>
+		#@-node:3:C=2:<< init directive ivars >> (tangle)
 	#@-body
 	#@-node:2:C=1:tangle.init_ivars & init_directive_ivars
 	#@+node:3::top level
@@ -1267,14 +1271,14 @@ class tangleCommands:
 	#@-node:5::skip_headline
 	#@-node:1:C=7:Pass 1
 	#@+node:2::Pass 2
-	#@+node:1::oblank, oblanks, os, otab, otabs
+	#@+node:1:C=9:oblank, oblanks, os, otab, otabs
 	#@+body
 	def oblank (self):
 		self.oblanks(1)
 	
 	def oblanks (self,n):
-		if n > 0:
-			self.output_file.write(' ' * n)
+		if abs(n) > 0:
+			self.output_file.write(' ' * abs(n))
 			
 	def onl(self):
 		self.os('\n')
@@ -1287,11 +1291,11 @@ class tangleCommands:
 		self.otabs(1)
 	
 	def otabs (self,n):
-		if n > 0:
-			self.output_file.write('\t' * n)
+		if abs(n) > 0:
+			self.output_file.write('\t' * abs(n))
 	#@-body
-	#@-node:1::oblank, oblanks, os, otab, otabs
-	#@+node:2:C=9:tangle.put_all_roots
+	#@-node:1:C=9:oblank, oblanks, os, otab, otabs
+	#@+node:2:C=10:tangle.put_all_roots
 	#@+body
 	#@+at
 	#  This is the top level method of the second pass. It creates a separate C file for each @root directive in the outline. As 
@@ -1362,7 +1366,7 @@ class tangleCommands:
 				#@-body
 				#@-node:2::<< Erase the temporary file >>
 	#@-body
-	#@-node:2:C=9:tangle.put_all_roots
+	#@-node:2:C=10:tangle.put_all_roots
 	#@+node:3::put_code
 	#@+body
 	#@+at
@@ -1464,7 +1468,7 @@ class tangleCommands:
 			assert(progress < i)
 	#@-body
 	#@-node:3::put_code
-	#@+node:4:C=10:put_doc
+	#@+node:4:C=11:put_doc
 	#@+body
 	# This method outputs a doc section within a block comment.
 	
@@ -1473,7 +1477,9 @@ class tangleCommands:
 		# trace(`get_line(s,0)`)
 		width = self.page_width
 		words = 0 ; word_width = 0 ; line_width = 0
-		single_w = choose(self.single_comment_string,len(self.single_comment_string),0)
+		# 8/1/02: can't use choose here!
+		if self.single_comment_string == None: single_w = 0
+		else: single_w = len(self.single_comment_string)
 		# Make sure we put at least 20 characters on a line.
 		if width - max(0,self.tangle_indent) < 20:
 			width = max(0,self.tangle_indent) + 20
@@ -1598,25 +1604,25 @@ class tangleCommands:
 				self.onl()
 			else: self.onl()
 	#@-body
-	#@-node:4:C=10:put_doc
-	#@+node:5::put_leading_ws
+	#@-node:4:C=11:put_doc
+	#@+node:5:C=12:put_leading_ws
 	#@+body
 	# Outputs leading whitespace, converting tab_width blanks to tabs.
 	
 	def put_leading_ws(self,indent):
 	
 		# trace("tab_width:" + `self.tab_width` + ", indent:" + `indent`)
-		w = abs(self.tab_width)
+		w = self.tab_width
 	
 		if w > 1:
 			# Output tabs if possible.
-			self.otabs  (indent / w)
-			self.oblanks(indent % w)
+			self.otabs(int(indent / w)) # To handle future division.
+			self.oblanks  (indent % w)
 		else:
 			self.oblanks(indent)
 
 	#@-body
-	#@-node:5::put_leading_ws
+	#@-node:5:C=12:put_leading_ws
 	#@+node:6::put_newline
 	#@+body
 	#@+at
@@ -2078,7 +2084,7 @@ class tangleCommands:
 	#@-body
 	#@-node:7::st_lookup
 	#@-node:5::tst
-	#@+node:6:C=11:ust
+	#@+node:6:C=13:ust
 	#@+node:1::ust_dump
 	#@+body
 	def ust_dump (self):
@@ -2183,8 +2189,8 @@ class tangleCommands:
 					break # One warning per section is enough.
 	#@-body
 	#@-node:4::ust_warn_about_orphans
-	#@-node:6:C=11:ust
-	#@+node:7:C=12:untangle
+	#@-node:6:C=13:ust
+	#@+node:7:C=14:untangle
 	#@+node:1::compare_comments
 	#@+body
 	#@+at
@@ -2208,7 +2214,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:1:C=13:<< Check both parts for @ comment conventions >>
+				#@+node:1:C=15:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2245,7 +2251,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:1:C=13:<< Check both parts for @ comment conventions >>
+				#@-node:1:C=15:<< Check both parts for @ comment conventions >>
 
 			if p1 >= len(s1) or p2 >= len(s2):
 				break
@@ -2342,7 +2348,7 @@ class tangleCommands:
 			if self.comment and self.comment_end:
 				
 				#@<< Check both parts for @ comment conventions >>
-				#@+node:2:C=13:<< Check both parts for @ comment conventions >>
+				#@+node:2:C=15:<< Check both parts for @ comment conventions >>
 				#@+body
 				#@+at
 				#  This code is used in forgiving_compare()and in compare_comments().
@@ -2379,7 +2385,7 @@ class tangleCommands:
 						continue
 
 				#@-body
-				#@-node:2:C=13:<< Check both parts for @ comment conventions >>
+				#@-node:2:C=15:<< Check both parts for @ comment conventions >>
 
 			ch1 = s1[p1]
 			if ch1 == '\r' or ch1 == '\n':
@@ -2461,14 +2467,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=14:<< Compare single characters >>
+					#@+node:1:C=16:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=14:<< Compare single characters >>
+					#@-node:1:C=16:<< Compare single characters >>
 				#@-body
 				#@-node:6::<< Compare possible strings >>
 
@@ -2504,14 +2510,14 @@ class tangleCommands:
 				else:
 					
 					#@<< compare single characters >>
-					#@+node:1:C=14:<< Compare single characters >>
+					#@+node:1:C=16:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=14:<< Compare single characters >>
+					#@-node:1:C=16:<< Compare single characters >>
 
 
 				#@-body
@@ -2609,14 +2615,14 @@ class tangleCommands:
 				else:
 					
 					#@<< Compare single characters >>
-					#@+node:1:C=14:<< Compare single characters >>
+					#@+node:1:C=16:<< Compare single characters >>
 					#@+body
 					assert(p1 < len(s1) and p2 < len(s2))
 					result = s1[p1] == s2[p2]
 					p1 += 1 ; p2 += 1
 					if not result: self.mismatch("Mismatched single characters")
 					#@-body
-					#@-node:1:C=14:<< Compare single characters >>
+					#@-node:1:C=16:<< Compare single characters >>
 				#@-body
 				#@-node:8::<< Compare comments or single characters >>
 
@@ -3026,8 +3032,8 @@ class tangleCommands:
 		c.endUpdate()
 	#@-body
 	#@-node:7::update_current_vnode
-	#@-node:7:C=12:untangle
-	#@+node:8:C=15:utility methods
+	#@-node:7:C=14:untangle
+	#@+node:8:C=17:utility methods
 	#@+body
 	#@+at
 	#  These utilities deal with tangle ivars, so they should be methods.
@@ -3327,16 +3333,7 @@ class tangleCommands:
 		return i, val
 	#@-body
 	#@-node:10::scan_short_val
-	#@+node:11::set_root_delims
-	#@+body
-	def set_root_delims(self,s):
-	
-		(self.single_comment_string,
-		self.start_comment_string,
-		self.end_comment_string) = set_delims_from_string(s)
-	#@-body
-	#@-node:11::set_root_delims
-	#@+node:12::setRootFromHeadline
+	#@+node:11::setRootFromHeadline
 	#@+body
 	def setRootFromHeadline (self,v):
 	
@@ -3349,8 +3346,8 @@ class tangleCommands:
 				# self.root_name must be set later by token_type().
 				self.root = s
 	#@-body
-	#@-node:12::setRootFromHeadline
-	#@+node:13::setRootFromText
+	#@-node:11::setRootFromHeadline
+	#@+node:12::setRootFromText
 	#@+body
 	#@+at
 	#  This code skips the file name used in @root directives.  i points after the @root directive.
@@ -3385,8 +3382,8 @@ class tangleCommands:
 			self.root_name = string.strip(s[root1:root2])
 		return i
 	#@-body
-	#@-node:13::setRootFromText
-	#@+node:14::skip_CWEB_section_name
+	#@-node:12::setRootFromText
+	#@+node:13::skip_CWEB_section_name
 	#@+body
 	#@+at
 	#  This function skips past a section name that starts with @< and ends with @>. This code also skips any = following the 
@@ -3431,8 +3428,8 @@ class tangleCommands:
 		else:
 			return i, kind, end
 	#@-body
-	#@-node:14::skip_CWEB_section_name
-	#@+node:15::skip_noweb_section_name
+	#@-node:13::skip_CWEB_section_name
+	#@+node:14::skip_noweb_section_name
 	#@+body
 	#@+at
 	#  This function skips past a section name that starts with < < and might end with > > or > > =. The entire section name must 
@@ -3479,8 +3476,8 @@ class tangleCommands:
 			i = j
 		return i, kind, end
 	#@-body
-	#@-node:15::skip_noweb_section_name
-	#@+node:16::skip_section_name
+	#@-node:14::skip_noweb_section_name
+	#@+node:15::skip_section_name
 	#@+body
 	# Returns a tuple (i, kind, end)
 	
@@ -3491,8 +3488,8 @@ class tangleCommands:
 		else:
 			return self.skip_cweb_section_name(s,i)
 	#@-body
-	#@-node:16::skip_section_name
-	#@+node:17::standardize_name
+	#@-node:15::skip_section_name
+	#@+node:16::standardize_name
 	#@+body
 	#@+at
 	#  This code removes leading and trailing brackets, converts white space to a single blank and converts to lower case.
@@ -3519,8 +3516,8 @@ class tangleCommands:
 		# trace(`name`)
 		return name
 	#@-body
-	#@-node:17::standardize_name
-	#@+node:18:C=16:tangle.scanAllDirectives
+	#@-node:16::standardize_name
+	#@+node:17:C=18:tangle.scanAllDirectives
 	#@+body
 	#@+at
 	#  This code scans the node v and all its ancestors looking for directives.  If found,the corresponding globals are set for 
@@ -3550,9 +3547,17 @@ class tangleCommands:
 				 pass # Do nothing more.
 			elif btest(bits,comment_bits):
 				i = dict["comment"]
-				self.set_root_delims(s[i:])
-				# @comment effectively disables Untangle.
-				self.language = unknown_language
+				# self.set_root_delims(s[i:])
+				(delim1,delim2,delim3) = set_delims_from_string(s[i:])
+				if delim1 or delim2:
+					self.single_comment_string = delim1
+					self.start_comment_string = delim2
+					self.end_comment_string = delim3
+					# @comment effectively disables Untangle.
+					self.language = unknown_language
+				else:
+					if issue_error_flag:
+						es("ignoring: " + s[i:])
 			elif btest(bits,language_bits):
 				issue_error_flag = false
 				i = dict["language"]
@@ -3560,10 +3565,14 @@ class tangleCommands:
 				language,delim1,delim2,delim3 = set_language(
 					s,i,issue_error_flag,c.target_language)
 				self.language = language
+				# 8/1/02: Now works as expected.
 				self.single_comment_string = delim1
 				self.start_comment_string = delim2
 				self.end_comment_string = delim3
-				# trace(`self.single_comment_string` + "," + `self.start_comment_string` + "," + `self.end_comment_string`)
+				if 0:
+					trace(`self.single_comment_string` + "," +
+					`self.start_comment_string` + "," +
+					`self.end_comment_string`)
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
 
@@ -3717,8 +3726,8 @@ class tangleCommands:
 
 		# trace(`self.tangle_directory`)
 	#@-body
-	#@-node:18:C=16:tangle.scanAllDirectives
-	#@+node:19:C=17:token_type
+	#@-node:17:C=18:tangle.scanAllDirectives
+	#@+node:18:C=19:token_type
 	#@+body
 	#@+at
 	#  This method returns a code indicating the apparent kind of token at the position i. The caller must determine whether 
@@ -3794,8 +3803,8 @@ class tangleCommands:
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
 	#@-body
-	#@-node:19:C=17:token_type
-	#@-node:8:C=15:utility methods
+	#@-node:18:C=19:token_type
+	#@-node:8:C=17:utility methods
 	#@-others
 	
 	#@-body
