@@ -546,6 +546,12 @@ class baseUndoer:
 					u.p.linkAsNthChild(u.parent,0)
 				else:
 					u.p.linkAsRoot()
+					
+				# Restore all vnodeLists (and thus all clone marks).
+				for p2 in u.p.self_and_subtree_iter():
+					vnodeList = p2.v.t.vnodeList
+					if p2.v not in vnodeList:
+						vnodeList.append(p2.v)
 			
 				c.selectVnode(u.p)
 			#@nonl
@@ -570,11 +576,8 @@ class baseUndoer:
 				elif u.back:
 					u.p.moveAfter(u.back)
 				else:
-					# Moving up is the only case that can do this.
-					assert(u.p.hasParent)
-					parent = u.p.getParent()
-					u.p.moveToRoot(c.rootPostion())
-					parent.moveAfter(u.p)
+					oldRoot = c.rootPosition() # Bug fix: 4/9/04
+					u.p.moveToRoot(oldRoot)
 			
 				c.selectVnode(u.p)
 				
@@ -753,6 +756,12 @@ class baseUndoer:
 					u.p.linkAsNthChild(u.parent,0)
 				else:
 					u.p.linkAsRoot()
+					
+				# Restore all vnodeLists (and thus all clone marks).
+				for p2 in u.p.self_and_subtree_iter():
+					vnodeList = p2.v.t.vnodeList
+					if p2.v not in vnodeList:
+						vnodeList.append(p2.v)
 			
 				c.selectVnode(u.p)
 			#@nonl
@@ -791,16 +800,14 @@ class baseUndoer:
 			elif undoType in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 			
 				# g.trace("oldParent",u.oldParent)
+			
 				if u.oldParent:
 					u.p.moveToNthChildOf(u.oldParent,u.oldN)
 				elif u.oldBack:
 					u.p.moveAfter(u.oldBack)
 				else:
-					# Moving up is the only case that can do this.
-					assert(u.p.hasParent())
-					parent = u.p.getParent()
-					u.p.moveToRoot(c.rootPosition())
-					parent.moveAfter(u.p)
+					oldRoot = c.rootPosition() # Bug fix: 4/9/04
+					u.p.moveToRoot(oldRoot)
 			
 				c.selectVnode(u.p)
 			#@nonl
