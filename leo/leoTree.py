@@ -781,6 +781,10 @@ class leoTree:
 		c = self.commands
 		if not c or not v or v != c.currentVnode():
 			return "break"
+		# Call the pre-key hook.
+		flag = handleLeoHook("bodykey1",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
+		if flag == true:
+			return "break" # The hook claims to have handled the event.
 		body = v.bodyString()
 		s = c.body.get("1.0", "end")
 		# Do nothing for control characters...
@@ -941,8 +945,9 @@ class leoTree:
 			v.iconVal = val
 			redraw_flag = true
 		c.endUpdate(redraw_flag) # redraw only if necessary
+		# Call the post-key hook.
+		handleLeoHook("bodykey2",c=c,v=v,ch=ch,oldSel=oldSel,undoType=undoType)
 		return "break"
-	
 	#@-body
 	#@-node:4::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
 	#@+node:5::tree.OnContinueDrag
@@ -1430,10 +1435,15 @@ class leoTree:
 	#@-at
 	#@@c
 
-	def select (self, v):
+	def select (self,v):
 		
 		# trace(`v`)
 		c = self.commands ; frame = c.frame ; body = frame.body
+		old_v = c.currentVnode()
+		doSelectHook = v != old_v
+		# Call the pre-select hook.
+		if doSelectHook:
+			handleLeoHook("select1",c=c,new_v=v)
 		# Remember the position of the scrollbar before making any changes.
 		yview=body.yview()
 		insertSpot = c.body.index("insert") # 9/21/02
@@ -1489,8 +1499,9 @@ class leoTree:
 		self.scanForTabWidth(v) # 9/13/02
 		# Set focus.
 		self.commands.body.focus_set()
-	
-	
+		# Call the post-select hook.
+		if doSelectHook:
+			handleLeoHook("select2",c=c,old_v=old_v)
 	#@-body
 	#@-node:5::tree.select
 	#@+node:6::tree.set...LabelState

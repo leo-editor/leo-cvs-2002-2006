@@ -158,10 +158,10 @@ class config:
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
 		self.use_relative_node_indices = 1
+		self.use_configureLeo_dot_py = 0 # Should _never_ be 1 (!!)
 		self.write_clone_indices = 0
 		self.xml_version_string = "UTF-8"
 			# Must be upper case for compatibility with older versions of Leo.
-		
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -632,11 +632,14 @@ class config:
 			self.remove_sentinels_extension = self.initConfigParam(
 				"remove_sentinels_extension",
 				self.remove_sentinels_extension)
+				
+			self.use_configureLeo_dot_py = self.initBooleanConfigParam(
+				"use_configureLeo_dot_py",
+				self.use_configureLeo_dot_py)
 			
 			self.write_clone_indices = self.initBooleanConfigParam(
 				"write_clone_indices",
 				self.write_clone_indices)
-			
 			#@-body
 			#@-node:1::<< get config options >>
 

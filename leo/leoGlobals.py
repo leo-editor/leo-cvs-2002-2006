@@ -2288,9 +2288,12 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 #@-at
 #@@c
 
-def handleLeoHook(tag):
+def handleLeoHook(tag,**keywords):
 
 	a = app() ; c = top() # c may be None during startup.
+	
+	if not app().config.use_configureLeo_dot_py:
+		return None # not enabled.
 
 	if a.hookError:
 		return None
@@ -2302,7 +2305,7 @@ def handleLeoHook(tag):
 			es("exception in hook function for " + title)
 	elif a.hookFunction:
 		try:
-			return a.hookFunction(tag)
+			return a.hookFunction(tag,keywords)
 		except:
 			es("exception in app().hookFunction")
 	else:
@@ -2310,7 +2313,7 @@ def handleLeoHook(tag):
 			from customizeLeo import customizeLeo
 			try:
 				a.hookFunction = customizeLeo
-				return customizeLeo(tag)
+				return customizeLeo(tag,keywords)
 			except:
 				a.hookFunction = None
 				es("exception in customizeLeo")

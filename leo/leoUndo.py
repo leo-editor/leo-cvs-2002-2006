@@ -1106,6 +1106,7 @@ class undoer:
 				newlines -= 1
 			if oldNewlines > newlines:
 				c.frame.body.insert("end",'\n'*(oldNewlines-newlines))
+			
 			#@-body
 			#@-node:1::<< Incrementally update the Tk.Text widget >>
 

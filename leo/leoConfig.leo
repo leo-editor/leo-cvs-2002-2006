@@ -16,11 +16,11 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="V"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -170,6 +170,25 @@ stylesheet =
 #	        Leo simply copies this line as given.
 #	Note 2: Please set this field empty when uploading to CVS.
 #	Note 3: This field must be empty for compatibility with older versions of Leo.
+
+use_configureLeo_dot_py = 1
+
+#	1: Leo calls code "hooks" in configureLeo.py.
+#      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
+#   0: (The default) Leo calls NO hooks in configureLeo.py.
+#
+#	Very important SECURITY WARNINGS:
+#
+#   - Setting use_configureLeo_dot_py = 1 enables user code that could,
+#     if not well thought out, create SECURITY ISSUES.
+#     See the warnings in the @file configureLeo.py node in LeoPy.py.
+#	- Neither leoConfigure.leo nor leoConfigure.txt
+#	  should EVER be distributed with use_configureLeo_dot_py = 1
+#     Please report such distributions to me, Edward K. Ream.
+#   - Distributing any copy of configureLeo.py should be considered a HOSTILE ACT.
+#	  Please report anyone that distributes configureLeo.py to me.
+#	  At no time should an authentic Leo distribution ever contain configureLeo.py.
+#	  Please report any such distributions to me.
 
 use_relative_node_indices = 0
 #	At present this user option is non-functional.

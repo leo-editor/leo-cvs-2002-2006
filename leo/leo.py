@@ -117,7 +117,7 @@ def leoOpen(fileName=None,*args):
 		frame1.title = fileName
 		frame1.top.title(fileName)
 	init_sherlock(args)
-	handleLeoHook("start2")
+	handleLeoHook("start2",fileName=fileName)
 	root.mainloop()
 #@-body
 #@-node:4::leo.leoOpen

@@ -883,7 +883,7 @@ class LeoFrame:
 		app().log = self
 	
 		app().commandName = label
-		flag = handleLeoHook("command1")
+		flag = handleLeoHook("command1",label=label)
 		if flag == None or flag != false:
 			try:
 				command(event)
@@ -891,7 +891,7 @@ class LeoFrame:
 				es("exception executing command")
 				es_exception()
 		
-			handleLeoHook("command2")
+			handleLeoHook("command2",label=label)
 		return "break" # Inhibit all other handlers.
 	#@-body
 	#@-node:9::frame.doCommand
@@ -1452,7 +1452,8 @@ class LeoFrame:
 			file = open(fileName,'r')
 			if file:
 				frame = LeoFrame(fileName)
-				flag = handleLeoHook("open1")
+				flag = handleLeoHook("open1",
+					old_c=self,new_c=frame.commands,fileName=fileName)
 				if flag == None or flag != false:
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
@@ -1491,7 +1492,8 @@ class LeoFrame:
 				#@-body
 				#@-node:1::<< make fileName the most recent file of frame >>
 
-				handleLeoHook("open2")
+				handleLeoHook("open2",
+					old_c=self,new_c=frame.commands,fileName=fileName)
 				return true, frame
 			else:
 				es("can not open" + fileName)
