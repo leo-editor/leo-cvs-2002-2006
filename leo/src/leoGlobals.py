@@ -253,178 +253,6 @@ class Bunch:
 		
 		
 #@-node:class Bunch
-#@+node:attachLeoIcon & allies
-#@+at 
-#@nonl
-# This code requires Fredrik Lundh's PIL and tkIcon packages:
-# 
-# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
-# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
-# 
-# We wait until the window has been drawn once before attaching the icon in 
-# OnVisiblity.
-# 
-# Many thanks to Jonathan M. Gilligan for suggesting this code.
-#@-at
-#@@c
-
-leoIcon = None
-
-def attachLeoIcon (w):
-	try:
-		import Image,_tkicon
-		import tkIcon
-		global leoIcon
-		
-		f = onVisibility
-		callback = lambda event,w=w,f=f:f(w,event)
-		w.bind("<Visibility>",callback)
-		if not leoIcon:
-			# Using a .gif rather than an .ico allows us to specify transparency.
-			icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
-			icon_file_name = os.path.normpath(icon_file_name)
-			icon_image = Image.open(icon_file_name)
-			if 1: # Doesn't resize.
-				leoIcon = createLeoIcon(icon_image)
-			else: # Assumes 64x64
-				leoIcon = tkIcon.Icon(icon_image)
-			
-	except:
-		# es_exception()
-		leoIcon = None
-#@nonl
-#@-node:attachLeoIcon & allies
-#@+node:createLeoIcon
-# This code is adapted from tkIcon.__init__
-# Unlike the tkIcon code, this code does _not_ resize the icon file.
-
-def createLeoIcon (icon):
-	
-	try:
-		import Image,_tkicon
-		import tkIcon
-		
-		i = icon ; m = None
-		# create transparency mask
-		if i.mode == "P":
-			try:
-				t = i.info["transparency"]
-				m = i.point(lambda i, t=t: i==t, "1")
-			except KeyError: pass
-		elif i.mode == "RGBA":
-			# get transparency layer
-			m = i.split()[3].point(lambda i: i == 0, "1")
-		if not m:
-			m = Image.new("1", i.size, 0) # opaque
-		# clear unused parts of the original image
-		i = i.convert("RGB")
-		i.paste((0, 0, 0), (0, 0), m)
-		# create icon
-		m = m.tostring("raw", ("1", 0, 1))
-		c = i.tostring("raw", ("BGRX", 0, -1))
-		return _tkicon.new(i.size, c, m)
-	except:
-		return None
-#@nonl
-#@-node:createLeoIcon
-#@+node:onVisibility
-# Handle the "visibility" event and attempt to attach the Leo icon.
-# This code must be executed whenever the window is redrawn.
-
-def onVisibility (w,event):
-
-	global leoIcon
-
-	try:
-		import Image,_tkicon
-		import tkIcon
-		if leoIcon and w and event and event.widget == w:
-			if 1: # Allows us not to resize the icon.
-				leoIcon.attach(w.winfo_id())
-			else:
-				leoIcon.attach(w)
-	except: pass
-#@nonl
-#@-node:onVisibility
-#@+node:get_window_info
-# WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def get_window_info (top):
-	
-	top.update_idletasks() # Required to get proper info.
-
-	# Get the information about top and the screen.
-	geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-	dim,x,y = string.split(geom,'+')
-	w,h = string.split(dim,'x')
-	w,h,x,y = int(w),int(h),int(x),int(y)
-	
-	return w,h,x,y
-#@nonl
-#@-node:get_window_info
-#@+node:center_dialog
-# Center the dialog on the screen.
-# WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def center_dialog(top):
-
-	sw = top.winfo_screenwidth()
-	sh = top.winfo_screenheight()
-	w,h,x,y = get_window_info(top)
-	
-	# Set the new window coordinates, leaving w and h unchanged.
-	x = (sw - w)/2
-	y = (sh - h)/2
-	top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-	
-	return w,h,x,y
-#@nonl
-#@-node:center_dialog
-#@+node:create_labeled_frame
-# Returns frames w and f.
-# Typically the caller would pack w into other frames, and pack content into f.
-
-def create_labeled_frame (parent,
-	caption=None,relief="groove",bd=2,padx=0,pady=0):
-	
-	Tk = Tkinter
-	# Create w, the master frame.
-	w = Tk.Frame(parent)
-	w.grid(sticky="news")
-	
-	# Configure w as a grid with 5 rows and columns.
-	# The middle of this grid will contain f, the expandable content area.
-	w.columnconfigure(1,minsize=bd)
-	w.columnconfigure(2,minsize=padx)
-	w.columnconfigure(3,weight=1)
-	w.columnconfigure(4,minsize=padx)
-	w.columnconfigure(5,minsize=bd)
-	
-	w.rowconfigure(1,minsize=bd)
-	w.rowconfigure(2,minsize=pady)
-	w.rowconfigure(3,weight=1)
-	w.rowconfigure(4,minsize=pady)
-	w.rowconfigure(5,minsize=bd)
-
-	# Create the border spanning all rows and columns.
-	border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-	border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
-	
-	# Create the content frame, f, in the center of the grid.
-	f = Tk.Frame(w,bd=bd)
-	f.grid(row=3,column=3,sticky="news")
-	
-	# Add the caption.
-	if caption and len(caption) > 0:
-		caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
-		caption.tkraise(w)
-		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
-
-	return w,f
-#@nonl
-#@-node:create_labeled_frame
 #@+node:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
 
@@ -863,73 +691,6 @@ def scanDirectives(c,v=None):
 		"wrap"      : wrap }
 
 #@-node:scanDirectives (utils)
-#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-def canonicalizeMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		# if ch not in (' ','\t','\n','\r','&'):
-		if ch in string.letters:
-			newname = newname+ch
-	return newname
-	
-def canonicalizeTranslatedMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		if ch not in (' ','\t','\n','\r','&'):
-		# if ch in string.letters:
-			newname = newname+ch
-	return newname
-#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+node:enableMenu & disableMenu & setMenuLabel
-# 11/17/02: Fail gracefully if the item name does not exist.
-def enableMenu (menu,name,val):
-	state = choose(val,"normal","disabled")
-	try:
-		menu.entryconfig(name,state=state)
-	except:
-		try:
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state=state)
-		except:
-			print "enableMenu menu,name,val:",menu,name,val
-			es_exception()
-			pass
-
-def disableMenu (menu,name):
-	try:
-		menu.entryconfig(name,state="disabled")
-	except: 
-		try:
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state="disabled")
-		except:
-			print "disableMenu menu,name:",menu,name
-			es_exception()
-			pass
-
-def setMenuLabel (menu,name,label,underline=-1):
-	try:
-		if type(name) == type(0):
-			# "name" is actually an index into the menu.
-			menu.entryconfig(name,label=label,underline=underline)
-		else:
-			# Bug fix: 2/16/03: use translated name.
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			# Bug fix: 3/25/03" use tranlasted label.
-			label = app().getRealMenuName(label)
-			label = label.replace("&","")
-			menu.entryconfig(realName,label=label,underline=underline)
-	except:
-		print "setMenuLabel menu,name,label:",menu,name,label
-		es_exception()
-		pass
-#@nonl
-#@-node:enableMenu & disableMenu & setMenuLabel
 #@+node:openWithFileName (leoGlobals)
 def openWithFileName(fileName,old_c=None):
 	
@@ -1835,34 +1596,106 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
-#@+node:get_focus
-def get_focus(top):
+#@+node:Dialog utils...
+def attachLeoIcon (w):
+	"""Attach the Leo icon to window w."""
+	app().gui.attachLeoIcon(w)
 	
-	"""Returns the widget that has focus, or body if None."""
+def center_dialog(dialog):
+	"""Center the dialog."""
+	app().gui.center_dialog(dialog)
+	
+def create_labeled_frame (parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
+	"""Create a labeled frame."""
+	return app().gui.create_labeled_frame(parent,caption,relief,bd,padx,pady)
+	
+def get_window_info (window):
+	"""Return the window information."""
+	return app().gui.get_window_info(window)
+#@nonl
+#@-node:Dialog utils...
+#@+node:Focus (leoGlobals)
+# These convenience routines just call the corresponding method of the app().gui class.
 
-	return top.focus_displayof()
-#@nonl
-#@-node:get_focus
-#@+node:set_focus
+def get_focus(top):
+	"""Return the widget that has focus, or the body widget if None."""
+	return app().gui.get_focus(top)
+	
 def set_focus(commands,widget):
-	
 	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	app().gui.set_focus(commands,widget)
 	
-	focus = commands.frame.top.focus_displayof()
-	if focus != widget:
-		# trace(`widget`)
-		widget.focus_set()
-#@nonl
-#@-node:set_focus
-#@+node:force_focus
-def force_focus(widget):
+def force_focus(commands,widget):
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	app().gui.force_focus(commands,widget)
+#@-node:Focus (leoGlobals)
+#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
+def canonicalizeMenuName (name):
 	
-	focus = commands.frame.top.focus_displayof()
-	if focus != widget:
-		trace(widget)
-		widget.focus_force() # Apparently it is not a good idea to call focus_force.
+	name = name.lower() ; newname = ""
+	for ch in name:
+		# if ch not in (' ','\t','\n','\r','&'):
+		if ch in string.letters:
+			newname = newname+ch
+	return newname
+	
+def canonicalizeTranslatedMenuName (name):
+	
+	name = name.lower() ; newname = ""
+	for ch in name:
+		if ch not in (' ','\t','\n','\r','&'):
+		# if ch in string.letters:
+			newname = newname+ch
+	return newname
+#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
+#@+node:enableMenu & disableMenu & setMenuLabel
+# 11/17/02: Fail gracefully if the item name does not exist.
+def enableMenu (menu,name,val):
+	state = choose(val,"normal","disabled")
+	try:
+		menu.entryconfig(name,state=state)
+	except:
+		try:
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state=state)
+		except:
+			print "enableMenu menu,name,val:",menu,name,val
+			es_exception()
+			pass
+
+def disableMenu (menu,name):
+	try:
+		menu.entryconfig(name,state="disabled")
+	except: 
+		try:
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state="disabled")
+		except:
+			print "disableMenu menu,name:",menu,name
+			es_exception()
+			pass
+
+def setMenuLabel (menu,name,label,underline=-1):
+	try:
+		if type(name) == type(0):
+			# "name" is actually an index into the menu.
+			menu.entryconfig(name,label=label,underline=underline)
+		else:
+			# Bug fix: 2/16/03: use translated name.
+			realName = app().getRealMenuName(name)
+			realName = realName.replace("&","")
+			# Bug fix: 3/25/03" use tranlasted label.
+			label = app().getRealMenuName(label)
+			label = label.replace("&","")
+			menu.entryconfig(realName,label=label,underline=underline)
+	except:
+		print "setMenuLabel menu,name,label:",menu,name,label
+		es_exception()
+		pass
 #@nonl
-#@-node:force_focus
+#@-node:enableMenu & disableMenu & setMenuLabel
 #@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -1979,17 +1812,6 @@ def printGcRefs (verbose=true):
 #@-node:printGcRefs
 #@-others
 #@-node:Garbage Collection
-#@+node:gui
-if 0: # There is no need to use a dispatcher!
-	def gui(functionName,*args,**keys):
-	
-		"""A global function to call a method of the app().gui instance.
-		
-		The first argument must be the name of a method."""
-	
-		return app().guiDispatcher(functionName,*args,**keys)
-#@nonl
-#@-node:gui
 #@+node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+at 
 #@nonl

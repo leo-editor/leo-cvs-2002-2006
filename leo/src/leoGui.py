@@ -8,6 +8,7 @@
 Plugins may define their own gui classes by setting app().gui."""
 
 from leoGlobals import *
+import leoFind
 import os,sys,tkFont,Tkinter,traceback
 
 Tk = Tkinter
@@ -26,7 +27,10 @@ class leoGui:
 		
 		# print "leoGui.__init__",guiName
 		
+		self.leoIcon = None
 		self.mGuiName = guiName
+		self.mainLoop = None
+		self.root = None
 	#@nonl
 	#@-node:leoGui.__init__
 	#@+node:__getattr__ & ignoreUnknownAttr
@@ -87,6 +91,14 @@ class leoGui:
 		pass
 	
 	#@-node:Birth, death & rebirth
+	#@+node:runMainLoop
+	def runMainLoop(self):
+	
+		"""A do-nothing base class to run the gui's main loop."""
+		
+		pass
+	#@nonl
+	#@-node:runMainLoop
 	#@+node:Creating Frames
 	def newColorFrame(self,commander):
 		"""A do-nothing base class to create a colorFrame."""
@@ -143,6 +155,37 @@ class leoGui:
 		pass
 	#@nonl
 	#@-node:Creating and running dialogs
+	#@+node:Dialog utils
+	def attachLeoIcon (self,window):
+		"""Attach the Leo icon to a window."""
+		pass
+		
+	def center_dialog(self,dialog):
+		"""Center a dialog."""
+		pass
+		
+	def create_labeled_frame (self,parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
+		"""Create a labeled frame."""
+		pass
+		
+	def get_window_info (self,window):
+		"""Return the window information."""
+		pass
+	#@-node:Dialog utils
+	#@+node:Focus utils
+	def get_focus(self,top):
+		"""Return the widget that has focus, or the body widget if None."""
+		pass
+		
+	def set_focus(self,commander,widget):
+		"""Set the focus of the widget in the given commander if it needs to be changed."""
+		pass
+		
+	def force_focus(self,commander,widget):
+		"""Set the focus of the widget in the given commander if it needs to be changed."""
+		pass
+	#@nonl
+	#@-node:Focus utils
 	#@-others
 #@nonl
 #@-node:class leoGui
@@ -152,7 +195,7 @@ class tkinterGui(leoGui):
 	"""A class encapulating all calls to tkinter."""
 	
 	#@	@+others
-	#@+node:tkinterGui.__init__
+	#@+node: tkinterGui.__init__
 	def __init__ (self):
 		
 		# print "tkinterGui.__init__"
@@ -160,13 +203,242 @@ class tkinterGui(leoGui):
 		# Initialize the base class.
 		leoGui.__init__(self,"tkinter")
 	#@nonl
-	#@-node:tkinterGui.__init__
+	#@-node: tkinterGui.__init__
+	#@+node:createRootWindow & allies
+	def createRootWindow(self):
+	
+		"""Create a hidden Tk root window."""
+		
+		# print "tkinterGui:createRootWindow"
+	
+		self.root = root = Tkinter.Tk()
+		root.title("Leo Main Window")
+		root.withdraw()
+		
+		self.setDefaultIcon()
+		self.getDefaultConfigFont(app().config)
+		self.setEncoding()
+		self.createGlobalWindows()
+	
+		return root
+	#@nonl
+	#@-node:createRootWindow & allies
+	#@+node:setDefaultIcon
+	def setDefaultIcon(self):
+		
+		# print "setDefaultIcon"
+		
+		gui = self ; a = app()
+		try:
+			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
+			bitmap = Tkinter.BitmapImage(bitmap_name)
+		except:
+			print "exception creating bitmap"
+			traceback.print_exc()
+		
+		try:
+			version = gui.root.getvar("tk_patchLevel")
+			v834 = CheckVersion(version, "8.3.4") # v834 true if 8.3.4 or greater.
+		except:
+			print "exception getting version"
+			traceback.print_exc()
+			v834 = None
+			
+		if v834:
+			print "setting tk 8.3.4 default icon bitmap"
+			try:
+				if sys.platform=="win32": # Windows
+					gui.root.wm_iconbitmap(bitmap,default=1)
+				else:
+					gui.root.wm_iconbitmap(bitmap)
+			except:
+				if 1: # Let's ignore this for now until I understand the issues better.
+					es("exception setting bitmap")
+					es_exception()
+	#@nonl
+	#@-node:setDefaultIcon
+	#@+node:setEncoding
+	#@+at 
+	#@nonl
+	# According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
+	# be fixed. The workaround is to copy the getpreferredencoding() function 
+	# from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
+	#@-at
+	#@@c
+	
+	def setEncoding (self):
+		
+		a = app()
+	
+		for (encoding,src) in (
+			(a.config.tkEncoding,"config"),
+			#(locale.getdefaultlocale()[1],"locale"),
+			(getpreferredencoding(),"locale"),
+			(sys.getdefaultencoding(),"sys"),
+			("utf-8","default")):
+		
+			if isValidEncoding (encoding): # 3/22/03
+				a.tkEncoding = encoding
+				# print a.tkEncoding,src
+				break
+			elif encoding and len(encoding) > 0:
+				print "ignoring invalid " + src + " encoding: " + `encoding`
+				
+		# print "setEncoding",a.tkEncoding
+	#@nonl
+	#@-node:setEncoding
+	#@+node:getDefaultConfigFont
+	def getDefaultConfigFont(self,config):
+		
+		"""Get the default font from a new text widget."""
+		
+		# print "getDefaultConfigFont",`config`
+	
+		t = Tkinter.Text()
+		fn = t.cget("font")
+		font = tkFont.Font(font=fn)
+		config.defaultFont = font
+		config.defaultFontFamily = font.cget("family")
+	#@nonl
+	#@-node:getDefaultConfigFont
+	#@+node:createGlobalWindows
+	def createGlobalWindows (self):
+		
+		"""Create the global windows for the application."""
+	
+		a = app()
+		a.findFrame = leoFind.leoFind()
+		a.findFrame.top.withdraw()
+		a.globalWindows.append(a.findFrame)
+	#@nonl
+	#@-node:createGlobalWindows
 	#@+node:destroy
 	def destroy(self,widget):
 		
 		widget.destroy()
 	#@nonl
 	#@-node:destroy
+	#@+node:killGui (not used)
+	def killGui(self,exitFlag=true):
+		
+		"""Destroy a gui and terminate Leo if exitFlag is true."""
+	
+		pass # Not ready yet.
+	
+	#@-node:killGui (not used)
+	#@+node:recreateRootWindow (not used)
+	def recreateRootWindow(self):
+		"""A do-nothing base class to create the hidden root window of a gui
+	
+		after a previous gui has terminated with killGui(false)."""
+		pass
+	
+	#@-node:recreateRootWindow (not used)
+	#@+node:getFontFromParams
+	def getFontFromParams(self,family,size,slant,weight):
+		
+		# print "getFontFromParams"
+		
+		family_name = family
+		
+		try:
+			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+			#print family_name,family,size,slant,weight
+			#print "actual_name:",font.cget("family")
+			return font
+		except:
+			es("exception setting font from " + `family_name`)
+			es("family,size,slant,weight:"+
+				`family`+':'+`size`+':'+`slant`+':'+`weight`)
+			es_exception()
+			return self.defaultFont
+	#@nonl
+	#@-node:getFontFromParams
+	#@+node:Creating and running dialogs
+	def newAboutLeoDialog(self,commander):
+		"""A do-nothing base class to create an About Leo dialog."""
+		pass
+	
+	def newAskOkDialog(self,commander):
+		"""A do-nothing base class to create an askOK dialog ."""
+		pass
+	
+	def newAskOkCancelDialog(self,commander):
+		"""A do-nothing base class to create an askOkCancel dialog."""
+		pass
+	
+	def newAskOkCancelNumberDialog(self,commander):
+		"""A do-nothing base class to create an askOkCancelNumber dialog ."""
+		pass
+	
+	def newAskYesNoDialog(self,commander):
+		"""A do-nothing base class to create an askYesNo dialog."""
+		pass
+	
+	def newAskYesNoCancelDialg(self,commander):
+		"""A do-nothing base class to create an askYesNoCancel dialog ."""
+		pass
+	#@nonl
+	#@-node:Creating and running dialogs
+	#@+node:Creating Frames
+	def newColorFrame(self,commander):
+		"""A do-nothing base class to create a colorFrame."""
+		pass
+	
+	def newColorNameFrame(self,commander):
+		"""A do-nothing base class to create a colorNameFrame."""
+		pass
+	
+	def newCompareFrame(self,commander):
+		"""A do-nothing base class to create a compareFrame."""
+		pass
+	
+	def newFindFrame(self,commander):
+		"""A do-nothing base class to create a findFrame."""
+		pass
+	
+	def newFontFrame(self,commander):
+		"""A do-nothing base class to create a fondFrame."""
+		pass
+	
+	def newLeoFrame(self,commander):
+		"""A do-nothing base class to create a view frame for the Leo main window."""
+		print "tkinterGui:newLeoFrame"
+		return leoFrame.LeoFrame(commander)
+	
+	def newPrefsFrame(self,commander):
+		"""A do-nothing base class to create a prefsFrame."""
+		pass
+	#@nonl
+	#@-node:Creating Frames
+	#@+node:get_focus
+	def get_focus(self,top):
+		
+		"""Returns the widget that has focus, or body if None."""
+	
+		return top.focus_displayof()
+	#@nonl
+	#@-node:get_focus
+	#@+node:set_focus
+	def set_focus(self,commands,widget):
+		
+		"""Set the focus of the widget in the given commander if it needs to be changed."""
+		
+		focus = commands.frame.top.focus_displayof()
+		if focus != widget:
+			widget.focus_set()
+	#@nonl
+	#@-node:set_focus
+	#@+node:force_focus
+	def force_focus(self,commands,widget):
+		
+		"""Set the focus of the widget in the given commander if it needs to be changed."""
+		
+		focus = commands.frame.top.focus_displayof()
+		if focus != widget:
+			widget.focus_force() # Apparently it is not a good idea to call focus_force.
+	#@nonl
+	#@-node:force_focus
 	#@+node:attachLeoIcon & allies
 	#@+at 
 	#@nonl
@@ -182,30 +454,28 @@ class tkinterGui(leoGui):
 	#@-at
 	#@@c
 	
-	leoIcon = None
-	
 	def attachLeoIcon (self,w):
+		
+		# print "tkinterGui:attachLeoIcon"
 		try:
 			import Image,_tkicon
 			import tkIcon
-			global leoIcon
 			
-			f = onVisibility
+			f = self.onVisibility
 			callback = lambda event,w=w,f=f:f(w,event)
 			w.bind("<Visibility>",callback)
-			if not leoIcon:
+			if not self.leoIcon:
 				# Using a .gif rather than an .ico allows us to specify transparency.
 				icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
 				icon_file_name = os.path.normpath(icon_file_name)
 				icon_image = Image.open(icon_file_name)
 				if 1: # Doesn't resize.
-					leoIcon = createLeoIcon(icon_image)
+					self.leoIcon = self.createLeoIcon(icon_image)
 				else: # Assumes 64x64
-					leoIcon = tkIcon.Icon(icon_image)
-				
+					self.leoIcon = tkIcon.Icon(icon_image)
 		except:
 			# es_exception()
-			leoIcon = None
+			self.leoIcon = None
 	#@nonl
 	#@-node:attachLeoIcon & allies
 	#@+node:createLeoIcon
@@ -247,25 +517,40 @@ class tkinterGui(leoGui):
 	
 	def onVisibility (self,w,event):
 	
-		global leoIcon
-	
 		try:
 			import Image,_tkicon
 			import tkIcon
-			if leoIcon and w and event and event.widget == w:
+			if self.leoIcon and w and event and event.widget == w:
 				if 1: # Allows us not to resize the icon.
-					leoIcon.attach(w.winfo_id())
+					self.leoIcon.attach(w.winfo_id())
 				else:
-					leoIcon.attach(w)
+					self.leoIcon.attach(w)
 		except: pass
 	#@nonl
 	#@-node:onVisibility
+	#@+node:get_window_info
+	# WARNING: Call this routine _after_ creating a dialog.
+	# (This routine inhibits the grid and pack geometry managers.)
+	
+	def get_window_info (self,top):
+		
+		top.update_idletasks() # Required to get proper info.
+	
+		# Get the information about top and the screen.
+		geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
+		dim,x,y = string.split(geom,'+')
+		w,h = string.split(dim,'x')
+		w,h,x,y = int(w),int(h),int(x),int(y)
+		
+		return w,h,x,y
+	#@nonl
+	#@-node:get_window_info
 	#@+node:center_dialog
 	# Center the dialog on the screen.
 	# WARNING: Call this routine _after_ creating a dialog.
 	# (This routine inhibits the grid and pack geometry managers.)
 	
-	def center_dialog(self,dialog,top):
+	def center_dialog(self,top):
 	
 		sw = top.winfo_screenwidth()
 		sh = top.winfo_screenheight()
@@ -279,128 +564,63 @@ class tkinterGui(leoGui):
 		return w,h,x,y
 	#@nonl
 	#@-node:center_dialog
-	#@+node:createRootWindow
-	def createRootWindow(self):
+	#@+node:create_labeled_frame
+	# Returns frames w and f.
+	# Typically the caller would pack w into other frames, and pack content into f.
 	
-		"""Create a hidden Tk root window and the app object"""
+	def create_labeled_frame (self,parent,
+		caption=None,relief="groove",bd=2,padx=0,pady=0):
 		
-		# Create a hidden main window: this window never becomes visible!
+		Tk = Tkinter
+		# Create w, the master frame.
+		w = Tk.Frame(parent)
+		w.grid(sticky="news")
 		
-		# print "createRootWindow"
+		# Configure w as a grid with 5 rows and columns.
+		# The middle of this grid will contain f, the expandable content area.
+		w.columnconfigure(1,minsize=bd)
+		w.columnconfigure(2,minsize=padx)
+		w.columnconfigure(3,weight=1)
+		w.columnconfigure(4,minsize=padx)
+		w.columnconfigure(5,minsize=bd)
+		
+		w.rowconfigure(1,minsize=bd)
+		w.rowconfigure(2,minsize=pady)
+		w.rowconfigure(3,weight=1)
+		w.rowconfigure(4,minsize=pady)
+		w.rowconfigure(5,minsize=bd)
 	
-		root = Tkinter.Tk()
-		root.title("Leo Main Window")
-		root.withdraw()
-		return root
-	#@nonl
-	#@-node:createRootWindow
-	#@+node:setGuiEncoding
-	#@+at 
-	#@nonl
-	# According to Martin v. Löwis, getdefaultlocale() is broken, and cannot 
-	# be fixed. The workaround is to copy the getpreferredencoding() function 
-	# from locale.py in Python 2.3a2.  This function is now in leoGlobals.py.
-	#@-at
-	#@@c
+		# Create the border spanning all rows and columns.
+		border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
+		border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
+		
+		# Create the content frame, f, in the center of the grid.
+		f = Tk.Frame(w,bd=bd)
+		f.grid(row=3,column=3,sticky="news")
+		
+		# Add the caption.
+		if caption and len(caption) > 0:
+			caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
+			caption.tkraise(w)
+			caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
 	
-	def setEncoding (self):
-		
-		a = app()
+		return w,f
+	#@nonl
+	#@-node:create_labeled_frame
+	#@+node:runMainLoop
+	def runMainLoop(self):
 	
-		for (encoding,src) in (
-			(a.config.tkEncoding,"config"),
-			#(locale.getdefaultlocale()[1],"locale"),
-			(getpreferredencoding(),"locale"),
-			(sys.getdefaultencoding(),"sys"),
-			("utf-8","default")):
+		"""Run tkinter's main loop."""
 		
-			if isValidEncoding (encoding): # 3/22/03
-				a.tkEncoding = encoding
-				# print a.tkEncoding,src
-				break
-			elif encoding and len(encoding) > 0:
-				print "ignoring invalid " + src + " encoding: " + `encoding`
-				
-		# print "setEncoding",a.tkEncoding
-	#@nonl
-	#@-node:setGuiEncoding
-	#@+node:setDefaultIcon
-	def setDefaultIcon(self):
-		
-		# print "setDefaultIcon"
-		
-		a = app()
-		try:
-			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
-			bitmap = Tkinter.BitmapImage(bitmap_name)
-		except:
-			print "exception creating bitmap"
-			traceback.print_exc()
-		
-		try:
-			version = a.root.getvar("tk_patchLevel")
-			#@		<< set v834 if version is 8.3.4 or greater >>
-			#@+node:<< set v834 if version is 8.3.4 or greater >>
-			# 04-SEP-2002 DHEIN: simplify version check
-			# 04-SEP-2002 Stephen P. Schaefer: make sure v834 is set
-			v834 = CheckVersion(version, "8.3.4")
-			#@-node:<< set v834 if version is 8.3.4 or greater >>
-			#@nl
-		except:
-			print "exception getting version"
-			traceback.print_exc()
-			v834 = None
-			
-		if v834:
-			try:
-				if sys.platform=="win32": # Windows
-					top.wm_iconbitmap(bitmap,default=1)
-				else:
-					top.wm_iconbitmap(bitmap)
-			except:
-				if 0: # Let's ignore this for now until I understand the issues better.
-					es("exception setting bitmap")
-					es_exception()
-	#@nonl
-	#@-node:setDefaultIcon
-	#@+node:getDefaultConfigFont
-	def getDefaultConfigFont(self,config):
-		
-		"""Get the default font from a new text widget."""
-		
-		# print "getDefaultConfigFont",`config`
+		print "tkinterGui.runMainLoop"
 	
-		t = Tkinter.Text()
-		fn = t.cget("font")
-		font = tkFont.Font(font=fn)
-		config.defaultFont = font
-		config.defaultFontFamily = font.cget("family")
+		self.root.mainloop()
 	#@nonl
-	#@-node:getDefaultConfigFont
-	#@+node:getFontFromParams
-	def getFontFromParams(self,family,size,slant,weight):
-		
-		# print "getFontFromParams"
-		
-		family_name = family
-		
-		try:
-			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
-			#print family_name,family,size,slant,weight
-			#print "actual_name:",font.cget("family")
-			return font
-		except:
-			es("exception setting font from " + `family_name`)
-			es("family,size,slant,weight:"+
-				`family`+':'+`size`+':'+`slant`+':'+`weight`)
-			es_exception()
-			return self.defaultFont
-	#@nonl
-	#@-node:getFontFromParams
+	#@-node:runMainLoop
 	#@-others
 #@nonl
 #@-node:class tkinterGui(leoGui)
 #@-others
-
+#@nonl
 #@-node:@file leoGui.py
 #@-leo

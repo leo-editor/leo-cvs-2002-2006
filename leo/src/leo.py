@@ -38,15 +38,6 @@ import leoApp,leoConfig,leoFrame,leoGui
 import os,string,sys
 
 #@+others
-#@+node:runMainLoop
-def runMainLoop(root):
-	
-	"""A function that runs root.mainloop()
-	
-	LeoN may replace this fuction entirely."""
-	
-	root.mainloop()
-#@-node:runMainLoop
 #@+node:run & allies
 def run(fileName=None,*args,**keywords):
 	
@@ -56,20 +47,15 @@ def run(fileName=None,*args,**keywords):
 	app = leoApp.LeoApp()
 	if not app: return
 	setApp(app)
+	# Make sure we have Python 2.1 or above.
 	if not app.startCreate(): return
-	app.runMainLoop = runMainLoop # For LeoN.
-	app.config = leoConfig.config() # No longer contains gui code.
-	# Load plugins before creating a gui so plugins can create their own gui.
+	# Initialize the configuration class.
+	app.config = leoConfig.config()
+	# Load plugins. Plugins may create app.gui.
 	doHook("start1")
-	# Create a default gui if none has been created by a plugin.
+	# Create the default gui if needed.
 	if app.gui == None: app.createTkGui()
-	# Finish creating the gui: maybe this should be part of createGui.
-	gui = app.gui
-	gui.setDefaultIcon()
-	gui.getDefaultConfigFont(app.config)
-	gui.setEncoding()
-	## gui.createGlobalWindows() ## Code should move out of finishCreate.
-	app.finishCreate() # No longer contains gui code.  Probably should be eliminated.
+	app.finishCreate()
 	# Initialize tracing.
 	initSherlock(app,args)
 	# Create the main frame.  Show it and all queued messages.
@@ -79,17 +65,14 @@ def run(fileName=None,*args,**keywords):
 	c = frame.commands ; v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
 	frame.commands.redraw()
-	## Should be gui.setfocus.
-	set_focus(frame.commands,frame.body)
-	## Should be gui.runMainLoop()
-	app.runMainLoop(app.root)
+	app.gui.set_focus(frame.commands,frame.body)
+	app.gui.runMainLoop()
+#@nonl
 #@-node:run & allies
 #@+node:createFrame (leo.py)
 def createFrame (app,fileName):
 	
-	"""Step 2 of Leo startup process:
-		
-	Create a Leo Frame."""
+	"""Create a LeoFrame during Leo's startup process."""
 	
 	# Try to create a frame for the file.
 	if fileName:
@@ -103,6 +86,7 @@ def createFrame (app,fileName):
 	
 	# Create a new frame & indicate it is the startup window.
 	frame = leoFrame.LeoFrame()
+	## frame = app.gui.newLeoFrame(None) # Right now the frame creates the commander.
 	frame.setInitialWindowGeometry()
 	frame.startupWindow = true
 	

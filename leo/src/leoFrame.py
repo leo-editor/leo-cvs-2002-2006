@@ -18,7 +18,7 @@ class baseLeoFrame:
 	instances = 0
 	#@	@+others
 	#@+node:f.__init__
-	def __init__(self, title = None):
+	def __init__(self,title=None):
 	
 		Tk = Tkinter
 		LeoFrame.instances += 1
@@ -1535,6 +1535,7 @@ class baseLeoFrame:
 	
 		config = app().config
 		frame = LeoFrame() # Create another Leo window.
+		## frame = app().gui.newLeoFrame(None) # Right now the frame creates the commander.
 		top = frame.top
 		
 		# 5/16/03: Needed for hooks.

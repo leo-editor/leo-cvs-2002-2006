@@ -152,9 +152,10 @@ class LeoApp:
 	def createTkGui (self):
 		
 		app = self
-		app.gui = gui = leoGui.tkinterGui()
-		assert(app.gui.guiName()=="tkinter")
+		
+		app.gui = leoGui.tkinterGui()
 		app.root = app.gui.createRootWindow()
+	#@nonl
 	#@-node:app.createTkGui
 	#@+node:app.destroyAllGlobalWindows
 	def destroyAllGlobalWindows (self):
@@ -348,13 +349,6 @@ class LeoApp:
 	# Called when the gApp global has been defined.
 	
 	def finishCreate(self):
-	
-		a = self
-	
-		# Create the global windows
-		a.findFrame = leoFind.leoFind()
-		a.findFrame.top.withdraw()
-		a.globalWindows.append(a.findFrame)
 		
 		# New 4.0 stuff.
 		if 0: # Not using leoID.txt is more convenient for the user.
@@ -420,7 +414,7 @@ class LeoApp:
 	
 	
 	#@-node:app.onQuit
-	#@+node:app.setLeoID
+	#@+node:app.setLeoID (not used)
 	def setLeoID (self):
 		
 		a = self
@@ -495,7 +489,7 @@ class LeoApp:
 		#@-node:<< attempt to create leoID.txt >>
 		#@nl
 	#@nonl
-	#@-node:app.setLeoID
+	#@-node:app.setLeoID (not used)
 	#@+node:app.setLog, lockLog, unlocklog
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
