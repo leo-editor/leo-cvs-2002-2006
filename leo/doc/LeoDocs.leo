@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
-	<global_window_position top="90" left="80" height="680" width="843"/>
+	<global_window_position top="37" left="202" height="680" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -51,7 +51,7 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336"><vh>Still to do</vh>
 <v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
@@ -1416,7 +1416,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -7397,19 +7397,20 @@ Download tkIcon from http://www.effbot.org/downloads/#tkIcon
 Many thanks to Jonathan M. Gilligan for suggesting this code.</t>
 <t tx="edream.110203163054.62">@nocolor
 
-Quick start
+This is the minimum you need to use Leo effectively:
 
-This is the minimum you need to use Leo effectively.
+- Create source files by creating @thin nodes.
 
-1. Write body text using the noweb languages. See Using noweb, CWEB and Directives.
+- Create source code in the body pane using the noweb languages.
 
-2. Create source files (derived files) using the Tangle command. Only @root directives under the currently selected headline are tangled by the Tangle command. Warning: The Tangle command will overwrite files specified in @root directives if they exist.
+    - Everything following @ or @doc in the first column is a comment until the @c
+    directive ends the comment.
 
-3. Use the Untangle command to propagate changes made to derived files back into the outline Untangle is useful only for making small syntactic changes. Don't attempt to change the structure of an outline by modifying derived files; it won't work.
+    - &lt;&lt; section name &gt;&gt; is a reference to a section. Sections must be defined
+    in a child of the node containing the reference.
 
-4. Many command key abbreviations are specified in the Syntax Coloring panel.
-
-See the Appendices for a concise summary of information about Leo.</t>
+    - Define a section by putting &lt;&lt; section name &gt;&gt; in the headline of a child
+    node.</t>
 <t tx="edream.110203163054.63">@nocolor</t>
 <t tx="edream.110203163054.64">Leo 4.1 alpha 1                   November 3, 2003
 

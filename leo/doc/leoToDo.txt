@@ -5,13 +5,9 @@
 #@+all
 #@+node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
 #@-node:ekr.20050202052911.2:Figure out what is going on with tnodeLists (!!!)
-#@+node:ekr.20050119072551:4.3 a2 TO DO
-#@+node:ekr.20050206095417:Test unicode fixes
-#@-node:ekr.20050206095417:Test unicode fixes
-#@+node:ekr.20050206042705:Distribution
-#@+node:ekr.20050125075513:Distribute Pmw in extensions folder
-#@+node:ekr.20050125040057.1:Document that Pmw is required for some extensions
-#@-node:ekr.20050125040057.1:Document that Pmw is required for some extensions
+#@+node:ekr.20050119072551:4.3 a2 To do
+ 
+#@nonl
 #@+node:ekr.20050125075513.1:Fix crash in plugins manager plugin
 @killcolor
 
@@ -51,10 +47,32 @@ TclError: bad window path name ".11727296.12134160.12133760.12134280.12133640.14
 [/quote] 
 #@nonl
 #@-node:ekr.20050125075513.1:Fix crash in plugins manager plugin
+#@+node:ekr.20050206042705:Distribution 4...
+@killcolor
+#@nonl
+#@+node:ekr.20050125075513:Distribute Pmw in extensions folder
+#@+node:ekr.20050125040057.1:Document that Pmw is required for some extensions
+#@-node:ekr.20050125040057.1:Document that Pmw is required for some extensions
 #@+node:ekr.20050125040057:Distribute Pmw in extensions folder
 #@-node:ekr.20050125040057:Distribute Pmw in extensions folder
 #@-node:ekr.20050125075513:Distribute Pmw in extensions folder
 #@+node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
+http://sourceforge.net/forum/message.php?msg_id=2980056
+By: jgleeson
+
+To make .leo files double-clickable, you need to set CFBundleTypeExtensions to
+"leo" in the info.plist file.
+
+It would also be useful to set CFBundleTypeName, which shows up as "Kind" in
+file descriptions.
+
+Here's an example from the setup.py script I use with py2app
+
+<html://pythonmac.org/wiki/py2app>:
+
+    CFBundleTypeExtensions=["leo"],
+    CFBundleTypeName="Leo Outline File",
+#@nonl
 #@-node:ekr.20050201175949:Make .leo files double-clickable (and document how to do this)
 #@+node:ekr.20041130125213.1:(Create Mac package for Leo)
 #@+node:ekr.20041130125213.2:Requests & follow up
@@ -85,120 +103,42 @@ Günther
 #@nonl
 #@-node:ekr.20041130125213.2:Requests & follow up
 #@-node:ekr.20041130125213.1:(Create Mac package for Leo)
-#@-node:ekr.20050206042705:Distribution
-#@+node:ekr.20050206164308:OLD: Improve docs as suggested by JasonC
+#@+node:ekr.20050206210832.2:Create better download pages
+http://sourceforge.net/forum/message.php?msg_id=2928991
+By: jasonic
+
+Even Clicking on the hompage link download and and people face a huge list of
+files to choose from.
+
+http://sourceforge.net/project/showfiles.php?group_id=3458
+
+I suggest changing  the dedicated link on Leo homepage where it says
+
+"Download Leo[4.2 final]"
+
+Insead of linking directly to the sourceforge page, better to go to a small page
+with precise links for the correct packages needed for each OS. And include from
+there a link to an freshly updated Installatian page in the Users Guide. to
+http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
+#@nonl
+#@-node:ekr.20050206210832.2:Create better download pages
+#@-node:ekr.20050206042705:Distribution 4...
+#@+node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
 @killcolor
 
 http://sourceforge.net/forum/message.php?msg_id=2928991
 By: jasonic
 
-2. @file nods are also possible, but @thin is better.
-Please can someone explain simply why and when to use @thin instead of @file ?
-
-3. @nosent is an abbreviation for @file-nosentinels.
+@nosent is an abbreviation for @file-nosentinels.
 Very hadny very cool but does not seem be much docs anywhere on this.
-
-4. The minimum needed to create derived file nodes with sections is first to
-create an @thin [or @file node]. Then in its body text insert @others. All nodes
-below that will now be included unless explicit directives interfere.
-
-5. Common abbreviations --
-@ is an abbreviation for @doc [short for documentation]
-
-Everything following @ is a comment until another directive ends that behavior.
-
-Typically @c follows @, thus signalling code which will be treated with more
-care by Leo. Specifically Leo checks in the preference settings for the default
-language and assumes text following @c is that language.
-
-You can instruct Leo to overide its default by inserting @language directive
-after the @c and before the source code text it starts.
-
-6. @ignore protects any text following it from inclusion in derived files. When
-Leo imports a file using "Import to @file" via File/Import menu or CTRL+SHIFT+F,
-by default it protects the imported code by instering an @ignore directive at
-the head of the new text.
-
-7. I notice most of the docs and read-me recommend studying LeoPy.leo as learning
-resource. But this wonderful master outline is full of legacy directives.
-Why not use Leo's lovely find/replace tools to bring all the directives up-to-date
-using @, @c thoughout ?
-[Simpler sweeter 2005 mimimalism]
-
-8. The beginner is mainly unaware of @thin or @nosent directives, as they are
-currently poorly represented in various glossaries and documentation?
-
-Because Leo does not yet support CSS or other typographic formatting, the HTML
-docs on the main homepage at http://webpages.charter.net/edreamleo/front.html
- are much more readable to beginners. But out of sync and in placesw out of
-date from the documentation and notes within Leo.
-
-There is some excellent reading there, for example the "Users Guide"
-http://webpages.charter.net/edreamleo/leo_TOC.html#anchor964914
-Its Glossary is very helpful, but buried too deep  in the appendices and does
-not mention some current directives. Like much of Leo, the "Users Guide" is
-relly full of excellent irformation but much of it si burreid and not lnked
-from a top level menu.
-
-For example, go to "Chapter 5: Using Leo's Commands"
-http://webpages.charter.net/edreamleo/commands.html#top
-Now click the top left arrow a few times...
-
-...et voila what gems do we find !
-
-Appendix 3 to Chapter 4:
-Using @thin and @all
-http://webpages.charter.net/edreamleo/atThin.html
-
-Click again the top left arrow
-
- Appendix 2 to Chapter 4:
-Using @root Directives, Tangling and Untangling
-http://webpages.charter.net/edreamleo/atRoot.html
-
-and again
- Appendix 1 to Chapter 4:
-Using @rawfile and @silentfile Trees
-http://webpages.charter.net/edreamleo/atRawFile.html
-
-Some of those sectoins include very valuable information but not linked from
-the table of contents  nor listed or linked in the Appendices.
-http://webpages.charter.net/edreamleo/appendices.html
-
-
-The 'Users Guide' it is not dated and carries no indication of version. Given
-the speed at which Leo developers this in itself is quite confusing.
-
-
-Even Clicking on the hompage link download and and people face a huge list of
-files to choose from.
-http://sourceforge.net/project/showfiles.php?group_id=3458
-
-The installation instructions in Chapter 2 of the Users Guide are alsoi misleading
-in January 2005.. See
-
-Chapter 2: Installing Leo
-http://webpages.charter.net/edreamleo/Install.html
-
-My recent experience for Windows XP  this week is that one should only install
-Python 2.3 and  Leosetup-4.2.exe
-
-Downloading tcl/Tk from http://tcl.activestate.com/software/tcltk/
-does not seem to be relevant any longer.
-Is that corect?
-
-I suggest changing  the dedicated link on Leo homepage where it says "Download
-Leo[4.2 final]" .
-Insead of linking directly to the sourceforge page, better imo to go to a small
-page with precise  links for the correct packages needed for each OS.
-And include from there a link to an freshly updated Installatian page in the
-Users Guide.
-to  
-http://prdownloads.sourceforge.net/leo/leosetup-4-2.exe?download
-#@nonl
-#@-node:ekr.20050206164308:OLD: Improve docs as suggested by JasonC
-#@-node:ekr.20050119072551:4.3 a2 TO DO
+#@-node:ekr.20050206210832.1:Put @nosent and similar abbreviations in glossary
+#@+node:ekr.20050207091724:Make sure string % is better than string +
+#@-node:ekr.20050207091724:Make sure string % is better than string +
+#@+node:ekr.20050207092137:Make sure mini tests of Unicode filenames work
+#@-node:ekr.20050207092137:Make sure mini tests of Unicode filenames work
+#@-node:ekr.20050119072551:4.3 a2 To do
 #@+node:ekr.20050126101301:4.3 a3 Plugins & config...
+#@+node:ekr.20050207063254:Plugins...
 #@+node:ekr.20050128065405:Study Leo2Ascii
 @killcolor
 
@@ -207,6 +147,213 @@ The output is particularly handsome. Perhaps there's somening in his design we c
 #@+node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
 #@-node:ekr.20050128065405.1:@url http://www.marshallresearch.com/michael-dawson/os/leo.html
 #@-node:ekr.20050128065405:Study Leo2Ascii
+#@+node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20050125075757.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2957679
+Dany
+
+Here are my preliminary tests :
+
+- mod_http didn't work with 2.4 (ok with 2.3.4)
+
+- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
+to use them
+
+- open_shell didn't work but it was easy to fix
+   (system path from c:\windows to c:\winnt)
+
+- word_export : doesn't work (I have a non-English version of Word so that might
+explain it)
+
+I have to do some more testings for the other plugins.
+#@nonl
+#@-node:ekr.20050125075757.1:Report
+#@-node:ekr.20050125075757:Fix plugin problems
+#@+node:ekr.20041231102453.1:Move emacs commands into core
+#@-node:ekr.20041231102453.1:Move emacs commands into core
+#@-node:ekr.20050207063254:Plugins...
+#@+node:ekr.20050207063254.1:New features
+#@+node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
+#@+node:ekr.20050207062841:Report
+@killcolor
+
+By: Graham Horler - grahamh
+ paste retaining clones bug: old data zaps new   
+2005-01-27 12:31  
+Leo 4.3 alpha 1, build 1.208 , January 24, 2005 
+Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0 
+ 
+(Please excuse my leo-newbieness) 
+ 
+Is this a bug?: 
+ 
+Create a new headline "Head1", insert some body text. 
+Click Outline/Copy Node. 
+Type some more body text in "Head1" and change its name to "Head1a". 
+Create another headline "Head2". 
+Click Outline/Paste Retaining Clones. 
+Your changes to "Head1" are destroyed (bug 1). 
+Undo does NOT undo the destruction (bug 2) 
+ 
+Hope this helps, Graham
+ 
+#@-node:ekr.20050207062841:Report
+#@+node:ekr.20050207062841.1:Response
+@killcolor
+
+> Edward wants to empty the undo stack. So all should still behave as expected if you do copy / paste retaining clones without making changes in between, except that you might loose undo and get pestered with warnings.  
+ 
+You have just convinced me that clearing the undo stack and issuing a warning is not good. For a2, I am going to back out of the 'fix', and leave things as they were. 
+ 
+Besides, it should be possible to undo Paste As Clone. The paste code "just" needs to create a list of changed nodes. This list must be created while pasting; it can not be created after the fact. 
+ 
+I put quotes around the word 'just' above because the paste code is, in fact, quite complex. The difficult part is in leoFileCommands.getVnode, and I suspect that this is the part that must remember changed data. 
+ 
+In short, I believe Undo Paste As Clone is doable, but it isn't going to happen in a2. As I said above, a2 will do things as in a1. 
+#@nonl
+#@-node:ekr.20050207062841.1:Response
+#@+node:ekr.20050206101036:From undo class
+#@+node:EKR.20040526084140:undoInsertNodes
+def undoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+    
+    c.selectVnode(u.p)
+    c.deleteOutline()
+
+    if u.select:
+        c.selectVnode(u.select)
+        
+    # New in 4.3: Support for Paste As Clone.
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old
+#@nonl
+#@-node:EKR.20040526084140:undoInsertNodes
+#@+node:EKR.20040526072519.4:redoInsertNodes
+def redoInsertNodes (self):
+    
+    u = self ; c = u.c
+    
+    if 0: # Paste retaining clones can't be undone!
+        # Remember the previous headline.
+        old = c.currentPosition().headString()
+
+    if u.back:
+        u.p.linkAfter(u.back)
+    elif u.parent:
+        u.p.linkAsNthChild(u.parent,0)
+    else:
+        oldRoot = c.rootPosition()
+        u.p.linkAsRoot(oldRoot)
+        
+    # Restore all vnodeLists (and thus all clone marks).
+    u.p.restoreLinksInTree()
+
+    c.selectVnode(u.p)
+    
+    if 0: # Paste retaining clones can't be undone!
+        if u.headString:
+            new = u.headString
+            g.trace('old',old,'new',new)
+            u.p.setHeadStringOrHeadline(new)
+            u.headString=old
+#@nonl
+#@-node:EKR.20040526072519.4:redoInsertNodes
+#@-node:ekr.20050206101036:From undo class
+#@+node:ekr.20031218072017.1548:Cut & Paste Outlines
+#@+node:ekr.20031218072017.1549:cutOutline
+def cutOutline(self):
+
+    c = self
+    if c.canDeleteHeadline():
+        c.copyOutline()
+        c.deleteOutline("Cut Node")
+        c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1549:cutOutline
+#@+node:ekr.20031218072017.1550:copyOutline
+def copyOutline(self):
+
+    # Copying an outline has no undo consequences.
+    c = self
+    c.endEditing()
+    c.fileCommands.assignFileIndices()
+    s = c.fileCommands.putLeoOutline()
+    g.app.gui.replaceClipboardWith(s)
+#@nonl
+#@-node:ekr.20031218072017.1550:copyOutline
+#@+node:ekr.20031218072017.1551:pasteOutline
+# To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
+
+def pasteOutline(self,reassignIndices=True):
+
+    c = self ; current = c.currentPosition()
+    
+    s = g.app.gui.getTextFromClipboard()
+
+    if not s or not c.canPasteOutline(s):
+        return # This should never happen.
+
+    isLeo = g.match(s,0,g.app.prolog_prefix_string)
+
+    if isLeo:
+        p = c.fileCommands.getLeoOutline(s,reassignIndices)
+    else:
+        p = c.importCommands.convertMoreStringToOutlineAfter(s,current)
+        
+    if p:
+        c.endEditing()
+        c.beginUpdate()
+        if 1: # inside update...
+            c.validateOutline()
+            c.selectVnode(p)
+            p.setDirty()
+            c.setChanged(True)
+            # paste as first child if back is expanded.
+            back = p.back()
+            if back and back.isExpanded():
+                p.moveToNthChildOf(back,0)
+            c.undoer.setUndoParams("Paste Node",p)
+        c.endUpdate()
+        c.recolor()
+#@nonl
+#@-node:ekr.20031218072017.1551:pasteOutline
+#@+node:EKR.20040610130943:pasteOutlineRetainingClones
+def pasteOutlineRetainingClones (self):
+    
+    c = self
+    
+    if 1:
+        # For now, just execute the command.
+        return c.pasteOutline(reassignIndices=False)
+
+    else:
+        # Paste retaining clones can't be fully undone.  Warn first.
+        message = (
+            'Are you sure you want to Paste As Clone?\n\n'
+            'This operation can not be undone; it will clear the Undo stack.')
+        
+        response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+    
+        if response == 'yes':
+            val = c.pasteOutline(reassignIndices=False)
+            c.undoer.clearUndoState()
+            g.es('Undo stack cleared',color='red')
+            return val
+#@nonl
+#@-node:EKR.20040610130943:pasteOutlineRetainingClones
+#@-node:ekr.20031218072017.1548:Cut & Paste Outlines
+#@-node:ekr.20050128081550:(Implement undo for Paste Retaing clones)
 #@+node:ekr.20041228090344:Config improvements
 - Cancel should revert all settings.
     (Revert doesn't work after a node changes:this is confusing and dangerous.)
@@ -217,6 +364,23 @@ The output is particularly handsome. Perhaps there's somening in his design we c
 
 - Handle undo/redo properly.
 #@nonl
+#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+@killcolor
+
+> I...change the @settings node to
+@string server = mail.otherisp.net
+
+the script doesn't print  -mail.otherisp.net-
+until I restart Leo.
+
+I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
+
+There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
+
+You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
+
+Edward
+#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
 #@+node:ekr.20050122091016:Minor
 - move findCorrespondingNode into leoNodes class.
 
@@ -269,47 +433,36 @@ g.setGeneralTkSetting(widget,setting_name) would do the following:
 #@nonl
 #@-node:ekr.20050123155522:Redo settings dialog and Plugins Manager dialog in Tk
 #@-node:ekr.20041228090344:Config improvements
-#@+node:ekr.20050128092443:Add g.app.config.reloadAllSettings
+#@+node:ekr.20050116094523:Option not to write marks/expansion attributes
+#@-node:ekr.20050116094523:Option not to write marks/expansion attributes
+#@+node:ekr.20050121081635:Request:  cumulative @path directives
 @killcolor
+https://sourceforge.net/forum/message.php?msg_id=2936513
+By: ktenney
 
-> I...change the @settings node to
-@string server = mail.otherisp.net
+In the @view plugin is a method, currentPath() which examines the current headline
+and body, and the headlines and bodies of it's parents, looking for @path and
+@view directives. It builds a path from them and checks for validity.
 
-the script doesn't print  -mail.otherisp.net-
-until I restart Leo.
+if a top level node contains;
+@path /home/ktenney
 
-I see.  Thanks for this clarification.  What you want to do is a) clear all the settings, b) reload all the settings files.
+and a descendant of that node contains;
+@path projects/myproject
 
-There probably should be a g.app.config.reloadAllSettings method, but there isn't yet.
+Then a node further down the tree which contains;
+@view readme.txt
 
-You could simulate this in a script, but clearly this is a convenience method that would be good to have.  I'll do it for a2.
+will display /home/ktenney/projects/myproject/readme.txt
 
-Edward
-#@-node:ekr.20050128092443:Add g.app.config.reloadAllSettings
-#@+node:ekr.20050125075757:Fix plugin problems
-#@+node:ekr.20050125075757.1:Report
-@killcolor
+I like this principle of cumulative paths, and would like other plugins to work
+the same way ... @image, @url etc.
 
-http://sourceforge.net/forum/message.php?msg_id=2957679
-Dany
-
-Here are my preliminary tests :
-
-- mod_http didn't work with 2.4 (ok with 2.3.4)
-
-- @clip, @view, @strip don't work (2.3.4 or 2.4) but maybe I don't know how
-to use them
-
-- open_shell didn't work but it was easy to fix
-   (system path from c:\windows to c:\winnt)
-
-- word_export : doesn't work (I have a non-English version of Word so that might
-explain it)
-
-I have to do some more testings for the other plugins.
-#@nonl
-#@-node:ekr.20050125075757.1:Report
-#@-node:ekr.20050125075757:Fix plugin problems
+This brings me to my question, would it make sense for Leo to offer a 'Plugin'
+class to inherit from? It seems that there are some operations that are being
+re-written in many plugins.
+#@-node:ekr.20050121081635:Request:  cumulative @path directives
+#@-node:ekr.20050207063254.1:New features
 #@+node:EKR.20040422132037.7:Problems with run script command on Mac x11
 Jon Schull <jschull@softlock.com>  
 Date:  2003/12/30 Tue PM 05:50:51 EST 
@@ -388,41 +541,6 @@ Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
 #@-node:ekr.20050126101301:4.3 a3 Plugins & config...
-#@+node:ekr.20041228084018.1:4.3.a4 plugins
-Edit and commit all plugins.
-#@nonl
-#@+node:ekr.20050121081635:Request:  cumulative @path directives
-@killcolor
-https://sourceforge.net/forum/message.php?msg_id=2936513
-By: ktenney
-
-In the @view plugin is a method, currentPath() which examines the current headline
-and body, and the headlines and bodies of it's parents, looking for @path and
-@view directives. It builds a path from them and checks for validity.
-
-if a top level node contains;
-@path /home/ktenney
-
-and a descendant of that node contains;
-@path projects/myproject
-
-Then a node further down the tree which contains;
-@view readme.txt
-
-will display /home/ktenney/projects/myproject/readme.txt
-
-I like this principle of cumulative paths, and would like other plugins to work
-the same way ... @image, @url etc.
-
-This brings me to my question, would it make sense for Leo to offer a 'Plugin'
-class to inherit from? It seems that there are some operations that are being
-re-written in many plugins.
-#@-node:ekr.20050121081635:Request:  cumulative @path directives
-#@+node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@-node:ekr.20050116094523:Option not to write marks/expansion attributes
-#@+node:ekr.20041231102453.1:Move emacs commands into core
-#@-node:ekr.20041231102453.1:Move emacs commands into core
-#@-node:ekr.20041228084018.1:4.3.a4 plugins
 #@+node:ekr.20050104083128:4.3 b1 drawing and uA's
 #@+node:ekr.20041231102453:Design new uA scheme
 #@-node:ekr.20041231102453:Design new uA scheme

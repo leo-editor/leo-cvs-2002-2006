@@ -2432,18 +2432,23 @@ def pasteOutlineRetainingClones (self):
     
     c = self
     
-    # Paste retaining clones can't be fully undone.  Warn first.
-    message = (
-        'Are you sure you want to Paste As Clone?\n\n'
-        'This operation can not be undone; it will clear the Undo stack.')
-    
-    response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+    if 1:
+        # For now, just execute the command.
+        return c.pasteOutline(reassignIndices=False)
 
-    if response == 'yes':
-        val = c.pasteOutline(reassignIndices=False)
-        c.undoer.clearUndoState()
-        g.es('Undo stack cleared',color='red')
-        return val
+    else:
+        # Paste retaining clones can't be fully undone.  Warn first.
+        message = (
+            'Are you sure you want to Paste As Clone?\n\n'
+            'This operation can not be undone; it will clear the Undo stack.')
+        
+        response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
+    
+        if response == 'yes':
+            val = c.pasteOutline(reassignIndices=False)
+            c.undoer.clearUndoState()
+            g.es('Undo stack cleared',color='red')
+            return val
 #@nonl
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@+node:ekr.20031218072017.1551:pasteOutline
@@ -14792,10 +14797,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -15180,10 +15187,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -17270,10 +17279,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -22133,10 +22144,12 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-/Users/edream/leoCVS/leo/config/leoSettings.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo
-/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/doc/LeoDocs.leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\Leo Stuff\oldLeoFiles.leo
+c:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -26813,10 +26826,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -28375,10 +28390,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -28646,10 +28663,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -28682,6 +28701,7 @@ def putnl (self):
         
 def forceLogUpdate (self,s):
     if sys.platform == "darwin": # Does not work on MacOS X.
+        
         print s, # Don't add a newline.
     else:
         self.frame.tree.disableRedraw = True
@@ -28689,8 +28709,11 @@ def forceLogUpdate (self,s):
         self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
-if type(s) == type(u""): # 3/18/03
-    s = g.toEncodedString(s,g.app.tkEncoding)
+if 0:
+    # Do this later, or not at all.
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
 
 if color:
     if color not in self.colorTags:
@@ -28714,8 +28737,10 @@ self.forceLogUpdate(s)
 g.app.logWaiting.append((s,color),)
 
 print "Null tkinter log"
-if type(s) == type(u""): # 3/18/03
+
+if type(s) == type(u""):
     s = g.toEncodedString(s,"ascii")
+
 print s
 #@nonl
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -28939,181 +28964,6 @@ if marks or expanded:
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20050130133731:Added silent keyword to severl methods
 #@-node:ekr.20050126102846.2:(Improved queuing of log messages)
-#@+node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
-redirect script IO to log pane setting isn't working, 
-#@nonl
-#@+node:ekr.20050130162739.1:redirect stdout
-#@-node:ekr.20050130162739.1:redirect stdout
-#@+node:ekr.20050130162739:undirect stdout
-#@-node:ekr.20050130162739:undirect stdout
-#@+node:ekr.20050130162739.2:redirect stderr
-#@-node:ekr.20050130162739.2:redirect stderr
-#@+node:ekr.20050130162739.3:undirect stderr
-#@-node:ekr.20050130162739.3:undirect stderr
-#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
-class redirectClass:
-    
-    """A class to redirect stdout and stderr."""
-
-    << redirectClass methods >>
-
-# Create two redirection objects, one for each stream.
-redirectStdErrObj = redirectClass()
-redirectStdOutObj = redirectClass()
-
-<< define convenience methods for redirecting streams >>
-
-if 0: # Test code: may be executed in the child node.
-    << test code >>
-#@nonl
-#@+node:ekr.20031218072017.1656:<< redirectClass methods >>
-@others
-#@nonl
-#@+node:ekr.20041012082437:redirectClass.__init__
-def __init__ (self):
-    
-    self.old = None
-#@nonl
-#@-node:ekr.20041012082437:redirectClass.__init__
-#@+node:ekr.20041012082437.1:isRedirected
-def isRedirected (self):
-
-    return self.old != None
-#@nonl
-#@-node:ekr.20041012082437.1:isRedirected
-#@+node:ekr.20041012082437.2:flush
-# For LeoN: just for compatibility.
-
-def flush(self, *args):
-    return 
-
-#@-node:ekr.20041012082437.2:flush
-#@+node:ekr.20041012091252:rawPrint
-def rawPrint (self,s):
-
-    if self.old:
-        self.old.write(s+'\n')
-    else:
-        print s
-#@nonl
-#@-node:ekr.20041012091252:rawPrint
-#@+node:ekr.20041012082437.3:redirect
-def redirect (self,stdout=1):
-
-    import sys
-
-    if g.app.batchMode:
-        # Redirection is futile in batch mode.
-        return
-
-    if not self.old:
-        if stdout:
-            self.old,sys.stdout = sys.stdout,self
-        else:
-            self.old,sys.stderr = sys.stderr,self
-#@nonl
-#@-node:ekr.20041012082437.3:redirect
-#@+node:ekr.20041012082437.4:undirect
-def undirect (self,stdout=1):
-
-    import sys
-
-    if self.old:
-        if stdout:
-            sys.stdout,self.old = self.old,None
-        else:
-            sys.stderr,self.old = self.old,None
-#@nonl
-#@-node:ekr.20041012082437.4:undirect
-#@+node:ekr.20041012082437.5:write
-def write(self,s):
-
-    if self.old:
-        if app.log:
-            app.log.put(s)
-        else:
-            self.old.write(s+'\n')
-    else:
-        # Can happen when g.batchMode is True.
-        print s
-#@nonl
-#@-node:ekr.20041012082437.5:write
-#@-node:ekr.20031218072017.1656:<< redirectClass methods >>
-#@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
-@others
-#@nonl
-#@+node:ekr.20041012090942:redirectStderr & redirectStdout
-# Redirect streams to the current log window.
-def redirectStderr():
-    global redirectStdErrObj
-    redirectStdErrObj.redirect(stdout=False)
-
-def redirectStdout():
-    global redirectStdOutObj
-    redirectStdOutObj.redirect()
-#@nonl
-#@-node:ekr.20041012090942:redirectStderr & redirectStdout
-#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
-# Restore standard streams.
-def restoreStderr():
-    global redirectStdErrObj
-    redirectStdErrObj.undirect(stdout=False)
-    
-def restoreStdout():
-    global redirectStdOutObj
-    redirectStdOutObj.undirect()
-#@nonl
-#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
-#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
-def stdErrIsRedirected():
-    global redirectStdErrObj
-    return redirectStdErrObj.isRedirected()
-    
-def stdOutIsRedirected():
-    global redirectStdOutObj
-    return redirectStdOutObj.isRedirected()
-#@nonl
-#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
-#@+node:ekr.20041012090942.3:rawPrint
-# Send output to original stdout.
-
-def rawPrint(s):
-
-    global redirectStdOutObj
-
-    redirectStdOutObj.rawPrint(s)
-#@nonl
-#@-node:ekr.20041012090942.3:rawPrint
-#@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
-#@+node:ekr.20031218072017.3123:<< test code >>
-import leoGlobals as g ; import sys
-print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
-print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
-
-# stderr
-import leoGlobals as g ; import sys
-g.redirectStderr()
-print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
-print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
-
-import leoGlobals as g ; import sys
-g.restoreStderr()
-print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
-print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
-
-# stdout
-import leoGlobals as g ; import sys
-g.restoreStdout()
-print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
-print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
-
-import leoGlobals as g ; import sys
-g.redirectStdout()
-print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
-print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
-#@-node:ekr.20031218072017.3123:<< test code >>
-#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
-#@-node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
 #@+node:ekr.20050130171901:(Fixed crasher in Change All command)
 #@+node:ekr.20050130171901.1:Traceback
 #@-node:ekr.20050130171901.1:Traceback
@@ -29326,6 +29176,7 @@ def putnl (self):
         
 def forceLogUpdate (self,s):
     if sys.platform == "darwin": # Does not work on MacOS X.
+        
         print s, # Don't add a newline.
     else:
         self.frame.tree.disableRedraw = True
@@ -29333,8 +29184,11 @@ def forceLogUpdate (self,s):
         self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
-if type(s) == type(u""): # 3/18/03
-    s = g.toEncodedString(s,g.app.tkEncoding)
+if 0:
+    # Do this later, or not at all.
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
 
 if color:
     if color not in self.colorTags:
@@ -29358,8 +29212,10 @@ self.forceLogUpdate(s)
 g.app.logWaiting.append((s,color),)
 
 print "Null tkinter log"
-if type(s) == type(u""): # 3/18/03
+
+if type(s) == type(u""):
     s = g.toEncodedString(s,"ascii")
+
 print s
 #@nonl
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -29405,6 +29261,8 @@ Added some very simple unit tests to make sure the basics will never break
 again so easily.
 #@nonl
 #@-node:ekr.20050203084346:Notes
+#@+node:ekr.20050130183838.1:Original Report
+#@-node:ekr.20050130183838.1:Original Report
 #@+node:ekr.20041122094813:<<  baseConfig data >>
 @others
     
@@ -29947,44 +29805,264 @@ setString = set
 #@-node:ekr.20041118195812:Setters...
 #@-node:ekr.20041118104831.1:class configSettings
 #@-node:ekr.20050202063852.1:(Made local config settings work again)
-#@+node:ekr.20050127083933:(Fixed bug: Find All appeared to hang)
-#@+node:ekr.20050206045723:Notes: it just ran slowly & silently
-@killcolor
-
-What I did:
-
-- Added s arg to forceLogUpdate.
-- Call forceLogUpdate in putnl.
-- forceLogUpdate prints s in darwin.
+#@+node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
+redirect script IO to log pane setting isn't working, 
 #@nonl
+#@+node:ekr.20050130162739.1:redirect stdout
+#@-node:ekr.20050130162739.1:redirect stdout
+#@+node:ekr.20050130162739:undirect stdout
+#@-node:ekr.20050130162739:undirect stdout
+#@+node:ekr.20050130162739.2:redirect stderr
+#@-node:ekr.20050130162739.2:redirect stderr
+#@+node:ekr.20050130162739.3:undirect stderr
+#@-node:ekr.20050130162739.3:undirect stderr
+#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
+class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
+    << redirectClass methods >>
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+<< define convenience methods for redirecting streams >>
+
+if 0: # Test code: may be executed in the child node.
+    << test code >>
+#@nonl
+#@+node:ekr.20031218072017.1656:<< redirectClass methods >>
+@others
+#@nonl
+#@+node:ekr.20041012082437:redirectClass.__init__
+def __init__ (self):
+    
+    self.old = None
+#@nonl
+#@-node:ekr.20041012082437:redirectClass.__init__
+#@+node:ekr.20041012082437.1:isRedirected
+def isRedirected (self):
+
+    return self.old != None
+#@nonl
+#@-node:ekr.20041012082437.1:isRedirected
+#@+node:ekr.20041012082437.2:flush
+# For LeoN: just for compatibility.
+
+def flush(self, *args):
+    return 
+
+#@-node:ekr.20041012082437.2:flush
+#@+node:ekr.20041012091252:rawPrint
+def rawPrint (self,s):
+
+    if self.old:
+        self.old.write(s+'\n')
+    else:
+        print s
+#@nonl
+#@-node:ekr.20041012091252:rawPrint
+#@+node:ekr.20041012082437.3:redirect
+def redirect (self,stdout=1):
+
+    import sys
+
+    if g.app.batchMode:
+        # Redirection is futile in batch mode.
+        return
+
+    if not self.old:
+        if stdout:
+            self.old,sys.stdout = sys.stdout,self
+        else:
+            self.old,sys.stderr = sys.stderr,self
+#@nonl
+#@-node:ekr.20041012082437.3:redirect
+#@+node:ekr.20041012082437.4:undirect
+def undirect (self,stdout=1):
+
+    import sys
+
+    if self.old:
+        if stdout:
+            sys.stdout,self.old = self.old,None
+        else:
+            sys.stderr,self.old = self.old,None
+#@nonl
+#@-node:ekr.20041012082437.4:undirect
+#@+node:ekr.20041012082437.5:write
+def write(self,s):
+
+    if self.old:
+        if app.log:
+            app.log.put(s)
+        else:
+            self.old.write(s+'\n')
+    else:
+        # Can happen when g.batchMode is True.
+        print s
+#@nonl
+#@-node:ekr.20041012082437.5:write
+#@-node:ekr.20031218072017.1656:<< redirectClass methods >>
+#@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+@others
+#@nonl
+#@+node:ekr.20041012090942:redirectStderr & redirectStdout
+# Redirect streams to the current log window.
+def redirectStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.redirect(stdout=False)
+
+def redirectStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.redirect()
+#@nonl
+#@-node:ekr.20041012090942:redirectStderr & redirectStdout
+#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
+# Restore standard streams.
+def restoreStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.undirect(stdout=False)
+    
+def restoreStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.undirect()
+#@nonl
+#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
+#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+def stdErrIsRedirected():
+    global redirectStdErrObj
+    return redirectStdErrObj.isRedirected()
+    
+def stdOutIsRedirected():
+    global redirectStdOutObj
+    return redirectStdOutObj.isRedirected()
+#@nonl
+#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+#@+node:ekr.20041012090942.3:rawPrint
+# Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)
+#@nonl
+#@-node:ekr.20041012090942.3:rawPrint
+#@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+#@+node:ekr.20031218072017.3123:<< test code >>
+import leoGlobals as g ; import sys
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stderr
+import leoGlobals as g ; import sys
+g.redirectStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.restoreStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stdout
+import leoGlobals as g ; import sys
+g.restoreStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+#@-node:ekr.20031218072017.3123:<< test code >>
+#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@-node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
+#@+node:ekr.20050127083933:(Fix url problems)
+#@+node:ekr.20050130163553:Report
+#@-node:ekr.20050130163553:Report
+#@+node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+def OnIconDoubleClick (self,v,event=None):
+
+    # Note: "icondclick" hooks handled by vnode callback routine.
+
+    c = self.c
+    s = v.headString().strip()
+    if g.match_word(s,0,"@url"):
+        if not g.doHook("@url1",c=c,p=v,v=v):
+            url = s[4:].strip()
+            << stop the url after any whitespace >>
+            << check the url; return if bad >>
+            << pass the url to the web browser >>
+        g.doHook("@url2",c=c,p=v,v=v)
+#@nonl
+#@+node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+# For safety, the URL string should end at the first whitespace.
+
+url = url.replace('\t',' ')
+i = url.find(' ')
+if i > -1:
+    if 0: # No need for a warning.  Assume everything else is a comment.
+        g.es("ignoring characters after space in url:"+url[i:])
+        g.es("use %20 instead of spaces")
+    url = url[:i]
+#@-node:ekr.20031218072017.2313:<< stop the url after any whitespace  >>
+#@+node:ekr.20031218072017.2314:<< check the url; return if bad >>
+if not url or len(url) == 0:
+    g.es("no url following @url")
+    return
+    
+@ A valid url is (according to D.T.Hein):
+
+3 or more lowercase alphas, followed by,
+one ':', followed by,
+one or more of: (excludes !"#;<>[\]^`|)
+  $%&'()*+,-./0-9:=?@A-Z_a-z{}~
+followed by one of: (same as above, except no minus sign or comma).
+  $%&'()*+/0-9:=?@A-Z_a-z}~
+@c
+
+urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+import re
+# 4/21/03: Add http:// if required.
+if not re.match('^([a-z]{3,}:)',url):
+    url = 'http://' + url
+if not re.match(urlPattern,url):
+    g.es("invalid url: "+url)
+    return
+#@-node:ekr.20031218072017.2314:<< check the url; return if bad >>
+#@+node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+@ Most browsers should handle the following urls:
+  ftp://ftp.uu.net/public/whatever.
+  http://localhost/MySiteUnderDevelopment/index.html
+  file://home/me/todolist.html
+@c
+
+try:
+    import os
+    os.chdir(g.app.loadDir)
+
+    if g.match(url,0,"file:") and url[-4:]==".leo":
+        ok,frame = g.openWithFileName(url[5:],c)
+        if ok:
+            frame.bringToFront()
+    else:
+        import webbrowser
+        
+        # Mozilla throws a weird exception, then opens the file!
+        try: webbrowser.open(url)
+        except: pass
+except:
+    g.es("exception opening " + url)
+    g.es_exception()
+
+#@-node:ekr.20031218072017.2315:<< pass the url to the web browser >>
+#@-node:ekr.20031218072017.2312:tree.OnIconDoubleClick (@url)
+#@+node:ekr.20050206045723:Notes: it just ran slowly & silently
 #@-node:ekr.20050206045723:Notes: it just ran slowly & silently
 #@+node:ekr.20050206043626:Original Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2962084
-By: nobody
-
-Two problems:
-
-1. A @url node with spaces in it doesn't seem to work on Linux when I double-click
-the node to open the link target. In my case, the link target is a file on the
-local filesystem with spaces in the filename.
-
-So, I have to change all spaces in the @url headline to %20. This works, but
-I wanted to do this change operation all at once using Leo's find/replace dialog.
-This leads to the next problem:
-
-2. Search/Replace on headline text seems broken. I've selected "plain search",
-"wrap around", "node only", and "search headline text", and in the "find" field
-I enter an empty space " " and in the "Change" field I enter "%20". Just clicking
-"Change all" doesn't work. Clicking the headline text and making it editable,
-then marking the whole headline text and selecting "Change, Then Find" seems
-to sometimes kind of work, but unreliably. Also, if I "undo" a change operation
-on the headline text, the length of the headline text field is not correctly
-reverted to its previous state.
-
-Basically it seems that headline text is not properly handled by undo nor by
-find/change.
 #@-node:ekr.20050206043626:Original Report
 #@+node:ekr.20031218072017.3060:findAllButton
 # The user has pushed the "Find All" button from the find panel.
@@ -30152,6 +30230,7 @@ def putnl (self):
         
 def forceLogUpdate (self,s):
     if sys.platform == "darwin": # Does not work on MacOS X.
+        
         print s, # Don't add a newline.
     else:
         self.frame.tree.disableRedraw = True
@@ -30159,8 +30238,11 @@ def forceLogUpdate (self,s):
         self.frame.tree.disableRedraw = False
 #@nonl
 #@+node:EKR.20040423082910:<< put s to log control >>
-if type(s) == type(u""): # 3/18/03
-    s = g.toEncodedString(s,g.app.tkEncoding)
+if 0:
+    # Do this later, or not at all.
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
 
 if color:
     if color not in self.colorTags:
@@ -30184,8 +30266,10 @@ self.forceLogUpdate(s)
 g.app.logWaiting.append((s,color),)
 
 print "Null tkinter log"
-if type(s) == type(u""): # 3/18/03
+
+if type(s) == type(u""):
     s = g.toEncodedString(s,"ascii")
+
 print s
 #@nonl
 #@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
@@ -30202,85 +30286,12 @@ print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
 #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
-#@-node:ekr.20050127083933:(Fixed bug: Find All appeared to hang)
-#@+node:ekr.20050126102846:(Fixed (maybe) Unicode problems)
-#@+node:ekr.20050206092203:What I did
-@killcolor
-
-- Replaced string + with string %.
-- Created atFile.printError to handle printing safely.
-- Simplified code in openWithFileName and made sure it does not call print!
-#@nonl
-#@-node:ekr.20050206092203:What I did
+#@-node:ekr.20050127083933:(Fix url problems)
+#@+node:ekr.20050126102846:Fix Unicode problems
 #@+node:ekr.20050126102846.1:Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2959696
-By: tyndal
-
-Windows XP japanese. Leo 4.3a1, Leo4.2.1, Python2.3.4
-
-I was just trying to open an example file whose filename is in japanese. It
-worked mostly fine in Leo 4.2, (the only problem is that filename displayed
-in the log window has garbage characters in it, though it might be because the
-default font doesnt display japanese, since the window title shows fine) the
-but in 4.3a1 it fails.. there are 4 different cases i tried opening the same
-file, just renamed or moved as appropriate.
-
-1. standard case -- file with ascii name in ascii
-directory.&#12288;(c:/temp/file.leo)
-
-2. subfolder case  -- put in subfolder with japanese name
-(c:/temp/&#12486;&#12473;&#12488;/file.leo)
-
-3. filename case -- renamed file to japanese name, original folder
-(c:/temp/&#12486;&#12473;&#12488;.leo)
-
-4. filefolder case -- put in subfolder with japanese name
-(c:/temp/&#12486;&#12473;&#12488;/&#12486;&#12473;&#12488;.leo)
-
-If i try double clicking on the leo file, only case 1 will open the file correctly,
-the other cases, the hourglass shows briefly, then disappears, seeming to the
-user as if nothing happend (no leo opens, etc)
-
-If i try opening the files from file->open, they all result in the same error.
-The title of the window shows the filename correctly, however, the leo window
-is reduced to only showing the file menu, the bar with the dehoist and hoist
-buttons, and the status bar a the bottom (the log, headlines, and text area
-arent visible). If i drag the corner of the window, i can see the 3 areas, but
-there is nothing in the headline or text area.. in the log area the output is
-the following:
-
-------- 
-Leo Log Window...
-Leo 4.3 alpha 1, build  1.208 , January 24, 2005
-Python 2.3.4, Tk 8.4.3, win32
-
-exception executing command
-Traceback (most recent call last):
-  File "F:\Programs\Leo\src\leoCommands.py", line 170, in doCommand
-    command()
-  File "F:\Programs\Leo\src\leoCommands.py", line 328, in open
-    ok, frame = g.openWithFileName(fileName,c)
-  File "F:\Programs\Leo\src\leoGlobals.py", line 638, in openWithFileName
-    print "exceptions opening:", fileName
-UnicodeEncodeError: 'ascii' codec can't encode characters in position 8-10:
-ordinal not in range(128)
-
-------- 
-
-Also, upon a new instance of leo (no other instances open, blank leo window),
-if i try to open case 2, 3, or 4, and then open a regular leo file (ex test.leo
-in the test directory of leo, aka the file that shows up at the open dialog)
-the log window is blank. dont know if it is the same bug, or a separate bug.
-	
-Note: the filenames are in japanese, i dont know what encoding they will show
-up in the forum post, so check UTF8 and the other 3 japanese encodings if necessary
-(shift jis, euc, and iso-2002-jp)
-
-Thanks,
--Tyndal
 #@-node:ekr.20050126102846.1:Report
+#@+node:ekr.20050206092203:What I did
+#@-node:ekr.20050206092203:What I did
 #@+node:ekr.20031218072017.2052:g.openWithFileName
 def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     
@@ -30326,10 +30337,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
@@ -30389,140 +30402,9 @@ def printError (self,message):
             print g.toEncodedString(message)
 #@nonl
 #@-node:ekr.20050206085258:atFile.printError
-#@-node:ekr.20050126102846:(Fixed (maybe) Unicode problems)
-#@+node:ekr.20050128081550:(Paste As Clone is undoable!)
-#@+node:ekr.20050206095417.1:Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2963304
-By: grahamh (Graham)
-
-Leo 4.3 alpha 1, build  1.208 , January 24, 2005
-Python 2.3.4, Tk 8.4.7-1, Debian GNU/Linux 3.0
-
-
-Create a new headline "Head1", insert some body text.
-Click Outline/Copy Node.
-Type some more body text in "Head1" and change its name to "Head1a".
-Create another headline "Head2".
-Click Outline/Paste Retaining Clones.
-Your changes to "Head1" are destroyed (bug 1).  Not a bug.
-Undo does NOT undo the destruction (bug 2)      VERY hard to fix.
-
-Paste As Clone can change arbitrarily many nodes throughout the outline.  It's not at all clear how to undo this...
-#@nonl
-#@-node:ekr.20050206095417.1:Report
-#@+node:ekr.20050206114130:Response
-@killcolor
-
-It is not possible to completely undo the effects of Paste As Clone, aka Paste
-Retaining Clones. Indeed, arbitrarily many changes may have happened between the
-copy and the paste. Furthermore, the copy may have been made in another copy of
-Leo! The only possible way of undoing Paste As Node would be to place the entire
-contents of the .leo file on the undo stack!
-
-This I shall not do. Instead, Leo will put up a dialog warning about not being
-able to undo the operation. If the user goes ahead anyway, Leo will clear the
-undo stack!
-
-This problem highlights the dangerous nature of Paste As Clone. My previous
-intuition about Paste As Clone was correct--it is something that should be used
-sparingly if at all.
-
-The so-called 'bug #1' is not a bug: it is what must happen if Paste As Clone is
-to mean anything. 
-#@nonl
-#@-node:ekr.20050206114130:Response
-#@+node:EKR.20040610130943:pasteOutlineRetainingClones
-def pasteOutlineRetainingClones (self):
-    
-    c = self
-    
-    # Paste retaining clones can't be fully undone.  Warn first.
-    message = (
-        'Are you sure you want to Paste As Clone?\n\n'
-        'This operation can not be undone; it will clear the Undo stack.')
-    
-    response = g.app.gui.runAskYesNoDialog('Paste As Clone?',message=message)
-
-    if response == 'yes':
-        val = c.pasteOutline(reassignIndices=False)
-        c.undoer.clearUndoState()
-        g.es('Undo stack cleared',color='red')
-        return val
-#@nonl
-#@-node:EKR.20040610130943:pasteOutlineRetainingClones
-#@+node:ekr.20050206101036:From undo class
-#@+node:EKR.20040526084140:undoInsertNodes
-def undoInsertNodes (self):
-    
-    u = self ; c = u.c
-    
-    if 0: # Paste retaining clones can't be undone!
-        # Remember the previous headline.
-        old = c.currentPosition().headString()
-    
-    c.selectVnode(u.p)
-    c.deleteOutline()
-
-    if u.select:
-        c.selectVnode(u.select)
-        
-    # New in 4.3: Support for Paste As Clone.
-    if 0: # Paste retaining clones can't be undone!
-        if u.headString:
-            new = u.headString
-            g.trace('old',old,'new',new)
-            u.p.setHeadStringOrHeadline(new)
-            u.headString=old
-#@nonl
-#@-node:EKR.20040526084140:undoInsertNodes
-#@+node:EKR.20040526072519.4:redoInsertNodes
-def redoInsertNodes (self):
-    
-    u = self ; c = u.c
-    
-    if 0: # Paste retaining clones can't be undone!
-        # Remember the previous headline.
-        old = c.currentPosition().headString()
-
-    if u.back:
-        u.p.linkAfter(u.back)
-    elif u.parent:
-        u.p.linkAsNthChild(u.parent,0)
-    else:
-        oldRoot = c.rootPosition()
-        u.p.linkAsRoot(oldRoot)
-        
-    # Restore all vnodeLists (and thus all clone marks).
-    u.p.restoreLinksInTree()
-
-    c.selectVnode(u.p)
-    
-    if 0: # Paste retaining clones can't be undone!
-        if u.headString:
-            new = u.headString
-            g.trace('old',old,'new',new)
-            u.p.setHeadStringOrHeadline(new)
-            u.headString=old
-#@nonl
-#@-node:EKR.20040526072519.4:redoInsertNodes
-#@-node:ekr.20050206101036:From undo class
-#@-node:ekr.20050128081550:(Paste As Clone is undoable!)
-#@+node:ekr.20050128081226:(mod_scripting plugin now disables buttons when config dialog is open)
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2963722
-By: paulpaterson
-
-When in settings all commands are disabled but toolbar buttons (eg hoist, script
-button) do seem to function to some extent.
-
-What I did:
-
-    These are now disabled when c.disableCommandsMessage contains a message.
-
-#@-node:ekr.20050128081226:(mod_scripting plugin now disables buttons when config dialog is open)
+#@-node:ekr.20050126102846:Fix Unicode problems
+#@+node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
+#@-node:ekr.20050128081226:buttons work in toolbars when settings dialog is open
 #@+node:ekr.20050206120754.1:(Fixed bug: Focus shifted from body to headline
 #@+node:ekr.20050206140101:Report
 @killcolor
@@ -30737,6 +30619,135 @@ for theDir in (homeDir,globalConfigDir,loadDir):
 #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
 #@-node:ekr.20031218072017.1978:app.setLeoID
 #@-node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
+#@+node:ekr.20050206201921:(Leo now prints unicode characters properly in the log pane)
+# This now works: g.es('ﺻﺱ',color='red')
+#@nonl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+# All output to the log stream eventually comes here.
+def put (self,s,color=None):
+    
+    # print 'tkLog.put',self.c.shortFileName(),s,
+
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put s to log control >>
+    else:
+        << put s to logWaiting and print s >>
+
+def putnl (self):
+    if g.app.quitting: return
+    elif self.logCtrl:
+        << put newline to log control >>
+    else:
+        << put newline to logWaiting and print newline >>
+        
+def forceLogUpdate (self,s):
+    if sys.platform == "darwin": # Does not work on MacOS X.
+        
+        print s, # Don't add a newline.
+    else:
+        self.frame.tree.disableRedraw = True
+        self.logCtrl.update_idletasks()
+        self.frame.tree.disableRedraw = False
+#@nonl
+#@+node:EKR.20040423082910:<< put s to log control >>
+if 0:
+    # Do this later, or not at all.
+    # Doing this here messes up the display in the log pane.
+    if type(s) == type(u""):
+        s = g.toEncodedString(s,g.app.TkEncoding)
+
+if color:
+    if color not in self.colorTags:
+        self.colorTags.append(color)
+        self.logCtrl.tag_config(color,foreground=color)
+    self.logCtrl.insert("end",s)
+    self.logCtrl.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+    if "black" not in self.colorTags:
+        self.colorTags.append("black")
+        self.logCtrl.tag_config("black",foreground="black")
+    self.logCtrl.tag_add("black","end")
+else:
+    self.logCtrl.insert("end",s)
+
+self.logCtrl.see("end")
+    
+self.forceLogUpdate(s)
+#@nonl
+#@-node:EKR.20040423082910:<< put s to log control >>
+#@+node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+g.app.logWaiting.append((s,color),)
+
+print "Null tkinter log"
+
+if type(s) == type(u""):
+    s = g.toEncodedString(s,"ascii")
+
+print s
+#@nonl
+#@-node:EKR.20040423082910.1:<< put s to logWaiting and print s >>
+#@+node:EKR.20040423082910.2:<< put newline to log control >>
+self.logCtrl.insert("end",'\n')
+self.logCtrl.see("end")
+self.forceLogUpdate('\n')
+#@nonl
+#@-node:EKR.20040423082910.2:<< put newline to log control >>
+#@+node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+g.app.logWaiting.append(('\n',"black"),)
+print "Null tkinter log"
+print
+#@nonl
+#@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
+#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+#@-node:ekr.20050206201921:(Leo now prints unicode characters properly in the log pane)
 #@-node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125203059.2:New features...
 #@+node:ekr.20050125170349:(Added new undo granularities & undo_granularity setting)

@@ -1772,7 +1772,7 @@ writer, the filter must reproduce the modified file up until, but not including,
 j1. In addition, all the sentinels of the original Leo file, up until
 mapping[i1], must be present in the new_source_file.
 
-@code
+@c
 
 # Check the loop invariant.
 assert i_reader.i == i1
@@ -2865,6 +2865,36 @@ def OnVisibility (self,event):
         self.icon.attach(self.top)
 #@nonl
 #@-node:ekr.20031218072017.3974:frame.OnVisibility (Not used)
+#@+node:ekr.20050129113217:Unused code from leoTkinterGui & leoGui
+# These were in leoGui.py.
+
+def createColorPanel(self,c):
+    """Create Color panel."""
+    
+def createFontPanel(self,c):
+    """Create a Font panel."""
+    
+def createPrefsPanel(self,c):
+    """Create a Prefs panel."""
+
+# These were in leoTkinterGui.py
+
+if 0: # No longer used
+    def createColorPanel(self,c):
+        """Create a Tkinter color picker panel."""
+        return leoTkinterColorPanels.leoTkinterColorPanel(c)
+
+if 0: # No longer used
+    def createFontPanel(self,c):
+        """Create a Tkinter font panel."""
+        return leoTkinterFontPanel.leoTkinterFontPanel(c)
+        
+if 0: # No longer used
+    def createPrefsPanel(self,c):
+        """Create a Tkinter find panel."""
+        return leoTkinterPrefs.leoTkinterPrefs(c)
+#@nonl
+#@-node:ekr.20050129113217:Unused code from leoTkinterGui & leoGui
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl
