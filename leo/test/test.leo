@@ -44,7 +44,7 @@
 <v t="edream.110203161858.15"><vh>Test of report bad chars</vh></v>
 <v t="edream.110203161858.16"><vh>Test of indentation</vh>
 <v t="edream.110203161858.17" tnodeList="edream.110203161858.17,edream.110203161858.18,edream.110203161858.19,edream.110203161858.21,edream.110203161858.22,edream.110203161858.24,edream.110203161858.18"><vh>@file c:\prog\test\gnxText.txt</vh>
-<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
+<v t="edream.110203161858.18"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="edream.110203161858.19"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
 <v t="edream.110203161858.20"><vh>Organizer node</vh>
 <v t="edream.110203161858.21"><vh>node 1</vh>
@@ -121,12 +121,12 @@
 </v>
 <v t="edream.120603125057"><vh>4.1 rc1 tests</vh>
 <v t="edream.120603112201"><vh>clone-drag bug</vh>
-<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.1"><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
 <v t="edream.120603112201.2"><vh>b</vh></v>
 <v t="edream.120603113726"><vh>c</vh></v>
 </v>
-<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.1"><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
 <v t="edream.120603112201.2"><vh>b</vh></v>
 <v t="edream.120603113726"><vh>c</vh></v>
@@ -219,14 +219,14 @@
 <v t="edream.120703182038.1" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
 </v>
 <v t="edream.120803164745"><vh>clone copy/paste test</vh>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.1"><vh>a</vh>
 <v t="edream.120803164745.2"><vh>b</vh></v>
 </v>
 <v t="edream.120803164745.3"><vh>copy</vh>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.1"><vh>a</vh>
 <v t="edream.120803164745.2"><vh>b</vh></v>
 </v>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.1"><vh>a</vh>
 <v t="edream.120803164745.2"><vh>b</vh></v>
 </v>
 </v>
@@ -241,14 +241,22 @@
 </v>
 <v t="ekr.20040128180619"><vh>4.1 rc4 tests</vh>
 <v t="ekr.20040128174521"><vh>Test of orphan node</vh>
-<v t="ekr.20040128174521.1" a="E" tnodeList="ekr.20040128174521.1"><vh>@file orphanIgnoredTest.txt</vh>
-<v t="ekr.20040128174521.2" a=""><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
-<v t="ekr.20040128175919" a="E"><vh>a</vh>
-<v t="ekr.20040128174521.2" a=""><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
+<v t="ekr.20040128174521.1" tnodeList="ekr.20040128174521.1"><vh>@file orphanIgnoredTest.txt</vh>
+<v t="ekr.20040128174521.2"><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
+<v t="ekr.20040128175919"><vh>a</vh>
+<v t="ekr.20040128174521.2"><vh>&lt;&lt; should be orphan &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 <v t="ekr.20040126121831"><vh>Test of exception-handling inside commands</vh></v>
+<v t="ekr.20040130151238"><vh>convert tab/blanks tests</vh>
+<v t="ekr.20040130151238.1"><vh>node 1</vh></v>
+<v t="ekr.20040130151238.2"><vh>node 2</vh></v>
+</v>
+<v t="ekr.20040130110810"><vh>Scipt tests</vh>
+<v t="ekr.20040130110810.1"><vh>one</vh></v>
+<v t="ekr.20040130110810.2"><vh>two</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
@@ -353,7 +361,7 @@
 </v>
 </v>
 <v t="edream.110203161858.111"><vh>Test Files...</vh>
-<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
+<v t="edream.110203161858.18"><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
 <v t="edream.110203161858.112" tnodeList="edream.110203161858.112,edream.110203161858.113,edream.110203161858.113"><vh>@file c:\prog\test\atRawTest.txt</vh>
 <v t="edream.110203161858.113"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 </v>
@@ -546,10 +554,10 @@
 <v t="edream.110203161858.267"><vh>Top level</vh>
 <v t="edream.110203161858.268"><vh>old_df.rawWrite</vh>
 <v t="edream.110203161858.269"><vh>&lt;&lt; write root's tree &gt;&gt;</vh>
-<v t="edream.110203161858.270" a=""><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203161858.270"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
 <v t="edream.110203161858.271"><vh>&lt;&lt; put optional @comment sentinel lines &gt;&gt;</vh></v>
 <v t="edream.110203161858.272"><vh>&lt;&lt; Write v's node &gt;&gt;</vh></v>
-<v t="edream.110203161858.273" a=""><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="edream.110203161858.273"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 </v>
 <v t="edream.110203161858.274"><vh>old_df.silentWrite</vh>
@@ -560,9 +568,9 @@
 <v t="edream.110203161858.278"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203161858.279"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203161858.280"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (3.x)</vh>
-<v t="edream.110203161858.270" a=""><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203161858.270"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
 <v t="edream.110203161858.281"><vh>&lt;&lt; write the derived file&gt;&gt;</vh></v>
-<v t="edream.110203161858.273" a=""><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
+<v t="edream.110203161858.273"><vh>&lt;&lt; put all @last lines in root &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.282"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
 <v t="edream.110203161858.283"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
@@ -1212,10 +1220,10 @@
 <v t="edream.110203161858.807"><vh>newTnode</vh></v>
 <v t="edream.110203161858.808"><vh>readAtFileNodes</vh></v>
 <v t="edream.110203161858.809"><vh>fileCommands.readOutlineOnly</vh>
-<v t="edream.110203161858.810" a=""><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
+<v t="edream.110203161858.810"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.811"><vh>fileCommands.open</vh>
-<v t="edream.110203161858.810" a=""><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
+<v t="edream.110203161858.810"><vh>&lt;&lt; Set the default directory &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.812"><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203161858.813"><vh>xmlUnescape</vh></v>
@@ -1877,7 +1885,7 @@
 <v t="edream.110203161858.1357"><vh>windows</vh></v>
 </v>
 <v t="edream.110203161858.1358"><vh>Scanning, selection &amp; whitespace...</vh>
-<v t="edream.110203161858.1359" a=""><vh>getindex</vh></v>
+<v t="edream.110203161858.1359"><vh>getindex</vh></v>
 <v t="edream.110203161858.1360"><vh>scanAtFileOptions</vh>
 <v t="edream.110203161858.1361"><vh>&lt;&lt; scan another @file option &gt;&gt;</vh></v>
 </v>
@@ -1928,7 +1936,7 @@
 </v>
 <v t="edream.110203161858.1404"><vh>Tk.Text selection (utils)</vh>
 <v t="edream.110203161858.1405"><vh>bound_paragraph</vh></v>
-<v t="edream.110203161858.1359" a=""><vh>getindex</vh></v>
+<v t="edream.110203161858.1359"><vh>getindex</vh></v>
 <v t="edream.110203161858.1406"><vh>getSelectedText</vh></v>
 <v t="edream.110203161858.1407"><vh>getTextSelection</vh></v>
 <v t="edream.110203161858.1408"><vh>setTextSelection</vh></v>
@@ -2051,7 +2059,7 @@
 <v t="edream.110203161858.1498"><vh>&lt;&lt; handle equal sign in C&gt;&gt;</vh></v>
 <v t="edream.110203161858.1499"><vh>&lt;&lt; handle open paren in C &gt;&gt;</vh></v>
 <v t="edream.110203161858.1500"><vh>&lt;&lt; handle semicolon in C &gt;&gt;</vh></v>
-<v t="edream.110203161858.1501" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+<v t="edream.110203161858.1501"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1502"><vh>scanJavaText</vh>
 <v t="edream.110203161858.1503"><vh>&lt;&lt; define scanJavaText vars &gt;&gt;</vh></v>
@@ -2065,7 +2073,7 @@
 <v t="edream.110203161858.1510"><vh>&lt;&lt; handle equal sign in Java &gt;&gt;</vh></v>
 <v t="edream.110203161858.1511"><vh>&lt;&lt; handle open paren in Java &gt;&gt;</vh></v>
 <v t="edream.110203161858.1512"><vh>&lt;&lt; handle semicolon in Java &gt;&gt;</vh></v>
-<v t="edream.110203161858.1501" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+<v t="edream.110203161858.1501"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1513"><vh>scanPascalText</vh>
 <v t="edream.110203161858.1514"><vh>&lt;&lt; handle possible Pascal function &gt;&gt;</vh>
@@ -2077,7 +2085,7 @@
 </v>
 <v t="edream.110203161858.1520"><vh>&lt;&lt; append noweb method reference to the parent node &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203161858.1501" a=""><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
+<v t="edream.110203161858.1501"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -2494,26 +2502,26 @@
 </v>
 <v t="edream.110203161858.1857"><vh>untangle</vh>
 <v t="edream.110203161858.1858"><vh>compare_comments</vh>
-<v t="edream.110203161858.1859" a=""><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="edream.110203161858.1859"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1860"><vh>massage_block_comment (no longer used)</vh></v>
 <v t="edream.110203161858.1861"><vh>forgiving_compare</vh>
 <v t="edream.110203161858.1862"><vh>&lt;&lt; Define forgiving_compare vars &gt;&gt;</vh></v>
-<v t="edream.110203161858.1859" a=""><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
+<v t="edream.110203161858.1859"><vh>&lt;&lt; Check both parts for @ comment conventions &gt;&gt;</vh></v>
 <v t="edream.110203161858.1863"><vh>&lt;&lt; Compare non-critical newlines &gt;&gt;</vh></v>
 <v t="edream.110203161858.1864"><vh>&lt;&lt; Compare non-critical whitespace &gt;&gt;</vh></v>
 <v t="edream.110203161858.1865"><vh>&lt;&lt; Compare possible preprocessor directives &gt;&gt;</vh>
-<v t="edream.110203161858.1866" a=""><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="edream.110203161858.1866"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
 <v t="edream.110203161858.1867"><vh>&lt;&lt; Compare preprocessor directives &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1868"><vh>&lt;&lt; Compare possible strings &gt;&gt;</vh>
-<v t="edream.110203161858.1866" a=""><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="edream.110203161858.1866"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
 <v t="edream.110203161858.1869"><vh>&lt;&lt; Compare C strings &gt;&gt;</vh></v>
 <v t="edream.110203161858.1870"><vh>&lt;&lt; Compare Pascal strings &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1871"><vh>&lt;&lt; Compare possible section references &gt;&gt;</vh></v>
 <v t="edream.110203161858.1872"><vh>&lt;&lt; Compare comments or single characters &gt;&gt;</vh>
-<v t="edream.110203161858.1866" a=""><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
+<v t="edream.110203161858.1866"><vh>&lt;&lt; Compare single characters &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203161858.1873"><vh>&lt;&lt; Make sure both parts have ended &gt;&gt;</vh></v>
 <v t="edream.110203161858.1874"><vh>&lt;&lt; Trace the mismatch &gt;&gt;</vh></v>
@@ -2801,15 +2809,15 @@
 </v>
 <v t="ekr.20040126105605"><vh>Clone test</vh>
 <v t="ekr.20040126105605.1"><vh>moving last b up destroys the outline!!</vh></v>
-<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.2"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
-<v t="ekr.20040126105605.2" a="E"><vh>a</vh>
+<v t="ekr.20040126105605.2"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2119" a="V"><vh>Unit Tests</vh>
-<v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
+<v t="edream.110203161858.2119" a="TV"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="dthein.20040108213304"><vh>reformatParagraphsTests</vh>
 <v t="dthein.20040108213304.1"><vh>testNoTrailingNewline</vh>
 <v t="dthein.20040108213304.2"><vh>before</vh></v>
@@ -2863,7 +2871,7 @@
 <v t="dthein.20040110062310.1"><vh>before</vh></v>
 <v t="dthein.20040110062310.2"><vh>after</vh></v>
 </v>
-<v t="dthein.20040121204705" a="E"><vh>testWithLeadingWSOnEmptyLines</vh>
+<v t="dthein.20040121204705"><vh>testWithLeadingWSOnEmptyLines</vh>
 <v t="dthein.20040121204705.1"><vh>before</vh></v>
 <v t="dthein.20040121204705.2"><vh>after</vh></v>
 </v>
@@ -36216,5 +36224,20 @@ c.doCommand(throwException,"Throw Exception")</t>
 <t tx="ekr.20040128174521.2"></t>
 <t tx="ekr.20040128175919"></t>
 <t tx="ekr.20040128180619"></t>
+<t tx="ekr.20040130110810"># Test to see whether execute script ensures newlines at end of each node.
+
+if 1:
+	@others</t>
+<t tx="ekr.20040130110810.1">print "a"</t>
+<t tx="ekr.20040130110810.2">print \
+"b"</t>
+<t tx="ekr.20040130151238">@tabwidth 4
+	line 1
+    line 2
+  	line 3</t>
+<t tx="ekr.20040130151238.1">	line 1
+    line 2
+  	line 3</t>
+<t tx="ekr.20040130151238.2">	line 1</t>
 </tnodes>
 </leo_file>
