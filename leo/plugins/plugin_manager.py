@@ -1315,12 +1315,40 @@ class EnableManager:
         find_inactive = re.compile(r"^\s*#\s*(\w+)\.py", re.MULTILINE)
         find_manager = re.compile(r"^\s*plugin_manager\.py", re.MULTILINE)
     
-        # Get active plugin defintions
-        self.actives = dict([(match.groups()[0], match) 
+        if 1: # Put the first match in the starts dict.
+            starts = {}
+            for kind,iter in (
+                ('active',find_active.finditer(text)),
+                ('inactive',find_inactive.finditer(text)),
+            ):
+                for match in iter:
+                    name = match.groups()[0]
+                    start = match.start()
+                    if start != -1:
+                        bunch = starts.get(name)
+                        if not bunch or bunch.start > start:
+                          starts[name] = g.Bunch(
+                            kind=kind,name=name,start=start,match=match)
+                        
+            self.actives = dict(
+                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='active'])
+                
+            self.inactives = dict(
+                [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='inactive'])
+                
+            if 0: # debugging.
+                starts2 = [(bunch.start,bunch.name,bunch.kind) for bunch in starts.values()]
+                starts2.sort()
+                g.trace(g.listToString(starts2,tag='starts2 list'))
+                g.trace(g.dictToString(self.actives,tag='Active Plugins'))
+                      
+        else: # Original code.
+            # Get active plugin defintions
+            self.actives = dict([(match.groups()[0], match) 
                 for match in find_active.finditer(text)])
-    
-        # Get inactive plugin definitions
-        self.inactives = dict([(match.groups()[0], match) 
+        
+            # Get inactive plugin definitions
+            self.inactives = dict([(match.groups()[0], match) 
                 for match in find_inactive.finditer(text)])
     
         # List of all plugins

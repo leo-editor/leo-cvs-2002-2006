@@ -3,29 +3,34 @@
 #@@comment #
 #@@tabwidth -4
 
-# Leo enables only those plugins whose filenames appear here.
+#@+at
+# 
+# Leo enables those plugins whose filenames appear anywhere in this file 
+# without comments.
+# 
+# Warning: make sure plugins appear at most once without comments. Otherwise,
+# disabling a plugin in the Plugins Manageger plugin will have no effect.
+# 
 # Leo loads plugins in the order they appear in this file.
+# 
 # File names may be indented as desired.
+# 
+#@-at
+#@@c
 
 #@+others
 #@+node:ekr.20041113105336:Enabled plugins
 # Icon area: order is important.
-# rowcol.py
+#rowcol.py
 mod_scripting.py
-# hoist.py
+#hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
 plugin_manager.py
 
-# Other plugins: order not so important.
-# add_directives.py
-# image.py
-# rClick.py
-# mod_tempfname.py
-# open_with.py
-# rst2.py
-# spellpyx.py
+# test: second mention of rowcol should have no effect.
+rowcol.py
 #@nonl
 #@-node:ekr.20041113105336:Enabled plugins
 #@+node:ekr.20041113105527.1:Documentation for plugins
@@ -112,10 +117,10 @@ plugin_manager.py
     # newButtons.py
 
 # Creates "Recent" and "Marks" popups in the icon area.
-#nodenavigator.py
+    # nodenavigator.py
     
 # Creates row-column indicators in the status area.
-#rowcol.py
+    # rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
     # searchbox.py
@@ -126,7 +131,7 @@ plugin_manager.py
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
 # Adds tabs to Leo outline.
-#chapters.py
+    #chapters.py
 
 # Maximizes all new windows. (Windows platform only).
     # maximizeNewWindows.py
