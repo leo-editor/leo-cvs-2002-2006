@@ -4718,16 +4718,32 @@ class baseCommands:
     def canHoist(self):
         
         c = self
-        root = c.rootPosition()
-        p = c.currentPosition()
+        
+        # N.B.  This is called at idle time, so minimizing positions is crucial!
     
-        if c.hoistStack:
-            p2,junk = c.hoistStack[-1]
-            return p2 != p
-        elif p == root:
-            return p.hasNext()
-        else:
-            return True
+        if 1: # minimizes positions
+    
+            if c.hoistStack:
+                p2,junk = c.hoistStack[-1]
+                return p2 and not p2.isCurrentPosition()
+            elif c.currentPositionIsRootPosition():
+                return c.currentPositionHasNext()
+            else:
+                return True
+    
+        else: # old code
+    
+            root = c.rootPosition()
+            p = c.currentPosition()
+        
+            if c.hoistStack:
+                p2,junk = c.hoistStack[-1]
+                return p2 != p
+            
+            elif p == root:
+                return p.hasNext()
+            else:
+                return True
     #@nonl
     #@-node:ekr.20040303165342:canHoist & canDehoist
     #@+node:ekr.20031218072017.2970:canMoveOutlineDown (changed for hoist)
@@ -4890,34 +4906,6 @@ class baseCommands:
     #@-node:ekr.20031218072017.2981:canUnmarkAll
     #@-node:ekr.20031218072017.2955:Enabling Menu Items
     #@+node:ekr.20031218072017.2982:Getters & Setters
-    #@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
-    def currentPosition (self,copy=True):
-        
-        """Return the presently selected position."""
-        
-        c = self
-        
-        if c._currentPosition:
-            return c._currentPosition.copy() # Must make the second copy now.
-        else:
-            return c.nullPosition()
-        
-    def setCurrentPosition (self,p):
-        
-        """Set the presently selected position."""
-        
-        c = self
-        
-        if p:
-            c._currentPosition = p.copy() # Must make the first copy _now_
-        else:
-            c._currentPosition = None
-        
-    # Define these for compatibiility with old scripts.
-    currentVnode = currentPosition
-    setCurrentVnode = setCurrentPosition
-    #@nonl
-    #@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
     #@+node:ekr.20031218072017.2984:c.clearAllMarked
     def clearAllMarked (self):
     
@@ -4937,6 +4925,49 @@ class baseCommands:
             p.v.t.clearVisited()
             p.v.t.clearWriteBit()
     #@-node:ekr.20031218072017.2985:c.clearAllVisited
+    #@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
+    #@+node:ekr.20040803140033:currentPosition
+    def currentPosition (self,copy=True):
+        
+        """Return the presently selected position."""
+        
+        c = self
+        
+        if c._currentPosition:
+            if copy:
+                return c._currentPosition.copy() # Must make a second copy now.
+            else:
+                # The caller MUST copy the position if it is passed to any other method.
+                # At present no core method uses copy = False.
+                g.trace("copy=False")
+                return c._currentPosition
+        else:
+            return c.nullPosition()
+        
+    # For compatibiility with old scripts.
+    currentVnode = currentPosition
+    #@nonl
+    #@-node:ekr.20040803140033:currentPosition
+    #@+node:ekr.20040803140033.1:setCurrentPosition
+    def setCurrentPosition (self,p):
+        
+        """Set the presently selected position."""
+        
+        c = self
+        
+        if p:
+            if p.equal(c._currentPosition):
+                pass # We have already made a copy.
+            else: # Must make a copy _now_
+                c._currentPosition = p.copy() 
+        else:
+            c._currentPosition = None
+        
+    # For compatibiility with old scripts.
+    setCurrentVnode = setCurrentPosition
+    #@nonl
+    #@-node:ekr.20040803140033.1:setCurrentPosition
+    #@-node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
     #@+node:ekr.20031218072017.2986:c.fileName
     # Compatibility with scripts
     
@@ -4950,24 +4981,149 @@ class baseCommands:
         return self.changed
     #@nonl
     #@-node:ekr.20031218072017.2987:c.isChanged
+    #@+node:ekr.20040803112200:c.is...Position
+    #@+node:ekr.20040803155551:c.currentPositionIsRootPosition
+    def currentPositionIsRootPosition (self):
+        
+        """Return True if the current position is the root position.
+        
+        This method is called during idle time, so not generating positions
+        here fixes a major leak.
+        """
+        
+        c = self
+        
+        return (
+            c._currentPosition and c._rootPosition and
+            c._currentPosition == c._rootPosition)
+            
+    #@nonl
+    #@-node:ekr.20040803155551:c.currentPositionIsRootPosition
+    #@+node:ekr.20040803160656:c.currentPositionHasNext
+    def currentPositionHasNext (self):
+        
+        """Return True if the current position is the root position.
+        
+        This method is called during idle time, so not generating positions
+        here fixes a major leak.
+        """
+        
+        c = self ; current = c._currentPosition 
+        
+        return current and current.hasNext()
+    #@nonl
+    #@-node:ekr.20040803160656:c.currentPositionHasNext
+    #@+node:ekr.20040803112450:c.isCurrentPosition
+    def isCurrentPosition (self,p):
+        
+        """
+        >>> c = g.top() ; p = c.currentPosition()
+        >>> n = g.app.positions
+        >>> assert c.isCurrentPosition(None) is False
+        >>> assert c.isCurrentPosition(p) is True
+        >>> assert g.app.positions == n
+        >>> 
+        """
+        
+        c = self
+        
+        if p is None or c._currentPosition is None:
+            return False
+        else:
+            return p.isEqual(c._currentPosition)
+    #@nonl
+    #@-node:ekr.20040803112450:c.isCurrentPosition
+    #@+node:ekr.20040803112450.1:c.isRootPosition
+    def isRootPosition (self,p):
+        
+        """
+        >>> c = g.top() ; p = c.rootPosition()
+        >>> n = g.app.positions
+        >>> assert c.isRootPosition(None) is False
+        >>> assert c.isRootPosition(p) is True
+        >>> assert g.app.positions == n
+        >>> 
+        """
+        
+        c = self
+        
+        if p is None or c._rootPosition is None:
+            return False
+        else:
+            return p.isEqual(c._rootPosition)
+    #@nonl
+    #@-node:ekr.20040803112450.1:c.isRootPosition
+    #@-node:ekr.20040803112200:c.is...Position
+    #@+node:ekr.20040311094927:c.nullPosition
+    def nullPosition (self):
+        
+        return leoNodes.position(None,[])
+    #@nonl
+    #@-node:ekr.20040311094927:c.nullPosition
     #@+node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
+    #@+node:ekr.20040803140033.2:rootPosition
     def rootPosition(self):
         
         """Return the root position."""
         
-        return self._rootPosition.copy()
+        c = self
+        
+        if self._rootPosition:
+            return self._rootPosition.copy()
+        else:
+            return  c.nullPosition()
     
+    # For compatibiility with old scripts.
+    rootVnode = rootPosition
+    #@nonl
+    #@-node:ekr.20040803140033.2:rootPosition
+    #@+node:ekr.20040803140033.3:setRootPosition
     def setRootPosition(self,p):
         
         """Set the root positioin."""
     
-        self._rootPosition = p.copy() # Potential bug fix: 5/2/04
+        c = self
         
-    # Define these for compatibiility with old scripts.
-    rootVnode = rootPosition
+        if p:
+            if p.equal(c._rootPosition):
+                pass # We have already made a copy.
+            else:
+                # We must make a copy _now_.
+                c._rootPosition = p.copy()
+        else:
+            c._rootPosition = None
+        
+    # For compatibiility with old scripts.
     setRootVnode = setRootPosition
     #@nonl
+    #@-node:ekr.20040803140033.3:setRootPosition
     #@-node:ekr.20031218072017.2988:c.rootPosition & c.setRootPosition
+    #@+node:ekr.20031218072017.2989:c.setChanged
+    def setChanged (self,changedFlag):
+    
+        c = self
+        if not c.frame: return
+        
+        # import traceback ; traceback.print_stack()
+    
+        # Clear all dirty bits _before_ setting the caption.
+        # 9/15/01 Clear all dirty bits except orphaned @file nodes
+        if not changedFlag:
+            # g.trace("clearing all dirty bits")
+            for p in c.allNodes_iter():
+                if p.isDirty() and not (p.isAtFileNode() or p.isAtNorefFileNode()):
+                    p.clearDirty()
+        # Update all derived changed markers.
+        c.changed = changedFlag
+        s = c.frame.getTitle()
+        if len(s) > 2 and not c.loading: # don't update while loading.
+            if changedFlag:
+                # import traceback ; traceback.print_stack()
+                if s [0] != '*': c.frame.setTitle("* " + s)
+            else:
+                if s[0:2]=="* ": c.frame.setTitle(s[2:])
+    #@nonl
+    #@-node:ekr.20031218072017.2989:c.setChanged
     #@+node:ekr.20040311173238:c.topPosition & c.setTopPosition
     def topPosition(self):
         
@@ -4996,38 +5152,6 @@ class baseCommands:
     setTopVnode = setTopPosition
     #@nonl
     #@-node:ekr.20040311173238:c.topPosition & c.setTopPosition
-    #@+node:ekr.20031218072017.2989:c.setChanged
-    def setChanged (self,changedFlag):
-    
-        c = self
-        if not c.frame: return
-        
-        # import traceback ; traceback.print_stack()
-    
-        # Clear all dirty bits _before_ setting the caption.
-        # 9/15/01 Clear all dirty bits except orphaned @file nodes
-        if not changedFlag:
-            # g.trace("clearing all dirty bits")
-            for p in c.allNodes_iter():
-                if p.isDirty() and not (p.isAtFileNode() or p.isAtNorefFileNode()):
-                    p.clearDirty()
-        # Update all derived changed markers.
-        c.changed = changedFlag
-        s = c.frame.getTitle()
-        if len(s) > 2 and not c.loading: # don't update while loading.
-            if changedFlag:
-                # import traceback ; traceback.print_stack()
-                if s [0] != '*': c.frame.setTitle("* " + s)
-            else:
-                if s[0:2]=="* ": c.frame.setTitle(s[2:])
-    #@nonl
-    #@-node:ekr.20031218072017.2989:c.setChanged
-    #@+node:ekr.20040311094927:c.nullPosition
-    def nullPosition (self):
-        
-        return leoNodes.position(None,[])
-    #@nonl
-    #@-node:ekr.20040311094927:c.nullPosition
     #@-node:ekr.20031218072017.2982:Getters & Setters
     #@+node:ekr.20031218072017.2990:Selecting & Updating (commands)
     #@+node:ekr.20031218072017.2991:c.editVnode (calls tree.editLabel)
