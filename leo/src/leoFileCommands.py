@@ -142,10 +142,10 @@ class baseFileCommands:
 		#@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
 		keys = attrDict.keys()
 		if keys:
-			p.v.unknownAttributes = attrDict
+			v.unknownAttributes = attrDict
 		
 			if 0: # For debugging.
-				s = "unknown attributes for " + p.headString()
+				s = "unknown attributes for " + v.headString()
 				print s ; g.es(s,color="blue")
 				for key in keys:
 					s = "%s = %s" % (key,attrDict.get(key))
