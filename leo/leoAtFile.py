@@ -544,7 +544,8 @@ class atFile:
 				# 11/14/02: Similar to fix below.
 				delim1, delim2, delim3 = set_delims_from_string(s[k:])
 			
-			if not old.has_key("language") and dict.has_key("language"):
+			# Reversion fix: 12/06/02: We must use elif here, not if.
+			elif not old.has_key("language") and dict.has_key("language"):
 				k = dict["language"]
 				# 11/14/02: Fix bug reported by J.M.Gilligan.
 				self.language,delim1,delim2,delim3 = set_language(s,k)

@@ -263,7 +263,7 @@ class LeoApp:
 			self.root.quit()
 	#@-body
 	#@-node:5::app.quit
-	#@+node:6::app.get/setRealMenuName
+	#@+node:6::app.get/setRealMenuName & setRealMenuNamesFromTable
 	#@+body
 	# Returns the translation of a menu name or an item name.
 	
@@ -283,7 +283,7 @@ class LeoApp:
 			self.setRealMenuName(untrans,trans)
 	
 	#@-body
-	#@-node:6::app.get/setRealMenuName
+	#@-node:6::app.get/setRealMenuName & setRealMenuNamesFromTable
 	#@+node:7::app.testDialogs
 	#@+body
 	def testDialogs (self):
