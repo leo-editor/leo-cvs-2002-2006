@@ -10,30 +10,18 @@
 
 #@<< Import pychecker >>
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
-#@+at 
-#@nonl
-# pychecker is extremely useful, and it sometimes reports problems 
-# erroneously.  In particular, the following warnings are invalid:
-# 
-# in leoFrame.py and leoNodes.py: warnings about the event param not being 
-# used. pychecker doesn't understand that these routines are Tkinter 
-# callbacks.
-# 
-# in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals 
-# very well.  There are spurious warnings about globals.
-# 
-# several files: pychecker complains about several routines being "too big", 
-# i.e., pychecker doesn't understand about literate programming.
-# 
-#@-at
-#@@c
+#@@color
 
-if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
     try:
         import pychecker.checker
-        # from pychecker import Config
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
         print ; print "Warning: pychecker.checker running..." ; print
-    except: pass
+    except:
+        pass
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@nl

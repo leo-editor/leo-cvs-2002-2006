@@ -30,25 +30,6 @@ that line number does not compute. RTFM
 e
 #@nonl
 #@-node:ekr.20040630214448.1:Use inspect module to improve Go To Line Number
-#@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
-
-in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines are Tkinter callbacks.
-
-in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
-
-several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
-
-@c
-
-if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
-    try:
-        import pychecker.checker
-        # from pychecker import Config
-        print ; print "Warning: pychecker.checker running..." ; print
-    except: pass
-#@nonl
-#@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@-node:ekr.20040630214448:To do next
 #@+node:EKR.20040430163619:To do: 4.2
 #@+node:EKR.20040617105034:To do before 4.2 beta 3: feature complete
@@ -3251,22 +3232,18 @@ C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
 #@nonl
 #@-node:ekr.20040701123332:To do: redirect output
 #@+node:ekr.20031218072017.2606:<< Import pychecker >>
-@ pychecker is extremely useful, and it sometimes reports problems erroneously.  In particular, the following warnings are invalid:
+@color
 
-in leoFrame.py and leoNodes.py: warnings about the event param not being used. pychecker doesn't understand that these routines are Tkinter callbacks.
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
 
-in leoApp.py and leoGlobals.py: pychecker doesn't seem to handle globals very well.  There are spurious warnings about globals.
-
-several files: pychecker complains about several routines being "too big", i.e., pychecker doesn't understand about literate programming.
-
-@c
-
-if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
+if 0: # Set to 1 for lint-like testing.
     try:
         import pychecker.checker
-        # from pychecker import Config
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
         print ; print "Warning: pychecker.checker running..." ; print
-    except: pass
+    except:
+        pass
 #@nonl
 #@-node:ekr.20031218072017.2606:<< Import pychecker >>
 #@-node:ekr.20040701120647:Pychecker stuff...
