@@ -4,62 +4,7 @@
 
 #@+all
 #@+node:ekr.20050102180943.1:4.3 a1
-#@+node:ekr.20050121074152:Fix bug: search in hoisted outline can stop outside the hoisted area
-#@+node:ekr.20050121074152.1:Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2934617
-By: bwmulder
-
-According to various notes in the Leo documentation, "hoist" should restrict
-you a subtree of the outline.
-
-With the version I am using (CVS, a few days old), searching for strings stops
-at nodes outside this subtree. The nodes where the string was found remains
-invisible.
-#@-node:ekr.20050121074152.1:Report
-#@-node:ekr.20050121074152:Fix bug: search in hoisted outline can stop outside the hoisted area
-#@+node:ekr.20050121075634:Investigate Control-Q binding
-#@+node:ekr.20050121075634.1:Report
-@killcolor
-
-http://sourceforge.net/forum/message.php?msg_id=2944234
-By: nobody
-
-I am unable to remap the CTRL+Q keyboard shortcut. It seems to be hardwired
-to File > Exit. My attempts to override it have failed.
-
-I want to remap it to reformat paragraph. I have remapped several keys. They
-worked. When I did CTRL+Q it still does File > Exit.
-
-Any suggestions? What's so special about this one or I just missing something?
-#@-node:ekr.20050121075634.1:Report
-#@-node:ekr.20050121075634:Investigate Control-Q binding
-#@+node:ekr.20041118135306.1:Unit tests for settings dialog
-@killcolor
-
-- Create unit tests for essential features.
-    - There are too many cases to test by hand.
-    - Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
-#@nonl
-#@-node:ekr.20041118135306.1:Unit tests for settings dialog
-#@+node:ekr.20041228090344.1:Fix minor config problems
-@killcolor
-
-- Disable all commands while in dialog.
-
-- Print changes to log.
-#@nonl
-#@-node:ekr.20041228090344.1:Fix minor config problems
-#@+node:ekr.20050122092221:Do release notes
-@killcolor
-
-- This really is an alpha release.  Be careful.
-
-- Files must have @recent-files (or @recentFiles, etc.) nodes to keep track of recent files.
-#@nonl
-#@-node:ekr.20050122092221:Do release notes
-#@+node:ekr.20050122105757:Implement 'Undo Clear Recent Files'
+#@+node:ekr.20050122105757:** Implement 'Undo Clear Recent Files'
 #@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
 def setRecentFiles (self,files):
     
@@ -83,7 +28,70 @@ def setRecentFiles (self,files):
     c.setChanged(changed)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
-#@-node:ekr.20050122105757:Implement 'Undo Clear Recent Files'
+#@-node:ekr.20050122105757:** Implement 'Undo Clear Recent Files'
+#@+node:ekr.20050122192837:Small bugs 3
+#@+node:ekr.20050121075634:Investigate Control-Q binding
+#@+node:ekr.20050121075634.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2944234
+By: nobody
+
+I am unable to remap the CTRL+Q keyboard shortcut. It seems to be hardwired
+to File > Exit. My attempts to override it have failed.
+
+I want to remap it to reformat paragraph. I have remapped several keys. They
+worked. When I did CTRL+Q it still does File > Exit.
+
+Any suggestions? What's so special about this one or I just missing something?
+#@-node:ekr.20050121075634.1:Report
+#@-node:ekr.20050121075634:Investigate Control-Q binding
+#@+node:ekr.20041228090344.1:Fix minor config problems
+@killcolor
+
+- Disable all commands while in dialog.
+
+- Print changes to log.
+#@nonl
+#@-node:ekr.20041228090344.1:Fix minor config problems
+#@+node:ekr.20050122122437:Investigae interaction between @language & @comment
+#@+node:ekr.20050122122437.1:Report
+@killcolor
+
+This doesn't work (EKR: it should)
+
++ Code 
+@language python 
++ @file sql_create.sql 
+@comment -- 
+ 
+So I rearranged the outline (probably more logical anyway) to  
++Code 
++ Python 
+... 
++ SQL 
+... 
+ 
+All is now well and Leo continues to be a revelation.
+#@-node:ekr.20050122122437.1:Report
+#@-node:ekr.20050122122437:Investigae interaction between @language & @comment
+#@-node:ekr.20050122192837:Small bugs 3
+#@+node:ekr.20041118135306.1:Unit tests for settings dialog
+@killcolor
+
+- Create unit tests for essential features.
+    - There are too many cases to test by hand.
+    - Make sure proper values from Prefs panel are used in Tangle/Untangle commands.
+#@nonl
+#@-node:ekr.20041118135306.1:Unit tests for settings dialog
+#@+node:ekr.20050122092221:Do release notes
+@killcolor
+
+- This really is an alpha release.  Be careful.
+
+- Files must have @recent-files (or @recentFiles, etc.) nodes to keep track of recent files.
+#@nonl
+#@-node:ekr.20050122092221:Do release notes
 #@-node:ekr.20050102180943.1:4.3 a1
 #@+node:ekr.20050119072551:4.3 a2 config
 #@+node:ekr.20050122091016:Minor

@@ -10926,6 +10926,126 @@ except:
 #@nonl
 #@-node:ekr.20031218072017.2829:<< execute a command to open path in external editor >>
 #@-node:ekr.20050121082447:(Fixed bug in the code that executes Open With command with spawnv)
+#@+node:ekr.20050121074152:(Fix buged: search in hoisted outline can stop outside the hoisted area)
+#@+node:ekr.20050121074152.1:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2934617
+By: bwmulder
+
+According to various notes in the Leo documentation, "hoist" should restrict
+you a subtree of the outline.
+
+With the version I am using (CVS, a few days old), searching for strings stops
+at nodes outside this subtree. The nodes where the string was found remains
+invisible.
+#@-node:ekr.20050121074152.1:Report
+#@+node:ekr.20031218072017.2028:Hoist & dehoist & enablers
+def dehoist(self):
+
+    c = self ; p = c.currentPosition()
+    if p and c.canDehoist():
+        c.undoer.setUndoParams("De-Hoist",p)
+        bunch = c.hoistStack.pop()
+        if bunch.expanded: p.expand()
+        else:              p.contract()
+        c.redraw()
+        c.frame.clearStatusLine()
+        if c.hoistStack:
+            bunch = c.hoistStack[-1]
+            c.frame.putStatusLine("Hoist: " + bunch.p.headString())
+        else:
+            c.frame.putStatusLine("No hoist")
+
+def hoist(self):
+
+    c = self ; p = c.currentPosition()
+    if p and c.canHoist():
+        c.undoer.setUndoParams("Hoist",p)
+        # New in 4.2: remember expansion state.
+        bunch = g.Bunch(p=p.copy(),expanded=p.isExpanded())
+        c.hoistStack.append(bunch)
+        p.expand()
+        c.redraw()
+        c.frame.clearStatusLine()
+        c.frame.putStatusLine("Hoist: " + p.headString())
+#@nonl
+#@-node:ekr.20031218072017.2028:Hoist & dehoist & enablers
+#@+node:ekr.20031218072017.3081:selectNextVnode
+# Selects the next node to be searched.
+
+def selectNextVnode(self):
+
+    c = self.c ; v = self.v
+
+    if self.selection_only:
+        return None
+
+    # Start suboutline only searches.
+    if self.suboutline_only and not self.onlyVnode:
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.onlyVnode = v 
+
+    # Start wrapped searches.
+    if self.wrapping and not self.wrapVnode:
+        assert(self.wrapPos != None)
+        # v.copy not needed because the find code never calls p.moveToX.
+        # Furthermore, v might be None, so v.copy() would be wrong!
+        self.wrapVnode = v 
+
+    if self.in_headline and self.search_body:
+        # just switch to body pane.
+        self.in_headline = False
+        self.initNextText()
+        # g.trace(v)
+        return v
+
+    if self.reverse: v = v.threadBack()
+    else:            v = v.threadNext()
+    
+    # New in 4.3: restrict searches to hoisted area.
+    # End searches outside hoisted area.
+    if c.hoistStack:
+        if not v:
+            if self.wrapping:
+                g.es('Wrap disabled in hoisted outlines',color='blue')
+            return
+        bunch = c.hoistStack[-1]
+        if not bunch.p.isAncestorOf(v):
+            g.es('Found match outside of hoisted outline',color='blue')
+            return None
+
+    # Wrap if needed.
+    if not v and self.wrapping and not self.suboutline_only:
+        v = c.rootVnode()
+        if self.reverse:
+            # Set search_v to the last node of the tree.
+            while v and v.next():
+                v = v.next()
+            if v: v = v.lastNode()
+
+    # End wrapped searches.
+    if self.wrapping and v and v == self.wrapVnode:
+        # g.trace("ending wrapped search")
+        v = None ; self.resetWrap()
+
+    # End suboutline only searches.
+    if (self.suboutline_only and self.onlyVnode and v and
+        (v == self.onlyVnode or not self.onlyVnode.isAncestorOf(v))):
+        # g.trace("end outline-only")
+        v = None ; self.onlyVnode = None
+
+    # v.copy not needed because the find code never calls p.moveToX.
+    # Furthermore, v might be None, so v.copy() would be wrong!
+    self.v = v # used in initNextText().
+    if v: # select v and set the search point within v.
+        self.in_headline = self.search_headline
+        self.initNextText()
+    return v
+#@nonl
+#@-node:ekr.20031218072017.3081:selectNextVnode
+#@-node:ekr.20050121074152:(Fix buged: search in hoisted outline can stop outside the hoisted area)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -15365,8 +15485,8 @@ def drawTopTree (self):
     self.prevPositions = g.app.positions
 
     if c.hoistStack:
-        p,junk = c.hoistStack[-1]
-        self.drawTree(p,self.root_left,self.root_top,0,0,hoistFlag=True)
+        bunch = c.hoistStack[-1]
+        self.drawTree(bunch.p,self.root_left,self.root_top,0,0,hoistFlag=True)
     else:
         self.drawTree(c.rootPosition(),self.root_left,self.root_top,0,0)
     
@@ -15884,7 +16004,7 @@ self.beadPointer = -1 # present item in the list.
 self.visitedList = [] # list of vnodes for the Nodes dialog.
 
 # 4.1: for hoist/dehoist commands.
-self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.
+self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
 
 self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@nonl
@@ -19992,7 +20112,7 @@ self.beadPointer = -1 # present item in the list.
 self.visitedList = [] # list of vnodes for the Nodes dialog.
 
 # 4.1: for hoist/dehoist commands.
-self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects only drawing routines.
+self.hoistStack = [] # Stack of nodes to be root of drawn tree.  Affects drawing routines and find commands.
 
 self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@nonl
@@ -21032,8 +21152,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
 C:\prog\leoCVS\leo\doc\leoDocs.leo
-C:\prog\leoCVS\leo\config\leoSettings.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files

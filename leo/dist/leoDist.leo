@@ -78,7 +78,7 @@
 <v t="EKR.20040519080201.2" tnodeList="EKR.20040519080201.2"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="EKR.20040519080201.3"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
-<v t="EKR.20040519090846"><vh>Distribution files</vh>
+<v t="EKR.20040519090846" a="E"><vh>Distribution files</vh>
 <v t="EKR.20040519090846.2"><vh>@silentfile ../doc/INSTALL.TXT</vh>
 <v t="EKR.20040519090846.3"><vh>System requirements</vh></v>
 <v t="EKR.20040519090846.4"><vh>Linux installation</vh></v>
@@ -89,7 +89,7 @@
 <v t="EKR.20040519090846.1"><vh>@silentfile ../doc/LICENSE.TXT</vh></v>
 <v t="EKR.20040519090846.8"><vh>@silentfile ../doc/PKG-INFO.TXT</vh></v>
 <v t="EKR.20040519090846.9"><vh>@silentfile ../doc/README.TXT</vh></v>
-<v t="EKR.20040519082027.23"><vh>@thin createLeoDist.py</vh></v>
+<v t="EKR.20040519082027.23" a="TV"><vh>@thin createLeoDist.py</vh></v>
 <v t="EKR.20040519100230"><vh>In leo directory</vh>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
 <v t="EKR.20040519082027.32"><vh>Linux install/uninstall scripts</vh>
@@ -223,7 +223,7 @@ expanded="ekr.20050118092706.1,ekr.20050118092706.22,"><vh>@thin leo-4-3.nsi</vh
 <v t="ekr.20050116151024" a="E"><vh>To do</vh>
 <v t="ekr.20050119191232"><vh>Announce 4.2.1 beta 1 to SF, comp.lang.python, etc.</vh></v>
 <v t="ekr.20050117031116"><vh>Make sure nsi scripts are in synch with manifest</vh></v>
-<v t="ekr.20050116150710.90" a="TV"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
+<v t="ekr.20050116150710.90"><vh>Handle installation with Python 2.4 installed for Current User only</vh></v>
 <v t="ekr.20050118125236" a="M"><vh>To do:  write a script to make sure .nsi and main install scripts create the same files</vh></v>
 <v t="ekr.20050119191034"><vh>To do:  create manifest.in from manifest-nn.in</vh></v>
 </v>

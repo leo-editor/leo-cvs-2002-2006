@@ -23,7 +23,7 @@
 # Icon area: order is important.
 #rowcol.py
 mod_scripting.py
-#hoist.py
+hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
