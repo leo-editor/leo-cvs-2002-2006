@@ -3204,7 +3204,7 @@ class atFile:
 			if written:
 				es("finished")
 			else:
-				es("no @file, @rawfile or @silentfile nodes in the selected tree")
+				es("no @file or similar nodes in the selected tree")
 	#@-body
 	#@-node:17::atFile.writeAll
 	#@-node:6::Writing

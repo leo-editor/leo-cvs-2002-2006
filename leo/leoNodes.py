@@ -1432,9 +1432,9 @@ class vnode:
 		redraw_flag = false
 		c.beginUpdate()
 		while v:
-			if not v.isDirty() and (v.isAtFileNode() or v.isAtRawFileNode()):
+			if not v.isDirty() and (
+				v.isAtFileNode() or v.isAtRawFileNode() or v.isAtNoSentinelsFileNode()):
 				redraw_flag = true
-				# trace(`v`)
 				v.t.setDirty() # Do not call v.setDirty here!
 			v = v.parent()
 		c.endUpdate(redraw_flag) # A crucial optimization!
