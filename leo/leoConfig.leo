@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="22" left="150" height="26" width="84"/>
+	<global_window_position top="6" left="172" height="26" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="80" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
@@ -15,7 +15,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -29,9 +29,9 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -105,9 +105,23 @@ save_clears_undo_buffer = 0
 #	1: Save command clears undo buffer.
 #	0: Undo buffer persists across saves.
 
-path_directive_creates_directories = 1
+path_directive_creates_directories = 0
 #	1: @path directive attempts to create directory if it does not exist.
-#	0: @path directive makes no such attempt.</t>
+#	0: @path directive makes no such attempt.
+
+relative_path_base_directory = .
+#	The directory to be used as a prefix for &lt;filename&gt; in
+#	@path &lt;filename&gt; and @file &lt;filename&gt; and @root &lt;filename&gt;
+#	when &lt;filename&gt; is a relative path.
+#
+#	Valid values for this option:
+#		"!" means relative to the location leo.py (the default).
+#		"." means relative to the location of the .leo file in the top window.
+#		An absolute path (in platform-dependent format).
+#
+#	Relative paths are not allowed:
+#		Relative paths would be dangerous because their meaning
+#		would depend on the chaning value of the current working directory.</t>
 <t tx="T5">@c
 
 # The list of files in the "Recent Files" menu at startup.

@@ -659,7 +659,27 @@ def setMenuLabel (menu,name,label):
 #@-body
 #@-node:1::enableMenu & disableMenu & setMenuLabel
 #@-node:11::Menu utlities...
-#@+node:12::scanError
+#@+node:12:C=10:getBaseDirectory
+#@+body
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory():
+
+	base = app().config.relative_path_base_directory
+
+	if base and base == "!":
+		base = app().loadDir
+	elif base and base == ".":
+		base = top().openDirectory
+
+	# trace(`base`)
+	if base and len(base) > 0 and os.path.isabs(base):
+		return base # base need not exist yet.
+	else:
+		return "" # An error.
+#@-body
+#@-node:12:C=10:getBaseDirectory
+#@+node:13::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -677,8 +697,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:12::scanError
-#@+node:13::Scanners: calling scanError
+#@-node:13::scanError
+#@+node:14::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -706,7 +726,7 @@ def skip_block_comment (s,i):
 	else: return k + 2
 #@-body
 #@-node:1::skip_block_comment
-#@+node:2:C=10:skip_braces
+#@+node:2:C=11:skip_braces
 #@+body
 #@+at
 #  Skips from the opening to the matching . If no matching is found i is set 
@@ -741,8 +761,8 @@ def skip_braces(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:2:C=10:skip_braces
-#@+node:3:C=11:skip_php_braces (Dave Hein)
+#@-node:2:C=11:skip_braces
+#@+node:3:C=12:skip_php_braces (Dave Hein)
 #@+body
 #@+at
 #  08-SEP-2002 DTHEIN: Added for PHP import support
@@ -774,7 +794,7 @@ def skip_php_braces(s,i):
 	return i
 
 #@-body
-#@-node:3:C=11:skip_php_braces (Dave Hein)
+#@-node:3:C=12:skip_php_braces (Dave Hein)
 #@+node:4::skip_parens
 #@+body
 #@+at
@@ -876,7 +896,7 @@ def skip_pascal_string(s,i):
 	return i
 #@-body
 #@-node:7::skip_pascal_string : called by tangle
-#@+node:8:C=12:skip_heredoc_string : called by php import (Dave Hein)
+#@+node:8:C=13:skip_heredoc_string : called by php import (Dave Hein)
 #@+body
 #@+at
 #  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
@@ -920,8 +940,8 @@ def skip_heredoc_string(s,i):
 	return i
 
 #@-body
-#@-node:8:C=12:skip_heredoc_string : called by php import (Dave Hein)
-#@+node:9:C=13:skip_pp_directive
+#@-node:8:C=13:skip_heredoc_string : called by php import (Dave Hein)
+#@+node:9:C=14:skip_pp_directive
 #@+body
 # Now handles continuation lines and block comments.
 
@@ -936,8 +956,8 @@ def skip_pp_directive(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:9:C=13:skip_pp_directive
-#@+node:10:C=14:skip_pp_if
+#@-node:9:C=14:skip_pp_directive
+#@+node:10:C=15:skip_pp_if
 #@+body
 # Skips an entire if or if def statement, including any nested statements.
 
@@ -970,8 +990,8 @@ def skip_pp_if(s,i):
 	return i,delta1
 
 #@-body
-#@-node:10:C=14:skip_pp_if
-#@+node:11:C=15:skip_pp_part
+#@-node:10:C=15:skip_pp_if
+#@+node:11:C=16:skip_pp_part
 #@+body
 # Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
 
@@ -1001,7 +1021,7 @@ def skip_pp_part(s,i):
 		else: i += 1
 	return i,delta
 #@-body
-#@-node:11:C=15:skip_pp_part
+#@-node:11:C=16:skip_pp_part
 #@+node:12::skip_python_string
 #@+body
 def skip_python_string(s,i):
@@ -1051,7 +1071,7 @@ def skip_to_semicolon(s,i):
 	return i
 #@-body
 #@-node:14::skip_to_semicolon
-#@+node:15:C=16:skip_typedef
+#@+node:15:C=17:skip_typedef
 #@+body
 def skip_typedef(s,i):
 
@@ -1064,9 +1084,9 @@ def skip_typedef(s,i):
 		i = skip_to_semicolon(s,i)
 	return i
 #@-body
-#@-node:15:C=16:skip_typedef
-#@-node:13::Scanners: calling scanError
-#@+node:14::Scanners: no error messages
+#@-node:15:C=17:skip_typedef
+#@-node:14::Scanners: calling scanError
+#@+node:15::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1080,7 +1100,7 @@ def escaped(s,i):
 	return (count%2) == 1
 #@-body
 #@-node:1::escaped
-#@+node:2:C=17:find_line_start
+#@+node:2:C=18:find_line_start
 #@+body
 def find_line_start(s,i):
 
@@ -1088,7 +1108,7 @@ def find_line_start(s,i):
 	if i == -1: return 0
 	else: return i + 1
 #@-body
-#@-node:2:C=17:find_line_start
+#@-node:2:C=18:find_line_start
 #@+node:3::find_on_line
 #@+body
 def find_on_line(s,i,pattern):
@@ -1139,7 +1159,7 @@ def is_special(s,i,directive):
 	return false, -1
 #@-body
 #@-node:6::is_special
-#@+node:7:C=18:is_special_bits
+#@+node:7:C=19:is_special_bits
 #@+body
 #@+at
 #  Returns bits, dict where:
@@ -1230,7 +1250,7 @@ def is_special_bits(s,root=None):
 		i = skip_line(s,i)
 	return bits, dict
 #@-body
-#@-node:7:C=18:is_special_bits
+#@-node:7:C=19:is_special_bits
 #@+node:8::is_ws & is_ws_or_nl
 #@+body
 def is_ws(c):
@@ -1412,8 +1432,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:20::skip_ws, skip_ws_and_nl
-#@-node:14::Scanners: no error messages
-#@+node:15::shortFileName
+#@-node:15::Scanners: no error messages
+#@+node:16::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1422,8 +1442,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:15::shortFileName
-#@+node:16::sortSequence
+#@-node:16::shortFileName
+#@+node:17::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1462,8 +1482,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:16::sortSequence
-#@+node:17::Timing
+#@-node:17::sortSequence
+#@+node:18::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1478,8 +1498,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:17::Timing
-#@+node:18:C=19:Tk.Text selection (utils)
+#@-node:18::Timing
+#@+node:19:C=20:Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1507,7 +1527,7 @@ def getSelectedText (t):
 		return None
 #@-body
 #@-node:2::getSelectedText
-#@+node:3:C=20:setTextSelection
+#@+node:3:C=21:setTextSelection
 #@+body
 #@+at
 #  t is a Tk.Text widget.  start and end are positions.  Selects from start to end.
@@ -1527,9 +1547,9 @@ def setTextSelection (t,start,end):
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
 #@-body
-#@-node:3:C=20:setTextSelection
-#@-node:18:C=19:Tk.Text selection (utils)
-#@+node:19:C=21:update_file_if_changed
+#@-node:3:C=21:setTextSelection
+#@-node:19:C=20:Tk.Text selection (utils)
+#@+node:20:C=22:update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1568,8 +1588,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only")
 			traceback.print_exc()
 #@-body
-#@-node:19:C=21:update_file_if_changed
-#@+node:20:C=22:utils_rename
+#@-node:20:C=22:update_file_if_changed
+#@+node:21:C=23:utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1588,8 +1608,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:20:C=22:utils_rename
-#@+node:21:C=23:version checking (Dave Hein)
+#@-node:21:C=23:utils_rename
+#@+node:22:C=24:version checking (Dave Hein)
 #@+body
 #@+at
 # 
@@ -1704,8 +1724,8 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
-#@-node:21:C=23:version checking (Dave Hein)
-#@+node:22:C=24:readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:22:C=24:version checking (Dave Hein)
+#@+node:23:C=25:readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
 #  Stephen P. Schaefer 9/7/2002
@@ -1725,7 +1745,7 @@ def readlineForceUnixNewline(f):
 	return s
 
 #@-body
-#@-node:22:C=24:readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:23:C=25:readlineForceUnixNewline (Steven P. Schaefer)
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

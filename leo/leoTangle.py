@@ -3930,34 +3930,36 @@ class tangleCommands:
 				#@-node:1::<< compute path from s[k:] >>
 
 				if len(path) > 0:
-					dir = path # EKR: 9/5/02: was os.path.dirname(path)
-					if dir and len(dir) > 0 and os.path.isabs(dir):
-						
-						#@<< handle absolute @path >>
-						#@+node:2::<< handle absolute @path >>
-						#@+body
-						if os.path.exists(dir):
-							self.tangle_directory = dir
-						else: # 9/25/02
-							config = app().config
-							if config.path_directive_creates_directories:
-								try:
-									os.mkdir(dir)
-									es("creating @path directory:" + dir)
-									self.default_directory = dir
-									break
-								except:
-									self.error("can not create @path directory: " + dir)
-									traceback.print_exc()
-							elif issue_error_flag and not self.path_warning_given:
-								self.path_warning_given = true # supress future warnings
-								self.error("invalid directory: " + '"' + s[i:j] + '"')
-						#@-body
-						#@-node:2::<< handle absolute @path >>
+					base = getBaseDirectory() # returns "" on error.
+					if dir and len(dir) > 0:
+						dir = os.path.join(base,path)
+						if os.path.isabs(dir):
+							
+							#@<< handle absolute @path >>
+							#@+node:2::<< handle absolute @path >>
+							#@+body
+							if os.path.exists(dir):
+								self.tangle_directory = dir
+							else: # 9/25/02
+								config = app().config
+								if config.path_directive_creates_directories:
+									try:
+										os.mkdir(dir)
+										es("creating @path directory:" + dir)
+										self.default_directory = dir
+										break
+									except:
+										self.error("can not create @path directory: " + dir)
+										traceback.print_exc()
+								elif issue_error_flag and not self.path_warning_given:
+									self.path_warning_given = true # supress future warnings
+									self.error("invalid directory: " + '"' + s[i:j] + '"')
+							#@-body
+							#@-node:2::<< handle absolute @path >>
 
-					elif issue_error_flag and not self.path_warning_given:
-						self.path_warning_given = true # supress future warnings
-						self.error("ignoring relative path: " + '"' + s[i:j] + '"')
+						elif issue_error_flag and not self.path_warning_given:
+							self.path_warning_given = true # supress future warnings
+							self.error("ignoring relative path:" + dir)
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
@@ -4028,36 +4030,40 @@ class tangleCommands:
 		#@@c
 		
 		if c.frame and require_path_flag and not self.tangle_directory:
+		
 			if self.root_name and len(self.root_name) > 0:
 				root_dir = os.path.dirname(self.root_name)
 			else:
 				root_dir = None
-			table = (
-				(root_dir,"@root"),
-				(c.tangle_directory,"default tangle"),
+			table = ( # This is a precedence table.
+				(root_dir,"@root"), 
+				(c.tangle_directory,"default tangle"), # Probably should be eliminated.
 				(c.frame.openDirectory,"open"))
+			base = getBaseDirectory() # returns "" on error.
 			for dir, kind in table:
-				if dir and len(dir) > 0 and os.path.isabs(dir):
-					
-					#@<< handle absolute path >>
-					#@+node:1::<< handle absolute path >>
-					#@+body
-					if os.path.exists(dir):
-						self.tangle_directory = dir ; break
-					else: # 9/25/02
-						config = app().config
-						if config.path_directive_creates_directories:
-							try:
-								os.mkdir(dir)
-								es("creating @root directory:" + dir)
-								self.default_directory = dir ; break
-							except:
-								self.error("can not create @root directory: " + dir)
-								traceback.print_exc()
-						elif issue_error_flag:
-							self.warning("ignoring invalid " + kind + " directory: " + dir)
-					#@-body
-					#@-node:1::<< handle absolute path >>
+				if dir and len(dir) > 0:
+					dir = os.path.join(base,dir)
+					if os.path.isabs(dir): # Errors may result in relative or invalid path.
+						
+						#@<< handle absolute path >>
+						#@+node:1::<< handle absolute path >>
+						#@+body
+						if os.path.exists(dir):
+							self.tangle_directory = dir ; break
+						else: # 9/25/02
+							config = app().config
+							if config.path_directive_creates_directories:
+								try:
+									os.mkdir(dir)
+									es("creating @root directory:" + dir)
+									self.default_directory = dir ; break
+								except:
+									self.error("can not create @root directory: " + dir)
+									traceback.print_exc()
+							elif issue_error_flag:
+								self.warning("ignoring invalid " + kind + " directory: " + dir)
+						#@-body
+						#@-node:1::<< handle absolute path >>
 
 		
 		if not self.tangle_directory and issue_error_flag:

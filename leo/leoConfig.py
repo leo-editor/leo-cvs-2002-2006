@@ -341,6 +341,7 @@ class config:
 		self.config = None # The current instance of ConfigParser
 		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
 		self.path_directive_creates_directories = false
+		self.relative_path_base_directory = "!"
 		self.save_clears_undo_buffer = false
 		self.xml_version_string = None
 		self.compareDict = {}
@@ -571,15 +572,20 @@ class config:
 			
 			try: self.read_only = config.getboolean(
 				self.configSection,"read_only")
-			except: self.read_only = false # not an error.
+			except: self.read_only = false
+			
+			try: self.relative_path_base_directory = config.get(
+				self.configSection,"relative_path_base_directory")
+			except: self.relative_path_base_directory = "!"
 				
 			try: self.save_clears_undo_buffer = config.getboolean(
 				self.configSection,"save_clears_undo_buffer")
-			except: self.save_clears_undo_buffer = false # not an error.
+			except: self.save_clears_undo_buffer = false
 				
 			try:self.xml_version_string = config.get(
 				self.configSection,"xml_version_string")
 			except: self.xml_version_string = prolog_version_string
+
 			#@-body
 			#@-node:1::<< get config options >>
 

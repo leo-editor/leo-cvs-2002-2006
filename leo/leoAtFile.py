@@ -444,11 +444,15 @@ class atFile:
 				#@-node:1::<< compute path from s[k:] >>
 
 				if path and len(path) > 0:
+					base = getBaseDirectory() # returns "" on error.
+					path = os.path.join(base,path)
 					if os.path.isabs(path):
 						
 						#@<< handle absolute path >>
 						#@+node:2::<< handle absolute path >>
 						#@+body
+						# path is an absolute path.
+						
 						if os.path.exists(path):
 							self.default_directory = path
 						else: # 9/25/02
@@ -467,7 +471,7 @@ class atFile:
 						#@-node:2::<< handle absolute path >>
 
 					else:
-						self.error("ignoring relative @path: " + path)
+						self.error("ignoring bad @path: " + path)
 				else:
 					self.error("ignoring empty @path")
 			#@-body
@@ -532,19 +536,22 @@ class atFile:
 		# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 		
 		if c.frame and not self.default_directory:
+			base = getBaseDirectory() # returns "" on error.
 			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-				if dir and len(dir) > 0 and os.path.isabs(dir):
-					if os.path.exists(dir):
-						self.default_directory = dir ; break
-					else: # 9/25/02
-						if config.path_directive_creates_directories:
-							try:
-								os.mkdir(dir)
-								es("creating @file directory:" + dir)
-								self.default_directory = dir ; break
-							except:
-								self.error("can not create @file directory: " + dir)
-								traceback.print_exc()
+				if dir and len(dir) > 0:
+					dir = os.path.join(base,dir)
+					if os.path.isabs(dir): # Errors may result in relative or invalid path.
+						if os.path.exists(dir):
+							self.default_directory = dir ; break
+						else: # 9/25/02
+							if config.path_directive_creates_directories:
+								try:
+									os.mkdir(dir)
+									es("creating @file directory:" + dir)
+									self.default_directory = dir ; break
+								except:
+									self.error("can not create @file directory: " + dir)
+									traceback.print_exc()
 		
 		if not self.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.
