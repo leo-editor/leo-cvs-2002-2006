@@ -147,6 +147,9 @@ class atFile:
 		# Support of @raw
 		self.raw = false # true: in @raw mode
 		self.sentinels = true # true: output sentinels while expanding refs.
+		
+		# For tracing problems involing indentation and blank lines.
+		self.trace = false
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -285,7 +288,9 @@ class atFile:
 	#@@c
 	def putSentinel(self,s):
 		
-		if not self.sentinels: return # Handle @nosentinelsfile.
+		if not self.sentinels:
+			if self.trace: trace(s)
+			return # Handle @nosentinelsfile.
 	
 		self.newline_pending = false # discard any pending newline.
 		self.onl() ; self.putIndent(self.indent) # Start of sentinel.
@@ -1814,7 +1819,7 @@ class atFile:
 					out.append('\n')
 					s = readlineForceUnixNewline(file)
 					nextline = s
-					trace(`s`)
+					# trace(`s`)
 				elif kind == atFile.startNoNewline:
 					s = readlineForceUnixNewline(file)
 					nextline = s
@@ -1993,6 +1998,7 @@ class atFile:
 	
 	def os(self,s):
 		if s is None or len(s) == 0: return
+		if self.trace: trace(`s`)
 		if self.suppress_newlines and self.newline_pending:
 			self.newline_pending = false
 			s = self.output_newline + s
@@ -2147,7 +2153,7 @@ class atFile:
 	
 		c = self.commands
 		atOthersSeen = false # true: at-others has been expanded.
-		# j = skip_line(s,i) ; trace(`s[i:j]`)
+		if self.trace: trace("%d %s" % (self.indent,get_line(s,i)))
 		while i < len(s):
 			
 			#@<< handle the start of a line >>
@@ -2164,6 +2170,7 @@ class atFile:
 			leading_nl = (s[i] == body_newline) # 9/27/02: look ahead before outputting newline.
 			if leading_nl:
 				i = skip_nl(s,i)
+				if self.trace: trace("leading nl")
 				self.onl() # 10/15/02: simpler to do it here.
 			
 			j,delta = skip_leading_ws_with_indent(s,i,self.tab_width)
@@ -2200,6 +2207,12 @@ class atFile:
 					else:
 						atOthersSeen = true
 						self.putAtOthers(v, delta)
+						
+						# 12/8/02: Skip the newline _after_ the @others.
+						if not self.sentinels and is_nl(s,i):
+							if self.trace: trace("skip nl after @others")
+							i = skip_nl(s,i)
+					
 					#@-body
 					#@-node:1::<< handle @others >>
 
@@ -2234,9 +2247,18 @@ class atFile:
 			#@+node:2::<< put the line >>
 			#@+body
 			if not self.raw:
-				self.putIndent(self.indent)
+				# 12/8/02: Don't write trailing indentation if not writing sentinels.
+				if not self.sentinels and i >= len(s):
+					if self.trace: trace("skipping trailing indentation")
+					pass
+				else:
+					if self.trace: trace("start line")
+					self.putIndent(self.indent)
 			
 			newlineSeen = false
+			# 12/8/02: we buffer characters here for two reasons:
+			# 1) to make traces easier to read and 2) to increase speed.
+			buf = i # Indicate the start of buffered characters.
 			while i < len(s) and not newlineSeen:
 				ch = s[i]
 				if ch == body_newline:
@@ -2251,20 +2273,23 @@ class atFile:
 					isSection, j = self.isSectionName(s, i)
 					
 					if isSection:
+						# Output the buffered characters and clear the buffer.
+						self.os(s[buf:i]) ; buf = i
 						# Output the expansion.
 						name = s[i:j]
 						j,newlineSeen = self.putRef(name,v,s,j,delta)
 						assert(j > i) # isSectionName must have made progress
-						i = j
+						i = j ; buf = i
 					else:
-						self.os(s[i]) # This is _not_ an error.
+						# This is _not_ an error.
 						i += 1
 					#@-body
 					#@-node:1::<< put possible section reference >>
 
 				else:
-					self.os(ch)
 					i += 1
+			# Output any buffered characters.
+			self.os(s[buf:i])
 			#@-body
 			#@-node:2::<< put the line >>
 
@@ -2342,6 +2367,8 @@ class atFile:
 	#@+node:6::putAtOthersChild
 	#@+body
 	def putAtOthersChild(self,v):
+		
+		# trace("%d %s" % (self.indent,`v`))
 	
 		self.putOpenNodeSentinel(v)
 		
@@ -2363,7 +2390,7 @@ class atFile:
 	#@+body
 	def putRef (self,name,v,s,i,delta):
 	
-		# trace(get_line(s[i:],0))
+		if self.trace: trace(get_line(s,i))
 		newlineSeen = false
 		ref = findReference(name, v)
 		if not ref:
@@ -2493,6 +2520,8 @@ class atFile:
 	#@@c
 	def putDoc(self,s,i,kind):
 	
+		if self.trace: trace("%d %s" % (self.indent,get_line(s,i)))
+	
 		if kind == atFile.atDirective:
 			i += 1 ; tag = "at"
 		elif kind == atFile.docDirective:
@@ -2589,6 +2618,7 @@ class atFile:
 	
 	def putIndent(self,n):
 	
+		if self.trace: trace(`n`)
 		c = self.commands
 		w = self.tab_width
 		if w > 1:
