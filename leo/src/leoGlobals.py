@@ -3,7 +3,7 @@
 #@+node:@file leoGlobals.py
 #@@first # -*- coding: utf-8 -*-
 
-# Global constants, variables and utility functions used throughout Leo.
+"""Global constants, variables and utility functions used throughout Leo."""
 
 #@@language python
 
@@ -27,7 +27,25 @@ assert(false!=None)
 #@-node:<< define general constants >>
 #@nl
 
+gApp = None # Used the leoProxy class below.
+
 #@+others
+#@+node:leoProxy
+class leoProxy:
+	
+	"""A proxy for the gApp object that can be created before gApp itself.
+	
+	After gApp is created, both app.x and app().x refer to gApp.x."""
+
+	def __getattr__(self,attr):
+
+		return getattr(gApp,attr)
+		
+	def __call__(self):
+		
+		return gApp
+#@nonl
+#@-node:leoProxy
 #@+node:createTopologyList
 def createTopologyList (c=None,root=None,useHeadlines=false):
 	
@@ -257,10 +275,8 @@ class Bunch:
 # Returns a tuple (single,start,end) of comment delims
 
 def set_delims_from_language(language):
-	
-	a = app()
-	
-	val = a.language_delims_dict.get(language)
+
+	val = app.language_delims_dict.get(language)
 	if val:
 		delim1,delim2,delim3 = set_delims_from_string(val)
 		if delim2 and not delim3:
@@ -324,7 +340,6 @@ def set_language(s,i,issue_errors_flag=false):
 	Returns (language, delim1, delim2, delim3)
 	"""
 
-	a = app()
 	tag = "@language"
 	# trace(`get_line(s,i)`)
 	assert(i != None)
@@ -334,7 +349,7 @@ def set_language(s,i,issue_errors_flag=false):
 	j = i ; i = skip_c_id(s,i)
 	# Allow tcl/tk.
 	arg = string.lower(s[j:i])
-	if a.language_delims_dict.get(arg):
+	if app.language_delims_dict.get(arg):
 		language = arg
 		delim1, delim2, delim3 = set_delims_from_language(language)
 		return language, delim1, delim2, delim3
@@ -438,7 +453,7 @@ def getOutputNewline (lineending = None):
 	if lineending:
 		s = lineending
 	else:
-		s = app().config.output_newline
+		s = app.config.output_newline
 	s = string.lower(s)
 	if s in ( "nl","lf","platform"): s = '\n'
 	elif s == "cr": s = '\r'
@@ -556,11 +571,11 @@ def scanDirectives(c,v=None):
 	if c == None or top() == None:
 		return {} # 7/16/03: for unit tests.
 	if v == None: v = c.currentVnode()
-	a = app()
+
 	# trace(`v`)
 	#@	<< Set local vars >>
 	#@+node:<< Set local vars >>
-	loadDir = a.loadDir
+	loadDir = app.loadDir
 	
 	page_width = c.page_width
 	tab_width  = c.tab_width
@@ -569,7 +584,7 @@ def scanDirectives(c,v=None):
 	path = None
 	encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
 	lineending = getOutputNewline() # 4/24/03 initialize from config settings.
-	wrap = a.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
+	wrap = app.config.getBoolWindowPref("body_pane_wraps") # 7/7/03: this is a window pref.
 	#@nonl
 	#@-node:<< Set local vars >>
 	#@nl
@@ -697,7 +712,7 @@ def openWithFileName(fileName,old_c=None):
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
 	
 	from leoFrame import LeoFrame
-	assert(app().config)
+	assert(app.config)
 
 	if not fileName or len(fileName) == 0:
 		return false, None
@@ -710,13 +725,13 @@ def openWithFileName(fileName,old_c=None):
 	fileName = os.path.normcase(fileName)
 
 	# If the file is already open just bring its window to the front.
-	list = app().windowList
+	list = app.windowList
 	for frame in list:
 		fn = os.path.normcase(frame.mFileName)
 		fn = os.path.normpath(fn)
 		if fileName == fn:
 			frame.top.deiconify()
-			app().setLog(frame,"OpenWithFileName")
+			app.setLog(frame,"OpenWithFileName")
 			# es("This window already open")
 			return true, frame
 			
@@ -728,10 +743,10 @@ def openWithFileName(fileName,old_c=None):
 			frame = LeoFrame(fileName)
 			if not doHook("open1",
 				old_c=old_c,new_c=frame.commands,fileName=fileName):
-				app().setLog(frame,"OpenWithFileName") # 5/12/03
-				app().lockLog() # 6/30/03
+				app.setLog(frame,"OpenWithFileName") # 5/12/03
+				app.lockLog() # 6/30/03
 				frame.commands.fileCommands.open(file,fileName) # closes file.
-				app().unlockLog() # 6/30/03
+				app.unlockLog() # 6/30/03
 			frame.openDirectory=os.path.dirname(fileName)
 			frame.updateRecentFiles(fileName)
 			doHook("open2",
@@ -850,10 +865,10 @@ def ensure_extension (name, ext):
 
 def getBaseDirectory():
 
-	base = app().config.relative_path_base_directory
+	base = app.config.relative_path_base_directory
 
 	if base and base == "!":
-		base = app().loadDir
+		base = app.loadDir
 	elif base and base == ".":
 		base = top().openDirectory
 
@@ -873,7 +888,7 @@ def getBaseDirectory():
 
 def makeAllNonExistentDirectories (dir):
 
-	if not app().config.create_nonexistent_directories:
+	if not app.config.create_nonexistent_directories:
 		return None
 
 	dir1 = dir = os.path.normpath(dir)
@@ -952,7 +967,7 @@ class redirectClass:
 	
 	def write(self,s):
 		if self.old:
-			if app().log: app().log.put(s)
+			if app.log: app.log.put(s)
 			else: self.old.write(s)
 		else: print s # Typically will not happen.
 	#@-node:<< redirectClass methods >>
@@ -1199,7 +1214,7 @@ def get_Sherlock_args (args):
 
 	if not args or len(args)==0:
 		try:
-			f = open(os.path.join(app().loadDir,"SherlockArgs"))
+			f = open(os.path.join(app.loadDir,"SherlockArgs"))
 			args = f.readlines()
 			f.close()
 		except: pass
@@ -1215,7 +1230,7 @@ def get_Sherlock_args (args):
 #@+node:init_trace
 def init_trace(args,echo=1):
 
-	t = app().trace_list
+	t = app.trace_list
 	args = get_Sherlock_args(args)
 
 	for arg in args:
@@ -1268,7 +1283,7 @@ def trace (*args,**keys):
 	if 1: # Print all traces.
 		print name + ": " + message
 	else: # Print only enabled traces.
-		t = app().trace_list
+		t = app.trace_list
 		# tracepoint names starting with '-' must match exactly.
 		minus = len(name) > 0 and name[0] == '-'
 		if minus: name = name[1:]
@@ -1293,7 +1308,7 @@ def trace_tag (name, *args):
 			s = arg
 	message = s
 
-	t = app().trace_list
+	t = app.trace_list
 	# tracepoint names starting with '-' must match exactly.
 	minus = len(name) > 0 and name[0] == '-'
 	if minus: name = name[1:]
@@ -1305,7 +1320,7 @@ def trace_tag (name, *args):
 #@+node:clear_stats
 def clear_stats():
 	
-	app().stats = {}
+	app.stats = {}
 #@-node:clear_stats
 #@+node:print_stats
 def print_stats (name=None):
@@ -1317,7 +1332,7 @@ def print_stats (name=None):
 		name = callerName(n=2) # Get caller name 2 levels back.
 	
 	try:
-		stats = app().stats
+		stats = app.stats
 	except:
 		print ; print "no statistics at", name ; print
 		return
@@ -1333,7 +1348,7 @@ def print_stats (name=None):
 #@+node:stat
 def stat (name=None):
 
-	"""Increments the statistic for name in app().stats
+	"""Increments the statistic for name in app.stats
 	The caller's name is used by default.
 	"""
 	
@@ -1344,9 +1359,9 @@ def stat (name=None):
 		name = callerName(n=2) # Get caller name 2 levels back.
 
 	try:
-		stats = app().stats
+		stats = app.stats
 	except:
-		app().stats = stats = {}
+		app.stats = stats = {}
 
 	stats[name] = 1 + stats.get(name,0)
 #@-node:stat
@@ -1420,7 +1435,7 @@ def oldDump(s):
 #@+node:es_error
 def es_error (s):
 	
-	config = app().config
+	config = app.config
 	if config: # May not exist during initialization.
 		color = config.getWindowPref("log_error_color")
 		es(s,color=color)
@@ -1459,12 +1474,12 @@ def es_exception (full=false):
 #@-node:es_exception
 #@+node:file/module/plugin_date
 def module_date (mod,format=None):
-	file = os.path.join(app().loadDir,mod.__file__)
+	file = os.path.join(app.loadDir,mod.__file__)
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app().loadDir,"..","plugins",plugin_mod.__file__)
+	file = os.path.join(app.loadDir,"..","plugins",plugin_mod.__file__)
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
@@ -1599,106 +1614,6 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
-#@+node:Dialog utils...
-def attachLeoIcon (w):
-	"""Attach the Leo icon to window w."""
-	app().gui.attachLeoIcon(w)
-	
-def center_dialog(dialog):
-	"""Center the dialog."""
-	app().gui.center_dialog(dialog)
-	
-def create_labeled_frame (parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
-	"""Create a labeled frame."""
-	return app().gui.create_labeled_frame(parent,caption,relief,bd,padx,pady)
-	
-def get_window_info (window):
-	"""Return the window information."""
-	return app().gui.get_window_info(window)
-#@nonl
-#@-node:Dialog utils...
-#@+node:Focus (leoGlobals)
-# These convenience routines just call the corresponding method of the app().gui class.
-
-def get_focus(top):
-	"""Return the widget that has focus, or the body widget if None."""
-	return app().gui.get_focus(top)
-	
-def set_focus(commands,widget):
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	app().gui.set_focus(commands,widget)
-	
-def force_focus(commands,widget):
-	"""Set the focus of the widget in the given commander if it needs to be changed."""
-	app().gui.force_focus(commands,widget)
-#@-node:Focus (leoGlobals)
-#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-def canonicalizeMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		# if ch not in (' ','\t','\n','\r','&'):
-		if ch in string.letters:
-			newname = newname+ch
-	return newname
-	
-def canonicalizeTranslatedMenuName (name):
-	
-	name = name.lower() ; newname = ""
-	for ch in name:
-		if ch not in (' ','\t','\n','\r','&'):
-		# if ch in string.letters:
-			newname = newname+ch
-	return newname
-#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
-#@+node:enableMenu & disableMenu & setMenuLabel
-# 11/17/02: Fail gracefully if the item name does not exist.
-def enableMenu (menu,name,val):
-	state = choose(val,"normal","disabled")
-	try:
-		menu.entryconfig(name,state=state)
-	except:
-		try:
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state=state)
-		except:
-			print "enableMenu menu,name,val:",menu,name,val
-			es_exception()
-			pass
-
-def disableMenu (menu,name):
-	try:
-		menu.entryconfig(name,state="disabled")
-	except: 
-		try:
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			menu.entryconfig(realName,state="disabled")
-		except:
-			print "disableMenu menu,name:",menu,name
-			es_exception()
-			pass
-
-def setMenuLabel (menu,name,label,underline=-1):
-	try:
-		if type(name) == type(0):
-			# "name" is actually an index into the menu.
-			menu.entryconfig(name,label=label,underline=underline)
-		else:
-			# Bug fix: 2/16/03: use translated name.
-			realName = app().getRealMenuName(name)
-			realName = realName.replace("&","")
-			# Bug fix: 3/25/03" use tranlasted label.
-			label = app().getRealMenuName(label)
-			label = label.replace("&","")
-			menu.entryconfig(realName,label=label,underline=underline)
-	except:
-		print "setMenuLabel menu,name,label:",menu,name,label
-		es_exception()
-		pass
-#@nonl
-#@-node:enableMenu & disableMenu & setMenuLabel
 #@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -1793,12 +1708,12 @@ def printGcRefs (verbose=true):
 
 	import leoFrame
 
-	refs = gc.get_referrers(app().windowList[0])
+	refs = gc.get_referrers(app.windowList[0])
 	print '-' * 30
 	
 	
 	if verbose:
-		print "refs of", app().windowList[0]
+		print "refs of", app.windowList[0]
 		for ref in refs:
 			print type(ref)
 			if 0:
@@ -1815,6 +1730,106 @@ def printGcRefs (verbose=true):
 #@-node:printGcRefs
 #@-others
 #@-node:Garbage Collection
+#@+node:Dialog utils...
+def attachLeoIcon (w):
+	"""Attach the Leo icon to window w."""
+	app.gui.attachLeoIcon(w)
+	
+def center_dialog(dialog):
+	"""Center the dialog."""
+	app.gui.center_dialog(dialog)
+	
+def create_labeled_frame (parent,caption=None,relief="groove",bd=2,padx=0,pady=0):
+	"""Create a labeled frame."""
+	return app.gui.create_labeled_frame(parent,caption,relief,bd,padx,pady)
+	
+def get_window_info (window):
+	"""Return the window information."""
+	return app.gui.get_window_info(window)
+#@nonl
+#@-node:Dialog utils...
+#@+node:Focus (leoGlobals)
+# These convenience routines just call the corresponding method of the app.gui class.
+
+def get_focus(top):
+	"""Return the widget that has focus, or the body widget if None."""
+	return app.gui.get_focus(top)
+	
+def set_focus(commands,widget):
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	app.gui.set_focus(commands,widget)
+	
+def force_focus(commands,widget):
+	"""Set the focus of the widget in the given commander if it needs to be changed."""
+	app.gui.force_focus(commands,widget)
+#@-node:Focus (leoGlobals)
+#@+node:canonicalizeMenuName & cononicalizeTranslatedMenuName
+def canonicalizeMenuName (name):
+	
+	name = name.lower() ; newname = ""
+	for ch in name:
+		# if ch not in (' ','\t','\n','\r','&'):
+		if ch in string.letters:
+			newname = newname+ch
+	return newname
+	
+def canonicalizeTranslatedMenuName (name):
+	
+	name = name.lower() ; newname = ""
+	for ch in name:
+		if ch not in (' ','\t','\n','\r','&'):
+		# if ch in string.letters:
+			newname = newname+ch
+	return newname
+#@-node:canonicalizeMenuName & cononicalizeTranslatedMenuName
+#@+node:enableMenu & disableMenu & setMenuLabel
+# 11/17/02: Fail gracefully if the item name does not exist.
+def enableMenu (menu,name,val):
+	state = choose(val,"normal","disabled")
+	try:
+		menu.entryconfig(name,state=state)
+	except:
+		try:
+			realName = app.getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state=state)
+		except:
+			print "enableMenu menu,name,val:",menu,name,val
+			es_exception()
+			pass
+
+def disableMenu (menu,name):
+	try:
+		menu.entryconfig(name,state="disabled")
+	except: 
+		try:
+			realName = app.getRealMenuName(name)
+			realName = realName.replace("&","")
+			menu.entryconfig(realName,state="disabled")
+		except:
+			print "disableMenu menu,name:",menu,name
+			es_exception()
+			pass
+
+def setMenuLabel (menu,name,label,underline=-1):
+	try:
+		if type(name) == type(0):
+			# "name" is actually an index into the menu.
+			menu.entryconfig(name,label=label,underline=underline)
+		else:
+			# Bug fix: 2/16/03: use translated name.
+			realName = app.getRealMenuName(name)
+			realName = realName.replace("&","")
+			# Bug fix: 3/25/03" use tranlasted label.
+			label = app.getRealMenuName(label)
+			label = label.replace("&","")
+			menu.entryconfig(realName,label=label,underline=underline)
+	except:
+		print "setMenuLabel menu,name,label:",menu,name,label
+		es_exception()
+		pass
+#@nonl
+#@-node:enableMenu & disableMenu & setMenuLabel
 #@+node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+at 
 #@nonl
@@ -1824,20 +1839,19 @@ def printGcRefs (verbose=true):
 #@-at
 #@@c
 def enableIdleTimeHook(idleTimeDelay=100):
-	app().idleTimeHook = true
-	app().idleTimeDelay = idleTimeDelay # Delay in msec.
-	app().root.after_idle(idleTimeHookHandler)
+	app.idleTimeHook = true
+	app.idleTimeDelay = idleTimeDelay # Delay in msec.
+	app.root.after_idle(idleTimeHookHandler)
 	
 # Disables the "idle" hook.
 def disableIdleTimeHook():
-	app().idleTimeHook = false
+	app.idleTimeHook = false
 	
 # An internal routine used to dispatch the "idle" hook.
 def idleTimeHookHandler(*args):
 	
-	a = app()
 	# New for Python 2.3: may be called during shutdown.
-	if a.killed:
+	if app.killed:
 		return
 	c = top()
 	if c: v = c.currentVnode()
@@ -1845,10 +1859,10 @@ def idleTimeHookHandler(*args):
 	doHook("idle",c=c,v=v)
 	# Requeue this routine after 100 msec.
 	# Faster requeues overload the system.
-	if a.idleTimeHook:
-		a.afterHandler = a.root.after(a.idleTimeDelay,idleTimeHookHandler)
+	if app.idleTimeHook:
+		app.afterHandler = app.root.after(app.idleTimeDelay,idleTimeHookHandler)
 	else:
-		a.afterHandler = None
+		app.afterHandler = None
 #@nonl
 #@-node:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+node:doHook
@@ -1861,44 +1875,44 @@ def idleTimeHookHandler(*args):
 # 
 # We look for a hook routine in three places:
 # 1. top().hookFunction
-# 2. app().hookFunction
+# 2. app.hookFunction
 # 3. leoPlugins.doPlugins()
-# We set app().hookError on all exceptions.  Scripts may reset app().hookError 
-# to try again.
+# We set app.hookError on all exceptions.  Scripts may reset app.hookError to 
+# try again.
 #@-at
 #@@c
 
 def doHook(tag,*args,**keywords):
 
-	a = app() ; c = top() # c may be None during startup.
+	c = top() # c may be None during startup.
 	
-	if not a.config.use_plugins:
+	if not app.config.use_plugins:
 		return None
-	elif a.hookError:
+	elif app.hookError:
 		return None
 	elif c and c.hookFunction:
 		try:
 			return c.hookFunction(tag,keywords)
 		except:
 			es("exception in c.hookFunction for " + c.frame.top.title())
-	elif a.hookFunction:
+	elif app.hookFunction:
 		try:
-			return a.hookFunction(tag,keywords)
+			return app.hookFunction(tag,keywords)
 		except:
-			es("exception in app().hookFunction")
+			es("exception in app.hookFunction")
 	else:
 		import leoPlugins
 		try:
-			a.hookFunction = leoPlugins.doPlugins
-			return a.hookFunction(tag,keywords)
+			app.hookFunction = leoPlugins.doPlugins
+			return app.hookFunction(tag,keywords)
 		except:
-			a.hookFunction = None
+			app.hookFunction = None
 			es("exception in plugin")
 
 	# Handle all exceptions.
 	es_exception()
-	a.hookError = true # Supress this function.
-	a.idleTimeHook = false # Supress idle-time hook
+	app.hookError = true # Supress this function.
+	app.idleTimeHook = false # Supress idle-time hook
 	return None # No return value
 #@nonl
 #@-node:doHook
@@ -1985,13 +1999,16 @@ def makeDict(**keys):
 # These are guaranteed always to exist for scripts.
 #@-node:Most common functions
 #@+node:app
-# *** Note *** the global statement makes sense only within functions!
+if 0:
+	
+	def app():
 
-gApp = None # Not needed, and keeps Pychecker happy.
-
-def app():
-	global gApp
-	return gApp
+		"""Return the singleton application object."""
+		
+		trace("unexpected call")
+	
+		global gApp # "global" makes sense only within functions!
+		return gApp
 #@nonl
 #@-node:app
 #@+node:choose
@@ -2006,13 +2023,13 @@ def ecnl():
 	ecnls(1)
 
 def ecnls(n):
-	log = app().log
+	log = app.log
 	if log:
 		while log.es_newlines < n:
 			enl()
 
 def enl():
-	log = app().log
+	log = app.log
 	if log:
 		log.es_newlines += 1
 		log.putnl()
@@ -2026,7 +2043,7 @@ def es(s,*args,**keys):
 		if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
 			arg = repr(arg)
 		s = s + ", " + arg
-	a = app() ; log = a.log
+	log = app.log
 	if log:
 		# print s
 		log.put(s,color=color)
@@ -2037,17 +2054,17 @@ def es(s,*args,**keys):
 		if newline:
 			ecnl() # only valid here
 	elif newline:
-		a.logWaiting.append((s+'\n',color),) # 2/16/03
+		app.logWaiting.append((s+'\n',color),) # 2/16/03
 		print s
 	else:
-		a.logWaiting.append((s,color),) # 2/16/03
+		app.logWaiting.append((s,color),) # 2/16/03
 		print s,
 #@nonl
 #@-node:es, enl, ecnl
 #@+node:top
 #@+at 
 #@nonl
-# frame.doCommand and frame.OnMenuClick now set app().log, so top() will be 
+# frame.doCommand and frame.OnMenuClick now set app.log, so top() will be 
 # reliable after any command is executed.
 # 
 # Note 1: The value of top() may change during a new or open command, which 
@@ -2062,14 +2079,14 @@ def top():
 	
 	# Warning: may be called during startup or shutdown when nothing exists.
 	try:
-		return app().log.commands
+		return app.log.commands
 	except:
 		return None
 #@nonl
 #@-node:top
 #@+node:windows
 def windows():
-	return app().windowList
+	return app.windowList
 #@nonl
 #@-node:windows
 #@+node:getindex
@@ -2171,7 +2188,7 @@ def scanAtRootOptions (s,i,err_flag=false):
 		#@nl
 
 	if mode == None:
-		doc = app().config.at_root_bodies_start_in_doc_mode
+		doc = app.config.at_root_bodies_start_in_doc_mode
 		mode = choose(doc,"doc","code")
 	return i,mode
 #@nonl
@@ -2864,7 +2881,7 @@ endsWithNL: true if the paragraph ends with a newline"""
 	
 	# Return if the selected line is all whitespace or a Leo directive.
 	s = t.get(x+"linestart",x+"lineend")
-	s = toUnicode(s,app().tkEncoding) # 9/28/03
+	s = toUnicode(s,app.tkEncoding) # 9/28/03
 	if not s or s.isspace() or s[0] == '@':
 		return None 
 
@@ -2893,7 +2910,7 @@ endsWithNL: true if the paragraph ends with a newline"""
 	while end != bodyEnd:
 		end = str(tmpLine) + ".0"
 		s = t.get(end,end+"lineend")
-		s = toUnicode(s,app().tkEncoding) # 9/28/03
+		s = toUnicode(s,app.tkEncoding) # 9/28/03
 		if not s or s.isspace() or s[0] == '@':
 			break
 		tmpLine += 1
@@ -2919,7 +2936,7 @@ def getAllText (t):
 	
 	s = t.get("1.0","end")
 	if s is None: s = u""
-	return toUnicode(s,app().tkEncoding)
+	return toUnicode(s,app.tkEncoding)
 
 def getSelectedText (t):
 	
@@ -2929,7 +2946,7 @@ def getSelectedText (t):
 	if start and end and start != end:
 		s = t.get(start,end)
 		if s is None: s = u""
-		return toUnicode(s,app().tkEncoding)
+		return toUnicode(s,app.tkEncoding)
 	else:
 		return None
 #@nonl
@@ -3181,7 +3198,7 @@ except:
 				import _locale
 				return _locale._getdefaultlocale()[1]
 			except:
-				return None # Good enough for a.finishCreate.
+				return None
 		#@nonl
 		#@-node:<< define getpreferredencoding using _locale >>
 		#@nl
@@ -3199,7 +3216,7 @@ except:
 				try:
 					return locale.getdefaultlocale()[1]
 				except:
-					return None # Good enough for a.finishCreate.
+					return None
 		else:
 			def getpreferredencoding(do_setlocale = true):
 				"""Return the charset that the user is likely using,
@@ -3214,12 +3231,15 @@ except:
 					else:
 						return locale.nl_langinfo(CODESET)
 				except:
-					return None # Good enough for a.finishCreate.
+					return None
 		#@nonl
 		#@-node:<< define getpreferredencoding for *nix >>
 		#@nl
 #@-node:getpreferredencoding from 2.3a2
 #@-others
+
+# The code can use app.x and app().x to refer to ivars of the leoApp class.
+app = leoProxy()
 #@nonl
 #@-node:@file leoGlobals.py
 #@-leo

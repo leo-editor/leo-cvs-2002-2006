@@ -166,7 +166,7 @@ class baseLeoFontPanel:
 		
 		#@	<< update the configuration settings >>
 		#@+node:<< update the configuration settings >>
-		set = app().config.setWindowPref
+		set = app.config.setWindowPref
 		
 		fn = c.body.cget("font")
 		font = tkFont.Font(font=fn)
@@ -389,7 +389,7 @@ class baseLeoFontPanel:
 	def run (self):
 		
 		Tk = Tkinter ; c = self.commands
-		self.top = top = Tk.Toplevel(app().root)
+		self.top = top = Tk.Toplevel(app.root)
 		attachLeoIcon(top)
 		top.title("Fonts for " + shortFileName(c.frame.title))
 		top.protocol("WM_DELETE_WINDOW", self.onOk)

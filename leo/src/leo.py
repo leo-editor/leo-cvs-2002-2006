@@ -33,6 +33,7 @@ if 0: # Set to 1 for lint-like testing.  This can also be done in idle.
 #@nonl
 #@-node:<< Import pychecker >>
 #@nl
+
 from leoGlobals import *
 import leoApp,leoConfig,leoFrame,leoGui
 import os,string,sys
@@ -43,13 +44,12 @@ def run(fileName=None,*args,**keywords):
 	
 	"""Initialize and run Leo"""
 	
+	if not isValidPython(): return
+	
 	# Create the application object.
-	app = leoApp.LeoApp()
-	if not app: return
-	# Set the gApp global.
-	import leoGlobals ; leoGlobals.gApp = app
-	# Make sure we have Python 2.1 or above.
-	if not app.startCreate(): return
+	import leoGlobals
+	leoGlobals.gApp = app = leoApp.LeoApp()
+	app.loadDir = computeLoadDir()
 	# Initialize the configuration class.
 	app.config = leoConfig.config()
 	# Load plugins. Plugins may create app.gui.
@@ -70,6 +70,48 @@ def run(fileName=None,*args,**keywords):
 	app.gui.runMainLoop()
 #@nonl
 #@-node:run & allies
+#@+node:isValidPython
+def isValidPython():
+	
+	message = """
+Leo requires Python 2.1 or higher.
+You may download Python 2.1 and Python 2.2 from http://python.org/download/
+"""
+	try:
+		if not CheckVersion(sys.version, "2.1"):
+			leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
+			return false
+		else:
+			return true
+	except:
+		print "exception getting Python version"
+		import traceback
+		traceback.print_exc()
+		return false
+#@nonl
+#@-node:isValidPython
+#@+node:computeLoadDir
+def computeLoadDir():
+	
+	"""Returns the directory containing leo.py."""
+
+	try:
+		loadDir = os.path.dirname(__file__)
+		if not loadDir:
+			loadDir = os.getcwd()
+		loadDir = os.path.abspath(loadDir)
+	except:
+		# Emergency defaults.
+		if sys.platform=="win32": # Windows
+			loadDir = "c:\\prog\\LeoPy\\"
+		else: # Linux, or whatever.
+			loadDir = "LeoPy"
+		print "Setting load directory to:", loadDir
+	
+	print "loadDir:",`loadDir`
+	return loadDir
+#@nonl
+#@-node:computeLoadDir
 #@+node:createFrame (leo.py)
 def createFrame (app,fileName):
 	

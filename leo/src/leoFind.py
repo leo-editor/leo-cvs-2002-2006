@@ -89,7 +89,7 @@ class leoFindBase (leoDialog.leoDialog):
 		# Remove the newly inserted newline from the search & change strings.
 		for text in (self.find_text,self.change_text):
 			ch = text.get("insert - 1c")
-			ch= toUnicode(ch,app().tkEncoding) # 9/28/03
+			ch= toUnicode(ch,app.tkEncoding) # 9/28/03
 			if ch in ('\r','\n'):
 				text.delete("insert - 1c")
 	
@@ -332,11 +332,11 @@ class leoFind (leoFindBase):
 		c.suboutline_only_flag = self.dict["radio-search-scope"].get() == "suboutline-only"
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,app().tkEncoding) # 2/25/03
+		s = toUnicode(s,app.tkEncoding) # 2/25/03
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		s = toUnicode(s,app().tkEncoding) # 2/25/03
+		s = toUnicode(s,app.tkEncoding) # 2/25/03
 		c.change_text = s
 	#@nonl
 	#@-node:find.set_ivars
@@ -431,7 +431,7 @@ class leoFind (leoFindBase):
 	
 	def setup_button(self):
 	
-		self.commands = c = app().log.commands
+		self.commands = c = app.log.commands
 		self.v = c.currentVnode()
 		assert(c)
 		c.bringToFront()
@@ -540,7 +540,7 @@ class leoFind (leoFindBase):
 				count += 1
 				self.batchChange(pos1,pos2,count)
 				line = st.get(pos1 + " linestart", pos1 + " lineend")
-				line = toUnicode(line,app().tkEncoding) # 9/28/03
+				line = toUnicode(line,app.tkEncoding) # 9/28/03
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate() # self.restore
@@ -626,7 +626,7 @@ class leoFind (leoFindBase):
 			if pos:
 				count += 1
 				line = st.get(pos + " linestart", pos + " lineend")
-				line = toUnicode(line,app().tkEncoding) # 9/28/03
+				line = toUnicode(line,app.tkEncoding) # 9/28/03
 				self.printLine(line,allFlag=true)
 			else: break
 		c.endUpdate()
@@ -810,10 +810,10 @@ class leoFind (leoFindBase):
 				last   = t.get(newpos)
 				after  = t.get(newpos, newpos + "+1c")
 				
-				before = toUnicode(before,app().tkEncoding) # 9/28/03
-				first  = toUnicode(first, app().tkEncoding) # 9/28/03
-				last   = toUnicode(last,  app().tkEncoding) # 9/28/03
-				after  = toUnicode(after, app().tkEncoding) # 9/28/03
+				before = toUnicode(before,app.tkEncoding) # 9/28/03
+				first  = toUnicode(first, app.tkEncoding) # 9/28/03
+				last   = toUnicode(last,  app.tkEncoding) # 9/28/03
+				after  = toUnicode(after, app.tkEncoding) # 9/28/03
 				
 				# print before, first, last, after
 				

@@ -509,7 +509,7 @@ class baseTangleCommands:
 		# Stephen P. Schaefer 9/13/2002
 		# support @first directive
 		self.first_lines = ""
-		self.encoding = app().config.default_derived_file_encoding # 2/21/03
+		self.encoding = app.config.default_derived_file_encoding # 2/21/03
 		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
 		#@nonl
 		#@-node:<< init directive ivars >> (tangle)
@@ -1402,7 +1402,7 @@ class baseTangleCommands:
 				break
 			# Set the output_file global.
 			# Use "text" mode for platform-specific newlines.
-			mode = app().config.output_newline
+			mode = app.config.output_newline
 			mode = choose(mode=="platform",'w','wb')
 			try:
 				self.output_file = open(temp_name,mode)
@@ -3680,7 +3680,7 @@ class baseTangleCommands:
 				
 				dir = relative_path = string.strip(path)
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-					dir = os.path.join(app().loadDir,dir)
+					dir = os.path.join(app.loadDir,dir)
 				
 				# trace("dir: " + dir)
 				#@nonl

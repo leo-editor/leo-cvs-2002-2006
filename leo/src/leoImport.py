@@ -72,7 +72,7 @@ class baseLeoImportCommands:
 		
 		# Used by Importers.
 		self.web_st = []
-		self.encoding = app().tkEncoding # 2/25/03: was "utf-8"
+		self.encoding = app.tkEncoding # 2/25/03: was "utf-8"
 	#@-node:import.__init__
 	#@+node:createOutline
 	def createOutline (self,fileName,parent):
@@ -2065,7 +2065,7 @@ class baseLeoImportCommands:
 	def convertVnodeToWeb (self,v):
 	
 		if not v: return ""
-		startInCode = not app().config.at_root_bodies_start_in_doc_mode
+		startInCode = not app.config.at_root_bodies_start_in_doc_mode
 		nl = self.output_newline
 		s = v.bodyString()
 		lb = choose(self.webType=="cweb","@<","<<")
@@ -2161,7 +2161,7 @@ class baseLeoImportCommands:
 		after = v.nodeAfterTree()
 		firstLevel = v.level()
 		try:
-			mode = app().config.output_newline
+			mode = app.config.output_newline
 			mode = choose(mode=="platform",'w','wb')
 			file = open(fileName,mode)
 			while v and v != after:
@@ -2186,7 +2186,7 @@ class baseLeoImportCommands:
 		firstLevel = v.level()
 		try:
 			# 10/14/02: support for output_newline setting.
-			mode = app().config.output_newline
+			mode = app.config.output_newline
 			mode = choose(mode=="platform",'w','wb')
 			file = open(fileName,mode)
 			while v and v != after:
@@ -2215,7 +2215,7 @@ class baseLeoImportCommands:
 		after = v.nodeAfterTree()
 		try: # This can fail if the file is open by another app.
 			# 10/14/02: support for output_newline setting.
-			mode = app().config.output_newline
+			mode = app.config.output_newline
 			mode = choose(mode=="platform",'w','wb')
 			file = open(fileName,mode)
 			self.treeType = "@file"
@@ -2305,7 +2305,7 @@ class baseLeoImportCommands:
 					"start:"+`start_delim`+","+
 					"end:"+`end_delim`)
 			s = self.removeSentinelLines(s,line_delim,start_delim,end_delim)
-			ext = app().config.remove_sentinels_extension
+			ext = app.config.remove_sentinels_extension
 			if ext == None or len(ext) == 0:
 				ext = ".txt"
 			if ext[0] == '.':
@@ -2318,7 +2318,7 @@ class baseLeoImportCommands:
 			#@+node:<< Write s into newFileName >>
 			try:
 				# 10/14/02: support for output_newline setting.
-				mode = app().config.output_newline
+				mode = app.config.output_newline
 				mode = choose(mode=="platform",'w','wb')
 				file = open(newFileName,mode)
 				s = toEncodedString(s,self.encoding,reportErrors=true)
@@ -2394,7 +2394,7 @@ class baseLeoImportCommands:
 		#@+node:<< open filename to f, or return >>
 		try:
 			# 10/14/02: support for output_newline setting.
-			mode = app().config.output_newline
+			mode = app.config.output_newline
 			mode = choose(mode=="platform",'w','wb')
 			f = open(filename,mode)
 			if not f: return
@@ -2636,7 +2636,7 @@ class baseLeoImportCommands:
 		if encoding and isValidEncoding(encoding):
 			self.encoding = encoding
 		else:
-			self.encoding = app().tkEncoding # 2/25/03
+			self.encoding = app.tkEncoding # 2/25/03
 	
 		# print self.encoding
 	#@-node:setEncoding

@@ -259,7 +259,7 @@
 </v>
 <v t="T160"><vh>wx Leo</vh></v>
 </v>
-<v t="T161" a="EV"><vh>4.0 Test files</vh>
+<v t="T161" a="E"><vh>4.0 Test files</vh>
 <v t="T162"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="T163" a="E"><vh>Test Files...</vh>
 <v t="T164" tnodeList="164,165,166"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
@@ -292,7 +292,7 @@
 </v>
 <v t="T185"><vh>Node 2</vh></v>
 </v>
-<v t="T186" tnodeList="186,187,188,189,190,191,192,193,194,195"><vh>@file c:\prog\test\leo.py </vh>
+<v t="T186" a="V" tnodeList="186,187,188,189,190,191,192,193,194,195"><vh>@file c:\prog\test\leo.py </vh>
 <v t="T187"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="T188"><vh>runMainLoop</vh></v>
 <v t="T189"><vh>run &amp; allies</vh>
@@ -4209,7 +4209,7 @@ this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb ccccccccccccccccc
 <t tx="T159"></t>
 <t tx="T160">import wxLeo
 reload(wxLeo)</t>
-<t tx="T161"> @ignore
+<t tx="T161">@ignore
 
 ## @encoding iso-8859-1
 # @comment /* */</t>

@@ -33,7 +33,7 @@ def loadHandlers():
 	import glob,os,sys
 	global count
 	
-	path = os.path.join(app().loadDir,"..","plugins")
+	path = os.path.join(app.loadDir,"..","plugins")
 	files = glob.glob(os.path.join(path,"*.py"))
 	files.sort()
 	if files:

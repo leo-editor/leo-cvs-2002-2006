@@ -3,8 +3,6 @@
 #@@language python
 
 from leoGlobals import *
-
-# Import the subcommanders.
 import leoAtFile,leoFileCommands,leoImport,leoNodes,leoTangle,leoUndo
 
 class baseCommands:
@@ -85,7 +83,7 @@ class baseCommands:
 	
 	def setIvarsFromFind (self):
 	
-		c = self ; find = app().findFrame
+		c = self ; find = app.findFrame
 		if find:
 			find.set_ivars(c)
 	#@-node:c.setIvarsFromFind
@@ -122,8 +120,8 @@ class baseCommands:
 		c.fileCommands.assignFileIndices() # Revert to 3.11.1 code.
 		s = c.fileCommands.putLeoOutline()
 		# trace(`s`)
-		app().root.clipboard_clear()
-		app().root.clipboard_append(s)
+		app.root.clipboard_clear()
+		app.root.clipboard_append(s)
 		# Copying an outline has no undo consequences.
 	#@-node:copyOutline
 	#@+node:pasteOutline
@@ -136,17 +134,17 @@ class baseCommands:
 	
 	def pasteOutline(self):
 	
-		a = app() ; c = self ; current = c.currentVnode()
+		c = self ; current = c.currentVnode()
 		
 		try:
-			s = a.root.selection_get(selection="CLIPBOARD")
+			s = app.root.selection_get(selection="CLIPBOARD")
 		except:
 			s = None # This should never happen.
 	
 		if not s or not c.canPasteOutline(s):
 			return # This should never happen.
 	
-		isLeo = match(s,0,a.prolog_prefix_string)
+		isLeo = match(s,0,app.prolog_prefix_string)
 	
 		# trace(`s`)
 		if isLeo:
@@ -555,9 +553,9 @@ class baseCommands:
 				endSel = c.body.index(j + "lineend")
 				j = endSel
 			head = c.body.get("1.0",i)
-			head = toUnicode(head,app().tkEncoding) # 9/28/03
+			head = toUnicode(head,app.tkEncoding) # 9/28/03
 			tail = c.body.get(j,"end")
-			tail = toUnicode(tail,app().tkEncoding) # 9/28/03
+			tail = toUnicode(tail,app.tkEncoding) # 9/28/03
 		else: # Convert the entire text.
 			i = "1.0" ; j = "end" ; head = tail = ""
 			endSel = c.body.index(j + "- 1 chars") # 14-SEP-2002 DTHEIN
@@ -566,7 +564,7 @@ class baseCommands:
 			head = tail = None ; lines = []
 		else:
 			lines = c.body.get(i,endSel)
-			lines = toUnicode(lines,app().tkEncoding) # 9/28/03
+			lines = toUnicode(lines,app.tkEncoding) # 9/28/03
 			lines = string.split(lines, '\n')
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head,lines,tail,oldSel,oldYview
@@ -684,7 +682,7 @@ class baseCommands:
 			insPos = str(lastLine) + ".0"
 			while lastLine < endLine:
 				s = body.get(insPos,insPos + "lineend")
-				s = toUnicode(s,app().tkEncoding) # 9/28/03
+				s = toUnicode(s,app.tkEncoding) # 9/28/03
 				if s and (0 < len(s)) and not s.isspace():
 					break;
 				lastLine += 1
@@ -968,15 +966,15 @@ class baseCommands:
 	#@+node:canPasteOutline
 	def canPasteOutline (self,s=None):
 	
-		a = app() ; c = self
+		c = self
 		if s == None:
 			try:
-				s = a.root.selection_get(selection="CLIPBOARD")
+				s = app.root.selection_get(selection="CLIPBOARD")
 			except:
 				return false
 	
 		# trace(s)
-		if match(s,0,a.prolog_prefix_string):
+		if match(s,0,app.prolog_prefix_string):
 			return true
 		elif len(s) > 0:
 			return c.importCommands.stringIsValidMoreFile(s)

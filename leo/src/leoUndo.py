@@ -52,7 +52,9 @@ optionalIvars = (
 #@nonl
 #@-node:<< Define optional ivars >>
 #@nl
+
 from leoGlobals import *
+
 import types
 
 class baseUndoer:
@@ -111,9 +113,9 @@ class baseUndoer:
 			u.undoMenuLabel = "Can't Undo"
 		
 		if 0: # Wrong: set realLabel only when calling setMenuLabel.
-			realLabel = app().getRealMenuName("Can't Redo")
+			realLabel = app.getRealMenuName("Can't Redo")
 			u.realRedoMenuLabel = realLabel.replace("&","")
-			realLabel = app().getRealMenuName("Can't Undo")
+			realLabel = app.getRealMenuName("Can't Undo")
 			u.realUndoMenuLabel = realLabel.replace("&","")
 			
 		u.setRedoType("Can't Redo")
@@ -230,7 +232,7 @@ class baseUndoer:
 		name = u.redoMenuName(type)
 		if name != u.redoMenuLabel:
 			# Update menu using old name.
-			realLabel = app().getRealMenuName(name)
+			realLabel = app.getRealMenuName(name)
 			if realLabel == name:
 				underline=choose(match(name,0,"Can't"),-1,0)
 			else:
@@ -246,7 +248,7 @@ class baseUndoer:
 		name = u.undoMenuName(type)
 		if name != u.undoMenuLabel:
 			# Update menu using old name.
-			realLabel = app().getRealMenuName(name)
+			realLabel = app.getRealMenuName(name)
 			if realLabel == name:
 				underline=choose(match(name,0,"Can't"),-1,0)
 			else:
@@ -1049,7 +1051,7 @@ class baseUndoer:
 		# This may be off by one, and we don't care because
 		# we never use body text to compute undo results!
 		s = c.frame.body.get("1.0","end")
-		s = toUnicode(s,app().tkEncoding) # 2/25/03
+		s = toUnicode(s,app.tkEncoding) # 2/25/03
 		newlines = 0 ; i = len(s) - 1
 		while i >= 0 and s[i] == '\n':
 			newlines += 1 ; i -= 1
@@ -1094,7 +1096,7 @@ class baseUndoer:
 		#@	<< Get textResult from the Tk.Text widget >>
 		#@+node:<< Get textResult from the Tk.Text widget >>
 		textResult = c.frame.body.get("1.0","end")
-		textResult = toUnicode(textResult,app().tkEncoding) # 2/25/03
+		textResult = toUnicode(textResult,app.tkEncoding) # 2/25/03
 		
 		if textResult != result:
 			# Remove the newline from textResult if that is the only difference.

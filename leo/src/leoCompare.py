@@ -613,7 +613,7 @@ class baseLeoComparePanel:
 	
 	def finishCreate (self):
 	
-		config = app().config
+		config = app.config
 		
 		# File names.
 		for i,option in (
@@ -707,7 +707,7 @@ class baseLeoComparePanel:
 		import leoApp, leoCommands
 	
 		c = self.commands ; cmp = self.cmp ; Tk = Tkinter
-		self.top = top = Tk.Toplevel(app().root)
+		self.top = top = Tk.Toplevel(app.root)
 		top.title("Leo Compare files and directories")
 		top.protocol("WM_DELETE_WINDOW", self.onClose)
 		#@	<< create the organizer frames >>

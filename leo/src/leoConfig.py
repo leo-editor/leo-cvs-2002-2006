@@ -77,7 +77,7 @@ class baseConfig:
 		try:
 			self.configDir = sys.leo_config_directory
 		except:
-			self.configDir = os.path.join(app().loadDir,"..","config")
+			self.configDir = os.path.join(app.loadDir,"..","config")
 	
 		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
 		self.configsExist = false # True when we successfully open leoConfig.txt.
@@ -307,7 +307,7 @@ class baseConfig:
 		weight = self.getWindowPref(weight)
 		if not weight or weight == "": weight = "normal"
 		
-		return app().gui.getFontFromParams(family,size,slant,weight)
+		return app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
 	#@-node:config.getFontFromParams
 	#@+node:getShortcut
@@ -340,7 +340,7 @@ class baseConfig:
 	
 	def setCommandsFindIvars (self,c):
 	
-		config = self ; findFrame = app().findFrame
+		config = self ; findFrame = app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
@@ -355,7 +355,7 @@ class baseConfig:
 		val = config.getStringFindPref("find_string")
 		if val: c.find_text = val
 	
-		app().findFrame.init(c)
+		app.findFrame.init(c)
 	#@nonl
 	#@-node:setCommandsFindIvars
 	#@+node:setCommandsIvars
@@ -363,7 +363,7 @@ class baseConfig:
 	
 	def setCommandsIvars (self,c):
 	
-		config = self ; a = app()
+		config = self
 		#@	<< set prefs ivars >>
 		#@+node:<< set prefs ivars >>
 		val = config.getIntPref("tab_width")
@@ -399,7 +399,7 @@ class baseConfig:
 			try:
 				val = string.lower(val)
 				val = string.replace(val,"/","")
-				if a.language_delims_dict.get(val):
+				if app.language_delims_dict.get(val):
 					c.target_language = val
 				
 			except: pass
@@ -413,7 +413,7 @@ class baseConfig:
 	
 	def setConfigFindIvars (self,c):
 		
-		findFrame = app().findFrame
+		findFrame = app.findFrame
 	
 		# N.B.: separate c.ivars are much more convenient than a dict.
 		for s in findFrame.intKeys:
@@ -430,10 +430,10 @@ class baseConfig:
 	
 	def setConfigIvars (self,c):
 		
-		a = app()
+		a = app
 		
 		
-		if c.target_language and a.language_delims_dict.get(c.target_language):
+		if c.target_language and app.language_delims_dict.get(c.target_language):
 			language = c.target_language
 		else:
 			language = "plain"

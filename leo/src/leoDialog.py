@@ -2,8 +2,8 @@
 #@+node:@file leoDialog.py
 #@@language python
 
-import leoDialog
 from leoGlobals import *
+import leoDialog
 import string,Tkinter
 
 Tk = Tkinter
@@ -26,7 +26,7 @@ class baseLeoDialog:
 		self.buttonsFrame = None # Frame to hold typical dialog buttons.
 		self.defaultButtonCommand = None  # Command to call when user closes the window by clicking the close box.
 		self.frame = None # The outermost frame in self.top.
-		self.root = None # app().root
+		self.root = None # app.root
 		self.top = None # The toplevel Tk widget.
 		self.focus_widget = None # The widget to get the first focus.
 	#@nonl
@@ -111,7 +111,7 @@ class baseLeoDialog:
 		
 		"""Create the Tk.Toplevel widget for a leoDialog."""
 		
-		self.root = app().root
+		self.root = app.root
 	
 		self.top = Tk.Toplevel(self.root)
 		attachLeoIcon(self.top)
@@ -195,7 +195,7 @@ class aboutLeo (leoDialog):
 		text.pack(pady=10)
 		
 		try:
-			bitmap_name = os.path.join(app().loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
+			bitmap_name = os.path.join(app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
 			image = Tkinter.PhotoImage(file=bitmap_name)
 			text.image_create("1.0",image=image,padx=10)
 		except:

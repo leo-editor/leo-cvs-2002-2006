@@ -145,7 +145,7 @@ class baseLeoColorPanel:
 		self.option_names = {}
 		# Save colors for revert.  onOk alters this.
 		self.revertColors = {}
-		config = app().config
+		config = app.config
 		for name,option_name,default_color in colorPanelData:
 			self.revertColors[option_name] = config.getColorsPref(option_name)
 	#@nonl
@@ -154,9 +154,9 @@ class baseLeoColorPanel:
 	def run (self):
 		
 		c = self.commands ; Tk = Tkinter
-		config = app().config
+		config = app.config
 		
-		self.top = top = Tk.Toplevel(app().root)
+		self.top = top = Tk.Toplevel(app.root)
 		top.title("Syntax colors for " + shortFileName(c.frame.title))
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 		attachLeoIcon(top)
@@ -224,7 +224,7 @@ class baseLeoColorPanel:
 	def showColorPicker (self,name):
 		
 		option_name = self.option_names[name]
-		color = app().config.getColorsPref(option_name)
+		color = app.config.getColorsPref(option_name)
 		rgb,val = tkColorChooser.askcolor(color=color)
 		if val != None:
 			self.update(name,val)
@@ -240,7 +240,7 @@ class baseLeoColorPanel:
 	#@+node:colorPanel.onOk, onCancel, onRevert
 	def onOk (self):
 		# Update the revert colors
-		config = app().config
+		config = app.config
 		for name in self.changed_options:
 			option_name = self.option_names[name]
 			self.revertColors[option_name] = config.getColorsPref(option_name)
@@ -260,7 +260,7 @@ class baseLeoColorPanel:
 			self.top.destroy()
 		
 	def onRevert (self):
-		config = app().config
+		config = app.config
 		for name in self.changed_options:
 			option_name = self.option_names[name]
 			old_val = self.revertColors[option_name]
@@ -278,7 +278,7 @@ class baseLeoColorPanel:
 	#@+node:update
 	def update (self,name,val):
 		
-		config = app().config
+		config = app.config
 		# es(str(name) + " = " + str(val))
 		
 		# Put the new color in the button.
@@ -348,9 +348,9 @@ class baseLeoColorNamePanel:
 		self.revertColor = color
 		
 		Tk = Tkinter
-		config = app().config
+		config = app.config
 	
-		self.top = top = Tk.Toplevel(app().root)
+		self.top = top = Tk.Toplevel(app.root)
 		top.title("Color names for " + '"' + name + '"')
 		top.protocol("WM_DELETE_WINDOW", self.onOk)
 	
@@ -957,7 +957,7 @@ class baseColorizer:
 		self.rb = None
 		self.rootMode = None # None, "code" or "doc"
 		
-		config = app().config
+		config = app.config
 		self.latex_cweb_docs     = config.getBoolColorsPref("color_cweb_doc_parts_with_latex")
 		self.latex_cweb_comments = config.getBoolColorsPref("color_cweb_comments_with_latex")
 		# print "docs,comments",`self.latex_cweb_docs`,`self.latex_cweb_comments`
@@ -1138,7 +1138,7 @@ class baseColorizer:
 			
 			#@<< configure tags >>
 			#@+node:<< configure tags >>
-			config = app().config
+			config = app.config
 			assert(config)
 			
 			for name in default_colors_dict.keys(): # Python 2.1 support.
@@ -2191,7 +2191,7 @@ class baseColorizer:
 				elif match_word(s,k,"@root-doc"):
 					self.rootMode = "doc"
 				else:
-					doc = app().config.at_root_bodies_start_in_doc_mode
+					doc = app.config.at_root_bodies_start_in_doc_mode
 					self.rootMode = choose(doc,"doc","code")
 			#@-node:<< Test for @root, @root-doc or @root-code >>
 			#@nl

@@ -318,8 +318,8 @@ class baseLeoPrefs:
 	#@-node:set_lang
 	#@+node:prefs.onOK, onCancel, onRevert
 	def onOK (self):
-		app().config.setConfigIvars(self.commands)
-		app().config.update()
+		app.config.setConfigIvars(self.commands)
+		app.config.update()
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.

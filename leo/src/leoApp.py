@@ -5,7 +5,7 @@
 #@@language python
 
 from leoGlobals import *
-import leo,leoConfig,leoDialog,leoFind,leoGui,leoNodes
+import leoConfig,leoDialog,leoFind,leoGui,leoNodes
 import locale,os,sys
 
 class LeoApp:
@@ -123,28 +123,28 @@ class LeoApp:
 		
 		Return false if the user veto's the close."""
 		
-		a = self ; c = frame.commands
+		app = self ; c = frame.commands
 	
 		if c.changed:
 			veto = frame.promptForSave()
 			# print "veto",veto
 			if veto: return false
 	
-		app().setLog(None) # no log until we reactive a window.
+		app.setLog(None) # no log until we reactive a window.
 		
 		doHook("close-frame",c=c) # This may remove frame from the window list.
 		
-		if frame in a.windowList:
-			a.destroyWindow(frame)
+		if frame in app.windowList:
+			app.destroyWindow(frame)
 		
-		if a.windowList:
+		if app.windowList:
 			# Pick a window to activate so we can set the log.
-			w = a.windowList[0]
+			w = app.windowList[0]
 			w.top.deiconify()
 			w.top.lift()
-			a.setLog(w)
+			app.setLog(w)
 		else:
-			a.finishQuit()
+			app.finishQuit()
 	
 		return true # The window has been closed.
 	#@-node:app.closeLeoWindow
@@ -182,13 +182,13 @@ class LeoApp:
 	
 	def destroyAllOpenWithFiles (self):
 		
-		a = self
+		app = self
 	
 		for dict in self.openWithFiles[:]: # 7/10/03.
-			a.destroyOpenWithFileWithDict(dict)
+			app.destroyOpenWithFileWithDict(dict)
 			
 		# Delete the list so the gc can recycle Leo windows!
-		a.openWithFiles = []
+		app.openWithFiles = []
 	#@nonl
 	#@-node:app.destroyAllOpenWithFiles
 	#@+node:app.destroyAllWindowObjects
@@ -251,20 +251,20 @@ class LeoApp:
 		
 		"""Close all "Open With" files associated with frame"""
 		
-		a = self
+		app = self
 		
 		# Make a copy of the list: it may change in the loop.
-		openWithFiles = a.openWithFiles
+		openWithFiles = app.openWithFiles
 	
 		for dict in openWithFiles[:]: # 6/30/03
 			c = dict.get("c")
 			if c.frame == frame:
-				a.destroyOpenWithFileWithDict(dict)
+				app.destroyOpenWithFileWithDict(dict)
 	#@-node:app.destroyOpenWithFilesForFrame
 	#@+node:app.destroyOpenWithFileWithDict
 	def destroyOpenWithFileWithDict (self,dict):
 		
-		a = self
+		app = self
 		
 		path = dict.get("path")
 		if path and os.path.exists(path):
@@ -275,85 +275,36 @@ class LeoApp:
 				print "can not delete temp file:", path
 				
 		# Remove dict from the list so the gc can recycle the Leo window!
-		a.openWithFiles.remove(dict)
+		app.openWithFiles.remove(dict)
 	#@nonl
 	#@-node:app.destroyOpenWithFileWithDict
 	#@+node:app.destroyWindow
 	def destroyWindow (self,frame):
 		
-		a = self
-		top = frame.top # Remember this.
+		app = self ; top = frame.top # Remember this.
 			
-		a.destroyOpenWithFilesForFrame(frame)
+		app.destroyOpenWithFilesForFrame(frame)
 		
 		# 8/27/03: Recycle only if more than one window open
-		if len(a.windowList) > 1:
-			a.destroyAllWindowObjects(frame)
+		if len(app.windowList) > 1:
+			app.destroyAllWindowObjects(frame)
 	
-		a.windowList.remove(frame)
+		app.windowList.remove(frame)
 	
 		top.destroy() # force the window to go away now.
 	#@nonl
 	#@-node:app.destroyWindow
-	#@+node:app.startCreate
-	# Called just after the gApp global has been defined.
-	
-	def startCreate(self):
-		
-		a = self
-		#@	<< return false if not v2.1 or above >>
-		#@+node:<< return false if not v2.1 or above >>
-		# Python 2.1 support.
-		
-		try:
-			# 04-SEP-2002 DHEIN: simplify version check
-			message = """
-		leo.py requires Python 2.1 or higher.
-		
-		You may download Python 2.1 and Python 2.2 from http://python.org/download/
-		"""
-		
-			if not CheckVersion(sys.version, "2.1"):
-				leoDialog.askOk("Python version error",message=message,text="Exit").run(modal=true)
-				return false
-		except:
-			print "exception getting version"
-			import traceback
-			traceback.print_exc()
-		#@nonl
-		#@-node:<< return false if not v2.1 or above >>
-		#@nl
-		#@	<< set loadDir >>
-		#@+node:<< set loadDir >>
-		# loadDir should be the directory that contains leo.py
-		
-		try:
-			a.loadDir = os.path.dirname(leo.__file__)
-			if a.loadDir in (None,""):
-				a.loadDir = os.getcwd()
-			a.loadDir = os.path.abspath(a.loadDir)
-		except:
-			# Emergency defaults.  Hopefully we will never have to use them.
-			if sys.platform=="win32": # Windows
-				a.loadDir = "c:\\prog\\LeoPy\\"
-			else: # Linux, or whatever.
-				a.loadDir = "LeoPy"
-			print "Setting load directory to:", a.loadDir
-		#@nonl
-		#@-node:<< set loadDir >>
-		#@nl
-		return true
-	#@nonl
-	#@-node:app.startCreate
 	#@+node:app.finishCreate
 	# Called when the gApp global has been defined.
 	
 	def finishCreate(self):
 		
+		app = self
+		
 		# New 4.0 stuff.
 		if 0: # Not using leoID.txt is more convenient for the user.
-			a.setLeoID()
-			a.nodeIndices = leoNodes.nodeIndices()
+			app.setLeoID()
+			app.nodeIndices = leoNodes.nodeIndices()
 	#@nonl
 	#@-node:app.finishCreate
 	#@+node:app.finishQuit
@@ -401,36 +352,34 @@ class LeoApp:
 	#@+node:app.onQuit
 	def onQuit (self):
 		
-		a = self
+		app = self
 		
-		a.quitting = true
+		app.quitting = true
 		
-		while a.windowList:
-			w = a.windowList[0]
-			if not a.closeLeoWindow(w):
+		while app.windowList:
+			w = app.windowList[0]
+			if not app.closeLeoWindow(w):
 				break
 	
-		a.quitting = false # If we get here the quit has been disabled.
+		app.quitting = false # If we get here the quit has been disabled.
 	
 	
 	#@-node:app.onQuit
 	#@+node:app.setLeoID (not used)
 	def setLeoID (self):
 		
-		a = self
-	
 		tag = ".leoID.txt"
-		loadDir = a.loadDir
-		configDir = a.config.configDir
+		loadDir = app.loadDir
+		configDir = app.config.configDir
 		#@	<< return if we can set self.leoID from sys.leoID >>
 		#@+node:<< return if we can set self.leoID from sys.leoID>>
 		# This would be set by in Python's sitecustomize.py file.
 		try:
-			a.leoID = sys.leoID
-			es("leoID = " + a.leoID, color="blue")
+			app.leoID = sys.leoID
+			es("leoID = " + app.leoID, color="blue")
 			return
 		except:
-			a.leoID = None
+			app.leoID = None
 		#@nonl
 		#@-node:<< return if we can set self.leoID from sys.leoID>>
 		#@nl
@@ -444,13 +393,13 @@ class LeoApp:
 					s = f.readline()
 					f.close()
 					if s and len(s) > 0:
-						a.leoID = s
-						es("leoID = " + a.leoID, color="blue")
+						app.leoID = s
+						es("leoID = " + app.leoID, color="blue")
 						return
 					else:
 						es("empty " + tag + " in " + dir, color = "red")
 			except:
-				a.leoID = None
+				app.leoID = None
 				
 		if configDir == loadDir:
 			es(tag + " not found in " + loadDir, color="red")
@@ -461,9 +410,9 @@ class LeoApp:
 		#@nl
 		#@	<< put up a dialog requiring a valid id >>
 		#@+node:<< put up a dialog requiring a valid id >>
-		a.leoID = leoDialog.askLeoID().run(modal=true)
+		app.leoID = leoDialog.askLeoID().run(modal=true)
 		
-		es("leoID = " + `a.leoID`, color="blue")
+		es("leoID = " + `app.leoID`, color="blue")
 		#@nonl
 		#@-node:<< put up a dialog requiring a valid id >>
 		#@nl
@@ -475,7 +424,7 @@ class LeoApp:
 				fn = os.path.join(dir, tag)
 				f = open(fn,'w')
 				if f:
-					f.write(a.leoID)
+					f.write(app.leoID)
 					f.close()
 					es("created leoID.txt in " + dir, color="red")
 					return

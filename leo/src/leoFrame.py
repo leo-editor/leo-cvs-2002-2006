@@ -30,9 +30,9 @@ class baseLeoFrame:
 			title = self.setWindowTitle(title)
 		else:
 			title = "untitled"
-			n = app().numberOfWindows
+			n = app.numberOfWindows
 			if n > 0: title += `n`
-			app().numberOfWindows = n+1
+			app.numberOfWindows = n+1
 			self.mFileName = ""
 			
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
@@ -123,10 +123,10 @@ class baseLeoFrame:
 		v = c.currentVnode()
 		if not doHook("menu1",c=c,v=v):
 			self.createMenuBar(top)
-		app().setLog(self,"frame.__init__") # the LeoFrame containing the log
-		app().windowList.append(self)
+		app.setLog(self,"frame.__init__") # the LeoFrame containing the log
+		app.windowList.append(self)
 		# Sign on.
-		color = app().config.getWindowPref("log_error_color")
+		color = app.config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
 		es("Leo 4.0 beta 1, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
@@ -187,7 +187,7 @@ class baseLeoFrame:
 	#@+node:f.createLeoFrame
 	def createLeoFrame (self,top):
 	
-		Tk = Tkinter ; config = app().config
+		Tk = Tkinter ; config = app.config
 		
 		self.outerFrame = outerFrame = Tk.Frame(top)
 		self.outerFrame.pack(expand=1,fill="both")
@@ -328,7 +328,7 @@ class baseLeoFrame:
 		
 		c = self.commands
 		name = choose(self.mFileName, self.mFileName, self.title)
-		type = choose(app().quitting, "quitting?", "closing?")
+		type = choose(app.quitting, "quitting?", "closing?")
 		
 		answer = leoDialog.askYesNoCancel("Confirm",
 			'Save changes to %s before %s' % (name,type)).run(modal=true)
@@ -364,7 +364,7 @@ class baseLeoFrame:
 	#@+node:f.configureBar
 	def configureBar (self, bar, verticalFlag):
 		
-		config = app().config
+		config = app.config
 	
 		# Get configuration settings.
 		w = config.getWindowPref("split_bar_width")
@@ -395,7 +395,7 @@ class baseLeoFrame:
 	#@+node:f.configureBarsFromConfig
 	def configureBarsFromConfig (self):
 		
-		config = app().config
+		config = app.config
 	
 		w = config.getWindowPref("split_bar_width")
 		if not w or w < 1: w = 7
@@ -445,7 +445,7 @@ class baseLeoFrame:
 	#@+node:f.setBodyFontFromConfig
 	def setBodyFontFromConfig (self):
 		
-		config = app().config ; body = self.body
+		config = app.config ; body = self.body
 		#print "body",self.body
 		
 		font = config.getFontFromParams(
@@ -487,7 +487,7 @@ class baseLeoFrame:
 		
 		"""Set the position and size of the frame to config params."""
 		
-		config = app().config
+		config = app.config
 	
 		h = config.getIntWindowPref("initial_window_height")
 		w = config.getIntWindowPref("initial_window_width")
@@ -505,7 +505,7 @@ class baseLeoFrame:
 	#@+node:f.setLogFontFromConfig
 	def setLogFontFromConfig (self):
 	
-		log = self.log ; config = app().config
+		log = self.log ; config = app.config
 		#print "log",self.log
 	
 		font = config.getFontFromParams(
@@ -531,7 +531,7 @@ class baseLeoFrame:
 		try: # This can fail when called from scripts
 			# Use the present font for computations.
 			font = self.body.cget("font")
-			root = app().root # 4/3/03: must specify root so idle window will work properly.
+			root = app.root # 4/3/03: must specify root so idle window will work properly.
 			font = tkFont.Font(root=root,font=font)
 			tabw = font.measure(" " * abs(w)) # 7/2/02
 			# tablist = `tabw` + ' ' + `2*tabw`
@@ -545,7 +545,7 @@ class baseLeoFrame:
 	#@+node:f.setTreeColorsFromConfig
 	def setTreeColorsFromConfig (self):
 		
-		config = app().config ; tree = self.tree
+		config = app.config ; tree = self.tree
 	
 		bg = config.getWindowPref("outline_pane_background_color")
 		if bg:
@@ -570,7 +570,7 @@ class baseLeoFrame:
 	#@+node:reconfigurePanes (use config bar_width)
 	def reconfigurePanes (self):
 		
-		border = app().config.getIntWindowPref('additional_body_text_border')
+		border = app.config.getIntWindowPref('additional_body_text_border')
 		if border == None: border = 0
 		
 		# The body pane needs a _much_ bigger border when tiling horizontally.
@@ -615,7 +615,7 @@ class baseLeoFrame:
 	
 	def OnCloseLeoEvent(self):
 	
-		app().closeLeoWindow(self)
+		app.closeLeoWindow(self)
 	#@nonl
 	#@-node:frame.OnCloseLeoEvent
 	#@+node:frame.OnControlKeyUp/Down
@@ -644,7 +644,7 @@ class baseLeoFrame:
 	
 		try:
 			c = self.commands ; v = c.currentVnode()
-			app().setLog(self,"OnActivateBody")
+			app.setLog(self,"OnActivateBody")
 			self.tree.OnDeactivate()
 			set_focus(c,c.body)
 		except:
@@ -656,14 +656,14 @@ class baseLeoFrame:
 	def OnActivateLeoEvent(self,event=None):
 	
 		try:
-			app().setLog(self,"OnActivateLeoEvent")
+			app.setLog(self,"OnActivateLeoEvent")
 		except:
 			es_event_exception("activate Leo")
 	
 	def OnDeactivateLeoEvent(self,event=None):
 	
 		try:
-			app().setLog(None,"OnDeactivateLeoEvent")
+			app.setLog(None,"OnDeactivateLeoEvent")
 		except:
 			es_event_exception("deactivate Leo")
 	#@nonl
@@ -672,7 +672,7 @@ class baseLeoFrame:
 	def OnActivateLog (self,event=None):
 	
 		try:
-			app().setLog(self,"OnActivateLog")
+			app.setLog(self,"OnActivateLog")
 			self.tree.OnDeactivate()
 		except:
 			es_event_exception("activate log")
@@ -683,7 +683,7 @@ class baseLeoFrame:
 	
 		try:
 			c = self.commands
-			app().setLog(self,"OnActivateTree")
+			app.setLog(self,"OnActivateTree")
 			self.tree.undimEditLabel()
 			set_focus(c,c.frame.body) # 7/12/03
 		except:
@@ -772,15 +772,15 @@ class baseLeoFrame:
 		
 		"""Destroy all the widgets in the icon bar"""
 		
-		a = app() ; f = self.iconFrame
+		f = self.iconFrame
 		if not f: return
 		
 		for slave in f.pack_slaves():
 			slave.destroy()
 	
 		f.configure(height="5m") # The default height.
-		a.iconWidgetCount = 0
-		a. iconImageRefs = []
+		app.iconWidgetCount = 0
+		app.iconImageRefs = []
 	#@-node:clearIconBar
 	#@+node:showIconBar
 	def showIconBar(self):
@@ -797,15 +797,15 @@ class baseLeoFrame:
 		
 		Pictures take precedence over text"""
 		
-		a = app() ; f = self.iconFrame
+		f = self.iconFrame
 		if not imagefile and not image and not text: return
 	
 		# First define n.	
 		try:
-			a.iconWidgetCount += 1
-			n = a.iconWidgetCount
+			app.iconWidgetCount += 1
+			n = app.iconWidgetCount
 		except:
-			n = a.iconWidgetCount = 1
+			n = app.iconWidgetCount = 1
 	
 		if not command:
 			def command(n=n):
@@ -817,15 +817,15 @@ class baseLeoFrame:
 			try:
 				if imagefile:
 					# Create the image.  Throws an exception if file not found
-					imagefile = os.path.join(app().loadDir,imagefile)
+					imagefile = os.path.join(app.loadDir,imagefile)
 					imagefile = os.path.normpath(imagefile)
-					image = Tkinter.PhotoImage(master=app().root,file=imagefile)
+					image = Tkinter.PhotoImage(master=app.root,file=imagefile)
 					
 					# Must keep a reference to the image!
 					try:
-						refs = a.iconImageRefs
+						refs = app.iconImageRefs
 					except:
-						refs = a.iconImageRefs = []
+						refs = app.iconImageRefs = []
 				
 					refs.append((imagefile,image),)
 				
@@ -863,11 +863,11 @@ class baseLeoFrame:
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
-		# print `app().quitting`,`self.log`
-		if app().quitting: return
+		# print `app.quitting`,`self.log`
+		if app.quitting: return
 		if self.log:
 			if type(s) == type(u""): # 3/18/03
-				s = toEncodedString(s,app().tkEncoding)
+				s = toEncodedString(s,app.tkEncoding)
 			if color:
 				if color not in self.logColorTags:
 					self.logColorTags.append(color)
@@ -883,20 +883,20 @@ class baseLeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			app().logWaiting.append((s,color),) # 2/25/03
+			app.logWaiting.append((s,color),) # 2/25/03
 			print "Null log"
 			if type(s) == type(u""): # 3/18/03
 				s = toEncodedString(s,"ascii")
 			print s
 	
 	def putnl (self):
-		if app().quitting: return
+		if app.quitting: return
 		if self.log:
 			self.log.insert("end",'\n')
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			app().logWaiting.append(('\n',"black"),) # 6/28/03
+			app.logWaiting.append(('\n',"black"),) # 6/28/03
 			print "Null log"
 			print
 	#@nonl
@@ -950,13 +950,13 @@ class baseLeoFrame:
 		
 		fields = string.split(s2,"+")
 		if fields == None or len(fields) == 0:
-			if not app().menuWarningsGiven:
+			if not app.menuWarningsGiven:
 				print "bad shortcut specifier:", s
 			return None,None
 		
 		last = fields[-1]
 		if last == None or len(last) == 0:
-			if not app().menuWarningsGiven:
+			if not app.menuWarningsGiven:
 				print "bad shortcut specifier:", s
 			return None,None
 		#@nonl
@@ -1132,7 +1132,7 @@ class baseLeoFrame:
 		#@<< create the recent files submenu >>
 		#@+node:<< create the recent files submenu >>
 		recentFilesMenu = self.createNewMenu("Recent &Files...","File")
-		self.recentFiles = app().config.getRecentFiles()
+		self.recentFiles = app.config.getRecentFiles()
 		self.createRecentFilesMenuItems()
 		
 		table = (("Clear Recent Files",None,self.OnClearRecentFiles),)
@@ -1479,7 +1479,7 @@ class baseLeoFrame:
 		#@-node:<< create the help menu >>
 		#@nl
 		top.config(menu=topMenu) # Display the menu.
-		app().menuWarningsGiven = true
+		app.menuWarningsGiven = true
 	#@-node:createMenuBar
 	#@+node:frame.doCommand
 	#@+at 
@@ -1495,12 +1495,12 @@ class baseLeoFrame:
 	
 	def doCommand (self,command,label,event=None):
 		
-		# A horrible kludge: set app().log to cover for a possibly missing activate event.
-		app().setLog(self,"doCommand")
+		# A horrible kludge: set app.log to cover for a possibly missing activate event.
+		app.setLog(self,"doCommand")
 	
 		if label == "cantredo": label = "redo"
 		if label == "cantundo": label = "undo"
-		app().commandName = label
+		app.commandName = label
 		c = self.commands ; v = c.currentVnode() # 2/8/03
 		if not doHook("command1",c=c,v=v,label=label):
 			try:
@@ -1533,9 +1533,9 @@ class baseLeoFrame:
 	#@+node:OnNew
 	def OnNew (self,event=None):
 	
-		config = app().config
+		config = app.config
 		frame = LeoFrame() # Create another Leo window.
-		## frame = app().gui.newLeoFrame(None) # Right now the frame creates the commander.
+		## frame = app.gui.newLeoFrame(None) # Right now the frame creates the commander.
 		top = frame.top
 		
 		# 5/16/03: Needed for hooks.
@@ -1591,7 +1591,7 @@ class baseLeoFrame:
 		closeFlag = (
 			self.startupWindow==true and # The window was open on startup
 			c.changed==false and self.saved==false and # The window has never been changed
-			app().numberOfWindows == 1) # Only one untitled window has ever been opened
+			app.numberOfWindows == 1) # Only one untitled window has ever been opened
 		#@-node:<< Set closeFlag if the only open window is empty >>
 		#@nl
 		# trace(`closeFlag`)
@@ -1604,7 +1604,7 @@ class baseLeoFrame:
 		if fileName and len(fileName) > 0:
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
-				app().destroyWindow(self)
+				app.destroyWindow(self)
 	#@nonl
 	#@-node:frame.OnOpen
 	#@+node:frame.OnOpenWith and allies
@@ -1618,7 +1618,7 @@ class baseLeoFrame:
 	
 	def OnOpenWith(self,data=None):
 		
-		a = app() ; c = self.commands ; v = c.currentVnode()
+		c = self.commands ; v = c.currentVnode()
 		if not data or len(data) != 3: return # 6/22/03
 		try:
 			# print "OnOpenWith:",`data`
@@ -1629,7 +1629,7 @@ class baseLeoFrame:
 				if not ext:
 					dict = scanDirectives(c)
 					language = dict.get("language")
-					ext = a.language_extension_dict.get(language)
+					ext = app.language_extension_dict.get(language)
 					# print language,ext
 					if ext == None:
 						ext = "txt"
@@ -1649,7 +1649,7 @@ class baseLeoFrame:
 				searchPath = self.openWithTempFilePath(v,ext)
 				
 				if os.path.exists(searchPath):
-					for dict in a.openWithFiles:
+					for dict in app.openWithFiles:
 						if v.t == dict.get("v") and searchPath == dict.get("path"):
 							path = searchPath
 							break
@@ -1762,7 +1762,7 @@ class baseLeoFrame:
 	#@+node:frame.createOpenWithTempFile
 	def createOpenWithTempFile (self, v, ext):
 		
-		c = self.commands ; a = app()
+		c = self.commands ; a = app
 		path = self.openWithTempFilePath(v,ext)
 		try:
 			if os.path.exists(path):
@@ -1775,7 +1775,7 @@ class baseLeoFrame:
 			dict = scanDirectives(self.commands,v=v)
 			encoding = dict.get("encoding",None)
 			if encoding == None:
-				encoding = a.config.default_derived_file_encoding
+				encoding = app.config.default_derived_file_encoding
 			s = toEncodedString(s,encoding,reportErrors=true) 
 			file.write(s)
 			file.flush()
@@ -1785,18 +1785,18 @@ class baseLeoFrame:
 			# es("time: " + str(time))
 			# 4/22/03: add body and encoding entries to dict for later comparisons.
 			dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
-			#@		<< remove previous entry from a.openWithFiles if it exists >>
-			#@+node:<< remove previous entry from a.openWithFiles if it exists >>
-			for d in a.openWithFiles[:]: # 6/30/03
+			#@		<< remove previous entry from app.openWithFiles if it exists >>
+			#@+node:<< remove previous entry from app.openWithFiles if it exists >>
+			for d in app.openWithFiles[:]: # 6/30/03
 				v2 = d.get("v")
 				if v.t == v2.t:
-					print "removing previous entry in a.openWithFiles for",v
-					a.openWithFiles.remove(d)
+					print "removing previous entry in app.openWithFiles for",v
+					app.openWithFiles.remove(d)
 			#@nonl
-			#@-node:<< remove previous entry from a.openWithFiles if it exists >>
+			#@-node:<< remove previous entry from app.openWithFiles if it exists >>
 	#@afterref
  # 4/22/03
-			a.openWithFiles.append(dict)
+			app.openWithFiles.append(dict)
 			return path
 		except:
 			file = None
@@ -1829,7 +1829,7 @@ class baseLeoFrame:
 		
 		"""Handle the File-Close command."""
 		
-		app().closeLeoWindow(self)
+		app.closeLeoWindow(self)
 	#@nonl
 	#@-node:frame.OnClose
 	#@+node:OnSave
@@ -1906,7 +1906,7 @@ class baseLeoFrame:
 	#@+node:frame.OnRevert
 	def OnRevert(self,event=None):
 		
-		a = app()
+		a = app
 	
 		# Make sure the user wants to Revert.
 		if not self.mFileName:
@@ -1927,14 +1927,14 @@ class baseLeoFrame:
 		ok, frame = self.OpenWithFileName(fileName)
 		if ok:
 			frame.top.deiconify()
-			app().destroyWindow(self)
+			app.destroyWindow(self)
 		else:
 			self.mFileName = fileName
 	#@-node:frame.OnRevert
 	#@+node:frame.OnQuit
 	def OnQuit(self,event=None):
 		
-		app().onQuit()
+		app.onQuit()
 	#@nonl
 	#@-node:frame.OnQuit
 	#@+node:frame.updateRecentFiles
@@ -1946,7 +1946,7 @@ class baseLeoFrame:
 		# Update the recent files list in all windows.
 		normFileName = os.path.normcase(fileName)
 		
-		for frame in app().windowList:
+		for frame in app.windowList:
 			# Remove all versions of the file name.
 			for name in frame.recentFiles:
 				name2 = os.path.normcase(name)
@@ -1958,8 +1958,8 @@ class baseLeoFrame:
 			frame.createRecentFilesMenuItems()
 			
 		# Update the config file.
-		app().config.setRecentFiles(frame.recentFiles)
-		app().config.update()
+		app.config.setRecentFiles(frame.recentFiles)
+		app.config.update()
 	#@nonl
 	#@-node:frame.updateRecentFiles
 	#@+node:OnClearRecentFiles
@@ -1994,7 +1994,7 @@ class baseLeoFrame:
 		closeFlag = (
 			self.startupWindow==true and # The window was open on startup
 			c.changed==false and self.saved==false and # The window has never been changed
-			app().numberOfWindows == 1) # Only one untitled window has ever been opened
+			app.numberOfWindows == 1) # Only one untitled window has ever been opened
 		#@-node:<< Set closeFlag if the only open window is empty >>
 		#@nl
 		if not name:
@@ -2004,8 +2004,8 @@ class baseLeoFrame:
 		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
-				app().destroyWindow(self)
-				app().setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
+				app.destroyWindow(self)
+				app.setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
 	
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@nonl
@@ -2040,7 +2040,7 @@ class baseLeoFrame:
 			frame = LeoFrame(fileName)
 			frame.top.deiconify()
 			frame.top.lift()
-			app().root.update() # Force a screen redraw immediately.
+			app.root.update() # Force a screen redraw immediately.
 			frame.commands.fileCommands.readOutlineOnly(file,fileName) # closes file.
 		except:
 			es("can not open:" + fileName)
@@ -2770,7 +2770,7 @@ class baseLeoFrame:
 			if 0: # No need to make this modal
 				top.grab_set() # Make the dialog a modal dialog.
 				top.focus_set() # Get all keystrokes.
-				app().root.wait_window(top)
+				app.root.wait_window(top)
 	#@-node:OnPreferences
 	#@+node:OnConvertBlanks & OnConvertAllBlanks
 	def OnConvertBlanks(self,event=None):
@@ -2821,9 +2821,9 @@ class baseLeoFrame:
 		c = self ; body = c.body
 		brackets = "()[]{}<>"
 		ch1=body.get("insert -1c")
-		ch1= toUnicode(ch1,app().tkEncoding) # 9/28/03
+		ch1= toUnicode(ch1,app.tkEncoding) # 9/28/03
 		ch2=body.get("insert")
-		ch2= toUnicode(ch2,app().tkEncoding) # 9/28/03
+		ch2= toUnicode(ch2,app.tkEncoding) # 9/28/03
 	
 		# Prefer to match the character to the left of the cursor.
 		if ch1 in brackets:
@@ -2865,7 +2865,7 @@ class baseLeoFrame:
 			if (not forward and body.compare(index,"<=","1.0")):
 				return None
 			ch2 = body.get(index)
-			ch2= toUnicode(ch2,app().tkEncoding) # 9/28/03
+			ch2= toUnicode(ch2,app.tkEncoding) # 9/28/03
 			if ch2 == ch: level += 1
 			if ch2 == match_ch:
 				level -= 1
@@ -2916,7 +2916,7 @@ class baseLeoFrame:
 		
 		import time
 		
-		config = app().config
+		config = app.config
 		default_format =  "%m/%d/%Y %H:%M:%S" # E.g., 1/30/2003 8:31:55
 		
 		# Try to get the format string from leoConfig.txt.
@@ -2983,7 +2983,7 @@ class baseLeoFrame:
 	
 		c = self.commands
 	
-		find = app().findFrame
+		find = app.findFrame
 		# 15-SEP-2002 DTHEIN: call withdraw() to force findFrame to top after 
 		#                     opening multiple Leo files.
 		find.top.withdraw()
@@ -2999,25 +2999,25 @@ class baseLeoFrame:
 	def OnFindNext(self,event=None):
 	
 		c = self.commands
-		app().findFrame.findNextCommand(c)
+		app.findFrame.findNextCommand(c)
 	#@-node:OnFindNext
 	#@+node:OnFindPrevious
 	def OnFindPrevious(self,event=None):
 	
 		c = self.commands
-		app().findFrame.findPreviousCommand(c)
+		app.findFrame.findPreviousCommand(c)
 	#@-node:OnFindPrevious
 	#@+node:OnReplace
 	def OnReplace(self,event=None):
 	
 		c = self.commands
-		app().findFrame.changeCommand(c)
+		app.findFrame.changeCommand(c)
 	#@-node:OnReplace
 	#@+node:OnReplaceThenFind
 	def OnReplaceThenFind(self,event=None):
 	
 		c = self.commands
-		app().findFrame.changeThenFindCommand(c)
+		app.findFrame.changeThenFindCommand(c)
 	#@-node:OnReplaceThenFind
 	#@+node:OnCutNode
 	def OnCutNode(self,event=None):
@@ -3346,7 +3346,7 @@ class baseLeoFrame:
 		# Switch directions.
 		verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
 		orientation = choose(verticalFlag,"vertical","horizontal")
-		app().config.setWindowPref("initial_splitter_orientation",orientation)
+		app.config.setWindowPref("initial_splitter_orientation",orientation)
 		# Reconfigure the bars.
 		bar1.place_forget()
 		bar2.place_forget()
@@ -3366,7 +3366,7 @@ class baseLeoFrame:
 	def OnCascade(self,event=None):
 		
 		c = self ; x,y,delta = 10,10,10
-		for frame in app().windowList:
+		for frame in app.windowList:
 			top = frame.top
 			# Compute w,h
 			top.update_idletasks() # Required to get proper info.
@@ -3385,9 +3385,9 @@ class baseLeoFrame:
 	#@+node:OnMinimizeAll
 	def OnMinimizeAll(self,event=None):
 	
-		self.minimize(app().findFrame)
-		self.minimize(app().pythonFrame)
-		for frame in app().windowList:
+		self.minimize(app.findFrame)
+		self.minimize(app.pythonFrame)
+		for frame in app.windowList:
 			self.minimize(frame)
 		
 	def minimize(self, frame):
@@ -3427,12 +3427,12 @@ class baseLeoFrame:
 			# 09-SEP-2002 DHEIN: Open Python window under linux
 			
 			try:
-				pathToLeo = os.path.join(app().loadDir,"leo.py")
+				pathToLeo = os.path.join(app.loadDir,"leo.py")
 				sys.argv = [pathToLeo]
 				from idlelib import idle
-				if app().idle_imported:
+				if app.idle_imported:
 					reload(idle)
-				app().idle_imported = true
+				app.idle_imported = true
 			except:
 				try:
 					es("idlelib could not be imported.")
@@ -3452,12 +3452,12 @@ class baseLeoFrame:
 				if idle_dir not in sys.path:
 					sys.path.append(idle_dir)
 				# Initialize argv: the -t option sets the title of the Idle interp window.
-				# pathToLeo = os.path.join(app().loadDir,"leo.py")
+				# pathToLeo = os.path.join(app.loadDir,"leo.py")
 				sys.argv = ["leo","-t","leo"]
 				import PyShell
-				if app().idle_imported:
+				if app.idle_imported:
 					reload(idle)
-					app().idle_imported = true
+					app.idle_imported = true
 				if 1: # Mostly works, but causes problems when opening other .leo files.
 					PyShell.main()
 				else: # Doesn't work: destroys all of Leo when Idle closes.
@@ -3486,7 +3486,7 @@ class baseLeoFrame:
 	def leoPyShellMain(self):
 		
 		import PyShell
-		root = app().root
+		root = app.root
 		PyShell.fixwordbreaks(root)
 		flist = PyShell.PyShellFileList(root)
 		shell = PyShell.PyShell(flist)
@@ -3515,7 +3515,7 @@ class baseLeoFrame:
 	#@+node:OnLeoDocumentation
 	def OnLeoDocumentation (self,event=None):
 	
-		fileName = os.path.join(app().loadDir,"..","doc","LeoDocs.leo")
+		fileName = os.path.join(app.loadDir,"..","doc","LeoDocs.leo")
 		try:
 			self.OpenWithFileName(fileName)
 		except:
@@ -3536,7 +3536,7 @@ class baseLeoFrame:
 	#@+node:OnLeoHelp
 	def OnLeoHelp (self,event=None):
 		
-		file = os.path.join(app().loadDir,"..","doc","sbooks.chm")
+		file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
 		if os.path.exists(file):
 			os.startfile(file)
 		else:
@@ -3557,7 +3557,7 @@ class baseLeoFrame:
 					else:
 						url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
 						import webbrowser
-						os.chdir(app().loadDir)
+						os.chdir(app.loadDir)
 						webbrowser.open_new(url)
 				except:
 					es("exception dowloading sbooks.chm")
@@ -3603,8 +3603,8 @@ class baseLeoFrame:
 	def OnLeoConfig (self,event=None):
 	
 		# 4/21/03 new code suggested by fBechmann@web.de
-		loadDir = app().loadDir
-		configDir = app().config.configDir
+		loadDir = app.loadDir
+		configDir = app.config.configDir
 		# Look in configDir first.
 		fileName = os.path.join(configDir, "leoConfig.leo")
 		ok, frame = self.OpenWithFileName(fileName)
@@ -3620,7 +3620,7 @@ class baseLeoFrame:
 		
 	def OnApplyConfig (self,event=None):
 	
-		app().config.init()
+		app.config.init()
 		self.commands.frame.reconfigureFromConfig()
 	#@nonl
 	#@-node:OnLeoConfig, OnApplyConfig
@@ -3666,7 +3666,7 @@ class baseLeoFrame:
 				#@nl
 				#@			<< set accel to the shortcut for name >>
 				#@+node:<< set accel to the shortcut for name >>
-				config = app().config
+				config = app.config
 				accel2 = config.getShortcut(name)
 				
 				# 7/19/03: Make sure "None" overrides the default shortcut.
@@ -3721,7 +3721,7 @@ class baseLeoFrame:
 				#@nl
 				#@			<< set realLabel, amp_index and menu_shortcut >>
 				#@+node:<< set realLabel, amp_index and menu_shortcut >>
-				realLabel = app().getRealMenuName(label)
+				realLabel = app.getRealMenuName(label)
 				amp_index = realLabel.find("&")
 				realLabel = realLabel.replace("&","")
 				if not menu_shortcut:
@@ -3737,7 +3737,7 @@ class baseLeoFrame:
 					#@				<< handle bind_shorcut >>
 					#@+node:<< handle bind_shorcut >>
 					if bind_shortcut in self.menuShortcuts:
-						if not app().menuWarningsGiven:
+						if not app.menuWarningsGiven:
 							es("duplicate shortcut:", accel, bind_shortcut, label,color="red")
 							print "duplicate shortcut:", accel, bind_shortcut, label
 					else:
@@ -3746,11 +3746,11 @@ class baseLeoFrame:
 							self.body.bind(bind_shortcut,callback)
 							self.top.bind (bind_shortcut,callback)
 						except: # could be a user error
-							if not app().menuWarningsGiven:
+							if not app.menuWarningsGiven:
 								print "exception binding menu shortcut..."
 								print bind_shortcut
 								es_exception()
-								app().menuWarningsGive = true
+								app.menuWarningsGive = true
 					#@nonl
 					#@-node:<< handle bind_shorcut >>
 					#@nl
@@ -3789,11 +3789,11 @@ class baseLeoFrame:
 			else:
 				menu = Tkinter.Menu(parent,tearoff=0)
 				self.setMenu(menuName,menu)
-				label=app().getRealMenuName(menuName)
+				label=app.getRealMenuName(menuName)
 				amp_index = label.find("&")
 				label = label.replace("&","")
 				if before: # Insert the menu before the "before" menu.
-					index_label=app().getRealMenuName(before)
+					index_label=app.getRealMenuName(before)
 					amp_index = index_label.find("&")
 					index_label = index_label.replace("&","")
 					index = parent.index(index_label)
@@ -3829,11 +3829,10 @@ class baseLeoFrame:
 	
 	def createOpenWithMenuFromTable (self,table):
 	
-		a = app()
-		a.openWithTable = table # Override any previous table.
+		app.openWithTable = table # Override any previous table.
 		# Delete the previous entry.
 		parent = self.getMenu("File")
-		label=a.getRealMenuName("Open &With...")
+		label=app.getRealMenuName("Open &With...")
 		amp_index = label.find("&")
 		label = label.replace("&","")
 		try:
@@ -3883,7 +3882,7 @@ class baseLeoFrame:
 		try:
 			menu = self.getMenu(menuName)
 			if menu:
-				realItemName=app().getRealMenuName(itemName)
+				realItemName=app.getRealMenuName(itemName)
 				menu.delete(realItemName)
 			else:
 				es("menu not found: " + menuName)
@@ -3896,7 +3895,7 @@ class baseLeoFrame:
 	def setRealMenuNamesFromTable (self,table):
 	
 		try:
-			app().setRealMenuNamesFromTable(table)
+			app.setRealMenuNamesFromTable(table)
 		except:
 			es("exception in setRealMenuNamesFromTable")
 			es_exception()
@@ -3906,8 +3905,8 @@ class baseLeoFrame:
 	
 	def OnMenuClick (self):
 		
-		# A horrible kludge: set app().log to cover for a possibly missing activate event.
-		app().setLog(self,"OnMenuClick")
+		# A horrible kludge: set app.log to cover for a possibly missing activate event.
+		app.setLog(self,"OnMenuClick")
 		
 		# Allow the user first crack at updating menus.
 		c = self.commands ; v = c.currentVnode() # 2/8/03
@@ -3940,7 +3939,7 @@ class baseLeoFrame:
 			enableMenu(menu,"Revert To Saved", c.canRevert())
 	
 			openWithMenu = self.getMenu("Open With...")
-			enableMenu(menu,"Open With...", app().hasOpenWithMenu)
+			enableMenu(menu,"Open With...", app.hasOpenWithMenu)
 			
 		except:
 			es("exception updating File menu")
@@ -4135,7 +4134,7 @@ class baseLeoFrame:
 	#@+node:initialRatios
 	def initialRatios (self):
 	
-		config = app().config
+		config = app.config
 		s = config.getWindowPref("initial_splitter_orientation")
 		verticalFlag = s == None or (s != "h" and s != "horizontal")
 	
@@ -4277,14 +4276,14 @@ class baseLeoFrame:
 		c = self.commands ; body = self.body ; lab = self.statusLabel
 		
 		# New for Python 2.3: may be called during shutdown.
-		if app().killed:
+		if app.killed:
 			return
 	
 		index = body.index("insert")
 		row,col = getindex(body,index)
 		if col > 0:
 			s = body.get("%d.0" % (row),index)
-			s = toUnicode(s,app().tkEncoding) # 9/28/03
+			s = toUnicode(s,app.tkEncoding) # 9/28/03
 			col = computeWidth (s,self.tab_width)
 	
 		if row != self.lastStatusRow or col != self.lastStatusCol:

@@ -47,7 +47,7 @@ class baseFileCommands:
 		self.topVnode = None
 		self.mFileName = ""
 		self.fileDate = -1
-		self.leo_file_encoding = app().config.new_leo_file_encoding
+		self.leo_file_encoding = app.config.new_leo_file_encoding
 		# For reading
 		self.fileFormatNumber = 0
 		self.ratio = 0.5
@@ -59,7 +59,7 @@ class baseFileCommands:
 		self.openDirectory = None
 		self.usingClipboard = false
 		# New in 3.12
-		self.a = app()
+		self.a = app
 		self.copiedTree = None
 		self.tnodesDict = {}
 	#@-node:leoFileCommands._init_
@@ -321,7 +321,7 @@ class baseFileCommands:
 	#@+node:getFindPanelSettings
 	def getFindPanelSettings (self):
 	
-		c = self.commands ; config = app().config ; findFrame = app().findFrame
+		c = self.commands ; config = app.config ; findFrame = app.findFrame
 		#@	<< Set defaults of all flags >>
 		#@+node:<< Set defaults of all flags >>
 		for var in findFrame.intKeys:
@@ -360,7 +360,7 @@ class baseFileCommands:
 		# Override .leo file's preferences if settings are in leoConfig.txt.
 		config.setCommandsFindIvars(c)
 		# Update the settings immediately.
-		app().findFrame.init(c)
+		app.findFrame.init(c)
 	#@nonl
 	#@-node:getFindPanelSettings
 	#@+node:getGlobals (changed for 4.0)
@@ -537,7 +537,7 @@ class baseFileCommands:
 	#@+node:getPrefs
 	def getPrefs (self):
 	
-		a = app() ; c = self.commands ; config = a.config
+		c = self.commands ; config = app.config
 		
 		if self.getOpenTag("<preferences"):
 			return
@@ -571,7 +571,7 @@ class baseFileCommands:
 				
 				language = "c" # default
 				
-				for name in a.language_delims_dict.keys():
+				for name in app.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
 						s = string.lower(name)
 						language = string.replace(name,"/","")
@@ -813,11 +813,11 @@ class baseFileCommands:
 	
 	def getXmlVersionTag (self):
 		
-		a = app() ; config = a.config
+		config = app.config
 	
-		self.getTag(a.prolog_prefix_string)
+		self.getTag(app.prolog_prefix_string)
 		encoding = self.getDqString()
-		self.getTag(a.prolog_postfix_string)
+		self.getTag(app.prolog_postfix_string)
 	
 		if isValidEncoding(encoding):
 			self.leo_file_encoding = encoding
@@ -1129,7 +1129,7 @@ class baseFileCommands:
 	#@+node:putFindSettings
 	def putFindSettings (self):
 	
-		c = self.commands ; config = app().config
+		c = self.commands ; config = app.config
 	
 		self.put("<find_panel_settings")
 		
@@ -1262,7 +1262,7 @@ class baseFileCommands:
 	#@+node:putPrefs
 	def putPrefs (self):
 	
-		c = self.commands ; config = app().config
+		c = self.commands ; config = app.config
 	
 		self.put("<preferences")
 		self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
@@ -1312,14 +1312,14 @@ class baseFileCommands:
 	#@+node:putProlog
 	def putProlog (self):
 	
-		a = app() ; c = self.commands ; config = a.config
+		c = self.commands ; config = app.config
 	
 		#@	<< Put the <?xml...?> line >>
 		#@+node:<< Put the <?xml...?> line >>
 		# 1/22/03: use self.leo_file_encoding encoding.
-		self.put(a.prolog_prefix_string)
+		self.put(app.prolog_prefix_string)
 		self.put_dquote() ; self.put(self.leo_file_encoding) ; self.put_dquote()
-		self.put(a.prolog_postfix_string) ; self.put_nl()
+		self.put(app.prolog_postfix_string) ; self.put_nl()
 		#@nonl
 		#@-node:<< Put the <?xml...?> line >>
 		#@nl
@@ -1510,7 +1510,7 @@ class baseFileCommands:
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))
-				if app().config.save_clears_undo_buffer:
+				if app.config.save_clears_undo_buffer:
 					es("clearing undo")
 					c.undoer.clearUndoState()
 			c.endUpdate()
@@ -1564,7 +1564,7 @@ class baseFileCommands:
 	#@+node:write_LEO_file
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
-		c=self.commands ; config = app().config
+		c=self.commands ; config = app.config
 	
 		if not outlineOnlyFlag:
 			try:
@@ -1586,7 +1586,7 @@ class baseFileCommands:
 			# rename fileName to fileName.bak if fileName exists.
 			if os.path.exists(fileName):
 				try:
-					backupName = os.path.join(app().loadDir,fileName)
+					backupName = os.path.join(app.loadDir,fileName)
 					backupName = fileName + ".bak"
 					if os.path.exists(backupName):
 						os.unlink(backupName)

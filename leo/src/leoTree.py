@@ -331,7 +331,7 @@ class baseLeoTree:
 		self.redrawScheduled = false # 7/10/03: Always do this here.
 	
 		frame = self.commands.frame
-		if frame not in app().windowList or app().quitting:
+		if frame not in app.windowList or app.quitting:
 			# trace("no frame")
 			return
 			
@@ -579,7 +579,7 @@ class baseLeoTree:
 	# Called by ctor and when config params are reloaded.
 	def setFontFromConfig (self):
 	
-		font = app().config.getFontFromParams(
+		font = app.config.getFontFromParams(
 			"headline_text_font_family", "headline_text_font_size",
 			"headline_text_font_slant",  "headline_text_font_weight")
 	
@@ -594,7 +594,7 @@ class baseLeoTree:
 			return self.iconimages[name]
 			
 		try:
-			fullname = os.path.join(app().loadDir,"..","Icons",name)
+			fullname = os.path.join(app.loadDir,"..","Icons",name)
 			fullname = os.path.normpath(fullname)
 			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
@@ -918,7 +918,7 @@ class baseLeoTree:
 					# For Python: increase auto-indent after colons.
 					if self.colorizer.scanColorDirectives(v) == "python":
 						width += abs(c.tab_width)
-				if app().config.getBoolWindowPref("smart_auto_indent"):
+				if app.config.getBoolWindowPref("smart_auto_indent"):
 					# Added Nov 18 by David McNab, david@rebirthing.co.nz
 					# Determine if prev line has unclosed parens/brackets/braces
 					brackets = [width]
@@ -1155,7 +1155,7 @@ class baseLeoTree:
 			self.dragging = true
 			self.controlDrag = c.frame.controlKeyIsDown
 			# 1/29/03: support this new option.
-			flag = app().config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
+			flag = app.config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
 			if flag:
 				if self.controlDrag:
 					es("dragged node will be cloned")
@@ -1194,7 +1194,7 @@ class baseLeoTree:
 			#@-node:<< set vdrag, childFlag >>
 			#@nl
 			# 1/29/03: support for this new option.
-			flag = app().config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
+			flag = app.config.getBoolWindowPref("look_for_control_drag_on_mouse_down")
 			if not flag:
 				self.controlDrag = c.frame.controlKeyIsDown
 			if vdrag and vdrag != v:
@@ -1267,7 +1267,7 @@ class baseLeoTree:
 		#@	<< set s to the widget text >>
 		#@+node:<< set s to the widget text >>
 		s = v.edit_text().get("1.0","end")
-		s = toUnicode(s,app().tkEncoding) # 2/25/03
+		s = toUnicode(s,app.tkEncoding) # 2/25/03
 		if not s:
 			s = u""
 		s = s.replace('\n','')
@@ -1455,7 +1455,7 @@ class baseLeoTree:
 				try:
 					import os
 					import webbrowser
-					os.chdir(app().loadDir)
+					os.chdir(app.loadDir)
 					# print "url:",url
 					webbrowser.open(url)
 				except:
@@ -1512,18 +1512,18 @@ class baseLeoTree:
 	#@+node:createPopupMenu
 	def createPopupMenu (self,v,event):
 		
-		a = app() ; c = self.commands ; frame = c.frame
+		c = self.commands ; frame = c.frame
 		
 		# If we are going to recreate it, we had better destroy it.
 		if self.popupMenu:
 			self.popupMenu.destroy()
 			self.popupMenu = None
 		
-		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
+		self.popupMenu = menu = Tkinter.Menu(app.root, tearoff=0)
 		
 		# Add the Open With entries if they exist.
-		if a.openWithTable:
-			frame.createMenuEntries(menu,a.openWithTable,openWith=1)
+		if app.openWithTable:
+			frame.createMenuEntries(menu,app.openWithTable,openWith=1)
 			table = (("-",None,None),)
 			frame.createMenuEntries(menu,table)
 			
@@ -1966,7 +1966,7 @@ class baseLeoTree:
 			# trace(v)
 			#@		<< set editing headline colors >>
 			#@+node:<< set editing headline colors >>
-			config = app().config
+			config = app.config
 			fg   = config.getWindowPref("headline_text_editing_foreground_color")
 			bg   = config.getWindowPref("headline_text_editing_background_color")
 			selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
@@ -1997,7 +1997,7 @@ class baseLeoTree:
 			# trace(v)
 			#@		<< set selected, disabled headline colors >>
 			#@+node:<< set selected, disabled headline colors >>
-			config = app().config
+			config = app.config
 			fg = config.getWindowPref("headline_text_selected_foreground_color")
 			bg = config.getWindowPref("headline_text_selected_background_color")
 			
@@ -2021,7 +2021,7 @@ class baseLeoTree:
 			# trace(v)
 			#@		<< set unselected headline colors >>
 			#@+node:<< set unselected headline colors >>
-			config = app().config
+			config = app.config
 			fg = config.getWindowPref("headline_text_unselected_foreground_color")
 			bg = config.getWindowPref("headline_text_unselected_background_color")
 			

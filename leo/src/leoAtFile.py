@@ -117,7 +117,7 @@ class baseAtFile:
 		self.errors = 0
 	
 		# Set by scanHeader when reading. Set by scanAllDirectives...
-		self.encoding = app().config.default_derived_file_encoding
+		self.encoding = app.config.default_derived_file_encoding
 		self.endSentinelComment = None
 		self.startSentinelComment = None
 	#@nonl
@@ -514,7 +514,7 @@ class baseAtFile:
 		#@	<< read optional encoding param >>
 		#@+node:<< read optional encoding param >>
 		# Set the default encoding
-		at.encoding = app().config.default_derived_file_encoding
+		at.encoding = app.config.default_derived_file_encoding
 		
 		if match(s,i,encoding_tag):
 			# Read optional encoding param, e.g., -encoding=utf-8,
@@ -567,7 +567,7 @@ class baseAtFile:
 		"""Write @file nodes in all or part of the outline"""
 	
 		at = self ; c = at.commands
-		write_new = not app().config.write_old_format_derived_files
+		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
 		writtenFiles = [] # Files that might be written again.
@@ -648,7 +648,7 @@ class baseAtFile:
 	def rawWrite (self,v):
 		
 		at = self
-		write_new = not app().config.write_old_format_derived_files
+		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		try: df.rawWrite(v)
 		except: at.writeException(v)
@@ -662,7 +662,7 @@ class baseAtFile:
 	def write (self,v,nosentinels=false):
 		
 		at = self
-		write_new = not app().config.write_old_format_derived_files
+		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		try: df.write(v,nosentinels)
 		except: at.writeException(v)
@@ -683,7 +683,7 @@ class baseAtFile:
 		
 	def writeDerivedFiles (self,v,write_old):
 		
-		a = app() ; config = a.config
+		config = app.config
 		old = config.write_old_format_derived_files
 		config.write_old_format_derived_files = write_old
 		self.writeAll(writeAtFileNodesFlag=true)
@@ -696,7 +696,7 @@ class baseAtFile:
 		trace("old_df",v)
 	
 		at = self
-		write_new = not app().config.write_old_format_derived_files
+		write_new = not app.config.write_old_format_derived_files
 		df = choose(write_new,at.new_df,at.old_df)
 		df.initIvars()
 		writtenFiles = false
@@ -861,7 +861,7 @@ class baseOldDerivedFile:
 		self.trace = false
 		
 		# The encoding used to convert from unicode to a byte stream.
-		self.encoding = app().config.default_derived_file_encoding
+		self.encoding = app.config.default_derived_file_encoding
 		
 		# For interface between 3.x and 4.x read code.
 		self.file = None
@@ -1235,7 +1235,7 @@ class baseOldDerivedFile:
 	#@@c
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 	
-		a = app() ; c = self.commands ; config = a.config
+		c = self.commands ; config = app.config
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		while 1:
@@ -1377,7 +1377,7 @@ class baseOldDerivedFile:
 				# This must be done here, not in the @+node logic.
 				body = string.join(child_out, "")
 				body = body.replace('\r', '')
-				body = toUnicode(body,app().tkEncoding) # 9/28/03
+				body = toUnicode(body,app.tkEncoding) # 9/28/03
 				
 				if self.importing:
 					child.t.bodyString = body
@@ -2046,7 +2046,7 @@ class baseOldDerivedFile:
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		self.language = c.target_language
 		
-		self.encoding = app().config.default_derived_file_encoding
+		self.encoding = app.config.default_derived_file_encoding
 		self.output_newline = getOutputNewline() # 4/24/03: initialize from config settings.
 		#@nonl
 		#@-node:<< Set ivars >>
@@ -2085,7 +2085,7 @@ class baseOldDerivedFile:
 			#@+node:<< Test for @path >>
 			# We set the current director to a path so future writes will go to that directory.
 			
-			loadDir = app().loadDir
+			loadDir = app.loadDir
 			
 			if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 			
@@ -2310,7 +2310,7 @@ class baseOldDerivedFile:
 			self.putOpenLeoSentinel("@+leo")
 			#@<< put optional @comment sentinel lines >>
 			#@+node:<< put optional @comment sentinel lines >>
-			s2 = app().config.output_initial_comment
+			s2 = app.config.output_initial_comment
 			if s2:
 				lines = string.split(s2,"\\n")
 				for line in lines:
@@ -2672,7 +2672,7 @@ class baseOldDerivedFile:
 	#@+node:atFile.putInitialComment
 	def putInitialComment (self):
 		
-		s2 = app().config.output_initial_comment
+		s2 = app.config.output_initial_comment
 		if s2:
 			lines = string.split(s2,"\\n")
 			for line in lines:
@@ -3390,7 +3390,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	
 		# For 4.x reading & writing...
 		at.inCode = true
-		## at.nodeIndices = app().nodeIndices
+		## at.nodeIndices = app.nodeIndices
 	
 		# For 4.x writing...
 		at.docKind = None
@@ -3764,7 +3764,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		# Set the temporary body text.
 		s = ''.join(at.out)
-		s = toUnicode(s,app().tkEncoding) # 9/28/03
+		s = toUnicode(s,app.tkEncoding) # 9/28/03
 	
 		if at.importing:
 			at.t.bodyString = s
@@ -4457,7 +4457,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.putOpenLeoSentinel("@+leo-ver=4") # 9/26/03: after beta 1 release.
 			#@<< put optional @comment sentinel lines >>
 			#@+node:<< put optional @comment sentinel lines >>
-			s2 = app().config.output_initial_comment
+			s2 = app.config.output_initial_comment
 			if s2:
 				lines = string.split(s2,"\\n")
 				for line in lines:

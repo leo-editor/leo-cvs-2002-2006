@@ -5,7 +5,7 @@
 
 """A module containing all of Leo's default gui code.
 
-Plugins may define their own gui classes by setting app().gui."""
+Plugins may define their own gui classes by setting app.gui."""
 
 from leoGlobals import *
 import leoFind
@@ -217,7 +217,7 @@ class tkinterGui(leoGui):
 		root.withdraw()
 		
 		self.setDefaultIcon()
-		self.getDefaultConfigFont(app().config)
+		self.getDefaultConfigFont(app.config)
 		self.setEncoding()
 		self.createGlobalWindows()
 	
@@ -237,7 +237,7 @@ class tkinterGui(leoGui):
 			version = gui.root.getvar("tk_patchLevel")
 			if CheckVersion(version,"8.3.4"):
 				# tk 8.3.4 or greater: load a 16 by 16 icon.
-				bitmap_name = os.path.join(app().loadDir,"..","Icons","LeoApp16.ico")
+				bitmap_name = os.path.join(app.loadDir,"..","Icons","LeoApp16.ico")
 				self.bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception setting bitmap"
@@ -254,24 +254,22 @@ class tkinterGui(leoGui):
 	#@@c
 	
 	def setEncoding (self):
-		
-		a = app()
 	
 		for (encoding,src) in (
-			(a.config.tkEncoding,"config"),
+			(app.config.tkEncoding,"config"),
 			#(locale.getdefaultlocale()[1],"locale"),
 			(getpreferredencoding(),"locale"),
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
 			if isValidEncoding (encoding): # 3/22/03
-				a.tkEncoding = encoding
-				# trace(a.tkEncoding,src)
+				app.tkEncoding = encoding
+				# trace(app.tkEncoding,src)
 				break
 			elif encoding and len(encoding) > 0:
 				trace("ignoring invalid " + src + " encoding: " + `encoding`)
 				
-		# trace(a.tkEncoding)
+		# trace(app.tkEncoding)
 	#@nonl
 	#@-node:setEncoding
 	#@+node:getDefaultConfigFont
@@ -291,10 +289,9 @@ class tkinterGui(leoGui):
 		
 		"""Create the global windows for the application."""
 	
-		a = app()
-		a.findFrame = leoFind.leoFind()
-		a.findFrame.top.withdraw()
-		a.globalWindows.append(a.findFrame)
+		app.findFrame = leoFind.leoFind()
+		app.findFrame.top.withdraw()
+		app.globalWindows.append(app.findFrame)
 	#@nonl
 	#@-node:createGlobalWindows
 	#@+node:destroy
@@ -457,7 +454,7 @@ class tkinterGui(leoGui):
 				w.bind("<Visibility>",visibilityCallback)
 				if not self.leoIcon:
 					# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-					icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
+					icon_file_name = os.path.join(app.loadDir,'..','Icons','LeoWin.gif')
 					icon_file_name = os.path.normpath(icon_file_name)
 					icon_image = Image.open(icon_file_name)
 					if 1: # Doesn't resize.

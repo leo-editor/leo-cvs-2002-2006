@@ -237,7 +237,7 @@ class baseTnode:
 	
 	def __init__ (self,index=0,bodyString=None,headString=None):
 	
-		a = app()
+		a = app
 		self.statusBits = 0 # status bits
 		self.selectionStart = 0 # The start of the selected body text.
 		self.selectionLength = 0 # The length of the selected body text.
@@ -249,8 +249,8 @@ class baseTnode:
 		# New in 3.12
 		self.joinList = [] # vnodes on the same joinlist are updated together.
 		
-		self.headString = toUnicode(headString,app().tkEncoding) # 9/28/03
-		self.bodyString = toUnicode(bodyString,app().tkEncoding) # 9/28/03
+		self.headString = toUnicode(headString,app.tkEncoding) # 9/28/03
+		self.bodyString = toUnicode(bodyString,app.tkEncoding) # 9/28/03
 	#@nonl
 	#@-node:t.__init__
 	#@+node:hasBody
@@ -392,7 +392,7 @@ class baseVnode:
 	#@+node:v.__init__
 	def __init__ (self,commands,t):
 	
-		a = app()
+		a = app
 		assert(t)
 		
 		# commands may be None for testing.
@@ -934,7 +934,7 @@ class baseVnode:
 			print s ; es(s,color="red")
 	
 		# Make _sure_ we return a unicode string.
-		return toUnicode(self.t.bodyString,app().tkEncoding)
+		return toUnicode(self.t.bodyString,app.tkEncoding)
 	#@nonl
 	#@-node:bodyString
 	#@+node:currentVnode (vnode)
@@ -969,7 +969,7 @@ class baseVnode:
 			print s ; es(s,color="red")
 			
 		# Make _sure_ we return a unicode string.
-		return toUnicode(self.t.headString,app().tkEncoding)
+		return toUnicode(self.t.headString,app.tkEncoding)
 	
 	def cleanHeadString (self):
 		
@@ -2120,8 +2120,8 @@ class nodeIndices:
 		
 		"""ctor for nodeIndices class"""
 		
-		self.userId = app().leoID # 5/1/03: This never changes.
-		self.defaultId = app().leoID # This probably will change.
+		self.userId = app.leoID # 5/1/03: This never changes.
+		self.defaultId = app.leoID # This probably will change.
 		self.lastIndex = None
 		self.timeString = None
 	#@nonl
