@@ -119,12 +119,13 @@ def es(s):
 	log = app().log
 	if log:
 		log.put(s)
+		# 6/2/02: This logic will fail if log is None.
+		for ch in s:
+			if ch == '\n': log.es_newlines += 1
+			else: log.es_newlines = 0
+		ecnl() # only valid here
 	else:
 		print "Null log:", s
-	for ch in s:
-		if ch == '\n': log.es_newlines += 1
-		else: log.es_newlines = 0
-	ecnl() # only valid here
 
 #@-body
 #@-node:5::es, enl, ecnl
@@ -145,7 +146,6 @@ def top():
 #@-body
 #@-node:7::top
 #@-others
-
 #@-body
 #@-node:0::@file leoGlobals.py
 #@-leo

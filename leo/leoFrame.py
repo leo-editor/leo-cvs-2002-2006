@@ -32,6 +32,8 @@ class LeoFrame:
 			if n > 0: title += `n`
 			app().numberOfWindows = n+1
 			self.mFileName = ""
+			
+		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
 		
 		self.title=title # Title of window, not including dirty mark
 		self.saved=false # True if ever saved
@@ -70,7 +72,7 @@ class LeoFrame:
 		top.minsize(30,10) # This doesn't work as I expect.
 		g = "+%d%+d" % (30, 30)
 		top.geometry(g)
-		# self.top.SetIcon("LeoIcon")
+		
 		
 		#@<< create the Leo frame >>
 		#@+node:2::<< create the Leo frame >>
@@ -303,25 +305,26 @@ class LeoFrame:
 		importMenu = Tk.Menu(fileMenu,tearoff=0)
 		fileMenu.add_cascade(label="Import/Export...", menu=importMenu)
 		
-		importMenu.add_command(label="Import Files",accelerator="Shift+Ctrl+F",
-			command=self.OnImportFiles,state="disabled") # not tested yet.
+		importMenu.add_command(label="Import To @file",accelerator="Shift+Ctrl+F",
+			command=self.OnImportAtFile)
+		importMenu.add_command(label="Import To @root",
+			command=self.OnImportAtRoot)
 		importMenu.add_command(label="Import CWEB Files",
-			command=self.OnImportCWEBFiles,state="disabled") # not tested yet.
+			command=self.OnImportCWEBFiles)
 		importMenu.add_command(label="Import noweb Files",
-			command=self.OnImportNowebFiles,state="disabled") # never has worked.
-		importMenu.add_command(label="Import MORE Text",
-			command=self.OnImportMoreText,state="disabled") # not tested yet.
+			command=self.OnImportNowebFiles)
+		importMenu.add_command(label="Import Flattened Outline",
+			command=self.OnImportFlattenedOutline)
 		importMenu.add_separator()
 		
-		importMenu.add_command(label="OutlineToCWEB",
-			command=self.OnOutlineToCWEB,state="disabled") # never has worked.
-		importMenu.add_command(label="OutlineToNoweb",
-			command=self.OnOutlineToNoweb,state="disabled") # never has worked.
-			
-		importMenu.add_command(label="Export MORE Text",
-			command=self.OnExportMoreText,state="disabled") # not tested yet.
+		importMenu.add_command(label="Outline To CWEB",
+			command=self.OnOutlineToCWEB)
+		importMenu.add_command(label="Outline To Noweb",
+			command=self.OnOutlineToNoweb)
 		importMenu.add_command(label="Flatten Outline",
-			command=self.OnFlattenOutline,state="disabled") # not tested yet.
+			command=self.OnFlattenOutline)
+		importMenu.add_command(label="Remove Sentinels",
+			command=self.OnRemoveSentinels)
 		#@-body
 		#@-node:5::<< create the import submenu >>
 
@@ -669,7 +672,7 @@ class LeoFrame:
 			("C", self.OnCopyNode),
 			("D", self.OnExtract),
 			("E", self.OnExtractSection),
-			("F", self.OnImportFiles),
+			("F", self.OnImportAtFile),
 			("G", self.OnFindPrevious),
 			# H unused
 			# I reserved
@@ -1320,8 +1323,6 @@ class LeoFrame:
 		if answer=="ok":
 			c.fileCommands.readAtFileNodes()
 			c.undoer.clearUndoState()
-		else:
-			es("Read @file Nodes cancelled")
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -1402,139 +1403,230 @@ class LeoFrame:
 	#@-node:3::OnUntangle
 	#@-node:4::Untangle submenu
 	#@+node:5:C=18:Import&Export submenu
-	#@+node:1::OnExportMoreText
-	#@+body
-	def OnExportMoreText (self,event=None):
-		
-		self.notYet("Export More Text")
-		return "break" # inhibit further command processing
-	
-		c = self.commands
-		self.commands.importCommands.exportMoreText()
-		c.undoer.clearUndoState()
-		return "break" # inhibit further command processing
-	#@-body
-	#@-node:1::OnExportMoreText
-	#@+node:2::OnFlattenOutline
+	#@+node:1::OnFlattenOutline
 	#@+body
 	def OnFlattenOutline (self,event=None):
 		
-		self.notYet("Flatten Outline")
-		return "break" # inhibit further command processing
+		filetypes = [("Text files", "*.txt"),("All files", "*")]
 	
 		fileName = tkFileDialog.asksaveasfilename(
-			title="Flatten Outline",
-			filetypes=[("Text files", "*.txt"),("All files", "*")],
-			initialfile="flat.txt",
-			defaultextension="txt")
+			title="Flatten Outline",filetypes=filetypes,
+			initialfile="flat.txt",defaultextension="txt")
 	
 		if fileName and len(fileName) > 0:
 			c = self.commands
-			self.commands.importCommands.flattenOutline(fileName)
-			c.undoer.clearUndoState()
+			c.importCommands.flattenOutline(fileName)
 	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:2::OnFlattenOutline
-	#@+node:3::OnImportCWEBFiles
+	#@-node:1::OnFlattenOutline
+	#@+node:2::OnImportAtFile
 	#@+body
-	def OnImportCWEBFiles (self,event=None):
-		
-		self.notYet("Import CWEB Files")
-		return "break" # inhibit further command processing
-		
-		fileName = tkFileDialog.askopenfilename(
-			title="Import CWEB Files",
-			filetypes=[("Leo files", "*.leo"), ("All files", "*")],
-			defaultextension="leo")
-			
-		if fileName and len(fileName) > 0:
-			c = self.commands
-			paths = [fileName] # alas, askopenfilename returns only a single name.
-			self.commands.importCommands.CWEBToOutlineCommand(paths)
-			c.undoer.clearUndoState()
-		
-		return "break" # inhibit further command processing
-	#@-body
-	#@-node:3::OnImportCWEBFiles
-	#@+node:4::OnImportFiles
-	#@+body
-	def OnImportFiles (self,event=None):
-		
-		self.notYet("Import Files")
-		return "break" # inhibit further command processing
+	def OnImportAtFile (self,event=None):
 		
 		types = [
-			("Python files","*.py"),
+			("All files","*"),
 			("C/C++ files","*.c"),
 			("C/C++ files","*.cpp"),
 			("C/C++ files","*.h"),
 			("C/C++ files","*.hpp"),
 			("Java files","*.java"),
 			("Pascal files","*.pas"),
-			("All files","*") ]
+			("Python files","*.py") ]
 	
-		fileName = tkFileDialog.askopenfilename(
-			title="Import Files",
-			filetypes=types,
-			defaultextension="py")
-			
-		if fileName and len(fileName) > 0:
-			c = self.commands
-			paths = [fileName] # alas, askopenfilename returns only a single name.
-			self.commands.importCommands.ImportFilesCommand(paths)
-			c.undoer.clearUndoState()
-			
+		d = leoDialog.leoDialog()
+		answer = d.askOkCancel("Proceed?",
+			"Import to @file is not undoable." +
+			"\nProceed?")
+	
+		if answer=="ok":
+			fileName = tkFileDialog.askopenfilename(
+				title="Import To @file",filetypes=types)
+			if fileName and len(fileName) > 0:
+				c = self.commands
+				paths = [fileName] # alas, askopenfilename returns only a single name.
+				c.importCommands.importFilesCommand (paths,"@file")
+				c.undoer.clearUndoState()
+	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:4::OnImportFiles
-	#@+node:5::OnImportMoreText
+	#@-node:2::OnImportAtFile
+	#@+node:3::OnImportAtRoot
 	#@+body
-	def OnImportMoreText (self,event=None):
+	def OnImportAtRoot (self,event=None):
 		
-		self.notYet("Import MORE Text")
+		types = [
+			("All files","*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+			
+		d = leoDialog.leoDialog()
+		answer = d.askOkCancel("Proceed?",
+			"Import to @root is not undoable." +
+			"\nProceed?")
+	
+		if answer=="ok":
+			fileName = tkFileDialog.askopenfilename(
+				title="Import To @root",filetypes=types)
+			if fileName and len(fileName) > 0:
+				c = self.commands
+				paths = [fileName] # alas, askopenfilename returns only a single name.
+				c.importCommands.importFilesCommand (paths,"@root")
+				c.undoer.clearUndoState()
+	
 		return "break" # inhibit further command processing
+	#@-body
+	#@-node:3::OnImportAtRoot
+	#@+node:4::OnImportCWEBFiles
+	#@+body
+	def OnImportCWEBFiles (self,event=None):
+		
+		filetypes = [
+			("CWEB files", "*.w"),
+			("Text files", "*.txt"),
+			("All files", "*")]
+			
+		d = leoDialog.leoDialog()
+		answer = d.askOkCancel("Proceed?",
+			"Import CWEB files is not undoable." +
+			"\nProceed?")
+		
+		if answer=="ok":
+			fileName = tkFileDialog.askopenfilename(
+				title="Import CWEB Files",filetypes=filetypes,
+				defaultextension="w")
+			if fileName and len(fileName) > 0:
+				c = self.commands
+				paths = [fileName] # alas, askopenfilename returns only a single name.
+				c.importCommands.importWebCommand(paths,"cweb")
+				c.undoer.clearUndoState()
+		
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:4::OnImportCWEBFiles
+	#@+node:5::OnImportFlattenedOutline
+	#@+body
+	def OnImportFlattenedOutline (self,event=None):
 		
 		types = [("Text files","*.txt"), ("All files","*")]
 		
-		fileName = tkFileDialog.askopenfilename(
-			title="Import MORE Text",
-			filetypes=types,
-			defaultextension="py")
-			
-		if fileName and len(fileName) > 0:
-			c = self.commands
-			paths = [fileName] # alas, askopenfilename returns only a single name.
-			self.commands.importCommands.importMoreText(paths)
-			c.undoer.clearUndoState()
+		d = leoDialog.leoDialog()
+		answer = d.askOkCancel("Proceed?",
+			"Import Flattened Outline is not undoable." +
+			"\nProceed?")
+		
+		if answer=="ok":
+			fileName = tkFileDialog.askopenfilename(
+				title="Import MORE Text",
+				filetypes=types,
+				defaultextension="py")
+			if fileName and len(fileName) > 0:
+				c = self.commands
+				paths = [fileName] # alas, askopenfilename returns only a single name.
+				c.importCommands.importFlattenedOutline(paths)
+				c.undoer.clearUndoState()
 			
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:5::OnImportMoreText
-	#@+node:6::OnImportNowebFiles (not yet)
+	#@-node:5::OnImportFlattenedOutline
+	#@+node:6::OnImportNowebFiles
 	#@+body
 	def OnImportNowebFiles (self,event=None):
-	
-		self.notYet("Import Noweb Files")
+		
+		filetypes = [
+			("Noweb files", "*.nw"),
+			("Text files", "*.txt"),
+			("All files", "*")]
+			
+		d = leoDialog.leoDialog()
+		answer = d.askOkCancel("Proceed?",
+			"Import Noweb files is not undoable." +
+			"\nProceed?")
+		
+		if answer=="ok":
+			fileName = tkFileDialog.askopenfilename(
+				title="Import Noweb Files",filetypes=filetypes,
+				defaultextension="nw")
+			if fileName and len(fileName) > 0:
+				c = self.commands
+				paths = [fileName] # alas, askopenfilename returns only a single name.
+				c.importCommands.importWebCommand(paths,"noweb")
+				c.undoer.clearUndoState()
+		
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:6::OnImportNowebFiles (not yet)
-	#@+node:7::OnOutlineToCWEB (not yet)
+	#@-node:6::OnImportNowebFiles
+	#@+node:7::OnOutlineToCWEB
 	#@+body
 	def OnOutlineToCWEB (self,event=None):
+		
+		filetypes=[
+			("CWEB files", "*.w"),
+			("Text files", "*.txt"),
+			("All files", "*")]
 	
-		self.notYet("Outline To CWEB")
+		fileName = tkFileDialog.asksaveasfilename(
+			title="Outline To CWEB",filetypes=filetypes,
+			initialfile="cweb.w",defaultextension="w")
+	
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			c.importCommands.outlineToWeb(fileName,"cweb")
+	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:7::OnOutlineToCWEB (not yet)
-	#@+node:8::OnOutlineToNoweb  (not yet)
+	#@-node:7::OnOutlineToCWEB
+	#@+node:8::OnOutlineToNoweb
 	#@+body
 	def OnOutlineToNoweb (self,event=None):
+		
+		filetypes=[
+			("Noweb files", "*.nw"),
+			("Text files", "*.txt"),
+			("All files", "*")]
 	
-		self.notYet("Outline To Noweb")
+		fileName = tkFileDialog.asksaveasfilename(
+			title="Outline To Noweb",filetypes=filetypes,
+			initialfile=self.outlineToNowebDefaultFileName,defaultextension="nw")
+	
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			c.importCommands.outlineToWeb(fileName,"noweb")
+			self.outlineToNowebDefaultFileName = fileName
+	
 		return "break" # inhibit further command processing
 	#@-body
-	#@-node:8::OnOutlineToNoweb  (not yet)
+	#@-node:8::OnOutlineToNoweb
+	#@+node:9::OnRemoveSentinels
+	#@+body
+	def OnRemoveSentinels (self,event=None):
+		
+		types = [
+			("All files","*"),
+			("C/C++ files","*.c"),
+			("C/C++ files","*.cpp"),
+			("C/C++ files","*.h"),
+			("C/C++ files","*.hpp"),
+			("Java files","*.java"),
+			("Pascal files","*.pas"),
+			("Python files","*.py") ]
+			
+		fileName = tkFileDialog.askopenfilename(
+			title="Remove Sentinels",filetypes=types)
+	
+		if fileName and len(fileName) > 0:
+			c = self.commands
+			# alas, askopenfilename returns only a single name.
+			c.importCommands.removeSentinelsCommand (fileName)
+	
+		return "break" # inhibit further command processing
+	#@-body
+	#@-node:9::OnRemoveSentinels
 	#@-node:5:C=18:Import&Export submenu
 	#@-node:1::File Menu (Unfinished: Page Setup, Print, Import...)
 	#@+node:2::Edit Menu (change to handle log pane too)
@@ -2263,7 +2355,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 2.0, March 4, 2002\n\n" +
+			"Version 2.2, June 2, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -2310,7 +2402,7 @@ class LeoFrame:
 	
 		if verticalFlag:
 			# Panes arranged vertically; horizontal splitter bar
-			bar = Tk.Frame(f,height=7,bd=2,relief="raised",bg="LightSteelBlue2")
+			bar = Tk.Frame(f,height=7,bd=2,relief="raised",bg="LightSteelBlue2",cursor="sb_v_double_arrow")
 	
 			pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
 			pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
@@ -2321,7 +2413,7 @@ class LeoFrame:
 			bar.bind("<ButtonRelease-1>", self.onDropVSplitBar)
 		else:
 			# Panes arranged horizontally; vertical splitter bar
-			bar = Tk.Frame(f,width=7,bd=2,relief="raised",bg="LightSteelBlue2")
+			bar = Tk.Frame(f,width=7,bd=2,relief="raised",bg="LightSteelBlue2",cursor="sb_h_double_arrow")
 			
 			f = 0.65 # give tree pane more room
 			pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=f)
@@ -2420,7 +2512,6 @@ class LeoFrame:
 	#@-node:5::onDropSplitterBar, onDropHSplitBar, onDropVSplitBar
 	#@-node:14::Splitter stuff
 	#@-others
-
 #@-body
 #@-node:0::@file leoFrame.py
 #@-leo

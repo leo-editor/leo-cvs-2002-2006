@@ -2,69 +2,39 @@
 
 #@+node:0::@file leoFind.py
 #@+body
-
 #@<< Theory of operation >>
 #@+node:1:C=1:<< Theory of operation >>
 #@+body
 #@+at
-#  The find command is surprisingly tricky; there are many details that must be handled properly.  This documentation states some 
-# important design principles and discusses some code details.
+#  The find and change commands are tricky; there are many details that must be handled properly. This documentation describes the 
+# leo.py code. Previous versions of Leo used an inferior scheme.  The following principles govern the LeoFind class:
 # 
+# 1.	Find and Change commands initialize themselves using only the state of the present Leo window. In particular, the Find class 
+# must not save internal state information from one invocation to the next. This means that when the user changes the nodes, or 
+# selects new text in headline or body text, those changes will affect the next invocation of any Find or Change command. Failure 
+# to follow this principle caused all kinds of problems in the Borland and Macintosh codes. There is one exception to this rule: 
+# we must remember where interactive wrapped searches start. This principle simplifies the code because most ivars do not persist. 
+# However, each command must ensure that the Leo window is left in a state suitable for restarting the incremental (interactive) 
+# Find and Change commands. Details of initialization are discussed below.
 # 
-# Design Principles:
+# 2. The Find and Change commands must not change the state of the outline or body pane during execution. That would cause severe 
+# flashing and slow down the commands a great deal. In particular, c.selectVnode and c.editVnode methods must not be called while 
+# looking for matches.
 # 
-# The following principles influence all aspects of the Find class:
+# 3. When incremental Find or Change commands succeed they must leave the Leo window in the proper state to execute another 
+# incremental command. We restore the Leo window as it was on entry whenever an incremental search fails and after any Find All 
+# and Change All command.
 # 
-# 1. Find and Change commands initialize themselves using only the state of the present Leo window. In particular, the Find class 
-# must not save internal state inforamtion from one invocation to the next.  This means that when the user changes the nodes, or 
-# selects new text in headline or body text, those changes will affect the next invocation of any Find or Change command.  Failure 
-# to follow this cardinal principle caused all kinds of problems in the Borland and Macintosh code.
+# Initialization involves setting the self.c, self.v, self.in_headline, self.wrapping and self.s_text ivars. Setting 
+# self.in_headline is tricky; we must be sure to retain the state of the outline pane until initialization is complete. 
+# Initializing the Find All and Change All commands is much easier because such initialization does not depend on the state of the 
+# Leo window.
 # 
-# This principle simplifies the code somewhat because ivars do not persist.  OTOH, each command must ensure that the Leo window is 
-# left in a state suitable for restarting the incremental(interactive) Find and Change commands.  Initialization is by far the 
-# most tricky aspect of the Find class.  Details are discussed below in the "About Initialization" section.
-# 
-# There is one exception to this rule. We must remember where interactive wrapped searches start. We clear self.wrapVnode when the 
-# Find panel changes.  Interactive searches set and clear these persistent ivars as needed.
-# 
-# 2. Commands must not change the state of the outline or body pane during execution: that would cause severe flashing and slow 
-# down the commands a great deal.  In particular, c.selectVnode() and c.editVnode() must not be called while looking for matches.  
-# This has several important consequences, discussed below in the About Searching section.
-# 
-# 3.  The Find All and Change All commands always restore the Leo window to its state on entry.  Incremental commands restore the 
-# Leo window to its state on entry if no match is found.  The save and restore routines do this.
-# 
-# About Initialization
-# 
-# The setup_commands() and setup_buttons() methods perform common initialization for menu commands and Find panel buttons 
-# respectively.  The initBatchCommands(), initInteractiveCommands() and initInHeadline() methods handle details of 
-# initialization.  Initialization involves setting the self.c, self.v, self.in_headline, self.wrapping and self.s_text ivars.  
-# Setting self.in_headline is tricky: we must be sure to retain the state of the outline pane until initialization is complete.  
-# Initializing the Find All and Change All commands is much easier than initializing incremental Find or Change commands because 
-# such initialization does not depend greatly on the state of the Leo window.
-# 
-# About Searching
-# 
-# Using Tk.Text widgets for both headlines and body text results in a _huge_ simplification of the code.  The actual searching 
-# takes place in the search() method.  search() must not assume that c.currentVnode() is the current node to be searched.  
-# Instead, search() assumes that:
-# 
-# 1. self.s_text is a Tk.Text widget that contains the text to be searched or changed.
-# 2. The "insert" and "sel" attributes of self.search_text indicate the range of text to be searched.
-# 
-# The selectNextVnode() method handles the many details of selecting the next node to be searched.  selectNextVnode() and its 
-# allies set self.s_text, including its "insert" and "sel" attributes.
-# 
-# The actual searching is easy: search() just calls the Tk search_text.search() method.
-# 
-# About Finalization
-# 
-# When incremental Find or Change commands succeeed they must leave the Leo window in the proper state to execute another 
-# incremental command.  The showSuccess() method does this.  show_success() calls c.currentVnode() or c.editVnode and sets the 
-# insertion point and the range of selected text.
-# 
-# We restore the Leo window as it was on entry whenever an incremental search fails and after any Find All and Change All 
-# command.  The save() and restore() methods do this.
+# Using Tk.Text widgets for both headlines and body text results in a huge simplification of the code. Indeed, the searching code 
+# does not know whether it is searching headline or body text. The search code knows only that self.s_text is a Tk.Text widget 
+# that contains the text to be searched or changed and the insert and sel Tk attributes of self.search_text indicate the range of 
+# text to be searched. Searching headline and body text simultaneously is complicated. The selectNextVnode() method handles the 
+# many details involved by setting self.s_text and its insert and sel attributes.
 
 #@-at
 #@-body
@@ -983,7 +953,6 @@ class LeoFind:
 	#@-node:11::Initializing & finalizing & selecting
 	#@-node:8:C=6:Utilities
 	#@-others
-
 #@-body
 #@-node:0::@file leoFind.py
 #@-leo

@@ -473,7 +473,7 @@ class atFile:
 
 			old_bits |= bits
 			v = v.parent()
-		if c.frame and not self.default_directory:		# No path in @file headline and no @path directive.
+		if c.frame and not self.default_directory: # No path in @file headline and no @path directive.
 			
 			#@<< Set current directory >>
 			#@+node:6::<< Set current directory >>
@@ -1603,6 +1603,7 @@ class atFile:
 		self.os("\n")
 	
 	def os(self,s):
+		if s is None or len(s) == 0: return
 		if self.suppress_newlines and self.newline_pending:
 			self.newline_pending = false
 			s = "\n" + s
@@ -1940,7 +1941,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:6::putDoc
-	#@+node:7::putDocPart
+	#@+node:7:C=9:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2008,7 +2009,7 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:7::putDocPart
+	#@-node:7:C=9:putDocPart
 	#@+node:8::putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
@@ -2023,7 +2024,7 @@ class atFile:
 			self.oblanks(n)
 	#@-body
 	#@-node:8::putIndent
-	#@+node:9:C=9:atFile.write
+	#@+node:9:C=10:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file vnode. We set the orphan and dirty flags if there are 
@@ -2161,7 +2162,7 @@ class atFile:
 			#@-body
 			#@-node:4::<< Replace the target with the temp file if different >>
 	#@-body
-	#@-node:9:C=9:atFile.write
+	#@-node:9:C=10:atFile.write
 	#@+node:10::writeAll
 	#@+body
 	#@+at
@@ -2269,7 +2270,6 @@ class atFile:
 	#@-node:2::scanFile
 	#@-node:7::Testing
 	#@-others
-
 #@-body
 #@-node:0::@file leoAtFile.py
 #@-leo

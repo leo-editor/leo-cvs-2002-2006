@@ -5,394 +5,125 @@
 from leoGlobals import *
 from leoUtils import *
 
+# Synonyms
 indent_refs = true ; dont_indent_refs = false
 
 class leoImportCommands:
 
 	#@+others
-	#@+node:1::is... methods
-	#@+body
-	def isCodeStart(self,s,i):  return match(s,i,"@c") or match(s,i,"@p")
-	def isMacroStart(self,s,i): return match(s,i,"@d") or match(s,i,"@f")
-	def isTeXStart(self,s,i):   return match(s,i,"@ ") or match(s,i,"@*")
-	
-	def isModuleStart(self,s,i):
-		return self.isCodeStart(s,i) or self.isMacroStart(s,i) or self.isTeXStart(s,i)
-			
-	def isAtAt(self,s,i):       return match(s,i,"@@")
-	def isNameStart(self,s,i):  return match(s,i,"@<")
-	def isNameEnd(self,s,i):    return match(s,i,"@>")
-	#@-body
-	#@-node:1::is... methods
-	#@+node:2::error
-	#@+body
-	def error (self,s): es(s)
-	#@-body
-	#@-node:2::error
-	#@+node:3::import.__init__ (new)
+	#@+node:1::import.__init__
 	#@+body
 	def __init__ (self,commands):
 	
 		self.commands = commands
 		
-		#@<< initialize importFiles ivars >>
-		#@+node:1::<< initialize importFiles ivars >>
-		#@+body
+		# Set by ImportFilesFommand.
+		self.treeType = "@file" # "@root" or "@file"
+		# Set by ImportWebCommand.
+		self.webType = "@noweb" # "cweb" or "noweb"
+	
+		# Set by create_outline.
 		self.fileName = None # The original file name, say x.cpp
 		self.methodName = None # x, as in < < x methods > > =
-		self.fileType = None
+		self.fileType = None # ".py", ".c", etc.
 		
-		# These mark the points in the present function.
-		self.scan_start = 0 # The start of the unscanned text.
-		self.function_start = None
-		self.function_end = None
-		self.name_start = None
-		self.name_end = None
-		
-		# Used by CWEBtoOutline
-		self.cweb_st = None
-		#@-body
-		#@-node:1::<< initialize importFiles ivars >>
-	#@-body
-	#@-node:3::import.__init__ (new)
-	#@+node:4::Top Level
-	#@+node:1::CWEBToOutline
-	#@+node:1::createCWEBHeadline
-	#@+body
-	def createCWEBHeadline (self,parent,headline,body):
-	
-		# Create the vnode.
-		v = parent.insertAsLastChild()
-		v.initHeadString(headline)
-		# Attach the body text.
-		v.t.setTnodeText(body)
-		v.t.setSelection(0,0)
-	#@-body
-	#@-node:1::createCWEBHeadline
-	#@+node:2::createHeadlineFromBody
-	#@+body
-	#@+at
-	#  This method determines the proper headline text. If the body text contains a section definition the headline becomes the 
-	# corresponding section reference. Otherwise,if the body text contains @c the headline becomes the function name that is 
-	# presumed to follow the @c. Otherwise,if the body text contains @d name the headline becomes @d name. Otherwise,the headline 
-	# is simply "code"
+		# Used by Importers.
+		self.web_st = []
 
-	#@-at
-	#@@c
+	#@-body
+	#@-node:1::import.__init__
+	#@+node:2::Import
+	#@+node:1::createOutline
+	#@+body
+	def createOutline (self,fileName,parent):
 	
-	def createHeadlineFromBody (self,s):
+		junk, self.fileName = os.path.split(fileName) # junk/fileName
+		self.methodName, type = os.path.splitext(self.fileName) # methodName.fileType
+		self.fileType = type
+		# trace(`self.fileName`) ; trace(`self.fileType`)
+		# All file types except the following just get copied to the parent node.
+		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py"]
 		
-		macro_start = macro_end = None
-		
-		#@<< Scan for a section definition,@d or @c >>
-		#@+node:1::<< Scan for a section definition, @d or @c >>
+		#@<< Read file into s >>
+		#@+node:1::<< Read file into s >>
 		#@+body
-		i = 0
-		while i < len(s):
-			start = end = None
-			i = skip_ws_and_nl(s,i)
-			# Allow constructs such as @ @c
-			if self.isTeXStart(s,i):
-				i += 2
-			if not macro_start and self.isMacroStart(s,i):
-				
-				#@<< set macro_start and macro_end >>
-				#@+node:1::<< set macro_start and macro_end >>
-				#@+body
-				macro_start = i # Remember the @d or @f
-				i += 2
-				# Scan past the first identifier.
-				i = skip_ws(s,i)
-				while i < len(s) and is_c_id(s[i]):
-					i += 1
-				macro_end = i
-				#@-body
-				#@-node:1::<< set macro_start and macro_end >>
-
-			elif self.isCodeStart(s,i):
-				
-				#@<< Return the function name >>
-				#@+node:2::<< Return the function name >>
-				#@+body
-				i += 2 # Skip the @c or @p
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if i < len(s) and (s[i]=='_' or s[i] in string.letters):
-						start = i
-						while i < len(s) and is_c_id(s[i]):
-							i += 1
-						end = i
-					elif i < len(s) and s[i] == '(' and start:
-						return s[start:end]
-					else: i += 1
-				return "outer function"
-				#@-body
-				#@-node:2::<< Return the function name >>
-
-			elif self.isNameStart(s,i):
-				start = i ; i += 2
-				while i < len(s) and not self.isNameEnd(s,i) and not is_nl(s,i):
-					i += 1
-				if self.isNameEnd(s,i):
-					i += 2 ; end = i
-					i = skip_ws(s,i)
-					if match(s,i,"+=") or match(s,i,"="):
-						# Set the headline to the section reference.
-						return s[start:end]
-			else: i = skip_line(s,i)
+		try:
+			file = open(fileName)
+			s = file.read()
+			file.close()
+		except:
+			es("Can not read " + fileName)
+			return
 		#@-body
-		#@-node:1::<< Scan for a section definition, @d or @c >>
+		#@-node:1::<< Read file into s >>
 
-		if macro_start and macro_end:
-			return s[macro_start:macro_end]
-		else:
-			return "code"
-	#@-body
-	#@-node:2::createHeadlineFromBody
-	#@+node:3::createOutlineFromCWEB
-	#@+body
-	def createOutlineFromCWEB (self,path,parent):
-	
-		junk, fileName = os.path.split(path)
 		# Create the top-level headline.
 		v = parent.insertAsLastChild()
-		v.initHeadString(fileName)
-		# Scan the file,creating one section for each function definition.
-		self.scanCWEBFile(path,v)
+		if self.treeType == "@file":
+			v.initHeadString("@file " + self.fileName)
+		else:
+			v.initHeadString(self.fileName)
+		if appendFileFlag:
+			v.setBodyStringOrPane(s)
+		elif type == ".c" or type == ".cpp":
+			self.scanCText(s,v)
+		elif type == ".java":
+			self.scanJavaText(s,v,true) #outer level
+		elif type == ".pas":
+			self.scanPascalText(s,v)
+		elif type == ".py":
+			self.scanPythonText(s,v)
+		else:
+			es("createOutline: can't happen")
 		return v
 	#@-body
-	#@-node:3::createOutlineFromCWEB
-	#@+node:4::cstCanonicalize
+	#@-node:1::createOutline
+	#@+node:2::importFilesCommand
 	#@+body
-	#@+at
-	#  We canonicalize strings before looking them up, but strings are entered in the form they are first encountered.
-
-	#@-at
-	#@@c
-	
-	def cstCanonicalize (self,s,lower=true):
-		
-		if lower:
-			s = string.lower(s)
-		s = string.replace(s,"\t"," ")
-		s = string.replace(s,"\r"," ")
-		s = string.replace(s,"\n"," ")
-		s = string.replace(s,"  "," ")
-		s = string.strip(s)
-		return s
-	#@-body
-	#@-node:4::cstCanonicalize
-	#@+node:5::cstDump
-	#@+body
-	def cstDump (self):
-	
-		self.cweb_st.sort()
-		s = "Dump of cwt...\n"
-		for name in self.cweb_st:
-			s = s + name + "\n"
-		return s
-	#@-body
-	#@-node:5::cstDump
-	#@+node:6::cstEnter
-	#@+body
-	# We only enter the section name into the symbol table if the ... convention is not used.
-	
-	def cstEnter (self,s):
-	
-		# Don't enter names that end in "..."
-		s = string.rstrip(s)
-		if s.endswith("..."): return
-		
-		# Put the section name in the symbol table, retaining capitalization.
-		lower = self.cstCanonicalize(s,true)  # do lower
-		upper = self.cstCanonicalize(s,false) # don't lower.
-		for name in self.cweb_st:
-			if string.lower(name) == lower:
-				return
-		self.cweb_st.append(upper)
-	#@-body
-	#@-node:6::cstEnter
-	#@+node:7::cstLookup
-	#@+body
-	# This method returns a string if the indicated string is a prefix of an entry in the cweb_st
-	
-	def cstLookup (self,target):
-		
-		# Do nothing if the ... convention is not used.
-		target = string.strip(target)
-		if not target.endswith("..."): return target
-		# Canonicalize the target name, and remove the trailing "..."
-		ctarget = target[:-3]
-		ctarget = self.cstCanonicalize(ctarget)
-		ctarget = string.strip(ctarget)
-		found = false ; result = target
-		for s in self.cweb_st:
-			cs = self.cstCanonicalize(s)
-			if cs[:len(ctarget)] == ctarget:
-				if found:
-					es("****** " + target + ": is also a prefix of: " + s)
-				else:
-					found = true ; result = s
-					es("replacing: " + target + " with: " + s)
-		return result
-	#@-body
-	#@-node:7::cstLookup
-	#@+node:8:C=1:CWEBToOutlineCommand
-	#@+body
-	def CWEBToOutlineCommand (self,files):
+	def importFilesCommand  (self,files,treeType):
 	
 		c = self.commands ; current = c.currentVnode()
-		if current == None: return
+		if not current: return
 		if len(files) < 1: return
+		self.treeType = treeType
 		c.beginUpdate()
-		i = 0
-		while i < len(files):
-			fileName = files[i] ; i += 1
-			v = self.createOutlineFromCWEB(fileName,current)
-			c.contractVnode(v)
-			v.setDirty()
-			c.setChanged(true)
-		c.selectVnode(current)
+		if 1: # range of update...
+		  	c.selectVnode(current)
+			if len(files) == 2:
+				
+				#@<< Create a parent for two files having a common prefix >>
+				#@+node:1::<< Create a parent for two files having a common prefix >>
+				#@+body
+				#@+at
+				#  The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+
+				#@-at
+				#@@c
+				
+				name0 = files[0]
+				name1 = files[1]
+				prefix0, junk = os.path.splitext(name0)
+				prefix1, junk = os.path.splitext(name1)
+				if len(prefix0) > 0 and prefix0 == prefix1:
+					current = current.insertAsLastChild()
+					junk, nameExt = os.path.split(prefix1)
+					name,ext = os.path.splitext(prefix1)
+					current.initHeadString(name)
+				#@-body
+				#@-node:1::<< Create a parent for two files having a common prefix >>
+
+			for i in xrange(len(files)):
+				fileName = files[0]
+				v = self.createOutline(fileName,current)
+				c.contractVnode(v)
+				v.setDirty()
+				c.setChanged(true)
+			c.validateOutline()
+		  	c.selectVnode(current)
 		c.endUpdate()
 	#@-body
-	#@-node:8:C=1:CWEBToOutlineCommand
-	#@+node:9:C=2:massageCWEBBody
-	#@+body
-	def massageCWEBBody (self,s):
-	
-		
-		#@<< Remove most newlines from @space and @* sections >>
-		#@+node:1::<< Remove most newlines from @space and @* sections >>
-		#@+body
-		i = 0
-		while i < len(s):
-			i = skip_ws_and_nl(s,i)
-			if self.isTeXStart(s,i):
-				# Scan to end of the section.
-				start = end = i ; i += 2
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if self.isModuleStart(s,i) or self.isNameStart(s,i):
-						break
-					else:
-						end = i ; i = skip_to_end_of_line(s,i)
-				# Remove newlines from start to end.
-				j = start
-				while j < end:
-					if s[j] == '\n':
-						s = s[:j] + " " + s[j+1:]
-					j += 1
-			else: i = skip_line(s,i)
-		#@-body
-		#@-node:1::<< Remove most newlines from @space and @* sections >>
-
-		
-		#@<< Replace abbreviated names with full names >>
-		#@+node:2::<< Replace abbreviated names with full names >>
-		#@+body
-		i = 0
-		while i < len(s):
-			if self.isNameStart(s,i):
-				i += 2 ; start = i
-				while i < len(s) and not self.isNameEnd(s,i) and not self.isNameStart(s,i):
-					i += 1
-				if i < len(s) and self.isNameEnd(s,i):
-					name = s[start:i]
-					name2 = self.cstLookup(name)
-					if name != name2:
-						# Replace name by name2.
-						s = s[:start] + name2 + s[i:]
-						i = start + len(name2)
-			else: i += 1
-		#@-body
-		#@-node:2::<< Replace abbreviated names with full names >>
-
-		s = string.rstrip(s)
-		return s
-	#@-body
-	#@-node:9:C=2:massageCWEBBody
-	#@+node:10:C=3:scanCWEBFile
-	#@+body
-	def scanCWEBFile (self,fileName,parent):
-	
-		try: # Read the file into s.
-			f = open(fileName)
-			s = f.read()
-		except: s = None
-		self.cweb_st = None
-		
-		#@<< Create a symbol table of all section names >>
-		#@+node:1::<< Create a symbol table of all section names >>
-		#@+body
-		i = 0
-		while i < len(s):
-			if self.isAtAt(s,i):
-				i += 2
-			elif self.isNameStart(s,i):
-				i += 2 ; start = i
-				while i < len(s) and not self.isNameEnd(s,i) and not self.isNameStart(s,i):
-					if self.isAtAt(s,i): i += 2
-					else: i += 1
-				if self.isNameEnd(s,i):
-					self.cstEnter(s[start,i])
-			else: i += 1
-		
-		trace(self.cstDump())
-		#@-body
-		#@-node:1::<< Create a symbol table of all section names >>
-
-		
-		#@<< Create a node for limbo text >>
-		#@+node:2::<< Create a node for limbo text >>
-		#@+body
-		i = 0
-		while i < len(s):
-			i = skip_ws_and_nl(s,i)
-			if self.isModuleStart(s,i): break
-			else: i = skip_line(s,i)
-			
-		j = skip_ws(s,i)
-		if j < i:
-			self.createCWEBHeadline(parent,"Limbo",s[j:i])
-		#@-body
-		#@-node:2::<< Create a node for limbo text >>
-
-		while i < len(s):
-			
-			#@<< Create a node for the next module >>
-			#@+node:3::<< Create a node for the next module >>
-			#@+body
-			assert(self.isModuleStart(s,i))
-			start = i
-			if self.isTeXStart(s,i):
-				i += 2 ; i = skip_line(s,i)
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if self.isModuleStart(s,i): break
-					else: i = skip_line(s,i)
-			if self.isMacroStart(s,i):
-				i += 2 ; i = skip_line(s,i)
-				# Place all @d directives in the same node.
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if self.isModuleStart(s,i) and not self.isMacroStart(s,i): break
-					else: i = skip_line(s,i)
-			if self.isCodeStart(s,i):
-				i += 2 ; i = skip_line(s,i)
-				while i < len(s):
-					i = skip_ws_and_nl(s,i)
-					if self.isModuleStart(s,i): break
-					else: i = skip_line(s,i)
-			body = s[start:i]
-			body = self.massageCWEBBody(body)
-			headline = self.createHeadlineFromBody(body)
-			self.createCWEBHeadline(parent,headline,body)
-			#@-body
-			#@-node:3::<< Create a node for the next module >>
-	#@-body
-	#@-node:10:C=3:scanCWEBFile
-	#@-node:1::CWEBToOutline
-	#@+node:2::Import
+	#@-node:2::importFilesCommand
+	#@+node:3::importFlattenedOutline & allies
 	#@+node:1::convertMoreStringsToOutlineAfter
 	#@+body
 	# Almost all the time spent in this command is spent here.
@@ -404,9 +135,11 @@ class leoImportCommands:
 		if not self.stringsAreValidMoreFile(strings): return None
 		c.beginUpdate()
 		firstLevel, junk = self.moreHeadlineLevel(strings[0])
-		index = 0 ; lastLevel = -1 ; theRoot = lastVnode = None
+		lastLevel = -1 ; theRoot = lastVnode = None
+		index = 0
 		while index < len(strings):
-			s = strings[index] ; i = 0
+			progress = index
+			s = strings[index]
 			level, newFlag = self.moreHeadlineLevel(s)
 			level -= firstLevel
 			if level >= 0:
@@ -439,11 +172,12 @@ class leoImportCommands:
 				#@+node:2::<< Set the headline string, skipping over the leader >>
 				#@+body
 				j = 0
-				while match(s,i,'\t'):
+				while match(s,j,'\t'):
 					j += 1
 				if match(s,j,"+ ") or match(s,j,"- "):
 					j += 2
-				v.initHeadline(s[j:])
+				
+				v.initHeadString(s[j:])
 				#@-body
 				#@-node:2::<< Set the headline string, skipping over the leader >>
 
@@ -485,6 +219,7 @@ class leoImportCommands:
 
 				v.setDirty()
 			else: index += 1
+			assert progress < index
 		if theRoot:
 			theRoot.setDirty()
 			c.setChanged(true)
@@ -492,56 +227,10 @@ class leoImportCommands:
 		return theRoot
 	#@-body
 	#@-node:1::convertMoreStringsToOutlineAfter
-	#@+node:2::ImportFilesCommand
-	#@+body
-	def ImportFilesCommand (self,files):
-	
-		c = self.commands ; current = c.currentVnode()
-		if not current: return
-		if len(files) < 1: return
-		c.beginUpdate()
-		if 1: # range of update...
-		  	c.selectVnode(current)
-			if len(files) == 2:
-				
-				#@<< Create a parent for two files having a common prefix >>
-				#@+node:1::<< Create a parent for two files having a common prefix >>
-				#@+body
-				#@+at
-				#  The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
-
-				#@-at
-				#@@c
-				
-				name0 = files[0]
-				name1 = files[1]
-				prefix0, junk = os.path.splitext(name0)
-				prefix1, junk = os.path.splitext(name1)
-				if len(prefix0) > 0 and prefix0 == prefix1:
-					current = current.insertAsLastChild()
-					junk, nameExt = os.path.split(prefix1)
-					name,ext = os.path.splitext(prefix1)
-					current.initHeadString(name)
-				#@-body
-				#@-node:1::<< Create a parent for two files having a common prefix >>
-
-			i = 0
-			while i < len(files):
-				fileName = files[0]
-				v = self.createOutline(fileName,current)
-				c.contractVnode(v)
-				v.setDirty()
-				c.setChanged(true)
-				i += 1
-			c.validateOutline()
-		  	c.selectVnode(current)
-		c.endUpdate()
-	#@-body
-	#@-node:2::ImportFilesCommand
-	#@+node:3::importMoreText
+	#@+node:2::importFlattenedOutline
 	#@+body
 	# On entry,files contains at most one file to convert.
-	def importMoreText (self,files):
+	def importFlattenedOutline (self,files):
 	
 		c = self.commands ; current = c.currentVnode()
 		if current == None: return
@@ -553,7 +242,9 @@ class leoImportCommands:
 		#@+body
 		try:
 			file = open(fileName)
-			array = file.readlines()
+			s = file.read()
+			s = string.replace(s,"\r","")
+			array = string.split(s,"\n")
 			file.close()
 		except: array = []
 		#@-body
@@ -570,8 +261,8 @@ class leoImportCommands:
 		else:
 			es(fileName + " is not a valid MORE file.")
 	#@-body
-	#@-node:3::importMoreText
-	#@+node:4::moreHeadlineLevel
+	#@-node:2::importFlattenedOutline
+	#@+node:3::moreHeadlineLevel
 	#@+body
 	# return the headline level of s,or -1 if the string is not a MORE headline.
 	def moreHeadlineLevel (self,s):
@@ -586,8 +277,8 @@ class leoImportCommands:
 		else:
 			return -1, plusFlag
 	#@-body
-	#@-node:4::moreHeadlineLevel
-	#@+node:5::stringsAreValidMoreFile
+	#@-node:3::moreHeadlineLevel
+	#@+node:4::stringsAreValidMoreFile
 	#@+body
 	def stringsAreValidMoreFile (self,strings):
 	
@@ -611,521 +302,742 @@ class leoImportCommands:
 					plusFlag = newFlag
 		return true
 	#@-body
-	#@-node:5::stringsAreValidMoreFile
-	#@-node:2::Import
-	#@+node:3::Export
-	#@+node:1::exportMoreText
+	#@-node:4::stringsAreValidMoreFile
+	#@-node:3::importFlattenedOutline & allies
+	#@+node:4::importWebCommand & allies
+	#@+node:1::createOutlineFromWeb
 	#@+body
-	def exportMoreText (self):
+	def createOutlineFromWeb (self,path,parent):
 	
-		c = self.commands ; v = c.currentVnode()
-		if v:
-			app().clipboard = v.convertTreeToString()
-	#@-body
-	#@-node:1::exportMoreText
-	#@+node:2:C=4:flattenOutline
-	#@+body
-	def flattenOutline (self,fileName):
-	
-		c = self.commands ; v = c.currentVnode()
-		if not v: return
-		after = v.nodeAfterTree()
-		firstLevel = v.level()
-		try:
-			file = open(fileName,'w')
-			while v and v != after:
-				head = v.moreHead(firstLevel)
-				file.write( head + '\n')
-				body = v.moreBody() # Inserts escapes.
-				if len(body) > 0:
-					file.write(body + '\n')
-				v = v.threadNext()
-			file.close()
-		except:
-			es("File error while flattening the outline")
-	#@-body
-	#@-node:2:C=4:flattenOutline
-	#@+node:3:C=5:outlineToNoweb
-	#@+body
-	def outlineToNoweb (self,fileName):
-	
-		c = self.commands ; v = c.currentVnode()
-		if v == None: return
-		after = v.nodeAfterTree()
-		try:
-			file = open(fileName,'w')
-			while v and v != after:
-				s = self.convertToNoweb(v)
-				if len(s) > 0:
-					file.write(s)
-					if s[-1] != '\n':
-						file.write('\n')
-				v = v.threadNext()
-			file.close()
-		except:
-			es("File error in Outline To noweb command")
-	#@-body
-	#@-node:3:C=5:outlineToNoweb
-	#@+node:4::convertToNoweb
-	#@+body
-	#@+at
-	#  This code converts a vnode to noweb text as follows:
-	# 
-	# Convert @root to << * >>
-	# Convert @doc to @
-	# Convert @code to << name >>=, assuming the headline contains << name >>
-	# Ignore other directives
-	# Format parts so they fit in pagewidth columns.
-	# Output code parts as is.
-
-	#@-at
-	#@@c
-	
-	def convertToNoweb (self,v):
-	
-		if not v: return ""
-		s = v.bodyString()
-		i = 0 ; result = []
-		while i < len(s):
-			i = skip_ws_and_nl(s,i)
-			if match_word(s,i,"@doc") or match(s,i,"@ "):
-				i = self.convertDocPartToNoweb(s,i,result)
-			elif (match_word(s,i,"@code") or match(s,i,"@c") or
-				match_word(s,i,"@root") or match(s,i,"<<")):
-				i = self.convertCodePartToNoweb(s,i,v,result)
-			elif s[i] == '@':
-				i = skip_line(s,i) # Ignore all other directives.
-			else: # Assume we are in a doc part.
-				i = self.convertDocPartToNoweb(s,i,result)
-		return listToString(result)
-	#@-body
-	#@-node:4::convertToNoweb
-	#@+node:5::convertCodePartToNoweb
-	#@+body
-	# The code part should start either with @code or @root or < < section name > > =
-	
-	def convertCodePartToNoweb (self,s,i,v,result):
-	
-		if i >= len(s): return i
-		if match_word(s,i,"@c"):
-			
-			#@<< handle @c >>
-			#@+node:1::<< handle @c >>
-			#@+body
-			i = skip_line(s,i)
-			
-			#@<< put v's headline in head >>
-			#@+node:1::<< put v's headline in head>>
-			#@+body
-			head = v.headString()
-			j = skip_ws(head,0)
-			if match(head,j,"<<"):
-				j += 2 ; k = j
-				while k < len(head) and not match(head,k,">>"):
-					k += 1
-				if match(head,k,">>"): head = head[j:k]
-				else: head = None
-			else: head = None
-			#@-body
-			#@-node:1::<< put v's headline in head>>
-
-			if head:
-				# for ch in "\n" + head + "=": result.append(ch)
-				result.append("\n" + head + "=")
-			else:
-				# for ch in "\n\n" + angleBrackets("*** no section name for @c ***"): result.append(ch)
-				result.append("\n\n" + angleBrackets("*** no section name for @c ***"))
-			#@-body
-			#@-node:1::<< handle @c >>
-
-		elif match(s,i,"@root"):
-			
-			#@<< handle @root >>
-			#@+node:2::<< handle @root >>
-			#@+body
-			j = skip_ws(s,i+5)
-			i = skip_line(s,i)
-			if j < i:
-				
-				#@<< Set name >>
-				#@+node:1::<< Set name >>
-				#@+body
-				delim = ' ' ; name = None
-				if match(s,j,"<"):
-					j += 1 ; delim = ">"
-				elif match(s,j,'"'):
-					j += 1 ; delim = '"'
-				else: delim = ' '
-				k = j
-				while k < len(s) and s[k] != delim and not is_nl(s,k):
-					k += 1
-				if j < k:
-					name = string.strip(s[j:k])
-				if not name or len(name) == 0:
-					name = "*"
-				#@-body
-				#@-node:1::<< Set name >>
-
-			result += "\n\n" + angleBrackets(" " + name + " ") + "="
-			#@-body
-			#@-node:2::<< handle @root >>
-
-		elif match(s,i,"<<"):
-			
-			#@<< copy the line to result >>
-			#@+node:3::<< copy the line to result >>
-			#@+body
-			j = i ; i = skip_line(s,i)
-			for ch in s[j:i]:
-				result.append(ch)
-			#@-body
-			#@-node:3::<< copy the line to result >>
-
-		i = self.copyPart(s,i,result)
-		return i
-	#@-body
-	#@-node:5::convertCodePartToNoweb
-	#@+node:6::convertDocPartToNoweb
-	#@+body
-	def convertDocPartToNoweb (self,s,i,outerResult):
-	
-		if match_word(s,i,"@doc") or match_word(s,i,"@ "):
-			i = skip_line(s,i)
-		i = skip_ws_and_nl(s,i)
-		result = []
-		i = self.copyPart(s,i,result)
-		if len(result) > 0:
-			# We could break long lines in result here.
-			for ch in "@ \n":
-				outerResult.append(ch)
-			for ch in result:
-				outerResult.append(ch)
-		return i
-	#@-body
-	#@-node:6::convertDocPartToNoweb
-	#@+node:7::copyPart
-	#@+body
-	# Copies characters to result until the end of the present section is seen.
-	
-	def copyPart (self,s,i,result):
-	
-		while i < len(s):
-			j = i # We should be at the start of a line here.
-			i = skip_nl(s,i) ; i = skip_ws(s,i)
-			if match_word(s,i,"@doc") or match_word(s,i,"@c") or match_word(s,i,"@root"):
-				return i
-			elif match(s,i,"<<"):
-				k = find_on_line(s,i,">>=")
-				if k > -1: return i
-			elif match(s,i,"@ ") or match(s,i,"@@"):
-				return i
-			elif s[i] == '@':
-				i = skip_line(s,i) # Ignore all other directives.
-			else:
-				# Copy the entire line.
-				i = skip_line(s,j)
-				for ch in s[j:i]:
-					result.append(ch)
-		return i
-	#@-body
-	#@-node:7::copyPart
-	#@-node:3::Export
-	#@+node:4::createOutline
-	#@+body
-	def createOutline (self,fileName,parent):
-	
-		junk, self.fileName = os.path.split(fileName) # junk/fileName
-		self.methodName, type = os.path.splitext(self.fileName) # methodName.fileType
-		self.fileType = type
-		trace(`self.fileName`)
-		trace(`self.fileType`)
-		# All file types except the following just get copied to the parent node.
-		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py"]
-		
-		#@<< Read file into s >>
-		#@+node:1::<< Read file into s >>
-		#@+body
-		try:
-			file = open(fileName)
-			s = file.read()
-			file.close()
-		except:
-			es("Can not read " + fileName)
-			return
-		#@-body
-		#@-node:1::<< Read file into s >>
-
+		junk, fileName = os.path.split(path)
 		# Create the top-level headline.
 		v = parent.insertAsLastChild()
-		v.initHeadString(self.fileName)
-		if appendFileFlag:
-			v.setBodyStringOrPane(s)
-		elif type == ".c" or type == ".cpp":
-			self.scanCText(s,v)
-		elif type == ".java":
-			self.scanJavaText(s,v,true) #outer level
-		elif type == ".pas":
-			self.scanPascalText(s,v)
-		elif type == ".py":
-			self.scanPythonText(s,v)
-		else:
-			es("createOutline: can't happen")
+		v.initHeadString(fileName)
+		if self.webType=="cweb":
+			v.setBodyStringOrPane("@language cweb")
+		# Scan the file,creating one section for each function definition.
+		self.scanWebFile(path,v)
 		return v
 	#@-body
-	#@-node:4::createOutline
-	#@-node:4::Top Level
-	#@+node:5::Utilities
-	#@+node:1::createHeadline
+	#@-node:1::createOutlineFromWeb
+	#@+node:2::importWebCommand
 	#@+body
-	def createHeadline (self,parent,body,headline):
+	def importWebCommand (self,files,webType):
 	
-		trace(`headline`)
-		# Create the vnode.
-		v = parent.insertAsLastChild()
-		v.initHeadString(headline)
-		# Set the body.
-		if len(body) > 0: 
-			v.setBodyStringOrPane(body)
-		return v
+		c = self.commands ; current = c.currentVnode()
+		if current == None: return
+		if len(files) < 1: return
+		self.webType = webType
+		c.beginUpdate()
+		for i in xrange(len(files)):
+			fileName = files[i]
+			v = self.createOutlineFromWeb(fileName,current)
+			c.contractVnode(v)
+			v.setDirty()
+			c.setChanged(true)
+		c.selectVnode(current)
+		c.endUpdate()
 	#@-body
-	#@-node:1::createHeadline
-	#@+node:2::getPythonIndent
+	#@-node:2::importWebCommand
+	#@+node:3::findFunctionDef
 	#@+body
-	#@+at
-	#  This code returns the leading whitespace of a line, ignoring blank and comment lines.
-	# 
-	# This routine should be called at, or just after, a newline character.
-
-	#@-at
-	#@@c
-	
-	def getPythonIndent (self,s,i):
+	def findFunctionDef (self,s,i):
 		
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		c = self.commands
+		# Look at the next non-blank line for a function name.
+		i = skip_ws_and_nl(s,i)
+		k = skip_line(s,i)
+		name = None
+		while i < k:
+			if is_c_id(s[i]):
+				j = i ; i = skip_c_id(s,i) ; name = s[j:i]
+			elif s[i] == '(':
+				if name: return name
+				else: break
+			else: i += 1
+		return None
+	#@-body
+	#@-node:3::findFunctionDef
+	#@+node:4::massageWebBody
+	#@+body
+	def massageWebBody (self,s):
+	
+		type = self.webType
+		lb = choose(type=="cweb","@<","<<")
+		rb = choose(type=="cweb","@>",">>")
+		
+		#@<< Remove most newlines from @space and @* sections >>
+		#@+node:1::<< Remove most newlines from @space and @* sections >>
+		#@+body
 		i = 0
 		while i < len(s):
-			i, width = skip_leading_ws_with_indent(s,i,c.tab_width)
-			if is_nl(s,i) or match(s,i,"#"):
-				i = skip_line(s,i) # ignore blank lines and comments.
-			else:
-				return width
-		return 0
-	#@-body
-	#@-node:2::getPythonIndent
-	#@+node:3::massageBody
-	#@+body
-	# Inserts < < path methods > > = at the start of the body text and after leading comments.
-	
-	def massageBody (self,s,methodKind):
-		
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		c = self.commands
-		cweb = (self.fileType == "c" and not c.use_noweb_flag)
-		lb = choose(cweb,"@<","<<")
-		rb = choose(cweb,"@>=",">>=")
-		intro = lb + " " + self.methodName + " " + methodKind + " " + rb
-		if self.fileType == "py":
-			
-			#@<< massage python text >>
-			#@+node:1::<< massage python text >>
-			#@+body
-			# For Python, we want to delete all but one tab from the text.
-			
-			newBody = self.undentPythonBody(s)
-			# newBody = self.massageAngleBrackets(newBody)
-			newLine = choose(is_nl(newBody,0),"","\n")
-			return intro + newLine + newBody
-			#@-body
-			#@-node:1::<< massage python text >>
+			i = skip_ws_and_nl(s,i)
+			if self.isDocStart(s,i):
+				# Scan to end of the doc part.
+				if match(s,i,"@ %def"):
+					# Don't remove the newline following %def
+					i = skip_line(s,i) ; start = end = i
+				else:
+					start = end = i ; i += 2
+				while i < len(s):
+					i = skip_ws_and_nl(s,i)
+					if self.isModuleStart(s,i) or match(s,i,lb):
+						end = i ; break
+					elif type == "cweb": i += 1
+					else: i = skip_to_end_of_line(s,i)
+				# Remove newlines from start to end.
+				doc = s[start:end]
+				doc = string.replace(doc,"\n"," ")
+				doc = string.replace(doc,"\r","")
+				doc = string.strip(doc)
+				if doc and len(doc) > 0:
+					if doc == "@":
+						doc = choose(self.webType=="cweb", "@ ","@\n")
+					else:
+						doc += "\n\n"
+					# trace("new doc:" + `doc`)
+					s = s[:start] + doc + s[end:]
+					i = start + len(doc)
+			else: i = skip_line(s,i)
+		#@-body
+		#@-node:1::<< Remove most newlines from @space and @* sections >>
 
-		else:
-			
-			#@<< massage other text >>
-			#@+node:2::<< massage other text >>
-			#@+body
-			newBody, comment = self.skipLeadingComments(s)
-			# newBody = self.massageAngleBrackets(newBody)
-			newLine = choose(is_nl(newBody,0),"","\n")
-			if len(comment) > 0:
-				return comment + "\n" + intro + newLine + newBody
-			else:
-				return intro + newLine + newBody
-			#@-body
-			#@-node:2::<< massage other text >>
-	#@-body
-	#@-node:3::massageBody
-	#@+node:4::massageAngleBrackets (do not use!)
-	#@+body
-	# Converts < < to @ < < and > > to @ > > everywhere.
-	
-	def massageAngleBrackets (self,s):
-	
-		# Do not use @ < < inside strings.
-		j = skip_line(s,0) ; trace(s[:j])
-		lb = "@" ; lb += "<<"
-		rb = "@" ; rb += ">>"
-		s = string.replace(s,"<<",lb)
-		s = string.replace(s,">>",rb)
+		
+		#@<< Replace abbreviated names with full names >>
+		#@+node:2::<< Replace abbreviated names with full names >>
+		#@+body
+		i = 0
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
+			if match(s,i,lb):
+				i += 2 ; j = i ; k = find_on_line(s,j,rb)
+				if k > -1:
+					name = s[j:k]
+					name2 = self.cstLookup(name)
+					if name != name2:
+						# Replace name by name2 in s.
+						# trace("replacing:" + `name` + ", by:" + `name2`)
+						s = s[:j] + name2 + s[k:]
+						i = j + len(name2)
+			i = skip_line(s,i)
+		#@-body
+		#@-node:2::<< Replace abbreviated names with full names >>
+
+		s = string.rstrip(s)
 		return s
 	#@-body
-	#@-node:4::massageAngleBrackets (do not use!)
-	#@+node:5::massageComment
+	#@-node:4::massageWebBody
+	#@+node:5::scanBodyForHeadline
 	#@+body
 	#@+at
-	#  Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
+	#  This method returns the proper headline text.
+	# 
+	# 1. If s contains a section def, return the section ref.
+	# 2. cweb only: if s contains @c, return the function name following the @c.
+	# 3. cweb only: if s contains @d name, returns @d name.
+	# 4. Otherwise, returns "@"
 
 	#@-at
 	#@@c
 	
-	def massageComment (self,s):
+	def scanBodyForHeadline (self,s):
+		
+		if self.webType == "cweb":
+			
+			#@<< scan cweb body for headline >>
+			#@+node:1::<< scan cweb body for headline >>
+			#@+body
+			i = 0
+			while i < len(s):
+				i = skip_ws_and_nl(s,i)
+				# line = get_line(s,i) ; trace(`line`)
+				# Allow constructs such as @ @c, or @ @<.
+				if self.isDocStart(s,i):
+					i += 2 ; i = skip_ws(s,i)
+				if match(s,i,"@d") or match(s,i,"@f"):
+					# Look for a macro name.
+					directive = s[i:i+2]
+					i = skip_ws(s,i+2) # skip the @d or @f
+					if i < len(s) and is_c_id(s[i]):
+						j = i ; skip_c_id(s,i) ; return s[j:i]
+					else: return directive
+				elif match(s,i,"@c") or match(s,i,"@p"):
+					# Look for a function def.
+					name = self.findFunctionDef(s,i+2)
+					return choose(name,name,"outer function")
+				elif match(s,i,"@<"):
+					# Look for a section def.
+					# A small bug: the section def must end on this line.
+					j = i ; k = find_on_line(s,i,"@>")
+					if k > -1 and (match(s,k+2,"+=") or match(s,k+2,"=")):
+						return s[j:k+2] # return the section ref.
+				i = skip_line(s,i)
+			#@-body
+			#@-node:1::<< scan cweb body for headline >>
+
+		else:
+			
+			#@<< scan noweb body for headline >>
+			#@+node:2::<< scan noweb body for headline >>
+			#@+body
+			i = 0
+			while i < len(s):
+				i = skip_ws_and_nl(s,i)
+				# line = get_line(s,i) ; trace(`line`)
+				if match(s,i,"<<"):
+					k = find_on_line(s,i,">>=")
+					if k > -1:
+						ref = s[i:k+2]
+						name = string.strip(s[i+2:k])
+						if name != "@others":
+							return ref
+				else:
+					name = self.findFunctionDef(s,i)
+					if name:
+						return name
+				i = skip_line(s,i)
+			#@-body
+			#@-node:2::<< scan noweb body for headline >>
+
+		return "@" # default.
+	#@-body
+	#@-node:5::scanBodyForHeadline
+	#@+node:6::scanWebFile (handles limbo)
+	#@+body
+	def scanWebFile (self,fileName,parent):
 	
-		j = skip_line(s,0) ; trace(s[:j])
-		s = string.strip(s)
-		s = string.replace(s,"\n"," ")
-		s = string.replace(s,"\r"," ")
+		type = self.webType
+		lb = choose(type=="cweb","@<","<<")
+		rb = choose(type=="cweb","@>",">>")
+	
+		try: # Read the file into s.
+			f = open(fileName)
+			s = f.read()
+		except: s = None
+	
+		
+		#@<< Create a symbol table of all section names >>
+		#@+node:1::<< Create a symbol table of all section names >>
+		#@+body
+		i = 0 ; 	self.web_st = []
+		while i < len(s):
+			i = skip_ws_and_nl(s,i)
+			# line = get_line(s,i) ; trace(`line`)
+			if self.isDocStart(s,i):
+				if type == "cweb": i += 2
+				else: i = skip_line(s,i)
+			elif type == "cweb" and match(s,i,"@@"):
+				i += 2
+			elif match(s,i,lb):
+				i += 2 ; j = i ; k = find_on_line(s,j,rb)
+				if k > -1: self.cstEnter(s[j:k])
+			else: i += 1
+		
+		# trace(self.cstDump())
+		#@-body
+		#@-node:1::<< Create a symbol table of all section names >>
+
+		
+		#@<< Create nodes for limbo text and the root section >>
+		#@+node:2::<< Create nodes for limbo text and the root section >>
+		#@+body
+		i = 0
+		while i < len(s):
+			i = skip_ws_and_nl(s,i)
+			if self.isModuleStart(s,i) or match(s,i,lb):
+				break
+			else: i = skip_line(s,i)
+			
+		j = skip_ws(s,0)
+		if j < i:
+			self.createHeadline(parent,"@ " + s[j:i],"Limbo")
+		
+		j = i
+		if match(s,i,lb):
+			while i < len(s):
+				i = skip_ws_and_nl(s,i)
+				if self.isModuleStart(s,i):
+					break
+				else: i = skip_line(s,i)
+			self.createHeadline(parent,s[j:i],angleBrackets(" @ "))
+			
+		# trace(`get_line(s,i)`)
+		#@-body
+		#@-node:2::<< Create nodes for limbo text and the root section >>
+
+		while i < len(s):
+			progress = i
+			
+			#@<< Create a node for the next module >>
+			#@+node:3::<< Create a node for the next module >>
+			#@+body
+			if type=="cweb":
+				assert(self.isModuleStart(s,i))
+				start = i
+				if self.isDocStart(s,i):
+					i += 2
+					while i < len(s):
+						i = skip_ws_and_nl(s,i)
+						if self.isModuleStart(s,i): break
+						else: i = skip_line(s,i)
+				
+				#@<< Handle cweb @d, @f, @c and @p directives >>
+				#@+node:1::<< Handle cweb @d, @f, @c and @p directives >>
+				#@+body
+				if match(s,i,"@d") or match(s,i,"@f"):
+					i += 2 ; i = skip_line(s,i)
+					# Place all @d and @f directives in the same node.
+					while i < len(s):
+						i = skip_ws_and_nl(s,i)
+						if match(s,i,"@d") or match(s,i,"@f"): i = skip_line(s,i)
+						else: break
+					i = skip_ws_and_nl(s,i)
+					
+				while i < len(s) and not self.isModuleStart(s,i):
+					i = skip_line(s,i)
+					i = skip_ws_and_nl(s,i)
+				
+				if match(s,i,"@c") or match(s,i,"@p"):
+					i += 2 ; 
+					while i < len(s):
+						i = skip_line(s,i)
+						i = skip_ws_and_nl(s,i)
+						if self.isModuleStart(s,i):
+							break
+				#@-body
+				#@-node:1::<< Handle cweb @d, @f, @c and @p directives >>
+
+			else:
+				assert(self.isDocStart(s,i)) # isModuleStart == isDocStart for noweb.
+				start = i ; i = skip_line(s,i)
+				while i < len(s):
+					i = skip_ws_and_nl(s,i)
+					if self.isDocStart(s,i): break
+					else: i = skip_line(s,i)
+				
+			body = s[start:i]
+			body = self.massageWebBody(body)
+			headline = self.scanBodyForHeadline(body)
+			self.createHeadline(parent,body,headline)
+			#@-body
+			#@-node:3::<< Create a node for the next module >>
+
+			assert(progress < i)
+	#@-body
+	#@-node:6::scanWebFile (handles limbo)
+	#@+node:7::Symbol table
+	#@+node:1::cstCanonicalize
+	#@+body
+	#@+at
+	#  We canonicalize strings before looking them up, but strings are entered in the form they are first encountered.
+
+	#@-at
+	#@@c
+	
+	def cstCanonicalize (self,s,lower=true):
+		
+		if lower:
+			s = string.lower(s)
 		s = string.replace(s,"\t"," ")
+		s = string.replace(s,"\r","")
+		s = string.replace(s,"\n"," ")
 		s = string.replace(s,"  "," ")
 		s = string.strip(s)
 		return s
 	#@-body
-	#@-node:5::massageComment
-	#@+node:6::skipLeadingComments
+	#@-node:1::cstCanonicalize
+	#@+node:2::cstDump
 	#@+body
-	#@+at
-	#  This skips all leading comments in s, returning the remaining body text and the massaged comment text. Comment text is 
-	# massaged as follows:
-	# 
-	# . Leading // on a line is deleted.
-	# . A line starting with /// << or /// -- end -- << is deleted.
-	# . The / * and * / characters surrounding a block comment are removed.
-	# . Any sequence of whitespace and newlines is replaced by a single blank.
-	# . Leading and trailing whitespace is deleted.
-	# 
-	# Returns (body, comment)
-
-	#@-at
-	#@@c
+	def cstDump (self):
 	
-	def skipLeadingComments (self,s):
-	
-		trace(`get_line(s,0)`)
-		comment = "" ; newComment = ""
-		s = string.lstrip(s)
-		i = 0
-		while i < len(s):
-			# Skip lines starting with /// <<
-			if match(s,i,"/// <<"):
-				while i < len(s) and s[i] != '\n':
-					i += 1
-				while i < len(s) and is_ws_or_nl(s,i):
-					i += 1
-			elif match(s,i,"/// -- end -- <<"):
-				while i < len(s) and s[i] != '\n':
-					i += 1
-				while i < len(s) and is_ws_or_nl(s,i):
-					i += 1
-			elif match(s,i,"//"): # Handle a C++ comment.
-				i += 2
-				while i < len(s) and s[i] == '/':
-					i += 1
-				commentStart = i
-				while i < len(s) and not is_nl(s,i):
-					i += 1
-				newComment = self.massageComment(s[commentStart:i-1])
-				comment = comment + newComment + "\n"
-				while is_ws_or_nl(s,i):
-					i += 1
-			elif match(s,i,"/*"): # Handle a block C comment.
-				i += 2 ; commentStart = i
-				while i < len and not match(s,i,"*/"):
-					i += 1
-				if match(s,i,"*/"):
-					i += 2
-				newComment = self.massageComment(s[commentStart:i-2])
-				comment = comment + newComment + "\n"
-				while is_ws_or_nl(s,i):
-					i += 1
-			else: break
-		return s[i:], comment
+		self.web_st.sort()
+		s = "Web Symbol Table...\n\n"
+		for name in self.web_st:
+			s += name + "\n"
+		return s
 	#@-body
-	#@-node:6::skipLeadingComments
-	#@+node:7::undentPythonBody
+	#@-node:2::cstDump
+	#@+node:3::cstEnter
 	#@+body
-	#@+at
-	#  Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
-
-	#@-at
-	#@@c
+	# We only enter the section name into the symbol table if the ... convention is not used.
 	
-	def undentPythonBody (self,s):
+	def cstEnter (self,s):
+	
+		# Don't enter names that end in "..."
+		s = string.rstrip(s)
+		if s.endswith("..."): return
 		
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		c = self.commands
-		i = 0 ; result = ""
-		# Copy an @code line as is.
-		if match(s,i,"@code"):
-			j = i ; i = skip_line(s,i)
-			result += s[j:i]
-		# Calculate the amount to be removed from each line.
-		undent = self.getPythonIndent(s,i)
-		if undent == 0: return s
-		while i < len(s):
-			j = i ; i = skip_line(s,i)
-			line = s[j:i]
-			line = removeLeadingWhitespace(line,undent,c.tab_width)
-			result += line
+		# Put the section name in the symbol table, retaining capitalization.
+		lower = self.cstCanonicalize(s,true)  # do lower
+		upper = self.cstCanonicalize(s,false) # don't lower.
+		for name in self.web_st:
+			if string.lower(name) == lower:
+				return
+		self.web_st.append(upper)
+	#@-body
+	#@-node:3::cstEnter
+	#@+node:4::cstLookup
+	#@+body
+	# This method returns a string if the indicated string is a prefix of an entry in the web_st.
+	
+	def cstLookup (self,target):
+		
+		# Do nothing if the ... convention is not used.
+		target = string.strip(target)
+		if not target.endswith("..."): return target
+		# Canonicalize the target name, and remove the trailing "..."
+		ctarget = target[:-3]
+		ctarget = self.cstCanonicalize(ctarget)
+		ctarget = string.strip(ctarget)
+		found = false ; result = target
+		for s in self.web_st:
+			cs = self.cstCanonicalize(s)
+			if cs[:len(ctarget)] == ctarget:
+				if found:
+					es("****** " + target + ": is also a prefix of: " + s)
+				else:
+					found = true ; result = s
+					# es("replacing: " + target + " with: " + s)
 		return result
 	#@-body
-	#@-node:7::undentPythonBody
-	#@-node:5::Utilities
-	#@+node:6::Language Specific
-	#@+node:1::scanJavaText
+	#@-node:4::cstLookup
+	#@-node:7::Symbol table
+	#@-node:4::importWebCommand & allies
+	#@+node:5::Scanners for createOutline
+	#@+node:1::Python scanners
+	#@+node:1::scanPythonClass
 	#@+body
 	#@+at
-	#  This code creates a child of parent for each Java function definition seen.  See the comments for scanCText for what the text
-	# looks like.
+	#  Creates a child node c of parent for the class, and children of c for each def in the class.
 
 	#@-at
 	#@@c
 	
-	def scanJavaText (self,s,parent,outerFlag): # TRUE if at outer level.
+	def scanPythonClass (self,s,i,start,parent):
 	
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		method_seen = false
-		class_seen = false # TRUE is class keyword seen at outer level.
-		lparen = None   # Non-null if '(' seen at outer level.
+		# line = get_line(s,i) ; trace(`line`)
 		
-		#@<< Initialize the ImportFiles private globals >>
-		#@+node:1:C=6:<< Initialize the ImportFiles private globals >>
+		#@<< set classname and headline, or return i >>
+		#@+node:1::<< set classname and headline, or return i >>
 		#@+body
-		# Shared by several routines...
-		scan_start = i = 0
-		function_start = i
-		function_end = None
-		name_start = name_end = None
+		# Skip to the class name.
+		i = skip_ws(s,i)
+		i = skip_c_id(s,i) # skip "class"
+		i = skip_ws_and_nl(s,i)
+		if i < len(s) and is_c_id(s[i]):
+			j = i ; i = skip_c_id(s,i)
+			classname = s[j:i]
+			headline = "class " + classname
+		else: return i
 		#@-body
-		#@-node:1:C=6:<< Initialize the ImportFiles private globals >>
+		#@-node:1::<< set classname and headline, or return i >>
 
-		trace()
-		while i < len(s): 
+		i = skip_line(s,i) # Skip the class line.
+		
+		#@<< create class_vnode >>
+		#@+node:2::<< create class_vnode  >>
+		#@+body
+		# Create the section name using the old value of self.methodName.
+		if  self.treeType == "@file":
+			prefix = ""
+		else:
+			prefix = angleBrackets(" " + self.methodName + " methods ") + "=\n\n"
+		
+		# i points just after the class line.
+		body = s[start:i]
+		body = self.undentPythonBody(body)
+		class_vnode = self.createHeadline(parent,prefix + body,headline)
+
+		#@-body
+		#@-node:2::<< create class_vnode  >>
+
+		savedMethodName = self.methodName
+		self.methodName = headline
+		# Create a node for leading declarations of the class.
+		i = self.scanPythonDecls(s,i,class_vnode,indent_refs)
+		
+		#@<< append a reference to class_vnode's methods >>
+		#@+node:3::<< Append a reference to class_vnode's methods >>
+		#@+body
+		# This must be done after the declaration reference is generated.
+		
+		ref = angleBrackets(" class " + classname + " methods ")
+		class_vnode.appendStringToBody("\t" + ref + "\n\n")
+		if self.treeType == "@file":
+			parent_vnode = self.createHeadline(class_vnode,prefix + body,ref)
+			parent_vnode.appendStringToBody("\n\t@others")
+		else:
+			parent_vnode = class_vnode
+		#@-body
+		#@-node:3::<< Append a reference to class_vnode's methods >>
+
+		
+		#@<< create nodes for all defs of the class >>
+		#@+node:4::<< create nodes for all defs of the class >>
+		#@+body
+		indent = indent1 = self.getPythonIndent(s,i)
+		start = i = skip_blank_lines(s,i)
+		while i < len(s) and indent >= indent1:
+			progress = i
+			if is_nl(s,i):
+				j = skip_nl(s,i)
+				indent = self.getPythonIndent(s,j)
+				if indent >= indent1: i = j
+				else: break
+			elif match_c_word(s,i,"def"):
+				i = start = self.scanPythonDef(s,i,start,parent_vnode)
+				indent = self.getPythonIndent(s,i)
+			elif match_c_word(s,i,"class"):
+				i = start = self.scanPythonClass(s,i,start,parent_vnode)
+				indent = self.getPythonIndent(s,i)
+			elif s[i] == '#': i = skip_to_end_of_line(s,i)
+			elif s[i] == '"' or s[i] == '\'': i = skip_python_string(s,i)
+			else: i += 1
+			assert(progress < i)
+		#@-body
+		#@-node:4::<< create nodes for all defs of the class >>
+
+		self.methodName = savedMethodName
+		return i
+	#@-body
+	#@-node:1::scanPythonClass
+	#@+node:2::scanPythonDef
+	#@+body
+	#@+at
+	#  Creates a node of parent for the def.
+
+	#@-at
+	#@@c
+	
+	def scanPythonDef (self,s,i,start,parent):
+	
+		# line = get_line(s,i) ; trace(`line`)
+		
+		#@<< set headline or return i >>
+		#@+node:1::<< set headline or return i >>
+		#@+body
+		i = skip_ws(s,i)
+		i = skip_c_id(s,i) # Skip the "def"
+		i = skip_ws_and_nl(s,i)
+		if i < len(s) and is_c_id(s[i]):
+			j = i ; i = skip_c_id(s,i)
+			headline = s[j:i]
+			# trace("headline:" + `headline`)
+		else: return i
+		#@-body
+		#@-node:1::<< set headline or return i >>
+
+		
+		#@<< skip the Python def >>
+		#@+node:2::<< skip the Python def >>
+		#@+body
+		# Set indent1 to the indentation of the def line.
+		indent1 = self.getPythonIndent(s,start)
+		i = skip_line(s,i) # Skip the def line.
+		indent = self.getPythonIndent(s,i)
+		while i < len(s) and indent >= indent1:
+			progress = i
+			ch = s[i]
+			if is_nl(s,i):
+				i = skip_nl(s,i)
+				indent = self.getPythonIndent(s,i)
+				if indent <= indent1: break
+			elif ch == '#':
+				i = skip_line(s,i)
+			elif ch == '"' or ch == '\'':
+				i = skip_python_string(s,i)
+			else: i += 1
+			assert(progress < i)
+		#@-body
+		#@-node:2::<< skip the Python def >>
+
+		# Create the def node.
+		savedMethodName = self.methodName
+		self.methodName = headline
+		
+		#@<< Create def node >>
+		#@+node:3::<< Create def node >>
+		#@+body
+		# Create the prefix line for @root trees.
+		if self.treeType == "@file":
+			prefix = ""
+		else:
+			prefix = angleBrackets(" " + savedMethodName + " methods ") + "=\n\n"
+		
+		# Create body.
+		start = skip_blank_lines(s,start)
+		body = s[start:i]
+		body = self.undentPythonBody(body)
+		
+		# Create the node.
+		self.createHeadline(parent,prefix + body,headline)
+		#@-body
+		#@-node:3::<< Create def node >>
+
+		self.methodName = savedMethodName
+		return i
+	#@-body
+	#@-node:2::scanPythonDef
+	#@+node:3::scanPythonDecls
+	#@+body
+	def scanPythonDecls (self,s,i,parent,indent_parent_ref_flag):
+		
+		done = false ; start = i
+		while not done and i < len(s):
+			progress = i
+			# line = get_line(s,i) ; trace(`line`)
+			ch = s[i]
+			if ch == '\n': i = skip_nl(s,i)
+			elif ch == '#': i = skip_to_end_of_line(s,i)
+			elif ch == '"' or ch == '\'':
+				i = skip_python_string(s,i)
+			elif is_c_id(ch):
+				
+				#@<< break on def or class >>
+				#@+node:1::<< break on def or class >>
+				#@+body
+				if match_c_word(s,i,"def") or match_c_word(s,i,"class"):
+					i = find_line_start(s,i)
+					done = true
+					break
+				else:
+					i = skip_c_id(s,i)
+				#@-body
+				#@-node:1::<< break on def or class >>
+
+			else: i += 1
+			assert(progress < i)
+		j = skip_blank_lines(s,start)
+		if is_nl(s,j): j = skip_nl(s,j)
+		if j < i:
+			
+			#@<< Create a child node for declarations >>
+			#@+node:2::<< Create a child node for declarations >>
+			#@+body
+			headline = ref = angleBrackets(" " + self.methodName + " declarations ")
+			leading_tab = choose(indent_parent_ref_flag,"\t","")
+			
+			# Append the reference to the parent's body.
+			if self.treeType == "@file":
+				pass
+			else:
+				parent.appendStringToBody(leading_tab + ref + "\n")
+			
+			# Create the node for the decls.
+			body = self.undentPythonBody(s[j:i])
+			if self.treeType == "@root":
+				body = "@code\n\n" + body
+			self.createHeadline(parent,body,headline)
+			#@-body
+			#@-node:2::<< Create a child node for declarations >>
+
+		return i
+	#@-body
+	#@-node:3::scanPythonDecls
+	#@+node:4::scanPythonText
+	#@+body
+	#@+at
+	#  This code creates a child of parent for each Python function definition seen.  See the comments for scanCText for what the 
+	# text looks like.
+
+	#@-at
+	#@@c
+	
+	def scanPythonText (self,s,parent):
+	
+		decls_seen = false ; start = i = 0
+		while i < len(s):
+			progress = i
+			# line = get_line(s,i) ; trace(`line`)
+			ch = s[i]
+			if ch == '\n' or ch == '\r': i = skip_nl(s,i)
+			elif ch == '#': i = skip_to_end_of_line(s,i)
+			elif ch == '"' or ch == '\'': i = skip_python_string(s,i)
+			elif is_c_id(ch):
+				
+				#@<< handle possible Python function or class >>
+				#@+node:1::<< handle possible Python function or class >>
+				#@+body
+				if match_c_word(s,i,"def") or match(s,i,"class"):
+					isDef = match_c_word(s,i,"def")
+					if not decls_seen:
+						parent.appendStringToBody("@language python\n@others\n")
+						i = start = self.scanPythonDecls(s,start,parent,dont_indent_refs)
+						decls_seen = true
+					if isDef:
+						i = start = self.scanPythonDef(s,i,start,parent)
+					else:
+						i = start = self.scanPythonClass(s,i,start,parent)
+				else:
+					i = skip_c_id(s,i)
+				#@-body
+				#@-node:1::<< handle possible Python function or class >>
+
+			else: i += 1
+			assert(progress < i)
+		
+		#@<< Append a reference to the methods of this file >>
+		#@+node:2::<< Append a reference to the methods of this file >>
+		#@+body
+		if self.treeType == "@file":
+			pass
+		else:
+			parent.appendStringToBody(
+				angleBrackets(" " + self.methodName + " methods ") + "\n\n")
+		#@-body
+		#@-node:2::<< Append a reference to the methods of this file >>
+
+		
+		#@<< Append any unused python text to the parent's body text >>
+		#@+node:3::<< Append any unused python text to the parent's body text >>
+		#@+body
+		# Do nothing if only whitespace is left.
+		i = start ; i = skip_ws_and_nl(s,i)
+		if i < len(s):
+			parent.appendStringToBody(s[start:])
+		#@-body
+		#@-node:3::<< Append any unused python text to the parent's body text >>
+	#@-body
+	#@-node:4::scanPythonText
+	#@-node:1::Python scanners
+	#@+node:2::scanCText
+	#@+body
+	# Creates a child of parent for each C function definition seen.
+	
+	def scanCText (self,s,parent):
+	
+		
+		#@<< define scanCText vars >>
+		#@+node:1::<< define scanCText vars >>
+		#@+body
+		c = self.commands
+		include_seen = method_seen = false
+		methodKind = choose(self.fileType=="c","functions","methods")
+		lparen = None   # Non-null if '(' seen at outer level.
+		scan_start = function_start = 0
+		name = None
+		i = 0
+		#@-body
+		#@-node:1::<< define scanCText vars >>
+
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
 			ch = s[i]
 			# These cases skip tokens.
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:4:C=7:Shared by C and Java
+				#@+node:5:C=1:Shared by C and Java
 				#@+node:1::<< handle possible C comments >>
 				#@+body
-				i += 1 # skip the opening '/'
-				if i < len(s) and s[i] == '/':
+				if match(s,i,"//"):
 					i = skip_line(s,i)
-				elif i < len(s) and s[i] == '*':
-					i += 1
+				elif match(s,i,"/*"):
 					i = skip_block_comment(s,i)
+				else:
+					i += 1
 				#@-body
 				#@-node:1::<< handle possible C comments >>
-				#@-node:4:C=7:Shared by C and Java
+				#@-node:5:C=1:Shared by C and Java
 
 			elif ch == '"' or ch == '\'':
 				i = skip_string(s,i)
@@ -1133,7 +1045,7 @@ class leoImportCommands:
 			elif ch == '=':
 				
 				#@<< handle equal sign in C or Java >>
-				#@+node:4:C=7:Shared by C and Java
+				#@+node:5:C=1:Shared by C and Java
 				#@+node:2::<< handle equal sign in C or Java >>
 				#@+body
 				#@+at
@@ -1146,35 +1058,35 @@ class leoImportCommands:
 				i += 1 # skip the '='
 				function_start = None # We can't be in a function.
 				lparen = None   # We have not seen an argument list yet.
-				if  i < len(s) and s[i] == '=':
+				if match(s,i,'='):
 					i = skip_braces(s,i)
 				#@-body
 				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:4:C=7:Shared by C and Java
+				#@-node:5:C=1:Shared by C and Java
 
 			elif ch == '(':
 				
 				#@<< handle open paren in C or Java >>
-				#@+node:4:C=7:Shared by C and Java
+				#@+node:5:C=1:Shared by C and Java
 				#@+node:3::<< handle open paren in C or Java >>
 				#@+body
 				lparen = i
 				# This will skip any equal signs inside the paren.
 				i = skip_parens(s,i)
-				if i < len(s) and s[i] == ')':
+				if match(s,i,')'):
 					i += 1
 					i = skip_ws_and_nl(s,i)
-					if i < len(s) and s[i] == ';':
+					if match(s,i,';'):
 						lparen = None # not a function definition.
 				else: lparen = None
 				#@-body
 				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:4:C=7:Shared by C and Java
+				#@-node:5:C=1:Shared by C and Java
 
 			elif ch == ';':
 				
 				#@<< handle semicolon in C or Java >>
-				#@+node:4:C=7:Shared by C and Java
+				#@+node:5:C=1:Shared by C and Java
 				#@+node:4::<< handle semicolon in C or Java >>
 				#@+body
 				#@+at
@@ -1190,10 +1102,341 @@ class leoImportCommands:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
 				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:4:C=7:Shared by C and Java
+				#@-node:5:C=1:Shared by C and Java
+
+			# These cases and the default case can create child nodes.
+			elif ch == '#':
+				
+				#@<< handle # sign >>
+				#@+node:2::<< handle # sign >>
+				#@+body
+				# if statements may contain function definitions.
+				i += 1  # Skip the '#'
+				if not include_seen and match_c_word(s,i,"include"):
+					include_seen = true
+					
+					#@<< create a child node for all #include statements >>
+					#@+node:1::<< create a child node for all #include statements >>
+					#@+body
+					# Scan back to the start of the line.
+					include_start = i = find_line_start(s,i)
+					# Scan to the next line that is neither blank nor and #include.
+					i = skip_pp_directive(s,i)
+					i = skip_nl(s,i)
+					include_end = i
+					while i < len(s):
+						i = skip_ws_and_nl(s,i)
+						if match_c_word(s,i,"#include"):
+							i = skip_pp_directive(s,i)
+							i = skip_nl(s,i)
+							include_end = i
+						elif i + 2 < len(s) and s[i] == '\\':
+							# Handle possible comment.
+							if s[i+1] == '\\':
+								i = skip_to_end_of_line(s,i)
+							elif s[i+1] == '*':
+								i = skip_block_comment(s,i + 2)
+							else:
+								i = include_end ; break
+						else:
+							i = include_end ; break
+							
+					
+					headline = angleBrackets(" " + self.methodName + " #includes ")
+					body = s[include_start:include_end]
+					prefix = choose(self.treeType == "@file","","@code\n\n")
+					self.createHeadline(parent,prefix + body,headline)
+					parent.appendStringToBody("@language c\n")
+					# Append any previous text to the parent's body.
+					save_ip = i ; i = scan_start
+					while i < include_start and is_ws_or_nl(s,i):
+						i += 1
+					if i < include_start:
+						parent.appendStringToBody(s[i:include_start])
+					scan_start = function_start = i = save_ip
+					# Append the headline to the parent's body.
+					parent.appendStringToBody(headline + "\n")
+					#@-body
+					#@-node:1::<< create a child node for all #include statements >>
+
+				else: i = skip_pp_directive(s,i)
+				#@-body
+				#@-node:2::<< handle # sign >>
+
+			elif ch == '{':
+				
+				#@<< handle open curly bracket in C >>
+				#@+node:3::<< handle open curly bracket in C >> (scans function)
+				#@+body
+				i = skip_braces(s,i) # Skip all inner blocks.
+				# This may fail if #if's contain unmathed curly braces.
+				if (match(s,i,'}') and lparen and name and function_start):
+					# Point i _after_ the last character of the function.
+					i += 1
+					if is_nl(s,i):
+						i = skip_nl(s,i)
+					function_end = i
+					if method_seen:
+						# Include everything after the last function.
+						function_start = scan_start 
+					else:
+						
+						#@<< create a declaration node >>
+						#@+node:1::<< create a declaration node >>
+						#@+body
+						save_ip = i
+						i = scan_start
+						while i < function_start and is_ws_or_nl(s,i):
+							i += 1
+						if i < function_start:
+							headline = angleBrackets(" " + self.methodName + " declarations ")
+							# Append the headline to the parent's body.
+							parent.appendStringToBody(headline + "\n")
+							decls = s[scan_start:function_start]
+							if self.treeType == "@file":
+								body = decls
+							else:
+								body = "@code\n\n" + decls
+							self.createHeadline(parent,body,headline)
+						i = save_ip
+						scan_start = i
+						#@-body
+						#@-node:1::<< create a declaration node >>
+
+						
+						#@<< append C function/method reference to parent node >>
+						#@+node:2::<< append C function/method reference to parent node >>
+						#@+body
+						if self.treeType == "@file":
+							parent.appendStringToBody("@others\n")
+						else:
+							cweb = c.target_language == cweb_language
+							lb = choose(cweb,"@<","<<")
+							rb = choose(cweb,"@>",">>")
+							parent.appendStringToBody(
+								lb + " " + self.methodName + " " + methodKind + " " + rb + "\n")
+						#@-body
+						#@-node:2::<< append C function/method reference to parent node >>
+
+					headline = name
+					body = s[function_start:function_end]
+					body = self.massageBody(body,"functions")
+					self.createHeadline(parent,body,headline)
+					
+					method_seen = true
+					scan_start = function_start = i # Set the start of the _next_ function.
+					lparen = None
+				else: i += 1
+				#@-body
+				#@-node:3::<< handle open curly bracket in C >> (scans function)
+
+			elif is_c_id(ch):
+				
+				#@<< skip c identif ier, typedef, struct, union, namespace >>
+				#@+node:4::<< skip c identifier, typedef, struct, union, namespace >>
+				#@+body
+				if match_c_word(s,i,"typedef"):
+					i = skip_typedef(s,i)
+					lparen = None
+				elif match_c_word(s,i,"struct"):
+					i = skip_typedef(s,i)
+					# lparen = None ;  # This can appear in an argument list.
+				elif match_c_word(s,i,"union"):
+					i = skip_typedef(s,i)
+					# lparen = None ;  # This can appear in an argument list.
+				elif match_c_word(s,i,"namespace"):
+					
+					#@<< Create children for the namespace >>
+					#@+node:2::<< Create children for the namespace >>
+					#@+body
+					#@+at
+					#  Namesspaces change the self.moduleName and recursively call self function with a text covering only the 
+					# range of the namespace. This effectively changes the definition line of any created child nodes. The 
+					# namespace is written to the top level.
+
+					#@-at
+					#@@c
+					
+					# skip the "namespace" keyword.
+					i += len("namespace")
+					i = skip_ws_and_nl(s,i)
+					# Skip the namespace name.
+					namespace_name_start = i
+					namespace_name_end = None
+					if i < len(s) and is_c_id(s[i]):
+						i = skip_c_id(s,i)
+						namespace_name_end = i - 1
+					else: namespace_name_start = None
+					# Skip the '{'
+					i = skip_ws_and_nl(s,i)
+					if match(s,i,'{') and namespace_name_start:
+						inner_ip = i + 1
+						i = skip_braces(s,i)
+						if match(s,i,'}'):
+							# Append everything so far to the body.
+							if inner_ip > scan_start:
+								parent.appendStringToBody(s[scan_start:inner_ip])
+							# Save and change self.moduleName to namespaceName
+							savedMethodName = self.methodName
+							namespaceName = s[namespace_name_start:namespace_name_end]
+							self.methodName = "namespace " + namespaceName
+							# Recursively call this function .
+							self.scanCText(s[inner_ip:],parent)
+							# Restore self.moduleName and continue scanning.
+							self.methodName = savedMethodName
+							scan_start = function_start = i
+					#@-body
+					#@-node:2::<< Create children for the namespace >>
+
+				else:
+					# Remember the last name before an open parenthesis.
+					if lparen == None:
+						j = i ; i = skip_c_id(s,i) ; name = s[j:i]
+					else:
+						i = skip_c_id(s,i)
+					
+					#@<< test for operator keyword >>
+					#@+node:1::<< test for operator keyword >>
+					#@+body
+					# We treat a C++ a construct such as operator + as a function name.
+					if match(name,0,"operator"):
+						j = i
+						i = skip_ws(s,i) # Don't allow newline in headline.
+						if (i < len(s) and not is_c_id(s[i]) and
+							s[i]!=' ' and s[i]!='\n' and s[i]!='\r'):
+							while (i < len(s) and not is_c_id(s[i]) and
+								s[i]!=' ' and s[i]!='\n' and s[i] != '\r'):
+								i += 1
+							name = s[j:i] # extend the name.
+					#@-body
+					#@-node:1::<< test for operator keyword >>
+				#@-body
+				#@-node:4::<< skip c identifier, typedef, struct, union, namespace >>
+
+			else: i += 1
+		
+		#@<< Append any unused text to the parent's body text >>
+		#@+node:6:C=2:<< Append any unused text to the parent's body text >>
+		#@+body
+		# Used by C, Java and Pascal parsers.
+		# Do nothing if only whitespace is left.
+		
+		i = skip_ws_and_nl(s,scan_start)
+		if i < len(s):
+			parent.appendStringToBody(s[scan_start:])
+		#@-body
+		#@-node:6:C=2:<< Append any unused text to the parent's body text >>
+	#@-body
+	#@+node:5:C=1:Shared by C and Java
+	#@-node:5:C=1:Shared by C and Java
+	#@-node:2::scanCText
+	#@+node:3::scanJavaText
+	#@+body
+	# Creates a child of parent for each Java function definition seen.
+	
+	def scanJavaText (self,s,parent,outerFlag): # true if at outer level.
+	
+		
+		#@<< define scanJavaText vars >>
+		#@+node:1::<< define scanJavaText vars >>
+		#@+body
+		method_seen = false
+		class_seen = false # true is class keyword seen at outer level.
+		lparen = None  # not None if '(' seen at outer level.
+		scan_start = 0
+		name = None
+		function_start = choose(outerFlag, None, 0)
+		i = 0
+		#@-body
+		#@-node:1::<< define scanJavaText vars >>
+
+		# if not outerFlag: trace("inner:" + `s`)
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
+			ch = s[i]
+			# These cases skip tokens.
+			if ch == '/':
+				
+				#@<< handle possible C comments >>
+				#@+node:4:C=1:Shared by C and Java
+				#@+node:1::<< handle possible C comments >>
+				#@+body
+				if match(s,i,"//"):
+					i = skip_line(s,i)
+				elif match(s,i,"/*"):
+					i = skip_block_comment(s,i)
+				else:
+					i += 1
+				#@-body
+				#@-node:1::<< handle possible C comments >>
+				#@-node:4:C=1:Shared by C and Java
+
+			elif ch == '"' or ch == '\'': i = skip_string(s,i)
+			# These cases help determine where functions start.
+			elif ch == '=':
+				
+				#@<< handle equal sign in C or Java >>
+				#@+node:4:C=1:Shared by C and Java
+				#@+node:2::<< handle equal sign in C or Java >>
+				#@+body
+				#@+at
+				#  We can not be seeing a function definition when we find an equal sign at the top level. Equal signs inside 
+				# parentheses are handled by the open paren logic.
+
+				#@-at
+				#@@c
+				
+				i += 1 # skip the '='
+				function_start = None # We can't be in a function.
+				lparen = None   # We have not seen an argument list yet.
+				if match(s,i,'='):
+					i = skip_braces(s,i)
+				#@-body
+				#@-node:2::<< handle equal sign in C or Java >>
+				#@-node:4:C=1:Shared by C and Java
+
+			elif ch == '(':
+				
+				#@<< handle open paren in C or Java >>
+				#@+node:4:C=1:Shared by C and Java
+				#@+node:3::<< handle open paren in C or Java >>
+				#@+body
+				lparen = i
+				# This will skip any equal signs inside the paren.
+				i = skip_parens(s,i)
+				if match(s,i,')'):
+					i += 1
+					i = skip_ws_and_nl(s,i)
+					if match(s,i,';'):
+						lparen = None # not a function definition.
+				else: lparen = None
+				#@-body
+				#@-node:3::<< handle open paren in C or Java >>
+				#@-node:4:C=1:Shared by C and Java
+
+			elif ch == ';':
+				
+				#@<< handle semicolon in C or Java >>
+				#@+node:4:C=1:Shared by C and Java
+				#@+node:4::<< handle semicolon in C or Java >>
+				#@+body
+				#@+at
+				#  A semicolon signals the end of a declaration, thereby potentially starting the _next_ function defintion.   
+				# Declarations end a function definition unless we have already seen a parenthesis, in which case we are seeing an 
+				# old-style function definition.
+
+				#@-at
+				#@@c
+				
+				i += 1 # skip the semicolon.
+				if lparen == None:
+					function_start = i + 1 # The semicolon ends the declaration.
+				#@-body
+				#@-node:4::<< handle semicolon in C or Java >>
+				#@-node:4:C=1:Shared by C and Java
 
 				class_seen = false
-			# This cases and the default case can create child nodes.
+			# These cases can create child nodes.
 			elif ch == '{':
 				
 				#@<< handle open curly bracket in Java >>
@@ -1202,15 +1445,15 @@ class leoImportCommands:
 				brace_ip1 = i
 				i = skip_braces(s,i) # Skip all inner blocks.
 				brace_ip2 = i
-				if (i < len(s) and s[i] == '}' and
-					(not outerFlag and lparen or outerFlag and class_seen) and
-					name_start and name_end and function_start):
+				if (
+					match(s,i,'}') and name and function_start != None and
+					((outerFlag and class_seen) or (not outerFlag and lparen))):
 					# Point i _after_ the last character of the method.
 					i += 1
 					if is_nl(s,i):
 						i = skip_nl(s,i)
 					function_end = i
-					headline = s[name_start,name_end]
+					headline = name
 					if outerFlag:
 						leader = "" ; decl_leader = ""
 						headline = "class " + headline
@@ -1232,12 +1475,14 @@ class leoImportCommands:
 						while i < function_start and is_ws_or_nl(s,i):
 							i += 1
 						if i < function_start:
-							headline = angleBrackets(self.methodName + " declarations ")
+							if outerFlag:
+								parent.appendStringToBody("@language java\n")
+							decl_headline = angleBrackets(" " + self.methodName + " declarations ")
 							# Append the headline to the parent's body.
-							parent.appendStringToBody(decl_leader + leader + headline + "\n")
+							parent.appendStringToBody(decl_leader + leader + decl_headline + "\n")
 							decls = s[scan_start:function_start]
-							body = "@code\n\n" + decls
-							self.createHeadline(parent,body,headline)
+							body = choose(self.treeType == "@file",decls,"@code\n\n" + decls)
+							self.createHeadline(parent,body,decl_headline)
 						i = save_ip
 						scan_start = i
 						#@-body
@@ -1247,9 +1492,17 @@ class leoImportCommands:
 						#@<< append Java method reference to parent node >>
 						#@+node:2::<< append Java method reference to parent node >>
 						#@+body
-						kind = choose(outerFlag,"classes","methods")
-						name = angleBrackets(self.methodName + " " + kind)
-						parent.appendStringToBody(leader + name + "\n")
+						if self.treeType == "@file":
+							if outerFlag:
+								parent.appendStringToBody("@others\n")
+							else:
+								ref_name = angleBrackets(" " + self.methodName + " methods ")
+								parent.appendStringToBody("\n" + leader + ref_name + "\n")
+								parent = self.createHeadline(parent,"@others\n",ref_name)
+						else:
+							kind = choose(outerFlag,"classes","methods")
+							ref_name = angleBrackets(" " + self.methodName + " " + kind + " ")
+							parent.appendStringToBody(leader + ref_name + "\n")
 						#@-body
 						#@-node:2::<< append Java method reference to parent node >>
 
@@ -1263,9 +1516,10 @@ class leoImportCommands:
 						#@+node:3::<< recursively scan the text >>
 						#@+body
 						# These mark the points in the present function.
+						# trace("recursive scan:" + `get_line(s,brace_ip1+ 1)`)
 						oldMethodName = self.methodName
 						self.methodName = headline
-						self.scanJavaText(s[brace_ip1+1,brace_ip2], # Don't include either brace.
+						self.scanJavaText(s[brace_ip1+1:brace_ip2], # Don't include either brace.
 							v,false) # inner level
 						self.methodName = oldMethodName
 						# Append the brace to the parent.
@@ -1280,10 +1534,8 @@ class leoImportCommands:
 						body = self.massageBody(body,methodKind)
 						self.createHeadline(parent,body,headline)
 					method_seen = true
-					scan_start = i
-					function_start = i # Set the start of the _next_ function.
-					lparen = None
-					class_seen = false
+					scan_start = function_start = i # Set the start of the _next_ function.
+					lparen = None ; class_seen = false
 				else: i += 1
 				#@-body
 				#@-node:2::<< handle open curly bracket in Java >>
@@ -1299,14 +1551,10 @@ class leoImportCommands:
 					i = skip_ws_and_nl(s,i)
 					if i < len(s) and is_c_id(s[i]):
 						# Remember the class name.
-						name_start = i
-						i = skip_c_id(s,i)
-						name_end = i - 1
-				elif class_seen:
+						j = i ; i = skip_c_id(s,i) ; name = s[j:i]
+				elif not lparen and not class_seen:
 					# Remember a possible method name.
-					name_start = i
-					i = skip_c_id(s,i)
-					name_end = i - 1
+					j = i ; i = skip_c_id(s,i) ; name = s[j:i]
 				else: i = skip_c_id(s,i)
 				#@-body
 				#@-node:3::<< skip and remember the Java id >>
@@ -1314,7 +1562,7 @@ class leoImportCommands:
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:5:C=8:<< Append any unused text to the parent's body text >>
+		#@+node:5:C=2:<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1323,421 +1571,31 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:5:C=8:<< Append any unused text to the parent's body text >>
+		#@-node:5:C=2:<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:4:C=7:Shared by C and Java
-	#@-node:4:C=7:Shared by C and Java
-	#@-node:1::scanJavaText
-	#@+node:2::scanCText
+	#@+node:4:C=1:Shared by C and Java
+	#@-node:4:C=1:Shared by C and Java
+	#@-node:3::scanJavaText
+	#@+node:4::scanPascalText
 	#@+body
-	#@+at
-	#  This code creates a child of parent for each C function definition seen.
-	# 
-	# After calling this function the body text of the parent node will look like this:
-	# 	..whatever was in the parent node before the call..
-	# 	..all text before the first method found..
-	# 	<< gModuleName methods >>
-	# 	..all text after the last method found..
-	# 
-	# Each new child node will have the form
-	# 	..the text of the method
-	# Namesspaces change the gModuleName global and recursively call self function with a text covering only the range of the
-	# namespace. This effectively changes the definition line of any created child nodes. The namespace is written to the top level.
-
-	#@-at
-	#@@c
-	
-	def scanCText (self,s,parent):
-	
-		trace(`get_line(s,0)`)
-		c = self.commands
-		include_seen = false ; method_seen = false
-		first_ip = i = 0 # To terminate backwards scans.
-		lparen = None   # Non-null if '(' seen at outer level.
-		methodKind = choose(self.fileType == "c","functions","methods")
-		
-		#@<< Initialize the ImportFiles private globals >>
-		#@+node:1:C=6:<< Initialize the ImportFiles private globals >>
-		#@+body
-		# Shared by several routines...
-		scan_start = i = 0
-		function_start = i
-		function_end = None
-		name_start = name_end = None
-		#@-body
-		#@-node:1:C=6:<< Initialize the ImportFiles private globals >>
-
-		while i < len(s): 
-			ch = s[i]
-			# These cases skip tokens.
-			if ch == '/':
-				
-				#@<< handle possible C comments >>
-				#@+node:5:C=7:Shared by C and Java
-				#@+node:1::<< handle possible C comments >>
-				#@+body
-				i += 1 # skip the opening '/'
-				if i < len(s) and s[i] == '/':
-					i = skip_line(s,i)
-				elif i < len(s) and s[i] == '*':
-					i += 1
-					i = skip_block_comment(s,i)
-				#@-body
-				#@-node:1::<< handle possible C comments >>
-				#@-node:5:C=7:Shared by C and Java
-
-			elif ch == '"' or ch == '\'':
-				i = skip_string(s,i)
-			# These cases help determine where functions start.
-			elif ch == '=':
-				
-				#@<< handle equal sign in C or Java >>
-				#@+node:5:C=7:Shared by C and Java
-				#@+node:2::<< handle equal sign in C or Java >>
-				#@+body
-				#@+at
-				#  We can not be seeing a function definition when we find an equal sign at the top level. Equal signs inside 
-				# parentheses are handled by the open paren logic.
-
-				#@-at
-				#@@c
-				
-				i += 1 # skip the '='
-				function_start = None # We can't be in a function.
-				lparen = None   # We have not seen an argument list yet.
-				if  i < len(s) and s[i] == '=':
-					i = skip_braces(s,i)
-				#@-body
-				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:5:C=7:Shared by C and Java
-
-			elif ch == '(':
-				
-				#@<< handle open paren in C or Java >>
-				#@+node:5:C=7:Shared by C and Java
-				#@+node:3::<< handle open paren in C or Java >>
-				#@+body
-				lparen = i
-				# This will skip any equal signs inside the paren.
-				i = skip_parens(s,i)
-				if i < len(s) and s[i] == ')':
-					i += 1
-					i = skip_ws_and_nl(s,i)
-					if i < len(s) and s[i] == ';':
-						lparen = None # not a function definition.
-				else: lparen = None
-				#@-body
-				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:5:C=7:Shared by C and Java
-
-			elif ch == ';':
-				
-				#@<< handle semicolon in C or Java >>
-				#@+node:5:C=7:Shared by C and Java
-				#@+node:4::<< handle semicolon in C or Java >>
-				#@+body
-				#@+at
-				#  A semicolon signals the end of a declaration, thereby potentially starting the _next_ function defintion.   
-				# Declarations end a function definition unless we have already seen a parenthesis, in which case we are seeing an 
-				# old-style function definition.
-
-				#@-at
-				#@@c
-				
-				i += 1 # skip the semicolon.
-				if lparen == None:
-					function_start = i + 1 # The semicolon ends the declaration.
-				#@-body
-				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:5:C=7:Shared by C and Java
-
-			# These cases and the default case can create child nodes.
-			elif ch == '#':
-				
-				#@<< handle # sign >>
-				#@+node:2::<< handle # sign >>
-				#@+body
-				# if statements may contain function definitions.
-				i += 1  # Skip the '#'
-				if not include_seen and match_c_word(s,i,"include"):
-					include_seen = true
-					
-					#@<< create a child node for all #include statements >>
-					#@+node:1::<< create a child node for all #include statements >>
-					#@+body
-					# Scan back to the start of the line.
-					include_start = i
-					while include_start > first_ip and not is_nl(s,include_start):
-						include_start -= 1
-					if is_nl(s,include_start):
-						include_start = skip_nl(s,include_start)
-					# Scan to the next line that is neither blank nor and #include.
-					i = include_start
-					i = skip_pp_directive(s,i)
-					i = skip_nl(s,i)
-					include_end = i
-					while i < len(s):
-						i = skip_ws_and_nl(s,i)
-						if match_c_word(s,i,"#include"):
-							i = skip_pp_directive(s,i)
-							i = skip_nl(s,i)
-							include_end = i
-						elif i + 2 < len(s) and s[i] == '\\':
-							# Handle possible comment.
-							if s[i+1] == '\\':
-								i = skip_to_end_of_line(s,i)
-							elif s[i+1] == '*':
-								i = skip_block_comment(s,i + 2)
-							else:
-								i = include_end ; break
-						else:
-							i = include_end ; break
-					headline = angleBrackets(" " + self.methodName + " #includes ")
-					body = "@code\n\n" + s[include_start:include_end]
-					self.createHeadline(parent,body,headline)
-					# Append any previous text to the parent's body.
-					save_ip = i
-					#
-					i = scan_start
-					while i < include_start and is_ws_or_nl(s,i):
-						i += 1
-					if i < include_start:
-						parent.appendStringToBody(s[i:include_start])
-					#
-					i = save_ip
-					scan_start = i
-					function_start = i
-					# Append the headline to the parent's body.
-					parent.appendStringToBody(headline + "\n")
-					#@-body
-					#@-node:1::<< create a child node for all #include statements >>
-
-				else: i = skip_pp_directive(s,i)
-				#@-body
-				#@-node:2::<< handle # sign >>
-
-			elif ch == '{':
-				
-				#@<< handle open curly bracket in C >>
-				#@+node:3::<< handle open curly bracket in C >>
-				#@+body
-				i = skip_braces(s,i) # Skip all inner blocks.
-				if (i < len(s) and s[i] == '}' and  # This may fail if #if's contain unmathed curly braces.
-					lparen and name_start and name_end and function_start):
-					# Point i _after_ the last character of the function.
-					i += 1
-					if i < len(s) and(s[i] == '\r' or s[i] == '\n'):
-						i = skip_nl(s,i)
-					function_end = i
-					if method_seen:
-						function_start = scan_start # Include everything after the last fucntion.
-					else:
-						
-						#@<< create a declaration node >>
-						#@+node:1::<< create a declaration node >>
-						#@+body
-						save_ip = i
-						i = scan_start
-						while i < function_start and is_ws_or_nl(s,i):
-							i += 1
-						if i < function_start:
-							headline = angleBrackets(self.methodName + " declarations ")
-							# Append the headline to the parent's body.
-							parent.appendStringToBody(headline + "\n")
-							decls = s[scan_start:function_start]
-							body = "@code\n\n" + decls
-							self.createHeadline(parent,body,headline)
-						i = save_ip
-						scan_start = i
-						#@-body
-						#@-node:1::<< create a declaration node >>
-
-						
-						#@<< append C function/method reference to parent node >>
-						#@+node:2::<< append C function/method reference to parent node >>
-						#@+body
-						cweb = not c.use_noweb_flag
-						lb = choose(cweb,"@<","<<")
-						rb = choose(cweb,"@>",">>")
-						s = lb + self.methodName + " " + methodKind + rb
-						parent.appendStringToBody(s + "\n")
-						#@-body
-						#@-node:2::<< append C function/method reference to parent node >>
-
-					length = name_end - name_start + 1
-					headline = (name_start,length)
-					body = s[function_start:function_end]
-					body = self.massageBody(body,"functions")
-					self.createHeadline(parent,body,headline)
-					method_seen = true
-					scan_start = i
-					function_start = i # Set the start of the _next_ function.
-					lparen = 0
-				else: i += 1
-				#@-body
-				#@-node:3::<< handle open curly bracket in C >>
-
-			elif is_c_id(ch):
-				
-				#@<< skip c identif ier, typedef, struct, union, namespace >>
-				#@+node:4::<< skip c identifier, typedef, struct, union, namespace >>
-				#@+body
-				if match_c_word(s,i,"typedef"):
-					i = skip_typedef(s,i)
-					lparen = None
-				elif match_c_word(s,i,"struct"):
-					i = skip_typedef(s,i)
-					# lparen = NULL ;  # This can appear in an argument list.
-				elif match_c_word(s,i,"union"):
-					i = skip_typedef(s,i)
-					# lparen = NULL ;  # This can appear in an argument list.
-				elif match_c_word(s,i,"namespace"):
-					
-					#@<< Create children for the namespace >>
-					#@+node:2::<< Create children for the namespace >>
-					#@+body
-					# skip the "namespace" keyword.
-					i += 9
-					i = skip_ws_and_nl(s,i)
-					# Skip the namespace name.
-					namespace_name_start = i
-					namespace_name_end = None
-					if i < len(s) and is_c_id(s[i]):
-						i = skip_c_id(s,i)
-						namespace_name_end = i - 1
-					else: namespace_name_start = None
-					# Skip the '{'
-					i = skip_ws_and_nl(s,i)
-					if i < len(s) and s[i] == '{' and namespace_name_start:
-						inner_ip = i + 1
-						i = skip_braces(s,i)
-						if i < len(s) and s[i] == '}':
-							# Append everything so far to the body.
-							if inner_ip > scan_start:
-								parent.appendStringToBody(s[scan_start:inner_ip])
-							# Save and change gModuleName to namespaceName
-							savedMethodName = self.methodName
-							namespaceName = s[namespace_name_start:namespace_name_end]
-							self.methodName = "namespace " + namespaceName
-							# Recursively call this function .
-							self.scanCText(s[inner_ip:],parent)
-							# Restore gModuleName and continue scanning.
-							savedMethodName = savedMethodName
-							scan_start = i
-							function_start = i
-					#@-body
-					#@-node:2::<< Create children for the namespace >>
-
-				else:
-					# Remember the last name before an open parenthesis.
-					if lparen == None:
-						name_start = i
-					i = skip_c_id(s,i)
-					if lparen == None:
-						name_end = i - 1
-					
-					#@<< test for operator keyword >>
-					#@+node:1::<< test for operator keyword >>
-					#@+body
-					# We treat a C++ a construct such as operator + as a function name.
-					if match(s[name_start:name_end],0,"operator"):
-						i = skip_ws(s,i) # Don't allow newline in headline.
-						if  i < len(s) and not is_c_id(s[i]) and s[i] != ' ' and s[i] != '\n' and s[i] != '\r':
-							while i < len(s) and not is_c_id(s[i]) and s[i] != ' ' and s[i] != '\n' and s[i] != '\r':
-								i += 1
-							name_end = i - 1
-					#@-body
-					#@-node:1::<< test for operator keyword >>
-				#@-body
-				#@-node:4::<< skip c identifier, typedef, struct, union, namespace >>
-
-			else: i += 1
-		
-		#@<< Append any unused text to the parent's body text >>
-		#@+node:6:C=8:<< Append any unused text to the parent's body text >>
-		#@+body
-		# Used by C, Java and Pascal parsers.
-		# Do nothing if only whitespace is left.
-		
-		i = skip_ws_and_nl(s,scan_start)
-		if i < len(s):
-			parent.appendStringToBody(s[scan_start:])
-		#@-body
-		#@-node:6:C=8:<< Append any unused text to the parent's body text >>
-	#@-body
-	#@+node:5:C=7:Shared by C and Java
-	#@-node:5:C=7:Shared by C and Java
-	#@-node:2::scanCText
-	#@+node:3::scanPascalText
-	#@+body
-	#@+at
-	#  Creates a child of parent for each Pascal function definition seen.  See the comments for scanCText for what the text looks like.
-
-	#@-at
-	#@@c
+	# Creates a child of parent for each Pascal function definition seen.
 	
 	def scanPascalText (self,s,parent):
 	
-		trace(`get_line(s,0)`)
-		method_seen = false
-		methodKind = "methods"
-		
-		#@<< Initialize the ImportFiles private globals >>
-		#@+node:1:C=6:<< Initialize the ImportFiles private globals >>
-		#@+body
-		# Shared by several routines...
-		scan_start = i = 0
-		function_start = i
-		function_end = None
-		name_start = name_end = None
-		#@-body
-		#@-node:1:C=6:<< Initialize the ImportFiles private globals >>
-
+		method_seen = false ; methodKind = "methods"
+		scan_start = function_start = i = 0
+		name = None
 		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
 			ch = s[i]
-			if ch == '{':
-				i = skip_pascal_braces(s,i)
-			elif ch == '/':
-				
-				#@<< handle possible Pascal single-line comment >>
-				#@+node:2::<< handle possible Pascal function >>
-				#@+node:4::<< skip the function definition, or continue >>
-				#@+node:1::<< skip past the semicolon >>
-				#@+node:1::<< handle possible Pascal single-line comment >>
-				#@+body
-				i += 1 # skip the opening '/'
-				if  i < len(s) and s[i] == '/':
-					i = skip_to_end_of_line(s,i)
-				#@-body
-				#@-node:1::<< handle possible Pascal single-line comment >>
-				#@-node:1::<< skip past the semicolon >>
-				#@-node:4::<< skip the function definition, or continue >>
-				#@-node:2::<< handle possible Pascal function >>
-
-			elif ch == '(':
-				
-				#@<< handle possible Pascal block comment >>
-				#@+node:2::<< handle possible Pascal function >>
-				#@+node:4::<< skip the function definition, or continue >>
-				#@+node:1::<< skip past the semicolon >>
-				#@+node:2::<< handle possible Pascal block comment >>
-				#@+body
-				i += 1 # skip the '('
-				if  i < len(s) and s[i] == '*':
-					i += 1 # skip the '*'
-					i = skip_pascal_block_comment(s,i)
-				#@-body
-				#@-node:2::<< handle possible Pascal block comment >>
-				#@-node:1::<< skip past the semicolon >>
-				#@-node:4::<< skip the function definition, or continue >>
-				#@-node:2::<< handle possible Pascal function >>
-
-			elif ch == '"' or ch == '\'':
-				i = skip_pascal_string(s,i)
+			if ch == '{': i = skip_pascal_braces(s,i)
+			elif ch == '"' or ch == '\'': i = skip_pascal_string(s,i)
+			elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
+			elif match(s,i,"(*"): i = skip_pascal_block_comment(s,i)
 			elif is_c_id(s[i]):
 				
 				#@<< handle possible Pascal function >>
-				#@+node:2::<< handle possible Pascal function >>
+				#@+node:1::<< handle possible Pascal function >>
 				#@+body
 				if match_c_word(s,i,"begin"):
 					i = skip_pascal_begin_end(s,i)
@@ -1745,6 +1603,9 @@ class leoImportCommands:
 						i = skip_c_id(s,i)
 				elif (match_c_word(s,i,"function")  or match_c_word(s,i,"procedure") or
 					match_c_word(s,i,"constructor") or match_c_word(s,i,"destructor")):
+				
+					# line = get_line(s,i) ; trace(`line`)
+					
 					start = i
 					i = skip_c_id(s,i)
 					i = skip_ws_and_nl(s,i)
@@ -1753,13 +1614,11 @@ class leoImportCommands:
 					#@+node:3::<< remember the function name, or continue >>
 					#@+body
 					if i < len(s) and is_c_id(s[i]):
-						name_start = i
-						i = skip_c_id(s,i)
+						j = i ; i = skip_c_id(s,i)
 						while i + 1 < len(s) and s[i] == '.' and is_c_id(s[i+1]):
-							i += 1
-							name_start = i
+							i += 1 ; j = i
 							i = skip_c_id(s,i)
-						name_end = i - 1
+						name = s[j:i]
 					else: continue
 					#@-body
 					#@-node:3::<< remember the function name, or continue >>
@@ -1776,52 +1635,32 @@ class leoImportCommands:
 						# The paremeter list may contain "inner" semicolons.
 						if s[i] == '(':
 							i = skip_parens(s,i)
-							if i < len(s) and s[i] == ')':
+							if match(s,i,')'):
 								i += 1
 							else: break
 						else: i += 1
-					if i < len(s) and s[i] == ';':
+					if match(s,i,';'):
 						i += 1
 					i = skip_ws_and_nl(s,i)
+					
 					if match_c_word(s,i,"var"):
 						# Skip to the next begin.
 						i = skip_c_id(s,i)
 						done = false
 						while i < len(s) and not done:
 							ch = s[i]
-							if ch == '{':
-								i = skip_pascal_braces(s,i)
-							elif ch == '/':
-								
-								#@<< handle possible Pascal single-line comment >>
-								#@+node:1::<< handle possible Pascal single-line comment >>
-								#@+body
-								i += 1 # skip the opening '/'
-								if  i < len(s) and s[i] == '/':
-									i = skip_to_end_of_line(s,i)
-								#@-body
-								#@-node:1::<< handle possible Pascal single-line comment >>
-
-							elif ch == '(':
-								
-								#@<< handle possible Pascal block comment >>
-								#@+node:2::<< handle possible Pascal block comment >>
-								#@+body
-								i += 1 # skip the '('
-								if  i < len(s) and s[i] == '*':
-									i += 1 # skip the '*'
-									i = skip_pascal_block_comment(s,i)
-								#@-body
-								#@-node:2::<< handle possible Pascal block comment >>
-
-							elif ch == '"' or ch == '\'':
-								i = skip_pascal_string(s,i)
-							elif match_c_word(s,i,"begin"):
-								done = true
+							if ch == '{': i = skip_pascal_braces(s,i)
+							elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
+							elif match(s,i,"(*"): i = skip_pascal_block_comment(s,i)
+							elif is_c_id(ch):
+								if match_c_word(s,i,"begin"): done = true
+								else: i = skip_c_id(s,i)
+							elif ch == '"' or ch == '\'': i = skip_pascal_string(s,i)
 							else: i += 1
 					#@-body
 					#@-node:1::<< skip past the semicolon >>
 
+					
 					if not match_c_word(s,i,"begin"):
 						continue
 					# Skip to the matching end.
@@ -1829,16 +1668,16 @@ class leoImportCommands:
 					if match_c_word(s,i,"end"):
 						i = skip_c_id(s,i)
 						i = skip_ws_and_nl(s,i)
-						if i < len(s) and s[i] == ';':
+						if match(s,i,';'):
 							i += 1
 						i = skip_ws(s,i)
-						if i < len(s) and(s[i] == '\n' or s[i] == '\r'):
+						if is_nl(s,i):
 							i = skip_nl(s,i)
 					else: continue
 					#@-body
 					#@-node:4::<< skip the function definition, or continue >>
 
-					if method_seen == false:
+					if not method_seen:
 						method_seen = true
 						
 						#@<< create a child node for leading declarations >>
@@ -1849,10 +1688,14 @@ class leoImportCommands:
 						while i < start and is_ws_or_nl(s,i):
 							i += 1
 						if i < start:
+							parent.appendStringToBody("@language pascal\n")
 							headline = angleBrackets(self.methodName + " declarations ")
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(headline + "\n")
-							body = "@code\n\n" + s[scan_start:start]
+							if self.treeType == "@file":
+								body = s[scan_start:start]
+							else:
+								body = "@code\n\n" + s[scan_start:start]
 							self.createHeadline(parent,body,headline)
 						i = save_ip
 						scan_start = i
@@ -1864,8 +1707,11 @@ class leoImportCommands:
 						#@+node:5::<< append noweb method reference to the parent node >>
 						#@+body
 						# Append the headline to the parent's body.
-						ref = angleBrackets(" " + self.methodName + " methods ")
-						parent.appendStringToBody(ref + "\n")
+						if self.treeType == "@file":
+							parent.appendStringToBody("@others\n")
+						else:
+							parent.appendStringToBody(
+								angleBrackets(" " + self.methodName + " methods ") + "\n")
 						#@-body
 						#@-node:5::<< append noweb method reference to the parent node >>
 
@@ -1877,11 +1723,10 @@ class leoImportCommands:
 					#@+body
 					# Point i _after_ the last character of the function.
 					i = skip_ws(s,i)
-					if i < len(s) and(s[i] == '\r' or s[i] == '\n'):
+					if is_nl(s,i):
 						i = skip_nl(s,i)
 					function_end = i
-					length = name_end - name_start + 1
-					headline = (name_start,length)
+					headline = name
 					body = s[function_start:function_end]
 					body = self.massageBody(body,methodKind)
 					self.createHeadline(parent,body,headline)
@@ -1891,12 +1736,12 @@ class leoImportCommands:
 
 				else: i = skip_c_id(s,i)
 				#@-body
-				#@-node:2::<< handle possible Pascal function >>
+				#@-node:1::<< handle possible Pascal function >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:3:C=8:<< Append any unused text to the parent's body text >>
+		#@+node:2:C=2:<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1905,302 +1750,731 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:3:C=8:<< Append any unused text to the parent's body text >>
+		#@-node:2:C=2:<< Append any unused text to the parent's body text >>
 	#@-body
-	#@-node:3::scanPascalText
-	#@+node:4::Python scanners
-	#@+node:1::scanPythonClass
+	#@-node:4::scanPascalText
+	#@-node:5::Scanners for createOutline
+	#@-node:2::Import
+	#@+node:3::Export
+	#@+node:1::convertCodePartToWeb
 	#@+body
 	#@+at
-	#  Creates a child node c of parent for the class, and children of c for each def in the class.
+	#  Headlines not containing a section reference are ignored in noweb and generate index index in cweb.
 
 	#@-at
 	#@@c
 	
-	def scanPythonClass (self,s,i,parent):
+	def convertCodePartToWeb (self,s,i,v,result):
 	
-		trace(`get_line(s,i)`)
-		start = i
+		# line = get_line(s,i) ; trace(`line`)
+		c = self.commands
+		lb = choose(self.webType=="cweb","@<","<<")
+		rb = choose(self.webType=="cweb","@>",">>")
+		h = string.strip(v.headString())
 		
-		#@<< set classname and headline, or return i >>
-		#@+node:1::<< set classname and headline, or return i >>
+		#@<< put v's headline ref in head_ref >>
+		#@+node:1::<< put v's headline ref in head_ref>>
 		#@+body
-		# Skip to the class name.
-		i = skip_ws(s,i)
-		i = skip_c_id(s,i) # skip "class"
-		i = skip_ws_and_nl(s,i)
-		if i < len(s) and is_c_id(s[i]):
-			j = i ; i = skip_c_id(s,i)
-			classname = s[j:i]
-			headline = "class " + classname
-		else: return i
-		#@-body
-		#@-node:1::<< set classname and headline, or return i >>
+		#@+at
+		#  We look for either noweb or cweb brackets. head_ref does not include these brackets.
 
-		i = skip_line(s,0) # Skip the class line.
+		#@-at
+		#@@c
 		
-		#@<< create class_vnode >>
-		#@+node:2::<< create class_vnode  >>
+		head_ref = None
+		j = 0
+		if match(h,j,"<<"):
+			k = string.find(h,">>",j)
+		elif match(h,j,"<@"):
+			k = string.find(h,"@>",j)
+		else:
+			k = -1
+		
+		if k > -1:
+			head_ref = string.strip(h[j+2:k])
+			if len(head_ref) == 0:
+				head_ref = None
+		#@-body
+		#@-node:1::<< put v's headline ref in head_ref>>
+
+		
+		#@<< put name following @root or @file in file_name >>
+		#@+node:2::<< put name following @root or @file in file_name >>
 		#@+body
-		# Create the section name using the old value of self.methodName.
-		body = angleBrackets(" " + self.methodName + " methods ") + "=\n\n"
-		# i points just after the class line.
-		body2 = s[start:i]
-		body2 = self.undentPythonBody(body2)
-		body += body2
-		class_vnode = self.createHeadline(parent,body,headline)
-		#@-body
-		#@-node:2::<< create class_vnode  >>
-
-		savedMethodName = self.methodName
-		self.methodName = headline
-		# Create a node for leading declarations of the class.
-		i = self.scanPythonDecls(s,class_vnode,indent_refs)
-		
-		#@<< append a reference to class_vnode's methods >>
-		#@+node:3::<< Append a reference to class_vnode's methods >>
-		#@+body
-		# This must be done after the declaration reference is generated.
-		ref = "\t" + angleBrackets(" class " + classname + " methods ")
-		class_vnode.appendStringToBody(ref + "\n\n")
-		#@-body
-		#@-node:3::<< Append a reference to class_vnode's methods >>
-
-		
-		#@<< create nodes for all defs of the class >>
-		#@+node:4::<< create nodes for all defs of the class >>
-		#@+body
-		line_start = find_line_start(s,i)
-		indent1 = self.getPythonIndent(s[line_start:],0)
-		# Skip past blank lines.
-		i = skip_blank_lines(s,i)
-		start = i
-		indent = indent1
-		while i < len(s) and indent >= indent1:
-			progress = i
-			if is_nl(s,i):
-				j = skip_nl(s,i)
-				indent = self.getPythonIndent(s,j)
-				if indent >= indent1: i = j
-			elif match_c_word(s,i,"def"):
-				j = self.scanPythonDef(s,i,class_vnode)
-				i += j ; start = i
-				indent = self.getPythonIndent(s,i)
-			elif match_c_word(s,i,"class"):
-				start = i = self.scanPythonClass(s,start,class_vnode)
-				indent = self.getPythonIndent(s,i)
-			elif s[i] == '#':
-				i = skip_to_end_of_line(s,i)
-			elif s[i] == '"' or s[i] == '\'':
-				i = skip_python_string(s,i)
-			else: i += 1
-			assert(progress < i)
-		#@-body
-		#@-node:4::<< create nodes for all defs of the class >>
-
-		self.methodName = savedMethodName
-		return i
-	#@-body
-	#@-node:1::scanPythonClass
-	#@+node:2::scanPythonDef
-	#@+body
-	#@+at
-	#  Creates a node of parent for the def.
-
-	#@-at
-	#@@c
-	
-	def scanPythonDef (self,s,i,parent):
-	
-		trace(`get_line(s,i)`)
-		start = i
-		
-		#@<< set headline or return i >>
-		#@+node:1::<< set headline or return i >>
-		#@+body
-		i = skip_ws(s,0)
-		i = skip_c_id(s,i) # Skip the "def"
-		i = skip_ws_and_nl(s,i)
-		if i < len(s) and is_c_id(s[i]):
-			j = i ; i = skip_c_id(s,i)
-			headline = s[j:i]
-			trace("headline:" + `headline`)
-		else: return i
-		#@-body
-		#@-node:1::<< set headline or return i >>
-
-		
-		#@<< skip the Python def >>
-		#@+node:2::<< skip the Python def >>
-		#@+body
-		# This doesn't handle nested defs or classes.  It should.
-		# Set indent1 to the indentation of the def line.
-		
-		line_start = find_line_start(s,start)
-		indent1 = self.getPythonIndent(s[line_start:],0)
-		i = skip_line(s,i) # Skip the def line.
-		indent = self.getPythonIndent(s,i)
-		while i < len(s) and indent >= indent1:
-			progress = i
-			ch = s[i]
-			if is_nl(s,i):
-				i = skip_nl(s,i)
-				indent = self.getPythonIndent(s,i)
-				if indent <= indent1: break
-			elif ch == '#': i = skip_line(s,i)
-			elif ch == '"' or ch == '\'': i = skip_python_string(s,i)
-			else: i += 1
-			assert(progress < i)
-		#@-body
-		#@-node:2::<< skip the Python def >>
-
-		# Create the def node.
-		savedMethodName = self.methodName
-		self.methodName = headline
-		
-		#@<< Create def node >>
-		#@+node:3::<< Create def node >>
-		#@+body
-		# Create the header line.
-		body = angleBrackets(" " + savedMethodName + " methods ") + "=\n\n"
-		# Create body.
-		start = skip_blank_lines(s,start)
-		body2 = s[:i]
-		body2 = self.undentPythonBody(body2)
-		body += body2
-		# Create the node.
-		self.createHeadline(parent,body,headline)
-		#@-body
-		#@-node:3::<< Create def node >>
-
-		self.methodName = savedMethodName
-		return i
-	#@-body
-	#@-node:2::scanPythonDef
-	#@+node:3::scanPythonDecls
-	#@+body
-	def scanPythonDecls (self,s,parent,indent_parent_ref_flag):
-		
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		i = 0 ; done = false
-		while not done and i < len(s):
-			progress = i
-			ch = s[i]
-			if ch == '\n': i = skip_nl(s,i)
-			elif ch == '#': i = skip_to_end_of_line(s,i)
-			elif ch == '"' or ch == '\'': i = skip_python_string(s,i)
-			elif is_c_id(s[i]):
-				
-				#@<< break on def or class >>
-				#@+node:1::<< break on def or class >>
-				#@+body
-				if match_c_word(s,i,"def") or match_c_word(s,i,"class"):
-					i = find_line_start(s,i)
-					done = true
-					break
-				else:
-					i = skip_c_id(s,i)
-				#@-body
-				#@-node:1::<< break on def or class >>
-
-			else: i += 1
-			assert(progress < i)
-		j = skip_blank_lines(s,0)
-		if is_nl(s,j):
-			j = skip_nl(s,j)
-		if j < i:
+		if match(h,0,"@file") or match(h,0,"@root"):
+			line = h[5:]
+			line = string.strip(line)
 			
-			#@<< Create a child node for declarations >>
-			#@+node:2::<< Create a child node for declarations >>
+			#@<< set file_name >>
+			#@+node:1::<< Set file_name >>
 			#@+body
-			# Create the body.
-			body = "@code\n\n" + s[j:i]
-			body = self.undentPythonBody(body)
-			# Create the headline.
-			headline = angleBrackets(" " + self.methodName + " declarations ")
-			# Append the headline to the parent's body.
-			ctab = choose(indent_parent_ref_flag,"\t","")
-			parent.appendStringToBody(ctab + headline + "\n")
-			# Create the node for the decls
-			self.createHeadline(parent,body,headline)
+			# set j & k so line[j:k] is the file name.
+			# trace(`line`)
+			
+			if match(line,0,"<"):
+				j = 1 ; k = string.find(line,">",1)
+			elif match(line,0,'"'):
+				j = 1 ; k = string.find(line,'"',1)
+			else:
+				j = 0 ; k = string.find(line," ",0)
+			if k == -1:
+				k = len(line)
+			
+			file_name = string.strip(line[j:k])
+			if file_name and len(file_name) == 0:
+				file_name = None
 			#@-body
-			#@-node:2::<< Create a child node for declarations >>
+			#@-node:1::<< Set file_name >>
 
-		return i
+		else:
+			file_name = line = None
+
+		#@-body
+		#@-node:2::<< put name following @root or @file in file_name >>
+
+		if match_word(s,i,"@root"):
+			i = skip_line(s,i)
+			
+			#@<< append ref to file_name >>
+			#@+node:3::<< append ref to file_name >>
+			#@+body
+			if self.webType == "cweb":
+				if not file_name:
+					result += "@<root@>=\n"
+				else:
+					result += "@(" + file_name + "@>\n" # @(...@> denotes a file.
+			else:
+				if not file_name:
+					file_name = "*"
+				result += lb + file_name + rb + "=\n"
+
+			#@-body
+			#@-node:3::<< append ref to file_name >>
+
+		elif match_word(s,i,"@c") or match_word(s,i,"@code"):
+			i = skip_line(s,i)
+			
+			#@<< append head_ref >>
+			#@+node:4::<< append head_ref >>
+			#@+body
+			if self.webType == "cweb":
+				if not head_ref:
+					result += "@^" + h + "@>\n" # Convert the headline to an index entry.
+					result += "@c\n" # @c denotes a new section.
+				else: 
+					escaped_head_ref = string.replace(head_ref,"@","@@")
+					result += "@<" + escaped_head_ref + "@>=\n"
+			else:
+				if not head_ref:
+					if v == c.currentVnode():
+						head_ref = choose(file_name,file_name,"*")
+					else:
+						head_ref = "@others"
+			
+				result += lb + head_ref + rb + "=\n"
+			#@-body
+			#@-node:4::<< append head_ref >>
+
+		elif match_word(h,0,"@file"):
+			# Only do this if nothing else matches.
+			
+			#@<< append ref to file_name >>
+			#@+node:3::<< append ref to file_name >>
+			#@+body
+			if self.webType == "cweb":
+				if not file_name:
+					result += "@<root@>=\n"
+				else:
+					result += "@(" + file_name + "@>\n" # @(...@> denotes a file.
+			else:
+				if not file_name:
+					file_name = "*"
+				result += lb + file_name + rb + "=\n"
+
+			#@-body
+			#@-node:3::<< append ref to file_name >>
+
+			i = skip_line(s,i) # 4/28/02
+		else:
+			
+			#@<< append head_ref >>
+			#@+node:4::<< append head_ref >>
+			#@+body
+			if self.webType == "cweb":
+				if not head_ref:
+					result += "@^" + h + "@>\n" # Convert the headline to an index entry.
+					result += "@c\n" # @c denotes a new section.
+				else: 
+					escaped_head_ref = string.replace(head_ref,"@","@@")
+					result += "@<" + escaped_head_ref + "@>=\n"
+			else:
+				if not head_ref:
+					if v == c.currentVnode():
+						head_ref = choose(file_name,file_name,"*")
+					else:
+						head_ref = "@others"
+			
+				result += lb + head_ref + rb + "=\n"
+			#@-body
+			#@-node:4::<< append head_ref >>
+
+		i,result = self.copyPart(s,i,result)
+		return i, string.strip(result) + "\n"
+		
+
+	#@+at
+	#  %defs a b c
+
+	#@-at
 	#@-body
-	#@-node:3::scanPythonDecls
-	#@+node:4::scanPythonText
+	#@-node:1::convertCodePartToWeb
+	#@+node:2::convertDocPartToWeb (handle @ %def)
+	#@+body
+	def convertDocPartToWeb (self,s,i,result):
+	
+		# line = get_line(s,i) ; trace(`line`)
+		if match_word(s,i,"@doc"):
+			i = skip_line(s,i)
+		elif match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@*"):
+			i += 2
+		elif match(s,i,"@\n"):
+			i += 1
+		i = skip_ws_and_nl(s,i)
+		i, result2 = self.copyPart(s,i,"")
+		if len(result2) > 0:
+			# Break lines after periods.
+			result2 = string.replace(result2,".  ",".\n")
+			result2 = string.replace(result2,". ",".\n")
+			result += "\n@\n" + string.strip(result2) + "\n\n"
+		else:
+			# All nodes should start with '@', even if the doc part is empty.
+			result += choose(self.webType=="cweb","\n@ ","\n@\n")
+		return i, result
+	#@-body
+	#@-node:2::convertDocPartToWeb (handle @ %def)
+	#@+node:3:C=3:convertVnodeToWeb
 	#@+body
 	#@+at
-	#  This code creates a child of parent for each Python function definition seen.  See the comments for scanCText for what the 
-	# text looks like.
+	#  This code converts a vnode to noweb text as follows:
+	# 
+	# Convert @doc to @
+	# Convert @root or @code to << name >>=, assuming the headline contains << name >>
+	# Ignore other directives
+	# Format doc parts so they fit in pagewidth columns.
+	# Output code parts as is.
 
 	#@-at
 	#@@c
 	
-	def scanPythonText (self,s,parent):
-		
-		j = skip_to_end_of_line(s,0) ; trace(s[:j])
-		decls_seen = false
-		start = i = 0
+	def convertVnodeToWeb (self,v):
+	
+		if not v: return ""
+		s = v.bodyString()
+		lb = choose(self.webType=="cweb","@<","<<")
+		i = 0 ; result = "" ; docSeen = false
 		while i < len(s):
 			progress = i
-			# j = skip_line(s,i) ; trace(s[i:j])
-			ch = s[i]
-			if ch == '\n': i = skip_nl(s,i)
-			elif ch == '#': i = skip_to_end_of_line(s,i)
-			elif ch == '"' or ch == '\'': i = skip_python_string(s,i)
-			elif is_c_id(ch):
+			# line = get_line(s,i) ; trace(`line`)
+			i = skip_ws_and_nl(s,i)
+			if self.isDocStart(s,i) or match_word(s,i,"@doc"):
+				i,result = self.convertDocPartToWeb(s,i,result)
+				docSeen = true
+			elif (match_word(s,i,"@code") or match_word(s,i,"@root") or
+				match_word(s,i,"@c") or match(s,i,lb)):
 				
-				#@<< handle possible Python function or class >>
-				#@+node:1::<< handle possible Python function or class >>
+				#@<< Supply a missing doc part >>
+				#@+node:1::<< Supply a missing doc part >>
 				#@+body
-				if match_c_word(s,i,"def"):
-					if not decls_seen:
-						j = self.scanPythonDecls(s[i:],parent,dont_indent_refs)
-						i += j ; start = i
-						decls_seen = true
-					j = self.scanPythonDef(s,i,parent)
-					i += j ; start = i
-				elif match_c_word(s,i,"class"):
-					if not decls_seen:
-						j = self.scanPythonDecls(s[start:],parent,dont_indent_refs)
-						i = start + j ; start = i
-						decls_seen = true
-					j = self.scanPythonClass(s,start,parent)
-					i = start + j ; start = i
-				else:
-					i = skip_c_id(s,i)
+				if not docSeen:
+					docSeen = true
+					result += choose(self.webType=="cweb","\n@ ","\n@\n")
 				#@-body
-				#@-node:1::<< handle possible Python function or class >>
+				#@-node:1::<< Supply a missing doc part >>
 
-			else: i += 1
+				i,result = self.convertCodePartToWeb(s,i,v,result)
+			elif self.treeType == "@file":
+				
+				#@<< Supply a missing doc part >>
+				#@+node:1::<< Supply a missing doc part >>
+				#@+body
+				if not docSeen:
+					docSeen = true
+					result += choose(self.webType=="cweb","\n@ ","\n@\n")
+				#@-body
+				#@-node:1::<< Supply a missing doc part >>
+
+				i,result = self.convertCodePartToWeb(s,i,v,result)
+			else:
+				i,result = self.convertDocPartToWeb(s,i,result)
+				docSeen = true
 			assert(progress < i)
-		
-		#@<< Append a reference to the methods of this file >>
-		#@+node:2::<< Append a reference to the methods of this file >>
-		#@+body
-		ref = angleBrackets(" " + self.methodName + " methods ")
-		parent.appendStringToBody(ref + "\n\n")
-		#@-body
-		#@-node:2::<< Append a reference to the methods of this file >>
-
-		
-		#@<< Append any unused python text to the parent's body text >>
-		#@+node:3::<< Append any unused python text to the parent's body text >>
-		#@+body
-		# Do nothing if only whitespace is left.
-		i = start ; i = skip_ws_and_nl(s,i)
-		if i < len(s):
-			parent.appendStringToBody(s[start:])
-		#@-body
-		#@-node:3::<< Append any unused python text to the parent's body text >>
+		result = string.strip(result)
+		if len(result) > 0:
+			result += "\n"
+		return result
 	#@-body
-	#@-node:4::scanPythonText
-	#@-node:4::Python scanners
-	#@-node:6::Language Specific
-	#@-others
+	#@-node:3:C=3:convertVnodeToWeb
+	#@+node:4:C=4:copyPart
+	#@+body
+	# Copies characters to result until the end of the present section is seen.
+	
+	def copyPart (self,s,i,result):
+	
+		# line = get_line(s,i) ; trace(`line`)
+		lb = choose(self.webType=="cweb","@<","<<")
+		rb = choose(self.webType=="cweb","@>",">>")
+		type = self.webType
+		while i < len(s):
+			progress = j = i # We should be at the start of a line here.
+			# line = get_line(s,i) ; trace(`line`)
+			i = skip_nl(s,i) ; i = skip_ws(s,i)
+			if self.isDocStart(s,i):
+				return i, result
+			if match_word(s,i,"@doc") or match_word(s,i,"@c") or match_word(s,i,"@root"):
+				return i, result
+			elif (match(s,i,"<<") and # must be on separate lines.
+				find_on_line(s,i,">>=") > -1):
+				return i, result
+			else:
+				# Copy the entire line, escaping '@' and
+				# Converting @others to < < @ others > >
+				i = skip_line(s,j) ; line = s[j:i]
+				if type == "cweb":
+					line = string.replace(line,"@","@@")
+				else:
+					j = skip_ws(line,0)
+					if match(line,j,"@others"):
+						line = string.replace(line,"@others",lb + "@others" + rb)
+					elif match(line,0,"@"):
+						# Special case: do not escape @ %defs.
+						k = skip_ws(line,1)
+						if not match(line,k,"%defs"):
+							line = "@" + line
+				result += line
+			assert(progress < i)
+		return i, string.rstrip(result)
+	#@-body
+	#@-node:4:C=4:copyPart
+	#@+node:5:C=5:flattenOutline
+	#@+body
+	def flattenOutline (self,fileName):
+	
+		c = self.commands ; v = c.currentVnode()
+		if not v: return
+		after = v.nodeAfterTree()
+		firstLevel = v.level()
+		try:
+			file = open(fileName,'w')
+			while v and v != after:
+				head = v.moreHead(firstLevel)
+				file.write( head + '\n')
+				body = v.moreBody() # Inserts escapes.
+				if len(body) > 0:
+					file.write(body + '\n')
+				v = v.threadNext()
+			file.close()
+		except:
+			es("File error while flattening the outline")
+	#@-body
+	#@-node:5:C=5:flattenOutline
+	#@+node:6:C=6:outlineToWeb
+	#@+body
+	def outlineToWeb (self,fileName,webType):
+	
+		c = self.commands ; v = c.currentVnode()
+		if v == None: return
+		self.webType = webType
+		after = v.nodeAfterTree()
+		try: # This can fail if the file is open by another app.
+			file = open(fileName,'w')
+			self.treeType = "@file"
+			# Set self.treeType to @root if v or an ancestor is an @root node.
+			while v:
+				flag, junk = is_special(v.bodyString(),0,"@root")
+				if flag:
+					self.treeType = "@root" ; break
+				else: v = v.parent()
+			v = c.currentVnode()
+			while v and v != after:
+				s = self.convertVnodeToWeb(v)
+				if len(s) > 0:
+					file.write(s)
+					if s[-1] != '\n':
+						file.write('\n')
+				v = v.threadNext()
+			file.close()
+		except:
+			es("File error in Outline To noweb command")
+	#@-body
+	#@-node:6:C=6:outlineToWeb
+	#@+node:7::removeSentinelsCommand
+	#@+body
+	def removeSentinelsCommand (self,fileName):
+	
+		path, self.fileName = os.path.split(fileName) # path/fileName
+		trace(`self.fileName`)
+		
+		#@<< Read file into s >>
+		#@+node:1::<< Read file into s >>
+		#@+body
+		try:
+			file = open(fileName)
+			s = file.read()
+			file.close()
+		except:
+			es("Can not read " + fileName)
+			return
+		#@-body
+		#@-node:1::<< Read file into s >>
 
+		valid = true
+		line_delim = start_delim = end_delim = None
+		
+		#@<< set delims from the header line >>
+		#@+node:2::<< set delims from the header line >>
+		#@+body
+		#@+at
+		#  This code is similar to atFile::scanHeader.
+
+		#@-at
+		#@@c
+		
+		tag = "@+leo"
+		# Skip any non @+leo lines.
+		i = 0
+		while i < len(s) and not find_on_line(s,i,tag):
+			i = skip_line(s,i)
+		# We should be at the @+leo line.
+		i = j = skip_ws(s,i)
+		# The opening comment delim is the initial non-whitespace.
+		while i < len(s) and not match(s,i,tag) and not is_ws(s[i]) and not is_nl(s,i):
+			i += 1
+		if j < i: line_delim = s[j:i]
+		else: valid = false
+		# Make sure we have @+leo
+		i = skip_ws(s,i)
+		if match(s,i,tag): i += len(tag)
+		else: valid = false
+		# The closing comment delim is the trailing non-whitespace.
+		i = j = skip_ws(s,i)
+		while i < n and not is_ws(s[i]) and not is_nl(s,i):
+			i += 1
+		if j < i:
+			start_delim = line_delim
+			end_delim = s[j:i]
+			line_delim = None
+		#@-body
+		#@-node:2::<< set delims from the header line >>
+
+		if valid == false:
+			es("Invalid @+leo sentinel in " + fileName)
+		else:
+			trace("line:"+`line_delim`+","+
+				"start:"+`start_delim`+","+
+				"end:"+`end_delim`)
+			s = removeSentinelLines(s,line_delim,start_delim,end_delim)
+			newFileName = os.path.join(path,fileName+".tmp")
+			
+			#@<< Write s into newFileName >>
+			#@+node:3::<< Write s into newFileName >>
+			#@+body
+			try:
+				file = open(newFileName,"w")
+				file.write(s)
+				file.close()
+			except:
+				es("Can not create " + newFileName)
+			#@-body
+			#@-node:3::<< Write s into newFileName >>
+	#@-body
+	#@-node:7::removeSentinelsCommand
+	#@+node:8::removeSentinelLines
+	#@+body
+	#@+at
+	#  Properly removes all sentinel lines in s.  Only leading single-line comments may be sentinels.
+	# 
+	# line_delim, start_delim and end_delim are the comment delimiters.
+
+	#@-at
+	#@@c
+	
+	def removeSentinelLines(s,line_delim,start_delim,end_delim):
+	
+		i = 0 ; result = "" ; first = true
+		while i < len(s):
+			start = i # The start of the next syntax element.
+			if first or is_nl(s,i):
+				first = false
+				
+				#@<< handle possible sentinel >>
+				#@+node:1::<< handle possible sentinel >>
+				#@+body
+				i = skip_nl(s,i)
+				i = skip_ws(s,i)
+				
+				if line_delim:
+					if match(s,i,line_delim):
+						j = i + len(line_delim)
+						i = skip_to_end_of_line(s,i)
+						if match(s,j,"@"):
+							continue # Remove the sentinel.
+				elif start_delim:
+					if match(s,i,start_delim):
+						j = i + len(start_delim)
+						i = skip_matching_delims(s,i,start_delim,end_delim)
+						if match(s,j,"@"):
+							continue # Remove the sentinel.
+				#@-body
+				#@-node:1::<< handle possible sentinel >>
+
+			elif match(s,i,line_delim):
+				i = skip_to_end_of_line(s,i)
+			elif match(s,i,start_delim):
+				i = skip_matching_delims(s,i,start_delim,end_delim)
+			elif match(s,i,"'") or match(s,i,'"'):
+				i = skip_string(s,i)
+			else:
+				i += 1
+			assert(i==0 or start<i)
+			result += s[start:i]
+		return result
+	#@-body
+	#@-node:8::removeSentinelLines
+	#@-node:3::Export
+	#@+node:4::Utilities
+	#@+node:1::createHeadline
+	#@+body
+	def createHeadline (self,parent,body,headline):
+	
+		# trace("parent,headline:" + `parent` + ":" + `headline`)
+		# Create the vnode.
+		v = parent.insertAsLastChild()
+		v.initHeadString(headline)
+		# Set the body.
+		if len(body) > 0: 
+			v.setBodyStringOrPane(body)
+		return v
+	#@-body
+	#@-node:1::createHeadline
+	#@+node:2::error
+	#@+body
+	def error (self,s): es(s)
+	#@-body
+	#@-node:2::error
+	#@+node:3::getPythonIndent
+	#@+body
+	#@+at
+	#  This code returns the leading whitespace of a line, ignoring blank and comment lines.
+
+	#@-at
+	#@@c
+	
+	def getPythonIndent (self,s,i):
+	
+		c = self.commands
+		i = find_line_start(s,i)
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
+			if is_nl(s,i) or match(s,i,"#"):
+				i = skip_line(s,i) # ignore blank lines and comments.
+			else:
+				i, width = skip_leading_ws_with_indent(s,i,c.tab_width)
+				# trace("returns:" + `width`)
+				return width
+		# trace("returns:0")
+		return 0
+	#@-body
+	#@-node:3::getPythonIndent
+	#@+node:4::isDocStart and isModuleStart
+	#@+body
+	# The start of a document part or module in a noweb or cweb file.
+	# Exporters may have to test for @doc as well.
+	
+	def isDocStart (self,s,i):
+		
+		if not match(s,i,"@"):
+			return false
+	
+		j = skip_ws(s,i+1)
+		if match(s,j,"%defs"):
+			return false
+		elif self.webType == "cweb" and match(s,i,"@*"):
+			return true
+		else:
+			return match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n")
+	
+	def isModuleStart (self,s,i):
+	
+		if self.isDocStart(s,i):
+			return true
+		else:
+			return self.webType == "cweb" and (
+				match(s,i,"@c") or match(s,i,"@p") or
+				match(s,i,"@d") or match(s,i,"@f"))
+
+	#@-body
+	#@-node:4::isDocStart and isModuleStart
+	#@+node:5::massageBody
+	#@+body
+	def massageBody (self,s,methodKind):
+		
+		# line = get_line(s,0) ; trace(`line`)
+		c = self.commands
+		if self.treeType == "@file":
+			if self.fileType == "py":
+				return self.undentPythonBody(s)
+			else:
+				newBody, comment = self.skipLeadingComments(s)
+				newLine = choose(is_nl(newBody,0),"\n","\n\n")
+				if len(comment) > 0:
+					return comment + "\n@c" + newLine + newBody
+				else:
+					return newBody
+		else:
+			# Inserts < < self.methodName methodKind > > =
+			cweb = self.fileType == "c" and not c.use_noweb_flag
+			lb = choose(cweb,"@<","<<")
+			rb = choose(cweb,"@>=",">>=")
+			intro = lb + " " + self.methodName + " " + methodKind + " " + rb
+			if self.fileType == "py":
+				newBody = self.undentPythonBody(s)
+				newLine = choose(is_nl(newBody,0),"\n","\n\n")
+				return intro + newLine + newBody
+			else:
+				newBody, comment = self.skipLeadingComments(s)
+				newLine = choose(is_nl(newBody,0),"\n","\n\n")
+				if len(comment) > 0:
+					return comment + "\n" + intro + newLine + newBody
+				else:
+					return intro + newLine + newBody
+	#@-body
+	#@-node:5::massageBody
+	#@+node:6::massageComment
+	#@+body
+	#@+at
+	#  Returns s with all runs of whitespace and newlines converted to a single blank.  It also removes leading and trailing whitespace.
+
+	#@-at
+	#@@c
+	
+	def massageComment (self,s):
+	
+		# line = get_line(s,0) ; trace(`line`)
+		s = string.strip(s)
+		s = string.replace(s,"\n"," ")
+		s = string.replace(s,"\r"," ")
+		s = string.replace(s,"\t"," ")
+		s = string.replace(s,"  "," ")
+		s = string.strip(s)
+		return s
+	#@-body
+	#@-node:6::massageComment
+	#@+node:7::skipLeadingComments
+	#@+body
+	#@+at
+	#  This skips all leading comments in s, returning the remaining body text and the massaged comment text.
+	# Returns (body, comment)
+
+	#@-at
+	#@@c
+	
+	def skipLeadingComments (self,s):
+	
+		# trace(`get_line(s,0)`)
+		s = string.lstrip(s)
+		i = 0 ; comment = ""
+		if self.fileType in [".c", ".cpp", ".java"]:
+			
+			#@<< scan for C-style comments >>
+			#@+node:1::<< scan for C-style comments >>
+			#@+body
+			while i < len(s):
+				if match(s,i,"//"): # Handle a C++ comment.
+					while match(s,i,'/'):
+						i += 1
+					j = i ; i = skip_line(s,i)
+					comment = comment + self.massageComment(s[j:i]) + "\n"
+					i = skip_ws_and_nl(s,i)
+				elif match(s,i,"/*"): # Handle a block C comment.
+					j = i + 2 ; i = skip_block_comment (s,i)
+					k = choose(match(s,i-2,"*/"),i-2,i)
+					comment = comment + self.massageComment(s[j:k]) + "\n"
+					i = skip_ws_and_nl(s,i)
+				else: break
+			#@-body
+			#@-node:1::<< scan for C-style comments >>
+
+		elif self.fileType == ".pas":
+			
+			#@<< scan for Pascal comments >>
+			#@+node:2::<< scan for Pascal comments >>
+			#@+body
+			while i < len(s):
+				if match(s,i,"//"): # Handle a Pascal line comment.
+					while match(s,i,'/'):
+						i += 1
+					j = i ; i = skip_line(s,i)
+					comment = comment + self.massageComment(s[j:i]) + "\n"
+					i = skip_ws_and_nl(s,i)
+				elif match(s,i,'(*'):
+					j = i + 1 ; i = skip_pascal_block_comment(s,i)
+					comment = comment + self.massageComment(s[j:i]) + "\n"
+					i = skip_ws_and_nl(s,i)
+				else: break
+			#@-body
+			#@-node:2::<< scan for Pascal comments >>
+
+		elif self.fileType == ".py":
+			
+			#@<< scan for Python comments >>
+			#@+node:3::<< scan for Python comments >>
+			#@+body
+			while i < len(s) and match(s,i,'#'):
+				j = i + 1 ; i = skip_line(s,i)
+				comment = comment + self.massageComment(s[j:i]) + "\n"
+				i = skip_ws_and_nl(s,i)
+			#@-body
+			#@-node:3::<< scan for Python comments >>
+
+		comment = string.strip(comment)
+		if len(comment) == 0:
+			return s[i:], ""
+		elif self.treeType == "@file":
+			return s[i:], "@ " + comment
+		else:
+			return s[i:], "@ " + comment + "\n"
+	#@-body
+	#@-node:7::skipLeadingComments
+	#@+node:8::undentPythonBody
+	#@+body
+	#@+at
+	#  Removes extra leading indentation from all lines.  We look at the first line to determine how much leading whitespace to delete.
+
+	#@-at
+	#@@c
+	
+	def undentPythonBody (self,s):
+	
+		c = self.commands
+		i = 0 ; result = ""
+		# Copy an @code line as is.
+		if match(s,i,"@code"):
+			j = i ; i = skip_line(s,i) # don't use get_line: it is only for dumping.
+			result += s[j:i]
+		# Calculate the amount to be removed from each line.
+		undent = self.getPythonIndent(s,i)
+		if undent == 0: return s
+		while i < len(s):
+			j = i ; i = skip_line(s,i) # don't use get_line: it is only for dumping.
+			line = s[j:i]
+			# trace(`line`)
+			line = removeLeadingWhitespace(line,undent,c.tab_width)
+			result += line
+		return result
+	#@-body
+	#@-node:8::undentPythonBody
+	#@-node:4::Utilities
+	#@-others
 #@-body
 #@-node:0::@file leoImport.py
 #@-leo

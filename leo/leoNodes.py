@@ -2,20 +2,52 @@
 
 #@+node:0::@file leoNodes.py
 #@+body
-
 #@<< About the vnode and tnode classes >>
 #@+node:1::<< About the vnode and tnode classes >>
 #@+body
 #@+at
-#  The vnodes and tnodes classes form the heart of the "model" classes (using the Smalltalk model/view/controller terminology).  
-# That is, the vnode and tnode classes represent nearly all the data contained in the outline.  These two classes also provide a 
-# way of hiding the underlying implementation.  For instance, the Delphi classes used to implement outlines (TTreeView, TTreeNode 
-# and TTreeNodes) appear only in the implementation of the vodes and tnodes class.
+#  The vnode and tnode classes represent most of the data contained in the outline. These classes are Leo's fundamental Model classes.
 # 
-# The developer documentation contains an extended discussion of these two classes.  To summarize:  a vnode (visual nodes) 
-# represents a headlines _at a particular location on the screen_.  When a headline is cloned, vnodes must be copied.  tnodes, 
-# (text nodes) on the other hand, represent body text: a tnode is shared by all vnodes that are clones of each other.  In other 
-# words, tnodes are the "unit of sharing" of body text.
+# A vnode (visual node) represents a headline at a particular location on the screen. When a headline is cloned, vnodes must be 
+# copied. vnodes persist even if they are not drawn on the screen. Commanders call vnode routines to insert, delete and move headlines.
+# 
+# The vnode contains data associated with a headline, except the body text data which is contained in tnodes. A vnode contains 
+# headline text, a link to its tnode and other information. In leo.py, vnodes contain structure links: parent, firstChild, next 
+# and back ivars. To insert, delete, move or clone a vnode the vnode class just alters those links. The Commands class calls the 
+# leoTree class to redraw the outline pane whenever it changes. The leoTree class knows about these structure links; in effect, 
+# the leoTree and vnode classes work together. The implementation of vnodes is quite different in the Borland version of Leo. This 
+# does not affect the rest of the Leo. Indeed, vnodes are designed to shield Leo from such implementation details.
+# 
+# A tnode, (text node) represents body text: a tnode is shared by all vnodes that are clones of each other. In other words, tnodes 
+# are the unit of sharing of body text. The tnode class is more private than the vnode class. Most commanders deal only with 
+# vnodes, though there are exceptions.
+# 
+# Because leo.py has unlimited Undo commands, vnodes and tnodes can be deleted only when the window containing them is closed. 
+# Nodes are deleted indirectly. Several classes, including the vnode, tnode, leoFrame and leoTree classes, have destroy() 
+# routines. These destroy() routines merely clear links so that Python's and Tkinter's reference counting mechanisms will 
+# eventually delete vnodes, tnodes and other data when a window closes.
+# 
+# Leo uses several kinds of node indices. Leo's XML file format uses tnode indices to indicate which tnodes (t elements) belong to 
+# which vnodes (v elements). Such indices are required. Even if we duplicated the body text of shared tnodes within the file, the 
+# file format would still need an unambiguous way to denote that tnodes are shared.
+# 
+# Present versions of Leo recompute these tnodes indices whenever Leo writes any .leo file. Earlier versions of Leo remembered 
+# tnode indices and rewrote the same indices whenever possible. Those versions of Leo recomputed indices when executing the Save 
+# As and Save To commands, so using these commands was a way of "compacting" indices. The main reason for not wanting to change 
+# tnode indices in .leo files was to reduce the number of changes reported by CVS and other Source Code Control Systems. I finally 
+# abandoned this goal in the interest of simplifying the code. Also, CVS will likely report many differences between two versions 
+# of the same .leo file, regardless of whether tnode indices are conserved.
+# 
+# A second kind of node index is the clone index used in @+node sentinels in files derived from @file trees. As with indices in 
+# .leo files, indices in derived files are required so that Leo can know unambiguously which nodes are cloned to each other.
+# 
+# It is imperative that clone indices be computed correctly, that is, that tnode @+node sentinels have the same index if and only 
+# if the corresponding vnodes are cloned. Early versions of leo.py had several bugs involving these clone indices. Such bugs are 
+# extremely serious because they corrupt the derived file and cause read errors when Leo reads the @file tree. Leo must guarantee 
+# that clone indices are always recomputed properly. This is not as simple as it might appear at first. In particular, Leo's 
+# commands must ensure that @file trees are marked dirty whenever any changed is made that affects cloned nodes within the tree. 
+# For example, a change made outside any @file tree may make several @file trees dirty if the change is made to a node with clones 
+# in those @file trees.
 
 #@-at
 #@-body
@@ -29,151 +61,106 @@
 #  This is the design document for clones in Leo. It covers all important aspects of clones. Clones are inherently complex, and 
 # this paper will include several different definitions of clones and related concepts.
 # 
-# The user's view of clones
+# The following is a definition of clones from the user's point of view.
 # 
-# Leo's documentation describes clones as follows:
+# Definition 1
 # 
-# Definition 1:
-# 
-# "A clone node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node 
+# A clone node is a copy of a node that changes when the original changes. Changes to the children, grandchildren, etc. of a node 
 # are simultaneously made to the corresponding nodes contained in all cloned nodes. Clones are marked by a small clone arrow by 
-# its leader character."
+# its leader character.
 # 
-# As we shall see, this definition glosses over a number of important complications.
+# As we shall see, this definition glosses over a number of complications. Note that all cloned nodes (including the original 
+# node) are equivalent. There is no such thing as a "master" node from which all clones are derived. When the penultimate cloned 
+# node is deleted, the remaining node becomes an ordinary node again.
 # 
-# Clone bits
-# 
-# Internally, the clone arrow is represented by a clone bit in the status field of the vnode. The "Clone" command sets the clone 
-# bits of the "orignal" and "cloned" vnodes when it creates the clone.
-# 
-# Joined nodes
+# Internally, the clone arrow is represented by a clone bit in the status field of the vnode. The Clone Node command sets the 
+# clone bits of the original and cloned vnodes when it creates the clone. Setting and clearing clone bits properly when nodes are 
+# inserted, deleted or moved, is non-trivial. We need the following machinery to do the job properly.
 # 
 # Two vnodes are joined if a) they share the same tnode (body text) and b) changes to any subtree of either joined vnodes are made 
-# to the corresponding nodes in all joined nodes. For example, Definition 1 defines clones as joined nodes that are marked with a 
-# clone arrow.
+# to the corresponding nodes in all joined nodes.  For example, Definition 1 defines clones as joined nodes that are marked with a 
+# clone arrow.  Leo links all vnodes joined to each other in a circular list, called the join list. For any vnode n, let J(n) 
+# denote the join list of n, that is, the set of all vnodes joined to n. Again, maintaining the join lists in an outline is non-trivial.
 # 
-# Leo links all vnodes joined to each other in a circular list. For any vnode n, let J(n) denote the set of all vnodes joined to n.
-# 
-# Structurally similar nodes
-# 
-# The concept of "structurally similar" nodes provides an effective way of determining when two joined nodes should have their 
+# The concept of structurally similar nodes provides an effective way of determining when two joined nodes should also have their 
 # cloned bit set.  Two joined nodes are structurally similar if a) their parents are distinct but joined and b) they are both the 
-# nth child of their (distinct) parents.
+# nth child of their (distinct) parents.  We can define cloned nodes using the concept of structurally similar nodes as follows:
 # 
-# Let us consider the following alternative definition of cloned and non-cloned nodes.
+# Definition 2
 # 
-# Definition 2:
+# Clones are joined vnodes such that at least two of the vnodes of J(n) are not structurally similar to each other. Non-cloned 
+# vnodes are vnodes such that all of the vnodes of J(n) are structurally similar. In particular, n is a non-cloned vnode if J(n) 
+# is empty.
 # 
-# A node n is a clone if and only if there exist two vnodes in J(n) that are not structurally similar to each other.  Thus, 
-# non-cloned vnodes are vnodes such that all of the vnodes of J(n) are structually similar. In particular, n is a non-cloned vnode 
-# if J(n) is empty.
-# 
-# How do we know that Definitions 1 and 2 are consistent? Informally, these definitions are consistent because Leo makes them 
-# consistent. Definition 1 says that:
-# 
-# changes to the children, grandchildren, etc. of a node are simultaneously made to the corresponding nodes contained in all 
-# cloned nodes.
-# 
-# Making "corresponding changes" to the descendents of all cloned nodes insures that the non-cloned joined nodes will be 
-# structurally similar. On the other hand, cloned nodes are never structurally similar. They are created as siblings, so they have 
-# the same parent with different "child indices."  We shall consider the cases of moving and deleting cloned ndoes later.
-# 
-# We could prove consistency by induction: The definitions are (trivially) consistent for an outline containing one root node, 
-# they remain consistent when a) cloned nodes are created, moved or deleted or b) when descendents of cloned nodes are moved, 
-# inserted or deleted.
-# 
-# In any event, let's accept these definitions as consistent. Let's look at some examples.  In these examples, an apostrophe 
-# signifies the clone bit and the corresponding clone mark on the screen.
+# Leo ensures that definitions 1 and 2 are consistent. Definition 1 says that changes to the children, grandchildren, etc. of a 
+# node are simultaneously made to the corresponding nodes contained in all cloned nodes. Making "corresponding changes" to the 
+# non-cloned descendents of all cloned nodes insures that the non-cloned joined nodes will be structurally similar. On the other 
+# hand, cloned nodes are never structurally similar. They are created as siblings, so they have the same parent with different 
+# "child indices."  To see how this works in practice, let's look at some examples.
 # 
 # Example 1
 # 
-# root
-#   a' (1)
-#   a' (2)
+# + root
+# 	+ a' (1)
+# 	+ a' (2)
 # 
-# This example shows the simplest possible clone. Node a in position (1) has just been cloned to produce a' in position (2). These 
-# two cloned nodes are not structurally similar because their parents are not distinct and because they occupy different positions 
-# relative to their common parent.
+# This example shows the simplest possible clone. A prime (') indicates a cloned node.  Node a in position (1) has just been 
+# cloned to produce a' in position (2). Clearly, these two cloned nodes are not structurally similar because their parents are not 
+# distinct and they occupy different positions relative to their common parent.
 # 
 # Example 2
 # 
-# If we add a node b as the first child of either a' node we get the following tree:
+# If we add a node b to either a' node we get the following tree:
 # 
-# root
-#   a'
-#     b
-#   a'
-#     b
+# + root
+# 	+ a'
+# 		+ b
+# 	+ a'
+# 		+ b
 # 
-# The b nodes are struturally similar because the a' nodes are joined and each b node is the first child of its parent.
+# The b nodes are structurally similar because the a' nodes are joined and each b node is the first child of its parent.
 # 
 # Example 3
 # 
 # If we now clone either b, we will get:
 # 
-# root
-#   a'
-#     b' (1)
-#     b' (2)
-#   a'
-#     b' (1)
-#     b' (2)
+# + root
+# 	+ a'
+# 		+ b' (1)
+# 		+ b' (2)
+# 	+ a'
+# 		+ b' (1)
+# 		+ b' (2)
 # 
 # All b' nodes must be clones because the nodes marked (1) are not structurally similar to the nodes marked (2).
 # 
-# Dependent nodes
-# 
 # Dependent nodes are nodes created or destroyed when corresponding linked nodes are created or destroyed in another tree. For 
 # example, going from example 1 to example 2 above, adding node b to either node a' causes another (dependent) node to be created 
-# as the descendent of the other node a'. Similary, going from example 2 to example 1, deleting node b from either node a' causes 
-# the other (dependent) node b to be deleted from the other node a'.
-# 
-# Cloned nodes may also be dependent nodes.  This will happen if the cloned nodes are descendents of other cloned nodes.  In 
-# Example 3, the b' nodes in position (1) are dependent on the other b' node in position (1).  Similarly, the b' nodes in position 
-# (2) depend on each other.
-# 
-# Inserting, Deleting and Moving nodes
+# as the ancestor of the other node a'. Similarly, going from example 2 to example 1, deleting node b from either node a' causes 
+# the other (dependent) node b to be deleted from the other node a'.  Cloned nodes may also be dependent nodes. In Example 3, all 
+# the b' nodes are dependent on any of the other b' nodes.
 # 
 # We can now give simple rules for inserting and deleting dependent vnodes when other vnodes are created, moved or destroyed. For 
-# the purposes of this discussion, moving a node is handled exactly like deleting the node followed by inserting the node; we need 
-# not consider moving nodes further.
+# the purposes of this discussion, moving a node is handled exactly like deleting the node then inserting the node; we need not 
+# consider moving nodes further.  We insert a new node n as the nth child of a parent node p as follows. We insert n, then for 
+# every node pi linked to p, we insert a dependent node ni as the nth child of pi. Each ni is linked to n. Clearly, each ni is 
+# structurally similar to n.  Similarly, it is easy to delete a node n that is the nth child of a parent node p. We delete each 
+# dependent node ni that is the nth child of any node pi linked to p. We then delete n.  When inserting or deleting any vnode n we 
+# must update its join list, J(n). Updating the join list is easy because the join list is circular: the entire list is accessible 
+# from any of its members.
 # 
-# It is easy to insert a new node n as the nth child of a parent node p. We insert n, then for every node pi linked to p, we 
-# insert a dependent node ni as the nth child of pi. Each ni is joined to n. Clearly, each ni is structurally similar to n.
+# Inserting or deleting nodes can cause the clone bits of all joined nodes to change in non-trivial ways. To see the problems that 
+# can arise, consider deleting any of the b' nodes from Example 3. We would be left with the tree in Example 2. There are two 
+# remaining b nodes, each with the clone bit set. Unless we know that both b nodes are structurally similar, there would be no way 
+# to conclude that we should clear the clone bits in each node. In order to update clone links properly we could examine many 
+# special cases, but there is an easier way. Because of definition 2, we can define a shouldBeCloned function that checks J(n) to 
+# see whether all nodes of J(n) are structurally similar.
 # 
-# Similarly, it is easy to delete a node n that is the nth child of a parent node p. We delete each dependent node ni that is the 
-# nth child of any node pi linked to p. We then delete n.
-# 
-# As we have seen, when inserting or deleting any vnode n we must update its join list, J(n). Updating the join list is made 
-# easier because the list is circular: the entire list is accessible from any of its members.
-# 
-# Propagating clone bits: the shouldBeClone function
-# 
-# Inserting or deleting nodes can cause the clone bits of all joined nodes to change in non-trivial ways. We could examine a 
-# number of special cases, but there is an easier way. Because of Definition 2, we can define a shouldBeClone function that checks 
-# J(n) to see whether all nodes of J(n) are stucturally similar or not.  We set the clone bits if not, otherwise we clear the 
-# clone bits.
-# 
-# To see why shouldBeClone is necessary, consider deleting any of the b' nodes from Example 3. We would be left with the tree in 
-# Example 2. There are two remaining b nodes, each with the clone bit set.  The nodes are still joined but should no longer be 
-# cloned.  Checking for structural similarity is the only way to clear these clone bits.
-# 
-# Omitting Join lists from Files
-# 
-# The XML file format does not save join lists. This makes it much safer to change a Leo file "by hand." If join lists were part 
-# of the file, as they are in the Mac version of Leo, it would be too easy to corrupt the entire file by screwing up a join list.
-# 
-# It is easy to recreate the join lists when reading a file, provided that we allocate one extra field in each tnode. This field 
-# is the head of a list of all vnodes that point to the tnode. We create this list with one pass through the vnodes, then convert 
-# each list to a circular list in one additional pass through the tnodes.
-# 
-# Conclusion
-# 
-# Redefining clones in terms of structural simularity solves all major problems involving clones. Earlier schemes that did not use 
-# the shouldBeClone functions maintained "clone lists" of all clones that were, in fact, structurally similar! The Mac version 
-# complicated matters further by storing the join and clone lists in the file format. It's much easier and safer to call 
-# shouldBeClone as needed. The shouldBeClone function is very fast, provided that the join lists have already been computed. 
-# Moving cloned nodes is slow in the YB version of Leo because join lists are recomputed whenever needed.
+# Leo's XML file format does not contain join lists. This makes it easy to change a Leo file "by hand." If join lists were a part 
+# of the file, as they are in the Mac version of Leo, corrupting a join list would corrupt the entire file. It is easy to recreate 
+# the join lists when reading a file using a dedicated field in the tnode.  This field is the head of a list of all vnodes that 
+# points to the tnode. After reading all nodes, Leo creates this list with one pass through the vnodes.  Leo then convert each 
+# list to a circular list with one additional pass through the tnodes.
 
 #@-at
 #@-body
@@ -1338,27 +1325,29 @@ class vnode:
 		return v
 	#@-body
 	#@-node:5::insertAsNthChild
-	#@+node:6::moveAfter
+	#@+node:6:C=7:moveAfter
 	#@+body
-	# Compatibility routine for scripts
+	# Used by scripts
 	
 	def moveAfter (self,a):
 	
 		"""Moves the receiver after a"""
 	
-		v = self
+		v = self ; c = self.commands
 		# trace(`v`)
 		v.destroyDependents()
 		v.unlink()
 		v.linkAfter(a)
 		v.createDependents()
+		
+		# 5/27/02: Moving a node after another node can create a new root node.
+		if not a.parent() and not a.back():
+			c.tree.rootVnode = a
 	#@-body
-	#@-node:6::moveAfter
-	#@+node:7::moveToRoot
+	#@-node:6:C=7:moveAfter
+	#@+node:7:C=8:moveToRoot
 	#@+body
-	# Compatibility routine for scripts
-	
-	def moveToRoot (self):
+	def moveToRoot (self, oldRoot = None):
 	
 		"""Moves the receiver to the root position"""
 	
@@ -1366,11 +1355,11 @@ class vnode:
 		# trace(`v`)
 		v.destroyDependents()
 		v.unlink()
-		v.linkAsRoot()
+		v.linkAsRoot(oldRoot)
 		v.createDependents()
 	#@-body
-	#@-node:7::moveToRoot
-	#@+node:8::moveToNthChildOf
+	#@-node:7:C=8:moveToRoot
+	#@+node:8:C=9:moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1378,14 +1367,18 @@ class vnode:
 	
 		"""Moves the receiver to the nth child of p"""
 	
-		v = self
+		v = self ; c = self.commands
 		# trace(`n` + ", " + `p`)
 		v.destroyDependents()
 		v.unlink()
 		v.linkAsNthChild(p, n)
 		v.createDependents()
+		
+		# 5/27/02: Moving a node can create a new root node.
+		if not p.parent() and not p.back():
+			c.tree.rootVnode = p
 	#@-body
-	#@-node:8::moveToNthChildOf
+	#@-node:8:C=9:moveToNthChildOf
 	#@+node:9::restoreOutlineFromDVnodes (test)
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
@@ -1751,7 +1744,7 @@ class vnode:
 	#@-node:10::joinNodeTo
 	#@+node:11::linkAfter
 	#@+body
-	# Links the receiver after v
+	# Links the receiver after v.
 	
 	def linkAfter (self, v):
 	
@@ -1789,20 +1782,31 @@ class vnode:
 				v.mNext.mBack = v
 	#@-body
 	#@-node:12::linkAsNthChild
-	#@+node:13::linkAsRoot
+	#@+node:13:C=10:linkAsRoot
 	#@+body
-	def linkAsRoot(self):
+	#@+at
+	#  Bug fix: 5/27/02.  We link in the rest of the tree only when oldRoot != None.  Otherwise, we are calling this routine from 
+	# init code and we want to start with a pristine tree.
+
+	#@-at
+	#@@c
+	def linkAsRoot(self, oldRoot = None):
 	
 		v = self ; c = v.commands ; tree = c.tree
 		# trace(`v`)
-		# Set the links
+		# Bug fix 3/16/02:
+		# Clear all links except the child link.
+		# This allows a node with children to be moved up properly to the root position.
+		# v.mFirstChild = None
 		v.mParent = None
-		v.mFirstChild = None
 		v.mBack = None
-		v.mNext = None
+		# 5/27/02
+		if oldRoot: oldRoot.mBack = v
+		v.mNext = oldRoot
 		tree.rootVnode = v
+
 	#@-body
-	#@-node:13::linkAsRoot
+	#@-node:13:C=10:linkAsRoot
 	#@+node:14::unlink
 	#@+body
 	def unlink (self):

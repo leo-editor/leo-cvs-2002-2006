@@ -1530,7 +1530,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:1::demote
-	#@+node:2::moveOutlineDown
+	#@+node:2:C=15:moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a child of itself.  An important optimization:  we don't 
@@ -1583,7 +1583,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:2::moveOutlineDown
+	#@-node:2:C=15:moveOutlineDown
 	#@+node:3::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
@@ -1640,7 +1640,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:4::moveOutlineRight
-	#@+node:5::moveOutlineUp
+	#@+node:5:C=16:moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -1666,7 +1666,7 @@ class Commands:
 			
 			if not back2:
 				# v will be the new root node
-				back.moveAfter(v)
+				v.moveToRoot(c.tree.rootVnode) # 3/16/02, 5/17/02
 				c.undoer.setUndoParams("Move Up",v,
 					oldBack=oldBack,oldParent=oldParent,oldN=oldN)
 			elif back2.hasChildren() and back2.isExpanded():
@@ -1688,7 +1688,7 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:5::moveOutlineUp
+	#@-node:5:C=16:moveOutlineUp
 	#@+node:6::promote
 	#@+body
 	def promote(self):
@@ -1713,7 +1713,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
 	#@-node:6::promote
-	#@+node:7:C=15:c.sortChildren, sortSiblings
+	#@+node:7:C=17:c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
 	
@@ -1769,7 +1769,7 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:7:C=15:c.sortChildren, sortSiblings
+	#@-node:7:C=17:c.sortChildren, sortSiblings
 	#@-node:15:C=14:Moving, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)
@@ -1794,7 +1794,7 @@ class Commands:
 
 	#@-body
 	#@-node:2::endEditing (calls tree.endEditLabel)
-	#@+node:3:C=16:selectThreadBack
+	#@+node:3:C=18:selectThreadBack
 	#@+body
 	def selectThreadBack(self):
 	
@@ -1808,8 +1808,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:3:C=16:selectThreadBack
-	#@+node:4:C=17:selectThreadNext
+	#@-node:3:C=18:selectThreadBack
+	#@+node:4:C=19:selectThreadNext
 	#@+body
 	def selectThreadNext(self):
 	
@@ -1823,8 +1823,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:4:C=17:selectThreadNext
-	#@+node:5:C=18:selectVisBack
+	#@-node:4:C=19:selectThreadNext
+	#@+node:5:C=20:selectVisBack
 	#@+body
 	# This has an up arrow for a control key.
 	
@@ -1840,8 +1840,8 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:5:C=18:selectVisBack
-	#@+node:6:C=19:selectVisNext
+	#@-node:5:C=20:selectVisBack
+	#@+node:6:C=21:selectVisNext
 	#@+body
 	def selectVisNext(self):
 	
@@ -1855,7 +1855,7 @@ class Commands:
 			c.endUpdate()
 			c.frame.canvas.focus_force()
 	#@-body
-	#@-node:6:C=19:selectVisNext
+	#@-node:6:C=21:selectVisNext
 	#@+node:7::c.selectVnode (calls tree.select)
 	#@+body
 	# This is called inside commands to select a new vnode.
@@ -1904,7 +1904,6 @@ class Commands:
 	#@-node:1::updateSyntaxColorer
 	#@-node:17::Syntax coloring interface
 	#@-others
-
 #@-body
 #@-node:0::@file leoCommands.py
 #@-leo

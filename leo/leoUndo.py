@@ -9,24 +9,22 @@
 #@+node:1::<< How Leo implements unlimited undo >>
 #@+body
 #@+at
-#  Unlimited undo is straightforward, and it requires that all commands that affect the outline or body text must be undoable.
+#  Only leo.py supports unlimited undo.  Unlimited undo is straightforward; it merely requires that all commands that affect the 
+# outline or body text must be undoable. In other words, everything that affects the outline or body text must be remembered.
 # 
-# We can think of all the actions that may be Undone or Redone as a string of beads (undo nodes).  Undoing an operation moves 
-# backwards to the next bead; redoing an operation moves forwards to the next bead.  A "bead pointer" points to the present bead.  
-# The bead pointer may point in front of the first bead (Undo is disabled) or at the last bead (Redo is disabled). An undo node is 
-# just a dictionary containing all information needed to undo or redo the operation.
+# We may think of all the actions that may be Undone or Redone as a string of beads (undo nodes). Undoing an operation moves 
+# backwards to the next bead; redoing an operation moves forwards to the next bead. A bead pointer points to the present bead. The 
+# bead pointer points in front of the first bead when Undo is disabled.  The bead pointer points at the last bead when Redo is 
+# disabled. An undo node is a Python dictionary containing all information needed to undo or redo the operation.
 # 
-# The Undo command uses the present bead to undo the action, then moves the bead pointer backwards.  The Redo command uses the 
-# bead after the present bead to redo the action, then moves the bead pointer forwards.  All undoable operations call 
-# setUndoParams() to create a new bead.  The list of beads does not branch: all undoable operations (except the Undo and Redo 
-# commands themselves) delete any beads following the newly created bead.
+# The Undo command uses the present bead to undo the action, then moves the bead pointer backwards. The Redo command uses the bead 
+# after the present bead to redo the action, then moves the bead pointer forwards. All undoable operations call setUndoParams() to 
+# create a new bead. The list of beads does not branch; all undoable operations (except the Undo and Redo commands themselves) 
+# delete any beads following the newly created bead.
 # 
-# The undoType ivar is a string indicating the operation that may be currently undone, or "Can't Redo" if the Undo command is 
-# presently disabled.  The undoType ivar contains just the operation name, not the "Undo" prefix found in the actual menu titles.  
-# There is no independent redoType ivar: it is computed from the undoType ivar of the next bead on the string.
+# I did not invent this model of unlimited undo.  I first came across it in the documentation for Apple's Yellow Box classes.
 
 #@-at
-#@@c
 #@-body
 #@-node:1::<< How Leo implements unlimited undo >>
 
@@ -376,7 +374,7 @@ class undoer:
 
 			
 			#@<< redo move & drag cases >>
-			#@+node:4::<< redo move & drag cases >>
+			#@+node:4:C=3:<< redo move & drag cases >>
 			#@+body
 			elif type in ["Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -385,7 +383,11 @@ class undoer:
 				elif u.back:
 					u.v.moveAfter(u.back)
 				else:
-					u.v.moveToRoot()
+					# 3/16/02: Moving up is the only case that can do this.
+					parent = u.v.parent()
+					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
+					if parent: # We could assert(parent)
+						parent.moveAfter(u.v)
 				c.selectVnode(u.v)
 				
 			elif type == "Drag":
@@ -393,7 +395,7 @@ class undoer:
 				u.v.moveToNthChildOf(u.parent,u.n)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:4::<< redo move & drag cases >>
+			#@-node:4:C=3:<< redo move & drag cases >>
 
 			
 			#@<< redo promote and demote cases >>
@@ -478,7 +480,7 @@ class undoer:
 		u.setUndoTypes()
 	#@-body
 	#@-node:4:C=2:redo
-	#@+node:5:C=3:undo
+	#@+node:5:C=4:undo
 	#@+body
 	#@+at
 	#  This function and its allies undo the operation described by the undo parmaters.
@@ -562,14 +564,14 @@ class undoer:
 				c.selectVnode(u.v)
 				c.deleteHeadline()
 				if u.select:
-					trace("Insert/Paste:" + `u.select`)
+					# trace("Insert/Paste:" + `u.select`)
 					c.selectVnode(u.select)
 			#@-body
 			#@-node:4::<< undo insert cases >>
 
 			
 			#@<< undo move cases >>
-			#@+node:5::<< undo move cases >>
+			#@+node:5:C=5:<< undo move cases >>
 			#@+body
 			elif type in ["Move Down","Move Left","Move Right","Move Up"]:
 			
@@ -578,10 +580,14 @@ class undoer:
 				elif u.oldBack:
 					u.v.moveAfter(u.oldBack)
 				else:
-					u.v.moveToRoot()
+					# 3/16/02: Moving up is the only case that can do this.
+					parent = u.v.parent()
+					u.v.moveToRoot(c.tree.rootVnode) # 5/27/02
+					if parent: # We could assert(parent)
+						parent.moveAfter(u.v)
 				c.selectVnode(u.v)
 			#@-body
-			#@-node:5::<< undo move cases >>
+			#@-node:5:C=5:<< undo move cases >>
 
 			
 			#@<< undo promote and demote cases >>
@@ -675,7 +681,7 @@ class undoer:
 		u.bead -= 1
 		u.setUndoTypes()
 	#@-body
-	#@-node:5:C=3:undo
+	#@-node:5:C=4:undo
 	#@+node:6::Undo helpers
 	#@+node:1::findSharedVnode
 	#@+body
@@ -689,7 +695,7 @@ class undoer:
 		return None
 	#@-body
 	#@-node:1::findSharedVnode
-	#@+node:2:C=4:undoDemote
+	#@+node:2:C=6:undoDemote
 	#@+body
 	# undoes the previous demote operation.
 	def undoDemote (self):
@@ -711,8 +717,8 @@ class undoer:
 		c.selectVnode(u.v)
 		c.endUpdate()
 	#@-body
-	#@-node:2:C=4:undoDemote
-	#@+node:3:C=5:undoPromote
+	#@-node:2:C=6:undoDemote
+	#@+node:3:C=7:undoPromote
 	#@+body
 	# Undoes the previous promote operation.
 	def undoPromote (self):
@@ -735,7 +741,7 @@ class undoer:
 		c.selectVnode(v1)
 		c.endUpdate()
 	#@-body
-	#@-node:3:C=5:undoPromote
+	#@-node:3:C=7:undoPromote
 	#@+node:4::undoSortChildren
 	#@+body
 	def undoSortChildren (self):
@@ -775,7 +781,6 @@ class undoer:
 	#@-node:5::undoSortSiblings
 	#@-node:6::Undo helpers
 	#@-others
-
 #@-body
 #@-node:0::@file leoUndo.py
 #@-leo

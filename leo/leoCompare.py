@@ -284,7 +284,6 @@ def sequence(f1,f2):
 #@-body
 #@-node:14::sequence (hangs)
 #@-others
-
 #@-body
 #@-node:0::@file leoCompare.py
 #@-leo

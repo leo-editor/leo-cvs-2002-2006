@@ -270,7 +270,6 @@ class LeoPrefs:
 	#@-body
 	#@-node:5::OnClosePrefsFrame
 	#@-others
-
 #@-body
 #@-node:0::@file leoPrefs.py
 #@-leo

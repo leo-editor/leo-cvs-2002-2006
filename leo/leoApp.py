@@ -5,7 +5,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leo, leoFind, leoPrefs
-import os
+import os, Tkinter
 
 class LeoApp:
 
@@ -64,12 +64,61 @@ class LeoApp:
 		#@-node:1:C=3:<< set loaddir >>
 
 		
+		#@<< set the default Leo icon >>
+		#@+node:2::<< set the default Leo icon >>
+		#@+body
+		try: # 6/2/02: Try to set the default bitmap.
+			bitmap_name = os.path.join(self.loadDir, "Icons\LeoApp.ico")
+			bitmap = Tkinter.BitmapImage(bitmap_name)
+		except:
+			print "exception creating bitmap"
+			
+		try:
+			version = self.root.getvar("tk_patchLevel")
+			# print "tcl version:" + `version`
+			
+			#@<< set v834 if version is 8.3.4 or greater >>
+			#@+node:1::<< set v834 if version is 8.3.4 or greater >>
+			#@+body
+			# A compare version utility would be good.
+			
+			vlist = string.split(version,".")
+			
+			v0 = int(vlist[0])
+			v1 =  int(vlist[1])
+			if len(vlist) > 2: 
+				v2 = int(vlist[2])
+			else:
+				v2 = 0
+			
+			v834 = v0 > 8 or (
+				(v0 == 8 and v1 > 3) or (
+				(v0 == 8 and v1 == 3 and v2 >= 4 )))
+			#@-body
+			#@-node:1::<< set v834 if version is 8.3.4 or greater >>
+
+		except:
+			print "exception getting version"
+			
+		if v834:
+			try:
+				if sys.platform=="win32": # Windows
+					top.wm_iconbitmap(bitmap,default=1)
+				else:
+					top.wm_iconbitmap(bitmap)
+			except:
+				es("exception setting bitmap")
+		#@-body
+		#@-node:2::<< set the default Leo icon >>
+
+		
 		# Create the global windows
 		self.findFrame = leoFind.LeoFind()
 		self.findFrame.top.withdraw()
 	
 		self.prefsFrame = leoPrefs.LeoPrefs()
 		self.prefsFrame.top.withdraw()
+
 	#@-body
 	#@-node:2:C=2:app.finishCreate
 	#@+node:3::destroyAllGlobalWindows
@@ -105,7 +154,6 @@ class LeoApp:
 	#@-body
 	#@-node:5::app.testDialogs
 	#@-others
-
 #@-body
 #@-node:0::@file leoApp.py
 #@-leo

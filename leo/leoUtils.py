@@ -5,7 +5,7 @@
 # Global utility functions
 
 from leoGlobals import *
-import os, string, sys, time
+import os, string, sys, time, types
 
 
 #@+others
@@ -458,16 +458,30 @@ def appendToList(out, s):
 		out.append(i)
 #@-body
 #@-node:1::appendToList
-#@+node:2::listToString
+#@+node:2::flattenList
 #@+body
-def listToString(list):
+def flattenList (theList):
+
+	result = []
+	for item in theList:
+		if type(item) == types.ListType:
+			result.extend(flattenList(item))
+		else:
+			result.append(item)
+	return result
+#@-body
+#@-node:2::flattenList
+#@+node:3::listToString
+#@+body
+def listToString(theList):
 
 	if list:
-		return string.join(list,"")
+		theList = flattenList(theList)
+		return string.join(theList,"")
 	else:
 		return ""
 #@-body
-#@-node:2::listToString
+#@-node:3::listToString
 #@-node:9::List utilities...
 #@+node:10::Menu utlities...
 #@+node:1::enableMenu & disableMenu & setMenuLabel
@@ -521,7 +535,7 @@ def scanError(s):
 
 def skip_block_comment (s,i):
 
-	assert(s[i:i+2]=="/*")
+	assert(match(s,i,"/*"))
 	j = i ; i += 2 ; n = len(s)
 	
 	k = string.find(s,"*/",i)
@@ -593,22 +607,26 @@ def skip_parens(s,i):
 def skip_pascal_begin_end(s,i):
 
 	assert(match_c_word(s,i,"begin"))
+	i1 = i # for traces
 	level = 1 ; i = skip_c_id(s,i) # Skip the opening begin.
-	n = len(s)
-	while i < n:
-		c = s[i]
-		if c =='{' : i = skip_pascal_braces(s,i)
-		elif c =='"' or c == '\'': i = skip_pascal_string(s,i)
-		elif match(s,i,"//"): i = skip_to_end_of_line(s,i)
-		elif match(s,i,"(*"): i = skip_pascal_block_comment(s,i+2)
+	while i < len(s):
+		ch = s[i]
+		if ch =='{' : i = skip_pascal_braces(s,i)
+		elif ch =='"' or ch == '\'': i = skip_pascal_string(s,i)
+		elif match(s,i,"//"): i = skip_line(s,i)
+		elif match(s,i,"(*"): i = skip_pascal_block_comment(s,i)
 		elif match_c_word(s,i,"end"):
 			level -= 1 ;
-			if level == 0: return i
-		else:
-			for name in ["begin", "case", "class", "record", "try"]:
-				if match_c_word(s,i,name):
-					level += 1 ; i += len(name) ; break
-			else: i += 1
+			if level == 0:
+				# lines = s[i1:i+3] ; trace('\n' + lines + '\n')
+				return i
+			else: i = skip_c_id(s,i)
+		elif is_c_id(ch):
+			j = i ; i = skip_c_id(s,i) ; name = s[j:i]
+			if name in ["begin", "case", "class", "record", "try"]:
+				level += 1
+		else: i += 1
+	# trace(`s[i1:i]`)
 	return i
 #@-body
 #@-node:4::skip_pascal_begin_end
@@ -620,7 +638,7 @@ def skip_pascal_block_comment(s,i):
 	
 	j = i
 	assert(match(s,i,"(*"))
-	i = string.find(s,"*/",i)
+	i = string.find(s,"*)",i)
 	if i > -1: return i + 2
 	else:
 		scanError("Run on comment" + s[j:i])
@@ -640,15 +658,13 @@ def skip_pascal_string(s,i):
 
 	j = i ; delim = s[i] ; i += 1
 	assert(delim == '"' or delim == '\'')
-	
-	n = len(s)
-	while 1:
-		i = string.find(s,delim,i)
-		if i == -1 or i == n: return n
-		if s[i+1] != delim: return i
-		else: i += 2
 
-	scanError("Run on string: " + s[j:])
+	while i < len(s):
+		if s[i] == delim:
+			return i + 1
+		else: i += 1
+
+	scanError("Run on string: " + s[j:i])
 	return i
 #@-body
 #@-node:6::skip_pascal_string : called by tangle
@@ -718,7 +734,7 @@ def skip_python_string(s,i):
 	if match(s,i,"'''") or match(s,i,'"""'):
 		j = i ; delim = s[i]*3 ; i += 3
 		k = string.find(s,delim,i)
-		if k > -1: return k
+		if k > -1: return k+3
 		scanError("Run on triple quoted string: " + s[j:i])
 		return len(s)
 	else:
@@ -1038,7 +1054,21 @@ def skip_long(s,i):
 	return i, val
 #@-body
 #@-node:16::skip_long
-#@+node:17::skip_nl
+#@+node:17::skip_matching_delims
+#@+body
+def skip_matching_delims(s,i,delim1,delim2):
+	
+	assert(match(s,i,delim1))
+
+	i += len(delim1)
+	k = string.find(s,delim2,i)
+	if k == -1:
+		return len(s)
+	else:
+		return k + len(delim2)
+#@-body
+#@-node:17::skip_matching_delims
+#@+node:18::skip_nl
 #@+body
 #@+at
 #  This function skips a single "logical" end-of-line character.  We need this function because different systems have different 
@@ -1053,8 +1083,8 @@ def skip_nl (s,i):
 	elif match(s,i,'\n') or match(s,i,'\r'): return i + 1
 	else: return i
 #@-body
-#@-node:17::skip_nl
-#@+node:18::skip_pascal_braces
+#@-node:18::skip_nl
+#@+node:19::skip_pascal_braces
 #@+body
 # Skips from the opening { to the matching }.
 
@@ -1065,8 +1095,8 @@ def skip_pascal_braces(s,i):
 	if i == -1: return len(s)
 	else: return k
 #@-body
-#@-node:18::skip_pascal_braces
-#@+node:19::skip_ws, skip_ws_and_nl
+#@-node:19::skip_pascal_braces
+#@+node:20::skip_ws, skip_ws_and_nl
 #@+body
 def skip_ws(s,i):
 
@@ -1082,7 +1112,7 @@ def skip_ws_and_nl(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:19::skip_ws, skip_ws_and_nl
+#@-node:20::skip_ws, skip_ws_and_nl
 #@-node:13::Scanners: no error messages
 #@+node:14:C=7:sortSequence
 #@+body
@@ -1220,7 +1250,6 @@ def update_file_if_changed(file_name,temp_name):
 #@-body
 #@-node:17::update_file_if_changed
 #@-others
-
 #@-body
 #@-node:0::@file leoUtils.py
 #@-leo

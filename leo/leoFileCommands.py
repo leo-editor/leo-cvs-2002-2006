@@ -950,10 +950,16 @@ class fileCommands:
 	def put (self,s):
 		if s and len(s) > 0:
 			if self.outputFile: # Write to a file
-				self.outputFile.write(s) 
+				try: # 5/27/02: We can get Unicode strings here via cut/paste.
+					try:
+						self.outputFile.write(s)
+					except UnicodeError:
+						self.outputFile.write(`s`)
+				except:
+					es("error writing:" + `s`)
 			elif self.outputString != None: # Write to a string
 				self.outputString += s
-						
+	
 	def put_dquote (self):
 		self.put('"')
 			
@@ -1446,7 +1452,6 @@ class fileCommands:
 	#@-node:11:C=5:fileCommands.write_LEO_file
 	#@-node:3::Writing
 	#@-others
-
 #@-body
 #@-node:0::@file leoFileCommands.py
 #@-leo

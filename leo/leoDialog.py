@@ -179,7 +179,6 @@ class leoDialog:
 	#@-node:2::OnOkCancelKey, OnYesNoKey, OnYesNoCancelKey
 	#@-node:6::Event handlers & command handlers
 	#@-others
-
 #@-body
 #@-node:0::@file leoDialog.py
 #@-leo
