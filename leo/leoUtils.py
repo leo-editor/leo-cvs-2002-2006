@@ -1633,9 +1633,6 @@ def esDiffTime(message, start):
 #@+node:23::Tk.Text selection (utils)
 #@+node:1::bound_paragraph
 #@+body
-# EKR: There is no need to compute the leading whitespace here.
-# This utility is strengthened by doing only one thing.
-
 def bound_paragraph(t=None):
 	"""Find the bounds of the text paragraph that contains the current cursor position.
 	

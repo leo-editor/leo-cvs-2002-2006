@@ -591,17 +591,9 @@ class Commands:
 	#@+node:13::reformatParagraph
 	#@+body
 	#@+at
-	#  EKR: To do:
-	# 
-	# 1. Use the values returned by getBodyLines when there is a real selection.
-	# This should be safe, especially because of undo!
-	# 
-	# 2. tnodes are always up-to-date, so the body text is c.currentVnode().bodyString().
-	# It should be much easier to deal with a tuple or list of lines than to 
-	# deal with the Tk.Text widget!
-	# (Yes, other Edit Body commands could certainly be simplified as well.)
-	# 
-	# 3. Look for @pagewidth directives.
+	#  To do:
+	# 1. Use range of selected text.
+	# 2. Honor @pagewidth directives.
 	# 
 
 	#@-at
@@ -626,7 +618,6 @@ class Commands:
 		result = []
 	
 		# If active selection, then don't attempt a reformat.
-		### EKR: Why bail out?
 		selStart, selEnd = getTextSelection(body)
 		if selStart != selEnd: return
 	
@@ -638,8 +629,7 @@ class Commands:
 			lastLine = int(float(end)) - 1
 		else: return
 		
-		# EKR: bound_paragraph should only find the boundaries of the paragraph.
-		# EKR: use computeWidth utility to properly measure leading whitespace.
+		# Compute the leading whitespace.
 		indents = [0,0,0]
 		for i in (0,1):
 			if firstLine + i < len(lines):
@@ -651,11 +641,11 @@ class Commands:
 		for i in range(0,firstLine):
 			result.append(lines[i])
 			
-		# EKR: wrap the lines, decreasing the page width by indent.
+		# Wrap the lines, decreasing the page width by indent.
 		wrapped_lines = wrap_lines(lines[firstLine:lastLine],pageWidth-indents[2])
 		lineCount = len(wrapped_lines)
 		
-		# EKR: Add the leading whitespace to the wrapped lines.
+		# Add the leading whitespace to the wrapped lines.
 		leading_ws = [0,0,0]
 		for i in (0,1,2):
 			leading_ws[i] = computeLeadingWhitespace(indents[i],tabWidth)
@@ -673,8 +663,6 @@ class Commands:
 		for i in range(firstLine,lineCount+firstLine):
 			if i >= lastLine or lines[i] != result[i]:
 				result = string.join(result,'\n')
-				if not endsWithNL:
-					pass # result = result[:-1] # Remove the trailing newline.
 				c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
 				break
 	
