@@ -48,6 +48,90 @@ file0 = c:\prog\leocvs\leo\leodocs.leo
 #	Valid option names: file0 through file9.
 
 # -----------------------------------------------------------------------------
+# Initial settings of the Compare panel.
+# 	These correspond to the keyword parameters of the leoCompare constructor.
+# 	Exception: there are no keywords for compare file names in the constructor.
+
+[compare options]
+
+# ----- Options specifying files for the Compare panel.
+
+compare_file_1 = c:/prog/test/compareTest1/file1.txt
+#	Path to the first file or directory to be compared.
+#	Directory compares ignore a filename part of the path, if present.
+#	E.g., c:/directory1/spam.py is valid for directory compares.
+
+compare_file_2 = c:/prog/test/compareTest2/file2.txt
+#	Path to the second file or directory to be compared.
+#	Directory compares ignore a filename part of the path, if present.
+#	E.g., c:/directory2/spam.py is valid for directory compares
+
+output_file = c:/prog/test/compareResults.txt
+#	Path to the output file.
+#	Leo will silently write to this file, regardless of whether it already exists.
+#	Leo will write to the log pane if this path is empty or invalid.
+
+append_output_to_output_file = 0
+#	0: Replace output file with results of compare.
+#	1: Append output to output file.
+
+# ----- Options related to directory compares.
+#	These options has no effect when comparing files.
+
+limit_directory_search_extenstion = .py
+#	Limit directory searches to files with the given file extension.
+# 	Examples:
+#		None	Compare all files when comparing directories.
+#		.py  	Compare .py files when comparing directories.
+
+# ----- Options related to file compares.
+#	These options have no effect when comparing directories.
+
+ignore_blank_lines = 1
+#	1: Ignore blanks lines when comparing files.
+
+ignore_first_line_of_file_1 = 0
+#	1: Ignore the first line of compare_file_1 when comparing files.
+
+ignore_first_line_of_file_2 = 0
+#	1: Ignore the first line of compare_file_2 when comparing files.
+
+ignore_interior_whitespace = 0
+#	1: Ignore whitespace after the leading whitespace of a line when comparing files.
+
+ignore_leading_whitespace = 0
+#	1: Ignore leading whitespace of each line when comparing files.
+#	Not recommended when comparing .py files.
+
+ignore_sentinel_lines = 0
+#	1: Ignore sentinel lines when comparing files.
+#	Leo sets sentinel comment delimiters from the first line of each file.
+#	This option has no effect if the first line is not a @+leo line.
+
+# ----- Options affecting how Leo shows the results of file compares.
+#	(Leo gathers statistics regardless of these options.)
+
+limit_count = 9
+#	0: Show lines regardless of the number of mismatches.
+#	n: Stop showing lines after n mismatches.
+
+make_whitespace_visible = 0
+#	1: Show blanks as [ ] and tabs as [t]
+
+print_both_lines_for_matches = 0
+#	0: Print only the line of compare_file_1 when showing matching lines.
+#	1: Print lines of both files when showing matching lines.
+
+print_matching_lines = 0
+#	1: Print lines that match using the print_both_lines_for_matches option.
+
+print_mismatching_lines = 1
+#	1: Print lines that do not compare equal to each other.
+
+print_trailing_lines = 1
+#	1: Print lines all lines in one file after an end-of-file is seen on the other file.
+
+# -----------------------------------------------------------------------------
 # The initial settings of the Find/Change panel.
 
 [find/change options]

@@ -140,7 +140,7 @@ class leoCompare:
 		self.outputFile = None
 	#@-body
 	#@-node:1::compare.__init__
-	#@+node:2::compare_directories (entry) (convert file names to directory names)
+	#@+node:2::compare_directories (entry)
 	#@+body
 	# We ignore the filename portion of path1 and path2 if it exists.
 	
@@ -169,6 +169,9 @@ class leoCompare:
 			
 		if self.outputFileName:
 			self.openOutputFile()
+		ok = self.outputFileName == None or self.outputFile
+		if not ok:
+			return
 	
 		# Create files and files2, the lists of files to be compared.
 		files1 = []
@@ -207,7 +210,6 @@ class leoCompare:
 				fail.append(f1)
 		
 		# Print the results.
-		self.show("\n")
 		for kind, files in (
 			("----- matches --------",yes),
 			("----- mismatches -----",no),
@@ -215,19 +217,15 @@ class leoCompare:
 			self.show(kind)
 			for f in files:
 				self.show(f)
-		self.show("\n")
 		
 		if self.outputFile:
 			self.outputFile.close()
 			self.outputFile = None
 	#@-body
-	#@-node:2::compare_directories (entry) (convert file names to directory names)
-	#@+node:3::compare_files (entry)
+	#@-node:2::compare_directories (entry)
+	#@+node:3:C=1:compare_files (entry)
 	#@+body
 	def compare_files (self, name1, name2):
-		
-		#from leoUtils import trace
-		#trace()
 		
 		if name1 == name2:
 			self.show("File names are identical.\nPlease pick distinct files.")
@@ -235,24 +233,29 @@ class leoCompare:
 	
 		f1 = f2 = None
 		try:
-			f1=self.doOpen(name1)
-			f2=self.doOpen(name2)
-			if f1 and f2:
+			f1 = self.doOpen(name1)
+			f2 = self.doOpen(name2)
+			if self.outputFileName:
+				self.openOutputFile()
+			ok = self.outputFileName == None or self.outputFile
+			ok = choose(ok and ok != 0,1,0)
+			if f1 and f2 and ok: # Don't compare if there is an error opening the output file.
 				self.compare_open_files(f1,f2,name1,name2)
 		except:
 			import traceback
 			self.show("exception comparing files")
 			traceback.print_exc()
-			
 		try:
 			if f1: f1.close()
 			if f2: f2.close()
+			if self.outputFile:
+				self.outputFile.close() ; self.outputFile = None
 		except:
 			import traceback
 			self.show("exception closing files")
 			traceback.print_exc()
 	#@-body
-	#@-node:3::compare_files (entry)
+	#@-node:3:C=1:compare_files (entry)
 	#@+node:4::compare_lines
 	#@+body
 	def compare_lines (self,s1,s2):
@@ -283,11 +286,10 @@ class leoCompare:
 	#@+body
 	def compare_open_files (self, f1, f2, name1, name2):
 	
-		lines1 = 0 ; lines2 = 0 ; mismatches = 0
-		printTrailing = true ;
+		# self.show("compare_open_files")
+		lines1 = 0 ; lines2 = 0 ; mismatches = 0 ; printTrailing = true
 		sentinelComment1 = sentinelComment2 = None
-		if self.outputFileName:
-			self.openOutputFile()
+		if self.openOutputFile:
 			self.show("1: " + name1)
 			self.show("2: " + name2)
 			self.show("")
@@ -403,10 +405,6 @@ class leoCompare:
 		self.show("mismatches:" + `mismatches`)
 		#@-body
 		#@-node:5::<< handle reporting after at least one eof is seen >>
-
-		if self.outputFile:
-			self.outputFile.close()
-			self.outputFile = None
 	#@-body
 	#@-node:5::compare_open_files
 	#@+node:6::filecmp
@@ -451,14 +449,16 @@ class leoCompare:
 				elif ch == ' ':
 					out += "[" ; out += " " ; out += "]"
 				else: out += ch
-			else: 
-				if ch == '\t' or ch == ' ':
-					out += ' '
-				else:
+			else:
+				if 1:
 					out += ch
+				else: # I don't know why I thought this was a good idea ;-)
+					if ch == '\t' or ch == ' ':
+						out += ' '
+					else:
+						out += ch
 	
 		self.show(out)
-
 	#@-body
 	#@-node:2::dump
 	#@+node:3::dumpToEndOfFile
@@ -480,7 +480,7 @@ class leoCompare:
 		return trailingLines
 	#@-body
 	#@-node:3::dumpToEndOfFile
-	#@+node:4:C=1:isLeoHeader & isSentinel
+	#@+node:4::isLeoHeader & isSentinel
 	#@+body
 	#@+at
 	#  These methods are based on atFile.scanHeader().  They are simpler because we only care about the starting sentinel comment: 
@@ -506,33 +506,41 @@ class leoCompare:
 		i = skip_ws(s,0)
 		return match(s,i,sentinelComment)
 	#@-body
-	#@-node:4:C=1:isLeoHeader & isSentinel
-	#@+node:5::openOutput
+	#@-node:4::isLeoHeader & isSentinel
+	#@+node:5:C=2:openOutputFile
 	#@+body
 	def openOutputFile (self):
 		
-		if self.outputFileName:
-			dir = os.path.dirname(self.outputFileName)
-			if not os.path.exists(dir):
-				self.show("output directory not found: " + dir)
-			else:
-				try:
-					if self.appendOutput:
-						self.show("appending to " + self.outputFileName)
-						self.outputFile = open(self.outputFileName,"a")
-					else:
-						self.show("writing to " + self.outputFileName)
-						self.outputFile = open(self.outputFileName,"w")
-				except:
-					self.outputFile = None
-					self.show("exception opening output file")
-					traceback.print_exc()
+		if self.outputFileName == None:
+			return
+		dir,name = os.path.split(self.outputFileName)
+		if len(dir) == 0:
+			self.show("empty output directory")
+			return
+		if len(name) == 0:
+			self.show("empty output file name")
+			return
+		if not os.path.exists(dir):
+			self.show("output directory not found: " + dir)
+		else:
+			try:
+				if self.appendOutput:
+					self.show("appending to " + self.outputFileName)
+					self.outputFile = open(self.outputFileName,"a")
+				else:
+					self.show("writing to " + self.outputFileName)
+					self.outputFile = open(self.outputFileName,"w")
+			except:
+				self.outputFile = None
+				self.show("exception opening output file")
+				traceback.print_exc()
 	#@-body
-	#@-node:5::openOutput
+	#@-node:5:C=2:openOutputFile
 	#@+node:6::show
 	#@+body
 	def show (self,s):
 		
+		# print s
 		if self.outputFile:
 			self.outputFile.write(s + '\n')
 		elif self.commands:
@@ -647,8 +655,8 @@ class leoComparePanel:
 		self.stopAfterMismatchVar        = Tk.IntVar()
 		
 		# These ivars are set from Entry widgets.
-		self.limitCount = 1
-		self.limitToExtension = ".py"
+		self.limitCount = 0
+		self.limitToExtension = None 
 		if 0: # we just use the cmp ivars.
 			self.pathName1 = None
 			self.pathName2 = None
@@ -658,42 +666,89 @@ class leoComparePanel:
 		self.defaultOutputFileName = "CompareResults.txt"
 	#@-body
 	#@-node:2::comparePanel.__init__
-	#@+node:3::finishCreate
+	#@+node:3:C=3:finishCreate
 	#@+body
-	# Initialize ivars to values I like.
-	# To do: set all these from config parameters.
+	# Initialize ivars from config parameters.
 	
 	def finishCreate (self):
 		
+		from leoGlobals import app
+		config = app().config
+		
 		# File names.
-		for i,name in (
-			(0,"C:/prog/test/leoAtFile.py"),
-			(1,"C:/prog/test/Copy of leoAtFile.py"),
-			(2,"C:/prog/test/CompareResults.txt") ):
+		for i,option in (
+			(0,"compare_file_1"),
+			(1,"compare_file_2"),
+			(2,"output_file") ):
+				
+			name = config.getComparePref(option)
+			if name and len(name) > 0:
+				e = self.browseEntries[i]
+				e.delete(0,"end")
+				e.insert(0,name)
+				
+		name = config.getComparePref("output_file")
+		b = choose(name and len(name) > 0,1,0)
+		self.useOutputFileVar.set(b)
 	
-			e = self.browseEntries[i]
+		# File options.
+		b = config.getBoolComparePref("ignore_first_line_of_file_1")
+		self.ignoreFirstLine1Var.set(b)
+		
+		b = config.getBoolComparePref("ignore_first_line_of_file_2")
+		self.ignoreFirstLine2Var.set(b)
+		
+		b = config.getBoolComparePref("append_output_to_output_file")
+		self.appendOutputVar.set(b)
+	
+		ext = config.getComparePref("limit_directory_search_extenstion")
+		b = ext and len(ext) > 0
+		b = choose(b and b != 0,1,0)
+		self.limitToExtensionVar.set(b)
+		if b:
+			e = self.extensionEntry
 			e.delete(0,"end")
-			e.insert(0,name)
-	
-		self.useOutputFileVar.set(1)
-		self.makeWhitespaceVisibleVar.set(0)
-		
-		# Extension and append options.
-		self.appendOutputVar.set(0)
-		
+			e.insert(0,ext)
+			
 		# Print options.
-		self.printMatchesVar.set(1)
-		self.printMismatchesVar.set(1)
-		self.printTrailingMismatchesVar.set(1)
+		b = config.getBoolComparePref("print_both_lines_for_matches")
+		self.printBothMatchesVar.set(b)
 		
-		self.stopAfterMismatchVar.set(1)
-		self.countEntry.delete(0,"end")
-		self.countEntry.insert(0,"9")
+		b = config.getBoolComparePref("print_matching_lines")
+		self.printMatchesVar.set(b)
 		
+		b = config.getBoolComparePref("print_mismatching_lines")
+		self.printMismatchesVar.set(b)
+		
+		b = config.getBoolComparePref("print_trailing_lines")
+		self.printTrailingMismatchesVar.set(b)
+		
+		n = config.getIntComparePref("limit_count")
+		b = n and n > 0
+		b = choose(b and b != 0,1,0)
+		self.stopAfterMismatchVar.set(b)
+		if b:
+			e = self.countEntry
+			e.delete(0,"end")
+			e.insert(0,`n`)
+	
 		# Whitespace options.
-		self.ignoreBlankLinesVar.set(1)
+		b = config.getBoolComparePref("ignore_blank_lines")
+		self.ignoreBlankLinesVar.set(b)
+		
+		b = config.getBoolComparePref("ignore_interior_whitespace")
+		self.ignoreInteriorWhitespaceVar.set(b)
+		
+		b = config.getBoolComparePref("ignore_leading_whitespace")
+		self.ignoreLeadingWhitespaceVar.set(b)
+		
+		b = config.getBoolComparePref("ignore_sentinel_lines")
+		self.ignoreSentinelLinesVar.set(b)
+		
+		b = config.getBoolComparePref("make_whitespace_visible")
+		self.makeWhitespaceVisibleVar.set(b)
 	#@-body
-	#@-node:3::finishCreate
+	#@-node:3:C=3:finishCreate
 	#@+node:4::run
 	#@+body
 	def run (self):
@@ -774,7 +829,6 @@ class leoComparePanel:
 		
 		self.extensionEntry = e = Tk.Entry(row4,width=6)
 		e.pack(side="left",padx=2)
-		e.insert(0,".py")
 		
 		b = Tk.Checkbutton(row4,anchor="w",var=self.appendOutputVar,
 			text="Append output to output file")
@@ -859,37 +913,37 @@ class leoComparePanel:
 		self.finishCreate()
 	#@-body
 	#@-node:4::run
-	#@+node:5::setIvarsFromWidgets
+	#@+node:5::show
+	#@+body
+	def show (self,s):
+		
+		self.cmp.show(s)
+	#@-body
+	#@-node:5::show
+	#@+node:6:C=4:setIvarsFromWidgets
 	#@+body
 	def setIvarsFromWidgets (self):
 	
-		cmp = self.cmp ; result = true
+		cmp = self.cmp
 		
-		# File paths.
+		# File paths. cmp checks for valid file name.
 		e = self.browseEntries[0]
 		cmp.fileName1 = e.get()
 		
 		e = self.browseEntries[1]
 		cmp.fileName2 = e.get()
-		
-		# Make sure paths actually exist.
-		for name in (cmp.fileName1, cmp.fileName2):
-			if name and len(name) > 0:
-				if not os.path.exists(name):
-					self.show("path not found: " + name)
-					result = false
-			else:
-				self.show("missing compare path")
-				result = false
 	
 		# Ignore first line settings.
 		cmp.ignoreFirstLine1 = self.ignoreFirstLine1Var.get()
 		cmp.ignoreFirstLine2 = self.ignoreFirstLine2Var.get()
 		
-		# Output file.
+		# Output file.  cmp checks for valid file name.
 		if self.useOutputFileVar.get():
 			e = self.browseEntries[2]
-			cmp.outputFileName = e.get()
+			name = e.get()
+			if name != None and len(name) == 0:
+				name = None
+			cmp.outputFileName = name
 		else:
 			cmp.outputFileName = None
 	
@@ -927,11 +981,9 @@ class leoComparePanel:
 			except: cmp.limitCount = 0
 		else:
 			cmp.limitCount = 0
-		
-		return result
 	#@-body
-	#@-node:5::setIvarsFromWidgets
-	#@+node:6::Event handlers...
+	#@-node:6:C=4:setIvarsFromWidgets
+	#@+node:7::Event handlers...
 	#@+node:1::onBrowse...
 	#@+body
 	def onBrowse1 (self):
@@ -980,18 +1032,14 @@ class leoComparePanel:
 	def onCompareDirectories (self):
 	
 		cmp = self.cmp
-		ok = self.setIvarsFromWidgets()
-		#cmp.showIvars()
-		if ok:
-			cmp.compare_directories(cmp.fileName1,cmp.fileName2)
+		self.setIvarsFromWidgets()
+		cmp.compare_directories(cmp.fileName1,cmp.fileName2)
 	
 	def onCompareFiles (self):
 	
 		cmp = self.cmp
 		ok = self.setIvarsFromWidgets()
-		#cmp.showIvars()
-		if ok:
-			cmp.compare_files(cmp.fileName1,cmp.fileName2)
+		cmp.compare_files(cmp.fileName1,cmp.fileName2)
 	#@-body
 	#@-node:3::onCompare...
 	#@+node:4::onPrintMatchedLines
@@ -1004,7 +1052,7 @@ class leoComparePanel:
 		b.configure(state=state)
 	#@-body
 	#@-node:4::onPrintMatchedLines
-	#@-node:6::Event handlers...
+	#@-node:7::Event handlers...
 	#@-others
 	
 	#@-body
