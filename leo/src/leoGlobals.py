@@ -1823,14 +1823,13 @@ def printGcRefs (verbose=True):
 def enableIdleTimeHook(idleTimeDelay=100):
 
     if not g.app.idleTimeHook:
-        s = "idle-time hooks enabled"
-        # print s ; g.es(s)
-        g.app.idleTimeHook = True
-        g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
-        
         # Start idle-time processing only after the first idle-time event.
         g.app.gui.setIdleTimeHook(g.idleTimeHookHandler)
         g.app.afterHandler = g.idleTimeHookHandler
+        
+    # 1/4/05: Always update these.
+    g.app.idleTimeHook = True
+    g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
 #@nonl
 #@-node:EKR.20040602125018:enableIdleTimeHook
 #@+node:EKR.20040602125018.1:disableIdleTimeHook
@@ -1851,7 +1850,7 @@ def idleTimeHookHandler(*args,**keys):
         if trace_count % 10 == 0:
             for w in g.app.windowList:
                 c = w.c
-                print "idleTimeHookHandler",trace_count,c
+                print "idleTimeHookHandler",trace_count,c.shortFileName()
 
     # New for Python 2.3: may be called during shutdown.
     if g.app.killed: return
