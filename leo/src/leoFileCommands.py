@@ -606,7 +606,7 @@ class baseFileCommands:
 				
 				for name in app.language_delims_dict.keys():
 					if self.matchTagWordIgnoringCase(name):
-						language = name.replace(name,"/","")
+						language = name.replace("/","") # Bug fix: 1020/03
 						self.getDquote()
 						break
 				
