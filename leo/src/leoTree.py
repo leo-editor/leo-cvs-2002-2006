@@ -154,6 +154,7 @@ class baseLeoTree:
 		self.initing = false # true: opening file.
 		
 		# Drag and drop
+		self.aboutToDrag = false # true: inhibit first redraw so bindings remain in place.
 		self.dragging = false # true: presently dragging.
 		self.controlDrag = false # true: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
@@ -355,12 +356,19 @@ class baseLeoTree:
 	#@+node:4::idle_redraw
 	#@+body
 	def idle_redraw (self):
+		
+		self.redrawScheduled = false # 7/10/03: Always do this here.
 	
 		frame = self.commands.frame
 		if frame not in app().windowList or app().quitting:
+			# trace("no frame")
+			return
+		if self.aboutToDrag:
+			# trace("aboutToDrag")
+			self.aboutToDrag = false
 			return
 			
-		# trace("*" * 40)
+		# trace()
 	
 		self.expandAllAncestors(self.currentVnode)
 		oldcursor = self.canvas['cursor']
@@ -385,7 +393,6 @@ class baseLeoTree:
 			doHook("after_redraw-outline",c=self.commands)
 	
 		self.canvas['cursor'] = oldcursor
-		self.redrawScheduled = false
 	#@-body
 	#@-node:4::idle_redraw
 	#@+node:5::idle_second_redraw
@@ -1228,9 +1235,11 @@ class baseLeoTree:
 	def OnDrag(self,v,event):
 	
 		# Note: "drag" hooks handled by vnode callback routine.
+		# trace(event)
 		
 		c = self.commands
 		assert(v == self.drag_v)
+		self.aboutToDrag = false
 	
 		if not event:
 			return
@@ -1258,7 +1267,7 @@ class baseLeoTree:
 		
 		# Note: "enddrag" hooks handled by vnode callback routine.
 		
-		# es("tree.OnEndDrag" + `v`)
+		# trace(v)
 		assert(v == self.drag_v)
 		c = self.commands ; canvas = self.canvas
 	
@@ -1307,7 +1316,6 @@ class baseLeoTree:
 			self.drag_id = None
 			
 		self.dragging = false
-	
 	#@-body
 	#@-node:9::tree.OnEndDrag
 	#@+node:10::headline key handlers (tree)
@@ -1477,11 +1485,15 @@ class baseLeoTree:
 			canvas_x = canvas.canvasx(event.x)
 			canvas_y = canvas.canvasy(event.y)
 			id = canvas.find_closest(canvas_x,canvas_y)
-			if id:
+			if id != None:
+				try: id = id[0]
+				except: pass
+				# trace("binding",id,v)
 				self.drag_id = id
 				self.drag_v = v
 				canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
 				canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
+				self.aboutToDrag = true
 		self.select(v)
 		
 	def OnIconRightClick (self,v,event):

@@ -520,6 +520,8 @@ class baseVnode:
 	#@+body
 	def OnDrag(self,event=None):
 		
+		# trace()
+		
 		try:
 			v = self ; c = v.commands
 			if c.frame.tree.dragging:
@@ -538,6 +540,8 @@ class baseVnode:
 	#@+body
 	def OnEndDrag(self,event=None):
 		
+		# trace()
+	
 		try:
 			v = self ; c = v.commands
 			if c.frame.tree.dragging:
