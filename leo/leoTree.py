@@ -1385,10 +1385,44 @@ class leoTree:
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
+			config = app().config
+			fg   = config.getWindowPref("headline_text_editing_foreground_color")
+			bg   = config.getWindowPref("headline_text_editing_background_color")
+			selfg = config.getWindowPref("headline_text_editing_selection_foreground_color")
+			selbg = config.getWindowPref("headline_text_editing_selection_background_color")
+			if fg and bg and selfg and selbg:
+				try:
+					v.edit_text.configure(state="normal",highlightthickness=1,
+						selectforeground=selfg,selectbackground=selbg,fg=fg, bg=bg)
+					return
+				except:
+					traceback.print_exc()
+			elif selfg and selbg:
+				try:
+					v.edit_text.configure(state="normal",highlightthickness=1,
+						selectforeground=selfg,selectbackground=selbg,fg="black",bg="white")
+					return
+				except:
+					traceback.print_exc()
+			elif fg and bg:
+				try:
+					v.edit_text.configure(state="normal",highlightthickness=1,fg=fg,bg=bg)
+					return
+				except:
+					traceback.print_exc()
 			v.edit_text.configure(state="normal",highlightthickness=1,fg="black", bg="white")
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text:
+			config = app().config
+			fg = config.getWindowPref("headline_text_selected_foreground_color")
+			bg = config.getWindowPref("headline_text_selected_background_color")
+			if fg and bg:
+				try:
+					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
+					return
+				except:
+					traceback.print_exc()
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
 	
 	def setSelectedLabelState (self,v): # selected, not editing
@@ -1400,6 +1434,15 @@ class leoTree:
 	
 	def setUnselectedLabelState (self,v): # not selected.
 		if v and v.edit_text:
+			config = app().config
+			fg = config.getWindowPref("headline_text_unselected_foreground_color")
+			bg = config.getWindowPref("headline_text_unselected_background_color")
+			if fg and bg:
+				try:
+					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
+					return
+				except:
+					traceback.print_exc()
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
 	#@-body
 	#@-node:6:C=32:tree.set...LabelState

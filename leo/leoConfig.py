@@ -102,6 +102,8 @@ class config:
 		"headline_text_selected_background_color" : None,
 		"headline_text_editing_foreground_color" : None,
 		"headline_text_editing_background_color" : None,
+		"headline_text_editing_selection_foreground_color" : None,
+		"headline_text_editing_selection_background_color" : None,
 		
 		"headline_text_font_family" : None,
 		"headline_text_font_size" : 12,
@@ -260,6 +262,8 @@ class config:
 	"headline_text_selected_background_color",
 	"headline_text_editing_foreground_color",
 	"headline_text_editing_background_color",
+	"headline_text_editing_selection_foreground_color",
+	"headline_text_editing_selection_background_color",
 	
 	"headline_text_font_family",
 	"headline_text_font_slant",

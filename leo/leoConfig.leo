@@ -13,18 +13,18 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
-<v t="T13" a="V"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
+<v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
@@ -34,7 +34,7 @@
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T22" a="M"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
@@ -606,14 +606,23 @@ outline_pane_scrolls_horizontally = 0
 
 headline_text_unselected_foreground_color = black
 headline_text_unselected_background_color = white
+#	Foreground and background colors of unselected headline text.
+#	Both must be specified for either to take effect.
 
 headline_text_selected_foreground_color = black
 headline_text_selected_background_color = gray80
+#	Foreground and background colors of selected headline text that is not being edited.
+#	Both must be specified for either to take effect.
 
-headline_text_editing_foreground_color = white
-headline_text_editing_background_color = black
+headline_text_editing_foreground_color = black
+headline_text_editing_background_color = white
+#	Foreground and background colors of unselected headline text in a headline that is being edited.
+#	Both must be specified for either to take effect.
 
-#	Foreground and background colors of headline text.
+headline_text_editing_selection_foreground_color = white
+headline_text_editing_selection_background_color = DarkBlue
+#	Foreground and background colors of selected text headline text in a headline that is being edited.
+#	Both must be specified for either to take effect.
 
 outline_pane_background_color =
 #	Background color of outline pane itself.

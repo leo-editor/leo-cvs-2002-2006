@@ -3270,7 +3270,7 @@ class LeoFrame:
 		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
 			bg = config.getWindowPref("body_cursor_background_color")
-			print `fg`, `bg`
+			# print `fg`, `bg`
 			if fg and bg:
 				cursor="xterm" + " " + fg + " " + bg
 				try: body.configure(cursor=cursor)
