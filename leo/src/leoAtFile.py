@@ -3682,23 +3682,6 @@ class baseNewDerivedFile(oldDerivedFile):
         # Don't check the headline.  It simply causes problems.
         t.setVisited() # Supress warning about unvisited node.
         return t
-        
-        if 0: # Old code:
-            #@        << Check the headlines >>
-            #@+node:ekr.20040716061450:<< Check the headlines >>
-            if headline.strip() == v.headString().strip():
-                t.setVisited() # Supress warning about unvisited node.
-                return t
-            else:
-                at.readError(
-                    "Mismatched headline.\nExpecting: %s\ngot: %s" %
-                    (headline,v.headString()))
-                g.trace("Mismatched headline",headline,v.headString())
-                g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
-                return None
-            #@nonl
-            #@-node:ekr.20040716061450:<< Check the headlines >>
-            #@nl
     #@nonl
     #@-node:ekr.20031218072017.2007:findChild 4.x (@file only)
     #@+node:ekr.20031218072017.2758:scanText4 & allies
