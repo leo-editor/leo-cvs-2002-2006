@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2169" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="66" left="66" height="728" width="960"/>
+	<global_window_position top="107" left="128" height="728" width="960"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2687,9 +2687,9 @@
 </v>
 </v>
 <v t="edream.110903121744"><vh>Latex colorizer</vh></v>
-<v t="edream.111103045130" a="V"><vh>Undo typing test</vh></v>
+<v t="edream.111103045130"><vh>Undo typing test</vh></v>
 <v t="edream.111103091713"><vh>Test of match brackets</vh></v>
-<v t="edream.111303082913"><vh>Redirect script output</vh></v>
+<v t="edream.111303082913" a="V"><vh>Redirect script output</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -34161,6 +34161,7 @@ Test \% test.</t>
 }
 </t>
 <t tx="edream.111303082913">from leoGlobals import *
-print app.config.redirect_execute_script_output_to_log_pane</t>
+print app.config.redirect_execute_script_output_to_log_pane
+</t>
 </tnodes>
 </leo_file>
