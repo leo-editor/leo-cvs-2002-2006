@@ -1656,27 +1656,7 @@ class vnode:
 			self.t = t
 	#@-body
 	#@-node:6::setT
-	#@+node:7::v.sortChildren
-	#@+body
-	def sortChildren (self):
-		
-		# Create a list of vnode, headline tuples
-		v = self ; pairs = []
-		child = v.firstChild()
-		if not child: return
-		while child:
-			pairs.append((string.lower(child.headString()), child))
-			child = child.next()
-		# Sort the list on the headlines.
-		sortedChildren = sortSequence(pairs,0)
-		# Move the children.
-		index = 0
-		for headline,child in sortedChildren:
-			child.moveToNthChildOf(v,index)
-			index += 1
-	#@-body
-	#@-node:7::v.sortChildren
-	#@+node:8::trimTrailingLines
+	#@+node:7::trimTrailingLines
 	#@+body
 	#@+at
 	#  This trims trailing blank lines from a node.  It is surprising 
@@ -1705,29 +1685,11 @@ class vnode:
 			v.setBodyStringOrPane(body)
 			# Don't set the dirty bit: it would just be annoying.
 	#@-body
-	#@-node:8::trimTrailingLines
+	#@-node:7::trimTrailingLines
 	#@-node:11::Setters
-	#@+node:12::Moving, Inserting, Deleting, Cloning
+	#@+node:12::Moving, Inserting, Deleting, Cloning, Sorting
 	#@+node:1::Entry Points (vnode)
-	#@+node:1::v.clone
-	#@+body
-	# Creates a clone of back and insert it as the next sibling of back.
-	
-	def clone (self,back):
-	
-		clone = self.cloneTree(back)
-		clone.createDependents()
-		# Set the clone bit in all nodes joined to back.
-		clone.setClonedBit()
-		back.setClonedBit()
-		v = back.joinList
-		while v and v != back:
-			v.setClonedBit()
-			v = v.joinList
-		return clone
-	#@-body
-	#@-node:1::v.clone
-	#@+node:2::doDelete
+	#@+node:1::doDelete
 	#@+body
 	#@+at
 	#  This is the main delete routine.  It deletes the receiver's entire tree 
@@ -1752,8 +1714,8 @@ class vnode:
 		c.initAllCloneBits()
 		return self # We no longer need dvnodes: vnodes contain all needed info.
 	#@-body
-	#@-node:2::doDelete
-	#@+node:3::insertAfter
+	#@-node:1::doDelete
+	#@+node:2::insertAfter
 	#@+body
 	def insertAfter (self, t = None):
 	
@@ -1766,8 +1728,8 @@ class vnode:
 		v.linkAfter(self)
 		return v
 	#@-body
-	#@-node:3::insertAfter
-	#@+node:4::insertAsLastChild
+	#@-node:2::insertAfter
+	#@+node:3::insertAsLastChild
 	#@+body
 	def insertAsLastChild (self,t = None):
 	
@@ -1778,8 +1740,8 @@ class vnode:
 			t = tnode()
 		return self.insertAsNthChild(n,t)
 	#@-body
-	#@-node:4::insertAsLastChild
-	#@+node:5::insertAsNthChild
+	#@-node:3::insertAsLastChild
+	#@+node:4::insertAsNthChild
 	#@+body
 	def insertAsNthChild (self, n, t=None):
 	
@@ -1794,8 +1756,8 @@ class vnode:
 		v.linkAsNthChild(self,n)
 		return v
 	#@-body
-	#@-node:5::insertAsNthChild
-	#@+node:6::moveAfter
+	#@-node:4::insertAsNthChild
+	#@+node:5::moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1814,22 +1776,8 @@ class vnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:6::moveAfter
-	#@+node:7::moveToRoot
-	#@+body
-	def moveToRoot (self, oldRoot = None):
-	
-		"""Moves the receiver to the root position"""
-	
-		v = self
-		# trace(`v`)
-		v.destroyDependents()
-		v.unlink()
-		v.linkAsRoot(oldRoot)
-		v.createDependents()
-	#@-body
-	#@-node:7::moveToRoot
-	#@+node:8::moveToNthChildOf
+	#@-node:5::moveAfter
+	#@+node:6::moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1848,8 +1796,22 @@ class vnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:8::moveToNthChildOf
-	#@+node:9::restoreOutlineFromDVnodes (test)
+	#@-node:6::moveToNthChildOf
+	#@+node:7::moveToRoot
+	#@+body
+	def moveToRoot (self, oldRoot = None):
+	
+		"""Moves the receiver to the root position"""
+	
+		v = self
+		# trace(`v`)
+		v.destroyDependents()
+		v.unlink()
+		v.linkAsRoot(oldRoot)
+		v.createDependents()
+	#@-body
+	#@-node:7::moveToRoot
+	#@+node:8::restoreOutlineFromDVnodes (test)
 	#@+body
 	# Restores (relinks) the dv tree in the position described by back and parent.
 	
@@ -1863,8 +1825,8 @@ class vnode:
 			dv.linkAsRoot()
 		return dv
 	#@-body
-	#@-node:9::restoreOutlineFromDVnodes (test)
-	#@+node:10::swap_links
+	#@-node:8::restoreOutlineFromDVnodes (test)
+	#@+node:9::swap_links
 	#@+body
 	# 7/5/02: New for undo.
 	# On entry, linked is linked into a tree and unlinked is not.
@@ -1899,7 +1861,45 @@ class vnode:
 		# Clear links in linked.
 		linked.mParent = linked.mBack = linked.mNext = linked.joinList = None
 	#@-body
-	#@-node:10::swap_links
+	#@-node:9::swap_links
+	#@+node:10::v.clone
+	#@+body
+	# Creates a clone of back and insert it as the next sibling of back.
+	
+	def clone (self,back):
+	
+		clone = self.cloneTree(back)
+		clone.createDependents()
+		# Set the clone bit in all nodes joined to back.
+		clone.setClonedBit()
+		back.setClonedBit()
+		v = back.joinList
+		while v and v != back:
+			v.setClonedBit()
+			v = v.joinList
+		return clone
+	#@-body
+	#@-node:10::v.clone
+	#@+node:11::v.sortChildren
+	#@+body
+	def sortChildren (self):
+		
+		# Create a list of vnode, headline tuples
+		v = self ; pairs = []
+		child = v.firstChild()
+		if not child: return
+		while child:
+			pairs.append((string.lower(child.headString()), child))
+			child = child.next()
+		# Sort the list on the headlines.
+		sortedChildren = sortSequence(pairs,0)
+		# Move the children.
+		index = 0
+		for headline,child in sortedChildren:
+			child.moveToNthChildOf(v,index)
+			index += 1
+	#@-body
+	#@-node:11::v.sortChildren
 	#@-node:1::Entry Points (vnode)
 	#@+node:2::Public helper functions
 	#@+node:1::v.copyTree
@@ -2405,7 +2405,7 @@ class vnode:
 	#@-body
 	#@-node:16::unjoinTree
 	#@-node:3::Private helper functions
-	#@-node:12::Moving, Inserting, Deleting, Cloning
+	#@-node:12::Moving, Inserting, Deleting, Cloning, Sorting
 	#@-others
 #@-body
 #@-node:4::class vnode

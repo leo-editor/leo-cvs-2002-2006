@@ -1107,8 +1107,7 @@ class Commands:
 	def canSortSiblings (self):
 	
 		c = self ; v = c.currentVnode()
-		parent = v.parent()
-		return parent and parent.hasChildren()
+		return v.next() or v.back()
 	#@-body
 	#@-node:25::canSortChildren, canSortSiblings
 	#@+node:26::canUndo & canRedo
@@ -1837,32 +1836,7 @@ class Commands:
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@-body
 	#@-node:1::c.dragAfter
-	#@+node:2::c.dragToNthChildOf
-	#@+body
-	def dragToNthChildOf(self,v,parent,n):
-	
-		# es("dragToNthChildOf")
-		c = self
-		if not c.checkMoveWithParentWithWarning(v,parent,true): return
-		# Remember both the before state and the after state for undo/redo
-		oldBack = v.back()
-		oldParent = v.parent()
-		oldN = v.childIndex()
-		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.setDirty()
-			v.moveToNthChildOf(parent,n)
-			c.undoer.setUndoParams("Drag",v,
-				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-			v.setDirty()
-			c.selectVnode(v)
-			c.setChanged(true)
-		c.endUpdate()
-		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
-	#@-body
-	#@-node:2::c.dragToNthChildOf
-	#@+node:3::c.dragCloneAfter
+	#@+node:2::c.dragCloneAfter
 	#@+body
 	def dragCloneAfter (self,v,after):
 	
@@ -1888,8 +1862,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:3::c.dragCloneAfter
-	#@+node:4::c.dragCloneToNthChildOf
+	#@-node:2::c.dragCloneAfter
+	#@+node:3::c.dragCloneToNthChildOf
 	#@+body
 	def dragCloneToNthChildOf (self,v,parent,n):
 	
@@ -1915,7 +1889,32 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@-body
-	#@-node:4::c.dragCloneToNthChildOf
+	#@-node:3::c.dragCloneToNthChildOf
+	#@+node:4::c.dragToNthChildOf
+	#@+body
+	def dragToNthChildOf(self,v,parent,n):
+	
+		# es("dragToNthChildOf")
+		c = self
+		if not c.checkMoveWithParentWithWarning(v,parent,true): return
+		# Remember both the before state and the after state for undo/redo
+		oldBack = v.back()
+		oldParent = v.parent()
+		oldN = v.childIndex()
+		c.beginUpdate()
+		if 1: # inside update...
+			c.endEditing()
+			v.setDirty()
+			v.moveToNthChildOf(parent,n)
+			c.undoer.setUndoParams("Drag",v,
+				oldBack=oldBack,oldParent=oldParent,oldN=oldN)
+			v.setDirty()
+			c.selectVnode(v)
+			c.setChanged(true)
+		c.endUpdate()
+		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
+	#@-body
+	#@-node:4::c.dragToNthChildOf
 	#@+node:5::c.sortChildren, sortSiblings
 	#@+body
 	def sortChildren(self):
@@ -1937,11 +1936,10 @@ class Commands:
 		#@-node:1::<< Set the undo info for sortChildren >>
 
 		c.beginUpdate()
-		if 1: # inside update...
-			c.endEditing()
-			v.sortChildren()
-			v.setDirty()
-			c.setChanged(true)
+		c.endEditing()
+		v.sortChildren()
+		v.setDirty()
+		c.setChanged(true)
 		c.endUpdate()
 		
 	def sortSiblings (self):
@@ -1949,31 +1947,70 @@ class Commands:
 		c = self ; v = c.currentVnode()
 		if not v: return
 		parent = v.parent()
-		if not parent: return # can't sort the top level this way.
-		
-		#@<< Set the undo info for sortSiblings >>
-		#@+node:2::<< Set the undo info for sortSiblings >>
-		#@+body
-		# Get the present list of siblings.
-		sibs = []
-		sib = parent.firstChild()
-		while sib:
-			sibs.append(sib)
-			sib = sib.next()
-		c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
-		#@-body
-		#@-node:2::<< Set the undo info for sortSiblings >>
+		if not parent:
+			c.sortTopLevel()
+		else:
+			
+			#@<< Set the undo info for sortSiblings >>
+			#@+node:2::<< Set the undo info for sortSiblings >>
+			#@+body
+			# Get the present list of siblings.
+			sibs = []
+			sib = parent.firstChild()
+			while sib:
+				sibs.append(sib)
+				sib = sib.next()
+			c.undoer.setUndoParams("Sort Siblings",v,sort=sibs)
+			#@-body
+			#@-node:2::<< Set the undo info for sortSiblings >>
 
-		c.beginUpdate()
-		if 1: # inside update...
+			c.beginUpdate()
 			c.endEditing()
 			parent.sortChildren()
 			parent.setDirty()
 			c.setChanged(true)
-		c.endUpdate()
+			c.endUpdate()
 	#@-body
 	#@-node:5::c.sortChildren, sortSiblings
-	#@+node:6::demote
+	#@+node:6::c.sortTopLevel
+	#@+body
+	def sortTopLevel (self):
+		
+		# Create a list of vnode, headline tuples
+		c = self ; v = root = c.rootVnode()
+		if not v: return
+		
+		#@<< Set the undo info for sortTopLevel >>
+		#@+node:1::<< Set the undo info for sortTopLevel >>
+		#@+body
+		# Get the present list of children.
+		sibs = []
+		sib = c.rootVnode()
+		while sib:
+			sibs.append(sib)
+			sib = sib.next()
+		c.undoer.setUndoParams("Sort Top Level",v,sort=sibs)
+		#@-body
+		#@-node:1::<< Set the undo info for sortTopLevel >>
+
+		pairs = []
+		while v:
+			pairs.append((v.headString().lower(), v))
+			v = v.next()
+		# Sort the list on the headlines.
+		sortedNodes = sortSequence(pairs,0)
+		# Move the nodes
+		c.beginUpdate()
+		h,v = sortedNodes[0]
+		if v != root:
+			v.moveToRoot(oldRoot=root)
+		for h,next in sortedNodes[1:]:
+			next.moveAfter(v)
+			v = next
+		c.endUpdate()
+	#@-body
+	#@-node:6::c.sortTopLevel
+	#@+node:7::demote
 	#@+body
 	def demote(self):
 	
@@ -2004,8 +2041,8 @@ class Commands:
 		c.undoer.setUndoParams("Demote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:6::demote
-	#@+node:7::moveOutlineDown
+	#@-node:7::demote
+	#@+node:8::moveOutlineDown
 	#@+body
 	#@+at
 	#  Moving down is more tricky than moving up; we can't move v to be a 
@@ -2060,8 +2097,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:7::moveOutlineDown
-	#@+node:8::moveOutlineLeft
+	#@-node:8::moveOutlineDown
+	#@+node:9::moveOutlineLeft
 	#@+body
 	def moveOutlineLeft(self):
 	
@@ -2087,8 +2124,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:8::moveOutlineLeft
-	#@+node:9::moveOutlineRight
+	#@-node:9::moveOutlineLeft
+	#@+node:10::moveOutlineRight
 	#@+body
 	def moveOutlineRight(self):
 	
@@ -2117,8 +2154,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:9::moveOutlineRight
-	#@+node:10::moveOutlineUp
+	#@-node:10::moveOutlineRight
+	#@+node:11::moveOutlineUp
 	#@+body
 	def moveOutlineUp(self):
 	
@@ -2166,8 +2203,8 @@ class Commands:
 		c.endUpdate()
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:10::moveOutlineUp
-	#@+node:11::promote
+	#@-node:11::moveOutlineUp
+	#@+node:12::promote
 	#@+body
 	def promote(self):
 	
@@ -2190,7 +2227,7 @@ class Commands:
 		c.undoer.setUndoParams("Promote",v,lastChild=last)
 		c.updateSyntaxColorer(v) # Moving can change syntax coloring.
 	#@-body
-	#@-node:11::promote
+	#@-node:12::promote
 	#@-node:15::Moving, Dragging, Promote, Demote, Sort
 	#@+node:16::Selecting & Updating (commands)
 	#@+node:1::editVnode (calls tree.editLabel)

@@ -647,6 +647,13 @@ class undoer:
 			
 				c.selectVnode(u.v)
 				c.sortSiblings()
+				
+			elif redoType == "Sort Top Level":
+				
+				c.selectVnode(u.v)
+				c.sortTopLevel()
+				u.v = None # don't mark u.v dirty
+			
 			#@-body
 			#@-node:7::<< redo sort cases >>
 
@@ -883,6 +890,11 @@ class undoer:
 			elif undoType == "Sort Siblings":
 				
 				u.undoSortSiblings()
+				
+			elif undoType == "Sort Top Level":
+				
+				u.undoSortTopLevel()
+				u.v = None # don't mark u.v dirty
 			#@-body
 			#@-node:7::<< undo sort cases >>
 
@@ -1234,6 +1246,25 @@ class undoer:
 		c.endUpdate()
 	#@-body
 	#@-node:7::undoSortSiblings
+	#@+node:8::undoSortTopLevel
+	#@+body
+	def undoSortTopLevel (self):
+		
+		u = self ; c = u.commands
+		root = c.rootVnode()
+		
+		c.beginUpdate()
+		c.endEditing()
+		v = u.sort[0]
+		v.moveToRoot(oldRoot=root)
+		for next in u.sort[1:]:
+			next.moveAfter(v)
+			v = next
+		c.setChanged(true)
+		c.endUpdate()
+	
+	#@-body
+	#@-node:8::undoSortTopLevel
 	#@-node:7::Undo helpers
 	#@-others
 #@-body
