@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6476" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="83" left="190" height="804" width="946"/>
+	<global_window_position top="70" left="223" height="804" width="946"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,7 +13,7 @@
 <v t="ekr.20041121151002.1"><vh>@recentfiles </vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
-<v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
+<v t="ekr.20041211044607"><vh>@  int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
 <v t="ekr.20041217042849"><vh>@font body font</vh></v>
 <v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
@@ -437,6 +437,7 @@
 <v t="ekr.20041105091229"><vh>test of g.pdb</vh></v>
 <v t="ekr.20041029111650"><vh>Test of g.app.debugSwitch</vh></v>
 </v>
+<v t="ekr.20041227081159"><vh>test of tab_width &amp; tab_width ivars</vh></v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -797,7 +798,7 @@
 <v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
-<v t="ekr.20041113113555"><vh>@button spellpyx</vh></v>
+<v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
 <v t="EKR.20040619133116"><vh>Unit testing...</vh>
@@ -1328,7 +1329,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041222060224"><vh>Tests of component</vh>
+<v t="ekr.20041222060224" a="TV"><vh>Tests of component</vh>
 <v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
 <v t="ekr.20041224082127"><vh>iconBar...</vh>
 <v t="ekr.20041224082127.1"><vh>unpack iconBar</vh></v>
@@ -1384,14 +1385,9 @@
 <v t="ekr.20041225051328.2"><vh>@strip c:/prog/test/atSignTest.txt</vh></v>
 <v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
 </v>
-<v t="ekr.20041225104159" a="E"><vh>Settings dialogs</vh>
-<v t="ekr.20041213074603" a="TV"><vh>To do</vh>
-<v t="ekr.20041220102317"><vh>Support for generalized widget settings?</vh></v>
-<v t="ekr.20041213115848"><vh>Later or never ...</vh>
-<v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
-<v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
-<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
-</v>
+<v t="ekr.20041225104159"><vh>Settings dialogs</vh>
+<v t="ekr.20041213074603"><vh>To do</vh>
+<v t="ekr.20041220102317"><vh>Support for general component settings</vh></v>
 </v>
 <v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
 <v t="ekr.20041225104159.1"><vh>Settings dialog</vh></v>
@@ -10769,31 +10765,34 @@ import Tkinter as Tk</t>
         (type(arg_type) == types.ClassType and isinstance(val,arg_type)))</t>
 <t tx="ekr.20041113113555">import leoGlobals as g
 import leoPlugins
-
-def check():
-    spellpyx.spellFrame.checkSpelling()
-    
-def createMenu():
-    spellpyx.createSpellMenu("tag",keywords={"c":g.top()})
+c = g.top()
 
 spellpyx = leoPlugins.getPluginModule("spellpyx")
+createMenu = spellpyx is None
+keys = {'c':c}
+
+if not spellpyx:
+    print 'loading spellpyx plugin'
+    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose=True)
+    if spellpyx:
+        spellpyx.onCreate('tag',keys)
 
 if spellpyx:
-    check()
-else:
-    spellpyx = leoPlugins.loadOnePlugin("spellpyx",verbose = True)
-    if spellpyx:
-        createMenu()
-        check()</t>
+    # g.trace(g.dictToString(spellpyx.spellFrames,tag='spellFrames'))
+    spellFrame = spellpyx.spellFrames.get(c)
+    if spellFrame and createMenu:
+        spellFrame.createSpellMenu('tag',keys)
+    if spellFrame:
+        spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -10805,7 +10804,7 @@ for s in sys.path:
 import leoGlobals as g
 import leoConfig
 
-# @button code does not get updated dynamcially.
+# @button code does not get updated dynamically.
 replaceBody=True
 
 c = g.top()
@@ -10861,20 +10860,24 @@ for fileName in fileNames:
 <t tx="ekr.20041126132604"></t>
 <t tx="ekr.20041130092210"></t>
 <t tx="ekr.20041211044607"></t>
-<t tx="ekr.20041211053412.1">@
-
-May be a problem with copying positions.
-
-Probably don't need to do anything with this if the Settings command uses the body pane.</t>
-<t tx="ekr.20041211053539.1"></t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
-- Grab all keys or otherwise disable commands while in dialog!
+Major:
+    - Cancel should revert all settings.
+        (Revert doesn't work after a node changes:this is confusing and dangerous.)
+    - Support generalized widget settings (see child node)
+    - Copy expansion state when writing @settings trees.
+    - Handle undo/redo properly.
 
-- Unit tests: there are too many cases to test by hand.
-
-- move findCorrespondingNode into leoNodes class.</t>
+Minor:
+    - Remove label in settings pane.
+    - Make sure comment area is always visible.
+    - Disable all commands while in dialog.
+    - Print changes to log.
+    - Unit tests: there are too many cases to test by hand.
+    - move findCorrespondingNode into leoNodes class.
+    - Fix bug: findSettingsRoot doesn't work if no summary node.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -10885,8 +10888,6 @@ log_text_font_size = None
 log_text_font_slant = None
 log_text_font_weight = normal
 </t>
-<t tx="ekr.20041213115848">@</t>
-<t tx="ekr.20041217033348"></t>
 <t tx="ekr.20041217042849"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -11028,7 +11029,7 @@ Calling apply() is different from just calling function(args), since in that cas
 Deprecated since release 2.3. Use the extended call syntax instead, as described above.
 </t>
 <t tx="ekr.20041220102317">@list name
-    - name specifies the widget to configure.
+    - name specifies the component to configure.
     - parser creates a list of name,kind,value tuples from the body.
 
 Leo's core would support one 'name' for:
@@ -11044,9 +11045,8 @@ Examples:
         text,string,my widget
 
 g.setGeneralTkSetting(widget,setting_name) would do the following:
-
     - get the setting_name and the associated list of tuples/bunches from the config class.
-    - safetly set the widget's setting using the settings list as is done in the prototype code.</t>
+    - safely set the widget's setting using the settings list as is done in the prototype code.</t>
 <t tx="ekr.20041220165048"></t>
 <t tx="ekr.20041220172118">@ignore</t>
 <t tx="ekr.20041220172118.1">@nocolor
@@ -11299,5 +11299,12 @@ replaceBody=False
 
 c = g.top()
 leoConfig.settingsController(c,replaceBody)</t>
+<t tx="ekr.20041227081159">import leoGlobals as g
+c = g.top()
+
+print c
+print 'use_plugins',c.use_plugins
+print 'tab_width',c.tab_width
+print 'page_width',c.page_width</t>
 </tnodes>
 </leo_file>
