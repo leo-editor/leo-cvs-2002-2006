@@ -103,21 +103,22 @@ class leoFind:
         
         #@<< do dummy initialization to keep Pychecker happy >>
         #@+node:ekr.20050123164539:<< do dummy initialization to keep Pychecker happy >>
-        self.batch = None
-        self.ignore_case = None
-        self.node_only = None
-        self.pattern_match = None
-        self.search_headline = None
-        self.search_body = None
-        self.suboutline_only = None
-        self.mark_changes = None
-        self.mark_finds = None
-        self.reverse = None
-        self.script_search = None
-        self.script_change = None
-        self.selection_only = None
-        self.wrap = None
-        self.whole_word = None
+        if 1:
+            self.batch = None
+            self.ignore_case = None
+            self.node_only = None
+            self.pattern_match = None
+            self.search_headline = None
+            self.search_body = None
+            self.suboutline_only = None
+            self.mark_changes = None
+            self.mark_finds = None
+            self.reverse = None
+            self.script_search = None
+            self.script_change = None
+            self.selection_only = None
+            self.wrap = None
+            self.whole_word = None
         #@nonl
         #@-node:ekr.20050123164539:<< do dummy initialization to keep Pychecker happy >>
         #@nl
@@ -439,7 +440,7 @@ class leoFind:
             #@nl
             v.setBodyStringOrPane(s)
         # Set mark, changed and dirty bits.
-        if c.mark_changes:
+        if self.mark_changes:
             v.setMarked()
         if not c.isChanged():
             c.setChanged(True)

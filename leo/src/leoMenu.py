@@ -349,7 +349,6 @@ class leoMenu:
         self.helpMenuTopTable = (
             ("&About Leo...",None,c.about),
             ("Online &Home Page",None,c.leoHome),
-            ("-",None,None),
             ("Open Online &Tutorial",None,c.leoTutorial),
         )
             
@@ -358,8 +357,9 @@ class leoMenu:
         )
             
         self.helpMenuTop3Table = (
-            ("Open Leo&Docs.leo",None,c.leoDocumentation),
             ("-",None,None),
+            ("Open Leo&Docs.leo",None,c.leoDocumentation),
+            ("Open Leo&Plugins.leo",None,c.leoPlugins),
             ("Open Leo&Settings.leo",None,c.leoConfig),
         )
         #@nonl

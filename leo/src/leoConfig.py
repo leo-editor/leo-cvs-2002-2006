@@ -1147,7 +1147,7 @@ class baseConfig:
                         else:
                             self.localOptionsList.insert(0,d)
                     else:
-                        g.es("No @settings tree in %s",color="red")
+                        g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                     g.app.destroyWindow(c.frame)
     
         self.inited = True

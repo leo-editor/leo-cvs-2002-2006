@@ -366,7 +366,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
     #@nonl
     #@-node:ekr.20031218072017.2059:find.init
     #@-node:ekr.20031218072017.3898:Birth & death
-    #@+node:ekr.20031218072017.1460:tkFind.update_ivars
+    #@+node:ekr.20031218072017.1460:find.update_ivars
     def update_ivars (self):
         
         """Called just before doing a find to update ivars from the find panel."""
@@ -400,7 +400,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         s = g.toUnicode(s,g.app.tkEncoding)
         self.change_text = s
     #@nonl
-    #@-node:ekr.20031218072017.1460:tkFind.update_ivars
+    #@-node:ekr.20031218072017.1460:find.update_ivars
     #@+node:ekr.20050204090259:tkFind.adjust_find_text
     def adjust_find_text(self,s):
         

@@ -4460,7 +4460,6 @@ self.windowMenuTopTable = (
 self.helpMenuTopTable = (
     ("&About Leo...",None,c.about),
     ("Online &Home Page",None,c.leoHome),
-    ("-",None,None),
     ("Open Online &Tutorial",None,c.leoTutorial),
 )
     
@@ -4469,8 +4468,9 @@ self.helpMenuTop2Table = (
 )
     
 self.helpMenuTop3Table = (
-    ("Open Leo&Docs.leo",None,c.leoDocumentation),
     ("-",None,None),
+    ("Open Leo&Docs.leo",None,c.leoDocumentation),
+    ("Open Leo&Plugins.leo",None,c.leoPlugins),
     ("Open Leo&Settings.leo",None,c.leoConfig),
 )
 #@nonl
@@ -11075,27 +11075,31 @@ def rawPrint(s):
 #@-node:ekr.20041012090942.3:rawPrint
 #@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
 #@+node:ekr.20031218072017.3123:<< test code >>
-import leoGlobals as g
+import leoGlobals as g ; import sys
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+# stderr
+import leoGlobals as g ; import sys
 g.redirectStderr()
-g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+import leoGlobals as g ; import sys
 g.restoreStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+# stdout
+import leoGlobals as g ; import sys
 g.restoreStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-#@nonl
+import leoGlobals as g ; import sys
+g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 #@-node:ekr.20031218072017.3123:<< test code >>
 #@-node:ekr.20031218072017.3121:redirecting stderr and stdout
 #@+node:ekr.20031218072017.3695:leoLog.__init__
@@ -15018,7 +15022,7 @@ def readSettingsFiles (self,fileName,verbose=True):
                     else:
                         self.localOptionsList.insert(0,d)
                 else:
-                    g.es("No @settings tree in %s",color="red")
+                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                 g.app.destroyWindow(c.frame)
 
     self.inited = True
@@ -17291,7 +17295,7 @@ def readSettingsFiles (self,fileName,verbose=True):
                     else:
                         self.localOptionsList.insert(0,d)
                 else:
-                    g.es("No @settings tree in %s",color="red")
+                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                 g.app.destroyWindow(c.frame)
 
     self.inited = True
@@ -17545,7 +17549,7 @@ def readSettingsFiles (self,fileName,verbose=True):
                     else:
                         self.localOptionsList.insert(0,d)
                 else:
-                    g.es("No @settings tree in %s",color="red")
+                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                 g.app.destroyWindow(c.frame)
 
     self.inited = True
@@ -18123,7 +18127,7 @@ def readSettingsFiles (self,fileName,verbose=True):
                     else:
                         self.localOptionsList.insert(0,d)
                 else:
-                    g.es("No @settings tree in %s",color="red")
+                    g.es("No @settings tree in %s" % (g.shortFileName(path)),color="red")
                 g.app.destroyWindow(c.frame)
 
     self.inited = True
@@ -22072,9 +22076,12 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/config/leoSettings.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo
+C:\prog\leoCVS\leo\config\leoSettings.leo
+c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\Leo Stuff\oldLeoFiles.leo
+c:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\test\test.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -23239,8 +23246,6 @@ def __init__(self,c,resizeable=False,title=None):
     self.createTopFrame() # Create the outer tkinter dialog frame.
     self.createFrame()
     self.init(c) # New in 4.3: init only once.
-    
-    # g.trace(self.top)
 #@nonl
 #@+node:ekr.20031218072017.3900:<< create the tkinter intVars >>
 self.dict = {}
@@ -23468,12 +23473,12 @@ self.find_ctrl.delete("1.0","end")
 self.change_ctrl.delete("1.0","end")
 
 # New in 4.3: Get setting from @settings.
-for w,setting in (
-    (self.find_ctrl,"find_text"),
-    (self.change_ctrl,"change_text"),
+for w,setting,defaultText in (
+    (self.find_ctrl,"find_text",'<find pattern here>'),
+    (self.change_ctrl,"change_text",''),
 ):
     s = c.config.getString(setting)
-    if s is None: s = ""
+    if not s: s = defaultText
     w.insert("end",s)
 #@nonl
 #@-node:ekr.20031218072017.2060:<< set find/change widgets >>
@@ -25350,12 +25355,12 @@ self.find_ctrl.delete("1.0","end")
 self.change_ctrl.delete("1.0","end")
 
 # New in 4.3: Get setting from @settings.
-for w,setting in (
-    (self.find_ctrl,"find_text"),
-    (self.change_ctrl,"change_text"),
+for w,setting,defaultText in (
+    (self.find_ctrl,"find_text",'<find pattern here>'),
+    (self.change_ctrl,"change_text",''),
 ):
     s = c.config.getString(setting)
-    if s is None: s = ""
+    if not s: s = defaultText
     w.insert("end",s)
 #@nonl
 #@-node:ekr.20031218072017.2060:<< set find/change widgets >>
@@ -25405,11 +25410,17 @@ def update_ivars (self):
     self.node_only       = g.choose(search_scope == "node-only",1,0)
     self.selection       = g.choose(search_scope == "selection-only",1,0) # 11/9/03
 
-    s = self.find_ctrl.get("1.0","end - 1c") # Remove trailing newline
+    # New in 4.3: The caller is responsible for removing most trailing cruft.
+    # Among other things, this allows Leo to search for a single trailing space.
+    s = self.find_ctrl.get("1.0","end")
     s = g.toUnicode(s,g.app.tkEncoding)
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
     self.find_text = s
 
-    s = self.change_ctrl.get("1.0","end - 1c") # Remove trailing newline
+    s = self.change_ctrl.get("1.0","end")
+    if s and s[-1] in ('\r','\n'):
+        s = s[:-1]
     s = g.toUnicode(s,g.app.tkEncoding)
     self.change_text = s
 #@nonl
@@ -28638,7 +28649,7 @@ print
 #@nonl
 #@-node:EKR.20040423082910.3:<< put newline to logWaiting and print newline >>
 #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
-#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
 def ecnl():
     g.ecnls(1)
 
@@ -28685,7 +28696,7 @@ def es(s,*args,**keys):
             app.logWaiting.append((s,color),)
             # print s,
 #@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20031218072017.2619:app.writeWaitingLog
 def writeWaitingLog (self):
 
@@ -28845,6 +28856,183 @@ if marks or expanded:
 #@-node:ekr.20031218072017.1553:getLeoFile
 #@-node:ekr.20050130133731:Added silent keyword to severl methods
 #@-node:ekr.20050126102846.2:(Improved queuing of log messages)
+#@+node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
+#@+node:ekr.20050130162739.1:redirect stdout
+#@-node:ekr.20050130162739.1:redirect stdout
+#@+node:ekr.20050130162739:undirect stdout
+#@-node:ekr.20050130162739:undirect stdout
+#@+node:ekr.20050130162739.2:redirect stderr
+#@-node:ekr.20050130162739.2:redirect stderr
+#@+node:ekr.20050130162739.3:undirect stderr
+#@-node:ekr.20050130162739.3:undirect stderr
+#@+node:ekr.20031218072017.3121:redirecting stderr and stdout
+class redirectClass:
+    
+    """A class to redirect stdout and stderr."""
+
+    << redirectClass methods >>
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+<< define convenience methods for redirecting streams >>
+
+if 0: # Test code: may be executed in the child node.
+    << test code >>
+#@nonl
+#@+node:ekr.20031218072017.1656:<< redirectClass methods >>
+@others
+#@nonl
+#@+node:ekr.20041012082437:redirectClass.__init__
+def __init__ (self):
+    
+    self.old = None
+#@nonl
+#@-node:ekr.20041012082437:redirectClass.__init__
+#@+node:ekr.20041012082437.1:isRedirected
+def isRedirected (self):
+
+    return self.old != None
+#@nonl
+#@-node:ekr.20041012082437.1:isRedirected
+#@+node:ekr.20041012082437.2:flush
+# For LeoN: just for compatibility.
+
+def flush(self, *args):
+    return 
+
+#@-node:ekr.20041012082437.2:flush
+#@+node:ekr.20041012091252:rawPrint
+def rawPrint (self,s):
+
+    if self.old:
+        self.old.write(s+'\n')
+    else:
+        print s
+#@nonl
+#@-node:ekr.20041012091252:rawPrint
+#@+node:ekr.20041012082437.3:redirect
+def redirect (self,stdout=1):
+
+    import sys
+
+    if g.app.batchMode:
+        # Redirection is futile in batch mode.
+        return
+
+    if not self.old:
+        if stdout:
+            self.old,sys.stdout = sys.stdout,self
+        else:
+            self.old,sys.stderr = sys.stderr,self
+#@nonl
+#@-node:ekr.20041012082437.3:redirect
+#@+node:ekr.20041012082437.4:undirect
+def undirect (self,stdout=1):
+
+    import sys
+
+    if self.old:
+        if stdout:
+            sys.stdout,self.old = self.old,None
+        else:
+            sys.stderr,self.old = self.old,None
+#@nonl
+#@-node:ekr.20041012082437.4:undirect
+#@+node:ekr.20041012082437.5:write
+def write(self,s):
+
+    if self.old:
+        if app.log:
+            app.log.put(s)
+        else:
+            self.old.write(s+'\n')
+    else:
+        # Can happen when g.batchMode is True.
+        print s
+#@nonl
+#@-node:ekr.20041012082437.5:write
+#@-node:ekr.20031218072017.1656:<< redirectClass methods >>
+#@+node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+@others
+#@nonl
+#@+node:ekr.20041012090942:redirectStderr & redirectStdout
+# Redirect streams to the current log window.
+def redirectStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.redirect(stdout=False)
+
+def redirectStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.redirect()
+#@nonl
+#@-node:ekr.20041012090942:redirectStderr & redirectStdout
+#@+node:ekr.20041012090942.1:restoreStderr & restoreStdout
+# Restore standard streams.
+def restoreStderr():
+    global redirectStdErrObj
+    redirectStdErrObj.undirect(stdout=False)
+    
+def restoreStdout():
+    global redirectStdOutObj
+    redirectStdOutObj.undirect()
+#@nonl
+#@-node:ekr.20041012090942.1:restoreStderr & restoreStdout
+#@+node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+def stdErrIsRedirected():
+    global redirectStdErrObj
+    return redirectStdErrObj.isRedirected()
+    
+def stdOutIsRedirected():
+    global redirectStdOutObj
+    return redirectStdOutObj.isRedirected()
+#@nonl
+#@-node:ekr.20041012090942.2:stdErrIsRedirected & stdOutIsRedirected
+#@+node:ekr.20041012090942.3:rawPrint
+# Send output to original stdout.
+
+def rawPrint(s):
+
+    global redirectStdOutObj
+
+    redirectStdOutObj.rawPrint(s)
+#@nonl
+#@-node:ekr.20041012090942.3:rawPrint
+#@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
+#@+node:ekr.20031218072017.3123:<< test code >>
+import leoGlobals as g ; import sys
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stderr
+import leoGlobals as g ; import sys
+g.redirectStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.restoreStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+# stdout
+import leoGlobals as g ; import sys
+g.restoreStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+
+import leoGlobals as g ; import sys
+g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
+#@-node:ekr.20031218072017.3123:<< test code >>
+#@-node:ekr.20031218072017.3121:redirecting stderr and stdout
+#@-node:ekr.20050127090442.1:(Investigated redirection from scripts.  All appears well.)
+#@+node:ekr.20050130171901:(Fixed crasher in Change All command)
+#@+node:ekr.20050130171901.1:Traceback
+#@-node:ekr.20050130171901.1:Traceback
+#@-node:ekr.20050130171901:(Fixed crasher in Change All command)
 #@+node:ekr.20050201174750:(Fixed crasher in script button)
 #@+node:ekr.20050202052911:Traceback
 File "/Users/edream/leoCVS/leo/src/leoAtFile.py", line 2794, in write        
@@ -28909,7 +29097,7 @@ Indeed, this was so: a recent botch in a change in mod_scripting.py prevented th
 #@+node:ekr.20050201175325:(g.es called print on the Mac)
 # The problem was simply some extra print statements. No idea why they were there.
 #@nonl
-#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
 def ecnl():
     g.ecnls(1)
 
@@ -28956,7 +29144,7 @@ def es(s,*args,**keys):
             app.logWaiting.append((s,color),)
             # print s,
 #@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
 def put(self,s,color=None):
     
@@ -29533,27 +29721,31 @@ def rawPrint(s):
 #@-node:ekr.20041012090942.3:rawPrint
 #@-node:ekr.20031218072017.3122:<< define convenience methods for redirecting streams >>
 #@+node:ekr.20031218072017.3123:<< test code >>
-import leoGlobals as g
+import leoGlobals as g ; import sys
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+# stderr
+import leoGlobals as g ; import sys
 g.redirectStderr()
-g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+import leoGlobals as g ; import sys
 g.restoreStderr()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-
+# stdout
+import leoGlobals as g ; import sys
 g.restoreStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 
-print "stdout isRedirected:", g.stdOutIsRedirected()
-print "stderr isRedirected:", g.stdErrIsRedirected()
-#@nonl
+import leoGlobals as g ; import sys
+g.redirectStdout()
+print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
 #@-node:ekr.20031218072017.3123:<< test code >>
 #@-node:ekr.20031218072017.3121:redirecting stderr and stdout
 #@+node:ekr.20041118104831.1:class configSettings
@@ -30630,6 +30822,98 @@ enable(menu,"De-Hoist",c.canDehoist())
 #@nonl
 #@-node:ekr.20040131171020:<< enable top level outline menu >>
 #@-node:ekr.20050128081422:(Changed name of Paste Retaining Clones to Paste Node As Clone)
+#@+node:ekr.20050130152008.1:(Added leoPlugins.leo to Help menu)
+#@+node:ekr.20031218072017.2938:Help Menu
+#@+node:ekr.20031218072017.2939:about (version number & date)
+def about(self):
+    
+    c = self
+    
+    # Don't use triple-quoted strings or continued strings here.
+    # Doing so would add unwanted leading tabs.
+    version = c.getSignOnLine() + "\n\n"
+    theCopyright = (
+        "Copyright 1999-2005 by Edward K. Ream\n" +
+        "All Rights Reserved\n" +
+        "Leo is distributed under the Python License")
+    url = "http://webpages.charter.net/edreamleo/front.html"
+    email = "edreamleo@charter.net"
+
+    g.app.gui.runAboutLeoDialog(version,theCopyright,url,email)
+#@nonl
+#@-node:ekr.20031218072017.2939:about (version number & date)
+#@+node:ekr.20031218072017.2943:leoConfig
+def leoConfig (self):
+
+    c = self
+    name = 'leoSettings.leo'
+    homeDir = g.app.homeDir
+    configDir = g.app.globalConfigDir
+
+    # Look in configDir first.
+    fileName = g.os_path_join(configDir,name)
+
+    # Look in homeDir second.
+    ok, frame = g.openWithFileName(fileName,c)
+    if not ok:
+        if configDir == loadDir:
+            g.es("%s not found in %s" % (name,configDir))
+        else:
+            fileName = g.os_path_join(homeDir,name)
+            ok, frame = g.openWithFileName(fileName,c)
+            if not ok:
+                g.es("%s not found in %s or %s" % (name,configDir,homeDir))
+#@nonl
+#@-node:ekr.20031218072017.2943:leoConfig
+#@+node:ekr.20031218072017.2940:leoDocumentation
+def leoDocumentation (self):
+    
+    c = self ; name = "LeoDocs.leo"
+
+    fileName = g.os_path_join(g.app.loadDir,"..","doc",name)
+    ok,frame = g.openWithFileName(fileName,c)
+    if not ok:
+        g.es("not found: %s" % name)
+#@-node:ekr.20031218072017.2940:leoDocumentation
+#@+node:ekr.20031218072017.2941:leoHome
+def leoHome (self):
+    
+    import webbrowser
+
+    url = "http://webpages.charter.net/edreamleo/front.html"
+    try:
+        webbrowser.open_new(url)
+    except:
+        g.es("not found: " + url)
+#@nonl
+#@-node:ekr.20031218072017.2941:leoHome
+#@+node:ekr.20050130152008:leoPlugins
+def leoPlugins (self):
+    
+    c = self ; name = "leoPlugins.leo"
+    fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)
+    ok,frame = g.openWithFileName(fileName,c)
+    if not ok:
+        g.es("not found: %s" % name)
+#@nonl
+#@-node:ekr.20050130152008:leoPlugins
+#@+node:ekr.20031218072017.2942:leoTutorial (version number)
+def leoTutorial (self):
+    
+    import webbrowser
+
+    if 1: # new url
+        url = "http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"
+    else:
+        url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+    try:
+        webbrowser.open_new(url)
+    except:
+        g.es("not found: " + url)
+#@nonl
+#@-node:ekr.20031218072017.2942:leoTutorial (version number)
+#@-node:ekr.20031218072017.2938:Help Menu
+#@-node:ekr.20050130152008.1:(Added leoPlugins.leo to Help menu)
 #@+node:ekr.20050202074304:Script buttons can request to be removed
 @killcolor
 

@@ -1050,27 +1050,31 @@ def rawPrint(s):
 if 0: # Test code: may be executed in the child node.
     #@    << test code >>
     #@+node:ekr.20031218072017.3123:<< test code >>
-    import leoGlobals as g
+    import leoGlobals as g ; import sys
+    print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+    print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
     
-    print "stdout isRedirected:", g.stdOutIsRedirected()
-    print "stderr isRedirected:", g.stdErrIsRedirected()
-    
+    # stderr
+    import leoGlobals as g ; import sys
     g.redirectStderr()
-    g.redirectStdout()
+    print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+    print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
     
-    print "stdout isRedirected:", g.stdOutIsRedirected()
-    print "stderr isRedirected:", g.stdErrIsRedirected()
-    
+    import leoGlobals as g ; import sys
     g.restoreStderr()
+    print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+    print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
     
-    print "stdout isRedirected:", g.stdOutIsRedirected()
-    print "stderr isRedirected:", g.stdErrIsRedirected()
-    
+    # stdout
+    import leoGlobals as g ; import sys
     g.restoreStdout()
+    print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+    print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
     
-    print "stdout isRedirected:", g.stdOutIsRedirected()
-    print "stderr isRedirected:", g.stdErrIsRedirected()
-    #@nonl
+    import leoGlobals as g ; import sys
+    g.redirectStdout()
+    print >> sys.stdout, "stdout isRedirected:", g.stdOutIsRedirected()
+    print >> sys.stderr, "stderr isRedirected:", g.stdErrIsRedirected()
     #@-node:ekr.20031218072017.3123:<< test code >>
     #@nl
 #@nonl
@@ -2095,7 +2099,7 @@ def choose(cond, a, b): # warning: evaluates all arguments
     else: return b
 #@nonl
 #@-node:ekr.20031218072017.3147:choose
-#@+node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
 def ecnl():
     g.ecnls(1)
 
@@ -2142,7 +2146,7 @@ def es(s,*args,**keys):
             app.logWaiting.append((s,color),)
             # print s,
 #@nonl
-#@-node:ekr.20031218072017.1474:es, enl, ecnl & ecnls
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
 #@+node:ekr.20031218072017.3148:top
 #@+at 
 #@nonl

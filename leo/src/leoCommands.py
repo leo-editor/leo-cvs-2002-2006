@@ -4502,45 +4502,6 @@ class baseCommands:
         g.app.gui.runAboutLeoDialog(version,theCopyright,url,email)
     #@nonl
     #@-node:ekr.20031218072017.2939:about (version number & date)
-    #@+node:ekr.20031218072017.2940:leoDocumentation
-    def leoDocumentation (self):
-        
-        c = self
-    
-        fileName = g.os_path_join(g.app.loadDir,"..","doc","LeoDocs.leo")
-    
-        try:
-            g.openWithFileName(fileName,c)
-        except:
-            g.es("not found: LeoDocs.leo")
-    #@-node:ekr.20031218072017.2940:leoDocumentation
-    #@+node:ekr.20031218072017.2941:leoHome
-    def leoHome (self):
-        
-        import webbrowser
-    
-        url = "http://webpages.charter.net/edreamleo/front.html"
-        try:
-            webbrowser.open_new(url)
-        except:
-            g.es("not found: " + url)
-    #@nonl
-    #@-node:ekr.20031218072017.2941:leoHome
-    #@+node:ekr.20031218072017.2942:leoTutorial (version number)
-    def leoTutorial (self):
-        
-        import webbrowser
-    
-        if 1: # new url
-            url = "http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"
-        else:
-            url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
-        try:
-            webbrowser.open_new(url)
-        except:
-            g.es("not found: " + url)
-    #@nonl
-    #@-node:ekr.20031218072017.2942:leoTutorial (version number)
     #@+node:ekr.20031218072017.2943:leoConfig
     def leoConfig (self):
     
@@ -4564,6 +4525,53 @@ class baseCommands:
                     g.es("%s not found in %s or %s" % (name,configDir,homeDir))
     #@nonl
     #@-node:ekr.20031218072017.2943:leoConfig
+    #@+node:ekr.20031218072017.2940:leoDocumentation
+    def leoDocumentation (self):
+        
+        c = self ; name = "LeoDocs.leo"
+    
+        fileName = g.os_path_join(g.app.loadDir,"..","doc",name)
+        ok,frame = g.openWithFileName(fileName,c)
+        if not ok:
+            g.es("not found: %s" % name)
+    #@-node:ekr.20031218072017.2940:leoDocumentation
+    #@+node:ekr.20031218072017.2941:leoHome
+    def leoHome (self):
+        
+        import webbrowser
+    
+        url = "http://webpages.charter.net/edreamleo/front.html"
+        try:
+            webbrowser.open_new(url)
+        except:
+            g.es("not found: " + url)
+    #@nonl
+    #@-node:ekr.20031218072017.2941:leoHome
+    #@+node:ekr.20050130152008:leoPlugins
+    def leoPlugins (self):
+        
+        c = self ; name = "leoPlugins.leo"
+        fileName = g.os_path_join(g.app.loadDir,"..","plugins",name)
+        ok,frame = g.openWithFileName(fileName,c)
+        if not ok:
+            g.es("not found: %s" % name)
+    #@nonl
+    #@-node:ekr.20050130152008:leoPlugins
+    #@+node:ekr.20031218072017.2942:leoTutorial (version number)
+    def leoTutorial (self):
+        
+        import webbrowser
+    
+        if 1: # new url
+            url = "http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"
+        else:
+            url = "http://www.evisa.com/e/sbooks/leo/sbframetoc_ie.htm"
+        try:
+            webbrowser.open_new(url)
+        except:
+            g.es("not found: " + url)
+    #@nonl
+    #@-node:ekr.20031218072017.2942:leoTutorial (version number)
     #@-node:ekr.20031218072017.2938:Help Menu
     #@-node:ekr.20031218072017.2818:Command handlers...
     #@+node:ekr.20031218072017.2945:Dragging (commands)
