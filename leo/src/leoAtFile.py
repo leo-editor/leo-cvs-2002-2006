@@ -5,20 +5,24 @@
 #@@language python
 #@@tabwidth -4
 
+#@<< atFile imports >>
+#@+node:EKR.20040620100737:<< atFile imports >>
 import leoGlobals as g
 
 if g.app.config.use_psyco:
     # print "enabled psyco classes",__file__
     try: from psyco.classes import *
     except ImportError: pass
-
+    
 import leoColor
 import leoNodes
 import filecmp
 import os
 import string
 import time
-
+#@nonl
+#@-node:EKR.20040620100737:<< atFile imports >>
+#@nl
 #@<< global atFile constants >>
 #@+node:ekr.20031218072017.2621:<< global atFile constants >>
 # These constants must be global to this module because they are shared by several classes.
@@ -430,8 +434,12 @@ class baseAtFile:
         #@    << delete all tempBodyStrings >>
         #@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
         for p in c.allNodes_iter():
+            
             if hasattr(p.v.t,"tempBodyString"):
                 delattr(p.v.t,"tempBodyString")
+                
+            #if hasattr(p.v.t,"tempRefBodyString"):
+            #    delattr(p.v.t,"tempRefBodyString")
         #@nonl
         #@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
         #@nl
@@ -610,7 +618,7 @@ class baseAtFile:
     #@-node:ekr.20031218072017.2625:Reading
     #@+node:ekr.20031218072017.2640:Writing
     #@+node:ekr.20031218072017.2015:top_df.writeAll
-    def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False):
+    def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False,toString=False):
         
         """Write @file nodes in all or part of the outline"""
     
@@ -657,21 +665,21 @@ class baseAtFile:
                     
                     # Tricky: @ignore not recognised in @silentfile nodes.
                     if p.isAtAsisFileNode():
-                        at.asisWrite(p)
+                        at.asisWrite(p,toString=toString)
                         writtenFiles.append(p.v.t) ; autoSave = True
                     elif p.isAtIgnoreNode():
                         pass
                     elif p.isAtNorefFileNode():
-                        at.norefWrite(p)
+                        at.norefWrite(p,toString=toString)
                         writtenFiles.append(p.v.t) ; autoSave = True
                     elif p.isAtNoSentFileNode():
-                        at.write(p,nosentinels=True)
+                        at.write(p,nosentinels=True,toString=toString)
                         writtenFiles.append(p.v.t) # No need for autosave
                     elif p.isAtThinFileNode():
-                        at.write(p,thinFile=True)
+                        at.write(p,thinFile=True,toString=toString)
                         writtenFiles.append(p.v.t) # No need for autosave.
                     elif p.isAtFileNode():
-                        at.write(p)
+                        at.write(p,toString=toString)
                         writtenFiles.append(p.v.t) ; autoSave = True
                 
                     if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
@@ -699,54 +707,50 @@ class baseAtFile:
     #@nonl
     #@-node:ekr.20031218072017.2015:top_df.writeAll
     #@+node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
-    def norefWrite (self,p):
+    def norefWrite (self,p,toString=False):
         at = self
         write_new = not g.app.config.write_old_format_derived_files
         df = g.choose(write_new,at.new_df,at.old_df)
-        try:    df.norefWrite(p)
+        try:    df.norefWrite(p,toString=toString)
         except: at.writeException(p)
         
     rawWrite = norefWrite # Compatibility with old scripts.
         
-    def asisWrite (self,p):
+    def asisWrite (self,p,toString=False):
         at = self
-        try: at.old_df.asisWrite(p) # No new_df.asisWrite method.
+        try: at.old_df.asisWrite(p,toString=toString) # No new_df.asisWrite method.
         except: at.writeException(p)
         
     selentWrite = asisWrite # Compatibility with old scripts.
         
-    def write (self,p,nosentinels=False,thinFile=False):
+    def write (self,p,nosentinels=False,thinFile=False,toString=False):
         at = self
         write_new = thinFile or not g.app.config.write_old_format_derived_files
         df = g.choose(write_new,at.new_df,at.old_df)
-        try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
+        try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile,toString=toString)
         except: at.writeException(p)
-    
-    def writeException(self,p):
-        self.error("Unexpected exception while writing " + p.headString())
-        g.es_exception()
     #@nonl
     #@-node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
     #@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
-    def writeOldDerivedFiles (self):
+    def writeOldDerivedFiles (self,toString=False):
         
-        self.writeDerivedFiles(write_old=True)
+        self.writeDerivedFiles(write_old=True,toString=toString)
     
-    def writeNewDerivedFiles (self):
+    def writeNewDerivedFiles (self,toString=False):
     
-        self.writeDerivedFiles(write_old=False)
+        self.writeDerivedFiles(write_old=False,toString=toString)
         
-    def writeDerivedFiles (self,write_old):
+    def writeDerivedFiles (self,write_old,toString=False):
         
         config = g.app.config
         old = config.write_old_format_derived_files
         config.write_old_format_derived_files = write_old
-        self.writeAll(writeAtFileNodesFlag=True)
+        self.writeAll(writeAtFileNodesFlag=True,toString=toString)
         config.write_old_format_derived_files = old
     #@nonl
     #@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
     #@+node:ekr.20031218072017.2019:top_df.writeMissing
-    def writeMissing(self,p):
+    def writeMissing(self,p,toString=False):
     
         at = self
     
@@ -798,19 +802,23 @@ class baseAtFile:
                 if valid and missing:
                     #@                << create df.outputFile >>
                     #@+node:ekr.20031218072017.2021:<< create df.outputFile >>
-                    try:
-                        df.outputFileName = df.targetFileName + ".leotmp"
-                        df.outputFile = open(df.outputFileName,'wb')
-                        if df.outputFile is None:
-                            g.es("can not open " + df.outputFileName)
-                    except:
-                        g.es("exception opening:" + df.outputFileName)
-                        g.es_exception()
-                        df.outputFile = None
+                    if toString:
+                        df.outputFileName = "<string: %s>" % df.targetFileName
+                        df.outputFile = g.fileLikeObject()
+                    else:
+                        try:
+                            df.outputFileName = df.targetFileName
+                            df.outputFile = open(df.outputFileName,'wb')
+                            if df.outputFile is None:
+                                g.es("can not open " + df.outputFileName)
+                        except IOError:
+                            g.es("Can not open " + df.outputFileName)
+                            g.es_exception()
+                            df.outputFile = None
                     #@nonl
                     #@-node:ekr.20031218072017.2021:<< create df.outputFile >>
                     #@nl
-                    if at.outputFile:
+                    if df.outputFile:
                         #@                    << write the @file node >>
                         #@+node:ekr.20031218072017.2022:<< write the @file node >>
                         if p.isAtAsisFileNode():
@@ -830,6 +838,7 @@ class baseAtFile:
                         #@nonl
                         #@-node:ekr.20031218072017.2022:<< write the @file node >>
                         #@nl
+                        df.closeWriteFile()
                 p.moveToNodeAfterTree()
             elif p.isAtIgnoreNode():
                 p.moveToNodeAfterTree()
@@ -844,32 +853,13 @@ class baseAtFile:
         return changedFiles # So caller knows whether to do an auto-save.
     #@nonl
     #@-node:ekr.20031218072017.2019:top_df.writeMissing
-    #@+node:EKR.20040507095329:top_df.writeToString
-    def writeToString (self,p,nosentinels=False,thinFile=False):
-        
-        at = self ; df = at.new_df
-        
-        ### Can this be correct?  what about scanAllDirectives?  what about comment delims?
+    #@+node:EKR.20040620103353:top_df.writeException
+    def writeException(self,p):
     
-        # From perfect import
-        df.targetFileName = "<string-file>"
-        df.outputFile = fo = g.fileLikeObject()
-        df.writeOpenFile(p)
-        return fo.get()
-        
-        if 0: # From execute script:
-            
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            # Write the "derived file" into fo.
-            fo = g.fileLikeObject()
-            df.write(p.copy(),nosentinels=True,scriptFile=fo)
-            assert(p)
-            s = fo.get()
+        self.error("Unexpected exception while writing " + p.headString())
+        g.es_exception()
     #@nonl
-    #@-node:EKR.20040507095329:top_df.writeToString
+    #@-node:EKR.20040620103353:top_df.writeException
     #@-node:ekr.20031218072017.2640:Writing
     #@-others
     #@nonl
@@ -919,6 +909,8 @@ class baseOldDerivedFile:
         self.targetFileName = u"" # EKR 1/21/03: now a unicode string
         self.outputFileName = u"" # EKR 1/21/03: now a unicode string
         self.outputFile = None # The temporary output file.
+        self.toStringFlag = False # True if output eventually gets put in self.stringOutput
+        self.stringOutput = None
         
         #@+at 
         #@nonl
@@ -1053,6 +1045,7 @@ class baseOldDerivedFile:
             # 21-SEP-2002 DTHEIN: no trailing whitespace on empty @last directive
             trailingLine = " " + lastLines[j]
             out[k] = tag + trailingLine.rstrip() ; j -= 1
+    #@nonl
     #@-node:ekr.20031218072017.2649:completeLastDirectives
     #@+node:ekr.20031218072017.2650:createNthChild 3.x
     #@+at 
@@ -1457,7 +1450,7 @@ class baseOldDerivedFile:
                     #@nl
             elif kind == startBody:
                 #@    << scan @+body >>
-                #@+node:ekr.20031218072017.2674:<< scan @+body >>
+                #@+node:ekr.20031218072017.2674:<< scan @+body >> 3.x
                 assert(g.match(s,i,"+body"))
                 
                 child_out = [] ; child = p.copy() # Do not change out or p!
@@ -1477,7 +1470,7 @@ class baseOldDerivedFile:
                 
                 self.indent = oldIndent
                 #@nonl
-                #@-node:ekr.20031218072017.2674:<< scan @+body >>
+                #@-node:ekr.20031218072017.2674:<< scan @+body >> 3.x
                 #@nl
             elif kind == startNode:
                 #@    << scan @+node >>
@@ -2356,17 +2349,17 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.2707:writeError
     #@-node:ekr.20031218072017.2702:Utilites (3.x)
-    #@+node:ekr.20031218072017.2708:Writing (3.x)
+    #@+node:ekr.20031218072017.2708:Writing (3.x) (Deprecated)
     #@+node:ekr.20031218072017.2709:Top level
     #@+node:ekr.20031218072017.2714:old_df.asisWrite
-    def asisWrite(self,root):
+    def asisWrite(self,root,toString=False):
     
         c = self.c ; self.root = root
         self.errors = 0
         c.endEditing() # Capture the current headline.
         try:
             self.targetFileName = root.atAsisFileNodeName()
-            ok = self.openWriteFile(root)
+            ok = self.openWriteFile(root,toString)
             if not ok: return
             for p in root.self_and_subtree_iter():
                 #@            << Write p's headline if it starts with @@ >>
@@ -2401,7 +2394,7 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.2714:old_df.asisWrite
     #@+node:ekr.20031218072017.2710:old_df.norefWrite
-    def norefWrite(self,root):
+    def norefWrite(self,root,toString=False):
     
         c = self.c ; self.root = root
         self.errors = 0
@@ -2409,7 +2402,7 @@ class baseOldDerivedFile:
         c.endEditing() # Capture the current headline.
         try:
             self.targetFileName = root.atNorefFileNodeName()
-            ok = self.openWriteFile(root)
+            ok = self.openWriteFile(root,toString)
             if not ok: return
             #@        << write root's tree >>
             #@+node:ekr.20031218072017.2711:<< write root's tree >>
@@ -2514,7 +2507,7 @@ class baseOldDerivedFile:
     #@+node:ekr.20031218072017.2322:old_df.write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,thinFile=False):
+    def write(self,root,nosentinels=False,thinFile=False,toString=False):
         
         if thinFile:
             self.error("@file-thin not supported before 4.2")
@@ -2546,7 +2539,7 @@ class baseOldDerivedFile:
             else:
                 self.targetFileName = root.atFileNodeName()
             
-            ok = self.openWriteFile(root)
+            ok = self.openWriteFile(root,toString)
             if not ok: return
             #@nonl
             #@-node:ekr.20031218072017.2324:<< open the file; return on error >>
@@ -2656,17 +2649,20 @@ class baseOldDerivedFile:
             self.handleWriteException()
     #@-node:ekr.20031218072017.2322:old_df.write
     #@+node:ekr.20031218072017.2717:Top level write helpers
-    #@+node:ekr.20031218072017.2718:atFile.closeWriteFile
+    #@+node:ekr.20031218072017.2718:old_df.closeWriteFile
     def closeWriteFile (self):
         
-        if self.outputFile:
-            if self.suppress_newlines and self.newline_pending:
-                self.newline_pending = False
-                self.onl() # Make sure file ends with a newline.
-            self.outputFile.flush()
-            self.outputFile.close()
-            self.outputFile = None
-    #@-node:ekr.20031218072017.2718:atFile.closeWriteFile
+        if not self.outputFile: return
+    
+        if self.suppress_newlines and self.newline_pending:
+            self.newline_pending = False
+            self.onl() # Make sure file ends with a newline.
+    
+        self.outputFile.flush()
+        self.outputFile.close()
+        self.outputFile = None
+    #@nonl
+    #@-node:ekr.20031218072017.2718:old_df.closeWriteFile
     #@+node:EKR.20040424085407:atFile.compareFilesIgnoringLineEndings
     # This routine is needed to handle cvs stupidities.
     
@@ -2708,12 +2704,12 @@ class baseOldDerivedFile:
             root.setDirty()
     #@nonl
     #@-node:ekr.20031218072017.2719:atFile.handleWriteException
-    #@+node:ekr.20031218072017.2720:atFile.openWriteFile
+    #@+node:ekr.20031218072017.2720:atFile.openWriteFile (used by both old and new code)
     # Open files.  Set root.orphan and root.dirty flags and return on errors.
     
-    def openWriteFile (self,root):
+    def openWriteFile (self,root,toString):
         
-        # g.trace(root)
+        self.toStringFlag = toString
     
         try:
             self.scanAllDirectives(root)
@@ -2722,6 +2718,12 @@ class baseOldDerivedFile:
             self.writeError("exception in atFile.scanAllDirectives")
             g.es_exception()
             valid = False
+            
+        if valid and toString:
+            self.targetFileName = self.outputFileName = "<string-file>"
+            self.outputFile = g.fileLikeObject()
+            self.stringOutput = ""
+            return valid
     
         if valid:
             try:
@@ -2767,7 +2769,7 @@ class baseOldDerivedFile:
         
         return valid
     #@nonl
-    #@-node:ekr.20031218072017.2720:atFile.openWriteFile
+    #@-node:ekr.20031218072017.2720:atFile.openWriteFile (used by both old and new code)
     #@+node:ekr.20031218072017.2721:atFile.putInitialComment
     def putInitialComment (self):
         
@@ -3479,7 +3481,7 @@ class baseOldDerivedFile:
     #@nonl
     #@-node:ekr.20031218072017.2753:putIndent
     #@-node:ekr.20031218072017.2747:Writing Utils
-    #@-node:ekr.20031218072017.2708:Writing (3.x)
+    #@-node:ekr.20031218072017.2708:Writing (3.x) (Deprecated)
     #@-others
     #@nonl
     #@-node:ekr.20031218072017.2643:<< class baseOldDerivedFile methods >>
@@ -4023,7 +4025,7 @@ class baseNewDerivedFile(oldDerivedFile):
         at.readEndNode(s,i,middle=True)
     #@nonl
     #@-node:EKR.20040524071414:readEndMiddle
-    #@+node:ekr.20031218072017.2772:readEndNode
+    #@+node:ekr.20031218072017.2772:readEndNode (4.x)
     def readEndNode (self,s,i,middle=False):
         
         """Handle end-of-node processing for @-others and @-ref sentinels."""
@@ -4042,6 +4044,8 @@ class baseNewDerivedFile(oldDerivedFile):
         elif middle: 
             pass # Middle sentinels never alter text.
         else:
+            if hasattr(at.t,"tempBodyString") and at.t.tempBodyString != s:
+                g.trace("multiple copies of node text",at.t)
             at.t.tempBodyString = s
     
         # Indicate that the tnode has been set in the derived file.
@@ -4056,7 +4060,7 @@ class baseNewDerivedFile(oldDerivedFile):
     
         at.popSentinelStack(endNode)
     #@nonl
-    #@-node:ekr.20031218072017.2772:readEndNode
+    #@-node:ekr.20031218072017.2772:readEndNode (4.x)
     #@+node:ekr.20031218072017.2773:readEndOthers
     def readEndOthers (self,s,i):
         
@@ -4617,7 +4621,10 @@ class baseNewDerivedFile(oldDerivedFile):
         
         at = self
         if at.outputFile:
+            g.trace()
             at.outputFile.flush()
+            if self.toStringFlag:
+                self.stringOutput = self.outputFile.get()
             at.outputFile.close()
             at.outputFile = None
     #@nonl
@@ -4625,7 +4632,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@+node:ekr.20031218072017.2114:new_df.write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,scriptFile=None,thinFile=False):
+    def write(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False):
         
         """Write a 4.x derived file."""
         
@@ -4633,7 +4640,9 @@ class baseNewDerivedFile(oldDerivedFile):
     
         #@    << open the file; return on error >>
         #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
-        if scriptFile:
+        if toString:
+            at.targetFileName = "<string-file>"
+        elif scriptFile:
             at.targetFileName = "<script>"
         elif nosentinels:
             at.targetFileName = root.atNoSentFileNodeName()
@@ -4641,13 +4650,13 @@ class baseNewDerivedFile(oldDerivedFile):
             at.targetFileName = root.atThinFileNodeName()
         else:
             at.targetFileName = root.atFileNodeName()
-        
+            
         if scriptFile:
             ok = True
             at.outputFileName = "<script>"
             at.outputFile = scriptFile
         else:
-            ok = at.openWriteFile(root)
+            ok = at.openWriteFile(root,toString)
             
         if not ok:
             return
@@ -4655,10 +4664,10 @@ class baseNewDerivedFile(oldDerivedFile):
         #@-node:ekr.20031218072017.2116:<< open the file; return on error >>
         #@nl
         try:
-            self.writeOpenFile(root,nosentinels,scriptFile,thinFile)
-            if scriptFile != None:
-                at.root.v.t.tnodeList = []
-            else:
+            self.writeOpenFile(root,nosentinels,scriptFile,thinFile,toString)
+            if toString:
+                at.closeWriteFile()
+            elif scriptFile is None:
                 at.closeWriteFile()
                 #@            << set dirty and orphan bits on error >>
                 #@+node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
@@ -4676,6 +4685,8 @@ class baseNewDerivedFile(oldDerivedFile):
                 #@nonl
                 #@-node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
                 #@nl
+            else:
+                at.root.v.t.tnodeList = []
         except:
             if scriptFile:
                 g.es("exception preprocessing script",color="blue")
@@ -4687,7 +4698,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20031218072017.2114:new_df.write
     #@+node:EKR.20040506075328:new_df.writeOpenFile
-    def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False):
+    def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False):
         
         at = self ; c = at.c
         
@@ -4698,6 +4709,7 @@ class baseNewDerivedFile(oldDerivedFile):
         at.thinFile = thinFile
         at.scripting = scriptFile is not None
         at.raw = False
+        assert(at.toStringFlag == toString) # Must have been set earlier.
         
         # Init other ivars.
         at.errors = 0
@@ -4767,22 +4779,25 @@ class baseNewDerivedFile(oldDerivedFile):
         while j >= 0:
             line = lines[j]
             if g.match(line,0,tag): j -= 1
+            elif not line.strip():
+                j -= 1
             else: break
             
         # Write the @last lines.
         for line in lines[j+1:k+1]:
-            i = len(tag) ; i = g.skip_ws(line,i)
-            self.os(line[i:])
+            if g.match(line,0,tag):
+                i = len(tag) ; i = g.skip_ws(line,i)
+                self.os(line[i:])
         #@nonl
         #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
         #@nl
         
-        if not scriptFile and not nosentinels:
+        if not toString and not scriptFile and not nosentinels:
             at.warnAboutOrphandAndIgnoredNodes()
     #@nonl
     #@-node:EKR.20040506075328:new_df.writeOpenFile
     #@+node:ekr.20031218072017.2122:new_df.norefWrite
-    def norefWrite(self,root):
+    def norefWrite(self,root,toString=False):
     
         at = self
     
@@ -4795,7 +4810,7 @@ class baseNewDerivedFile(oldDerivedFile):
         c.endEditing() # Capture the current headline.
         try:
             at.targetFileName = root.atNorefFileNodeName()
-            ok = at.openWriteFile(root)
+            ok = at.openWriteFile(root,toString)
             if not ok: return
             #@        << write root's tree >>
             #@+node:ekr.20031218072017.2123:<< write root's tree >>
@@ -5010,7 +5025,7 @@ class baseNewDerivedFile(oldDerivedFile):
     
         at = self ; s = p.bodyString()
         
-        ## p.v.setVisited()   # Make sure v is never expanded again.
+        p.v.setVisited()   # Make sure v is never expanded again.
         p.v.t.setVisited() # Use the tnode for the orphans check.
         if not at.thinFile and not s: return
         inCode = True
@@ -5170,7 +5185,7 @@ class baseNewDerivedFile(oldDerivedFile):
         if line and not at.raw:
             at.putIndent(at.indent)
     
-        if line[-1:]=="\n": # 12/2/03: emakital
+        if line[-1:]=="\n":
             at.os(line[:-1])
             at.onl()
         else:
@@ -5535,21 +5550,42 @@ class baseNewDerivedFile(oldDerivedFile):
         return -1 < n1 < n2, n1, n2
     #@nonl
     #@-node:ekr.20031218072017.2137:hasSectionName
-    #@+node:ekr.20031218072017.2138:os, onl, etc.
+    #@+node:ekr.20031218072017.2138:os and allies
+    # Note:  self.outputFile may be either a fileLikeObject or a real file.
+    
+    #@+node:EKR.20040620094529:oblank, oblanks & otabs
     def oblank(self):
         self.os(' ')
     
-    def oblanks(self,n):
+    def oblanks (self,n):
         self.os(' ' * abs(n))
-    
+        
+    def otabs(self,n):
+        self.os('\t' * abs(n))
+    #@nonl
+    #@-node:EKR.20040620094529:oblank, oblanks & otabs
+    #@+node:EKR.20040620094529.1:onl & onl_sent
     def onl(self):
+        
+        """Write a newline to the output stream."""
+    
         self.os(self.output_newline)
         
     def onl_sent(self):
+        
+        """Write a newline to the output stream, provided we are outputting sentinels."""
+    
         if self.sentinels:
             self.onl()
-        
+    #@nonl
+    #@-node:EKR.20040620094529.1:onl & onl_sent
+    #@+node:EKR.20040620094529.2:os
     def os (self,s):
+        
+        """Write a string to the output stream.
+        
+        All output produced by leoAtFile module goes here."""
+        
         if s and self.outputFile:
             try:
                 s = g.toEncodedString(s,self.encoding,reportErrors=True)
@@ -5557,11 +5593,9 @@ class baseNewDerivedFile(oldDerivedFile):
             except:
                 g.es("exception writing:",s)
                 g.es_exception(full=True)
-    
-    def otabs(self,n):
-        self.os('\t' * abs(n))
     #@nonl
-    #@-node:ekr.20031218072017.2138:os, onl, etc.
+    #@-node:EKR.20040620094529.2:os
+    #@-node:ekr.20031218072017.2138:os and allies
     #@+node:ekr.20031218072017.1921:putDirective  (handles @delims) 4,x
     #@+at 
     #@nonl
@@ -5648,5 +5682,6 @@ class baseNewDerivedFile(oldDerivedFile):
 
 class newDerivedFile(baseNewDerivedFile):
     pass # May be overridden in plugins.
+#@nonl
 #@-node:ekr.20031218072017.2620:@thin leoAtFile.py 
 #@-leo
