@@ -66,12 +66,12 @@
 <v t="edream.110203163054.26"><vh>Travers A. Hough</vh></v>
 <v t="edream.110203163054.23"><vh>Zak Greant</vh></v>
 </v>
-<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
-<v t="edream.110203163054.48" a="E"><vh>Installation notes</vh>
+<v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
 <v t="edream.110203163054.50"><vh>How to install leo.py on Linux</vh></v>
-<v t="edream.110203163054.51" a="TV"><vh>How to install leo.py on Windows</vh></v>
+<v t="edream.110203163054.51"><vh>How to install leo.py on Windows</vh></v>
 <v t="ekr.20040219100738"><vh>How to install Leo on MacOS Panther (10.3)</vh></v>
 <v t="edream.110203163054.59"><vh>How to install the Borland version of Leo on Windows</vh></v>
 <v t="edream.110203163054.60"><vh>How to associate leo.py with .leo files on Windows</vh></v>
@@ -1849,7 +1849,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1880,10 +1880,11 @@
 <v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
 <v t="ekr.20040804173200.6"><vh>How does @thin make Leo more friendly to CVS?</vh></v>
 </v>
-<v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
+<v t="edream.110203163054.1068" a="E"><vh>Customizing Leo</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
 <v t="edream.110203163054.1069"><vh>I'm having trouble getting plugins to work.  What should I do?</vh></v>
 <v t="edream.110203163054.1070"><vh>How can I add support for a new language?</vh></v>
+<v t="ekr.20041220095419" a="TV"><vh>How do I submit a plugin?</vh></v>
 <v t="edream.110203163054.319"><vh>Chapter 8: Customizing Leo</vh>
 <v t="edream.110203163054.320"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="edream.110203163054.321"><vh>Using plugins and hooks</vh>
@@ -15628,5 +15629,14 @@ inertia would have kept me thinking c or javascript/java
 was the answer.
 if I could just learn how to tame the beast.
 </t>
+<t tx="ekr.20041220095419">Two options: 
+ 
+1. Get cvs write access, and add the @thin derived file to the plugins directory.
+
+2. Just send the @thin derived file to me.
+
+My email address is edreamleo@charter.net.
+
+That's all you need to do.  In particular that there is no need to change leoPlugins.leo.</t>
 </tnodes>
 </leo_file>
