@@ -482,7 +482,7 @@ class listBoxDialog:
 	#@+others
 	#@+node:1::listboxDialog.__init__
 	#@+body
-	def __init__ (self,c,label):
+	def __init__ (self,c,title,label):
 	
 		# trace(`label`)
 	
@@ -497,7 +497,7 @@ class listBoxDialog:
 		self.root = root = app().root
 		self.top = top = Tk.Toplevel(root)
 		attachLeoIcon(top)
-		top.title("")
+		top.title(title)
 		
 		# Fill in the frame.
 		self.createFrame()
@@ -622,11 +622,11 @@ class recentSectionsDialog (listBoxDialog):
 	#@+others
 	#@+node:1::__init__  recentSectionsDialog
 	#@+body
-	def __init__ (self,c,buttons,label):
+	def __init__ (self,c,buttons,title,label):
 		
 		self.lt_nav_iconFrame_button, self.rt_nav_iconFrame_button = buttons
 		
-		listBoxDialog.__init__(self,c,label)
+		listBoxDialog.__init__(self,c,title,label)
 	
 	#@-body
 	#@-node:1::__init__  recentSectionsDialog
@@ -792,9 +792,9 @@ class marksDialog (listBoxDialog):
 	#@+others
 	#@+node:1::marksDialog.__init__
 	#@+body
-	def __init__ (self,c,label):
+	def __init__ (self,c,title,label):
 		
-		listBoxDialog.__init__(self,c,label)
+		listBoxDialog.__init__(self,c,title,label)
 	
 	#@-body
 	#@-node:1::marksDialog.__init__

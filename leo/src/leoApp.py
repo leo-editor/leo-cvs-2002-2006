@@ -121,6 +121,8 @@ class LeoApp:
 	
 		if self.findFrame:
 			self.findFrame.top.destroy()
+			
+		doHook("destroy-all-global-windows")
 	
 	#@-body
 	#@-node:2::app.destroyAllGlobalWindows

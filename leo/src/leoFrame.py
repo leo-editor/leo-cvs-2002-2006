@@ -608,6 +608,8 @@ class LeoFrame:
 				self.fontPanel.top.destroy()
 			if self.prefsPanel:
 				self.prefsPanel.top.destroy()
+				
+			doHook("close-frame",c=c)
 			
 			if self in app().windowList:
 				app().windowList.remove(self)
@@ -887,7 +889,7 @@ class LeoFrame:
 
 		elif text:
 			b = Tk.Button(f,text=text,relief="raised",command=command)
-			b.pack(side="left",fill="y")
+			b.pack(side="left", fill="y")
 			return b
 			
 		return None
@@ -3840,9 +3842,10 @@ class LeoFrame:
 			d.top.deiconify()
 			d.fillbox()
 		else:
-			# Create and run the dialog.
-			title = "Recent nodes: " + shortFileName(c.frame.mFileName)
-			d = leoDialog.recentSectionsDialog(c,self.nav_buttons,title)
+			# Create and run the dialog.]
+			title = "Recent Nodes"
+			label = "Recent nodes: " + shortFileName(c.frame.mFileName)
+			d = leoDialog.recentSectionsDialog(c,self.nav_buttons,title,label)
 			self.recentSectionsDialog = d
 			d.root.wait_window(d.top)
 	
