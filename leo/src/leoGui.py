@@ -212,7 +212,7 @@ class leoGui:
     #@nonl
     #@-node:ekr.20031218072017.3730:app.gui dialogs
     #@+node:ekr.20031218072017.3731:app.gui file dialogs
-    def runOpenFileDialog(self,title,filetypes,defaultextension):
+    def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
     
         """Create and run an open file dialog ."""
     
@@ -474,7 +474,7 @@ class unitTestGui(leoGui):
     def runAskOkCancelNumberDialog(self,title,message):
         return self.simulateDialog("numberDialog",-1)
         
-    def runOpenFileDialog(self,title,filetypes,defaultextension):
+    def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
         return self.simulateDialog("openFileDialog")
     
     def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
