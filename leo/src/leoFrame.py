@@ -761,6 +761,7 @@ class leoTree:
 	
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
+		# g.trace(self.updateCount)
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@nonl

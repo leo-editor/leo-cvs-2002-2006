@@ -1660,6 +1660,7 @@ class baseFileCommands:
 			p.moveToParent()
 	
 		fc.put("</v>") ; fc.put_nl()
+	#@nonl
 	#@-node:putVnode (3.x and 4.x)
 	#@+node:putVnodes
 	def putVnodes (self):
