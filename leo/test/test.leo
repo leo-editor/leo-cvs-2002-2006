@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6145" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6178" clone_windows="0"/>
 <globals body_outline_ratio="0.475694444444">
-	<global_window_position top="37" left="147" height="864" width="907"/>
+	<global_window_position top="43" left="190" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -759,6 +760,7 @@
 </v>
 <v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
 <v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
+<v t="ekr.20041124144944"><vh>print sys.path</vh></v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1290,6 +1292,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
+<v t="ekr.20041125062529" a="E"><vh>Settings Dialog</vh>
 <v t="ekr.20041114121805.1"><vh>Configurator script</vh>
 <v t="ekr.20041114121805.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041114165932"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
@@ -1311,10 +1314,45 @@
 <v t="ekr.20041114134217"><vh>setDirties</vh></v>
 </v>
 </v>
-<v t="ekr.20040920104357" a="E"><vh>Tix Tests</vh>
-<v t="ekr.20041124102349" a="E"><vh>class tixDialog (leoTkinterDialog)</vh>
+<v t="ekr.20040920104357"><vh>Tix Tests</vh>
+<v t="ekr.20041124102349"><vh>class tixDialog (leoTkinterDialog)</vh>
 <v t="ekr.20041124102349.1"><vh>ctor</vh></v>
-<v t="ekr.20041124103531" a="TV"><vh>createFrame</vh></v>
+<v t="ekr.20041124103531"><vh>createFrame</vh></v>
+</v>
+</v>
+<v t="ekr.20041125045317" a="ETV"><vh>Tk dialog</vh>
+<v t="ekr.20041125062244"><vh>To do</vh></v>
+<v t="ekr.20041125045826"><vh>class settingsDialog (leoTkinterDialog)</vh>
+<v t="ekr.20041125045826.1"><vh>ctor</vh></v>
+</v>
+<v t="ekr.20041125045826.3"><vh>class settingsFrame(leoTkinterFrame)</vh>
+<v t="ekr.20041125045826.4"><vh>ctor</vh></v>
+<v t="ekr.20041125051628.1"><vh>finishCreate</vh>
+<v t="ekr.20041125051628.3" a="M"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="ekr.20041125051628.4"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041125053228"><vh>To be deleted...</vh>
+<v t="ekr.20041125051628.2"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="ekr.20041125051628.5"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+<v t="ekr.20041125053016"><vh>&lt;&lt; create the menu &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20041125060346"><vh>class settingsTree(leoTkinterTree)</vh>
+<v t="ekr.20041125060346.1"><vh>ctor</vh></v>
+<v t="ekr.20041125060516"><vh>Selecting &amp; editing...</vh>
+<v t="ekr.20041125060516.1"><vh>endEditLabel</vh></v>
+<v t="ekr.20041125060516.2"><vh>editLabel</vh></v>
+<v t="ekr.20041125060516.3"><vh>tree.select</vh>
+<v t="ekr.20041125060516.4"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20041125060516.5"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20041125060516.6"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20041125060516.7"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20041125060516.8"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20041125060346.2"><vh>class settingsBody(leoTkinterBody)</vh></v>
 </v>
 </v>
 </vnodes>
@@ -9787,13 +9825,31 @@ import leoTkinterDialog
 
 import Tkinter as Tk
 import Tix
+import WmDefault
 # from Tkconstants import *
+
+c = g.top()
 
 @others
 
-c = g.top()
-d = tixDialog(c)
-d.run(modal=True)</t>
+if 1: # works, provided that Tix is enabled in leoTkinterGui.createRootWindow
+    d = tixDialog(c)
+    d.run(modal=True)
+
+else: # Also works
+    root = Tix.Tk()
+    WmDefault.setup(root)
+    d = {'activebackground':'DarkBlue','activeforeground':'white'}
+    WmDefault.addoptions(root,d)
+    d = WmDefault.getoptions(root)
+    
+    if 0:
+        print '-' * 40
+        keys = d.keys()
+        keys.sort()
+        for key in keys: print key,d.get(key)
+
+</t>
 <t tx="ekr.20040922064156">import leoGlobals as g
 
 s = u"ß"
@@ -10934,7 +10990,14 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002"></t>
-<t tx="ekr.20041121151002.1">c:\prog\leocvs\leo\test\test.leo</t>
+<t tx="ekr.20041121151002.1">c:\prog\leocvs\leo\doc\LeoDocs.leo
+c:\prog\leocvs\leo\plugins\leoPlugins.leo
+c:\prog\leocvs\leo\src\LeoPy.leo
+c:\prog\leocvs\leo\dist\leoDist.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile3.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile2.leo
+c:\prog\leocvs\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -10959,15 +11022,327 @@ Bigger projects:
     outer = Tk.Frame(self.top)
     outer.pack()
     
-    lt = Tk.Frame(outer)
-    rt = Tk.Frame(outer)
-    lt.pack(side="left",expand=1,fill="both")
-    rt.pack(side="right",expand=1,fill="both")
+    if 0: # Use container widget (not ready yet)
     
-    tree=Tix.Tree(lt)
-    tree.pack(expand=1,fill="both")
+        tree=Tix.Tree()
+        #tree.pack(expand=1,fill="both")
+        
+        text = Tk.Text()
+        #text.pack(expand=1,fill="both")
     
-    text = Tk.Text(rt)
-    text.pack(expand=1,fill="both")</t>
+        paned = Tix.PanedWindow(outer)
+        #paned.add(tree)
+        #paned.add(text)
+        
+    else: # Pack into constant-sized areas.
+    
+        root = self.top # The root of the dialog.
+        menu = Tk.Menu(root)
+
+        root.config(menu=menu)
+        filemenu = Tk.Menu(menu)
+        filemenu.add_command(label="hi")
+        menu.add_cascade(label="File",menu=filemenu)
+        # overrides general settings.
+        filemenu.configure(activebackground="red",activeforeground='white')
+
+        lt = Tk.Frame(outer)
+        rt = Tk.Frame(outer)
+        lt.pack(side="left",expand=1,fill="both")
+        rt.pack(side="right",expand=1,fill="both")
+    
+        tree=Tix.Tree(lt)
+        tree.pack(expand=1,fill="both")
+        
+        text = Tk.Text(rt)
+        text.pack(expand=1,fill="both")</t>
+<t tx="ekr.20041124144944">import os
+import sys
+for s in sys.path:
+    exists = os.path.exists(s)
+    print "%5s %s" % (exists,s)</t>
+<t tx="ekr.20041125045317">"""Use subclasses of Leo's core classes to create a Tk settings dialog."""
+
+import leoGlobals as g
+
+import leoTkinterDialog
+import leoTkinterFrame
+import leoTkinterTree
+
+import sys
+import Tkinter as Tk
+
+@others
+
+c = g.top()
+d = settingsDialog(c)
+d.run(modal=True)</t>
+<t tx="ekr.20041125045826">class settingsDialog (leoTkinterDialog.leoTkinterDialog):
+    
+    @others</t>
+<t tx="ekr.20041125045826.1">def __init__ (self,c):
+    
+    self.c = c
+    base = leoTkinterDialog.leoTkinterDialog
+    title = "Settings for %s" % g.shortFileName(c.fileName())
+
+    # Init the base class
+    base.__init__(self,title,resizeable=True)
+
+    # Create self.top (a top-level) and self.frame(the top frame).
+    base.createTopFrame(self)
+    
+    self.top.minsize(600,400) # In pixels.
+
+    # Create an unfinished frame to pass to the commanders.
+    self.settingsFrame = f = settingsFrame(c,self.frame)
+    
+    # Finish creating the frame.
+    f.finishCreate()</t>
+<t tx="ekr.20041125045826.3">class settingsFrame (leoTkinterFrame.leoTkinterFrame):
+    
+    @others</t>
+<t tx="ekr.20041125045826.4">def __init__ (self,c,topFrame):
+
+    # Init the base class.
+    title = "Dummy title"
+    leoTkinterFrame.leoTkinterFrame.__init__(self,title,g.app.gui)
+    
+    self.c = c
+    self.topFrame = topFrame
+    self.title = title</t>
+<t tx="ekr.20041125051628.1">def finishCreate (self):
+
+    c = self.c ; gui = g.app.gui ; topFrame = self.topFrame
+
+    # This must be done after creating the commander.
+    self.splitVerticalFlag,self.ratio,self.secondary_ratio = self.initialRatios()
+
+    if 0: # Alread done in the dialog.
+        &lt;&lt; create the toplevel frame &gt;&gt;
+
+    &lt;&lt; create all the subframes &gt;&gt;
+    
+    self.tree.redraw()
+    
+    if 0: # Not needed.
+        &lt;&lt; create the first tree node &gt;&gt;
+        &lt;&lt; create the menu &gt;&gt;
+        g.app.setLog(self.log,"settingsFrame.finishCreate") # the leoTkinterFrame containing the log
+        g.app.windowList.append(self)
+        c.initVersion()
+        c.signOnWithVersion()
+        self.body.createBindings(self)</t>
+<t tx="ekr.20041125051628.2">frame.top = top = Tk.Toplevel()
+gui.attachLeoIcon(top)
+top.title(frame.title)
+top.minsize(30,10) # In grid units.
+
+frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
+frame.top.bind("&lt;Button-1&gt;", frame.OnActivateLeoEvent)
+
+frame.top.bind("&lt;Activate&gt;", frame.OnActivateLeoEvent) # Doesn't work on windows.
+frame.top.bind("&lt;Deactivate&gt;", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+
+frame.top.bind("&lt;Control-KeyPress&gt;",frame.OnControlKeyDown)
+frame.top.bind("&lt;Control-KeyRelease&gt;",frame.OnControlKeyUp)</t>
+<t tx="ekr.20041125051628.3"># Create the outer frame.
+self.outerFrame = outerFrame = topFrame
+
+if 0: # Not needed?
+    self.createIconBar()
+
+&lt;&lt; create both splitters &gt;&gt;
+
+# Create the canvas, tree, log and body.
+self.canvas   = self.createCanvas(self.split2Pane1)
+self.tree     = settingsTree(c,self,self.canvas)
+self.log      = leoTkinterFrame.leoTkinterLog(self,self.split2Pane2)
+self.body     = settingsBody(self,self.split1Pane2)
+
+# Yes, this an "official" ivar: this is a kludge.
+self.bodyCtrl = self.body.bodyCtrl
+
+# Configure.  N.B. There may be Tk bugs here that make the order significant!
+self.setTabWidth(c.tab_width)
+self.tree.setTreeColorsFromConfig()
+self.reconfigurePanes()
+self.body.setFontFromConfig()</t>
+<t tx="ekr.20041125051628.4"># Splitter 1 is the main splitter containing splitter2 and the body pane.
+f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
+self.f1,self.bar1 = f1,bar1
+self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
+
+# Splitter 2 is the secondary splitter containing the tree and log panes.
+f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
+self.f2,self.bar2 = f2,bar2
+self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2</t>
+<t tx="ekr.20041125051628.5">t = leoNodes.tnode()
+v = leoNodes.vnode(c,t)
+p = leoNodes.position(v,[])
+v.initHeadString("NewHeadline")
+
+p.moveToRoot()
+c.beginUpdate()
+c.selectVnode(p)
+c.redraw()
+c.frame.getFocus()
+c.editPosition(p)
+c.endUpdate(False)
+</t>
+<t tx="ekr.20041125053016">self.menu = leoTkinterMenu.leoTkinterMenu(frame)
+v = c.currentVnode()
+if not g.doHook("menu1",c=c,p=v,v=v):
+    frame.menu.createMenuBar(self)</t>
+<t tx="ekr.20041125053228"></t>
+<t tx="ekr.20041125060346">class settingsTree (leoTkinterTree.leoTkinterTree):
+    
+    @others</t>
+<t tx="ekr.20041125060346.1">def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoTkinterTree.leoTkinterTree.__init__(self,c,frame,canvas)
+    
+    #</t>
+<t tx="ekr.20041125060346.2">class settingsBody (leoTkinterFrame.leoTkinterBody):
+    
+    @others
+    
+    pass</t>
+<t tx="ekr.20041125060516"></t>
+<t tx="ekr.20041125060516.1">def endEditLabel (self):
+    
+    """End editing for self.editText."""
+    
+    if 0: # Editing is not allowed.
+        c = self.c ; gui = g.app.gui
+        p = self.editPosition()
+        if p and p.edit_text():
+            if 0: # New in recycled widgets scheme: this could cause a race condition.
+                # This will be done in the redraw code becaused editPosition will be None.
+                self.setUnselectedLabelState(p)
+            self.setEditPosition(None)
+            # force a redraw of joined and ancestor headlines.
+            self.force_redraw() 
+        gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02</t>
+<t tx="ekr.20041125060516.2">def editLabel (self,p):
+    
+    """Start editing p.edit_text."""
+    
+    if 0: # Editing is not allowed.
+        if self.editPosition() and p != self.editPosition():
+            self.endEditLabel()
+            self.frame.revertHeadline = None
+            
+        self.setEditPosition(p)
+    
+        # Start editing
+        if p and p.edit_text():
+            self.setNormalLabelState(p)
+            self.frame.revertHeadline = p.headString()
+            self.setEditPosition(p)</t>
+<t tx="ekr.20041125060516.3"># Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    return
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+    
+    if self.trace and self.verbose: g.trace(p.headString())
+
+    if 0:
+        &lt;&lt; unselect the old node &gt;&gt;
+
+
+    &lt;&lt; select the new node &gt;&gt;
+    if p and p != old_p: # 3/26/03: Suppress duplicate call.
+        try: # may fail during initialization
+            self.idle_scrollTo(p)
+        except: pass
+        
+    if 0:
+        &lt;&lt; update c.beadList or c.beadPointer &gt;&gt;
+        &lt;&lt; update c.visitedList &gt;&gt;
+
+    &lt;&lt; set the current node &gt;&gt;</t>
+<t tx="ekr.20041125060516.4"># Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p and old_p != p:
+    if self.trace and self.verbose:
+        g.trace("unselect:",old_p.headString())
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p and old_p.edit_text():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+</t>
+<t tx="ekr.20041125060516.5">frame.setWrap(p)
+
+# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")</t>
+<t tx="ekr.20041125060516.6">if updateBeadList:
+    
+    if c.beadPointer &gt; -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)</t>
+<t tx="ekr.20041125060516.7"># Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())</t>
+<t tx="ekr.20041125060516.8">self.c.setCurrentPosition(p)
+if p != old_p:
+    self.setSelectedLabelState(p)
+self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
+<t tx="ekr.20041125062244">@killcolor
+@
+
+frame:
+
+- Use just two frames? Eliminate log?
+- Create comment area.  Is this the body pane?
+- Use canvas for settings display area.
+
+tree:
+
+- Create tree.settingsRoot
+
+- tree.select
+    - maintain self.currentPosition (NOT c.currentPosition)
+    - switch to new settings page when selecting new tree item.
+</t>
+<t tx="ekr.20041125062529"></t>
 </tnodes>
 </leo_file>
