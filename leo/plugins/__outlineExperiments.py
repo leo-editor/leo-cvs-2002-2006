@@ -2,10 +2,9 @@
 #@+node:ekr.20040723100651:@thin __outlineExperiments.py
 """Override outline drawing code to test optimized drawing"""
 
-"""This class implements a tree control similar to Windows explorer.  The code is based on code found in Python's IDLE program."""
+"""This class implements a tree control similar to Windows explorer.
 
-# To do: Undo headline doesn't work.
-# Key bindings are now OK.  However, the undo text isn't set properly.
+The code is based on code found in Python's IDLE program."""
 
 #@@language python
 #@@tabwidth -4
@@ -1765,7 +1764,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
     
         self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
         
-        return "continue"
+        # return "continue"
     #@nonl
     #@-node:ekr.20040723142710.6:onHeadlineKey
     #@+node:ekr.20040723142710.5:onHeadlineRightClick
@@ -2040,7 +2039,7 @@ class myLeoTkinterTree(leoFrame.leoTree):
                     self.controlDrag = c.frame.controlKeyIsDown
     
             if vdrag and vdrag.v.t != p.v.t: # 6/22/04: Disallow drag to joined node.
-                g.trace("*** end drag   ***",id,x,y,p.headString(),vdrag.headString())
+                if self.trace: g.trace("*** end drag   ***",id,x,y,p.headString(),vdrag.headString())
                 if self.controlDrag: # Clone p and move the clone.
                     if childFlag:
                         c.dragCloneToNthChildOf(p,vdrag,0)
