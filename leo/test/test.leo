@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5954" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5955" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
 	<global_window_position top="36" left="296" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -15,7 +15,10 @@
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
-<v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
+<v t="ekr.20040901065642.2" a="E"><vh>runTimeit</vh>
+<v t="ekr.20040901072339"><vh>&lt;&lt; scan for #@count &gt;&gt;</vh></v>
+<v t="ekr.20040901071028"><vh>&lt;&lt; put setup code in s1 and everything else in s2 &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 </v>
@@ -666,7 +669,7 @@
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -759,10 +762,10 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test Leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test Leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
-<v t="ekr.20040831104758" a="TV"><vh>@test minimalLeoFile3.leo</vh></v>
+<v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
 <v t="ekr.20040712101754.3"><vh>@test test.leo</vh></v>
 <v t="ekr.20040803090901"><vh>@test leoDist.leo</vh></v>
 <v t="ekr.20040712101754.4"><vh>@test LeoPy.leo</vh></v>
@@ -1131,6 +1134,7 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20040901065642" a="TV"><vh>test of new timit script</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -8988,23 +8992,6 @@ if p.bodyString().rstrip():
     stats.sort_stats('cum','file','name')
     stats.print_stats()
 </t>
-<t tx="ekr.20040721114839.1">try: import timeit # Exists only in Python 2.3 and above.
-except ImportError: 
-    timeit = None
-    print "Can not import timeit"
-import leoGlobals as g
-
-c = g.top() ; p = c.currentPosition()
-
-if timeit and p.bodyString().strip():
-    s = p.bodyString().rstrip() + '\n'
-    t = timeit.Timer(s)
-    try:
-        count = 1000000 # The default is 1 million.
-        result = t.timeit(count)
-        print "count: %d time: %f %s" % (count,result,p.headString().strip())
-    except:
-        t.print_exc()</t>
 <t tx="ekr.20040721115141"># There will never be an overflow here, no matter how many times timeit executes this.
 
 try:
@@ -9396,5 +9383,76 @@ reload(leoTest)
 path = g.os_path_join(g.app.loadDir,"..","test","minimalLeoFile3.leo")
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
+<t tx="ekr.20040901065642">import string
+
+#@count 10000
+#@setup
+
+s = ''
+for i in range(0, 50):
+    s += '%d'%i
+s = string.replace(s, '2', '1')</t>
+<t tx="ekr.20040901065642.2">@ Improved timeit script after an idea by 'e'.
+
+Comments of the form #@count nnn set the repeat count.
+Comments of the form #@setup comment delimits the end of setup code.
+@c
+
+try: import timeit # Exists only in Python 2.3 and above.
+except ImportError: 
+    timeit = None
+    print "Can not import timeit"
+import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+if timeit and p.bodyString().strip():
+    s = p.bodyString().rstrip() + '\n'
+    &lt;&lt; scan for #@count &gt;&gt;
+    &lt;&lt; put setup code in s1 and everything else in s2 &gt;&gt;
+    t = timeit.Timer(stmt=s2,setup=s1)
+    try:
+        if 1: # faster.
+            result = t.timeit(count)
+        else: # better results.
+            result = min(t.repeat(3, count))  
+        print "count: %d : %f %s" % (
+            count, result, p.headString().strip())
+    except:
+        t.print_exc()</t>
+<t tx="ekr.20040901071028">lines = s.split('\n')
+
+for i in xrange(len(lines)):
+    if lines[i].strip() == "#@setup":
+        break
+        
+if i &lt; len(lines):
+    # Split at the #@setup line and delete the #@setup line
+    s1 = '\n'.join(lines[:i])
+    s2 = '\n'.join(lines[i:])
+    #print "setup",repr(s1)
+    #print "code",repr(s2)
+else:
+    # There is no setup.
+    s1 = None
+    s2 = s
+    
+if not s1: s1 = 'pass'
+if not s2: s2 = 'pass'</t>
+<t tx="ekr.20040901072339">lines = s.split('\n')
+
+count = 1000000 # default count
+tag = "#@count"
+
+for line in lines:
+    i = g.skip_ws(line,0)
+    if g.match(line,0,tag):
+        i += len(tag)
+        i = g.skip_ws(line,i)
+        junk,val = g.skip_long(line,i)
+        if val is not None:
+            count = abs(val)
+            # print "Setting count to",count
+            break</t>
 </tnodes>
 </leo_file>
