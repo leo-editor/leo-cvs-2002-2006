@@ -2168,7 +2168,7 @@ class leoTkinterTree (leoFrame.leoTree):
             data = self.iconIds.get(id[0])
         except:
             data = self.iconIds.get(id)
-            
+    
         if data:
             p,generation = data
             if generation==self.generation:
@@ -2179,7 +2179,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 g.trace("*** wrong generation: %d ***" % id)
                 return None
         else:
-            g.trace(id,None)
+            if self.trace and self.verbose: g.trace(id,None)
             return None
             
         
