@@ -326,7 +326,7 @@ def createFrame (fileName):
     frame.setInitialWindowGeometry()
     frame.startupWindow = True
     # 3/2/05: Call the 'new' hook for compatibility with plugins.
-    g.doHook("new",old_c=None,new_c=c)
+    g.doHook("new",old_c=None,c=c,new_c=c)
 
     # Report the failure to open the file.
     if fileName:

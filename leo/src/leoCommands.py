@@ -279,7 +279,7 @@ class baseCommands:
         c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
         
         # 5/16/03: Needed for plugins.
-        g.doHook("new",old_c=self,new_c=c)
+        g.doHook("new",old_c=self,c=c,new_c=c)
     
         # Use the config params to set the size and location of the window.
         frame.setInitialWindowGeometry()
