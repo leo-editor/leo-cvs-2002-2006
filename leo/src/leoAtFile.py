@@ -369,22 +369,6 @@ class atFile:
                 at.inputFile = None
     #@nonl
     #@-node:ekr.20041005105605.19:openFileForReading
-    #@+node:bwmulder.20041231170726:openForRead
-    def openForRead(self, *args, **kw):
-        """
-        Hook for the mod_shadow plugin.
-        """
-        return open(*args, **kw)
-    
-    #@-node:bwmulder.20041231170726:openForRead
-    #@+node:bwmulder.20050101094804:openForWrite
-    def openForWrite(self, *args, **kw):
-        """
-        Hook for the mod_shadow plugin
-        """
-        return open(*args, **kw)
-    
-    #@-node:bwmulder.20050101094804:openForWrite
     #@+node:ekr.20041005105605.21:read
     # The caller must enclose this code in beginUpdate/endUpdate.
     
@@ -540,6 +524,22 @@ class atFile:
         #@nl
     #@nonl
     #@-node:ekr.20041005105605.27:readOpenFile
+    #@+node:bwmulder.20041231170726:openForRead
+    def openForRead(self, *args, **kw):
+        """
+        Hook for the mod_shadow plugin.
+        """
+        return open(*args, **kw)
+    #@nonl
+    #@-node:bwmulder.20041231170726:openForRead
+    #@+node:bwmulder.20050101094804:openForWrite
+    def openForWrite(self, *args, **kw):
+        """
+        Hook for the mod_shadow plugin
+        """
+        return open(*args, **kw)
+    
+    #@-node:bwmulder.20050101094804:openForWrite
     #@-node:ekr.20041005105605.18:Reading (top level)
     #@+node:ekr.20041005105605.29:Reading (3.x)
     #@+node:ekr.20041005105605.30:createNthChild3
@@ -4141,7 +4141,7 @@ class atFile:
         assert(self.outputFile is None)
         
         if self.toString:
-            return
+            return False
         
         self.fileChangedFlag = False
         if g.os_path_exists(self.targetFileName):
@@ -4223,6 +4223,7 @@ class atFile:
             #@nonl
             #@-node:ekr.20041005105605.215:<< rename the output file to be the target file >>
             #@nl
+            return False
     #@nonl
     #@-node:ekr.20041005105605.212:replaceTargetFileIfDifferent
     #@+node:ekr.20041005105605.216:warnAboutOrpanAndIgnoredNodes
