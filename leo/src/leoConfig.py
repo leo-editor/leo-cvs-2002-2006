@@ -164,8 +164,6 @@ class baseConfig:
 			if val: val = 1
 			else: val = 0
 		return val
-		#if val and val != None and val != 0: val = 1
-		#return val
 	
 	def getFloatFromDict (self,name,dict):
 		val = self.getFromDict(name,dict)
@@ -185,15 +183,16 @@ class baseConfig:
 	
 	def getIntFromDict (self,name,dict):
 		val = self.getFromDict(name,dict)
-		if val:
-			try: val = int(val)
-			except: val = None
-		return val
+		try:
+			return int(val)
+		except:
+			return 0
 	
 	def setDict (self,name,val,dict):
 		dict [name] = val
 			
 	getStringFromDict = getFromDict
+	#@nonl
 	#@-node:get...FromDict & setDict
 	#@+node:get/setColors
 	def getBoolColorsPref (self,name):
