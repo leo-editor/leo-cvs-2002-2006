@@ -622,10 +622,12 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
     except IOError:
         try:
             # Do not use string + here: it will fail for non-ascii strings!
-            g.es("can not open: %s" % (fileName), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (fileName), color="blue")
             return False, None
         except UnicodeError:
-            g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
+            if not g.app.unitTesting:
+                g.es("can not open: %s" % (g.toEncodedString(fileName)), color="blue")
             return False, None
     except:
         if 0:
