@@ -122,7 +122,123 @@ def btest(b1, b2):
 	return (b1 & b2) != 0
 #@-body
 #@-node:3::btest
-#@+node:4::create_temp_name
+#@+node:4::CheckVersion (Dave Hein)
+#@+body
+#@+at
+# 
+# CheckVersion() is a generic version checker.  Assumes a
+# version string of up to four parts, or tokens, with
+# leftmost token being most significant and each token
+# becoming less signficant in sequence to the right.
+# 
+# RETURN VALUE
+# 
+# 1 if comparison is true
+# 0 if comparison is false
+# 
+# PARAMETERS
+# 
+# version: the version string to be tested
+# againstVersion: the reference version string to be
+#                 compared against
+# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
+# stringCompare: whether to test a token using only the
+#                leading integer of the token, or using the
+# 			   entire token string.  For example, a value
+# 			   of "0.0.1.0" means that we use the integer
+# 			   value of the first, second, and fourth
+# 			   tokens, but we use a string compare for the
+# 			   third version token.
+# delimiter: the character that separates the tokens in the
+#            version strings.
+# 
+# The comparison uses the precision of the version string
+# with the least number of tokens.  For example a test of
+# "8.4" against "8.3.3" would just compare the first two
+# tokens.
+# 
+# The version strings are limited to a maximum of 4 tokens.
+
+#@-at
+#@@c
+
+def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
+	import sre  # Unicode-aware regular expressions
+	#
+	# tokenize the stringCompare flags
+	compareFlag = string.split( stringCompare, '.' )
+	#
+	# tokenize the version strings
+	testVersion = string.split( version, delimiter )
+	testAgainst = string.split( againstVersion, delimiter )
+	#
+	# find the 'precision' of the comparison
+	tokenCount = 4
+	if tokenCount > len(testAgainst):
+		tokenCount = len(testAgainst)
+	if tokenCount > len(testVersion):
+		tokenCount = len(testVersion)
+	#
+	# Apply the stringCompare flags
+	justInteger = sre.compile("^[0-9]+")
+	for i in range(tokenCount):
+		if "0" == compareFlag[i]:
+			m = justInteger.match( testVersion[i] )
+			testVersion[i] = m.group()
+			m = justInteger.match( testAgainst[i] )
+			testAgainst[i] = m.group()
+		elif "1" != compareFlag[i]:
+			errMsg = "stringCompare argument must be of " +\
+				 "the form \"x.x.x.x\" where each " +\
+				 "'x' is either '0' or '1'."
+			raise errMsg
+	#
+	# Compare the versions
+	if condition == ">=":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 1 # it was equal
+	if condition == ">":
+		for i in range(tokenCount):
+			if testVersion[i] < testAgainst[i]:
+				return 0
+			if testVersion[i] > testAgainst[i]:
+				return 1 # it was greater than
+		return 0 # it was equal
+	if condition == "==":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 0 # any token was not equal
+		return 1 # every token was equal
+	if condition == "!=":
+		for i in range(tokenCount):
+			if testVersion[i] != testAgainst[i]:
+				return 1 # any token was not equal
+		return 0 # every token was equal
+	if condition == "<":
+		for i in range(tokenCount):
+			if testVersion[i] >= testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 0 # it was equal
+	if condition == "<=":
+		for i in range(tokenCount):
+			if testVersion[i] > testAgainst[i]:
+				return 0
+			if testVersion[i] < testAgainst[i]:
+				return 1 # it was less than
+		return 1 # it was equal
+	#
+	# didn't find a condition that we expected.
+	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+
+#@-body
+#@-node:4::CheckVersion (Dave Hein)
+#@+node:5::create_temp_name
 #@+body
 # Returns a temporary file name.
 
@@ -133,8 +249,8 @@ def create_temp_name ():
 	# trace(`temp`)
 	return temp
 #@-body
-#@-node:4::create_temp_name
-#@+node:5::Dialog utilites...
+#@-node:5::create_temp_name
+#@+node:6::Dialog utilites...
 #@+node:1::get_window_info
 #@+body
 # WARNING: Call this routine _after_ creating a dialog.
@@ -217,8 +333,8 @@ def create_labeled_frame (parent,
 	return w,f
 #@-body
 #@-node:3::create_labeled_frame
-#@-node:5::Dialog utilites...
-#@+node:6::Dumping, Tracing & Sherlock
+#@-node:6::Dialog utilites...
+#@+node:7::Dumping, Tracing & Sherlock
 #@+node:1::dump
 #@+body
 def dump(s):
@@ -413,8 +529,8 @@ def trace (s1=None,s2=None):
 #@-body
 #@-node:3::trace
 #@-node:5::Sherlock...
-#@-node:6::Dumping, Tracing & Sherlock
-#@+node:7::ensure_extension
+#@-node:7::Dumping, Tracing & Sherlock
+#@+node:8::ensure_extension
 #@+body
 def ensure_extension (name, ext):
 
@@ -426,8 +542,8 @@ def ensure_extension (name, ext):
 	else:
 		return file + ext
 #@-body
-#@-node:7::ensure_extension
-#@+node:8::findReference
+#@-node:8::ensure_extension
+#@+node:9::findReference
 #@+body
 #@+at
 #  We search the descendents of v looking for the definition node matching name.
@@ -448,8 +564,110 @@ def findReference(name,root):
 	return None
 
 #@-body
-#@-node:8::findReference
-#@+node:9::Leading & trailing whitespace...
+#@-node:9::findReference
+#@+node:10::get_directives_dict
+#@+body
+#@+at
+#  Scans root for @directives and returns a dict containing pointers to the 
+# start of each directive.
+# 
+# The caller passes [root_node] or None as the second arg.  This allows us to 
+# distinguish between None and [None].
+
+#@-at
+#@@c
+
+def get_directives_dict(s,root=None):
+
+	if root: root_node = root[0]
+	dict = {}
+	i = 0 ; n = len(s)
+	while i < n:
+		if s[i] == '@' and i+1 < n:
+			
+			#@<< set dict for @ directives >>
+			#@+node:1::<< set dict for @ directives >>
+			#@+body
+			# EKR: rewritten 10/10/02
+			directiveList = (
+				"color", "comment", "header", "ignore",
+				"language", "nocolor", "noheader",
+				"pagewidth", "path", "quiet", "root", "silent",
+				"tabwidth", "terse", "unit", "verbose")
+			
+			j = skip_c_id(s,i+1)
+			word = s[i+1:j]
+			if word in directiveList:
+				dict [word] = i
+			
+			#@-body
+			#@-node:1::<< set dict for @ directives >>
+
+		elif root and match(s,i,"<<"):
+			
+			#@<< set dict["root"] for noweb * chunks >>
+			#@+node:2::<< set dict["root"] for noweb * chunks >>
+			#@+body
+			#@+at
+			#  The following looks for chunk definitions of the form < < * > > 
+			# =. If found, we take this to be equivalent to @root filename if 
+			# the headline has the form @root filename.
+
+			#@-at
+			#@@c
+
+			i = skip_ws(s,i+2)
+			if i < n and s[i] == '*' :
+				i = skip_ws(s,i+1) # Skip the '*'
+				if match(s,i,">>="):
+					# < < * > > = implies that @root should appear in the headline.
+					i += 3
+					if root_node:
+						dict["root"]=0 # value not immportant
+					else:
+						es(angleBrackets("*") + "= requires @root in the headline")
+			#@-body
+			#@-node:2::<< set dict["root"] for noweb * chunks >>
+
+		i = skip_line(s,i)
+	return dict
+#@-body
+#@-node:10::get_directives_dict
+#@+node:11::getBaseDirectory
+#@+body
+# Handles the conventions applying to the "relative_path_base_directory" configuration option.
+
+def getBaseDirectory():
+
+	base = app().config.relative_path_base_directory
+
+	if base and base == "!":
+		base = app().loadDir
+	elif base and base == ".":
+		base = top().openDirectory
+
+	# trace(`base`)
+	if base and len(base) > 0 and os.path.isabs(base):
+		return base # base need not exist yet.
+	else:
+		return "" # An error.
+#@-body
+#@-node:11::getBaseDirectory
+#@+node:12::getUserNewline
+#@+body
+def getOutputNewline ():
+	
+	s = app().config.output_newline
+	s = string.lower(s)
+	if s == "nl" or s == "lf": s = '\n'
+	elif s == "cr": s = '\r'
+	elif s == "crlf": s = "\r\n"
+	else: s = '\n'
+	return s
+
+#@-body
+#@-node:12::getUserNewline
+#@+node:13::Leading & trailing whitespace...
 #@+node:1::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
@@ -571,8 +789,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:7::skip_leading_ws_with_indent
-#@-node:9::Leading & trailing whitespace...
-#@+node:10::List utilities...
+#@-node:13::Leading & trailing whitespace...
+#@+node:14::List utilities...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -605,8 +823,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:10::List utilities...
-#@+node:11::Menu utlities...
+#@-node:14::List utilities...
+#@+node:15::Menu utlities...
 #@+node:1::enableMenu & disableMenu & setMenuLabel
 #@+body
 def enableMenu (menu,name,val):
@@ -623,110 +841,29 @@ def setMenuLabel (menu,name,label):
 	menu.entryconfig(name,label=label)
 #@-body
 #@-node:1::enableMenu & disableMenu & setMenuLabel
-#@-node:11::Menu utlities...
-#@+node:12::getBaseDirectory
-#@+body
-# Handles the conventions applying to the "relative_path_base_directory" configuration option.
-
-def getBaseDirectory():
-
-	base = app().config.relative_path_base_directory
-
-	if base and base == "!":
-		base = app().loadDir
-	elif base and base == ".":
-		base = top().openDirectory
-
-	# trace(`base`)
-	if base and len(base) > 0 and os.path.isabs(base):
-		return base # base need not exist yet.
-	else:
-		return "" # An error.
-#@-body
-#@-node:12::getBaseDirectory
-#@+node:13::get_directives_dict
+#@-node:15::Menu utlities...
+#@+node:16::readlineForceUnixNewline (Steven P. Schaefer)
 #@+body
 #@+at
-#  Scans root for @directives and returns a dict containing pointers to the 
-# start of each directive.
+#  Stephen P. Schaefer 9/7/2002
 # 
-# The caller passes [root_node] or None as the second arg.  This allows us to 
-# distinguish between None and [None].
+# The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
+# the windows versions force the string to use the Unix convention of using 
+# only "\n".  This routine causes the Unix readline to do the same.
 
 #@-at
 #@@c
 
-def get_directives_dict(s,root=None):
+def readlineForceUnixNewline(f):
 
-	if root: root_node = root[0]
-	dict = {}
-	i = 0 ; n = len(s)
-	while i < n:
-		if s[i] == '@' and i+1 < n:
-			
-			#@<< set dict for @ directives >>
-			#@+node:1::<< set dict for @ directives >>
-			#@+body
-			# EKR: rewritten 10/10/02
-			directiveList = (
-				"color", "comment", "header", "ignore",
-				"language", "nocolor", "noheader",
-				"pagewidth", "path", "quiet", "root", "silent",
-				"tabwidth", "terse", "unit", "verbose")
-			
-			j = skip_c_id(s,i+1)
-			word = s[i+1:j]
-			if word in directiveList:
-				dict [word] = i
-			
-			#@-body
-			#@-node:1::<< set dict for @ directives >>
-
-		elif root and match(s,i,"<<"):
-			
-			#@<< set dict["root"] for noweb * chunks >>
-			#@+node:2::<< set dict["root"] for noweb * chunks >>
-			#@+body
-			#@+at
-			#  The following looks for chunk definitions of the form < < * > > 
-			# =. If found, we take this to be equivalent to @root filename if 
-			# the headline has the form @root filename.
-
-			#@-at
-			#@@c
-
-			i = skip_ws(s,i+2)
-			if i < n and s[i] == '*' :
-				i = skip_ws(s,i+1) # Skip the '*'
-				if match(s,i,">>="):
-					# < < * > > = implies that @root should appear in the headline.
-					i += 3
-					if root_node:
-						dict["root"]=0 # value not immportant
-					else:
-						es(angleBrackets("*") + "= requires @root in the headline")
-			#@-body
-			#@-node:2::<< set dict["root"] for noweb * chunks >>
-
-		i = skip_line(s,i)
-	return dict
-#@-body
-#@-node:13::get_directives_dict
-#@+node:14::getUserNewline
-#@+body
-def getOutputNewline ():
-	
-	s = app().config.output_newline
-	s = string.lower(s)
-	if s == "nl" or s == "lf": s = '\n'
-	elif s == "cr": s = '\r'
-	elif s == "crlf": s = "\r\n"
-	else: s = '\n'
+	s = f.readline()
+	if len(s) >= 2 and s[-2] == "\r" and s[-1] == "\n":
+		s = s[0:-2] + "\n"
 	return s
 
 #@-body
-#@-node:14::getUserNewline
-#@+node:15::scanError
+#@-node:16::readlineForceUnixNewline (Steven P. Schaefer)
+#@+node:17::scanError
 #@+body
 #@+at
 #  It seems dubious to bump the Tangle error count here.  OTOH, it really 
@@ -744,8 +881,8 @@ def scanError(s):
 
 	es(s)
 #@-body
-#@-node:15::scanError
-#@+node:16::Scanners: calling scanError
+#@-node:17::scanError
+#@+node:18::Scanners: calling scanError
 #@+body
 #@+at
 #  These scanners all call scanError() directly or indirectly, so they will 
@@ -1132,8 +1269,8 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:15::skip_typedef
-#@-node:16::Scanners: calling scanError
-#@+node:17::Scanners: no error messages
+#@-node:18::Scanners: calling scanError
+#@+node:19::Scanners: no error messages
 #@+node:1::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
@@ -1387,8 +1524,8 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:19::skip_ws, skip_ws_and_nl
-#@-node:17::Scanners: no error messages
-#@+node:18::shortFileName
+#@-node:19::Scanners: no error messages
+#@+node:20::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1397,8 +1534,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:18::shortFileName
-#@+node:19::sortSequence
+#@-node:20::shortFileName
+#@+node:21::sortSequence
 #@+body
 #@+at
 #  sequence is a sequence of items, each of which is a sequence containing at 
@@ -1437,8 +1574,8 @@ def sortSequence (sequence, n):
 #@-at
 #@@c
 #@-body
-#@-node:19::sortSequence
-#@+node:20::Timing
+#@-node:21::sortSequence
+#@+node:22::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1453,8 +1590,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:20::Timing
-#@+node:21::Tk.Text selection (utils)
+#@-node:22::Timing
+#@+node:23::Tk.Text selection (utils)
 #@+node:1::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
@@ -1503,8 +1640,8 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:3::setTextSelection
-#@-node:21::Tk.Text selection (utils)
-#@+node:22::Unicode...
+#@-node:23::Tk.Text selection (utils)
+#@+node:24::Unicode...
 #@+node:1::convertChar/String/ToXMLCharRef
 #@+body
 def convertCharToXMLCharRef(c,xml_encoding):
@@ -1585,8 +1722,8 @@ def returnNonEncodingChar(c,xml_encoding):
 			return c
 #@-body
 #@-node:3::es_nonEncodingChar, returnNonEncodingChar
-#@-node:22::Unicode...
-#@+node:23::update_file_if_changed
+#@-node:24::Unicode...
+#@+node:25::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1632,8 +1769,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:23::update_file_if_changed
-#@+node:24::utils_rename
+#@-node:25::update_file_if_changed
+#@+node:26::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1652,144 +1789,7 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 
 #@-body
-#@-node:24::utils_rename
-#@+node:25::version checking (Dave Hein)
-#@+body
-#@+at
-# 
-# CheckVersion() is a generic version checker.  Assumes a
-# version string of up to four parts, or tokens, with
-# leftmost token being most significant and each token
-# becoming less signficant in sequence to the right.
-# 
-# RETURN VALUE
-# 
-# 1 if comparison is true
-# 0 if comparison is false
-# 
-# PARAMETERS
-# 
-# version: the version string to be tested
-# againstVersion: the reference version string to be
-#                 compared against
-# condition: can be any of "==", "!=", ">=", "<=", ">", or "<"
-# stringCompare: whether to test a token using only the
-#                leading integer of the token, or using the
-# 			   entire token string.  For example, a value
-# 			   of "0.0.1.0" means that we use the integer
-# 			   value of the first, second, and fourth
-# 			   tokens, but we use a string compare for the
-# 			   third version token.
-# delimiter: the character that separates the tokens in the
-#            version strings.
-# 
-# The comparison uses the precision of the version string
-# with the least number of tokens.  For example a test of
-# "8.4" against "8.3.3" would just compare the first two
-# tokens.
-# 
-# The version strings are limited to a maximum of 4 tokens.
-
-#@-at
-#@@c
-
-def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.0", delimiter='.' ):
-	import sre  # Unicode-aware regular expressions
-	#
-	# tokenize the stringCompare flags
-	compareFlag = string.split( stringCompare, '.' )
-	#
-	# tokenize the version strings
-	testVersion = string.split( version, delimiter )
-	testAgainst = string.split( againstVersion, delimiter )
-	#
-	# find the 'precision' of the comparison
-	tokenCount = 4
-	if tokenCount > len(testAgainst):
-		tokenCount = len(testAgainst)
-	if tokenCount > len(testVersion):
-		tokenCount = len(testVersion)
-	#
-	# Apply the stringCompare flags
-	justInteger = sre.compile("^[0-9]+")
-	for i in range(tokenCount):
-		if "0" == compareFlag[i]:
-			m = justInteger.match( testVersion[i] )
-			testVersion[i] = m.group()
-			m = justInteger.match( testAgainst[i] )
-			testAgainst[i] = m.group()
-		elif "1" != compareFlag[i]:
-			errMsg = "stringCompare argument must be of " +\
-				 "the form \"x.x.x.x\" where each " +\
-				 "'x' is either '0' or '1'."
-			raise errMsg
-	#
-	# Compare the versions
-	if condition == ">=":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 1 # it was equal
-	if condition == ">":
-		for i in range(tokenCount):
-			if testVersion[i] < testAgainst[i]:
-				return 0
-			if testVersion[i] > testAgainst[i]:
-				return 1 # it was greater than
-		return 0 # it was equal
-	if condition == "==":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 0 # any token was not equal
-		return 1 # every token was equal
-	if condition == "!=":
-		for i in range(tokenCount):
-			if testVersion[i] != testAgainst[i]:
-				return 1 # any token was not equal
-		return 0 # every token was equal
-	if condition == "<":
-		for i in range(tokenCount):
-			if testVersion[i] >= testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 0 # it was equal
-	if condition == "<=":
-		for i in range(tokenCount):
-			if testVersion[i] > testAgainst[i]:
-				return 0
-			if testVersion[i] < testAgainst[i]:
-				return 1 # it was less than
-		return 1 # it was equal
-	#
-	# didn't find a condition that we expected.
-	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
-
-#@-body
-#@-node:25::version checking (Dave Hein)
-#@+node:26::readlineForceUnixNewline (Steven P. Schaefer)
-#@+body
-#@+at
-#  Stephen P. Schaefer 9/7/2002
-# 
-# The Unix readline() routine delivers "\r\n" line end strings verbatim, while 
-# the windows versions force the string to use the Unix convention of using 
-# only "\n".  This routine causes the Unix readline to do the same.
-
-#@-at
-#@@c
-
-def readlineForceUnixNewline(f):
-
-	s = f.readline()
-	if len(s) >= 2 and s[-2] == "\r" and s[-1] == "\n":
-		s = s[0:-2] + "\n"
-	return s
-
-#@-body
-#@-node:26::readlineForceUnixNewline (Steven P. Schaefer)
+#@-node:26::utils_rename
 #@-others
 #@-body
 #@-node:0::@file leoUtils.py

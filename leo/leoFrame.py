@@ -116,7 +116,12 @@ class LeoFrame:
 		self.createMenuBar(top)
 		app().log = self # the LeoFrame containing the log
 		app().windowList.append(self)
-		es("Leo Log Window...") ; enl()
+		# Sign on.
+		es("Leo Log Window...")
+		n1,n2,n3,junk,junk=sys.version_info
+		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
+		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
+		es(ver1 + ver2) ; enl()
 	
 		self.top.protocol("WM_DELETE_WINDOW", self.OnCloseLeoEvent)
 		self.top.bind("<Button-1>", self.OnActivateLeoEvent)
@@ -174,7 +179,7 @@ class LeoFrame:
 		self.top = None
 	#@-body
 	#@-node:4::frame.destroy
-	#@+node:5::frame.setTabWidth
+	#@+node:5::f.setTabWidth
 	#@+body
 	def setTabWidth (self, w):
 		
@@ -190,7 +195,7 @@ class LeoFrame:
 			pass
 	
 	#@-body
-	#@-node:5::frame.setTabWidth
+	#@-node:5::f.setTabWidth
 	#@+node:6::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -786,14 +791,18 @@ class LeoFrame:
 			("About Leo...",None,self.OnAbout),
 			("Online Home Page...",None,self.OnLeoHome),
 			("-",None,None),
-			("Online Tutorial (Start Here)...",None,self.OnLeoTutorial))
+			("Online Tutorial: Start Here...",None,self.OnLeoTutorial))
 		self.createMenuEntries(helpMenu,table)
 		
 		if sys.platform=="win32":
-			table = (("Tutorial (sbooks.chm)...",None,self.OnLeoHelp),)
+			table = (("Tutorial: sbooks.chm...",None,self.OnLeoHelp),)
 			self.createMenuEntries(helpMenu,table)
 		
-		table = (("Reference (LeoDocs.leo)...",None,self.OnLeoDocumentation),)
+		table = (
+			("Reference: LeoDocs.leo...",None,self.OnLeoDocumentation),
+			("-",None,None),
+			("Configuration: LeoConfig.leo...",None,self.OnLeoConfig),
+			("Configuration: Apply Options",None,self.OnApplyConfig))
 		self.createMenuEntries(helpMenu,table)
 		#@-body
 		#@-node:5::<< create the help menu >>
@@ -2998,9 +3007,142 @@ class LeoFrame:
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:5::OnLeoTutorial (version number)
+	#@+node:6::OnLeoConfig, OnApplyConfig
+	#@+body
+	def OnLeoConfig (self,event=None):
+	
+		dir = app().loadDir
+		fileName = os.path.join(dir, "leoConfig.leo")
+		try:
+			self.OpenWithFileName(fileName)
+		except:
+			es("not found: leoConfig.leo")
+	
+		return "break" # inhibit further command processing
+		
+	def OnApplyConfig (self,event=None):
+	
+		app().config.init()
+		self.commands.frame.reconfigureFromConfig()
+	#@-body
+	#@-node:6::OnLeoConfig, OnApplyConfig
 	#@-node:5::Help Menu
 	#@-node:16::Menu Command Handlers
-	#@+node:17::Splitter stuff
+	#@+node:17::Configuration
+	#@+node:1::f.reconfigureFromConfig
+	#@+body
+	def reconfigureFromConfig (self):
+		
+		f = self ; c = f.commands
+		
+		# Not ready yet: just reset the width and color.
+		# We need self.bar1 and self.bar2 ivars.
+		# self.reconfigureBar(...)
+		
+		# The calls to redraw are workarounds for an apparent Tk bug.
+		# Without them the text settings get applied to the wrong widget!
+		# Moreover, only this order seems to work on Windows XP...
+		f.tree.setFontFromConfig()
+		f.setTreeColorsFromConfig()
+		f.configureBarsFromConfig()
+		c.redraw()
+		f.setBodyFontFromConfig()
+		f.setTabWidth(c.tab_width)
+		c.redraw()
+		f.setLogFontFromConfig()
+		c.redraw()
+	#@-body
+	#@-node:1::f.reconfigureFromConfig
+	#@+node:2::reconfigurePanes (use config bar_width)
+	#@+body
+	def reconfigurePanes (self):
+		
+		border = app().config.getIntWindowPref('additional_body_text_border')
+		if border == None: border = 0
+		
+		# The body pane needs a _much_ bigger border when tiling horizontally.
+		border = choose(self.splitVerticalFlag,2+border,6+border)
+		self.body.configure(bd=border)
+		
+		# The log pane needs a slightly bigger border when tiling vertically.
+		border = choose(self.splitVerticalFlag,4,2) 
+		self.log.configure(bd=border)
+	#@-body
+	#@-node:2::reconfigurePanes (use config bar_width)
+	#@+node:3::f.setBodyFontFromConfig
+	#@+body
+	def setBodyFontFromConfig (self):
+		
+		config = app().config ; body = self.body
+		#print "body",`self.body`
+		
+		font = config.getFontFromParams(
+			"body_text_font_family", "body_text_font_size",
+			"body_text_font_slant",  "body_text_font_weight")
+	
+		body.configure(font=font)
+		
+		bg = config.getWindowPref("body_text_background_color")
+		if bg:
+			try: body.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("body_text_foreground_color")
+		if fg:
+			try: body.configure(fg=fg)
+			except: pass
+			
+		if sys.platform != "win32": # Maybe a Windows bug.
+			fg = config.getWindowPref("body_cursor_foreground_color")
+			bg = config.getWindowPref("body_cursor_background_color")
+			# print `fg`, `bg`
+			if fg and bg:
+				cursor="xterm" + " " + fg + " " + bg
+				try: body.configure(cursor=cursor)
+				except:
+					traceback.print_exc()
+	#@-body
+	#@-node:3::f.setBodyFontFromConfig
+	#@+node:4::f.setLogFontFromConfig
+	#@+body
+	def setLogFontFromConfig (self):
+	
+		log = self.log ; config = app().config
+		#print "log",`self.log`
+	
+		font = config.getFontFromParams(
+			"log_text_font_family", "log_text_font_size",
+			"log_text_font_slant",  "log_text_font_weight")
+		
+		log.configure(font=font)
+		
+		bg = config.getWindowPref("log_text_background_color")
+		if bg:
+			try: log.configure(bg=bg)
+			except: pass
+		
+		fg = config.getWindowPref("log_text_foreground_color")
+		if fg:
+			try: log.configure(fg=fg)
+			except: pass
+	
+	#@-body
+	#@-node:4::f.setLogFontFromConfig
+	#@+node:5::setTreeColorsFromConfig (frame)
+	#@+body
+	def setTreeColorsFromConfig (self):
+		
+		config = app().config ; tree = self.tree
+	
+		bg = config.getWindowPref("outline_pane_background_color")
+		if bg:
+			try: tree.configure(bg=bg)
+			except: pass
+	
+	#@-body
+	#@-node:5::setTreeColorsFromConfig (frame)
+	#@-node:17::Configuration
+	#@+node:18::Splitter stuff
 	#@+body
 	#@+at
 	#  The key invariants used throughout this code:
@@ -3057,7 +3199,30 @@ class LeoFrame:
 				bar.configure(width=7,cursor="sb_h_double_arrow")
 	#@-body
 	#@-node:2::configureBar
-	#@+node:3::createBothLeoSplitters (use config.body_font,etc)
+	#@+node:3::f.configureBarsFromConfig
+	#@+body
+	def configureBarsFromConfig (self):
+		
+		config = app().config
+	
+		w = config.getWindowPref("split_bar_width")
+		if not w or w < 1: w = 7
+		
+		relief = config.getWindowPref("split_bar_relief")
+		if not relief or relief == "": relief = "flat"
+	
+		color = config.getWindowPref("split_bar_color")
+		if not color or color == "": color = "LightSteelBlue2"
+	
+		if self.splitVerticalFlag:
+			bar1,bar2=self.bar1,self.bar2
+		else:
+			bar1,bar2=self.bar2,self.bar1
+		bar1.configure(relief=relief,height=w,bg=color)
+		bar2.configure(relief=relief,width=w,bg=color)
+	#@-body
+	#@-node:3::f.configureBarsFromConfig
+	#@+node:4::createBothLeoSplitters
 	#@+body
 	def createBothLeoSplitters (self,top):
 	
@@ -3081,34 +3246,9 @@ class LeoFrame:
 		
 		self.body = body = Tk.Text(split1Pane2,name='body',
 			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap=wrap,
-			# selectforeground="white",
-			selectbackground="Gray80")
+			setgrid=1,wrap=wrap, selectbackground="Gray80")
 		
-		font = config.getFontFromParams(
-			"body_text_font_family", "body_text_font_size",
-			"body_text_font_slant",  "body_text_font_weight")
-		if font: body.configure(font=font)
-		
-		bg = config.getWindowPref("body_text_background_color")
-		if bg:
-			try: body.configure(bg=bg)
-			except: pass
-		
-		fg = config.getWindowPref("body_text_foreground_color")
-		if fg:
-			try: body.configure(fg=fg)
-			except: pass
-			
-		if sys.platform != "win32": # Maybe a Windows bug.
-			fg = config.getWindowPref("body_cursor_foreground_color")
-			bg = config.getWindowPref("body_cursor_background_color")
-			# print `fg`, `bg`
-			if fg and bg:
-				cursor="xterm" + " " + fg + " " + bg
-				try: body.configure(cursor=cursor)
-				except:
-					traceback.print_exc()
+		self.setBodyFontFromConfig()
 		
 		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')
 		body['yscrollcommand'] = bodyBar.set
@@ -3136,10 +3276,7 @@ class LeoFrame:
 		self.canvas = tree = Tk.Canvas(split2Pane1,name="tree",
 			bd=0,bg="white",relief="flat")
 			
-		bg = config.getWindowPref("outline_pane_background_color")
-		if bg:
-			try: tree.configure(bg=bg)
-			except: pass
+		self.setTreeColorsFromConfig()
 		
 		# The font is set in the tree code.
 		
@@ -3175,20 +3312,7 @@ class LeoFrame:
 		self.log = log = Tk.Text(split2Pane2,name="log",
 			setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
 			
-		font = config.getFontFromParams(
-			"log_text_font_family", "log_text_font_size",
-			"log_text_font_slant",  "log_text_font_weight")
-		if font: log.configure(font=font)
-		
-		bg = config.getWindowPref("log_text_background_color")
-		if bg:
-			try: log.configure(bg=bg)
-			except: pass
-		
-		fg = config.getWindowPref("log_text_foreground_color")
-		if fg:
-			try: log.configure(fg=fg)
-			except: pass
+		self.setLogFontFromConfig()
 		
 		self.logBar = logBar = Tk.Scrollbar(split2Pane2,name="logBar")
 		
@@ -3210,8 +3334,8 @@ class LeoFrame:
 		# Give the log and body panes the proper borders.
 		self.reconfigurePanes()
 	#@-body
-	#@-node:3::createBothLeoSplitters (use config.body_font,etc)
-	#@+node:4::createLeoSplitter (use config params)
+	#@-node:4::createBothLeoSplitters
+	#@+node:5::createLeoSplitter
 	#@+body
 	# Create a splitter window and panes into which the caller packs widgets.
 	# Returns (f, bar, pane1, pane2)
@@ -3232,8 +3356,8 @@ class LeoFrame:
 		
 		return f, bar, pane1, pane2
 	#@-body
-	#@-node:4::createLeoSplitter (use config params)
-	#@+node:5::divideAnySplitter
+	#@-node:5::createLeoSplitter
+	#@+node:6::divideAnySplitter
 	#@+body
 	# This is the general-purpose placer for splitters.
 	# It is the only general-purpose splitter code in Leo.
@@ -3251,8 +3375,8 @@ class LeoFrame:
 			pane1.place(relwidth=frac)
 			pane2.place(relwidth=1-frac)
 	#@-body
-	#@-node:5::divideAnySplitter
-	#@+node:6::divideLeoSplitter
+	#@-node:6::divideAnySplitter
+	#@+node:7::divideLeoSplitter
 	#@+body
 	# Divides the main or secondary splitter, using the key invariant.
 	def divideLeoSplitter (self, verticalFlag, frac):
@@ -3273,8 +3397,8 @@ class LeoFrame:
 		self.divideAnySplitter (frac, verticalFlag,
 			self.bar2, self.split2Pane1, self.split2Pane2)
 	#@-body
-	#@-node:6::divideLeoSplitter
-	#@+node:7::onDrag...
+	#@-node:7::divideLeoSplitter
+	#@+node:8::onDrag...
 	#@+body
 	def onDragMainSplitBar (self, event):
 		self.onDragSplitterBar(event,self.splitVerticalFlag)
@@ -3311,8 +3435,8 @@ class LeoFrame:
 		# trace(`frac`)
 		self.divideLeoSplitter(verticalFlag, frac)
 	#@-body
-	#@-node:7::onDrag...
-	#@+node:8::placeSplitter
+	#@-node:8::onDrag...
+	#@+node:9::placeSplitter
 	#@+body
 	def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 	
@@ -3329,24 +3453,8 @@ class LeoFrame:
 			pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
 			bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 	#@-body
-	#@-node:8::placeSplitter
-	#@+node:9::reconfigurePanes (use config bar_width)
-	#@+body
-	def reconfigurePanes (self):
-		
-		border = app().config.getIntWindowPref('additional_body_text_border')
-		if border == None: border = 0
-		
-		# The body pane needs a _much_ bigger border when tiling horizontally.
-		border = choose(self.splitVerticalFlag,2+border,6+border)
-		self.body.configure(bd=border)
-		
-		# The log pane needs a slightly bigger border when tiling vertically.
-		border = choose(self.splitVerticalFlag,4,2) 
-		self.log.configure(bd=border)
-	#@-body
-	#@-node:9::reconfigurePanes (use config bar_width)
-	#@-node:17::Splitter stuff
+	#@-node:9::placeSplitter
+	#@-node:18::Splitter stuff
 	#@-others
 #@-body
 #@-node:0::@file leoFrame.py

@@ -125,24 +125,9 @@ class leoTree:
 		self.active = false # true if tree is active
 		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		
-		# We use the system defaults below if self.font == None.
-		config = app().config
-		self.font = config.getFontFromParams(
-			"headline_text_font_family", "headline_text_font_size",
-			"headline_text_font_slant",  "headline_text_font_weight")
-			
-		# self.font and self.fontName must exist for self.getFont.
-		if self.font:
-			self.fontName = config.getWindowPref("headline_text_font_family")
-		else:
-			# Get the name and font from the system defaults.
-			t = Tkinter.Text()
-			self.fontName = fn = t.cget("font")
-			self.font = tkFont.Font(font=fn)
-		assert(self.font)
-		
-		self.setLineHeight(self.font)
-		
+		# Set self.font and self.fontName.
+		self.setFontFromConfig()
+	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
 		self.redrawCount = 0 # For traces
@@ -228,12 +213,13 @@ class leoTree:
 		return None
 	#@-body
 	#@-node:7::tree.findVnodeWithIconId
-	#@+node:8::getFont/setFont (used by leoFontPanel)
+	#@+node:8::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
 	
 		return self.font
 			
+	# Called by leoFontPanel.
 	def setFont (self, font=None, fontName=None):
 		
 		if fontName:
@@ -244,8 +230,17 @@ class leoTree:
 			self.font = font
 			
 		self.setLineHeight(self.font)
+		
+	# Called by ctor and when config params are reloaded.
+	def setFontFromConfig (self):
+	
+		font = app().config.getFontFromParams(
+			"headline_text_font_family", "headline_text_font_size",
+			"headline_text_font_slant",  "headline_text_font_weight")
+	
+		self.setFont(font)
 	#@-body
-	#@-node:8::getFont/setFont (used by leoFontPanel)
+	#@-node:8::tree.getFont,setFont,setFontFromConfig
 	#@+node:9::setLineHeight
 	#@+body
 	def setLineHeight (self,font):

@@ -74,7 +74,26 @@ class config:
 	#@+body
 	def __init__ (self):
 		
-		# Files and directories.
+		
+		#@<< get the default font >>
+		#@+node:1::<< get the default font >>
+		#@+body
+		# Get the default font from a new text widget.
+		# This should only be done once.
+		
+		t = Tkinter.Text()
+		fn = t.cget("font")
+		font = tkFont.Font(font=fn)
+		self.defaultFont = font
+		self.defaultFontFamily = font.cget("family")
+		
+		#@-body
+		#@-node:1::<< get the default font >>
+
+		self.init()
+	
+	def init (self):
+	
 		try:
 			self.configDir = sys.leo_config_directory
 		except:
@@ -84,7 +103,7 @@ class config:
 		
 		
 		#@<< initialize constant ivars, lists & dicts >>
-		#@+node:1::<< initialize constant ivars, lists & dicts >> (leoConfig)
+		#@+node:2::<< initialize constant ivars, lists & dicts >> (leoConfig)
 		#@+body
 		# Names of sections.
 		self.configSection = "config options"
@@ -119,11 +138,11 @@ class config:
 			(self.colorsSection,self.colorsDict),
 			(self.windowSection,self.windowDict) )
 		#@-body
-		#@-node:1::<< initialize constant ivars, lists & dicts >> (leoConfig)
+		#@-node:2::<< initialize constant ivars, lists & dicts >> (leoConfig)
 
 		
 		#@<< initialize ivars that may be set by config options >>
-		#@+node:2::<< initialize ivars that may be set by config options >>
+		#@+node:3::<< initialize ivars that may be set by config options >>
 		#@+body
 		# 10/11/02: Defaults are specified only here.
 		
@@ -138,7 +157,7 @@ class config:
 		self.write_clone_indices = 0
 		self.xml_version_string = "UTF-8" # Must be upper case for compatibility with Borland version of Leo.
 		#@-body
-		#@-node:2::<< initialize ivars that may be set by config options >>
+		#@-node:3::<< initialize ivars that may be set by config options >>
 
 	
 		self.open() # read and process the configuration file.
@@ -285,7 +304,7 @@ class config:
 	getStringWindowPref = getWindowPref
 	#@-body
 	#@-node:7::get/setWindowPrefs
-	#@+node:8::getFontFromParams
+	#@+node:8::config.getFontFromParams
 	#@+body
 	#@+at
 	#  A convenience method that computes a font from font parameters.
@@ -299,27 +318,35 @@ class config:
 
 	def getFontFromParams(self,family,size,slant,weight):
 		
+		tag = "getFont..." ; family_name = family
+	
 		family = self.getWindowPref(family)
-		# print `family`
-		if not family:
-			return None
-		
+		if not family or family == "":
+			# print tag,"using default"
+			family = self.defaultFontFamily
+			
 		size = self.getIntWindowPref(size)
-		# print `size`
-		if size == None: size = 12
+		if not size or size == 0: size = 12
 		
 		slant = self.getWindowPref(slant)
-		# print `slant`
-		if not slant: slant = "roman"
+		if not slant or slant == "": slant = "roman"
 		
 		weight = self.getWindowPref(weight)
-		# print `weight`
-		if not weight: weight = "normal"
+		if not weight or weight == "": weight = "normal"
 		
-		font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+		try:
+			font = tkFont.Font(family=family,size=size,slant=slant,weight=weight)
+		except:
+			es("exception setting font from " + `family_name`)
+			es("family,size,slant,weight:"+
+				`family`+':'+`size`+':'+`slant`+':'+`weight`)
+			es_exception()
+			return self.defaultFont
+		#print `family_name`,`family`,`size`,`slant`,`weight`
+		#print "actual_name:",`font.cget("family")`
 		return font
 	#@-body
-	#@-node:8::getFontFromParams
+	#@-node:8::config.getFontFromParams
 	#@+node:9::getShortcut
 	#@+body
 	def getShortcut (self,name):
@@ -627,6 +654,7 @@ class config:
 				print "\n\ncompareDict:\n\n"+ `self.compareDict`
 				print "\n\nfindDict:\n\n"   + `self.findDict` 
 				print "\n\nprefsDict:\n\n"  + `self.prefsDict`
+			if 0:
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			if 0:
 				print "\n\nkeysDict:\n\n"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="35" left="191" height="25" width="84"/>
+<globals body_outline_ratio="0.29999999999999999">
+	<global_window_position top="46" left="190" height="25" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -15,7 +15,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -29,13 +29,13 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
-<v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
+<v t="T23" a="V"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
@@ -636,14 +636,14 @@ body_cursor_foreground_color =
 body_cursor_background_color =
 # 	Foreground and background colors for the cursor in body text.
 
-body_text_font_family = Courier
+body_text_font_family = Courier New
 #	Font family for body text.
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
 body_text_font_size = 9
 #	Size of body text. Must be an integer.
-#	Default is 9 on Windows, 12 on Linux and all others.
+#	Default is 12.
 
 body_text_font_slant = roman
 #	The Tk -slant setting: roman or italic.  Default is roman.
@@ -706,7 +706,7 @@ log_text_font_family =
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-log_text_font_size =
+log_text_font_size = 9
 #	Size of text in the log pane. Must be an integer.
 #	Default is 12
 
@@ -777,6 +777,7 @@ initial_vertical_secondary_ratio = 0.7
 @c
 
 split_bar_color = LightSteelBlue2
+#	gray90 also looks good.
 #	The color of the split bar.
 #	Valid values: Tk color names or Tk color values.
 
@@ -784,7 +785,7 @@ split_bar_relief = groove
 #	The Tk -relief option for the split bar.
 #	Valid values: raised, sunken, flat, ridge, solid, groove.
 	
-split_bar_width = 7
+split_bar_width = 6
 #	The width of the split bar, in pixels (must be an integer).</t>
 </tnodes>
 </leo_file>

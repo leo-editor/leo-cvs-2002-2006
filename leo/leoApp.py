@@ -16,21 +16,20 @@ class LeoApp:
 	def __init__(self, root):
 	
 		# These ivars are the global vars of this program.
-		self.root = root # The hidden main window
-		self.log = None # The LeoFrame containing the present log
-		self.quitting = false # True if quitting.  Locks out some events.
-		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
-		self.numberOfWindows = 0 # Number of opened windows.
-		self.loadDir = None # The directory from which Leo was loaded.
-		self.configDir = None # The directory containing configuration info.
 		self.config = None # The leoConfig instance.
-		self.idle_imported = false # true: we have done an import idle
-		self.menuWarningsGiven = false # true: supress warnings in menu code.
-		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
-		
-		# Global options...
-		self.trace_list = [] # "Sherlock" argument list for tracing().
+		self.configDir = None # The directory containing configuration info.
 		self.deleteOnClose = true # true: delete frame objects when a frame closes.
+		self.idle_imported = false # true: we have done an import idle
+		self.loadDir = None # The directory from which Leo was loaded.
+		self.log = None # The LeoFrame containing the present log.
+		self.menuWarningsGiven = false # true: supress warnings in menu code.
+		self.numberOfWindows = 0 # Number of opened windows.
+		self.quitting = false # True if quitting.  Locks out some events.
+		self.root = root # The hidden main window
+		self.trace_list = [] # "Sherlock" argument list for tracing().
+		self.unicodeErrorGiven = false # true: suppres unicode tracebacks.
+		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
+	
 		if 0: # app() is not accessible during shutdown!
 			self.printDel = false # true: enable prints in __del__ routines
 	
