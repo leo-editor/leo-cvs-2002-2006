@@ -22,10 +22,10 @@ class baseCommands:
 		self.atFileCommands = leoAtFile.atFile(self)
 		self.importCommands = leoImport.leoImportCommands(self)
 		self.tangleCommands = leoTangle.tangleCommands(self)
-			# tangle subcommander uses self.frame.mFilename
 		self.undoer = leoUndo.undoer(self)
 	
 	def initIvars(self):
+	
 		#@	<< initialize ivars >>
 		#@+node:<< initialize ivars >>
 		# per-document info...
@@ -52,8 +52,6 @@ class baseCommands:
 		# Default Target Language
 		self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
 		
-		self.setIvarsFromFind()
-		
 		# These are defined here, and updated by the tree.select()
 		self.beadList = [] # list of vnodes for the Back and Forward commands.
 		self.beadPointer = -1 # present item in the list.
@@ -61,6 +59,7 @@ class baseCommands:
 		#@nonl
 		#@-node:<< initialize ivars >>
 		#@nl
+		self.setIvarsFromFind()
 	#@nonl
 	#@-node:c.__init__, initIvars
 	#@+node:c.__repr__ & __str__

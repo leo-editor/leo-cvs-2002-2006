@@ -384,7 +384,7 @@
 </v>
 </v>
 </v>
-<v t="T337" a="E"><vh>Plugins</vh>
+<v t="T337" a="V"><vh>Plugins</vh>
 <v t="T338"><vh>Commands</vh>
 <v t="T339"><vh> Importing Cisco configuration files</vh>
 <v t="T340" a="M" tnodeList="340,341,342,343,344,345,346,347"><vh>@file import_cisco_config.py</vh>
@@ -544,7 +544,7 @@
 </v>
 </v>
 </v>
-<v t="T460" a="E"><vh>External editors &amp; Open With</vh>
+<v t="T460"><vh>External editors &amp; Open With</vh>
 <v t="T461" tnodeList="461,462,463,464,465,466"><vh>@file open_with.py</vh>
 <v t="T462"><vh>on_idle</vh>
 <v t="T463"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
@@ -560,7 +560,7 @@
 </v>
 <v t="T469" tnodeList="469"><vh>@file xemacs.py</vh></v>
 <v t="T470" a="E"><vh>word export</vh>
-<v t="T471" a="V" tnodeList="471,472,473,474,475,476"><vh>@file word_export.py</vh>
+<v t="T471" tnodeList="471,472,473,474,475,476"><vh>@file word_export.py</vh>
 <v t="T472"><vh>getConfiguration</vh></v>
 <v t="T473"><vh>getWordConnection</vh></v>
 <v t="T474"><vh>doPara</vh></v>
