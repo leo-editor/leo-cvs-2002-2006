@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6470" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6476" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="63" left="267" height="804" width="909"/>
+	<global_window_position top="83" left="190" height="804" width="946"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -439,137 +439,14 @@
 </v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
-<v t="ekr.20041125145818.1"><vh>Settings dialog</vh>
-<v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
-<v t="ekr.20041220102317"><vh>Support for generalized widget settings?</vh></v>
-<v t="ekr.20041213115848"><vh>Later or never ...</vh>
-<v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
-<v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
-<v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
-<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
-</v>
-</v>
-<v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
-<v t="ekr.20041216085206"><vh>class logClass</vh>
-<v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041126110158"><vh> ctor</vh>
-<v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog d &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
-<v t="ekr.20041128225055"><vh>&lt;&lt; create paneFrame2, a second paned widget &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.2"><vh>&lt;&lt; create outline and log panes in paneFrame2 &gt;&gt;</vh></v>
-<v t="ekr.20041127132947"><vh>&lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;</vh></v>
-<v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041128225703.1"><vh>center</vh></v>
-<v t="ekr.20041126153101.1"><vh>createSettingsTree &amp; helpers</vh>
-<v t="ekr.20041127055009.1"><vh>&lt;&lt; create a node p for  kind &amp; root2 &gt;&gt;</vh>
-<v t="ekr.20041127081146"><vh>&lt;&lt; add entry for p to filesInfoDict &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
-</v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
-<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
-<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2"><vh>createColor</vh>
-<v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
-<v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
-<v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont </vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
-<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
-<v t="ekr.20041218100021"><vh>createInts</vh></v>
-<v t="ekr.20041127134208.7"><vh>createPath</vh></v>
-<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles</vh></v>
-<v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
-<v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
-<v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
-<v t="ekr.20041127134613.1"><vh>createString</vh></v>
-<v t="ekr.20041218100121"><vh>createStrings</vh></v>
-</v>
-<v t="ekr.20041130061955"><vh>callbacks...</vh>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
-<v t="ekr.20041128082112"><vh>revert</vh></v>
-<v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
-<v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
-</v>
-<v t="ekr.20041130061955.1"><vh>getters...</vh>
-<v t="ekr.20041129175112"><vh>findCorrespondingNode</vh></v>
-<v t="ekr.20041129095748"><vh>findSettingsRoot</vh></v>
-<v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
-</v>
-<v t="ekr.20041130061955.2"><vh>redrawing...</vh>
-<v t="ekr.20041126153101"><vh>updateSetter</vh></v>
-<v t="ekr.20041127092231"><vh>updateComments</vh></v>
-<v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
-</v>
-<v t="ekr.20041128042051"><vh>value handlers...</vh>
-<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
-<v t="ekr.20041130062919"><vh>updateConfig</vh></v>
-<v t="ekr.20041129113302"><vh>updateOneNode &amp; helper</vh>
-<v t="ekr.20041216102449"><vh>computeBodyFromFontDict</vh></v>
-</v>
-<v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
-<v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
-</v>
-</v>
-<v t="ekr.20041130061955.3"><vh>utilities...</vh>
-<v t="ekr.20041129182726"><vh>settingsController.es</vh></v>
-<v t="ekr.20041130191836"><vh>copyExpansionState</vh></v>
-<v t="ekr.20041128230425"><vh>get_window_info</vh></v>
-<v t="ekr.20041128081018"><vh>printChangedVars</vh></v>
-<v t="ekr.20041127112806"><vh>printWidgets</vh></v>
-</v>
-</v>
-<v t="ekr.20041125163105.21"><vh>class settingsTree (leoTkinterTree)</vh>
-<v t="ekr.20041125163105.22"><vh>ctor</vh></v>
-<v t="ekr.20041125163105.23"><vh>Selecting &amp; editing...</vh>
-<v t="ekr.20041125163105.24"><vh>endEditLabel</vh></v>
-<v t="ekr.20041125163105.25"><vh>editLabel</vh></v>
-<v t="ekr.20041125163105.26"><vh>tree.select</vh>
-<v t="ekr.20041125163105.27"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
-<v t="ekr.20041125163105.28"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
-<v t="ekr.20041125163105.29"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
-<v t="ekr.20041125163105.30"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
-<v t="ekr.20041125163105.31"><vh>&lt;&lt; set the current node &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127083322"><vh>setSelectColors</vh></v>
-<v t="ekr.20041127084516"><vh>setUnselectColors</vh></v>
-<v t="ekr.20041127084516.1"><vh>getTextWidget</vh></v>
-</v>
-<v t="ekr.20041125163105.32"><vh>Event handlers...</vh>
-<v t="ekr.20041126130336"><vh>expandAllAncestors</vh></v>
-<v t="ekr.20041125163105.39"><vh>onClickBoxClick</vh></v>
-</v>
-<v t="ekr.20041126142253.3"><vh>drawTopTree</vh></v>
-</v>
-<v t="ekr.20041127102844"><vh>class parserClass (parserBaseClass)</vh>
-<v t="ekr.20041127102844.1"><vh>ctor</vh></v>
-<v t="ekr.20041127110245"><vh>set</vh></v>
-<v t="ekr.20041127103503"><vh>visitNode</vh></v>
-<v t="ekr.20041127103503.1"><vh>kind handlers</vh>
-<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
-<v t="ekr.20041127103503.12"><vh>doPage</vh></v>
-<v t="ekr.20041127103503.16"><vh>doRecentFiles &amp; doBodyPaneList</vh></v>
-<v t="ekr.20041127113719"><vh>doShortcuts</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
+<v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
+<v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
+<v t="ekr.20041220173748"><vh>Design notes</vh></v>
 </v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
@@ -1451,12 +1328,6 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
-<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
-<v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
-<v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
-<v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
-<v t="ekr.20041220173748"><vh>Design notes</vh></v>
-</v>
 <v t="ekr.20041222060224"><vh>Tests of component</vh>
 <v t="ekr.20041224104337"><vh>packing &amp; unpacking...</vh>
 <v t="ekr.20041224082127"><vh>iconBar...</vh>
@@ -1491,19 +1362,39 @@
 <v t="ekr.20041224095444"><vh>Replacing &amp; restoring</vh>
 <v t="ekr.20041224104031"><vh>Body...</vh>
 <v t="ekr.20041224104031.1"><vh>Replace body</vh></v>
-<v t="ekr.20041224104031.2"><vh>Restore original body</vh></v>
+<v t="ekr.20041224104031.2"><vh>Restore body</vh></v>
+</v>
+<v t="ekr.20041225092227"><vh>Tree...</vh>
+<v t="ekr.20041225092227.1"><vh>Replace tree</vh></v>
+<v t="ekr.20041225092227.2"><vh>Restore  tree</vh></v>
+</v>
+<v t="ekr.20041225102217"><vh>Log...</vh>
+<v t="ekr.20041225102217.1"><vh>Replace log</vh></v>
+<v t="ekr.20041225102217.2"><vh>Restore log</vh></v>
 </v>
 <v t="ekr.20041224115905"><vh>Icon bar</vh>
 <v t="ekr.20041224104416"><vh>Replace icon bar</vh></v>
 <v t="ekr.20041224115905.1"><vh>Restore icon bar</vh></v>
 </v>
 </v>
-</v>
 <v t="ekr.20041223124541"><vh>Trace components</vh></v>
-<v t="ekr.20041225051328" a="E"><vh>Tests of at_view plugin</vh>
+</v>
+<v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
 <v t="ekr.20041225051328.1"><vh>@clip</vh></v>
 <v t="ekr.20041225051328.2"><vh>@strip c:/prog/test/atSignTest.txt</vh></v>
-<v t="ekr.20041225051445" a="TV"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
+<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
+</v>
+<v t="ekr.20041225104159" a="E"><vh>Settings dialogs</vh>
+<v t="ekr.20041213074603" a="TV"><vh>To do</vh>
+<v t="ekr.20041220102317"><vh>Support for generalized widget settings?</vh></v>
+<v t="ekr.20041213115848"><vh>Later or never ...</vh>
+<v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
+<v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
+<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
+</v>
+</v>
+<v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
+<v t="ekr.20041225104159.1"><vh>Settings dialog</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2125,7 +2016,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2256,7 +2147,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10895,135 +10786,30 @@ else:
         createMenu()
         check()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
     exists = os.path.exists(s)
     print "%5s %s" % (exists,s)</t>
-<t tx="ekr.20041125145818.1">"""Create a Pmw settings dialog by subclassing leoTkinterTree."""
+<t tx="ekr.20041125145818.1">''' Replace the outline and body panes by a settings outline and settings widgets respectively'''
 
-&lt;&lt; imports &gt;&gt;
+import leoGlobals as g
+import leoConfig
 
-@others
+# @button code does not get updated dynamcially.
+replaceBody=True
 
 c = g.top()
-settingsController(c)</t>
-<t tx="ekr.20041125163105.21">class settingsTree (leoTkinterTree.leoTkinterTree):
-    
-    @others</t>
-<t tx="ekr.20041125163105.22">def __init__(self,c,frame,canvas,controller):
-    
-    # Init the base class.
-    leoTkinterTree.leoTkinterTree.__init__(self,c,frame,canvas)
-    
-    self.controller = controller
-    self.old_p = None</t>
-<t tx="ekr.20041125163105.23"></t>
-<t tx="ekr.20041125163105.24">def endEditLabel (self):
-    
-    pass # Editing is not allowed.</t>
-<t tx="ekr.20041125163105.25">def editLabel (self,p):
-    
-    pass # Editing is not allowed.</t>
-<t tx="ekr.20041125163105.26">def select (self,p,updateBeadList=True):
-
-    old_p = self.old_p
-
-    # Unselect the old
-    if old_p:
-        t = self.getTextWidget(old_p)
-        if t: self.setUnselectColors(t)
-        
-    # Select the new
-    t = self.getTextWidget(p)
-    if t: self.setSelectColors(t)
-    
-    # N.B. Do not change the commander's notion of the present position.
-    self.old_p = p
-
-    self.controller.onTreeClick(p)</t>
-<t tx="ekr.20041125163105.27"># Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
-
-if old_p and old_p != p:
-    if self.trace and self.verbose:
-        g.trace("unselect:",old_p.headString())
-    self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p)
-
-if old_p and old_p.edit_text():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot
-</t>
-<t tx="ekr.20041125163105.28">frame.setWrap(p)
-
-# 6/14/04: Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-self.setText(body,s,tag="select:set body",isHeadline=False)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")</t>
-<t tx="ekr.20041125163105.29">if updateBeadList:
-    
-    if c.beadPointer &gt; -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p.copy())
-        
-    # g.trace(c.beadPointer,p,present_p)</t>
-<t tx="ekr.20041125163105.30"># Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
-
-c.visitedList.insert(0,p.copy())</t>
-<t tx="ekr.20041125163105.31">self.c.setCurrentPosition(p)
-if p != old_p:
-    self.setSelectedLabelState(p)
-self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
-<t tx="ekr.20041125163105.32"></t>
-<t tx="ekr.20041125163105.39">def onClickBoxClick (self,event):
-    
-    tree = self
-
-    p = self.eventToPosition(event)
-    if not p: return
-
-    # g.trace(p.isExpanded(),p.headString())
-
-    if p.isExpanded(): p.contract()
-    else:              p.expand()
-
-    tree.active = True
-    tree.redraw()
-    tree.select(p)</t>
+leoConfig.settingsController(c,replaceBody)</t>
 <t tx="ekr.20041126035448"># Note: the source files contain mixed tabs/blanks, and that's very hard for Leo's imports to handle.
 
 @tabwidth 8
@@ -11072,1105 +10858,23 @@ for fileName in fileNames:
     items.sort()
     for line,kind,name in items:
         print "%4d %8s %s" % (line,kind,name)</t>
-<t tx="ekr.20041126104958">def onAnyButton(self,name):
-    
-    dispatchDict = {
-        "Apply":    self.writeChangedVars,
-        "Cancel":   None, # Do nothing.
-        "OK":       self.writeChangedVars,
-        "Revert":   self.revert,
-    }
-    
-    f = dispatchDict.get(name)
-    if f:
-        f()
-
-    if name in (None,"OK","Cancel"):
-        self.dialog.destroy()
-    else:
-        self.dialog.withdraw()
-        self.dialog.deiconify()</t>
-<t tx="ekr.20041126110057">class settingsController:
-    
-    @others</t>
-<t tx="ekr.20041126110158">def __init__ (self,c):
-    
-    self.c = c
-    self.p = None # Used to revert settings.
-
-    self.colorSettingDict = {} # Contains entries for all changed colors.
-    self.initValueDict = {} # Initial value of settings in present pane.
-    self.fileValueDict = {} # Values of settings written to file.
-    self.filesInfoDict = {} # Info about all settings file in the settings outline.
-        # Keys are positions, values are dicts giving info for a setting file.
-    self.fontRefs = {} # A dict to retain references to fonts.
-    self.modal = False
-    self.setterLabel = None
-    self.suppressComments = None # position for which to suppress comments.
-    self.alterComments = None # position for which to alter comments.
-    self.alteredCommentsString = None
-    self.title = title = "Settings for %s" % g.shortFileName(c.fileName())
-
-    self._settingsPosition = p = self.createSettingsTree()
-    self.parser = parserClass(c,p,self)
-
-    &lt;&lt; create the dialog d &gt;&gt;
-    &lt;&lt; create paneFrame, a paned widget &gt;&gt;
-    &lt;&lt; create paneFrame2, a second paned widget &gt;&gt;
-    &lt;&lt; create outline and log panes in paneFrame2 &gt;&gt;
-    &lt;&lt; put setterCanvas in paneFrame's setter pane&gt;&gt;
-    &lt;&lt; put a Text widget in the comment pane &gt;&gt;
-    self.log = self.logClass(self.logText)
-
-    tree.redraw_now() # To allocate widgets.
-    tree.select(p)
-    self.center()
-    if self.modal: d.activate()</t>
-<t tx="ekr.20041126113848">self.dialog = d = Pmw.Dialog(
-    c.frame.top,
-    title=title,
-    buttons = ('OK', 'Cancel','Apply','Revert','Refresh','Check'),
-    # It's too upsetting to have a dialog go away on a return key.
-    # defaultbutton = 'OK',
-    command = self.onAnyButton
-)
-
-self.top = hull = d.component('hull')
-hull.minsize(800,800)
-
-interior = d.interior()
-
-if 0: # Do immediately
-    g.app.gui.attachLeoIcon(hull)
-else: # Do at idle time.
-    def setIcont(top=hull):
-        g.app.gui.attachLeoIcon(top)
-    hull.after_idle(setIcont)</t>
-<t tx="ekr.20041126113848.1">self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    command = self.onPaneResize
-)
-paneFrame.pack(expand = 1, fill='both')
-
-self.panes = {}
-for name,minsize,size,label,isSetterLabel in (
-    ("splitter2",50,300,None,False),
-    ("setter",50,300,"",False),
-    ("comments",50,200,None,False),
-):
-    self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
-    if label is not None:
-        label = label = Tk.Label(pane,text=label)
-        label.pack(side = 'top', expand = 0)
-        if isSetterLabel:
-            self.setterLabel = label
-
-# Set the colors of the separator and handle.
-for i in (1,2):
-    bar = paneFrame.component('separator-%d' % i)
-    bar.configure(background='LightSteelBlue2')
-    handle = paneFrame.component('handle-%d' % i)
-    handle.configure(background='SteelBlue2')
-
-# g.printDict(self.panes)</t>
-<t tx="ekr.20041126113848.2">outline = self.panes.get('outline')
-
-# Create the widget.
-self.scrolledTreeCanvas = scrolledTreeCanvas = Pmw.ScrolledCanvas(outline,
-    hscrollmode='none',borderframe=3)
-    
-# Configure the canvas component.
-scrolledTreeCanvas.pack(side='top',expand=1,fill="both")
-
-treeCanvas = scrolledTreeCanvas.component('canvas')
-treeCanvas.configure(background='white')
-
-# Create the tree.
-self.tree = tree = settingsTree(c,c.frame,treeCanvas,self)
-
-logPane = self.panes.get('log')
-self.logText = logText = Tk.Text(logPane)
-logText.pack(expand=1,fill="both")</t>
-<t tx="ekr.20041126124710">def onTreeClick (self,p):
-    
-    self.p = p.copy()
-    self.updateSetter(p)</t>
-<t tx="ekr.20041126130336">def expandAllAncestors (self,p):
-    
-    # This would be harmful because p is always c.currentPosition().
-
-    return False # redraw_flag</t>
 <t tx="ekr.20041126132604"></t>
-<t tx="ekr.20041126133120">commentFrame = self.paneFrame.pane('comments')
-
-self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
-commentWidget.pack(expand=1,fill="both")
-
-self.commentText = text = commentWidget.component('text')
-
-background = commentFrame.cget('background')
-text.configure(background=background,borderwidth=0)</t>
-<t tx="ekr.20041126142253.1">def settingsPosition (self):
-    
-    return self._settingsPosition.copy()</t>
-<t tx="ekr.20041126142253.3">def drawTopTree (self):
-    
-    """Draw the settings tree, i.e., the tree rooted at self.controller.settingsPosition()."""
-    
-    c = self.c ; canvas = self.canvas
-    p = self.controller.settingsPosition()
-    self.redrawing = True
-    # Recycle all widgets.
-    self.recycleWidgets()
-    # Clear all ids so invisible id's don't confuse eventToPosition &amp; findPositionWithIconId
-    self.ids = {}
-    self.iconIds = {}
-    self.generation += 1
-    self.drag_p = None # Disable drags across redraws.
-    self.dragging = False
-    self.prevPositions = g.app.positions
-    
-    # Draw only the settings tree
-    self.drawTree(p,self.root_left,self.root_top,0,0)
-
-    canvas.lower("lines")  # Lowest.
-    canvas.lift("textBox") # Not the Tk.Text widget: it should be low.
-    canvas.lift("userIcon")
-    canvas.lift("plusBox")
-    canvas.lift("clickBox")
-    canvas.lift("iconBox") # Higest.
-    self.redrawing = False</t>
-<t tx="ekr.20041126153101">def updateSetter (self,p,updateDicts=True):
-    
-    """Create a setter pane for position p."""
-    
-    sc = self.sc ; interior = sc.interior()
-    
-    if updateDicts:
-        self.fileValueDict = {}
-        self.initValueDict = {}
-        self.colorSettingDict = {}
-    
-    # Destroy the previous widgets
-    for w in interior.winfo_children():
-        w.destroy()
-
-    # Visit the node, and possibly its subtree, looking for widgets to create.
-    self.parser.widgets = []
-    self.parser.visitNode(p)
-    if self.parser.widgets:
-        self.createWidgets(self.parser.widgets,interior)
-        
-    self.sc.resizescrollregion()
-    self.sc.yview('moveto',0)
-    self.updateComments(p)
-    self.updateSetterLabel(p)</t>
-<t tx="ekr.20041126153101.1">def createSettingsTree (self):
-    
-    """Create a tree of vnodes representing all settings."""
-    
-    createSummaryNode = True # Dithering whether to do this.
-    createEmptyNodes = False
-
-    c = self.c ; config = g.app.config
-    root_p = None ; last_p = None
-    for kind,path,otherFileFlag in (
-        ("Global",config.globalConfigFile,True),
-        ("Home",config.homeFile,True),
-        ("Local",c.fileName(),False),
-    ):
-        if path:
-            if otherFileFlag: c2 = config.openSettingsFile(path)
-            else: c2 = c
-            root2 = config.settingsRoot(c2)
-        else:
-            root2 = None
-        if root2 or createEmptyNodes:
-            &lt;&lt; create a node p for kind &amp; root2 &gt;&gt;
-    root_p.expand()
-    return root_p</t>
-<t tx="ekr.20041127055009.1">if not root_p:
-    t = leoNodes.tnode()
-    root_v = leoNodes.vnode(c,t) # Using c2 --&gt; oops: nullTree.
-    root_p = leoNodes.position(root_v,[])
-    if createSummaryNode:
-        root_p.initHeadString("All settings")
-        root_p.scriptSetBodyString(self.rootNodeComments())
-        p = root_p.insertAsLastChild()
-    else:
-        p = root_p.copy()
-else:
-    p = last_p.insertAfter()
-
-if root2:
-    root2.copyTreeFromSelfTo(p)  # replace p by root2.
-
-self.copyExpansionState(root2,p)
-p.expand() # Always expand the top-level node
-
-&lt;&lt; add entry for p to filesInfoDict &gt;&gt;
-
-path2 = g.choose(otherFileFlag,path,g.shortFileName(path))
-p.initHeadString("%s settings: %s" % (kind,path2))
-last_p = p</t>
-<t tx="ekr.20041127081146">self.filesInfoDict[p] = {
-    'c': c2,
-    'changes': [],
-    'p': p.copy(),
-    'path': path,
-    'isLocal':  not otherFileFlag,
-}</t>
-<t tx="ekr.20041127083322">def setSelectColors (self,textWidget): 
-    
-    fg = c.config.getColor("headline_text_selected_foreground_color")
-    bg = c.config.getColor("headline_text_selected_background_color")
-    
-    if not fg or not bg:
-        fg,bg = "black","white"
-
-    try:
-        textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20041127084516">def setUnselectColors (self,textWidget): 
-    
-    fg = c.config.getColor("headline_text_unselected_foreground_color")
-    bg = c.config.getColor("headline_text_unselected_background_color")
-    
-    if not fg or not bg:
-        fg,bg = "black","white"
-
-    try:
-        textWidget.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
-    except:
-        g.es_exception()</t>
-<t tx="ekr.20041127084516.1">def getTextWidget (self,p):
-    
-    # The data is create in newText.
-    data = self.visibleText.get(p.v)
-    if data:
-        data = data[0] # A list of one element.
-        # g.trace(len(data),data)
-        p2,t,id = data
-        return t
-    else:
-        return None</t>
-<t tx="ekr.20041127090307">def rootNodeComments(self):
-    
-    c = self.c ; fileName = g.shortFileName(c.mFileName)
-    
-    s = """This tree shows Leo's global and home settings, as well as the local settings in %s."""\
-        % (fileName)
-    
-    return s</t>
-<t tx="ekr.20041127092231">def updateComments (self,p):
-
-    self.commentWidget.clear()
-    
-    if not p or p == self.suppressComments:
-        comments = ''
-    elif p == self.alterComments:
-        comments = self.alteredCommentsString
-    else:
-        comments = p.bodyString()
-    
-    self.commentWidget.setvalue(comments)
-
-    self.suppressComments = None
-    self.alterComments = None</t>
-<t tx="ekr.20041127102844">class parserClass (leoConfig.parserBaseClass):
-    
-    @others</t>
-<t tx="ekr.20041127102844.1">def __init__ (self,c,p,dialogController):
-    
-    self.c = c
-    self.root = p.copy()
-    self.widgets = [] # A list of widgets to create in the setter pane.
-
-    # Keys are canonicalized names.
-    self.dispatchDict = {
-        'bool':         self.set,
-        'color':        self.set,
-        'directory':    self.doDirectory,
-        'font':         self.doFont,
-        'if':           self.doIf,
-        'ifgui':        None,
-        'ifplatform':   None,
-        'ignore':       None,
-        'int':          self.set,
-        'ints':         self.doInts,
-        'float':        self.set,
-        'font':         self.doFont,
-        'path':         self.doPath,
-        'page':         self.doPage,
-        'ratio':        self.set,
-        'recentfiles':  self.doRecentFiles,
-        'shortcut':     None,
-        'shortcuts':    self.doShortcuts,
-        'string':       self.set,
-        'strings':      self.doStrings,
-    }</t>
-<t tx="ekr.20041127103503">def visitNode (self,p):
-    
-    """Visit a node, and possibly append a widget description to self.widgets."""
-    
-    munge = g.app.config.munge
-    h = p.headString().strip() or ''
-    kind,name,val = self.parseHeadline(h)
-    
-    # g.trace(kind,name,val)
-
-    f = self.dispatchDict.get(munge(kind))
-    if f is not None:
-        try:
-            f(p,kind,name,val)
-        except TypeError:
-            g.es_exception()
-            print "*** no handler",kind</t>
-<t tx="ekr.20041127103503.1"># Most of the work is done by base class methods.</t>
-<t tx="ekr.20041127103503.8">def doFont (self,p,kind,name,val):
-
-    d = self.parseFont(p)
-    # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
-    self.set(p,kind,name,d)</t>
-<t tx="ekr.20041127103503.12">def doPage(self,p,kind,name,val):
-    
-    """Create a widget for each setting in the subtree."""
-
-    for p in p.subtree_iter():
-        self.visitNode(p)</t>
-<t tx="ekr.20041127103503.16">def doBodyPaneList (self,p,kind,name,val):
-
-    s = p.bodyString()
-    lines = g.splitLines(s)
-
-    vals = []
-    for line in lines:
-        line = line.strip()
-        if line and not g.match(line,0,'#'):
-            vals.append(line)
-                
-    self.set(p,kind,name,vals)
-
-doRecentFiles = doBodyPaneList
-</t>
-<t tx="ekr.20041127110245">def set (self,p,kind,name,val):
-    
-    self.widgets.append((p.copy(),kind,name,val),)</t>
-<t tx="ekr.20041127112806">def printWidgets (self,widgets):
-
-    print '-'*20
-
-    for data in widgets:
-        p,kind,name,vals = data
-        if type(vals) == type([]):
-            print "%s %s..." % (name,kind)
-            for val in vals:
-                print val
-        else:
-            print "%45s %8s %s" % (name,kind,vals)</t>
-<t tx="ekr.20041127112925">def createWidgets (self,widgets,parent):
-    
-    munge = g.app.config.munge
-
-    &lt;&lt; define creatorDispatchDict &gt;&gt;
-    
-    # self.printWidgets(widgets)
-    
-    self.h = 0 # Offset from top of pane for first widget.
-    self.createSpacerFrame(parent,size=15)
-            
-    for data in widgets:
-        p,kind,name,vals = data
-        if kind.startswith('ints'):
-            self.createInts(parent,p,kind,name,vals)
-        if kind.startswith('strings'):
-            self.createStrings(parent,p,kind,name,vals)
-        else:
-            f = creatorDispatchDict.get(munge(kind))
-            if f is not None:
-                try:
-                    f(parent,p,kind,name,vals)
-                except TypeError:
-                    g.es_exception()
-                    g.trace("***No handler***",kind)</t>
-<t tx="ekr.20041127113719">def doShortcuts(self,p,kind,name,val):
-
-    s = p.bodyString()
-    lines = g.splitLines(s)
-
-    vals = []
-    for line in lines:
-        line = line.strip()
-        if line and not g.match(line,0,'#'):
-            name,val = self.parseShortcutLine(line)
-            if val is not None:
-                vals.append((name,val),)
-                
-    self.set(p,kind,name,vals)</t>
-<t tx="ekr.20041127132947"># Create the widget in the 'setter' pane.
-setter = self.panes.get('setter')
-
-self.sc = sc = Pmw.ScrolledCanvas(setter,
-    hscrollmode='none',vscrollmode='dynamic',
-    labelpos = 'n',label_text = '')
-    
-sc.pack(side='top',expand=1,fill="both")
-
-setterCanvas = sc.component('canvas')
-self.setterLabel = sc.component('label')
-
-# setterCanvas.configure(background='LightSteelBlue1')</t>
-<t tx="ekr.20041127134208">creatorDispatchDict = {
-    'bool':         self.createBool,
-    'color':        self.createColor,
-    'directory':    self.createDirectory,
-    'font':         self.createFont,
-    'int':          self.createInt,
-    'ints':         self.createInts,
-    'float':        self.createFloat,
-    'path':         self.createPath,
-    'ratio':        self.createRatio,
-    'recentfiles':  self.createRecentFiles,
-    'shortcut':     self.createShortcut,
-    'shortcuts':    self.createShortcuts,
-    'string':       self.createString,
-    'strings':      self.createStrings,
-}</t>
-<t tx="ekr.20041127134208.1">def createBool (self,parent,p,kind,name,val):
-    
-    val = g.choose(val.lower()=='true',1,0)
-
-    # Inits the checkbutton widget. 
-    var = Tk.IntVar()
-    var.set(val)
-
-    def boolCallback():
-        val2 = g.choose(var.get(),True,False)
-        # g.trace(name,val2)
-        return val2
-    
-    val = g.choose(val,True,False)
-    self.initValue(p,name,kind,val,boolCallback)
-
-    box = Tk.Checkbutton(parent,text=name,variable=var)
-
-    self.sc.create_window(10,self.h,anchor='w',window=box)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.2">def createColor (self,parent,p,kind,name,val):
-    
-    munge = g.app.config.munge
-    noColor = "&lt;no color&gt;"
-    colorNamesList = list(leoTkinterColorPanels.colorNamesList)
-    
-    f = Tk.Frame(parent) # No need to pack.
-    &lt;&lt; munge val and add val to colorNamesList &gt;&gt;
-    &lt;&lt; create optionMenu and callback &gt;&gt;
-    &lt;&lt; create picker button and callback &gt;&gt;
-    Tk.Label(f,text=name).pack(side='left')
-    
-    self.colorSettingDict [munge(name)] = val
-
-    def getColorCallback ():
-        return self.colorSettingDict.get(munge(name))
-
-    self.initValue(p,name,kind,val,getColorCallback)
-
-    self.sc.create_window(15,self.h+8,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.3">def createDirectory (self,parent,p,kind,name,val):
-    
-    self.createString(parent,p,kind,name,val)</t>
-<t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,fontName,val):
-    
-    """Create a font picker.  val is a dict containing the specified values."""
-
-    d = val ; widgets = {}
-    munge = g.app.config.munge
-    f = Tk.Frame(parent) # No need to pack.
-    self.alterComments = p.copy()
-    self.alteredCommentsString = d.get('comments')
-    &lt;&lt; create the family combo box &gt;&gt;
-    &lt;&lt; create the size entry &gt;&gt;
-    &lt;&lt; create the weight combo box &gt;&gt;
-    &lt;&lt; create the slant combo box &gt;&gt;
-    Tk.Label(f,text=fontName).pack(side='left')
-    &lt;&lt; define fontCallback &gt;&gt;
-
-    familyBox.configure(selectioncommand=fontCallback)
-    slantBox.configure(selectioncommand=fontCallback)
-    weightBox.configure(selectioncommand=fontCallback)
-
-    self.initValue(p,munge(fontName),'font',d,fontCallback)
-
-    self.sc.create_window(15,self.h,anchor='w',window = f)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.5">def createInt (self,parent,p,kind,name,val):
-
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent)
-    Tk.Entry(f,textvariable=var).pack(side='left')
-    Tk.Label(f,text=name).pack(side='left')
-
-    def intCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            int(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-    
-    self.initValue(p,name,kind,val,intCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.6">def createFloat (self,parent,p,kind,name,val):
-
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent)
-    Tk.Entry(f,textvariable=var).pack(side='left')
-    Tk.Label(f,text=name).pack(side='left')
-    
-    def floatCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            float(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-            
-    self.initValue(p,name,kind,val,floatCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.7">def createPath (self,parent,p,kind,name,val):
-    
-    self.createString(parent,p,kind,name,val)</t>
-<t tx="ekr.20041127134208.8">def createRatio (self,parent,p,kind,name,val):
-    
-    # Inits the entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-
-    f = Tk.Frame(parent)
-    Tk.Entry(f,textvariable=var).pack(side='left')
-    Tk.Label(f,text=name).pack(side='left')
-    
-    def ratioCallback():
-        val2 = var.get()
-        # g.trace(name,val2)
-        try:
-            float(val2)
-            return g.choose(0.0 &lt;= val2 &lt;= 1.0,val2,val)
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-            
-    self.initValue(p,name,kind,val,ratioCallback)
-    
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041127134208.9">def createRecentFiles (self,parent,p,kind,name,vals):
-    
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    
-    f = Tk.Frame(parent)
-    
-    recentFilesBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text='recent files',
-        scrolledlist_items=lines)
-
-    if lines:
-        recentFilesBox.selectitem(0)
-    recentFilesBox.pack(side="left")
-    
-    # Increase the width of the entry field.
-    entryfield = recentFilesBox.component('entryfield')
-    entry = entryfield.component('entry')
-    entry.configure(width=70)
-
-    def recentFilesCallback():
-        files = recentFilesBox.get(0,'end')
-        files = [theFile.strip() for theFile in files if theFile.strip()]
-        return files
-
-    self.initValue(p,name,kind,vals,recentFilesCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30
-                
-    self.suppressComments = p.copy()</t>
-<t tx="ekr.20041127134208.10">def createShortcut (self,parent,p,kind,name,val):
-    
-    g.trace(name,val)
-    
-    if name:
-        self.createString(parent,p,kind,name,val)</t>
-<t tx="ekr.20041127134613">def createShortcuts (self,parent,p,kind,name,vals):
-    
-    s = p.bodyString()
-    lines = g.splitLines(s)
-    
-    for line in lines:
-        if not g.match(line.strip(),0,'#'):
-            name,val = self.parser.parseShortcutLine(line)
-            if name:
-                self.createString(parent,p,kind,name,val)
-
-    self.suppressComments = p.copy()</t>
-<t tx="ekr.20041127134613.1">def createString (self,parent,p,kind,name,val):
-
-    if val in (None,'None'): val = ""
-    
-    # Inits the Entry widget.
-    var = Tk.StringVar()
-    var.set(val)
-    
-    f = Tk.Frame(parent) # No need to pack.
-    Tk.Entry(f,textvariable=var,width=40).pack(side='left')
-    Tk.Label(f,text=name).pack(side='left')
-    
-    def stringCallback():
-        val = var.get()
-        # g.trace(name,val)
-        return val
-
-    self.initValue(p,name,kind,val,stringCallback)
-    
-    self.sc.create_window(15,self.h,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041127144346">def onPaneResize (self,sizes=None):
-
-    self.sc.resizescrollregion()</t>
-<t tx="ekr.20041127155541">def updateSetterLabel (self,p):
-    
-    if self.setterLabel:
-
-        h = p.headString().strip() or ''
-
-        for name in ('@page','@font','@ignore','@'):
-            if g.match(h,0,name):
-                h = h[len(name):].strip()
-                break
-    
-        self.setterLabel.configure(text=h)</t>
-<t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
-<t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
-    
-    munge = g.app.config.munge
-    
-    # g.trace(name,kind,val)
-    
-    self.initValueDict [munge(name)] = (p,name,kind,val,getValueCallback)</t>
-<t tx="ekr.20041128061452">def createSpacerFrame (self,parent,size=10):
-    
-    f = Tk.Frame(parent)
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += size</t>
-<t tx="ekr.20041128062141">if val in ("None",None): val = noColor
-val = str(val) # Get rid of unicode.
-
-if noColor in colorNamesList:
-    colorNamesList.remove(val)
-if val is not noColor and val not in colorNamesList:
-     colorNamesList.append(val)
-colorNamesList.sort()
-colorNamesList.insert(0,noColor)
-
-initVal = val
-if val is noColor: val = None</t>
-<t tx="ekr.20041128062902">colorBox = Pmw.ComboBox(f,scrolledlist_items=colorNamesList)
-colorBox.selectitem(initVal)
-colorBox.pack(side="left",padx=2)
-
-color = g.choose(val is None,f.cget('background'),val)
-colorSample = Tk.Button(f,width=8,background=color)
-colorSample.pack(side='left',padx=2)
-
-def colorCallback (newName):
-    g.trace(repr(newName))
-    if not newName or newName.lower() in ('none','&lt;none&gt;','&lt;no color&gt;'):
-        self.colorSettingDict[munge(name)] = None
-        color = f.cget('background')
-        colorSample.configure(background=color)
-    else:
-        try:
-            colorSample.configure(background=newName)
-            self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
-        except: pass # Ignore invalid names.
-
-colorBox.configure(selectioncommand=colorCallback)</t>
-<t tx="ekr.20041128062902.1">def pickerCallback (color=val):
-
-    rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
-    if rgb or val:
-        # g.trace(rgb,val)
-        self.colorSettingDict[munge(name)] = val
-        colorSample.configure(background=val,activebackground=val,text=val)
-
-b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
-b.pack(side="left")</t>
-<t tx="ekr.20041128081018">def printChangedVars (self):
-
-    d = self.initValueDict
-    
-    for key in d.keys():
-        
-        data = d.get(key)
-        p,name,kind,val,getValueCallback = data
-        newVal = getValueCallback()
-        
-        if val != newVal:
-            print "%10s -&gt; %10s %s" % (str(val),str(newVal),name)</t>
-<t tx="ekr.20041128081018.1">def writeChangedVars (self):
-    
-    """Create per-file changes lists from diffs between what has been inited and written.
-    
-    Call writeChangedList to update each file from items in this list."""
-
-    changedList = []
-    fDict = self.fileValueDict
-    iDict = self.initValueDict
-    munge = g.app.config.munge
-    
-    for key in iDict.keys():
-
-        iData = iDict.get(key)
-        ip,iname,ikind,ival,getValueCallback = iData
-        newVal = getValueCallback()
-        fData = fDict.get(key)
-        if fData:
-            fp,fname,fkind,fval,junk = fData
-            assert(ip==fp and iname==fname and ikind==fkind)
-            changed = fval != newVal ; oldVal = fval
-        else:
-            changed = ival != newVal ; oldVal = ival
-            fval = '&lt;none&gt;'
-
-        if changed:
-            # print "write","key","ival",ival,"fval",fval
-            if type(oldVal) == type({}):
-                print "write  %10s -&gt; %10s %s" % ("dict","dict",iname)
-            else:
-                print "write  %10s -&gt; %10s %s" % (str(oldVal),str(newVal),iname)
-            self.fileValueDict [munge(iname)] = ip,iname,ikind,newVal,getValueCallback
-            changedList.append((ip,iname,ikind,oldVal,newVal),)
-            
-    self.writeChangedList(changedList,"write")</t>
-<t tx="ekr.20041128082112">def revert (self):
-    
-    """Restores written vars to initial value and re-inits all widgets."""
-    
-    iDict = self.initValueDict
-    fDict = self.fileValueDict
-    munge = g.app.config.munge
-    
-    changedList = []
-    for key in fDict.keys():
-
-        fData = fDict.get(key)
-        fp,fname,fkind,fval,getValueCallback = fData
-        
-        iData = iDict.get(key)
-        ip,iname,ikind,ival,getValueCallback = iData
-
-        assert(ip==fp and iname==fname and ikind==fkind)
-        # print "revert",key,"ival",ival,"fval",fval
-        
-        if ival != fval:
-            # print "revert %10s -&gt; %10s %s" % (str(fval),str(ival),fname)
-            self.fileValueDict [munge(iname)] = ip,iname,ikind,ival,getValueCallback
-            changedList.append((ip,iname,ikind,fval,ival),)
-
-    self.updateSetter(self.p,updateDicts=False)
-    self.writeChangedList(changedList,"revert")
-    self.updateSetter(self.p) # Redraw the widgets in the pane.</t>
-<t tx="ekr.20041128225055">splitter2 = self.panes.get('splitter2')
-
-self.paneFrame2 = paneFrame2 = Pmw.PanedWidget(splitter2,
-    separatorthickness = 4, # default is 2
-    handlesize = 8, # default is 8
-    orient='horizontal',
-    command = self.onPaneResize
-)
-paneFrame2.pack(expand = 1, fill='both')
-
-for name,minsize,size, in (
-    ('outline',50,500),
-    ('log',50,300),
-):
-    self.panes[name] = pane = paneFrame2.add(name,min=minsize,size=size)
-    
-# Set the colors of the separator and handle.
-i = 1
-bar = paneFrame2.component('separator-%d' % i)
-bar.configure(background='LightSteelBlue2')
-handle = paneFrame2.component('handle-%d' % i)
-handle.configure(background='SteelBlue2')</t>
-<t tx="ekr.20041128225703.1">def center(self):
-    
-    top = self.top
-
-    """Center the dialog on the screen.
-
-    WARNING: Call this routine _after_ creating a dialog.
-    (This routine inhibits the grid and pack geometry managers.)"""
-
-    sw = top.winfo_screenwidth()
-    sh = top.winfo_screenheight()
-    w,h,x,y = self.get_window_info()
-    
-    # Set the new window coordinates, leaving w and h unchanged.
-    x = (sw - w)/2
-    y = (sh - h)/2
-    top.geometry("%dx%d%+d%+d" % (w,h,x,y))
-    
-    return w,h,x,y</t>
-<t tx="ekr.20041128230425"># WARNING: Call this routine _after_ creating a dialog.
-# (This routine inhibits the grid and pack geometry managers.)
-
-def get_window_info (self):
-    
-    top = self.top
-    
-    top.update_idletasks() # Required to get proper info.
-
-    # Get the information about top and the screen.
-    geom = top.geometry() # geom = "WidthxHeight+XOffset+YOffset"
-    dim,x,y = geom.split('+')
-    w,h = dim.split('x')
-    w,h,x,y = int(w),int(h),int(x),int(y)
-    
-    return w,h,x,y</t>
-<t tx="ekr.20041129095748">def findSettingsRoot (self,p):
-    
-    first_p = p.copy()
-    
-    # Get the list of root positions.
-    roots = self.filesInfoDict.keys()
-
-    for p in p.self_and_parents_iter():
-        for root in roots:
-            if p == root:
-                # g.trace("root of %s is %s" % (first_p.headString(),p.headString()))
-                return root # Used as key.  Must NOT return a copy.
-                
-    g.trace("Can't happen: %s has no root node" % (first_p.headString()))
-    return None</t>
-<t tx="ekr.20041129095748.1">def writeChangedList (self,changedList,tag):
-    
-    if not changedList: return
-    
-    filesInfoDict = self.filesInfoDict
-    if 0:
-        &lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;
-
-    # Accumulate the changes for each file in a 'changes' list for each root.
-    for data in changedList:
-        p,name,kind,oldVal,newVal = data
-        # print "%6s %6s %10s -&gt; %10s %s" % (tag,kind,str(oldVal),str(newVal),name)
-        root = self.findSettingsRoot(p)
-        d = filesInfoDict.get(root)
-        changes = d.get('changes')
-        changes.append(data)
-        d['changes'] = changes
-
-    for root in filesInfoDict.keys():
-        d = filesInfoDict.get(root)
-        # Keys are 'c','changes','path','islocal' (unused)
-        c = d.get('c')
-        changes = d.get('changes')
-        path = d.get('path')
-        # isLocal = rootDict.get('isLocal')
-        if changes:
-            self.writeChangesToFile(c,changes,path)
-            self.updateConfig(c,changes)
-        d['changes'] = []</t>
-<t tx="ekr.20041129112522">for key in filesInfoDict.keys():
-    print ; print
-    print "key",key
-    g.printDict(filesInfoDict.get(key))
-print ; print</t>
-<t tx="ekr.20041129113117">def writeChangesToFile (self,c,changes,path):
-
-    # Write the individual changes.
-    for data in changes:
-        self.updateOneNode(c,data)
-
-    if c.mFileName:
-        self.es("writing " + g.shortFilename(path))
-        # Save the file corresponding to c.
-        # Non-local files aren't open otherwise!
-        c.fileCommands.save(c.mFileName)
-        c.redraw() # This should work for non-local files too.
-        self.tree.redraw()
-    else:
-        print "no settings saved.  local file not named."</t>
-<t tx="ekr.20041129113302">def updateOneNode (self,c,data):
-    
-    """Update the node in c corresponding to p = data[0]."""
-    
-    p,name,kind,oldVal,val = data
-    munge = g.app.config.munge
-    name = name.strip() ; kind = munge(kind.strip())
-
-    # Root 1 is the root of the dialog's outline.
-    p1 = p
-    root1 = self.findSettingsRoot(p1).copy()
-    c1 = root1.c
-    
-    # Root is the root of the settings outline in the file.
-    root2 = g.app.config.settingsRoot(c) # c is NOT self.c
-    # g.trace(root2.c.mFileName)
-    p2 = self.findCorrespondingNode(root1,root2,p1)
-    if p2:
-        c2 = p2.c ; filename = c2.mFileName
-    else:
-        g.trace("can't happen: can't find node in",root2.c.mFileName)
-        c2 = None ; filename = None
-
-    # Update the outline in the dialog and the target file.
-    for p,c,where in ((p1,c1,"dialog"),(p2,c2,filename)):
-        if p:
-            # g.trace("updating %s in %s" % (name,where))
-            if kind in ('shortcuts','recentfiles'):
-                # Put the values in the body.
-                p.initHeadString("@%s %s" % (kind,name))
-                body = '\n'.join(val)
-                p.setBodyStringOrPane(body)
-            elif kind == 'font':
-                body = self.computeBodyFromFontDict(p,val)
-                p.setBodyStringOrPane(body)
-            else:
-                # Put everything in the headline.
-                p.initHeadString("@%s %s = %s" % (kind,name,val))</t>
-<t tx="ekr.20041129175112">def findCorrespondingNode (self,root1,root2,p1):
-    
-    """Return the node corresponding to p1 (in root1) in the root2's tree."""
-    
-    if p1 == root1: return root2
-    
-    # Go up tree 1, computing child indices.
-    childIndices = []
-    for p in p1.self_and_parents_iter():
-        #g.trace(p)
-        if p == root1: break
-        childIndices.append(p.childIndex())
-        
-    childIndices.reverse()
-    #g.trace(childIndices)
-    
-    # Go down tree 2, moving to the n'th child.
-    p2 = root2.copy()
-    for n in childIndices:
-        #g.trace(p2)
-        p2.moveToNthChild(n)
-
-    # g.trace(p2)
-    return p2</t>
-<t tx="ekr.20041129182726">def es(self,*args,**keys):
-    
-    old_log = g.app.log
-    g.app.log = self.log
-    g.es(*args,**keys)
-    g.app.log = old_log</t>
-<t tx="ekr.20041130061955"></t>
-<t tx="ekr.20041130061955.1"></t>
-<t tx="ekr.20041130061955.2"></t>
-<t tx="ekr.20041130061955.3"></t>
-<t tx="ekr.20041130062919">def updateConfig(self,c,changes):
-    
-    """Update the core config settings from the changes list."""
-    
-    munge = g.app.config.munge
-
-    for data in changes:
-        p,name,kind,oldval,val = data
-        if munge(kind) == 'font':
-            for key in ('family','size','slant','weight'):
-                data2 = val.get(key)
-                if data2:
-                    name2,val2 = data2
-                    kind2 = g.choose(key=='size','int','string')
-                    g.app.config.set(c,name2,kind2,val2)
-            # Update the visible fonts: c may not be the same as self.c.
-            for c2 in (c,self.c):
-                c2.frame.body.setFontFromConfig()
-                c2.frame.body.colorizer.setFontFromConfig()
-                c2.frame.log.setFontFromConfig()
-                c2.frame.tree.setFontFromConfig()
-                c2.redraw()
-        elif munge(kind) == "color":
-            g.trace("setting colors")
-            g.app.config.set(c,name,kind,val)
-            for c2 in (c,self.c):
-                c2.frame.tree.setColorFromConfig()
-                c2.frame.log.setColorFromConfig()
-                c2.frame.body.setColorFromConfig()
-        elif munge(name) == "recentfiles":
-            c.setRecentFiles(val)
-        else:
-            g.app.config.set(c,name,kind,val)</t>
 <t tx="ekr.20041130092210"></t>
-<t tx="ekr.20041130191836">def copyExpansionState(self,p1,p2):
- 
-    # Don't depend on p.nodeAfterTree, etc.
-    if p1.isExpanded():
-        # g.trace("p1",p1)
-        # g.trace("p2",p2)
-        p2.expand()
-        child1 = p1.firstChild()
-        child2 = p2.firstChild()
-        while child1:
-            self.copyExpansionState(child1,child2)
-            child1 = child1.next()
-            child2 = child2.next()</t>
 <t tx="ekr.20041211044607"></t>
 <t tx="ekr.20041211053412.1">@
 
 May be a problem with copying positions.
 
 Probably don't need to do anything with this if the Settings command uses the body pane.</t>
-<t tx="ekr.20041211053412.2">@
-
-- Refresh recreates and redraws dialog's outline.  
-
-- Check button checks for duplicate shortcuts, bad settings, etc.
-
-- For testing I like to have the window close button funtional.  In production code it should be disabled because it is not clear whether is should equivalent to OK or Cancel.
-
-To disable this button, in onAnyButton change:
-
-if name in (None,"OK","Cancel"):
-
-to:
-
-if name in ("OK","Cancel"):</t>
 <t tx="ekr.20041211053539.1"></t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
+- Grab all keys or otherwise disable commands while in dialog!
+
 - Unit tests: there are too many cases to test by hand.
 
-- Move code into Leo's core.
-    - move findCorrespondingNode into leoNodes class.
-
-- Don't use separate dialog at all
-    - This create a way of cutting &amp; pasting colors.
-    - However, we would still need a different outline.
-    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
+- move findCorrespondingNode into leoNodes class.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -12181,157 +10885,7 @@ log_text_font_size = None
 log_text_font_slant = None
 log_text_font_weight = normal
 </t>
-<t tx="ekr.20041213090401.4">names = tkFont.families()
-names = list(names)
-names.sort()
-names.insert(0,'&lt;None&gt;')
-
-data = d.get('family')
-initialitem = 0
-if data:
-    name2,val = data
-    if val and val in names:
-        initialitem = names.index(val)
-
-familyBox = Pmw.ComboBox(f,
-    labelpos="we",label_text='Family:',
-    scrolledlist_items=names)
-
-familyBox.selectitem(initialitem)
-familyBox.pack(side="left",padx=2)</t>
-<t tx="ekr.20041213090401.5">initialitem = 0
-values = ['&lt;None&gt;','normal','bold']
-data = d.get('weight')
-if data:
-    kind,val = data
-    if val in values:
-        initialitem = values.index(val)
-
-weightBox = Pmw.ComboBox(f,
-    labelpos="we",label_text="Weight:",
-    scrolledlist_items=values)
-
-weightBox.selectitem(initialitem)
-weightBox.pack(side="left",padx=2)</t>
-<t tx="ekr.20041213090929">import leoGlobals as g
-import leoConfig
-import leoNodes
-import leoTkinterColorPanels
-import leoTkinterTree
-
-import Pmw
-
-import Tkinter as Tk
-import tkColorChooser
-import tkFont
-
-import sys</t>
 <t tx="ekr.20041213115848">@</t>
-<t tx="ekr.20041213163519">Tk.Label(f,text="Size:").pack(side="left")
-
-sizeEntry = Tk.Entry(f,width=4)
-sizeEntry.pack(side="left")
-
-data = d.get('size')
-if data:
-    kind,val = data
-    if val not in (None,'None','none'):
-        try:
-            n = int(val)
-            sizeEntry.insert('end',val)
-        except ValueError:
-            s = "invalid size: %s" % val
-            print s ; self.es(s,color="blue")</t>
-<t tx="ekr.20041213163519.1">initialitem = 0
-values=['&lt;None&gt;','roman','italic']
-data = d.get('slant')
-if data:
-    kind,val = data
-    if val in values:
-        initialitem = values.index(val)
-
-slantBox = Pmw.ComboBox(f,
-    labelpos="we",label_text="Slant:",
-    scrolledlist_items=values)
-
-slantBox.selectitem(initialitem)
-slantBox.pack(side="left",padx=2)</t>
-<t tx="ekr.20041216085206">class logClass:
-    
-    def __init__ (self,textWidget):
-        self.textWidget = textWidget
-        self.colorTags = []
-        
-    def put(self,s,color=None):
-        w = self.textWidget
-        &lt;&lt; put s to w &gt;&gt;
-        
-    def putnl (self):
-        w = self.textWidget
-        if sys.platform == "darwin": print
-        w.insert("end",'\n')
-        w.see("end")
-        w.update_idletasks()</t>
-<t tx="ekr.20041216085206.1">if type(s) == type(u""):
-    s = g.toEncodedString(s,g.app.tkEncoding)
-    
-if sys.platform == "darwin": print s,
-
-if color:
-    if color not in self.colorTags:
-        self.colorTags.append(color)
-        w.tag_config(color,foreground=color)
-    w.insert("end",s)
-    w.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-    if "black" not in self.colorTags:
-        self.colorTags.append("black")
-        w.tag_config("black",foreground="black")
-    w.tag_add("black","end")
-else:
-    w.insert("end",s)
-
-w.see("end")
-w.update_idletasks()</t>
-<t tx="ekr.20041216102449">def computeBodyFromFontDict(self,p,d):
-
-    lines = []
-    comments = d.get('comments')
-    if comments:
-        comment_lines = g.splitLines(comments)
-        comment_lines = ["# %s" % (line) for line in comment_lines]
-        lines.extend(comment_lines)
-        lines.extend('\n\n')
-        
-    for key in ('family','size','slant','weight'):
-        data = d.get(key)
-        if data:
-            name,val = data
-            if val in (None,'&lt;none&gt;'):
-                val = "None"
-            line = "%s = %s\n" % (name,val)
-            lines.extend(line)
-
-    body = ''.join(lines)
-    return body</t>
-<t tx="ekr.20041216110712">def fontCallback(*args,**keys):
-    
-    d2 = d.copy() # The update logic must compare distinct dicts.
-    
-    for box,key in (
-        (familyBox, 'family'),
-        (None,      'size'),
-        (slantBox,  'slant'),
-        (weightBox, 'weight'),
-    ):
-        if box: val = box.get()
-        else:   val = sizeEntry.get().strip()
-        if not val or  val.lower() in ('none','&lt;none&gt;',): val = None
-
-        data = d.get(key)
-        name,oldval = data
-        d2[key] = name,val
-    
-    return d2</t>
 <t tx="ekr.20041217033348"></t>
 <t tx="ekr.20041217042849"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
@@ -12351,78 +10905,6 @@ body_text_font_weight = None
 <t tx="ekr.20041217143421">ivory1
 #ffecea</t>
 <t tx="ekr.20041217144914"></t>
-<t tx="ekr.20041218100021">def createInts (self,parent,p,kind,name,val):
-    
-    # g.trace(repr(kind),repr(name),val)
-    
-    i = kind.find('[')
-    j = kind.find(']')
-    if not (-1 &lt; i &lt; j):
-        return
-    
-    items = kind[i+1:j].split(',')
-    items.sort()
-    items.insert(0,'&lt;none&gt;')
-    
-    if val in items:
-        initialitem = items.index(val)
-    else:
-        initialitem = 0
-        
-    f = Tk.Frame(parent)
-
-    intsBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text=name,
-        scrolledlist_items=items)
-
-    intsBox.selectitem(initialitem)
-    intsBox.pack(side="left",padx=2)
-    
-    def intsCallback():
-        val2 = intsBox.get()
-        try:
-            int(val2)
-            return val2
-        except TypeError:
-            g.trace("bad val:",val2)
-            return val
-
-    self.initValue(p,name,kind,val,intsCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30</t>
-<t tx="ekr.20041218100121">def createStrings (self,parent,p,kind,name,val):
-    
-    # g.trace(repr(kind),repr(name),val)
-    i = kind.find('[')
-    j = kind.find(']')
-    if not (-1 &lt; i &lt; j):
-        return
-    
-    items = kind[i+1:j].split(',')
-    items.sort()
-    items.insert(0,'&lt;none&gt;')
-    if val in items:
-        initialitem = items.index(val)
-    else:
-        initialitem = 0
-        
-    f = Tk.Frame(parent)
-
-    stringsBox = Pmw.ComboBox(f,
-        labelpos="ew",label_text=name,
-        scrolledlist_items=items)
-
-    stringsBox.selectitem(initialitem)
-    stringsBox.pack(side="left",padx=2)
-    
-    def stringsCallback():
-        return stringsBox.get()
-
-    self.initValue(p,name,kind,val,stringsCallback)
-
-    self.sc.create_window(10,self.h,anchor='w',window=f)
-    self.h += 30</t>
 <t tx="ekr.20041218100259"></t>
 <t tx="ekr.20041218110904"></t>
 <t tx="ekr.20041218141525"></t>
@@ -12640,9 +11122,7 @@ def eggs():
 - Maybe the atFile read logic could detect a conflict?
     - Only after detecting a fileName.1.nnn file.
     - Only if 'repair_cvs_conflict' option is set.</t>
-<t tx="ekr.20041222060224"># Make repack a script button before unpacking.
-
-# The "packers" for the 'body', 'log' and 'tree' components are actually placers, so packing twice does _not_ duplicate those components.</t>
+<t tx="ekr.20041222060224"></t>
 <t tx="ekr.20041222060224.1">import leoGlobals as g
 c = g.top()
 
@@ -12650,7 +11130,9 @@ c.frame.unpackComponent('splitter1')</t>
 <t tx="ekr.20041222060224.2">import leoGlobals as g
 c = g.top()
 
-c.frame.packComponent('splitter1')</t>
+c.frame.unpackComponent('statusLine')
+c.frame.packComponent('splitter1')
+c.frame.packComponent('statusLine')</t>
 <t tx="ekr.20041223124541">import leoGlobals as g
 c = g.top()
 
@@ -12719,20 +11201,13 @@ c.frame.packComponent('statusLine')</t>
 <t tx="ekr.20041224104031"></t>
 <t tx="ekr.20041224104031.1">import leoGlobals as g
 import Tkinter as Tk
-import leoTkinterFrame
 c = g.top()
 
-componentClass = leoTkinterFrame.componentClass
-
-body = c.frame.component('body')
-packer = body.getPacker()
-unpacker = body.getUnpacker()
-
-# The new parent's frame must be splitter1Frame.
+# The new frame must be a child of splitter1Frame.
 parentFrame = c.frame.component('splitter1Frame').getFrame()
 f = Tk.Frame(parentFrame,background='red')
 
-componentClass(c,'new body',f,None,packer,unpacker)
+c.frame.componentClass(c,'new body',f)
 c.frame.replaceBodyPaneWithComponent('new body')</t>
 <t tx="ekr.20041224104031.2">import leoGlobals as g
 c = g.top()
@@ -12740,23 +11215,21 @@ c = g.top()
 c.frame.replaceBodyPaneWithComponent('body')</t>
 <t tx="ekr.20041224104337"></t>
 <t tx="ekr.20041224104416">import leoGlobals as g
-import leoTkinterFrame
-componentClass = leoTkinterFrame.componentClass
 c = g.top()
 
 c.frame.unpackComponent('iconBar')
 c.frame.unpackComponent('splitter1')
 c.frame.unpackComponent('statusLine')
 
-class newIconBar (leoTkinterFrame.iconBarClass):
+class newIconBar (c.frame.iconBarClass):
     def clear(self):
-        leoTkinterFrame.iconBarClass.clear(self)
-        g.trace('newIconBar')
+        c.frame.iconBarClass.clear(self)
+        g.trace()
 
 hull = c.frame.component('hull').getFrame()
 newIconBar = newIconBar(c,hull)
 
-newIconBarComponent = componentClass(c,'newIconBar',hull,newIconBar,newIconBar.pack,newIconBar.unpack)
+newIconBarComponent = c.frame.componentClass(c,'newIconBar',hull,newIconBar,newIconBar.pack,newIconBar.unpack)
 c.frame.iconBarComponentName = 'newIconBar'
 c.frame.iconBar = newIconBarComponent
 c.frame.clearIconBar()
@@ -12777,36 +11250,54 @@ c.frame.iconBarComponentName = 'iconBar'
 c.frame.packComponent('iconBar')
 c.frame.packComponent('splitter1')
 c.frame.packComponent('statusLine')</t>
-<t tx="ekr.20041225051328">@language python</t>
-<t tx="ekr.20041225051328.1">with all sentinels removed.
-(To do: don't strip sentinel comments from lines following @verbatim.)
+<t tx="ekr.20041225051328">@language python
+@ignore</t>
+<t tx="ekr.20041225051328.1">zx
 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-with all sentinels removed.
-(To do: don't strip sentinel comments from lines following @verbatim.)
-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-atSignTest.txt
-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-A plugin that supports @view, @strip and @clip nodes.
-
-Selecting a node whose headline contains @view, @strip or @clip does the following:
-
-@view &lt;path-to-file&gt;
-
-Places the contents of the file in the body pane
-
-@strip &lt;path-to-file&gt;
-
-Places the contents of the file in the body pane, with all sentinels removed.
-(To do: don't strip sentinel comments from lines following @verbatim.)
-
-@clip
-
-Places the contents of the clipboard in the body pane.
-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-(does not properly handler @verbatim sentinels at this time.)
+&gt;
 _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 </t>
-<t tx="ekr.20041225051328.2"></t>
+<t tx="ekr.20041225051328.2">zx</t>
 <t tx="ekr.20041225051445"></t>
+<t tx="ekr.20041225092227"></t>
+<t tx="ekr.20041225092227.1">import leoGlobals as g
+import Tkinter as Tk
+c = g.top()
+
+# The new frame must be a child of splitter2Frame.
+parentFrame = c.frame.component('splitter2Frame').getFrame()
+f = Tk.Frame(parentFrame,background='red')
+
+c.frame.componentClass(c,'newTree',f)
+c.frame.replaceTreePaneWithComponent('newTree')</t>
+<t tx="ekr.20041225092227.2">import leoGlobals as g
+c = g.top()
+
+c.frame.replaceTreePaneWithComponent('tree')</t>
+<t tx="ekr.20041225102217"></t>
+<t tx="ekr.20041225102217.1">import leoGlobals as g
+import Tkinter as Tk
+c = g.top()
+
+# The new frame must be a child of splitter2Frame.
+parentFrame = c.frame.component('splitter2Frame').getFrame()
+f = Tk.Frame(parentFrame,background='red')
+
+c.frame.componentClass(c,'newLog',f)
+c.frame.replaceLogPaneWithComponent('newLog')</t>
+<t tx="ekr.20041225102217.2">import leoGlobals as g
+c = g.top()
+
+c.frame.replaceLogPaneWithComponent('log')</t>
+<t tx="ekr.20041225104159"></t>
+<t tx="ekr.20041225104159.1">''' Replace the outline and body panes by a settings outline and settings widgets respectively'''
+
+import leoGlobals as g
+import leoConfig
+
+replaceBody=False
+
+c = g.top()
+leoConfig.settingsController(c,replaceBody)</t>
 </tnodes>
 </leo_file>
