@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3831" clone_windows="0"/>
-<globals body_outline_ratio="0.6495215311">
-	<global_window_position top="21" left="215" height="836" width="831"/>
+<globals body_outline_ratio="0.427033492823">
+	<global_window_position top="21" left="215" height="836" width="1007"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1944,21 +1944,22 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040414161647" a="ETV"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
+<v t="ekr.20040414161647" a="E"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
 <v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
 <v t="ekr.20040414163815" a="E"><vh>Table of Contents</vh>
 <v t="ekr.20040414163815.1"><vh>@rst</vh></v>
 </v>
 </v>
-<v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
+<v t="ekr.20040414172212" a="E"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2" a="E"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
+<v t="ekr.20040416070800"><vh>@rst</vh></v>
+<v t="ekr.20040416070800.1" a="TV"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040414172218.3"><vh>Leo's Design Goals</vh>
-<v t="ekr.20040414172336.2"><vh>@rst</vh></v>
-</v>
-<v t="ekr.20040414172218.4"><vh>Acknowledgements</vh>
+<v t="ekr.20040414172218.4" a="E"><vh>Acknowledgements</vh>
 <v t="ekr.20040414172617" a="E"><vh>@rst</vh></v>
+<v t="ekr.20040416075437"><vh>@rst</vh></v>
+<v t="ekr.20040416080538"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040414172218.5"><vh>Copyright</vh>
 <v t="ekr.20040414172617.1"><vh>@rst</vh></v>
@@ -12771,50 +12772,24 @@ Front Matter
 .. |next| image:: arrow_rt.gif
 	:target: FAQ_</t>
 <t tx="ekr.20040414172218.2"></t>
-<t tx="ekr.20040414172218.3"></t>
 <t tx="ekr.20040414172218.4"></t>
 <t tx="ekr.20040414172218.5"></t>
 <t tx="ekr.20040414172336">@ignore
 
-Leo creates a better way of programming by making clear the relationships between parts of programs. The larger the program, the more valuable Leo becomes. I would never willing program without Leo again.
+Leo has thousands of users. They use Leo to create programs in all kinds of languages and for all kinds of projects.  Leo's users write programs in assembly language, C and C++, Java, Python Tk, PHP, XML and XSLT and many more.  They use Leo to build and maintain web sites and to manage large amounts of other data.  Managers use Leo to organize projects and to communicate general ideas to programmers.
 
-Leo has hundreds of users. They use Leo to create programs in all kinds of languages, from assembly language, C and C++ to Java, Python and Tk. They use Leo to build and maintain web sites and to manage large amounts of other data. Leo's users have extended Leo in directions I never imagined. See the Acknowledgments below.
-
-Inventing and building Leo, and completely re-visioning Leo to add @file trees has been the happiest and most creative part of my professional life. Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming". Chapter 6 discusses how Leo relates to traditional literate programming. Chapter 8 contains a history of Leo and a detailed account of how I invented Leo2.</t>
-<t tx="ekr.20040414172336.2">@ignore
-
-This is what I wanted when I started this project.
-
-1. A tool that I could use successfully. I had tried flat literate programming and failed to produce a program that I could understand. The design of my own literate programs were a mystery to me. With the insight gained with two years experience with literate outlines, I believe I could now probably create flat literate outlines with some success. But how would I do that? By mentally simulating a literate outline! So although it would be possible for me to use flat literate programming tools, it would never be easy or natural.
-
-Using literate outlines instantly transformed how I program. No longer was I confused about what I had done or what remained to do. No longer did I need to remember section names. No longer did I have to search for where functions and variables were defined. March 5, 1996, the day I started using MORE as a prototype of a literate outliner, changed my programming life forever. Within an hour of writing code in MORE, I knew that literate outlines would work, and work spectacularly well.
-
-2. A way to ignore formatting. Printed listings, no matter how "beautiful", simply do not convey the structure of complex programs as well as an on-screen outline. What matters is how a program is represented on screen. I have been using Leo since early 1996. Not once have I had any inclination to look at a printed listing in order to understand my program better.
-
-3. An outliner as good as MORE. I accomplished this by borrowing a large part of MORE's screen design. Consider this the sincerest form of flattery.
-
-I did make one real change to MORE's design. MORE shows body text in multiple separate windows within the main outline pane; Leo shows body text in a single body pane. Leo's approach simplifies switching between nodes: one simply selects a new headline and the body text appears in the body pane. With MORE, one has to explicitly open the body pane for each individual headline, which can be clumsy.
-However, MORE's approach does have some advantages. First, when opening body text in MORE, the subsidiary window becomes as large as necessary to show the entire body text, up to the limit of the size of the containing window. With Leo, the body pane stays fixed unless one resizes it. This is the reason Leo has several shortcuts for resizing the body pane.
-
-MORE leaves lots of open windows around when doing a search or change command; MORE could be called a slob in this regard. However, MORE's way does have one benefit: one can see all the places where the search command found a match just be looking at all the open windows. With Leo this can not be done so directly; one must mark headlines to see where one has been. This is the main reason why Leo has a Find Next Marked Headline command. Without this command one must resort to something like expanding all headlines.
-Leo and MORE have superb outlining facilities; each provides true outline objects and a full range of outline operations. Leo attempts to fix the one clumsy feature of MORE, the need to explicitly open body text. On the whole, I believe that Leo is slightly easier to use than MORE, especially for programming.
-
-4. A self-contained programming system.  Leo's Tangle command provides basic support for literate programming.  Leo's Untangle command is a novel addition to literate programming.  The automatic tangling and untangling of @file trees is another major step forward.  Finally, Leo's many import and export commands ensure that Leo is compatible with noweb and CWEB.
-
-5. A fun tool.  In Chapter 6 I list several highbrow reasons for liking literate programming. I know somebody gets what literate programming is all about when he or she says how much fun literate programming is. Clearly, Leo has succeeded admirably in this regard. I would never again willingly program without a literate outliner.</t>
+I would never willing program in Leo again; many of Leo's users say the same.
+What makes Leo so special?  The general answer is that Leo creates a new way of programming, a new way of organizing data, and a new way of managing projects.  One can speak of good or bad style in using Leo.  That there could *be* such a thing as proper "Leonine" style shows that Leo does, in fact, create a rich new environment for design.
+</t>
 <t tx="ekr.20040414172617">@ignore
 
 Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
 
-The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
+The following people have made generous donations to the Leo project:
+Robert Low, Nic Cave-Lynch.
 
 The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
-
-The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
-
-The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
-
-Special thanks to my family. My brother, David Speed Ream, tested Leo and made many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo. That was a crucial first step.</t>
+</t>
 <t tx="ekr.20040414172617.1">@ignore
 
 All parts of Leo are distributed under the following copyright.  This is intended to be the same as the Python license, namely that Leo is absolutely free, even for commercial use, including resale.  There is no GNU-like "copyleft" restriction.  This license is compatible with the GPL.
@@ -12829,5 +12804,75 @@ Permission to use, copy, modify, and distribute this software and its documentat
 ----------------
 
 |prev| |leo| |next|</t>
+<t tx="ekr.20040416070800">More specifically, there are several reasons why Leo "works". First, and most importantly, outlines clarify and make explicit the relationships between parts of a project, regardless of whether those parts are computer programs, pages in a web site, pages in a document or tasks of a project.   Leo excels in handling complex projects: it shows you the big picture at all times, while providing unlimited places to hide details.  This aspect of Leo quickly becomes completely addicting.   
+
+Second, a single outline can contain multiple kinds of data: programs, documentation, project management tasks, test data, whatever.  This means, for example, that the relationships between a program, its documentation and its tests suites can be shown directly within the same outline.  Clones provide a way of relating and organizing all these kinds of data, and clones can create multiple views of these data within the *same* outline.
+
+Third, Leo's users can use plugins to add literally any conceivable feature to Leo.  Leo's plugins provide excellent test beds for experimentation and development.  Several significant improvements to Leo started out as started out as plugins and later migrated into Leo's core.  In fact, Leo's core is "Gui-agnostic".  The code that draws the screen is separated from the rest of Leo. The present version of Leo users Tk/Tkinter to draw the screen.  Leo presently supports batch mode operation using a "Null-gui" module in Leo's core.  A wxWindows plugin is in development, and a Swing/SWT plugin would be possible using Jython.
+
+Fourth, Python programs have full access to the outline structure and data contained within the outline itself.  This has great theoretical and practical consequences.  From a theoretical point of view, computer programs are powerful because there is no inherent distinction between code and data; a computer program is simply data that is passed to the hardware and interpreted by the central processing unit as instructions.  In other words, computers *unify* code and data.  Code *is* data, and data *is* code.
+
+Leo extends the unification of code and data by allowing outline structure to be "first-class" data and "first-class" code:
+
+- Outlines organize the code and data within them.
+- Leo's markup language (noweb) understands and uses outline structure.
+- Leo's Execute script command understands outline structure, section references and Leo's directives.
+- Scripts have full access to the outline structure of the outlines in which the are embedded.
+
+These last two points complete the unification of code, data and outline structure.
+The outline structure *is* data, scripts are data *within* this structure, and scripts may *use* this structure to access their *own* data.
+The unification of code, data and outline structure is much more than a theoretical curiosity.
+It has great practical significance.
+For example, test.leo contains the following kinds of nodes:
+
+- The @file leoTest.py node defines all of Leo's test classes used for unit testing.
+- The "Unit Tests" node contains the actual unit testing scripts.
+- The subnodes of the "Unit Tests" node contain both scripts and *data for those scripts*.
+
+The individual scripts use functions in leoGlobals.py to access the data in child nodes of the nodes that contain the scripts.  (leoGlobals.py contain several utility functions that find nodes within an outline.)  So the outline contains both the script and its data, and moreover, *scripts can access data organized by the same outline that contains the script itself.*  The possibilities are endless.  For example, some test scripts create, test and then destroy subtrees of the same outline that contains those scripts!</t>
+<t tx="ekr.20040416070800.1">Inventing and reinventing Leo has been the happiest and most creative part of my professional life.  Work on Leo accelerated significantly when a community of Leo's users became established on SourceForge.  For that I am truly grateful.  Suggestions (and plugins!) from users continue to drive Leo in excellent new directions.  Leo has come a long way since the early prototypes more than 9 years ago.  But in all that time, Leo's look and feel have remained almost completely unchanged--there has been no need to do so.
+
+Leo grew out of my attempts to understand and use Donald Knuth's CWEB system of "literate programming".  Leo greatly simplifies and extends Knuth's original idea.  Leo shows how to make literate program truly useful.  Indeed, I had great difficulty the original CWEB. The design and organization of my own literate programs were a mystery to me. I couldn't keep the parts of a literate program clear in my mind.  I easily became confused about what I had done or what remained to do.  It was too difficult to remember the names of sections or where I had defined functions and variables.
+
+I started using the MORE outlining program to organize literate programs on March 5, 1996.  I had been lead to do this by the (gradual!) realization that webs are "outlines in disguise".  Within an hour of writing code in MORE, I knew that using outlines to organize literate programs would work spectacularly well.  This day changed my programming life forever.
+
+Leo continues to evolve and grow.  Who knows what the next plugin will bring?
+
+Edward K. Ream, April, 2004</t>
+<t tx="ekr.20040416075437">The following have contributed plugins to Leo:
+Felix Breuer,
+Josef Dalcolmo,
+Timo Honkasalo,
+Andrea Galimberti,
+Frédéric Momméja
+Bernhard Mulder,
+Paul Paterson,
+Davide Salomoni,
+Ed Taekema,
+Steve Zatz.
+</t>
+<t tx="ekr.20040416080538">The following deserve special mention:
+David Brock wrote TSyntaxMemo.
+The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language.
+Joe Orr created XSLT stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm.
+Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm.
+Bernhard Mulder proposed a new way of untangling derived files.
+John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.
+Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it.
+Paul Paterson suggested the plugin architecture, suggested an approach to spell checking and has contributed many excellent plugins.
+Norman Ramsey created noweb and gave permission to quote from the noweb web documentation.
+Rich Ries has contributed a huge number of suggestions.
+Steven P. Schaefer pointed out major security problems lurking in hooks.
+Gil Shwartz helped with unicode support.
+Phil Straus has been a great friend and constant support.
+Guido van Rossum created Python, Tkinter and the Python License.
+Dave Winer created MORE.
+Dan Winkler helped support Leo on the Mac.
+
+Special thanks to my family.
+My brother, David Speed Ream, tested Leo and made many useful suggestions.
+Rebecca, James and Linda make it all worthwhile.
+It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo.
+That was a crucial first step.</t>
 </tnodes>
 </leo_file>
