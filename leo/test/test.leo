@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2288" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2291" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="63" left="180" height="784" width="842"/>
+	<global_window_position top="65" left="384" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,15 +20,229 @@
 <v t="edream.110203161858.3"><vh>Quote from Alex Martelli</vh></v>
 <v t="edream.110203161858.4"><vh>How to get screenshots</vh></v>
 <v t="edream.110203161858.103"><vh>Python related...</vh>
-<v t="edream.110203161858.104"><vh>Assignment tests</vh></v>
 <v t="edream.110203161858.105"><vh>alloc tests</vh></v>
-<v t="edream.110203161858.106"><vh>Use xml.sax</vh></v>
+<v t="edream.110203161858.104"><vh>Assignment tests</vh></v>
 <v t="edream.110203161858.107"><vh>New import</vh></v>
 <v t="edream.110203161858.108"><vh>Singleton sequences</vh></v>
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
+<v t="edream.110203161858.106"><vh>Use xml.sax</vh></v>
+<v t="edream.120803091715"><vh>using pdb</vh></v>
 </v>
 </v>
 <v t="edream.110203161858.6"><vh>Tests...</vh>
+<v t="edream.110203161858.7"><vh>4.0 tests</vh>
+<v t="edream.110203161858.8"><vh>unicode test for find all</vh>
+<v t="edream.110203161858.9"><vh>a</vh></v>
+<v t="edream.110203161858.10"><vh>Ý</vh></v>
+</v>
+<v t="edream.110203161858.11"><vh>Orphan test</vh>
+<v t="edream.110203161858.12" tnodeList="edream.110203161858.12"><vh>@file orphanTest.txt</vh>
+<v t="edream.110203161858.13"><vh>Orphan node</vh></v>
+</v>
+</v>
+<v t="edream.110203161858.14"><vh>Test sentinelName</vh></v>
+<v t="edream.110203161858.15"><vh>Test of report bad chars</vh></v>
+<v t="edream.110203161858.16"><vh>Test of indentation</vh>
+<v t="edream.110203161858.17" tnodeList="edream.110203161858.17,edream.110203161858.18,edream.110203161858.19,edream.110203161858.21,edream.110203161858.22,edream.110203161858.24,edream.110203161858.18"><vh>@file c:\prog\test\gnxText.txt</vh>
+<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
+<v t="edream.110203161858.19"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
+<v t="edream.110203161858.20"><vh>Organizer node</vh>
+<v t="edream.110203161858.21"><vh>node 1</vh>
+<v t="edream.110203161858.22"><vh>&lt;&lt; indented ref &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.23"><vh>empty node</vh></v>
+</v>
+<v t="edream.110203161858.24"><vh>Node 2</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.121403172715"><vh>4.1 tests</vh>
+<v t="edream.110203161858.2105"><vh>4.1 tests beta 1 &amp; 2 tests</vh>
+<v t="edream.110203161858.2106"><vh>Extract tests</vh></v>
+<v t="edream.110403110104"><vh>Extract tests2</vh></v>
+<v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
+<v t="edream.110203161858.2108" tnodeList="edream.110203161858.2108"><vh>@file c:\prog\test\UnicodeFileNames\Chineses\test.txt</vh></v>
+<v t="edream.110203161858.2109"><vh>@last ?&gt; problems</vh>
+<v t="edream.110203161858.2110" tnodeList="edream.110203161858.2110"><vh>@file c:\prog\test\atLastPHPTest.txt</vh></v>
+</v>
+<v t="edream.110203161858.2111"><vh>Dialog tests</vh>
+<v t="edream.110203161858.2112"><vh>Test of app.gui.runAboutLeoDialog</vh></v>
+<v t="edream.110203161858.2113"><vh>Test of app.gui.runAskOkDialog</vh></v>
+<v t="edream.110203161858.2114"><vh>Test of app.gui.runAskOkCancelNumberDialog</vh></v>
+<v t="edream.110203161858.2115"><vh>Test of app.gui.runAskYesNoDialog</vh></v>
+<v t="edream.110203161858.2116"><vh>Test of app.gui.runAskYesNoCancelDialog</vh></v>
+</v>
+<v t="edream.110503093114"><vh>Binary file test</vh>
+<v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
+</v>
+<v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
+<v t="edream.110203161858.2118" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
+</v>
+</v>
+<v t="edream.111803061611"><vh>4.1 beta 3 tests</vh>
+<v t="edream.110903121744"><vh>Latex colorizer</vh></v>
+<v t="edream.111103091713"><vh>Test of match brackets</vh></v>
+<v t="edream.111303082913"><vh>Redirect script output</vh></v>
+</v>
+<v t="edream.112003103554"><vh>4.1 beta 4 tests</vh>
+<v t="edream.111903143504"><vh>Handle Leo constructs when executing scripts</vh>
+<v t="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.111903143504.1"><vh>more</vh></v>
+</v>
+<v t="edream.111803110909"><vh>Two refs on the same line</vh>
+<v t="edream.111803110909.1" a="M" tnodeList="edream.111803110909.1,edream.111803110909.2,edream.111803110909.3,edream.111803110909.2,edream.111803110909.3"><vh>@file c:\prog\test\ref.txt</vh>
+<v t="edream.111803110909.2"><vh>&lt;&lt; rhs &gt;&gt;</vh></v>
+<v t="edream.111803110909.3"><vh>&lt;&lt; rhe &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.112003090130"><vh>Script crash</vh>
+<v t="edream.112003090753"><vh>test</vh></v>
+</v>
+<v t="edream.112003094004" a="M"><vh>Another test script</vh>
+<v t="edream.112003094004.1"><vh>&lt;&lt; 2 &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
+<v t="edream.110203161858.2091"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.110203161858.2092"><vh>others</vh></v>
+</v>
+</v>
+<v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
+<v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
+<v t="edream.112303110337.1"><vh>a</vh></v>
+<v t="edream.112303110337.2"><vh>Ba</vh></v>
+<v t="edream.112303110337.3"><vh>Ca</vh></v>
+</v>
+<v t="edream.120203151550"><vh>@url file:../doc/LeoDocs.leo</vh></v>
+<v t="edream.120303093019" tnodeList="edream.120303093019,edream.120303093527,edream.120303093527.1"><vh>@file c:\prog\test\atFirstLastTest.txt</vh>
+<v t="edream.120303093527"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.120303093527.1"><vh>others</vh></v>
+</v>
+<v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
+</v>
+<v t="edream.120603125057"><vh>4.1 rc1 tests</vh>
+<v t="edream.120603112201"><vh>clone-drag bug</vh>
+<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.3"><vh>f</vh></v>
+<v t="edream.120603112201.2"><vh>b</vh></v>
+<v t="edream.120603113726"><vh>c</vh></v>
+</v>
+<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.3"><vh>f</vh></v>
+<v t="edream.120603112201.2"><vh>b</vh></v>
+<v t="edream.120603113726"><vh>c</vh></v>
+</v>
+</v>
+<v t="edream.120603125159"><vh>ItemTemplate</vh>
+<v t="edream.120603125159.1"><vh>&lt;&lt; html_body &gt;&gt;</vh>
+<v t="edream.120603125159.2"><vh>&lt;&lt; head  &gt;&gt;</vh></v>
+<v t="edream.120603125159.3"><vh>&lt;&lt; body &gt;&gt;</vh>
+<v t="edream.120603125159.4"><vh>&lt;&lt; form &gt;&gt;</vh>
+<v t="edream.120603125159.5"><vh>&lt;&lt; xsl_var_initialisation &gt;&gt;</vh></v>
+<v t="edream.120603125159.6"><vh>&lt;&lt; status &gt;&gt;</vh></v>
+<v t="edream.120603125159.7"><vh>&lt;&lt; tabs &gt;&gt;</vh></v>
+<v t="edream.120603125159.8"><vh>&lt;&lt; policy_selector &gt;&gt;</vh>
+<v t="edream.120603125159.9"><vh>&lt;&lt; policy_category &gt;&gt;</vh></v>
+<v t="edream.120603125159.10"><vh>&lt;&lt; policy &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.11" a="M"><vh>&lt;&lt; table_container &gt;&gt;</vh>
+<v t="edream.120603125159.12"><vh>&lt;&lt; dynamic_zone &gt;&gt;</vh>
+<v t="edream.120603125159.13" a="M"><vh>&lt;&lt; date &gt;&gt;</vh>
+<v t="edream.120603125159.14"><vh>&lt;&lt; date_error &gt;&gt;</vh></v>
+<v t="edream.120603125159.15"><vh>&lt;&lt; from_date &gt;&gt;</vh></v>
+<v t="edream.120603125159.16"><vh>&lt;&lt; to_date &gt;&gt;</vh></v>
+<v t="edream.120603125159.17"><vh>&lt;&lt; taxpoint &gt;&gt;</vh></v>
+<v t="edream.120603125159.18"><vh>&lt;&lt; calendar_jscript &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.19"><vh>&lt;&lt; quantity &gt;&gt;</vh>
+<v t="edream.120603125159.20"><vh>&lt;&lt; item_quantity &gt;&gt;</vh></v>
+<v t="edream.120603125159.21"><vh>&lt;&lt; person_quantity &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.22"><vh>&lt;&lt; employee &gt;&gt;</vh>
+<v t="edream.120603125159.23"><vh>&lt;&lt; emp_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.24"><vh>&lt;&lt; emp_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.25"><vh>&lt;&lt; emp_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.26"><vh>&lt;&lt; nonemployee &gt;&gt;</vh>
+<v t="edream.120603125159.27"><vh>&lt;&lt; nonemp_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.28"><vh>&lt;&lt; nonemp_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.29"><vh>&lt;&lt; nonemp_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.30"><vh>&lt;&lt; allowance &gt;&gt;</vh></v>
+<v t="edream.120603125159.31"><vh>&lt;&lt; calc_explanation &gt;&gt;</vh></v>
+<v t="edream.120603125159.32"><vh>&lt;&lt; home_value &gt;&gt;</vh>
+<v t="edream.120603125159.33"><vh>&lt;&lt; hv_currency_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.34"><vh>&lt;&lt; hv_currency_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.35"><vh>&lt;&lt; hv_value_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.36"><vh>&lt;&lt; hv_value &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.37"><vh>&lt;&lt; foreign_value &gt;&gt;</vh>
+<v t="edream.120603125159.38"><vh>&lt;&lt; fv_error &gt;&gt;</vh></v>
+<v t="edream.120603125159.39"><vh>&lt;&lt; fv_currency_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.40"><vh>&lt;&lt; fv_currency_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.41"><vh>&lt;&lt; fv_exchange_rate_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.42"><vh>&lt;&lt; fv_exchange_rate_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.43"><vh>&lt;&lt; fv_value_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.44"><vh>&lt;&lt; fv_value &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.45"><vh>&lt;&lt; vat &gt;&gt;</vh>
+<v t="edream.120603125159.46"><vh>&lt;&lt; vat_flag &gt;&gt;</vh></v>
+<v t="edream.120603125159.47"><vh>&lt;&lt; vat_rate &gt;&gt;</vh></v>
+<v t="edream.120603125159.48"><vh>&lt;&lt; vat_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.49"><vh>&lt;&lt; vat_reason&gt;&gt;</vh></v>
+<v t="edream.120603125159.50"><vh>&lt;&lt; vat_comment &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.51"><vh>&lt;&lt; comment &gt;&gt;</vh></v>
+<v t="edream.120603125159.52"><vh>&lt;&lt; supplier &gt;&gt;</vh>
+<v t="edream.120603125159.53"><vh>&lt;&lt; preferred_supplier &gt;&gt;</vh></v>
+<v t="edream.120603125159.54"><vh>&lt;&lt; other_supplier &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.55"><vh>&lt;&lt; user_defined &gt;&gt;</vh>
+<v t="edream.120603125159.56"><vh>&lt;&lt; udf1 &gt;&gt;</vh></v>
+<v t="edream.120603125159.57"><vh>&lt;&lt; udf2 &gt;&gt;</vh></v>
+<v t="edream.120603125159.58"><vh>&lt;&lt; udf3 &gt;&gt;</vh></v>
+<v t="edream.120603125159.59"><vh>&lt;&lt; udf4 &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.60"><vh>&lt;&lt; charge &gt;&gt;</vh>
+<v t="edream.120603125159.61"><vh>&lt;&lt; charge_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.62"><vh>&lt;&lt; charge_unallocated_row &gt;&gt;</vh></v>
+<v t="edream.120603125159.63"><vh>&lt;&lt; charge_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.64"><vh>&lt;&lt; charge_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.65"><vh>&lt;&lt; buttons &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="edream.120703182038"><vh>Test of @others inside doc part</vh>
+<v t="edream.120703182038.1" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
+</v>
+<v t="edream.120803164745"><vh>clone copy/paste test</vh>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+<v t="edream.120803164745.3"><vh>copy</vh>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+</v>
+<v t="edream.120803164752"><vh>paste</vh></v>
+</v>
+<v t="edream.120903112952" tnodeList="edream.120903112952,edream.120903113034"><vh>@file-nosent c:\prog\test\atIgnoreInAtNosentTest.txt</vh>
+<v t="edream.120903113034"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="edream.120903112952.1"><vh>orphan node</vh></v>
+</v>
+<v t="edream.120903113034.1"><vh>@ignore</vh></v>
+</v>
+<v t="edream.121303091808"><vh>Batch test</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+</v>
+</v>
+</v>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
@@ -2567,32 +2781,6 @@
 </v>
 </v>
 <v t="edream.110203161858.2101"><vh>Test of app.forceShutdown</vh></v>
-<v t="edream.110203161858.7"><vh>~4.0 tests</vh>
-<v t="edream.110203161858.8"><vh>unicode test for find all</vh>
-<v t="edream.110203161858.9"><vh>a</vh></v>
-<v t="edream.110203161858.10"><vh>Ý</vh></v>
-</v>
-<v t="edream.110203161858.11"><vh>Orphan test</vh>
-<v t="edream.110203161858.12" tnodeList="edream.110203161858.12"><vh>@file orphanTest.txt</vh>
-<v t="edream.110203161858.13"><vh>Orphan node</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.14"><vh>Test sentinelName</vh></v>
-<v t="edream.110203161858.15"><vh>Test of report bad chars</vh></v>
-<v t="edream.110203161858.16"><vh>Test of indentation</vh>
-<v t="edream.110203161858.17" tnodeList="edream.110203161858.17,edream.110203161858.18,edream.110203161858.19,edream.110203161858.21,edream.110203161858.22,edream.110203161858.24,edream.110203161858.18"><vh>@file c:\prog\test\gnxText.txt</vh>
-<v t="edream.110203161858.18" a=""><vh>&lt;&lt; ref &gt;&gt; (cloned)</vh></v>
-<v t="edream.110203161858.19"><vh>&lt;&lt; ref2 &gt;&gt;</vh></v>
-<v t="edream.110203161858.20"><vh>Organizer node</vh>
-<v t="edream.110203161858.21"><vh>node 1</vh>
-<v t="edream.110203161858.22"><vh>&lt;&lt; indented ref &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.23"><vh>empty node</vh></v>
-</v>
-<v t="edream.110203161858.24"><vh>Node 2</vh></v>
-</v>
-</v>
-</v>
 </v>
 <v t="edream.110203161858.2102"><vh>Scripts...</vh>
 <v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
@@ -2600,200 +2788,7 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.110203161858.2105"><vh>4.1 tests</vh>
-<v t="edream.110203161858.2106"><vh>Extract tests</vh></v>
-<v t="edream.110403110104"><vh>Extract tests2</vh></v>
-<v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
-<v t="edream.110203161858.2108" tnodeList="edream.110203161858.2108"><vh>@file c:\prog\test\UnicodeFileNames\Chineses\test.txt</vh></v>
-<v t="edream.110203161858.2109"><vh>@last ?&gt; problems</vh>
-<v t="edream.110203161858.2110" tnodeList="edream.110203161858.2110"><vh>@file c:\prog\test\atLastPHPTest.txt</vh></v>
-</v>
-<v t="edream.110203161858.2111"><vh>Dialog tests</vh>
-<v t="edream.110203161858.2112"><vh>Test of app.gui.runAboutLeoDialog</vh></v>
-<v t="edream.110203161858.2113"><vh>Test of app.gui.runAskOkDialog</vh></v>
-<v t="edream.110203161858.2114"><vh>Test of app.gui.runAskOkCancelNumberDialog</vh></v>
-<v t="edream.110203161858.2115"><vh>Test of app.gui.runAskYesNoDialog</vh></v>
-<v t="edream.110203161858.2116"><vh>Test of app.gui.runAskYesNoCancelDialog</vh></v>
-</v>
-<v t="edream.110503093114"><vh>Binary file test</vh>
-<v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
-</v>
-<v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
-<v t="edream.110203161858.2118" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
-</v>
-</v>
-<v t="edream.111803061611"><vh>4.1 beta 3 tests</vh>
-<v t="edream.110903121744"><vh>Latex colorizer</vh></v>
-<v t="edream.111103091713"><vh>Test of match brackets</vh></v>
-<v t="edream.111303082913"><vh>Redirect script output</vh></v>
-</v>
-<v t="edream.112003103554"><vh>4.1 beta 4 tests</vh>
-<v t="edream.111903143504"><vh>Handle Leo constructs when executing scripts</vh>
-<v t="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-<v t="edream.111903143504.1"><vh>more</vh></v>
-</v>
-<v t="edream.111803110909"><vh>Two refs on the same line</vh>
-<v t="edream.111803110909.1" a="M" tnodeList="edream.111803110909.1,edream.111803110909.2,edream.111803110909.3,edream.111803110909.2,edream.111803110909.3"><vh>@file c:\prog\test\ref.txt</vh>
-<v t="edream.111803110909.2"><vh>&lt;&lt; rhs &gt;&gt;</vh></v>
-<v t="edream.111803110909.3"><vh>&lt;&lt; rhe &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.112003090130"><vh>Script crash</vh>
-<v t="edream.112003090753"><vh>test</vh></v>
-</v>
-<v t="edream.112003094004" a="M"><vh>Another test script</vh>
-<v t="edream.112003094004.1"><vh>&lt;&lt; 2 &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
-<v t="edream.110203161858.2091"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-<v t="edream.110203161858.2092"><vh>others</vh></v>
-</v>
-</v>
-<v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
-<v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
-<v t="edream.112303110337.1"><vh>a</vh></v>
-<v t="edream.112303110337.2"><vh>Ba</vh></v>
-<v t="edream.112303110337.3"><vh>Ca</vh></v>
-</v>
-<v t="edream.120203151550"><vh>@url file:../doc/LeoDocs.leo</vh></v>
-<v t="edream.120303093019" tnodeList="edream.120303093019,edream.120303093527,edream.120303093527.1"><vh>@file c:\prog\test\atFirstLastTest.txt</vh>
-<v t="edream.120303093527"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-<v t="edream.120303093527.1"><vh>others</vh></v>
-</v>
-<v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
-</v>
-<v t="edream.120603125057"><vh>4.1 beta 6 tests</vh>
-<v t="edream.120603112201"><vh>clone-drag bug</vh>
-<v t="edream.120603112201.1" a=""><vh>a</vh>
-<v t="edream.120603112201.3"><vh>f</vh></v>
-<v t="edream.120603112201.2"><vh>b</vh></v>
-<v t="edream.120603113726"><vh>c</vh></v>
-</v>
-<v t="edream.120603112201.1" a=""><vh>a</vh>
-<v t="edream.120603112201.3"><vh>f</vh></v>
-<v t="edream.120603112201.2"><vh>b</vh></v>
-<v t="edream.120603113726"><vh>c</vh></v>
-</v>
-</v>
-<v t="edream.120603125159"><vh>ItemTemplate</vh>
-<v t="edream.120603125159.1"><vh>&lt;&lt; html_body &gt;&gt;</vh>
-<v t="edream.120603125159.2"><vh>&lt;&lt; head  &gt;&gt;</vh></v>
-<v t="edream.120603125159.3"><vh>&lt;&lt; body &gt;&gt;</vh>
-<v t="edream.120603125159.4"><vh>&lt;&lt; form &gt;&gt;</vh>
-<v t="edream.120603125159.5"><vh>&lt;&lt; xsl_var_initialisation &gt;&gt;</vh></v>
-<v t="edream.120603125159.6"><vh>&lt;&lt; status &gt;&gt;</vh></v>
-<v t="edream.120603125159.7"><vh>&lt;&lt; tabs &gt;&gt;</vh></v>
-<v t="edream.120603125159.8"><vh>&lt;&lt; policy_selector &gt;&gt;</vh>
-<v t="edream.120603125159.9"><vh>&lt;&lt; policy_category &gt;&gt;</vh></v>
-<v t="edream.120603125159.10"><vh>&lt;&lt; policy &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.11" a="M"><vh>&lt;&lt; table_container &gt;&gt;</vh>
-<v t="edream.120603125159.12"><vh>&lt;&lt; dynamic_zone &gt;&gt;</vh>
-<v t="edream.120603125159.13" a="M"><vh>&lt;&lt; date &gt;&gt;</vh>
-<v t="edream.120603125159.14"><vh>&lt;&lt; date_error &gt;&gt;</vh></v>
-<v t="edream.120603125159.15"><vh>&lt;&lt; from_date &gt;&gt;</vh></v>
-<v t="edream.120603125159.16"><vh>&lt;&lt; to_date &gt;&gt;</vh></v>
-<v t="edream.120603125159.17"><vh>&lt;&lt; taxpoint &gt;&gt;</vh></v>
-<v t="edream.120603125159.18"><vh>&lt;&lt; calendar_jscript &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.19"><vh>&lt;&lt; quantity &gt;&gt;</vh>
-<v t="edream.120603125159.20"><vh>&lt;&lt; item_quantity &gt;&gt;</vh></v>
-<v t="edream.120603125159.21"><vh>&lt;&lt; person_quantity &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.22"><vh>&lt;&lt; employee &gt;&gt;</vh>
-<v t="edream.120603125159.23"><vh>&lt;&lt; emp_titles &gt;&gt;</vh></v>
-<v t="edream.120603125159.24"><vh>&lt;&lt; emp_records &gt;&gt;</vh></v>
-<v t="edream.120603125159.25"><vh>&lt;&lt; emp_add_row &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.26"><vh>&lt;&lt; nonemployee &gt;&gt;</vh>
-<v t="edream.120603125159.27"><vh>&lt;&lt; nonemp_titles &gt;&gt;</vh></v>
-<v t="edream.120603125159.28"><vh>&lt;&lt; nonemp_records &gt;&gt;</vh></v>
-<v t="edream.120603125159.29"><vh>&lt;&lt; nonemp_add_row &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.30"><vh>&lt;&lt; allowance &gt;&gt;</vh></v>
-<v t="edream.120603125159.31"><vh>&lt;&lt; calc_explanation &gt;&gt;</vh></v>
-<v t="edream.120603125159.32"><vh>&lt;&lt; home_value &gt;&gt;</vh>
-<v t="edream.120603125159.33"><vh>&lt;&lt; hv_currency_label &gt;&gt;</vh></v>
-<v t="edream.120603125159.34"><vh>&lt;&lt; hv_currency_value &gt;&gt;</vh></v>
-<v t="edream.120603125159.35"><vh>&lt;&lt; hv_value_label &gt;&gt;</vh></v>
-<v t="edream.120603125159.36"><vh>&lt;&lt; hv_value &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.37"><vh>&lt;&lt; foreign_value &gt;&gt;</vh>
-<v t="edream.120603125159.38"><vh>&lt;&lt; fv_error &gt;&gt;</vh></v>
-<v t="edream.120603125159.39"><vh>&lt;&lt; fv_currency_label &gt;&gt;</vh></v>
-<v t="edream.120603125159.40"><vh>&lt;&lt; fv_currency_value &gt;&gt;</vh></v>
-<v t="edream.120603125159.41"><vh>&lt;&lt; fv_exchange_rate_label &gt;&gt;</vh></v>
-<v t="edream.120603125159.42"><vh>&lt;&lt; fv_exchange_rate_value &gt;&gt;</vh></v>
-<v t="edream.120603125159.43"><vh>&lt;&lt; fv_value_label &gt;&gt;</vh></v>
-<v t="edream.120603125159.44"><vh>&lt;&lt; fv_value &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.45"><vh>&lt;&lt; vat &gt;&gt;</vh>
-<v t="edream.120603125159.46"><vh>&lt;&lt; vat_flag &gt;&gt;</vh></v>
-<v t="edream.120603125159.47"><vh>&lt;&lt; vat_rate &gt;&gt;</vh></v>
-<v t="edream.120603125159.48"><vh>&lt;&lt; vat_value &gt;&gt;</vh></v>
-<v t="edream.120603125159.49"><vh>&lt;&lt; vat_reason&gt;&gt;</vh></v>
-<v t="edream.120603125159.50"><vh>&lt;&lt; vat_comment &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.51"><vh>&lt;&lt; comment &gt;&gt;</vh></v>
-<v t="edream.120603125159.52"><vh>&lt;&lt; supplier &gt;&gt;</vh>
-<v t="edream.120603125159.53"><vh>&lt;&lt; preferred_supplier &gt;&gt;</vh></v>
-<v t="edream.120603125159.54"><vh>&lt;&lt; other_supplier &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.55"><vh>&lt;&lt; user_defined &gt;&gt;</vh>
-<v t="edream.120603125159.56"><vh>&lt;&lt; udf1 &gt;&gt;</vh></v>
-<v t="edream.120603125159.57"><vh>&lt;&lt; udf2 &gt;&gt;</vh></v>
-<v t="edream.120603125159.58"><vh>&lt;&lt; udf3 &gt;&gt;</vh></v>
-<v t="edream.120603125159.59"><vh>&lt;&lt; udf4 &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.60"><vh>&lt;&lt; charge &gt;&gt;</vh>
-<v t="edream.120603125159.61"><vh>&lt;&lt; charge_titles &gt;&gt;</vh></v>
-<v t="edream.120603125159.62"><vh>&lt;&lt; charge_unallocated_row &gt;&gt;</vh></v>
-<v t="edream.120603125159.63"><vh>&lt;&lt; charge_records &gt;&gt;</vh></v>
-<v t="edream.120603125159.64"><vh>&lt;&lt; charge_add_row &gt;&gt;</vh></v>
-</v>
-<v t="edream.120603125159.65"><vh>&lt;&lt; buttons &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="edream.120703182038"><vh>Test of @others inside doc part</vh>
-<v t="edream.120703182038.1" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
-</v>
-<v t="edream.120803164745"><vh>clone copy/paste test</vh>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
-<v t="edream.120803164745.2"><vh>b</vh></v>
-</v>
-<v t="edream.120803164745.3"><vh>copy</vh>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
-<v t="edream.120803164745.2"><vh>b</vh></v>
-</v>
-<v t="edream.120803164745.1" a=""><vh>a</vh>
-<v t="edream.120803164745.2"><vh>b</vh></v>
-</v>
-</v>
-<v t="edream.120803164752"><vh>paste</vh></v>
-</v>
-<v t="edream.120903112952" tnodeList="edream.120903112952,edream.120903113034"><vh>@file-nosent c:\prog\test\atIgnoreInAtNosentTest.txt</vh>
-<v t="edream.120903113034"><vh>&lt;&lt; ref &gt;&gt;</vh>
-<v t="edream.120903112952.1"><vh>orphan node</vh></v>
-</v>
-<v t="edream.120903113034.1"><vh>@ignore</vh></v>
-</v>
-</v>
-<v t="edream.120803091715"><vh>using pdb</vh></v>
-<v t="edream.121303072722"><vh>tnode cleaning</vh></v>
-<v t="edream.121303091808"><vh>Batch test</vh>
-<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
-</v>
 <v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
-<v t="edream.110203161858.2120"><vh>Bug reports</vh>
-<v t="edream.110203161858.2121"><vh>Colorizer</vh>
-<v t="edream.110203161858.2122"><vh> Report</vh></v>
-</v>
-</v>
-<v t="edream.110203161858.2123" a="E"><vh>Tests and data</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -2857,7 +2852,7 @@
 <v t="edream.121103175314"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="edream.121103175121"><vh>importTests</vh>
+<v t="edream.121103175121" a="EV"><vh>importTests</vh>
 <v t="edream.121103114537.1"><vh>importAtRoot</vh>
 <v t="edream.121103114537.2"><vh>dialog</vh></v>
 </v>
@@ -2867,7 +2862,7 @@
 <v t="edream.121103115910.7"><vh>importNowebFiles</vh>
 <v t="edream.121103121417"><vh>dialog</vh></v>
 </v>
-<v t="edream.121103115910.6"><vh>importFlattenedOutline</vh>
+<v t="edream.121103115910.6" a="E"><vh>importFlattenedOutline</vh>
 <v t="edream.121103121417.1"><vh>dialog</vh></v>
 </v>
 <v t="edream.121103115910.5"><vh>importCWEBFiles</vh>
@@ -2896,13 +2891,12 @@
 <v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
 <v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
 </v>
-<v t="edream.121403092706" a="V"><vh>pluginsTests</vh></v>
+<v t="edream.121403092706"><vh>pluginsTests</vh></v>
 <v t="edream.110903064653"><vh>testLeoFiles</vh>
 <v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
 <v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
 <v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
-</v>
 </v>
 <v t="edream.110203161858.2153" a="E"><vh>Run all tests</vh></v>
 </v>
@@ -33699,38 +33693,7 @@ if 1:
 (( Some code ))
 @ -------------------------------------------------------------&gt; Input
 @c</t>
-<t tx="edream.110203161858.2119">@ To do:
-	
-- Unicode tests.
-- File tests.
-- Test that most (all?) commander methods can be run without crashing.</t>
-<t tx="edream.110203161858.2120"></t>
-<t tx="edream.110203161858.2121"></t>
-<t tx="edream.110203161858.2122">Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1745015
-By: jmgilligan
-
-For the most part, I can get cweb mode to color both the tex and the c code
-appropriately by using @language.
-
-I have run into a small problem, though:
-
-@language latex
-blah blah blah
-
-works fine, but
-
-@language latex
-@!@^memory allocation@&gt;
-blah blah blah
-
-does not. This causes leo to color all subsequent latex text as leo doc parts.
-
-The control sequence @! means underline the following term in the index. @^foo
-bar@&gt; means put the term "foo bar" in the index with a reference to the current
-location.
-</t>
-<t tx="edream.110203161858.2123"></t>
+<t tx="edream.110203161858.2119"></t>
 <t tx="edream.110203161858.2124"></t>
 <t tx="edream.110203161858.2125">@color
 
@@ -35783,7 +35746,7 @@ runner = unittest.TextTestRunner()
 runner.run(suite)</t>
 <t tx="edream.121103114537.1"></t>
 <t tx="edream.121103114537.2">openFileDialog
-c:\\prog\\test\\leoAtFile.py</t>
+c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
 <t tx="edream.121103115910.1"></t>
 <t tx="edream.121103115910.2"></t>
 <t tx="edream.121103115910.4"></t>
@@ -35799,14 +35762,16 @@ c:\\prog\\test\\unittest\\output\\exportHeadlines.txt</t>
 <t tx="edream.121103121130">saveFileDialog
 c:\\prog\\test\\unittest\\output\\flattenOutline.txt</t>
 <t tx="edream.121103121159">openFileDialog
-c:\\prog\\test\\leoAtFile.py</t>
+c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
 <t tx="edream.121103121417">openFileDialog
-c:\\prog\\test\\test.nw</t>
+c:\\prog\\test\\unittest\\input\\noweave.nw.txt</t>
 <t tx="edream.121103121417.1">openFileDialog
-c:\\prog\\test\\flat.py</t>
+c:\\prog\\test\\unittest\\input\\flat.txt</t>
 <t tx="edream.121103121417.2">openFileDialog
-c:\\prog\\test\\test.cweb</t>
-<t tx="edream.121103175121">import unittest
+c:\\prog\\test\\unittest\\input\\cweave.w</t>
+<t tx="edream.121103175121"># To do: at present this creates a copy of this node as the next sib of tempNode!
+
+import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
@@ -35821,7 +35786,6 @@ c:\\prog\\test\\unittest\\input\\leoAtFile.py</t>
 c:\\prog\\test\\unittest\\output\\outlineToCweb.txt</t>
 <t tx="edream.121103180347">saveFileDialog
 c:\\prog\\test\\unittest\\output\\outlineToNoweb.txt</t>
-<t tx="edream.121303072722">print "hello"</t>
 <t tx="edream.121303091808">import os
 
 s = r"c:\python23\python c:\prog\leoCVS\leo\src\leo.py -script c:\prog\leoCVS\leo\test\batchScript.py"
@@ -35846,5 +35810,6 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 suite = leoTest.makePluginsSuite(verbose=True)
 runner = unittest.TextTestRunner()
 runner.run(suite)</t>
+<t tx="edream.121403172715">@ignore</t>
 </tnodes>
 </leo_file>

@@ -398,9 +398,9 @@ class baseAtFile:
 		#@nl
 		if not at.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.
+			trace()
 			at.error("No absolute directory specified anywhere.")
 			at.default_directory = ""
-	#@nonl
 	#@-node:top_df.scanDefaultDirectory
 	#@+node:top_df.scanHeader
 	def scanHeader(self,file,fileName):
@@ -2005,7 +2005,7 @@ class baseOldDerivedFile:
 	#@-at
 	#@@c
 	
-	def scanAllDirectives(self,v):
+	def scanAllDirectives(self,v,scripting=false):
 		
 		"""Scan vnode v and v's ancestors looking for directives,
 		setting corresponding atFile ivars.
@@ -2188,7 +2188,7 @@ class baseOldDerivedFile:
 						else: # 9/25/02
 							self.default_directory = makeAllNonExistentDirectories(dir)
 		
-		if not self.default_directory:
+		if not self.default_directory and not scripting:
 			# This should never happen: c.openDirectory should be a good last resort.
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
@@ -4371,8 +4371,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nonl
 			#@-node:<< put all @last lines in root >> (4.x)
 			#@nl
-			
-			
+			#@nonl
 			#@-node:<< write then entire @file tree >> (4.x)
 			#@nl
 			if scriptFile != None:

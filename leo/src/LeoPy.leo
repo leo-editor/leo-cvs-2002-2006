@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4003" clone_windows="0"/>
-<globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="34" left="375" height="870" width="818"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4006" clone_windows="0"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="43" left="337" height="870" width="818"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,14 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.121503100333"><vh>12/15</vh>
+<v t="edream.121503182208"><vh>Changed format of timestamps</vh></v>
+<v t="edream.121503192250"><vh>Changed *.* to * in dialogs</vh></v>
+<v t="edream.121503192250.1"><vh>Released 4.1 rc1</vh></v>
+<v t="edream.121503102940"><vh>All unit tests now pass (import tests leave stuff behind)</vh></v>
+<v t="edream.121503100333.1"><vh>Don't warn about missing path when writing scripts</vh></v>
+<v t="edream.121503100407"><vh>Set default font size to None in leoConfig.txt.</vh></v>
+</v>
 <v t="edream.121303061952"><vh>12/13</vh>
 <v t="edream.121303193923"><vh>Completed move code in leoTest.py</vh></v>
 <v t="edream.121303093557"><vh>Moved encoding messages so they don't appear in batch mode</vh></v>
@@ -3914,10 +3922,30 @@
 <v t="edream.110203160744.2123"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.121503092638"><vh>(Last-minute changes)</vh>
+<v t="edream.121503092638.3"><vh>(no a problem?) Problem with font panel</vh></v>
+<v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
+<v t="edream.110203160744.2729" a=""><vh>scanAllDirectives</vh>
+<v t="edream.110203160744.2730"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
+<v t="edream.110203160744.2371"><vh>&lt;&lt; Set path from @file node &gt;&gt; in scanDirectory in leoGlobals.py</vh></v>
+<v t="edream.110203160744.2731"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
+<v t="edream.110203160744.2732"><vh>&lt;&lt; Test for @encoding &gt;&gt;</vh></v>
+<v t="edream.110203160744.2733"><vh>&lt;&lt; Test for @header and @noheader &gt;&gt;</vh></v>
+<v t="edream.110203160744.2734"><vh>&lt;&lt; Test for @lineending &gt;&gt;</vh></v>
+<v t="edream.110203160744.2735"><vh>&lt;&lt; Test for @path &gt;&gt;</vh>
+<v t="edream.110203160744.2736"><vh>&lt;&lt; compute relative path from s[k:] &gt;&gt;</vh></v>
+<v t="edream.110203160744.2737"><vh>&lt;&lt; handle absolute path &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2738"><vh>&lt;&lt; Test for @pagewidth &gt;&gt;</vh></v>
+<v t="edream.110203160744.2739"><vh>&lt;&lt; Test for @tabwidth &gt;&gt;</vh></v>
+<v t="edream.110203160744.2740"><vh>&lt;&lt; Set current directory &gt;&gt;</vh></v>
+<v t="edream.110203160744.2741"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+</v>
+</v>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4321,7 +4349,7 @@
 <v t="edream.110203160744.2726"><vh>directiveKind</vh></v>
 <v t="edream.110203160744.2727"><vh>error</vh></v>
 <v t="edream.110203160744.2728"><vh>readError</vh></v>
-<v t="edream.110203160744.2729"><vh>scanAllDirectives</vh>
+<v t="edream.110203160744.2729" a=""><vh>scanAllDirectives</vh>
 <v t="edream.110203160744.2730"><vh>&lt;&lt; Set ivars &gt;&gt;</vh></v>
 <v t="edream.110203160744.2371"><vh>&lt;&lt; Set path from @file node &gt;&gt; in scanDirectory in leoGlobals.py</vh></v>
 <v t="edream.110203160744.2731"><vh>&lt;&lt; Test for @comment and @language &gt;&gt;</vh></v>
@@ -4978,7 +5006,7 @@
 </v>
 </v>
 <v t="edream.110203160744.2947" tnodeList="edream.110203160744.2947,edream.110203160744.2948,edream.110203160744.2373,edream.110203160744.2374,edream.110203160744.2375,edream.110203160744.2411,edream.110203160744.2950,edream.110203160744.2951,edream.110203160744.2952,edream.110203160744.2953,edream.110203160744.2954,edream.110203160744.2955,edream.110203160744.2956,edream.110203160744.1837,edream.110203160744.2957,edream.110203160744.1815,edream.110203160744.2958,edream.110203160744.2959,edream.110203160744.1816,edream.110203160744.2960,edream.110203160744.2408,edream.110203160744.1403,edream.110203160744.2409,edream.110203160744.1404,edream.110203160744.2410,edream.110203160744.883,edream.110203160744.884,edream.110203160744.1402"><vh>@file leoConfig.py</vh>
-<v t="edream.110203160744.2948"><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
+<v t="edream.110203160744.2948" a=""><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
 <v t="edream.110203160744.2373"><vh>config.__init__</vh>
 <v t="edream.110203160744.2374"><vh>&lt;&lt; initialize constant ivars, lists &amp; dicts &gt;&gt; (leoConfig)</vh></v>
 <v t="edream.110203160744.2375"><vh>&lt;&lt; initialize ivars that may be set by config options &gt;&gt;</vh></v>
@@ -7121,8 +7149,19 @@
 </v>
 </v>
 </v>
+<v t="edream.121503182328" a="V"><vh>(Created defaults for log/tree font sizes)</vh>
+<v t="edream.031215194720"><vh>Request</vh></v>
+<v t="edream.110203160744.2948" a=""><vh>&lt;&lt; define defaultsDict &gt;&gt;</vh></v>
+<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+</v>
 </vnodes>
 <tnodes>
+<t tx="edream.031215194720">@nocolor
+
+&gt; leoConfig.leo/.txt now set the size of the body font to None, which kicks in the defaults of 12 for Linux and 9 elsewhere.
+
+Excellent! Could you do the same for the log and the headline panes as well? (I've just downloaded rc1 from the files section and only sets None for the body pane)
+</t>
 <t tx="edream.110203160744">@ignore
 @nocolor
 
@@ -7642,11 +7681,12 @@ What I did earlier:
 <t tx="edream.110203160744.188">@ignore
 @nocolor</t>
 <t tx="edream.110203160744.189">@pagewidth 70</t>
-<t tx="edream.110203160744.190">Leo 4.0 leo-4.0.zip 382
-Leo 3.12 leosetup.exe 953
-Leo leo-3.12.zip 592
-Leo leo-3.11.zip 102
-Leo leo-3.10.zip 1193</t>
+<t tx="edream.110203160744.190">4.1 b5: setup-b5: 195,  b5.zip: 128
+4.0.4:  setup: 340, zip 385
+4.0 leo-4.0.zip 382
+3.12 leosetup 953,3.12.zip 592
+3.11.zip 102
+3.10.zip 1193</t>
 <t tx="edream.110203160744.191"></t>
 <t tx="edream.110203160744.192">Proper FAQ entry for Leo
 
@@ -21090,7 +21130,7 @@ def destroyMenu (self,menuName):
 
 	fileName = app.gui.runOpenFileDialog(
 		title="Open",
-		filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+		filetypes=[("Leo files", "*.leo"), ("All files", "*")],
 		defaultextension=".leo")
 
 	if fileName and len(fileName) &gt; 0:
@@ -21464,7 +21504,7 @@ closeFlag = (
 
 	fileName = app.gui.runOpenFileDialog(
 		title="Read Outline Only",
-		filetypes=[("Leo files", "*.leo"), ("All files", "*.*")],
+		filetypes=[("Leo files", "*.leo"), ("All files", "*")],
 		defaultextension=".leo")
 
 	if not fileName:
@@ -21520,7 +21560,7 @@ closeFlag = (
 	c = self ; frame = c.frame ; v = c.currentVnode()
 	
 	types = [
-		("All files","*.*"),
+		("All files","*"),
 		("C/C++ files","*.c"),
 		("C/C++ files","*.cpp"),
 		("C/C++ files","*.h"),
@@ -21628,7 +21668,7 @@ def writeOldDerivedFiles (self):
 	c = self
 	
 	types = [
-		("All files","*.*"),
+		("All files","*"),
 		("C/C++ files","*.c"),
 		("C/C++ files","*.cpp"),
 		("C/C++ files","*.h"),
@@ -21652,7 +21692,7 @@ def writeOldDerivedFiles (self):
 	c = self
 
 	types = [
-		("All files","*.*"),
+		("All files","*"),
 		("C/C++ files","*.c"),
 		("C/C++ files","*.cpp"),
 		("C/C++ files","*.h"),
@@ -21676,7 +21716,7 @@ def writeOldDerivedFiles (self):
 	filetypes = [
 		("CWEB files", "*.w"),
 		("Text files", "*.txt"),
-		("All files", "*.*")]
+		("All files", "*")]
 
 	fileName = app.gui.runOpenFileDialog(
 		title="Import CWEB Files",
@@ -21691,7 +21731,7 @@ def writeOldDerivedFiles (self):
 	
 	c = self
 	
-	types = [("Text files","*.txt"), ("All files","*.*")]
+	types = [("Text files","*.txt"), ("All files","*")]
 
 	fileName = app.gui.runOpenFileDialog(
 		title="Import MORE Text",
@@ -21709,7 +21749,7 @@ def writeOldDerivedFiles (self):
 	filetypes = [
 		("Noweb files", "*.nw"),
 		("Text files", "*.txt"),
-		("All files", "*.*")]
+		("All files", "*")]
 
 	fileName = app.gui.runOpenFileDialog(
 		title="Import Noweb Files",
@@ -21765,7 +21805,7 @@ def writeOldDerivedFiles (self):
 	c = self
 	
 	types = [
-		("All files","*.*"),
+		("All files","*"),
 		("C/C++ files","*.c"),
 		("C/C++ files","*.cpp"),
 		("C/C++ files","*.h"),
@@ -21782,6 +21822,7 @@ def writeOldDerivedFiles (self):
 	if fileName and len(fileName) &gt; 0:
 		# alas, askopenfilename returns only a single name.
 		c.importCommands.removeSentinelsCommand (fileName)
+
 </t>
 <t tx="edream.110203160744.1141">def weave (self):
 	
@@ -21923,7 +21964,7 @@ def OnPasteFromMenu (self):
 	if s.strip():
 		app.scriptDict["script1"]=s
 		df = c.atFileCommands.new_df
-		df.scanAllDirectives(v)
+		df.scanAllDirectives(v,scripting=true)
 		# Force Python comment delims.
 		df.startSentinelComment = "#"
 		df.endSentinelComment = None
@@ -28164,21 +28205,24 @@ if 0: # not ready yet.
 			mutli_list.append((self.block_comment_start,self.doBlockComment),)</t>
 <t tx="edream.110203160744.1614">self.bold_font = config.getFontFromParams(
 	"body_text_font_family", "body_text_font_size",
-	"body_text_font_slant",  "body_text_font_weight")
+	"body_text_font_slant",  "body_text_font_weight",
+	config.defaultBodyFontSize)
 
 if self.bold_font:
 	self.bold_font.configure(weight="bold")
 
 self.italic_font = config.getFontFromParams(
 	"body_text_font_family", "body_text_font_size",
-	"body_text_font_slant",  "body_text_font_weight")
+	"body_text_font_slant",  "body_text_font_weight",
+	config.defaultBodyFontSize)
 	
 if self.italic_font:
 	self.italic_font.configure(slant="italic",weight="normal")
 
 self.bolditalic_font = config.getFontFromParams(
 	"body_text_font_family", "body_text_font_size",
-	"body_text_font_slant",  "body_text_font_weight")
+	"body_text_font_slant",  "body_text_font_weight",
+	config.defaultBodyFontSize)
 	
 if self.bolditalic_font:
 	self.bolditalic_font.configure(weight="bold",slant="italic")
@@ -36678,7 +36722,7 @@ def onDragSplitterBar (self, event, verticalFlag):
 	font = config.getFontFromParams(
 		"body_text_font_family", "body_text_font_size",
 		"body_text_font_slant",  "body_text_font_weight",
-		tag = "body")
+		config.defaultBodyFontSize, tag = "body")
 
 	if app.trace:
 		trace(body.cget("font"),font.cget("family"),font.cget("weight"))
@@ -37056,7 +37100,8 @@ def configureFont(self,font):
 
 	font = config.getFontFromParams(
 		"log_text_font_family", "log_text_font_size",
-		"log_text_font_slant",  "log_text_font_weight")
+		"log_text_font_slant",  "log_text_font_weight",
+		config.defaultLogFontSize)
 	
 	logCtrl.configure(font=font)
 
@@ -42106,8 +42151,10 @@ def initIvars(self):
 	&lt;&lt; Set current directory &gt;&gt;
 	if not at.default_directory:
 		# This should never happen: c.openDirectory should be a good last resort.
+		trace()
 		at.error("No absolute directory specified anywhere.")
-		at.default_directory = ""</t>
+		at.default_directory = ""
+</t>
 <t tx="edream.110203160744.2656"># This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 assert(not at.default_directory)
@@ -43209,7 +43256,7 @@ def directiveKind(self,s,i):
 This code is similar to Commands::scanAllDirectives, but it has been modified for use by the atFile class.
 @c
 
-def scanAllDirectives(self,v):
+def scanAllDirectives(self,v,scripting=false):
 	
 	"""Scan vnode v and v's ancestors looking for directives,
 	setting corresponding atFile ivars.
@@ -43332,7 +43379,7 @@ if c.frame and not self.default_directory:
 				else: # 9/25/02
 					self.default_directory = makeAllNonExistentDirectories(dir)
 
-if not self.default_directory:
+if not self.default_directory and not scripting:
 	# This should never happen: c.openDirectory should be a good last resort.
 	self.error("No absolute directory specified anywhere.")
 	self.default_directory = ""</t>
@@ -44791,10 +44838,7 @@ at.putBody(root)
 at.putSentinel("@-leo")
 root.setVisited()
 
-&lt;&lt; put all @last lines in root &gt;&gt;
-
-
-</t>
+&lt;&lt; put all @last lines in root &gt;&gt;</t>
 <t tx="edream.110203160744.2848">@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
 @c
 
@@ -45860,6 +45904,8 @@ Ints and bools default to 0, floats to 0.0 and strings to "".
 @c
 
 defaultBodyFontSize = choose(sys.platform=="win32",9,12)
+defaultLogFontSize  = choose(sys.platform=="win32",8,12)
+defaultTreeFontSize = choose(sys.platform=="win32",9,12)
 
 defaultsDict = {
 	# compare options...
@@ -45888,10 +45934,10 @@ defaultsDict = {
 	"body_text_font_slant" : "roman",
 	"body_text_font_weight" : "normal",
 	"enable_drag_messages" : 1,
-	"headline_text_font_size" : 12,
+	"headline_text_font_size" : defaultTreeFontSize,
 	"headline_text_font_slant" : "roman",
 	"headline_text_font_weight" : "normal",
-	"log_text_font_size" : 12,
+	"log_text_font_size" : defaultLogFontSize,
 	"log_text_font_slant" : "roman",
 	"log_text_font_weight" : "normal",
 	"initial_window_height" : 600, # 7/24/03: In pixels.
@@ -45988,7 +46034,7 @@ def setWindowPref (self,name,val):
 	self.setDict(name,val,self.windowDict)
 	
 getStringWindowPref = getWindowPref</t>
-<t tx="edream.110203160744.2956">def getFontFromParams(self,family,size,slant,weight,tag=""):
+<t tx="edream.110203160744.2956">def getFontFromParams(self,family,size,slant,weight,defaultSize=12,tag=""):
 
 	"""Compute a font from font parameters.
 
@@ -46003,7 +46049,7 @@ getStringWindowPref = getWindowPref</t>
 		family = self.defaultFontFamily
 		
 	size = self.getIntWindowPref(size)
-	if size in (None,0): size = 12
+	if size in (None,0): size = defaultSize
 	
 	slant = self.getWindowPref(slant)
 	if slant in (None,""): slant = "roman"
@@ -46013,9 +46059,7 @@ getStringWindowPref = getWindowPref</t>
 	
 	# if app.trace: trace(tag,family,size,slant,weight)
 	
-	return app.gui.getFontFromParams(family,size,slant,weight)
-
-</t>
+	return app.gui.getFontFromParams(family,size,slant,weight)</t>
 <t tx="edream.110203160744.2957">def initConfigParam (self,name,defaultVal):
 	try:
 		val = self.config.get(self.configSection,name,raw=1) # 2/4/03
@@ -50656,7 +50700,9 @@ def setDefaultId (self,id):
 	"""Set the timestamp string to be used by getNewIndex until further notice"""
 
 	self.timeString = time.strftime(
-		"%m%d%y%H%M%S", time.localtime()) # compact timestamp is best</t>
+		# "%m%d%y%H%M%S",
+		"%y%m%d%H%M%S", # Best for time comparisons.
+		time.localtime()) # compact timestamp is best</t>
 <t tx="edream.110203160744.3331">def toString (self,index,removeDefaultId=false):
 	
 	"""Convert a gnx (a tuple) to its string representation"""
@@ -55832,7 +55878,7 @@ class tkinterGui(leoGui.leoGui):
 	# trace("tkinterGui")
 	self.root.mainloop()</t>
 <t tx="edream.110203160744.3694"></t>
-<t tx="edream.110203160744.3695">def getFontFromParams(self,family,size,slant,weight):
+<t tx="edream.110203160744.3695">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
 	
 	family_name = family
 	
@@ -55844,7 +55890,7 @@ class tkinterGui(leoGui.leoGui):
 		es("exception setting font from " + `family_name`)
 		es("family,size,slant,weight:"+
 			`family`+':'+`size`+':'+`slant`+':'+`weight`)
-		es_exception()
+		# es_exception() # 12/15/03: This just confuses people.
 		return app.config.defaultFont</t>
 <t tx="edream.110203160744.3696"></t>
 <t tx="edream.110203160744.3697"># WARNING: Call this routine _after_ creating a dialog.
@@ -56026,7 +56072,8 @@ def setFontFromConfig (self):
 
 	font = app.config.getFontFromParams(
 		"headline_text_font_family", "headline_text_font_size",
-		"headline_text_font_slant",  "headline_text_font_weight")
+		"headline_text_font_slant",  "headline_text_font_weight",
+		app.config.defaultTreeFontSize)
 
 	self.setFont(font)</t>
 <t tx="edream.110203160744.3712">def getIconImage (self, name):
@@ -56766,9 +56813,9 @@ elif undoType == "De-Hoist":
 
 Unit tests:
 
-- Import tests.
 - (done by hand) batch mode.
 	Have script create a file, fail if the file does not exist.
+
 - Read/write commands.</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
@@ -59594,7 +59641,7 @@ else:
 
 		trace("leoMenu", callerName(2))
 		pass</t>
-<t tx="edream.112103091508">def getFontFromParams(self,family,size,slant,weight):
+<t tx="edream.112103091508">def getFontFromParams(self,family,size,slant,weight,defaultSize=12):
 	
 	self.oops()</t>
 <t tx="edream.112103092005.1">def bbox(self,index):
@@ -61693,5 +61740,25 @@ Wiki:     http://leo.hd1.org/
 
 Edward K. Ream
 December 15, 2003</t>
+<t tx="edream.121503092638"></t>
+<t tx="edream.121503092638.3">3) open a leo file with the default settings. Font size is 9. Open Edit-&gt;Set Font, write "12" in the size block and select e.g. body, log, headline. Click on OK: nothing happens, and the log window reports
+
+body font:courier,9,roman,normal
+log font:courier,9,roman,normal
+headline font:courier,9,roman,normal
+
+You would expect the font to change to 12 instead. Actually, next time you open the font window, the font size is declared to be 12, although in reality it is still 9.
+
+OTOH, if you click on "Apply" and not on OK, the font size gets correctly set to 12.</t>
+<t tx="edream.121503100333"></t>
+<t tx="edream.121503100333.1">The fix is to add a scripting arg to atFile.scanAllDirectives.</t>
+<t tx="edream.121503100407">Also removed a confusing traceback.</t>
+<t tx="edream.121503102940"></t>
+<t tx="edream.121503182208">@nocolor
+
+Leo now uses yymmddhhmmss as the format of timestamps.  This is good for sorting chronologically.</t>
+<t tx="edream.121503182328"></t>
+<t tx="edream.121503192250">Using * shows files like readme that don't have a file extension.</t>
+<t tx="edream.121503192250.1"></t>
 </tnodes>
 </leo_file>
