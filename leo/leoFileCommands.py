@@ -222,7 +222,19 @@ class fileCommands:
 		val = int(self.fileBuffer[self.fileIndex:i])
 		self.fileIndex = i
 		return val
-	
+			
+	def getStringToTag (self,tag):
+		buf = self.fileBuffer
+		blen = len(buf) ; tlen = len(tag)
+		i = j = self.fileIndex
+		while i < blen:
+			if tag == buf[i:i+tlen]:
+				self.fileIndex = i
+				return buf[j:i]
+			else: i += 1
+		raise BadLeoFile("expecting string terminated by " + tag)
+		return ""
+		
 	def getTag (self,tag):
 		if not self.matchTag(tag):
 			print "getTag(", tag, ") failed:"
@@ -418,6 +430,7 @@ class fileCommands:
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
 			self.getXmlVersionTag() # leo.py 3.0
+			self.getXmlStylesheetTag() # 10/25/02
 			self.getTag("<leo_file>")
 			self.getLeoHeader()
 			self.getGlobals()
@@ -513,6 +526,7 @@ class fileCommands:
 		self.tnodesDict = {}
 		try:
 			self.getXmlVersionTag() # leo.py 3.0
+			self.getXmlStylesheetTag() # 10/25/02
 			self.getTag("<leo_file>")
 			self.getClipboardHeader()
 			self.getVnodes()
@@ -755,7 +769,32 @@ class fileCommands:
 		self.getTag("</vnodes>")
 	#@-body
 	#@-node:17::getVnodes
-	#@+node:18::getXmlVersionTag
+	#@+node:18::getXmlStylesheetTag
+	#@+body
+	#@+at
+	#  Parses the optional xml stylesheet string, and sets the corresponding 
+	# config option.
+	# 
+	# For example, given: <?xml_stylesheet s?>
+	# the config option is s.
+
+	#@-at
+	#@@c
+
+	def getXmlStylesheetTag (self):
+		
+		c = self.commands
+		tag = "<?xml-stylesheet "
+	
+		if self.matchTag(tag):
+			s = self.getStringToTag("?>")
+			# print "reading:", tag + s + "?>"
+			c.frame.stylesheet = s
+			self.getTag("?>")
+	
+	#@-body
+	#@-node:18::getXmlStylesheetTag
+	#@+node:19::getXmlVersionTag
 	#@+body
 	#@+at
 	#  Parses the xml version string, and sets the xml version string.
@@ -777,8 +816,8 @@ class fileCommands:
 		self.getTag(prolog_postfix_string)
 	
 	#@-body
-	#@-node:18::getXmlVersionTag
-	#@+node:19::skipWs
+	#@-node:19::getXmlVersionTag
+	#@+node:20::skipWs
 	#@+body
 	def skipWs (self):
 	
@@ -792,8 +831,8 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:19::skipWs
-	#@+node:20::skipWsAndNl
+	#@-node:20::skipWs
+	#@+node:21::skipWsAndNl
 	#@+body
 	def skipWsAndNl (self):
 	
@@ -807,7 +846,7 @@ class fileCommands:
 		if  self.fileIndex >= len(self.fileBuffer):
 			raise BadLeoFile("")
 	#@-body
-	#@-node:20::skipWsAndNl
+	#@-node:21::skipWsAndNl
 	#@-node:3::get routines
 	#@+node:4::newTnode
 	#@+body
@@ -1287,24 +1326,47 @@ class fileCommands:
 	#@+body
 	def putProlog (self):
 	
-		if 0: # leo.py 2.x code
-			self.put(prolog_string) ; self.put_nl()
-			# internal or external DTD goes here
-			self.put("<leo_file>") ; self.put_nl()
-		else: # leo.py 3.x code
-			config = app().config
-			version = config.xml_version_string
-			if not version or len(version) == 0:
-				# This is used only for new files without leoConfig.txt.
-				if 0: # "UTF-8"
-					version = prolog_version_string1 # leo.py 2.x
-				else: # "ISO-8859-1"
-					version = prolog_version_string2 # leo.py 3.0
-			self.put(prolog_prefix_string) ; self.put_dquote()
-			self.put(version) ; self.put_dquote()
-			self.put(prolog_postfix_string) ; self.put_nl()
-			self.put("<leo_file>") ; self.put_nl()
+		c = self.commands ; config = app().config
 	
+		
+		#@<< Put the <?xml...?> line >>
+		#@+node:1::<< Put the <?xml...?> line >>
+		#@+body
+		version = config.xml_version_string
+		if not version or len(version) == 0:
+			# This is used only for new files without leoConfig.txt.
+			if 0: # "UTF-8"
+				version = prolog_version_string1 # leo.py 2.x
+			else: # "ISO-8859-1"
+				version = prolog_version_string2 # leo.py 3.0
+		
+		self.put(prolog_prefix_string) ; self.put_dquote()
+		self.put(version) ; self.put_dquote()
+		self.put(prolog_postfix_string) ; self.put_nl()
+		#@-body
+		#@-node:1::<< Put the <?xml...?> line >>
+
+		
+		#@<< Put the optional <?xml-stylesheet...?> line >>
+		#@+node:2::<< Put the optional <?xml-stylesheet...?> line >>
+		#@+body
+		if config.stylesheet or c.frame.stylesheet:
+			
+			# The stylesheet in the .leo file takes precedence over the default stylesheet.
+			if c.frame.stylesheet:
+				s = c.frame.stylesheet
+			else:
+				s = config.stylesheet
+				
+			tag = "<?xml-stylesheet "
+			# print "writing:", tag + s + "?>"
+			self.put(tag) ; self.put(s) ; self.put("?>") ; self.put_nl()
+		
+		#@-body
+		#@-node:2::<< Put the optional <?xml-stylesheet...?> line >>
+
+	
+		self.put("<leo_file>") ; self.put_nl()
 	#@-body
 	#@-node:9::putProlog
 	#@+node:10::putPostlog

@@ -157,6 +157,7 @@ class config:
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
+		self.stylesheet = None
 		self.use_relative_node_indices = 1
 		self.write_clone_indices = 0
 		self.xml_version_string = "UTF-8"
@@ -614,6 +615,10 @@ class config:
 			self.save_clears_undo_buffer = self.initBooleanConfigParam(
 				"save_clears_undo_buffer",
 				self.save_clears_undo_buffer)
+				
+			self.stylesheet = self.initConfigParam(
+				"stylesheet",
+				self.stylesheet)
 			
 			self.xml_version_string = self.initConfigParam(
 				"xml_version_string",

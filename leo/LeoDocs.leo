@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1165" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="6" left="168" height="27" width="87"/>
+	<global_window_position top="13" left="198" height="27" width="82"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -45,7 +45,7 @@
 <v t="T28"><vh>Kent Tenney</vh></v>
 <v t="T29"><vh>Jim Vickroy</vh></v>
 </v>
-<v t="T30" a="V"><vh>Release Notes</vh>
+<v t="T30"><vh>Release Notes</vh>
 <v t="T31"><vh>Warnings</vh></v>
 <v t="T32"><vh>Installation notes</vh>
 <v t="T33" a="C"><vh>System requirements</vh></v>
@@ -530,7 +530,7 @@
 </v>
 </v>
 </v>
-<v t="T348"><vh>Users Guide</vh>
+<v t="T348" a="V"><vh>Users Guide</vh>
 <v t="T349" a="E"><vh>An overview of Leo</vh></v>
 <v t="T350"><vh>Front material</vh>
 <v t="T351" a="E"><vh>Title Page &amp; Summary</vh></v>
@@ -671,7 +671,7 @@
 <v t="T410" a="EM"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
 <v t="T315" a="CE"><vh>About CWEB   </vh></v>
-<v t="T411" a="E"><vh>Appendix 1 to Chapter 4: Using the @rawfile directive</vh></v>
+<v t="T411" a="E"><vh>Appendix 1 to Chapter 4: Using @rawfile and @silentfile trees</vh></v>
 <v><vh>Appendix 2 to Chapter 4: Using the @root directive, Tangling and Untangling</vh>
 <v t="T412" a="E"><vh>@root vs. @file trees</vh></v>
 <v t="T413" a="EM"><vh>Sections and section definitions</vh></v>
@@ -5670,13 +5670,17 @@ An error occurs if no absolute path can be computed according to these rules, or
 The form of the @pagewidth directive is @pagewidth n, where n is a positive integer that indicates the width of tangled pages in columns. This setting only affects how Tangle outputs block comments.
 
 The form of the @tabwidth directive is @tabwidth n, where n is a positive integer that indicates the width of tabs in spaces. This is used by Tangle to output leading whitespace.</t>
-<t tx="T411">An @rawfile tree is a tree whose headline starts with @rawfile &lt;filename&gt;.  @rawfile trees are the simplest way to create derived files.  Leo recognizes no directives, section definitions or sections references within @rawfile trees.  Leo creates the derived file using unevaluated body text, and sometimes headline text.
+<t tx="T411">An @rawfile tree is a tree whose root headline starts with @rawfile &lt;filename&gt;.  Similarly, an @silentfile tree is a tree whose root headline starts with @silentfile &lt;filename&gt;.  
 
-Leo creates derived files from @rawfile trees by writing all the body text of the rawfile tree in outline order.  Usually Leo writes just body text, but if a headline starts with @@ Leo writes everything in the headline following the @@ just before the corresponding body text.  Leo never adds information when creating a file derived from an @file tree.  If body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.
+Leo creates derived files from @rawfile and @silentfile trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. Exception: Leo recognizes the @ignore directive in @rawfile or @silentfile nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
 
-Although Leo recognizes no directives within @rawfiles, Leo _does_ recognize directives in ancestors of @rawfile trees.  In particular, Leo does not write an @rawfile tree whose ancestor contains the @ignore directive, but Leo _will_ write an @rawfile tree if the @rawfile node itself contains @ignore.
+There are several difference between @rawfile and @silentfile trees:
 
-Files derived from @rawfile trees do not contain any sentinel lines, so Leo can not updated @rawfile trees from changes made in derived files.  Unlike @file trees, the primary source of information for an @rawfile tree is the outline containing it, not the derived file.
+1. Leo writes no sentinel lines when writing @silentfile trees.  When writing @rawfile trees, Leo writes only the @+leo, @-leo, @+node, @-node, @+body and @-body sentinels. Therefore, Leo can update @rawfile trees, but _not_ @silentfile trees from changes made in derived files. Unlike @file and @rawfile trees, the primary source of information for an @silentfile tree is the outline containing it.
+
+2. Within @silentfile trees only, if a headline starts with @@, Leo writes everything in the headline following the @@ just before the corresponding body text.
+
+3. Files derived from @silentfile trees contain _nothing_ not contained in body text (or @@ headlines).  In particular, if body text does not end in a newline, the first line from the next node will concatenated to the last line of the preceding node.
 </t>
 <t tx="T412">@file trees are much easier to use than @root trees:
 

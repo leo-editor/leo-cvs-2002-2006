@@ -36,6 +36,8 @@ class LeoFrame:
 			if n > 0: title += `n`
 			app().numberOfWindows = n+1
 			self.mFileName = ""
+			
+		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 		
 		# These are set the first time a panel is opened.
 		# The panel remains open (perhaps hidden) until this frame is closed.

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
@@ -155,6 +156,16 @@ remove_sentinels_extension = .txt
 save_clears_undo_buffer = 0
 #	1: Save command clears undo buffer.
 #	0: Undo buffer persists across saves.
+
+stylesheet =
+#	A string, s.  If present, .leo files will contain an xml-stylesheet line following
+#	the opening xml line. 
+#	For example:
+#		&lt;?xml ....?&gt; 
+#		&lt;?xml-stylesheet s?&gt;
+#	Note 1: The string s should contain any needed XML escapes.
+#	        Leo simply copies this line as given.
+#	Note 2: Please set this field to None or empty when uploading to CVS.
 
 use_relative_node_indices = 0
 #	At present this user option is non-functional.
