@@ -3957,8 +3957,10 @@ class fileLikeObject:
     
     The caller is responsible for handling newlines correctly."""
 
-    def __init__(self):
-        self.list = []
+    def __init__(self,fromString=None):
+        # New in 4.2.1: allow the file to be inited from string s.
+        if fromString: self.list = g.splitLines(fromString) # Must preserve newlines!
+        else: self.list = []
         self.ptr = 0
 
     def clear (self):   self.list = []
