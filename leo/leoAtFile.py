@@ -1274,12 +1274,12 @@ class atFile:
 			delim = self.endSentinelComment
 			n = len(delim)
 			
-			# Remove delim and possible a leading newline.
+			# Remove delim and possibly a leading newline.
 			s = string.join(out,"")
 			s = string.rstrip(s)
 			if s[-n:] == delim:
 				s = s[:-n]
-			if s[-1] == '\n':
+			if len(s) > 0 and s[-1] == '\n':
 				s = s[:-1]
 				
 			# Rewrite out in place.
