@@ -969,7 +969,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         try:
             frame = self ; c = frame.c ; gui = g.app.gui
             g.app.setLog(frame.log,"OnActivateTree")
-            self.tree.undimEditLabel()
+            # self.tree.undimEditLabel()
             gui.set_focus(c, frame.bodyCtrl)
         except:
             g.es_event_exception("activate tree")
