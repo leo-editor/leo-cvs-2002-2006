@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6553" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6568" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="47" left="291" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -1502,7 +1502,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050107093251" a="TV"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050107093251"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050105141608"><vh>Notes</vh>
 <v t="ekr.20050105142314.1"><vh>spellpyx</vh></v>
 <v t="ekr.20050105142314.4"><vh>table</vh></v>
@@ -1529,6 +1529,20 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050111103842"><vh>class lastTestCase</vh></v>
 </v>
 <v t="ekr.20050110193057"><vh>print all loaded plugins</vh></v>
+</v>
+<v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
+<v t="ekr.20050114101014" a="E"><vh>Problems writing Leo sentinels</vh>
+<v t="ekr.20050115103442" a="TV"><vh>Copy of middleSentinelsTest.txt tree</vh>
+<v t="ekr.20050115103442.1" a="E"><vh>&lt;&lt; level 1 &gt;&gt;</vh>
+<v t="ekr.20050115103442.2" a="E"><vh>&lt;&lt; level 2&gt;&gt;</vh>
+<v t="ekr.20050115103442.3" a="E"><vh>&lt;&lt; level 3 &gt;&gt;</vh>
+<v t="ekr.20050115103442.4" a="E"><vh>&lt;&lt; level 4 &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050115100918"
+expanded="ekr.20050115100918.1,ekr.20050115100918.2,ekr.20050115100918.3,"><vh>@thin c:\prog\test\middleSentinelsTest.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2150,7 +2164,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2305,7 +2319,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10905,12 +10919,12 @@ if spellpyx and spellpyx.aspell:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test(conflict).leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\test.leo</t>
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\test\test(conflict).leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -13259,5 +13273,39 @@ leoPlugins.printHandlers()</t>
             new_c.frame.setTitle("unit test for 'new' hook")</t>
 <t tx="ekr.20050112095306"></t>
 <t tx="ekr.20050112095306.1"></t>
+<t tx="ekr.20050113094943">import leoGlobals as g
+stuff = g.toEncodedString(u'∑','utf-8')
+print type(stuff)
+print '*' * 10
+for ch in stuff:
+    print ch, ord(ch),
+print</t>
+<t tx="ekr.20050114101014"></t>
+<t tx="ekr.20050115103442">root line 1
+&lt;&lt; level 1&gt;&gt;
+root line 2
+&lt;&lt; level 2 &gt;&gt;
+root line 3
+&lt;&lt; level 3 &gt;&gt;
+root line 4
+&lt;&lt; level 4 &gt;&gt;
+root line 5</t>
+<t tx="ekr.20050115103442.1">level 1 line 1
+&lt;&lt; level 2 &gt;&gt;
+level 1 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 1 line 3
+&lt;&lt; level 4 &gt;&gt;
+level 1 line 4</t>
+<t tx="ekr.20050115103442.2">level 2 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 2 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 2 line 3</t>
+<t tx="ekr.20050115103442.3">level 3 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 3 line 2
+</t>
+<t tx="ekr.20050115103442.4">level 4 line 1</t>
 </tnodes>
 </leo_file>
