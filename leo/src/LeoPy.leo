@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4024" clone_windows="0"/>
-<globals body_outline_ratio="0.62002567394094998">
+<globals body_outline_ratio="0.48523748395378691">
 	<global_window_position top="18" left="367" height="779" width="804"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -16,6 +16,8 @@
 <v t="ekr.20040105070023"><vh>2004</vh>
 <v t="ekr.20040105070023.1"><vh>January 2004</vh>
 <v t="ekr.20040108131321"><vh>1/8</vh>
+<v t="ekr.20040108153420"><vh>Esc hides the Find panel</vh></v>
+<v t="ekr.20040108153420.1"><vh>Return in Find panel simuatest the Find button</vh></v>
 <v t="ekr.20040108141927"><vh>Fixed huge performance bug in cut/copy nodes.</vh></v>
 <v t="ekr.20040108134357"><vh>Improved sample code for batch mode in LeoDocs.leo</vh></v>
 <v t="ekr.20040108133440"><vh>Removed a complex assert in colorizer</vh></v>
@@ -1107,6 +1109,7 @@
 <v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
 </v>
 <v t="ekr.20031218072017.855"><vh>Later</vh>
+<v t="ekr.20040108153757"><vh>Make the find panel smaller</vh></v>
 <v t="ekr.20031218072017.856"><vh>button context menu in body panel</vh></v>
 <v t="ekr.20031218072017.857"><vh>Study SPE editor</vh></v>
 <v t="ekr.20031218072017.858"><vh>Use Emacs style input to avoid difficult key combinations</vh></v>
@@ -4100,7 +4103,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101" a="V"><vh>rc4 projects</vh>
+<v t="ekr.20040107064101"><vh>rc4 projects</vh>
 <v t="ekr.20040106121339.1"><vh>(Added message when plugins are disabled)</vh>
 <v t="ekr.20031218072017.1596" a=""><vh>frame.doHook</vh></v>
 </v>
@@ -4127,8 +4130,16 @@
 <v t="ekr.20031218072017.1573" a=""><vh>putLeoOutline (to clipboard)</vh></v>
 <v t="ekr.20031218072017.1470" a=""><vh>put (basic)(leoFileCommands)</vh></v>
 </v>
+<v t="ekr.20040106121339"><vh>(Improved the find panel)</vh>
+<v t="ekr.20040107064101.2"><vh>What I did</vh></v>
+<v t="ekr.20031218072017.3902" a=""><vh>find.createFrame</vh>
+<v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+</v>
+</v>
+<v t="ekr.20031218072017.2406" a="E"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4380,7 +4391,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
+<v t="ekr.20031218072017.2604" a="V"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1934" a=""><vh>run &amp; allies</vh>
@@ -5061,7 +5072,7 @@
 <v t="ekr.20031218072017.2897"><vh>&lt;&lt; Set the undo info for sortTopLevel &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2898"><vh>Expand &amp; Contract...</vh>
+<v t="ekr.20031218072017.2898" a=""><vh>Expand &amp; Contract...</vh>
 <v t="ekr.20031218072017.2899"><vh>Commands</vh>
 <v t="ekr.20031218072017.2900"><vh>contractAllHeadlines</vh></v>
 <v t="ekr.20031218072017.2901"><vh>contractNode</vh></v>
@@ -6744,7 +6755,7 @@
 <v t="ekr.20031218072017.3900"><vh>&lt;&lt; init the tkinter ivars &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3901"><vh>destroySelf</vh></v>
-<v t="ekr.20031218072017.3902"><vh>find.createFrame</vh>
+<v t="ekr.20031218072017.3902" a=""><vh>find.createFrame</vh>
 <v t="ekr.20031218072017.3903"><vh>&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3904"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3905"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
@@ -7349,11 +7360,17 @@
 </v>
 </v>
 <v t="ekr.20040105064959"><vh>Fix Bugs</vh>
-<v t="ekr.20040106121339" a="M"><vh>(Improve the find panel)</vh>
-<v t="ekr.20040107064101.2"><vh>Requests</vh></v>
+<v t="ekr.20040106095546.2" a="M"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
+<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
+<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
+<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
+<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
 </v>
 <v t="ekr.20040107161709"><vh>Write missing @file nodes</vh></v>
-<v t="ekr.20040107095421"><vh>Batch mode report (works, with changes)</vh></v>
 <v t="ekr.20040105070134"><vh>Bug: reformat paragraph</vh></v>
 <v t="ekr.20040104162835"><vh>Bug: marked nodes</vh>
 <v t="ekr.20040104162835.1"><vh>Reports</vh>
@@ -7370,17 +7387,27 @@
 <v t="ekr.20040105103517"><vh>Importing @file issues</vh>
 <v t="ekr.20040105103916"><vh>Fix?</vh></v>
 </v>
-<v t="ekr.20040106095546.2"><vh>(Enabled drawing after exceptions)  MAKES THINGS WORSE</vh>
-<v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20040106095546" a=""><vh>tkTree.enableDrawingAfterException</vh></v>
-<v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+<v t="ekr.20040107081050"><vh>Can't open Idle (Encoding problem)</vh></v>
 </v>
-<v t="ekr.20031218072017.3112" a=""><vh>es_exception</vh></v>
+<v t="ekr.20040108152516" a="EM"><vh>Contract everything everything except current tree option</vh>
+<v t="ekr.20031218072017.2898" a=""><vh>Expand &amp; Contract...</vh>
+<v t="ekr.20031218072017.2899"><vh>Commands</vh>
+<v t="ekr.20031218072017.2900"><vh>contractAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2901"><vh>contractNode</vh></v>
+<v t="ekr.20031218072017.2902"><vh>contractParent</vh></v>
+<v t="ekr.20031218072017.2903"><vh>expandAllHeadlines</vh></v>
+<v t="ekr.20031218072017.2904"><vh>expandAllSubheads</vh></v>
+<v t="ekr.20031218072017.2905"><vh>expandLevel1..9</vh></v>
+<v t="ekr.20031218072017.2906"><vh>expandNextLevel</vh></v>
+<v t="ekr.20031218072017.2907"><vh>expandNode</vh></v>
+<v t="ekr.20031218072017.2908"><vh>expandPrevLevel</vh></v>
 </v>
-<v t="ekr.20040107081050"><vh>Can't open Idle</vh></v>
+<v t="ekr.20031218072017.2909"><vh>Utilities</vh>
+<v t="ekr.20031218072017.2910"><vh>contractSubtree</vh></v>
+<v t="ekr.20031218072017.2911"><vh>expandSubtree</vh></v>
+<v t="ekr.20031218072017.2912"><vh>expandToLevel</vh></v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -47241,7 +47268,7 @@ def changeThenFindButton(self):
 			self.changeThenFind()</t>
 <t tx="ekr.20031218072017.3059"># The user has pushed the "Find" button from the find panel.
 
-def findButton(self):
+def findButton(self,event=None):
 
 	c = self.setup_button()
 	
@@ -58406,13 +58433,15 @@ self.s_text = Tk.Text() # Used by find.search()</t>
 	&lt;&lt; Create four columns of radio and checkboxes &gt;&gt;
 	&lt;&lt; Create two rows of buttons &gt;&gt;
 	
-	self.find_text.bind  ("&lt;1&gt;", self.resetWrap)
-	self.change_text.bind("&lt;1&gt;", self.resetWrap)
-	self.find_text.bind  ("&lt;Key&gt;", self.resetWrap)
-	self.change_text.bind("&lt;Key&gt;", self.resetWrap)
+	for widget in (self.find_text, self.change_text):
+		widget.bind ("&lt;1&gt;",  self.resetWrap)
+		widget.bind("&lt;Key&gt;", self.resetWrap)
 	
-	self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
-</t>
+	for widget in (outer, self.find_text, self.change_text):
+		widget.bind("&lt;Key-Return&gt;", self.findButton)
+		widget.bind("&lt;Key-Escape&gt;", self.onCloseWindow)
+	
+	self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)</t>
 <t tx="ekr.20031218072017.3903">columnsFrame = Tk.Frame(outer,relief="groove",bd=2)
 columnsFrame.pack(anchor="e",expand=1,padx="7m",pady="2m") # Don't fill.
 
@@ -58499,7 +58528,7 @@ buttons.pack (anchor="n",expand=1,fill="x")
 buttons2.pack(anchor="n",expand=1,fill="x")
 
 # Create the first row of buttons
-findButton=Tk.Button(buttons,width=8,text="Find",command=self.findButton)
+findButton=Tk.Button(buttons,width=8,text="Find",bd=4,command=self.findButton) # The default.
 contextBox=Tk.Checkbutton(buttons,anchor="w",text="Show Context",variable=self.dict["batch"])
 findAllButton=Tk.Button(buttons,width=8,text="Find All",command=self.findAllButton)
 
@@ -58515,7 +58544,7 @@ changeAllButton =Tk.Button(buttons2,width=8,text="Change All",command=self.chang
 changeButton.pack    (pady="1m",padx="25m",side="left")
 changeFindButton.pack(pady="1m",          side="left",expand=1)
 changeAllButton.pack (pady="1m",padx="25m",side="right")</t>
-<t tx="ekr.20031218072017.3906">def onCloseWindow(self):
+<t tx="ekr.20031218072017.3906">def onCloseWindow(self,event=None):
 
 	self.top.withdraw()</t>
 <t tx="ekr.20031218072017.3907">def bringToFront (self):
@@ -63004,26 +63033,9 @@ Scott
 <t tx="ekr.20040107064101.1"></t>
 <t tx="ekr.20040107064101.2">@nocolor
 
-http://sourceforge.net/forum/message.php?msg_id=2361160
-By: ejoy
+- ESC closes the Find panel.
 
-the finding panel (4.1-b4) is a little difficult to use:
-
-1. the dialog is too big (both the find and replace text entry), and I can not
-even resize the dialog but move it. This often overlap the underline text
-content I'm looking for.
-
-2. ESC key does not work for finding panel. When I press ESC, I except
-the dialog be discarded right away. But I can't and have click close button
-with mouse:-(.
-
-3. Find button has no default binding to &lt;Return&gt;
-
-4. All buttons are on the bottom of the panel, not a good place I think. I
-suggest rearrange the buttons on the right part of the panel and put the checkboxs
-at the bottom. And the dialog should be small. Just like most finding&amp;replace
-dialogs found in other applications (for example, python IDLE)
-</t>
+- Bound Return key to Find button.</t>
 <t tx="ekr.20040107064101.3">@nocolor
 
 The fix was to remove the call to self.getDquote() in the getTargetLanguage.</t>
@@ -63185,83 +63197,6 @@ ImportError: No module named idlelib.Py
 <t tx="ekr.20040107090240"></t>
 <t tx="ekr.20040107090747"></t>
 <t tx="ekr.20040107090747.1"></t>
-<t tx="ekr.20040107095421">@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2362976
-By: comcol
-
-OK, I'm getting something that works. For the benefit of all, here's what I
-did ...
-
-I have 3 files:
---- a.leo:
-&lt;?xml version="1.0" encoding="UTF-8"?&gt;
-&lt;leo_file&gt;
-&lt;leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/&gt;
-&lt;globals body_outline_ratio="0.5"&gt;
-&lt;global_window_position top="20" left="20" height="600" width="800"/&gt;
-&lt;global_log_window_position top="0" left="0" height="0" width="0"/&gt;
-&lt;/globals&gt;
-&lt;preferences&gt;
-&lt;/preferences&gt;
-&lt;find_panel_settings&gt;
-&lt;find_string&gt;&lt;/find_string&gt;
-&lt;change_string&gt;&lt;/change_string&gt;
-&lt;/find_panel_settings&gt;
-&lt;vnodes&gt;
-&lt;v t="mcarter.010704100214"&gt;&lt;vh&gt;Top&lt;/vh&gt;&lt;/v&gt;
-&lt;v t="mcarter.010704100214.1" a="V"&gt;&lt;vh&gt;new&lt;/vh&gt;&lt;/v&gt;
-&lt;/vnodes&gt;
-&lt;tnodes&gt;
-&lt;t tx="mcarter.010704100214"&gt;hello&lt;/t&gt;
-&lt;t tx="mcarter.010704100214.1"&gt;world&lt;/t&gt;
-&lt;/tnodes&gt;
-&lt;/leo_file&gt;
-
----myleo01.py:
-from leoGlobals import *
-c = top()
-c = app.log.c
-path = r"a.leo"
-app.log.disable() # disable reading messages while opening the file
-flag,newFrame = openWithFileName(path, None)
-app.log.enable() # re-enable the log.
-c = newFrame.c ; root = c.rootVnode()
-v=c.currentVnode() # get the current vnode.
-print v
-print "head:", v.headString()
-print "body:", v.bodyString()
-
---runleo.py:
-import os
-
-cwd = 'C:/Documents and Settings/mcarter/My Documents'
-
-pyexe = "C:/Python23/python.exe"
-script = "c:/Python23/Lib/site-packages/leo/src/leo.py"
-args = '-script "%s/myleo01.py"' % (cwd)
-cmd = "%s %s %s" % ( pyexe, script, args)
-
-os.system(cmd)
----
-
-The example can be run by running runleo.py. Of course, users will have to make
-an adjustment for their particular installation layouts.
-
-The example given in node "Running Leo in batch mode" contains a few bugs. If
-you like, I can make a few changes, and post it to Patches.
-
-Running on from a thread in which I participated, having Leo install to the
-standard package directory will help with the execution of scripts.
-
-Additionallly, and ideally, it would be useful if Leo separated out "Leo the
-Application" from "Leo the File Format". That way, people could batch process
-files without worrying about the GUI, or using any --script options. So file
-processing would be "just a library" that the GUI, or independent batch processes,
-could call.
-
-I use the word "ideally", of course, because I suspect that file input/output
-is tightly coupled to the GUI, so that separating out functionality would be
-a bit of a chore.</t>
 <t tx="ekr.20040107161709">https://sourceforge.net/forum/message.php?msg_id=2362014
 By: grayrest
 
@@ -63302,5 +63237,31 @@ assert(i == new_len)
 in &lt;&lt; initialize new states &gt;&gt; has caused no end of troubles.  The new code eliminates the assertion by brute force.  It has never been clear why the assert has failed, and it does so rarely.  However, the very worst that can happen is that some lines aren't colored properly, so it's not a big deal.</t>
 <t tx="ekr.20040108134357"></t>
 <t tx="ekr.20040108141927"></t>
+<t tx="ekr.20040108152516">This might save a _lot_ of work.
+
+When selecting a new node:
+	
+- Find the root ancestor ra.
+- Contract all siblings of ra.
+
+When expanding a new node: contract all children.</t>
+<t tx="ekr.20040108153420"></t>
+<t tx="ekr.20040108153420.1">This is so handy.</t>
+<t tx="ekr.20040108153757">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2361160
+By: ejoy
+
+the finding panel is a little difficult to use:
+
+- the dialog is too big (both the find and replace text entry), and I can not
+even resize the dialog but move it. This often overlap the underline text
+content I'm looking for.
+
+- All buttons are on the bottom of the panel, not a good place I think. I
+suggest rearrange the buttons on the right part of the panel and put the checkboxs
+at the bottom. And the dialog should be small. Just like most finding&amp;replace
+dialogs found in other applications (for example, python IDLE)
+</t>
 </tnodes>
 </leo_file>
