@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2933" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2934" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="19" left="330" height="836" width="833"/>
+	<global_window_position top="64" left="365" height="836" width="833"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -62,7 +62,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="V"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49" a=""><vh>System requirements</vh></v>
@@ -82,8 +82,8 @@
 <v t="edream.110203163054.61" a=""><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62" a=""><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest version</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 1</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest version</vh>
+<v t="edream.110603185805" a="V"><vh>4.1 beta 2</vh>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
 <v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
@@ -98,7 +98,7 @@
 <v t="edream.110603192009.1"><vh>New &amp; improved commands</vh>
 <v t="edream.110603190322.14"><vh>Added Check Outline command</vh></v>
 <v t="edream.110603190322.15"><vh>Added Hoist/De-Hoist commands</vh></v>
-<v t="edream.110603190322.6" a="E"><vh>Added script search/change</vh></v>
+<v t="edream.110603190322.6"><vh>Added script search/change</vh></v>
 <v t="edream.110303182253.3"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
 </v>
 <v t="edream.110303182719"><vh>New config settings</vh></v>
@@ -112,7 +112,7 @@
 <v t="edream.110203163054.66" a=""><vh>4.0.1, 4.0.2, 4.0.3 &amp; 4.0.4</vh></v>
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
-<v t="edream.110603185805" a=""><vh>4.1 beta 1</vh>
+<v t="edream.110603185805" a=""><vh>4.1 beta 2</vh>
 <v t="edream.110603190404"><vh>Fixed bugs</vh>
 <v t="edream.110603190322.8"><vh>Fixed Serious Undo Change All bug</vh></v>
 <v t="edream.110603190322.13"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
@@ -503,11 +503,8 @@
 <v t="edream.110203163054.361"><vh>Fixed bugs</vh>
 <v t="edream.110203163054.362"><vh>Crashers</vh>
 <v t="edream.110203163054.363"><vh>Fixed another crasher in scanAllDirectives</vh></v>
-<v t="edream.110203163054.364" a=""><vh>Other representations of trees</vh></v>
-<v t="edream.110203163054.365" a=""><vh>Part 1</vh></v>
 </v>
 <v t="edream.110203163054.366"><vh>Bugs involving paths &amp; derived files</vh>
-<v t="edream.110203163054.367" a=""><vh>Part 2</vh></v>
 <v t="edream.110203163054.368"><vh>Fixed @delims "round trip" bug</vh></v>
 <v t="edream.110203163054.369"><vh>Fixed cweb sentinel bug</vh></v>
 <v t="edream.110203163054.370"><vh>Fixed import to @root problems</vh></v>
@@ -1164,11 +1161,13 @@
 </v>
 </v>
 <v t="edream.110203163054.853"><vh> The Outline Menu</vh>
+<v t="edream.110703093314"><vh> Checking outlines</vh></v>
 <v t="edream.110203163054.854"><vh> Creating and deleting headlines</vh></v>
 <v t="edream.110203163054.855"><vh> Cutting, pasting and deleting headlines</vh></v>
 <v t="edream.110203163054.856"><vh> Expanding and contracting headlines</vh></v>
-<v t="edream.110203163054.857"><vh> Moving, sorting and reorganizing headlines</vh></v>
+<v t="edream.110703093314.1"><vh> Hoisting &amp; De-hoisting headlines</vh></v>
 <v t="edream.110203163054.858"><vh> Marking headlines</vh></v>
+<v t="edream.110203163054.857"><vh> Moving, sorting and reorganizing headlines</vh></v>
 <v t="edream.110203163054.755" a=""><vh>Cloning headlines</vh>
 <v t="edream.110203163054.756"><vh>read me</vh></v>
 <v t="edream.110203163054.757" a=""><vh>a</vh>
@@ -1372,9 +1371,9 @@
 <v t="edream.110203163054.949"><vh>Tangle and Untangle commands</vh></v>
 <v t="edream.110203163054.950"><vh>Unicode theory of operation</vh></v>
 <v t="edream.110203163054.951"><vh>Unlimited undo</vh></v>
-<v t="edream.110203163054.364" a=""><vh>Other representations of trees</vh>
-<v t="edream.110203163054.365" a=""><vh>Part 1</vh></v>
-<v t="edream.110203163054.367" a=""><vh>Part 2</vh></v>
+<v t="edream.110203163054.364"><vh>Other representations of trees</vh>
+<v t="edream.110203163054.365"><vh>Part 1</vh></v>
+<v t="edream.110203163054.367"><vh>Part 2</vh></v>
 </v>
 <v t="edream.110203163054.100" a=""><vh>4.0 Theory of operation</vh></v>
 </v>
@@ -2738,38 +2737,6 @@
 <v t="edream.110203163054.2013"><vh>cleaned up config code relating to find settings</vh></v>
 <v t="edream.110203163054.2014"><vh>Added Node only option to find menu</vh></v>
 <v t="edream.110203163054.2015"><vh>Added Export Headlines command</vh></v>
-<v t="edream.110203163054.2016"><vh>@url http://24.243.129.68:8080/members/sandbox</vh></v>
-<v t="edream.110203163054.2017"><vh>Zope &amp; collaboration info</vh>
-<v t="edream.110203163054.2018"><vh>Kent Tenny Notes</vh></v>
-<v t="edream.110203163054.2019"><vh>url's</vh>
-<v t="edream.110203163054.2020"><vh>@url http://24.243.129.68:8080/members/sandbox</vh></v>
-<v t="edream.110203163054.2021"><vh>@url http://www.zopelabs.com/cookbook</vh></v>
-<v t="edream.110203163054.2022"><vh>@url http://zwiki.org/FrontPage  Zope implementation of wiki</vh></v>
-</v>
-<v t="edream.110203163054.2023"><vh>Collaboration &amp; Sharing</vh>
-<v t="edream.110203163054.2024"><vh>From Rodrigo</vh></v>
-</v>
-<v t="edream.110203163054.2025"><vh>Zope</vh>
-<v t="edream.110203163054.2026" a=""><vh>From Rodrigo re: Zope.</vh></v>
-<v t="edream.110203163054.2027" a=""><vh>Clarification from Kent Tenny</vh></v>
-<v t="edream.110203163054.2028" a=""><vh>From Rodrigo re: ip</vh></v>
-<v t="edream.110203163054.2029" a=""><vh>Other servers</vh></v>
-<v t="edream.110203163054.2030" a=""><vh>Is my ip public?</vh></v>
-<v t="edream.110203163054.2031" a=""><vh>Back ends for storing/retrieving nodes: Paul Paterson</vh></v>
-<v t="edream.110203163054.2032"><vh>From Paul Paterson</vh></v>
-</v>
-<v t="edream.110203163054.2033"><vh>Jabber</vh></v>
-</v>
-<v t="edream.110203163054.2034"><vh>@url http://www.zopelabs.com/cookbook</vh></v>
-</v>
-<v t="edream.110203163054.2035"><vh>@url http://zwiki.org/FrontPage  Zope implementation of wiki</vh>
-<v t="edream.110203163054.2026" a=""><vh>From Rodrigo re: Zope.</vh></v>
-<v t="edream.110203163054.2027" a=""><vh>Clarification from Kent Tenny</vh></v>
-<v t="edream.110203163054.2028" a=""><vh>From Rodrigo re: ip</vh></v>
-</v>
-<v t="edream.110203163054.2029" a=""><vh>Other servers</vh></v>
-<v t="edream.110203163054.2030" a=""><vh>Is my ip public?</vh>
-<v t="edream.110203163054.2031" a=""><vh>Back ends for storing/retrieving nodes: Paul Paterson</vh></v>
 </v>
 <v t="edream.110203163054.2036"><vh>11/21</vh>
 <v t="edream.110203163054.2037"><vh>Fixed bug in colorizeAnyLine</vh></v>
@@ -3695,6 +3662,7 @@
 </v>
 </v>
 </v>
+<v t="edream.110803170826"><vh>Count pages</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203163054">@nocolor
@@ -4151,7 +4119,11 @@ and how to break it down into manageable chunks.
 Choice 1: Use the "Read Outline Only" command to recover the outline using only the .leo file.  This is the recommend way because it preserves all clone links.
 
 Choice 2: Use one or move "Read @file Nodes" commands to update the outline from derived files.  This way is will break any clone links from the outline into the </t>
-<t tx="edream.110203163054.48">This node duplicates the information in Chapter 2: Installing Leo.</t>
+<t tx="edream.110203163054.48">This node duplicates the information in Chapter 2: Installing Leo.
+
+New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
+
+Leo stores this identifier in leoID.txt, so you can change this identifier at any time by chaning leoID.txt.</t>
 <t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2 or later and Tk 8.3 or later.
 
 Download Python from http://python.org/
@@ -9034,7 +9006,11 @@ In short, task headlines focus our attention on only those parts of a project th
 This introduction has only sketched Leo's capabilities.  Chapter 3 shows how to create and reorganize Leo's outlines. This chapter covers clones, a powerful outline feature found in few other outliners.  Chapter 4 tells you everything you need to write programs in Leo.  Chapter 5 discusses all of Leo's commands.  Chapter 7 discusses scripting Leo with Python.</t>
 <t tx="edream.110203163054.753">@nocolor
 
-This chapter tells how to install Leo.</t>
+This chapter tells how to install Leo.
+
+New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
+
+Leo stores this identifier in leoID.txt, so you can change this identifier at any time by chaning leoID.txt.</t>
 <t tx="edream.110203163054.754">@nocolor
 
 This chapter tells how to use Leo's outline pane.  It introduces terminology and discusses creating, moving, marking, cloning headlines.
@@ -21883,604 +21859,6 @@ Created custom 16x16 LeoWin.gif.</t>
 
 Note that Node Only takes precedence over Suboutline Only if they are both checked.</t>
 <t tx="edream.110203163054.2015">This works just like the Flatten Outline command except it writes only headlines.</t>
-<t tx="edream.110203163054.2016"></t>
-<t tx="edream.110203163054.2017">@nocolor</t>
-<t tx="edream.110203163054.2018">@nocolor
-
-Outlook: server for email, addresses &amp; calendar.  Groupware.  Chandler similar.
-
-Zope: back end is ZODB.  Zope like an OS: run Python code on Zope.
-
-Zope: another way to access Leo files.  Maybe twisted is better?
-
-Wiki anology: edit Leo files with browser.  Write through the web.
-
-longrun.org
-
-Wiki principles: 
-	- Sharing is 90% of collaboration.
-	- Zope: Subscribe to a wiki: email when page changes.
-	- RSS: xml that defines piece of info(tile,url,abstract)
-		- Client has a list of rss feeds: an xml file.
-		- List of intesting people: notified when they say something.
-
-Two goals:
-	- publish Leo files
-	- edit Leo files
-
-Brother needs cvs.
-Kent not so worried about cvs.
-	-Leo file is a web site!
-	- Helper layer between user and OS.
-		- Look at aap project.  Author of vim. a-p.org
-			- Replacement for make in Python.  Automating tool.
-		- Expert prepares Leo file.  User uses it.</t>
-<t tx="edream.110203163054.2019"></t>
-<t tx="edream.110203163054.2020"></t>
-<t tx="edream.110203163054.2021"></t>
-<t tx="edream.110203163054.2022"></t>
-<t tx="edream.110203163054.2023"></t>
-<t tx="edream.110203163054.2024">Developers Forum
-By: rodrigo_b ( Rodrigo Benenson ) 
- RE: Leo over the network   
-2003-05-10 00:06  
-So this is my first proposal: 
-
-Requirements 
--------------------- 
-
-* Read remote outlines. 
-** With Leo clients. 
-** Over the web. 
-
-* Edit remote outlines. 
-
-* Import remote outlines (retrieve outlines from the web). 
-
-* Synchronize local outlines with remote ones (web to local and local to web). 
-
-* Publish outlines (send outlines to the web). 
-
-* The Leo client have to be keept lighweigth. 
-
-* The Leo remote outline access server should be a lighweigth daemon. 
-
-* This daemon should automagically render HTML from the outlines. 
-
-* The outlines should be editable from the web and via Leo client. 
-
-* Concurency management is must. 
-
-* The remote servers should be included in the leo client as leo nodes (just like leo files, but remotes). 
-"@leo-outline leo.server.org:854" 
-
-* By this way I could have access to local server nodes. 
-"@leo-outline localhost:854" 
-
-* The remote server should offer one and only one big outline with sub nodes, and so on, and so on... 
-
-* At least the concurency should be managed as "when someone write, all the other ones only can read" 
-
-* It is better if Leo devellop simultaneaously some hypertext/wiki extensions. 
-
----------------------------- 
-End of requeriments 
-
-This requeriments requires a client-server architecture, with basic commands as: 
-- Update node 
-- Lock/release node 
-- Edit outline 
-- Download outline 
-- Upload outline 
-
-well that is by the moment, I hope that we will be able to create a Finite, clear, requeriments list for this branch of Leo. 
-
-RodrigoB.  
-
-</t>
-<t tx="edream.110203163054.2025"></t>
-<t tx="edream.110203163054.2026">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007586
-By: rodrigo_b
-
-z2.py,
-&gt;Supposing that that I did find this file, what would I be looking for? 
-
-This is the Main script, the principal program, the code that startup all the
-servers, the only python program that make run Zope, it the code called by start.py,
-and it is the one to which you pass the command lines.
-
-With the command line you can indicate which services to start up at which ports.
-This is IMPORTANT. Also you can enable/disable the Debug mode.
-
-python z2.py --help will give you some infos about what I'm talking about.
-
-In linux the debug or not debug mode, enable the console or daemon mode (that
-means 'background task mode').
-
-In windows, I'm not sure that disabling the debug mode will be enough.
-I know that at the install time you can setup Zope as a Windows Service, so
-it will start automatically every time Windows Startup, and it will not open
-a console window.
-
-But first look at the debug mode.
-
-Start.bat give some defaults command lines to z2.py
-
-Webdav,
-&gt;What issues are involved in this choice, and why should I care today? 
-
-from www.webdav.org
-
-What is WebDAV? 
-Briefly: WebDAV stands for "Web-based Distributed Authoring and Versioning".
-It is a set of extensions to the HTTP protocol which allows users to collaboratively
-edit and manage files on remote web servers.
-
-For example that means that you can open you Windows Explorer (from your mail
-I understand that you work on an MsWindows OS),
-tip the url "localhost:%i"%(your webdav port) and you will be able to navigate,
-view and edit the Zope Objects just as a normal file system (well, almost).
-
-WebDav is a standard and there are Python implementations. WebDav is support
-by  Oscom.
-
-WebDav is cool.
-WebDav is the 'highest level tool'.
-
-ZODB,
-
-&gt;Does that mean that gnx's aren't needed with Zope? Could Leo nodes live in
-the ZODB?
-
-You have to thinks to ZODB just as what it is: a Persistent Object Database.
-Most objects in Zope are Persistents, that mean that their instances do not
-die when you shutdown the server.
-
-The ZODB store his data in it own format.
-I think that GNX should be keeped.
-You have to basic ways to put nodes into Zope.
-
-First: the hard way: create a new Product (Products are something like Zope
-plugins) that is based on the Leo code, but were there is no node storage, instead
-the node should be Persistents. Then add rendering code to this objects.
-
-Leo node object + Persistence + ZClass + Rendering Code -&gt; Leo Zope node.
-
-Additionaly you should create an Folder like object that should be an 'Leo Outline
-Zope Object',  actuating as an Leo nodes container.
-
-This shema is similar to the Zwiki way, with a Zwiki Web and the Zwiki Pages.
-
-Second: Use A zope folder just as Leo manage the @file nodes. Let have simple
-DTMLDocuments, edited via WebDav, with &lt;dtml-comments&gt; , and stuff like that.
-The Leo import/export that nodes.
-
-RodrigoB.
-
-</t>
-<t tx="edream.110203163054.2027">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009081
-By: ktenney
-
-Edward,
-
-I don't see ZLeo replacing Leo, rather a method of accessing
-Leo files.
-
-When I write, I almost always want it to be web accessable,
-so that I can access it from any browser, and so that I can
-share it easily. I would like myfile.leo to live
-at http://longrun.org/leo/myfile.leo. It can be read and
-written to from any browser (according to how permissions are
-configured) The page describing how to configure Apache would
-be found at http://longrun.org/leo/myfile.leo/Apache/configure
-The only requirement to work with Leo files is a browser.
-
-I wouldn't want to lose the capability to edit outside
-the browser, using a standalone version of Leo or Zope's
-ExternalEditor product. ExternalEditor allows me to click
-an icon to open the page I'm viewing in any editor. I could
-open it in Leo as a Leo file, or open just the page in
-Vim (http://vim.sourceforge.net/index.php)
-
-Zope is ponderous, I think of it as more of a platform
-than an application. My understanding of how Zope works
-grows slowly, in the mean time my focus is on _products_.
-Installing a product in Zope is like installing an application
-in Windows or Linux.
-
-One of the most evolved products is Plone/CMF http://plone.org
-which is basically a turnkey web site.
-
-twisted http://twistedmatrix.com is a brilliant set of network
-programming tools. That's all I know about it.
-
-I'm not sure about Chandler (http://www.osafoundation.org/) 
-(they did choose Python and ZODB http://www.osafoundation.org/technology.htm)
-
-You might try subscribing to a Zope mailing list or two
-http://www.zope.org/Resources/MailingLists
-The community of users and developers is very important to Zope.
-
-Thanks,
-Kent
-</t>
-<t tx="edream.110203163054.2028">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007817
-By: rodrigo_b
-
-If zope is running some server then this server will be accesible from your
-network if and only if there is no firewall in the way.
-
-The people can access to your services using (normally on internet you do not
-have a domain name)
-
-your_ip:the_service_port
-
-Example:
-zope http service on port 8080 on your machine.
-When  you connect to internet your machine got an extra IP.
-Then simple put on the web browser
-
-http://your_conexion_ip:8080
-
-and Tada you will see the root_zope/index_html object rendered intro HTML.
-
-Most of the ISP give you a dinamic IP.
-Some companies provides you dinamic IP Domain Name services, allowing to attach
-a domain name to your machine dinamically (each time you reconect).
-
-then you can have:
-
-http://leo.edward.com:8080/
-
-The 8080 stuff can be avoied if you setup zope to use the standard port 80 for
-HTTP service.
-
-With this in mind you can access ftp
-
-ftp://your_ip_or_domain_name:8021
-
-or webdav, or anything else.
-</t>
-<t tx="edream.110203163054.2029">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2007832
-By: rodrigo_b
-
-I would made a warning.
-
-Zope IT IS NOT the only way to obtain an local HTTP server, pythonic and
-flexible.
-
-There is a lot of other way.
-
-Also Zope IT IS NOT THE BEST pythonic http/ftp/webdav or anything server
-aviable.
-
-I think that we should define better 
-
-What we want to do?
-
-before choosing the tool.
-
-As I said, I had already used Zope, I choosed it because of very specific features,
-but nothing indicate that Zope is the best way to get Leo to the colaborative
-network universe.
-
-I think that we should at least consider:
-- SimpleHTTPServer
-- To take of the Medusa Server from Zope (that is use Zope code in the standard
-Leo distribution, avoying dependences)
-- Twisted matrix (I had no experience with it, but it looks much more
-flexible/powerfull)
-
-Zope provides you a specific framework, you have to match you application to
-this framework, Zope (in my opinion) it is not a tool, it's an ambient.
-
-It's seems that Edward it is new in the web oriented software, I think it has
-a lot of potencialities and it will benefits Leo devellopment.
-
-Please Edward, look at Zope as an example but not as THE options. Think about
-what can be done, what should be done, and then we will take the best tool.
-
-Anyway my opinion:
-- SimpleHTTP server: usefull, it is in python, not very eficiente, just http
-server....
-- Medusa: usefull, very eficiente, just http server...
-- Twisted Matrix: very powerfull, fresh comunity, confusing documentation, a
-new paradigm, a devellopment tool.
-- Zope: powerfull, eficient, comes with battery included, bad documentation,
-to very paradigm oriented, the apps have to fit the paradigm, don't believe
-all the promises, strong enthousiast comunity, poor web examples.
-
-
-RodrigoB. 
-</t>
-<t tx="edream.110203163054.2030">https://sourceforge.net/forum/message.php?msg_id=2007962
-By: bwmulder
-
-Since no one else answered this question, let me take a first take on the
-question:
-
-If you are connected to the internet, people can use your IP number to connect
-to your computer. This IP number is often given dynamically, though some DSL
-providers give you fixed IP numbers for an additional fee. If you did not ask
-for fixed IP numbers, you probably have an dynamic IP number (I think).
-
-An IP number consist of four digits. A connection to the (example) IP number
-111.222.333.444 can by made via the request http://111.222.333.444
-
-If you have a dynamic IP number, and your Internet provider provides you with
-some space to publish HTML, you could, via a script, upload your current IP
-number dynamically.
-
-You might also consider buying a domain name. In this case, people can use the
-domain name to connect to your computer instead of the IP number.
-
-Another consideration are firewalls. Normally, you want a firewall isolating
-your computer from attacks from the Internet. I firewall can be some additional
-software. I am currently using a router, a piece of hardware, as a firewall.
-Windows XP has firewall software build in. You might have to configure your
-firewall to let requests for your server go through.
-
-Finally, you might want to check the agreement you entered with your Internet
-service provider, if you are allowed to run a server from your connection. It
-might become a problem if your server becomes very popular.
-</t>
-<t tx="edream.110203163054.2031">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2009279
-By: paulpaterson
-
-What I see Zope offering is an alternative way of storing and retrieving nodes.
-What you also get for "free" with Zope is concurrent access, security,
-http/ftp/webdav access to the same node information etc. The hidden price you
-pay is that Zope is big and many users will have other tools which can provide
-these facilities also.
-
-So, my thinking is that we can abstract the basic idea (alternative ways of
-storing and retrieving node information) into Leo and then let the magic really
-happen in the concrete implementation stage.
-
-What does this mean? Well, we could change Leo so that whenever it goes to retrieve
-Headline or Body it goes to a Node Server object to do that. The Node Server
-object uses whatever method it wants to retrieve or set the information. The
-Node server would also be responsible for telling Leo what child nodes an object
-has and whether they are clones or not.
-
-The cool part is that we could implement different kinds of Node server to talk
-to different back-ends. These can then be thought of as drivers. So we might
-have,
-
-- a file system driver where all information is stored in files and directories
-- a database driver where the DB stores all information
-- an ftp driver
-- a Zope driver
-- the default Leo driver
-
-People could write a driver to their own back end storage system. 
-
-What is the advantage of this?
-
-Well, the magic really happens in the back-end. If you choose a back end which
-supports versioning, security, concurrent working, web access, etc etc then
-Leo now supports them. If you choose a back-end which supports dynamic mark-up
-or some other fancy stuff then Leo supports it. The key is that Leo doesn't
-need to bind itself to any one system to achieve this - the end user can install
-the relevant driver, configure the back-end and just go with it.
-
-Paul
-</t>
-<t tx="edream.110203163054.2032">Ok, I'll have a bash in a rough order or when things occurred...
-
-
-1. Everything is web based. I had the same problem you did. I ran the
-thing and said, "ok, so what did it do". Others have pointed you in the
-right direction now with visiting http://localhost:8080 and
-http://localhost:8080/manage to view the site and mange it respectively.
-
-If you are running WinNT, 2000 or XP you can also run Zope as a service,
-which is much more convenient as you don't need the console window open
-all the time.
-
-
-2. Everything in Zope is an object. Ok, you'll see this a lot. The best
-thing to do is think "wow, cool" and then forget it again as you
-probably wont really see how this helps at all until you get much deeper
-into Zope. 
-
-
-3. DTML allows you to construct web pages by piecing together bits much
-like writing a program from functions. In fact you will find DTML is a
-lot like tangling Leo's @root nodes. Here's a bit...
-
-&lt;!-- start html --&gt;
-
-&lt;h&gt;DTML allows you to assemble web pages much like Leo tangles
-documents&lt;/h&gt;
-
-&lt;p&gt;For instance, have a look at how this page is constructed&lt;/p&gt;
-
-&lt;dtml-var first_bit&gt;
-&lt;dtml-var second_bit&gt;
-&lt;dtml-var third_bit&gt;
-
-&lt;!-- end html --&gt;
-
-The &lt;dtml-var name&gt; bit is like a &lt;&lt; name &gt;&gt; directive. It effectively
-inserts the object (could be HTML, an image or something more complex)
-in the current page. 
-
-To see this snippet in action you can visit my server at
-http://24.243.129.68:8080/members/sandbox/index_html
-
-To see the code, visit http://24.243.129.68:8080/members/sandbox/manage
-(username=edream, pwd=leo) and then click on the index_html to see the
-main DTML. Feel free to mess around in here but please don't publish the
-IP address as my ISP doesn't allow servers!
-
-
-4. There is a lot of power in Zope products. Try going to www.zope.org
-and seeing what is available. As an example I put a Wiki in the sandbox
-area http://24.243.129.68:8080/members/sandbox/edswiki
-
-
-5. If you are looking for a good book to begin with then steer clear of
-"The Zope Book"! If you don't mind paying then "The book of Zope" is a
-much better introduction. When you have read this then "The Zope Book"
-will make some sense but really I found this book tremendously hard to
-get through.
-
-
-6. Web standards are very cool! Zope supports FTP. Point your favourite
-FTP tool to,
-
-ftp://24.243.129.68:8021/members/sandbox/
-
-Or try using WebDav by creating a network place pointing to
-
-http://24.243.129.68:8080/members/sandbox
-
-You can then use windows explorer or an ftp tool to browse your objects.
-
-
-7. Everything is an object! I can't do justice to the concept of
-Acquisition here but by the time you have messed around with Zope a bit
-you should start to see how acquisition starts to make things really
-work like classes in Python. 
-
-
-I realize this isn't very coherent - if I get a spare moment this
-weekend I'll knock up a quick demo showing Leo interacting with Zope.
-
-Regards,
-
-Paul
-</t>
-<t tx="edream.110203163054.2033">Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2016634
-By: jasonic
-
-I have been thinking about LeoZopeWiki integration. I am a recovering Zope addict
-[1999-2001] :-)  I believe Zope offers a very valuable client and server for
-Leo.
-
-I think Ed higlighted the distinction of collboration vs. sharing. So consdering
-that re:  Leo and CVS , Leo and Zope, Leo and wikis, I had another idea this
-morning..
-
-LEO+JABBER
-
-Jabber is an open XML-based  instant messaging and *presence* system. Although
-Jabber is typically used for IM chat, its core designers have a much bigger
-vision in mind.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-CVS etc all depend on runing diff on posted static files which are checked in
-or out. Clearly valuable, and good for __sharing__ but not so suitable as the
-communication paradigm needed for collboration.
-
-Wikis and Zope all suffer from problem of versioning and the time delay and
-lack of timely communications to their cobtributors. There is no 'shared state'
-or persistence in the collaboration beyond their own files or objectdatabases.
-
-For example if two people want to edit a wiki or Zope site, they have an imeedaiet
-problem of knowing whether or not the someone else is working one it already.
-
-Score:
-Sharing 1
-Collaboration 0
-
-Two  or more people wanting to edit a common project based on Leo have the same
-dilemma. They can check the leo file into a wiki, Zope or CVS, but they still
-don't have direct communication at teh content level.
-
-score:
-Sharing 1
-Collaboration 0
-
-PROPOSAL: LeoJabber
-1. Integrate a Jabber client into Leo 
-2. Add special Leo module to jabberd [Jabber's server daemon]
-
-Leo-based developers could work in direct communication with each other allowing
-them to add, edit and comment nodes in a shared le-space, local or remote. Static
-publishing via upload/import etc all still apply.
-
-LeoJabber would mean subscribing developers could immediately be aware of changes
-and then apply whatever strategy is appropriate for handling them, such as:
- 
-a. autoUpdate()
-b. makeNewNode()
-c. runDiffFunctions()
-d. notifyPartners()
-e. notifyPublic()
-etc..
-
-Jabber via its presencing mechanism offers real-time and just-in time communcations.
-If you are logged out, then mesages are queued.
-
-An open Jabber message session is actually one long piece of XML data passed
-over an XMLSocket :-) Sounds like a great fit for Leo
-
-- All Jabber configs are XML.
-- Good smart open source community.
-- Similar open embracing philsophy as Leo
-- Jabber connects diverse messaging systems., MSN, AOL etc [Most are
-close/proprietary, though the trend is toward greater openness and connectivity]
-- Many Jabber clients already. There is even one written in Flash so that any
-webpage can participate.
-
-Embedding Jabber in Leo would allow 'discussion' threads to  be integrated.
-Developers need to bounce idea and notes around just as this forum does. But
-often they need to be more provate or more focused on project specifics.
-WORKFLOW 
-It is important to know  which code is uptodate, but arguably, even *more* important
-is to know which people and what discussions are uptodate. And if not, what
-their status is. The larger, longer the more global the develpoment office/project,
-the more this is true.
-
-IM [instant messaging] are popular largely becuae they offer direct communication
-with status feedback to crucial people's workflow:
-"off-line", "on-line", "back-soon", "later" etc
-
-Jabber extends this idea to create a platform for any presence application.
-That is its long term-goal.
-
-So in a Leo deevlopment project, that presence might apply to adding status
-mesages such as
-"making changes" "new version" "debugging" "review only" "major re-write"
-
-or perhaps status/presence woudl be used for much lower level Leo-specific
-purposes.
-
-"new node"
-"cloned to .."
-"@file imported"
-"version uploaded"
-etc
-
-I am not suggesting that Leo forget CVS or file upload storage. But I think
-Jabber may truly provide the Missing Link, literally for Leo collaboration.
-
-Jabber Software Foundation
-http://www.jabber.org/
-O'Reilly Book
-http://www.oreilly.com/catalog/jabber/
-Python Jabber library
-http://jabberpy.sourceforge.net/
-
-hope this makes sense
-Jason
-</t>
-<t tx="edream.110203163054.2034"></t>
-<t tx="edream.110203163054.2035"></t>
 <t tx="edream.110203163054.2036"></t>
 <t tx="edream.110203163054.2037">The code that checks whether leading and trailing have been supplied must check against None.  Otherwise, a leading or trailing value of zero will cause middle_lines to be miscalculated.</t>
 <t tx="edream.110203163054.2038">The commands now remember the scroll position so the screen doesn't hope around.</t>
@@ -24736,23 +24114,24 @@ Still to do:
 		file commands,
 		find commands,
 		tangle/untangle commands</t>
-<t tx="edream.110303182253.3">- Added df.fileChanged flag.  This is set by replaceTargetFileIfDifferent.
-
-- Separated the "written" logic from the "changed" logic.  We do an auto-save only if something has actually been changed.  The "written" logic is used to warn if a tree contains no @file nodes.</t>
+<t tx="edream.110303182253.3">Leo does an auto-save only if something has actually been changed.</t>
 <t tx="edream.110303182253.39"></t>
 <t tx="edream.110303182719">The config_encoding setting controls the encoding of non-ascii characters in leoConfig.txt.
 
 The use_gnx setting in leoConfig.txt determines whether uses gnx's (cvs friendly) or ints.  No version of Leo before 4.1 can read .leo files containing gnx.   Only gnx's are immutable.  Leo recomputes all non-gnx indices from scratch whenever writing a .leo file. It is possible to convert between 3.x and 4.1 file formats by changing the use_gnx setting.
 </t>
-<t tx="edream.110603185805">Leo 4.1 beta 1                   November 7, 2003
+<t tx="edream.110603185805">Leo 4.1 beta 2                   November 9, 2003
 
-This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+This is the second official release of the reorganized 4.1 code base.
+
+Beta 2 fixes a startup problem with Linux: "mbcs" is not a valid encoding.
+
+The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
 N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
 
 Highlights of 4.1:
 -----------------
-
 * Leo 4.1 includes several new commands:
   - script-based find/change commands: very powerful and flexible.
   - Hoist &amp; DeHoist commands for viewing parts of an outline.
@@ -24816,9 +24195,31 @@ The fix was simple: call setUndoParams instead of setUndoTypingParams in batchCh
 There still may be a problem with the interaction between Node-only,Change All and Undo.</t>
 <t tx="edream.110603190322.13">The fix was to open files with 'rb' instead of 'r'.  This probably should be done in more places.</t>
 <t tx="edream.110603190322.14">This command checks for unused tnodeLists and checks the topology of all clones.</t>
-<t tx="edream.110603190322.15">Hoisting itself is easy.  The biggest challenge was preventing moves outside the hoisted area, which would too confusing.</t>
+<t tx="edream.110603190322.15">The Hoist command redraws the screen so presently selected tree becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  The De-hoist command restores the outline.  Hoist commands may be nested.</t>
 <t tx="edream.110603190404"></t>
 <t tx="edream.110603192009"></t>
 <t tx="edream.110603192009.1"></t>
+<t tx="edream.110703093314">The Check Outline command checks the outline for consistency and warns if it finds dubious clones.</t>
+<t tx="edream.110703093314.1">The Hoist command redraws the screen so presently selected tree becomes the only visible part of the outline.  Leo prevents the you from moving nodes outside the hoisted outline.  The De-hoist command restores the outline.  Hoist commands may be nested.</t>
+<t tx="edream.110803170826">from leoGlobals import *
+import leoTest
+
+u = leoTest.testUtils()
+nodes = 0 ; lines = 0
+c = top()
+c.clearAllVisited()
+v = u.findNodeAnywhere(c,"Users Guide")
+after = v.nodeAfterTree()
+# trace(v,after)
+while v and v != after:
+	if not v.t.isVisited():
+		v.t.setVisited()
+		nodes += 1
+		lines += len(splitLines(v.bodyString()))
+	v = v.threadNext()
+	
+pages = ((nodes * 10) + lines) / 50
+print "nodes,lines,pages",nodes,lines,pages
+es("nodes,lines,pages",nodes,lines,pages)</t>
 </tnodes>
 </leo_file>

@@ -4,9 +4,11 @@ Leo is available at:  http://sourceforge.net/projects/leo/
 Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
 Leo will work on Linux, Windows and MacOs X Jaguar.
 
-Leo 4.1 beta 1                   November 7, 2003
+Leo 4.1 beta 2                   November 9, 2003
 
-This is the first official release of the reorganized 4.1 code base.  The code appears solid, and has not been widely tested.  Please use caution when using this code.
+This is the second official release of the reorganized 4.1 code base.  Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
+
+The code appears solid, and has not been widely tested.  Please use caution when using this code.
 
 N.B. By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.  Please read the following carefully if that concerns you.
 

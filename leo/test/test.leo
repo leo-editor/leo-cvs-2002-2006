@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2166" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2169" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="1" left="319" height="671" width="841"/>
+	<global_window_position top="66" left="66" height="728" width="960"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2378,7 +2378,7 @@
 <v t="edream.110203161858.1942"><vh>About drawing and updating</vh></v>
 <v t="edream.110203161858.1943"><vh>beginUpdate</vh></v>
 <v t="edream.110203161858.1944"><vh>drawBox (tag_bind)</vh></v>
-<v t="edream.110203161858.1945" a="M"><vh>drawIcon (tag_bind)</vh></v>
+<v t="edream.110203161858.1945"><vh>drawIcon (tag_bind)</vh></v>
 <v t="edream.110203161858.1946"><vh>Drawing routines (tree)...</vh>
 <v t="edream.110203161858.1947"><vh>redraw</vh></v>
 <v t="edream.110203161858.1948"><vh>force_redraw</vh></v>
@@ -2602,26 +2602,33 @@
 <v t="edream.110203161858.2107"><vh>reformatParagraph test</vh></v>
 <v t="edream.110203161858.2108" tnodeList="edream.110203161858.2108"><vh>@file c:\prog\test\UnicodeFileNames\Chineses\test.txt</vh></v>
 <v t="edream.110203161858.2109"><vh>@last ?&gt; problems</vh>
-<v t="edream.110203161858.2110" a="M" tnodeList="edream.110203161858.2110"><vh>@file c:\prog\test\atLastPHPTest.txt</vh></v>
+<v t="edream.110203161858.2110" tnodeList="edream.110203161858.2110"><vh>@file c:\prog\test\atLastPHPTest.txt</vh></v>
 </v>
 <v t="edream.110203161858.2111"><vh>Dialog tests</vh>
 <v t="edream.110203161858.2112"><vh>Test of app.gui.runAboutLeoDialog</vh></v>
 <v t="edream.110203161858.2113"><vh>Test of app.gui.runAskOkDialog</vh></v>
 <v t="edream.110203161858.2114"><vh>Test of app.gui.runAskOkCancelNumberDialog</vh></v>
 <v t="edream.110203161858.2115"><vh>Test of app.gui.runAskYesNoDialog</vh></v>
-<v t="edream.110203161858.2116" a="M"><vh>Test of app.gui.runAskYesNoCancelDialog</vh></v>
+<v t="edream.110203161858.2116"><vh>Test of app.gui.runAskYesNoCancelDialog</vh></v>
 </v>
 <v t="edream.110503093114"><vh>Binary file test</vh>
 <v t="edream.110403171311" tnodeList="edream.110403171311"><vh>@file c:\prog\test\binaryText.txt</vh></v>
 </v>
 <v t="edream.110203161858.2117"><vh>@nonl in @doc parts</vh>
-<v t="edream.110203161858.2118" a="M" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
+<v t="edream.110203161858.2118" tnodeList="edream.110203161858.2118"><vh>@file c:\prog\test\docTest.txt</vh></v>
 </v>
 </v>
 </v>
 <v t="edream.110203161858.2102"><vh>Scripts...</vh>
 <v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
 <v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
+<v t="edream.110803170022"><vh>Count pages</vh></v>
+</v>
+<v t="edream.110503215752"><vh>Find scripts to convert @doc comments to doc strings</vh>
+<v t="edream.110503231822"><vh>Find script</vh></v>
+<v t="edream.110503231822.1"><vh>Change script</vh></v>
+<v t="edream.110503215752.1"><vh>re tests</vh></v>
+<v t="edream.110503161232"><vh>early find script</vh></v>
 </v>
 <v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
@@ -2665,22 +2672,24 @@
 <v t="edream.110203161858.2151"><vh>moveOutlineRight</vh></v>
 <v t="edream.110203161858.2152"><vh>moveOutlineUp</vh></v>
 </v>
+<v t="edream.110903064653"><vh>testLeoFiles</vh>
+<v t="edream.110903064653.1"><vh>c:\prog\leoCvs\leo\test\test.leo</vh></v>
+<v t="edream.110903064653.2"><vh>c:\prog\leoCvs\leo\src\LeoPy.leo</vh></v>
+<v t="edream.110903064653.3"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
+<v t="edream.110903064653.4"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
+</v>
 </v>
 <v t="edream.110203161858.2153"><vh>Drivers</vh>
+<v t="edream.110903064653.5"><vh>run testLeo tests</vh></v>
 <v t="edream.110203161858.2154"><vh>run color tests</vh></v>
 <v t="edream.110203161858.2155"><vh>run edit body tests</vh></v>
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
 </v>
-<v t="edream.110503215752"><vh>Find scripts to convert @doc comments to doc strings</vh>
-<v t="edream.110503231822"><vh>Find script</vh></v>
-<v t="edream.110503231822.1"><vh>Change script</vh></v>
-<v t="edream.110503215752.1"><vh>re tests</vh></v>
-<v t="edream.110503161232"><vh>early find script</vh></v>
-</v>
-<v t="edream.110703023327" a="EV"><vh>Distribution checklist for 4.1 beta 1</vh>
-<v t="edream.110703023327.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
+<v t="edream.110903121744"><vh>Latex colorizer</vh></v>
+<v t="edream.111103045130" a="V"><vh>Undo typing test</vh></v>
+<v t="edream.111103091713"><vh>Test of match brackets</vh></v>
+<v t="edream.111303082913"><vh>Redirect script output</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -2699,6 +2708,7 @@ Documentation
 Version numbers
 	- Update version number in Help menu.
 	- Update version number in setup.py (@ignore'd!!)
+	** Make sure the top-level directory has no spaces in its name.
 @color
 
 if 1: # Save all files and tangle leoConfig.leo
@@ -2895,8 +2905,10 @@ maxReferences = 500
 ignoreStandardLibrary = 1 # EKR
 
 # list of strings: ignore unused locals/arguments if name is one of
-unusedNames = [ '_', 'empty', 'unused', 'dummy', 'event', 's', 'i', 'commander', 'tag']
-
+unusedNames = [
+	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
+	'c', 'i', 'j', 'k', 's',
+	'tag', 'args', 'keys', 'keywords']
 
 # list of strings: ignore warnings generated from these modules
 blacklist = [ 'leoGlobals', 'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
@@ -3998,9 +4010,7 @@ class LeoApp:
 	
 	Ivars of this class are Leo's global variables."""
 	
-	@others
-
-</t>
+	@others</t>
 <t tx="edream.110203161858.116">def __init__(self, root):
 
 	# These ivars are the global vars of this program.
@@ -33707,7 +33717,11 @@ This is a test of \LaTeX mode.
 @ blah blah blah
 @c
 
-\c and \LaTeX are latex keywords.</t>
+\c and \LaTeX are latex keywords.
+
+This is a keyword \% not the start of a comment.
+
+More keywords: \@ and \( and \) and \{ and \}</t>
 <t tx="edream.110203161858.2133">@ignore
 @ doc
 @c
@@ -33957,7 +33971,10 @@ mainSuite.addTest(colorSuite)
 	
 editBodySuite = leoTest.makeEditBodySuite("editBodyTests","tempNode")
 mainSuite.addTest(editBodySuite)
-	
+
+testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("cloneTestLeoFiles")
+mainSuite.addTest(testLeoFilesSuite)
+
 if 0: # not ready yet.
 	outlineSuite = leoTest.makeOutlineSuite("outlineTests")
 	mainSuite.addTest(outlineSuite)
@@ -34097,40 +34114,53 @@ if m:
 	oldText = v.bodyString()
 	v.setBodyStringOrPane(s,encoding=app.tkEncoding)
 	c.frame.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.</t>
-<t tx="edream.110703023327">@color
+<t tx="edream.110803170022">from leoGlobals import *
+import leoTest
 
-if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
+u = leoTest.testUtils()
+nodes = 0 ; lines = 0
+c = top()
+c.clearAllVisited()
+v = u.findNodeAnywhere(c,"Tests...")
+after = v.nodeAfterTree()
+trace(v,after)
+while v and v != after:
+	if not v.t.isVisited():
+		v.t.setVisited()
+		nodes += 1
+		lines += len(splitLines(v.bodyString()))
+	v = v.threadNext()
+	
+pages = ((nodes * 10) + lines) / 50
+print "nodes,lines,pages",nodes,lines,pages
+es("nodes,lines,pages",nodes,lines,pages)
+</t>
+<t tx="edream.110903064653"></t>
+<t tx="edream.110903064653.1"></t>
+<t tx="edream.110903064653.2"></t>
+<t tx="edream.110903064653.3"></t>
+<t tx="edream.110903064653.4"></t>
+<t tx="edream.110903064653.5"># To do: use a null-gui to open the .leo files.
 
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
+import unittest
+import leoTest
+reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 
-@nocolor
-Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
+suite = testLeoFilesSuite = leoTest.makeTestLeoFilesSuite("testLeoFiles")
+runner = unittest.TextTestRunner()
+runner.run(suite)</t>
+<t tx="edream.110903121744">@language latex
 
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
+Test \% test.</t>
+<t tx="edream.111103045130"></t>
+<t tx="edream.111103091713">def abc(self)
 
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="edream.110703023327.2"></t>
+{
+	( ABC abc)
+	
+}
+</t>
+<t tx="edream.111303082913">from leoGlobals import *
+print app.config.redirect_execute_script_output_to_log_pane</t>
 </tnodes>
 </leo_file>
