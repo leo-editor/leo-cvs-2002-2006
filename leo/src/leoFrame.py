@@ -231,8 +231,7 @@ class baseLeoFrame:
 		
 		self.body = body = Tk.Text(split1Pane2,name='body',
 			bd=2,bg="white",relief="flat",
-			setgrid=1,wrap=wrap, selectbackground="Gray80")
-		
+			setgrid=1,wrap=wrap, selectbackground="Gray80") 
 		self.setBodyFontFromConfig()
 		
 		self.bodyBar = bodyBar = Tk.Scrollbar(split1Pane2,name='bodyBar')

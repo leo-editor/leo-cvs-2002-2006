@@ -10,6 +10,7 @@ class baseLeoFontPanel:
 	"""The base class for Leo's font panel."""
 
 	#@+others
+	#@+node:1::Birth & Death
 	#@+node:1::fontPanel.__init__
 	#@+body
 	def __init__ (self,c):
@@ -99,7 +100,7 @@ class baseLeoFontPanel:
 			("Bold",self.boldVar),
 			("Italic",self.italVar)):
 		
-			b = Tk.Checkbutton(rt,text=text,variable=var,command=self.update)
+			b = Tk.Checkbutton(rt,text=text,variable=var) # ,command=self.update)
 			b.pack(side="top",anchor="w")
 		
 		# Create the size label and entry widget.
@@ -114,34 +115,37 @@ class baseLeoFontPanel:
 		e.bind("<Key>",self.onSizeEntryKey)
 		
 		# Create the pane checkboxes.
-		for text,var,command in (
-			("Body",self.bodyVar,self.onBodyBoxChanged),
-			("Outline",self.treeVar,self.onTreeBoxChanged),
-			("Log",self.logVar,self.onLogBoxChanged)):
-				
-			b = Tk.Checkbutton(rt,text=text,variable=var,command=command)
+		for text,var in (
+			("Body",   self.bodyVar),
+			("Outline",self.treeVar,),
+			("Log",    self.logVar)):
+		
+			b = Tk.Checkbutton(rt,text=text,variable=var)
 			b.pack(side="top",anchor="w")
 		#@-body
 		#@-node:3::<< create the checkboxes >>
 
 		
-		#@<< create Ok, Cancel and Revert buttons >>
-		#@+node:4::<< create Ok, Cancel and Revert buttons >>
+		#@<< create the buttons >>
+		#@+node:4::<< create the buttons >>
 		#@+body
 		for name,command in (
+			("Apply",self.onApply),
 			("OK",self.onOk),
 			("Cancel",self.onCancel),
 			("Revert",self.onRevert)):
 				
 			b = Tk.Button(lower,width=7,text=name,command=command)
-			b.pack(side="left",anchor="w",pady=6,padx=4,expand=0) #,fill="y")
+			b.pack(side="left",anchor="w",pady=6,padx=4,expand=0)
 		#@-body
-		#@-node:4::<< create Ok, Cancel and Revert buttons >>
+		#@-node:4::<< create the buttons >>
 	#@-body
 	#@-node:2::create_outer
 	#@+node:3::finishCreate
 	#@+body
 	def finishCreate (self):
+		
+		# self.commands.frame.top.resizable(0,0)
 		
 		# These do not get changed when reverted.
 		self.bodyVar.set(1)
@@ -151,10 +155,133 @@ class baseLeoFontPanel:
 		# All other vars do change when reverted.
 		self.revertIvars()
 		self.update()
-	
 	#@-body
 	#@-node:3::finishCreate
-	#@+node:4::getActiveFont
+	#@-node:1::Birth & Death
+	#@+node:2::Buttons
+	#@+node:1::onApply
+	#@+body
+	def onApply (self):
+		
+		self.update()
+	
+	#@-body
+	#@-node:1::onApply
+	#@+node:2::onCancel
+	#@+body
+	def onCancel (self):
+	
+		c = self.commands
+		self.onRevert()
+		self.showSettings()
+		self.hide()
+	#@-body
+	#@-node:2::onCancel
+	#@+node:3::onOk
+	#@+body
+	def onOk (self):
+	
+		c = self.commands
+		self.showSettings()
+		
+		
+		#@<< update the configuration settings >>
+		#@+node:1::<< update the configuration settings >>
+		#@+body
+		set = app().config.setWindowPref
+		
+		fn = c.body.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		set("body_text_font_family",name)
+		set("body_text_font_size",size)
+		set("body_text_font_slant",slant)
+		set("body_text_font_weight",weight)
+			
+		fn = c.log.cget("font")
+		font = tkFont.Font(font=fn)
+		name,size,slant,weight = self.getFontSettings(font)
+		set("log_text_font_family",name)
+		set("log_text_font_size",size)
+		set("log_text_font_slant",slant)
+		set("log_text_font_weight",weight)
+			
+		font = c.tree.getFont()
+		name,size,slant,weight = self.getFontSettings(font)
+		set("headline_text_font_family",name)
+		set("headline_text_font_size",size)
+		set("headline_text_font_slant",slant)
+		set("headline_text_font_weight",weight)
+		#@-body
+		#@-node:1::<< update the configuration settings >>
+
+	
+		self.setRevertVars()
+		self.hide()
+	#@-body
+	#@-node:3::onOk
+	#@+node:4::onRevert
+	#@+body
+	def onRevert (self):
+	
+		c = self.commands
+		c.body.configure(font=self.revertBodyFont)
+		c.log.configure (font=self.revertLogFont)
+		c.tree.setFont  (font=self.revertTreeFont)
+		c.redraw()
+		self.revertIvars()
+		# Don't call update here.
+	#@-body
+	#@-node:4::onRevert
+	#@-node:2::Buttons
+	#@+node:3::Events
+	#@+node:1::selectFont
+	#@+body
+	def selectFont (self,font):
+		
+		box = self.family_list_box
+		
+		# All selections come here.
+		self.last_selected_font = font
+	
+		# The name should be on the list!
+		name, size, slant, weight = self.getFontSettings(font)
+		for i in xrange(0,box.size()):
+			item = box.get(i)
+			if name == item:
+				box.select_clear(0,"end")
+				box.select_set(i)
+				box.see(i)
+				self.last_selected_font = font
+				# trace(name)
+				return
+		# print "not found:" + name
+	#@-body
+	#@-node:1::selectFont
+	#@+node:2::onSizeEntryKey
+	#@+body
+	def onSizeEntryKey (self,event=None):
+		
+		self.size_entry.after_idle(self.idle_entry_key)
+		
+	def idle_entry_key (self):
+		
+		size = self.size_entry.get() # Doesn't work until idle time.
+		try:
+			size = int(size)
+			self.sizeVar.set(size)
+		except: # The user typed an invalid number.
+			return
+	
+		if 0: # This is too upsetting.
+			# trace(`size`)
+			if 0 < size < 100: # Choosing very small or large fonts drives Tk crazy.
+				self.update()
+	#@-body
+	#@-node:2::onSizeEntryKey
+	#@-node:3::Events
+	#@+node:4::Helpers
+	#@+node:1::getActiveFont
 	#@+body
 	#@+at
 	#  Returns a font corresponding to present visual state of the font 
@@ -208,8 +335,8 @@ class baseLeoFontPanel:
 		self.selectFont(font)
 		return font
 	#@-body
-	#@-node:4::getActiveFont
-	#@+node:5::getFontSettings
+	#@-node:1::getActiveFont
+	#@+node:2::getFontSettings
 	#@+body
 	def getFontSettings (self, font):
 	
@@ -220,8 +347,8 @@ class baseLeoFontPanel:
 	
 		return name, size, slant, weight
 	#@-body
-	#@-node:5::getFontSettings
-	#@+node:6::getImpliedFont
+	#@-node:2::getFontSettings
+	#@+node:3::getImpliedFont
 	#@+body
 	# If a single pane's checkbox is checked, select that pane's present font.
 	# Otherwise, select the present font of some checked pane, it doesn't much matter which.
@@ -251,128 +378,25 @@ class baseLeoFontPanel:
 		else:      font = bodyFont
 		return font
 	#@-body
-	#@-node:6::getImpliedFont
-	#@+node:7::on...BoxChanged
+	#@-node:3::getImpliedFont
+	#@+node:4::hide
 	#@+body
-	#@+at
-	#  We define these routines so that changing one pane box affects only 
-	# that pane.
-	# 
-	# When we turn a box on, we expect that the present font will instantly 
-	# apply to the new pane, and when we turn a box off we call implied font 
-	# to see which font should be highlighted and we revert the pane's font. 
-	# It is crucial that unchecking a box be equivalent to a "small revert".  
-	# This is the _only_ scheme that isn't confusing to the user.
-	# 
-	# Note: if we just called update instead of these routines we could do 
-	# something unexpected after after a revert.  For example, suppose all 
-	# three pane boxes are checked and we do a revert.  If we then uncheck a 
-	# box, we expect only that pane to change, but if we call update the other 
-	# two panes might also change...
-
-	#@-at
-	#@@c
-	def onBodyBoxChanged(self):
-		font = choose(self.bodyVar.get(),
-			self.getActiveFont(),self.revertBodyFont)
-		self.commands.body.configure(font=font)
-	
-	def onLogBoxChanged(self):
-		font = choose(self.logVar.get(),
-			self.getActiveFont(),self.revertLogFont)
-		self.commands.log.configure(font=font)
-			
-	def onTreeBoxChanged(self):
-		c = self.commands
-		font = choose(self.treeVar.get(),
-			self.getActiveFont(),self.revertTreeFont)
-		c.tree.setFont(font=font)
-		c.redraw()
-	#@-body
-	#@-node:7::on...BoxChanged
-	#@+node:8::leoFont.onOk, onCancel, onRevert
-	#@+body
-	def onOk (self):
-		c = self.commands
-		self.showSettings()
+	def hide (self):
 		
-		#@<< update the configuration settings >>
-		#@+node:1::<< update the configuration settings >>
-		#@+body
-		set = app().config.setWindowPref
+		"""Hide the font panel."""
 		
-		fn = c.body.cget("font")
-		font = tkFont.Font(font=fn)
-		name,size,slant,weight = self.getFontSettings(font)
-		set("body_text_font_family",name)
-		set("body_text_font_size",size)
-		set("body_text_font_slant",slant)
-		set("body_text_font_weight",weight)
-			
-		fn = c.log.cget("font")
-		font = tkFont.Font(font=fn)
-		name,size,slant,weight = self.getFontSettings(font)
-		set("log_text_font_family",name)
-		set("log_text_font_size",size)
-		set("log_text_font_slant",slant)
-		set("log_text_font_weight",weight)
-			
-		font = c.tree.getFont()
-		name,size,slant,weight = self.getFontSettings(font)
-		set("headline_text_font_family",name)
-		set("headline_text_font_size",size)
-		set("headline_text_font_slant",slant)
-		set("headline_text_font_weight",weight)
-		#@-body
-		#@-node:1::<< update the configuration settings >>
-
-		self.setRevertVars()
-		if 1: # Hide the window, preserving its position.
-			self.top.withdraw()
-		else: # works.
-			self.commands.frame.fontPanel=None
-			self.top.destroy()
-	
-	def onCancel (self):
 		c = self.commands
-		self.onRevert()
-		self.showSettings()
+		
+		# c.frame.top.resizable(1,1)
+		
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
 			c.frame.fontPanel=None
 			self.top.destroy()
-		
-	def onRevert (self):
-		c = self.commands
-		c.body.configure(font=self.revertBodyFont)
-		c.log.configure (font=self.revertLogFont)
-		c.tree.setFont  (font=self.revertTreeFont)
-		c.redraw()
-		self.revertIvars()
-		# Don't call update here.
 	#@-body
-	#@-node:8::leoFont.onOk, onCancel, onRevert
-	#@+node:9::onSizeEntryKey
-	#@+body
-	def onSizeEntryKey (self,event=None):
-		
-		self.size_entry.after_idle(self.idle_entry_key)
-		
-	def idle_entry_key (self):
-		
-		size = self.size_entry.get() # Doesn't work until idle time.
-		try:
-			size = int(size)
-		except: # This just means the user didn't type a valid number.
-			return
-		# trace(`size`)
-		self.sizeVar.set(size)
-		if 0 < size < 100: # Choosing very small or large fonts drives Tk crazy.
-			self.update()
-	#@-body
-	#@-node:9::onSizeEntryKey
-	#@+node:10::revertIvars
+	#@-node:4::hide
+	#@+node:5::revertIvars
 	#@+body
 	def revertIvars (self):
 		
@@ -400,8 +424,8 @@ class baseLeoFontPanel:
 		e.delete(0,"end")
 		e.insert(0,`size`)
 	#@-body
-	#@-node:10::revertIvars
-	#@+node:11::run
+	#@-node:5::revertIvars
+	#@+node:6::run
 	#@+body
 	def run (self):
 		
@@ -427,31 +451,8 @@ class baseLeoFontPanel:
 			top.grab_set()
 			top.focus_force() # Get all keystrokes.
 	#@-body
-	#@-node:11::run
-	#@+node:12::selectFont
-	#@+body
-	def selectFont (self,font):
-		
-		box = self.family_list_box
-		
-		# All selections come here.
-		self.last_selected_font = font
-	
-		# The name should be on the list!
-		name, size, slant, weight = self.getFontSettings(font)
-		for i in xrange(0,box.size()):
-			item = box.get(i)
-			if name == item:
-				box.select_clear(0,"end")
-				box.select_set(i)
-				box.see(i)
-				self.last_selected_font = font
-				# trace(name)
-				return
-		# print "not found:" + name
-	#@-body
-	#@-node:12::selectFont
-	#@+node:13::setRevertVars
+	#@-node:6::run
+	#@+node:7::setRevertVars
 	#@+body
 	def setRevertVars (self):
 		
@@ -466,8 +467,8 @@ class baseLeoFontPanel:
 		
 		self.revertTreeFont = c.tree.getFont()
 	#@-body
-	#@-node:13::setRevertVars
-	#@+node:14::showSettings
+	#@-node:7::setRevertVars
+	#@+node:8::showSettings
 	#@+body
 	# Write all settings to the log panel.
 	# Note that just after a revert all three setting may be different.
@@ -490,37 +491,58 @@ class baseLeoFontPanel:
 		name,size,slant,weight = self.getFontSettings(font)
 		es("headline font:" + name + "," + `size` + "," + slant + "," + weight)
 	#@-body
-	#@-node:14::showSettings
-	#@+node:15::update
+	#@-node:8::showSettings
+	#@+node:9::update
 	#@+body
-	# Updates size box and example box when something changes.
-	
 	def update (self,event=None):
+		
+		"""Update the body text to show the present settings."""
 		
 		c = self.commands
 		size = self.sizeVar.get()
 		
-		# Insert the new text in the size box.
+		#@<< insert the new text in the size box >>
+		#@+node:1::<< insert the new text in the size box >>
+		#@+body
 		e = self.size_entry
 		e.delete(0,"end")
 		e.insert(0,`size`)
-		
-		font = self.getActiveFont()
-		
-		if not self.bodyVar.get() and not self.logVar.get() and not self.treeVar.get():
-			es("no pane selected")
+		#@-body
+		#@-node:1::<< insert the new text in the size box >>
+
+		activeFont = self.getActiveFont()
+		bodyChecked = self.bodyVar.get()
+		logChecked = self.logVar.get()
+		treeChecked = self.treeVar.get()
 	
-		f = choose(self.bodyVar.get(),font,self.revertBodyFont)
-		self.commands.body.configure(font=f)
+		if not bodyChecked and not logChecked and not treeChecked:
+			es("no pane selected")
+			return
+	
+		c.frame.body.configure(setgrid=0) # Disable body resizes.
+		c.beginUpdate()
 		
-		f = choose(self.logVar.get(),font,self.revertLogFont)
-		self.commands.log.configure(font=f)
+		#@<< set the fonts in all panes >>
+		#@+node:2::<< set the fonts in all panes >>
+		#@+body
+		font = choose(bodyChecked,activeFont,self.revertBodyFont)
+		c.body.configure(font=font)
 		
-		f = choose(self.treeVar.get(),font,self.revertTreeFont)
-		c.tree.setFont(font=f)
-		c.redraw()
+		font = choose(logChecked,activeFont,self.revertLogFont)
+		c.log.configure(font=font)
+		
+		font = choose(treeChecked,activeFont,self.revertTreeFont)
+		c.tree.setFont(font=font)
+		#@-body
+		#@-node:2::<< set the fonts in all panes >>
+
+		c.endUpdate()
+		c.frame.body.configure(setgrid=1) # Enable body resizes.
+		self.top.deiconify()
+		self.top.lift()
 	#@-body
-	#@-node:15::update
+	#@-node:9::update
+	#@-node:4::Helpers
 	#@-others
 
 	
