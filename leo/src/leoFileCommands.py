@@ -798,8 +798,8 @@ class baseFileCommands:
 			v.setOrphan()
 		
 		if setTop:
-			c.mTopVnode = v  # Not used at present.
-		
+			self.topVnode = v # 1/30/04
+		#@nonl
 		#@-node:<< Set the remembered status bits >>
 		#@nl
 		# Recursively create all nested nodes.
@@ -980,10 +980,10 @@ class baseFileCommands:
 		c.frame.deiconify()
 		vflag,junk,secondary_ratio = self.frame.initialRatios()
 		c.frame.resizePanesToRatio(ratio,secondary_ratio)
-		# This should be done after the pane size has been set.
-		if 0: # This can not be done at present.
+		if 0: # 1/30/04: this is useless.
+			# This should be done after the pane size has been set.
 			if self.topVnode:
-				c.frame.tree.scrollTo(self.topVnode)
+				c.frame.tree.setTopVnode(self.topVnode)
 				c.redraw()
 		# delete the file buffer
 		self.fileBuffer = ""
@@ -1015,21 +1015,13 @@ class baseFileCommands:
 		#@nonl
 		#@-node:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
+		self.topVnode = None
 		c.beginUpdate()
 		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
 		frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
-		#@	<< Make the top node visible >>
-		#@+node:<< Make the top node visible >>
-		if 0: # This can't be done directly.
-		
-			# This should be done after the pane size has been set.
-			top = c.frame.tree.topVnode()
-		
-			if top:
-				c.frame.tree.scrollTo(top)
-		#@nonl
-		#@-node:<< Make the top node visible >>
-		#@nl
+		if 0: # 1/30/04: this is useless.
+			if self.topVnode: 
+				c.frame.tree.setTopVnode(self.topVnode)
 		c.endUpdate()
 		# delete the file buffer
 		self.fileBuffer = ""
@@ -1535,17 +1527,18 @@ class baseFileCommands:
 		#@	<< Put attribute bits >>
 		#@+node:<< Put attribute bits >>
 		current = c.currentVnode()
-		top = topVnode
-		if ( v.isCloned() or v.isExpanded() or v.isMarked() or
-			v == current or v == top ):
+		if (
+			v.isExpanded() or
+			v.isMarked() or
+			v == current or
+			v == topVnode
+		):
 			fc.put(" a=") ; fc.put_dquote()
-			if 0: # 10/25/03: Clone bits are never used.
-				if v.isCloned(): fc.put("C")
 			if v.isExpanded(): fc.put("E")
-			if v.isMarked(): fc.put("M")
-			if v.isOrphan(): fc.put("O")
-			if v == top: fc.put("T")
-			if v == current: fc.put("V")
+			if v.isMarked():   fc.put("M")
+			if v.isOrphan():   fc.put("O")
+			if v == topVnode:  fc.put("T")
+			if v == current:   fc.put("V")
 			fc.put_dquote()
 		#@nonl
 		#@-node:<< Put attribute bits >>
@@ -1604,10 +1597,11 @@ class baseFileCommands:
 				None) # Don't write top vnode status bit.
 		else: 
 			v = c.rootVnode()
+			top = c.frame.tree.topVnode()
 			while v:
 				self.putVnode(
-					v, # Write the next top-level node.
-					c.frame.tree.topVnode()) # Write the top-vnode status bit.
+					v,   # Write the next top-level node.
+					top) # Write the top-vnode status bit.
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@nonl
