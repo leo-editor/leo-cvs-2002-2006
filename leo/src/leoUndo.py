@@ -1064,8 +1064,8 @@ class baseUndoer:
 		copies = []
 	
 		# For each node joined to v, swap in a copy of oldv.
-		trace("old" + `oldv.t.joinList`)
-		trace("new" + `v.t.joinList`)
+		# trace("old" + `oldv.t.joinList`)
+		# trace("new" + `v.t.joinList`)
 		joinList = v.t.joinList[:] # Copy the join list: it will change.
 		for j in joinList:
 			if j != v:
