@@ -18,7 +18,7 @@ import sys
 #@nonl
 #@-node:ekr.20050218024153:<< imports >>
 #@nl
-__version__ = "1.7"
+__version__ = "1.8"
 #@<< version history >>
 #@+node:ekr.20050218024153.1:<< version history >>
 #@@killcolor
@@ -31,8 +31,12 @@ __version__ = "1.7"
 #     - Added init method.
 # 1.6 MCM
 #     - Added sections from Vim mode and some clean-up.
-# 1.7 EKR
+# 1.7 EKR:
 #     - Select _emacs_cmd using sys.platform.
+# 1.8 EKR:
+#     - Get c from keywords, not g.top().
+#     - Simplified the search of g.app.openWithFiles.
+#     - Fixed bug in open_in_emacs: hanged v.bodyString to v.bodyString()
 #@-at
 #@nonl
 #@-node:ekr.20050218024153.1:<< version history >>
@@ -62,58 +66,50 @@ def init ():
         leoPlugins.registerHandler("icondclick2", open_in_emacs)
     else: # Open on single click: interferes with dragging.
         leoPlugins.registerHandler("iconclick2", open_in_emacs,val=True)
-    
-    
+
     if g.app.unitTesting:
         os.system(_emacs_cmd)
     
     g.plugin_signon(__name__)
     
     return ok
-    
-
-def open_in_emacs (tag,keywords,val=None):
-    
-    c = g.top()
-    if not c: return
-    p = keywords.get("p")
-    if not p: return
-    v = p.v
-
-    # Find dictionary with infos about this node
-    this=filter(lambda x: id(x['v'])==id(v),g.app.openWithFiles)
-    
-    # Retrieve the name of the temporary file (if any).
-    if this != []:  path=this[0]['path']
-    else:           path=''
-
-    # if the body has changed we need to open a new 
-    # temp file containing the new body in emacs
-    if  not g.os_path_exists(path) or \
-        not hasattr(v,'OpenWithOldBody') or \
-        v.bodyString!=v.OpenWithOldBody:
-        # if there is an old temp file we need to delete it,
-        # remove it from the dictionary and delete the old
-        # buffer
-        if path != '':
-            os.remove(path)
-            g.app.openWithFiles=filter(lambda x: x['path']!=path,g.app.openWithFiles)
-            os.system(_emacs_cmd)
-        # update old body with new contents
-        v.OpenWithOldBody=v.bodyString()
-        # open the node in emacs (note the space after _emacs_cmd)
-        g.top().openWith(("os.spawnl", _emacs_cmd, None),) #mcm 9/III/05
-    # else, display the old temp file in vim because other files 
-    # may have been opened in the meantime
-    else:
-        # We reopen the file. if it is still open, the buffer is raised
-        # if the changes to the current buffer were not saved, vim will
-        # notify the user of that fact at this point
-        os.system(_emacs_cmd)
-        
-    return val
 #@nonl
 #@-node:ekr.20050218023308:init
+#@+node:ekr.20050313071202:open_in_emacs
+def open_in_emacs (tag,keywords,val=None):
+    
+    c = keywords.get('c')
+    p = keywords.get('p')
+    if not c or not p: return
+    v = p.v
+
+    # Search g.app.openWithFiles for a file corresponding to v.
+    for d in g.app.openWithFiles:
+        if d.get('v') == id(v):
+            path = d.get('path','') ; break
+    else: path = ''
+
+    if (
+        not g.os_path_exists(path) or
+        not hasattr(v,'OpenWithOldBody') or
+        v.bodyString() != v.OpenWithOldBody
+    ):
+        # Open a new temp file.
+        if path:
+            # Remove the old file and the entry in g.app.openWithFiles.
+            os.remove(path)
+            g.app.openWithFiles = [d for d in g.app.openWithFiles if d.get('path') != path]
+            os.system(_emacs_cmd)
+        v.OpenWithOldBody=v.bodyString() # Remember the old contents
+        # open the node in emacs (note the space after _emacs_cmd)
+        c.openWith(("os.spawnl", _emacs_cmd, None),) # mcm 9/III/05
+    else:
+        # Reopen the old temp file.
+        os.system(_emacs_cmd)
+
+    return val
+#@nonl
+#@-node:ekr.20050313071202:open_in_emacs
 #@-others
 #@nonl
 #@-node:EKR.20040517075715.12:@thin xemacs.py
