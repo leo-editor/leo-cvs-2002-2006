@@ -2068,14 +2068,16 @@ class position (object):
         
         t = p.edit_text()
         
-        p.v.initHeadString(s,encoding)
-        
-        c.endEditing()
+        p.initHeadString(s,encoding)
     
         if t:
-            g.trace(s)
+            
+            state = t.cget("state")
+            # g.trace(state,s)
+            t.configure(state="normal")
             t.delete("1.0","end")
             t.insert("end",s)
+            t.configure(state=state)
     
         p.setDirty()
     #@nonl
