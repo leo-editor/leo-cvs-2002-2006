@@ -1252,7 +1252,7 @@ class nullBody (leoBody):
         self.s = self.s[:i] + s + self.s[i:]
     #@nonl
     #@-node:ekr.20031218072017.2214:Insert...
-    #@+node:ekr.20031218072017.2215:setSelectionAreas
+    #@+node:ekr.20031218072017.2215:setSelectionAreas (nullFrame)
     def setSelectionAreas (self,before,sel,after):
         
         if before is None: before = ""
@@ -1263,7 +1263,7 @@ class nullBody (leoBody):
         
         self.selection = len(before), len(before) + len(sel)
     #@nonl
-    #@-node:ekr.20031218072017.2215:setSelectionAreas
+    #@-node:ekr.20031218072017.2215:setSelectionAreas (nullFrame)
     #@-node:ekr.20031218072017.2208:Text
     #@+node:ekr.20031218072017.2216:Visibility & scrolling
     def makeIndexVisible (self,index):

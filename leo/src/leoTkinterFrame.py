@@ -2132,7 +2132,7 @@ class leoTkinterBody (leoFrame.leoBody):
             pass
     #@nonl
     #@-node:ekr.20031218072017.4023:selectAllText
-    #@+node:ekr.20031218072017.4024:setTextSelection
+    #@+node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
     def setTextSelection (self,i,j=None):
         
         # Allow the user to pass either a 2-tuple or two separate args.
@@ -2143,7 +2143,7 @@ class leoTkinterBody (leoFrame.leoBody):
     
         g.app.gui.setTextSelection(self.bodyCtrl,i,j)
     #@nonl
-    #@-node:ekr.20031218072017.4024:setTextSelection
+    #@-node:ekr.20031218072017.4024:setTextSelection (tkinterBody)
     #@-node:ekr.20031218072017.4018:Selection
     #@+node:ekr.20031218072017.4025:Text
     #@+node:ekr.20031218072017.4026:delete...
@@ -2309,7 +2309,7 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.4036:insertAtStartOfLine
     #@-node:ekr.20031218072017.4033:Insert...
-    #@+node:ekr.20031218072017.4037:setSelectionAreas
+    #@+node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
     def setSelectionAreas (self,before,sel,after):
         
         """Replace the body text by before + sel + after and
@@ -2335,7 +2335,7 @@ class leoTkinterBody (leoFrame.leoBody):
         
         return t.index(sel_start), t.index(sel_end)
     #@nonl
-    #@-node:ekr.20031218072017.4037:setSelectionAreas
+    #@-node:ekr.20031218072017.4037:setSelectionAreas (tkinterBody)
     #@-node:ekr.20031218072017.4025:Text
     #@+node:ekr.20031218072017.4038:Visibility & scrolling
     def makeIndexVisible (self,index):

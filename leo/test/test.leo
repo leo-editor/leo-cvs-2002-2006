@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5714" clone_windows="0"/>
 <globals body_outline_ratio="0.5561861521">
-	<global_window_position top="30" left="143" height="881" width="856"/>
+	<global_window_position top="30" left="285" height="881" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -57,7 +57,7 @@
 </v>
 <v t="ekr.20040708205841"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
-<v t="ekr.20040409140301" a="E"><vh>clone test</vh>
+<v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
 <v t="ekr.20040409140301.2"><vh>c</vh>
 <v t="ekr.20040409142108"><vh>firstChild</vh></v>
@@ -149,7 +149,7 @@
 <v t="ekr.20040325140133"><vh>test that childIndex doesn't mess with p</vh></v>
 <v t="ekr.20040325155043"><vh>Test of __cmp__ vrs equal</vh></v>
 <v t="EKR.20040615070332"><vh>Test print</vh></v>
-<v t="ekr.20040711140206" a="E"><vh>String-based imports...</vh>
+<v t="ekr.20040711140206"><vh>String-based imports...</vh>
 <v t="ekr.20040710125250"><vh>import from string</vh>
 <v t="ekr.20040710125250.2"><vh>@test import from string</vh></v>
 </v>
@@ -249,12 +249,12 @@
 <v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
 </v>
 <v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
-<v t="EKR.20040430162649.2" a="E"><vh> Tests</vh>
+<v t="EKR.20040430162649.2"><vh> Tests</vh>
 <v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
 <v t="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
-<v t="EKR.20040430162649.5" a="E" tnodeList="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
+<v t="EKR.20040430162649.5" tnodeList="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
 </v>
-<v t="EKR.20040430162649.6" a="E"><vh> Tests</vh>
+<v t="EKR.20040430162649.6"><vh> Tests</vh>
 <v t="EKR.20040430162649.7"><vh>Import/export tests</vh>
 <v t="EKR.20040430162649.8"><vh>test</vh>
 <v t="EKR.20040430162649.9"><vh>NewHeadlineë</vh></v>
@@ -273,6 +273,7 @@
 <v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
 <v t="EKR.20040604170105"><vh>Test of Remove sentinels</vh></v>
 <v t="ekr.20040711044029.1"><vh>Test new docutils stull</vh></v>
+<v t="ekr.20040712101754.273"><vh>Redundant: @suite run all doctests in @file nodes</vh></v>
 </v>
 <v t="ekr.20040707104245"><vh>Printing tests...</vh>
 <v t="ekr.20040323085933"><vh>Print findAllPotentiallyDirtyNodes</vh></v>
@@ -285,9 +286,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040309111102" a="E"><vh>Clone test data</vh>
+<v t="ekr.20040309111102"><vh>Clone test data</vh>
 <v t="ekr.20040309111102.1"><vh>aa</vh></v>
-<v t="ekr.20040309111102.2" a="E"><vh>a</vh>
+<v t="ekr.20040309111102.2"><vh>a</vh>
 <v t="ekr.20040309111102.3"><vh>b</vh>
 <v t="ekr.20040309111102.4"><vh>c</vh>
 <v t="ekr.20040309111102.5"><vh>c2</vh>
@@ -353,7 +354,7 @@
 </v>
 </v>
 <v t="ekr.20040708215319"><vh>To do...</vh>
-<v t="EKR.20040608095146" a="E"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716.44"><vh>perfect import unit tests</vh>
 <v t="EKR.20040504083716.45"><vh>@   file test_sentinels.py</vh>
 <v t="EKR.20040504083716.47"><vh>class sentinel_test</vh>
@@ -410,7 +411,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
@@ -465,7 +466,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -554,7 +555,7 @@
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040712101754.102" a="E"><vh>atFileTests...</vh>
+<v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
 <v t="ekr.20040712101754.104"><vh>@@file</vh></v>
 <v t="ekr.20040712101754.105"><vh>Output</vh></v>
@@ -567,7 +568,7 @@
 <v t="ekr.20040712101754.110"><vh>@@file</vh></v>
 <v t="ekr.20040712101754.111"><vh>Output</vh></v>
 </v>
-<v t="ekr.20040707141957.12" a="TV"><vh>@test @thin</vh>
+<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
 <v t="ekr.20040707141957.13"><vh>@@thin</vh></v>
 <v t="ekr.20040707141957.14"><vh>Output</vh></v>
 </v>
@@ -714,6 +715,11 @@
 <v t="ekr.20040712101754.211"><vh>@test hasThreadNextBack</vh></v>
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 </v>
+<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526.1"><vh>data</vh></v>
+</v>
+<v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
+<v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 </v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
@@ -796,9 +802,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
-<v t="ekr.20040712101754.273"><vh>Redundant: @suite run all doctests in @file nodes</vh></v>
-<v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 </v>
 <v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
@@ -808,7 +811,10 @@
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>checkCode</vh></v>
-<v t="ekr.20040712112631"><vh>To do:  warn if headlines have empty strings</vh></v>
+<v t="ekr.20040713071919"><vh>data for Pretty Print</vh></v>
+<v t="ekr.20040713070526" a="ETV"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713070526.1"><vh>data</vh></v>
+</v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1913,7 +1919,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2051,7 +2057,7 @@ print s ; g.es(s)</t>
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -5360,7 +5366,51 @@ if suite:
 
 c = g.top()
 
-c.checkPythonCode()</t>
-<t tx="ekr.20040712112631"></t>
+c.checkAllPythonCode()</t>
+<t tx="ekr.20040713070526">@language python 
+
+import leoGlobals as g 
+
+c = g.top()
+
+dump = False 
+all = False 
+
+if all:
+    c.prettyPrintAllPythonCode(dump=dump)
+else:
+    c.prettyPrintPythonCode(dump=dump)
+    
+c.redraw()</t>
+<t tx="ekr.20040713070526.1">@ This is a test of stuff.in doc parts.
+
+         I wonder what will happen.
+@c 
+
+def spam(self):
+    
+    if a==3:
+        print "Ä á Û"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others </t>
+<t tx="ekr.20040713071919">@ This is    a test of stuff.in doc parts.
+
+         I wonder           what will happen.
+@c
+
+def        spam (self         )  :   
+    
+    if a==3:
+        print "Ä á Û"
+        
+class eggs:
+    
+    """ A typical doc string """
+    
+    @others</t>
 </tnodes>
 </leo_file>
