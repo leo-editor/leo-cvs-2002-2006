@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="12848" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
 <globals body_outline_ratio="0.398837209302">
-	<global_window_position top="16" left="539" height="860" width="686"/>
+	<global_window_position top="10" left="202" height="860" width="982"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -53,13 +53,16 @@
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="ekr.20050130112336"><vh>Still to do</vh>
+<v t="ekr.20050130112336.1"><vh>Improve how Leo handles recent files</vh></v>
+</v>
 <v t="ekr.20050126100405.1"><vh>Added undo granularity</vh>
 <v t="EKR.20040524104904.48"><vh>Undoing operations</vh></v>
 </v>
 </v>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123112834" a="E"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -75,7 +78,7 @@
 <v t="ekr.20050123092834.2"><vh>Commands</vh>
 <v t="ekr.20050123092834.6"><vh>Fixed problems with spawnv option of openWith</vh></v>
 <v t="ekr.20050123092834.19"><vh>Fixed bug in  Remove Sentinels command</vh></v>
-<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Retaining Clones</vh></v>
+<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Node As Clone</vh></v>
 <v t="ekr.20050123092834.42"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
 <v t="ekr.20050123092834.71"><vh>Fixed crasher in Import Derived Files command</vh></v>
 <v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
@@ -164,8 +167,8 @@
 </v>
 <v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20050122090311"><vh>4.3-a1</vh>
-<v t="ekr.20050123112834"><vh>Defining features of 4.3</vh>
-<v t="ekr.20050123110009"><vh>@settings trees and leoSettings.leo</vh>
+<v t="ekr.20050123112834" a="E"><vh>Defining features of 4.3</vh>
+<v t="ekr.20050123110009" a="E"><vh>@settings trees and leoSettings.leo</vh>
 <v t="ekr.20050122084954"><vh>Using leoSettings.leo and @settings trees</vh></v>
 <v t="ekr.20050122091036"><vh>Unfinished configuration features</vh></v>
 </v>
@@ -181,7 +184,7 @@
 <v t="ekr.20050123092834.2"><vh>Commands</vh>
 <v t="ekr.20050123092834.6"><vh>Fixed problems with spawnv option of openWith</vh></v>
 <v t="ekr.20050123092834.19"><vh>Fixed bug in  Remove Sentinels command</vh></v>
-<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Retaining Clones</vh></v>
+<v t="ekr.20050123092834.27"><vh>Fixed bug re Paste Node As Clone</vh></v>
 <v t="ekr.20050123092834.42"><vh>Fixed Pretty Print commands for Python 2.4</vh></v>
 <v t="ekr.20050123092834.71"><vh>Fixed crasher in Import Derived Files command</vh></v>
 <v t="ekr.20050123092834.510"><vh>Search commands are now restricted to hoisted area</vh></v>
@@ -2255,11 +2258,6 @@
 </v>
 </v>
 <v t="ekr.20040414161647"><vh>Leo's HTML Users Guide (Created using the rst2 plugin)</vh>
-<v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
-<v t="ekr.20040414163815"><vh>Table of Contents</vh>
-<v t="ekr.20040414163815.1"><vh>@rst</vh></v>
-</v>
-</v>
 <v t="ekr.20040414172212"><vh>@rst frontMatter.html</vh>
 <v t="ekr.20040414172218.2"><vh>Preface</vh>
 <v t="ekr.20040414172336"><vh>@rst</vh></v>
@@ -2359,6 +2357,11 @@
 </v>
 <v t="ekr.20040906100201"><vh>Unit testing with @test and @suite</vh>
 <v t="ekr.20040906100201.1"><vh>@rst</vh></v>
+</v>
+</v>
+<v t="ekr.20040414162124"><vh>@rst leo_TOC.html</vh>
+<v t="ekr.20040414163815"><vh>Table of Contents</vh>
+<v t="ekr.20040414163815.1"><vh>@rst</vh></v>
 </v>
 </v>
 </v>
@@ -2844,7 +2847,9 @@ You should now be able to double click on a leo file in explorer with leo.py.</t
 
 This is the minimum you need to use Leo effectively.
 
-- Specify source files (derived files) using @file or @thin nodes.  The @file or @thin node is the so-called root node of the file.  Leo will save the derived file automatically when you save the Leo outline.
+- Specify source files (derived files) using @file or @thin nodes. The @file or
+@thin node is the so-called root node of the file. Leo will save the derived
+file automatically when you save the Leo outline.
 
 - Put the contents of derived files in the body text in the root node and the descendents of the root node.  The body text of these nodes may use the noweb markup language.
 
@@ -4085,7 +4090,7 @@ You may implement alternate pretty printers in a plugin merely by overriding the
 
 The Cut Outline and Copy Outline copy a text representation of the outline to the clipboard.  This representation is the same as the file format with some information deleted.  You may copy this text representation into a body pane (or into any other text editor) using the Paste command in the Edit menu.
 
-New in 4.2:  The Paste Retaining Clone command retains the identity of nodes, so if the pasted node already exists in the outline the newly pasted node will become of a clone of the already-existing node.  In contrast, the Paste Outline creates nodes with new identities (new gnx's).</t>
+New in 4.2:  The Paste Node As Clone command retains the identity of nodes, so if the pasted node already exists in the outline the newly pasted node will become of a clone of the already-existing node.  In contrast, the Paste Outline creates nodes with new identities (new gnx's).</t>
 <t tx="EKR.20040524104904.147">The Expand command expands the currently selected node so that all its children are visible.  The Expand All Subheads command expands the currently selected node so that all its offspring are visible.  The Expand All command expands all the nodes of the entire tree.
 
 New with leo.py version 1.0 and Borland Leo v2.6:
@@ -7282,12 +7287,20 @@ Choice 2: Use one or move "Read @file Nodes" commands to update the outline from
 New in version 4.1:  The first time you start Leo, Leo will ask you for a unique identifier.  If you are using cvs, use your cvs login name.  Otherwise your initials will do.
 
 Leo stores this identifier in leoID.txt, so you can change this identifier at any time by changing leoID.txt.</t>
-<t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk.  It should work on any platform that supports Python 2.2.1 or later and Tk 8.4 or later.
+<t tx="edream.110203163054.49">leo.py is Leo2 written in Python and Tk. It should work on any platform that
+supports Python 2.2.1 or later and Tk 8.4 or later.
 
-Download Python from http://python.org/
-Download tcl/Tk from http://tcl.activestate.com/software/tcltk/
+Download Python from:
 
-See "How to install Leo on MacOS Panther (10.3)" for installation instructions for MacOs X.  Leo will not run on MacOs 9.</t>
+http://python.org/
+
+Most installations of Python have tcl/tk pre-installed. If your doesn't, you may
+download it from:
+
+http://tcl.activestate.com/software/tcltk/
+
+See "How to install Leo on MacOS Panther (10.3)" for installation instructions
+for MacOs X. Leo will not run on MacOs 9.</t>
 <t tx="edream.110203163054.50">@nocolor
 
 leo.py requires Python 2.1 and tcl/tk 8.3 or above.
@@ -14862,20 +14875,29 @@ Iterators exist only in the position class:
 <t tx="ekr.20040414161647">@nocolor
 @ignore
 
-Double-click the @rst x.html nodes to generate the files</t>
+Double-click the top-level @rst x.html nodes to generate the files</t>
 <t tx="ekr.20040414162124">###################
 Leo's Users Guide
 ###################
 
+Leo version 4.3, January 30, 2005
+
 |leo| |next|
+
+.. The following are the 'callout' form of explicit hyperlink targets.
+.. They do not create text.  That is done in the child node.
 
 .. _front:                                     http://webpages.charter.net/edreamleo/front.html
 .. _Front Matter:                              http://webpages.charter.net/edreamleo/frontMatter.html
+.. _What people are saying about Leo:          http://webpages.charter.net/edreamleo/testimonials.html
 .. _FAQ:                                       http://webpages.charter.net/edreamleo/FAQ.html
 .. _Chapter 1\: Introducing Leo:               http://webpages.charter.net/edreamleo/intro.html
 .. _Chapter 2\: Installing Leo:                http://webpages.charter.net/edreamleo/Install.html
 .. _Chapter 3\: Using Leo's Outlines:          http://webpages.charter.net/edreamleo/outlines.html
 .. _Chapter 4\: Writing Programs in Leo:       http://webpages.charter.net/edreamleo/directives.html
+.. _Using \@rawfile and \@silentfile Trees:             http://webpages.charter.net/edreamleo/atRawFile.html
+.. _Using \@root Directives, Tangling and Untangling:   http://webpages.charter.net/edreamleo/atRoot.html
+.. _Using \@thin and \@all:                             http://webpages.charter.net/edreamleo/atThin.html
 .. _Chapter 5\: Using Leo's Commands:          http://webpages.charter.net/edreamleo/commands.html
 .. _Chapter 6\: Leo and Literate Programming:  http://webpages.charter.net/edreamleo/design.html
 .. _Chapter 7\: Scripting Leo with Python:     http://webpages.charter.net/edreamleo/scripting.html
@@ -14883,34 +14905,55 @@ Leo's Users Guide
 .. _Chapter 9\: History of Leo:                http://webpages.charter.net/edreamleo/history.html
 .. _Chapter 10\: Theory of Operation:          http://webpages.charter.net/edreamleo/theory.html
 .. _Appendices:                                http://webpages.charter.net/edreamleo/appendices.html
+.. _Glossary:                                  http://webpages.charter.net/edreamleo/appendices.html#glossary
 
 .. |leo|  image:: leo.gif
 	:target: front_
 
 .. |next| image:: arrow_rt.gif
-	:target: `front Matter`_
-</t>
+	:target: `front Matter`_</t>
 <t tx="ekr.20040414163815"></t>
 <t tx="ekr.20040414163815.1">@ignore
 
-- `Front Matter`_
-- FAQ_
-- `Chapter 1: Introducing Leo`_
-- `Chapter 2: Installing Leo`_
-- `Chapter 3: Using Leo's Outlines`_
-- `Chapter 4: Writing Programs in Leo`_
-- `Chapter 5: Using Leo's Commands`_
-- `Chapter 6: Leo and Literate Programming`_
-- `Chapter 7: Scripting Leo with Python`_
-- `Chapter 8: Customizing Leo`_
-- `Chapter 9: History of Leo`_
-- `Chapter 10: Theory of Operation`_
-- `Appendices`_
+`Front Matter`_
+
+`What people are saying about Leo`_
+
+FAQ_
+
+`Chapter 1: Introducing Leo`_
+
+`Chapter 2: Installing Leo`_
+
+`Chapter 3: Using Leo's Outlines`_
+
+`Chapter 4: Writing Programs in Leo`_
+
+    `Using \@rawfile and \@silentfile Trees`_
+
+    `Using \@root Directives, Tangling and Untangling`_
+
+    `Using \@thin and \@all`_
+
+`Chapter 5: Using Leo's Commands`_
+
+`Chapter 6: Leo and Literate Programming`_
+
+`Chapter 7: Scripting Leo with Python`_
+
+`Chapter 8: Customizing Leo`_
+
+`Chapter 9: History of Leo`_
+
+`Chapter 10: Theory of Operation`_
+
+Appendices_
+
+Glossary_
 
 ------------
 
-|leo| |next|
-</t>
+|leo| |next|</t>
 <t tx="ekr.20040414172212">############
 Front Matter
 ############
@@ -15663,6 +15706,16 @@ body_text_font_weight = None
 
 The body text contains a list of paths of recently opened files, one path per line.
 
+Warning: The following features of @recentfiles nodes are confusing and probably
+will be changed:
+
+- Leo does not save recent file information unless the open .leo file has an
+@settings tree and an @recentfiles node within the @settings tree. That is, Leo
+does not save recent files information in leoSettings.leo files.
+
+- Changing the @rencentfiles node doesn't mark the Leo file as dirty, so if you
+don't save the .leo file the recent files information will not be updated.
+
 3. "Page nodes" have headlines of the form @page &lt;description&gt;
 
 Such nodes have the effect of gathering all descendant settings nodes into a single settings page.
@@ -15723,7 +15776,7 @@ These will be added as time permits and people request.</t>
 <t tx="ekr.20050123092834.2"></t>
 <t tx="ekr.20050123092834.6">The Open With logic in createOpenWithMenuFromTable for the 'spawnv' case  now actually calls os.spawnv (rather than spawnl) and it allows a variable length list of parameters.</t>
 <t tx="ekr.20050123092834.19">The old code wasn't handling single file selections properly.  The new code works around an apparent bug in Tk.askopenfilename.</t>
-<t tx="ekr.20050123092834.27">The new code forbids Paste Retaining Clones if the paste would result in a node being a clone of itself.</t>
+<t tx="ekr.20050123092834.27">The new code forbids Paste Node As Clone if the paste would result in a node being a clone of itself.</t>
 <t tx="ekr.20050123092834.42">The '@' sign is an operator in Python 2.4, not an error token.</t>
 <t tx="ekr.20050123092834.71">What I did:
     
@@ -16233,7 +16286,7 @@ massage the data to my heart's content as I learn more about it and
 decide to use it in different ways for different purposes.  It's the 
 difference between the pick axe and the steam shovel for me.
 </t>
-<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 January 31, 2005
+<t tx="ekr.20050126100405">Leo 4.3 alpha 2                 February 4, 2005
 
 Leo 4.3 is the culmination of more than four months of work. This alpha 2 release corrects various minor bugs and distribution problems.  4.3a2 also adds better control over undo.
 
@@ -16310,5 +16363,15 @@ That is, Leo 4.3 will read the full file format specified in the children of thi
 &lt;fine_panel_settings&gt;
 
 Leo 4.3 never writes &lt;clone_windows&gt; elements.</t>
+<t tx="ekr.20050130112336"></t>
+<t tx="ekr.20050130112336.1">Warning: The following features of @recentfiles nodes are confusing and probably
+will be changed:
+
+- Leo does not save recent file information unless the open .leo file has an
+@settings tree and an @recentfiles node within the @settings tree. That is, Leo
+does not save recent files information in leoSettings.leo files.
+
+- Changing the @rencentfiles node doesn't mark the Leo file as dirty, so if you
+don't save the .leo file the recent files information will not be updated.</t>
 </tnodes>
 </leo_file>
