@@ -1512,7 +1512,8 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107092135" a="EV"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040109080300" a="V"><vh>Changes made by EKR</vh></v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
 <v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
@@ -1532,8 +1533,8 @@
 </v>
 <v t="ekr.20040108060748"><vh>&lt;&lt; doc string &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040108062655" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6,ekr.20040108091136"><vh>@file nodenavigator.py</vh>
-<v t="ekr.20040108062655.2"><vh>class Navigator</vh>
+<v t="ekr.20040108062655" a="E" tnodeList="ekr.20040108062655,ekr.20040108062655.2,ekr.20040108062655.3,ekr.20040108062655.4,ekr.20040108062655.5,ekr.20040108062655.6,ekr.20040108091136"><vh>@file nodenavigator.py</vh>
+<v t="ekr.20040108062655.2" a="E"><vh>class Navigator</vh>
 <v t="ekr.20040108062655.3"><vh>addWidgets</vh></v>
 <v t="ekr.20040108062655.4"><vh>_getSizer</vh></v>
 <v t="ekr.20040108062655.5"><vh>onSelect</vh></v>
@@ -15879,7 +15880,7 @@ the marked node.
 """ 
 
 __name__ = "Node Navigator"
-__version__ = "0.2" 
+__version__ = "0.3" 
 
 from leoPlugins import * 
 from leoGlobals import * 
@@ -15888,24 +15889,21 @@ try:    import Tkinter
 except: Tkinter = None 
 Tk = Tkinter 
 
-# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform 
+# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
 USE_FIXED_SIZES = 1 
 
 @others
 
 if Tkinter: 
-	nav = Navigator() 
-	
 	if app.gui is None: 
 		app.createTkGui(__file__) 
 
-	if app.gui.guiName() == "tkinter": 
-		# es("Activating NodeNavigator", color="orange") 
+	if app.gui.guiName() == "tkinter":
+		nav = Navigator() 
 		registerHandler("after-create-leo-frame", nav.addWidgets) 
 		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
 		registerHandler("select2",nav.updateRecent)
-		plugin_signon("nodenavigator") 
-</t>
+		plugin_signon("nodenavigator")</t>
 <t tx="ekr.20040108062655.2">class Navigator: 
 	"""A node navigation aid for Leo"""
 	@others
@@ -15920,23 +15918,15 @@ if Tkinter:
 	# Marks
 	marks = ["Marks"] 
 	self.mark_value = Tkinter.StringVar() 
-	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 70), self.mark_value, *marks) # was 29,130
+	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.mark_value,*marks)
 	self.mark_value.set(marks[0]) 
 	self.marks.pack(side="right",fill="both",expand=1)
 	# Recent.
 	recent = ["Recent"]
 	self.recent_value = Tkinter.StringVar() 
-	self.recent = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 70), self.recent_value, *recent) 
+	self.recent = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
 	self.recent_value.set(recent[0]) 
-	self.recent.pack(side="left",fill="both",expand=1)
-	if 0:
-		# Options
-		options = ["Hoist", "Go to"]
-		self.option_value = Tkinter.StringVar() 
-		self.options = Tkinter.OptionMenu(self._getSizer(self.frame, 29, 75), self.option_value, *options) 
-		self.option_value.set(options[0]) 
-		self.options.pack(side="left", fill="both", expand=1) 
-	# self.vnodeList = []</t>
+	self.recent.pack(side="left",fill="both",expand=1)</t>
 <t tx="ekr.20040108062655.4">def _getSizer(self, parent, height, width):
 	
 	"""Return a sizer object to force a Tk widget to be the right size""" 
@@ -15957,20 +15947,20 @@ if Tkinter:
 	v = c.rootVnode()
 
 	# Clear old marks menu
-	menu = self.marks["menu"]
-	if menu:
+	try:
+		menu = self.marks["menu"]
 		menu.delete(0,"end")
+	except: return
 
-	def getCaller(v):
-		"""Return a callback"""
-		return lambda : self.onSelect(v)
+	def callback(self=self,v=v):
+		return self.onSelect(v)
 
 	# Find all marked nodes
 	vnodes = [] ; tnodes = []
 	while v:
 		if v.isMarked() and v.t not in tnodes:
 			name = v.headString().strip()
-			menu.add_command(label=name,command=getCaller(v))
+			menu.add_command(label=name,command=callback)
 			tnodes.append(v.t)
 			vnodes.append(v)
 		v = v.threadNext()</t>
@@ -15985,19 +15975,17 @@ if Tkinter:
 		menu.delete(0,"end")
 	except: return
 
-	def getCaller(v):
-		"""Return a callback"""
-		return lambda : self.onSelect(v)
+	def callback(self=self,v=v):
+		return self.onSelect(v)
 
 	# Make sure the node still exists.
 	# Insert only the last cloned node.
 	vnodes = [] ; tnodes = []
 	for v in c.visitedList:
 		if v.exists(c) and v.t not in tnodes:
-			menu.add_command(label=v.headString(),command=getCaller(v))
+			menu.add_command(label=v.headString(),command=callback)
 			tnodes.append(v.t)
-			vnodes.append(v)
-</t>
+			vnodes.append(v)</t>
 <t tx="ekr.20040108095351">"""Add row/column indicators to the toolbar.""" 
 
 __name__ = "Row/Column indicators"
@@ -16075,5 +16063,12 @@ if Tkinter:
 <t tx="ekr.20040108100040">def __init__ (self):
 	
 	self.lastStatusRow, self.lastStatusCol = -1,-1</t>
+<t tx="ekr.20040109080300">@nocolor
+
+1/9/04: nodenavigator.py
+
+- Put the code that deletes menus in a try/except block.
+- Simplified defintion of callback routines: I don't like lambda.
+- Removed some old code.</t>
 </tnodes>
 </leo_file>
