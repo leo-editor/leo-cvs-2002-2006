@@ -76,7 +76,6 @@ if Tk and Pmw: # Ok for unit tests even though it modifies core classes!
     nbs = weakref.WeakKeyDictionary()
     oldCLog = leoTkinterFrame.leoTkinterLog.createControl
     leoTkinterFrame.leoTkinterLog.createControl = createLog
-    
     g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20040915073637:@thin TabbedLog.py
