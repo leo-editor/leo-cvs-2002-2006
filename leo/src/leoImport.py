@@ -149,6 +149,8 @@ class baseLeoImportCommands:
             for fileName in files:
                 v = self.createOutline(fileName,current)
                 if v: # createOutline may fail.
+                    perfectImport = False ###
+                    testing = True; verbose = True
                     if perfectImport and treeType == "@file": # Can't correct @root trees.
                         self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
                     else:
@@ -749,7 +751,7 @@ class baseLeoImportCommands:
             if verbose:
                 g.es("Running Perfect Import",color="blue")
             write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
-            if 0: # For testing.
+            if 1: # For testing.
                 #@            << put the corrected fat lines in a new node >>
                 #@+node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
                 write_lines_node = root.insertAfter()
