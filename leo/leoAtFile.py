@@ -869,6 +869,7 @@ class atFile:
 		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 		self.targetFileName = root.atFileNodeName()
 		self.root = root
+		self.raw = false
 		self.errors = self.structureErrors = 0
 		
 		#@<< open file >>
@@ -1462,7 +1463,10 @@ class atFile:
 				#@@c
 
 				# Point linep past the first self.indent whitespace characters.
-				linep = self.skipIndent(s,0,self.indent)
+				if self.raw: # 10/15/02
+					linep =0
+				else:
+					linep = self.skipIndent(s,0,self.indent)
 				
 				# Set lineIndent to the total indentation on the line.
 				lineIndent = 0 ; i = 0
@@ -1486,8 +1490,10 @@ class atFile:
 				#@+node:3::<< append non-sentinel line >>
 				#@+body
 				# We don't output the trailing newline if the next line is a sentinel.
-				
-				i = self.skipIndent(s,0,self.indent)
+				if self.raw: # 10/15/02
+					i = 0
+				else:
+					i = self.skipIndent(s,0,self.indent)
 				
 				assert(nextLine != None)
 				
@@ -1590,6 +1596,11 @@ class atFile:
 				#@+node:4::<< scan @@ >>
 				#@+body
 				assert(match(s,i,"@"))
+				
+				if match_word(s,i,"@raw"):
+					self.raw = true
+				elif match_word(s,i,"@end_raw"):
+					self.raw = false
 				
 				# The first '@' has already been eaten.
 				if len(self.endSentinelComment) == 0:
@@ -1850,6 +1861,8 @@ class atFile:
 							if len(s) == 0: break
 							# 21-SEP-2002 DTHEIN: capture _all_ the trailing lines, even if empty
 							lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
+					elif kind == atFile.endBody:
+						self.raw = false
 					# nextLine != None only if we have a non-sentinel line.
 					# Therefore, nextLine == None whenever scanText returns.
 					assert(nextLine==None)
@@ -2525,6 +2538,7 @@ class atFile:
 		self.errors = 0 # 9/26/02
 		c.setIvarsFromPrefs()
 		self.root = root
+		self.raw = false
 		c.endEditing() # Capture the current headline.
 		self.targetFileName = root.atFileNodeName()
 		try:
