@@ -163,7 +163,7 @@ class baseCommands:
         return "break" # Inhibit all other handlers.
     #@nonl
     #@-node:ekr.20031218072017.2817: doCommand
-    #@+node:ekr.20031218072017.2582:  Version & signon stuff
+    #@+node:ekr.20031218072017.2582: version & signon stuff
     #@+node:ekr.20040629121554:getBuildNumber
     def getBuildNumber(self):
         c = self
@@ -196,7 +196,7 @@ class baseCommands:
         g.enl()
     #@nonl
     #@-node:ekr.20040629121554.3:signOnWithVersion
-    #@-node:ekr.20031218072017.2582:  Version & signon stuff
+    #@-node:ekr.20031218072017.2582: version & signon stuff
     #@+node:ekr.20040312090934:c.iterators
     #@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
     def allNodes_iter(self,copy=False):
