@@ -3378,7 +3378,22 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 #@nonl
 #@-node:ekr.20031218072017.3097:CheckVersion (Dave Hein)
 #@+node:ekr.20031218072017.3098:class Bunch
-# From The Python Cookbook.
+#@+at 
+#@nonl
+# From The Python Cookbook:  Often we want to just collect a bunch of stuff 
+# together, naming each item of the bunch; a dictionary's OK for that, but a 
+# small do-nothing class is even handier, and prettier to use.
+# 
+# Create a Bunch whenever you want to group a few variables:
+# 
+#     point = Bunch(datum=y, squared=y*y, coord=x)
+# 
+# You can read/write the named attributes you just created, add others, del 
+# some of them, etc:
+#     if point.squared > threshold:
+#         point.isok = True
+#@-at
+#@@c
 
 import operator
 
@@ -3388,17 +3403,31 @@ class Bunch:
     
     Especially useful for representing a collection of related variables."""
     
-    def __init__(self, **keywords):
+    def __init__(self,**keywords):
         self.__dict__.update (keywords)
 
     def ivars(self):
         return self.__dict__.keys()
         
-    def __setitem__ (self,key,value):
-        return operator.setitem(self.__dict__,key,value)
+    def toString(self):
+        tag = self.__dict__.get('tag')
+        entries = ["%s: %s" % (key,str(self.__dict__.get(key)))
+            for key in self.ivars() if key != 'tag']
+        if tag:
+            return "Bunch(tag=%s)...\n%s\n" % (tag,'\n'.join(entries))
+        else:
+            return "Bunch...\n%s\n" % '\n'.join(entries)
+
+    if 0:
+        def __setitem__ (self,key,value):
+            '''Support aBunch[key] = val'''
+            return operator.setitem(self.__dict__,key,value)
+            
+        def __getitem__ (self,key):
+            '''Support aBunch[key]'''
+            return operator.getitem(self.__dict__,key)
         
-    def __getitem__ (self,key):
-        return operator.getitem(self.__dict__,key)
+bunch = Bunch
 #@nonl
 #@-node:ekr.20031218072017.3098:class Bunch
 #@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
