@@ -197,7 +197,7 @@ class tkinterAboutLeo (leoTkinterDialog):
 		text.pack(pady=10)
 		
 		try:
-			bitmap_name = os.path.join(app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
+			bitmap_name = os_path_join(app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
 			image = Tkinter.PhotoImage(file=bitmap_name)
 			text.image_create("1.0",image=image,padx=10)
 		except:
@@ -746,7 +746,7 @@ class tkinterListBoxDialog (leoTkinterDialog):
 			c.frame.tree.expandAllAncestors(v)
 			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
 			c.endUpdate()
-			c.frame.idle_scrollTo(v)
+			c.frame.tree.idle_scrollTo(v)
 	#@-node:go
 	#@-others
 #@nonl

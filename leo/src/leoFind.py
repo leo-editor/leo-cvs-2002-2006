@@ -568,16 +568,11 @@ class leoFind:
 	#@nonl
 	#@-node:resetWrap
 	#@+node:search
-	#@+at 
-	#@nonl
-	# Searches the present headline or body text for c.find_text and returns 
-	# true if found.
-	# c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control 
-	# the search.
-	#@-at
-	#@@c
-	
 	def search (self):
+	
+		"""Searches the present headline or body text for c.find_text and returns true if found.
+	
+		c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control the search."""
 	
 		c = self.c ; v = self.v ; t = self.s_text ; gui = app.gui
 		assert(c and t and v)
@@ -873,15 +868,12 @@ class leoFind:
 	#@nonl
 	#@-node:save
 	#@+node:showSuccess
-	#@+at 
-	#@nonl
-	# This is used for displaying the final result.  It returns 
-	# self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with "insert" and 
-	# "sel" points set properly.
-	#@-at
-	#@@c
-	
 	def showSuccess(self,pos,newpos):
+	
+		"""Displays the final result.
+		
+		Returns self.dummy_vnode, v.edit_text() or c.frame.bodyCtrl with
+		"insert" and "sel" points set properly."""
 	
 		c = self.c ; v = self.v ; gui = app.gui
 		
@@ -908,7 +900,6 @@ class leoFind:
 		gui.set_focus(c,t)
 		if c.wrap_flag and not self.wrapVnode:
 			self.wrapVnode = self.v
-	#@nonl
 	#@-node:showSuccess
 	#@+node:Must be overridden in subclasses
 	def init_s_text (self,s):

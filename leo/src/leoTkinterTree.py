@@ -801,8 +801,8 @@ class leoTkinterTree (leoFrame.leoTree):
 			return self.iconimages[name]
 			
 		try:
-			fullname = os.path.join(app.loadDir,"..","Icons",name)
-			fullname = os.path.normpath(fullname)
+			fullname = os_path_join(app.loadDir,"..","Icons",name)
+			fullname = os_path_normpath(fullname)
 			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
 			return image
@@ -813,14 +813,11 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@nonl
 	#@-node:tree.getIconImage
 	#@+node:tree.idle_scrollTo
-	#@+at 
-	#@nonl
-	# This scrolls the canvas so that v is in view.  This is done at idle time 
-	# after a redraw so that treeBar.get() will return proper values.
-	#@-at
-	#@@c
-	
 	def idle_scrollTo(self,v=None):
+	
+		"""Scrolls the canvas so that v is in view.
+		
+		This is done at idle time after a redraw so that treeBar.get() will return proper values."""
 	
 		frame = self.c.frame
 		last = self.lastVisible()
@@ -859,7 +856,6 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.canvas.after_idle(self.idle_second_redraw)
 	
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
-	#@nonl
 	#@-node:tree.idle_scrollTo
 	#@+node:tree.numberOfVisibleNodes
 	def numberOfVisibleNodes(self):
@@ -935,14 +931,9 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@nonl
 	#@-node:tree.getFont,setFont,setFontFromConfig
 	#@+node:headWidth
-	#@+at 
-	#@nonl
-	# Returns the proper width of the entry widget for the headline. This has 
-	# been a problem.
-	#@-at
-	#@@c
-	
 	def headWidth(self,v):
+	
+		"""Returns the proper width of the entry widget for the headline."""
 	
 		return max(10,5 + len(v.headString()))
 	#@nonl
@@ -1245,6 +1236,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@+node:<< set s to the widget text >>
 		s = v.edit_text().get("1.0","end")
 		s = toUnicode(s,app.tkEncoding) # 2/25/03
+		
 		if not s:
 			s = u""
 		s = s.replace('\n','')

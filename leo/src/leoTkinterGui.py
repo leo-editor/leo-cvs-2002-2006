@@ -58,10 +58,10 @@ class tkinterGui(leoGui.leoGui):
 			version = gui.root.getvar("tk_patchLevel")
 			if CheckVersion(version,"8.4.3"):
 				# tk 8.4.3 or greater: load a 16 by 16 icon.
-				path = os.path.join(app.loadDir,"..","Icons")
-				if os.path.exists(path):
-					file = os.path.join(path,"LeoApp16.ico")
-					if os.path.exists(path):
+				path = os_path_join(app.loadDir,"..","Icons")
+				if os_path_exists(path):
+					file = os_path_join(path,"LeoApp16.ico")
+					if os_path_exists(path):
 						self.bitmap = Tkinter.BitmapImage(file)
 					else:
 						es("LeoApp16.ico not in Icons directory", color="red")
@@ -251,14 +251,12 @@ class tkinterGui(leoGui.leoGui):
 	#@nonl
 	#@-node:get_window_info
 	#@+node:center_dialog
-	#@+at
-	# Center the dialog on the screen.
-	# WARNING: Call this routine _after_ creating a dialog.
-	# (This routine inhibits the grid and pack geometry managers.)
-	#@-at
-	#@@c
-	
 	def center_dialog(self,top):
+	
+		"""Center the dialog on the screen.
+	
+		WARNING: Call this routine _after_ creating a dialog.
+		(This routine inhibits the grid and pack geometry managers.)"""
 	
 		sw = top.winfo_screenwidth()
 		sh = top.winfo_screenheight()
@@ -392,8 +390,8 @@ class tkinterGui(leoGui.leoGui):
 				w.bind("<Visibility>",visibilityCallback)
 				if not self.leoIcon:
 					# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-					icon_file_name = os.path.join(app.loadDir,'..','Icons','LeoWin.gif')
-					icon_file_name = os.path.normpath(icon_file_name)
+					icon_file_name = os_path_join(app.loadDir,'..','Icons','LeoWin.gif')
+					icon_file_name = os_path_normpath(icon_file_name)
 					icon_image = Image.open(icon_file_name)
 					if 1: # Doesn't resize.
 						self.leoIcon = self.createLeoIcon(icon_image)

@@ -15,13 +15,13 @@ from leoGlobals import *
 
 def importFiles (dir, type = None, kind = "@file"):
 	
-	import os
+	from leoGlobals import os_path_exists,os_path_isfile,os_path_join,os_path_splitext
 
 	# Check the params.
 	if kind != "@file" and kind != "@root":
 		es("kind must be @file or @root: " + `kind`)
 		return
-	if not os.path.exists(dir):
+	if not os_path_exists(dir):
 		es("directory does not exist: " + `dir`)
 		return
 	
@@ -31,10 +31,9 @@ def importFiles (dir, type = None, kind = "@file"):
 		files = os.listdir(dir)
 		files2 = []
 		for f in files:
-			path = os.path.join(dir,f)
-			path = toUnicode(path,app.tkEncoding) # 10/20/03
-			if os.path.isfile(path):
-				name, ext = os.path.splitext(f)
+			path = os_path_join(dir,f)
+			if os_path_isfile(path):
+				name, ext = os_path_splitext(f)
 				if type == None or ext == type:
 					files2.append(path)
 		if len(files2) > 0:
@@ -79,11 +78,8 @@ class baseLeoImportCommands:
 	def createOutline (self,fileName,parent):
 	
 		c = self.c ; current = c.currentVnode()
-		junk, self.fileName = os.path.split(fileName) # junk/fileName
-		self.methodName,ext = os.path.splitext(self.fileName) # methodName.fileType
-		
-		self.fileName   = toUnicode(self.fileName,app.tkEncoding) # 10/20/03
-		self.methodName = toUnicode(self.methodName,app.tkEncoding) # 10/20/03
+		junk, self.fileName = os_path_split(fileName) # junk/fileName
+		self.methodName,ext = os_path_splitext(self.fileName) # methodName.fileType
 		
 		self.fileType = ext
 		self.setEncoding()
@@ -174,12 +170,12 @@ class baseLeoImportCommands:
 				
 				name0 = files[0]
 				name1 = files[1]
-				prefix0, junk = os.path.splitext(name0)
-				prefix1, junk = os.path.splitext(name1)
+				prefix0, junk = os_path_splitext(name0)
+				prefix1, junk = os_path_splitext(name1)
 				if len(prefix0) > 0 and prefix0 == prefix1:
 					current = current.insertAsLastChild()
-					junk, nameExt = os.path.split(prefix1)
-					name,ext = os.path.splitext(prefix1)
+					junk, nameExt = os_path_split(prefix1)
+					name,ext = os_path_splitext(prefix1)
 					current.initHeadString(name)
 				#@nonl
 				#@-node:<< Create a parent for two files having a common prefix >>
@@ -387,7 +383,7 @@ class baseLeoImportCommands:
 	def createOutlineFromWeb (self,path,parent):
 	
 		c = self.c ; current = c.currentVnode()
-		junk, fileName = os.path.split(path)
+		junk, fileName = os_path_split(path)
 		# Create the top-level headline.
 		v = parent.insertAsLastChild()
 		c.undoer.setUndoParams("Import",v,select=current)
@@ -621,12 +617,7 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:scanWebFile (handles limbo)
 	#@+node:cstCanonicalize
-	#@+at 
-	#@nonl
-	# We canonicalize strings before looking them up, but strings are entered 
-	# in the form they are first encountered.
-	#@-at
-	#@@c
+	# We canonicalize strings before looking them up, but strings are entered in the form they are first encountered.
 	
 	def cstCanonicalize (self,s,lower=true):
 		
@@ -693,14 +684,9 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:cstLookup
 	#@+node:scanPythonClass
-	#@+at 
-	#@nonl
-	# Creates a child node c of parent for the class, and children of c for 
-	# each def in the class.
-	#@-at
-	#@@c
-	
 	def scanPythonClass (self,s,i,start,parent):
+	
+		"""Creates a child node c of parent for the class, and children of c for each def in the class."""
 	
 		# trace(get_line(s,i))
 		classIndent = self.getLeadingIndent(s,i)
@@ -800,16 +786,11 @@ class baseLeoImportCommands:
 		#@nl
 		self.methodName = savedMethodName
 		return i
-	#@nonl
 	#@-node:scanPythonClass
 	#@+node:scanPythonDef
-	#@+at 
-	#@nonl
-	# Creates a node of parent for the def.
-	#@-at
-	#@@c
-	
 	def scanPythonDef (self,s,i,start,parent):
+	
+		"""Creates a node of parent for the def."""
 	
 		# trace(get_line(s,i))
 		#@	<< set headline or return i >>
@@ -872,7 +853,6 @@ class baseLeoImportCommands:
 		#@nl
 		self.methodName = savedMethodName
 		return i
-	#@nonl
 	#@-node:scanPythonDef
 	#@+node:scanPythonDecls
 	def scanPythonDecls (self,s,i,parent,indent,indent_parent_ref_flag=true):
@@ -930,14 +910,11 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:scanPythonDecls
 	#@+node:scanPythonText
-	#@+at 
-	#@nonl
-	# This code creates a child of parent for each Python function definition 
-	# seen.  See the comments for scanCText for what the text looks like.
-	#@-at
-	#@@c
+	# See the comments for scanCText for what the text looks like.
 	
 	def scanPythonText (self,s,parent):
+	
+		"""Creates a child of parent for each Python function definition seen."""
 	
 		decls_seen = false ; start = i = 0
 		self.methodsSeen = false
@@ -992,15 +969,14 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:scanPythonText
 	#@+node:scanPHPText (Dave Hein)
-	#@+at  
-	#@nonl
-	# 08-SEP-2002 DTHEIN: Added for PHP import support
-	# Creates a child of parent for each class and function definition seen.
-	# 
+	# 08-SEP-2002 DTHEIN: Added for PHP import support.
+	#
 	# PHP uses both # and // as line comments, and /* */ as block comments
-	#@-at
-	#@@c
+	
 	def scanPHPText (self,s,parent):
+	
+		"""Creates a child of parent for each class and function definition seen."""
+	
 		import re
 		#@	<< Append file if not pure PHP >>
 		#@+node:<< Append file if not pure PHP >>
@@ -2014,12 +1990,7 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:scanPascalText
 	#@+node:convertCodePartToWeb
-	#@+at 
-	#@nonl
-	# Headlines not containing a section reference are ignored in noweb and 
-	# generate index index in cweb.
-	#@-at
-	#@@c
+	# Headlines not containing a section reference are ignored in noweb and generate index index in cweb.
 	
 	def convertCodePartToWeb (self,s,i,v,result):
 	
@@ -2385,7 +2356,7 @@ class baseLeoImportCommands:
 	def removeSentinelsCommand (self,fileName):
 	
 		self.setEncoding()
-		path, self.fileName = os.path.split(fileName) # path/fileName
+		path, self.fileName = os_path_split(fileName) # path/fileName
 		#@	<< Read file into s >>
 		#@+node:<< Read file into s >>
 		try:
@@ -2447,10 +2418,10 @@ class baseLeoImportCommands:
 		if ext == None or len(ext) == 0:
 			ext = ".txt"
 		if ext[0] == '.':
-			newFileName = os.path.join(path,fileName+ext)
+			newFileName = os_path_join(path,fileName+ext)
 		else:
-			head,ext2 = os.path.splitext(fileName) 
-			newFileName = os.path.join(path,head+ext+ext2)
+			head,ext2 = os_path_splitext(fileName) 
+			newFileName = os_path_join(path,head+ext+ext2)
 		#@	<< Write s into newFileName >>
 		#@+node:<< Write s into newFileName >>
 		try:
@@ -2592,14 +2563,9 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:error
 	#@+node:getLeadingIndent
-	#@+at 
-	#@nonl
-	# This code returns the leading whitespace of a line, ignoring blank and 
-	# comment lines.
-	#@-at
-	#@@c
-	
 	def getLeadingIndent (self,s,i):
+	
+		"""Return the leading whitespace of a line, ignoring blank and comment lines."""
 	
 		c = self.c
 		i = find_line_start(s,i)
@@ -2680,14 +2646,11 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:massageBody
 	#@+node:massageComment
-	#@+at 
-	#@nonl
-	# Returns s with all runs of whitespace and newlines converted to a single 
-	# blank.  It also removes leading and trailing whitespace.
-	#@-at
-	#@@c
-	
 	def massageComment (self,s):
+	
+		"""Returns s with all runs of whitespace and newlines converted to a single blank.
+		
+		Also removes leading and trailing whitespace."""
 	
 		# trace(`get_line(s,0)`)
 		s = string.strip(s)
@@ -2777,15 +2740,11 @@ class baseLeoImportCommands:
 		# print self.encoding
 	#@-node:setEncoding
 	#@+node:skipLeadingComments
-	#@+at 
-	#@nonl
-	# This skips all leading comments in s, returning the remaining body text 
-	# and the massaged comment text.
-	# Returns (body, comment)
-	#@-at
-	#@@c
-	
 	def skipLeadingComments (self,s):
+	
+		"""Skips all leading comments in s, returning the remaining body text and the massaged comment text.
+	
+		Returns (body, comment)"""
 	
 		# trace(`get_line(s,0)`)
 		s_original = s
@@ -2866,14 +2825,11 @@ class baseLeoImportCommands:
 	#@nonl
 	#@-node:skipLeadingComments
 	#@+node:undentBody
-	#@+at 
-	#@nonl
-	# Removes extra leading indentation from all lines.  We look at the first 
-	# line to determine how much leading whitespace to delete.
-	#@-at
-	#@@c
+	# We look at the first line to determine how much leading whitespace to delete.
 	
 	def undentBody (self,s):
+	
+		"""Removes extra leading indentation from all lines."""
 	
 		# trace(`s`)
 		c = self.c

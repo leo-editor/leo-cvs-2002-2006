@@ -4,7 +4,7 @@
 
 from leoGlobals import *
 import leoNodes
-import os,os.path,time
+import os,time
 
 #@+at 
 #@nonl
@@ -622,7 +622,7 @@ class baseFileCommands:
 				# New in version 0.16.
 				c.tangle_directory = self.getEscapedString()
 				self.getTag("</defaultDirectory>")
-				if not os.path.exists(c.tangle_directory):
+				if not os_path_exists(c.tangle_directory):
 					es("default tangle directory not found:" + c.tangle_directory)
 			elif self.matchTag("<TSyntaxMemo_options>"):
 				self.getEscapedString() # ignored
@@ -857,17 +857,11 @@ class baseFileCommands:
 	#@nonl
 	#@-node:getVnodes
 	#@+node:getXmlStylesheetTag
-	#@+at 
-	#@nonl
-	# Parses the optional xml stylesheet string, and sets the corresponding 
-	# config option.
-	# 
-	# For example, given: <?xml_stylesheet s?>
-	# the config option is s.
-	#@-at
-	#@@c
-	
 	def getXmlStylesheetTag (self):
+	
+		"""Parses the optional xml stylesheet string, and sets the corresponding config option.
+		
+		For example, given: <?xml_stylesheet s?> the config option is s."""
 		
 		c = self.c
 		tag = "<?xml-stylesheet "
@@ -877,6 +871,7 @@ class baseFileCommands:
 			# print "reading:", tag + s + "?>"
 			c.frame.stylesheet = s
 			self.getTag("?>")
+	#@nonl
 	#@-node:getXmlStylesheetTag
 	#@+node:getXmlVersionTag
 	# Parses the encoding string, and sets self.leo_file_encoding.
@@ -975,8 +970,7 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os.path.dirname(fileName)
-		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		dir = os_path_dirname(fileName)
 		
 		if len(dir) > 0:
 			c.openDirectory = dir
@@ -1017,8 +1011,7 @@ class baseFileCommands:
 		#@-at
 		#@@c
 		
-		dir = os.path.dirname(fileName)
-		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		dir = os_path_dirname(fileName)
 		
 		if len(dir) > 0:
 			c.openDirectory = dir
@@ -1198,12 +1191,7 @@ class baseFileCommands:
 	#@nonl
 	#@-node:putClipboardHeader
 	#@+node:putEscapedString
-	#@+at 
-	#@nonl
-	# Surprisingly, the call to xmlEscape here is _much_ faster than calling 
-	# put for each characters of s.
-	#@-at
-	#@@c
+	# Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
 	
 	def putEscapedString (self,s):
 	
@@ -1525,15 +1513,9 @@ class baseFileCommands:
 	#@nonl
 	#@-node:putTnodes
 	#@+node:putVnode (3.x and 4.x)
-	#@+at 
-	#@nonl
-	# This writes full headline and body text for all vnodes, even orphan and 
-	# @ignored nodes.  This allows all Leo outlines to be used as backup 
-	# files.
-	#@-at
-	#@@c
-	
 	def putVnode (self,v,topVnode):
+	
+		"""Write a <v> element corresponding to a vnode."""
 	
 		fc = self ; c = fc.c
 		fc.put("<v")
@@ -1610,13 +1592,9 @@ class baseFileCommands:
 	#@nonl
 	#@-node:putVnode (3.x and 4.x)
 	#@+node:putVnodes
-	#@+at 
-	#@nonl
-	# This method puts all vnodes by starting the recursion.  putVnode will 
-	# write all vnodes in the order in which they appear in the outline.
-	#@-at
-	#@@c
 	def putVnodes (self):
+	
+		"""Puts all <v> elements in the order in which they appear in the outline."""
 	
 		c = self.c
 		c.clearAllVisited()
@@ -1695,10 +1673,9 @@ class baseFileCommands:
 		c = self.c
 	
 		if not c.openDirectory or len(c.openDirectory) == 0:
-			dir = os.path.dirname(fileName)
-			dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+			dir = os_path_dirname(fileName)
 	
-			if len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
+			if len(dir) > 0 and os_path_isabs(dir) and os_path_exists(dir):
 				c.openDirectory = dir
 	#@nonl
 	#@-node:setDefaultDirectoryForNewFiles
@@ -1725,12 +1702,11 @@ class baseFileCommands:
 			#@		<< create backup file >>
 			#@+node:<< create backup file >> in write_LEO_file
 			# rename fileName to fileName.bak if fileName exists.
-			if os.path.exists(fileName):
+			if os_path_exists(fileName):
 				try:
-					backupName = os.path.join(app.loadDir,fileName)
-					backupName = toUnicode(backupName,app.tkEncoding) # 10/20/03
+					backupName = os_path_join(app.loadDir,fileName)
 					backupName = fileName + ".bak"
-					if os.path.exists(backupName):
+					if os_path_exists(backupName):
 						os.unlink(backupName)
 					# os.rename(fileName,backupName)
 					utils_rename(fileName,backupName)
@@ -1749,7 +1725,7 @@ class baseFileCommands:
 				es("can not open " + fileName)
 				#@			<< delete backup file >>
 				#@+node:<< delete backup file >>
-				if backupName and os.path.exists(backupName):
+				if backupName and os_path_exists(backupName):
 					try:
 						os.unlink(backupName)
 					except:
@@ -1789,7 +1765,7 @@ class baseFileCommands:
 			#@+node:<< erase filename and rename backupName to fileName >>
 			es("error writing " + fileName)
 			
-			if fileName and os.path.exists(fileName):
+			if fileName and os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
 				except:
@@ -1817,7 +1793,7 @@ class baseFileCommands:
 				es_exception()
 			#@		<< delete backup file >>
 			#@+node:<< delete backup file >>
-			if backupName and os.path.exists(backupName):
+			if backupName and os_path_exists(backupName):
 				try:
 					os.unlink(backupName)
 				except:
@@ -1831,7 +1807,7 @@ class baseFileCommands:
 			#@+node:<< erase filename and rename backupName to fileName >>
 			es("error writing " + fileName)
 			
-			if fileName and os.path.exists(fileName):
+			if fileName and os_path_exists(fileName):
 				try:
 					os.unlink(fileName)
 				except:

@@ -579,7 +579,7 @@ class leoFileTestCase(unittest.TestCase):
 		"""Open the .leo file."""
 	
 		c = self.old_c ; fileName = self.fileName
-		assert(os.path.exists(fileName))
+		assert(os_path_exists(fileName))
 		ok, frame = openWithFileName(fileName,c)
 		assert(ok)
 		self.c = frame.c

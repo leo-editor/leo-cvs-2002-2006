@@ -5,7 +5,7 @@
 from leoGlobals import *
 import leoFontPanel
 import Tkinter,tkFont
-import exceptions,sys,string
+import sys,string
 
 Tk = Tkinter
 

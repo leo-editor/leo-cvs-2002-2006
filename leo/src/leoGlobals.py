@@ -7,7 +7,7 @@
 
 #@@language python
 
-import exceptions,os,re,string,sys,time,types
+import os,string,sys,time,types
 
 #@<< define general constants >>
 #@+node:<< define general constants >>
@@ -310,19 +310,11 @@ def set_delims_from_language(language):
 		return None, None, None # Indicate that no change should be made
 #@-node:set_delims_from_language
 #@+node:set_delims_from_string
-#@+at 
-#@nonl
-# Returns (delim1, delim2, delim2), the delims following the @comment 
-# directive.
-# 
-# This code can be called from @languge logic, in which case s can point at 
-# @comment
-#@-at
-#@@c
-
 def set_delims_from_string(s):
+
+	"""Returns (delim1, delim2, delim2), the delims following the @comment directive.
 	
-	# trace(`s`)
+	This code can be called from @languge logic, in which case s can point at @comment"""
 
 	# Skip an optional @comment
 	tag = "@comment"
@@ -404,16 +396,12 @@ def findReference(name,root):
 	return None
 #@-node:findReference
 #@+node:get_directives_dict & globalDirectiveList
-#@+at 
-#@nonl
-# The caller passes [root_node] or None as the second arg.  This allows us to 
-# distinguish between None and [None].
-#@-at
-#@@c
+# The caller passes [root_node] or None as the second arg.  This allows us to distinguish between None and [None].
 
 def get_directives_dict(s,root=None):
 	
-	"""Scans root for @directives found in globalDirectivesList
+	"""Scans root for @directives found in globalDirectivesList.
+
 	Returns a dict containing pointers to the start of each directive"""
 
 	if root: root_node = root[0]
@@ -563,12 +551,6 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
 #@+node:scanDirectives (utils)
 #@+at 
 #@nonl
-# A general-purpose routine that scans v and its ancestors for directives.  It 
-# returns a dict containing the settings in effect as the result of the 
-# @comment, @language, @lineending, @pagewidth, @path and @tabwidth 
-# directives.  This code does not check on the existence of paths, and issues 
-# no error messages.
-# 
 # Perhaps this routine should be the basis of atFile.scanAllDirectives and 
 # tangle.scanAllDirectives, but I am loath to make any further to these two 
 # already-infamous routines.  Also, this code does not check for @color and 
@@ -580,14 +562,12 @@ def scanDirectives(c,v=None):
 	
 	"""Scan vnode v and v's ancestors looking for directives.
 
-	Returns a dict containing the results, including defaults.
-	"""
+	Returns a dict containing the results, including defaults."""
 
 	if c == None or top() == None:
 		return {} # 7/16/03: for unit tests.
 	if v == None: v = c.currentVnode()
 
-	# trace(`v`)
 	#@	<< Set local vars >>
 	#@+node:<< Set local vars >>
 	page_width = c.page_width
@@ -669,14 +649,13 @@ def scanDirectives(c,v=None):
 			
 			path = string.strip(path)
 			if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-				path = os.path.join(app.loadDir,path)
+				path = os_path_join(app.loadDir,path)
 			#@nonl
 			#@-node:<< compute relative path from s[k:] >>
 			#@nl
 			if path and len(path) > 0:
 				base = getBaseDirectory() # returns "" on error.
-				path = os.path.join(base,path)
-				path = toUnicode(path,app.tkEncoding) # 10/20/03
+				path = os_path_join(base,path)
 				
 		#@nonl
 		#@-node:<< Test for @path >>
@@ -734,19 +713,16 @@ def openWithFileName(fileName,old_c=None):
 
 	# Create a full normalized path name.
 	# Display the file name with case intact.
-	fileName = os.path.join(os.getcwd(), fileName)
-	fileName = os.path.normpath(fileName)
-	fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+	fileName = os_path_join(os.getcwd(), fileName)
+	fileName = os_path_normpath(fileName)
 	oldFileName = fileName 
-	fileName = os.path.normcase(fileName)
-	fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+	fileName = os_path_normcase(fileName)
 
 	# If the file is already open just bring its window to the front.
 	list = app.windowList
 	for frame in list:
-		fn = os.path.normcase(frame.c.mFileName)
-		fn = os.path.normpath(fn)
-		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
+		fn = os_path_normcase(frame.c.mFileName)
+		fn = os_path_normpath(fn)
 		if fileName == fn:
 			frame.deiconify()
 			app.setLog(frame.log,"OpenWithFileName")
@@ -766,8 +742,7 @@ def openWithFileName(fileName,old_c=None):
 				app.lockLog() # 6/30/03
 				frame.c.fileCommands.open(file,fileName) # closes file.
 				app.unlockLog() # 6/30/03
-			frame.openDirectory=os.path.dirname(fileName)
-			frame.openDirectory = toUnicode(frame.openDirectory,app.tkEncoding) # 10/20/03
+			frame.openDirectory = os_path_dirname(fileName)
 			frame.c.updateRecentFiles(fileName)
 			doHook("open2",
 				old_c=old_c,new_c=frame.c,fileName=fileName)
@@ -790,9 +765,6 @@ def openWithFileName(fileName,old_c=None):
 #@+node:wrap_lines
 #@+at 
 #@nonl
-# Returns a list of lines, consisting of the input lines wrapped to the given 
-# pageWidth.
-# 
 # Important note: this routine need not deal with leading whitespace.  
 # Instead, the caller should simply reduce pageWidth by the width of leading 
 # whitespace wanted, then add that whitespace to the lines returned here.
@@ -800,10 +772,11 @@ def openWithFileName(fileName,old_c=None):
 # The key to this code is the invarient that line never ends in whitespace.
 #@-at
 #@@c
-# DTHEIN 3-NOV-2002: handle indented first line (normal or hanging indent)
 
 def wrap_lines (lines,pageWidth,firstLineWidth=None):
-	
+
+	"""Returns a list of lines, consisting of the input lines wrapped to the given pageWidth."""
+
 	if pageWidth < 10:
 		pageWidth = 10
 		
@@ -869,7 +842,7 @@ def computeWindowTitle (fileName):
 	if fileName == None:
 		return "untitled"
 	else:
-		path,fn = os.path.split(fileName)
+		path,fn = os_path_split(fileName)
 		if path:
 			title = fn + " in " + path
 		else:
@@ -1015,22 +988,20 @@ def printLeoModules(message=None):
 #@-node:printLeoModules
 #@+node:file/module/plugin_date
 def module_date (mod,format=None):
-	file = os.path.join(app.loadDir,mod.__file__)
-	file = toUnicode(file,app.tkEncoding) # 10/20/03
-	root,ext = os.path.splitext(file) 
+	file = os_path_join(app.loadDir,mod.__file__)
+	root,ext = os_path_splitext(file) 
 	return file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app.loadDir,"..","plugins",plugin_mod.__file__)
-	file = toUnicode(file,app.tkEncoding) # 10/20/03
-	root,ext = os.path.splitext(file) 
+	file = os_path_join(app.loadDir,"..","plugins",plugin_mod.__file__)
+	root,ext = os_path_splitext(file) 
 	return file_date(root + ".py",format=format)
 
 def file_date (file,format=None):
-	if file and len(file)and os.path.exists(file):
+	if file and len(file)and os_path_exists(file):
 		try:
 			import time
-			n = os.path.getmtime(file)
+			n = os_path_getmtime(file)
 			if format == None:
 				format = "%m/%d/%y %H:%M:%S"
 			return time.strftime(format,time.gmtime(n))
@@ -1051,7 +1022,7 @@ def create_temp_name ():
 #@+node:ensure_extension
 def ensure_extension (name, ext):
 
-	file, old_ext = os.path.splitext(name)
+	file, old_ext = os_path_splitext(name)
 	if len(name) == 0:
 		return name # don't add to an empty name.
 	elif old_ext and old_ext == ext:
@@ -1073,30 +1044,27 @@ def getBaseDirectory():
 		base = top().openDirectory
 
 	# trace(`base`)
-	if base and len(base) > 0 and os.path.isabs(base):
+	if base and len(base) > 0 and os_path_isabs(base):
 		return base # base need not exist yet.
 	else:
 		return "" # No relative base given.
 #@-node:getBaseDirectory
 #@+node:makeAllNonExistentDirectories
-#@+at 
-#@nonl
 # This is a generalization of os.makedir.
-# It attempts to make all non-existent directories.
-#@-at
-#@@c
 
 def makeAllNonExistentDirectories (dir):
+
+	"""Attempt to make all non-existent directories"""
 
 	if not app.config.create_nonexistent_directories:
 		return None
 
-	dir1 = dir = os.path.normpath(dir)
-	dir1 = dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+	dir1 = dir = os_path_normpath(dir)
+
 	# Split dir into all its component parts.
 	paths = []
 	while len(dir) > 0:
-		head,tail=os.path.split(dir)
+		head,tail=os_path_split(dir)
 		if len(tail) == 0:
 			paths.append(head)
 			break
@@ -1106,9 +1074,8 @@ def makeAllNonExistentDirectories (dir):
 	path = ""
 	paths.reverse()
 	for s in paths:
-		path = os.path.join(path,s)
-		path = toUnicode(path,app.tkEncoding) # 10/20/03
-		if not os.path.exists(path):
+		path = os_path_join(path,s)
+		if not os_path_exists(path):
 			try:
 				os.mkdir(path)
 				es("created directory: "+path)
@@ -1245,18 +1212,14 @@ if 0: # Test code: may be safely and conveniently executed in the child node.
 #@nonl
 #@-node:redirecting stderr and stdout
 #@+node:sanitize_filename
-#@+at 
-#@nonl
-# This prepares string s to be a valid file name:
-# 
-# - substitute '_' whitespace and characters used special path characters.
-# - eliminate all other non-alphabetic characters.
-# - strip leading and trailing whitespace.
-# - return at most 128 characters.
-#@-at
-#@@c
-
 def sanitize_filename(s):
+
+	"""Prepares string s to be a valid file name:
+	
+	- substitute '_' whitespace and characters used special path characters.
+	- eliminate all other non-alphabetic characters.
+	- strip leading and trailing whitespace.
+	- return at most 128 characters."""
 
 	result = ""
 	for ch in s.strip():
@@ -1278,21 +1241,19 @@ def sanitize_filename(s):
 #@+node:shortFileName
 def shortFileName (fileName):
 	
-	return os.path.basename(fileName)
+	return os_path_basename(fileName)
 #@nonl
 #@-node:shortFileName
 #@+node:update_file_if_changed
-#@+at 
-#@nonl
-# This function compares two files. If they are different, we replace 
-# file_name with temp_name. Otherwise, we just delete temp_name.  Both files 
-# should be closed.
-#@-at
-#@@c
-
 def update_file_if_changed(file_name,temp_name):
 
-	if os.path.exists(file_name):
+	"""Compares two files.
+	
+	If they are different, we replace file_name with temp_name.
+	Otherwise, we just delete temp_name.
+	Both files should be closed."""
+
+	if os_path_exists(file_name):
 		import filecmp
 		if filecmp.cmp(temp_name, file_name):
 			try: # Just delete the temp file.
@@ -1325,21 +1286,15 @@ def update_file_if_changed(file_name,temp_name):
 			es("rename failed: no file created!",color="red")
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
-#@nonl
 #@-node:update_file_if_changed
 #@+node:utils_rename
-#@+at 
-#@nonl
-# Platform-independent rename.
-# 
-# os.rename may fail on some Unix flavors if src and dst are on different 
-# filesystems.
-#@-at
-#@@c
+# os.rename may fail on some Unix flavors if src and dst are on different filesystems.
 
 def utils_rename(src,dst):
+
+	"""Platform-independent rename."""
 	
-	head,tail=os.path.split(dst)
+	head,tail=os_path_split(dst)
 	if head and len(head) > 0:
 		makeAllNonExistentDirectories(head)
 	
@@ -1369,6 +1324,7 @@ def utils_rename(src,dst):
 #@@c
 
 def funcToMethod(f,theClass,name=None):
+
 	setattr(theClass,name or f.__name__,f)
 	# trace(`name`)
 #@nonl
@@ -1471,8 +1427,7 @@ def get_Sherlock_args (args):
 
 	if not args or len(args)==0:
 		try:
-			fn = os.path.join(app.loadDir,"SherlockArgs")
-			fn = toUnicode(fn,app.tkEncoding) # 10/20/03
+			fn = os_path_join(app.loadDir,"SherlockArgs")
 			f = open(fn)
 			args = f.readlines()
 			f.close()
@@ -1624,11 +1579,7 @@ def stat (name=None):
 	stats[name] = 1 + stats.get(name,0)
 #@-node:stat
 #@+node:Timing
-#@+at 
-#@nonl
 # pychecker bug: pychecker complains that there is no attribute time.clock
-#@-at
-#@@c
 
 def getTime():
 	return time.clock()
@@ -1643,7 +1594,7 @@ def executeScript (name):
 	
 	"""Execute a script whose short python file name is given"""
 	
-	mod_name,ext = os.path.splitext(name)
+	mod_name,ext = os_path_splitext(name)
 	file = None
 	try:
 		# This code is in effect an import or a reload.
@@ -1659,37 +1610,193 @@ def executeScript (name):
 		file.close()
 
 #@-node:executeScript
-#@+node:File utils (unicode filenames)  **** Rename to os_path_xxx
-#@+at 
-# 
-# - Probably should use app.fnEncoding = "mbcs" for Windows.
-# 
-# - Probably only works for Python 2.3
-# 
-#@-at
-#@-node:File utils (unicode filenames)  **** Rename to os_path_xxx
-#@+node:fn_norm
-def fn_norm(arg,encoding=None):
+#@+node:os_path_abspath
+def os_path_abspath(path,encoding=None):
+	
+	"""Convert a path to an absolute path."""
 
-	if not encoding:
-		encoding = app.tkEncoding
-	arg = toUnicode(arg,encoding)
-	arg = os.path.normpath(arg)
-	arg = os.path.normcase(arg)
-	return arg
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.abspath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
 #@nonl
-#@-node:fn_norm
-#@+node:fn_join
-def fn_join(*args,**keys):
+#@-node:os_path_abspath
+#@+node:os_path_basename
+def os_path_basename(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.basename(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_basename
+#@+node:os_path_dirname
+def os_path_dirname(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.dirname(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_dirname
+#@+node:os_path_exists
+def os_path_exists(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.exists(path)
+#@nonl
+#@-node:os_path_exists
+#@+node:os_path_getmtime
+def os_path_getmtime(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.getmtime(path)
+#@nonl
+#@-node:os_path_getmtime
+#@+node:os_path_isabs
+def os_path_isabs(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isabs(path)
+#@nonl
+#@-node:os_path_isabs
+#@+node:os_path_isdir (not used)
+def os_path_isdir(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isdir(path)
+#@nonl
+#@-node:os_path_isdir (not used)
+#@+node:os_path_isfile
+def os_path_isfile(path,encoding=None):
+	
+	"""Normalize the path and convert it to an absolute path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return os.path.isfile(path)
+#@nonl
+#@-node:os_path_isfile
+#@+node:os_path_join
+def os_path_join(*args,**keys):
 	
 	encoding = keys.get("encoding")
-	if not encoding:
-		encoding = app.tkEncoding
-	uargs = [fn_norm(arg,encoding) for arg in args]
-	fn = os.path.join(*uargs)
-	return fn
+
+	uargs = [toUnicodeFileEncoding(arg,encoding) for arg in args]
+
+	path = os.path.join(*uargs)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+
+	return path
 #@nonl
-#@-node:fn_join
+#@-node:os_path_join
+#@+node:os_path_norm
+def os_path_norm(path,encoding=None):
+	
+	"""Normalize both the path and the case."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normcase(path)
+	path = os.path.normpath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_norm
+#@+node:os_path_normcase
+def os_path_normcase(path,encoding=None):
+	
+	"""Normalize the path's case."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normcase(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_normcase
+#@+node:os_path_normpath
+def os_path_normpath(path,encoding=None):
+	
+	"""Normalize the path."""
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	path = os.path.normpath(path)
+	
+	path = toUnicodeFileEncoding(path,encoding)
+	
+	return path
+#@nonl
+#@-node:os_path_normpath
+#@+node:os_path_split
+def os_path_split(path,encoding=None):
+	
+	path = toUnicodeFileEncoding(path,encoding)
+
+	head,tail = os.path.split(path)
+
+	head = toUnicodeFileEncoding(head,encoding)
+	tail = toUnicodeFileEncoding(tail,encoding)
+
+	return head,tail
+#@nonl
+#@-node:os_path_split
+#@+node:os_path_splitext
+def os_path_splitext(path,encoding=None):
+
+	path = toUnicodeFileEncoding(path,encoding)
+
+	head,tail = os.path.splitext(path)
+
+	head = toUnicodeFileEncoding(head,encoding)
+	tail = toUnicodeFileEncoding(tail,encoding)
+
+	return head,tail
+#@nonl
+#@-node:os_path_splitext
+#@+node:toUnicodeFileEncoding
+def toUnicodeFileEncoding(path,encoding):
+
+	if not encoding:
+		if sys.platform == "win32":
+			encoding = "mbcs"
+		else:
+			encoding = app.tkEncoding
+
+	return toUnicode(path,encoding)
+#@nonl
+#@-node:toUnicodeFileEncoding
 #@+node:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
@@ -1909,9 +2016,8 @@ def importFromPath (name,path):
 		file = None ; result = None
 		try:
 			fn = shortFileName(name)
-			mod_name,ext = os.path.splitext(fn)
-			path = os.path.normpath(path)
-			path = toUnicode(path,app.tkEncoding) # 10/20/03
+			mod_name,ext = os_path_splitext(fn)
+			path = os_path_normpath(path)
 			data = imp.find_module(mod_name,[path]) # This can open the file.
 			if data:
 				file,pathname,description = data
@@ -2164,16 +2270,12 @@ def scanAtRootOptions (s,i,err_flag=false):
 #@nonl
 #@-node:scanAtRootOptions
 #@+node:scanError
-#@+at 
-#@nonl
-# It seems dubious to bump the Tangle error count here.  OTOH, it really 
-# doesn't hurt.
-#@-at
-#@@c
+# It seems dubious to bump the Tangle error count here.  OTOH, it really doesn't hurt.
 
 def scanError(s):
 
-	# Bump the error count in the tangle command.
+	"""Bump the error count in the tangle command."""
+
 	top().tangleCommands.errors += 1
 
 	es(s)
@@ -2229,15 +2331,16 @@ def skip_block_comment (s,i):
 #@+node:skip_braces
 #@+at 
 #@nonl
-# Skips from the opening to the matching . If no matching is found i is set to 
-# len(s).
-# 
 # This code is called only from the import logic, so we are allowed to try 
 # some tricks.  In particular, we assume all braces are matched in #if blocks.
 #@-at
 #@@c
 
 def skip_braces(s,i):
+
+	"""Skips from the opening to the matching brace.
+	
+	If no matching is found i is set to len(s)"""
 
 	# start = get_line(s,i)
 	assert(match(s,i,'{'))
@@ -2259,7 +2362,6 @@ def skip_braces(s,i):
 			level += delta
 		else: i += 1
 	return i
-#@nonl
 #@-node:skip_braces
 #@+node:skip_php_braces (Dave Hein)
 #@+at 
@@ -2291,16 +2393,15 @@ def skip_php_braces(s,i):
 		elif match(s,i,'/*'): i = skip_block_comment(s,i)
 		else: i += 1
 	return i
+#@nonl
 #@-node:skip_php_braces (Dave Hein)
 #@+node:skip_parens
-#@+at 
-#@nonl
-# Skips from the opening ( to the matching ) . If no matching is found i is 
-# set to len(s)
-#@-at
-#@@c
-
 def skip_parens(s,i):
+
+	"""Skips from the opening ( to the matching ).
+	
+	If no matching is found i is set to len(s)"""
+
 	level = 0 ; n = len(s)
 	assert(match(s,i,'('))
 	while i < n:
@@ -2319,15 +2420,11 @@ def skip_parens(s,i):
 #@nonl
 #@-node:skip_parens
 #@+node:skip_pascal_begin_end
-#@+at 
-#@nonl
-# Skips from begin to matching end.
-# If found, i points to the end. Otherwise, i >= len(s)
-# The end keyword matches begin, case, class, record, and try.
-#@-at
-#@@c
-
 def skip_pascal_begin_end(s,i):
+
+	"""Skips from begin to matching end.
+	If found, i points to the end. Otherwise, i >= len(s)
+	The end keyword matches begin, case, class, record, and try."""
 
 	assert(match_c_word(s,i,"begin"))
 	level = 1 ; i = skip_c_id(s,i) # Skip the opening begin.
@@ -2349,7 +2446,6 @@ def skip_pascal_begin_end(s,i):
 				level += 1
 		else: i += 1
 	return i
-#@nonl
 #@-node:skip_pascal_begin_end
 #@+node:skip_pascal_block_comment
 # Scans past a pascal comment delimited by (* and *).
@@ -2607,16 +2703,11 @@ def is_nl(s,i):
 #@nonl
 #@-node:is_nl
 #@+node:is_special
-#@+at 
-#@nonl
-# Return true if the body text contains the @ directive.
-# 
-# We no longer require that the directive appear befor any @c directive or 
-# section definition.
-#@-at
-#@@c
+# We no longer require that the directive appear befor any @c directive or section definition.
 
 def is_special(s,i,directive):
+
+	"""Return true if the body text contains the @ directive."""
 
 	# j = skip_line(s,i) ; trace(`s[i:j]` + " : " + `directive`)
 	assert (directive and directive [0] == '@' )
@@ -2769,14 +2860,11 @@ def skip_matching_delims(s,i,delim1,delim2):
 #@nonl
 #@-node:skip_matching_delims
 #@+node:skip_nl
-#@+at 
-#@nonl
-# This function skips a single "logical" end-of-line character.  We need this 
-# function because different systems have different end-of-line conventions.
-#@-at
-#@@c
+# We need this function because different systems have different end-of-line conventions.
 
 def skip_nl (s,i):
+
+	"""Skips a single "logical" end-of-line character."""
 
 	if match(s,i,"\r\n"): return i + 2
 	elif match(s,i,'\n') or match(s,i,'\r'): return i + 1
@@ -2868,10 +2956,10 @@ def initScriptFind(findHeadline,changeHeadline,firstNode=None):
 	# Initialize the find panel.
 	c.script_search_flag = true
 	c.script_change_flag = true
-	c.find_text   = find_v.bodyString().strip()
-	c.change_text = change_v.bodyString().strip()
+	c.find_text   = find_v.bodyString().strip() + "\n"
+	c.change_text = change_v.bodyString().strip() + "\n"
 	app.findFrame.init(c)
-	c.frame.OnFindPanel()
+	c.findPanel()
 #@nonl
 #@-node:initScriptFind
 #@+node:isUnicode
@@ -3096,15 +3184,12 @@ def skip_leading_ws(s,i,ws,tab_width):
 #@nonl
 #@-node:skip_leading_ws
 #@+node:skip_leading_ws_with_indent
-#@+at 
-#@nonl
-# Skips leading whitespace and returns (i, indent), where i points after the 
-# whitespace and indent is the width of the whitespace, assuming tab_width 
-# wide tabs.
-#@-at
-#@@c
-
 def skip_leading_ws_with_indent(s,i,tab_width):
+
+	"""Skips leading whitespace and returns (i, indent), 
+	
+	- i points after the whitespace
+	- indent is the width of the whitespace, assuming tab_width wide tabs."""
 
 	count = 0 ; n = len(s)
 	while i < n:

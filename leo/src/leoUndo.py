@@ -96,14 +96,11 @@ class baseUndoer:
 	#@nonl
 	#@-node:clearIvars
 	#@+node:clearUndoState
-	#@+at 
-	#@nonl
-	# This method clears then entire Undo state.  All non-undoable commands 
-	# should call this method.
-	#@-at
-	#@@c
-	
 	def clearUndoState (self):
+	
+		"""Clears then entire Undo state.
+		
+		All non-undoable commands should call this method."""
 		
 		u = self
 		u.setRedoType("Can't Redo")
@@ -111,7 +108,6 @@ class baseUndoer:
 		u.beads = [] # List of undo nodes.
 		u.bead = -1 # Index of the present bead: -1:len(beads)
 		u.clearIvars()
-	#@nonl
 	#@-node:clearUndoState
 	#@+node:canRedo & canUndo
 	# Translation does not affect these routines.
@@ -684,14 +680,9 @@ class baseUndoer:
 	#@nonl
 	#@-node:u.redo
 	#@+node:u.undo
-	#@+at 
-	#@nonl
-	# This function and its allies undo the operation described by the undo 
-	# parmaters.
-	#@-at
-	#@@c
-	
 	def undo (self):
+	
+		"""This function and its allies undo the operation described by the undo parmaters."""
 		
 		# clear_stats() ; # stat()
 		u = self ; c = u.c
@@ -932,7 +923,6 @@ class baseUndoer:
 		u.bead -= 1
 		u.setUndoTypes()
 		# print_stats()
-	#@nonl
 	#@-node:u.undo
 	#@+node:saveTree, restoreExtraAttributes
 	def saveTree (self,v):

@@ -358,20 +358,6 @@ class leoMenu:
 			self.updateOutlineMenu()
 	#@nonl
 	#@-node:updateAllMenus
-	#@+node:hasSelection
-	# Returns true if text in the outline or body text is selected.
-	
-	def hasSelection (self):
-		
-		body = self.frame.body
-	
-		if body:
-			first, last = body.getTextSelection()
-			return first != last
-		else:
-			return false
-	#@nonl
-	#@-node:hasSelection
 	#@+node:updateFileMenu
 	def updateFileMenu (self):
 		
@@ -481,6 +467,20 @@ class leoMenu:
 			es_exception()
 	#@nonl
 	#@-node:updateOutlineMenu
+	#@+node:hasSelection
+	# Returns true if text in the outline or body text is selected.
+	
+	def hasSelection (self):
+		
+		body = self.frame.body
+	
+		if body:
+			first, last = body.getTextSelection()
+			return first != last
+		else:
+			return false
+	#@nonl
+	#@-node:hasSelection
 	#@+node:get/setRealMenuName & setRealMenuNamesFromTable (MOVED to leoMenu class)
 	# Returns the translation of a menu name or an item name.
 	

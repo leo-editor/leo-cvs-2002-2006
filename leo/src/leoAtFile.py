@@ -6,7 +6,7 @@
 
 from leoGlobals import *
 import leoColor,leoNodes
-import filecmp,os,os.path,time
+import filecmp,os,time
 
 #@<< global atFile constants >>
 #@+node:<< global atFile constants >>
@@ -183,9 +183,8 @@ class baseAtFile:
 		#@nl
 		#@	<< open file or return false >>
 		#@+node:<< open file or return false >>
-		fn = os.path.join(at.default_directory,fileName)
-		fn = os.path.normpath(fn)
-		fn = toUnicode(fn,app.tkEncoding) # 10/20/03
+		fn = os_path_join(at.default_directory,fileName)
+		fn = os_path_normpath(fn)
 		
 		try:
 			# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
@@ -310,11 +309,10 @@ class baseAtFile:
 		else:
 			name = ""
 		
-		dir = choose(name,os.path.dirname(name),None)
-		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		dir = choose(name,os_path_dirname(name),None)
 		
-		if dir and os.path.isabs(dir):
-			if os.path.exists(dir):
+		if dir and os_path_isabs(dir):
+			if os_path_exists(dir):
 				at.default_directory = dir
 			else:
 				at.default_directory = makeAllNonExistentDirectories(dir)
@@ -354,15 +352,14 @@ class baseAtFile:
 				
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.
-					path = os.path.join(base,path)
-					path = toUnicode(path,app.tkEncoding) # 10/20/03
+					path = os_path_join(base,path)
 					
-					if os.path.isabs(path):
+					if os_path_isabs(path):
 						#@		<< handle absolute path >>
 						#@+node:<< handle absolute path >>
 						# path is an absolute path.
 						
-						if os.path.exists(path):
+						if os_path_exists(path):
 							at.default_directory = path
 						else:
 							at.default_directory = makeAllNonExistentDirectories(path)
@@ -391,11 +388,9 @@ class baseAtFile:
 			base = getBaseDirectory() # returns "" on error.
 			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
 				if dir and len(dir) > 0:
-					dir = os.path.join(base,dir)
-					dir = toUnicode(dir,app.tkEncoding) # 10/20/03
-		
-					if os.path.isabs(dir): # Errors may result in relative or invalid path.
-						if os.path.exists(dir):
+					dir = os_path_join(base,dir)
+					if os_path_isabs(dir): # Errors may result in relative or invalid path.
+						if os_path_exists(dir):
 							at.default_directory = dir ; break
 						else:
 							at.default_directory = makeAllNonExistentDirectories(dir)
@@ -709,14 +704,13 @@ class baseAtFile:
 					try:
 						fn = df.targetFileName
 						df.shortFileName = fn # name to use in status messages.
-						df.targetFileName = os.path.join(df.default_directory,fn)
-						df.targetFileName = os.path.normpath(df.targetFileName)
-						df.targetFileName = toUnicode(df.targetFileName,app.tkEncoding) # 10/20/03
+						df.targetFileName = os_path_join(df.default_directory,fn)
+						df.targetFileName = os_path_normpath(df.targetFileName)
 				
 						path = df.targetFileName # Look for the full name, not just the directory.
 						valid = path and len(path) > 0
 						if valid:
-							missing = not os.path.exists(path)
+							missing = not os_path_exists(path)
 					except:
 						es("exception creating path:" + fn)
 						es_exception()
@@ -984,6 +978,8 @@ class baseOldDerivedFile:
 	#@-at
 	#@@c
 	def createNthChild(self,n,parent,headline):
+		
+		"""Create the nth child of the parent."""
 	
 		at = self
 		assert(n > 0)
@@ -1732,13 +1728,11 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putCloseNodeSentinel
 	#@+node:putCloseSentinels
-	#@+at 
-	#@nonl
-	# root is an ancestor of v, or root == v.  We call putCloseSentinel for v 
-	# up to, but not including, root.
-	#@-at
-	#@@c
+	# root is an ancestor of v, or root == v.
+	
 	def putCloseSentinels(self,root,v):
+		
+		"""call putCloseSentinel for v up to, but not including, root."""
 	
 		self.putCloseNodeSentinel(v)
 		while 1:
@@ -1749,13 +1743,11 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putCloseSentinels
 	#@+node:putOpenLeoSentinel
-	#@+at 
-	#@nonl
-	# This method is the same as putSentinel except we don't put an opening 
-	# newline and leading whitespace.
-	#@-at
-	#@@c
+	# This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
+	
 	def putOpenLeoSentinel(self,s):
+		
+		"""Put a +leo sentinel containing s."""
 		
 		if not self.sentinels:
 			return # Handle @nosentinelsfile.
@@ -1774,12 +1766,9 @@ class baseOldDerivedFile:
 			self.onl() # End of sentinel.
 	#@-node:putOpenLeoSentinel
 	#@+node:putOpenNodeSentinel
-	#@+at 
-	#@nonl
-	# This method puts an open node sentinel for node v.
-	#@-at
-	#@@c
 	def putOpenNodeSentinel(self,v):
+	
+		"""Put an open node sentinel for node v."""
 	
 		if v.isAtFileNode() and v != self.root:
 			self.writeError("@file not valid in: " + v.headString())
@@ -1790,13 +1779,11 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putOpenNodeSentinel
 	#@+node:putOpenSentinels
-	#@+at 
-	#@nonl
-	# root is an ancestor of v, or root == v.  We call putOpenNodeSentinel on 
-	# all the descendents of root which are the ancestors of v.
-	#@-at
-	#@@c
+	# root is an ancestor of v, or root == v.
+	
 	def putOpenSentinels(self,root,v):
+	
+		"""Call putOpenNodeSentinel on all the descendents of root which are the ancestors of v."""
 	
 		last = root
 		while last != v:
@@ -1833,6 +1820,8 @@ class baseOldDerivedFile:
 	#@@c
 	def putSentinel(self,s):
 		
+		"""Put a sentinel containing s."""
+		
 		if not self.sentinels:
 			return # Handle @nosentinelsfile.
 	
@@ -1857,21 +1846,18 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putSentinel (applies cweb hack)
 	#@+node:sentinelKind
-	#@+at 
-	#@nonl
-	# This method tells what kind of sentinel appears in line s.  Typically s 
-	# will be an empty line before the actual sentinel, but it is also valid 
-	# for s to be an actual sentinel line.
-	# 
-	# Returns (kind, s, emptyFlag), where emptyFlag is true if kind == 
-	# noSentinel and s was an empty line on entry.
-	#@-at
-	#@@c
-	
 	def sentinelKind(self,s):
 	
+		"""This method tells what kind of sentinel appears in line s.
+		
+		Typically s will be an empty line before the actual sentinel,
+		but it is also valid for s to be an actual sentinel line.
+		
+		Returns (kind, s, emptyFlag), where emptyFlag is true if
+		kind == noSentinel and s was an empty line on entry."""
+	
 		i = skip_ws(s,0)
-		if match(s,i,self.startSentinelComment): 
+		if match(s,i,self.startSentinelComment):
 			i += len(self.startSentinelComment)
 		else:
 			return noSentinel
@@ -2055,11 +2041,10 @@ class baseOldDerivedFile:
 		else:
 			name = ""
 		
-		dir = choose(name,os.path.dirname(name),None)
-		dir = toUnicode(dir,app.tkEncoding) # 10/20/03
+		dir = choose(name,os_path_dirname(name),None)
 		
-		if dir and len(dir) > 0 and os.path.isabs(dir):
-			if os.path.exists(dir):
+		if dir and len(dir) > 0 and os_path_isabs(dir):
+			if os_path_exists(dir):
 				self.default_directory = dir
 			else: # 9/25/02
 				self.default_directory = makeAllNonExistentDirectories(dir)
@@ -2093,19 +2078,19 @@ class baseOldDerivedFile:
 				path = path.strip()
 				
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-					path = os.path.join(app.loadDir,path)
+					path = os_path_join(app.loadDir,path)
 				#@nonl
 				#@-node:<< compute relative path from s[k:] >>
 				#@nl
 				if path and len(path) > 0:
 					base = getBaseDirectory() # returns "" on error.
-					path = os.path.join(base,path)
-					if os.path.isabs(path):
+					path = os_path_join(base,path)
+					if os_path_isabs(path):
 						#@			<< handle absolute path >>
 						#@+node:<< handle absolute path >>
 						# path is an absolute path.
 						
-						if os.path.exists(path):
+						if os_path_exists(path):
 							self.default_directory = path
 						else: # 9/25/02
 							self.default_directory = makeAllNonExistentDirectories(path)
@@ -2195,9 +2180,9 @@ class baseOldDerivedFile:
 			base = getBaseDirectory() # returns "" on error.
 			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
 				if dir and len(dir) > 0:
-					dir = os.path.join(base,dir)
-					if os.path.isabs(dir): # Errors may result in relative or invalid path.
-						if os.path.exists(dir):
+					dir = os_path_join(base,dir)
+					if os_path_isabs(dir): # Errors may result in relative or invalid path.
+						if os_path_exists(dir):
 							self.default_directory = dir ; break
 						else: # 9/25/02
 							self.default_directory = makeAllNonExistentDirectories(dir)
@@ -2616,12 +2601,10 @@ class baseOldDerivedFile:
 			try:
 				fn = self.targetFileName
 				self.shortFileName = fn # name to use in status messages.
-				self.targetFileName = os.path.join(self.default_directory,fn)
-				self.targetFileName = os.path.normpath(self.targetFileName)
-				self.targetFileName = toUnicode(self.targetFileName,app.tkEncoding) # 10/20/03
-				path = os.path.dirname(self.targetFileName)
-				path = toUnicode(path,app.tkEncoding) # 10/20/03
-				if not path or not os.path.exists(path):
+				self.targetFileName = os_path_join(self.default_directory,fn)
+				self.targetFileName = os_path_normpath(self.targetFileName)
+				path = os_path_dirname(self.targetFileName)
+				if not path or not os_path_exists(path):
 					self.writeError("path does not exist: " + path)
 					valid = false
 			except:
@@ -2629,7 +2612,7 @@ class baseOldDerivedFile:
 				es_exception()
 				valid = false
 	
-		if valid and os.path.exists(self.targetFileName):
+		if valid and os_path_exists(self.targetFileName):
 			try:
 				if not os.access(self.targetFileName,os.W_OK):
 					self.writeError("read only: " + self.targetFileName)
@@ -2674,7 +2657,7 @@ class baseOldDerivedFile:
 		assert(self.outputFile == None)
 		
 		self.fileChangedFlag = false
-		if os.path.exists(self.targetFileName):
+		if os_path_exists(self.targetFileName):
 			if filecmp.cmp(self.outputFileName,self.targetFileName):
 				#@			<< delete the output file >>
 				#@+node:<< delete the output file >>
@@ -2857,13 +2840,11 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putBodyPart (3.x)
 	#@+node:putDoc
-	#@+at 
-	#@nonl
-	# This method outputs a doc section terminated by @code or end-of-text.  
-	# All other interior directives become part of the doc part.
-	#@-at
-	#@@c
 	def putDoc(self,s,i,kind):
+	
+		"""Outputs a doc section terminated by @code or end-of-text.
+		
+		All other interior directives become part of the doc part."""
 	
 		if kind == atDirective:
 			i += 1 ; tag = "at"
@@ -2881,7 +2862,6 @@ class baseOldDerivedFile:
 		self.putDocPart(s[i:j])
 		self.putSentinel("@-" + tag)
 		return j
-	#@nonl
 	#@-node:putDoc
 	#@+node:putDocPart (3.x)
 	# Puts a comment part in comments.
@@ -2952,14 +2932,11 @@ class baseOldDerivedFile:
 	#@nonl
 	#@-node:putDocPart (3.x)
 	#@+node:putCodePart & allies
-	#@+at 
-	#@nonl
-	# This method expands a code part, terminated by any at-directive except 
-	# at-others.  It expands references and at-others and outputs @verbatim 
-	# sentinels as needed.
-	#@-at
-	#@@c
 	def putCodePart(self,s,i,v):
+	
+		"""Expands a code part, terminated by any at-directive except at-others.
+		
+		It expands references and at-others and outputs @verbatim sentinels as needed."""
 	
 		atOthersSeen = false # true: at-others has been expanded.
 		while i < len(s):
@@ -3090,28 +3067,24 @@ class baseOldDerivedFile:
 		# Raw code parts can only end at the end of body text.
 		self.raw = false
 		return i
-	#@nonl
 	#@-node:putCodePart & allies
 	#@+node:inAtOthers
-	#@+at 
-	#@nonl
-	# Returns true if v should be included in the expansion of the at-others 
-	# directive in the body text of v's parent.
-	# 
-	# 7/30/02: v will not be included if it is a definition node or if its 
-	# body text contains an @ignore directive. Previously, a "nested" @others 
-	# directive would also inhibit the inclusion of v.
-	#@-at
-	#@@c
 	def inAtOthers(self,v):
+	
+		"""Returns true if v should be included in the expansion of the at-others directive in the body text of v's parent.
+		
+		v will not be included if it is a definition node or if its body text contains an @ignore directive.
+		Previously, a "nested" @others directive would also inhibit the inclusion of v."""
 	
 		# Return false if this has been expanded previously.
 		if  v.isVisited(): return false
+	
 		# Return false if this is a definition node.
 		h = v.headString()
 		i = skip_ws(h,0)
 		isSection, j = self.isSectionName(h,i)
 		if isSection: return false
+	
 		# Return false if v's body contains an @ignore or at-others directive.
 		if 1: # 7/29/02: New code.  Amazingly, this appears to work!
 			return not v.isAtIgnoreNode()
@@ -3141,6 +3114,8 @@ class baseOldDerivedFile:
 	#@-at
 	#@@c
 	def putAtOthers(self,v,delta):
+		
+		"""Output code corresponding to an @others directive."""
 	
 		self.indent += delta
 		self.putSentinel("@+others")
@@ -5000,8 +4975,6 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@+node:putDirective  (handles @delims) 4,x
 	#@+at 
 	#@nonl
-	# This method outputs s, a directive or reference, in a sentinel.
-	# 
 	# It is important for PHP and other situations that @first and @last 
 	# directives get translated to verbatim lines that do _not_ include what 
 	# follows the @first & @last directives.
@@ -5009,6 +4982,8 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@@c
 	
 	def putDirective(self,s,i):
+		
+		"""Output a sentinel a directive or reference s."""
 	
 		tag = "@delims"
 		assert(i < len(s) and s[i] == '@')

@@ -35,13 +35,12 @@ def loadHandlers():
 	import glob,os
 	global count
 	
-	path = os.path.join(app.loadDir,"..","plugins")
-	path = toUnicode(path,app.tkEncoding) # 10/20/03
-	files = glob.glob(os.path.join(path,"*.py"))
+	path = os_path_join(app.loadDir,"..","plugins")
+	files = glob.glob(os_path_join(path,"*.py"))
 	files.sort()
 	if files:
 		for file in files:
-			file = toUnicode(file,app.tkEncoding) # 10/20/03
+			file = toUnicode(file,app.tkEncoding)
 			importFromPath(file,path)
 		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")
 #@nonl
@@ -139,6 +138,9 @@ def registerOneExclusiveHandler(tag, fn):
 #@@c
 
 def funcToMethod(f,theClass,name=None):
+	
+	"""Converts the function f to a method of theClass with the given optional name."""
+
 	setattr(theClass,name or f.__name__,f)
 	
 # That's all!

@@ -393,7 +393,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare):
 			
 		if fileName and len(fileName) > 0:
 			# The dialog also warns about this, so this may never happen.
-			if not os.path.exists(fileName):
+			if not os_path_exists(fileName):
 				self.show("not found: " + fileName)
 				fileName = None
 		else: fileName = None

@@ -120,10 +120,10 @@ class baseLeoCompare:
 	def compare_directories (self,path1,path2):
 		
 		# Ignore everything except the directory name.
-		dir1 = os.path.dirname(path1)
-		dir2 = os.path.dirname(path2)
-		dir1 = os.path.normpath(dir1)
-		dir2 = os.path.normpath(dir2)
+		dir1 = os_path_dirname(path1)
+		dir2 = os_path_dirname(path2)
+		dir1 = os_path_normpath(dir1)
+		dir2 = os_path_normpath(dir2)
 		
 		if dir1 == dir2:
 			self.show("Directory names are identical.\nPlease pick distinct directories.")
@@ -150,14 +150,14 @@ class baseLeoCompare:
 		files1 = []
 		files2 = []
 		for f in list1:
-			junk, ext = os.path.splitext(f)
+			junk, ext = os_path_splitext(f)
 			if self.limitToExtension:
 				if ext == self.limitToExtension:
 					files1.append(f)
 			else:
 				files1.append(f)
 		for f in list2:
-			junk, ext = os.path.splitext(f)
+			junk, ext = os_path_splitext(f)
 			if self.limitToExtension:
 				if ext == self.limitToExtension:
 					files2.append(f)
@@ -167,11 +167,11 @@ class baseLeoCompare:
 		# Compare the files and set the yes, no and fail lists.
 		yes = [] ; no = [] ; fail = []
 		for f1 in files1:
-			head,f2 = os.path.split(f1)
+			head,f2 = os_path_split(f1)
 			if f2 in files2:
 				try:
-					name1 = os.path.join(dir1,f1)
-					name2 = os.path.join(dir2,f2)
+					name1 = os_path_join(dir1,f1)
+					name2 = os_path_join(dir2,f2)
 					val = filecmp.cmp(name1,name2,0)
 					if val: yes.append(f1)
 					else:    no.append(f1)
@@ -462,14 +462,14 @@ class baseLeoCompare:
 		
 		if self.outputFileName == None:
 			return
-		dir,name = os.path.split(self.outputFileName)
+		dir,name = os_path_split(self.outputFileName)
 		if len(dir) == 0:
 			self.show("empty output directory")
 			return
 		if len(name) == 0:
 			self.show("empty output file name")
 			return
-		if not os.path.exists(dir):
+		if not os_path_exists(dir):
 			self.show("output directory not found: " + dir)
 		else:
 			try:

@@ -105,18 +105,13 @@ class baseCommands:
 	#@nonl
 	#@-node:c.setIvarsFromPrefs
 	#@+node: doCommand
-	#@+at 
-	#@nonl
-	# Executes the given command, invoking hooks and catching exceptions.
-	# Command handlers no longer need to return "break".  Yippee!
-	# 
-	# The code assumes that the "command1" hook has completely handled the 
-	# command if doHook("command1") returns false.  This provides a very 
-	# simple mechanism for overriding commands.
-	#@-at
-	#@@c
-	
 	def doCommand (self,command,label,event=None):
+	
+		"""Execute the given command, invoking hooks and catching exceptions.
+		
+		The code assumes that the "command1" hook has completely handled the command if
+		doHook("command1") returns false.
+		This provides a simple mechanism for overriding commands."""
 		
 		c = self ; v = c.currentVnode()
 	
@@ -147,7 +142,7 @@ class baseCommands:
 	
 	def getSignOnLine (self):
 		c = self
-		return "Leo 4.1 beta 3, build %s, November 18, 2003" % c.getBuildNumber()
+		return "Leo 4.1 beta 4, build %s, November 20, 2003" % c.getBuildNumber()
 		
 	def initVersion (self):
 		c = self
@@ -227,15 +222,12 @@ class baseCommands:
 	#@nonl
 	#@-node:open
 	#@+node:openWith and allies
-	#@+at 
-	#@nonl
-	# This routine handles the items in the Open With... menu.
-	# These items can only be created by createOpenWithMenuFromTable().
-	# Typically this would be done from the "open2" hook.
-	#@-at
-	#@@c
-	
 	def openWith(self,data=None):
+	
+		"""This routine handles the items in the Open With... menu.
+	
+		These items can only be created by createOpenWithMenuFromTable().
+		Typically this would be done from the "open2" hook."""
 		
 		c = self ; v = c.currentVnode()
 		if not data or len(data) != 3: return # 6/22/03
@@ -267,7 +259,7 @@ class baseCommands:
 				#@+node:<<set dict and path if a temp file already refers to v.t >>
 				searchPath = c.openWithTempFilePath(v,ext)
 				
-				if os.path.exists(searchPath):
+				if os_path_exists(searchPath):
 					for dict in app.openWithFiles:
 						if v.t == dict.get("v") and searchPath == dict.get("path"):
 							path = searchPath
@@ -296,9 +288,9 @@ class baseCommands:
 					
 					old_time = dict.get("time")
 					try:
-						new_time=os.path.getmtime(path)
+						new_time = os_path_getmtime(path)
 					except:
-						new_time=None
+						new_time = None
 						
 					body_changed = old_body != new_body
 					temp_changed = old_time != new_time
@@ -353,11 +345,11 @@ class baseCommands:
 						command    = "exec("+arg+shortPath+")"
 						exec arg+path in {} # 12/11/02
 					elif openType == "os.spawnl":
-						filename = os.path.basename(arg)
+						filename = os_path_basename(arg)
 						command = "os.spawnl("+arg+","+filename+','+ shortPath+")"
 						apply(os.spawnl,(os.P_NOWAIT,arg,filename,path))
 					elif openType == "os.spawnv":
-						filename = os.path.basename(arg)
+						filename = os_path_basename(arg)
 						command = "os.spawnv("+arg+",("+filename+','+ shortPath+"))"
 						apply(os.spawnl,(os.P_NOWAIT,arg,(filename,path)))
 					else:
@@ -384,7 +376,7 @@ class baseCommands:
 		c = self
 		path = c.openWithTempFilePath(v,ext)
 		try:
-			if os.path.exists(path):
+			if os_path_exists(path):
 				es("recreating:  " + shortFileName(path),color="red")
 			else:
 				es("creating:  " + shortFileName(path),color="blue")
@@ -399,8 +391,8 @@ class baseCommands:
 			file.write(s)
 			file.flush()
 			file.close()
-			try:    time=os.path.getmtime(path)
-			except: time=None
+			try:    time = os_path_getmtime(path)
+			except: time = None
 			# es("time: " + str(time))
 			# 4/22/03: add body and encoding entries to dict for later comparisons.
 			dict = {"body":s, "c":c, "encoding":encoding, "f":file, "path":path, "time":time, "v":v}
@@ -432,9 +424,8 @@ class baseCommands:
 		name = "LeoTemp_" + str(id(v.t)) + '_' + sanitize_filename(v.headString()) + ext
 		name = toUnicode(name,app.tkEncoding) # 10/20/03
 	
-		td = os.path.abspath(tempfile.gettempdir())
-		path = os.path.join(td,name)
-		path = toUnicode(path,app.tkEncoding) # 10/20/03
+		td = os_path_abspath(tempfile.gettempdir())
+		path = os_path_join(td,name)
 		
 		# print "openWithTempFilePath",path
 		return path
@@ -614,12 +605,12 @@ class baseCommands:
 			return
 		
 		# Update the recent files list in all windows.
-		normFileName = fn_norm(fileName)
+		normFileName = os_path_norm(fileName)
 		for frame in app.windowList:
 			c = frame.c
 			# Remove all versions of the file name.
 			for name in c.recentFiles:
-				if normFileName == fn_norm(name):
+				if normFileName == os_path_norm(name):
 					c.recentFiles.remove(name)
 			c.recentFiles.insert(0,fileName)
 			# Recreate the Recent Files menu.
@@ -975,14 +966,11 @@ class baseCommands:
 	#@nonl
 	#@-node:delete
 	#@+node:executeScript
-	#@+at 
-	#@nonl
-	# This executes body text as a Python script.  We execute the selected 
-	# text, or the entire body text if no text is selected.
-	#@-at
-	#@@c
-	
 	def executeScript(self,v=None):
+	
+		"""This executes body text as a Python script.
+		
+		We execute the selected text, or the entire body text if no text is selected."""
 		
 		c = self ; s = None
 		if v == None:
@@ -1064,8 +1052,8 @@ class baseCommands:
 		# 1/26/03: calculate the full path.
 		d = scanDirectives(c)
 		path = d.get("path")
-		fileName = os.path.join(path,fileName)
-		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+		
+		fileName = os_path_join(path,fileName)
 		
 		try:
 			file=open(fileName)
@@ -2168,12 +2156,7 @@ class baseCommands:
 	#@nonl
 	#@-node:copyOutline
 	#@+node:pasteOutline
-	#@+at 
-	#@nonl
-	# To cut and paste between apps, just copy into an empty body first, then 
-	# copy to Leo's clipboard.
-	#@-at
-	#@@c
+	# To cut and paste between apps, just copy into an empty body first, then copy to Leo's clipboard.
 	
 	def pasteOutline(self):
 	
@@ -2716,7 +2699,7 @@ class baseCommands:
 				c.frame.tree.expandAllAncestors(v)
 				c.selectVnode(v,updateBeadList=false)
 				c.endUpdate()
-				c.frame.idle_scrollTo(v)
+				c.frame.tree.idle_scrollTo(v)
 				return
 	#@nonl
 	#@-node:goNextVisitedNode
@@ -2733,7 +2716,7 @@ class baseCommands:
 				c.frame.tree.expandAllAncestors(v)
 				c.selectVnode(v,updateBeadList=false)
 				c.endUpdate()
-				c.frame.idle_scrollTo(v)
+				c.frame.tree.idle_scrollTo(v)
 				return
 	#@-node:goPrevVisitedNode
 	#@+node:goToFirstNode
@@ -3221,7 +3204,7 @@ class baseCommands:
 			# 09-SEP-2002 DHEIN: Open Python window under linux
 			
 			try:
-				pathToLeo = os.path.join(app.loadDir,"leo.py")
+				pathToLeo = os_path_join(app.loadDir,"leo.py")
 				sys.argv = [pathToLeo]
 				from idlelib import idle
 				if app.idle_imported:
@@ -3247,9 +3230,8 @@ class baseCommands:
 			#@<< Try to open idle in pre-Python 2.3 systems>>
 			#@+node:<< Try to open idle in pre-Python 2.3 systems>>
 			try:
-				executable_dir = os.path.dirname(sys.executable)
-				idle_dir = os.path.join(executable_dir,"Tools","idle")
-				idle_dir = toUnicode(idle_dir,app.tkEncoding) # 10/20/03
+				executable_dir = os_path_dirname(sys.executable)
+				idle_dir = os_path_join(executable_dir,"Tools","idle")
 			
 				if idle_dir not in sys.path:
 					sys.path.append(idle_dir)
@@ -3308,8 +3290,8 @@ class baseCommands:
 	# The key parts of Pyshell.main(), but using Leo's root window instead of 
 	# a new Tk root window.
 	# 
-	# This does _not_ work.  Using Leo's root window means that Idle will shut 
-	# down Leo without warning when the Idle window is closed!
+	# This does _not_ work well.  Using Leo's root window means that Idle will 
+	# shut down Leo without warning when the Idle window is closed!
 	#@-at
 	#@@c
 	
@@ -3345,8 +3327,7 @@ class baseCommands:
 	#@+node:leoDocumentation
 	def leoDocumentation (self):
 	
-		fileName = os.path.join(app.loadDir,"..","doc","LeoDocs.leo")
-		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+		fileName = os_path_join(app.loadDir,"..","doc","LeoDocs.leo")
 	
 		try:
 			self.OpenWithFileName(fileName)
@@ -3388,8 +3369,7 @@ class baseCommands:
 		configDir = app.config.configDir
 	
 		# Look in configDir first.
-		fileName = os.path.join(configDir, "leoConfig.leo")
-		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+		fileName = os_path_join(configDir, "leoConfig.leo")
 	
 		ok, frame = self.OpenWithFileName(fileName)
 		if not ok:
@@ -3397,8 +3377,7 @@ class baseCommands:
 				es("leoConfig.leo not found in " + loadDir)
 			else:
 				# Look in loadDir second.
-				fileName = os.path.join(loadDir,"leoConfig.leo")
-				fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
+				fileName = os_path_join(loadDir,"leoConfig.leo")
 	
 				ok, frame = self.OpenWithFileName(fileName)
 				if not ok:

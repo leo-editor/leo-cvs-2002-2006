@@ -104,7 +104,7 @@ def computeLoadDir():
 	
 	try:
 		import leo
-		path = os.path.abspath(leo.__file__)
+		path = os_path_abspath(leo.__file__)
 
 		if sys.platform=="win32": # "mbcs" exists only on Windows.
 			path = toUnicode(path,"mbcs")
@@ -114,11 +114,11 @@ def computeLoadDir():
 			path = toUnicode(path,app.tkEncoding)
 
 		if path:
-			loadDir = os.path.dirname(path)
+			loadDir = os_path_dirname(path)
 		else:
 			loadDir = None
 		if not loadDir:
-			loadDir = os.path.abspath(os.getcwd())
+			loadDir = os_path_abspath(os.getcwd())
 			print "Using emergency loadDir:",`loadDir`
 
 		encoding = choose(sys.platform=="dawwin","utf-8",app.tkEncoding) # 11/18/03
@@ -139,10 +139,9 @@ def createFrame (fileName):
 	
 	# Try to create a frame for the file.
 	if fileName:
-		fileName = os.path.join(os.getcwd(),fileName)
-		fileName = os.path.normpath(fileName)
-		fileName = toUnicode(fileName,app.tkEncoding) # 10/20/03
-		if os.path.exists(fileName):
+		fileName = os_path_join(os.getcwd(),fileName)
+		fileName = os_path_normpath(fileName)
+		if os_path_exists(fileName):
 			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
 			if ok:
 				# print fileName

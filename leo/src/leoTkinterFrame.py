@@ -447,9 +447,8 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			try:
 				if imagefile:
 					# Create the image.  Throws an exception if file not found
-					imagefile = os.path.join(app.loadDir,imagefile)
-					imagefile = os.path.normpath(imagefile)
-					imagefile = toUnicode(imagefile,app.tkEncoding) # 10/20/03
+					imagefile = os_path_join(app.loadDir,imagefile)
+					imagefile = os_path_normpath(imagefile)
 					image = Tkinter.PhotoImage(master=app.root,file=imagefile)
 					
 					# Must keep a reference to the image!
@@ -1136,10 +1135,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:leoHelp
 	def leoHelp (self):
 		
-		file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
-		file = toUnicode(file,app.tkEncoding) # 10/20/03
+		file = os_path_join(app.loadDir,"..","doc","sbooks.chm")
 	
-		if os.path.exists(file):
+		if os_path_exists(file):
 			os.startfile(file)
 		else:	
 			answer = app.gui.runAskYesNoDialog(

@@ -185,17 +185,14 @@ class LeoApp:
 		doHook("destroy-all-global-windows")
 	#@-node:app.destroyAllGlobalWindows
 	#@+node:app.destroyAllOpenWithFiles
-	#@+at 
-	#@nonl
-	# Try to remove temp files created with the Open With command.  This may 
-	# fail if the files are still open.
-	# 
-	# We can't use es here because the log stream no longer exists.
-	#@-at
-	#@@c 
-	
 	def destroyAllOpenWithFiles (self):
+	
+		"""Try to remove temp files created with the Open With command.
 		
+		This may fail if the files are still open."""
+		
+		# We can't use es here because the log stream no longer exists.
+	
 		app = self
 	
 		for dict in self.openWithFiles[:]: # 7/10/03.
@@ -226,7 +223,7 @@ class LeoApp:
 		app = self
 		
 		path = dict.get("path")
-		if path and os.path.exists(path):
+		if path and os_path_exists(path):
 			try:
 				os.remove(path)
 				print "deleting temp file:", shortFileName(path)
@@ -314,7 +311,7 @@ class LeoApp:
 	
 	def setEncoding (self):
 		
-		# 10/20/03: moved from gui class to app class.
+		"""Set app.tkEncoding."""
 	
 		for (encoding,src) in (
 			(self.config.tkEncoding,"config"),
@@ -357,7 +354,7 @@ class LeoApp:
 		#@+node:<< return if we can set self.leoID from "leoID.txt" >>
 		for dir in (configDir,loadDir):
 			try:
-				fn = os.path.join(dir, tag)
+				fn = os_path_join(dir, tag)
 				f = open(fn,'r')
 				if f:
 					s = f.readline()
@@ -392,7 +389,7 @@ class LeoApp:
 		for dir in (configDir,loadDir):
 			try:
 				# Look in configDir first.
-				fn = os.path.join(dir, tag)
+				fn = os_path_join(dir, tag)
 				f = open(fn,'w')
 				if f:
 					f.write(app.leoID)

@@ -32,7 +32,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		c = self.c ; gui = app.gui
 		self.top = top = Tk.Toplevel()
 		c.frame.prefsPanel = self
-		head,tail = os.path.split(c.frame.title)
+		head,tail = os_path_split(c.frame.title)
 		self.top.title("Prefs for " + tail)
 		
 		# Create the outer frame

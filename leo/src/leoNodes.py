@@ -510,43 +510,27 @@ class baseVnode:
 			return ""
 	#@-node:isAnyAtFileNode & isAnyAtFileNodeName
 	#@+node:isAtIgnoreNode
-	#@+at 
-	#@nonl
-	# Returns true if the receiver contains @ignore in its body at the start 
-	# of a line.
-	#@-at
-	#@@c
-	
 	def isAtIgnoreNode (self):
+	
+		"""Returns true if the receiver contains @ignore in its body at the start of a line."""
 	
 		flag, i = is_special(self.t.bodyString, 0, "@ignore")
 		return flag
-	#@nonl
 	#@-node:isAtIgnoreNode
 	#@+node:isAtOthersNode
-	#@+at 
-	#@nonl
-	# Returns true if the receiver contains @others in its body at the start 
-	# of a line.
-	#@-at
-	#@@c
-	
 	def isAtOthersNode (self):
+	
+		"""Returns true if the receiver contains @others in its body at the start of a line."""
 	
 		flag, i = is_special(self.t.bodyString,0,"@others")
 		return flag
-	#@nonl
 	#@-node:isAtOthersNode
 	#@+node:matchHeadline
-	#@+at 
-	#@nonl
-	# Returns true if the headline matches the pattern ignoring whitespace and 
-	# case.  The headline may contain characters following the successfully 
-	# matched pattern.
-	#@-at
-	#@@c
-	
 	def matchHeadline (self,pattern):
+	
+		"""Returns true if the headline matches the pattern ignoring whitespace and case.
+		
+		The headline may contain characters following the successfully matched pattern."""
 	
 		h = string.lower(self.headString())
 		h = string.replace(h,' ','')
@@ -558,7 +542,6 @@ class baseVnode:
 	
 		# ignore characters in the headline following the match
 		return p == h[0:len(p)]
-	#@nonl
 	#@-node:matchHeadline
 	#@+node:convertTreeToString
 	# Converts the outline to a string in "MORE" format
@@ -594,22 +577,21 @@ class baseVnode:
 	#@-node:moreHead
 	#@+node:v.moreBody
 	#@+at 
-	#@nonl
-	# Returns the body string in MORE format.  It inserts a backslash before 
-	# any leading plus, minus or backslash.
-	# 
-	# + test line
-	# - test line
-	# \ test line
-	# test line +
-	# test line -
-	# test line \
-	# 
-	# More lines...
+	# 	+ test line
+	# 	- test line
+	# 	\ test line
+	# 	test line +
+	# 	test line -
+	# 	test line \
+	# 	More lines...
 	#@-at
 	#@@c
 	
 	def moreBody (self):
+	
+		"""Returns the body string in MORE format.  
+		
+		Inserts a backslash before any leading plus, minus or backslash."""
 	
 		v = self ; list = []
 		
@@ -1049,13 +1031,14 @@ class baseVnode:
 	# of the screen here. We avoid redraw in most cases by passing redraw_flag 
 	# to the caller.
 	# 
-	# This marks v dirty and all cloned nodes in v's tree.
-	# 
 	# 2/1/03: I don't see how this can possibly be correct.
 	# Why is it needed?? If it is needed, what about undo??
 	#@-at
 	#@@c
+	
 	def setAncestorsOfClonedNodesInTreeDirty(self):
+	
+		"""This marks v dirty and all cloned nodes in v's tree."""
 	
 		# Look up the tree for an ancestor @file node.
 		v = self ; redraw_flag = false
@@ -1208,14 +1191,11 @@ class baseVnode:
 	#@nonl
 	#@-node:setT
 	#@+node:trimTrailingLines
-	#@+at 
-	#@nonl
-	# This trims trailing blank lines from a node.  It is surprising difficult 
-	# to do this during Untangle.
-	#@-at
-	#@@c
-	
 	def trimTrailingLines (self):
+	
+		"""Trims trailing blank lines from a node.
+		
+		It is surprising difficult to do this during Untangle."""
 	
 		v = self
 		body = v.bodyString()
@@ -1234,7 +1214,6 @@ class baseVnode:
 			# trace(`body`)
 			v.setBodyStringOrPane(body)
 			# Don't set the dirty bit: it would just be annoying.
-	#@nonl
 	#@-node:trimTrailingLines
 	#@+node:back
 	# Compatibility routine for scripts
@@ -1261,21 +1240,17 @@ class baseVnode:
 	#@nonl
 	#@-node:lastNode
 	#@+node:level
-	#@+at 
-	#@nonl
-	# This function returns the indentation level of the receiver. The root 
-	# nodes have level 0, their children have level 1, and so on.
-	#@-at
-	#@@c
-	
 	def level (self):
+	
+		"""Returns the indentation level of the receiver.
+		
+		The root nodes have level 0, their children have level 1, and so on."""
 	
 		level = 0 ; parent = self.parent()
 		while parent:
 			level += 1
 			parent = parent.parent()
 		return level
-	#@nonl
 	#@-node:level
 	#@+node:next
 	# Compatibility routine for scripts
@@ -1373,7 +1348,7 @@ class baseVnode:
 	
 	def doDelete (self, newVnode):
 	
-		"""Unlinks the receiver, but does not destroy it. May be undone"""
+		"""Unlinks the receiver, but does not destroy it. May be undone."""
 	
 		v = self ; c = v.c
 		v.setDirty() # 1/30/02: mark @file nodes dirty!
@@ -1754,14 +1729,14 @@ class baseVnode:
 	#@+node:v.destroyTree (does nothing!)(Called only from destroy dependents)
 	#@+at 
 	#@nonl
-	# This method destroys (irrevocably deletes) a vnode tree.
-	# 
 	# This code should be called only when it is no longer possible to undo a 
 	# previous delete.  It is always valid to destroy dependent trees.
 	#@-at
 	#@@c
 	
 	def destroyTree (self):
+	
+		"""Destroys (irrevocably deletes) a vnode tree."""
 	
 		pass
 	#@nonl
@@ -1797,16 +1772,17 @@ class baseVnode:
 	#@nonl
 	#@-node:v.joinNodeTo (rewritten for 4.0)
 	#@+node:v.joinTreeTo
-	#@+at 
+	#@+at  
 	#@nonl
-	# This function joins all nodes in the receiver and tree2.  This code 
-	# makes no assumptions about the two trees, and some or all of the nodes 
-	# may already have been joined.  The assert's guarantee that both trees 
-	# have the same topology.
+	# This code makes no assumptions about the two trees, and some or all of 
+	# the nodes may already have been joined.  The assert's guarantee that 
+	# both trees have the same topology.
 	#@-at
 	#@@c
 	
 	def joinTreeTo (self, tree2):
+	
+		"""Joins all nodes in the receiver and tree2."""
 	
 		tree1 = self
 		assert(tree2)

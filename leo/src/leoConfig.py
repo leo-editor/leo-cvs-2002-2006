@@ -79,10 +79,9 @@ class baseConfig:
 		try:
 			self.configDir = sys.leo_config_directory
 		except:
-			self.configDir = os.path.join(app.loadDir,"..","config")
+			self.configDir = os_path_join(app.loadDir,"..","config")
 	
-		self.configFileName = os.path.join(self.configDir,"leoConfig.txt")
-		self.configFileName = toUnicode(self.configFileName,app.tkEncoding) # 10/20/03
+		self.configFileName = os_path_join(self.configDir,"leoConfig.txt")
 	
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		
@@ -291,17 +290,14 @@ class baseConfig:
 	#@nonl
 	#@-node:get/setWindowPrefs
 	#@+node:config.getFontFromParams
-	#@+at 
-	#@nonl
-	# A convenience method that computes a font from font parameters.
-	# Arguments are the names of settings to be use.
-	# We return None if there is no family setting so we can use system 
-	# default fonts.
-	# We default to size=12, slant="roman", weight="normal"
-	#@-at
-	#@@c
-	
 	def getFontFromParams(self,family,size,slant,weight):
+	
+		"""Compute a font from font parameters.
+	
+		Arguments are the names of settings to be use.
+		We default to size=12, slant="roman", weight="normal".
+	
+		We return None if there is no family setting so we can use system default fonts."""
 	
 		family = self.getWindowPref(family)
 		if not family or family == "":
@@ -665,7 +661,7 @@ class baseConfig:
 		if self.read_only:
 			# print "Read only config file"
 			return
-		if not os.path.exists(self.configFileName):
+		if not os_path_exists(self.configFileName):
 			# print "No config file"
 			return
 		

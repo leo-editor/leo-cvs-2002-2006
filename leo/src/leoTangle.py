@@ -540,7 +540,7 @@ class baseTangleCommands:
 			for section in self.root_list:
 				for part in section.parts:
 					if part.is_root:
-						root_names.append(os.path.join(dir,part.name))
+						root_names.append(os_path_join(dir,part.name))
 			
 			if self.tangling and self.tangle_batch_flag:
 				try:
@@ -652,14 +652,11 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:tangleMarked
 	#@+node:tanglePass1
-	#@+at 
-	#@nonl
-	# This is the main routine of pass 1. It traverses the tree whose root is 
-	# given, handling each headline and associated body text.
-	#@-at
-	#@@c
+	# Traverses the tree whose root is given, handling each headline and associated body text.
 	
 	def tanglePass1(self,v):
+	
+		"""The main routine of tangle pass 1"""
 	
 		next = v.nodeAfterTree()
 		
@@ -703,17 +700,13 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:tanglePass2
 	#@+node:tangleTree (calls cleanup)
-	#@+at 
-	#@nonl
-	# This funtion tangles all nodes in the tree whose root is v. It reports 
-	# on its results if report_flag is true.
-	# 
-	# This function is called only from the top level, so there is no need to 
-	# initialize globals.
-	#@-at
-	#@@c
+	# This function is called only from the top level, so there is no need to initialize globals.
 	
 	def tangleTree(self,v,report_flag):
+	
+		"""Tangles all nodes in the tree whose root is v.
+		
+		Reports on its results if report_flag is true."""
 	
 		assert(v)
 		any_root_flag = false
@@ -857,8 +850,7 @@ class baseTangleCommands:
 		#@+node:<< Read the file into file_buf  >> in untangleRoot
 		f = None
 		try:
-			path = os.path.join(self.tangle_directory,path)
-			path = toUnicode(path,app.tkEncoding) # 10/20/03
+			path = os_path_join(self.tangle_directory,path)
 			f = open(path)
 			if f:
 				file_buf = f.read()
@@ -1398,9 +1390,8 @@ class baseTangleCommands:
 		for section in self.root_list:
 		
 			# trace(`section.name`)
-			file_name = os.path.join(self.tangle_directory,section.name)
-			file_name = os.path.normpath(file_name)
-			file_name = toUnicode(file_name,app.tkEncoding) # 10/20/03
+			file_name = os_path_join(self.tangle_directory,section.name)
+			file_name = os_path_normpath(file_name)
 			temp_name = create_temp_name()
 			if not temp_name:
 				es("Can not create temp file")
@@ -2006,14 +1997,9 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:section_check
 	#@+node:st_check
-	#@+at 
-	#@nonl
-	# This function checks the given symbol table for defined but never 
-	# referenced sections.
-	#@-at
-	#@@c
-	
 	def st_check(self):
+	
+		"""Checks the given symbol table for defined but never referenced sections."""
 	
 		keys = self.tst.keys()
 		keys.sort()
@@ -2068,15 +2054,9 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:st_dump_node
 	#@+node:st_enter
-	#@+at 
-	#@nonl
-	# Enters names and their associated code and doc parts into the given 
-	# symbol table.
-	# `is_dirty` is used only when entering root names.
-	#@-at
-	#@@c
-	
 	def st_enter(self,name,code,doc,multiple_parts_flag,is_root_flag):
+	
+		"""Enters names and their associated code and doc parts into the given symbol table."""
 		
 		# trace(`name`)
 		section = self.st_lookup(name,is_root_flag)
@@ -2135,27 +2115,19 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:st_enter_root_name
 	#@+node:st_enter_section_name
-	#@+at 
-	#@nonl
-	# This function enters a section name into the given symbol table.
-	# The code and doc pointers are None for references.
-	#@-at
-	#@@c
-	
 	def st_enter_section_name(self,name,code,doc,multiple_parts_flag):
+	
+		"""Enters a section name into the given symbol table.
+	
+		The code and doc pointers are None for references."""
 		
 		return self.st_enter(name,code,doc,multiple_parts_flag,not_root_name)
 	#@nonl
 	#@-node:st_enter_section_name
 	#@+node:st_lookup
-	#@+at 
-	#@nonl
-	# This function looks up name in the symbol table and creates a tst_node 
-	# for it if it does not exist.
-	#@-at
-	#@@c
-	
 	def st_lookup(self,name,is_root_flag):
+	
+		"""Looks up name in the symbol table and creates a tst_node for it if it does not exist."""
 	
 		if is_root_flag:
 			key = name
@@ -2250,14 +2222,10 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:ust_lookup
 	#@+node:ust_warn_about_orphans
-	#@+at 
-	#@nonl
-	# This function issues a warning about any sections in the derived file 
-	# for which no corresponding section has been seen in the outline.
-	#@-at
-	#@@c
-	
 	def ust_warn_about_orphans (self):
+	
+		"""Issues a warning about any sections in the derived file for which
+		no corresponding section has been seen in the outline."""
 	
 		for section in self.ust.values():
 			# trace(`section`)
@@ -2270,7 +2238,6 @@ class baseTangleCommands:
 						choose(self.use_noweb_flag," >>"," @>") +
 						" is not in the outline")
 					break # One warning per section is enough.
-	#@nonl
 	#@-node:ust_warn_about_orphans
 	#@+node:compare_comments
 	#@+at 
@@ -3055,14 +3022,9 @@ class baseTangleCommands:
 		return body, len(head) + len(ucode),true
 	#@-node:update_def (pass 2)
 	#@+node:update_current_vnode
-	#@+at 
-	#@nonl
-	# This function is called from within the Untangle logic to update the 
-	# body text of self.v.
-	#@-at
-	#@@c
-	
 	def update_current_vnode (self,s):
+	
+		"""Called from within the Untangle logic to update the body text of self.v."""
 	
 		c = self.c ; v = self.v
 		assert(self.v)
@@ -3512,14 +3474,9 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:skip_section_name
 	#@+node:standardize_name
-	#@+at 
-	#@nonl
-	# This code removes leading and trailing brackets, converts white space to 
-	# a single blank and converts to lower case.
-	#@-at
-	#@@c
-	
 	def standardize_name (self,name):
+	
+		"""Removes leading and trailing brackets, converts white space to a single blank and converts to lower case."""
 	
 		# Convert to lowercase.
 		name = string.lower(name)
@@ -3685,7 +3642,7 @@ class baseTangleCommands:
 				
 				dir = relative_path = string.strip(path)
 				if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-					dir = os.path.join(app.loadDir,dir)
+					dir = os_path_join(app.loadDir,dir)
 				
 				# trace("dir: " + dir)
 				#@nonl
@@ -3694,12 +3651,11 @@ class baseTangleCommands:
 				if len(dir) > 0:
 					base = getBaseDirectory() # May return "".
 					if dir and len(dir) > 0:
-						dir = os.path.join(base,dir)
-						dir = toUnicode(dir,app.tkEncoding) # 10/20/03
-						if os.path.isabs(dir):
+						dir = os_path_join(base,dir)
+						if os_path_isabs(dir):
 							#@				<< handle absolute @path >>
 							#@+node:<< handle absolute @path >>
-							if os.path.exists(dir):
+							if os_path_exists(dir):
 								self.tangle_directory = dir
 							else: # 11/19/02
 								self.tangle_directory = makeAllNonExistentDirectories(dir)
@@ -3788,13 +3744,13 @@ class baseTangleCommands:
 		# directory set here.
 		# A relative file name gets appended later to the default directory.
 		# That is, the final file name will be 
-		# os.path.join(self.tangle_directory,fileName)
+		# os_path_join(self.tangle_directory,fileName)
 		#@-at
 		#@@c
 		
 		if c.frame and require_path_flag and not self.tangle_directory:
 			if self.root_name and len(self.root_name) > 0:
-				root_dir = os.path.dirname(self.root_name)
+				root_dir = os_path_dirname(self.root_name)
 			else:
 				root_dir = None
 			# print "root_dir:", root_dir
@@ -3809,13 +3765,12 @@ class baseTangleCommands:
 			for dir2, kind in table:
 				if dir2 and len(dir2) > 0:
 					# print "base,dir:",`base`,`dir`
-					dir = os.path.join(base,dir2)
-					dir = toUnicode(dir,app.tkEncoding) # 10/20/03
-					if os.path.isabs(dir): # Errors may result in relative or invalid path.
+					dir = os_path_join(base,dir2)
+					if os_path_isabs(dir): # Errors may result in relative or invalid path.
 						#@				<< handle absolute path >>
 						#@+node:<< handle absolute path >>
-						if os.path.exists(dir):
-							if kind == "@root" and not os.path.isabs(root_dir):
+						if os_path_exists(dir):
+							if kind == "@root" and not os_path_isabs(root_dir):
 								self.tangle_directory = base
 							else:
 								self.tangle_directory = dir 
@@ -3839,17 +3794,13 @@ class baseTangleCommands:
 	#@nonl
 	#@-node:tangle.scanAllDirectives
 	#@+node:token_type
-	#@+at 
-	#@nonl
-	# This method returns a code indicating the apparent kind of token at the 
-	# position i. The caller must determine whether section definiton tokens 
-	# are valid.
-	# 
-	# returns (kind, end) and sets global root_name using setRootFromText().
-	#@-at
-	#@@c
-	
 	def token_type(self,s,i,err_flag):
+	
+		"""This method returns a code indicating the apparent kind of token at the position i.
+		
+		The caller must determine whether section definiton tokens are valid.
+		
+		returns (kind, end) and sets global root_name using setRootFromText()."""
 	
 		kind = plain_line ; end = -1
 		if self.use_noweb_flag:
@@ -3919,7 +3870,6 @@ class baseTangleCommands:
 			#@nl
 		# trace(`kind` + ":" + `get_line(s,i)`)
 		return kind, end
-	#@nonl
 	#@-node:token_type
 	#@-others
 	
