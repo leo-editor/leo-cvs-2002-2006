@@ -113,7 +113,7 @@ def createStandardButtons(c,d):
     #@    << define execCommand >>
     #@+node:EKR.20040618091543.1:<< define execCommand >>
     def execCommand (event=None,c=c):
-        c.executeScript(c.currentPosition())
+        c.executeScript(c.currentPosition(),useSelectedText=True)
     #@nonl
     #@-node:EKR.20040618091543.1:<< define execCommand >>
     #@nl
@@ -303,7 +303,7 @@ def executeScriptNode (c,p):
         g.es("disabled @script: %s" % (name),color="blue")
     else:
         g.es("executing script %s" % (name),color="blue")
-        c.executeScript(p)
+        c.executeScript(p,useSelectedText=False)
 #@nonl
 #@-node:ekr.20041001203145:executeScriptNode
 #@-others
