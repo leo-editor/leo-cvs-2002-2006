@@ -1328,12 +1328,14 @@ class nullLog (leoLog):
 	def __init__ (self,frame=None,parentFrame=None):
 		
 		leoLog.__init__(self,frame,parentFrame) # Init the base class.
-		if app.batchMode:
-			if app.log: self.enabled = app.log.enabled
-			else:       self.enabled = true
-			app.log = self
-		else:
-			self.enabled = true
+		
+		if 0: # No longer needed: use base enable/disable methods.
+			if app.batchMode:
+				if app.log: self.enabled = app.log.enabled
+				else:       self.enabled = true
+				app.log = self
+			else:
+				self.enabled = true
 		# trace("nullLog",self.enabled)
 		
 	def createControl (self,parentFrame):
