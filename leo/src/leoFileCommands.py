@@ -1577,49 +1577,50 @@ class baseFileCommands:
     def putFindSettings (self):
     
         c = self.c ; config = g.app.config
-    
-        self.put("<find_panel_settings")
         
-        #@    << put find settings that may exist in leoConfig.txt >>
-        #@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-        if config.configsExist and not config.read_only: # 8/6/02
-            pass # config.update has already been called.
+        if 1: # New in 4.3:  This settings never get written here.
+            self.put("<find_panel_settings/>") ; self.put_nl()
         else:
-            self.put_flag(c.batch_flag,"batch")
-            self.put_flag(c.ignore_case_flag,"ignore_case")
-            self.put_flag(c.mark_changes_flag,"mark_changes")
-            self.put_flag(c.mark_finds_flag,"mark_finds")
-            self.put_flag(c.pattern_match_flag,"pattern_match")
-            self.put_flag(c.reverse_flag,"reverse")
-            self.put_flag(c.search_headline_flag,"search_headline")
-            self.put_flag(c.search_body_flag,"search_body")
-            self.put_flag(c.suboutline_only_flag,"suboutline_only")
-            self.put_flag(c.whole_word_flag,"whole_word")
-            self.put_flag(c.wrap_flag,"wrap")
-            self.put_flag(c.node_only_flag,"node_only")
-        
-        self.put(">") ; self.put_nl()
-        
-        if config.configsExist and not config.read_only: # 8/6/02
-            self.put_tab()
-            self.put("<find_string></find_string>") ; self.put_nl()
-        else:
-            self.put_tab()
-            self.put("<find_string>") ; self.putEscapedString(c.find_text)
-            self.put("</find_string>") ; self.put_nl()
-        
-        if config.configsExist and not config.read_only: # 8/6/02
-            self.put_tab()
-            self.put("<change_string></change_string>") ; self.put_nl()
-        else:
-            self.put_tab()
-            self.put("<change_string>") ; self.putEscapedString(c.change_text)
-            self.put("</change_string>") ; self.put_nl()
-        #@nonl
-        #@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-        #@nl
-        
-        self.put("</find_panel_settings>") ; self.put_nl()
+            self.put("<find_panel_settings")
+            #@        << put find settings that may exist in leoConfig.txt >>
+            #@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
+            if config.configsExist and not config.read_only:
+                pass # config.update has already been called.
+            else:
+                self.put_flag(c.batch_flag,"batch")
+                self.put_flag(c.ignore_case_flag,"ignore_case")
+                self.put_flag(c.mark_changes_flag,"mark_changes")
+                self.put_flag(c.mark_finds_flag,"mark_finds")
+                self.put_flag(c.pattern_match_flag,"pattern_match")
+                self.put_flag(c.reverse_flag,"reverse")
+                self.put_flag(c.search_headline_flag,"search_headline")
+                self.put_flag(c.search_body_flag,"search_body")
+                self.put_flag(c.suboutline_only_flag,"suboutline_only")
+                self.put_flag(c.whole_word_flag,"whole_word")
+                self.put_flag(c.wrap_flag,"wrap")
+                self.put_flag(c.node_only_flag,"node_only")
+            
+            self.put(">") ; self.put_nl()
+            
+            if config.configsExist and not config.read_only: # 8/6/02
+                self.put_tab()
+                self.put("<find_string></find_string>") ; self.put_nl()
+            else:
+                self.put_tab()
+                self.put("<find_string>") ; self.putEscapedString(c.find_text)
+                self.put("</find_string>") ; self.put_nl()
+            
+            if config.configsExist and not config.read_only: # 8/6/02
+                self.put_tab()
+                self.put("<change_string></change_string>") ; self.put_nl()
+            else:
+                self.put_tab()
+                self.put("<change_string>") ; self.putEscapedString(c.change_text)
+                self.put("</change_string>") ; self.put_nl()
+            #@nonl
+            #@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
+            #@nl
+            self.put("</find_panel_settings>") ; self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.3035:putFindSettings
     #@+node:ekr.20031218072017.3041:putHeader
@@ -1664,53 +1665,53 @@ class baseFileCommands:
     def putPrefs (self):
     
         c = self.c ; config = g.app.config
-    
-        self.put("<preferences")
         
-        if 0:
-            self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
-        
-        #@    << put prefs that may exist in leoConfig.txt >>
-        #@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-        language = c.target_language
-        for name in xml_language_names:
-            s = string.lower(name)
-            s = string.replace(s,"/","")
-            if s == language:
-                language = name ; break
-        
-        if config.configsExist and not config.read_only: # 8/6/02
-            pass # config.update has already been called.
+        if 1: # New in 4.3:  This settings never get written here.
+            self.put("<preferences/>") ; self.put_nl()
         else:
-            self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
-            self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
-            self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-            self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
-            self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
-            self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-            self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-            self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-        
-        self.put(">") ; self.put_nl()
-        # New in version 0.16
-        #@<< put default directory >>
-        #@+node:ekr.20031218072017.2068:<< put default directory >>
-        if config.configsExist:
-            pass # Has been done earlier.
-        elif len(c.tangle_directory) > 0:
-            self.put_tab()
-            self.put("<defaultDirectory>")
-            self.putEscapedString(c.tangle_directory)
-            self.put("</defaultDirectory>")
-            self.put_nl()
-        #@nonl
-        #@-node:ekr.20031218072017.2068:<< put default directory >>
-        #@nl
-        #@nonl
-        #@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-        #@nl
-        
-        self.put("</preferences>") ; self.put_nl()
+            self.put("<preferences")
+            if 0:
+                self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
+            #@        << put prefs that may exist in leoConfig.txt >>
+            #@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+            language = c.target_language
+            for name in xml_language_names:
+                s = string.lower(name)
+                s = string.replace(s,"/","")
+                if s == language:
+                    language = name ; break
+            
+            if config.configsExist and not config.read_only: # 8/6/02
+                pass # config.update has already been called.
+            else:
+                self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
+                self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
+                self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+                self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
+                self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
+                self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
+                self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
+                self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
+            
+            self.put(">") ; self.put_nl()
+            # New in version 0.16
+            #@<< put default directory >>
+            #@+node:ekr.20031218072017.2068:<< put default directory >>
+            if config.configsExist:
+                pass # Has been done earlier.
+            elif len(c.tangle_directory) > 0:
+                self.put_tab()
+                self.put("<defaultDirectory>")
+                self.putEscapedString(c.tangle_directory)
+                self.put("</defaultDirectory>")
+                self.put_nl()
+            #@nonl
+            #@-node:ekr.20031218072017.2068:<< put default directory >>
+            #@nl
+            #@nonl
+            #@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+            #@nl
+            self.put("</preferences>") ; self.put_nl()
     #@nonl
     #@-node:ekr.20031218072017.2066:putPrefs
     #@+node:ekr.20031218072017.1246:putProlog
@@ -2163,11 +2164,12 @@ class baseFileCommands:
             #@nl
             #@        << update leoConfig.txt >>
             #@+node:ekr.20040324080819:<< update leoConfig.txt >>
-            c.setIvarsFromFind()
-            config.setConfigFindIvars(c)
-            c.setIvarsFromPrefs()
-            config.setCommandsIvars(c)
-            config.update()
+            if 0: # Not done in 4.3.
+                c.setIvarsFromFind()
+                config.setConfigFindIvars(c)
+                c.setIvarsFromPrefs()
+                config.setCommandsIvars(c)
+                config.update()
             #@nonl
             #@-node:ekr.20040324080819:<< update leoConfig.txt >>
             #@nl

@@ -343,16 +343,19 @@ class leoMenu:
             ("&About Leo...",None,c.about),
             ("Online &Home Page",None,c.leoHome),
             ("-",None,None),
-            ("Open Online &Tutorial",None,c.leoTutorial))
+            ("Open Online &Tutorial",None,c.leoTutorial),
+        )
             
         self.helpMenuTop2Table = (
-            ("Open &Offline Tutorial",None,f.leoHelp),)
+            ("Open &Offline Tutorial",None,f.leoHelp),
+        )
             
         self.helpMenuTop3Table = (
             ("Open Leo&Docs.leo",None,c.leoDocumentation),
             ("-",None,None),
             ("Open Leo&Config.leo",None,c.leoConfig),
-            ("Apply &Settings",None,c.applyConfig))
+            # ("Apply &Settings",None,c.applyConfig),
+        )
         #@nonl
         #@-node:ekr.20031218072017.3774:<< define help menu tables >>
         #@nl
