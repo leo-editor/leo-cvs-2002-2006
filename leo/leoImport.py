@@ -1072,11 +1072,18 @@ class leoImportCommands:
 		class_node = ""
 		phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
 		phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+		# 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
+		startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
+		endOfCode = s.rfind("?>") # this should be the line containing the last ?>
 
 		#@-body
 		#@-node:2::<< define scanPHPText vars >>
 
-		while i < len(s):
+		# 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+		parent.appendStringToBody("@first ")	
+		parent.appendStringToBody(s[:startOfCode])
+		scan_start = i = startOfCode
+		while i < endOfCode:
 			# line = get_line(s,i) ; trace(`line`)
 			ch = s[i]
 			# These cases skip tokens.
@@ -1231,11 +1238,14 @@ class leoImportCommands:
 		#@<< Append any unused text to the parent's body text >>
 		#@+node:7::<< Append any unused text to the parent's body text >>
 		#@+body
-		parent.appendStringToBody(s[scan_start:])
+		parent.appendStringToBody(s[scan_start:endOfCode])
 
 		#@-body
 		#@-node:7::<< Append any unused text to the parent's body text >>
 
+		# 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+		parent.appendStringToBody("@last ")	
+		parent.appendStringToBody(s[endOfCode:])
 
 	#@-body
 	#@-node:2:C=8:scanPHPText (Dave Hein)
