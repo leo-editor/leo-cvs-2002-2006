@@ -299,7 +299,7 @@ class baseConfig:
         
         found = False
         if c:
-            d = self.localOptionsDict.get(c)
+            d = self.localOptionsDict.get(c.hash())
             if d:
                 val,found = self.getValFromDict(d,setting,theType,found)
                 if val is not None: return val
@@ -559,30 +559,25 @@ class baseConfig:
     #@-node:ekr.20041117081009:Getters...
     #@+node:ekr.20041118084146:Setters
     #@+node:ekr.20041118084146.1:set (g.app.config)
-    def set (self,c,setting,type,val):
+    def set (self,c,setting,kind,val):
         
         """Set the setting and make sure its type matches the given type."""
-        
+    
         munge = self.munge
-        
-        setting = munge(setting)
+        localOptionsDict = self.localOptionsDict
     
-        g.trace(c,setting,type,val)
-    
-        return ####
-        
-        ## To do: also search c's settings dict.
-        data = self.defaultsDict.get(setting)
-        
-        if data:
-            theType,val = data
+        # c may not be in localOptionsDict exactly.
+        g.trace("c",c)
+        d = localOptionsDict.get(c.hash())
+        if d:
+            g.trace("c",c)
+            dkind = "c dict"
         else:
-            theType,val = None,None
-    
-        if setting is None:
-            g.trace(setting,type,val)
+            dkind = "global dict"
+            d = self.dictList [0]
         
-        return val
+        d[munge(setting)] = (kind,val),
+        g.trace(dkind,setting,kind,val)
     #@nonl
     #@-node:ekr.20041118084146.1:set (g.app.config)
     #@+node:ekr.20041118084241:setString
