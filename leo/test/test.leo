@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6361" clone_windows="0"/>
 <globals body_outline_ratio="0.590277777778">
-	<global_window_position top="32" left="327" height="864" width="907"/>
+	<global_window_position top="42" left="213" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -417,8 +417,8 @@
 <v t="ekr.20041112155634"><vh>checkOneHook</vh></v>
 </v>
 </v>
-<v t="ekr.20041126132604"><vh>Prototypes</vh>
-<v t="ekr.20041125062529"><vh>Prototypes of settings dialogs</vh>
+<v t="ekr.20041126132604" a="E"><vh>Prototypes</vh>
+<v t="ekr.20041125062529" a="E"><vh>Prototypes of settings dialogs</vh>
 <v t="ekr.20041114121805.1"><vh>Configurator script</vh>
 <v t="ekr.20041114121805.2"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041114165932"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
@@ -441,7 +441,7 @@
 </v>
 </v>
 <v t="ekr.20040920104357" a="E"><vh>Tix Tests</vh>
-<v t="ekr.20041124102349"><vh>class tixDialog (leoTkinterDialog)</vh>
+<v t="ekr.20041124102349" a="E"><vh>class tixDialog (leoTkinterDialog)</vh>
 <v t="ekr.20041124102349.1"><vh>ctor</vh></v>
 <v t="ekr.20041124103531"><vh>createFrame</vh></v>
 </v>
@@ -1431,13 +1431,13 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="EMTV"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
 <v t="ekr.20041126132754"><vh>To do</vh></v>
-<v t="ekr.20041126110057"><vh>class settingsController</vh>
+<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041126110158" a="E"><vh>ctor</vh>
 <v t="ekr.20041126143346"><vh>&lt;&lt; create a tree holding the global, user and local @settings trees &gt;&gt;</vh></v>
 <v t="ekr.20041126113848"><vh>&lt;&lt; create the dialog &gt;&gt;</vh></v>
-<v t="ekr.20041126113848.1"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
+<v t="ekr.20041126113848.1" a="TV"><vh>&lt;&lt; create paneFrame, a paned widget &gt;&gt;</vh></v>
 <v t="ekr.20041126113848.2"><vh>&lt;&lt; put a settingsTree in paneFrame's outline pane&gt;&gt;</vh></v>
 <v t="ekr.20041126133120"><vh>&lt;&lt; put a Text widget in the comment pane &gt;&gt;</vh></v>
 </v>
@@ -2085,7 +2085,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2216,7 +2216,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -12479,8 +12479,14 @@ for fileName in fileNames:
 )
     
 hull = d.component('hull')
-hull.minsize(600,400)
-interior = d.interior()</t>
+hull.minsize(800,600)
+interior = d.interior()
+
+# Do this at idle time.
+def callback(top=hull):
+    g.app.gui.attachLeoIcon(top)
+
+hull.after_idle(callback)</t>
 <t tx="ekr.20041126113848.1">self.paneFrame = paneFrame = Pmw.PanedWidget(interior,
     separatorthickness = 4, # default is 2
     handlesize = 8 # default is 8
@@ -12489,8 +12495,8 @@ paneFrame.pack(expand = 1, fill='both')
 
 self.panes = {}
 for name,minsize,size,label,isSetterLabel in (
-    ("outline",50,200,None,False),
-    ("setter",50,200,"",True),
+    ("outline",50,300,None,False),
+    ("setter",50,300,"",True),
     ("comments",50,100,None,False),
 ):
     self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
