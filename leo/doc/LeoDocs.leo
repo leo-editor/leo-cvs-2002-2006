@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="13081" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="13143" clone_windows="0"/>
 <globals body_outline_ratio="0.53452685422">
 	<global_window_position top="79" left="259" height="782" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -51,7 +51,21 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20050126100405" a="TV"><vh>4.3-a2</vh>
+<v t="ekr.20050221104844" a="ETV"><vh>4.3-a3</vh>
+<v t="ekr.20050221104844.2"><vh>Bugs</vh>
+<v t="ekr.20050221104844.3" a="E"><vh>Fixed crasher in Tangle</vh></v>
+<v t="ekr.20050221104844.12" a="E"><vh>Applied patch to rst2 plugin</vh></v>
+<v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
+<v t="ekr.20050221104844.27" a="E"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
+<v t="ekr.20050221104844.45" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050221104844.54" a="E"><vh>Fixed botch in g.pdb</vh></v>
+</v>
+<v t="ekr.20050221104844.57"><vh>New features</vh>
+<v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
+<v t="ekr.20050221104844.59" a="E"><vh>Added color='suppress' hack to g.es</vh></v>
+</v>
+</v>
+<v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
 <v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
 <v t="ekr.20050209141626.4"><vh>Fixed very old bug in Undo Insert Node </vh></v>
@@ -196,6 +210,20 @@
 </v>
 </v>
 <v t="edream.110203163054.117"><vh>Previous versions...</vh>
+<v t="ekr.20050221104844"><vh>4.3-a3</vh>
+<v t="ekr.20050221104844.2"><vh>Bugs</vh>
+<v t="ekr.20050221104844.3" a="E"><vh>Fixed crasher in Tangle</vh></v>
+<v t="ekr.20050221104844.12" a="E"><vh>Applied patch to rst2 plugin</vh></v>
+<v t="ekr.20050221104844.14"><vh>Revised searchbox plugin so it works with Leo 4.3</vh></v>
+<v t="ekr.20050221104844.27" a="E"><vh>Fixed bugs in nav_buttons and nodenavigator plugins</vh></v>
+<v t="ekr.20050221104844.45" a="E"><vh>Made sure Leo asks for leoID at most once</vh></v>
+<v t="ekr.20050221104844.54" a="E"><vh>Fixed botch in g.pdb</vh></v>
+</v>
+<v t="ekr.20050221104844.57"><vh>New features</vh>
+<v t="ekr.20050221104844.58"><vh>Added sets.py to distribution</vh></v>
+<v t="ekr.20050221104844.59" a="E"><vh>Added color='suppress' hack to g.es</vh></v>
+</v>
+</v>
 <v t="ekr.20050126100405"><vh>4.3-a2</vh>
 <v t="ekr.20050130112336.1"><vh>To do: Improve how Leo handles recent files</vh></v>
 <v t="ekr.20050209141626.3"><vh>Bugs fixed...</vh>
@@ -16786,5 +16814,128 @@ fileMenu = c.frame.menu.getMenu('File')
 fileMenu.insert(3,'command',label='Test2',command=callback)</t>
 <t tx="ekr.20050219093156.1"></t>
 <t tx="ekr.20050219093156.2">The authoritative source for information.</t>
+<t tx="ekr.20050221104844">Leo 4.3 alpha 3                 February 22, 2005
+
+Leo 4.3 is the culmination of more than five months of work. This alpha 3
+release corrects various bugs in Leo's core and in plugins.
+
+Leo 4.3 a3 adds several new features:
+
+- The 'extensions' folder contains sets.py from Python 2.4.
+  This allows the Plugin Manager plugin to work on Python 2.2.x.
+- g.es does nothing if color=='suppress'.  A useful hack.
+
+The defining features of Leo 4.3:
+
+1. Leo now stores options in @settings trees, that is, outlines whose headline
+is '@settings'. When opening a .leo file, Leo looks for @settings trees not only
+in the outline being opened but also in various leoSettings.leo files.
+
+The key design goal of @settings trees was that Leo's user options must be
+infinitely flexible. That goal has been accomplished. Indeed, users can create
+arbitrarily complex user options with @settings trees. Leo settings outlines
+are, in fact, infinitely more flexible and powerful than any scheme based on
+flat text.  Readers of Python's configParser shootout take note!
+
+2. The Settings command temporarily replaces the outline pane with an outline
+showing all the @settings trees in effect. The Settings command also replaces
+the body pane with a "settings pane". This settings pane allows you to change
+the settings selected in the outline pane using standard gui widgets. The
+settings pane is dynamically created from nodes in the settings tree; it is as
+extensible as the @settings tree itself.
+
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-
+defined tangling and untangling.  This is a major cleanup of Leo's core.
+
+4. Leo now boasts a wonderful new Plugins Manager plugin. This plugin enables
+and disables plugins automatically. You never have to mess with
+pluginsManager.txt again! This plugin also tells you everything you need to know
+about each plugin. Finally, this plugin also lets you download plugins from
+Leo's cvs site! Many thanks to Paul Patterson for this excellent work.
+
+5. You can install third-party extensions in Leo's extensions directory. Leo
+will attempt to import such extensions from the extensions directory if normal
+imports fail. Leo is distributed with Pmw (Python Mega Widgets), path.py and
+sets.py in this directory.</t>
+<t tx="ekr.20050221104844.2"></t>
+<t tx="ekr.20050221104844.3">http://sourceforge.net/forum/message.php?msg_id=2998446
+By: djsg
+
+g.create_temp_name() calls tempfile.mktemp or mkstemp(), but these return different values!
+
+mktemp returns the filename(a string); mkstemp returns a tuple (handle,filename)
+
+What I did:
+
+- Changed g.create_temp_name to g.create_temp_file.
+- Removed the file open logic in tangle.put_all_roots (now done in g.create_temp_file)
+- Rewrote g.create_temp_file so it works in both cases.
+- Create test routine for g.create_temp_file
+- Created very simple unit tests in test.leo for tangle and untangle.</t>
+<t tx="ekr.20050221104844.12">http://sourceforge.net/forum/message.php?msg_id=2999651
+
+I was pleasantly surprised to discover the reST2 plug-in working under 4.3a2
+(this is one the first thing I try as I'd like to use Leo as an editor
+for that).
+
+As mentioned in early threads, it still needs @rst for each node to be included
+in the reST rendering process. So I put @rst test.html and then a child with
+@rst and some reST code and it worked !!
+
+Then I tried to to get a simple rst file using @rst test but the plugin complained:
+
+[snip]
+
+  File "C:\dn_apps\Leo\plugins\rst2.py", line 164, in onIconDoubleClick
+    writeTreeAsRst(rstFile,fname,p,c)
+TypeError: writeTreeAsRst() takes exactly 5 arguments (4 given)
+
+So I looked at the rst2.py and found a way to get it working but I would need
+someone to verify it :
+
+line 164, replaced   writeTreeAsRst(rstFile,fname,p,c)  by
+
+syntax = False
+writeTreeAsRst(rstFile,fname,p,c,syntax)
+
+And it worked!
+</t>
+<t tx="ekr.20050221104844.14"></t>
+<t tx="ekr.20050221104844.27">http://sourceforge.net/forum/message.php?msg_id=3005140
+By: ktenney
+
+- perform a search which marks a number of nodes
+- select "Outline -&gt; Mark/Unmark -&gt; Unmark All"
+- Several marks are still listed in in the nodenavigator "Marks" list.
+  (They are not marked in the outline.)
+
+What I did:
+
+- The p.set/clearMark methods now call the hook _after_ changing the marked status.
+  This fixes the apparent bug in nodenavigator.py.
+- Rewrote nav_buttons.py.  The old code was a mess; the new code is clean.
+- Changed the vnodeList ivar in leoTkinterDialog to positionList.
+- Rewrote c.unmarkAll to make clear that it is using positions.
+    - Added test_c_unmark_all test routine.</t>
+<t tx="ekr.20050221104844.45">http://sourceforge.net/forum/message.php?msg_id=2958470
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Opened a new .leo file. It asked for an ID, and said it saved it. Closed the
+new leo file &amp; tried opening "Leo\config\leoSettings.leo". _It_ is asking for
+a leoID!
+
+What I did
+
+All changes were to g.app.leoID():
+    - Fixed bug:  set g.app.leoID in &lt;&lt; put up a dialog requiring a valid id &gt;&gt;.
+    - Improved signon message.
+    - Better error handling and reporting. </t>
+<t tx="ekr.20050221104844.54">g.pdb wasn't working because pdb wasn't imported inside the function.</t>
+<t tx="ekr.20050221104844.57"></t>
+<t tx="ekr.20050221104844.58">This allows plugins such as plugin_manager.py to work on Python 2.2.x.</t>
+<t tx="ekr.20050221104844.59">g.es does nothing if color=='suppress'.  This can be useful in unit tests.</t>
 </tnodes>
 </leo_file>
