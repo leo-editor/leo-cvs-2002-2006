@@ -31,8 +31,8 @@
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="edream.110203150636.18" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.17" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -103,7 +103,7 @@ create_nonexistent_directories = 0
 #	@file, @rawfile, @root and @silentfile trees, and to filenames
 #	speicied in the @path directory.
 
-config_encoding = iso-8859-1
+config_encoding = utf-8
 
 #	The encoding for leoConfig.txt:
 #	Default is utf-8
