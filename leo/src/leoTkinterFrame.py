@@ -909,6 +909,26 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		return "break"
 	#@nonl
 	#@-node:OnMouseWheel (Tomaz Ficko)
+	#@+node:abortEditLabelCommand
+	def abortEditLabelCommand (self):
+		
+		frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Abort Edit Headline")
+			return
+	
+		if self.revertHeadline and v.edit_text() and v == tree.editVnode():
+		
+			v.edit_text().delete("1.0","end")
+			v.edit_text().insert("end",self.revertHeadline)
+			tree.idle_head_key(v) # Must be done immediately.
+			tree.revertHeadline = None
+			tree.select(v)
+			if v and len(v.t.joinList) > 0:
+				tree.force_redraw() # force a redraw of joined headlines.
+	#@nonl
+	#@-node:abortEditLabelCommand
 	#@+node:frame.OnCut, OnCutFrom Menu
 	def OnCut (self,event=None):
 	
@@ -966,11 +986,35 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		frame.tree.onHeadChanged(v) # Works even if it wasn't the headline that changed.
 	#@nonl
 	#@-node:frame.OnPaste, OnPasteNode, OnPasteFromMenu
+	#@+node:endEditLabelCommand
+	def endEditLabelCommand (self):
+	
+		frame = self ; c = frame.c ; tree = frame.tree ; gui = app.gui
+		
+		if app.batchMode:
+			c.notValidInBatchMode("End Edit Headline")
+			return
+		
+		v = frame.tree.editVnode()
+	
+		# trace(v)
+		if v and v.edit_text():
+			tree.select(v)
+		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
+			tree.force_redraw() # force a redraw of joined headlines.
+	
+		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
+	#@nonl
+	#@-node:endEditLabelCommand
 	#@+node:insertHeadlineTime
 	def insertHeadlineTime (self):
 	
 		frame = self ; c = frame.c ; v = c.currentVnode()
 		h = v.headString() # Remember the old value.
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Insert Headline Time")
+			return
 	
 		if v.edit_text():
 			sel1,sel2 = app.gui.getTextSelection(v.edit_text())
@@ -984,38 +1028,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			es("Edit headline to append date/time")
 	#@nonl
 	#@-node:insertHeadlineTime
-	#@+node:endEditLabelCommand
-	def endEditLabelCommand (self):
-	
-		frame = self ; c = frame.c ; tree = frame.tree ; gui = app.gui
-		
-		v = frame.tree.editVnode()
-	
-		# trace(v)
-		if v and v.edit_text():
-			tree.select(v)
-		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			tree.force_redraw() # force a redraw of joined headlines.
-	
-		gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
-	#@nonl
-	#@-node:endEditLabelCommand
-	#@+node:abortEditLabelCommand
-	def abortEditLabelCommand (self):
-		
-		frame = self ; c = frame.c ; v = c.currentVnode() ; tree = frame.tree
-	
-		if self.revertHeadline and v.edit_text() and v == tree.editVnode():
-		
-			v.edit_text().delete("1.0","end")
-			v.edit_text().insert("end",self.revertHeadline)
-			tree.idle_head_key(v) # Must be done immediately.
-			tree.revertHeadline = None
-			tree.select(v)
-			if v and len(v.t.joinList) > 0:
-				tree.force_redraw() # force a redraw of joined headlines.
-	#@nonl
-	#@-node:abortEditLabelCommand
 	#@+node:toggleActivePane
 	def toggleActivePane(self):
 		
@@ -1306,17 +1318,23 @@ class leoTkinterBody (leoFrame.leoBody):
 		bg = config.getWindowPref("body_text_background_color")
 		if bg:
 			try: body.configure(bg=bg)
-			except: pass
+			except:
+				es("exception setting body background color")
+				es_exception()
 		
 		fg = config.getWindowPref("body_text_foreground_color")
 		if fg:
 			try: body.configure(fg=fg)
-			except: pass
+			except:
+				es("exception setting body foreground color")
+				es_exception()
 	
 		bg = config.getWindowPref("body_insertion_cursor_color")
 		if bg:
 			try: body.configure(insertbackground=bg)
-			except: pass
+			except:
+				es("exception setting insertion cursor color")
+				es_exception()
 			
 		if sys.platform != "win32": # Maybe a Windows bug.
 			fg = config.getWindowPref("body_cursor_foreground_color")
