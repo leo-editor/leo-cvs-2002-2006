@@ -218,7 +218,7 @@
 # entire file. It is easy to recreate the join lists when reading a file using 
 # a dedicated field in the tnode.  This field is the head of a list of all 
 # vnodes that points to the tnode. After reading all nodes, Leo creates this 
-# list with one pass through the vnodes.  Leo then convert each list to a 
+# list with one pass through the vnodes.  Leo then converts each list to a 
 # circular list with one additional pass through the tnodes.
 
 #@-at
