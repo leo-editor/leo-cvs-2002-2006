@@ -1040,49 +1040,34 @@ class LeoFrame:
 		#@-node:1::<< create top-level outline menu >>
 
 		
-		#@<< create expand submenu >>
-		#@+node:2::<< create expand submenu >>
+		#@<< create expand/contract submenu >>
+		#@+node:2::<< create expand/contract submenu >>
 		#@+body
-		expandMenu = self.createNewMenu("&Expand...","Outline")
+		expandMenu = self.createNewMenu("&Expand/Contract...","Outline")
 		
 		table = (
-			("Expand &All","Alt+9",self.OnExpandAll),
-			("Expand All C&hildren",None,self.OnExpandAllChildren),
-			("Expand &Children",None,self.OnExpandChildren),
+			("&Contract All","Alt+Shift+0",self.OnContractAll),
+			("Contract &Parent","Alt+0",self.OnContractParent),
 			("-",None,None),
-			("Expand &Next Level","Alt+=",self.OnExpandNextLevel),
+			("Expand To Level &1","Alt+1",self.OnExpandToLevel1),
 			("Expand To Level &2","Alt+2",self.OnExpandToLevel2),
 			("Expand To Level &3","Alt+3",self.OnExpandToLevel3),
 			("Expand To Level &4","Alt+4",self.OnExpandToLevel4),
 			("Expand To Level &5","Alt+5",self.OnExpandToLevel5),
 			("Expand To Level &6","Alt+6",self.OnExpandToLevel6),
 			("Expand To Level &7","Alt+7",self.OnExpandToLevel7),
-			("Expand To Level &8","Alt+8",self.OnExpandToLevel8))
+			("Expand To Level &8","Alt+8",self.OnExpandToLevel8),
+			("-",None,None),
+			("Expand &All","Alt+9",self.OnExpandAll),
+			("Expand &Next Level","Alt+=",self.OnExpandNextLevel))
 		
 		self.createMenuEntries(expandMenu,table)
-		
 		#@-body
-		#@-node:2::<< create expand submenu >>
-
-		
-		#@<< create contract submenu >>
-		#@+node:3::<< create contract submenu >>
-		#@+body
-		contractMenu = self.createNewMenu("Co&ntract...","Outline")
-		
-		table = (
-			("Contract &Parent","Alt+0",self.OnContractParent),
-			("Contract &All","Alt+1",self.OnContractAll),
-			("Contract All C&hildren",None,self.OnContractAllChildren),
-			("Contract &Children",None,self.OnContractChildren))
-		
-		self.createMenuEntries(contractMenu,table)
-		#@-body
-		#@-node:3::<< create contract submenu >>
+		#@-node:2::<< create expand/contract submenu >>
 
 		
 		#@<< create move submenu >>
-		#@+node:4::<< create move submenu >>
+		#@+node:3::<< create move submenu >>
 		#@+body
 		moveSelectMenu = self.createNewMenu("&Move...","Outline")
 		
@@ -1098,11 +1083,11 @@ class LeoFrame:
 		self.createMenuEntries(moveSelectMenu,table)
 		
 		#@-body
-		#@-node:4::<< create move submenu >>
+		#@-node:3::<< create move submenu >>
 
 		
 		#@<< create mark submenu >>
-		#@+node:5::<< create mark submenu >>
+		#@+node:4::<< create mark submenu >>
 		#@+body
 		markMenu = self.createNewMenu("M&ark/Unmark...","Outline")
 		
@@ -1117,11 +1102,11 @@ class LeoFrame:
 		self.createMenuEntries(markMenu,table)
 		
 		#@-body
-		#@-node:5::<< create mark submenu >>
+		#@-node:4::<< create mark submenu >>
 
 		
 		#@<< create goto submenu >>
-		#@+node:6::<< create goto submenu >>
+		#@+node:5::<< create goto submenu >>
 		#@+body
 		gotoMenu = self.createNewMenu("&Go To...","Outline")
 		
@@ -1138,7 +1123,7 @@ class LeoFrame:
 		self.createMenuEntries(gotoMenu,table)
 		
 		#@-body
-		#@-node:6::<< create goto submenu >>
+		#@-node:5::<< create goto submenu >>
 		#@-body
 		#@-node:3::<< create the outline menu >>
 
@@ -3967,8 +3952,8 @@ class LeoFrame:
 		enableMenu(menu,"Delete Node",c.canDeleteHeadline())
 		enableMenu(menu,"Paste Node",c.canPasteOutline())
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
-		# Contract submenu...
-		menu = self.getMenu("Contract...")
+		# Expand/Contract submenu...
+		menu = self.getMenu("Expand/Contract...")
 		enableMenu(menu,"Contract Parent",c.canContractParent())
 		# Move submenu...
 		menu = self.getMenu("Move...")

@@ -22,8 +22,8 @@
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
 <v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
-<v t="T11" a="V"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
+<v t="T10" a="V"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
@@ -438,8 +438,9 @@ KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
 <t tx="T10">ExpandNextLevel   = Alt+=
+ContractAll       = Alt+-
 ContractParent    = Alt+0
-ContractAll       = Alt+1
+ExpandToLevel1    = Alt+1
 ExpandToLevel2    = Alt+2
 ExpandToLevel3    = Alt+3
 ExpandToLevel4    = Alt+4
