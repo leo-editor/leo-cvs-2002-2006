@@ -2506,16 +2506,7 @@ class atFile:
 	#@-node:7::Utilites
 	#@+node:8::Writing
 	#@+node:1::Top level
-	#@+node:1::atFile.checkForLeoCustomize
-	#@+body
-	# Check file given by v, or self.targetFileName if v == None.
-	
-	def checkForLeoCustomize (self,v=None):
-	
-		return true # This routine is no longer needed.
-	#@-body
-	#@-node:1::atFile.checkForLeoCustomize
-	#@+node:2::atFile.rawWrite
+	#@+node:1::atFile.rawWrite
 	#@+body
 	def rawWrite(self,root):
 	
@@ -2645,8 +2636,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:2::atFile.rawWrite
-	#@+node:3::atFile.silentWrite
+	#@-node:1::atFile.rawWrite
+	#@+node:2::atFile.silentWrite
 	#@+body
 	def silentWrite(self,root):
 	
@@ -2693,8 +2684,8 @@ class atFile:
 		except:
 			self.handleWriteException(root)
 	#@-body
-	#@-node:3::atFile.silentWrite
-	#@+node:4::atFile.write
+	#@-node:2::atFile.silentWrite
+	#@+node:3::atFile.write
 	#@+body
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
@@ -2869,23 +2860,26 @@ class atFile:
 		except:
 			self.handleWriteException()
 	#@-body
-	#@-node:4::atFile.write
-	#@+node:5::atFile.writeAll
+	#@-node:3::atFile.write
+	#@+node:4::atFile.writeAll
 	#@+body
-	#@+at
-	#  This method scans all vnodes, calling write for every @file node 
-	# found.  If partialFlag is true we write all @file nodes in the selected 
-	# outline.  Otherwise we write @file nodes in the entire outline.
-
-	#@-at
-	#@@c
-	def writeAll(self,v,partialFlag):
+	def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
+		
+		"""Write @file nodes in all or part of the outline"""
 	
+		c = self.commands
 		self.initIvars()
-		writtenFiles = [] # List of files that might be written again.
-		# Kludge: look at whole tree if forceFlag is false;
-		if partialFlag: after = v.nodeAfterTree()
-		else: after = None
+		writtenFiles = [] # Files that might be written again.
+	
+		if writeAtFileNodesFlag:
+			# Write all nodes in the selected tree.
+			v = c.currentVnode()
+			after = v.nodeAfterTree()
+		else:
+			# Write dirty nodes in the entire outline.
+			v = c.rootVnode()
+			after = None
+	
 		
 		#@<< Clear all orphan bits >>
 		#@+node:1::<< Clear all orphan bits >>
@@ -2913,7 +2907,9 @@ class atFile:
 				#@+node:2::<< handle v's tree >>
 				#@+body
 				# This code is a little tricky: @ignore not recognised in @silentfile nodes.
-				if v.isDirty() or partialFlag or v.t in writtenFiles:
+				
+				if v.isDirty() or writeAtFileNodesFlag or v.t in writtenFiles:
+				
 					if v.isAtSilentFileNode():
 						self.silentWrite(v)
 					elif v.isAtIgnoreNode():
@@ -2927,28 +2923,29 @@ class atFile:
 				
 					if not v.isAtIgnoreNode():
 						writtenFiles.append(v.t)
-				
-				elif v.isAtFileNode():
-					self.checkForLeoCustomize(v)
-					
-				
-				
-				
 				#@-body
 				#@-node:2::<< handle v's tree >>
 
 				v = v.nodeAfterTree()
 			else:
 				v = v.threadNext()
-		if partialFlag: # This is the Write @file Nodes command.
+	
+		
+		#@<< say the command is finished >>
+		#@+node:3::<< say the command is finished >>
+		#@+body
+		if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
 			if len(writtenFiles) > 0:
 				es("finished")
+			elif writeAtFileNodesFlag:
+				es("no @file nodes in the selected tree")
 			else:
-				es("no @file or similar nodes in the selected tree")
-	
+				es("no dirty @file nodes")
+		#@-body
+		#@-node:3::<< say the command is finished >>
 	#@-body
-	#@-node:5::atFile.writeAll
-	#@+node:6::atFile.writeMissing
+	#@-node:4::atFile.writeAll
+	#@+node:5::atFile.writeMissing
 	#@+body
 	def writeMissing(self,v):
 	
@@ -2956,8 +2953,7 @@ class atFile:
 		writtenFiles = false
 		after = v.nodeAfterTree()
 		while v and v != after:
-			if v.isAtSilentFileNode() or (
-				v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
+			if v.isAtSilentFileNode() or (v.isAnyAtFileNode() and not v.isAtIgnoreNode()):
 				missing = false ; valid = true
 				self.targetFileName = v.anyAtFileNodeName()
 				
@@ -2996,43 +2992,42 @@ class atFile:
 				#@-node:1::<< set missing if the file does not exist >>
 
 				if valid and missing:
-					if not v.isAtFileNode() or self.checkForLeoCustomize(v):
+					
+					#@<< create self.outputFile >>
+					#@+node:2::<< create self.outputFile >>
+					#@+body
+					try:
+						self.outputFileName = self.targetFileName + ".tmp"
+						self.outputFile = open(self.outputFileName,'wb')
+						if self.outputFile == None:
+							self.writeError("can not open " + self.outputFileName)
+					except:
+						es("exception opening:" + self.outputFileName)
+						es_exception()
+						self.outputFile = None
+					
+					#@-body
+					#@-node:2::<< create self.outputFile >>
+
+					if self.outputFile:
 						
-						#@<< create self.outputFile >>
-						#@+node:2::<< create self.outputFile >>
+						#@<< write the @file node >>
+						#@+node:3::<< write the @file node >>
 						#@+body
-						try:
-							self.outputFileName = self.targetFileName + ".tmp"
-							self.outputFile = open(self.outputFileName,'wb')
-							if self.outputFile == None:
-								self.writeError("can not open " + self.outputFileName)
-						except:
-							es("exception opening:" + self.outputFileName)
-							es_exception()
-							self.outputFile = None
+						if v.isAtSilentFileNode():
+							self.silentWrite(v)
+						elif v.isAtRawFileNode():
+							self.rawWrite(v)
+						elif v.isAtNoSentinelsFileNode():
+							self.write(v,nosentinels=true)
+						elif v.isAtFileNode():
+							self.write(v)
+						else: assert(0)
+						
+						writtenFiles = true
 						
 						#@-body
-						#@-node:2::<< create self.outputFile >>
-
-						if self.outputFile:
-							
-							#@<< write the @file node >>
-							#@+node:3::<< write the @file node >>
-							#@+body
-							if v.isAtSilentFileNode():
-								self.silentWrite(v)
-							elif v.isAtRawFileNode():
-								self.rawWrite(v)
-							elif v.isAtNoSentinelsFileNode():
-								self.write(v,nosentinels=true)
-							elif v.isAtFileNode():
-								self.write(v)
-							else: assert(0)
-							
-							writtenFiles = true
-							
-							#@-body
-							#@-node:3::<< write the @file node >>
+						#@-node:3::<< write the @file node >>
 
 				v = v.nodeAfterTree()
 			elif v.isAtIgnoreNode():
@@ -3045,8 +3040,8 @@ class atFile:
 		else:
 			es("no missing @file node in the selected tree")
 	#@-body
-	#@-node:6::atFile.writeMissing
-	#@+node:7::Top level write helpers
+	#@-node:5::atFile.writeMissing
+	#@+node:6::Top level write helpers
 	#@+node:1::atFile.closeWriteFile
 	#@+body
 	def closeWriteFile (self):
@@ -3183,8 +3178,6 @@ class atFile:
 				#@-node:1::<< delete the output file >>
 
 			else:
-				if self.checkForLeoCustomize() == false:
-					return
 				
 				#@<< replace the target file with the output file >>
 				#@+node:2::<< replace the target file with the output file >>
@@ -3209,9 +3202,6 @@ class atFile:
 				#@-body
 				#@-node:2::<< replace the target file with the output file >>
 
-				
-		elif self.checkForLeoCustomize() == false:
-			return
 		else:
 			
 			#@<< rename the output file to be the target file >>
@@ -3240,7 +3230,7 @@ class atFile:
 		self.os(s.replace('\n',self.output_newline))
 	#@-body
 	#@-node:6::atFile.outputStringWithLineEndings
-	#@-node:7::Top level write helpers
+	#@-node:6::Top level write helpers
 	#@-node:1::Top level
 	#@+node:2::putBodyPart
 	#@+body

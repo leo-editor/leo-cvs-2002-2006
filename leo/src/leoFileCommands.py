@@ -1722,13 +1722,22 @@ class fileCommands:
 	#@+body
 	def writeAtFileNodes (self):
 	
-		c = self.commands ; v = c.currentVnode()
+		c = self.commands
 		if v:
 			at = c.atFileCommands
-			at.writeAll(v,true) # partialFlag
+			at.writeAll(writeAtFileNodesFlag=true)
 	#@-body
 	#@-node:9::writeAtFileNodes
-	#@+node:10::writeMissingAtFileNodes
+	#@+node:10::writeDirtyAtFileNodes
+	#@+body
+	def writeDirtyAtFileNodes (self): # fileCommands
+	
+		"""The Write Dirty @file Nodes command"""
+	
+		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+	#@-body
+	#@-node:10::writeDirtyAtFileNodes
+	#@+node:11::writeMissingAtFileNodes
 	#@+body
 	def writeMissingAtFileNodes (self):
 	
@@ -1737,8 +1746,8 @@ class fileCommands:
 			at = c.atFileCommands
 			at.writeMissing(v)
 	#@-body
-	#@-node:10::writeMissingAtFileNodes
-	#@+node:11::writeOutlineOnly
+	#@-node:11::writeMissingAtFileNodes
+	#@+node:12::writeOutlineOnly
 	#@+body
 	def writeOutlineOnly (self):
 	
@@ -1747,8 +1756,8 @@ class fileCommands:
 		self.compactFileIndices()
 		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
 	#@-body
-	#@-node:11::writeOutlineOnly
-	#@+node:12::write_LEO_file
+	#@-node:12::writeOutlineOnly
+	#@+node:13::write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1758,7 +1767,7 @@ class fileCommands:
 			try:
 				# Leo2: write all @file nodes and set orphan bits.
 				at = c.atFileCommands
-				at.writeAll(c.rootVnode(), false) # forceFlag
+				at.writeAll()
 			except:
 				es_error("exception writing derived files")
 				es_exception()
@@ -1914,7 +1923,7 @@ class fileCommands:
 
 			return false
 	#@-body
-	#@-node:12::write_LEO_file
+	#@-node:13::write_LEO_file
 	#@-node:3::Writing
 	#@-others
 #@-body

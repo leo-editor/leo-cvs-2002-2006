@@ -1124,7 +1124,7 @@ class leoTree:
 						c.dragAfter(v,vdrag)
 			else:
 				if v and self.dragging:
-					es("not dragged: " + v.headString())
+					pass # es("not dragged: " + v.headString())
 				if 0: # Don't undo the scrolling we just did!
 					self.idle_scrollTo(v)
 		

@@ -886,6 +886,7 @@ class LeoFrame:
 				("&Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
 				("Read @file &Nodes",None,self.OnReadAtFileNodes),
 				("-",None,None),
+				("Write &Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
 				("Write &Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
 				("Write &Outline Only",None,self.OnWriteOutlineOnly),
 				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
@@ -1034,8 +1035,6 @@ class LeoFrame:
 			("&Indent","Ctrl+]",self.OnIndent),
 			("&Unindent","Ctrl+[",self.OnDedent),
 			("&Match Brackets","Ctrl+K",self.OnFindMatchingBracket))
-			#("-",None,None),
-			#("Insert Graphic File...",None,self.OnInsertGraphicFile))
 			
 		self.createMenuEntries(editBodyMenu,table)
 		
@@ -2087,31 +2086,39 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:2::OnReadAtFileNodes
-	#@+node:3::OnWriteMissingAtFileNodes
+	#@+node:3::OnWriteDirtyAtFileNodes
+	#@+body
+	def OnWriteDirtyAtFileNodes (self,event=None):
+	
+		self.commands.fileCommands.writeDirtyAtFileNodes()
+	
+	#@-body
+	#@-node:3::OnWriteDirtyAtFileNodes
+	#@+node:4::OnWriteMissingAtFileNodes
 	#@+body
 	def OnWriteMissingAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeMissingAtFileNodes()
 	
 	#@-body
-	#@-node:3::OnWriteMissingAtFileNodes
-	#@+node:4::OnWriteOutlineOnly
+	#@-node:4::OnWriteMissingAtFileNodes
+	#@+node:5::OnWriteOutlineOnly
 	#@+body
 	def OnWriteOutlineOnly (self,event=None):
 	
 		self.commands.fileCommands.writeOutlineOnly()
 	
 	#@-body
-	#@-node:4::OnWriteOutlineOnly
-	#@+node:5::OnWriteAtFileNodes
+	#@-node:5::OnWriteOutlineOnly
+	#@+node:6::OnWriteAtFileNodes
 	#@+body
 	def OnWriteAtFileNodes (self,event=None):
 	
 		self.commands.fileCommands.writeAtFileNodes()
 	
 	#@-body
-	#@-node:5::OnWriteAtFileNodes
-	#@+node:6::OnReadGnxFile
+	#@-node:6::OnWriteAtFileNodes
+	#@+node:7::OnReadGnxFile
 	#@+body
 	def OnReadGnxFile (self,event=None):
 		
@@ -2128,8 +2135,8 @@ class LeoFrame:
 		es("finished")
 	
 	#@-body
-	#@-node:6::OnReadGnxFile
-	#@+node:7::OnWriteGnxFile
+	#@-node:7::OnReadGnxFile
+	#@+node:8::OnWriteGnxFile
 	#@+body
 	def OnWriteGnxFile (self,event=None):
 		
@@ -2141,8 +2148,8 @@ class LeoFrame:
 		es("finished")
 	
 	#@-body
-	#@-node:7::OnWriteGnxFile
-	#@+node:8::OnClearAllNodeIndices
+	#@-node:8::OnWriteGnxFile
+	#@+node:9::OnClearAllNodeIndices
 	#@+body
 	def OnClearAllNodeIndices (self,event=None):
 		
@@ -2153,7 +2160,7 @@ class LeoFrame:
 			v = v.threadNext()
 		es("all tnode indices cleared",color="red")
 	#@-body
-	#@-node:8::OnClearAllNodeIndices
+	#@-node:9::OnClearAllNodeIndices
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
@@ -3072,45 +3079,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:8::OnIndent
-	#@+node:9::OnInsertGraphicFile
-	#@+body
-	def OnInsertGraphicFile(self,event=None):
-		
-		c = self.commands
-		
-		filetypes = [("Gif", "*.gif")]
-			# Only Gif images are allowed.
-			#("Bitmap", "*.bmp"),
-			#("Icon", "*.ico"),
-		
-		fileName = tkFileDialog.askopenfilename(
-			title="Insert Graphic",
-			filetypes=filetypes,
-			defaultextension=".gif")
-	
-		if fileName and len(fileName) > 0 and os.path.exists(fileName):
-			try:
-				fileName = os.path.join(app().loadDir,fileName)
-				fileName = os.path.normpath(fileName)
-				image = Tkinter.PhotoImage(file=fileName)
-			except:
-				es("Exception loading: " + fileName)
-				es_exception()
-				image = None
-			if image:
-				# print image.height()
-				index = c.body.index("insert")
-				if 1: # same behavior
-					bg = c.body.cget("background")
-					w = Tkinter.Label(c.body,image=image,bd=0,bg=bg)
-					c.body.window_create(index,window=w,align="baseline")
-				else:
-					c.body.image_create(index,image=image,align="baseline")
-				# c.body.dump(index) # The image isn't drawn unless we take an exception!
-	
-	#@-body
-	#@-node:9::OnInsertGraphicFile
-	#@+node:10::OnInsertBody/HeadlineTime & allies
+	#@+node:9::OnInsertBody/HeadlineTime & allies
 	#@+body
 	def OnInsertBodyTime (self,event=None):
 		
@@ -3169,7 +3138,7 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:1::getTime
-	#@-node:10::OnInsertBody/HeadlineTime & allies
+	#@-node:9::OnInsertBody/HeadlineTime & allies
 	#@-node:2::Edit Body submenu
 	#@+node:3::Edit Headline submenu
 	#@+node:1::OnEditHeadline
