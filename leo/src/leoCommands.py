@@ -2,6 +2,8 @@
 #@+node:ekr.20031218072017.2810:@thin leoCommands.py
 #@@language python
 
+from __future__ import generators # To make the code work in Python 2.2.
+
 import leoGlobals as g
 from leoGlobals import true,false
 
