@@ -1063,10 +1063,12 @@ class LeoFrame:
 			("Mark Subheads","Alt+S",self.OnMarkSubheads),
 			("Mark Changed Items","Alt+C",self.OnMarkChangedItems),
 			("Mark Changed Roots","Alt+R",self.OnMarkChangedRoots),
+			("Mark Clones","Alt+K",self.OnMarkClones),
 			("-",None,None),
 			("Unmark All","Alt+U",self.OnUnmarkAll),
 			("Go To Next Marked","Alt+M",self.OnGoToNextMarked),
-			("Go To Next Changed","Alt+D",self.OnGoToNextChanged))
+			("Go To Next Changed","Alt+D",self.OnGoToNextChanged),
+			("Go To Next Clone","Alt+N",self.OnGoToNextClone))
 			
 		self.createMenuEntries(markGotoMenu,table)
 		
@@ -3058,30 +3060,46 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:4::OnMarkChangedRoots
-	#@+node:5::OnUnmarkAll
+	#@+node:5::OnMarkClones
+	#@+body
+	def OnMarkClones(self,event=None):
+	
+		self.commands.markClones()
+	
+	#@-body
+	#@-node:5::OnMarkClones
+	#@+node:6::OnUnmarkAll
 	#@+body
 	def OnUnmarkAll(self,event=None):
 	
 		self.commands.unmarkAll()
 	
 	#@-body
-	#@-node:5::OnUnmarkAll
-	#@+node:6::OnGoToNextMarked
+	#@-node:6::OnUnmarkAll
+	#@+node:7::OnGoToNextMarked
 	#@+body
 	def OnGoToNextMarked(self,event=None):
 	
 		self.commands.goToNextMarkedHeadline()
 	
 	#@-body
-	#@-node:6::OnGoToNextMarked
-	#@+node:7::OnGoToNextChanged
+	#@-node:7::OnGoToNextMarked
+	#@+node:8::OnGoToNextChanged
 	#@+body
 	def OnGoToNextChanged(self,event=None):
 	
 		self.commands.goToNextDirtyHeadline()
 	
 	#@-body
-	#@-node:7::OnGoToNextChanged
+	#@-node:8::OnGoToNextChanged
+	#@+node:9::OnGoToNextClone
+	#@+body
+	def OnGoToNextClone(self,event=None):
+	
+		self.commands.goToNextClone()
+	
+	#@-body
+	#@-node:9::OnGoToNextClone
 	#@-node:4::Mark/Goto
 	#@-node:3::Outline Menu
 	#@+node:4::Window Menu
@@ -3660,8 +3678,10 @@ class LeoFrame:
 		enableMenu(menu,"Mark Subheads",(v and v.hasChildren()))
 		enableMenu(menu,"Mark Changed Items",c.canMarkChangedHeadlines())
 		enableMenu(menu,"Mark Changed Roots",c.canMarkChangedRoots())
+		enableMenu(menu,"Mark Clones",v.isCloned())
 		enableMenu(menu,"Go To Next Marked",c.canGoToNextMarkedHeadline())
 		enableMenu(menu,"Go To Next Changed",c.canGoToNextDirtyHeadline())
+		enableMenu(menu,"Go To Next Clone",v.isCloned())
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:7::Menu enablers (Frame)

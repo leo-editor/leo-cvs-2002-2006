@@ -1704,7 +1704,7 @@ class Commands:
 	#@-body
 	#@-node:8::validateOutline
 	#@-node:13::Insert, Delete & Clone (Commands)
-	#@+node:14::Mark & Unmark
+	#@+node:14::Mark & Unmark & goto
 	#@+node:1::goToNextDirtyHeadline
 	#@+body
 	def goToNextDirtyHeadline (self):
@@ -1740,7 +1740,32 @@ class Commands:
 			c.endUpdate()
 	#@-body
 	#@-node:2::goToNextMarkedHeadline
-	#@+node:3::markChangedHeadlines
+	#@+node:3::goToNextClone
+	#@+body
+	def goToNextClone(self):
+	
+		c = self ; current = c.currentVnode()
+		if not current: return
+		if not current.isCloned(): return
+	
+		v = current.threadNext()
+		while v and v.t != current.t:
+			v = v.threadNext()
+			
+		if not v:
+			# Wrap around.
+			v = c.rootVnode()
+			while v and v != current and v.t != current.t:
+				v = v.threadNext()
+	
+		if v:
+			c.beginUpdate()
+			c.endEditing()
+			c.selectVnode(v)
+			c.endUpdate()
+	#@-body
+	#@-node:3::goToNextClone
+	#@+node:4::markChangedHeadlines
 	#@+body
 	def markChangedHeadlines (self):
 	
@@ -1753,8 +1778,8 @@ class Commands:
 			v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:3::markChangedHeadlines
-	#@+node:4::markChangedRoots
+	#@-node:4::markChangedHeadlines
+	#@+node:5::markChangedRoots
 	#@+body
 	def markChangedRoots (self):
 	
@@ -1770,8 +1795,8 @@ class Commands:
 			v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:4::markChangedRoots
-	#@+node:5::markAllAtFileNodesDirty
+	#@-node:5::markChangedRoots
+	#@+node:6::markAllAtFileNodesDirty
 	#@+body
 	def markAllAtFileNodesDirty (self):
 	
@@ -1784,8 +1809,8 @@ class Commands:
 			else: v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:5::markAllAtFileNodesDirty
-	#@+node:6::markAtFileNodesDirty
+	#@-node:6::markAllAtFileNodesDirty
+	#@+node:7::markAtFileNodesDirty
 	#@+body
 	def markAtFileNodesDirty (self):
 	
@@ -1801,8 +1826,25 @@ class Commands:
 			else: v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:6::markAtFileNodesDirty
-	#@+node:7::markHeadline
+	#@-node:7::markAtFileNodesDirty
+	#@+node:8::markClones
+	#@+body
+	def markClones (self):
+	
+		c = self ; current = v = c.currentVnode()
+		if not v: return
+		if not v.isCloned(): return
+		
+		v = c.rootVnode()
+		c.beginUpdate()
+		while v:
+			if v.t == current.t:
+				v.setMarked()
+			v = v.threadNext()
+		c.endUpdate()
+	#@-body
+	#@-node:8::markClones
+	#@+node:9::markHeadline
 	#@+body
 	def markHeadline (self):
 	
@@ -1818,8 +1860,8 @@ class Commands:
 			c.setChanged(true)
 		c.endUpdate()
 	#@-body
-	#@-node:7::markHeadline
-	#@+node:8::markSubheads
+	#@-node:9::markHeadline
+	#@+node:10::markSubheads
 	#@+body
 	def markSubheads(self):
 	
@@ -1836,8 +1878,8 @@ class Commands:
 			child = child.next()
 		c.endUpdate()
 	#@-body
-	#@-node:8::markSubheads
-	#@+node:9::unmarkAll
+	#@-node:10::markSubheads
+	#@+node:11::unmarkAll
 	#@+body
 	def unmarkAll(self):
 	
@@ -1851,8 +1893,8 @@ class Commands:
 			v = v.threadNext()
 		c.endUpdate()
 	#@-body
-	#@-node:9::unmarkAll
-	#@-node:14::Mark & Unmark
+	#@-node:11::unmarkAll
+	#@-node:14::Mark & Unmark & goto
 	#@+node:15::Moving, Dragging, Promote, Demote, Sort
 	#@+node:1::c.dragAfter
 	#@+body
