@@ -1564,9 +1564,10 @@ class fileCommands:
 	#@+body
 	def save(self,fileName):
 	
-		c=self.commands
-		c.beginUpdate()
-		if 1: # within update...
+		c = self.commands ; v = c.currentVnode()
+	
+		if handleLeoHook("save1",c=c,v=v,fileName=fileName)==None:
+			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices() # 1/14/02: always recompute file indices
 			
@@ -1588,36 +1589,42 @@ class fileCommands:
 				if app().config.save_clears_undo_buffer:
 					es("clearing undo")
 					c.undoer.clearUndoState()
-		c.endUpdate()
+			c.endUpdate()
+		handleLeoHook("save2",c=c,v=v,fileName=fileName)
 	#@-body
 	#@-node:5::save
 	#@+node:6::saveAs
 	#@+body
 	def saveAs(self,fileName):
 	
-		c=self.commands
-		c.beginUpdate()
-		if 1: # within update...
+		c = self.commands ; v = c.currentVnode()
+	
+		if handleLeoHook("save1",c=c,v=v,fileName=fileName)==None:
+			c.beginUpdate()
 			c.endEditing() # Set the current headline text.
 			self.compactFileIndices()
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				c.setChanged(false) # Clears all dirty bits.
 				es("saved: " + shortFileName(fileName))
-		c.endUpdate()
+			c.endUpdate()
+		handleLeoHook("save2",c=c,v=v,fileName=fileName)
 	#@-body
 	#@-node:6::saveAs
 	#@+node:7::saveTo
 	#@+body
 	def saveTo (self,fileName):
 	
-		c=self.commands
-		c.beginUpdate()
-		if 1: # within update...
+		c = self.commands ; v = c.currentVnode()
+	
+		if handleLeoHook("save1",c=c,v=v,fileName=fileName)==None:
+			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.compactFileIndices()
 			if self.write_LEO_file(fileName,false): # outlineOnlyFlag
 				es("saved: " + shortFileName(fileName))
-		c.endUpdate()
+			c.endUpdate()
+		handleLeoHook("save2",c=c,v=v,fileName=fileName)
+	
 	#@-body
 	#@-node:7::saveTo
 	#@+node:8::xmlEscape
