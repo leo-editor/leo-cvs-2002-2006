@@ -1105,23 +1105,55 @@ def pause (s):
         i += 1
 #@nonl
 #@-node:ekr.20031218072017.3128:pause
-#@+node:ekr.20041126060136:print_dict & dictToString
-def print_dict(d):
+#@+node:ekr.20041224080039:print_dict & dictToString
+def print_dict(d,tag=None):
     
     keys = d.keys()
     keys.sort()
+    n = 6
     for key in keys:
-        print "%s: %s" % key,d.get(key)
+        n = max(n,len(key))
+    if tag:
+        print '%s...' % tag
+    for key in keys:
+        print "%*s: %s" % n,key,d.get(key)
 
 printDict = print_dict
 
-def dictToString(d):
+def dictToString(d,tag=None):
     keys = d.keys()
     keys.sort()
-    lines = ["%s: %s" % (key,d.get(key)) for key in keys]
-    return '\n'.join(lines)
+    n = 6
+    for key in keys:
+        n = max(n,len(key))
+    lines = ["%*s: %s" % (n,key,d.get(key)) for key in keys]
+    s = '\n'.join(lines)
+    if tag:
+        return '%s...\n%s' % (tag,s)
+    else:
+        return s
 #@nonl
-#@-node:ekr.20041126060136:print_dict & dictToString
+#@-node:ekr.20041224080039:print_dict & dictToString
+#@+node:ekr.20041126060136:print_list & listToString
+def print_list(aList,tag=None):
+    
+    if tag:
+        print '%s...' % tag
+    for e in aList:
+        print repr(e)
+
+printList = print_list
+
+def listToString(aList,tag=None):
+    
+    lines = ["%s" % repr(e) for e in aList]
+    s = '\n'.join(lines)
+    if tag:
+        return '%s...\n%s' % (tag,s)
+    else:
+        return s
+#@nonl
+#@-node:ekr.20041126060136:print_list & listToString
 #@+node:ekr.20041122153823:print_stack
 def print_stack():
     
@@ -3243,16 +3275,6 @@ def flattenList (theList):
     return result
 #@nonl
 #@-node:ekr.20031218072017.3142:flattenList
-#@+node:ekr.20031218072017.3143:listToString
-def listToString(theList):
-
-    if list:
-        theList = g.flattenList(theList)
-        return string.join(theList,"")
-    else:
-        return ""
-#@nonl
-#@-node:ekr.20031218072017.3143:listToString
 #@-node:ekr.20031218072017.3140: List utilities...
 #@+node:ekr.20031218072017.3106:angleBrackets & virtual_event_name
 # Returns < < s > >
