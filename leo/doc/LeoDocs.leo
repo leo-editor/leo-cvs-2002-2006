@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46" a="ETV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -1234,7 +1234,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -6200,7 +6200,9 @@ In all other respects Leo1 and Leo2 .leo files are identical. Leo1 can open Leo2
 
 &lt;v&gt; and &lt;t&gt; elements in .leo files correspond directly to vnodes and tnodes in memory when Leo is running.  For full information about these see @file leoNodes.py in LeoPy.leo.  For full information about exactly what Leo is doing when reading and writing files, see @file leoFileCommands.py in LeoPy.leo.
 
-New in 4.0:  &lt;v&gt; elements corresponding to @file nodes now contain tnodeList attributes that are a list of gnx's.  The tnodeList attribute allows the read code in @file leoAtFile.py to recreate the order in which nodes should appear in the outline.  The tnodeList attribute is a list of gnx's: global node indices.  See the nodeIndices class in leoNodes.py for details.  A gnx has the form id.timestamp.n where .n is elided unless two nodes would have the same id.timestamp field.
+New in 4.0:  &lt;v&gt; elements corresponding to @file nodes now contain tnodeList attributes.  The tnodeList attribute allows the read code in @file leoAtFile.py to recreate the order in which nodes should appear in the outline.
+
+The tnodeList attribute is a list of gnx's: global node indices.  See the nodeIndices class in leoNodes.py for details.  A gnx has the form id.timestamp.n where .n is elided unless two nodes would have the same id.timestamp field.
 
 The following sections of Users Guide:Customizing Leo contain new conventions that allow plugins to extend this format by adding attributes to &lt;v&gt; and &lt;t&gt; elments:
 
