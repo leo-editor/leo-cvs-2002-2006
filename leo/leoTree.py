@@ -1642,7 +1642,7 @@ class leoTree:
 	#@+node:7::tree.select
 	#@+body
 	#@+at
-	#  Warning: do not try to "optimize" this be returning if v==tree.currentVnode.
+	#  Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 
 	#@-at
 	#@@c

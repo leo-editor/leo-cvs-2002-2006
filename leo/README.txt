@@ -1,5 +1,38 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.10                             December 14, 2002
+
+This version of Leo corrects bugs, improves Leo's documentation and adds many new features:
+
+- Rewrote Scripting Chapter in Leo's Users Guide.
+- Improved the Customization Chapter of the Users Guide.
+- Adds several customizations contributed by Leo's users.
+  Among these: @read-only nodes. Reading empty .leo files.
+  Redirecting stderr and stdout to Leo's log pane.
+- New Mark Clones and Go To Next Clone commands.
+- New Export Headlines command.
+- Control-dragging a node now clones it.
+- New "Node Only checkbox in the Find/Change panel.
+- @root-code trees start in code mode by default.
+  This allows @root trees to work like @file trees.
+- @root-doc  trees start in doc  mode by default.
+- Converted leoConfig.py to use @root-code
+- New at_root_bodies_start_in_doc_mode option in leoConfig.py.
+  Specifies whether @root trees work like @root-code or @root-doc.
+- New synonms: @file-asis = @silentfile
+  @file-nosent = @nosentinelsfile ; @file-noref = @rawfile.
+- Leo now supports navigation of menus using underlined menus.
+- Added an easy way to replace any Leo method by a function.
+  The code in customizeLeo.py can now override part of Leo's code!
+- Added routines to redirect stderr and stdout to Leo's log pane.
+  These routines can be called from customizeLeo.py.
+- Added "event1" and "event2" hooks for customize event handling.
+- Improved Leo's window icon, and improved how that icon is loaded.
+- Added contributed code to support @read-only nodes.
+  This code show how easy it is to customize Leo.
+- The usual assortment of bug fixes and minor improvements.
+  Actually, this release fixes more than the usual number of bugs.
+
 leo.py 3.9                               Nov 23, 2002
 
 This is one of the most interesting versions of Leo ever released:
