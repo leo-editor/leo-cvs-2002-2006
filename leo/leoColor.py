@@ -792,7 +792,6 @@ class colorizer:
 			if self.language == "plain": # 9/12/02
 				delim1,delim2,delim3 = None,None,None
 			elif self.language == "cweb": # 11/14/02: Use C comments, not cweb sentinel comments.
-				print "using cweb delims"
 				delim1,delim2,delim3 = set_delims_from_language("c")
 			elif self.comment_string: # 8/11/02
 				delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
