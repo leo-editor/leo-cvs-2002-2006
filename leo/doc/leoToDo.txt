@@ -34,7 +34,7 @@ bolt
 #@nonl
 #@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
 #@+node:EKR.20040517112409:Bug copying @file-thin node
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2573178
 By: bwmulder
@@ -71,7 +71,7 @@ For now, I am trying to use the pickle module to convert my dictionary into a st
 #@-node:EKR.20040503091111.1:Before beta 1 May 28
 #@+node:ekr.20031218072017.646:To do...
 #@+node:ekr.20040414093758:Suggestions
-#@@nocolor
+@nocolor
  RE: Leo's reorganized to-do list   
 2004-03-31 05:48  
 
@@ -90,7 +90,7 @@ we can script the find, can we script the compare?
 
 insert/overstrike mode in body
 
-#@@path and other directives accept python expressions
+@path and other directives accept python expressions
 
 add a Stop button for find/change 
 and other possibly long running scripts.
@@ -105,7 +105,7 @@ Tabbed log/Find/config window.
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:EKR.20040517090625:Suggestions for user interface improvement
 #@+node:ekr.20040117092727.1: Notes
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:ekr.20040117092727.2:using zodb versions
 Read and respond to this message at: 
@@ -152,7 +152,7 @@ What exactly we want to create ?
 rodrigob
 #@-node:ekr.20040117111232:svn links
 #@+node:ekr.20040226085005:Java notes
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2442609
 By: nobody
 
@@ -199,11 +199,11 @@ Jonathan M. Gilligan
 Calltips, as in IDLE. 
 #@nonl
 #@+node:ekr.20031218072017.758:Study for Tooltips/Auto-completion
-#@@ignore
-#@@language python
+@ignore
+@language python
 #@nonl
 #@+node:ekr.20031218072017.759:Writing an Idle extension
-#@@nocolor
+@nocolor
 
 Writing an IDLE extension
 
@@ -393,8 +393,8 @@ hilite-foreground= black
 hilite-background= #43cd80
 #@-node:ekr.20031218072017.760:config.txt
 #@+node:ekr.20031218072017.761:AutoExpand.py (idle extension)
-#@@ignore
-#@@language python
+@ignore
+@language python
 
 import string
 import re
@@ -405,7 +405,7 @@ import re
 
 class AutoExpand:
 	<< decls >>
-#@@others
+@others
 
 #@+node:ekr.20031218072017.762:<< decls >>
 keydefs = {
@@ -508,9 +508,9 @@ import string,sys,types
 class CallTips:
 	<< class CallTips members >>
 
-#@@others
+@others
 #@+node:ekr.20031218072017.768:<< class CallTips members >>
-#@@others
+@others
 #@nonl
 #@+node:ekr.20031218072017.769: data members
 menudefs = [ ]
@@ -627,12 +627,9 @@ def get_object_at_cursor(self,wordchars="._" + string.ascii_letters + string.dig
 #@-node:ekr.20031218072017.778:get_object_at_cursor
 #@-node:ekr.20031218072017.768:<< class CallTips members >>
 #@+node:ekr.20031218072017.779:_find_constructor
-#@+at 
-#@nonl
-# Given a class object, return a function object used for the constructor,
-# i.e., __init__() or None if we can't find one.
-#@-at
-#@@c
+@ Given a class object, return a function object used for the constructor,
+i.e., __init__() or None if we can't find one.
+@c
 
 def _find_constructor(class_ob):
 
@@ -676,21 +673,18 @@ else:
 #@nonl
 #@-node:ekr.20031218072017.781:<< set fob depending on the type of ob >>
 #@+node:ekr.20031218072017.782:<< get argText for functions and lambdas >>
-#@+at 
-#@nonl
-# Examples
-# 
-# 1. string.replace(  generates:
-# 
-# 	(s, old, new, maxsplit=-1)
-# 	replace (str, old, new[,maxsplit]) -> string
-# 
-# 2. d = {} ; d.get( generates:
-# 	D.get(k[,d]) -> D[k] if D.has_key(k), else d.  d defaults to None.
-# 
-# This last presumably comes from the docstring.
-#@-at
-#@@c
+@ Examples
+
+1. string.replace(  generates:
+
+	(s, old, new, maxsplit=-1)
+	replace (str, old, new[,maxsplit]) -> string
+
+2. d = {} ; d.get( generates:
+	D.get(k[,d]) -> D[k] if D.has_key(k), else d.  d defaults to None.
+
+This last presumably comes from the docstring.
+@c
 
 # Try and build one for Python defined functions
 if type(fob) in [types.FunctionType, types.LambdaType]:
@@ -774,13 +768,8 @@ if __name__=='__main__':
 #@-node:ekr.20031218072017.767:CallTips.py (idle extension)
 #@-node:ekr.20031218072017.758:Study for Tooltips/Auto-completion
 #@+node:ekr.20031218072017.785:Test
-#@+at 
-#@nonl
-# We have _lots_ of object available while Leo is running, so it would be 
-# possible to pass those objects to the tooltip routines.  However, it is not 
-# clear how useful all those global names will be.
-#@-at
-#@@c
+@ We have _lots_ of object available while Leo is running, so it would be possible to pass those objects to the tooltip routines.  However, it is not clear how useful all those global names will be.
+@c
 
 from leoGlobals import *
 #print app()
@@ -808,7 +797,7 @@ my 'exploring' a lot.
 #@-node:ekr.20031218072017.757:Calltips
 #@+node:ekr.20040217154256:Autocompletion
 #@+node:ekr.20031218072017.798:@dictionary
-#@@nocolor
+@nocolor
 
 Developers
 By: jasonic ( Jason Cunliffe ) 
@@ -876,7 +865,7 @@ That web site is produced from a Leo outline.
 #@+node:ekr.20031218072017.830:Finish wx plugin & improve how Leo uses indices
 #@-node:ekr.20031218072017.830:Finish wx plugin & improve how Leo uses indices
 #@+node:ekr.20040208095208:Mark Task & Clone To Task commands
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2415033
 By: nobody
@@ -937,7 +926,7 @@ the leoConfig.leo machinery.
 Davide
 #@nonl
 #@+node:ekr.20040105080119:Search for settings in various places: Rodrigo
-#@@nocolor
+@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2355843
 By: rodrigo_b
@@ -957,7 +946,7 @@ look for .leoConfig.txt, then leoConfig.txt
 #@nonl
 #@-node:ekr.20040105080119:Search for settings in various places: Rodrigo
 #@+node:ekr.20040208112836:Specify shortcuts, ampersand bindings & translations in the same place
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2415127
 By: edream
@@ -976,7 +965,7 @@ the configuration code gets rewritten.
 #@nonl
 #@-node:ekr.20040208112836:Specify shortcuts, ampersand bindings & translations in the same place
 #@+node:ekr.20040212094034:Another comment
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2420426
 By: dalcolmo
 
@@ -1002,7 +991,7 @@ Best regards - Josef Dalcolmo
 #@nonl
 #@-node:ekr.20040212094034:Another comment
 #@+node:ekr.20040213060739:Config stuff
-#@@nocolor
+@nocolor
 
 By: nobody ( Nobody/Anonymous ) 
  RE: 4.1rc4 Plug-in Bug?   
@@ -1071,7 +1060,7 @@ RodrigoB.
 - Remove Apply Settings command (will be done with apply, cancel, ok, revert buttons in all Settings submenus)
 #@nonl
 #@+node:ekr.20031218072017.653:Notes
-#@@nocolor
+@nocolor
 
 It would be an understatement to say that the way Leo handles configuration settings could be improved.  The present scheme involves editing leoConfig.leo, then remembering to save all .leo files before tangling leoConfig.leo.  Moreover, even when doing this properly, not all changes to settings "take" immediately.  Furthermore, there are no easy analogies to the typical "apply" or "revert" or "revert to default" buttons commonly seen in options dialogs.
 
@@ -1114,7 +1103,7 @@ I'm not at all sure that it is worthwhile now.
 #@-node:ekr.20031218072017.654:Cleanup prefs code?
 #@-node:ekr.20031218072017.652:Add settings menu
 #@+node:ekr.20031218072017.655:multiple copies of leoConfig.txt
-#@@nocolor
+@nocolor
 
 > It just leaves still the problem of merging ones personal settings of leoConfig.txt 
 with the ones in the new distribution. 
@@ -1125,7 +1114,7 @@ I may also have Leo look for leoLinuxConfig.txt, leoWinConfig.txt and leoMacConf
 #@nonl
 #@-node:ekr.20031218072017.655:multiple copies of leoConfig.txt
 #@+node:ekr.20031218072017.656:Different fonts for Linux/Mac
-#@@nocolor
+@nocolor
 
 By: sanori ( Joo-won Jung ) 
  How about split font config for win and unix?   
@@ -1140,7 +1129,7 @@ I'm using leo on both windows and Linux, and leo is in the vfat partition to use
 -Sanori 
 #@-node:ekr.20031218072017.656:Different fonts for Linux/Mac
 #@+node:ekr.20040226105601:Design for new config system (alpaha, etc.) Tom
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2434323
 By: nobody
@@ -1273,7 +1262,7 @@ autocompletion of abbreviations (as many text editors do) and/or
 language-specific keywords taken from a dictionary selected by @language.
 #@-node:ekr.20031218072017.806:Auto-completion (probably won't be done)
 #@+node:ekr.20031218072017.789:Delay body display so alt+arrow keys aren't slowed
-#@@nocolor
+@nocolor
 
 need a delay on body display so alt+arrow keys arent slowed down while navigating.
 
@@ -1282,7 +1271,7 @@ EKR: Alt-Up and Alt-Down are bound to Go To Next/Prev visible.  The idea is that
 #@-node:ekr.20031218072017.789:Delay body display so alt+arrow keys aren't slowed
 #@+node:ekr.20031218072017.749:Meta key
 #@+node:ekr.20031218072017.750:Comments
-#@@nocolor
+@nocolor
 
 As recent experiments have shown, it is very difficult to make changes in the body key handlers.
 
@@ -1290,7 +1279,7 @@ Furthermore, emacs essentially takes over the handling of _all_ keystrokes.  I l
 #@nonl
 #@-node:ekr.20031218072017.750:Comments
 #@+node:ekr.20031218072017.751:Request
-#@@nocolor
+@nocolor
 
 How about a Emacs style meta-key(Esc?) followed by up or down? or F1/F2 ? anything to escape having to hold down three keys at the same time -- which seems to be common to other shortcut combinations too. so if you could put this in as an option in the preferences -- to turn on or off meta-key binding, that would let people choose what they prefer...
 
@@ -1405,7 +1394,7 @@ Edward
 #@-node:ekr.20040401121456:emacs roadmap
 #@-node:ekr.20040217153407.3:** Emacs-style keystroke handling
 #@+node:ekr.20031218072017.829:** gui interface for plugins manager
-#@@nocolor
+@nocolor
 
 Interim design:
 	
@@ -1445,7 +1434,7 @@ I personally prefer the wiki way [[name of section]].
 #@+node:ekr.20031218072017.803:@template directive?
 #@-node:ekr.20031218072017.803:@template directive?
 #@+node:ekr.20031218072017.795:Metatags
-#@@nocolor
+@nocolor
 
 By: nobody ( Nobody/Anonymous ) 
  RE: 3.11 todo list & schedule   
@@ -1463,7 +1452,7 @@ Here are some features I'd like to see:
 #@+node:ekr.20040217153407.1:** Unify @root and @file
 #@-node:ekr.20040217153407.1:** Unify @root and @file
 #@+node:ekr.20031218072017.658:Resolve Conflicts command (may not be needed with @file-thin)
-#@@nocolor
+@nocolor
 
 There have been a couple different suggestions on how to obtain a .leo file
 that presents the conflicts for resolution.  My initial thought was to have
@@ -1504,7 +1493,7 @@ Example:
 
 @file foo.py
 ****begin tnode
-#@@others
+@others
 ****end tnode
 ...definition of procedure a
 ***begin tnode
@@ -1942,7 +1931,7 @@ CEO, Dev Designs
 #@-node:ekr.20031218072017.797:Allow @file http & @file ftp
 #@+node:ekr.20040310092400.1:Use calltips in outline pane
 #@+node:ekr.20040324075752:Request
-#@@nocolor
+@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2460535
 By: nobody
@@ -1975,12 +1964,12 @@ import CallTipWindow
 
 import __main__
 
-#@@others
+@others
 #@+node:ekr.20040324071749.2:class CallTips
 class CallTips:
 	menudefs = [ ]
 	
-#@@others
+@others
 
 #@+node:ekr.20040324071749.4:__init__
 def __init__(self, editwin=None):
@@ -2227,7 +2216,7 @@ Used by the CallTips IDLE extension.
 import Tkinter as Tk
 import leoGlobals as g
 
-#@@others
+@others
 
 if 1:
 	main()
@@ -2235,7 +2224,7 @@ if 1:
 #@+node:ekr.20040324072124.2:class CallTip
 class CallTip:
 
-#@@others
+@others
 #@+node:ekr.20040324072124.3:__init__
 def __init__(self,widget):
 
@@ -2273,24 +2262,22 @@ def showtip (self,text):
 	label.pack()
 #@nonl
 #@+node:ekr.20040324073536:<< remove the border >>
-#@+at
-# The following command has two effects:
-# - It removes the calltip window border (good)
-# - Causes (at least on Linux) the calltip to show as a top level window,
-#   burning through any other window dragged over it.
-#   Also, shows on all viewports!
-#@-at
-#@@c
+@
+The following command has two effects:
+- It removes the calltip window border (good)
+- Causes (at least on Linux) the calltip to show as a top level window,
+  burning through any other window dragged over it.
+  Also, shows on all viewports!
+@c
 
 tw.wm_overrideredirect(1)
 #@nonl
 #@-node:ekr.20040324073536:<< remove the border >>
 #@+node:ekr.20040324073536.1:<< Mac-specific code >>
-#@+at
-# This command is only needed and available on Tk >= 8.4.0 for OSX.
-# Without it, call tips intrude on the typing process by grabbing the focus.
-#@-at
-#@@c
+@
+This command is only needed and available on Tk >= 8.4.0 for OSX.
+Without it, call tips intrude on the typing process by grabbing the focus.
+@c
 
 try:
 	tw.tk.call("::tk::unsupported::MacWindowStyle",
@@ -2313,7 +2300,7 @@ def hidetip(self):
 #@+node:ekr.20040324072124.6:class container (test code)
 class container: # Conceptually an editor_window
 
-#@@others
+@others
 #@nonl
 #@+node:ekr.20040324072124.7:__init__
 def __init__(self):
@@ -2380,7 +2367,7 @@ Pages) how difficult would this be to implement? You would just output using a
 different file extension so users of the older versions can still use files
 with the LEO extension.
 #@+node:ekr.20040226092546:Saving .leo files with file compression
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2442772
 By: ejoy
 
@@ -2411,7 +2398,7 @@ So you could do \t\t\t and then delete the entire space with 3 backspaces. But i
 This might be the best way to reliably have Tk move to the next line!
 #@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
 #@+node:ekr.20031218072017.733:Execute scripts like IDE's do
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2321235
 By: paulpaterson
@@ -2447,7 +2434,7 @@ Need a good yaml parser first: I don't want to write another parser by hand.
 #@nonl
 #@-node:ekr.20031218072017.748:Import/Export to yaml
 #@+node:ekr.20031218072017.790:Import dialog improvements
-#@@nocolor
+@nocolor
 
 Other options I though would be really handy:
 
@@ -2539,7 +2526,7 @@ default section name, which obviously can be changed.
 #@+node:ekr.20040115163454:@killcolor directive
 #@-node:ekr.20040115163454:@killcolor directive
 #@+node:ekr.20031218072017.833:Use @file extension by default if no @language
-#@@nocolor
+@nocolor
 
 Open discussion
 By: jasonic ( Jason Cunliffe ) 
@@ -2581,7 +2568,7 @@ It's better to let plugin customize the menu.
 #@nonl
 #@-node:ekr.20031218072017.856:context menu in body pane
 #@+node:ekr.20031218072017.746:Minimizing/maximizing windows
-#@@nocolor
+@nocolor
 
 Open Discussion
 https://sourceforge.net/forum/message.php?msg_id=2090601
@@ -2660,7 +2647,7 @@ Jason
 #@nonl
 #@-node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
 #@+node:ekr.20040220110030:Change cursor when caps lock is down
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2431552
 By: nobody
@@ -2698,7 +2685,7 @@ I can see this happening when cutting a node and pasting a node that is a clone.
 #@+node:ekr.20031218072017.792:Double Click Node command
 #@-node:ekr.20031218072017.792:Double Click Node command
 #@+node:ekr.20031218072017.852:Scroll improvement
-#@@nocolor
+@nocolor
 
 By: jwashin ( James Washington ) 
  Scrolling and the Tree Frame in Linux   
@@ -2717,7 +2704,7 @@ Thanks for the great program.
 #@-node:ekr.20040329190314:Most important
 #@+node:ekr.20040329190314.2:Others
 #@+node:ekr.20040213090121:Insert at end
-#@@nocolor
+@nocolor
 
 By: tibi ( Thiébaut Champenier ) 
  inserting a new node   
@@ -2748,7 +2735,7 @@ This prevents "hijacking" an already existing file.
 #@+node:ekr.20031218072017.756:Document how to use pdb plugin
 #@-node:ekr.20031218072017.756:Document how to use pdb plugin
 #@+node:ekr.20031218072017.745:@@first <n>
-#@@nocolor
+@nocolor
 
 Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
 
@@ -2795,7 +2782,7 @@ My fellow co-workers who don't use LEO, aren't exactly loving me here.
 
 Might we introduce an: 
 
-#@@@first <num> 
+@@first <num> 
 
 Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
 
@@ -2805,7 +2792,7 @@ Thanks.
 #@nonl
 #@-node:ekr.20031218072017.745:@@first <n>
 #@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-#@@nocolor
+@nocolor
 
 Open Discussion
 https://sourceforge.net/forum/message.php?msg_id=2003457
@@ -2826,7 +2813,7 @@ jedit plugin guidelines).
 Davide
 #@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
 #@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:ekr.20040226094105.1:halw
 
@@ -2928,7 +2915,7 @@ By: rogererens ( Roger Erens )
  RE: Documentation for 4.1rc3   
 2004-02-04 10:04  
 
-#@@nocolor
+@nocolor
 
 It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
 However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
@@ -2946,25 +2933,16 @@ Or, use something else instead of "os.startfile" to really use the intended edit
 #@-node:ekr.20040329182535.7:1-2 hour projects
 #@+node:ekr.20040123102724:Can't or wont
 #@+node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
-#@@color
+@color
 
-#@+at 
-#@nonl
-# This is not going well :-(  Probably what is happening is that Tk is 
-# competing with the win32 extensions in setting the clipboard.  It might not 
-# be so easy to
-# 
-# a) completely disable Tk's clipboard handling, in _both_ headlines and body 
-# text.
-# b) do the cut/paste operations "by hand".
-# 
-# This might require new body routlines to replace the selected text in the 
-# body.  And then there are issues relating to whether the headline or body 
-# text should be changed.  All in all, this is much harder than it looks.
-# 
-# Also, if one is not careful one can take fatal Python errors related to 
-# missing threads.  Pretty much a nightmare.
-#@-at
+@ This is not going well :-(  Probably what is happening is that Tk is competing with the win32 extensions in setting the clipboard.  It might not be so easy to
+
+a) completely disable Tk's clipboard handling, in _both_ headlines and body text.
+b) do the cut/paste operations "by hand".
+
+This might require new body routlines to replace the selected text in the body.  And then there are issues relating to whether the headline or body text should be changed.  All in all, this is much harder than it looks.
+
+Also, if one is not careful one can take fatal Python errors related to missing threads.  Pretty much a nightmare.
 #@nonl
 #@+node:ekr.20031218072017.836:updateEditMenu
 def updateEditMenu (self):
@@ -3177,7 +3155,7 @@ def getTextFromClipboard (self):
 #@-node:ekr.20031218072017.844:Clipboard (tkGui)
 #@-node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
 #@+node:ekr.20031218072017.753:Emacs comint-mode:  The improved Execute Script command does most of this
-#@@nocolor
+@nocolor
 
 Michael Manti
 mmanti@mac.com
@@ -3200,7 +3178,7 @@ could activate that. I think that would be very cool.
 #@-node:ekr.20031218072017.753:Emacs comint-mode:  The improved Execute Script command does most of this
 #@+node:ekr.20031218072017.729:HTML rendering in Leo's body pane
 #@+node:ekr.20031218072017.731:HTML plugin: opml
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2283466
 By: billp9619
 
@@ -3236,7 +3214,7 @@ bill p
 #@-node:ekr.20031218072017.731:HTML plugin: opml
 #@-node:ekr.20031218072017.729:HTML rendering in Leo's body pane
 #@+node:ekr.20040216054459:@h @f @endh and @endf directives
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2424151
 By: ksejlod ( Peter Barrel ) 
@@ -3301,7 +3279,7 @@ k
 #@nonl
 #@-node:ekr.20040216054459:@h @f @endh and @endf directives
 #@+node:ekr.20040123102724.2:Templates
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:ekr.20040123102724.3:daliuslt
 https://sourceforge.net/forum/message.php?msg_id=2385991
@@ -3420,7 +3398,7 @@ Dalius
 #@+node:ekr.20040329185649:Bugs: can't be fixed or can wait
 #@+node:ekr.20031218072017.663:Bug: can't be fixed
 #@+node:ekr.20031218072017.664:Cut/paste bug on X windows (waiting for help)
-#@@nocolor
+@nocolor
 
 Under X Window system, when text is selected, it is automatically entered into a buffer and can be pasted with the middle button of the mouse.
 
@@ -3428,11 +3406,11 @@ In Leo, when this is done, the text is rendered in right place, but it doesn't s
 
 Doing copy and paste works normally when done through the edit menu.
 
-#@@color
+@color
 #@nonl
 #@+node:ekr.20031218072017.665:(Cut & Paste ) (Middle-button bug reported by Timo)
 #@+node:ekr.20031218072017.666: Paste bug report
-#@@nocolor
+@nocolor
 
 By: riotnrrrd ( Timo Honkasalo ) 
  Pasted text doesn't stick   
@@ -3461,7 +3439,7 @@ abc bbb bbbxyz bbb
 #@-node:ekr.20031218072017.667: Test
 #@-node:ekr.20031218072017.665:(Cut & Paste ) (Middle-button bug reported by Timo)
 #@+node:ekr.20031218072017.668:Automatic select & Paste bug (Linux?)
-#@@nocolor
+@nocolor
 
 Bumping the thread because the bug still persists. 
 
@@ -3514,7 +3492,7 @@ Apparently there is no way to fix this glitch because of holes in Tk's event mec
 #@+node:ekr.20031218072017.676:Control-T can't be overridden in canvas text.
 #@-node:ekr.20031218072017.676:Control-T can't be overridden in canvas text.
 #@+node:ekr.20031218072017.677:(Alt-ctrl = Alt)
-#@@nocolor
+@nocolor
 
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1765069
@@ -3615,12 +3593,12 @@ end up at the next upper node etc...
 Create a Tk demo for each bug.
 #@nonl
 #@+node:ekr.20031218072017.679:Tk code
-#@@color
+@color
 #@nonl
 #@+node:ekr.20031218072017.680:@file c:/prog/test/leoSplitter.tcl
 # This file creates tk test code for prototyping.
-#@@language tcltk
-#@@others
+@language tcltk
+@others
 
 go
 #@nonl
@@ -4139,12 +4117,8 @@ pack $w.sample.text -side top -anchor c -expand 1 -fill none
 #@-node:ekr.20031218072017.704:<< create sample pane >>
 #@-node:ekr.20031218072017.699:createFontPanel
 #@+node:ekr.20031218072017.705:dkffontCreateFontPanel
-#@+at 
-#@nonl
-# Build the font panel (except for the apply button, which is handled by the 
-# 'configure_apply procedure...
-#@-at
-#@@c
+@ Build the font panel (except for the apply button, which is handled by the 'configure_apply procedure...
+@c
 
 proc origCreateFontPanel {w} {
 	# Framed regions.  Do this with grid and labels, as that seems
@@ -4580,8 +4554,8 @@ proc makeLeoFrame {} {
 #@+node:ekr.20031218072017.714:tkBugs.tcl
 #@+node:ekr.20031218072017.715:@file c:/prog/test/tkBugs.tcl
 # This file creates tk test code for prototyping.
-#@@language tcltk
-#@@others
+@language tcltk
+@others
 
 bindBug
 #@+node:ekr.20031218072017.716:canvasBug
@@ -4666,7 +4640,7 @@ Dave Hein
 #@nonl
 #@-node:ekr.20040118090055:Patch and bug report
 #@+node:ekr.20031218072017.719:Report
-#@@nocolor
+@nocolor
 
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1906790
@@ -4689,14 +4663,14 @@ Linux 2.4.22-21mdkenterprise
 To reproduce this, set your global tab prefernence to 4. Show invisibles. And then create a node containing:
 
 [BEGIN BODY TEXT]
-#@@language plain
-#@@tabwidth 8
+@language plain
+@tabwidth 8
 [END BODY TEXT]
 
 Create a child node to that one, containing:
 
 [BEGIN BODY TEXT]
-#@@root-code somefilename
+@root-code somefilename
 \t\tThis works
 bbb\tAnd This works
 So\tdoes this
@@ -4749,7 +4723,7 @@ def setTabWidth (self, w):
 #@+node:ekr.20031218072017.723:Bugs: can't recreate
 #@+node:ekr.20031218072017.724:(Uppercase bug) (Can't recreate)
 #@+node:ekr.20031218072017.725:Report (I can't recreate this)
-#@@nocolor
+@nocolor
 
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1819473
@@ -4774,7 +4748,7 @@ When opening a .leo file Leo selects the correct node but it is no longer the to
 (no) Probably related to Leo now saving of the body pane size.
 #@nonl
 #@+node:ekr.20040130174232:What I did
-#@@nocolor
+@nocolor
 
 - Eliminated entries like a="":  This happened because Leo no longer writes clone bits.
 
@@ -5026,13 +5000,8 @@ def open(self,file,fileName):
 	return ok
 #@nonl
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-#@+at 
-#@nonl
-# The most natural default directory is the directory containing the .leo file 
-# that we are about to open.  If the user has specified the "Default 
-# Directory" preference that will over-ride what we are about to set.
-#@-at
-#@@c
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
 
 dir = g.os_path_dirname(fileName)
 
@@ -5065,13 +5034,8 @@ def readOutlineOnly (self,file,fileName):
 	return ok
 #@nonl
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-#@+at 
-#@nonl
-# The most natural default directory is the directory containing the .leo file 
-# that we are about to open.  If the user has specified the "Default 
-# Directory" preference that will over-ride what we are about to set.
-#@-at
-#@@c
+@ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
+@c
 
 dir = g.os_path_dirname(fileName)
 
@@ -5083,49 +5047,36 @@ if len(dir) > 0:
 #@-node:ekr.20040129133809.8:top node not saved
 #@-node:ekr.20031218072017.663:Bug: can't be fixed
 #@+node:ekr.20040105064959:Bugs: can wait
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:ekr.20040115165036:bug in xml doc parts (hard to fix?)
-#@@language html
-#@@ignore
-#@@color
+@language html
+@ignore
+@color
 #@nonl
 #@+node:ekr.20040115165036.1:Demo XML comment bug
-#@+at 
-# This document demonstrates what appears to be a bug in Leo 4.1 rc3, build 
-# 1.62 of December 19, 2003.
-# 
-# It has manifested when Leo is executed under Python 2.3.3, Tk 8.4.3 under 
-# Windows 2000.
-# 
-# In brief, derived XML files are not well-formed with respect to comments 
-# under some conditions.  Comments can wind up nested, which looks okay to 
-# humans but not to XML parsers.
-#@-at
-#@@c
+@ 
+This document demonstrates what appears to be a bug in Leo 4.1 rc3, build 1.62 of December 19, 2003.
+
+It has manifested when Leo is executed under Python 2.3.3, Tk 8.4.3 under Windows 2000.
+
+In brief, derived XML files are not well-formed with respect to comments under some conditions.  Comments can wind up nested, which looks okay to humans but not to XML parsers.
+@c
 #@nonl
 #@-node:ekr.20040115165036.1:Demo XML comment bug
 #@+node:ekr.20040115165036.3:@file xmlcommentbug.xml
-#@@first
-#@@language HTML
+@first
+@language HTML
 <HiMom>
-#@+at 
-#@nonl
-# This will produce, in the derived file, an XML comment with another XML 
-# comment embedded.  Or, if you prefer, it will produce an unclosed XML 
-# comment followed by a well-formed one, followed by a string of text 
-# containing a comment-close marker.
-# 
-# This text is sitting in the inner comment, according to the first view.
-#@-at
-#@@c
+@ This will produce, in the derived file, an XML comment with another XML comment embedded.  Or, if you prefer, it will produce an unclosed XML comment followed by a well-formed one, followed by a string of text containing a comment-close marker.
+
+This text is sitting in the inner comment, according to the first view.
+@c
 
 
-#@+at
-# This comment is well-formed, seemingly because its content does not begin on 
-# the same line as the at-sign.
-#@-at
-#@@c
+@
+This comment is well-formed, seemingly because its content does not begin on the same line as the at-sign.
+@c
 </HiMom>
 #@nonl
 #@-node:ekr.20040115165036.3:@file xmlcommentbug.xml
@@ -5165,7 +5116,7 @@ the same line as the at-sign.
 #@-node:ekr.20040115165036.4:xmlcommentbug.xml
 #@-node:ekr.20040115165036:bug in xml doc parts (hard to fix?)
 #@+node:ekr.20040125114453:Import bug?control-alt-f of python code misalloctes code (waiting for answer)
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2391076
 By: thyrsus
 
@@ -5204,7 +5155,7 @@ However, the contents of the nodes are off.  In node [class WaitWindow] the
 text is
 
 class WaitWindow:
-#@@others
+@others
 	self.screen = screen
 	width = 40
 	if (len(text) < width): width = len(text)
@@ -5254,7 +5205,7 @@ other times only fix is to exit & restart.
 #@-node:ekr.20031218072017.646:To do...
 #@+node:EKR.20040430163619:To Do: 4.2
 #@+node:EKR.20040517074454:To do: Load plugins only from plugins menu
-#@@nocolor
+@nocolor
 
 1. The sys.path variable has been reset when the plugins are run. It
 is set so that *only* the plugins directory is in the path. This means
@@ -5304,7 +5255,7 @@ Pickling and hexlifying should do the trick, though.
 #@+node:ekr.20040323170225:General bugs
 #@+node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
 #@+node:ekr.20040327132739.3:Notes
-#@@nocolor
+@nocolor
 	
 1. "idle" hooks keep getting called even after a window goes away.
 2. Idle hooks in one window interfere with idle hooks in another window.
@@ -5318,13 +5269,10 @@ Also, the doHook logic seems much too complex.
 #@-node:ekr.20040327132739.3:Notes
 #@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
 #@+node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+at 
-#@nonl
-# Enables the "idle" hook.
-# After enableIdleTimeHook is called, Leo will call the "idle" hook
-# approximately every idleTimeDelay milliseconds.
-#@-at
-#@@c
+@ Enables the "idle" hook.
+After enableIdleTimeHook is called, Leo will call the "idle" hook
+approximately every idleTimeDelay milliseconds.
+@c
 def enableIdleTimeHook(idleTimeDelay=100):
 	app.idleTimeHook = true
 	app.idleTimeDelay = idleTimeDelay # Delay in msec.
@@ -5357,21 +5305,15 @@ def idleTimeHookHandler(*args,**keys):
 #@nonl
 #@-node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+node:ekr.20031218072017.1596:frame.doHook
-#@+at 
-#@nonl
-# This global function calls a hook routine.  Hooks are identified by the tag 
-# param.
-# Returns the value returned by the hook routine, or None if the there is an 
-# exception.
-# 
-# We look for a hook routine in three places:
-# 1. g.top().hookFunction
-# 2. app.hookFunction
-# 3. leoPlugins.doPlugins()
-# We set app.hookError on all exceptions.  Scripts may reset app.hookError to 
-# try again.
-#@-at
-#@@c
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
 
 def doHook(tag,*args,**keywords):
 
@@ -5450,7 +5392,7 @@ Leo did well with the includes & declarations, and separated the functions well.
 #@-node:ekr.20040329094003.3:Import bug: Import should create absolute path
 #@+node:ekr.20040129080256.1:(Import bugs: fixed??)
 #@+node:ekr.20040125114612:Can't import extensionless file: works on Windows
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2387427
 By: dthein
@@ -5468,7 +5410,7 @@ Dave Hein
 #@-node:ekr.20040125114612:Can't import extensionless file: works on Windows
 #@+node:ekr.20040105103517:Importing @file issues
 #@+node:ekr.20040129094501:Reports
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2355533
 By: sbeards
 
@@ -5495,7 +5437,7 @@ expected behavior.
 The ending ?> will not exist in the derived file when multiple newlines exist
 after the @last directive.
 Test body text:
-#@@last
+@last
 
 Test derived file output:
 #@verbatim
@@ -5520,7 +5462,7 @@ file to end in a newline (when generating binary files maybe?).
 #@-node:ekr.20040129100453.2:derived files with @last always end with a newline character
 #@-node:ekr.20040129094501:Reports
 #@+node:ekr.20040105103916:Fix?
-#@@nocolor
+@nocolor
 http://sourceforge.net/forum/message.php?msg_id=2355564
 By: sbeards
 
@@ -5691,15 +5633,10 @@ else:
 #@nonl
 #@-node:ekr.20031218072017.3246:<< handle possible PHP comments >>
 #@+node:ekr.20031218072017.3247:<< handle possible class or function >>
-#@+at 
-#@nonl
-# In PHP, all functions are typeless and start with the keyword "function;  
-# all classes start with the keyword class.
-# 
-# Functions can be nested, but we don't handle that right now (I don't think 
-# it is a common practice anyway).
-#@-at
-#@@c
+@ In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
+
+Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
+@c
 if g.match(s,i,"function "):
 	#we want to make the function a subnode of either the @file node or a class node
 	# 1. get the function name
@@ -5811,7 +5748,7 @@ parent.appendStringToBody(s[scan_start:endOfCode])
 #@+node:ekr.20031218072017.744:@tab, @notab (or make @tabwidth -n work again)
 #@-node:ekr.20031218072017.744:@tab, @notab (or make @tabwidth -n work again)
 #@+node:ekr.20040218053305:Fix names of Leo windows
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2429098
 By: nobody
@@ -5834,7 +5771,7 @@ open them, maybe something in globals can be beefed up to name and open dialogs.
 #@+node:ekr.20040329094003.4:Preserve whitespace in imports
 #@-node:ekr.20040329094003.4:Preserve whitespace in imports
 #@+node:ekr.20040310091144:Window position: possible bug
-#@@nocolor
+@nocolor
 
 By: dalcolmo ( Josef Dalcolmo ) 
  initial_window position   
@@ -5882,7 +5819,7 @@ both Leo and Python and now I can't place Leo windows in the corner any more
 Best regards - Josef Dalcolmo
 #@-node:ekr.20040310091144:Window position: possible bug
 #@+node:ekr.20040310092400:Allow </leo_header>
-#@@nocolor
+@nocolor
 
 By: billp9619 ( bill palmer ) 
  leo_header optional closetag sb valid?   
@@ -5931,14 +5868,14 @@ self.editMenuTopTable = (
 #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
 #@-node:ekr.20040216153243.5:Select All in headline affects body text
 #@+node:ekr.20040330092305.1:Make "end1" events (and destroy-all-global-windows) work again
-#@@nocolor
+@nocolor
 
  
 The 'end1' event is not working. I believe the problem is a logic problem.
 
 in leoApp.py:
 
-#@@color
+@color
 
 def finishQuit(self):
 
@@ -5950,7 +5887,7 @@ doHook("end1")
 #@nonl
 #@-node:ekr.20040330092305.1:Make "end1" events (and destroy-all-global-windows) work again
 #@+node:ekr.20040331152236:Fix unicode problem in config module
-#@@nocolor
+@nocolor
 
 By: Maxim Krikun - tws5
  Non-ASCII in plugin config   
@@ -5974,13 +5911,13 @@ e.insert(0, unicode(config.get(section, option)))
 I don't know if this problems does exist on other platforms. Setting encoding in site.py is a litl bit tricky. Should such unicode issues be handled in a more uniform way in Leo?  
 #@-node:ekr.20040331152236:Fix unicode problem in config module
 #@+node:ekr.20040403121321:Cutting and pasting created "invalid outline" messages
-#@@nocolor
+@nocolor
 
 These did not harm the actual data.
 #@nonl
 #@-node:ekr.20040403121321:Cutting and pasting created "invalid outline" messages
 #@+node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
-#@@nocolor
+@nocolor
 
 By: David McNab - davidmcnab
  Syntax Colouring Bug - html mode   
@@ -5995,7 +5932,7 @@ David
  
 #@-node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
 #@+node:EKR.20040512081330.1:Misleading message in Import Derived File
-#@@nocolor
+@nocolor
 
 By: Kent Tenney - ktenney
  'Import Derived File' error   
@@ -6021,12 +5958,12 @@ No absolute directory specified anywhere.
 #@-node:EKR.20040512081330.1:Misleading message in Import Derived File
 #@-node:ekr.20040323170225:General bugs
 #@+node:EKR.20040422132037:Mac/Linux bugs
-#@@nocolor
+@nocolor
 #@nonl
 #@+node:EKR.20040422132037.2:Install Leo in the site-packages directory
 #@-node:EKR.20040422132037.2:Install Leo in the site-packages directory
 #@+node:EKR.20040422132037.3:small bug in install script
-#@@nocolor
+@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2370629
 By: tyndal
@@ -6054,7 +5991,7 @@ fi
 #-----------------------------
 #@-node:EKR.20040422132037.3:small bug in install script
 #@+node:EKR.20040422132037.4:config problem on Linux
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2373816
 By: sbeards
@@ -6187,7 +6124,7 @@ Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Bug: vpython and mac
 #@+node:EKR.20040422132037.8:Mouse / Paste Anomalies
-#@@nocolor
+@nocolor
 
 By: Bill Drissel - drissel
 2004-04-13 19:43  
@@ -6234,7 +6171,7 @@ Does this hook exist ?
 #@-node:ekr.20040105080119.4:Put drawing hooks back in
 #@+node:ekr.20040206075634.1:Colorizing additions
 #@+node:ekr.20031218072017.367:How to add support for a new language
-#@@nocolor
+@nocolor
 
 - Add a new entries in << define global data structures >> app
 
@@ -6266,7 +6203,7 @@ but with the name of your new language instead of "Python".
 
 - Create an @root node and verify that you can Tangle it.
 
-#@@color
+@color
 #@+node:ekr.20031218072017.368:<< define global data structures >> app
 # Internally, lower case is used for all language names.
 self.language_delims_dict = {
@@ -6426,7 +6363,7 @@ else:
 #@nonl
 #@-node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
 #@+node:ekr.20031218072017.371:<< define colorizer keywords >> colorizer
-#@@others
+@others
 
 cweb_keywords = c_keywords
 perlpod_keywords = perl_keywords
@@ -7043,7 +6980,7 @@ rapidq_keywords = [
 #@-node:ekr.20040331145826.1:(done) RapidQ support
 #@+node:ekr.20040117111755:(done) css support
 #@+node:ekr.20040401104931:Notes
-#@@nocolor
+@nocolor
 
 By: grayrest ( Karl Guertin ) 
  diff: css support   
@@ -7198,7 +7135,7 @@ elif self.language == "php":
 #@-node:ekr.20040117111755:(done) css support
 #@+node:ekr.20040117113539.1:(done) Coloring for Shell Scripts (Davide)
 #@+node:ekr.20040401111308:Notes
-#@@nocolor
+@nocolor
 
 I recently wrote a few shell scripts (on linux) with leo, and I noticed
 there was no colorizer support for shell (apart from comments), so I added
@@ -7245,7 +7182,7 @@ else:
 #@-node:ekr.20040117113539.1:(done) Coloring for Shell Scripts (Davide)
 #@+node:ekr.20040106145421:(not yet) PHP syntax coloring
 #@+node:ekr.20040401110507:Notes
-#@@nocolor
+@nocolor
 
 http://sourceforge.net/forum/message.php?msg_id=2361052
 By: sbeards
@@ -7976,17 +7913,12 @@ c.endUpdate(false)
 #@-node:ekr.20031218072017.2180:<< create the first tree node >>
 #@-node:ekr.20031218072017.2176:f.finishCreate
 #@+node:ekr.20031218072017.3945:Creating the splitter
-#@+at 
-#@nonl
-# The key invariants used throughout this code:
-# 
-# 1. self.splitVerticalFlag tells the alignment of the main splitter and
-# 2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
-# 
-# Only the general-purpose divideAnySplitter routine doesn't know about these 
-# invariants.  So most of this code is specialized for Leo's window.  OTOH, 
-# creating a single splitter window would be much easier than this code.
-#@-at
+@ The key invariants used throughout this code:
+
+1. self.splitVerticalFlag tells the alignment of the main splitter and
+2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
+
+Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,secondary_ratio):
 
@@ -8230,7 +8162,7 @@ except:
 #@-node:ekr.20031218072017.3958:addIconButton
 #@-node:ekr.20031218072017.3953:Creating the icon area
 #@+node:ekr.20031218072017.3960:Creating the status area
-#@@tabwidth 4
+@tabwidth 4
 #@+node:ekr.20031218072017.3961:createStatusLine
 def createStatusLine (self):
 	
@@ -8439,7 +8371,7 @@ def destroySelf (self):
 #@-node:ekr.20031218072017.3964:Destroying the frame
 #@-node:ekr.20031218072017.3941: frame.Birth & Death
 #@+node:ekr.20031218072017.3960:Creating the status area
-#@@tabwidth 4
+@tabwidth 4
 #@+node:ekr.20031218072017.3961:createStatusLine
 def createStatusLine (self):
 	
@@ -8576,7 +8508,7 @@ def updateStatusRowCol (self):
 #@-node:ekr.20040408042209:Perfect Import
 #@+node:ekr.20040327050211:Fix problems with updating leoConfig.txt
 #@+node:ekr.20040330092305:Preserve comments in config files (so we can use sentinels!)
-#@@nocolor
+@nocolor
 
 > I don't know how to read [an @file-nosent config] file into the body of that node.
 
@@ -8590,7 +8522,7 @@ Edward
 #@-node:ekr.20040327050211:Fix problems with updating leoConfig.txt
 #@+node:ekr.20040323084434:(Add granularity setting for undo)
 #@+node:ekr.20040328111626:Notes
-#@@nocolor
+@nocolor
 
 - "node" and "line" granularity are easy:
 	- Node: just replace "new" text with present text.
@@ -8641,21 +8573,14 @@ def clearIvars (self):
 #@-node:ekr.20031218072017.3607:clearIvars
 #@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
 #@+node:ekr.20031218072017.1421:<< get config options >>
-#@+at 
-#@nonl
-# Rewritten 10/11/02 as follows:
-# 
-# 1. We call initConfigParam and initBooleanConfigParam to get the values.
-# 
-# The general purpose code will enter all these values into configDict.  This 
-# allows update() to write the configuration section without special case 
-# code.  configDict is not accessible by the user.  Rather, for greater speed 
-# the user access these values via the ivars of this class.
-# 
-# 2. We pass the ivars themselves as params so that default initialization is 
-# done in the ctor, as would normally be expected.
-#@-at
-#@@c
+@ Rewritten 10/11/02 as follows:
+
+1. We call initConfigParam and initBooleanConfigParam to get the values.
+
+The general purpose code will enter all these values into configDict.  This allows update() to write the configuration section without special case code.  configDict is not accessible by the user.  Rather, for greater speed the user access these values via the ivars of this class.
+
+2. We pass the ivars themselves as params so that default initialization is done in the ctor, as would normally be expected.
+@c
 
 self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
 	"at_root_bodies_start_in_doc_mode",self.at_root_bodies_start_in_doc_mode)
@@ -8744,15 +8669,10 @@ self.write_old_format_derived_files = self.initBooleanConfigParam(
 	"write_old_format_derived_files",self.write_old_format_derived_files)
 #@-node:ekr.20031218072017.1421:<< get config options >>
 #@+node:ekr.20031218072017.1490:setUndoTypingParams
-#@+at 
-#@nonl
-# This routine saves enough information so a typing operation can be undone 
-# and redone.
-# 
-# We do nothing when called from the undo/redo logic because the Undo and Redo 
-# commands merely reset the bead pointer.
-#@-at
-#@@c
+@ This routine saves enough information so a typing operation can be undone and redone.
+
+We do nothing when called from the undo/redo logic because the Undo and Redo commands merely reset the bead pointer.
+@c
 
 def setUndoTypingParams (self,p,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
 	
@@ -8794,15 +8714,10 @@ u.p = p
 #@nonl
 #@-node:ekr.20040324061854.1:<< init the undo params >>
 #@+node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
-#@+at 
-#@nonl
-# Incremental undo typing is similar to incremental syntax coloring.  We 
-# compute the number of leading and trailing lines that match, and save both 
-# the old and new middle lines.
-# 
-# NB: the number of old and new middle lines may be different.
-#@-at
-#@@c
+@ Incremental undo typing is similar to incremental syntax coloring.  We compute the number of leading and trailing lines that match, and save both the old and new middle lines.
+
+NB: the number of old and new middle lines may be different.
+@c
 
 old_lines = string.split(oldText,'\n')
 new_lines = string.split(newText,'\n')
@@ -8860,18 +8775,15 @@ if u.debug_print:
 #@nonl
 #@-node:ekr.20031218072017.1491:<< compute leading, middle & trailing  lines >>
 #@+node:ekr.20031218072017.1492:<< save undo text info >>
-#@+at 
-#@nonl
-# This is the start of the incremental undo algorithm.
-# 
-# We must save enough info to do _both_ of the following:
-# 
-# Undo: Given newText, recreate oldText.
-# Redo: Given oldText, recreate oldText.
-# 
-# The "given" texts for the undo and redo routines are simply v.bodyString().
-#@-at
-#@@c
+@ This is the start of the incremental undo algorithm.
+
+We must save enough info to do _both_ of the following:
+
+Undo: Given newText, recreate oldText.
+Redo: Given oldText, recreate oldText.
+
+The "given" texts for the undo and redo routines are simply v.bodyString().
+@c
 
 if u.new_undo:
 	if u.debug:
@@ -8974,17 +8886,10 @@ elif redoType == "Change Headline":
 #@nonl
 #@-node:ekr.20031218072017.2038:<< redo typing cases >>
 #@+node:ekr.20031218072017.2047:<< undo typing cases >>
-#@+at 
-#@nonl
-# When making "large" changes to text, we simply save the old and new text for 
-# undo and redo.  This happens rarely, so the expense is minor.
-# 
-# But for typical typing situations, where we are typing a single character, 
-# saving both the old and new text wastes a huge amount of space and puts 
-# extreme stress on the garbage collector.  This in turn can cause big 
-# performance problems.
-#@-at
-#@@c
+@ When making "large" changes to text, we simply save the old and new text for undo and redo.  This happens rarely, so the expense is minor.
+
+But for typical typing situations, where we are typing a single character, saving both the old and new text wastes a huge amount of space and puts extreme stress on the garbage collector.  This in turn can cause big performance problems.
+@c
 	
 elif undoType in ( "Typing",
 	"Change","Convert Blanks","Convert Tabs","Cut",
@@ -9149,7 +9054,7 @@ print "actual  :",textResult
 # Is this even necessary??
 #@+node:ekr.20031218072017.847:Cleanup
 #@+node:ekr.20031218072017.848:Cleanup Pychecker stuff
-#@@color
+@color
 
 C:/prog/leoCVS/leo/src\leoAtFile.py:852: Parameter (root) not used
 C:/prog/leoCVS/leo/src\leoFileCommands.py:429: Parameter (frame) not used
@@ -9178,7 +9083,7 @@ from leoGlobals import true,false
 import string
 c = g.top()
 
-#@@others
+@others
 
 if 1:
 	<< set nameList to the list of functions in leoGlobals.py >>
@@ -9466,7 +9371,7 @@ print s
 #@-node:ekr.20040304164949:prependNamesInTree
 #@-node:ekr.20040304163125:Script to find and replace all functions in leoGlobals.py
 #@+node:ekr.20040315073818:create find-script to complete transition?
-#@@nocolor
+@nocolor
 
 - Search for rootVnode,currentVnode.
 - change v to p
@@ -9475,7 +9380,7 @@ print s
 #@-node:ekr.20040325095459:Conversionn & cleanup
 #@+node:ekr.20040411151636:Other
 #@+node:ekr.20040323195916:Documentation
-#@@nocolor
+@nocolor
 
 Update acknowledgements.
 
@@ -9487,7 +9392,7 @@ Convert all docs to rST?
 #@nonl
 #@-node:ekr.20040323195916:Documentation
 #@+node:ekr.20040323195916.1:Tests
-#@@nocolor
+@nocolor
 
 ** Test for memory leaks.
 
@@ -9502,7 +9407,7 @@ Convert all docs to rST?
 #@-node:ekr.20040323195916.1:Tests
 #@-node:ekr.20040411151636:Other
 #@+node:ekr.20040414093055:Shadow files plugin
-#@@nocolor
+@nocolor
 
 https://sourceforge.net/forum/message.php?msg_id=2521345
 By: bwmulder

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="9737" clone_windows="0"/>
 <globals body_outline_ratio="0.427033492823">
-	<global_window_position top="59" left="270" height="836" width="1007"/>
+	<global_window_position top="43" left="218" height="836" width="1007"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1082,7 +1082,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.735"><vh>Users Guide</vh>
+<v t="edream.110203163054.735" a="TV"><vh>Users Guide</vh>
 <v t="edream.110203163054.736"><vh>An overview of Leo</vh></v>
 <v t="edream.110203163054.737"><vh>Front material</vh>
 <v t="edream.110203163054.738"><vh>Title Page &amp; Summary</vh></v>
@@ -1704,7 +1704,7 @@
 <v t="edream.110203163054.1157"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -1716,7 +1716,7 @@
 <v t="edream.110203163054.1057"><vh>Some characters in derived files look funny. What can I do?</vh></v>
 <v t="edream.110203163054.1058"><vh>Some characters are garbled when importing files. What can I do?</vh></v>
 </v>
-<v t="edream.110203163054.1059" a="E"><vh>Using derived files</vh>
+<v t="edream.110203163054.1059"><vh>Using derived files</vh>
 <v t="edream.110203163054.1060"><vh>How do I prevent Leo from inserting sentinels in derived files?</vh>
 <v t="edream.110203163054.359"><vh>Appendix 1 to Chapter 4: Using @rawfile, @silentfile and @nosentinlefile trees</vh></v>
 </v>
@@ -1732,7 +1732,7 @@
 <v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
 </v>
 <v t="edream.110203163054.1067"><vh>Can @file trees contain material not in the derived file?</vh></v>
-<v t="EKR.20040521090400" a="TV"><vh>How can I use Leo with older C compilers</vh></v>
+<v t="EKR.20040521090400"><vh>How can I use Leo with older C compilers</vh></v>
 </v>
 <v t="edream.110203163054.1068"><vh>Customizing Leo</vh>
 <v t="edream.110203163054.322"><vh>Overview of plugins and hooks</vh></v>
@@ -1793,7 +1793,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
-<v t="edream.110203163054.1071" a="E"><vh>Other topics</vh>
+<v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
@@ -9314,7 +9314,19 @@ The @+others and @&lt;&lt; sentinels indicte leading whitespace appearing before
 
 Leo writes the @afterref whenever any non-whitespace text appears after a section references.
 
-The @+doc and @+at sentinels now contain the whitespace that follows the corresponding @doc or @ directives.</t>
+The @+doc and @+at sentinels now contain the whitespace that follows the corresponding @doc or @ directives.
+
+New in 4.2:
+
+- Files derived from @file-thin ("thin" derived files) use gnx's in @+-node sentinels to permanently and uniquely identify nodes.
+gnx's have the format id.timestamp or id.timestamp.n if two gnx's would be the same otherwise.
+	- id should be an string unique to a developer, e.g., a cvs id.
+	- the timestamp is the date the node was first created, in yyyymmddhhmmss format.
+	- n is an integer.
+
+- The @+-all sentinels correspond to the range of the @all directive.
+
+- The @+-middle sentinels indicate intermediate nodes between the node that references a section and the node that defines the section.  Typically no such sentinels are needed because most sections are defined in a direct child of the referencing node.</t>
 <t tx="edream.110203163054.1019">The following is a list of features I'd like to add to Leo.
 
 Styled text and graphics
