@@ -189,7 +189,7 @@ class leoTkinterTree (leoFrame.leoTree):
             w.destroy() 
     
         self.widgets = []
-        
+    
         # g.trace("done")
     #@nonl
     #@-node:ekr.20031218072017.4143:tree.deleteWidgets
@@ -506,12 +506,10 @@ class leoTkinterTree (leoFrame.leoTree):
             x0, y0, x1, y1 = self.canvas.bbox("all")
             self.canvas.configure(scrollregion=(0, 0, x1, y1))
             
-            # g.printGc()
-            
             # Do a scrolling operation after the scrollbar is redrawn
             if scroll:
                 self.canvas.after_idle(self.idle_scrollTo)
-            #@nonl
+            
             #@-node:ekr.20040324090957.1:<< Erase and redraw the entire tree >>
             #@nl
             if self.trace:
@@ -520,6 +518,12 @@ class leoTkinterTree (leoFrame.leoTree):
         g.doHook("after-redraw-outline",c=self.c)
     
         self.canvas['cursor'] = oldcursor
+        
+        # g.collectGarbage()
+        g.printGc()
+        # import gc ; print len(gc.get_referents(frame))
+        # g.printGcRefs(verbose=False)
+        # g.trace("positions",g.app.positions)
     #@-node:ekr.20031218072017.1015:idle_redraw
     #@+node:ekr.20031218072017.1016:idle_second_redraw
     def idle_second_redraw (self):
@@ -594,7 +598,7 @@ class leoTkinterTree (leoFrame.leoTree):
                 self.tagBindings.append((id,id3,"<1>"),)
         
             id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-            id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+            id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x2: None)
             
             # Remember the bindings so deleteBindings can delete them.
             self.tagBindings.append((id,id1,"<1>"),)
@@ -1976,6 +1980,7 @@ class leoTkinterTree (leoFrame.leoTree):
         #@nl
         
         # g.trace(p)
+        # g.printGc()
     
         if not g.doHook("unselect1",c=c,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
@@ -2070,6 +2075,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         g.doHook("select2",c=c,new_v=p,old_v=old_p)
         g.doHook("select3",c=c,new_v=p,old_v=old_p)
+        
+        # g.printGc()
     #@nonl
     #@-node:ekr.20031218072017.1019:tree.select
     #@+node:ekr.20031218072017.4162:tree.set...LabelState
