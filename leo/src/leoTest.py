@@ -287,7 +287,7 @@ class testUtils:
         return n
         
     #@-node:EKR.20040623223148.10:numberOfNodesInOutline
-    #@+node:EKR.20040623223148.11:testUtils.replaceOutline
+    #@+node:EKR.20040623223148.11:replaceOutline
     def replaceOutline (self,c,outline1,outline2):
         
         """Replace outline1 by a copy of outline 2,
@@ -302,7 +302,72 @@ class testUtils:
         copy.linkAfter(outline1)
         outline1.doDelete(copy)
     #@nonl
-    #@-node:EKR.20040623223148.11:testUtils.replaceOutline
+    #@-node:EKR.20040623223148.11:replaceOutline
+    #@+node:ekr.20040716073021:testUtils.writeNodeToNode
+    def writeNodeToNode (self,c,input,output,sentinels=True):
+        
+        """Do an atFile.write the input tree to the body text of the output node."""
+        df = c.atFileCommands.new_df
+        nodeIndices = g.app.nodeIndices
+        
+        # Assign input.v.t.fileIndex
+        nodeIndices.setTimestamp()
+        for p in input.self_and_subtree_iter():
+            try:
+                id,time,n = p.v.t.fileIndex
+            except TypeError:
+                p.v.t.fileIndex = nodeIndices.getNewIndex()
+        
+        # Write the file to a string.
+        df.write(input,thinFile=True,nosentinels= not sentinels,toString=True)
+        s = df.stringOutput
+        
+        # Put the string in the body text of the output node.
+        output.scriptSetBodyString (s)
+    #@nonl
+    #@-node:ekr.20040716073021:testUtils.writeNodeToNode
+    #@+node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
+    def compareIgnoringNodeNames (self,s1,s2,marker,verbose=False):
+        
+        # Compare text containing sentinels, but ignore differences in @+-nodes.
+        
+        if marker[-1] == '@': marker = marker[:-1]
+        
+        lines1 = g.splitLines(s1)
+        lines2 = g.splitLines(s2)
+        if len(lines1) != len(lines2):
+            if verbose: g.trace("Different number of lines")
+            return False
+            
+        for i in xrange(len(lines2)):
+            line1 = lines1[i]
+            line2 = lines2[i]
+            if line1 == line2:
+                continue
+            else:
+                n1 = g.skip_ws(line1,0)
+                n2 = g.skip_ws(line2,0)
+                if (
+                    not g.match(line1,n1,marker) or
+                    not g.match(line2,n2,marker)
+                ):
+                    if verbose: g.trace("Mismatched non-sentinel lines")
+                    return False
+                n1 += len(marker)
+                n2 += len(marker)
+                if g.match(line1,n1,"@+node") and g.match(line2,n2,"@+node"):
+                    continue
+                if g.match(line1,n1,"@-node") and g.match(line2,n2,"@-node"):
+                    continue
+                else:
+                    if verbose:
+                        g.trace("Mismatched sentinel lines",marker)
+                        g.trace("line1:",repr(line1))
+                        g.trace("line2:",repr(line2))
+                    return False
+        return True
+    #@nonl
+    #@-node:ekr.20040716092802:testUtils.compareIgnoringNodeNames
     #@-others
 #@nonl
 #@-node:EKR.20040623223148: class testUtils

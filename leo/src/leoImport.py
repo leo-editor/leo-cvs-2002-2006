@@ -112,7 +112,8 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.1810:importDerivedFiles
     #@+node:ekr.20031218072017.3212:importFilesCommand
-    def importFilesCommand (self,files,treeType):
+    def importFilesCommand (self,files,treeType,
+        perfectImport=True,testing=False,verbose=False):
     
         c = self.c
         if c == None: return
@@ -146,8 +147,9 @@ class baseLeoImportCommands:
                 #@nl
             for fileName in files:
                 v = self.createOutline(fileName,current)
-                self.perfectImport(fileName,v)
-                if v: # 8/11/02: createOutline may fail.
+                if v: # createOutline may fail.
+                    if perfectImport:
+                        self.perfectImport(fileName,v,testing=testing,verbose=verbose)
                     g.es("imported " + fileName)
                     v.contract()
                     v.setDirty()
@@ -659,65 +661,86 @@ class baseLeoImportCommands:
     #@-node:ekr.20031218072017.3236:Symbol table
     #@-node:ekr.20031218072017.3224:importWebCommand & allies
     #@+node:EKR.20040506075328.2:perfectImport
-    def perfectImport (self,fileName,p):
+    def perfectImport (self,fileName,p,testing=False,verbose=False):
         
-        return ### not ready yet.
-    
-        g.trace(fileName,p)
+        c = self.c
+        df = c.atFileCommands.new_df
+        if testing:
+            #@        << clear all dirty bits >>
+            #@+node:ekr.20040716065356:<< clear all dirty bits >>
+            for p2 in p.self_and_subtree_iter():
+                p2.clearDirty()
+            #@nonl
+            #@-node:ekr.20040716065356:<< clear all dirty bits >>
+            #@nl
+        #@    << Assign file indices in p's tree >>
+        #@+node:ekr.20040716064333:<< Assign file indices in p's tree >>
+        nodeIndices = g.app.nodeIndices
         
-        #@    << write p to a virtual thin derived file s >>
-        #@+node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
-        try:
-            df = self.c.atFileCommands.new_df
-            df.targetFileName = "<virtual-file>"
-            df.outputFile = fo = g.fileLikeObject()
-            df.writeOpenFile(p)
-            s = fo.get()
-        except:
-            g.es("Exception in Perfect Import (write)")
-            g.es_exception()
-            s = None
-        #@-node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
+        nodeIndices.setTimestamp()
+        
+        for p2 in p.self_and_subtree_iter():
+            try: # Will fail for None or any pre 4.1 file index.
+                id,time,n = p2.v.t.fileIndex
+            except TypeError:
+                p2.v.t.fileIndex = nodeIndices.getNewIndex()
+        #@nonl
+        #@-node:ekr.20040716064333:<< Assign file indices in p's tree >>
         #@nl
-        if not s: return
+        #@    << Write p to to string s >>
+        #@+node:ekr.20040716064333.1:<< Write p to to string s >>
         
-        mu = g.mulderUpdateAlgorithm(testing=True)
+        df.write(p,thinFile=True,toString=True)
+        s = df.stringOutput
+        if not s: return
+        #@-node:ekr.20040716064333.1:<< Write p to to string s >>
+        #@nl
+        mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
         marker = mu.marker_from_extension(fileName)
     
-        fat_lines = s.splitlines(True) # Keep line endings.
-        
+        fat_lines = g.splitLines(s) # Keep the line endings.
         i_lines,mapping = mu.create_mapping(fat_lines,marker)
         j_lines = file(fileName).readlines()
         
         if i_lines != j_lines:
-            g.trace("correcting import")
+            g.es("Running Perfect Import",color="blue")
             write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
-            #@        << replace root's tree using write_lines >>
-            #@+node:EKR.20040506115229:<< replace root's tree using write_lines >>
-            if 0: # Not ready yet.
-            
-                # Remove all of root's tree.
-                while p.hasChildren():
-                    child = p.firstChild()
-                    child.doDelete(p)
+            #@        << trace results >>
+            #@+node:ekr.20040716062411:<< trace results >>
+            pass
+            #@nonl
+            #@-node:ekr.20040716062411:<< trace results >>
+            #@nl
+            #@        << replace root's tree by reading write_lines >>
+            #@+node:EKR.20040506115229:<< replace root's tree by reading write_lines >>
+            if 0:
+                
+                # What about tnodeLists's?  How can we read without them?
+                
+                # Do we need to replace?
+                # Wouldn't it be better to tell which nodes were corrected?
+                
+                if 0: # Remove all of root's tree.
+                    while p.hasChildren():
+                        child = p.firstChild()
+                        child.doDelete(p)
                     
                 p.setBodyStringOrPane("")
             
                 try:
-                    df = self.c.atFileCommands.new_df
                     df.targetFileName = "<virtual-file>"
                     df.inputFile = fo = g.fileLikeObject()
-                    fo.set(string.join(write_lines))
+                    fo.set(''.join(write_lines))
                     df.readOpenFile(p)
+                    g.trace("imported lines have been corrected")
                 except:
-                    g.es("Exception in Perfect Import (read)")
+                    g.es("Exception in Perfect Import")
                     g.es_exception()
                     s = None
             #@nonl
-            #@-node:EKR.20040506115229:<< replace root's tree using write_lines >>
+            #@-node:EKR.20040506115229:<< replace root's tree by reading write_lines >>
             #@nl
-        else:
-            g.trace("imported lines are perfect")
+    #@nonl
     #@-node:EKR.20040506075328.2:perfectImport
     #@+node:ekr.20031218072017.3241:Scanners for createOutline
     #@+node:ekr.20031218072017.2256:Python scanners
