@@ -177,7 +177,7 @@ def makeTestSuite (c,p):
         return None
 
     try:
-        exec script + '\n' in {}
+        exec script + '\n' in {'c':c,'g':g,'p':p} # 3/10/05.
         suite = g.app.scriptDict.get("suite")
         if not suite:
             print "%s script did not set g.app.scriptDict" % h
