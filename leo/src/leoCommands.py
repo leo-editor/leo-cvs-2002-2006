@@ -3103,13 +3103,13 @@ class baseCommands:
                 g.es_exception(full=False,color="black")
                 p.setMarked()
     
-        c.tabNannyNode(p,h,body,unittest)
+        c.tabNannyNode(p,h,body,unittest,suppressErrors)
     #@nonl
     #@-node:ekr.20040723094220.5:checkPythonNode
     #@+node:ekr.20040723094220.6:tabNannyNode
     # This code is based on tabnanny.check.
     
-    def tabNannyNode (self,p,headline,body,unittest=False):
+    def tabNannyNode (self,p,headline,body,unittest=False,suppressErrors=False):
     
         """Check indentation using tabnanny."""
     
