@@ -22,8 +22,6 @@ class baseCommands:
 	#@+node:ekr.20031218072017.2811: c.Birth & death
 	#@+node:ekr.20031218072017.2812:c.__init__, initIvars
 	def __init__(self,frame,fileName):
-		
-		# g.trace("Commands",fileName)
 	
 		self.frame = frame
 		self.mFileName = fileName
@@ -88,11 +86,12 @@ class baseCommands:
 	def __repr__ (self):
 		
 		try:
-			return "Commander: " + self.mFileName
+			return "Commander %d: %s" % (id(self),repr(self.mFileName))
 		except:
-			return "Commander: bad mFileName"
+			return "Commander: %d: bad mFileName" % id(self)
 			
 	__str__ = __repr__
+	
 	#@-node:ekr.20031218072017.2814:c.__repr__ & __str__
 	#@+node:ekr.20031218072017.2815:c.setIvarsFromFind
 	# This should be called whenever we need to use find values:
@@ -672,9 +671,9 @@ class baseCommands:
 			if ok and closeFlag:
 				g.app.destroyWindow(c.frame) # 12/12/03
 				g.app.setLog(frame.log,"openRecentFile") # Sets the log stream for g.es()
+				c = frame.c # 6/10/04: Switch to the new commander so the "recentfiles2" hook doesn't crash.
 	
 		g.doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
-	#@nonl
 	#@-node:ekr.20031218072017.2081:openRecentFile
 	#@+node:ekr.20031218072017.2083:updateRecentFiles
 	def updateRecentFiles (self,fileName):
