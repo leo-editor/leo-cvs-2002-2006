@@ -271,7 +271,8 @@ class config:
 			perlpod_language: "PerlPod",
 			plain_text_language: "Plain",
 			python_language: "Python",
-			tcltk_language: "tcl/tk" }
+			tcltk_language: "tcl/tk",
+			php_language: "php" } # 08-SEP-2002 DTHEIN
 		
 		# Names of sections.
 		self.configSection = "config options"

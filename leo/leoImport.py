@@ -93,7 +93,8 @@ class leoImportCommands:
 		self.fileType = type
 		# trace(`self.fileName`) ; trace(`self.fileType`)
 		# All file types except the following just get copied to the parent node.
-		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py"]
+		# 08-SEP-2002 DTHEIN: Added php
+		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py", ".php"]
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -126,6 +127,8 @@ class leoImportCommands:
 			self.scanPascalText(s,v)
 		elif type == ".py":
 			self.scanPythonText(s,v)
+		elif type == ".php":
+			self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
 		else:
 			es("createOutline: can't happen")
 		return v
@@ -1025,7 +1028,218 @@ class leoImportCommands:
 	#@-body
 	#@-node:4::scanPythonText
 	#@-node:1:C=6:Python scanners
-	#@+node:2:C=8:scanCText
+	#@+node:2::scanPHPText
+	#@+body
+	#@+at
+	#   08-SEP-2002 DTHEIN: Added for PHP import support
+	# Creates a child of parent for each class and function definition seen.
+	# 
+	# PHP uses both # and // as line comments, and /* */ as block comments
+	# 
+
+	#@-at
+	#@@c
+	def scanPHPText (self,s,parent):
+		import re
+		
+		#@<< Append file if not pure PHP >>
+		#@+node:1::<< Append file if not pure PHP >>
+		#@+body
+		# If the file does not begin with <?php or end with ?> then
+		# it is simply appended like a generic import would do.
+		s.strip() #remove inadvertent whitespace
+		if not s.startswith("<?php") \
+		or not (s.endswith("?>") or s.endswith("?>\n") or s.endswith("?>\r\n")):
+			es("File seems to be mixed HTML and PHP; importing as plain text file.")
+			parent.setBodyStringOrPane("@ignore\n\n" + s)
+			return
+
+		#@-body
+		#@-node:1::<< Append file if not pure PHP >>
+
+	
+		
+		#@<< define scanPHPText vars >>
+		#@+node:2::<< define scanPHPText vars >>
+		#@+body
+		scan_start = 0
+		class_start = 0
+		function_start = 0
+		c = self.commands
+		name = None
+		i = 0
+		class_body = ""
+		class_node = ""
+		phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+		phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+
+		#@-body
+		#@-node:2::<< define scanPHPText vars >>
+
+		while i < len(s):
+			# line = get_line(s,i) ; trace(`line`)
+			ch = s[i]
+			# These cases skip tokens.
+			if ch == '/' or ch == '#':
+				
+				#@<< handle possible PHP comments >>
+				#@+node:4::<< handle possible PHP comments >>
+				#@+body
+				if match(s,i,"//"):
+					i = skip_line(s,i)
+				elif match(s,i,"#"):
+					i = skip_line(s,i)
+				elif match(s,i,"/*"):
+					i = skip_block_comment(s,i)
+				else:
+					i += 1
+				#@-body
+				#@-node:4::<< handle possible PHP comments >>
+
+			elif ch == '<':
+				
+				#@<< handle possible heredoc string >>
+				#@+node:3::<< handle possible heredoc string >>
+				#@+body
+				if match(s,i,"<<<"):
+					i = skip_heredoc_string(s,i)
+				else:
+					i += 1
+
+				#@-body
+				#@-node:3::<< handle possible heredoc string >>
+
+			elif ch == '"' or ch == '\'':
+				i = skip_string(s,i)
+			# These cases help determine where functions start.
+			# FIXME: probably want to capture 'var's as class member data
+			elif ch == 'f' or ch =='c':
+				
+				#@<< handle possible class or function >>
+				#@+node:5::<< handle possible class or function >>
+				#@+body
+				#@+at
+				#  In PHP, all functions are typeless and start with the keyword "function;  all classes start with the keyword class.
+				# 
+				# Functions can be nested, but we don't handle that right now (I don't think it is a common practice anyway).
+
+				#@-at
+				#@@c
+				if match(s,i,"function "):
+					#we want to make the function a subnode of either the @file node or a class node
+					# 1. get the function name
+					# 2. make a reference in the parent
+					# 3. create the child node, and dump the function in it.
+					function_start = i
+					m = phpFunctionName.match(s[i:])
+					if (None == m): # function keyword without function name
+						i += len("function ")
+					else:
+						headline = angleBrackets(" function " + m.group(1) + " ")
+						# find the end of the function
+						openingBrace = s.find('{',i)
+						function_end = skip_php_braces(s,openingBrace)
+						function_end = skip_to_end_of_line(s,function_end - 1) + 1 # include the line end
+						# Insert skipped text into parent's body.
+						if class_start:
+							class_body += s[scan_start:function_start]
+						else:
+							parent.appendStringToBody(s[scan_start:function_start])
+						# Append the headline to the parent's body.
+						if class_start:
+							class_body += (headline + "\n")
+						else:
+							parent.appendStringToBody(headline + "\n")
+						# Backup to capture leading whitespace (for undent purposes)
+						while (function_start > 0) and (s[function_start - 1] in [" ", "\t"]):
+							function_start -= 1
+						# Get the body and undent it
+						function_body = s[function_start:function_end]
+						function_body = self.undentBody(function_body)
+						if self.treeType != "@file":
+							function_body = "@code\n\n" + function_body
+						# Create the new node
+						if class_start:
+							self.createHeadline(class_node,function_body,headline)
+						else:
+							self.createHeadline(parent,function_body,headline)
+						i = function_end
+						scan_start = i
+						function_end = 0
+						function_start = 0 #done with this function
+						function_body = ""
+						
+				elif match(s,i,"class "):
+					# we want to make the class a subnode of the @file node
+					# 1. get the class name
+					# 2. make a reference in the parent
+					# 3. create the child node and dump the function in it
+					class_start = i
+					class_body = ""
+					m = phpClassName.match(s[i:])
+					if (None == m): # class keyword without class name
+						i += len("class ")
+					else:
+						# Insert skipped text into parent's body.
+						parent.appendStringToBody(s[scan_start:class_start])
+						# create the headline name
+						headline = angleBrackets(" class " + m.group(1) + " ")
+						# find the place to start looking for methods (functions)
+						openingBrace = s.find('{',i)
+						# find the end of the class
+						class_end = skip_php_braces(s,openingBrace)
+						class_end = skip_to_end_of_line(s,class_end - 1) + 1 # include the line end
+						# Append the headline to the parent's body.
+						parent.appendStringToBody(headline + "\n")
+						# Backup to capture leading whitespace (for undent purposes)
+						while (class_start > 0) and (s[class_start - 1] in [" ", "\t"]):
+							class_start -= 1
+						scan_start = class_start
+						# Create the new node
+						class_node = self.createHeadline(parent,"",headline)
+						i = openingBrace
+					
+				else:
+					i += 1
+				#@-body
+				#@-node:5::<< handle possible class or function >>
+
+			elif class_start and (ch == '}'):
+				
+				#@<< handle end of class >>
+				#@+node:6::<< handle end of class >>
+				#@+body
+				# Capture the rest of the body
+				class_body += s[scan_start:class_end]
+				# insert the class node's body
+				if self.treeType != "@file":
+					class_body = "@code\n\n" + class_body
+				class_body = self.undentBody(class_body)
+				class_node.appendStringToBody(class_body)
+				# reset the indices
+				i = class_end
+				scan_start = i
+				class_end = 0
+				class_start = 0 #done with this class
+				class_body=""
+
+				#@-body
+				#@-node:6::<< handle end of class >>
+
+			else: i += 1
+		
+		#@<< Append any unused text to the parent's body text >>
+		#@+node:7::<< Append any unused text to the parent's body text >>
+		#@+body
+		parent.appendStringToBody(s[scan_start:])
+
+		#@-body
+		#@-node:7::<< Append any unused text to the parent's body text >>
+
+
+	#@-body
+	#@-node:2::scanPHPText
+	#@+node:3:C=8:scanCText
 	#@+body
 	# Creates a child of parent for each C function definition seen.
 	
@@ -1364,8 +1578,8 @@ class leoImportCommands:
 	#@-body
 	#@+node:5:C=9:Shared by C and Java
 	#@-node:5:C=9:Shared by C and Java
-	#@-node:2:C=8:scanCText
-	#@+node:3:C=11:scanJavaText
+	#@-node:3:C=8:scanCText
+	#@+node:4:C=11:scanJavaText
 	#@+body
 	# Creates a child of parent for each Java function definition seen.
 	
@@ -1609,8 +1823,8 @@ class leoImportCommands:
 	#@-body
 	#@+node:4:C=9:Shared by C and Java
 	#@-node:4:C=9:Shared by C and Java
-	#@-node:3:C=11:scanJavaText
-	#@+node:4::scanPascalText
+	#@-node:4:C=11:scanJavaText
+	#@+node:5::scanPascalText
 	#@+body
 	# Creates a child of parent for each Pascal function definition seen.
 	
@@ -1787,7 +2001,7 @@ class leoImportCommands:
 		#@-body
 		#@-node:2:C=10:<< Append any unused text to the parent's body text >>
 	#@-body
-	#@-node:4::scanPascalText
+	#@-node:5::scanPascalText
 	#@-node:5::Scanners for createOutline
 	#@-node:3::Import
 	#@+node:4::Export

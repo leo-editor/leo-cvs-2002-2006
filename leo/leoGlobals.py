@@ -50,6 +50,7 @@ python_language =	15
 shell_language =	16  # shell scripts
 tcltk_language =	17
 unknown_language =	18  # Set when @comment is seen.
+php_language = 19 # 08-SEP-2002 DTHEIN
 
 # Synonyms for the bits returned by is_special_bits...
 color_bits =    0x00001

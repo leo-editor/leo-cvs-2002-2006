@@ -33,7 +33,8 @@ def set_delims_from_language(language):
 		(plain_text_language, "#"), # 7/8/02: we have to pick something.
 		(shell_language, "#"),
 		(python_language, "#"),
-		(tcltk_language, "#") ]: # 7/18/02
+		(tcltk_language, "#"), # 7/18/02
+		(php_language, "//") ]:  #DTHEIN
 		if lang == language:
 			# trace(`val`)
 			delim1,delim2,delim3 = set_delims_from_string(val)
@@ -132,7 +133,8 @@ def set_language(s,i,issue_errors_flag):
 			("plain", plain_text_language), # 7/8/02
 			("python", python_language),
 			("shell", shell_language),
-			("tcl", tcltk_language) ]: # 7/18/02.  Note: this also matches tcl/tk.
+			("tcl", tcltk_language), # 7/18/02.  Note: this also matches tcl/tk.
+			("php", php_language) ]: # 08-SEP-2002 DTHEIN
 		
 			if arg == name:
 				delim1, delim2, delim3 = set_delims_from_language(language)
@@ -725,7 +727,40 @@ def skip_braces(s,i):
 	return i
 #@-body
 #@-node:2:C=10:skip_braces
-#@+node:3::skip_parens
+#@+node:3::skip_php_braces
+#@+body
+#@+at
+#  08-SEP-2002 DTHEIN: Added for PHP import support
+# Skips from the opening to the matching . If no matching is found i is set to len(s).
+# 
+# This code is called only from the import logic, and only for PHP imports.
+
+#@-at
+#@@c
+
+def skip_php_braces(s,i):
+
+	start = get_line(s,i)
+	assert(match(s,i,'{'))
+	level = 0 ; n = len(s)
+	while i < n:
+		c = s[i]
+		if c == '{':
+			level += 1 ; i += 1
+		elif c == '}':
+			level -= 1
+			if level <= 0: return i + 1
+			i += 1
+		elif c == '\'' or c == '"': i = skip_string(s,i)
+		elif match(s,i,"<<<"): i = skip_heredoc_string(s,i)
+		elif match(s,i,'//') or match(s,i,'#'): i = skip_to_end_of_line(s,i)
+		elif match(s,i,'/*'): i = skip_block_comment(s,i)
+		else: i += 1
+	return i
+
+#@-body
+#@-node:3::skip_php_braces
+#@+node:4::skip_parens
 #@+body
 #@+at
 #  Skips from the opening ( to the matching ) . If no matching is found i is set to len(s)
@@ -750,8 +785,8 @@ def skip_parens(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:3::skip_parens
-#@+node:4::skip_pascal_begin_end
+#@-node:4::skip_parens
+#@+node:5::skip_pascal_begin_end
 #@+body
 #@+at
 #  Skips from begin to matching end.
@@ -786,8 +821,8 @@ def skip_pascal_begin_end(s,i):
 	# trace(`s[i1:i]`)
 	return i
 #@-body
-#@-node:4::skip_pascal_begin_end
-#@+node:5::skip_pascal_block_comment
+#@-node:5::skip_pascal_begin_end
+#@+node:6::skip_pascal_block_comment
 #@+body
 # Scans past a pascal comment delimited by (* and *).
 
@@ -808,8 +843,8 @@ def skip_pascal_block_comment(s,i):
 #	scanError("Run on comment" + s[j:i])
 #	return i
 #@-body
-#@-node:5::skip_pascal_block_comment
-#@+node:6::skip_pascal_string : called by tangle
+#@-node:6::skip_pascal_block_comment
+#@+node:7::skip_pascal_string : called by tangle
 #@+body
 def skip_pascal_string(s,i):
 
@@ -824,8 +859,8 @@ def skip_pascal_string(s,i):
 	scanError("Run on string: " + s[j:i])
 	return i
 #@-body
-#@-node:6::skip_pascal_string : called by tangle
-#@+node:7:C=11:skip_pp_directive
+#@-node:7::skip_pascal_string : called by tangle
+#@+node:8:C=11:skip_pp_directive
 #@+body
 # Now handles continuation lines and block comments.
 
@@ -840,8 +875,8 @@ def skip_pp_directive(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:7:C=11:skip_pp_directive
-#@+node:8:C=12:skip_pp_if
+#@-node:8:C=11:skip_pp_directive
+#@+node:9:C=12:skip_pp_if
 #@+body
 # Skips an entire if or if def statement, including any nested statements.
 
@@ -874,8 +909,8 @@ def skip_pp_if(s,i):
 	return i,delta1
 
 #@-body
-#@-node:8:C=12:skip_pp_if
-#@+node:9:C=13:skip_pp_part
+#@-node:9:C=12:skip_pp_if
+#@+node:10:C=13:skip_pp_part
 #@+body
 # Skip to an #else or #endif.  The caller has eaten the #if, #ifdef, #ifndef or #else
 
@@ -905,8 +940,8 @@ def skip_pp_part(s,i):
 		else: i += 1
 	return i,delta
 #@-body
-#@-node:9:C=13:skip_pp_part
-#@+node:10::skip_python_string
+#@-node:10:C=13:skip_pp_part
+#@+node:11::skip_python_string
 #@+body
 def skip_python_string(s,i):
 
@@ -919,8 +954,8 @@ def skip_python_string(s,i):
 	else:
 		return skip_string(s,i)
 #@-body
-#@-node:10::skip_python_string
-#@+node:11::skip_string : called by tangle
+#@-node:11::skip_python_string
+#@+node:12::skip_string : called by tangle
 #@+body
 def skip_string(s,i):
 	
@@ -937,8 +972,47 @@ def skip_string(s,i):
 		i += 1
 	return i
 #@-body
-#@-node:11::skip_string : called by tangle
-#@+node:12::skip_to_semicolon
+#@-node:12::skip_string : called by tangle
+#@+node:13::skip_heredoc_string : called by php import
+#@+body
+#@+at
+#  08-SEP-2002 DTHEIN:  added function skip_heredoc_string
+# A heredoc string in PHP looks like:
+# 
+# 	<<<EOS
+# 	This is my string.
+# 	It is mine. I own it.
+# 	No one else has it.
+# 	EOS
+# 
+# It begins with <<< plus a token (naming same as PHP variable names).
+# It ends with the token on a line by itself (must start in first position.
+# 
+
+#@-at
+#@@c
+def skip_heredoc_string(s,i):
+	j = i
+	assert(match(s,i,"<<<"))
+	m = re.match("\<\<\<([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)", s[i:])
+	if (None == m):
+		i += 3
+		return i
+
+	delim = m.group(1)
+	i = skip_to_end_of_line(s,i)
+	n = len(s)
+	while i < n and not match(s,i,delim):
+		i = skip_to_end_of_line(s,i)
+		
+	if i >= n:
+		scanError("Run on string: " + s[j:i])
+	elif match(s,i,delim):
+		i += len(delim)
+	return i
+#@-body
+#@-node:13::skip_heredoc_string : called by php import
+#@+node:14::skip_to_semicolon
 #@+body
 # Skips to the next semicolon that is not in a comment or a string.
 
@@ -954,8 +1028,8 @@ def skip_to_semicolon(s,i):
 		else: i += 1
 	return i
 #@-body
-#@-node:12::skip_to_semicolon
-#@+node:13:C=14:skip_typedef
+#@-node:14::skip_to_semicolon
+#@+node:15:C=14:skip_typedef
 #@+body
 def skip_typedef(s,i):
 
@@ -968,7 +1042,7 @@ def skip_typedef(s,i):
 		i = skip_to_semicolon(s,i)
 	return i
 #@-body
-#@-node:13:C=14:skip_typedef
+#@-node:15:C=14:skip_typedef
 #@-node:13::Scanners: calling scanError
 #@+node:14::Scanners: no error messages
 #@+node:1::escaped

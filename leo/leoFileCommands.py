@@ -579,6 +579,8 @@ class fileCommands:
 					language = python_language ; self.getDquote()
 				elif self.matchTag("tcl/tk"):
 					language = tcltk_language ; self.getDquote()
+				elif self.matchTag("php"): # 08-SEP-2002 DTHEIN
+					language = php_language ; self.getDquote()
 					
 				# print(`language`)
 				

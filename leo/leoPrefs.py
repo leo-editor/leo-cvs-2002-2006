@@ -158,7 +158,8 @@ class LeoPrefs:
 		# Right column of radio buttons.
 		right_data = [ ("Perl", perl_language), ("Perl+POD", perlpod_language),
 			("Plain Text", plain_text_language), ("Python", python_language),
-			("tcl/tk", tcltk_language) ]
+			("tcl/tk", tcltk_language),
+			("PHP", php_language) ] # 08-SEP-2002 DTHEIN
 			
 		for text,value in right_data:
 			button = Tk.Radiobutton(rt,anchor="w",text=text,

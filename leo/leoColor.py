@@ -364,6 +364,22 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"unknown",   "unset",     "update",     "uplevel",   "upvar",
 	"variable",  "vwait",
 	"while" )
+
+php_keywords = ( # 08-SEP-2002 DTHEIN
+	"and",            "or",         "xor",       "__FILE__",
+	"__LINE__",       "array()",    "as",        "break",
+	"case",           "cfunction",  "class",     "const",
+	"continue",       "declare",    "default",   "die()",
+	"do",             "echo()",     "else",      "elseif",
+	"empty()",        "enddeclare", "endfor",    "endforeach",
+	"endif",          "endswitch",  "endwhile",  "eval",
+	"exit()",         "extends",    "for",       "foreach",
+	"function",       "global",     "if",        "include()",
+	"include_once()", "isset()",    "list()",    "new",
+	"old_function",   "print()",    "require()", "require_once()",
+	"return()",       "static",     "switch",    "unset()",
+	"use",            "var",        "while",     "__FUNCTION__",
+	"__CLASS__",      "<?php",      "?>" )
 #@-body
 #@-node:2:C=1:<< define colorizer keywords >>
 
@@ -607,7 +623,8 @@ class colorizer:
 		
 		has_string = language != plain_text_language
 		
-		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk"]
+		# 08-SEP-2002 DTHEIN: added "php"
+		languages = ["c","cweb","html","java","latex", "pascal","perl","perlpod","python","tcltk","php"]
 		
 		keywords = []
 		if language==cweb_language:
