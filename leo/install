@@ -13,8 +13,8 @@
 # This install script created by Frank Merenda 
 # (fmerenda@yahoo.com)
 #
-# verison 1.0 - 06/30/2003
-# - initial creation 
+# 06/30/2003: initial creation
+# 06/28/2004: Changes made as suggested by Scott Beardsley (sbeards)
 #
 # 
 # - minor changes to try and use a "prefix" directory
@@ -63,14 +63,27 @@ fi
 ################################
 # Step 2
 # Make the directory structure
+# 06/28/2004: Rewritten by Scott Beardsley
 ################################
-echo ""
-echo Making directory structure $LEO_LIB_DIR
+if [ ! -d $LEO_LIB_DIR ]; then
+    echo ""
+    echo Making directory structure $LEO_LIB_DIR
 
-RESULTS=`mkdir -p $LEO_LIB_DIR 2>&1`
-if [ $? -ne 0 ]; then
-    echo Failure making directory $LEO_LIB_DIR!
-    exit 0;
+    RESULTS=`mkdir -p -m755 $LEO_LIB_DIR 2>&1`
+    if [ $? -ne 0 ]; then
+        echo Failure making directory $LEO_LIB_DIR!
+        exit 0;
+    fi
+fi
+
+if [ ! -d $LEO_PREFIX/bin ]; then
+    echo ""
+    echo Making directory structure $LEO_PREFIX/bin
+    RESULTS=`mkdir -p -m755 $LEO_PREFIX/bin 2>&1`
+    if [ $? -ne 0 ]; then
+        echo Failure making directory $LEO_PREFIX/bin!
+        exit 0;
+    fi
 fi
    
 ################################
@@ -129,7 +142,9 @@ cp -rp config $LEO_LIB_DIR/.
 echo ""
 echo Creating startup script located at: $LEO_RUN_SCRIPT_OUTPUT
 
-echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \$1" > $LEO_RUN_SCRIPT_OUTPUT
+# 06/28/2004: Fix by Scott Beardsley
+# echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \$1" > $LEO_RUN_SCRIPT_OUTPUT
+echo "python ${LEO_PREFIX}/lib/leo/src/leo.py \"\$1\"" > $LEO_RUN_SCRIPT_OUTPUT
 
 RESULTS=`chmod 755 $LEO_RUN_SCRIPT_OUTPUT`   
    
