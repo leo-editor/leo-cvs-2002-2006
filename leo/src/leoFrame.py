@@ -77,6 +77,12 @@ class leoBody:
 		trace("leoBody oops:", callerName(2), "should be overridden in subclass")
 	#@nonl
 	#@-node:oops
+	#@+node:leoBody.setFontFromConfig
+	def setFontFromConfig (self):
+		
+		self.oops()
+	#@nonl
+	#@-node:leoBody.setFontFromConfig
 	#@+node:Must be overriden in subclasses
 	def createBindings (self,frame):
 		self.oops()
@@ -407,7 +413,11 @@ class leoFrame:
 	def leoHelp (self): self.oops()
 	#@nonl
 	#@-node: gui-dependent commands
-	#@+node:deiconify, lift & update
+	#@+node:bringToFront, deiconify, lift & update
+	def bringToFront (self):
+		
+		self.oops()
+	
 	def deiconify (self):
 		
 		self.oops()
@@ -419,8 +429,7 @@ class leoFrame:
 	def update (self):
 		
 		self.oops()
-	#@nonl
-	#@-node:deiconify, lift & update
+	#@-node:bringToFront, deiconify, lift & update
 	#@+node:resizePanesToRatio
 	def resizePanesToRatio (self,ratio,secondary_ratio):
 		
@@ -791,6 +800,90 @@ class leoTree:
 		print "leoTree oops:", callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:oops
+	#@+node:tree.OnIconDoubleClick (@url)
+	def OnIconDoubleClick (self,v,event=None):
+	
+		# Note: "icondclick" hooks handled by vnode callback routine.
+	
+		c = self.c
+		s = v.headString().strip()
+		if match_word(s,0,"@url"):
+			if not doHook("@url1",c=c,v=v):
+				url = s[4:].strip()
+				#@			<< stop the url after any whitespace >>
+				#@+node:<< stop the url after any whitespace  >>
+				# For safety, the URL string should end at the first whitespace.
+				
+				url = url.replace('\t',' ')
+				i = url.find(' ')
+				if i > -1:
+					if 0: # No need for a warning.  Assume everything else is a comment.
+						es("ignoring characters after space in url:"+url[i:])
+						es("use %20 instead of spaces")
+					url = url[:i]
+				#@-node:<< stop the url after any whitespace  >>
+				#@nl
+				#@			<< check the url; return if bad >>
+				#@+node:<< check the url; return if bad >>
+				if not url or len(url) == 0:
+					es("no url following @url")
+					return
+					
+				#@+at 
+				#@nonl
+				# A valid url is (according to D.T.Hein):
+				# 
+				# 3 or more lowercase alphas, followed by,
+				# one ':', followed by,
+				# one or more of: (excludes !"#;<>[\]^`|)
+				#   $%&'()*+,-./0-9:=?@A-Z_a-z{}~
+				# followed by one of: (same as above, except no minus sign or 
+				# comma).
+				#   $%&'()*+/0-9:=?@A-Z_a-z}~
+				#@-at
+				#@@c
+				
+				urlPattern = "[a-z]{3,}:[\$-:=?-Z_a-z{}~]+[\$-+\/-:=?-Z_a-z}~]"
+				import re
+				# 4/21/03: Add http:// if required.
+				if not re.match('^([a-z]{3,}:)',url):
+					url = 'http://' + url
+				if not re.match(urlPattern,url):
+					es("invalid url: "+url)
+					return
+				#@-node:<< check the url; return if bad >>
+				#@nl
+				#@			<< pass the url to the web browser >>
+				#@+node:<< pass the url to the web browser >>
+				#@+at 
+				#@nonl
+				# Most browsers should handle the following urls:
+				#   ftp://ftp.uu.net/public/whatever.
+				#   http://localhost/MySiteUnderDevelopment/index.html
+				#   file://home/me/todolist.html
+				#@-at
+				#@@c
+				
+				try:
+					import os
+					os.chdir(app.loadDir)
+				
+					if match(url,0,"file:") and url[-4:]==".leo":
+						ok,frame = openWithFileName(url[5:],c)
+						if ok:
+							frame.bringToFront()
+					else:
+						import webbrowser
+						webbrowser.open(url)
+				except:
+					es("exception opening " + url)
+					es_exception()
+				
+				#@-node:<< pass the url to the web browser >>
+				#@nl
+			doHook("@url2",c=c,v=v)
+	#@nonl
+	#@-node:tree.OnIconDoubleClick (@url)
 	#@-others
 #@nonl
 #@-node:class leoTree
@@ -1112,7 +1205,7 @@ class nullBody (leoBody):
 			
 		before is the all lines before the selected text
 		(or the text before the insert point if no selection)
-		sel is the selected text (or "" if no selection)
+		sel is the selected text (or the line containing the insert point if no selection)
 		after is all lines after the selected text
 		(or the text after the insert point if no selection)"""
 		
