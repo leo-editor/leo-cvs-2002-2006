@@ -192,15 +192,12 @@ class tkinterGui(leoGui.leoGui):
         
         # askopenfilenames only exists in Python 2.3 or later
         if multiple and g.CheckVersion(sys.version,"2.3"):
-            files = tkFileDialog.askopenfilenames(
-                title=title, filetypes=filetypes)
-            if type(files) not in (type([]), type((),)): files = [files]
-            return files
+            f = tkFileDialog.askopenfilenames
         else:
-            files = tkFileDialog.askopenfilename(
-                title=title, filetypes=filetypes)
-            if type(files) not in (type([]), type((),)): files = [files]
-            return files
+            f = tkFileDialog.askopenfilename
+    
+        files = f(title=title, filetypes=filetypes)
+        return list(files)
             # DTHEIN 2004.01.31: remove default extension on open,
             # so that we can open files without extensions
     
