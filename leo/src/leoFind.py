@@ -584,7 +584,7 @@ class LeoFind:
 		
 		c = self.commands ; v = self.v
 		# trace(`self.in_headline`)
-		t = choose(self.in_headline,v.edit_text,c.body)
+		t = choose(self.in_headline,v.edit_text(),c.body)
 		# Not yet: set undo params.
 		sel = t.tag_ranges("sel")
 		if len(sel) != 2:
@@ -947,7 +947,7 @@ class LeoFind:
 		c = self.commands ; v = self.v
 		
 		if self.in_headline:
-			t = v.edit_text
+			t = v.edit_text()
 			c.tree.editVnode = v
 			pos = t.index("insert")
 			# trace(`pos` + ":" + `self.in_headline` + ":" + `v==c.tree.editVnode` + ":" + `v`)
@@ -1012,7 +1012,7 @@ class LeoFind:
 	def save (self):
 	
 		c = self.commands ; v = self.v
-		t = choose(self.in_headline,v.edit_text,c.body)
+		t = choose(self.in_headline,v.edit_text(),c.body)
 		insert = t.index("insert")
 		sel = t.tag_ranges("sel")
 		if len(sel) == 2:
@@ -1026,7 +1026,7 @@ class LeoFind:
 	#@+body
 	#@+at
 	#  This is used for displaying the final result.  It returns 
-	# self.dummy_vnode, v.edit_text or c.body with "insert" and "sel" points 
+	# self.dummy_vnode, v.edit_text() or c.body with "insert" and "sel" points 
 	# set properly.
 
 	#@-at
@@ -1044,12 +1044,12 @@ class LeoFind:
 			if self.in_headline:
 				c.editVnode(v)
 				c.tree.setNormalLabelState(v)
-				assert(v.edit_text)
+				assert(v.edit_text())
 			else:
 				c.selectVnode(v)
 		c.endUpdate(false) # Do not draw again!
 	
-		t = choose(self.in_headline,v.edit_text,c.body)
+		t = choose(self.in_headline,v.edit_text(),c.body)
 		# trace(`self.in_headline` + "," + `t`)
 		insert = choose(c.reverse_flag,pos,newpos)
 		t.mark_set("insert",insert)

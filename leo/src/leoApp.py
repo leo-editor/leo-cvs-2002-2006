@@ -17,7 +17,6 @@ class LeoApp:
 		# These ivars are the global vars of this program.
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
-		self.deleteOnClose = true # true: delete frame objects when a frame closes.
 		self.hookError = false # true: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
 		self.idle_imported = false # true: we have done an import idle

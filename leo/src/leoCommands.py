@@ -1170,6 +1170,7 @@ class Commands:
 		c.beginUpdate()
 		v.contract()
 		c.endUpdate()
+	
 	#@-body
 	#@-node:2::contractNode
 	#@+node:3::contractParent
@@ -1255,6 +1256,7 @@ class Commands:
 		c.beginUpdate()
 		v.expand()
 		c.endUpdate()
+	
 	
 	#@-body
 	#@-node:8::expandNode

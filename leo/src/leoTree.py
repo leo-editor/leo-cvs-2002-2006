@@ -124,7 +124,6 @@ class leoTree:
 		
 		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
-		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
 		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		
@@ -135,6 +134,8 @@ class leoTree:
 		self.recycleBindings = true # true: remember bindings and unbind them explicitly.
 		self.bindings = [] # List of bindings to be unbound when redrawing.
 		self.tagBindings = [] # List of tag bindings to be unbound when redrawing.
+		self.icon_id_dict = {} # New in 4.0: keys are icon id's, values are vnodes.
+		self.edit_text_dict = {} # New in 4.0: keys vnodes, values are edit_text (Tk.Text widgets)
 	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
@@ -174,10 +175,24 @@ class leoTree:
 	#@-node:1::tree.__init__
 	#@+node:2::tree.deleteBindings
 	#@+body
-	# This code is called when redrawing the screen to delete the old bindings.
+	#@+at
+	#  This code is called when redrawing the screen to delete the old bindings.
 	# Calling this from __del__ was useless: __del__ would never be called!
-	
+	# 
+	# idle_redraw will call self.canvas.delete("all") just after we return,
+	# so this routine does _not_ have to delete the widgets themselves.
+
+	#@-at
+	#@@c
+
 	def deleteBindings (self):
+		
+		"""Delete all tree bindings and all references to tree widgets."""
+		
+		# print "deleteBindings: %d, %d" % (len(self.tagBindings),len(self.bindings))
+		
+		self.icon_id_dict = {} # Delete all references to icons.
+		self.edit_text_dict = {} # Delete all references to Tk.Edit widgets.
 		
 		if self.recycleBindings:
 			count = 0
@@ -202,15 +217,8 @@ class leoTree:
 	#@+body
 	def destroy (self):
 	
-		if not app().deleteOnClose:
-			return
-			
 		# Can't trace while destroying.
 		# print "tree.destroy"
-	
-		for v in self.vnode_alloc_list:
-			v.destroy()
-		del self.vnode_alloc_list # del all vnodes
 	
 		self.iconimages = None
 		del self.colorizer
@@ -260,74 +268,14 @@ class leoTree:
 	#@-at
 	#@-body
 	#@-node:1::About drawing and updating
-	#@+node:2::allocateNodes
-	#@+body
-	def allocateNodes(self,where,lines):
-		
-		"""Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
-		
-		assert(where in ("above","below"))
-	
-		# print "allocateNodes: %d lines %s visible area" % (lines,where)
-		
-		# Expand the visible area: a little extra delta is safer.
-		delta = lines * (self.line_height + 4)
-		y1,y2 = self.visibleArea
-	
-		if where == "below":
-			y2 += delta
-		else:
-			y1 = max(0.0,y1-delta)
-	
-		self.expandedVisibleArea=y1,y2
-		# print "expandedArea:   %5.1f %5.1f" % (y1,y2)
-		
-		# Allocate all nodes in expanded visible area.
-		self.updatedNodeCount = 0
-		self.updateTree(self.rootVnode,root_left,root_top,0,0)
-		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
-	
-	#@-body
-	#@-node:2::allocateNodes
-	#@+node:3::allocateNodesBeforeScrolling
-	#@+body
-	def allocateNodesBeforeScrolling (self, args):
-		
-		"""Calculate the nodes that will become visible as the result of an upcoming scroll.
-	
-		args is the tuple passed to the Tk.Canvas.yview method"""
-	
-		if not self.allocateOnlyVisibleNodes: return
-	
-		# print "allocateNodesBeforeScrolling:",self.redrawCount,`args`
-	
-		assert(self.visibleArea)
-		assert(len(args)==2 or len(args)==3)
-		kind = args[0] ; n = args[1]
-		lines = 2 # Update by 2 lines to account for rounding.
-		if len(args) == 2:
-			assert(kind=="moveto")
-			frac1,frac2 = args
-			if float(n) != frac1:
-				where = choose(n<frac1,"above","below")
-				self.allocateNodes(where=where,lines=lines)
-		else:
-			assert(kind=="scroll")
-			linesPerPage = self.canvas.winfo_height()/self.line_height + 2
-			n = int(n) ; assert(abs(n)==1)
-			where = choose(n == 1,"below","above")
-			lines = choose(args[2] == "pages",linesPerPage,lines)
-			self.allocateNodes(where=where,lines=lines)
-	#@-body
-	#@-node:3::allocateNodesBeforeScrolling
-	#@+node:4::beginUpdate
+	#@+node:2::beginUpdate
 	#@+body
 	def beginUpdate (self):
 	
 		self.updateCount += 1
 	#@-body
-	#@-node:4::beginUpdate
-	#@+node:5::drawBox (tag_bind)
+	#@-node:2::beginUpdate
+	#@+node:3::drawBox (tag_bind)
 	#@+body
 	def drawBox (self,v,x,y):
 		
@@ -337,10 +285,8 @@ class leoTree:
 		y += 7 # draw the box at x, y+7
 	
 		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
-		
 		image = self.getIconImage(iconname)
-	
-		v.box_id = id = self.canvas.create_image(x,y,image=image)
+		id = self.canvas.create_image(x,y,image=image)
 	
 		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
 		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
@@ -350,8 +296,8 @@ class leoTree:
 			self.tagBindings.append((id,id2,"<Double-1>"),)
 	
 	#@-body
-	#@-node:5::drawBox (tag_bind)
-	#@+node:6::drawIcon (tag_bind)
+	#@-node:3::drawBox (tag_bind)
+	#@+node:4::drawIcon (tag_bind)
 	#@+body
 	# Draws icon for v at x,y
 	
@@ -374,22 +320,23 @@ class leoTree:
 	
 		# Get the image
 		image = self.getIconImage(imagename + ".GIF")
-		v.icon_id = id = self.canvas.create_image(x,y,anchor="nw",image=image)
+		id = self.canvas.create_image(x,y,anchor="nw",image=image)
+		self.icon_id_dict[id] = v # Remember which vnode belongs to the icon.
 	
 		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
 		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
-		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick) # 2/8/03
+		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
 		if self.recycleBindings:
 			self.tagBindings.append((id,id1,"<1>"),)
 			self.tagBindings.append((id,id2,"<Double-1>"),)
-			self.tagBindings.append((id,id3,"<3>"),) # 2/8/03
+			self.tagBindings.append((id,id3,"<3>"),)
 	
 		return 0 # dummy icon height
 	
 	
 	#@-body
-	#@-node:6::drawIcon (tag_bind)
-	#@+node:7::drawNode, updateNode
+	#@-node:4::drawIcon (tag_bind)
+	#@+node:5::drawNode & force_draw_node
 	#@+body
 	def drawNode(self,v,x,y):
 	
@@ -402,29 +349,8 @@ class leoTree:
 	
 		if self.inVisibleArea(y):
 			return self.force_draw_node(v,x,y)
-		elif v.edit_text:
-			# Delete the Tk. Widget so a later scroll will recreate it.
-			# If we don't do this: the update code would be much slower!
-			# if self.trace: print "deleting:",v.cleanHeadString()
-			v.edit_text.destroy()
-			v.edit_text = None
-			v.edit_text_id = None
-			return self.line_height
 		else:
 			return self.line_height
-		
-	def updateNode (self,v,x,y):
-		
-		"""Draw a node that may have become visible as a result of a scrolling operation"""
-	
-		if self.inExpandedVisibleArea(y):
-			# This check is a major optimization.
-			if not v.edit_text:
-				return self.force_draw_node(v,x,y)
-			else:
-				return self.line_height
-	
-		return self.line_height
 		
 	def force_draw_node(self,v,x,y):
 	
@@ -435,8 +361,8 @@ class leoTree:
 		text_height = self.drawText(v,x+box_width+icon_width,y)
 		return max(icon_height, text_height)
 	#@-body
-	#@-node:7::drawNode, updateNode
-	#@+node:8::drawText (bind)
+	#@-node:5::drawNode & force_draw_node
+	#@+node:6::drawText (bind)
 	#@+body
 	# draws text for v at x,y
 	
@@ -447,8 +373,9 @@ class leoTree:
 		
 		x += text_indent
 	
-		v.edit_text = t = Tkinter.Text(self.canvas,
+		t = Tkinter.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+		self.edit_text_dict[v] = t # Remember which text widget belongs to v.
 	
 		t.insert("end", v.headString())
 		
@@ -469,19 +396,20 @@ class leoTree:
 		id3 = t.bind("<Key>", v.OnHeadlineKey)
 		id4 = t.bind("<Control-t>",self.OnControlT)
 			# 10/16/02: Stamp out the erroneous control-t binding.
-		# Remember the bindings so we can delete them by hand on redraws.
+			
+		# Remember the bindings so deleteBindings can delete them.
 		if self.recycleBindings:
 			self.bindings.append((t,id1,"<1>"),)
 			self.bindings.append((t,id2,"<3>"),)
 			self.bindings.append((t,id3,"<Key>"),)
 			self.bindings.append((t,id4,"<Control-t>"),)
-		v.edit_text_id = id = self.canvas.create_window(x,y,anchor="nw",window=t)
+		id = self.canvas.create_window(x,y,anchor="nw",window=t)
 		self.canvas.tag_lower(id)
 	
 		return self.line_height
 	#@-body
-	#@-node:8::drawText (bind)
-	#@+node:9::drawTree
+	#@-node:6::drawText (bind)
+	#@+node:7::drawTree
 	#@+body
 	def drawTree(self,v,x,y,h,level):
 		
@@ -514,8 +442,8 @@ class leoTree:
 
 		return y
 	#@-body
-	#@-node:9::drawTree
-	#@+node:10::endUpdate
+	#@-node:7::drawTree
+	#@+node:8::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
 	
@@ -524,8 +452,8 @@ class leoTree:
 		if flag and self.updateCount == 0:
 			self.redraw()
 	#@-body
-	#@-node:10::endUpdate
-	#@+node:11::headWidth
+	#@-node:8::endUpdate
+	#@+node:9::headWidth
 	#@+body
 	#@+at
 	#  Returns the proper width of the entry widget for the headline. This has 
@@ -538,8 +466,8 @@ class leoTree:
 	
 		return max(10,5 + len(v.headString()))
 	#@-body
-	#@-node:11::headWidth
-	#@+node:12::inVisibleArea & inExpandedVisibleArea
+	#@-node:9::headWidth
+	#@+node:10::inVisibleArea & inExpandedVisibleArea
 	#@+body
 	def inVisibleArea (self,y1):
 		
@@ -561,8 +489,8 @@ class leoTree:
 		else:
 			return false
 	#@-body
-	#@-node:12::inVisibleArea & inExpandedVisibleArea
-	#@+node:13::lastVisible
+	#@-node:10::inVisibleArea & inExpandedVisibleArea
+	#@+node:11::lastVisible
 	#@+body
 	# Returns the last visible node of the screen.
 	
@@ -580,8 +508,8 @@ class leoTree:
 				v = v.threadNext()
 		return last
 	#@-body
-	#@-node:13::lastVisible
-	#@+node:14::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@-node:11::lastVisible
+	#@+node:12::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
 	#@+body
 	# Calling redraw inside c.beginUpdate()/c.endUpdate() does nothing.
 	# This _is_ useful when a flag is passed to c.endUpdate.
@@ -630,13 +558,9 @@ class leoTree:
 			if self.trace:
 				self.redrawCount += 1
 				print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
-			if self.recycleBindings:
-				collectGarbage()
+			collectGarbage()
 	
 		self.canvas['cursor'] = oldcursor
-	
-		# if self.recycleBindings: collectGarbage()
-	
 		self.redrawScheduled = false
 		
 	def idle_second_redraw (self):
@@ -653,8 +577,8 @@ class leoTree:
 		if self.trace:
 			print "idle_second_redraw allocated:",self.redrawCount, self.allocatedNodes
 	#@-body
-	#@-node:14::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
-	#@+node:15::setLineHeight
+	#@-node:12::redraw , force_redraw, redraw_now, idle_redraw, idle_second_redraw
+	#@+node:13::setLineHeight
 	#@+body
 	def setLineHeight (self,font):
 		
@@ -668,44 +592,8 @@ class leoTree:
 			es("exception setting outline line height")
 			es_exception()
 	#@-body
-	#@-node:15::setLineHeight
-	#@+node:16::setVisibleArea
-	#@+body
-	def setVisibleArea (self,args):
-	
-		r1,r2 = args
-		r1,r2 = float(r1),float(r2)
-		# print "scroll ratios:",r1,r2
-	
-		try:
-			s = self.canvas.cget("scrollregion")
-			x1,y1,x2,y2 = scanf(s,"%d %d %d %d")
-			x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
-		except:
-			self.visibleArea = None
-			return
-			
-		scroll_h = y2-y1
-		# print "height of scrollregion:", scroll_h
-	
-		vy1 = y1 + (scroll_h*r1)
-		vy2 = y1 + (scroll_h*r2)
-		self.visibleArea = vy1,vy2
-		# print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
-	
-	#@-body
-	#@-node:16::setVisibleArea
-	#@+node:17::setVisibleAreaToFullCanvas
-	#@+body
-	def setVisibleAreaToFullCanvas(self):
-		
-		if self.visibleArea:
-			y1,y2 = self.visibleArea
-			y2 = max(y2,y1 + self.canvas.winfo_height())
-			self.visibleArea = y1,y2
-	#@-body
-	#@-node:17::setVisibleAreaToFullCanvas
-	#@+node:18::tree.getFont,setFont,setFontFromConfig
+	#@-node:13::setLineHeight
+	#@+node:14::tree.getFont,setFont,setFontFromConfig
 	#@+body
 	def getFont (self):
 	
@@ -732,8 +620,8 @@ class leoTree:
 	
 		self.setFont(font)
 	#@-body
-	#@-node:18::tree.getFont,setFont,setFontFromConfig
-	#@+node:19::tree.getIconImage
+	#@-node:14::tree.getFont,setFont,setFontFromConfig
+	#@+node:15::tree.getIconImage
 	#@+body
 	def getIconImage (self, name):
 	
@@ -742,15 +630,8 @@ class leoTree:
 			return self.iconimages[name]
 			
 		try:
-			if 1: # 8/15/02
-				fullname = os.path.join(app().loadDir,"..","Icons",name)
-				fullname = os.path.normpath(fullname)
-			else:
-				dir = app().loadDir
-				file, ext = os.path.splitext(name)
-				fullname = os.path.join(dir, file + ext)
-				fullname = os.path.normpath(fullname)
-	
+			fullname = os.path.join(app().loadDir,"..","Icons",name)
+			fullname = os.path.normpath(fullname)
 			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
 			return image
@@ -759,8 +640,8 @@ class leoTree:
 			es_exception()
 			return None
 	#@-body
-	#@-node:19::tree.getIconImage
-	#@+node:20::tree.idle_scrollTo
+	#@-node:15::tree.getIconImage
+	#@+node:16::tree.idle_scrollTo
 	#@+body
 	#@+at
 	#  This scrolls the canvas so that v is in view.  This is done at idle 
@@ -808,11 +689,9 @@ class leoTree:
 			self.canvas.after_idle(self.idle_second_redraw)
 	
 		# print "%3d %3d %1.3f %1.3f %1.3f %1.3f" % (h1,h2,frac,frac2,lo,hi)
-	
-	
 	#@-body
-	#@-node:20::tree.idle_scrollTo
-	#@+node:21::tree.numberOfVisibleNodes
+	#@-node:16::tree.idle_scrollTo
+	#@+node:17::tree.numberOfVisibleNodes
 	#@+body
 	def numberOfVisibleNodes(self):
 		
@@ -822,8 +701,8 @@ class leoTree:
 			v = v.visNext()
 		return n
 	#@-body
-	#@-node:21::tree.numberOfVisibleNodes
-	#@+node:22::tree.recolor, recolor_now, recolor_range
+	#@-node:17::tree.numberOfVisibleNodes
+	#@+node:18::tree.recolor, recolor_now, recolor_range
 	#@+body
 	def recolor(self,v,incremental=0):
 	
@@ -844,25 +723,8 @@ class leoTree:
 		body = self.commands.frame.body
 		self.colorizer.recolor_range(v,body,leading,trailing)
 	#@-body
-	#@-node:22::tree.recolor, recolor_now, recolor_range
-	#@+node:23::tree.updateTree
-	#@+body
-	def updateTree (self,v,x,y,h,level):
-	
-		yfirst = ylast = y
-		if level==0: yfirst += 10
-		while v:
-			# trace(`x` + ", " + `y` + ", " + `v`)
-			h = self.updateNode(v,x,y)
-			y += h ; ylast = y
-			if v.isExpanded() and v.firstChild():
-				y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
-			v = v.next()
-		return y
-	
-	#@-body
-	#@-node:23::tree.updateTree
-	#@+node:24::tree.yoffset
+	#@-node:18::tree.recolor, recolor_now, recolor_range
+	#@+node:19::tree.yoffset
 	#@+body
 	#@+at
 	#  We can't just return icony because the tree hasn't been redrawn yet.  
@@ -898,7 +760,7 @@ class leoTree:
 			v = v.next()
 		return h, false
 	#@-body
-	#@-node:24::tree.yoffset
+	#@-node:19::tree.yoffset
 	#@-node:4::Drawing
 	#@+node:5::Event handers (tree)
 	#@+body
@@ -979,14 +841,13 @@ class leoTree:
 	#@+node:4::tree.findVnodeWithIconId
 	#@+body
 	def findVnodeWithIconId (self,id):
+		
+		# Due to an old bug, id may be a tuple.
+		try:
+			return self.icon_id_dict.get(id[0])
+		except:
+			return self.icon_id_dict.get(id)
 	
-		v = self.rootVnode
-		while v:
-			if v.icon_id == id or (v.icon_id,) == id:
-				return v
-			else: v = v.visNext()
-			
-		return None
 	#@-body
 	#@-node:4::tree.findVnodeWithIconId
 	#@+node:5::tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key
@@ -1373,11 +1234,11 @@ class leoTree:
 	def idle_head_key (self,v,ch=None):
 	
 		c = self.commands
-		if not v or not v.edit_text or v != c.currentVnode():
+		if not v or not v.edit_text() or v != c.currentVnode():
 			return "break"
 		if doHook("headkey1",c=c,v=v,ch=ch):
 			return "break" # The hook claims to have handled the event.
-		s = v.edit_text.get("1.0","end")
+		s = v.edit_text().get("1.0","end")
 		s = toUnicode(s,app().tkEncoding) # 2/25/03
 	
 		# remove all newlines and update the vnode
@@ -1393,7 +1254,7 @@ class leoTree:
 			return "break"
 		if changed:
 			c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
-		index = v.edit_text.index("insert")
+		index = v.edit_text().index("insert")
 		# trace(`s`)
 		if changed:
 			c.beginUpdate()
@@ -1404,28 +1265,28 @@ class leoTree:
 			v.setDirty() 
 			# Update v.
 			v.initHeadString(s)
-			v.edit_text.delete("1.0","end")
-			v.edit_text.insert("end",s)
-			v.edit_text.mark_set("insert",index)
+			v.edit_text().delete("1.0","end")
+			v.edit_text().insert("end",s)
+			v.edit_text().mark_set("insert",index)
 			# Update all joined nodes.
 			for v2 in v.t.joinList:
 				if v2 != v:
 					v2.initHeadString(s)
-					if v2.edit_text: # v2 may not be visible
-						v2.edit_text.delete("1.0","end")
-						v2.edit_text.insert("end",s)
+					if v2.edit_text(): # v2 may not be visible
+						v2.edit_text().delete("1.0","end")
+						v2.edit_text().insert("end",s)
 			c.endUpdate(false) # do not redraw now.
 	
 		# Reconfigure v's headline.
 		if done:
 			self.setDisabledLabelState(v)
-		v.edit_text.configure(width=self.headWidth(v))
+		v.edit_text().configure(width=self.headWidth(v))
 	
 		# Reconfigure all joined headlines.
 		for v2 in v.t.joinList:
 			if v2 != v:
-				if v2.edit_text: # v2 may not be visible
-					v2.edit_text.configure(width=self.headWidth(v2))
+				if v2.edit_text(): # v2 may not be visible
+					v2.edit_text().configure(width=self.headWidth(v2))
 			
 		# Update the screen.
 		if done:
@@ -1674,18 +1535,149 @@ class leoTree:
 	#@-body
 	#@-node:13::tree.OnPopup
 	#@-node:5::Event handers (tree)
-	#@+node:6::Selecting & editing (tree)
+	#@+node:6::Incremental drawing
+	#@+node:1::allocateNodes
+	#@+body
+	def allocateNodes(self,where,lines):
+		
+		"""Allocate Tk widgets in nodes that will become visible as the result of an upcoming scroll"""
+		
+		assert(where in ("above","below"))
+	
+		# print "allocateNodes: %d lines %s visible area" % (lines,where)
+		
+		# Expand the visible area: a little extra delta is safer.
+		delta = lines * (self.line_height + 4)
+		y1,y2 = self.visibleArea
+	
+		if where == "below":
+			y2 += delta
+		else:
+			y1 = max(0.0,y1-delta)
+	
+		self.expandedVisibleArea=y1,y2
+		# print "expandedArea:   %5.1f %5.1f" % (y1,y2)
+		
+		# Allocate all nodes in expanded visible area.
+		self.updatedNodeCount = 0
+		self.updateTree(self.rootVnode,root_left,root_top,0,0)
+		# if self.updatedNodeCount: print "updatedNodeCount:", self.updatedNodeCount
+	
+	#@-body
+	#@-node:1::allocateNodes
+	#@+node:2::allocateNodesBeforeScrolling
+	#@+body
+	def allocateNodesBeforeScrolling (self, args):
+		
+		"""Calculate the nodes that will become visible as the result of an upcoming scroll.
+	
+		args is the tuple passed to the Tk.Canvas.yview method"""
+	
+		if not self.allocateOnlyVisibleNodes: return
+	
+		# print "allocateNodesBeforeScrolling:",self.redrawCount,`args`
+	
+		assert(self.visibleArea)
+		assert(len(args)==2 or len(args)==3)
+		kind = args[0] ; n = args[1]
+		lines = 2 # Update by 2 lines to account for rounding.
+		if len(args) == 2:
+			assert(kind=="moveto")
+			frac1,frac2 = args
+			if float(n) != frac1:
+				where = choose(n<frac1,"above","below")
+				self.allocateNodes(where=where,lines=lines)
+		else:
+			assert(kind=="scroll")
+			linesPerPage = self.canvas.winfo_height()/self.line_height + 2
+			n = int(n) ; assert(abs(n)==1)
+			where = choose(n == 1,"below","above")
+			lines = choose(args[2] == "pages",linesPerPage,lines)
+			self.allocateNodes(where=where,lines=lines)
+	#@-body
+	#@-node:2::allocateNodesBeforeScrolling
+	#@+node:3::updateNode
+	#@+body
+	def updateNode (self,v,x,y):
+		
+		"""Draw a node that may have become visible as a result of a scrolling operation"""
+	
+		if self.inExpandedVisibleArea(y):
+			# This check is a major optimization.
+			if not v.edit_text():
+				return self.force_draw_node(v,x,y)
+			else:
+				return self.line_height
+	
+		return self.line_height
+	#@-body
+	#@-node:3::updateNode
+	#@+node:4::setVisibleAreaToFullCanvas
+	#@+body
+	def setVisibleAreaToFullCanvas(self):
+		
+		if self.visibleArea:
+			y1,y2 = self.visibleArea
+			y2 = max(y2,y1 + self.canvas.winfo_height())
+			self.visibleArea = y1,y2
+	#@-body
+	#@-node:4::setVisibleAreaToFullCanvas
+	#@+node:5::setVisibleArea
+	#@+body
+	def setVisibleArea (self,args):
+	
+		r1,r2 = args
+		r1,r2 = float(r1),float(r2)
+		# print "scroll ratios:",r1,r2
+	
+		try:
+			s = self.canvas.cget("scrollregion")
+			x1,y1,x2,y2 = scanf(s,"%d %d %d %d")
+			x1,y1,x2,y2 = int(x1),int(y1),int(x2),int(y2)
+		except:
+			self.visibleArea = None
+			return
+			
+		scroll_h = y2-y1
+		# print "height of scrollregion:", scroll_h
+	
+		vy1 = y1 + (scroll_h*r1)
+		vy2 = y1 + (scroll_h*r2)
+		self.visibleArea = vy1,vy2
+		# print "setVisibleArea: %5.1f %5.1f" % (vy1,vy2)
+	
+	#@-body
+	#@-node:5::setVisibleArea
+	#@+node:6::tree.updateTree
+	#@+body
+	def updateTree (self,v,x,y,h,level):
+	
+		yfirst = ylast = y
+		if level==0: yfirst += 10
+		while v:
+			# trace(`x` + ", " + `y` + ", " + `v`)
+			h = self.updateNode(v,x,y)
+			y += h ; ylast = y
+			if v.isExpanded() and v.firstChild():
+				y = self.updateTree(v.firstChild(),x+child_indent,y,h,level+1)
+			v = v.next()
+		return y
+	
+	#@-body
+	#@-node:6::tree.updateTree
+	#@-node:6::Incremental drawing
+	#@+node:7::Selecting & editing (tree)
 	#@+node:1::abortEditLabelCommand
 	#@+body
 	def abortEditLabelCommand (self):
 		
 		v = self.currentVnode
 		
-		if self.revertHeadline and v.edit_text and v == self.editVnode:
+		if self.revertHeadline and v.edit_text() and v == self.editVnode:
 			
 			# trace(`self.revertHeadline`)
-			v.edit_text.delete("1.0","end")
-			v.edit_text.insert("end",self.revertHeadline)
+			v.edit_text().delete("1.0","end")
+			v.edit_text().insert("end",self.revertHeadline)
 			self.idle_head_key(v) # Must be done immediately.
 			self.revertHeadline = None
 			self.select(v)
@@ -1711,7 +1703,7 @@ class leoTree:
 	#@-node:2::dimEditLabel, undimEditLabel
 	#@+node:3::editLabel
 	#@+body
-	# Start editing v.edit_text
+	# Start editing v.edit_text()
 	
 	def editLabel (self, v):
 	
@@ -1721,12 +1713,12 @@ class leoTree:
 			self.revertHeadline = None
 			
 		# Start editing
-		if v and v.edit_text:
+		if v and v.edit_text():
 			# trace(`v`)
 			self.setNormalLabelState(v)
-			v.edit_text.tag_remove("sel","1.0","end")
-			v.edit_text.tag_add("sel","1.0","end")
-			v.edit_text.focus_force()
+			v.edit_text().tag_remove("sel","1.0","end")
+			v.edit_text().tag_add("sel","1.0","end")
+			v.edit_text().focus_force()
 			self.editVnode = v
 			self.revertHeadline = v.headString() # 9/24/02
 		else:
@@ -1740,7 +1732,7 @@ class leoTree:
 	def endEditLabel (self):
 	
 		v = self.editVnode
-		if v and v.edit_text:
+		if v and v.edit_text():
 			self.setUnselectedLabelState(v)
 			self.editVnode = None
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
@@ -1751,7 +1743,7 @@ class leoTree:
 	def endEditLabelCommand (self):
 	
 		v = self.editVnode
-		if v and v.edit_text:
+		if v and v.edit_text():
 			self.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
 			# 3/26/03: changed redraw_now to force_redraw.
@@ -1837,7 +1829,7 @@ class leoTree:
 			# Remember the old body text
 			old_body = body.get("1.0","end")
 			
-			if old and old != v and old.edit_text:
+			if old and old != v and old.edit_text():
 				old.t.scrollBarSpot = yview
 				old.t.insertSpot = insertSpot
 			
@@ -1892,6 +1884,7 @@ class leoTree:
 				
 				if v != present_v:
 					# Replace the tail of c.beadList by c and make c the present node.
+					# print "updating c.beadList"
 					c.beadPointer += 1
 					c.beadList[c.beadPointer:] = []
 					c.beadList.append(v)
@@ -1931,7 +1924,7 @@ class leoTree:
 	#@+node:8::tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
-		if v and v.edit_text:
+		if v and v.edit_text():
 			
 			#@<< set editing headline colors >>
 			#@+node:1::<< set editing headline colors >>
@@ -1943,32 +1936,32 @@ class leoTree:
 			selbg = config.getWindowPref("headline_text_editing_selection_background_color")
 			if fg and bg and selfg and selbg:
 				try:
-					v.edit_text.configure(state="normal",highlightthickness=1,
+					v.edit_text().configure(state="normal",highlightthickness=1,
 						selectforeground=selfg,selectbackground=selbg,fg=fg, bg=bg)
 					return
 				except:
 					es_exception()
 			elif selfg and selbg:
 				try:
-					v.edit_text.configure(state="normal",highlightthickness=1,
+					v.edit_text().configure(state="normal",highlightthickness=1,
 						selectforeground=selfg,selectbackground=selbg,fg="black",bg="white")
 					return
 				except:
 					es_exception()
 			elif fg and bg:
 				try:
-					v.edit_text.configure(state="normal",highlightthickness=1,fg=fg,bg=bg)
+					v.edit_text().configure(state="normal",highlightthickness=1,fg=fg,bg=bg)
 					return
 				except:
 					es_exception()
 					
-			v.edit_text.configure(state="normal",highlightthickness=1,fg="black",bg="white")
+			v.edit_text().configure(state="normal",highlightthickness=1,fg="black",bg="white")
 			#@-body
 			#@-node:1::<< set editing headline colors >>
 
 	
 	def setDisabledLabelState (self,v): # selected, disabled
-		if v and v.edit_text:
+		if v and v.edit_text():
 			
 			#@<< set selected, disabled headline colors >>
 			#@+node:2::<< set selected, disabled headline colors >>
@@ -1978,12 +1971,12 @@ class leoTree:
 			bg = config.getWindowPref("headline_text_selected_background_color")
 			if fg and bg:
 				try:
-					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
+					v.edit_text().configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
 					return
 				except:
 					es_exception()
 			
-			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
+			v.edit_text().configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
 			#@-body
 			#@-node:2::<< set selected, disabled headline colors >>
 
@@ -1992,7 +1985,7 @@ class leoTree:
 		self.setDisabledLabelState(v)
 	
 	def setUnselectedLabelState (self,v): # not selected.
-		if v and v.edit_text:
+		if v and v.edit_text():
 			
 			#@<< set unselected headline colors >>
 			#@+node:3::<< set unselected headline colors >>
@@ -2002,18 +1995,18 @@ class leoTree:
 			bg = config.getWindowPref("headline_text_unselected_background_color")
 			if fg and bg:
 				try:
-					v.edit_text.configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
+					v.edit_text().configure(state="disabled",highlightthickness=0,fg=fg, bg=bg)
 					return
 				except:
 					es_exception()
 					
-			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black", bg="white")
+			v.edit_text().configure(state="disabled",highlightthickness=0,fg="black", bg="white")
 			#@-body
 			#@-node:3::<< set unselected headline colors >>
 	#@-body
 	#@-node:8::tree.set...LabelState
-	#@-node:6::Selecting & editing (tree)
-	#@+node:7::tree.moveUpDown
+	#@-node:7::Selecting & editing (tree)
+	#@+node:8::tree.moveUpDown
 	#@+body
 	def OnUpKey   (self,event=None): return self.moveUpDown("up")
 	def OnDownKey (self,event=None): return self.moveUpDown("down")
@@ -2049,7 +2042,7 @@ class leoTree:
 		# trace("insert:",body.index("insert"))
 		return "break" # Inhibit further bindings.
 	#@-body
-	#@-node:7::tree.moveUpDown
+	#@-node:8::tree.moveUpDown
 	#@-others
 #@-body
 #@-node:0::@file leoTree.py

@@ -5,6 +5,7 @@
 
 
 #@@language python
+
 import exceptions,os,re,string,sys,time,types,Tkinter
 
 
@@ -1103,6 +1104,9 @@ class redirectClass:
 		
 	def isRedirected (self):
 		return self.old != None
+		
+	def flush(self, *args):
+		return # 6/14/03:  For LeoN: just for compatibility.
 	
 	def redirect (self,stdout=1):
 		import sys
@@ -3392,29 +3396,37 @@ class Bunch:
 
 #@-body
 #@-node:11::class Bunch
-#@+node:12::collectGarbage
+#@+node:12::collectGarbage & printGarbage
 #@+body
+# gc may not exist everywhere.
+try: 
+	import gc
+	# gc.set_debug(gc.DEBUG_LEAK | gc.DEBUG_STATS)
+except:pass
+
 def collectGarbage():
 	
-	return ###
-	
+	return ## This just slows everything down.
 	try:
-		import gc
 		gc.collect()
-		n = len(gc.garbage)
-		n2 = len(gc.get_objects())
-		if 1: # more verbose.
-			if n > 0:
-				es("garbage: %d, objects: %d" % (n,n2),color="red")
-			else:
-				es("objects: %d" % (n2))
-		else: # less verbose
-			if n > 0:
-				es("garbage: "+`n`)
-	except:
-		es_exception()
+		print "garbage: %d, objects: %d" % (len(gc.garbage),len(gc.get_objects()))
+	except: pass # es_exception()
+
+lastObjectCount = 0
+
+def printGarbage(message=""):
+	
+	global lastObjectCount
+	n = len(gc.garbage)
+	n2 = len(gc.get_objects())
+	print message, "garbage: %d, objects: %+5d =%7d" % (n,n2-lastObjectCount,n2)
+	if n > 0:
+		for g in gc.garbage:
+			print `g`
+	lastObjectCount = n2
+	# gc.collect()
 #@-body
-#@-node:12::collectGarbage
+#@-node:12::collectGarbage & printGarbage
 #@+node:13::executeScript
 #@+body
 def executeScript (name):

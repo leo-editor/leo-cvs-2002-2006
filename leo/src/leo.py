@@ -52,7 +52,8 @@ def run(fileName=None,*args,**keywords):
 		frame = doStep2(app,fileName)
 		if frame:
 			doStep3(app,frame,args)
-			root.mainloop()
+			runMainLoop(root)
+
 
 #@-body
 #@+node:1::doStep1
@@ -166,7 +167,19 @@ def doStep3 (app,frame,args):
 #@-body
 #@-node:3::doStep3
 #@-node:2::run & allies
-#@+node:3::profile
+#@+node:3::runMainLoop
+#@+body
+def runMainLoop(root):
+	
+	"""A function that runs root.mainloop()
+	
+	LeoN may replace this fuction entirely."""
+	
+	root.mainloop()
+
+#@-body
+#@-node:3::runMainLoop
+#@+node:4::profile
 #@+body
 #@+at
 #  To gather statistics, do the following in a Python window, not idle:
@@ -193,7 +206,7 @@ def profile ():
 	p.sort_stats('cum','file','name')
 	p.print_stats()
 #@-body
-#@-node:3::profile
+#@-node:4::profile
 #@-others
 
 

@@ -93,19 +93,18 @@ class leoDialog:
 		# Buttons is a list of dictionaries, with an empty dictionary at the end if there is only one entry.
 		buttonList = []
 		for d in buttons:
-			if d:
-				text = d.get("text","<missing button name>")
-				isDefault = d.get("default",false)
-				underline = d.get("underline",0)
-				command = d.get("command",None)
-				bd = choose(isDefault,4,2)
-		
-				b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
-				b.pack(side="left",padx=5,pady=10)
-				buttonList.append(b)
-				
-				if isDefault and command:
-					self.defaultButtonCommand = command
+			text = d.get("text","<missing button name>")
+			isDefault = d.get("default",false)
+			underline = d.get("underline",0)
+			command = d.get("command",None)
+			bd = choose(isDefault,4,2)
+	
+			b = Tk.Button(f,width=6,text=text,bd=bd,underline=underline,command=command)
+			b.pack(side="left",padx=5,pady=10)
+			buttonList.append(b)
+			
+			if isDefault and command:
+				self.defaultButtonCommand = command
 			
 		return buttonList
 	#@-body
@@ -326,9 +325,7 @@ class askLeoID (leoDialog):
 		self.createFrame(message)
 		self.focus_widget = self.id_entry
 	
-		buttons = (
-			{"text":"OK","command":self.onButton,"default":true},
-			{})
+		buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0]
 	#@-body
@@ -451,7 +448,6 @@ class  askOkCancelNumber (leoDialog):
 		buttons = (
 				{"text":"Ok",    "command":self.okButton,     "default":true},
 				{"text":"Cancel","command":self.cancelButton} )
-	
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0] # Override the default kind of Ok button.
 	#@-body
@@ -553,9 +549,8 @@ class askOk(leoDialog):
 	
 		if message:
 			self.createMessageFrame(message)
-		buttons = (
-			{"text":text,"command":self.okButton,"default":true},
-			{})
+	
+		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
 		self.createButtons(buttons)
 	#@-body
 	#@-node:1::askOk.__init__

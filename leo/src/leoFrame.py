@@ -3407,11 +3407,11 @@ class LeoFrame:
 		c = self.commands ; v = c.currentVnode()
 		s = v.headString() # Remember the old value.
 	
-		if v.edit_text:
-			sel1,sel2 = getTextSelection(v.edit_text)
+		if v.edit_text():
+			sel1,sel2 = getTextSelection(v.edit_text())
 			if sel1 and sel2:
-				v.edit_text.delete(sel1,sel2)
-			v.edit_text.insert("insert",self.getTime(body=false))
+				v.edit_text().delete(sel1,sel2)
+			v.edit_text().insert("insert",self.getTime(body=false))
 			c.tree.idle_head_key(v)
 			
 		# A kludge to get around not knowing whether we are editing or not.
@@ -3495,9 +3495,9 @@ class LeoFrame:
 			s = angleBrackets(' ' + s + ' ')
 		
 		c.tree.editLabel(v)
-		if v.edit_text:
-			v.edit_text.delete("1.0","end")
-			v.edit_text.insert("1.0",s)
+		if v.edit_text():
+			v.edit_text().delete("1.0","end")
+			v.edit_text().insert("1.0",s)
 			c.tree.onHeadChanged(v)
 	
 	#@-body
@@ -4208,13 +4208,9 @@ class LeoFrame:
 		url = "http://webpages.charter.net/edreamleo/front.html"
 		email = "edreamleo@charter.net"
 	
-		if 1: # Much better looking and includes icon.
-			import leoDialog
-			leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
-		else:
-			import tkMessageBox
-			tkMessageBox.showinfo("About Leo",
-				version + copyright + '\n' + url + '\n' + email)
+		import leoDialog
+		leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)
+	
 	#@-body
 	#@-node:1::OnAbout (version number & date)
 	#@+node:2::OnLeoDocumentation

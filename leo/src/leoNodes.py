@@ -1374,24 +1374,30 @@ class vnode:
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
 		
 		# Tk widgets & widget references.
-		self.edit_text = None
-		self.icon_id = self.box_id = self.icon_id = None
+		# We would like to keep these to a minimum.
+		if 0: # Now replaced by getter.
+			self.edit_text = None
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
 
-		if app().deleteOnClose:
-			self.commands.tree.vnode_alloc_list.append(self)
+	
 	#@-body
 	#@-node:2::v.__init__
 	#@+node:3::v.__repr__ & v.__str__
 	#@+body
 	def __repr__ (self):
-	
-		return "<v %d:%s>" % (id(self),`self.t.headString`)
 		
-	def __str__ (self):
+		if self.t:
+			return "<v %d:%s>" % (id(self),`self.t.headString`)
+		else:
+			return "<v %d:NULL tnode>" % (id(self))
 	
-		return "<v %d:%s>" % (id(self),`self.t.headString`)
+	def __str__ (self):
+		
+		if self.t:
+			return "<v %d:%s>" % (id(self),`self.t.headString`)
+		else:
+			return "<v %d:NULL tnode>" % (id(self))
 	#@-body
 	#@-node:3::v.__repr__ & v.__str__
 	#@+node:4::v.__cmp__ (not used)
@@ -1421,8 +1427,8 @@ class vnode:
 		self.t.destroy()
 		self.t = None
 		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
-		self.edit_text = None
-		self.box_id = self.icon_id = self.edit_text_id = None
+	
+	
 	#@-body
 	#@-node:5::v.destroy
 	#@+node:6::v.Callbacks (handles event hooks)
@@ -1824,16 +1830,7 @@ class vnode:
 	#@-node:3::v.moreBody
 	#@-node:8::File Conversion (vnode)
 	#@+node:9::Getters
-	#@+node:1::bodyString
-	#@+body
-	# Compatibility routine for scripts
-	
-	def bodyString (self):
-	
-		return self.t.bodyString
-	#@-body
-	#@-node:1::bodyString
-	#@+node:2::Children
+	#@+node:1::Children
 	#@+node:1::childIndex
 	#@+body
 	# childIndex and nthChild are zero-based.
@@ -1905,86 +1902,8 @@ class vnode:
 		return n
 	#@-body
 	#@-node:6::numberOfChildren (n)
-	#@-node:2::Children
-	#@+node:3::currentVnode (vnode)
-	#@+body
-	# Compatibility routine for scripts
-	
-	def currentVnode (self):
-	
-		return self.commands.tree.currentVnode
-	#@-body
-	#@-node:3::currentVnode (vnode)
-	#@+node:4::v.exists
-	#@+body
-	def exists(self,c):
-		
-		"""Return true if v exists in c's tree"""
-		
-		v = self ; c = v.commands
-		
-		# This code must be fast.
-		root = c.rootVnode()
-		while v:
-			if v == root:
-				return true
-			p = v.parent()
-			if p:
-				v = p
-			else:
-				v = v.back()
-			
-		return false
-	#@-body
-	#@-node:4::v.exists
-	#@+node:5::findRoot
-	#@+body
-	# Compatibility routine for scripts
-	
-	def findRoot (self):
-	
-		return self.commands.tree.rootVnode
-	
-	#@-body
-	#@-node:5::findRoot
-	#@+node:6::headString & cleanHeadString
-	#@+body
-	def headString (self):
-	
-		if self.t.headString:
-			return self.t.headString
-		else:
-			return ""
-			
-	def cleanHeadString (self):
-		
-		s = self.headString()
-		s = toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
-		return s
-	#@-body
-	#@-node:6::headString & cleanHeadString
-	#@+node:7::isAncestorOf
-	#@+body
-	def isAncestorOf (self, v):
-	
-		if not v:
-			return false
-		v = v.parent()
-		while v:
-			if v == self:
-				return true
-			v = v.parent()
-		return false
-	#@-body
-	#@-node:7::isAncestorOf
-	#@+node:8::isRoot
-	#@+body
-	def isRoot (self):
-	
-		return not self.parent() and not self.back()
-	#@-body
-	#@-node:8::isRoot
-	#@+node:9::Status Bits
+	#@-node:1::Children
+	#@+node:2::Status Bits
 	#@+node:1::isCloned
 	#@+body
 	def isCloned (self):
@@ -2062,7 +1981,101 @@ class vnode:
 		return self.statusBits
 	#@-body
 	#@-node:10::status
-	#@-node:9::Status Bits
+	#@-node:2::Status Bits
+	#@+node:3::bodyString
+	#@+body
+	# Compatibility routine for scripts
+	
+	def bodyString (self):
+	
+		return self.t.bodyString
+	#@-body
+	#@-node:3::bodyString
+	#@+node:4::currentVnode (vnode)
+	#@+body
+	# Compatibility routine for scripts
+	
+	def currentVnode (self):
+	
+		return self.commands.tree.currentVnode
+	#@-body
+	#@-node:4::currentVnode (vnode)
+	#@+node:5::edit_text
+	#@+body
+	def edit_text (self):
+		
+		return self.commands.tree.edit_text_dict.get(self)
+	#@-body
+	#@-node:5::edit_text
+	#@+node:6::findRoot
+	#@+body
+	# Compatibility routine for scripts
+	
+	def findRoot (self):
+	
+		return self.commands.tree.rootVnode
+	
+	#@-body
+	#@-node:6::findRoot
+	#@+node:7::headString & cleanHeadString
+	#@+body
+	def headString (self):
+	
+		if self.t.headString:
+			return self.t.headString
+		else:
+			return ""
+			
+	def cleanHeadString (self):
+		
+		s = self.headString()
+		s = toEncodedString(s,"ascii") # Replaces non-ascii characters by '?'
+		return s
+	#@-body
+	#@-node:7::headString & cleanHeadString
+	#@+node:8::isAncestorOf
+	#@+body
+	def isAncestorOf (self, v):
+	
+		if not v:
+			return false
+		v = v.parent()
+		while v:
+			if v == self:
+				return true
+			v = v.parent()
+		return false
+	#@-body
+	#@-node:8::isAncestorOf
+	#@+node:9::isRoot
+	#@+body
+	def isRoot (self):
+	
+		return not self.parent() and not self.back()
+	#@-body
+	#@-node:9::isRoot
+	#@+node:10::v.exists
+	#@+body
+	def exists(self,c):
+		
+		"""Return true if v exists in c's tree"""
+		
+		v = self ; c = v.commands
+		
+		# This code must be fast.
+		root = c.rootVnode()
+		while v:
+			if v == root:
+				return true
+			p = v.parent()
+			if p:
+				v = p
+			else:
+				v = v.back()
+			
+		return false
+	#@-body
+	#@-node:10::v.exists
 	#@-node:9::Getters
 	#@+node:10::Setters
 	#@+node:1::Head and body text
@@ -3262,105 +3275,6 @@ class vnode:
 	#@-others
 #@-body
 #@-node:6::class vnode
-#@+node:7::class newVnode
-#@+body
-class newVnode:
-	
-	#@<< vnode constants >>
-	#@+node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
-	#@+body
-	# Define the meaning of status bits in new vnodes.
-	
-	# Archived...
-	clonedBit	  = 0x01 # true: vnode has clone mark.
-	# not used	 = 0x02
-	expandedBit = 0x04 # true: vnode is expanded.
-	markedBit	  = 0x08 # true: vnode is marked
-	orphanBit	  = 0x10 # true: vnode saved in .leo file, not derived file.
-	selectedBit = 0x20 # true: vnode is current vnode.
-	topBit		    = 0x40 # true: vnode was top vnode when saved.
-	
-	# Not archived...
-	dirtyBit    =	0x060
-	richTextBit =	0x080 # Determines whether we use <bt> or <btr> tags.
-	visitedBit	 = 0x100
-	
-	#@-body
-	#@-node:1::<< vnode constants >>  ### Warning: changes meaning of visitedBit
-
-
-	#@+others
-	#@+node:2::newv.__init__
-	#@+body
-	def __init__ (self,commands):
-	
-		self.commands = commands # The commander for this vnode.
-	
-		# Structure links
-		self.mParent = self.mFirstChild = self.mNext = self.mBack = None
-	
-		# Links between nodes in the same bag.
-		self.link = None # The link to the target node.
-		self.links = None # List of all link nodes having this node as a target.
-		self.t = self # A dummy link for compatibility with old code.
-	
-		# Content.
-		self.headString = "" # Headline text.
-		self.bodyString = "" # Body text.
-		self.statusBits = 0 # Status bits.
-	
-		# State information for the body pane
-		self.selectionStart = 0 # The start of the selected body text.
-		self.selectionLength = 0 # The length of the selected body text.
-		self.insertSpot = None # Location of previous insert point.
-		self.scrollBarSpot = None # Previous value of scrollbar position.
-	
-		# File stuff.
-		self.gnx = None # Immutable global node index.
-		self.fileIndex = None # An immutable file index: must always exist, even in 4.0.
-	
-	#@-body
-	#@-node:2::newv.__init__
-	#@-others
-#@-body
-#@-node:7::class newVnode
-#@+node:8::class vxnode
-#@+body
-class vxnode:
-	
-	"""A class representing a vnode during redraws"""
-	
-	
-	#@<< about the vxnode class >>
-	#@+node:1::<< about the vxnode class >>
-	#@-node:1::<< about the vxnode class >>
-
-
-	#@+others
-	#@+node:2::vx.__init__
-	#@+body
-	def __init__ (self,v):
-		
-		# Links to other classes.
-		self.c = v.commands
-		self.v = v
-		
-		# Traversal.
-		self.next = self.back = None
-		self.level = None
-		
-		# Canvas items.
-		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
-		self.icon_id = None
-		self.edit_text = None 
-	
-	#@-body
-	#@-node:2::vx.__init__
-	#@-others
-
-
-#@-body
-#@-node:8::class vxnode
 #@-others
 #@-body
 #@-node:0::@file leoNodes.py
