@@ -2046,8 +2046,10 @@ def getDetails(self, text):
         config
         commands
     """
-    self.is_plugin = self.hasImport(text, "leoPlugins") 
-    self.version = self.getPattern(text, r'__version__\s*=\s*"(.*?)"', "-")
+    # The following line tried to detect plugins by looking 
+    # for self.hasImport(text, "leoPlugins") - now we assume all .py are plugins
+    self.is_plugin = True 
+    self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
     # Allow both single and double triple-quoted strings.
     match1 = self.getMatch(text, r'"""(.*?)"""')
     match2 = self.getMatch(text, r"'''(.*?)'''")
@@ -2061,7 +2063,12 @@ def getDetails(self, text):
         self.description = pat1 or pat2 or 'Unknown'
     # g.trace('%4d %s' % (len(self.description),self.name))
     self.commands = sets.Set(self.getPatterns(text, "def cmd_(\w*?)\("))
-    self.handlers = sets.Set(self.getPatterns(text, r'registerHandler\("(.*?)"'))
+    # Get a list of the handlers
+    handler_list = self.getPattern(text, r'registerHandler\((.*?)\)')
+    if handler_list:
+        self.handlers = sets.Set(self.getPatterns(handler_list, r'["\'](.*?)["\']'))
+    else:
+        self.handlers = sets.Set()
     # Look for the matching .ini file.
     ini_file_name = g.os_path_join(
         g.app.loadDir,"..","plugins",
@@ -2123,8 +2130,6 @@ def initFrom(self, location):
     # Initial properties
     self.filename = location
     self.name = self.getName(location)
-    
-    # g.trace(self.name)
 
     # Get the contents of the file
     try:

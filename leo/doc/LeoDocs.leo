@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="12849" clone_windows="0"/>
-<globals body_outline_ratio="0.398837209302">
-	<global_window_position top="37" left="202" height="680" width="843"/>
+<globals body_outline_ratio="0.294117647059">
+	<global_window_position top="37" left="202" height="782" width="932"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -39,7 +39,7 @@
 <v t="edream.110203163054.12"><vh>Dan Winkler 3</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.46" a="TV"><vh>Release Notes</vh>
+<v t="edream.110203163054.46"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -2084,7 +2084,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050"><vh>FAQ</vh>
+<v t="edream.110203163054.1050" a="E"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -2176,6 +2176,7 @@
 <v t="edream.120903151103"><vh>Importing files</vh>
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
+<v t="ekr.20050208054557" a="TV"><vh>Leo is hanging on my Linux box.  What should I do?</vh></v>
 <v t="edream.110203163054.1071"><vh>Other topics</vh>
 <v t="ekr.20040805102623"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
@@ -16438,5 +16439,12 @@ in the clearest possible way, that is, with your natural language. Sections
 really are an entirely separate arena from computer syntax; there is NO
 intrinsic reason why such "units of understanding" should correspond with
 classes, functions or methods.</t>
+<t tx="ekr.20050208054557">When building Tcl on Linux, do not specify "--enable-threads"
+
+Only use Tcl with the default "threads not enabled" case.
+
+For more details, see:
+
+http://sourceforge.net/forum/message.php?msg_id=1685399</t>
 </tnodes>
 </leo_file>
