@@ -1555,7 +1555,8 @@ class atFile:
 				if len(self.endSentinelComment) == 0:
 					out.append(s[i:])
 				else:
-					k = string.find(s,self.endSentinelComment,i)
+					# 10/2/02: changed find to findr, per suggestion of Rich Ries
+					k = string.findr(s,self.endSentinelComment,i)
 					if k == -1:
 						out.append(s[i:])
 					else:
