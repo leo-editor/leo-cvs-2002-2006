@@ -59,7 +59,7 @@ def isTestNode (p):
 #@nonl
 #@-node:ekr.20040707071542.2:isSuiteNode and isTestNode
 #@+node:ekr.20040707210849:doTests...
-def doTests(all):
+def doTests(all,verbosity=1):
 
     c = g.top() ; p1 = p = c.currentPosition()
 
@@ -80,7 +80,7 @@ def doTests(all):
             if test: suite.addTest(test)
 
     # Verbosity: 1: print just dots.
-    unittest.TextTestRunner(verbosity=1).run(suite)
+    unittest.TextTestRunner(verbosity=verbosity).run(suite)
 
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
