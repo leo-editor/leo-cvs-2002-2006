@@ -570,7 +570,6 @@
 <v t="T371"><vh>To do</vh>
 <v t="T372"><vh> Calls to notYet</vh></v>
 <v t="T373"><vh> Update web site</vh></v>
-<v><vh>v2.3 Latest release</vh></v>
 <v><vh>v2.4: Drag and Drop, Import (The last major release)</vh>
 <v t="T374" a="C"><vh>Drag and drop</vh></v>
 <v><vh>Bill's suggestions (focus problems)</vh>
@@ -1775,7 +1774,7 @@
 <v t="T1102"><vh>@file tangle_done.py</vh></v>
 <v t="T1103"><vh>@file untangle_done.py</vh></v>
 </v>
-<v t="T1104" a="E"><vh>Code</vh>
+<v t="T1104" a="V"><vh>Code</vh>
 <v t="T995" a="C"><vh> OnAbout (version number)</vh></v>
 <v t="T1105"><vh> Overview of code</vh></v>
 <v t="T1106"><vh>@file __init__.py</vh></v>
@@ -2504,7 +2503,7 @@
 <v t="T1331"><vh>onDropSplitterBar, onDropHSplitBar, onDropVSplitBar</vh></v>
 </v>
 </v>
-<v t="T1332" a="V"><vh>@file leoGlobals.py</vh>
+<v t="T1332"><vh>@file leoGlobals.py</vh>
 <v t="T1333"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T1334"><vh>alert</vh></v>
 <v t="T1335"><vh>app, setApp</vh></v>
@@ -17711,7 +17710,7 @@ import leo, string, re
 @c
 
 import leo
-leo.open("c:\prog\LeoPy\LeoPy.leo")</t>
+leo.open("c:\prog\leoCVS\leo\LeoPy.leo")</t>
 <t tx="T1101">@ Script for creating and installing distributions of leo.py using Python's distutils package.  setup.py is the conventional name for such scripts.
 
 On Windows, invoke this script using sdist.bat

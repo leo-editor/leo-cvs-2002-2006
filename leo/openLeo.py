@@ -10,7 +10,7 @@
 #@@c
 
 import leo
-leo.open("c:\prog\LeoPy\LeoPy.leo")
+leo.open("c:\prog\leoCVS\leo\LeoPy.leo")
 #@-body
 #@-node:0::@file openLeo.py
 #@-leo
