@@ -2577,9 +2577,6 @@ class nodeIndices:
 	def getDefaultId (self):
 		return self.defaultId
 		
-	def getDefaultLoc (self):
-		return self.defaultLoc
-		
 	def setDefaultId (self,id):
 		self.defaultId = id
 	
