@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4253" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
+<leo_header file_format="2" tnodes="0" max_tnode_index="4254" clone_windows="0"/>
+<globals body_outline_ratio="0.292849035187">
 	<global_window_position top="36" left="289" height="881" width="894"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -404,7 +404,7 @@
 </v>
 </v>
 <v t="ekr.20040402043516" a="E"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402043516.1"><vh>leoReadlines</vh></v>
+<v t="ekr.20040402043516.1"><vh>readLinesClass</vh></v>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
 <v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
 <v t="ekr.20040402064301.1"><vh>__init__</vh></v>
@@ -631,7 +631,7 @@
 <v t="EKR.20040603143325"><vh>AssertionError test</vh></v>
 <v t="EKR.20040603174633"><vh>test of focus</vh></v>
 <v t="EKR.20040604082113"><vh>Test of @tabwidth</vh></v>
-<v t="EKR.20040604143253" a="E"><vh>Test of Remove sentinels</vh>
+<v t="EKR.20040604143253"><vh>Test of Remove sentinels</vh>
 <v t="EKR.20040604143253.1" a="E"><vh>@thin removeSentTest.txt</vh></v>
 </v>
 <v t="EKR.20040604170105"><vh>Mini test of Remove sentinels</vh></v>
@@ -641,9 +641,8 @@
 <v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
 <v t="EKR.20040608092841"><vh>test of indent/undent with negative tab width</vh></v>
 <v t="EKR.20040608095146.1" a="M" tnodeList="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
-</v>
 <v t="EKR.20040610092248"><vh>Test of pasting into big node</vh></v>
-<v t="EKR.20040610131858" a="TV"><vh>Test of Paste Node Retaining Clones</vh>
+<v t="EKR.20040610131858"><vh>Test of Paste Node Retaining Clones</vh>
 <v t="EKR.20040610131858.1"><vh>a</vh>
 <v t="EKR.20040610143643"><vh>b</vh></v>
 <v t="EKR.20040610143643"><vh>b</vh></v>
@@ -653,6 +652,42 @@
 <v t="EKR.20040610143643"><vh>b</vh></v>
 </v>
 <v t="EKR.20040610132739"><vh>copied</vh></v>
+</v>
+</v>
+<v t="EKR.20040610201941" a="E"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610192622" a="E"><vh>Check Syntax script</vh></v>
+<v t="EKR.20040610192622.1" a="TV"><vh>Check Syntax data</vh></v>
+</v>
+<v t="EKR.20040610201236" a="E"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610194209" a="E"><vh>TabNanny script</vh>
+<v t="EKR.20040610195543"><vh>checkString</vh></v>
+<v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
+</v>
+<v t="EKR.20040610194209.1" a="E"><vh>TabNanny data</vh></v>
+<v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
+<v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.3"><vh>errprint</vh></v>
+<v t="EKR.20040610195543.4"><vh>main</vh></v>
+<v t="EKR.20040610195543.5"><vh>class NannyNag</vh>
+<v t="EKR.20040610195543.6"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.7"><vh>get_lineno</vh></v>
+<v t="EKR.20040610195543.8"><vh>get_msg</vh></v>
+<v t="EKR.20040610195543.9"><vh>get_line</vh></v>
+</v>
+<v t="EKR.20040610195543.10"><vh>check</vh></v>
+<v t="EKR.20040610195543.11"><vh>class Whitespace</vh>
+<v t="EKR.20040610195543.12"><vh>&lt;&lt; class Whitespace declarations &gt;&gt;</vh></v>
+<v t="EKR.20040610195543.13"><vh>__init__</vh></v>
+<v t="EKR.20040610195543.14"><vh>longest_run_of_spaces</vh></v>
+<v t="EKR.20040610195543.15"><vh>indent_level</vh></v>
+<v t="EKR.20040610195543.16"><vh>equal</vh></v>
+<v t="EKR.20040610195543.17"><vh>not_equal_witness</vh></v>
+<v t="EKR.20040610195543.18"><vh>less</vh></v>
+<v t="EKR.20040610195543.19"><vh>not_less_witness</vh></v>
+</v>
+<v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
+<v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2207,6 +2242,431 @@ print p.v.t.fileIndex&lt;/t&gt;
 &lt;/leo_file&gt;
 </t>
 <t tx="EKR.20040610143643"></t>
+<t tx="EKR.20040610192622">import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+import compiler
+
+next = p.next()
+s = next.bodyString()
+
+try:
+	val = compiler.parse(s)
+	# print val
+	g.es("Parsed OK",color="blue")
+except SyntaxError:
+	g.es("Syntax error",color="blue")</t>
+<t tx="EKR.20040610192622.1">import string
+
+string.join(a,b]
+</t>
+<t tx="EKR.20040610194209">import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+import tabnanny
+
+@others
+
+next = p.next()
+s = next.bodyString()
+headline = next.headString()
+
+checkString(s,headline)</t>
+<t tx="EKR.20040610194209.1">    a = 5 # 4 spaces
+	b = 6 # a tab.</t>
+<t tx="EKR.20040610195543">def checkString (s,headline):
+
+	"""Check indentation using tabnanny.process_tokens."""
+
+	# This code is based on tabnanny.check.
+	
+	import tokenize
+	
+	# Create readLinesClass and return its next method.
+	readline = readLinesClass(s).next
+
+	try:
+		tabnanny.process_tokens(tokenize.generate_tokens(readline))
+
+	except tokenize.TokenError, msg:
+
+		g.es("Token error in %s" % headline,color="red")
+		g.es(str(msg))
+
+	except tabnanny.NannyNag, nag:
+
+		badline = nag.get_lineno()
+		line    = nag.get_line()
+		message = nag.get_msg()
+
+		g.es("Indentation error in %s, line %d" % (headline, badline),color="red")
+		g.es(message)
+		g.es("offending line:\n%s" % repr(str(line))[1:-1])</t>
+<t tx="EKR.20040610195543.1">@ignore
+@language python
+&lt;&lt; tabnanny declarations &gt;&gt;
+@others
+
+if __name__ == '__main__':
+    main()
+</t>
+<t tx="EKR.20040610195543.2">#! /usr/bin/env python
+
+"""The Tab Nanny despises ambiguous indentation.  She knows no mercy.
+
+tabnanny -- Detection of ambiguous indentation
+
+For the time being this module is intended to be called as a script.
+However it is possible to import it into an IDE and use the function
+check() described below.
+
+Warning: The API provided by this module is likely to change in future
+releases; such changes may not be backward compatible.
+"""
+
+# Released to the public domain, by Tim Peters, 15 April 1998.
+
+# XXX Note: this is now a standard library module.
+# XXX The API needs to undergo changes however; the current code is too
+# XXX script-like.  This will be addressed later.
+
+__version__ = "6"
+
+import os
+import sys
+import getopt
+import tokenize
+if not hasattr(tokenize, 'NL'):
+    raise ValueError("tokenize.NL doesn't exist -- tokenize module too old")
+
+__all__ = ["check", "NannyNag", "process_tokens"]
+
+verbose = 0
+filename_only = 0</t>
+<t tx="EKR.20040610195543.3">def errprint(*args):
+    sep = ""
+    for arg in args:
+        sys.stderr.write(sep + str(arg))
+        sep = " "
+    sys.stderr.write("\n")
+</t>
+<t tx="EKR.20040610195543.4">def main():
+    global verbose, filename_only
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "qv")
+    except getopt.error, msg:
+        errprint(msg)
+        return
+    for o, a in opts:
+        if o == '-q':
+            filename_only = filename_only + 1
+        if o == '-v':
+            verbose = verbose + 1
+    if not args:
+        errprint("Usage:", sys.argv[0], "[-v] file_or_directory ...")
+        return
+    for arg in args:
+        check(arg)</t>
+<t tx="EKR.20040610195543.5">
+class NannyNag(Exception):
+    """
+    Raised by tokeneater() if detecting an ambiguous indent.
+    Captured and handled in check().
+    """
+	@others
+</t>
+<t tx="EKR.20040610195543.6">def __init__(self, lineno, msg, line):
+    self.lineno, self.msg, self.line = lineno, msg, line
+</t>
+<t tx="EKR.20040610195543.7">def get_lineno(self):
+    return self.lineno
+</t>
+<t tx="EKR.20040610195543.8">def get_msg(self):
+    return self.msg
+</t>
+<t tx="EKR.20040610195543.9">def get_line(self):
+    return self.line
+</t>
+<t tx="EKR.20040610195543.10">def check(file):
+    """check(file_or_dir)
+
+    If file_or_dir is a directory and not a symbolic link, then recursively
+    descend the directory tree named by file_or_dir, checking all .py files
+    along the way. If file_or_dir is an ordinary Python source file, it is
+    checked for whitespace related problems. The diagnostic messages are
+    written to standard output using the print statement.
+    """
+
+    if os.path.isdir(file) and not os.path.islink(file):
+        if verbose:
+            print "%s: listing directory" % `file`
+        names = os.listdir(file)
+        for name in names:
+            fullname = os.path.join(file, name)
+            if (os.path.isdir(fullname) and
+                not os.path.islink(fullname) or
+                os.path.normcase(name[-3:]) == ".py"):
+                check(fullname)
+        return
+
+    try:
+        f = open(file)
+    except IOError, msg:
+        errprint("%s: I/O Error: %s" % (`file`, str(msg)))
+        return
+
+    if verbose &gt; 1:
+        print "checking", `file`, "..."
+
+    try:
+        process_tokens(tokenize.generate_tokens(f.readline))
+
+    except tokenize.TokenError, msg:
+        errprint("%s: Token Error: %s" % (`file`, str(msg)))
+        return
+
+    except NannyNag, nag:
+        badline = nag.get_lineno()
+        line = nag.get_line()
+        if verbose:
+            print "%s: *** Line %d: trouble in tab city! ***" % (
+                `file`, badline)
+            print "offending line:", `line`
+            print nag.get_msg()
+        else:
+            if ' ' in file: file = '"' + file + '"'
+            if filename_only: print file
+            else: print file, badline, `line`
+        return
+
+    if verbose:
+        print "%s: Clean bill of health." % `file`
+</t>
+<t tx="EKR.20040610195543.11">
+class Whitespace:
+	&lt;&lt; class Whitespace declarations &gt;&gt;
+	@others
+</t>
+<t tx="EKR.20040610195543.12"># the characters used for space and tab
+S, T = ' \t'
+
+# members:
+#   raw
+#       the original string
+#   n
+#       the number of leading whitespace characters in raw
+#   nt
+#       the number of tabs in raw[:n]
+#   norm
+#       the normal form as a pair (count, trailing), where:
+#       count
+#           a tuple such that raw[:n] contains count[i]
+#           instances of S * i + T
+#       trailing
+#           the number of trailing spaces in raw[:n]
+#       It's A Theorem that m.indent_level(t) ==
+#       n.indent_level(t) for all t &gt;= 1 iff m.norm == n.norm.
+#   is_simple
+#       true iff raw[:n] is of the form (T*)(S*)
+
+</t>
+<t tx="EKR.20040610195543.13">def __init__(self, ws):
+    self.raw  = ws
+    S, T = Whitespace.S, Whitespace.T
+    count = []
+    b = n = nt = 0
+    for ch in self.raw:
+        if ch == S:
+            n = n + 1
+            b = b + 1
+        elif ch == T:
+            n = n + 1
+            nt = nt + 1
+            if b &gt;= len(count):
+                count = count + [0] * (b - len(count) + 1)
+            count[b] = count[b] + 1
+            b = 0
+        else:
+            break
+    self.n    = n
+    self.nt   = nt
+    self.norm = tuple(count), b
+    self.is_simple = len(count) &lt;= 1
+</t>
+<t tx="EKR.20040610195543.14"># return length of longest contiguous run of spaces (whether or not
+# preceding a tab)
+def longest_run_of_spaces(self):
+    count, trailing = self.norm
+    return max(len(count)-1, trailing)
+</t>
+<t tx="EKR.20040610195543.15">def indent_level(self, tabsize):
+    # count, il = self.norm
+    # for i in range(len(count)):
+    #    if count[i]:
+    #        il = il + (i/tabsize + 1)*tabsize * count[i]
+    # return il
+
+    # quicker:
+    # il = trailing + sum (i/ts + 1)*ts*count[i] =
+    # trailing + ts * sum (i/ts + 1)*count[i] =
+    # trailing + ts * sum i/ts*count[i] + count[i] =
+    # trailing + ts * [(sum i/ts*count[i]) + (sum count[i])] =
+    # trailing + ts * [(sum i/ts*count[i]) + num_tabs]
+    # and note that i/ts*count[i] is 0 when i &lt; ts
+
+    count, trailing = self.norm
+    il = 0
+    for i in range(tabsize, len(count)):
+        il = il + i/tabsize * count[i]
+    return trailing + tabsize * (il + self.nt)
+</t>
+<t tx="EKR.20040610195543.16"># return true iff self.indent_level(t) == other.indent_level(t)
+# for all t &gt;= 1
+def equal(self, other):
+    return self.norm == other.norm
+</t>
+<t tx="EKR.20040610195543.17"># return a list of tuples (ts, i1, i2) such that
+# i1 == self.indent_level(ts) != other.indent_level(ts) == i2.
+# Intended to be used after not self.equal(other) is known, in which
+# case it will return at least one witnessing tab size.
+def not_equal_witness(self, other):
+    n = max(self.longest_run_of_spaces(),
+            other.longest_run_of_spaces()) + 1
+    a = []
+    for ts in range(1, n+1):
+        if self.indent_level(ts) != other.indent_level(ts):
+            a.append( (ts,
+                       self.indent_level(ts),
+                       other.indent_level(ts)) )
+    return a
+</t>
+<t tx="EKR.20040610195543.18"># Return True iff self.indent_level(t) &lt; other.indent_level(t)
+# for all t &gt;= 1.
+# The algorithm is due to Vincent Broman.
+# Easy to prove it's correct.
+# XXXpost that.
+# Trivial to prove n is sharp (consider T vs ST).
+# Unknown whether there's a faster general way.  I suspected so at
+# first, but no longer.
+# For the special (but common!) case where M and N are both of the
+# form (T*)(S*), M.less(N) iff M.len() &lt; N.len() and
+# M.num_tabs() &lt;= N.num_tabs(). Proof is easy but kinda long-winded.
+# XXXwrite that up.
+# Note that M is of the form (T*)(S*) iff len(M.norm[0]) &lt;= 1.
+def less(self, other):
+    if self.n &gt;= other.n:
+        return False
+    if self.is_simple and other.is_simple:
+        return self.nt &lt;= other.nt
+    n = max(self.longest_run_of_spaces(),
+            other.longest_run_of_spaces()) + 1
+    # the self.n &gt;= other.n test already did it for ts=1
+    for ts in range(2, n+1):
+        if self.indent_level(ts) &gt;= other.indent_level(ts):
+            return False
+    return True
+</t>
+<t tx="EKR.20040610195543.19"># return a list of tuples (ts, i1, i2) such that
+# i1 == self.indent_level(ts) &gt;= other.indent_level(ts) == i2.
+# Intended to be used after not self.less(other) is known, in which
+# case it will return at least one witnessing tab size.
+def not_less_witness(self, other):
+    n = max(self.longest_run_of_spaces(),
+            other.longest_run_of_spaces()) + 1
+    a = []
+    for ts in range(1, n+1):
+        if self.indent_level(ts) &gt;= other.indent_level(ts):
+            a.append( (ts,
+                       self.indent_level(ts),
+                       other.indent_level(ts)) )
+    return a
+</t>
+<t tx="EKR.20040610195543.20">def format_witnesses(w):
+    firsts = map(lambda tup: str(tup[0]), w)
+    prefix = "at tab size"
+    if len(w) &gt; 1:
+        prefix = prefix + "s"
+    return prefix + " " + ', '.join(firsts)
+</t>
+<t tx="EKR.20040610195543.21">def process_tokens(tokens):
+    INDENT = tokenize.INDENT
+    DEDENT = tokenize.DEDENT
+    NEWLINE = tokenize.NEWLINE
+    JUNK = tokenize.COMMENT, tokenize.NL
+    indents = [Whitespace("")]
+    check_equal = 0
+
+    for (type, token, start, end, line) in tokens:
+        if type == NEWLINE:
+            # a program statement, or ENDMARKER, will eventually follow,
+            # after some (possibly empty) run of tokens of the form
+            #     (NL | COMMENT)* (INDENT | DEDENT+)?
+            # If an INDENT appears, setting check_equal is wrong, and will
+            # be undone when we see the INDENT.
+            check_equal = 1
+
+        elif type == INDENT:
+            check_equal = 0
+            thisguy = Whitespace(token)
+            if not indents[-1].less(thisguy):
+                witness = indents[-1].not_less_witness(thisguy)
+                msg = "indent not greater e.g. " + format_witnesses(witness)
+                raise NannyNag(start[0], msg, line)
+            indents.append(thisguy)
+
+        elif type == DEDENT:
+            # there's nothing we need to check here!  what's important is
+            # that when the run of DEDENTs ends, the indentation of the
+            # program statement (or ENDMARKER) that triggered the run is
+            # equal to what's left at the top of the indents stack
+
+            # Ouch!  This assert triggers if the last line of the source
+            # is indented *and* lacks a newline -- then DEDENTs pop out
+            # of thin air.
+            # assert check_equal  # else no earlier NEWLINE, or an earlier INDENT
+            check_equal = 1
+
+            del indents[-1]
+
+        elif check_equal and type not in JUNK:
+            # this is the first "real token" following a NEWLINE, so it
+            # must be the first token of the next program statement, or an
+            # ENDMARKER; the "line" argument exposes the leading whitespace
+            # for this statement; in the case of ENDMARKER, line is an empty
+            # string, so will properly match the empty string with which the
+            # "indents" stack was seeded
+            check_equal = 0
+            thisguy = Whitespace(line)
+            if not indents[-1].equal(thisguy):
+                witness = indents[-1].not_equal_witness(thisguy)
+                msg = "indent not equal e.g. " + format_witnesses(witness)
+                raise NannyNag(start[0], msg, line)
+</t>
+<t tx="EKR.20040610195651">class readLinesClass:
+	
+	"""A class whose next method provides a readline method for Python's tokenize module."""
+
+	def __init__ (self,s):
+		self.lines = g.splitLines(s)
+		self.i = 0
+
+	def next(self):
+		if self.i &lt; len(self.lines):
+			line = self.lines[self.i]
+			self.i += 1
+		else:
+			line = ''
+		# g.trace(self.i,line)
+		return line</t>
+<t tx="EKR.20040610201236">@
+
+To do:
+	
+- Specify which nodes to check.
+- Check only Python code.</t>
+<t tx="EKR.20040610201941"></t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3422,7 +3882,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 
@@ -4072,6 +4532,8 @@ else:
 	for p in c.rootPosition().self_and_siblings_iter():
 		prettyPrintNode(p)</t>
 <t tx="ekr.20040402043516.1">class readLinesClass:
+	
+	"""A class whose next method provides a readline method for Python's tokenize module."""
 
 	def __init__ (self,s):
 		self.lines = g.splitLines(s)
@@ -4148,9 +4610,7 @@ else:
 	elif name == "dedent":
 		pass
 	else:
-		print "unknown: %s" % (name)
-
-</t>
+		print "unknown: %s" % (name)</t>
 <t tx="ekr.20040402074431.1">def dumpToken (self,token5tuple):
 
 	t1,t2,t3,t4,t5 = token5tuple
@@ -4196,6 +4656,7 @@ else:
 	print '-'*10, p.headString()
 
 	pp = prettyPrinter(p)
+	# Create readLinesClass and return its next method.
 	leoReadlines = readLinesClass(s).next
 	
 	for token5tuple in tokenize.generate_tokens(leoReadlines):
@@ -4209,8 +4670,7 @@ else:
 		print ''.join(lines), # Don't add a trailing newline!
 	else:
 		for i in xrange(len(lines)):
-			print "%3d" % i, repr(lines[i])
-</t>
+			print "%3d" % i, repr(lines[i])</t>
 <t tx="ekr.20040402093822">def get (self):
 	
 	return self.lines</t>
