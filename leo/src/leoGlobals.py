@@ -528,7 +528,7 @@ def scanDirectives(c,p=None):
             #@-node:ekr.20031218072017.1398:<< compute relative path from s[k:] >>
             #@nl
             if path and len(path) > 0:
-                base = g.getBaseDirectory() # returns "" on error.
+                base = g.getBaseDirectory(c=c) # returns "" on error.
                 path = g.os_path_join(base,path)
                 
         #@nonl
@@ -559,7 +559,7 @@ def scanDirectives(c,p=None):
             old_dict=old,dict=dict,pluginsList=pluginsList)
         old.update(dict)
 
-    if path == None: path = g.getBaseDirectory()
+    if path == None: path = g.getBaseDirectory(c=c)
 
     return {
         "delims"    : (delim1,delim2,delim3),
@@ -584,7 +584,10 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
 
     # Create a full normalized path name.
     # Display the file name with case intact.
-    fileName = g.os_path_join(os.getcwd(), fileName)
+    if 1: # New code, also appears to work.
+        fileName = g.os_path_abspath(fileName)
+    else: # Old code, works.
+        fileName = g.os_path_join(os.getcwd(),fileName)
     fileName = g.os_path_normpath(fileName)
     oldFileName = fileName 
     fileName = g.os_path_normcase(fileName)
@@ -1662,14 +1665,14 @@ def utils_stat (fileName):
 #@+node:ekr.20031218072017.1264:getBaseDirectory
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
 
-def getBaseDirectory():
+def getBaseDirectory(c=None):
 
     base = app.config.relative_path_base_directory
 
     if base and base == "!":
         base = app.loadDir
     elif base and base == ".":
-        base = g.top().openDirectory
+        base = c.openDirectory
 
     # g.trace(base)
     if base and len(base) > 0 and g.os_path_isabs(base):
@@ -2274,6 +2277,15 @@ def os_path_join(*args,**keys):
     encoding = keys.get("encoding")
 
     uargs = [g.toUnicodeFileEncoding(arg,encoding) for arg in args]
+    
+    # Note:  This is exactly the same convention as used by getBaseDirectory.
+    if uargs and uargs[0] == '!!':
+        uargs[0] = g.app.loadDir
+    elif uargs and uargs[0] == '.':
+        c = keys.get('c')
+        if c and c.openDirectory:
+            uargs[0] = c.openDirectory
+            g.trace(c.openDirectory)
 
     path = os.path.join(*uargs)
     
@@ -4208,9 +4220,9 @@ def getScript (c,p,useSelectedText=True):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
-    
+
     try:
-        script = None
+        script = ''
         # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
@@ -4234,7 +4246,7 @@ def getScript (c,p,useSelectedText=True):
         s = "unexpected exception"
         print s ; g.es(s)
         g.es_exception()
-        script = None
+        script = ''
 
     p.v.setTnodeText(old_body)
     return script
