@@ -74,7 +74,10 @@ class baseLeoImportCommands:
 		self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
 	
 		if appendFileFlag:
-			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
+			body = "@ignore\n"
+			if ext in (".html",".htm"): body += "@language html\n"
+			if ext in (".txt",".text"): body += "@nocolor\n"
+			v.setBodyStringOrPane(body + self.rootLine + s)
 		elif ext in (".c", ".cpp", ".cxx"):
 			self.scanCText(s,v)
 		elif ext == ".el":
