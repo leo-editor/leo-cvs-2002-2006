@@ -12,9 +12,9 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231" a="E"><vh>Diary</vh>
-<v t="edream.112103192146" a="E"><vh>11/21</vh>
-<v t="edream.112303075625" a="V"><vh>Added wxVersion to signon</vh></v>
+<v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.112103192146"><vh>11/21</vh>
+<v t="edream.112303075625"><vh>Added wxVersion to signon</vh></v>
 <v t="edream.112103192146.1"><vh>Fixed and test vim plugin</vh></v>
 </v>
 <v t="edream.111903190444"><vh>11/19</vh>
@@ -628,7 +628,7 @@
 <v t="edream.110203113231.304"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
 <v t="edream.110203113231.305"><vh>wxGui class</vh>
 <v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
-<v t="edream.111303091300" a="E"><vh>app.gui.wx birth &amp; death</vh>
+<v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
 <v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
 <v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
 <v t="edream.110203113231.310"><vh>setEncoding</vh></v>
@@ -766,7 +766,7 @@
 </v>
 </v>
 <v t="edream.110203113231.349"><vh>wxLeoFrame class</vh>
-<v t="edream.110203113231.350" a="E"><vh>Birth &amp; death</vh>
+<v t="edream.110203113231.350"><vh>Birth &amp; death</vh>
 <v t="edream.110203113231.266"><vh>__init__</vh></v>
 <v t="edream.110203113231.351"><vh>__repr__</vh></v>
 <v t="edream.110203113231.260"><vh>finishCreate</vh>
@@ -959,7 +959,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1257,8 +1257,8 @@
 <v t="edream.110203113231.830"><vh>onOpen</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.831"><vh>Menus</vh>
-<v t="edream.110203113231.832"><vh> Plugins menu</vh>
+<v t="edream.110203113231.831" a="E"><vh>Menus</vh>
+<v t="edream.110203113231.832" a="E"><vh> Plugins menu</vh>
 <v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
@@ -1269,10 +1269,10 @@
 <v t="edream.110203113231.839"><vh>about</vh></v>
 <v t="edream.110203113231.840"><vh>properties</vh></v>
 </v>
-<v t="edream.110203113231.841"><vh>class PropertiesWindow</vh>
-<v t="edream.110203113231.842"><vh>__init__</vh>
+<v t="edream.110203113231.841" a="E"><vh>class PropertiesWindow</vh>
+<v t="edream.110203113231.842" a="E"><vh>__init__</vh>
 <v t="edream.110203113231.843"><vh>&lt;&lt; initialize all ivars &gt;&gt;</vh></v>
-<v t="edream.110203113231.844"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
+<v t="edream.110203113231.844" a="E"><vh>&lt;&lt; create the frame from the configuration data &gt;&gt;</vh>
 <v t="edream.110203113231.845"><vh>&lt;&lt; Create the top level and the main frame &gt;&gt;</vh></v>
 <v t="edream.110203113231.846"><vh>&lt;&lt; Create widgets for each section and option &gt;&gt;</vh></v>
 <v t="edream.110203113231.847"><vh>&lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;</vh></v>
@@ -1281,7 +1281,7 @@
 <v t="edream.110203113231.848"><vh>Event Handlers</vh></v>
 <v t="edream.110203113231.849"><vh>writeConfiguration</vh></v>
 </v>
-<v t="edream.110203113231.850"><vh>class PluginAbout</vh>
+<v t="edream.110203113231.850" a="E"><vh>class PluginAbout</vh>
 <v t="edream.110203113231.851"><vh>__init__</vh>
 <v t="edream.110203113231.852"><vh>&lt;&lt; Create the contents of the about box &gt;&gt;</vh></v>
 <v t="edream.110203113231.853"><vh>&lt;&lt; Create the close button &gt;&gt;</vh></v>
@@ -1291,7 +1291,7 @@
 <v t="edream.110203113231.855"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.856"><vh>@file test.py</vh>
+<v t="edream.110203113231.856" a="EV" tnodeList="edream.110203113231.856,edream.110203113231.857,edream.110203113231.858,edream.110203113231.859,edream.110203113231.860,edream.110203113231.861,edream.110203113231.862"><vh>@file pluginsTest.py</vh>
 <v t="edream.110203113231.857"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.858"><vh>cmd_fn1/2/3</vh></v>
 <v t="edream.110203113231.859"><vh>onSelect</vh>
@@ -1484,6 +1484,9 @@
 </v>
 </v>
 </v>
+</v>
+<v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
+<v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9033,12 +9036,11 @@ for item in self.mod.__dict__.keys():
 	"""Put up an "about" dialog for this plugin"""
 
 	PluginAbout(self.name, self.version, self.doc)</t>
-<t tx="edream.110203113231.840">def properties(self, arg):
+<t tx="edream.110203113231.840">def properties(self, event=None):
 	
 	"""Create a modal properties dialog for this plugin"""
 
-	PropertiesWindow(self.configfilename, self)
-</t>
+	PropertiesWindow(self.configfilename, self)</t>
 <t tx="edream.110203113231.841">class PropertiesWindow:
 
 	"""A class to create and run a Properties dialog for a plugin"""
@@ -9073,7 +9075,7 @@ top.grab_set() # Make the dialog a modal dialog.
 top.focus_force() # Get all keystrokes.
 root.wait_window(top)</t>
 <t tx="edream.110203113231.845">self.top = top = Tk.Toplevel(root)
-attachLeoIcon(self.top)
+app.gui.attachLeoIcon(self.top)
 top.title("Properties of "+ plugin.name)
 top.resizable(0,0) # neither height or width is resizable.
 	
@@ -9212,7 +9214,7 @@ self.button.pack(side="bottom")</t>
 	else:
 		table = ((p.name, None, p.about),)
 		c.frame.menu.createMenuEntries(pluginMenu, table)</t>
-<t tx="edream.110203113231.856">@ignore
+<t tx="edream.110203113231.856"># @ignore
 @language python
 
 """Test file for Plugins menu protocols"""
@@ -9250,13 +9252,13 @@ if Tkinter and 0: # Register the handlers...
 		for option in options:
 			print section, option, config.get(section, option)
 </t>
-<t tx="edream.110203113231.858">def cmd_fn1(x):
+<t tx="edream.110203113231.858">def cmd_fn1(event=None):
 	es("Fn1",color="blue")
 
-def cmd_fn2(x):
+def cmd_fn2(event=None):
 	es("Fn2",color="blue")
 
-def cmd_fn3(x):
+def cmd_fn3(event=None):
 	es("Fn3",color="blue")
 </t>
 <t tx="edream.110203113231.859">def onSelect (tag,keywords):
@@ -15320,5 +15322,23 @@ can handle plug-in development at this stage.  :-)
 <t tx="edream.112103192146"></t>
 <t tx="edream.112103192146.1"></t>
 <t tx="edream.112303075625"></t>
+<t tx="edream.120103084310"></t>
+<t tx="edream.120103084310.1">1. The sys.path variable has been reset when the plugins are run. It
+is set so that *only* the plugins directory is in the path. This means
+that no import of standard modules will work in plugins.
+
+
+In plugins_menu: createPluginsMenu
+
+replace:
+path = os.path.join(app().loadDir,"..","plugins")
+sys.path = path
+
+by:
+
+path = os.path.join(app().loadDir,"..","plugins")
+newpath = old_path; newpath.append(path)
+sys.path = newpath
+</t>
 </tnodes>
 </leo_file>
