@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2129" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="62" left="257" height="835" width="843"/>
+	<global_window_position top="40" left="201" height="835" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -33755,39 +33755,11 @@ if 1: # 9/19/03: all files pass
 	compare("leoTree.py")
 	compare("leoUndo.py")
 print ; print "end of compare"</t>
-<t tx="T2127">@color
+<t tx="T2127">@nocolor
 
-# Update version number in Leo's front page.
+Announcements: on Monday, Oct 27
 
-if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
-
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
-
-@nocolor
-Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
-
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
 	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
 	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>

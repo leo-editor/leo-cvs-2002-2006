@@ -4424,7 +4424,7 @@ This is the minimum you need to use Leo effectively.
 
 See the Appendices for a concise summary of information about Leo.</t>
 <t tx="T64"></t>
-<t tx="T65">Leo 4.0.2                         October 24, 2003
+<t tx="T65">Leo 4.0.2                         October 23, 2003
 
 Yet another bug-fix release:
 
