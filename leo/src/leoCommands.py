@@ -1103,14 +1103,14 @@ class baseCommands:
     
         if not script:
             script = g.getScript(c,p)
-        #@    << redirect output if redirect_execute_script_output_to_log_pane >>
-        #@+node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+        #@    << redirect output >>
+        #@+node:ekr.20031218072017.2143:<< redirect output >>
         if g.app.config.redirect_execute_script_output_to_log_pane:
         
             g.redirectStdout() # Redirect stdout
             g.redirectStderr() # Redirect stderr
         #@nonl
-        #@-node:ekr.20031218072017.2143:<< redirect output if redirect_execute_script_output_to_log_pane >>
+        #@-node:ekr.20031218072017.2143:<< redirect output >>
         #@nl
         if script:
             script = script.strip()
@@ -1118,9 +1118,27 @@ class baseCommands:
             script += '\n' # Make sure we end the script properly.
             try:
                 exec script in {} # Use {} to get a pristine environment!
+                #@            << unredirect output >>
+                #@+node:EKR.20040627100424:<< unredirect output >>
+                if g.app.config.redirect_execute_script_output_to_log_pane:
+                
+                    g.restoreStderr()
+                    g.restoreStdout()
+                #@nonl
+                #@-node:EKR.20040627100424:<< unredirect output >>
+                #@nl
                 if not script1:
                     g.es("end of script",color="purple")
             except:
+                #@            << unredirect output >>
+                #@+node:EKR.20040627100424:<< unredirect output >>
+                if g.app.config.redirect_execute_script_output_to_log_pane:
+                
+                    g.restoreStderr()
+                    g.restoreStdout()
+                #@nonl
+                #@-node:EKR.20040627100424:<< unredirect output >>
+                #@nl
                 g.es("exception executing script")
                 n = g.es_exception(full=False,c=c)
                 if n is not None:
@@ -1151,6 +1169,15 @@ class baseCommands:
                         c.goToScriptLineNumber(p,script,n)
                 c.frame.tree.redrawAfterException()
         elif not error:
+            #@        << unredirect output >>
+            #@+node:EKR.20040627100424:<< unredirect output >>
+            if g.app.config.redirect_execute_script_output_to_log_pane:
+            
+                g.restoreStderr()
+                g.restoreStdout()
+            #@nonl
+            #@-node:EKR.20040627100424:<< unredirect output >>
+            #@nl
             g.es("no script selected",color="blue")
             
         # Force a redraw _after_ all messages have been output.
