@@ -306,7 +306,7 @@ self.language_delims_dict = {
     "css" : "/* */", # 4/1/04
     "cweb" : "@q@ @>", # Use the "cweb hack"
     "elisp" : ";",
-    "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
     "fortran" : "C",
     "fortran90" : "!",
     "html" : "<!-- -->",
@@ -395,6 +395,7 @@ left_data = [
     ("CSS",   "css"),
     ("CWEB",  "cweb"),
     ("elisp", "elisp"),
+    ("Forth", "forth"),
     ("HTML",  "html"),
     ("Java",  "java"),
     ("LaTeX", "latex")
@@ -455,7 +456,7 @@ self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
 # The list of languages for which keywords exist.
 # Eventually we might just use language_delims_dict.keys()
 languages = [
-    "actionscript","ada","c","csharp","css","cweb","elisp","html","java","latex",
+    "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
     "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
 
 self.keywords = []
@@ -471,7 +472,7 @@ else:
             self.keywords = getattr(self, name + "_keywords")
 
 # For forth.
-nextForthWordIsNew = False
+self.nextForthWordIsNew = False
 
 # Color plain text unless we are under the control of @nocolor.
 # state = g.choose(self.flag,"normal","nocolor")

@@ -80,6 +80,8 @@ class baseLeoImportCommands:
             self.scanCText(s,v)
         elif ext == ".el":
             self.scanElispText(s,v)
+        elif ext in (".fs", ".fi"):
+            self.scanForthText(s,v)
         elif ext == ".java":
             self.scanJavaText(s,v,True) #outer level
         elif ext == ".pas":
@@ -1197,217 +1199,6 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.2270:scanPythonText
     #@-node:ekr.20031218072017.2256:Python scanners
-    #@+node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
-    # 08-SEP-2002 DTHEIN: Added for PHP import support.
-    #
-    # PHP uses both # and // as line comments, and /* */ as block comments
-    
-    def scanPHPText (self,s,parent):
-    
-        """Creates a child of parent for each class and function definition seen."""
-    
-        import re
-        #@    << Append file if not pure PHP >>
-        #@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-        # If the file does not begin with <?php or end with ?> then
-        # it is simply appended like a generic import would do.
-        
-        s.strip() # Remove inadvertent whitespace.
-        
-        if (
-            not (
-                s.startswith("<?P") or
-                s.startswith("<?p") or
-                s.startswith("<?=") or
-                s.startswith("<?\n") or
-                s.startswith("<?\r") or
-                s.startswith("<? ") or
-                s.startswith("<?\t")
-            ) or not (
-                s.endswith("?>\n") or
-                s.endswith("?>\r") or
-                s.endswith("?>\r\n")
-            )
-        ):
-            g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
-            parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
-            return
-        #@nonl
-        #@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
-        #@nl
-    
-        #@    << define scanPHPText vars >>
-        #@+node:ekr.20031218072017.3244:<< define scanPHPText vars >>
-        scan_start = 0
-        class_start = 0
-        function_start = 0
-        i = 0
-        class_body = ""
-        class_node = ""
-        phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
-        phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
-        
-        # 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
-        startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
-        endOfCode = s.rfind("?>") # this should be the line containing the last ?>
-        #@-node:ekr.20031218072017.3244:<< define scanPHPText vars >>
-        #@nl
-        # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-        parent.appendStringToBody("@first ")	
-        parent.appendStringToBody(s[:startOfCode])
-        scan_start = i = startOfCode
-        while i < endOfCode:
-            # line = g.get_line(s,i) ; g.trace(line)
-            ch = s[i]
-            # These cases skip tokens.
-            if ch == '/' or ch == '#':
-                #@            << handle possible PHP comments >>
-                #@+node:ekr.20031218072017.3246:<< handle possible PHP comments >>
-                if g.match(s,i,"//"):
-                    i = g.skip_line(s,i)
-                elif g.match(s,i,"#"):
-                    i = g.skip_line(s,i)
-                elif g.match(s,i,"/*"):
-                    i = g.skip_block_comment(s,i)
-                else:
-                    i += 1
-                #@nonl
-                #@-node:ekr.20031218072017.3246:<< handle possible PHP comments >>
-                #@nl
-            elif ch == '<':
-                #@            << handle possible heredoc string >>
-                #@+node:ekr.20031218072017.3245:<< handle possible heredoc string >>
-                if g.match(s,i,"<<<"):
-                    i = g.skip_heredoc_string(s,i)
-                else:
-                    i += 1
-                #@-node:ekr.20031218072017.3245:<< handle possible heredoc string >>
-                #@nl
-            elif ch == '"' or ch == '\'':
-                i = g.skip_string(s,i)
-            # These cases help determine where functions start.
-            # FIXME: probably want to capture 'var's as class member data
-            elif ch == 'f' or ch =='c':
-                #@            << handle possible class or function >>
-                #@+node:ekr.20031218072017.3247:<< handle possible class or function >>
-                #@+at 
-                #@nonl
-                # In PHP, all functions are typeless and start with the 
-                # keyword "function;  all classes start with the keyword 
-                # class.
-                # 
-                # Functions can be nested, but we don't handle that right now 
-                # (I don't think it is a common practice anyway).
-                #@-at
-                #@@c
-                if g.match(s,i,"function "):
-                    #we want to make the function a subnode of either the @file node or a class node
-                    # 1. get the function name
-                    # 2. make a reference in the parent
-                    # 3. create the child node, and dump the function in it.
-                    function_start = i
-                    m = phpFunctionName.match(s[i:])
-                    if (None == m): # function keyword without function name
-                        i += len("function ")
-                    else:
-                        headline = g.angleBrackets(" function " + m.group(1) + " ")
-                        # find the end of the function
-                        openingBrace = s.find('{',i)
-                        function_end = g.skip_php_braces(s,openingBrace)
-                        function_end = g.skip_to_end_of_line(s,function_end - 1) + 1 # include the line end
-                        # Insert skipped text into parent's body.
-                        if class_start:
-                            class_body += s[scan_start:function_start]
-                        else:
-                            parent.appendStringToBody(s[scan_start:function_start])
-                        # Append the headline to the parent's body.
-                        if class_start:
-                            class_body += (headline + "\n")
-                        else:
-                            parent.appendStringToBody(headline + "\n")
-                        # Backup to capture leading whitespace (for undent purposes)
-                        while (function_start > 0) and (s[function_start - 1] in [" ", "\t"]):
-                            function_start -= 1
-                        # Get the body and undent it
-                        function_body = s[function_start:function_end]
-                        function_body = self.undentBody(function_body)
-                        if self.treeType != "@file":
-                            function_body = "@code\n\n" + function_body
-                        # Create the new node
-                        if class_start:
-                            self.createHeadline(class_node,function_body,headline)
-                        else:
-                            self.createHeadline(parent,function_body,headline)
-                        i = function_end
-                        scan_start = i
-                        function_end = 0
-                        function_start = 0 #done with this function
-                        function_body = ""
-                        
-                elif g.match(s,i,"class "):
-                    # we want to make the class a subnode of the @file node
-                    # 1. get the class name
-                    # 2. make a reference in the parent
-                    # 3. create the child node and dump the function in it
-                    class_start = i
-                    class_body = ""
-                    m = phpClassName.match(s[i:])
-                    if (None == m): # class keyword without class name
-                        i += len("class ")
-                    else:
-                        # Insert skipped text into parent's body.
-                        parent.appendStringToBody(s[scan_start:class_start])
-                        # create the headline name
-                        headline = g.angleBrackets(" class " + m.group(1) + " ")
-                        # find the place to start looking for methods (functions)
-                        openingBrace = s.find('{',i)
-                        # find the end of the class
-                        class_end = g.skip_php_braces(s,openingBrace)
-                        class_end = g.skip_to_end_of_line(s,class_end - 1) + 1 # include the line end
-                        # Append the headline to the parent's body.
-                        parent.appendStringToBody(headline + "\n")
-                        # Backup to capture leading whitespace (for undent purposes)
-                        while (class_start > 0) and (s[class_start - 1] in [" ", "\t"]):
-                            class_start -= 1
-                        scan_start = class_start
-                        # Create the new node
-                        class_node = self.createHeadline(parent,"",headline)
-                        i = openingBrace
-                    
-                else:
-                    i += 1
-                #@nonl
-                #@-node:ekr.20031218072017.3247:<< handle possible class or function >>
-                #@nl
-            elif class_start and (ch == '}'):
-                #@            << handle end of class >>
-                #@+node:ekr.20031218072017.3248:<< handle end of class >>
-                # Capture the rest of the body
-                class_body += s[scan_start:class_end]
-                # insert the class node's body
-                if self.treeType != "@file":
-                    class_body = "@code\n\n" + class_body
-                class_body = self.undentBody(class_body)
-                class_node.appendStringToBody(class_body)
-                # reset the indices
-                i = class_end
-                scan_start = i
-                class_end = 0
-                class_start = 0 #done with this class
-                class_body=""
-                #@-node:ekr.20031218072017.3248:<< handle end of class >>
-                #@nl
-            else: i += 1
-        #@    << Append any unused text to the parent's body text >>
-        #@+node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
-        parent.appendStringToBody(s[scan_start:endOfCode])
-        #@-node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
-        #@nl
-        # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
-        parent.appendStringToBody("@last ")	
-        parent.appendStringToBody(s[endOfCode:])
-    #@nonl
-    #@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
     #@+node:ekr.20031218072017.3250:scanCText
     # Creates a child of parent for each C function definition seen.
     
@@ -1831,6 +1622,14 @@ class baseLeoImportCommands:
     #@nonl
     #@-node:ekr.20031218072017.3269:createElispDataNode
     #@-node:ekr.20031218072017.3265:scanElispText & allies
+    #@+node:ekr.20041107094641:scanForthText
+    def scanForthText (self,s,parent):
+        
+        """Minimal forth scanner - leave it to user to create nodes as they see fit."""
+    
+        parent.setBodyStringOrPane("@ignore\n" + "@language forth\n" + self.rootLine + s)
+    #@nonl
+    #@-node:ekr.20041107094641:scanForthText
     #@+node:ekr.20031218072017.3270:scanJavaText
     # Creates a child of parent for each Java function definition seen.
     
@@ -2235,6 +2034,217 @@ class baseLeoImportCommands:
         #@nl
     #@nonl
     #@-node:ekr.20031218072017.3281:scanPascalText
+    #@+node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
+    # 08-SEP-2002 DTHEIN: Added for PHP import support.
+    #
+    # PHP uses both # and // as line comments, and /* */ as block comments
+    
+    def scanPHPText (self,s,parent):
+    
+        """Creates a child of parent for each class and function definition seen."""
+    
+        import re
+        #@    << Append file if not pure PHP >>
+        #@+node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+        # If the file does not begin with <?php or end with ?> then
+        # it is simply appended like a generic import would do.
+        
+        s.strip() # Remove inadvertent whitespace.
+        
+        if (
+            not (
+                s.startswith("<?P") or
+                s.startswith("<?p") or
+                s.startswith("<?=") or
+                s.startswith("<?\n") or
+                s.startswith("<?\r") or
+                s.startswith("<? ") or
+                s.startswith("<?\t")
+            ) or not (
+                s.endswith("?>\n") or
+                s.endswith("?>\r") or
+                s.endswith("?>\r\n")
+            )
+        ):
+            g.es("File seems to be mixed HTML and PHP; importing as plain text file.")
+            parent.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
+            return
+        #@nonl
+        #@-node:ekr.20031218072017.3243:<< Append file if not pure PHP >>
+        #@nl
+    
+        #@    << define scanPHPText vars >>
+        #@+node:ekr.20031218072017.3244:<< define scanPHPText vars >>
+        scan_start = 0
+        class_start = 0
+        function_start = 0
+        i = 0
+        class_body = ""
+        class_node = ""
+        phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+        phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+        
+        # 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
+        startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
+        endOfCode = s.rfind("?>") # this should be the line containing the last ?>
+        #@-node:ekr.20031218072017.3244:<< define scanPHPText vars >>
+        #@nl
+        # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+        parent.appendStringToBody("@first ")	
+        parent.appendStringToBody(s[:startOfCode])
+        scan_start = i = startOfCode
+        while i < endOfCode:
+            # line = g.get_line(s,i) ; g.trace(line)
+            ch = s[i]
+            # These cases skip tokens.
+            if ch == '/' or ch == '#':
+                #@            << handle possible PHP comments >>
+                #@+node:ekr.20031218072017.3246:<< handle possible PHP comments >>
+                if g.match(s,i,"//"):
+                    i = g.skip_line(s,i)
+                elif g.match(s,i,"#"):
+                    i = g.skip_line(s,i)
+                elif g.match(s,i,"/*"):
+                    i = g.skip_block_comment(s,i)
+                else:
+                    i += 1
+                #@nonl
+                #@-node:ekr.20031218072017.3246:<< handle possible PHP comments >>
+                #@nl
+            elif ch == '<':
+                #@            << handle possible heredoc string >>
+                #@+node:ekr.20031218072017.3245:<< handle possible heredoc string >>
+                if g.match(s,i,"<<<"):
+                    i = g.skip_heredoc_string(s,i)
+                else:
+                    i += 1
+                #@-node:ekr.20031218072017.3245:<< handle possible heredoc string >>
+                #@nl
+            elif ch == '"' or ch == '\'':
+                i = g.skip_string(s,i)
+            # These cases help determine where functions start.
+            # FIXME: probably want to capture 'var's as class member data
+            elif ch == 'f' or ch =='c':
+                #@            << handle possible class or function >>
+                #@+node:ekr.20031218072017.3247:<< handle possible class or function >>
+                #@+at 
+                #@nonl
+                # In PHP, all functions are typeless and start with the 
+                # keyword "function;  all classes start with the keyword 
+                # class.
+                # 
+                # Functions can be nested, but we don't handle that right now 
+                # (I don't think it is a common practice anyway).
+                #@-at
+                #@@c
+                if g.match(s,i,"function "):
+                    #we want to make the function a subnode of either the @file node or a class node
+                    # 1. get the function name
+                    # 2. make a reference in the parent
+                    # 3. create the child node, and dump the function in it.
+                    function_start = i
+                    m = phpFunctionName.match(s[i:])
+                    if (None == m): # function keyword without function name
+                        i += len("function ")
+                    else:
+                        headline = g.angleBrackets(" function " + m.group(1) + " ")
+                        # find the end of the function
+                        openingBrace = s.find('{',i)
+                        function_end = g.skip_php_braces(s,openingBrace)
+                        function_end = g.skip_to_end_of_line(s,function_end - 1) + 1 # include the line end
+                        # Insert skipped text into parent's body.
+                        if class_start:
+                            class_body += s[scan_start:function_start]
+                        else:
+                            parent.appendStringToBody(s[scan_start:function_start])
+                        # Append the headline to the parent's body.
+                        if class_start:
+                            class_body += (headline + "\n")
+                        else:
+                            parent.appendStringToBody(headline + "\n")
+                        # Backup to capture leading whitespace (for undent purposes)
+                        while (function_start > 0) and (s[function_start - 1] in [" ", "\t"]):
+                            function_start -= 1
+                        # Get the body and undent it
+                        function_body = s[function_start:function_end]
+                        function_body = self.undentBody(function_body)
+                        if self.treeType != "@file":
+                            function_body = "@code\n\n" + function_body
+                        # Create the new node
+                        if class_start:
+                            self.createHeadline(class_node,function_body,headline)
+                        else:
+                            self.createHeadline(parent,function_body,headline)
+                        i = function_end
+                        scan_start = i
+                        function_end = 0
+                        function_start = 0 #done with this function
+                        function_body = ""
+                        
+                elif g.match(s,i,"class "):
+                    # we want to make the class a subnode of the @file node
+                    # 1. get the class name
+                    # 2. make a reference in the parent
+                    # 3. create the child node and dump the function in it
+                    class_start = i
+                    class_body = ""
+                    m = phpClassName.match(s[i:])
+                    if (None == m): # class keyword without class name
+                        i += len("class ")
+                    else:
+                        # Insert skipped text into parent's body.
+                        parent.appendStringToBody(s[scan_start:class_start])
+                        # create the headline name
+                        headline = g.angleBrackets(" class " + m.group(1) + " ")
+                        # find the place to start looking for methods (functions)
+                        openingBrace = s.find('{',i)
+                        # find the end of the class
+                        class_end = g.skip_php_braces(s,openingBrace)
+                        class_end = g.skip_to_end_of_line(s,class_end - 1) + 1 # include the line end
+                        # Append the headline to the parent's body.
+                        parent.appendStringToBody(headline + "\n")
+                        # Backup to capture leading whitespace (for undent purposes)
+                        while (class_start > 0) and (s[class_start - 1] in [" ", "\t"]):
+                            class_start -= 1
+                        scan_start = class_start
+                        # Create the new node
+                        class_node = self.createHeadline(parent,"",headline)
+                        i = openingBrace
+                    
+                else:
+                    i += 1
+                #@nonl
+                #@-node:ekr.20031218072017.3247:<< handle possible class or function >>
+                #@nl
+            elif class_start and (ch == '}'):
+                #@            << handle end of class >>
+                #@+node:ekr.20031218072017.3248:<< handle end of class >>
+                # Capture the rest of the body
+                class_body += s[scan_start:class_end]
+                # insert the class node's body
+                if self.treeType != "@file":
+                    class_body = "@code\n\n" + class_body
+                class_body = self.undentBody(class_body)
+                class_node.appendStringToBody(class_body)
+                # reset the indices
+                i = class_end
+                scan_start = i
+                class_end = 0
+                class_start = 0 #done with this class
+                class_body=""
+                #@-node:ekr.20031218072017.3248:<< handle end of class >>
+                #@nl
+            else: i += 1
+        #@    << Append any unused text to the parent's body text >>
+        #@+node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
+        parent.appendStringToBody(s[scan_start:endOfCode])
+        #@-node:ekr.20031218072017.3249:<< Append any unused text to the parent's body text >>
+        #@nl
+        # 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
+        parent.appendStringToBody("@last ")	
+        parent.appendStringToBody(s[endOfCode:])
+    #@nonl
+    #@-node:ekr.20031218072017.3242:scanPHPText (Dave Hein)
     #@-node:ekr.20031218072017.3241:Scanners for createOutline
     #@-node:ekr.20031218072017.3209:Import
     #@+node:ekr.20031218072017.3289:Export

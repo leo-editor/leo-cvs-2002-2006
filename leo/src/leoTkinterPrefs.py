@@ -140,6 +140,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
             ("CSS",   "css"),
             ("CWEB",  "cweb"),
             ("elisp", "elisp"),
+            ("Forth", "forth"),
             ("HTML",  "html"),
             ("Java",  "java"),
             ("LaTeX", "latex")

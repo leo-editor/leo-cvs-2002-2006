@@ -98,7 +98,7 @@ class LeoApp:
             "css" : "/* */", # 4/1/04
             "cweb" : "@q@ @>", # Use the "cweb hack"
             "elisp" : ";",
-            "forth" : "_\\_ _(_ _)_", # Use the "REM hack"
+            "forth" : "\\_ _(_ _)", # Use the "REM hack"
             "fortran" : "C",
             "fortran90" : "!",
             "html" : "<!-- -->",

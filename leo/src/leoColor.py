@@ -896,12 +896,14 @@ class baseColorizer:
         for (lst, path, typ) in forth_items:
             try:
                 extras = []
+                path = g.os_path_join(g.app.loadDir,"..","plugins",path) # EKR.
                 for line in file(path).read().strip().split("\n"):
                     line = line.strip()
                     if line and line[0] != '\\':
                         extras.append(line)
                 if extras:
-                    print "Found extra forth %s" % typ + ": " + " ".join(extras)
+                    if not g.app.unitTesting and not g.app.batchMode:
+                        print "Found extra forth %s" % typ + ": " + " ".join(extras)
                     lst.extend(extras)
             except IOError:
                 # print "Not found",path
@@ -1075,7 +1077,7 @@ class baseColorizer:
             # The list of languages for which keywords exist.
             # Eventually we might just use language_delims_dict.keys()
             languages = [
-                "actionscript","ada","c","csharp","css","cweb","elisp","html","java","latex",
+                "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
                 "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
             
             self.keywords = []
@@ -1091,7 +1093,7 @@ class baseColorizer:
                         self.keywords = getattr(self, name + "_keywords")
             
             # For forth.
-            nextForthWordIsNew = False
+            self.nextForthWordIsNew = False
             
             # Color plain text unless we are under the control of @nocolor.
             # state = g.choose(self.flag,"normal","nocolor")
@@ -1658,7 +1660,8 @@ class baseColorizer:
         if ch in string.ascii_letters or ch == '_' or (
             (ch == '\\' and self.language=="latex") or
             (ch in '/&<>' and self.language=="html") or
-            (ch == '$' and self.language=="rapidq")
+            (ch == '$' and self.language=="rapidq") or
+            (self.language == 'forth' and ch in "`~!@#$%^&*()_+-={}|[];':\",./<>?")
         ):
             #@        << handle possible keyword >>
             #@+middle:ekr.20031218072017.1897:Valid regardless of latex mode
@@ -1704,6 +1707,42 @@ class baseColorizer:
                 else:
                     j = i + 1
                 #@-node:ekr.20031218072017.1900:<< handle possible html keyword >>
+                #@nl
+            elif self.language == "forth":
+                #@    << handle possible forth keyword >>
+                #@+node:ekr.20041107093219.3:<< handle possible forth keyword >>
+                j = self.skip_id(s,i+1,chars="`~!@#$%^&*()-_=+[]{};:'\\\",./<>?")
+                word = s[i:j]
+                
+                #print "word=%s" % repr(word)
+                
+                if not self.case_sensitiveLanguage:
+                    word = word.lower()
+                
+                if self.nextForthWordIsNew:
+                    #print "trying to bold the defined word '%s'" % word
+                    self.tag("bold", i, j)
+                    self.nextForthWordIsNew = False
+                else:
+                    if word in self.forth_definingwords:
+                        self.nextForthWordIsNew = True
+                    
+                    if word in self.forth_boldwords:
+                        self.tag("bold", i, j)
+                    elif word in self.forth_bolditalicwords:
+                        self.tag("bolditalic", i, j)
+                    elif word in self.forth_italicwords:
+                        self.tag("italic", i, j)
+                    elif word in self.forth_stringwords:
+                        self.tag("keyword", i, j-1)
+                        i = j - 1
+                        j, state = self.skip_string(s,j-1)
+                        self.tag("string",i,j)
+                        word = ''
+                    elif word in self.keywords:
+                        self.tag("keyword",i,j)
+                #@nonl
+                #@-node:ekr.20041107093219.3:<< handle possible forth keyword >>
                 #@nl
             else:
                 #@    << handle general keyword >>
