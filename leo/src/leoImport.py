@@ -31,7 +31,7 @@ class baseLeoImportCommands:
         self.rootLine = "" # Empty or @root + self.fileName
     
         # Support of output_newline option
-        self.output_newline = g.getOutputNewline()
+        self.output_newline = g.getOutputNewline(c=c)
         
         # Used by Importers.
         self.web_st = []

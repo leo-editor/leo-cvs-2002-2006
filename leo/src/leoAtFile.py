@@ -197,7 +197,7 @@ class atFile:
         # These may be changed in initReadIvars or initWriteIvars.
         
         # Support of output_newline option.
-        self.output_newline = g.getOutputNewline()
+        self.output_newline = g.getOutputNewline(c=c)
         
         # Set by scanHeader when reading and scanAllDirectives when writing.
         self.encoding = c.config.default_derived_file_encoding
@@ -4480,7 +4480,7 @@ class atFile:
         self.language = c.target_language
         
         self.encoding = c.config.default_derived_file_encoding
-        self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+        self.output_newline = g.getOutputNewline(c=self.c) # 4/24/03: initialize from config settings.
         #@nonl
         #@-node:ekr.20041005105605.223:<< Set ivars >>
         #@nl

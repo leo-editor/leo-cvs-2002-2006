@@ -447,7 +447,7 @@ class baseTangleCommands:
         self.code_seen = False # True if @code seen in body text.
         
         # Support of output_newline option
-        self.output_newline = g.getOutputNewline()
+        self.output_newline = g.getOutputNewline(c=c)
         #@nonl
         #@-node:ekr.20031218072017.1357:<< init tangle ivars >>
         #@nl
@@ -517,7 +517,7 @@ class baseTangleCommands:
         # support @first directive
         self.first_lines = ""
         self.encoding = c.config.default_derived_file_encoding # 2/21/03
-        self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
+        self.output_newline = g.getOutputNewline(c=c) # 4/24/03: initialize from config settings.
         #@nonl
         #@-node:ekr.20031218072017.1359:<< init directive ivars >> (tangle)
         #@nl

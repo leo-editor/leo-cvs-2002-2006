@@ -261,17 +261,20 @@ def get_directives_dict(s,root=None):
 #@nonl
 #@-node:ekr.20031218072017.1260:get_directives_dict & globalDirectiveList
 #@+node:ekr.20031218072017.1386:getOutputNewline
-def getOutputNewline (lineending = None):
+def getOutputNewline (c=None,name=None):
     
-    """Convert the name of a line ending to the line ending itself.
-    Use the output_newline configuration option if no lineending is given.
-    """
+    '''Convert the name of a line ending to the line ending itself.
     
-    if lineending:
-        s = lineending
-    else:
-        s = app.config.output_newline
+    Priority:
+    - Use name if name given
+    - Use c.config.output_newline if c given,
+    - Otherwise use g.app.config.output_newline.'''
+    
+    if name: s = name
+    elif c:  s = c.config.output_newline
+    else:    s = app.config.output_newline
 
+    if not s: s = ''
     s = s.lower()
     if s in ( "nl","lf"): s = '\n'
     elif s == "cr": s = '\r'
@@ -316,7 +319,7 @@ def scanAtLineendingDirective(s,dict):
     e = s[k+j:i].strip()
 
     if e in ("cr","crlf","lf","nl","platform"):
-        lineending = g.getOutputNewline(e)
+        lineending = g.getOutputNewline(name=e)
         # g.trace(e,lineending)
         return lineending
     else:
@@ -447,7 +450,7 @@ def scanDirectives(c,p=None):
     delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
     path = None
     encoding = None # 2/25/03: This must be none so that the caller can set a proper default.
-    lineending = g.getOutputNewline() # Init from config settings.
+    lineending = g.getOutputNewline(c=c) # Init from config settings.
     wrap = c.config.getBool("body_pane_wraps")
     #@nonl
     #@-node:ekr.20031218072017.1392:<< Set local vars >>
