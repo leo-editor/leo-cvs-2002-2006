@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6568" clone_windows="0"/>
-<globals body_outline_ratio="0.5">
-	<global_window_position top="47" left="291" height="804" width="943"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6596" clone_windows="0"/>
+<globals body_outline_ratio="0.494382022472">
+	<global_window_position top="89" left="186" height="712" width="897"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -153,7 +153,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040430162649.24"><vh>Assert fails</vh></v>
 <v t="EKR.20040430162649.25"><vh>double at-root test (assert fails)</vh></v>
 </v>
-<v t="EKR.20040427092657"><vh>@ file-thin c:\prog\test\at-file-thin-test.txt</vh>
+<v t="EKR.20040427092657"><vh>@ thin at-file-thin-test.txt</vh>
 <v t="EKR.20040427092657.1"><vh>node 1</vh>
 <v t="EKR.20040428145741"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
 <v t="EKR.20040428145741.1"><vh>child node 1</vh></v>
@@ -167,27 +167,27 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 </v>
-<v t="EKR.20040625110032"><vh>@ thin c:\prog\test\mixedCommentDelims.txt</vh>
+<v t="EKR.20040625110032"><vh>@ thin mixedCommentDelims.txt</vh>
 <v t="EKR.20040625110032.1"><vh>node 1</vh></v>
 <v t="EKR.20040625110032.2"><vh>node 2</vh>
 <v t="EKR.20040625110032.3"><vh>Node 3</vh></v>
 </v>
 </v>
-<v t="ekr.20040419105536"><vh>@file c:\prog\test\perlLineNumbersTest.txt</vh>
+<v t="ekr.20040419105536"><vh>@file perlLineNumbersTest.txt</vh>
 <v t="ekr.20040419105536.1"><vh>one</vh></v>
 <v t="ekr.20040419105536.2"><vh>two</vh></v>
 </v>
-<v t="ekr.20040330103006"><vh>@file c:\prog\test\testSectionDelims.txt</vh></v>
+<v t="ekr.20040330103006"><vh>@file testSectionDelims.txt</vh></v>
 <v t="EKR.20040608095146.1"><vh>@file login_process.cfm</vh></v>
 <v t="EKR.20040531110157"><vh>at-file thin tests</vh>
-<v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
-<v t="EKR.20040524050419"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
+<v t="EKR.20040520104329"><vh>@thin thinCloneTest.txt</vh></v>
+<v t="EKR.20040524050419"><vh>@file fatGrandChildTest.txt</vh>
 <v t="EKR.20040524050419.1"><vh>Organizer node</vh>
 <v t="EKR.20040524050419.2"><vh>&lt;&lt; defined in grandchild &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="EKR.20040524050438"><vh>@thin c:\prog\test\grandChildTest.txt</vh></v>
-<v t="EKR.20040525083635"><vh>@file c:\prog\test\orphanMessageTest.txt</vh>
+<v t="EKR.20040524050438"><vh>@thin grandChildTest.txt</vh></v>
+<v t="EKR.20040525083635"><vh>@file orphanMessageTest.txt</vh>
 <v t="EKR.20040525083635.1"><vh>orphan</vh></v>
 </v>
 </v>
@@ -198,15 +198,15 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 </v>
 <v t="EKR.20040430162649.16"><vh>REM test</vh>
-<v t="EKR.20040430162649.17"><vh>@file c:/prog/test/remTest.txt</vh></v>
+<v t="EKR.20040430162649.17"><vh>@file remTest.txt</vh></v>
 </v>
 </v>
 <v t="EKR.20040430162649.20"><vh>Suppress @@ sentinel unless leading @ starts a directive</vh>
-<v t="EKR.20040430162649.21"><vh>@file c:\prog\test\perltest.txt</vh></v>
+<v t="EKR.20040430162649.21"><vh>@file perltest.txt</vh></v>
 </v>
 <v t="ekr.20040704104554"><vh>Test mixed @language directives in a single node</vh>
 <v t="ekr.20040704104554.1"><vh>Mixed script</vh></v>
-<v t="ekr.20040704104554.2"><vh>@thin c:\prog\test\mixedLanguages.txt</vh></v>
+<v t="ekr.20040704104554.2"><vh>@thin mixedLanguages.txt</vh></v>
 </v>
 <v t="EKR.20040606204316"><vh>Test of @first</vh>
 <v t="EKR.20040606204316.1"><vh>@thin atFirstTest.txt</vh></v>
@@ -216,10 +216,10 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040622074004.2"><vh>b</vh></v>
 <v t="EKR.20040622074004.3"><vh>c</vh></v>
 </v>
-<v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
+<v t="EKR.20040622102618"><vh>@thin cloneConflicts.txt</vh></v>
 </v>
 <v t="ekr.20040701081330"><vh>Test of decendent attributes</vh>
-<v t="ekr.20040701065412"><vh>@ thin c:\prog\test\attribTest.txt</vh>
+<v t="ekr.20040701065412"><vh>@ thin attribTest.txt</vh>
 <v t="ekr.20040701065412.1"><vh>Marked</vh></v>
 <v t="ekr.20040701065412.2"><vh>Expanded</vh>
 <v t="ekr.20040701065412.3"><vh>child</vh></v>
@@ -235,7 +235,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="EKR.20040627103732"><vh>Test of writing descendent uA's</vh>
 <v t="EKR.20040627121836"><vh>print all tnode attributes</vh></v>
 <v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
-<v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
+<v t="EKR.20040627103801"><vh>@thin uaTest.txt</vh></v>
 </v>
 </v>
 <v t="ekr.20040708210442"><vh>Manual tests...</vh>
@@ -341,11 +341,11 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040730185319"><vh>Test drawing of root node w/o children</vh></v>
 <v t="ekr.20040909103024"><vh>Test of linenumbers plugin</vh>
-<v t="ekr.20040909103024.1"><vh>@file c:\prog\test\perlLineNumbers.txt</vh>
+<v t="ekr.20040909103024.1"><vh>@file perlLineNumbers.txt</vh>
 <v t="ekr.20040909103024.2"><vh>TestNode</vh></v>
 </v>
 </v>
-<v t="ekr.20040909123122"><vh>@rst c:\prog\test\rstTest.txt</vh>
+<v t="ekr.20040909123122"><vh>@rst rstTest.txt</vh>
 <v t="ekr.20040909123122.1"><vh>node 1</vh>
 <v t="ekr.20040909123122.2"><vh>node 1.1</vh></v>
 </v>
@@ -365,7 +365,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040910094546"><vh>@run c:\python23\python #open leoDocs.leo using args</vh>
 <v t="ekr.20040910094546.1"><vh>leo.py</vh></v>
-<v t="ekr.20040910094546.2"><vh>@arg c:\prog\leoCVS\leo\doc\LeoDocs.leo</vh></v>
+<v t="ekr.20040910094546.2"><vh>@arg ..\doc\LeoDocs.leo</vh></v>
 </v>
 </v>
 <v t="ekr.20040915045847"><vh>Test of spelling contraction</vh></v>
@@ -493,12 +493,12 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230090756"><vh>Script to run in Idle</vh></v>
 </v>
 <v t="ekr.20041231083027"><vh>Test of double @doc parts</vh>
-<v t="ekr.20041231083651"><vh>file c:\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083651"><vh>@ file doubleAtDoc.py</vh>
 <v t="ekr.20041231083651.1"><vh>foo</vh></v>
 <v t="ekr.20041231083651.2"><vh>bar</vh></v>
 <v t="ekr.20041231083651.3"><vh>spam</vh></v>
 </v>
-<v t="ekr.20041231083027.1" tnodeList="ekr.20041231083027.1,ekr.20041231083027.2,ekr.20041231083027.3,ekr.20041231083027.4"><vh>@file c:\prog\test\doubleAtDoc.py</vh>
+<v t="ekr.20041231083027.1"><vh>@ file doubleAtDoc.py</vh>
 <v t="ekr.20041231083027.2"><vh>foo</vh></v>
 <v t="ekr.20041231083027.3"><vh>bar (double doc parts)</vh></v>
 <v t="ekr.20041231083027.4"><vh>spam</vh></v>
@@ -507,17 +507,39 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041225051328"><vh>Tests of at_view plugin</vh>
 <v t="ekr.20041225051328.1"><vh>@clip</vh></v>
 <v t="ekr.20041231105348"><vh>Test of @strip</vh>
-<v t="ekr.20041225051328.2"><vh>@file c:/prog/test/atStripTest.txt</vh>
+<v t="ekr.20041225051328.2"><vh>@file atStripTest.txt</vh>
 <v t="ekr.20041231105200"><vh>Node 1</vh></v>
 <v t="ekr.20041231105200.1"><vh>Node 2</vh></v>
 <v t="ekr.20041231105200.2"><vh>@strip</vh></v>
 </v>
 </v>
-<v t="ekr.20041225051445"><vh>@view c:\prog\leoCVS\leo\config\leoConfig.txt</vh></v>
+<v t="ekr.20041225051445"><vh>@view ..\config\leoConfig.txt</vh></v>
 </v>
-<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
+<v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent niceNosentTest.txt</vh>
 <v t="ekr.20040909122141.1"><vh>spam</vh></v>
 </v>
+<v t="ekr.20050114101014"><vh>Test of writing 'middle' sentinels</vh>
+<v t="ekr.20050115103442"><vh>Copy of middleSentinelsTest.txt tree</vh>
+<v t="ekr.20050115103442.1"><vh>&lt;&lt; level 1 &gt;&gt;</vh>
+<v t="ekr.20050115103442.2"><vh>&lt;&lt; level 2&gt;&gt;</vh>
+<v t="ekr.20050115103442.3"><vh>&lt;&lt; level 3 &gt;&gt;</vh>
+<v t="ekr.20050115103442.4"><vh>&lt;&lt; level 4 &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050115100918"><vh>@ thin middleSentinelsTest.txt</vh>
+<v t="ekr.20050115100918.1"><vh>&lt;&lt; level 1 &gt;&gt;</vh>
+<v t="ekr.20050115100918.2"><vh>&lt;&lt; level 2&gt;&gt;</vh>
+<v t="ekr.20050115100918.3"><vh>&lt;&lt; level 3 &gt;&gt;</vh>
+<v t="ekr.20050115103123"><vh>&lt;&lt; level 4 &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
+<v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -945,9 +967,9 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
-<v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
+<v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
@@ -1017,6 +1039,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.260"><vh>findTests</vh></v>
 </v>
 </v>
+<v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
@@ -1306,26 +1329,6 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.174"><vh>Mini tests...</vh>
-<v t="ekr.20040712101754.175"><vh>@test p.t == p.v.t</vh></v>
-<v t="ekr.20040712101754.176"><vh>@test python keywords</vh></v>
-<v t="ekr.20040712101754.177"><vh>@test convertTreeToString and allies</vh>
-<v t="ekr.20040712101754.178"><vh>File Conversion</vh>
-<v t="ekr.20040712101754.179"><vh>moreHead</vh></v>
-<v t="ekr.20040712101754.180"><vh>moreBody</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.181"><vh>inner @test: Test consistency between parents iter and v.parents</vh>
-<v t="ekr.20040712101754.182"><vh>parent</vh>
-<v t="ekr.20040712101754.183"><vh>@test consistency between parents iter and v.parents</vh></v>
-</v>
-<v t="ekr.20040712101754.182"><vh>parent</vh>
-<v t="ekr.20040712101754.183"><vh>@test consistency between parents iter and v.parents</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
-<v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
-</v>
 <v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
@@ -1366,6 +1369,26 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20041019124050.1"><vh>Original</vh></v>
 <v t="ekr.20041019124050.2"><vh>Test</vh></v>
 </v>
+</v>
+<v t="ekr.20040712101754.174"><vh>Mini tests...</vh>
+<v t="ekr.20040712101754.175"><vh>@test p.t == p.v.t</vh></v>
+<v t="ekr.20040712101754.176"><vh>@test python keywords</vh></v>
+<v t="ekr.20040712101754.177"><vh>@test convertTreeToString and allies</vh>
+<v t="ekr.20040712101754.178"><vh>File Conversion</vh>
+<v t="ekr.20040712101754.179"><vh>moreHead</vh></v>
+<v t="ekr.20040712101754.180"><vh>moreBody</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.181"><vh>inner @test: Test consistency between parents iter and v.parents</vh>
+<v t="ekr.20040712101754.182"><vh>parent</vh>
+<v t="ekr.20040712101754.183"><vh>@test consistency between parents iter and v.parents</vh></v>
+</v>
+<v t="ekr.20040712101754.182"><vh>parent</vh>
+<v t="ekr.20040712101754.183"><vh>@test consistency between parents iter and v.parents</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
 </v>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
@@ -1420,7 +1443,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>@xx test checkAllPythonCode</vh></v>
 </v>
-<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1502,47 +1525,33 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050107093251"><vh>Unit testing for plugins</vh>
-<v t="ekr.20050105141608"><vh>Notes</vh>
-<v t="ekr.20050105142314.1"><vh>spellpyx</vh></v>
-<v t="ekr.20050105142314.4"><vh>table</vh></v>
-<v t="ekr.20050105142314.5"><vh>xsltWithNodes</vh></v>
+<v t="ekr.20050120095423"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050120095423.1"><vh>Notes</vh>
+<v t="ekr.20050120095423.2"><vh>spellpyx</vh></v>
+<v t="ekr.20050120095423.3"><vh>table</vh></v>
+<v t="ekr.20050120095423.4"><vh>xsltWithNodes</vh></v>
 </v>
-<v t="ekr.20050110110738"><vh>List of all calls to doHook</vh></v>
-<v t="ekr.20040801141212"><vh>@suite test syntax of all plugins correctly</vh>
-<v t="ekr.20040801141543"><vh>class parseFileTestCase</vh>
-<v t="ekr.20040801141543.1"><vh>__init__</vh></v>
-<v t="ekr.20040801141543.3"><vh>runTest</vh></v>
-<v t="ekr.20040801141543.5"><vh>shortDescription</vh></v>
-</v>
-</v>
-<v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
-<v t="ekr.20050105112249.1"><vh>makePluginsTestSuite</vh></v>
-<v t="ekr.20050105112249.2"><vh>class pluginTestCase</vh>
-<v t="ekr.20050105112249.3"><vh>__init__</vh></v>
-<v t="ekr.20050105112249.4"><vh>fail</vh></v>
-<v t="ekr.20050105112249.6" a="M"><vh>runTest</vh></v>
-<v t="ekr.20050105112249.7"><vh>setUp</vh></v>
-<v t="ekr.20050105112249.8"><vh>shortDescription</vh></v>
-<v t="ekr.20050105112249.9"><vh>tearDown</vh></v>
-</v>
-<v t="ekr.20050111103842"><vh>class lastTestCase</vh></v>
-</v>
-<v t="ekr.20050110193057"><vh>print all loaded plugins</vh></v>
-</v>
-<v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
-<v t="ekr.20050114101014" a="E"><vh>Problems writing Leo sentinels</vh>
-<v t="ekr.20050115103442"><vh>Copy of middleSentinelsTest.txt tree</vh>
-<v t="ekr.20050115103442.1" a="E"><vh>&lt;&lt; level 1 &gt;&gt;</vh>
-<v t="ekr.20050115103442.2" a="E"><vh>&lt;&lt; level 2&gt;&gt;</vh>
-<v t="ekr.20050115103442.3" a="E"><vh>&lt;&lt; level 3 &gt;&gt;</vh>
-<v t="ekr.20050115103442.4" a="E"><vh>&lt;&lt; level 4 &gt;&gt;</vh></v>
+<v t="ekr.20050120095423.5"><vh>List of all calls to doHook</vh></v>
+<v t="ekr.20050120095423.6"><vh>@suite test syntax of all plugins correctly</vh>
+<v t="ekr.20050120095423.7"><vh>class parseFileTestCase</vh>
+<v t="ekr.20050120095423.8"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.9"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.10"><vh>shortDescription</vh></v>
 </v>
 </v>
+<v t="ekr.20050120095423.11"><vh>@suite plugins tests</vh>
+<v t="ekr.20050120095423.12"><vh>makePluginsTestSuite</vh></v>
+<v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
+<v t="ekr.20050120095423.14"><vh>__init__</vh></v>
+<v t="ekr.20050120095423.15"><vh>fail</vh></v>
+<v t="ekr.20050120095423.16" a="M"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.17"><vh>setUp</vh></v>
+<v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
+<v t="ekr.20050120095423.19"><vh>tearDown</vh></v>
 </v>
+<v t="ekr.20050120095423.20"><vh>class lastTestCase</vh></v>
 </v>
-<v t="ekr.20050115100918" a="TV"
-expanded="ekr.20050115100918.1,ekr.20050115100918.2,ekr.20050115100918.3,"><vh>@thin c:\prog\test\middleSentinelsTest.txt</vh></v>
+<v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -2070,7 +2079,7 @@ try:
     print "done"
 except IOError:
     print "Can not open",port</t>
-<t tx="EKR.20040619133116"></t>
+<t tx="EKR.20040619133116"># Make sure this doesn't get deleted by the unit test!</t>
 <t tx="EKR.20040622074004">@ignore</t>
 <t tx="EKR.20040622074004.1"></t>
 <t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
@@ -2218,7 +2227,7 @@ for n in xrange(1):
 print "done"</t>
 <t tx="bwmulder.20050108100437.1">@killcolor
 
-Running unit tests from test.leo is very easy, provided you have enabled the
+Running unit tests from test.leo is easy, provided you have enabled the
 mod_scripting plugin. When this plugin is enabled Leo will create a blue 'script
 button' in the icon bar called 'unit test'. 
  
@@ -3568,8 +3577,7 @@ for t in c.all_unique_tnodes_iter():
     nodes.append(t)
     
 # print "duplicate tests pass"</t>
-<t tx="ekr.20040712101754.102">@ignore
-@color</t>
+<t tx="ekr.20040712101754.102">@color</t>
 <t tx="ekr.20040712101754.103">import leoGlobals as g
 import leoTest
 reload(leoTest)
@@ -9422,8 +9430,8 @@ import profile
 import pstats
 
 # Note: the profiled code should do all needed imports.
-
-path = "c:/prog/test/leoProfile.txt"
+path = g.os_path_abspath(g.os_path_join(g.app.loadDir,'..','test','leoProfile.txt'))
+path = str(path)
 
 c = g.top() ; p = c.currentPosition()
 
@@ -9551,62 +9559,6 @@ path = g.os_path_join(g.app.loadDir,"..","test","unittest","minimalLeoFile2.leo"
 leoTest.runLeoTest(path,verbose=False,full=True)
 </t>
 <t tx="ekr.20040730185319"></t>
-<t tx="ekr.20040801141212"># N.B.  We don't import the files: multiple imports might cause problems.
-import leoGlobals as g
-import unittest
-import leoTest
-reload(leoTest)
-
-c = g.top()
-
-@others
-
-suite = unittest.makeSuite(unittest.TestCase)
-
-for path in leoTest.getAllPluginFilenames():
-
-    f = file(path)
-    assert f, "File not found: %s" % path
-    s = f.read() ; f.close()
-    test = parseFileTestCase(c,path,checkCompile=True,checkTabs=True)
-    suite.addTest(test)
-
-if suite:
-    g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20040801141543">class parseFileTestCase (unittest.TestCase):
-
-    @others</t>
-<t tx="ekr.20040801141543.1">def __init__ (self,c,path,checkCompile,checkTabs):
-
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.path = path
-    self.checkCompile = checkCompile
-    self.checkTabs = checkTabs
-    assert self.checkCompile or self.checkTabs, "not checking anything"</t>
-<t tx="ekr.20040801141543.3">def runTest(self):
-    
-    c = self.c ; path = self.path
-
-    s = file(path).read()
-
-    if self.checkCompile:
-        leoTest.checkFileSyntax(path,s)
-
-    if self.checkTabs:
-        leoTest.checkFileTabs(path,s)</t>
-<t tx="ekr.20040801141543.5">def shortDescription (self):
-    
-    fn = str(g.shortFileName(self.path))
-    
-    if self.checkCompile and self.checkTabs:
-        return "Test syntax and tabbing of %s plugin" % fn
-    elif self.checkCompile:
-        return "Test syntax of %s plugin" % fn
-    else:
-        return "Test tabbing of %s plugin" % fn</t>
 <t tx="ekr.20040802065214"># Make sure that changing this headline marks descendant @thin nodes dirty.
 
 import leoGlobals as g
@@ -10919,12 +10871,12 @@ if spellpyx and spellpyx.aspell:
     if spellFrame:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test(conflict).leo
 C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\test\test(conflict).leo</t>
+C:\prog\leoCVS\leo\src\LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12737,113 +12689,6 @@ f.close()
 # print 'Contents of %s: %s' % (at.targetFileName,s)
 assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
 os.remove(at.targetFileName)</t>
-<t tx="ekr.20050105112238"># Create unit tests in g.app.scriptDict["suite"]
-
-import leoGlobals as g
-import leoPlugins
-import leoTest
-import glob
-import sys
-import unittest
-
-c = g.top()
-
-@others
-
-suite = makePluginsTestSuite(c)
-
-g.app.scriptDict['suite'] = suite</t>
-<t tx="ekr.20050105112249.1">def makePluginsTestSuite(c):
-
-    '''Create a plugin test for .py file in the plugins directory'''
-
-    # Create the suite.
-    suite = unittest.makeSuite(unittest.TestCase)
-
-    # Add a test case for every plugin.
-    plugins = g.os_path_join(g.app.loadDir,'..','plugins','*.py')
-    plugins = g.os_path_abspath(plugins)
-    files = glob.glob(plugins)
-    files = [g.os_path_abspath(f) for f in files]
-    files.sort()
-
-    for f in files:
-        test = pluginTestCase(c,f)
-        # g.trace(test.shortDescription())
-        suite.addTest(test)
-        
-    if 1: # Open a new window after all tests are completed.  Tests many plugins.
-        lastTest = lastTestCase(c,openFlag=True)
-        suite.addTest(lastTest)
-
-    return suite</t>
-<t tx="ekr.20050105112249.2">class pluginTestCase(unittest.TestCase):
-
-    '''A test case to test a single Leo plugin.'''
-
-    @others</t>
-<t tx="ekr.20050105112249.3">def __init__ (self,c,path):
-
-    # Init the base class.
-    unittest.TestCase.__init__(self)
-
-    self.c = c
-    self.path = path</t>
-<t tx="ekr.20050105112249.4">def fail (self):
-
-    """Mark a unit test as having failed."""
-
-    import leoGlobals as g
-
-    g.app.unitTestDict["fail"] = g.callerName(2)</t>
-<t tx="ekr.20050105112249.6">def runTest(self):
-
-    c = self.c ; path = self.path
-    
-    path,file = g.os_path_split(path)
-    moduleName,ext  = g.os_path_splitext(file)
-    module = sys.modules.get(moduleName)
-
-    if not module:
-        module = leoPlugins.loadOnePlugin(moduleName,verbose=False)
-        assert module, 'can not import %s' % moduleName</t>
-<t tx="ekr.20050105112249.7">def setUp(self,*args,**keys):
-
-    g.app.unitTesting = True
-    g.app.unitTestDict = {}</t>
-<t tx="ekr.20050105112249.8">def shortDescription (self):
-
-    return "pluginTestCase: %s" % g.shortFileName(self.path)</t>
-<t tx="ekr.20050105112249.9">def tearDown (self):
-
-    g.app.unitTesting = False</t>
-<t tx="ekr.20050105141608">@killcolor
-@
-
-What I did:
-
-- chapters.py
-    - Added some new keyword argument to several methods corresponding to leoFileCommands methods.
-    - This plugin now appears to work.
-
-- lineNumbers.py
-    - Changed leoAtFile.newDerivedFile to leoAtFile.atFile in several places.
-    - Again, this is required because of changes in 4.3 to Leo's core code.
-
-- dynamenu.py
-    - Changed all instances of g.os_path_norm to g.os_path_normpath</t>
-<t tx="ekr.20050105142314.1">@
-
-  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 4285, in importFromPath
-    result = imp.load_module(mod_name,theFile,pathname,description)
-
-ImportError: Module use of python23.dll conflicts with this version of Python.</t>
-<t tx="ekr.20050105142314.4">@
-
-Can not import Tkinter from plugin table</t>
-<t tx="ekr.20050105142314.5">@
-
-Can not import Ft from plugin xsltWithNodes</t>
 <t tx="ekr.20050106080304">import leoGlobals as g
 import glob
 import inspect
@@ -13092,8 +12937,6 @@ else:
 
     result = ''.join(result)
     return result</t>
-<t tx="ekr.20050107093251"># These are now compatible with the other unit tests.
-# It may be a bit off-putting to run the two sets together, however...</t>
 <t tx="ekr.20050108110751"></t>
 <t tx="ekr.20050108110751.1">@ Here is a function to convert the font tags to equivalent span tags. Note use
 of font-size:x-large to show how styling can be used for emphasis.
@@ -13156,7 +12999,113 @@ _colors = {
     '_LeoSen':        ['#BC8F8F','LeoSen','font-size:x-large;'], #sentinal, tan fade comment
     'bg':             ['#FFFAFA','bg',' '], #snow
 }</t>
-<t tx="ekr.20050110110738">@ignore
+<t tx="ekr.20050112095306"></t>
+<t tx="ekr.20050112095306.1"></t>
+<t tx="ekr.20050113094943">import leoGlobals as g
+stuff = g.toEncodedString(u'∑','utf-8')
+print type(stuff)
+print '*' * 10
+for ch in stuff:
+    print ch, ord(ch),
+print</t>
+<t tx="ekr.20050114101014">@ignore</t>
+<t tx="ekr.20050115100918">root line 1
+&lt;&lt; level 1&gt;&gt;
+root line 2
+&lt;&lt; level 2 &gt;&gt;
+root line 3
+&lt;&lt; level 3 &gt;&gt;
+root line 4
+&lt;&lt; level 4 &gt;&gt;
+root line 5</t>
+<t tx="ekr.20050115100918.1">level 1 line 1
+&lt;&lt; level 2 &gt;&gt;
+level 1 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 1 line 3
+&lt;&lt; level 4 &gt;&gt;
+level 1 line 4</t>
+<t tx="ekr.20050115100918.2">level 2 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 2 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 2 line 3</t>
+<t tx="ekr.20050115100918.3">level 3 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 3 line 2
+</t>
+<t tx="ekr.20050115103123">level 4 line 1</t>
+<t tx="ekr.20050115103442">root line 1
+&lt;&lt; level 1&gt;&gt;
+root line 2
+&lt;&lt; level 2 &gt;&gt;
+root line 3
+&lt;&lt; level 3 &gt;&gt;
+root line 4
+&lt;&lt; level 4 &gt;&gt;
+root line 5</t>
+<t tx="ekr.20050115103442.1">level 1 line 1
+&lt;&lt; level 2 &gt;&gt;
+level 1 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 1 line 3
+&lt;&lt; level 4 &gt;&gt;
+level 1 line 4</t>
+<t tx="ekr.20050115103442.2">level 2 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 2 line 2
+&lt;&lt; level 3 &gt;&gt;
+level 2 line 3</t>
+<t tx="ekr.20050115103442.3">level 3 line 1
+&lt;&lt; level 4 &gt;&gt;
+level 3 line 2
+</t>
+<t tx="ekr.20050115103442.4">level 4 line 1</t>
+<t tx="ekr.20050119144013">@killcolor
+
+Most dependencies are already gone.
+
+- Search for c: in headline shows only a few tests for plugins.
+- We could change \\ to , in the import tests,  or have the test call g.os_path_join implicitly.
+
+Still to do:
+
+There are a lot of 'quick and dirty' file tests that never became proper unit tests.
+
+    - Changed c:\prog\test\ to x, so all files now refer to Leo's test directory.
+    - However, none of those files actually exist in the test directory, and I don't want to commit those files to cvs.
+    - Again, the solution would probably be to create proper unit tests.</t>
+<t tx="ekr.20050119220832"></t>
+<t tx="ekr.20050120095423"># These are now compatible with the other unit tests.
+# It may be a bit off-putting to run the two sets together, however...</t>
+<t tx="ekr.20050120095423.1">@killcolor
+@
+
+What I did:
+
+- chapters.py
+    - Added some new keyword argument to several methods corresponding to leoFileCommands methods.
+    - This plugin now appears to work.
+
+- lineNumbers.py
+    - Changed leoAtFile.newDerivedFile to leoAtFile.atFile in several places.
+    - Again, this is required because of changes in 4.3 to Leo's core code.
+
+- dynamenu.py
+    - Changed all instances of g.os_path_norm to g.os_path_normpath</t>
+<t tx="ekr.20050120095423.2">@
+
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 4285, in importFromPath
+    result = imp.load_module(mod_name,theFile,pathname,description)
+
+ImportError: Module use of python23.dll conflicts with this version of Python.</t>
+<t tx="ekr.20050120095423.3">@
+
+Can not import Tkinter from plugin table</t>
+<t tx="ekr.20050120095423.4">@
+
+Can not import Ft from plugin xsltWithNodes</t>
+<t tx="ekr.20050120095423.5">@ignore
 # leo.py
 g.doHook("start1")
 g.doHook("start2",c=c,p=p,v=p,fileName=fileName)
@@ -13243,16 +13192,143 @@ g.doHook("unselect1",   c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 g.doHook("unselect2",   c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 g.doHook("select2",     c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
 g.doHook("select3",     c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)</t>
-<t tx="ekr.20050110193057">import leoGlobals as g
-import leoPlugins
+<t tx="ekr.20050120095423.6"># N.B.  We don't import the files: multiple imports might cause problems.
+import leoGlobals as g
+import unittest
+import leoTest
+reload(leoTest)
 
-print
-print 'loaded plugins...'
-for p in g.app.loadedPlugins:
-    print p
+c = g.top()
+
+@others
+
+suite = unittest.makeSuite(unittest.TestCase)
+
+for path in leoTest.getAllPluginFilenames():
+
+    f = file(path)
+    assert f, "File not found: %s" % path
+    s = f.read() ; f.close()
+    test = parseFileTestCase(c,path,checkCompile=True,checkTabs=True)
+    suite.addTest(test)
+
+if suite:
+    g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20050120095423.7">class parseFileTestCase (unittest.TestCase):
+
+    @others</t>
+<t tx="ekr.20050120095423.8">def __init__ (self,c,path,checkCompile,checkTabs):
+
+    # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.c = c
+    self.path = path
+    self.checkCompile = checkCompile
+    self.checkTabs = checkTabs
+    assert self.checkCompile or self.checkTabs, "not checking anything"</t>
+<t tx="ekr.20050120095423.9">def runTest(self):
     
-leoPlugins.printHandlers()</t>
-<t tx="ekr.20050111103842">class lastTestCase(unittest.TestCase):
+    c = self.c ; path = self.path
+
+    s = file(path).read()
+
+    if self.checkCompile:
+        leoTest.checkFileSyntax(path,s)
+
+    if self.checkTabs:
+        leoTest.checkFileTabs(path,s)</t>
+<t tx="ekr.20050120095423.10">def shortDescription (self):
+    
+    fn = str(g.shortFileName(self.path))
+    
+    if self.checkCompile and self.checkTabs:
+        return "Test syntax and tabbing of %s plugin" % fn
+    elif self.checkCompile:
+        return "Test syntax of %s plugin" % fn
+    else:
+        return "Test tabbing of %s plugin" % fn</t>
+<t tx="ekr.20050120095423.11"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+import leoPlugins
+import leoTest
+import glob
+import sys
+import unittest
+
+c = g.top()
+
+@others
+
+suite = makePluginsTestSuite(c)
+
+g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20050120095423.12">def makePluginsTestSuite(c):
+
+    '''Create a plugin test for .py file in the plugins directory'''
+
+    # Create the suite.
+    suite = unittest.makeSuite(unittest.TestCase)
+
+    # Add a test case for every plugin.
+    plugins = g.os_path_join(g.app.loadDir,'..','plugins','*.py')
+    plugins = g.os_path_abspath(plugins)
+    files = glob.glob(plugins)
+    files = [g.os_path_abspath(f) for f in files]
+    files.sort()
+
+    for f in files:
+        test = pluginTestCase(c,f)
+        # g.trace(test.shortDescription())
+        suite.addTest(test)
+        
+    if 1: # Open a new window after all tests are completed.  Tests many plugins.
+        lastTest = lastTestCase(c,openFlag=True)
+        suite.addTest(lastTest)
+
+    return suite</t>
+<t tx="ekr.20050120095423.13">class pluginTestCase(unittest.TestCase):
+
+    '''A test case to test a single Leo plugin.'''
+
+    @others</t>
+<t tx="ekr.20050120095423.14">def __init__ (self,c,path):
+
+    # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.c = c
+    self.path = path</t>
+<t tx="ekr.20050120095423.15">def fail (self):
+
+    """Mark a unit test as having failed."""
+
+    import leoGlobals as g
+
+    g.app.unitTestDict["fail"] = g.callerName(2)</t>
+<t tx="ekr.20050120095423.16">def runTest(self):
+
+    c = self.c ; path = self.path
+    
+    path,file = g.os_path_split(path)
+    moduleName,ext  = g.os_path_splitext(file)
+    module = sys.modules.get(moduleName)
+
+    if not module:
+        module = leoPlugins.loadOnePlugin(moduleName,verbose=False)
+        assert module, 'can not import %s' % moduleName</t>
+<t tx="ekr.20050120095423.17">def setUp(self,*args,**keys):
+
+    g.app.unitTesting = True
+    g.app.unitTestDict = {}</t>
+<t tx="ekr.20050120095423.18">def shortDescription (self):
+
+    return "pluginTestCase: %s" % g.shortFileName(self.path)</t>
+<t tx="ekr.20050120095423.19">def tearDown (self):
+
+    g.app.unitTesting = False</t>
+<t tx="ekr.20050120095423.20">class lastTestCase(unittest.TestCase):
 
     '''A test case to print a message at the end of plugin tests.'''
     
@@ -13271,41 +13347,14 @@ leoPlugins.printHandlers()</t>
         if self.openFlag:
             new_c = c.new() # Create the new window.
             new_c.frame.setTitle("unit test for 'new' hook")</t>
-<t tx="ekr.20050112095306"></t>
-<t tx="ekr.20050112095306.1"></t>
-<t tx="ekr.20050113094943">import leoGlobals as g
-stuff = g.toEncodedString(u'∑','utf-8')
-print type(stuff)
-print '*' * 10
-for ch in stuff:
-    print ch, ord(ch),
-print</t>
-<t tx="ekr.20050114101014"></t>
-<t tx="ekr.20050115103442">root line 1
-&lt;&lt; level 1&gt;&gt;
-root line 2
-&lt;&lt; level 2 &gt;&gt;
-root line 3
-&lt;&lt; level 3 &gt;&gt;
-root line 4
-&lt;&lt; level 4 &gt;&gt;
-root line 5</t>
-<t tx="ekr.20050115103442.1">level 1 line 1
-&lt;&lt; level 2 &gt;&gt;
-level 1 line 2
-&lt;&lt; level 3 &gt;&gt;
-level 1 line 3
-&lt;&lt; level 4 &gt;&gt;
-level 1 line 4</t>
-<t tx="ekr.20050115103442.2">level 2 line 1
-&lt;&lt; level 4 &gt;&gt;
-level 2 line 2
-&lt;&lt; level 3 &gt;&gt;
-level 2 line 3</t>
-<t tx="ekr.20050115103442.3">level 3 line 1
-&lt;&lt; level 4 &gt;&gt;
-level 3 line 2
-</t>
-<t tx="ekr.20050115103442.4">level 4 line 1</t>
+<t tx="ekr.20050120095423.21">import leoGlobals as g
+import leoPlugins
+
+print
+print 'loaded plugins...'
+for p in g.app.loadedPlugins:
+    print p
+    
+leoPlugins.printHandlers()</t>
 </tnodes>
 </leo_file>
