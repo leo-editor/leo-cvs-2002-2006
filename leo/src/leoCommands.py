@@ -450,7 +450,9 @@ class baseCommands:
 		headline = string.strip(headline)
 		
 		# Make sure we have a @< or <<
-		if headline[0:2] != '<<' and headline[0:2] != '@<': return
+		if headline[0:2] != '<<' and headline[0:2] != '@<':
+			es("Selected text should start with a section name",color="blue")
+			return
 		#@nonl
 		#@-node:<< Set headline for extractSection >>
 		#@nl
@@ -491,6 +493,7 @@ class baseCommands:
 		i, j = oldSel = newSel = self.getBodySelection()
 		c.beginUpdate()
 		if 1: # update range...
+			found = false
 			for s in lines:
 				#@			<< Find the next section name >>
 				#@+node:<< Find the next section name >>
@@ -509,9 +512,13 @@ class baseCommands:
 				#@nonl
 				#@-node:<< Find the next section name >>
 				#@nl
-				if name: self.createLastChildNode(v,name,None)
+				if name:
+					self.createLastChildNode(v,name,None)
+					found = true
 			c.selectVnode(v)
 			c.validateOutline()
+			if not found:
+				es("Selected text should contain one or more section names",color="blue")
 		c.endUpdate()
 		# No change to body or selection
 		c.undoer.setUndoParams("Extract Names",
@@ -1394,6 +1401,7 @@ class baseCommands:
 		if not v: return
 		c.beginUpdate()
 		clone = v.clone(v)
+		c.initAllCloneBits() # 10/10/03
 		clone.setDirty() # essential in Leo2
 		c.setChanged(true)
 		if c.validateOutline():
