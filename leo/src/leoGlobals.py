@@ -62,7 +62,31 @@ def collectGarbage():
 
 #@-body
 #@-node:3::collectGarbage
-#@+node:4::Commands, Dialogs, Directives, & Menus...
+#@+node:4::executeScript
+#@+body
+def executeScript (name):
+	
+	"""Execute a script whose short python file name is given"""
+	
+	mod_name,ext = os.path.splitext(name)
+	file = None
+	try:
+		# This code is in effect an import or a reload.
+		# This allows the user to modify scripts without leaving Leo.
+		import imp
+		file,filename,description = imp.find_module(mod_name)
+		imp.load_module(mod_name,file,filename,description)
+	except:
+		es("Exception executing " + name,color="red")
+		es_exception()
+
+	if file:
+		file.close()
+
+
+#@-body
+#@-node:4::executeScript
+#@+node:5::Commands, Dialogs, Directives, & Menus...
 #@+node:1::Dialog utils...
 #@+node:1::attachLeoIcon & allies
 #@+body
@@ -92,7 +116,7 @@ def attachLeoIcon (w):
 		w.bind("<Visibility>",callback)
 		if not leoIcon:
 			# Using a .gif rather than an .ico allows us to specify transparency.
-			icon_file_name = os.path.join(app().loadDir,'Icons','LeoWin.gif')
+			icon_file_name = os.path.join(app().loadDir,'..','Icons','LeoWin.gif')
 			icon_file_name = os.path.normpath(icon_file_name)
 			icon_image = Image.open(icon_file_name)
 			if 1: # Doesn't resize.
@@ -903,8 +927,8 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	return result
 #@-body
 #@-node:5::wrap_lines
-#@-node:4::Commands, Dialogs, Directives, & Menus...
-#@+node:5::Debugging, Dumping, Timing, Tracing & Sherlock
+#@-node:5::Commands, Dialogs, Directives, & Menus...
+#@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -1071,7 +1095,7 @@ def module_date (mod,format=None):
 	return file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app().loadDir,"plugins",plugin_mod.__file__)
+	file = os.path.join(app().loadDir,"..","plugins",plugin_mod.__file__)
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
@@ -1710,8 +1734,8 @@ def utils_rename(src,dst):
 #@-body
 #@-node:10::utils_rename
 #@-node:17::Files & Directories...
-#@-node:5::Debugging, Dumping, Timing, Tracing & Sherlock
-#@+node:6::Hooks
+#@-node:6::Debugging, Dumping, Timing, Tracing & Sherlock
+#@+node:7::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
 #@+at
@@ -1811,8 +1835,8 @@ def issueHookWarning ():
 			es("use_plugins = 0")
 #@-body
 #@-node:3::issueHookWarning
-#@-node:6::Hooks
-#@+node:7::Lists...
+#@-node:7::Hooks
+#@+node:8::Lists...
 #@+node:1::appendToList
 #@+body
 def appendToList(out, s):
@@ -1845,8 +1869,8 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:3::listToString
-#@-node:7::Lists...
-#@+node:8::Most common functions
+#@-node:8::Lists...
+#@+node:9::Most common functions
 #@+body
 # These are guaranteed always to exist for scripts.
 
@@ -1962,8 +1986,8 @@ def windows():
 	return app().windowList
 #@-body
 #@-node:6::windows
-#@-node:8::Most common functions
-#@+node:9::Scanning, selection & whitespace...
+#@-node:9::Most common functions
+#@+node:10::Scanning, selection & whitespace...
 #@+node:1::scanAtFileOptions
 #@+body
 def scanAtFileOptions (h,err_flag=false):
@@ -3031,8 +3055,8 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 #@-body
 #@-node:8::skip_leading_ws_with_indent
 #@-node:8::Whitespace...
-#@-node:9::Scanning, selection & whitespace...
-#@+node:10::Startup & initialization...
+#@-node:10::Scanning, selection & whitespace...
+#@+node:11::Startup & initialization...
 #@+node:1::CheckVersion (Dave Hein)
 #@+body
 #@+at
@@ -3187,16 +3211,18 @@ def unloadAll():
 #@+body
 def plugin_signon(module_name):
 	
-	exec("import %s ; m = %s" % (
-		module_name,module_name))
-
-	es("...%s.py v%s: %s" % (
-		m.__name__, m.__version__, plugin_date(m)))
+	exec("import %s ; m = %s" % (module_name,module_name))
+	
+	if 0: # Verbose
+		es("...%s.py v%s: %s" % (
+			m.__name__, m.__version__, plugin_date(m)))
+	else:
+		print m.__name__, m.__version__
 
 #@-body
 #@-node:3::plugin_signon
-#@-node:10::Startup & initialization...
-#@+node:11::Unicode utils...
+#@-node:11::Startup & initialization...
+#@+node:12::Unicode utils...
 #@+node:1::isValidEncoding
 #@+body
 def isValidEncoding (encoding):
@@ -3323,7 +3349,7 @@ except:
 
 #@-body
 #@-node:4::getpreferredencoding from 2.3a2
-#@-node:11::Unicode utils...
+#@-node:12::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

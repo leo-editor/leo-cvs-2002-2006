@@ -35,10 +35,11 @@ def loadHandlers():
 	import glob,os,sys
 	oldpath = sys.path
 	try: # Make sure we restore sys.path.
-		path = os.path.join(app().loadDir,"plugins") # 2/19/03
+		path = os.path.join(app().loadDir,"..","plugins") # 2/19/03
 		files = glob.glob(os.path.join(path,"mod_*.py"))
-		if len(files) > 0:
-			es("Loading plugins:",color="red")
+		files.sort()
+		if files:
+			# es("Loading plugins:",color="red")
 			sys.path.append(path)
 			for file in files:
 				try:
@@ -57,16 +58,21 @@ def loadHandlers():
 #@+node:2::doHandlersForTag
 #@+body
 def doHandlersForTag (tag,keywords):
+	
+	"""Execute all handlers for a given tag, in alphabetical order"""
 
 	global handlers
+
 	if handlers.has_key(tag):
 		handle_fns = handlers[tag]
+		handle_fns.sort()
 		for handle_fn in handle_fns:
 			ret = handle_fn(tag,keywords)
 			if ret is not None:
 				return ret
 	if handlers.has_key("all"):
 		handle_fns = handlers["all"]
+		handle_fns.sort()
 		for handle_fn in handle_fns:
 			ret = handle_fn(tag,keywords)
 			if ret is not None:
@@ -77,6 +83,7 @@ def doHandlersForTag (tag,keywords):
 #@+node:3::registerHandler
 #@+body
 def registerHandler(tags,fn):
+	
 	""" Register one or more handlers"""
 	import types
 	if type(tags) in (types.TupleType,types.ListType):
@@ -93,6 +100,7 @@ def registerOneHandler(tag,fn):
 		existing.append(fn)
 	except AttributeError:
 		es("*** Two exclusive handlers for '%s'" % tag)
+
 #@-body
 #@-node:3::registerHandler
 #@+node:4::registerExclusiveHandler

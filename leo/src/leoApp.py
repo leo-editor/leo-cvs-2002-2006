@@ -182,7 +182,7 @@ class LeoApp:
 		#@+node:3::<< set the default Leo icon >>
 		#@+body
 		try: # 6/2/02: Try to set the default bitmap.
-			bitmap_name = os.path.join(self.loadDir,"Icons","LeoApp.ico")
+			bitmap_name = os.path.join(self.loadDir,"..","Icons","LeoApp.ico")
 			bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception creating bitmap"

@@ -1229,388 +1229,10 @@ class LeoFrame:
 		#@-body
 		#@-node:3::<< create the outline menu >>
 
-		
-		#@<< create the plug-ins menu >>
-		#@+node:4::<< create the plug-ins menu >>
-		#@+body
-		# Written by Paul A. Paterson.  Revised by Edward K. Ream.
-		
-		if app().use_gnx: # This code will make its official debut in 4.0.
-		
-			import ConfigParser, glob
-			
-			
-			#@<< define classes used in the plugins menu >>
-			#@+node:1::<< define classes used in the plugins menu >>
-			#@+body
-			class PluginAbout:
-				"""A class to create and run an About Plugin dialog"""
-				
-				#@<< class PluginAbout methods >>
-				#@+node:3::<< class PluginAbout methods >>
-				#@+body
-				#@+others
-				#@+node:1::__init__
-				#@+body
-				def __init__(self, name, version, about):
-					
-					"""# Create and run a modal dialog giving the name,
-					version and description of a plugin.
-					"""
-				
-					root = app().root
-					self.top = top = Tk.Toplevel(root)
-					attachLeoIcon(self.top)
-					top.title("About " + name)
-					top.resizable(0,0) # neither height or width is resizable.
-					
-					frame = Tk.Frame(top)
-					frame.pack(side="top")
-					
-					#@<< Create the contents of the about box >>
-					#@+node:1::<< Create the contents of the about box >>
-					#@+body
-					if 0: # The name is now in the window's title.
-						Tk.Label(frame, text="Name:").grid(row=0, col=0, sticky="E")
-						Tk.Label(frame, text=name).grid(row=0, col=1, sticky="W")
-						Tk.Label(frame, text="Version").grid(row=1, col=0, sticky="E")
-						Tk.Label(frame, text=version).grid(row=1, col=1, sticky="W")
-						Tk.Label(frame, text=about, borderwidth=10, justify="left").grid(columnspan=2)
-					else:
-						Tk.Label(frame, text="Version " + version).pack()
-						Tk.Label(frame, text=about, borderwidth=10).pack()
-					#@-body
-					#@-node:1::<< Create the contents of the about box >>
-
-					
-					#@<< Create the close button >>
-					#@+node:2::<< Create the close button >>
-					#@+body
-					buttonbox = Tk.Frame(top, borderwidth=5)
-					buttonbox.pack(side="bottom")
-					
-					self.button = Tk.Button(buttonbox, text="Close", command=top.destroy)
-					self.button.pack(side="bottom")
-					#@-body
-					#@-node:2::<< Create the close button >>
-
-					
-					center_dialog(top) # Do this after packing.
-					top.grab_set() # Make the dialog a modal dialog.
-					top.focus_force() # Get all keystrokes.
-					root.wait_window(top)
-				#@-body
-				#@-node:1::__init__
-				#@-others
-				
-				#@-body
-				#@-node:3::<< class PluginAbout methods >>
-
-					
-			class PlugIn:
-				"""A class to hold information about one plugin"""
-				
-				#@<< class PlugIn methods >>
-				#@+node:1::<< class PlugIn methods >>
-				#@+body
-				#@+others
-				#@+node:1::__init__
-				#@+body
-				def __init__(self, filename):
-				
-					"""Initialize the plug-in"""
-				
-					# Import the file to find out some interesting stuff
-					oldpath = sys.path
-					sys.path.append(os.path.join(app().loadDir,"plugins"))
-					self.mod = __import__(os.path.splitext(os.path.basename(filename))[0])
-				
-					self.name = self.mod.__name__
-					self.doc = self.mod.__doc__
-					self.version = self.mod.__dict__.get("__version__", None) # "<unknown>")
-				
-					
-					#@<< Check if this can be configured >>
-					#@+node:1::<< Check if this can be configured >>
-					#@+body
-					# Look for a configuration file
-					self.configfilename = "%s.ini" % os.path.splitext(filename)[0]
-					self.hasconfig = os.path.isfile(self.configfilename)
-					
-					#@-body
-					#@-node:1::<< Check if this can be configured >>
-
-					
-					#@<< Check if this has an apply >>
-					#@+node:2::<< Check if this has an apply >>
-					#@+body
-					#@+at
-					#  Look for an apply function ("applyConfiguration") in 
-					# the module.
-					# 
-					# This is used to apply changes in configuration from the 
-					# properties window
-
-					#@-at
-					#@@c
-
-					self.hasapply = hasattr(self.mod, "applyConfiguration")
-					
-					#@-body
-					#@-node:2::<< Check if this has an apply >>
-
-					
-					#@<< Look for additional commands >>
-					#@+node:3::<< Look for additional commands >>
-					#@+body
-					#@+at
-					#  Additional commands can be added to the plugin menu by 
-					# having functions in the module called "cmd_whatever". 
-					# These are added to the main menu and will be called when clicked
-
-					#@-at
-					#@@c
-
-					self.othercmds = {}
-					
-					for item in self.mod.__dict__.keys():
-						if item.startswith("cmd_"):
-							self.othercmds[item[4:]] = self.mod.__dict__[item]
-					
-					#@-body
-					#@-node:3::<< Look for additional commands >>
-
-				
-				
-				#@-body
-				#@-node:1::__init__
-				#@+node:2::about
-				#@+body
-				def about(self, arg):
-					
-					"""Put up an "about" dialog for this plugin"""
-				
-					PluginAbout(self.name, self.version, self.doc)
-				#@-body
-				#@-node:2::about
-				#@+node:3::properties
-				#@+body
-				def properties(self, arg):
-					
-					"""Create a modal properties dialog for this plugin"""
-				
-					PropertiesWindow(self.configfilename, self)
-				
-				#@-body
-				#@-node:3::properties
-				#@-others
-				
-				#@-body
-				#@-node:1::<< class PlugIn methods >>
-
-				
-			class PropertiesWindow:
-				"""A class to create and run a Properties dialog for a plugin"""
-				
-				#@<< class PropertiesWindow methods >>
-				#@+node:2::<< class PropertiesWindow methods >>
-				#@+body
-				#@+others
-				#@+node:1::__init__
-				#@+body
-				def __init__(self, filename, plugin):
-				
-					"""Initialize the property window"""
-					
-					
-					#@<< initialize all ivars >>
-					#@+node:1::<< initialize all ivars >>
-					#@+body
-					# config stuff.
-					config = ConfigParser.ConfigParser()
-					config.read(filename)
-					self.filename = filename
-					self.config = config
-					self.plugin = plugin
-					
-					# self.entries is a list of tuples (section, option, e),
-					# where section and options are strings and e is a Tk.Entry widget.
-					# This list is used by writeConfiguration to write all settings.
-					self.entries = []
-					
-					#@-body
-					#@-node:1::<< initialize all ivars >>
-
-					
-					#@<< create the frame from the configuration data >>
-					#@+node:2::<< create the frame from the configuration data >>
-					#@+body
-					root = app().root
-					
-					
-					#@<< Create the top level and the main frame >>
-					#@+node:1::<< Create the top level and the main frame >>
-					#@+body
-					self.top = top = Tk.Toplevel(root)
-					attachLeoIcon(self.top)
-					top.title("Properties of "+ plugin.name)
-					top.resizable(0,0) # neither height or width is resizable.
-						
-					self.frame = frame = Tk.Frame(top)
-					frame.pack(side="top")
-					#@-body
-					#@-node:1::<< Create the top level and the main frame >>
-
-					
-					#@<< Create widgets for each section and option >>
-					#@+node:2::<< Create widgets for each section and option >>
-					#@+body
-					# Create all the entry boxes on the screen to allow the user to edit the properties
-					sections = config.sections()
-					sections.sort()
-					for section in sections:
-						# Create a frame for the section.
-						f = Tk.Frame(top, relief="groove",bd=2)
-						f.pack(side="top",padx=5,pady=5)
-						Tk.Label(f, text=section.capitalize()).pack(side="top")
-						# Create an inner frame for the options.
-						b = Tk.Frame(f)
-						b.pack(side="top",padx=2,pady=2)
-						# Create a Tk.Label and Tk.Entry for each option.
-						options = config.options(section)
-						options.sort()
-						row = 0
-						for option in options:
-							e = Tk.Entry(b)
-							e.insert(0, config.get(section, option))
-							Tk.Label(b, text=option).grid(row=row, col=0, sticky="e", pady=4)
-							e.grid(row=row, col=1, sticky="ew", pady = 4)
-							row += 1
-							self.entries.append((section, option, e))
-					#@-body
-					#@-node:2::<< Create widgets for each section and option >>
-
-					
-					#@<< Create Ok, Cancel and Apply buttons >>
-					#@+node:3::<< Create Ok, Cancel and Apply buttons >>
-					#@+body
-					box = Tk.Frame(top, borderwidth=5)
-					box.pack(side="bottom")
-					
-					list = [("OK",self.onOk),("Cancel",top.destroy)]
-					if plugin.hasapply:
-						list.append(("Apply",self.onApply),)
-					
-					for text,f in list:
-						Tk.Button(box,text=text,width=6,command=f).pack(side="left",padx=5)
-					#@-body
-					#@-node:3::<< Create Ok, Cancel and Apply buttons >>
-
-					
-					center_dialog(top) # Do this after packing.
-					top.grab_set() # Make the dialog a modal dialog.
-					top.focus_force() # Get all keystrokes.
-					root.wait_window(top)
-					#@-body
-					#@-node:2::<< create the frame from the configuration data >>
-				#@-body
-				#@-node:1::__init__
-				#@+node:2::Event Handlers
-				#@+body
-				def onApply(self):
-					
-					"""Event handler for Apply button"""
-					self.writeConfiguration()
-					self.plugin.mod.applyConfiguration(self.config)
-				
-				def onOk(self):
-				
-					"""Event handler for Ok button"""
-					self.writeConfiguration()
-					self.top.destroy()
-				#@-body
-				#@-node:2::Event Handlers
-				#@+node:3::writeConfiguration
-				#@+body
-				def writeConfiguration(self):
-					
-					"""Write the configuration to disk"""
-				
-					# Set values back into the config item.
-					for section, option, entry in self.entries:
-						self.config.set(section, option, entry.get())
-				
-					# Write out to the file.
-					f = open(self.filename, "w")
-					self.config.write(f)
-					f.close()
-				
-				#@-body
-				#@-node:3::writeConfiguration
-				#@-others
-				
-				#@-body
-				#@-node:2::<< class PropertiesWindow methods >>
-			#@-body
-			#@-node:1::<< define classes used in the plugins menu >>
-
-			
-			#@<< create PlugIn objects for all plugin files >>
-			#@+node:2::<< create PlugIn objects for all plugin files >>
-			#@+body
-			# Look for all the plug-ins that are on the system
-			path = os.path.join(app().loadDir,"..","plugins") # 5/12/03
-			plugin_files = glob.glob(os.path.join(path,"mod_*.py"))
-			plugins = [PlugIn(file) for file in plugin_files]
-			
-			#@-body
-			#@-node:2::<< create PlugIn objects for all plugin files >>
-
-			
-			# Create a sorted list of all active plugins.
-			sorted_items = [(p.name,p) for p in plugins if p.version]
-			sorted_items.sort()
-		
-			# Create the Plugins menu only if there are active plugins.
-			if len(sorted_items) > 0:
-				pluginMenu = self.createNewMenu("&Plugins")
-				
-				#@<< add enabled plugins to the plugins menu >>
-				#@+node:3::<< add enabled plugins to the plugins menu >>
-				#@+body
-				# Add an item or submenu to the Plugins menu for each plugin.
-				for name,p in sorted_items:
-					if p.hasconfig:
-						m = self.createNewMenu(p.name, "&Plugins")
-						table = [("About...", None, p.about),
-								 ("Properties...", None, p.properties)]
-						
-						#@<< Append plug-in specific menu items to table >>
-						#@+node:1::<< Append plug-in specific menu items to table >>
-						#@+body
-						# Add other menu items to call cmd_* functions in the module
-						
-						if p.othercmds:
-							table.append(("-", None, None))
-							items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
-							items.sort()
-							table.extend(items)
-						
-						#@-body
-						#@-node:1::<< Append plug-in specific menu items to table >>
-
-						self.createMenuEntries(m, table)
-					else:
-						table = ((p.name, None, p.about),)
-						self.createMenuEntries(pluginMenu, table)
-				#@-body
-				#@-node:3::<< add enabled plugins to the plugins menu >>
-		#@-body
-		#@-node:4::<< create the plug-ins menu >>
-
+		handleLeoHook("create-optional-menus",c=c) # A stub hook.
 		
 		#@<< create the window menu >>
-		#@+node:5::<< create the window menu >>
+		#@+node:4::<< create the window menu >>
 		#@+body
 		windowMenu = self.createNewMenu("&Window")
 		
@@ -1628,11 +1250,11 @@ class LeoFrame:
 		self.createMenuEntries(windowMenu,table)
 		
 		#@-body
-		#@-node:5::<< create the window menu >>
+		#@-node:4::<< create the window menu >>
 
 		
 		#@<< create the help menu >>
-		#@+node:6::<< create the help menu >>
+		#@+node:5::<< create the help menu >>
 		#@+body
 		helpMenu = self.createNewMenu("&Help")
 		
@@ -1656,7 +1278,7 @@ class LeoFrame:
 		
 		self.createMenuEntries(helpMenu,table)
 		#@-body
-		#@-node:6::<< create the help menu >>
+		#@-node:5::<< create the help menu >>
 
 		top.config(menu=topMenu) # Display the menu.
 		app().menuWarningsGiven = true
@@ -1832,6 +1454,9 @@ class LeoFrame:
 		frame = LeoFrame() # Create another Leo window.
 		top = frame.top
 		
+		# 5/16/03: Needed for hooks.
+		handleLeoHook("new",old_c=self,new_c=frame.commands)
+	
 		# Set the size of the new window.
 		h = config.getIntWindowPref("initial_window_height")
 		w = config.getIntWindowPref("initial_window_width")
@@ -1857,7 +1482,6 @@ class LeoFrame:
 		c.endUpdate()
 		
 		frame.body.focus_set()
-	
 	#@-body
 	#@-node:1::OnNew
 	#@+node:2::frame.OnOpen
@@ -4382,7 +4006,7 @@ class LeoFrame:
 				es("leoConfig.leo not found in " + loadDir)
 			else:
 				# Look in loadDir second.
-				fileName = os.path.join(loadDir, "leoConfig.leo")
+				fileName = os.path.join(loadDir,"leoConfig.leo")
 				ok, frame = self.OpenWithFileName(fileName)
 				if not ok:
 					es("leoConfig.leo not found in " + configDir + " or " + loadDir)
@@ -4424,7 +4048,7 @@ class LeoFrame:
 	#@-node:1::createMenuItemsFromTable
 	#@+node:2::createNewMenu
 	#@+body
-	def createNewMenu (self,menuName,parentName="top"):
+	def createNewMenu (self,menuName,parentName="top",before=None):
 		
 		import Tkinter
 		from leoGlobals import app
@@ -4436,14 +4060,21 @@ class LeoFrame:
 				
 			menu = self.getMenu(menuName)
 			if menu:
-				es("menu already exists: " + menuName)
+				es("menu already exists: " + menuName,color="red")
 			else:
 				menu = Tkinter.Menu(parent,tearoff=0)
 				self.setMenu(menuName,menu)
 				label=app().getRealMenuName(menuName)
 				amp_index = label.find("&")
 				label = label.replace("&","")
-				parent.add_cascade(label=label,menu=menu,underline=amp_index)
+				if before: # Insert the menu before the "before" menu.
+					index_label=app().getRealMenuName(before)
+					amp_index = index_label.find("&")
+					index_label = index_label.replace("&","")
+					index = parent.index(index_label)
+					parent.insert_cascade(index=index,label=label,menu=menu,underline=amp_index)
+				else:
+					parent.add_cascade(label=label,menu=menu,underline=amp_index)
 				return menu
 		except:
 			es("exception creating " + menuName + " menu")
