@@ -24,51 +24,6 @@ import time
 #@nl
 
 #@+others
-#@+node:ekr.20041005105605.3:getScript (NO LONGER USED)
-def getScript (c,p,useSelectedText=True):
-
-    if not p: p = c.currentPosition()
-    old_body = p.bodyString()
-    
-    try:
-        script = ""
-        # Allow p not to be the present position.
-        if p == c.currentPosition():
-            if useSelectedText and c.frame.body.hasTextSelection():
-                # Temporarily replace v's body text with just the selected text.
-                s = c.frame.body.getSelectedText()
-                p.v.setTnodeText(s)
-            else:
-                s = c.frame.body.getAllText()
-        else:
-            s = p.bodyString()
-    
-        if s.strip():
-            g.app.scriptDict["script1"]=s
-            
-            if 1: df = c.atFileCommands
-            else: df = c.atFileCommands.new_df
-
-            df.scanAllDirectives(p,scripting=True)
-            # Force Python comment delims.
-            df.startSentinelComment = "#"
-            df.endSentinelComment = None
-            df.write(p.copy(),toString=True)
-            script = df.stringOutput
-            assert(p)
-            g.app.scriptDict["script2"]=script
-            error = len(script) == 0
-    except:
-        s = "unexpected exception"
-        print s ; g.es(s)
-        g.es_exception()
-        script = ""
-
-    p.v.setTnodeText(old_body)
-    # g.trace(p,len(script))
-    return script
-#@nonl
-#@-node:ekr.20041005105605.3:getScript (NO LONGER USED)
 #@+node:ekr.20041005105605.4:class atFile
 class atFile:
     
@@ -4691,17 +4646,6 @@ class atFile:
 #@nonl
 #@-node:ekr.20041005105605.4:class atFile
 #@-others
-
-if 0:
-    import leoAtFile
-    leoAtFile.atFile = newAtFile
-    print "New atFile class installed"
-
-    import leoGlobals
-    leoGlobals.getScript = getScript
-    print "g.getScript installed"
-    
-    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20041005105605.1:@thin leoAtFile.py
 #@-leo
