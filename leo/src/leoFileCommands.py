@@ -426,6 +426,8 @@ class baseFileCommands:
 				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
 			elif self.matchTag("max_tnode_index="):
 				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
+			elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+				break
 			else:
 				self.getTag("/>")
 				break
@@ -634,6 +636,8 @@ class baseFileCommands:
 				# g.trace("max_tnode_index:",self.maxTnodeIndex)
 			elif self.matchTag("clone_windows="):
 				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
+			elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+				break
 			else:
 				self.getTag("/>")
 				break
