@@ -11693,7 +11693,7 @@ def getLastTracebackFileAndLineNumber():
         return filename,n
 #@nonl
 #@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
-#@+node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
@@ -11716,7 +11716,78 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@-node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:EKR.20040612232221:goToScriptLineNumber
 def goToScriptLineNumber (self,root,script,n):
 
@@ -13865,551 +13936,6 @@ def sentinelName(self, kind):
 #@-node:ekr.20041005105605.243:sentinelName
 #@-node:ekr.20041005105605.219:Uilites... (atFile)
 #@-node:ekr.20050101093544:(Always use os.rename in utils_rename)
-#@+node:ekr.20050119225135:(Implemented delayed focus scheme)
-#@+node:ekr.20050120091434:What I did
-@killcolor
-
-The original problem with the UNL plugin not staying on top was that button-1
-was bound to OnActivateTree, which called g.app.gui.set_focus.
-
-However, there was another problem, the idle-time code in the status line logic
-was also messing with the focus. It turns out that repeatedly calling
-g.app.gui.set_focus is a bad idea: it interferes with opening new windows.
-
-To deal with this I basically rewrote all the code that sets focus. The new code
-replaces direct calls to g.app.gui.set_focus with calls to frame.bodyWantsFocus,
-frame.statusLineWantsFocus, frame.treeWantsFocus and frame.logWantsFocus.
-Actually, they all do the same thing, but using different methods improves
-traces.
-
-This is an excellent pattern. Rather than setting the focus directly, these
-xWantsFocus methods merely signal their intension to set the focus. This allows
-very complex logic to be hidden in leoTkinterFrame.set_focus.
-
-leoTkinterFrame.set_focus is indeed complex. It took me several hours to get it
-just right. It queues up a 'one-shot' callback. That is, at most one copy of the
-callback is ever waiting to be executed. Furthermore, the callback is only
-queued for execution at the result of a call to xWantsFocus; it is never run
-automatically at idle time. Finally, even when executed, the callback does
-nothing if the last requested commander (in the new ivar, g.app.wantedFocus)
-does not match the commander to which the callback was bound. These checks allow
-the UNL plugin to open a window properly and keep it topmost :-)
-
-This is a big step forward for Leo. Using delayed focus methods ensures that the
-body pane always has focus unless the code has a specific, positive reason for
-the focus to be elsewhere. This was difficult (or rather impossible) to do with
-the old code: there are _many_ Tk calls that can affect the focus. Moreover, it
-minimizes calls to g.app.gui.set_focus.
-
-Oh yes, one more thing. All the new methods support a 'tag' keyword argument.
-This is typically set to the name of the routine in which the call takes place.
-It is a big help in making sense of traces.
-
-More details:
-- 'later' keyword arg
-- eliminates most calls to g.app.gui.set_focus
-- A case could be made for using a single, global one-shot callback in g.app.gui.set_focus.
-- Stresses Tk much less.
-- A problem with losing data in test.leo.
-#@nonl
-#@-node:ekr.20050120091434:What I did
-#@+node:ekr.20031218072017.2373:set_focus (app.gui)
-def set_focus(self,c,widget,tag=''):
-    
-    """Put the focus on the widget."""
-    
-    # g.trace(tag,widget)
-    
-    # g.trace(c.frame.top.wm_stackorder())
-    
-    if widget:
-        widget.focus_set()
-
-    if 0: # Causes a weird problem on some machines.
-        if c.frame.top:
-            focus = c.frame.top.focus_displayof()
-            if focus != widget:
-                widget.focus_set()
-#@nonl
-#@-node:ekr.20031218072017.2373:set_focus (app.gui)
-#@+node:ekr.20050120110418:Activation methods
-@
-
-N.B. There is NO WAY to keep track reliably of which window is on top!! Leo must
-never ever depend on this knowledge!!
-#@+node:ekr.20040803072955.105:OnActivate (tkTree)
-def OnActivate (self,p,event=None):
-
-    try:
-        c = self.c ; gui = g.app.gui
-        # g.trace(c)
-        << activate this window >>
-    except:
-        g.es_event_exception("activate tree")
-#@nonl
-#@+node:ekr.20040803072955.106:<< activate this window >>
-current = c.currentPosition()
-
-if p == current:
-    # g.trace("is current")
-    if self.active:
-        self.editLabel(p)
-    else:
-        # Set the focus immediately.  This is essential for proper editing.
-        c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
-else:
-    # g.trace("not current")
-    self.select(p)
-    if c.frame.findPanel:
-        c.frame.findPanel.handleUserClick(p)
-    if p.v.t.insertSpot != None:
-        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-        c.frame.bodyCtrl.see(p.v.t.insertSpot)
-    else:
-        c.frame.bodyCtrl.mark_set("insert","1.0")
-    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
-
-self.active = True
-#@nonl
-#@-node:ekr.20040803072955.106:<< activate this window >>
-#@-node:ekr.20040803072955.105:OnActivate (tkTree)
-#@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
-def OnActivateBody (self,event=None):
-
-    try:
-        frame = self ; c = frame.c ; gui = g.app.gui
-        # g.trace(c.shortFileName())
-        g.app.setLog(frame.log,"OnActivateBody")
-        w = gui.get_focus(frame)
-        if w != frame.body.bodyCtrl:
-            self.tree.OnDeactivate()
-        self.bodyWantsFocus(self.bodyCtrl,tag='OnActivateBody')
-    except:
-        g.es_event_exception("activate body")
-#@nonl
-#@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
-#@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
-def OnActivateLeoEvent(self,event=None):
-    
-    # g.trace(self.c.shortFileName())
-
-    try:
-        g.app.setLog(self.log,"OnActivateLeoEvent")
-    except:
-        g.es_event_exception("activate Leo")
-
-def OnDeactivateLeoEvent(self,event=None):
-    
-    if 0: # This causes problems on the Mac.
-        try:
-            g.app.setLog(None,"OnDeactivateLeoEvent")
-        except:
-            g.es_event_exception("deactivate Leo")
-#@nonl
-#@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
-#@+node:ekr.20031218072017.3976:OnActivateTree
-def OnActivateTree (self,event=None):
-    
-    # g.trace(self.c)
-
-    try:
-        frame = self ; c = frame.c ; gui = g.app.gui
-        g.app.setLog(frame.log,"OnActivateTree")
-        if 0: # Do NOT do this here!
-            # OnActivateTree can get called when the tree gets DE-activated!!
-            frame.bodyWantsFocus(frame.bodyCtrl,tag='OnActivateTree')
-            
-    except:
-        g.es_event_exception("activate tree")
-#@-node:ekr.20031218072017.3976:OnActivateTree
-#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
-def onActivateLog (self,event=None):
-
-    try:
-        g.app.setLog(self,"OnActivateLog")
-        self.frame.tree.OnDeactivate()
-        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
-    except:
-        g.es_event_exception("activate log")
-#@nonl
-#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
-#@-node:ekr.20050120110418:Activation methods
-#@+node:ekr.20040803072955.128:tree.select
-# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
-
-def select (self,p,updateBeadList=True):
-    
-    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
-    old_p = c.currentPosition()
-
-    if not p: return
-
-    # g.trace('len(body)',len(p.bodyString()),p.headString())
-
-    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << unselect the old node >>
-
-    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
-        << select the new node >>
-        if p and p != old_p: # 3/26/03: Suppress duplicate call.
-            try: # may fail during initialization
-                self.idle_scrollTo(p)
-            except: pass
-        << update c.beadList or c.beadPointer >>
-        << update c.visitedList >>
-
-    << set the current node >>
-    
-    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
-    
-    # g.printGc()
-#@nonl
-#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-# Remember the position of the scrollbar before making any changes.
-yview=body.yview()
-insertSpot = c.frame.body.getInsertionPoint()
-
-if old_p and old_p != p:
-    if self.trace and self.verbose:
-        g.trace("unselect:",old_p.headString())
-    self.endEditLabel() # sets editPosition = None
-    self.setUnselectedLabelState(old_p)
-
-if old_p and old_p.edit_text():
-    old_p.v.t.scrollBarSpot = yview
-    old_p.v.t.insertSpot = insertSpot
-#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
-#@+node:ekr.20040803072955.130:<< select the new node >>
-frame.setWrap(p)
-
-# Always do this.  Otherwise there can be problems with trailing hewlines.
-s = g.toUnicode(p.v.t.bodyString,"utf-8")
-self.setText(body,s,tag="select:set body",isHeadline=False)
-
-# We must do a full recoloring: we may be changing context!
-self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
-
-if p.v and p.v.t.scrollBarSpot != None:
-    first,last = p.v.t.scrollBarSpot
-    body.yview("moveto",first)
-
-if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
-    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
-    c.frame.bodyCtrl.see(p.v.t.insertSpot)
-else:
-    c.frame.bodyCtrl.mark_set("insert","1.0")
-#@nonl
-#@-node:ekr.20040803072955.130:<< select the new node >>
-#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-if updateBeadList:
-    
-    if c.beadPointer > -1:
-        present_p = c.beadList[c.beadPointer]
-    else:
-        present_p = c.nullPosition()
-    
-    if p != present_p:
-        # Replace the tail of c.beadList by c and make c the present node.
-        # print "updating c.beadList"
-        c.beadPointer += 1
-        c.beadList[c.beadPointer:] = []
-        c.beadList.append(p.copy())
-        
-    # g.trace(c.beadPointer,p,present_p)
-#@nonl
-#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
-#@+node:ekr.20040803072955.132:<< update c.visitedList >>
-# Make p the most recently visited position on the list.
-if p in c.visitedList:
-    c.visitedList.remove(p)
-
-c.visitedList.insert(0,p.copy())
-#@nonl
-#@-node:ekr.20040803072955.132:<< update c.visitedList >>
-#@+node:ekr.20040803072955.133:<< set the current node >>
-self.c.setCurrentPosition(p)
-if p != old_p:
-    self.setSelectedLabelState(p)
-frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-
-frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
-#@nonl
-#@-node:ekr.20040803072955.133:<< set the current node >>
-#@-node:ekr.20040803072955.128:tree.select
-#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
-@
-
-New in 4.3
-
-Rather than calling g.app.gui.set_focus directly, the code calls
-self.xWantsFocus. This defers to idle-time code in the status-line class.
-
-N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
-#@nonl
-#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
-@ All these do the same thing, but separate names are good for tracing and
-makes the intent of the code clearer.
-@c 
-
-def bodyWantsFocus(self,widget,later=True,tag=''):
-    # g.trace(tag,self.c.shortFileName())
-    self.set_focus(widget,later=later,tag=tag)
-    
-def logWantsFocus(self,widget,later=True,tag=''):
-    # g.trace(tag)
-    self.set_focus(widget,later=later,tag=tag)
-    
-def statusLineWantsFocus(self,widget,later=True,tag=''):
-    # g.trace(tag)
-    self.set_focus(widget,later=later,tag=tag)
-    
-def treeWantsFocus(self,widget,later=True,tag=''):
-    # g.trace(tag,repr(widget))
-    self.set_focus(widget,later=later,tag=tag)
-    
-def widgetWantsFocus(self,widget,later=True,tag=''):
-    # g.trace(tag,repr(widget))
-    self.set_focus(widget,later=later,tag=tag)
-#@nonl
-#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
-#@+node:ekr.20050120092028.1:set_focus (tkFrame)
-@
-Very tricky code:
-Many Tk calls can mess with the focus, so we must always set the focus,
-regardless of what we did previously.
-
-Alas, because of bugs in Tk and/or window managers, we can not call method at
-idle time: that would interfere with switching between windows. Instead, the
-xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
-to g.app.g.app.gui.set_focus.
-@c
-
-def set_focus(self,widget,later=False,tag=''):
-    
-    '''Set the focus to the widget specified in the xWantsFocus methods.'''
-
-    c = self.c
-    
-    # g.trace(c.shortFileName())
-
-    if widget and not g.app.unitTesting:
-        # Messing with focus may be dangerous in unit tests.
-        if later:
-            # Queue up the call (just once) for later.
-            def setFocusCallback(c=c):
-                self.wantedCallbackScheduled = False
-                if c == g.app.wantedCommander and c.frame.wantedWidget:
-                    # g.trace(c.frame.wantedWidget)
-                    g.app.gui.set_focus(
-                        g.app.wantedCommander,
-                        c.frame.wantedWidget,
-                        tag='frame.setFocus')
-                self.wantedWidget = None
-                g.app.wantedCommander = None
-                    
-            # Crucial: This may change what the callback does.
-            self.wantedWidget = widget
-            g.app.wantedCommander = c
-            if not self.wantedCallbackScheduled:
-                # g.trace(tag,c.shortFileName())
-                self.wantedCallbackScheduled = True
-                # We don't have to wait so long now that we don't call this so often.
-                # The difference between 500 msec. and 100 msec. is significant.
-                self.outerFrame.after(100,setFocusCallback)
-        else:
-            # g.trace(tag,c.shortFileName())
-            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
-            # Crucial: cancel any previous callback.
-            # It may be re-enabled later, but that doesn't matter.
-            self.wantedWidget = None
-            g.app.wantedCommander = None
-    else:
-        # Cancel any previous request.
-        self.wantedWidget = None
-        g.app.wantedCommander = None
-#@nonl
-#@-node:ekr.20050120092028.1:set_focus (tkFrame)
-#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
-#@+node:ekr.20041223104933:class statusLineClass
-class statusLineClass:
-    
-    '''A class representing the status line.'''
-    
-    @others
-#@nonl
-#@+node:ekr.20031218072017.3961: ctor
-def __init__ (self,c,parentFrame):
-    
-    self.c = c
-    self.bodyCtrl = c.frame.bodyCtrl
-    self.colorTags = [] # list of color names used as tags.
-    self.enabled = False
-    self.isVisible = False
-    self.lastRow = self.lastCol = 0
-    self.log = c.frame.log
-    #if 'black' not in self.log.colorTags:
-    #    self.log.colorTags.append("black")
-    self.parentFrame = parentFrame
-    self.statusFrame = Tk.Frame(parentFrame,bd=2)
-    text = "line 0, col 0"
-    width = len(text) + 4
-    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
-    self.labelWidget.pack(side="left",padx=1)
-    
-    bg = self.statusFrame.cget("background")
-    self.textWidget = Tk.Text(self.statusFrame,
-        height=1,state="disabled",bg=bg,relief="groove")
-    self.textWidget.pack(side="left",expand=1,fill="x")
-    self.textWidget.bind("<Button-1>", self.onActivate)
-#@nonl
-#@-node:ekr.20031218072017.3961: ctor
-#@+node:ekr.20031218072017.3962:clear
-def clear (self):
-    
-    t = self.textWidget
-    if not t: return
-    
-    t.configure(state="normal")
-    t.delete("1.0","end")
-    t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clear
-#@+node:EKR.20040424153344:enable, disable & isEnabled
-def disable (self,background=None):
-    
-    c = self.c ; t = self.textWidget
-    if t:
-        if not background:
-            background = self.statusFrame.cget("background")
-        t.configure(state="disabled",background=background)
-    self.enabled = False
-    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
-    
-def enable (self,background="white"):
-    
-    # g.trace()
-    c = self.c ; t = self.textWidget
-    if t:
-        t.configure(state="normal",background=background)
-        c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
-        t.focus_set()
-    self.enabled = True
-        
-def isEnabled(self):
-    return self.enabled
-#@nonl
-#@-node:EKR.20040424153344:enable, disable & isEnabled
-#@+node:ekr.20041026132435:get
-def get (self):
-    
-    t = self.textWidget
-    if t:
-        return t.get("1.0","end")
-    else:
-        return ""
-#@nonl
-#@-node:ekr.20041026132435:get
-#@+node:ekr.20041223114744:getFrame
-def getFrame (self):
-    
-    return self.statusFrame
-#@nonl
-#@-node:ekr.20041223114744:getFrame
-#@+node:ekr.20050120093555:onActivate
-def onActivate (self,event=None):
-    
-    # Don't change background as the result of simple mouse clicks.
-    background = self.statusFrame.cget("background")
-    self.enable(background=background)
-#@nonl
-#@-node:ekr.20050120093555:onActivate
-#@+node:ekr.20041223111916:pack & show
-def pack (self):
-    
-    if not self.isVisible:
-        self.isVisible = True
-        self.statusFrame.pack(fill="x",pady=1)
-
-        # Register an idle-time handler to update the row and column indicators.
-        self.statusFrame.after_idle(self.update)
-        
-show = pack
-#@nonl
-#@-node:ekr.20041223111916:pack & show
-#@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
-def put(self,s,color=None):
-    
-    t = self.textWidget
-    if not t: return
-    
-    t.configure(state="normal")
-        
-    if color and color not in self.colorTags:
-        self.colorTags.append(color)
-        t.tag_config(color,foreground=color)
-
-    if color:
-        t.insert("end",s)
-        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-        t.tag_config("black",foreground="black")
-        t.tag_add("black","end")
-    else:
-        t.insert("end",s)
-    
-    t.configure(state="disabled")
-    t.update_idletasks()
-#@nonl
-#@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
-#@+node:EKR.20040424154804:setFocus
-if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
-
-    def setFocus (self):
-    
-        # Force the focus to the icon area.
-        t = self.textWidget
-        if t:
-            t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocus
-#@+node:ekr.20041223111916.1:unpack & hide
-def unpack (self):
-    
-    if self.isVisible:
-        self.isVisible = False
-        self.statusFrame.pack_forget()
-
-hide = unpack
-#@nonl
-#@-node:ekr.20041223111916.1:unpack & hide
-#@+node:ekr.20031218072017.1733:update
-def update (self):
-    
-    c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
-    if g.app.killed or not self.isVisible:
-        return
-
-    index = body.index("insert")
-    row,col = g.app.gui.getindex(body,index)
-
-    if col > 0:
-        s = body.get("%d.0" % (row),index)
-        s = g.toUnicode(s,g.app.tkEncoding)
-        col = g.computeWidth (s,c.tab_width)
-
-    if row != self.lastRow or col != self.lastCol:
-        s = "line %d, col %d " % (row,col)
-        lab.configure(text=s)
-        self.lastRow = row
-        self.lastCol = col
-
-    self.statusFrame.after(500,self.update)
-#@nonl
-#@-node:ekr.20031218072017.1733:update
-#@-node:ekr.20041223104933:class statusLineClass
-#@-node:ekr.20050119225135:(Implemented delayed focus scheme)
 #@+node:ekr.20050123162958:(Fixed Pychecker warnings)
 #@+node:ekr.20050123192629:Real bugs in leoConfig.py
 @killcolor
@@ -22326,7 +21852,7 @@ except ImportError:
 #@+node:ekr.20041029111407:(Added support for g.app.debugSwitch in es_exception)
 @ It's not clear that this support is so useful for debugging scripts...
 #@nonl
-#@+node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
@@ -22349,7 +21875,78 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@-node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
@@ -23119,7 +22716,7 @@ How did we ever live without this?
 - Added sciptFind ivar and related logic to goToLineNumber and it allies.
 #@nonl
 #@-node:ekr.20041111100436:Notes
-#@+node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
@@ -23142,7 +22739,78 @@ def es_exception (full=True,c=None,color="red"):
 
     return fileName,n
 #@nonl
-#@-node:ekr.20031218072017.3112:es_exception
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
 #@+node:ekr.20031218072017.2140:c.executeScript
 def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
 
@@ -25558,6 +25226,551 @@ def setRecentFiles (self,files):
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@-node:ekr.20050122105757:(Implemented 'Undo Clear Recent Files')
+#@+node:ekr.20050119225135:(Implemented delayed focus scheme)
+#@+node:ekr.20050120091434:What I did
+@killcolor
+
+The original problem with the UNL plugin not staying on top was that button-1
+was bound to OnActivateTree, which called g.app.gui.set_focus.
+
+However, there was another problem, the idle-time code in the status line logic
+was also messing with the focus. It turns out that repeatedly calling
+g.app.gui.set_focus is a bad idea: it interferes with opening new windows.
+
+To deal with this I basically rewrote all the code that sets focus. The new code
+replaces direct calls to g.app.gui.set_focus with calls to frame.bodyWantsFocus,
+frame.statusLineWantsFocus, frame.treeWantsFocus and frame.logWantsFocus.
+Actually, they all do the same thing, but using different methods improves
+traces.
+
+This is an excellent pattern. Rather than setting the focus directly, these
+xWantsFocus methods merely signal their intension to set the focus. This allows
+very complex logic to be hidden in leoTkinterFrame.set_focus.
+
+leoTkinterFrame.set_focus is indeed complex. It took me several hours to get it
+just right. It queues up a 'one-shot' callback. That is, at most one copy of the
+callback is ever waiting to be executed. Furthermore, the callback is only
+queued for execution at the result of a call to xWantsFocus; it is never run
+automatically at idle time. Finally, even when executed, the callback does
+nothing if the last requested commander (in the new ivar, g.app.wantedFocus)
+does not match the commander to which the callback was bound. These checks allow
+the UNL plugin to open a window properly and keep it topmost :-)
+
+This is a big step forward for Leo. Using delayed focus methods ensures that the
+body pane always has focus unless the code has a specific, positive reason for
+the focus to be elsewhere. This was difficult (or rather impossible) to do with
+the old code: there are _many_ Tk calls that can affect the focus. Moreover, it
+minimizes calls to g.app.gui.set_focus.
+
+Oh yes, one more thing. All the new methods support a 'tag' keyword argument.
+This is typically set to the name of the routine in which the call takes place.
+It is a big help in making sense of traces.
+
+More details:
+- 'later' keyword arg
+- eliminates most calls to g.app.gui.set_focus
+- A case could be made for using a single, global one-shot callback in g.app.gui.set_focus.
+- Stresses Tk much less.
+- A problem with losing data in test.leo.
+#@nonl
+#@-node:ekr.20050120091434:What I did
+#@+node:ekr.20031218072017.2373:set_focus (app.gui)
+def set_focus(self,c,widget,tag=''):
+    
+    """Put the focus on the widget."""
+    
+    # g.trace(tag,widget)
+    
+    # g.trace(c.frame.top.wm_stackorder())
+    
+    if widget:
+        widget.focus_set()
+
+    if 0: # Causes a weird problem on some machines.
+        if c.frame.top:
+            focus = c.frame.top.focus_displayof()
+            if focus != widget:
+                widget.focus_set()
+#@nonl
+#@-node:ekr.20031218072017.2373:set_focus (app.gui)
+#@+node:ekr.20050120110418:Activation methods
+@
+
+N.B. There is NO WAY to keep track reliably of which window is on top!! Leo must
+never ever depend on this knowledge!!
+#@+node:ekr.20040803072955.105:OnActivate (tkTree)
+def OnActivate (self,p,event=None):
+
+    try:
+        c = self.c ; gui = g.app.gui
+        # g.trace(c)
+        << activate this window >>
+    except:
+        g.es_event_exception("activate tree")
+#@nonl
+#@+node:ekr.20040803072955.106:<< activate this window >>
+current = c.currentPosition()
+
+if p == current:
+    # g.trace("is current")
+    if self.active:
+        self.editLabel(p)
+    else:
+        # Set the focus immediately.  This is essential for proper editing.
+        c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
+else:
+    # g.trace("not current")
+    self.select(p)
+    if c.frame.findPanel:
+        c.frame.findPanel.handleUserClick(p)
+    if p.v.t.insertSpot != None:
+        c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+        c.frame.bodyCtrl.see(p.v.t.insertSpot)
+    else:
+        c.frame.bodyCtrl.mark_set("insert","1.0")
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
+
+self.active = True
+#@nonl
+#@-node:ekr.20040803072955.106:<< activate this window >>
+#@-node:ekr.20040803072955.105:OnActivate (tkTree)
+#@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
+def OnActivateBody (self,event=None):
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        # g.trace(c.shortFileName())
+        g.app.setLog(frame.log,"OnActivateBody")
+        w = gui.get_focus(frame)
+        if w != frame.body.bodyCtrl:
+            self.tree.OnDeactivate()
+        self.bodyWantsFocus(self.bodyCtrl,tag='OnActivateBody')
+    except:
+        g.es_event_exception("activate body")
+#@nonl
+#@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
+#@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
+def OnActivateLeoEvent(self,event=None):
+    
+    # g.trace(self.c.shortFileName())
+
+    try:
+        g.app.setLog(self.log,"OnActivateLeoEvent")
+    except:
+        g.es_event_exception("activate Leo")
+
+def OnDeactivateLeoEvent(self,event=None):
+    
+    if 0: # This causes problems on the Mac.
+        try:
+            g.app.setLog(None,"OnDeactivateLeoEvent")
+        except:
+            g.es_event_exception("deactivate Leo")
+#@nonl
+#@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
+#@+node:ekr.20031218072017.3976:OnActivateTree
+def OnActivateTree (self,event=None):
+    
+    # g.trace(self.c)
+
+    try:
+        frame = self ; c = frame.c ; gui = g.app.gui
+        g.app.setLog(frame.log,"OnActivateTree")
+        if 0: # Do NOT do this here!
+            # OnActivateTree can get called when the tree gets DE-activated!!
+            frame.bodyWantsFocus(frame.bodyCtrl,tag='OnActivateTree')
+            
+    except:
+        g.es_event_exception("activate tree")
+#@-node:ekr.20031218072017.3976:OnActivateTree
+#@+node:ekr.20031218072017.4045:tkLog.onActivateLog
+def onActivateLog (self,event=None):
+
+    try:
+        g.app.setLog(self,"OnActivateLog")
+        self.frame.tree.OnDeactivate()
+        self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
+    except:
+        g.es_event_exception("activate log")
+#@nonl
+#@-node:ekr.20031218072017.4045:tkLog.onActivateLog
+#@-node:ekr.20050120110418:Activation methods
+#@+node:ekr.20040803072955.128:tree.select
+# Warning: do not try to "optimize" this by returning if p==tree.currentPosition.
+
+def select (self,p,updateBeadList=True):
+    
+    c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+    old_p = c.currentPosition()
+
+    if not p: return
+
+    # g.trace('len(body)',len(p.bodyString()),p.headString())
+
+    if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << unselect the old node >>
+
+    g.doHook("unselect2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    if not g.doHook("select1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
+        << select the new node >>
+        if p and p != old_p: # 3/26/03: Suppress duplicate call.
+            try: # may fail during initialization
+                self.idle_scrollTo(p)
+            except: pass
+        << update c.beadList or c.beadPointer >>
+        << update c.visitedList >>
+
+    << set the current node >>
+    
+    g.doHook("select2",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    g.doHook("select3",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p)
+    
+    # g.printGc()
+#@nonl
+#@+node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+if old_p and old_p != p:
+    if self.trace and self.verbose:
+        g.trace("unselect:",old_p.headString())
+    self.endEditLabel() # sets editPosition = None
+    self.setUnselectedLabelState(old_p)
+
+if old_p and old_p.edit_text():
+    old_p.v.t.scrollBarSpot = yview
+    old_p.v.t.insertSpot = insertSpot
+#@-node:ekr.20040803072955.129:<< unselect the old node >> (changed in 4.2)
+#@+node:ekr.20040803072955.130:<< select the new node >>
+frame.setWrap(p)
+
+# Always do this.  Otherwise there can be problems with trailing hewlines.
+s = g.toUnicode(p.v.t.bodyString,"utf-8")
+self.setText(body,s,tag="select:set body",isHeadline=False)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(p) # recolor now uses p.copy(), so this is safe.
+
+if p.v and p.v.t.scrollBarSpot != None:
+    first,last = p.v.t.scrollBarSpot
+    body.yview("moveto",first)
+
+if p.v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+    c.frame.bodyCtrl.mark_set("insert",p.v.t.insertSpot)
+    c.frame.bodyCtrl.see(p.v.t.insertSpot)
+else:
+    c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20040803072955.130:<< select the new node >>
+#@+node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+    
+    if c.beadPointer > -1:
+        present_p = c.beadList[c.beadPointer]
+    else:
+        present_p = c.nullPosition()
+    
+    if p != present_p:
+        # Replace the tail of c.beadList by c and make c the present node.
+        # print "updating c.beadList"
+        c.beadPointer += 1
+        c.beadList[c.beadPointer:] = []
+        c.beadList.append(p.copy())
+        
+    # g.trace(c.beadPointer,p,present_p)
+#@nonl
+#@-node:ekr.20040803072955.131:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20040803072955.132:<< update c.visitedList >>
+# Make p the most recently visited position on the list.
+if p in c.visitedList:
+    c.visitedList.remove(p)
+
+c.visitedList.insert(0,p.copy())
+#@nonl
+#@-node:ekr.20040803072955.132:<< update c.visitedList >>
+#@+node:ekr.20040803072955.133:<< set the current node >>
+self.c.setCurrentPosition(p)
+if p != old_p:
+    self.setSelectedLabelState(p)
+frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+
+frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
+#@nonl
+#@-node:ekr.20040803072955.133:<< set the current node >>
+#@-node:ekr.20040803072955.128:tree.select
+#@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+@
+
+New in 4.3
+
+Rather than calling g.app.gui.set_focus directly, the code calls
+self.xWantsFocus. This defers to idle-time code in the status-line class.
+
+N.B.  This code never calls select, so there can be no race condition here that alters text improperly.
+#@nonl
+#@+node:ekr.20050120092028:xWantsFocus (tkFrame)
+@ All these do the same thing, but separate names are good for tracing and
+makes the intent of the code clearer.
+@c 
+
+def bodyWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,self.c.shortFileName())
+    self.set_focus(widget,later=later,tag=tag)
+    
+def logWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def statusLineWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag)
+    self.set_focus(widget,later=later,tag=tag)
+    
+def treeWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
+    
+def widgetWantsFocus(self,widget,later=True,tag=''):
+    # g.trace(tag,repr(widget))
+    self.set_focus(widget,later=later,tag=tag)
+#@nonl
+#@-node:ekr.20050120092028:xWantsFocus (tkFrame)
+#@+node:ekr.20050120092028.1:set_focus (tkFrame)
+@
+Very tricky code:
+Many Tk calls can mess with the focus, so we must always set the focus,
+regardless of what we did previously.
+
+Alas, because of bugs in Tk and/or window managers, we can not call method at
+idle time: that would interfere with switching between windows. Instead, the
+xWnatFocus routines call this with later=True, to queue up a ONE-SHOT later call
+to g.app.g.app.gui.set_focus.
+@c
+
+def set_focus(self,widget,later=False,tag=''):
+    
+    '''Set the focus to the widget specified in the xWantsFocus methods.'''
+
+    c = self.c
+    
+    # g.trace(c.shortFileName())
+
+    if widget and not g.app.unitTesting:
+        # Messing with focus may be dangerous in unit tests.
+        if later:
+            # Queue up the call (just once) for later.
+            def setFocusCallback(c=c):
+                self.wantedCallbackScheduled = False
+                if c == g.app.wantedCommander and c.frame.wantedWidget:
+                    # g.trace(c.frame.wantedWidget)
+                    g.app.gui.set_focus(
+                        g.app.wantedCommander,
+                        c.frame.wantedWidget,
+                        tag='frame.setFocus')
+                self.wantedWidget = None
+                g.app.wantedCommander = None
+                    
+            # Crucial: This may change what the callback does.
+            self.wantedWidget = widget
+            g.app.wantedCommander = c
+            if not self.wantedCallbackScheduled:
+                # g.trace(tag,c.shortFileName())
+                self.wantedCallbackScheduled = True
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 100 msec. is significant.
+                self.outerFrame.after(100,setFocusCallback)
+        else:
+            # g.trace(tag,c.shortFileName())
+            g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+            # Crucial: cancel any previous callback.
+            # It may be re-enabled later, but that doesn't matter.
+            self.wantedWidget = None
+            g.app.wantedCommander = None
+    else:
+        # Cancel any previous request.
+        self.wantedWidget = None
+        g.app.wantedCommander = None
+#@nonl
+#@-node:ekr.20050120092028.1:set_focus (tkFrame)
+#@-node:ekr.20050120083053:Delayed Focus (tkFrame)
+#@+node:ekr.20041223104933:class statusLineClass
+class statusLineClass:
+    
+    '''A class representing the status line.'''
+    
+    @others
+#@nonl
+#@+node:ekr.20031218072017.3961: ctor
+def __init__ (self,c,parentFrame):
+    
+    self.c = c
+    self.bodyCtrl = c.frame.bodyCtrl
+    self.colorTags = [] # list of color names used as tags.
+    self.enabled = False
+    self.isVisible = False
+    self.lastRow = self.lastCol = 0
+    self.log = c.frame.log
+    #if 'black' not in self.log.colorTags:
+    #    self.log.colorTags.append("black")
+    self.parentFrame = parentFrame
+    self.statusFrame = Tk.Frame(parentFrame,bd=2)
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+    self.labelWidget.pack(side="left",padx=1)
+    
+    bg = self.statusFrame.cget("background")
+    self.textWidget = Tk.Text(self.statusFrame,
+        height=1,state="disabled",bg=bg,relief="groove")
+    self.textWidget.pack(side="left",expand=1,fill="x")
+    self.textWidget.bind("<Button-1>", self.onActivate)
+#@nonl
+#@-node:ekr.20031218072017.3961: ctor
+#@+node:ekr.20031218072017.3962:clear
+def clear (self):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
+#@nonl
+#@-node:ekr.20031218072017.3962:clear
+#@+node:EKR.20040424153344:enable, disable & isEnabled
+def disable (self,background=None):
+    
+    c = self.c ; t = self.textWidget
+    if t:
+        if not background:
+            background = self.statusFrame.cget("background")
+        t.configure(state="disabled",background=background)
+    self.enabled = False
+    c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
+    
+def enable (self,background="white"):
+    
+    # g.trace()
+    c = self.c ; t = self.textWidget
+    if t:
+        t.configure(state="normal",background=background)
+        c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
+        t.focus_set()
+    self.enabled = True
+        
+def isEnabled(self):
+    return self.enabled
+#@nonl
+#@-node:EKR.20040424153344:enable, disable & isEnabled
+#@+node:ekr.20041026132435:get
+def get (self):
+    
+    t = self.textWidget
+    if t:
+        return t.get("1.0","end")
+    else:
+        return ""
+#@nonl
+#@-node:ekr.20041026132435:get
+#@+node:ekr.20041223114744:getFrame
+def getFrame (self):
+    
+    return self.statusFrame
+#@nonl
+#@-node:ekr.20041223114744:getFrame
+#@+node:ekr.20050120093555:onActivate
+def onActivate (self,event=None):
+    
+    # Don't change background as the result of simple mouse clicks.
+    background = self.statusFrame.cget("background")
+    self.enable(background=background)
+#@nonl
+#@-node:ekr.20050120093555:onActivate
+#@+node:ekr.20041223111916:pack & show
+def pack (self):
+    
+    if not self.isVisible:
+        self.isVisible = True
+        self.statusFrame.pack(fill="x",pady=1)
+
+        # Register an idle-time handler to update the row and column indicators.
+        self.statusFrame.after_idle(self.update)
+        
+show = pack
+#@nonl
+#@-node:ekr.20041223111916:pack & show
+#@+node:ekr.20031218072017.3963:put (leoTkinterFrame)
+def put(self,s,color=None):
+    
+    t = self.textWidget
+    if not t: return
+    
+    t.configure(state="normal")
+        
+    if color and color not in self.colorTags:
+        self.colorTags.append(color)
+        t.tag_config(color,foreground=color)
+
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
+    t.update_idletasks()
+#@nonl
+#@-node:ekr.20031218072017.3963:put (leoTkinterFrame)
+#@+node:EKR.20040424154804:setFocus
+if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
+
+    def setFocus (self):
+    
+        # Force the focus to the icon area.
+        t = self.textWidget
+        if t:
+            t.focus_set()
+#@nonl
+#@-node:EKR.20040424154804:setFocus
+#@+node:ekr.20041223111916.1:unpack & hide
+def unpack (self):
+    
+    if self.isVisible:
+        self.isVisible = False
+        self.statusFrame.pack_forget()
+
+hide = unpack
+#@nonl
+#@-node:ekr.20041223111916.1:unpack & hide
+#@+node:ekr.20031218072017.1733:update
+def update (self):
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
+    if g.app.killed or not self.isVisible:
+        return
+
+    index = body.index("insert")
+    row,col = g.app.gui.getindex(body,index)
+
+    if col > 0:
+        s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding)
+        col = g.computeWidth (s,c.tab_width)
+
+    if row != self.lastRow or col != self.lastCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastRow = row
+        self.lastCol = col
+
+    self.statusFrame.after(500,self.update)
+#@nonl
+#@-node:ekr.20031218072017.1733:update
+#@-node:ekr.20041223104933:class statusLineClass
+#@-node:ekr.20050119225135:(Implemented delayed focus scheme)
 #@-node:ekr.20041228052527.2:New features...
 #@+node:ekr.20041228052527.3:Plugins...
 #@+node:EKR.20040424151321:(Improved status line plugin)
@@ -26865,7 +27078,6 @@ self.tree.setColorFromConfig()
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@+node:ekr.20050125203059:4.3 a2 projects
 #@+node:ekr.20050129112109: (Removed unused files)
-#@+node:ekr.20050129112109.1:What I did
 @killcolor
 
 - Removed following files and corresponding imports.
@@ -26880,7 +27092,6 @@ self.tree.setColorFromConfig()
 
 - Removed unused code from gui.Tkinter panels.
 #@nonl
-#@-node:ekr.20050129112109.1:What I did
 #@-node:ekr.20050129112109: (Removed unused files)
 #@+node:ekr.20050125203059.1:Bugs
 #@+node:ekr.20050125202008:(Fixed very old bug in Undo Insert Node )
@@ -27409,6 +27620,7 @@ def es(s,*args,**keys):
         return
     newline = keys.get("newline",True)
     color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
     for arg in args:
@@ -27686,6 +27898,7 @@ def es(s,*args,**keys):
         return
     newline = keys.get("newline",True)
     color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
     for arg in args:
@@ -28998,6 +29211,25 @@ def set_focus(self,widget,later=False,tag=''):
 #@-node:ekr.20050120092028.1:set_focus (tkFrame)
 #@-node:ekr.20050206120754.1:(Fixed bug: Focus shifted from body to headline
 #@+node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
+#@+node:ekr.20050221091906:Report2
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3006092
+Viktor Ransmayr
+
+In Leo-4.3.a2 there is a small problem with the location of the created .leoID.txt
+file.
+
+When I installed the new version of Leo, I started Leo
+and entered a LeoID, when asked. For whatever reason
+this was stored in C:\Programme\Leo\test\.leoID.txt
+and not in C:\Programme\Leo\config\.leoID.txt, where
+it is expected.
+
+The net-result is that you asked for a new LeoID,
+whenever you open an existing Leo-file in any
+directory other than C:\Programme\Leo\test.
+#@nonl
+#@-node:ekr.20050221091906:Report2
 #@+node:ekr.20050206150004:Report
 @killcolor
 
@@ -29148,6 +29380,7 @@ def es(s,*args,**keys):
         return
     newline = keys.get("newline",True)
     color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
     if type(s) != type("") and type(s) != type(u""): # 1/20/03
         s = repr(s)
     for arg in args:
@@ -33066,8 +33299,154 @@ def doHandlersForTag (tag,keywords):
 #@nonl
 #@-node:ekr.20031218072017.3442:doHandlersForTag
 #@-node:ekr.20050219080830:(Fixed bugs in nav_buttons and nodenavigator plugins)
-#@+node:ekr.20050220024410:Fixed botch in g.pdb
-#@+node:ekr.20041105091148:g.pdb
+#@+node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
+#@+node:ekr.20050221091906:Report2
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3006092
+Viktor Ransmayr
+
+In Leo-4.3.a2 there is a small problem with the location of the created .leoID.txt
+file.
+
+When I installed the new version of Leo, I started Leo
+and entered a LeoID, when asked. For whatever reason
+this was stored in C:\Programme\Leo\test\.leoID.txt
+and not in C:\Programme\Leo\config\.leoID.txt, where
+it is expected.
+
+The net-result is that you asked for a new LeoID,
+whenever you open an existing Leo-file in any
+directory other than C:\Programme\Leo\test.
+#@nonl
+#@-node:ekr.20050221091906:Report2
+#@+node:ekr.20050206150004:Report
+@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2958470
+By: nobody
+
+From: Rich
+
+Leo 4.3 alpha 1, build  1.208 , January 24, 2005
+Python 2.3.4, Tk 8.4.3, win32
+
+Opened a new .leo file. It asked for an ID, and said it saved it. Closed the
+new leo file & tried opening "Leo\config\leoSettings.leo". _It_ is asking for
+a leoID!
+#@nonl
+#@-node:ekr.20050206150004:Report
+#@+node:ekr.20050206152211:What I did
+@killcolor
+
+All changes were to g.app.leoID():
+
+- Fixed bug:  set g.app.leoID in << put up a dialog requiring a valid id >>.
+- Improved signon message.
+- Better error handling and reporting. 
+#@nonl
+#@-node:ekr.20050206152211:What I did
+#@+node:ekr.20031218072017.1978:app.setLeoID
+def setLeoID (self,verbose=True):
+
+    tag = ".leoID.txt"
+    homeDir = g.app.homeDir
+    globalConfigDir = g.app.globalConfigDir
+    loadDir = g.app.loadDir
+
+    << return if we can set self.leoID from sys.leoID >>
+    << return if we can set self.leoID from "leoID.txt" >>
+
+    << put up a dialog requiring a valid id >>
+    << attempt to create leoID.txt >>
+#@nonl
+#@+node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+# This would be set by in Python's sitecustomize.py file.
+
+# 7/2/04: Use hasattr & getattr to suppress pychecker warning.
+# We also have to use a "non-constant" attribute to suppress another warning!
+
+nonConstantAttr = "leoID"
+
+if hasattr(sys,nonConstantAttr):
+    g.app.leoID = getattr(sys,nonConstantAttr)
+    if verbose:
+        g.es("leoID = " + g.app.leoID, color="orange")
+    return
+else:
+    g.app.leoID = None
+#@nonl
+#@-node:ekr.20031218072017.1979:<< return if we can set self.leoID from sys.leoID>>
+#@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+for theDir in (homeDir,globalConfigDir,loadDir):
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'r')
+        s = f.readline()
+        f.close()
+        if s and len(s) > 0:
+            g.app.leoID = s
+            if verbose:
+                g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+            return
+        elif verbose:
+            g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+    except IOError:
+        g.app.leoID = None
+    except Exception:
+        g.app.leoID = None
+        g.es('Unexpected exception in app.setLeoID',color='red')
+        g.es_esception()
+        
+dirs = []
+
+for theDir in (globalConfigDir,homeDir):
+    if theDir not in dirs:
+        dirs.append(theDir)
+
+g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+#@nonl
+#@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
+#@+node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+# New in 4.1: get an id for gnx's.  Plugins may set g.app.leoID.
+
+# Create an emergency gui and a Tk root window.
+g.app.createTkGui("startup")
+
+# Bug fix: 2/6/05: put result in g.app.leoID.
+g.app.leoID = g.app.gui.runAskLeoIDDialog()
+g.app.gui = None
+
+# g.trace(g.app.leoID)
+g.es("leoID = %s" % (repr(g.app.leoID)),color="blue")
+#@nonl
+#@-node:ekr.20031218072017.1981:<< put up a dialog requiring a valid id >>
+#@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+dirs = []
+
+for theDir in (homeDir,globalConfigDir,loadDir):
+    cant = "can not create %s in %s" % (tag,theDir)
+    try:
+        fn = g.os_path_join(theDir,tag)
+        f = open(fn,'w')
+        if f:
+            f.write(g.app.leoID)
+            f.close()
+            if g.os_path_exists(fn):
+                g.es("created %s in %s" % (tag,theDir), color="red")
+                return
+            else:
+                g.es(cant,color='red')
+    except IOError:
+        g.es(cant,color='red')
+
+    if theDir not in dirs:
+        dirs.append(theDir)
+#@nonl
+#@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
+#@-node:ekr.20031218072017.1978:app.setLeoID
+#@-node:ekr.20050206120954:(Made sure Leo asks for leoID at most once)
+#@+node:ekr.20050220024410:(Fixed botch in g.pdb)
+#@+node:ekr.20041105091148:g.pdb & test
 def pdb ():
     
     """Fall into pdb."""
@@ -33075,24 +33454,143 @@ def pdb ():
     import pdb # Required: we have just defined pdb as a function!
 
     pdb.set_trace()
-
+#@nonl
+#@+node:ekr.20050221092824:test_g_pdb
 def test_g_pdb():
     
-    # Note: not a valid unit test.
-    # It would succeed even if the import statment above were removed.
+    import sys
     
+    # Not a good unit test; it probably will never fail.
     def aFunction(): pass
-    
     assert type(g.pdb)==type(aFunction), 'wrong type for g.pdb: %' % type(g.pdb)
+    
+    class myStdout:
+        def write(self,s):
+            pass # ; g.es('From pdb:',s)
+        
+    class myStdin:
+        def readline (self):
+            return 'c' # Return 'c' (continue) for all requests for input.
+            
+    def restore():
+        sys.stdout,sys.stdin = sys.__stdout__,sys.__stdin__
+     
+    try:
+        sys.stdin = myStdin() # Essential
+        sys.stdout=myStdout() # Optional
+        g.pdb()
+        restore()
+        # assert False,'test of reraising'
+    except Exception:
+        restore()
+        raise
 #@nonl
-#@-node:ekr.20041105091148:g.pdb
-#@-node:ekr.20050220024410:Fixed botch in g.pdb
+#@-node:ekr.20050221092824:test_g_pdb
+#@-node:ekr.20041105091148:g.pdb & test
+#@-node:ekr.20050220024410:(Fixed botch in g.pdb)
 #@-node:ekr.20050214092455.1:Bugs
 #@+node:ekr.20050214092455.2:New features
 #@+node:ekr.20050214092455.3:Added sets.py to distribution
 This allows plugins such as plugin_manager.py to work on Python 2.2.x.
 #@nonl
 #@-node:ekr.20050214092455.3:Added sets.py to distribution
+#@+node:ekr.20050220034952:(Added test for g.exception & added color='suppress' hack to g.es)
+#@+node:ekr.20031218072017.3112:es_exception & test
+def es_exception (full=True,c=None,color="red"):
+    
+    typ,val,tb = sys.exc_info()
+    
+    full = full or g.app.debugSwitch > 0
+
+    if full: lines = traceback.format_exception(typ,val,tb)
+    else:    lines = traceback.format_exception_only(typ,val)
+        
+    fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+            
+    if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
+        pdb.set_trace()
+
+    return fileName,n
+#@nonl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
+#@-node:ekr.20050220034952:(Added test for g.exception & added color='suppress' hack to g.es)
 #@-node:ekr.20050214092455.2:New features
 #@-node:ekr.20050214092455:4.3 a3 projects
 #@-all
