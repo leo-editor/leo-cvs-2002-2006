@@ -72,6 +72,7 @@ class LeoApp:
 		#@+body
 		# Internally, lower case is used for all language names.
 		self.language_delims_dict = {
+			"actionscript" : "// /* */", #jason 2003-07-03
 			"c" : "// /* */", # C, C++ or objective C.
 			"cweb" : "@q@ @>", # Use the "cweb hack"
 			"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
@@ -86,11 +87,13 @@ class LeoApp:
 			"php" : "//",
 			"plain" : "#", # We must pick something.
 			"python" : "#",
+			"rebol" : ";", #jason 2003-07-03
 			"shell" : "#",  # shell scripts
 			"tcltk" : "#",
 			"unknown" : "#" } # Set when @comment is seen.
 			
 		self.language_extension_dict = {
+			"actionscript" : "as", #jason 2003-07-03
 			"c" : "c", 
 			"cweb" : "w",
 			"forth" : "forth",
@@ -106,6 +109,7 @@ class LeoApp:
 			"php" : "php",
 			"plain" : "txt",
 			"python" : "py",
+			"rebol" : "r",  #jason 2003-07-03
 			"shell" : "txt",
 			"tex" : "tex",
 			"tcltk" : "tcl",
