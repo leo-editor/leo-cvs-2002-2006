@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5934" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5941" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="60" left="293" height="864" width="913"/>
+	<global_window_position top="51" left="257" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="EKR.20040623200709" a="E"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
@@ -649,7 +649,7 @@
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
 <v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
-<v t="ekr.20040723064143.1"><vh>To do</vh>
+<v t="ekr.20040723064143.1" a="E"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
@@ -750,7 +750,7 @@
 <v t="ekr.20040712101754.5"><vh>@test leoPlugins.leo</vh></v>
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36" a="TV"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -838,6 +838,18 @@
 <v t="ekr.20040712101754.99"><vh>@test c iters</vh>
 <v t="ekr.20040712101754.100"><vh>&lt;&lt; coverage tests &gt;&gt;</vh></v>
 <v t="ekr.20040712101754.101"><vh>&lt;&lt; duplicate tests &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040802065214"><vh>@test changing headline marks descendent @thin nodes dirty</vh>
+<v t="ekr.20040802065214.1"><vh>bogus</vh></v>
+</v>
+<v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
+<v t="ekr.20040802071519"><vh>@test p.setBodyStringOrPane</vh>
+<v t="ekr.20040802071519.1"><vh>child</vh></v>
+</v>
+<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
+<v t="ekr.20040713123617"><vh>tempNode</vh></v>
+<v t="ekr.20040713071919"><vh>before</vh></v>
+<v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
@@ -1000,12 +1012,6 @@
 <v t="ekr.20040712101754.212"><vh>@test vnode list</vh></v>
 <v t="ekr.20040722055040"><vh>@test isAncestorOf</vh></v>
 </v>
-<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
-<v t="ekr.20040713123617"><vh>tempNode</vh></v>
-<v t="ekr.20040713071919"><vh>before</vh></v>
-<v t="ekr.20040713123828.1"><vh>after</vh></v>
-</v>
-<v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
 <v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
@@ -1017,7 +1023,7 @@
 </v>
 </v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
-<v t="ekr.20040712101754.261" a="E"><vh>Plugins tests</vh>
+<v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
 <v t="ekr.20040801141212"><vh>@suite test syntax of all plugins correctly</vh>
 <v t="ekr.20040801141543" a="E"><vh>class parseFileTestCase</vh>
 <v t="ekr.20040801141543.1"><vh>__init__</vh></v>
@@ -1032,7 +1038,7 @@
 <v t="ekr.20040801150333.3"><vh>shortDescription</vh></v>
 </v>
 </v>
-<v t="ekr.20040801124822.1" a="TV"><vh>@test plugins/nodenavigator.py</vh></v>
+<v t="ekr.20040801124822.1"><vh>@test plugins/nodenavigator.py</vh></v>
 </v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
@@ -9218,5 +9224,52 @@ if suite:
     fn = str(g.shortFileName(self.path))
     
     return "Run unitTest function in %s plugin if it exists" % fn</t>
+<t tx="ekr.20040802065214"># Make sure that changing this headline marks descendent @thin nodes dirty.
+
+import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+h = p.headString()
+
+c.beginUpdate()
+try:
+    child = p.firstChild()
+    child.initHeadString("@thin bogus")
+    assert child.headString() == "@thin bogus", "setting headline failed"
+    child.clearDirty()
+    assert not child.isDirty(), "clearing dirty failed"
+    p.setHeadString("changed")
+    assert child.isDirty(), "setting descendent @thin nodes dirty failed."
+finally:
+    p.setHeadString(h)
+    child.setHeadString("bogus")
+    p.clearDirty()
+    child.clearDirty()
+c.endUpdate()
+</t>
+<t tx="ekr.20040802065214.1">test</t>
+<t tx="ekr.20040802071519"># Tests that p.setBodyStringOrPane works immediately.
+
+import leoGlobals as g
+
+c = g.top() ; p = c.currentPosition()
+
+h = p.headString()
+
+try:
+    child = p.firstChild()
+    before = child.bodyString()
+    after = "after"
+    child.setBodyStringOrPane("after")
+    c.selectPosition(child)
+    t = c.frame.body.bodyCtrl
+    s = t.get("1.0","end")
+    assert s.rstrip() == after.rstrip(), \
+        "setBodyStringOrPane failed: %s, %s" % (repr(s),repr(after))
+finally:
+    child.setBodyStringOrPane(before)
+    c.selectPosition(p)</t>
+<t tx="ekr.20040802071519.1">after</t>
 </tnodes>
 </leo_file>
