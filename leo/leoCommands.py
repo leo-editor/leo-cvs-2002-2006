@@ -2085,7 +2085,7 @@ class Commands:
 			c.frame.canvas.focus_force()
 	#@-body
 	#@-node:6:C=29:selectVisNext
-	#@+node:7::c.selectVnode (calls tree.select)
+	#@+node:7:C=30:c.selectVnode (calls tree.select)
 	#@+body
 	# This is called inside commands to select a new vnode.
 	
@@ -2095,12 +2095,16 @@ class Commands:
 		c = self
 		c.tree.endEditLabel()
 		c.tree.select(v)
-		c.body.mark_set("insert","1.0")
+		if v.t.insertSpot != None: # 9/1/02
+			c.body.mark_set("insert",v.t.insertSpot)
+			c.body.see(v.t.insertSpot)
+		else:
+			c.body.mark_set("insert","1.0")
 		# c.body.see("1.0")
 		c.body.focus_force()
 		self.editing = false
 	#@-body
-	#@-node:7::c.selectVnode (calls tree.select)
+	#@-node:7:C=30:c.selectVnode (calls tree.select)
 	#@+node:8::selectVnodeWithEditing
 	#@+body
 	# Selects the given node and enables editing of the headline if editFlag is true.

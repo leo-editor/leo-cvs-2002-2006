@@ -667,7 +667,11 @@ class leoTree:
 				self.canvas.focus_set()
 		else:
 			self.select(v)
-			c.body.mark_set("insert","1.0")
+			if v.t.insertSpot != None: # 9/1/02
+				c.body.mark_set("insert",v.t.insertSpot)
+				c.body.see(v.t.insertSpot)
+			else:
+				c.body.mark_set("insert","1.0")
 			c.body.focus_force()
 	
 		self.active = true
@@ -879,11 +883,11 @@ class leoTree:
 		# trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,undoType)
 	
-	# Bound to any key press.
+	# Bound to any key press..
 	def OnBodyKey (self,event):
 	
 		c = self.commands
-		v = c.currentVnode() ; ch = event.char
+		v = c.currentVnode() ; ch = event.char 
 		oldSel = c.body.index("insert")
 		# trace(`oldSel`)
 		self.commands.body.after_idle(self.idle_body_key,v,oldSel,"Typing",ch)
@@ -968,6 +972,7 @@ class leoTree:
 		if s == None: s = ""
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel)
 		v.t.bodyString = s
+		v.t.insertSpot = c.body.index("insert")
 		# Recolor the body.
 		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
 		# Update dirty bits and changed bit.
