@@ -163,41 +163,44 @@ class labelsController(object):
     def __init__(self, c):
     
         self.c = c
+        self.installed = False
     #@nonl
     #@-node:ekr.20050301095332.18:__init__
     #@+node:ekr.20050301103957.3:onCreateOptionalMenus
     def onCreateOptionalMenus(self,tag,keywords):
-    
-        c = self.c
+        
+        c = keywords.get('c')
         # g.trace('mod_labels',c)
-        table = (
-            ("Show labels for Node", None, self.show_labels_for_current_position),
-            ("Show labels", None, self.show_labels),
-            ("-", None, None),
-            ("Delete node label", None, self.delete_node_label),
-            ("Delete label", None, self.delete_label),
-            ("Delete labels", None, self.delete_all_labels),
-            ("-", None, None),
-            ("Marks to label", None, self.marks_to_label),
-            ("Label to Marks", None, self.label_to_marks),
-            ("-", None, None),
-            ("Add label to current node", None, self.menu_add_label),
-            ("-", None, None),
-            ("Label to subnode", None, self.label_to_subnode),
-            ("label to subnodes", None, self.label_to_subnodes),
-            ("labels to subnodes", None, self.labels_to_subnodes),
-            ("-", None, None),
-            ("subnode to label", None, self.subnode_to_label),
-            ("subnodes to label", None, self.subnodes_to_labels),
-            ("subnodes to labels", None, self.subnodes_to_labels),
-            ("-", None, None),
-            ("Clone label subnodes", None, self.clone_label_subnodes),
-        )
-        menu = c.frame.menu
-        labelsMenu = menu.getMenu('Labels')
-        if not labelsMenu:
-            menu.createNewMenu("Labels")
-            menu.createMenuItemsFromTable("Labels", table)
+        if c == self.c and not self.installed:
+            self.installed = True
+            table = (
+                ("Show labels for Node", None, self.show_labels_for_current_position),
+                ("Show labels", None, self.show_labels),
+                ("-", None, None),
+                ("Delete node label", None, self.delete_node_label),
+                ("Delete label", None, self.delete_label),
+                ("Delete labels", None, self.delete_all_labels),
+                ("-", None, None),
+                ("Marks to label", None, self.marks_to_label),
+                ("Label to Marks", None, self.label_to_marks),
+                ("-", None, None),
+                ("Add label to current node", None, self.menu_add_label),
+                ("-", None, None),
+                ("Label to subnode", None, self.label_to_subnode),
+                ("label to subnodes", None, self.label_to_subnodes),
+                ("labels to subnodes", None, self.labels_to_subnodes),
+                ("-", None, None),
+                ("subnode to label", None, self.subnode_to_label),
+                ("subnodes to label", None, self.subnodes_to_labels),
+                ("subnodes to labels", None, self.subnodes_to_labels),
+                ("-", None, None),
+                ("Clone label subnodes", None, self.clone_label_subnodes),
+            )
+            menu = c.frame.menu
+            labelsMenu = menu.getMenu('Labels')
+            if not labelsMenu:
+                menu.createNewMenu("Labels")
+                menu.createMenuItemsFromTable("Labels", table)
     #@nonl
     #@-node:ekr.20050301103957.3:onCreateOptionalMenus
     #@+node:ekr.20050301095332.19:subroutines
