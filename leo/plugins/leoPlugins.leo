@@ -31,7 +31,7 @@
 </v>
 </v>
 </v>
-<v t="T15"><vh>Plugins</vh>
+<v t="T15" a="E"><vh>Plugins</vh>
 <v t="T16"><vh>Commands</vh>
 <v t="T17"><vh> Importing Cisco configuration files</vh>
 <v t="T18" tnodeList="18,19,20,21,22,23,24,25"><vh>@file import_cisco_config.py</vh>
@@ -130,7 +130,7 @@
 <v t="T91"><vh>scanPluginDirectives</vh></v>
 </v>
 </v>
-<v t="T92"><vh>Drawing, graphics &amp; styled text</vh>
+<v t="T92" a="E"><vh>Drawing, graphics &amp; styled text</vh>
 <v t="T93" tnodeList="93,94,95,96,97,98,99,100"><vh>@file color_markup.py</vh>
 <v t="T94"><vh>initAnyMarkup</vh></v>
 <v t="T95"><vh>colorWikiMarkup</vh></v>
@@ -150,17 +150,17 @@
 <v t="T105"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T106" tnodeList="106,107,108,109,110,111,112,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137"><vh>@file nav_buttons.py</vh>
-<v t="T107"><vh>class commanderInfoClass</vh>
+<v t="T106" a="E" tnodeList="106,107,108,109,110,111,112,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137"><vh>@file nav_buttons.py</vh>
+<v t="T107" a="E"><vh>class commanderInfoClass</vh>
 <v t="T108"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="T109"><vh>addWidgets</vh>
 <v t="T110"><vh>&lt;&lt; define callbacks &gt;&gt;</vh></v>
 </v>
 <v t="T111"><vh>createImage</vh></v>
 <v t="T112"><vh>updateNavButtons (nav_buttons.py)</vh></v>
-<v t="T113"><vh>Callbacks</vh>
+<v t="T113" a="E"><vh>Callbacks</vh>
 <v t="T114"><vh>marksButtonCallback</vh></v>
-<v t="T115"><vh>recentButtonCallback</vh></v>
+<v t="T115" a="V"><vh>recentButtonCallback</vh></v>
 </v>
 </v>
 <v t="T116"><vh>class globalInfoClass</vh>
@@ -472,7 +472,7 @@
 </v>
 </v>
 </v>
-<v t="T347" a="E"><vh>In progress</vh>
+<v t="T347"><vh>wxPython plugin (demo only)</vh>
 <v t="T348" tnodeList="348,349,350,352,354,355,356,357,358,359,360,361,362,363,364,366,367,369,370,371,372,374,375,376,378,379,380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398,399,400,403,401,402,404,405,406,407,408,409,410,411,418,419,420,421,422,423,424,425,412,413,414,415,416,417,426,427,428,429,430,431,432,433,434,435,436,351"><vh>@file __wx_gui.py</vh>
 <v t="T349"><vh>&lt;&lt; imports for wx plugin &gt;&gt;</vh></v>
 <v t="T350"><vh>&lt;&lt; constants for wx plugin &gt;&gt;</vh></v>
@@ -581,8 +581,8 @@
 <v t="T436"><vh>OnAbout</vh></v>
 </v>
 </v>
-<v t="T437" a="E"><vh>(other wxStuff)</vh>
-<v t="T438" a="EV"><vh>wxTests</vh>
+<v t="T437"><vh>(other wxStuff)</vh>
+<v t="T438" a="E"><vh>wxTests</vh>
 <v t="T439"><vh>@file c:\prog\test\wxTest.py</vh></v>
 </v>
 <v t="T440" a="E"><vh>old wxLeo code (imported C++ code)</vh>
@@ -870,7 +870,7 @@
 <v t="T706"><vh>wx Questions</vh></v>
 </v>
 </v>
-<v t="T707" a="E"><vh>Leo wx prototype script</vh>
+<v t="T707"><vh>Leo wx prototype script</vh>
 <v t="T708" a="M" tnodeList="708,709,710,711,712,713,714,715,716,717,718,719,720,721,722,725,723,724,726,727,728,729,730,731,732,733,740,741,742,743,744,745,746,747,734,735,736,737,738,739,748,749,750,751,752,753,754,755,756,757,758"><vh>@file c:\prog\test\wxLeo.py</vh>
 <v t="T709"><vh>const</vh></v>
 <v t="T710"><vh>leoApp class</vh>
@@ -934,7 +934,7 @@
 </v>
 </v>
 </v>
-<v t="T759" a="E"><vh>(Startup issues)</vh>
+<v t="T759"><vh>(Startup issues)</vh>
 <v t="T351" a="C"><vh>&lt;&lt; set app.gui &gt;&gt;</vh></v>
 <v t="T355" a="C"><vh>createRootWindow &amp; allies</vh>
 <v t="T356"><vh>setDefaultIcon</vh></v>
@@ -2733,7 +2733,7 @@ def onRecentButton(self=self):
 	else:
 		# Create and run the dialog.
 		title = "Marks"
-		label = "Marks: " + shortFileName(c.frame.mFileName)
+		label = "Marks: " + shortFileName(c.mFileName)
 		d = marksDialog(c,title,label)
 		self.marksDialog = d
 		d.root.wait_window(d.top)
@@ -2748,7 +2748,7 @@ def onRecentButton(self=self):
 	else:
 		# Create and run the dialog.]
 		title = "Recent Nodes"
-		label = "Recent nodes: " + shortFileName(c.frame.mFileName)
+		label = "Recent nodes: " + shortFileName(c.mFileName)
 		d = recentSectionsDialog(c,self.nav_buttons,title,label)
 		self.recentSectionsDialog = d
 		d.root.wait_window(d.top)
@@ -6053,10 +6053,15 @@ def getPluginNames(self):
 	
     """Return a list of the files needed by a plugin"""
     return ("%s1.py" % name, "%s2.py" % name)</t>
-<t tx="T347">To do:
+<t tx="T347">@nocolor
+
+To do:
 	
 - Complete all stubs.
-- Add event handlers.</t>
+	- More stubs will be created when c.body ivar gets eliminated.
+- Add event handlers.
+
+@color</t>
 <t tx="T348">@first # -*- coding: utf-8 -*-
 
 """A plugin to use wxPython as Leo's gui."""

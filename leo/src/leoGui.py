@@ -356,7 +356,7 @@ class tkinterGui(leoGui):
 	#@+node:destroyLeoFrame
 	def destroyLeoFrame (self,frame):
 	
-		self.destroy(frame)
+		self.destroy(frame.top)
 	#@nonl
 	#@-node:destroyLeoFrame
 	#@+node:destroy
