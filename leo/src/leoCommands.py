@@ -215,13 +215,13 @@ class baseCommands:
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
 		count = 0
 		while v and v != next:
 			if v == current:
-				if c.convertBlanks():
+				if c.convertBlanks(setUndoParams=false):
 					count += 1
 			else:
 				result = [] ; changed = false
@@ -256,13 +256,13 @@ class baseCommands:
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
 		count = 0
 		while v and v != next:
 			if v == current:
-				if self.convertTabs():
+				if self.convertTabs(setUndoParams=false):
 					count += 1
 			else:
 				result = [] ; changed = false
@@ -291,7 +291,7 @@ class baseCommands:
 	#@nonl
 	#@-node:convertAllTabs
 	#@+node:convertBlanks
-	def convertBlanks (self):
+	def convertBlanks (self,setUndoParams=true):
 	
 		c = self
 		head,lines,tail,oldSel,oldYview = c.getBodyLines()
@@ -314,13 +314,14 @@ class baseCommands:
 	
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Blanks",oldSel,oldYview) # Handles undo
+			undoType = choose(setUndoParams,"Convert Blanks",None)
+			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 			
 		return changed
 	#@-node:convertBlanks
 	#@+node:convertTabs
-	def convertTabs (self):
+	def convertTabs (self,setUndoParams=true):
 	
 		c = self
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
@@ -345,7 +346,8 @@ class baseCommands:
 	
 		if changed:
 			result = string.join(result,'\n')
-			c.updateBodyPane(head,result,tail,"Convert Tabs",oldSel,oldYview) # Handles undo
+			undoType = choose(setUndoParams,"Convert Tabs",None)
+			c.updateBodyPane(head,result,tail,undoType,oldSel,oldYview) # Handles undo
 			setTextSelection(c.body,"1.0","1.0")
 			
 		return changed
@@ -392,7 +394,7 @@ class baseCommands:
 		headline = lines[0] ; del lines[0]
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		oldText = getAllText(c.body)
 		oldSel = getTextSelection(c.body)
 		#@	<< Set headline for extract >>
@@ -438,7 +440,7 @@ class baseCommands:
 		junk, ws = skip_leading_ws_with_indent(headline,0,c.tab_width)
 		line1 = "\n" + headline
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		# trace("v:     " + `v`)
 		# trace("v_copy:" + `v_copy`)
 		oldText = getAllText(c.body)
@@ -487,7 +489,7 @@ class baseCommands:
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		# Create copy for undo.
-		v_copy = v.copyTree()
+		v_copy = c.undoer.saveTree(v)
 		# No change to body or selection of this node.
 		oldText = newText = getAllText(c.body)
 		i, j = oldSel = newSel = self.getBodySelection()
