@@ -789,20 +789,20 @@ class LeoFrame:
 		
 		table = (
 			("About Leo...",None,self.OnAbout),
-			("Online Home Page...",None,self.OnLeoHome),
+			("Online Home Page",None,self.OnLeoHome),
 			("-",None,None),
-			("Online Tutorial: Start Here...",None,self.OnLeoTutorial))
+			("Open Online Tutorial",None,self.OnLeoTutorial))
 		self.createMenuEntries(helpMenu,table)
 		
 		if sys.platform=="win32":
-			table = (("Tutorial: sbooks.chm...",None,self.OnLeoHelp),)
+			table = (("Open Offline Tutorial",None,self.OnLeoHelp),)
 			self.createMenuEntries(helpMenu,table)
 		
 		table = (
-			("Reference: LeoDocs.leo...",None,self.OnLeoDocumentation),
+			("Open LeoDocs.leo",None,self.OnLeoDocumentation),
 			("-",None,None),
-			("Configuration: LeoConfig.leo...",None,self.OnLeoConfig),
-			("Configuration: Apply Options",None,self.OnApplyConfig))
+			("Open LeoConfig.leo",None,self.OnLeoConfig),
+			("Apply Settings",None,self.OnApplyConfig))
 		self.createMenuEntries(helpMenu,table)
 		#@-body
 		#@-node:5::<< create the help menu >>

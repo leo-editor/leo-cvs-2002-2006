@@ -13,13 +13,13 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="V"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -488,6 +488,7 @@ EndEditHeadline = Esc
 </t>
 <t tx="T14">@ These are all comments...
 AboutLeo                = None
+ApplySettings           = None
 Cascade                 = None
 ContractAllChildren     = None
 ContractChildren        = None
@@ -501,7 +502,10 @@ ImportNowebFiles        = None
 ImportToroot            = None
 MinimizeAll             = None
 OnlineHomePage          = None
-OnlineTutorialStartHere = None
+OpenLeoConfigLeo        = None
+OpenLeoDocsLeo          = None
+OpenOfflineTutorial     = None
+OpenOnlineTutorial      = None
 OpenCompareWindow       = None
 OpenfileWith            = None
 OutlineToCWEB           = None
@@ -513,7 +517,6 @@ RevertToSaved           = None
 SaveTo                  = None
 SortChildren            = None
 ToggleSplitDirection    = None
-Tutorialsbookschm       = None
 UntangleAll             = None
 UntangleMarked          = None
 Weave                   = None
