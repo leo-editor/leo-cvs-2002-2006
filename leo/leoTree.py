@@ -1500,7 +1500,8 @@ class leoTree:
 			self.revertHeadline = None
 			self.select(v)
 			if v and v.joinList:
-				self.redraw_now() # force a redraw of joined headlines.
+				# 3/26/03: changed redraw_now to force_redraw.
+				self.force_redraw() # force a redraw of joined headlines.
 	#@-body
 	#@-node:1::abortEditLabelCommand
 	#@+node:2::dimEditLabel, undimEditLabel
@@ -1553,7 +1554,8 @@ class leoTree:
 			self.setUnselectedLabelState(v)
 			self.editVnode = None
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			self.redraw_now() # force a redraw of joined and ancestor headlines.
+			# 3/26/03: changed redraw_now to force_redraw.
+			self.force_redraw() # force a redraw of joined and ancestor headlines.
 		self.commands.body.focus_force() # 10/14/02
 			
 	def endEditLabelCommand (self):
@@ -1562,7 +1564,8 @@ class leoTree:
 		if v and v.edit_text:
 			self.select(v)
 		if v: # Bug fix 10/9/02: also redraw ancestor headlines.
-			self.redraw_now() # force a redraw of joined headlines.
+			# 3/26/03: changed redraw_now to force_redraw.
+			self.force_redraw() # force a redraw of joined headlines.
 		self.commands.body.focus_force() # 10/14/02
 	#@-body
 	#@-node:4::endEditLabel & endEditLabelCommand
