@@ -8,7 +8,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import os,string
+import os,string,traceback
 
 
 #@<< about Tangle and Untangle >>
@@ -460,12 +460,16 @@ class tangleCommands:
 				try:
 					import tangle_done
 					tangle_done.run(root_names)
-				except: es("Can not execute tangle_done.run()")
+				except:
+					es("Can not execute tangle_done.run()")
+					traceback.print_exc()
 			if not self.tangling and self.untangle_batch_flag:
 				try:
 					import untangle_done
 					untangle_done.run(root_names)
-				except: es("Can not execute tangle_done.run()")
+				except:
+					es("Can not execute tangle_done.run()")
+					traceback.print_exc()
 	
 		# Reinitialize the symbol tables and lists.
 		self.tst = {}
@@ -784,6 +788,7 @@ class tangleCommands:
 		except:
 			if f: f.close()
 			es("error reading: " + path)
+			traceback.print_exc()
 			self.cleanup()
 			return
 		#@-body

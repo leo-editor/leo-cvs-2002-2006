@@ -677,7 +677,7 @@ class undoer:
 			#@<< undo typing cases >>
 			#@+node:8::<< undo typing cases >>
 			#@+body
-			elif type in [ "Typing"
+			elif type in [ "Typing",
 				"Change",
 				"Convert Blanks", "Convert Tabs",
 				"Cut", "Paste", "Delete",

@@ -1218,8 +1218,8 @@ class LeoFrame:
 				es("can not open" + fileName)
 				return false, None
 		except:
-			traceback.print_exc()
 			es("exceptions opening" + fileName)
+			traceback.print_exc()
 			return false, None
 	#@-body
 	#@-node:3:C=18:frame.OpenWithFileName
@@ -2421,6 +2421,7 @@ class LeoFrame:
 		except:
 			es("Can not import idle")
 			es("Please add \Python2x\Tools\idle to sys.paths")
+			traceback.print_exc()
 		return "break" # inhibit further command processing
 	#@-body
 	#@-node:6:C=40:OnOpenPythonWindow
@@ -2435,7 +2436,7 @@ class LeoFrame:
 		tkMessageBox.showinfo(
 			"About Leo",
 			"Leo in Python/Tk\n" +
-			"Version 3.0, July 15, 2002\n\n" +
+			"Version 3.0, July 16, 2002\n\n" +
 	
 			"Copyright 1999-2002 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

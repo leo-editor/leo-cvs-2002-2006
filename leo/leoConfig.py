@@ -516,8 +516,6 @@ class config:
 				print "\n\nwindowDict:\n\n" + `self.windowDict`
 			cf.close()
 		except exceptions.IOError:
-			# traceback.print_exc()
-			# es("Can not open " + self.configFileName)
 			pass
 		except:
 			es("Exception opening " + self.configFileName)
@@ -789,6 +787,7 @@ class config:
 			config.write(cf)
 			cf.close()
 		except:
+			es("exception writing: " + self.configFileName)
 			traceback.print_exc()
 		self.config = None
 	#@-body

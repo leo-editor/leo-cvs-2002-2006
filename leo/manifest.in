@@ -1,13 +1,13 @@
 include LeoPy.leo
 include LeoDocs.leo
 include leo*.py
+include leoConfig.txt
 include c2py.py
 include openLeo.py
 include tangle_done.py
 include untangle_done.py
 include __init__.py
-include readme.txt
-include leoConfig.txt
+include readme.*
 include Icons/*.*
 include leo.rc
 include leo.res

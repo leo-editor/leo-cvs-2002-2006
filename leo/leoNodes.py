@@ -348,8 +348,8 @@ class vnode:
 	#@+body
 	def OnHyperLinkEnter (self,event):
 	
-		c = self.commands ; v = self
 		if 0: # This works, and isn't very useful.
+			c = self.commands ; v = self
 			c.body.tag_config(v.tagName,background="green")
 	#@-body
 	#@-node:7::OnHyperLinkEnter
@@ -357,8 +357,8 @@ class vnode:
 	#@+body
 	def OnHyperLinkLeave (self,event):
 	
-		c = self.commands ; v = self
 		if 0: # This works, and isn't very useful.
+			c = self.commands ; v = self
 			c.body.tag_config(v.tagName,background="white")
 	#@-body
 	#@-node:8::OnHyperLinkLeave

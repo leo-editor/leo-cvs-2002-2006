@@ -7,7 +7,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leo,leoConfig,leoDialog,leoFind
-import os, sys, Tkinter
+import os, sys, Tkinter, traceback
 
 class LeoApp:
 
@@ -56,6 +56,7 @@ class LeoApp:
 			v22 = v0 > 2 or (v0 == 2 and v1 > 1)
 		except:
 			print "exception getting version"
+			traceback.print_exc()
 			v22 = true # Just hope
 			
 		if not v22:
@@ -96,6 +97,7 @@ class LeoApp:
 			bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception creating bitmap"
+			traceback.print_exc()
 		
 		try:
 			version = self.root.getvar("tk_patchLevel")
@@ -123,6 +125,7 @@ class LeoApp:
 
 		except:
 			print "exception getting version"
+			traceback.print_exc()
 			v834 = None # 6/18/02
 			
 		if v834:
@@ -133,6 +136,7 @@ class LeoApp:
 					top.wm_iconbitmap(bitmap)
 			except:
 				es("exception setting bitmap")
+				traceback.print_exc()
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
 

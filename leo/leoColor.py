@@ -8,7 +8,7 @@
 
 from leoGlobals import *
 from leoUtils import *
-import keyword, string, Tkinter,tkColorChooser
+import string, Tkinter, tkColorChooser, traceback
 
 
 #@<< define colorizer constants >>
@@ -1208,7 +1208,8 @@ class leoColorNamePanel:
 			try: # This shouldn't fail now.
 				items = map(int, items)
 				color = box.get(items[0])
-			except: 
+			except:
+				es("unexpected exception")
 				traceback.print_exc()
 	
 		if not color:

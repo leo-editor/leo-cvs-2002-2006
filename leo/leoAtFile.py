@@ -18,7 +18,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoNodes, leoPrefs
-import filecmp, os, os.path, time
+import filecmp, os, os.path, time, traceback
 
 class atFile:
 	
@@ -581,7 +581,6 @@ class atFile:
 	
 	def skipIndent(self,s,i,width):
 	
-		c = self.commands
 		ws = 0 ; n = len(s)
 		while i < n and ws < width:
 			if   s[i] == '\t': ws += (abs(self.tab_width) - (ws % abs(self.tab_width)))
@@ -751,7 +750,7 @@ class atFile:
 	def read(self,root):
 	
 		t1 = getTime()
-		# c = self.commands
+		c = self.commands
 		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 		self.targetFileName = root.atFileNodeName()
 		self.root = root
@@ -2183,6 +2182,7 @@ class atFile:
 						es("writing: " + self.shortFileName)
 					except:
 						self.writeError("rename failed: no file created! (file may be read-only)")
+						traceback.print_exc()
 			else:
 				os.rename(self.outputFileName, self.targetFileName)
 				es("creating: " + self.targetFileName)

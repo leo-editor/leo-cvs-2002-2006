@@ -189,7 +189,8 @@ class leoFontPanel:
 			try: # This shouldn't fail now.
 				items = map(int, items)
 				family = box.get(items[0])
-			except: 
+			except:
+				es("unexpected exception")
 				traceback.print_exc()
 				font = self.getImpliedFont()
 		# At this point we either have family or font.
@@ -340,7 +341,7 @@ class leoFontPanel:
 		if 1: # Hide the window, preserving its position.
 			self.top.withdraw()
 		else: # works.
-			self.commands.frame.fontPanel=None
+			c.frame.fontPanel=None
 			self.top.destroy()
 		
 	def onRevert (self):
@@ -365,7 +366,6 @@ class leoFontPanel:
 		try:
 			size = int(size)
 		except: # This just means the user didn't type a valid number.
-			# trace("exception")
 			return
 		# trace(`size`)
 		self.sizeVar.set(size)
@@ -473,7 +473,7 @@ class leoFontPanel:
 	
 	def update (self,event=None):
 		
-		Tk = Tkinter ; c = self.commands
+		c = self.commands
 		size = self.sizeVar.get()
 		
 		# Insert the new text in the size box.

@@ -6,6 +6,7 @@
 
 from leoGlobals import *
 from leoUtils import *
+import traceback
 
 # Synonyms
 indent_refs = true ; dont_indent_refs = false
@@ -2116,6 +2117,7 @@ class leoImportCommands:
 			file.close()
 		except:
 			es("file error while flattening the outline")
+			traceback.print_exc()
 	#@-body
 	#@-node:5:C=8:flattenOutline
 	#@+node:6:C=9:outlineToWeb
@@ -2146,6 +2148,7 @@ class leoImportCommands:
 			file.close()
 		except:
 			es("file error in Outline To noweb command")
+			traceback.print_exc()
 	#@-body
 	#@-node:6:C=9:outlineToWeb
 	#@+node:7::removeSentinelsCommand

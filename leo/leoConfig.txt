@@ -1,5 +1,5 @@
 # leoConfig.txt: configuration file for Leo.
-# 7/15/2002 by Edward K. Ream
+# 7/16/2002 by Edward K. Ream
 #
 # Leo looks for this file using the directory in sys.leo_config_directory.
 # 	(You would typically set this attribute in sitecustomize.py).
@@ -7,6 +7,8 @@
 #	 Leo attempts to load this file from the directory from which Leo was loaded.
 #
 # Settings in this file override settings in all .leo files.
+# (But not always, see below for the real truth.)
+#
 # 	Leo does not write settings to the <preferences> and <find_panel_settings>
 # 	elements of .leo files that exist in this file.
 #
@@ -28,11 +30,11 @@
 read_only = 1
 #	WARNING: Clearing the read_only attribute will cause Leo to remove
 #	all comments and alter order of attributes when rewriting this file!!
-#	Syntax errors in this file set read_only = 1.
+#	Syntax errors in this file set this file to read-only.
 
-xml_version_string = ISO-8859-1
+xml_version_string = UTF-8
 #	The version used at the start of .leo files.
-#	Default is UTF-8
+#	Default is UTF-8.  Better is ISO-8859-1.
 #	Use UTF-8 to write leo.py 2.x files.
 
 # -----------------------------------------------------------------------------
@@ -55,7 +57,6 @@ change_string =
 
 find_string = 
 # 	The find string (without the quotes unless quotes are part of the string).
-
 
 # ----- 0/1 settings for checkboxes in the Find/Change panel.
 
@@ -123,7 +124,6 @@ use_hyperlinks = 0
 #		Cute, but disorienting and _not_ recommended.
 #		Control-clicking moves to indicated node.
 #	0: don't use hyperlinks and allow underlining of undefined section names.
-
 
 # The following may be any valid Tk color name or color value.
 # 	For example, #00aa00 is the dark green used by IDLE.
@@ -241,7 +241,7 @@ initial_window_left = 10
 #	Distance from left of screen of window, in pixels (must be an integer).
 
 initial_window_top = 10
-#	Distance from top of screen of window, in in pixels (must be an integer).
+#	Distance from top of screen of window, in pixels (must be an integer).
 
 # ----- Options for newly opened windows...
 

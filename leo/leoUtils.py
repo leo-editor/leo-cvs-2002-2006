@@ -7,7 +7,7 @@
 # Global utility functions
 
 from leoGlobals import *
-import os, string, sys, time, types, Tkinter
+import os, string, sys, time, types, Tkinter, traceback
 
 
 #@+others
@@ -1365,12 +1365,14 @@ def update_file_if_changed(file_name,temp_name):
 				es("***updating: " + file_name)
 			except:
 				es("Rename failed: no file created! (file may be read-only)")
+				traceback.print_exc()
 	else:
 		try:
 			os.rename(temp_name, file_name)
 			es("Creating: " + file_name)
 		except:
 			es("Rename failed: no file created! (file may be read-only)")
+			traceback.print_exc()
 #@-body
 #@-node:19::update_file_if_changed
 #@-others

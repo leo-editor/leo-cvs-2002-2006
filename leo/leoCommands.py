@@ -330,8 +330,6 @@ class Commands:
 	def convertBlanks (self):
 	
 		c = self ; v = current = c.currentVnode()
-		# Create copy for undo.
-		v_copy = c.copyTree(v)
 		head, lines, tail = c.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:

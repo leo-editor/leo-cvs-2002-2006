@@ -994,6 +994,7 @@ class fileCommands:
 					except UnicodeError:
 						self.outputFile.write(`s`)
 				except:
+					traceback.print_exc()
 					es("error writing:" + `s`)
 			elif self.outputString != None: # Write to a string
 				self.outputString += s
@@ -1539,6 +1540,7 @@ class fileCommands:
 				os.rename(fileName,backupName)
 			except:
 				es("error creating " + backupName)
+				traceback.print_exc()
 				backupName = None
 		else:
 			backupName = None
@@ -1558,6 +1560,8 @@ class fileCommands:
 					os.unlink(backupName)
 				except:
 					es("error deleting " + backupName)
+					traceback.print_exc()
+
 			#@-body
 			#@-node:2::<< delete backup file >>
 
@@ -1574,6 +1578,7 @@ class fileCommands:
 			self.putPostlog()
 			# raise BadLeoFile # testing
 		except:
+			es("exception writing: " + fileName)
 			traceback.print_exc() 
 			if self.outputFile:
 				self.outputFile.close()
@@ -1596,6 +1601,7 @@ class fileCommands:
 					os.rename(backupName, fileName)
 				except:
 					es("can not rename " + backupName + " to " + fileName)
+					traceback.print_exc()
 
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>
@@ -1614,6 +1620,8 @@ class fileCommands:
 					os.unlink(backupName)
 				except:
 					es("error deleting " + backupName)
+					traceback.print_exc()
+
 			#@-body
 			#@-node:2::<< delete backup file >>
 
@@ -1637,6 +1645,7 @@ class fileCommands:
 					os.rename(backupName, fileName)
 				except:
 					es("can not rename " + backupName + " to " + fileName)
+					traceback.print_exc()
 
 			#@-body
 			#@-node:3::<< erase filename and rename backupName to fileName >>

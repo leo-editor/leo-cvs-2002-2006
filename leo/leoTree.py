@@ -232,6 +232,7 @@ class leoTree:
 			# print `metrics`
 		except:
 			self.line_height = line_height # was 17 + 2
+			es("exception setting outline line height")
 			traceback.print_exc()
 	#@-body
 	#@-node:9:C=7:setLineHeight
@@ -430,6 +431,7 @@ class leoTree:
 		except:
 			es("Can not load: " + fullname)
 			es("dir:" + `dir` + ", file:" + `file` + ", ext:" + `ext`)
+			traceback.print_exc()
 			return None
 	#@-body
 	#@-node:9:C=13:tree.getIconImage
@@ -704,15 +706,20 @@ class leoTree:
 		
 		# es("tree.OnContinueDrag" + `v`)
 		assert(v == self.drag_v)
-		if not event: return
 		
 		c = self.commands 
 		canvas = self.canvas
 		frame = self.commands.frame
-		x,y = event.x,event.y
+		
+		if event:
+			x,y = event.x,event.y
+		else:
+			x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
+			if x == -1 or y == -1: return # Stop the scrolling if we go outside the entire window.
 	
 		canvas_x = canvas.canvasx(x)
 		canvas_y = canvas.canvasy(y)
+		
 		id = self.canvas.find_closest(canvas_x,canvas_y)
 	
 		if 0: # Confusing: we should only do this if a modifier key is down.
@@ -767,7 +774,7 @@ class leoTree:
 				# Queue up another event to keep scrolling while the cursor is outside the canvas.
 				lo, hi = frame.treeBar.get()
 				if (y < 0 and lo > 0.1) or (y > h and hi < 0.9):
-					canvas.after_idle(self.OnContinueDrag,v,event)
+					canvas.after_idle(self.OnContinueDrag,v,None) # Don't propagate the event.
 			#@-body
 			#@-node:2::<< scroll the canvas as needed >>
 	#@-body

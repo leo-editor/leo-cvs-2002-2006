@@ -17,6 +17,7 @@ leoDialog.py
 leoFileCommands.py
 leoFind.py
 leoFindScript.py
+leoFontPanel.py
 leoFrame.py
 leoGlobals.py
 leoImport.py
