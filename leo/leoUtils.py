@@ -1654,6 +1654,97 @@ def setTextSelection (t,start,end):
 	t.tag_add("sel",start,end)
 	t.tag_remove("sel",end,"end")
 	t.mark_set("insert",end)
+	
+def bound_paragraph(t=None):
+	"""Find the bounds of the text paragraph that contains
+the current cursor position.
+
+Returns a list of values: the paragraph starting position,
+the paragraph ending position, and a flag indicating 
+whether the paragraph ends with a newline, the leading
+whitespace for each line, and the leading whitespace
+for the first line.  Returns None if the cursor is on
+a whitespace line or a delimeter line.
+
+Parameters:
+  t   a reference to a Tk.Text widget
+"""
+	if not t:
+		# c=leo.topCommand()
+		# b=c.frame.body
+		return None
+		
+	# get the current position
+	x=t.index("insert")
+	
+	# if line is whitespace, get out
+	s = t.get(x+"linestart",x+"lineend")
+	if s.isspace() or (0 == len(s)):
+		return None	
+		
+	# if line is a delimiter, get out
+	if "@" == s[0]:
+		return None
+
+	# current start and end defined by current line
+	start = t.index(x+"linestart")
+	tmpLine = int(float(start))
+	end = str(tmpLine + 1) + ".0"
+
+	# find the start of the paragraph
+	while (tmpLine > 1):
+		tmpLine -= 1
+		tmp = str(tmpLine) + ".0"
+		s = t.get(tmp,tmp+"lineend")
+		if s.isspace() or (0 == len(s)):
+			break
+		if "@" == s[0]:
+			break
+		start = tmp
+
+	# find the end of the paragraph
+	tmpLine = int(float(end))
+	bodyEnd = t.index("end")
+	while end != bodyEnd:
+		end = str(tmpLine) + ".0"
+		s = t.get(end,end+"lineend")
+		if s.isspace() or (0 == len(s)):
+			break
+		if "@" == s[0]:
+			break
+		tmpLine += 1
+
+	# do we insert a trailing NL?
+	endsWithNL = len(t.get(end))
+	
+	# find the first whitespace
+	s = t.get(start,start+"lineend")
+	wsFirst = get_leading_ws(s)
+	# find the second whitespace
+	second = str(int(float(start)) + 1) + ".0"
+	if (second == end) or (float(second) > float(end)):
+		wsSecond = wsFirst
+	else:
+		s = t.get(second,second+"lineend")
+		wsSecond = get_leading_ws(s)
+	
+	# return the start and end positions
+	# return the ending NL state
+	# return the first and second line leading WS
+	return start, end, endsWithNL, wsFirst, wsSecond
+
+
+def get_leading_ws(s):
+	"""Returns a string containing the leading tabs and
+spaces from 's'.
+"""
+	s2 = s.lstrip()
+	diff = len(s) - len(s2)
+	if diff:
+		ws = s[0:diff]
+	else:
+		ws = ""
+	return ws
 #@-body
 #@-node:3::setTextSelection
 #@-node:23::Tk.Text selection (utils)
