@@ -13,7 +13,8 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
-<v t="ekr.20040119102021" a="E"><vh>2004</vh>
+<v t="ekr.20040119102021"><vh>2004</vh>
+<v t="ekr.20040130165735"><vh>1/30 Fixed crashers in open_shell.py</vh></v>
 <v t="ekr.20040129151121"><vh>1/29 Activate xemacs plugin only on double-clicks</vh></v>
 <v t="ekr.20040119102021.1"><vh>1/19 Added http plugin</vh></v>
 </v>
@@ -8827,7 +8828,7 @@ pathToCmd = 'c:/windows/system32/cmd.exe'
 # Register the handlers...
 registerHandler("after-create-leo-frame", load_menu)
 
-__version__ = "1.3"
+__version__ = "1.4"
 plugin_signon(__name__)</t>
 <t tx="edream.110203113231.816">@ Written by Ed Taekema.  Modified by E.K.Ream
 
@@ -8880,14 +8881,14 @@ Current limitations ...
 	d = _getpath(c,v)
 	return d
 </t>
-<t tx="edream.110203113231.820">def launchCmd(not_used):
+<t tx="edream.110203113231.820">def launchCmd(event=None):
 	
 	global pathToCmd
 
 	d = _getCurrentNodePath()
 	myCmd = 'cd ' + d
 	os.spawnl(os.P_NOWAIT, pathToCmd, '/k ', myCmd)</t>
-<t tx="edream.110203113231.821">def launchExplorer(not_used):
+<t tx="edream.110203113231.821">def launchExplorer(event=None):
 	
 	global pathToExplorer
 
@@ -15680,6 +15681,9 @@ plugin_signon(__name__)</t>
 	rowcol.py
 	# word_export.py
 	# xemacs.py
+	
+# Other plugins...
+	# open_shell.py
 
 # New from Steve Zatz
 	# ** requires docutils: http://docutils.sourceforge.net/
@@ -17505,5 +17509,6 @@ def setUp(self):
 
 '''</t>
 <t tx="ekr.20040129151121"></t>
+<t tx="ekr.20040130165735"></t>
 </tnodes>
 </leo_file>
