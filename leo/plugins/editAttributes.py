@@ -1,185 +1,182 @@
 #@+leo-ver=4-thin
-#@+node:ekr.20040722142445:@thin editAttributes.py
-"""A plugin to add and edit unknown attributes of a node
+#@+node:mork.20041018162155.1:@thin EditAttributes.py
+#@<< docstring >>
+#@+node:ekr.20050226091502:<< docstring >>
+'''A plugin that lets the user to associate text with a specific node.
 
-Summon it by pressing button-2 or button-3 on an icon Box in the outline."""
+Summon it by pressing button-2 or button-3 on an icon Box in the outline. This
+will create an attribute editor where the user can add, remove and edit
+attributes. Since attributes use the underlying tnode, clones will share the
+attributes of one another.'''
+#@nonl
+#@-node:ekr.20050226091502:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
 #@<< imports >>
-#@+node:ekr.20040722142445.1:<< imports >>
-import leoGlobals as g
+#@+node:mork.20041018162155.2:<< imports >>
 import leoPlugins
+import leoGlobals as g
+import leoTkinterFrame    
 
-Tk  = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
-    
-import weakref
+
+
+#@-node:mork.20041018162155.2:<< imports >>
+#@nl
+
+__version__ = ".3"
+#@<< version history >>
+#@+node:ekr.20050226091502.1:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# 0.3 EKR:  Base on version 0.2 from Leo User.
+# 
+#     - Minor changes:  new/different section names.
+#     - Use g.importExtension to import PMW.
+#     - Added init function.
+#@-at
 #@nonl
-#@-node:ekr.20040722142445.1:<< imports >>
+#@-node:ekr.20050226091502.1:<< version history >>
 #@nl
 
 #@+others
-#@+node:ekr.20040722142445.2:addAttrDetection
-def addAttrDetection( tag, keywords ):
+#@+node:ekr.20050226091648:init
+def init ():
     
-    if keywords.has_key( 'c' ):
-        c = keywords[ 'c' ]
-    else:
-        c = keywords[ 'new_c' ]
-    if haveseen.has_key( c ): return
+    ok = Pmw is not None
+    if ok:
+        g.plugin_signon( __name__ )
+    return ok
+   
 
-    haveseen[ c ] = None
-    can = c.frame.canvas
-    #@    << define hit callback >>
-    #@+node:ekr.20040722143218:<< define hit callback >>
-    def hit (event, c = c):
+
+#@-node:ekr.20050226091648:init
+#@+node:mork.20041018162155.3:class AttrEditor
+class AttrEditor:
+    #@	@+others
+    #@+node:mork.20041018162155.4:__init__
+    def __init__( self, c , plist):
         
-        # Modified for 4.2 code base.
+        self.c = c
+        pos = plist[ 0 ]
+        t = pos.v.t 
+        self.uAs = t.unknownAttributes = getattr( t, 'unknownAttributes', {} ) 
+        self.dialog = Pmw.Dialog( buttons = ( 'Add Attribute', 'Remove Attribute', 'Close' ),
+                                  title = t.headString,
+                                  command = self.buttonCommands )  
+        group = Pmw.Group( self.dialog.interior(), tag_text = t.headString )
+        group.pack( side = 'top' )
+        self._mkGui( group.interior())        
+        self.dialog.activate()
+    
+    #@-node:mork.20041018162155.4:__init__
+    #@+node:mork.20041018162155.5:buttonCommands
+    def buttonCommands( self, name ):
+        if name == 'Add Attribute': return self.add() 
+        elif name == 'Remove Attribute': return self.rmv()
+        else:
+             self.dialog.deactivate()
+             self.dialog.destroy()
+    #@-node:mork.20041018162155.5:buttonCommands
+    #@+node:mork.20041018162155.6:_mkGui
+    def _mkGui( self, frame ):
+    
+        group = Pmw.Group( frame , tag_text = "Attributes")
+        group.pack( side = 'left' )
+        lb = self.lb = Pmw.ScrolledListBox( group.interior() ,
+                                           listbox_background = 'white', listbox_foreground = 'blue', 
+                                           listbox_selectbackground = '#FFE7C6', 
+                                           listbox_selectforeground = 'blue',
+                                           selectioncommand = self.selcommand )
+        bk = self.uAs.keys()
+        bk.sort()
+        lb.setlist( bk )
+        lb.pack()
+        e = self.attEnt = Pmw.EntryField( group.interior(), entry_background = 'white', 
+                                          entry_foreground = 'blue' ,
+                                          labelpos = 'n', label_text= 'New Attribute:' )
+        e.pack()
+        self.tx = Pmw.ScrolledText( frame, text_background = 'white', text_foreground = 'blue',
+                                    labelpos = 'n', label_text = 'Current Attribute Value' )
+        self.tx.pack( side = 'right' )
+        self.tx.component( 'text' ).bind( '<Key>', self.setText )
+        if bk:
+            lb.setvalue( bk[ 0 ] )
+            self.selcommand()
+    #@-node:mork.20041018162155.6:_mkGui
+    #@+node:mork.20041018162155.7:setText
+    def setText( self, event):
+        if event.char == '': return
+        cs = self.lb.getcurselection() 
+        if len( cs ) == 0: return
+        cs = cs[ 0 ]
+        txt = self.tx.get( '1.0', 'end -1c' ) 
+        self.uAs[ cs ] = txt + event.char
+    #@-node:mork.20041018162155.7:setText
+    #@+node:mork.20041018162155.8:selcommand
+    def selcommand( self ):
+        cs = self.lb.getcurselection()
+        if len( cs ) != 0: cs = cs[ 0 ]
+        else: return
+        txt = self.uAs[ cs ]
+        self.tx.delete( '1.0', 'end' ) 
+        self.tx.insert( '1.0' ,txt) 
+    #@-node:mork.20041018162155.8:selcommand
+    #@+node:mork.20041018162155.9:add
+    def add( self ):
+        txt = self.attEnt.getvalue()
+        if txt.strip() == '': return
+        self.attEnt.delete( 0, 'end' )
+        self.uAs[ txt ] = ''
+        bk = self.uAs.keys() 
+        bk.sort()
+        self.lb.setlist( bk )
+        self.lb.setvalue( txt ) 
+        self.tx.delete( '1.0', 'end' )
+    #@-node:mork.20041018162155.9:add
+    #@+node:mork.20041018162155.10:rmv
+    def rmv( self ):
+        cs = self.lb.curselection() 
+        if len( cs ) != 0 : cs = cs[ 0 ]
+        else: return
+        del self.uAs[ self.lb.get( cs ) ]
+        bk = self.uAs.keys()
+        bk.sort()
+        self.lb.setlist( bk )
+        self.tx.delete( '1.0', 'end' )  
+    #@-node:mork.20041018162155.10:rmv
+    #@-others
+#@-node:mork.20041018162155.3:class AttrEditor
+#@+node:mork.20041018193158:newCreateCanvas
+olCreateCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas
+
+def newCreateCanvas( self, parentFrame ):
+    
+    can = olCreateCanvas( self, parentFrame )
+    def hit( event, self = self ):
+        c = self.c
         tree = c.frame.tree
-        iddict = tree.iconIds # was tree.icon_id_dict
+        iddict = tree.iconIds
         can = event.widget
         x = can.canvasx( event.x )
         y = can.canvasy( event.y )
         olap = can.find_overlapping( x, y, x, y)
-        
-        # g.trace(olap,iddict.get(olap[0]))
+        if olap and iddict.has_key( olap[ 0 ] ):
+            return AttrEditor( c, iddict[ olap[ 0 ] ])
+
             
-        # EKR: search for the key.
-        found = False
-        for item in olap:
-            if iddict.get(item):
-                p,generation = iddict[item] # New in 4.2.
-                found = True ; break
-            
-        if found:
-            par = can.master
-            can.pack_forget()
-            
-            if hasattr(p.v,'unknownAttributes' ):
-                b = p.v.unknownAttributes
-            else:
-                b = p.v.unknownAttributes = {}
-        
-            v = p
-            #@        << create widgets >>
-            #@+node:ekr.20040722144601:<< create widgets >>
-            f = Tk.Frame( par )
-            l = Tk.Label(f, text = v.headString() )
-            l.pack()
-            f3 = Tk.Frame( f )
-            f.pack()
-            lb = Pmw.ScrolledListBox( f3 )
-            lblb = lb.component( 'listbox' )
-            lblb.configure( background = 'white', foreground = 'blue', selectbackground = '#FFE7C6', selectforeground = 'blue' )
-            bk = b.keys()
-            bk.sort()
-            lb.setlist( bk )
-            lb.pack( side = 'left' )
-            tx = Tk.Text( f3, background = 'white', foreground = 'blue' )
-            
-            # define inner callbacks...
-            #@+others
-            #@+node:ekr.20040722143521.1:add
-            def add():
-            
-                txt = e.get()
-                if txt.strip() == '': return
-                e.delete( 0, 'end' )
-                b[ txt ] = ''
-                bk = b.keys()
-                bk.sort()
-                lb.setlist( bk )
-                lb.setvalue( txt )
-                tx.delete( '1.0', 'end' )
-            #@nonl
-            #@-node:ekr.20040722143521.1:add
-            #@+node:ekr.20040722143637:clz
-            def clz():
-            
-                f.pack_forget()
-                can.pack( expand = 1 , fill = 'both' )
-                f.destroy()
-            #@nonl
-            #@-node:ekr.20040722143637:clz
-            #@+node:ekr.20040722143521.2:rmv
-            def rmv():
-                
-                cs = lb.curselection()
-                if len( cs ) != 0 : cs = cs[ 0 ]
-                else: return
-                del b[ lb.get( cs ) ]
-                bk = b.keys()
-                bk.sort()
-                lb.setlist( bk )
-                tx.delete( '1.0', 'end' )
-            #@-node:ekr.20040722143521.2:rmv
-            #@+node:ekr.20040722143521:selcommand
-            def selcommand():
-            
-                cs = lb.getcurselection()
-                if len( cs ) != 0: cs = cs[ 0 ]
-                else: return
-                txt = b[ cs ]
-                tx.delete( '1.0', 'end' )
-                tx.insert( '1.0' ,txt)
-            #@nonl
-            #@-node:ekr.20040722143521:selcommand
-            #@+node:ekr.20040722143218.2:setText
-            def setText( event):
-            
-                if event.char == '': return
-                cs = lb.getcurselection()
-                if len( cs ) == 0: return
-                cs = cs[ 0 ]
-                txt = tx.get( '1.0', 'end -1c' )
-                b[ cs ] = txt + event.char
-            #@nonl
-            #@-node:ekr.20040722143218.2:setText
-            #@-others
-            
-            tx.bind( '<Key>', setText )
-            tx.pack( side = 'right' )
-            #
-            lb.configure( selectioncommand = selcommand )
-            f2 = Tk.Frame( f )
-            f2.pack( side = 'bottom')
-            f3.pack()
-            e = Tk.Entry( f2 , background = 'white', foreground = 'blue' )
-            e.pack( side = 'left')
-            ba = Tk.Button( f2, text = 'Add' )
-            #
-            ba.configure( command = add )
-            ba.pack( side = 'left' )
-            br = Tk.Button( f2, text = 'Remove' )
-            #
-            br.configure( command = rmv )
-            br.pack( side = 'left' )
-            bu = Tk.Button( f2, text = 'Close' )
-            #
-            bu.configure( command = clz )
-            bu.pack( side = 'right' )
-            f.pack()
-            #@nonl
-            #@-node:ekr.20040722144601:<< create widgets >>
-            #@nl
-    #@nonl
-    #@-node:ekr.20040722143218:<< define hit callback >>
-    #@nl
-    can.bind( '<Button-2>', hit, '+')
-    can.bind( '<Button-3>', hit, '+') # EKR
-#@nonl
-#@-node:ekr.20040722142445.2:addAttrDetection
+    can.bind( '<Button-2>', hit, '+' )
+    can.bind( '<Button-3>', hit, '+' )
+    
+    return can
+
+leoTkinterFrame.leoTkinterFrame.createCanvas = newCreateCanvas
+#@-node:mork.20041018193158:newCreateCanvas
 #@-others
-
-haveseen = weakref.WeakKeyDictionary()
-
-if Tk and Pmw: # Ok for unit testing: add's binding for Button-2 and Button-3 to canvas.
-    leoPlugins.registerHandler(('new','open2'), addAttrDetection)
-    __version__ = ".0.2"
-        # 0.2 EKR: converted to outline.  Fixed some bugs.
-    g.plugin_signon( __name__ )
-#@nonl
-#@-node:ekr.20040722142445:@thin editAttributes.py
+#@-node:mork.20041018162155.1:@thin EditAttributes.py
 #@-leo

@@ -1,5 +1,7 @@
 #@+leo-ver=4-thin
 #@+node:mork.20041010095009:@thin xsltWithNodes.py
+#@<< docstring >>
+#@+node:ekr.20050226120104:<< docstring >>
 """Adds XSLT-Node Command submen item to the Outline menu.
 
 This menu contains the following items:
@@ -14,6 +16,12 @@ This menu contains the following items:
 
 Requires 4Suite 1.0a3 or better, downloadable from http://4Suite.org.
 """
+#@nonl
+#@-node:ekr.20050226120104:<< docstring >>
+#@nl
+
+#@@language python
+#@@tabwidth -4
 
 #@<< imports >>
 #@+node:mork.20041025113509:<< imports >>
@@ -32,12 +40,14 @@ except ImportError:
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 
 import weakref 
-import cStringIO 
-
+import cStringIO
+#@nonl
 #@-node:mork.20041025113509:<< imports >>
 #@nl
 #@<<parser problems>>
 #@+node:mork.20041024091024:<<parser problems>>
+#@@killcolor
+
 #@+at 
 # 1. Having space before the start of the document caused it not to work.  I 
 # fixed this by striping the whitespace from the start
@@ -50,8 +60,9 @@ import cStringIO
 #     @</end>
 # 
 #     I dont know at this point if its just illegal xml, or its a problem in 
-# the parser. ????
+# the parser. ??
 #@-at
+#@nonl
 #@-node:mork.20041024091024:<<parser problems>>
 #@nl
 #@<<future directions>>
@@ -63,8 +74,11 @@ import cStringIO
 #@nonl
 #@-node:mork.20041025101943:<<future directions>>
 #@nl
+__version__ = '0.4'
 #@<< version history >>
 #@+node:mork.20041025113211:<< version history >>
+#@@killcolor
+
 #@+at
 # 
 # 0.1: Original code.
@@ -73,12 +87,28 @@ import cStringIO
 # 
 # 0.3: Added more XSLT boilerplate. Added Test with Minidom Discovered parser 
 # problem(?).
+# 
+# 0.4 EKR:
+#     - Added init function.
+#     - Use g.importExtension to import Tkinter.
 #@-at
 #@nonl
 #@-node:mork.20041025113211:<< version history >>
 #@nl
 
 #@+others
+#@+node:ekr.20050226120104.1:init
+def init():
+    
+    ok = Ft and Tk
+
+    if ok:
+        leoPlugins.registerHandler(('start2','open2',"new"),addMenu)
+        g.plugin_signon(__name__)
+
+    return ok
+#@nonl
+#@-node:ekr.20050226120104.1:init
 #@+node:mork.20041025115037:xslt elements
 #This dict contains elements that go into a stylesheet
 xslt = {
@@ -651,10 +681,5 @@ def addMenu( tag, keywords ):
 #@nonl
 #@-node:mork.20041025100716:examples/tests
 #@-others
-
-if Ft and Tk: # Ok for unit testing.  Just adds menu.
-    leoPlugins.registerHandler(('start2','open2',"new"),addMenu)
-    g.plugin_signon(__name__)
-#@nonl
 #@-node:mork.20041010095009:@thin xsltWithNodes.py
 #@-leo
