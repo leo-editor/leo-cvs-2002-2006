@@ -433,9 +433,10 @@ def scanAtEncodingDirective(s,dict):
 	"""
 
 	k = dict["encoding"]
-	i = skip_to_end_of_line(s,k)
 	j = len("@encoding")
-	encoding = s[k+j:i].strip()
+	j = skip_ws(s,k+j)
+	i = skip_c_id(s,j)
+	encoding = s[j:i].strip()
 	if isValidEncoding(encoding):
 		# trace(encoding)
 		return encoding
@@ -454,10 +455,10 @@ def scanAtLineendingDirective(s,dict):
 	"""
 
 	k = dict["lineending"]
-	i = skip_to_end_of_line(s,k)
 	j = len("@lineending")
-	j = skip_ws(s,j)
-	e = s[k+j:i].strip()
+	j = skip_ws(s,k+j)
+	i = skip_c_id(s,j)
+	e = s[j:i].strip()
 
 	if e in ("cr","crlf","lf","nl","platform"):
 		lineending = getOutputNewline(e)
@@ -1495,7 +1496,7 @@ def callerName (n=1):
 
 #@-body
 #@-node:7::callerName
-#@+node:8::createTopologyList
+#@+node:8::g.createTopologyList
 #@+body
 def createTopologyList (c=None,root=None,useHeadlines=false):
 	
@@ -1514,7 +1515,7 @@ def createTopologyList (c=None,root=None,useHeadlines=false):
 		child = child.next()
 	return aList
 #@-body
-#@-node:8::createTopologyList
+#@-node:8::g.createTopologyList
 #@+node:9::dump
 #@+body
 def dump(s):
