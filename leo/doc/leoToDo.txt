@@ -247,6 +247,27 @@ item = data[-1]
 if not item[-1] is None:
     item = data[-2]
 #@-node:ekr.20041007080346.1:Report 2 from e
+#@+node:ekr.20041011102546:Report 3 from e
+ @killcolor
+
+RE: --script maximum recursion depth exceeded  
+2004-10-09 10:48
+I don't know if this will be helpful or not,
+<http://rclick.netfirms.com/commonerrors.html>
+is an @suite common errors of @test nodes
+that trigger python errors to see how Leo
+reports the line number and error line.
+you compare the output when run as @test
+to when run with executeScript manually.
+
+my patched leoGlobals and leoCommands
+(not included, but is documented)
+shows the right line# and error line
+in all but 2 cases.
+somone who knows their way around tracebacks
+will likely be able to improve the code.
+#@nonl
+#@-node:ekr.20041011102546:Report 3 from e
 #@+node:ekr.20041004094706.1:Traceback
 Unexpected end of file. Expecting @-leosentinel
 AttributeError: 'NoneType' object has no attribute 'setOrphan'
@@ -642,6 +663,36 @@ def putUnknownAttributes (self,torv,toString=False):
 #@-node:EKR.20040526202501:putUnknownAttributes
 #@-node:EKR.20040602153716:(Finish drawUserIcons)
 #@+node:ekr.20040916122326.1:Undo...
+#@+node:ekr.20041011092930:Fix undo bug
+http://sourceforge.net/forum/message.php?msg_id=2795653
+
+By: Paul Paterson - paulpaterson
+Bug: minor asymmetry with undo insert node  
+2004-10-08 13:49
+Very minor hangnail,
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. There is no longer a node selected in the tree so keyboard tree navigation etc commands don't work until you click on something with the mouse
+
+In an ideal world, after #3 it should be as if #2 never happened.
+
+----------------
+
+http://sourceforge.net/forum/message.php?msg_id=2795656
+By: paulpaterson
+
+Hmm, there's something interesting here after all.
+
+1. Select a node in the tree
+2. Hit CTRL-I to insert a node
+3. Hit CTRL-Z to undo the insert
+4. Hit Hoist before clicking on anything
+
+Now you are hoisted on the recently removed node! The node is dead but his memory
+lives on ...
+#@-node:ekr.20041011092930:Fix undo bug
 #@+node:EKR.20040601133022.1:(Finish the new undo)
 #@+node:EKR.20040606195417.5:To do
 @nocolor

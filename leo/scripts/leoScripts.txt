@@ -2183,31 +2183,22 @@ if 0: # This is usually a very bad idea.
 #@-node:EKR.20040502195524.24:Clear all timestamps
 #@+node:EKR.20040502195524.30:Count pages
 import leoGlobals as g
-import leoTest
 
-u = leoTest.testUtils()
-nodes = 0 ; lines = 0
 c = g.top()
+nodes = 0 ; lines = 0 ; files = 0
+
 c.clearAllVisited()
-if 0:
-    v = u.findNodeAnywhere(c,"Code")
-else:
-    root = u.findRootNode (c.currentVnode())
-    v = u.findNodeInTree(root,"Code")
-
-after = v.nodeAfterTree()
-# g.trace(v,after)
-
-while v and v != after:
-    if not v.t.isVisited():
-        v.t.setVisited()
+for p in c.allNodes_iter():
+    if not p.v.t.isVisited():
+        if p.isAnyAtFileNode():
+            files += 1
+        p.v.t.setVisited()
         nodes += 1
-        lines += len(g.splitLines(v.bodyString()))
-    v = v.threadNext()
+        lines += len(g.splitLines(p.bodyString()))
     
-pages = ((nodes * 10) + lines) / 60
-print "nodes,lines,pages",nodes,lines,pages
-g.es("nodes,lines,pages",nodes,lines,pages)
+pages = ((nodes * 10) + lines) / 50
+s = "%d files, %d nodes,  %d lines, %d pages" % (files,nodes,lines,pages)
+print s ; g.es(s)
 #@nonl
 #@-node:EKR.20040502195524.30:Count pages
 #@+node:EKR.20040502195524.31:Count separate nodes (tnodes)
