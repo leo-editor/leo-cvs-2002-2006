@@ -2977,8 +2977,8 @@ def joinLines (aList):
 	return ''.join(aList)
 #@nonl
 #@-node:splitLines & joinLines
-#@+node:initScriptFind
-def initScriptFind(findHeadline,changeHeadline,firstNode=None,
+#@+node:initScriptFind (use this to set up Leo's Find/Change dialog for scripting)
+def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
 	script_search=true,script_change=true):
 	
 	import leoTest
@@ -2993,7 +2993,10 @@ def initScriptFind(findHeadline,changeHeadline,firstNode=None,
 	else:
 		es("no Find script node",color="red")
 		return
-	change_v = u.findNodeInTree(v,changeHeadline)
+	if changeHeadline:
+		change_v = u.findNodeInTree(v,changeHeadline)
+	else:
+		change_v = None
 	if change_v:
 		change_text = change_v.bodyString()
 	else:
@@ -3002,7 +3005,7 @@ def initScriptFind(findHeadline,changeHeadline,firstNode=None,
 	
 	# Initialize the find panel.
 	c.script_search_flag = script_search
-	c.script_change_flag = script_change
+	c.script_change_flag = script_change and change_text
 	if script_search:
 		c.find_text = find_text.strip() + "\n"
 	else:
@@ -3014,7 +3017,7 @@ def initScriptFind(findHeadline,changeHeadline,firstNode=None,
 	app.findFrame.init(c)
 	c.findPanel()
 #@nonl
-#@-node:initScriptFind
+#@-node:initScriptFind (use this to set up Leo's Find/Change dialog for scripting)
 #@+node:isUnicode
 def isUnicode(s):
 	
