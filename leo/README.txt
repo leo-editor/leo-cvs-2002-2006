@@ -1,19 +1,19 @@
 Important note: See INSTALL.TXT for installation instructions.
 
-leo.py 3.11.1                       April 29, 2003
+leo.py is available at:  http://sourceforge.net/projects/leo/
+leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
+leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-This version fixes two serious bugs:
+leo.py 3.11.1                       May 1, 2003
+
+This version fixes two bugs:
 	
-- getpreferredencoding threw an exception on some Linux systems.
+- Leo threw an exception at startup on some Linux systems.
 - Creating clones by control dragging did not always work.
 
 This code contains permanently disabled 4.0 code. That is, the use_pre_4pt0_file_formats setting is non-functional and Leo acts as if use_pre_4pt0_file_formats = 1
 
 leo.py 3.11                         April 27, 2003
-
-leo.py 3.11 is now available at:  http://sourceforge.net/projects/leo/
-leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
-leo.py will work on Linux, Windows and MacOs X Jaguar.
 
 This version of Leo contains many important improvements since 3.10,
 especially support for unicode and a new plugin architecture.

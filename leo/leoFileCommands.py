@@ -67,6 +67,7 @@ class fileCommands:
 		# New in 4.0
 		self.a = app()
 		self.nodeIndices = self.a.nodeIndices
+	
 	#@-body
 	#@-node:1::leoFileCommands._init_
 	#@+node:2::Reading
@@ -446,7 +447,8 @@ class fileCommands:
 		# New in 4.0.
 		if self.matchTag("<default_gnx_id="):
 			id = self.getDqString() ; self.getTag("/>")
-			es("default id = " + id,color="blue")
+			if self.a.use_gnx:
+				es("default id = " + id,color="blue")
 			self.a.nodeIndices.setDefaultId(id)
 	
 		self.getTag("</globals>")

@@ -213,7 +213,7 @@ use_plugins = 0
 #
 #   0: (The default) Leo disables all plugins.
 
-use_pre_4pt0_file_formats = 0
+use_pre_4pt0_file_formats = 1
 #	1: Use pre 4.0 formats for .leo files and derived files.
 #	0: Use 4.0 formats for .leo files and derived files.
 #	This setting should be 0 if you intend to upload files to Leo's cvs repository.</t>
