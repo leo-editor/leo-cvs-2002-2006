@@ -753,7 +753,19 @@ class leoFind:
             return v
     
         if self.reverse: v = v.threadBack()
-        else:              v = v.threadNext()
+        else:            v = v.threadNext()
+        
+        # New in 4.3: restrict searches to hoisted area.
+        # End searches outside hoisted area.
+        if c.hoistStack:
+            if not v:
+                if self.wrapping:
+                    g.es('Wrap disabled in hoisted outlines',color='blue')
+                return
+            bunch = c.hoistStack[-1]
+            if not bunch.p.isAncestorOf(v):
+                g.es('Found match outside of hoisted outline',color='blue')
+                return None
     
         # Wrap if needed.
         if not v and self.wrapping and not self.suboutline_only:
