@@ -158,9 +158,6 @@ class baseConfig:
         self.use_psyco = False
         self.undo_granularity = "word" # "char","word","line","node"
         self.write_strips_blank_lines = False
-        
-        # TO BE REMOVED:
-        self.write_old_format_derived_files = False # Use new format if leoConfig.txt does not exist.
         #@nonl
         #@-node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
         #@nl
@@ -598,10 +595,6 @@ class baseConfig:
                 
             self.undo_granularity = self.initConfigParam(
                 "undo_granularity",self.undo_granularity)
-                
-            # TO BE REMOVED
-            self.write_old_format_derived_files = self.initBooleanConfigParam(
-                "write_old_format_derived_files",self.write_old_format_derived_files)
             
             # New in 4.2
             self.write_strips_blank_lines = self.initBooleanConfigParam(

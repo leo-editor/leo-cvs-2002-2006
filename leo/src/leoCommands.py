@@ -814,23 +814,6 @@ class baseCommands:
             c.importCommands.importDerivedFiles(v,names)
     #@nonl
     #@-node:ekr.20031218072017.1809:importDerivedFile
-    #@+node:ekr.20031218072017.2014:writeNew/OldDerivedFiles
-    def writeNewDerivedFiles (self):
-        
-        c = self
-        autoSave = c.atFileCommands.writeNewDerivedFiles()
-        if autoSave:
-            g.es("auto-saving outline",color="blue")
-            c.save() # Must be done to preserve tnodeList.
-        
-    def writeOldDerivedFiles (self):
-        
-        c = self
-        c.atFileCommands.writeOldDerivedFiles()
-        g.es("auto-saving outline",color="blue")
-        c.save() # Must be done to clear tnodeList.
-    #@nonl
-    #@-node:ekr.20031218072017.2014:writeNew/OldDerivedFiles
     #@-node:ekr.20031218072017.2840:4.0 Commands
     #@-node:ekr.20031218072017.2838:Read/Write submenu
     #@+node:ekr.20031218072017.2841:Tangle submenu

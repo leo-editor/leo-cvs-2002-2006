@@ -144,10 +144,7 @@ class leoMenu:
             ("Write &Dirty @file Nodes","Shift+Ctrl+Q",c.fileCommands.writeDirtyAtFileNodes),
             ("Write &Missing @file Nodes",None,c.fileCommands.writeMissingAtFileNodes),
             ("Write &Outline Only",None,c.fileCommands.writeOutlineOnly),
-            ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes),
-            ("-",None,None),
-            ("Write 4.x Derived Files",None,c.writeNewDerivedFiles),
-            ("Write 3.x Derived Files",None,c.writeOldDerivedFiles))
+            ("&Write @file Nodes","Shift+Ctrl+W",c.fileCommands.writeAtFileNodes))
         #@nonl
         #@-node:ekr.20031218072017.3761:<< define fileMenuReadWriteMenuTable >>
         #@nl

@@ -8001,6 +8001,338 @@ else:
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20040914082436:(Added c.frame.openDirectory to sys.path when executing scripts)
 #@-node:ekr.20040809102904:4.2 rc1 projects
+#@+node:ekr.20040929081120:4.3 a1 projects
+#@+node:ekr.20040701152235:(Fixed shawdow warnings)
+@killcolor
+
+The following are all Python global functions:
+
+(done) cmp -> compare
+(done) dict -> theDict
+(done) dir -> theDir
+(done) file -> theFile
+(done) id -> theId
+(done) type -> theType
+(done) input  (suppressed the warning)
+(done) iter -> theIter
+#@nonl
+#@+node:ekr.20031218072017.2606:<< Import pychecker >>
+@color
+
+# See pycheckrc file in leoDist.leo for a list of erroneous warnings to be suppressed.
+
+if 0: # Set to 1 for lint-like testing.
+    try:
+        import pychecker.checker
+        # This works.  We may want to set options here...
+        # from pychecker import Config 
+        print ; print "Warning: pychecker.checker running..." ; print
+    except:
+        pass
+#@nonl
+#@-node:ekr.20031218072017.2606:<< Import pychecker >>
+#@+node:ekr.20040701152235.2:leoApp (done)
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:209: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:224: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:368: (dir) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoApp.py:401: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.2:leoApp (done)
+#@+node:ekr.20040701152235.3:leoPlugins (done)
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:40: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:53: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:67: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:72: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoPlugins.py:74: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.3:leoPlugins (done)
+#@+node:ekr.20040701152235.4:leoColor (done)
+(fixed) C:\prog\leoCVS\leo\src\leoColor.py:1948: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoColor.py:2059: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.4:leoColor (done)
+#@+node:ekr.20040701152235.5:leoNodes (done)
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:578: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1372: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1394: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1411: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1412: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1419: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1443: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoNodes.py:1446: (id) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.5:leoNodes (done)
+#@+node:ekr.20040701152235.6:leoCompare (done)
+(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:44: (cmp) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:397: (cmp) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoCompare.py:468: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.6:leoCompare (done)
+#@+node:ekr.20040701152235.8:leoFind (done)
+(fixed) c:\prog\leoCVS\leo\src\leoFind.py:864: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.8:leoFind (done)
+#@+node:ekr.20040701152235.9:leoMenu (done)
+(fixed) c:\prog\leoCVS\leo\src\leoMenu.py:656: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoMenu.py:700: (dict) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.9:leoMenu (done)
+#@+node:ekr.20040701152235.10:leoTkinterTree (done)
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:949: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:162: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:167: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:586: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:639: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:783: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:844: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:911: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1390: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1588: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:1590: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:883: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterTree.py:893: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.10:leoTkinterTree (done)
+#@+node:ekr.20040701152235.11:leoTkinterFrame (done)
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:807: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoFrame.py:566: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoTkinterFrame.py:1233: (file) shadows builtin
+
+(fixed) c:\prog\leoCVS\leo\src\leoFrame.py:522: (type) shadows builtin
+#@-node:ekr.20040701152235.11:leoTkinterFrame (done)
+#@+node:ekr.20040701152235.12:leoTkinterPrefs (done)
+(fixed) c:\prog\leoCVS\leo\src\leoTkinterPrefs.py:295: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.12:leoTkinterPrefs (done)
+#@+node:ekr.20040701152235.13:leoTkinterGui (done)
+(fixed) c:\prog\leoCVS\leo\src\leoTkinterGui.py:78: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.13:leoTkinterGui (done)
+#@+node:ekr.20040701152235.14:leoAtFile (done)
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:336: (file) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:490: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2157: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:473: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:549: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:551: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2142: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2278: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoAtFile.py:2280: (dir) shadows builtin
+#@-node:ekr.20040701152235.14:leoAtFile (done)
+#@+node:ekr.20040701152235.15:leoFileCommands (done)
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:90: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:866: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1191: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1318: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1756: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:990: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:2018: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1228: (dir) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoFileCommands.py:1269: (dir) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.15:leoFileCommands (done)
+#@+node:ekr.20040701152235.16:leoImport (done)
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2792: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:52: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:273: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2348: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2371: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2398: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2426: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2476: (file) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:473: (type) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:1626: (id) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:1648: (id) shadows builtin
+(fixed) :\prog\leoCVS\leo\src\leoImport.py:1650: (id) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2303: (type) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoImport.py:2727: (type) shadows builtin
+
+#@-node:ekr.20040701152235.16:leoImport (done)
+#@+node:ekr.20040701152235.17:leoTangle (done)
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:718: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:911: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:924: (dict) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:3563: (dict) shadows builtin
+
+c:\prog\leoCVS\leo\src\leoTangle.py:540: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:541: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:666: (dict) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3656: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3667: (dir) shadows builtin
+c:\prog\leoCVS\leo\src\leoTangle.py:3780: (dir) shadows builtin
+
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:2038: (type) shadows builtin
+(fixed) c:\prog\leoCVS\leo\src\leoTangle.py:3865: (type) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.17:leoTangle (done)
+#@+node:ekr.20040701152235.18:leoCommands (done)
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:324: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:340: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:346: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:468: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:480: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1677: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1721: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1770: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1800: (dict) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:2280: (dict) shadows builtin
+
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:465: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:495: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:734: (file) shadows builtin
+(fixed) C:\prog\leoCVS\leo\src\leoCommands.py:1238: (file) shadows builtin
+#@nonl
+#@-node:ekr.20040701152235.18:leoCommands (done)
+#@-node:ekr.20040701152235:(Fixed shawdow warnings)
+#@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
+@
+
+Replace the try/except code with
+
+    if multiple and g.CheckVersion(sys.version,"2.3") and g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4"):
+#@nonl
+#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+# We no longer specify default extensions so that we can open and save files without extensions.
+
+def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
+
+    """Create and run an Tkinter open file dialog ."""
+    
+    if multiple:
+        # askopenfilenames requires Pythone 2.3 and Tk 8.4.
+        if (
+            g.CheckVersion(sys.version,"2.3") and
+            g.CheckVersion(self.root.getvar("tk_patchLevel"),"8.4")
+        ):
+            files = tkFileDialog.askopenfilenames(title=title,filetypes=filetypes)
+            return list(files)
+        else:
+            # Get one file and return it as a list.
+            theFile = tkFileDialog.askopenfilename(title=title,filetypes=filetypes)
+            return [theFile]
+    else:
+        # Return a single file name as a string.
+        return tkFileDialog.askopenfilename(title=title, filetypes=filetypes)
+
+def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
+
+    """Create and run an Tkinter save file dialog ."""
+
+    return tkFileDialog.asksaveasfilename(
+        initialfile=initialfile,
+        title=title,
+        filetypes=filetypes)
+#@nonl
+#@-node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
+#@-node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
+#@+node:ekr.20040917063309:(Fixed bug re non-existent filename on command line)
+#@+node:ekr.20040929100426:Report
+@killcolor
+
+When I start leo from the command line (linux) with e.g.
+
+[davides@icarus utilities]$ leodev test.leo
+
+(leodev is an alias to the latest cvs version)
+
+and "test.leo" does not exist, the Log pane says
+
+File not found: /localstore/computer/davides/SW/test/utilities/test.leo
+
+but then I would expect that the current file name were set to "test.leo", so that when I do a save, "test.leo" gets saved. It is set to "untitled" instead, so that in essence in this case Leo ignores my command line argument. I would also change the log message to say something like "New file" or similar. Cf. what happens when you do e.g. "vi newfile.txt" (or "emacs", or even "edit" in ms-dos).
+
+Davide 
+#@nonl
+#@-node:ekr.20040929100426:Report
+#@+node:ekr.20031218072017.1624:createFrame (leo.py)
+def createFrame (fileName):
+    
+    """Create a LeoFrame during Leo's startup process."""
+    
+    import leoGlobals as g
+    
+    # g.trace(g.app.tkEncoding,fileName)
+    
+    # Try to create a frame for the file.
+    if fileName:
+        fileName = g.os_path_join(os.getcwd(),fileName)
+        fileName = g.os_path_normpath(fileName)
+        if g.os_path_exists(fileName):
+            ok, frame = g.openWithFileName(fileName,None)
+            if ok:
+                return frame.c,frame
+    
+    # Create a new frame & indicate it is the startup window.
+    c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=fileName)
+    frame.setInitialWindowGeometry()
+    frame.startupWindow = True
+    
+    # Report the failure to open the file.
+    if fileName:
+        g.es("File not found: " + fileName)
+
+    return c,frame
+#@-node:ekr.20031218072017.1624:createFrame (leo.py)
+#@-node:ekr.20040917063309:(Fixed bug re non-existent filename on command line)
+#@+node:ekr.20040720073339:Removed use_gnx
+#@-node:ekr.20040720073339:Removed use_gnx
+#@+node:ekr.20040929102351:Removed write_old_format_derived_files
+This implies:
+    
+- Deprecating old-style file formats.
+- Removing commands that write old-style formats.
+#@nonl
+#@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles (no longer used)
+def writeOldDerivedFiles (self,toString=False):
+    
+    self.writeDerivedFiles(write_old=True,toString=toString)
+
+def writeNewDerivedFiles (self,toString=False):
+
+    self.writeDerivedFiles(write_old=False,toString=toString)
+    
+def writeDerivedFiles (self,write_old,toString=False):
+    
+    config = g.app.config
+    old = config.write_old_format_derived_files
+    config.write_old_format_derived_files = write_old
+    self.writeAll(writeAtFileNodesFlag=True,toString=toString)
+    config.write_old_format_derived_files = old
+#@nonl
+#@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles (no longer used)
+#@+node:ekr.20031218072017.2014:writeNew/OldDerivedFiles (no longer used)
+def writeNewDerivedFiles (self):
+    
+    c = self
+    autoSave = c.atFileCommands.writeNewDerivedFiles()
+    if autoSave:
+        g.es("auto-saving outline",color="blue")
+        c.save() # Must be done to preserve tnodeList.
+    
+def writeOldDerivedFiles (self):
+    
+    c = self
+    c.atFileCommands.writeOldDerivedFiles()
+    g.es("auto-saving outline",color="blue")
+    c.save() # Must be done to clear tnodeList.
+#@nonl
+#@-node:ekr.20031218072017.2014:writeNew/OldDerivedFiles (no longer used)
+#@-node:ekr.20040929102351:Removed write_old_format_derived_files
+#@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt

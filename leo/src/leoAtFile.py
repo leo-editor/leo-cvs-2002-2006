@@ -623,9 +623,7 @@ class baseAtFile:
         
         """Write @file nodes in all or part of the outline"""
     
-        at = self ; c = at.c
-        write_new = not g.app.config.write_old_format_derived_files
-        df = g.choose(write_new,at.new_df,at.old_df)
+        at = self ; c = at.c ; df = at.new_df
         df.initIvars()
         writtenFiles = [] # Files that might be written again.
         mustAutoSave = False
@@ -709,9 +707,7 @@ class baseAtFile:
     #@-node:ekr.20031218072017.2015:top_df.writeAll
     #@+node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
     def norefWrite (self,p,toString=False):
-        at = self
-        write_new = not g.app.config.write_old_format_derived_files
-        df = g.choose(write_new,at.new_df,at.old_df)
+        at = self ; df = at.new_df
         try:    df.norefWrite(p,toString=toString)
         except: at.writeException(p)
         
@@ -725,38 +721,15 @@ class baseAtFile:
     selentWrite = asisWrite # Compatibility with old scripts.
         
     def write (self,p,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
-        at = self
-        write_new = thinFile or not g.app.config.write_old_format_derived_files
-        df = g.choose(write_new,at.new_df,at.old_df)
+        at = self ; df = at.new_df
         try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile,toString=toString,oneNodeOnly=oneNodeOnly)
         except: at.writeException(p)
     #@nonl
     #@-node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
-    #@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
-    def writeOldDerivedFiles (self,toString=False):
-        
-        self.writeDerivedFiles(write_old=True,toString=toString)
-    
-    def writeNewDerivedFiles (self,toString=False):
-    
-        self.writeDerivedFiles(write_old=False,toString=toString)
-        
-    def writeDerivedFiles (self,write_old,toString=False):
-        
-        config = g.app.config
-        old = config.write_old_format_derived_files
-        config.write_old_format_derived_files = write_old
-        self.writeAll(writeAtFileNodesFlag=True,toString=toString)
-        config.write_old_format_derived_files = old
-    #@nonl
-    #@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
     #@+node:ekr.20031218072017.2019:top_df.writeMissing
     def writeMissing(self,p,toString=False):
     
-        at = self
-    
-        write_new = not g.app.config.write_old_format_derived_files
-        df = g.choose(write_new,at.new_df,at.old_df)
+        at = self ; df = at.new_df
         df.initIvars()
         writtenFiles = False ; changedFiles = False
     
