@@ -80,8 +80,9 @@ def doTests(all,verbosity=1):
             if test: suite.addTest(test)
 
     # Verbosity: 1: print just dots.
+    c.beginUpdate()
     unittest.TextTestRunner(verbosity=verbosity).run(suite)
-
+    c.endUpdate()
     c.setChanged(changed) # Restore changed state.
     c.selectVnode(p1) # N.B. Restore the selected node.
 #@nonl
@@ -116,6 +117,7 @@ class generalTestCase(unittest.TestCase):
         c = self.c ; p = self.p
     
         g.app.unitTesting = True
+        c.beginUpdate()
         c.selectVnode(p)
     #@nonl
     #@-node:ekr.20040707073029.2:setUp
@@ -123,6 +125,7 @@ class generalTestCase(unittest.TestCase):
     def tearDown (self):
     
         g.app.unitTesting = False
+        self.c.endUpdate(False)
         # To do: restore the outline.
     #@nonl
     #@-node:ekr.20040707073029.3:tearDown
