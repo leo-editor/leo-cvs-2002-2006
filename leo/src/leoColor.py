@@ -71,7 +71,7 @@ class baseColorizer:
 		"short","signed","sizeof","static","struct","switch",
 		"typedef","union","unsigned","void","volatile","while",
 		# C++ keywords
-		"asm","bool","catch","class","const_cast",
+		"asm","bool","catch","class","const","const_cast",
 		"delete","dynamic_cast","explicit","false","friend",
 		"inline","mutable","namespace","new","operator",
 		"private","protected","public","reinterpret_cast","static_cast",
@@ -81,6 +81,32 @@ class baseColorizer:
 	#@-node:<< c keywords >>
 	#@nl
 	cweb_keywords = c_keywords
+	#@<< csharp keywords >>
+	#@+node:<< csharp keywords >>
+	csharp_keywords = (
+		"abstract","as",
+		"base","bool","break","byte",
+		"case","catch","char","checked","class","const","continue",
+		"decimal","default","delegate","do","double",
+		"else","enum","event","explicit","extern",
+		"false","finally","fixed","float","for","foreach",
+		"get","goto",
+		"if","implicit","in","int","interface","internal","is",
+		"lock","long",
+		"namespace","new","null",
+		"object","operator","out","override",
+		"params","partial","private","protected","public",
+		"readonly","ref","return",
+		"sbyte","sealed","set","short","sizeof","stackalloc",
+		"static","string","struct","switch",
+		"this","throw","true","try","typeof",
+		"uint","ulong","unchecked","unsafe","ushort","using",
+		"value","virtual","void","volatile",
+		"where","while",
+		"yield")
+	#@nonl
+	#@-node:<< csharp keywords >>
+	#@nl
 	#@<< elisp keywords>>
 	#@+node:<< elisp keywords>>
 	# EKR: needs more work.
@@ -859,12 +885,12 @@ class baseColorizer:
 				self.string_delims = ('"')
 			else:
 				self.string_delims = ("'",'"')
-			self.has_pp_directives = self.language in ("c","cweb","latex")
+			self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
 			
 			# The list of languages for which keywords exist.
 			# Eventually we might just use language_delims_dict.keys()
 			languages = [
-				"actionscript","c","cweb","elisp","html","java","latex",
+				"actionscript","c","csharp","cweb","elisp","html","java","latex",
 				"pascal","perl","perlpod","php","python","rebol","tcltk"]
 			
 			self.keywords = []

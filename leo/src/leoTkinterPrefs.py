@@ -130,12 +130,12 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		left_data = [
 			("ActionScript", "actionscript"),
 			("C/C++","c"),
+			("C#",   "csharp"),
 			("CWEB", "cweb"),
 			("elisp","elisp"),
 			("HTML", "html"),
 			("Java", "java"),
-			("LaTeX", "latex"),
-			("Pascal", "pascal")]
+			("LaTeX", "latex")]
 		
 		for text,value in left_data:
 			button = Tk.Radiobutton(lt,anchor="w",text=text,
@@ -144,6 +144,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 		
 		# Right column of radio buttons.
 		right_data = [
+			("Pascal", "pascal"),
 			("Perl", "perl"),
 			("Perl+POD", "perlpod"),
 			("PHP", "php"),
@@ -156,6 +157,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs):
 			button = Tk.Radiobutton(rt,anchor="w",text=text,
 				variable=self.lang_var,value=value,command=self.set_lang)
 			button.pack(fill="x")
+		#@nonl
 		#@-node:<< Create the Target Language frame >> frame
 		#@nl
 		#@	<< Create the Ok, Cancel & Revert buttons >>

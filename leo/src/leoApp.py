@@ -82,6 +82,7 @@ class LeoApp:
 		self.language_delims_dict = {
 			"actionscript" : "// /* */", #jason 2003-07-03
 			"c" : "// /* */", # C, C++ or objective C.
+			"csharp" : "// /* */",	# C#
 			"cweb" : "@q@ @>", # Use the "cweb hack"
 			"elisp" : ";",
 			"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
@@ -124,6 +125,7 @@ class LeoApp:
 			"tex" : "tex",
 			"tcltk" : "tcl",
 			"unknown" : "txt" } # Set when @comment is seen.
+		#@nonl
 		#@-node:<< define global data structures >> app
 		#@nl
 	#@nonl
