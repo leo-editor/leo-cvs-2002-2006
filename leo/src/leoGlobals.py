@@ -329,6 +329,32 @@ def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
         return None
 
 #@-node:ekr.20031218072017.1390:scanAtTabwidthDirective
+#@+node:ekr.20040712084911.1:scanForAtLanguage
+def scanForAtLanguage(c,p):
+    
+    """Scan position p and p's ancestors looking only for @language and @ignore directives.
+
+    Returns the language found, or c.target_language."""
+    
+    language = c.target_language
+
+    if c is None or g.top() is None:
+        return language # For unit tests.
+
+    found = False
+    for p in p.self_and_parents_iter():
+        s = p.bodyString()
+        d = g.get_directives_dict(s)
+        if d.has_key("ignore"):
+            return None
+        elif not found and d.has_key("language"):
+            k = d["language"]
+            language,delim1,delim2,delim3 = g.set_language(s,k)
+            found = True # Continue looking for @ignore
+
+    return language
+#@nonl
+#@-node:ekr.20040712084911.1:scanForAtLanguage
 #@+node:ekr.20031218072017.1391:scanDirectives (utils)
 #@+at 
 #@nonl
@@ -667,15 +693,15 @@ def oldDump(s):
 #@nonl
 #@-node:ekr.20031218072017.3109:dump
 #@+node:ekr.20031218072017.3110:es_error
-def es_error (s):
+def es_error (s,color=None):
     
     config = app.config
 
-    if config: # May not exist during initialization.
+    if color is None and config: # May not exist during initialization.
         color = config.getWindowPref("log_error_color")
         g.es(s,color=color)
     else:
-        g.es(s)
+        g.es(s,color=color)
 #@nonl
 #@-node:ekr.20031218072017.3110:es_error
 #@+node:ekr.20031218072017.3111:es_event_exception
@@ -697,7 +723,7 @@ def es_event_exception (eventName,full=False):
 #@nonl
 #@-node:ekr.20031218072017.3111:es_event_exception
 #@+node:ekr.20031218072017.3112:es_exception
-def es_exception (full=True,c=None):
+def es_exception (full=True,c=None,color="red"):
     
     typ,val,tb = sys.exc_info()
    
@@ -733,7 +759,7 @@ def es_exception (full=True,c=None):
                 lines.append(line)
 
     for line in lines:
-        g.es_error(line)
+        g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
 
@@ -3778,7 +3804,7 @@ class fileLikeObject:
 #@nonl
 #@-node:ekr.20040331083824.1:g.fileLikeObject
 #@+node:EKR.20040614071102.1:g.getScript
-def getScript (c,p):
+def getScript (c,p,oneNodeOnly=False):
 
     if not p: p = c.currentPosition()
     old_body = p.bodyString()
@@ -3804,7 +3830,7 @@ def getScript (c,p):
             df.startSentinelComment = "#"
             df.endSentinelComment = None
             if 1: # new code: using generalized string-write logic.
-                df.write(p.copy(),nosentinels=False,toString=True)
+                df.write(p.copy(),nosentinels=False,toString=True,oneNodeOnly=oneNodeOnly)
                 script = df.stringOutput
             else: # old code: works
                 # Write the "derived file" into fo.
