@@ -180,9 +180,9 @@ class LeoFind:
 		radioLists[0] = [
 			(self.dict["radio-find-type"],"Plain Search","plain-search"),  
 			(self.dict["radio-find-type"],"Pattern Match Search","pattern-search"),
-			(self.dict["radio-find-type"],"Script Search","script-search")]
+			(self.dict["radio-find-type"],"Script Search",None)] #"script-search")]
 		checkLists[0] = [
-			("Script Change",self.dict["script_change"]),]
+			("Script Change",None)] # self.dict["script_change"]),]
 		checkLists[1] = [
 			("Whole Word",  self.dict["whole_word"]),
 			("Ignore Case", self.dict["ignore_case"]),
@@ -192,7 +192,7 @@ class LeoFind:
 			(self.dict["radio-search-scope"],"Entire Outline","entire-outine"),
 			(self.dict["radio-search-scope"],"Suboutline Only","suboutline-only"),  
 			(self.dict["radio-search-scope"],"Node Only","snode-only"),           
-			(self.dict["radio-search-scope"],"Selection Only","selected-text-only")]
+			(self.dict["radio-search-scope"],"Selection Only",None)] # "selected-text-only")]
 		checkLists[2] = []
 		checkLists[3] = [
 			("Search Headline Text", self.dict["search_headline"]),
@@ -205,10 +205,12 @@ class LeoFind:
 				box = Tk.Radiobutton(columns[i],anchor="w",text=name,variable=var,value=val)
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
+				if val == None: box.configure(state="disabled")
 			for name, var in checkLists[i]:
 				box = Tk.Checkbutton(columns[i],anchor="w",text=name,variable=var)
 				box.pack(fill="x")
 				box.bind("<1>", self.resetWrap)
+				if var == None: box.configure(state="disabled")
 		#@-body
 		#@-node:3::<< Create four columns of radio and checkboxes >>
 

@@ -316,7 +316,7 @@ class LeoFrame:
 			statusFrame = Tk.Frame(outerFrame,bd=2)
 			lab = Tk.Label(statusFrame,text="status")
 			lab.pack(side="left")
-			self.statusText = Tk.Entry(statusFrame)
+			self.statusText = Tk.Text(statusFrame,height=1) # Text panes are much more flexible.
 			self.statusText.pack(side="left",expand=1,fill="x")
 			statusFrame.pack(fill="x",pady=1)
 	
