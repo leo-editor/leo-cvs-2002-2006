@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="3654" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="3759" clone_windows="0"/>
 <globals body_outline_ratio="0.47009569377990429">
 	<global_window_position top="10" left="376" height="836" width="837"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -23,7 +23,7 @@
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
 <v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
-<v t="edream.110203163054.9" a="EM"><vh>Quotes of the Month</vh>
+<v t="edream.110203163054.9" a="M"><vh>Quotes of the Month</vh>
 <v t="ekr.20040129074732"><vh>Annon: (not yet)</vh></v>
 <v t="ekr.20040118085921"><vh>Tarvin Rhodes (not yet)</vh></v>
 <v t="ekr.20031219090156"><vh>Anon (not yet)</vh></v>
@@ -90,28 +90,48 @@
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
 <v t="ekr.20040131040356" a="TV"><vh>4.1 rc4</vh>
+<v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
+<v t="ekr.20040201114855.42" a="E"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
+<v t="ekr.20040201114855.91" a="E"><vh>newButtons.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.29" a="E"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.36" a="E"><vh>rowcol.py: EKR</vh></v>
+<v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
+<v t="ekr.20040201114855.13" a="E"><vh>searchbox.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
+</v>
 <v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
-<v t="ekr.20040131040544.10" a="E"><vh>Leo no longer automatically draws the atus area</vh></v>
-<v t="ekr.20040131040544.21" a="E"><vh>Esc and enter key now work in the find panel</vh></v>
-<v t="ekr.20040131040544.55" a="E"><vh>Improved message for orphan nodes</vh></v>
-<v t="ekr.20040131040544.178" a="E"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
-<v t="ekr.20040131040544.222" a="E"><vh>Execute Script command now ends all nodes with a newline</vh></v>
-<v t="ekr.20040131040544.2" a="E"><vh>Added message when plugins are disabled</vh></v>
+<v t="ekr.20040131040544.10"><vh>Leo no longer automatically draws the status area</vh></v>
+<v t="ekr.20040131040544.21"><vh>Esc and enter key now work in the find panel</vh></v>
+<v t="ekr.20040131040544.55"><vh>Improved message for orphan nodes</vh></v>
+<v t="ekr.20040131040544.178"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
+<v t="ekr.20040131040544.222"><vh>Execute Script command now ends all nodes with a newline</vh></v>
+<v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
+<v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
+<v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
+<v t="edream.110603190322.6" a="E"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+<v t="ekr.20040201114855.106"><vh>Added done message to Mark Changed commands</vh></v>
 </v>
 <v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
-<v t="ekr.20040131044727" a="E"><vh>Fixed several bugs when writing derived files</vh></v>
+<v t="ekr.20040131044727"><vh>Fixed several bugs when writing derived files</vh></v>
 <v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
-<v t="ekr.20040131040544.5" a="E"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
-<v t="ekr.20040131040544.18" a="E"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
-<v t="ekr.20040131040544.32" a="E"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
-<v t="ekr.20040131040544.73" a="E"><vh>Fixed bug in Move Up command</vh></v>
-<v t="ekr.20040131040544.81" a="E"><vh>Fixed bug in Import Derived File</vh></v>
-<v t="ekr.20040131040544.146" a="E"><vh>Fixed bugs related to saving read-only files</vh></v>
-<v t="ekr.20040131040544.169" a="E"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
-<v t="ekr.20040131040544.228" a="E"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
+<v t="ekr.20040131040544.5"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
+<v t="ekr.20040131040544.18"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
+<v t="ekr.20040131040544.32"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
+<v t="ekr.20040201114855.107"><vh>Fixed major bug in tkFind.init</vh></v>
+<v t="ekr.20040131040544.73"><vh>Fixed bug in Move Up command</vh></v>
+<v t="ekr.20040131040544.81"><vh>Fixed bug in Import Derived File</vh></v>
+<v t="ekr.20040131040544.146"><vh>Fixed bugs related to saving read-only files</vh></v>
+<v t="ekr.20040131040544.169"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
+<v t="ekr.20040131040544.228"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
 <v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
 <v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
 <v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
+<v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
 </v>
 <v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
 <v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
@@ -119,7 +139,56 @@
 <v t="ekr.20040131040356.5"><vh>New features</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="ekr.20040131040356"><vh>4.1 rc4</vh>
+<v t="ekr.20040201114855"><vh>New plugins in 4.1 rc4</vh>
+<v t="ekr.20040201114855.42"><vh>mod_http.py plugin: Bernhard Mulder</vh></v>
+<v t="ekr.20040201114855.91"><vh>newButtons.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.29"><vh>nodenavigator.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201114855.36"><vh>rowcol.py: EKR</vh></v>
+<v t="ekr.20040201114855.3"><vh>rst2.py plugin: Steve Zatz</vh></v>
+<v t="ekr.20040201114855.13"><vh>searchbox.py plugin: Paul Paterson</vh></v>
+<v t="ekr.20040201120903"><vh>status_line.py plugin: EKR</vh></v>
+</v>
+<v t="ekr.20040131041015"><vh>New features in 4.1 rc4</vh>
+<v t="ekr.20040131040544.10"><vh>Leo no longer automatically draws the status area</vh></v>
+<v t="ekr.20040131040544.21"><vh>Esc and enter key now work in the find panel</vh></v>
+<v t="ekr.20040131040544.55"><vh>Improved message for orphan nodes</vh></v>
+<v t="ekr.20040131040544.178"><vh>Eliminated marking nodes dirty unnecessarily</vh></v>
+<v t="ekr.20040131040544.222"><vh>Execute Script command now ends all nodes with a newline</vh></v>
+<v t="ekr.20040131040544.2"><vh>Added message when plugins are disabled</vh></v>
+<v t="ekr.20040201061329"><vh>Created status_line.py plugin</vh></v>
+<v t="ekr.20040201114855.105"><vh>Simplified operation of script-find/change &amp; improved documentation</vh>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
+</v>
+<v t="ekr.20040201114855.106"><vh>Added done message to Mark Changed commands</vh></v>
+</v>
+<v t="ekr.20040131040356.1"><vh>Bugs fixed in 4.1 rc4</vh>
+<v t="ekr.20040131044727"><vh>Fixed several bugs when writing derived files</vh></v>
+<v t="ekr.20040131040754"><vh>Fixed several crashers</vh></v>
+<v t="ekr.20040131040544.5"><vh>Fixed "bad leo file" when reading some 3.x .leo files</vh></v>
+<v t="ekr.20040131040544.18"><vh>Fixed huge performance bug in cut/copy node commands</vh></v>
+<v t="ekr.20040131040544.32"><vh>Leo now properly re-enables drawing after exceptions</vh></v>
+<v t="ekr.20040201114855.107"><vh>Fixed major bug in tkFind.init</vh></v>
+<v t="ekr.20040131040544.73"><vh>Fixed bug in Move Up command</vh></v>
+<v t="ekr.20040131040544.81"><vh>Fixed bug in Import Derived File</vh></v>
+<v t="ekr.20040131040544.146"><vh>Fixed bugs related to saving read-only files</vh></v>
+<v t="ekr.20040131040544.169"><vh>Fixed bug in Import Python Window command when using Python 2.2</vh></v>
+<v t="ekr.20040131040544.228"><vh>Fixed bugs in Convert All BlanksTabs commands</vh></v>
+<v t="ekr.20040131040544.258"><vh>Fixed crashes in open_shell.py plugin</vh></v>
+<v t="ekr.20040131044136"><vh>Fixed several bugs involving cut &amp; paste</vh></v>
+<v t="ekr.20040131040544.227"><vh>Fixed whitespace problem in leoTkinterGui.py</vh></v>
+<v t="ekr.20040131100557"><vh>Fixed glitches when inserting node in hoisted outline</vh></v>
+</v>
+<v t="ekr.20040131040356.2"><vh>Bug fixed in previous 4.1 releases</vh></v>
+<v t="ekr.20040131040356.3"><vh>New code-level features</vh></v>
+<v t="ekr.20040131040356.4"><vh>New configuration settings</vh></v>
+<v t="ekr.20040131040356.5"><vh>New features</vh></v>
+</v>
 <v t="edream.121403160546"><vh>4.1 rc3</vh>
 <v t="edream.121403165221"><vh>Bugs fixed in this release</vh></v>
 <v t="edream.121403161017"><vh>Bug fixed in previous 4.1 releases</vh></v>
@@ -174,6 +243,7 @@
 <v t="edream.111803060152"><vh>Added script-based find/change commands</vh>
 <v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
 </v>
 </v>
@@ -526,6 +596,11 @@
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.349"><vh>More flexible creation of non-existent directories</vh></v>
 </v>
@@ -1186,6 +1261,7 @@
 <v t="edream.110203163054.834"><vh>Finding and changing text</vh>
 <v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
 <v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
 <v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
 </v>
 <v t="edream.110203163054.835"><vh>Batch</vh></v>
@@ -1403,6 +1479,11 @@
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
 </v>
 <v t="edream.110203163054.930"><vh>Chapter 9: History of Leo</vh>
 <v t="edream.110203163054.931"><vh>Beginnings</vh></v>
@@ -1585,6 +1666,7 @@
 <v t="edream.110203163054.1062"><vh>How do I generate files after using the Import commands?</vh></v>
 <v t="edream.110203163054.1063"><vh>How can I create Javascript comments?</vh></v>
 <v t="edream.110203163054.1064"><vh>How can I disable PHP comments?</vh></v>
+<v t="ekr.20040201114855.108"><vh>How can I use Leo with unsuppoorted languages?</vh></v>
 <v t="edream.110203163054.1065"><vh>How do I make derived files start with a shebang line?</vh></v>
 <v t="edream.110203163054.1066"><vh>How do I use Leo to create cweb files?</vh>
 <v t="edream.110203163054.355"><vh>About cweb mode </vh></v>
@@ -1640,6 +1722,11 @@
 <v t="edream.110203163054.348"><vh>Extending the format of .leo files</vh></v>
 <v t="edream.120703073611"><vh>Attaching temporary attributes to vnodes and tnodes</vh></v>
 <v t="edream.120703073611.1"><vh>Recommended conventions for plugins</vh></v>
+<v t="edream.110603190322.6"><vh> Script Find and Script Change</vh>
+<v t="edream.111803060152.1"><vh>How it works</vh></v>
+<v t="ekr.20040201113232"><vh>Using the initScriptFind script</vh></v>
+<v t="edream.111803060152.2"><vh>Ideas for using scripts</vh></v>
+</v>
 </v>
 </v>
 <v t="edream.120903151103"><vh>Importing files</vh>
@@ -24226,23 +24313,25 @@ The __wx_gui.py plugin is uses the newly reoganized code.  It is functional exce
 <t tx="edream.110603190322.3">This involved fixing a bug in idle_body_key so that the oldText param is honored if present.</t>
 <t tx="edream.110603190322.6">@nocolor
 
-New in 4.1: Leo is now the ultimate platform for finding and changing text.
+New in 4.1: Leo now supports scripts in Leo's Find/Change dialog.
 
 Leo's find panel now contains the Script Search radio button and the Script
 Change checkbox. When the Script Search radio button is selected Leo treats the
-contents of the Search Text as a _script_ to execute whenever any kind of Find
+contents of the Search Text as a script to execute whenever any kind of Find
 command is executed. Similarly, when the Script Change checkbox is selected Leo
 treats the context of the Change Text as a script to execute whenever any kind
 of Change command is executed. See below for just how this works.
 
-For more than 30 years I have been disgusted with tools like regular
-expressions. Calling re powerful is a joke; it's way too complex and way too
-wimpy. Script-based find-change is infinitely more powerful. In effect, Leo's
-Find/Change panel becomes a new platform for running scripts interactively. Leo
-now has all the find/change capability of pattern matching languages like
-Snobol and Icon, just by using the capabilities of the plain Python language.
-Moreover, Leo can deliver these capabilities interactively or not depending
-which buttons you push in Leo's Find/Change panel.</t>
+Script-based find-change is extremely powerful. In effect, Leo's Find/Change
+panel becomes a new platform for running scripts interactively. Leo now has all
+the find/change capability of pattern matching languages like Snobol and Icon,
+just by using the capabilities of the plain Python language. Moreover, Leo can
+deliver these capabilities interactively or not depending which buttons you push
+in Leo's Find/Change panel.
+
+Script-based find/change frees the user from having to control script-based
+searches interactively. Rather than forcing find/change scripts to implement
+their own interactive controls, it is much easier to use what Leo already has.</t>
 <t tx="edream.110603190322.8">Undoing Change All cleared the body pane or the headline pane.
 
 The fix was simple: call setUndoParams instead of setUndoTypingParams in batchChange.</t>
@@ -24280,73 +24369,56 @@ pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
 es("nodes,lines,pages",nodes,lines,pages)</t>
 <t tx="edream.111803060152"></t>
-<t tx="edream.111803060152.1">Here is how it works: the find script is responsible for traversing the tree
-and for highlighting the found text or otherwise indicating to the change
-script what the found text was. Leo dedicates a Python dict called
-app.searchDict for communication between the search script and the change
-script.
+<t tx="edream.111803060152.1">Leo dedicates a Python dictionary called app.searchDict for communication
+between Leo and the search and change scripts. The search and change scripts may
+also use app.searchDict for communication between themselves. Leo sets
+app.searchDict["type"] to "find", "change", "findAll" or "changeAll" to indicate
+the kind of command being executed. Scripts may use all other entries in
+app.searchDict as they please.
 
-The change script is responsible for changing the text and (optionally)
-handling undo. Typically, the change script will compute the new value of body
-text and call v.setBodyStringOrPane(newText) to make that change permanent. The
-change script can handle undo simply by calling
-c.frame.onBodyChanged(v,"Change",oldText=oldText).
+Leo executes the find script once when you press the Find button (or the Change
+then Find button) in Leo's Find/Change dialog. Typically, the find script would
+traversing the tree and highlight the found text or otherwise indicate to the
+user that the find operation has suceeded. However, the script can do anything
+it pleases.
 
-Some details:
+Leo executes the the find script repeatedly when you press the Find All button.
+Leo keeps executing the find script until app.searchDict["continue"] evaluates
+to false. Initially there is no entry for app.searchDict["continue"], so the
+find script must set app.searchDict["continue"] = true if it wants Leo to keep
+executing it.
 
-- When executing script-based Find All or Change All commands, Leo executes the
-find or change scripts repeatedly only if app.searchDict.get("continue")
-evaluates to True. Otherwise these scripts are only executed once. 
+Leo executes the change script once when you press the Change button. Typically,
+the change script would change the selected text. Usually the change script will
+compute the new value of body text and call v.setBodyStringOrPane(newText) to
+make that change permanent. 
 
-- Leo sets app.searchDict["type"] to "find", "change", "findAll" or "changeAll"
-to indicate the kind of command being executed.
+The change script also may handle undo, typically by calling
+c.frame.onBodyChanged(v,"Change",oldText=oldText). Leo does not handle undo
+automatically. Indeed, Leo makes no assumptions whatever about what the change
+script really does.
 
-- Scripts may use all other entries in app.searchDict as they please.
+Leo executes the the change script repeatedly when you press the Change All
+button. Just as with the Find All command, Leo keeps executing the change script
+until app.searchDict["continue"] evaluates to false.
 
-- Most find/change scripts will ignore settings in the Find Panel like "whole
+Most find and change scripts will ignore settings in the Find Panel like "whole
 word", "pattern match", and "reverse". However, these settings are available to
-the scripts via ivars such as c.whole_word_flag, etc. if desired.
-
-- Yes, we really do need script-based find/change. Indeed, the user needs the
-find panel and Leo's find/change commands to control script-based searches
-interactively. Rather than forcing find/change scripts to implement their own
-interactive controls, it is so much easier to use what Leo already has.</t>
+the scripts via ivars such as c.whole_word_flag, etc. if desired.</t>
 <t tx="edream.111803060152.2">@nocolor
 
 Some ideas for using scripts:
 	
-1. Either the find and change scripts may use Python's re module.  For
+Either the find and change scripts may use Python's re module.  For
 example, the find script could set app.searchDict["m"] to the match object
 returned by re's match method.  The change script would then compute the
 result, change the text and set the undo info as usual.
 
-2. There is no reason to confine find/change scripts to operate on data only
+There is no reason to confine find/change scripts to operate on data only
 within a Leo outline. These scripts could as easily traverse your file system
 as the Leo outline. But notice: scripts could pull data from the file system
 into the outline so that you can see the effects of changes as the scripts
-operate. Again, this can all happen interactively if you like.
-
-3. It's convenient to defined an initScriptFind utility very similar to the
-makeColorSuite utility, used like this:
-
-@color
-# Initialize Leo's find panel using the named children of this node.
-from leoGlobals import *
-initScriptFind("Find script","Change script")
-# Start searching at the top.
-top().selectVnode(c.rootVnode())
-@nocolor
-
-Put the search script in a child node called "Find script" (no quotes), put
-the change script in a child node called "Change script", execute this
-script and the following happens:
-
-- The body text of "Find script" node gets put in the find text of Leo's Find/Change dialog.
-- The body text of "Change script" node gets put in the find text of Leo's Find/Change dialog.
-- The Script Find radio buttons gets selected, as does the Script Change checkbox.
-- The root of the outline becomes the selected node.
-
-Presto!  Leo is ready for a script search.</t>
+operate. Again, this can all happen interactively if you like.</t>
 <t tx="edream.111803060643"></t>
 <t tx="edream.111803062437"></t>
 <t tx="edream.112303173638">@language python
@@ -24617,11 +24689,10 @@ Tarvin Rhodes
 </t>
 <t tx="ekr.20040131040356">Leo 4.1 Release Candidate 4              February 2, 2004
 
-This release fixes a serious bug in the logic that reads old-style derived files.
+This release fixes numerous bugs reported since 4.1 rc3 and makes several other
+minor improvements, including several nifty new plugins.
 
-There are no known bugs in this version of Leo.
-
-The highlights of this release:
+The highlights of Leo 4.1:
 
 - Leo runs in batch mode when invoked with --script aScriptFile.py
 - Leo supports Unicode characters (e.g. Chinese) in path and file names.
@@ -24736,5 +24807,180 @@ The bug happened in some cases when a section reference occured following non-wh
 2. Leo ensures that leading whitespace is not added when writing empty lines.
 
 This _might_ fix the "Zope Sprint" bug: "blank" lines in the expansion of @others got leading whitespace.</t>
+<t tx="ekr.20040131100557">Previously, if you hoist a node with no children and then insert a node (CTRL-I)
+then the child is created as a sibling of the hoisted node and consequently is
+not displayed.
+
+Leo now creates the new node as the first child of the hoisted node. 
+
+Also, Leo disables the Clone command when the presently selected node is the root of a hoist.</t>
+<t tx="ekr.20040201061329">This creates a status area at the bottom of the Leo Window.  Plugins may write to this area using the status area convenience routines in leoTkinterFrame.py.</t>
+<t tx="ekr.20040201113232">@nocolor
+
+The Scripts node in LeoPy.leo contains a script called initScriptFind.  This script makes it easy to set up script based searches as follows:
+
+1. Put the following code in the root of a tree that will contain your script search:
+
+@color
+# Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+initScriptFind("Find script","Change script") # Second argument is optional.
+# Start searching at the top.
+top().selectVnode(c.rootVnode())
+@nocolor
+
+2. Put the search script in a child node called "Find script" (no quotes).
+
+3. (Optional) Put the change script in a child node called "Change script"
+
+4.  Execute the code above.  Leo does the following:
+
+- Puts the body of the "Find script" into the find text of Leo's Find/Change dialog.
+- Puts the body of the "Change script" into the change text of Leo's Find/Change dialog.
+- Selects the Script Find radio button.
+- Selects the Script Change checkbox if the change script exists.
+- Selects the root of the entire outline.
+
+Presto!  Leo is ready for a script search.</t>
+<t tx="ekr.20040201114855"></t>
+<t tx="ekr.20040201114855.3">This plugin uses Leo and docutils to mix program code and reST documentation.
+
+The Python docutils package must be installed.http://docutils.sourceforge.net
+
+If SilverCity is installed (http://silvercity.sourceforge.net) the plugin
+produces HTML output that is syntax colored.
+
+The basic approach is that any Leo node that contains program code that needs
+documentation (in an ideal world it would be every node) has an associated child
+node whose headline is simply '@rst', that contains reST-style documentation.
+While this means that a typical program may have dozens (if not hundreds) of
+these @rst nodes, it produces documentation that I think is as close as I have
+ever seen to useful, easy-to-read documentation that is easy to create at the
+same time as an application is being coded.
+
+There are several interelated aspects to this work:
+
+- The reST plugin (renamed rst2) was hacked to manage Leo outlines that were a
+combination of normal code nodes and reSt nodes.
+
+- The plugin now recognizes a @rst directive (that has no associated file name)
+in the headline of a node.
+
+- When it encounters such a @rst Headline node, it writes the contents of the
+body of the @rst node's *parent* (which generally contains program code) to the
+reST output file (HTML) and then adds the reST content that is contained in the
+body of the @rst documentation node to the output HTML file,
+
+- These @rst nodes are used in @file-nosent trees and the @rst nodes have an 
+@ignore directive (plus @nocolor directive and @wrap directives) so that 
+when the @file is updated the application code does not contain the reST-style
+documentation contained in the body of the @rst nodes. (This was the reason I
+had asked you in the Leo Forum to allow @file-nosent trees to work appropriately
+with @ignore nodes - Thank you for doing this right away.) There is no reason
+that the reST content couldn't be written to the 
+@file as documentation other than I personally believe in a volume of 
+documentation (including musings, failed ideas, questions, etc.) that is 
+probably best kept separate from the actual *.py files.
+
+- When you double-click on a plain rst node (no associated filename) Leo opens
+both the @rst documentation node and the parent node containing code in an
+external editor *simultaneously*. I happen to use Textpad and so the code is
+opened with python syntax coloring in one Textpad window and right next to it is
+the reST documentation. This makes it much much easier to code and do
+documentation at the same time. (Note that the plugin assumes that the python
+extension is '.tp' since that is what I use with TextPad.)
+
+So why is this a big deal?
+
+For the first time in my experience the documentation process:
+
+1) is completely in sync with the process of code development.
+
+2) allows the programmer to write as much documentation as he/she wants without
+the programming code becoming unreadable because of what would be considered
+excessive or intrusive documentation. (This applies whether documentation is
+intended for external consumption or just so a solo programmer can remember what
+he/she was thinking...)
+
+My conclusion is that Leo + reST/docutils provides the perfect platform for
+optimal documentation. I have never completely understood what is meant by
+Literate Programming but in my mind this is practical Literate Programming.
+
+Frankly, I think this is all a minor miracle but maybe I've lost perspective.
+
+Steve Zatz</t>
+<t tx="ekr.20040201114855.13">Adds a quick search to the toolbar in Leo.
+
+A search box which behaves like a web site search is added, along with a "GO"
+button to do quick searches right from the main Leo window. All the current
+search options are retained except that "search body text" is explicitely set -
+mainly because this is by far the most common use case.
+
+Pressing &lt;CR&gt; while editing the text automatically does a search. Repeated
+searches can be done by clicking the "GO" button.
+
+The combo box also stores a list of previous searches, which can be selected to
+quickly repeat a search. When activating a previous search the original search
+mode is used.
+
+Still to do:
+
+- incremental search
+- reverse search
+- persist recent searches across Leo sessions
+- use INI file to set options for list size, etc.</t>
+<t tx="ekr.20040201114855.29">Adds a node navigator to the toolbar. The navigator allows quick access to
+marked nodes. You can either go to the marked node or hoist the marked node.</t>
+<t tx="ekr.20040201114855.36">Adds row/column indicators to the toolbar at the top of Leo Windows.</t>
+<t tx="ekr.20040201114855.42">A minimal http plugin for LEO, based on AsyncHttpServer.py.
+
+Use this plugin is as follows:
+
+1. Start Leo with the plugin enabled. You will see a purple message that says
+something like: "http serving enabled on port 8080, version 0.9"
+
+2. Start a web browser, and enter the following url: http://localhost:8080/
+You will see a a "top" level page containing one link for every open .leo file.
+Start clicking :-)
+
+You can use the browser's refresh button to update the top-level view in the
+browser after you have opened or closed files.</t>
+<t tx="ekr.20040201114855.91">Automatically add nodes for common tasks. This can be used to generate boiler
+plate code to quickly build an outline.</t>
+<t tx="ekr.20040201114855.105"></t>
+<t tx="ekr.20040201114855.106"></t>
+<t tx="ekr.20040201114855.107">This bug happened when executing the initScriptFind script.  This bug could cause Leo not to be able to save files.</t>
+<t tx="ekr.20040201114855.108">Here is a posting which might be helpful:
+
+http://sourceforge.net/forum/message.php?msg_id=2300457
+
+The "@first" directive is the key to output useable code in unsupported
+languages.  For example, to use Leo with the Basic language:
+
+-&gt;body of a "@file" header:
+-----------------------------Snippet
+@first $IFDEF LEOHEADER
+@delims '
+@c
+$ENDIF
+-----------------------------End of snippet
+
+So this would enable a basic compiler to "jump" over the "true"
+LEO-header-lines; wich gives you:
+
+-----------------------Derived file begins with:
+$IFDEF LEOHEADER &lt;-conditionnal compilation directive 
+#@+leo-ver=4 &lt;-these lines not compiled
+#@+node:@file QParser005.INC
+#@@first
+#@delims ' 
+'@@c
+$ENDIF &lt;-... Until here!
+&lt;rest of derived code file ... &gt;
+-----------------------end of snippet
+
+This changes the comment symbol to " ' " apostrophe... making comments parseable
+by a BASIC (or other language.)</t>
+<t tx="ekr.20040201120903">Adds a status line to the bottom of Leo windows.</t>
 </tnodes>
 </leo_file>
