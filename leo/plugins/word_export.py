@@ -24,8 +24,7 @@ __version__ = "0.4"
 # - Better error messages.
 # 0.4 EKR:
 # 
-# - Added autostart code per 
-# http://sourceforge.net/forum/message.php?msg_id=2842589
+# - Added autostart code per http://sourceforge.net/forum/message.php?msg_id=2842589
 #@-at
 #@nonl
 #@-node:ekr.20040909110753:<< version history >>
@@ -102,7 +101,7 @@ def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, secti
     dict = g.scanDirectives(c,p=vnode)
     encoding = dict.get("encoding",None)
     if encoding == None:
-        encoding = g.app.config.default_derived_file_encoding
+        encoding = c.config.default_derived_file_encoding
     # 
     s = vnode.bodyString()
     s = g.toEncodedString(s,encoding,reportErrors=True)

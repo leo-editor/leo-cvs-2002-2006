@@ -12,8 +12,7 @@ A Leo plugin that implements configurable actions on
 #@+node:ekr.20040915110406:<< about this plugin >>
 #@+at 
 # 
-# Leo plugin that permits the definition of actions for double-clicking on 
-# file nodes.
+# Leo plugin that permits the definition of actions for double-clicking on file nodes.
 # Written by Konrad Hinsen <konrad.hinsen@laposte.net>
 # Distributed under the same licence as Leo.
 # 
@@ -21,18 +20,13 @@ A Leo plugin that implements configurable actions on
 # have been made since the last save, and then runs a script on
 # it, which is retrieved from the outline.
 # 
-# Scripts are located in a node whose headline is FileActions. This node can 
-# be
-# anywhere in the outline. If there is more than one such node, the first one 
-# in
+# Scripts are located in a node whose headline is FileActions. This node can be
+# anywhere in the outline. If there is more than one such node, the first one in
 # outline order is used.
 # 
-# The children of that node are expected to contain a file pattern in the 
-# headline
-# and the script to be executed in the body. The file name is matched against 
-# the
-# patterns (which are Unix-style shell patterns), and the first matching node 
-# is
+# The children of that node are expected to contain a file pattern in the headline
+# and the script to be executed in the body. The file name is matched against the
+# patterns (which are Unix-style shell patterns), and the first matching node is
 # selected. If the filename is a path, only the last item is matched.
 # 
 # Execution of the scripts is similar to the "Execute Script"
@@ -78,8 +72,7 @@ import tempfile
 #@+at 
 #@nonl
 # The @file-ref directive is not used elsewhere by Leo. It is meant to
-# be used for actions on files that are not read or written by Leo at all, 
-# they
+# be used for actions on files that are not read or written by Leo at all, they
 # are just referenced to be possible targets of file actions.
 #@-at
 #@@c
@@ -154,7 +147,7 @@ def applyFileAction(p, filename, c):
         script += '\n'
         #@        << redirect output >>
         #@+node:ekr.20040915105758.17:<< redirect output >>
-        if g.app.config.redirect_execute_script_output_to_log_pane:
+        if c.config.redirect_execute_script_output_to_log_pane:
         
             g.redirectStdout() # Redirect stdout
             g.redirectStderr() # Redirect stderr
@@ -168,7 +161,7 @@ def applyFileAction(p, filename, c):
             exec script in namespace
             #@            << unredirect output >>
             #@+node:ekr.20040915105758.18:<< unredirect output >>
-            if g.app.config.redirect_execute_script_output_to_log_pane:
+            if c.config.redirect_execute_script_output_to_log_pane:
             
                 g.restoreStderr()
                 g.restoreStdout()
@@ -178,7 +171,7 @@ def applyFileAction(p, filename, c):
         except:
             #@            << unredirect output >>
             #@+node:ekr.20040915105758.18:<< unredirect output >>
-            if g.app.config.redirect_execute_script_output_to_log_pane:
+            if c.config.redirect_execute_script_output_to_log_pane:
             
                 g.restoreStderr()
                 g.restoreStdout()
