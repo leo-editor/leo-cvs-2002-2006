@@ -867,7 +867,7 @@ The @all directive is valid only in @thin trees.  This directive is similar to @
 The @all directive is required for files such as @thin leoProjects.txt in LeoPy.leo.  leoProjects.txt contains so-called project nodes.  It doesn't have an meaning as a program file:  it is simply a collection of unrelated data.  @others would not work at all: it would complain about lots of orphan nodes.
 #@nonl
 #@-node:EKR.20040608091134:@all directive copies all nodes in @thin trees
-#@+node:EKR.20040524104904.80:@color and @nocolor control syntax coloring
+#@+node:EKR.20040524104904.80:@color, @nocolor and @killcolor control syntax coloring
 Syntax coloring is on by default in all body text. Leo formats comments and documentation parts in red, directives and C keywords in blue, strings and character constants in gray and all other text in code parts in black.
 
 The @nocolor directive disables syntax coloring for the body text in which it appears. No syntax coloring is done until an @color directive re-enables syntax coloring.
@@ -875,8 +875,16 @@ The @nocolor directive disables syntax coloring for the body text in which it ap
 If a node contains neither the @color nor the @nocolor directive it may inherit the syntax coloring attribute from an ancestor. The nearest ancestor that contains exactly one of the @color or @nocolor directives will control the syntax coloring. Ambiguous nodes, nodes containing both the @color and @nocolor directives, never affect the coloring of their offspring.
 
 Note: the @color or @nocolor directives do not affect the Tangle commands in any way. In particular, the Tangle commands will recognize section definitions as usual even after an @nocolor directive is seen.
+
+New in 4.2:  The @killcolor directive completely disables the colorizer for that node.  The result is a huge improvement in responsiveness for large body text.  As usual @killcolor may itself be overridden in descendent nodes.
+
+The differences between @killcolor and @nocolor:
+
+- @nocolor suppresses coloring only until the next @color directive.
+
+- @killcolor overrides @nocolor and @color directives.  Any node containing @killcolor is unambiguously a @killcolor node regardless of whether that node also contains @color or @nocolor directives.
 #@nonl
-#@-node:EKR.20040524104904.80:@color and @nocolor control syntax coloring
+#@-node:EKR.20040524104904.80:@color, @nocolor and @killcolor control syntax coloring
 #@+node:EKR.20040524104904.81:@comment sets comment delimiters in @root and @unit trees
 Note: the @comment directive is now officially deprecated: you should use the @language directive whenever possible.
 

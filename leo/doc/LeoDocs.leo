@@ -81,8 +81,8 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040601084317" a="E"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2" a="E"><vh>Bug fixes</vh>
+<v t="EKR.20040601084317" a="TV"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
 <v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
 <v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
@@ -103,9 +103,9 @@
 <v t="EKR.20040601102808"><vh>Known bugs</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
-<v t="EKR.20040601084317" a="E"><vh>4.2 a3</vh>
-<v t="EKR.20040601084317.2" a="E"><vh>Bug fixes</vh>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="EKR.20040601084317"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
 <v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
 <v t="EKR.20040601084317.99"><vh>Eliminated spurious "Not written x.tmp" message after write errors</vh></v>
@@ -1124,8 +1124,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1" a="E"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
