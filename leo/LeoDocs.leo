@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1254" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="0" left="138" height="26" width="85"/>
+	<global_window_position top="7" left="223" height="26" width="65"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -704,10 +704,10 @@
 </v>
 </v>
 </v>
-<v t="T87" a="CV"><vh>Chapter 8: Customizing Leo</vh>
+<v t="T87" a="CE"><vh>Chapter 8: Customizing Leo</vh>
 <v t="T88" a="C"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="T89" a="E"><vh>Using customizeLeo.py</vh>
-<v t="T90"><vh>About hooks</vh></v>
+<v t="T90" a="V"><vh>About hooks</vh></v>
 <v t="T91"><vh>SECURITY WARNINGS</vh>
 <v t="T92"><vh>The danger of trusting code in shared .leo files</vh></v>
 <v t="T93"><vh>NEVER use this kind of code in a hook!!</vh></v>
@@ -2055,7 +2055,7 @@ to ask questions or suggest improvements.  That way other people can share in th
 
 Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
 
-The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Fred Gansevles, Thomas Guettler, Zak Greant, Thomas Guettler, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, Romain Guy, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli, Marcus A. Martin, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Sean Shaleh Perry, Tim Peters, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Guido van Rossum, Steven Schaefer, Wolfram Schwenzer, Jurjen Stellingwerff, Paul Snively, Jeffrey Thompson, Gabriel Valiente, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Thomas Guettler, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
 
 The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
 
@@ -2607,7 +2607,7 @@ tag argument                                             keys in keywords
 "bodykey2"              after body keystrokes           v,ch,oldSel,undoType
 "command1"     yes      before each command             label
 "command2"              after each command              label
-"end1"                  start of app.quit()
+"end1"         no       start of app.quit()
 "event1"       yes      start of event handlers         kind,v
 "event2"                end of event handlers           kind,v
 "headkey1"     no       before body keystrokes          c,v,ch
