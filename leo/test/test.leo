@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6523" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6534" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="51" left="198" height="804" width="943"/>
+	<global_window_position top="69" left="98" height="804" width="943"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -25,7 +25,7 @@
 <v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
 </v>
-<v t="ekr.20041218141525" a="E"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525"><vh>@page Fonts</vh>
 <v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
 <v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
@@ -924,7 +924,7 @@
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
 <v t="ekr.20041230143535"><vh>@ button help</vh></v>
 </v>
-<v t="EKR.20040619133116" a="ETV"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1" a="M"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -997,8 +997,8 @@
 </v>
 </v>
 <v t="ekr.20050105080048"><vh>New unit tests</vh>
-<v t="ekr.20050105080048.1" a="E"><vh>@test official frame ivars</vh></v>
-<v t="ekr.20050105082500" a="E"><vh>@test official commander ivars</vh></v>
+<v t="ekr.20050105080048.1"><vh>@test official frame ivars</vh></v>
+<v t="ekr.20050105082500"><vh>@test official commander ivars</vh></v>
 <v t="ekr.20050105084757"><vh>@test official g.app directories</vh></v>
 <v t="ekr.20050105090632"><vh>@test official g.app ivars</vh></v>
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
@@ -1008,6 +1008,22 @@
 <v t="ekr.20050105094311"><vh>@test atFile.replaceTargetFileIfDifferent (different)</vh></v>
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
+<v t="ekr.20050105112238"><vh>@suite plugins tests</vh>
+<v t="ekr.20050105141608" a="E"><vh>Notes</vh>
+<v t="ekr.20050105142314.1"><vh>spellpyx</vh></v>
+<v t="ekr.20050105142314.4"><vh>table</vh></v>
+<v t="ekr.20050105142314.5"><vh>xsltWithNodes</vh></v>
+</v>
+<v t="ekr.20050105112249.1"><vh>makePluginsTestSuite</vh></v>
+<v t="ekr.20050105112249.2" a="E"><vh>class pluginTestCase</vh>
+<v t="ekr.20050105112249.3"><vh>__init__</vh></v>
+<v t="ekr.20050105112249.4"><vh> fail</vh></v>
+<v t="ekr.20050105112249.6"><vh>runTest</vh></v>
+<v t="ekr.20050105112249.7"><vh>setUp</vh></v>
+<v t="ekr.20050105112249.8"><vh>shortDescription</vh></v>
+<v t="ekr.20050105112249.9"><vh>tearDown</vh></v>
+</v>
+</v>
 </v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
@@ -1203,9 +1219,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1478,6 +1494,22 @@
 </v>
 <v t="ekr.20040909122141" tnodeList="ekr.20040909122141,ekr.20040909122141.1"><vh>@nosent c:\prog\test\niceNosentTest.txt</vh>
 <v t="ekr.20040909122141.1"><vh>spam</vh></v>
+</v>
+<v t="ekr.20050105112238" a="E"><vh>@suite plugins tests</vh>
+<v t="ekr.20050105141608" a="ETV"><vh>Notes</vh>
+<v t="ekr.20050105142314.1"><vh>spellpyx</vh></v>
+<v t="ekr.20050105142314.4"><vh>table</vh></v>
+<v t="ekr.20050105142314.5"><vh>xsltWithNodes</vh></v>
+</v>
+<v t="ekr.20050105112249.1"><vh>makePluginsTestSuite</vh></v>
+<v t="ekr.20050105112249.2" a="E"><vh>class pluginTestCase</vh>
+<v t="ekr.20050105112249.3"><vh>__init__</vh></v>
+<v t="ekr.20050105112249.4"><vh> fail</vh></v>
+<v t="ekr.20050105112249.6"><vh>runTest</vh></v>
+<v t="ekr.20050105112249.7"><vh>setUp</vh></v>
+<v t="ekr.20050105112249.8"><vh>shortDescription</vh></v>
+<v t="ekr.20050105112249.9"><vh>tearDown</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2099,7 +2131,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2230,7 +2262,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10895,10 +10927,10 @@ if spellpyx:
         spellFrame.checkSpelling()</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo</t>
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -12708,5 +12740,110 @@ f.close()
 # print 'Contents of %s: %s' % (at.targetFileName,s)
 assert s == 'test %s' % at.outputFileName, 'unexpected contents of target file'
 os.remove(at.targetFileName)</t>
+<t tx="ekr.20050105112238"># Create unit tests in g.app.scriptDict["suite"]
+
+import leoGlobals as g
+import leoTest
+import glob
+import sys
+import unittest
+
+c = g.top()
+
+@others
+
+# g.trace(g.dictToString(sys.modules))
+
+suite = makePluginsTestSuite(c)
+
+g.app.scriptDict['suite'] = suite</t>
+<t tx="ekr.20050105112249.1">def makePluginsTestSuite(c):
+
+    '''Create a plugin test for .py file in the plugins directory'''
+
+    # Create the suite.
+    suite = unittest.makeSuite(unittest.TestCase)
+    
+    # Add a test case for every plugin.
+    plugins = g.os_path_join(g.app.loadDir,'..','plugins','*.py')
+    plugins = g.os_path_abspath(plugins)
+    files = glob.glob(plugins)
+    files = [g.os_path_abspath(f) for f in files]
+    files.sort()
+
+    for f in files:
+        test = pluginTestCase(c,f)
+        # g.trace(test.shortDescription())
+        suite.addTest(test)
+
+    return suite</t>
+<t tx="ekr.20050105112249.2">class pluginTestCase(unittest.TestCase):
+
+    '''A test case to test a single Leo plugin.'''
+
+    @others</t>
+<t tx="ekr.20050105112249.3">def __init__ (self,c,path):
+
+    # Init the base class.
+    unittest.TestCase.__init__(self)
+
+    self.c = c
+    self.path = path</t>
+<t tx="ekr.20050105112249.4">def fail (self):
+
+    """Mark a unit test as having failed."""
+
+    import leoGlobals as g
+
+    g.app.unitTestDict["fail"] = g.callerName(2)</t>
+<t tx="ekr.20050105112249.6">def runTest(self):
+    
+    c = self.c ; path = self.path
+    
+    path,file = g.os_path_split(path)
+    moduleName,ext  = g.os_path_splitext(file)
+    
+    module = sys.modules.get(moduleName)
+    if not module:
+        # print ; print 'importing: %s' % moduleName
+        module = g.importModule(moduleName)
+        assert module, 'can not import %s' % moduleName</t>
+<t tx="ekr.20050105112249.7">def setUp(self,*args,**keys):
+
+    g.app.unitTesting = True
+    g.app.unitTestDict = {}</t>
+<t tx="ekr.20050105112249.8">def shortDescription (self):
+
+    return "pluginTestCase: %s" % g.shortFileName(self.path)</t>
+<t tx="ekr.20050105112249.9">def tearDown (self):
+
+    g.app.unitTesting = False</t>
+<t tx="ekr.20050105141608">@killcolor
+@
+
+What I did:
+
+- chapters.py
+    - Added some new keyword argument to several methods corresponding to leoFileCommands methods.
+    - This plugin now appears to work.
+
+- lineNumbers.py
+    - Changed leoAtFile.newDerivedFile to leoAtFile.atFile in several places.
+    - Again, this is required because of changes in 4.3 to Leo's core code.
+
+- dynamenu.py
+    - Changed all instances of g.os_path_norm to g.os_path_normpath</t>
+<t tx="ekr.20050105142314.1">@
+
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 4285, in importFromPath
+    result = imp.load_module(mod_name,theFile,pathname,description)
+
+ImportError: Module use of python23.dll conflicts with this version of Python.</t>
+<t tx="ekr.20050105142314.4">@
+
+Can not import Tkinter from plugin table</t>
+<t tx="ekr.20050105142314.5">@
+
+Can not import Ft from plugin xsltWithNodes</t>
 </tnodes>
 </leo_file>
