@@ -242,19 +242,22 @@ def computeHomeDir():
     encoding = startupEncoding()
     # dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=None)
+
     if home and len(home) > 1 and home[0]=='%' and home[-1]=='%':
 	    # Get the indirect reference to the true home.
 	    home = os.getenv(home[1:-1],default=None)
-    
-    home = g.os_path_abspath(home,encoding)
-    
-    if (
-        not home or
-        not g.os_path_exists(home,encoding) or
-        not g.os_path_isdir(home,encoding)
-    ):
-        home = None
 
+    if home:
+        # N.B. This returns the _working_ directory if home is None!
+        # This was the source of the 4.3 .leoID.txt problems.
+        home = g.os_path_abspath(home,encoding)
+        if (
+            not g.os_path_exists(home,encoding) or
+            not g.os_path_isdir(home,encoding)
+        ):
+            home = None
+
+    # g.trace(home)
     return home
 #@nonl
 #@-node:ekr.20041117151301:computeHomeDir

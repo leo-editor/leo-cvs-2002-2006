@@ -403,32 +403,27 @@ class LeoApp:
         #@    << return if we can set self.leoID from "leoID.txt" >>
         #@+node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
         for theDir in (homeDir,globalConfigDir,loadDir):
-            try:
-                fn = g.os_path_join(theDir,tag)
-                f = open(fn,'r')
-                s = f.readline()
-                f.close()
-                if s and len(s) > 0:
-                    g.app.leoID = s
-                    if verbose:
-                        g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
-                    return
-                elif verbose:
-                    g.es("empty %s (in %s)" % (tag,theDir), color = "red")
-            except IOError:
-                g.app.leoID = None
-            except Exception:
-                g.app.leoID = None
-                g.es('Unexpected exception in app.setLeoID',color='red')
-                g.es_esception()
-                
-        dirs = []
-        
-        for theDir in (globalConfigDir,homeDir):
-            if theDir not in dirs:
-                dirs.append(theDir)
-        
-        g.es("%s not found in %s" % (tag,repr(dirs)),color="red")
+            # N.B. We would use the _working_ directory if theDir is None!
+            if theDir:
+                try:
+                    fn = g.os_path_join(theDir,tag)
+                    f = open(fn,'r')
+                    s = f.readline()
+                    f.close()
+                    if s and len(s) > 0:
+                        g.app.leoID = s
+                        if verbose:
+                            g.es("leoID = %s (in %s)" % (g.app.leoID,theDir), color="red")
+                        return
+                    elif verbose:
+                        g.es("empty %s (in %s)" % (tag,theDir), color = "red")
+                except IOError:
+                    g.app.leoID = None
+                    # g.es("%s not found in %s" % (tag,theDir),color="red")
+                except Exception:
+                    g.app.leoID = None
+                    g.es('Unexpected exception in app.setLeoID',color='red')
+                    g.es_exception()
         #@nonl
         #@-node:ekr.20031218072017.1980:<< return if we can set self.leoID from "leoID.txt" >>
         #@nl
@@ -451,26 +446,23 @@ class LeoApp:
         #@nl
         #@    << attempt to create leoID.txt >>
         #@+node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
-        dirs = []
-        
         for theDir in (homeDir,globalConfigDir,loadDir):
-            cant = "can not create %s in %s" % (tag,theDir)
-            try:
-                fn = g.os_path_join(theDir,tag)
-                f = open(fn,'w')
-                if f:
+            # N.B. We would use the _working_ directory if theDir is None!
+            if theDir:
+                cant = "can not create %s in %s" % (tag,theDir)
+                try:
+                    fn = g.os_path_join(theDir,tag)
+                    f = open(fn,'w')
                     f.write(g.app.leoID)
                     f.close()
                     if g.os_path_exists(fn):
-                        g.es("created %s in %s" % (tag,theDir), color="red")
+                        s = "%s created in %s" % (tag,theDir)
+                        print s ; g.es(s, color="red")
                         return
                     else:
                         g.es(cant,color='red')
-            except IOError:
-                g.es(cant,color='red')
-        
-            if theDir not in dirs:
-                dirs.append(theDir)
+                except IOError:
+                    g.es(cant,color='red')
         #@nonl
         #@-node:ekr.20031218072017.1982:<< attempt to create leoID.txt >>
         #@nl
