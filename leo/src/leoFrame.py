@@ -604,12 +604,12 @@ class leoLog:
 		print "leoLog oops:", callerName(2), "should be overridden in subclass"
 	#@nonl
 	#@-node:leoLog.oops
-	#@+node:leoLog.setLogFontFromConfig
+	#@+node:leoLog.setFontFromConfig
 	def setFontFromConfig (self):
 		
 		self.oops()
 	#@nonl
-	#@-node:leoLog.setLogFontFromConfig
+	#@-node:leoLog.setFontFromConfig
 	#@+node:leoLog.onActivateLog
 	def onActivateLog (self,event=None):
 	
@@ -1220,17 +1220,33 @@ class nullFrame (leoFrame):
 #@-node:class nullFrame
 #@+node:class nullLog
 class nullLog (leoLog):
-
-	def oops(self):
-		# trace("nullLog:", callerName(2))
+	
+	def __init__ (self,frame=None,parentFrame=None):
+		
+		leoLog.__init__(self,frame,parentFrame) # Init the base class.
+		self.enabled = true
+		
+	def createControl (self,parentFrame):
 		pass
 		
+	def disable (self):
+		self.enabled = false
+		
+	def enable (self):
+		self.enabled = true
+
+	def oops(self):
+		trace("nullLog:", callerName(2))
+		
 	def put (self,s,color=None):
-		print s
+		if self.enabled:
+			print s
 
 	def putnl (self):
 		pass
-#@nonl
+		
+	def setFontFromConfig (self):
+		pass
 #@-node:class nullLog
 #@+node:class nullTree
 class nullTree (leoTree):

@@ -1496,6 +1496,11 @@ class baseCommands:
 	def convertAllBlanks (self):
 		
 		c = self ; body = c.frame.body ; v = current = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Convert All Blanks")
+			return
+	
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
@@ -1537,6 +1542,11 @@ class baseCommands:
 	def convertAllTabs (self):
 	
 		c = self ; body = c.frame.body ; v = current = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Convert All Tabs")
+			return
+	
 		next = v.nodeAfterTree()
 		dict = scanDirectives(c)
 		tabWidth  = dict.get("tabwidth")
@@ -1579,6 +1589,11 @@ class baseCommands:
 	def convertBlanks (self,setUndoParams=true):
 	
 		c = self ; body = c.frame.body
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Convert Blanks")
+			return
+	
 		head,lines,tail,oldSel,oldYview = c.getBodyLines()
 		result = [] ; changed = false
 	
@@ -1603,6 +1618,11 @@ class baseCommands:
 	def convertTabs (self,setUndoParams=true):
 	
 		c = self ; body = c.frame.body
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Convert Tabs")
+			return
+	
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		
@@ -1642,8 +1662,13 @@ class baseCommands:
 	#@-node:createLastChildNode
 	#@+node:dedentBody
 	def dedentBody (self):
-	
+		
 		c = self
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Unindent")
+			return
+	
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
@@ -1658,8 +1683,13 @@ class baseCommands:
 	#@-node:dedentBody
 	#@+node:extract
 	def extract(self):
-	
+		
 		c = self ; body = c.frame.body ; current = v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Extract")
+			return
+		
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
@@ -1705,6 +1735,11 @@ class baseCommands:
 	def extractSection(self):
 	
 		c = self ; body = c.frame.body ; current = v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Extract Section")
+			return
+	
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		headline = lines[0] ; del lines[0]
@@ -1751,12 +1786,16 @@ class baseCommands:
 				oldText=oldText,newText=newText,
 				oldSel=oldSel,newSel=newSel)
 		c.endUpdate()
-	#@nonl
 	#@-node:extractSection
 	#@+node:extractSectionNames
 	def extractSectionNames(self):
 	
 		c = self ; body = c.frame.body ; current = v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Extract Section Names")
+			return
+	
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		if not lines: return
 		# Create copy for undo.
@@ -1862,6 +1901,11 @@ class baseCommands:
 	def findMatchingBracket (self):
 		
 		c = self ; body = c.frame.body
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Match Brackets")
+			return
+	
 		brackets = "()[]{}<>"
 		ch1 = body.getCharBeforeInsertPoint()
 		ch2 = body.getCharAtInsertPoint()
@@ -1947,6 +1991,11 @@ class baseCommands:
 	def indentBody (self):
 	
 		c = self
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Indent")
+			return
+	
 		head,lines,tail,oldSel,oldYview = self.getBodyLines()
 		result = [] ; changed = false
 		for line in lines:
@@ -1963,6 +2012,10 @@ class baseCommands:
 	def insertBodyTime (self):
 		
 		c = self ; v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("xxx")
+			return
 		
 		oldSel = c.frame.body.getTextSelection()
 		c.frame.body.deleteTextSelection() # Works if nothing is selected.
@@ -2013,6 +2066,10 @@ class baseCommands:
 	cursor."""
 	
 		c = self ; body = c.frame.body ; v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("xxx")
+			return
 	
 		if body.hasTextSelection():
 			es("Text selection inhibits Reformat Paragraph",color="blue")
@@ -2120,8 +2177,13 @@ class baseCommands:
 	#@-node:updateBodyPane (handles undo)
 	#@+node:editHeadline
 	def editHeadline(self):
+		
+		c = self ; tree = c.frame.tree
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Edit Headline")
+			return
 	
-		tree = self.frame.tree
 		tree.editLabel(tree.currentVnode())
 	#@nonl
 	#@-node:editHeadline
@@ -2129,6 +2191,11 @@ class baseCommands:
 	def toggleAngleBrackets (self):
 		
 		c = self ; v = c.currentVnode()
+		
+		if app.batchMode:
+			c.notValidInBatchMode("Toggle Angle Brackets")
+			return
+	
 		s = v.headString().strip()
 		if (s[0:2] == "<<"
 			or s[-2:] == ">>"): # Must be on separate line.
@@ -2177,6 +2244,11 @@ class baseCommands:
 		c = self
 		app.findFrame.changeThenFindCommand(c)
 	#@-node:replaceThenFind
+	#@+node:notValidInBatchMode
+	def notValidInBatchMode(self, commandName):
+		
+		es("%s command is not valid in batch mode" % commandName)
+	#@-node:notValidInBatchMode
 	#@+node:cutOutline
 	def cutOutline(self):
 	
