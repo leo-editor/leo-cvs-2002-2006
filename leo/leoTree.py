@@ -136,6 +136,11 @@ class leoTree:
 		# Drag and drop
 		self.oldcursor = None # To reset cursor after drag
 		self.drag_id = None # To reset bindings after drag
+		
+		# 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
+		#                     behavior better on Linux
+		# Context menu
+		self.popupMenu = None
 	#@-body
 	#@-node:3:C=2:tree.__init__
 	#@+node:4::tree.__del__
@@ -1097,13 +1102,31 @@ class leoTree:
 	#@-node:9:C=26:tree.OnIconClick
 	#@+node:10:C=27:tree.OnPopup
 	#@+body
+	# 20-SEP-2002 DTHEIN:
+	# On Linux we must do something special to make the popup menu
+	# "unpost" if the mouse is clicked elsewhere.  So we have to 
+	# catch the <FocusOut> event and explicitly unpost.  In order
+	# to process the <FocusOut> event, we need to be able to find
+	# the reference to the popup window again, so this needs to be
+	# an attribute of the tree object; hence, "self.popupMenu".
+	#
+	# Aside: though Tk tries to be muli-platform, the interaction with
+	# different window managers does cause small differences that will
+	# need to be compensated by system specific application code. :-(
+	
 	def OnPopup (self,v,event):
 		
 		# print `v`,`event`
 		if event == None: return
 		
-		c = self.commands ; frame = c.frame
-		menu = Tkinter.Menu(app().root, tearoff=0)
+		c = self.commands ; frame = c.frame ; topMenu = frame.topMenu
+		# 20-SEP-2002 DTHEIN: If we are going to recreate it, we'd
+		#                     better destroy it.
+		if self.popupMenu:
+			self.popupMenu.destroy()
+			self.popupMenu = None
+		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
+		#self.popupMenu = menu = Tkinter.Menu(topMenu, tearoff=0)
 		
 		#@<< create the menu >>
 		#@+node:1::<< create the menu >>
@@ -1178,8 +1201,19 @@ class leoTree:
 		#@-body
 		#@-node:1::<< create the menu >>
 
+		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+			menu.bind("<FocusOut>",self.OnPopupFocusLost)
 		menu.post(event.x_root, event.y_root)
+		# 20-SEP-2002 DTHEIN: make certain we have focus so we know when we lose it.
+		#                     I think this is OK for all OSes.
+		menu.focus_set() 
 		return "break"
+	
+	
+	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux
+	
+	def OnPopupFocusLost(self,event=None):
+		self.popupMenu.unpost()
 	#@-body
 	#@-node:10:C=27:tree.OnPopup
 	#@-node:11::Event handers
