@@ -826,61 +826,65 @@ class config:
 		self.config = config
 		try:
 			cf = open(self.configFileName,"w")
-			config.readfp(cf)
-			
-			#@<< write config section >>
-			#@+node:1::<< write config section >>
-			#@+body
-			section = self.configSection
-			
-			if config.has_section(section):
-				config.remove_section(section)
-			config.add_section(section)
-			
-			config.set(section,"read_only",self.read_only)
-			config.set(section,"save_clears_undo_buffer",self.save_clears_undo_buffer)
-			config.set(section,"xml_version_string",self.xml_version_string)
+			if cf:
+				config.readfp(cf)
+				
+				#@<< write config section >>
+				#@+node:1::<< write config section >>
+				#@+body
+				section = self.configSection
+				
+				if config.has_section(section):
+					config.remove_section(section)
+				config.add_section(section)
+				
+				config.set(section,"read_only",self.read_only)
+				config.set(section,"save_clears_undo_buffer",self.save_clears_undo_buffer)
+				config.set(section,"xml_version_string",self.xml_version_string)
 
-			#@-body
-			#@-node:1::<< write config section >>
+				#@-body
+				#@-node:1::<< write config section >>
 
-			
-			#@<< write recent files section >>
-			#@+node:2::<< write recent files section >>
-			#@+body
-			section = self.recentFilesSection
-			files = self.recentFiles
-			
-			if config.has_section(section):
-				config.remove_section(section)
-			config.add_section(section)
-			
-			if 0: # elegant, but may be a security hole.
-				config.set(section,"recentFiles",files)
-			else: # easier to read in the config file.
-				for i in xrange(len(files)):
-					config.set(section, "file"+`i`, files[i])
-			#@-body
-			#@-node:2::<< write recent files section >>
+				
+				#@<< write recent files section >>
+				#@+node:2::<< write recent files section >>
+				#@+body
+				section = self.recentFilesSection
+				files = self.recentFiles
+				
+				if config.has_section(section):
+					config.remove_section(section)
+				config.add_section(section)
+				
+				if 0: # elegant, but may be a security hole.
+					config.set(section,"recentFiles",files)
+				else: # easier to read in the config file.
+					for i in xrange(len(files)):
+						config.set(section, "file"+`i`, files[i])
+				#@-body
+				#@-node:2::<< write recent files section >>
 
-			
-			#@<< write prefs section >>
-			#@+node:3::<< write prefs section >>
-			#@+body
-			self.update_section(config,self.prefsSection,self.prefsDict)
-			#@-body
-			#@-node:3::<< write prefs section >>
+				
+				#@<< write prefs section >>
+				#@+node:3::<< write prefs section >>
+				#@+body
+				self.update_section(config,self.prefsSection,self.prefsDict)
+				#@-body
+				#@-node:3::<< write prefs section >>
 
-			self.update_section(config,
-				self.compareSection,self.compareDict)
-			self.update_section(config,
-				self.findSection,self.findDict)
-			self.update_section(config,
-				self.colorsSection,self.colorsDict)
-			self.update_section(config,
-				self.windowSection,self.windowDict)
-			config.write(cf)
-			cf.close()
+				self.update_section(config,
+					self.compareSection,self.compareDict)
+				self.update_section(config,
+					self.findSection,self.findDict)
+				self.update_section(config,
+					self.colorsSection,self.colorsDict)
+				self.update_section(config,
+					self.windowSection,self.windowDict)
+				config.write(cf)
+				cf.flush()
+				cf.close()
+			else:
+				es("can not open: " + self.configFileName)
 		except:
 			es("exception writing: " + self.configFileName)
 			traceback.print_exc()

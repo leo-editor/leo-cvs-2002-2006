@@ -10,7 +10,7 @@
 from leoGlobals import *
 from leoUtils import *
 import leoColor, leoCompare, leoDialog, leoFontPanel, leoNodes, leoPrefs
-import traceback,Tkinter,tkFileDialog,tkFont
+import os,sys,traceback,Tkinter,tkFileDialog,tkFont
 
 # Needed for menu commands
 import leoCommands, leoNodes, leoTree
@@ -610,11 +610,18 @@ class LeoFrame:
 		#@+body
 		self.helpMenu = helpMenu = Tk.Menu(menu,tearoff=0)
 		menu.add_cascade(label="Help", menu=helpMenu)
+		
 		helpMenu.add_command(label="About Leo...", command=self.OnAbout)
+		helpMenu.add_separator()
+		
+		helpMenu.add_command(label="Online Tutorial (Start Here)...", command=self.OnLeoTutorial)
+		helpMenu.add_command(label="Online Home Page...", command=self.OnLeoHome)
+		
+		helpMenu.add_separator()
 		helpMenu.add_command(label="Open LeoDocs.leo...", command=self.OnLeoDocumentation)
-		helpMenu.add_command(label="Leo's Home Page...", command=self.OnLeoHome)
-		# helpMenu.add_command(label="Leo's Help File...", command=self.OnLeoHelp)
-		helpMenu.add_command(label="Tutorial...", command=self.OnLeoTutorial)
+		if sys.platform=="win32": # Windows
+			helpMenu.add_command(label="Open Help File...", command=self.OnLeoHelp)
+
 		#@-body
 		#@-node:5::<< create the help menu >>
 
@@ -2520,7 +2527,10 @@ class LeoFrame:
 	#@+body
 	def OnLeoHelp (self,event=None):
 		
-		# Not ready yet.
+		try:
+			os.system('start sbooks.chm')
+		except:
+			es("not found: sbooks.chm")
 		
 		return "break" # inhibit further command processing
 	#@-body
