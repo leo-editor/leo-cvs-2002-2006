@@ -1283,8 +1283,7 @@ class leoImportCommands:
 			if ch == '/':
 				
 				#@<< handle possible C comments >>
-				#@+node:5::Shared by C and Java
-				#@+node:1::<< handle possible C comments >>
+				#@+node:5::<< handle possible C comments >>
 				#@+body
 				if match(s,i,"//"):
 					i = skip_line(s,i)
@@ -1293,17 +1292,15 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:1::<< handle possible C comments >>
-				#@-node:5::Shared by C and Java
+				#@-node:5::<< handle possible C comments >>
 
 			elif ch == '"' or ch == '\'':
 				i = skip_string(s,i)
 			# These cases help determine where functions start.
 			elif ch == '=':
 				
-				#@<< handle equal sign in C or Java >>
-				#@+node:5::Shared by C and Java
-				#@+node:2::<< handle equal sign in C or Java >>
+				#@<< handle equal sign in C >>
+				#@+node:6::<< handle equal sign in C>>
 				#@+body
 				#@+at
 				#  We can not be seeing a function definition when we find an 
@@ -1319,14 +1316,12 @@ class leoImportCommands:
 				if match(s,i,'='):
 					i = skip_braces(s,i)
 				#@-body
-				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:5::Shared by C and Java
+				#@-node:6::<< handle equal sign in C>>
 
 			elif ch == '(':
 				
-				#@<< handle open paren in C or Java >>
-				#@+node:5::Shared by C and Java
-				#@+node:3::<< handle open paren in C or Java >>
+				#@<< handle open paren in C >>
+				#@+node:7::<< handle open paren in C >>
 				#@+body
 				lparen = i
 				# This will skip any equal signs inside the paren.
@@ -1338,14 +1333,12 @@ class leoImportCommands:
 						lparen = None # not a function definition.
 				else: lparen = None
 				#@-body
-				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:5::Shared by C and Java
+				#@-node:7::<< handle open paren in C >>
 
 			elif ch == ';':
 				
-				#@<< handle semicolon in C or Java >>
-				#@+node:5::Shared by C and Java
-				#@+node:4::<< handle semicolon in C or Java >>
+				#@<< handle semicolon in C >>
+				#@+node:8::<< handle semicolon in C >>
 				#@+body
 				#@+at
 				#  A semicolon signals the end of a declaration, thereby 
@@ -1361,8 +1354,7 @@ class leoImportCommands:
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
-				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:5::Shared by C and Java
+				#@-node:8::<< handle semicolon in C >>
 
 			# These cases and the default case can create child nodes.
 			elif ch == '#':
@@ -1588,7 +1580,7 @@ class leoImportCommands:
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:6::<< Append any unused text to the parent's body text >>
+		#@+node:9::<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1597,10 +1589,8 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:6::<< Append any unused text to the parent's body text >>
+		#@-node:9::<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:5::Shared by C and Java
-	#@-node:5::Shared by C and Java
 	#@-node:3::scanCText
 	#@+node:4::scanJavaText
 	#@+body
@@ -1613,25 +1603,25 @@ class leoImportCommands:
 		#@+node:1::<< define scanJavaText vars >>
 		#@+body
 		method_seen = false
-		class_seen = false # true if class keyword seen at outer level.
+		class_seen = false # true: class keyword seen at outer level.
+		interface_seen = false # true: interface keyword seen at outer level.
 		lparen = None  # not None if '(' seen at outer level.
 		scan_start = 0
 		name = None
-		function_start = choose(outerFlag, None, 0)
+		function_start = 0 # choose(outerFlag, None, 0)
 		i = 0
 		#@-body
 		#@-node:1::<< define scanJavaText vars >>
 
 		# if not outerFlag: trace("inner:" + `s`)
 		while i < len(s):
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(`get_line(s,i)`)
 			ch = s[i]
 			# These cases skip tokens.
 			if ch == '/':
 				
-				#@<< handle possible C comments >>
-				#@+node:4::Shared by C and Java
-				#@+node:1::<< handle possible C comments >>
+				#@<< handle possible Java comments >>
+				#@+node:4::<< handle possible Java comments >>
 				#@+body
 				if match(s,i,"//"):
 					i = skip_line(s,i)
@@ -1640,16 +1630,14 @@ class leoImportCommands:
 				else:
 					i += 1
 				#@-body
-				#@-node:1::<< handle possible C comments >>
-				#@-node:4::Shared by C and Java
+				#@-node:4::<< handle possible Java comments >>
 
 			elif ch == '"' or ch == '\'': i = skip_string(s,i)
 			# These cases help determine where functions start.
 			elif ch == '=':
 				
-				#@<< handle equal sign in C or Java >>
-				#@+node:4::Shared by C and Java
-				#@+node:2::<< handle equal sign in C or Java >>
+				#@<< handle equal sign in Java >>
+				#@+node:5::<< handle equal sign in Java >>
 				#@+body
 				#@+at
 				#  We can not be seeing a function definition when we find an 
@@ -1665,14 +1653,12 @@ class leoImportCommands:
 				if match(s,i,'='):
 					i = skip_braces(s,i)
 				#@-body
-				#@-node:2::<< handle equal sign in C or Java >>
-				#@-node:4::Shared by C and Java
+				#@-node:5::<< handle equal sign in Java >>
 
 			elif ch == '(':
 				
-				#@<< handle open paren in C or Java >>
-				#@+node:4::Shared by C and Java
-				#@+node:3::<< handle open paren in C or Java >>
+				#@<< handle open paren in Java >>
+				#@+node:6::<< handle open paren in Java >>
 				#@+body
 				lparen = i
 				# This will skip any equal signs inside the paren.
@@ -1684,14 +1670,12 @@ class leoImportCommands:
 						lparen = None # not a function definition.
 				else: lparen = None
 				#@-body
-				#@-node:3::<< handle open paren in C or Java >>
-				#@-node:4::Shared by C and Java
+				#@-node:6::<< handle open paren in Java >>
 
 			elif ch == ';':
 				
-				#@<< handle semicolon in C or Java >>
-				#@+node:4::Shared by C and Java
-				#@+node:4::<< handle semicolon in C or Java >>
+				#@<< handle semicolon in Java >>
+				#@+node:7::<< handle semicolon in Java >>
 				#@+body
 				#@+at
 				#  A semicolon signals the end of a declaration, thereby 
@@ -1707,8 +1691,7 @@ class leoImportCommands:
 				if lparen == None:
 					function_start = i + 1 # The semicolon ends the declaration.
 				#@-body
-				#@-node:4::<< handle semicolon in C or Java >>
-				#@-node:4::Shared by C and Java
+				#@-node:7::<< handle semicolon in Java >>
 
 				class_seen = false
 			# These cases can create child nodes.
@@ -1720,9 +1703,20 @@ class leoImportCommands:
 				brace_ip1 = i
 				i = skip_braces(s,i) # Skip all inner blocks.
 				brace_ip2 = i
-				if (
-					match(s,i,'}') and name and function_start != None and
-					((outerFlag and class_seen) or (not outerFlag and lparen))):
+				
+				if not match (s,i,'}'):
+					es("unmatched '{'")
+				elif not name:
+					i += 1
+				elif (outerFlag and (class_seen or interface_seen)) or (not outerFlag and lparen):
+					# trace("starting:"+name)
+					# trace("outerFlag:"+`outerFlag`)
+					# trace("lparen:"`lparen`)
+					# trace("class_seen:"+`class_seen`)
+					# trace("scan_start:"+get_line_after(s,scan_start))
+					# trace("func_start:"+get_line_after(s,function_start))
+					# trace("s:"+get_line(s,i))
+				
 					# Point i _after_ the last character of the method.
 					i += 1
 					if is_nl(s,i):
@@ -1731,8 +1725,12 @@ class leoImportCommands:
 					headline = name
 					if outerFlag:
 						leader = "" ; decl_leader = ""
-						headline = "class " + headline
-						methodKind = "classes"
+						if class_seen:
+							headline = "class " + headline
+							methodKind = "classes"
+						else:
+							headline = "interface " + headline
+							methodKind = "interfaces"
 					else:
 						leader = "\t" # Indent only inner references.
 						decl_leader = "\n"  # Declaration leader for inner references.
@@ -1749,10 +1747,13 @@ class leoImportCommands:
 						i = scan_start
 						while i < function_start and is_ws_or_nl(s,i):
 							i += 1
+							
+						if outerFlag:
+							parent.appendStringToBody("@ignore\n" + self.rootLine + "@language java\n")
+						
 						if i < function_start:
-							if outerFlag:
-								parent.appendStringToBody("@ignore\n" + self.rootLine + "@language java\n")
 							decl_headline = angleBrackets(" " + self.methodName + " declarations ")
+						
 							# Append the headline to the parent's body.
 							parent.appendStringToBody(decl_leader + leader + decl_headline + "\n")
 							scan_start = find_line_start(s,scan_start) # Backtrack so we remove leading whitespace.
@@ -1760,6 +1761,7 @@ class leoImportCommands:
 							decls = self.undentBody(decls)
 							body = choose(self.treeType == "@file",decls,"@code\n\n" + decls)
 							self.createHeadline(parent,body,decl_headline)
+						
 						i = save_ip
 						scan_start = i
 						#@-body
@@ -1770,7 +1772,10 @@ class leoImportCommands:
 						#@+node:2::<< append Java method reference to parent node >>
 						#@+body
 						if self.treeType == "@file":
-							parent.appendStringToBody("\t@others\n")
+							if outerFlag:
+								parent.appendStringToBody("\n@others\n")
+							else:
+								parent.appendStringToBody("\n\t@others\n")
 						else:
 							kind = choose(outerFlag,"classes","methods")
 							ref_name = angleBrackets(" " + self.methodName + " " + kind + " ")
@@ -1778,9 +1783,9 @@ class leoImportCommands:
 						#@-body
 						#@-node:2::<< append Java method reference to parent node >>
 
-					if outerFlag:
-						# Create a headline for the class.
-						function_start = find_line_start(s,function_start) # Backtrack so we remove leading whitespace.
+					if outerFlag: # Create a class.
+						# Backtrack so we remove leading whitespace.
+						function_start = find_line_start(s,function_start)
 						body = s[function_start:brace_ip1+1]
 						body = self.massageBody(body,methodKind)
 						v = self.createHeadline(parent,body,headline)
@@ -1795,18 +1800,20 @@ class leoImportCommands:
 						self.scanJavaText(s[brace_ip1+1:brace_ip2], # Don't include either brace.
 							v,false) # inner level
 						self.methodName = oldMethodName
-						# Append the brace to the parent.
-						v.appendStringToBody("}")
-						i = brace_ip2 + 1 # Start after the closing brace.
+						
 						#@-body
 						#@-node:3::<< recursively scan the text >>
 
-					else:
-						# Create a single headline for the method.
-						function_start = find_line_start(s,function_start) # Backtrack so we remove leading whitespace.
+						# Append the brace to the parent.
+						v.appendStringToBody("}")
+						i = brace_ip2 + 1 # Start after the closing brace.
+					else: # Create a method.
+						# Backtrack so we remove leading whitespace.
+						function_start = find_line_start(s,function_start)
 						body = s[function_start:function_end]
 						body = self.massageBody(body,methodKind)
 						self.createHeadline(parent,body,headline)
+						i = function_end
 					method_seen = true
 					scan_start = function_start = i # Set the start of the _next_ function.
 					lparen = None ; class_seen = false
@@ -1819,24 +1826,27 @@ class leoImportCommands:
 				#@<< skip and remember the Java id >>
 				#@+node:3::<< skip and remember the Java id >>
 				#@+body
-				if match_c_word(s,i,"class"):
-					class_seen = true
-					i = skip_c_id(s,i)
+				if match_c_word(s,i,"class") or match_c_word(s,i,"interface"):
+					if match_c_word(s,i,"class"):
+						class_seen = true
+					else:
+						interface_seen = true
+					i = skip_c_id(s,i) # Skip the class or interface keyword.
 					i = skip_ws_and_nl(s,i)
 					if i < len(s) and is_c_id(s[i]):
-						# Remember the class name.
+						# Remember the class or interface name.
 						j = i ; i = skip_c_id(s,i) ; name = s[j:i]
-				elif not lparen and not class_seen:
-					# Remember a possible method name.
-					j = i ; i = skip_c_id(s,i) ; name = s[j:i]
-				else: i = skip_c_id(s,i)
+				else:
+					j = i ; i = skip_c_id(s,i)
+					if not lparen and not class_seen:
+						name = s[j:i] # Remember the name.
 				#@-body
 				#@-node:3::<< skip and remember the Java id >>
 
 			else: i += 1
 		
 		#@<< Append any unused text to the parent's body text >>
-		#@+node:5::<< Append any unused text to the parent's body text >>
+		#@+node:8::<< Append any unused text to the parent's body text >>
 		#@+body
 		# Used by C, Java and Pascal parsers.
 		# Do nothing if only whitespace is left.
@@ -1845,10 +1855,8 @@ class leoImportCommands:
 		if i < len(s):
 			parent.appendStringToBody(s[scan_start:])
 		#@-body
-		#@-node:5::<< Append any unused text to the parent's body text >>
+		#@-node:8::<< Append any unused text to the parent's body text >>
 	#@-body
-	#@+node:4::Shared by C and Java
-	#@-node:4::Shared by C and Java
 	#@-node:4::scanJavaText
 	#@+node:5::scanPascalText
 	#@+body
@@ -2641,7 +2649,7 @@ class leoImportCommands:
 		c = self.commands
 		i = find_line_start(s,i)
 		while i < len(s):
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(`get_line(s,i)`)
 			if is_nl(s,i) or match(s,i,"#"):
 				i = skip_line(s,i) # ignore blank lines and comments.
 			else:
@@ -2685,8 +2693,8 @@ class leoImportCommands:
 	#@+body
 	def massageBody (self,s,methodKind):
 		
-		#trace(`s`)
-		# line = get_line(s,0) ; trace(`line`)
+		# trace(`s`)
+		# trace(`get_line(s,0)`)
 		c = self.commands
 		if self.treeType == "@file":
 			if self.fileType == ".py": # 7/31/02: was "py"
@@ -2730,7 +2738,7 @@ class leoImportCommands:
 
 	def massageComment (self,s):
 	
-		# line = get_line(s,0) ; trace(`line`)
+		# trace(`get_line(s,0)`)
 		s = string.strip(s)
 		s = string.replace(s,"\n"," ")
 		s = string.replace(s,"\r"," ")
@@ -2790,7 +2798,7 @@ class leoImportCommands:
 		#@+body
 		i = 0
 		while i < len(s):
-			# line = get_line(s,i) ; trace(`line`)
+			# trace(`get_line(s,i)`)
 			if match(s,i,lb):
 				i += 2 ; j = i ; k = find_on_line(s,j,rb)
 				if k > -1:
@@ -2822,9 +2830,10 @@ class leoImportCommands:
 	def skipLeadingComments (self,s):
 	
 		# trace(`get_line(s,0)`)
+		s_original = s
 		s = string.lstrip(s)
 		i = 0 ; comment = ""
-		if self.fileType in [".c", ".cpp", ".java"]:
+		if self.fileType in [".c", ".cpp"]: # 11/2/02: don't mess with java comments.
 			
 			#@<< scan for C-style comments >>
 			#@+node:1::<< scan for C-style comments >>
@@ -2897,7 +2906,7 @@ class leoImportCommands:
 
 		comment = string.strip(comment)
 		if len(comment) == 0:
-			return s[i:], ""
+			return s_original, "" # Bug fix: 11/2/02: don't skip leading whitespace!
 		elif self.treeType == "@file":
 			return s[i:], "@ " + comment
 		else:

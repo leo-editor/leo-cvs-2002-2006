@@ -1308,7 +1308,8 @@ def escaped(s,i):
 #@+body
 def find_line_start(s,i):
 
-	i = string.rfind(s,'\n',0,i) # Finds the highest index in the range.
+	# bug fix: 11/2/02: change i to i+1 in rfind
+	i = string.rfind(s,'\n',0,i+1) # Finds the highest index in the range.
 	if i == -1: return 0
 	else: return i + 1
 #@-body
