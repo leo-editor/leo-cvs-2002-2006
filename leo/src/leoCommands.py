@@ -179,24 +179,56 @@ class baseCommands:
 		g.enl()
 	#@nonl
 	#@-node:ekr.20031218072017.2582: version & signon stuff
-	#@+node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
+	#@+node:ekr.20040312090934:c.iterators
+	#@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
 	def allNodes_iter(self,copy=false):
 		
 		c = self
 		return c.rootPosition().allNodes_iter(copy)
 		
+	all_positions_iter = allNodes_iter
+	#@nonl
+	#@-node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
+	#@+node:EKR.20040529091232.1:c.all_tnodes_iter
 	def all_tnodes_iter(self):
 		
 		c = self
-		return c.rootPosition().all_tnodes_iter(all=true)
+		for p in c.all_positions_iter():
+			yield p.v.t
 	
+		# return c.rootPosition().all_tnodes_iter(all=true)
+	#@nonl
+	#@-node:EKR.20040529091232.1:c.all_tnodes_iter
+	#@+node:EKR.20040529091232.2:c.all_unique_tnodes_iter
+	def all_unique_tnodes_iter(self):
 		
+		c = self ; marks = {}
+		
+		for p in c.all_positions_iter():
+			if not p.v.t in marks:
+				marks[p.v.t] = p.v.t
+				yield p.v.t
+	#@nonl
+	#@-node:EKR.20040529091232.2:c.all_unique_tnodes_iter
+	#@+node:EKR.20040529091232.3:c.all_vnodes_iter
 	def all_vnodes_iter(self):
 		
 		c = self
-		return c.rootPosition().all_vnodes_iter(all=true)
+		for p in c.all_positions_iter():
+			yield p.v
 	#@nonl
-	#@-node:ekr.20040312090934:c.allNodes_iter, all_vnodes_iter, all_tnodes_iter
+	#@-node:EKR.20040529091232.3:c.all_vnodes_iter
+	#@+node:EKR.20040529091232.4:c.all_unique_vnodes_iter
+	def all_unique_vnodes_iter(self):
+		
+		c = self ; marks = {}
+		for p in c.all_positions_iter():
+			if not p.v in marks:
+				marks[p.v] = p.v
+				yield p.v
+	#@nonl
+	#@-node:EKR.20040529091232.4:c.all_unique_vnodes_iter
+	#@-node:ekr.20040312090934:c.iterators
 	#@+node:ekr.20031218072017.2818:Command handlers...
 	#@+node:ekr.20031218072017.2819:File Menu
 	#@+node:ekr.20031218072017.2820:top level
@@ -1571,7 +1603,6 @@ class baseCommands:
 	#@-node:ekr.20031218072017.2086:preferences
 	#@-node:ekr.20031218072017.2862:Edit top level
 	#@+node:ekr.20031218072017.2884:Edit Body submenu
-	#@+node:ekr.20031218072017.1820:Edit Body Text
 	#@+node:ekr.20031218072017.1704:convertAllBlanks
 	def convertAllBlanks (self):
 		
@@ -1824,8 +1855,6 @@ class baseCommands:
 		line1 = "\n" + headline
 		# Create copy for undo.
 		v_copy = c.undoer.saveTree(v)
-		# g.trace("v:     ",v)
-		# g.trace("v_copy:",v_copy)
 		oldText = body.getAllText()
 		oldSel = body.getTextSelection()
 		#@	<< Set headline for extractSection >>
@@ -1858,12 +1887,13 @@ class baseCommands:
 			line = g.removeLeadingWhitespace(line,ws,c.tab_width)
 			result.append(line)
 		# Create a new node from lines.
-		newBody = string.join(result,'\n')  # 11/23/03
+		newBody = string.join(result,'\n')
 		if head and len(head) > 0:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		if 1: # update range...
-			c.createLastChildNode(v,headline,newBody)  # 11/23/03
+			c.createLastChildNode(v,headline,newBody)
+			g.trace(v)
 			undoType = None # Set undo params later.
 			c.updateBodyPane(head+line1,None,tail,undoType,oldSel,oldYview,setSel=false)
 			newText = body.getAllText()
@@ -2285,7 +2315,6 @@ class baseCommands:
 		c.recolor()
 	#@nonl
 	#@-node:ekr.20031218072017.1838:updateBodyPane (handles undo)
-	#@-node:ekr.20031218072017.1820:Edit Body Text
 	#@-node:ekr.20031218072017.2884:Edit Body submenu
 	#@+node:ekr.20031218072017.2885:Edit Headline submenu
 	#@+node:ekr.20031218072017.2886:editHeadline
@@ -2440,33 +2469,34 @@ class baseCommands:
 		if full and not unittest:
 			g.es("all tests enabled: this may take awhile",color="blue")
 	
-		try:
-			p = c.rootPosition()
-			#@		<< assert equivalence of lastVisible methods >>
-			#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
-			if 0:
-				g.app.debug = true
+		p = c.rootPosition()
+		#@	<< assert equivalence of lastVisible methods >>
+		#@+node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+		if 0:
+			g.app.debug = true
+		
+			p1 = p.oldLastVisible()
+			p2 = p.lastVisible()
 			
-				p1 = p.oldLastVisible()
-				p2 = p.lastVisible()
-				
-				if p1 != p2:
-					print "oldLastVisible",p1
-					print "   lastVisible",p2
-				
-				assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
-				assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
-				
-				g.app.debug = false
-			#@nonl
-			#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
-			#@nl
-			for p in c.allNodes_iter():
+			if p1 != p2:
+				print "oldLastVisible",p1
+				print "   lastVisible",p2
+			
+			assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+			assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+			
+			g.app.debug = false
+		#@nonl
+		#@-node:ekr.20040314062338:<< assert equivalence of lastVisible methods >>
+		#@nl
+		for p in c.allNodes_iter():
+			try:
 				count += 1
 				#@			<< remove unused tnodeList >>
 				#@+node:ekr.20040313150633:<< remove unused tnodeList >>
 				# Empty tnodeLists are not errors.
 				v = p.v
+				
 				# New in 4.2: tnode list is in tnode.
 				if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
 					s = "deleting tnodeList for " + repr(v)
@@ -2507,7 +2537,7 @@ class baseCommands:
 							assert p == next.back(), "p==next.back"
 						#@nonl
 						#@-node:ekr.20040314035615.1:assert consistency of next and back links
-						#@+node:ekr.20040314035615.2:assert consistency of parent and chiild links
+						#@+node:ekr.20040314035615.2:assert consistency of parent and child links
 						if p.hasParent():
 							n = p.childIndex()
 							assert p == p.parent().moveToNthChild(n), "p==parent.moveToNthChild"
@@ -2521,34 +2551,41 @@ class baseCommands:
 						if p.hasBack():
 							assert p.back().parent() == p.parent(), "back.parent==parent"
 						#@nonl
-						#@-node:ekr.20040314035615.2:assert consistency of parent and chiild links
+						#@-node:ekr.20040314035615.2:assert consistency of parent and child links
 						#@+node:ekr.20040323155951.1:assert consistency of directParents and parent
 						if p.hasParent():
 							t = p.parent().v.t
 							for v in p.directParents():
-								assert(v.t == t)
-						#@nonl
+								try:
+									assert v.t == t
+								except:
+									print "p",p
+									print "p.directParents",p.directParents()
+									print "v",v
+									print "v.t",v.t
+									print "t = p.parent().v.t",t
+									raise AssertionError,"v.t == t"
 						#@-node:ekr.20040323155951.1:assert consistency of directParents and parent
 						#@+node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
 						if p.isCloned():
 							parents = p.v.t.vnodeList
 							for child in p.children_iter():
 								vparents = child.directParents()
-								assert(len(parents) == len(vparents))
+								assert len(parents) == len(vparents), "len(parents) == len(vparents)"
 								for parent in parents:
-									assert(parent in vparents)
+									assert parent in vparents, "parent in vparents"
 								for parent in vparents:
-									assert(parent in parents)
+									assert parent in parents, "parent in parents"
 						#@nonl
 						#@-node:ekr.20040323161837:assert consistency of p.v.t.vnodeList, & v.parents for cloned nodes
 						#@+node:ekr.20040323162707:assert that clones actually share subtrees
 						if p.isCloned() and p.hasChildren():
 							childv = p.firstChild().v
-							assert(childv == p.v.t._firstChild)
-							assert(id(childv) == id(p.v.t._firstChild))
+							assert childv == p.v.t._firstChild, "childv == p.v.t._firstChild"
+							assert id(childv) == id(p.v.t._firstChild), "id(childv) == id(p.v.t._firstChild)"
 							for v in p.v.t.vnodeList:
-								assert(v.t._firstChild == childv)
-								assert(id(v.t._firstChild) == id(childv))
+								assert v.t._firstChild == childv, "v.t._firstChild == childv"
+								assert id(v.t._firstChild) == id(childv), "id(v.t._firstChild) == id(childv)"
 						#@nonl
 						#@-node:ekr.20040323162707:assert that clones actually share subtrees
 						#@+node:ekr.20040314043623:assert consistency of vnodeList
@@ -2556,7 +2593,15 @@ class baseCommands:
 							
 						for v in vnodeList:
 							
-							assert v.t == p.v.t, "v.t == p.v.t"
+							try:
+								assert v.t == p.v.t
+							except AssertionError:
+								print "p",p
+								print "v",v
+								print "p.v",p.v
+								print "v.t",v.t
+								print "p.v.t",p.v.t
+								raise AssertionError, "v.t == p.v.t"
 						
 							if p.v.isCloned():
 								assert v.isCloned(), "v.isCloned"
@@ -2569,18 +2614,17 @@ class baseCommands:
 						#@-others
 						#@-node:ekr.20040323155951:<< do full tests >>
 						#@nl
-				# assert false, "checkFailed" # check of checkFailed itself.
-		except AssertionError,message:
-			errors += 1
-			#@		<< give test failed message >>
-			#@+node:ekr.20040314044652:<< give test failed message >>
-			if errors == 1:
-				s = "test failed: %s %s" % (message,repr(p))
-				print s
-				g.es(s,color="red")
-			#@nonl
-			#@-node:ekr.20040314044652:<< give test failed message >>
-			#@nl
+			except AssertionError,message:
+				errors += 1
+				#@			<< give test failed message >>
+				#@+node:ekr.20040314044652:<< give test failed message >>
+				if 1: # errors == 1:
+					s = "test failed: %s %s" % (message,repr(p))
+					print s ; print
+					g.es(s,color="red")
+				#@nonl
+				#@-node:ekr.20040314044652:<< give test failed message >>
+				#@nl
 		if not unittest:
 			#@		<< print summary message >>
 			#@+node:ekr.20040314043900:<<print summary message >>
@@ -4290,10 +4334,10 @@ class baseCommands:
 	#@-node:ekr.20031218072017.2955:Enabling Menu Items
 	#@+node:ekr.20031218072017.2982:Getters & Setters
 	#@+node:ekr.20031218072017.2983:c.currentPosition & c.setCurrentPosition
-	def currentPosition (self):
+	def currentPosition (self,copy=true):
 		
 		"""Return the presently selected position."""
-	
+		
 		return self._currentPosition.copy()
 		
 	def setCurrentPosition (self,p):
