@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="5844" clone_windows="0"/>
-<globals body_outline_ratio="0.5561861521">
-	<global_window_position top="31" left="296" height="881" width="856"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="5846" clone_windows="0"/>
+<globals body_outline_ratio="0.465380249716">
+	<global_window_position top="70" left="421" height="881" width="856"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -722,6 +722,7 @@
 </v>
 <v t="ekr.20040712101754.272"><vh>@test CheckOutline</vh></v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
+<v t="ekr.20040712101813"><vh>@test checkCode</vh></v>
 </v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
@@ -808,22 +809,17 @@
 <v t="ekr.20040707071542.1"><vh>Do all @tests</vh></v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="EKR.20040612095237"><vh>Tests of new commands</vh>
+<v t="EKR.20040612095237"><vh>Tests of new commands TO DO</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
-<v t="ekr.20040712101813"><vh>checkCode</vh></v>
-<v t="ekr.20040713070526"><vh>@test Pretty Print command</vh>
-<v t="ekr.20040713123617"><vh>tempNode</vh></v>
-<v t="ekr.20040713071919"><vh>before</vh></v>
-<v t="ekr.20040713123828.1"><vh>after</vh></v>
-</v>
-<v t="ekr.20040713123617.1" a="EM"><vh>elisp2Python script</vh>
-<v t="ekr.20040713200238" a="E"><vh>Ref</vh>
-<v t="ekr.20040713131315"><vh>To do</vh>
-<v t="ekr.20040713133131"><vh>Tokens</vh></v>
-<v t="ekr.20040713133131.1"><vh>Statements</vh></v>
-<v t="ekr.20040713133131.2"><vh>Expressions</vh></v>
+<v t="ekr.20040714055306" a="E"><vh>elispToPy</vh>
+<v t="ekr.20040713123617.1" a="M"><vh>doElisp2py</vh>
+<v t="ekr.20040713200238"><vh>Ref</vh>
+<v t="ekr.20040713131315" a="M"><vh>To do</vh>
+<v t="ekr.20040713133131" a="M"><vh>Tokens</vh></v>
+<v t="ekr.20040713133131.1" a="M"><vh>Statements</vh></v>
+<v t="ekr.20040713133131.2" a="M"><vh>Expressions</vh></v>
 </v>
 <v t="ekr.20040713130853"><vh>Docs</vh>
 <v t="ekr.20040713130853.1"><vh>What elisp2py does</vh></v>
@@ -938,7 +934,7 @@
 <v t="ekr.20040713150856.47"><vh>splitLines &amp; joinLines</vh></v>
 </v>
 </v>
-<v t="ekr.20040713131350"><vh>-before-</vh>
+<v t="ekr.20040713131350" a="E"><vh>-before-</vh>
 <v t="ekr.20040713132127.1"><vh>igrep.el</vh>
 <v t="ekr.20040713132127.2"><vh>provide</vh></v>
 <v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
@@ -1011,17 +1007,25 @@
 </v>
 </v>
 <v t="ekr.20040713131350.1"><vh>-after-</vh></v>
-<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713164604,ekr.20040713180208,ekr.20040713144036,ekr.20040713144036.1,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040713155152,ekr.20040713155152.1"><vh>@file ../src/elisp2py.py</vh>
-<v t="ekr.20040713150037"><vh>class tok</vh>
+</v>
+<v t="ekr.20040713130853.8" a="E" tnodeList="ekr.20040713130853.8,ekr.20040713150037,ekr.20040713150037.1,ekr.20040713150712,ekr.20040713173923,ekr.20040713174349,ekr.20040713180208,ekr.20040714091940,ekr.20040713164604,ekr.20040714095247,ekr.20040713144036,ekr.20040713144036.1,ekr.20040714061625,ekr.20040714061625.1,ekr.20040714061625.2,ekr.20040713152809,ekr.20040713193437,ekr.20040713161629.1,ekr.20040713194021,ekr.20040713152318,ekr.20040713151556.1,ekr.20040713160302,ekr.20040714060941,ekr.20040714053807.1,ekr.20040714054620.1,ekr.20040713150314.1,ekr.20040713144926,ekr.20040713154118,ekr.20040713200126,ekr.20040713211010,ekr.20040713161629.2,ekr.20040713205718,ekr.20040714074445,ekr.20040714074445,ekr.20040714072448,ekr.20040714082939,ekr.20040714085204,ekr.20040714082939.2,ekr.20040714084550,ekr.20040714082939.1,ekr.20040714082939.3,ekr.20040714085204.1,ekr.20040714084550.1,ekr.20040714085754,ekr.20040714091940.1"><vh>@file ../src/elisp2py.py</vh>
+<v t="ekr.20040713150037" a="E"><vh>class tok</vh>
 <v t="ekr.20040713150037.1" a="E"><vh>tok.__init__</vh></v>
 <v t="ekr.20040713150712"><vh>tok.copy</vh></v>
 <v t="ekr.20040713173923"><vh>tok.match</vh></v>
 <v t="ekr.20040713174349"><vh>tok.dump</vh></v>
-<v t="ekr.20040713164604"><vh>tok.dumpWs</vh></v>
-<v t="ekr.20040713180208"><vh>tok.toString</vh></v>
+<v t="ekr.20040713180208" a="E"><vh>tok.toString &amp; allies</vh>
+<v t="ekr.20040714091940"><vh>tok.parseTokToString</vh></v>
+<v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
+<v t="ekr.20040714095247" a="TV"><vh>tok.tokValToString</vh></v>
+</v>
 </v>
 <v t="ekr.20040713144036" a="E"><vh>class elisp2pyClass</vh>
-<v t="ekr.20040713144036.1"><vh>e.__init__</vh></v>
+<v t="ekr.20040713144036.1"><vh>e.__init__</vh>
+<v t="ekr.20040714061625"><vh>&lt;&lt; define elisp constants &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.2"><vh>&lt;&lt; define elisp functions &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.1"><vh>&lt;&lt; define elisp statements &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040713152809"><vh>Utils</vh>
 <v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
 <v t="ekr.20040713161629.1"><vh>dump</vh>
@@ -1030,18 +1034,32 @@
 <v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
 <v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
 <v t="ekr.20040713160302"><vh>findTokens</vh></v>
+<v t="ekr.20040714060941"><vh>isMatchingBracket</vh></v>
+<v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
+<v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
 <v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
-<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
+<v t="ekr.20040713144926" a="E"><vh>tokenize &amp; allies</vh>
 <v t="ekr.20040713154118"><vh>skipString</vh></v>
 </v>
 </v>
-<v t="ekr.20040713200126" a="E"><vh>Converters</vh>
+<v t="ekr.20040713200126"><vh>Converters</vh>
 <v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
-<v t="ekr.20040713161629.2" a="MTV"><vh>createPythonIndentation</vh></v>
-<v t="ekr.20040713205718"><vh>createIndentedBlock</vh></v>
-<v t="ekr.20040713155152"><vh>handleAllKeywords (old)</vh>
-<v t="ekr.20040713155152.1"><vh>handleKeyword</vh></v>
+<v t="ekr.20040713161629.2" a="EM"><vh>createPythonIndentation</vh></v>
+<v t="ekr.20040713205718"><vh>createIndentedBlock</vh>
+<v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
+</v>
+<v t="ekr.20040714082939" a="E"><vh>Parser &amp; allies</vh>
+<v t="ekr.20040714085204"><vh>&lt;&lt; parse block into tree &gt;&gt;</vh></v>
+<v t="ekr.20040714082939.2"><vh>parse_cond</vh></v>
+<v t="ekr.20040714084550"><vh>parse_def</vh></v>
+<v t="ekr.20040714082939.1"><vh>parse_if</vh></v>
+<v t="ekr.20040714082939.3"><vh>parse_let</vh></v>
+<v t="ekr.20040714085204.1"><vh>parse_loop</vh></v>
+<v t="ekr.20040714084550.1"><vh>parse_prog</vh></v>
+<v t="ekr.20040714085754"><vh>parse_set</vh></v>
+<v t="ekr.20040714091940.1"><vh>block</vh></v>
 </v>
 </v>
 </v>
@@ -5667,7 +5685,8 @@ before = u.findNodeInTree(p,"-before-")
 print '=' * 60
 for p in before.self_and_subtree_iter():
     e = elisp2py.elisp2pyClass(c,p)
-    e.convert()</t>
+    e.convert()
+    e.dump(e.tokens,verbose=3)</t>
 <t tx="ekr.20040713123828.1">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
@@ -6755,8 +6774,8 @@ def skipWsAndNl(list, i):
 indentation level depends on def, if, while, etc., not on parens.
 
 </t>
-<t tx="ekr.20040713131350"></t>
-<t tx="ekr.20040713131350.1"></t>
+<t tx="ekr.20040713131350">@language elisp</t>
+<t tx="ekr.20040713131350.1">@language elisp</t>
 <t tx="ekr.20040713132127.1">@ignore
 @language elisp
 </t>
@@ -7871,8 +7890,11 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
     
     self.c = c
     self.p = p
+    self.tabwidth = 4
 
-    self.statementLevel = 0</t>
+    &lt;&lt; define elisp constants &gt;&gt;
+    &lt;&lt; define elisp statements &gt;&gt;
+    &lt;&lt; define elisp functions &gt;&gt;</t>
 <t tx="ekr.20040713144336"></t>
 <t tx="ekr.20040713144926">def tokenize (self,s):
     
@@ -7906,7 +7928,7 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
             result.append(tok("string",val))
             i = j
         elif ch in name1:
-            j = g.skip_id(s,i,chars='-') # '-' valid in elisp.
+            j = g.skip_id(s,i,chars='-*') # '-*' valid in elisp.
             val = s[i:j]
             result.append(tok("id",val))
             i = j
@@ -7937,7 +7959,8 @@ if (&lt; emacs-major-version 20) "\C-c\C-e")  -&gt; if &lt;cond&gt;: &lt;val&gt;
 <t tx="ekr.20040713150037.1">def __init__ (self,kind,val=""):
     
     self.kind = kind
-    self.val = val</t>
+    self.val = val
+    self.isParseTok = type(val) == type([])</t>
 <t tx="ekr.20040713150314.1">def replaceAll (self,tokens,findKind,changeTok):
     
     self = e
@@ -8332,25 +8355,25 @@ def joinLines (aList):
     return ''.join(aList)</t>
 <t tx="ekr.20040713151556.1">def findMatchingBracket(self,tokens,i):
 
-    tok = tokens[i] ; i += 1
-    ch1 = tok.kind
-    assert ch1 in "({["
+    tok1 = tokens[i] ; i += 1
+    assert tok1.kind in "({["
    
-    if   ch1 == '(': delim = ')'
-    elif ch1 == '{': delim = '}'
-    else:            delim = ']'
+    if   tok1.kind == '(': delim = ')'
+    elif tok1.kind == '{': delim = '}'
+    else:                  delim = ']'
 
-    level = 0
+    level = 1
     while i &lt; len(tokens):
         tok = tokens[i]
+        # g.trace(level,delim,tok.kind)
         i += 1
-        if tok.kind == ch1:
+        if tok.kind == tok1.kind:
             level += 1
         elif tok.kind == delim:
             level -= 1
             if level == 0: return i-1
 
-    self.warning("%s not matched by %s", ch1,delim)
+    self.warning("%s not matched by %s" % (tok1.kind,delim))
     return None</t>
 <t tx="ekr.20040713152318">def warning (self,message):
     
@@ -8377,70 +8400,22 @@ def warning (self,message):
 
     self.warning("run-on elisp string:", g.get_line(s[i1:]))
     return i</t>
-<t tx="ekr.20040713155152"># converts if ( x ) to if x:
-# converts while ( x ) to while x:
-def handleAllKeywords(codeList):
+<t tx="ekr.20040713160302">def findTokens(self,tokens,i,findTokens):
+    
+    """Search for a match with findTokens.
+    Return i,i+len(findTokens) if found, or None,None otherwise."""
 
-    # print "handAllKeywords:", listToString(codeList)
-    i = 0
-    while i &lt; len(codeList):
-        if isStringOrComment(codeList,i):
-            i = skipStringOrComment(codeList,i)
-        elif ( matchWord(codeList,i,"if") or
-            matchWord(codeList,i,"while") or
-            matchWord(codeList,i,"for") or
-            matchWord(codeList,i,"elif") ):
-            i = handleKeyword(codeList,i)
+    e = self
+    
+    while i &lt; len(tokens):
+        
+        if e.matchTokens(tokens,i,findTokens):
+            return i,i+len(findTokens)
         else:
             i += 1
-    # print "handAllKeywords2:", listToString(codeList)</t>
-<t tx="ekr.20040713155152.1">def handleKeyword(codeList,i):
-
-    isFor = False
-    if (matchWord(codeList,i,"if")):
-        i += 2
-    elif (matchWord(codeList,i,"elif")):
-        i += 4
-    elif (matchWord(codeList,i,"while")):
-        i += 5
-    elif (matchWord(codeList,i,"for")):
-        i += 3
-        isFor = True
-    else: assert(0)
-    # Make sure one space follows the keyword
-    k = i
-    i = skipWs(codeList,i)
-    if k == i:
-        c = codeList[i]
-        codeList[i:i+1] = [ ' ', c ]
-        i += 1
-    # Remove '(' and matching ')' and add a ':'
-    if codeList[i] == "(":
-        j = removeMatchingBrackets(codeList,i)
-        if j &gt; i and j &lt; len(codeList):
-            c = codeList[j]
-            codeList[j:j+1] = [":", " ", c]
-            j = j + 2
-        return j
-    return i</t>
-<t tx="ekr.20040713160302">def findTokens(self,tokens,i,fTokens):
-
-    progress = i-1
-    while i &lt; len(tokens):
-        assert progress &lt; i
-        progress = i
-
-        found = True
-        for j in xrange(len(fTokens)):
-            tok = tokens[i+j]
-            ftok = fTokens[j]
-            if not tok.match(ftok):
-                found = False; break
-        if found: return i,i+j
-        else: i += 1
 
     return None,None # Not found</t>
-<t tx="ekr.20040713161629.1">def dump (self,tokens,verbose=1):
+<t tx="ekr.20040713161629.1">def dump (self,tokens,verbose=2,tag=None):
     
     e = self ; p = e.p ; v2 = verbose &gt;= 2
     
@@ -8459,49 +8434,51 @@ def handleAllKeywords(codeList):
         else:
             for tok in tokens:
                 print tok.toString(verbose=verbose)</t>
-<t tx="ekr.20040713161629.2">def createPythonIndentation (self,tokens):
+<t tx="ekr.20040713161629.2">def createPythonIndentation (self,tokens,level=0):
     
     e = self ; p = e.p
-
-    # Whitespace has been deleted.
-    findToks = [tok('('),tok("id","defun"),tok("id"),tok("(")] 
-    
-    i = 0 ; progress = -1
+    i = 0
     while i &lt; len(tokens):
-        assert(progress &lt; i)
-        progress = i
-        i,j = e.findTokens(tokens,i,findToks)
-        if i is not None:
-            s = [str(tokens[k].toString()) for k in xrange(i,j+1)]
-            print "found:",' '.join(s)
-            k = e.findMatchingBracket(tokens,i)
-            if k is None:
-                print "No matching bracket!"
-                 i = j + 1
-            else:
-                # print "found matching bracket",k,str(tokens[k].toString())
-                e.statementLevel += 1
-                e.createIndentedBlock(tokens[1:k])
-                e.statementLevel -= 1
-                ### This isn't right: we will have to replace the token list and start again.
-                i = k + 1
+        if e.isStatement(tokens,i):
+            # e.dump(tokens[i:i+2])
+            j = e.findMatchingBracket(tokens,i)
+            if j is not None:
+                assert e.isMatchingBracket(tokens,i,j)
+                # Strip off the matching brackets
+                newTokens = e.createIndentedBlock(tokens[i+1:j],level+1)
+                if newTokens:
+                    # Recursively handle all inner statements.
+                    newTokens = e.createPythonIndentation(newTokens,level+1)
+                    tokens[i:j+1] = newTokens
+                    assert not e.isStatement(tokens,i)
+                    i = j # No need to rescan.
         else:
-            break</t>
-<t tx="ekr.20040713164604">def dumpWs (self,ws):
+            i += 1
+
+    return tokens</t>
+<t tx="ekr.20040713164604">def wsToString (self,ws):
     
-    result = ["&lt;"]
+    allBlanks = True
     for ch in ws:
-        if ch == ' ':
-            result.append(" ")
-        elif ch == '\t':
-            result.append("tab")
-        elif ch == '\f':
-            result.append("feed")
-        else:
-            result.append("&lt;%s&gt;" % repr(ch)) # should never happen.
-    
-    result.append("&gt;")
-    return ''.join(result)</t>
+        if ch != ' ':
+            allBlanks = False
+            
+    if allBlanks:
+       return "&lt;' '*%d&gt;" % len(ws)
+    else:
+        result = ["&lt;"]
+        for ch in ws:
+            if ch == ' ':
+                result.append(" ")
+            elif ch == '\t':
+                result.append("tab")
+            elif ch == '\f':
+                result.append("feed")
+            else:
+                result.append("&lt;%s&gt;" % repr(ch)) # should never happen.
+        
+        result.append("&gt;")
+        return ''.join(result)</t>
 <t tx="ekr.20040713173923">def match (self,tok2):
     
     tok1 = self
@@ -8523,86 +8500,63 @@ def handleAllKeywords(codeList):
     if verbose == 2:
         print tok.toString(verbose=verbose)
     else:
-        print tok.toString(verbose=verbose),
-    
-    return ##
-    
-    if verbose == 2:
-        val = g.toEncodedString(tok.val,g.app.tkEncoding)
-        if   tok.kind == '\n':      print "%9s:" % "newline"
-        elif tok.kind=="form-feed": print "%9s:" % "form-feed"
-        elif len(tok.kind)==1:      print "%9s:" % tok.kind
-        elif tok.kind == "ws":
-                print "%9s: %s" % (tok.kind,self.dumpWs(tok.val))
-        else:   print "%9s: &lt;%s&gt;" % (tok.kind, val)
-
-    else:
-        val = g.toEncodedString(tok.val,g.app.tkEncoding)
-        if tok.kind == '\n':        print
-        elif len(tok.kind) == 1:    print tok.kind,
-        elif tok.kind=="form-feed":
-            print ; print "form-feed" ; print
-        else: print val,</t>
+        print tok.toString(verbose=verbose),</t>
 <t tx="ekr.20040713180208">def toString (self,verbose=2):
     
     tok = self
     
-    if verbose &lt; 2:
-        return
-    
+    if verbose &lt; 2: return
     val = tok.val or ""
     val = g.toEncodedString(val,g.app.tkEncoding)
     
     if verbose == 2:
-        if len(tok.kind) == 1:      return tok.kind
+        if tok.isParseTok: return "%s:%s" % tok.parseTokToString()
+        elif len(tok.kind) == 1:    return tok.kind
         elif tok.kind=="form-feed": return "\nform-feed\n"
+        elif tok.kind == "comment": return "\n%s" % val
         else:                       return val
     
     elif verbose == 3:
-        if   tok.kind == '\n':      return "%9s:" % "newline"
+        if tok.isParseTok: return "%9s: %s" % tok.parseTokToString()
+        elif tok.kind == '\n':      return "%9s:" % "newline"
         elif tok.kind=="form-feed": return "%9s:" % "form-feed"
         elif len(tok.kind)==1:      return "%9s:" % tok.kind
         elif tok.kind == "ws":
-                return "%9s: %s" % (tok.kind,self.dumpWs(val))
-        else:   return "%9s: &lt;%s&gt;" % (tok.kind,val)
-</t>
+                return "%9s: %s" % (tok.kind,tok.wsToString(val))
+        else:   return "%9s: &lt;%s&gt;" % (tok.kind,val)</t>
 <t tx="ekr.20040713193437">def deleteTokens (self,tokens,delToken):
             
     return [tok for tok in tokens if not tok.match(delToken)]</t>
 <t tx="ekr.20040713194021">print
 print ; print '-' * 40
-print p.headString()
+if tag:
+    print tag
+else:
+    print p.headString()
 print '-' * 40
 print</t>
 <t tx="ekr.20040713200126"></t>
-<t tx="ekr.20040713200238"></t>
-<t tx="ekr.20040713205718">def createIndentedBlock (self,tokens):
+<t tx="ekr.20040713200238">@language elisp</t>
+<t tx="ekr.20040713205718">def createIndentedBlock (self,tokens,level):
     
-    return ## not ready yet.
+    e = self ; p = e.p ; level1 = level
     
-    e = self ; p = e.p
-
-    # Whitespace has been deleted.
-    findToks = [tok('('),tok("id","defun"),tok("id"),tok("(")] 
-    
-    i = 0 ; progress = -1
+    i = 0
     while i &lt; len(tokens):
-        assert(progress &lt; i)
-        progress = i
-        i,j = e.findTokens(tokens,i,findToks)
-        if i is not None:
-            s = [str(tokens[k].toString()) for k in xrange(i,j+1)]
-            print "found:",' '.join(s)
-            k = e.findMatchingBracket(tokens,i)
-            if k is None: print "No matching bracket!"
-            else:
-                # print "found matching bracket",k,str(tokens[k].toString())
-                e.statementLevel += 1
-                e.createIndentedBlock(tokens[1:k])
-                e.statementLevel -= 1
-            i = j + 1
+        t = tokens[i]
+        if t.kind == '(':
+            &lt;&lt; insert nl and ws tokens &gt;&gt;
+            level += 1
+            i += 3
+        elif t.kind == ')':
+            level -= 1 ; i += 1
+        elif t.kind == "string" and level == level1:
+            &lt;&lt; insert nl and ws tokens &gt;&gt;
+            i += 3
         else:
-            break</t>
+            i += 1
+
+    return tokens</t>
 <t tx="ekr.20040713211010">def convert (self):
     
     e = self ; p = e.p
@@ -8610,7 +8564,239 @@ print</t>
     e.tokens = e.tokenize(p.bodyString())
     e.tokens = e.deleteTokens(e.tokens,tok("ws"))
     e.tokens = e.deleteTokens(e.tokens,tok('\n'))
-    # e.dump(e.tokens,verbose=3)
-    e.createPythonIndentation(e.tokens)</t>
+    if 1:
+        e.tokens = e.parse(e.tokens)
+    else: # not yet
+        e.tokens = e.createPythonIndentation(e.tokens)
+        e.tokens = e.removeBlankLines(e.tokens)</t>
+<t tx="ekr.20040714053807.1">def isStatement (self,tokens,i):
+    
+    e = self
+    
+    for s in e.statements:
+        toks = [tok('('),tok('id',s)]
+        if e.matchTokens(tokens,i,toks):
+            return s
+
+    return False
+      
+    
+</t>
+<t tx="ekr.20040714054620.1">def matchTokens (self,tokens,i,findTokens):
+    
+    """Return True if tokens match findTokens at position i."""
+
+    j = 0
+    while j &lt; len(findTokens):
+        tok = tokens[i+j]
+        ftok = findTokens[j]
+        if not tok.match(ftok):
+            return False
+        j += 1
+    return True</t>
+<t tx="ekr.20040714055306"></t>
+<t tx="ekr.20040714060941">def isMatchingBracket(self,tokens,i,j):
+    
+    toki = tokens[i]
+    tokj = tokens[j]
+
+    f1 = "({[".find(toki.kind)
+    f2 = ")}]".find(tokj.kind)
+    
+    # g.trace(f1,f2,repr(toki.kind),repr(tokj.kind))
+    
+    return f1 == f2 and f1 != -1</t>
+<t tx="ekr.20040714061625">self.constants = ("t","nil")</t>
+<t tx="ekr.20040714061625.1">self.statements = (
+    "defconst","defun","defsubst","defvar",
+    "cond",
+    "if",
+    "let","let*",
+    "prog","progn",
+    "set","setq",
+    "unless","when","while",
+)
+
+</t>
+<t tx="ekr.20040714061625.2">self.functions = (
+    "and","or","not",
+    "apply","eval",
+    "cons","car","cdr",
+    "error","princ",
+    "eq","ne","equal","gt","ge","lt","le",
+    "mapcar","type-of",
+)</t>
+<t tx="ekr.20040714072448">def removeBlankLines (self,tokens):
+    
+    e = self
+    
+    i = 0
+    while i &lt; len(tokens):
+        
+        if tokens[i].kind == '\n':
+            j = i ; i += 1
+            while i &lt; len(tokens) and tokens[i].kind == "ws":
+                i += 1
+            if i &gt;= len(tokens) or tokens[i].kind == '\n':
+                del tokens[j:i]
+                i = j
+            else: i += 1
+        else: i += 1
+            
+    return tokens</t>
+<t tx="ekr.20040714074445">ws = tok("ws",' '*e.tabwidth*level)
+nl = tok('\n','\n')
+tokens.insert(i,nl)
+tokens.insert(i+1,ws)</t>
+<t tx="ekr.20040714082939">def parse (self,tokens):
+    
+    """A recursive-descent parser for elisp."""
+    
+    e = self
+    i = 0
+    while i &lt; len(tokens):
+        statement = e.isStatement(tokens,i)
+        if not statement:
+            i += 1 ; continue
+        j = e.findMatchingBracket(tokens,i)
+        if j is None:
+            e.error("No matching ')' for %s statement" % statement)
+            i += 1 ; continue
+        # Strip off the matching parens.
+        assert e.isMatchingBracket(tokens,i,j)
+        block = tokens[i+1:j]
+        &lt;&lt; parse block into tree &gt;&gt;
+        if tree:
+            # Replace the tokens with the parse tree.
+            g.trace(type(tree))
+            tokens[i:j] = [tree]
+            # No need to rescan: inner parsers call parse.
+            i = j
+        else:
+            i += 1
+            
+    return tokens</t>
+<t tx="ekr.20040714082939.1">def parse_if (self,tokens,statement):
+    
+    e = self
+    cond_block,then_block,else_block = None,None,None
+    # e.dump(tokens,tag=statement)
+    
+    i,cond_block = e.block(tokens,1)
+    if i is not None:
+        i,then_block = e.block(tokens,i+1)
+        if i is not None:
+            i,else_block = e.block(tokens,i+1)
+            
+    if cond_block and then_block:
+        tree = tok("if",[cond_block,then_block,else_block])
+    else:
+        tree = None
+        
+    return tree
+</t>
+<t tx="ekr.20040714082939.2">def parse_cond (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714082939.3">def parse_let (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714084550">def parse_def (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714084550.1">def parse_prog (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714085204">if statement == "cond":
+    tree = e.parse_cond(block,statement)
+
+elif statement in ("defconst","defun","defsubst","defvar"):
+    tree = e.parse_def(block,statement)
+
+elif statement == "if":
+    tree = e.parse_if(block,statement)
+
+elif statement in ("let","let*"):
+    tree = e.parse_let(block,statement)
+
+elif statement in ("set","setq"):
+    tree = e.parse_set(block,statement)
+
+elif statement in ("unless","when","while"):
+    tree = e.parse_loop(block,statement)
+
+else: tree = None</t>
+<t tx="ekr.20040714085204.1">def parse_loop (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714085754">def parse_set (self,tokens,statement):
+    
+    e = self
+    
+    e.dump(tokens,tag=statement)</t>
+<t tx="ekr.20040714091940">def parseTokToString (self):
+    
+    tok = self
+
+    return self.kind, tok.tokValToString(tok.val,verbose=2)</t>
+<t tx="ekr.20040714091940.1">def block (self,tokens,i):
+    
+    e = self
+    # g.trace(tokens[i])
+    if i &gt;= len(tokens):
+        return None,None
+    elif tokens[i].kind == '(':
+        j = e.findMatchingBracket(tokens,i)
+        if j is None:
+            # To do: print error message?
+            return None,None
+        else:
+            # Strip off the matching brackets
+            assert e.isMatchingBracket(tokens,i,j)
+            block = tokens[i+1:j]
+            ## To do: recursively parse this block.
+            if 0:
+                print
+                print "block..."
+                for t in block:
+                    print '  ',t.toString(verbose=3)
+            return j,block
+    elif tokens[i].kind in ("string","comment"):
+        # This is probably an error.  But shouldn't we strip comments??
+        return None,None
+    else:
+        # Assume anything else is valid.
+        block = tokens[i:i+1]
+        return i+1,block</t>
+<t tx="ekr.20040714095247">def tokValToString (self,val,verbose,level=0):
+
+    dummy_tok = tok("dummy_tok")
+    
+    result = []
+    if val is None:
+        result.append("None")
+    if type(val) == type(dummy_tok):
+        result.append(val.toString(verbose)+' ')
+    elif type(val) == type([]):
+        if level &gt; 0:
+            result.append('\n%s' % '\t' *level)
+        result.append('[')
+        for inner_val in val:
+            result.append(self.tokValToString(inner_val,verbose,level+1))
+        result.append(']')
+    else:
+        result.append("unknown type in valToString")
+        
+    return ''.join(result)</t>
 </tnodes>
 </leo_file>
