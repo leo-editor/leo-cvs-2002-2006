@@ -1642,22 +1642,19 @@ class baseFileCommands:
 		attrs = []
 		for key in attrDict.keys():
 			val = attrDict[key]
-			if 1:
-				try:
-					g.es(key,val)
-					s = pickle.dumps(val,bin=true)
-				except pickle.PicklingError:
-					g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
-					# import traceback ; traceback.print_exc()
-					return
-				attr = ' %s="%s"' % (key,binascii.hexlify(s))
-			else: # This is not general enough
+			try:
+				s = pickle.dumps(val,bin=true)
+			except pickle.PicklingError:
+				g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+				g.es(key,val)
+				return
+			attr = ' %s="%s"' % (key,binascii.hexlify(s))
+			if 0: # This is not general enough
 				attr = ' %s="%s"' % (key,self.xmlEscape(val))
 			attrs.append(attr)
 	
 		for attr in attrs:
 			self.put(attr)
-			# g.trace(torv,attr)
 	#@nonl
 	#@-node:EKR.20040526202501:putUnknownAttributes
 	#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
