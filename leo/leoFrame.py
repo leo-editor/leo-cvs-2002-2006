@@ -38,8 +38,10 @@ class LeoFrame:
 			app().numberOfWindows = n+1
 			self.mFileName = ""
 			
+		self.colorPanel = None # Set by leoColorPanel ctor
+		self.fontPanel = None # Set by leoFontPanel ctor
+			
 		self.outlineToNowebDefaultFileName = "noweb.nw" # For Outline To Noweb dialog.
-		
 		self.title=title # Title of window, not including dirty mark
 		self.saved=false # True if ever saved
 		self.startupWindow=false # True if initially opened window
@@ -122,7 +124,7 @@ class LeoFrame:
 	#@-node:1:C=1:frame.__init__
 	#@+node:2:C=2:frame.__del__
 	#@+body
-	# Warning:  call del self will not necessarily call this routine.
+	# Warning:  calling del self will not necessarily call this routine.
 	
 	def __del__ (self):
 		
@@ -839,7 +841,7 @@ class LeoFrame:
 	
 		# trace(`self in app().windowList` + ":" + `self`)
 		veto=false
-		c = self.commands
+		c = self.commands ; frame = c.frame
 		if c.changed:
 			
 			#@<< Prompt for change.  Set veto if the user cancels >>
@@ -886,6 +888,10 @@ class LeoFrame:
 
 		if veto: return false
 		app().log = None # no log until we reactive a window
+		if self.fontPanel:
+			self.fontPanel.top.destroy()
+		if self.colorPanel:
+			self.colorPanel.top.destroy()
 		if self in app().windowList:
 			app().windowList.remove(self)
 			self.destroy() # force the window to go away now.
@@ -1746,8 +1752,11 @@ class LeoFrame:
 	#@+body
 	def OnFontPanel(self,event=None):
 	
-		fp =  leoFontPanel.leoFontPanel(self.commands)
-		fp.run()
+		if self.fontPanel:
+			self.fontPanel.top.deiconify()
+		else:
+			self.fontPanel = fp =  leoFontPanel.leoFontPanel(self.commands)
+			fp.run()
 	
 		return "break" # inhibit further command processing
 	#@-body
@@ -1756,8 +1765,11 @@ class LeoFrame:
 	#@+body
 	def OnColorPanel(self,event=None):
 		
-		cp = leoColor.leoColorPanel(self.commands)
-		cp.run()
+		if self.colorPanel:
+			self.colorPanel.top.deiconify()
+		else:
+			self.colorPanel = cp = leoColor.leoColorPanel(self.commands)
+			cp.run()
 	
 		return "break" # inhibit further command processing
 

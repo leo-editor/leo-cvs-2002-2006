@@ -942,19 +942,82 @@ class colorizer:
 #@+node:4::<< define color panel data >>
 #@+body
 colorPanelData = (
-	#Dialog name,             option name,         default color),
-	("Brackets",       "section_name_brackets_color", "blue"),
-	("Comments",       "comment_color",               "red"),
-	("Directives",     "directive_color",             "blue"),
-	("Doc parts",      "doc_part_color",              "red"),
-	("Keywords" ,      "keyword_color",               "blue"),
-	("Leo Keywords",   "leo_keyword_color",           "blue"),
-	("Section Names",  "section_name_color",          "red"),
-	("Strings",        "string_color",                "#00aa00"), # Used by IDLE.
-	("Undefined Names","undefined_section_name_color","red") )
-	
-# This is too seldom used to take up space here.
-	# "cwebName"     :("cweb_section_name_color",     "red"),
+	#Dialog name,                option name,         default color),
+	("Brackets",          "section_name_brackets_color", "blue"),
+	("Comments",          "comment_color",               "red"),
+	("CWEB section names","cweb_section_name_color",     "red"),
+	("Directives",        "directive_color",             "blue"),
+	("Doc parts",         "doc_part_color",              "red"),
+	("Keywords" ,         "keyword_color",               "blue"),
+	("Leo Keywords",      "leo_keyword_color",           "blue"),
+	("Section Names",     "section_name_color",          "red"),
+	("Strings",           "string_color",   "#00aa00"), # Used by IDLE.
+	("Undefined Names",   "undefined_section_name_color","red") )
+
+colorNamesList = (
+	"gray60", "gray70", "gray80", "gray85", "gray90", "gray95",
+	"snow1", "snow2", "snow3", "snow4", "seashell1", "seashell2",
+	"seashell3", "seashell4", "AntiqueWhite1", "AntiqueWhite2", "AntiqueWhite3",
+	"AntiqueWhite4", "bisque1", "bisque2", "bisque3", "bisque4", "PeachPuff1",
+	"PeachPuff2", "PeachPuff3", "PeachPuff4", "NavajoWhite1", "NavajoWhite2",
+	"NavajoWhite3", "NavajoWhite4", "LemonChiffon1", "LemonChiffon2",
+	"LemonChiffon3", "LemonChiffon4", "cornsilk1", "cornsilk2", "cornsilk3",
+	"cornsilk4", "ivory1", "ivory2", "ivory3", "ivory4", "honeydew1", "honeydew2",
+	"honeydew3", "honeydew4", "LavenderBlush1", "LavenderBlush2",
+	"LavenderBlush3", "LavenderBlush4", "MistyRose1", "MistyRose2",
+	"MistyRose3", "MistyRose4", "azure1", "azure2", "azure3", "azure4",
+	"SlateBlue1", "SlateBlue2", "SlateBlue3", "SlateBlue4", "RoyalBlue1",
+	"RoyalBlue2", "RoyalBlue3", "RoyalBlue4", "blue1", "blue2", "blue3", "blue4",
+	"DodgerBlue1", "DodgerBlue2", "DodgerBlue3", "DodgerBlue4", "SteelBlue1",
+	"SteelBlue2", "SteelBlue3", "SteelBlue4", "DeepSkyBlue1", "DeepSkyBlue2",
+	"DeepSkyBlue3", "DeepSkyBlue4", "SkyBlue1", "SkyBlue2", "SkyBlue3",
+	"SkyBlue4", "LightSkyBlue1", "LightSkyBlue2", "LightSkyBlue3",
+	"LightSkyBlue4", "SlateGray1", "SlateGray2", "SlateGray3", "SlateGray4",
+	"LightSteelBlue1", "LightSteelBlue2", "LightSteelBlue3",
+	"LightSteelBlue4", "LightBlue1", "LightBlue2", "LightBlue3",
+	"LightBlue4", "LightCyan1", "LightCyan2", "LightCyan3", "LightCyan4",
+	"PaleTurquoise1", "PaleTurquoise2", "PaleTurquoise3", "PaleTurquoise4",
+	"CadetBlue1", "CadetBlue2", "CadetBlue3", "CadetBlue4", "turquoise1",
+	"turquoise2", "turquoise3", "turquoise4", "cyan1", "cyan2", "cyan3", "cyan4",
+	"DarkSlateGray1", "DarkSlateGray2", "DarkSlateGray3",
+	"DarkSlateGray4", "aquamarine1", "aquamarine2", "aquamarine3",
+	"aquamarine4", "DarkSeaGreen1", "DarkSeaGreen2", "DarkSeaGreen3",
+	"DarkSeaGreen4", "SeaGreen1", "SeaGreen2", "SeaGreen3", "SeaGreen4",
+	"PaleGreen1", "PaleGreen2", "PaleGreen3", "PaleGreen4", "SpringGreen1",
+	"SpringGreen2", "SpringGreen3", "SpringGreen4", "green1", "green2",
+	"green3", "green4", "chartreuse1", "chartreuse2", "chartreuse3",
+	"chartreuse4", "OliveDrab1", "OliveDrab2", "OliveDrab3", "OliveDrab4",
+	"DarkOliveGreen1", "DarkOliveGreen2", "DarkOliveGreen3",
+	"DarkOliveGreen4", "khaki1", "khaki2", "khaki3", "khaki4",
+	"LightGoldenrod1", "LightGoldenrod2", "LightGoldenrod3",
+	"LightGoldenrod4", "LightYellow1", "LightYellow2", "LightYellow3",
+	"LightYellow4", "yellow1", "yellow2", "yellow3", "yellow4", "gold1", "gold2",
+	"gold3", "gold4", "goldenrod1", "goldenrod2", "goldenrod3", "goldenrod4",
+	"DarkGoldenrod1", "DarkGoldenrod2", "DarkGoldenrod3", "DarkGoldenrod4",
+	"RosyBrown1", "RosyBrown2", "RosyBrown3", "RosyBrown4", "IndianRed1",
+	"IndianRed2", "IndianRed3", "IndianRed4", "sienna1", "sienna2", "sienna3",
+	"sienna4", "burlywood1", "burlywood2", "burlywood3", "burlywood4", "wheat1",
+	"wheat2", "wheat3", "wheat4", "tan1", "tan2", "tan3", "tan4", "chocolate1",
+	"chocolate2", "chocolate3", "chocolate4", "firebrick1", "firebrick2",
+	"firebrick3", "firebrick4", "brown1", "brown2", "brown3", "brown4", "salmon1",
+	"salmon2", "salmon3", "salmon4", "LightSalmon1", "LightSalmon2",
+	"LightSalmon3", "LightSalmon4", "orange1", "orange2", "orange3", "orange4",
+	"DarkOrange1", "DarkOrange2", "DarkOrange3", "DarkOrange4", "coral1",
+	"coral2", "coral3", "coral4", "tomato1", "tomato2", "tomato3", "tomato4",
+	"OrangeRed1", "OrangeRed2", "OrangeRed3", "OrangeRed4", "red1", "red2", "red3",
+	"red4", "DeepPink1", "DeepPink2", "DeepPink3", "DeepPink4", "HotPink1",
+	"HotPink2", "HotPink3", "HotPink4", "pink1", "pink2", "pink3", "pink4",
+	"LightPink1", "LightPink2", "LightPink3", "LightPink4", "PaleVioletRed1",
+	"PaleVioletRed2", "PaleVioletRed3", "PaleVioletRed4", "maroon1",
+	"maroon2", "maroon3", "maroon4", "VioletRed1", "VioletRed2", "VioletRed3",
+	"VioletRed4", "magenta1", "magenta2", "magenta3", "magenta4", "orchid1",
+	"orchid2", "orchid3", "orchid4", "plum1", "plum2", "plum3", "plum4",
+	"MediumOrchid1", "MediumOrchid2", "MediumOrchid3", "MediumOrchid4",
+	"DarkOrchid1", "DarkOrchid2", "DarkOrchid3", "DarkOrchid4", "purple1",
+	"purple2", "purple3", "purple4", "MediumPurple1", "MediumPurple2",
+	"MediumPurple3", "MediumPurple4", "thistle1", "thistle2", "thistle3",
+	"thistle4" )
+
 #@-body
 #@-node:4::<< define color panel data >>
 
@@ -984,6 +1047,7 @@ class leoColorPanel:
 	#@+body
 	def run (self):
 		
+		c = self.commands
 		
 		#@<< create color panel >>
 		#@+node:1::<< create color panel >>
@@ -992,7 +1056,7 @@ class leoColorPanel:
 		config = app().config
 		
 		self.top = top = Tk.Toplevel(app().root)
-		top.title("Select syntax colors")
+		top.title("Syntax colors for " + shortFileName(c.frame.title))
 		
 		outer = Tk.Frame(top,bd=2,relief="groove")
 		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
@@ -1005,15 +1069,26 @@ class leoColorPanel:
 			# Create the row.
 			f = Tk.Frame(outer,bd=2)
 			f.pack()
-			lab=Tk.Label(f,text=name,width=14,anchor="e")
+			
+			lab=Tk.Label(f,text=name,width=17,anchor="e")
+		
 			b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
 			self.buttons[name]=b1 # For callback.
 			self.option_names[name]=option_name # For callback.
+			
+			b2 = Tk.Button(f,width=10,text=option_color)
+			
 			callback = lambda name=name,color=color:self.showColorPicker(name,color)
-			b2 = Tk.Button(f,text="Set...",command=callback)
+			b3 = Tk.Button(f,text="Color Picker...",command=callback)
+		
+			callback = lambda name=name,color=color:self.showColorName(name,color)
+			b4 = Tk.Button(f,text="Color Name...",command=callback)
+		
 			lab.pack(side="left",padx=3)
 			b1.pack (side="left",padx=3)
 			b2.pack (side="left",padx=3)
+			b3.pack (side="left",padx=3)
+			b4.pack (side="left",padx=3)
 			
 		# Create the Ok, Cancel & Revert buttons
 		f = Tk.Frame(outer,bd=2)
@@ -1029,32 +1104,31 @@ class leoColorPanel:
 
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0)
-		top.grab_set() # Make the dialog a modal dialog.
-		top.focus_force() # Get all keystrokes.
+		
+		# We are associated with a commander, so
+		# There is no need to make this a modal dialog.
+		if 0:
+			top.grab_set() # Make the dialog a modal dialog.
+			top.focus_force() # Get all keystrokes.
 	#@-body
 	#@-node:2::run
 	#@+node:3::showColorPicker
 	#@+body
 	def showColorPicker (self,name,color):
 		
-		config = app().config
-		# Put the new color in val.
 		rgb,val = tkColorChooser.askcolor(color=color)
-		es(`val`)
-		# Put the new color in the button.
-		b = self.buttons[name]
-		b.configure(bg=val)
-		option_name = self.option_names[name]
-		# Save the old value for revert.
-		old = config.getColorsPref(option_name)
-		self.changed_options.append((option_name,old))
-		# Set the new value and recolor.
-		config.setColorsPref(option_name,val)
-		self.commands.recolor()
-
+		self.update(name,color)
 	#@-body
 	#@-node:3::showColorPicker
-	#@+node:4::onOk, onCancel, onRevert
+	#@+node:4::showColorName
+	#@+body
+	def showColorName (self,name,color):
+		
+		np = leoColorNamePanel(self,name,color)
+		np.run(name,color)
+	#@-body
+	#@-node:4::showColorName
+	#@+node:5::onOk, onCancel, onRevert
 	#@+body
 	def onOk (self):
 		self.top.destroy()
@@ -1069,11 +1143,191 @@ class leoColorPanel:
 		self.changed_options = []
 		self.commands.recolor()
 	#@-body
-	#@-node:4::onOk, onCancel, onRevert
+	#@-node:5::onOk, onCancel, onRevert
+	#@+node:6::update
+	#@+body
+	def update (self,name,val):
+		
+		config = app().config
+		es(`val`)
+		
+		# Put the new color in the button.
+		b = self.buttons[name]
+		b.configure(bg=val)
+		option_name = self.option_names[name]
+		
+		# Save the old value for revert.
+		old = config.getColorsPref(option_name)
+		self.changed_options.append((option_name,old))
+		
+		# Set the new value and recolor.
+		config.setColorsPref(option_name,val)
+		self.commands.recolor()
+	#@-body
+	#@-node:6::update
 	#@-others
 	
 	#@-body
 	#@-node:6:C=8:<< class leoColorPanel methods >>
+
+	
+class leoColorNamePanel:
+	
+	#@<< class leoColorNamePanel methods >>
+	#@+node:7::<< class leoColorNamePanel methods >>
+	#@+body
+	#@+others
+	#@+node:1::namePanel.__init__
+	#@+body
+	def __init__ (self, colorPanel, name, color):
+		
+		self.colorPanel = colorPanel
+		self.name = name
+		self.color = color
+		self.revertColor = color
+	#@-body
+	#@-node:1::namePanel.__init__
+	#@+node:2::getSelection
+	#@+body
+	def getSelection (self):
+	
+		box = self.box ; color = None
+		
+		# Get the family name if possible, or font otherwise.
+		items = box.curselection()
+	
+		if len(items)> 0:
+			try: # This shouldn't fail now.
+				items = map(int, items)
+				color = box.get(items[0])
+			except: 
+				traceback.print_exc()
+	
+		if not color:
+			color = self.color
+		return color
+	#@-body
+	#@-node:2::getSelection
+	#@+node:3::run
+	#@+body
+	def run (self,name,color):
+		
+		assert(name==self.name)
+		assert(color==self.color)
+		
+		Tk = Tkinter
+		config = app().config
+	
+		self.top = top = Tk.Toplevel(app().root)
+		top.title("Color names for " + `name`)
+	
+		
+		#@<< create color name panel >>
+		#@+node:1::<< create color name panel >>
+		#@+body
+		# Create organizer frames
+		outer = Tk.Frame(top,bd=2,relief="groove")
+		outer.pack(fill="both",expand=1)
+		
+		upper = Tk.Frame(outer,height="6i")
+		upper.pack(fill="both",expand=1)
+		
+		lt = Tk.Frame(upper)
+		lt.pack(side="left",fill="both",expand=1)
+		
+		rt = Tk.Frame(upper) 
+		rt.pack(side="right",pady="2i") # A kludge to expand the listbox!
+		
+		lower = Tk.Frame(outer)
+		# padx=20 gives more room to the Listbox!
+		lower.pack(padx=40) # Not expanding centers the buttons.
+		
+		# Create and populate the listbox.
+		self.box = box = Tk.Listbox(lt)
+		box.bind("<Double-Button-1>", self.onApply)
+		
+		if color not in colorNamesList:
+			box.insert(0,color)
+			
+		names = list(colorNamesList) # It's actually a tuple.
+		names.sort()
+		for name in names:
+			box.insert("end",name)
+		
+		bar = Tk.Scrollbar(box)
+		bar.pack(side="right", fill="y")
+		box.pack(padx=2,pady=2,expand=1,fill="both")
+		
+		bar.config(command=box.yview)
+		box.config(yscrollcommand=bar.set)
+		
+		self.select(color)
+			
+		# Create the row of buttons.
+		for text,command in (
+			("OK",self.onOk),
+			("Cancel",self.onCancel),
+			("Revert",self.onRevert),
+			("Apply",self.onApply) ):
+				
+			b = Tk.Button(lower,text=text,command=command)
+			b.pack(side="left",pady=6,padx=4)
+		#@-body
+		#@-node:1::<< create color name panel >>
+
+		
+		center_dialog(top) # Do this _after_ building the dialog!
+		# top.resizable(0,0)
+		
+		# This must be a modal dialog.
+		top.grab_set()
+		top.focus_force() # Get all keystrokes.
+	#@-body
+	#@-node:3::run
+	#@+node:4::onOk, onCancel, onRevert, OnApply
+	#@+body
+	def onApply (self,event=None):
+		self.color = color = self.getSelection()
+		self.colorPanel.update(self.name,color)
+	
+	def onOk (self):
+		color = self.getSelection()
+		self.colorPanel.update(self.name,color)
+		self.top.destroy()
+		
+	def onCancel (self):
+		self.onRevert()
+		self.top.destroy()
+		
+	def onRevert (self):
+		self.color = color = self.revertColor
+		self.select(self.color)
+		self.colorPanel.update(self.name,color)
+	#@-body
+	#@-node:4::onOk, onCancel, onRevert, OnApply
+	#@+node:5::select
+	#@+body
+	def select (self,color):
+	
+		# trace(color)
+	
+		# The name should be on the list!
+		box = self.box
+		for i in xrange(0,box.size()):
+			item = box.get(i)
+			if color == item:
+				box.select_clear(0,"end")
+				box.select_set(i)
+				box.see(i)
+				return
+	
+		# trace("not found:" + `color`)
+	#@-body
+	#@-node:5::select
+	#@-others
+	
+	#@-body
+	#@-node:7::<< class leoColorNamePanel methods >>
 #@-body
 #@-node:0::@file leoColor.py
 #@-leo

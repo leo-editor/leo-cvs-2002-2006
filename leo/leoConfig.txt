@@ -160,7 +160,7 @@ leo_keyword_color = #00aa00
 section_name_color = red
 #	The color of name in <<name>> when name is defined.
 
-section_name_brackets = blue
+section_name_brackets_color = blue
 #	The color of << and >> in <<name>>
 
 string_color = #00aa00

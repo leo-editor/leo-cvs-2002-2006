@@ -202,6 +202,7 @@ class leoFontPanel:
 		bold = self.boldVar.get()
 		ital = self.italVar.get()
 		size = self.sizeVar.get()
+		# trace(`size`)
 		slant=choose(ital,"italic","roman")
 		weight=choose(bold,"bold","normal")
 		# Compute the font from all the settings.
@@ -359,7 +360,7 @@ class leoFontPanel:
 			return
 		# trace(`size`)
 		self.sizeVar.set(size)
-		if 1 < size < 100: # Choosing very small or large fonts drives Tk crazy.
+		if 0 < size < 100: # Choosing very small or large fonts drives Tk crazy.
 			self.update()
 	#@-body
 	#@-node:9::onSizeEntryKey
