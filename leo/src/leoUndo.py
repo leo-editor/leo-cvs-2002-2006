@@ -43,7 +43,7 @@ optionalIvars = (
 	"oldText","newText",
 	"oldSel","newSel",
 	"sort","select",
-	"oldTree",
+	"oldTree","newTree", # Added newTree 10/14/03
 	"yview",
 	# For incremental undo typing...
 	"leading","trailing",
@@ -150,7 +150,8 @@ class baseUndoer:
 	def getBead (self,n):
 		
 		u = self
-		if n < 0 or n >= len(u.beads): return false
+		if n < 0 or n >= len(u.beads):
+			return None
 		d = u.beads[n]
 		# trace(`n` + ":" + `len(u.beads)` + ":" + `d`)
 		self.clearIvars()
@@ -175,7 +176,8 @@ class baseUndoer:
 	def peekBead (self,n):
 		
 		u = self
-		if n < 0 or n >= len(u.beads): return false
+		if n < 0 or n >= len(u.beads):
+			return None
 		d = u.beads[n]
 		# trace(`n` + ":" + `len(u.beads)` + ":" + `d`)
 		return d
@@ -205,7 +207,6 @@ class baseUndoer:
 					# trace(`u.oldText`)
 		# trace(`d`)
 		return d
-	#@nonl
 	#@-node:getBead, peekBead, setBead
 	#@+node:redoMenuName, undoMenuName
 	def redoMenuName (self,name):
@@ -269,6 +270,8 @@ class baseUndoer:
 	#@@c
 	
 	def setUndoParams (self,undo_type,v,**keywords):
+		
+		# trace(undo_type)
 	
 		u = self
 		if u.redoing or u.undoing: return None
@@ -307,6 +310,8 @@ class baseUndoer:
 	#@@c
 	
 	def setUndoTypingParams (self,v,undo_type,oldText,newText,oldSel,newSel,oldYview=None):
+		
+		# trace(undo_type)
 	
 		u = self ; c = u.commands
 		if u.redoing or u.undoing: return None
@@ -578,8 +583,8 @@ class baseUndoer:
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section",
 				"Read @file Nodes"):
-				
-				u.v = self.undoReplace(u.oldTree,u.v,u.newText)
+			
+				u.v = self.undoReplace(u.v,u.oldTree,u.newTree,u.newText)
 				c.selectVnode(u.v) # Does full recolor.
 				if u.newSel:
 					start,end=u.newSel
@@ -797,8 +802,8 @@ class baseUndoer:
 				"Convert All Blanks","Convert All Tabs",
 				"Extract","Extract Names","Extract Section",
 				"Read @file Nodes"):
-					
-				u.v = self.undoReplace(u.v,u.oldTree,u.oldText)
+			
+				u.v = self.undoReplace(u.v,u.newTree,u.oldTree,u.oldText)
 				c.selectVnode(u.v) # Does full recolor.
 				if u.oldSel:
 					start,end=u.oldSel
@@ -911,6 +916,29 @@ class baseUndoer:
 		# print_stats()
 	#@nonl
 	#@-node:u.undo
+	#@+node:saveTree, restoreExtraAttributes
+	def saveTree (self,v):
+		
+		tree = v.copyTree()
+		headlines = []
+		bodies = []
+		extraAttributes = []
+		after = v.nodeAfterTree()
+		while v and v != after:
+			headlines.append(v.headString())
+			bodies.append(v.bodyString())
+			data = v.extraAttributes(), v.t.extraAttributes()
+			extraAttributes.append(data)
+			v = v.threadNext()
+		return tree, headlines, bodies, extraAttributes
+	
+	def restoreExtraAttributes (self,v,extraAttributes):
+	
+		v_extraAttributes, t_extraAttributes = extraAttributes
+		v.setExtraAttributes(v_extraAttributes)
+		v.t.setExtraAttributes(t_extraAttributes)
+	#@nonl
+	#@-node:saveTree, restoreExtraAttributes
 	#@+node:findSharedVnode
 	def findSharedVnode (self,target):
 	
@@ -974,21 +1002,43 @@ class baseUndoer:
 	# This routine implements undo for any kind of operation, no matter how 
 	# complex.  Just do:
 	# 
-	# 	v_copy = v.copyTree(v)
-	# 	(make arbitrary changes to v's tree.)
+	# 	v_copy = c.undoer.saveTree(v)
+	# 	...make arbitrary changes to v's tree.
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
 	#@-at
 	#@@c
 	
-	def undoReplace (self,new_v,old_v,text):
-		
+	def undoReplace (self,v,new_data,old_data,text):
+	
 		"""Replace new_v with old_v during undo."""
 	
-		# trace("new_v:%s" % new_v)
-		# trace("old_v:%s" % old_v)
-		# trace("text:",text)
-		assert(new_v and old_v)
+		u = self
+		if 0:
+			trace(u.undoType)
+			trace("u.bead",u.bead, type(u.peekBead(u.bead)))
+			trace("new_data:",type(new_data))
+			trace("old_data:",type(old_data))
+	
+		assert(type(new_data)==type((),) or type(old_data)==type((),))
+	
+		# new_data will be None the first time we undo this operation.
+		# In that case, we must save the new tree for later undo operation.
+		try:
+			new_v, new_headlines, new_bodies, new_attributes = new_data
+		except:
+			new_data = u.saveTree(v)
+			new_v, new_headlines, new_bodies, new_attributes = new_data
+			# Put the new data in the bead.
+			d = u.beads[u.bead]
+			d["newTree"] = new_data
+			u.beads[u.bead] = d
+			# Another kludge to satisfy assert(new_v in joinList) below.
+			new_v = v
+			
+		# The previous code should already have created this data.
+		old_v, old_headlines, old_bodies, old_attributes = old_data
 		assert(text is not None)
+	
 		u = self ; c = u.commands
 		joinList = new_v.t.joinList[:]
 		if 0:
@@ -1015,10 +1065,22 @@ class baseUndoer:
 			copy.addTreeToJoinLists()
 			assert(copy in copy.t.joinList)
 	
+		# Restore all headlines and bodies from the saved lists.
+		assert(new_bodies != None)
+		assert(old_bodies != None)
+		v = copy; after = copy.nodeAfterTree()
+		encoding = app.tkEncoding
+		i = 0
+		while v and v != after:
+			v.initHeadString(old_headlines[i],encoding)
+			v.t.setTnodeText(old_bodies[i],encoding)
+			u.restoreExtraAttributes(v,old_attributes[i])
+			v = v.threadNext()
+			i += 1
+	
 		assert(result == old_v)
 		result.t.setTnodeText(text)
 		result.setBodyStringOrPane(text)
-	
 		c.initAllCloneBits()
 		return result
 	#@nonl
