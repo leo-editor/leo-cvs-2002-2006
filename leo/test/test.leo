@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6598" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6599" clone_windows="0"/>
 <globals body_outline_ratio="0.494382022472">
-	<global_window_position top="65" left="383" height="480" width="557"/>
+	<global_window_position top="66" left="37" height="680" width="800"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -31,11 +31,9 @@
 <v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
 <v t="ekr.20050104095950"><vh>@shortcuts</vh></v>
-<v t="ekr.20050123143337"><vh>#@shortcut Exit = alt-ctrl-Q</vh></v>
+<v t="ekr.20050123143337"><vh>@bool redirect_execute_script_output_to_log_pane = None</vh></v>
 </v>
-<v t="EKR.20040623200709"
-marks="ekr.20050106081120.1,"
-expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.20040708173707,"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040901065642.2"><vh>runTimeit</vh>
@@ -542,6 +540,7 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 </v>
 <v t="ekr.20050113094943"><vh>Unicode stuff</vh></v>
 <v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
+<v t="ekr.20050203085849"><vh>test local settings (c.redirect_execute_script_output_to_log_pane)</vh></v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -938,7 +937,7 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 <v t="ekr.20041126035448"><vh>Script to import a file</vh></v>
 <v t="ekr.20041225104159.1"><vh>Create stand-alone settings dialog</vh></v>
 <v t="ekr.20050108110751"><vh>HTMLize scripts</vh>
-<v t="ekr.20041229163210" a="M"><vh>dyna htmlize</vh>
+<v t="ekr.20041229163210"><vh>dyna htmlize</vh>
 <v t="ekr.20041229164609"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041229163210.2"><vh>&lt;&lt; init globals &gt;&gt;</vh></v>
 <v t="ekr.20041229170824"><vh>stripSentinels</vh></v>
@@ -972,7 +971,7 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 </v>
 <v t="EKR.20040619133116" a="TV"><vh>Unit testing...</vh>
 <v t="bwmulder.20050108100437.1"><vh>How to run unit tests</vh></v>
-<v t="ekr.20040723064143.1" a="E"><vh>To do...</vh>
+<v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
@@ -1044,7 +1043,7 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 </v>
 <v t="ekr.20050119144013"><vh>Remove all file system dependencies</vh></v>
 </v>
-<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests</vh></v>
 <v t="ekr.20050106080304"><vh>@suite run all test routines</vh>
 <v t="ekr.20050106123646"><vh>unused</vh>
@@ -1086,12 +1085,12 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 <v t="ekr.20050105084757.1"><vh>@test g.utils_remove</vh></v>
 <v t="ekr.20050105091547"><vh>@test g.utils_rename</vh></v>
 </v>
-<v t="ekr.20040712101754.7" a="E"><vh>Import/Export tests</vh>
+<v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
 <v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
-<v t="ekr.20040712101754.12" a="E"><vh>importAtRoot</vh>
+<v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
 <v t="ekr.20040831095833"><vh>importDerivedFile</vh>
@@ -1525,6 +1524,10 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 </v>
 </v>
 </v>
+<v t="ekr.20050203084930"><vh>Test settings...</vh>
+<v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
+<v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
+</v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
@@ -1547,7 +1550,7 @@ expanded="ekr.20040707210849,ekr.20040707073029,ekr.20040707140849.12,ekr.200407
 <v t="ekr.20050120095423.13"><vh>class pluginTestCase</vh>
 <v t="ekr.20050120095423.14"><vh>__init__</vh></v>
 <v t="ekr.20050120095423.15"><vh>fail</vh></v>
-<v t="ekr.20050120095423.16" a="M"><vh>runTest</vh></v>
+<v t="ekr.20050120095423.16"><vh>runTest</vh></v>
 <v t="ekr.20050120095423.17"><vh>setUp</vh></v>
 <v t="ekr.20050120095423.18"><vh>shortDescription</vh></v>
 <v t="ekr.20050120095423.19"><vh>tearDown</vh></v>
@@ -10875,7 +10878,8 @@ if not spellpyx or not spellFrame:
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
-/Users/edream/leoCVS/leo/test/test.leo</t>
+/Users/edream/leoCVS/leo/test/test.leo
+/Users/edream/leoCVS/leo/config/leoSettings.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
@@ -13367,6 +13371,32 @@ for p in p.self_and_subtree_iter():
 headlines = '\n'.join(headlines)
 print headlines
 
+</t>
+<t tx="ekr.20050203001146">import leoGlobals as g
+
+c = g.top()
+
+# g.es(c.page_width)
+
+assert c.page_width == 80</t>
+<t tx="ekr.20050203084930"></t>
+<t tx="ekr.20050203084930.1">import leoGlobals as g
+
+w = g.app.config.get(None,'global_setting_for_unit_tests','int')
+
+# print w 
+
+assert w == 132</t>
+<t tx="ekr.20050203085849">import leoGlobals as g
+
+c = g.top()
+
+g.es(c.redirect_execute_script_output_to_log_pane)
+g.es(c.config.redirect_execute_script_output_to_log_pane)
+print 'hello'
+
+#assert c.redirect_execute_script_output_to_log_pane is True
+#assert c.config.redirect_execute_script_output_to_log_pane is True
 </t>
 </tnodes>
 </leo_file>
