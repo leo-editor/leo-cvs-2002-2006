@@ -654,11 +654,11 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
-<v t="EKR.20040610201941" a="E"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
 <v t="EKR.20040610192622" a="E"><vh>Check Syntax script</vh></v>
-<v t="EKR.20040610192622.1" a="TV"><vh>Check Syntax data</vh></v>
+<v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
 </v>
-<v t="EKR.20040610201236" a="E"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610201236" a="TV"><vh>Tabnanny prototype</vh>
 <v t="EKR.20040610194209" a="E"><vh>TabNanny script</vh>
 <v t="EKR.20040610195543"><vh>checkString</vh></v>
 <v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
@@ -2665,8 +2665,15 @@ def not_less_witness(self, other):
 To do:
 	
 - Specify which nodes to check.
-- Check only Python code.</t>
-<t tx="EKR.20040610201941"></t>
+- Check only Python code.
+- use g.readLinesClass or similar code in existing Python module.</t>
+<t tx="EKR.20040610201941">@
+
+To do:
+	
+- Specify which nodes to check.
+- Check only Python code.
+- use g.readLinesClass or similar code in existing Python module.</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -3882,7 +3889,7 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
 

@@ -40576,6 +40576,241 @@ def pasteOutlineRetainingClones (self):
 #@-node:EKR.20040610130943:pasteOutlineRetainingClones
 #@-node:ekr.20031218072017.1548:Cut & Paste Outlines
 #@-node:EKR.20040603074929:(Added Paste Retaining Clones command)
+#@+node:EKR.20040610174603:(Fixed bug when pasting large text into headlines)
+#@+node:EKR.20040610174603.1:Report
+@nocolor
+
+> found a fatal bug in Leo headline handling.
+
+setting breakpoints in OnPasteFromMenu and in idle_head_key,
+after a large paste, control is returned to OnPasteFromMenu
+before 
+  w.event_generate(virtual_event_name("Paste")) 
+told it to continue running,
+and control is returned to  idle_head_key. told it to continue running,
+and it crashes. so something in idle_head_key.
+
+singlestepping in idle_head_key after a large paste,
+it gets to here.
+  s = v.edit_text().get("1.0","end")
+able to singlestep thru,
+then crashes here.
+  s = toUnicode(s,app.tkEncoding) # 2/25/03
+what was that saying about refusing the temptation to guess?
+
+even though not a direct cause as it now appears,
+a possible solution is to limit the size of the copy buffer
+before the virtual paste in OnPasteFromMenu 
+
+after the virtual paste there is this line,
+  if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+
+is there only the body or headline widget possible using this function?
+
+is there anyway to determine exactly if this widget is a headline?
+I gather the headline widgets don't have Tk names
+as many of the other Text and Entry widgets also don't.
+it would simplify automation of Leo if all widgets had names.
+since they do have arbitrarily assigned Tk numbers as names anyway,
+maybe when each headline is created it can be given a name.
+then it would simply be a matter of testing if it was a headline widget.
+
+this would also seem to provide a solution to the long standing bug,
+where delete and selectall while editing headline
+actually deletes and selectall operates on the body text.
+
+in OnPasteFromMenu something like:
+...
+  w = self.getFocus()
+#
+  if w._name.startswith('Hl'):   #we have a headline
+        g.app.gui.replaceClipboardWith(
+                g.app.gui.getTextFromClipboard()[:1024]
+        )
+#
+  w.event_generate(virtual_event_name("Paste"))
+...
+
+then again, maybe its a bug in the py2.3 unicode conversion
+or in Leo's toUnicode and nothing whatever in Tk.
+
+it still quite boggles my mind how much stuff 
+goes on behind the scenes in Leo.
+
+heres another way to run Leo I just tried
+yesterday for the first time.
+
+------cut openleo.pys
+@path c:\bIn\pys\
+@lineending crnl
+@
+w04609p09:57:19 a pys to open leo and do something.
+you need the win32 extensions amn you have to enable 
+the script engine. details how on google or on the win32 page.
+
+the sendkeys method can insert any test or control codes
+msdn or microsoft.com/scripting
+
+@c
+pypath = r'C:\c\py\Python233'
+py =  pypath + r'\python.exe -itOO '
+leosrc = r'c:\c\leo\leo4CVS233\src'
+name = "blank.leo"
+
+WshShell = WScript.CreateObject("WScript.Shell")
+
+#look like it comes up untitled 
+# if it cant find an existing leo of that name?
+
+WshShell.Run(py + leosrc + r'\Leo.py ../' + name)
+WScript.Sleep(4900) 
+
+wname = "untitled"
+
+WshShell.AppActivate(wname);  WScript.Sleep(2100)
+WshShell.SendKeys("%Fe");   WScript.Sleep(1300);  #^Q
+
+---end openleo.pys
+
+I can see using WSH scripts as another way to test apps,
+simulating what the user does pressing keys.
+maybe I can determine exactly the size of text needed to crash.
+and if it matters the content of the text.
+so far I've been using copys of nodes to cause the crash. 
+maybe there is something besides the size of the node.
+sorry if its more questions than answers today.
+
+#@-node:EKR.20040610174603.1:Report
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+def OnPaste (self,event=None):
+	
+	frame = self ; c = frame.c ; v = c.currentVnode()
+
+	# Activate the body key handler by hand.
+	frame.body.forceFullRecolor()
+	frame.body.onBodyWillChange(v,"Paste")
+	
+def OnPasteFromMenu (self):
+	
+	frame = self ; c = frame.c ; v = c.currentVnode()
+
+	w = self.getFocus()
+	w.event_generate(g.virtual_event_name("Paste"))
+	
+	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+		frame.tree.onHeadChanged(v)
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+#@+node:ekr.20031218072017.1333:onHeadChanged
+def onHeadChanged (self,p):
+	
+	"""Handle a change to headline text."""
+	
+	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+
+#@-node:ekr.20031218072017.1333:onHeadChanged
+#@+node:ekr.20031218072017.1335:idle_head_key
+def idle_head_key (self,p,ch=None):
+	
+	"""Update headline text at idle time."""
+	
+	c = self.c ; v = p.v
+
+	if not p or not p.edit_text() or p != c.currentPosition():
+		return "break"
+		
+	edit_text = p.edit_text()
+
+	if g.doHook("headkey1",c=c,p=p,ch=ch):
+		return "break" # The hook claims to have handled the event.
+
+	<< set s to the widget text >>
+	<< set head to vnode text >>
+	changed = s != head
+	done = ch and (ch == '\r' or ch == '\n')
+	if not changed and not done:
+		return "break"
+
+	if changed:
+		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+	index = edit_text.index("insert")
+	if changed:
+		<< update v and all nodes joined to v >>
+	<< reconfigure v and all nodes joined to v >>
+	<< update the screen >>
+
+	g.doHook("headkey2",c=c,p=p,ch=ch)
+	return "break"
+
+#@+node:ekr.20031218072017.1336:<< set s to the widget text >>
+s = edit_text.get("1.0","end")
+
+if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
+	# Another kludge: remove one or two trailing newlines before warning of truncation.
+	if s and s[-1] == '\n': s = s[:-1]
+	if s and s[-1] == '\n': s = s[:-1]
+	i = s.find('\n')
+	if i > -1:
+		# g.trace(i,len(s),repr(s))
+		g.es("Truncating headline to one line",color="blue")
+		s = s[:i]
+	if len(s) > 250:
+		g.es("Truncating headline to 250 characters",color="blue")
+		s = s[:250]
+
+s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
+
+if not s:
+	s = u""
+	
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+	s = s.replace('\n','')
+	s = s.replace('\r','')
+#@nonl
+#@-node:ekr.20031218072017.1336:<< set s to the widget text >>
+#@+node:ekr.20031218072017.1337:<< set head to vnode text >>
+head = p.headString()
+if head == None:
+	head = u""
+head = g.toUnicode(head,"utf-8")
+#@-node:ekr.20031218072017.1337:<< set head to vnode text >>
+#@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+c.beginUpdate()
+if 1: # update...
+	# Update changed bit.
+	if not c.changed:
+		c.setChanged(true)
+	# Update all dirty bits.
+	p.setDirty()
+	# Update v.
+	v.initHeadString(s)
+	edit_text.delete("1.0","end")
+	edit_text.insert("end",s)
+	edit_text.mark_set("insert",index)
+c.endUpdate(false) # do not redraw now.
+#@nonl
+#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+# Reconfigure v's headline.
+if done:
+	self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(v))
+#@nonl
+#@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
+#@+node:ekr.20031218072017.1340:<< update the screen >>
+if done:
+	c.beginUpdate()
+	self.endEditLabel()
+	c.endUpdate()
+
+elif changed:
+	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
+	# Redrawing the whole screen now messes up the cursor in the headline.
+	self.drawIcon(p) # just redraw the icon.
+#@nonl
+#@-node:ekr.20031218072017.1340:<< update the screen >>
+#@-node:ekr.20031218072017.1335:idle_head_key
+#@-node:EKR.20040610174603:(Fixed bug when pasting large text into headlines)
 #@-node:EKR.20040610102329:In 4.2 a4
 #@-node:EKR.20040517090500:May 2004
 #@-node:ekr.20040107064101.1:4.2 Projects
