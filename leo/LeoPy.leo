@@ -21537,12 +21537,10 @@ def OnConvertAllTabs(self,event=None):
 	if index2:
 		if body.compare(index,"&lt;=",index2):
 			setTextSelection(self.body,index,index2+"+1c")
-			body.mark_set("insert",index2+"+1c")
-			body.see(index2+"+1c")
 		else:
 			setTextSelection(self.body,index2,index+"+1c")
-			body.mark_set("insert",index2)
-			body.see(index2)
+		body.mark_set("insert",index2+"+1c")
+		body.see(index2+"+1c")
 	else:
 		es("unmatched " + `ch`)
 	
