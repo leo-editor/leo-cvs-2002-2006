@@ -223,7 +223,7 @@
 
 
 from leoGlobals import *
-import types
+import time,types
 
 
 #@+others
@@ -262,7 +262,6 @@ class baseTnode:
 		# New in 3.12
 		self.joinList = [] # vnodes on the same joinlist are updated together.
 		self.headString = headString
-	
 	#@-body
 	#@-node:2::t.__init__
 	#@+node:3::Getters
@@ -2333,6 +2332,138 @@ class vnode (baseVnode):
 	pass
 #@-body
 #@-node:4::class vnode
+#@+node:5::class nodeIndices
+#@+body
+# Indices are Python dicts containing 'id','loc','time' and 'n' keys.
+
+class nodeIndices:
+	
+	"""A class to implement global node indices (gnx's)."""
+	
+
+	#@+others
+	#@+node:1::nodeIndices.__init__
+	#@+body
+	def __init__ (self):
+		
+		"""ctor for nodeIndices class"""
+		
+		self.userId = app().leoID # 5/1/03: This never changes.
+		self.defaultId = app().leoID # This probably will change.
+		self.lastIndex = None
+		self.timeString = None
+	#@-body
+	#@-node:1::nodeIndices.__init__
+	#@+node:2::areEqual
+	#@+body
+	def areEqual (self,gnx1,gnx2):
+		
+		"""Return True if all fields of gnx1 and gnx2 are equal"""
+	
+		id1,time1,n1 = gnx1
+		id2,time2,n2 = gnx2
+		return id1==id2 and time1==time2 and n1==n2
+	#@-body
+	#@-node:2::areEqual
+	#@+node:3::get/setDefaultId
+	#@+body
+	# These are used by the fileCommands read/write code.
+	
+	def getDefaultId (self):
+		
+		"""Return the id to be used by default in all gnx's"""
+		return self.defaultId
+		
+	def setDefaultId (self,id):
+		
+		"""Set the id to be used by default in all gnx's"""
+		self.defaultId = id
+	
+	#@-body
+	#@-node:3::get/setDefaultId
+	#@+node:4::getNewIndex
+	#@+body
+	def getNewIndex (self):
+		
+		"""Create a new gnx using self.timeString and self.lastIndex"""
+		
+		id = self.userId # Bug fix 5/1/03: always use the user's id for new ids!
+		t = self.timeString
+		assert(t)
+		n = None
+	
+		# Set n if id and time match the previous index.
+		last = self.lastIndex
+		if last:
+			lastId,lastTime,lastN = last
+			if id==lastId and t==lastTime:
+				if lastN == None: n = 1
+				else: n = lastN + 1
+	
+		d = (id,t,n)
+		self.lastIndex = d
+		# trace(d)
+		return d
+	#@-body
+	#@-node:4::getNewIndex
+	#@+node:5::scanGnx
+	#@+body
+	def scanGnx (self,s,i):
+		
+		"""Create a gnx from its string representation"""
+	
+		if len(s) > 0 and s[-1] == '\n':
+			s = s[:-1]
+	
+		id,t,n=None,None,None
+		i,id = skip_to_char(s,i,'.')
+		if match(s,i,'.'):
+			i,t = skip_to_char(s,i+1,'.')
+			if match(s,i,'.'):
+				i,n = skip_to_char(s,i+1,'.')
+		# Use self.defaultId for missing id entries.
+		if id == None or len(id) == 0:
+			id = self.defaultId
+		# Convert n to int.
+		if n:
+			try: n = int(n)
+			except: pass
+		d = (id,t,n)
+	
+		return d
+	#@-body
+	#@-node:5::scanGnx
+	#@+node:6::setTimeString
+	#@+body
+	def setTimestamp (self):
+	
+		"""Set the timestamp string to be used by getNewIndex until further notice"""
+	
+		self.timeString = time.strftime(
+			"%m%d%y%H%M%S",  # compact timestamp is best
+			time.localtime())
+	#@-body
+	#@-node:6::setTimeString
+	#@+node:7::toString
+	#@+body
+	def toString (self,index,removeDefaultId=false):
+		
+		"""Convert a gnx (a tuple) to its string representation"""
+	
+		id,t,n = index
+	
+		if removeDefaultId and id == self.defaultId:
+			id = ""
+	
+		if n == None:
+			return "%s.%s" % (id,t)
+		else:
+			return "%s.%s.%d" % (id,t,n)
+	#@-body
+	#@-node:7::toString
+	#@-others
+#@-body
+#@-node:5::class nodeIndices
 #@-others
 #@-body
 #@-node:0::@file leoNodes.py

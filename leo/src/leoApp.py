@@ -6,8 +6,8 @@
 #@@language python
 
 from leoGlobals import *
-import leo,leoConfig,leoDialog,leoFind
-import os,sys,Tkinter
+import leo,leoConfig,leoDialog,leoFind,leoNodes
+import locale,os,sys,Tkinter
 
 class LeoApp:
 
@@ -38,6 +38,7 @@ class LeoApp:
 		self.logIsLocked = false # true: no changes to log are allowed.
 		self.logWaiting = [] # List of messages waiting to go to a log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
+		self.nodeIndices = None # Singleton node indices instance.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
@@ -314,8 +315,8 @@ class LeoApp:
 	
 	def finishCreate(self):
 	
-		import locale,sys
-		import leoNodes
+		a = self
+	
 		
 		#@<< return false if not v2.1 or above >>
 		#@+node:1::<< return false if not v2.1 or above >>
@@ -347,17 +348,17 @@ class LeoApp:
 		# loadDir should be the directory that contains leo.py
 		
 		try:
-			self.loadDir = os.path.dirname(leo.__file__)
-			if self.loadDir in (None,""):
-				self.loadDir = os.getcwd()
-			self.loadDir = os.path.abspath(self.loadDir)
+			a.loadDir = os.path.dirname(leo.__file__)
+			if a.loadDir in (None,""):
+				a.loadDir = os.getcwd()
+			a.loadDir = os.path.abspath(a.loadDir)
 		except:
 			# Emergency defaults.  Hopefully we will never have to use them.
 			if sys.platform=="win32": # Windows
-				self.loadDir = "c:\\prog\\LeoPy\\"
+				a.loadDir = "c:\\prog\\LeoPy\\"
 			else: # Linux, or whatever.
-				self.loadDir = "LeoPy"
-			print "Setting load directory to:", self.loadDir
+				a.loadDir = "LeoPy"
+			print "Setting load directory to:", a.loadDir
 		
 		#@-body
 		#@-node:2::<< set loadDir >>
@@ -367,7 +368,7 @@ class LeoApp:
 		#@+node:3::<< set the default Leo icon >>
 		#@+body
 		try: # 6/2/02: Try to set the default bitmap.
-			bitmap_name = os.path.join(self.loadDir,"..","Icons","LeoApp.ico")
+			bitmap_name = os.path.join(a.loadDir,"..","Icons","LeoApp.ico")
 			bitmap = Tkinter.BitmapImage(bitmap_name)
 		except:
 			print "exception creating bitmap"
@@ -375,7 +376,7 @@ class LeoApp:
 			traceback.print_exc()
 		
 		try:
-			version = self.root.getvar("tk_patchLevel")
+			version = a.root.getvar("tk_patchLevel")
 			# print "tcl version:", version
 			
 			#@<< set v834 if version is 8.3.4 or greater >>
@@ -407,7 +408,7 @@ class LeoApp:
 		#@-body
 		#@-node:3::<< set the default Leo icon >>
 
-		self.config = leoConfig.config()
+		a.config = leoConfig.config()
 		
 		#@<< set app.tkEncoding >>
 		#@+node:4::<< set app.tkEncoding >>
@@ -422,15 +423,15 @@ class LeoApp:
 		#@@c
 
 		for (encoding,src) in (
-			(self.config.tkEncoding,"config"),
+			(a.config.tkEncoding,"config"),
 			#(locale.getdefaultlocale()[1],"locale"),
 			(getpreferredencoding(),"locale"),
 			(sys.getdefaultencoding(),"sys"),
 			("utf-8","default")):
 		
 			if isValidEncoding (encoding): # 3/22/03
-				self.tkEncoding = encoding
-				# print self.tkEncoding,src
+				a.tkEncoding = encoding
+				# print a.tkEncoding,src
 				break
 			elif encoding and len(encoding) > 0:
 				print "ignoring invalid " + src + " encoding: " + `encoding`
@@ -441,9 +442,14 @@ class LeoApp:
 
 	
 		# Create the global windows
-		self.findFrame = leoFind.leoFind()
-		self.findFrame.top.withdraw()
-		self.globalWindows.append(self.findFrame)
+		a.findFrame = leoFind.leoFind()
+		a.findFrame.top.withdraw()
+		a.globalWindows.append(a.findFrame)
+		
+		# New 4.0 stuff.
+		if 0: # Not using leoID.txt would be more convenient for the user.
+			a.setLeoID()
+			a.nodeIndices = leoNodes.nodeIndices()
 	
 		return true # all went well.
 	#@-body
@@ -513,7 +519,95 @@ class LeoApp:
 	
 	#@-body
 	#@-node:12::app.onQuit
-	#@+node:13::app.setLog, lockLog, unlocklog
+	#@+node:13::app.setLeoID
+	#@+body
+	def setLeoID (self):
+		
+		a = self
+	
+		tag = ".leoID.txt"
+		loadDir = a.loadDir
+		configDir = a.config.configDir
+		
+		#@<< return if we can set self.leoID from sys.leoID >>
+		#@+node:1::<< return if we can set self.leoID from sys.leoID>>
+		#@+body
+		# This would be set by in Python's sitecustomize.py file.
+		try:
+			a.leoID = sys.leoID
+			es("leoID = " + a.leoID, color="blue")
+			return
+		except:
+			a.leoID = None
+		#@-body
+		#@-node:1::<< return if we can set self.leoID from sys.leoID>>
+
+		
+		#@<< return if we can set self.leoID from "leoID.txt" >>
+		#@+node:2::<< return if we can set self.leoID from "leoID.txt" >>
+		#@+body
+		for dir in (configDir,loadDir):
+			try:
+				fn = os.path.join(dir, tag)
+				f = open(fn,'r')
+				if f:
+					s = f.readline()
+					f.close()
+					if s and len(s) > 0:
+						a.leoID = s
+						es("leoID = " + a.leoID, color="blue")
+						return
+					else:
+						es("empty " + tag + " in " + dir, color = "red")
+			except:
+				a.leoID = None
+				
+		if configDir == loadDir:
+			es(tag + " not found in " + loadDir, color="red")
+		else:
+			es(tag + " not found in " + configDir + " or " + loadDir, color="red")
+		
+		
+		#@-body
+		#@-node:2::<< return if we can set self.leoID from "leoID.txt" >>
+
+		
+		#@<< put up a dialog requiring a valid id >>
+		#@+node:3::<< put up a dialog requiring a valid id >>
+		#@+body
+		a.leoID = leoDialog.askLeoID().run(modal=true)
+		
+		es("leoID = " + `a.leoID`, color="blue")
+		#@-body
+		#@-node:3::<< put up a dialog requiring a valid id >>
+
+		
+		#@<< attempt to create leoID.txt >>
+		#@+node:4::<< attempt to create leoID.txt >>
+		#@+body
+		for dir in (configDir,loadDir):
+			try:
+				# Look in configDir first.
+				fn = os.path.join(dir, tag)
+				f = open(fn,'w')
+				if f:
+					f.write(a.leoID)
+					f.close()
+					es("created leoID.txt in " + dir, color="red")
+					return
+			except: pass
+			
+		if configDir == loadDir:
+			es("can not create leoID.txt in " + loadDir, color="red")
+		else:
+			es("can not create leoID.txt in " + configDir + " or " + loadDir, color="red")
+		
+		
+		#@-body
+		#@-node:4::<< attempt to create leoID.txt >>
+	#@-body
+	#@-node:13::app.setLeoID
+	#@+node:14::app.setLog, lockLog, unlocklog
 	#@+body
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
@@ -530,8 +624,8 @@ class LeoApp:
 		"""Enable changes to the log"""
 		self.logIsLocked = false
 	#@-body
-	#@-node:13::app.setLog, lockLog, unlocklog
-	#@+node:14::app.writeWaitingLog
+	#@-node:14::app.setLog, lockLog, unlocklog
+	#@+node:15::app.writeWaitingLog
 	#@+body
 	def writeWaitingLog (self):
 	
@@ -541,7 +635,7 @@ class LeoApp:
 			self.logWaiting = []
 	
 	#@-body
-	#@-node:14::app.writeWaitingLog
+	#@-node:15::app.writeWaitingLog
 	#@-others
 
 

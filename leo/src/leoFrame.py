@@ -137,7 +137,7 @@ class baseLeoFrame:
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 3.12.1 beta 1, ",newline=0)
+		es("Leo 4.0 alpha 1, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -2279,14 +2279,16 @@ class baseLeoFrame:
 	
 		c = self.commands
 	
-		answer = leoDialog.askOkCancel("Proceed?",
-			"Read @file Nodes is not undoable." +
-			"\nProceed?").run(modal=true)
+		if 0: # highly annoying during testing.
+			answer = leoDialog.askOkCancel("Proceed?",
+				"Read @file Nodes is not undoable." +
+				"\nProceed?").run(modal=true)
+		else:
+			answer = "ok"
 	
 		if answer=="ok":
 			c.fileCommands.readAtFileNodes()
 			c.undoer.clearUndoState()
-	
 	#@-body
 	#@-node:2::OnReadAtFileNodes
 	#@+node:3::OnWriteDirtyAtFileNodes
@@ -2321,6 +2323,79 @@ class baseLeoFrame:
 	
 	#@-body
 	#@-node:6::OnWriteAtFileNodes
+	#@+node:7::4.0 Commands
+	#@+node:1::OnImportDerivedFile
+	#@+body
+	def OnImportDerivedFile (self,event=None):
+		
+		"""Create a new outline from a 4.0 derived file."""
+		
+		frame = self ; c = frame.commands ; v = c.currentVnode()
+		at = c.atFileCommands
+		
+		if not v.isAtFileNode():
+			es("not an @file node",color="blue")
+			return
+		else:
+			name = v.atFileNodeName()
+	
+		trace(name)
+		
+		c.beginUpdate()
+		
+		c.insertHeadline() # op_name="Import Derived File" (was "Insert Outline")
+		c.moveOutlineLeft()
+		v = c.currentVnode()
+		v.initHeadString("Imported @file " + name)
+	
+		at.read(v,importFileName=name)
+	
+		c.endUpdate()
+	#@-body
+	#@-node:1::OnImportDerivedFile
+	#@+node:2::OnWriteNew/OldDerivedFiles
+	#@+body
+	def OnWriteNewDerivedFiles (self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+	
+		c.atFileCommands.writeNewDerivedFiles(v)
+		es("auto-saving outline",color="blue")
+		self.OnSave() # Must be done to preserve tnodeList.
+		
+	def OnWriteOldDerivedFiles (self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+	
+		c.atFileCommands.writeOldDerivedFiles(v)
+	#@-body
+	#@-node:2::OnWriteNew/OldDerivedFiles
+	#@+node:3::OnWriteOldOutline
+	#@+body
+	# Based on the Save As code.
+	
+	def OnWriteOldOutline (self,event=None):
+		
+		"""Saves a pre-4.0 outline"""
+	
+		# Make sure we never pass None to the ctor.
+		if not self.mFileName:
+			self.title = ""
+	
+		# set local fileName, _not_ self.mFileName
+		fileName = tkFileDialog.asksaveasfilename(
+			initialfile = self.mFileName,
+			title="Write Pre 4.0 Outline",
+			filetypes=[("Leo files", "*.leo")],
+			defaultextension=".leo")
+	
+		if len(fileName) > 0:
+			fileName = ensure_extension(fileName, ".leo")
+			self.commands.fileCommands.saveTo(fileName)
+			self.updateRecentFiles(self.mFileName)
+	#@-body
+	#@-node:3::OnWriteOldOutline
+	#@-node:7::4.0 Commands
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
@@ -4042,7 +4117,7 @@ class baseLeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.12.1 beta 1, Build " + build + ", July 25, 2003\n\n"
+		version = "leo.py 4.0 alpha 1, Build " + build + ", July 25, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

@@ -109,7 +109,8 @@ chmod 666 $LEO_LIB_DIR/doc/LeoDocs.leo
 ################################
 echo Creating startup script located at: $LEO_RUN_SCRIPT_OUTPUT
 
-RESULTS=`cp $LEO_RUN_SCRIPT_SOURCE $LEO_RUN_SCRIPT_OUTPUT`
+# RESULTS=`cp $LEO_RUN_SCRIPT_SOURCE $LEO_RUN_SCRIPT_OUTPUT`
+echo "python /usr/lib/leo/src/leo.py \"> $LEO_RUN_SCRIPT_OUTPUT
 
 RESULTS=`chmod 755 $LEO_RUN_SCRIPT_OUTPUT`   
    

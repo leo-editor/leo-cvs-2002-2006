@@ -11,7 +11,7 @@ Tk = Tkinter
 
 
 #@+others
-#@+node:1::class leoDialog
+#@+node:1:: class leoDialog
 #@+body
 class baseLeoDialog:
 	"""The base class for all Leo dialogs"""
@@ -169,7 +169,7 @@ class leoDialog (baseLeoDialog):
 	pass
 
 #@-body
-#@-node:1::class leoDialog
+#@-node:1:: class leoDialog
 #@+node:2::class aboutLeo
 #@+body
 class aboutLeo (leoDialog):
@@ -295,7 +295,218 @@ class aboutLeo (leoDialog):
 
 #@-body
 #@-node:2::class aboutLeo
-#@+node:3::class askOkCancelNumber
+#@+node:3::class askLeoID
+#@+body
+class askLeoID (leoDialog):
+	
+	"""A class to create and run a dialog that asks for Id for gnx's."""
+	
+
+	#@+others
+	#@+node:1::askLeoID.__init__
+	#@+body
+	def __init__(self):
+		
+		"""Create the Leo Id dialog."""
+		
+		leoDialog.__init__(self,"Enter unique id",resizeable=false) # Initialize the base class.
+		self.id_entry = None
+		self.answer = None
+	
+		self.createTopFrame()
+		self.top.protocol("WM_DELETE_WINDOW", self.onCloseWindow)
+		self.top.bind("<Key>", self.onKey)
+		
+		message = (
+			"leoID.txt not found\n\n" +
+			"Please enter an id that identifies you uniquely.\n" +
+			"Your cvs login name is a good choice.\n\n" +
+			"Your id must contain only letters and numbers\n" +
+			"and must be at least 4 characters in length.")
+		self.createFrame(message)
+		self.focus_widget = self.id_entry
+	
+		buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
+		buttonList = self.createButtons(buttons)
+		self.ok_button = buttonList[0]
+	#@-body
+	#@-node:1::askLeoID.__init__
+	#@+node:2::askLeoID.createFrame
+	#@+body
+	def createFrame(self,message):
+		
+		"""Create the frame for the Leo Id dialog."""
+		
+		f = self.frame
+	
+		label = Tk.Label(f,text=message)
+		label.pack(pady=10)
+	
+		self.id_entry = text = Tk.Entry(f,width=20)
+		text.pack()
+	#@-body
+	#@-node:2::askLeoID.createFrame
+	#@+node:3::onCloseWindow
+	#@+body
+	def onCloseWindow (self):
+		
+		"""Prevent the Leo Id dialog from closing by ignoring close events."""
+	
+		pass
+	#@-body
+	#@-node:3::onCloseWindow
+	#@+node:4::onButton
+	#@+body
+	def onButton(self):
+		
+		"""Handle clicks in the Leo Id close button."""
+	
+		s = self.id_entry.get().strip()
+		if len(s) < 4:  # Require at least 4 characters in an id.
+			return
+	
+		self.answer = s
+		self.top.destroy() # terminates wait_window
+	#@-body
+	#@-node:4::onButton
+	#@+node:5::onKey
+	#@+body
+	def onKey(self,event):
+		
+		"""Handle keystrokes in the Leo Id dialog."""
+		
+		
+		#@<< eliminate invalid characters >>
+		#@+node:1::<< eliminate invalid characters >>
+		#@+body
+		e = self.id_entry
+		s = e.get().strip()
+		i = 0 ; ok = true
+		while i < len(s):
+			ch = s[i]
+			if ch not in string.letters and ch not in string.digits:
+				e.delete(`i`)
+				s = e.get()
+				ok = false
+			else:
+				i += 1
+		if not ok: return
+		#@-body
+		#@-node:1::<< eliminate invalid characters >>
+
+		
+		#@<< enable the ok button if there are 4 or more valid characters >>
+		#@+node:2::<< enable the ok button if there are 4 or more valid characters >>
+		#@+body
+		e = self.id_entry
+		b = self.ok_button
+		
+		if len(e.get().strip()) >= 4:
+			b.configure(state="normal")
+		else:
+			b.configure(state="disabled")
+		#@-body
+		#@-node:2::<< enable the ok button if there are 4 or more valid characters >>
+
+		
+		ch = event.char.lower()
+		if ch in ('\n','\r'):
+			self.onButton()
+		return "break"
+	
+	
+	#@-body
+	#@-node:5::onKey
+	#@-others
+#@-body
+#@-node:3::class askLeoID
+#@+node:4::class askOk
+#@+body
+class askOk(leoDialog):
+	"""A class that creates a dialog with a single OK button."""
+
+	#@+others
+	#@+node:1::askOk.__init__
+	#@+body
+	def __init__ (self,title,message=None,text="Ok",resizeable=false):
+	
+		"""Create a dialog with one button"""
+	
+		leoDialog.__init__(self,title,resizeable) # Initialize the base class.
+		self.text = text
+		self.createTopFrame()
+		self.top.bind("<Key>", self.onKey)
+	
+		if message:
+			self.createMessageFrame(message)
+	
+		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
+		self.createButtons(buttons)
+	#@-body
+	#@-node:1::askOk.__init__
+	#@+node:2::askOk.onKey
+	#@+body
+	def onKey(self,event):
+		
+		"""Handle Key events in askOk dialogs."""
+	
+		ch = event.char.lower()
+	
+		if ch in (self.text[0].lower(),'\n','\r'):
+			self.okButton()
+	
+		return "break"
+	
+	#@-body
+	#@-node:2::askOk.onKey
+	#@-others
+#@-body
+#@-node:4::class askOk
+#@+node:5::class askOkCancel
+#@+body
+class askOkCancel (leoDialog):
+	"""A class that creates a dialog with two buttons: Ok and Cancel."""
+
+	#@+others
+	#@+node:1::askOkCancel.__init__
+	#@+body
+	def __init__ (self,title,message=None,resizeable=false):
+		
+		"""Create a dialog having Ok and Cancel buttons."""
+	
+		leoDialog.__init__(self,title,resizeable) # Initialize the base class.
+		self.createTopFrame()
+		self.top.bind("<Key>",self.onKey)
+	
+		if message:
+			self.createMessageFrame(message)
+			
+		buttons = (
+			{"text":"Ok",    "command":self.okButton,     "default":true},
+			{"text":"Cancel","command":self.cancelButton} )
+		self.createButtons(buttons)
+	
+	#@-body
+	#@-node:1::askOkCancel.__init__
+	#@+node:2::askOkCancel.onKey
+	#@+body
+	def onKey(self,event):
+		
+		"""Handle keystrokes in a dialog having Ok and Cancel buttons."""
+	
+		ch = event.char.lower()
+		if ch in ('o','\n','\r'):
+			self.okButton()
+		elif ch == 'c':
+			self.cancelButton()
+	
+		return "break"
+	#@-body
+	#@-node:2::askOkCancel.onKey
+	#@-others
+#@-body
+#@-node:5::class askOkCancel
+#@+node:6::class askOkCancelNumber
 #@+body
 class  askOkCancelNumber (leoDialog):
 	"""Create and run a modal dialog to get a number."""
@@ -399,94 +610,8 @@ class  askOkCancelNumber (leoDialog):
 
 
 #@-body
-#@-node:3::class askOkCancelNumber
-#@+node:4::class askOk
-#@+body
-class askOk(leoDialog):
-	"""A class that creates a dialog with a single OK button."""
-
-	#@+others
-	#@+node:1::askOk.__init__
-	#@+body
-	def __init__ (self,title,message=None,text="Ok",resizeable=false):
-	
-		"""Create a dialog with one button"""
-	
-		leoDialog.__init__(self,title,resizeable) # Initialize the base class.
-		self.text = text
-		self.createTopFrame()
-		self.top.bind("<Key>", self.onKey)
-	
-		if message:
-			self.createMessageFrame(message)
-	
-		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
-		self.createButtons(buttons)
-	#@-body
-	#@-node:1::askOk.__init__
-	#@+node:2::askOk.onKey
-	#@+body
-	def onKey(self,event):
-		
-		"""Handle Key events in askOk dialogs."""
-	
-		ch = event.char.lower()
-	
-		if ch in (self.text[0].lower(),'\n','\r'):
-			self.okButton()
-	
-		return "break"
-	
-	#@-body
-	#@-node:2::askOk.onKey
-	#@-others
-#@-body
-#@-node:4::class askOk
-#@+node:5::class askOkCancel
-#@+body
-class askOkCancel (leoDialog):
-	"""A class that creates a dialog with two buttons: Ok and Cancel."""
-
-	#@+others
-	#@+node:1::askOkCancel.__init__
-	#@+body
-	def __init__ (self,title,message=None,resizeable=false):
-		
-		"""Create a dialog having Ok and Cancel buttons."""
-	
-		leoDialog.__init__(self,title,resizeable) # Initialize the base class.
-		self.createTopFrame()
-		self.top.bind("<Key>",self.onKey)
-	
-		if message:
-			self.createMessageFrame(message)
-			
-		buttons = (
-			{"text":"Ok",    "command":self.okButton,     "default":true},
-			{"text":"Cancel","command":self.cancelButton} )
-		self.createButtons(buttons)
-	
-	#@-body
-	#@-node:1::askOkCancel.__init__
-	#@+node:2::askOkCancel.onKey
-	#@+body
-	def onKey(self,event):
-		
-		"""Handle keystrokes in a dialog having Ok and Cancel buttons."""
-	
-		ch = event.char.lower()
-		if ch in ('o','\n','\r'):
-			self.okButton()
-		elif ch == 'c':
-			self.cancelButton()
-	
-		return "break"
-	#@-body
-	#@-node:2::askOkCancel.onKey
-	#@-others
-#@-body
-#@-node:5::class askOkCancel
-#@+node:6::class askYesNo
+#@-node:6::class askOkCancelNumber
+#@+node:7::class askYesNo
 #@+body
 class askYesNo (leoDialog):
 	"""A class that creates a dialog with two buttons: Yes and No."""
@@ -533,8 +658,8 @@ class askYesNo (leoDialog):
 
 
 #@-body
-#@-node:6::class askYesNo
-#@+node:7::class askYesNoCancel
+#@-node:7::class askYesNo
+#@+node:8::class askYesNoCancel
 #@+body
 class askYesNoCancel(leoDialog):
 	
@@ -617,8 +742,8 @@ class askYesNoCancel(leoDialog):
 
 
 #@-body
-#@-node:7::class askYesNoCancel
-#@+node:8::class listboxDialog
+#@-node:8::class askYesNoCancel
+#@+node:9::class listboxDialog
 #@+body
 class listBoxDialog (leoDialog):
 	"""A base class for dialogs containing a Tk Listbox"""
@@ -754,7 +879,7 @@ class listBoxDialog (leoDialog):
 	#@-node:7::go
 	#@-others
 #@-body
-#@-node:8::class listboxDialog
+#@-node:9::class listboxDialog
 #@-others
 #@-body
 #@-node:0::@file leoDialog.py

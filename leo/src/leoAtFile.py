@@ -164,9 +164,6 @@ class baseAtFile:
 		
 		# The encoding used to convert from unicode to a byte stream.
 		self.encoding = app().config.default_derived_file_encoding
-		
-		# New for 4.0
-		self.using_gnx = false # true: present derived file uses gnxs.
 		#@-body
 		#@-node:1::<< init atFile ivars >>
 
@@ -304,11 +301,6 @@ class baseAtFile:
 		#@+node:3::<< Scan the file buffer  >>
 		#@+body
 		firstLines = self.scanHeader(file)
-		
-		# Reading 4.0 files is not ready yet.
-		if self.using_gnx:
-			es("Reading 4.0 files not ready yet")
-			return false
 			
 		self.indent = 0
 		self.root_seen = false
@@ -388,11 +380,6 @@ class baseAtFile:
 			#@+node:3::<< Scan the file buffer  >>
 			#@+body
 			firstLines = self.scanHeader(file)
-			
-			# Reading 4.0 files is not ready yet.
-			if self.using_gnx:
-				es("Reading 4.0 files not ready yet")
-				return false
 				
 			self.indent = 0
 			self.root_seen = false
@@ -856,9 +843,9 @@ class baseAtFile:
 		#@<< read optional version param >>
 		#@+node:3::<< read optional version param >>
 		#@+body
-		self.using_gnx = match(s,i,version_tag)
+		using_gnx = match(s,i,version_tag)
 		
-		if self.using_gnx:
+		if using_gnx:
 			trace("reading gnx file",self.targetFileName)
 			i += len(version_tag)
 			# Skip to the next minus sign or end-of-line
