@@ -266,8 +266,13 @@ def create_labeled_frame (parent,
 #@-body
 #@-node:+0::create_labeled_frame
 #@-node:+2::Dialog utilites...
+#@+node:+1::A new node, illustrating relative node indices
+#@+body
+# This is body text in the new node.
+#@-body
+#@-node:+0::A new node, illustrating relative node indices
 #@+node:+1::Dumping, Tracing & Sherlock
-#@+node:-5::dump
+#@+node:-6::dump
 #@+body
 def dump(s):
 	
@@ -450,7 +455,7 @@ def trace (s1=None,s2=None):
 #@-body
 #@-node:+0::trace
 #@-node:+1::Sherlock...
-#@-node:+2::Dumping, Tracing & Sherlock
+#@-node:+3::Dumping, Tracing & Sherlock
 #@+node:+1::ensure_extension
 #@+body
 def ensure_extension (name, ext):
@@ -487,7 +492,7 @@ def findReference(name,root):
 #@-body
 #@-node:+0::findReference
 #@+node:+1::Leading & trailing whitespace...
-#@+node:-8::computeLeadingWhitespace
+#@+node:-9::computeLeadingWhitespace
 #@+body
 # Returns optimized whitespace corresponding to width with the indicated tab_width.
 
@@ -608,9 +613,9 @@ def skip_leading_ws_with_indent(s,i,tab_width):
 	return i, count
 #@-body
 #@-node:+0::skip_leading_ws_with_indent
-#@-node:+2::Leading & trailing whitespace...
+#@-node:+3::Leading & trailing whitespace...
 #@+node:+1::List utilities...
-#@+node:-9::appendToList
+#@+node:-10::appendToList
 #@+body
 def appendToList(out, s):
 
@@ -642,9 +647,9 @@ def listToString(theList):
 		return ""
 #@-body
 #@-node:+0::listToString
-#@-node:+7::List utilities...
+#@-node:+8::List utilities...
 #@+node:+1::Menu utlities...
-#@+node:-10::enableMenu & disableMenu & setMenuLabel
+#@+node:-11::enableMenu & disableMenu & setMenuLabel
 #@+body
 def enableMenu (menu,name,val):
 
@@ -660,7 +665,7 @@ def setMenuLabel (menu,name,label):
 	menu.entryconfig(name,label=label)
 #@-body
 #@-node:+0::enableMenu & disableMenu & setMenuLabel
-#@-node:+10::Menu utlities...
+#@-node:+11::Menu utlities...
 #@+node:+1::getBaseDirectory
 #@+body
 # Handles the conventions applying to the "relative_path_base_directory" configuration option.
@@ -712,7 +717,7 @@ def scanError(s):
 
 #@-at
 #@-body
-#@+node:-13::skip_block_comment
+#@+node:-14::skip_block_comment
 #@+body
 # Scans past a block comment (an old_style C comment).
 
@@ -1087,9 +1092,9 @@ def skip_typedef(s,i):
 	return i
 #@-body
 #@-node:+0::skip_typedef
-#@-node:-1::Scanners: calling scanError
+#@-node:+0::Scanners: calling scanError
 #@+node:+1::Scanners: no error messages
-#@+node:-14::escaped
+#@+node:-15::escaped
 #@+body
 # Returns true if s[i] is preceded by an odd number of backslashes.
 
@@ -1434,7 +1439,7 @@ def skip_ws_and_nl(s,i):
 	return i
 #@-body
 #@-node:+0::skip_ws, skip_ws_and_nl
-#@-node:-5::Scanners: no error messages
+#@-node:-4::Scanners: no error messages
 #@+node:+1::shortFileName
 #@+body
 def shortFileName (fileName):
@@ -1502,7 +1507,7 @@ def esDiffTime(message, start):
 #@-body
 #@-node:+0::Timing
 #@+node:+1::Tk.Text selection (utils)
-#@+node:-18::getTextSelection
+#@+node:-19::getTextSelection
 #@+body
 # t is a Tk.Text widget.  Returns the selected range of t.
 
@@ -1550,7 +1555,7 @@ def setTextSelection (t,start,end):
 	t.mark_set("insert",end)
 #@-body
 #@-node:+0::setTextSelection
-#@-node:+16::Tk.Text selection (utils)
+#@-node:+17::Tk.Text selection (utils)
 #@+node:+1::update_file_if_changed
 #@+body
 #@+at
