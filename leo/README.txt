@@ -1,3 +1,17 @@
+leo.py version 2.3                             June 12, 2002
+
+This version fixes a minor problem with Leo.
+
+1.  The code that reads and writes @file nodes now uses the directory containing the
+.leo file as a default when the Default Tangle Directory setting is empty in the Prefrences panel.
+This is a reasonable default because derived files are most often created in the same directory as
+the .leo file.
+BTW, the Tangle and Untangle commands have used this convention for a long time.
+
+Note: This default allows us to distribute LeoPy.leo without specifying
+a directory in the Preferences Panel.
+
+
 leo.py version 2.2                             June 2, 2002
 
 The version fixes two bugs that happen rarely and can cause loss of data when they do happen.

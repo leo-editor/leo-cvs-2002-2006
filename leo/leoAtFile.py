@@ -478,7 +478,15 @@ class atFile:
 			#@<< Set current directory >>
 			#@+node:6::<< Set current directory >>
 			#@+body
-			# This code is executed if no valid path was specified in the @file node or in an @path directive. 
+			# This code is executed if no valid path was specified in the @file node or in an @path directive.
+			
+			# 6/4/02: Use c.openDirectory as the initial default.
+			dir = c.openDirectory
+			if len(dir) > 0:
+				if os.path.exists(dir):
+					self.default_directory = dir
+				else:
+					self.error("Invalid open directory: " + `dir`)
 			
 			dir = c.tangle_directory # Try the directory in the Preferences panel
 			if dir and len(dir) > 0:
@@ -495,6 +503,7 @@ class atFile:
 					self.error("Open directory no longer valid: " + `dir`)
 					
 			if not self.default_directory:
+				# 6/4/02: This message will almost never happen.
 				self.error("No directory specified by @file, @path or Preferences.")
 				self.default_directory = ""
 			#@-body
@@ -730,8 +739,8 @@ class atFile:
 	#@@c
 	def read(self,root):
 	
-		# t1 = getTime()
-		c = self.commands
+		t1 = getTime()
+		# c = self.commands
 		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 		self.targetFileName = root.atFileNodeName()
 		self.root = root
