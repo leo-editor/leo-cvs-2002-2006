@@ -1071,7 +1071,6 @@ class undoer:
 		#@+body
 		# Only update the changed lines.
 		mid_text = string.join(oldMidLines,'\n')
-		old_mid_len = len(oldMidLines)
 		new_mid_len = len(newMidLines)
 		# Maybe this could be simplified, and it is good to treat the "end" with care.
 		if trailing == 0:

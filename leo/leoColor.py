@@ -1258,7 +1258,7 @@ class colorizer:
 	
 	def continueSinglePythonString (self,s,i,j,n):
 		j = string.find(s,"'''",i)
-		return self.continuePythonString(s,i,n,"string3s")
+		return self.continuePythonString(s,i,j,n,"string3s")
 	
 	def continuePythonString (self,s,i,j,n,continueState):
 	

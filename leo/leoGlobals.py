@@ -2353,7 +2353,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 			errMsg = "stringCompare argument must be of " +\
 				 "the form \"x.x.x.x\" where each " +\
 				 "'x' is either '0' or '1'."
-			raise errMsg
+			raise EnvironmentError,errMsg
 	#
 	# Compare the versions
 	if condition == ">=":
@@ -2396,7 +2396,7 @@ def CheckVersion( version, againstVersion, condition=">=", stringCompare="0.0.0.
 		return 1 # it was equal
 	#
 	# didn't find a condition that we expected.
-	raise "condition must be one of '>=', '>', '==', '!=', '<', or '<='."
+	raise EnvironmentError,"condition must be one of '>=', '>', '==', '!=', '<', or '<='."
 
 #@-body
 #@-node:1::CheckVersion (Dave Hein)

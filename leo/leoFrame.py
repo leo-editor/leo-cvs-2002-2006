@@ -2099,8 +2099,7 @@ class LeoFrame:
 	#@+body
 	#@+at
 	#  This executes body text as a Python script.  We execute the selected 
-	# text, or the entire presently selected body text if no text is selected 
-	# and the node's headline starts with @pythonscript.
+	# text, or the entire body text if no text is selected.
 
 	#@-at
 	#@@c
@@ -2207,7 +2206,7 @@ class LeoFrame:
 			#@<< count outline lines, setting v,n2,found >>
 			#@+node:4::<< count outline lines, setting v,n2,found >>
 			#@+body
-			v = lastv = root
+			v = lastv = root ; after = root.nodeAfterTree()
 			prev = 0 ; found = false
 			while v and v != after:
 				lastv = v
@@ -2238,7 +2237,6 @@ class LeoFrame:
 			#@+node:5::<< set v to the node whose headline is vnodeName >>
 			#@+body
 			after = root.nodeAfterTree()
-			
 			while v and v != after and not v.matchHeadline(vnodeName):
 				v = v.threadNext()
 			
@@ -3429,8 +3427,6 @@ class LeoFrame:
 	#@+body
 	#@+at
 	#  The following convenience routines make creating menus easier.
-	# 
-	# The two most important routines are createMenuItemsFromTable and createOpenWithMenuFromTable.
 	# 
 	# The file customizeLeo.py shows gives examples of how to use these 
 	# routines to create custom menus and to add items to the Open With menu.

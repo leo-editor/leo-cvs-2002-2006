@@ -85,8 +85,11 @@ class Commands:
 	#@+node:3::c.__repr__
 	#@+body
 	def __repr__ (self):
-	
-		return "Commander: " + self.frame.title
+		
+		try:
+			return "Commander: " + self.frame.mFileName
+		except:
+			return "Commander: bad mFileName"
 	
 	#@-body
 	#@-node:3::c.__repr__

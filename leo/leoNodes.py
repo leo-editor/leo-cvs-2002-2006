@@ -504,7 +504,7 @@ class vnode:
 	#@+body
 	def __repr__ (self):
 	
-		return "v: " + self.mHeadString
+		return "v: " + `self.mHeadString`
 	#@-body
 	#@-node:4::vnode.__repr__
 	#@+node:5::vnode.__cmp__ (not used)
