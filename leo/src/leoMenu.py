@@ -763,7 +763,7 @@ class leoMenu:
 				# This has already been bound in leoTkinterFrame.__init__
 				# 2/13/03: A _possible_ fix for the Linux control-v bug.
 				
-				if sys.platform not in ("linux1","linux2"):
+				if sys.platform not in ("darwin","freebsd4","freebsd5","linux1","linux2"):
 					if bind_shortcut in ("<Control-c>","<Control-v>","<Control-x>"):
 						bind_shortcut = None
 				#@nonl
