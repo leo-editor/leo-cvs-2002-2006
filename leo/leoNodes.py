@@ -565,7 +565,7 @@ class vnode:
 				self.commands.tree.OnBoxClick(self)
 			handleLeoHook("boxclick2",c=c,v=v,event=event)
 		except:
-			es_event_exception("xxx")
+			es_event_exception("boxclick")
 	#@-body
 	#@-node:1::OnBoxClick
 	#@+node:2::OnDrag
