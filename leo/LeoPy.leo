@@ -459,229 +459,229 @@
 </v>
 </v>
 <v t="T279"><vh>Notes</vh>
-<v t="T280"><vh>about sys.settrace</vh></v>
-<v t="T281"><vh>Increasing environment space</vh></v>
+<v t="T280"><vh>Adding and removing files from CVS repository</vh></v>
+<v t="T281"><vh>about sys.settrace</vh></v>
+<v t="T282"><vh>Increasing environment space</vh></v>
 <v><vh>Milestones</vh>
 <v><vh>02/03/02 Leo 0.08 released</vh></v>
 <v><vh>12/17/01 ** Leo 0.05 released</vh></v>
-<v t="T282"><vh>12/16/01 Leo becomes functional</vh></v>
-<v t="T283"><vh>12/13/01 Syntax coloring works</vh></v>
+<v t="T283"><vh>12/16/01 Leo becomes functional</vh></v>
+<v t="T284"><vh>12/13/01 Syntax coloring works</vh></v>
 <v><vh>12/09/01 Tree now drawn properly</vh></v>
 <v><vh>12/05/01 Tree works with Tkinter</vh></v>
-<v t="T284"><vh>11/10/01 ** began conversion to tk</vh></v>
+<v t="T285"><vh>11/10/01 ** began conversion to tk</vh></v>
 <v><vh>10/26/01 First successful read of .leo file w/ @file nodes</vh></v>
-<v t="T285"><vh>9/29/01 c2py: Totally in love with Python</vh></v>
-<v t="T286"><vh>ca. 9/1/01 began work on wxPython version of Leo</vh></v>
+<v t="T286"><vh>9/29/01 c2py: Totally in love with Python</vh></v>
+<v t="T287"><vh>ca. 9/1/01 began work on wxPython version of Leo</vh></v>
 </v>
 <v><vh>Problems</vh>
-<v t="T287"><vh>Linux problems</vh></v>
+<v t="T288"><vh>Linux problems</vh></v>
 </v>
-<v t="T288"><vh>pychecker reports</vh>
-<v t="T289"><vh>leo.py (done)</vh></v>
-<v t="T290"><vh>leoApp (done)</vh></v>
-<v t="T291"><vh>leoAtFile (done)</vh></v>
-<v t="T292"><vh>leoColor (done)</vh></v>
-<v t="T293"><vh>leoCommands (done)</vh></v>
-<v t="T294"><vh>leoDialogs (done)</vh></v>
-<v t="T295"><vh>leoFileCommands (done)</vh></v>
-<v t="T296"><vh>leoFind (done)</vh></v>
-<v t="T297"><vh>leoFrame (done)</vh></v>
-<v t="T298"><vh>leoImport (done)</vh></v>
-<v t="T299"><vh>leoNodes (done)</vh></v>
-<v t="T300"><vh>leoTangle (done)</vh></v>
-<v t="T301"><vh>leoTree (done)</vh></v>
-<v t="T302"><vh>leoUtils (done)</vh></v>
+<v t="T289"><vh>pychecker reports</vh>
+<v t="T290"><vh>leo.py (done)</vh></v>
+<v t="T291"><vh>leoApp (done)</vh></v>
+<v t="T292"><vh>leoAtFile (done)</vh></v>
+<v t="T293"><vh>leoColor (done)</vh></v>
+<v t="T294"><vh>leoCommands (done)</vh></v>
+<v t="T295"><vh>leoDialogs (done)</vh></v>
+<v t="T296"><vh>leoFileCommands (done)</vh></v>
+<v t="T297"><vh>leoFind (done)</vh></v>
+<v t="T298"><vh>leoFrame (done)</vh></v>
+<v t="T299"><vh>leoImport (done)</vh></v>
+<v t="T300"><vh>leoNodes (done)</vh></v>
+<v t="T301"><vh>leoTangle (done)</vh></v>
+<v t="T302"><vh>leoTree (done)</vh></v>
+<v t="T303"><vh>leoUtils (done)</vh></v>
 </v>
-<v t="T303"><vh>Scripting compatibility</vh>
-<v t="T304"><vh>Functions (done with stub topCommand)</vh></v>
-<v t="T305"><vh>Commands (menu commands &amp; enablers not ready yet)</vh>
-<v t="T306"><vh>menu commands (not ready yet)</vh></v>
-<v t="T307"><vh>command enablers (not ready yet)</vh></v>
+<v t="T304"><vh>Scripting compatibility</vh>
+<v t="T305"><vh>Functions (done with stub topCommand)</vh></v>
+<v t="T306"><vh>Commands (menu commands &amp; enablers not ready yet)</vh>
+<v t="T307"><vh>menu commands (not ready yet)</vh></v>
+<v t="T308"><vh>command enablers (not ready yet)</vh></v>
 </v>
-<v t="T308"><vh>Prefs (not ready yet)</vh></v>
-<v t="T309"><vh>vnodes (done except for minor routines)</vh></v>
+<v t="T309"><vh>Prefs (not ready yet)</vh></v>
+<v t="T310"><vh>vnodes (done except for minor routines)</vh></v>
 </v>
-<v t="T310"><vh>Selection notes</vh></v>
+<v t="T311"><vh>Selection notes</vh></v>
 <v><vh>tk code</vh>
-<v t="T311"><vh>@file c:/prog/test/leoSplitter.tcl</vh>
-<v t="T312"><vh>go</vh></v>
-<v t="T313"><vh>createLeo</vh></v>
-<v t="T314"><vh>createMenus</vh></v>
+<v t="T312"><vh>@file c:/prog/test/leoSplitter.tcl</vh>
+<v t="T313"><vh>go</vh></v>
+<v t="T314"><vh>createLeo</vh></v>
+<v t="T315"><vh>createMenus</vh></v>
 <v><vh>createSplitter</vh>
-<v t="T315"><vh>createSplitter</vh></v>
-<v t="T316"><vh>onGrabSplitterBar</vh></v>
-<v t="T317"><vh>onDropSplitterBar</vh></v>
-<v t="T318"><vh>onDragSplitterBar</vh></v>
-<v t="T319"><vh>divideSplitter</vh></v>
+<v t="T316"><vh>createSplitter</vh></v>
+<v t="T317"><vh>onGrabSplitterBar</vh></v>
+<v t="T318"><vh>onDropSplitterBar</vh></v>
+<v t="T319"><vh>onDragSplitterBar</vh></v>
+<v t="T320"><vh>divideSplitter</vh></v>
 </v>
-<v t="T320"><vh>createFindPanel</vh>
-<v t="T321"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
-<v t="T322"><vh>&lt;&lt; Create two columns of checkboxes &gt;&gt;</vh></v>
-<v t="T323"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
+<v t="T321"><vh>createFindPanel</vh>
+<v t="T322"><vh>&lt;&lt; Create the Find and Change panes &gt;&gt;</vh></v>
+<v t="T323"><vh>&lt;&lt; Create two columns of checkboxes &gt;&gt;</vh></v>
+<v t="T324"><vh>&lt;&lt; Create two rows of buttons &gt;&gt;</vh></v>
 </v>
-<v t="T324"><vh>createPrefsPanel</vh>
-<v t="T325"><vh>&lt;&lt; Create the Global Options frame &gt;&gt;</vh></v>
-<v t="T326"><vh>&lt;&lt; Create the Tangle Options frame &gt;&gt;</vh></v>
-<v t="T327"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
+<v t="T325"><vh>createPrefsPanel</vh>
+<v t="T326"><vh>&lt;&lt; Create the Global Options frame &gt;&gt;</vh></v>
+<v t="T327"><vh>&lt;&lt; Create the Tangle Options frame &gt;&gt;</vh></v>
+<v t="T328"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
 </v>
-<v t="T328"><vh>createColorPanel</vh></v>
-<v t="T329" a="M"><vh>createFontPanel</vh>
-<v t="T330"><vh>&lt;&lt; create family pane &gt;&gt;</vh></v>
-<v t="T331"><vh>&lt;&lt; create style pane &gt;&gt;</vh></v>
-<v t="T332"><vh>&lt;&lt; create buttons &gt;&gt;</vh></v>
-<v t="T333"><vh>&lt;&lt; create size pane &gt;&gt;</vh></v>
-<v t="T334"><vh>&lt;&lt; create sample pane &gt;&gt;</vh></v>
+<v t="T329"><vh>createColorPanel</vh></v>
+<v t="T330" a="M"><vh>createFontPanel</vh>
+<v t="T331"><vh>&lt;&lt; create family pane &gt;&gt;</vh></v>
+<v t="T332"><vh>&lt;&lt; create style pane &gt;&gt;</vh></v>
+<v t="T333"><vh>&lt;&lt; create buttons &gt;&gt;</vh></v>
+<v t="T334"><vh>&lt;&lt; create size pane &gt;&gt;</vh></v>
+<v t="T335"><vh>&lt;&lt; create sample pane &gt;&gt;</vh></v>
 </v>
-<v t="T335"><vh>dkffontCreateFontPanel</vh>
-<v t="T336"><vh>get_accel</vh></v>
-<v t="T337"><vh>get_gap</vh></v>
-<v t="T338"><vh>list_families</vh></v>
+<v t="T336"><vh>dkffontCreateFontPanel</vh>
+<v t="T337"><vh>get_accel</vh></v>
+<v t="T338"><vh>get_gap</vh></v>
+<v t="T339"><vh>list_families</vh></v>
 </v>
-<v t="T339"><vh>createComparePanel</vh></v>
+<v t="T340"><vh>createComparePanel</vh></v>
 </v>
-<v t="T340"><vh>tk labeled frames</vh>
-<v t="T341"><vh>myFrame</vh></v>
+<v t="T341"><vh>tk labeled frames</vh>
+<v t="T342"><vh>myFrame</vh></v>
 </v>
-<v t="T342"><vh>font dialogs</vh>
-<v t="T343"><vh>@file dkffont.tcl</vh>
-<v t="T344"><vh>parse_opts</vh></v>
-<v t="T345"><vh>capitalize</vh></v>
-<v t="T346"><vh>map</vh></v>
-<v t="T347"><vh>decls ?</vh></v>
-<v t="T348" a="M"><vh>get_gap</vh></v>
-<v t="T349" a="M"><vh>make_UI</vh></v>
-<v t="T350"><vh>get_accel</vh></v>
-<v t="T351"><vh>change_family</vh></v>
-<v t="T352"><vh>do_apply</vh></v>
-<v t="T353"><vh>configure_apply</vh></v>
-<v t="T354"><vh>set_font</vh></v>
-<v t="T355"><vh>list_families</vh></v>
-<v t="T356"><vh>dkf_chooseFont</vh></v>
-<v t="T357"><vh>initializing</vh></v>
+<v t="T343"><vh>font dialogs</vh>
+<v t="T344"><vh>@file dkffont.tcl</vh>
+<v t="T345"><vh>parse_opts</vh></v>
+<v t="T346"><vh>capitalize</vh></v>
+<v t="T347"><vh>map</vh></v>
+<v t="T348"><vh>decls ?</vh></v>
+<v t="T349" a="M"><vh>get_gap</vh></v>
+<v t="T350" a="M"><vh>make_UI</vh></v>
+<v t="T351"><vh>get_accel</vh></v>
+<v t="T352"><vh>change_family</vh></v>
+<v t="T353"><vh>do_apply</vh></v>
+<v t="T354"><vh>configure_apply</vh></v>
+<v t="T355"><vh>set_font</vh></v>
+<v t="T356"><vh>list_families</vh></v>
+<v t="T357"><vh>dkf_chooseFont</vh></v>
+<v t="T358"><vh>initializing</vh></v>
 </v>
-<v t="T358"><vh>@file PrefEditor.py</vh>
-<v t="T359"><vh>&lt;&lt; PrefEditor declarations &gt;&gt;</vh></v>
-<v t="T360"><vh>class PrefEditFactory</vh>
-<v t="T361"><vh>&lt;&lt; class PrefEditFactory declarations &gt;&gt;</vh></v>
-<v t="T362"><vh>&lt;&lt; class PrefEditFactory methods &gt;&gt;</vh>
-<v t="T363"><vh>getEditor</vh></v>
-</v>
-</v>
-<v t="T364"><vh>class PrefEditor</vh>
-<v t="T365"><vh>__init__</vh></v>
-<v t="T366"><vh>getCurrentValue</vh></v>
-<v t="T367"><vh>getDefaultValue</vh></v>
-<v t="T368"><vh>getEditValue</vh></v>
-<v t="T369"><vh>getInitialValue</vh></v>
-<v t="T370"><vh>setVariable</vh></v>
-<v t="T371"><vh>showValue</vh></v>
-<v t="T372"><vh>showCurrentValue</vh></v>
-<v t="T373"><vh>showDefaultValue</vh></v>
-<v t="T374"><vh>showInitialValue</vh></v>
-<v t="T375"><vh>unappliedChanges</vh></v>
-<v t="T376"><vh>updateEditor</vh></v>
-<v t="T377"><vh>updateChanged</vh></v>
-<v t="T378"><vh>_editCallback</vh></v>
-<v t="T379"><vh>_getLabelWdg</vh></v>
-<v t="T380"><vh>_getEditWdg</vh></v>
-<v t="T381"><vh>_getRangeWdg</vh></v>
-<v t="T382"><vh>_getShowMenu</vh></v>
-</v>
-<v t="T383"><vh>class FontPrefEditor</vh>
-<v t="T384"><vh>_getEditWdg</vh></v>
-<v t="T385"><vh>getCurrentValue</vh></v>
-<v t="T386"><vh>getInitialvalue</vh></v>
-<v t="T387"><vh>getDefaultValue</vh></v>
-<v t="T388"><vh>getEditValue</vh></v>
-<v t="T389"><vh>showValue</vh></v>
-<v t="T390"><vh>_editCallback</vh></v>
+<v t="T359"><vh>@file PrefEditor.py</vh>
+<v t="T360"><vh>&lt;&lt; PrefEditor declarations &gt;&gt;</vh></v>
+<v t="T361"><vh>class PrefEditFactory</vh>
+<v t="T362"><vh>&lt;&lt; class PrefEditFactory declarations &gt;&gt;</vh></v>
+<v t="T363"><vh>&lt;&lt; class PrefEditFactory methods &gt;&gt;</vh>
+<v t="T364"><vh>getEditor</vh></v>
 </v>
 </v>
-<v t="T391"><vh>_getEditWdg (copy)</vh>
-<v t="T392"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
-<v t="T393"><vh>&lt;&lt; create the frame &gt;&gt;</vh></v>
+<v t="T365"><vh>class PrefEditor</vh>
+<v t="T366"><vh>__init__</vh></v>
+<v t="T367"><vh>getCurrentValue</vh></v>
+<v t="T368"><vh>getDefaultValue</vh></v>
+<v t="T369"><vh>getEditValue</vh></v>
+<v t="T370"><vh>getInitialValue</vh></v>
+<v t="T371"><vh>setVariable</vh></v>
+<v t="T372"><vh>showValue</vh></v>
+<v t="T373"><vh>showCurrentValue</vh></v>
+<v t="T374"><vh>showDefaultValue</vh></v>
+<v t="T375"><vh>showInitialValue</vh></v>
+<v t="T376"><vh>unappliedChanges</vh></v>
+<v t="T377"><vh>updateEditor</vh></v>
+<v t="T378"><vh>updateChanged</vh></v>
+<v t="T379"><vh>_editCallback</vh></v>
+<v t="T380"><vh>_getLabelWdg</vh></v>
+<v t="T381"><vh>_getEditWdg</vh></v>
+<v t="T382"><vh>_getRangeWdg</vh></v>
+<v t="T383"><vh>_getShowMenu</vh></v>
+</v>
+<v t="T384"><vh>class FontPrefEditor</vh>
+<v t="T385"><vh>_getEditWdg</vh></v>
+<v t="T386"><vh>getCurrentValue</vh></v>
+<v t="T387"><vh>getInitialvalue</vh></v>
+<v t="T388"><vh>getDefaultValue</vh></v>
+<v t="T389"><vh>getEditValue</vh></v>
+<v t="T390"><vh>showValue</vh></v>
+<v t="T391"><vh>_editCallback</vh></v>
 </v>
 </v>
-<v t="T394"><vh>colorizer tags</vh></v>
-</v>
-<v t="T395"><vh>Tk notes &amp; url's</vh>
-<v t="T396"><vh>Standard names for all accelerator keys</vh>
-<v t="T397"><vh>Useful for "show invisibles"</vh></v>
-<v t="T398"><vh>Other characters</vh></v>
+<v t="T392"><vh>_getEditWdg (copy)</vh>
+<v t="T393"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
+<v t="T394"><vh>&lt;&lt; create the frame &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T399" a="M"><vh>tk prototype code</vh>
-<v t="T400"><vh>tree</vh>
-<v t="T401"><vh>createTree</vh></v>
+<v t="T395"><vh>colorizer tags</vh></v>
+</v>
+<v t="T396"><vh>Tk notes &amp; url's</vh>
+<v t="T397"><vh>Standard names for all accelerator keys</vh>
+<v t="T398"><vh>Useful for "show invisibles"</vh></v>
+<v t="T399"><vh>Other characters</vh></v>
+</v>
+</v>
+<v t="T400" a="M"><vh>tk prototype code</vh>
+<v t="T401"><vh>tree</vh>
+<v t="T402"><vh>createTree</vh></v>
 <v><vh>expand/contract</vh>
-<v t="T402"><vh>flip</vh></v>
-<v t="T403"><vh>expand</vh></v>
-<v t="T404"><vh>collapse</vh></v>
+<v t="T403"><vh>flip</vh></v>
+<v t="T404"><vh>expand</vh></v>
+<v t="T405"><vh>collapse</vh></v>
 </v>
 <v><vh>drawing</vh>
-<v t="T405"><vh>geticonimage</vh></v>
-<v t="T406"><vh>view</vh></v>
-<v t="T407"><vh>lastvisiblechild</vh></v>
-<v t="T408"><vh>update</vh></v>
-<v t="T409"><vh>drawicon</vh></v>
-<v t="T410"><vh>draw (draws the tree!)</vh>
-<v t="T411"><vh>&lt;&lt; append TreeNodes to children &gt;&gt;</vh></v>
-<v t="T412"><vh>&lt;&lt; draw the horizontal line to the child &gt;&gt;</vh></v>
-<v t="T413"><vh>&lt;&lt; draw the plus or minus icon &gt;&gt;</vh></v>
-<v t="T414"><vh>&lt;&lt; Add bindings for plus or minus icon &gt;&gt;</vh></v>
-<v t="T415"><vh>&lt;&lt; draw the vertical line to the left of all children &gt;&gt;</vh></v>
+<v t="T406"><vh>geticonimage</vh></v>
+<v t="T407"><vh>view</vh></v>
+<v t="T408"><vh>lastvisiblechild</vh></v>
+<v t="T409"><vh>update</vh></v>
+<v t="T410"><vh>drawicon</vh></v>
+<v t="T411"><vh>draw (draws the tree!)</vh>
+<v t="T412"><vh>&lt;&lt; append TreeNodes to children &gt;&gt;</vh></v>
+<v t="T413"><vh>&lt;&lt; draw the horizontal line to the child &gt;&gt;</vh></v>
+<v t="T414"><vh>&lt;&lt; draw the plus or minus icon &gt;&gt;</vh></v>
+<v t="T415"><vh>&lt;&lt; Add bindings for plus or minus icon &gt;&gt;</vh></v>
+<v t="T416"><vh>&lt;&lt; draw the vertical line to the left of all children &gt;&gt;</vh></v>
 </v>
-<v t="T416"><vh>drawtext</vh></v>
+<v t="T417"><vh>drawtext</vh></v>
 </v>
 <v><vh>edit or select</vh>
-<v t="T417"><vh>edit</vh></v>
-<v t="T418"><vh>edit_finish</vh></v>
-<v t="T419"><vh>edit_cancel</vh></v>
-<v t="T420"><vh>select</vh></v>
-<v t="T421"><vh>select_or_edit</vh></v>
-<v t="T422"><vh>deselect</vh></v>
-<v t="T423"><vh>deselectall</vh></v>
-<v t="T424"><vh>deselecttree</vh></v>
+<v t="T418"><vh>edit</vh></v>
+<v t="T419"><vh>edit_finish</vh></v>
+<v t="T420"><vh>edit_cancel</vh></v>
+<v t="T421"><vh>select</vh></v>
+<v t="T422"><vh>select_or_edit</vh></v>
+<v t="T423"><vh>deselect</vh></v>
+<v t="T424"><vh>deselectall</vh></v>
+<v t="T425"><vh>deselecttree</vh></v>
 </v>
 </v>
-<v t="T425"><vh>widget.tcl (The Tk demo)</vh>
-<v t="T426"><vh>&lt;&lt; Create the main window &gt;&gt;</vh>
-<v t="T427"><vh>&lt;&lt; Create the menu bar &gt;&gt;</vh></v>
-<v t="T428"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
-<v t="T429"><vh>&lt;&lt; Create the text frame &gt;&gt;</vh></v>
-<v t="T430"><vh>&lt;&lt; Create tags for the text widget &gt;&gt;</vh></v>
+<v t="T426"><vh>widget.tcl (The Tk demo)</vh>
+<v t="T427"><vh>&lt;&lt; Create the main window &gt;&gt;</vh>
+<v t="T428"><vh>&lt;&lt; Create the menu bar &gt;&gt;</vh></v>
+<v t="T429"><vh>&lt;&lt; Create the status bar &gt;&gt;</vh></v>
+<v t="T430"><vh>&lt;&lt; Create the text frame &gt;&gt;</vh></v>
+<v t="T431"><vh>&lt;&lt; Create tags for the text widget &gt;&gt;</vh></v>
 </v>
-<v t="T431"><vh>&lt;&lt; Create the text for the text widget &gt;&gt;</vh></v>
-<v t="T432"><vh>AboutBox</vh></v>
-<v t="T433"><vh>invoke</vh></v>
-<v t="T434"><vh>positionWindow</vh></v>
-<v t="T435"><vh>showCode</vh></v>
-<v t="T436"><vh>showStatus</vh></v>
-<v t="T437"><vh>showVars</vh></v>
+<v t="T432"><vh>&lt;&lt; Create the text for the text widget &gt;&gt;</vh></v>
+<v t="T433"><vh>AboutBox</vh></v>
+<v t="T434"><vh>invoke</vh></v>
+<v t="T435"><vh>positionWindow</vh></v>
+<v t="T436"><vh>showCode</vh></v>
+<v t="T437"><vh>showStatus</vh></v>
+<v t="T438"><vh>showVars</vh></v>
 </v>
 </v>
-<v t="T438"><vh>Unused code</vh>
-<v t="T439"><vh>leoImport.sort (works)</vh></v>
-<v t="T440"><vh>exportMoreText (won't do)</vh></v>
+<v t="T439"><vh>Unused code</vh>
+<v t="T440"><vh>leoImport.sort (works)</vh></v>
+<v t="T441"><vh>exportMoreText (won't do)</vh></v>
 </v>
 <v><vh>White papers</vh>
-<v t="T441"><vh>Recovering from Read Errors</vh></v>
-<v t="T442"><vh>CVS postings</vh>
-<v t="T443"><vh>How to use Leo with CVS</vh></v>
-<v t="T444"><vh>Leo can't mend clone links</vh></v>
-<v t="T445"><vh>Problems</vh></v>
-<v t="T446"><vh>.cvs.leo format</vh></v>
-<v t="T447"><vh>@cvs</vh></v>
+<v t="T442"><vh>Recovering from Read Errors</vh></v>
+<v t="T443"><vh>CVS postings</vh>
+<v t="T444"><vh>How to use Leo with CVS</vh></v>
+<v t="T445"><vh>Leo can't mend clone links</vh></v>
+<v t="T446"><vh>Problems</vh></v>
+<v t="T447"><vh>.cvs.leo format</vh></v>
+<v t="T448"><vh>@cvs</vh></v>
 </v>
-<v t="T448"><vh>Mac status report</vh></v>
-<v t="T449"><vh>tk is the future of Leo</vh></v>
-<v t="T450"><vh>Why I like Python</vh></v>
+<v t="T449"><vh>Mac status report</vh></v>
+<v t="T450"><vh>tk is the future of Leo</vh></v>
+<v t="T451"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="T451" a="E"><vh>To do</vh>
-<v a="E"><vh>Release 2.5</vh>
-<v t="T452"><vh>update leoDocs.leo and web site</vh></v>
-<v t="T453" a="V"><vh>admin: update CVS</vh></v>
+<v t="T452" a="E"><vh>To do</vh>
+<v a="V"><vh>Release 2.5</vh>
+<v t="T453"><vh>update leoDocs.leo and web site</vh></v>
 </v>
 <v><vh>2.6 Tk stuff (2-4 days)</vh>
 <v t="T454"><vh>Allow "ISO-8859-1" specification</vh></v>
@@ -4774,7 +4774,20 @@ Still to do:
 		find commands,
 		tangle/untangle commands</t>
 <t tx="T279">@nocolor</t>
-<t tx="T280">sys.settrace(func) sets the global trace function. there can also a local trace function (see later)
+<t tx="T280">use the command line option in the admin menu to do the following:
+
+add leoConfig.py and leoConfig.txt
+	cvs add leoConfig.txt
+	cvs add leoConfig.py
+	(then do commit)
+
+remove readme*.doc
+	remove files from working area (done)
+	cvs remove readme1.doc
+	cvs remove readme2.doc
+	...
+	(then do commit)</t>
+<t tx="T281">sys.settrace(func) sets the global trace function. there can also a local trace function (see later)
 
 Trace functions have three arguments: frame, event, and arg.
 frame is the current stack frame.
@@ -4812,7 +4825,7 @@ the return value specifies the new local trace function
 Note that as an exception is propagated down the chain of callers, an 'exception' event is generated at each level. 
 
 For more information on code and frame objects, refer to the Python Reference Manual.</t>
-<t tx="T281">To increase the size of environment space, add the following to config.sys:
+<t tx="T282">To increase the size of environment space, add the following to config.sys:
 
 shell=C:\windows\command\command.com /p:4096
 
@@ -4821,16 +4834,16 @@ Notes:
 1. The path C:\windows\command\command.com may vary.  Check you system for the location of command.com.
 
 2. This works for versions of Windows prior to Me.  On Me you set the registry somehow.  No information on XP.</t>
-<t tx="T282">leo.py reads and writes exactly like LeoCB</t>
-<t tx="T283">Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
+<t tx="T283">leo.py reads and writes exactly like LeoCB</t>
+<t tx="T284">Amazing.  I wrote some dummy code last night, read up on indices this morning, and got everything to work in a couple of hours. The result is very fast: no optimization is needed for Leo. I love Tkinter!
 
 Added c.recolor and tree.recolor routines.  This hooks should be called whenever the body text changes.  Apparently there is no "OnTextChanged" event in Tk.</t>
-<t tx="T284">This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.</t>
-<t tx="T285">I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
+<t tx="T285">This marked my complete frustration with wxLeo and wxPython, and the real beginning of the work on leo.py.</t>
+<t tx="T286">I am totally in love with Python.  Everything is so much easier:  Automatic debugging, no declarations, no types, no compilation. Great data structures. Even without single stepping the debugging is easy.
 
 All major aspects of c2py are now complete.</t>
-<t tx="T286">I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.</t>
-<t tx="T287">Executable scripts don't execute
+<t tx="T287">I am not sure exactly when this happened.  The details apparently have been lost.  There was a time when I was experimenting with Python and wxPython, and a time when I was working on wxWindows version of Leo.</t>
+<t tx="T288">Executable scripts don't execute
 	idle, other scripts
 Linker sees .so file, loader doesn't
 $PATH  no such file or directory
@@ -4847,16 +4860,16 @@ worked on Corel Linux
 installed from /usr/edream/downloads
 high partition with Windows
 </t>
-<t tx="T288">(wrong) indicates that the pychecker warning is wrong.
+<t tx="T289">(wrong) indicates that the pychecker warning is wrong.
 (fixed) indicates a lint-like problem was fixed.
 (real bug) indicates a real bug was fixed.  These bugs could cause crashes.
 (not yet) indicates the problem is in old code that will be rewritten.</t>
-<t tx="T289">1: Imported module (sys) not used
+<t tx="T290">1: Imported module (sys) not used
 	sys.argv is used in some commented-out-traces.</t>
-<t tx="T290">(fixed) 1: Imported module (leoFrame) not used
+<t tx="T291">(fixed) 1: Imported module (leoFrame) not used
 
 (fixed) 15: Parameter (master) not used</t>
-<t tx="T291">(fixed) 362: Local variable (ftag) not used
+<t tx="T292">(fixed) 362: Local variable (ftag) not used
 (fixed) 395: Local variable (dont_set_root_from_headline) shadows global defined on line 0
 (fixed) 398: Local variable (dont_set_root_from_headline) shadows global defined on line 0
 (fixed) 732: Parameter (doErrorRecoveryFlag) not used
@@ -4874,14 +4887,14 @@ high partition with Windows
 (real bug) 2057: No global (writeError) found
 (fixed) 2231: Local variable (c) not used
 (fixed) 2265: Local variable (next) not used</t>
-<t tx="T292">(fixed) 1:   Imported module (Tkinter) not used
+<t tx="T293">(fixed) 1:   Imported module (Tkinter) not used
 (fixed) 267: Parameter (v) not used
 (wrong) 281: Function (colorizePython) has too many lines (289)
 (fixed) 458: Local variable (linkName) not used
 (wrong) 582: Function (colorizeAnyLanguage) has too many lines (366)
 (fixed) 832: Local variable (linkName) not used
 (fixed) 1083: Local variable (j) not used</t>
-<t tx="T293">(fixed) 168: No global (current) found
+<t tx="T294">(fixed) 168: No global (current) found
 (fixed) 244: Local variable (v) not used
 (fixed) 277: Local variable (v) not used
 (fixed) 441: Local variable (v) not used
@@ -4889,7 +4902,7 @@ high partition with Windows
 (fixed) 1106: Local variable (c) not used
 (fixed) 1221: Local variable (c) not used
 (fixed) 1414: Invalid arguments to (is_special), got 2, expected 3</t>
-<t tx="T294">(wrong) 157: Parameter (event) not used
+<t tx="T295">(wrong) 157: Parameter (event) not used
 (wrong) 161: Parameter (event) not used
 (fixed) 163: No class attribute (outlineBox) found
 (fixed) 163: No class attribute (outlinePick) found
@@ -4897,7 +4910,7 @@ high partition with Windows
 (wrong) 176: Parameter (event) not used
 (fixed) 178: No class attribute (fileBox) found
 (fixed) 178: No class attribute (filePick) found</t>
-<t tx="T295">(real bug) 19: No global (message) found
+<t tx="T296">(real bug) 19: No global (message) found
 (fixed) 65: No global (FALSE) found
 (fixed) 77: No global (FileExists) found
 (fixed) 78: No global (FileAge) found
@@ -4912,7 +4925,7 @@ high partition with Windows
 (fixed) 1088: Local variable (c) not used
 (fixed) 1295: Local variable (at) not used
 </t>
-<t tx="T296">(wrong) c:\prog\LeoPy\leoFind.py:186: No global (box) found
+<t tx="T297">(wrong) c:\prog\LeoPy\leoFind.py:186: No global (box) found
 	box is set in an exec statement.
 (wrong) 209: No class attribute (reverse_flag) found
 	reverse_flag is initialized in an exect statement.
@@ -4924,7 +4937,7 @@ high partition with Windows
 (fixed) 536: Local variable (c) not used
 (fixed) 573: Local variable (v) not used
 </t>
-<t tx="T297">(wrong) Note: deleted all "Parameter (event) not used"
+<t tx="T298">(wrong) Note: deleted all "Parameter (event) not used"
 (wrong) 203: Function (createMenuBar) has too many lines (387)
 
 (fixed) 227: Local variable (revert) not used
@@ -4939,10 +4952,10 @@ high partition with Windows
 (later) 1636: No global (wxID_OK) found
 (later) 1652: No class attribute (Refresh) found
 (later) 2176: No global (wxPoint) found</t>
-<t tx="T298">(wrong) 502: Object (lastVnode) has no attribute (insertAfter)
+<t tx="T299">(wrong) 502: Object (lastVnode) has no attribute (insertAfter)
 (wrong) 504: Object (lastVnode) has no attribute (insertAsNthChild)
 (wrong) 509: Object (lastVnode) has no attribute (parent)</t>
-<t tx="T299">(fixed) 1: Imported module (leoTree) not used
+<t tx="T300">(fixed) 1: Imported module (leoTree) not used
 
 (wrong) 307: Parameter (event) not used
 (wrong) 314: Parameter (event) not used
@@ -4966,7 +4979,7 @@ high partition with Windows
 (fixed) 1821: No global (dvnode) found
 (fixed) 1841: Invalid arguments to (threadNext), got 1, expected 0
 (fixed) 1843: Invalid arguments to (threadNext), got 1, expected 0</t>
-<t tx="T300">(fixed) 502: Local variable (c) not used
+<t tx="T301">(fixed) 502: Local variable (c) not used
 (fixed) 535: Parameter (unitFlag) not used
 (fixed) 535: Parameter (v) not used
 (real bug) 634: Local variable (marked_flag) not used
@@ -4994,23 +5007,23 @@ high partition with Windows
 (real bug) 3541: Local variable (arg_tab_width) not used
 (real bug) 3555: Local variable (arg_use_header_flag) not used
 (fixed) 3689: Local variable (j) not used</t>
-<t tx="T301">(fixed) 1: Imported module (leoApp) not used
+<t tx="T302">(fixed) 1: Imported module (leoApp) not used
 (fixed) 1: Imported module (leoNodes) not used
 (fixed) 1: Imported module (traceback) not used
 
 (wrong) c:\prog\LeoPy\leoTree.py:664: Parameter (event) not used</t>
-<t tx="T302">(fixed) 134: Parameter (name) not used
+<t tx="T303">(fixed) 134: Parameter (name) not used
 (fixed) 871: No global (owncolor_bits) found
 (fixed) 912: No global (head_root) found
 
 (wrong) 1135: No module attribute (clock) found
 (wrong) 1139: No module attribute (clock) found
 (wrong) 1141: No module attribute (clock) found</t>
-<t tx="T303">@color</t>
-<t tx="T304">c=leo.topCommand() # done, sort of
+<t tx="T304">@color</t>
+<t tx="T305">c=leo.topCommand() # done, sort of
 
 [c]=leo.getCommands() # done</t>
-<t tx="T305"># Drawing utilities...
+<t tx="T306"># Drawing utilities...
 c.BeginUpdate() # also beginUpdate (done)
 c.EndUpdate() # also endUpdate (done)
 c.Repaint() # also repaint (done)
@@ -5030,7 +5043,7 @@ c.endEditing(v)
 c.makeVisible(v)
 c.selectVnode(v)
 c.synchVnode()  # No longer used.</t>
-<t tx="T306"># File menu commands
+<t tx="T307"># File menu commands
 c.new(windowName)
 b=c.open(fileName)
 c.close()
@@ -5117,7 +5130,7 @@ c.goToNextMarkedHeadline()
 
 # Window menu commands
 c.equalSizedPanes()</t>
-<t tx="T307"># Menu enablers
+<t tx="T308"># Menu enablers
 b=c.canContractAllHeadlines()
 b=c.canContractAllSubheads()
 b=c.canContractSubheads()
@@ -5152,7 +5165,7 @@ b=c.canShiftBodyLeft()
 b=c.canShiftBodyRight()
 b=c.canUndo()
 b=c.canUnmarkAll()</t>
-<t tx="T308"># Getters...
+<t tx="T309"># Getters...
 p = leo.getPrefs() # returns instance of the Prefs class
 b=p.defaultTangleDirectory()
 b=p.doLeoDoneBat()
@@ -5170,7 +5183,7 @@ p.setPageWidth(n)
 p.setTangleOutputsHeaderLine(b)
 p.setTangleOutputsDocChunks(b)
 </t>
-<t tx="T309"># Getters...
+<t tx="T310"># Getters...
 
 v=v.next() # mNext (done)
 v=v.back() # mBack (done)
@@ -5218,7 +5231,7 @@ v.moveToRoot()
 v.clearVisited()
 v.setVisited()
 </t>
-<t tx="T310">@ignore
+<t tx="T311">@ignore
 @color
 
 	# To get the current selection
@@ -5245,8 +5258,8 @@ v.setVisited()
 			selection_range(text, index, text._anchor)
 		else:
 			selection_range(text, text._anchor, index)</t>
-<t tx="T311">@others</t>
-<t tx="T312">proc go {} {
+<t tx="T312">@others</t>
+<t tx="T313">proc go {} {
 	# createLeo 1
 	# createLeo 2
 	# createFindPanel
@@ -5257,7 +5270,7 @@ v.setVisited()
 	# createComparePanel
 }
 </t>
-<t tx="T313">proc createLeo { n } {
+<t tx="T314">proc createLeo { n } {
 
 	toplevel .leo$n
 
@@ -5285,7 +5298,7 @@ v.setVisited()
 	
 	createMenus $n
 }</t>
-<t tx="T314">proc createMenus { n } {
+<t tx="T315">proc createMenus { n } {
 
 	# Create the menu bar
 	menu .leo$n.menu -tearoff 0
@@ -5307,7 +5320,7 @@ v.setVisited()
 	
 	.leo$n configure -menu .leo$n.menu
 }</t>
-<t tx="T315"># Create a splitter window into which the caller packs widgets.
+<t tx="T316"># Create a splitter window into which the caller packs widgets.
 
 proc createSplitter {w verticalFlag} {
 	# verticalFlag, height, width could be params
@@ -5338,7 +5351,7 @@ proc createSplitter {w verticalFlag} {
 	pack $w -expand yes -fill both
 }
 </t>
-<t tx="T316">proc onGrabSplitterBar {w verticalFlag} {
+<t tx="T317">proc onGrabSplitterBar {w verticalFlag} {
 
 	# We should change the cursor here.
 	
@@ -5349,13 +5362,13 @@ proc createSplitter {w verticalFlag} {
 		# $w.bar configure -relief sunken -background LightSteelBlue4
 		# $w.bar configure -background LightSteelBlue4
 }</t>
-<t tx="T317">proc onDropSplitterBar {w verticalFlag xy} {
+<t tx="T318">proc onDropSplitterBar {w verticalFlag xy} {
 
 	# We should reset the cursor here.
 	$w.bar configure -relief raised -background LightSteelBlue2
 }
 </t>
-<t tx="T318"># xy is the coordinate of the cursor relative to the bar, not the main window.
+<t tx="T319"># xy is the coordinate of the cursor relative to the bar, not the main window.
 
 proc onDragSplitterBar {w verticalFlag xy} {
 
@@ -5380,7 +5393,7 @@ proc onDragSplitterBar {w verticalFlag xy} {
 	divideSplitter $w $verticalFlag $frac
 	return $frac ;# No longer used
 }</t>
-<t tx="T319">proc divideSplitter {w verticalFlag frac} {
+<t tx="T320">proc divideSplitter {w verticalFlag frac} {
 
 	if { $verticalFlag } {
 		# Panes arranged vertically; horizontal splitter bar
@@ -5394,7 +5407,7 @@ proc onDragSplitterBar {w verticalFlag xy} {
 		place $w.pane2 -relwidth [expr 1 - $frac]
 	}
 }</t>
-<t tx="T320">proc createFindPanel {} {
+<t tx="T321">proc createFindPanel {} {
 
 	toplevel .find
 	&lt;&lt; Create the Find and Change panes &gt;&gt;
@@ -5402,7 +5415,7 @@ proc onDragSplitterBar {w verticalFlag xy} {
 	&lt;&lt; Create two rows of buttons &gt;&gt;
 }
 </t>
-<t tx="T321">frame .find.fc -bd 1m
+<t tx="T322">frame .find.fc -bd 1m
 pack  .find.fc -anchor n -expand yes -fill x
 
 frame .find.fc.fpane -bd 1 -height 0.95i -width 1.5i
@@ -5422,7 +5435,7 @@ pack  .find.fc.cpane.lab -side left
 pack  .find.fc.cpane.t -side right -expand yes -fill both
 pack  .find.fc.fpane.t -side right -expand yes -fill both
 </t>
-<t tx="T322">frame .find.boxes -bd 1m
+<t tx="T323">frame .find.boxes -bd 1m
 pack  .find.boxes -anchor n -expand yes -fill x
 
 frame .find.boxes.lt -bd 1
@@ -5454,7 +5467,7 @@ pack .find.boxes.rt.outline  -side top -fill x
 pack .find.boxes.rt.mark     -side top -fill x
 pack .find.boxes.rt.markch   -side top -fill x
 </t>
-<t tx="T323"># Create the button panes
+<t tx="T324"># Create the button panes
 frame .find.buttons -bd 1
 pack  .find.buttons -anchor n -expand yes -fill x
 
@@ -5479,14 +5492,14 @@ pack .find.buttons2.change       -pady 1m -padx 1m -side left
 pack .find.buttons2.changeFind   -pady 1m          -side left -expand 1
 pack .find.buttons2.changeAll    -pady 1m -padx 1m -side right
 </t>
-<t tx="T324">proc createPrefsPanel {} {
+<t tx="T325">proc createPrefsPanel {} {
 
 	toplevel .prefs
 	&lt;&lt; Create the Global Options frame &gt;&gt;
 	&lt;&lt; Create the Tangle Options frame &gt;&gt;
 	&lt;&lt; Create the Target Language frame &gt;&gt;
 }</t>
-<t tx="T325">frame .prefs.glob -bd 1m -relief groove
+<t tx="T326">frame .prefs.glob -bd 1m -relief groove
 pack  .prefs.glob -anchor n -pady 1m -ipadx 1m -expand 1 -fill x
 
 label .prefs.glob.title -text "Global Options..."
@@ -5509,7 +5522,7 @@ checkbutton .prefs.glob.done -anchor w -text "Execute Leo_done.bat after Tangle"
 checkbutton .prefs.glob.un   -anchor w -text "Execute Leo_un.bat after Tangle"
 pack .prefs.glob.done .prefs.glob.un -fill x
 </t>
-<t tx="T326"># Frame and title
+<t tx="T327"># Frame and title
 frame .prefs.tangle -bd 1m -relief groove
 pack  .prefs.tangle -anchor n -ipadx 1m -expand 1 -fill x
 
@@ -5528,7 +5541,7 @@ checkbutton .prefs.tangle.header -anchor w -text "Tangle outputs header line"
 checkbutton .prefs.tangle.doc    -anchor w -text "Tangle outputs document chunks"
 pack .prefs.tangle.header .prefs.tangle.doc -fill x
 </t>
-<t tx="T327"># Frame and title
+<t tx="T328"># Frame and title
 frame .prefs.target -bd 1m -relief groove
 pack  .prefs.target -anchor n -pady 1m -ipadx 1m -expand 1 -fill x
 
@@ -5567,7 +5580,7 @@ pack .prefs.target.rt.pod    -fill x
 pack .prefs.target.rt.plain  -fill x
 pack .prefs.target.rt.python -fill x
 </t>
-<t tx="T328">proc showColorPicker {} {
+<t tx="T329">proc showColorPicker {} {
 	tk_chooseColor
 }
 
@@ -5631,7 +5644,7 @@ proc createColorPanel {} {
 	button .color.f.unF.set -text "Set..." -command showColorPicker
 	pack  .color.f.unF.lab .color.f.unF.show .color.f.unF.set -side left -padx 3
 }</t>
-<t tx="T329">proc createFontPanel {w} {
+<t tx="T330">proc createFontPanel {w} {
 
 	frame $w.top
 	frame $w.size -bd 2 -relief "ridge"
@@ -5644,7 +5657,7 @@ proc createColorPanel {} {
 	&lt;&lt; create size pane &gt;&gt;
 	&lt;&lt; create sample pane &gt;&gt;
 }</t>
-<t tx="T330">frame $w.top.family -bd 2 -relief "ridge"
+<t tx="T331">frame $w.top.family -bd 2 -relief "ridge"
 label $w.top.family.lab -text "family"
 listbox $w.top.family.box
 pack $w.top.family.lab $w.top.family.box -anchor w
@@ -5652,7 +5665,7 @@ pack $w.top.family.lab $w.top.family.box -anchor w
 frame $w.top.style -bd 2 -relief "ridge"
 frame $w.top.right -bd 2 -relief "flat"
 pack $w.top.family $w.top.style $w.top.right -side left -fill y -padx 2 -pady 2 ; # -ipadx 5 -ipady 5</t>
-<t tx="T331">label $w.top.style.lab -text "Style"
+<t tx="T332">label $w.top.style.lab -text "Style"
 pack  $w.top.style.lab -anchor w
 foreach {name text} {
 	b Bold
@@ -5663,7 +5676,7 @@ foreach {name text} {
 	checkbutton $w.top.style.$name -text $text
 	pack $w.top.style.$name -side top -anchor w -expand 1
 }</t>
-<t tx="T332">foreach {name text} {
+<t tx="T333">foreach {name text} {
 	ok OK
 	cancel Cancel
 	apply Apply
@@ -5671,7 +5684,7 @@ foreach {name text} {
 	button $w.top.right.$name -text $text -width 6
 	pack   $w.top.right.$name -side top -anchor w -pady 2m ; # -expand 1
 }</t>
-<t tx="T333">frame $w.size.left
+<t tx="T334">frame $w.size.left
 label $w.size.lab -text "Size"
 
 text  $w.size.text -height 1 -width 4
@@ -5695,7 +5708,7 @@ foreach {size} {
 	radiobutton $w.size.left.row2.radio$size -text $size -variable size
 	pack $w.size.left.row2.radio$size -side left
 }</t>
-<t tx="T334">label $w.sample.lab -text "Sample"
+<t tx="T335">label $w.sample.lab -text "Sample"
 pack  $w.sample.lab -side top -anchor w
 
 label $w.sample.text -text "ABCabcXYZxyz123(may be changed)"
@@ -5707,7 +5720,7 @@ pack $w.sample.text -side top -anchor c -expand 1 -fill none
 
 # $w.sample.text insert 0 "ABCabcXYZxyz123(may be changed)"
 # $w.sample.text configure -state disabled</t>
-<t tx="T335">@ Build the font panel (except for the apply button, which is handled by the 'configure_apply procedure...
+<t tx="T336">@ Build the font panel (except for the apply button, which is handled by the 'configure_apply procedure...
 @c
 
 proc origCreateFontPanel {w} {
@@ -5857,14 +5870,14 @@ proc origCreateFontPanel {w} {
 	## bind $w.butnframe.ok &lt;Down&gt; [list focus $w.butnframe.can]
 	## bind $w.butnframe.can &lt;Up&gt; [list focus $w.butnframe.ok]
 }</t>
-<t tx="T336"># Convenience proc to get the accelerator for a particular window
+<t tx="T337"># Convenience proc to get the accelerator for a particular window
 # if the user has given one.  Makes it simpler to get this right
 # everywhere it is needed...
 
 proc get_accel {w} {
 	option get $w accelerator Accelerator
 }</t>
-<t tx="T337"># Get the gap spacing for the frameboxes.  Use a user-specified
+<t tx="T338"># Get the gap spacing for the frameboxes.  Use a user-specified
 # default if there is one (that is a valid integer) and fall back
 # to measuring/guessing otherwise.
 proc get_gap {w} {
@@ -5878,13 +5891,13 @@ proc get_gap {w} {
 	}
 	return $gap
 }</t>
-<t tx="T338"># Get a sorted lower-case list of all the font families defined on
+<t tx="T339"># Get a sorted lower-case list of all the font families defined on
 # the system.  A canonicalisation of [font families]
 proc list_families {} {
 	lsort [string tolower [font families]]
 }
 </t>
-<t tx="T339"># Path 1: text box
+<t tx="T340"># Path 1: text box
 # Path 2: text box
 
 # check: File extension: text box
@@ -5904,7 +5917,7 @@ proc createComparePanel {} {
 
 	toplevel .comparePanel
 }</t>
-<t tx="T340">if 0 {
+<t tx="T341">if 0 {
 	myFrame .f -padx 2 -pady 2 -text "My buttons"
 	pack .f -fill both -expand 1 -padx 2 -pady 2
 	button .f.f.b1 -text Hejsan
@@ -5970,7 +5983,7 @@ proc createComparePanel {} {
 		}
 	}
 }</t>
-<t tx="T341"># w is the frame to be created.
+<t tx="T342"># w is the frame to be created.
 # This configures w.f to be the content.
 # Typically, the user will pack more content into w.f.
 
@@ -6079,8 +6092,8 @@ proc myFrame {w args} {
         grid $lw -sticky [string index $labelanchor 1]
     }
 }</t>
-<t tx="T342">@ignore</t>
-<t tx="T343">@ignore
+<t tx="T343">@ignore</t>
+<t tx="T344">@ignore
 
 #! /bin/sh
 # \
@@ -6105,7 +6118,7 @@ if {![string compare [info script] $argv0]} {
     # use after idle here to put errors into a dialog for testing...
     after idle {puts [dkf_chooseFont -apply puts]}
 }</t>
-<t tx="T344"># Local procedure names (ones that it is a bad idea to refer to
+<t tx="T345"># Local procedure names (ones that it is a bad idea to refer to
 # outside this namespace/file) are prepended with an apostrophe
 # character.  There are no externally useful variables.
 
@@ -6137,14 +6150,14 @@ foreach key [array names options] {
     }
 }
 }</t>
-<t tx="T345"># Capitalise the given word.  Assumes the first capitalisable
+<t tx="T346"># Capitalise the given word.  Assumes the first capitalisable
 # letter is the first character in the argument.
 proc 'capitalise {word} {
 set cUpper [string toupper [string index $word 0]]
 set cLower [string tolower [string range $word 1 end]]
 return ${cUpper}${cLower}
 }</t>
-<t tx="T346"># The classic functional operation.  Replaces each element of the
+<t tx="T347"># The classic functional operation.  Replaces each element of the
 # input list with the result of running the supplied script on
 # that element.
 proc 'map {script list} {
@@ -6155,7 +6168,7 @@ foreach item $list {
 return $newlist
 }
 </t>
-<t tx="T347"># ----------------------------------------------------------------------
+<t tx="T348"># ----------------------------------------------------------------------
 # Now we start in earnest
 namespace export dkf_chooseFont
 
@@ -6170,7 +6183,7 @@ italic 0
 underline 0
 overstrike 0
 }</t>
-<t tx="T348"># Get the gap spacing for the frameboxes.  Use a user-specified
+<t tx="T349"># Get the gap spacing for the frameboxes.  Use a user-specified
 # default if there is one (that is a valid integer) and fall back
 # to measuring/guessing otherwise.
 proc 'get_gap {w} {
@@ -6184,7 +6197,7 @@ proc 'get_gap {w} {
 	}
 	return $gap
 }</t>
-<t tx="T349"># Build the user interface (except for the apply button, which is
+<t tx="T350"># Build the user interface (except for the apply button, which is
 # handled by the 'configure_apply procedure...
 proc 'make_UI {w} {
 # Framed regions.  Do this with grid and labels, as that seems
@@ -6344,7 +6357,7 @@ button $w.butnframe.apl
 bind $w.butnframe.ok &lt;Down&gt; [list focus $w.butnframe.can]
 bind $w.butnframe.can &lt;Up&gt; [list focus $w.butnframe.ok]
 }</t>
-<t tx="T350"># Convenience proc to get the accelerator for a particular window
+<t tx="T351"># Convenience proc to get the accelerator for a particular window
 # if the user has given one.  Makes it simpler to get this right
 # everywhere it is needed...
 proc 'get_accel {w} {
@@ -6353,7 +6366,7 @@ option get $w accelerator Accelerator
 
 
 </t>
-<t tx="T351"># Called when changing the family.  Sets the family to either be
+<t tx="T352"># Called when changing the family.  Sets the family to either be
 # the first family whose name starts with the given character (if
 # char is non-empty and not special) or to be the name of the
 # family at the given index of the listbox.
@@ -6375,14 +6388,14 @@ set Family [$w get $index]
 #wm title [winfo toplevel $w] $Family
 'set_font
 }</t>
-<t tx="T352"># The apply button runs this script when pressed.
+<t tx="T353"># The apply button runs this script when pressed.
 proc 'do_apply {w script} {
 'set_font
 set font [$w.sample.text cget -font]
 uplevel #0 $script [list $font]
 }
 </t>
-<t tx="T353"># Based on whether the supplied script is empty or not, install an
+<t tx="T354"># Based on whether the supplied script is empty or not, install an
 # apply button into the dialog.  This is not part of 'make_UI
 # since it happens at a different stage of initialisation.
 proc 'configure_apply {w script} {
@@ -6427,7 +6440,7 @@ if {[string length $script]} {
 }
 }
 </t>
-<t tx="T354"># Set the font on the editor window based on the information in
+<t tx="T355"># Set the font on the editor window based on the information in
 # the namespace variables.  Returns a 1 if the operation was a
 # failure and 0 if it iwas a success.
 proc 'set_font {} {
@@ -6455,7 +6468,7 @@ if {[catch {
 }
 return 0
 }</t>
-<t tx="T355"># Get a sorted lower-case list of all the font families defined on
+<t tx="T356"># Get a sorted lower-case list of all the font families defined on
 # the system.  A canonicalisation of [font families]
 proc 'list_families {} {
 lsort [string tolower [font families]]
@@ -6463,7 +6476,7 @@ lsort [string tolower [font families]]
 
 # ----------------------------------------------------------------------
 </t>
-<t tx="T356">proc dkf_chooseFont {args} {
+<t tx="T357">proc dkf_chooseFont {args} {
 variable Family
 variable Style
 variable Size
@@ -6564,7 +6577,7 @@ set font [$Win cget -font]
 destroy $w
 return $font
 }</t>
-<t tx="T357"># ----------------------------------------------------------------------
+<t tx="T358"># ----------------------------------------------------------------------
 # I normally load these from a file, but I inline them here for portability
 foreach {pattern value} {
 *DKFChooseFont.DKFChooseFontFrame.borderWidth	2
@@ -6667,7 +6680,7 @@ default {
     }
 }
 }</t>
-<t tx="T358">@language python
+<t tx="T359">@language python
 @others
 
 if __name__ == "__main__":
@@ -6787,7 +6800,7 @@ if __name__ == "__main__":
 
 	root.mainloop()
 </t>
-<t tx="T359">#!/usr/local/bin/python
+<t tx="T360">#!/usr/local/bin/python
 """Widgets for editing individual preference variables.
 
 To Do:
@@ -6812,29 +6825,29 @@ import tkFont
 from OrderedDict import OrderedDict
 
 </t>
-<t tx="T360">class PrefEditFactory:
+<t tx="T361">class PrefEditFactory:
 	&lt;&lt; class PrefEditFactory methods &gt;&gt;
 
 </t>
-<t tx="T361">"""Returns a PrefEditor suitable for the specified PrefVar"""
+<t tx="T362">"""Returns a PrefEditor suitable for the specified PrefVar"""
 </t>
-<t tx="T362">class PrefEditFactory:
+<t tx="T363">class PrefEditFactory:
 
 	@others</t>
-<t tx="T363">def getEditor(self,
+<t tx="T364">def getEditor(self,
 	prefVar,
 	master,
 	row = 0,
 	column = 0,
 </t>
-<t tx="T364">class PrefEditor:
+<t tx="T365">class PrefEditor:
 	"""Basic preferences editor. Works for string, numeric and boolean data
 (PrefVar, StrPrefVar, IntPrefVar, FloatPrefVar, BoolPrefVar).
 """
 	@others
 
 </t>
-<t tx="T365">def __init__(self,
+<t tx="T366">def __init__(self,
 	prefVar,
 	master,
 	row = 0,
@@ -6868,7 +6881,7 @@ from OrderedDict import OrderedDict
 	for wdg in self.wdgDict.itervalues():
 		wdg.grid(row=row, column=column)
 		column += 1</t>
-<t tx="T366">
+<t tx="T367">
 
 def getCurrentValue(self):
 	"""Returns the current value of the preference variable
@@ -6876,47 +6889,47 @@ def getCurrentValue(self):
 	"""
 	return self.prefVar.getValueStr()
 </t>
-<t tx="T367">def getDefaultValue(self):
+<t tx="T368">def getDefaultValue(self):
 	"""Returns the current value of the preference variable
 	(not necessarily the value shown in the value editor).
 	"""
 	return self.prefVar.getDefaultValueStr()
 </t>
-<t tx="T368">def getEditValue(self):
+<t tx="T369">def getEditValue(self):
 	"""Returns the value from the editor widget"""
 	return self.editVar.get()
 </t>
-<t tx="T369">def getInitialValue(self):
+<t tx="T370">def getInitialValue(self):
 	return self.initialValue
 </t>
-<t tx="T370">def setVariable(self):
+<t tx="T371">def setVariable(self):
 	"""Sets the preference variable to the edit value"""
 	self.prefVar.setValue(self.getEditValue())
 	self.updateChanged()
 	
 </t>
-<t tx="T371">def showValue(self, value):
+<t tx="T372">def showValue(self, value):
 	self.editVar.set(value)
 	self.updateEditor()
 </t>
-<t tx="T372">def showCurrentValue(self):
+<t tx="T373">def showCurrentValue(self):
 	self.showValue(self.getCurrentValue())
 </t>
-<t tx="T373">def showDefaultValue(self):
+<t tx="T374">def showDefaultValue(self):
 	self.showValue(self.getDefaultValue())
 </t>
-<t tx="T374">def showInitialValue(self):
+<t tx="T375">def showInitialValue(self):
 	self.showValue(self.getInitialValue())
 </t>
-<t tx="T375">def unappliedChanges(self):
+<t tx="T376">def unappliedChanges(self):
 	"""Returns true if the user has changed the value and it has not been applied"""
 	return self.getEditValue() != self.prefVar.getValueStr()
 </t>
-<t tx="T376">def updateEditor(self):
+<t tx="T377">def updateEditor(self):
 	"""Called after editVal is changed (and verified)"""
 	pass
 </t>
-<t tx="T377">def updateChanged(self):
+<t tx="T378">def updateChanged(self):
 	"""Updates the "value changed" indicator.
 	"""
 	editValue = self.getEditValue()
@@ -6930,7 +6943,7 @@ def getCurrentValue(self):
 	else:
 		self.wdgDict["changed"]["text"] = "!"
 </t>
-<t tx="T378">def _editCallback(self, *args):
+<t tx="T379">def _editCallback(self, *args):
 	try:
 		proposedValue = self.editVar.get()
 		self.prefVar.checkPartialValue(proposedValue)
@@ -6941,14 +6954,14 @@ def getCurrentValue(self):
 		print "rejected value %r" % (proposedValue,)
 		self.editVar.set(self.mostRecentValidValue)
 </t>
-<t tx="T379">def _getLabelWdg(self):
+<t tx="T380">def _getLabelWdg(self):
 	if self.prefVar.units:
 		labelText = "%s (%s)" % (self.prefVar.name, self.prefVar.units)
 	else:
 		labelText = self.prefVar.name
 	return Tkinter.Label(self.master, text = labelText)
 </t>
-<t tx="T380">def _getEditWdg(self):
+<t tx="T381">def _getEditWdg(self):
 	if self.prefVar.validValues:
 		# use a pop-up list of values
 		# first generate a list of strings representing the values
@@ -6958,10 +6971,10 @@ def getCurrentValue(self):
 	else:
 		return self.prefVar.getEditWdg(self.master, self.editVar)
 </t>
-<t tx="T381">def _getRangeWdg(self):
+<t tx="T382">def _getRangeWdg(self):
 	return Tkinter.Label(self.master, text = self.prefVar.getRangeStr())
 </t>
-<t tx="T382">def _getShowMenu(self):
+<t tx="T383">def _getShowMenu(self):
 	mbut = Tkinter.Menubutton(self.master,
 		indicatoron=1,
 		direction="below",
@@ -6978,7 +6991,7 @@ def getCurrentValue(self):
 	mbut["menu"] = mnu
 	return mbut
 </t>
-<t tx="T383">class FontPrefEditor(PrefEditor):
+<t tx="T384">class FontPrefEditor(PrefEditor):
 	"""An editor for fonts.
 getEditValue() returns a dictionary of font attributes
 such as can be used to configure a Tk Font widget.
@@ -6989,7 +7002,7 @@ not the string version returned by prefVar.getValue()
 	@others
 
 </t>
-<t tx="T384">def _getEditWdg(self):
+<t tx="T385">def _getEditWdg(self):
 
 	currFontDict = self.prefVar.value
 	fontFamilies = tkFont.families()
@@ -7043,19 +7056,19 @@ not the string version returned by prefVar.getValue()
 
 	return frame
 </t>
-<t tx="T385">def getCurrentValue(self):
+<t tx="T386">def getCurrentValue(self):
 
 	"""Returns a font description dictionary"""
 	return self.prefVar.getValue()
 </t>
-<t tx="T386">def getInitialvalue(self):
+<t tx="T387">def getInitialvalue(self):
 	
 	return self.initialValue.copy()</t>
-<t tx="T387">def getDefaultValue(self):
+<t tx="T388">def getDefaultValue(self):
 	
 	"""Returns a font description dictionary"""
 	return self.prefVar.getDefaultValue()</t>
-<t tx="T388">def getEditValue(self):
+<t tx="T389">def getEditValue(self):
 	"""Returns a dictionary of font attributes,
 	such as are used by PrefVar FontPrefs.
 	"""
@@ -7068,7 +7081,7 @@ not the string version returned by prefVar.getValue()
 	retValue.update(editValue)
 	return retValue
 </t>
-<t tx="T389">def showValue(self, valueDict):
+<t tx="T390">def showValue(self, valueDict):
 	"""Value is a dictionary of font attributes containing fields:
 	"family", "size" and ?. Unknown values are ignored.
 	"""
@@ -7080,12 +7093,12 @@ not the string version returned by prefVar.getValue()
 	# now update the font used for the menu text
 	self._editCallback()
 </t>
-<t tx="T390">def _editCallback(self, *args):
+<t tx="T391">def _editCallback(self, *args):
 	self.editFont.configure(**self.getEditValue())
 	self.updateChanged()
 	
 </t>
-<t tx="T391">def _getEditWdg(self):
+<t tx="T392">def _getEditWdg(self):
 	
 	&lt;&lt; initialize ivars &gt;&gt;
 	&lt;&lt; create the frame &gt;&gt;
@@ -7095,7 +7108,7 @@ not the string version returned by prefVar.getValue()
 		var.trace_variable("w", self._editCallback)
 
 	return frame</t>
-<t tx="T392">currFontDict = self.prefVar.value
+<t tx="T393">currFontDict = self.prefVar.value
 fontFamilies = tkFont.families()
 fontSizes = [str(x) for x in range(9, 25)]
 
@@ -7114,7 +7127,7 @@ self.varDict = {}
 for varName, varDef in varNameDefSet:
 	self.varDict[varName] = Tkinter.StringVar()
 	self.varDict[varName].set(currFontDict.get(varName, varDef))</t>
-<t tx="T393">frame = Tkinter.Frame(self.master)
+<t tx="T394">frame = Tkinter.Frame(self.master)
 
 fontNameWdg = Tkinter.OptionMenu(frame, self.varDict["family"], *fontFamilies)
 fontNameWdg.configure(font=self.editFont)
@@ -7142,7 +7155,7 @@ fontOptionWdg["menu"] = mnu
 fontNameWdg.pack(side="left")
 fontSizeWdg.pack(side="left")
 fontOptionWdg.pack(side="left")</t>
-<t tx="T394"># Must use foreground, not fg
+<t tx="T395"># Must use foreground, not fg
 body.tag_config("comment", foreground="red")
 body.tag_config("cwebName", foreground="DarkRed")
 body.tag_config("docPart", foreground="red")
@@ -7176,12 +7189,12 @@ else:
 	body.tag_config("tab",background="white")
 
 # body.tag_config("normal", foreground="black")</t>
-<t tx="T395">Valid colors: ( see colors in main TOC )
+<t tx="T396">Valid colors: ( see colors in main TOC )
   http://tcl.activestate.com/man/tcl8.4/TkCmd/colors.htm
 
 Valid key names ( see keysyms in main TOC)
   http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm</t>
-<t tx="T396">@nocolor
+<t tx="T397">@nocolor
 
 Not all keysyms will be valid on all platforms.
 
@@ -7394,7 +7407,7 @@ Super_R                          65516     0xffec
 Hyper_L                          65517     0xffed
 Hyper_R                          65518     0xffee
 Delete                           65535     0xffff</t>
-<t tx="T397">paragraph                          182     0x00b6
+<t tx="T398">paragraph                          182     0x00b6
 periodcentered                     183     0x00b7
 
 section                            167     0x00a7
@@ -7405,7 +7418,7 @@ plusminus                          177     0x00b1
 
 copyright                          169     0x00a9
 registered                         174     0x00ae</t>
-<t tx="T398">exclamdown                         161     0x00a1
+<t tx="T399">exclamdown                         161     0x00a1
 cent                               162     0x00a2
 sterling                           163     0x00a3
 currency                           164     0x00a4
@@ -8080,11 +8093,11 @@ hebrew_kuf                        3319     0x0cf7
 hebrew_resh                       3320     0x0cf8
 hebrew_shin                       3321     0x0cf9
 hebrew_taf                        3322     0x0cfa</t>
-<t tx="T399">@language python
+<t tx="T400">@language python
 @ignore
 @color</t>
-<t tx="T400">@ignore</t>
-<t tx="T401"># How do we remember the state?
+<t tx="T401">@ignore</t>
+<t tx="T402"># How do we remember the state?
 # How do we insert, delete and move nodes?
 # Is it worth it to do this in tcl, or should I wait for tkinter??
 
@@ -8093,7 +8106,7 @@ proc createTree {w} {
 	Canvas $w.c
 	## pack??
 }</t>
-<t tx="T402">def flip(self, event=None):
+<t tx="T403">def flip(self, event=None):
 
 	if self.state == 'expanded':
 		self.collapse()
@@ -8102,7 +8115,7 @@ proc createTree {w} {
 	self.item.OnDoubleClick()
 	return "break"
 </t>
-<t tx="T403">def expand(self, event=None):
+<t tx="T404">def expand(self, event=None):
 
 	if not self.item._IsExpandable():
 		return
@@ -8111,13 +8124,13 @@ proc createTree {w} {
 		self.update()
 		self.view()
 </t>
-<t tx="T404">def collapse(self, event=None):
+<t tx="T405">def collapse(self, event=None):
 
 	if self.state != 'collapsed':
 		self.state = 'collapsed'
 		self.update()
 </t>
-<t tx="T405">def geticonimage(self, name):
+<t tx="T406">def geticonimage(self, name):
 
 	try:
 		return self.iconimages[name]
@@ -8131,7 +8144,7 @@ proc createTree {w} {
 	self.iconimages[name] = image
 	return image
 </t>
-<t tx="T406">def view(self):
+<t tx="T407">def view(self):
 
 	top = self.y - 2
 	bottom = self.lastvisiblechild().y + 17
@@ -8151,14 +8164,14 @@ proc createTree {w} {
 	fraction = float(fraction) / y1
 	self.canvas.yview_moveto(fraction)
 </t>
-<t tx="T407">def lastvisiblechild(self):
+<t tx="T408">def lastvisiblechild(self):
 
 	if self.children and self.state == 'expanded':
 		return self.children[-1].lastvisiblechild()
 	else:
 		return self
 </t>
-<t tx="T408">def update(self):
+<t tx="T409">def update(self):
 
 	# EKR: I would do v=self.findRoot(), etc.
 
@@ -8175,7 +8188,7 @@ proc createTree {w} {
 			self.canvas.configure(scrollregion=(0, 0, x1, y1))
 		self.canvas['cursor'] = oldcursor
 </t>
-<t tx="T409"># EKR: draws icon at self.x, self.y
+<t tx="T410"># EKR: draws icon at self.x, self.y
 
 def drawicon(self):
 
@@ -8193,7 +8206,7 @@ def drawicon(self):
 	self.canvas.tag_bind(id, "&lt;1&gt;", self.select)
 	self.canvas.tag_bind(id, "&lt;Double-1&gt;", self.flip)
 </t>
-<t tx="T410">@ EKR: draws the receiver and all its descendants at x,y and returns the tree's total height.
+<t tx="T411">@ EKR: draws the receiver and all its descendants at x,y and returns the tree's total height.
 
 EKR: modified from IDLE code
 	all vnodes have treeNode and firstChild fields
@@ -8224,7 +8237,7 @@ def draw(self, x, y):
 	&lt;&lt; draw the vertical line to the left of all children &gt;&gt;
 	return cy # EKR: return total height of node and its children
 </t>
-<t tx="T411">sublist = self.item._GetSubList()
+<t tx="T412">sublist = self.item._GetSubList()
 if not sublist:
 	# _IsExpandable() was mistaken; that's allowed
 	return y+17
@@ -8233,12 +8246,12 @@ for item in sublist:
 	child = TreeNode(self.canvas, self, item)
 	self.children.append(child)
 </t>
-<t tx="T412">@ EKR: The horizontal line runs from the vertical line to the left of all children at x+9 to the child's icon at cx = x+20
+<t tx="T413">@ EKR: The horizontal line runs from the vertical line to the left of all children at x+9 to the child's icon at cx = x+20
 @c
 
 self.canvas.create_line(x+9, cy+7, cx, cy+7, fill="gray50")
 </t>
-<t tx="T413"># EKR: this icon will overlay part of the horizontal line just drawn.
+<t tx="T414"># EKR: this icon will overlay part of the horizontal line just drawn.
 
 if child.state == 'expanded':
 	iconname = "minusnode"
@@ -8250,18 +8263,18 @@ else:
 image = self.geticonimage(iconname)
 id = self.canvas.create_image(x+9, cylast+7, image=image)
 </t>
-<t tx="T414"># XXX This leaks bindings until canvas is deleted:
+<t tx="T415"># XXX This leaks bindings until canvas is deleted:
 self.canvas.tag_bind(id, "&lt;1&gt;", callback)
 self.canvas.tag_bind(id, "&lt;Double-1&gt;", lambda x: None)
 </t>
-<t tx="T415"># EKR: the line is at x+9
+<t tx="T416"># EKR: the line is at x+9
 
 id = self.canvas.create_line(x+9, y+10, x+9, cylast+7,
 	##stipple="gray50",     # XXX Seems broken in Tk 8.0.x
 	fill="gray50")
 self.canvas.tag_lower(id) # XXX .lower(id) before Python 1.5.2
 </t>
-<t tx="T416">@ EKR
+<t tx="T417">@ EKR
 draws text at self.x+20-1, self.y-1
 label text preceeds other text (no idea why we need both)
 @c
@@ -8305,7 +8318,7 @@ def drawtext(self):
 	self.label.bind("&lt;Double-1&gt;", self.flip)
 	self.text_id = id
 </t>
-<t tx="T417">def edit(self, event=None):
+<t tx="T418">def edit(self, event=None):
 
 	self.entry = Entry(self.label, bd=0, highlightthickness=1, width=0)
 	self.entry.insert(0, self.label['text'])
@@ -8315,7 +8328,7 @@ def drawtext(self):
 	self.entry.bind("&lt;Return&gt;", self.edit_finish)
 	self.entry.bind("&lt;Escape&gt;", self.edit_cancel)
 </t>
-<t tx="T418">def edit_finish(self, event=None):
+<t tx="T419">def edit_finish(self, event=None):
 
 	try:
 		entry = self.entry
@@ -8332,7 +8345,7 @@ def drawtext(self):
 	self.drawtext()
 	self.canvas.focus_set()
 </t>
-<t tx="T419">def edit_cancel(self, event=None):
+<t tx="T420">def edit_cancel(self, event=None):
 
 	try:
 		entry = self.entry
@@ -8344,7 +8357,7 @@ def drawtext(self):
 	self.drawtext()
 	self.canvas.focus_set()
 </t>
-<t tx="T420">def select(self, event=None):
+<t tx="T421">def select(self, event=None):
 
 	if self.selected:
 		return
@@ -8354,14 +8367,14 @@ def drawtext(self):
 	self.drawicon()
 	self.drawtext()
 </t>
-<t tx="T421">def select_or_edit(self, event=None):
+<t tx="T422">def select_or_edit(self, event=None):
 
 	if self.selected and self.item.IsEditable():
 		self.edit(event)
 	else:
 		self.select(event)
 </t>
-<t tx="T422">def deselect(self, event=None):
+<t tx="T423">def deselect(self, event=None):
 
 	if not self.selected:
 		return
@@ -8370,21 +8383,21 @@ def drawtext(self):
 	self.drawicon()
 	self.drawtext()
 </t>
-<t tx="T423">def deselectall(self):
+<t tx="T424">def deselectall(self):
 
 	if self.parent:
 		self.parent.deselectall()
 	else:
 		self.deselecttree()
 </t>
-<t tx="T424">def deselecttree(self):
+<t tx="T425">def deselecttree(self):
 
 	if self.selected:
 		self.deselect()
 	for child in self.children:
 		child.deselecttree()
 </t>
-<t tx="T425">#!/bin/sh
+<t tx="T426">#!/bin/sh
 # the next line restarts using wish \
 exec wish "$0" "$@"
 
@@ -8405,7 +8418,7 @@ set widgetDemo 1
 @others
 
 </t>
-<t tx="T426"># The code below create the main window, consisting of a menu bar
+<t tx="T427"># The code below create the main window, consisting of a menu bar
 # and a text widget that explains how to use the program, plus lists
 # all of the demos as hypertext items.
 
@@ -8413,7 +8426,7 @@ set widgetDemo 1
 &lt;&lt; Create the status bar &gt;&gt;
 &lt;&lt; Create the text frame &gt;&gt;
 &lt;&lt; Create tags for the text widget &gt;&gt;</t>
-<t tx="T427">set font {Helvetica 14}
+<t tx="T428">set font {Helvetica 14}
 menu .menuBar -tearoff 0
 .menuBar add cascade -menu .menuBar.file -label "File" -underline 0
 menu .menuBar.file -tearoff 0
@@ -8434,7 +8447,7 @@ if {$tcl_platform(platform) == "macintosh"} {
 . configure -menu .menuBar
 bind . &lt;F1&gt; aboutBox
 </t>
-<t tx="T428">frame .statusBar
+<t tx="T429">frame .statusBar
 label .statusBar.lab -text "   " -relief sunken -bd 1 \
     -font -*-Helvetica-Medium-R-Normal--*-120-*-*-*-*-*-* -anchor w
 label .statusBar.foo -width 8 -relief sunken -bd 1 \
@@ -8443,7 +8456,7 @@ pack .statusBar.lab -side left -padx 2 -expand yes -fill both
 pack .statusBar.foo -side left -padx 2
 pack .statusBar -side bottom -fill x -pady 2
 </t>
-<t tx="T429">frame .textFrame
+<t tx="T430">frame .textFrame
 scrollbar .s -orient vertical -command {.t yview} -highlightthickness 0 \
     -takefocus 1
 pack .s -in .textFrame -side right -fill y
@@ -8452,7 +8465,7 @@ text .t -yscrollcommand {.s set} -wrap word -width 60 -height 30 -font $font \
 pack .t -in .textFrame -expand y -fill both -padx 1
 pack  .textFrame -expand yes -fill both
 </t>
-<t tx="T430"># Create a bunch of tags to use in the text widget, such as those for
+<t tx="T431"># Create a bunch of tags to use in the text widget, such as those for
 # section titles and demo descriptions.  Also define the bindings for tags.
 
 .t tag configure title -font {Helvetica 18 bold}
@@ -8511,7 +8524,7 @@ set lastLine ""
     showStatus [.t index {@%x,%y}]
 }
 </t>
-<t tx="T431">.t insert end "Tk Widget Demonstrations\n" title
+<t tx="T432">.t insert end "Tk Widget Demonstrations\n" title
 
 .t insert end {
 This application provides a front end for several short scripts that demonstrate what you can do with Tk widgets.  Each of the numbered lines below describes a demonstration;  you can click on it to invoke the demonstration.  Once the demonstration window appears, you can click the "See Code" button to see the Tcl/Tk code that created the demonstration.  If you wish, you can edit the code and click the "Rerun Demo" button in the code window to reinvoke the demonstration with the modified code.
@@ -8623,14 +8636,14 @@ This application provides a front end for several short scripts that demonstrate
 
 .t configure -state disabled
 focus .s</t>
-<t tx="T432"># Pops up a message box with an "about" message
+<t tx="T433"># Pops up a message box with an "about" message
 
 proc aboutBox {} {
     tk_messageBox -icon info -type ok -title "About Widget Demo" -message \
 		"Tk widget demonstration\n\n\Copyright (c) 1996-1997 Sun Microsystems, Inc."
 }
 </t>
-<t tx="T433"># This procedure invokes a demo when the user clicks on a demo description.
+<t tx="T434"># This procedure invokes a demo when the user clicks on a demo description.
 # index - The index of the character that the user clicked on.
 
 proc invoke index {
@@ -8652,13 +8665,13 @@ proc invoke index {
 }
 
 </t>
-<t tx="T434"># Invoked by most of the demos to position a new demo window.
+<t tx="T435"># Invoked by most of the demos to position a new demo window.
 # w - The name of the window to position.
 
 proc positionWindow w {
     wm geometry $w +300+300
 }</t>
-<t tx="T435"># This procedure creates a toplevel window that displays the code for
+<t tx="T436"># This procedure creates a toplevel window that displays the code for
 # a demonstration and allows it to be edited and reinvoked.
 #
 # Arguments:
@@ -8711,7 +8724,7 @@ proc showCode w {
 	close $id
 }
 </t>
-<t tx="T436">#	Show the name of the demo program in the status bar. This procedure
+<t tx="T437">#	Show the name of the demo program in the status bar. This procedure
 #	is called when the user moves the cursor over a demo description.
 
 proc showStatus index {
@@ -8732,7 +8745,7 @@ proc showStatus index {
 	}
 }
 </t>
-<t tx="T437"># Displays the values of one or more variables in a window, and
+<t tx="T438"># Displays the values of one or more variables in a window, and
 # updates the display whenever any of the variables changes.
 #
 # Arguments:
@@ -8765,9 +8778,9 @@ proc showVars {w args} {
 	pack $w.ok -side bottom -pady 2
 }
 </t>
-<t tx="T438">@ignore
+<t tx="T439">@ignore
 @color</t>
-<t tx="T439"># Returns a list of methods in this file, sorted by starting line number.
+<t tx="T440"># Returns a list of methods in this file, sorted by starting line number.
 # This works, and it isn't clear that Leo can use it.
 
 def sort():
@@ -8782,7 +8795,7 @@ def sort():
 	sorted = sortSequence(numbers,0)
 	for n, val in sorted: print n, val
 	return sorted</t>
-<t tx="T440">@ The problem here is getting app().clipboard to the "real" clipboard.  This I don't know how to do!
+<t tx="T441">@ The problem here is getting app().clipboard to the "real" clipboard.  This I don't know how to do!
 @c
 
 def exportMoreText (self):
@@ -8791,7 +8804,7 @@ def exportMoreText (self):
 	if v:
 		app().clipboard = v.convertTreeToString()
 		trace(app().clipboard)</t>
-<t tx="T441">@nocolor
+<t tx="T442">@nocolor
 
 This paper presents my present thoughts about recovering from "read errors", that is, errors encountered while reading @file trees.
 
@@ -8814,8 +8827,8 @@ At present Leo restores the @file tree in the outline from the derived file when
 2. When restoring a project from a backup .leo file, it is natural to have the information in the .leo file take precedence over the derived file.  Ditto when using CVS.
 
 3. The user can "manually" restore information from a derived file using the Read @file Nodes command if  necessary.  This operation, and only this operation, will break clone links.</t>
-<t tx="T442">@nocolor</t>
-<t tx="T443">Let us consider how to use CVS with Leo.  Our goal is this:
+<t tx="T443">@nocolor</t>
+<t tx="T444">Let us consider how to use CVS with Leo.  Our goal is this:
 	
 	CVS operations should retain clone links.
 	
@@ -8844,7 +8857,7 @@ I always envisioned that update conflicts would have to be resolved in .leo file
 I believe these rules are correct.  If you disagree with these conclusions please let me know immediately.
 
 Edward</t>
-<t tx="T444">My last posting is completely wrong.  Leo can not mend clone links for a very simple reason: cloned nodes must have the same structure!  Most read errors come about because Leo has detected that nodes do _not_ have the same structure.
+<t tx="T445">My last posting is completely wrong.  Leo can not mend clone links for a very simple reason: cloned nodes must have the same structure!  Most read errors come about because Leo has detected that nodes do _not_ have the same structure.
 
 Even if a Mend Clone dialog were put up, the user would have no way of knowing whether any joins made sense.  Joining two nodes with different structure would be disastrous.
 
@@ -8853,14 +8866,14 @@ Mending clones would be possible only if the only differences between trees were
 My next posting will try to make a virtue out of necessity by proposing guidelines for using Leo with CVS.
 
 Edward</t>
-<t tx="T445">Development work on Leo is about to start using CVS.  This raises a number of questions about how to use Leo projects with CVS.  Resolving these issues is very important; people won't use Leo if it doesn't work well with CVS.
+<t tx="T446">Development work on Leo is about to start using CVS.  This raises a number of questions about how to use Leo projects with CVS.  Resolving these issues is very important; people won't use Leo if it doesn't work well with CVS.
 	
 1. CVS may not do very well in reporting conflicts involving .leo files.  Indeed, .leo files might almost be considered to be "binary" files as far as CVS is concerned.  Experience will show how serious this problem turns out to be, and I have some ideas about how to help out CVS.
 
 2. Files derived from @root or @file trees contain structure information that should not be edited by hand.  In particular, if CVS reports a conflict, that conflict should be resolved at the outline level, not in the derived file.  Again, it remains to be seen how big a problem this will be, and again I have some ideas about how to make things more smooth.
 
 Note: It will never be possible to update outline _structure_ using the Untangle command.  Indeed, the Untangle command traverses the outline to find body text to update; there is absolutely no way for Untangle to change outline structure.  It _is_ possible to update outline structure by reading @file trees (that was a big reason for creating @file trees!), and there are problems with clones.  See the next section.</t>
-<t tx="T446">This note addresses problem 1 of my initial posting, namely that .leo files are like "binary" files as far as CVS is concerned.  That is, CVS may have problems providing intelligent diffs of .leo files.
+<t tx="T447">This note addresses problem 1 of my initial posting, namely that .leo files are like "binary" files as far as CVS is concerned.  That is, CVS may have problems providing intelligent diffs of .leo files.
 
 It would be easy for Leo to write a "diff-friendly" version of a .leo file.  Call such files .cvs.leo files.  .cvs.leo files would be easy for us humans to understand.  I am thinking that people would check .cvs.leo files in and out rather than .leo files.  On checkout, one would then recreate .leo files from .cvs.leo files.  Before checkin, one would create .cvs.leo files from .leo files.
 
@@ -8888,12 +8901,12 @@ Each headline on separate line, starts with + or -.  The + or = depends only on 
 Still unresolved is a way of specifying clones in a bullet-proof way.
 
 Edward</t>
-<t tx="T447">This note is another approach to handling some of the problems mentioned in my original post.
+<t tx="T448">This note is another approach to handling some of the problems mentioned in my original post.
 
 It may be desirable to use @cvs trees instead of @file tree.  When Leo writes a @cvs tree to a .leo file it writes only the headline of the tree; it writes none of the headlines below the @cvs tree and writes none of the body text of the tree.  This is suspiciously like the infamous "Archive" command, and it may be a good idea nevertheless in the context of CVS.  With @cvs, the .leo file becomes just a dummy file, so it would not be common to check .leo files in or out.
 
 Implementing this command can be done easily.  The question is, does it make sense to do so?</t>
-<t tx="T448">@nocolor
+<t tx="T449">@nocolor
 
 Farewell to the Mac?
 
@@ -8914,7 +8927,7 @@ This posting uses the word 'alas' three times, not counting the last one ;-)  I 
 Edward K. Ream
 November 4, 2001
 </t>
-<t tx="T449">@nocolor
+<t tx="T450">@nocolor
 
 The more I look at Tk, the more convinced I am that Python + Tk (aka tkinter) is, by far, the best way to go with Leo.py.  I now have Open Source code for tree widgets and splitter windows, and have intensely studied how to modify that code for use in Leo.  It is clear, even at this early date, that this code will provide a very pleasant base on which to build Leo.
 
@@ -8941,7 +8954,7 @@ In short, using Tk for Leo.py will be fast enough and will greatly increase what
 
 Edward K. Ream
 November 4, 2001</t>
-<t tx="T450">@nocolor
+<t tx="T451">@nocolor
 
 I've known for a while that Python was interesting; I attended a Python conference last year and added Python support to Leo.  But last week I got that Python is something truly remarkable.  I wanted to convert Leo from wxWindows to wxPython, so I began work on c2py, a Python script that would help convert from C++ syntax to Python.  While doing so, I had an Aha experience.  Python is more than an incremental improvement over Smalltalk or C++ or objective-C; it is "something completely different".  The rest of this post tries to explain this difference.
 
@@ -8995,21 +9008,10 @@ The only hope of making Leo all it can be is to use the best possible tools.  I 
 
 Edward K. Ream
 October 25, 2001</t>
-<t tx="T451">@nocolor
+<t tx="T452">@nocolor
 
 "ISO-8859-1" for "UTF-8"</t>
-<t tx="T452">Update web site.</t>
-<t tx="T453">add leoConfig.py and leoConfig.txt
-	cvs add leoConfig.txt
-	cvs add leoConfig.py
-	(then do commit)
-
-remove readme*.doc
-	remove files from working area (done)
-	cvs remove readme1.doc
-	cvs remove readme2.doc
-	...
-	(then do commit)</t>
+<t tx="T453">Update web site.</t>
 <t tx="T454">Allow a prolog string of either:
 
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
