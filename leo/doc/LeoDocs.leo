@@ -5,9 +5,9 @@
 	<global_window_position top="43" left="218" height="836" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
+<preferences defaultTargetLanguage="Python" node_only="0" output_doc_chunks="1" page_width="132" tab_width="4" tangle_bat="0" untangle_bat="0" use_header_flag="1">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
@@ -80,8 +80,8 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
-<v t="EKR.20040628095213"><vh>4.2 beta 1</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="EKR.20040628095213" a="ETV"><vh>4.2 beta 1</vh>
 <v t="EKR.20040524104904.242"><vh>Extending the format of .leo files</vh></v>
 <v t="EKR.20040628100535"><vh>Fixed bugs</vh>
 <v t="EKR.20040628095213.3"><vh>Made "end1" and "ilde"events work again</vh></v>
@@ -1229,8 +1229,8 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
-<v t="EKR.20040524104904.1" a="TV"><vh>@file-thin leoUsersGuide.txt</vh></v>
+<v t="EKR.20040524104904"><vh>Users Guide</vh>
+<v t="EKR.20040524104904.1"><vh>@file-thin leoUsersGuide.txt</vh></v>
 </v>
 <v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="EKR.20040524105011"><vh>@file-thin leoFAQ.txt</vh></v>
