@@ -6,13 +6,19 @@
 #@@tabwidth -4
 
 __name__ = "Row/Column indicators"
-__version__ = "0.1" 
+__version__ = "0.1"
+
+#@<< imports >>
+#@+node:ekr.20040908094021.2:<< imports >>
 
 import leoGlobals as g
 import leoPlugins
 
 try: import Tkinter as Tk
-except ImportError: Tk = None 
+except ImportError: Tk = None
+#@nonl
+#@-node:ekr.20040908094021.2:<< imports >>
+#@nl
 
 #@+others
 #@+node:ekr.20040108095351.1:class rowColClass

@@ -30,7 +30,19 @@ Still to do:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.3"
+__version__ = "0.4"
+
+#@<< version history >>
+#@+node:ekr.20040908094021.3:<< version history >>
+#@+at
+# 
+# 0.4 EKR: Don't mess with button width on MacOS/darwin.
+#@-at
+#@nonl
+#@-node:ekr.20040908094021.3:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20040908093511.3:<< imports >>
 
 import leoGlobals as g
 import leoPlugins
@@ -40,11 +52,15 @@ import leoFind
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
+import sys
+#@nonl
+#@-node:ekr.20040908093511.3:<< imports >>
+#@nl
 #@<< vars >>
 #@+node:ekr.20040108054555.14:<< vars >>
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on 
 # your platform 
-USE_FIXED_SIZES = 1
+USE_FIXED_SIZES = sys.platform != "darwin"
 
 # Set this to the number of previous searches you want to remember 
 SEARCH_LIST_LENGTH = 10
@@ -67,6 +83,7 @@ OPTION_DICT = dict(OPTION_LIST)
 #@nonl
 #@-node:ekr.20040108054555.14:<< vars >>
 #@nl
+
 #@+others
 #@+node:ekr.20040107092135.3:class SearchBox
 class SearchBox:

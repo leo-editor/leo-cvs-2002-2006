@@ -6,22 +6,40 @@
 #@@tabwidth -4
 
 __name__ = "Node Navigator"
-__version__ = "0.4"
-    # 0.4 EKR:
-        # - Rewrote to handle multiple commanders correctly.
-        #   - Created ctor, set hooks on "new" and "open2".
-        # - Save marks so we don't have to rescan:  a major performance boost.
-        #   This was slowing down write logic considerably.
-        # - Add basic unit testing.
+__version__ = "0.5"
 
+#@<< version history >>
+#@+node:ekr.20040908093511.2:<< version history >>
+#@+at
+# 
+# 0.4 EKR:
+# - Rewrote to handle multiple commanders correctly.
+# - Created ctor, set hooks on "new" and "open2".
+# - Saved marks so we don't have to rescan:  a major performance boost.
+#   This was slowing down write logic considerably.
+# - Added basic unit testing.
+# 
+# 0.5 EKR:
+# - Use constant spacing for buttons on MacOs/darwin.
+#@-at
+#@nonl
+#@-node:ekr.20040908093511.2:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ekr.20040908094021.1:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
+import sys
+#@nonl
+#@-node:ekr.20040908094021.1:<< imports >>
+#@nl
+
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
-USE_FIXED_SIZES = 1
+USE_FIXED_SIZES = sys.platform != "darwin"
 
 inited = {}
 

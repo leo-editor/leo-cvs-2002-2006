@@ -4,8 +4,20 @@
 
 Based on ideas from e's dynabutton plugin."""
 
-#@<< mod_scripting imports >>
-#@+node:EKR.20040613215415:<< mod_scripting imports >>
+__version__ = "0.3"
+
+#@<< version history >>
+#@+node:ekr.20040908094021:<< version history >>
+#@+at
+# 
+# 0.3 EKR: Don't mess with button sizes or fonts on MacOs/darwin
+#@-at
+#@nonl
+#@-node:ekr.20040908094021:<< version history >>
+#@nl
+
+#@<< imports >>
+#@+node:EKR.20040613215415:<< imports >>
 # from __future__ import generators
 
 import leoGlobals as g
@@ -13,8 +25,10 @@ import leoPlugins
 
 try: import Tkinter as Tk
 except: Tk = None
+
+import sys
 #@nonl
-#@-node:EKR.20040613215415:<< mod_scripting imports >>
+#@-node:EKR.20040613215415:<< imports >>
 #@nl
 
 data = {} # Global data: contains one dict for each commander.
@@ -22,8 +36,8 @@ buttons = 0 # Total number of buttons created.
 
 bindLate = True
     # True (recommended) bind script when script is executed.
-    #               Allows you to change the script after creating the script button.
-    # False:        Bind script when button is created.
+    # Allows you to change the script after creating the script button.
+    # False: Bind script when button is created.
 
 #@+others
 #@+node:EKR.20040613215415.2:createButtons
@@ -150,8 +164,6 @@ def createButtons (tag, keys):
             execCommand,'MistyRose1'),
         ("addScriptButton","script Button","Add script button",
             addScriptButtonCommand,"#ffffcc")
-        # ("addScriptMenu","scriptMenu","Add script menu item",
-        #    addScriptItemCommand,'gold1')
     ):
         #@        << define callbacks for standard buttons >>
         #@+node:EKR.20040614000551:<< define callbacks for standard buttons >>
@@ -168,8 +180,9 @@ def createButtons (tag, keys):
         #@nl
         b = c.frame.addIconButton(text=text)
         d [key] = b
-        width = int(len(text) * 0.9)
-        b.configure(width=width,font=('verdana',7,'bold'),bg=bg)
+        if sys.platform == "win32":
+            width = int(len(text) * 0.9)
+            b.configure(width=width,font=('verdana',7,'bold'),bg=bg)
         b.configure(command=command)
         # b.bind('<3>',deleteButtonCallback) # No real reason to delete these buttons.
         b.bind('<Enter>', mouseEnterCallback)
@@ -186,7 +199,6 @@ if Tk and not g.app.unitTesting:
 
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler(('open2','new'),createButtons)
-        __version__ = "0.2" # Minor reorg.
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040613213623:@thin mod_scripting.py

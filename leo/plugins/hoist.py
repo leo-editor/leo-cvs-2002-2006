@@ -2,23 +2,40 @@
 #@+node:ekr.20040331072607:@thin hoist.py
 """Add Hoist/De-Hoist buttons to the toolbar.
 """
+#@<< change history >>
+#@+node:ekr.20040908093511:<< change history >>
+#@+at
+# 
+# 0.1: Original version by Davide Salomoni.
+# 0.2: EKR, Color mod by EKR.
+# 0.3: DS, Works with multiple open files.
+# 0.4: EKR: 4.2 coding style, enable or disable buttons, support for unit 
+# tests.
+# 0.5: EKR: Use constant size for non Windows platforms
+#@-at
+#@nonl
+#@-node:ekr.20040908093511:<< change history >>
+#@nl
 
-__version__ = "0.4"
-    # 0.1: Original version by Davide Salomoni.
-    # 0.2: EKR, Color mod by EKR.
-    # 0.3: DS, Works with multiple open files.
-    # 0.4: EKR, 4.2 coding style, enable or disable buttons, support for unit tests.
-
+__version__ = "0.5"
+  
+#@<< hoist.py imports >>
+#@+node:ekr.20040908093511.1:<< hoist.py imports >>
 import leoGlobals as g
 import leoPlugins
 
 try: import Tkinter as Tk
 except ImportError: Tk = None
 
+import sys
+#@nonl
+#@-node:ekr.20040908093511.1:<< hoist.py imports >>
+#@nl
+
 activeHoistColor = "pink1" # The Tk color to use for the active hoist button.
 
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
-USE_FIXED_SIZES = 1 
+USE_FIXED_SIZES = sys.platform != "darwin" 
 
 #@+others
 #@+node:ekr.20040331072607.1:class HoistButtons
@@ -135,5 +152,6 @@ if Tk and not g.app.unitTesting:
         leoPlugins.registerHandler("after-create-leo-frame", hoist.addWidgets)
         leoPlugins.registerHandler("idle", hoist.onIdle)
         g.plugin_signon(__name__)
+#@nonl
 #@-node:ekr.20040331072607:@thin hoist.py
 #@-leo
