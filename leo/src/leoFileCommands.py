@@ -365,7 +365,7 @@ class baseFileCommands:
         try:
             bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
             val2 = pickle.loads(bin)
-        except (TypeError, pickle.UnpicklingError):
+        except (TypeError,pickle.UnpicklingError,ImportError):
             # The unknownAtrribute was written before 4.2.
             val2 = val
             
