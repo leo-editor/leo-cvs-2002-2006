@@ -1,60 +1,64 @@
 #@+leo-ver=4-thin
 #@+node:rogererens.20041013082304:@thin UNL.py
-"""
-Displays a node's "address" (aka Uniform Node Locator) in the status line.
-Also allows "jumping" to UNLs.
-"""
+#@<< docstring >>
+#@+node:ekr.20050119144617:<< docstring >>
+'''This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
+Leo files. UNL's are not limited to nodes within the present Leo file; you can
+use them to create cross-Leo-file links! UNL
+
+This plugin consists of two parts:
+
+1) Selecting a node shows the UNL in the status line at the bottom of the Leo
+window. You can copy from the status line and paste it into headlines, emails,
+whatever. 
+
+2) Double-clicking @url nodes containing UNL's select the node specified in the
+UNL. If the UNL species in another Leo file, the other file will be opened.
+
+Format of UNL's:
+
+UNL's referring to nodes within the present outline have the form
+
+    headline1-->headline2-->...-->headlineN
+
+headline1 is the headline of a top-level node, and each successive headline is
+the headline of a child node.
+
+UNL's of the form file:<path>#headline1-->...-->headlineN
+
+refer to a node specified in <path> For example, double clicking the following
+headline will take you to Chapter 8 of Leo's Users Guide.
+
+    @url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+    
+Examples:
+    
+For example, suppose you want to email someone with comments about a Leo file.
+Create a comments.leo file containing @url UNL nodes. That is, headlines are
+@url followed by a UNL. The body text contains your comments about the nodes in
+the _other_ Leo file! Send the comments.leo to your friend, who can use the
+comments.leo file to quickly navigate to the various nodes you are talking
+about.
+
+As another example, you can copy UNL's into emails. The recipient can navigate
+to the nodes 'by hand' by following the arrows in the UNL.
+
+Details and warnings:
+
+- At present, UNL's refer to nodes by their position in the outline. Moving a
+node will break the link.
+
+- Don't refer to nodes that contain UNL's in the headline. Instead, refer to the
+parent or child of such nodes.
+
+- You don't have to replace spaces in URL's or UNL's by '%20'.'''
+#@nonl
+#@-node:ekr.20050119144617:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
 
-#@<< about this plugin >>
-#@+node:rogererens.20041014104346:<< about this plugin >>
-#@+at
-# 
-# This plugin consists of two parts.
-# 
-# 1) It shows the 'address' or 'path' (list of ancestors and itself) of the 
-# currently selected node in the status line. 'Uniform Node
-# Locator' (UNL) also seems a nice description of it.
-# 
-# I use it to be able to copy the UNL into mail when discussing stuff in the
-# selected node, so other people can find the node of interest quickly in 
-# their
-# own copy of the outlines (given the same directory structure). It's a matter 
-# of selecting the UNL in the status line and pressing CTRL-C (on windows XP) 
-# in order to copy it onto the clipboard.
-# 
-# 2) This plugin also overrides the default way of handling doubleclicking on 
-# @url nodes.
-# When doubleclicking the icon of an @url node for the case of a leo file on 
-# the
-# file system, it is now possible to jump directly to a node in that leo
-# file. This is accomplished by appending the '#'-sign and the UNL of a node 
-# to the URL of the leo file. As an example, see the following node.
-# 
-# This way, the need for duplicating nodes among leo files
-# ought to be reduced. (Duplicates will get out of sync surely, as currently
-# can be seen at this moment with the 'About Hooks' node in both 
-# leoPlugins.leo and in leoDocs.leo: one mentions the 'select3' hook, the 
-# other does not).
-# 
-# Beware when moving nodes that are being referred to or changing a headline 
-# name.
-# (TODO: create a link checker script to see if nodes referred to still 
-# exist).
-# 
-# Don't refer to nodes that contain UNLs in the headline, as this busts the
-# recognition of UNLs. Instead, refer to the parent or child of such nodes.
-# 
-# An added bonus is that the need for URLs to contain '%20' in stead of spaces 
-# is removed, since the invoked function urlparse.urlsplit() can handle 
-# spaces. And I presume the recognition of valid URLs in Python's standard 
-# libs is more solid than found in the current Leo Core code.
-#@-at
-#@nonl
-#@-node:rogererens.20041014104346:<< about this plugin >>
-#@nl
 __version__ = "0.2"
 #@<< version history >>
 #@+node:rogererens.20041014104353:<< version history >>
