@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1023" clone_windows="0"/>
 <globals body_outline_ratio="0.428571428571">
-	<global_window_position top="19" left="280" height="778" width="875"/>
+	<global_window_position top="74" left="341" height="778" width="852"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -15,7 +15,7 @@
 </v>
 <v t="ekr.20050315084922"><vh>@button check spelling...</vh></v>
 </v>
-<v t="EKR.20040519091259" a="TV"><vh>Annoucnements</vh>
+<v t="EKR.20040519091259"><vh>Annoucnements</vh>
 <v t="EKR.20040519091259.1"><vh>Download statistics</vh></v>
 <v t="EKR.20040519091259.2"><vh>Quotes of the month</vh>
 <v t="ekr.20040828084148"><vh>August 2004</vh></v>
@@ -23,7 +23,7 @@
 <v t="EKR.20040519091259.3"><vh>November 2003</vh></v>
 <v t="EKR.20040519091259.4"><vh>October 2003</vh></v>
 </v>
-<v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4</vh></v>
+<v t="ekr.20050313105121"><vh>ANN: Leo 4.3-a4 (don't split into lines!)</vh></v>
 <v t="ekr.20050212054125"><vh>ANN: Leo 4.3-a3</vh></v>
 <v t="ekr.20050224070230"><vh>ANN: Leo 4.3-a2</vh></v>
 <v t="ekr.20050124083006"><vh>ANN: Leo 4.3-a1</vh></v>
@@ -135,7 +135,7 @@
 <v t="ekr.20040701160830.1"><vh>names for use in suppressions</vh></v>
 <v t="ekr.20040629180414"><vh>pycheckrc (reference)</vh></v>
 </v>
-<v t="ekr.20050118095021"><vh>Leo 4.3 installer</vh>
+<v t="ekr.20050118095021" a="TV"><vh>Leo 4.3 installer</vh>
 <v t="ekr.20050118124408"><vh>&lt;&lt; 4.3 nsi installer version &gt;&gt;</vh></v>
 <v t="ekr.20050118092706.4"><vh>&lt;&lt; Settings &gt;&gt;</vh></v>
 <v t="ekr.20050118103207"><vh>Keeping installer/uninstallers in synch</vh>
@@ -148,7 +148,7 @@
 <v t="ekr.20050118104149.4"><vh>&lt;&lt; install dist files &gt;&gt;</vh></v>
 <v t="ekr.20050118104149.5"><vh>&lt;&lt; uninstall dist files &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20050118104901"><vh>doc files</vh>
+<v t="ekr.20050118104901" a="E"><vh>doc files</vh>
 <v t="ekr.20050118104901.1"><vh>&lt;&lt; install doc files &gt;&gt;</vh></v>
 <v t="ekr.20050118104901.2"><vh>&lt;&lt; uninstall doc files &gt;&gt;</vh></v>
 </v>
@@ -186,7 +186,7 @@
 <v t="ekr.20050118113631"><vh>Main distribution script</vh>
 <v t="EKR.20040519082027.28"><vh>&lt;&lt; setup info for createLeoDist.py &gt;&gt;</vh></v>
 <v t="EKR.20040519090846.10"><vh>@silentfile ../manifest.in</vh></v>
-<v t="ekr.20050117032444"><vh>@button Create Leo-4.3.zip</vh>
+<v t="ekr.20050117032444" a="E"><vh>@button Create Leo-4.3.zip</vh>
 <v t="ekr.20050118080857"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 <v t="ekr.20050118083936.1"><vh>&lt;&lt; version history &gt;&gt;</vh></v>
 <v t="ekr.20050118082301"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
@@ -457,7 +457,7 @@ else: # Doesn't work
 suppressionRegexs = {}</t>
 <t tx="EKR.20040519080201.3"></t>
 <t tx="EKR.20040519082027.28">name="leo",
-version="4-3-a4", # No spaces here!
+version="4-3-a5", # No spaces here!
 author="Edward K. Ream",
 author_email="edreamleo@charter.net",
 url="http://webpages.charter.net/edreamleo/front.html",
@@ -734,6 +734,11 @@ include doc/LICENSE.TXT
 include doc/default.css
 include doc/leo_rst.css
 include doc/silver_city.css
+
+include doc\LeoN\sun98achieving.pdf
+include doc\LeoN\sun97generic.pdf
+include doc\LeoN\sun98operational.pdf
+include doc\LeoN\sun98reversible.pdf
 
 # New in 4.3a2: include path.py and sets.py.
 include extensions/path.py
@@ -3462,7 +3467,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a4.exe"
+OutFile "LeoSetup-4-3-a5.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -3530,7 +3535,13 @@ File "..\doc\License.txt"
 
 File "..\doc\default.css"
 File "..\doc\leo_rst.css"
-File "..\doc\silver_city.css"</t>
+File "..\doc\silver_city.css"
+
+File "..\doc\LeoN\sun98achieving.pdf"
+File "..\doc\LeoN\sun97generic.pdf"
+File "..\doc\LeoN\sun98operational.pdf"
+File "..\doc\LeoN\sun98reversible.pdf"
+</t>
 <t tx="ekr.20050118104901.2">Delete "$INSTDIR\doc\LeoDocs.leo"
 Delete "$INSTDIR\doc\leoDiary.leo"
 
@@ -3544,7 +3555,12 @@ Delete "$INSTDIR\doc\Readme.txt"
 
 Delete "$INSTDIR\doc\silver_city.css"
 Delete "$INSTDIR\doc\leo_rst.css"
-Delete "$INSTDIR\doc\default.css"</t>
+Delete "$INSTDIR\doc\default.css"
+
+Delete "$INSTDIR\doc\LeoN\sun98achieving.pdf"
+Delete "$INSTDIR\doc\LeoN\sun97generic.pdf"
+Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
+Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"</t>
 <t tx="ekr.20050118104901.3"></t>
 <t tx="ekr.20050118104901.4">File "..\Icons\*.*"</t>
 <t tx="ekr.20050118104901.5">Delete "$INSTDIR\icons\*.*"</t>
@@ -3639,7 +3655,7 @@ Delete "$INSTDIR\extensions\Pmw\Pmw_1_2\tests\*.*"</t>
 <t tx="ekr.20050118122740.2"></t>
 <t tx="ekr.20050118122740.3">Delete "$INSTDIR\test\__init__.py"
 Delete "$INSTDIR\test\test.leo"</t>
-<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a3"</t>
+<t tx="ekr.20050118124408">!define PRODUCT_VERSION "4.3-a5"</t>
 <t tx="ekr.20050118125236"></t>
 <t tx="ekr.20050119191034"></t>
 <t tx="ekr.20050124083006">Leo 4.3 alpha 1 is now available at http://sourceforge.net/projects/leo/
@@ -4017,76 +4033,33 @@ Leo: http://webpages.charter.net/edreamleo/front.html
 </t>
 <t tx="ekr.20050313105121">Leo 4.3 alpha 4 is now available at http://sourceforge.net/projects/leo/
 
-Leo 4.3 is the culmination of more than five months of work. This alpha 4
-focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins
-now work with the 4.3 code base.
+Leo 4.3 is the culmination of more than five months of work. This alpha 4 focuses on plugins: all known plugins are now in leoPlugins.leo. Most plugins now work with the 4.3 code base.
 
-This alpha 4 release also adds the frequently-requested Add Comments and Delete
-Comments commands to Leo's Edit Body menu.
+This alpha 4 release also adds the frequently-requested Add Comments and Delete Comments commands to Leo's Edit Body menu.
 
 The defining features of Leo 4.3:
 ---------------------------------
-1. Leo now stores options in @settings trees, that is, outlines whose
-headline is '@settings'. When opening a .leo file, Leo looks for
-@settings trees not only in the outline being opened but also in
-various leoSettings.leo files.
+1. Leo now stores options in @settings trees, that is, outlines whose headline is '@settings'. When opening a .leo file, Leo looks for @settings trees not only in the outline being opened but also in various leoSettings.leo files. Users can create arbitrarily complex user options with @settings trees. 
 
-Users can create arbitrarily complex user options with @settings
-trees. Leo settings outlines are, in fact, infinitely more flexible
-and powerful than any scheme based on flat text. Readers of Python's
-configParser shootout take note.
+2. The Preferences command temporarily replaces the outline pane with an outline showing all the @settings trees in effect. The Preferences command also replaces the body pane with a "settings pane". This settings pane allows you to change the settings selected in the outline pane using standard gui widgets.
 
-2. The Preferences command temporarily replaces the outline pane with
-an outline showing all the @settings trees in effect. The Preferences
-command also replaces the body pane with a "settings pane". This
-settings pane allows you to change the settings selected in the
-outline pane using standard gui widgets.
+3. Leo's read/write code in leoAtFile.py has been rewritten to support user-defined tangling and untangling. This is a major cleanup of Leo's core.
 
-3. Leo's read/write code in leoAtFile.py has been rewritten to support
-user-defined tangling and untangling. This is a major cleanup of
-Leo's core.
+4. Leo now contains an excellent Plugins Manager plugin. This plugin enables and disables plugins automatically and tells you everything you need to know about each plugin. This plugin also lets you download plugins from Leo's cvs site.
 
-4. Leo now boasts an excellent Plugins Manager plugin. This plugin
-enables and disables plugins automatically and tells you everything
-you need to know about each plugin. This plugin also lets you download
-plugins from Leo's cvs site.
-
-5. You can install third-party extensions in Leo's extensions
-directory. Leo will attempt to import such extensions from the
-extensions directory when normal imports fail. The distribution contains
-Python Mega Widgets in the extensions directory.
+5. You can install third-party extensions in Leo's extensions directory. Leo will attempt to import such extensions from the extensions directory when normal imports fail. The distribution contains Python Mega Widgets in the extensions directory.
 
 What people are saying about Leo
 --------------------------------
-"Word outlines are very useful. But Leo makes Word look like a clunky toy."
---Joe Orr
+"Word outlines are very useful. But Leo makes Word look like a clunky toy." --Joe Orr
 
-"Leo is an interactive editor for organizing text fragments hierarchically and
-sequentially into one or more files and hierarchical folders, without arbitrary
-limits on the number and size of text fragments and the depth of the
-hierarchy...Tangle is a tool for combining hierarchically and sequentially
-organized text fragments into text files, hierarchically grouped into folders,
-with hierarchical or sequential organization of text within the files, and
-without arbitrary limits on the size and number of files and the depth of the
-hierarchy of folders and text nesting within the files." -- Alex Abacus
+"Leo is an interactive editor for organizing text fragments hierarchically and sequentially into one or more files and hierarchical folders, without arbitrary limits on the number and size of text fragments and the depth of the hierarchy...Tangle is a tool for combining hierarchically and sequentially organized text fragments into text files, hierarchically grouped into folders, with hierarchical or sequential organization of text within the files, and without arbitrary limits on the size and number of files and the depth of the hierarchy of folders and text nesting within the files." -- Alex Abacus
 
-"Leo reminds me a great deal of things I loved when I used Userland's Frontier
-(an outlining cms with a native oodb) - but Frontier wasn't hackable enough for
-me, and it wasn't oriented towards coding and literate programming, and you
-couldn't round-trip rendered pages (big Leo win). This is really a super tool -
-in a matter of days I've started to use it on all my projects and I still
-haven't figured out how I lived without it." -- John Sequeira
+"Leo reminds me a great deal of things I loved when I used Userland's Frontier (an outlining cms with a native oodb) - but Frontier wasn't hackable enough for me, and it wasn't oriented towards coding and literate programming, and you couldn't round-trip rendered pages (big Leo win). This is really a super tool - in a matter of days I've started to use it on all my projects and I still haven't figured out how I lived without it." -- John Sequeira
 
-"Leo is EXACTLY the kind of outliner I was looking for--fantastic job!"
--- Steve Allen
+"Leo is EXACTLY the kind of outliner I was looking for--fantastic job!" -- Steve Allen
 
-"If you are like me, you have a kind of knowledge base with infos gathered over
-time. And you have projects, where you use some of those infos. Now, with
-conventional outliners you begin to double these infos, because you want to have
-the infos needed for the project with your project. With Leo you can do this
-too, but if you change text in one place IT IS UPDATED IN THE OTHER PLACE TOO!
-This is a feature I did not see with any other outliner (and I tried a few).
-Amazing! Leo directly supports the way I work!" -- F. Geiger
+"If you are like me, you have a kind of knowledge base with infos gathered over time. And you have projects, where you use some of those infos. Now, with conventional outliners you begin to double these infos, because you want to have the infos needed for the project with your project. With Leo you can do this too, but if you change text in one place IT IS UPDATED IN THE OTHER PLACE TOO! This is a feature I did not see with any other outliner (and I tried a few). Amazing! Leo directly supports the way I work!" -- F. Geiger
 
 More quotes at: http://webpages.charter.net/edreamleo/testimonials.html
 
@@ -4102,7 +4075,7 @@ What is Leo?
 - A programmer's editor, an outlining editor and a flexible browser.
 - A literate programming tool, compatible with noweb and CWEB.
 - A data organizer and project manager. Leo provides multiple views
-   of projects within a single outline.
+  of projects within a single outline.
 - Fully scriptable using Python. Leo saves its files in XML format.
 - Portable. leo.py is 100% pure Python.
 - Open Software, distributed under the Python License.
@@ -4117,14 +4090,6 @@ Home:     http://sourceforge.net/projects/leo/
 Download: http://sourceforge.net/project/showfiles.php?group_id=3458
 CVS:      http://sourceforge.net/cvs/?group_id=3458
 Quotes:   http://webpages.charter.net/edreamleo/testimonials.html
-
-Edward K. Ream
-March 15, 2005
---------------------------------------------------------------------
-Edward K. Ream   email:  edreamleo@charter.net
-Leo: Literate Editor with Outlines
-Leo: http://webpages.charter.net/edreamleo/front.html
---------------------------------------------------------------------
 </t>
 <t tx="ekr.20050315084904"></t>
 <t tx="ekr.20050315084904.1">@nocolor</t>

@@ -18,7 +18,7 @@
 ;@+node:ekr.20050118092706.1:<< defines >>
 ;@<< 4.3 nsi installer version >>
 ;@+node:ekr.20050118124408:<< 4.3 nsi installer version >>
-!define PRODUCT_VERSION "4.3-a3"
+!define PRODUCT_VERSION "4.3-a5"
 ;@nonl
 ;@-node:ekr.20050118124408:<< 4.3 nsi installer version >>
 ;@nl
@@ -73,7 +73,7 @@ WindowIcon off
 
 ; settings from HM NIS Edit Wizard
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "LeoSetup-4-3-a4.exe"
+OutFile "LeoSetup-4-3-a5.exe"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"
 InstallDir "$PROGRAMFILES\Leo"
 Icon "..\Icons\leo_inst.ico"
@@ -264,7 +264,11 @@ Section "Leo" SEC01
   File "..\doc\default.css"
   File "..\doc\leo_rst.css"
   File "..\doc\silver_city.css"
-  ;@nonl
+  
+  File "..\doc\LeoN\sun98achieving.pdf"
+  File "..\doc\LeoN\sun97generic.pdf"
+  File "..\doc\LeoN\sun98operational.pdf"
+  File "..\doc\LeoN\sun98reversible.pdf"
   ;@-node:ekr.20050118104901.1:<< install doc files >>
   ;@nl
   SetOutPath "$INSTDIR\extensions"
@@ -539,6 +543,11 @@ Section Uninstall
   Delete "$INSTDIR\doc\silver_city.css"
   Delete "$INSTDIR\doc\leo_rst.css"
   Delete "$INSTDIR\doc\default.css"
+  
+  Delete "$INSTDIR\doc\LeoN\sun98achieving.pdf"
+  Delete "$INSTDIR\doc\LeoN\sun97generic.pdf"
+  Delete "$INSTDIR\doc\LeoN\sun98operational.pdf"
+  Delete "$INSTDIR\doc\LeoN\sun98reversible.pdf"
   ;@nonl
   ;@-node:ekr.20050118104901.2:<< uninstall doc files >>
   ;@nl
