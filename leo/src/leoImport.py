@@ -97,8 +97,8 @@ class baseLeoImportCommands:
 			s = toUnicode(s,self.encoding)
 			file.close()
 		except:
-			es("can not read " + fileName)
-			es_exception()
+			es("can not open " + fileName)
+			import leoTest ; leoTest.fail()
 			return None
 		#@nonl
 		#@-node:<< Read file into s >>
@@ -314,9 +314,9 @@ class baseLeoImportCommands:
 			array = string.split(s,"\n")
 			file.close()
 		except:
-			es_exception()
-			array = []
-		#@nonl
+			es("Can not open " + fileName, color="blue")
+			import leoTest ; leoTest.fail()
+			return
 		#@-node:<< Read the file into array >>
 		#@nl
 		# Convert the string to an outline and insert it after the current node.
@@ -512,7 +512,9 @@ class baseLeoImportCommands:
 		try: # Read the file into s.
 			f = open(fileName)
 			s = f.read()
-		except: s = None
+		except:
+			es("Can not import " + fileName, color="blue")
+			return
 	
 		#@	<< Create a symbol table of all section names >>
 		#@+node:<< Create a symbol table of all section names >>
@@ -2371,8 +2373,8 @@ class baseLeoImportCommands:
 			s = toUnicode(s,self.encoding)
 			file.close()
 		except:
-			es("exception while reading " + fileName)
-			es_exception()
+			es("Can not open " + fileName, color="blue")
+			import leoTest ; leoTest.fail()
 			return
 		#@nonl
 		#@-node:<< Read file into s >>
@@ -2458,7 +2460,7 @@ class baseLeoImportCommands:
 	
 	def removeSentinelLines(self,s,line_delim,start_delim,end_delim):
 	
-		i = 0 ; result = "" ; first = true
+		i = 0 ; result = [] ; first = true
 		while i < len(s):
 			start = i # The start of the next syntax element.
 			if first or is_nl(s,i):
@@ -2492,7 +2494,9 @@ class baseLeoImportCommands:
 			else:
 				i += 1
 			assert(i==0 or start<i)
-			result += s[start:i]
+			result.append(s[start:i])# 12/11/03: hugely faster than string concatenation.
+	
+		result = ''.join(result) 
 		return result
 	#@nonl
 	#@-node:removeSentinelLines
