@@ -1,15 +1,29 @@
 #@+leo-ver=4-thin
 #@+node:ktenney.20041211072654.1:@thin at_view.py
-"""View files and directories."""
+'''A plugin that supports @clip, @view and @strip nodes.
+
+- Selecting a headline containing @clip places the contents of the clipboard in
+the body pane.
+
+- Double clicking the icon box of a node whose headline contains @view <path-to-file>
+places the contents of the file in the body pane.
+
+- Double clicking the icon box of a node whose headline contains @strip <path-to-file>
+places the contents of the file in the body pane, with all sentinels removed.
+
+This plugin also accumulates the effect of all @path nodes.
+'''
 
 #@@language python
 #@@tabwidth -4
+#@@pagewidth 80
 
 #@<< about this plugin >>
 #@+node:ktenney.20041211072654.2:<< about this plugin >>
 #@+at 
 #@nonl
-# if the headline of a node starts with @view, load the body with the file contents
+# if the headline of a node starts with @view, load the body with the file 
+# contents
 #   if
 #@-at
 #@nonl
@@ -23,10 +37,16 @@ __version__ = "0.2"
 # 0.1 KT 2004/12/07 begin converting @button to plugin
 # 
 # 0.2 EKR style changes:
-#     - used g.trace to simply all traces.
-#     - removed comments originating from style guide.
-#     - defined __version__ only in root node.
-#     - used g.importModule to try to import win32clipboard
+#     - Uses g.trace to simplify all traces.
+#     - Removed comments originating from style guide.
+#     - Defined __version__ only in root node.
+# 0.3 EKR
+#     - Used g.importExtension to import path and win32clipboard.
+#     - Added extensive comments to module's doc string.
+#     - Added comments to class View node.
+#     - Commented out several traces.
+#     - Handle @verbatim sentinels in strip()
+#     - Fix bug in strip: set path = currentPath.abspath()
 #@-at
 #@nonl
 #@-node:ktenney.20041211072654.3:<< version history >>
@@ -37,8 +57,8 @@ __version__ = "0.2"
 import leoGlobals as g
 import leoPlugins
 
-path = g.importModule('path')
-win32clipboard = g.importModule('win32clipboard')
+path = g.importExtension('path',verbose=True)
+win32clipboard = g.importExtension('win32clipboard',verbose=True)
 #@nonl
 #@-node:ktenney.20041211072654.4:<< imports >>
 #@nl
@@ -48,24 +68,20 @@ win32clipboard = g.importModule('win32clipboard')
 def onCreate(tag, keywords):
 
     if g.app.unitTesting: return
-
-    # Register the handlers...
-    g.plugin_signon(__name__)
-    g.trace('tag',tag)
-
+    
     c = keywords.get("c")
     myView = View(c)
+
+    # Register the handlers...
     leoPlugins.registerHandler("icondclick2", myView.icondclick2)
     leoPlugins.registerHandler("idle", myView.idle)
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ktenney.20041211072654.6:onCreate
 #@+node:ktenney.20041211072654.7:class View
 class View:
     
-    """
-    A class illustrating how to bind a class instance permanently to a _particular_ window.
-    All methods of this class should use self.c rather than c = g.top().
-    """
+    '''A class to support @view, @strip and @clip nodes.'''
 
     #@    @+others
     #@+node:ktenney.20041211072654.8:__init__
@@ -111,16 +127,15 @@ class View:
     
         # get a path object for this position
         currentPath = self.getCurrentPath()
-        g.trace(currentPath)
     
         if currentPath.exists():
-            g.es('currentPath exists as %s' % currentPath.abspath())
+            g.es('currentPath: %s' % currentPath.abspath())
             if currentPath.isfile():
                 self.processFile(currentPath, self.current)
     
             if currentPath.isdir():
                 self.processDirectory(currentPath, self.current)
-    
+    #@nonl
     #@-node:ktenney.20041211072654.10:view
     #@+node:ktenney.20041212102137:clip
     def clip(self):
@@ -158,19 +173,25 @@ class View:
         
         # get a path object for this position
         currentPath = self.getCurrentPath()
-        g.es('in View.strip(), currentPath is %s' % currentPath)
+        
+        g.trace()
         
         if currentPath.exists():
-            g.es('currentPath exists as %s' % currentPath.abspath())
-            filelines = currentPath.lines()
-            #make it an @ignore node, preventing it from appearing in files
+            path = currentPath.abspath()
+            g.es('currentPath: %s' % path)
+            filelines = path.lines()
+            # Add an @ignore directive.
             lines = ['@ignore\n']
+            verbatim = False
             for line in filelines:
-                if not line.strip().startswith('#@'):
+                if verbatim:
                     lines.append(line)
-            self.current.setBodyTextOrPane("".join(lines))
-            
-       
+                    verbatim = False
+                elif line.strip().startswith('#@verbatim'):
+                    verbatim = True
+                elif not line.strip().startswith('#@'):
+                    lines.append(line)
+            self.current.setBodyTextOrPane(''.join(lines))
     #@nonl
     #@-node:ktenney.20041211072654.15:strip
     #@+node:ktenney.20041211072654.11:getCurrentPath
@@ -253,7 +274,10 @@ class View:
 #@-node:ktenney.20041211072654.7:class View
 #@-others
 
-leoPlugins.registerHandler("after-create-leo-frame",onCreate)
+if path and win32clipboard:
+    leoPlugins.registerHandler("after-create-leo-frame",onCreate)
+else:
+    g.trace('%s not loaded')
 #@nonl
 #@-node:ktenney.20041211072654.1:@thin at_view.py
 #@-leo
