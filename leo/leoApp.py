@@ -128,6 +128,7 @@ class LeoApp:
 	def finishCreate(self):
 	
 		import locale,sys
+		import leoNodes
 		
 		#@<< return false if not v2.1 or above >>
 		#@+node:1::<< return false if not v2.1 or above >>
@@ -221,6 +222,7 @@ class LeoApp:
 		#@-node:3::<< set the default Leo icon >>
 
 		self.config = leoConfig.config()
+		self.nodeIndices = leoNodes.nodeIndices()
 		
 		#@<< set app.tkEncoding >>
 		#@+node:4::<< set app.tkEncoding >>

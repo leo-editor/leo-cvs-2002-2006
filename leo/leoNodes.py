@@ -1062,7 +1062,10 @@ class vnode:
 	
 	def headString (self):
 	
-		return self.mHeadString
+		if self.mHeadString:
+			return self.mHeadString
+		else:
+			return ""
 	
 	
 	#@-body
@@ -2494,6 +2497,100 @@ class vnode:
 	#@-others
 #@-body
 #@-node:4::class vnode
+#@+node:5::class nodeIndices
+#@+body
+# Indices are Python dicts containing 'id','loc','time' and 'n' keys.
+
+class nodeIndices:
+
+	#@+others
+	#@+node:1::nodeIndices.__init__
+	#@+body
+	def __init__ (self):
+		
+		self.defaultId = ""
+		self.defaultLoc = ""
+		self.lastIndex = None
+	#@-body
+	#@-node:1::nodeIndices.__init__
+	#@+node:2::toString
+	#@+body
+	def toString (self,index):
+		
+		id  = index.get('id')
+		loc = index.get('loc')
+		t   = index.get('time')
+		n   = last.get('n')
+	
+		if n == None:
+			return "%s:%s:%s" % (id,loc,t)
+		else:
+			return "%s:%s:%s:%d" % (id,loc,t,n)
+	
+	#@-body
+	#@-node:2::toString
+	#@+node:3::getNewIndex
+	#@+body
+	def getNewIndex (self,id=None,loc=None):
+		
+		import time
+	
+		if id  == None: id  = self.defaultId
+		if loc == None: loc = self.defaultLoc
+		t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
+		
+		# Set n if all other fields match the previous index.
+		last = self.lastIndex
+		if (last and id == last.get('id') and
+			loc == last.get('loc') and t == last.get('time')):
+			n = last.get('n')
+			n = choose(n==None,1,n+1)
+		else: n = None
+	
+		self.lastIndex = {'id':id,'loc':loc,'time':t,'n':n}
+		return self.lastIndex
+	
+	#@-body
+	#@-node:3::getNewIndex
+	#@+node:4::getters & setters
+	#@+body
+	def getDefaultId (self):
+		return self.defaultId
+		
+	def getDefaultLoc (self):
+		return self.defaultLoc
+		
+	def setDefaultId (self,id):
+		self.defaultId = id
+		
+	def setDefaultLoc (self,loc):
+		self.defaultLoc = loc
+	
+	#@-body
+	#@-node:4::getters & setters
+	#@+node:5::scanGnx
+	#@+body
+	def scanGnx (self,s,i):
+		
+		id  = self.defaultId
+		loc = self.defaultLoc
+		dict = {'id':id,'loc':loc,'time':"",'n':None}
+		keys = ('id','loc','time','n')
+		n = 0
+		while n < 4 and i < len(s):
+			i,val = skip_to_char(s,i,':')
+			if val:
+				dict[keys[n]] = val
+			if match(s,i,':'):
+				i += 1
+			n += 1
+		return dict
+	
+	#@-body
+	#@-node:5::scanGnx
+	#@-others
+#@-body
+#@-node:5::class nodeIndices
 #@-others
 #@-body
 #@-node:0::@file leoNodes.py

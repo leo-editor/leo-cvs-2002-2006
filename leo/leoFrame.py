@@ -896,17 +896,22 @@ class LeoFrame:
 		#@+body
 		readWriteMenu = self.createNewMenu("&Read/Write...","File")
 		
-		table = (
-			("&Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
-			("Read @file &Nodes",None,self.OnReadAtFileNodes),
-			("-",None,None),
-			("Write &Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
-			("Write &Outline Only",None,self.OnWriteOutlineOnly),
-			("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes))
+		table = [
+				("&Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
+				("Read @file &Nodes",None,self.OnReadAtFileNodes),
+				("-",None,None),
+				("Write &Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
+				("Write &Outline Only",None,self.OnWriteOutlineOnly),
+				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
+		
+		if app().use_gnx:
+			table2 = (
+				("-",None,None),
+				("Read 4.0 Derived File",None,self.OnReadGnxFile),
+				("Write 4.0 Derived File",None,self.OnWriteGnxFile))
+			table.extend(table2)
 		
 		self.createMenuEntries(readWriteMenu,table)
-		
-		
 		#@-body
 		#@-node:3::<< create the read/write submenu >>
 
@@ -2033,6 +2038,33 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:5::OnWriteAtFileNodes
+	#@+node:6::OnReadGnxFile
+	#@+body
+	def OnReadGnxFile (self,event=None):
+		
+		trace()
+		c = self.commands ; v = c.currentVnode()
+		
+		c.atFileCommands.using_gnx = true # Flag to add ".txt" to file name.
+		c.atFileCommands.read(v)
+		c.atFileCommands.using_gnx = false
+		es("finished")
+	
+	#@-body
+	#@-node:6::OnReadGnxFile
+	#@+node:7::OnWriteGnxFile
+	#@+body
+	def OnWriteGnxFile (self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+	
+		c.atFileCommands.using_gnx = true
+		c.atFileCommands.write(v)
+		c.atFileCommands.using_gnx = false
+		es("finished")
+	
+	#@-body
+	#@-node:7::OnWriteGnxFile
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
