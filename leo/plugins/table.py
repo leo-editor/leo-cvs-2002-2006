@@ -16,25 +16,15 @@ import leoGlobals as g
 import leoPlugins
 import leoNodes
 
-try:
-    import Pmw
-except ImportError:
-    Pmw = g.cantImport("Pmw",__name__)
-
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
-except ImportError:
-    Tk = g.cantImport("Tk",__name__)
-    
-try:
     import tktable as tktab
 except ImportError:
-    tktab = g.cantImport("tktable",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
-try:
-    import weakref
-except ImportError:
-    weakref = g.cantImport("weakref",__name__)
+Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
 
 import csv
 import cStringIO

@@ -37,12 +37,16 @@ __version__ = "0.8"
 # 0.5 EKR: Various minor mods, including support for unit testing.
 # 
 # 0.6 EKR: Hacked findNextWord so contractions are handled properly.
-#     tcl_wordchars defines the characters in a word, but I don't know how to set this.
-# 0.7 EKR: Uses spellpyx.ini and spellpyx.txt instead of mode_spelling.ini and mod_spelling.txt.
+#     tcl_wordchars defines the characters in a word, but I don't know how to 
+# set this.
+# 0.7 EKR: Uses spellpyx.ini and spellpyx.txt instead of mode_spelling.ini and 
+# mod_spelling.txt.
 # 
-# 0.8 EKR: leoTkinterFind dialog is now commander specific, so this code must be too:
+# 0.8 EKR: leoTkinterFind dialog is now commander specific, so this code must 
+# be too:
 #     - Added onCreate function to create per-commander spellling class.
-#     - createSpellMenu,onSelect and onCommand are now methods of spellDialog class.
+#     - createSpellMenu,onSelect and onCommand are now methods of spellDialog 
+# class.
 #     - Added initGlobals function to create global data.
 #     - spellDialog.init override new leoTkinterFind.init method.
 #     - Added spellFrames global dict for use by @button code.
@@ -57,15 +61,14 @@ import leoGlobals as g
 import leoPlugins
 import leoTkinterFind
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
-  
-aspell = g.importFromPath("aspell",aspell_dir,verbose=False)
-if not aspell:
-    g.cantImport("aspell",__name__)
-    
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+
+aspell = g.importFromPath("aspell",aspell_dir,pluginName=__name__,verbose=True)
+
 import ConfigParser
 import os
 import re
@@ -689,10 +692,14 @@ if Tk and aspell and not g.app.unitTesting:
                         #@+node:ekr.20040809151600.43:<< Skip word if ignored or in local dictionary >>
                         #@+at 
                         #@nonl
-                        # We don't bother to call apell if the word is in our dictionary. The dictionary contains both locally 
-                        # 'allowed' words and 'ignored' words. We put the test before aspell rather than after aspell because the 
-                        # cost of checking aspell is higher than the cost of checking our local dictionary. For small local 
-                        # dictionaries this is probably not True and this code could easily be located after the aspell call
+                        # We don't bother to call apell if the word is in our 
+                        # dictionary. The dictionary contains both locally 
+                        # 'allowed' words and 'ignored' words. We put the test 
+                        # before aspell rather than after aspell because the 
+                        # cost of checking aspell is higher than the cost of 
+                        # checking our local dictionary. For small local 
+                        # dictionaries this is probably not True and this code 
+                        # could easily be located after the aspell call
                         #@-at
                         #@@c
                         

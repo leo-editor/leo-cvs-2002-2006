@@ -18,6 +18,7 @@ CheckVersion
 ClassType
 ConfigParser
 Configurator
+Ctor
 Ctrl
 DEBUG_LEAK
 DEBUG_SAVEALL
@@ -131,6 +132,7 @@ TestCase
 TestSuite
 TextTestRunner
 Textpad
+ThoughtManager
 Tix
 Tk
 Tkinter
@@ -257,6 +259,7 @@ activestate
 ada_language
 addMenu
 addTest
+add_dicts
 add_directives
 add_item
 after_v
@@ -270,6 +273,7 @@ allStatements
 all_tnodes_iter
 all_vnodes_iter
 allow_clone_drags
+altre
 apply_
 aren`t
 arg
@@ -283,6 +287,8 @@ ascii_letters
 asis
 asisWrite
 aspell
+aspell_dir
+aspell_return
 assignFileIndices
 ast
 atFile
@@ -298,6 +304,7 @@ backticks
 backwards
 badline
 basefont
+basename
 batchChange
 batchTest
 batchfile
@@ -316,6 +323,8 @@ bodyFlag
 bodyString
 body_newline
 body_pane_wraps
+bodyclick2
+bodydclick2
 bodykey1
 bodykey2
 bodyrclick
@@ -335,6 +344,7 @@ c2py
 c_language
 callerName
 can`t
+cantImport
 cantredo
 cantundo
 caseName
@@ -357,6 +367,7 @@ checkFileTabs
 checkOutline
 checkPosition
 checkPythonCode
+checkSpelling
 checkTabs
 checkText
 checkbox
@@ -382,7 +393,9 @@ close2
 closeCallback
 closeFlag
 closeLeoWindow
+closePipes
 closing_delim
+cmd
 cmnd
 codeLine
 codeList
@@ -426,7 +439,9 @@ createLeoDist
 createMenuEntries
 createNewMenu
 createNthChild
+createSpellMenu
 createThinChild
+createTkGui
 createUnitTest
 create_line
 create_mapping
@@ -437,6 +452,7 @@ csharp
 css
 currentPosition
 currentVnode
+currentWord
 current_v
 customizeLeo
 cweave
@@ -473,6 +489,8 @@ delta2
 destroySelf
 df
 dialog_
+dictToString
+dictionary_file
 dicts
 dir
 dir1
@@ -555,6 +573,7 @@ fileCommands
 fileIndex
 fileName
 file_format
+fillbox
 filterCallback
 finalCol
 finalResult
@@ -667,6 +686,7 @@ gray75
 group_id
 gti
 gui
+guiName
 guis
 gzip
 handAllKeywords
@@ -842,6 +862,7 @@ leoSettings
 leoTangle
 leoTest
 leoTests
+leoTkinterFind
 leoTkinterGui
 leoTkinterTree
 leoToDo
@@ -871,8 +892,11 @@ linkX
 linux1
 linux2
 list1
+listAlternates
+listBox
 listToString
 loadDir
+loadOnePlugin
 load_module
 localhost
 lockLog
@@ -1016,6 +1040,8 @@ oldi
 onBodyChanged
 onBodyKey
 onClick
+onCommand
+onCreate
 onDoubleClick
 onEnd
 onHeadChanged
@@ -1023,8 +1049,10 @@ onHeadlineKey
 onIdle
 onKey
 onLoadFile
+onMap
 onOk
 onRightClick
+onSelect
 onStart
 onXXX
 on_idle
@@ -1032,6 +1060,7 @@ open1
 open2
 openFileDialog
 openLeo
+openPipes
 openWith
 openWriteFile
 opening_delim
@@ -1092,6 +1121,7 @@ pluginsList
 pluginsManager
 plugins_menu
 plusMinus
+popen2
 popup
 porv
 pos
@@ -1116,6 +1146,7 @@ printGcRefs
 printHeading
 print_exc
 printf
+processWord
 process_tokens
 prog
 progn
@@ -1157,6 +1188,7 @@ readEndNode
 readLinesClass
 read_only
 readline
+readlines
 readonly
 realMenuName
 reassignIndices
@@ -1181,13 +1213,16 @@ removeTrailingWs
 renderers
 reorg
 replaceAll
+replaceBody
 replaceComments
 replaceOutline
 replacePatterns
 reportBadChars
 repr
+resizeable
 restoreStderr
 restoreStdout
+ret
 rexec
 rfind
 right_data
@@ -1270,6 +1305,7 @@ set_lang
 set_language
 set_trace
 setq
+settingsController
 settingsRoot
 sharedNodes
 shortDescription
@@ -1278,6 +1314,7 @@ showInvisibles
 showfiles
 shutil
 siblings_iter
+signonGiven
 signons
 silentfile
 silentfiles
@@ -1319,8 +1356,12 @@ sourcetime
 spawnl
 spawnv
 speedTest
+spellDialog
+spellFrame
+spellFrames
 spellpyx
 splitLines
+splitext
 src
 sss
 st_enter
@@ -1475,7 +1516,9 @@ unmarking
 unselect1
 unselect2
 unselecting
+updateButtons
 updateCount
+updateDictionary
 url
 url1
 url2
@@ -1526,6 +1569,7 @@ windowMenu
 won`t
 word2
 word_export
+workCtrl
 workflow
 writeAll
 writeAtFileNodes

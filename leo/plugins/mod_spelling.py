@@ -2,7 +2,7 @@
 #@+node:edream.110203113231.933:@thin mod_spelling.py
 """Spell Checker Plugin
 
-- Perfoms spell checking on nodes within a Leo document.
+- Performs spell checking on nodes within a Leo document.
 - Uses aspell.exe to do the checking and suggest alternatives."""
 
 #@@language python
@@ -15,8 +15,11 @@ import leoPlugins
 
 import leoTkinterFind
 
-try: import Tkinter as Tk
-except ImportError: Tk = g.cantImport("Tkinter",__name__)
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 import ConfigParser
 import os
@@ -589,8 +592,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
             
             """Open the Check Spelling dialog."""
         
-            self.top.deiconify()
-            self.top.lift()
+            self.bringToFront()
             self.update(show=True,fill=False)
         #@nonl
         #@-node:edream.110203113231.968:checkSpelling
@@ -635,6 +637,14 @@ if Tk and not g.app.unitTesting: # Register the handlers...
         #@-node:edream.110203113231.970:ignore
         #@-node:edream.110203113231.965:Commands
         #@+node:edream.110203113231.971:Helpers
+        #@+node:ekr.20041226080101:bringToFront
+        def bringToFront (self):
+            
+            if self.top:
+                self.top.deiconify()
+                self.top.lift()
+        #@nonl
+        #@-node:ekr.20041226080101:bringToFront
         #@+node:edream.110203113231.972:closePipes
         def closePipes(self):
             
@@ -794,7 +804,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
                 self.fillbox([])
             self.updateButtons()
             if show:
-                self.top.deiconify()
+                self.bringToFront()
                 # Don't interfere with Edit Headline commands.
                 self.body.bodyCtrl.focus_set()
                 

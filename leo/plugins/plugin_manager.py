@@ -9,7 +9,7 @@ A plugin to manage Leo's Plugins:
 - Checks for and updates plugins from the web.
 """
 
-__version__ = "0.3"
+__version__ = "0.5"
 __plugin_name__ = "Plugin Manager"
 __plugin_priority__ = 10000
 __plugin_requires__ = ["plugin_menu"]
@@ -31,6 +31,8 @@ __plugin_requires__ = ["plugin_menu"]
 #       Leo loads plugins in the order in which they appear in 
 # pluginsManager.txt.
 #       Furthermore, this plugin preserves that order.
+# 0.5 EKR:
+#     - Make sure to do nothing if Pmw is not defined.
 #@-at
 #@nonl
 #@-node:pap.20041006184225.2:<< version history >>
@@ -43,15 +45,13 @@ import leoPlugins
 import os
 import sys
 
+Pmw = g.importExtension("Pmw",pluginName=__name__,verbose=True)
+
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tkinter",__name__)
-    
-try:
-    import Pmw
-except ImportError:
-    Tk = g.cantImport("Pmw",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 import fnmatch
 import re
@@ -92,14 +92,14 @@ Done
 USE_PRIORITY = False # True: show non-functional priority field.
 
 #@+others
-#@+node:pap.20041006185727:topLevelMenu
-# This is called from plugins_menu plugin.
-
+#@+node:ekr.20041231134702:topLevelMenu
 def topLevelMenu():
+    # This is called from plugins_menu plugin.
+    # It should only be defined if the extension has been registered.
     """Manage the plugins"""
-    dlg = ManagerDialog() 
+    dlg = ManagerDialog()
 #@nonl
-#@-node:pap.20041006185727:topLevelMenu
+#@-node:ekr.20041231134702:topLevelMenu
 #@+node:pap.20041006193459:Error Classes
 class InvalidPlugin(Exception):
     """The plugin is invalid"""
@@ -945,7 +945,7 @@ class Plugin:
             requires.append("Tkinter")
             
         if self.hasImport(self.text, "Pmw"):
-            requires.append("Pmw")    
+            requires.append("Pmw")
         #@nonl
         #@-node:pap.20041009230050:<< Check UI toolkits >>
         #@nl
@@ -1373,5 +1373,6 @@ class EnableManager:
 
 if Tk and Pmw:
     g.plugin_signon(__name__)
+#@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py
 #@-leo

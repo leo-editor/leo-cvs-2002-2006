@@ -51,15 +51,14 @@ import os
 import threading
 import time
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
-    
-try:
-    import weakref
-except ImportError:
-    weakref = g.cantImport("weakref",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+
+weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+#@nonl
 #@-node:ekr.20040915085715:<< imports >>
 #@nl
 

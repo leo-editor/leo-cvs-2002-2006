@@ -5,11 +5,20 @@
 #@@language python
 #@@tabwidth -4
 
+#@<< imports >>
+#@+node:ekr.20050101090207:<< imports >>
+
 import leoGlobals as g
 import leoPlugins
 
-try: import Tkinter as Tk
-except ImportError: Tk = None
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+#@nonl
+#@-node:ekr.20050101090207:<< imports >>
+#@nl
 
 #@+others
 #@+node:EKR.20040517080517.2:onOpen

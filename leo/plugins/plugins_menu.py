@@ -1,6 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517080555.2:@thin plugins_menu.py
-"""Create a Plugins menu
+#@<< docstring >>
+#@+node:ekr.20050101090207.9:<< docstring >>
+'''Create a Plugins menu
 
 Adds an item to the plugin menu for each active plugin. Selecting
 this menu item will bring up a short About dialog with the details of the
@@ -17,7 +19,8 @@ changes.
 Plugins can also define a top level function to be called instead of
 the default "About" dialog by defining a "topLevelMenu" function in
 the plugin. This function will be called when the user clicks on the
-plugin name in the plugins menu. 
+plugin name in the plugins menu, but only if the plugin was loaded
+properly and registered with g.plugin_signon.
 
 Plugins can define their name by setting the __plugin_name__ property.
 
@@ -29,16 +32,19 @@ the order of calling handlers.
 
 To change the order select a number outside the range 0-200 since this
 range is used internally for sorting alphabetically.
+'''
+#@nonl
+#@-node:ekr.20050101090207.9:<< docstring >>
+#@nl
 
-"""
+# Written by Paul A. Paterson.  Revised by Edward K. Ream.
+# To do: add Revert button to each dialog.
 
 #@@language python
 #@@tabwidth -4
 
-# Written by Paul A. Paterson.  Revised by Edward K. Ream.
-
-## To do: add Revert button to each dialog.
-
+#@<< imports >>
+#@+node:ekr.20050101090207.10:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -47,11 +53,29 @@ import glob
 import os
 import sys
 
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+#@nonl
+#@-node:ekr.20050101090207.10:<< imports >>
+#@nl
+__version__ = "1.4"
+#@<< version history >>
+#@+node:ekr.20050101100033:<< version history >>
+#@+at
+# 
+# 1.4 EKR:
+#     - Check at runtime to make sure that the plugin has been loaded before 
+# calling topLevelMenu function.
+#@-at
+#@nonl
+#@-node:ekr.20050101100033:<< version history >>
+#@nl
+
 __plugin_name__ = "Plugins Menu"
 __plugin_priority__ = -100
-
-try: import Tkinter as Tk
-except ImportError: Tk = None
 
 #@+others
 #@+node:EKR.20040517080555.3:class Plugin
@@ -68,6 +92,7 @@ class PlugIn:
         # Import the file to find out some interesting stuff
         # Do not use the imp module: we only want to import these files once!
         self.mod = self.doc = self.version = None
+        self.filename = g.os_path_abspath(filename)
         try:
             self.mod = __import__(g.os_path_splitext(g.os_path_basename(filename))[0])
             if not self.mod:
@@ -366,7 +391,19 @@ def createPluginsMenu (tag,keywords):
             #@+node:EKR.20040517080555.24:<< add items to the plugins menu >>
             for name,p in items:
                 if p.hastoplevel:
-                    table = ((p.name, None, p.hastoplevel),)
+                    if 1: # Check at runtime to see if the plugin has actually been loaded.
+                        # This prevents us from calling hasTopLevel() on unloaded plugins.
+                        def callback(p=p):
+                            path,name = g.os_path_split(p.filename)
+                            name,ext = g.os_path_splitext(name)
+                            # g.trace(name,g.app.loadedPlugins)
+                            if name in g.app.loadedPlugins:
+                                p.hastoplevel()
+                            else:
+                                p.about()
+                        table = ((p.name, None, callback),)
+                    else:
+                        table = ((p.name, None, p.hastoplevel),)
                     c.frame.menu.createMenuEntries(pluginMenu, table)
                 elif p.hasconfig or p.othercmds:
                     m = c.frame.menu.createNewMenu(p.name, "&Plugins")
@@ -399,8 +436,6 @@ if Tk and not g.app.unitTesting: # Register the handlers...
 
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler("create-optional-menus",createPluginsMenu)
-        
-        __version__ = "1.4"
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080555.2:@thin plugins_menu.py

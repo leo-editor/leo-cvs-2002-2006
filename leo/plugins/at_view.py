@@ -23,7 +23,7 @@ This plugin also accumulates the effect of all @path nodes.
 #@@tabwidth -4
 #@@pagewidth 80
 
-__version__ = "0.5"
+__version__ = "0.6"
 #@<< version history >>
 #@+node:ktenney.20041211072654.3:<< version history >>
 #@+at
@@ -45,18 +45,19 @@ __version__ = "0.5"
 #     - Handle case where self.c has been destroyed in idle handler.
 # 0.5 EKR:
 #     - Corrected and expanded doc string.
+# 0.6 EKR:
+#     - Added better error message if can't load extensions.
 #@-at
 #@nonl
 #@-node:ktenney.20041211072654.3:<< version history >>
 #@nl
 #@<< imports >>
 #@+node:ktenney.20041211072654.4:<< imports >>
-# Almost all plugins will use these two imports.
 import leoGlobals as g
 import leoPlugins
 
-path = g.importExtension('path',verbose=True)
-win32clipboard = g.importExtension('win32clipboard',verbose=True)
+path           = g.importExtension('path',          pluginName=__name__,verbose=True)
+win32clipboard = g.importExtension('win32clipboard',pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ktenney.20041211072654.4:<< imports >>
 #@nl
@@ -280,7 +281,8 @@ class View:
 if path and win32clipboard:
     leoPlugins.registerHandler("after-create-leo-frame",onCreate)
 else:
-    g.trace('%s not loaded')
+    s = 'at_view plugin not loaded'
+    print s ; g.es(s)
 #@nonl
 #@-node:ktenney.20041211072654.1:@thin at_view.py
 #@-leo

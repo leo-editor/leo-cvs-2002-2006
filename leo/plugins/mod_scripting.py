@@ -25,8 +25,11 @@ __version__ = "0.5"
 import leoGlobals as g
 import leoPlugins
 
-try: import Tkinter as Tk
-except: Tk = None
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 import sys
 #@nonl
@@ -46,7 +49,7 @@ atPluginNodes = False
     # True: dynamically loads plugins in @plugins nodes when a window is created.
 atScriptNodes = False
     # True: dynamically executes script in @script nodes when a window is created.  DANGEROUS!
-maxButtonSize = 12
+maxButtonSize = 18
     # Maximum length of button names.
 
 #@+others
@@ -281,7 +284,8 @@ def loadPlugin (c,p):
         g.es("plugin already loaded: %s" % (theFile),color="blue")
     else:
         plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
-        theModule = g.importFromPath(theFile,plugins_path)
+        theModule = g.importFromPath(theFile,plugins_path,
+            pluginName=__name__,verbose=False)
         if theModule:
             g.es("plugin loaded: %s" % (theFile),color="blue")
             g.app.loadedPlugins.append(theFile)

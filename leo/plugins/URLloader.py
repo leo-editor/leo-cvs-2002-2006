@@ -17,8 +17,8 @@ It requires the TabbedLog plugin.
 #@nonl
 #@-node:ekr.20040831115918:<< Change log >>
 #@nl
-#@<< URLloader imports >>
-#@+node:ekr.20040831115918.1:<< URLloader imports >>
+#@<< imports >>
+#@+node:ekr.20040831115918.1:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -26,22 +26,16 @@ import os
 import urllib
 import weakref
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
-try:
-    import Pmw
-except ImportError:
-    Pmw = g.cantImport("Pmw",__name__)
-
-try:
-    import TabbedLog
-except ImportError:
-    TabbedLog = g.cantImport("TabbedLog",__name__)
+Pmw       = g.importExtension("Pmw",      pluginName=__name__,verbose=True)
+TabbedLog = g.importExtension("TabbedLog",pluginName=__name__,verbose=True)
 #@nonl
-#@-node:ekr.20040831115918.1:<< URLloader imports >>
+#@-node:ekr.20040831115918.1:<< imports >>
 #@nl
 
 #@+others

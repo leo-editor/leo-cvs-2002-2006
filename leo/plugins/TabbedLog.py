@@ -44,20 +44,15 @@ import leoGlobals as g
 import leoPlugins
 import leoTkinterFrame
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
-try:
-    import Pmw
-except ImportError:
-    Pmw = g.cantImport("Pmw",__name__)
-    
-try:
-    import weakref
-except ImportError:
-    weakref = g.cantImport("weakref",__name__)
+Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
+#@nonl
 #@-node:ekr.20040915074133.1:<< imports >>
 #@nl
 

@@ -5,14 +5,23 @@
 #@@language python
 #@@tabwidth -4
 
+#@<< imports >>
+#@+node:ekr.20050101090207.3:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
-try: import Tkinter as Tk
-except ImportError: Tk = None
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+    import tkColorChooser
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
-import os,string  # zfill does not exist in Python 2.2.1
-import tkColorChooser
+import os
+import string  # zfill does not exist in Python 2.2.1
+#@nonl
+#@-node:ekr.20050101090207.3:<< imports >>
+#@nl
 
 if Tk and not g.app.unitTesting: # Register the handlers...
 
@@ -405,5 +414,6 @@ if Tk and not g.app.unitTesting: # Register the handlers...
     
         __version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
         g.plugin_signon(__name__)
+#@nonl
 #@-node:edream.110403140857.8:@thin color_markup.py
 #@-leo

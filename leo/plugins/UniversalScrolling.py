@@ -24,10 +24,20 @@ cases stops the scrolling.
 #@nonl
 #@-node:ekr.20040915104230.5:<< about this plugin >>
 #@nl
-
+#@<< imports >>
+#@+node:ekr.20050101090207.5:<< imports >>
 import leoTkinterFrame
-import Tkinter
+
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+    
 import time
+#@nonl
+#@-node:ekr.20050101090207.5:<< imports >>
+#@nl
 
 createCanvas = leoTkinterFrame.leoTkinterFrame.createCanvas
 

@@ -67,20 +67,14 @@ __version__ = "0.3"
 import leoGlobals as g
 import leoPlugins
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
-try:
-    import Pmw
-except:
-    Pmw = g.cantImport("Pmw",__name__)
-    
-try:
-    import weakref
-except ImportError:
-    weakref = g.cantImport("weakref",__name__)
+Pmw     = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
+weakref = g.importExtension("weakref",pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20040916073636.2:<< imports >>
 #@nl

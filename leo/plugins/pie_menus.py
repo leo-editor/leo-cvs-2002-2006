@@ -12,7 +12,7 @@ try:
     import Tkinter as Tk
     import tkFont
 except ImportError:
-    Tk = None
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 import weakref
 import leoTkinterTree

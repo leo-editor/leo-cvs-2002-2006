@@ -24,7 +24,12 @@ have to lazy eval the filename creation till after leoID is defined til Leo4.3
 
 import sys, os
 import leoGlobals as g
-import Tkinter as Tk
+
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 try:
     True and False

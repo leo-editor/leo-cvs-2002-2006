@@ -10,12 +10,14 @@ __version__ = "0.2"
 
 #@<< imports >>
 #@+node:ekr.20040908094021.2:<< imports >>
-
 import leoGlobals as g
 import leoPlugins
 
-try: import Tkinter as Tk
-except ImportError: Tk = None
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 #@nonl
 #@-node:ekr.20040908094021.2:<< imports >>
 #@nl
@@ -42,7 +44,7 @@ def onCreate (tag,keywords):
     if c:
         rowCol = rowColClass(c)
         rowCol.addWidgets()
-        leoPlugins.registerHandler("idle",rowCol.updateRowColWidget)
+        leoPlugins.registerHandler("idle",rowCol.update)
 #@nonl
 #@-node:ekr.20041120114651.1:onCreate
 #@+node:ekr.20040108095351.1:class rowColClass
@@ -54,31 +56,32 @@ class rowColClass:
     #@+node:ekr.20040108100040:__init__
     def __init__ (self,c):
         
-        self.lastStatusRow, self.lastStatusCol = -1,-1
         self.c = c
+        self.lastRow,self.lastCol = -1,-1
     #@nonl
     #@-node:ekr.20040108100040:__init__
     #@+node:ekr.20040108095351.2:addWidgets
     def addWidgets (self):
     
         c = self.c
-        toolbar = c.frame.iconFrame
+        iconBar = c.frame.iconBar
+        iconBarFrame = iconBar.getFrame()
     
         # Main container 
-        self.rowColFrame = f = Tk.Frame(toolbar) 
-        f.pack(side="left")
-        
+        self.frame = Tk.Frame(iconBarFrame) 
+        self.frame.pack(side="left")
+    
         text = "line 0, col 0"
         width = len(text) # Setting the width here prevents jitters.
-        self.rowColLabel = Tk.Label(f,text=text,width=width,anchor="w")
-        self.rowColLabel.pack(side="left")
+        self.label = Tk.Label(self.frame,text=text,width=width,anchor="w")
+        self.label.pack(side="left")
         
         # Update the row/column indicators immediately to reserve a place.
-        self.updateRowColWidget()
+        self.update()
     #@nonl
     #@-node:ekr.20040108095351.2:addWidgets
-    #@+node:ekr.20040108095351.4:updateRowColWidget
-    def updateRowColWidget (self,*args,**keys):
+    #@+node:ekr.20040108095351.4:update
+    def update (self,*args,**keys):
         
         c = self.c
     
@@ -91,19 +94,21 @@ class rowColClass:
     
         index = body.index("insert")
         row,col = gui.getindex(body,index)
-        
+    
         if col > 0:
             s = body.get("%d.0" % (row),index)
             s = g.toUnicode(s,g.app.tkEncoding)
             col = g.computeWidth(s,tab_width)
     
-        if row != self.lastStatusRow or col != self.lastStatusCol:
+        if row != self.lastRow or col != self.lastCol:
             s = "line %d, col %d " % (row,col)
-            self.rowColLabel.configure(text=s)
-            self.lastStatusRow = row
-            self.lastStatusCol = col
+            self.label.configure(text=s)
+            self.lastRow,self.lastCol = row,col
+            
+        if 0: # Done in idle handler.
+            self.label.after(500,self.update)
     #@nonl
-    #@-node:ekr.20040108095351.4:updateRowColWidget
+    #@-node:ekr.20040108095351.4:update
     #@-others
 #@nonl
 #@-node:ekr.20040108095351.1:class rowColClass

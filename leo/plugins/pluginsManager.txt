@@ -10,14 +10,15 @@
 #@+others
 #@+node:ekr.20041113105336:Enabled plugins
 # Icon area: order is important.
-rowcol.py
+# rowcol.py
 mod_scripting.py
 hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
-UNL.py
-datenodes.py
+#UNL.py
+#datenodes.py
+#at_view.py
 plugin_manager.py
 
 # Other plugins: order not so important.
@@ -117,7 +118,7 @@ rst2.py
     # nodenavigator.py
     
 # Creates row-column indicators in the status area.
-    # rowcol.py
+#rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
     # searchbox.py

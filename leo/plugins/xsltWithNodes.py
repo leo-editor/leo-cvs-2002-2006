@@ -28,11 +28,12 @@ try:
     from Ft.Xml.Xslt.Processor import Processor
 except ImportError:
     Ft = g.cantImport("Ft",__name__)
-
+    
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 import weakref 
 import cStringIO 

@@ -55,7 +55,7 @@ Also allows "jumping" to UNLs.
 #@nonl
 #@-node:rogererens.20041014104346:<< about this plugin >>
 #@nl
-__version__ = "0.1"
+__version__ = "0.2"
 #@<< version history >>
 #@+node:rogererens.20041014104353:<< version history >>
 #@+at
@@ -63,6 +63,8 @@ __version__ = "0.1"
 # 0.1 rogererens: Initial version.
 # 
 # PS: wouldn't it be more handy to define __version__ in this section?
+# 
+# 0.2 ekr:  changes for new status line class.
 #@-at
 #@nonl
 #@-node:rogererens.20041014104353:<< version history >>
@@ -72,10 +74,12 @@ __version__ = "0.1"
 import leoGlobals as g
 import leoPlugins
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+#@nonl
 #@-node:rogererens.20041014110709.1:<< imports >>
 #@nl
 #@<< globals >>
@@ -111,8 +115,9 @@ def createStatusLine(tag,keywords):
     """Create a status line.""" # Might already be done by another plugin. Checking needed?
     
     c = keywords.get("c")
-    c.frame.createStatusLine()
-    c.frame.putStatusLine("Soon to be replaced")
+    statusLine = c.frame.createStatusLine()
+    statusLine.clear()
+    statusLine.put("...")
 #@nonl
 #@-node:rogererens.20041013082304.1:createStatusLine
 #@+node:rogererens.20041013084119:onSelect2

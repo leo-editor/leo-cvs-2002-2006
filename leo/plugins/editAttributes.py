@@ -12,11 +12,11 @@ Summon it by pressing button-2 or button-3 on an icon Box in the outline."""
 import leoGlobals as g
 import leoPlugins
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    g.es("editAttributes.py: can not import Tk",color="blue")
-    Tk = None
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
     
 try:
     import Pmw

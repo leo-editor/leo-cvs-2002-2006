@@ -10,10 +10,11 @@
 import leoGlobals as g
 import leoPlugins
 
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
-except  ImportError:
-    Tk = g.cantImport("Tk",__name__)
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 #@nonl
 #@-node:ekr.20041002154511:<< imports >>
 #@nl
@@ -43,14 +44,11 @@ def createStatusLine(tag,keywords):
     c = keywords.get("c")
     
     if c:
-    
-        statusLine = statusLineClass(c)
-    
-        leoPlugins.registerHandler("idle",statusLine.onIdle)
+        statusLine = myStatusLineClass(c)
 #@nonl
 #@-node:EKR.20040424152057:createStatusLine
 #@+node:ekr.20041002154511.2:class statusLineClass
-class statusLineClass:
+class myStatusLineClass:
     
     """A class to manage a status line in a Leo window."""
     
@@ -80,16 +78,6 @@ class statusLineClass:
         self.c.frame.body.bodyCtrl.bind("<Key-Escape>",self.topMode.enterMode)
     #@nonl
     #@-node:ekr.20041002154511.3:ctor
-    #@+node:ekr.20041002154846:onIdle
-    def onIdle (self,tag,keys):
-        
-        assert(tag=="idle")
-        
-        c = keys.get("c")
-        if c and c == self.c:
-            c.frame.updateStatusRowCol()
-    #@nonl
-    #@-node:ekr.20041002154846:onIdle
     #@-others
 #@nonl
 #@-node:ekr.20041002154511.2:class statusLineClass

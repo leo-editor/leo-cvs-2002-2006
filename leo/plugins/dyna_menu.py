@@ -39,8 +39,8 @@ bribe someone to test it on mac and nix and give some feedback
 on windows remove the dos command window flash with pyw in htmlize
 """   
 __version__ = '0.0138'  #t04A26p02:57
-#@<< initilize >>
-#@+node:ekr.20041030091736.4:<< initilize >>
+#@<< imports >>
+#@+node:ekr.20041030091736.4:<< imports >>
 
 #from __future__ import generators  # + enumerate for less than py2.3
 #@+at
@@ -59,8 +59,11 @@ except NameError:  #?
 
 import leoGlobals as g
 
-try: import Tkinter as Tk
-except: Tk = None
+# g.importExtension('Tkinter') does not seem to work.
+try:
+    import Tkinter as Tk
+except ImportError:
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
 
 #at this point in Leo, code from plugins isn't importable. later it is.
 #replace w/importfromfile
@@ -295,7 +298,7 @@ based on the Netscape user.js and chrome.css and adds themes.
 e
 """
 
-#@-node:ekr.20041030091736.4:<< initilize >>
+#@-node:ekr.20041030091736.4:<< imports >>
 #@nl
 NDebug = True and False
 #@+others

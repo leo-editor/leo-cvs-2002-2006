@@ -56,20 +56,14 @@ import leoPlugins
 import anydbm
 import weakref
 
-try:
-    import Pmw
-except ImportError:
-    Pmw = g.cantImport("Pmw",__name__)
-
+# g.importExtension('Tkinter') does not seem to work.
 try:
     import Tkinter as Tk
 except ImportError:
-    Tk = g.cantImport("Tk",__name__)
-    
-try:
-    import zlib
-except ImportError:
-    zlib = g.cantImport("zlib",__name__)
+    Tk = g.cantImport('Tkinter',pluginName=__name__)
+
+Pmw  = g.importExtension("Pmw", pluginName=__name__,verbose=True)
+zlib = g.importExtension("zlib",pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20041003172238.3:<< imports >>
 #@nl
