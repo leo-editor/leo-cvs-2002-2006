@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2857" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2860" clone_windows="0"/>
 <globals body_outline_ratio="0.463110102157">
 	<global_window_position top="32" left="228" height="881" width="866"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -379,21 +379,6 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
-<v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
-<v t="ekr.20040311111734.2"><vh>node a</vh></v>
-<v t="ekr.20040311111734.3"><vh>node b</vh></v>
-</v>
-<v t="ekr.20040323113659"><vh>Clone test 1</vh>
-<v t="ekr.20040323113659.1"><vh>Clone1</vh>
-<v t="ekr.20040323113659.2"><vh>child-of-clone-1</vh></v>
-<v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
-</v>
-<v t="ekr.20040323113659.1"><vh>Clone1</vh>
-<v t="ekr.20040323113659.2"><vh>child-of-clone-1</vh></v>
-<v t="ekr.20040323113659.3"><vh>child-of-clone2</vh></v>
-</v>
-</v>
 <v t="ekr.20040303071432"><vh>Mini tests, scripts &amp; experiments</vh>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
@@ -502,7 +487,7 @@
 </v>
 <v t="ekr.20040321091021"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
 </v>
-<v t="ekr.20040402043516" a="TV"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
 <v t="ekr.20040402043516.1" a="E"><vh>leoReadlines</vh></v>
 <v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
 <v t="ekr.20040402064301" a="E"><vh>class prettyPrinter</vh>
@@ -515,7 +500,7 @@
 <v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
 </v>
 </v>
-<v t="ekr.20040414082806"><vh>Clone test</vh>
+<v t="ekr.20040414082806" a="TV"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
 <v t="ekr.20040409140301.2" a="E"><vh>c</vh>
@@ -2870,19 +2855,6 @@ c = g.top() ; root = c.rootPosition()
 
 for p in root.allNodes_iter():
 	print p.v.t.fileIndex</t>
-<t tx="ekr.20040311111734">@language python
-@encoding iso-8859-1
-
-# Test of Leo 42 derived files.
-
-changed3
-
-&lt;&lt; node one &gt;&gt;
-
-@others</t>
-<t tx="ekr.20040311111734.1">node one text</t>
-<t tx="ekr.20040311111734.2">node a text</t>
-<t tx="ekr.20040311111734.3">node b text</t>
 <t tx="ekr.20040311125054">import leoGlobals as g
 c = g.top()
 root = c.rootPosition()
@@ -3445,10 +3417,6 @@ for p in c.allNodes_iter():
 s = "checked %d cloned positions" % count
 print s ; g.es(s)
 </t>
-<t tx="ekr.20040323113659"></t>
-<t tx="ekr.20040323113659.1"></t>
-<t tx="ekr.20040323113659.2"></t>
-<t tx="ekr.20040323113659.3"></t>
 <t tx="ekr.20040323162303">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()

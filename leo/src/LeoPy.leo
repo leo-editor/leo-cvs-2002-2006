@@ -4205,7 +4205,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040107064101.1" a="TV"><vh>4.2 Projects</vh>
+<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
 <v t="ekr.20040326032652"><vh> Notes</vh>
 <v t="ekr.20040301192211"><vh> What I did</vh>
 <v t="ekr.20040311124726"><vh>Features of 4.2</vh></v>
@@ -5862,7 +5862,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040117181936"><vh>To do: 4.2</vh>
+<v t="ekr.20040117181936" a="E"><vh>To do: 4.2</vh>
 <v t="ekr.20040409164648"><vh>Bugs</vh>
 <v t="ekr.20040323170225"><vh>General bugs</vh>
 <v t="ekr.20040327123438"><vh>Idle hooks are not working properly!  (add unregisterHandler)</vh>
@@ -6114,6 +6114,8 @@
 <v t="ekr.20040327103735"><vh>Email to Fred Drake re 4.1 final</vh></v>
 <v t="ekr.20040323195916.1"><vh>Tests</vh></v>
 </v>
+<v t="ekr.20040414093055"><vh>Shadow files plugin</vh></v>
+<v t="ekr.20040414093758" a="TV"><vh>Suggestions</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
@@ -6390,7 +6392,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2604" a="E"><vh>Core classes...</vh>
+<v t="ekr.20031218072017.2604"><vh>Core classes...</vh>
 <v t="ekr.20031218072017.2605" tnodeList="ekr.20031218072017.2605,ekr.20031218072017.2606,ekr.20031218072017.1934,ekr.20031218072017.1935,ekr.20040411081633,ekr.20031218072017.1936,ekr.20031218072017.1937,ekr.20031218072017.1624,ekr.20031218072017.1938,ekr.20031218072017.1939,ekr.20031218072017.2607"><vh>@file leo.py </vh>
 <v t="ekr.20031218072017.2606"><vh>&lt;&lt; Import pychecker &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1934"><vh>run &amp; allies</vh>
@@ -6923,7 +6925,7 @@
 <v t="ekr.20031218072017.3443"><vh>registerHandler</vh></v>
 <v t="ekr.20031218072017.3444"><vh>registerExclusiveHandler</vh></v>
 </v>
-<v t="ekr.20031218072017.3446" a="E" tnodeList="ekr.20031218072017.3446,ekr.20031218072017.2411,ekr.20031218072017.3447,ekr.20031218072017.3449,ekr.20031218072017.3450,ekr.20031218072017.3451,ekr.20031218072017.3452,ekr.20031218072017.3453,ekr.20031218072017.3454,ekr.20031218072017.3455,ekr.20031218072017.3456,ekr.20031218072017.3457,ekr.20031218072017.3458,ekr.20031218072017.3459,ekr.20031218072017.3460,ekr.20031218072017.3461,ekr.20031218072017.3462,ekr.20031218072017.3463,ekr.20031218072017.3464,ekr.20031218072017.3465,ekr.20031218072017.3466,ekr.20031218072017.1356,ekr.20031218072017.1357,ekr.20031218072017.1358,ekr.20031218072017.1359,ekr.20031218072017.3467,ekr.20031218072017.3468,ekr.20031218072017.3469,ekr.20031218072017.3470,ekr.20031218072017.3471,ekr.20031218072017.3472,ekr.20031218072017.3473,ekr.20031218072017.3474,ekr.20031218072017.3475,ekr.20031218072017.3476,ekr.20031218072017.3477,ekr.20031218072017.3478,ekr.20031218072017.3479,ekr.20031218072017.3480,ekr.20031218072017.3481,ekr.20031218072017.3483,ekr.20031218072017.3482,ekr.20031218072017.3484,ekr.20031218072017.3485,ekr.20031218072017.3486,ekr.20031218072017.3487,ekr.20031218072017.3490,ekr.20031218072017.3491,ekr.20031218072017.3494,ekr.20031218072017.3493,ekr.20031218072017.3495,ekr.20031218072017.3496,ekr.20031218072017.3497,ekr.20031218072017.3492,ekr.20031218072017.3498,ekr.20031218072017.3499,ekr.20031218072017.3500,ekr.20031218072017.3501,ekr.20031218072017.3502,ekr.20031218072017.3503,ekr.20031218072017.3504,ekr.20031218072017.1488,ekr.20031218072017.1151,ekr.20031218072017.1152,ekr.20031218072017.1153,ekr.20031218072017.1154,ekr.20031218072017.1155,ekr.20031218072017.3506,ekr.20031218072017.3507,ekr.20031218072017.3508,ekr.20031218072017.3509,ekr.20031218072017.3510,ekr.20031218072017.3511,ekr.20031218072017.3512,ekr.20031218072017.3513,ekr.20031218072017.3514,ekr.20031218072017.3515,ekr.20031218072017.3516,ekr.20031218072017.3517,ekr.20031218072017.3518,ekr.20031218072017.3519,ekr.20031218072017.3520,ekr.20031218072017.3521,ekr.20031218072017.3522,ekr.20031218072017.3523,ekr.20031218072017.3524,ekr.20031218072017.3524,ekr.20031218072017.3525,ekr.20031218072017.3526,ekr.20031218072017.3527,ekr.20031218072017.3529,ekr.20031218072017.3530,ekr.20031218072017.3531,ekr.20031218072017.3532,ekr.20031218072017.3533,ekr.20031218072017.3534,ekr.20031218072017.3535,ekr.20031218072017.3536,ekr.20031218072017.3537,ekr.20031218072017.3539,ekr.20031218072017.3540,ekr.20031218072017.3541,ekr.20031218072017.3542,ekr.20031218072017.3543,ekr.20031218072017.3545,ekr.20031218072017.3546,ekr.20031218072017.3547,ekr.20031218072017.3548,ekr.20031218072017.3549,ekr.20031218072017.3546,ekr.20031218072017.3550,ekr.20031218072017.3551,ekr.20031218072017.3555,ekr.20031218072017.3557,ekr.20031218072017.3556,ekr.20031218072017.3553,ekr.20031218072017.3552,ekr.20031218072017.3554,ekr.20031218072017.3553,ekr.20031218072017.3558,ekr.20031218072017.3559,ekr.20031218072017.3553,ekr.20031218072017.3560,ekr.20031218072017.3561,ekr.20031218072017.3562,ekr.20031218072017.3563,ekr.20031218072017.2368,ekr.20031218072017.3564,ekr.20031218072017.3565,ekr.20031218072017.3566,ekr.20031218072017.3567,ekr.20031218072017.3568,ekr.20031218072017.3570,ekr.20031218072017.3571,ekr.20031218072017.3569,ekr.20031218072017.3572,ekr.20031218072017.3573,ekr.20031218072017.3574,ekr.20031218072017.3575,ekr.20031218072017.3576,ekr.20031218072017.3577,ekr.20031218072017.3578,ekr.20031218072017.3579,ekr.20031218072017.3580,ekr.20031218072017.3581,ekr.20031218072017.3582,ekr.20031218072017.3583,ekr.20031218072017.3584,ekr.20031218072017.3585,ekr.20031218072017.3586,ekr.20031218072017.3587,ekr.20031218072017.3588,ekr.20031218072017.3589,ekr.20031218072017.3590,ekr.20031218072017.3591,ekr.20031218072017.3592,ekr.20031218072017.3593,ekr.20031218072017.3594,ekr.20031218072017.1259,ekr.20031218072017.3595,ekr.20031218072017.3596,ekr.20031218072017.3597,ekr.20031218072017.3598,ekr.20031218072017.1360,ekr.20031218072017.1361,ekr.20031218072017.1362,ekr.20031218072017.1363,ekr.20031218072017.1364,ekr.20031218072017.1365,ekr.20031218072017.1366,ekr.20031218072017.1367,ekr.20031218072017.1368,ekr.20031218072017.1369,ekr.20031218072017.1370,ekr.20031218072017.1371,ekr.20031218072017.1372,ekr.20031218072017.1373,ekr.20031218072017.1374,ekr.20031218072017.3599,ekr.20031218072017.3600,ekr.20031218072017.3601,ekr.20031218072017.3602"><vh>@file leoTangle.py</vh>
+<v t="ekr.20031218072017.3446" tnodeList="ekr.20031218072017.3446,ekr.20031218072017.2411,ekr.20031218072017.3447,ekr.20031218072017.3449,ekr.20031218072017.3450,ekr.20031218072017.3451,ekr.20031218072017.3452,ekr.20031218072017.3453,ekr.20031218072017.3454,ekr.20031218072017.3455,ekr.20031218072017.3456,ekr.20031218072017.3457,ekr.20031218072017.3458,ekr.20031218072017.3459,ekr.20031218072017.3460,ekr.20031218072017.3461,ekr.20031218072017.3462,ekr.20031218072017.3463,ekr.20031218072017.3464,ekr.20031218072017.3465,ekr.20031218072017.3466,ekr.20031218072017.1356,ekr.20031218072017.1357,ekr.20031218072017.1358,ekr.20031218072017.1359,ekr.20031218072017.3467,ekr.20031218072017.3468,ekr.20031218072017.3469,ekr.20031218072017.3470,ekr.20031218072017.3471,ekr.20031218072017.3472,ekr.20031218072017.3473,ekr.20031218072017.3474,ekr.20031218072017.3475,ekr.20031218072017.3476,ekr.20031218072017.3477,ekr.20031218072017.3478,ekr.20031218072017.3479,ekr.20031218072017.3480,ekr.20031218072017.3481,ekr.20031218072017.3483,ekr.20031218072017.3482,ekr.20031218072017.3484,ekr.20031218072017.3485,ekr.20031218072017.3486,ekr.20031218072017.3487,ekr.20031218072017.3490,ekr.20031218072017.3491,ekr.20031218072017.3494,ekr.20031218072017.3493,ekr.20031218072017.3495,ekr.20031218072017.3496,ekr.20031218072017.3497,ekr.20031218072017.3492,ekr.20031218072017.3498,ekr.20031218072017.3499,ekr.20031218072017.3500,ekr.20031218072017.3501,ekr.20031218072017.3502,ekr.20031218072017.3503,ekr.20031218072017.3504,ekr.20031218072017.1488,ekr.20031218072017.1151,ekr.20031218072017.1152,ekr.20031218072017.1153,ekr.20031218072017.1154,ekr.20031218072017.1155,ekr.20031218072017.3506,ekr.20031218072017.3507,ekr.20031218072017.3508,ekr.20031218072017.3509,ekr.20031218072017.3510,ekr.20031218072017.3511,ekr.20031218072017.3512,ekr.20031218072017.3513,ekr.20031218072017.3514,ekr.20031218072017.3515,ekr.20031218072017.3516,ekr.20031218072017.3517,ekr.20031218072017.3518,ekr.20031218072017.3519,ekr.20031218072017.3520,ekr.20031218072017.3521,ekr.20031218072017.3522,ekr.20031218072017.3523,ekr.20031218072017.3524,ekr.20031218072017.3524,ekr.20031218072017.3525,ekr.20031218072017.3526,ekr.20031218072017.3527,ekr.20031218072017.3529,ekr.20031218072017.3530,ekr.20031218072017.3531,ekr.20031218072017.3532,ekr.20031218072017.3533,ekr.20031218072017.3534,ekr.20031218072017.3535,ekr.20031218072017.3536,ekr.20031218072017.3537,ekr.20031218072017.3539,ekr.20031218072017.3540,ekr.20031218072017.3541,ekr.20031218072017.3542,ekr.20031218072017.3543,ekr.20031218072017.3545,ekr.20031218072017.3546,ekr.20031218072017.3547,ekr.20031218072017.3548,ekr.20031218072017.3549,ekr.20031218072017.3546,ekr.20031218072017.3550,ekr.20031218072017.3551,ekr.20031218072017.3555,ekr.20031218072017.3557,ekr.20031218072017.3556,ekr.20031218072017.3553,ekr.20031218072017.3552,ekr.20031218072017.3554,ekr.20031218072017.3553,ekr.20031218072017.3558,ekr.20031218072017.3559,ekr.20031218072017.3553,ekr.20031218072017.3560,ekr.20031218072017.3561,ekr.20031218072017.3562,ekr.20031218072017.3563,ekr.20031218072017.2368,ekr.20031218072017.3564,ekr.20031218072017.3565,ekr.20031218072017.3566,ekr.20031218072017.3567,ekr.20031218072017.3568,ekr.20031218072017.3570,ekr.20031218072017.3571,ekr.20031218072017.3569,ekr.20031218072017.3572,ekr.20031218072017.3573,ekr.20031218072017.3574,ekr.20031218072017.3575,ekr.20031218072017.3576,ekr.20031218072017.3577,ekr.20031218072017.3578,ekr.20031218072017.3579,ekr.20031218072017.3580,ekr.20031218072017.3581,ekr.20031218072017.3582,ekr.20031218072017.3583,ekr.20031218072017.3584,ekr.20031218072017.3585,ekr.20031218072017.3586,ekr.20031218072017.3587,ekr.20031218072017.3588,ekr.20031218072017.3589,ekr.20031218072017.3590,ekr.20031218072017.3591,ekr.20031218072017.3592,ekr.20031218072017.3593,ekr.20031218072017.3594,ekr.20031218072017.1259,ekr.20031218072017.3595,ekr.20031218072017.3596,ekr.20031218072017.3597,ekr.20031218072017.3598,ekr.20031218072017.1360,ekr.20031218072017.1361,ekr.20031218072017.1362,ekr.20031218072017.1363,ekr.20031218072017.1364,ekr.20031218072017.1365,ekr.20031218072017.1366,ekr.20031218072017.1367,ekr.20031218072017.1368,ekr.20031218072017.1369,ekr.20031218072017.1370,ekr.20031218072017.1371,ekr.20031218072017.1372,ekr.20031218072017.1373,ekr.20031218072017.1374,ekr.20031218072017.3599,ekr.20031218072017.3600,ekr.20031218072017.3601,ekr.20031218072017.3602"><vh>@file leoTangle.py</vh>
 <v t="ekr.20031218072017.2411"><vh>&lt;&lt; About Tangle and Untangle &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3447"><vh>&lt;&lt; constants &amp; synonyms &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3448"><vh>node classes</vh>
@@ -6950,14 +6952,14 @@
 <v t="ekr.20031218072017.3464"><vh>root_attributes.__repr__</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3465" a="E"><vh>class tangleCommands methods</vh>
+<v t="ekr.20031218072017.3465"><vh>class tangleCommands methods</vh>
 <v t="ekr.20031218072017.3466"><vh>tangle.__init__</vh></v>
 <v t="ekr.20031218072017.1356"><vh>tangle.init_ivars &amp; init_directive_ivars</vh>
 <v t="ekr.20031218072017.1357"><vh>&lt;&lt; init tangle ivars &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1358"><vh>&lt;&lt; init untangle ivars &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1359"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
-<v t="ekr.20031218072017.3467" a="E"><vh>top level</vh>
+<v t="ekr.20031218072017.3467"><vh>top level</vh>
 <v t="ekr.20031218072017.3468"><vh>cleanup</vh>
 <v t="ekr.20031218072017.3469"><vh>&lt;&lt; call tangle_done.run() or untangle_done.run() &gt;&gt;</vh></v>
 </v>
@@ -6982,7 +6984,7 @@
 <v t="ekr.20031218072017.3487"><vh>&lt;&lt; set end to the next root in the unit &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3488" a="E"><vh>tangle</vh>
+<v t="ekr.20031218072017.3488"><vh>tangle</vh>
 <v t="ekr.20031218072017.3489"><vh>Pass 1</vh>
 <v t="ekr.20031218072017.3490"><vh>handle_newline</vh></v>
 <v t="ekr.20031218072017.3491"><vh>skip_body</vh>
@@ -7005,7 +7007,7 @@
 <v t="ekr.20031218072017.3503"><vh>skip_doc</vh></v>
 <v t="ekr.20031218072017.3504"><vh>skip_headline</vh></v>
 </v>
-<v t="ekr.20031218072017.3505" a="E"><vh>Pass 2</vh>
+<v t="ekr.20031218072017.3505"><vh>Pass 2</vh>
 <v t="ekr.20031218072017.1488"><vh>oblank, oblanks, os, otab, otabs (Tangle)</vh></v>
 <v t="ekr.20031218072017.1151"><vh>tangle.put_all_roots</vh>
 <v t="ekr.20031218072017.1152"><vh>&lt;&lt;Get root specific attributes&gt;&gt;</vh></v>
@@ -7030,11 +7032,11 @@
 <v t="ekr.20031218072017.3517"><vh>&lt;&lt; Output leading white space except for blank lines &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3518"><vh>put_part_node</vh></v>
-<v t="ekr.20031218072017.3519" a="E"><vh>put_section</vh>
+<v t="ekr.20031218072017.3519"><vh>put_section</vh>
 <v t="ekr.20031218072017.3520"><vh>&lt;&lt; Calculate the new value of tangle_indent &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3521"><vh>&lt;&lt; Set 'newline_flag' if the line ends with the reference &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3522" a="E"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
-<v t="ekr.20031218072017.3523" a="E"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
+<v t="ekr.20031218072017.3522"><vh>&lt;&lt;put all parts of the section definition&gt;&gt;</vh>
+<v t="ekr.20031218072017.3523"><vh>&lt;&lt; Put the section name in a comment &gt;&gt;</vh>
 <v t="ekr.20031218072017.3524"><vh>&lt;&lt; put ( n of m ) &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3525"><vh>&lt;&lt; Put the ending comment &gt;&gt;</vh></v>
@@ -36044,7 +36046,7 @@ I solved the issue playing with the bodyCtrl but I think you should take a look
 to see if the setTextSelection methods do what you want them to do.
 
 RodrigoB.</t>
-<t tx="ekr.20031218072017.2406">@language python
+<t tx="ekr.20031218072017.2406">w@language python
 @pagewidth 80
 
 @ This section contains all the source code of leo.py.
@@ -39001,6 +39003,7 @@ import prepareSetup
 prepareSetup.setup()
 
 import os
+
 # This _must_ be run from the main leo directory
 os.system("python setup.py sdist --formats=zip")
 </t>
@@ -39009,7 +39012,6 @@ os.system("python setup.py sdist --formats=zip")
 @color
 
 # Prepare to execute setup.py
-# This script has access to g.app.  setup.py does not.
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -39066,7 +39068,8 @@ os.system(r"cd C:\prog\leoCVS\leo")
 os.system("python setup.py sdist --formats=zip")
 @c
 
-true = 1 ; false = 0
+import leoGlobals as g
+from leoGlobals import true,false
 
 from distutils.core import setup
 import distutils,os,sys
@@ -39087,7 +39090,7 @@ setup (
 if sys.argv[1] == "sdist":
 	print "setup complete"</t>
 <t tx="ekr.20031218072017.2571">name="leo",
-version="4.2-alpha-1",
+version="4.2-a1",
 author="Edward K. Ream",
 author_email="edream@tds.net",
 url="http://personalpages.tds.net/~edream/front.html",
@@ -39141,8 +39144,6 @@ def generateModules():
 	return modules
 </t>
 <t tx="ekr.20031218072017.2574">def replacePatterns (file,pats):
-	
-	from leoGlobals import os_path_join
 
 	try:
 		path = os.getcwd()
@@ -39170,8 +39171,6 @@ def generateModules():
 		sys.exit()
 </t>
 <t tx="ekr.20031218072017.2575">def setDefaultParams():
-	
-	from leoGlobals import os_path_join
 
 	print "setDefaultParams"
 
@@ -39187,7 +39186,7 @@ def generateModules():
 @color
 
 # Postprocess after executing setup.py
-# This script has access to g.app.  setup.py does not.
+
 import leoGlobals as g
 from leoGlobals import true,false
 
@@ -67000,5 +66999,99 @@ Bill Drissel
 </t>
 <t tx="ekr.20040414073612"></t>
 <t tx="ekr.20040414073612.1"></t>
+<t tx="ekr.20040414093055">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2521345
+By: bwmulder
+
+I am working on a plugin which works with shadow files in a Leo subdirectory.
+
+This is really the same code posted integrated with Leo. New is that
+the goto linenumber command works properly as well.
+
+The new code only kicks in if:
+   - A leo subdirectory exists, and
+   - both directories contain the file in question.
+   
+To get things started, create a Leo subdirectory, move the source
+files there, and then create zero length strings instead of the moved
+files. Whenever you change something in the sourcefile, both files
+will be brought up to date automatically.
+
+In the future, I might provide a script which provides this initial
+setup automatically.
+
+Implementation notes (relative to 4.1):
+
+In order to use this mechanism to annotate foreign code, I am missing
+two pieces:
+   
+   - The import command should import the source *exactly*.
+   - I would like to add comments to the source which are *not* output into
+source,
+     and live in Leo only (or the shadowfile under Leo sentinel comments).
+     
+I changed the "message_comment" function to do nothing.
+
+I do not think that this function is a good idea, since Leo can not know
+if the line structure in a comment.
+
+There might be more to do in this area.
+
+It seems that I can get around the second limitation by writing "//@"
+at the beginning of the line in the code sections, since this is
+filtered away by the plugin.
+
+Is there some other way to put comments only in the Leo document, but
+not in the derived file?
+
+I had to copy quite a bit of source code for the gotolinenr
+command. It probably won't work for the next version of Leo
+
+It seems that Leo somewhat encourages a coding style with long
+routines, since complexity can be tugged away into subnodes rather
+than creating functions to structure the code.
+
+For the read and write command, I decided to inject a new "open"
+function into the global namespace of leoAtFile.py. This function
+checks if the caller is the read or write function of leoAtFile.py. In
+this case, some special processing for synchronization is done.
+
+I did this strange programming since I did not want to copy large
+amounts of code and just add a few lines.
+
+Currently the script works for C and python files. It looks at the
+file extension to determine if C or python type annotations are
+used. Maybe this information can be centralized.
+</t>
+<t tx="ekr.20040414093758">@nocolor
+ RE: Leo's reorganized to-do list   
+2004-03-31 05:48  
+
+ in order of most likely to least possible,
+
++1 on defineing __main__ and allowing parameters to scripts.
+
+add python -t to test suite to catch mixed tab &amp; space in derived files.
+leoFind.py: inconsistent use of tabs and spaces 
+
+Edit-&gt; Delete while in headline deletes body text.
+
+unregisterhook()
+
+we can script the find, can we script the compare?
+
+insert/overstrike mode in body
+
+@path and other directives accept python expressions
+
+add a Stop button for find/change 
+and other possibly long running scripts.
+possibly a plugin can already do this.
+
+Tabbed log/Find/config window.
+
+ 
+</t>
 </tnodes>
 </leo_file>

@@ -68,7 +68,7 @@
 <v t="edream.110203163054.44"><vh>Dan Winkler 1</vh></v>
 <v t="edream.110203163054.45"><vh>Dan Winkler 2</vh></v>
 </v>
-<v t="edream.110203163054.46"><vh>Release Notes</vh>
+<v t="edream.110203163054.46" a="E"><vh>Release Notes</vh>
 <v t="edream.110203163054.47"><vh>Warnings</vh></v>
 <v t="edream.110203163054.48"><vh>Installation notes</vh>
 <v t="edream.110203163054.49"><vh>System requirements</vh></v>
@@ -80,7 +80,133 @@
 <v t="edream.110203163054.61"><vh>Putting the Leo icon in Leo windows</vh></v>
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
-<v t="edream.110203163054.63"><vh>Latest versions</vh>
+<v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
+<v t="ekr.20040414084511" a="E"><vh>4.2 a1</vh>
+<v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
+<v t="edream.110203163054.891"><vh>Overview</vh></v>
+<v t="edream.110203163054.892"><vh>Basic scripts</vh>
+<v t="ekr.20040403051340"><vh>Writing to log window</vh></v>
+<v t="edream.110203163054.893"><vh>Getting commanders and frames</vh></v>
+<v t="edream.110203163054.894"><vh>Redirecting output from scripts</vh></v>
+<v t="edream.110203163054.895"><vh>Getting the headline and body text of the presently selected node</vh></v>
+<v t="edream.110203163054.896"><vh>Setting the headline and body text of the presently selected node</vh></v>
+<v t="edream.110203163054.897"><vh>Traversing all nodes of an outline</vh></v>
+<v t="ekr.20040403103655"><vh>Iterators</vh>
+<v t="ekr.20040403121641.1"><vh>allNodes_iter</vh>
+<v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
+<v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
+</v>
+<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
+<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
+<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
+<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
+</v>
+<v t="edream.110203163054.898"><vh>Updating the screen</vh></v>
+<v t="edream.110203163054.899"><vh>Invoking commands from scripts</vh></v>
+<v t="edream.110203163054.900"><vh>Getting preferences</vh></v>
+<v t="edream.110203163054.901"><vh>Setting preferences</vh></v>
+<v t="edream.110203163054.902"><vh>Functions for finding and changing text from scripts</vh>
+<v t="edream.110203163054.903"><vh>Example 1: the findAll function</vh></v>
+<v t="edream.110203163054.904"><vh>Example 2: the reFindAll function</vh></v>
+</v>
+<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
+<v t="edream.110203163054.909"><vh>Functions defined in leoGlobals.py</vh></v>
+</v>
+<v t="edream.110203163054.905"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403103655"><vh>Iterators</vh>
+<v t="ekr.20040403121641.1"><vh>allNodes_iter</vh>
+<v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
+<v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
+</v>
+<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
+<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
+<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
+<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
+</v>
+<v t="edream.110203163054.906"><vh>Getters</vh></v>
+<v t="edream.110203163054.907"><vh>Setters</vh></v>
+</v>
+</v>
+<v t="ekr.20040403175746" a="TV"><vh>Scripting chapter using the rst plugin</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403183229"><vh>Overview</vh>
+<v t="ekr.20040403183229.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403175011"><vh>g.top(): the commander of the top window</vh>
+<v t="ekr.20040403175011.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.3"><vh>g.es(): write to the log pane</vh>
+<v t="ekr.20040403175257"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403175157.1"><vh>app.windowList: the list of all open frames</vh>
+<v t="ekr.20040403175157.2"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.6"><vh>Getting and setting headline and body text</vh>
+<v t="ekr.20040403180217"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.9"><vh>Traversing outlines</vh>
+<v t="ekr.20040403183934"><vh>@rst</vh>
+<v t="ekr.20040403173920.10"><vh>c.allNodes_iter</vh>
+<v t="ekr.20040403185643"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.13"><vh>p.children_iter</vh>
+<v t="ekr.20040403185803"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.14"><vh>p.parents_iter and p.self_and_parents_iter</vh>
+<v t="ekr.20040403185803.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.15"><vh>p.siblings_iter and p.following_siblings_iter</vh>
+<v t="ekr.20040403185803.2"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.16"><vh>p.subtree_iter and p.self_and_subtree_iter</vh>
+<v t="ekr.20040403185803.3"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040403173920.17"><vh>Updating the screen</vh>
+<v t="ekr.20040403183934.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.18"><vh>Invoking commands from scripts</vh>
+<v t="ekr.20040403183934.2"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.19"><vh>Getting and setting preferences</vh>
+<v t="ekr.20040403183934.3"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
+<v t="ekr.20040403184306.1"><vh>@rst</vh>
+<v t="ekr.20040403191729"><vh>g.findAll</vh>
+<v t="ekr.20040403173920.22"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403191729.1"><vh>g.reFindall</vh>
+<v t="ekr.20040403173920.23"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040403173920.24"><vh>Running Leo in batch mode</vh>
+<v t="ekr.20040403184306.2"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.25"><vh>Functions defined in leoGlobals.py</vh>
+<v t="ekr.20040403184306.3"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
+<v t="ekr.20040403183718"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040411151245"><vh>Iterators</vh>
+<v t="ekr.20040411151245.1"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.27"><vh>Getters</vh>
+<v t="ekr.20040403192653"><vh>@rst</vh></v>
+</v>
+<v t="ekr.20040403173920.28"><vh>Setters</vh>
+<v t="ekr.20040403192653.1"><vh>@rst</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
 <v t="ekr.20040216151748"><vh>4.1 final</vh>
 <v t="ekr.20040217085036"><vh>Added several new plugins</vh></v>
 <v t="ekr.20040216152948"><vh>Added Toggle Angle Brackets command</vh></v>
@@ -1820,53 +1946,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.890"><vh>Chapter 7: Scripting Leo with Python</vh>
-<v t="edream.110203163054.891"><vh>Overview</vh></v>
-<v t="edream.110203163054.892"><vh>Basic scripts</vh>
-<v t="ekr.20040403051340"><vh>Writing to log window</vh></v>
-<v t="edream.110203163054.893"><vh>Getting commanders and frames</vh></v>
-<v t="edream.110203163054.894"><vh>Redirecting output from scripts</vh></v>
-<v t="edream.110203163054.895"><vh>Getting the headline and body text of the presently selected node</vh></v>
-<v t="edream.110203163054.896"><vh>Setting the headline and body text of the presently selected node</vh></v>
-<v t="edream.110203163054.897"><vh>Traversing all nodes of an outline</vh></v>
-<v t="ekr.20040403103655"><vh>Iterators</vh>
-<v t="ekr.20040403121641.1"><vh>allNodes_iter</vh>
-<v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
-<v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
-</v>
-<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
-<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
-<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
-<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
-</v>
-<v t="edream.110203163054.898"><vh>Updating the screen</vh></v>
-<v t="edream.110203163054.899"><vh>Invoking commands from scripts</vh></v>
-<v t="edream.110203163054.900"><vh>Getting preferences</vh></v>
-<v t="edream.110203163054.901"><vh>Setting preferences</vh></v>
-<v t="edream.110203163054.902"><vh>Functions for finding and changing text from scripts</vh>
-<v t="edream.110203163054.903"><vh>Example 1: the findAll function</vh></v>
-<v t="edream.110203163054.904"><vh>Example 2: the reFindAll function</vh></v>
-</v>
-<v t="edream.112303173638"><vh>Running Leo in batch mode</vh></v>
-<v t="edream.110203163054.909"><vh>Functions defined in leoGlobals.py</vh></v>
-</v>
-<v t="edream.110203163054.905"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403103655"><vh>Iterators</vh>
-<v t="ekr.20040403121641.1"><vh>allNodes_iter</vh>
-<v t="ekr.20040403123631.1"><vh>Example 1</vh></v>
-<v t="ekr.20040403123631.2"><vh>Example 2</vh></v>
-</v>
-<v t="ekr.20040403121641.7"><vh>children_iter</vh></v>
-<v t="ekr.20040403121641.10"><vh>parents_iter</vh></v>
-<v t="ekr.20040403121641.13"><vh>siblings_iter</vh></v>
-<v t="ekr.20040403121641.4"><vh>subtree_iter</vh></v>
-</v>
-<v t="edream.110203163054.906"><vh>Getters</vh></v>
-<v t="edream.110203163054.907"><vh>Setters</vh></v>
-</v>
-</v>
-<v t="ekr.20040403175746" a="E"><vh>Scripting chapter using the rst plugin</vh>
-<v t="ekr.20040403171740" a="E"><vh>@rst scripting.html</vh>
+<v t="ekr.20040403175746"><vh>Scripting chapter using the rst plugin</vh>
+<v t="ekr.20040403171740"><vh>@rst scripting.html</vh>
 <v t="ekr.20040403183229"><vh>Overview</vh>
 <v t="ekr.20040403183229.1"><vh>@rst</vh></v>
 </v>
@@ -1911,11 +1992,11 @@
 <v t="ekr.20040403183934.3"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.21"><vh>Functions for finding and changing text from scripts</vh>
-<v t="ekr.20040403184306.1" a="E"><vh>@rst</vh>
-<v t="ekr.20040403191729" a="E"><vh>g.findAll</vh>
-<v t="ekr.20040403173920.22" a="E"><vh>@rst</vh></v>
+<v t="ekr.20040403184306.1"><vh>@rst</vh>
+<v t="ekr.20040403191729"><vh>g.findAll</vh>
+<v t="ekr.20040403173920.22"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403191729.1" a="E"><vh>g.reFindall</vh>
+<v t="ekr.20040403191729.1"><vh>g.reFindall</vh>
 <v t="ekr.20040403173920.23"><vh>@rst</vh></v>
 </v>
 </v>
@@ -1929,12 +2010,12 @@
 <v t="ekr.20040403173920.5"><vh>Redirecting output from scripts</vh>
 <v t="ekr.20040403183718"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.26" a="E"><vh>Summary of the vnode and position classes</vh>
-<v t="ekr.20040403184306.4" a="E"><vh>@rst</vh>
-<v t="ekr.20040411151245" a="E"><vh>Iterators</vh>
-<v t="ekr.20040411151245.1" a="TV"><vh>@rst</vh></v>
+<v t="ekr.20040403173920.26"><vh>Summary of the vnode and position classes</vh>
+<v t="ekr.20040403184306.4"><vh>@rst</vh>
+<v t="ekr.20040411151245"><vh>Iterators</vh>
+<v t="ekr.20040411151245.1"><vh>@rst</vh></v>
 </v>
-<v t="ekr.20040403173920.27" a="E"><vh>Getters</vh>
+<v t="ekr.20040403173920.27"><vh>Getters</vh>
 <v t="ekr.20040403192653"><vh>@rst</vh></v>
 </v>
 <v t="ekr.20040403173920.28"><vh>Setters</vh>
@@ -12591,5 +12672,6 @@ Iterators exist only in the position class:
 	p.following_siblings_iter  # returns all siblings following p.
 	p.subtree_iter             # returns all positions in p's subtree, excluding p.
 	p.self_and_subtree_iter    # returns all positions in p's subtree, including p.</t>
+<t tx="ekr.20040414084511"></t>
 </tnodes>
 </leo_file>
