@@ -1505,14 +1505,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
         c = self.c
         theDict = g.scanDirectives(c,p)
         if theDict != None:
-            # 8/30/03: Add scroll bars if we aren't wrapping.
+            # Add scroll bars if we aren't wrapping.
             wrap = theDict.get("wrap")
+            # g.trace(wrap,p.headString())
             if wrap:
                 self.bodyCtrl.configure(wrap="word")
                 self.bodyXBar.pack_forget()
             else:
                 self.bodyCtrl.configure(wrap="none")
                 self.bodyXBar.pack(side="bottom",fill="x")
+    #@nonl
     #@-node:ekr.20031218072017.1540:setWrap
     #@+node:ekr.20031218072017.2307:setTopGeometry
     def setTopGeometry(self,w,h,x,y,adjustSize=True):

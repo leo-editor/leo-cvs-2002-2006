@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="6672" clone_windows="0"/>
 <globals body_outline_ratio="0.521970705726">
-	<global_window_position top="80" left="306" height="751" width="931"/>
+	<global_window_position top="91" left="302" height="676" width="879"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -597,7 +597,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734" annotate="7d71002e"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="E" annotate="7d71002e"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -1011,6 +1011,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050219071503"><vh>Test of createMenuItemsFromTable</vh></v>
 <v t="ekr.20050219073752.1"><vh>Add a menu item after Open With</vh></v>
 </v>
+<v t="ekr.20050310082013" a="TV"><vh>AutoIt script from e</vh></v>
 </v>
 <v t="ekr.20041001211817" annotate="7d71002e"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
@@ -1610,7 +1611,7 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20050120095423" a="TV" annotate="7d71002e"><vh>Unit testing for plugins</vh>
+<v t="ekr.20050120095423" annotate="7d71002e"><vh>Unit testing for plugins</vh>
 <v t="ekr.20050218015346"><vh>@suite run all plugin test routines</vh>
 <v t="ekr.20050218015346.11"><vh>&lt;&lt; class testRoutineTestCase &gt;&gt;</vh>
 <v t="ekr.20050218015346.12"><vh>__init__</vh></v>
@@ -1700,7 +1701,8 @@ expanded="ekr.20040721114839,ekr.20040707073029,"><vh>@thin ../src/leoTest.py</v
 <v t="ekr.20050225161940.6" annotate="7d71002e"><vh>doatest</vh></v>
 </v>
 </v>
-<v t="ekr.20050301084943" labels="553a3238363437303330306135333237343534623532366336313632363536633237306137303331306135333237323730613730333230613733326571002e"><vh>Test</vh></v>
+<v t="ekr.20050301084943" labels="553a3238363437303330306135333237343534623532366336313632363536633237306137303331306135333237323730613730333230613733326571002e"><vh>Asciidoc stuff</vh></v>
+<v t="ekr.20050307194435"><vh>@nowrap</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -10990,8 +10992,8 @@ if not spellpyx or not spellFrame:
     # Ask to be removed.
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\test.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\test\test.leo</t>
 <t tx="ekr.20041124144944">import os
 import sys
 for s in sys.path:
@@ -14477,6 +14479,63 @@ import os
 import StringIO
 import sys
 import unittest</t>
-<t tx="ekr.20050301084943">print 'hi',c</t>
+<t tx="ekr.20050301084943">a = g.importExtension('asciidoc')
+print a</t>
+<t tx="ekr.20050307194435">@wrap
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx yyyyyyyyyyyyyyyyyyyyyyyy zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</t>
+<t tx="ekr.20050310082013">@ http://sourceforge.net/forum/message.php?msg_id=3039793
+
+heres a short script to open a leo, then a New leo from that one, pause then exit.
+
+still have to work out how to collect error output, especially if Leo doesn't start at all
+can't then depend on Leo error reporting!
+
+make a node
+@url ./leoopen1.au3
+
+make another
+@nosent leoopen1.au3
+@c
+
+@language elisp
+
+; AutoIt Version: 3.0 a BASIC like language
+; http://www.hiddensoft.com/AutoIt/
+
+; Opens Leo with no filename, then opens a new, closes it
+; Preliminary, will eventually programatically create
+; leoPlugins.txt and various leoSettings.leo
+; and run commands in all permutations looking for failures.
+
+; Paths are hardwired but later scripts will be created on the fly
+; maybe Leo can have a -trace mode to output to file a log of activities?
+
+; exit when CTRL+ALT+x is pressed
+HotKeySet("^!x", "MyExit")
+
+Func MyExit()
+    Exit 
+EndFunc 
+
+Opt("SendKeyDelay", 1)
+Opt("WinWaitDelay", 80)
+
+;fix path to leo.py
+Run("python c:\c\leo\V43leos\leo\src\leo.py")
+Sleep(2700) 
+
+WinWaitActive("untitled")   
+
+Sleep(700) 
+Send("!Fn")  ; how to tell if there are errors?
+Sleep(2700) 
+
+WinWaitActive("untitled1")
+Send("!Fx")
+Sleep(2700) 
+
+;careful you don't close the leo you are working from
+Send("!Fx")</t>
 </tnodes>
 </leo_file>

@@ -1991,8 +1991,8 @@ def parseManagerText(self, text):
     if 1: # Put the first match in the starts dict.
         starts = {}
         for kind,iter in (
-            ('active',find_active.finditer(text)),
-            ('inactive',find_inactive.finditer(text)),
+            ('on',find_active.finditer(text)),
+            ('off',find_inactive.finditer(text)),
         ):
             for match in iter:
                 name = match.groups()[0]
@@ -2004,10 +2004,10 @@ def parseManagerText(self, text):
                         kind=kind,name=name,start=start,match=match)
                     
         self.actives = dict(
-            [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='active'])
+            [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='on'])
             
         self.inactives = dict(
-            [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='inactive'])
+            [(bunch.name,bunch.match) for bunch in starts.values() if bunch.kind=='off'])
             
         if 0: # debugging.
             starts2 = [(bunch.start,bunch.name,bunch.kind) for bunch in starts.values()]
@@ -2048,8 +2048,9 @@ def getDetails(self, text):
     """
     # The following line tried to detect plugins by looking 
     # for self.hasImport(text, "leoPlugins") - now we assume all .py are plugins
-    self.is_plugin = True 
+    self.is_plugin = not self.hasPattern(text, '__not_a_plugin__\s*=\s*True(?!")')
     self.version = self.getPattern(text, r'__version__\s*=\s*[\'"](.*?)[\'"]', "-")
+    self.group = self.getPattern(text, r'__plugin_group__\s*=\s*[\'"](.*?)[\'"]', "-")
     # Allow both single and double triple-quoted strings.
     match1 = self.getMatch(text, r'"""(.*?)"""')
     match2 = self.getMatch(text, r"'''(.*?)'''")
@@ -2080,6 +2081,7 @@ def getDetails(self, text):
     if USE_PRIORITY:
         self.priority = self.getPattern(text, r'__plugin_priority__\s*=\s*(.*?)$', "-")
     self.has_toplevel = self.hasPattern(text, "def topLevelMenu")
+    self.getVersionHistory(text)
 #@nonl
 #@-node:pap.20041006194759:getDetails
 #@+node:pap.20041006194759.1:getPattern
@@ -2109,6 +2111,7 @@ def showPlugin(self, plugin):
     """Show a plugin"""
     self.name.setentry(plugin.name)
     self.version.setentry(plugin.version)
+    self.group.setentry(plugin.group)
     self.filename.setentry(g.os_path_abspath(plugin.filename)) # EKR
     self.status.setentry(plugin.enabled)
     self.has_ini.setentry(
@@ -2118,6 +2121,7 @@ def showPlugin(self, plugin):
     if USE_PRIORITY:
         self.priority.setentry(plugin.priority)
     self.description.settext(plugin.description.strip())
+    self.version_history.settext(plugin.versions.strip())
     self.commands.setlist(plugin.commands)
     self.handlers.setlist(plugin.handlers)
     self.requires.setlist(plugin.requires)

@@ -1351,7 +1351,186 @@ scripts.
 
 #@-node:ekr.20031218072017.401:Yet another Python .bat wrapper
 #@-node:ekr.20031218072017.399:How to run Python programs easily on NT,2K,XP
+#@+node:ekr.20050228095252:xml tools mentioned in posts
+#@+node:ekr.20050228095252.1:@url http://www.xml.com/pub/a/2003/02/12/py-xml.html
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3019151
+By: e
+
+>>code to parse and write XML ? 
+
+something like this to get started?
+Simple XML Processing With elementtree
+<http://www.xml.com/pub/a/2003/02/12/py-xml.html>
+look at some plugin source for a bunch
+of ways to insert nodes and move them 
+programatically. the piemenu is on the forum 
+somewhere has nearly everything you would need.
+BTW, I've got a u3 event I use all the time:
+one click, insert body and headline from the clipboard.
+
+... def u3(event ):  
+... ... #insert paste body 
+... ... #and create headline, cheap extract
+... ... c.selectVnode(v )
+... ... c.insertHeadline()
+... ... #c.moveOutlineRight()
+... ... cv = c.currentVnode()
+... ... cv.setBodyStringOrPane(
+... ... ... g.app.gui.getTextFromClipboard())
+... ... s = g.app.gui.getTextFromClipboard()[:25].strip()
+... ... s = ' '.join(s.split()[:3])  
+... ... #later skip punctuation somehow make smarter
+... ... cv.setHeadString(s)
+... self.u3.bind('<Button-1>', u3 )  
+THANKS! this hack saves bunches of time daily.
+would work other places than the piemenu too.
+
+I won't attempt to reiterate what many other blogs
+and articles have said about elementtree.
+besides which I know next to nothing deep about XML.
+no clue how it compares to sax or anything else.
+I will say it's great for parsing and creating and
+modifying XML and HTML in the few short examples
+I've read from years past and some recent. 
+lately there is also a c module,
+works in conjunction with Elementtree.py
+very clean code compiles easily w/o error.
+light, fast. how does he do it?
+<http://effbot.org/zone/element-index.htm>
+
+its html tree can work with Tidy, I actually started
+a very similar project to parse HTML into nodes:
+html, head, script, body, table or form etc.
+using pullparser then beautifulsoup.
+I got lost where if you insert a node, 
+then a body then another node malformed HTML
+can really screw you up. Tidy helps somewhat.
+XML is probably much better formed,
+I like the comment about keeping the tags in the body.
+maybe easier to verify later body by body
+rather than trying to match nodes & subnodes.
+funny how a comment can change your perspective
+of the problem from mostly chaos back to mostly order.
+the really funny part is, as I pictured the node headline
+it was just descriptive, the tags were in the body
+but the confusion won.
+
+the html import in Leo as many know is to a single node.
+so many parsing/web scraping projects would go 
+that much easier if you could isolate sections 
+via a Leo import so it must happen under 
+program control to be useful and non tedious.
+will have to try again w/elementtree.
+its parser will do all the work I didn't want to
+have to do building a stack of elements and bodys.
+sometimes it pays to wait for a better solution.
+well formed html is not the norm.
+maybe you will post your code first and I can adapt it!
+#@nonl
+#@-node:ekr.20050228095252.1:@url http://www.xml.com/pub/a/2003/02/12/py-xml.html
+#@+node:ekr.20050228095252.2:@url http://gnosis.cx
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3019245
+By: paulpaterson
+
+I haven't used ElementTree but I do make extensive use of the gnosis XML tools.
+The XML_Objectify function turns any XML into an object where the attributes
+are child properties and nodes.
+
+Just another toolkit to consider!
+
+http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@+node:ekr.20050228095252.3:@url http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@-node:ekr.20050228095252.3:@url http://gnosis.cx/download/Gnosis_Utils-current.tar.gz
+#@-node:ekr.20050228095252.2:@url http://gnosis.cx
+#@-node:ekr.20050228095252:xml tools mentioned in posts
 #@-node:ekr.20031218072017.392:Python Notes...
+#@+node:ekr.20050306070535:Tk Notes
+@killcolor
+#@nonl
+#@+node:ekr.20050306070535.1:*** How to use Tk bindtags
+http://sourceforge.net/forum/message.php?msg_id=1864584
+By: btheado
+
+If you don't already know about Tk's bindtags command, then check it out.  It
+should make things like this easy.  It basically allows you to dynamically add
+and remove a whole group of bindings all at once without affecting any other
+bindings.
+
+i.e. if you have a window called .text:
+
+# Enter escape mode
+bind .text <Esc> {
+    # add EscapeMode to .text's list of bindings by
+    # using the bindtags command (not shown)
+}
+
+bind EscapeMode <Up> {
+    # Add special escape mode up handling code here
+    break
+}
+bind EscapeMode <Down> {
+    # Add special escape mode down handling code
+    break
+}
+etc.
+
+# Leave escape mode
+bind EscapeMode <Esc> {
+    # remove EscapeMode from .text's list of bindings
+    # by using the bindtags command (not shown)
+}
+
+See (http://wiki.tcl.tk/bindtags) for a page with more information about bindtags
+and a link to the bindtags man page.
+
+I just wanted you to be aware of this functionality if and when you do tackle
+this.  I have found Tk's event handling, bindtags functionality very powerful,
+easy to use, and quite elegant for the coding I've done.
+
+Brian Theado
+#@nonl
+#@-node:ekr.20050306070535.1:*** How to use Tk bindtags
+#@+node:ekr.20050306070535.2:Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)
+We need a delay on body display so alt+arrow keys arent slowed down while navigating.
+
+EKR: Alt-Up and Alt-Down are bound to Go To Next/Prev visible. The idea is that
+if we don't display the body text these keys will work faster.
+#@nonl
+#@-node:ekr.20050306070535.2:Delay body display so alt+arrow keys aren't slowed (threaded colorizer?)
+#@+node:ekr.20050306070535.3:How to detect changes in text
+http://sourceforge.net/forum/message.php?msg_id=1864564
+By: btheado
+
+WAS:RE: Leo 3.10 comments
+edream wrote:
+
+>This is due to apparent glitches in the Tk event dispatching. The problem is
+that pressing a control or alt or shift key _all by themselves_ will generate
+keypress events that are passed on to Leo's key handlers
+
+This should be easy to make simpler--just bind an empty script to <Alt-KeyPress>,
+<Shift-KeyPress>, etc.  Tk chooses the most specific event it can find, so the
+more general <KeyPress> handler will not fire.
+
+On a broader note, when programming the text widget in Tcl/Tk, watching key
+events is not the easiest way to detect changes in the text.  The only way the
+text in a text widget can change is if either the delete or the insert subcommands
+(methods) are called.  Any keypresses that end up changing text will have called
+one of these subcommands.
+
+So the simplest way to detect changes is to just intercept the calls to insert
+and delete.  In Tcl/Tk intercepting these calls is pretty straightforward. 
+I don't know if the same is true in Tkinter.
+
+Also note the text widget in Tk8.4 (http://www.tcl.tk/man/tcl8.4/TkCmd/text.htm#M72)
+has a built-in way of seeing if the text has changed
+
+Brian Theado
+#@nonl
+#@-node:ekr.20050306070535.3:How to detect changes in text
+#@-node:ekr.20050306070535:Tk Notes
 #@+node:ekr.20031218072017.434:Unused code
 @ignore
 @language python

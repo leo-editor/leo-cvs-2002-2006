@@ -8121,7 +8121,10 @@ def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
 
             if not thinFile or (thinFile and p.v.isDirty()):
                 # New in Leo 4.3: support for mod_labels plugin:
-                c.mod_label_controller.add_label(p,"before change:",old_body)
+                try:
+                    c.mod_label_controller.add_label(p,"before change:",old_body)
+                except Exception:
+                    pass
                 g.es("changed: " + p.headString(),color="blue")
                 p.setMarked()
 #@nonl
@@ -14515,7 +14518,7 @@ def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
     c = leoCommands.Commands(frame,fileName)
     
     if not g.app.initing:
-        g.doHook("onCreate",c=c)
+        g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
     
     frame.finishCreate(c)
     
@@ -20743,8 +20746,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
-C:\prog\leoCVS\leo\src\LeoPy.leo
 c:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -35345,6 +35348,149 @@ def openWithTempFilePath (self,p,ext):
 #@nonl
 #@-node:ekr.20031218072017.2832:c.openWithTempFilePath
 #@-node:ekr.20050303104141:(Made sure file names get sanitized correctly)
+#@+node:ekr.20050308021443:(Fixed crasher in atFile read logic when mod_labels plugin not enabled!)
+#@+node:ekr.20050308021443.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3035871
+By: e
+
+open leoPy.leo
+exceptions opening: C:\c\leo\V43leos\leo\src\LeoPyRef.leo
+Traceback (most recent call last):
+  File "c:\c\leo\V43leos\leo\src\leoGlobals.py", line 630, in openWithFileName
+    readAtFileNodesFlag=readAtFileNodesFlag) # closes file.
+  File "c:\c\leo\V43leos\leo\src\leoFileCommands.py", line 1285, in open
+    ok, ratio =
+self.getLeoFile(fileName,readAtFileNodesFlag=readAtFileNodesFlag,silent=silent)
+  File "c:\c\leo\V43leos\leo\src\leoFileCommands.py", line 632, in getLeoFile
+    c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+  File "c:\c\leo\V43leos\leo\src\leoAtFile.py", line 486, in readAll
+    at.read(p,thinFile=True)
+  File "c:\c\leo\V43leos\leo\src\leoAtFile.py", line 432, in read
+    self.copyAllTempBodyStringsToTnodes(root,thinFile)
+  File "c:\c\leo\V43leos\leo\src\leoAtFile.py", line 2382, in
+copyAllTempBodyStringsToTnodes
+    c.mod_label_controller.add_label(p,"before change:",old_body)
+AttributeError: Commands instance has no attribute 'mod_label_controller'
+
+leo stops loading so a save would lose information?
+leo is changed but isn't indicated,
+on exit you get the save/cancel popup.
+#@nonl
+#@-node:ekr.20050308021443.1:Report
+#@+node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
+def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
+    
+    c = self.c
+    for p in root.self_and_subtree_iter():
+        try: s = p.v.t.tempBodyString
+        except: s = ""
+        old_body = p.bodyString()
+        if s != old_body:
+            if 0: # For debugging.
+                print ; print "changed: " + p.headString()
+                print ; print "new:",s
+                print ; print "old:",p.bodyString()
+            if thinFile:
+                p.v.setTnodeText(s)
+                if p.v.isDirty():
+                    p.setAllAncestorAtFileNodesDirty()
+            else:
+                p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+
+            if not thinFile or (thinFile and p.v.isDirty()):
+                # New in Leo 4.3: support for mod_labels plugin:
+                try:
+                    c.mod_label_controller.add_label(p,"before change:",old_body)
+                except Exception:
+                    pass
+                g.es("changed: " + p.headString(),color="blue")
+                p.setMarked()
+#@nonl
+#@-node:ekr.20050301105854:copyAllTempBodyStringsToTnodes
+#@-node:ekr.20050308021443:(Fixed crasher in atFile read logic when mod_labels plugin not enabled!)
+#@+node:ekr.20050308100508:(Fix colorizer bug for initial @nocolor in @root nodes)
+#@+node:ekr.20050308100508.1:Report
+@killcolor
+
+in LeoDocs.leo in Tangling @root trees with the Tangle commands
+
+the node starts out with the @nocolor directive, but Python keywords
+(e.g. 'is', 'for', etc.) are coloured blue anyway.
+#@-node:ekr.20050308100508.1:Report
+#@+node:ekr.20031218072017.1614:continueDocPart
+def continueDocPart (self,s,i):
+    
+    state = "doc"
+    if self.language == "cweb":
+        << handle cweb doc part >>
+    else:
+        << handle noweb doc part >>
+    return i,state
+#@nonl
+#@+node:ekr.20031218072017.1615:<< handle cweb doc part >>
+word = self.getCwebWord(s,i)
+if word and len(word) > 0:
+    j = i + len(word)
+    if word in ("@<","@(","@c","@d","@f","@p"):
+        state = "normal" # end the doc part and rescan
+    else:
+        # The control code does not end the doc part.
+        self.tag("keyword",i,j)
+        i = j
+        if word in ("@^","@.","@:","@="): # Ended by "@>"
+            j = s.find("@>",i)
+            if j > -1:
+                self.tag("cwebName",i,j)
+                self.tag("nameBrackets",j,j+2)
+                i = j + 2
+elif g.match(s,i,self.lb):
+    j = self.doNowebSecRef(s,i)
+    if j == i + 2: # not a section ref.
+        self.tag("docPart",i,j)
+    i = j
+elif self.latex_cweb_docs:
+    # Everything up to the next "@" is latex colored.
+    j = s.find("@",i+1)
+    if j == -1: j = len(s)
+    self.doLatexLine(s,i,j)
+    i = j
+else:
+    # Everthing up to the next "@" is in the doc part.
+    j = s.find("@",i+1)
+    if j == -1: j = len(s)
+    self.tag("docPart",i,j)
+    i = j
+#@nonl
+#@-node:ekr.20031218072017.1615:<< handle cweb doc part >>
+#@+node:ekr.20031218072017.1616:<< handle noweb doc part >>
+if i == 0 and g.match(s,i,"<<"):
+    # Possible section definition line.
+    return i,"normal" # rescan the line.
+
+if i == 0 and s[i] == '@':
+    j = self.skip_id(s,i+1,chars='-')
+    word = s[i:j]
+    word = word.lower()
+else:
+    word = ""
+    
+if word in ["@c","@code","@unit","@root","@root-code","@root-doc","@color","@nocolor"]:
+    # End of the doc part.
+    self.body.tag_remove("docPart",self.index(i),self.index(j)) # 10/27/03
+    self.tag("leoKeyword",i,j)
+    state = "normal"
+    if word != '@nocolor': i = j # 3/8/05: Rescan @nocolor.
+else:
+    # The entire line is in the doc part.
+    j = len(s)
+    if not g.doHook("color-optional-markup",
+        colorer=self,p=self.p,v=self.p,s=s,i=i,j=j,colortag="docPart"):
+        self.tag("docPart",i,j)
+    i = j # skip the rest of the line.
+#@-node:ekr.20031218072017.1616:<< handle noweb doc part >>
+#@-node:ekr.20031218072017.1614:continueDocPart
+#@-node:ekr.20050308100508:(Fix colorizer bug for initial @nocolor in @root nodes)
 #@-node:ekr.20050225104239.1:Bugs
 #@+node:ekr.20050225104239.2:Features
 #@-node:ekr.20050225104239.2:Features
@@ -35372,7 +35518,10 @@ def  copyAllTempBodyStringsToTnodes (self,root,thinFile):
 
             if not thinFile or (thinFile and p.v.isDirty()):
                 # New in Leo 4.3: support for mod_labels plugin:
-                c.mod_label_controller.add_label(p,"before change:",old_body)
+                try:
+                    c.mod_label_controller.add_label(p,"before change:",old_body)
+                except Exception:
+                    pass
                 g.es("changed: " + p.headString(),color="blue")
                 p.setMarked()
 #@nonl
@@ -35718,7 +35867,7 @@ def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
     c = leoCommands.Commands(frame,fileName)
     
     if not g.app.initing:
-        g.doHook("onCreate",c=c)
+        g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
     
     frame.finishCreate(c)
     
@@ -36046,6 +36195,132 @@ self.createMenuEntries(helpMenu,self.helpMenuTop3Table,init=True)
 #@-node:ekr.20031218072017.3803:<< create the help menu >>
 #@-node:ekr.20031218072017.3785:createMenusFromTables
 #@-node:ekr.20050303061941:(Changes to hooks)
+#@+node:ekr.20050309054857:(Changed 'onCreate' hook to 'before-create-leo-frame')
+#@+node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+def newLeoCommanderAndFrame(self,fileName,updateRecentFiles=True):
+    
+    """Create a commander and its view frame for the Leo main window."""
+    
+    gui = self
+    
+    import leoCommands
+    
+    if not fileName: fileName = ""
+    << compute the window title >>
+
+    # Create an unfinished frame to pass to the commanders.
+    frame = gui.createLeoFrame(title)
+    
+    # Create the commander and its subcommanders.
+    c = leoCommands.Commands(frame,fileName)
+    
+    if not g.app.initing:
+        g.doHook("before-create-leo-frame",c=c) # Was 'onCreate': too confusing.
+    
+    frame.finishCreate(c)
+    
+    # Finish initing the subcommanders.
+    c.undoer.clearUndoState() # Menus must exist at this point.
+    
+    if updateRecentFiles:
+        c.updateRecentFiles(fileName)
+    
+    if not g.app.initing:
+        g.doHook("after-create-leo-frame",c=c)
+
+    return c,frame
+#@nonl
+#@+node:ekr.20031218072017.2189:<< compute the window title >>
+# Set the window title and fileName
+if fileName:
+    title = g.computeWindowTitle(fileName)
+else:
+    s = "untitled"
+    n = g.app.numberOfWindows
+    if n > 0:
+        s += str(n)
+    title = g.computeWindowTitle(s)
+    g.app.numberOfWindows = n+1
+
+#@-node:ekr.20031218072017.2189:<< compute the window title >>
+#@-node:ekr.20031218072017.2188:newLeoCommanderAndFrame (gui-independent)
+#@-node:ekr.20050309054857:(Changed 'onCreate' hook to 'before-create-leo-frame')
+#@+node:ekr.20050308020541:(Fixed 2 problems in mod_scripting plugin)
+ 
+#@nonl
+#@+node:ekr.20050308020541.1:Traceback
+Traceback (most recent call last):
+
+  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 2180, in doHook
+    return f(tag,keywords)
+
+  File "C:\prog\leoCVS\leo\src\leoPlugins.py", line 92, in doPlugins
+    return doHandlersForTag(tag,keywords)
+
+  File "C:\prog\leoCVS\leo\src\leoPlugins.py", line 73, in doHandlersForTag
+    val = callTagHandler(bunch,tag,keywords)
+
+  File "C:\prog\leoCVS\leo\src\leoPlugins.py", line 51, in callTagHandler
+    result = handler(tag,keywords)
+
+  File "c:\prog\leoCVS\leo\plugins\mod_scripting.py", line 160, in createAllButtons
+    self.createStandardButtons()
+
+  File "c:\prog\leoCVS\leo\plugins\mod_scripting.py", line 238, in createStandardButtons
+    c = self.c ; p = c.currentPosition()
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 5232, in currentPosition
+    if c._currentPosition:
+
+AttributeError: Commands instance has no attribute '_currentPosition'
+#@nonl
+#@-node:ekr.20050308020541.1:Traceback
+#@+node:ekr.20050308101529:Report: buttons installed twice
+@killcolor
+https://sourceforge.net/forum/message.php?msg_id=3035661
+By: nobody
+
+new mod scripting run script/script button 
+is installing twice. not at all on new leo.
+from cvs 3/4/05 and 3/7 just now, uses onCreate hook.
+may be anomaly or I just
+didn't notice it yesterday.
+
+open leo from shortcut
+open a recent or new leo, no script buttons
+close it
+there are another set of script buttons on the first leo!
+and then you can't rclick away @buttons in the first leo.
+you can when you first open the leo from shortcut.
+open leo file does get script buttons.
+close it now the first has 3 sets of buttons.
+
+redo the sequence
+this time close the first leo, leave the new leo open
+and magically script buttons appear where there were none.
+
+replacing the comented out register line using
+open2 and new doesn't work anymore in mod_scripting.
+same problems w/py2.4 or 2.3 after reboot.
+my local copies of a few plugins still work ok.
+
+appropo of your comment about rewritting the hooks:
+there was an indirect url to a joel on software artical 
+on daily python the other day. from a comment by Guido,
+why python 3000 will not be a complete rewrite.
+how netscape might have lost valuable time and 
+marketshare by rewriting netscape 6 from scratch
+with very few of the origional v4 developers to boot.
+they even had to completely trash version 5 for 
+some possibly unrelated reason. details are fuzzy. 
+maybe Internet Explorer was at version 6 
+by the time they had a beta ready?
+<http://joelonsoftware.com/articles/fog0000000069.html>
+
+e
+#@nonl
+#@-node:ekr.20050308101529:Report: buttons installed twice
+#@-node:ekr.20050308020541:(Fixed 2 problems in mod_scripting plugin)
 #@-node:ekr.20050227125015:Plugins & hooks
 #@+node:ekr.20050225155947:Docs
 #@+node:ekr.20050202052911.2:Documentation of tnodeLists & potential problems

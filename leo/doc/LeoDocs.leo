@@ -19,7 +19,7 @@
 </v>
 <v t="ekr.20041226081019"><vh>@button check spelling...</vh></v>
 <v t="edream.110203163054.6"><vh>Please use SourceForge to ask questions and make comments</vh></v>
-<v t="edream.110203163054.7"><vh>Acknowledgements</vh></v>
+<v t="edream.110203163054.7" a="TV"><vh>Acknowledgements</vh></v>
 <v t="edream.110203163054.8"><vh>What people are saying about Leo</vh>
 <v t="ekr.20050124153126.1"><vh>Leo is revolutionary</vh></v>
 <v t="ekr.20050124153126.2"><vh>Leo is a showcase Python/Tkinter application</vh></v>
@@ -2199,7 +2199,7 @@
 <v t="EKR.20040524104904.429"><vh>Weaving</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.1050" a="TV"><vh>FAQ</vh>
+<v t="edream.110203163054.1050"><vh>FAQ</vh>
 <v t="edream.110203163054.1051"><vh>Learning about Leo</vh>
 <v t="edream.110203163054.1052"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="edream.110203163054.1053"><vh>Where are the simple examples?</vh></v>
@@ -7214,17 +7214,63 @@ http://sourceforge.net/forum/?group_id=3458
 to ask questions or suggest improvements.  That way other people can share in the discussions.</t>
 <t tx="edream.110203163054.7">@nocolor
 
-Leo owes much of its visual design to MORE, possibly the most elegant computer program ever written. Leo's clone nodes are inspired by MORE.
+Leo owes much of its visual design to MORE, possibly the most elegant computer
+program ever written. Leo's clone nodes are inspired by MORE.
 
-The following people have made generous donations to the Leo project: Robert Low, Nic Cave-Lynch.
+The following people have made generous donations to the Leo project: Robert
+Low, Nic Cave-Lynch.
 
-The following people reported bugs, answered questions, and made suggestions for improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric Brown, Gaspard Bucher, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards, Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Zak Greant, Thomas Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob, Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low, Fredrik Lundh, Alex Martelli,  Marcus A. Martin, Gidion May, David McNab, Chad Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H. Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil Straus, Jurjen Stellingwerff,  Jeffrey Thompson, Gabriel Valiente, Tom van Vleck, Jim Vickroy, Tony Vignaux, Randall Voth, Ying-Chao Wang, Cliff Wells, Dan Wharton, Wim Wijnders, Vadim Zeitlin.
+The following people reported bugs, answered questions, and made suggestions for
+improving Leo: Alex Abacus, Shakeeb Alireze, Bruce Arnold, Chris Barker, Eric
+Brown, Gaspard Bucher, Darius Clarke, Bill Drissel, Wenshan Du, Allen Edwards,
+Chris Elliot, Mark Engleberg, Dethe Elza, Stephen Ferg, Tom Fetherston, Tomaz
+Ficko, Niklas Frykholm, Fred Gansevles, Jonathan M. Gilligan, Zak Greant, Thomas
+Guettler, Romain Guy, Dave Hein, Tiago Castro Henriques, Gary Herron, Steve
+Holden, Klass Holwerda, Matthias Huening, Robert Hustead, John Jacob,
+Christopher P. Jobling, Eric S. Johansson, Garold Johnson, James Kerwin, Nicola
+Larosa, David LeBlanc, Chris Liechti, Steve Litt, Martin v. Loewis, Robert Low,
+Fredrik Lundh, Alex Martelli, Marcus A. Martin, Gidion May, David McNab, Chad
+Netzer, Naud Olivier, Joe Orr, Marc-Antoine Parent, Paul Paterson, Davide
+Salomoni, Sean Shaleh Perry, Tim Peters, Scott Powell, Bruce Rafnel, Walter H.
+Rauser, David Speed Ream, Rich Ries, Aharon Robbins, Guido van Rossum, David
+Rowe, Steven Schaefer, Wolfram Schwenzer, Gil Shwartz, Paul Snively, Phil
+Straus, Jurjen Stellingwerff, Jeffrey Thompson, Gabriel Valiente, Tom van Vleck,
+Jim Vickroy, Tony Vignaux, Randall Voth, Ying-Chao Wang, Cliff Wells, Dan
+Wharton, Wim Wijnders, Vadim Zeitlin.
 
-The following people have written code for Leo: Dave Hein wrote code to support PHP, to handle Tk version numbers properly and to open the Python window properly on Linux.  Marcus A. Martin wrote code to support LaTex. Bernhard Mulder proposed a new way of untangling derived files.  Paul Paterson wrote the first implementation of plugins and the spell checking plugin.  Steven P. Schaefer eliminated problems with end-of-line on Linux and fixed bugs in how directives were handled in @root trees.
+The following people have written code for Leo: Dave Hein wrote code to support
+PHP, to handle Tk version numbers properly and to open the Python window
+properly on Linux. Marcus A. Martin wrote code to support LaTex. Bernhard Mulder
+proposed a new way of untangling derived files. Paul Paterson wrote the first
+implementation of plugins and the spell checking plugin. Steven P. Schaefer
+eliminated problems with end-of-line on Linux and fixed bugs in how directives
+were handled in @root trees.
 
-The following deserve special mention: David Brock wrote TSyntaxMemo.  The late Bob Fitzwater kept me focused on design. Donald Knuth invented literate programming and the CWEB language. Will Munslow wrote stylesheets for Leo so Leo and Microsoft Word can talk to each other. Joe Orr created Leo stylesheets for Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K. Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker.  Marc-Antoine Parent urged me to use XML for Leo's file format and helped improve it. Paul Paterson suggested the plugin architecture and suggested an approach to spell checking.  Norman Ramsey created noweb and gave permission to quote from the noweb web documentation. Rich Ries has contributed a huge number of suggestions. Steven P. Schaefer pointed out major security problems lurking in hooks.  Gil Shwartz helped with unicode support.  Phil Straus has been a great friend and constant support. Guido van Rossum created Python, Tkinter and the Python License. Dave Winer created MORE. Dan Winkler helped support Leo on the Mac.
+The following have written plugins for Leo: Rodrigo Benenson, Pierre Bidon,
+Josef Dalcolmo, Michael Dawson, 'e', Timo Honkasalo, Zhang Le, David McNam,
+Frederic Mommeja, Martin Moncrieffe, Bernhard Mulder, Mark Ng, Paul Patterson,
+Davide Salomoni, David J. Szent-Györgyi.
 
-Special thanks to my family. My brother, David Speed Ream, tested Leo and made many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was during a conversation with Rebecca that I realized that MORE could be used as a prototype for Leo. That was a crucial first step.</t>
+The following deserve special mention: David Brock wrote TSyntaxMemo. The late
+Bob Fitzwater kept me focused on design. Donald Knuth invented literate
+programming and the CWEB language. Will Munslow wrote stylesheets for Leo so Leo
+and Microsoft Word can talk to each other. Joe Orr created Leo stylesheets for
+Leo; see http://www.jserv.com/jk_orr/xml/leo.htm. Joe Orr also created an
+outstanding set of tutorials for Leo; see http://www.evisa.com/e/sb.htm. John K.
+Ousterhout created tcl/Tk. Neal Norwitz wrote PyChecker. Marc-Antoine Parent
+urged me to use XML for Leo's file format and helped improve it. Paul Paterson
+suggested the plugin architecture and suggested an approach to spell checking.
+Norman Ramsey created noweb and gave permission to quote from the noweb web
+documentation. Rich Ries has contributed a huge number of suggestions. Steven P.
+Schaefer pointed out major security problems lurking in hooks. Gil Shwartz
+helped with unicode support. Phil Straus has been a great friend and constant
+support. Guido van Rossum created Python, Tkinter and the Python License. Dave
+Winer created MORE. Dan Winkler helped support Leo on the Mac.
+
+Special thanks to my family. My brother, David Speed Ream, tested Leo and made
+many useful suggestions. Rebecca, James and Linda make it all worthwhile. It was
+during a conversation with Rebecca that I realized that MORE could be used as a
+prototype for Leo. That was a crucial first step.</t>
 <t tx="edream.110203163054.8">@nocolor
 Here is what people are saying about Leo:</t>
 <t tx="edream.110203163054.12">From Dan Winkler, heydan@post.harvard.edu
