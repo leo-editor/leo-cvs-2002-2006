@@ -1,7 +1,8 @@
 #@+leo-ver=4-thin
 #@+node:mork.20041030164547:@thin temacs.py
-'''temacs is a binding module for the Tkinter Text widget.  Using the
-setBufferStrokes def will bind callbacks to the widget.'''
+'''temacs is a binding module for the Tkinter Text widget.
+
+Using the setBufferStrokes def will bind callbacks to the widget.'''
 
 #@@language python
 #@@tabwidth -4
@@ -176,12 +177,8 @@ __version__ = ".51"
 # in subtle ways.  A dictionary should be used to implement this, adding 1000 
 # attributes to the Emacs class doesnt seem like a good idea.
 # 8 Maybe add local abbreviations 'Control-x a i l'
-# 
-# 
-# 
-# 
-# 
 #@-at
+#@nonl
 #@-node:mork.20041102103822:Future directions
 #@+node:mork.20041104095745:A Note on Alt-X
 #@+at

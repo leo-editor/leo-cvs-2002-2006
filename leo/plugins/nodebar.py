@@ -1,10 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:mork.20041022155742.1:@thin nodebar.py
-'''nodebar adds buttons at the bottom of the tree canvas.
+"""nodebar adds buttons at the bottom of the tree canvas.
 
 The buttons correspond to commands found in the Outline commands. It is intended
 to speed up a new users ability to use the outline. Experienced users may find
-value in being able to quickly execute commands they do not use very often'''
+value in being able to quickly execute commands they do not use very often"""
 
 #@<< imports >>
 #@+node:ekr.20041030084334:<< imports >>
@@ -147,6 +147,7 @@ moverightPI = Tk.PhotoImage( data = moveright )
 #@nonl
 #@-node:mork.20041023210407:<<images2>>
 #@nl
+__version__ = ".5"
 #@<<version>>
 #@+node:mork.20041023091529:<<version>>
 #@+at
@@ -174,6 +175,9 @@ moverightPI = Tk.PhotoImage( data = moveright )
 # 
 # .4 EKR:
 #     - Put load_ok code in root.  Added string.atoi = int
+# 
+# .5 EKR
+#     - Defined __version__
 #@-at
 #@nonl
 #@-node:mork.20041023091529:<<version>>
@@ -220,9 +224,6 @@ moverightPI = Tk.PhotoImage( data = moveright )
 #@nonl
 #@-node:mork.20041026092203:<<How To Configure>>
 #@nl
-
-import string
-string.atoi = int # Work around a very weird situation on EKR's machine.
 
 #@+others
 #@+node:mork.20041026090227:determineFrame
@@ -306,18 +307,7 @@ def addNodeBar( tag, keywords ):
     #@nonl
     #@-node:mork.20041026100755:<< Create the help button >>
     #@nl
-
-
-
-
-
-
-
-
-
-
-
-
+#@nonl
 #@-node:mork.20041022160305:addNodeBar
 #@+node:mork.20041022172156:add
 def add( c, frame, column, command, image, text ):
@@ -370,6 +360,7 @@ pos = 'position'
 help = 'usehelp'
 config[ pos ] = '1' #The default is to put the bar in the icon area
 config[ help ] = '1' #The default is to see the help buttons
+
 def configureNodebar():
     '''nodebar reads what the config file has in it and sets global state'''
     nbar = 'nodebar'
@@ -394,12 +385,7 @@ def configureNodebar():
             else:
                 g.es( "Bad value in nodebar.ini: %s" % p, color= 'red' )
                 g.es( "Was expecting a digit", color = 'red' )
-                
-
-
-
-
-
+#@nonl
 #@-node:mork.20041026084314:configureNodebar
 #@+node:mork.20041026084509:readConfigFile
 def readConfigFile ():
@@ -428,8 +414,7 @@ usehelp=1
     except Exception, x:
         g.es( "Could not read nodebar.ini because of : %s "%x, color='red' )
         return None
-    
-
+#@nonl
 #@-node:mork.20041026084509:readConfigFile
 #@-others
 
@@ -441,7 +426,7 @@ if load_ok:
 
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler( ('start2' , 'open2', "new") , addNodeBar )
-        g.plugin_signon( __name__ )
+        g.plugin_signon(__name__)
 #@nonl
 #@-node:mork.20041022155742.1:@thin nodebar.py
 #@-leo

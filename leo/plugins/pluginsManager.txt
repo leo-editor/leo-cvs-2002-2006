@@ -17,7 +17,7 @@
     # FileActions.py
     
 # Use Python's anydbm module to store Leo files.
-    Library.py
+#Library.py
 
 # Automatically executes Save commands every so often.
     # mod_autosave.py
@@ -26,7 +26,7 @@
     # mod_timestamp.py
     
 # Overrides pretty printing class.
-pretty_print.py
+#pretty_print.py
 #@nonl
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
@@ -54,8 +54,7 @@ pretty_print.py
     # arrows.py
 
 # Handles autocompletion when the user types '.' or '(' characters.
-    # FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
-#autocompleter.py
+# autocompleter.py
 
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.
@@ -87,10 +86,10 @@ pretty_print.py
     # rowcol.py
     
 # Creates a search box and a "go" button in the icon area.
-    searchbox.py
+#searchbox.py
     
 # Creates a status line at the bottom of the body pane.
-    status_line.py
+#status_line.py
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040915073259.3:Enhance windows
@@ -246,7 +245,7 @@ pretty_print.py
     # Child @in nodes are ignored.
     # All other child nodes contribute body text as an argument to the command.
     # @in or @input nodes (anywhere) can be used to send input to the running process.
-    run_nodes.py
+#run_nodes.py
     
 # Lauches (starts) a file with the name of the headline on double-clicking it.
     # This does not work on Linux because os.startfile does not exist.
@@ -259,6 +258,7 @@ pretty_print.py
 #table.py
 #templates.py
 #nodebar.py
+#usetemacs.py
 
 	plugin_manager.py
 #@nonl

@@ -1050,6 +1050,17 @@ headlines did not change to show the new font until I started up again.
 
 -- Dan Windler
 #@-node:ekr.20041022080455:Report
+#@+node:ekr.20041030082554:Report 2
+
+http://sourceforge.net/forum/message.php?msg_id=2823643
+
+there are two bugs with the setting of the font.
+
+1. it does not get saved, if you exit leo without saving the file. or in other
+words: you have to save a file, otherwise the font settings are not saved.
+
+2. the outline font does not change until you restart leo.
+#@-node:ekr.20041030082554:Report 2
 #@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
 #@-node:ekr.20041022080257:Mac Bugs 3
 #@-node:ekr.20041022091645.6:Today
@@ -1394,6 +1405,17 @@ headlines did not change to show the new font until I started up again.
 
 -- Dan Windler
 #@-node:ekr.20041022080455:Report
+#@+node:ekr.20041030082554:Report 2
+
+http://sourceforge.net/forum/message.php?msg_id=2823643
+
+there are two bugs with the setting of the font.
+
+1. it does not get saved, if you exit leo without saving the file. or in other
+words: you have to save a file, otherwise the font settings are not saved.
+
+2. the outline font does not change until you restart leo.
+#@-node:ekr.20041030082554:Report 2
 #@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
 #@-node:ekr.20041022080257:Mac Bugs 3
 #@+node:ekr.20041006110656:Urgent 7 + 0
@@ -2274,6 +2296,10 @@ def __init__(self):
     self.count = 0 # General purpose debugging count.
     self.debug = False # True: enable extra debugging tests (not used at present).
         # WARNING: this could greatly slow things down.
+    self.debugSwitch = 0
+        # 0: default behavior
+        # 1: full traces in g.es_exception.
+        # 2: call pdb.set_trace in g.es_exception, etc.
     self.disableSave = False
     self.failedPlugins = [] # List of loaded plugins that have failed to load.
     self.globalWindows = []
@@ -7336,6 +7362,14 @@ Seth
 Use noweb and TeX, or maybe Pyx.
 #@nonl
 #@-node:ekr.20041016134312.2:Create a proper Weave command
+#@+node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
+@killcolor
+
+> pdb.set_trace() is...quite a pain to use if you are used to pdb.pm() in an interactive session.
+
+Whaterver pdb.pm does (I haven't used it) this might be the starting point for the design of a better interface between pdb and Leo.
+
+#@-node:ekr.20041029085429:Use pdb.pm as starting point for integrated Leo debugger
 #@-node:ekr.20040329182535.3:2 day to 2 week projects
 #@+node:ekr.20040123102724:Can't or wont
 #@+node:ekr.20040217153407.1:Unify @root and @file

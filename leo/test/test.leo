@@ -390,6 +390,12 @@
 <v t="ekr.20041012102030"><vh>Test reporting of IndexError in another file</vh></v>
 </v>
 <v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
+<v t="ekr.20041028152830"><vh>Gui tests</vh>
+<v t="ekr.20041022195304"><vh>Tix</vh></v>
+<v t="ekr.20041022201417"><vh>Pmw dialog</vh></v>
+<v t="ekr.20041022200902"><vh>Pmw example</vh></v>
+</v>
+<v t="ekr.20041029111650"><vh>Test of g.app.debugSwitch</vh></v>
 <v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
@@ -739,6 +745,7 @@
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
@@ -810,7 +817,6 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
@@ -977,7 +983,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -1232,10 +1238,10 @@
 </v>
 </v>
 <v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
-<v t="EKR.20040612095237" a="E"><vh>@test checkPythonCode (bad syntax)</vh>
+<v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
-<v t="ekr.20040715154319" a="E"><vh>@test checkPythonCode (bad tabnanny)</vh>
+<v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
@@ -1262,14 +1268,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041022195304"><vh>Tix</vh></v>
-<v t="ekr.20041022201417" a="TV"><vh>Pmw dialog</vh></v>
-<v t="ekr.20041022200902" a="E"><vh>Pmw example</vh></v>
-<v t="ekr.20041023105238" a="E"><vh>Test Paste Retaining clones</vh>
-<v t="ekr.20041023105238.1" a="E"><vh>a</vh>
-<v t="ekr.20041023105441"><vh>b</vh></v>
-</v>
-</v>
+<v t="ekr.20041105091229" a="TV"><vh>test of g.pdb</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -1890,7 +1889,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2021,7 +2020,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10386,8 +10385,16 @@ counter = Pmw.Counter(interior)
 counter.pack(padx = 20, pady = 20)
 
 </t>
-<t tx="ekr.20041023105238"></t>
-<t tx="ekr.20041023105238.1"></t>
-<t tx="ekr.20041023105441"></t>
+<t tx="ekr.20041028152830"></t>
+<t tx="ekr.20041029111650">import leoGlobals as g
+
+print g.app.debugSwitch
+
+g.app.debugSwitch = 0 # 2: drop into pdb
+
+zerodivide = 1 / 0</t>
+<t tx="ekr.20041105091229">import leoGlobals as g
+
+g.pdb()</t>
 </tnodes>
 </leo_file>
