@@ -1,10 +1,16 @@
+# -*- coding: utf-8 -*-
 #@+leo-ver=4-thin
 #@+node:ekr.20041005105605.1:@thin leoAtFile.py
+#@@first
+    # Needed because of unicode characters in tests.
+
 """Classes to read and write @file nodes."""
 
 #@@language python
 #@@tabwidth -4
 #@@pagewidth 80
+
+__pychecker__ = '--no-reimport' # Reimports needed in test methods.
 
 #@<< imports >>
 #@+node:ekr.20041005105605.2:<< imports >>
@@ -4353,8 +4359,6 @@ class atFile:
     #@nonl
     #@+node:ekr.20050107085710:test_atFile_rename
     def test_atFile_rename (self):
-        
-        __pychecker__ = '--no-reimport' # Reimports needed in test methods.
     
         import leoGlobals as g
         import os
@@ -4446,7 +4450,7 @@ class atFile:
     
         self.errors += 1
     #@-node:ekr.20041005105605.220:atFile.error
-    #@+node:ekr.20050206085258:atFile.printError
+    #@+node:ekr.20050206085258:atFile.printError & test_printError
     def printError (self,message):
     
         '''Print an error message that may contain non-ascii characters.'''
@@ -4457,9 +4461,19 @@ class atFile:
             try:
                 print message
             except UnicodeError:
-                print g.toEncodedString(message)
+                print g.toEncodedString(message,g.app.tkEncoding)
+                
+    def test_printError(self):
+    
+        import leoGlobals as g
+        
+        c = g.top() ; at = c.atFileCommands
+        
+        at.errors = 0
+        at.printError(
+            "test of printError: Ᾱ(U+1FB9: Greek Capital Letter Alpha With Macron)")
     #@nonl
-    #@-node:ekr.20050206085258:atFile.printError
+    #@-node:ekr.20050206085258:atFile.printError & test_printError
     #@+node:ekr.20041005105605.221:exception
     def exception (self,message):
         
