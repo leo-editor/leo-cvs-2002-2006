@@ -1431,7 +1431,7 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="MTV"><vh>Pmw dialog</vh>
+<v t="ekr.20041125145818.1" a="EM"><vh>Pmw dialog</vh>
 <v t="ekr.20041127231319"><vh>To do</vh></v>
 <v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
 <v t="ekr.20041126110158"><vh> ctor</vh>
@@ -1446,10 +1446,14 @@
 <v t="ekr.20041127081146"><vh>&lt;&lt; inject ivars into p.v &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; allies</vh>
+<v t="ekr.20041127112925" a="E"><vh>createWidgets &amp; allies</vh>
 <v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
 <v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2" a="EM"><vh>createColor</vh></v>
+<v t="ekr.20041127134208.2" a="EMTV"><vh>createColor</vh>
+<v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
+<v t="ekr.20041128062902" a="E"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
+<v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
 <v t="ekr.20041127134208.4" a="EM"><vh>createFont  (finish)</vh></v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
@@ -1459,15 +1463,22 @@
 <v t="ekr.20041127134208.9"><vh>createRecentFiles </vh></v>
 <v t="ekr.20041127134208.10" a="E"><vh>createShortcut </vh></v>
 <v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
+<v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
 <v t="ekr.20041127134613.1"><vh>createString</vh></v>
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
-<v t="ekr.20041126104958"><vh>doButton</vh></v>
+<v t="ekr.20041128042051" a="EM"><vh>value handlers &amp; callbacks...</vh>
+<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
+<v t="ekr.20041128043411"><vh>traceNameVal</vh></v>
+<v t="ekr.20041128045021"><vh>def onApply</vh></v>
+<v t="ekr.20041128043411.1"><vh>onOk</vh></v>
+<v t="ekr.20041128043411.2"><vh>onCancel (also handles Revert)</vh></v>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+</v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
 <v t="ekr.20041127112806"><vh>printWidgets</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
 <v t="ekr.20041127090307"><vh>rootNodeComments</vh></v>
-<v t="ekr.20041127222244"><vh>showColorPicker</vh></v>
 <v t="ekr.20041126142253.1"><vh>settingsPosition</vh></v>
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
@@ -1499,7 +1510,7 @@
 <v t="ekr.20041127102844.1"><vh>ctor</vh></v>
 <v t="ekr.20041127110245"><vh>set</vh></v>
 <v t="ekr.20041127103503"><vh>visitNode</vh></v>
-<v t="ekr.20041127103503.1"><vh>kind handlers</vh>
+<v t="ekr.20041127103503.1" a="E"><vh>kind handlers</vh>
 <v t="ekr.20041127111750"><vh>Not used</vh>
 <v t="ekr.20041127103503.2"><vh>doBool</vh></v>
 <v t="ekr.20041127103503.3"><vh>doColor</vh></v>
@@ -12527,12 +12538,25 @@ for fileName in fileNames:
     for line,kind,name in items:
         print "%4d %8s %s" % (line,kind,name)
         </t>
-<t tx="ekr.20041126104958">def doButton(self,name):
+<t tx="ekr.20041126104958">def onAnyButton(self,name):
     
+    dispatchDict = {
+        None:       self.onCancel,
+        "OK":       self.onOk,
+        "Cancel":   self.onCancel,
+        "Apply":    self.onApply,
+        "Revert":   self.onCancel,
+    }
+    
+    f = dispatchDict.get(name)
+    if f:
+        f()
+    else:
+        g.trace("No handler",name)
+
     if name in (None,"OK","Cancel"):
         self.dialog.destroy()
-    else:
-        g.trace(name)</t>
+</t>
 <t tx="ekr.20041126110057">class settingsController:
     
     @others</t>
@@ -12542,10 +12566,12 @@ for fileName in fileNames:
     title = "Settings for %s" % g.shortFileName(c.fileName())
 
     self._settingsPosition = p = self.createSettingsTree()
+    self.colorSettingDict = {} # Contains entries for all changed colors.
+    self.initValueDict = {} # Contains all data needed to track changes to settings.
     self.parser = parserClass(c,p,self)
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
-    
+
     &lt;&lt; create the dialog d &gt;&gt;
     &lt;&lt; create paneFrame, a paned widget &gt;&gt;
     &lt;&lt; put a settingsTree in paneFrame's outline pane &gt;&gt;
@@ -12558,9 +12584,9 @@ for fileName in fileNames:
 <t tx="ekr.20041126113848">self.dialog = d = Pmw.Dialog(
     c.frame.top,
     title=title,
-    buttons = ('OK', 'Apply', 'Cancel', 'Help'),
+    buttons = ('OK', 'Cancel','Apply','Revert'),
     defaultbutton = 'OK',
-    command = self.doButton
+    command = self.onAnyButton
 )
 
 d.withdraw()
@@ -12671,23 +12697,23 @@ text.configure(background=background,borderwidth=0)</t>
     
     sc = self.sc ; interior = sc.interior()
     
+    self.initValueDict = {}
+    self.colorSettingDict = {}
+    
     # Destroy the previous widgets
     for w in interior.winfo_children():
         w.destroy()
-        
-    self.sc.yview('moveto',0)
-    self.updateSetterLabel(p)
-        
+
     # Visit the node, and possibly its subtree, looking for widgets to create.
     self.parser.widgets = []
     self.parser.visitNode(p)
     if self.parser.widgets:
         self.createWidgets(self.parser.widgets,interior)
-
+        
+    self.sc.resizescrollregion()
+    self.sc.yview('moveto',0)
     self.updateComments(p)
-
-    self.onPaneResize()
-        </t>
+    self.updateSetterLabel(p)</t>
 <t tx="ekr.20041126153101.1">def createSettingsTree (self):
     
     """Create a tree of vnodes representing all settings."""
@@ -12940,7 +12966,8 @@ doRecentFiles = doBodyPaneList
     
     # self.printWidgets(widgets)
     
-    self.h = 0
+    self.h = 0 # Offset from top of pane for first widget.
+    self.createSpacerFrame(parent,size=15)
             
     for data in widgets:
         p,kind,name,vals = data
@@ -12950,9 +12977,7 @@ doRecentFiles = doBodyPaneList
                 f(parent,p,kind,name,vals)
             except TypeError:
                 g.es_exception()
-                g.trace("***No handler***",kind)
-                
-    self.sc.resizescrollregion()</t>
+                g.trace("***No handler***",kind)</t>
 <t tx="ekr.20041127113719">def doShortcuts(self,p,kind,name,val):
 
     s = p.bodyString()
@@ -12999,57 +13024,43 @@ self.setterLabel = sc.component('label')
 
     # Convert val to a 1,0.
     val = g.choose(val.lower()=='true',1,0)
-    # g.trace("%-5s %s" % (val,name))
-    
-    # Setting this var inits the checkbutton. widget.
-    boolVar = Tk.IntVar()
-    boolVar.set(val)
-    
-    def callback(event=None,self=self,p=p,name=name,var=boolVar):
-        val = var.get()
-        g.trace(val,name)
 
-    box = Tk.Checkbutton(parent,text=name,variable=boolVar,command=callback)
+    # Inits the checkbutton widget.
+    var = Tk.IntVar()
+    var.set(val)
+    
+    def callback(event=None,self=self,p=p,name=name,var=var):
+        val = var.get()
+        val = g.choose(val,True,False)
+        # self.traceNameVal(name,val)
+        return val
+        
+    val = g.choose(val,True,False)
+    self.initValue(p,name,kind,val,callback)
+    box = Tk.Checkbutton(parent,text=name,variable=var,command=callback)
 
     self.sc.create_window(10,self.h,anchor='w',window=box)
     self.h += 20</t>
 <t tx="ekr.20041127134208.2">def createColor (self,parent,p,kind,name,val):
     
-    g.trace(name,repr(val))
-    
-    colorNamesList = list(leoTkinterColorPanels.colorNamesList[:])
-    colorNamesList.sort()
-    
-    w = 10
-    for theColor in colorNamesList:
-        w = max(w,len(theColor))
-    w = int(w*2)
+    munge = g.app.config.munge
+    noColor = "&lt;no color&gt;"
+    colorNamesList = list(leoTkinterColorPanels.colorNamesList)
     
     f = Tk.Frame(parent) # No need to pack.
-    
-    label = Tk.Label(f,text=name,width=w,anchor="e")
+    &lt;&lt; munge val and add val to colorNamesList &gt;&gt;
+    &lt;&lt; create optionMenu and callback &gt;&gt;
+    &lt;&lt; create picker button and callback &gt;&gt;
+    label = Tk.Label(f,text=name)
     label.pack(side='left')
     
-    if val in ("None",None):
-        val = ""
-    val = str(val) # Get rid of unicode.
+    self.colorSettingDict [munge(name)] = val
     
-    if val and val in colorNamesList:
-        optionMenu = Pmw.OptionMenu(f,items=colorNamesList,initialitem=val)
-    else:
-        optionMenu = Pmw.OptionMenu(f,items=colorNamesList)
-    optionMenu.pack(side="left",padx=2)
-    
-    menuButton = optionMenu.component('menubutton')
-    menuButton.configure(width=w)
-    if val: menuButton.configure(background=val)
-    
-    def callback(event=None,self=self,p=p,name=name,color=val):
-        self.showColorPicker(p,name,color)
+    def getColorCallback (self=self,name=name):
+        munge = g.app.config.munge
+        return self.colorSettingDict.get(munge(name))
 
-    b = Tk.Button(f,text="Color Picker...",command=callback)
-    if val: b.configure(background=val)
-    b.pack(side="left")
+    self.initValue(p,name,kind,val,getColorCallback)
 
     self.sc.create_window(15,self.h+8,anchor='w',window=f)
     self.h += 30</t>
@@ -13154,18 +13165,25 @@ self.setterLabel = sc.component('label')
     # g.trace(name,val)
     
     # Creating this var inits the Entry widget.
-    stringVar = Tk.StringVar()
-    stringVar.set(val)
+    var = Tk.StringVar()
+    var.set(val)
     
     f = Tk.Frame(parent) # No need to pack.
+    
+    def callback(event=None,self=self,p=p,name=name,var=var):
+        val = var.get()
+        self.traceNameVal(name,val)
+        return val
 
-    e = Tk.Entry(f,textvariable=stringVar,width=40)
-    e.pack(side='left',pady=2)
+    e = Tk.Entry(f,textvariable=var,width=40,validate='key',validatecommand=callback)
+    e.pack(side='left')
     
     label = Tk.Label(f,text=name)
     label.pack(side='left')
+
+    self.initValue(p,name,kind,val,callback)
     
-    self.sc.create_window(15, self.h,anchor='w',window = f)
+    self.sc.create_window(15,self.h,anchor='w',window=f)
     self.h += 22</t>
 <t tx="ekr.20041127134613.2">def createType (self,parent,p,kind,name,vals):
     pass</t>
@@ -13184,13 +13202,6 @@ self.setterLabel = sc.component('label')
                 break
     
         self.setterLabel.configure(text=h)</t>
-<t tx="ekr.20041127222244">def showColorPicker(self,p,name,color):
-    
-    rgb,val = tkColorChooser.askcolor(color=color)
-    
-    g.trace(name,rgb,val)
-    
-    return rgb,val</t>
 <t tx="ekr.20041127231319">@
 @killcolor
 
@@ -13199,5 +13210,106 @@ self.setterLabel = sc.component('label')
 - Add common names red,blue,green,white,orange,yellow,black,pink etc.
 
 - Start remembering what the user did...</t>
+<t tx="ekr.20041128042051">@ These keep track of the original and changed values of all items in the present setter pane.</t>
+<t tx="ekr.20041128042051.1">def initValue (self,p,name,kind,val,getValueCallback):
+    
+    munge = g.app.config.munge
+    
+    self.traceNameVal(name,val)
+    
+    self.initValueDict [munge(name)] = (p,name,kind,val,getValueCallback)</t>
+<t tx="ekr.20041128043411">def traceNameVal (self,name,val):
+    
+    if 0:
+        g.trace("%-10s %s" % (val,name))</t>
+<t tx="ekr.20041128043411.1">def onOk (self):
+    
+    g.trace()
+    
+    d = self.initValueDict
+    
+    for key in d.keys():
+        
+        data = d.get(key)
+        p,name,kind,val,getValueCallback = data
+        newVal = getValueCallback()
+        
+        if val != newVal:
+            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
+<t tx="ekr.20041128043411.2">def onCancel (self):
+    
+    g.trace()
+    
+    d = self.initValueDict
+    
+    for key in d.keys():
+        
+        data = d.get(key)
+        p,name,kind,val,getValueCallback = data
+        newVal = getValueCallback()
+        
+        if val != newVal:
+            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
+<t tx="ekr.20041128045021">def onApply (self):
+    
+    g.trace()
+    
+    d = self.initValueDict
+    
+    for key in d.keys():
+        
+        data = d.get(key)
+        p,name,kind,val,getValueCallback = data
+        newVal = getValueCallback()
+        
+        if val != newVal:
+            print "%s -&gt; %s %s" % (str(val),str(newVal),name)</t>
+<t tx="ekr.20041128061452">def createSpacerFrame (self,parent,size=10):
+    
+    f = Tk.Frame(parent)
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += size</t>
+<t tx="ekr.20041128062141">if val in ("None",None): val = noColor
+val = str(val) # Get rid of unicode.
+
+if noColor in colorNamesList:
+    colorNamesList.remove(val)
+if val is not noColor and val not in colorNamesList:
+     colorNamesList.append(val)
+colorNamesList.sort()
+colorNamesList.insert(0,noColor)
+
+initVal = val
+if val is noColor: val = None</t>
+<t tx="ekr.20041128062902">optionMenu = Pmw.OptionMenu(f,items=colorNamesList,initialitem=initVal)
+
+def optionMenuCallback (newName,
+    self=self,f=f,name=name,noColor=noColor,optionMenu=optionMenu):
+
+    self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
+    menuButton = optionMenu.component('menubutton')
+    if newName is noColor:
+        newName = f.cget('background')
+    menuButton.configure(background=newName,activebackground=newName)
+
+optionMenu.configure(command=optionMenuCallback)
+optionMenu.pack(side="left",padx=2)
+
+menuButton = optionMenu.component('menubutton')
+menuButton.configure(width=20) # Constant width is good enough.
+if val:
+    menuButton.configure(background=val,activebackground=val)</t>
+<t tx="ekr.20041128062902.1">def pickerCallback (event=None,self=self,
+    color=val,f=f,name=name,optionMenu=optionMenu,parent=parent):
+
+    rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
+    if rgb or val:
+        # g.trace(rgb,val)
+        self.colorSettingDict[munge(name)] = val
+        menuButton = optionMenu.component('menubutton')
+        menuButton.configure(background=val,activebackground=val,text=val)
+
+b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
+b.pack(side="left")</t>
 </tnodes>
 </leo_file>
