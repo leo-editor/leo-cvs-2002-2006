@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11554" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11560" clone_windows="0"/>
 <globals body_outline_ratio="0.64539748954">
-	<global_window_position top="-8" left="225" height="956" width="973"/>
+	<global_window_position top="-10" left="225" height="956" width="973"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -81,7 +81,14 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040713110718" a="ETV"><vh>4.2 beta 3</vh>
+<v t="ekr.20040713110718" a="E"><vh>4.2 beta 3</vh>
+<v t="ekr.20040804173200.1" a="EM"><vh>To do...</vh>
+<v t="ekr.20040804173200.3" a="TV"><vh>Document @thin and @all on Leo's web site</vh></v>
+<v t="ekr.20040804173200.4"><vh>Document @killcolor on Leo's web site</vh></v>
+<v t="ekr.20040804173200.5"><vh>Document Paste Retaining Clones</vh></v>
+<v t="ekr.20040804173200.6"><vh>Create a FAQ entry about using @thin in a cooperative environment</vh></v>
+<v t="ekr.20040805110139"><vh>Document new Check commands</vh></v>
+</v>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16" a="E"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -112,8 +119,15 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
+<v t="ekr.20040804173200.1" a="EM"><vh>To do...</vh>
+<v t="ekr.20040804173200.3"><vh>Document @thin and @all on Leo's web site</vh></v>
+<v t="ekr.20040804173200.4"><vh>Document @killcolor on Leo's web site</vh></v>
+<v t="ekr.20040804173200.5"><vh>Document Paste Retaining Clones</vh></v>
+<v t="ekr.20040804173200.6"><vh>Create a FAQ entry about using @thin in a cooperative environment</vh></v>
+<v t="ekr.20040805110139"><vh>Document new Check commands</vh></v>
+</v>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16" a="E"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -1942,7 +1956,7 @@
 <v t="edream.120903151103.1"><vh>How can I import many files at once?</vh></v>
 </v>
 <v t="edream.110203163054.1071"><vh>Other topics</vh>
-<v t="edream.110203163054.1072"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
+<v t="ekr.20040805102623"><vh>How can I use Python's pdb debugger with Leo?</vh></v>
 <v t="edream.110203163054.1073"><vh>How can I add support in Leo for a new language?</vh>
 <v t="edream.110203163054.1074"><vh>code</vh>
 <v t="edream.110203163054.1075"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -3794,7 +3808,16 @@ array(), die(), echo(), empty(), exit(), include(), include_once(), isset(), lis
 
 \zeta</t>
 <t tx="EKR.20040524104904.143"></t>
-<t tx="EKR.20040524104904.144">The Check Outline command checks the outline for consistency and warns if it finds dubious clones.</t>
+<t tx="EKR.20040524104904.144">The Check Outline command checks the outline for consistency.
+
+The Check All Python Code and Check Python Code commnds report any syntax errors or tabnanny errors.  These commands mark erroneous nodes.  These commands work on the selected Node and its descendents.  These commands ignore any nodes for which a) @ignore is in effect or b) @language python is in not effect.
+
+The Check Python Code and Pretty Print Python Code commands replace nodes with their pretty-printed alternative.
+
+You may implement alternate pretty printers in a plugin merely by overriding the following methods of class prettyPrinter in leoCommands.py:
+    
+- putOperator:      puts whitespace around operators.
+- putNormalToken:   puts whitespace around everything else.</t>
 <t tx="EKR.20040524104904.145">The Insert Headline command inserts a new headline after the presently selected headline, either as the next sibling or the first child of the presently selected headline if the presently selected headline has children and is expanded.</t>
 <t tx="EKR.20040524104904.146">The Cut Outline, Paste Outline, Copy Outline and Delete Outline commands work on nodes rather than text.  For example, to delete a headline, select the headline and choose the Cut Outline or Delete Outline commands.
 
@@ -12431,14 +12454,6 @@ For now, you can only change Leo's source code and submit the changes for
 inclusion in Leo's "official" code. Longer term you will be able to create
 your own language description file.</t>
 <t tx="edream.110203163054.1071"></t>
-<t tx="edream.110203163054.1072">leo.py v2.5 and later does this automatically.
-
-For earlier versions, the workaround is as follows:
-
-1. Copy the node with the Copy Node command.
-2. Paste it into to _body_ text with a regular paste command.
-3. Copy the body text with a regular copy or cut command.
-4. Switch to the other copy of Leo, then do Paste Node.</t>
 <t tx="edream.110203163054.1073">@nocolor
 
 Here are the steps involved in adding a new language.
@@ -13645,7 +13660,9 @@ forget the book. I would pay to see the movie.</t>
 <t tx="edream.120903151103"></t>
 <t tx="edream.120903151103.1">@nocolor
 
-There is an importFiles script in LeoPy.leo.  You can use that script as follows:
+New in Leo 4.2:  The Import Files dialog allows you to select multiple files provided you are running Python 2.3 or above.
+
+There is also an importFiles script in LeoPy.leo.  You can use that script as follows:
 
 @color
 
@@ -15219,5 +15236,32 @@ The Check Python Code and Pretty Print Python Code commands replace nodes with t
 <t tx="ekr.20040804171818"></t>
 <t tx="ekr.20040804172113"></t>
 <t tx="ekr.20040804172113.1"></t>
+<t tx="ekr.20040804173200.1"></t>
+<t tx="ekr.20040804173200.3"></t>
+<t tx="ekr.20040804173200.4"></t>
+<t tx="ekr.20040804173200.5"></t>
+<t tx="ekr.20040804173200.6">@nocolor
+
+The general idea is that developers should use @thin in a cvs environment, and only commit thin derived files.
+
+Consider .leo files to be private in a cooperative environment.  Only "reference" .leo files get committed to cvs: each developer uses a private copy.
+
+Edward</t>
+<t tx="ekr.20040805102623">@nocolor
+@
+Just run Leo in a console window.  At the point you want to drop into the debugger, execute this line:
+@c
+
+@color
+
+# You can execute this here provided you are running Leo in a console window.
+import pdb ; pdb.set_trace() # Drop into pdb.
+
+@nocolor
+@
+All output from pdb goes to stdout, which is the console window.
+
+It would be good to create a subclass of pdb.Pdb that uses Leo's log pane rather than a console window, but I haven't done that.  It could be done easily enough in a plugin...</t>
+<t tx="ekr.20040805110139"></t>
 </tnodes>
 </leo_file>
