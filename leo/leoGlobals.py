@@ -19,7 +19,7 @@ try:
 	true = True
 	false = False
 except:
-	print "True and False not defined"
+	# print "True and False not defined"
 	true = 1
 	false = 0 # Better than None
 

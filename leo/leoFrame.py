@@ -54,13 +54,13 @@ class LeoFrame:
 		
 		# Created below
 		self.commands = None
-		
 		self.tree = None
 		self.f1 = self.f2 = None
 		self.log = None  ; self.logBar = None
 		self.body = None ; self.bodyBar = None
 		self.canvas = None ; self.treeBar = None
 		self.splitter1 = self.splitter2 = None
+		self.icon = None
 		
 		self.menus = {} # Menu dictionary.
 		self.menuShortcuts = None # List of menu shortcuts for warnings.
@@ -75,6 +75,36 @@ class LeoFrame:
 
 		self.top = top = Tk.Toplevel()
 		top.withdraw() # 7/15/02
+		
+		#@<< attach LeoDoc icon with tkIcon >>
+		#@+node:2::<< attach LeoDoc icon with tkIcon >>
+		#@+body
+		#@+at
+		#  This code requires Fredrik Lundh's PIL and tkIcon packages:
+		# 
+		# Download PIL    from http://www.pythonware.com/downloads/index.htm#pil
+		# Download tkIcon from http://www.effbot.org/downloads/#tkIcon
+		# 
+		# We wait until the window has been drawn once before attaching the 
+		# icon in OnVisiblity.
+		# 
+		# Many thanks to Jonathan M. Gilligan for suggesting this code.
+
+		#@-at
+		#@@c
+
+		try:
+			import Image,tkIcon
+			self.top.bind("<Visibility>", self.OnVisibility)
+			icon_file_name = os.path.join(app().loadDir,'Icons','LeoDoc.ico')
+			icon_file_name = os.path.normpath(icon_file_name)
+			icon_image = Image.open(icon_file_name)
+			self.icon = tkIcon.Icon(icon_image)
+		except:
+			self.icon = None
+		#@-body
+		#@-node:2::<< attach LeoDoc icon with tkIcon >>
+
 		# print `top`
 		
 		if sys.platform=="win32":
@@ -92,7 +122,7 @@ class LeoFrame:
 		self.setTabWidth(c.tab_width)
 		
 		#@<< create the first tree node >>
-		#@+node:2::<< create the first tree node >>
+		#@+node:3::<< create the first tree node >>
 		#@+body
 		t = leoNodes.tnode()
 		v = leoNodes.vnode(c,t)
@@ -105,7 +135,7 @@ class LeoFrame:
 		c.editVnode(v)
 		c.endUpdate(false)
 		#@-body
-		#@-node:2::<< create the first tree node >>
+		#@-node:3::<< create the first tree node >>
 
 		flag = handleLeoHook("menu1")
 		if flag == None or flag != false:
@@ -251,7 +281,7 @@ class LeoFrame:
 		bind_last = menu_last = last
 		if len(last) == 1:
 			ch = last[0]
-			if ch in string.ascii_letters:
+			if ch in string.letters:
 				menu_last = string.upper(last)
 				if has_shift:
 					bind_last = string.upper(last)
@@ -360,7 +390,7 @@ class LeoFrame:
 		
 		if has_shift:
 			menu_head = "Shift+"
-			if len(last) > 1 or (len(last)==1 and last[0] not in string.ascii_letters):
+			if len(last) > 1 or (len(last)==1 and last[0] not in string.letters):
 				bind_head = "Shift-"
 		
 		if has_alt:
@@ -431,8 +461,8 @@ class LeoFrame:
 		
 		for i in xrange(len(self.recentFiles)):
 			name = self.recentFiles[i]
-			# 9/15/02: Added self=self to remove Python 2.1 warning.
-			callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
+			f=self.OnOpenRecentFile
+			callback = lambda f=f,n=i,self=self:f(n)
 			recentFilesMenu.add_command(label=name,command=callback)
 		
 		#@-body
@@ -817,7 +847,7 @@ class LeoFrame:
 				# Remove special characters from command names.
 				name2 = ""
 				for ch in name:
-					if ch in string.ascii_letters or ch in string.digits:
+					if ch in string.letters or ch in string.digits:
 						name2 = name2 + ch
 				name = name2
 				
@@ -839,7 +869,8 @@ class LeoFrame:
 				#@-body
 				#@-node:1::<< get menu and bind shortcuts >>
 
-				callback=lambda self=self,cmd=command,label=name:self.doCommand(cmd,label)
+				f = self.doCommand # Removes warning in Python 2.1
+				callback=lambda f=f,cmd=command,label=name:f(cmd,label)
 				realLabel = app().realMenuName(label)
 				if menu_shortcut:
 					menu.add_command(label=realLabel,accelerator=menu_shortcut,command=callback)
@@ -854,14 +885,18 @@ class LeoFrame:
 						self.menuShortcuts.append(bind_shortcut)
 						try:
 							# The self and event params must be unbound.
-							callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
+							f = self.doCommand # More compatible with Python 2.1
+							callback=lambda event,f=f,cmd=command,label=name:f(cmd,label,event)
+							# The 2.2 code.  Must be a comment or Python 2.1 will complain.
+							# callback=lambda event,cmd=command,label=name:self.doCommand(cmd,label,event)
 							self.body.bind(bind_shortcut,callback) # Necessary to override defaults in body.
 							self.top.bind (bind_shortcut,callback)
 						except: # could be a user error
 							if not app().menuWarningsGiven:
 								print "exception binding menu shortcut..."
 								print `bind_shortcut`
-								# es_exception()
+								es_exception()
+								app().menuWarningsGive = true
 	#@-body
 	#@-node:8::createMenuEntries
 	#@+node:9::frame.doCommand
@@ -1130,6 +1165,19 @@ class LeoFrame:
 			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
 	#@-body
 	#@-node:6::OnMouseWheel (Tomaz Ficko)
+	#@+node:7::frame.OnVisibility
+	#@+body
+	# Handle the "visibility" event and attempt to attach the Leo icon.
+	# This code must be executed whenever the window is redrawn.
+	
+	def OnVisibility (self,event):
+	
+		if self.icon and event.widget is self.top:
+	
+			# print "OnVisibility"
+			self.icon.attach(self.top)
+	#@-body
+	#@-node:7::frame.OnVisibility
 	#@-node:16::Event handlers
 	#@+node:17::Menu enablers (Frame)
 	#@+node:1::frame.OnMenuClick (enables and disables all menu items)
@@ -1482,8 +1530,8 @@ class LeoFrame:
 					# Recreate Recent Files menu.
 					i = 0
 					for name in frame.recentFiles:
-						# 9/15/02: Added self=self to remove Python 2.1 warning.
-						callback = lambda n=i,self=self: self.OnOpenRecentFile(n)
+						f = self.OnOpenRecentFile
+						callback = lambda f=f,n=i,self=self:f(n)
 						recentFilesMenu.add_command(label=name,command=callback)
 						i += 1
 					
