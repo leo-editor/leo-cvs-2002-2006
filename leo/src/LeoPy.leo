@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4104" clone_windows="0"/>
-<globals body_outline_ratio="0.5940919037199125">
-	<global_window_position top="10" left="387" height="914" width="843"/>
+<globals body_outline_ratio="0.39798488664987408">
+	<global_window_position top="0" left="0" height="1102" width="1588"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -1195,7 +1195,7 @@
 <v t="ekr.20031218072017.862"><vh>Cleanup</vh></v>
 </v>
 <v t="ekr.20031219082559" a="E"><vh>To do: 4.1</vh>
-<v t="ekr.20040118101339" a="V"><vh>rc4</vh>
+<v t="ekr.20040118101339"><vh>rc4</vh>
 <v t="ekr.20040118101339.1" a="E"><vh>Plugin problems</vh>
 <v t="ekr.20040115162445" a="M"><vh>Create plugin to insert status bar</vh></v>
 <v t="ekr.20040117112213.1" a="M"><vh>mod_autosave doesn't work (?)</vh></v>
@@ -4202,7 +4202,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="E"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4943,8 +4943,8 @@
 <v t="ekr.20031218072017.2816"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20031218072017.2582" a=""><vh> version &amp; signon stuff</vh></v>
-<v t="ekr.20031218072017.2818"><vh>Command handlers...</vh>
+<v t="ekr.20031218072017.2582" a="M"><vh> version &amp; signon stuff</vh></v>
+<v t="ekr.20031218072017.2818" a="E"><vh>Command handlers...</vh>
 <v t="ekr.20031218072017.2819"><vh>File Menu</vh>
 <v t="ekr.20031218072017.2820"><vh>top level</vh>
 <v t="ekr.20031218072017.1623" a=""><vh>new</vh></v>
@@ -5010,7 +5010,7 @@
 <v t="ekr.20031218072017.2860"><vh>weave</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2861"><vh>Edit Menu...</vh>
+<v t="ekr.20031218072017.2861" a="E"><vh>Edit Menu...</vh>
 <v t="ekr.20031218072017.2862"><vh>Edit top level</vh>
 <v t="ekr.20031218072017.2863"><vh>delete</vh></v>
 <v t="ekr.20031218072017.2140" a=""><vh>executeScript</vh>
@@ -5047,8 +5047,8 @@
 <v t="ekr.20031218072017.2883"><vh>viewAllCharacters</vh></v>
 <v t="ekr.20031218072017.2086" a=""><vh>preferences</vh></v>
 </v>
-<v t="ekr.20031218072017.2884"><vh>Edit Body submenu</vh>
-<v t="ekr.20031218072017.1820" a=""><vh>Edit Body Text</vh>
+<v t="ekr.20031218072017.2884" a="E"><vh>Edit Body submenu</vh>
+<v t="ekr.20031218072017.1820" a="E"><vh>Edit Body Text</vh>
 <v t="ekr.20031218072017.1704" a=""><vh>convertAllBlanks</vh></v>
 <v t="ekr.20031218072017.1705" a=""><vh>convertAllTabs</vh></v>
 <v t="ekr.20031218072017.1821"><vh>convertBlanks</vh></v>
@@ -5075,7 +5075,7 @@
 <v t="ekr.20031218072017.1831"><vh>insertBodyTime &amp; allies</vh>
 <v t="ekr.20031218072017.1832"><vh>getTime</vh></v>
 </v>
-<v t="ekr.20031218072017.1833"><vh>reformatParagraph</vh>
+<v t="ekr.20031218072017.1833" a="E"><vh>reformatParagraph</vh>
 <v t="ekr.20031218072017.1834"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1835"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1836"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
@@ -6196,7 +6196,7 @@
 <v t="ekr.20031218072017.2607"><vh>profile</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3625"><vh>Gui Base classes</vh>
+<v t="ekr.20031218072017.3625" a="E"><vh>Gui Base classes</vh>
 <v t="ekr.20031218072017.3626" tnodeList="ekr.20031218072017.3626,ekr.20031218072017.3627,ekr.20031218072017.3628,ekr.20031218072017.3629"><vh>@file leoColorPanel.py</vh>
 <v t="ekr.20031218072017.3627"><vh>&lt;&lt; define default color panel data &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3628"><vh>leoColorPanels.__init__</vh></v>
@@ -6233,13 +6233,13 @@
 <v t="ekr.20031218072017.3653"><vh>fontPanel.__init__</vh></v>
 <v t="ekr.20031218072017.3654"><vh>Must be overridden in subclasses</vh></v>
 </v>
-<v t="ekr.20031218072017.3655" tnodeList="ekr.20031218072017.3655,ekr.20031218072017.2410,ekr.20031218072017.3656,ekr.20031218072017.3657,ekr.20031218072017.3658,ekr.20031218072017.3659,ekr.20031218072017.3660,ekr.20031218072017.3661,ekr.20031218072017.3662,ekr.20031218072017.3663,ekr.20031218072017.3664,ekr.20031218072017.3665,ekr.20031218072017.3666,ekr.20031218072017.3667,ekr.20031218072017.3668,ekr.20031218072017.3669,ekr.20031218072017.3670,ekr.20031218072017.3672,ekr.20031218072017.3673,ekr.20031218072017.3674,ekr.20031218072017.3675,ekr.20031218072017.3676,ekr.20031218072017.3677,ekr.20031218072017.3678,ekr.20031218072017.3679,ekr.20031218072017.3681,ekr.20031218072017.3682,ekr.20031218072017.3684,ekr.20031218072017.3685,ekr.20031218072017.3686,ekr.20031218072017.3687,ekr.20031218072017.3688,ekr.20031218072017.3689,ekr.20031218072017.3690,ekr.20031218072017.3691,ekr.20031218072017.3692,ekr.20031218072017.3693,ekr.20031218072017.1375,ekr.20031218072017.1376,ekr.20031218072017.3694,ekr.20031218072017.3695,ekr.20031218072017.3696,ekr.20031218072017.3697,ekr.20031218072017.3698,ekr.20031218072017.3699,ekr.20031218072017.3700,ekr.20031218072017.3701,ekr.20031218072017.3702,ekr.20031218072017.3703,ekr.20031218072017.3704,ekr.20031218072017.3705,ekr.20031218072017.3707,ekr.20031218072017.3708,ekr.20031218072017.3709,ekr.20031218072017.3710,ekr.20031218072017.3711,ekr.20031218072017.3712,ekr.20031218072017.3713,ekr.20031218072017.3714,ekr.20031218072017.3715,ekr.20031218072017.3716,ekr.20031218072017.3717,ekr.20031218072017.3718,ekr.20031218072017.2312,ekr.20031218072017.2313,ekr.20031218072017.2314,ekr.20031218072017.2315,ekr.20040106095546.1,ekr.20031218072017.2191,ekr.20031218072017.2192,ekr.20031218072017.2194,ekr.20031218072017.2195,ekr.20031218072017.2196,ekr.20031218072017.2197,ekr.20031218072017.2198,ekr.20031218072017.2199,ekr.20031218072017.2200,ekr.20031218072017.2201,ekr.20031218072017.2202,ekr.20031218072017.2203,ekr.20031218072017.2204,ekr.20031218072017.2205,ekr.20031218072017.2206,ekr.20031218072017.2207,ekr.20031218072017.2209,ekr.20031218072017.2210,ekr.20031218072017.2211,ekr.20031218072017.2212,ekr.20031218072017.2213,ekr.20031218072017.2214,ekr.20031218072017.2215,ekr.20031218072017.2216,ekr.20031218072017.2217,ekr.20031218072017.2222,ekr.20031218072017.2232,ekr.20031218072017.2233,ekr.20031218072017.2234,ekr.20031218072017.2235,ekr.20031218072017.2237,ekr.20031218072017.2238,ekr.20031218072017.2239,ekr.20031218072017.2240,ekr.20031218072017.2241,ekr.20031218072017.2242"><vh>@file leoFrame.py</vh>
+<v t="ekr.20031218072017.3655" a="E" tnodeList="ekr.20031218072017.3655,ekr.20031218072017.2410,ekr.20031218072017.3656,ekr.20031218072017.3657,ekr.20031218072017.3658,ekr.20031218072017.3659,ekr.20031218072017.3660,ekr.20031218072017.3661,ekr.20031218072017.3662,ekr.20031218072017.3663,ekr.20031218072017.3664,ekr.20031218072017.3665,ekr.20031218072017.3666,ekr.20031218072017.3667,ekr.20031218072017.3668,ekr.20031218072017.3669,ekr.20031218072017.3670,ekr.20031218072017.3672,ekr.20031218072017.3673,ekr.20031218072017.3674,ekr.20031218072017.3675,ekr.20031218072017.3676,ekr.20031218072017.3677,ekr.20031218072017.3678,ekr.20031218072017.3679,ekr.20031218072017.3681,ekr.20031218072017.3682,ekr.20031218072017.3684,ekr.20031218072017.3685,ekr.20031218072017.3686,ekr.20031218072017.3687,ekr.20031218072017.3688,ekr.20031218072017.3689,ekr.20031218072017.3690,ekr.20031218072017.3691,ekr.20031218072017.3692,ekr.20031218072017.3693,ekr.20031218072017.1375,ekr.20031218072017.1376,ekr.20031218072017.3694,ekr.20031218072017.3695,ekr.20031218072017.3696,ekr.20031218072017.3697,ekr.20031218072017.3698,ekr.20031218072017.3699,ekr.20031218072017.3700,ekr.20031218072017.3701,ekr.20031218072017.3702,ekr.20031218072017.3703,ekr.20031218072017.3704,ekr.20031218072017.3705,ekr.20031218072017.3707,ekr.20031218072017.3708,ekr.20031218072017.3709,ekr.20031218072017.3710,ekr.20031218072017.3711,ekr.20031218072017.3712,ekr.20031218072017.3713,ekr.20031218072017.3714,ekr.20031218072017.3715,ekr.20031218072017.3716,ekr.20031218072017.3717,ekr.20031218072017.3718,ekr.20031218072017.2312,ekr.20031218072017.2313,ekr.20031218072017.2314,ekr.20031218072017.2315,ekr.20040106095546.1,ekr.20031218072017.2191,ekr.20031218072017.2192,ekr.20031218072017.2194,ekr.20031218072017.2195,ekr.20031218072017.2196,ekr.20031218072017.2197,ekr.20031218072017.2198,ekr.20031218072017.2199,ekr.20031218072017.2200,ekr.20031218072017.2201,ekr.20031218072017.2202,ekr.20031218072017.2203,ekr.20031218072017.2204,ekr.20031218072017.2205,ekr.20031218072017.2206,ekr.20031218072017.2207,ekr.20031218072017.2209,ekr.20031218072017.2210,ekr.20031218072017.2211,ekr.20031218072017.2212,ekr.20031218072017.2213,ekr.20031218072017.2214,ekr.20031218072017.2215,ekr.20031218072017.2216,ekr.20031218072017.2217,ekr.20031218072017.2222,ekr.20031218072017.2232,ekr.20031218072017.2233,ekr.20031218072017.2234,ekr.20031218072017.2235,ekr.20031218072017.2237,ekr.20031218072017.2238,ekr.20031218072017.2239,ekr.20031218072017.2240,ekr.20031218072017.2241,ekr.20031218072017.2242"><vh>@file leoFrame.py</vh>
 <v t="ekr.20031218072017.2410" a=""><vh>&lt;&lt; About handling events &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3656"><vh>class leoBody</vh>
+<v t="ekr.20031218072017.3656" a="E"><vh>class leoBody</vh>
 <v t="ekr.20031218072017.3657"><vh>leoBody.__init__</vh></v>
 <v t="ekr.20031218072017.3658"><vh>oops</vh></v>
 <v t="ekr.20031218072017.3659"><vh>leoBody.setFontFromConfig</vh></v>
-<v t="ekr.20031218072017.3660"><vh>Must be overriden in subclasses</vh>
+<v t="ekr.20031218072017.3660" a="E"><vh>Must be overriden in subclasses</vh>
 <v t="ekr.20031218072017.3661"><vh>Bounding box (Tk spelling)</vh></v>
 <v t="ekr.20031218072017.3662"><vh>Color tags (Tk spelling)</vh></v>
 <v t="ekr.20031218072017.3663"><vh>Configuration (Tk spelling)</vh></v>
@@ -6250,7 +6250,7 @@
 <v t="ekr.20031218072017.3668"><vh>Insert point</vh></v>
 <v t="ekr.20031218072017.3669"><vh>Menus</vh></v>
 <v t="ekr.20031218072017.3670"><vh>Selection</vh></v>
-<v t="ekr.20031218072017.3671"><vh>Text</vh>
+<v t="ekr.20031218072017.3671" a="E"><vh>Text</vh>
 <v t="ekr.20031218072017.3672"><vh>delete...</vh></v>
 <v t="ekr.20031218072017.3673"><vh>get...</vh></v>
 <v t="ekr.20031218072017.3674"><vh>Insert...</vh></v>
@@ -6317,14 +6317,14 @@
 </v>
 <v t="ekr.20040106095546.1"><vh>tree.enableDrawingAfterException</vh></v>
 </v>
-<v t="ekr.20031218072017.2191" a=""><vh>class nullBody</vh>
+<v t="ekr.20031218072017.2191" a="E"><vh>class nullBody</vh>
 <v t="ekr.20031218072017.2192"><vh> nullBody.__init__</vh></v>
 <v t="ekr.20031218072017.2193"><vh>Utils (internal use)</vh>
 <v t="ekr.20031218072017.2194"><vh>findStartOfLine</vh></v>
 <v t="ekr.20031218072017.2195"><vh>scanToStartOfLine</vh></v>
 <v t="ekr.20031218072017.2196"><vh>scanToEndOfLine</vh></v>
 </v>
-<v t="ekr.20031218072017.2197"><vh>Must be overriden in subclasses</vh>
+<v t="ekr.20031218072017.2197" a="E"><vh>Must be overriden in subclasses</vh>
 <v t="ekr.20031218072017.2198"><vh>Bounding box</vh></v>
 <v t="ekr.20031218072017.2199"><vh>Color tags</vh></v>
 <v t="ekr.20031218072017.2200"><vh>Configuration</vh></v>
@@ -6335,9 +6335,9 @@
 <v t="ekr.20031218072017.2205"><vh>Insert point</vh></v>
 <v t="ekr.20031218072017.2206"><vh>Menus</vh></v>
 <v t="ekr.20031218072017.2207"><vh>Selection</vh></v>
-<v t="ekr.20031218072017.2208"><vh>Text</vh>
+<v t="ekr.20031218072017.2208" a="E"><vh>Text</vh>
 <v t="ekr.20031218072017.2209"><vh>delete...</vh></v>
-<v t="ekr.20031218072017.2210"><vh>get...</vh>
+<v t="ekr.20031218072017.2210" a="E"><vh>get...</vh>
 <v t="ekr.20031218072017.2211"><vh>getInsertLines</vh></v>
 <v t="ekr.20031218072017.2212"><vh>getSelectionAreas</vh></v>
 <v t="ekr.20031218072017.2213" a=""><vh>getSelectionLines (nullBody)</vh></v>
@@ -6523,7 +6523,7 @@
 <v t="ekr.20031218072017.3820"><vh>printIvars</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3821"><vh>Gui Tkinter classes</vh>
+<v t="ekr.20031218072017.3821" a="E"><vh>Gui Tkinter classes</vh>
 <v t="ekr.20031218072017.3822" tnodeList="ekr.20031218072017.3822,ekr.20031218072017.3823,ekr.20031218072017.3824,ekr.20031218072017.3825,ekr.20031218072017.3826,ekr.20031218072017.3827,ekr.20031218072017.3828,ekr.20031218072017.3829,ekr.20031218072017.3830,ekr.20031218072017.3831,ekr.20031218072017.3832,ekr.20031218072017.3833,ekr.20031218072017.1875,ekr.20031218072017.1876,ekr.20031218072017.3834,ekr.20031218072017.3835,ekr.20031218072017.3836,ekr.20031218072017.3837"><vh>@file leoTkinterColorPanels.py</vh>
 <v t="ekr.20031218072017.3823"><vh>&lt;&lt; define gui-dependent color panel data &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3824"><vh>class leoTkinterColorNamePanel</vh>
@@ -6690,14 +6690,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.3939" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
-<v t="ekr.20031218072017.3940"><vh>class leoTkinterFrame</vh>
-<v t="ekr.20031218072017.3941"><vh> frame.Birth &amp; Death</vh>
+<v t="ekr.20031218072017.3939" a="E" tnodeList="ekr.20031218072017.3939,ekr.20031218072017.3940,ekr.20031218072017.1801,ekr.20031218072017.1802,ekr.20031218072017.3942,ekr.20031218072017.3944,ekr.20031218072017.2176,ekr.20031218072017.2177,ekr.20031218072017.2178,ekr.20031218072017.2179,ekr.20031218072017.2180,ekr.20031218072017.3945,ekr.20031218072017.3946,ekr.20031218072017.3947,ekr.20031218072017.3948,ekr.20031218072017.3949,ekr.20031218072017.3950,ekr.20031218072017.3951,ekr.20031218072017.3952,ekr.20031218072017.3954,ekr.20031218072017.3955,ekr.20031218072017.3956,ekr.20031218072017.3957,ekr.20031218072017.3958,ekr.20031218072017.3959,ekr.20031218072017.3960,ekr.20031218072017.3961,ekr.20031218072017.3962,ekr.20031218072017.3963,ekr.20031218072017.1733,ekr.20031218072017.1975,ekr.20031218072017.1976,ekr.20031218072017.3965,ekr.20031218072017.1974,ekr.20031218072017.3966,ekr.20031218072017.3968,ekr.20031218072017.3969,ekr.20031218072017.2246,ekr.20031218072017.1625,ekr.20031218072017.722,ekr.20031218072017.1540,ekr.20031218072017.2307,ekr.20031218072017.3970,ekr.20031218072017.3972,ekr.20031218072017.3973,ekr.20031218072017.3974,ekr.20031218072017.3975,ekr.20031218072017.2253,ekr.20031218072017.3976,ekr.20031218072017.3977,ekr.20031218072017.3978,ekr.20031218072017.1803,ekr.20031218072017.3981,ekr.20031218072017.841,ekr.20031218072017.842,ekr.20031218072017.843,ekr.20031218072017.3982,ekr.20031218072017.3983,ekr.20031218072017.3985,ekr.20031218072017.3986,ekr.20031218072017.3987,ekr.20031218072017.3988,ekr.20031218072017.3989,ekr.20031218072017.3990,ekr.20031218072017.3992,ekr.20031218072017.3993,ekr.20031218072017.3994,ekr.20031218072017.998,ekr.20031218072017.3995,ekr.20031218072017.3996,ekr.20031218072017.2182,ekr.20031218072017.838,ekr.20031218072017.3998,ekr.20031218072017.2183,ekr.20031218072017.1320,ekr.20031218072017.1321,ekr.20031218072017.1322,ekr.20031218072017.1323,ekr.20031218072017.1324,ekr.20031218072017.1325,ekr.20031218072017.1326,ekr.20031218072017.1327,ekr.20031218072017.1328,ekr.20031218072017.1329,ekr.20031218072017.1330,ekr.20040105223536,ekr.20040105223536.1,ekr.20031218072017.1331,ekr.20031218072017.3999,ekr.20031218072017.4000,ekr.20031218072017.4001,ekr.20031218072017.4002,ekr.20031218072017.2184,ekr.20031218072017.4003,ekr.20031218072017.4004,ekr.20031218072017.4005,ekr.20031218072017.4007,ekr.20031218072017.4008,ekr.20031218072017.4009,ekr.20031218072017.4010,ekr.20031218072017.4011,ekr.20031218072017.4012,ekr.20031218072017.495,ekr.20031218072017.4014,ekr.20031218072017.4015,ekr.20031218072017.4016,ekr.20031218072017.4017,ekr.20031218072017.4019,ekr.20031218072017.4020,ekr.20031218072017.4021,ekr.20031218072017.4022,ekr.20031218072017.4023,ekr.20031218072017.4024,ekr.20031218072017.4026,ekr.20031218072017.4028,ekr.20031218072017.4029,ekr.20031218072017.4030,ekr.20031218072017.4031,ekr.20031218072017.2377,ekr.20031218072017.4032,ekr.20031218072017.4034,ekr.20031218072017.4035,ekr.20031218072017.4036,ekr.20031218072017.4037,ekr.20031218072017.4038,ekr.20031218072017.4039,ekr.20031218072017.4040,ekr.20031218072017.4041,ekr.20031218072017.4042,ekr.20031218072017.4043,ekr.20031218072017.4044,ekr.20031218072017.4045,ekr.20031218072017.1473,ekr.20031218072017.4046"><vh>@file leoTkinterFrame.py</vh>
+<v t="ekr.20031218072017.3940" a="E"><vh>class leoTkinterFrame</vh>
+<v t="ekr.20031218072017.3941" a="E"><vh> frame.Birth &amp; Death</vh>
 <v t="ekr.20031218072017.1801" a=""><vh>f.__init__</vh>
 <v t="ekr.20031218072017.1802"><vh>&lt;&lt; set the leoTkinterFrame ivars &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.3942"><vh>f.__repr__</vh></v>
-<v t="ekr.20031218072017.3943"><vh>Creating the frame</vh>
+<v t="ekr.20031218072017.3943" a="E"><vh>Creating the frame</vh>
 <v t="ekr.20031218072017.3944"><vh>f.createCanvas</vh></v>
 <v t="ekr.20031218072017.2176" a=""><vh>f.finishCreate</vh>
 <v t="ekr.20031218072017.2177" a=""><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
@@ -6724,7 +6724,7 @@
 <v t="ekr.20031218072017.3959"><vh>&lt;&lt; create a picture &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3960" a=""><vh>Creating the status area</vh>
+<v t="ekr.20031218072017.3960" a="E"><vh>Creating the status area</vh>
 <v t="ekr.20031218072017.3961"><vh>createStatusLine</vh></v>
 <v t="ekr.20031218072017.3962"><vh>clearStatusLine</vh></v>
 <v t="ekr.20031218072017.3963"><vh>putStatusLine</vh></v>
@@ -6791,14 +6791,14 @@
 <v t="ekr.20031218072017.998" a=""><vh>Scrolling callbacks (frame)</vh></v>
 <v t="ekr.20031218072017.3995"><vh>Tk bindings...</vh></v>
 </v>
-<v t="ekr.20031218072017.3996"><vh>class leoTkinterBody</vh>
+<v t="ekr.20031218072017.3996" a="E"><vh>class leoTkinterBody</vh>
 <v t="ekr.20031218072017.3997"><vh> Birth &amp; death</vh>
 <v t="ekr.20031218072017.2182" a=""><vh>tkBody. __init__</vh></v>
 <v t="ekr.20031218072017.838" a=""><vh>tkBody.createBindings</vh></v>
 <v t="ekr.20031218072017.3998"><vh>tkBody.createControl</vh></v>
 </v>
 <v t="ekr.20031218072017.2183" a=""><vh>tkBody.setFontFromConfig</vh></v>
-<v t="ekr.20031218072017.1320" a=""><vh>body key handlers</vh>
+<v t="ekr.20031218072017.1320" a="E"><vh>body key handlers</vh>
 <v t="ekr.20031218072017.1321" a=""><vh>idle_body_key</vh>
 <v t="ekr.20031218072017.1322"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1323"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
@@ -6817,7 +6817,7 @@
 <v t="ekr.20031218072017.1331" a=""><vh>onBodyWillChange</vh></v>
 </v>
 <v t="ekr.20031218072017.3999"><vh>forceRecolor</vh></v>
-<v t="ekr.20031218072017.4000"><vh>Tk bindings (leoTkinterBody)</vh>
+<v t="ekr.20031218072017.4000" a="E"><vh>Tk bindings (leoTkinterBody)</vh>
 <v t="ekr.20031218072017.4001"><vh>Bounding box (Tk spelling)</vh></v>
 <v t="ekr.20031218072017.4002"><vh>Color tags (Tk spelling)</vh></v>
 <v t="ekr.20031218072017.2184" a=""><vh>Configuration (Tk spelling)</vh></v>
@@ -6832,7 +6832,7 @@
 <v t="ekr.20031218072017.4011"><vh>getImageIndex</vh></v>
 <v t="ekr.20031218072017.4012"><vh>tkIndex (internal use only)</vh></v>
 </v>
-<v t="ekr.20031218072017.4013"><vh>Insert point</vh>
+<v t="ekr.20031218072017.4013" a="E"><vh>Insert point</vh>
 <v t="ekr.20031218072017.495" a=""><vh>getInsertionPoint &amp; getBeforeInsertionPoint</vh></v>
 <v t="ekr.20031218072017.4014"><vh>getCharAtInsertPoint &amp; getCharBeforeInsertPoint</vh></v>
 <v t="ekr.20031218072017.4015"><vh>makeInsertPointVisible</vh></v>
@@ -6847,9 +6847,9 @@
 <v t="ekr.20031218072017.4023"><vh>selectAllText</vh></v>
 <v t="ekr.20031218072017.4024"><vh>setTextSelection</vh></v>
 </v>
-<v t="ekr.20031218072017.4025"><vh>Text</vh>
+<v t="ekr.20031218072017.4025" a="E"><vh>Text</vh>
 <v t="ekr.20031218072017.4026"><vh>delete...</vh></v>
-<v t="ekr.20031218072017.4027"><vh>get...</vh>
+<v t="ekr.20031218072017.4027" a="E"><vh>get...</vh>
 <v t="ekr.20031218072017.4028"><vh>getAllText</vh></v>
 <v t="ekr.20031218072017.4029"><vh>getCharAtIndex</vh></v>
 <v t="ekr.20031218072017.4030"><vh>getInsertLines</vh></v>
@@ -7137,9 +7137,9 @@
 <v t="ekr.20031218072017.1141" a=""><vh>tree.moveUpDown</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.4166"><vh>Unit Testing</vh>
+<v t="ekr.20031218072017.4166" a="E"><vh>Unit Testing</vh>
 <v t="ekr.20031218072017.4167"><vh>To do</vh></v>
-<v t="ekr.20031218072017.4168" tnodeList="ekr.20031218072017.4168,ekr.20031218072017.4169,ekr.20031218072017.4171,ekr.20031218072017.4172,ekr.20031218072017.4173,ekr.20031218072017.4174,ekr.20031218072017.4175,ekr.20031218072017.4176,ekr.20031218072017.4177,ekr.20031218072017.4179,ekr.20031218072017.4180,ekr.20031218072017.4181,ekr.20031218072017.4182,ekr.20031218072017.4183,ekr.20031218072017.4184,ekr.20031218072017.4185,ekr.20031218072017.4186,ekr.20031218072017.4187,ekr.20031218072017.4188,ekr.20031218072017.4189,ekr.20031218072017.4190,ekr.20031218072017.4191,ekr.20031218072017.4192,ekr.20031218072017.4193,ekr.20031218072017.4194,ekr.20031218072017.4195,ekr.20031218072017.4196,ekr.20031218072017.4197,ekr.20031218072017.4198,ekr.20031218072017.4200,ekr.20031218072017.4201,ekr.20031218072017.4202,ekr.20031218072017.4203,ekr.20031218072017.4204,ekr.20031218072017.4205,ekr.20031218072017.4206,ekr.20031218072017.4208,ekr.20031218072017.4209,ekr.20031218072017.4210,ekr.20031218072017.4211,ekr.20031218072017.4212,ekr.20031218072017.4213,ekr.20031218072017.4214,ekr.20031218072017.4216,ekr.20031218072017.4217,ekr.20031218072017.4218,ekr.20031218072017.4219,ekr.20031218072017.4220,ekr.20031218072017.4221,ekr.20031218072017.4222,ekr.20031218072017.4223,ekr.20031218072017.4225,ekr.20031218072017.4226,ekr.20031218072017.4227,ekr.20031218072017.4228,ekr.20031218072017.4229,ekr.20031218072017.4230,ekr.20031218072017.4232,ekr.20031218072017.4233,ekr.20031218072017.4234,ekr.20031218072017.4235,ekr.20031218072017.4236,ekr.20031218072017.4237,ekr.20031218072017.4238,ekr.20031218072017.4240,ekr.20031218072017.4241,ekr.20031218072017.4242,ekr.20031218072017.4243,ekr.20031218072017.4244,ekr.20031218072017.4245,ekr.20031218072017.4246,ekr.20031218072017.4247"><vh>@file leoTest.py</vh>
+<v t="ekr.20031218072017.4168" a="E" tnodeList="ekr.20031218072017.4168,ekr.20031218072017.4169,ekr.20031218072017.4171,ekr.20031218072017.4172,ekr.20031218072017.4173,ekr.20031218072017.4174,ekr.20031218072017.4175,ekr.20031218072017.4176,ekr.20031218072017.4177,ekr.20031218072017.4179,ekr.20031218072017.4180,ekr.20031218072017.4181,ekr.20031218072017.4182,ekr.20031218072017.4183,ekr.20031218072017.4184,ekr.20031218072017.4185,ekr.20031218072017.4186,ekr.20031218072017.4187,ekr.20031218072017.4188,ekr.20031218072017.4189,ekr.20031218072017.4190,ekr.20031218072017.4191,ekr.20031218072017.4192,ekr.20031218072017.4193,ekr.20031218072017.4194,ekr.20031218072017.4195,ekr.20031218072017.4196,ekr.20031218072017.4197,ekr.20031218072017.4198,ekr.20031218072017.4200,ekr.20031218072017.4201,ekr.20031218072017.4202,ekr.20031218072017.4203,ekr.20031218072017.4204,ekr.20031218072017.4205,ekr.20031218072017.4206,ekr.20031218072017.4208,ekr.20031218072017.4209,ekr.20031218072017.4210,ekr.20031218072017.4211,ekr.20031218072017.4212,ekr.20031218072017.4213,ekr.20031218072017.4214,dthein.20040108183412,dthein.20040108221100,dthein.20040108183412.1,dthein.20040110083440.1,dthein.20040110084225.1,dthein.20040110083440.2,dthein.20040110103539,dthein.20040110105811,dthein.20040110110003,dthein.20040110111253,dthein.20040110111432,dthein.20040110111609,dthein.20040110111642,dthein.20040110112122,dthein.20040110112134,dthein.20040110112256,dthein.20040111093132,dthein.20040111093717,dthein.20040111093132.1,dthein.20040110152856,dthein.20040110160056,dthein.20040110083440,dthein.20040110104535,dthein.20040110152856.1,ekr.20031218072017.4216,ekr.20031218072017.4217,ekr.20031218072017.4218,ekr.20031218072017.4219,ekr.20031218072017.4220,ekr.20031218072017.4221,ekr.20031218072017.4222,ekr.20031218072017.4223,ekr.20031218072017.4225,ekr.20031218072017.4226,ekr.20031218072017.4227,ekr.20031218072017.4228,ekr.20031218072017.4229,ekr.20031218072017.4230,ekr.20031218072017.4232,ekr.20031218072017.4233,ekr.20031218072017.4234,ekr.20031218072017.4235,ekr.20031218072017.4236,ekr.20031218072017.4237,ekr.20031218072017.4238,ekr.20031218072017.4240,ekr.20031218072017.4241,ekr.20031218072017.4242,ekr.20031218072017.4243,ekr.20031218072017.4244,ekr.20031218072017.4245,ekr.20031218072017.4246,ekr.20031218072017.4247"><vh>@file leoTest.py</vh>
 <v t="ekr.20031218072017.4169"><vh> class testUtils</vh>
 <v t="ekr.20031218072017.4170"><vh>compareNodeAndFile TODO</vh></v>
 <v t="ekr.20031218072017.4171"><vh>compareOutlines</vh></v>
@@ -7188,12 +7188,44 @@
 </v>
 <v t="ekr.20031218072017.4207"><vh>Edit body tests</vh>
 <v t="ekr.20031218072017.4208"><vh> makeEditBodySuite</vh></v>
-<v t="ekr.20031218072017.4209"><vh>class editBodyTestCase</vh>
+<v t="ekr.20031218072017.4209" a="E"><vh>class editBodyTestCase</vh>
 <v t="ekr.20031218072017.4210"><vh>__init__</vh></v>
 <v t="ekr.20031218072017.4211"><vh>editBody</vh></v>
 <v t="ekr.20031218072017.4212"><vh>tearDown</vh></v>
 <v t="ekr.20031218072017.4213"><vh>setUp</vh></v>
 <v t="ekr.20031218072017.4214"><vh>runTest</vh></v>
+</v>
+</v>
+<v t="dthein.20040108183412" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="dthein.20040108221100"><vh>makeReformatParagraphSuite</vh></v>
+<v t="dthein.20040108183412.1" a="V"><vh>class reformatParagraphTestCase</vh>
+<v t="dthein.20040110153454"><vh>setup and teardown</vh>
+<v t="dthein.20040110083440.1"><vh>setUp</vh></v>
+<v t="dthein.20040110084225.1"><vh>tearDown</vh></v>
+</v>
+<v t="dthein.20040110153454.1"><vh>tests</vh>
+<v t="dthein.20040110083440.2"><vh>testNoTrailingNewline</vh></v>
+<v t="dthein.20040110103539"><vh>testTrailingNewline</vh></v>
+<v t="dthein.20040110105811"><vh>testMixedLineLengths</vh></v>
+<v t="dthein.20040110110003"><vh>testMixedLinesWithLeadingWS</vh></v>
+<v t="dthein.20040110111253"><vh>testNoChangeRequired</vh></v>
+<v t="dthein.20040110111432"><vh>testHonorLeadingWS</vh></v>
+<v t="dthein.20040110111609"><vh>testHonorLeadingWSVar1</vh></v>
+<v t="dthein.20040110111642"><vh>testSimpleHangingIndent</vh></v>
+<v t="dthein.20040110112122"><vh>testSimpleHangingIndentVar1</vh></v>
+<v t="dthein.20040110112134"><vh>testSimpleHangingIndentVar2</vh></v>
+<v t="dthein.20040110112256"><vh>testMultiParagraph</vh></v>
+<v t="dthein.20040111093132"><vh>testMultiParagraphWithList</vh></v>
+<v t="dthein.20040111093717"><vh>testDirectiveBreaksParagraph</vh></v>
+</v>
+<v t="dthein.20040110153454.2"><vh>utility methods</vh>
+<v t="dthein.20040111093132.1"><vh>singleParagraphTest</vh></v>
+<v t="dthein.20040110152856"><vh>checkPosition</vh></v>
+<v t="dthein.20040110160056"><vh>checkText</vh></v>
+<v t="dthein.20040110083440"><vh>copyBeforeToTemp</vh></v>
+<v t="dthein.20040110104535"><vh>getCaseDataNodes</vh></v>
+<v t="dthein.20040110152856.1"><vh>getRowCol</vh></v>
+</v>
 </v>
 </v>
 <v t="ekr.20031218072017.4215"><vh>Import/Export tests</vh>
@@ -7467,6 +7499,333 @@
 </v>
 </vnodes>
 <tnodes>
+<t tx="dthein.20040108183412"># DTHEIN 2004.01.11: Added unit tests for reformatParagraph</t>
+<t tx="dthein.20040108183412.1"># DTHEIN 2004.01.11: Added class
+class reformatParagraphTestCase(unittest.TestCase):
+	
+	"""Unit tests for Leo's reformat paragraph command."""
+	
+	@others</t>
+<t tx="dthein.20040108221100"># DTHEIN 2004.01.11: Added method
+def makeReformatParagraphSuite():
+	
+	"""makeReformatParagraphSuite() -&gt; suite
+	
+	Create a Reformat Paragraph test for each of the 
+	unit tests in the reformatParagraphTestCase class."""
+	
+	suite = unittest.TestSuite()
+	suite.addTest(reformatParagraphTestCase("testNoTrailingNewline"))
+	suite.addTest(reformatParagraphTestCase("testTrailingNewline"))
+	suite.addTest(reformatParagraphTestCase("testMixedLineLengths"))
+	suite.addTest(reformatParagraphTestCase("testMixedLinesWithLeadingWS"))
+	suite.addTest(reformatParagraphTestCase("testNoChangeRequired"))
+	suite.addTest(reformatParagraphTestCase("testHonorLeadingWS"))
+	suite.addTest(reformatParagraphTestCase("testHonorLeadingWSVar1"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndent"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar1"))
+	suite.addTest(reformatParagraphTestCase("testSimpleHangingIndentVar2"))
+	suite.addTest(reformatParagraphTestCase("testMultiParagraph"))
+	suite.addTest(reformatParagraphTestCase("testMultiParagraphWithList"))
+	suite.addTest(reformatParagraphTestCase("testDirectiveBreaksParagraph"))
+	return suite
+	#	suite = reformatParagraphTestCase().suite();
+	#return suite</t>
+<t tx="dthein.20040110083440"># DTHEIN 2004.01.11: Added method
+# Warning: this is Tk-specific code.
+#
+def copyBeforeToTemp(self):
+
+	# local variables for class fields, for ease
+	# of reading and ease of typeing.
+	#	
+	c = self.c ; temp_v = self.temp_v
+
+	# Delete all children of temp node.
+	#
+	while temp_v.firstChild():
+		temp_v.firstChild().doDelete(temp_v)
+
+	# Copy the test case node text to the temp node
+	#
+	text = self.case_v.bodyString()
+	temp_v.t.setTnodeText(text,app.tkEncoding)
+	
+	# create the child node that holds the text
+	#
+	t = leoNodes.tnode(headString="tempChildNode")
+	self.tempChild_v = self.temp_v.insertAsNthChild(0,t)
+
+	# copy the before text to the temp text
+	#
+	text = self.before_v.bodyString()
+	self.tempChild_v.t.setTnodeText(text,app.tkEncoding)
+	
+	# make the temp child node current, and put the
+	# cursor at the beginning
+	#
+	c.selectVnode(self.tempChild_v)
+	c.frame.body.setInsertPointToStartOfLine( 0 )
+	c.frame.body.setTextSelection(None,None)
+	#app.gui.setInsertPoint(t,"1.0")
+	#app.gui.setTextSelection(t,"1.0","1.0")
+</t>
+<t tx="dthein.20040110083440.1"># DTHEIN 2004.01.11: Added method
+def setUp(self):
+
+	self.u = testUtils()
+	self.c = top()
+	self.current_v = self.c.currentVnode()
+	self.old_v = self.c.currentVnode()
+	root = self.u.findRootNode(self.current_v)
+	self.temp_v = self.u.findNodeInTree(root,"tempNode")
+	self.tempChild_v = None
+	self.dataParent_v = self.u.findNodeInTree(root,"reformatParagraphsTests")
+	self.before_v = None
+	self.after_v = None
+	self.case_v = None
+	self.wasChanged = self.c.changed
+	
+
+</t>
+<t tx="dthein.20040110083440.2"># DTHEIN 2004.01.11: Added method
+def testNoTrailingNewline(self):
+	
+	self.singleParagraphTest("testNoTrailingNewline",2,24)
+</t>
+<t tx="dthein.20040110084225.1"># DTHEIN 2004.01.11: Added method
+def tearDown(self):
+	
+	# local variables for class fields, for ease
+	# of reading and ease of typeing.
+	#	
+	c = self.c ; temp_v = self.temp_v
+	
+	# clear the temp node and mark it unchanged
+	#
+	temp_v.t.setTnodeText("",app.tkEncoding)
+	temp_v.clearDirty()
+	
+	if not self.wasChanged:
+		c.setChanged (false)
+		
+	# Delete all children of temp node.
+	#
+	while temp_v.firstChild():
+		temp_v.firstChild().doDelete(temp_v)
+
+	# make the original node the current node
+	#
+	c.selectVnode(self.old_v)</t>
+<t tx="dthein.20040110103539"># DTHEIN 2004.01.11: Added method
+def testTrailingNewline(self):
+	
+	self.singleParagraphTest("testTrailingNewline",3,0)
+</t>
+<t tx="dthein.20040110104535"># DTHEIN 2004.01.11: Added method
+def getCaseDataNodes(self,caseNodeName):
+
+	self.case_v = self.u.findNodeInTree(self.dataParent_v,caseNodeName)
+	self.before_v = self.u.findNodeInTree(self.case_v,"before")
+	self.after_v  = self.u.findNodeInTree(self.case_v,"after")
+</t>
+<t tx="dthein.20040110105811"># DTHEIN 2004.01.11: Added method
+def testMixedLineLengths(self):
+	
+	self.singleParagraphTest("testMixedLineLengths",4,10)
+</t>
+<t tx="dthein.20040110110003"># DTHEIN 2004.01.11: Added method
+def testMixedLinesWithLeadingWS(self):
+	
+	self.singleParagraphTest("testMixedLinesWithLeadingWS",4,12)
+</t>
+<t tx="dthein.20040110111253"># DTHEIN 2004.01.11: Added method
+def testNoChangeRequired(self):
+	
+	self.singleParagraphTest("testNoChangeRequired",1,28)
+</t>
+<t tx="dthein.20040110111432"># DTHEIN 2004.01.11: Added method
+def testHonorLeadingWS(self):
+	
+	self.singleParagraphTest("testHonorLeadingWS",5,16)
+</t>
+<t tx="dthein.20040110111609"># DTHEIN 2004.01.11: Added method
+def testHonorLeadingWSVar1(self):
+	
+	self.singleParagraphTest("testHonorLeadingWSVar1",5,16)
+</t>
+<t tx="dthein.20040110111642"># DTHEIN 2004.01.11: Added method
+def testSimpleHangingIndent(self):
+	
+	self.singleParagraphTest("testSimpleHangingIndent",5,8)
+</t>
+<t tx="dthein.20040110112122"># DTHEIN 2004.01.11: Added method
+def testSimpleHangingIndentVar1(self):
+	
+	self.singleParagraphTest("testSimpleHangingIndentVar1",5,8)
+</t>
+<t tx="dthein.20040110112134"># DTHEIN 2004.01.11: Added method
+def testSimpleHangingIndentVar2(self):
+	
+	self.singleParagraphTest("testSimpleHangingIndentVar2",5,8)
+</t>
+<t tx="dthein.20040110112256"># DTHEIN 2004.01.11: Added method
+def testMultiParagraph(self):
+	
+	# Locate the test data
+	#
+	self.getCaseDataNodes("testMultiParagraph")
+	
+	# Setup the temp node
+	#
+	self.copyBeforeToTemp()
+	
+	# reformat the paragraph and check insertion cursor position
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(13,0)
+	
+	# Keep going, in the same manner
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(25,0)
+	self.c.reformatParagraph()
+	self.checkPosition(32,11)
+	
+	# Compare the computed result to the reference result.
+	self.checkText()
+</t>
+<t tx="dthein.20040110152856"># DTHEIN 2004.01.11: Added method
+def checkPosition(self,expRow,expCol):
+
+	row,col = self.getRowCol()
+	self.failUnlessEqual(expCol,col,
+		"Current position is (" + str(row) + "," + str(col) 
+		+ ");  expected cursor to be at column " + str(expCol) + ".")
+	self.failUnlessEqual(expRow,row,
+		"Current position is (" + str(row) + "," + str(col) 
+		+ ");  expected cursor to be at line " + str(expRow) + ".")
+</t>
+<t tx="dthein.20040110152856.1"># DTHEIN 2004.01.11: Added method
+def getRowCol(self):
+	
+	# local variables for class fields, for ease
+	# of reading and ease of typeing.
+	#	
+	c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
+	tab_width = c.frame.tab_width
+
+	# Get the Tkinter row col position of the insert cursor
+	#	
+	index = body.index("insert")
+	row,col = gui.getindex(body,index)
+	
+	# Adjust col position for tabs
+	#
+	if col &gt; 0:
+		s = body.get("%d.0" % (row),index)
+		s = toUnicode(s,app.tkEncoding)
+		col = computeWidth(s,tab_width)
+
+	return (row,col)
+</t>
+<t tx="dthein.20040110153454"></t>
+<t tx="dthein.20040110153454.1"></t>
+<t tx="dthein.20040110153454.2"></t>
+<t tx="dthein.20040110160056"># DTHEIN 2004.01.11: Added method
+def checkText(self):
+
+	new_text = self.tempChild_v.bodyString()
+	ref_text = self.after_v.bodyString()
+	newLines = new_text.splitlines(1)
+	refLines = ref_text.splitlines(1)
+	newLinesCount = len(newLines)
+	refLinesCount = len(refLines)
+	for i in range(min(newLinesCount,refLinesCount)):
+		self.failUnlessEqual(newLines[i],refLines[i],
+			"Mismatch on line " + str(i) + "."
+			+ "\nExpected text: " + `refLines[i]`
+			+ "\n  Actual text: "	+ `newLines[i]`)
+	self.failUnlessEqual(newLinesCount,refLinesCount,
+		"Expected " + str(refLinesCount) + " lines, but "
+		+ "received " + str(newLinesCount) + " lines.")</t>
+<t tx="dthein.20040111093132"># DTHEIN 2004.01.11: Added method
+def testMultiParagraphWithList(self):
+	
+	# Locate the test data
+	#
+	self.getCaseDataNodes("testMultiParagraphWithList")
+	
+	# Setup the temp node
+	#
+	self.copyBeforeToTemp()
+	
+	# reformat the paragraph and check insertion cursor position
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(4,0)
+	
+	# Keep going, in the same manner
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(7,0)
+	self.c.reformatParagraph()
+	self.checkPosition(10,0)
+	self.c.reformatParagraph()
+	self.checkPosition(13,0)
+	self.c.reformatParagraph()
+	self.checkPosition(14,18)
+	
+	# Compare the computed result to the reference result.
+	self.checkText()
+</t>
+<t tx="dthein.20040111093132.1"># DTHEIN 2004.01.11: Added method
+def singleParagraphTest(self,caseName,finalRow,finalCol):
+	
+	# Locate the test data
+	#
+	self.getCaseDataNodes(caseName)
+	
+	# Setup the temp node
+	#
+	self.copyBeforeToTemp()
+	
+	# reformat the paragraph
+	#
+	self.c.reformatParagraph()
+	
+	# Compare the computed result to the reference result.
+	self.checkText()
+	self.checkPosition(finalRow,finalCol)
+
+</t>
+<t tx="dthein.20040111093717"># DTHEIN 2004.01.11: Added method
+def testDirectiveBreaksParagraph(self):
+	
+	# Locate the test data
+	#
+	self.getCaseDataNodes("testDirectiveBreaksParagraph")
+	
+	# Setup the temp node
+	#
+	self.copyBeforeToTemp()
+	
+	# reformat the paragraph and check insertion cursor position
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(13,0) # at next paragraph
+	
+	# Keep going, in the same manner
+	#
+	self.c.reformatParagraph()
+	self.checkPosition(25,0) # at next paragraph
+
+	self.c.reformatParagraph()
+	self.checkPosition(32,11)
+	
+	# Compare the computed result to the reference result.
+	self.checkText()
+</t>
 <t tx="ekr.20031218072017">@ignore
 @nocolor
 
@@ -29551,7 +29910,7 @@ while v and v != after:
 	head,ins,tail = c.frame.body.getInsertLines()
 
 	if not ins or ins.isspace() or ins[0] == '@':
-		return None,None,None
+		return None,None,None,None # DTHEIN 18-JAN-2004
 		
 	head_lines = splitLines(head)
 	tail_lines = splitLines(tail)
@@ -29572,12 +29931,15 @@ while v and v != after:
 
 	# Scan forwards.
 	i = 0
+	trailingNL = False # DTHEIN 18-JAN-2004: properly capture terminating NL
 	while i &lt; len(tail_lines):
 		line = tail_lines[i]
 		if len(line) == 0 or line.isspace() or line[0] == '@':
+			trailingNL = line[0] == u'\n' or line[0] == '@' # DTHEIN 18-JAN-2004
 			break
 		i += 1
 		
+#	para_tail_lines = tail_lines[:i]
 	para_tail_lines = tail_lines[:i]
 	post_para_lines = tail_lines[i:]
 	
@@ -29587,12 +29949,19 @@ while v and v != after:
 	result.extend(para_tail_lines)
 	tail = joinLines(post_para_lines)
 
-	return head,result,tail # string, list, string</t>
-<t tx="ekr.20031218072017.1826">print ; print "head_lines"
-for line in head_lines: print `line`
-print ; print "ins", `ins`
-print ; print "tail_lines"
-for line in tail_lines: print `line`</t>
+	# DTHEIN 18-JAN-2004: added trailingNL to return value list
+	return head,result,tail,trailingNL # string, list, string, bool</t>
+<t tx="ekr.20031218072017.1826">if 0:
+	print ; print "head_lines"
+	for line in head_lines: print `line`
+	print ; print "ins", `ins`
+	print ; print "tail_lines"
+	for line in tail_lines: print `line`
+else:
+	es("head_lines: " + `head_lines`)
+	es("ins: ", `ins`)
+	es("tail_lines: " + `tail_lines`)
+</t>
 <t tx="ekr.20031218072017.1827">def findMatchingBracket (self):
 	
 	c = self ; body = c.frame.body
@@ -29769,7 +30138,7 @@ tabWidth  = dict.get("tabwidth")
 original = body.getAllText()
 oldSel   = body.getTextSelection()
 oldYview = body.getYScrollPosition()
-head,lines,tail = c.findBoundParagraph()</t>
+head,lines,tail,trailingNL = c.findBoundParagraph() # DTHEIN 18-JAN-2004: add trailingNL</t>
 <t tx="ekr.20031218072017.1835">indents = [0,0] ; leading_ws = ["",""]
 
 for i in (0,1):
@@ -29780,14 +30149,16 @@ for i in (0,1):
 		
 indents[1] = max(indents)
 if len(lines) == 1:
-	leading_ws[1] = leading_ws[0]</t>
+	leading_ws[1] = leading_ws[0]
+</t>
 <t tx="ekr.20031218072017.1836"># Remember whether the last line ended with a newline.
 lastLine = lines[-1]
-trailingNL = lastLine and lastLine[-1] == '\n'
+if 0: # DTHEIN 18-JAN-2004: removed because findBoundParagraph now gives trailingNL
+	trailingNL = lastLine and lastLine[-1] == '\n'
 
 # Remove any trailing newlines for wraplines.
 lines = [line[:-1] for line in lines[:-1]]
-if lastLine and trailingNL:
+if lastLine and not trailingNL:
 	lastLine = lastLine[:-1]
 lines.extend([lastLine])
 
@@ -29796,10 +30167,19 @@ result = wrap_lines(lines,
 	pageWidth-indents[1],
 	pageWidth-indents[0])
 
+# DTHEIN 	18-JAN-2004
+# prefix with the leading whitespace, if any
+paddedResult = []
+paddedResult.append(leading_ws[0] + result[0])
+for line in result[1:]:
+	paddedResult.append(leading_ws[1] + line)
+
 # Convert the result to a string.
-result = '\n'.join(result)
-if trailingNL:
-	result += '\n'</t>
+result = '\n'.join(paddedResult) # DTHEIN 	18-JAN-2004: use paddedResult
+if 0: # DTHEIN 18-JAN-2004:  No need to do this.
+	if trailingNL:
+		result += '\n'
+</t>
 <t tx="ekr.20031218072017.1837">sel_start, sel_end = body.setSelectionAreas(head,result,tail)
 
 changed = original != head + result + tail
@@ -34827,6 +35207,8 @@ def getTextRange (self,index1,index2):
 	
 	All lines end in a newline, except possibly the last line."""
 
+	# DTHEIN 18-JAN-2004: NOTE: overridden by leoTkinterBody!!!!!!
+	
 	n1 = self.scanToStartOfLine(self.insertPoint)
 	n2 = self.scanToEndOfLine(self.insertPoint)
 	
@@ -47671,13 +48053,18 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	for s in lines:
 		i = 0
 		while i &lt; len(s):
-			assert(len(line) &lt; outputLineWidth)
+			assert(len(line) &lt;= outputLineWidth) # DTHEIN 18-JAN-2004
 			j = skip_ws(s,i)   # ;   ws = s[i:j]
 			k = skip_non_ws(s,j) ; word = s[j:k]
 			assert(k&gt;i)
 			i = k
-			if 1 + len(word) + len(line) &lt; outputLineWidth:
-				if len(word) &gt; 0:
+			# DTHEIN 18-JAN-2004: wrap at exactly the text width, 
+			# not one character less
+			# 
+			wordLen = len(word)
+			if len(line) &gt; 0 and wordLen &gt; 0: wordLen += len(" ")
+			if wordLen + len(line) &lt;= outputLineWidth:
+				if wordLen &gt; 0:
 					&lt;&lt; place blank and word on the present line &gt;&gt;
 				else: pass # discard the trailing whitespace.
 			else:
@@ -47691,7 +48078,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	line = word
 else:
 	# Add the word, preceeded by a blank.
-	line = string.join((line,' ',word),'')</t>
+	line = " ".join([line,word]) # DTHEIN 18-JAN-2004: better syntax</t>
 <t tx="ekr.20031218072017.3102"># End the previous line.
 if len(line) &gt; 0:
 	result.append(line)
@@ -47701,7 +48088,7 @@ if len(line) &gt; 0:
 line = word
 
 # Careful: the word may be longer than pageWidth.
-if len(line) &gt;= pageWidth:
+if len(line) &gt; pageWidth: # DTHEIN 18-JAN-2004: line can equal pagewidth
 	result.append(line)
 	outputLineWidth = pageWidth # DTHEIN 3-NOV-2002: width for remaining lines
 	line = ""
@@ -58649,7 +59036,7 @@ Tk = Tkinter
 	# Handle mouse wheel in the outline pane.
 	if sys.platform == "linux2": # This crashes tcl83.dll
 		canvas.bind("&lt;MouseWheel&gt;", frame.OnMouseWheel)
-		
+	
 	# print_bindings("canvas",canvas)
 	return canvas</t>
 <t tx="ekr.20031218072017.3945">@ The key invariants used throughout this code:
@@ -62155,7 +62542,8 @@ Linux 2.4.22-21mdkenterprise
 The pargraph reformat is broken with respect to hanging indentation and leading whitespace.
 
 It does not (as it used to) preserve the leading whitespace of the first and second lines ... and, therefore, doesn't properly handle hanging indentation either.
-</t>
+
+DTHEIN 18-JAN-2004:  I believe this is now fixed.</t>
 <t tx="ekr.20040105070616">This may be the result of excessive string concatenation.</t>
 <t tx="ekr.20040105070616.2">- beginUpdate does not inhibit redraw!!
 
