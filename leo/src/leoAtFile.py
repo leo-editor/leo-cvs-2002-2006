@@ -464,6 +464,7 @@ class atFile:
         if partialFlag: after = p.nodeAfterTree()
         else: after = c.nullPosition()
         while p and not p.equal(after): # Don't use iterator.
+            # g.trace(p.headString())
             if p.isAtIgnoreNode():
                 p.moveToNodeAfterTree()
             elif p.isAtThinFileNode():
