@@ -157,18 +157,26 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2817: doCommand
     #@+node:ekr.20031218072017.2582: version & signon stuff
+        
+        
+    #@+node:ekr.20040629121554:getBuildNumber
     def getBuildNumber(self):
         c = self
         return c.ver[10:-1] # Strip off "(dollar)Revision" and the trailing "$"
-    
+    #@nonl
+    #@-node:ekr.20040629121554:getBuildNumber
+    #@+node:ekr.20040629121554.1:getSignOnLine
     def getSignOnLine (self):
         c = self
-        return "Leo 4.2 beta 1, build %s, July 1, 2004" % c.getBuildNumber()
-        
+        return "Leo 4.2 beta 1, build %s, June 30, 2004" % c.getBuildNumber()
+    #@-node:ekr.20040629121554.1:getSignOnLine
+    #@+node:ekr.20040629121554.2:initVersion
     def initVersion (self):
         c = self
-        c.ver = "$Revision$" # CVS will update this.
-        
+        c.ver = "$Revision$" # CVS updates this.
+    #@nonl
+    #@-node:ekr.20040629121554.2:initVersion
+    #@+node:ekr.20040629121554.3:signOnWithVersion
     def signOnWithVersion (self):
     
         c = self
@@ -182,6 +190,7 @@ class baseCommands:
         g.es("Python %d.%d.%d, Tk %s, %s" % (n1,n2,n3,tkLevel,sys.platform))
         g.enl()
     #@nonl
+    #@-node:ekr.20040629121554.3:signOnWithVersion
     #@-node:ekr.20031218072017.2582: version & signon stuff
     #@+node:ekr.20040312090934:c.iterators
     #@+node:EKR.20040529091232:c.all_positions_iter == allNodes_iter
