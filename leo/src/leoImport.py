@@ -144,8 +144,7 @@ class baseLeoImportCommands:
                 #@nonl
                 #@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
                 #@nl
-            for i in xrange(len(files)):
-                fileName = files[i]
+            for fileName in files:
                 v = self.createOutline(fileName,current)
                 self.perfectImport(fileName,v)
                 if v: # 8/11/02: createOutline may fail.
