@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6453" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6457" clone_windows="0"/>
 <globals body_outline_ratio="0.410011918951">
-	<global_window_position top="37" left="307" height="839" width="907"/>
+	<global_window_position top="72" left="237" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
 <v t="ekr.20041121151002" a="E"><vh>@settings</vh>
-<v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
+<v t="ekr.20041121151002.1" a="TV"><vh>@recentfiles </vh></v>
 <v t="ekr.20041218110904"><vh>@page local options</vh>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
 <v t="ekr.20041213075902"><vh>@font log font</vh></v>
 <v t="ekr.20041217042849"><vh>@font body font</vh></v>
-<v t="ekr.20041217132317"><vh>@strings[a,b,c] test = b</vh></v>
-<v t="ekr.20041217132338"><vh>@ints[1,2,3] test = 3</vh></v>
+<v t="ekr.20041217132317"><vh>@strings[a,b,c] stringsTest = c</vh></v>
+<v t="ekr.20041217132338"><vh>@ints[1,2,3] intsTest = 3</vh></v>
 </v>
 <v t="ekr.20041217144914"><vh>@page colors</vh>
 <v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
 <v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
 <v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041218100259"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
+</v>
+<v t="ekr.20041218141525"><vh>@page Fonts</vh>
+<v t="ekr.20041218141525.1"><vh>@font log font</vh></v>
+<v t="ekr.20041218141525.2"><vh>@font body text font</vh></v>
+<v t="ekr.20041218141525.3"><vh>@font outline font</vh></v>
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
@@ -991,7 +996,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
 <v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
 <v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
@@ -1145,7 +1150,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.2"><vh>Test .leo files...</vh>
+<v t="ekr.20040712101754.2" a="E"><vh>Test .leo files...</vh>
 <v t="ekr.20040730181601"><vh>@test minimalLeoFile.leo</vh></v>
 <v t="ekr.20040730181610"><vh>@test minimalLeoFile2.leo</vh></v>
 <v t="ekr.20040831104758"><vh>@test minimalLeoFile3.leo</vh></v>
@@ -1446,16 +1451,15 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
+<v t="ekr.20041125145818.1" a="M"><vh>Settings dialog</vh>
 <v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
-<v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
-<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
+<v t="ekr.20041213115848"><vh>Later or never ...</vh>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
 <v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
 <v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
-<v t="ekr.20041217140915"><vh>Unit tests</vh></v>
-<v t="ekr.20041213115848"><vh>Later ...</vh></v>
+<v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="MTV"><vh>Settings dialog</vh>
+</v>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
 <v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
@@ -1487,18 +1491,17 @@
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
 <v t="ekr.20041127134208.4"><vh>createFont </vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
 <v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
 <v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041218100021"><vh>createInts</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles</vh></v>
 <v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
 <v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
@@ -1587,18 +1590,17 @@
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
 <v t="ekr.20041127134208.4"><vh>createFont </vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family combo box &gt;&gt;</vh></v>
 <v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight combo box &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant combo box&gt;&gt;</vh></v>
 <v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041218100021"><vh>createInts</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
 <v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
+<v t="ekr.20041127134208.9"><vh>createRecentFiles</vh></v>
 <v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
 <v t="ekr.20041127134613"><vh>createShortcuts</vh></v>
 <v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
@@ -2225,7 +2227,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2356,7 +2358,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -11240,16 +11242,14 @@ Bigger projects:
     top.focus_force() # Get all keystrokes.
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
-<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\doc\leodocs.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\test\test.leo
+<t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo</t>
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\test.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13127,12 +13127,17 @@ self.setterLabel = sc.component('label')
     f = Tk.Frame(parent) # No need to pack.
     self.alterComments = p.copy()
     self.alteredCommentsString = d.get('comments')
-    &lt;&lt; create the family option menu &gt;&gt;
+    &lt;&lt; create the family combo box &gt;&gt;
     &lt;&lt; create the size entry &gt;&gt;
-    &lt;&lt; create the weight option menu &gt;&gt;
-    &lt;&lt; create the slant option menu &gt;&gt;
+    &lt;&lt; create the weight combo box &gt;&gt;
+    &lt;&lt; create the slant combo box &gt;&gt;
+    Tk.Label(f,text=fontName).pack(side='left')
     &lt;&lt; define fontCallback &gt;&gt;
-    &lt;&lt; create the sample area &gt;&gt;
+
+    familyBox.configure(selectioncommand=fontCallback)
+    slantBox.configure(selectioncommand=fontCallback)
+    weightBox.configure(selectioncommand=fontCallback)
+
     self.initValue(p,munge(fontName),'font',d,fontCallback)
 
     self.sc.create_window(15,self.h,anchor='w',window = f)
@@ -13217,14 +13222,33 @@ self.setterLabel = sc.component('label')
     s = p.bodyString()
     lines = g.splitLines(s)
     
-    i = 1
-    for line in lines:
-        if not g.match(line.strip(),0,'#'):
-            name = "file %d" % (i) ; i += 1
-            self.createString(parent,p,kind,name,line)
+    f = Tk.Frame(parent)
+    
+    recentFilesBox = Pmw.ComboBox(f,
+        labelpos="ew",label_text='recent files',
+        scrolledlist_items=lines)
+
+    if lines:
+        recentFilesBox.selectitem(0)
+    recentFilesBox.pack(side="left")
+    
+    # Increase the width of the entry field.
+    entryfield = recentFilesBox.component('entryfield')
+    entry = entryfield.component('entry')
+    entry.configure(width=70)
+
+    def recentFilesCallback():
+        files = recentFilesBox.get(0,'end')
+        files = [theFile.strip() for theFile in files]
+        # g.trace(repr(files))
+        return files
+
+    self.initValue(p,name,kind,vals,recentFilesCallback)
+
+    self.sc.create_window(10,self.h,anchor='w',window=f)
+    self.h += 30
                 
-    self.suppressComments = p.copy()
-</t>
+    self.suppressComments = p.copy()</t>
 <t tx="ekr.20041127134208.10">def createShortcut (self,parent,p,kind,name,val):
     
     g.trace(name,val)
@@ -13304,21 +13328,27 @@ colorNamesList.insert(0,noColor)
 
 initVal = val
 if val is noColor: val = None</t>
-<t tx="ekr.20041128062902">optionMenu = Pmw.OptionMenu(f,items=colorNamesList,initialitem=initVal)
-optionMenu.pack(side="left",padx=2)
+<t tx="ekr.20041128062902">colorBox = Pmw.ComboBox(f,scrolledlist_items=colorNamesList)
+colorBox.selectitem(initVal)
+colorBox.pack(side="left",padx=2)
 
-menuButton = optionMenu.component('menubutton')
-menuButton.configure(width=20) # Constant width is good enough.
-if val:
-    menuButton.configure(background=val,activebackground=val)
+color = g.choose(val is None,f.cget('background'),val)
+colorSample = Tk.Button(f,width=8,background=color)
+colorSample.pack(side='left',padx=2)
 
-# Callback uses optionMenu and menuButton.
-def optionMenuCallback (newName):
-    self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
-    if newName is noColor: newName = f.cget('background')
-    menuButton.configure(background=newName,activebackground=newName)
+def colorCallback (newName):
+    g.trace(repr(newName))
+    if not newName or newName.lower() in ('none','&lt;none&gt;','&lt;no color&gt;'):
+        self.colorSettingDict[munge(name)] = None
+        color = f.cget('background')
+        colorSample.configure(background=color)
+    else:
+        try:
+            colorSample.configure(background=newName)
+            self.colorSettingDict[munge(name)] = g.choose(newName is noColor,None,newName)
+        except: pass # Ignore invalid names.
 
-optionMenu.configure(command=optionMenuCallback)</t>
+colorBox.configure(selectioncommand=colorCallback)</t>
 <t tx="ekr.20041128062902.1">def pickerCallback (color=val):
 
     rgb,val = tkColorChooser.askcolor(parent=parent,color=color)
@@ -13645,17 +13675,11 @@ print ; print</t>
             child1 = child1.next()
             child2 = child2.next()</t>
 <t tx="ekr.20041211044607"></t>
-<t tx="ekr.20041211053412">@
-
-- Make recent files an extensible list.
-    At present there is no way to add entries from the dialog.
-
-- The recent-files entry is updated properly, but it doesn't "take".
-
-</t>
 <t tx="ekr.20041211053412.1">@
 
-May be a problem with copying positions.</t>
+May be a problem with copying positions.
+
+Probably don't need to do anything with this if the Settings command uses the body pane.</t>
 <t tx="ekr.20041211053412.2">@
 
 - Refresh recreates and redraws dialog's outline.  
@@ -13671,14 +13695,19 @@ if name in (None,"OK","Cancel"):
 to:
 
 if name in ("OK","Cancel"):</t>
-<t tx="ekr.20041211053539.1">@
-
-</t>
+<t tx="ekr.20041211053539.1"></t>
 <t tx="ekr.20041213074603">@ignore
 @killcolor
 
-- Create widgets for @strings and @ints.
-</t>
+- Unit tests: there are too many cases to test by hand.
+
+- Move code into Leo's core.
+    - move findCorrespondingNode into leoNodes class.
+
+- Don't use separate dialog at all
+    - This create a way of cutting &amp; pasting colors.
+    - However, we would still need a different outline.
+    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -13700,22 +13729,13 @@ if data:
     name2,val = data
     if val and val in names:
         initialitem = names.index(val)
-        
-label_text = "%s:" % (fontName)
 
-familyMenu = Pmw.OptionMenu(f,
-    labelpos="we",label_text=label_text,
-    items=names,initialitem=initialitem)
-familyMenu.pack(side="left",padx=2)
+familyBox = Pmw.ComboBox(f,
+    labelpos="we",label_text='Family:',
+    scrolledlist_items=names)
 
-familyVar = Tk.StringVar()
-familyVar.set(names[initialitem])
-
-labelButton = familyMenu.component('label')
-labelButton.configure(width=20,anchor='e')
-
-familyButton = familyMenu.component('menubutton')
-familyButton.configure(width=20,textvariable=familyVar)</t>
+familyBox.selectitem(initialitem)
+familyBox.pack(side="left",padx=2)</t>
 <t tx="ekr.20041213090401.5">initialitem = 0
 values = ['&lt;None&gt;','normal','bold']
 data = d.get('weight')
@@ -13724,17 +13744,12 @@ if data:
     if val in values:
         initialitem = values.index(val)
 
-weightMenu = Pmw.OptionMenu(f,
+weightBox = Pmw.ComboBox(f,
     labelpos="we",label_text="Weight:",
-    items=values,initialitem=initialitem)
-weightMenu.pack(side="left",padx=2)
+    scrolledlist_items=values)
 
-weightVar = Tk.StringVar()
-weightVar.set(values[initialitem])
-
-weightButton = weightMenu.component('menubutton')
-weightButton.configure(width=7,textvariable=weightVar)
-</t>
+weightBox.selectitem(initialitem)
+weightBox.pack(side="left",padx=2)</t>
 <t tx="ekr.20041213090929">import leoGlobals as g
 import leoConfig
 import leoNodes
@@ -13748,13 +13763,7 @@ import tkColorChooser
 import tkFont
 
 import sys</t>
-<t tx="ekr.20041213115848">- Move code into Leo's core.
-    - move findCorrespondingNode into leoNodes class.
-
-- Don't use separate dialog at all
-    - This create a way of cutting &amp; pasting colors.
-    - However, we would still need a different outline.
-    - If changes to the outline were allowed in the dialog it would be sorta like old clone windows.</t>
+<t tx="ekr.20041213115848">@</t>
 <t tx="ekr.20041213163519">Tk.Label(f,text="Size:").pack(side="left")
 
 sizeEntry = Tk.Entry(f,width=4)
@@ -13778,16 +13787,12 @@ if data:
     if val in values:
         initialitem = values.index(val)
 
-slantMenu = Pmw.OptionMenu(f,
+slantBox = Pmw.ComboBox(f,
     labelpos="we",label_text="Slant:",
-    items=values,initialitem=initialitem)
-slantMenu.pack(side="left",padx=2)
-    
-slantVar = Tk.StringVar()
-slantVar.set(values[initialitem])
+    scrolledlist_items=values)
 
-slantButton = slantMenu.component('menubutton')
-slantButton.configure(width=7,textvariable=slantVar)</t>
+slantBox.selectitem(initialitem)
+slantBox.pack(side="left",padx=2)</t>
 <t tx="ekr.20041216085206">class logClass:
     
     def __init__ (self,textWidget):
@@ -13845,25 +13850,24 @@ w.update_idletasks()</t>
 
     body = ''.join(lines)
     return body</t>
-<t tx="ekr.20041216110712">def fontCallback():
+<t tx="ekr.20041216110712">def fontCallback(*args,**keys):
     
     d2 = d.copy() # The update logic must compare distinct dicts.
     
-    for var,key in (
-        (familyVar,'family'),
-        (None,'size'),
-        (slantVar,'slant'),
-        (weightVar,'weight'),
+    for box,key in (
+        (familyBox, 'family'),
+        (None,      'size'),
+        (slantBox,  'slant'),
+        (weightBox, 'weight'),
     ):
-        if var:
-            val = var.get()
-        else:
-            val = sizeEntry.get().strip()
-        if val in (u'','','None','none','&lt;None&gt;','&lt;none&gt;',): val = None
+        if box: val = box.get()
+        else:   val = sizeEntry.get().strip()
+        if not val or  val.lower() in ('none','&lt;none&gt;',): val = None
+
         data = d.get(key)
         name,oldval = data
         d2[key] = name,val
-
+    
     return d2</t>
 <t tx="ekr.20041217033348"></t>
 <t tx="ekr.20041217042849"># The font for the log pane. Default is default font for Tk.Text widgets.
@@ -13876,29 +13880,9 @@ body_text_font_size = None
 body_text_font_slant = None
 body_text_font_weight = None
 </t>
-<t tx="ekr.20041217072951">if 0:
-    sample = Tk.Text(f,width = 20,height=1)
-    sample.pack(side="left")
-    
-    sample.insert('end','sample')
-    
-    params = [] ; d2 = fontCallback()
-    for key in ('family','size','slant','weight'):
-        param = d2.get(key)
-        if param:
-            name,val = param
-        params.append(val)
-        
-    font = g.app.gui.getFontFromParams(params[0],params[1],params[2],params[3])
-    
-    self.fontRefs[fontName] = font
-    g.trace(fontName,font,params)
-    
-    sample.configure(font=font)</t>
 <t tx="ekr.20041217132317"></t>
 <t tx="ekr.20041217132338"></t>
 <t tx="ekr.20041217135841"></t>
-<t tx="ekr.20041217140915">There are too many cases to test by hand.</t>
 <t tx="ekr.20041217142026">LightYellow1
 #f2fdff</t>
 <t tx="ekr.20041217143421">ivory1
@@ -13924,19 +13908,15 @@ body_text_font_weight = None
         
     f = Tk.Frame(parent)
 
-    intsMenu = Pmw.OptionMenu(f,
+    intsBox = Pmw.ComboBox(f,
         labelpos="ew",label_text=name,
-        items=items,initialitem=initialitem)
-    intsMenu.pack(side="left",padx=2)
+        scrolledlist_items=items)
 
-    intsVar = Tk.StringVar()
-    intsVar.set(str(items[initialitem]))
-    
-    intsButton = intsMenu.component('menubutton')
-    intsButton.configure(width=20,textvariable=intsVar)
+    intsBox.selectitem(initialitem)
+    intsBox.pack(side="left",padx=2)
     
     def intsCallback():
-        val2 = intsVar.get()
+        val2 = intsBox.get()
         try:
             int(val2)
             return val2
@@ -13951,7 +13931,6 @@ body_text_font_weight = None
 <t tx="ekr.20041218100121">def createStrings (self,parent,p,kind,name,val):
     
     # g.trace(repr(kind),repr(name),val)
-    
     i = kind.find('[')
     j = kind.find(']')
     if not (-1 &lt; i &lt; j):
@@ -13967,20 +13946,15 @@ body_text_font_weight = None
         
     f = Tk.Frame(parent)
 
-    stringsMenu = Pmw.OptionMenu(f,
+    stringsBox = Pmw.ComboBox(f,
         labelpos="ew",label_text=name,
-        items=items,initialitem=initialitem)
-    stringsMenu.pack(side="left",padx=2)
+        scrolledlist_items=items)
 
-    stringsVar = Tk.StringVar()
-    stringsVar.set(items[initialitem])
-
-    stringsButton = stringsMenu.component('menubutton')
-    stringsButton.configure(width=20,textvariable=stringsVar)
+    stringsBox.selectitem(initialitem)
+    stringsBox.pack(side="left",padx=2)
     
     def stringsCallback():
-        val2 = stringsVar.get()
-        return val2
+        return stringsBox.get()
 
     self.initValue(p,name,kind,val,stringsCallback)
 
@@ -13988,5 +13962,26 @@ body_text_font_weight = None
     self.h += 30</t>
 <t tx="ekr.20041218100259"></t>
 <t tx="ekr.20041218110904"></t>
+<t tx="ekr.20041218141525"></t>
+<t tx="ekr.20041218141525.1"># The font for the log pane. Default is default font for Tk.Text widgets.
+# Tk translates invalid font names to another font in a system-dependent way.
+# 
+# Default size is 12 for Linux, 8 otherwise.
+
+log_text_font_family = None
+log_text_font_size = None
+log_text_font_slant = roman
+log_text_font_weight = normal
+</t>
+<t tx="ekr.20041218141525.2">body_text_font_family = Courier New
+body_text_font_size = None
+body_text_font_slant = None
+body_text_font_weight = None
+</t>
+<t tx="ekr.20041218141525.3">headline_text_font_family = None
+headline_text_font_size = None
+headline_text_font_slant = roman
+headline_text_font_weight = normal
+</t>
 </tnodes>
 </leo_file>
