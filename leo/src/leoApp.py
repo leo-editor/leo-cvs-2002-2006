@@ -134,11 +134,7 @@ class LeoApp:
 		doHook("close-frame",c=c) # This may remove frame from the window list.
 		
 		if frame in a.windowList:
-			top = frame.top # Remember this.
-			a.destroyOpenWithFilesForFrame(frame)
-			a.destroyAllWindowObjects(frame)
-			a.windowList.remove(frame)
-			top.destroy() # force the window to go away now.
+			a.destroyWindow(frame)
 		
 		if a.windowList:
 			# Pick a window to activate so we can set the log.
@@ -285,7 +281,21 @@ class LeoApp:
 		a.openWithFiles.remove(dict)
 	#@-body
 	#@-node:7::app.destroyOpenWithFileWithDict
-	#@+node:8::app.finishCreate
+	#@+node:8::app.destroyWindow
+	#@+body
+	def destroyWindow (self,frame):
+		
+		a = self
+		top = frame.top # Remember this.
+			
+		a.destroyOpenWithFilesForFrame(frame)
+		a.destroyAllWindowObjects(frame)
+		a.windowList.remove(frame)
+	
+		top.destroy() # force the window to go away now.
+	#@-body
+	#@-node:8::app.destroyWindow
+	#@+node:9::app.finishCreate
 	#@+body
 	# Called when the gApp global has been defined.
 	
@@ -424,8 +434,8 @@ class LeoApp:
 	
 		return true # all went well.
 	#@-body
-	#@-node:8::app.finishCreate
-	#@+node:9::app.finishQuit
+	#@-node:9::app.finishCreate
+	#@+node:10::app.finishQuit
 	#@+body
 	def finishQuit(self):
 	
@@ -446,8 +456,8 @@ class LeoApp:
 			self.root.quit()
 			collectGarbage("after self.root.quit")
 	#@-body
-	#@-node:9::app.finishQuit
-	#@+node:10::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@-node:10::app.finishQuit
+	#@+node:11::app.get/setRealMenuName & setRealMenuNamesFromTable
 	#@+body
 	# Returns the translation of a menu name or an item name.
 	
@@ -467,8 +477,8 @@ class LeoApp:
 			self.setRealMenuName(untrans,trans)
 	
 	#@-body
-	#@-node:10::app.get/setRealMenuName & setRealMenuNamesFromTable
-	#@+node:11::app.onQuit
+	#@-node:11::app.get/setRealMenuName & setRealMenuNamesFromTable
+	#@+node:12::app.onQuit
 	#@+body
 	def onQuit (self):
 		
@@ -486,8 +496,8 @@ class LeoApp:
 	
 	
 	#@-body
-	#@-node:11::app.onQuit
-	#@+node:12::app.setLog, lockLog, unlocklog
+	#@-node:12::app.onQuit
+	#@+node:13::app.setLog, lockLog, unlocklog
 	#@+body
 	def setLog (self,log,tag=""):
 		"""set the frame to which log messages will go"""
@@ -504,8 +514,8 @@ class LeoApp:
 		"""Enable changes to the log"""
 		self.logIsLocked = false
 	#@-body
-	#@-node:12::app.setLog, lockLog, unlocklog
-	#@+node:13::app.writeWaitingLog
+	#@-node:13::app.setLog, lockLog, unlocklog
+	#@+node:14::app.writeWaitingLog
 	#@+body
 	def writeWaitingLog (self):
 	
@@ -515,7 +525,7 @@ class LeoApp:
 			self.logWaiting = []
 	
 	#@-body
-	#@-node:13::app.writeWaitingLog
+	#@-node:14::app.writeWaitingLog
 	#@-others
 
 

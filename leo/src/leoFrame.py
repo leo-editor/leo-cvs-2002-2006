@@ -1920,13 +1920,8 @@ class baseLeoFrame:
 	
 		if fileName and len(fileName) > 0:
 			ok, frame = self.OpenWithFileName(fileName)
-			
 			if ok and closeFlag:
-				app().windowList.remove(self)
-				self.top.destroy() # force the window to go away now.
-				
-	
-	
+				app().destroyWindow(self)
 	#@-body
 	#@-node:2::frame.OnOpen
 	#@+node:3::frame.OnOpenWith and allies
@@ -2296,9 +2291,11 @@ class baseLeoFrame:
 	
 	#@-body
 	#@-node:8::OnSaveTo
-	#@+node:9::OnRevert
+	#@+node:9::frame.OnRevert
 	#@+body
 	def OnRevert(self,event=None):
+		
+		a = app()
 	
 		# Make sure the user wants to Revert.
 		if not self.mFileName:
@@ -2319,13 +2316,12 @@ class baseLeoFrame:
 		ok, frame = self.OpenWithFileName(fileName)
 		if ok:
 			frame.top.deiconify()
-			app().windowList.remove(self)
-			self.destroy() # Destroy this frame.
+			app().destroyWindow(self)
 		else:
 			self.mFileName = fileName
 	
 	#@-body
-	#@-node:9::OnRevert
+	#@-node:9::frame.OnRevert
 	#@+node:10::frame.OnQuit
 	#@+body
 	def OnQuit(self,event=None):
@@ -2393,9 +2389,9 @@ class baseLeoFrame:
 		if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
 			ok, frame = self.OpenWithFileName(fileName)
 			if ok and closeFlag:
-				app().windowList.remove(self)
-				self.destroy() # force the window to go away now.
+				app().destroyWindow(self)
 				app().setLog(frame,"OnOpenRecentFile") # Sets the log stream for es()
+	
 		doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)
 	#@-body
 	#@-node:1::frame.OnOpenRecentFile

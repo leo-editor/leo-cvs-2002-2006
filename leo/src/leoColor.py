@@ -1301,9 +1301,10 @@ class baseColorizer:
 
 				# trace("incremental")
 				
-				old_lines = self.lines
-				old_states = self.states
-				new_lines = lines
+				# 6/30/03: make a copies of everything
+				old_lines = self.lines[:]
+				old_states = self.states[:]
+				new_lines = lines[:]
 				new_states = []
 				
 				new_len = len(new_lines)
@@ -1374,6 +1375,7 @@ class baseColorizer:
 
 				#@-at
 				#@@c
+
 				if trailing_lines == 0:
 					m1 = new_lines[leading_lines:]
 					m2 = old_lines[leading_lines:]
@@ -1417,7 +1419,7 @@ class baseColorizer:
 				while j < old_len and j < len(old_states):
 					new_states.append(old_states[j])
 					j += 1
-					i += 1 # for the assert below.\
+					i += 1 # for the assert below.
 				
 				while j < len(old_states):
 					new_states.append("unknown")
