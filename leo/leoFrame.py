@@ -1997,8 +1997,8 @@ class LeoFrame:
 						d = leoDialog.leoDialog()
 						result = d.askYesNoCancel(
 							"Conflict!", message,
-							yesMessage = "Use Outline",
-							noMessage = "Use Temp File",
+							yesMessage = "Outline",
+							noMessage = "File",
 							defaultButton = "Cancel")
 						
 						
@@ -4970,7 +4970,7 @@ class LeoFrame:
 			self.log.see("end")
 			self.log.update_idletasks()
 		else:
-			a.logWaiting.append((s,color),) # 2/16/03
+			app().logWaiting.append((s,color),) # 2/25/03
 			print "Null log"
 			if type(s) == type(u""): # 3/18/03
 				s = toEncodedString(s,"ascii")
