@@ -193,7 +193,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040303063549" a="TV"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
+<v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
@@ -364,7 +364,7 @@
 <v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010" a="M"><vh>Run all tests except files tests</vh></v>
 </v>
-<v t="ekr.20040311111734" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
+<v t="ekr.20040311111734" a="M" tnodeList="ekr.20040311111734,ekr.20040311111734.1,ekr.20040311111734.2,ekr.20040311111734.3"><vh>@file c:\prog\test\leo42test.txt</vh>
 <v t="ekr.20040311111734.1"><vh>&lt;&lt; node one &gt;&gt;</vh></v>
 <v t="ekr.20040311111734.2"><vh>node a</vh></v>
 <v t="ekr.20040311111734.3"><vh>node b</vh></v>
@@ -436,6 +436,8 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040317101155" a="TV"><vh>Test of user icons</vh></v>
+<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -2791,8 +2793,11 @@ c = g.top() ; root = c.rootPosition()
 for p in root.allNodes_iter():
 	print p.v.t.fileIndex</t>
 <t tx="ekr.20040311111734">@language python
+@encoding iso-8859-1
 
 # Test of Leo 42 derived files.
+
+changed2
 
 &lt;&lt; node one &gt;&gt;
 
@@ -2947,5 +2952,49 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
+<t tx="ekr.20040317101155">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+p = c.currentPosition()
+p.v.t.unknownAttributes = {}
+a = p.v.t.unknownAttributes
+
+path = r"c:\prog\leoCVS\leo\Icons"
+icon1 = g.os_path_join(path,"lt_arrow_enabled.gif")
+icon2 = g.os_path_join(path,"rt_arrow_enabled.gif")
+
+d1 = {
+"type" : "file", "file" : icon1,
+"where" : "beforeIcon",
+"yoffset" : -3,
+# "yoffset" : 5, "ypad" : -5,
+# "height" : 40, # automatically adjust headline y position.
+"xpad": 2 } # "yoffset" : -5, , "ypad": 5}
+
+d2 = {
+"type" : "file", "file" : icon2,
+"where" : "beforeHeadline",
+"yoffset" : -3,
+"xoffset" : 2, "xpad" : -2 }
+
+a["icons"] = [d1,d2] # [d1,d2]
+a["lineYOffset"] = 3
+
+c.redraw()</t>
+<t tx="ekr.20040317173327">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+for p in c.allNodes_iter():
+	
+	if hasattr(p.v.t,"unknownAttributes"):
+		a = p.v.t.unknownAttributes
+		iconsList = a.get("icons")
+		if dict:
+			a["icons"] = []
+			a["lineYOffset"] = 0
+			
+c.redraw() </t>
 </tnodes>
 </leo_file>
