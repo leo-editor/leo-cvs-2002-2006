@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6658" clone_windows="0"/>
-<globals body_outline_ratio="0.583222370173">
-	<global_window_position top="109" left="219" height="751" width="931"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6662" clone_windows="0"/>
+<globals body_outline_ratio="0.521970705726">
+	<global_window_position top="131" left="237" height="751" width="931"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -544,6 +544,8 @@
 <v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
 <v t="ekr.20050211121701.2"><vh>test_g_removeExtraLws</vh></v>
 </v>
+<v t="ekr.20050220024614"><vh>Mini test of g.pdb</vh></v>
+<v t="ekr.20050220034025"><vh>Mini test of g.es_exception</vh></v>
 </v>
 <v t="ekr.20041126132604"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
@@ -594,7 +596,7 @@
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="TV"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -619,8 +621,83 @@
 <v t="EKR.20040627150213"><vh>Complex functions</vh></v>
 </v>
 <v t="ekr.20040714055306"><vh>elispToPy</vh>
-<v t="ekr.20040715133744"><vh>To do</vh></v>
-<v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
+<v t="ekr.20050220091046.5"><vh>Old e2py Stuff</vh>
+<v t="ekr.20050220091236"><vh>Old outer code</vh></v>
+<v t="ekr.20040713150037"><vh>class tok</vh>
+<v t="ekr.20040713150037.1"><vh>tok.__init__</vh></v>
+<v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
+<v t="ekr.20040713150712"><vh>tok.copy</vh></v>
+<v t="ekr.20040713173923"><vh>tok.match</vh></v>
+<v t="ekr.20040713174349"><vh>tok.dump</vh></v>
+<v t="ekr.20040713180208"><vh>tok.toString &amp; allies</vh>
+<v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
+</v>
+</v>
+<v t="ekr.20040715093804"><vh>Utility functions</vh>
+<v t="ekr.20040715073230"><vh>isList &amp; isToken</vh></v>
+<v t="ekr.20040715082059"><vh>printHeading</vh></v>
+<v t="ekr.20040714095247"><vh>parseTreeToString</vh></v>
+</v>
+<v t="ekr.20040715080216"><vh>class lineClass</vh>
+<v t="ekr.20040715080738"><vh>line.__init__</vh></v>
+<v t="ekr.20040715081031"><vh>line.add</vh></v>
+<v t="ekr.20040715080738.1"><vh>line.toString</vh></v>
+</v>
+<v t="ekr.20040713144036"><vh>class elisp2pyClass</vh>
+<v t="ekr.20040713144036.1"><vh>e.__init__</vh>
+<v t="ekr.20040714061625"><vh>&lt;&lt; define elisp constants &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.2"><vh>&lt;&lt; define elisp functions &gt;&gt;</vh></v>
+<v t="ekr.20040714061625.1"><vh>&lt;&lt; define elisp statements &gt;&gt;</vh></v>
+<v t="ekr.20040715090957"><vh>&lt;&lt; define code gen dispatch table &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040713152809"><vh>Utils</vh>
+<v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
+<v t="ekr.20040713161629.1"><vh>dump</vh></v>
+<v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
+<v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
+<v t="ekr.20040713160302"><vh>findTokens</vh></v>
+<v t="ekr.20040714060941"><vh>isMatchingBracket</vh></v>
+<v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
+<v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
+<v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
+<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
+<v t="ekr.20040713154118"><vh>skipString</vh></v>
+</v>
+</v>
+<v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
+<v t="ekr.20040714082939"><vh>Parser &amp; allies</vh>
+<v t="ekr.20040714155341"><vh>parse</vh>
+<v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040714091940.1"><vh>block</vh></v>
+</v>
+<v t="ekr.20040714222507"><vh>Code gen</vh>
+<v t="ekr.20040715081425"><vh>dumpCodeList</vh></v>
+<v t="ekr.20040715075914"><vh>newCodeLine</vh></v>
+<v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
+</v>
+<v t="ekr.20040715090957.2"><vh>gen_xxx</vh>
+<v t="ekr.20040715071350"><vh>gen</vh></v>
+<v t="ekr.20040715125453"><vh>gen_computed_function</vh></v>
+<v t="ekr.20040715120001"><vh>gen_cond</vh></v>
+<v t="ekr.20040715120001.1"><vh>gen_defconst</vh></v>
+<v t="ekr.20040715120001.2"><vh>gen_defsubst</vh></v>
+<v t="ekr.20040715093122"><vh>gen_defun</vh></v>
+<v t="ekr.20040715120001.3"><vh>gen_defvar</vh></v>
+<v t="ekr.20040715121456"><vh>gen_expression</vh></v>
+<v t="ekr.20040715091409"><vh>gen_function</vh></v>
+<v t="ekr.20040715120001.4"><vh>gen_if</vh></v>
+<v t="ekr.20040715120001.5"><vh>gen_let, gen_let_star</vh></v>
+<v t="ekr.20040715084435"><vh>gen_list</vh></v>
+<v t="ekr.20040715120001.7"><vh>gen_prog, gen_prog1, gen_progn</vh></v>
+<v t="ekr.20040715120001.8"><vh>gen_set &amp; gen_setq</vh></v>
+<v t="ekr.20040715090957.1"><vh>gen_statement</vh></v>
+<v t="ekr.20040715075845"><vh>gen_token</vh></v>
+<v t="ekr.20040715120001.9"><vh>gen_unless, gen_when, gen_while</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20050220085042.2"><vh>Data</vh>
 <v t="ekr.20040713200238"><vh>Ref</vh>
 <v t="ekr.20040713131315"><vh>To do</vh>
 <v t="ekr.20040713133131"><vh>Tokens</vh></v>
@@ -743,9 +820,10 @@
 <v t="ekr.20040714074445"><vh>&lt;&lt; insert nl and ws tokens &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040713131350"><vh>-input-</vh>
+<v t="ekr.20040713131350"><vh>-elisp2py-input-</vh>
 <v t="ekr.20040715071555"><vh>igrep-read-file-name</vh></v>
 </v>
+<v t="ekr.20050220091046.4"><vh>-elisp2py-output-</vh></v>
 <v t="ekr.20040713132127.1"><vh>igrep.el</vh>
 <v t="ekr.20040713132127.2"><vh>provide</vh></v>
 <v t="ekr.20040713132127.3"><vh>const igrep-version</vh></v>
@@ -817,79 +895,28 @@
 <v t="ekr.20040713132127.69"><vh>unnamed data</vh></v>
 </v>
 </v>
-<v t="ekr.20040713130853.8"><vh>elisp2py.py</vh>
-<v t="ekr.20040715093804"><vh>Utility functions</vh>
-<v t="ekr.20040715073230"><vh>isList &amp; isToken</vh></v>
-<v t="ekr.20040715082059"><vh>printHeading</vh></v>
-<v t="ekr.20040714095247"><vh>parseTreeToString</vh></v>
-</v>
-<v t="ekr.20040713150037"><vh>class tok</vh>
-<v t="ekr.20040713150037.1"><vh>tok.__init__</vh></v>
-<v t="ekr.20040714170021"><vh>tok.isParseTok</vh></v>
-<v t="ekr.20040713150712"><vh>tok.copy</vh></v>
-<v t="ekr.20040713173923"><vh>tok.match</vh></v>
-<v t="ekr.20040713174349"><vh>tok.dump</vh></v>
-<v t="ekr.20040713180208"><vh>tok.toString &amp; allies</vh>
-<v t="ekr.20040713164604"><vh>tok.wsToString</vh></v>
-</v>
-</v>
-<v t="ekr.20040715080216"><vh>class lineClass</vh>
-<v t="ekr.20040715080738"><vh>line.__init__</vh></v>
-<v t="ekr.20040715081031"><vh>line.add</vh></v>
-<v t="ekr.20040715080738.1"><vh>line.toString</vh></v>
-</v>
-<v t="ekr.20040713144036"><vh>class elisp2pyClass</vh>
-<v t="ekr.20040713144036.1"><vh>e.__init__</vh>
-<v t="ekr.20040714061625"><vh>&lt;&lt; define elisp constants &gt;&gt;</vh></v>
-<v t="ekr.20040714061625.2"><vh>&lt;&lt; define elisp functions &gt;&gt;</vh></v>
-<v t="ekr.20040714061625.1"><vh>&lt;&lt; define elisp statements &gt;&gt;</vh></v>
-<v t="ekr.20040715090957"><vh>&lt;&lt; define code gen dispatch table &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040713152809"><vh>Utils</vh>
-<v t="ekr.20040713193437"><vh>deleteTokens</vh></v>
-<v t="ekr.20040713161629.1"><vh>dump</vh></v>
-<v t="ekr.20040713152318"><vh>error &amp; warning</vh></v>
-<v t="ekr.20040713151556.1"><vh>findMatchingBracket</vh></v>
-<v t="ekr.20040713160302"><vh>findTokens</vh></v>
-<v t="ekr.20040714060941"><vh>isMatchingBracket</vh></v>
-<v t="ekr.20040714053807.1"><vh>isStatement</vh></v>
-<v t="ekr.20040714054620.1"><vh>matchTokens</vh></v>
-<v t="ekr.20040713150314.1"><vh>replaceAll (not used yet)</vh></v>
-<v t="ekr.20040713144926"><vh>tokenize &amp; allies</vh>
-<v t="ekr.20040713154118"><vh>skipString</vh></v>
-</v>
-</v>
-<v t="ekr.20040713211010"><vh>convert (main line)</vh></v>
-<v t="ekr.20040714082939"><vh>Parser &amp; allies</vh>
-<v t="ekr.20040714155341"><vh>parse</vh>
-<v t="ekr.20040714154314"><vh>&lt;&lt; give error message about mismatched parens &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040714091940.1"><vh>block</vh></v>
-</v>
-<v t="ekr.20040714222507"><vh>Code gen</vh>
-<v t="ekr.20040715081425"><vh>dumpCodeList</vh></v>
-<v t="ekr.20040715075914"><vh>newCodeLine</vh></v>
-<v t="ekr.20040714072448"><vh>removeBlankLines</vh></v>
-</v>
-<v t="ekr.20040715090957.2"><vh>gen_xxx</vh>
-<v t="ekr.20040715071350"><vh>gen</vh></v>
-<v t="ekr.20040715125453"><vh>gen_computed_function</vh></v>
-<v t="ekr.20040715120001"><vh>gen_cond</vh></v>
-<v t="ekr.20040715120001.1"><vh>gen_defconst</vh></v>
-<v t="ekr.20040715120001.2"><vh>gen_defsubst</vh></v>
-<v t="ekr.20040715093122"><vh>gen_defun</vh></v>
-<v t="ekr.20040715120001.3"><vh>gen_defvar</vh></v>
-<v t="ekr.20040715121456"><vh>gen_expression</vh></v>
-<v t="ekr.20040715091409"><vh>gen_function</vh></v>
-<v t="ekr.20040715120001.4"><vh>gen_if</vh></v>
-<v t="ekr.20040715120001.5"><vh>gen_let, gen_let_star</vh></v>
-<v t="ekr.20040715084435"><vh>gen_list</vh></v>
-<v t="ekr.20040715120001.7"><vh>gen_prog, gen_prog1, gen_progn</vh></v>
-<v t="ekr.20040715120001.8"><vh>gen_set &amp; gen_setq</vh></v>
-<v t="ekr.20040715090957.1"><vh>gen_statement</vh></v>
-<v t="ekr.20040715075845"><vh>gen_token</vh></v>
-<v t="ekr.20040715120001.9"><vh>gen_unless, gen_when, gen_while</vh></v>
-</v>
+<v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
+<v t="ekr.20050220085042.1"><vh>run</vh></v>
+<v t="ekr.20050220091046"><vh>class e2py</vh>
+<v t="ekr.20050220091046.1"><vh>ctor</vh></v>
+<v t="ekr.20050220111049"><vh>doBlock</vh></v>
+<v t="ekr.20050220091046.3"><vh>doParenBlock</vh></v>
+<v t="ekr.20050220105058"><vh>doDef</vh></v>
+<v t="ekr.20050220124658"><vh>doDoubleParen</vh></v>
+<v t="ekr.20050220111114"><vh>doId</vh></v>
+<v t="ekr.20050220105058.1"><vh>doIf</vh></v>
+<v t="ekr.20050220105058.2"><vh>doLet</vh></v>
+<v t="ekr.20050220091046.2"><vh>doOuterBlock</vh></v>
+<v t="ekr.20050220105058.3"><vh>doProg</vh></v>
+<v t="ekr.20050220111923"><vh>dump</vh></v>
+<v t="ekr.20050220092732"><vh>findMatchingBracket</vh></v>
+<v t="ekr.20050220114616"><vh>getToken</vh></v>
+<v t="ekr.20050220105726"><vh>indent</vh></v>
+<v t="ekr.20050220093752"><vh>matchingBracket</vh></v>
+<v t="ekr.20050220103808"><vh>skip_id</vh></v>
+<v t="ekr.20050220105058.4"><vh>skipString</vh></v>
+<v t="ekr.20050220122447"><vh>removeBlankLines</vh></v>
+<v t="ekr.20050220100049"><vh>stripLws</vh></v>
 </v>
 </v>
 </v>
@@ -1117,8 +1144,8 @@
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
 <v t="ekr.20040712101754.8"><vh>@suite Import tests</vh></v>
 <v t="ekr.20040712101754.9"><vh>@suite Export tests</vh></v>
-<v t="ekr.20040712101754.10" a="E"><vh>importTests</vh>
-<v t="ekr.20040712101754.11" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.10"><vh>importTests</vh>
+<v t="ekr.20040712101754.11"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.12"><vh>importAtRoot</vh>
 <v t="ekr.20040712101754.13"><vh>dialog</vh></v>
 </v>
@@ -1141,8 +1168,8 @@
 <v t="ekr.20040712101754.15"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.24" a="E"><vh>exportTests</vh>
-<v t="ekr.20040712101754.25" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040712101754.24"><vh>exportTests</vh>
+<v t="ekr.20040712101754.25"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.26"><vh>exportHeadlines</vh>
 <v t="ekr.20040712101754.27"><vh>dialog</vh></v>
 </v>
@@ -1167,9 +1194,9 @@
 <v t="ekr.20050105095743"><vh>@test atFile.replaceTargetFileIfDifferent (identical)</vh></v>
 <v t="ekr.20050105100227"><vh>@test atFile.replaceTargetFileIfDifferent (no target file)</vh></v>
 </v>
-<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
-<v t="ekr.20040712101754.37" a="E"><vh>@suite Edit body tests</vh>
-<v t="ekr.20040712101754.38" a="E"><vh>editBodyTests</vh>
+<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
+<v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.40"><vh>extractSection</vh>
 <v t="ekr.20040712101754.41"><vh>before</vh></v>
@@ -1190,9 +1217,9 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040712101754.53" a="E"><vh>@suite Reformat Paragraph Tests</vh>
+<v t="ekr.20040712101754.53"><vh>@suite Reformat Paragraph Tests</vh>
 <v t="ekr.20040712101754.54"><vh>What I did</vh></v>
-<v t="ekr.20040712101754.55" a="E"><vh>Reformat Paragraph tests</vh>
+<v t="ekr.20040712101754.55"><vh>Reformat Paragraph tests</vh>
 <v t="ekr.20040712101754.56"><vh>tempNode</vh></v>
 <v t="ekr.20040712101754.57"><vh>testNoTrailingNewline</vh>
 <v t="ekr.20040712101754.58"><vh>before</vh></v>
@@ -1360,7 +1387,7 @@
 <v t="ekr.20040712101754.173"><vh>wikiTest3</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.187" a="E"><vh>Position tests...</vh>
+<v t="ekr.20040712101754.187"><vh>Position tests...</vh>
 <v t="ekr.20040712101754.188"><vh>@test p.iters and v.iters</vh>
 <v t="ekr.20040712101754.189"><vh>child1</vh>
 <v t="ekr.20040712101754.190"><vh>a</vh>
@@ -1421,7 +1448,7 @@
 <v t="ekr.20040712101754.184"><vh>@test consistency of p.v.t.vnodeList &amp; v.parents for cloned nodes</vh></v>
 <v t="ekr.20040712101754.185"><vh>@test that cloned nodes actually share subtrees</vh></v>
 </v>
-<v t="ekr.20050208051418" a="E"><vh>Unicode tests</vh>
+<v t="ekr.20050208051418"><vh>Unicode tests</vh>
 <v t="ekr.20050206090416"><vh>@test open non-existent non-ascii directory</vh></v>
 <v t="ekr.20050208051418.1"><vh>@test can't open message in g.openWithFileName</vh></v>
 <v t="ekr.20050208051854"><vh>@test atFile.printError</vh></v>
@@ -1574,7 +1601,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20050203084930" a="E"><vh>Test settings...</vh>
+<v t="ekr.20050203084930"><vh>Test settings...</vh>
 <v t="ekr.20050203001146"><vh>@test local settings (c.page_width)</vh></v>
 <v t="ekr.20050203084930.1"><vh>@test global settings</vh></v>
 </v>
@@ -1655,7 +1682,6 @@
 <v t="ekr.20050106124624"><vh>getAllLeoModules</vh></v>
 <v t="ekr.20050106133147"><vh>removeLeadingWs</vh></v>
 </v>
-<v t="ekr.20050220024614" a="TV"><vh>Mini test of g.pdb</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -5752,27 +5778,18 @@ class eggs:
 <t tx="ekr.20040713123617.1">@language python
 @tabwidth -4
 
-import leoGlobals as g
-import elisp2py
-import leoTest
-reload(leoTest)
-reload(elisp2py)
+import string
 
-c = g.top() ; p = c.currentPosition()
-u = leoTest.testUtils()
-before = u.findNodeInTree(p,"-input-")
+tabWidth = 4 # how many blanks in a tab.
+printFlag = False
+doLeoTranslations,dontDoLeoTranslations = True,False
 
-print ; print '*' * 80
+gClassName = "" # The class name for the present function.  Used to modify ivars.
+gIvars = [] # List of ivars to be converted to self.ivar
 
-for p in before.subtree_iter():
-    e = elisp2py.elisp2pyClass(c,p)
-    e.convert()
-    if 0:
-        e.dump(e.tokens,heading="Tokens",verbose=2)
-    if 1:
-        e.dump(e.parseTree,heading="Parse Tree",verbose=2)
-    if 0:
-        e.dumpCodeList(e.codeList,heading="Code List")</t>
+@others
+
+run(c)</t>
 <t tx="ekr.20040713123828.1">@ This is a test of stuff.in doc parts.
 
          I wonder what will happen.
@@ -6021,21 +6038,6 @@ void vnode::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))\n\
     print "speedTest done:"
     print "elapsed time:", time2-time1
     print "time/pass:", (time2-time1)/passes</t>
-<t tx="ekr.20040713130853.8">@language python
-@tabwidth -4
-
-import leoGlobals as g
-import string
-
-tabWidth = 4 # how many blanks in a tab.
-printFlag = False
-doLeoTranslations,dontDoLeoTranslations = True,False
-
-gClassName = "" # The class name for the present function.  Used to modify ivars.
-gIvars = [] # List of ivars to be converted to self.ivar
-
-@others
-</t>
 <t tx="ekr.20040713130853.15">@ We separate the processing into two parts, 1) a leo-aware driver that iterates over @file trees and 2) a text-based part that processes one or more files or strings.
 </t>
 <t tx="ekr.20040713130853.16">def convertCurrentTree():
@@ -9137,11 +9139,6 @@ def gen_while(self,args):
 
     for arg in args:
         e.gen(arg)</t>
-<t tx="ekr.20040715133744">@language plain
-
-Complete the code generators.  This involves handling all the special cases.
-
-Maybe someday.  For now, I can't bear to waste any more time on this project.</t>
 <t tx="ekr.20040715154319">@ignore # Suppress Check Python Code warnings.
 
 @language python
@@ -14044,5 +14041,275 @@ fileMenu.insert(3,'command',label='Test',command=callback) </t>
 <t tx="ekr.20050219075759"></t>
 <t tx="ekr.20050220024614"># Running this as a unit test would hang the unit tests!
 g.pdb()</t>
+<t tx="ekr.20050220034025">try:
+    assert False, 'Assert False'
+except AssertionError:
+    g.es_exception()</t>
+<t tx="ekr.20050220085042.1">def run (c):
+    
+    import leoTest
+    u = leoTest.testUtils() 
+    input  = u.findNodeAnywhere(c,'-elisp2py-input-')
+    output = u.findNodeAnywhere(c,'-elisp2py-output-')
+    assert input and output
+
+    print ; print '*' * 60
+    e = e2py(dumping=False)
+    for p in input.children_iter():
+        print ; print '-' * 10, p.headString()
+        print p.bodyString()
+        result = e.doOuterBlock(p.bodyString())
+        print '-' * 20
+        print result</t>
+<t tx="ekr.20050220085042.2"></t>
+<t tx="ekr.20050220091046">class e2py:
+    
+    '''A text-based (not token-based) approach to parsing.'''
+    
+    @others</t>
+<t tx="ekr.20050220091046.1">def __init__ (self,dumping=False):
+    
+    self.dumping = dumping</t>
+<t tx="ekr.20050220091046.2">def doOuterBlock (self,s):
+    
+    '''Handle outermost code.  Return a string, not a list.'''
+    
+    s = self.stripLws(s)
+    result = self.doBlock(s)
+    result = self.removeBlankLines(result)
+    return '\n'.join(result)</t>
+<t tx="ekr.20050220091046.3">def doParenBlock (self,s):
+    
+    ''' - Strip outer parens.
+        - Call doBlock recursively for all inner parens.
+        - Add one level of indentation to each line.'''
+    n,ok = self.findMatchingBracket(s)
+    assert n == len(s) and ok
+    s = s[1:-1] # Strip the brackets
+    i = 0
+    i = g.skip_ws(s,i)
+    j,id = self.skip_id(s,i)
+    if id:
+        s = s[j:].lstrip()
+        if id == 'defun': result = self.doDef(s,id)
+        elif id == 'let': result = self.doLet(s)
+        elif id == 'if': result = self.doIf(s)
+        elif id in ('prog1','progn'): result = self.doProg(s,id)
+        else: result = self.doId(s,id)
+    elif s[i] == '(':
+        s = s[i:].lstrip()
+        result = self.doDoubleParen(s)
+    else: result = self.doBlock(s)
+        
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220091046.4"></t>
+<t tx="ekr.20050220091046.5"></t>
+<t tx="ekr.20050220091236">    for p in before.subtree_iter():
+        e = elisp2py.elisp2pyClass(c,p)
+        e.convert()
+        if 0:
+            e.dump(e.tokens,heading="Tokens",verbose=2)
+        if 1:
+            e.dump(e.parseTree,heading="Parse Tree",verbose=2)
+        if 0:
+            e.dumpCodeList(e.codeList,heading="Code List")</t>
+<t tx="ekr.20050220092732">def findMatchingBracket(self,s,i=0):
+
+    ch1 = s[i]
+    assert ch1 in "({["
+    delim = self.matchingBracket(ch1)
+    level = 1
+    for ch in s[i+1:]:
+        i += 1
+        # g.trace(level,ch)
+        if ch == ch1:
+            level += 1
+        elif ch == delim:
+            level -= 1
+            if level == 0: return i+1,True
+    print "%s not matched by %s in %s" % (ch1,delim,s)
+    return len(s),False</t>
+<t tx="ekr.20050220093752">def matchingBracket (self,ch):
+    
+    assert ch in "({["
+    
+    if   ch == '(': return ')'
+    elif ch == '{': return '}'
+    else:           return ']'</t>
+<t tx="ekr.20050220100049">def stripLws(self,s):
+    
+    lines = g.splitLines(s)
+    result = [line.lstrip() for line in lines]
+    return ''.join(result)</t>
+<t tx="ekr.20050220103808">def skip_id(self,s,i=0):
+    
+    j = g.skip_id(s,i,chars='-')
+    id = s[i:j]
+    return j,id</t>
+<t tx="ekr.20050220105058">def doDef(self,s,id):
+    # g.trace(id)
+    if id == 'defun':
+        kind,i,j,name = self.getToken(s,0)
+        if kind == 'id':
+            kind,i,j,params = self.getToken(s,j)
+            if kind == '()':
+                s = s[j:]
+                result = ['def %s %s:' % (name,params)]
+                result.extend(self.indent(self.doBlock(s)))
+                self.dump(result)
+                return result
+                
+    # Fall through if error.
+    result = [id]
+    result.extend(self.indent(self.doBlock(s)))
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220105058.1">def doIf(self,s):
+    
+    # g.trace()
+    
+    if 1:
+        result = ['if:']
+        result.extend(self.indent(self.doBlock(s)))
+        result.extend([':if'])
+
+    else: # not yet.  Don't suck everything into the 'if' statement!
+        block = self.doBlock(s)
+        result = ['if (%s):' % ' '.join(block)]
+    
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220105058.2">def doLet(self,s):
+    
+    # g.trace()
+    
+    result = ['let:']
+    result.extend(self.indent(self.doBlock(s)))
+    result.extend([':let'])
+    
+    self.dump(result)
+    return result
+</t>
+<t tx="ekr.20050220105058.3">def doProg(self,s,id):
+    
+    # g.trace(id)
+    
+    result = [id]
+    result.extend(self.indent(self.doBlock(s)))
+    
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220105058.4">def skipString(self,s,i):
+
+    # Skip the opening double quote.
+    i1 = i
+    ch = s[i]
+    i += 1
+    assert(ch == '"')
+
+    while i &lt; len(s):
+        ch = s[i]
+        i += 1
+        if ch == '"': return i
+        elif ch == '\\': i += 1
+
+    print "run-on elisp string: %s" % g.get_line(s[i1:])
+    return i</t>
+<t tx="ekr.20050220105726">def indent (self,lines,strip=True):
+    
+    '''Add a tab to each element of a list.'''
+    
+    return ['    ' + line for line in lines if not strip or line.strip()]</t>
+<t tx="ekr.20050220111049">def doBlock (self,s,strip=True):
+    
+    '''Handle an outer block or a formerly parenthesized block.'''
+
+    i = 0 ; result = []
+    while i &lt; len(s):
+        j = s.find('(',i)
+        if j == -1:
+            tail = s[i:]
+            if tail:
+                # g.trace(repr(tail))
+                result.extend(g.splitLines(tail))
+            break
+        else:
+            prev = s[i:j]
+            if prev: result.extend(g.splitLines(prev))
+            i = j
+            n,ok = self.findMatchingBracket(s[i:])
+            if ok:
+                block = s[i:i+n]
+                block = self.stripLws(block)
+                block_result = self.doParenBlock(block)
+                if block_result:
+                    result.extend(block_result)
+            i += n
+    
+    result = self.removeBlankLines(result)
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220111114">def doId(self,s,id):
+    
+    # g.trace(id)
+    if 1:
+        result = ['(%s:' % id]
+        result.extend(self.indent(self.doBlock(s)))
+        result.extend([':%s)' % id])
+    else:
+        result = [id]
+        result.extend(self.doBlock(s))
+    
+    self.dump(result)
+    return result</t>
+<t tx="ekr.20050220111923">def dump(self,lines):
+    
+    if self.dumping:
+        print '%s returns...' % g.callerName(2)
+        lines = [str(line) for line in lines]
+        print g.listToString(lines)</t>
+<t tx="ekr.20050220114616">def getToken (self,s,i=0):
+
+    i = g.skip_ws(s,i)
+    if i &lt; len(s):
+        ch = s[i]
+        if ch == '"':
+            j = self.skipString(s,i)
+            val = '"',i,j,s[i:j]
+        elif ch in string.ascii_letters or ch in string.digits or ch in '-_':
+            j,name = self.skip_id(s,i)
+            val = 'id',i,j,name
+        elif ch == '(':
+            j,ok = self.findMatchingBracket(s,i)
+            if ok:
+                val = '()',i,j,s[i:j]
+            else:
+                val = '(',i,i,'('
+        else:
+            val = ch,i,i,ch
+    else:
+        val = None,i,i,None
+        
+    # g.trace(repr(s[i]),val)
+    return val</t>
+<t tx="ekr.20050220122447">def removeBlankLines (self,lines):
+    
+    return [line for line in lines if line.strip()]</t>
+<t tx="ekr.20050220124658">def doDoubleParen (self,s):
+
+    n,ok = self.findMatchingBracket(s)
+    if ok:
+        s2 = s[:n] ; s3 = s[n:]
+        result = ['(:']
+        result.extend(self.indent(self.doParenBlock(s2)))
+        result.extend([':)'])
+        result.extend(self.doBlock(s3))
+    else:
+        result = self.doBlock(s)
+        
+    self.dump(result)
+    return result
+</t>
 </tnodes>
 </leo_file>
