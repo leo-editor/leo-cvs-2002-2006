@@ -97,7 +97,6 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.active = false # true if tree is active
 		self._editPosition = None
-		self._editWidget = None
 		self.lineyoffset = 0 # y offset for this headline.
 		self.disableRedraw = false # True: reschedule a redraw for later.
 		
