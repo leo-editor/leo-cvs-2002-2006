@@ -343,6 +343,8 @@ class config:
 		self.path_directive_creates_directories = false
 		self.relative_path_base_directory = "!"
 		self.save_clears_undo_buffer = false
+		self.use_relative_node_indices = 1
+		self.write_clone_indices = 0
 		self.xml_version_string = None
 		self.compareDict = {}
 		self.findDict = {}
@@ -585,6 +587,14 @@ class config:
 			try:self.xml_version_string = config.get(
 				self.configSection,"xml_version_string")
 			except: self.xml_version_string = prolog_version_string
+			
+			try: self.use_relative_node_indices = config.getboolean(
+				self.configSection,"use_relative_node_indices")
+			except: self.use_relative_node_indices = 1
+			
+			try: self.write_clone_indices = config.getboolean(
+				self.configSection,"write_clone_indices")
+			except: self.write_clone_indices = 0
 
 			#@-body
 			#@-node:1::<< get config options >>

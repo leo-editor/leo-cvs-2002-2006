@@ -129,25 +129,45 @@ class atFile:
 		# Ivars used to suppress newlines between sentinels.
 		self.suppress_newlines = true # true: enable suppression of newlines.
 		self.newline_pending = false # true: newline is pending on read or write.
+		
+		# 9/26/02 The present node index.  Used to compute absolute indices from relative indices.
+		self.nodeIndex = 0
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
 	#@-node:2:C=1:atFile ctor
 	#@+node:3::Sentinels
-	#@+node:1::nodeSentinelText
+	#@+node:1:C=2:nodeSentinelText
 	#@+body
 	def nodeSentinelText(self,v):
 	
-		# A hack: zero indicates the root node so scanText won't create a child.
-		if v != self.root and v.parent():
-			index = v.childIndex() + 1
-		else:
-			index = 0
-		cloneIndex = v.t.cloneIndex
-		s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
-		return `index` + ':' + s + ':' + v.headString()
+		config = app().config
+	
+		if config.write_clone_indices:
+			cloneIndex = v.t.cloneIndex
+			clone_s = choose(cloneIndex > 0, "C=" + `cloneIndex`, "")
+		else: clone_s = ""
+	
+		if config.use_relative_node_indices:
+			if v != self.root and v.parent():
+				index = v.childIndex() + 1
+				if index >= self.nodeIndex:
+					node_s = '+' + `index - self.nodeIndex`
+				else:
+					node_s = '-' + `self.nodeIndex - index`
+				self.nodeIndex = index
+			else:
+				# A hack: zero indicates the root node so scanText won't create a child.
+				node_s = '0' ; self.nodeIndex = 0
+		else: # Use absolute node indices.
+			if v != self.root and v.parent():
+				node_s = `v.childIndex() + 1`
+			else:
+				node_s = '0'
+		
+		return node_s + ':' + clone_s + ':' + v.headString()
 	#@-body
-	#@-node:1::nodeSentinelText
+	#@-node:1:C=2:nodeSentinelText
 	#@+node:2::putCloseNodeSentinel
 	#@+body
 	def putCloseNodeSentinel(self,v):
@@ -227,7 +247,7 @@ class atFile:
 			last = node
 	#@-body
 	#@-node:6::putOpenSentinels
-	#@+node:7:C=2:putSentinel
+	#@+node:7:C=3:putSentinel
 	#@+body
 	#@+at
 	#  All sentinels are eventually output by this method.
@@ -262,8 +282,8 @@ class atFile:
 		else:
 			self.onl() # End of sentinel.
 	#@-body
-	#@-node:7:C=2:putSentinel
-	#@+node:8:C=3:sentinelKind
+	#@-node:7:C=3:putSentinel
+	#@+node:8:C=4:sentinelKind
 	#@+body
 	#@+at
 	#  This method tells what kind of sentinel appears in line s.  Typically s 
@@ -309,7 +329,7 @@ class atFile:
 		else:
 			return atFile.noSentinel
 	#@-body
-	#@-node:8:C=3:sentinelKind
+	#@-node:8:C=4:sentinelKind
 	#@+node:9::sentinelName
 	#@+body
 	# Returns the name of the sentinel for warnings.
@@ -347,7 +367,7 @@ class atFile:
 	#@-node:10::skipSentinelStart
 	#@-node:3::Sentinels
 	#@+node:4::Utilites
-	#@+node:1:C=4:atFile.scanAllDirectives (calls writeError on errors)
+	#@+node:1:C=5:atFile.scanAllDirectives (calls writeError on errors)
 	#@+body
 	#@+at
 	#  This code scans the node v and all of v's ancestors looking for 
@@ -373,7 +393,7 @@ class atFile:
 		bits = 0 ; old_bits = 0 ; val = 0
 		
 		#@<< Set ivars >>
-		#@+node:1:C=5:<< Set ivars >>
+		#@+node:1:C=6:<< Set ivars >>
 		#@+body
 		self.page_width = self.commands.page_width
 		self.tab_width  = self.commands.tab_width
@@ -382,7 +402,7 @@ class atFile:
 		
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		#@-body
-		#@-node:1:C=5:<< Set ivars >>
+		#@-node:1:C=6:<< Set ivars >>
 
 		
 		#@<< Set path from @file node >>
@@ -503,7 +523,7 @@ class atFile:
 
 			
 			#@<< Test for @pagewidth and @tabwidth >>
-			#@+node:5:C=6:<< Test for @pagewidth and @tabwidth >>
+			#@+node:5:C=7:<< Test for @pagewidth and @tabwidth >>
 			#@+body
 			if self.btest(page_width_bits, bits) and not self.btest(page_width_bits, old_bits):
 				k = dict["page_width"]
@@ -525,7 +545,7 @@ class atFile:
 					i = skip_to_end_of_line(s,i)
 					self.error("Ignoring " + s[k:i])
 			#@-body
-			#@-node:5:C=6:<< Test for @pagewidth and @tabwidth >>
+			#@-node:5:C=7:<< Test for @pagewidth and @tabwidth >>
 
 			old_bits |= bits
 			v = v.parent()
@@ -579,7 +599,7 @@ class atFile:
 		#@-body
 		#@-node:7::<< Set comment Strings from delims >>
 	#@-body
-	#@-node:1:C=4:atFile.scanAllDirectives (calls writeError on errors)
+	#@-node:1:C=5:atFile.scanAllDirectives (calls writeError on errors)
 	#@+node:2::directiveKind
 	#@+body
 	# Returns the kind of at-directive or noDirective.
@@ -643,7 +663,7 @@ class atFile:
 		self.root.setDirty()
 	#@-body
 	#@-node:5::readError
-	#@+node:6:C=7:updateCloneIndices
+	#@+node:6:C=8:updateCloneIndices
 	#@+body
 	#@+at
 	#  The new Leo2 computes clone indices differently from the old Leo2:
@@ -681,7 +701,7 @@ class atFile:
 		# Make sure the root's clone index is zero.
 		root.t.setCloneIndex(0)
 	#@-body
-	#@-node:6:C=7:updateCloneIndices
+	#@-node:6:C=8:updateCloneIndices
 	#@+node:7::writeError
 	#@+body
 	def writeError(self,message):
@@ -789,7 +809,7 @@ class atFile:
 			self.readError("cloned nodes have different topologies")
 	#@-body
 	#@-node:2::joinTrees
-	#@+node:3:C=8:atFile.read
+	#@+node:3:C=9:atFile.read
 	#@+body
 	#@+at
 	#  This is the entry point to the read code.  The root vnode should be an 
@@ -856,6 +876,7 @@ class atFile:
 		
 		firstLines = self.scanHeader(file)
 		
+		self.nodeIndex = 0 # 9/26/02
 		self.indent = 0 ; out = []
 		lastLines = self.scanText(file,root,out,atFile.endLeo)
 		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -921,6 +942,7 @@ class atFile:
 			
 			firstLines = self.scanHeader(file)
 			
+			self.nodeIndex = 0 # 9/26/02
 			self.indent = 0 ; out = []
 			lastLines = self.scanText(file,root,out,atFile.endLeo)
 			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -939,76 +961,77 @@ class atFile:
 		file.close()
 		if self.errors == 0:
 			next = root.nodeAfterTree()
-			root.clearAllVisitedInTree()
-			
-			#@<< Handle clone bits >>
-			#@+node:5::<< Handle clone bits >>
-			#@+body
-			h = {}
-			v = root
-			while v and v != next:
-				cloneIndex = v.t.cloneIndex
-				# new Leo2: we skip the root node: @file nodes can not be cloned.
-				if cloneIndex > 0 and v != root:
-					if h.has_key(cloneIndex):
-						t = h[cloneIndex]
-						# v is a clone: share the previous tnode.
-						v.setT(t)
-						t.setVisited() # We will mark these clones later.
-					else: h[cloneIndex] = v.t
-				v = v.threadNext()
-			
-			# Set clone marks for all visited tnodes.
-			v = root
-			while v and v != next:
-				if v.t.isVisited():
-					if v == root:
-						pass
-					elif v.shouldBeClone():
-						v.initClonedBit(true)
-					else:
-						# Not a serious error.
-						es("clone links cleared for: " + v.headString())
-						v.unjoinTree();
-						t.setCloneIndex(0) # t is no longer cloned.
-				v = v.threadNext()
-			#@-body
-			#@-node:5::<< Handle clone bits >>
-
-			
-			#@<< Join cloned trees >>
-			#@+node:6::<< Join cloned trees >>
-			#@+body
-			#@+at
-			#  In most cases, this code is not needed, because the outline 
-			# already has been read and nodes joined.  However, there could be 
-			# problems on read errors, so we also join nodes here.
-
-			#@-at
-			#@@c
-			
-			h = {}
-			v = root
-			while v and v != next:
-				cloneIndex = v.t.cloneIndex
-				# new Leo2: we skip the root node: @file nodes can not be cloned.
-				if cloneIndex > 0 and v != root:
-					if h.has_key(cloneIndex):
-						clone = h[cloneIndex]
-						if v.headString() == clone.headString():
-							self.joinTrees(clone,v)
+			if 0: # 9/26/02: No longer used: derived files contain no clone indices.
+				root.clearAllVisitedInTree()
+				
+				#@<< Handle clone bits >>
+				#@+node:5::<< Handle clone bits >>
+				#@+body
+				h = {}
+				v = root
+				while v and v != next:
+					cloneIndex = v.t.cloneIndex
+					# new Leo2: we skip the root node: @file nodes can not be cloned.
+					if cloneIndex > 0 and v != root:
+						if h.has_key(cloneIndex):
+							t = h[cloneIndex]
+							# v is a clone: share the previous tnode.
+							v.setT(t)
+							t.setVisited() # We will mark these clones later.
+						else: h[cloneIndex] = v.t
+					v = v.threadNext()
+				
+				# Set clone marks for all visited tnodes.
+				v = root
+				while v and v != next:
+					if v.t.isVisited():
+						if v == root:
+							pass
+						elif v.shouldBeClone():
+							v.initClonedBit(true)
 						else:
-							# An extremely serious error.  Data may be lost.
-							self.readError(
-								"Outline corrupted: " +
-								"different nodes have same clone index!\n\t" +
-								v.headString() + "\n\t" + clone.headString())
-					# Enter v so we can join the next clone to it.
-					# The next call to lookup will find this v, not the previous.
-					h[cloneIndex] = v
-				v = v.threadNext()
-			#@-body
-			#@-node:6::<< Join cloned trees >>
+							# Not a serious error.
+							es("clone links cleared for: " + v.headString())
+							v.unjoinTree();
+							t.setCloneIndex(0) # t is no longer cloned.
+					v = v.threadNext()
+				#@-body
+				#@-node:5::<< Handle clone bits >>
+
+				
+				#@<< Join cloned trees >>
+				#@+node:6::<< Join cloned trees >>
+				#@+body
+				#@+at
+				#  In most cases, this code is not needed, because the outline 
+				# already has been read and nodes joined.  However, there 
+				# could be problems on read errors, so we also join nodes here.
+
+				#@-at
+				#@@c
+				
+				h = {}
+				v = root
+				while v and v != next:
+					cloneIndex = v.t.cloneIndex
+					# new Leo2: we skip the root node: @file nodes can not be cloned.
+					if cloneIndex > 0 and v != root:
+						if h.has_key(cloneIndex):
+							clone = h[cloneIndex]
+							if v.headString() == clone.headString():
+								self.joinTrees(clone,v)
+							else:
+								# An extremely serious error.  Data may be lost.
+								self.readError(
+									"Outline corrupted: " +
+									"different nodes have same clone index!\n\t" +
+									v.headString() + "\n\t" + clone.headString())
+						# Enter v so we can join the next clone to it.
+						# The next call to lookup will find this v, not the previous.
+						h[cloneIndex] = v
+					v = v.threadNext()
+				#@-body
+				#@-node:6::<< Join cloned trees >>
 
 			
 			#@<< Handle all status bits >>
@@ -1039,8 +1062,8 @@ class atFile:
 		# esDiffTime("read: exit", t1)
 		return self.errors == 0
 	#@-body
-	#@-node:3:C=8:atFile.read
-	#@+node:4:C=9:readAll (Leo2)
+	#@-node:3:C=9:atFile.read
+	#@+node:4:C=10:readAll (Leo2)
 	#@+body
 	#@+at
 	#  This method scans all vnodes, calling read for every @file node found.  
@@ -1094,7 +1117,7 @@ class atFile:
 		if partialFlag and not anyRead:
 			es("no @file nodes in the selected tree")
 	#@-body
-	#@-node:4:C=9:readAll (Leo2)
+	#@-node:4:C=10:readAll (Leo2)
 	#@+node:5::scanDoc
 	#@+body
 	# Scans the doc part and appends the text out.
@@ -1213,7 +1236,7 @@ class atFile:
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
 	#@-node:5::scanDoc
-	#@+node:6:C=10:scanHeader
+	#@+node:6:C=11:scanHeader
 	#@+body
 	#@+at
 	#  This method sets self.startSentinelComment and self.endSentinelComment 
@@ -1272,7 +1295,7 @@ class atFile:
 		return firstLines
 
 	#@-body
-	#@-node:6:C=10:scanHeader
+	#@-node:6:C=11:scanHeader
 	#@+node:7::completeFirstDirectives (Dave Hein)
 	#@+body
 	# 14-SEP-2002 DTHEIN: added for use by atFile.read()
@@ -1335,7 +1358,7 @@ class atFile:
 
 	#@-body
 	#@-node:8::completeLastDirectives (Dave Hein)
-	#@+node:9:C=11:scanText
+	#@+node:9:C=12:scanText
 	#@+body
 	#@+at
 	#  This method is the heart of the new read code.  It reads lines from the 
@@ -1348,7 +1371,7 @@ class atFile:
 	#@@c
 	def scanText (self,file,v,out,endSentinelKind):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		lastLines = [] # 14-SEP-2002 DTHEIN: the last lines, after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		nextLine = None
@@ -1589,7 +1612,7 @@ class atFile:
 				
 				#@<< scan @+node >>
 				#@+node:6::start sentinels
-				#@+node:5:C=12:<< scan @+node >> (new read code)
+				#@+node:5:C=14:<< scan @+node >> (new read code)
 				#@+body
 				assert(match(s,i,"+node:"))
 				i += 6
@@ -1600,6 +1623,12 @@ class atFile:
 				#@+node:1::<< Set childIndex >>
 				#@+body
 				i = skip_ws(s,i) ; j = i
+				# 9/26/02: allow relative node indices.
+				if match(s,i,"+") or match(s,i,"-"):
+					relative = s[i] ; i += 1 ; j += 1
+				else:
+					relative = None
+				
 				while i < len(s) and s[i] in string.digits:
 					i += 1
 				
@@ -1607,6 +1636,13 @@ class atFile:
 					self.readError("Bad child index in @+node")
 				else:
 					childIndex = int(s[j:i])
+					# 9/26/02: allow relative node indices.
+					if relative == '+':
+						childIndex = self.nodeIndex + childIndex
+					elif relative == '-':
+						childIndex = self.nodeIndex - childIndex
+					self.nodeIndex = childIndex
+				
 					i += 1 # Skip the ":".
 				#@-body
 				#@-node:1::<< Set childIndex >>
@@ -1655,6 +1691,8 @@ class atFile:
 				#@-node:3::<< Set headline and ref >>
 
 				
+				# print `childIndex`,`headline`
+				
 				if childIndex == 0: # The root node.
 					
 					#@<< Check the filename in the sentinel >>
@@ -1682,7 +1720,7 @@ class atFile:
 					# if cloneIndex > 0: trace("clone index:" + `cloneIndex` + ", " + `child`)
 					self.scanText(file,child,out,atFile.endNode)
 				#@-body
-				#@-node:5:C=12:<< scan @+node >> (new read code)
+				#@-node:5:C=14:<< scan @+node >> (new read code)
 				#@-node:6::start sentinels
 
 			elif kind == atFile.startOthers:
@@ -1753,7 +1791,7 @@ class atFile:
 				kind == atFile.endNode or kind == atFile.endOthers ):
 				
 				#@<< handle an ending sentinel >>
-				#@+node:4::<< handle an ending sentinel >>
+				#@+node:4:C=13:<< handle an ending sentinel >> (new read code)
 				#@+body
 				if kind == endSentinelKind:
 					if kind == atFile.endLeo:
@@ -1764,6 +1802,39 @@ class atFile:
 							if len(s) == 0: break
 							# 21-SEP-2002 DTHEIN: capture _all_ the trailing lines, even if empty
 							lastLines.append(s) # 14-SEP-2002 DTHEIN: capture the trailing lines
+					elif kind == atFile.endNode: # 6/26/02:
+						if 1:
+							
+							#@<< adjust self.nodeIndex >>
+							#@+node:1::<< adjust self.nodeIndex >> (new code)
+							#@+body
+							assert(match(s,i,"-node:"))
+							i += 6
+							
+							i = skip_ws(s,i) ; j = i
+							if match(s,i,"+") or match(s,i,"-"):
+								relative = s[i] ; i += 1 ; j += 1
+							else:
+								relative = None
+							
+							while i < len(s) and s[i] in string.digits:
+								i += 1
+							
+							if j == i or not match(s,i,':'):
+								self.readError("Bad child index in @-node")
+							else:
+								childIndex = int(s[j:i])
+								# 9/26/02: allow relative node indices.
+								if relative == '+':
+									childIndex = self.nodeIndex + childIndex
+								elif relative == '-':
+									childIndex = self.nodeIndex - childIndex
+								self.nodeIndex = childIndex
+							
+								i += 1 # Skip the ":".
+							#@-body
+							#@-node:1::<< adjust self.nodeIndex >> (new code)
+
 					# nextLine != None only if we have a non-sentinel line.
 					# Therefore, nextLine == None whenever scanText returns.
 					assert(nextLine==None)
@@ -1774,7 +1845,7 @@ class atFile:
 					expect = self.sentinelName(endSentinelKind)
 					self.readError("Ignoring " + name + " sentinel.  Expecting " + expect)
 				#@-body
-				#@-node:4::<< handle an ending sentinel >>
+				#@-node:4:C=13:<< handle an ending sentinel >> (new read code)
 
 			else:
 				
@@ -1806,10 +1877,10 @@ class atFile:
 	#@-node:6::start sentinels
 	#@+node:7::unpaired sentinels
 	#@-node:7::unpaired sentinels
-	#@-node:9:C=11:scanText
+	#@-node:9:C=12:scanText
 	#@-node:5::Reading
 	#@+node:6::Writing
-	#@+node:1:C=13:os, onl, etc. (leoAtFile)
+	#@+node:1:C=15:os, onl, etc. (leoAtFile)
 	#@+body
 	def oblank(self):
 		self.os(' ')
@@ -1840,7 +1911,7 @@ class atFile:
 	def otabs(self,n):
 		self.os('\t' * abs(n))
 	#@-body
-	#@-node:1:C=13:os, onl, etc. (leoAtFile)
+	#@-node:1:C=15:os, onl, etc. (leoAtFile)
 	#@+node:2::putBody
 	#@+body
 	#@+at
@@ -1978,7 +2049,7 @@ class atFile:
 		self.putSentinel("@-body")
 	#@-body
 	#@-node:3::putBodyPart (removes trailing lines)
-	#@+node:4:C=14:putCodePart & allies
+	#@+node:4:C=16:putCodePart & allies
 	#@+body
 	#@+at
 	#  This method expands a code part, terminated by any at-directive except 
@@ -2095,7 +2166,7 @@ class atFile:
 			return false, -1
 	#@-body
 	#@-node:3::isSectionName
-	#@+node:4:C=15:inAtOthers
+	#@+node:4:C=17:inAtOthers
 	#@+body
 	#@+at
 	#  Returns true if v should be included in the expansion of the at-others 
@@ -2122,8 +2193,8 @@ class atFile:
 		else: # old & reliable code
 			return not v.isAtIgnoreNode() and not v.isAtOthersNode()
 	#@-body
-	#@-node:4:C=15:inAtOthers
-	#@+node:5:C=16:putAtOthers
+	#@-node:4:C=17:inAtOthers
+	#@+node:5:C=18:putAtOthers
 	#@+body
 	#@+at
 	#  The at-others directive is recognized only at the start of the line.  
@@ -2143,8 +2214,8 @@ class atFile:
 		self.putSentinel("@-others")
 		self.indent -= delta
 	#@-body
-	#@-node:5:C=16:putAtOthers
-	#@+node:6:C=17:putAtOthersChild
+	#@-node:5:C=18:putAtOthers
+	#@+node:6:C=19:putAtOthersChild
 	#@+body
 	def putAtOthersChild(self,v):
 	
@@ -2163,7 +2234,7 @@ class atFile:
 	
 		self.putCloseNodeSentinel(v)
 	#@-body
-	#@-node:6:C=17:putAtOthersChild
+	#@-node:6:C=19:putAtOthersChild
 	#@+node:7::putRef
 	#@+body
 	def putRef (self,name,v,s,i,delta):
@@ -2185,7 +2256,7 @@ class atFile:
 				"\n\treferenced from: " + v.headString())
 	#@-body
 	#@-node:7::putRef
-	#@-node:4:C=14:putCodePart & allies
+	#@-node:4:C=16:putCodePart & allies
 	#@+node:5::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
@@ -2281,7 +2352,7 @@ class atFile:
 		return j
 	#@-body
 	#@-node:7::putDoc
-	#@+node:8:C=18:putDocPart
+	#@+node:8:C=20:putDocPart
 	#@+body
 	# Puts a comment part in comments.
 	
@@ -2350,8 +2421,8 @@ class atFile:
 			self.os(self.endSentinelComment)
 			self.onl() # Note: no trailing whitespace.
 	#@-body
-	#@-node:8:C=18:putDocPart
-	#@+node:9:C=19:putIndent
+	#@-node:8:C=20:putDocPart
+	#@+node:9:C=21:putIndent
 	#@+body
 	# Puts tabs and spaces corresponding to n spaces, assuming that we are at the start of a line.
 	
@@ -2366,8 +2437,8 @@ class atFile:
 		else:
 			self.oblanks(n)
 	#@-body
-	#@-node:9:C=19:putIndent
-	#@+node:10:C=20:atFile.write
+	#@-node:9:C=21:putIndent
+	#@+node:10:C=22:atFile.write
 	#@+body
 	#@+at
 	#  This is the entry point to the write code.  root should be an @file 
@@ -2450,7 +2521,7 @@ class atFile:
 			self.updateCloneIndices(root, next)
 			
 			#@<< put all @first lines in root >>
-			#@+node:2:C=21:<< put all @first lines in root >>
+			#@+node:2:C=23:<< put all @first lines in root >>
 			#@+body
 			#@+at
 			#  Write any @first lines.  These lines are also converted to 
@@ -2473,9 +2544,10 @@ class atFile:
 				self.os(line) ; self.onl()
 				i = skip_nl(s,i)
 			#@-body
-			#@-node:2:C=21:<< put all @first lines in root >>
+			#@-node:2:C=23:<< put all @first lines in root >>
 
 			if 1: # write the entire file
+				self.nodeIndex = 0 # 9/26/02
 				self.putOpenLeoSentinel("@+leo")
 				self.putOpenNodeSentinel(root)
 				self.putBodyPart(root)
@@ -2484,7 +2556,7 @@ class atFile:
 				self.putSentinel("@-leo")
 				
 				#@<< put all @last lines in root >>
-				#@+node:6:C=23:<< put all @last lines in root >>
+				#@+node:6:C=25:<< put all @last lines in root >>
 				#@+body
 				#@+at
 				#  Write any @last lines.  These lines are also converted to 
@@ -2510,7 +2582,7 @@ class atFile:
 					i = len(tag) ; i = skip_ws(line,i)
 					self.os(line[i:]) ; self.onl()
 				#@-body
-				#@-node:6:C=23:<< put all @last lines in root >>
+				#@-node:6:C=25:<< put all @last lines in root >>
 
 			if self.outputFile:
 				if self.suppress_newlines and self.newline_pending:
@@ -2544,7 +2616,7 @@ class atFile:
 				root.clearDirty()
 				
 				#@<< Replace the target with the temp file if different >>
-				#@+node:4:C=22:<< Replace the target with the temp file if different >>
+				#@+node:4:C=24:<< Replace the target with the temp file if different >>
 				#@+body
 				assert(self.outputFile == None)
 				
@@ -2576,7 +2648,7 @@ class atFile:
 							" to " + self.targetFileName)
 						traceback.print_exc()
 				#@-body
-				#@-node:4:C=22:<< Replace the target with the temp file if different >>
+				#@-node:4:C=24:<< Replace the target with the temp file if different >>
 
 		except:
 			
@@ -2599,7 +2671,7 @@ class atFile:
 			#@-body
 			#@-node:5::<< handle all exceptions during the write >>
 	#@-body
-	#@-node:10:C=20:atFile.write
+	#@-node:10:C=22:atFile.write
 	#@+node:11::writeAll
 	#@+body
 	#@+at
