@@ -1617,13 +1617,12 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; gui = g.app.gui
         
         if self.trace and self.verbose: g.trace()
-        
         p = self.eventToPosition(event)
-        
-        if p:
+        if not p: return
+    
+        if not g.doHook("boxclick1",c=c,p=p,v=p,event=event):
             if p.isExpanded(): p.contract()
             else:              p.expand()
-        
             self.active = True
             # Schedule the redraw _before_ calling select.
             # This disables any call that would configure old text widgets.
@@ -1631,6 +1630,7 @@ class leoTkinterTree (leoFrame.leoTree):
             self.select(p)
             g.app.findFrame.handleUserClick(p)
             gui.set_focus(c,c.frame.bodyCtrl)
+        g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     #@nonl
     #@-node:ekr.20040803072955.79:onClickBoxClick
     #@-node:ekr.20040803072955.78:Click Box...
@@ -1641,17 +1641,17 @@ class leoTkinterTree (leoFrame.leoTree):
         c = self.c ; gui = g.app.gui
         tree = self ; canvas = tree.canvas
         
-        if self.trace and self.verbose: g.trace()
-        
         p = self.eventToPosition(event)
         if not p: return
         
-        if not g.doHook("iconclick1",c=c,p=p,event=event):
+        if self.trace and self.verbose: g.trace()
+        
+        if not g.doHook("iconclick1",c=c,p=p,v=p,event=event):
             if event:
                 self.onDrag(event)
             tree.select(p)
             g.app.findFrame.handleUserClick(p) # 4/3/04
-            g.doHook("iconclick2",c=c,p=p,event=event)
+        g.doHook("iconclick2",c=c,p=p,v=p,event=event)
             
         return "break" # disable expanded box handling.
     #@nonl
@@ -1667,13 +1667,13 @@ class leoTkinterTree (leoFrame.leoTree):
         if not p: return
     
         try:
-            if not g.doHook("headrclick1",c=c,p=p,event=event):
+            if not g.doHook("iconrclick1",c=c,p=p,v=p,event=event):
                 self.OnActivate(p)
                 self.endEditLabel()
                 self.OnPopup(p,event)
-            g.doHook("headrclick2",c=c,p=p,event=event)
+            g.doHook("iconrclick2",c=c,p=p,v=p,event=event)
         except:
-            g.es_event_exception("headrclick")
+            g.es_event_exception("iconrclick")
             
         return "continue"
     #@nonl
@@ -1689,9 +1689,9 @@ class leoTkinterTree (leoFrame.leoTree):
         if self.trace and self.verbose: g.trace()
         
         try:
-            if not g.doHook("icondclick1",c=c,p=p,event=event):
+            if not g.doHook("icondclick1",c=c,p=p,v=p,event=event):
                 self.OnIconDoubleClick(p) # Call the method in the base class.
-            g.doHook("icondclick2",c=c,p=p,event=event)
+            g.doHook("icondclick2",c=c,p=p,v=p,event=event)
         except:
             g.es_event_exception("icondclick")
     #@-node:ekr.20040803072955.82:onIconBoxDoubleClick
@@ -1918,22 +1918,112 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.90:virtual event handlers: called from core
     #@-node:ekr.20040803072955.84:Text Box...
     #@+node:ekr.20040803072955.99:Dragging
-    #@+node:ekr.20040803072955.100:tree.onContinueDrag
+    #@+node:ekr.20041111115908:endDrag
+    def endDrag (self,event):
+        
+        """The official helper of the onEndDrag event handler."""
+        
+        c = self.c ; p = self.drag_p
+        canvas = self.canvas ; config = g.app.config
+        if not event: return
+    
+        #@    << set vdrag, childFlag >>
+        #@+node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+        x,y = event.x,event.y
+        canvas_x = canvas.canvasx(x)
+        canvas_y = canvas.canvasy(y)
+        
+        theId = self.canvas.find_closest(canvas_x,canvas_y)
+        # theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+        
+        vdrag = self.findPositionWithIconId(theId)
+        childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
+        #@nonl
+        #@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
+        #@nl
+        if config.getBoolWindowPref("allow_clone_drags"):
+            if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
+                self.controlDrag = c.frame.controlKeyIsDown
+    
+        if vdrag and vdrag.v.t != p.v.t: # Disallow drag to joined node.
+            #@        << drag p to vdrag >>
+            #@+node:ekr.20041111114148:<< drag p to vdrag >>
+            if self.trace and self.verbose:
+                g.trace("*** end drag   ***",\
+                    theId,x,y,p.headString(),vdrag.headString())
+            if self.controlDrag: # Clone p and move the clone.
+                if childFlag:
+                    c.dragCloneToNthChildOf(p,vdrag,0)
+                else:
+                    c.dragCloneAfter(p,vdrag)
+            else: # Just drag p.
+                if childFlag:
+                    c.dragToNthChildOf(p,vdrag,0)
+                else:
+                    c.dragAfter(p,vdrag)
+            #@nonl
+            #@-node:ekr.20041111114148:<< drag p to vdrag >>
+            #@nl
+        elif self.trace and self.verbose:
+            g.trace("Cancel drag")
+        
+        # Reset the old cursor by brute force.
+        self.canvas['cursor'] = "arrow"
+        self.dragging = False
+        self.drag_p = None
+    #@-node:ekr.20041111115908:endDrag
+    #@+node:ekr.20041111114944:startDrag
+    # This precomputes numberOfVisibleNodes(), a significant optimization.
+    # We also indicate where findPositionWithIconId() should start looking for tree id's.
+    
+    def startDrag (self,event):
+        
+        """The official helper of the onDrag event handler."""
+        
+        c = self.c ; canvas = self.canvas
+        assert(not self.drag_p)
+        x = canvas.canvasx(event.x)
+        y = canvas.canvasy(event.y)
+        theId = canvas.find_closest(x,y)
+        # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
+        if theId is None: return
+        try: theId = theId[0]
+        except: pass
+        p = self.ids.get(theId)
+        if not p: return
+        self.drag_p = p.copy() # defensive programming: not needed.
+        self.dragging = True
+        if self.trace and self.verbose:
+            g.trace("*** start drag ***",theId,self.drag_p.headString())
+        windowPref = g.app.config.getBoolWindowPref
+        # Only do this once: greatly speeds drags.
+        self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
+        if windowPref("allow_clone_drags"):
+            self.controlDrag = c.frame.controlKeyIsDown
+            if windowPref("look_for_control_drag_on_mouse_down"):
+                if windowPref("enable_drag_messages"):
+                    if self.controlDrag:
+                        g.es("dragged node will be cloned")
+                    else:
+                        g.es("dragged node will be moved")
+        else: self.controlDrag = False
+        self.canvas['cursor'] = "hand2" # "center_ptr"
+    #@nonl
+    #@-node:ekr.20041111114944:startDrag
+    #@+node:ekr.20040803072955.100:onContinueDrag
     def onContinueDrag(self,event):
         
-        canvas = self.canvas ; frame = self.c.frame
-    
         p = self.drag_p
         if not p: return
     
         try:
+            canvas = self.canvas ; frame = self.c.frame
             if event:
                 x,y = event.x,event.y
             else:
                 x,y = frame.top.winfo_pointerx(),frame.top.winfo_pointery()
                 # Stop the scrolling if we go outside the entire window.
                 if x == -1 or y == -1: return 
-    
             if self.dragging: # This gets cleared by onEndDrag()
                 #@            << scroll the canvas as needed >>
                 #@+node:ekr.20040803072955.101:<< scroll the canvas as needed >>
@@ -1960,102 +2050,36 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("continue drag")
     #@nonl
-    #@-node:ekr.20040803072955.100:tree.onContinueDrag
-    #@+node:ekr.20040803072955.102:tree.onDrag
-    # This precomputes numberOfVisibleNodes(), a significant optimization.
-    # We also indicate where findPositionWithIconId() should start looking for tree id's.
-    
+    #@-node:ekr.20040803072955.100:onContinueDrag
+    #@+node:ekr.20040803072955.102:onDrag
     def onDrag(self,event):
-    
-        # Note: "drag" hooks handled by vnode callback routine.
         
-        c = self.c ; canvas = self.canvas
+        c = self.c ; p = self.drag_p
         if not event: return
-     
+        
         if not self.dragging:
-            assert(not self.drag_p)
-            x = canvas.canvasx(event.x)
-            y = canvas.canvasy(event.y)
-            theId = canvas.find_closest(x,y)
-            # theId = canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-            if theId is None: return
-            try: theId = theId[0]
-            except: pass
-            p = self.ids.get(theId)
-            if not p: return
-            self.drag_p = p.copy() # defensive programming: not needed.
-            self.dragging = True
-            if self.trace and self.verbose:
-                g.trace("*** start drag ***",theId,self.drag_p.headString())
-            windowPref = g.app.config.getBoolWindowPref
-            # Only do this once: greatly speeds drags.
-            self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-            if windowPref("allow_clone_drags"):
-                self.controlDrag = c.frame.controlKeyIsDown
-                if windowPref("look_for_control_drag_on_mouse_down"):
-                    if windowPref("enable_drag_messages"):
-                        if self.controlDrag:
-                            g.es("dragged node will be cloned")
-                        else:
-                            g.es("dragged node will be moved")
-            else: self.controlDrag = False
-            self.canvas['cursor'] = "hand2" # "center_ptr"
-    
-        self.onContinueDrag(event)
-    #@-node:ekr.20040803072955.102:tree.onDrag
-    #@+node:ekr.20040803072955.103:tree.onEndDrag
+            if not g.doHook("drag1",c=c,p=p,v=p,event=event):
+                self.startDrag(event)
+            g.doHook("drag2",c=c,p=p,v=p,event=event)
+            
+        if not g.doHook("dragging1",c=c,p=p,v=p,event=event):
+            self.onContinueDrag(event)
+        g.doHook("dragging2",c=c,p=p,v=p,event=event)
+    #@nonl
+    #@-node:ekr.20040803072955.102:onDrag
+    #@+node:ekr.20040803072955.103:onEndDrag
     def onEndDrag(self,event):
         
         """Tree end-of-drag handler called from vnode event handler."""
         
-        c = self.c ; canvas = self.canvas ; config = g.app.config
-        if not self.dragging: return
-        p = self.drag_p
+        c = self.c ; p = self.drag_p
         if not p: return
         
-        if event:
-            
-            #@        << set vdrag, childFlag >>
-            #@+node:ekr.20040803072955.104:<< set vdrag, childFlag >>
-            x,y = event.x,event.y
-            canvas_x = canvas.canvasx(x)
-            canvas_y = canvas.canvasy(y)
-            
-            theId = self.canvas.find_closest(canvas_x,canvas_y)
-            # theId = self.canvas.find_overlapping(canvas_x,canvas_y,canvas_x,canvas_y)
-            
-            vdrag = self.findPositionWithIconId(theId)
-            childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()
-            #@nonl
-            #@-node:ekr.20040803072955.104:<< set vdrag, childFlag >>
-            #@nl
-            if config.getBoolWindowPref("allow_clone_drags"):
-                if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
-                    self.controlDrag = c.frame.controlKeyIsDown
-    
-            if vdrag and vdrag.v.t != p.v.t: # 6/22/04: Disallow drag to joined node.
-                if self.trace and self.verbose:
-                    g.trace("*** end drag   ***",\
-                        theId,x,y,p.headString(),vdrag.headString())
-                if self.controlDrag: # Clone p and move the clone.
-                    if childFlag:
-                        c.dragCloneToNthChildOf(p,vdrag,0)
-                    else:
-                        c.dragCloneAfter(p,vdrag)
-                else: # Just drag p.
-                    if childFlag:
-                        c.dragToNthChildOf(p,vdrag,0)
-                    else:
-                        c.dragAfter(p,vdrag)
-            else:
-                if self.trace and self.verbose:
-                    g.trace("Cancel drag")
-        
-        # Reset the old cursor by brute force.
-        self.canvas['cursor'] = "arrow"
-        self.dragging = False
-        self.drag_p = None
-    #@-node:ekr.20040803072955.103:tree.onEndDrag
+        if not g.doHook("enddrag1",c=c,p=p,v=p,event=event):
+            self.endDrag(event)
+        g.doHook("enddrag2",c=c,p=p,v=p,event=event)
+    #@nonl
+    #@-node:ekr.20040803072955.103:onEndDrag
     #@-node:ekr.20040803072955.99:Dragging
     #@+node:ekr.20040803072955.105:OnActivate
     def OnActivate (self,p,event=None):
