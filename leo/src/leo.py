@@ -165,6 +165,7 @@ def createFrame (app,fileName):
 
 	else:
 		# Show the first frame & indicate it is the startup window.
+		frame1.setInitialWindowGeometry()
 		frame1.top.deiconify()
 		frame1.startupWindow = true
 		return frame1

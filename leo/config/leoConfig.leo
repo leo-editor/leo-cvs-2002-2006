@@ -16,7 +16,7 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
@@ -34,7 +34,7 @@
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
-<v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
+<v t="T21" a="V"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
 <v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
@@ -843,14 +843,14 @@ initial_window_height = 75
 #	Height of window, Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 	
-initial_window_width = 150
+initial_window_width = 100
 #	Width window, in Tk grid units, that is, pixels. (must be an integer).
 #	Grid units must be specified because Leo windows are gridded.
 
-initial_window_left = 10
+initial_window_left = 20
 #	Distance from left of screen of window, in pixels (must be an integer).
 
-initial_window_top = 10
+initial_window_top = 20
 #	Distance from top of screen of window, in pixels (must be an integer).</t>
 <t tx="T22">initial_splitter_orientation = v
 #	Defines the primary splitter orientation.

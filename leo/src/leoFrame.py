@@ -514,7 +514,28 @@ class leoCoreFrame:
 					traceback.print_exc()
 	#@-body
 	#@-node:4::f.setBodyFontFromConfig
-	#@+node:5::f.setLogFontFromConfig
+	#@+node:5::f.setInitialWindowGeometry
+	#@+body
+	def setInitialWindowGeometry(self):
+		
+		"""Set the position and size of the frame to config params."""
+		
+		config = app().config
+	
+		h = config.getIntWindowPref("initial_window_height")
+		w = config.getIntWindowPref("initial_window_width")
+		x = config.getIntWindowPref("initial_window_left")
+		y = config.getIntWindowPref("initial_window_top")
+		# print h,w,x,y
+		
+		if h == None or h < 5: h = 5
+		if w == None or w < 5: w = 10
+		y = max(y,0) ; x = max(x,0)
+	
+		self.top.geometry("%dx%d%+d%+d" % (w,h,x,y))
+	#@-body
+	#@-node:5::f.setInitialWindowGeometry
+	#@+node:6::f.setLogFontFromConfig
 	#@+body
 	def setLogFontFromConfig (self):
 	
@@ -538,8 +559,8 @@ class leoCoreFrame:
 			except: pass
 	
 	#@-body
-	#@-node:5::f.setLogFontFromConfig
-	#@+node:6::f.setTabWidth
+	#@-node:6::f.setLogFontFromConfig
+	#@+node:7::f.setTabWidth
 	#@+body
 	def setTabWidth (self, w):
 		
@@ -558,8 +579,8 @@ class leoCoreFrame:
 			pass
 	
 	#@-body
-	#@-node:6::f.setTabWidth
-	#@+node:7::f.setTreeColorsFromConfig
+	#@-node:7::f.setTabWidth
+	#@+node:8::f.setTreeColorsFromConfig
 	#@+body
 	def setTreeColorsFromConfig (self):
 		
@@ -571,8 +592,8 @@ class leoCoreFrame:
 			except: pass
 	
 	#@-body
-	#@-node:7::f.setTreeColorsFromConfig
-	#@+node:8::reconfigurePanes (use config bar_width)
+	#@-node:8::f.setTreeColorsFromConfig
+	#@+node:9::reconfigurePanes (use config bar_width)
 	#@+body
 	def reconfigurePanes (self):
 		
@@ -587,7 +608,7 @@ class leoCoreFrame:
 		border = choose(self.splitVerticalFlag,4,2) 
 		self.log.configure(bd=border)
 	#@-body
-	#@-node:8::reconfigurePanes (use config bar_width)
+	#@-node:9::reconfigurePanes (use config bar_width)
 	#@-node:2::Configuration
 	#@+node:3::Scrolling callbacks (frame)
 	#@+body
@@ -1776,18 +1797,23 @@ class leoCoreFrame:
 		
 		# 5/16/03: Needed for hooks.
 		doHook("new",old_c=self,new_c=frame.commands)
+		
+		# Use the config params to set the size and location of the window.
+		frame.setInitialWindowGeometry()
 	
-		# Set the size of the new window.
-		h = config.getIntWindowPref("initial_window_height")
-		w = config.getIntWindowPref("initial_window_width")
-		x = config.getIntWindowPref("initial_window_left")
-		y = config.getIntWindowPref("initial_window_top")
-		# print h,w,x,y
-		if h == None or h < 5: h = 5
-		if w == None or w < 5: w = 10
-		y = max(y,0) ; x = max(x,0)
-		geom = "%dx%d%+d%+d" % (w,h,x,y)
-		top.geometry(geom)
+		if 0:
+			# Set the size of the new window.
+			h = config.getIntWindowPref("initial_window_height")
+			w = config.getIntWindowPref("initial_window_width")
+			x = config.getIntWindowPref("initial_window_left")
+			y = config.getIntWindowPref("initial_window_top")
+			# print h,w,x,y
+			if h == None or h < 5: h = 5
+			if w == None or w < 5: w = 10
+			y = max(y,0) ; x = max(x,0)
+			geom = "%dx%d%+d%+d" % (w,h,x,y)
+			top.geometry(geom)
+	
 		top.deiconify()
 		top.lift()
 		frame.resizePanesToRatio(frame.ratio,frame.secondary_ratio) # Resize the _new_ frame.
