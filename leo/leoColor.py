@@ -738,8 +738,12 @@ class colorizer:
 			# Color plain text unless we are under the control of @nocolor.
 			state = choose(self.flag,normalState,nocolorState)
 			
-			self.lb = choose(self.language == "cweb","@<","<<")
-			self.rb = choose(self.language == "cweb","@>",">>")
+			if 1: # 10/25/02: we color both kinds of references in cweb mode.
+				self.lb = "<<"
+				self.rb = ">>"
+			else:
+				self.lb = choose(self.language == "cweb","@<","<<")
+				self.rb = choose(self.language == "cweb","@>",">>")
 			#@-body
 			#@-node:3::<< configure language-specific settings >>
 
@@ -1061,27 +1065,25 @@ class colorizer:
 			#@-body
 			#@-node:4::<< handle C preprocessor line >>
 
-		elif match(s,i,self.lb) or (self.language == "cweb" and match(s,i,"@(")):
+		elif match(s,i,self.lb):
 			
-			#@<< handle possible section ref or def >>
-			#@+node:5::<< handle possible section ref or def >>
+			#@<< handle possible noweb section ref or def >>
+			#@+node:5::<< handle possible noweb section ref or def >>
 			#@+body
 			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 			
 			# See if the line contains the right name bracket.
-			j = string.find(s,self.rb+"=",i+2) ; k = 3
+			j = string.find(s,self.rb+"=",i+2)
+			k = choose(j==-1,2,3)
 			if j == -1:
-				j = string.find(s,self.rb,i+2) ; k = 2
+				j = string.find(s,self.rb,i+2)
+			
 			if j == -1:
 				i += 2
 			else:
-				if not self.language == "cweb":
-					searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
-					ref = findReference(searchName,self.v)
-				
-				if self.language == "cweb":
-					body.tag_add("cwebName", index(n,i+2), index(n,j))
-				elif ref:
+				searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
+				ref = findReference(searchName,self.v)
+				if ref:
 					body.tag_add("link", index(n,i+2), index(n,j))
 					if self.use_hyperlinks:
 						
@@ -1109,12 +1111,35 @@ class colorizer:
 				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 				i = j + k
 			#@-body
-			#@-node:5::<< handle possible section ref or def >>
+			#@-node:5::<< handle possible noweb section ref or def >>
+
+		elif self.language == "cweb" and (match(s,i,"@(") or match(s,i,"@<")):
+			
+			#@<< handle cweb ref or def >>
+			#@+node:6::<< handle cweb ref or def >>
+			#@+body
+			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+			
+			# See if the line contains the right name bracket.
+			j = string.find(s,"@>=",i+2)
+			k = choose(j==-1,2,3)
+			if j == -1:
+				j = string.find(s,"@>",i+2)
+			
+			if j == -1:
+				i += 2
+			else:
+				body.tag_add("cwebName", index(n,i+2), index(n,j))
+				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+				i = j + k
+			
+			#@-body
+			#@-node:6::<< handle cweb ref or def >>
 
 		elif ch == '@':
 			
 			#@<< handle possible @keyword >>
-			#@+node:6::<< handle possible @keyword >>
+			#@+node:7::<< handle possible @keyword >>
 			#@+body
 			word = None
 			if self.language == "cweb":
@@ -1172,12 +1197,12 @@ class colorizer:
 				#@-body
 				#@-node:2::<< Handle non-cweb @keywords >>
 			#@-body
-			#@-node:6::<< handle possible @keyword >>
+			#@-node:7::<< handle possible @keyword >>
 
 		elif ch in string.letters or ch == '_' or (ch == '\\' and self.language == "latex"):
 			
 			#@<< handle possible keyword >>
-			#@+node:7::<< handle possible  keyword >>
+			#@+node:8::<< handle possible  keyword >>
 			#@+body
 			if self.language == "latex" and match(s,i,"\\"):
 				j = self.skip_id(s,i+1)
@@ -1193,12 +1218,12 @@ class colorizer:
 					j += 2
 			i = j
 			#@-body
-			#@-node:7::<< handle possible  keyword >>
+			#@-node:8::<< handle possible  keyword >>
 
 		elif self.language == "php" and (match(s,i,"<") or match(s,i,"?")):
 			
 			#@<< handle special php keywords >>
-			#@+node:8::<< handle special php keywords >>
+			#@+node:9::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
 				body.tag_add("keyword", index(n,i), index(n,i+5))
@@ -1210,40 +1235,40 @@ class colorizer:
 				i += 1
 			
 			#@-body
-			#@-node:8::<< handle special php keywords >>
+			#@-node:9::<< handle special php keywords >>
 
 		elif ch == ' ':
 			
 			#@<< handle blank >>
-			#@+node:9::<< handle blank >>
+			#@+node:10::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
 				body.tag_add("blank", index(n,i))
 			i += 1
 			#@-body
-			#@-node:9::<< handle blank >>
+			#@-node:10::<< handle blank >>
 
 		elif ch == '\t':
 			
 			#@<< handle tab >>
-			#@+node:10::<< handle tab >>
+			#@+node:11::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
 				body.tag_add("tab", index(n,i))
 			i += 1
 			#@-body
-			#@-node:10::<< handle tab >>
+			#@-node:11::<< handle tab >>
 
 		else:
 			
 			#@<< handle normal character >>
-			#@+node:11::<< handle normal character >>
+			#@+node:12::<< handle normal character >>
 			#@+body
 			# body.tag_add("normal", index(n,i))
 			i += 1
 			
 			#@-body
-			#@-node:11::<< handle normal character >>
+			#@-node:12::<< handle normal character >>
 
 	
 		assert(self.progress < i)

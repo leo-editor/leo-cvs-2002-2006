@@ -668,7 +668,14 @@ class atFile:
 	
 		# This code rarely gets executed, so simple code suffices.
 		if i+1 >= n or match(s,i,"@ ") or match(s,i,"@\t") or match(s,i,"@\n"):
-			return atFile.atDirective
+			# 10/25/02: @space is not recognized in cweb mode.
+			return choose(self.language=="cweb",
+				atFile.noDirective,atFile.atDirective)
+	
+		# 10/25/02: @c is not recognized in cweb mode.
+		if self.language=="cweb" and match_word(s,i,"@c"):
+			return atFile.noDirective
+	
 		for name,directive in table:
 			if match_word(s,i,name):
 				return directive
@@ -2398,7 +2405,7 @@ class atFile:
 	#@-body
 	#@-node:7::putRef
 	#@-node:3::putCodePart & allies
-	#@+node:4::atFile.putCWEB
+	#@+node:4::atFile.putCWEB (no longer used)
 	#@+body
 	def putCWEB (self,root):
 	
@@ -2416,7 +2423,7 @@ class atFile:
 			v = v.threadNext()
 	
 	#@-body
-	#@-node:4::atFile.putCWEB
+	#@-node:4::atFile.putCWEB (no longer used)
 	#@+node:5::putDirective  (handles @delims)
 	#@+body
 	# This method outputs s, a directive or reference, in a sentinel.
@@ -2842,13 +2849,10 @@ class atFile:
 			#@-node:2::<< put optional @comment sentinel lines >>
 
 			
-			if self.language == "cweb":
-				self.putCWEB(root)
-			else:
-				self.putOpenNodeSentinel(root)
-				self.putBodyPart(root)
-				self.putCloseNodeSentinel(root)
-				
+			self.putOpenNodeSentinel(root)
+			self.putBodyPart(root)
+			self.putCloseNodeSentinel(root)
+			
 			root.setVisited()
 			self.putSentinel("@-leo")
 			
