@@ -3,14 +3,6 @@
 #@@nocolor
 
 #@+all
-#@+node:EKR.20040503091111.1:Before beta 1
-- Import derived file supports @file-thin.
-#@nonl
-#@+node:EKR.20040503093407:Import derived file
-#@-node:EKR.20040503093407:Import derived file
-#@+node:EKR.20040514104902:Go To Line Number
-#@-node:EKR.20040514104902:Go To Line Number
-#@-node:EKR.20040503091111.1:Before beta 1
 #@+node:ekr.20031218072017.646:To do...
 #@+node:ekr.20040414093758:Suggestions
 @nocolor
@@ -831,6 +823,1137 @@ into the Task node.
 #@nonl
 #@-node:ekr.20040208095208:Mark Task & Clone To Task commands
 #@-node:ekr.20040329182535:plugins
+#@+node:ekr.20040329182535.7:1-2 hour projects
+#@+node:ekr.20040329190314:Most important
+#@+node:ekr.20040115163454:@killcolor directive
+#@-node:ekr.20040115163454:@killcolor directive
+#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+@nocolor
+
+Open discussion
+By: jasonic ( Jason Cunliffe ) 
+ use of @language   
+2003-07-16 03:40  
+
+I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+
+For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
+
+".py" for python 
+".r" for rebol 
+".as" for actionscript etc.. 
+
+Should anyone need to over-ride those, they could use @language.
+#@nonl
+#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@+node:ekr.20031218072017.856:context menu in body pane
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2311537
+By: ejoy
+
+Hello delevepers:
+  I think add a right button context menu in body panel is useful. Especially
+for cut&copy&paste operations.
+
+
+from windows' notepad:
+undo
+-----
+cut
+copy
+paste
+delete
+------
+select all
+
+It's better to let plugin customize the menu.  
+#@nonl
+#@-node:ekr.20031218072017.856:context menu in body pane
+#@+node:ekr.20031218072017.746:Minimizing/maximizing windows
+@nocolor
+
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2090601
+By: jasonic
+
+I'll be happy to run some test and report to you. But  I suspect from your post
+a slight misunderstanding about Alt+Tab.
+
+Alt+Tab just toggles the active window.
+It works fine with Leo on Windows wherver I have tried it.
+
+Resizing wondows via hotkeys is another matter.
+The special "Windows" Key + m will minimize all windows. 
+
+But unfortunately I've not yet discovered any opposite shortcut to  maximize
+all windows :-(
+I've tried various 3rd party hotkey utililties, but somehow always end up dropping
+them.
+
+<rant>
+I really hate wasting any time dragging windows around and resizing them or
+clicking to bring them into top focus. As I work mainly with graphics, and mult-task
+intesenlty bwetn apps,  it is especially important to reduce visual clutter
+on screen.
+
+For many years the way to do this has been combining maximized [or minimized]
+windows with  Alt+Tab. Alt+Tab  lets one jump rapidly betwen open apps and windows
+without ever need to repostion or resize them.
+
+As a consultant, its one of the first things I ever teach clients. Often it
+transforms their perception of using Windows.
+
+It is so painful to watch people dragging and rescaling  windows all over the
+place. Ironically, I've witnessed some very smart programmers fly through vi
+or emacs but then slow to tortoises when navigation mice and windows. I beleive
+as long as we have the curertn wnidows UI paradigm,  use of Alt+Tab is an essential
+part of  GUI 'litteracy' - an essentail skill all shoudl have. Alas its still
+little known or discussed.
+
+There is also a nice toggle feature so one can jump back to the last app/window
+as its first "stop". Typically one is working between two apps for some specific
+task, even though many are open.
+
+Keeping one's finger on the 'Alt' key then tapping 'Tab' lets one hop along
+the list.
+
+Adding 'shift' to the mix helps one to go in reverse. 
+
+Above all one can keep one hand on the mouse, the other on the keyboard [ALt+Tab]
+and ones mind/eye on teh screen. For me it means left hand "plays" the bass
+pattern using Alt+Tab along with the clipboard shortcuts [CTRL+ z,x,c,v] ,while
+right hand on the mouse mouse  provides the melody.
+
+I've been using variations on the above since 1987 when I bought an Amiga2000.
+I seem to recall SGI had one also. And after learning about Alt+Tab on windows,
+I  found a utility to work the same way on Macintosh.  I am very happy to discover
+that MacOSX now has built-in ALt+Tab :-)
+</rant>
+
+Meanwhile, Iam  still wondering how to set Leo [3.12 beta 1, Python 2.2.2, Tk
+8.3.2] default to a maxmimized or minimized window size by itself.
+
+And also to remember the last size/position it had. I vaguely remember that
+it used to do that, but perhaps I am mistaking it for some other software ?
+
+thanks
+Jason
+#@-node:ekr.20031218072017.746:Minimizing/maximizing windows
+#@+node:ekr.20031218072017.791:automatic "tab nanny" and syntax checking of Python code
+#@-node:ekr.20031218072017.791:automatic "tab nanny" and syntax checking of Python code
+#@+node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
+- Show changes:
+	When a derived file is modified by an editor it would be very nice if Leo would:
+	- flag the file as modified and,
+	- flag (underline, color, diff, whatever) the parts that were modified.
+#@nonl
+#@-node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
+#@+node:ekr.20040220110030:Change cursor when caps lock is down
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2431552
+By: nobody
+
+From: Rich
+
+ I just got nipped twice by the following effect: the Caps-Lock key is ON, but
+because the LED is on the Caps-Lock key, it is hidden behind my hand. I hit
+Ctrl-x, expecting to cut my selection, but the entire node is cut.
+
+   I know there's a problem with tk and the shift key status, so I'm wondering
+if it would be possible to change the shape of the cursor when the Caps-Lock
+is ON (preferrably a big red flashing blot 8-), or otherwise show that Caps-Lock
+is active ( "CAPS" on a status line, for instance).
+
+  Another way: I don't know if this goes against an "anti-modalism rule," but
+only allowing Ctrl-Shift-x|c|v in the outline pane would also be acceptable
+to me.
+#@nonl
+#@-node:ekr.20040220110030:Change cursor when caps lock is down
+#@+node:ekr.20040315060557:declone command
+By: nobody ( Nobody/Anonymous ) 
+ having a declone() method for vnodes?   
+2004-03-15 04:36  
+
+ hi,
+
+Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
+
+1. Making a clone node a normal node.
+
+I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
+#@nonl
+#@-node:ekr.20040315060557:declone command
+#@+node:ekr.20031218072017.792:Double Click Node command
+#@-node:ekr.20031218072017.792:Double Click Node command
+#@+node:ekr.20031218072017.852:Scroll improvement
+@nocolor
+
+By: jwashin ( James Washington ) 
+ Scrolling and the Tree Frame in Linux   
+2003-10-20 12:13  
+
+I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
+
+I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
+
+Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
+
+Thanks for the great program.
+
+-- Jim Washington  
+#@-node:ekr.20031218072017.852:Scroll improvement
+#@-node:ekr.20040329190314:Most important
+#@+node:ekr.20040329190314.2:Others
+#@+node:ekr.20040213090121:Insert at end
+@nocolor
+
+By: tibi ( Thiébaut Champenier ) 
+ inserting a new node   
+2004-02-13 13:23  
+
+ Hi,
+
+When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
+What do you think ?
+To try it just make this little change:
+RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
+retrieving revision 1.76
+diff -r1.76 leoCommands.py
+2516c2516
+< v = current.insertAsNthChild(0)
+---
+> v = current.insertAsLastChild()  
+#@nonl
+#@-node:ekr.20040213090121:Insert at end
+#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+1. Warn when creating _any_ new file.
+
+2. Warn when rewriting any file that was not read properly.
+
+This prevents "hijacking" an already existing file.
+#@nonl
+#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+#@+node:ekr.20031218072017.756:Document how to use pdb plugin
+#@-node:ekr.20031218072017.756:Document how to use pdb plugin
+#@+node:ekr.20031218072017.745:@@first <n>
+@nocolor
+
+Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
+
+As an example: 
+# 1 
+# 2 
+# 3 
+# 4 
+# 5 
+#@verbatim
+#@+leo 
+#@verbatim
+#@+node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@+body 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@@first 
+#@verbatim
+#@+doc 
+# 
+# How many firsts do I get? 
+
+#@verbatim
+#@-doc 
+#@verbatim
+#@@c 
+Start code. 
+#@verbatim
+#@-body 
+#@verbatim
+#@-node:0::@file /tmp/firstcheck.py 
+#@verbatim
+#@-leo 
+
+My fellow co-workers who don't use LEO, aren't exactly loving me here. 
+
+Might we introduce an: 
+
+@@first <num> 
+
+Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
+
+Thanks. 
+
+- ordinarius 
+#@nonl
+#@-node:ekr.20031218072017.745:@@first <n>
+#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+@nocolor
+
+Open Discussion
+https://sourceforge.net/forum/message.php?msg_id=2003457
+By: dsalomoni
+
+Proposal: modify the code for @url so that if you type for example just "@url"
+(no file specified) in a headline, a window pops up allowing you to browse the
+local file system and select the file (similar to what browsers do when you
+want to open a file).
+
+This would be more convenient than manually writing @url
+file://a/long/path/to/the/file. @read-only nodes already allow this, it would
+perhaps be nice if all these types of plugins (@folder might be another one
+for example) and directives (@file etc) had the same behavior (and this should
+probably be specified in some guidelines for writing new plugins -see e.g. the
+jedit plugin guidelines).
+
+Davide
+#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
+#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+@nocolor
+#@nonl
+#@+node:ekr.20040226094105.1:halw
+
+https://sourceforge.net/forum/message.php?msg_id=2437859
+By: halw
+
+David,
+
+I agree that your solution is best -- the problem is it doesn't work. 
+
+If you look at the original post you'll note that the mouse wheel works fine
+in all other Leo panes (which are native text panes, not a custom canvas).
+
+In fact, a stock RH9 system does set up X as those pages indicate. The problem
+is elsewhere, perhaps Tk or Tkinter.
+
+If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
+it into the FAQ, though.
+
+--Hal
+
+#@-node:ekr.20040226094105.1:halw
+#@+node:ekr.20040226094105.2:djsg
+https://sourceforge.net/forum/message.php?msg_id=2435622
+By: djsg
+
+Tk is complying with the behavior of XFree86, and not hiding that behavior. 
+
+Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
+matches it, so 4.3.0 ought to match it also:
+
+http://www.xfree86.org/4.2.0/mouse7.html
+
+An example of configuration for XFree86 3.3.2.
+
+First, the URL: 
+
+http://www.genius-europe.com/service/faq/tuxmouse.htm
+
+o save their bandwidth, the example follows: 
+
+
+All mices with scroll wheel or stick
+
+XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
+The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
+wheel actions.
+Edit /etc/XF86Config with your favorite editor
+Add the following line to the "Pointer" section.
+
+ZAxisMapping 4 5
+
+Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
+or for serial mice set it to "IntelliMouse" or "Auto".
+Example for PS/2 wheel mouse:
+
+Section "Pointer"
+Protocol "IMPS/2"
+Device "/dev/psaux"
+SampleRate 60
+BaudRate 1200
+ZAxisMapping 4 5
+Buttons 3
+EndSection
+
+After XWindows is started run :
+imwheel -k
+
+
+#@-node:ekr.20040226094105.2:djsg
+#@+node:ekr.20040226094105.3:The actual workaround
+
+https://sourceforge.net/forum/message.php?msg_id=2433628
+By: halw
+
+Okay, I have a workaround that works for me with my existing Tk version. My
+Tkinter skills are weak, but I don't think this will hurt anything else :)
+
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
+events, but maps to buttons 4 (up) & 5 (down).
+
+Add to if clause 
+# Handle mouse wheel in the outline pane.
+if sys.platform == "linux2": # This crashes tcl83.dll
+..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+..def mapWheel(e):
+	if e.num == 4:
+	..e.delta = 120
+	..return frame.OnMouseWheel(e)
+	elif e.num == 5:
+	..e.delta = -120
+	..return frame.OnMouseWheel(e)
+..canvas.bind("<ButtonPress>", mapWheel, add=1)
+#@nonl
+#@-node:ekr.20040226094105.3:The actual workaround
+#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+#@+node:ekr.20040217090833:Change how Open with works?
+By: rogererens ( Roger Erens ) 
+ RE: Documentation for 4.1rc3   
+2004-02-04 10:04  
+
+@nocolor
+
+It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
+However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
+
+Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
+
+Or, use something else instead of "os.startfile" to really use the intended editor.
+#@nonl
+#@-node:ekr.20040217090833:Change how Open with works?
+#@+node:ekr.20040311022923:Make sentinel name in @-node optional
+#@-node:ekr.20040311022923:Make sentinel name in @-node optional
+#@+node:ekr.20040217154134:XML as a @language
+#@-node:ekr.20040217154134:XML as a @language
+#@-node:ekr.20040329190314.2:Others
+#@-node:ekr.20040329182535.7:1-2 hour projects
+#@+node:ekr.20040329182535.5:1 day projects
+#@+node:ekr.20031218072017.801:Zipped .leo files
+By: samcollett ( Sam Collett ) 
+ Compressed LEO files   
+2003-01-07 16:57
+
+
+Would it be possible to have a new file format that was basically a compressed
+version of LEO files? Maybe using the gzip compression method. You could then
+save a lot of space when you do large files. Not being a professional
+programmer myself (I mainly dabble in web design - HTML and Active Server
+Pages) how difficult would this be to implement? You would just output using a
+different file extension so users of the older versions can still use files
+with the LEO extension.
+#@+node:ekr.20040226092546:Saving .leo files with file compression
+@nocolor
+http://sourceforge.net/forum/message.php?msg_id=2442772
+By: ejoy
+
+I made an experiment last night. I replaced the call to open()in leofilecommand.py
+with a call to gzip.open().
+The LeoPy.leo file saved this way is only 600K! And there is no significant
+speed down in saving.
+
+I think it is a good idea to add compression support for load/save .leo files.
+When reading or writing file with name ending with ".leo.gz", leo can call gzip
+module to uncompress/compress the file, saving a lot of disk space.
+
+What do you think of this?
+#@-node:ekr.20040226092546:Saving .leo files with file compression
+#@-node:ekr.20031218072017.801:Zipped .leo files
+#@+node:ekr.20031218072017.755:Delay converting tabs to spaces
+Developers
+
+ RE: tab spacing test   
+2003-07-01 17:05  
+Another thought that hit me last night. In vim for example, tabs are tabs until you're off the line if you've set expandtab. Never really thought about it before, but that's how it works. 
+
+So you could do \t\t\t and then delete the entire space with 3 backspaces. But if you move the cursor off the line then it would take 12 backspaces (assuming you set the tabwidth to 4) because its been replaced with spaces. Its nice, and works well. 
+
+- ordinarius  
+#@-node:ekr.20031218072017.755:Delay converting tabs to spaces
+#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+This might be the best way to reliably have Tk move to the next line!
+#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
+#@+node:ekr.20031218072017.733:Execute scripts like IDE's do
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2321235
+By: paulpaterson
+
+I think I understand what Samir is getting at. 
+
+In PythonWin, or other IDE's for other languages, you are able to execute the
+"current program" in a way that it will behave identically to if it had been
+run from the command line.
+
+For Python this requires,
+
+1. That the script run with __name__ == "__main__", so that the standard "if
+__name__ ..." section will be executed properly.
+
+2. You are able to pass command line parameters to the script. In some IDE's
+you are able to set default command line parameters and these are "injected"
+into the sys.argv (or equivalent) so that, as far as the program is concerned,
+it looks like you ran it from the command line with some aruments.
+
+
+The underlying assumption is that you want to run an entire program from Leo,
+not just a script. I would find this very useful also as I could run unit tests
+or even my entire apps by just hitting, for exampe, F5.
+
+Paul
+#@nonl
+#@-node:ekr.20031218072017.733:Execute scripts like IDE's do
+#@+node:ekr.20031218072017.747:Mutliple cut/paste buffers?
+#@-node:ekr.20031218072017.747:Mutliple cut/paste buffers?
+#@+node:ekr.20031218072017.748:Import/Export to yaml
+Need a good yaml parser first: I don't want to write another parser by hand.
+#@nonl
+#@-node:ekr.20031218072017.748:Import/Export to yaml
+#@+node:ekr.20031218072017.790:Import dialog improvements
+@nocolor
+
+Other options I though would be really handy:
+
+1. Use an existing node as a source also
+
+2. Use an node from another Leo file.. I am not sure what the syntax for that
+would be exactly
+
+3. From a URL.. this would be really cool. People could post outlines not only
+as existing Leo xml files, but as text files or even dynamic scripts. The code
+to handle these would presumably need to deal with http:// intelligently. But
+that's easy in Python. Rebol is great at that too.
+
+4. Other XML file with valid filepaths in them.
+That's probably a much bigger project like Leo 3.10  
+
+Jason
+#@-node:ekr.20031218072017.790:Import dialog improvements
+#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
+This is done automatically now!  I may have to use configure events.
+
+> When I have the 'split mode' set to display tree and log on left, and viewpane
+on right, I sometimes need to increase the width of the window.
+
+When I do the resize, the tree/log panes grow in proportion. I don't know about
+others, but I'd much prefer if the tree/log panes stayed at the same width,
+and only the view pane grew.
+#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
+#@+node:ekr.20031218072017.800:Enhancements to extract section
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1858824
+By: gilshwartz
+Open discusstion
+
+Currently Extract Section is only available if the first line in a selection
+is a section name <<x>>. I would like to propose a few enhancements I think
+should be useful, while I believe most of the code is already implemented in
+Leo.
+
+1. If the first line in a selection is not <<x>>, than Extract Section WILL
+make a section name from the first line (or a version of it, see below), leave
+the section name in the body, create a new node with that section name, and
+will copy the selection including the first line to the new node.
+
+Rational: this is useful when selecting a function or a class. Thus the section
+name becomes the function or the class definition. The section name can either
+be the full first line, or, knowing the language, Leo can make a nice section
+name like it does in import, e.g. "function foo", or "class bar", without the
+parameters list.
+
+2. Even better, when Extract Section is called WITHOUT a selection it will look
+for the first function/class definition before the cursor's position and will
+either use it as a selection and do 1 above, or just mark it as selection, which
+will enable 1 above upon a second Extract Section.
+
+Rational: Leo does it beautifully in import and when a node's code starts to
+build it is most convenient. Also, I think a variation on this was recently
+asked by another user.
+
+3. Add an option Merge Section, which when called from a named section will
+merge it back to all the sections containing it.
+
+Rational: make it easy (together with 2) to create/delete sections until the
+sections picture of a new code becomes clear.
+
+Gil
+
+--
+
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=1859516
+By: nobody
+
+Simpler & more intutive:
+Mark text, select from menu - 'extract section', this presents a dialog box
+in which you fill in the section name. It is too much work to type <<name>>
+then select the whole thing...
+
+As an enhancement, the dialog can show the first line of the selection as the
+default section name, which obviously can be changed.
+
+- Rajiv Bhagwat
+#@-node:ekr.20031218072017.800:Enhancements to extract section
+#@+node:ekr.20040329094003:Apply patch command
+#@-node:ekr.20040329094003:Apply patch command
+#@-node:ekr.20040329182535.5:1 day projects
+#@+node:ekr.20040329182535.3:2 day projects
+#@+node:ekr.20040330064657:(@file-thin-wait)
+#@-node:ekr.20040330064657:(@file-thin-wait)
+#@+node:ekr.20031218072017.734:** Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20031218072017.735:Option: case insensitive keywords
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2097076
+By: nobody
+
+Using Jason's code for Rebol and a visual DIFF, I was able to quickly add the
+keywords for the assembler I use. I'm wondering if there is a way to tell Leo
+to ignore keyword case -- at the present, each keyword is entered twice. Not
+a big problem with modern editors, but it _would_ be nicer...
+
+--Rich
+#@-node:ekr.20031218072017.735:Option: case insensitive keywords
+#@-node:ekr.20031218072017.734:** Rewrite colorizer to use jEdit language descriptionfiles
+#@+node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
+#@-node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
+#@+node:ekr.20031218072017.743:Note windows
+Read and respond to this message at: 
+https://sourceforge.net/forum/message.php?msg_id=2205285
+By: nobody
+
+From: Rich
+
+Some of the things I'd like to see in Leo:
+
+A note window for each node. This is similar to (1), but a little fancier
+looking. I envision a short window at the bottom of the edit window that could
+hold notes and comments about the code, such as "Test this harder" or "Find
+a better way of phrasing this". This is currently available in uSoft Office
+and the Eclipse IDE (http://www.eclipse.org). Perhaps a numeric reference, such
+as "<<1>>" could be used.
+
+(2) Color ''and'' italic/bold characters with @markup. One thing I'd like to
+''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
+does nothing for readability in plain text.
+#@nonl
+#@-node:ekr.20031218072017.743:Note windows
+#@+node:ekr.20031218072017.754:Open text files in text window
+#@-node:ekr.20031218072017.754:Open text files in text window
+#@+node:ekr.20040329182535.4:Leo + zodb
+#@+node:ekr.20040226114127:Zope test
+from leoGlobals import *
+
+from ZODB import FileStorage, DB
+
+if 1:
+	print "-"*20
+	storage = FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs") 
+	db = DB(storage)
+	print storage ; print db
+	db.close()
+#@-node:ekr.20040226114127:Zope test
+#@+node:ekr.20031218072017.737:Leo & data bases
+From: "Scott Chapman" <scott_list@mischko.com>
+To: <edreamleo@charter.net>
+Sent: Monday, November 10, 2003 11:05 AM
+Subject: Enhancement request: Make Leo deal with a database
+
+It would be Way Cool if Leo could deal with psycopg or other DataBase 
+API compliant implementations and fetch and store database records.
+
+Details of what I'd like to see:
+
+I'm working on Python source code. I want Leo to pull a source code file 
+from a database record built something like this:
+
+filename: text
+updated: datetimestamp
+code: text
+
+Leo would insert a new record, not update an existing one, each time a 
+Save was done, with a more current time stamp.  
+
+When a File Open was requested (i.e. a node on a existing Leo outline 
+was being pulled from a database), Leo would fetch the most recent 
+time-stamped version only.
+
+I use this same technique for my wiki pages.  It's very easy to 
+implement in SQL and works great.
+
+Leo would also need the ability to save the same file to a regular 
+python source code file on disk at a specific location, so you'd have 
+to be able to put more than one save/load directive in a given node.
+
+This would provide a nice version history and could lead to other Useful 
+Things in Leo.
+
+Scott
+#@nonl
+#@-node:ekr.20031218072017.737:Leo & data bases
+#@-node:ekr.20040329182535.4:Leo + zodb
+#@+node:ekr.20031218072017.797:Allow @file http & @file ftp
+I'd like to see leo's @file can be extended to cover more protocols, like REBOL's "read" does. 
+
+in short, it would be very sweet if the following work: 
+
+@file http://www.somedomain.org/python/foo.py 
+
+@file pass@ftp.sd.org/python/foo.py" target="_blank" target="_new">ftp://user:pass@ftp.sd.org/python/foo.py> 
+
+while we are at it, what about xmlrpc/soap? 
+
+should there be new directive, like @source ?
+#@nonl
+#@+node:ekr.20031218072017.810:Remote access Scott Powell
+I will wait. Here's clarification, when you're ready for it:
+
+All of my projects are stored on remote computers, and accessed via FTP. 
+What I want is basically the ability to open up these projects directly 
+through leo, instead of transferring the files manually between my computer 
+and the computers that hold my projects, preferably through FTP.
+
+My solution: A new menu item called 'FTP' or 'Remote'. Click on this, and an 
+FTP dialog opens up, with an empty list of FTP sites, and the ability to add 
+more. You select a site, and it brings up a list of files. You select a 
+file, and it is added to your project. When you hit 'save', it automatically 
+does an FTP send.
+
+Python makes this a lot easier with the builtin module 'ftplib'. I'm sure 
+there are similar things for C++. I hope you take this idea into 
+consideration.
+
+Scott Powell
+CEO, Dev Designs
+#@-node:ekr.20031218072017.810:Remote access Scott Powell
+#@-node:ekr.20031218072017.797:Allow @file http & @file ftp
+#@+node:ekr.20040310092400.1:Use calltips in outline pane
+#@+node:ekr.20040324075752:Request
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2460535
+By: nobody
+
+See CallTipWindow.py in IDLE 1.0.2
+
+Fairly simple implementation - uses a new toplevel window without a border.
+
+Read the comments in the code for potential drawbacks on some platforms.
+
+Regards, Myles.
+#@nonl
+#@-node:ekr.20040324075752:Request
+#@+node:ekr.20040324071749:CallTips.py
+"""CallTips.py - An IDLE Extension to Jog Your Memory
+
+Call Tips are floating windows which display function, class, and method
+parameter and docstring information when you type an opening parenthesis, and
+which disappear when you type a closing parenthesis.
+
+Future plans include extending the functionality to include class attributes.
+
+"""
+
+import sys
+import string
+import types
+
+import CallTipWindow
+
+import __main__
+
+@others
+#@+node:ekr.20040324071749.2:class CallTips
+class CallTips:
+	menudefs = [ ]
+	
+@others
+
+#@+node:ekr.20040324071749.4:__init__
+def __init__(self, editwin=None):
+
+    if editwin == None:  # subprocess and test
+        self.editwin = None
+        return
+
+    self.editwin = editwin
+    self.text = editwin.text
+    self.calltip = None
+    self._make_calltip_window = self._make_tk_calltip_window
+#@nonl
+#@-node:ekr.20040324071749.4:__init__
+#@+node:ekr.20040324071749.5:close
+def close(self):
+
+    self._make_calltip_window = None
+#@-node:ekr.20040324071749.5:close
+#@+node:ekr.20040324071749.6:_make_tk_calltip_window
+def _make_tk_calltip_window(self):
+	
+    # See __init__ for usage
+    return CallTipWindow.CallTip(self.text)
+#@nonl
+#@-node:ekr.20040324071749.6:_make_tk_calltip_window
+#@+node:ekr.20040324071749.7:_remove_calltip_window
+def _remove_calltip_window(self):
+
+    if self.calltip:
+        self.calltip.hidetip()
+        self.calltip = None
+#@nonl
+#@-node:ekr.20040324071749.7:_remove_calltip_window
+#@+node:ekr.20040324071749.8:paren_open_event
+def paren_open_event(self, event):
+
+    self._remove_calltip_window()
+    name = self.get_name_at_cursor()
+    arg_text = self.fetch_tip(name)
+    if arg_text:
+        self.calltip_start = self.text.index("insert")
+        self.calltip = self._make_calltip_window()
+        self.calltip.showtip(arg_text)
+    return "" #so the event is handled normally.
+#@nonl
+#@-node:ekr.20040324071749.8:paren_open_event
+#@+node:ekr.20040324071749.9:paren_close_event
+def paren_close_event(self, event):
+
+    # Now just hides, but later we should check if other
+    # paren'd expressions remain open.
+    self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+#@-node:ekr.20040324071749.9:paren_close_event
+#@+node:ekr.20040324071749.10:check_calltip_cancel_event
+def check_calltip_cancel_event(self, event):
+
+    if self.calltip:
+        # If we have moved before the start of the calltip,
+        # or off the calltip line, then cancel the tip.
+        # (Later need to be smarter about multi-line, etc)
+        if self.text.compare("insert", "<=", self.calltip_start) or \
+           self.text.compare("insert", ">", self.calltip_start
+                             + " lineend"):
+            self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+#@-node:ekr.20040324071749.10:check_calltip_cancel_event
+#@+node:ekr.20040324071749.11:calltip_cancel_event
+def calltip_cancel_event(self, event):
+
+    self._remove_calltip_window()
+
+    return "" #so the event is handled normally.
+#@-node:ekr.20040324071749.11:calltip_cancel_event
+#@+node:ekr.20040324071749.12:get_name_at_cursor
+__IDCHARS = "._" + string.ascii_letters + string.digits
+
+def get_name_at_cursor(self):
+    idchars = self.__IDCHARS
+    str = self.text.get("insert linestart", "insert")
+    i = len(str)
+    while i and str[i-1] in idchars:
+        i -= 1
+    return str[i:]
+#@-node:ekr.20040324071749.12:get_name_at_cursor
+#@+node:ekr.20040324071749.13:fetch_tip
+def fetch_tip(self, name):
+
+    """Return the argument list and docstring of a function or class
+
+    If there is a Python subprocess, get the calltip there.  Otherwise,
+    either fetch_tip() is running in the subprocess itself or it was called
+    in an IDLE EditorWindow before any script had been run.
+
+    The subprocess environment is that of the most recently run script.  If
+    two unrelated modules are being edited some calltips in the current
+    module may be inoperative if the module was not the last to run.
+
+    """
+    try:
+        rpcclt = self.editwin.flist.pyshell.interp.rpcclt
+    except:
+        rpcclt = None
+    if rpcclt:
+        return rpcclt.remotecall("exec", "get_the_calltip",
+                                 (name,), {})
+    else:
+        entity = self.get_entity(name)
+        return get_arg_text(entity)
+#@nonl
+#@-node:ekr.20040324071749.13:fetch_tip
+#@+node:ekr.20040324071749.14:get_entity
+def get_entity(self, name):
+
+    "Lookup name in a namespace spanning sys.modules and __main.dict__"
+    if name:
+        namespace = sys.modules.copy()
+        namespace.update(__main__.__dict__)
+        try:
+            return eval(name, namespace)
+        except:
+            return None
+#@nonl
+#@-node:ekr.20040324071749.14:get_entity
+#@-node:ekr.20040324071749.2:class CallTips
+#@+node:ekr.20040324071749.15:_find_constructor
+def _find_constructor(class_ob):
+	
+    # Given a class object, return a function object used for the
+    # constructor (ie, __init__() ) or None if we can't find one.
+	
+    try:
+        return class_ob.__init__.im_func
+    except AttributeError:
+        for base in class_ob.__bases__:
+            rc = _find_constructor(base)
+            if rc is not None: return rc
+    return None
+
+#@-node:ekr.20040324071749.15:_find_constructor
+#@+node:ekr.20040324071749.16:get_arg_text
+def get_arg_text(ob):
+    "Get a string describing the arguments for the given object"
+    argText = ""
+    if ob is not None:
+        argOffset = 0
+        if type(ob)==types.ClassType:
+            # Look for the highest __init__ in the class chain.
+            fob = _find_constructor(ob)
+            if fob is None:
+                fob = lambda: None
+            else:
+                argOffset = 1
+        elif type(ob)==types.MethodType:
+            # bit of a hack for methods - turn it into a function
+            # but we drop the "self" param.
+            fob = ob.im_func
+            argOffset = 1
+        else:
+            fob = ob
+        # Try and build one for Python defined functions
+        if type(fob) in [types.FunctionType, types.LambdaType]:
+            try:
+                realArgs = fob.func_code.co_varnames[argOffset:fob.func_code.co_argcount]
+                defaults = fob.func_defaults or []
+                defaults = list(map(lambda name: "=%s" % name, defaults))
+                defaults = [""] * (len(realArgs)-len(defaults)) + defaults
+                items = map(lambda arg, dflt: arg+dflt, realArgs, defaults)
+                if fob.func_code.co_flags & 0x4:
+                    items.append("...")
+                if fob.func_code.co_flags & 0x8:
+                    items.append("***")
+                argText = ", ".join(items)
+                argText = "(%s)" % argText
+            except:
+                pass
+        # See if we can use the docstring
+        doc = getattr(ob, "__doc__", "")
+        if doc:
+            doc = doc.lstrip()
+            pos = doc.find("\n")
+            if pos < 0 or pos > 70:
+                pos = 70
+            if argText:
+                argText += "\n"
+            argText += doc[:pos]
+    return argText
+#@-node:ekr.20040324071749.16:get_arg_text
+#@+node:ekr.20040324071749.17:t1
+#################################################
+#
+# Test code
+#
+if __name__=='__main__':
+
+    def t1(): "()"
+    def t2(a, b=None): "(a, b=None)"
+    def t3(a, *args): "(a, ...)"
+    def t4(*args): "(...)"
+    def t5(a, *args): "(a, ...)"
+    def t6(a, b=None, *args, **kw): "(a, b=None, ..., ***)"
+
+    class TC:
+        "(a=None, ...)"
+        def __init__(self, a=None, *b): "(a=None, ...)"
+        def t1(self): "()"
+        def t2(self, a, b=None): "(a, b=None)"
+        def t3(self, a, *args): "(a, ...)"
+        def t4(self, *args): "(...)"
+        def t5(self, a, *args): "(a, ...)"
+        def t6(self, a, b=None, *args, **kw): "(a, b=None, ..., ***)"
+
+    def test(tests):
+        ct = CallTips()
+        failed=[]
+        for t in tests:
+            expected = t.__doc__ + "\n" + t.__doc__
+            name = t.__name__
+            arg_text = ct.fetch_tip(name)
+            if arg_text != expected:
+                failed.append(t)
+                print "%s - expected %s, but got %s" % (t, expected,
+                                                        get_arg_text(entity))
+        print "%d of %d tests failed" % (len(failed), len(tests))
+
+    tc = TC()
+    tests = (t1, t2, t3, t4, t5, t6,
+             TC, tc.t1, tc.t2, tc.t3, tc.t4, tc.t5, tc.t6)
+
+    test(tests)
+#@-node:ekr.20040324071749.17:t1
+#@-node:ekr.20040324071749:CallTips.py
+#@+node:ekr.20040324072124:CallTipWindow.py
+"""A CallTip window class for Tkinter/IDLE.
+
+After ToolTip.py, which uses ideas gleaned from PySol
+Used by the CallTips IDLE extension.
+
+"""
+
+import Tkinter as Tk
+import leoGlobals as g
+
+@others
+
+if 1:
+	main()
+#@nonl
+#@+node:ekr.20040324072124.2:class CallTip
+class CallTip:
+
+@others
+#@+node:ekr.20040324072124.3:__init__
+def __init__(self,widget):
+
+	self.widget = widget
+	self.tipwindow = None
+	self.id = None
+	self.x = self.y = 0
+#@nonl
+#@-node:ekr.20040324072124.3:__init__
+#@+node:ekr.20040324072124.4:showtip
+def showtip (self,text):
+
+	""" Display text in calltip window"""
+
+	if self.tipwindow or not text: return
+
+	# truncate overly long calltip
+	if len(text) >= 79: text = text[:75] + ' ...'
+	self.text = text
+
+	self.widget.see("insert")
+	x,y,cx,cy = self.widget.bbox("insert")
+	x = x + self.widget.winfo_rootx() + 2
+	y = y + cy + self.widget.winfo_rooty()
+	self.tipwindow = tw = Tk.Toplevel(self.widget)
+
+	<< remove the border >>
+	tw.wm_geometry("+%d+%d" % (x, y))
+	<< Mac-specific code >>
+
+	label = Tk.Label(tw,text=text, justify="left",
+		background="#ffffe0",relief="solid",borderwidth=1,
+		font=self.widget['font'])
+
+	label.pack()
+#@nonl
+#@+node:ekr.20040324073536:<< remove the border >>
+@
+The following command has two effects:
+- It removes the calltip window border (good)
+- Causes (at least on Linux) the calltip to show as a top level window,
+  burning through any other window dragged over it.
+  Also, shows on all viewports!
+@c
+
+tw.wm_overrideredirect(1)
+#@nonl
+#@-node:ekr.20040324073536:<< remove the border >>
+#@+node:ekr.20040324073536.1:<< Mac-specific code >>
+@
+This command is only needed and available on Tk >= 8.4.0 for OSX.
+Without it, call tips intrude on the typing process by grabbing the focus.
+@c
+
+try:
+	tw.tk.call("::tk::unsupported::MacWindowStyle",
+		"style",tw._w,"help","noActivates")
+except Tk.TclError:
+	pass
+#@nonl
+#@-node:ekr.20040324073536.1:<< Mac-specific code >>
+#@-node:ekr.20040324072124.4:showtip
+#@+node:ekr.20040324072124.5:hidetip
+def hidetip(self):
+
+	tw = self.tipwindow
+	self.tipwindow = None
+	if tw:
+		tw.destroy()
+#@nonl
+#@-node:ekr.20040324072124.5:hidetip
+#@-node:ekr.20040324072124.2:class CallTip
+#@+node:ekr.20040324072124.6:class container (test code)
+class container: # Conceptually an editor_window
+
+@others
+#@nonl
+#@+node:ekr.20040324072124.7:__init__
+def __init__(self):
+
+	root = Tk.Tk()
+	text = self.text = Tk.Text(root)
+	text.pack(side="left", fill="both", expand=1)
+	text.insert("insert","string.split")
+	root.update()
+	self.calltip = CallTip(text)
+
+	text.event_add(g.virtual_event_name("calltip-show"),"(")
+	text.event_add(g.virtual_event_name("calltip-hide"),")")
+
+	text.bind(g.virtual_event_name("calltip-show"),self.calltip_show)
+	text.bind(g.virtual_event_name("calltip-hide"),self.calltip_hide)
+
+	text.focus_set()
+	root.mainloop()
+#@nonl
+#@-node:ekr.20040324072124.7:__init__
+#@+node:ekr.20040324072124.8:calltip_show
+def calltip_show(self, event):
+
+	self.calltip.showtip("Hello world")
+#@nonl
+#@-node:ekr.20040324072124.8:calltip_show
+#@+node:ekr.20040324072124.9:calltip_hide
+def calltip_hide(self, event):
+
+	self.calltip.hidetip()
+#@nonl
+#@-node:ekr.20040324072124.9:calltip_hide
+#@-node:ekr.20040324072124.6:class container (test code)
+#@+node:ekr.20040324072124.10:main
+def main():
+
+	# Test code
+	c=container()
+#@nonl
+#@-node:ekr.20040324072124.10:main
+#@-node:ekr.20040324072124:CallTipWindow.py
+#@-node:ekr.20040310092400.1:Use calltips in outline pane
+#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
+http://www.reportlab.com
+
+import xml.sax
+#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
+#@+node:ekr.20040411152933:Jython (when Jython supports Python 2.2)
+#@-node:ekr.20040411152933:Jython (when Jython supports Python 2.2)
+#@-node:ekr.20040329182535.3:2 day projects
 #@+node:ekr.20040329182535.1:1-2 week projects
 #@+node:ekr.20031218072017.828:Rewrite the config manager
 http://sourceforge.net/forum/message.php?msg_id=2329053
@@ -1742,1137 +2865,6 @@ David
 
 #@-node:ekr.20031218072017.811:Split panes (could be done in gui plugins)
 #@-node:ekr.20040329182535.1:1-2 week projects
-#@+node:ekr.20040329182535.3:2 day projects
-#@+node:ekr.20040330064657:(@file-thin-wait)
-#@-node:ekr.20040330064657:(@file-thin-wait)
-#@+node:ekr.20031218072017.734:** Rewrite colorizer to use jEdit language descriptionfiles
-#@+node:ekr.20031218072017.735:Option: case insensitive keywords
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2097076
-By: nobody
-
-Using Jason's code for Rebol and a visual DIFF, I was able to quickly add the
-keywords for the assembler I use. I'm wondering if there is a way to tell Leo
-to ignore keyword case -- at the present, each keyword is entered twice. Not
-a big problem with modern editors, but it _would_ be nicer...
-
---Rich
-#@-node:ekr.20031218072017.735:Option: case insensitive keywords
-#@-node:ekr.20031218072017.734:** Rewrite colorizer to use jEdit language descriptionfiles
-#@+node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
-#@-node:ekr.20040217152936.1:Incremental drawing of outline pane: see projects
-#@+node:ekr.20031218072017.743:Note windows
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2205285
-By: nobody
-
-From: Rich
-
-Some of the things I'd like to see in Leo:
-
-A note window for each node. This is similar to (1), but a little fancier
-looking. I envision a short window at the bottom of the edit window that could
-hold notes and comments about the code, such as "Test this harder" or "Find
-a better way of phrasing this". This is currently available in uSoft Office
-and the Eclipse IDE (http://www.eclipse.org). Perhaps a numeric reference, such
-as "<<1>>" could be used.
-
-(2) Color ''and'' italic/bold characters with @markup. One thing I'd like to
-''not'' see are the markup characters in @file-nosent files.  "~~red:NOTE:~~"
-does nothing for readability in plain text.
-#@nonl
-#@-node:ekr.20031218072017.743:Note windows
-#@+node:ekr.20031218072017.754:Open text files in text window
-#@-node:ekr.20031218072017.754:Open text files in text window
-#@+node:ekr.20040329182535.4:Leo + zodb
-#@+node:ekr.20040226114127:Zope test
-from leoGlobals import *
-
-from ZODB import FileStorage, DB
-
-if 1:
-	print "-"*20
-	storage = FileStorage.FileStorage(r"c:\prog\zopeTemp\leo.fs") 
-	db = DB(storage)
-	print storage ; print db
-	db.close()
-#@-node:ekr.20040226114127:Zope test
-#@+node:ekr.20031218072017.737:Leo & data bases
-From: "Scott Chapman" <scott_list@mischko.com>
-To: <edreamleo@charter.net>
-Sent: Monday, November 10, 2003 11:05 AM
-Subject: Enhancement request: Make Leo deal with a database
-
-It would be Way Cool if Leo could deal with psycopg or other DataBase 
-API compliant implementations and fetch and store database records.
-
-Details of what I'd like to see:
-
-I'm working on Python source code. I want Leo to pull a source code file 
-from a database record built something like this:
-
-filename: text
-updated: datetimestamp
-code: text
-
-Leo would insert a new record, not update an existing one, each time a 
-Save was done, with a more current time stamp.  
-
-When a File Open was requested (i.e. a node on a existing Leo outline 
-was being pulled from a database), Leo would fetch the most recent 
-time-stamped version only.
-
-I use this same technique for my wiki pages.  It's very easy to 
-implement in SQL and works great.
-
-Leo would also need the ability to save the same file to a regular 
-python source code file on disk at a specific location, so you'd have 
-to be able to put more than one save/load directive in a given node.
-
-This would provide a nice version history and could lead to other Useful 
-Things in Leo.
-
-Scott
-#@nonl
-#@-node:ekr.20031218072017.737:Leo & data bases
-#@-node:ekr.20040329182535.4:Leo + zodb
-#@+node:ekr.20031218072017.797:Allow @file http & @file ftp
-I'd like to see leo's @file can be extended to cover more protocols, like REBOL's "read" does. 
-
-in short, it would be very sweet if the following work: 
-
-@file http://www.somedomain.org/python/foo.py 
-
-@file pass@ftp.sd.org/python/foo.py" target="_blank" target="_new">ftp://user:pass@ftp.sd.org/python/foo.py> 
-
-while we are at it, what about xmlrpc/soap? 
-
-should there be new directive, like @source ?
-#@nonl
-#@+node:ekr.20031218072017.810:Remote access Scott Powell
-I will wait. Here's clarification, when you're ready for it:
-
-All of my projects are stored on remote computers, and accessed via FTP. 
-What I want is basically the ability to open up these projects directly 
-through leo, instead of transferring the files manually between my computer 
-and the computers that hold my projects, preferably through FTP.
-
-My solution: A new menu item called 'FTP' or 'Remote'. Click on this, and an 
-FTP dialog opens up, with an empty list of FTP sites, and the ability to add 
-more. You select a site, and it brings up a list of files. You select a 
-file, and it is added to your project. When you hit 'save', it automatically 
-does an FTP send.
-
-Python makes this a lot easier with the builtin module 'ftplib'. I'm sure 
-there are similar things for C++. I hope you take this idea into 
-consideration.
-
-Scott Powell
-CEO, Dev Designs
-#@-node:ekr.20031218072017.810:Remote access Scott Powell
-#@-node:ekr.20031218072017.797:Allow @file http & @file ftp
-#@+node:ekr.20040310092400.1:Use calltips in outline pane
-#@+node:ekr.20040324075752:Request
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2460535
-By: nobody
-
-See CallTipWindow.py in IDLE 1.0.2
-
-Fairly simple implementation - uses a new toplevel window without a border.
-
-Read the comments in the code for potential drawbacks on some platforms.
-
-Regards, Myles.
-#@nonl
-#@-node:ekr.20040324075752:Request
-#@+node:ekr.20040324071749:CallTips.py
-"""CallTips.py - An IDLE Extension to Jog Your Memory
-
-Call Tips are floating windows which display function, class, and method
-parameter and docstring information when you type an opening parenthesis, and
-which disappear when you type a closing parenthesis.
-
-Future plans include extending the functionality to include class attributes.
-
-"""
-
-import sys
-import string
-import types
-
-import CallTipWindow
-
-import __main__
-
-@others
-#@+node:ekr.20040324071749.2:class CallTips
-class CallTips:
-	menudefs = [ ]
-	
-@others
-
-#@+node:ekr.20040324071749.4:__init__
-def __init__(self, editwin=None):
-
-    if editwin == None:  # subprocess and test
-        self.editwin = None
-        return
-
-    self.editwin = editwin
-    self.text = editwin.text
-    self.calltip = None
-    self._make_calltip_window = self._make_tk_calltip_window
-#@nonl
-#@-node:ekr.20040324071749.4:__init__
-#@+node:ekr.20040324071749.5:close
-def close(self):
-
-    self._make_calltip_window = None
-#@-node:ekr.20040324071749.5:close
-#@+node:ekr.20040324071749.6:_make_tk_calltip_window
-def _make_tk_calltip_window(self):
-	
-    # See __init__ for usage
-    return CallTipWindow.CallTip(self.text)
-#@nonl
-#@-node:ekr.20040324071749.6:_make_tk_calltip_window
-#@+node:ekr.20040324071749.7:_remove_calltip_window
-def _remove_calltip_window(self):
-
-    if self.calltip:
-        self.calltip.hidetip()
-        self.calltip = None
-#@nonl
-#@-node:ekr.20040324071749.7:_remove_calltip_window
-#@+node:ekr.20040324071749.8:paren_open_event
-def paren_open_event(self, event):
-
-    self._remove_calltip_window()
-    name = self.get_name_at_cursor()
-    arg_text = self.fetch_tip(name)
-    if arg_text:
-        self.calltip_start = self.text.index("insert")
-        self.calltip = self._make_calltip_window()
-        self.calltip.showtip(arg_text)
-    return "" #so the event is handled normally.
-#@nonl
-#@-node:ekr.20040324071749.8:paren_open_event
-#@+node:ekr.20040324071749.9:paren_close_event
-def paren_close_event(self, event):
-
-    # Now just hides, but later we should check if other
-    # paren'd expressions remain open.
-    self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-#@-node:ekr.20040324071749.9:paren_close_event
-#@+node:ekr.20040324071749.10:check_calltip_cancel_event
-def check_calltip_cancel_event(self, event):
-
-    if self.calltip:
-        # If we have moved before the start of the calltip,
-        # or off the calltip line, then cancel the tip.
-        # (Later need to be smarter about multi-line, etc)
-        if self.text.compare("insert", "<=", self.calltip_start) or \
-           self.text.compare("insert", ">", self.calltip_start
-                             + " lineend"):
-            self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-#@-node:ekr.20040324071749.10:check_calltip_cancel_event
-#@+node:ekr.20040324071749.11:calltip_cancel_event
-def calltip_cancel_event(self, event):
-
-    self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-#@-node:ekr.20040324071749.11:calltip_cancel_event
-#@+node:ekr.20040324071749.12:get_name_at_cursor
-__IDCHARS = "._" + string.ascii_letters + string.digits
-
-def get_name_at_cursor(self):
-    idchars = self.__IDCHARS
-    str = self.text.get("insert linestart", "insert")
-    i = len(str)
-    while i and str[i-1] in idchars:
-        i -= 1
-    return str[i:]
-#@-node:ekr.20040324071749.12:get_name_at_cursor
-#@+node:ekr.20040324071749.13:fetch_tip
-def fetch_tip(self, name):
-
-    """Return the argument list and docstring of a function or class
-
-    If there is a Python subprocess, get the calltip there.  Otherwise,
-    either fetch_tip() is running in the subprocess itself or it was called
-    in an IDLE EditorWindow before any script had been run.
-
-    The subprocess environment is that of the most recently run script.  If
-    two unrelated modules are being edited some calltips in the current
-    module may be inoperative if the module was not the last to run.
-
-    """
-    try:
-        rpcclt = self.editwin.flist.pyshell.interp.rpcclt
-    except:
-        rpcclt = None
-    if rpcclt:
-        return rpcclt.remotecall("exec", "get_the_calltip",
-                                 (name,), {})
-    else:
-        entity = self.get_entity(name)
-        return get_arg_text(entity)
-#@nonl
-#@-node:ekr.20040324071749.13:fetch_tip
-#@+node:ekr.20040324071749.14:get_entity
-def get_entity(self, name):
-
-    "Lookup name in a namespace spanning sys.modules and __main.dict__"
-    if name:
-        namespace = sys.modules.copy()
-        namespace.update(__main__.__dict__)
-        try:
-            return eval(name, namespace)
-        except:
-            return None
-#@nonl
-#@-node:ekr.20040324071749.14:get_entity
-#@-node:ekr.20040324071749.2:class CallTips
-#@+node:ekr.20040324071749.15:_find_constructor
-def _find_constructor(class_ob):
-	
-    # Given a class object, return a function object used for the
-    # constructor (ie, __init__() ) or None if we can't find one.
-	
-    try:
-        return class_ob.__init__.im_func
-    except AttributeError:
-        for base in class_ob.__bases__:
-            rc = _find_constructor(base)
-            if rc is not None: return rc
-    return None
-
-#@-node:ekr.20040324071749.15:_find_constructor
-#@+node:ekr.20040324071749.16:get_arg_text
-def get_arg_text(ob):
-    "Get a string describing the arguments for the given object"
-    argText = ""
-    if ob is not None:
-        argOffset = 0
-        if type(ob)==types.ClassType:
-            # Look for the highest __init__ in the class chain.
-            fob = _find_constructor(ob)
-            if fob is None:
-                fob = lambda: None
-            else:
-                argOffset = 1
-        elif type(ob)==types.MethodType:
-            # bit of a hack for methods - turn it into a function
-            # but we drop the "self" param.
-            fob = ob.im_func
-            argOffset = 1
-        else:
-            fob = ob
-        # Try and build one for Python defined functions
-        if type(fob) in [types.FunctionType, types.LambdaType]:
-            try:
-                realArgs = fob.func_code.co_varnames[argOffset:fob.func_code.co_argcount]
-                defaults = fob.func_defaults or []
-                defaults = list(map(lambda name: "=%s" % name, defaults))
-                defaults = [""] * (len(realArgs)-len(defaults)) + defaults
-                items = map(lambda arg, dflt: arg+dflt, realArgs, defaults)
-                if fob.func_code.co_flags & 0x4:
-                    items.append("...")
-                if fob.func_code.co_flags & 0x8:
-                    items.append("***")
-                argText = ", ".join(items)
-                argText = "(%s)" % argText
-            except:
-                pass
-        # See if we can use the docstring
-        doc = getattr(ob, "__doc__", "")
-        if doc:
-            doc = doc.lstrip()
-            pos = doc.find("\n")
-            if pos < 0 or pos > 70:
-                pos = 70
-            if argText:
-                argText += "\n"
-            argText += doc[:pos]
-    return argText
-#@-node:ekr.20040324071749.16:get_arg_text
-#@+node:ekr.20040324071749.17:t1
-#################################################
-#
-# Test code
-#
-if __name__=='__main__':
-
-    def t1(): "()"
-    def t2(a, b=None): "(a, b=None)"
-    def t3(a, *args): "(a, ...)"
-    def t4(*args): "(...)"
-    def t5(a, *args): "(a, ...)"
-    def t6(a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    class TC:
-        "(a=None, ...)"
-        def __init__(self, a=None, *b): "(a=None, ...)"
-        def t1(self): "()"
-        def t2(self, a, b=None): "(a, b=None)"
-        def t3(self, a, *args): "(a, ...)"
-        def t4(self, *args): "(...)"
-        def t5(self, a, *args): "(a, ...)"
-        def t6(self, a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    def test(tests):
-        ct = CallTips()
-        failed=[]
-        for t in tests:
-            expected = t.__doc__ + "\n" + t.__doc__
-            name = t.__name__
-            arg_text = ct.fetch_tip(name)
-            if arg_text != expected:
-                failed.append(t)
-                print "%s - expected %s, but got %s" % (t, expected,
-                                                        get_arg_text(entity))
-        print "%d of %d tests failed" % (len(failed), len(tests))
-
-    tc = TC()
-    tests = (t1, t2, t3, t4, t5, t6,
-             TC, tc.t1, tc.t2, tc.t3, tc.t4, tc.t5, tc.t6)
-
-    test(tests)
-#@-node:ekr.20040324071749.17:t1
-#@-node:ekr.20040324071749:CallTips.py
-#@+node:ekr.20040324072124:CallTipWindow.py
-"""A CallTip window class for Tkinter/IDLE.
-
-After ToolTip.py, which uses ideas gleaned from PySol
-Used by the CallTips IDLE extension.
-
-"""
-
-import Tkinter as Tk
-import leoGlobals as g
-
-@others
-
-if 1:
-	main()
-#@nonl
-#@+node:ekr.20040324072124.2:class CallTip
-class CallTip:
-
-@others
-#@+node:ekr.20040324072124.3:__init__
-def __init__(self,widget):
-
-	self.widget = widget
-	self.tipwindow = None
-	self.id = None
-	self.x = self.y = 0
-#@nonl
-#@-node:ekr.20040324072124.3:__init__
-#@+node:ekr.20040324072124.4:showtip
-def showtip (self,text):
-
-	""" Display text in calltip window"""
-
-	if self.tipwindow or not text: return
-
-	# truncate overly long calltip
-	if len(text) >= 79: text = text[:75] + ' ...'
-	self.text = text
-
-	self.widget.see("insert")
-	x,y,cx,cy = self.widget.bbox("insert")
-	x = x + self.widget.winfo_rootx() + 2
-	y = y + cy + self.widget.winfo_rooty()
-	self.tipwindow = tw = Tk.Toplevel(self.widget)
-
-	<< remove the border >>
-	tw.wm_geometry("+%d+%d" % (x, y))
-	<< Mac-specific code >>
-
-	label = Tk.Label(tw,text=text, justify="left",
-		background="#ffffe0",relief="solid",borderwidth=1,
-		font=self.widget['font'])
-
-	label.pack()
-#@nonl
-#@+node:ekr.20040324073536:<< remove the border >>
-@
-The following command has two effects:
-- It removes the calltip window border (good)
-- Causes (at least on Linux) the calltip to show as a top level window,
-  burning through any other window dragged over it.
-  Also, shows on all viewports!
-@c
-
-tw.wm_overrideredirect(1)
-#@nonl
-#@-node:ekr.20040324073536:<< remove the border >>
-#@+node:ekr.20040324073536.1:<< Mac-specific code >>
-@
-This command is only needed and available on Tk >= 8.4.0 for OSX.
-Without it, call tips intrude on the typing process by grabbing the focus.
-@c
-
-try:
-	tw.tk.call("::tk::unsupported::MacWindowStyle",
-		"style",tw._w,"help","noActivates")
-except Tk.TclError:
-	pass
-#@nonl
-#@-node:ekr.20040324073536.1:<< Mac-specific code >>
-#@-node:ekr.20040324072124.4:showtip
-#@+node:ekr.20040324072124.5:hidetip
-def hidetip(self):
-
-	tw = self.tipwindow
-	self.tipwindow = None
-	if tw:
-		tw.destroy()
-#@nonl
-#@-node:ekr.20040324072124.5:hidetip
-#@-node:ekr.20040324072124.2:class CallTip
-#@+node:ekr.20040324072124.6:class container (test code)
-class container: # Conceptually an editor_window
-
-@others
-#@nonl
-#@+node:ekr.20040324072124.7:__init__
-def __init__(self):
-
-	root = Tk.Tk()
-	text = self.text = Tk.Text(root)
-	text.pack(side="left", fill="both", expand=1)
-	text.insert("insert","string.split")
-	root.update()
-	self.calltip = CallTip(text)
-
-	text.event_add(g.virtual_event_name("calltip-show"),"(")
-	text.event_add(g.virtual_event_name("calltip-hide"),")")
-
-	text.bind(g.virtual_event_name("calltip-show"),self.calltip_show)
-	text.bind(g.virtual_event_name("calltip-hide"),self.calltip_hide)
-
-	text.focus_set()
-	root.mainloop()
-#@nonl
-#@-node:ekr.20040324072124.7:__init__
-#@+node:ekr.20040324072124.8:calltip_show
-def calltip_show(self, event):
-
-	self.calltip.showtip("Hello world")
-#@nonl
-#@-node:ekr.20040324072124.8:calltip_show
-#@+node:ekr.20040324072124.9:calltip_hide
-def calltip_hide(self, event):
-
-	self.calltip.hidetip()
-#@nonl
-#@-node:ekr.20040324072124.9:calltip_hide
-#@-node:ekr.20040324072124.6:class container (test code)
-#@+node:ekr.20040324072124.10:main
-def main():
-
-	# Test code
-	c=container()
-#@nonl
-#@-node:ekr.20040324072124.10:main
-#@-node:ekr.20040324072124:CallTipWindow.py
-#@-node:ekr.20040310092400.1:Use calltips in outline pane
-#@+node:ekr.20031218072017.736:Use xml parser to read .leo files
-http://www.reportlab.com
-
-import xml.sax
-#@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@+node:ekr.20040411152933:Jython (when Jython supports Python 2.2)
-#@-node:ekr.20040411152933:Jython (when Jython supports Python 2.2)
-#@-node:ekr.20040329182535.3:2 day projects
-#@+node:ekr.20040329182535.5:1 day projects
-#@+node:ekr.20031218072017.801:Zipped .leo files
-By: samcollett ( Sam Collett ) 
- Compressed LEO files   
-2003-01-07 16:57
-
-
-Would it be possible to have a new file format that was basically a compressed
-version of LEO files? Maybe using the gzip compression method. You could then
-save a lot of space when you do large files. Not being a professional
-programmer myself (I mainly dabble in web design - HTML and Active Server
-Pages) how difficult would this be to implement? You would just output using a
-different file extension so users of the older versions can still use files
-with the LEO extension.
-#@+node:ekr.20040226092546:Saving .leo files with file compression
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2442772
-By: ejoy
-
-I made an experiment last night. I replaced the call to open()in leofilecommand.py
-with a call to gzip.open().
-The LeoPy.leo file saved this way is only 600K! And there is no significant
-speed down in saving.
-
-I think it is a good idea to add compression support for load/save .leo files.
-When reading or writing file with name ending with ".leo.gz", leo can call gzip
-module to uncompress/compress the file, saving a lot of disk space.
-
-What do you think of this?
-#@-node:ekr.20040226092546:Saving .leo files with file compression
-#@-node:ekr.20031218072017.801:Zipped .leo files
-#@+node:ekr.20031218072017.755:Delay converting tabs to spaces
-Developers
-
- RE: tab spacing test   
-2003-07-01 17:05  
-Another thought that hit me last night. In vim for example, tabs are tabs until you're off the line if you've set expandtab. Never really thought about it before, but that's how it works. 
-
-So you could do \t\t\t and then delete the entire space with 3 backspaces. But if you move the cursor off the line then it would take 12 backspaces (assuming you set the tabwidth to 4) because its been replaced with spaces. Its nice, and works well. 
-
-- ordinarius  
-#@-node:ekr.20031218072017.755:Delay converting tabs to spaces
-#@+node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-This might be the best way to reliably have Tk move to the next line!
-#@-node:ekr.20040203075059:use pos linestart + 1 lines to go to next line?
-#@+node:ekr.20031218072017.733:Execute scripts like IDE's do
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2321235
-By: paulpaterson
-
-I think I understand what Samir is getting at. 
-
-In PythonWin, or other IDE's for other languages, you are able to execute the
-"current program" in a way that it will behave identically to if it had been
-run from the command line.
-
-For Python this requires,
-
-1. That the script run with __name__ == "__main__", so that the standard "if
-__name__ ..." section will be executed properly.
-
-2. You are able to pass command line parameters to the script. In some IDE's
-you are able to set default command line parameters and these are "injected"
-into the sys.argv (or equivalent) so that, as far as the program is concerned,
-it looks like you ran it from the command line with some aruments.
-
-
-The underlying assumption is that you want to run an entire program from Leo,
-not just a script. I would find this very useful also as I could run unit tests
-or even my entire apps by just hitting, for exampe, F5.
-
-Paul
-#@nonl
-#@-node:ekr.20031218072017.733:Execute scripts like IDE's do
-#@+node:ekr.20031218072017.747:Mutliple cut/paste buffers?
-#@-node:ekr.20031218072017.747:Mutliple cut/paste buffers?
-#@+node:ekr.20031218072017.748:Import/Export to yaml
-Need a good yaml parser first: I don't want to write another parser by hand.
-#@nonl
-#@-node:ekr.20031218072017.748:Import/Export to yaml
-#@+node:ekr.20031218072017.790:Import dialog improvements
-@nocolor
-
-Other options I though would be really handy:
-
-1. Use an existing node as a source also
-
-2. Use an node from another Leo file.. I am not sure what the syntax for that
-would be exactly
-
-3. From a URL.. this would be really cool. People could post outlines not only
-as existing Leo xml files, but as text files or even dynamic scripts. The code
-to handle these would presumably need to deal with http:// intelligently. But
-that's easy in Python. Rebol is great at that too.
-
-4. Other XML file with valid filepaths in them.
-That's probably a much bigger project like Leo 3.10  
-
-Jason
-#@-node:ekr.20031218072017.790:Import dialog improvements
-#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
-This is done automatically now!  I may have to use configure events.
-
-> When I have the 'split mode' set to display tree and log on left, and viewpane
-on right, I sometimes need to increase the width of the window.
-
-When I do the resize, the tree/log panes grow in proportion. I don't know about
-others, but I'd much prefer if the tree/log panes stayed at the same width,
-and only the view pane grew.
-#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally
-#@+node:ekr.20031218072017.800:Enhancements to extract section
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1858824
-By: gilshwartz
-Open discusstion
-
-Currently Extract Section is only available if the first line in a selection
-is a section name <<x>>. I would like to propose a few enhancements I think
-should be useful, while I believe most of the code is already implemented in
-Leo.
-
-1. If the first line in a selection is not <<x>>, than Extract Section WILL
-make a section name from the first line (or a version of it, see below), leave
-the section name in the body, create a new node with that section name, and
-will copy the selection including the first line to the new node.
-
-Rational: this is useful when selecting a function or a class. Thus the section
-name becomes the function or the class definition. The section name can either
-be the full first line, or, knowing the language, Leo can make a nice section
-name like it does in import, e.g. "function foo", or "class bar", without the
-parameters list.
-
-2. Even better, when Extract Section is called WITHOUT a selection it will look
-for the first function/class definition before the cursor's position and will
-either use it as a selection and do 1 above, or just mark it as selection, which
-will enable 1 above upon a second Extract Section.
-
-Rational: Leo does it beautifully in import and when a node's code starts to
-build it is most convenient. Also, I think a variation on this was recently
-asked by another user.
-
-3. Add an option Merge Section, which when called from a named section will
-merge it back to all the sections containing it.
-
-Rational: make it easy (together with 2) to create/delete sections until the
-sections picture of a new code becomes clear.
-
-Gil
-
---
-
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1859516
-By: nobody
-
-Simpler & more intutive:
-Mark text, select from menu - 'extract section', this presents a dialog box
-in which you fill in the section name. It is too much work to type <<name>>
-then select the whole thing...
-
-As an enhancement, the dialog can show the first line of the selection as the
-default section name, which obviously can be changed.
-
-- Rajiv Bhagwat
-#@-node:ekr.20031218072017.800:Enhancements to extract section
-#@+node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20040329182535.5:1 day projects
-#@+node:ekr.20040329182535.7:1-2 hour projects
-#@+node:ekr.20040329190314:Most important
-#@+node:ekr.20040115163454:@killcolor directive
-#@-node:ekr.20040115163454:@killcolor directive
-#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
-@nocolor
-
-Open discussion
-By: jasonic ( Jason Cunliffe ) 
- use of @language   
-2003-07-16 03:40  
-
-I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
-
-For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
-
-".py" for python 
-".r" for rebol 
-".as" for actionscript etc.. 
-
-Should anyone need to over-ride those, they could use @language.
-#@nonl
-#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
-#@+node:ekr.20031218072017.856:context menu in body pane
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2311537
-By: ejoy
-
-Hello delevepers:
-  I think add a right button context menu in body panel is useful. Especially
-for cut&copy&paste operations.
-
-
-from windows' notepad:
-undo
------
-cut
-copy
-paste
-delete
-------
-select all
-
-It's better to let plugin customize the menu.  
-#@nonl
-#@-node:ekr.20031218072017.856:context menu in body pane
-#@+node:ekr.20031218072017.746:Minimizing/maximizing windows
-@nocolor
-
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2090601
-By: jasonic
-
-I'll be happy to run some test and report to you. But  I suspect from your post
-a slight misunderstanding about Alt+Tab.
-
-Alt+Tab just toggles the active window.
-It works fine with Leo on Windows wherver I have tried it.
-
-Resizing wondows via hotkeys is another matter.
-The special "Windows" Key + m will minimize all windows. 
-
-But unfortunately I've not yet discovered any opposite shortcut to  maximize
-all windows :-(
-I've tried various 3rd party hotkey utililties, but somehow always end up dropping
-them.
-
-<rant>
-I really hate wasting any time dragging windows around and resizing them or
-clicking to bring them into top focus. As I work mainly with graphics, and mult-task
-intesenlty bwetn apps,  it is especially important to reduce visual clutter
-on screen.
-
-For many years the way to do this has been combining maximized [or minimized]
-windows with  Alt+Tab. Alt+Tab  lets one jump rapidly betwen open apps and windows
-without ever need to repostion or resize them.
-
-As a consultant, its one of the first things I ever teach clients. Often it
-transforms their perception of using Windows.
-
-It is so painful to watch people dragging and rescaling  windows all over the
-place. Ironically, I've witnessed some very smart programmers fly through vi
-or emacs but then slow to tortoises when navigation mice and windows. I beleive
-as long as we have the curertn wnidows UI paradigm,  use of Alt+Tab is an essential
-part of  GUI 'litteracy' - an essentail skill all shoudl have. Alas its still
-little known or discussed.
-
-There is also a nice toggle feature so one can jump back to the last app/window
-as its first "stop". Typically one is working between two apps for some specific
-task, even though many are open.
-
-Keeping one's finger on the 'Alt' key then tapping 'Tab' lets one hop along
-the list.
-
-Adding 'shift' to the mix helps one to go in reverse. 
-
-Above all one can keep one hand on the mouse, the other on the keyboard [ALt+Tab]
-and ones mind/eye on teh screen. For me it means left hand "plays" the bass
-pattern using Alt+Tab along with the clipboard shortcuts [CTRL+ z,x,c,v] ,while
-right hand on the mouse mouse  provides the melody.
-
-I've been using variations on the above since 1987 when I bought an Amiga2000.
-I seem to recall SGI had one also. And after learning about Alt+Tab on windows,
-I  found a utility to work the same way on Macintosh.  I am very happy to discover
-that MacOSX now has built-in ALt+Tab :-)
-</rant>
-
-Meanwhile, Iam  still wondering how to set Leo [3.12 beta 1, Python 2.2.2, Tk
-8.3.2] default to a maxmimized or minimized window size by itself.
-
-And also to remember the last size/position it had. I vaguely remember that
-it used to do that, but perhaps I am mistaking it for some other software ?
-
-thanks
-Jason
-#@-node:ekr.20031218072017.746:Minimizing/maximizing windows
-#@+node:ekr.20031218072017.791:automatic "tab nanny" and syntax checking of Python code
-#@-node:ekr.20031218072017.791:automatic "tab nanny" and syntax checking of Python code
-#@+node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
-- Show changes:
-	When a derived file is modified by an editor it would be very nice if Leo would:
-	- flag the file as modified and,
-	- flag (underline, color, diff, whatever) the parts that were modified.
-#@nonl
-#@-node:ekr.20031218072017.742:Show diffs of changed node in top_df.read
-#@+node:ekr.20040220110030:Change cursor when caps lock is down
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2431552
-By: nobody
-
-From: Rich
-
- I just got nipped twice by the following effect: the Caps-Lock key is ON, but
-because the LED is on the Caps-Lock key, it is hidden behind my hand. I hit
-Ctrl-x, expecting to cut my selection, but the entire node is cut.
-
-   I know there's a problem with tk and the shift key status, so I'm wondering
-if it would be possible to change the shape of the cursor when the Caps-Lock
-is ON (preferrably a big red flashing blot 8-), or otherwise show that Caps-Lock
-is active ( "CAPS" on a status line, for instance).
-
-  Another way: I don't know if this goes against an "anti-modalism rule," but
-only allowing Ctrl-Shift-x|c|v in the outline pane would also be acceptable
-to me.
-#@nonl
-#@-node:ekr.20040220110030:Change cursor when caps lock is down
-#@+node:ekr.20040315060557:declone command
-By: nobody ( Nobody/Anonymous ) 
- having a declone() method for vnodes?   
-2004-03-15 04:36  
-
- hi,
-
-Ive had a use for a declone() method in vnodes recently. Have you ever thought about adding a method that declones a clone? This would entail:
-
-1. Making a clone node a normal node.
-
-I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
-#@nonl
-#@-node:ekr.20040315060557:declone command
-#@+node:ekr.20031218072017.792:Double Click Node command
-#@-node:ekr.20031218072017.792:Double Click Node command
-#@+node:ekr.20031218072017.852:Scroll improvement
-@nocolor
-
-By: jwashin ( James Washington ) 
- Scrolling and the Tree Frame in Linux   
-2003-10-20 12:13  
-
-I'm using tk-8.4.3, python-2.2.3 on linux. The MouseWheel events do not work for me in the Tree Frame.
-
-I added <Button-4> and <Button-5> bindings similar to the existing <MouseWheel> binding in LeoFrame.finishCreate(), associating them with two methods, LeoFrame.OnMouseScrollDown and LeoFrame.OnMouseScrollUp that took the appropriate parts of OnMouseWheel()
-
-Now it works, sort-of. It scrolls properly unless the cursor is an I-Bar, e.g., over text. But at least this removes in-part the most glaring UI problem for me with Leo in tk. I suppose I am spoiled with the mouse wheel and want it to work everywhere.
-
-Thanks for the great program.
-
--- Jim Washington  
-#@-node:ekr.20031218072017.852:Scroll improvement
-#@-node:ekr.20040329190314:Most important
-#@+node:ekr.20040329190314.2:Others
-#@+node:ekr.20040213090121:Insert at end
-@nocolor
-
-By: tibi ( Thiébaut Champenier ) 
- inserting a new node   
-2004-02-13 13:23  
-
- Hi,
-
-When doing ctrl+i I on the node that has children I would prefer Leo to insert the new node as the last children instead of the first. It just makes more sense to me, for exemple when you take a big file and cut it in subnodes you typically start at the top and create new nodes while paging down the file.
-What do you think ?
-To try it just make this little change:
-RCS file: /cvsroot/leo/leo/src/leoCommands.py,v
-retrieving revision 1.76
-diff -r1.76 leoCommands.py
-2516c2516
-< v = current.insertAsNthChild(0)
----
-> v = current.insertAsLastChild()  
-#@nonl
-#@-node:ekr.20040213090121:Insert at end
-#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-1. Warn when creating _any_ new file.
-
-2. Warn when rewriting any file that was not read properly.
-
-This prevents "hijacking" an already existing file.
-#@nonl
-#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-#@+node:ekr.20031218072017.756:Document how to use pdb plugin
-#@-node:ekr.20031218072017.756:Document how to use pdb plugin
-#@+node:ekr.20031218072017.745:@@first <n>
-@nocolor
-
-Hate to break into the grand design discussions, but here's a hopefully small thing. If you need to place a good sized copyright statement at the top of your files, LEO doesn't handle this case very cleanly. As I'm sure you're aware, you wind up with a matching number of @@first lines for each leading line in your source. 
-
-As an example: 
-# 1 
-# 2 
-# 3 
-# 4 
-# 5 
-#@verbatim
-#@+leo 
-#@verbatim
-#@+node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@+body 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@@first 
-#@verbatim
-#@+doc 
-# 
-# How many firsts do I get? 
-
-#@verbatim
-#@-doc 
-#@verbatim
-#@@c 
-Start code. 
-#@verbatim
-#@-body 
-#@verbatim
-#@-node:0::@file /tmp/firstcheck.py 
-#@verbatim
-#@-leo 
-
-My fellow co-workers who don't use LEO, aren't exactly loving me here. 
-
-Might we introduce an: 
-
-@@first <num> 
-
-Type tag instead? So one '@@first 5' could represent all 5 of the above @@first lines? It makes for a smaller, cleaner LEO footprint and will tick off non-LEO users much less. 
-
-Thanks. 
-
-- ordinarius 
-#@nonl
-#@-node:ekr.20031218072017.745:@@first <n>
-#@+node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-@nocolor
-
-Open Discussion
-https://sourceforge.net/forum/message.php?msg_id=2003457
-By: dsalomoni
-
-Proposal: modify the code for @url so that if you type for example just "@url"
-(no file specified) in a headline, a window pops up allowing you to browse the
-local file system and select the file (similar to what browsers do when you
-want to open a file).
-
-This would be more convenient than manually writing @url
-file://a/long/path/to/the/file. @read-only nodes already allow this, it would
-perhaps be nice if all these types of plugins (@folder might be another one
-for example) and directives (@file etc) had the same behavior (and this should
-probably be specified in some guidelines for writing new plugins -see e.g. the
-jedit plugin guidelines).
-
-Davide
-#@-node:ekr.20031218072017.807:Put up file dialog on empty @url, etc.
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
-#@nonl
-#@+node:ekr.20040226094105.1:halw
-
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-	if e.num == 4:
-	..e.delta = 120
-	..return frame.OnMouseWheel(e)
-	elif e.num == 5:
-	..e.delta = -120
-	..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
-#@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@+node:ekr.20040217090833:Change how Open with works?
-By: rogererens ( Roger Erens ) 
- RE: Documentation for 4.1rc3   
-2004-02-04 10:04  
-
-@nocolor
-
-It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
-However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
-
-Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
-
-Or, use something else instead of "os.startfile" to really use the intended editor.
-#@nonl
-#@-node:ekr.20040217090833:Change how Open with works?
-#@+node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20040311022923:Make sentinel name in @-node optional
-#@+node:ekr.20040217154134:XML as a @language
-#@-node:ekr.20040217154134:XML as a @language
-#@-node:ekr.20040329190314.2:Others
-#@-node:ekr.20040329182535.7:1-2 hour projects
 #@+node:ekr.20040123102724:Can't or wont
 #@+node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
 @color
@@ -5135,120 +5127,46 @@ other times only fix is to exit & restart.
 #@-node:ekr.20031218072017.646:To do...
 #@+node:EKR.20040430163619:To Do: 4.2
 #@+node:ekr.20040323170225:General bugs
-#@+node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
-#@+node:ekr.20040327132739.3:Notes
+#@+node:EKR.20040523193958:Remove Sentinel command converts windows newlines into unix newlines
+By: Poor Yorick - pooryorick
+ Bug: Remove Sentinels   
+2004-05-21 09:57  
+
+ The Remove Sentinels function also converts windows newlines into unix newlines.  
+
+#@-node:EKR.20040523193958:Remove Sentinel command converts windows newlines into unix newlines
+#@+node:EKR.20040521084602:PHP import bug
 @nocolor
-	
-1. "idle" hooks keep getting called even after a window goes away.
-2. Idle hooks in one window interfere with idle hooks in another window.
-3. It's confusing to set idle hooks.
-	- At least one  plugin may have to call enableIdleTimeHook.
 
-Also, the doHook logic seems much too complex.
-	- It doesn't correspond to the registerHandler logic.
-	- And why is there a separate doHandlersForTag method???
+"deech_99" <deech_99@yahoo.com> wrote in message news:c6m6hu$ncv$1@news.fas.harvard.edu...
+
+> I coded a PHP program using noweb and have recently decided to convert it
+> into a Leo program. The importing, however, seems to mess up the indenting
+> of the latex documentation badly. In noweb format the documentation looks
+> like this:
+> 
+> %------------------------
+> \subsection{Title}
+> %------------------------
+> contentcontentcontentconte
+> ntcontent
+> <<Code Chunk>>=
+> codecodecodecode
+> codecodecodecode
+> @
+> 
+> whereas in Leo, I get this:
+> @%-----------------\subsection{Title} %---
+> ------contentcontentcontentcontentcontent
+> content
+> 
+> Does anyone understand why this happens?
+> 
+> Thanks...
+> Deech
+> 
 #@nonl
-#@-node:ekr.20040327132739.3:Notes
-#@+node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
-#@+node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-@ Enables the "idle" hook.
-After enableIdleTimeHook is called, Leo will call the "idle" hook
-approximately every idleTimeDelay milliseconds.
-@c
-def enableIdleTimeHook(idleTimeDelay=100):
-	app.idleTimeHook = true
-	app.idleTimeDelay = idleTimeDelay # Delay in msec.
-	app.gui.setIdleTimeHook(idleTimeHookHandler)
-	
-# Disables the "idle" hook.
-def disableIdleTimeHook():
-	app.idleTimeHook = false
-	
-# An internal routine used to dispatch the "idle" hook.
-trace_count = 0
-def idleTimeHookHandler(*args,**keys):
-	
-	if 0:
-		global trace_count ; trace_count += 1
-		if trace_count % 10 == 0: g.trace(trace_count)
-
-	# New for Python 2.3: may be called during shutdown.
-	if app.killed: return
-	c = g.top()
-	if c: v = c.currentVnode()
-	else: v = None
-	g.doHook("idle",c=c,v=v)
-	# Requeue this routine after 100 msec.  Faster requeues overload the system.
-	if app.idleTimeHook:
-		app.gui.setIdleTimeHookAfterDelay(app.idleTimeDelay,idleTimeHookHandler)
-		app.afterHandler = idleTimeHookHandler
-	else:
-		app.afterHandler = None
-#@nonl
-#@-node:ekr.20031218072017.1315:enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
-#@+node:ekr.20031218072017.1596:frame.doHook
-@ This global function calls a hook routine.  Hooks are identified by the tag param.
-Returns the value returned by the hook routine, or None if the there is an exception.
-
-We look for a hook routine in three places:
-1. g.top().hookFunction
-2. app.hookFunction
-3. leoPlugins.doPlugins()
-We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
-@c
-
-def doHook(tag,*args,**keywords):
-
-	c = g.top() # c may be None during startup.
-	
-	if app.killed or app.hookError:
-		return None
-	elif not app.config.use_plugins:
-		if tag == "start1":
-			g.es("Plugins disabled: use_plugins is 0",color="blue")
-		return None
-	elif c and c.hookFunction:
-		try:
-			return c.hookFunction(tag,keywords)
-		except:
-			g.es("exception in c.hookFunction for " + c.frame.getTitle())
-	elif app.hookFunction:
-		try:
-			return app.hookFunction(tag,keywords)
-		except:
-			g.es("exception in app.hookFunction")
-	else:
-		import leoPlugins
-		try:
-			app.hookFunction = leoPlugins.doPlugins
-			return app.hookFunction(tag,keywords)
-		except:
-			app.hookFunction = None
-			g.es("exception in plugin")
-
-	# Handle all exceptions.
-	g.es_exception()
-	app.hookError = true # Supress this function.
-	app.idleTimeHook = false # Supress idle-time hook
-	return None # No return value
-#@nonl
-#@-node:ekr.20031218072017.1596:frame.doHook
-#@+node:ekr.20031218072017.1318:plugin_signon
-def plugin_signon(module_name,verbose=false):
-	
-	exec("import %s ; m = %s" % (module_name,module_name))
-	
-	if verbose:
-		g.es("...%s.py v%s: %s" % (
-			m.__name__, m.__version__, g.plugin_date(m)))
-
-		print m.__name__, m.__version__
-		
-	app.loadedPlugins.append(module_name)
-#@nonl
-#@-node:ekr.20031218072017.1318:plugin_signon
-#@-node:ekr.20031218072017.3139:Hooks & plugins (leoGlobals)
-#@-node:ekr.20040327123438:Idle hooks are not working properly!  (add unregisterHandler)
+#@-node:EKR.20040521084602:PHP import bug
 #@+node:ekr.20040329094003.1:Fix or improve Import command
 #@+node:ekr.20040319102251:Import bug: section names when importing C files
 By: nobody ( Nobody/Anonymous ) 
@@ -5629,29 +5547,6 @@ parent.appendStringToBody(s[scan_start:endOfCode])
 #@-node:ekr.20040225061559:Look at older config files when reading config data the first time for a new install
 #@+node:ekr.20031218072017.744:@tab, @notab (or make @tabwidth -n work again)
 #@-node:ekr.20031218072017.744:@tab, @notab (or make @tabwidth -n work again)
-#@+node:ekr.20040218053305:Fix names of Leo windows
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2429098
-By: nobody
-
-can there be a little more consistance in the popup names?
-find/change is Leo find change and has the leo icon
-prefs is prefs for leo w/Tk icon
-compare is Leo Compare . w/Tk icon
-open python is *leo*  w/Tk icon
-when Leo is the first word, then its not as easy to
-select if you have more than one open
-from the taskbar. sometimes all you see is Leo...
-its also a little nebulous which leo they work on,
-maybe good design, but shoulden't they be able to tag the title at least with
-the current leo which has focus?
-not something immediate, but as new dialogs are comtemplated and plugins can
-open them, maybe something in globals can be beefed up to name and open dialogs.
-#@nonl
-#@-node:ekr.20040218053305:Fix names of Leo windows
-#@+node:ekr.20040329094003.4:Preserve whitespace in imports
-#@-node:ekr.20040329094003.4:Preserve whitespace in imports
 #@+node:ekr.20040310091144:Window position: possible bug
 @nocolor
 
@@ -5700,28 +5595,54 @@ both Leo and Python and now I can't place Leo windows in the corner any more
 
 Best regards - Josef Dalcolmo
 #@-node:ekr.20040310091144:Window position: possible bug
-#@+node:ekr.20040310092400:Allow </leo_header>
-@nocolor
+#@+node:EKR.20040523192553:Crash when pasting large text into headlines
+From: <eltronic@juno.com>
+To: <edreamleo@charter.net>
+Sent: Sunday, May 23, 2004 9:36 AM
+Subject: fatal bug in Leo headline handling
 
-By: billp9619 ( bill palmer ) 
- leo_header optional closetag sb valid?   
-2004-03-07 01:21  
 
- 1. <leo_header ... />
-vs.
-2. <leo_header ... ></leo_header>
-
-Leo saves using style 1 and treats style 2 as invalid.
-
-Both are equivalent and so I think leo should accept both. Some applications for comparing xml insist on style 2. 
-
-billp
- 
-#@-node:ekr.20040310092400:Allow </leo_header>
-#@+node:ekr.20040225061559.1:Change message when derived file not found
-(2) On loading leoPlugins.leo, I got "Unexpected end of file. Expecting @-leo sentinel" for the following files:
-
-#@-node:ekr.20040225061559.1:Change message when derived file not found
+> found a fatal bug in Leo headline handling.
+> not sure if anyone reported before,
+> an oversize string can crash python 2.3.3
+> 
+> 
+> the text was about 4500 bytes. nothing but text.
+> opened the  leo again, copy a large page of text,
+> insert headline, paste, fatal error in python.
+> 
+> I have by mistake pasted whatever node xml was in 
+> the copy buffer into a headline w/o problem.
+> but that was just dumb luck. just verified,
+> had the node been large enough it crashes.
+> 
+> Leo 4.1 final, py2.3.3 win98
+> PYTHON caused an invalid page fault in
+> module TK84.DLL at 0167:1022b74f.
+> 
+> Leo 4.1 final, py2.2 win98
+> paste a 15k node copy into headline. no problem.
+> 
+> this is the first repeatable hard crash I've stumbled on
+> and thought it best to report it privately.
+> I can think of no advantage to allowing a headline 
+> of this size anyway. think of the tooltip that would create!
+> 
+> there are latent bugs in the selectall and delete from 
+> the edit menu related to headline as well on the todo list.
+> reported many times. 
+> covert destruction of the selected body text.
+> use of virtual events, with out proper focus to headline.
+> 
+> without myself being able to supply a patch, I'll guess,
+> the virtual event paste called can as well point 
+> to a function that checks the size before pasting.
+> or simply sets the headline directly with 
+> g.app.gui.getTextFromClipboard()[:1024]
+> 
+> 
+> e
+#@-node:EKR.20040523192553:Crash when pasting large text into headlines
 #@+node:ekr.20031218072017.859:Should mouse up cancel a drag?
 Clone dragging isn't working reliably.
 #@nonl
@@ -5749,25 +5670,6 @@ self.editMenuTopTable = (
 #@nonl
 #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
 #@-node:ekr.20040216153243.5:Select All in headline affects body text
-#@+node:ekr.20040330092305.1:Make "end1" events (and destroy-all-global-windows) work again
-@nocolor
-
- 
-The 'end1' event is not working. I believe the problem is a logic problem.
-
-in leoApp.py:
-
-@color
-
-def finishQuit(self):
-
-self.killed = true # Disable after events.
-
-a little latter in the method:
-
-doHook("end1")
-#@nonl
-#@-node:ekr.20040330092305.1:Make "end1" events (and destroy-all-global-windows) work again
 #@+node:ekr.20040331152236:Fix unicode problem in config module
 @nocolor
 
@@ -5798,21 +5700,6 @@ I don't know if this problems does exist on other platforms. Setting encoding in
 These did not harm the actual data.
 #@nonl
 #@-node:ekr.20040403121321:Cutting and pasting created "invalid outline" messages
-#@+node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
-@nocolor
-
-By: David McNab - davidmcnab
- Syntax Colouring Bug - html mode   
-2004-04-22 07:38  
-
- Hi,
-
-Within an HTML @file node, where I have '@language html' at the top root, I notice that on typing in a triple-double-quote ("""), the text following gets coloured green, as would be appropriate if the node were actually python.
-
-Cheers
-David
- 
-#@-node:EKR.20040422091601.1:Syntax Colouring Bug - html mode
 #@+node:EKR.20040512081330.1:Misleading message in Import Derived File
 @nocolor
 
@@ -6035,2376 +5922,7 @@ This last anomaly seems to persist regardless of how the headline is hilited and
 #@nonl
 #@-node:EKR.20040422132037.8:Mouse / Paste Anomalies
 #@-node:EKR.20040422132037:Mac/Linux bugs
-#@+node:ekr.20040411155746:Quick
-#@+node:ekr.20040105080119.4:Put drawing hooks back in
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2342120
-By: rodrigo_b
-
-Today I was trying to clen some of the hooks of LeoN and I tried the
-"draw-outline-text-box" that appears in the plugins documentation. But this
-hook was not called when expected, in fact it was not called at all. I search
-inside the code of 4.1rc1 and did not found any reference to it	
-
-I would like to try to use "draw-outline-text-box" instead of overwriting the
-tree.drawText method as I actually do.
-
-Does this hook exist ? 
-#@-node:ekr.20040105080119.4:Put drawing hooks back in
-#@+node:ekr.20040206075634.1:Colorizing additions
-#@+node:ekr.20031218072017.367:How to add support for a new language
-@nocolor
-
-- Add a new entries in << define global data structures >> app
-
-- Add a new Tk.Radiobutton in <<create the Target Language frame>>
-
-- Add an entry to the languages list in <<configure language-specific settings>>
-
-- Add a list of the keywords of the language to << define colorizer keywords >>
-
-  N.B.: the name of this list must be x_keywords, where x is the entry in language in step a.
-
-- Add any language-specifig code to leoColor.colorizeAnyLanguage.
-  For most languages nothing need be done in this step.
-
-TESTS
-
-- Test the syntax coloring for the new language by using the @language directive.
-
-- Test workings of the Preferences Panel by choosing the language in the panel and by looking at code that is _not_ under control of an @language directive.
-
-- Test the leoConfig.txt by setting default_target_language to the name of the new language.  When you restart Leo, the new language should be selected in the Prefs panel.
-
-- Remove leoConfig.txt, select the new language in the Prefs panel, and save the .leo file.  Open the file with a text editor and check to make sure that the <preferences> tag (near the top) contains an entry like this:
-
-<preferences allow_rich_text="0" defaultTargetLanguage="Python">
-</preferences>
-
-but with the name of your new language instead of "Python".
-
-- Create an @root node and verify that you can Tangle it.
-
-@color
-#@+node:ekr.20031218072017.368:<< define global data structures >> app
-# Internally, lower case is used for all language names.
-self.language_delims_dict = {
-	"actionscript" : "// /* */", #jason 2003-07-03
-	"c" : "// /* */", # C, C++ or objective C.
-	"csharp" : "// /* */",	# C#
-	"css" : "/* */", # 4/1/04
-	"cweb" : "@q@ @>", # Use the "cweb hack"
-	"elisp" : ";",
-	"forth" : "_\\_ _(_ _)_", # Use the "REM hack"
-	"fortran" : "C",
-	"fortran90" : "!",
-	"html" : "<!-- -->",
-	"java" : "// /* */",
-	"latex" : "%",
-	"pascal" : "// { }",
-	"perl" : "#",
-	"perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
-	"php" : "//",
-	"plain" : "#", # We must pick something.
-	"python" : "#",
-	"rapidq" : "'", # fil 2004-march-11
-	"rebol" : ";",  # jason 2003-07-03
-	"shell" : "#",  # shell scripts
-	"tcltk" : "#",
-	"unknown" : "#" } # Set when @comment is seen.
-
-self.language_extension_dict = {
-	"actionscript" : "as", #jason 2003-07-03
-	"c" : "c",
-	"css" : "css", # 4/1/04
-	"cweb" : "w",
-	"elisp" : "el",
-	"forth" : "forth",
-	"fortran" : "f",
-	"fortran90" : "f",
-	"html" : "html",
-	"java" : "java",
-	"latex" : "tex", # 1/8/04
-	"noweb" : "nw",
-	"pascal" : "p",
-	"perl" : "perl",
-	"perlpod" : "perl",
-	"php" : "php",
-	"plain" : "txt",
-	"python" : "py",
-	"rapidq" : "bas", # fil 2004-march-11
-	"rebol" : "r",    # jason 2003-07-03
-	"shell" : "sh",   # DS 4/1/04
-	"tex" : "tex",
-	"tcltk" : "tcl",
-	"unknown" : "txt" } # Set when @comment is seen.
-#@nonl
-#@-node:ekr.20031218072017.368:<< define global data structures >> app
-#@+node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
-# Frame and title
-w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
-w.pack(padx=2,pady=2,expand=1,fill="x")
-
-# Frames for two columns of radio buttons
-lt = Tk.Frame(target)
-rt = Tk.Frame(target)
-lt.pack(side="left")
-rt.pack(side="right")
-
-# Left column of radio buttons.
-left_data = [
-	("ActionScript", "actionscript"),
-	("C#",    "csharp"),
-	("C/C++", "c"),
-	("CSS",   "css"),
-	("CWEB",  "cweb"),
-	("elisp", "elisp"),
-	("HTML",  "html"),
-	("Java",  "java"),
-	("LaTeX", "latex"),
-	("Pascal","pascal")]
-
-for text,value in left_data:
-	button = Tk.Radiobutton(lt,anchor="w",text=text,
-		variable=self.lang_var,value=value,command=self.set_lang)
-	button.pack(fill="x")
-
-# Right column of radio buttons.
-right_data = [
-	("Perl", "perl"),
-	("Perl+POD",   "perlpod"),
-	("PHP",        "php"),
-	("Plain Text", "plain"),
-	("Python",     "python"),
-	("RapidQ",     "rapidq"),
-	("Rebol",      "rebol"),
-	("Shell",      "shell"),
-	("tcl/tk",     "tcltk")]
-
-for text,value in right_data:
-	button = Tk.Radiobutton(rt,anchor="w",text=text,
-		variable=self.lang_var,value=value,command=self.set_lang)
-	button.pack(fill="x")
-#@nonl
-#@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
-#@+node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
-# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
-
-if self.language == "cweb": # Use C comments, not cweb sentinel comments.
-	delim1,delim2,delim3 = g.set_delims_from_language("c")
-elif self.comment_string:
-	delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
-elif self.language == "plain": # 1/30/03
-	delim1,delim2,delim3 = None,None,None
-else:
-	delim1,delim2,delim3 = g.set_delims_from_language(self.language)
-
-self.single_comment_start = delim1
-self.block_comment_start = delim2
-self.block_comment_end = delim3
-
-# A strong case can be made for making this code as fast as possible.
-# Whether this is compatible with general language descriptions remains to be seen.
-self.has_string = self.language != "plain"
-if self.language == "plain":
-	self.string_delims = ()
-elif self.language in ("elisp","html"):
-	self.string_delims = ('"')
-else:
-	self.string_delims = ("'",'"')
-self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
-
-# The list of languages for which keywords exist.
-# Eventually we might just use language_delims_dict.keys()
-languages = [
-	"actionscript","c","csharp","css","cweb","elisp","html","java","latex",
-	"pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
-
-self.keywords = []
-if self.language == "cweb":
-	for i in self.c_keywords:
-		self.keywords.append(i)
-	for i in self.cweb_keywords:
-		self.keywords.append(i)
-else:
-	for name in languages:
-		if self.language==name: 
-			# g.trace("setting keywords for",name)
-			self.keywords = getattr(self, name + "_keywords")
-
-# Color plain text unless we are under the control of @nocolor.
-# state = g.choose(self.flag,"normal","nocolor")
-state = self.setFirstLineState()
-
-if 1: # 10/25/02: we color both kinds of references in cweb mode.
-	self.lb = "<<"
-	self.rb = ">>"
-else:
-	self.lb = g.choose(self.language == "cweb","@<","<<")
-	self.rb = g.choose(self.language == "cweb","@>",">>")
-#@nonl
-#@-node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
-#@+node:ekr.20031218072017.371:<< define colorizer keywords >> colorizer
-@others
-
-cweb_keywords = c_keywords
-perlpod_keywords = perl_keywords
-#@nonl
-#@+node:ekr.20031218072017.372:actionscript keywords
-actionscript_keywords = [
-#Jason 2003-07-03 
-#Actionscript keywords for Leo adapted from UltraEdit syntax highlighting
-"break", "call", "continue", "delete", "do", "else", "false", "for", "function", "goto", "if", "in", "new", "null", "return", "true", "typeof", "undefined", "var", "void", "while", "with", "#include", "catch", "constructor", "prototype", "this", "try", "_parent", "_root", "__proto__", "ASnative", "abs", "acos", "appendChild", "asfunction", "asin", "atan", "atan2", "attachMovie", "attachSound", "attributes", "BACKSPACE", "CAPSLOCK", "CONTROL", "ceil", "charAt", "charCodeAt", "childNodes", "chr", "cloneNode", "close", "concat", "connect", "cos", "createElement", "createTextNode", "DELETEKEY", "DOWN", "docTypeDecl", "duplicateMovieClip", "END", "ENTER", "ESCAPE", "enterFrame", "entry", "equal", "eval", "evaluate", "exp", "firstChild", "floor", "fromCharCode", "fscommand", "getAscii", "getBeginIndex", "getBounds", "getBytesLoaded", "getBytesTotal", "getCaretIndex", "getCode", "getDate", "getDay", "getEndIndex", "getFocus", "getFullYear", "getHours", "getMilliseconds", "getMinutes", "getMonth", "getPan", "getProperty", "getRGB", "getSeconds", "getTime", "getTimer", "getTimezoneOffset", "getTransform", "getURL", "getUTCDate", "getUTCDay", "getUTCFullYear", "getUTCHours", "getUTCMilliseconds", "getUTCMinutes", "getUTCMonth", "getUTCSeconds", "getVersion", "getVolume", "getYear", "globalToLocal", "gotoAndPlay", "gotoAndStop", "HOME", "haschildNodes", "hide", "hitTest", "INSERT", "Infinity", "ifFrameLoaded", "ignoreWhite", "indexOf", "insertBefore", "int", "isDown", "isFinite", "isNaN", "isToggled", "join", "keycode", "keyDown", "keyUp", "LEFT", "LN10", "LN2", "LOG10E", "LOG2E", "lastChild", "lastIndexOf", "length", "load", "loaded", "loadMovie", "loadMovieNum", "loadVariables", "loadVariablesNum", "localToGlobal", "log", "MAX_VALUE", "MIN_VALUE", "max", "maxscroll", "mbchr", "mblength", "mbord", "mbsubstring", "min", "NEGATIVE_INFINITY", "NaN", "newline", "nextFrame", "nextScene", "nextSibling", "nodeName", "nodeType", "nodeValue", "on", "onClipEvent", "onClose", "onConnect", "onData", "onLoad", "onXML", "ord", "PGDN", "PGUP", "PI", "POSITIVE_INFINITY", "parentNode", "parseFloat", "parseInt", "parseXML", "play", "pop", "pow", "press", "prevFrame", "previousSibling", "prevScene", "print", "printAsBitmap", "printAsBitmapNum", "printNum", "push", "RIGHT", "random", "release", "removeMovieClip", "removeNode", "reverse", "round", "SPACE", "SQRT1_2", "SQRT2", "scroll", "send", "sendAndLoad", "set", "setDate", "setFocus", "setFullYear", "setHours", "setMilliseconds", "setMinutes", "setMonth", "setPan", "setProperty", "setRGB", "setSeconds", "setSelection", "setTime", "setTransform", "setUTCDate", "setUTCFullYear", "setUTCHours", "setUTCMilliseconds", "setUTCMinutes", "setUTCMonth", "setUTCSeconds", "setVolume", "setYear", "shift", "show", "sin", "slice", "sort", "start", "startDrag", "status", "stop", "stopAllSounds", "stopDrag", "substr", "substring", "swapDepths", "splice", "split", "sqrt", "TAB", "tan", "targetPath", "tellTarget", "toggleHighQuality", "toLowerCase", "toString", "toUpperCase", "trace", "UP", "UTC", "unescape", "unloadMovie", "unLoadMovieNum", "unshift", "updateAfterEvent", "valueOf", "xmlDecl", "_alpha", "_currentframe", "_droptarget", "_focusrect", "_framesloaded", "_height", "_highquality", "_name", "_quality", "_rotation", "_soundbuftime", "_target", "_totalframes", "_url", "_visible", "_width", "_x", "_xmouse", "_xscale", "_y", "_ymouse", "_yscale", "and", "add", "eq", "ge", "gt", "le", "lt", "ne", "not", "or", "Array", "Boolean", "Color", "Date", "Key", "Math", "MovieClip", "Mouse", "Number", "Object", "Selection", "Sound", "String", "XML", "XMLSocket"
-]
-#@nonl
-#@-node:ekr.20031218072017.372:actionscript keywords
-#@+node:ekr.20040206072057:c# keywords
-csharp_keywords = [
-	"abstract","as",
-	"base","bool","break","byte",
-	"case","catch","char","checked","class","const","continue",
-	"decimal","default","delegate","do","double",
-	"else","enum","event","explicit","extern",
-	"false","finally","fixed","float","for","foreach",
-	"get","goto",
-	"if","implicit","in","int","interface","internal","is",
-	"lock","long",
-	"namespace","new","null",
-	"object","operator","out","override",
-	"params","partial","private","protected","public",
-	"readonly","ref","return",
-	"sbyte","sealed","set","short","sizeof","stackalloc",
-	"static","string","struct","switch",
-	"this","throw","true","try","typeof",
-	"uint","ulong","unchecked","unsafe","ushort","using",
-	"value","virtual","void","volatile",
-	"where","while",
-	"yield"]
-#@nonl
-#@-node:ekr.20040206072057:c# keywords
-#@+node:ekr.20031218072017.373:c/c++ keywords
-c_keywords = [
-	# C keywords
-	"auto","break","case","char","continue",
-	"default","do","double","else","enum","extern",
-	"float","for","goto","if","int","long","register","return",
-	"short","signed","sizeof","static","struct","switch",
-	"typedef","union","unsigned","void","volatile","while",
-	# C++ keywords
-	"asm","bool","catch","class","const","const_cast",
-	"delete","dynamic_cast","explicit","false","friend",
-	"inline","mutable","namespace","new","operator",
-	"private","protected","public","reinterpret_cast","static_cast",
-	"template","this","throw","true","try",
-	"typeid","typename","using","virtual","wchar_t"]
-#@nonl
-#@-node:ekr.20031218072017.373:c/c++ keywords
-#@+node:ekr.20040401103539:css keywords
-css_keywords = [
-#html tags
-"address", "applet", "area", "a", "base", "basefont",
-"big", "blockquote", "body", "br", "b", "caption", "center",
-"cite", "code", "dd", "dfn", "dir", "div", "dl", "dt", "em", "font",
-"form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "html", "img",
-"input", "isindex", "i", "kbd", "link", "li", "link", "map", "menu",
-"meta", "ol", "option", "param", "pre", "p", "samp",
-"select", "small", "span", "strike", "strong", "style", "sub", "sup",
-"table", "td", "textarea", "th", "title", "tr", "tt", "ul", "u", "var",
-#units
-"mm", "cm", "in", "pt", "pc", "em", "ex", "px",
-#colors
-"aqua", "black", "blue", "fuchsia", "gray", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "yellow", "white",
-#important directive
-"!important",
-#font rules
-"font", "font-family", "font-style", "font-variant", "font-weight", "font-size",
-#font values
-"cursive", "fantasy", "monospace", "normal", "italic", "oblique", "small-caps",
-"bold", "bolder", "lighter", "medium", "larger", "smaller",
-"serif", "sans-serif",
-#background rules
-"background", "background-color", "background-image", "background-repeat", "background-attachment", "background-position",
-#background values
-"contained", "none", "top", "center", "bottom", "left", "right", "scroll", "fixed",
-"repeat", "repeat-x", "repeat-y", "no-repeat",
-#text rules
-"word-spacing", "letter-spacing", "text-decoration", "vertical-align", "text-transform", "text-align", "text-indent", "text-transform", "text-shadow", "unicode-bidi", "line-height",
-#text values
-"normal", "none", "underline", "overline", "blink", "sub", "super", "middle", "top", "text-top", "text-bottom",
-"capitalize", "uppercase", "lowercase", "none", "left", "right", "center", "justify",
-"line-through",
-#box rules
-"margin", "margin-top", "margin-bottom", "margin-left", "margin-right",
-"margin", "padding-top", "padding-bottom", "padding-left", "padding-right",
-"border", "border-width", "border-style", "border-top", "border-top-width", "border-top-style", "border-bottom", "border-bottom-width", "border-bottom-style", "border-left", "border-left-width", "border-left-style", "border-right", "border-right-width", "border-right-style", "border-color",
-#box values
-"width", "height", "float", "clear",
-"auto", "thin", "medium", "thick", "left", "right", "none", "both",
-"none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset",
-#display rules
-"display", "white-space", 
-"min-width", "max-width", "min-height", "max-height",
-"outline-color", "outline-style", "outline-width",
-#display values
-"run-in", "inline-block", "list-item", "block", "inline", "none", "normal", "pre", "nowrap", "table-cell", "table-row", "table-row-group", "table-header-group", "inline-table", "table-column", "table-column-group", "table-cell", "table-caption"
-#list rules
-"list-style", "list-style-type", "list-style-image", "list-style-position",
-#list values
-"disc", "circle", "square", "decimal", "decimal-leading-zero", "none",
-"lower-roman", "upper-roman", "lower-alpha", "upper-alpha", "lower-latin", "upper-latin",
-#table rules
-"border-collapse", "caption-side",
-#table-values
-"empty-cells", "table-layout",
-#misc values/rules
-"counter-increment", "counter-reset",
-"marker-offset", "z-index",
-"cursor", "direction", "marks", "quotes",
-"clip", "content", "orphans", "overflow", "visibility",
-#aural rules
-"pitch", "range", "pitch-during", "cue-after", "pause-after", "cue-before", "pause-before", "speak-header", "speak-numeral", "speak-punctuation", "speed-rate", "play-during", "voice-family",
-#aural values
-"stress", "azimuth", "elevation", "pitch", "richness", "volume",
-"page-break", "page-after", "page-inside"]
-#@nonl
-#@-node:ekr.20040401103539:css keywords
-#@+node:ekr.20031218072017.374:elisp keywords
-# EKR: needs more work.
-elisp_keywords = [
-	# Maybe...
-	"error","princ",
-	# More typical of other lisps...
-	"apply","eval",
-	"t","nil",
-	"and","or","not",
-	"cons","car","cdr",
-	"cond",
-	"defconst","defun","defvar",
-	"eq","ne","equal","gt","ge","lt","le",
-	"if",
-	"let",
-	"mapcar",
-	"prog","progn",
-	"set","setq",
-	"type-of",
-	"unless",
-	"when","while"]
-#@nonl
-#@-node:ekr.20031218072017.374:elisp keywords
-#@+node:ekr.20031218072017.375:html keywords
-# No longer used by syntax colorer.
-html_keywords = []
-
-if 0: # Not used at present.
-	unused_keywords = [
-		# html constructs.
-		"a","body","cf",
-		"h1","h2","h3","h4","h5","h6",
-		"head","html","hr",
-		"i","img","li","lu","meta",
-		"p","title","ul",
-		# Common tags
-		"caption","col","colgroup",
-		"table","tbody","td","tfoot","th","thead","tr",
-		"script","style"]
-
-	html_specials = [ "<%","%>" ]
-#@nonl
-#@-node:ekr.20031218072017.375:html keywords
-#@+node:ekr.20031218072017.376:java keywords
-java_keywords = [
-	"abstract","boolean","break","byte","byvalue",
-	"case","cast","catch","char","class","const","continue",
-	"default","do","double","else","extends",
-	"false","final","finally","float","for","future",
-	"generic","goto","if","implements","import","inner",
-	"instanceof","int","interface","long","native",
-	"new","null","operator","outer",
-	"package","private","protected","public","rest","return",
-	"short","static","super","switch","synchronized",
-	"this","throw","transient","true","try",
-	"var","void","volatile","while"]
-#@nonl
-#@-node:ekr.20031218072017.376:java keywords
-#@+node:ekr.20031218072017.377:latex keywords
-#If you see two idenitical words, with minor capitalization differences
-#DO NOT ASSUME that they are the same word. For example \vert produces
-#a single vertical line and \Vert produces a double vertical line
-#Marcus A. Martin.
-
-latex_special_keyword_characters = "@(){}%"
-
-latex_keywords = [
-	#special keyworlds
-	"\\%", # 11/9/03
-	"\\@", "\\(", "\\)", "\\{", "\\}",
-	#A
-	"\\acute", "\\addcontentsline", "\\addtocontents", "\\addtocounter", "\\address",
-	"\\addtolength", "\\addvspace", "\\AE", "\\ae", "\\aleph", "\\alph", "\\angle",
-	"\\appendix", 
-	"\\approx",	"\\arabic", "\\arccos", "\\arcsin", "\\arctan", "\\ast", "\\author",
-	#B
-	"\\b", "\\backmatter", "\\backslash", "\\bar", "\\baselineskip", "\\baselinestretch",
-	"\\begin", "\\beta", "\\bezier", "\\bf", "\\bfseries", "\\bibitem", "\\bigcap", 
-	"\\bigcup", "\\bigodot", "\\bigoplus", "\\bigotimes", "\\bigskip", "\\biguplus", 
-	"\\bigvee", "\\bigwedge",	"\\bmod", "\\boldmath", "\\Box", "\\breve", "\\bullet",
-	#C
-	"\\c", "\\cal", "\\caption", "\\cdot", "\\cdots", "\\centering", "\\chapter", 
-	"\\check", "\\chi", "\\circ", "\\circle", "\\cite", "\\cleardoublepage", "\\clearpage", 
-	"\\cline",	"\\closing", "\\clubsuit", "\\coprod", "\\copywright", "\\cos", "\\cosh", 
-	"\\cot", "\\coth",	"csc",
-	#D
-	"\\d", "\\dag", "\\dashbox", "\\date", "\\ddag", "\\ddot", "\\ddots", "\\decl", 
-	"\\deg", "\\Delta", 
-	"\\delta", "\\depthits", "\\det", 
-	"\\DH", "\\dh", "\\Diamond", "\\diamondsuit", "\\dim", "\\div", "\\DJ", "\\dj", 
-	"\\documentclass", "\\documentstyle", 
-	"\\dot", "\\dotfil", "\\downarrow",
-	#E
-	"\\ell", "\\em", "\\emph", "\\end", "\\enlargethispage", "\\ensuremath", 
-	"\\enumi", "\\enuii", "\\enumiii", "\\enuiv", "\\epsilon", "\\equation", "\\equiv",	
-	"\\eta", "\\example", "\\exists", "\\exp",
-	#F
-	"\\fbox", "\\figure", "\\flat", "\\flushbottom", "\\fnsymbol", "\\footnote", 
-	"\\footnotemark", "\\fotenotesize", 
-	"\\footnotetext", "\\forall", "\\frac", "\\frame", "\\framebox", "\\frenchspacing", 
-	"\\frontmatter",
-	#G
-	"\\Gamma", "\\gamma", "\\gcd", "\\geq", "\\gg", "\\grave", "\\guillemotleft", 
-	"\\guillemotright",	"\\guilsinglleft", "\\guilsinglright",
-	#H
-	"\\H", "\\hat", "\\hbar", "\\heartsuit", "\\heightits", "\\hfill", "\\hline", "\\hom",
-	"\\hrulefill",	"\\hspace", "\\huge",	"\\Huge",	"\\hyphenation"
-	#I
-	"\\Im", "\\imath", "\\include", "includeonly", "indent", "\\index", "\\inf", "\\infty", 
-	"\\input", "\\int", "\\iota",	"\\it", "\\item", "\\itshape",
-	#J
-	"\\jmath", "\\Join",
-	#K
-	"\\k", "\\kappa", "\\ker", "\\kill",
-	#L
-	"\\label", "\\Lambda", "\\lambda", "\\langle", "\\large", "\\Large", "\\LARGE", 
-	"\\LaTeX", "\\LaTeXe", 
-	"\\ldots", "\\leadsto", "\\left", "\\Leftarrow", "\\leftarrow", "\\lefteqn", "\\leq",
-	"\\lg", "\\lhd", "\\lim", "\\liminf", "\\limsup", "\\line", 	"\\linebreak", 
-	"\\linethickness", "\\linewidth",	"\\listfiles",
-	"\\ll", "\\ln", "\\location", "\\log", "\\Longleftarrow", "\\longleftarrow", 
-	"\\Longrightarrow",	"longrightarrow",
-	#M
-	"\\mainmatter", "\\makebox", "\\makeglossary", "\\makeindex","\\maketitle", "\\markboth", "\\markright",
-	"\\mathbf", "\\mathcal", "\\mathit", "\\mathnormal", "\\mathop",
-	"\\mathrm", "\\mathsf", "\\mathtt", "\\max", "\\mbox", "\\mdseries", "\\medskip",
-	"\\mho", "\\min", "\\mp", "\\mpfootnote", "\\mu", "\\multicolumn", "\\multiput",
-	#N
-	"\\nabla", "\\natural", "\\nearrow", "\\neq", "\\newcommand", "\\newcounter", 
-	"\\newenvironment", "\\newfont",
-	"\\newlength",	"\\newline", "\\newpage", "\\newsavebox", "\\newtheorem", "\\NG", "\\ng",
-	"\\nocite", "\\noindent", "\\nolinbreak", "\\nopagebreak", "\\normalsize",
-	"\\not", "\\nu", "nwarrow",
-	#O
-	"\\Omega", "\\omega", "\\onecolumn", "\\oint", "\\opening", "\\oval", 
-	"\\overbrace", "\\overline",
-	#P
-	"\\P", "\\page", "\\pagebreak", "\\pagenumbering", "\\pageref", "\\pagestyle", 
-	"\\par", "\\parbox",	"\\paragraph", "\\parindent", "\\parskip", "\\part", 
-	"\\partial", "\\per", "\\Phi", 	"\\phi",	"\\Pi", "\\pi", "\\pm", 
-	"\\pmod", "\\pounds", "\\prime", "\\printindex", "\\prod", "\\propto", "\\protext", 
-	"\\providecomamnd", "\\Psi",	"\\psi", "\\put",
-	#Q
-	"\\qbezier", "\\quoteblbase", "\\quotesinglbase",
-	#R
-	"\\r", "\\raggedbottom", "\\raggedleft", "\\raggedright", "\\raisebox", "\\rangle", 
-	"\\Re", "\\ref", 	"\\renewcommand", "\\renewenvironment", "\\rhd", "\\rho", "\\right", 
-	"\\Rightarrow",	"\\rightarrow", "\\rm", "\\rmfamily",
-	"\\Roman", "\\roman", "\\rule", 
-	#S
-	"\\s", "\\samepage", "\\savebox", "\\sbox", "\\sc", "\\scriptsize", "\\scshape", 
-	"\\searrow",	"\\sec", "\\section",
-	"\\setcounter", "\\setlength", "\\settowidth", "\\settodepth", "\\settoheight", 
-	"\\settowidth", "\\sf", "\\sffamily", "\\sharp", "\\shortstack", "\\Sigma", "\\sigma", 
-	"\\signature", "\\sim", "\\simeq", "\\sin", "\\sinh", "\\sl", "\\SLiTeX",
-	"\\slshape", "\\small", "\\smallskip", "\\spadesuit", "\\sqrt", "\\sqsubset",	
-	"\\sqsupset", "\\SS",
-	"\\stackrel", "\\star", "\\subsection", "\\subset", 
-	"\\subsubsection", "\\sum", "\\sup", "\\supressfloats", "\\surd", "\\swarrow",
-	#T
-	"\\t", "\\table", "\\tableofcontents", "\\tabularnewline", "\\tan", "\\tanh", 
-	"\\tau", "\\telephone",	"\\TeX", "\\textbf",
-	"\\textbullet", "\\textcircled", "\\textcompworkmark",	"\\textemdash", 
-	"\\textendash", "\\textexclamdown", "\\textheight", "\\textquestiondown", 
-	"\\textquoteblleft", "\\textquoteblright", "\\textquoteleft",
-	"\\textperiod", "\\textquotebl", "\\textquoteright", "\\textmd", "\\textit", "\\textrm", 
-	"\\textsc", "\\textsl", "\\textsf", "\\textsuperscript", "\\texttt", "\\textup",
-	"\\textvisiblespace", "\\textwidth", "\\TH", "\\th", "\\thanks", "\\thebibligraphy",
-	"\\Theta", "theta", 
-	"\\tilde", "\\thinlines", 
-	"\\thispagestyle", "\\times", "\\tiny", "\\title",	"\\today", "\\totalheightits", 
-	"\\triangle", "\\tt", 
-	"\\ttfamily", "\\twocoloumn", "\\typeout", "\\typein",
-	#U
-	"\\u", "\\underbrace", "\\underline", "\\unitlength", "\\unlhd", "\\unrhd", "\\Uparrow",
-	"\\uparrow",	"\\updownarrow", "\\upshape", "\\Upsilon", "\\upsilon", "\\usebox",	
-	"\\usecounter", "\\usepackage", 
-	#V
-	"\\v", "\\value", "\\varepsilon", "\\varphi", "\\varpi", "\\varrho", "\\varsigma", 
-	"\\vartheta", "\\vdots", "\\vec", "\\vector", "\\verb", "\\Vert", "\\vert", 	"\\vfill",
-	"\\vline", "\\vphantom", "\\vspace",
-	#W
-	"\\widehat", "\\widetilde", "\\widthits", "\\wp",
-	#X
-	"\\Xi", "\\xi",
-	#Z
-	"\\zeta" ]
-#@nonl
-#@-node:ekr.20031218072017.377:latex keywords
-#@+node:ekr.20031218072017.378:pascal keywords
-pascal_keywords = [
-	"and","array","as","begin",
-	"case","const","class","constructor","cdecl"
-	"div","do","downto","destructor","dispid","dynamic",
-	"else","end","except","external",
-	"false","file","for","forward","function","finally",
-	"goto","if","in","is","label","library",
-	"mod","message","nil","not","nodefault""of","or","on",
-	"procedure","program","packed","pascal",
-	"private","protected","public","published",
-	"record","repeat","raise","read","register",
-	"set","string","shl","shr","stdcall",
-	"then","to","true","type","try","until","unit","uses",
-	"var","virtual","while","with","xor"
-	# object pascal
-	"asm","absolute","abstract","assembler","at","automated",
-	"finalization",
-	"implementation","inherited","initialization","inline","interface",
-	"object","override","resident","resourcestring",
-	"threadvar",
-	# limited contexts
-	"exports","property","default","write","stored","index","name" ]
-#@nonl
-#@-node:ekr.20031218072017.378:pascal keywords
-#@+node:ekr.20031218072017.379:perl keywords
-perl_keywords = [
-	"continue","do","else","elsif","format","for","format","for","foreach",
-	"if","local","package","sub","tr","unless","until","while","y",
-	# Comparison operators
-	"cmp","eq","ge","gt","le","lt","ne",
-	# Matching ooperators
-	"m","s",
-	# Unary functions
-	"alarm","caller","chdir","cos","chroot","exit","eval","exp",
-	"getpgrp","getprotobyname","gethostbyname","getnetbyname","gmtime",
-	"hex","int","length","localtime","log","ord","oct",
-	"require","reset","rand","rmdir","readlink",
-	"scalar","sin","sleep","sqrt","srand","umask",
-	# Transfer ops
-	"next","last","redo","go","dump",
-	# File operations...
-	"select","open",
-	# FL ops
-	"binmode","close","closedir","eof",
-	"fileno","getc","getpeername","getsockname","lstat",
-	"readdir","rewinddir","stat","tell","telldir","write",
-	# FL2 ops
-	"bind","connect","flock","listen","opendir",
-	"seekdir","shutdown","truncate",
-	# FL32 ops
-	"accept","pipe",
-	# FL3 ops
-	"fcntl","getsockopt","ioctl","read",
-	"seek","send","sysread","syswrite",
-	# FL4 & FL5 ops
-	"recv","setsocket","socket","socketpair",
-	# Array operations
-	"pop","shift","split","delete",
-	# FLIST ops
-	"sprintf","grep","join","pack",
-	# LVAL ops
-	"chop","defined","study","undef",
-	# f0 ops
-	"endhostent","endnetent","endservent","endprotoent",
-	"endpwent","endgrent","fork",
-	"getgrent","gethostent","getlogin","getnetent","getppid",
-	"getprotoent","getpwent","getservent",
-	"setgrent","setpwent","time","times","wait","wantarray",
-	# f1 ops
-	"getgrgid","getgrnam","getprotobynumber","getpwnam","getpwuid",
-	"sethostent","setnetent","setprotoent","setservent",
-	# f2 ops
-	"atan2","crypt",
-	"gethostbyaddr","getnetbyaddr","getpriority","getservbyname","getservbyport",
-	"index","link","mkdir","msgget","rename",
-	"semop","setpgrp","symlink","unpack","waitpid",
-	# f2 or 3 ops
-	"index","rindex","substr",
-	# f3 ops
-	"msgctl","msgsnd","semget","setpriority","shmctl","shmget","vec",
-	# f4 & f5 ops
-	"semctl","shmread","shmwrite","msgrcv",
-	# Assoc ops
-	"dbmclose","each","keys","values",
-	# List ops
-	"chmod","chown","die","exec","kill",
-	"print","printf","return","reverse",
-	"sort","system","syscall","unlink","utime","warn"]
-#@nonl
-#@-node:ekr.20031218072017.379:perl keywords
-#@+node:ekr.20031218072017.380:php keywords
-php_keywords = [ # 08-SEP-2002 DTHEIN
-	"__CLASS__", "__FILE__", "__FUNCTION__", "__LINE__",
-	"and", "as", "break",
-	"case", "cfunction", "class", "const", "continue",
-	"declare", "default", "do",
-	"else", "elseif", "enddeclare", "endfor", "endforeach",
-	"endif", "endswitch",  "endwhile", "eval", "extends",
-	"for", "foreach", "function", "global", "if",
-	"new", "old_function", "or", "static", "switch",
-	"use", "var", "while", "xor" ]
-	
-# The following are supposed to be followed by ()
-php_paren_keywords = [
-	"array", "die", "echo", "empty", "exit",
-	"include", "include_once", "isset", "list",
-	"print", "require", "require_once", "return",
-	"unset" ]
-	
-# The following are handled by special case code:
-# "<?php", "?>"
-#@-node:ekr.20031218072017.380:php keywords
-#@+node:ekr.20031218072017.381:python keywords
-python_keywords = [
-	"and",       "del",       "for",       "is",        "raise",    
-	"assert",    "elif",      "from",      "lambda",    "return",   
-	"break",     "else",      "global",    "not",       "try",      
-	"class",     "except",    "if",        "or",        "yield",   
-	"continue",  "exec",      "import",    "pass",      "while",
-	"def",       "finally",   "in",        "print"]
-#@nonl
-#@-node:ekr.20031218072017.381:python keywords
-#@+node:ekr.20040331145826:rapidq keywords
-rapidq_keywords = [
-# Syntax file for RapidQ
-"$APPTYPE","$DEFINE","$ELSE","$ENDIF","$ESCAPECHARS","$IFDEF","$IFNDEF",
-"$INCLUDE","$MACRO","$OPTIMIZE","$OPTION","$RESOURCE","$TYPECHECK","$UNDEF",
-"ABS","ACOS","ALIAS","AND","AS","ASC","ASIN","ATAN","ATN","BIN$","BIND","BYTE",
-"CALL","CALLBACK","CALLFUNC","CASE","CEIL","CHDIR","CHDRIVE","CHR$","CINT",
-"CLNG","CLS","CODEPTR","COMMAND$","COMMANDCOUNT","CONSOLE","CONST","CONSTRUCTOR",
-"CONVBASE$","COS","CREATE","CSRLIN","CURDIR$","DATA","DATE$","DEC","DECLARE",
-"DEFBYTE","DEFDBL","DEFDWORD","DEFINT","DEFLNG","DEFSHORT","DEFSNG","DEFSTR",
-"DEFWORD","DELETE$","DIM","DIR$","DIREXISTS","DO","DOEVENTS","DOUBLE","DWORD",
-"ELSE","ELSEIF","END","ENVIRON","ENVIRON$","EVENT","EXIT","EXP","EXTENDS",
-"EXTRACTRESOURCE","FIELD$","FILEEXISTS","FIX","FLOOR","FOR","FORMAT$","FRAC",
-"FUNCTION","FUNCTIONI","GET$","GOSUB","GOTO","HEX$","IF","INC","INITARRAY",
-"INKEY$","INP","INPUT","INPUT$","INPUTHANDLE","INSERT$","INSTR","INT","INTEGER",
-"INV","IS","ISCONSOLE","KILL","KILLMESSAGE","LBOUND","LCASE$","LEFT$","LEN",
-"LFLUSH","LIB","LIBRARYINST","LOCATE","LOG","LONG","LOOP","LPRINT","LTRIM$",
-"MEMCMP","MESSAGEBOX","MESSAGEDLG","MID$","MKDIR","MOD","MOUSEX","MOUSEY",
-"NEXT","NOT","OFF","ON","OR","OUT","OUTPUTHANDLE","PARAMSTR$","PARAMSTRCOUNT",
-"PARAMVAL","PARAMVALCOUNT","PCOPY","PEEK","PLAYWAV","POKE","POS","POSTMESSAGE",
-"PRINT","PROPERTY","QUICKSORT","RANDOMIZE","REDIM","RENAME","REPLACE$",
-"REPLACESUBSTR$","RESOURCE","RESOURCECOUNT","RESTORE","RESULT","RETURN",
-"REVERSE$","RGB","RIGHT$","RINSTR","RMDIR","RND","ROUND","RTRIM$","RUN",
-"SCREEN","SELECT","SENDER","SENDMESSAGE","SETCONSOLETITLE","SGN","SHELL",
-"SHL","SHORT","SHOWMESSAGE","SHR","SIN","SINGLE","SIZEOF","SLEEP","SOUND",
-"SPACE$","SQR","STACK","STATIC","STEP","STR$","STRF$","STRING","STRING$",
-"SUB","SUBI","SWAP","TALLY","TAN","THEN","TIME$","TIMER","TO","TYPE","UBOUND",
-"UCASE$","UNLOADLIBRARY","UNTIL","VAL","VARIANT","VARPTR","VARPTR$","VARTYPE",
-"WEND","WHILE","WITH","WORD","XOR"]
-#@nonl
-#@-node:ekr.20040331145826:rapidq keywords
-#@+node:ekr.20031218072017.382:rebol keywords
-rebol_keywords = [
-#Jason 2003-07-03 
-#based on UltraEdit syntax highlighting
-"about", "abs", "absolute", "add", "alert", "alias", "all", "alter", "and", "and~", "any", "append", "arccosine", "arcsine", "arctangent", "array", "ask", "at",  
-"back", "bind", "boot-prefs", "break", "browse", "build-port", "build-tag",  
-"call", "caret-to-offset", "catch", "center-face", "change", "change-dir", "charset", "checksum", "choose", "clean-path", "clear", "clear-fields", "close", "comment", "complement", "compose", "compress", "confirm", "continue-post", "context", "copy", "cosine", "create-request", "crypt", "cvs-date", "cvs-version",  
-"debase", "decode-cgi", "decode-url", "decompress", "deflag-face", "dehex", "delete", "demo", "desktop", "detab", "dh-compute-key", "dh-generate-key", "dh-make-key", "difference", "dirize", "disarm", "dispatch", "divide", "do", "do-boot", "do-events", "do-face", "do-face-alt", "does", "dsa-generate-key", "dsa-make-key", "dsa-make-signature", "dsa-verify-signature",  
-"echo", "editor", "either", "else", "emailer", "enbase", "entab", "exclude", "exit", "exp", "extract", 
-"fifth", "find", "find-key-face", "find-window", "flag-face", "first", "flash", "focus", "for", "forall", "foreach", "forever", "form", "forskip", "fourth", "free", "func", "function",  
-"get", "get-modes", "get-net-info", "get-style",  
-"halt", "has", "head", "help", "hide", "hide-popup",  
-"if", "import-email", "in", "inform", "input", "insert", "insert-event-func", "intersect", 
-"join", 
-"last", "launch", "launch-thru", "layout", "license", "list-dir", "load", "load-image", "load-prefs", "load-thru", "log-10", "log-2", "log-e", "loop", "lowercase",  
-"make", "make-dir", "make-face", "max", "maximum", "maximum-of", "min", "minimum", "minimum-of", "mold", "multiply",  
-"negate", "net-error", "next", "not", "now",  
-"offset-to-caret", "open", "open-events", "or", "or~", 
-"parse", "parse-email-addrs", "parse-header", "parse-header-date", "parse-xml", "path-thru", "pick", "poke", "power", "prin", "print", "probe", "protect", "protect-system",  
-"q", "query", "quit",  
-"random", "read", "read-io", "read-net", "read-thru", "reboot", "recycle", "reduce", "reform", "rejoin", "remainder", "remold", "remove", "remove-event-func", "rename", "repeat", "repend", "replace", "request", "request-color", "request-date", "request-download", "request-file", "request-list", "request-pass", "request-text", "resend", "return", "reverse", "rsa-encrypt", "rsa-generate-key", "rsa-make-key", 
-"save", "save-prefs", "save-user", "scroll-para", "second", "secure", "select", "send", "send-and-check", "set", "set-modes", "set-font", "set-net", "set-para", "set-style", "set-user", "set-user-name", "show", "show-popup", "sine", "size-text", "skip", "sort", "source", "split-path", "square-root", "stylize", "subtract", "switch",  
-"tail", "tangent", "textinfo", "third", "throw", "throw-on-error", "to", "to-binary", "to-bitset", "to-block", "to-char", "to-date", "to-decimal", "to-email", "to-event", "to-file", "to-get-word", "to-hash", "to-hex", "to-idate", "to-image", "to-integer", "to-issue", "to-list", "to-lit-path", "to-lit-word", "to-local-file", "to-logic", "to-money", "to-none", "to-pair", "to-paren", "to-path", "to-rebol-file", "to-refinement", "to-set-path", "to-set-word", "to-string", "to-tag", "to-time", "to-tuple", "to-url", "to-word", "trace", "trim", "try",  
-"unfocus", "union", "unique", "uninstall", "unprotect", "unset", "until", "unview", "update", "upgrade", "uppercase", "usage", "use",  
-"vbug", "view", "view-install", "view-prefs",  
-"wait", "what", "what-dir", "while", "write", "write-io",  
-"xor", "xor~",  
-"action!", "any-block!", "any-function!", "any-string!", "any-type!", "any-word!",  
-"binary!", "bitset!", "block!",  
-"char!",  
-"datatype!", "date!", "decimal!", 
-"email!", "error!", "event!",  
-"file!", "function!",  
-"get-word!",  
-"hash!",  
-"image!", "integer!", "issue!",  
-"library!", "list!", "lit-path!", "lit-word!", "logic!",  
-"money!",  
-"native!", "none!", "number!",  
-"object!", "op!",  
-"pair!", "paren!", "path!", "port!",  
-"refinement!", "routine!",  
-"series!", "set-path!", "set-word!", "string!", "struct!", "symbol!",  
-"tag!", "time!", "tuple!",  
-"unset!", "url!",  
-"word!",  
-"any-block?", "any-function?", "any-string?", "any-type?", "any-word?",  
-"binary?", "bitset?", "block?",  
-"char?", "connected?", "crypt-strength?", 
-"datatype?", "date?", "decimal?", "dir?",  
-"email?", "empty?", "equal?", "error?", "even?", "event?", "exists?", "exists-key?",
-"file?", "flag-face?", "found?", "function?",  
-"get-word?", "greater-or-equal?", "greater?",  
-"hash?", "head?",  
-"image?", "in-window?", "index?", "info?", "input?", "inside?", "integer?", "issue?",  
-"length?", "lesser-or-equal?", "lesser?", "library?", "link-app?", "link?", "list?", "lit-path?", "lit-word?", "logic?",  
-"modified?", "money?",  
-"native?", "negative?", "none?", "not-equal?", "number?",  
-"object?", "odd?", "offset?", "op?", "outside?",  
-"pair?", "paren?", "path?", "port?", "positive?",  
-"refinement?", "routine?",  
-"same?", "screen-offset?", "script?", "series?", "set-path?", "set-word?", "size?", "span?", "strict-equal?", "strict-not-equal?", "string?", "struct?",  
-"tag?", "tail?", "time?", "tuple?", "type?",  
-"unset?", "url?",  
-"value?", "view?", 
-"within?", "word?",  
-"zero?"
-]
-#@nonl
-#@-node:ekr.20031218072017.382:rebol keywords
-#@+node:ekr.20040401111125:shell keywords
-shell_keywords = [
-	# reserved keywords
-	"case","do","done","elif","else","esac","fi",
-	"for","if","in","then",
-	"until","while",
-	"break","cd","chdir","continue","eval","exec",
-	"exit","kill","newgrp","pwd","read","readonly",
-	"return","shift","test","trap","ulimit",
-	"umask","wait" ]
-#@nonl
-#@-node:ekr.20040401111125:shell keywords
-#@+node:ekr.20031218072017.383:tcl/tk keywords
-tcltk_keywords = [ # Only the tcl keywords are here.
-	"after",     "append",    "array",
-	"bgerror",   "binary",    "break",
-	"catch",     "cd",        "clock",
-	"close",     "concat",    "continue",
-	"dde",
-	"encoding",  "eof",       "eval",
-	"exec",      "exit",      "expr",
-	"fblocked",  "fconfigure","fcopy",     "file",      "fileevent",
-	"filename",  "flush",     "for",       "foreach",   "format",
-	"gets",      "glob",      "global",
-	"history",
-	"if",        "incr",      "info",      "interp",
-	"join",
-	"lappend",   "lindex",    "linsert",   "list",      "llength",
-	"load",      "lrange",    "lreplace",  "lsearch",   "lsort",
-	"memory",    "msgcat",
-	"namespace",
-	"open",
-	"package",   "parray",    "pid",
-	"proc",      "puts",      "pwd",
-	"read",      "regexp",    "registry",   "regsub",
-	"rename",    "resource",  "return",
-	"scan",      "seek",      "set",        "socket",   "source",
-	"split",     "string",    "subst",      "switch",
-	"tell",      "time",      "trace",
-	"unknown",   "unset",     "update",     "uplevel",   "upvar",
-	"variable",  "vwait",
-	"while" ]
-#@nonl
-#@-node:ekr.20031218072017.383:tcl/tk keywords
-#@-node:ekr.20031218072017.371:<< define colorizer keywords >> colorizer
-#@-node:ekr.20031218072017.367:How to add support for a new language
-#@+node:ekr.20040331145826.1:(done) RapidQ support
-#@+node:ekr.20040331145826:rapidq keywords
-rapidq_keywords = [
-# Syntax file for RapidQ
-"$APPTYPE","$DEFINE","$ELSE","$ENDIF","$ESCAPECHARS","$IFDEF","$IFNDEF",
-"$INCLUDE","$MACRO","$OPTIMIZE","$OPTION","$RESOURCE","$TYPECHECK","$UNDEF",
-"ABS","ACOS","ALIAS","AND","AS","ASC","ASIN","ATAN","ATN","BIN$","BIND","BYTE",
-"CALL","CALLBACK","CALLFUNC","CASE","CEIL","CHDIR","CHDRIVE","CHR$","CINT",
-"CLNG","CLS","CODEPTR","COMMAND$","COMMANDCOUNT","CONSOLE","CONST","CONSTRUCTOR",
-"CONVBASE$","COS","CREATE","CSRLIN","CURDIR$","DATA","DATE$","DEC","DECLARE",
-"DEFBYTE","DEFDBL","DEFDWORD","DEFINT","DEFLNG","DEFSHORT","DEFSNG","DEFSTR",
-"DEFWORD","DELETE$","DIM","DIR$","DIREXISTS","DO","DOEVENTS","DOUBLE","DWORD",
-"ELSE","ELSEIF","END","ENVIRON","ENVIRON$","EVENT","EXIT","EXP","EXTENDS",
-"EXTRACTRESOURCE","FIELD$","FILEEXISTS","FIX","FLOOR","FOR","FORMAT$","FRAC",
-"FUNCTION","FUNCTIONI","GET$","GOSUB","GOTO","HEX$","IF","INC","INITARRAY",
-"INKEY$","INP","INPUT","INPUT$","INPUTHANDLE","INSERT$","INSTR","INT","INTEGER",
-"INV","IS","ISCONSOLE","KILL","KILLMESSAGE","LBOUND","LCASE$","LEFT$","LEN",
-"LFLUSH","LIB","LIBRARYINST","LOCATE","LOG","LONG","LOOP","LPRINT","LTRIM$",
-"MEMCMP","MESSAGEBOX","MESSAGEDLG","MID$","MKDIR","MOD","MOUSEX","MOUSEY",
-"NEXT","NOT","OFF","ON","OR","OUT","OUTPUTHANDLE","PARAMSTR$","PARAMSTRCOUNT",
-"PARAMVAL","PARAMVALCOUNT","PCOPY","PEEK","PLAYWAV","POKE","POS","POSTMESSAGE",
-"PRINT","PROPERTY","QUICKSORT","RANDOMIZE","REDIM","RENAME","REPLACE$",
-"REPLACESUBSTR$","RESOURCE","RESOURCECOUNT","RESTORE","RESULT","RETURN",
-"REVERSE$","RGB","RIGHT$","RINSTR","RMDIR","RND","ROUND","RTRIM$","RUN",
-"SCREEN","SELECT","SENDER","SENDMESSAGE","SETCONSOLETITLE","SGN","SHELL",
-"SHL","SHORT","SHOWMESSAGE","SHR","SIN","SINGLE","SIZEOF","SLEEP","SOUND",
-"SPACE$","SQR","STACK","STATIC","STEP","STR$","STRF$","STRING","STRING$",
-"SUB","SUBI","SWAP","TALLY","TAN","THEN","TIME$","TIMER","TO","TYPE","UBOUND",
-"UCASE$","UNLOADLIBRARY","UNTIL","VAL","VARIANT","VARPTR","VARPTR$","VARTYPE",
-"WEND","WHILE","WITH","WORD","XOR"]
-#@nonl
-#@-node:ekr.20040331145826:rapidq keywords
-#@-node:ekr.20040331145826.1:(done) RapidQ support
-#@+node:ekr.20040117111755:(done) css support
-#@+node:ekr.20040401104931:Notes
-@nocolor
-
-By: grayrest ( Karl Guertin ) 
- diff: css support   
-2004-01-09 23:42  
-
- I got frustrated at leo's lack of support for CSS. The main difficulty I was having is that CSS only specifies the /* and */ comment delimiters and not any single line delimeter. Trying the depricated @comment /* */ doesn't work because it produces the output
-
-/* @@comment /* */ */
-
-which fails because the first */ on the line ends the comment, leaving the second */ as a syntax error in the file.
-
-Anyway, while looking into it I figured I'd just add CSS as a supported language. It took longer than expected (there are a LOT of keywords in css) but the only hangup was that css keywords include dashes (e.g. margin-top). Diff against 4.1RC3 release is below.
-
-
-In case it gets mangled, the diff can also be found at http://r39h92.res.gatech.edu:8788/leon_files/css.diff
-#@nonl
-#@-node:ekr.20040401104931:Notes
-#@+node:ekr.20040401103539:css keywords
-css_keywords = [
-#html tags
-"address", "applet", "area", "a", "base", "basefont",
-"big", "blockquote", "body", "br", "b", "caption", "center",
-"cite", "code", "dd", "dfn", "dir", "div", "dl", "dt", "em", "font",
-"form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "hr", "html", "img",
-"input", "isindex", "i", "kbd", "link", "li", "link", "map", "menu",
-"meta", "ol", "option", "param", "pre", "p", "samp",
-"select", "small", "span", "strike", "strong", "style", "sub", "sup",
-"table", "td", "textarea", "th", "title", "tr", "tt", "ul", "u", "var",
-#units
-"mm", "cm", "in", "pt", "pc", "em", "ex", "px",
-#colors
-"aqua", "black", "blue", "fuchsia", "gray", "green", "lime", "maroon", "navy", "olive", "purple", "red", "silver", "teal", "yellow", "white",
-#important directive
-"!important",
-#font rules
-"font", "font-family", "font-style", "font-variant", "font-weight", "font-size",
-#font values
-"cursive", "fantasy", "monospace", "normal", "italic", "oblique", "small-caps",
-"bold", "bolder", "lighter", "medium", "larger", "smaller",
-"serif", "sans-serif",
-#background rules
-"background", "background-color", "background-image", "background-repeat", "background-attachment", "background-position",
-#background values
-"contained", "none", "top", "center", "bottom", "left", "right", "scroll", "fixed",
-"repeat", "repeat-x", "repeat-y", "no-repeat",
-#text rules
-"word-spacing", "letter-spacing", "text-decoration", "vertical-align", "text-transform", "text-align", "text-indent", "text-transform", "text-shadow", "unicode-bidi", "line-height",
-#text values
-"normal", "none", "underline", "overline", "blink", "sub", "super", "middle", "top", "text-top", "text-bottom",
-"capitalize", "uppercase", "lowercase", "none", "left", "right", "center", "justify",
-"line-through",
-#box rules
-"margin", "margin-top", "margin-bottom", "margin-left", "margin-right",
-"margin", "padding-top", "padding-bottom", "padding-left", "padding-right",
-"border", "border-width", "border-style", "border-top", "border-top-width", "border-top-style", "border-bottom", "border-bottom-width", "border-bottom-style", "border-left", "border-left-width", "border-left-style", "border-right", "border-right-width", "border-right-style", "border-color",
-#box values
-"width", "height", "float", "clear",
-"auto", "thin", "medium", "thick", "left", "right", "none", "both",
-"none", "dotted", "dashed", "solid", "double", "groove", "ridge", "inset", "outset",
-#display rules
-"display", "white-space", 
-"min-width", "max-width", "min-height", "max-height",
-"outline-color", "outline-style", "outline-width",
-#display values
-"run-in", "inline-block", "list-item", "block", "inline", "none", "normal", "pre", "nowrap", "table-cell", "table-row", "table-row-group", "table-header-group", "inline-table", "table-column", "table-column-group", "table-cell", "table-caption"
-#list rules
-"list-style", "list-style-type", "list-style-image", "list-style-position",
-#list values
-"disc", "circle", "square", "decimal", "decimal-leading-zero", "none",
-"lower-roman", "upper-roman", "lower-alpha", "upper-alpha", "lower-latin", "upper-latin",
-#table rules
-"border-collapse", "caption-side",
-#table-values
-"empty-cells", "table-layout",
-#misc values/rules
-"counter-increment", "counter-reset",
-"marker-offset", "z-index",
-"cursor", "direction", "marks", "quotes",
-"clip", "content", "orphans", "overflow", "visibility",
-#aural rules
-"pitch", "range", "pitch-during", "cue-after", "pause-after", "cue-before", "pause-before", "speak-header", "speak-numeral", "speak-punctuation", "speed-rate", "play-during", "voice-family",
-#aural values
-"stress", "azimuth", "elevation", "pitch", "richness", "volume",
-"page-break", "page-after", "page-inside"]
-#@nonl
-#@-node:ekr.20040401103539:css keywords
-#@+node:ekr.20031218072017.1898:<< handle possible  keyword >>
-if self.language == "latex":
-	<< handle possible latex keyword >>
-elif self.language == "html":
-	<< handle possible html keyword >>
-else:
-	<< handle general keyword >>
-i = j
-#@nonl
-#@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-if g.match(s,i,"\\"):
-	j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
-	word = s[i:j]
-	if word in self.latex_keywords:
-		self.tag("latexKeyword",i,j)
-	else:
-		self.tag("latexBackground",i,j)
-else:
-	self.tag("latexBackground",i,i+1)
-	j = i + 1 # skip the character.
-#@nonl
-#@-node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-#@+node:ekr.20031218072017.1900:<< handle possible html keyword >>
-if g.match(s,i,"<!---") or g.match(s,i,"<!--"):
-	if g.match(s,i,"<!---"): k = 5
-	else: k = 4
-	self.tag("comment",i,i+k)
-	j = i + k ; state = "blockComment"
-elif g.match(s,i,"<"):
-	if g.match(s,i,"</"): k = 2
-	else: k = 1
-	j = self.skip_id(s,i+k)
-	self.tag("keyword",i,j)
-elif g.match(s,i,"&"):
-	j = self.skip_id(s,i+1,';')
-	self.tag("keyword",i,j)
-elif g.match(s,i,"/>"):
-	j = i + 2
-	self.tag("keyword",i,j)
-elif g.match(s,i,">"):
-	j = i + 1
-	self.tag("keyword",i,j)
-else:
-	j = i + 1
-#@-node:ekr.20031218072017.1900:<< handle possible html keyword >>
-#@+node:ekr.20031218072017.1901:<< handle general keyword >>
-if self.language == "rapidq":
-	j = self.skip_id(s,i+1,chars="$")
-elif self.language == "rebol":
-	j = self.skip_id(s,i+1,chars="-~!?")
-elif self.language in ("elisp","css"):
-	j = self.skip_id(s,i+1,chars="-")
-else:
-	j = self.skip_id(s,i)
-
-word = s[i:j]
-if word in self.keywords:
-	self.tag("keyword",i,j)
-elif self.language == "php":
-	if word in self.php_paren_keywords and g.match(s,j,"()"):
-		self.tag("keyword",i,j+2)
-		j += 2
-#@nonl
-#@-node:ekr.20031218072017.1901:<< handle general keyword >>
-#@-node:ekr.20031218072017.1898:<< handle possible  keyword >>
-#@-node:ekr.20040117111755:(done) css support
-#@+node:ekr.20040117113539.1:(done) Coloring for Shell Scripts (Davide)
-#@+node:ekr.20040401111308:Notes
-@nocolor
-
-I recently wrote a few shell scripts (on linux) with leo, and I noticed
-there was no colorizer support for shell (apart from comments), so I added
-it: see the attached leo file. Note that this only adds colorizer support
-for vanilla /bin/sh keywords -- one could customize it to add support for
-all the different shell flavors out there (bash, ksh, etc), although I
-think this is better left out for when we have a more flexible way of
-specifying language grammars. Note that I changed the default extension
-type for shell scripts from "txt" to "sh" (much more common for shell
-scripts, I think).
-
-In addition to what's specified in "How to add support for a new language"
-(in LeoPy.leo), I also had to modify the << handle single-line comment >>
-block in colorizer.doNormalState to avoid that the built-in shell variable
-'$#' starts a single-line comment.
-
-As usual, feel free to modify at will.
-
-Last thing: if I try to "Import to @file" a file with no extension, it
-fails saying "<filename>.py does not exist" (where <filename> is the file I
-want to load), i.e. Leo always tries to add a ".py" extension to files to
-be imported if they don't have one. This is with Leo 4.1rc3 CVS version,
-Python 2.3.2 on Linux.
-#@nonl
-#@-node:ekr.20040401111308:Notes
-#@+node:ekr.20031218072017.1617:<< handle single-line comment >>
-# print "single-line comment i,s:",i,s
-
-if self.language == "cweb" and self.latex_cweb_comments:
-	j = i + len(self.single_comment_start)
-	self.tag("comment",i,j)
-	self.doLatexLine(s,j,len(s))
-	i = len(s)
-elif self.language == "shell" and (i>0 and s[i-1]=='$'):
-	i += 1 # '$#' in shell should not start a comment (DS 040113)
-else:
-	j = len(s)
-	if not g.doHook("color-optional-markup",
-		colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
-		self.tag("comment",i,j)
-	i = j
-#@nonl
-#@-node:ekr.20031218072017.1617:<< handle single-line comment >>
-#@-node:ekr.20040117113539.1:(done) Coloring for Shell Scripts (Davide)
-#@+node:ekr.20040106145421:(not yet) PHP syntax coloring
-#@+node:ekr.20040401110507:Notes
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2361052
-By: sbeards
-
-It would be nice if [doNormalState] could also catch the following all of which should be valid when the language is PHP.
-
-<?_    (Note: replace the '_' with whitespace)
-<?=
-<?[pP][hH][pP] (Note: regex/mixed case is OK)
-
-Can't we use the following regex to catch these cases?
-
-"<?(\s|=|[pP][hH][pP])"
-
-Scott
-
-EKR: This doesn't seem to work.  I did add code so that all cases of PHP get recoginized.
-#@nonl
-#@-node:ekr.20040401110507:Notes
-#@+node:ekr.20031218072017.1910:<< handle special php keywords >>
-if g.match(s.lower(),i,"<?php"):
-	self.tag("keyword",i,i+5)
-	i += 5
-elif g.match(s,i,"?>"):
-	self.tag("keyword",i,i+2)
-	i += 2
-else:
-	i += 1
-
-#@-node:ekr.20031218072017.1910:<< handle special php keywords >>
-#@+node:ekr.20031218072017.1896:doNormalState
-## To do: rewrite using dynamically generated tables.
-
-def doNormalState (self,s,i):
-
-	ch = s[i] ; state = "normal"
-	assert(type(ch)==type(u""))
-
-	if ch in string.ascii_letters or ch == '_' or (
-		(ch == '\\' and self.language=="latex") or
-		(ch in '/&<>' and self.language=="html") or
-		(ch == '$' and self.language=="rapidq")
-	):
-		<< handle possible keyword >>
-	elif g.match(s,i,self.lb):
-		i = self.doNowebSecRef(s,i)
-	elif ch == '@':
-		<< handle at keyword >>
-	elif g.match(s,i,self.single_comment_start):
-		<< handle single-line comment >>
-	elif g.match(s,i,self.block_comment_start):
-		<< start block comment >>
-	elif ch == '%' and self.language=="cweb":
-		<< handle latex line >>
-	elif self.language=="latex":
-		<< handle latex normal character >>
-	# ---- From here on self.language != "latex" -----
-	elif ch in self.string_delims:
-		<< handle string >>
-	elif ch == '#' and self.has_pp_directives:
-		<< handle C preprocessor line >>
-	elif self.language == "php" and (g.match(s,i,"<") or g.match(s,i,"?")):
-		# g.trace("%3d" % i,php_re.match(s,i),s)
-		<< handle special php keywords >>
-	elif ch == ' ':
-		<< handle blank >>
-	elif ch == '\t':
-		<< handle tab >>
-	else:
-		<< handle normal character >>
-
-	if 0: # This can fail harmlessly when using wxPython plugin.  Don't know exactly why.
-		g.trace(self.progress,i,state)
-		assert(self.progress < i)
-	return i,state
-
-
-#@+node:ekr.20031218072017.1897:Valid regardless of latex mode
-#@+node:ekr.20031218072017.1898:<< handle possible  keyword >>
-if self.language == "latex":
-	<< handle possible latex keyword >>
-elif self.language == "html":
-	<< handle possible html keyword >>
-else:
-	<< handle general keyword >>
-i = j
-#@nonl
-#@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-if g.match(s,i,"\\"):
-	j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
-	word = s[i:j]
-	if word in self.latex_keywords:
-		self.tag("latexKeyword",i,j)
-	else:
-		self.tag("latexBackground",i,j)
-else:
-	self.tag("latexBackground",i,i+1)
-	j = i + 1 # skip the character.
-#@nonl
-#@-node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-#@+node:ekr.20031218072017.1900:<< handle possible html keyword >>
-if g.match(s,i,"<!---") or g.match(s,i,"<!--"):
-	if g.match(s,i,"<!---"): k = 5
-	else: k = 4
-	self.tag("comment",i,i+k)
-	j = i + k ; state = "blockComment"
-elif g.match(s,i,"<"):
-	if g.match(s,i,"</"): k = 2
-	else: k = 1
-	j = self.skip_id(s,i+k)
-	self.tag("keyword",i,j)
-elif g.match(s,i,"&"):
-	j = self.skip_id(s,i+1,';')
-	self.tag("keyword",i,j)
-elif g.match(s,i,"/>"):
-	j = i + 2
-	self.tag("keyword",i,j)
-elif g.match(s,i,">"):
-	j = i + 1
-	self.tag("keyword",i,j)
-else:
-	j = i + 1
-#@-node:ekr.20031218072017.1900:<< handle possible html keyword >>
-#@+node:ekr.20031218072017.1901:<< handle general keyword >>
-if self.language == "rapidq":
-	j = self.skip_id(s,i+1,chars="$")
-elif self.language == "rebol":
-	j = self.skip_id(s,i+1,chars="-~!?")
-elif self.language in ("elisp","css"):
-	j = self.skip_id(s,i+1,chars="-")
-else:
-	j = self.skip_id(s,i)
-
-word = s[i:j]
-if word in self.keywords:
-	self.tag("keyword",i,j)
-elif self.language == "php":
-	if word in self.php_paren_keywords and g.match(s,j,"()"):
-		self.tag("keyword",i,j+2)
-		j += 2
-#@nonl
-#@-node:ekr.20031218072017.1901:<< handle general keyword >>
-#@-node:ekr.20031218072017.1898:<< handle possible  keyword >>
-#@+node:ekr.20031218072017.1902:<< handle at keyword >>
-if self.language == "cweb":
-	if g.match(s,i,"@(") or g.match(s,i,"@<"):
-		<< handle cweb ref or def >>
-	else:
-		word = self.getCwebWord(s,i)
-		if word:
-			<< Handle cweb control word >>
-		else:
-			i,state = self.doAtKeyword(s,i)
-else:
-	i,state = self.doAtKeyword(s,i)
-#@nonl
-#@+node:ekr.20031218072017.1903:<< Handle cweb control word >>
-# Color and skip the word.
-assert(self.language=="cweb")
-
-j = i + len(word)
-self.tag("keyword",i,j)
-i = j
-
-if word in ("@ ","@\t","@\n","@*","@**"):
-	state = "doc"
-elif word in ("@<","@(","@c","@d","@f","@p"):
-	state = "normal"
-elif word in ("@^","@.","@:","@="): # Ended by "@>"
-	j = s.find("@>",i)
-	if j > -1:
-		self.tag("cwebName",i,j)
-		self.tag("nameBrackets",j,j+2)
-		i = j + 2
-#@nonl
-#@-node:ekr.20031218072017.1903:<< Handle cweb control word >>
-#@+node:ekr.20031218072017.1904:<< handle cweb ref or def >>
-self.tag("nameBrackets",i,i+2)
-
-# See if the line contains the right name bracket.
-j = s.find("@>=",i+2)
-k = g.choose(j==-1,2,3)
-if j == -1:
-	j = s.find("@>",i+2)
-
-if j == -1:
-	i += 2
-else:
-	self.tag("cwebName",i+2,j)
-	self.tag("nameBrackets",j,j+k)
-	i = j + k
-#@-node:ekr.20031218072017.1904:<< handle cweb ref or def >>
-#@-node:ekr.20031218072017.1902:<< handle at keyword >>
-#@+node:ekr.20031218072017.1617:<< handle single-line comment >>
-# print "single-line comment i,s:",i,s
-
-if self.language == "cweb" and self.latex_cweb_comments:
-	j = i + len(self.single_comment_start)
-	self.tag("comment",i,j)
-	self.doLatexLine(s,j,len(s))
-	i = len(s)
-elif self.language == "shell" and (i>0 and s[i-1]=='$'):
-	i += 1 # '$#' in shell should not start a comment (DS 040113)
-else:
-	j = len(s)
-	if not g.doHook("color-optional-markup",
-		colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
-		self.tag("comment",i,j)
-	i = j
-#@nonl
-#@-node:ekr.20031218072017.1617:<< handle single-line comment >>
-#@+node:ekr.20031218072017.1619:<< start block comment >>
-k = len(self.block_comment_start)
-
-if not g.doHook("color-optional-markup",
-	colorer=self,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
-	self.tag("comment",i,i+k)
-
-i += k ; state = "blockComment"
-#@nonl
-#@-node:ekr.20031218072017.1619:<< start block comment >>
-#@+node:ekr.20031218072017.1905:<< handle latex line >>
-self.tag("keyword",i,i+1)
-i += 1 # Skip the %
-self.doLatexLine(s,i,len(s))
-i = len(s)
-#@nonl
-#@-node:ekr.20031218072017.1905:<< handle latex line >>
-#@-node:ekr.20031218072017.1897:Valid regardless of latex mode
-#@+node:ekr.20031218072017.1906:Vaid only in latex mode
-#@+node:ekr.20031218072017.1907:<< handle latex normal character >>
-if self.language=="cweb":
-	self.tag("latexModeBackground",i,i+1)
-else:
-	self.tag("latexBackground",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1907:<< handle latex normal character >>
-#@-node:ekr.20031218072017.1906:Vaid only in latex mode
-#@+node:ekr.20031218072017.1908:Valid when not in latex_mode
-#@+node:ekr.20031218072017.1612:<< handle string >>
-if self.language == "python":
-
-	delim = s[i:i+3]
-	j, state = self.skip_python_string(s,i)
-	if delim == '"""':
-		# Only handle wiki items in """ strings.
-		if not g.doHook("color-optional-markup",
-			colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
-			self.tag("string",i,j)
-	else:
-		self.tag("string",i,j)
-	i = j
-
-else:
-	j, state = self.skip_string(s,i)
-	self.tag("string",i,j)
-	i = j
-#@-node:ekr.20031218072017.1612:<< handle string >>
-#@+node:ekr.20031218072017.1909:<< handle C preprocessor line >>
-# 10/17/02: recognize comments in preprocessor lines.
-j = i
-while i < len(s):
-	if g.match(s,i,self.single_comment_start) or g.match(s,i,self.block_comment_start):
-		break
-	else: i += 1
-
-self.tag("pp",j,i)
-#@nonl
-#@-node:ekr.20031218072017.1909:<< handle C preprocessor line >>
-#@+node:ekr.20031218072017.1910:<< handle special php keywords >>
-if g.match(s.lower(),i,"<?php"):
-	self.tag("keyword",i,i+5)
-	i += 5
-elif g.match(s,i,"?>"):
-	self.tag("keyword",i,i+2)
-	i += 2
-else:
-	i += 1
-
-#@-node:ekr.20031218072017.1910:<< handle special php keywords >>
-#@+node:ekr.20031218072017.1911:<< handle blank >>
-if self.showInvisibles:
-	self.tag("blank",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1911:<< handle blank >>
-#@+node:ekr.20031218072017.1912:<< handle tab >>
-if self.showInvisibles:
-	self.tag("tab",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1912:<< handle tab >>
-#@+node:ekr.20031218072017.1913:<< handle normal character >>
-# self.tag("normal",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1913:<< handle normal character >>
-#@-node:ekr.20031218072017.1908:Valid when not in latex_mode
-#@+node:ekr.20031218072017.1898:<< handle possible  keyword >>
-if self.language == "latex":
-	<< handle possible latex keyword >>
-elif self.language == "html":
-	<< handle possible html keyword >>
-else:
-	<< handle general keyword >>
-i = j
-#@nonl
-#@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-if g.match(s,i,"\\"):
-	j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
-	word = s[i:j]
-	if word in self.latex_keywords:
-		self.tag("latexKeyword",i,j)
-	else:
-		self.tag("latexBackground",i,j)
-else:
-	self.tag("latexBackground",i,i+1)
-	j = i + 1 # skip the character.
-#@nonl
-#@-node:ekr.20031218072017.1899:<< handle possible latex keyword >>
-#@+node:ekr.20031218072017.1900:<< handle possible html keyword >>
-if g.match(s,i,"<!---") or g.match(s,i,"<!--"):
-	if g.match(s,i,"<!---"): k = 5
-	else: k = 4
-	self.tag("comment",i,i+k)
-	j = i + k ; state = "blockComment"
-elif g.match(s,i,"<"):
-	if g.match(s,i,"</"): k = 2
-	else: k = 1
-	j = self.skip_id(s,i+k)
-	self.tag("keyword",i,j)
-elif g.match(s,i,"&"):
-	j = self.skip_id(s,i+1,';')
-	self.tag("keyword",i,j)
-elif g.match(s,i,"/>"):
-	j = i + 2
-	self.tag("keyword",i,j)
-elif g.match(s,i,">"):
-	j = i + 1
-	self.tag("keyword",i,j)
-else:
-	j = i + 1
-#@-node:ekr.20031218072017.1900:<< handle possible html keyword >>
-#@+node:ekr.20031218072017.1901:<< handle general keyword >>
-if self.language == "rapidq":
-	j = self.skip_id(s,i+1,chars="$")
-elif self.language == "rebol":
-	j = self.skip_id(s,i+1,chars="-~!?")
-elif self.language in ("elisp","css"):
-	j = self.skip_id(s,i+1,chars="-")
-else:
-	j = self.skip_id(s,i)
-
-word = s[i:j]
-if word in self.keywords:
-	self.tag("keyword",i,j)
-elif self.language == "php":
-	if word in self.php_paren_keywords and g.match(s,j,"()"):
-		self.tag("keyword",i,j+2)
-		j += 2
-#@nonl
-#@-node:ekr.20031218072017.1901:<< handle general keyword >>
-#@-node:ekr.20031218072017.1898:<< handle possible  keyword >>
-#@+node:ekr.20031218072017.1902:<< handle at keyword >>
-if self.language == "cweb":
-	if g.match(s,i,"@(") or g.match(s,i,"@<"):
-		<< handle cweb ref or def >>
-	else:
-		word = self.getCwebWord(s,i)
-		if word:
-			<< Handle cweb control word >>
-		else:
-			i,state = self.doAtKeyword(s,i)
-else:
-	i,state = self.doAtKeyword(s,i)
-#@nonl
-#@+node:ekr.20031218072017.1903:<< Handle cweb control word >>
-# Color and skip the word.
-assert(self.language=="cweb")
-
-j = i + len(word)
-self.tag("keyword",i,j)
-i = j
-
-if word in ("@ ","@\t","@\n","@*","@**"):
-	state = "doc"
-elif word in ("@<","@(","@c","@d","@f","@p"):
-	state = "normal"
-elif word in ("@^","@.","@:","@="): # Ended by "@>"
-	j = s.find("@>",i)
-	if j > -1:
-		self.tag("cwebName",i,j)
-		self.tag("nameBrackets",j,j+2)
-		i = j + 2
-#@nonl
-#@-node:ekr.20031218072017.1903:<< Handle cweb control word >>
-#@+node:ekr.20031218072017.1904:<< handle cweb ref or def >>
-self.tag("nameBrackets",i,i+2)
-
-# See if the line contains the right name bracket.
-j = s.find("@>=",i+2)
-k = g.choose(j==-1,2,3)
-if j == -1:
-	j = s.find("@>",i+2)
-
-if j == -1:
-	i += 2
-else:
-	self.tag("cwebName",i+2,j)
-	self.tag("nameBrackets",j,j+k)
-	i = j + k
-#@-node:ekr.20031218072017.1904:<< handle cweb ref or def >>
-#@-node:ekr.20031218072017.1902:<< handle at keyword >>
-#@+node:ekr.20031218072017.1617:<< handle single-line comment >>
-# print "single-line comment i,s:",i,s
-
-if self.language == "cweb" and self.latex_cweb_comments:
-	j = i + len(self.single_comment_start)
-	self.tag("comment",i,j)
-	self.doLatexLine(s,j,len(s))
-	i = len(s)
-elif self.language == "shell" and (i>0 and s[i-1]=='$'):
-	i += 1 # '$#' in shell should not start a comment (DS 040113)
-else:
-	j = len(s)
-	if not g.doHook("color-optional-markup",
-		colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
-		self.tag("comment",i,j)
-	i = j
-#@nonl
-#@-node:ekr.20031218072017.1617:<< handle single-line comment >>
-#@+node:ekr.20031218072017.1619:<< start block comment >>
-k = len(self.block_comment_start)
-
-if not g.doHook("color-optional-markup",
-	colorer=self,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
-	self.tag("comment",i,i+k)
-
-i += k ; state = "blockComment"
-#@nonl
-#@-node:ekr.20031218072017.1619:<< start block comment >>
-#@+node:ekr.20031218072017.1905:<< handle latex line >>
-self.tag("keyword",i,i+1)
-i += 1 # Skip the %
-self.doLatexLine(s,i,len(s))
-i = len(s)
-#@nonl
-#@-node:ekr.20031218072017.1905:<< handle latex line >>
-#@+node:ekr.20031218072017.1907:<< handle latex normal character >>
-if self.language=="cweb":
-	self.tag("latexModeBackground",i,i+1)
-else:
-	self.tag("latexBackground",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1907:<< handle latex normal character >>
-#@+node:ekr.20031218072017.1612:<< handle string >>
-if self.language == "python":
-
-	delim = s[i:i+3]
-	j, state = self.skip_python_string(s,i)
-	if delim == '"""':
-		# Only handle wiki items in """ strings.
-		if not g.doHook("color-optional-markup",
-			colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
-			self.tag("string",i,j)
-	else:
-		self.tag("string",i,j)
-	i = j
-
-else:
-	j, state = self.skip_string(s,i)
-	self.tag("string",i,j)
-	i = j
-#@-node:ekr.20031218072017.1612:<< handle string >>
-#@+node:ekr.20031218072017.1909:<< handle C preprocessor line >>
-# 10/17/02: recognize comments in preprocessor lines.
-j = i
-while i < len(s):
-	if g.match(s,i,self.single_comment_start) or g.match(s,i,self.block_comment_start):
-		break
-	else: i += 1
-
-self.tag("pp",j,i)
-#@nonl
-#@-node:ekr.20031218072017.1909:<< handle C preprocessor line >>
-#@+node:ekr.20031218072017.1910:<< handle special php keywords >>
-if g.match(s.lower(),i,"<?php"):
-	self.tag("keyword",i,i+5)
-	i += 5
-elif g.match(s,i,"?>"):
-	self.tag("keyword",i,i+2)
-	i += 2
-else:
-	i += 1
-
-#@-node:ekr.20031218072017.1910:<< handle special php keywords >>
-#@+node:ekr.20031218072017.1911:<< handle blank >>
-if self.showInvisibles:
-	self.tag("blank",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1911:<< handle blank >>
-#@+node:ekr.20031218072017.1912:<< handle tab >>
-if self.showInvisibles:
-	self.tag("tab",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1912:<< handle tab >>
-#@+node:ekr.20031218072017.1913:<< handle normal character >>
-# self.tag("normal",i,i+1)
-i += 1
-#@nonl
-#@-node:ekr.20031218072017.1913:<< handle normal character >>
-#@-node:ekr.20031218072017.1896:doNormalState
-#@-node:ekr.20040106145421:(not yet) PHP syntax coloring
-#@+node:ekr.20031218072017.3195:splitLines & joinLines
-def splitLines (s):
-	
-	"""Split s into lines, preserving the number of lines and the ending of the last line."""
-	
-	if s:
-		return s.splitlines(true) # This is a Python string function!
-	else:
-		return []
-
-	if 0:# Rewritten: 4/2/04.  This works, but why bother?
-		if s:
-			lines = s.split('\n')
-			result = [line + '\n' for line in lines[:-1]]
-			if s[-1] != '\n':
-				result.append(lines[-1])
-			return result
-		else:
-			return []
-
-def joinLines (aList):
-	
-	return ''.join(aList)
-#@nonl
-#@-node:ekr.20031218072017.3195:splitLines & joinLines
-#@-node:ekr.20040206075634.1:Colorizing additions
-#@+node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-Also add corresponding commands.
-#@nonl
-#@-node:ekr.20040317050439:Right-click to add user-specified attributes and icons
-#@+node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
-#@+node:ekr.20031218072017.3941: frame.Birth & Death
-#@+node:ekr.20031218072017.1801:f.__init__
-def __init__(self,title):
-
-	# Init the base class.
-	leoFrame.leoFrame.__init__(self)
-
-	self.title = title
-	leoTkinterFrame.instances += 1
-	self.c = None # Set in finishCreate.
-
-	<< set the leoTkinterFrame ivars >>
-#@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-# Created in createLeoFrame and its allies.
-self.top = None
-self.tree = None
-self.f1 = self.f2 = None
-self.log = None  ; self.logBar = None
-self.body = None ; self.bodyCtrl = None ; self.bodyBar = None ; self.bodyXBar = None
-self.canvas = None ; self.treeBar = None
-self.splitter1 = self.splitter2 = None
-self.icon = None
-self.outerFrame = None # 5/20/02
-self.iconFrame = None # 5/20/02
-self.statusFrame = None # 5/20/02
-self.statusText = None # 5/20/02
-self.statusLabel = None # 5/20/02
-
-# Used by event handlers...
-self.redrawCount = 0
-self.draggedItem = None
-self.controlKeyIsDown = false # For control-drags
-self.revertHeadline = None # Previous headline text for abortEditLabel.
-#@nonl
-#@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
-#@-node:ekr.20031218072017.1801:f.__init__
-#@+node:ekr.20031218072017.3942:f.__repr__
-def __repr__ (self):
-
-	return "<leoTkinterFrame: %s>" % self.title
-#@-node:ekr.20031218072017.3942:f.__repr__
-#@+node:ekr.20031218072017.3943:Creating the frame
-#@+node:ekr.20031218072017.3944:f.createCanvas
-def createCanvas (self,parentFrame):
-	
-	frame = self ; config = g.app.config ; Tk = Tkinter
-	
-	scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
-	scrolls = g.choose(scrolls,1,0)
-
-	canvas = Tk.Canvas(parentFrame,name="canvas",
-		bd=0,bg="white",relief="flat")
-
-	frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
-	
-	# Bind mouse wheel event to canvas
-	if sys.platform != "win32": # Works on 98, crashes on XP.
-		canvas.bind("<MouseWheel>", self.OnMouseWheel)
-		
-	canvas['yscrollcommand'] = self.setCallback
-	treeBar['command']     = self.yviewCallback
-	
-	treeBar.pack(side="right", fill="y")
-	if scrolls: 
-		treeXBar = Tk.Scrollbar( 
-			parentFrame,name='treeXBar',orient="horizontal") 
-		canvas['xscrollcommand'] = treeXBar.set 
-		treeXBar['command'] = canvas.xview 
-		treeXBar.pack(side="bottom", fill="x")
-	
-	canvas.pack(expand=1,fill="both")
-
-	canvas.bind("<Button-1>", frame.OnActivateTree)
-
-	# Handle mouse wheel in the outline pane.
-	if sys.platform == "linux2": # This crashes tcl83.dll
-		canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-	
-	# g.print_bindings("canvas",canvas)
-	return canvas
-#@nonl
-#@-node:ekr.20031218072017.3944:f.createCanvas
-#@+node:ekr.20031218072017.2176:f.finishCreate
-def finishCreate (self,c):
-	
-	frame = self ; frame.c = c
-	Tk = Tkinter ; gui = g.app.gui
-
-	<< create the toplevel frame >>
-	<< create all the subframes >>
-	<< create the first tree node >>
-
-	self.menu = leoTkinterMenu.leoTkinterMenu(frame)
-
-	v = c.currentVnode()
-
-	if not g.doHook("menu1",c=c,v=v):
-		frame.menu.createMenuBar(self)
-
-	g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
-
-	g.app.windowList.append(frame)
-	
-	c.initVersion()
-	c.signOnWithVersion()
-	
-	self.body.createBindings(frame)
-#@nonl
-#@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
-frame.top = top = Tk.Toplevel()
-gui.attachLeoIcon(top)
-top.title(frame.title)
-top.minsize(30,10) # In grid units.
-
-frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
-frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
-
-frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
-
-frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
-frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
-#@nonl
-#@-node:ekr.20031218072017.2177:<< create the toplevel frame >>
-#@+node:ekr.20031218072017.2178:<< create all the subframes >>
-# Create the outer frame.
-self.outerFrame = outerFrame = Tk.Frame(top)
-self.outerFrame.pack(expand=1,fill="both")
-
-self.createIconBar()
-<< create both splitters >>
-
-# Create the canvas, tree, log and body.
-frame.canvas   = self.createCanvas(self.split2Pane1)
-frame.tree     = leoTkinterTree.leoTkinterTree(c,frame,frame.canvas)
-frame.log      = leoTkinterLog(frame,self.split2Pane2)
-frame.body     = leoTkinterBody(frame,self.split1Pane2)
-
-# Yes, this an "official" ivar: this is a kludge.
-frame.bodyCtrl = frame.body.bodyCtrl
-
-# Configure.  N.B. There may be Tk bugs here that make the order significant!
-frame.setTabWidth(c.tab_width)
-frame.tree.setTreeColorsFromConfig()
-self.reconfigurePanes()
-self.body.setFontFromConfig()
-
-if 0: # No longer done automatically.
-
-	# Create the status line.
-	self.createStatusLine()
-	self.putStatusLine("Welcome to Leo")
-#@nonl
-#@+node:ekr.20031218072017.2179:<< create both splitters >>
-# Splitter 1 is the main splitter containing splitter2 and the body pane.
-f1,bar1,split1Pane1,split1Pane2 = self.createLeoSplitter(outerFrame, self.splitVerticalFlag)
-self.f1,self.bar1 = f1,bar1
-self.split1Pane1,self.split1Pane2 = split1Pane1,split1Pane2
-
-# Splitter 2 is the secondary splitter containing the tree and log panes.
-f2,bar2,split2Pane1,split2Pane2 = self.createLeoSplitter(split1Pane1, not self.splitVerticalFlag)
-self.f2,self.bar2 = f2,bar2
-self.split2Pane1,self.split2Pane2 = split2Pane1,split2Pane2
-#@nonl
-#@-node:ekr.20031218072017.2179:<< create both splitters >>
-#@-node:ekr.20031218072017.2178:<< create all the subframes >>
-#@+node:ekr.20031218072017.2180:<< create the first tree node >>
-t = leoNodes.tnode()
-v = leoNodes.vnode(c,t)
-p = leoNodes.position(v,[])
-v.initHeadString("NewHeadline")
-
-p.moveToRoot()
-c.beginUpdate()
-c.selectVnode(p)
-c.redraw()
-c.frame.getFocus()
-c.editPosition(p)
-c.endUpdate(false)
-#@-node:ekr.20031218072017.2180:<< create the first tree node >>
-#@-node:ekr.20031218072017.2176:f.finishCreate
-#@+node:ekr.20031218072017.3945:Creating the splitter
-@ The key invariants used throughout this code:
-
-1. self.splitVerticalFlag tells the alignment of the main splitter and
-2. not self.splitVerticalFlag tells the alignment of the secondary splitter.
-
-Only the general-purpose divideAnySplitter routine doesn't know about these invariants.  So most of this code is specialized for Leo's window.  OTOH, creating a single splitter window would be much easier than this code.
-#@+node:ekr.20031218072017.3946:resizePanesToRatio
-def resizePanesToRatio(self,ratio,secondary_ratio):
-
-	self.divideLeoSplitter(self.splitVerticalFlag, ratio)
-	self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-	# g.trace(ratio)
-#@-node:ekr.20031218072017.3946:resizePanesToRatio
-#@+node:ekr.20031218072017.3947:bindBar
-def bindBar (self, bar, verticalFlag):
-	
-	if verticalFlag == self.splitVerticalFlag:
-		bar.bind("<B1-Motion>", self.onDragMainSplitBar)
-
-	else:
-		bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
-#@-node:ekr.20031218072017.3947:bindBar
-#@+node:ekr.20031218072017.3948:createLeoSplitter
-# 5/20/03: Removed the ancient kludge for forcing the height & width of f.
-# The code in leoFileCommands.getGlobals now works!
-
-def createLeoSplitter (self, parent, verticalFlag):
-	
-	"""Create a splitter window and panes into which the caller packs widgets.
-	
-	Returns (f, bar, pane1, pane2) """
-
-	Tk = Tkinter
-	
-	# Create the frames.
-	f = Tk.Frame(parent,bd=0,relief="flat")
-	f.pack(expand=1,fill="both",pady=1)
-	pane1 = Tk.Frame(f)
-	pane2 = Tk.Frame(f)
-	bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
-
-	# Configure and place the frames.
-	self.configureBar(bar,verticalFlag)
-	self.bindBar(bar,verticalFlag)
-	self.placeSplitter(bar,pane1,pane2,verticalFlag)
-
-	return f, bar, pane1, pane2
-#@nonl
-#@-node:ekr.20031218072017.3948:createLeoSplitter
-#@+node:ekr.20031218072017.3949:divideAnySplitter
-# This is the general-purpose placer for splitters.
-# It is the only general-purpose splitter code in Leo.
-
-def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
-
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		bar.place(rely=frac)
-		pane1.place(relheight=frac)
-		pane2.place(relheight=1-frac)
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		bar.place(relx=frac)
-		pane1.place(relwidth=frac)
-		pane2.place(relwidth=1-frac)
-#@nonl
-#@-node:ekr.20031218072017.3949:divideAnySplitter
-#@+node:ekr.20031218072017.3950:divideLeoSplitter
-# Divides the main or secondary splitter, using the key invariant.
-def divideLeoSplitter (self, verticalFlag, frac):
-	if self.splitVerticalFlag == verticalFlag:
-		self.divideLeoSplitter1(frac,verticalFlag)
-		self.ratio = frac # Ratio of body pane to tree pane.
-	else:
-		self.divideLeoSplitter2(frac,verticalFlag)
-		self.secondary_ratio = frac # Ratio of tree pane to log pane.
-
-# Divides the main splitter.
-def divideLeoSplitter1 (self, frac, verticalFlag): 
-	self.divideAnySplitter(frac, verticalFlag,
-		self.bar1, self.split1Pane1, self.split1Pane2)
-
-# Divides the secondary splitter.
-def divideLeoSplitter2 (self, frac, verticalFlag): 
-	self.divideAnySplitter (frac, verticalFlag,
-		self.bar2, self.split2Pane1, self.split2Pane2)
-#@nonl
-#@-node:ekr.20031218072017.3950:divideLeoSplitter
-#@+node:ekr.20031218072017.3951:onDrag...
-def onDragMainSplitBar (self, event):
-	self.onDragSplitterBar(event,self.splitVerticalFlag)
-
-def onDragSecondarySplitBar (self, event):
-	self.onDragSplitterBar(event,not self.splitVerticalFlag)
-
-def onDragSplitterBar (self, event, verticalFlag):
-
-	# x and y are the coordinates of the cursor relative to the bar, not the main window.
-	bar = event.widget
-	x = event.x
-	y = event.y
-	top = bar.winfo_toplevel()
-
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		wRoot	= top.winfo_rooty()
-		barRoot = bar.winfo_rooty()
-		wMax	= top.winfo_height()
-		offset = float(barRoot) + y - wRoot
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		wRoot	= top.winfo_rootx()
-		barRoot = bar.winfo_rootx()
-		wMax	= top.winfo_width()
-		offset = float(barRoot) + x - wRoot
-
-	# Adjust the pixels, not the frac.
-	if offset < 3: offset = 3
-	if offset > wMax - 2: offset = wMax - 2
-	# Redraw the splitter as the drag is occuring.
-	frac = float(offset) / wMax
-	# g.trace(frac)
-	self.divideLeoSplitter(verticalFlag, frac)
-#@nonl
-#@-node:ekr.20031218072017.3951:onDrag...
-#@+node:ekr.20031218072017.3952:placeSplitter
-def placeSplitter (self,bar,pane1,pane2,verticalFlag):
-
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-		pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-		bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		# adj gives tree pane more room when tiling vertically.
-		adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-		pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-		pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-		bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
-#@nonl
-#@-node:ekr.20031218072017.3952:placeSplitter
-#@-node:ekr.20031218072017.3945:Creating the splitter
-#@+node:ekr.20031218072017.3953:Creating the icon area
-#@+node:ekr.20031218072017.3954:createIconBar
-def createIconBar (self):
-	
-	"""Create an empty icon bar in the packer's present position"""
-
-	if not self.iconFrame:
-		self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
-		self.iconFrame.pack(fill="x",pady=2)
-#@nonl
-#@-node:ekr.20031218072017.3954:createIconBar
-#@+node:ekr.20031218072017.3955:hideIconBar
-def hideIconBar (self):
-	
-	"""Hide the icon bar by unpacking it.
-	
-	A later call to showIconBar will repack it in a new location."""
-	
-	if self.iconFrame:
-		self.iconFrame.pack_forget()
-#@-node:ekr.20031218072017.3955:hideIconBar
-#@+node:ekr.20031218072017.3956:clearIconBar
-def clearIconBar(self):
-	
-	"""Destroy all the widgets in the icon bar"""
-	
-	f = self.iconFrame
-	if not f: return
-	
-	for slave in f.pack_slaves():
-		slave.destroy()
-
-	f.configure(height="5m") # The default height.
-	g.app.iconWidgetCount = 0
-	g.app.iconImageRefs = []
-#@-node:ekr.20031218072017.3956:clearIconBar
-#@+node:ekr.20031218072017.3957:showIconBar
-def showIconBar(self):
-	
-	"""Show the icon bar by repacking it"""
-
-	self.iconFrame.pack(fill="x",pady=2)
-#@nonl
-#@-node:ekr.20031218072017.3957:showIconBar
-#@+node:ekr.20031218072017.3958:addIconButton
-def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
-	
-	"""Add a button containing text or a picture to the icon bar.
-	
-	Pictures take precedence over text"""
-	
-	f = self.iconFrame
-	if not imagefile and not image and not text: return
-
-	# First define n.	
-	try:
-		g.app.iconWidgetCount += 1
-		n = g.app.iconWidgetCount
-	except:
-		n = g.app.iconWidgetCount = 1
-
-	if not command:
-		def command(n=n):
-			print "command for widget %s" % (n)
-
-	if imagefile or image:
-		<< create a picture >>
-	elif text:
-		w = min(6,len(text))
-		b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
-		b.pack(side="left", fill="y")
-		return b
-		
-	return None
-#@nonl
-#@+node:ekr.20031218072017.3959:<< create a picture >>
-try:
-	if imagefile:
-		# Create the image.  Throws an exception if file not found
-		imagefile = g.os_path_join(g.app.loadDir,imagefile)
-		imagefile = g.os_path_normpath(imagefile)
-		image = Tkinter.PhotoImage(master=g.app.root,file=imagefile)
-		
-		# Must keep a reference to the image!
-		try:
-			refs = g.app.iconImageRefs
-		except:
-			refs = g.app.iconImageRefs = []
-	
-		refs.append((imagefile,image),)
-	
-	if not bg:
-		bg = f.cget("bg")
-
-	b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
-	b.pack(side="left",fill="y")
-	return b
-	
-except:
-	g.es_exception()
-	return None
-#@nonl
-#@-node:ekr.20031218072017.3959:<< create a picture >>
-#@-node:ekr.20031218072017.3958:addIconButton
-#@-node:ekr.20031218072017.3953:Creating the icon area
-#@+node:ekr.20031218072017.3960:Creating the status area
-@tabwidth 4
-#@+node:ekr.20031218072017.3961:createStatusLine
-def createStatusLine (self):
-	
-	if self.statusFrame and self.statusLabel:
-		return
-	
-	self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-	statusFrame.pack(fill="x",pady=1)
-	
-	text = "line 0, col 0"
-	width = len(text) + 4
-	self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-	self.statusLabel.pack(side="left",padx=1)
-	
-	bg = statusFrame.cget("background")
-	self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-	self.statusText.pack(side="left",expand=1,fill="x")
-
-	# Register an idle-time handler to update the row and column indicators.
-	self.statusFrame.after_idle(self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.3961:createStatusLine
-#@+node:ekr.20031218072017.3962:clearStatusLine
-def clearStatusLine (self):
-	
-	t = self.statusText
-	if not t: return
-	
-	t.configure(state="normal")
-	t.delete("1.0","end")
-	t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clearStatusLine
-#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="disabled",background="gray")
-	
-def enableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="normal",background="pink")
-		t.focus_set()
-		
-def statusLineIsEnabled(self):
-	t = self.statusText
-	if t:
-		state = t.cget("state")
-		return state == "normal"
-	else:
-		return false
-#@nonl
-#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-#@+node:ekr.20031218072017.3963:putStatusLine
-def putStatusLine (self,s,color=None):
-	
-	t = self.statusText ; tags = self.statusColorTags
-	if not t: return
-
-	t.configure(state="normal")
-	
-	if "black" not in self.log.colorTags:
-		tags.append("black")
-		
-	if color and color not in tags:
-		tags.append(color)
-		t.tag_config(color,foreground=color)
-
-	if color:
-		t.insert("end",s)
-		t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-		t.tag_config("black",foreground="black")
-		t.tag_add("black","end")
-	else:
-		t.insert("end",s)
-	
-	t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3963:putStatusLine
-#@+node:EKR.20040424154804:setFocusStatusLine
-def setFocusStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocusStatusLine
-#@+node:ekr.20031218072017.1733:updateStatusRowCol
-def updateStatusRowCol (self):
-	
-	c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-	gui = g.app.gui
-	if not lab: return
-	
-	# New for Python 2.3: may be called during shutdown.
-	if g.app.killed:
-		return
-
-	if 0: # New code
-		index = c.frame.body.getInsertionPoint()
-		row,col = c.frame.body.indexToRowColumn(index)
-		index1 = c.frame.body.rowColumnToIndex(row,0)
-	else:
-		index = body.index("insert")
-		row,col = gui.getindex(body,index)
-	
-	if col > 0:
-		if 0: # new code
-			s = c.frame.body.getRange(index1,index2)
-		else:
-			s = body.get("%d.0" % (row),index)
-		s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-		col = g.computeWidth (s,self.tab_width)
-
-	if row != self.lastStatusRow or col != self.lastStatusCol:
-		s = "line %d, col %d " % (row,col)
-		lab.configure(text=s)
-		self.lastStatusRow = row
-		self.lastStatusCol = col
-		
-	# Reschedule this routine 100 ms. later.
-	# Don't use after_idle: it hangs Leo.
-	self.statusFrame.after(100,self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.1733:updateStatusRowCol
-#@-node:ekr.20031218072017.3960:Creating the status area
-#@-node:ekr.20031218072017.3943:Creating the frame
-#@+node:ekr.20031218072017.3964:Destroying the frame
-#@+node:ekr.20031218072017.1975:destroyAllObjects
-def destroyAllObjects (self):
-
-	"""Clear all links to objects in a Leo window."""
-
-	frame = self ; c = self.c ; tree = frame.tree ; body = self.body
-
-	# Do this first.
-	<< clear all vnodes and tnodes in the tree >>
-
-	# Destroy all ivars in subclasses.
-	g.clearAllIvars(c.atFileCommands)
-	g.clearAllIvars(c.fileCommands)
-	g.clearAllIvars(c.importCommands)
-	g.clearAllIvars(c.tangleCommands)
-	g.clearAllIvars(c.undoer)
-	g.clearAllIvars(c)
-	g.clearAllIvars(body.colorizer)
-	g.clearAllIvars(body)
-	g.clearAllIvars(tree)
-
-	# This must be done last.
-	frame.destroyAllPanels()
-	g.clearAllIvars(frame)
-#@nonl
-#@+node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
-# Using a dict here is essential for adequate speed.
-vList = [] ; tDict = {}
-
-for p in c.allNodes_iter():
-	vList.append(p.v)
-	if p.v.t:
-		key = id(p.v.t)
-		if not tDict.has_key(key):
-			tDict[key] = p.v.t
-
-for key in tDict.keys():
-	g.clearAllIvars(tDict[key])
-
-for v in vList:
-	g.clearAllIvars(v)
-
-vList = [] ; tDict = {} # Remove these references immediately.
-#@nonl
-#@-node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
-#@-node:ekr.20031218072017.1975:destroyAllObjects
-#@+node:ekr.20031218072017.3965:destroyAllPanels
-def destroyAllPanels (self):
-	
-	"""Destroy all panels attached to this frame."""
-	
-	panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
-
-	for panel in panels:
-		if panel:
-			panel.top.destroy()
-			
-	self.comparePanel = None
-	self.colorPanel = None
-	self.fontPanel = None
-	self.prefsPanel = None
-#@nonl
-#@-node:ekr.20031218072017.3965:destroyAllPanels
-#@+node:ekr.20031218072017.1974:destroySelf
-def destroySelf (self):
-	
-	top = self.top # Remember this: we are about to destroy all of our ivars!
-
-	if g.app.windowList:
-		self.destroyAllObjects()
-
-	top.destroy()
-#@nonl
-#@-node:ekr.20031218072017.1974:destroySelf
-#@-node:ekr.20031218072017.3964:Destroying the frame
-#@-node:ekr.20031218072017.3941: frame.Birth & Death
-#@+node:ekr.20031218072017.3960:Creating the status area
-@tabwidth 4
-#@+node:ekr.20031218072017.3961:createStatusLine
-def createStatusLine (self):
-	
-	if self.statusFrame and self.statusLabel:
-		return
-	
-	self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-	statusFrame.pack(fill="x",pady=1)
-	
-	text = "line 0, col 0"
-	width = len(text) + 4
-	self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-	self.statusLabel.pack(side="left",padx=1)
-	
-	bg = statusFrame.cget("background")
-	self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-	self.statusText.pack(side="left",expand=1,fill="x")
-
-	# Register an idle-time handler to update the row and column indicators.
-	self.statusFrame.after_idle(self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.3961:createStatusLine
-#@+node:ekr.20031218072017.3962:clearStatusLine
-def clearStatusLine (self):
-	
-	t = self.statusText
-	if not t: return
-	
-	t.configure(state="normal")
-	t.delete("1.0","end")
-	t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3962:clearStatusLine
-#@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-def disableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="disabled",background="gray")
-	
-def enableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="normal",background="pink")
-		t.focus_set()
-		
-def statusLineIsEnabled(self):
-	t = self.statusText
-	if t:
-		state = t.cget("state")
-		return state == "normal"
-	else:
-		return false
-#@nonl
-#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
-#@+node:ekr.20031218072017.3963:putStatusLine
-def putStatusLine (self,s,color=None):
-	
-	t = self.statusText ; tags = self.statusColorTags
-	if not t: return
-
-	t.configure(state="normal")
-	
-	if "black" not in self.log.colorTags:
-		tags.append("black")
-		
-	if color and color not in tags:
-		tags.append(color)
-		t.tag_config(color,foreground=color)
-
-	if color:
-		t.insert("end",s)
-		t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-		t.tag_config("black",foreground="black")
-		t.tag_add("black","end")
-	else:
-		t.insert("end",s)
-	
-	t.configure(state="disabled")
-#@nonl
-#@-node:ekr.20031218072017.3963:putStatusLine
-#@+node:EKR.20040424154804:setFocusStatusLine
-def setFocusStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.focus_set()
-#@nonl
-#@-node:EKR.20040424154804:setFocusStatusLine
-#@+node:ekr.20031218072017.1733:updateStatusRowCol
-def updateStatusRowCol (self):
-	
-	c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-	gui = g.app.gui
-	if not lab: return
-	
-	# New for Python 2.3: may be called during shutdown.
-	if g.app.killed:
-		return
-
-	if 0: # New code
-		index = c.frame.body.getInsertionPoint()
-		row,col = c.frame.body.indexToRowColumn(index)
-		index1 = c.frame.body.rowColumnToIndex(row,0)
-	else:
-		index = body.index("insert")
-		row,col = gui.getindex(body,index)
-	
-	if col > 0:
-		if 0: # new code
-			s = c.frame.body.getRange(index1,index2)
-		else:
-			s = body.get("%d.0" % (row),index)
-		s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-		col = g.computeWidth (s,self.tab_width)
-
-	if row != self.lastStatusRow or col != self.lastStatusCol:
-		s = "line %d, col %d " % (row,col)
-		lab.configure(text=s)
-		self.lastStatusRow = row
-		self.lastStatusCol = col
-		
-	# Reschedule this routine 100 ms. later.
-	# Don't use after_idle: it hangs Leo.
-	self.statusFrame.after(100,self.updateStatusRowCol)
-#@nonl
-#@-node:ekr.20031218072017.1733:updateStatusRowCol
-#@-node:ekr.20031218072017.3960:Creating the status area
-#@-node:EKR.20040424151321:(Status line experiments) TO DO: create status line class
-#@-node:ekr.20040411155746:Quick
 #@+node:ekr.20040409164648.1:Features
-#@+node:EKR.20040517074454:To do: Load plugins only from plugins menu
-@nocolor
-
-1. The sys.path variable has been reset when the plugins are run. It
-is set so that *only* the plugins directory is in the path. This means
-that no import of standard modules will work in plugins.
-
-In plugins_menu: createPluginsMenu
-
-replace:
-path = os.path.join(g.app().loadDir,"..","plugins")
-sys.path = path
-
-by:
-
-path = os.path.join(g.app().loadDir,"..","plugins")
-newpath = old_path; newpath.append(path)
-sys.path = newpath
-#@-node:EKR.20040517074454:To do: Load plugins only from plugins menu
 #@+node:ekr.20040408042209:Perfect Import
 #@-node:ekr.20040408042209:Perfect Import
 #@+node:EKR.20040503160843:@directory-import
@@ -9060,6 +6578,72 @@ print "actual  :",textResult
 #@-node:ekr.20031218072017.1497:<< print mismatch trace >>
 #@-node:ekr.20031218072017.1493:undoRedoText
 #@-node:ekr.20040323084434:(Add granularity setting for undo)
+#@+node:ekr.20040414093055:Shadow files plugin
+@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2521345
+By: bwmulder
+
+I am working on a plugin which works with shadow files in a Leo subdirectory.
+
+This is really the same code posted integrated with Leo. New is that
+the goto linenumber command works properly as well.
+
+The new code only kicks in if:
+   - A leo subdirectory exists, and
+   - both directories contain the file in question.
+   
+To get things started, create a Leo subdirectory, move the source
+files there, and then create zero length strings instead of the moved
+files. Whenever you change something in the sourcefile, both files
+will be brought up to date automatically.
+
+In the future, I might provide a script which provides this initial
+setup automatically.
+
+Implementation notes (relative to 4.1):
+
+In order to use this mechanism to annotate foreign code, I am missing
+two pieces:
+   
+   - The import command should import the source *exactly*.
+   - I would like to add comments to the source which are *not* output into
+source,
+     and live in Leo only (or the shadowfile under Leo sentinel comments).
+     
+I changed the "message_comment" function to do nothing.
+
+I do not think that this function is a good idea, since Leo can not know
+if the line structure in a comment.
+
+There might be more to do in this area.
+
+It seems that I can get around the second limitation by writing "//@"
+at the beginning of the line in the code sections, since this is
+filtered away by the plugin.
+
+Is there some other way to put comments only in the Leo document, but
+not in the derived file?
+
+I had to copy quite a bit of source code for the gotolinenr
+command. It probably won't work for the next version of Leo
+
+It seems that Leo somewhat encourages a coding style with long
+routines, since complexity can be tugged away into subnodes rather
+than creating functions to structure the code.
+
+For the read and write command, I decided to inject a new "open"
+function into the global namespace of leoAtFile.py. This function
+checks if the caller is the read or write function of leoAtFile.py. In
+this case, some special processing for synchronization is done.
+
+I did this strange programming since I did not want to copy large
+amounts of code and just add a few lines.
+
+Currently the script works for C and python files. It looks at the
+file extension to determine if C or python type annotations are
+used. Maybe this information can be centralized.
+#@-node:ekr.20040414093055:Shadow files plugin
 #@-node:ekr.20040409164648.1:Features
 #@+node:ekr.20040325095459:Conversionn & cleanup
 # Is this even necessary??
@@ -9089,6 +6673,8 @@ C:/prog/leoCVS/leo/src\leoTkinterGui.py:380: Parameter (defaultSize) not used
 #@-node:ekr.20040328082044.1:Convert all plugins to "g style"
 #@-node:ekr.20031218072017.847:Cleanup
 #@+node:ekr.20040304163125:Script to find and replace all functions in leoGlobals.py
+@color
+
 import leoGlobals as g
 from leoGlobals import true,false
 import string
@@ -9389,7 +6975,6 @@ print s
 - Use iterators? (Search for threadNext)
 #@-node:ekr.20040315073818:create find-script to complete transition?
 #@-node:ekr.20040325095459:Conversionn & cleanup
-#@+node:ekr.20040411151636:Other
 #@+node:ekr.20040323195916:Documentation
 @nocolor
 
@@ -9426,248 +7011,7 @@ How to recover the data:
 - Run profiler on code.
 #@nonl
 #@-node:ekr.20040323195916.1:Tests
-#@-node:ekr.20040411151636:Other
-#@+node:ekr.20040414093055:Shadow files plugin
-@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2521345
-By: bwmulder
-
-I am working on a plugin which works with shadow files in a Leo subdirectory.
-
-This is really the same code posted integrated with Leo. New is that
-the goto linenumber command works properly as well.
-
-The new code only kicks in if:
-   - A leo subdirectory exists, and
-   - both directories contain the file in question.
-   
-To get things started, create a Leo subdirectory, move the source
-files there, and then create zero length strings instead of the moved
-files. Whenever you change something in the sourcefile, both files
-will be brought up to date automatically.
-
-In the future, I might provide a script which provides this initial
-setup automatically.
-
-Implementation notes (relative to 4.1):
-
-In order to use this mechanism to annotate foreign code, I am missing
-two pieces:
-   
-   - The import command should import the source *exactly*.
-   - I would like to add comments to the source which are *not* output into
-source,
-     and live in Leo only (or the shadowfile under Leo sentinel comments).
-     
-I changed the "message_comment" function to do nothing.
-
-I do not think that this function is a good idea, since Leo can not know
-if the line structure in a comment.
-
-There might be more to do in this area.
-
-It seems that I can get around the second limitation by writing "//@"
-at the beginning of the line in the code sections, since this is
-filtered away by the plugin.
-
-Is there some other way to put comments only in the Leo document, but
-not in the derived file?
-
-I had to copy quite a bit of source code for the gotolinenr
-command. It probably won't work for the next version of Leo
-
-It seems that Leo somewhat encourages a coding style with long
-routines, since complexity can be tugged away into subnodes rather
-than creating functions to structure the code.
-
-For the read and write command, I decided to inject a new "open"
-function into the global namespace of leoAtFile.py. This function
-checks if the caller is the read or write function of leoAtFile.py. In
-this case, some special processing for synchronization is done.
-
-I did this strange programming since I did not want to copy large
-amounts of code and just add a few lines.
-
-Currently the script works for C and python files. It looks at the
-file extension to determine if C or python type annotations are
-used. Maybe this information can be centralized.
-#@-node:ekr.20040414093055:Shadow files plugin
 #@-node:EKR.20040430163619:To Do: 4.2
-#@+node:EKR.20040520075421:To do next
-#@+node:EKR.20040524053657.1:(Handle conflicts in different clones)
-#@+node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
-@nocolor
-
-By: nobody ( Nobody/Anonymous ) 
- About "@file" untangling and clones   
-2003-11-24 23:55  
-
-0-before untangling:save a reference copy of a found clone for each clone in the outline!
-1-Start untangling,
-2- once you reach a clone node: compare, if changed update all instances of outline
-3-later in untangling, if same is found but no change in regards to reference copy, leave it as last found. ---END OF ALGORITHM
-
-so you see, only the last _Changed_ instance of a clone would have precedence in the untangling process.
-
-- bolt
-
-EKR comments:
-
-- We can probably use something like this even for @file-thin.  In most cases, a text from a derived file should override the text in the outline.
-
-- The actual algorithm is easier than this.  There is only one tnode per set of clones, so "updating all clones" is trivial.  Moreover, we don't need to compute "reference text", we merely need to know where text comes from:  outline or derived file.
-
-- leoFileCommands.getLeoFile reads all derived files after reading the .leo file, which is exactly what we want.
-
-In short, the algorithm is this:  When creating/updating tnode text, if the "new" text is different from the "old", do the following:
-
-1.  Create a tempRefText attribute (ivar) in tnode if it doesn't already exist,  put the old text into it, and put the new text into the tnode.  (Actually, the text gets put into another temp ivar, but that's not particularly significant).
-
-2.  If the tempRefText attribute already exists, then it contains what you originally called the "reference copy".  If the "new" text is the same as the reference copy, do _not_ update the cloned text.  Otherwise, we have multiple conflicting updates to the same clone.  Issue a warning and do something arbitrary.
-#@nonl
-#@-node:ekr.20031218072017.853:More intelligent untangling of clones (make @all secondary)
-#@-node:EKR.20040524053657.1:(Handle conflicts in different clones)
-#@+node:EKR.20040524072340:(Make sure Leo doesn't add spurious newlines)
-#@+node:EKR.20040524075457:Report
-@nocolor
-
-Attached is a simple file with @file and two sections.
- 
-First, I saved the file with no newlines at the end of any node body.  when
-you open the file, there will probably be a newline at the end of the @file
-node.
- 
-Save the Leo file which creates the test.txt file.
- 
-Click through the nodes and notice how many newlines are at the end of each
-node body.
- 
-Save the Leo file again.  It will probably write the file again.  Check the
-nodes.  You'll find one or more nodes with an extra line feed.
- 
-clicking between nodes and frequently saving will stick an extra newline at
-the end of the body of one or more nodes.
- 
-Sometimes you can even save twice without clicking and it will save the file
-a second time because of the newline.
- 
-This behavior was seen with 4.1 final and the latest 4.2 a2.  I am running
-on a Windows machine:  win2k
- 
-I love your tool.  Strangely, this one problem is a problem for me because I
-have a concept about rolling up project data into a portfolio file and these
-extra line feeds are breaking my rollup program.
- 
-Let me know if you need more info.
- 
-Curt Bergmann
- 
-Pearson
-
-#@-node:EKR.20040524075457:Report
-#@-node:EKR.20040524072340:(Make sure Leo doesn't add spurious newlines)
-#@+node:EKR.20040521084602:PHP import bug
-@nocolor
-
-"deech_99" <deech_99@yahoo.com> wrote in message news:c6m6hu$ncv$1@news.fas.harvard.edu...
-
-> I coded a PHP program using noweb and have recently decided to convert it
-> into a Leo program. The importing, however, seems to mess up the indenting
-> of the latex documentation badly. In noweb format the documentation looks
-> like this:
-> 
-> %------------------------
-> \subsection{Title}
-> %------------------------
-> contentcontentcontentconte
-> ntcontent
-> <<Code Chunk>>=
-> codecodecodecode
-> codecodecodecode
-> @
-> 
-> whereas in Leo, I get this:
-> @%-----------------\subsection{Title} %---
-> ------contentcontentcontentcontentcontent
-> content
-> 
-> Does anyone understand why this happens?
-> 
-> Thanks...
-> Deech
-> 
-#@nonl
-#@-node:EKR.20040521084602:PHP import bug
-#@+node:EKR.20040523193958:Remove Sentinel command converts windows newlines into unix newlines
-By: Poor Yorick - pooryorick
- Bug: Remove Sentinels   
-2004-05-21 09:57  
-
- The Remove Sentinels function also converts windows newlines into unix newlines.  
-
-#@-node:EKR.20040523193958:Remove Sentinel command converts windows newlines into unix newlines
-#@+node:EKR.20040527180034:Add to Leo Home page
-#@+node:EKR.20040527180034.1:@url http://www.subterrane.com/leo2html.shtml
-#@-node:EKR.20040527180034.1:@url http://www.subterrane.com/leo2html.shtml
-#@-node:EKR.20040527180034:Add to Leo Home page
-#@+node:EKR.20040523192553:Crash when pasting large text into headlines
-From: <eltronic@juno.com>
-To: <edreamleo@charter.net>
-Sent: Sunday, May 23, 2004 9:36 AM
-Subject: fatal bug in Leo headline handling
-
-
-> found a fatal bug in Leo headline handling.
-> not sure if anyone reported before,
-> an oversize string can crash python 2.3.3
-> 
-> 
-> the text was about 4500 bytes. nothing but text.
-> opened the  leo again, copy a large page of text,
-> insert headline, paste, fatal error in python.
-> 
-> I have by mistake pasted whatever node xml was in 
-> the copy buffer into a headline w/o problem.
-> but that was just dumb luck. just verified,
-> had the node been large enough it crashes.
-> 
-> Leo 4.1 final, py2.3.3 win98
-> PYTHON caused an invalid page fault in
-> module TK84.DLL at 0167:1022b74f.
-> 
-> Leo 4.1 final, py2.2 win98
-> paste a 15k node copy into headline. no problem.
-> 
-> this is the first repeatable hard crash I've stumbled on
-> and thought it best to report it privately.
-> I can think of no advantage to allowing a headline 
-> of this size anyway. think of the tooltip that would create!
-> 
-> there are latent bugs in the selectall and delete from 
-> the edit menu related to headline as well on the todo list.
-> reported many times. 
-> covert destruction of the selected body text.
-> use of virtual events, with out proper focus to headline.
-> 
-> without myself being able to supply a patch, I'll guess,
-> the virtual event paste called can as well point 
-> to a function that checks the size before pasting.
-> or simply sets the headline directly with 
-> g.app.gui.getTextFromClipboard()[:1024]
-> 
-> 
-> e
-#@-node:EKR.20040523192553:Crash when pasting large text into headlines
-#@+node:EKR.20040527085107:Unit tests
-#@+node:EKR.20040526150818.3:unit tests for undo/redo
-#@-node:EKR.20040526150818.3:unit tests for undo/redo
-#@+node:EKR.20040527085107.1:unit tests for node iterators
-#@-node:EKR.20040527085107.1:unit tests for node iterators
-#@+node:EKR.20040527085107.2:unit tests for other new code
-#@-node:EKR.20040527085107.2:unit tests for other new code
-#@-node:EKR.20040527085107:Unit tests
-#@-node:EKR.20040520075421:To do next
 #@-all
 #@nonl
 #@-node:ekr.20040117181936:@thin ../doc/leoToDo.txt

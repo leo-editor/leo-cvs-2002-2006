@@ -81,7 +81,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="EKR.20040601084317" a="TV"><vh>4.2 a3</vh>
+<v t="EKR.20040601084317"><vh>4.2 a3</vh>
 <v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
 <v t="EKR.20040601101430"><vh>Fixed Change Headline command</vh></v>
@@ -103,7 +103,7 @@
 <v t="EKR.20040601102808"><vh>Known bugs</vh></v>
 </v>
 </v>
-<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="edream.110203163054.117" a="E"><vh>leo.py versions</vh>
 <v t="EKR.20040601084317"><vh>4.2 a3</vh>
 <v t="EKR.20040601084317.2"><vh>Bug fixes</vh>
 <v t="EKR.20040601101118"><vh>Fixed copy/paste operations involving @thin trees</vh></v>
@@ -366,8 +366,8 @@
 </v>
 </v>
 </v>
-<v t="edream.110203163054.118"><vh>3.x releases</vh>
-<v t="edream.110203163054.119"><vh>3.12 final</vh>
+<v t="edream.110203163054.118" a="E"><vh>3.x releases</vh>
+<v t="edream.110203163054.119" a="E"><vh>3.12 final</vh>
 <v t="edream.110203163054.120"><vh>Bug fixes (major)</vh>
 <v t="edream.110203163054.121"><vh>Fixed major undo bug</vh></v>
 <v t="edream.110203163054.122"><vh>Fixed huge performance bug when handling read errors</vh></v>
@@ -423,8 +423,8 @@
 <v t="edream.110203163054.169"><vh>Updated Marks window in Mark Find and Mark Changes commands</vh></v>
 <v t="edream.110203163054.170"><vh>Use "file in directory" format for entries in Recent Files list</vh></v>
 </v>
-<v t="edream.110203163054.171"><vh>Hooks</vh>
-<v t="edream.110203163054.172"><vh>About hooks</vh></v>
+<v t="edream.110203163054.171" a="E"><vh>Hooks</vh>
+<v t="edream.110203163054.172" a="TV"><vh>About hooks</vh></v>
 <v t="edream.110203163054.173"><vh>Added "clear-mark" and "set-mark" hooks</vh></v>
 <v t="edream.110203163054.174"><vh>Added hooks to customize popup menus</vh></v>
 <v t="edream.110203163054.175"><vh>Added new hooks so that plugins may extend popup menus </vh></v>
@@ -2641,8 +2641,13 @@ tag argument                                                       keys in keywo
 "close-frame"                no        in app.closeLeoWindow     c
 "color-optional-markup"      yes *     (note 7)                  colorer,v (note 7)
 "create-optional-menus"      no        (note 8)                  (note 8)
-"destroy-all-global-windows" no        (note 12)                 None
 "create-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
+"destroy-all-global-windows" no        (note 12)                 None
+"draw-outline-box"           yes       start of drawBox          tree,p,v,x,y (note 6)
+"draw-outline-icon"          yes       start of tree.drawIcon    tree,p,v,x,y (note 6)
+"draw-outline-node"          yes       start of tree.drawNode    tree,p,v,x,y (note 6)
+"draw-outline-text-box"      yes       start of tree.drawText    tree,p,v,x,y (note 6)
+"draw-sub-outline"           yes       start of tree.drawTree    tree,p,v,x,y,h,level (note 6)
 "enable-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
 "init-color-markup"          no        (note 7)                  colorer,v,s,i,j,colortag (note 7)
 "new"                        no        start of New command      old_c,new_c (note 9)

@@ -600,7 +600,7 @@ if 1: # Register the handlers...
 	registerHandler("start2", onStart)
 
 #@-node:edream.110203163054.1069:I'm having trouble getting plugins to work.  What should I do?
-#@+node:edream.110203163054.1070:How can I add support for a new language? 
+#@+node:edream.110203163054.1070:How can I add support for a new language?
 1. What's the best way to go about adding a new @language? 
 
 In the short term, the instructions are in LeoPy.leo in the Notes:How To:How to
@@ -617,7 +617,7 @@ For now, you can only change Leo's source code and submit the changes for
 inclusion in Leo's "official" code. Longer term you will be able to create
 your own language description file.
 #@nonl
-#@-node:edream.110203163054.1070:How can I add support for a new language? 
+#@-node:edream.110203163054.1070:How can I add support for a new language?
 #@+node:edream.110203163054.319:Chapter 8: Customizing Leo
 @nocolor
 
@@ -1126,8 +1126,13 @@ tag argument                                                       keys in keywo
 "close-frame"                no        in app.closeLeoWindow     c
 "color-optional-markup"      yes *     (note 7)                  colorer,v (note 7)
 "create-optional-menus"      no        (note 8)                  (note 8)
-"destroy-all-global-windows" no        (note 12)                 None
 "create-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
+"destroy-all-global-windows" no        (note 12)                 None
+"draw-outline-box"           yes       start of drawBox          tree,p,v,x,y (note 6)
+"draw-outline-icon"          yes       start of tree.drawIcon    tree,p,v,x,y (note 6)
+"draw-outline-node"          yes       start of tree.drawNode    tree,p,v,x,y (note 6)
+"draw-outline-text-box"      yes       start of tree.drawText    tree,p,v,x,y (note 6)
+"draw-sub-outline"           yes       start of tree.drawTree    tree,p,v,x,y,h,level (note 6)
 "enable-popup-menu-items"    no        in tree.OnPopup           c,v,event (new)
 "init-color-markup"          no        (note 7)                  colorer,v,s,i,j,colortag (note 7)
 "new"                        no        start of New command      old_c,new_c (note 9)
