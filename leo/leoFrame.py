@@ -1495,7 +1495,7 @@ class LeoFrame:
 		print f
 	
 		# This doesn't work for .py files or .bat files.
-		# Probably not to swift for other files either.
+		# Probably not too swift for other files either.
 		if 0:
 			os.startfile(f)
 	#@-body
@@ -1716,9 +1716,34 @@ class LeoFrame:
 	#@+body
 	def OnOpenRecentFile(self,n):
 		
+		c = self.commands
+		
+		#@<< Set closeFlag if the only open window is empty >>
+		#@+node:1::<< Set closeFlag if the only open window is empty >>
+		#@+body
+		#@+at
+		#  If this is the only open window was opened when the app started, 
+		# and the window has never been written to or saved, then we will 
+		# automatically close that window if this open command completes successfully.
+
+		#@-at
+		#@@c
+			
+		closeFlag = (
+			self.startupWindow==true and # The window was open on startup
+			c.changed==false and self.saved==false and # The window has never been changed
+			app().numberOfWindows == 1) # Only one untitled window has ever been opened
+		
+		#@-body
+		#@-node:1::<< Set closeFlag if the only open window is empty >>
+
 		if n < len(self.recentFiles):
 			fileName = self.recentFiles[n]
 			ok, frame = self.OpenWithFileName(fileName)
+			if ok and closeFlag:
+				app().windowList.remove(self)
+				self.destroy() # force the window to go away now.
+				app().log = frame # Sets the log stream for es()
 	
 		return "break" # inhibit further command processing
 	#@-body
