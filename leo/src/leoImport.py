@@ -32,6 +32,7 @@ def importFiles (dir, type = None, kind = "@file"):
 		files2 = []
 		for f in files:
 			path = os.path.join(dir,f)
+			path = toUnicode(path,app.tkEncoding) # 10/20/03
 			if os.path.isfile(path):
 				name, ext = os.path.splitext(f)
 				if type == None or ext == type:
@@ -79,7 +80,11 @@ class baseLeoImportCommands:
 	
 		c = self.commands ; current = c.currentVnode()
 		junk, self.fileName = os.path.split(fileName) # junk/fileName
-		self.methodName, ext = os.path.splitext(self.fileName) # methodName.fileType
+		self.methodName,ext = os.path.splitext(self.fileName) # methodName.fileType
+		
+		self.fileName   = toUnicode(self.fileName,app.tkEncoding) # 10/20/03
+		self.methodName = toUnicode(self.methodName,app.tkEncoding) # 10/20/03
+		
 		self.fileType = ext
 		self.setEncoding()
 		# trace(`self.fileName`) ; trace(`self.fileType`)
