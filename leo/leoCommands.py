@@ -674,7 +674,7 @@ class Commands:
 			if i >= lastLine or lines[i] != result[i]:
 				result = string.join(result,'\n')
 				if not endsWithNL:
-					result = result[:-1] # Remove the trailing newline.
+					pass # result = result[:-1] # Remove the trailing newline.
 				c.updateBodyPane(head,result,tail,"Reformat Paragraph") # Handles undo
 				break
 	
