@@ -398,67 +398,67 @@ I'm going to ignore this problem for now...
 #@+node:ekr.20031218072017.2062:getPrefs
 def getPrefs (self):
 
-	c = self.c ; config = g.app.config
-	
-	if self.getOpenTag("<preferences"):
-		return
+    c = self.c ; config = g.app.config
+    
+    if self.getOpenTag("<preferences"):
+        return
 
-	table = (
-		("allow_rich_text",None,None), # Ignored.
-		("tab_width","tab_width",self.getLong),
-		("page_width","page_width",self.getLong),
-		("tangle_bat","tangle_batch_flag",self.getBool),
-		("untangle_bat","untangle_batch_flag",self.getBool),
-		("output_doc_chunks","output_doc_flag",self.getBool),
-		("noweb_flag",None,None), # Ignored.
-		("extended_noweb_flag",None,None), # Ignored.
-		("defaultTargetLanguage","target_language",self.getTargetLanguage),
-		("use_header_flag","use_header_flag",self.getBool))
-	
-	while 1:
-		found = False
-		for tag,var,f in table:
-			if self.matchTag("%s=" % tag):
-				if var:
-					self.getDquote() ; val = f() ; self.getDquote()
-					setattr(c,var,val)
-				else:
-					self.getDqString()
-				found = True ; break
-		if not found:
-			if self.matchTag(">"):
-				break
-			else: # New in 4.1: ignore all other tags.
-				self.getUnknownTag()
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag(">"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
 
-	while 1:
-		if self.matchTag("<defaultDirectory>"):
-			# New in version 0.16.
-			c.tangle_directory = self.getEscapedString()
-			self.getTag("</defaultDirectory>")
-			if not g.os_path_exists(c.tangle_directory):
-				g.es("default tangle directory not found:" + c.tangle_directory)
-		elif self.matchTag("<TSyntaxMemo_options>"):
-			self.getEscapedString() # ignored
-			self.getTag("</TSyntaxMemo_options>")
-		else: break
-	self.getTag("</preferences>")
-	
-	# Override .leo file's preferences if settings are in leoConfig.txt.
-	if config.configsExist:
-		config.setCommandsIvars(c)
+    while 1:
+        if self.matchTag("<defaultDirectory>"):
+            # New in version 0.16.
+            c.tangle_directory = self.getEscapedString()
+            self.getTag("</defaultDirectory>")
+            if not g.os_path_exists(c.tangle_directory):
+                g.es("default tangle directory not found:" + c.tangle_directory)
+        elif self.matchTag("<TSyntaxMemo_options>"):
+            self.getEscapedString() # ignored
+            self.getTag("</TSyntaxMemo_options>")
+        else: break
+    self.getTag("</preferences>")
+    
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    if config.configsExist:
+        config.setCommandsIvars(c)
 #@nonl
 #@+node:ekr.20031218072017.2063:getTargetLanguage
 def getTargetLanguage (self):
-	
-	# Must match longer tags before short prefixes.
-	for name in g.app.language_delims_dict.keys():
-		if self.matchTagWordIgnoringCase(name):
-			language = name.replace("/","")
-			# self.getDquote()
-			return language
-			
-	return "c" # default
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default
 #@nonl
 #@-node:ekr.20031218072017.2063:getTargetLanguage
 #@-node:ekr.20031218072017.2062:getPrefs
@@ -531,96 +531,96 @@ This might be the best way to reliably have Tk move to the next line!
 #@nonl
 #@+node:ekr.20031218072017.2623:atFile.__init__ & initIvars
 def __init__(self,c):
-	
-	self.c = c
-	self.fileCommands = self.c.fileCommands
-	
-	# Create subcommanders to handler old and new format derived files.
-	self.old_df = oldDerivedFile(c)
-	self.new_df = newDerivedFile(c)
-	
-	self.initIvars()
-	
+    
+    self.c = c
+    self.fileCommands = self.c.fileCommands
+    
+    # Create subcommanders to handler old and new format derived files.
+    self.old_df = oldDerivedFile(c)
+    self.new_df = newDerivedFile(c)
+    
+    self.initIvars()
+    
 def initIvars(self):
-	
-	# Set by scanDefaultDirectory.
-	self.default_directory = None
-	self.errors = 0
+    
+    # Set by scanDefaultDirectory.
+    self.default_directory = None
+    self.errors = 0
 
-	# Set by scanHeader when reading. Set by scanAllDirectives...
-	self.encoding = g.app.config.default_derived_file_encoding
-	self.endSentinelComment = None
-	self.startSentinelComment = None
+    # Set by scanHeader when reading. Set by scanAllDirectives...
+    self.encoding = g.app.config.default_derived_file_encoding
+    self.endSentinelComment = None
+    self.startSentinelComment = None
 #@nonl
 #@-node:ekr.20031218072017.2623:atFile.__init__ & initIvars
 #@+node:ekr.20031218072017.2624:top_df.error
 def error(self,message):
 
-	g.es(message,color="red")
-	print message
-	self.errors += 1
+    g.es(message,color="red")
+    print message
+    self.errors += 1
 #@nonl
 #@-node:ekr.20031218072017.2624:top_df.error
 #@+node:ekr.20031218072017.2625:Reading
 #@+node:ekr.20031218072017.2626: top_df.readAll
 def readAll(self,root,partialFlag=False):
-	
-	"""Scan vnodes, looking for @file nodes to read."""
+    
+    """Scan vnodes, looking for @file nodes to read."""
 
-	at = self ; c = at.c
-	c.endEditing() # Capture the current headline.
-	anyRead = False
-	at.initIvars()
-	p = root.copy()
-	if partialFlag: after = p.nodeAfterTree()
-	else: after = c.nullPosition()
-	while p and not p.equal(after): # Don't use iterator.
-		if p.isAtIgnoreNode():
-			p.moveToNodeAfterTree()
-		elif p.isAtThinFileNode():
-			anyRead = True
-			at.read(p,thinFile=True)
-			p.moveToNodeAfterTree()
-		elif p.isAtFileNode() or p.isAtNorefFileNode():
-			anyRead = True
-			if partialFlag:
-				# We are forcing the read.
-				at.read(p)
-			else:
-				# if p is an orphan, we don't expect to see a derived file,
-				# and we shall read a derived file if it exists.
-				wasOrphan = p.isOrphan()
-				ok = at.read(p)
-				if wasOrphan and not ok:
-					# Remind the user to fix the problem.
-					p.setDirty()
-					c.setChanged(True)
-			p.moveToNodeAfterTree()
-		else: p.moveToThreadNext()
-	# Clear all orphan bits.
-	for p in c.allNodes_iter():
-		p.v.clearOrphan()
-		
-	if partialFlag and not anyRead:
-		g.es("no @file nodes in the selected tree")
+    at = self ; c = at.c
+    c.endEditing() # Capture the current headline.
+    anyRead = False
+    at.initIvars()
+    p = root.copy()
+    if partialFlag: after = p.nodeAfterTree()
+    else: after = c.nullPosition()
+    while p and not p.equal(after): # Don't use iterator.
+        if p.isAtIgnoreNode():
+            p.moveToNodeAfterTree()
+        elif p.isAtThinFileNode():
+            anyRead = True
+            at.read(p,thinFile=True)
+            p.moveToNodeAfterTree()
+        elif p.isAtFileNode() or p.isAtNorefFileNode():
+            anyRead = True
+            if partialFlag:
+                # We are forcing the read.
+                at.read(p)
+            else:
+                # if p is an orphan, we don't expect to see a derived file,
+                # and we shall read a derived file if it exists.
+                wasOrphan = p.isOrphan()
+                ok = at.read(p)
+                if wasOrphan and not ok:
+                    # Remind the user to fix the problem.
+                    p.setDirty()
+                    c.setChanged(True)
+            p.moveToNodeAfterTree()
+        else: p.moveToThreadNext()
+    # Clear all orphan bits.
+    for p in c.allNodes_iter():
+        p.v.clearOrphan()
+        
+    if partialFlag and not anyRead:
+        g.es("no @file nodes in the selected tree")
 #@nonl
 #@-node:ekr.20031218072017.2626: top_df.readAll
 #@+node:EKR.20040604155223.1:top_df.parseLeoSentinel
 def parseLeoSentinel (self,s):
-	
-	at = self
-	new_df = False ; valid = True ; n = len(s)
-	encoding_tag = "-encoding="
-	version_tag = "-ver="
-	tag = "@+leo"
-	thin_tag = "-thin"
-	<< set the opening comment delim >>
-	<< make sure we have @+leo >>
-	<< read optional version param >>
-	<< read optional thin param >>
-	<< read optional encoding param >>
-	<< set the closing comment delim >>
-	return valid,new_df,start,end
+    
+    at = self
+    new_df = False ; valid = True ; n = len(s)
+    encoding_tag = "-encoding="
+    version_tag = "-ver="
+    tag = "@+leo"
+    thin_tag = "-thin"
+    << set the opening comment delim >>
+    << make sure we have @+leo >>
+    << read optional version param >>
+    << read optional thin param >>
+    << read optional encoding param >>
+    << set the closing comment delim >>
+    return valid,new_df,start,end
 #@nonl
 #@+node:EKR.20040604155223:<< set the opening comment delim >>
 # s contains the tag
@@ -628,12 +628,12 @@ i = j = g.skip_ws(s,0)
 
 # The opening comment delim is the initial non-tag
 while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
-	i += 1
+    i += 1
 
 if j < i:
-	start = s[j:i]
+    start = s[j:i]
 else:
-	valid = False
+    valid = False
 #@nonl
 #@-node:EKR.20040604155223:<< set the opening comment delim >>
 #@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
@@ -641,10 +641,10 @@ else:
 @c
 
 if 0: # Make leading whitespace significant.
-	i = g.skip_ws(s,i)
+    i = g.skip_ws(s,i)
 
 if g.match(s,i,tag):
-	i += len(tag)
+    i += len(tag)
 else: valid = False
 #@nonl
 #@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
@@ -652,20 +652,20 @@ else: valid = False
 new_df = g.match(s,i,version_tag)
 
 if new_df:
-	# Skip to the next minus sign or end-of-line
-	i += len(version_tag)
-	j = i
-	while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
-		i += 1
+    # Skip to the next minus sign or end-of-line
+    i += len(version_tag)
+    j = i
+    while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
+        i += 1
 
-	if j < i:
-		pass # version = s[j:i]
-	else:
-		valid = False
+    if j < i:
+        pass # version = s[j:i]
+    else:
+        valid = False
 #@-node:ekr.20031218072017.2636:<< read optional version param >>
 #@+node:EKR.20040503105354:<< read optional thin param >>
 if g.match(s,i,thin_tag):
-	i += len(tag)
+    i += len(tag)
 #@nonl
 #@-node:EKR.20040503105354:<< read optional thin param >>
 #@+node:ekr.20031218072017.2637:<< read optional encoding param >>
@@ -673,37 +673,37 @@ if g.match(s,i,thin_tag):
 at.encoding = g.app.config.default_derived_file_encoding
 
 if g.match(s,i,encoding_tag):
-	# Read optional encoding param, e.g., -encoding=utf-8,
-	i += len(encoding_tag)
-	# Skip to the next end of the field.
-	j = s.find(",.",i)
-	if j > -1:
-		# The encoding field was written by 4.2 or after:
-		encoding = s[i:j]
-		i = j + 1 # 6/8/04
-	else:
-		# The encoding field was written before 4.2.
-		j = s.find('.',i)
-		if j > -1:
-			encoding = s[i:j]
-			i = j + 1 # 6/8/04
-		else:
-			encoding = None
-	# g.trace("encoding:",encoding)
-	if encoding:
-		if g.isValidEncoding(encoding):
-			at.encoding = encoding
-		else:
-			print "bad encoding in derived file:",encoding
-			g.es("bad encoding in derived file:",encoding)
-	else:
-		valid = False
+    # Read optional encoding param, e.g., -encoding=utf-8,
+    i += len(encoding_tag)
+    # Skip to the next end of the field.
+    j = s.find(",.",i)
+    if j > -1:
+        # The encoding field was written by 4.2 or after:
+        encoding = s[i:j]
+        i = j + 1 # 6/8/04
+    else:
+        # The encoding field was written before 4.2.
+        j = s.find('.',i)
+        if j > -1:
+            encoding = s[i:j]
+            i = j + 1 # 6/8/04
+        else:
+            encoding = None
+    # g.trace("encoding:",encoding)
+    if encoding:
+        if g.isValidEncoding(encoding):
+            at.encoding = encoding
+        else:
+            print "bad encoding in derived file:",encoding
+            g.es("bad encoding in derived file:",encoding)
+    else:
+        valid = False
 #@-node:ekr.20031218072017.2637:<< read optional encoding param >>
 #@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
 # The closing comment delim is the trailing non-whitespace.
 i = j = g.skip_ws(s,i)
 while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
-	i += 1
+    i += 1
 end = s[j:i]
 #@nonl
 #@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
@@ -712,53 +712,53 @@ end = s[j:i]
 # The caller has enclosed this code in beginUpdate/endUpdate.
 
 def read(self,root,importFileName=None,thinFile=False):
-	
-	"""Common read logic for any derived file."""
-	
-	at = self ; c = at.c
-	at.errors = 0
-	importing = importFileName is not None
-	<< set fileName from root and importFileName >>
-	<< open file or return False >>
-	g.es("reading: " + root.headString())
-	firstLines,read_new = at.scanHeader(file,fileName)
-	df = g.choose(read_new,at.new_df,at.old_df)
-	# g.trace(g.choose(df==at.new_df,"new","old"))
-	<< copy ivars to df >>
-	root.clearVisitedInTree()
-	try:
-		# 1/28/04: Don't set comment delims when importing.
-		# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
-		importing = importFileName is not None
-		df.scanAllDirectives(root,importing=importing,reading=True)
-		df.readOpenFile(root,file,firstLines)
-	except:
-		at.error("Unexpected exception while reading derived file")
-		g.es_exception()
-	file.close()
-	root.clearDirty() # May be set dirty below.
-	after = root.nodeAfterTree()
-	<< warn about non-empty unvisited nodes >>
-	if df.errors == 0:
-		if not df.importing:
-			<< copy all tempBodyStrings to tnodes >>
-	<< delete all tempBodyStrings >>
-	return df.errors == 0
+    
+    """Common read logic for any derived file."""
+    
+    at = self ; c = at.c
+    at.errors = 0
+    importing = importFileName is not None
+    << set fileName from root and importFileName >>
+    << open file or return False >>
+    g.es("reading: " + root.headString())
+    firstLines,read_new = at.scanHeader(file,fileName)
+    df = g.choose(read_new,at.new_df,at.old_df)
+    # g.trace(g.choose(df==at.new_df,"new","old"))
+    << copy ivars to df >>
+    root.clearVisitedInTree()
+    try:
+        # 1/28/04: Don't set comment delims when importing.
+        # 1/28/04: Call scanAllDirectives here, not in readOpenFile.
+        importing = importFileName is not None
+        df.scanAllDirectives(root,importing=importing,reading=True)
+        df.readOpenFile(root,file,firstLines)
+    except:
+        at.error("Unexpected exception while reading derived file")
+        g.es_exception()
+    file.close()
+    root.clearDirty() # May be set dirty below.
+    after = root.nodeAfterTree()
+    << warn about non-empty unvisited nodes >>
+    if df.errors == 0:
+        if not df.importing:
+            << copy all tempBodyStrings to tnodes >>
+    << delete all tempBodyStrings >>
+    return df.errors == 0
 #@nonl
 #@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
 at.scanDefaultDirectory(root,importing=importing)
 if at.errors: return
 
 if importFileName:
-	fileName = importFileName
+    fileName = importFileName
 elif root.isAnyAtFileNode():
-	fileName = root.anyAtFileNodeName()
+    fileName = root.anyAtFileNodeName()
 else:
-	fileName = None
+    fileName = None
 
 if not fileName:
-	at.error("Missing file name.  Restoring @file tree from .leo file.")
-	return False
+    at.error("Missing file name.  Restoring @file tree from .leo file.")
+    return False
 #@nonl
 #@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
 #@+node:ekr.20031218072017.1814:<< open file or return false >>
@@ -766,23 +766,23 @@ fn = g.os_path_join(at.default_directory,fileName)
 fn = g.os_path_normpath(fn)
 
 try:
-	# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-	file = open(fn,'rb')
-	if file:
-		<< warn on read-only file >>
-	else: return False
+    # 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+    file = open(fn,'rb')
+    if file:
+        << warn on read-only file >>
+    else: return False
 except:
-	at.error("Can not open: " + '"@file ' + fn + '"')
-	root.setDirty()
-	return False
+    at.error("Can not open: " + '"@file ' + fn + '"')
+    root.setDirty()
+    return False
 #@nonl
 #@+node:ekr.20031218072017.1815:<< warn on read-only file >>
 try:
-	read_only = not os.access(fn,os.W_OK)
-	if read_only:
-		g.es("read only: " + fn,color="red")
+    read_only = not os.access(fn,os.W_OK)
+    if read_only:
+        g.es("read only: " + fn,color="red")
 except:
-	pass # os.access() may not exist on all platforms.
+    pass # os.access() may not exist on all platforms.
 #@nonl
 #@-node:ekr.20031218072017.1815:<< warn on read-only file >>
 #@-node:ekr.20031218072017.1814:<< open file or return false >>
@@ -791,7 +791,7 @@ except:
 df.importing = importFileName != None
 df.raw = False
 if importing and df == at.new_df:
-	thinFile = True
+    thinFile = True
 df.thinFile = thinFile
 
 # Set by scanHeader.
@@ -812,88 +812,88 @@ df.root_seen = False
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
 for p in root.self_and_subtree_iter():
 
-	# g.trace(p)
-	try: s = p.v.t.tempBodyString
-	except: s = ""
-	if s and not p.v.t.isVisited():
-		at.error("Not in derived file:" + p.headString())
-		p.v.t.setVisited() # One message is enough.
+    # g.trace(p)
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s and not p.v.t.isVisited():
+        at.error("Not in derived file:" + p.headString())
+        p.v.t.setVisited() # One message is enough.
 #@nonl
 #@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
 #@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
 for p in root.self_and_subtree_iter():
-	try: s = p.v.t.tempBodyString
-	except: s = ""
-	if s != p.bodyString():
-		if 0: # For debugging.
-			print ; print "changed: " + p.headString()
-			print ; print "new:",s
-			print ; print "old:",p.bodyString()
-		if thinFile:
-			p.v.setTnodeText(s)
-		else:
-			g.es("changed: " + p.headString(),color="blue")
-			p.setMarked()
-			p.setBodyStringOrPane(s) # Sets v and v.c dirty.
+    try: s = p.v.t.tempBodyString
+    except: s = ""
+    if s != p.bodyString():
+        if 0: # For debugging.
+            print ; print "changed: " + p.headString()
+            print ; print "new:",s
+            print ; print "old:",p.bodyString()
+        if thinFile:
+            p.v.setTnodeText(s)
+        else:
+            g.es("changed: " + p.headString(),color="blue")
+            p.setMarked()
+            p.setBodyStringOrPane(s) # Sets v and v.c dirty.
 #@nonl
 #@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
 #@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
 for p in c.allNodes_iter():
-	if hasattr(p.v.t,"tempBodyString"):
-		delattr(p.v.t,"tempBodyString")
+    if hasattr(p.v.t,"tempBodyString"):
+        delattr(p.v.t,"tempBodyString")
 #@nonl
 #@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
 #@-node:ekr.20031218072017.1812:top_df.read
 #@+node:ekr.20031218072017.2639:top_df.readLine
 def readLine (self,file):
 
-	"""Reads one line from file using the present encoding"""
-	
-	s = g.readlineForceUnixNewline(file)
-	u = g.toUnicode(s,self.encoding)
-	return u
+    """Reads one line from file using the present encoding"""
+    
+    s = g.readlineForceUnixNewline(file)
+    u = g.toUnicode(s,self.encoding)
+    return u
 #@nonl
 #@-node:ekr.20031218072017.2639:top_df.readLine
 #@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
 def scanDefaultDirectory(self,p,importing=False):
-	
-	"""Set default_directory ivar by looking for @path directives."""
+    
+    """Set default_directory ivar by looking for @path directives."""
 
-	at = self ; c = at.c
-	at.default_directory = None
-	<< Set path from @file node >>
-	if at.default_directory:
-		return
-		
-	for p in p.self_and_parents_iter():
-		s = p.v.t.bodyString
-		dict = g.get_directives_dict(s)
-		if dict.has_key("path"):
-			<< handle @path >>
-			return
+    at = self ; c = at.c
+    at.default_directory = None
+    << Set path from @file node >>
+    if at.default_directory:
+        return
+        
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        if dict.has_key("path"):
+            << handle @path >>
+            return
 
-	<< Set current directory >>
-	if not at.default_directory and not importing:
-		# This should never happen: c.openDirectory should be a good last resort.
-		g.trace()
-		at.error("No absolute directory specified anywhere.")
-		at.default_directory = ""
+    << Set current directory >>
+    if not at.default_directory and not importing:
+        # This should never happen: c.openDirectory should be a good last resort.
+        g.trace()
+        at.error("No absolute directory specified anywhere.")
+        at.default_directory = ""
 #@nonl
 #@+node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 # An absolute path in an @file node over-rides everything else.
 # A relative path gets appended to the relative path by the open logic.
 
 name = p.anyAtFileNodeName() # 4/28/04
-	
+    
 dir = g.choose(name,g.os_path_dirname(name),None)
 
 if dir and g.os_path_isabs(dir):
-	if g.os_path_exists(dir):
-		at.default_directory = dir
-	else:
-		at.default_directory = g.makeAllNonExistentDirectories(dir)
-		if not at.default_directory:
-			at.error("Directory \"" + dir + "\" does not exist")
+    if g.os_path_exists(dir):
+        at.default_directory = dir
+    else:
+        at.default_directory = g.makeAllNonExistentDirectories(dir)
+        if not at.default_directory:
+            at.error("Directory \"" + dir + "\" does not exist")
 #@nonl
 #@-node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
 #@+node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -903,15 +903,15 @@ k = dict["path"]
 << compute relative path from s[k:] >>
 
 if path and len(path) > 0:
-	base = g.getBaseDirectory() # returns "" on error.
-	path = g.os_path_join(base,path)
-	
-	if g.os_path_isabs(path):
-		<< handle absolute path >>
-	else:
-		at.error("ignoring bad @path: " + path)
+    base = g.getBaseDirectory() # returns "" on error.
+    path = g.os_path_join(base,path)
+    
+    if g.os_path_isabs(path):
+        << handle absolute path >>
+    else:
+        at.error("ignoring bad @path: " + path)
 else:
-	at.error("ignoring empty @path")
+    at.error("ignoring empty @path")
 
 #@+node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
 j = i = k + len("@path")
@@ -920,9 +920,9 @@ path = string.strip(s[j:i])
 
 # Remove leading and trailing delims if they exist.
 if len(path) > 2 and (
-	(path[0]=='<' and path[-1] == '>') or
-	(path[0]=='"' and path[-1] == '"') ):
-	path = path[1:-1]
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
 
 path = path.strip()
 #@nonl
@@ -931,11 +931,11 @@ path = path.strip()
 # path is an absolute path.
 
 if g.os_path_exists(path):
-	at.default_directory = path
+    at.default_directory = path
 else:
-	at.default_directory = g.makeAllNonExistentDirectories(path)
-	if not at.default_directory:
-		at.error("invalid @path: " + path)
+    at.default_directory = g.makeAllNonExistentDirectories(path)
+    if not at.default_directory:
+        at.error("invalid @path: " + path)
 #@nonl
 #@-node:ekr.20031218072017.2631:<< handle absolute path >>
 #@-node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
@@ -945,42 +945,42 @@ else:
 assert(not at.default_directory)
 
 if c.frame :
-	base = g.getBaseDirectory() # returns "" on error.
-	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-		if dir and len(dir) > 0:
-			dir = g.os_path_join(base,dir)
-			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-				if g.os_path_exists(dir):
-					at.default_directory = dir ; break
-				else:
-					at.default_directory = g.makeAllNonExistentDirectories(dir)
+    base = g.getBaseDirectory() # returns "" on error.
+    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if dir and len(dir) > 0:
+            dir = g.os_path_join(base,dir)
+            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(dir):
+                    at.default_directory = dir ; break
+                else:
+                    at.default_directory = g.makeAllNonExistentDirectories(dir)
 #@-node:ekr.20031218072017.2632:<< Set current directory >>
 #@-node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
 #@+node:ekr.20031218072017.2633:top_df.scanHeader
 def scanHeader(self,file,fileName):
-	
-	"""Scan the @+leo sentinel.
-	
-	Sets self.encoding, and self.start/endSentinelComment.
-	
-	Returns (firstLines,new_df) where:
-	firstLines contains all @first lines,
-	new_df is True if we are reading a new-format derived file."""
-	
-	at = self
-	firstLines = [] # The lines before @+leo.
-	tag = "@+leo"
-	valid = True ; new_df = False
-	<< skip any non @+leo lines >>
-	if valid:
-		valid,new_df,start,end = at.parseLeoSentinel(s)
-	if valid:
-		at.startSentinelComment = start
-		at.endSentinelComment = end
-	else:
-		at.error("Bad @+leo sentinel in " + fileName)
-	# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
-	return firstLines, new_df
+    
+    """Scan the @+leo sentinel.
+    
+    Sets self.encoding, and self.start/endSentinelComment.
+    
+    Returns (firstLines,new_df) where:
+    firstLines contains all @first lines,
+    new_df is True if we are reading a new-format derived file."""
+    
+    at = self
+    firstLines = [] # The lines before @+leo.
+    tag = "@+leo"
+    valid = True ; new_df = False
+    << skip any non @+leo lines >>
+    if valid:
+        valid,new_df,start,end = at.parseLeoSentinel(s)
+    if valid:
+        at.startSentinelComment = start
+        at.endSentinelComment = end
+    else:
+        at.error("Bad @+leo sentinel in " + fileName)
+    # g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
+    return firstLines, new_df
 #@nonl
 #@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
 @ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
@@ -990,11 +990,11 @@ We can not call sentinelKind here because that depends on the comment delimiters
 
 s = at.readLine(file)
 while len(s) > 0:
-	j = s.find(tag)
-	if j != -1: break
-	firstLines.append(s) # Queue the line
-	s = at.readLine(file)
-	
+    j = s.find(tag)
+    if j != -1: break
+    firstLines.append(s) # Queue the line
+    s = at.readLine(file)
+    
 n = len(s)
 valid = n > 0
 #@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
@@ -1003,166 +1003,166 @@ valid = n > 0
 #@+node:ekr.20031218072017.2640:Writing
 #@+node:ekr.20031218072017.2015:top_df.writeAll
 def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False):
-	
-	"""Write @file nodes in all or part of the outline"""
+    
+    """Write @file nodes in all or part of the outline"""
 
-	at = self ; c = at.c
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	df.initIvars()
-	writtenFiles = [] # Files that might be written again.
-	mustAutoSave = False
+    at = self ; c = at.c
+    write_new = not g.app.config.write_old_format_derived_files
+    df = g.choose(write_new,at.new_df,at.old_df)
+    df.initIvars()
+    writtenFiles = [] # Files that might be written again.
+    mustAutoSave = False
 
-	if writeAtFileNodesFlag:
-		# Write all nodes in the selected tree.
-		p = c.currentPosition()
-		after = p.nodeAfterTree()
-	else:
-		# Write dirty nodes in the entire outline.
-		p =  c.rootPosition()
-		after = c.nullPosition()
+    if writeAtFileNodesFlag:
+        # Write all nodes in the selected tree.
+        p = c.currentPosition()
+        after = p.nodeAfterTree()
+    else:
+        # Write dirty nodes in the entire outline.
+        p =  c.rootPosition()
+        after = c.nullPosition()
 
-	<< Clear all orphan bits >>
-	while p and p != after:
-		if p.isAnyAtFileNode() or p.isAtIgnoreNode():
-			<< handle v's tree >>
-			p.moveToNodeAfterTree()
-		else:
-			p.moveToThreadNext()
+    << Clear all orphan bits >>
+    while p and p != after:
+        if p.isAnyAtFileNode() or p.isAtIgnoreNode():
+            << handle v's tree >>
+            p.moveToNodeAfterTree()
+        else:
+            p.moveToThreadNext()
 
-	<< say the command is finished >>
-	return mustAutoSave
+    << say the command is finished >>
+    return mustAutoSave
 #@nonl
 #@+node:ekr.20031218072017.2016:<< Clear all orphan bits >>
 @ We must clear these bits because they may have been set on a previous write.
 Calls to atFile::write may set the orphan bits in @file nodes.
 If so, write_Leo_file will write the entire @file tree.
 @c
-	
+    
 for v2 in p.self_and_subtree_iter():
-	v2.clearOrphan()
+    v2.clearOrphan()
 #@nonl
 #@-node:ekr.20031218072017.2016:<< Clear all orphan bits >>
 #@+node:ekr.20031218072017.2017:<< handle v's tree >>
 if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
 
-	df.fileChangedFlag = False # 1/9/04
-	autoSave = False
-	
-	# Tricky: @ignore not recognised in @silentfile nodes.
-	if p.isAtAsisFileNode():
-		at.asisWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = True
-	elif p.isAtIgnoreNode():
-		pass
-	elif p.isAtNorefFileNode():
-		at.norefWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = True
-	elif p.isAtNoSentFileNode():
-		at.write(p,nosentinels=True)
-		writtenFiles.append(p.v.t) # No need for autosave
-	elif p.isAtThinFileNode():
-		at.write(p,thinFile=True)
-		writtenFiles.append(p.v.t) # No need for autosave.
-	elif p.isAtFileNode():
-		at.write(p)
-		writtenFiles.append(p.v.t) ; autoSave = True
+    df.fileChangedFlag = False # 1/9/04
+    autoSave = False
+    
+    # Tricky: @ignore not recognised in @silentfile nodes.
+    if p.isAtAsisFileNode():
+        at.asisWrite(p)
+        writtenFiles.append(p.v.t) ; autoSave = True
+    elif p.isAtIgnoreNode():
+        pass
+    elif p.isAtNorefFileNode():
+        at.norefWrite(p)
+        writtenFiles.append(p.v.t) ; autoSave = True
+    elif p.isAtNoSentFileNode():
+        at.write(p,nosentinels=True)
+        writtenFiles.append(p.v.t) # No need for autosave
+    elif p.isAtThinFileNode():
+        at.write(p,thinFile=True)
+        writtenFiles.append(p.v.t) # No need for autosave.
+    elif p.isAtFileNode():
+        at.write(p)
+        writtenFiles.append(p.v.t) ; autoSave = True
 
-	if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
-		mustAutoSave = True
+    if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
+        mustAutoSave = True
 #@nonl
 #@-node:ekr.20031218072017.2017:<< handle v's tree >>
 #@+node:ekr.20031218072017.2018:<< say the command is finished >>
 if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
-	if len(writtenFiles) > 0:
-		g.es("finished")
-	elif writeAtFileNodesFlag:
-		g.es("no @file nodes in the selected tree")
-	else:
-		g.es("no dirty @file nodes")
+    if len(writtenFiles) > 0:
+        g.es("finished")
+    elif writeAtFileNodesFlag:
+        g.es("no @file nodes in the selected tree")
+    else:
+        g.es("no dirty @file nodes")
 #@nonl
 #@-node:ekr.20031218072017.2018:<< say the command is finished >>
 #@-node:ekr.20031218072017.2015:top_df.writeAll
 #@+node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
 def norefWrite (self,p):
-	at = self
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	try:    df.norefWrite(p)
-	except: at.writeException(p)
-	
+    at = self
+    write_new = not g.app.config.write_old_format_derived_files
+    df = g.choose(write_new,at.new_df,at.old_df)
+    try:    df.norefWrite(p)
+    except: at.writeException(p)
+    
 rawWrite = norefWrite # Compatibility with old scripts.
-	
+    
 def asisWrite (self,p):
-	at = self
-	try: at.old_df.asisWrite(p) # No new_df.asisWrite method.
-	except: at.writeException(p)
-	
+    at = self
+    try: at.old_df.asisWrite(p) # No new_df.asisWrite method.
+    except: at.writeException(p)
+    
 selentWrite = asisWrite # Compatibility with old scripts.
-	
+    
 def write (self,p,nosentinels=False,thinFile=False):
-	at = self
-	write_new = thinFile or not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
-	except: at.writeException(p)
+    at = self
+    write_new = thinFile or not g.app.config.write_old_format_derived_files
+    df = g.choose(write_new,at.new_df,at.old_df)
+    try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
+    except: at.writeException(p)
 
 def writeException(self,p):
-	self.error("Unexpected exception while writing " + p.headString())
-	g.es_exception()
+    self.error("Unexpected exception while writing " + p.headString())
+    g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
 #@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
 def writeOldDerivedFiles (self):
-	
-	self.writeDerivedFiles(write_old=True)
+    
+    self.writeDerivedFiles(write_old=True)
 
 def writeNewDerivedFiles (self):
 
-	self.writeDerivedFiles(write_old=False)
-	
+    self.writeDerivedFiles(write_old=False)
+    
 def writeDerivedFiles (self,write_old):
-	
-	config = g.app.config
-	old = config.write_old_format_derived_files
-	config.write_old_format_derived_files = write_old
-	self.writeAll(writeAtFileNodesFlag=True)
-	config.write_old_format_derived_files = old
+    
+    config = g.app.config
+    old = config.write_old_format_derived_files
+    config.write_old_format_derived_files = write_old
+    self.writeAll(writeAtFileNodesFlag=True)
+    config.write_old_format_derived_files = old
 #@nonl
 #@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
 #@+node:ekr.20031218072017.2019:top_df.writeMissing
 def writeMissing(self,p):
 
-	at = self
+    at = self
 
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	df.initIvars()
-	writtenFiles = False ; changedFiles = False
+    write_new = not g.app.config.write_old_format_derived_files
+    df = g.choose(write_new,at.new_df,at.old_df)
+    df.initIvars()
+    writtenFiles = False ; changedFiles = False
 
-	p = p.copy()
-	after = p.nodeAfterTree()
-	while p and p != after: # Don't use iterator.
-		if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
-			missing = False ; valid = True
-			df.targetFileName = p.anyAtFileNodeName()
-			<< set missing if the file does not exist >>
-			if valid and missing:
-				<< create df.outputFile >>
-				if at.outputFile:
-					<< write the @file node >>
-			p.moveToNodeAfterTree()
-		elif p.isAtIgnoreNode():
-			p.moveToNodeAfterTree()
-		else:
-			p.moveToThreadNext()
-	
-	if writtenFiles > 0:
-		g.es("finished")
-	else:
-		g.es("no missing @file node in the selected tree")
-		
-	return changedFiles # So caller knows whether to do an auto-save.
+    p = p.copy()
+    after = p.nodeAfterTree()
+    while p and p != after: # Don't use iterator.
+        if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
+            missing = False ; valid = True
+            df.targetFileName = p.anyAtFileNodeName()
+            << set missing if the file does not exist >>
+            if valid and missing:
+                << create df.outputFile >>
+                if at.outputFile:
+                    << write the @file node >>
+            p.moveToNodeAfterTree()
+        elif p.isAtIgnoreNode():
+            p.moveToNodeAfterTree()
+        else:
+            p.moveToThreadNext()
+    
+    if writtenFiles > 0:
+        g.es("finished")
+    else:
+        g.es("no missing @file node in the selected tree")
+        
+    return changedFiles # So caller knows whether to do an auto-save.
 #@nonl
 #@+node:ekr.20031218072017.2020:<< set missing if the file does not exist >>
 # This is similar, but not the same as, the logic in openWriteFile.
@@ -1170,86 +1170,86 @@ def writeMissing(self,p):
 valid = df.targetFileName and len(df.targetFileName) > 0
 
 if valid:
-	try:
-		# Creates missing directives if option is enabled.
-		df.scanAllDirectives(p)
-		valid = df.errors == 0
-	except:
-		g.es("exception in atFile.scanAllDirectives")
-		g.es_exception()
-		valid = False
+    try:
+        # Creates missing directives if option is enabled.
+        df.scanAllDirectives(p)
+        valid = df.errors == 0
+    except:
+        g.es("exception in atFile.scanAllDirectives")
+        g.es_exception()
+        valid = False
 
 if valid:
-	try:
-		fn = df.targetFileName
-		df.shortFileName = fn # name to use in status messages.
-		df.targetFileName = g.os_path_join(df.default_directory,fn)
-		df.targetFileName = g.os_path_normpath(df.targetFileName)
+    try:
+        fn = df.targetFileName
+        df.shortFileName = fn # name to use in status messages.
+        df.targetFileName = g.os_path_join(df.default_directory,fn)
+        df.targetFileName = g.os_path_normpath(df.targetFileName)
 
-		path = df.targetFileName # Look for the full name, not just the directory.
-		valid = path and len(path) > 0
-		if valid:
-			missing = not g.os_path_exists(path)
-	except:
-		g.es("exception creating path:" + fn)
-		g.es_exception()
-		valid = False
+        path = df.targetFileName # Look for the full name, not just the directory.
+        valid = path and len(path) > 0
+        if valid:
+            missing = not g.os_path_exists(path)
+    except:
+        g.es("exception creating path:" + fn)
+        g.es_exception()
+        valid = False
 #@nonl
 #@-node:ekr.20031218072017.2020:<< set missing if the file does not exist >>
 #@+node:ekr.20031218072017.2021:<< create df.outputFile >>
 try:
-	df.outputFileName = df.targetFileName + ".leotmp"
-	df.outputFile = open(df.outputFileName,'wb')
-	if df.outputFile is None:
-		g.es("can not open " + df.outputFileName)
+    df.outputFileName = df.targetFileName + ".leotmp"
+    df.outputFile = open(df.outputFileName,'wb')
+    if df.outputFile is None:
+        g.es("can not open " + df.outputFileName)
 except:
-	g.es("exception opening:" + df.outputFileName)
-	g.es_exception()
-	df.outputFile = None
+    g.es("exception opening:" + df.outputFileName)
+    g.es_exception()
+    df.outputFile = None
 #@nonl
 #@-node:ekr.20031218072017.2021:<< create df.outputFile >>
 #@+node:ekr.20031218072017.2022:<< write the @file node >>
 if p.isAtAsisFileNode():
-	at.asisWrite(p)
+    at.asisWrite(p)
 elif p.isAtNorefFileNode():
-	at.norefWrite(p)
+    at.norefWrite(p)
 elif p.isAtNoSentFileNode():
-	at.write(p,nosentinels=True)
+    at.write(p,nosentinels=True)
 elif p.isAtFileNode():
-	at.write(p)
+    at.write(p)
 else: assert(0)
 
 writtenFiles = True
 
 if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
-	changedFiles = True
+    changedFiles = True
 #@nonl
 #@-node:ekr.20031218072017.2022:<< write the @file node >>
 #@-node:ekr.20031218072017.2019:top_df.writeMissing
 #@+node:EKR.20040507095329:top_df.writeToString
 def writeToString (self,p,nosentinels=False,thinFile=False):
-	
-	at = self ; df = at.new_df
-	
-	### Can this be correct?  what about scanAllDirectives?  what about comment delims?
+    
+    at = self ; df = at.new_df
+    
+    ### Can this be correct?  what about scanAllDirectives?  what about comment delims?
 
-	# From perfect import
-	df.targetFileName = "<string-file>"
-	df.outputFile = fo = g.fileLikeObject()
-	df.writeOpenFile(p)
-	return fo.get()
-	
-	if 0: # From execute script:
-		
-		df.scanAllDirectives(p,scripting=True)
-		# Force Python comment delims.
-		df.startSentinelComment = "#"
-		df.endSentinelComment = None
-		# Write the "derived file" into fo.
-		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=True,scriptFile=fo)
-		assert(p)
-		s = fo.get()
+    # From perfect import
+    df.targetFileName = "<string-file>"
+    df.outputFile = fo = g.fileLikeObject()
+    df.writeOpenFile(p)
+    return fo.get()
+    
+    if 0: # From execute script:
+        
+        df.scanAllDirectives(p,scripting=True)
+        # Force Python comment delims.
+        df.startSentinelComment = "#"
+        df.endSentinelComment = None
+        # Write the "derived file" into fo.
+        fo = g.fileLikeObject()
+        df.write(p.copy(),nosentinels=True,scriptFile=fo)
+        assert(p)
+        s = fo.get()
 #@nonl
 #@-node:EKR.20040507095329:top_df.writeToString
 #@-node:ekr.20031218072017.2640:Writing
@@ -1261,30 +1261,30 @@ This code is similar to Commands.scanAllDirectives, but it has been modified for
 @c
 
 def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
-	
-	"""Scan position p and p's ancestors looking for directives,
-	setting corresponding atFile ivars.
-	"""
+    
+    """Scan position p and p's ancestors looking for directives,
+    setting corresponding atFile ivars.
+    """
 
-	c = self.c
-	<< Set ivars >>
-	<< Set path from @file node >>
-	old = {}
-	for p in p.self_and_parents_iter():
-		s = p.v.t.bodyString
-		dict = g.get_directives_dict(s)
-		<< Test for @path >>
-		<< Test for @encoding >>
-		<< Test for @comment and @language >>
-		<< Test for @header and @noheader >>
-		<< Test for @lineending >>
-		<< Test for @pagewidth >>
-		<< Test for @tabwidth >>
-		old.update(dict)
-	<< Set current directory >>
-	if not importing and not reading:
-		# 5/19/04: don't override comment delims when reading!
-		<< Set comment strings from delims >>
+    c = self.c
+    << Set ivars >>
+    << Set path from @file node >>
+    old = {}
+    for p in p.self_and_parents_iter():
+        s = p.v.t.bodyString
+        dict = g.get_directives_dict(s)
+        << Test for @path >>
+        << Test for @encoding >>
+        << Test for @comment and @language >>
+        << Test for @header and @noheader >>
+        << Test for @lineending >>
+        << Test for @pagewidth >>
+        << Test for @tabwidth >>
+        old.update(dict)
+    << Set current directory >>
+    if not importing and not reading:
+        # 5/19/04: don't override comment delims when reading!
+        << Set comment strings from delims >>
 #@nonl
 #@+node:ekr.20031218072017.2388:<< Set ivars >>
 self.page_width = self.c.page_width
@@ -1308,12 +1308,12 @@ name = p.anyAtFileNodeName() # 4/28/04
 dir = g.choose(name,g.os_path_dirname(name),None)
 
 if dir and len(dir) > 0 and g.os_path_isabs(dir):
-	if g.os_path_exists(dir):
-		self.default_directory = dir
-	else: # 9/25/02
-		self.default_directory = g.makeAllNonExistentDirectories(dir)
-		if not self.default_directory:
-			self.error("Directory \"" + dir + "\" does not exist")
+    if g.os_path_exists(dir):
+        self.default_directory = dir
+    else: # 9/25/02
+        self.default_directory = g.makeAllNonExistentDirectories(dir)
+        if not self.default_directory:
+            self.error("Directory \"" + dir + "\" does not exist")
 #@nonl
 #@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 #@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
@@ -1321,54 +1321,54 @@ if dir and len(dir) > 0 and g.os_path_isabs(dir):
 # For this to be effective the @comment directive should follow the @language directive.
 
 if not old.has_key("comment") and dict.has_key("comment"):
-	k = dict["comment"]
-	# 11/14/02: Similar to fix below.
-	delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
+    k = dict["comment"]
+    # 11/14/02: Similar to fix below.
+    delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
 
 # Reversion fix: 12/06/02: We must use elif here, not if.
 elif not old.has_key("language") and dict.has_key("language"):
-	k = dict["language"]
-	# 11/14/02: Fix bug reported by J.M.Gilligan.
-	self.language,delim1,delim2,delim3 = g.set_language(s,k)
+    k = dict["language"]
+    # 11/14/02: Fix bug reported by J.M.Gilligan.
+    self.language,delim1,delim2,delim3 = g.set_language(s,k)
 #@nonl
 #@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
 #@+node:ekr.20031218072017.2391:<< Test for @encoding >>
 if not old.has_key("encoding") and dict.has_key("encoding"):
-	
-	e = g.scanAtEncodingDirective(s,dict)
-	if e:
-		self.encoding = e
+    
+    e = g.scanAtEncodingDirective(s,dict)
+    if e:
+        self.encoding = e
 #@nonl
 #@-node:ekr.20031218072017.2391:<< Test for @encoding >>
 #@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 # EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
 if dict.has_key("header") and dict.has_key("noheader"):
-	g.es("conflicting @header and @noheader directives")
+    g.es("conflicting @header and @noheader directives")
 #@nonl
 #@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
 #@+node:ekr.20031218072017.2393:<< Test for @lineending >>
 if not old.has_key("lineending") and dict.has_key("lineending"):
-	
-	lineending = g.scanAtLineendingDirective(s,dict)
-	if lineending:
-		self.output_newline = lineending
+    
+    lineending = g.scanAtLineendingDirective(s,dict)
+    if lineending:
+        self.output_newline = lineending
 #@-node:ekr.20031218072017.2393:<< Test for @lineending >>
 #@+node:ekr.20031218072017.2394:<< Test for @path >>
 # We set the current director to a path so future writes will go to that directory.
 
 if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
 
-	k = dict["path"]
-	<< compute relative path from s[k:] >>
-	if path and len(path) > 0:
-		base = g.getBaseDirectory() # returns "" on error.
-		path = g.os_path_join(base,path)
-		if g.os_path_isabs(path):
-			<< handle absolute path >>
-		else:
-			self.error("ignoring bad @path: " + path)
-	else:
-		self.error("ignoring empty @path")
+    k = dict["path"]
+    << compute relative path from s[k:] >>
+    if path and len(path) > 0:
+        base = g.getBaseDirectory() # returns "" on error.
+        path = g.os_path_join(base,path)
+        if g.os_path_isabs(path):
+            << handle absolute path >>
+        else:
+            self.error("ignoring bad @path: " + path)
+    else:
+        self.error("ignoring empty @path")
 #@nonl
 #@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
 j = i = k + len("@path")
@@ -1377,79 +1377,79 @@ path = string.strip(s[j:i])
 
 # Remove leading and trailing delims if they exist.
 if len(path) > 2 and (
-	(path[0]=='<' and path[-1] == '>') or
-	(path[0]=='"' and path[-1] == '"') ):
-	path = path[1:-1]
+    (path[0]=='<' and path[-1] == '>') or
+    (path[0]=='"' and path[-1] == '"') ):
+    path = path[1:-1]
 path = path.strip()
 
 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-	path = g.os_path_join(g.app.loadDir,path)
+    path = g.os_path_join(g.app.loadDir,path)
 #@nonl
 #@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
 #@+node:ekr.20031218072017.2396:<< handle absolute path >>
 # path is an absolute path.
 
 if g.os_path_exists(path):
-	self.default_directory = path
+    self.default_directory = path
 else: # 9/25/02
-	self.default_directory = g.makeAllNonExistentDirectories(path)
-	if not self.default_directory:
-		self.error("invalid @path: " + path)
+    self.default_directory = g.makeAllNonExistentDirectories(path)
+    if not self.default_directory:
+        self.error("invalid @path: " + path)
 #@-node:ekr.20031218072017.2396:<< handle absolute path >>
 #@-node:ekr.20031218072017.2394:<< Test for @path >>
 #@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-	
-	w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
-	if w and w > 0:
-		self.page_width = w
+    
+    w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
+    if w and w > 0:
+        self.page_width = w
 #@nonl
 #@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 #@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
 if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
-	
-	w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
-	if w and w != 0:
-		self.tab_width = w
+    
+    w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
+    if w and w != 0:
+        self.tab_width = w
 
 #@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
 #@+node:ekr.20031218072017.2399:<< Set current directory >>
 # This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
 
 if c.frame and not self.default_directory:
-	base = g.getBaseDirectory() # returns "" on error.
-	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-		if dir and len(dir) > 0:
-			dir = g.os_path_join(base,dir)
-			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-				if g.os_path_exists(dir):
-					self.default_directory = dir ; break
-				else: # 9/25/02
-					self.default_directory = g.makeAllNonExistentDirectories(dir)
+    base = g.getBaseDirectory() # returns "" on error.
+    for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
+        if dir and len(dir) > 0:
+            dir = g.os_path_join(base,dir)
+            if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
+                if g.os_path_exists(dir):
+                    self.default_directory = dir ; break
+                else: # 9/25/02
+                    self.default_directory = g.makeAllNonExistentDirectories(dir)
 
 if not self.default_directory and not scripting and not importing:
-	# This should never happen: c.openDirectory should be a good last resort.
-	g.trace()
-	self.error("No absolute directory specified anywhere.")
-	self.default_directory = ""
+    # This should never happen: c.openDirectory should be a good last resort.
+    g.trace()
+    self.error("No absolute directory specified anywhere.")
+    self.default_directory = ""
 #@-node:ekr.20031218072017.2399:<< Set current directory >>
 #@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
 # Use single-line comments if we have a choice.
 # 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
 if delim1:
-	self.startSentinelComment = delim1
-	self.endSentinelComment = "" # Must not be None.
+    self.startSentinelComment = delim1
+    self.endSentinelComment = "" # Must not be None.
 elif delim2 and delim3:
-	self.startSentinelComment = delim2
-	self.endSentinelComment = delim3
+    self.startSentinelComment = delim2
+    self.endSentinelComment = delim3
 else: # Emergency!
-	# assert(0)
-	g.es("Unknown language: using Python comment delimiters")
-	g.es("c.target_language:",c.target_language)
-	g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
-	self.startSentinelComment = "#" # This should never happen!
-	self.endSentinelComment = ""
-	
+    # assert(0)
+    g.es("Unknown language: using Python comment delimiters")
+    g.es("c.target_language:",c.target_language)
+    g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
+    self.startSentinelComment = "#" # This should never happen!
+    self.endSentinelComment = ""
+    
 # g.trace(self.startSentinelComment)
 #@nonl
 #@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
@@ -1465,98 +1465,98 @@ else: # Emergency!
 #@-node:EKR.20040507095329.2:To do
 #@+node:ekr.20031218072017.2647:old_df.readOpenFile
 def readOpenFile(self,root,file,firstLines):
-	
-	"""Read an open 3.x derived file."""
-	
-	at = self
+    
+    """Read an open 3.x derived file."""
+    
+    at = self
 
-	# Scan the file buffer
-	lastLines = at.scanText(file,root,[],endLeo)
-	root.v.t.setVisited() # Disable warning about set nodes.
+    # Scan the file buffer
+    lastLines = at.scanText(file,root,[],endLeo)
+    root.v.t.setVisited() # Disable warning about set nodes.
 
-	# Handle first and last lines.
-	try: body = root.v.t.tempBodyString
-	except: body = ""
-	lines = body.split('\n')
-	at.completeFirstDirectives(lines,firstLines)
-	at.completeLastDirectives(lines,lastLines)
-	s = '\n'.join(lines).replace('\r', '')
-	root.v.t.tempBodyString = s
+    # Handle first and last lines.
+    try: body = root.v.t.tempBodyString
+    except: body = ""
+    lines = body.split('\n')
+    at.completeFirstDirectives(lines,firstLines)
+    at.completeLastDirectives(lines,lastLines)
+    s = '\n'.join(lines).replace('\r', '')
+    root.v.t.tempBodyString = s
 #@nonl
 #@-node:ekr.20031218072017.2647:old_df.readOpenFile
 #@+node:ekr.20031218072017.2757:new_df.readOpenFile
 def readOpenFile(self,root,file,firstLines):
-	
-	"""Read an open 4.x thick or thin derived file."""
-	
-	at = self
+    
+    """Read an open 4.x thick or thin derived file."""
+    
+    at = self
 
-	# Scan the 4.x file.
-	at.tnodeListIndex = 0
-	# 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
-	lastLines = at.scanText4(file,root)
-	root.v.t.setVisited() # Disable warning about set nodes.
-	
-	# Handle first and last lines.
-	try: body = root.v.t.tempBodyString
-	except: body = ""
-	lines = body.split('\n')
-	at.completeFirstDirectives(lines,firstLines)
-	at.completeLastDirectives(lines,lastLines)
-	s = '\n'.join(lines).replace('\r', '')
-	root.v.t.tempBodyString = s
+    # Scan the 4.x file.
+    at.tnodeListIndex = 0
+    # 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
+    lastLines = at.scanText4(file,root)
+    root.v.t.setVisited() # Disable warning about set nodes.
+    
+    # Handle first and last lines.
+    try: body = root.v.t.tempBodyString
+    except: body = ""
+    lines = body.split('\n')
+    at.completeFirstDirectives(lines,firstLines)
+    at.completeLastDirectives(lines,lastLines)
+    s = '\n'.join(lines).replace('\r', '')
+    root.v.t.tempBodyString = s
 #@nonl
 #@-node:ekr.20031218072017.2757:new_df.readOpenFile
 #@+node:EKR.20040507095329:top_df.writeToString
 def writeToString (self,p,nosentinels=False,thinFile=False):
-	
-	at = self ; df = at.new_df
-	
-	### Can this be correct?  what about scanAllDirectives?  what about comment delims?
+    
+    at = self ; df = at.new_df
+    
+    ### Can this be correct?  what about scanAllDirectives?  what about comment delims?
 
-	# From perfect import
-	df.targetFileName = "<string-file>"
-	df.outputFile = fo = g.fileLikeObject()
-	df.writeOpenFile(p)
-	return fo.get()
-	
-	if 0: # From execute script:
-		
-		df.scanAllDirectives(p,scripting=True)
-		# Force Python comment delims.
-		df.startSentinelComment = "#"
-		df.endSentinelComment = None
-		# Write the "derived file" into fo.
-		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=True,scriptFile=fo)
-		assert(p)
-		s = fo.get()
+    # From perfect import
+    df.targetFileName = "<string-file>"
+    df.outputFile = fo = g.fileLikeObject()
+    df.writeOpenFile(p)
+    return fo.get()
+    
+    if 0: # From execute script:
+        
+        df.scanAllDirectives(p,scripting=True)
+        # Force Python comment delims.
+        df.startSentinelComment = "#"
+        df.endSentinelComment = None
+        # Write the "derived file" into fo.
+        fo = g.fileLikeObject()
+        df.write(p.copy(),nosentinels=True,scriptFile=fo)
+        assert(p)
+        s = fo.get()
 #@nonl
 #@-node:EKR.20040507095329:top_df.writeToString
 #@+node:EKR.20040506075328:new_df.writeOpenFile
 def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False):
-	
-	at = self ; c = at.c
-	
-	<< init atFile ivars for writing >>
-	root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
-	root.clearVisitedInTree()
+    
+    at = self ; c = at.c
+    
+    << init atFile ivars for writing >>
+    root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
+    root.clearVisitedInTree()
 
-	<< put all @first lines in root >>
+    << put all @first lines in root >>
 
-	# Put the main part of the file.
-	at.putOpenLeoSentinel("@+leo-ver=4")
-	at.putInitialComment()
-	at.putOpenNodeSentinel(root)
-	at.putBody(root)
-	at.putCloseNodeSentinel(root)
-	at.putSentinel("@-leo")
-	root.setVisited()
-	
-	<< put all @last lines in root >>
-	
-	if not scriptFile and not nosentinels:
-		at.warnAboutOrphandAndIgnoredNodes()
+    # Put the main part of the file.
+    at.putOpenLeoSentinel("@+leo-ver=4")
+    at.putInitialComment()
+    at.putOpenNodeSentinel(root)
+    at.putBody(root)
+    at.putCloseNodeSentinel(root)
+    at.putSentinel("@-leo")
+    root.setVisited()
+    
+    << put all @last lines in root >>
+    
+    if not scriptFile and not nosentinels:
+        at.warnAboutOrphandAndIgnoredNodes()
 #@nonl
 #@+node:EKR.20040506075328.1:<< init atFile ivars for writing >>
 # Set flags telling what kind of writing we are doing.
@@ -1582,14 +1582,14 @@ s = root.v.t.bodyString
 tag = "@first"
 i = 0
 while g.match(s,i,tag):
-	i += len(tag)
-	i = g.skip_ws(s,i)
-	j = i
-	i = g.skip_to_end_of_line(s,i)
-	# Write @first line, whether empty or not
-	line = s[j:i]
-	self.os(line) ; self.onl()
-	i = g.skip_nl(s,i)
+    i += len(tag)
+    i = g.skip_ws(s,i)
+    j = i
+    i = g.skip_to_end_of_line(s,i)
+    # Write @first line, whether empty or not
+    line = s[j:i]
+    self.os(line) ; self.onl()
+    i = g.skip_nl(s,i)
 #@nonl
 #@-node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
 #@+node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
@@ -1601,16 +1601,16 @@ lines = root.v.t.bodyString.split('\n')
 n = len(lines) ; j = k = n - 1
 # Don't write an empty last line.
 if j >= 0 and len(lines[j])==0:
-	j = k = n - 2
+    j = k = n - 2
 # Scan backwards for @last directives.
 while j >= 0:
-	line = lines[j]
-	if g.match(line,0,tag): j -= 1
-	else: break
+    line = lines[j]
+    if g.match(line,0,tag): j -= 1
+    else: break
 # Write the @last lines.
 for line in lines[j+1:k+1]:
-	i = len(tag) ; i = g.skip_ws(line,i)
-	self.os(line[i:]) ; self.onl()
+    i = len(tag) ; i = g.skip_ws(line,i)
+    self.os(line[i:]) ; self.onl()
 #@nonl
 #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
 #@-node:EKR.20040506075328:new_df.writeOpenFile
@@ -1620,14 +1620,14 @@ for line in lines[j+1:k+1]:
 #@+node:ekr.20031218072017.1801:f.__init__
 def __init__(self,title):
 
-	# Init the base class.
-	leoFrame.leoFrame.__init__(self)
+    # Init the base class.
+    leoFrame.leoFrame.__init__(self)
 
-	self.title = title
-	leoTkinterFrame.instances += 1
-	self.c = None # Set in finishCreate.
+    self.title = title
+    leoTkinterFrame.instances += 1
+    self.c = None # Set in finishCreate.
 
-	<< set the leoTkinterFrame ivars >>
+    << set the leoTkinterFrame ivars >>
 #@+node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
 # Created in createLeoFrame and its allies.
 self.top = None
@@ -1655,73 +1655,73 @@ self.revertHeadline = None # Previous headline text for abortEditLabel.
 #@+node:ekr.20031218072017.3942:f.__repr__
 def __repr__ (self):
 
-	return "<leoTkinterFrame: %s>" % self.title
+    return "<leoTkinterFrame: %s>" % self.title
 #@-node:ekr.20031218072017.3942:f.__repr__
 #@+node:ekr.20031218072017.3943:Creating the frame
 #@+node:ekr.20031218072017.3944:f.createCanvas
 def createCanvas (self,parentFrame):
-	
-	frame = self ; config = g.app.config
-	
-	scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
-	scrolls = g.choose(scrolls,1,0)
+    
+    frame = self ; config = g.app.config
+    
+    scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
+    scrolls = g.choose(scrolls,1,0)
 
-	canvas = Tk.Canvas(parentFrame,name="canvas",
-		bd=0,bg="white",relief="flat")
+    canvas = Tk.Canvas(parentFrame,name="canvas",
+        bd=0,bg="white",relief="flat")
 
-	frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
-	
-	# Bind mouse wheel event to canvas
-	if sys.platform != "win32": # Works on 98, crashes on XP.
-		canvas.bind("<MouseWheel>", self.OnMouseWheel)
-		
-	canvas['yscrollcommand'] = self.setCallback
-	treeBar['command']     = self.yviewCallback
-	
-	treeBar.pack(side="right", fill="y")
-	if scrolls: 
-		treeXBar = Tk.Scrollbar( 
-			parentFrame,name='treeXBar',orient="horizontal") 
-		canvas['xscrollcommand'] = treeXBar.set 
-		treeXBar['command'] = canvas.xview 
-		treeXBar.pack(side="bottom", fill="x")
-	
-	canvas.pack(expand=1,fill="both")
+    frame.treeBar = treeBar = Tk.Scrollbar(parentFrame,name="treeBar")
+    
+    # Bind mouse wheel event to canvas
+    if sys.platform != "win32": # Works on 98, crashes on XP.
+        canvas.bind("<MouseWheel>", self.OnMouseWheel)
+        
+    canvas['yscrollcommand'] = self.setCallback
+    treeBar['command']     = self.yviewCallback
+    
+    treeBar.pack(side="right", fill="y")
+    if scrolls: 
+        treeXBar = Tk.Scrollbar( 
+            parentFrame,name='treeXBar',orient="horizontal") 
+        canvas['xscrollcommand'] = treeXBar.set 
+        treeXBar['command'] = canvas.xview 
+        treeXBar.pack(side="bottom", fill="x")
+    
+    canvas.pack(expand=1,fill="both")
 
-	canvas.bind("<Button-1>", frame.OnActivateTree)
+    canvas.bind("<Button-1>", frame.OnActivateTree)
 
-	# Handle mouse wheel in the outline pane.
-	if sys.platform == "linux2": # This crashes tcl83.dll
-		canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-	
-	# g.print_bindings("canvas",canvas)
-	return canvas
+    # Handle mouse wheel in the outline pane.
+    if sys.platform == "linux2": # This crashes tcl83.dll
+        canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+    
+    # g.print_bindings("canvas",canvas)
+    return canvas
 #@nonl
 #@-node:ekr.20031218072017.3944:f.createCanvas
 #@+node:ekr.20031218072017.2176:f.finishCreate
 def finishCreate (self,c):
-	
-	frame = self ; frame.c = c ; gui = g.app.gui
+    
+    frame = self ; frame.c = c ; gui = g.app.gui
 
-	<< create the toplevel frame >>
-	<< create all the subframes >>
-	<< create the first tree node >>
+    << create the toplevel frame >>
+    << create all the subframes >>
+    << create the first tree node >>
 
-	self.menu = leoTkinterMenu.leoTkinterMenu(frame)
+    self.menu = leoTkinterMenu.leoTkinterMenu(frame)
 
-	v = c.currentVnode()
+    v = c.currentVnode()
 
-	if not g.doHook("menu1",c=c,v=v):
-		frame.menu.createMenuBar(self)
+    if not g.doHook("menu1",c=c,v=v):
+        frame.menu.createMenuBar(self)
 
-	g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
+    g.app.setLog(frame.log,"tkinterFrame.__init__") # the leoTkinterFrame containing the log
 
-	g.app.windowList.append(frame)
-	
-	c.initVersion()
-	c.signOnWithVersion()
-	
-	self.body.createBindings(frame)
+    g.app.windowList.append(frame)
+    
+    c.initVersion()
+    c.signOnWithVersion()
+    
+    self.body.createBindings(frame)
 #@nonl
 #@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
 frame.top = top = Tk.Toplevel()
@@ -1764,9 +1764,9 @@ self.body.setFontFromConfig()
 
 if 0: # No longer done automatically.
 
-	# Create the status line.
-	self.createStatusLine()
-	self.putStatusLine("Welcome to Leo")
+    # Create the status line.
+    self.createStatusLine()
+    self.putStatusLine("Welcome to Leo")
 #@nonl
 #@+node:ekr.20031218072017.2179:<< create both splitters >>
 # Splitter 1 is the main splitter containing splitter2 and the body pane.
@@ -1806,42 +1806,42 @@ Only the general-purpose divideAnySplitter routine doesn't know about these inva
 #@+node:ekr.20031218072017.3946:resizePanesToRatio
 def resizePanesToRatio(self,ratio,secondary_ratio):
 
-	self.divideLeoSplitter(self.splitVerticalFlag, ratio)
-	self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
-	# g.trace(ratio)
+    self.divideLeoSplitter(self.splitVerticalFlag, ratio)
+    self.divideLeoSplitter(not self.splitVerticalFlag, secondary_ratio)
+    # g.trace(ratio)
 #@-node:ekr.20031218072017.3946:resizePanesToRatio
 #@+node:ekr.20031218072017.3947:bindBar
 def bindBar (self, bar, verticalFlag):
-	
-	if verticalFlag == self.splitVerticalFlag:
-		bar.bind("<B1-Motion>", self.onDragMainSplitBar)
+    
+    if verticalFlag == self.splitVerticalFlag:
+        bar.bind("<B1-Motion>", self.onDragMainSplitBar)
 
-	else:
-		bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
+    else:
+        bar.bind("<B1-Motion>", self.onDragSecondarySplitBar)
 #@-node:ekr.20031218072017.3947:bindBar
 #@+node:ekr.20031218072017.3948:createLeoSplitter
 # 5/20/03: Removed the ancient kludge for forcing the height & width of f.
 # The code in leoFileCommands.getGlobals now works!
 
 def createLeoSplitter (self, parent, verticalFlag):
-	
-	"""Create a splitter window and panes into which the caller packs widgets.
-	
-	Returns (f, bar, pane1, pane2) """
-	
-	# Create the frames.
-	f = Tk.Frame(parent,bd=0,relief="flat")
-	f.pack(expand=1,fill="both",pady=1)
-	pane1 = Tk.Frame(f)
-	pane2 = Tk.Frame(f)
-	bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
+    
+    """Create a splitter window and panes into which the caller packs widgets.
+    
+    Returns (f, bar, pane1, pane2) """
+    
+    # Create the frames.
+    f = Tk.Frame(parent,bd=0,relief="flat")
+    f.pack(expand=1,fill="both",pady=1)
+    pane1 = Tk.Frame(f)
+    pane2 = Tk.Frame(f)
+    bar =   Tk.Frame(f,bd=2,relief="raised",bg="LightSteelBlue2")
 
-	# Configure and place the frames.
-	self.configureBar(bar,verticalFlag)
-	self.bindBar(bar,verticalFlag)
-	self.placeSplitter(bar,pane1,pane2,verticalFlag)
+    # Configure and place the frames.
+    self.configureBar(bar,verticalFlag)
+    self.bindBar(bar,verticalFlag)
+    self.placeSplitter(bar,pane1,pane2,verticalFlag)
 
-	return f, bar, pane1, pane2
+    return f, bar, pane1, pane2
 #@nonl
 #@-node:ekr.20031218072017.3948:createLeoSplitter
 #@+node:ekr.20031218072017.3949:divideAnySplitter
@@ -1850,327 +1850,328 @@ def createLeoSplitter (self, parent, verticalFlag):
 
 def divideAnySplitter (self, frac, verticalFlag, bar, pane1, pane2):
 
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		bar.place(rely=frac)
-		pane1.place(relheight=frac)
-		pane2.place(relheight=1-frac)
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		bar.place(relx=frac)
-		pane1.place(relwidth=frac)
-		pane2.place(relwidth=1-frac)
+    if verticalFlag:
+        # Panes arranged vertically; horizontal splitter bar
+        bar.place(rely=frac)
+        pane1.place(relheight=frac)
+        pane2.place(relheight=1-frac)
+    else:
+        # Panes arranged horizontally; vertical splitter bar
+        bar.place(relx=frac)
+        pane1.place(relwidth=frac)
+        pane2.place(relwidth=1-frac)
 #@nonl
 #@-node:ekr.20031218072017.3949:divideAnySplitter
 #@+node:ekr.20031218072017.3950:divideLeoSplitter
 # Divides the main or secondary splitter, using the key invariant.
 def divideLeoSplitter (self, verticalFlag, frac):
-	if self.splitVerticalFlag == verticalFlag:
-		self.divideLeoSplitter1(frac,verticalFlag)
-		self.ratio = frac # Ratio of body pane to tree pane.
-	else:
-		self.divideLeoSplitter2(frac,verticalFlag)
-		self.secondary_ratio = frac # Ratio of tree pane to log pane.
+    if self.splitVerticalFlag == verticalFlag:
+        self.divideLeoSplitter1(frac,verticalFlag)
+        self.ratio = frac # Ratio of body pane to tree pane.
+    else:
+        self.divideLeoSplitter2(frac,verticalFlag)
+        self.secondary_ratio = frac # Ratio of tree pane to log pane.
 
 # Divides the main splitter.
 def divideLeoSplitter1 (self, frac, verticalFlag): 
-	self.divideAnySplitter(frac, verticalFlag,
-		self.bar1, self.split1Pane1, self.split1Pane2)
+    self.divideAnySplitter(frac, verticalFlag,
+        self.bar1, self.split1Pane1, self.split1Pane2)
 
 # Divides the secondary splitter.
 def divideLeoSplitter2 (self, frac, verticalFlag): 
-	self.divideAnySplitter (frac, verticalFlag,
-		self.bar2, self.split2Pane1, self.split2Pane2)
+    self.divideAnySplitter (frac, verticalFlag,
+        self.bar2, self.split2Pane1, self.split2Pane2)
 #@nonl
 #@-node:ekr.20031218072017.3950:divideLeoSplitter
 #@+node:ekr.20031218072017.3951:onDrag...
 def onDragMainSplitBar (self, event):
-	self.onDragSplitterBar(event,self.splitVerticalFlag)
+    self.onDragSplitterBar(event,self.splitVerticalFlag)
 
 def onDragSecondarySplitBar (self, event):
-	self.onDragSplitterBar(event,not self.splitVerticalFlag)
+    self.onDragSplitterBar(event,not self.splitVerticalFlag)
 
 def onDragSplitterBar (self, event, verticalFlag):
 
-	# x and y are the coordinates of the cursor relative to the bar, not the main window.
-	bar = event.widget
-	x = event.x
-	y = event.y
-	top = bar.winfo_toplevel()
+    # x and y are the coordinates of the cursor relative to the bar, not the main window.
+    bar = event.widget
+    x = event.x
+    y = event.y
+    top = bar.winfo_toplevel()
 
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		wRoot	= top.winfo_rooty()
-		barRoot = bar.winfo_rooty()
-		wMax	= top.winfo_height()
-		offset = float(barRoot) + y - wRoot
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		wRoot	= top.winfo_rootx()
-		barRoot = bar.winfo_rootx()
-		wMax	= top.winfo_width()
-		offset = float(barRoot) + x - wRoot
+    if verticalFlag:
+        # Panes arranged vertically; horizontal splitter bar
+        wRoot	= top.winfo_rooty()
+        barRoot = bar.winfo_rooty()
+        wMax	= top.winfo_height()
+        offset = float(barRoot) + y - wRoot
+    else:
+        # Panes arranged horizontally; vertical splitter bar
+        wRoot	= top.winfo_rootx()
+        barRoot = bar.winfo_rootx()
+        wMax	= top.winfo_width()
+        offset = float(barRoot) + x - wRoot
 
-	# Adjust the pixels, not the frac.
-	if offset < 3: offset = 3
-	if offset > wMax - 2: offset = wMax - 2
-	# Redraw the splitter as the drag is occuring.
-	frac = float(offset) / wMax
-	# g.trace(frac)
-	self.divideLeoSplitter(verticalFlag, frac)
+    # Adjust the pixels, not the frac.
+    if offset < 3: offset = 3
+    if offset > wMax - 2: offset = wMax - 2
+    # Redraw the splitter as the drag is occuring.
+    frac = float(offset) / wMax
+    # g.trace(frac)
+    self.divideLeoSplitter(verticalFlag, frac)
 #@nonl
 #@-node:ekr.20031218072017.3951:onDrag...
 #@+node:ekr.20031218072017.3952:placeSplitter
 def placeSplitter (self,bar,pane1,pane2,verticalFlag):
 
-	if verticalFlag:
-		# Panes arranged vertically; horizontal splitter bar
-		pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
-		pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
-		bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
-	else:
-		# Panes arranged horizontally; vertical splitter bar
-		# adj gives tree pane more room when tiling vertically.
-		adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
-		pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
-		pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
-		bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
+    if verticalFlag:
+        # Panes arranged vertically; horizontal splitter bar
+        pane1.place(relx=0.5, rely =   0, anchor="n", relwidth=1.0, relheight=0.5)
+        pane2.place(relx=0.5, rely = 1.0, anchor="s", relwidth=1.0, relheight=0.5)
+        bar.place  (relx=0.5, rely = 0.5, anchor="c", relwidth=1.0)
+    else:
+        # Panes arranged horizontally; vertical splitter bar
+        # adj gives tree pane more room when tiling vertically.
+        adj = g.choose(verticalFlag != self.splitVerticalFlag,0.65,0.5)
+        pane1.place(rely=0.5, relx =   0, anchor="w", relheight=1.0, relwidth=adj)
+        pane2.place(rely=0.5, relx = 1.0, anchor="e", relheight=1.0, relwidth=1.0-adj)
+        bar.place  (rely=0.5, relx = adj, anchor="c", relheight=1.0)
 #@nonl
 #@-node:ekr.20031218072017.3952:placeSplitter
 #@-node:ekr.20031218072017.3945:Creating the splitter
 #@+node:ekr.20031218072017.3953:Creating the icon area
 #@+node:ekr.20031218072017.3954:createIconBar
 def createIconBar (self):
-	
-	"""Create an empty icon bar in the packer's present position"""
+    
+    """Create an empty icon bar in the packer's present position"""
 
-	if not self.iconFrame:
-		self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
-		self.iconFrame.pack(fill="x",pady=2)
+    if not self.iconFrame:
+        self.iconFrame = Tk.Frame(self.outerFrame,height="5m",bd=2,relief="groove")
+        self.iconFrame.pack(fill="x",pady=2)
 #@nonl
 #@-node:ekr.20031218072017.3954:createIconBar
 #@+node:ekr.20031218072017.3955:hideIconBar
 def hideIconBar (self):
-	
-	"""Hide the icon bar by unpacking it.
-	
-	A later call to showIconBar will repack it in a new location."""
-	
-	if self.iconFrame:
-		self.iconFrame.pack_forget()
+    
+    """Hide the icon bar by unpacking it.
+    
+    A later call to showIconBar will repack it in a new location."""
+    
+    if self.iconFrame:
+        self.iconFrame.pack_forget()
 #@-node:ekr.20031218072017.3955:hideIconBar
 #@+node:ekr.20031218072017.3956:clearIconBar
 def clearIconBar(self):
-	
-	"""Destroy all the widgets in the icon bar"""
-	
-	f = self.iconFrame
-	if not f: return
-	
-	for slave in f.pack_slaves():
-		slave.destroy()
+    
+    """Destroy all the widgets in the icon bar"""
+    
+    f = self.iconFrame
+    if not f: return
+    
+    for slave in f.pack_slaves():
+        slave.destroy()
 
-	f.configure(height="5m") # The default height.
-	g.app.iconWidgetCount = 0
-	g.app.iconImageRefs = []
+    f.configure(height="5m") # The default height.
+    g.app.iconWidgetCount = 0
+    g.app.iconImageRefs = []
 #@-node:ekr.20031218072017.3956:clearIconBar
 #@+node:ekr.20031218072017.3957:showIconBar
 def showIconBar(self):
-	
-	"""Show the icon bar by repacking it"""
+    
+    """Show the icon bar by repacking it"""
 
-	self.iconFrame.pack(fill="x",pady=2)
+    self.iconFrame.pack(fill="x",pady=2)
 #@nonl
 #@-node:ekr.20031218072017.3957:showIconBar
 #@+node:ekr.20031218072017.3958:addIconButton
 def addIconButton(self,text=None,imagefile=None,image=None,command=None,bg=None):
-	
-	"""Add a button containing text or a picture to the icon bar.
-	
-	Pictures take precedence over text"""
-	
-	f = self.iconFrame
-	if not imagefile and not image and not text: return
+    
+    """Add a button containing text or a picture to the icon bar.
+    
+    Pictures take precedence over text"""
+    
+    f = self.iconFrame
+    if not imagefile and not image and not text: return
 
-	# First define n.	
-	try:
-		g.app.iconWidgetCount += 1
-		n = g.app.iconWidgetCount
-	except:
-		n = g.app.iconWidgetCount = 1
+    # First define n.	
+    try:
+        g.app.iconWidgetCount += 1
+        n = g.app.iconWidgetCount
+    except:
+        n = g.app.iconWidgetCount = 1
 
-	if not command:
-		def command(n=n):
-			print "command for widget %s" % (n)
+    if not command:
+        def command(n=n):
+            print "command for widget %s" % (n)
 
-	if imagefile or image:
-		<< create a picture >>
-	elif text:
-		w = min(6,len(text))
-		b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
-		b.pack(side="left", fill="y")
-		return b
-		
-	return None
+    if imagefile or image:
+        << create a picture >>
+    elif text:
+        w = min(6,len(text))
+        b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
+        b.pack(side="left", fill="y")
+        return b
+        
+    return None
 #@nonl
 #@+node:ekr.20031218072017.3959:<< create a picture >>
 try:
-	if imagefile:
-		# Create the image.  Throws an exception if file not found
-		imagefile = g.os_path_join(g.app.loadDir,imagefile)
-		imagefile = g.os_path_normpath(imagefile)
-		image = Tk.PhotoImage(master=g.app.root,file=imagefile)
-		
-		# Must keep a reference to the image!
-		try:
-			refs = g.app.iconImageRefs
-		except:
-			refs = g.app.iconImageRefs = []
-	
-		refs.append((imagefile,image),)
-	
-	if not bg:
-		bg = f.cget("bg")
+    if imagefile:
+        # Create the image.  Throws an exception if file not found
+        imagefile = g.os_path_join(g.app.loadDir,imagefile)
+        imagefile = g.os_path_normpath(imagefile)
+        image = Tk.PhotoImage(master=g.app.root,file=imagefile)
+        
+        # Must keep a reference to the image!
+        try:
+            refs = g.app.iconImageRefs
+        except:
+            refs = g.app.iconImageRefs = []
+    
+        refs.append((imagefile,image),)
+    
+    if not bg:
+        bg = f.cget("bg")
 
-	b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
-	b.pack(side="left",fill="y")
-	return b
-	
+    b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
+    b.pack(side="left",fill="y")
+    return b
+    
 except:
-	g.es_exception()
-	return None
+    g.es_exception()
+    return None
 #@nonl
 #@-node:ekr.20031218072017.3959:<< create a picture >>
 #@-node:ekr.20031218072017.3958:addIconButton
 #@-node:ekr.20031218072017.3953:Creating the icon area
 #@+node:ekr.20031218072017.3960:Creating the status area
-@tabwidth 4
+
+
 #@+node:ekr.20031218072017.3961:createStatusLine
 def createStatusLine (self):
-	
-	if self.statusFrame and self.statusLabel:
-		return
-	
-	self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-	statusFrame.pack(fill="x",pady=1)
-	
-	text = "line 0, col 0"
-	width = len(text) + 4
-	self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-	self.statusLabel.pack(side="left",padx=1)
-	
-	bg = statusFrame.cget("background")
-	self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-	self.statusText.pack(side="left",expand=1,fill="x")
+    
+    if self.statusFrame and self.statusLabel:
+        return
+    
+    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
+    statusFrame.pack(fill="x",pady=1)
+    
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
+    self.statusLabel.pack(side="left",padx=1)
+    
+    bg = statusFrame.cget("background")
+    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
+    self.statusText.pack(side="left",expand=1,fill="x")
 
-	# Register an idle-time handler to update the row and column indicators.
-	self.statusFrame.after_idle(self.updateStatusRowCol)
+    # Register an idle-time handler to update the row and column indicators.
+    self.statusFrame.after_idle(self.updateStatusRowCol)
 #@nonl
 #@-node:ekr.20031218072017.3961:createStatusLine
 #@+node:ekr.20031218072017.3962:clearStatusLine
 def clearStatusLine (self):
-	
-	t = self.statusText
-	if not t: return
-	
-	t.configure(state="normal")
-	t.delete("1.0","end")
-	t.configure(state="disabled")
+    
+    t = self.statusText
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
 #@nonl
 #@-node:ekr.20031218072017.3962:clearStatusLine
 #@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 def disableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="disabled",background="gray")
-	
+    
+    t = self.statusText
+    if t:
+        t.configure(state="disabled",background="gray")
+    
 def enableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="normal",background="pink")
-		t.focus_set()
-		
+    
+    t = self.statusText
+    if t:
+        t.configure(state="normal",background="pink")
+        t.focus_set()
+        
 def statusLineIsEnabled(self):
-	t = self.statusText
-	if t:
-		state = t.cget("state")
-		return state == "normal"
-	else:
-		return False
+    t = self.statusText
+    if t:
+        state = t.cget("state")
+        return state == "normal"
+    else:
+        return False
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 #@+node:ekr.20031218072017.3963:putStatusLine
 def putStatusLine (self,s,color=None):
-	
-	t = self.statusText ; tags = self.statusColorTags
-	if not t: return
+    
+    t = self.statusText ; tags = self.statusColorTags
+    if not t: return
 
-	t.configure(state="normal")
-	
-	if "black" not in self.log.colorTags:
-		tags.append("black")
-		
-	if color and color not in tags:
-		tags.append(color)
-		t.tag_config(color,foreground=color)
+    t.configure(state="normal")
+    
+    if "black" not in self.log.colorTags:
+        tags.append("black")
+        
+    if color and color not in tags:
+        tags.append(color)
+        t.tag_config(color,foreground=color)
 
-	if color:
-		t.insert("end",s)
-		t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-		t.tag_config("black",foreground="black")
-		t.tag_add("black","end")
-	else:
-		t.insert("end",s)
-	
-	t.configure(state="disabled")
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
 #@nonl
 #@-node:ekr.20031218072017.3963:putStatusLine
 #@+node:EKR.20040424154804:setFocusStatusLine
 def setFocusStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.focus_set()
+    
+    t = self.statusText
+    if t:
+        t.focus_set()
 #@nonl
 #@-node:EKR.20040424154804:setFocusStatusLine
 #@+node:ekr.20031218072017.1733:updateStatusRowCol
 def updateStatusRowCol (self):
-	
-	c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-	gui = g.app.gui
-	if not lab: return
-	
-	# New for Python 2.3: may be called during shutdown.
-	if g.app.killed:
-		return
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
+    gui = g.app.gui
+    if not lab: return
+    
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed:
+        return
 
-	if 0: # New code
-		index = c.frame.body.getInsertionPoint()
-		row,col = c.frame.body.indexToRowColumn(index)
-		index1 = c.frame.body.rowColumnToIndex(row,0)
-	else:
-		index = body.index("insert")
-		row,col = gui.getindex(body,index)
-	
-	if col > 0:
-		if 0: # new code
-			s = c.frame.body.getRange(index1,index2)
-		else:
-			s = body.get("%d.0" % (row),index)
-		s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-		col = g.computeWidth (s,self.tab_width)
+    if 0: # New code
+        index = c.frame.body.getInsertionPoint()
+        row,col = c.frame.body.indexToRowColumn(index)
+        index1 = c.frame.body.rowColumnToIndex(row,0)
+    else:
+        index = body.index("insert")
+        row,col = gui.getindex(body,index)
+    
+    if col > 0:
+        if 0: # new code
+            s = c.frame.body.getRange(index1,index2)
+        else:
+            s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+        col = g.computeWidth (s,self.tab_width)
 
-	if row != self.lastStatusRow or col != self.lastStatusCol:
-		s = "line %d, col %d " % (row,col)
-		lab.configure(text=s)
-		self.lastStatusRow = row
-		self.lastStatusCol = col
-		
-	# Reschedule this routine 100 ms. later.
-	# Don't use after_idle: it hangs Leo.
-	self.statusFrame.after(100,self.updateStatusRowCol)
+    if row != self.lastStatusRow or col != self.lastStatusCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastStatusRow = row
+        self.lastStatusCol = col
+        
+    # Reschedule this routine 100 ms. later.
+    # Don't use after_idle: it hangs Leo.
+    self.statusFrame.after(100,self.updateStatusRowCol)
 #@nonl
 #@-node:ekr.20031218072017.1733:updateStatusRowCol
 #@-node:ekr.20031218072017.3960:Creating the status area
@@ -2179,44 +2180,44 @@ def updateStatusRowCol (self):
 #@+node:ekr.20031218072017.1975:destroyAllObjects
 def destroyAllObjects (self):
 
-	"""Clear all links to objects in a Leo window."""
+    """Clear all links to objects in a Leo window."""
 
-	frame = self ; c = self.c ; tree = frame.tree ; body = self.body
+    frame = self ; c = self.c ; tree = frame.tree ; body = self.body
 
-	# Do this first.
-	<< clear all vnodes and tnodes in the tree >>
+    # Do this first.
+    << clear all vnodes and tnodes in the tree >>
 
-	# Destroy all ivars in subclasses.
-	g.clearAllIvars(c.atFileCommands)
-	g.clearAllIvars(c.fileCommands)
-	g.clearAllIvars(c.importCommands)
-	g.clearAllIvars(c.tangleCommands)
-	g.clearAllIvars(c.undoer)
-	g.clearAllIvars(c)
-	g.clearAllIvars(body.colorizer)
-	g.clearAllIvars(body)
-	g.clearAllIvars(tree)
+    # Destroy all ivars in subclasses.
+    g.clearAllIvars(c.atFileCommands)
+    g.clearAllIvars(c.fileCommands)
+    g.clearAllIvars(c.importCommands)
+    g.clearAllIvars(c.tangleCommands)
+    g.clearAllIvars(c.undoer)
+    g.clearAllIvars(c)
+    g.clearAllIvars(body.colorizer)
+    g.clearAllIvars(body)
+    g.clearAllIvars(tree)
 
-	# This must be done last.
-	frame.destroyAllPanels()
-	g.clearAllIvars(frame)
+    # This must be done last.
+    frame.destroyAllPanels()
+    g.clearAllIvars(frame)
 #@nonl
 #@+node:ekr.20031218072017.1976:<< clear all vnodes and tnodes in the tree>>
 # Using a dict here is essential for adequate speed.
 vList = [] ; tDict = {}
 
 for p in c.allNodes_iter():
-	vList.append(p.v)
-	if p.v.t:
-		key = id(p.v.t)
-		if not tDict.has_key(key):
-			tDict[key] = p.v.t
+    vList.append(p.v)
+    if p.v.t:
+        key = id(p.v.t)
+        if not tDict.has_key(key):
+            tDict[key] = p.v.t
 
 for key in tDict.keys():
-	g.clearAllIvars(tDict[key])
+    g.clearAllIvars(tDict[key])
 
 for v in vList:
-	g.clearAllIvars(v)
+    g.clearAllIvars(v)
 
 vList = [] ; tDict = {} # Remove these references immediately.
 #@nonl
@@ -2224,162 +2225,163 @@ vList = [] ; tDict = {} # Remove these references immediately.
 #@-node:ekr.20031218072017.1975:destroyAllObjects
 #@+node:ekr.20031218072017.3965:destroyAllPanels
 def destroyAllPanels (self):
-	
-	"""Destroy all panels attached to this frame."""
-	
-	panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
+    
+    """Destroy all panels attached to this frame."""
+    
+    panels = (self.comparePanel, self.colorPanel, self.fontPanel, self.prefsPanel)
 
-	for panel in panels:
-		if panel:
-			panel.top.destroy()
-			
-	self.comparePanel = None
-	self.colorPanel = None
-	self.fontPanel = None
-	self.prefsPanel = None
+    for panel in panels:
+        if panel:
+            panel.top.destroy()
+            
+    self.comparePanel = None
+    self.colorPanel = None
+    self.fontPanel = None
+    self.prefsPanel = None
 #@nonl
 #@-node:ekr.20031218072017.3965:destroyAllPanels
 #@+node:ekr.20031218072017.1974:destroySelf
 def destroySelf (self):
-	
-	top = self.top # Remember this: we are about to destroy all of our ivars!
+    
+    top = self.top # Remember this: we are about to destroy all of our ivars!
 
-	if g.app.windowList:
-		self.destroyAllObjects()
+    if g.app.windowList:
+        self.destroyAllObjects()
 
-	top.destroy()
+    top.destroy()
 #@nonl
 #@-node:ekr.20031218072017.1974:destroySelf
 #@-node:ekr.20031218072017.3964:Destroying the frame
 #@-node:ekr.20031218072017.3941: frame.Birth & Death
 #@+node:ekr.20031218072017.3960:Creating the status area
-@tabwidth 4
+
+
 #@+node:ekr.20031218072017.3961:createStatusLine
 def createStatusLine (self):
-	
-	if self.statusFrame and self.statusLabel:
-		return
-	
-	self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
-	statusFrame.pack(fill="x",pady=1)
-	
-	text = "line 0, col 0"
-	width = len(text) + 4
-	self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
-	self.statusLabel.pack(side="left",padx=1)
-	
-	bg = statusFrame.cget("background")
-	self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
-	self.statusText.pack(side="left",expand=1,fill="x")
+    
+    if self.statusFrame and self.statusLabel:
+        return
+    
+    self.statusFrame = statusFrame = Tk.Frame(self.outerFrame,bd=2)
+    statusFrame.pack(fill="x",pady=1)
+    
+    text = "line 0, col 0"
+    width = len(text) + 4
+    self.statusLabel = Tk.Label(statusFrame,text=text,width=width,anchor="w")
+    self.statusLabel.pack(side="left",padx=1)
+    
+    bg = statusFrame.cget("background")
+    self.statusText = Tk.Text(statusFrame,height=1,state="disabled",bg=bg,relief="groove")
+    self.statusText.pack(side="left",expand=1,fill="x")
 
-	# Register an idle-time handler to update the row and column indicators.
-	self.statusFrame.after_idle(self.updateStatusRowCol)
+    # Register an idle-time handler to update the row and column indicators.
+    self.statusFrame.after_idle(self.updateStatusRowCol)
 #@nonl
 #@-node:ekr.20031218072017.3961:createStatusLine
 #@+node:ekr.20031218072017.3962:clearStatusLine
 def clearStatusLine (self):
-	
-	t = self.statusText
-	if not t: return
-	
-	t.configure(state="normal")
-	t.delete("1.0","end")
-	t.configure(state="disabled")
+    
+    t = self.statusText
+    if not t: return
+    
+    t.configure(state="normal")
+    t.delete("1.0","end")
+    t.configure(state="disabled")
 #@nonl
 #@-node:ekr.20031218072017.3962:clearStatusLine
 #@+node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 def disableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="disabled",background="gray")
-	
+    
+    t = self.statusText
+    if t:
+        t.configure(state="disabled",background="gray")
+    
 def enableStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.configure(state="normal",background="pink")
-		t.focus_set()
-		
+    
+    t = self.statusText
+    if t:
+        t.configure(state="normal",background="pink")
+        t.focus_set()
+        
 def statusLineIsEnabled(self):
-	t = self.statusText
-	if t:
-		state = t.cget("state")
-		return state == "normal"
-	else:
-		return False
+    t = self.statusText
+    if t:
+        state = t.cget("state")
+        return state == "normal"
+    else:
+        return False
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 #@+node:ekr.20031218072017.3963:putStatusLine
 def putStatusLine (self,s,color=None):
-	
-	t = self.statusText ; tags = self.statusColorTags
-	if not t: return
+    
+    t = self.statusText ; tags = self.statusColorTags
+    if not t: return
 
-	t.configure(state="normal")
-	
-	if "black" not in self.log.colorTags:
-		tags.append("black")
-		
-	if color and color not in tags:
-		tags.append(color)
-		t.tag_config(color,foreground=color)
+    t.configure(state="normal")
+    
+    if "black" not in self.log.colorTags:
+        tags.append("black")
+        
+    if color and color not in tags:
+        tags.append(color)
+        t.tag_config(color,foreground=color)
 
-	if color:
-		t.insert("end",s)
-		t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-		t.tag_config("black",foreground="black")
-		t.tag_add("black","end")
-	else:
-		t.insert("end",s)
-	
-	t.configure(state="disabled")
+    if color:
+        t.insert("end",s)
+        t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+        t.tag_config("black",foreground="black")
+        t.tag_add("black","end")
+    else:
+        t.insert("end",s)
+    
+    t.configure(state="disabled")
 #@nonl
 #@-node:ekr.20031218072017.3963:putStatusLine
 #@+node:EKR.20040424154804:setFocusStatusLine
 def setFocusStatusLine (self):
-	
-	t = self.statusText
-	if t:
-		t.focus_set()
+    
+    t = self.statusText
+    if t:
+        t.focus_set()
 #@nonl
 #@-node:EKR.20040424154804:setFocusStatusLine
 #@+node:ekr.20031218072017.1733:updateStatusRowCol
 def updateStatusRowCol (self):
-	
-	c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
-	gui = g.app.gui
-	if not lab: return
-	
-	# New for Python 2.3: may be called during shutdown.
-	if g.app.killed:
-		return
+    
+    c = self.c ; body = self.bodyCtrl ; lab = self.statusLabel
+    gui = g.app.gui
+    if not lab: return
+    
+    # New for Python 2.3: may be called during shutdown.
+    if g.app.killed:
+        return
 
-	if 0: # New code
-		index = c.frame.body.getInsertionPoint()
-		row,col = c.frame.body.indexToRowColumn(index)
-		index1 = c.frame.body.rowColumnToIndex(row,0)
-	else:
-		index = body.index("insert")
-		row,col = gui.getindex(body,index)
-	
-	if col > 0:
-		if 0: # new code
-			s = c.frame.body.getRange(index1,index2)
-		else:
-			s = body.get("%d.0" % (row),index)
-		s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
-		col = g.computeWidth (s,self.tab_width)
+    if 0: # New code
+        index = c.frame.body.getInsertionPoint()
+        row,col = c.frame.body.indexToRowColumn(index)
+        index1 = c.frame.body.rowColumnToIndex(row,0)
+    else:
+        index = body.index("insert")
+        row,col = gui.getindex(body,index)
+    
+    if col > 0:
+        if 0: # new code
+            s = c.frame.body.getRange(index1,index2)
+        else:
+            s = body.get("%d.0" % (row),index)
+        s = g.toUnicode(s,g.app.tkEncoding) # 9/28/03
+        col = g.computeWidth (s,self.tab_width)
 
-	if row != self.lastStatusRow or col != self.lastStatusCol:
-		s = "line %d, col %d " % (row,col)
-		lab.configure(text=s)
-		self.lastStatusRow = row
-		self.lastStatusCol = col
-		
-	# Reschedule this routine 100 ms. later.
-	# Don't use after_idle: it hangs Leo.
-	self.statusFrame.after(100,self.updateStatusRowCol)
+    if row != self.lastStatusRow or col != self.lastStatusCol:
+        s = "line %d, col %d " % (row,col)
+        lab.configure(text=s)
+        self.lastStatusRow = row
+        self.lastStatusCol = col
+        
+    # Reschedule this routine 100 ms. later.
+    # Don't use after_idle: it hangs Leo.
+    self.statusFrame.after(100,self.updateStatusRowCol)
 #@nonl
 #@-node:ekr.20031218072017.1733:updateStatusRowCol
 #@-node:ekr.20031218072017.3960:Creating the status area
@@ -4187,37 +4189,37 @@ Also, if one is not careful one can take fatal Python errors related to missing 
 #@+node:ekr.20031218072017.836:updateEditMenu
 def updateEditMenu (self):
 
-	c = self.c ; frame = c.frame ; gui = g.app.gui
-	if not c: return
-	try:
-		# Top level Edit menu...
-		enable = frame.menu.enableMenu
-		menu = frame.menu.getMenu("Edit")
-		c.undoer.enableMenuItems()
-		<< enable cut/paste >>
-		if 0: # Always on for now.
-			menu = frame.menu.getMenu("Find...")
-			enable(menu,"Find Next",c.canFind())
-			flag = c.canReplace()
-			enable(menu,"Replace",flag)
-			enable(menu,"Replace, Then Find",flag)
-		# Edit Body submenu...
-		menu = frame.menu.getMenu("Edit Body...")
-		enable(menu,"Extract Section",c.canExtractSection())
-		enable(menu,"Extract Names",c.canExtractSectionNames())
-		enable(menu,"Extract",c.canExtract())
-		enable(menu,"Match Brackets",c.canFindMatchingBracket())
-	except:
-		g.es("exception updating Edit menu")
-		g.es_exception()
+    c = self.c ; frame = c.frame ; gui = g.app.gui
+    if not c: return
+    try:
+        # Top level Edit menu...
+        enable = frame.menu.enableMenu
+        menu = frame.menu.getMenu("Edit")
+        c.undoer.enableMenuItems()
+        << enable cut/paste >>
+        if 0: # Always on for now.
+            menu = frame.menu.getMenu("Find...")
+            enable(menu,"Find Next",c.canFind())
+            flag = c.canReplace()
+            enable(menu,"Replace",flag)
+            enable(menu,"Replace, Then Find",flag)
+        # Edit Body submenu...
+        menu = frame.menu.getMenu("Edit Body...")
+        enable(menu,"Extract Section",c.canExtractSection())
+        enable(menu,"Extract Names",c.canExtractSectionNames())
+        enable(menu,"Extract",c.canExtract())
+        enable(menu,"Match Brackets",c.canFindMatchingBracket())
+    except:
+        g.es("exception updating Edit menu")
+        g.es_exception()
 #@nonl
 #@+node:ekr.20040130164211:<< enable cut/paste >>
 if frame.body.hasFocus():
-	data = frame.body.getSelectedText()
-	canCut = data and len(data) > 0
+    data = frame.body.getSelectedText()
+    canCut = data and len(data) > 0
 else:
-	# This isn't strictly correct, but we can't get the Tk headline selection.
-	canCut = True
+    # This isn't strictly correct, but we can't get the Tk headline selection.
+    canCut = True
 
 enable(menu,"Cut",canCut)
 enable(menu,"Copy",canCut)
@@ -4231,79 +4233,79 @@ enable(menu,"Paste",canPaste)
 #@+node:ekr.20031218072017.837: tkinterGui.__init__
 def __init__ (self):
 
-	# Initialize the base class.
-	leoGui.leoGui.__init__(self,"tkinter")
+    # Initialize the base class.
+    leoGui.leoGui.__init__(self,"tkinter")
 
-	self.bitmap_name = None
-	self.bitmap = None
-	self.win32clipboard = None
-	
-	if 0: # This seems both dangerous and non-functional.
-		if sys.platform == "win32":
-			try:
-				import win32clipboard
-				self.win32clipboard = win32clipboard
-			except:
-				g.es_exception()
+    self.bitmap_name = None
+    self.bitmap = None
+    self.win32clipboard = None
+    
+    if 0: # This seems both dangerous and non-functional.
+        if sys.platform == "win32":
+            try:
+                import win32clipboard
+                self.win32clipboard = win32clipboard
+            except:
+                g.es_exception()
 #@nonl
 #@-node:ekr.20031218072017.837: tkinterGui.__init__
 #@+node:ekr.20031218072017.838:tkBody.createBindings
 def createBindings (self,frame):
-	
-	t = self.bodyCtrl
-	
-	# Event handlers...
-	t.bind("<Button-1>", frame.OnBodyClick)
-	t.bind("<Button-3>", frame.OnBodyRClick)
-	t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
-	t.bind("<Key>", frame.body.onBodyKey)
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
 
-	# Gui-dependent commands...
-	t.bind(g.virtual_event_name("Cut"), frame.OnCut)
-	t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
-	t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
 #@nonl
 #@-node:ekr.20031218072017.838:tkBody.createBindings
 #@+node:ekr.20031218072017.839:<< define editMenuTopTable >>
 self.editMenuTopTable = (
-	("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
-	("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
-	("-",None,None),
-	("Cu&t","Ctrl+X",f.OnCutFromMenu), 
-	("Cop&y","Ctrl+C",f.OnCopyFromMenu),
-	("&Paste","Ctrl+V",f.OnPasteFromMenu),
-	("&Delete",None,c.delete),
-	("Select &All","Ctrl+A",f.body.selectAllText),
-	("-",None,None))
+    ("Can't Undo","Ctrl+Z",c.undoer.undo), # &U reserved for Undo
+    ("Can't Redo","Shift+Ctrl+Z",c.undoer.redo), # &R reserved for Redo
+    ("-",None,None),
+    ("Cu&t","Ctrl+X",f.OnCutFromMenu), 
+    ("Cop&y","Ctrl+C",f.OnCopyFromMenu),
+    ("&Paste","Ctrl+V",f.OnPasteFromMenu),
+    ("&Delete",None,c.delete),
+    ("Select &All","Ctrl+A",f.body.selectAllText),
+    ("-",None,None))
 #@nonl
 #@-node:ekr.20031218072017.839:<< define editMenuTopTable >>
 #@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
 #@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
 def OnCut (self,event=None):
-	
-	"""The handler for the virtual Cut event."""
+    
+    """The handler for the virtual Cut event."""
 
-	frame = self ; c = frame.c ; v = c.currentVnode()
-	
-	# This is probably being subverted by Tk.
-	if g.app.gui.win32clipboard:
-		data = frame.body.getSelectedText()
-		if data:
-			g.app.gui.replaceClipboardWith(data)
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    # This is probably being subverted by Tk.
+    if g.app.gui.win32clipboard:
+        data = frame.body.getSelectedText()
+        if data:
+            g.app.gui.replaceClipboardWith(data)
 
-	# Activate the body key handler by hand.
-	frame.body.forceFullRecolor()
-	frame.body.onBodyWillChange(v,"Cut")
+    # Activate the body key handler by hand.
+    frame.body.forceFullRecolor()
+    frame.body.onBodyWillChange(v,"Cut")
 
 def OnCutFromMenu (self):
-	
-	w = self.getFocus()
-	w.event_generate(g.virtual_event_name("Cut"))
-	
-	frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Cut"))
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
 
-	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-		frame.tree.onHeadChanged(v)
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
 
 
 
@@ -4311,85 +4313,85 @@ def OnCutFromMenu (self):
 #@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
 #@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 def OnCopy (self,event=None):
-	
-	frame = self
+    
+    frame = self
 
-	if g.app.gui.win32clipboard:
-		data = frame.body.getSelectedText()
-		if data:
-			g.app.gui.replaceClipboardWith(data)
-		
-	# Copy never changes dirty bits or syntax coloring.
-	
+    if g.app.gui.win32clipboard:
+        data = frame.body.getSelectedText()
+        if data:
+            g.app.gui.replaceClipboardWith(data)
+        
+    # Copy never changes dirty bits or syntax coloring.
+    
 def OnCopyFromMenu (self):
 
-	frame = self
-	w = frame.getFocus()
-	w.event_generate(g.virtual_event_name("Copy"))
+    frame = self
+    w = frame.getFocus()
+    w.event_generate(g.virtual_event_name("Copy"))
 
 #@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
 #@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 def OnPaste (self,event=None):
-	
-	frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
 
-	# Activate the body key handler by hand.
-	frame.body.forceFullRecolor()
-	frame.body.onBodyWillChange(v,"Paste")
-	
+    # Activate the body key handler by hand.
+    frame.body.forceFullRecolor()
+    frame.body.onBodyWillChange(v,"Paste")
+    
 def OnPasteFromMenu (self):
-	
-	frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
 
-	w = self.getFocus()
-	w.event_generate(g.virtual_event_name("Paste"))
-	
-	if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
-		frame.tree.onHeadChanged(v)
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Paste"))
+    
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
 #@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
 #@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
 #@+node:ekr.20031218072017.844:Clipboard (tkGui)
 #@+node:ekr.20031218072017.845:replaceClipboardWith
 def replaceClipboardWith (self,s):
-	
-	wcb = g.app.gui.win32clipboard
+    
+    wcb = g.app.gui.win32clipboard
 
-	if wcb:
-		try:
-			wcb.OpenClipboard(0)
-			wcb.EmptyClipboard()
-			wcb.SetClipboardText(s)
-			wcb.CloseClipboard()
-		except:
-			g.es_exception()
-	else:
-		self.root.clipboard_clear()
-		self.root.clipboard_append(s)
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)
 #@nonl
 #@-node:ekr.20031218072017.845:replaceClipboardWith
 #@+node:ekr.20031218072017.846:getTextFromClipboard
 def getTextFromClipboard (self):
-	
-	wcb = g.app.gui.win32clipboard
-	
-	if wcb:
-		try:
-			wcb.OpenClipboard(0)
-			data = wcb.GetClipboardData()
-			wcb.CloseClipboard()
-			# g.trace(data)
-			return data
-		except TypeError:
-			# g.trace(None)
-			return None
-		except:
-			g.es_exception()
-			return None
-	else:
-		try:
-			return self.root.selection_get(selection="CLIPBOARD")
-		except:
-			return None
+    
+    wcb = g.app.gui.win32clipboard
+    
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            return self.root.selection_get(selection="CLIPBOARD")
+        except:
+            return None
 #@-node:ekr.20031218072017.846:getTextFromClipboard
 #@-node:ekr.20031218072017.844:Clipboard (tkGui)
 #@-node:ekr.20031218072017.835:(Use pywin extensions to improve cut/paste between apps)
@@ -4778,121 +4780,121 @@ Subject: fatal bug in Leo headline handling
 #@nonl
 #@+node:ekr.20031218072017.1333:onHeadChanged
 def onHeadChanged (self,p):
-	
-	"""Handle a change to headline text."""
-	
-	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
+    
+    """Handle a change to headline text."""
+    
+    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
 
 #@-node:ekr.20031218072017.1333:onHeadChanged
 #@+node:ekr.20031218072017.1334:OnHeadlineKey
 def OnHeadlineKey (self,p,event):
-	
-	"""Handle a key event in a headline."""
+    
+    """Handle a key event in a headline."""
 
-	ch = event.char
-	self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
+    ch = event.char
+    self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
 
 
 #@-node:ekr.20031218072017.1334:OnHeadlineKey
 #@+node:ekr.20031218072017.1335:idle_head_key
 def idle_head_key (self,p,ch=None):
-	
-	"""Update headline text at idle time."""
-	
-	c = self.c ; v = p.v
+    
+    """Update headline text at idle time."""
+    
+    c = self.c ; v = p.v
 
-	if not p or not p.edit_text() or p != c.currentPosition():
-		return "break"
-		
-	edit_text = p.edit_text()
+    if not p or not p.edit_text() or p != c.currentPosition():
+        return "break"
+        
+    edit_text = p.edit_text()
 
-	if g.doHook("headkey1",c=c,p=p,ch=ch):
-		return "break" # The hook claims to have handled the event.
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
 
-	<< set s to the widget text >>
-	<< set head to vnode text >>
-	changed = s != head
-	done = ch and (ch == '\r' or ch == '\n')
-	if not changed and not done:
-		return "break"
+    << set s to the widget text >>
+    << set head to vnode text >>
+    changed = s != head
+    done = ch and (ch == '\r' or ch == '\n')
+    if not changed and not done:
+        return "break"
 
-	if changed:
-		c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
-	index = edit_text.index("insert")
-	if changed:
-		<< update v and all nodes joined to v >>
-	<< reconfigure v and all nodes joined to v >>
-	<< update the screen >>
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+    index = edit_text.index("insert")
+    if changed:
+        << update v and all nodes joined to v >>
+    << reconfigure v and all nodes joined to v >>
+    << update the screen >>
 
-	g.doHook("headkey2",c=c,p=p,ch=ch)
-	return "break"
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"
 
 #@+node:ekr.20031218072017.1336:<< set s to the widget text >>
 s = edit_text.get("1.0","end")
 
 if 1: # 6/10/04: Truncate headline text to workaround Tk problems...
-	# Another kludge: remove one or two trailing newlines before warning of truncation.
-	if s and s[-1] == '\n': s = s[:-1]
-	if s and s[-1] == '\n': s = s[:-1]
-	i = s.find('\n')
-	if i > -1:
-		# g.trace(i,len(s),repr(s))
-		g.es("Truncating headline to one line",color="blue")
-		s = s[:i]
-	if len(s) > 250:
-		g.es("Truncating headline to 250 characters",color="blue")
-		s = s[:250]
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i > -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    if len(s) > 250:
+        g.es("Truncating headline to 250 characters",color="blue")
+        s = s[:250]
 
 s = g.toUnicode(s,g.app.tkEncoding) # 2/25/03
 
 if not s:
-	s = u""
-	
+    s = u""
+    
 if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
-	s = s.replace('\n','')
-	s = s.replace('\r','')
+    s = s.replace('\n','')
+    s = s.replace('\r','')
 #@nonl
 #@-node:ekr.20031218072017.1336:<< set s to the widget text >>
 #@+node:ekr.20031218072017.1337:<< set head to vnode text >>
 head = p.headString()
 if head == None:
-	head = u""
+    head = u""
 head = g.toUnicode(head,"utf-8")
 #@-node:ekr.20031218072017.1337:<< set head to vnode text >>
 #@+node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 c.beginUpdate()
 if 1: # update...
-	# Update changed bit.
-	if not c.changed:
-		c.setChanged(True)
-	# Update all dirty bits.
-	p.setDirty()
-	# Update v.
-	v.initHeadString(s)
-	edit_text.delete("1.0","end")
-	edit_text.insert("end",s)
-	edit_text.mark_set("insert",index)
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    p.setDirty()
+    # Update v.
+    v.initHeadString(s)
+    edit_text.delete("1.0","end")
+    edit_text.insert("end",s)
+    edit_text.mark_set("insert",index)
 c.endUpdate(False) # do not redraw now.
 #@nonl
 #@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 #@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
 # Reconfigure v's headline.
 if done:
-	self.setDisabledLabelState(p)
+    self.setDisabledLabelState(p)
 
 edit_text.configure(width=self.headWidth(v))
 #@nonl
 #@-node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
 #@+node:ekr.20031218072017.1340:<< update the screen >>
 if done:
-	c.beginUpdate()
-	self.endEditLabel()
-	c.endUpdate()
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
 
 elif changed:
-	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
-	# Redrawing the whole screen now messes up the cursor in the headline.
-	self.drawIcon(p) # just redraw the icon.
+    # update v immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.
 #@nonl
 #@-node:ekr.20031218072017.1340:<< update the screen >>
 #@-node:ekr.20031218072017.1335:idle_head_key
@@ -6124,19 +6126,19 @@ reading d:\test.leo
 #@-node:ekr.20031218072017.721:Test File for Non Expanding Tabs
 #@+node:ekr.20031218072017.722:setTabWidth
 def setTabWidth (self, w):
-	
-	try: # This can fail when called from scripts
-		# Use the present font for computations.
-		font = self.bodyCtrl.cget("font")
-		root = g.app.root # 4/3/03: must specify root so idle window will work properly.
-		font = tkFont.Font(root=root,font=font)
-		tabw = font.measure(" " * abs(w)) # 7/2/02
-		self.bodyCtrl.configure(tabs=tabw)
-		self.tab_width = w
-		# g.trace(w,tabw)
-	except:
-		g.es_exception()
-		pass
+    
+    try: # This can fail when called from scripts
+        # Use the present font for computations.
+        font = self.bodyCtrl.cget("font")
+        root = g.app.root # 4/3/03: must specify root so idle window will work properly.
+        font = tkFont.Font(root=root,font=font)
+        tabw = font.measure(" " * abs(w)) # 7/2/02
+        self.bodyCtrl.configure(tabs=tabw)
+        self.tab_width = w
+        # g.trace(w,tabw)
+    except:
+        g.es_exception()
+        pass
 #@-node:ekr.20031218072017.722:setTabWidth
 #@-node:ekr.20031218072017.718:(tab bug)
 #@-node:ekr.20031218072017.673:Tk bugs
@@ -6180,169 +6182,169 @@ Another possibility would be to save the scrolling state, but that is very gui-d
 #@+node:ekr.20031218072017.1579:putVnodes
 def putVnodes (self):
 
-	"""Puts all <v> elements in the order in which they appear in the outline."""
+    """Puts all <v> elements in the order in which they appear in the outline."""
 
-	c = self.c
-	c.clearAllVisited()
+    c = self.c
+    c.clearAllVisited()
 
-	self.put("<vnodes>") ; self.put_nl()
+    self.put("<vnodes>") ; self.put_nl()
 
-	# Make only one copy for all calls.
-	self.currentPosition = c.currentPosition() 
-	self.topPosition     = c.topPosition()
+    # Make only one copy for all calls.
+    self.currentPosition = c.currentPosition() 
+    self.topPosition     = c.topPosition()
 
-	if self.usingClipboard:
-		self.putVnode(self.currentPosition) # Write only current tree.
-	else:
-		for p in c.rootPosition().self_and_siblings_iter():
-			self.putVnode(p) # Write the next top-level node.
+    if self.usingClipboard:
+        self.putVnode(self.currentPosition) # Write only current tree.
+    else:
+        for p in c.rootPosition().self_and_siblings_iter():
+            self.putVnode(p) # Write the next top-level node.
 
-	self.put("</vnodes>") ; self.put_nl()
+    self.put("</vnodes>") ; self.put_nl()
 #@nonl
 #@-node:ekr.20031218072017.1579:putVnodes
 #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
-	c = self.c ; v = None
-	setCurrent = setExpanded = setMarked = setOrphan = setTop = False
-	tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
-	# we have already matched <v.
-	while 1:
-		if self.matchTag("a=\""):
-			<< Handle vnode attribute bits >>
-		elif self.matchTag("t="):
-			# New for 4.1.  Read either "Tnnn" or "gnx".
-			tref = self.getDqString()
-		elif self.matchTag("vtag=\"V"):
-			self.getIndex() ; self.getDquote() # ignored
-		elif self.matchTag("tnodeList="):
-			s = self.getDqString()
-			tnodeList = self.getTnodeList(s) # New for 4.0
-		elif self.matchTag(">"):
-			break
-		else: # New for 4.0: allow unknown attributes.
-			# New in 4.2: allow pickle'd and hexlify'ed values.
-			attr,val = self.getUnknownAttribute()
-			attrDict[attr] = val
-	# Headlines are optional.
-	if self.matchTag("<vh>"):
-		headline = self.getEscapedString() ; self.getTag("</vh>")
-	
-	# g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-	if skip:
-		v = self.getExistingVnode(tref)
-	else:
-		v,skip = self.createVnode(parent,back,tref,headline,attrDict)
-		if tnodeList:
-			v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-			# g.trace("%4d" % len(tnodeList),v)
+    c = self.c ; v = None
+    setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+    tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+    # we have already matched <v.
+    while 1:
+        if self.matchTag("a=\""):
+            << Handle vnode attribute bits >>
+        elif self.matchTag("t="):
+            # New for 4.1.  Read either "Tnnn" or "gnx".
+            tref = self.getDqString()
+        elif self.matchTag("vtag=\"V"):
+            self.getIndex() ; self.getDquote() # ignored
+        elif self.matchTag("tnodeList="):
+            s = self.getDqString()
+            tnodeList = self.getTnodeList(s) # New for 4.0
+        elif self.matchTag(">"):
+            break
+        else: # New for 4.0: allow unknown attributes.
+            # New in 4.2: allow pickle'd and hexlify'ed values.
+            attr,val = self.getUnknownAttribute()
+            attrDict[attr] = val
+    # Headlines are optional.
+    if self.matchTag("<vh>"):
+        headline = self.getEscapedString() ; self.getTag("</vh>")
+    
+    # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+    if skip:
+        v = self.getExistingVnode(tref)
+    else:
+        v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+        if tnodeList:
+            v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+            # g.trace("%4d" % len(tnodeList),v)
 
-	<< Set the remembered status bits >>
+    << Set the remembered status bits >>
 
-	# Recursively create all nested nodes.
-	parent = v ; back = None
-	while self.matchTag("<v"):
-		append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
-		append2 = appendToTopStack and len(self.topVnodeStack) == 0
-		back = self.getVnode(parent,back,skip,
-			appendToCurrentStack=append1,appendToTopStack=append2)
-			
-	<< Append to current or top stack >>
+    # Recursively create all nested nodes.
+    parent = v ; back = None
+    while self.matchTag("<v"):
+        append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+        append2 = appendToTopStack and len(self.topVnodeStack) == 0
+        back = self.getVnode(parent,back,skip,
+            appendToCurrentStack=append1,appendToTopStack=append2)
+            
+    << Append to current or top stack >>
 
-	# End this vnode.
-	self.getTag("</v>")
-	return v
+    # End this vnode.
+    self.getTag("</v>")
+    return v
 #@nonl
 #@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
 # The a=" has already been seen.
 while 1:
-	if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
-	elif self.matchChar('D'): pass # Not used.
-	elif self.matchChar('E'): setExpanded = True
-	elif self.matchChar('M'): setMarked = True
-	elif self.matchChar('O'): setOrphan = True
-	elif self.matchChar('T'): setTop = True
-	elif self.matchChar('V'): setCurrent = True
-	else: break
+    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+    elif self.matchChar('D'): pass # Not used.
+    elif self.matchChar('E'): setExpanded = True
+    elif self.matchChar('M'): setMarked = True
+    elif self.matchChar('O'): setOrphan = True
+    elif self.matchChar('T'): setTop = True
+    elif self.matchChar('V'): setCurrent = True
+    else: break
 
 self.getDquote()
 #@nonl
 #@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
 #@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
 if setCurrent:
-	self.currentVnodeStack = [v]
+    self.currentVnodeStack = [v]
 
 if setTop:
-	self.topVnodeStack = [v]
-	
+    self.topVnodeStack = [v]
+    
 if setExpanded:
-	v.initExpandedBit()
-	
+    v.initExpandedBit()
+    
 if setMarked:
-	v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+    v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
 
 if setOrphan:
-	v.setOrphan()
+    v.setOrphan()
 #@nonl
 #@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
 #@+node:ekr.20040326055828:<< Append to current or top stack >>
 if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
-	#g.trace("append current",v)
-	self.currentVnodeStack.append(v)
-	
+    #g.trace("append current",v)
+    self.currentVnodeStack.append(v)
+    
 if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
-	#g.trace("append top",v)
-	self.topVnodeStack.append(v)
+    #g.trace("append top",v)
+    self.topVnodeStack.append(v)
 #@nonl
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 def putVnode (self,p):
 
-	"""Write a <v> element corresponding to a vnode."""
+    """Write a <v> element corresponding to a vnode."""
 
-	fc = self ; c = fc.c ; v = p.v
-	isThin = p.isAtThinFileNode()
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
 
-	fc.put("<v")
-	<< Put tnode index >>
-	<< Put attribute bits >>
-	<< Put tnodeList and unKnownAttributes >>
-	fc.put(">")
-	<< Write the head text >>
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
 
-	# New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
-	if p.hasChildren():
-		if isThin and not p.isOrphan() and not self.usingClipboard:
-			# g.trace("skipping child vnodes for", p.headString())
-			pass
-		else:
-			fc.put_nl()
-			# This optimization eliminates all "recursive" copies.
-			p.moveToFirstChild()
-			while 1:
-				fc.putVnode(p)
-				if p.hasNext(): p.moveToNext()
-				else:           break
-			p.moveToParent()
+    # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if isThin and not p.isOrphan() and not self.usingClipboard:
+            # g.trace("skipping child vnodes for", p.headString())
+            pass
+        else:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
 
-	fc.put("</v>") ; fc.put_nl()
+    fc.put("</v>") ; fc.put_nl()
 #@nonl
 #@+node:ekr.20031218072017.1864:<< Put tnode index >>
 if v.t.fileIndex:
-	if g.app.use_gnx:
-		gnx = g.app.nodeIndices.toString(v.t.fileIndex)
-		fc.put(" t=") ; fc.put_in_dquotes(gnx)
-	else:
-		fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
-		
-	# g.trace(v.t)
-	if not isThin or self.usingClipboard:
-		v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if not isThin or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
 else:
-	g.trace(v.t.fileIndex,v)
-	g.es("error writing file(bad v.t.fileIndex)!")
-	g.es("try using the Save To command")
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
 #@nonl
 #@-node:ekr.20031218072017.1864:<< Put tnode index >>
 #@+node:ekr.20031218072017.1865:<< Put attribute bits >>
@@ -6352,9 +6354,9 @@ if p.v.isMarked():   attr += "M"
 if p.v.isOrphan():   attr += "O"
 
 if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
-	# Almost 30% of the entire writing time came from here!!!
-	if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-	if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+    if p.equal(self.currentPosition): attr += "V" # was a bottleneck
 
 if attr: fc.put(' a="%s"' % attr)
 #@nonl
@@ -6364,48 +6366,48 @@ if attr: fc.put(' a="%s"' % attr)
 # New in 4.2: tnode list is in tnode.
 
 if 0: # Debugging.
-	if v.isAnyAtFileNode() and not v.isAtThinFileNode():
-		if hasattr(v.t,"tnodeList"):
-			g.trace(v.headString(),len(v.t.tnodeList))
-		else:
-			g.trace(v.headString(),"no tnodeList")
+    if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
 
 if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-	fc.putTnodeList(v) # New in 4.0
+    fc.putTnodeList(v) # New in 4.0
 
 if hasattr(v,"unknownAttributes"): # New in 4.0
-	self.putUnknownAttributes(v)
+    self.putUnknownAttributes(v)
 #@nonl
 #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
 #@+node:ekr.20031218072017.1866:<< Write the head text >>
 headString = p.v.headString()
 
 if headString:
-	fc.put("<vh>")
-	fc.putEscapedString(headString)
-	fc.put("</vh>")
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
 #@nonl
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@+node:ekr.20031218072017.2297:fileCommands.open
 def open(self,file,fileName):
 
-	c = self.c ; frame = c.frame
-	# Read the entire file into the buffer
-	self.fileBuffer = file.read() ; file.close()
-	self.fileIndex = 0
-	<< Set the default directory >>
-	self.topPosition = None
-	c.beginUpdate()
-	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
-	frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
-	if 0: # 1/30/04: this is useless.
-		if self.topPosition: 
-			c.setTopVnode(self.topPosition)
-	c.endUpdate()
-	# delete the file buffer
-	self.fileBuffer = ""
-	return ok
+    c = self.c ; frame = c.frame
+    # Read the entire file into the buffer
+    self.fileBuffer = file.read() ; file.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    self.topPosition = None
+    c.beginUpdate()
+    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
+    frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
+    if 0: # 1/30/04: this is useless.
+        if self.topPosition: 
+            c.setTopVnode(self.topPosition)
+    c.endUpdate()
+    # delete the file buffer
+    self.fileBuffer = ""
+    return ok
 #@nonl
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
@@ -6414,32 +6416,32 @@ def open(self,file,fileName):
 dir = g.os_path_dirname(fileName)
 
 if len(dir) > 0:
-	c.openDirectory = dir
+    c.openDirectory = dir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@-node:ekr.20031218072017.2297:fileCommands.open
 #@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
 def readOutlineOnly (self,file,fileName):
 
-	c = self.c
-	# Read the entire file into the buffer
-	self.fileBuffer = file.read() ; file.close()
-	self.fileIndex = 0
-	<< Set the default directory >>
-	c.beginUpdate()
-	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
-	c.endUpdate()
-	c.frame.deiconify()
-	vflag,junk,secondary_ratio = self.frame.initialRatios()
-	c.frame.resizePanesToRatio(ratio,secondary_ratio)
-	if 0: # 1/30/04: this is useless.
-		# This should be done after the pane size has been set.
-		if self.topPosition:
-			c.frame.tree.setTopPosition(self.topPosition)
-			c.redraw()
-	# delete the file buffer
-	self.fileBuffer = ""
-	return ok
+    c = self.c
+    # Read the entire file into the buffer
+    self.fileBuffer = file.read() ; file.close()
+    self.fileIndex = 0
+    << Set the default directory >>
+    c.beginUpdate()
+    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
+    c.endUpdate()
+    c.frame.deiconify()
+    vflag,junk,secondary_ratio = self.frame.initialRatios()
+    c.frame.resizePanesToRatio(ratio,secondary_ratio)
+    if 0: # 1/30/04: this is useless.
+        # This should be done after the pane size has been set.
+        if self.topPosition:
+            c.frame.tree.setTopPosition(self.topPosition)
+            c.redraw()
+    # delete the file buffer
+    self.fileBuffer = ""
+    return ok
 #@nonl
 #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 @ The most natural default directory is the directory containing the .leo file that we are about to open.  If the user has specified the "Default Directory" preference that will over-ride what we are about to set.
@@ -6448,7 +6450,7 @@ def readOutlineOnly (self,file,fileName):
 dir = g.os_path_dirname(fileName)
 
 if len(dir) > 0:
-	c.openDirectory = dir
+    c.openDirectory = dir
 #@nonl
 #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 #@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly

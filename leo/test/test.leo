@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4255" clone_windows="0"/>
 <globals body_outline_ratio="0.292849035187">
-	<global_window_position top="67" left="147" height="881" width="1011"/>
+	<global_window_position top="16" left="146" height="881" width="1011"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,7 +20,7 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846.2"><vh>@thin ../src/leoTest.py</vh></v>
+<v t="ekr.20040303062846.2" a="TV"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
@@ -403,20 +403,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
-<v t="ekr.20040402043516.1"><vh>readLinesClass</vh></v>
-<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
-<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
-<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
-<v t="ekr.20040402093822"><vh>get</vh></v>
-<v t="ekr.20040402072335"><vh>put</vh></v>
-<v t="ekr.20040402081135"><vh>putOperator</vh></v>
-<v t="ekr.20040402080311"><vh>putToken</vh></v>
-<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
-<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
-</v>
-</v>
-<v t="EKR.20040430160416" a="TV"><vh>Tests: for unit tests</vh>
+<v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
 <v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
 <v t="EKR.20040430160416.2"><vh>tex.xml</vh>
 <v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
@@ -654,6 +641,20 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
+<v t="EKR.20040612095237" a="E"><vh>Prototypes of new commands</vh>
+<v t="ekr.20040402043516"><vh>A pretty printer for Leo</vh>
+<v t="ekr.20040402043516.1"><vh>readLinesClass</vh></v>
+<v t="ekr.20040402084155"><vh>prettyPrintNode</vh></v>
+<v t="ekr.20040402064301"><vh>class prettyPrinter</vh>
+<v t="ekr.20040402064301.1"><vh>__init__</vh></v>
+<v t="ekr.20040402093822"><vh>get</vh></v>
+<v t="ekr.20040402072335"><vh>put</vh></v>
+<v t="ekr.20040402081135"><vh>putOperator</vh></v>
+<v t="ekr.20040402080311"><vh>putToken</vh></v>
+<v t="ekr.20040402074431"><vh>putNormalToken</vh></v>
+<v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
+</v>
+</v>
 <v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
 <v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
@@ -691,6 +692,7 @@
 <v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh>
 <v t="EKR.20040611094028"><vh>readLinesGenerator</vh></v>
 <v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -753,7 +755,8 @@ node 1 last line</t>
 <t tx="EKR.20040428145826"></t>
 <t tx="EKR.20040428145826.1"></t>
 <t tx="EKR.20040428150018">text of organizer node</t>
-<t tx="EKR.20040430160416">@ignore</t>
+<t tx="EKR.20040430160416">@tabwidth -4
+@ignore</t>
 <t tx="EKR.20040430160416.1">@language html</t>
 <t tx="EKR.20040430160416.2">&lt;!-- ekr uses the MARK_FOLLOWING to mark _anything_ after \ --&gt;
 
@@ -762,34 +765,34 @@ node 1 last line</t>
 &lt;!DOCTYPE MODE SYSTEM "xmode.dtd"&gt;
 
 &lt;MODE&gt;
-	&lt;PROPS&gt;
-		&lt;PROPERTY NAME="lineComment" VALUE="%" /&gt;
-	&lt;/PROPS&gt;
+    &lt;PROPS&gt;
+        &lt;PROPERTY NAME="lineComment" VALUE="%" /&gt;
+    &lt;/PROPS&gt;
 
-	&lt;RULES&gt;
-		&lt;&lt; general rules &gt;&gt;
-	&lt;/RULES&gt;
+    &lt;RULES&gt;
+        &lt;&lt; general rules &gt;&gt;
+    &lt;/RULES&gt;
 
-	&lt;RULES SET="MATH" DEFAULT="MARKUP"&gt;
-		&lt;&lt; math rules &gt;&gt;
-	&lt;/RULES&gt;
+    &lt;RULES SET="MATH" DEFAULT="MARKUP"&gt;
+        &lt;&lt; math rules &gt;&gt;
+    &lt;/RULES&gt;
 &lt;/MODE&gt;</t>
 <t tx="EKR.20040430160416.3">&lt;!-- $$...$$ --&gt;
 &lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
-	&lt;BEGIN&gt;$$&lt;/BEGIN&gt;
-	&lt;END&gt;$$&lt;/END&gt;
+    &lt;BEGIN&gt;$$&lt;/BEGIN&gt;
+    &lt;END&gt;$$&lt;/END&gt;
 &lt;/SPAN&gt;
 
 &lt;!-- $...$ --&gt;
 &lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
-	&lt;BEGIN&gt;$&lt;/BEGIN&gt;
-	&lt;END&gt;$&lt;/END&gt;
+    &lt;BEGIN&gt;$&lt;/BEGIN&gt;
+    &lt;END&gt;$&lt;/END&gt;
 &lt;/SPAN&gt;
 
 &lt;!-- \[...\] (LaTeX math mode) --&gt;
 &lt;SPAN TYPE="MARKUP" DELEGATE="MATH"&gt;
-	&lt;BEGIN&gt;\[&lt;/BEGIN&gt;
-	&lt;END&gt;\]&lt;/END&gt;
+    &lt;BEGIN&gt;\[&lt;/BEGIN&gt;
+    &lt;END&gt;\]&lt;/END&gt;
 &lt;/SPAN&gt;
 
 &lt;!-- some commands must be handled specially --&gt;
@@ -852,17 +855,17 @@ node 1 last line</t>
 &lt;&lt; remarks &gt;&gt;
 
 &lt;MODE&gt;
-	&lt;PROPS&gt;
-		&lt;PROPERTY NAME="indentPrevLine" VALUE="\s*.{3,}:\s*(#.*)?" /&gt;
-		&lt;PROPERTY NAME="lineComment" VALUE="#" /&gt;
-	&lt;/PROPS&gt;
-	&lt;RULES ESCAPE="\" IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
-		&lt;&lt; comments &gt;&gt;
-		&lt;&lt; literals &gt;&gt;
-		&lt;&lt; operators &gt;&gt;
-		&lt;MARK_PREVIOUS TYPE="FUNCTION" EXCLUDE_MATCH="TRUE"&gt;(&lt;/MARK_PREVIOUS&gt;
-		&lt;&lt; keywords &gt;&gt;
-	&lt;/RULES&gt;
+    &lt;PROPS&gt;
+        &lt;PROPERTY NAME="indentPrevLine" VALUE="\s*.{3,}:\s*(#.*)?" /&gt;
+        &lt;PROPERTY NAME="lineComment" VALUE="#" /&gt;
+    &lt;/PROPS&gt;
+    &lt;RULES ESCAPE="\" IGNORE_CASE="FALSE" HIGHLIGHT_DIGITS="TRUE"&gt;
+        &lt;&lt; comments &gt;&gt;
+        &lt;&lt; literals &gt;&gt;
+        &lt;&lt; operators &gt;&gt;
+        &lt;MARK_PREVIOUS TYPE="FUNCTION" EXCLUDE_MATCH="TRUE"&gt;(&lt;/MARK_PREVIOUS&gt;
+        &lt;&lt; keywords &gt;&gt;
+    &lt;/RULES&gt;
 &lt;/MODE&gt;</t>
 <t tx="EKR.20040430160416.6">&lt;!-- Python mode, by Slava Pestov. Based on PythonTokenMarker by --&gt;
 &lt;!-- Jonathan Revusky --&gt;
@@ -883,23 +886,23 @@ node 1 last line</t>
 
 &lt;!-- Triple-quotes --&gt;
 &lt;SPAN TYPE="LITERAL2"&gt;
-	&lt;BEGIN&gt;"""&lt;/BEGIN&gt;
-	&lt;END&gt;"""&lt;/END&gt;
+    &lt;BEGIN&gt;"""&lt;/BEGIN&gt;
+    &lt;END&gt;"""&lt;/END&gt;
 &lt;/SPAN&gt;
 
 &lt;SPAN TYPE="LITERAL2"&gt;
-	&lt;BEGIN&gt;'''&lt;/BEGIN&gt;
-	&lt;END&gt;'''&lt;/END&gt;
+    &lt;BEGIN&gt;'''&lt;/BEGIN&gt;
+    &lt;END&gt;'''&lt;/END&gt;
 &lt;/SPAN&gt;</t>
 <t tx="EKR.20040430160416.8">&lt;!-- Standard literals --&gt;
 &lt;SPAN TYPE="LITERAL1"&gt;
-	&lt;BEGIN&gt;"&lt;/BEGIN&gt;
-	&lt;END&gt;"&lt;/END&gt;
+    &lt;BEGIN&gt;"&lt;/BEGIN&gt;
+    &lt;END&gt;"&lt;/END&gt;
 &lt;/SPAN&gt;
 
 &lt;SPAN TYPE="LITERAL1"&gt;
-	&lt;BEGIN&gt;'&lt;/BEGIN&gt;
-	&lt;END&gt;'&lt;/END&gt;
+    &lt;BEGIN&gt;'&lt;/BEGIN&gt;
+    &lt;END&gt;'&lt;/END&gt;
 &lt;/SPAN&gt;
 </t>
 <t tx="EKR.20040430160416.9">&lt;SEQ TYPE="OPERATOR"&gt;=&lt;/SEQ&gt;
@@ -918,10 +921,10 @@ node 1 last line</t>
 &lt;SEQ TYPE="OPERATOR"&gt;^&lt;/SEQ&gt;
 &lt;SEQ TYPE="OPERATOR"&gt;~&lt;/SEQ&gt;</t>
 <t tx="EKR.20040430160416.10">&lt;KEYWORDS&gt;
-	&lt;&lt; reserved words &gt;&gt;
-	&lt;&lt; builtins &gt;&gt;
-	&lt;&lt; exceptions &gt;&gt;
-	&lt;&lt; types &gt;&gt;
+    &lt;&lt; reserved words &gt;&gt;
+    &lt;&lt; builtins &gt;&gt;
+    &lt;&lt; exceptions &gt;&gt;
+    &lt;&lt; types &gt;&gt;
 &lt;/KEYWORDS&gt;</t>
 <t tx="EKR.20040430160416.11">&lt;!--  Reserved Words  --&gt;
 &lt;KEYWORD1&gt;and&lt;/KEYWORD1&gt;
@@ -1285,7 +1288,7 @@ More plain text.</t>
 
 line 1
 @line 2
-	@line 3
+    @line 3
 line 4</t>
 <t tx="EKR.20040430162649.22">@nocolor
 @pagewidth 40
@@ -1300,14 +1303,14 @@ tree whose root headline starts with an @silentfile
     Leo creates derived files from @rawfile and @silentfile trees by writing the body text of all nodes of the tree in outline order.  Leo writes the body text _as is_, without recognizing section definitions, without expanding section references, and without treating directives specially in any way.  In particular, Leo copies all directives, including @space or @c directives, to the derived file as text. Exception: Leo recognizes the @ignore directive in @rawfile or @silentfile nodes, so you may use the @ignore directive as usual to prevent Leo from writing @rawfile and @silentfile trees.
 
 There are several difference between @rawfile and @silentfile trees:
-	
+    
   This
   is
   a
   test.
 
   1. This is the first line and it is really really really long. And it has
-	 a hanging indentation.
+     a hanging indentation.
      and another line.
 
   2. This is a lllllllllllllllllllllllllllllllllllloooooooooooooooooong
@@ -1363,186 +1366,186 @@ print ; print '-' * 20
 sync(files) # push or pull, depending on date.
 </t>
 <t tx="EKR.20040504083716.39">def sync(files):
-	
-	"""Do a pull or a push, depending on the date of the files."""
-	
-	none, push, pull = 'None', 'push', 'pull'
-	mu = g.mulderUpdateAlgorithm()
+    
+    """Do a pull or a push, depending on the date of the files."""
+    
+    none, push, pull = 'None', 'push', 'pull'
+    mu = g.mulderUpdateAlgorithm()
 
-	for sourcefilename, targetfilename in files:
-		&lt;&lt; compute sourcetime and targettime &gt;&gt;
-		&lt;&lt; compute operation &gt;&gt;
-		if operation == push:
-			if testing: print push, sourcefilename, targetfilename
-			strippedLines = mu.removeSentinelsFromFile(sourcefilename)
-			mu.write_if_changed(strippedLines,sourcefilename,targetfilename)
-			mu.copy_time(sourcefilename,targetfilename)
-		elif operation == pull:
-			if testing: print pull, sourcefilename, targetfilename
-			if sourcetime:
-				mu.propagateDiffsToSentinelsFile(sourcefilename,targetfilename)
-				mu.copy_time(targetfilename,sourcefilename)
-			else:
-				shutil.copy2(targetfilename,sourcefilename)</t>
+    for sourcefilename, targetfilename in files:
+        &lt;&lt; compute sourcetime and targettime &gt;&gt;
+        &lt;&lt; compute operation &gt;&gt;
+        if operation == push:
+            if testing: print push, sourcefilename, targetfilename
+            strippedLines = mu.removeSentinelsFromFile(sourcefilename)
+            mu.write_if_changed(strippedLines,sourcefilename,targetfilename)
+            mu.copy_time(sourcefilename,targetfilename)
+        elif operation == pull:
+            if testing: print pull, sourcefilename, targetfilename
+            if sourcetime:
+                mu.propagateDiffsToSentinelsFile(sourcefilename,targetfilename)
+                mu.copy_time(targetfilename,sourcefilename)
+            else:
+                shutil.copy2(targetfilename,sourcefilename)</t>
 <t tx="EKR.20040504083716.44"># This is some basic testing.
 
 @ignore</t>
 <t tx="EKR.20040504083716.45">@others</t>
 <t tx="EKR.20040504083716.47">class sentinel_test(TestCase):
-	@others</t>
+    @others</t>
 <t tx="EKR.20040504083716.48">def setUp(self):
-	self.prefix = ["#@+leo-ver=4\n",
+    self.prefix = ["#@+leo-ver=4\n",
 "#@+node:@file sentinel.py\n",
 "#@@language python\n"]
-	self.postfix = ["#@-node:@file sentinel.py\n",
+    self.postfix = ["#@-node:@file sentinel.py\n",
 "#@-leo\n"]
 </t>
 <t tx="EKR.20040504083716.49">def setup_inputfile(self, input):
-	classname = self.__class__.__name__
-	self.input_filename = os.path.join('test/s_%s.txt' % classname)
-	self.output_filename = os.path.join('test/d_%s.txt' % classname)
-	outfile = file(self.input_filename, "w")
-	for line in input:
-		outfile.write(line)
-	outfile.close()
-	
-	
+    classname = self.__class__.__name__
+    self.input_filename = os.path.join('test/s_%s.txt' % classname)
+    self.output_filename = os.path.join('test/d_%s.txt' % classname)
+    outfile = file(self.input_filename, "w")
+    for line in input:
+        outfile.write(line)
+    outfile.close()
+    
+    
  
 </t>
 <t tx="EKR.20040504083716.50">def setup_configfile(self):
-	self.configfilename = "test/sentinel.cfg"
-	outfile = file(self.configfilename, "w")
-	outfile.write("[sentinel]\n")
-	outfile.write("\ns1=%s\n" % self.input_filename)
-	outfile.write("\nd1=%s\n" % self.output_filename)
-	outfile.close()
+    self.configfilename = "test/sentinel.cfg"
+    outfile = file(self.configfilename, "w")
+    outfile.write("[sentinel]\n")
+    outfile.write("\ns1=%s\n" % self.input_filename)
+    outfile.write("\nd1=%s\n" % self.output_filename)
+    outfile.close()
 
 </t>
 <t tx="EKR.20040504083716.51"></t>
 <t tx="EKR.20040504083716.52">class insert_test(sentinel_test):
-	@others</t>
+    @others</t>
 <t tx="EKR.20040504083716.53">def setUp(self):
-	sentinel_test.setUp(self)
-	self.setup_inputfile(self.prefix + 
+    sentinel_test.setUp(self)
+    self.setup_inputfile(self.prefix + 
 ["Proof of concept implementation of sentinel free Leo files.\n",
 "We try to insert a line after here\n",
 "This should be after the inserted line\n",
 "This should be the last line in the file\n"]
  + self.postfix)
 
-	# here are the same lines, without sentinels
-	self.lines = ["Proof of concept implementation of sentinel free Leo files.\n",
-	 "We try to insert a line after here\n",
-	 "This should be after the inserted line\n",
-	 "This should be the last line in the file\n"]
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.lines = ["Proof of concept implementation of sentinel free Leo files.\n",
+     "We try to insert a line after here\n",
+     "This should be after the inserted line\n",
+     "This should be the last line in the file\n"]
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.54">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	assert file(self.output_filename).readlines() == self.lines
-	
-	# then insert one line in the sentinel free output.
-	lines = self.lines
-	lines[2:2] = ["This is an inserted line\n"]
-	outfile = file(self.output_filename, "w")
-	for line in lines:
-		outfile.write(line)
-	outfile.close()
-	
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# re-generate the output.
-	sentinel.main(self.configfilename, "push")
-	
-	# and check for equality.
-	assert file(self.output_filename).readlines() == lines
-	
-	
-	
-	
-	
-	
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    assert file(self.output_filename).readlines() == self.lines
+    
+    # then insert one line in the sentinel free output.
+    lines = self.lines
+    lines[2:2] = ["This is an inserted line\n"]
+    outfile = file(self.output_filename, "w")
+    for line in lines:
+        outfile.write(line)
+    outfile.close()
+    
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # re-generate the output.
+    sentinel.main(self.configfilename, "push")
+    
+    # and check for equality.
+    assert file(self.output_filename).readlines() == lines
+    
+    
+    
+    
+    
+    
 
 
 
 </t>
 <t tx="EKR.20040504083716.55"></t>
 <t tx="EKR.20040504083716.56">class replace_test(sentinel_test):
-	"""
-	Replace a single line.
-	"""
-	@others</t>
+    """
+    Replace a single line.
+    """
+    @others</t>
 <t tx="EKR.20040504083716.57">def setUp(self):
-	sentinel_test.setUp(self)
-	self.lines = [
-	 "Proof of concept implementation of sentinel free Leo files.\n",
-	 "This line should be replaced\n",
-	 "This should be the last line in the file\n"]
-	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+    sentinel_test.setUp(self)
+    self.lines = [
+     "Proof of concept implementation of sentinel free Leo files.\n",
+     "This line should be replaced\n",
+     "This should be the last line in the file\n"]
+    self.setup_inputfile(self.prefix + self.lines + self.postfix)
 
-	# here are the same lines, without sentinels
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.58">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	assert file(self.output_filename).readlines() == self.lines
-	
-	# then insert one line in the sentinel free output.
-	lines = self.lines
-	lines[2:2] = ["This is a replaced line\n"]
-	outfile = file(self.output_filename, "w")
-	for line in lines:
-		outfile.write(line)
-	outfile.close()
-	
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# re-generate the output.
-	sentinel.main(self.configfilename, "push")
-	
-	# and check for equality.
-	assert file(self.output_filename).readlines() == lines
-	
-	
-	
-	
-	
-	
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    assert file(self.output_filename).readlines() == self.lines
+    
+    # then insert one line in the sentinel free output.
+    lines = self.lines
+    lines[2:2] = ["This is a replaced line\n"]
+    outfile = file(self.output_filename, "w")
+    for line in lines:
+        outfile.write(line)
+    outfile.close()
+    
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # re-generate the output.
+    sentinel.main(self.configfilename, "push")
+    
+    # and check for equality.
+    assert file(self.output_filename).readlines() == lines
+    
+    
+    
+    
+    
+    
 
 
 
 </t>
 <t tx="EKR.20040504083716.59">class replace_test2(sentinel_test):
-	"""
-	Replace two lines.
-	"""
-	@others</t>
+    """
+    Replace two lines.
+    """
+    @others</t>
 <t tx="EKR.20040504083716.60">def setUp(self):
-	sentinel_test.setUp(self)
-	self.lines = [
-	"Line 0\n",    #0
+    sentinel_test.setUp(self)
+    self.lines = [
+    "Line 0\n",    #0
 "   Line 1\n",    #1
 "   Line 2.\n",   #2
 "   Line 3.\n",   #3
@@ -1555,179 +1558,179 @@ sync(files) # push or pull, depending on date.
 " Line 10\n", #10
 " Line 11\n" #11
 ]
-	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+    self.setup_inputfile(self.prefix + self.lines + self.postfix)
 
-	# here are the same lines, without sentinels
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.61">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	assert file(self.output_filename).readlines() == self.lines
-	
-	# then insert two lines in the sentinel free output.
-	lines = self.lines
-	lines[7:9] = ["   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
-					  "   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.\n", #8
-					 ]
-	outfile = file(self.output_filename, "w")
-	for line in lines:
-		outfile.write(line)
-	outfile.close()
-	
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# re-generate the output.
-	sentinel.main(self.configfilename, "push")
-	
-	# and check for equality.
-	assert file(self.output_filename).readlines() == lines
-	
-	
-	
-	
-	
-	
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    assert file(self.output_filename).readlines() == self.lines
+    
+    # then insert two lines in the sentinel free output.
+    lines = self.lines
+    lines[7:9] = ["   single_class represents a (condition, register) =&gt; (expression_number, linenumber) mapping.\n", #7
+                      "   set_class represents a set of (condition, register) =&gt; (expression_number, linenumber) mappings.\n", #8
+                     ]
+    outfile = file(self.output_filename, "w")
+    for line in lines:
+        outfile.write(line)
+    outfile.close()
+    
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # re-generate the output.
+    sentinel.main(self.configfilename, "push")
+    
+    # and check for equality.
+    assert file(self.output_filename).readlines() == lines
+    
+    
+    
+    
+    
+    
 
 
 
 </t>
 <t tx="EKR.20040504083716.62">class replace_test3(sentinel_test):
-	"""
-	Replace the lines of a whole node.
-	"""
-	@others</t>
+    """
+    Replace the lines of a whole node.
+    """
+    @others</t>
 <t tx="EKR.20040504083716.63">def setUp(self):
-	sentinel_test.setUp(self)
-	self.lines = [
-	"#@+node:main\n",
-	"node 1: line 1\n", # 1
-	"node 1: line 2\n", # 2
-	"#@-node:main\n",
-	"#@-others\n",
-	"node 2: line 3\n", # 3
-	"node 2: line 4\n", # 4
-	"#@-node:@file sentinel.py\n",
-	]
-	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+    sentinel_test.setUp(self)
+    self.lines = [
+    "#@+node:main\n",
+    "node 1: line 1\n", # 1
+    "node 1: line 2\n", # 2
+    "#@-node:main\n",
+    "#@-others\n",
+    "node 2: line 3\n", # 3
+    "node 2: line 4\n", # 4
+    "#@-node:@file sentinel.py\n",
+    ]
+    self.setup_inputfile(self.prefix + self.lines + self.postfix)
 
-	# here are the same lines, without sentinels
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.64">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	filtered_lines = sentinel.push_filter_lines(self.lines)[0]
-	assert file(self.output_filename).readlines() == filtered_lines
-	
-	# then insert one line in the sentinel free output.
-	filtered_lines [2:4] = [   "These lines should be totally different\n",
-	"and be replaced across sentinel blocks,\n",
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    filtered_lines = sentinel.push_filter_lines(self.lines)[0]
+    assert file(self.output_filename).readlines() == filtered_lines
+    
+    # then insert one line in the sentinel free output.
+    filtered_lines [2:4] = [   "These lines should be totally different\n",
+    "and be replaced across sentinel blocks,\n",
 
-					 ]
-	outfile = file(self.output_filename, "w")
-	for line in filtered_lines:
-		outfile.write(line)
-	outfile.close()
-	
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# re-generate the output.
-	sentinel.main(self.configfilename, "push")
-	
-	# and check for equality.
-	assert file(self.output_filename).readlines() == filtered_lines
-	
-	
-	
-	
-	
-	
+                     ]
+    outfile = file(self.output_filename, "w")
+    for line in filtered_lines:
+        outfile.write(line)
+    outfile.close()
+    
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # re-generate the output.
+    sentinel.main(self.configfilename, "push")
+    
+    # and check for equality.
+    assert file(self.output_filename).readlines() == filtered_lines
+    
+    
+    
+    
+    
+    
 
 
 
 </t>
 <t tx="EKR.20040504083716.65">class replace_test4(sentinel_test):
-	"""
-	Replace the lines of a whole node.
-	"""
-	@others</t>
+    """
+    Replace the lines of a whole node.
+    """
+    @others</t>
 <t tx="EKR.20040504083716.66">def setUp(self):
-	sentinel_test.setUp(self)
-	self.lines = [
-	"#@+node:main\n",
-	"node 1: line 1\n", # 1
-	"node 1: line 2\n", # 2
-	"#@-node:main\n",
-	"#@-others\n",
-	"node 2: line 3\n", # 3
-	"node 2: line 4\n", # 4
-	"#@-node:@file sentinel.py\n",
-	]
-	self.setup_inputfile(self.prefix + self.lines + self.postfix)
+    sentinel_test.setUp(self)
+    self.lines = [
+    "#@+node:main\n",
+    "node 1: line 1\n", # 1
+    "node 1: line 2\n", # 2
+    "#@-node:main\n",
+    "#@-others\n",
+    "node 2: line 3\n", # 3
+    "node 2: line 4\n", # 4
+    "#@-node:@file sentinel.py\n",
+    ]
+    self.setup_inputfile(self.prefix + self.lines + self.postfix)
 
-	# here are the same lines, without sentinels
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.67">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	filtered_lines = sentinel.push_filter_lines(self.lines)[0]
-	assert file(self.output_filename).readlines() == filtered_lines
-	
-	# then insert one line in the sentinel free output.
-	filtered_lines [1:3] = [   "These lines should be totally different\n",
-	"and be replaced across sentinel blocks,\n",
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    filtered_lines = sentinel.push_filter_lines(self.lines)[0]
+    assert file(self.output_filename).readlines() == filtered_lines
+    
+    # then insert one line in the sentinel free output.
+    filtered_lines [1:3] = [   "These lines should be totally different\n",
+    "and be replaced across sentinel blocks,\n",
 
-					 ]
-	outfile = file(self.output_filename, "w")
-	for line in filtered_lines:
-		outfile.write(line)
-	outfile.close()
-	
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# re-generate the output.
-	sentinel.main(self.configfilename, "push")
-	
-	# and check for equality.
-	assert file(self.output_filename).readlines() == filtered_lines
-	
-	
-	
-	
-	
-	
+                     ]
+    outfile = file(self.output_filename, "w")
+    for line in filtered_lines:
+        outfile.write(line)
+    outfile.close()
+    
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # re-generate the output.
+    sentinel.main(self.configfilename, "push")
+    
+    # and check for equality.
+    assert file(self.output_filename).readlines() == filtered_lines
+    
+    
+    
+    
+    
+    
 
 
 
@@ -1735,12 +1738,12 @@ sync(files) # push or pull, depending on date.
 <t tx="EKR.20040504083716.68">@doc
 these are tests representing errors which I encountered during the development of the code.</t>
 <t tx="EKR.20040504083716.69">class regression_test_1(sentinel_test):
-	"""
-	Replace a single line.
-	"""
-	@others</t>
+    """
+    Replace a single line.
+    """
+    @others</t>
 <t tx="EKR.20040504083716.70">def setUp(self):
-	self.lines = [
+    self.lines = [
 "#@+leo-ver=4\n",
 "#@+node:@file driver.py\n",
 "#@@language python\n",
@@ -1762,65 +1765,65 @@ these are tests representing errors which I encountered during the development o
 "#@-node:@file driver.py\n",
 "#@-leo\n"
 ]
-	self.setup_inputfile(self.lines)
+    self.setup_inputfile(self.lines)
 
-	# here are the same lines, without sentinels
-	self.setup_configfile()
+    # here are the same lines, without sentinels
+    self.setup_configfile()
 </t>
 <t tx="EKR.20040504083716.71">def runTest(self):
-	"""
-	
-	Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
-	
-	"""
-	
-	# First, produce the sentinel free output.
-	sentinel.main(self.configfilename, "push")
-	
-	# Verify this first step.
-	assert os.path.exists(self.output_filename)
-	assert file(self.output_filename).readlines() == sentinel.push_filter_lines(self.lines)[0]
-		
-	# get the sources back.
-	sentinel.main(self.configfilename, "pull")
-	
-	# Now check that the source has not been changed.
-	assert file(self.input_filename).readlines() == self.lines   
-	
-	
-	
-	
-	
+    """
+    
+    Insert a line in a file without sentinels of a file derived of a file with sentinels, and make sure that this line is inserted in the proper place.
+    
+    """
+    
+    # First, produce the sentinel free output.
+    sentinel.main(self.configfilename, "push")
+    
+    # Verify this first step.
+    assert os.path.exists(self.output_filename)
+    assert file(self.output_filename).readlines() == sentinel.push_filter_lines(self.lines)[0]
+        
+    # get the sources back.
+    sentinel.main(self.configfilename, "pull")
+    
+    # Now check that the source has not been changed.
+    assert file(self.input_filename).readlines() == self.lines   
+    
+    
+    
+    
+    
 
 
 
 </t>
 <t tx="EKR.20040504083716.72">if __name__ == '__main__':
-	#fileName = os.path.join(os.getcwd(),"testing.ini")
-	#config = ConfigParser.ConfigParser()
-	#config.read(fileName)
-	#main = "Main"
-	#leodir = config.get(main, "leodir")
-	#test_to_run = config.get(main, "test_to_run")
-	test_to_run = 'all'
-	
-	if os.path.exists("test"):
-		shutil.rmtree("test")
-	os.mkdir("test")
-	suite = TestSuite()
-	if test_to_run == 'all':
-		for testclass in (
-			insert_test,
-			replace_test,
-			replace_test2,
-			replace_test3,
-			regression_test_1,         
-		):
-			suite.addTest(testclass())
-	else:
-		suite.addTest(globals()[test_to_run]())
-	testrunner = TextTestRunner()
-	testrunner.run(suite)
+    #fileName = os.path.join(os.getcwd(),"testing.ini")
+    #config = ConfigParser.ConfigParser()
+    #config.read(fileName)
+    #main = "Main"
+    #leodir = config.get(main, "leodir")
+    #test_to_run = config.get(main, "test_to_run")
+    test_to_run = 'all'
+    
+    if os.path.exists("test"):
+        shutil.rmtree("test")
+    os.mkdir("test")
+    suite = TestSuite()
+    if test_to_run == 'all':
+        for testclass in (
+            insert_test,
+            replace_test,
+            replace_test2,
+            replace_test3,
+            regression_test_1,         
+        ):
+            suite.addTest(testclass())
+    else:
+        suite.addTest(globals()[test_to_run]())
+    testrunner = TextTestRunner()
+    testrunner.run(suite)
  </t>
 <t tx="EKR.20040504083716.73">@ignore</t>
 <t tx="EKR.20040504083716.74">[Main]
@@ -1838,21 +1841,21 @@ leodir = C:/bwm/ftptoot/Cleo-4.1-beta-5</t>
 <t tx="EKR.20040504153320">sourcetime = targettime = None
 
 if g.os_path_exists(sourcefilename):
-	sourcetime = g.os_path_getmtime(sourcefilename)
+    sourcetime = g.os_path_getmtime(sourcefilename)
 
 if g.os_path_exists(targetfilename):
-	targettime = g.os_path_getmtime(targetfilename)</t>
+    targettime = g.os_path_getmtime(targetfilename)</t>
 <t tx="EKR.20040504153320.1">operation = None
 if sourcetime:
-	if targettime:
-		if sourcetime &gt; targettime:
-			operation = push
-		elif sourcetime &lt; targettime:
-			operation = pull
-	else:
-		operation = push
+    if targettime:
+        if sourcetime &gt; targettime:
+            operation = push
+        elif sourcetime &lt; targettime:
+            operation = pull
+    else:
+        operation = push
 elif targettime:
-	operation = pull</t>
+    operation = pull</t>
 <t tx="EKR.20040517074600.8">import leoGlobals as g
 import leoTest
 
@@ -1864,12 +1867,12 @@ v = u.findNodeAnywhere(c,"Plugins &amp; scripts")
 after = v.nodeAfterTree()
 trace(v,after)
 while v and v != after:
-	if not v.t.isVisited():
-		v.t.setVisited()
-		nodes += 1
-		lines += len(splitLines(v.bodyString()))
-	v = v.threadNext()
-	
+    if not v.t.isVisited():
+        v.t.setVisited()
+        nodes += 1
+        lines += len(splitLines(v.bodyString()))
+    v = v.threadNext()
+    
 pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
 g.es("nodes,lines,pages",nodes,lines,pages)</t>
@@ -1878,10 +1881,10 @@ g.es("nodes,lines,pages",nodes,lines,pages)</t>
 config = g.app.config
 
 font = config.getFontFromParams(
-		"body_text_font_family", "body_text_font_size",
-		"body_text_font_slant",  "body_text_font_weight",
-		tag = "body")
-		
+        "body_text_font_family", "body_text_font_size",
+        "body_text_font_slant",  "body_text_font_weight",
+        tag = "body")
+        
 print font
 
 c = top() ; body = c.frame.body.bodyCtrl
@@ -1904,24 +1907,24 @@ print "body:",fn,name,size,slant,weight
 
 if 0:
 
-	# Log pane.
-	fn = c.frame.log.getFontConfig()
-	font = tkFont.Font(font=fn)
-	name,size,slant,weight = getFontSettings(font)
-	g.es("log:" + name + "," + `size` + "," + slant + "," + weight)
-	
-	# Tree pane.
-	font = c.frame.tree.getFont()
-	name,size,slant,weight = getFontSettings(font)
-	g.es("head:" + name + "," + `size` + "," + slant + "," + weight)</t>
+    # Log pane.
+    fn = c.frame.log.getFontConfig()
+    font = tkFont.Font(font=fn)
+    name,size,slant,weight = getFontSettings(font)
+    g.es("log:" + name + "," + `size` + "," + slant + "," + weight)
+    
+    # Tree pane.
+    font = c.frame.tree.getFont()
+    name,size,slant,weight = getFontSettings(font)
+    g.es("head:" + name + "," + `size` + "," + slant + "," + weight)</t>
 <t tx="EKR.20040517074600.12">def getFontSettings (font):
 
-	name   = font.cget("family")
-	size   = font.cget("size")
-	slant  = font.cget("slant")
-	weight = font.cget("weight")
+    name   = font.cget("family")
+    size   = font.cget("size")
+    slant  = font.cget("slant")
+    weight = font.cget("weight")
 
-	return name, size, slant, weight</t>
+    return name, size, slant, weight</t>
 <t tx="EKR.20040517074600.13">import leoGlobals as g
 
 font = g.app.config.defaultFont
@@ -1947,20 +1950,20 @@ last line</t>
 <t tx="EKR.20040526094831">import leoGlobals as g
 
 def redoBletch(self):
-	g.trace()
-	
+    g.trace()
+    
 def undoBletch(self):
-	g.trace()
-	
+    g.trace()
+    
 c = g.top() ; u = c.undoer
 p = c.currentPosition()
 
 if 0:
-	# bad functions
-	u.registerUndoHandlers("Bletch","abc","xyz")
+    # bad functions
+    u.registerUndoHandlers("Bletch","abc","xyz")
 else:
-	u.registerUndoHandlers("Bletch",undoBletch,redoBletch)
-	
+    u.registerUndoHandlers("Bletch",undoBletch,redoBletch)
+    
 # "Execute" the Bletch command :-)  The Edit command should contain "Undo Bletch"
 u.setUndoParams("Bletch",p)
 
@@ -1990,9 +1993,9 @@ c = g.top() ; p = c.currentPosition()
 d = { "a":True }
 
 if 1:
-	# Warning: executing this in the a2 code base will cause any save operation to fail.
-	p.v.unknownAttributes = { "myPlugin" : d }
-	
+    # Warning: executing this in the a2 code base will cause any save operation to fail.
+    p.v.unknownAttributes = { "myPlugin" : d }
+    
 print repr(p.v.unknownAttributes)</t>
 <t tx="EKR.20040527072047"></t>
 <t tx="EKR.20040527072047.1"></t>
@@ -2002,27 +2005,27 @@ print repr(p.v.unknownAttributes)</t>
 <t tx="EKR.20040527074524.2"></t>
 <t tx="EKR.20040527083449.1">nodes = []
 for v in current.unique_vnodes_iter():
-	assert v not in nodes
-	nodes.append(v)
-	
+    assert v not in nodes
+    nodes.append(v)
+    
 nodes = []
 for t in current.unique_tnodes_iter():
-	assert t not in nodes
-	nodes.append(t)
-	
+    assert t not in nodes
+    nodes.append(t)
+    
 print "duplicate tests pass"</t>
 <t tx="EKR.20040527083449.2">if 0:
-	for v in current.vnodes_iter(): print v
-	for v in current.unique_vnodes_iter(): print v
+    for v in current.vnodes_iter(): print v
+    for v in current.unique_vnodes_iter(): print v
 
 if 0: # subtree of root node:
-	root = c.rootPosition()
-	for v in root.vnodes_iter(): print v
-	for t in root.tnodes_iter(): print t
+    root = c.rootPosition()
+    for v in root.vnodes_iter(): print v
+    for t in root.tnodes_iter(): print t
 
 if 0: # child1's tree.  child2 should not be included.
-	for v in child.vnodes_iter(): print v
-	for t in child.tnodes_iter(): print t</t>
+    for v in child.vnodes_iter(): print v
+    for t in child.tnodes_iter(): print t</t>
 <t tx="EKR.20040527154402">line 1
 
 &lt;&lt; sec &gt;&gt;
@@ -2043,8 +2046,8 @@ vList1 = [v for v in current.vnodes_iter()]
 vList2 = [v for v in current.unique_vnodes_iter()]
 
 if 0:
-	for v in vList1: print v
-	for v in vList2: print v
+    for v in vList1: print v
+    for v in vList2: print v
 
 print len(allList),len(vList1),len(vList2)
 
@@ -2063,12 +2066,12 @@ print "vnodes",len([v for v in c.all_vnodes_iter()]),len([v for v in c.all_uniqu
 print "tnodes",len([t for t in c.all_tnodes_iter()]),len([t for t in c.all_unique_tnodes_iter()])
 
 if 0: # all nodes
-	for v in c.all_vnodes_iter(): print v
-	for t in c.all_tnodes_iter(): print t
-		
+    for v in c.all_vnodes_iter(): print v
+    for t in c.all_tnodes_iter(): print t
+        
 if 0: # unique nodes
-	for v in c.all_unique_vnodes_iter(): print v
-	for t in c.all_unique_tnodes_iter(): print t</t>
+    for v in c.all_unique_vnodes_iter(): print v
+    for t in c.all_unique_tnodes_iter(): print t</t>
 <t tx="EKR.20040529093047">v1 = [p.v for p in c.all_positions_iter()]
 v2 = [v for v in c.all_vnodes_iter()]
 for v in v2: assert(v in v1)
@@ -2082,48 +2085,48 @@ for t in t1: assert(t in t2)
 print "coverage tests pass"</t>
 <t tx="EKR.20040529093047.1">nodes = []
 for v in c.all_unique_vnodes_iter():
-	assert v not in nodes
-	nodes.append(v)
-	
+    assert v not in nodes
+    nodes.append(v)
+    
 nodes = []
 for t in c.all_unique_tnodes_iter():
-	assert t not in nodes
-	nodes.append(t)
-	
+    assert t not in nodes
+    nodes.append(t)
+    
 print "duplicate tests pass"</t>
 <t tx="EKR.20040529104307">try:
-	tag = "test1"
-	list1 = [v for v in current.vnodes_iter()]
-	list2 = [v for v in current.v.self_and_subtree_iter()]
-	assert(list1==list2)
-	
-	tag = "test2"
-	list1 = [p.v for p in c.all_positions_iter()]
-	list2 = [v   for v in c.all_vnodes_iter()]
-	assert(list1==list2)
-	
-	print "consistency tests pass"
+    tag = "test1"
+    list1 = [v for v in current.vnodes_iter()]
+    list2 = [v for v in current.v.self_and_subtree_iter()]
+    assert(list1==list2)
+    
+    tag = "test2"
+    list1 = [p.v for p in c.all_positions_iter()]
+    list2 = [v   for v in c.all_vnodes_iter()]
+    assert(list1==list2)
+    
+    print "consistency tests pass"
 
 except AssertionError:
-	print tag
-	print "list1"
-	for v in list1: print v
-	print "list2"
-	for v in list2: print v</t>
+    print tag
+    print "list1"
+    for v in list1: print v
+    print "list2"
+    for v in list2: print v</t>
 <t tx="EKR.20040529105640"></t>
 <t tx="EKR.20040531110157">@ignore</t>
 <t tx="EKR.20040602101648">import leoGlobals as g
 import leoPlugins
 
 def onEnd (tag,keys):
-	print "onEnd",tag,keys
-	
+    print "onEnd",tag,keys
+    
 count = 0
-	
+    
 def onIdle (tag,keys):
-	global count ; count += 1
-	if count % 10 == 0:
-		print "onIdle",count,keys.get("c")
+    global count ; count += 1
+    if count % 10 == 0:
+        print "onIdle",count,keys.get("c")
 
 leoPlugins.registerHandler("end1", onEnd)
 print "onEnd registered as end1 hook"
@@ -2135,23 +2138,23 @@ print "onIdle registered as idle hook"</t>
 c = g.top()
 
 for p in c.all_positions_iter():
-	print p.v.t.fileIndex</t>
+    print p.v.t.fileIndex</t>
 <t tx="EKR.20040603103118">@language html
 
 b = "cd"
 d
 </t>
 <t tx="EKR.20040603143325">try:
-	assert(0)
+    assert(0)
 except (AttributeError, AssertionError):
-	print "caught"
+    print "caught"
 </t>
 <t tx="EKR.20040603174633">import leoGlobals as g
 c = g.top()
 print c.frame.bodyCtrl.focus()</t>
 <t tx="EKR.20040604082113">@tabwidth -4
 
-	
+    
     a   b   c
 a   b   c   d
 aa  b   c   d
@@ -2179,9 +2182,9 @@ v.copyTree(self,root)</t>
 <t tx="EKR.20040606204316"></t>
 <t tx="EKR.20040608092841">@tabwidth -4
 
-	a
-	b</t>
-<t tx="EKR.20040608095146"></t>
+    a
+    b</t>
+<t tx="EKR.20040608095146">@tabwidth -4</t>
 <t tx="EKR.20040608095146.1">@ignore
 @language html
 
@@ -2248,11 +2251,11 @@ next = p.next()
 s = next.bodyString()
 
 try:
-	val = compiler.parse(s)
-	# print val
-	g.es("Parsed OK",color="blue")
+    val = compiler.parse(s)
+    # print val
+    g.es("Parsed OK",color="blue")
 except SyntaxError:
-	g.es("Syntax error",color="blue")</t>
+    g.es("Syntax error",color="blue")</t>
 <t tx="EKR.20040610192622.1">import string
 
 string.join(a,b]
@@ -2272,44 +2275,44 @@ headline = next.headString()
 
 checkString(s,headline)</t>
 <t tx="EKR.20040610194209.1">    a = 5 # 4 spaces
-	b = 6 # a tab.</t>
+    b = 6 # a tab.</t>
 <t tx="EKR.20040610195543">def checkString (s,headline):
 
-	"""Check indentation using tabnanny.process_tokens."""
+    """Check indentation using tabnanny.process_tokens."""
 
-	# This code is based on tabnanny.check.
-	
-	import tokenize
+    # This code is based on tabnanny.check.
+    
+    import tokenize
 
-	def readLineGenerator(s):
-		for line in s.splitlines(True):
-			g.trace(line,newline=False)
-			yield line
-		yield ''
+    def readLineGenerator(s):
+        for line in s.splitlines(True):
+            g.trace(line,newline=False)
+            yield line
+        yield ''
 
-	readline = readLineGenerator(s).next
+    readline = readLineGenerator(s).next
 
-	try:
-		tabnanny.process_tokens(tokenize.generate_tokens(readline))
+    try:
+        tabnanny.process_tokens(tokenize.generate_tokens(readline))
 
-	except tokenize.TokenError, msg:
+    except tokenize.TokenError, msg:
 
-		g.es("Token error in %s" % headline,color="red")
-		g.es(str(msg))
-		return
+        g.es("Token error in %s" % headline,color="red")
+        g.es(str(msg))
+        return
 
-	except tabnanny.NannyNag, nag:
+    except tabnanny.NannyNag, nag:
 
-		badline = nag.get_lineno()
-		line    = nag.get_line()
-		message = nag.get_msg()
+        badline = nag.get_lineno()
+        line    = nag.get_line()
+        message = nag.get_msg()
 
-		g.es("Indentation error in %s, line %d" % (headline, badline),color="red")
-		g.es(message)
-		g.es("offending line:\n%s" % repr(str(line))[1:-1])
-		return
-		
-	g.es("Indentation is good",color="blue")
+        g.es("Indentation error in %s, line %d" % (headline, badline),color="red")
+        g.es(message)
+        g.es("offending line:\n%s" % repr(str(line))[1:-1])
+        return
+        
+    g.es("Indentation is good",color="blue")
 </t>
 <t tx="EKR.20040610195543.1">@ignore
 @language python
@@ -2382,7 +2385,7 @@ class NannyNag(Exception):
     Raised by tokeneater() if detecting an ambiguous indent.
     Captured and handled in check().
     """
-	@others
+    @others
 </t>
 <t tx="EKR.20040610195543.6">def __init__(self, lineno, msg, line):
     self.lineno, self.msg, self.line = lineno, msg, line
@@ -2453,8 +2456,8 @@ class NannyNag(Exception):
 </t>
 <t tx="EKR.20040610195543.11">
 class Whitespace:
-	&lt;&lt; class Whitespace declarations &gt;&gt;
-	@others
+    &lt;&lt; class Whitespace declarations &gt;&gt;
+    @others
 </t>
 <t tx="EKR.20040610195543.12"># the characters used for space and tab
 S, T = ' \t'
@@ -2652,32 +2655,32 @@ def not_less_witness(self, other):
                 raise NannyNag(start[0], msg, line)
 </t>
 <t tx="EKR.20040610195651">class readLinesClass:
-	
-	"""A class whose next method provides a readline method for Python's tokenize module."""
+    
+    """A class whose next method provides a readline method for Python's tokenize module."""
 
-	def __init__ (self,s):
-		self.lines = g.splitLines(s)
-		self.i = 0
+    def __init__ (self,s):
+        self.lines = g.splitLines(s)
+        self.i = 0
 
-	def next(self):
-		if self.i &lt; len(self.lines):
-			line = self.lines[self.i]
-			self.i += 1
-		else:
-			line = ''
-		# g.trace(self.i,line)
-		return line</t>
+    def next(self):
+        if self.i &lt; len(self.lines):
+            line = self.lines[self.i]
+            self.i += 1
+        else:
+            line = ''
+        # g.trace(self.i,line)
+        return line</t>
 <t tx="EKR.20040610201236">@
 
 To do:
-	
+    
 - Specify which nodes to check.
 - Check only Python code.
 - use g.readLinesClass or similar code in existing Python module.</t>
 <t tx="EKR.20040610201941">@
 
 To do:
-	
+    
 - Specify which nodes to check.
 - Check only Python code.
 - use g.readLinesClass or similar code in existing Python module.</t>
@@ -2690,27 +2693,28 @@ import leoGlobals as g
 lines = "a\nb\nc\nd"
 
 if 1: # Both work
-	readline = readLinesGenerator(lines).next
+    readline = readLinesGenerator(lines).next
 else:
-	readline = readLinesClass(lines).next
+    readline = readLinesClass(lines).next
 
 print '-' * 20
 
 if 1: # Both work
-	for s in readLinesGenerator(lines):
-		print s,
+    for s in readLinesGenerator(lines):
+        print s,
 else:
-	while 1:
-		s = readline()
-		if s: print s,
-		else: break
-	
+    while 1:
+        s = readline()
+        if s: print s,
+        else: break
+    
 print ; print '-' * 20</t>
 <t tx="EKR.20040611094028">def readLinesGenerator(s):
 
-	for line in g.splitLines(s):
-		yield line
-	yield ''</t>
+    for line in g.splitLines(s):
+        yield line
+    yield ''</t>
+<t tx="EKR.20040612095237">@tabwidth -4</t>
 <t tx="ekr.20040126105605"></t>
 <t tx="ekr.20040126105605.2"></t>
 <t tx="ekr.20040126105605.3"></t>
@@ -2720,10 +2724,10 @@ print ; print '-' * 20</t>
 <t tx="ekr.20040302091705">import leoGlobals as g
 
 class position:
-	def __init__(self):
-		self.v = "a"
-	def move(self):
-		self.v = "b"
+    def __init__(self):
+        self.v = "a"
+    def move(self):
+        self.v = "b"
 
 p = position()
 v = p.v
@@ -2735,21 +2739,23 @@ print "after ", v, p.v, v is p.v</t>
 <t tx="ekr.20040302092753.2"></t>
 <t tx="ekr.20040302092753.3"></t>
 <t tx="ekr.20040302092753.4"></t>
-<t tx="ekr.20040303063549">@nocolor
+<t tx="ekr.20040303063549">@tabwidth -4
+@nocolor
 
 Notes:
 
 The following contain undo tests:
-	- Outline tests
-	- Edit body tests
+    - Outline tests
+    - Edit body tests
 
-@color</t>
+@color
+</t>
 <t tx="ekr.20040303063549.1"></t>
 <t tx="ekr.20040303063549.2">@ 
 # DTHEIN 2004.01.11: Added script
 
 Each child node will in turn have two or more children:
-	
+    
 - a "before" node
 - an "after" node
 
@@ -2900,7 +2906,7 @@ Single paragraph, hanging indentation, short lines, extraneous indentation, and 
   please.  Hanging
    indentation is valuable
     for lists of all kinds.  But 
-	it is tricky to get right.</t>
+    it is tricky to get right.</t>
 <t tx="ekr.20040303063549.32">Honor this line that has a hanging
   indentation, please. Hanging
   indentation is valuable for lists of
@@ -3212,8 +3218,8 @@ and this is C code. // It is colored in \LaTeX mode by default.
 if else, while, do // C keywords.</t>
 <t tx="ekr.20040303063549.50">&lt;&lt; section def &gt;&gt;=
 
-	my \c code goes here // This is \LaTeX text
-	/* This is also \LaTeX text */</t>
+    my \c code goes here // This is \LaTeX text
+    /* This is also \LaTeX text */</t>
 <t tx="ekr.20040303063549.51">@language elisp
 
 ; Maybe...
@@ -3266,52 +3272,52 @@ WIDTH="32" HEIGHT="32" ALIGN="BOTTOM" NATURALSIZEFLAG="3"&gt;&lt;a href="leo_TOC
 
 &lt;UL&gt;
   &lt;LI&gt;Leo is a &lt;i&gt; programmer's editor&lt;/i&gt;  and a flexible &lt;i&gt;browser&lt;/i&gt; for
-	projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
+    projects, programs, classes or data. Leo clarifies design, coding, debugging, testing
   and maintenance.
   &lt;LI&gt;Leo is an &lt;i&gt;outlining editor&lt;/i&gt;. Outlines clarify the big picture while
-	providing unlimited space for details.
+    providing unlimited space for details.
   &lt;LI&gt;Leo
-	is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
-	programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
-	and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
-	Leo enhances any text-based
+    is a &lt;a HREF="http://www.literateprogramming.com/"&gt;&lt;i&gt;literate
+    programming&lt;/i&gt;&lt;/a&gt; tool, compatible with &lt;A HREF="http://www.eecs.harvard.edu/~nr/noweb/"&gt;noweb&lt;/A&gt;
+    and &lt;a HREF="http://www-cs-faculty.stanford.edu/~knuth/cweb.html"&gt;CWEB&lt;/a&gt;.
+    Leo enhances any text-based
 programming language, from assembly language and C to Java, Python and XML.
   &lt;LI&gt;Leo is also a &lt;i&gt;data organizer&lt;/i&gt;. A single Leo outline can generate complex
-	data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
+    data spanning many different files.&amp;nbsp; Leo has been used to manage web sites.
   &lt;LI&gt;Leo is a &lt;i&gt; project manager&lt;/i&gt;. Leo provides multiple views
 of a project within a single outline. Leo naturally represents tasks that remain
-	up-to-date.
+    up-to-date.
   &lt;LI&gt;Leo is fully &lt;i&gt; scriptable&lt;/i&gt; using &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
   and saves its files in &lt;A HREF="http://www.w3.org/XML/"&gt;XML&lt;/A&gt; format.
   &lt;LI&gt;Leo is &lt;i&gt;portable&lt;/i&gt;.&amp;nbsp; Leo.py is 100% pure Python and will run on
-	any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
-	and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
-	Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
+    any platform supporting &lt;A HREF="http://www.python.org/"&gt;Python&lt;/A&gt;
+    and &lt;a href="http://tcl.activestate.com/"&gt;Tk/tcl&lt;/a&gt;, including Windows,
+    Linux and MacOS X.&amp;nbsp; Leo.exe runs on any Windows platform.
   &lt;LI&gt;Leo is &lt;a href="http://www.opensource.org/"&gt; &lt;i&gt; Open Software&lt;/i&gt;&lt;/a&gt;, distributed under
-	the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
+    the &lt;a href="http://www.python.org/doc/Copyright.html"&gt; Python License&lt;/a&gt;.
 &lt;/UL&gt;
 
 &lt;H3&gt;More Information and downloads&lt;/H3&gt;
 
 &lt;ul&gt;
   &lt;LI&gt;An excellent &lt;a href="http://www.3dtree.com/ev/e/sbooks/leo/sbframetoc_ie.htm"&gt;online
-	tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
+    tutorial&lt;/a&gt; and &lt;A HREF="http://www.jserv.com/jk_orr/xml/leo.htm"&gt;Leo resource
   page&lt;/A&gt;, both written by &lt;a href="http://www.jserv.com/jk_orr"&gt;Joe Orr&lt;/a&gt;.
   &lt;LI&gt;My brother's &lt;a href="SpeedReam.html"&gt;slashdot
-	article about Leo&lt;/a&gt;, the best description about why Leo is special.
+    article about Leo&lt;/a&gt;, the best description about why Leo is special.
   &lt;LI&gt;&lt;A HREF="testimonials.html#anchor104391"&gt;What people are saying about Leo&lt;/A&gt;
   &lt;LI&gt;&lt;A HREF="leo_TOC.html#anchor964914"&gt;Complete users guide&lt;/A&gt;
-	and
-	&lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
+    and
+    &lt;A HREF="intro.html#anchor887874"&gt;tutorial introduction&lt;/A&gt;  with
   screen shots.
   &lt;li&gt;&lt;a href="FAQ.html"&gt;FAQ&lt;/a&gt; and &lt;a href="http://sourceforge.net/forum/?group_id=3458"&gt;help and discussion
-	forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
-	in.&lt;/li&gt;
+    forums&lt;/a&gt;, preferable to &lt;A HREF="mailto:edream@tds.net"&gt;email&lt;/A&gt; so others may join
+    in.&lt;/li&gt;
   &lt;li&gt;&lt;a href="icons.html"&gt;Icons&lt;/a&gt; for bragging about Leo.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;a href="http://sourceforge.net/project/showfiles.php?group_id=3458"&gt;Download
-	Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
+    Leo&lt;/a&gt; from &lt;A HREF="http://sourceforge.net/project/?group_id=3458"&gt;Leo's SourceForge
 site&lt;/A&gt;.
 
 &lt;P ALIGN=left&gt;Leo's author is &lt;A HREF="http://personalpages.tds.net/~edream/index.html"&gt;Edward
@@ -3352,7 +3358,7 @@ More keywords: \@ and \( and \) and \{ and \}</t>
 @ doc
 @c
 @language c
-	@others
+    @others
 
 abc
 for # comment
@@ -3399,21 +3405,21 @@ string"""d
 is'''</t>
 <t tx="ekr.20040303063549.58">"""This creates a free-floating copy of v's tree for undo.
 The copied trees must use different tnodes than the original."""
-	
+    
 def copyTree(self,root):
 
-	c = self
-	# Create the root vnode.
-	result = v = leoNodes.vnode(c,root.t)
-	# Copy the headline and icon values v.copyNode(root,v)
-	# Copy the rest of tree.
-	v.copyTree(root,v)
-	# Replace all tnodes in v by copies.
-	assert(v.nodeAfterTree() == None)
-	while v:
-		v.t = leoNodes.tnode(0, v.t.bodyString)
-		v = v.threadNext()
-	return result</t>
+    c = self
+    # Create the root vnode.
+    result = v = leoNodes.vnode(c,root.t)
+    # Copy the headline and icon values v.copyNode(root,v)
+    # Copy the rest of tree.
+    v.copyTree(root,v)
+    # Replace all tnodes in v by copies.
+    assert(v.nodeAfterTree() == None)
+    while v:
+        v.t = leoNodes.tnode(0, v.t.bodyString)
+        v = v.threadNext()
+    return result</t>
 <t tx="ekr.20040303063549.59">@language rebol
 
 ; a comment
@@ -3561,7 +3567,7 @@ import leoGlobals as g ; print g.app().loadDir
 <t tx="ekr.20040303063549.63">@ The names of child nodes are the names of commander methods to be called to do the test.
 
 Each child node will in turn have two or more children:
-	
+    
 - a "before" node
 - an "after" node
 - an optional selection node containing two lines giving the selection range in Tk coordinates.
@@ -3578,8 +3584,8 @@ runner.run(suite)
 </t>
 <t tx="ekr.20040303063549.64"></t>
 <t tx="ekr.20040303063549.65">line 1
-	line 2
-	line 3
+    line 2
+    line 3
 line 4</t>
 <t tx="ekr.20040303063549.66">line 1
 line 2
@@ -3593,8 +3599,8 @@ line 2
 line 3
 line 4</t>
 <t tx="ekr.20040303063549.70">line 1
-	line 2
-	line 3
+    line 2
+    line 3
 line 4</t>
 <t tx="ekr.20040303063549.71">2.0
 3.0 lineend - 1c</t>
@@ -3602,14 +3608,14 @@ line 4</t>
 <t tx="ekr.20040303063549.73">before
 &lt;&lt; section &gt;&gt;
 sec line 1
-	sec line 2 indented
+    sec line 2 indented
 sec line 3
 after</t>
 <t tx="ekr.20040303063549.74">before
 &lt;&lt; section &gt;&gt;
 after</t>
 <t tx="ekr.20040303063549.75">sec line 1
-	sec line 2 indented
+    sec line 2 indented
 sec line 3</t>
 <t tx="ekr.20040303063549.76">2.0
 5.0 lineend -1c</t>
@@ -3720,25 +3726,25 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
 for f,arg in (
-	(leoTest.makeBatchModeSuite,None),
-	(leoTest.makeColorSuite,"colorizerTests"),
-	(leoTest.makeEditBodySuite,"editBodyTests"),
-	(leoTest.makeImportExportSuite,"exportTests"),
-	(leoTest.makeImportExportSuite,"importTests"),
-	(leoTest.makeOutlineSuite,"outlineTests"),
-	(leoTest.makeTestLeoFilesSuite,"fileTests"),
-	(leoTest.makePositionSuite,None),
-	(leoTest.makeReformatParagraphSuite,None)
-	# 
-	# These tests presently have problem with the gui when run with other tests...
-	# (leoTest.makePluginsSuite,False) # verbose
+    (leoTest.makeBatchModeSuite,None),
+    (leoTest.makeColorSuite,"colorizerTests"),
+    (leoTest.makeEditBodySuite,"editBodyTests"),
+    (leoTest.makeImportExportSuite,"exportTests"),
+    (leoTest.makeImportExportSuite,"importTests"),
+    (leoTest.makeOutlineSuite,"outlineTests"),
+    (leoTest.makeTestLeoFilesSuite,"fileTests"),
+    (leoTest.makePositionSuite,None),
+    (leoTest.makeReformatParagraphSuite,None)
+    # 
+    # These tests presently have problem with the gui when run with other tests...
+    # (leoTest.makePluginsSuite,False) # verbose
 ):
-	suite = f(arg,"tempNode")
-	mainSuite.addTest(suite)
+    suite = f(arg,"tempNode")
+    mainSuite.addTest(suite)
 
 runner = unittest.TextTestRunner()
 runner.run(mainSuite)</t>
-<t tx="ekr.20040303071432"></t>
+<t tx="ekr.20040303071432">@tabwidth -4</t>
 <t tx="ekr.20040303080010">import leoGlobals as g
 import unittest
 import leoTest
@@ -3747,17 +3753,17 @@ reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
 mainSuite = unittest.makeSuite(unittest.TestCase)
 
 for f,arg in (
-	(leoTest.makeBatchModeSuite,"dummy"),
-	(leoTest.makeColorSuite,"colorizerTests"),
-	(leoTest.makeEditBodySuite,"editBodyTests"),
-	(leoTest.makePositionSuite,None),
-	(leoTest.makeReformatParagraphSuite,None),
-	(leoTest.makeOutlineSuite,"outlineTests")
-	# These tests presently have problem with the gui when run with other tests...
-	# (leoTest.makePluginsSuite,False)
+    (leoTest.makeBatchModeSuite,"dummy"),
+    (leoTest.makeColorSuite,"colorizerTests"),
+    (leoTest.makeEditBodySuite,"editBodyTests"),
+    (leoTest.makePositionSuite,None),
+    (leoTest.makeReformatParagraphSuite,None),
+    (leoTest.makeOutlineSuite,"outlineTests")
+    # These tests presently have problem with the gui when run with other tests...
+    # (leoTest.makePluginsSuite,False)
 ):
-	suite = f(arg,"tempNode")
-	mainSuite.addTest(suite)
+    suite = f(arg,"tempNode")
+    mainSuite.addTest(suite)
 
 runner = unittest.TextTestRunner()
 runner.run(mainSuite)</t>
@@ -3777,21 +3783,21 @@ child1 = current.firstChild()
 child2 = child1.firstChild()
 
 if 0:
-	print '-'*10, "parents"
-	for p in child2.parents_iter(): print p
+    print '-'*10, "parents"
+    for p in child2.parents_iter(): print p
 if 0:
-	print '-'*10, "subtree"
-	for p in pos.subtree_iter(): print p
+    print '-'*10, "subtree"
+    for p in pos.subtree_iter(): print p
 if 0:
-	print '-'*10, "children"
-	for p in child1.children_iter(): print p
+    print '-'*10, "children"
+    for p in child1.children_iter(): print p
 if 0:
-	print '-'*10, "siblings"
-	for p in pos.siblings_iter(): print p
+    print '-'*10, "siblings"
+    for p in pos.siblings_iter(): print p
 if 1:
-	print '-'*10, "all nodes"
-	for p in pos.allNodes_iter():
-		print p.isCloned(),p
+    print '-'*10, "all nodes"
+    for p in pos.allNodes_iter():
+        print p.isCloned(),p
 </t>
 <t tx="ekr.20040309111102"></t>
 <t tx="ekr.20040309111102.1"></t>
@@ -3814,7 +3820,7 @@ import leoNodes
 c = g.top() ; root = c.rootPosition()
 
 for p in root.allNodes_iter():
-	print p.v.t.fileIndex</t>
+    print p.v.t.fileIndex</t>
 <t tx="ekr.20040311125054">import leoGlobals as g
 c = g.top()
 root = c.rootPosition()
@@ -3822,8 +3828,8 @@ root = c.rootPosition()
 # NOTE: p.__getattr__ must be enabled for this test to work.
 
 for p in root.allNodes_iter():
-	assert(p.t == p.v.t)
-	
+    assert(p.t == p.v.t)
+    
 print "done"</t>
 <t tx="ekr.20040312021734"></t>
 <t tx="ekr.20040312021734.1">import leoGlobals as g
@@ -3832,13 +3838,13 @@ c = g.top()
 
 count = 0
 for p in c.rootPosition().allNodes_iter():
-	count += 1
-	# Empty tnodeLists are not errors because they never get written to the .leo file.
-	v = p.v
-	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
-		g.es("deleting tnodeList for " + `v`,color="blue")
-		delattr(v,"tnodeList")
-		c.setChanged(True)
+    count += 1
+    # Empty tnodeLists are not errors because they never get written to the .leo file.
+    v = p.v
+    if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
+        g.es("deleting tnodeList for " + `v`,color="blue")
+        delattr(v,"tnodeList")
+        c.setChanged(True)
 
 s = "%d nodes" % count
 print s ; g.es(s)</t>
@@ -3849,58 +3855,58 @@ print s ; g.es(s)</t>
 - moreBody could be anywhere: it may as well be a postion method.
 </t>
 <t tx="ekr.20040315025315.1">def convertTreeToString (self):
-	
-	"""Convert a positions  suboutline to a string in MORE format."""
+    
+    """Convert a positions  suboutline to a string in MORE format."""
 
-	p = self ; level1 = p.level()
-	
-	array = []
-	for p in p.subtree_iter()
-		array.append(p.moreHead(level1)+'\n')
-		body = p.moreBody()
-		if body:
-			array.append(body +'\n')
+    p = self ; level1 = p.level()
+    
+    array = []
+    for p in p.subtree_iter()
+        array.append(p.moreHead(level1)+'\n')
+        body = p.moreBody()
+        if body:
+            array.append(body +'\n')
 
-	return ''.join(array)</t>
+    return ''.join(array)</t>
 <t tx="ekr.20040315025315.2">def moreHead (self, firstLevel,useVerticalBar=False):
-	
-	"""Return the headline string in MORE format."""
+    
+    """Return the headline string in MORE format."""
 
-	p = self
+    p = self
 
-	level = self.level() - firstLevel
-	plusMinus = g.choose(p.hasChildren(), "+", "-")
-	
-	return "%s%s %s" % ('\t'*level,plusMinus,p.headString())</t>
+    level = self.level() - firstLevel
+    plusMinus = g.choose(p.hasChildren(), "+", "-")
+    
+    return "%s%s %s" % ('\t'*level,plusMinus,p.headString())</t>
 <t tx="ekr.20040315025315.3">@ 
-	+ test line
-	- test line
-	\ test line
-	test line +
-	test line -
-	test line \
-	More lines...
+    + test line
+    - test line
+    \ test line
+    test line +
+    test line -
+    test line \
+    More lines...
 @c
 
 def moreBody (self):
 
-	"""Returns the body string in MORE format.  
-	
-	Inserts a backslash before any leading plus, minus or backslash."""
+    """Returns the body string in MORE format.  
+    
+    Inserts a backslash before any leading plus, minus or backslash."""
 
-	p = self ; list = []
-	
-	# Only escape the first non-blank character of the line.
-	s =  p.bodyString() ; result = []
-	lines = string.split(s,'\n')
-	for s in lines:
-		i = g.skip_ws(s,0)
-		if i &lt; len(s):
-			ch = s[i]
-			if ch == '+' or ch == '-' or ch == '\\':
-				s = s[:i] + '\\' + s[i:]
-		result.append(s)
-	return string.join(result,'\n')
+    p = self ; list = []
+    
+    # Only escape the first non-blank character of the line.
+    s =  p.bodyString() ; result = []
+    lines = string.split(s,'\n')
+    for s in lines:
+        i = g.skip_ws(s,0)
+        if i &lt; len(s):
+            ch = s[i]
+            if ch == '+' or ch == '-' or ch == '\\':
+                s = s[:i] + '\\' + s[i:]
+        result.append(s)
+    return string.join(result,'\n')
 </t>
 <t tx="ekr.20040315030123">import leoGlobals as g
 
@@ -3938,24 +3944,24 @@ icon1 = g.os_path_join(path,"lt_arrow_enabled.gif")
 icon2 = g.os_path_join(path,"rt_arrow_enabled.gif")
 
 d1 = {
-	"type" : "file", "file" : icon1,
-	"where" : "beforeIcon",
-	"yoffset" : -3,
-	# "yoffset" : 5, "ypad" : -5,
-	# "height" : 40, # automatically adjust headline y position.
-	"xpad": 2
+    "type" : "file", "file" : icon1,
+    "where" : "beforeIcon",
+    "yoffset" : -3,
+    # "yoffset" : 5, "ypad" : -5,
+    # "height" : 40, # automatically adjust headline y position.
+    "xpad": 2
 }
 
 # Classes and functions can only be pickled if they are at the top level of a module.
-	#"onClick" : onClick,
-	#"onRightClick" : onRightClick,
-	#"onDoubleClick" : onDoubleClick }
+    #"onClick" : onClick,
+    #"onRightClick" : onRightClick,
+    #"onDoubleClick" : onDoubleClick }
 
 d2 = {
-	"type" : "file", "file" : icon2,
-	"where" : "beforeHeadline",
-	"yoffset" : -3,
-	"xoffset" : 2, "xpad" : -2 }
+    "type" : "file", "file" : icon2,
+    "where" : "beforeHeadline",
+    "yoffset" : -3,
+    "xoffset" : 2, "xpad" : -2 }
 
 a["icons"] = [d1,d2] # [d1,d2]
 a["lineYOffset"] = 3
@@ -3967,35 +3973,35 @@ c.redraw()
 c = g.top()
 
 for p in c.allNodes_iter():
-	
-	if hasattr(p.v.t,"unknownAttributes"):
-		a = p.v.t.unknownAttributes
-		iconsList = a.get("icons")
-		if dict:
-			a["icons"] = []
-			a["lineYOffset"] = 0
-			
+    
+    if hasattr(p.v.t,"unknownAttributes"):
+        a = p.v.t.unknownAttributes
+        iconsList = a.get("icons")
+        if dict:
+            a["icons"] = []
+            a["lineYOffset"] = 0
+            
 c.redraw()</t>
 <t tx="ekr.20040317185041">def onClick(p=p):
-	
-	g.trace(p)
+    
+    g.trace(p)
 
 def onRightClick(p=p):
-	
-	g.trace(p)
+    
+    g.trace(p)
 
 def onDoubleClick(p=p):
-	
-	g.trace(p)</t>
+    
+    g.trace(p)</t>
 <t tx="ekr.20040318091620">import leoGlobals as g
 
 c = g.top()
 
 for p in c.allNodes_iter():
-	if hasattr(p.v.t,"unknownAttributes"):
-		print "deleting unknownAttributes:",p
-		delattr(p.v.t,"unknownAttributes")
-			
+    if hasattr(p.v.t,"unknownAttributes"):
+        print "deleting unknownAttributes:",p
+        delattr(p.v.t,"unknownAttributes")
+            
 c.redraw()</t>
 <t tx="ekr.20040318102920"># The actual test is in a child node.</t>
 <t tx="ekr.20040318102920.1"></t>
@@ -4007,38 +4013,38 @@ print '-'*20
 count = 0 ; ok = True
 for p in c.allNodes_iter():
 # for p in [c.currentPosition()]:
-	count += 1
-	if 0: # Check all ancestors.  This is tricky and doesn't work yet.
-		parents1 = [parent.v for parent in p.parents_iter()]
-		parents2 = []
-		parent2 = p.v.directParents()
-		while parent2:
-			v = parent2[0]
-			parents2.append(v)
-			parent2 = v.directParents()
-	else:
-		if p.v._parent: parents1 = p.v._parent.t.vnodeList
-		else:           parents1 = []
-		parents2 = p.v.directParents()
-	
-	if len(parents1) != len(parents2):
-		print "length mismatch",p,p.v._parent
-		ok = False
-	for parent in parents1:
-		if parent not in parents2:
-			print "not in parent2",p,parent
-			ok = False
-	for parent in parents2:
-		if parent not in parents1:
-			print "not in parents1",p,parent
-			ok = False
-	if not ok:
-		print "parents1"
-		for parent in parents1: print parent
-		print "parents2"
-		for parent in parents2: print parent
-		break
-	
+    count += 1
+    if 0: # Check all ancestors.  This is tricky and doesn't work yet.
+        parents1 = [parent.v for parent in p.parents_iter()]
+        parents2 = []
+        parent2 = p.v.directParents()
+        while parent2:
+            v = parent2[0]
+            parents2.append(v)
+            parent2 = v.directParents()
+    else:
+        if p.v._parent: parents1 = p.v._parent.t.vnodeList
+        else:           parents1 = []
+        parents2 = p.v.directParents()
+    
+    if len(parents1) != len(parents2):
+        print "length mismatch",p,p.v._parent
+        ok = False
+    for parent in parents1:
+        if parent not in parents2:
+            print "not in parent2",p,parent
+            ok = False
+    for parent in parents2:
+        if parent not in parents1:
+            print "not in parents1",p,parent
+            ok = False
+    if not ok:
+        print "parents1"
+        for parent in parents1: print parent
+        print "parents2"
+        for parent in parents2: print parent
+        break
+    
 print "%d vnodes checked" % count</t>
 <t tx="ekr.20040319111213">from leoPlugins import *
 from leoGlobals import *
@@ -4053,18 +4059,18 @@ fhp = None
 fhp_entry = None
     
 if 1:
-	addMenu("none",None)
+    addMenu("none",None)
 else:
-	hooks = choose(sys.platform == 'win32',
-		('open2',"new"),
-		('start2','open2',"new"))
-		
-	print "hi"
-		
-	registerHandler(hooks,addMenu)
+    hooks = choose(sys.platform == 'win32',
+        ('open2',"new"),
+        ('start2','open2',"new"))
+        
+    print "hi"
+        
+    registerHandler(hooks,addMenu)
 
-	__version__ = ".1"
-	plugin_signon(__name__)
+    __version__ = ".1"
+    plugin_signon(__name__)
 </t>
 <t tx="ekr.20040319111213.1">@nocolor
 
@@ -4092,142 +4098,142 @@ That was one motivation for writing this thing, using a generator vs. Recursive
 approach to tree walking.</t>
 <t tx="ekr.20040319111213.2">def OLDfilter(c,e):
 
-	v = c.rootVnode()
-	
-	nodes = []
-	while v:
-		nodes.append(v)
-		v = v.next()
+    v = c.rootVnode()
     
-	regex = re.compile(e.get())
-	c.beginUpdate()
-	if 1: # update...
-		t = tnode('','A Filtered Hoist')
-		ticker = c.rootVnode().insertAfter(t)
-		for z in nodes:
-			for x in search(z,regex):
-				clone = x.clone( x )
-				clone.moveToNthChildOf(ticker,0)
-		c.setCurrentVnode(ticker)
-		ticker.moveToRoot(c.rootVnode())
-	c.endUpdate()
-	c.hoist()
-	fhp.withdraw()
+    nodes = []
+    while v:
+        nodes.append(v)
+        v = v.next()
+    
+    regex = re.compile(e.get())
+    c.beginUpdate()
+    if 1: # update...
+        t = tnode('','A Filtered Hoist')
+        ticker = c.rootVnode().insertAfter(t)
+        for z in nodes:
+            for x in search(z,regex):
+                clone = x.clone( x )
+                clone.moveToNthChildOf(ticker,0)
+        c.setCurrentVnode(ticker)
+        ticker.moveToRoot(c.rootVnode())
+    c.endUpdate()
+    c.hoist()
+    fhp.withdraw()
 </t>
 <t tx="ekr.20040319111213.3">def OLDsearch(vn,regex):
 
-	sn = vn 
-	while vn != None:
-		if regex.search( vn.t.bodyString ) : yield vn
-		nc = vn.numberOfChildren()
-		if nc == 0:
-			i = vn.childIndex()
-			p = vn.parent()
-			if p == None: 
-				vn = None
-				continue
-			if i == 0:
-				while 1:
-					if p == sn :
-						vn = None
-						break
-					vn = p.back() 
-					if vn == None:
-						p = p.parent()
-						continue
-					break
-				continue                                                        
-			vn = p.nthChild( i - 1)
-			continue
-		vn = vn.nthChild( nc - 1 )
+    sn = vn 
+    while vn != None:
+        if regex.search( vn.t.bodyString ) : yield vn
+        nc = vn.numberOfChildren()
+        if nc == 0:
+            i = vn.childIndex()
+            p = vn.parent()
+            if p == None: 
+                vn = None
+                continue
+            if i == 0:
+                while 1:
+                    if p == sn :
+                        vn = None
+                        break
+                    vn = p.back() 
+                    if vn == None:
+                        p = p.parent()
+                        continue
+                    break
+                continue                                                        
+            vn = p.nthChild( i - 1)
+            continue
+        vn = vn.nthChild( nc - 1 )
 </t>
 <t tx="ekr.20040319111213.4">def filterHoist(c):
 
-	global fhp
-	global e
-	
-	if fhp is None:
+    global fhp
+    global e
+    
+    if fhp is None:
 
-		fhp = Tkinter.Toplevel()
-		fhp.title('FilterHoist')
+        fhp = Tkinter.Toplevel()
+        fhp.title('FilterHoist')
 
-		fhp_entry = e = Tkinter.Entry(fhp)
-		e.pack(side="top",fill="both")
+        fhp_entry = e = Tkinter.Entry(fhp)
+        e.pack(side="top",fill="both")
 
-		def closeCallback(fhp=fhp):
-			fhp.withdraw()
-			
-		def filterCallback(c=c,entry=e):
-			filter(c,entry)
+        def closeCallback(fhp=fhp):
+            fhp.withdraw()
+            
+        def filterCallback(c=c,entry=e):
+            filter(c,entry)
 
-		b1 = Tkinter.Button(fhp,text='Close',command=closeCallback)
-		b2 = Tkinter.Button(fhp,text='Filter',command=filterCallback)
-		b1.pack(side="left")
-		b2.pack(side="right")
+        b1 = Tkinter.Button(fhp,text='Close',command=closeCallback)
+        b2 = Tkinter.Button(fhp,text='Filter',command=filterCallback)
+        b1.pack(side="left")
+        b2.pack(side="right")
 
-	fhp.geometry('200x200+250+250') 
-	fhp.deiconify()
-	fhp_entry.focus_set()
+    fhp.geometry('200x200+250+250') 
+    fhp.deiconify()
+    fhp_entry.focus_set()
 </t>
 <t tx="ekr.20040319111213.5">def addMenu(tag,keywords):
-	
-	c = top()
-	
-	trace()
-	
-	def callback(c=c):
-		filterHoist(c)
-	
-	table = ("FilterHoist",None,callback),
+    
+    c = top()
+    
+    trace()
+    
+    def callback(c=c):
+        filterHoist(c)
+    
+    table = ("FilterHoist",None,callback),
 
-	c.frame.menu.createMenuItemsFromTable("Outline",table)</t>
+    c.frame.menu.createMenuItemsFromTable("Outline",table)</t>
 <t tx="ekr.20040319142202"></t>
 <t tx="ekr.20040319142708">def filter(c,e):
-	
-	pat = re.compile(e.get())
+    
+    pat = re.compile(e.get())
 
-	c.beginUpdate()
-	if 1: # update...
-		t = tnode('','A Filtered Hoist')
-		newRoot = c.rootVnode().insertAfter(t)
-		p = c.rootVnode()
-		while p:
-			if pat.search(p.bodyString()):
-				clone = p.clone(p)
-				clone.moveToLastChildOf(newRoot)
-			p = p.threadNext()
-		newRoot.moveToRoot(c.rootVnode())
-		c.setCurrentVnode(newRoot)
-	c.endUpdate()
+    c.beginUpdate()
+    if 1: # update...
+        t = tnode('','A Filtered Hoist')
+        newRoot = c.rootVnode().insertAfter(t)
+        p = c.rootVnode()
+        while p:
+            if pat.search(p.bodyString()):
+                clone = p.clone(p)
+                clone.moveToLastChildOf(newRoot)
+            p = p.threadNext()
+        newRoot.moveToRoot(c.rootVnode())
+        c.setCurrentVnode(newRoot)
+    c.endUpdate()
 
-	c.hoist()
-	fhp.withdraw()
+    c.hoist()
+    fhp.withdraw()
 </t>
 <t tx="ekr.20040322120331">import leoGlobals as g
 c = g.top()
 
 print '-'*20
 for p in c.allNodes_iter():
-	if hasattr(p.v.t,"tnodeList"):
-		print p,p.v.t.tnodeList</t>
+    if hasattr(p.v.t,"tnodeList"):
+        print p,p.v.t.tnodeList</t>
 <t tx="ekr.20040323075614">import leoGlobals as g
 
 class test_iter_class:
-	def __init__ (self):
-		self.vals = ("a","b","c")
-		self.n = 0
-	def __iter__(self):
-		return self
-	def next(self):
-		if self.n &lt; len(self.vals):
-			val = self.vals[self.n]
-			self.n += 1
-			return val
-		else:
-			raise StopIteration
-			
+    def __init__ (self):
+        self.vals = ("a","b","c")
+        self.n = 0
+    def __iter__(self):
+        return self
+    def next(self):
+        if self.n &lt; len(self.vals):
+            val = self.vals[self.n]
+            self.n += 1
+            return val
+        else:
+            raise StopIteration
+            
 def test_iter(): return test_iter_class()
-		
+        
 vals = [val for val in test_iter()]
 
 print vals
@@ -4243,11 +4249,11 @@ positions2 = [p.copy() for p in c.allNodes_iter()]
 
 assert(len(positions1) == len(positions2))
 for i in xrange(len(positions1)):
-	assert(positions1[i] == positions2[i])
+    assert(positions1[i] == positions2[i])
 
 if 0:
-	for p in positions1:
-		print p
+    for p in positions1:
+        print p
 print "done"</t>
 <t tx="ekr.20040323082119">import leoGlobals as g
 c = g.top()
@@ -4258,15 +4264,15 @@ positions = [p.copy() for p in c.allNodes_iter()]
 
 tnodes = {} ; vnodes = []
 for p in c.allNodes_iter():
-	t = p.v.t
-	if tnodes.get(t) is None:
-		tnodes[t]=t
-		vnodes.append(p.v)
-		
+    t = p.v.t
+    if tnodes.get(t) is None:
+        tnodes[t]=t
+        vnodes.append(p.v)
+        
 print len(positions),len(vnodes)
 
 for v in vnodes:
-	print v</t>
+    print v</t>
 <t tx="ekr.20040323085406">import leoGlobals as g
 
 c = g.top()
@@ -4274,9 +4280,9 @@ c = g.top()
 print '-'*20
 
 for p in c.allNodes_iter():
-	if p.isAnyAtFileNode():
-		print p
-		
+    if p.isAnyAtFileNode():
+        print p
+        
 print "done"</t>
 <t tx="ekr.20040323085933">import leoGlobals as g
 
@@ -4285,11 +4291,11 @@ c = g.top()
 print '-'*20
 
 for p in c.allNodes_iter():
-	if p.isDirty():
-		vnodes = p.findAllPotentiallyDirtyNodes()
-		print '-'*5, p
-		for v in vnodes:
-			print v
+    if p.isDirty():
+        vnodes = p.findAllPotentiallyDirtyNodes()
+        print '-'*5, p
+        for v in vnodes:
+            print v
 
 print "done"</t>
 <t tx="ekr.20040323090541">import leoGlobals as g
@@ -4299,30 +4305,30 @@ c = g.top()
 print '-'*20
 ok = True ; count = 0
 for p in c.allNodes_iter():
-	if p.isCloned():
-		count += 1
-		parents = p.v.t.vnodeList
-		for child in p.children_iter():
-			vparents = child.v.directParents()
-			if len(parents) != len(vparents):
-					print "length mismatch",p,child,
-					ok = False
-			for parent in parents:
-				if parent not in vparents:
-					print "not in vparents",p,child
-					ok = False
-			for parent in vparents:
-				if parent not in parents:
-					print "not in parents",p,child
-					ok = False
-			if not ok:
-				print "parents"
-				for parent in parents: print parent
-				print "vparents"
-				for parent in vparents: print parent
-				break
-		if not ok: break
-	if not ok: break
+    if p.isCloned():
+        count += 1
+        parents = p.v.t.vnodeList
+        for child in p.children_iter():
+            vparents = child.v.directParents()
+            if len(parents) != len(vparents):
+                    print "length mismatch",p,child,
+                    ok = False
+            for parent in parents:
+                if parent not in vparents:
+                    print "not in vparents",p,child
+                    ok = False
+            for parent in vparents:
+                if parent not in parents:
+                    print "not in parents",p,child
+                    ok = False
+            if not ok:
+                print "parents"
+                for parent in parents: print parent
+                print "vparents"
+                for parent in vparents: print parent
+                break
+        if not ok: break
+    if not ok: break
 s = "checked %d cloned positions" % count
 print s ; g.es(s)
 </t>
@@ -4331,14 +4337,14 @@ print s ; g.es(s)
 c = g.top()
 
 for p in c.allNodes_iter():
-	if p.isCloned() and p.hasChildren():
-		childv = p.firstChild().v
-		assert(childv == p.v.t._firstChild)
-		assert(id(childv) == id(p.v.t._firstChild))
-		for v in p.v.t.vnodeList:
-			assert(v.t._firstChild == childv)
-			assert(id(v.t._firstChild) == id(childv))
-			
+    if p.isCloned() and p.hasChildren():
+        childv = p.firstChild().v
+        assert(childv == p.v.t._firstChild)
+        assert(id(childv) == id(p.v.t._firstChild))
+        for v in p.v.t.vnodeList:
+            assert(v.t._firstChild == childv)
+            assert(id(v.t._firstChild) == id(childv))
+            
 print "done"</t>
 <t tx="ekr.20040325073120">@ignore</t>
 <t tx="ekr.20040325082811">import leoGlobals as g
@@ -4362,14 +4368,14 @@ print p.v.headString()</t>
 
 s1 = '''\
 class test(object):
-	def __cmp__(self,p2):   return 0
-	def equal(self,p2):     return 0
+    def __cmp__(self,p2):   return 0
+    def equal(self,p2):     return 0
 p1 = test() ; p2 = test()'''
 
 s2 = '''\
 class test:
-	def __cmp__(self,p2):   return 0
-	def equal(self,p2):     return 0
+    def __cmp__(self,p2):   return 0
+    def equal(self,p2):     return 0
 p1 = test() ; p2 = test()'''
 
 s3 = '''\
@@ -4378,9 +4384,9 @@ p1 = leoNodes.position(None,[])
 p2 = leoNodes.position(None,[])'''
 
 for s in (s1,s2,s3):
-	t1 = timeit.Timer(stmt='p1==p2',setup=s).timeit()
-	t2 = timeit.Timer(stmt='p1.equal(p2)',setup=s).timeit()
-	print "%2.2f,%2.2f,%0.2f" % (t1,t2,t1/t2)
+    t1 = timeit.Timer(stmt='p1==p2',setup=s).timeit()
+    t2 = timeit.Timer(stmt='p1.equal(p2)',setup=s).timeit()
+    print "%2.2f,%2.2f,%0.2f" % (t1,t2,t1/t2)
 </t>
 <t tx="ekr.20040327105955">import os
 
@@ -4390,8 +4396,8 @@ s = r"c:\python23\python c:\prog\LeoCVS\leo\src\leo.py -script c:\prog\test\unit
 
 print '-'*10
 if os.path.exists(path):
-	print "deleting",path
-	os.remove(path)
+    print "deleting",path
+    os.remove(path)
 
 os.system(s)
 
@@ -4402,10 +4408,10 @@ print "done"</t>
 path = r"c:\prog\test\unittest\createdFile.txt"
 f = None
 try:
-	f = open(path,"w")
-	f.write("This is a test")
+    f = open(path,"w")
+    f.write("This is a test")
 finally:
-	if f: f.close()</t>
+    if f: f.close()</t>
 <t tx="ekr.20040327115825.1">@color
 
 import unittest
@@ -4563,155 +4569,155 @@ c = g.top()
 print '-'*90
 
 if 1:
-	# Just print the present position.
-	prettyPrintNode(c.currentPosition())
+    # Just print the present position.
+    prettyPrintNode(c.currentPosition())
 else:
-	# Print all top-level nodes.
-	for p in c.rootPosition().self_and_siblings_iter():
-		prettyPrintNode(p)</t>
+    # Print all top-level nodes.
+    for p in c.rootPosition().self_and_siblings_iter():
+        prettyPrintNode(p)</t>
 <t tx="ekr.20040402043516.1">class readLinesClass:
-	
-	"""A class whose next method provides a readline method for Python's tokenize module."""
+    
+    """A class whose next method provides a readline method for Python's tokenize module."""
 
-	def __init__ (self,s):
-		self.lines = g.splitLines(s)
-		self.i = 0
+    def __init__ (self,s):
+        self.lines = g.splitLines(s)
+        self.i = 0
 
-	def next(self):
-		if self.i &lt; len(self.lines):
-			line = self.lines[self.i]
-			self.i += 1
-		else:
-			line = ''
-		# g.trace(self.i,line)
-		return line</t>
+    def next(self):
+        if self.i &lt; len(self.lines):
+            line = self.lines[self.i]
+            self.i += 1
+        else:
+            line = ''
+        # g.trace(self.i,line)
+        return line</t>
 <t tx="ekr.20040402064301">class prettyPrinter:
-	
-	@others</t>
+    
+    @others</t>
 <t tx="ekr.20040402064301.1">def __init__ (self,p):
-	
-	self.line = 0
-	self.lines = []
-	self.col = 0
-	self.array = []
-	self.parenLevel = 0
-	self.bracketLevel = 0
-	self.p = p</t>
+    
+    self.line = 0
+    self.lines = []
+    self.col = 0
+    self.array = []
+    self.parenLevel = 0
+    self.bracketLevel = 0
+    self.p = p</t>
 <t tx="ekr.20040402072335">def put (self,s,strip=True):
-	
-	if self.array and strip:
-		prev = self.array[-1]
-		if len(self.array) == 1:
-			if prev.rstrip():
-				# We aren't stripping all leading whitespace.
-				self.array[-1] = prev.rstrip()
-		else:
-			# The previous entry isn't leading whitespace.
-			self.array[-1] = prev.rstrip()
+    
+    if self.array and strip:
+        prev = self.array[-1]
+        if len(self.array) == 1:
+            if prev.rstrip():
+                # We aren't stripping all leading whitespace.
+                self.array[-1] = prev.rstrip()
+        else:
+            # The previous entry isn't leading whitespace.
+            self.array[-1] = prev.rstrip()
 
-	self.array.append(s)</t>
+    self.array.append(s)</t>
 <t tx="ekr.20040402074431">def putNormalToken (self,token5tuple):
 
-	a = self.array
-	t1,t2,t3,t4,t5 = token5tuple
-	srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
-	name = token.tok_name[t1].lower()
-	val = str(t2)
-	startLine = self.line != srow
-	self.line = srow
+    a = self.array
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
+    name = token.tok_name[t1].lower()
+    val = str(t2)
+    startLine = self.line != srow
+    self.line = srow
 
-	if startLine:
-		ws = line[0:scol]
-		if ws: a.append(ws)
+    if startLine:
+        ws = line[0:scol]
+        if ws: a.append(ws)
 
-	if name in ("nl","newline","endmarker"):
-		if name in ("nl","newline"):
-			a.append('\n')
-		# else: a.append("&lt;END NODE&gt;")
-		self.lines.append(''.join(self.array))
-		self.array = []
-	elif name == "op":
-		self.putOperator(val)
-	elif name == "name":
-		a.append("%s " % val)
-	elif name in ("comment","string","number"):
-		a.append(val)
-	elif name == "errortoken":
-		if val == '@' and startLine:
-			# Preserve whitespace after leading @.
-			i = g.skip_ws(line,1)
-			a.append(line[0:i])
-		else:
-			a.append(val)
-	elif name == "indent":
-		a.append(val)
-	elif name == "dedent":
-		pass
-	else:
-		print "unknown: %s" % (name)</t>
+    if name in ("nl","newline","endmarker"):
+        if name in ("nl","newline"):
+            a.append('\n')
+        # else: a.append("&lt;END NODE&gt;")
+        self.lines.append(''.join(self.array))
+        self.array = []
+    elif name == "op":
+        self.putOperator(val)
+    elif name == "name":
+        a.append("%s " % val)
+    elif name in ("comment","string","number"):
+        a.append(val)
+    elif name == "errortoken":
+        if val == '@' and startLine:
+            # Preserve whitespace after leading @.
+            i = g.skip_ws(line,1)
+            a.append(line[0:i])
+        else:
+            a.append(val)
+    elif name == "indent":
+        a.append(val)
+    elif name == "dedent":
+        pass
+    else:
+        print "unknown: %s" % (name)</t>
 <t tx="ekr.20040402074431.1">def dumpToken (self,token5tuple):
 
-	t1,t2,t3,t4,t5 = token5tuple
-	srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
-	name = token.tok_name[t1].lower()
-	val = str(t2)
+    t1,t2,t3,t4,t5 = token5tuple
+    srow,scol = t3 ; erow,ecol = t4 ; line = str(t5)
+    name = token.tok_name[t1].lower()
+    val = str(t2)
 
-	startLine = self.line != srow
-	if startLine:
-		print "----- line",srow,repr(line)
-	self.line = srow
+    startLine = self.line != srow
+    if startLine:
+        print "----- line",srow,repr(line)
+    self.line = srow
 
-	print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))</t>
+    print "%10s (%2d,%2d) %-8s" % (name,scol,ecol,repr(val))</t>
 <t tx="ekr.20040402080311">def putToken (self,token5tuple):
-	
-	if 1:
-		self.putNormalToken(token5tuple)
-	else:
-		self.dumpToken(token5tuple)</t>
+    
+    if 1:
+        self.putNormalToken(token5tuple)
+    else:
+        self.dumpToken(token5tuple)</t>
 <t tx="ekr.20040402081135">def putOperator (self,val):
-	
-	if val == '(':
-		self.parenLevel += 1
-		self.put(val)
-	elif val == ')':
-		self.parenLevel -= 1
-		self.put(val)
-	elif val == '=':
-		if self.parenLevel &gt; 0: self.put('=')
-		else:                   self.put(' = ')
-	elif val == ',':
-		if self.parenLevel &gt; 0: self.put(',')
-		else:                   self.put(', ')
-	elif val == ';':
-		self.put(" ; ")
-	else:
-		self.put(val)</t>
+    
+    if val == '(':
+        self.parenLevel += 1
+        self.put(val)
+    elif val == ')':
+        self.parenLevel -= 1
+        self.put(val)
+    elif val == '=':
+        if self.parenLevel &gt; 0: self.put('=')
+        else:                   self.put(' = ')
+    elif val == ',':
+        if self.parenLevel &gt; 0: self.put(',')
+        else:                   self.put(', ')
+    elif val == ';':
+        self.put(" ; ")
+    else:
+        self.put(val)</t>
 <t tx="ekr.20040402084155">def prettyPrintNode(p):
 
-	s = p.bodyString()
-	if not s: return
-	
-	print '-'*10, p.headString()
+    s = p.bodyString()
+    if not s: return
+    
+    print '-'*10, p.headString()
 
-	pp = prettyPrinter(p)
-	# Create readLinesClass and return its next method.
-	leoReadlines = readLinesClass(s).next
-	
-	for token5tuple in tokenize.generate_tokens(leoReadlines):
-		pp.putToken(token5tuple)
-		
-	lines = pp.get()
-	
-	# Note: we could replace p's body text here.
+    pp = prettyPrinter(p)
+    # Create readLinesClass and return its next method.
+    leoReadlines = readLinesClass(s).next
+    
+    for token5tuple in tokenize.generate_tokens(leoReadlines):
+        pp.putToken(token5tuple)
+        
+    lines = pp.get()
+    
+    # Note: we could replace p's body text here.
 
-	if 1:
-		print ''.join(lines), # Don't add a trailing newline!
-	else:
-		for i in xrange(len(lines)):
-			print "%3d" % i, repr(lines[i])</t>
+    if 1:
+        print ''.join(lines), # Don't add a trailing newline!
+    else:
+        for i in xrange(len(lines)):
+            print "%3d" % i, repr(lines[i])</t>
 <t tx="ekr.20040402093822">def get (self):
-	
-	return self.lines</t>
+    
+    return self.lines</t>
 <t tx="ekr.20040409140301"></t>
 <t tx="ekr.20040409140301.1"></t>
 <t tx="ekr.20040409140301.2"></t>

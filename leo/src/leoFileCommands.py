@@ -5,9 +5,9 @@
 import leoGlobals as g
 
 if g.app.config.use_psyco:
-	# print "enabled psyco classes",__file__
-	try: from psyco.classes import *
-	except ImportError: pass
+    # print "enabled psyco classes",__file__
+    try: from psyco.classes import *
+    except ImportError: pass
 
 import leoNodes
 import os
@@ -26,2134 +26,2134 @@ import time
 #@@c
 
 xml_language_names = (
-	"CWEB","C","HTML","Java","LaTeX",
-	"Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
+    "CWEB","C","HTML","Java","LaTeX",
+    "Pascal","PerlPod","Perl","Plain","Python","tcl/tk")
 
 class BadLeoFile(Exception):
-	def __init__(self, message):
-		self.message = message
-		Exception.__init__(self,message) # 4/26/03: initialize the base class.
-	def __str__(self):
-		return "Bad Leo File:" + self.message
+    def __init__(self, message):
+        self.message = message
+        Exception.__init__(self,message) # 4/26/03: initialize the base class.
+    def __str__(self):
+        return "Bad Leo File:" + self.message
 
 class baseFileCommands:
-	"""A base class for the fileCommands subcommander."""
-	#@	@+others
-	#@+node:ekr.20031218072017.3019:leoFileCommands._init_
-	def __init__(self,c):
-	
-		# g.trace("__init__", "fileCommands.__init__")
-		self.c = c
-		self.frame = c.frame
-		self.initIvars()
-	
-	def initIvars(self):
-	
-		# General
-		self.maxTnodeIndex = 0
-		self.numberOfTnodes = 0
-		self.topPosition = None
-		self.mFileName = ""
-		self.fileDate = -1
-		self.leo_file_encoding = g.app.config.new_leo_file_encoding
-		# For reading
-		self.fileFormatNumber = 0
-		self.ratio = 0.5
-		self.fileBuffer = None ; self.fileIndex = 0
-		self.currentVnodeStack = [] # A stack of vnodes giving the current position.
-		self.topVnodeStack     = [] # A stack of vnodes giving the top position.
-		# For writing
-		self.read_only = False
-		self.outputFile = None # File for normal writing
-		self.outputList = None # List of strings for pasting
-		self.openDirectory = None
-		self.topVnode = None
-		self.usingClipboard = False
-		self.currentPosition = None
-		# New in 3.12
-		self.copiedTree = None
-		self.tnodesDict = {}  # keys are gnx strings as returned by canonicalTnodeIndex.
-	#@nonl
-	#@-node:ekr.20031218072017.3019:leoFileCommands._init_
-	#@+node:ekr.20031218072017.3020:Reading
-	#@+node:ekr.20031218072017.2004:canonicalTnodeIndex
-	def canonicalTnodeIndex(self,index):
-		
-		"""Convert Tnnn to nnn, leaving gnx's unchanged."""
-	
-		# index might be Tnnn, nnn, or gnx.
-		id,time,n = g.app.nodeIndices.scanGnx(index,0)
-		if time == None: # A pre-4.1 file index.
-			if index[0] == "T":
-				index = index[1:]
-	
-		return index
-	#@nonl
-	#@-node:ekr.20031218072017.2004:canonicalTnodeIndex
-	#@+node:ekr.20040326052245:convertStackToPosition
-	def convertStackToPosition (self,stack):
-	
-		c = self.c ; p2 = None
-		if not stack: return None
-	
-		for p in c.allNodes_iter():
-			if p.v == stack[0]:
-				p2 = p.copy()
-				for n in xrange(len(stack)):
-					if not p2: break
-					# g.trace("compare",n,p2.v,stack[n])
-					if p2.v != stack[n]:
-						p2 = None
-					elif n + 1 == len(stack):
-						break
-					else:
-						p2.moveToParent()
-				if p2: return p
-	
-		return None
-	#@nonl
-	#@-node:ekr.20040326052245:convertStackToPosition
-	#@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
-	def createVnode (self,parent,back,tref,headline,attrDict):
-		
-		# g.trace(parent,headline)
-		v = None ; c = self.c
-		# Shared tnodes are placed in the file even if empty.
-		if tref == -1:
-			t = leoNodes.tnode()
-		else:
-			tref = self.canonicalTnodeIndex(tref)
-			t = self.tnodesDict.get(tref)
-			if not t: t = self.newTnode(tref)
-		if back: # create v after back.
-			v = back.insertAfter(t)
-		elif parent: # create v as the parent's first child.
-			v = parent.insertAsNthChild(0,t)
-		else: # create a root vnode
-			v = leoNodes.vnode(c,t)
-			v.moveToRoot()
-	
-		if v not in v.t.vnodeList:
-			v.t.vnodeList.append(v) # New in 4.2.
-	
-		skip = len(v.t.vnodeList) > 1
-	
-		v.initHeadString(headline,encoding=self.leo_file_encoding)
-		#@	<< handle unknown vnode attributes >>
-		#@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-		keys = attrDict.keys()
-		if keys:
-			v.unknownAttributes = attrDict
-		
-			if 0: # For debugging.
-				s = "unknown attributes for " + v.headString()
-				print s ; g.es(s,color="blue")
-				for key in keys:
-					s = "%s = %s" % (key,attrDict.get(key))
-					print s ; g.es(s)
-		#@nonl
-		#@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
-		#@nl
-		return v,skip
-	#@nonl
-	#@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
-	#@+node:ekr.20040326063413:getExistingVnode
-	def getExistingVnode (self,tref):
-	
-		assert(tref > -1)
-		tref = self.canonicalTnodeIndex(tref)
-		t = self.tnodesDict.get(tref)
-		return t.vnodeList[0]
-	#@nonl
-	#@-node:ekr.20040326063413:getExistingVnode
-	#@+node:ekr.20031218072017.1557:finishPaste
-	def finishPaste(self,reassignIndices=True):
-		
-		"""Finish pasting an outline from the clipboard.
-		
-		Retain clone links if reassignIndices is False."""
-	
-		c = self.c
-		current = c.currentPosition()
-		c.beginUpdate()
-		if reassignIndices:
-			#@		<< reassign tnode indices and clear all clone links >>
-			#@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
-			#@+at 
-			#@nonl
-			# putLeoOutline calls assignFileIndices (when copying nodes) so 
-			# that vnode can be associated with tnodes.
-			# However, we must _reassign_ the indices here so that no "False 
-			# clones" are created.
-			#@-at
-			#@@c
-			
-			current.clearVisitedInTree()
-			
-			for p in current.self_and_subtree_iter():
-				t = p.v.t
-				if not t.isVisited():
-					t.setVisited()
-					self.maxTnodeIndex += 1
-					t.setFileIndex(self.maxTnodeIndex)
-			#@nonl
-			#@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
-			#@nl
-		c.selectVnode(current)
-		c.endUpdate()
-		return current
-	#@nonl
-	#@-node:ekr.20031218072017.1557:finishPaste
-	#@+node:ekr.20031218072017.3021:get routines
-	#@+node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
-	#@+node:ekr.20031218072017.1244:get routines
-	#@+node:EKR.20040526204706:getBool
-	def getBool (self):
-	
-		self.skipWs() # guarantees at least one more character.
-		ch = self.fileBuffer[self.fileIndex]
-		if ch == '0':
-			self.fileIndex += 1 ; return False
-		elif ch == '1':
-			self.fileIndex += 1 ; return True
-		else:
-			raise BadLeoFile("expecting bool constant")
-	#@nonl
-	#@-node:EKR.20040526204706:getBool
-	#@+node:EKR.20040526204706.1:getDouble
-	def getDouble (self):
-	
-		self.skipWs()
-		i = self.fileIndex ; buf = self.fileBuffer
-		floatChars = string.digits + 'e' + 'E' + '.' + '+' + '-'
-		n = len(buf)
-		while i < n and buf[i] in floatChars:
-			i += 1
-		if i == self.fileIndex:
-			raise BadLeoFile("expecting float constant")
-		val = float(buf[self.fileIndex:i])
-		self.fileIndex = i
-		return val
-	#@nonl
-	#@-node:EKR.20040526204706.1:getDouble
-	#@+node:EKR.20040526204706.2:getDqBool
-	def getDqBool (self):
-	
-		self.getDquote()
-		val = self.getBool()
-		self.getDquote()
-		return val
-	#@-node:EKR.20040526204706.2:getDqBool
-	#@+node:EKR.20040526204706.3:getDqString
-	def getDqString (self):
-	
-		self.getDquote()
-		i = self.fileIndex
-		self.fileIndex = j = string.find(self.fileBuffer,'"',i)
-		if j == -1: raise BadLeoFile("unterminated double quoted string")
-		s = self.fileBuffer[i:j]
-		self.getDquote()
-		return s
-	#@nonl
-	#@-node:EKR.20040526204706.3:getDqString
-	#@+node:EKR.20040526204706.4:getDquote
-	def getDquote (self):
-	
-		self.getTag('"')
-	#@nonl
-	#@-node:EKR.20040526204706.4:getDquote
-	#@+node:EKR.20040526204706.5:getIndex
-	def getIndex (self):
-	
-		val = self.getLong()
-		if val < 0: raise BadLeoFile("expecting index")
-		return val
-	#@nonl
-	#@-node:EKR.20040526204706.5:getIndex
-	#@+node:EKR.20040526204706.6:getLong
-	def getLong (self):
-	
-		self.skipWs() # guarantees at least one more character.
-		i = self.fileIndex
-		if self.fileBuffer[i] == '-':
-			i += 1
-		n = len(self.fileBuffer)
-		while i < n and self.fileBuffer[i] in string.digits:
-			i += 1
-		if i == self.fileIndex:
-			raise BadLeoFile("expecting int constant")
-		val = int(self.fileBuffer[self.fileIndex:i])
-		self.fileIndex = i
-		return val
-	#@nonl
-	#@-node:EKR.20040526204706.6:getLong
-	#@+node:EKR.20040526204706.7:getOpenTag
-	def getOpenTag (self,tag):
-		
-		"""
-		Look ahead for collapsed tag: tag may or may not end in ">"
-		Skips tag and /> if found, otherwise does not alter index.
-		"""
-	
-		if tag[-1] == ">":
-			# Only the tag itself or a collapsed tag are valid.
-			if self.matchTag(tag):
-				return False # Not a collapsed tag.
-			elif self.matchTag(tag[:-1]):
-				# It must be a collapsed tag.
-				self.skipWs()
-				if self.matchTag("/>"):
-					return True
-			print "getOpenTag(", tag, ") failed:"
-			raise BadLeoFile("expecting" + tag)
-		else:
-			# The tag need not be followed by "/>"
-			if self.matchTag(tag):
-				old_index = self.fileIndex
-				self.skipWs()
-				if self.matchTag("/>"):
-					return True
-				else:
-					self.fileIndex = old_index
-					return False
-			else:
-				print "getOpenTag(", tag, ") failed:"
-				raise BadLeoFile("expecting" + tag)
-	#@nonl
-	#@-node:EKR.20040526204706.7:getOpenTag
-	#@+node:EKR.20040526204706.8:getStringToTag
-	def getStringToTag (self,tag):
-	
-		buf = self.fileBuffer
-		blen = len(buf) ; tlen = len(tag)
-		i = j = self.fileIndex
-		while i < blen:
-			if tag == buf[i:i+tlen]:
-				self.fileIndex = i
-				return buf[j:i]
-			else: i += 1
-		raise BadLeoFile("expecting string terminated by " + tag)
-		return ""
-	#@nonl
-	#@-node:EKR.20040526204706.8:getStringToTag
-	#@+node:EKR.20040526204706.9:getTag
-	def getTag (self,tag):
-		
-		"""
-		Look ahead for closing />
-		Return True if found.
-		"""
-		
-		if self.matchTag(tag):
-			return
-		else:
-			print "getTag(", tag, ") failed:"
-			raise BadLeoFile("expecting" + tag)
-	#@-node:EKR.20040526204706.9:getTag
-	#@+node:EKR.20040526204036.1:getUnknownAttribute
-	def getUnknownAttribute(self):
-		
-		import binascii
-		import pickle
-		
-		# New in 4.2.  The unknown tag has been pickled and hexlify'd.
-		attr,val = self.getUnknownTag()
-		
-		# g.trace(attr,val)
-		
-		try:
-			bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
-			val2 = pickle.loads(bin)
-		except (TypeError, pickle.UnpicklingError):
-			# The unknownAtrribute was written before 4.2.
-			val2 = val
-			
-		return attr,val2
-	#@nonl
-	#@-node:EKR.20040526204036.1:getUnknownAttribute
-	#@+node:EKR.20040526204036:getUnknownTag
-	def getUnknownTag(self):
-		
-		self.skipWsAndNl() # guarantees at least one more character.
-		tag = self.getStringToTag('=')
-		if not tag:
-			print "getUnknownTag failed"
-			raise BadLeoFile("unknown tag not followed by '='")
-	
-		self.fileIndex += 1
-		val = self.getDqString()
-		# g.trace(tag,val)
-		return tag,val
-	#@nonl
-	#@-node:EKR.20040526204036:getUnknownTag
-	#@-node:ekr.20031218072017.1244:get routines
-	#@+node:ekr.20031218072017.1245:match routines
-	def matchChar (self,ch):
-		self.skipWs() # guarantees at least one more character.
-		if ch == self.fileBuffer[self.fileIndex]:
-			self.fileIndex += 1 ; return True
-		else: return False
-	
-	# Warning: does not check for end-of-word,
-	# so caller must match prefixes first.
-	def matchTag (self,tag):
-		self.skipWsAndNl() # guarantees at least one more character.
-		i = self.fileIndex
-		if tag == self.fileBuffer[i:i+len(tag)]:
-			self.fileIndex += len(tag)
-			return True
-		else:
-			return False
-	
-	def matchTagWordIgnoringCase (self,tag):
-		self.skipWsAndNl() # guarantees at least one more character.
-		i = self.fileIndex
-		tag = string.lower(tag)
-		j = g.skip_c_id(self.fileBuffer,i)
-		word = self.fileBuffer[i:j]
-		word = string.lower(word)
-		if tag == word:
-			self.fileIndex += len(tag)
-			return True
-		else:
-			return False
-	#@-node:ekr.20031218072017.1245:match routines
-	#@-node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
-	#@+node:ekr.20031218072017.3022:getClipboardHeader
-	def getClipboardHeader (self):
-	
-		if self.getOpenTag("<leo_header"):
-			return # 11/24/02
-	
-		while 1:
-			if self.matchTag("file_format="):
-				self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
-			elif self.matchTag("tnodes="):
-				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
-			elif self.matchTag("max_tnode_index="):
-				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
-			elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
-				break
-			else:
-				self.getTag("/>")
-				break
-	#@nonl
-	#@-node:ekr.20031218072017.3022:getClipboardHeader
-	#@+node:ekr.20031218072017.3023:getCloneWindows
-	# For compatibility with old file formats.
-	
-	def getCloneWindows (self):
-	
-		if not self.matchTag("<clone_windows>"):
-			return
-	
-		while self.matchTag("<clone_window vtag=\"V"):
-			self.getLong() ; self.getDquote() ; self.getTag(">")
-			if not self.getOpenTag("<global_window_position"):
-				self.getTag("<global_window_position")
-				self.getPosition()
-				self.getTag("/>")
-			self.getTag("</clone_window>")
-		self.getTag("</clone_windows>")
-	#@nonl
-	#@-node:ekr.20031218072017.3023:getCloneWindows
-	#@+node:ekr.20031218072017.3024:getEscapedString
-	def getEscapedString (self):
-	
-		# The next '<' begins the ending tag.
-		i = self.fileIndex
-		self.fileIndex = j = string.find(self.fileBuffer,'<',i)
-		if j == -1:
-			print self.fileBuffer[i:]
-			raise BadLeoFile("unterminated escaped string")
-		else:
-			# Allocates memory
-			return self.xmlUnescape(self.fileBuffer[i:j])
-	#@nonl
-	#@-node:ekr.20031218072017.3024:getEscapedString
-	#@+node:ekr.20031218072017.2064:getFindPanelSettings
-	def getFindPanelSettings (self):
-	
-		c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
-		#@	<< Set defaults of all flags >>
-		#@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
-		if g.app.gui.guiName() == "tkinter":
-		
-			for var in findFrame.intKeys:
-				attr = "%s_flag" % (var)
-				setattr(c,attr,False)
-				# g.trace(attr)
-		#@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
-		#@nl
-		if not self.getOpenTag("<find_panel_settings"):
-			while 1:
-				if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
-				elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
-				elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
-				elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
-				elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
-				elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
-				elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
-				elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
-				elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
-				elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
-				elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
-				elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
-				elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
-				elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
-				elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
-				elif self.matchTag(">"): break
-				else: self.getUnknownTag() # New in 4.1: ignore all other tags.
-			#
-			self.getTag("<find_string>")
-			c.find_text = self.getEscapedString()
-			self.getTag("</find_string>")
-			#
-			self.getTag("<change_string>")
-			c.change_text = self.getEscapedString()
-			self.getTag("</change_string>")
-			#
-			self.getTag("</find_panel_settings>")
-		
-		# Override .leo file's preferences if settings are in leoConfig.txt.
-		config.setCommandsFindIvars(c)
-		# Update the settings immediately.
-		if g.app.gui.guiName() == "tkinter":
-			g.app.findFrame.init(c)
-	#@nonl
-	#@-node:ekr.20031218072017.2064:getFindPanelSettings
-	#@+node:ekr.20031218072017.2306:getGlobals
-	def getGlobals (self):
-	
-		if self.getOpenTag("<globals"):
-			return
-	
-		self.getTag("body_outline_ratio=\"")
-		self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
-	
-		self.getTag("<global_window_position")
-		y,x,h,w = self.getPosition() ; self.getTag("/>")
-		self.frame.setTopGeometry(w,h,x,y)
-	
-		# 7/15/02: Redraw the window before writing into it.
-		self.frame.deiconify()
-		self.frame.lift()
-		self.frame.update()
-	
-		self.getTag("<global_log_window_position")
-		self.getPosition() ;
-		self.getTag("/>") # no longer used.
-	
-		self.getTag("</globals>")
-	#@nonl
-	#@-node:ekr.20031218072017.2306:getGlobals
-	#@+node:ekr.20031218072017.1553:getLeoFile
-	# The caller should enclose this in begin/endUpdate.
-	
-	def getLeoFile (self,fileName,atFileNodesFlag=True):
-	
-		c = self.c
-		c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
-		#@	<< warn on read-only files >>
-		#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
-		try:
-			self.read_only = False
-			self.read_only = not os.access(fileName,os.W_OK)
-			if self.read_only:
-				g.es("read only: " + fileName,color="red")
-		except:
-			if 0: # testing only: access may not exist on all platforms.
-				g.es("exception getting file access")
-				g.es_exception()
-		#@nonl
-		#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
-		#@nl
-		self.mFileName = c.mFileName
-		self.tnodesDict = {}
-		ok = True
-		c.loading = True # disable c.changed
-		
-		try:
-			#@		<< scan all the xml elements >>
-			#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
-			self.getXmlVersionTag()
-			self.getXmlStylesheetTag()
-			self.getTag("<leo_file>")
-			self.getLeoHeader()
-			self.getGlobals()
-			self.getPrefs()
-			self.getFindPanelSettings()
-			
-			# Causes window to appear.
-			c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
-			g.es("reading: " + fileName)
-			
-			self.getVnodes()
-			self.getTnodes()
-			self.getCloneWindows()
-			self.getTag("</leo_file>")
-			#@nonl
-			#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
-			#@nl
-		except BadLeoFile, message:
-			#@		<< raise an alert >>
-			#@+node:ekr.20031218072017.1556:<< raise an alert >>
-			# All other exceptions are Leo bugs.
-			
-			g.es_exception()
-			g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
-			#@nonl
-			#@-node:ekr.20031218072017.1556:<< raise an alert >>
-			#@nl
-			ok = False
-	
-		c.frame.tree.redraw_now(scroll=False)
-		
-		if ok and atFileNodesFlag:
-			c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
-	
-		if not c.currentPosition():
-			c.setCurrentPosition(c.rootPosition())
-	
-		c.selectVnode(c.currentPosition()) # load body pane
-		c.loading = False # reenable c.changed
-		c.setChanged(c.changed) # Refresh the changed marker.
-		self.tnodesDict = {}
-		return ok, self.ratio
-	#@nonl
-	#@-node:ekr.20031218072017.1553:getLeoFile
-	#@+node:ekr.20031218072017.1970:getLeoHeader
-	def getLeoHeader (self):
-	
-		# Set defaults.
-		self.maxTnodeIndex = 0
-		self.numberOfTnodes = 0
-		if self.getOpenTag("<leo_header"):
-			return
-	
-		# New in version 1.7: attributes may appear in any order.
-		while 1:
-			if self.matchTag("file_format="):
-				self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
-			elif self.matchTag("tnodes="):
-				self.getDquote() ; self.numberOfTnodes = self.getLong() ; self.getDquote()
-			elif self.matchTag("max_tnode_index="):
-				self.getDquote() ; self.maxTnodeIndex = self.getLong() ; self.getDquote()
-				# g.trace("max_tnode_index:",self.maxTnodeIndex)
-			elif self.matchTag("clone_windows="):
-				self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
-			elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
-				break
-			else:
-				self.getTag("/>")
-				break
-	#@nonl
-	#@-node:ekr.20031218072017.1970:getLeoHeader
-	#@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
-	# This method reads a Leo outline from string s in clipboard format.
-	def getLeoOutline (self,s,reassignIndices=True):
-	
-		self.usingClipboard = True
-		self.fileBuffer = s ; self.fileIndex = 0
-		self.tnodesDict = {}
-		
-		if not reassignIndices:
-			#@		<< recreate tnodesDict >>
-			#@+node:EKR.20040610134756:<< recreate tnodesDict >>
-			nodeIndices = g.app.nodeIndices
-			
-			for t in self.c.all_tnodes_iter():
-				tref = t.fileIndex
-				if nodeIndices.isGnx(tref):
-					tref = nodeIndices.toString(tref)
-				self.tnodesDict[tref] = t
-				
-			if 0:
-				print '-'*40
-				for key in self.tnodesDict.keys():
-					print key,self.tnodesDict[key]
-			#@nonl
-			#@-node:EKR.20040610134756:<< recreate tnodesDict >>
-			#@nl
-	
-		try:
-			self.getXmlVersionTag() # leo.py 3.0
-			self.getXmlStylesheetTag() # 10/25/02
-			self.getTag("<leo_file>")
-			self.getClipboardHeader()
-			self.getVnodes()
-			self.getTnodes()
-			self.getTag("</leo_file>")
-			v = self.finishPaste(reassignIndices)
-		except BadLeoFile:
-			v = None
-	
-		# Clean up.
-		self.fileBuffer = None ; self.fileIndex = 0
-		self.usingClipboard = False
-		self.tnodesDict = {}
-		return v
-	#@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
-	#@+node:ekr.20031218072017.3025:getPosition
-	def getPosition (self):
-	
-		top = left = height = width = 0
-		# New in version 1.7: attributes may appear in any order.
-		while 1:
-			if self.matchTag("top=\""):
-				top = self.getLong() ; self.getDquote()
-			elif self.matchTag("left=\""):
-				left = self.getLong() ; self.getDquote()
-			elif self.matchTag("height=\""):
-				height = self.getLong() ; self.getDquote()
-			elif self.matchTag("width=\""):
-				width = self.getLong() ; self.getDquote()
-			else: break
-		return top, left, height, width
-	#@nonl
-	#@-node:ekr.20031218072017.3025:getPosition
-	#@+node:ekr.20031218072017.2062:getPrefs
-	def getPrefs (self):
-	
-		c = self.c ; config = g.app.config
-		
-		if self.getOpenTag("<preferences"):
-			return
-	
-		table = (
-			("allow_rich_text",None,None), # Ignored.
-			("tab_width","tab_width",self.getLong),
-			("page_width","page_width",self.getLong),
-			("tangle_bat","tangle_batch_flag",self.getBool),
-			("untangle_bat","untangle_batch_flag",self.getBool),
-			("output_doc_chunks","output_doc_flag",self.getBool),
-			("noweb_flag",None,None), # Ignored.
-			("extended_noweb_flag",None,None), # Ignored.
-			("defaultTargetLanguage","target_language",self.getTargetLanguage),
-			("use_header_flag","use_header_flag",self.getBool))
-		
-		while 1:
-			found = False
-			for tag,var,f in table:
-				if self.matchTag("%s=" % tag):
-					if var:
-						self.getDquote() ; val = f() ; self.getDquote()
-						setattr(c,var,val)
-					else:
-						self.getDqString()
-					found = True ; break
-			if not found:
-				if self.matchTag(">"):
-					break
-				else: # New in 4.1: ignore all other tags.
-					self.getUnknownTag()
-	
-		while 1:
-			if self.matchTag("<defaultDirectory>"):
-				# New in version 0.16.
-				c.tangle_directory = self.getEscapedString()
-				self.getTag("</defaultDirectory>")
-				if not g.os_path_exists(c.tangle_directory):
-					g.es("default tangle directory not found:" + c.tangle_directory)
-			elif self.matchTag("<TSyntaxMemo_options>"):
-				self.getEscapedString() # ignored
-				self.getTag("</TSyntaxMemo_options>")
-			else: break
-		self.getTag("</preferences>")
-		
-		# Override .leo file's preferences if settings are in leoConfig.txt.
-		if config.configsExist:
-			config.setCommandsIvars(c)
-	#@nonl
-	#@+node:ekr.20031218072017.2063:getTargetLanguage
-	def getTargetLanguage (self):
-		
-		# Must match longer tags before short prefixes.
-		for name in g.app.language_delims_dict.keys():
-			if self.matchTagWordIgnoringCase(name):
-				language = name.replace("/","")
-				# self.getDquote()
-				return language
-				
-		return "c" # default
-	#@nonl
-	#@-node:ekr.20031218072017.2063:getTargetLanguage
-	#@-node:ekr.20031218072017.2062:getPrefs
-	#@+node:ekr.20031218072017.3026:getSize
-	def getSize (self):
-	
-		# New in version 1.7: attributes may appear in any order.
-		height = 0 ; width = 0
-		while 1:
-			if self.matchTag("height=\""):
-				height = self.getLong() ; self.getDquote()
-			elif self.matchTag("width=\""):
-				width = self.getLong() ; self.getDquote()
-			else: break
-		return height, width
-	#@nonl
-	#@-node:ekr.20031218072017.3026:getSize
-	#@+node:ekr.20031218072017.1561:getTnode
-	def getTnode (self):
-	
-		# we have already matched <t.
-		index = -1 ; attrDict = {}
-		# New in version 1.7: attributes may appear in any order.
-		while 1:	
-			if self.matchTag("tx="):
-				# New for 4.1.  Read either "Tnnn" or "gnx".
-				index = self.getDqString()
-			elif self.matchTag("rtf=\"1\""): pass # ignored
-			elif self.matchTag("rtf=\"0\""): pass # ignored
-			elif self.matchTag(">"):         break
-			else: # New for 4.0: allow unknown attributes.
-				# New in 4.2: allow pickle'd and hexlify'ed values.
-				attr,val = self.getUnknownAttribute()
-				attrDict[attr] = val
-				
-		if g.app.use_gnx:
-			# index might be Tnnn, nnn, or gnx.
-			id,time,n = g.app.nodeIndices.scanGnx(index,0)
-			if time == None: # A pre-4.1 file index.
-				if index[0] == "T":
-					index = index[1:]
-	
-		index = self.canonicalTnodeIndex(index)
-		t = self.tnodesDict.get(index)
-		# g.trace(t)
-		#@	<< handle unknown attributes >>
-		#@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
-		keys = attrDict.keys()
-		if keys:
-			t.unknownAttributes = attrDict
-			if 0: # For debugging.
-				s = "unknown attributes for tnode"
-				print s ; g.es(s, color = "blue")
-				for key in keys:
-					s = "%s = %s" % (key,attrDict.get(key))
-					print s ; g.es(s)
-		#@nonl
-		#@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
-		#@nl
-		if t:
-			s = self.getEscapedString()
-			t.setTnodeText(s,encoding=self.leo_file_encoding)
-		else:
-			g.es("no tnode with index: %s.  The text will be discarded" % str(index))
-		self.getTag("</t>")
-	#@-node:ekr.20031218072017.1561:getTnode
-	#@+node:ekr.20031218072017.1560:getTnodes
-	def getTnodes (self):
-	
-		# A slight change: we require a tnode element.  But Leo always writes this.
-		if self.getOpenTag("<tnodes>"):
-			return
-			
-		while self.matchTag("<t"):
-			self.getTnode()
-	
-		self.getTag("</tnodes>")
-	#@-node:ekr.20031218072017.1560:getTnodes
-	#@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
-	def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
-	
-		c = self.c ; v = None
-		setCurrent = setExpanded = setMarked = setOrphan = setTop = False
-		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
-		# we have already matched <v.
-		while 1:
-			if self.matchTag("a=\""):
-				#@			<< Handle vnode attribute bits >>
-				#@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-				# The a=" has already been seen.
-				while 1:
-					if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
-					elif self.matchChar('D'): pass # Not used.
-					elif self.matchChar('E'): setExpanded = True
-					elif self.matchChar('M'): setMarked = True
-					elif self.matchChar('O'): setOrphan = True
-					elif self.matchChar('T'): setTop = True
-					elif self.matchChar('V'): setCurrent = True
-					else: break
-				
-				self.getDquote()
-				#@nonl
-				#@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
-				#@nl
-			elif self.matchTag("t="):
-				# New for 4.1.  Read either "Tnnn" or "gnx".
-				tref = self.getDqString()
-			elif self.matchTag("vtag=\"V"):
-				self.getIndex() ; self.getDquote() # ignored
-			elif self.matchTag("tnodeList="):
-				s = self.getDqString()
-				tnodeList = self.getTnodeList(s) # New for 4.0
-			elif self.matchTag(">"):
-				break
-			else: # New for 4.0: allow unknown attributes.
-				# New in 4.2: allow pickle'd and hexlify'ed values.
-				attr,val = self.getUnknownAttribute()
-				attrDict[attr] = val
-		# Headlines are optional.
-		if self.matchTag("<vh>"):
-			headline = self.getEscapedString() ; self.getTag("</vh>")
-		
-		# g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-		if skip:
-			v = self.getExistingVnode(tref)
-		else:
-			v,skip = self.createVnode(parent,back,tref,headline,attrDict)
-			if tnodeList:
-				v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
-				# g.trace("%4d" % len(tnodeList),v)
-	
-		#@	<< Set the remembered status bits >>
-		#@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-		if setCurrent:
-			self.currentVnodeStack = [v]
-		
-		if setTop:
-			self.topVnodeStack = [v]
-			
-		if setExpanded:
-			v.initExpandedBit()
-			
-		if setMarked:
-			v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
-		
-		if setOrphan:
-			v.setOrphan()
-		#@nonl
-		#@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
-		#@nl
-	
-		# Recursively create all nested nodes.
-		parent = v ; back = None
-		while self.matchTag("<v"):
-			append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
-			append2 = appendToTopStack and len(self.topVnodeStack) == 0
-			back = self.getVnode(parent,back,skip,
-				appendToCurrentStack=append1,appendToTopStack=append2)
-				
-		#@	<< Append to current or top stack >>
-		#@+node:ekr.20040326055828:<< Append to current or top stack >>
-		if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
-			#g.trace("append current",v)
-			self.currentVnodeStack.append(v)
-			
-		if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
-			#g.trace("append top",v)
-			self.topVnodeStack.append(v)
-		#@nonl
-		#@-node:ekr.20040326055828:<< Append to current or top stack >>
-		#@nl
-	
-		# End this vnode.
-		self.getTag("</v>")
-		return v
-	#@nonl
-	#@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
-	#@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
-	def getTnodeList (self,s):
-	
-		"""Parse a list of tnode indices in string s."""
-		
-		# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
-		
-		fc = self ; 
-	
-		indexList = s.split(',') # The list never ends in a comma.
-		tnodeList = []
-		for index in indexList:
-			index = self.canonicalTnodeIndex(index)
-			t = fc.tnodesDict.get(index)
-			if not t:
-				# Not an error: create a new tnode and put it in fc.tnodesDict.
-				# g.trace("not allocated: %s" % index)
-				t = self.newTnode(index)
-			tnodeList.append(t)
-			
-		# if tnodeList: g.trace(len(tnodeList))
-		return tnodeList
-	#@-node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
-	#@+node:ekr.20031218072017.1565:getVnodes
-	def getVnodes (self):
-	
-		c = self.c
-	
-		if self.getOpenTag("<vnodes>"):
-			return
-			
-		if self.usingClipboard:
-			oldRoot = c.rootPosition()
-			oldCurrent = c.currentPosition()
-	
-		back = parent = None # This routine _must_ work on vnodes!
-		
-		self.currentVnodeStack = []
-		self.topVnodeStack = []
-		while self.matchTag("<v"):
-			append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
-			append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
-			back = self.getVnode(parent,back,skip=False,
-				appendToCurrentStack=append1,appendToTopStack=append2)
-	
-		if self.usingClipboard:
-			# Link in the pasted nodes after the current position.
-			newRoot = c.rootPosition()
-			c.setRootPosition(oldRoot)
-			newRoot.v.linkAfter(oldCurrent.v)
-			newCurrent = oldCurrent.copy()
-			newCurrent.v = newRoot.v
-			c.setCurrentPosition(newCurrent)
-		else:
-			#@		<< set current and top positions >>
-			#@+node:ekr.20040326054052:<< set current and top positions >>
-			current = self.convertStackToPosition(self.currentVnodeStack)
-			if current:
-				c.setCurrentPosition(current)
-			else:
-				# g.trace(self.currentVnodeStack)
-				c.setCurrentPosition(c.rootPosition())
-				
-			# At present this is useless: the drawing code doesn't set the top position properly.
-			top = self.convertStackToPosition(self.topVnodeStack)
-			if top:
-				c.setTopPosition(top)
-			#@nonl
-			#@-node:ekr.20040326054052:<< set current and top positions >>
-			#@nl
-	
-		self.getTag("</vnodes>")
-	#@nonl
-	#@-node:ekr.20031218072017.1565:getVnodes
-	#@+node:ekr.20031218072017.1249:getXmlStylesheetTag
-	def getXmlStylesheetTag (self):
-	
-		"""Parses the optional xml stylesheet string, and sets the corresponding config option.
-		
-		For example, given: <?xml_stylesheet s?> the config option is s."""
-		
-		c = self.c
-		tag = "<?xml-stylesheet "
-	
-		if self.matchTag(tag):
-			s = self.getStringToTag("?>")
-			# print "reading:", tag + s + "?>"
-			c.frame.stylesheet = s
-			self.getTag("?>")
-	#@nonl
-	#@-node:ekr.20031218072017.1249:getXmlStylesheetTag
-	#@+node:ekr.20031218072017.1468:getXmlVersionTag
-	# Parses the encoding string, and sets self.leo_file_encoding.
-	
-	def getXmlVersionTag (self):
-	
-		self.getTag(g.app.prolog_prefix_string)
-		encoding = self.getDqString()
-		self.getTag(g.app.prolog_postfix_string)
-	
-		if g.isValidEncoding(encoding):
-			self.leo_file_encoding = encoding
-			g.es("File encoding: " + encoding, color="blue")
-		else:
-			g.es("invalid encoding in .leo file: " + encoding, color="red")
-	#@-node:ekr.20031218072017.1468:getXmlVersionTag
-	#@+node:ekr.20031218072017.3027:skipWs
-	def skipWs (self):
-	
-		while self.fileIndex < len(self.fileBuffer):
-			ch = self.fileBuffer[self.fileIndex]
-			if ch == ' ' or ch == '\t':
-				self.fileIndex += 1
-			else: break
-	
-		# The caller is entitled to get the next character.
-		if  self.fileIndex >= len(self.fileBuffer):
-			raise BadLeoFile("")
-	#@nonl
-	#@-node:ekr.20031218072017.3027:skipWs
-	#@+node:ekr.20031218072017.3028:skipWsAndNl
-	def skipWsAndNl (self):
-	
-		while self.fileIndex < len(self.fileBuffer):
-			ch = self.fileBuffer[self.fileIndex]
-			if ch == ' ' or ch == '\t' or ch == '\r' or ch == '\n':
-				self.fileIndex += 1
-			else: break
-	
-		# The caller is entitled to get the next character.
-		if  self.fileIndex >= len(self.fileBuffer):
-			raise BadLeoFile("")
-	#@nonl
-	#@-node:ekr.20031218072017.3028:skipWsAndNl
-	#@-node:ekr.20031218072017.3021:get routines
-	#@+node:ekr.20031218072017.2009:newTnode
-	def newTnode(self,index):
-	
-		if self.tnodesDict.has_key(index):
-			g.es("bad tnode index: %s. Using empty text." % str(index))
-			return leoNodes.tnode()
-		else:
-			# Create the tnode.  Use the _original_ index as the key in tnodesDict.
-			t = leoNodes.tnode()
-			self.tnodesDict[index] = t
-		
-			if type(index) not in (type(""),type(u"")):
-				g.es("newTnode: unexpected index type:",type(index),index,color="red")
-			
-			# Convert any pre-4.1 index to a gnx.
-			id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
-			if time != None:
-				t.setFileIndex(gnx)
-	
-			return t
-	#@nonl
-	#@-node:ekr.20031218072017.2009:newTnode
-	#@+node:ekr.20031218072017.3029:readAtFileNodes
-	def readAtFileNodes (self):
-	
-		c = self.c ; current = c.currentVnode()
-		c.atFileCommands.readAll(current,partialFlag=True)
-		c.redraw() # 4/4/03
-		
-		# 7/8/03: force an update of the body pane.
-		current.setBodyStringOrPane(current.bodyString())
-		c.frame.body.onBodyChanged(current,undoType=None)
-	#@nonl
-	#@-node:ekr.20031218072017.3029:readAtFileNodes
-	#@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-	def readOutlineOnly (self,file,fileName):
-	
-		c = self.c
-		# Read the entire file into the buffer
-		self.fileBuffer = file.read() ; file.close()
-		self.fileIndex = 0
-		#@	<< Set the default directory >>
-		#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-		#@+at 
-		#@nonl
-		# The most natural default directory is the directory containing the 
-		# .leo file that we are about to open.  If the user has specified the 
-		# "Default Directory" preference that will over-ride what we are about 
-		# to set.
-		#@-at
-		#@@c
-		
-		dir = g.os_path_dirname(fileName)
-		
-		if len(dir) > 0:
-			c.openDirectory = dir
-		#@nonl
-		#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-		#@nl
-		c.beginUpdate()
-		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
-		c.endUpdate()
-		c.frame.deiconify()
-		vflag,junk,secondary_ratio = self.frame.initialRatios()
-		c.frame.resizePanesToRatio(ratio,secondary_ratio)
-		if 0: # 1/30/04: this is useless.
-			# This should be done after the pane size has been set.
-			if self.topPosition:
-				c.frame.tree.setTopPosition(self.topPosition)
-				c.redraw()
-		# delete the file buffer
-		self.fileBuffer = ""
-		return ok
-	#@nonl
-	#@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
-	#@+node:ekr.20031218072017.2297:fileCommands.open
-	def open(self,file,fileName):
-	
-		c = self.c ; frame = c.frame
-		# Read the entire file into the buffer
-		self.fileBuffer = file.read() ; file.close()
-		self.fileIndex = 0
-		#@	<< Set the default directory >>
-		#@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-		#@+at 
-		#@nonl
-		# The most natural default directory is the directory containing the 
-		# .leo file that we are about to open.  If the user has specified the 
-		# "Default Directory" preference that will over-ride what we are about 
-		# to set.
-		#@-at
-		#@@c
-		
-		dir = g.os_path_dirname(fileName)
-		
-		if len(dir) > 0:
-			c.openDirectory = dir
-		#@nonl
-		#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
-		#@nl
-		self.topPosition = None
-		c.beginUpdate()
-		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
-		frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
-		if 0: # 1/30/04: this is useless.
-			if self.topPosition: 
-				c.setTopVnode(self.topPosition)
-		c.endUpdate()
-		# delete the file buffer
-		self.fileBuffer = ""
-		return ok
-	#@nonl
-	#@-node:ekr.20031218072017.2297:fileCommands.open
-	#@+node:ekr.20031218072017.3031:xmlUnescape
-	def xmlUnescape(self,s):
-	
-		if s:
-			s = string.replace(s, '\r', '')
-			s = string.replace(s, "&lt;", '<')
-			s = string.replace(s, "&gt;", '>')
-			s = string.replace(s, "&amp;", '&')
-		return s
-	#@nonl
-	#@-node:ekr.20031218072017.3031:xmlUnescape
-	#@-node:ekr.20031218072017.3020:Reading
-	#@+node:ekr.20031218072017.3032:Writing
-	#@+node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
-	def assignFileIndices (self):
-		
-		"""Assign a file index to all tnodes"""
-		
-		c = self.c ; nodeIndices = g.app.nodeIndices
-	
-		nodeIndices.setTimestamp() # This call is fairly expensive.
-	
-		if g.app.use_gnx:
-			#@		<< assign missing gnx's, converting ints to gnx's >>
-			#@+node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
-			# Always assign an (immutable) index, even if the tnode is empty.
-			
-			for p in c.allNodes_iter():
-				try: # Will fail for None or any pre 4.1 file index.
-					id,time,n = p.v.t.fileIndex
-				except TypeError:
-					# Don't convert to string until the actual write.
-					p.v.t.fileIndex = nodeIndices.getNewIndex()
-			#@nonl
-			#@-node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
-			#@nl
-		else:
-			#@		<< reassign all tnode indices >>
-			#@+node:ekr.20031218072017.1572:<< reassign all tnode indices >>
-			# Clear out all indices.
-			for p in c.allNodes_iter():
-				p.v.t.fileIndex = None
-				
-			# Recreate integer indices.
-			self.maxTnodeIndex = 0
-			
-			for p in c.allNodes_iter():
-				if p.v.t.fileIndex == None:
-					self.maxTnodeIndex += 1
-					p.v.t.fileIndex = self.maxTnodeIndex
-			#@nonl
-			#@-node:ekr.20031218072017.1572:<< reassign all tnode indices >>
-			#@nl
-			
-		if 0: # debugging:
-			for p in c.allNodes_iter():
-				g.trace(p.v.t.fileIndex)
-	
-	# Indices are now immutable, so there is no longer any difference between these two routines.
-	compactFileIndices = assignFileIndices
-	#@nonl
-	#@-node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
-	#@+node:ekr.20031218072017.3033:put routines
-	#@+node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
-	# All output eventually comes here.
-	def put (self,s):
-		if s and len(s) > 0:
-			if self.outputFile:
-				s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
-				self.outputFile.write(s)
-			elif self.outputList != None: # Write to a list.
-				self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
-	
-	def put_dquote (self):
-		self.put('"')
-			
-	def put_dquoted_bool (self,b):
-		if b: self.put('"1"')
-		else: self.put('"0"')
-			
-	def put_flag (self,a,b):
-		if a:
-			self.put(" ") ; self.put(b) ; self.put('="1"')
-			
-	def put_in_dquotes (self,a):
-		self.put('"')
-		if a: self.put(a) # will always be True if we use backquotes.
-		else: self.put('0')
-		self.put('"')
-	
-	def put_nl (self):
-		self.put("\n")
-		
-	def put_tab (self):
-		self.put("\t")
-		
-	def put_tabs (self,n):
-		while n > 0:
-			self.put("\t")
-			n -= 1
-	#@-node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
-	#@+node:ekr.20031218072017.1971:putClipboardHeader
-	def putClipboardHeader (self):
-	
-		c = self.c ; tnodes = 0
-		#@	<< count the number of tnodes >>
-		#@+node:ekr.20031218072017.1972:<< count the number of tnodes >>
-		c.clearAllVisited()
-		
-		for p in c.currentPosition().self_and_subtree_iter():
-			t = p.v.t
-			if t and not t.isWriteBit():
-				t.setWriteBit()
-				tnodes += 1
-		#@nonl
-		#@-node:ekr.20031218072017.1972:<< count the number of tnodes >>
-		#@nl
-		self.put('<leo_header file_format="1" tnodes=')
-		self.put_in_dquotes(str(tnodes))
-		self.put(" max_tnode_index=")
-		self.put_in_dquotes(str(tnodes))
-		self.put("/>") ; self.put_nl()
-	#@-node:ekr.20031218072017.1971:putClipboardHeader
-	#@+node:ekr.20031218072017.3034:putEscapedString
-	# Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
-	
-	def putEscapedString (self,s):
-	
-		if s and len(s) > 0:
-			self.put(self.xmlEscape(s))
-	#@nonl
-	#@-node:ekr.20031218072017.3034:putEscapedString
-	#@+node:ekr.20031218072017.3035:putFindSettings
-	def putFindSettings (self):
-	
-		c = self.c ; config = g.app.config
-	
-		self.put("<find_panel_settings")
-		
-		#@	<< put find settings that may exist in leoConfig.txt >>
-		#@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-		if config.configsExist and not config.read_only: # 8/6/02
-			pass # config.update has already been called.
-		else:
-			self.put_flag(c.batch_flag,"batch")
-			self.put_flag(c.ignore_case_flag,"ignore_case")
-			self.put_flag(c.mark_changes_flag,"mark_changes")
-			self.put_flag(c.mark_finds_flag,"mark_finds")
-			self.put_flag(c.pattern_match_flag,"pattern_match")
-			self.put_flag(c.reverse_flag,"reverse")
-			self.put_flag(c.search_headline_flag,"search_headline")
-			self.put_flag(c.search_body_flag,"search_body")
-			self.put_flag(c.suboutline_only_flag,"suboutline_only")
-			self.put_flag(c.whole_word_flag,"whole_word")
-			self.put_flag(c.wrap_flag,"wrap")
-			self.put_flag(c.node_only_flag,"node_only")
-		
-		self.put(">") ; self.put_nl()
-		
-		if config.configsExist and not config.read_only: # 8/6/02
-			self.put_tab()
-			self.put("<find_string></find_string>") ; self.put_nl()
-		else:
-			self.put_tab()
-			self.put("<find_string>") ; self.putEscapedString(c.find_text)
-			self.put("</find_string>") ; self.put_nl()
-		
-		if config.configsExist and not config.read_only: # 8/6/02
-			self.put_tab()
-			self.put("<change_string></change_string>") ; self.put_nl()
-		else:
-			self.put_tab()
-			self.put("<change_string>") ; self.putEscapedString(c.change_text)
-			self.put("</change_string>") ; self.put_nl()
-		#@nonl
-		#@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
-		#@nl
-		
-		self.put("</find_panel_settings>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.3035:putFindSettings
-	#@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
-	def putGlobals (self):
-	
-		c = self.c
-		self.put("<globals")
-		#@	<< put the body/outline ratio >>
-		#@+node:ekr.20031218072017.3038:<< put the body/outline ratio >>
-		# Puts an innumerate number of digits
-		
-		self.put(" body_outline_ratio=")
-		self.put_in_dquotes(str(c.frame.ratio))
-		#@nonl
-		#@-node:ekr.20031218072017.3038:<< put the body/outline ratio >>
-		#@nl
-		self.put(">") ; self.put_nl()
-		#@	<< put the position of this frame >>
-		#@+node:ekr.20031218072017.3039:<< put the position of this frame >>
-		width,height,left,top = c.frame.get_window_info()
-		
-		self.put_tab()
-		self.put("<global_window_position")
-		self.put(" top=") ; self.put_in_dquotes(str(top))
-		self.put(" left=") ; self.put_in_dquotes(str(left))
-		self.put(" height=") ; self.put_in_dquotes(str(height))
-		self.put(" width=") ; self.put_in_dquotes(str(width))
-		self.put("/>") ; self.put_nl()
-		#@nonl
-		#@-node:ekr.20031218072017.3039:<< put the position of this frame >>
-		#@nl
-		#@	<< put the position of the log window >>
-		#@+node:ekr.20031218072017.3040:<< put the position of the log window >>
-		top = left = height = width = 0 # no longer used
-		self.put_tab()
-		self.put("<global_log_window_position")
-		self.put(" top=") ; self.put_in_dquotes(str(top))
-		self.put(" left=") ; self.put_in_dquotes(str(left))
-		self.put(" height=") ; self.put_in_dquotes(str(height))
-		self.put(" width=") ; self.put_in_dquotes(str(width))
-		self.put("/>") ; self.put_nl()
-		#@nonl
-		#@-node:ekr.20031218072017.3040:<< put the position of the log window >>
-		#@nl
-		self.put("</globals>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
-	#@+node:ekr.20031218072017.3041:putHeader
-	def putHeader (self):
-	
-		tnodes = 0 ; clone_windows = 0 # Always zero in Leo2.
-	
-		self.put("<leo_header")
-		self.put(" file_format=") ; self.put_in_dquotes("2")
-		self.put(" tnodes=") ; self.put_in_dquotes(str(tnodes))
-		self.put(" max_tnode_index=") ; self.put_in_dquotes(str(self.maxTnodeIndex))
-		self.put(" clone_windows=") ; self.put_in_dquotes(str(clone_windows))
-		self.put("/>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.3041:putHeader
-	#@+node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
-	# Writes a Leo outline to s in a format suitable for pasting to the clipboard.
-	
-	def putLeoOutline (self):
-	
-		self.outputList = [] ; self.outputFile = None
-		self.usingClipboard = True
-		self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
-		self.putProlog()
-		self.putClipboardHeader()
-		self.putVnodes()
-		self.putTnodes()
-		self.putPostlog()
-		s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
-		self.outputList = []
-		self.usingClipboard = False
-		return s
-	#@nonl
-	#@-node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
-	#@+node:ekr.20031218072017.3042:putPostlog
-	def putPostlog (self):
-	
-		self.put("</leo_file>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.3042:putPostlog
-	#@+node:ekr.20031218072017.2066:putPrefs
-	def putPrefs (self):
-	
-		c = self.c ; config = g.app.config
-	
-		self.put("<preferences")
-		
-		if 0:
-			self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
-		
-		#@	<< put prefs that may exist in leoConfig.txt >>
-		#@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-		language = c.target_language
-		for name in xml_language_names:
-			s = string.lower(name)
-			s = string.replace(s,"/","")
-			if s == language:
-				language = name ; break
-		
-		if config.configsExist and not config.read_only: # 8/6/02
-			pass # config.update has already been called.
-		else:
-			self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
-			self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
-			self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
-			self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
-			self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
-			self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
-			self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
-			self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
-		
-		self.put(">") ; self.put_nl()
-		# New in version 0.16
-		#@<< put default directory >>
-		#@+node:ekr.20031218072017.2068:<< put default directory >>
-		if config.configsExist:
-			pass # Has been done earlier.
-		elif len(c.tangle_directory) > 0:
-			self.put_tab()
-			self.put("<defaultDirectory>")
-			self.putEscapedString(c.tangle_directory)
-			self.put("</defaultDirectory>")
-			self.put_nl()
-		#@nonl
-		#@-node:ekr.20031218072017.2068:<< put default directory >>
-		#@nl
-		#@nonl
-		#@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
-		#@nl
-		
-		self.put("</preferences>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.2066:putPrefs
-	#@+node:ekr.20031218072017.1246:putProlog
-	def putProlog (self):
-	
-		c = self.c ; config = g.app.config
-	
-		#@	<< Put the <?xml...?> line >>
-		#@+node:ekr.20031218072017.1247:<< Put the <?xml...?> line >>
-		# 1/22/03: use self.leo_file_encoding encoding.
-		self.put(g.app.prolog_prefix_string)
-		self.put_dquote() ; self.put(self.leo_file_encoding) ; self.put_dquote()
-		self.put(g.app.prolog_postfix_string) ; self.put_nl()
-		#@nonl
-		#@-node:ekr.20031218072017.1247:<< Put the <?xml...?> line >>
-		#@nl
-		#@	<< Put the optional <?xml-stylesheet...?> line >>
-		#@+node:ekr.20031218072017.1248:<< Put the optional <?xml-stylesheet...?> line >>
-		if config.stylesheet or c.frame.stylesheet:
-			
-			# The stylesheet in the .leo file takes precedence over the default stylesheet.
-			if c.frame.stylesheet:
-				s = c.frame.stylesheet
-			else:
-				s = config.stylesheet
-				
-			tag = "<?xml-stylesheet "
-			# print "writing:", tag + s + "?>"
-			self.put(tag) ; self.put(s) ; self.put("?>") ; self.put_nl()
-		#@-node:ekr.20031218072017.1248:<< Put the optional <?xml-stylesheet...?> line >>
-		#@nl
-	
-		self.put("<leo_file>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.1246:putProlog
-	#@+node:ekr.20031218072017.1577:putTnode
-	def putTnode (self,t):
-	
-		self.put("<t")
-		self.put(" tx=")
-	
-		if g.app.use_gnx:
-			gnx = g.app.nodeIndices.toString(t.fileIndex)
-			self.put_in_dquotes(gnx)
-		else:
-			self.put_in_dquotes("T" + str(t.fileIndex))
-	
-		if hasattr(t,"unknownAttributes"):
-			self.putUnknownAttributes(t)
-	
-		self.put(">")
-	
-		# g.trace(t)
-		if t.bodyString:
-			self.putEscapedString(t.bodyString)
-	
-		self.put("</t>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.1577:putTnode
-	#@+node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
-	def putTnodeList (self,v):
-		
-		"""Put the tnodeList attribute of a tnode."""
-		
-		# g.trace(v)
-		
-		# Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
-	
-		fc = self ; nodeIndices = g.app.nodeIndices
-		tnodeList = v.t.tnodeList
-		if tnodeList:
-			# g.trace("%4d" % len(tnodeList),v)
-			fc.put(" tnodeList=") ; fc.put_dquote()
-			if g.app.use_gnx:
-				for t in tnodeList:
-					try: # Will fail for None or any pre 4.1 file index.
-						id,time,n = t.fileIndex
-					except:
-						g.trace("assigning gnx for ",v,t)
-						gnx = nodeIndices.getNewIndex()
-						v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
-				s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
-			else:
-				s = ','.join([str(t.fileIndex) for t in tnodeList])
-			fc.put(s) ; fc.put_dquote()
-	#@nonl
-	#@-node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
-	#@+node:ekr.20031218072017.1575:putTnodes
-	def putTnodes (self):
-		
-		"""Puts all tnodes as required for copy or save commands"""
-	
-		c = self.c
-	
-		self.put("<tnodes>") ; self.put_nl()
-		#@	<< write only those tnodes that were referenced >>
-		#@+node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
-		# Populate tnodes
-		tnodes = {}
-		
-		if self.usingClipboard: # write the current tree.
-			root = c.currentPosition()
-		else: # write everything
-			root = c.rootPosition()
-		
-		for p in c.allNodes_iter():
-			index = p.v.t.fileIndex
-			assert(index)
-			tnodes[index] = p.v.t
-		
-		# Put all tnodes in index order.
-		keys = tnodes.keys() ; keys.sort()
-		for index in keys:
-			# g.trace(index)
-			t = tnodes.get(index)
-			assert(t)
-			# Write only those tnodes whose vnodes were written.
-			if t.isWriteBit(): # 5/3/04
-				self.putTnode(t)
-		#@nonl
-		#@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
-		#@nl
-		self.put("</tnodes>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.1575:putTnodes
-	#@+node:EKR.20040526202501:putUnknownAttributes
-	def putUnknownAttributes (self,torv):
-		
-		import binascii,pickle
-		
-		attrDict = torv.unknownAttributes
-		if type(attrDict) != type({}):
-			g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
-			return
-			
-		attrs = []
-		for key in attrDict.keys():
-			val = attrDict[key]
-			try:
-				s = pickle.dumps(val,bin=True)
-			except pickle.PicklingError:
-				g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
-				g.es(key,val)
-				return
-			attr = ' %s="%s"' % (key,binascii.hexlify(s))
-			if 0: # This is not general enough
-				attr = ' %s="%s"' % (key,self.xmlEscape(val))
-			attrs.append(attr)
-	
-		for attr in attrs:
-			self.put(attr)
-	#@nonl
-	#@-node:EKR.20040526202501:putUnknownAttributes
-	#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-	def putVnode (self,p):
-	
-		"""Write a <v> element corresponding to a vnode."""
-	
-		fc = self ; c = fc.c ; v = p.v
-		isThin = p.isAtThinFileNode()
-	
-		fc.put("<v")
-		#@	<< Put tnode index >>
-		#@+node:ekr.20031218072017.1864:<< Put tnode index >>
-		if v.t.fileIndex:
-			if g.app.use_gnx:
-				gnx = g.app.nodeIndices.toString(v.t.fileIndex)
-				fc.put(" t=") ; fc.put_in_dquotes(gnx)
-			else:
-				fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
-				
-			# g.trace(v.t)
-			if not isThin or self.usingClipboard:
-				v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
-		else:
-			g.trace(v.t.fileIndex,v)
-			g.es("error writing file(bad v.t.fileIndex)!")
-			g.es("try using the Save To command")
-		#@nonl
-		#@-node:ekr.20031218072017.1864:<< Put tnode index >>
-		#@nl
-		#@	<< Put attribute bits >>
-		#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
-		attr = ""
-		if p.v.isExpanded(): attr += "E"
-		if p.v.isMarked():   attr += "M"
-		if p.v.isOrphan():   attr += "O"
-		
-		if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
-			# Almost 30% of the entire writing time came from here!!!
-			if p.equal(self.topPosition):     attr += "T" # was a bottleneck
-			if p.equal(self.currentPosition): attr += "V" # was a bottleneck
-		
-		if attr: fc.put(' a="%s"' % attr)
-		#@nonl
-		#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
-		#@nl
-		#@	<< Put tnodeList and unKnownAttributes >>
-		#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-		# Write tnodeList only for @file nodes.
-		# New in 4.2: tnode list is in tnode.
-		
-		if 0: # Debugging.
-			if v.isAnyAtFileNode() and not v.isAtThinFileNode():
-				if hasattr(v.t,"tnodeList"):
-					g.trace(v.headString(),len(v.t.tnodeList))
-				else:
-					g.trace(v.headString(),"no tnodeList")
-		
-		if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
-			fc.putTnodeList(v) # New in 4.0
-		
-		if hasattr(v,"unknownAttributes"): # New in 4.0
-			self.putUnknownAttributes(v)
-		#@nonl
-		#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
-		#@nl
-		fc.put(">")
-		#@	<< Write the head text >>
-		#@+node:ekr.20031218072017.1866:<< Write the head text >>
-		headString = p.v.headString()
-		
-		if headString:
-			fc.put("<vh>")
-			fc.putEscapedString(headString)
-			fc.put("</vh>")
-		#@nonl
-		#@-node:ekr.20031218072017.1866:<< Write the head text >>
-		#@nl
-	
-		# New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
-		if p.hasChildren():
-			if isThin and not p.isOrphan() and not self.usingClipboard:
-				# g.trace("skipping child vnodes for", p.headString())
-				pass
-			else:
-				fc.put_nl()
-				# This optimization eliminates all "recursive" copies.
-				p.moveToFirstChild()
-				while 1:
-					fc.putVnode(p)
-					if p.hasNext(): p.moveToNext()
-					else:           break
-				p.moveToParent()
-	
-		fc.put("</v>") ; fc.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-	#@+node:ekr.20031218072017.1579:putVnodes
-	def putVnodes (self):
-	
-		"""Puts all <v> elements in the order in which they appear in the outline."""
-	
-		c = self.c
-		c.clearAllVisited()
-	
-		self.put("<vnodes>") ; self.put_nl()
-	
-		# Make only one copy for all calls.
-		self.currentPosition = c.currentPosition() 
-		self.topPosition     = c.topPosition()
-	
-		if self.usingClipboard:
-			self.putVnode(self.currentPosition) # Write only current tree.
-		else:
-			for p in c.rootPosition().self_and_siblings_iter():
-				self.putVnode(p) # Write the next top-level node.
-	
-		self.put("</vnodes>") ; self.put_nl()
-	#@nonl
-	#@-node:ekr.20031218072017.1579:putVnodes
-	#@-node:ekr.20031218072017.3033:put routines
-	#@+node:ekr.20031218072017.1720:save
-	def save(self,fileName):
-	
-		c = self.c ; v = c.currentVnode()
-	
-		if not g.doHook("save1",c=c,v=v,fileName=fileName):
-			c.beginUpdate()
-			c.endEditing()# Set the current headline text.
-			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
-				c.setChanged(False) # Clears all dirty bits.
-				g.es("saved: " + g.shortFileName(fileName))
-				if g.app.config.save_clears_undo_buffer:
-					g.es("clearing undo")
-					c.undoer.clearUndoState()
-			c.endUpdate()
-		g.doHook("save2",c=c,v=v,fileName=fileName)
-	#@nonl
-	#@-node:ekr.20031218072017.1720:save
-	#@+node:ekr.20031218072017.3043:saveAs
-	def saveAs(self,fileName):
-	
-		c = self.c ; v = c.currentVnode()
-	
-		if not g.doHook("save1",c=c,v=v,fileName=fileName):
-			c.beginUpdate()
-			c.endEditing() # Set the current headline text.
-			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
-				c.setChanged(False) # Clears all dirty bits.
-				g.es("saved: " + g.shortFileName(fileName))
-			c.endUpdate()
-		g.doHook("save2",c=c,v=v,fileName=fileName)
-	#@-node:ekr.20031218072017.3043:saveAs
-	#@+node:ekr.20031218072017.3044:saveTo
-	def saveTo (self,fileName):
-	
-		c = self.c ; v = c.currentVnode()
-	
-		if not g.doHook("save1",c=c,v=v,fileName=fileName):
-			c.beginUpdate()
-			c.endEditing()# Set the current headline text.
-			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
-				g.es("saved: " + g.shortFileName(fileName))
-			c.endUpdate()
-		g.doHook("save2",c=c,v=v,fileName=fileName)
-	#@nonl
-	#@-node:ekr.20031218072017.3044:saveTo
-	#@+node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
-	def setDefaultDirectoryForNewFiles (self,fileName):
-		
-		"""Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives."""
-		
-		c = self.c
-	
-		if not c.openDirectory or len(c.openDirectory) == 0:
-			dir = g.os_path_dirname(fileName)
-	
-			if len(dir) > 0 and g.os_path_isabs(dir) and g.os_path_exists(dir):
-				c.openDirectory = dir
-	#@nonl
-	#@-node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
-	#@+node:ekr.20031218072017.3046:write_Leo_file
-	def write_Leo_file(self,fileName,outlineOnlyFlag):
-	
-		c = self.c ; config = g.app.config
-	
-		self.assignFileIndices()
-		if not outlineOnlyFlag:
-			#@		<< write all @file nodes >>
-			#@+node:ekr.20040324080359:<< write all @file nodes >>
-			try:
-				# Write all @file nodes and set orphan bits.
-				c.atFileCommands.writeAll()
-			except:
-				g.es_error("exception writing derived files")
-				g.es_exception()
-				return False
-			#@nonl
-			#@-node:ekr.20040324080359:<< write all @file nodes >>
-			#@nl
-		#@	<< return if the .leo file is read-only >>
-		#@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
-		# self.read_only is not valid for Save As and Save To commands.
-		
-		if g.os_path_exists(fileName):
-			try:
-				if not os.access(fileName,os.W_OK):
-					self.writeError("can not create: read only: " + self.targetFileName)
-					return False
-			except:
-				pass # os.access() may not exist on all platforms.
-		#@nonl
-		#@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
-		#@nl
-		try:
-			#@		<< create backup file >>
-			#@+node:ekr.20031218072017.3047:<< create backup file >>
-			# rename fileName to fileName.bak if fileName exists.
-			if g.os_path_exists(fileName):
-				try:
-					backupName = g.os_path_join(g.app.loadDir,fileName)
-					backupName = fileName + ".bak"
-					if g.os_path_exists(backupName):
-						os.unlink(backupName)
-					# os.rename(fileName,backupName)
-					g.utils_rename(fileName,backupName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception creating backup file: " + backupName)
-						g.es_exception()
-					return False
-				except:
-					g.es("exception creating backup file: " + backupName)
-					g.es_exception()
-					backupName = None
-					return False
-			else:
-				backupName = None
-			#@nonl
-			#@-node:ekr.20031218072017.3047:<< create backup file >>
-			#@nl
-			self.mFileName = fileName
-			#@		<< create the output file >>
-			#@+node:ekr.20040324080359.2:<< create the output file >>
-			self.outputFile = open(fileName, 'wb') # 9/18/02
-			if not self.outputFile:
-				g.es("can not open " + fileName)
-				#@	<< delete backup file >>
-				#@+node:ekr.20031218072017.3048:<< delete backup file >>
-				if backupName and g.os_path_exists(backupName):
-					try:
-						os.unlink(backupName)
-					except OSError:
-						if self.read_only:
-							g.es("read only",color="red")
-						else:
-							g.es("exception deleting backup file:" + backupName)
-							g.es_exception()
-						return False
-					except:
-						g.es("exception deleting backup file:" + backupName)
-						g.es_exception()
-						return False
-				#@-node:ekr.20031218072017.3048:<< delete backup file >>
-				#@nl
-				return False
-			#@nonl
-			#@-node:ekr.20040324080359.2:<< create the output file >>
-			#@nl
-			#@		<< update leoConfig.txt >>
-			#@+node:ekr.20040324080819:<< update leoConfig.txt >>
-			c.setIvarsFromFind()
-			config.setConfigFindIvars(c)
-			c.setIvarsFromPrefs()
-			config.setCommandsIvars(c)
-			config.update()
-			#@nonl
-			#@-node:ekr.20040324080819:<< update leoConfig.txt >>
-			#@nl
-			#@		<< put the .leo file >>
-			#@+node:ekr.20040324080819.1:<< put the .leo file >>
-			self.putProlog()
-			self.putHeader()
-			self.putGlobals()
-			self.putPrefs()
-			self.putFindSettings()
-			#start = g.getTime()
-			self.putVnodes()
-			#start = g.printDiffTime("vnodes ",start)
-			self.putTnodes()
-			#start = g.printDiffTime("tnodes ",start)
-			self.putPostlog()
-			#@nonl
-			#@-node:ekr.20040324080819.1:<< put the .leo file >>
-			#@nl
-		except:
-			#@		<< report the exception >>
-			#@+node:ekr.20040324080819.2:<< report the exception >>
-			g.es("exception writing: " + fileName)
-			g.es_exception() 
-			if self.outputFile:
-				try:
-					self.outputFile.close()
-					self.outputFile = None
-				except:
-					g.es("exception closing: " + fileName)
-					g.es_exception()
-			#@nonl
-			#@-node:ekr.20040324080819.2:<< report the exception >>
-			#@nl
-			#@		<< erase filename and rename backupName to fileName >>
-			#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-			g.es("error writing " + fileName)
-			
-			if fileName and g.os_path_exists(fileName):
-				try:
-					os.unlink(fileName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception deleting: " + fileName)
-						g.es_exception()
-				except:
-					g.es("exception deleting: " + fileName)
-					g.es_exception()
-					
-			if backupName:
-				g.es("restoring " + fileName + " from " + backupName)
-				try:
-					g.utils_rename(backupName, fileName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception renaming " + backupName + " to " + fileName)
-						g.es_exception()
-				except:
-					g.es("exception renaming " + backupName + " to " + fileName)
-					g.es_exception()
-			#@nonl
-			#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-			#@nl
-			return False
-		if self.outputFile:
-			#@		<< close the output file >>
-			#@+node:ekr.20040324080819.3:<< close the output file >>
-			try:
-				self.outputFile.close()
-				self.outputFile = None
-			except:
-				g.es("exception closing: " + fileName)
-				g.es_exception()
-			#@nonl
-			#@-node:ekr.20040324080819.3:<< close the output file >>
-			#@nl
-			#@		<< delete backup file >>
-			#@+middle:ekr.20040324080359.2:<< create the output file >>
-			#@+node:ekr.20031218072017.3048:<< delete backup file >>
-			if backupName and g.os_path_exists(backupName):
-				try:
-					os.unlink(backupName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception deleting backup file:" + backupName)
-						g.es_exception()
-					return False
-				except:
-					g.es("exception deleting backup file:" + backupName)
-					g.es_exception()
-					return False
-			#@-node:ekr.20031218072017.3048:<< delete backup file >>
-			#@-middle:ekr.20040324080359.2:<< create the output file >>
-			#@nl
-			return True
-		else: # This probably will never happen because errors should raise exceptions.
-			#@		<< erase filename and rename backupName to fileName >>
-			#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-			g.es("error writing " + fileName)
-			
-			if fileName and g.os_path_exists(fileName):
-				try:
-					os.unlink(fileName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception deleting: " + fileName)
-						g.es_exception()
-				except:
-					g.es("exception deleting: " + fileName)
-					g.es_exception()
-					
-			if backupName:
-				g.es("restoring " + fileName + " from " + backupName)
-				try:
-					g.utils_rename(backupName, fileName)
-				except OSError:
-					if self.read_only:
-						g.es("read only",color="red")
-					else:
-						g.es("exception renaming " + backupName + " to " + fileName)
-						g.es_exception()
-				except:
-					g.es("exception renaming " + backupName + " to " + fileName)
-					g.es_exception()
-			#@nonl
-			#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
-			#@nl
-			return False
-	#@nonl
-	#@-node:ekr.20031218072017.3046:write_Leo_file
-	#@+node:ekr.20031218072017.2012:writeAtFileNodes
-	def writeAtFileNodes (self):
-		
-		c = self.c
-	
-		self.assignFileIndices() # 4/3/04
-		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=True)
-		assert(changedFiles != None)
-		if changedFiles:
-			g.es("auto-saving outline",color="blue")
-			c.save() # Must be done to set or clear tnodeList.
-	#@nonl
-	#@-node:ekr.20031218072017.2012:writeAtFileNodes
-	#@+node:ekr.20031218072017.1666:writeDirtyAtFileNodes
-	def writeDirtyAtFileNodes (self): # fileCommands
-	
-		"""The Write Dirty @file Nodes command"""
-		
-		c = self.c
-	
-		self.assignFileIndices() # 4/3/04
-		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=True)
-		if changedFiles:
-			g.es("auto-saving outline",color="blue")
-			c.save() # Must be done to set or clear tnodeList.
-	#@nonl
-	#@-node:ekr.20031218072017.1666:writeDirtyAtFileNodes
-	#@+node:ekr.20031218072017.2013:writeMissingAtFileNodes
-	def writeMissingAtFileNodes (self):
-	
-		c = self.c ; v = c.currentVnode()
-	
-		if v:
-			at = c.atFileCommands
-			self.assignFileIndices() # 4/3/04
-			changedFiles = at.writeMissing(v)
-			assert(changedFiles != None)
-			if changedFiles:
-				g.es("auto-saving outline",color="blue")
-				c.save() # Must be done to set or clear tnodeList.
-	#@nonl
-	#@-node:ekr.20031218072017.2013:writeMissingAtFileNodes
-	#@+node:ekr.20031218072017.3050:writeOutlineOnly
-	def writeOutlineOnly (self):
-	
-		c = self.c
-		c.endEditing()
-		self.write_Leo_file(self.mFileName,True) # outlineOnlyFlag
-	#@nonl
-	#@-node:ekr.20031218072017.3050:writeOutlineOnly
-	#@+node:ekr.20031218072017.3051:xmlEscape
-	# Surprisingly, this is a time critical routine.
-	
-	def xmlEscape(self,s):
-	
-		assert(s and len(s) > 0) # check is made in putEscapedString
-		s = string.replace(s, '\r', '')
-		s = string.replace(s, '&', "&amp;")
-		s = string.replace(s, '<', "&lt;")
-		s = string.replace(s, '>', "&gt;")
-		return s
-	#@nonl
-	#@-node:ekr.20031218072017.3051:xmlEscape
-	#@-node:ekr.20031218072017.3032:Writing
-	#@-others
-	
+    """A base class for the fileCommands subcommander."""
+    #@    @+others
+    #@+node:ekr.20031218072017.3019:leoFileCommands._init_
+    def __init__(self,c):
+    
+        # g.trace("__init__", "fileCommands.__init__")
+        self.c = c
+        self.frame = c.frame
+        self.initIvars()
+    
+    def initIvars(self):
+    
+        # General
+        self.maxTnodeIndex = 0
+        self.numberOfTnodes = 0
+        self.topPosition = None
+        self.mFileName = ""
+        self.fileDate = -1
+        self.leo_file_encoding = g.app.config.new_leo_file_encoding
+        # For reading
+        self.fileFormatNumber = 0
+        self.ratio = 0.5
+        self.fileBuffer = None ; self.fileIndex = 0
+        self.currentVnodeStack = [] # A stack of vnodes giving the current position.
+        self.topVnodeStack     = [] # A stack of vnodes giving the top position.
+        # For writing
+        self.read_only = False
+        self.outputFile = None # File for normal writing
+        self.outputList = None # List of strings for pasting
+        self.openDirectory = None
+        self.topVnode = None
+        self.usingClipboard = False
+        self.currentPosition = None
+        # New in 3.12
+        self.copiedTree = None
+        self.tnodesDict = {}  # keys are gnx strings as returned by canonicalTnodeIndex.
+    #@nonl
+    #@-node:ekr.20031218072017.3019:leoFileCommands._init_
+    #@+node:ekr.20031218072017.3020:Reading
+    #@+node:ekr.20031218072017.2004:canonicalTnodeIndex
+    def canonicalTnodeIndex(self,index):
+        
+        """Convert Tnnn to nnn, leaving gnx's unchanged."""
+    
+        # index might be Tnnn, nnn, or gnx.
+        id,time,n = g.app.nodeIndices.scanGnx(index,0)
+        if time == None: # A pre-4.1 file index.
+            if index[0] == "T":
+                index = index[1:]
+    
+        return index
+    #@nonl
+    #@-node:ekr.20031218072017.2004:canonicalTnodeIndex
+    #@+node:ekr.20040326052245:convertStackToPosition
+    def convertStackToPosition (self,stack):
+    
+        c = self.c ; p2 = None
+        if not stack: return None
+    
+        for p in c.allNodes_iter():
+            if p.v == stack[0]:
+                p2 = p.copy()
+                for n in xrange(len(stack)):
+                    if not p2: break
+                    # g.trace("compare",n,p2.v,stack[n])
+                    if p2.v != stack[n]:
+                        p2 = None
+                    elif n + 1 == len(stack):
+                        break
+                    else:
+                        p2.moveToParent()
+                if p2: return p
+    
+        return None
+    #@nonl
+    #@-node:ekr.20040326052245:convertStackToPosition
+    #@+node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+    def createVnode (self,parent,back,tref,headline,attrDict):
+        
+        # g.trace(parent,headline)
+        v = None ; c = self.c
+        # Shared tnodes are placed in the file even if empty.
+        if tref == -1:
+            t = leoNodes.tnode()
+        else:
+            tref = self.canonicalTnodeIndex(tref)
+            t = self.tnodesDict.get(tref)
+            if not t: t = self.newTnode(tref)
+        if back: # create v after back.
+            v = back.insertAfter(t)
+        elif parent: # create v as the parent's first child.
+            v = parent.insertAsNthChild(0,t)
+        else: # create a root vnode
+            v = leoNodes.vnode(c,t)
+            v.moveToRoot()
+    
+        if v not in v.t.vnodeList:
+            v.t.vnodeList.append(v) # New in 4.2.
+    
+        skip = len(v.t.vnodeList) > 1
+    
+        v.initHeadString(headline,encoding=self.leo_file_encoding)
+        #@    << handle unknown vnode attributes >>
+        #@+node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+        keys = attrDict.keys()
+        if keys:
+            v.unknownAttributes = attrDict
+        
+            if 0: # For debugging.
+                s = "unknown attributes for " + v.headString()
+                print s ; g.es(s,color="blue")
+                for key in keys:
+                    s = "%s = %s" % (key,attrDict.get(key))
+                    print s ; g.es(s)
+        #@nonl
+        #@-node:ekr.20031218072017.1861:<< handle unknown vnode attributes >>
+        #@nl
+        return v,skip
+    #@nonl
+    #@-node:ekr.20031218072017.1860:createVnode (changed for 4.2)
+    #@+node:ekr.20040326063413:getExistingVnode
+    def getExistingVnode (self,tref):
+    
+        assert(tref > -1)
+        tref = self.canonicalTnodeIndex(tref)
+        t = self.tnodesDict.get(tref)
+        return t.vnodeList[0]
+    #@nonl
+    #@-node:ekr.20040326063413:getExistingVnode
+    #@+node:ekr.20031218072017.1557:finishPaste
+    def finishPaste(self,reassignIndices=True):
+        
+        """Finish pasting an outline from the clipboard.
+        
+        Retain clone links if reassignIndices is False."""
+    
+        c = self.c
+        current = c.currentPosition()
+        c.beginUpdate()
+        if reassignIndices:
+            #@        << reassign tnode indices and clear all clone links >>
+            #@+node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+            #@+at 
+            #@nonl
+            # putLeoOutline calls assignFileIndices (when copying nodes) so 
+            # that vnode can be associated with tnodes.
+            # However, we must _reassign_ the indices here so that no "False 
+            # clones" are created.
+            #@-at
+            #@@c
+            
+            current.clearVisitedInTree()
+            
+            for p in current.self_and_subtree_iter():
+                t = p.v.t
+                if not t.isVisited():
+                    t.setVisited()
+                    self.maxTnodeIndex += 1
+                    t.setFileIndex(self.maxTnodeIndex)
+            #@nonl
+            #@-node:ekr.20031218072017.1558:<< reassign tnode indices and clear all clone links >>
+            #@nl
+        c.selectVnode(current)
+        c.endUpdate()
+        return current
+    #@nonl
+    #@-node:ekr.20031218072017.1557:finishPaste
+    #@+node:ekr.20031218072017.3021:get routines
+    #@+node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
+    #@+node:ekr.20031218072017.1244:get routines
+    #@+node:EKR.20040526204706:getBool
+    def getBool (self):
+    
+        self.skipWs() # guarantees at least one more character.
+        ch = self.fileBuffer[self.fileIndex]
+        if ch == '0':
+            self.fileIndex += 1 ; return False
+        elif ch == '1':
+            self.fileIndex += 1 ; return True
+        else:
+            raise BadLeoFile("expecting bool constant")
+    #@nonl
+    #@-node:EKR.20040526204706:getBool
+    #@+node:EKR.20040526204706.1:getDouble
+    def getDouble (self):
+    
+        self.skipWs()
+        i = self.fileIndex ; buf = self.fileBuffer
+        floatChars = string.digits + 'e' + 'E' + '.' + '+' + '-'
+        n = len(buf)
+        while i < n and buf[i] in floatChars:
+            i += 1
+        if i == self.fileIndex:
+            raise BadLeoFile("expecting float constant")
+        val = float(buf[self.fileIndex:i])
+        self.fileIndex = i
+        return val
+    #@nonl
+    #@-node:EKR.20040526204706.1:getDouble
+    #@+node:EKR.20040526204706.2:getDqBool
+    def getDqBool (self):
+    
+        self.getDquote()
+        val = self.getBool()
+        self.getDquote()
+        return val
+    #@-node:EKR.20040526204706.2:getDqBool
+    #@+node:EKR.20040526204706.3:getDqString
+    def getDqString (self):
+    
+        self.getDquote()
+        i = self.fileIndex
+        self.fileIndex = j = string.find(self.fileBuffer,'"',i)
+        if j == -1: raise BadLeoFile("unterminated double quoted string")
+        s = self.fileBuffer[i:j]
+        self.getDquote()
+        return s
+    #@nonl
+    #@-node:EKR.20040526204706.3:getDqString
+    #@+node:EKR.20040526204706.4:getDquote
+    def getDquote (self):
+    
+        self.getTag('"')
+    #@nonl
+    #@-node:EKR.20040526204706.4:getDquote
+    #@+node:EKR.20040526204706.5:getIndex
+    def getIndex (self):
+    
+        val = self.getLong()
+        if val < 0: raise BadLeoFile("expecting index")
+        return val
+    #@nonl
+    #@-node:EKR.20040526204706.5:getIndex
+    #@+node:EKR.20040526204706.6:getLong
+    def getLong (self):
+    
+        self.skipWs() # guarantees at least one more character.
+        i = self.fileIndex
+        if self.fileBuffer[i] == '-':
+            i += 1
+        n = len(self.fileBuffer)
+        while i < n and self.fileBuffer[i] in string.digits:
+            i += 1
+        if i == self.fileIndex:
+            raise BadLeoFile("expecting int constant")
+        val = int(self.fileBuffer[self.fileIndex:i])
+        self.fileIndex = i
+        return val
+    #@nonl
+    #@-node:EKR.20040526204706.6:getLong
+    #@+node:EKR.20040526204706.7:getOpenTag
+    def getOpenTag (self,tag):
+        
+        """
+        Look ahead for collapsed tag: tag may or may not end in ">"
+        Skips tag and /> if found, otherwise does not alter index.
+        """
+    
+        if tag[-1] == ">":
+            # Only the tag itself or a collapsed tag are valid.
+            if self.matchTag(tag):
+                return False # Not a collapsed tag.
+            elif self.matchTag(tag[:-1]):
+                # It must be a collapsed tag.
+                self.skipWs()
+                if self.matchTag("/>"):
+                    return True
+            print "getOpenTag(", tag, ") failed:"
+            raise BadLeoFile("expecting" + tag)
+        else:
+            # The tag need not be followed by "/>"
+            if self.matchTag(tag):
+                old_index = self.fileIndex
+                self.skipWs()
+                if self.matchTag("/>"):
+                    return True
+                else:
+                    self.fileIndex = old_index
+                    return False
+            else:
+                print "getOpenTag(", tag, ") failed:"
+                raise BadLeoFile("expecting" + tag)
+    #@nonl
+    #@-node:EKR.20040526204706.7:getOpenTag
+    #@+node:EKR.20040526204706.8:getStringToTag
+    def getStringToTag (self,tag):
+    
+        buf = self.fileBuffer
+        blen = len(buf) ; tlen = len(tag)
+        i = j = self.fileIndex
+        while i < blen:
+            if tag == buf[i:i+tlen]:
+                self.fileIndex = i
+                return buf[j:i]
+            else: i += 1
+        raise BadLeoFile("expecting string terminated by " + tag)
+        return ""
+    #@nonl
+    #@-node:EKR.20040526204706.8:getStringToTag
+    #@+node:EKR.20040526204706.9:getTag
+    def getTag (self,tag):
+        
+        """
+        Look ahead for closing />
+        Return True if found.
+        """
+        
+        if self.matchTag(tag):
+            return
+        else:
+            print "getTag(", tag, ") failed:"
+            raise BadLeoFile("expecting" + tag)
+    #@-node:EKR.20040526204706.9:getTag
+    #@+node:EKR.20040526204036.1:getUnknownAttribute
+    def getUnknownAttribute(self):
+        
+        import binascii
+        import pickle
+        
+        # New in 4.2.  The unknown tag has been pickled and hexlify'd.
+        attr,val = self.getUnknownTag()
+        
+        # g.trace(attr,val)
+        
+        try:
+            bin = binascii.unhexlify(val) # Throws a TypeError if val is not a hex string.
+            val2 = pickle.loads(bin)
+        except (TypeError, pickle.UnpicklingError):
+            # The unknownAtrribute was written before 4.2.
+            val2 = val
+            
+        return attr,val2
+    #@nonl
+    #@-node:EKR.20040526204036.1:getUnknownAttribute
+    #@+node:EKR.20040526204036:getUnknownTag
+    def getUnknownTag(self):
+        
+        self.skipWsAndNl() # guarantees at least one more character.
+        tag = self.getStringToTag('=')
+        if not tag:
+            print "getUnknownTag failed"
+            raise BadLeoFile("unknown tag not followed by '='")
+    
+        self.fileIndex += 1
+        val = self.getDqString()
+        # g.trace(tag,val)
+        return tag,val
+    #@nonl
+    #@-node:EKR.20040526204036:getUnknownTag
+    #@-node:ekr.20031218072017.1244:get routines
+    #@+node:ekr.20031218072017.1245:match routines
+    def matchChar (self,ch):
+        self.skipWs() # guarantees at least one more character.
+        if ch == self.fileBuffer[self.fileIndex]:
+            self.fileIndex += 1 ; return True
+        else: return False
+    
+    # Warning: does not check for end-of-word,
+    # so caller must match prefixes first.
+    def matchTag (self,tag):
+        self.skipWsAndNl() # guarantees at least one more character.
+        i = self.fileIndex
+        if tag == self.fileBuffer[i:i+len(tag)]:
+            self.fileIndex += len(tag)
+            return True
+        else:
+            return False
+    
+    def matchTagWordIgnoringCase (self,tag):
+        self.skipWsAndNl() # guarantees at least one more character.
+        i = self.fileIndex
+        tag = string.lower(tag)
+        j = g.skip_c_id(self.fileBuffer,i)
+        word = self.fileBuffer[i:j]
+        word = string.lower(word)
+        if tag == word:
+            self.fileIndex += len(tag)
+            return True
+        else:
+            return False
+    #@-node:ekr.20031218072017.1245:match routines
+    #@-node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
+    #@+node:ekr.20031218072017.3022:getClipboardHeader
+    def getClipboardHeader (self):
+    
+        if self.getOpenTag("<leo_header"):
+            return # 11/24/02
+    
+        while 1:
+            if self.matchTag("file_format="):
+                self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
+            elif self.matchTag("tnodes="):
+                self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
+            elif self.matchTag("max_tnode_index="):
+                self.getDquote() ; self.getLong() ; self.getDquote() # no longer used
+            elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+                break
+            else:
+                self.getTag("/>")
+                break
+    #@nonl
+    #@-node:ekr.20031218072017.3022:getClipboardHeader
+    #@+node:ekr.20031218072017.3023:getCloneWindows
+    # For compatibility with old file formats.
+    
+    def getCloneWindows (self):
+    
+        if not self.matchTag("<clone_windows>"):
+            return
+    
+        while self.matchTag("<clone_window vtag=\"V"):
+            self.getLong() ; self.getDquote() ; self.getTag(">")
+            if not self.getOpenTag("<global_window_position"):
+                self.getTag("<global_window_position")
+                self.getPosition()
+                self.getTag("/>")
+            self.getTag("</clone_window>")
+        self.getTag("</clone_windows>")
+    #@nonl
+    #@-node:ekr.20031218072017.3023:getCloneWindows
+    #@+node:ekr.20031218072017.3024:getEscapedString
+    def getEscapedString (self):
+    
+        # The next '<' begins the ending tag.
+        i = self.fileIndex
+        self.fileIndex = j = string.find(self.fileBuffer,'<',i)
+        if j == -1:
+            print self.fileBuffer[i:]
+            raise BadLeoFile("unterminated escaped string")
+        else:
+            # Allocates memory
+            return self.xmlUnescape(self.fileBuffer[i:j])
+    #@nonl
+    #@-node:ekr.20031218072017.3024:getEscapedString
+    #@+node:ekr.20031218072017.2064:getFindPanelSettings
+    def getFindPanelSettings (self):
+    
+        c = self.c ; config = g.app.config ; findFrame = g.app.findFrame
+        #@    << Set defaults of all flags >>
+        #@+node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+        if g.app.gui.guiName() == "tkinter":
+        
+            for var in findFrame.intKeys:
+                attr = "%s_flag" % (var)
+                setattr(c,attr,False)
+                # g.trace(attr)
+        #@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
+        #@nl
+        if not self.getOpenTag("<find_panel_settings"):
+            while 1:
+                if   self.matchTag("batch="): c.batch_flag = self.getDqBool()
+                elif self.matchTag("ignore_case="): c.ignore_case_flag = self.getDqBool()
+                elif self.matchTag("mark_changes="): c.mark_changes_flag = self.getDqBool()
+                elif self.matchTag("mark_finds="): c.mark_finds_flag = self.getDqBool()
+                elif self.matchTag("node_only="): c.node_only_flag = self.getDqBool()
+                elif self.matchTag("pattern_match="): c.pattern_match_flag = self.getDqBool()
+                elif self.matchTag("reverse="): c.reverse_flag = self.getDqBool()
+                elif self.matchTag("script_change="): c.script_change_flag = self.getDqBool() # 11/05/03
+                elif self.matchTag("script_search="): c.script_search_flag = self.getDqBool() # 11/05/03
+                elif self.matchTag("search_headline="): c.search_headline_flag = self.getDqBool()
+                elif self.matchTag("search_body="): c.search_body_flag = self.getDqBool()
+                elif self.matchTag("selection_only="): c.selection_only_flag = self.getDqBool() # 11/9/03
+                elif self.matchTag("suboutline_only="): c.suboutline_only_flag = self.getDqBool()
+                elif self.matchTag("whole_word="): c.whole_word_flag = self.getDqBool()
+                elif self.matchTag("wrap="): c.wrap_flag = self.getDqBool()
+                elif self.matchTag(">"): break
+                else: self.getUnknownTag() # New in 4.1: ignore all other tags.
+            #
+            self.getTag("<find_string>")
+            c.find_text = self.getEscapedString()
+            self.getTag("</find_string>")
+            #
+            self.getTag("<change_string>")
+            c.change_text = self.getEscapedString()
+            self.getTag("</change_string>")
+            #
+            self.getTag("</find_panel_settings>")
+        
+        # Override .leo file's preferences if settings are in leoConfig.txt.
+        config.setCommandsFindIvars(c)
+        # Update the settings immediately.
+        if g.app.gui.guiName() == "tkinter":
+            g.app.findFrame.init(c)
+    #@nonl
+    #@-node:ekr.20031218072017.2064:getFindPanelSettings
+    #@+node:ekr.20031218072017.2306:getGlobals
+    def getGlobals (self):
+    
+        if self.getOpenTag("<globals"):
+            return
+    
+        self.getTag("body_outline_ratio=\"")
+        self.ratio = self.getDouble() ; self.getDquote() ; self.getTag(">")
+    
+        self.getTag("<global_window_position")
+        y,x,h,w = self.getPosition() ; self.getTag("/>")
+        self.frame.setTopGeometry(w,h,x,y)
+    
+        # 7/15/02: Redraw the window before writing into it.
+        self.frame.deiconify()
+        self.frame.lift()
+        self.frame.update()
+    
+        self.getTag("<global_log_window_position")
+        self.getPosition() ;
+        self.getTag("/>") # no longer used.
+    
+        self.getTag("</globals>")
+    #@nonl
+    #@-node:ekr.20031218072017.2306:getGlobals
+    #@+node:ekr.20031218072017.1553:getLeoFile
+    # The caller should enclose this in begin/endUpdate.
+    
+    def getLeoFile (self,fileName,atFileNodesFlag=True):
+    
+        c = self.c
+        c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+        #@    << warn on read-only files >>
+        #@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+        try:
+            self.read_only = False
+            self.read_only = not os.access(fileName,os.W_OK)
+            if self.read_only:
+                g.es("read only: " + fileName,color="red")
+        except:
+            if 0: # testing only: access may not exist on all platforms.
+                g.es("exception getting file access")
+                g.es_exception()
+        #@nonl
+        #@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+        #@nl
+        self.mFileName = c.mFileName
+        self.tnodesDict = {}
+        ok = True
+        c.loading = True # disable c.changed
+        
+        try:
+            #@        << scan all the xml elements >>
+            #@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+            self.getXmlVersionTag()
+            self.getXmlStylesheetTag()
+            self.getTag("<leo_file>")
+            self.getLeoHeader()
+            self.getGlobals()
+            self.getPrefs()
+            self.getFindPanelSettings()
+            
+            # Causes window to appear.
+            c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
+            g.es("reading: " + fileName)
+            
+            self.getVnodes()
+            self.getTnodes()
+            self.getCloneWindows()
+            self.getTag("</leo_file>")
+            #@nonl
+            #@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+            #@nl
+        except BadLeoFile, message:
+            #@        << raise an alert >>
+            #@+node:ekr.20031218072017.1556:<< raise an alert >>
+            # All other exceptions are Leo bugs.
+            
+            g.es_exception()
+            g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+            #@nonl
+            #@-node:ekr.20031218072017.1556:<< raise an alert >>
+            #@nl
+            ok = False
+    
+        c.frame.tree.redraw_now(scroll=False)
+        
+        if ok and atFileNodesFlag:
+            c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+    
+        if not c.currentPosition():
+            c.setCurrentPosition(c.rootPosition())
+    
+        c.selectVnode(c.currentPosition()) # load body pane
+        c.loading = False # reenable c.changed
+        c.setChanged(c.changed) # Refresh the changed marker.
+        self.tnodesDict = {}
+        return ok, self.ratio
+    #@nonl
+    #@-node:ekr.20031218072017.1553:getLeoFile
+    #@+node:ekr.20031218072017.1970:getLeoHeader
+    def getLeoHeader (self):
+    
+        # Set defaults.
+        self.maxTnodeIndex = 0
+        self.numberOfTnodes = 0
+        if self.getOpenTag("<leo_header"):
+            return
+    
+        # New in version 1.7: attributes may appear in any order.
+        while 1:
+            if self.matchTag("file_format="):
+                self.getDquote() ; self.fileFormatNumber = self.getLong() ; self.getDquote()
+            elif self.matchTag("tnodes="):
+                self.getDquote() ; self.numberOfTnodes = self.getLong() ; self.getDquote()
+            elif self.matchTag("max_tnode_index="):
+                self.getDquote() ; self.maxTnodeIndex = self.getLong() ; self.getDquote()
+                # g.trace("max_tnode_index:",self.maxTnodeIndex)
+            elif self.matchTag("clone_windows="):
+                self.getDquote() ; self.getLong() ; self.getDquote() # no longer used.
+            elif self.matchTag("></leo_header>"): # new in 4.2: allow this form.
+                break
+            else:
+                self.getTag("/>")
+                break
+    #@nonl
+    #@-node:ekr.20031218072017.1970:getLeoHeader
+    #@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
+    # This method reads a Leo outline from string s in clipboard format.
+    def getLeoOutline (self,s,reassignIndices=True):
+    
+        self.usingClipboard = True
+        self.fileBuffer = s ; self.fileIndex = 0
+        self.tnodesDict = {}
+        
+        if not reassignIndices:
+            #@        << recreate tnodesDict >>
+            #@+node:EKR.20040610134756:<< recreate tnodesDict >>
+            nodeIndices = g.app.nodeIndices
+            
+            for t in self.c.all_tnodes_iter():
+                tref = t.fileIndex
+                if nodeIndices.isGnx(tref):
+                    tref = nodeIndices.toString(tref)
+                self.tnodesDict[tref] = t
+                
+            if 0:
+                print '-'*40
+                for key in self.tnodesDict.keys():
+                    print key,self.tnodesDict[key]
+            #@nonl
+            #@-node:EKR.20040610134756:<< recreate tnodesDict >>
+            #@nl
+    
+        try:
+            self.getXmlVersionTag() # leo.py 3.0
+            self.getXmlStylesheetTag() # 10/25/02
+            self.getTag("<leo_file>")
+            self.getClipboardHeader()
+            self.getVnodes()
+            self.getTnodes()
+            self.getTag("</leo_file>")
+            v = self.finishPaste(reassignIndices)
+        except BadLeoFile:
+            v = None
+    
+        # Clean up.
+        self.fileBuffer = None ; self.fileIndex = 0
+        self.usingClipboard = False
+        self.tnodesDict = {}
+        return v
+    #@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
+    #@+node:ekr.20031218072017.3025:getPosition
+    def getPosition (self):
+    
+        top = left = height = width = 0
+        # New in version 1.7: attributes may appear in any order.
+        while 1:
+            if self.matchTag("top=\""):
+                top = self.getLong() ; self.getDquote()
+            elif self.matchTag("left=\""):
+                left = self.getLong() ; self.getDquote()
+            elif self.matchTag("height=\""):
+                height = self.getLong() ; self.getDquote()
+            elif self.matchTag("width=\""):
+                width = self.getLong() ; self.getDquote()
+            else: break
+        return top, left, height, width
+    #@nonl
+    #@-node:ekr.20031218072017.3025:getPosition
+    #@+node:ekr.20031218072017.2062:getPrefs
+    def getPrefs (self):
+    
+        c = self.c ; config = g.app.config
+        
+        if self.getOpenTag("<preferences"):
+            return
+    
+        table = (
+            ("allow_rich_text",None,None), # Ignored.
+            ("tab_width","tab_width",self.getLong),
+            ("page_width","page_width",self.getLong),
+            ("tangle_bat","tangle_batch_flag",self.getBool),
+            ("untangle_bat","untangle_batch_flag",self.getBool),
+            ("output_doc_chunks","output_doc_flag",self.getBool),
+            ("noweb_flag",None,None), # Ignored.
+            ("extended_noweb_flag",None,None), # Ignored.
+            ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+            ("use_header_flag","use_header_flag",self.getBool))
+        
+        while 1:
+            found = False
+            for tag,var,f in table:
+                if self.matchTag("%s=" % tag):
+                    if var:
+                        self.getDquote() ; val = f() ; self.getDquote()
+                        setattr(c,var,val)
+                    else:
+                        self.getDqString()
+                    found = True ; break
+            if not found:
+                if self.matchTag(">"):
+                    break
+                else: # New in 4.1: ignore all other tags.
+                    self.getUnknownTag()
+    
+        while 1:
+            if self.matchTag("<defaultDirectory>"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("</defaultDirectory>")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("<TSyntaxMemo_options>"):
+                self.getEscapedString() # ignored
+                self.getTag("</TSyntaxMemo_options>")
+            else: break
+        self.getTag("</preferences>")
+        
+        # Override .leo file's preferences if settings are in leoConfig.txt.
+        if config.configsExist:
+            config.setCommandsIvars(c)
+    #@nonl
+    #@+node:ekr.20031218072017.2063:getTargetLanguage
+    def getTargetLanguage (self):
+        
+        # Must match longer tags before short prefixes.
+        for name in g.app.language_delims_dict.keys():
+            if self.matchTagWordIgnoringCase(name):
+                language = name.replace("/","")
+                # self.getDquote()
+                return language
+                
+        return "c" # default
+    #@nonl
+    #@-node:ekr.20031218072017.2063:getTargetLanguage
+    #@-node:ekr.20031218072017.2062:getPrefs
+    #@+node:ekr.20031218072017.3026:getSize
+    def getSize (self):
+    
+        # New in version 1.7: attributes may appear in any order.
+        height = 0 ; width = 0
+        while 1:
+            if self.matchTag("height=\""):
+                height = self.getLong() ; self.getDquote()
+            elif self.matchTag("width=\""):
+                width = self.getLong() ; self.getDquote()
+            else: break
+        return height, width
+    #@nonl
+    #@-node:ekr.20031218072017.3026:getSize
+    #@+node:ekr.20031218072017.1561:getTnode
+    def getTnode (self):
+    
+        # we have already matched <t.
+        index = -1 ; attrDict = {}
+        # New in version 1.7: attributes may appear in any order.
+        while 1:	
+            if self.matchTag("tx="):
+                # New for 4.1.  Read either "Tnnn" or "gnx".
+                index = self.getDqString()
+            elif self.matchTag("rtf=\"1\""): pass # ignored
+            elif self.matchTag("rtf=\"0\""): pass # ignored
+            elif self.matchTag(">"):         break
+            else: # New for 4.0: allow unknown attributes.
+                # New in 4.2: allow pickle'd and hexlify'ed values.
+                attr,val = self.getUnknownAttribute()
+                attrDict[attr] = val
+                
+        if g.app.use_gnx:
+            # index might be Tnnn, nnn, or gnx.
+            id,time,n = g.app.nodeIndices.scanGnx(index,0)
+            if time == None: # A pre-4.1 file index.
+                if index[0] == "T":
+                    index = index[1:]
+    
+        index = self.canonicalTnodeIndex(index)
+        t = self.tnodesDict.get(index)
+        # g.trace(t)
+        #@    << handle unknown attributes >>
+        #@+node:ekr.20031218072017.1564:<< handle unknown attributes >>
+        keys = attrDict.keys()
+        if keys:
+            t.unknownAttributes = attrDict
+            if 0: # For debugging.
+                s = "unknown attributes for tnode"
+                print s ; g.es(s, color = "blue")
+                for key in keys:
+                    s = "%s = %s" % (key,attrDict.get(key))
+                    print s ; g.es(s)
+        #@nonl
+        #@-node:ekr.20031218072017.1564:<< handle unknown attributes >>
+        #@nl
+        if t:
+            s = self.getEscapedString()
+            t.setTnodeText(s,encoding=self.leo_file_encoding)
+        else:
+            g.es("no tnode with index: %s.  The text will be discarded" % str(index))
+        self.getTag("</t>")
+    #@-node:ekr.20031218072017.1561:getTnode
+    #@+node:ekr.20031218072017.1560:getTnodes
+    def getTnodes (self):
+    
+        # A slight change: we require a tnode element.  But Leo always writes this.
+        if self.getOpenTag("<tnodes>"):
+            return
+            
+        while self.matchTag("<t"):
+            self.getTnode()
+    
+        self.getTag("</tnodes>")
+    #@-node:ekr.20031218072017.1560:getTnodes
+    #@+node:ekr.20031218072017.1566:getVnode changed for 4.2)
+    def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
+    
+        c = self.c ; v = None
+        setCurrent = setExpanded = setMarked = setOrphan = setTop = False
+        tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
+        # we have already matched <v.
+        while 1:
+            if self.matchTag("a=\""):
+                #@            << Handle vnode attribute bits >>
+                #@+node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+                # The a=" has already been seen.
+                while 1:
+                    if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
+                    elif self.matchChar('D'): pass # Not used.
+                    elif self.matchChar('E'): setExpanded = True
+                    elif self.matchChar('M'): setMarked = True
+                    elif self.matchChar('O'): setOrphan = True
+                    elif self.matchChar('T'): setTop = True
+                    elif self.matchChar('V'): setCurrent = True
+                    else: break
+                
+                self.getDquote()
+                #@nonl
+                #@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+                #@nl
+            elif self.matchTag("t="):
+                # New for 4.1.  Read either "Tnnn" or "gnx".
+                tref = self.getDqString()
+            elif self.matchTag("vtag=\"V"):
+                self.getIndex() ; self.getDquote() # ignored
+            elif self.matchTag("tnodeList="):
+                s = self.getDqString()
+                tnodeList = self.getTnodeList(s) # New for 4.0
+            elif self.matchTag(">"):
+                break
+            else: # New for 4.0: allow unknown attributes.
+                # New in 4.2: allow pickle'd and hexlify'ed values.
+                attr,val = self.getUnknownAttribute()
+                attrDict[attr] = val
+        # Headlines are optional.
+        if self.matchTag("<vh>"):
+            headline = self.getEscapedString() ; self.getTag("</vh>")
+        
+        # g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
+        if skip:
+            v = self.getExistingVnode(tref)
+        else:
+            v,skip = self.createVnode(parent,back,tref,headline,attrDict)
+            if tnodeList:
+                v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
+                # g.trace("%4d" % len(tnodeList),v)
+    
+        #@    << Set the remembered status bits >>
+        #@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+        if setCurrent:
+            self.currentVnodeStack = [v]
+        
+        if setTop:
+            self.topVnodeStack = [v]
+            
+        if setExpanded:
+            v.initExpandedBit()
+            
+        if setMarked:
+            v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+        
+        if setOrphan:
+            v.setOrphan()
+        #@nonl
+        #@-node:ekr.20031218072017.1568:<< Set the remembered status bits >>
+        #@nl
+    
+        # Recursively create all nested nodes.
+        parent = v ; back = None
+        while self.matchTag("<v"):
+            append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+            append2 = appendToTopStack and len(self.topVnodeStack) == 0
+            back = self.getVnode(parent,back,skip,
+                appendToCurrentStack=append1,appendToTopStack=append2)
+                
+        #@    << Append to current or top stack >>
+        #@+node:ekr.20040326055828:<< Append to current or top stack >>
+        if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+            #g.trace("append current",v)
+            self.currentVnodeStack.append(v)
+            
+        if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+            #g.trace("append top",v)
+            self.topVnodeStack.append(v)
+        #@nonl
+        #@-node:ekr.20040326055828:<< Append to current or top stack >>
+        #@nl
+    
+        # End this vnode.
+        self.getTag("</v>")
+        return v
+    #@nonl
+    #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
+    #@+node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
+    def getTnodeList (self,s):
+    
+        """Parse a list of tnode indices in string s."""
+        
+        # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+        
+        fc = self ; 
+    
+        indexList = s.split(',') # The list never ends in a comma.
+        tnodeList = []
+        for index in indexList:
+            index = self.canonicalTnodeIndex(index)
+            t = fc.tnodesDict.get(index)
+            if not t:
+                # Not an error: create a new tnode and put it in fc.tnodesDict.
+                # g.trace("not allocated: %s" % index)
+                t = self.newTnode(index)
+            tnodeList.append(t)
+            
+        # if tnodeList: g.trace(len(tnodeList))
+        return tnodeList
+    #@-node:ekr.20031218072017.2008:getTnodeList (4.0,4.2)
+    #@+node:ekr.20031218072017.1565:getVnodes
+    def getVnodes (self):
+    
+        c = self.c
+    
+        if self.getOpenTag("<vnodes>"):
+            return
+            
+        if self.usingClipboard:
+            oldRoot = c.rootPosition()
+            oldCurrent = c.currentPosition()
+    
+        back = parent = None # This routine _must_ work on vnodes!
+        
+        self.currentVnodeStack = []
+        self.topVnodeStack = []
+        while self.matchTag("<v"):
+            append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
+            append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
+            back = self.getVnode(parent,back,skip=False,
+                appendToCurrentStack=append1,appendToTopStack=append2)
+    
+        if self.usingClipboard:
+            # Link in the pasted nodes after the current position.
+            newRoot = c.rootPosition()
+            c.setRootPosition(oldRoot)
+            newRoot.v.linkAfter(oldCurrent.v)
+            newCurrent = oldCurrent.copy()
+            newCurrent.v = newRoot.v
+            c.setCurrentPosition(newCurrent)
+        else:
+            #@        << set current and top positions >>
+            #@+node:ekr.20040326054052:<< set current and top positions >>
+            current = self.convertStackToPosition(self.currentVnodeStack)
+            if current:
+                c.setCurrentPosition(current)
+            else:
+                # g.trace(self.currentVnodeStack)
+                c.setCurrentPosition(c.rootPosition())
+                
+            # At present this is useless: the drawing code doesn't set the top position properly.
+            top = self.convertStackToPosition(self.topVnodeStack)
+            if top:
+                c.setTopPosition(top)
+            #@nonl
+            #@-node:ekr.20040326054052:<< set current and top positions >>
+            #@nl
+    
+        self.getTag("</vnodes>")
+    #@nonl
+    #@-node:ekr.20031218072017.1565:getVnodes
+    #@+node:ekr.20031218072017.1249:getXmlStylesheetTag
+    def getXmlStylesheetTag (self):
+    
+        """Parses the optional xml stylesheet string, and sets the corresponding config option.
+        
+        For example, given: <?xml_stylesheet s?> the config option is s."""
+        
+        c = self.c
+        tag = "<?xml-stylesheet "
+    
+        if self.matchTag(tag):
+            s = self.getStringToTag("?>")
+            # print "reading:", tag + s + "?>"
+            c.frame.stylesheet = s
+            self.getTag("?>")
+    #@nonl
+    #@-node:ekr.20031218072017.1249:getXmlStylesheetTag
+    #@+node:ekr.20031218072017.1468:getXmlVersionTag
+    # Parses the encoding string, and sets self.leo_file_encoding.
+    
+    def getXmlVersionTag (self):
+    
+        self.getTag(g.app.prolog_prefix_string)
+        encoding = self.getDqString()
+        self.getTag(g.app.prolog_postfix_string)
+    
+        if g.isValidEncoding(encoding):
+            self.leo_file_encoding = encoding
+            g.es("File encoding: " + encoding, color="blue")
+        else:
+            g.es("invalid encoding in .leo file: " + encoding, color="red")
+    #@-node:ekr.20031218072017.1468:getXmlVersionTag
+    #@+node:ekr.20031218072017.3027:skipWs
+    def skipWs (self):
+    
+        while self.fileIndex < len(self.fileBuffer):
+            ch = self.fileBuffer[self.fileIndex]
+            if ch == ' ' or ch == '\t':
+                self.fileIndex += 1
+            else: break
+    
+        # The caller is entitled to get the next character.
+        if  self.fileIndex >= len(self.fileBuffer):
+            raise BadLeoFile("")
+    #@nonl
+    #@-node:ekr.20031218072017.3027:skipWs
+    #@+node:ekr.20031218072017.3028:skipWsAndNl
+    def skipWsAndNl (self):
+    
+        while self.fileIndex < len(self.fileBuffer):
+            ch = self.fileBuffer[self.fileIndex]
+            if ch == ' ' or ch == '\t' or ch == '\r' or ch == '\n':
+                self.fileIndex += 1
+            else: break
+    
+        # The caller is entitled to get the next character.
+        if  self.fileIndex >= len(self.fileBuffer):
+            raise BadLeoFile("")
+    #@nonl
+    #@-node:ekr.20031218072017.3028:skipWsAndNl
+    #@-node:ekr.20031218072017.3021:get routines
+    #@+node:ekr.20031218072017.2009:newTnode
+    def newTnode(self,index):
+    
+        if self.tnodesDict.has_key(index):
+            g.es("bad tnode index: %s. Using empty text." % str(index))
+            return leoNodes.tnode()
+        else:
+            # Create the tnode.  Use the _original_ index as the key in tnodesDict.
+            t = leoNodes.tnode()
+            self.tnodesDict[index] = t
+        
+            if type(index) not in (type(""),type(u"")):
+                g.es("newTnode: unexpected index type:",type(index),index,color="red")
+            
+            # Convert any pre-4.1 index to a gnx.
+            id,time,n = gnx = g.app.nodeIndices.scanGnx(index,0)
+            if time != None:
+                t.setFileIndex(gnx)
+    
+            return t
+    #@nonl
+    #@-node:ekr.20031218072017.2009:newTnode
+    #@+node:ekr.20031218072017.3029:readAtFileNodes
+    def readAtFileNodes (self):
+    
+        c = self.c ; current = c.currentVnode()
+        c.atFileCommands.readAll(current,partialFlag=True)
+        c.redraw() # 4/4/03
+        
+        # 7/8/03: force an update of the body pane.
+        current.setBodyStringOrPane(current.bodyString())
+        c.frame.body.onBodyChanged(current,undoType=None)
+    #@nonl
+    #@-node:ekr.20031218072017.3029:readAtFileNodes
+    #@+node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
+    def readOutlineOnly (self,file,fileName):
+    
+        c = self.c
+        # Read the entire file into the buffer
+        self.fileBuffer = file.read() ; file.close()
+        self.fileIndex = 0
+        #@    << Set the default directory >>
+        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@+at 
+        #@nonl
+        # The most natural default directory is the directory containing the 
+        # .leo file that we are about to open.  If the user has specified the 
+        # "Default Directory" preference that will over-ride what we are about 
+        # to set.
+        #@-at
+        #@@c
+        
+        dir = g.os_path_dirname(fileName)
+        
+        if len(dir) > 0:
+            c.openDirectory = dir
+        #@nonl
+        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@nl
+        c.beginUpdate()
+        ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
+        c.endUpdate()
+        c.frame.deiconify()
+        vflag,junk,secondary_ratio = self.frame.initialRatios()
+        c.frame.resizePanesToRatio(ratio,secondary_ratio)
+        if 0: # 1/30/04: this is useless.
+            # This should be done after the pane size has been set.
+            if self.topPosition:
+                c.frame.tree.setTopPosition(self.topPosition)
+                c.redraw()
+        # delete the file buffer
+        self.fileBuffer = ""
+        return ok
+    #@nonl
+    #@-node:ekr.20031218072017.3030:fileCommands.readOutlineOnly
+    #@+node:ekr.20031218072017.2297:fileCommands.open
+    def open(self,file,fileName):
+    
+        c = self.c ; frame = c.frame
+        # Read the entire file into the buffer
+        self.fileBuffer = file.read() ; file.close()
+        self.fileIndex = 0
+        #@    << Set the default directory >>
+        #@+node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@+at 
+        #@nonl
+        # The most natural default directory is the directory containing the 
+        # .leo file that we are about to open.  If the user has specified the 
+        # "Default Directory" preference that will over-ride what we are about 
+        # to set.
+        #@-at
+        #@@c
+        
+        dir = g.os_path_dirname(fileName)
+        
+        if len(dir) > 0:
+            c.openDirectory = dir
+        #@nonl
+        #@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
+        #@nl
+        self.topPosition = None
+        c.beginUpdate()
+        ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
+        frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
+        if 0: # 1/30/04: this is useless.
+            if self.topPosition: 
+                c.setTopVnode(self.topPosition)
+        c.endUpdate()
+        # delete the file buffer
+        self.fileBuffer = ""
+        return ok
+    #@nonl
+    #@-node:ekr.20031218072017.2297:fileCommands.open
+    #@+node:ekr.20031218072017.3031:xmlUnescape
+    def xmlUnescape(self,s):
+    
+        if s:
+            s = string.replace(s, '\r', '')
+            s = string.replace(s, "&lt;", '<')
+            s = string.replace(s, "&gt;", '>')
+            s = string.replace(s, "&amp;", '&')
+        return s
+    #@nonl
+    #@-node:ekr.20031218072017.3031:xmlUnescape
+    #@-node:ekr.20031218072017.3020:Reading
+    #@+node:ekr.20031218072017.3032:Writing
+    #@+node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
+    def assignFileIndices (self):
+        
+        """Assign a file index to all tnodes"""
+        
+        c = self.c ; nodeIndices = g.app.nodeIndices
+    
+        nodeIndices.setTimestamp() # This call is fairly expensive.
+    
+        if g.app.use_gnx:
+            #@        << assign missing gnx's, converting ints to gnx's >>
+            #@+node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
+            # Always assign an (immutable) index, even if the tnode is empty.
+            
+            for p in c.allNodes_iter():
+                try: # Will fail for None or any pre 4.1 file index.
+                    id,time,n = p.v.t.fileIndex
+                except TypeError:
+                    # Don't convert to string until the actual write.
+                    p.v.t.fileIndex = nodeIndices.getNewIndex()
+            #@nonl
+            #@-node:ekr.20031218072017.1571:<< assign missing gnx's, converting ints to gnx's >>
+            #@nl
+        else:
+            #@        << reassign all tnode indices >>
+            #@+node:ekr.20031218072017.1572:<< reassign all tnode indices >>
+            # Clear out all indices.
+            for p in c.allNodes_iter():
+                p.v.t.fileIndex = None
+                
+            # Recreate integer indices.
+            self.maxTnodeIndex = 0
+            
+            for p in c.allNodes_iter():
+                if p.v.t.fileIndex == None:
+                    self.maxTnodeIndex += 1
+                    p.v.t.fileIndex = self.maxTnodeIndex
+            #@nonl
+            #@-node:ekr.20031218072017.1572:<< reassign all tnode indices >>
+            #@nl
+            
+        if 0: # debugging:
+            for p in c.allNodes_iter():
+                g.trace(p.v.t.fileIndex)
+    
+    # Indices are now immutable, so there is no longer any difference between these two routines.
+    compactFileIndices = assignFileIndices
+    #@nonl
+    #@-node:ekr.20031218072017.1570:assignFileIndices & compactFileIndices
+    #@+node:ekr.20031218072017.3033:put routines
+    #@+node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
+    # All output eventually comes here.
+    def put (self,s):
+        if s and len(s) > 0:
+            if self.outputFile:
+                s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
+                self.outputFile.write(s)
+            elif self.outputList != None: # Write to a list.
+                self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
+    
+    def put_dquote (self):
+        self.put('"')
+            
+    def put_dquoted_bool (self,b):
+        if b: self.put('"1"')
+        else: self.put('"0"')
+            
+    def put_flag (self,a,b):
+        if a:
+            self.put(" ") ; self.put(b) ; self.put('="1"')
+            
+    def put_in_dquotes (self,a):
+        self.put('"')
+        if a: self.put(a) # will always be True if we use backquotes.
+        else: self.put('0')
+        self.put('"')
+    
+    def put_nl (self):
+        self.put("\n")
+        
+    def put_tab (self):
+        self.put("\t")
+        
+    def put_tabs (self,n):
+        while n > 0:
+            self.put("\t")
+            n -= 1
+    #@-node:ekr.20031218072017.1470:put (basic)(leoFileCommands)
+    #@+node:ekr.20031218072017.1971:putClipboardHeader
+    def putClipboardHeader (self):
+    
+        c = self.c ; tnodes = 0
+        #@    << count the number of tnodes >>
+        #@+node:ekr.20031218072017.1972:<< count the number of tnodes >>
+        c.clearAllVisited()
+        
+        for p in c.currentPosition().self_and_subtree_iter():
+            t = p.v.t
+            if t and not t.isWriteBit():
+                t.setWriteBit()
+                tnodes += 1
+        #@nonl
+        #@-node:ekr.20031218072017.1972:<< count the number of tnodes >>
+        #@nl
+        self.put('<leo_header file_format="1" tnodes=')
+        self.put_in_dquotes(str(tnodes))
+        self.put(" max_tnode_index=")
+        self.put_in_dquotes(str(tnodes))
+        self.put("/>") ; self.put_nl()
+    #@-node:ekr.20031218072017.1971:putClipboardHeader
+    #@+node:ekr.20031218072017.3034:putEscapedString
+    # Surprisingly, the call to xmlEscape here is _much_ faster than calling put for each characters of s.
+    
+    def putEscapedString (self,s):
+    
+        if s and len(s) > 0:
+            self.put(self.xmlEscape(s))
+    #@nonl
+    #@-node:ekr.20031218072017.3034:putEscapedString
+    #@+node:ekr.20031218072017.3035:putFindSettings
+    def putFindSettings (self):
+    
+        c = self.c ; config = g.app.config
+    
+        self.put("<find_panel_settings")
+        
+        #@    << put find settings that may exist in leoConfig.txt >>
+        #@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
+        if config.configsExist and not config.read_only: # 8/6/02
+            pass # config.update has already been called.
+        else:
+            self.put_flag(c.batch_flag,"batch")
+            self.put_flag(c.ignore_case_flag,"ignore_case")
+            self.put_flag(c.mark_changes_flag,"mark_changes")
+            self.put_flag(c.mark_finds_flag,"mark_finds")
+            self.put_flag(c.pattern_match_flag,"pattern_match")
+            self.put_flag(c.reverse_flag,"reverse")
+            self.put_flag(c.search_headline_flag,"search_headline")
+            self.put_flag(c.search_body_flag,"search_body")
+            self.put_flag(c.suboutline_only_flag,"suboutline_only")
+            self.put_flag(c.whole_word_flag,"whole_word")
+            self.put_flag(c.wrap_flag,"wrap")
+            self.put_flag(c.node_only_flag,"node_only")
+        
+        self.put(">") ; self.put_nl()
+        
+        if config.configsExist and not config.read_only: # 8/6/02
+            self.put_tab()
+            self.put("<find_string></find_string>") ; self.put_nl()
+        else:
+            self.put_tab()
+            self.put("<find_string>") ; self.putEscapedString(c.find_text)
+            self.put("</find_string>") ; self.put_nl()
+        
+        if config.configsExist and not config.read_only: # 8/6/02
+            self.put_tab()
+            self.put("<change_string></change_string>") ; self.put_nl()
+        else:
+            self.put_tab()
+            self.put("<change_string>") ; self.putEscapedString(c.change_text)
+            self.put("</change_string>") ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >>
+        #@nl
+        
+        self.put("</find_panel_settings>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.3035:putFindSettings
+    #@+node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
+    def putGlobals (self):
+    
+        c = self.c
+        self.put("<globals")
+        #@    << put the body/outline ratio >>
+        #@+node:ekr.20031218072017.3038:<< put the body/outline ratio >>
+        # Puts an innumerate number of digits
+        
+        self.put(" body_outline_ratio=")
+        self.put_in_dquotes(str(c.frame.ratio))
+        #@nonl
+        #@-node:ekr.20031218072017.3038:<< put the body/outline ratio >>
+        #@nl
+        self.put(">") ; self.put_nl()
+        #@    << put the position of this frame >>
+        #@+node:ekr.20031218072017.3039:<< put the position of this frame >>
+        width,height,left,top = c.frame.get_window_info()
+        
+        self.put_tab()
+        self.put("<global_window_position")
+        self.put(" top=") ; self.put_in_dquotes(str(top))
+        self.put(" left=") ; self.put_in_dquotes(str(left))
+        self.put(" height=") ; self.put_in_dquotes(str(height))
+        self.put(" width=") ; self.put_in_dquotes(str(width))
+        self.put("/>") ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.3039:<< put the position of this frame >>
+        #@nl
+        #@    << put the position of the log window >>
+        #@+node:ekr.20031218072017.3040:<< put the position of the log window >>
+        top = left = height = width = 0 # no longer used
+        self.put_tab()
+        self.put("<global_log_window_position")
+        self.put(" top=") ; self.put_in_dquotes(str(top))
+        self.put(" left=") ; self.put_in_dquotes(str(left))
+        self.put(" height=") ; self.put_in_dquotes(str(height))
+        self.put(" width=") ; self.put_in_dquotes(str(width))
+        self.put("/>") ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.3040:<< put the position of the log window >>
+        #@nl
+        self.put("</globals>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.3037:fileCommands.putGlobals (changed for 4.0)
+    #@+node:ekr.20031218072017.3041:putHeader
+    def putHeader (self):
+    
+        tnodes = 0 ; clone_windows = 0 # Always zero in Leo2.
+    
+        self.put("<leo_header")
+        self.put(" file_format=") ; self.put_in_dquotes("2")
+        self.put(" tnodes=") ; self.put_in_dquotes(str(tnodes))
+        self.put(" max_tnode_index=") ; self.put_in_dquotes(str(self.maxTnodeIndex))
+        self.put(" clone_windows=") ; self.put_in_dquotes(str(clone_windows))
+        self.put("/>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.3041:putHeader
+    #@+node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
+    # Writes a Leo outline to s in a format suitable for pasting to the clipboard.
+    
+    def putLeoOutline (self):
+    
+        self.outputList = [] ; self.outputFile = None
+        self.usingClipboard = True
+        self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
+        self.putProlog()
+        self.putClipboardHeader()
+        self.putVnodes()
+        self.putTnodes()
+        self.putPostlog()
+        s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
+        self.outputList = []
+        self.usingClipboard = False
+        return s
+    #@nonl
+    #@-node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
+    #@+node:ekr.20031218072017.3042:putPostlog
+    def putPostlog (self):
+    
+        self.put("</leo_file>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.3042:putPostlog
+    #@+node:ekr.20031218072017.2066:putPrefs
+    def putPrefs (self):
+    
+        c = self.c ; config = g.app.config
+    
+        self.put("<preferences")
+        
+        if 0:
+            self.put(" allow_rich_text=") ; self.put_dquoted_bool(0) # no longer used
+        
+        #@    << put prefs that may exist in leoConfig.txt >>
+        #@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+        language = c.target_language
+        for name in xml_language_names:
+            s = string.lower(name)
+            s = string.replace(s,"/","")
+            if s == language:
+                language = name ; break
+        
+        if config.configsExist and not config.read_only: # 8/6/02
+            pass # config.update has already been called.
+        else:
+            self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
+            self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
+            self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+            self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
+            self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
+            self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
+            self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
+            self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
+        
+        self.put(">") ; self.put_nl()
+        # New in version 0.16
+        #@<< put default directory >>
+        #@+node:ekr.20031218072017.2068:<< put default directory >>
+        if config.configsExist:
+            pass # Has been done earlier.
+        elif len(c.tangle_directory) > 0:
+            self.put_tab()
+            self.put("<defaultDirectory>")
+            self.putEscapedString(c.tangle_directory)
+            self.put("</defaultDirectory>")
+            self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.2068:<< put default directory >>
+        #@nl
+        #@nonl
+        #@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+        #@nl
+        
+        self.put("</preferences>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.2066:putPrefs
+    #@+node:ekr.20031218072017.1246:putProlog
+    def putProlog (self):
+    
+        c = self.c ; config = g.app.config
+    
+        #@    << Put the <?xml...?> line >>
+        #@+node:ekr.20031218072017.1247:<< Put the <?xml...?> line >>
+        # 1/22/03: use self.leo_file_encoding encoding.
+        self.put(g.app.prolog_prefix_string)
+        self.put_dquote() ; self.put(self.leo_file_encoding) ; self.put_dquote()
+        self.put(g.app.prolog_postfix_string) ; self.put_nl()
+        #@nonl
+        #@-node:ekr.20031218072017.1247:<< Put the <?xml...?> line >>
+        #@nl
+        #@    << Put the optional <?xml-stylesheet...?> line >>
+        #@+node:ekr.20031218072017.1248:<< Put the optional <?xml-stylesheet...?> line >>
+        if config.stylesheet or c.frame.stylesheet:
+            
+            # The stylesheet in the .leo file takes precedence over the default stylesheet.
+            if c.frame.stylesheet:
+                s = c.frame.stylesheet
+            else:
+                s = config.stylesheet
+                
+            tag = "<?xml-stylesheet "
+            # print "writing:", tag + s + "?>"
+            self.put(tag) ; self.put(s) ; self.put("?>") ; self.put_nl()
+        #@-node:ekr.20031218072017.1248:<< Put the optional <?xml-stylesheet...?> line >>
+        #@nl
+    
+        self.put("<leo_file>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.1246:putProlog
+    #@+node:ekr.20031218072017.1577:putTnode
+    def putTnode (self,t):
+    
+        self.put("<t")
+        self.put(" tx=")
+    
+        if g.app.use_gnx:
+            gnx = g.app.nodeIndices.toString(t.fileIndex)
+            self.put_in_dquotes(gnx)
+        else:
+            self.put_in_dquotes("T" + str(t.fileIndex))
+    
+        if hasattr(t,"unknownAttributes"):
+            self.putUnknownAttributes(t)
+    
+        self.put(">")
+    
+        # g.trace(t)
+        if t.bodyString:
+            self.putEscapedString(t.bodyString)
+    
+        self.put("</t>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.1577:putTnode
+    #@+node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
+    def putTnodeList (self,v):
+        
+        """Put the tnodeList attribute of a tnode."""
+        
+        # g.trace(v)
+        
+        # Remember: entries in the tnodeList correspond to @+node sentinels, _not_ to tnodes!
+    
+        fc = self ; nodeIndices = g.app.nodeIndices
+        tnodeList = v.t.tnodeList
+        if tnodeList:
+            # g.trace("%4d" % len(tnodeList),v)
+            fc.put(" tnodeList=") ; fc.put_dquote()
+            if g.app.use_gnx:
+                for t in tnodeList:
+                    try: # Will fail for None or any pre 4.1 file index.
+                        id,time,n = t.fileIndex
+                    except:
+                        g.trace("assigning gnx for ",v,t)
+                        gnx = nodeIndices.getNewIndex()
+                        v.t.setFileIndex(gnx) # Don't convert to string until the actual write.
+                s = ','.join([nodeIndices.toString(t.fileIndex) for t in tnodeList])
+            else:
+                s = ','.join([str(t.fileIndex) for t in tnodeList])
+            fc.put(s) ; fc.put_dquote()
+    #@nonl
+    #@-node:ekr.20031218072017.2002:putTnodeList (4.0,4.2)
+    #@+node:ekr.20031218072017.1575:putTnodes
+    def putTnodes (self):
+        
+        """Puts all tnodes as required for copy or save commands"""
+    
+        c = self.c
+    
+        self.put("<tnodes>") ; self.put_nl()
+        #@    << write only those tnodes that were referenced >>
+        #@+node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
+        # Populate tnodes
+        tnodes = {}
+        
+        if self.usingClipboard: # write the current tree.
+            root = c.currentPosition()
+        else: # write everything
+            root = c.rootPosition()
+        
+        for p in c.allNodes_iter():
+            index = p.v.t.fileIndex
+            assert(index)
+            tnodes[index] = p.v.t
+        
+        # Put all tnodes in index order.
+        keys = tnodes.keys() ; keys.sort()
+        for index in keys:
+            # g.trace(index)
+            t = tnodes.get(index)
+            assert(t)
+            # Write only those tnodes whose vnodes were written.
+            if t.isWriteBit(): # 5/3/04
+                self.putTnode(t)
+        #@nonl
+        #@-node:ekr.20031218072017.1576:<< write only those tnodes that were referenced >>
+        #@nl
+        self.put("</tnodes>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.1575:putTnodes
+    #@+node:EKR.20040526202501:putUnknownAttributes
+    def putUnknownAttributes (self,torv):
+        
+        import binascii,pickle
+        
+        attrDict = torv.unknownAttributes
+        if type(attrDict) != type({}):
+            g.es("ignoring non-dictionary unknownAttributes for",torv,color="blue")
+            return
+            
+        attrs = []
+        for key in attrDict.keys():
+            val = attrDict[key]
+            try:
+                s = pickle.dumps(val,bin=True)
+            except pickle.PicklingError:
+                g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+                g.es(key,val)
+                return
+            attr = ' %s="%s"' % (key,binascii.hexlify(s))
+            if 0: # This is not general enough
+                attr = ' %s="%s"' % (key,self.xmlEscape(val))
+            attrs.append(attr)
+    
+        for attr in attrs:
+            self.put(attr)
+    #@nonl
+    #@-node:EKR.20040526202501:putUnknownAttributes
+    #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+    def putVnode (self,p):
+    
+        """Write a <v> element corresponding to a vnode."""
+    
+        fc = self ; c = fc.c ; v = p.v
+        isThin = p.isAtThinFileNode()
+    
+        fc.put("<v")
+        #@    << Put tnode index >>
+        #@+node:ekr.20031218072017.1864:<< Put tnode index >>
+        if v.t.fileIndex:
+            if g.app.use_gnx:
+                gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+                fc.put(" t=") ; fc.put_in_dquotes(gnx)
+            else:
+                fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+                
+            # g.trace(v.t)
+            if not isThin or self.usingClipboard:
+                v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+        else:
+            g.trace(v.t.fileIndex,v)
+            g.es("error writing file(bad v.t.fileIndex)!")
+            g.es("try using the Save To command")
+        #@nonl
+        #@-node:ekr.20031218072017.1864:<< Put tnode index >>
+        #@nl
+        #@    << Put attribute bits >>
+        #@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+        attr = ""
+        if p.v.isExpanded(): attr += "E"
+        if p.v.isMarked():   attr += "M"
+        if p.v.isOrphan():   attr += "O"
+        
+        if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+            # Almost 30% of the entire writing time came from here!!!
+            if p.equal(self.topPosition):     attr += "T" # was a bottleneck
+            if p.equal(self.currentPosition): attr += "V" # was a bottleneck
+        
+        if attr: fc.put(' a="%s"' % attr)
+        #@nonl
+        #@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+        #@nl
+        #@    << Put tnodeList and unKnownAttributes >>
+        #@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+        # Write tnodeList only for @file nodes.
+        # New in 4.2: tnode list is in tnode.
+        
+        if 0: # Debugging.
+            if v.isAnyAtFileNode() and not v.isAtThinFileNode():
+                if hasattr(v.t,"tnodeList"):
+                    g.trace(v.headString(),len(v.t.tnodeList))
+                else:
+                    g.trace(v.headString(),"no tnodeList")
+        
+        if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+            fc.putTnodeList(v) # New in 4.0
+        
+        if hasattr(v,"unknownAttributes"): # New in 4.0
+            self.putUnknownAttributes(v)
+        #@nonl
+        #@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+        #@nl
+        fc.put(">")
+        #@    << Write the head text >>
+        #@+node:ekr.20031218072017.1866:<< Write the head text >>
+        headString = p.v.headString()
+        
+        if headString:
+            fc.put("<vh>")
+            fc.putEscapedString(headString)
+            fc.put("</vh>")
+        #@nonl
+        #@-node:ekr.20031218072017.1866:<< Write the head text >>
+        #@nl
+    
+        # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+        if p.hasChildren():
+            if isThin and not p.isOrphan() and not self.usingClipboard:
+                # g.trace("skipping child vnodes for", p.headString())
+                pass
+            else:
+                fc.put_nl()
+                # This optimization eliminates all "recursive" copies.
+                p.moveToFirstChild()
+                while 1:
+                    fc.putVnode(p)
+                    if p.hasNext(): p.moveToNext()
+                    else:           break
+                p.moveToParent()
+    
+        fc.put("</v>") ; fc.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+    #@+node:ekr.20031218072017.1579:putVnodes
+    def putVnodes (self):
+    
+        """Puts all <v> elements in the order in which they appear in the outline."""
+    
+        c = self.c
+        c.clearAllVisited()
+    
+        self.put("<vnodes>") ; self.put_nl()
+    
+        # Make only one copy for all calls.
+        self.currentPosition = c.currentPosition() 
+        self.topPosition     = c.topPosition()
+    
+        if self.usingClipboard:
+            self.putVnode(self.currentPosition) # Write only current tree.
+        else:
+            for p in c.rootPosition().self_and_siblings_iter():
+                self.putVnode(p) # Write the next top-level node.
+    
+        self.put("</vnodes>") ; self.put_nl()
+    #@nonl
+    #@-node:ekr.20031218072017.1579:putVnodes
+    #@-node:ekr.20031218072017.3033:put routines
+    #@+node:ekr.20031218072017.1720:save
+    def save(self,fileName):
+    
+        c = self.c ; v = c.currentVnode()
+    
+        if not g.doHook("save1",c=c,v=v,fileName=fileName):
+            c.beginUpdate()
+            c.endEditing()# Set the current headline text.
+            self.setDefaultDirectoryForNewFiles(fileName)
+            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+                c.setChanged(False) # Clears all dirty bits.
+                g.es("saved: " + g.shortFileName(fileName))
+                if g.app.config.save_clears_undo_buffer:
+                    g.es("clearing undo")
+                    c.undoer.clearUndoState()
+            c.endUpdate()
+        g.doHook("save2",c=c,v=v,fileName=fileName)
+    #@nonl
+    #@-node:ekr.20031218072017.1720:save
+    #@+node:ekr.20031218072017.3043:saveAs
+    def saveAs(self,fileName):
+    
+        c = self.c ; v = c.currentVnode()
+    
+        if not g.doHook("save1",c=c,v=v,fileName=fileName):
+            c.beginUpdate()
+            c.endEditing() # Set the current headline text.
+            self.setDefaultDirectoryForNewFiles(fileName)
+            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+                c.setChanged(False) # Clears all dirty bits.
+                g.es("saved: " + g.shortFileName(fileName))
+            c.endUpdate()
+        g.doHook("save2",c=c,v=v,fileName=fileName)
+    #@-node:ekr.20031218072017.3043:saveAs
+    #@+node:ekr.20031218072017.3044:saveTo
+    def saveTo (self,fileName):
+    
+        c = self.c ; v = c.currentVnode()
+    
+        if not g.doHook("save1",c=c,v=v,fileName=fileName):
+            c.beginUpdate()
+            c.endEditing()# Set the current headline text.
+            self.setDefaultDirectoryForNewFiles(fileName)
+            if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+                g.es("saved: " + g.shortFileName(fileName))
+            c.endUpdate()
+        g.doHook("save2",c=c,v=v,fileName=fileName)
+    #@nonl
+    #@-node:ekr.20031218072017.3044:saveTo
+    #@+node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
+    def setDefaultDirectoryForNewFiles (self,fileName):
+        
+        """Set c.openDirectory for new files for the benefit of leoAtFile.scanAllDirectives."""
+        
+        c = self.c
+    
+        if not c.openDirectory or len(c.openDirectory) == 0:
+            dir = g.os_path_dirname(fileName)
+    
+            if len(dir) > 0 and g.os_path_isabs(dir) and g.os_path_exists(dir):
+                c.openDirectory = dir
+    #@nonl
+    #@-node:ekr.20031218072017.3045:setDefaultDirectoryForNewFiles
+    #@+node:ekr.20031218072017.3046:write_Leo_file
+    def write_Leo_file(self,fileName,outlineOnlyFlag):
+    
+        c = self.c ; config = g.app.config
+    
+        self.assignFileIndices()
+        if not outlineOnlyFlag:
+            #@        << write all @file nodes >>
+            #@+node:ekr.20040324080359:<< write all @file nodes >>
+            try:
+                # Write all @file nodes and set orphan bits.
+                c.atFileCommands.writeAll()
+            except:
+                g.es_error("exception writing derived files")
+                g.es_exception()
+                return False
+            #@nonl
+            #@-node:ekr.20040324080359:<< write all @file nodes >>
+            #@nl
+        #@    << return if the .leo file is read-only >>
+        #@+node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+        # self.read_only is not valid for Save As and Save To commands.
+        
+        if g.os_path_exists(fileName):
+            try:
+                if not os.access(fileName,os.W_OK):
+                    self.writeError("can not create: read only: " + self.targetFileName)
+                    return False
+            except:
+                pass # os.access() may not exist on all platforms.
+        #@nonl
+        #@-node:ekr.20040324080359.1:<< return if the .leo file is read-only >>
+        #@nl
+        try:
+            #@        << create backup file >>
+            #@+node:ekr.20031218072017.3047:<< create backup file >>
+            # rename fileName to fileName.bak if fileName exists.
+            if g.os_path_exists(fileName):
+                try:
+                    backupName = g.os_path_join(g.app.loadDir,fileName)
+                    backupName = fileName + ".bak"
+                    if g.os_path_exists(backupName):
+                        os.unlink(backupName)
+                    # os.rename(fileName,backupName)
+                    g.utils_rename(fileName,backupName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception creating backup file: " + backupName)
+                        g.es_exception()
+                    return False
+                except:
+                    g.es("exception creating backup file: " + backupName)
+                    g.es_exception()
+                    backupName = None
+                    return False
+            else:
+                backupName = None
+            #@nonl
+            #@-node:ekr.20031218072017.3047:<< create backup file >>
+            #@nl
+            self.mFileName = fileName
+            #@        << create the output file >>
+            #@+node:ekr.20040324080359.2:<< create the output file >>
+            self.outputFile = open(fileName, 'wb') # 9/18/02
+            if not self.outputFile:
+                g.es("can not open " + fileName)
+                #@    << delete backup file >>
+                #@+node:ekr.20031218072017.3048:<< delete backup file >>
+                if backupName and g.os_path_exists(backupName):
+                    try:
+                        os.unlink(backupName)
+                    except OSError:
+                        if self.read_only:
+                            g.es("read only",color="red")
+                        else:
+                            g.es("exception deleting backup file:" + backupName)
+                            g.es_exception()
+                        return False
+                    except:
+                        g.es("exception deleting backup file:" + backupName)
+                        g.es_exception()
+                        return False
+                #@-node:ekr.20031218072017.3048:<< delete backup file >>
+                #@nl
+                return False
+            #@nonl
+            #@-node:ekr.20040324080359.2:<< create the output file >>
+            #@nl
+            #@        << update leoConfig.txt >>
+            #@+node:ekr.20040324080819:<< update leoConfig.txt >>
+            c.setIvarsFromFind()
+            config.setConfigFindIvars(c)
+            c.setIvarsFromPrefs()
+            config.setCommandsIvars(c)
+            config.update()
+            #@nonl
+            #@-node:ekr.20040324080819:<< update leoConfig.txt >>
+            #@nl
+            #@        << put the .leo file >>
+            #@+node:ekr.20040324080819.1:<< put the .leo file >>
+            self.putProlog()
+            self.putHeader()
+            self.putGlobals()
+            self.putPrefs()
+            self.putFindSettings()
+            #start = g.getTime()
+            self.putVnodes()
+            #start = g.printDiffTime("vnodes ",start)
+            self.putTnodes()
+            #start = g.printDiffTime("tnodes ",start)
+            self.putPostlog()
+            #@nonl
+            #@-node:ekr.20040324080819.1:<< put the .leo file >>
+            #@nl
+        except:
+            #@        << report the exception >>
+            #@+node:ekr.20040324080819.2:<< report the exception >>
+            g.es("exception writing: " + fileName)
+            g.es_exception() 
+            if self.outputFile:
+                try:
+                    self.outputFile.close()
+                    self.outputFile = None
+                except:
+                    g.es("exception closing: " + fileName)
+                    g.es_exception()
+            #@nonl
+            #@-node:ekr.20040324080819.2:<< report the exception >>
+            #@nl
+            #@        << erase filename and rename backupName to fileName >>
+            #@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+            g.es("error writing " + fileName)
+            
+            if fileName and g.os_path_exists(fileName):
+                try:
+                    os.unlink(fileName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception deleting: " + fileName)
+                        g.es_exception()
+                except:
+                    g.es("exception deleting: " + fileName)
+                    g.es_exception()
+                    
+            if backupName:
+                g.es("restoring " + fileName + " from " + backupName)
+                try:
+                    g.utils_rename(backupName, fileName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception renaming " + backupName + " to " + fileName)
+                        g.es_exception()
+                except:
+                    g.es("exception renaming " + backupName + " to " + fileName)
+                    g.es_exception()
+            #@nonl
+            #@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+            #@nl
+            return False
+        if self.outputFile:
+            #@        << close the output file >>
+            #@+node:ekr.20040324080819.3:<< close the output file >>
+            try:
+                self.outputFile.close()
+                self.outputFile = None
+            except:
+                g.es("exception closing: " + fileName)
+                g.es_exception()
+            #@nonl
+            #@-node:ekr.20040324080819.3:<< close the output file >>
+            #@nl
+            #@        << delete backup file >>
+            #@+middle:ekr.20040324080359.2:<< create the output file >>
+            #@+node:ekr.20031218072017.3048:<< delete backup file >>
+            if backupName and g.os_path_exists(backupName):
+                try:
+                    os.unlink(backupName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception deleting backup file:" + backupName)
+                        g.es_exception()
+                    return False
+                except:
+                    g.es("exception deleting backup file:" + backupName)
+                    g.es_exception()
+                    return False
+            #@-node:ekr.20031218072017.3048:<< delete backup file >>
+            #@-middle:ekr.20040324080359.2:<< create the output file >>
+            #@nl
+            return True
+        else: # This probably will never happen because errors should raise exceptions.
+            #@        << erase filename and rename backupName to fileName >>
+            #@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+            g.es("error writing " + fileName)
+            
+            if fileName and g.os_path_exists(fileName):
+                try:
+                    os.unlink(fileName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception deleting: " + fileName)
+                        g.es_exception()
+                except:
+                    g.es("exception deleting: " + fileName)
+                    g.es_exception()
+                    
+            if backupName:
+                g.es("restoring " + fileName + " from " + backupName)
+                try:
+                    g.utils_rename(backupName, fileName)
+                except OSError:
+                    if self.read_only:
+                        g.es("read only",color="red")
+                    else:
+                        g.es("exception renaming " + backupName + " to " + fileName)
+                        g.es_exception()
+                except:
+                    g.es("exception renaming " + backupName + " to " + fileName)
+                    g.es_exception()
+            #@nonl
+            #@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
+            #@nl
+            return False
+    #@nonl
+    #@-node:ekr.20031218072017.3046:write_Leo_file
+    #@+node:ekr.20031218072017.2012:writeAtFileNodes
+    def writeAtFileNodes (self):
+        
+        c = self.c
+    
+        self.assignFileIndices() # 4/3/04
+        changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=True)
+        assert(changedFiles != None)
+        if changedFiles:
+            g.es("auto-saving outline",color="blue")
+            c.save() # Must be done to set or clear tnodeList.
+    #@nonl
+    #@-node:ekr.20031218072017.2012:writeAtFileNodes
+    #@+node:ekr.20031218072017.1666:writeDirtyAtFileNodes
+    def writeDirtyAtFileNodes (self): # fileCommands
+    
+        """The Write Dirty @file Nodes command"""
+        
+        c = self.c
+    
+        self.assignFileIndices() # 4/3/04
+        changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=True)
+        if changedFiles:
+            g.es("auto-saving outline",color="blue")
+            c.save() # Must be done to set or clear tnodeList.
+    #@nonl
+    #@-node:ekr.20031218072017.1666:writeDirtyAtFileNodes
+    #@+node:ekr.20031218072017.2013:writeMissingAtFileNodes
+    def writeMissingAtFileNodes (self):
+    
+        c = self.c ; v = c.currentVnode()
+    
+        if v:
+            at = c.atFileCommands
+            self.assignFileIndices() # 4/3/04
+            changedFiles = at.writeMissing(v)
+            assert(changedFiles != None)
+            if changedFiles:
+                g.es("auto-saving outline",color="blue")
+                c.save() # Must be done to set or clear tnodeList.
+    #@nonl
+    #@-node:ekr.20031218072017.2013:writeMissingAtFileNodes
+    #@+node:ekr.20031218072017.3050:writeOutlineOnly
+    def writeOutlineOnly (self):
+    
+        c = self.c
+        c.endEditing()
+        self.write_Leo_file(self.mFileName,True) # outlineOnlyFlag
+    #@nonl
+    #@-node:ekr.20031218072017.3050:writeOutlineOnly
+    #@+node:ekr.20031218072017.3051:xmlEscape
+    # Surprisingly, this is a time critical routine.
+    
+    def xmlEscape(self,s):
+    
+        assert(s and len(s) > 0) # check is made in putEscapedString
+        s = string.replace(s, '\r', '')
+        s = string.replace(s, '&', "&amp;")
+        s = string.replace(s, '<', "&lt;")
+        s = string.replace(s, '>', "&gt;")
+        return s
+    #@nonl
+    #@-node:ekr.20031218072017.3051:xmlEscape
+    #@-node:ekr.20031218072017.3032:Writing
+    #@-others
+    
 class fileCommands (baseFileCommands):
-	"""A class creating the fileCommands subcommander."""
-	pass
+    """A class creating the fileCommands subcommander."""
+    pass
 #@-node:ekr.20031218072017.3018:@thin leoFileCommands.py
 #@-leo
