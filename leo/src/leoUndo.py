@@ -508,6 +508,7 @@ class baseUndoer:
 				u.v.createDependents()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
+			#@nonl
 			#@-node:<< redo clone cases >>
 			#@nl
 			#@		<< redo insert cases >>
