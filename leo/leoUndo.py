@@ -445,9 +445,12 @@ class undoer:
 				u.v,u.oldTree = u.oldTree,u.v
 				
 				v = u.oldTree
-				c.selectVnode(v)
+				# selectVnode causes recoloring, so don't do this unless needed.
+				if current != u.v:
+					c.selectVnode(v)
+				# This rewrites the body pane, so we must do a full recolor.
 				v.setBodyStringOrPane(v.bodyString())
-				c.tree.recolor(v)
+				c.tree.recolor(u.v)
 			#@-body
 			#@-node:6::<< redo replace cases >>
 
@@ -480,7 +483,10 @@ class undoer:
 				"Indent", "Undent" ]:
 			
 				# trace(`type` + ":" + `u.v`)
-				c.selectVnode(u.v)
+				# selectVnode causes recoloring, so don't do this unless needed.
+				if current != u.v:
+					c.selectVnode(u.v)
+				# This rewrites the body pane, so we must do a full recolor.
 				u.v.setBodyStringOrPane(u.newText)
 				c.tree.recolor(u.v)
 				if u.newSel:
@@ -521,7 +527,8 @@ class undoer:
 			else: trace("Unknown case: " + `type`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
-		c.endUpdate()
+			flag = current != u.v
+		c.endUpdate(flag) # 11/08/02
 		u.redoing = false
 		u.bead += 1
 		u.setUndoTypes()
@@ -665,9 +672,12 @@ class undoer:
 				u.v,u.oldTree = u.oldTree,u.v
 				
 				v = u.v
-				c.selectVnode(v)
+				# selectVnode causes recoloring, so don't do this unless needed.
+				if current != u.v:
+					c.selectVnode(v)
+				# This rewrites the body pane, so we must do a full recolor.
 				v.setBodyStringOrPane(v.bodyString())
-				c.tree.recolor(v)
+				c.tree.recolor(u.v)
 			#@-body
 			#@-node:6::<< undo replace cases >>
 
@@ -706,7 +716,10 @@ class undoer:
 				"Indent", "Undent" ]:
 			
 				# trace(`type` + ":" + `u.v`)
-				c.selectVnode(u.v)
+				# selectVnode causes recoloring, so don't do this unless needed.
+				if current != u.v:
+					c.selectVnode(u.v)
+				# This rewrites the body pane, so we must do a full recolor.
 				u.v.setBodyStringOrPane(u.oldText)
 				c.tree.recolor(u.v)
 				if u.oldSel:
@@ -747,7 +760,8 @@ class undoer:
 			else: trace("Unknown case: " + `u.undoType`)
 			c.setChanged(true)
 			if u.v: u.v.setDirty()
-		c.endUpdate()
+			flag = current != u.v
+		c.endUpdate(flag) # 11/9/02
 		u.undoing = false
 		u.bead -= 1
 		u.setUndoTypes()

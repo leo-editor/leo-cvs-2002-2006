@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2612" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2613" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="5" left="169" height="27" width="81"/>
+	<global_window_position top="19" left="219" height="27" width="81"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,8 +14,11 @@
 <vnodes>
 <v t="T1"><vh>Diary</vh>
 <v><vh>Nov 2002</vh>
+<v><vh>11/9</vh>
+<v t="T2"><vh>Completed incremental syntax coloring</vh></v>
+</v>
 <v><vh>11/8</vh>
-<v t="T2"><vh>Finished incremental syntax coloring</vh></v>
+<v><vh>Worked on incremental syntax coloring</vh></v>
 <v><vh>Changed leoCustomize.py to customizeLeo.py to make distribution easier.</vh></v>
 <v><vh>Warn if @node leoCustomize.py is not @ignored</vh></v>
 <v t="T3"><vh>Execute script no longer supports @pythonscript</vh></v>
@@ -6708,18 +6711,44 @@
 </v>
 </v>
 </v>
-<v t="T2607" a="E"><vh>(Incremental Syntax Coloring)</vh>
-<v><vh> Tests</vh>
-<v t="T2608" a="E"><vh>Test 1</vh>
-<v t="T776" a="C"><vh>tree.select</vh></v>
-<v t="T2609" a="E"><vh>nocolor</vh>
-<v t="T776" a="C"><vh>tree.select</vh></v>
-</v>
+<v t="T2607"><vh>(Incremental Syntax Coloring)</vh>
+<v a="E"><vh> Tests</vh>
+<v t="T2608" a="E"><vh>Dave Hein</vh>
+<v t="T2609"><vh>Test</vh></v>
 </v>
 <v t="T2610"><vh>Long test</vh></v>
-<v t="T2611"><vh>problems</vh></v>
+<v><vh>Test 1</vh>
+<v t="T776" a="C"><vh>tree.select</vh></v>
+<v t="T2611"><vh>nocolor</vh>
+<v t="T776" a="C"><vh>tree.select</vh></v>
 </v>
-<v t="T2612"><vh>Setting self.incremental</vh>
+</v>
+<v t="T2612"><vh>problems</vh></v>
+</v>
+<v t="T2613"><vh>Setting self.incremental</vh>
+<v t="T1604" a="C"><vh>setBodyStringOrPane &amp; setBodyTextOrPane</vh></v>
+<v t="T776" a="C"><vh>tree.select</vh></v>
+<v t="T794" a="C"><vh>tree.redraw , force_redraw, redraw_now</vh></v>
+<v t="T744" a="C"><vh>redo</vh>
+<v t="T745"><vh>&lt;&lt; redo clone cases &gt;&gt;</vh></v>
+<v t="T746"><vh>&lt;&lt; redo delete cases &gt;&gt;</vh></v>
+<v t="T747"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="T748"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
+<v t="T749"><vh>&lt;&lt; redo promote and demote cases &gt;&gt;</vh></v>
+<v t="T750"><vh>&lt;&lt; redo replace cases &gt;&gt;</vh></v>
+<v t="T751"><vh>&lt;&lt; redo sort cases &gt;&gt;</vh></v>
+<v t="T752"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+</v>
+<v t="T735" a="C"><vh>undo</vh>
+<v t="T736"><vh>&lt;&lt; undo clone cases &gt;&gt;</vh></v>
+<v t="T737"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
+<v t="T738"><vh>&lt;&lt; undo insert cases &gt;&gt;</vh></v>
+<v t="T739"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
+<v t="T740"><vh>&lt;&lt; undo promote and demote cases &gt;&gt;</vh></v>
+<v t="T741"><vh>&lt;&lt; undo replace cases &gt;&gt;</vh></v>
+<v t="T742"><vh>&lt;&lt; undo sort cases &gt;&gt;</vh></v>
+<v t="T743"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+</v>
 <v t="T2052" a="C"><vh>color.schedule</vh></v>
 <v t="T2051" a="C"><vh>colorize</vh></v>
 <v t="T790" a="C"><vh>tree.onBodyChanged, onBodyWillChange, OnBodyKey, idle_body_key</vh>
@@ -6729,43 +6758,43 @@
 </v>
 <v t="T1185" a="C"><vh>tree.recolor &amp; recolor_now</vh></v>
 </v>
-<v t="T502" a="C"><vh>colorizeAnyLanguage &amp; allies</vh>
-<v t="T503" a="E"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
-<v t="T504" a="E"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
-<v t="T505" a="E"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
+<v t="T502" a="CE"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="T503"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt;</vh>
+<v t="T504"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="T505"><vh>&lt;&lt; configure language-specific settings &gt;&gt;</vh></v>
 </v>
-<v t="T506" a="E"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
-<v t="T507" a="E"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="T508" a="E"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
-<v t="T509" a="E"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
+<v t="T506"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="T507"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="T508"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+<v t="T509"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
 </v>
-<v t="T510" a="E"><vh>colorizeLine &amp; allies</vh>
-<v t="T511" a="E"><vh>continueBlockComment</vh></v>
-<v t="T512" a="E"><vh>continueSingle/DoubleString</vh></v>
-<v t="T513" a="E"><vh>continueDocPart</vh>
-<v t="T514" a="E"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
-<v t="T515" a="E"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
+<v t="T510"><vh>colorizeLine &amp; allies</vh>
+<v t="T511"><vh>continueBlockComment</vh></v>
+<v t="T512"><vh>continueSingle/DoubleString</vh></v>
+<v t="T513"><vh>continueDocPart</vh>
+<v t="T514"><vh>&lt;&lt; handle cweb doc part &gt;&gt;</vh></v>
+<v t="T515"><vh>&lt;&lt; handle noweb doc part &gt;&gt;</vh></v>
 </v>
-<v t="T516" a="E"><vh>continueNocolor</vh></v>
-<v t="T517" a="E"><vh>continueSingle/DoublePythonString</vh></v>
-<v t="T518" a="E"><vh>doAtKeyword</vh></v>
-<v t="T519" a="E"><vh>doNormalState</vh>
-<v t="T520" a="E"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="T521" a="E"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="T522" a="E"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="T523" a="E"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="T524" a="E"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="T525" a="E"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="T526" a="E"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+<v t="T516"><vh>continueNocolor</vh></v>
+<v t="T517"><vh>continueSingle/DoublePythonString</vh></v>
+<v t="T518"><vh>doAtKeyword</vh></v>
+<v t="T519"><vh>doNormalState</vh>
+<v t="T520"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="T521"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="T522"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="T523"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="T524"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="T525"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="T526"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
 </v>
-<v t="T527" a="EM"><vh>&lt;&lt; handle possible noweb section ref or def &gt;&gt;</vh>
-<v t="T528" a="E"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
+<v t="T527" a="M"><vh>&lt;&lt; handle possible noweb section ref or def &gt;&gt;</vh>
+<v t="T528"><vh>&lt;&lt; set the hyperlink &gt;&gt;</vh></v>
 </v>
-<v t="T529" a="E"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh></v>
-<v t="T530" a="E"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="T531" a="E"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="T532" a="E"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="T533" a="E"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+<v t="T529"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh></v>
+<v t="T530"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="T531"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="T532"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="T533"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
 </v>
 <v t="T534"><vh>removeAllTags &amp; removeTagsFromLines</vh></v>
 </v>
@@ -6774,7 +6803,11 @@
 </vnodes>
 <tnodes>
 <t tx="T1">@nocolor</t>
-<t tx="T2">It appears to be working properly now.  We shall see.</t>
+<t tx="T2">Eliminated the self.delim ivar.  This can't be set correctly when coloring incrementally.
+
+Realized that full, non-incremental coloring must _always_ be done when switching nodes.  Even if we move from one cloned node to another, the context can be different:  different @color, @nocolor, @language and @comment directives may be in effect.
+
+Used incremental syntax coloring when undoing.  This speed up undo tremendously.</t>
 <t tx="T3">The principle is this: people should see the scripts they are executed.
 </t>
 <t tx="T4">@color
@@ -9635,6 +9668,10 @@ def set_language(s,i,issue_errors_flag):
 def colorizeAnyLanguage (self,v,body,language,flag):
 	
 	try:
+		if 0:
+			if not self.incremental:
+				print "incremental: 0"
+				#import traceback ; traceback.print_stack()
 		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
 		if self.incremental:
 			&lt;&lt; incrementally color the text &gt;&gt;
@@ -9840,8 +9877,9 @@ while i &gt; 0:
 		i -= 1
 
 if i == 0:
-	state = "normal"
-	new_states[0] = "normal"
+	# Color plain text unless we are under the control of @nocolor.
+	state = choose(self.flag,"normal","nocolor")
+	new_states[0] = state
 
 # The new_states[] will be "unknown" unless the lines match,
 # so we do not need to compare lines here.
@@ -13947,7 +13985,8 @@ def undo (self):
 		else: trace("Unknown case: " + `u.undoType`)
 		c.setChanged(true)
 		if u.v: u.v.setDirty()
-	c.endUpdate()
+		flag = current != u.v
+	c.endUpdate(flag) # 11/9/02
 	u.undoing = false
 	u.bead -= 1
 	u.setUndoTypes()</t>
@@ -14019,9 +14058,12 @@ elif type == "Promote":
 	u.v,u.oldTree = u.oldTree,u.v
 	
 	v = u.v
-	c.selectVnode(v)
+	# selectVnode causes recoloring, so don't do this unless needed.
+	if current != u.v:
+		c.selectVnode(v)
+	# This rewrites the body pane, so we must do a full recolor.
 	v.setBodyStringOrPane(v.bodyString())
-	c.tree.recolor(v)</t>
+	c.tree.recolor(u.v)</t>
 <t tx="T742">@ Sort operations are the hard to undo, because they involve relinking a list of nodes. We pass the work off to routines dedicated to the task.
 @c
 
@@ -14041,7 +14083,10 @@ elif type in [ "Typing",
 	"Indent", "Undent" ]:
 
 	# trace(`type` + ":" + `u.v`)
-	c.selectVnode(u.v)
+	# selectVnode causes recoloring, so don't do this unless needed.
+	if current != u.v:
+		c.selectVnode(u.v)
+	# This rewrites the body pane, so we must do a full recolor.
 	u.v.setBodyStringOrPane(u.oldText)
 	c.tree.recolor(u.v)
 	if u.oldSel:
@@ -14099,7 +14144,8 @@ elif type == "Change Headline":
 		else: trace("Unknown case: " + `type`)
 		c.setChanged(true)
 		if u.v: u.v.setDirty()
-	c.endUpdate()
+		flag = current != u.v
+	c.endUpdate(flag) # 11/08/02
 	u.redoing = false
 	u.bead += 1
 	u.setUndoTypes()</t>
@@ -14180,9 +14226,12 @@ elif type == "Promote":
 	u.v,u.oldTree = u.oldTree,u.v
 	
 	v = u.oldTree
-	c.selectVnode(v)
+	# selectVnode causes recoloring, so don't do this unless needed.
+	if current != u.v:
+		c.selectVnode(v)
+	# This rewrites the body pane, so we must do a full recolor.
 	v.setBodyStringOrPane(v.bodyString())
-	c.tree.recolor(v)</t>
+	c.tree.recolor(u.v)</t>
 <t tx="T751">elif type == "Sort Children":
 
 	c.selectVnode(u.v)
@@ -14201,7 +14250,10 @@ elif type in [ "Typing",
 	"Indent", "Undent" ]:
 
 	# trace(`type` + ":" + `u.v`)
-	c.selectVnode(u.v)
+	# selectVnode causes recoloring, so don't do this unless needed.
+	if current != u.v:
+		c.selectVnode(u.v)
+	# This rewrites the body pane, so we must do a full recolor.
 	u.v.setBodyStringOrPane(u.newText)
 	c.tree.recolor(u.v)
 	if u.newSel:
@@ -14620,6 +14672,7 @@ def endEditLabelCommand (self):
 
 def select (self, v):
 	
+	# trace(`v`)
 	c = self.commands ; frame = c.frame ; body = frame.body
 	# Remember the position of the scrollbar before making any changes.
 	yview=body.yview()
@@ -15035,6 +15088,7 @@ def redraw_now (self):
 
 def idle_redraw (self):
 
+	# trace()
 	self.redrawScheduled = false
 	frame = self.commands.frame
 	if frame in app().windowList and app().quitting == 0:
@@ -26398,11 +26452,13 @@ def setRecentFiles (self,files):
 	self.recentFiles = files
 </t>
 <t tx="T1603">@ignore</t>
-<t tx="T1604">def setBodyStringOrPane (self, s):
+<t tx="T1604">def setBodyStringOrPane (self,s):
 
 	v = self ; c = v.commands
 	if not c or not v: return
+
 	if v == c.currentVnode():
+		# This code destoys all tags, so we must recolor.
 		c.frame.body.delete("1.0","end")
 		c.frame.body.insert("1.0", s) # Replace the body text with s.
 		c.recolor()
@@ -40950,11 +41006,63 @@ def clearIvars (self):
 	c.endUpdate()</t>
 <t tx="T2607">@ignore
 
-@ We need both incremental and full syntax coloring...</t>
-<t tx="T2608">@ We must do a _full_ recoloring when selecting any node, even for two cloned nodes, because the nodes may have different contexts.</t>
-<t tx="T2609">@nocolor</t>
+@
+
+We need both incremental and full syntax coloring...
+
+We must do a _full_ recoloring when selecting any node, even for two cloned nodes, because the nodes may have different contexts.
+
+Furthermore, at present undo must always do a full recoloring because setBodyStringOrPane just replaces the old text with the new, and that destroys all the coloring tags.  The only possible solution would be to do an "incremental update" in setBodyStringOrPane.  It would also be good to do that in tree.select.
+
+The present code _is_ faster than the old code because it avoids redundant drawing.</t>
+<t tx="T2608">@language c</t>
+<t tx="T2609">@
+This is just a test
+@c
+aprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+"/* testing */
+@#
+bprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+cprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+dprocedure(
+	a,
+	b )
+	{
+	printf( "Hello, world\n" );
+	return 0;
+}
+
+@#
+int main()
+{
+  return 0
+}</t>
 <t tx="T2610">def colorizeAnyLanguage (self,v,body,language,flag):
-	try:
+	
+	try:		
 		self.incremental = 1
 		&lt;&lt; initialize ivars &amp; tags &gt;&gt;
 		if self.incremental:
@@ -41313,12 +41421,14 @@ def colorizeAnyLanguage (self,v,body,language,flag):
 	except:
 		es_exception()
 
+
 </t>
-<t tx="T2611">"""python
+<t tx="T2611">@nocolor</t>
+<t tx="T2612">"""python
 string"""d
 
 'this\
 is</t>
-<t tx="T2612">@ We do incremental colorizing only in the body key handler.</t>
+<t tx="T2613">@ We do incremental colorizing only in the body key handler.</t>
 </tnodes>
 </leo_file>

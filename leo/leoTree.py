@@ -569,6 +569,7 @@ class leoTree:
 	
 	def idle_redraw (self):
 	
+		# trace()
 		self.redrawScheduled = false
 		frame = self.commands.frame
 		if frame in app().windowList and app().quitting == 0:
@@ -1384,6 +1385,7 @@ class leoTree:
 
 	def select (self, v):
 		
+		# trace(`v`)
 		c = self.commands ; frame = c.frame ; body = frame.body
 		# Remember the position of the scrollbar before making any changes.
 		yview=body.yview()

@@ -1189,11 +1189,13 @@ class vnode:
 	#@-node:1::appendStringToBody
 	#@+node:2::setBodyStringOrPane & setBodyTextOrPane
 	#@+body
-	def setBodyStringOrPane (self, s):
+	def setBodyStringOrPane (self,s):
 	
 		v = self ; c = v.commands
 		if not c or not v: return
+	
 		if v == c.currentVnode():
+			# This code destoys all tags, so we must recolor.
 			c.frame.body.delete("1.0","end")
 			c.frame.body.insert("1.0", s) # Replace the body text with s.
 			c.recolor()

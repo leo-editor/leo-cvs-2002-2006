@@ -702,6 +702,10 @@ class colorizer:
 	def colorizeAnyLanguage (self,v,body,language,flag):
 		
 		try:
+			if 0:
+				if not self.incremental:
+					print "incremental: 0"
+					#import traceback ; traceback.print_stack()
 			
 			#@<< initialize ivars & tags >>
 			#@+node:1::<< initialize ivars & tags >>
@@ -954,8 +958,9 @@ class colorizer:
 						i -= 1
 				
 				if i == 0:
-					state = "normal"
-					new_states[0] = "normal"
+					# Color plain text unless we are under the control of @nocolor.
+					state = choose(self.flag,"normal","nocolor")
+					new_states[0] = state
 				
 				# The new_states[] will be "unknown" unless the lines match,
 				# so we do not need to compare lines here.
