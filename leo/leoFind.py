@@ -67,14 +67,15 @@ all = true
 
 # The names of the actual ivars have "_flag" appended to these.
 # Note: batch_flag now records the "context" checkbox.
-ivars = [ "batch", "wrap", "whole_word", "ignore_case",
+ivars = [
+	"batch", "wrap", "whole_word", "ignore_case", "node_only",
 	"pattern_match", "search_headline", "search_body",
 	"suboutline_only", "mark_changes", "mark_finds", "reverse" ]
 
 class LeoFind:
 
 	#@+others
-	#@+node:2::find.__init__
+	#@+node:2::find.__init__ (creates find panel)
 	#@+body
 	def __init__(self):
 	
@@ -161,12 +162,19 @@ class LeoFind:
 		
 		lt_list = [
 			("Show Context", "batch"), # batch flag now records Show context.
-			("Wrap Around", "wrap"), ("Whole Word", "whole_word"),
-			("Ignore Case", "ignore_case"),("Pattern Match", "pattern_match") ]
+			("Wrap Around", "wrap"),
+			("Whole Word", "whole_word"),
+			("Ignore Case", "ignore_case"),
+			("Pattern Match", "pattern_match"),
+			("Reverse", "reverse")]
 		
-		rt_list = [ ("Search Headline Text", "search_headline"),
-			("Search Body Text", "search_body"), ("Suboutline Only", "suboutline_only"),
-			("Mark Changes", "mark_changes"), ("Mark Finds", "mark_finds") ]
+		rt_list = [
+			("Search Headline Text", "search_headline"),
+			("Search Body Text", "search_body"),
+			("Suboutline Only", "suboutline_only"),
+			("Node Only", "node_only"),
+			("Mark Changes", "mark_changes"),
+			("Mark Finds", "mark_finds") ]
 		
 		for name, var in lt_list:
 			exec ( 'box = Tk.Checkbutton(lt, anchor="w", text="' + name +
@@ -179,6 +187,7 @@ class LeoFind:
 				'", variable=self.' + var + "_flag)" )
 			box.pack(fill="x")
 			box.bind("<1>", self.resetWrap)
+		
 		#@-body
 		#@-node:3::<< Create two columns of checkboxes >>
 
@@ -194,14 +203,16 @@ class LeoFind:
 		
 		# Create the first row of buttons
 		findButton   =Tk.Button     (buttons,width=8,text="Find",command=self.findButton)
-		reverseBox   =Tk.Checkbutton(buttons,width=8,text="Reverse",variable=self.reverse_flag)
 		findAllButton=Tk.Button     (buttons,width=8,text="Find All",command=self.findAllButton)
 		
-		reverseBox.bind("<1>", self.resetWrap)
+		if 0: # Now in left column.
+			reverseBox   =Tk.Checkbutton(buttons,width=8,text="Reverse",variable=self.reverse_flag)
+			reverseBox.bind("<1>", self.resetWrap)
+		
 		
 		findButton.pack   (pady="1m",padx="1m",side="left")
-		reverseBox.pack   (pady="1m",          side="left",expand=1)
-		findAllButton.pack(pady="1m",padx="1m",side="left")
+		# reverseBox.pack   (pady="1m",          side="left",expand=1)
+		findAllButton.pack(pady="1m",padx="1m",fill="x",side="right")
 		
 		# Create the second row of buttons
 		changeButton    =Tk.Button(buttons2,width=8,text="Change",command=self.changeButton)
@@ -220,7 +231,7 @@ class LeoFind:
 		self.find_text.bind  ("<Key>", self.resetWrap)
 		self.change_text.bind("<Key>", self.resetWrap)
 	#@-body
-	#@-node:2::find.__init__
+	#@-node:2::find.__init__ (creates find panel)
 	#@+node:3::find.init
 	#@+body
 	def init (self,c):
@@ -647,6 +658,9 @@ class LeoFind:
 					v.setMarked()
 					c.tree.drawIcon(v,v.iconx,v.icony) # redraw only the icon.
 				return pos, newpos
+			elif c.node_only_flag:
+				# We are only searching one node.
+				return None,None
 			else:
 				v = self.v = self.selectNextVnode()
 		return None, None
