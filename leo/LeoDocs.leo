@@ -5,10 +5,10 @@
 	<global_window_position top="53" left="138" height="23" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences allow_rich_text="0">
+<preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
 </preferences>
-<find_panel_settings>
-	<find_string></find_string>
+<find_panel_settings search_body="1" whole_word="1">
+	<find_string>createLeoSplitter</find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
@@ -486,7 +486,7 @@
 <v t="T305"><vh>Resizing panes</vh></v>
 <v t="T306"><vh>Undoing operations</vh></v>
 </v>
-<v t="T307"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T307" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T308"><vh>Overview</vh></v>
 <v t="T309"><vh>Sections and section references</vh></v>
 <v t="T310"><vh>Organizing @file trees.</vh>
@@ -528,13 +528,13 @@
 </v>
 </v>
 </v>
-<v t="T327"><vh>More about directives</vh>
+<v t="T327" a="E"><vh>More about directives</vh>
 <v t="T328"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T329"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T330"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
 <v t="T331"><vh>@delims directive specifies comment delimiters in @file trees</vh></v>
 <v t="T332"><vh>@first directive allows preliminary lines in @file trees</vh></v>
-<v t="T333"><vh>@language specifying the target language</vh></v>
+<v t="T333" a="V"><vh>@language specifying the target language</vh></v>
 <v t="T334"><vh>@path, @pagewidth and @tabwidth directives set preferences</vh></v>
 </v>
 <v t="T239" a="C"><vh>About CWEB   </vh></v>
@@ -546,7 +546,7 @@
 <v t="T338"><vh>Untangling @root trees with the Untangle commands</vh></v>
 <v t="T339"><vh>@verbose, @terse and @silent directives control comments in @root trees</vh></v>
 </v>
-<v t="T340" a="E"><vh>Chapter 5: Using Leo's Commands</vh>
+<v t="T340"><vh>Chapter 5: Using Leo's Commands</vh>
 <v><vh> The File Menu</vh>
 <v t="T341"><vh>Loading, Saving and Reverting Files</vh></v>
 <v t="T342"><vh>Tangling an outline: Producing Derived Files</vh></v>
@@ -562,7 +562,7 @@
 <v t="T349"><vh>Shifting body text</vh></v>
 <v t="T350"><vh>Creating nodes from body text</vh></v>
 <v t="T351"><vh>Converting leading blanks and tabs in body text</vh></v>
-<v t="T352" a="V"><vh>Matching brackets and parenthesis</vh></v>
+<v t="T352"><vh>Matching brackets and parenthesis</vh></v>
 <v t="T353"><vh>Finding and changing text</vh>
 <v t="T354"><vh>Batch</vh></v>
 <v t="T355"><vh>Ignore Case</vh></v>
@@ -4516,7 +4516,7 @@ The @language directive specifies the comment delimiters and string types used b
 @language x
 
 @nocolor
-where x is one of the following: c, c++, html, java, objective-c, Pascal, Perl, plain, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
+where x is one of the following: c, c++, html, java, objective-c, pascal, perl, perlpod, plain, python and shell. Shell files have comments that start with #. Case is ignored in the language specifiers, but not in the @language itself. Thus, the following are equivalent:
 @color
 
 @language html
