@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2593" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2595" clone_windows="0"/>
 <globals body_outline_ratio="0.38383838383838381">
 	<global_window_position top="90" left="121" height="780" width="1071"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -17,7 +17,7 @@
 </v>
 <v t="ekr.20040303062846"><vh>Unit Testing</vh>
 <v t="ekr.20040303062846.1"><vh>To do</vh></v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040303064020.1,ekr.20040303064020.2,ekr.20040303064020.3,ekr.20040303064020.4,ekr.20040303064020.5,ekr.20040303064020.6,ekr.20040303064020.7,ekr.20040303064020.8,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.9,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040303064020.1,ekr.20040303064020.2,ekr.20040303064020.3,ekr.20040303064020.4,ekr.20040303064020.5,ekr.20040303064020.6,ekr.20040303064020.7,ekr.20040303064020.8,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
 <v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf</vh></v>
@@ -49,7 +49,7 @@
 </v>
 <v t="ekr.20040303062846.27"><vh>Import/Export tests</vh>
 <v t="ekr.20040303062846.28"><vh>makeImportExportSuite</vh></v>
-<v t="ekr.20040303062846.29" a="E"><vh>class importExportTestCase</vh>
+<v t="ekr.20040303062846.29"><vh>class importExportTestCase</vh>
 <v t="ekr.20040303062846.30"><vh>__init__</vh></v>
 <v t="ekr.20040303062846.31"><vh>importExport</vh></v>
 <v t="ekr.20040303062846.32"><vh>runTest</vh></v>
@@ -90,7 +90,7 @@
 </v>
 <v t="ekr.20040303063644"><vh>Position tests</vh>
 <v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
-<v t="ekr.20040303063118" a="E"><vh>class positionTestCase</vh>
+<v t="ekr.20040303063118"><vh>class positionTestCase</vh>
 <v t="ekr.20040303063118.4"><vh>setUp</vh></v>
 <v t="ekr.20040303064020.1"><vh>testFullTraverse</vh></v>
 <v t="ekr.20040303064020.2"><vh>testParentChildLinks</vh>
@@ -99,8 +99,11 @@
 </v>
 <v t="ekr.20040303064020.5"><vh>testNextBack</vh></v>
 <v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
-<v t="ekr.20040303064020.7"><vh>test threadNext/threadBack</vh></v>
+<v t="ekr.20040303064020.7"><vh>test threadNextBack</vh></v>
 <v t="ekr.20040303064020.8"><vh>testParentChildLevel</vh></v>
+<v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
+<v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
+<v t="ekr.20040303092153.1"><vh>testHasThreadNextBack</vh></v>
 </v>
 </v>
 <v t="ekr.20040303062846.80"><vh>Reformat Paragraph tests</vh>
@@ -148,9 +151,9 @@
 <v t="ekr.20040126105605"><vh>Clone test data</vh>
 <v t="ekr.20040302092753"><vh>aa</vh></v>
 <v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3" a="E"><vh>b</vh>
-<v t="ekr.20040301191933" a="E"><vh>c</vh>
-<v t="ekr.20040302092753.1" a="E"><vh>c2</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
 <v t="ekr.20040302092753.2"><vh>c3</vh></v>
 <v t="ekr.20040302092753.3"><vh>c4</vh></v>
 </v>
@@ -165,7 +168,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040301191933.1" a="E"><vh>d</vh>
+<v t="ekr.20040301191933.1"><vh>d</vh>
 <v t="ekr.20040126105605.2"><vh>a</vh>
 <v t="ekr.20040126105605.3"><vh>b</vh>
 <v t="ekr.20040301191933"><vh>c</vh>
@@ -189,8 +192,26 @@
 <v t="ekr.20040302092753.4"><vh>z</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549" a="ETV"><vh>Unit Tests</vh>
-<v t="ekr.20040303063549.1" a="E"><vh>tempNode</vh></v>
+<v t="ekr.20040303063644" a="E"><vh>Position tests</vh>
+<v t="ekr.20040303064013"><vh> makePositionSuite</vh></v>
+<v t="ekr.20040303063118" a="E"><vh>class positionTestCase</vh>
+<v t="ekr.20040303063118.4"><vh>setUp</vh></v>
+<v t="ekr.20040303064020.1"><vh>testFullTraverse</vh></v>
+<v t="ekr.20040303064020.2"><vh>testParentChildLinks</vh>
+<v t="ekr.20040303064020.3"><vh>&lt;&lt; check that the parent of p's first child is p &gt;&gt;</vh></v>
+<v t="ekr.20040303064020.4"><vh>&lt;&lt; check that the parent of all parent's children is parent &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040303064020.5"><vh>testNextBack</vh></v>
+<v t="ekr.20040303064020.6"><vh>testVnodeList</vh></v>
+<v t="ekr.20040303064020.7"><vh>test threadNextBack</vh></v>
+<v t="ekr.20040303064020.8"><vh>testParentChildLevel</vh></v>
+<v t="ekr.20040303091606"><vh>testHasNextBack</vh></v>
+<v t="ekr.20040303092153"><vh>testHasParentChild</vh></v>
+<v t="ekr.20040303092153.1" a="TV"><vh>testHasThreadNextBack</vh></v>
+</v>
+</v>
+<v t="ekr.20040303063549" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
 <v t="ekr.20040303063549.47"><vh>C</vh></v>
@@ -267,7 +288,7 @@
 <v t="ekr.20040303063549.100"><vh>dialog</vh></v>
 </v>
 </v>
-<v t="ekr.20040303063549.101" a="M"><vh>outlineTests</vh>
+<v t="ekr.20040303063549.101"><vh>outlineTests</vh>
 <v t="ekr.20040303063549.102"><vh>moveOutlineDown</vh>
 <v t="ekr.20040303063549.103"><vh>before</vh>
 <v t="ekr.20040303063549.104"><vh>a</vh></v>
@@ -355,7 +376,7 @@
 <v t="ekr.20040303063549.123"><vh>c:\prog\leoCvs\leo\plugins\leoPlugins.leo</vh></v>
 <v t="ekr.20040303063549.124"><vh>c:\prog\leoCvs\leo\doc\LeoDocs.leo</vh></v>
 </v>
-<v t="ekr.20040303063549.125" a="E"><vh>Run all tests</vh></v>
+<v t="ekr.20040303063549.125"><vh>Run all tests</vh></v>
 <v t="ekr.20040303080010"><vh>Run all tests except files tests</vh></v>
 </v>
 </vnodes>
@@ -2680,5 +2701,59 @@ runner = unittest.TextTestRunner()
 runner.run(mainSuite)</t>
 <t tx="ekr.20040303080938"></t>
 <t tx="ekr.20040303080938.1"></t>
+<t tx="ekr.20040303091606">def testHasNextBack (self):
+	
+	c = self.c ; p = c.rootPosition()
+
+	while p:
+
+		back = p.getBack()
+		next = p.getNext()
+
+		assert(
+			(back and p.hasBack()) or
+			(not back and not p.hasBack()))
+				
+		assert(
+			(next and p.hasNext()) or
+			(not next and not p.hasNext()))
+		
+		p.moveToThreadNext()</t>
+<t tx="ekr.20040303092153">def testHasParentChild (self):
+	
+	c = self.c ; p = c.rootPosition()
+
+	while p:
+
+		child = p.getFirstChild()
+		parent = p.getParent()
+
+		assert(
+			(child and p.hasFirstChild()) or
+			(not child and not p.hasFirstChild()))
+				
+		assert(
+			(parent and p.hasParent()) or
+			(not parent and not p.hasParent()))
+		
+		p.moveToThreadNext()</t>
+<t tx="ekr.20040303092153.1">def testHasThreadNextBack(self):
+	
+	c = self.c ; p = c.rootPosition()
+
+	while p:
+
+		threadBack = p.getThreadBack()
+		threadNext = p.getThreadNext()
+
+		assert(
+			(threadBack and p.hasThreadBack()) or
+			(not threadBack and not p.hasThreadBack()))
+				
+		assert(
+			(threadNext and p.hasThreadNext()) or
+			(not threadNext and not p.hasThreadNext()))
+		
+		p.moveToThreadNext()</t>
 </tnodes>
 </leo_file>
