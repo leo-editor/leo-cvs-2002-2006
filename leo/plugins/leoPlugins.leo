@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1506" clone_windows="0"/>
 <globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="10" left="184" height="921" width="957"/>
+	<global_window_position top="17" left="287" height="921" width="957"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,7 +13,8 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203113231"><vh>Diary</vh>
-<v t="ekr.20040119102021"><vh>2004</vh>
+<v t="ekr.20040119102021" a="E"><vh>2004</vh>
+<v t="ekr.20040129151121"><vh>1/29 Activate xemacs plugin only on double-clicks</vh></v>
 <v t="ekr.20040119102021.1"><vh>1/19 Added http plugin</vh></v>
 </v>
 <v t="ekr.20040119102021.2"><vh>2003</vh>
@@ -980,7 +981,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
+<v t="edream.120603093808" a="MV" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
@@ -1628,7 +1629,7 @@
 </v>
 <v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
 </v>
-<v t="ekr.20040127111517" a="V" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
+<v t="ekr.20040127111517" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
 <v t="ekr.20040127111023"><vh>Helper classes</vh>
 <v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
 <v t="ekr.20040127111023.2"><vh>class Node</vh></v>
@@ -8557,11 +8558,11 @@ def open_in_emacs (tag,keywords):
 # Register the handlers...
 
 if 1: # Edit when double-clicking a node's icon.
-	registerHandler("iconclick2", open_in_emacs)
+	registerHandler("icondclick2", open_in_emacs) # 1/29/03: activate on _double_ click.
 else: # Edit when selecting any node. That's a bit much for my taste.
 	registerHandler("select2", open_in_emacs)
 
-__version__ = "1.3"
+__version__ = "1.4"
 plugin_signon(__name__)</t>
 <t tx="edream.110203113231.799">"""vim handler"""
 
@@ -17498,5 +17499,6 @@ def setUp(self):
 	"""Create the test fixture"""
 
 '''</t>
+<t tx="ekr.20040129151121"></t>
 </tnodes>
 </leo_file>
