@@ -228,6 +228,10 @@ def computeHomeDir():
     encoding = startupEncoding()
     dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=dotDir)
+    if len(home) > 1 and home[0]=='%' and home[-1]=='%':
+	    # Get the indirect reference to the true home.
+	    home = os.getenv(home[1:-1],default=dotDir)
+    
     home = g.os_path_abspath(home,encoding)
     
     if (
