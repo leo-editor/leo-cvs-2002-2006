@@ -1034,33 +1034,20 @@ class baseColorizer:
 					i += 1
 					
 				# Set the state of all other middle lines to "unknown".
-				first_trailing_line = max(0,new_len - trailing_lines) # 11/23/03
+				first_trailing_line = max(0,new_len - trailing_lines)
 				while i < first_trailing_line:
 					new_states.append("unknown")
 					i += 1
 				
 				# Copy the trailing states from the old to the new lines.
-				j = max(0,old_len - trailing_lines)
-				while j < old_len and j < len(old_states): # 11/23/03
-					new_states.append(old_states[j])
-					j += 1
-					i += 1 # for the assert below.
+				i = max(0,old_len - trailing_lines)
+				while i < old_len and i < len(old_states):
+					new_states.append(old_states[i])
+					i += 1
 				
-				while j < len(old_states):
+				# 1/8/03: complete new_states by brute force.
+				while len(new_states) < new_len:
 					new_states.append("unknown")
-					j += 1
-					i += 1 # for the assert below.
-					
-				# A crucial assertion.  If it fails we won't handle continued states properly.
-				assert(i == new_len)
-					# Step 1 writes leading_lines lines
-					# Step 2 writes (new_len - trailing_lines - leading_lines) lines.
-					# Step 3 writes trailing_lines lines.
-				
-				# print "i:", i
-				if 0:
-					for i in xrange(len(new_lines)):
-						print new_states[i],new_lines[i]
 				#@nonl
 				#@-node:<< initialize new states >>
 				#@nl
