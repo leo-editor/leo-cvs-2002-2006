@@ -313,7 +313,7 @@ class baseConfig:
 		weight = self.getWindowPref(weight)
 		if not weight or weight == "": weight = "normal"
 		
-		trace(family,size,slant,weight)
+		# trace(family,size,slant,weight)
 		
 		return app.gui.getFontFromParams(family,size,slant,weight)
 	#@nonl
@@ -719,7 +719,7 @@ class baseConfig:
 		keys.sort() # Not effective.
 		for name in keys:
 			val = dict [name]
-			val = toEncodedString(val,self.config_encoding)
+			val  = toEncodedString(val,self.config_encoding)
 			name = toEncodedString(name,self.config_encoding) # 10/31/03
 			config.set(section,name,val)
 	#@nonl
