@@ -145,7 +145,7 @@ class baseCommands:
 	
 	def getSignOnLine (self):
 		c = self
-		return "Leo 4.1 rc4, build %s, February 3, 2004" % c.getBuildNumber()
+		return "Leo 4.1 final, build %s, February 18, 2004" % c.getBuildNumber()
 		
 	def initVersion (self):
 		c = self
@@ -2355,6 +2355,7 @@ class baseCommands:
 			c.beginUpdate()
 			if 1: # inside update...
 				v.createDependents()# To handle effects of clones.
+				c.initAllCloneBits() # 2/17/04
 				c.validateOutline()
 				c.selectVnode(v)
 				v.setDirty()
@@ -2476,7 +2477,7 @@ class baseCommands:
 	#@+node:c.deleteOutline
 	# Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
 	
-	def deleteOutline (self,op_name="Delete Outline"):
+	def deleteOutline (self,op_name="Delete Node"):
 	
 		c = self ; v = c.currentVnode()
 		if not v: return
@@ -2501,7 +2502,7 @@ class baseCommands:
 	#@+node:c.insertHeadline
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
-	def insertHeadline (self,op_name="Insert Outline"):
+	def insertHeadline (self,op_name="Insert Node"):
 	
 		c = self ; current = c.currentVnode()
 		if not current: return
@@ -2539,7 +2540,7 @@ class baseCommands:
 		c.setChanged(true)
 		if c.validateOutline():
 			c.selectVnode(clone)
-			c.undoer.setUndoParams("Clone",clone)
+			c.undoer.setUndoParams("Clone Node",clone)
 		c.endUpdate() # updates all icons
 	#@nonl
 	#@-node:c.clone
