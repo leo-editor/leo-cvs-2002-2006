@@ -401,7 +401,7 @@ class LeoFrame:
 			accelerator="Ctrl+]",command=self.OnIndent)
 		editBodyMenu.add_command(label="Unindent",
 			accelerator="Ctrl+[",command=self.OnDedent)
-		editBodyMenu.add_command(label="Find Matching Bracket",
+		editBodyMenu.add_command(label="Match Brackets",
 			accelerator="Ctrl+K",command=self.OnFindMatchingBracket)
 			
 		if 0: # Not ready yet.
@@ -999,13 +999,26 @@ class LeoFrame:
 		self.tree.canvas.focus_set()
 	#@-body
 	#@-node:5::OnActivateTree
-	#@+node:6::OnRoll
+	#@+node:6::OnMouseWheel
+	#@+body
+	# Contributed by Tomaz Ficko.  This works on some systems.
+	# On XP it causes a crash in tcl83.dll.  Clearly a Tk bug.
+	
+	def OnMouseWheel(self, event=None):
+	
+		if event.delta < 1:
+			self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+		else:
+			self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
+	#@-body
+	#@-node:6::OnMouseWheel
+	#@+node:7::OnRoll
 	#@+body
 	def OnRoll (self,event):
 		
 		print "OnRoll"
 	#@-body
-	#@-node:6::OnRoll
+	#@-node:7::OnRoll
 	#@-node:12:C=11:Event handlers
 	#@+node:13:C=15:Menu enablers (Frame)
 	#@+node:1::OnMenuClick (enables and disables all menu items)
@@ -1065,7 +1078,7 @@ class LeoFrame:
 		enableMenu(menu,"Extract Section",c.canExtractSection())
 		enableMenu(menu,"Extract Names",c.canExtractSectionNames())
 		enableMenu(menu,"Extract",c.canExtract())
-		enableMenu(menu,"Find Matching Bracket",c.canFindMatchingBracket())
+		enableMenu(menu,"Match Brackets",c.canFindMatchingBracket())
 	#@-body
 	#@-node:4::updateEditMenu
 	#@+node:5::updateOutlineMenu
@@ -2851,6 +2864,10 @@ class LeoFrame:
 		# These do nothing...
 		# selectborderwidth=0,selectforeground="white",selectbackground="white")
 		self.treeBar = treeBar = Tk.Scrollbar(split2Pane1,name="treeBar")
+		
+		# Bind mouse wheel event to canvas
+		if sys.platform != "win32": # Works on 98, crashes on XP.
+			self.canvas.bind("<MouseWheel>", self.OnMouseWheel)
 		
 		tree['yscrollcommand'] = treeBar.set
 		treeBar['command'] = tree.yview
