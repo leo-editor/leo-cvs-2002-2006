@@ -15,6 +15,7 @@ class config:
 	#@+body
 	if 0:
 		defaultConfigDict = {
+			"path_directive_creates_directories" : 0,
 			"read_only" : 1,
 			"save_clears_undo_buffer" : 0,
 			"xml_version_string" : "UTF-8" } # By default, we write leo.py 2.x files.
@@ -149,7 +150,10 @@ class config:
 	#@@c
 	
 	if 0: # Not used in code.
-		boolConfigNames = ( "read_only", "save_clears_undo_buffer")
+		boolConfigNames = (
+			"path_directive_creates_directories",
+			"read_only",
+			"save_clears_undo_buffer")
 		stringConfigNames = ( "xml_version_string", )
 	
 	# Compare section
@@ -336,6 +340,7 @@ class config:
 		self.configsExist = false # True when we successfully open leoConfig.txt.
 		self.config = None # The current instance of ConfigParser
 		self.read_only = true # Make _sure_ we don't alter an illegal leoConfig.txt file!
+		self.path_directive_creates_directories = false
 		self.save_clears_undo_buffer = false
 		self.xml_version_string = None
 		self.compareDict = {}
@@ -560,20 +565,21 @@ class config:
 			#@<< get config options >>
 			#@+node:1::<< get config options >>
 			#@+body
-			try:
-				self.read_only = config.getboolean(self.configSection, "read_only")
-			except:
-				self.read_only = false # not an error.
+			try: self.path_directive_creates_directories = config.get(
+				self.configSection, "path_directive_creates_directories")
+			except: self.path_directive_creates_directories = false
+			
+			try: self.read_only = config.getboolean(
+				self.configSection,"read_only")
+			except: self.read_only = false # not an error.
 				
-			try:
-				self.save_clears_undo_buffer = config.getboolean(self.configSection, "save_clears_undo_buffer")
-			except:
-				self.save_clears_undo_buffer = false # not an error.
+			try: self.save_clears_undo_buffer = config.getboolean(
+				self.configSection,"save_clears_undo_buffer")
+			except: self.save_clears_undo_buffer = false # not an error.
 				
-			try:
-				self.xml_version_string = config.get(self.configSection, "xml_version_string")
-			except:
-				self.xml_version_string = prolog_version_string
+			try:self.xml_version_string = config.get(
+				self.configSection,"xml_version_string")
+			except: self.xml_version_string = prolog_version_string
 			#@-body
 			#@-node:1::<< get config options >>
 

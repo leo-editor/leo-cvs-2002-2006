@@ -122,7 +122,6 @@ class leoTree:
 		self.topVnode = None
 		self.iconimages = {} # Image cache set by getIconImage().
 		self.colorizer = leoColor.colorizer(commands)
-		self.bodyKeepsFocus = true # true if body keeps focus when tree canvas clicked
 		self.vnode_alloc_list = [] # List of all vnodes ever allocated in this tree.
 		self.active = false # true if tree is active
 		self.revertHeadline = None # Previous headline text for abortEditLabel.
@@ -411,16 +410,9 @@ class leoTree:
 		#@+node:1::<< configure the text depending on state >>
 		#@+body
 		if v == self.currentVnode:
-			if self.bodyKeepsFocus:
-				t.configure(state="disabled",fg="black",bg="gray80")
-			else:
-				w = self.commands.frame.getFocus()
-				if w == self.canvas:
-					t.configure(state="normal",fg="white",bg="DarkBlue")
-				else:
-					t.configure(state="disabled",fg="black",bg="gray80")
+			self.setDisabledLabelState(v) # selected, disabled
 		else:
-			t.configure(state="disabled",fg="black",bg="white")
+			self.setUnselectedLabelState(v) # unselected
 		#@-body
 		#@-node:1::<< configure the text depending on state >>
 
@@ -1092,12 +1084,8 @@ class leoTree:
 	
 		# Reconfigure v's headline.
 		if done:
-			if self.bodyKeepsFocus:
-				v.edit_text.configure(state="disabled",fg="black",bg="gray80",width=self.headWidth(v))
-			else:
-				v.edit_text.configure(state="disabled",fg="white",bg="DarkBlue",width=self.headWidth(v))
-		else:
-			v.edit_text.configure(width=self.headWidth(v))
+			self.setDisabledLabelState(v)
+		v.edit_text.configure(width=self.headWidth(v))
 	
 		# Reconfigure all joined headlines.
 		v2 = v
@@ -1375,16 +1363,17 @@ class leoTree:
 		self.setSelectedLabelState(v)
 		self.scanForTabWidth(v) # 9/13/02
 		# Set focus.
-		if self.bodyKeepsFocus:
-			self.commands.body.focus_set()
-		else:
-			self.canvas.focus_set()
+		self.commands.body.focus_set()
 	#@-body
 	#@-node:5:C=31:tree.select
 	#@+node:6:C=32:tree.set...LabelState
 	#@+body
 	def setNormalLabelState (self,v): # selected, editing
 		if v and v.edit_text:
+			
+			#@<< set editing headline colors >>
+			#@+node:1::<< set editing headline colors >>
+			#@+body
 			config = app().config
 			fg   = config.getWindowPref("headline_text_editing_foreground_color")
 			bg   = config.getWindowPref("headline_text_editing_background_color")
@@ -1410,10 +1399,18 @@ class leoTree:
 					return
 				except:
 					traceback.print_exc()
-			v.edit_text.configure(state="normal",highlightthickness=1,fg="black", bg="white")
+					
+			v.edit_text.configure(state="normal",highlightthickness=1,fg="black",bg="white")
+			#@-body
+			#@-node:1::<< set editing headline colors >>
+
 	
 	def setDisabledLabelState (self,v): # selected, disabled
 		if v and v.edit_text:
+			
+			#@<< set selected, disabled headline colors >>
+			#@+node:2::<< set selected, disabled headline colors >>
+			#@+body
 			config = app().config
 			fg = config.getWindowPref("headline_text_selected_foreground_color")
 			bg = config.getWindowPref("headline_text_selected_background_color")
@@ -1423,17 +1420,21 @@ class leoTree:
 					return
 				except:
 					traceback.print_exc()
+			
 			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="gray80")
+			#@-body
+			#@-node:2::<< set selected, disabled headline colors >>
+
 	
 	def setSelectedLabelState (self,v): # selected, not editing
-		if self.bodyKeepsFocus:
-			self.setDisabledLabelState(v)
-		elif v and v.edit_text:
-			# Not used at present.
-			v.edit_text.configure(state="disabled",highlightthickness=0,fg="white",bg="DarkBlue")
+		self.setDisabledLabelState(v)
 	
 	def setUnselectedLabelState (self,v): # not selected.
 		if v and v.edit_text:
+			
+			#@<< set unselected headline colors >>
+			#@+node:3::<< set unselected headline colors >>
+			#@+body
 			config = app().config
 			fg = config.getWindowPref("headline_text_unselected_foreground_color")
 			bg = config.getWindowPref("headline_text_unselected_background_color")
@@ -1443,7 +1444,10 @@ class leoTree:
 					return
 				except:
 					traceback.print_exc()
-			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black",bg="white")
+					
+			v.edit_text.configure(state="disabled",highlightthickness=0,fg="black", bg="white")
+			#@-body
+			#@-node:3::<< set unselected headline colors >>
 	#@-body
 	#@-node:6:C=32:tree.set...LabelState
 	#@+node:7:C=33:tree.scanForTabWidth

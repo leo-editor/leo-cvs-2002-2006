@@ -369,7 +369,7 @@ class atFile:
 	
 	def scanAllDirectives(self,v):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		bits = 0 ; old_bits = 0 ; val = 0
 		
 		#@<< Set ivars >>
@@ -396,8 +396,18 @@ class atFile:
 		if dir and len(dir) > 0 and os.path.isabs(dir):
 			if os.path.exists(dir):
 				self.default_directory = dir
-			else:
-				self.error("Directory \"" + dir + "\" does not exist")
+			else: # 9/25/02
+				if config.path_directive_creates_directories:
+					try:
+						os.mkdir(dir)
+						self.default_directory = dir
+						es("creating @path directory:" + dir)
+					except:
+						self.error("can not create @path directory: " + dir)
+						traceback.print_exc()
+				else:
+					self.error("Directory \"" + dir + "\" does not exist")
+
 		#@-body
 		#@-node:2::<< Set path from @file node >>
 
@@ -413,11 +423,16 @@ class atFile:
 			loadDir = app().loadDir
 			
 			if self.btest(path_bits, bits) and not self.default_directory and not self.btest(path_bits, old_bits):
+			
 				k = dict["path"]
+				
+				#@<< compute path from s[k:] >>
+				#@+node:1::<< compute path from s[k:] >>
+				#@+body
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
 				path = string.strip(s[j:i])
-				# es(ftag + " path: " + path)
+				
 				# Remove leading and trailing delims if they exist.
 				if len(path) > 2 and (
 					(path[0]=='<' and path[-1] == '>') or
@@ -425,12 +440,32 @@ class atFile:
 					path = path[1:-1]
 				path = string.strip(path)
 				path = os.path.join(loadDir,path)
+				#@-body
+				#@-node:1::<< compute path from s[k:] >>
+
 				if path and len(path) > 0:
 					if os.path.isabs(path):
+						
+						#@<< handle absolute path >>
+						#@+node:2::<< handle absolute path >>
+						#@+body
 						if os.path.exists(path):
 							self.default_directory = path
-						else:
-							self.error("invalid @path: " + path)
+						else: # 9/25/02
+							if config.path_directive_creates_directories:
+								try:
+									os.mkdir(path)
+									self.default_directory = path
+									es("creating @path directory:" + dir)
+								except:
+									self.error("can not create @path directory: " + path)
+									traceback.print_exc()
+							else:
+								self.error("invalid @path: " + path)
+
+						#@-body
+						#@-node:2::<< handle absolute path >>
+
 					else:
 						self.error("ignoring relative @path: " + path)
 				else:
@@ -498,14 +533,23 @@ class atFile:
 		
 		if c.frame and not self.default_directory:
 			for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-				if dir and len(dir) > 0 and os.path.isabs(dir) and os.path.exists(dir):
-					self.default_directory = dir ; break
+				if dir and len(dir) > 0 and os.path.isabs(dir):
+					if os.path.exists(dir):
+						self.default_directory = dir ; break
+					else: # 9/25/02
+						if config.path_directive_creates_directories:
+							try:
+								os.mkdir(dir)
+								es("creating @file directory:" + dir)
+								self.default_directory = dir ; break
+							except:
+								self.error("can not create @file directory: " + dir)
+								traceback.print_exc()
 		
 		if not self.default_directory:
 			# This should never happen: c.openDirectory should be a good last resort.
 			self.error("No absolute directory specified anywhere.")
 			self.default_directory = ""
-
 		#@-body
 		#@-node:6::<< Set current directory >>
 

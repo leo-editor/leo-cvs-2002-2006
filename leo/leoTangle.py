@@ -3805,7 +3805,7 @@ class tangleCommands:
 	
 	def scanAllDirectives(self,v,require_path_flag,issue_error_flag):
 	
-		c = self.commands
+		c = self.commands ; config = app().config
 		# trace(`v`)
 		old_bits = 0 # One bit for each directive.
 		self.init_directive_ivars()
@@ -3903,38 +3903,72 @@ class tangleCommands:
 			#@-node:3::<< Test for @verbose, @terse or @silent >>
 
 			
-			#@<< Test for @path,@pagewidth and @tabwidth >>
-			#@+node:4::<< Test for @path, @pagewidth and @tabwidth >>
+			#@<< Test for @path >>
+			#@+node:4::<< Test for @path >>
 			#@+body
 			if require_path_flag and btest(bits,path_bits)and not btest(old_bits,path_bits):
+			
 				k = dict["path"]
+				
+				#@<< compute path from s[k:] >>
+				#@+node:1::<< compute path from s[k:] >>
+				#@+body
 				j = i = k + len("@path")
 				i = skip_to_end_of_line(s,i)
 				path = string.strip(s[j:i])
+				
 				# Remove leading and trailing delims if they exist.
 				if len(path) > 2 and (
 					(path[0]=='<' and path[-1] == '>') or
 					(path[0]=='"' and path[-1] == '"') ):
 					path = path[1:-1]
+				
 				path = string.strip(path)
 				path = os.path.join(app().loadDir,path) # EKR: 9/5/02
 				# trace("path: " + path)
+				#@-body
+				#@-node:1::<< compute path from s[k:] >>
+
 				if len(path) > 0:
 					dir = path # EKR: 9/5/02: was os.path.dirname(path)
 					if dir and len(dir) > 0 and os.path.isabs(dir):
+						
+						#@<< handle absolute @path >>
+						#@+node:2::<< handle absolute @path >>
+						#@+body
 						if os.path.exists(dir):
 							self.tangle_directory = dir
-							# trace("@path :" + `dir`)
-						elif issue_error_flag and not self.path_warning_given:
-							self.path_warning_given = true # supress future warnings
-							self.error("invalid directory: " + '"' + s[i:j] + '"')
+						else: # 9/25/02
+							config = app().config
+							if config.path_directive_creates_directories:
+								try:
+									os.mkdir(dir)
+									es("creating @path directory:" + dir)
+									self.default_directory = dir
+									break
+								except:
+									self.error("can not create @path directory: " + dir)
+									traceback.print_exc()
+							elif issue_error_flag and not self.path_warning_given:
+								self.path_warning_given = true # supress future warnings
+								self.error("invalid directory: " + '"' + s[i:j] + '"')
+						#@-body
+						#@-node:2::<< handle absolute @path >>
+
 					elif issue_error_flag and not self.path_warning_given:
 						self.path_warning_given = true # supress future warnings
 						self.error("ignoring relative path: " + '"' + s[i:j] + '"')
 				elif issue_error_flag and not self.path_warning_given:
 					self.path_warning_given = true # supress future warnings
 					self.error("ignoring empty @path")
+
+			#@-body
+			#@-node:4::<< Test for @path >>
+
 			
+			#@<< Test for @pagewidth and @tabwidth >>
+			#@+node:5::<< Test for @pagewidth and @tabwidth >>
+			#@+body
 			if btest(bits,page_width_bits) and not btest(old_bits,page_width_bits):
 				i = dict["page_width"] # 7/18/02 (!)
 				i, val = skip_long(s,i+10) # Point past @pagewidth
@@ -3954,12 +3988,13 @@ class tangleCommands:
 					if issue_error_flag:
 						j = skip_to_end_of_line(s,i)
 						es("ignoring " + s[i:j])
+
 			#@-body
-			#@-node:4::<< Test for @path, @pagewidth and @tabwidth >>
+			#@-node:5::<< Test for @pagewidth and @tabwidth >>
 
 			
 			#@<< Test for @header or @noheader >>
-			#@+node:5::<< Test for @header or @noheader >>
+			#@+node:6::<< Test for @header or @noheader >>
 			#@+body
 			if btest(old_bits,header_bits)or btest(old_bits,noheader_bits):
 				pass # Do nothing more.
@@ -3972,13 +4007,13 @@ class tangleCommands:
 				self.use_header_flag = false
 
 			#@-body
-			#@-node:5::<< Test for @header or @noheader >>
+			#@-node:6::<< Test for @header or @noheader >>
 
 			old_bits |= bits
 			v = v.parent()
 		
 		#@<< Set self.tangle_directory >>
-		#@+node:6::<< Set self.tangle_directory >>
+		#@+node:7::<< Set self.tangle_directory >>
 		#@+body
 		#@+at
 		#  This code sets self.tangle_directory if it has not already been set 
@@ -3997,21 +4032,38 @@ class tangleCommands:
 				root_dir = os.path.dirname(self.root_name)
 			else:
 				root_dir = None
-			for dir, kind in (
+			table = (
 				(root_dir,"@root"),
 				(c.tangle_directory,"default tangle"),
-				(c.frame.openDirectory,"open")):
-		
+				(c.frame.openDirectory,"open"))
+			for dir, kind in table:
 				if dir and len(dir) > 0 and os.path.isabs(dir):
+					
+					#@<< handle absolute path >>
+					#@+node:1::<< handle absolute path >>
+					#@+body
 					if os.path.exists(dir):
 						self.tangle_directory = dir ; break
-					elif issue_error_flag:
-						self.warning("ignoring invalid " + kind + " directory: " + dir)
+					else: # 9/25/02
+						config = app().config
+						if config.path_directive_creates_directories:
+							try:
+								os.mkdir(dir)
+								es("creating @root directory:" + dir)
+								self.default_directory = dir ; break
+							except:
+								self.error("can not create @root directory: " + dir)
+								traceback.print_exc()
+						elif issue_error_flag:
+							self.warning("ignoring invalid " + kind + " directory: " + dir)
+					#@-body
+					#@-node:1::<< handle absolute path >>
+
 		
 		if not self.tangle_directory and issue_error_flag:
 			self.pathError("No directory specified by @root, @path or Preferences.")
 		#@-body
-		#@-node:6::<< Set self.tangle_directory >>
+		#@-node:7::<< Set self.tangle_directory >>
 	#@-body
 	#@-node:17:C=25:tangle.scanAllDirectives
 	#@+node:18:C=26:token_type

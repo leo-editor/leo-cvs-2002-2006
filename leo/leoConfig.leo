@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="EV"><vh>@root leoConfig.txt</vh>
+<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
@@ -29,9 +29,9 @@
 </v>
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -103,7 +103,11 @@ xml_version_string = UTF-8
 
 save_clears_undo_buffer = 0
 #	1: Save command clears undo buffer.
-#	0: Undo buffer persists across saves.</t>
+#	0: Undo buffer persists across saves.
+
+path_directive_creates_directories = 1
+#	1: @path directive attempts to create directory if it does not exist.
+#	0: @path directive makes no such attempt.</t>
 <t tx="T5">@c
 
 # The list of files in the "Recent Files" menu at startup.
