@@ -246,17 +246,17 @@ def create_labeled_frame (parent,
 
 	# Create the border spanning all rows and columns.
 	border = Tk.Frame(w,bd=bd,relief=relief) # padx=padx,pady=pady)
-	border.grid(row=1,col=1,rowspan=5,columnspan=5,sticky="news")
+	border.grid(row=1,column=1,rowspan=5,columnspan=5,sticky="news")
 	
 	# Create the content frame, f, in the center of the grid.
 	f = Tk.Frame(w,bd=bd)
-	f.grid(row=3,col=3,sticky="news")
+	f.grid(row=3,column=3,sticky="news")
 	
 	# Add the caption.
 	if caption and len(caption) > 0:
 		caption = Tk.Label(parent,text=caption,highlightthickness=0,bd=0)
 		caption.tkraise(w)
-		caption.grid(in_=w,row=0,col=2,rowspan=2,columnspan=3,padx=4,sticky="w")
+		caption.grid(in_=w,row=0,column=2,rowspan=2,columnspan=3,padx=4,sticky="w")
 
 	return w,f
 #@-body
