@@ -912,9 +912,10 @@ class Commands:
 		
 		c = self ; body = c.body
 		brackets = "()[]{}"
-		c1=body.get("insert -1c")
-		c2=body.get("insert")
-		return c1 in brackets or c2 in brackets
+		c1 = body.get("insert -1c")
+		c2 = body.get("insert")
+		# Bug fix: 2/11/03
+		return (c1 and c1 in brackets) or (c2 and c2 in brackets)
 	#@-body
 	#@-node:11::canFindMatchingBracket
 	#@+node:12::canGoToNextDirtyHeadline
