@@ -48,11 +48,11 @@ def run(fileName=None,*args,**keywords):
 
 	app,root = doStep1()
 	if root:
-		doHook("start1")
+		doHook("start1") # Load plugins before doing step 2.
 		frame = doStep2(app,fileName)
-		doStep3(app,frame,args)
-		root.mainloop()
-
+		if frame:
+			doStep3(app,frame,args)
+			root.mainloop()
 
 #@-body
 #@+node:1::doStep1
@@ -109,13 +109,14 @@ def doStep2 (app,fileName):
 	frame1 = leoFrame.LeoFrame()
 	
 	if fileName:
-		# Hide the first frame.
-		frame1.top.withdraw()
-		frame1.top.update()
 		
 		#@<< open frame2. return frame2 or frame1 on failure >>
 		#@+node:1::<< open frame2.  return frame2 or frame1 on failure >>
 		#@+body
+		# Hide the first frame.
+		frame1.top.withdraw()
+		frame1.top.update()
+		
 		fileName = os.path.join(os.getcwd(), fileName)
 		fileName = os.path.normpath(fileName)
 		if os.path.exists(fileName):

@@ -825,7 +825,7 @@ class LeoFrame:
 	#@-node:4::showIconBar
 	#@+node:5::addIconButton
 	#@+body
-	def addIconButton(self,text=None,picture=None,command=None):
+	def addIconButton(self,text=None,picture=None,command=None,bg=None):
 		
 		"""Add a button containing text or a picture to the icon bar.
 		
@@ -861,8 +861,11 @@ class LeoFrame:
 					refs = a.iconImageRefs = []
 			
 				refs.append(photo)
+				
+				if not bg:
+					bg = f.cget("bg")
 			
-				b = Tk.Button(f,image=photo,relief="raised",command=command)
+				b = Tk.Button(f,image=photo,relief="raised",command=command,bg=bg)
 				b.pack(side="left",fill="y")
 				
 			except:
@@ -943,7 +946,7 @@ class LeoFrame:
 			return self.body
 	#@-body
 	#@-node:7::getFocus
-	#@+node:8::Menus
+	#@+node:8:: Menus
 	#@+node:1::canonicalizeShortcut
 	#@+body
 	#@+at
@@ -4611,7 +4614,7 @@ class LeoFrame:
 	#@-body
 	#@-node:5::updateOutlineMenu
 	#@-node:9::Menu enablers (Frame)
-	#@-node:8::Menus
+	#@-node:8:: Menus
 	#@+node:9::notYet
 	#@+body
 	def notYet(self,name):
