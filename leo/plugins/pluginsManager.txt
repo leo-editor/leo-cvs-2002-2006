@@ -24,6 +24,9 @@
     
 # Timestamp all save operations to show when they occur.
     # mod_timestamp.py
+    
+# Overrides pretty printing class.
+pretty_print.py
 #@nonl
 #@-node:ekr.20040722122459.4:Commands &  directives
 #@+node:ekr.20040722122459:Debugging & testing
@@ -52,7 +55,7 @@
 
 # Handles autocompletion when the user types '.' or '(' characters.
     # FIXME: Thread doesn't shut down properly.  Causes unit tests to fail.
-autocompleter.py
+#autocompleter.py
 
 # Allows coloring of wiki-style markup.
     # NOTE: requires add_directives.py plugin.

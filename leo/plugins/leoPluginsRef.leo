@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2976" clone_windows="0"/>
-<globals body_outline_ratio="0.600862998921">
-	<global_window_position top="10" left="402" height="927" width="834"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2988" clone_windows="0"/>
+<globals body_outline_ratio="0.526939655172">
+	<global_window_position top="18" left="298" height="928" width="834"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -201,7 +201,7 @@
 <v t="ekr.20040918165427.5"><vh>Leo to docbook xml plugin: Leo2AsciiDoc</vh></v>
 <v t="ekr.20040918165427.6"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
@@ -267,6 +267,7 @@
 <v t="ekr.20040915105758.13"><vh>@thin FileActions.py</vh></v>
 <v t="edream.110203113231.727"><vh>@thin mod_timestamp.py</vh></v>
 <v t="edream.110203113231.720"><vh>@thin outline_export.py</vh></v>
+<v t="ekr.20041021120118"><vh>@thin pretty_print.py</vh></v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
 <v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
 <v t="edream.110203113231.724"><vh>@thin mod_autosave.py</vh></v>
@@ -345,7 +346,6 @@
 <v t="edream.110203113231.753"><vh>@thin image.py</vh></v>
 <v t="ekr.20040422072343"><vh>@thin rClick.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="ekr.20041017103205"><vh>To do</vh></v>
 <v t="EKR.20040605181725.1"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
@@ -381,13 +381,6 @@
 <v t="ekr.20040916084945"><vh>@thin macros.py</vh></v>
 <v t="ekr.20040828122150"><vh>@thin pie_menus.py</vh></v>
 <v t="ekr.20040331153923"><vh>@thin scheduler.py</vh></v>
-<v t="ekr.20040915144649"><vh>chapters.py</vh>
-<v t="ekr.20040915144649.1"><vh>About .2</vh></v>
-<v t="ekr.20040915144649.2"
-marks="ekr.20040915145407.9,ekr.20040915145407.16,"><vh>@thin chapters.py</vh></v>
-<v t="ekr.20040915144649.17"><vh>Patch1</vh></v>
-<v t="ekr.20040915144649.18"><vh>Patch2</vh></v>
-</v>
 <v t="EKR.20040517080250"><vh>http plugin</vh>
 <v t="EKR.20040517080250.49"><vh>@thin mod_http.ini</vh></v>
 <v t="EKR.20040517080250.1"><vh>@thin mod_http.py</vh></v>
@@ -661,22 +654,26 @@ marks="ekr.20040915052810,"><vh>@thin spellpyx.py</vh></v>
 </v>
 </v>
 </v>
-<v t="ekr.20040929104807" a="E"><vh>4.3 prototype plugins</vh>
+<v t="ekr.20040929104807"><vh>4.3 prototype plugins</vh>
 <v t="ekr.20041017043108"><vh>To do: improve g.cantImport</vh></v>
 <v t="ekr.20041003172238"><vh>@thin Library.py</vh></v>
 <v t="ekr.20041011102931"><vh>@thin xsltWithNodes.py</vh></v>
 <v t="ekr.20041017035937"><vh>@thin table.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
-<v t="ekr.20041017103205"><vh>To do</vh></v>
 <v t="EKR.20040605181725.1"><vh>Configuration</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
 <v t="EKR.20040608070256.1"><vh>.ato files in the autocompleter folder</vh></v>
 </v>
 <v t="ekr.20041017043622"><vh>@thin autocompleter.py</vh></v>
 </v>
-<v t="bwmulder.20041017125718"
-expanded="bwmulder.20041018233934.1,bwmulder.20041018233934.2,bwmulder.20041018224835,"><vh>@thin mod_shadow.py</vh></v>
-<v t="ekr.20041019072849" a="TV"><vh>Note:  word_export.ini mysteriously changed</vh></v>
+<v t="bwmulder.20041017125718"><vh>@thin mod_shadow.py</vh></v>
+<v t="ekr.20041019072849"><vh>Note:  word_export.ini mysteriously changed</vh></v>
+<v t="ekr.20040915144649"><vh>chapters.py (DOES NOT WORK WITH 4.2)</vh>
+<v t="ekr.20040915144649.1"><vh>About .2</vh></v>
+<v t="mork.20040926105355.1"><vh>@thin chapters.py</vh></v>
+<v t="ekr.20040915144649.17"><vh>Patch1</vh></v>
+<v t="ekr.20040915144649.18"><vh>Patch2</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2787,6 +2784,8 @@ Advantages of this (XMLRPC) approach,
 Some kind of 'submit plugin' option would be interesting, but suddenly security issues start to loom!
 
 Do you think this is worth pursuing?</t>
+<t tx="edream.110203113231.984"></t>
+<t tx="edream.110203113231.994"></t>
 <t tx="edream.110403140857"></t>
 <t tx="edream.110403140857.1"></t>
 <t tx="edream.110403140857.2">@
@@ -8925,7 +8924,6 @@ frame.pack(side="top", fill='both', expand=1, padx=5, pady=5)</t>
 
 - Tell the name of the plugin that contains the failed import.
 - Give only one message per plugin.</t>
-<t tx="ekr.20041017103205">Bug:  Hitting escape followed by control key inserts text.</t>
 <t tx="ekr.20041019072632"></t>
 <t tx="ekr.20041019072849"></t>
 <t tx="pap.20041006194759">def getDetails(self, text):
