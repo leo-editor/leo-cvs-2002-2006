@@ -1535,12 +1535,11 @@ class baseLeoFrame:
 			("Casca&de",None,self.OnCascade),
 			("&Minimize All",None,self.OnMinimizeAll),
 			("-",None,None),
-			("Open &Compare Window",None,self.OnOpenCompareWindow))
-			
-			# 
-			# ("Open &Python Window","Alt+P",self.OnOpenPythonWindow))
+			("Open &Compare Window",None,self.OnOpenCompareWindow),
+			("Open &Python Window","Alt+P",self.OnOpenPythonWindow))
 		
 		self.createMenuEntries(windowMenu,table)
+		
 		#@-node:<< create the window menu >>
 		#@nl
 		#@	<< create the help menu >>
@@ -2546,19 +2545,28 @@ class baseLeoFrame:
 		#@+node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 		v = c.currentVnode()
 		fileName = None
-		while v and not fileName:
-			if v.isAtFileNode():
-				fileName = v.atFileNodeName()
-			elif v.isAtSilentFileNode():
-				fileName = v.atSilentFileNodeName()
-			elif v.isAtRawFileNode():
-				fileName = v.atRawFileNodeName()
-			else:
-				v = v.parent()
+		
+		# Search the present node first.
+		j = v.t.joinList
+		j.remove(v)
+		j.insert(0,v)
+		
+		# 10/15/03: search joined nodes if first search fails.
+		for v in j:
+			while v and not fileName:
+				if v.isAtFileNode():
+					fileName = v.atFileNodeName()
+				elif v.isAtSilentFileNode():
+					fileName = v.atSilentFileNodeName()
+				elif v.isAtRawFileNode():
+					fileName = v.atRawFileNodeName()
+				else:
+					v = v.parent()
 		
 		root = v
 		if not root:
-			es("no @file node found") ; return
+			es("Go to line number: ancestor must be @file node")
+			return
 		#@nonl
 		#@-node:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
 		#@nl
@@ -3649,28 +3657,63 @@ class baseLeoFrame:
 		else:
 			#@		<< open idle in Windows >>
 			#@+node:<< open idle in Windows >>
+			# Initialize argv: the -t option sets the title of the Idle interp window.
+			sys.argv = ["leo","-t","leo"]
+			
+			ok = false
+			#@<< Try to open idle in pre-Python 2.3 systems>>
+			#@+node:<< Try to open idle in pre-Python 2.3 systems>>
 			try:
 				executable_dir = os.path.dirname(sys.executable)
 				idle_dir=os.path.join(executable_dir,"Tools","idle")
+			
 				if idle_dir not in sys.path:
 					sys.path.append(idle_dir)
-				# Initialize argv: the -t option sets the title of the Idle interp window.
-				# pathToLeo = os.path.join(app.loadDir,"leo.py")
-				sys.argv = ["leo","-t","leo"]
+			
 				import PyShell
+					
 				if app.idle_imported:
 					reload(idle)
 					app.idle_imported = true
+					
 				if 1: # Mostly works, but causes problems when opening other .leo files.
 					PyShell.main()
 				else: # Doesn't work: destroys all of Leo when Idle closes.
 					self.leoPyShellMain()
+				ok = true
 			except:
+				ok = false
+				# es_exception()
+			#@nonl
+			#@-node:<< Try to open idle in pre-Python 2.3 systems>>
+			#@nl
+			
+			if not ok:
+				#@	<< Try to open idle in Python 2.3 systems >>
+				#@+node:<< Try to open idle in Python 2.3 systems >>
 				try:
-					es("Can not import idle")
-					es("Please add " + `idle_dir` + " to sys.path")
-					es_exception() # This can fail!!
-				except: pass
+					idle_dir = None
+					
+					import idlelib.PyShell
+				
+					if app.idle_imported:
+						reload(idle)
+						app.idle_imported = true
+						
+					idlelib.PyShell.main()
+					ok = true
+				
+				except:
+					ok = false
+					es_exception()
+				#@nonl
+				#@-node:<< Try to open idle in Python 2.3 systems >>
+				#@nl
+			
+			if not ok:
+				es("Can not import idle")
+				if idle_dir and idle_dir not in sys.path:
+					es("Please add '%s' to sys.path" % idle_dir)
 			#@nonl
 			#@-node:<< open idle in Windows >>
 			#@nl

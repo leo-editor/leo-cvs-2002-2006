@@ -2739,12 +2739,13 @@
 </v>
 </v>
 </v>
-<v t="T2178" tnodeList="2178,2179,2180,2181"><vh>@file c:\prog\test\undoTest</vh>
+<v t="T2178" a="V" tnodeList="2178,2179,2180,2181"><vh>@file c:\prog\test\undoTest</vh>
 <v t="T2179"><vh>&lt;&lt; ref 1 &gt;&gt;</vh></v>
-<v t="T2180"><vh>node 1</vh></v>
+<v t="T2180" a="C"><vh>node 1</vh></v>
 <v t="T2181"><vh>node 2</vh></v>
 </v>
-<v t="T2182" a="V"><vh>Redirect test</vh></v>
+<v t="T2182"><vh>Redirect test</vh></v>
+<v t="T2180" a="C"><vh>node 1</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
