@@ -30,7 +30,7 @@ class baseConfig:
     defaultLogFontSize  = g.choose(sys.platform=="win32",8,12)
     defaultTreeFontSize = g.choose(sys.platform=="win32",9,12)
     
-    defaultsDict = {}
+    defaultsDict = {'_hash':'defaultsDict'}
     
     defaultsData = (
         # compare options...
@@ -84,7 +84,7 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117062717.1:defaultsDict
     #@+node:ekr.20041118062709:define encodingIvarsDict
-    encodingIvarsDict = {}
+    encodingIvarsDict = {'_hash':'encodingIvarsDict'}
     
     encodingIvarsData = (
         ("default_derived_file_encoding","unicode-encoding","utf-8"),
@@ -97,19 +97,18 @@ class baseConfig:
     #@-node:ekr.20041118062709:define encodingIvarsDict
     #@+node:ekr.20041117072055:ivarsDict
     # Each of these settings sets the ivar with the same name.
-    ivarsDict = {}
+    ivarsDict = {'_hash':'ivarsDict'}
     
     if 0: # From c.__init__
-    
         # Global options
-        self.tangle_batch_flag = False
-        self.untangle_batch_flag = False
+        c.tangle_batch_flag = False
+        c.untangle_batch_flag = False
         # Default Tangle options
-        self.tangle_directory = ""
-        self.use_header_flag = False
-        self.output_doc_flag = False
+        c.tangle_directory = ""
+        c.use_header_flag = False
+        c.output_doc_flag = False
         # Default Target Language
-        self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
+        c.target_language = "python" # Required if leoConfig.txt does not exist.
     
     ivarsData = (
         ("at_root_bodies_start_in_doc_mode","bool",True),
@@ -150,6 +149,8 @@ class baseConfig:
     # Keys are commanders.  Values are optionsDicts.
     localOptionsDict = {}
     
+    localOptionsList = []
+    
     # Keys are type names.  Values are (basic_types,[values]) tuples.
     types_dict = {}
         
@@ -179,7 +180,8 @@ class baseConfig:
         self.configsExist = False # True when we successfully open a setting file.
         self.defaultFont = None # Set in gui.getDefaultConfigFont.
         self.defaultFontFamily = None # Set in gui.getDefaultConfigFont.
-        self.dictList = [self.defaultsDict] # List of dictionaries.
+        self.dictList = [self.defaultsDict]
+            ### self.ivarsDict,self.encodingIvarsDict,self.defaultsDict] # List of dictionaries.
         self.inited = False
     
         self.initIvarsFromSettings()
@@ -220,18 +222,21 @@ class baseConfig:
     def initIvarsFromSettings (self):
         
         for ivar in self.encodingIvarsDict.keys():
-            self.initEncoding(ivar)
+            if ivar != '_hash':
+                self.initEncoding(ivar)
             
         for ivar in self.ivarsDict.keys():
-            self.initIvar(ivar)
+            if ivar != '_hash':
+                self.initIvar(ivar)
     #@nonl
     #@-node:ekr.20041117065611.2:initIvarsFromSettings
     #@+node:ekr.20041117062717.24:initRawKeysDict
     def initRawKeysDict (self):
     
         for key in self.keysDict.keys():
-            newKey = key.replace('&','')
-            self.rawKeysDict[newKey] = key,self.keysDict[key]
+            if key != '_hash':
+                newKey = key.replace('&','')
+                self.rawKeysDict[newKey] = key,self.keysDict[key]
     
         if 0: #trace
             keys = self.rawKeysDict.keys()
@@ -319,13 +324,25 @@ class baseConfig:
             d = self.localOptionsDict.get(c.hash())
             if d:
                 val,found = self.getValFromDict(d,setting,theType,found)
-                if val is not None: return val
+                if val is not None:
+                    # g.trace(c.hash())
+                    return val
+                    
+        for d in self.localOptionsList:
+            val,found = self.getValFromDict(d,setting,theType,found)
+            if val is not None:
+                dType = d.get('_hash','<no hash>')
+                # g.trace(dType,val)
+                return val
     
         for d in self.dictList:
             val,found = self.getValFromDict(d,setting,theType,found)
-            if val is not None: return val
+            if val is not None:
+                dType = d.get('_hash','<no hash>')
+                # g.trace(dType,setting,val)
+                return val
                     
-        if 1: # Good for debugging leoSettings.leo.
+        if 1: # Good for debugging leoSettings.leo.  This is NOT an error.
             # Don't warn if None was specified.
             if not found and self.inited:
                 g.trace("Not found:",setting)
@@ -341,8 +358,11 @@ class baseConfig:
             found = True
             if len(data) == 2:
                 path = None ; dType,val = data
-            else:
+            elif len(data) == 3:
                 path,dType,val = data
+            else:
+                g.trace("bad tuple",data)
+                return None,found
                 
             if 0: # This is not reliable.
                 if dType != requestedType:
@@ -430,7 +450,7 @@ class baseConfig:
     #@nonl
     #@-node:ekr.20041117082135:getFloat
     #@+node:ekr.20041117062717.13:getFontFromParams (config)
-    def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag=""):
+    def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag="<unknown>"):
     
         """Compute a font from font parameters.
     
@@ -442,7 +462,7 @@ class baseConfig:
         family = self.get(c,family,"family")
         if family in (None,""):
             family = self.defaultFontFamily
-            
+    
         size = self.get(c,size,"size")
         if size in (None,0): size = defaultSize
         
@@ -452,7 +472,7 @@ class baseConfig:
         weight = self.get(c,weight,"weight")
         if weight in (None,""): weight = "normal"
         
-        # if g.app.trace: g.trace(tag,family,size,slant,weight)
+        # g.trace(tag,family,size,slant,weight,g.shortFileName(c.mFileName))
         
         return g.app.gui.getFontFromParams(family,size,slant,weight)
     #@nonl
@@ -571,17 +591,26 @@ class baseConfig:
         
         """Set the setting and make sure its type matches the given type."""
     
+        found = False
         if c:
             d = self.localOptionsDict.get(c.hash())
-            assert(d is not None) # Should have been created in readSettings.
-            dkind = "c dict: %s" % (c.mFileName)
-        else:
-            dkind = "global dict"
+            if d: found = True
+            
+        if not found:
+            hash = c.hash()
+            for d in self.localOptionsList:
+                hash2 = d.get('_hash')
+                if hash == hash2:
+                    found = True ; break
+                    
+        if not found:
             d = self.dictList [0]
     
-        d[self.munge(setting)] = (kind,val),
-        
-        g.trace(dkind,setting,kind,val)
+        d[self.munge(setting)] = kind,val
+    
+        if 0:
+            dkind = d.get('_hash','<no hash: %s>' % c.hash())
+            g.trace(dkind,setting,kind,val)
     #@nonl
     #@-node:ekr.20041118084146.1:set (g.app.config)
     #@+node:ekr.20041118084241:setString
@@ -646,21 +675,11 @@ class baseConfig:
                 if c:
                     d = self.readSettings(c)
                     if d:
-                        if 0:
-                            #@                        << print d >>
-                            #@+node:ekr.20041120113116:<< print d >>
-                            keys = d.keys()
-                            keys.sort()
-                            g.trace('-' * 40)
-                            for key in keys:
-                                data = d.get(key)
-                                kind,val = data
-                                print "%10s %-20s %s" % (kind,val,key)
-                            #@nonl
-                            #@-node:ekr.20041120113116:<< print d >>
-                            #@nl
+                        hash = c.hash()
+                        d['_hash'] = hash
+                        # g.trace('*****',hash)
                         if setOptionsFlag:
-                            self.localOptionsDict[c.hash()] = d
+                            self.localOptionsDict[hash] = d
                             #@                        << update recent files from d >>
                             #@+node:ekr.20041201081440:<< update recent files from d >>
                             for key in d.keys():
@@ -679,16 +698,15 @@ class baseConfig:
                             #@-node:ekr.20041201081440:<< update recent files from d >>
                             #@nl
                         else:
-                            self.dictList.insert(0,d)
+                            self.localOptionsList.insert(0,d)
                     else:
                         g.es("No @settings tree in %s",color="red")
                     g.app.destroyWindow(c.frame)
     
         self.inited = True
-    #@nonl
     #@-node:ekr.20041120064303:config.readSettingsFiles
     #@+node:ekr.20041117083857.1:readSettings
-    # Called to read all leoSettings.leo file.
+    # Called to read all leoSettings.leo files.
     # Also called when opening an .leo file to read @settings tree.
     
     def readSettings (self,c):
