@@ -329,7 +329,7 @@ initial_window_top = 10
 
 # ----- Options for newly opened windows...
 
-initial_splitter_orientation = vertical
+initial_splitter_orientation = v
 #	valid values: h or horizontal or v or vertical.
 #	(Actually, anything but h or horizontal is considered vertical.)
 #	This is not saved in .leo files, so it applies to all windows.

@@ -869,7 +869,7 @@ class fileCommands:
 			ok, ratio = self.getLeoFile(self.frame, true) # readAtFileNodes
 			c.loading = false # reenable c.changed
 			c.setChanged(false)
-			# c.frame.resizePanesToRatio(ratio)
+			c.frame.resizePanesToRatio(ratio)
 			# This should be done after the pane size has been set.
 			top = c.tree.topVnode
 			if 0: # This can't be done directly.

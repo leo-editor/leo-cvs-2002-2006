@@ -52,20 +52,17 @@ class LeoFrame:
 		self.openDirectory = ""
 		self.es_newlines = 0 # newline count for this log stream
 		
-		if 0:
-			self.splitVerticalFlag = true # True: main paines split vertically (horizontal main splitter)
-			self.ratio = 0.5 # Ratio of body pane to tree pane.
+		config = app().config
+		s = config.getWindowPref("initial_splitter_orientation")
+		self.splitVerticalFlag = s == None or (s != "h" and s != "horizontal")
+		if self.splitVerticalFlag:
+			r = config.getFloatWindowPref("initial_vertical_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.5
 		else:
-			config = app().config
-			s = config.getWindowPref("initial_splitter_orientation")
-			self.splitVerticalFlag = s = None or (s != "h" and s != "horizontal")
-			if self.splitVerticalFlag:
-				r = config.getFloatWindowPref("initial_vertical_ratio")
-				if r == None or r < 0.0 or r > 1.0: r = 0.5
-			else:
-				r = config.getFloatWindowPref("initial_horizontal_ratio")
-				if r == None or r < 0.0 or r > 1.0: r = 0.3
-			self.ratio = r
+			r = config.getFloatWindowPref("initial_horizontal_ratio")
+			if r == None or r < 0.0 or r > 1.0: r = 0.3
+		# print `r`
+		self.ratio = r
 		
 		# Created below
 		self.commands = None
