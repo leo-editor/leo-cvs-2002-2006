@@ -381,7 +381,6 @@ class leoTkinterTree (leoFrame.leoTree):
 	def redraw (self,event=None):
 		
 		# trace()
-		# import traceback ; traceback.print_stack()
 		
 		if self.updateCount == 0 and not self.redrawScheduled:
 			self.redrawScheduled = true

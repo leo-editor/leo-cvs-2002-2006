@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="2284" clone_windows="0"/>
-<globals body_outline_ratio="0.50724637681159424">
+<globals body_outline_ratio="0.5">
 	<global_window_position top="46" left="356" height="784" width="842"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -28,7 +28,7 @@
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.6"><vh>Tests...</vh>
+<v t="edream.110203161858.6" a="E"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
 <v t="edream.110203161858.27"><vh>wrap node</vh></v>
@@ -2663,7 +2663,7 @@
 </v>
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
 </v>
-<v t="edream.120603125057"><vh>4.1 beta 6 tests</vh>
+<v t="edream.120603125057" a="V"><vh>4.1 beta 6 tests</vh>
 <v t="edream.120603112201"><vh>clone-drag bug</vh>
 <v t="edream.120603112201.1" a=""><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
@@ -2790,7 +2790,7 @@
 <v t="edream.110203161858.2122"><vh> Report</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2123" a="V"><vh>Tests and data</vh>
+<v t="edream.110203161858.2123"><vh>Tests and data</vh>
 <v t="edream.110203161858.2124" a="E"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125" tnodeList="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -34281,7 +34281,7 @@ Test \% test.</t>
 <t tx="edream.111303082913">from leoGlobals import *
 print app.config.redirect_execute_script_output_to_log_pane
 </t>
-<t tx="edream.111803061611"></t>
+<t tx="edream.111803061611">@ignore</t>
 <t tx="edream.111803110909">Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=2286887
 By: nobody
@@ -34379,7 +34379,7 @@ print app.scriptDict["script2"]
 
 es(&lt;&lt;2&gt;&gt;+&lt;&lt;2&gt;&gt;, color="blue")</t>
 <t tx="edream.112003094004.1">2</t>
-<t tx="edream.112003103554"></t>
+<t tx="edream.112003103554">@ignore</t>
 <t tx="edream.112203144347"># Run this using:
 # c:\python23\python c:\prog\leoCVS\leo\src\leo.py -script c:\prog\leoCVS\leo\test\batchScript.py
 
@@ -34460,7 +34460,7 @@ text.insertString( cursor, "Hello World", 0 )
 # the target object.
 # I do this here by calling a cheap synchronous call (getPropertyValue).
 ctx.ServiceManager</t>
-<t tx="edream.120303092653"></t>
+<t tx="edream.120303092653">@ignore</t>
 <t tx="edream.120303093019">@first &lt;?
 @language php
 
@@ -34479,7 +34479,7 @@ ctx.ServiceManager</t>
 <t tx="edream.120603112201.2"></t>
 <t tx="edream.120603112201.3"></t>
 <t tx="edream.120603113726"></t>
-<t tx="edream.120603125057"></t>
+<t tx="edream.120603125057">@ignore</t>
 <t tx="edream.120603125159">@ignore
 @language html 
 @root "c:\prog\test\bedellUntangleTest.html"

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3994" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="10" left="390" height="870" width="828"/>
+	<global_window_position top="10" left="400" height="870" width="818"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -769,6 +769,7 @@
 <v t="edream.110203160744.420"><vh>To do: 4.2</vh>
 <v t="edream.121103150801"><vh>Urgent: improve the config manager</vh></v>
 <v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
+<v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
 <v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
@@ -1046,10 +1047,10 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538"><vh>To do: 4.1</vh>
+<v t="edream.110403112538" a="V"><vh>To do: 4.1</vh>
 <v t="edream.121103044318"><vh>Cleanup</vh></v>
 <v t="edream.120803170142.2"><vh>Document recent changes</vh></v>
-<v t="edream.120303071612"><vh>(maybe) Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="edream.121203134946"><vh>Import should put class strings with the class node</vh></v>
 </v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
@@ -1236,8 +1237,8 @@
 </v>
 <v t="edream.110203160744.748" a=""><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
-<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
-<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
+<v t="edream.110203160744.750"><vh>redraw</vh></v>
+<v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
 <v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
@@ -3169,7 +3170,7 @@
 <v t="edream.110203160744.1111" a=""><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
 <v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
 <v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1109" a=""><vh>openRecentFile</vh>
 <v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
@@ -3838,10 +3839,21 @@
 <v t="edream.112103153646.3" a=""><vh>getSelectionLines (nullBody)</vh></v>
 <v t="edream.110203160744.2302" a=""><vh>getSelectionLines (tkBody)</vh></v>
 </v>
+<v t="edream.121203135541"><vh>(Fixed reorg bug in openRecentFiles)</vh>
+<v t="edream.121203135541.1"><vh>Traceback</vh></v>
+<v t="edream.110203160744.1109" a=""><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.120803102832"><vh>(Fixed Recent files bug)</vh>
+<v t="edream.121203202534"><vh>Discussion</vh></v>
+<v t="edream.121203093714"><vh>Menu activation traceback</vh></v>
+<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+</v>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4612,7 +4624,7 @@
 </v>
 <v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
 <v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1109" a=""><vh>openRecentFile</vh>
 <v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
@@ -6832,8 +6844,8 @@
 </v>
 </v>
 <v t="edream.110203160744.749" a=""><vh>Updating routines (tree)...</vh>
-<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
-<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
+<v t="edream.110203160744.750"><vh>redraw</vh></v>
+<v t="edream.110203160744.751"><vh>force_redraw</vh></v>
 <v t="edream.110203160744.752"><vh>redraw_now</vh></v>
 <v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
 <v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
@@ -7050,40 +7062,6 @@
 <v t="edream.110903065210.5"><vh>tearDown</vh></v>
 </v>
 </v>
-</v>
-</v>
-<v t="edream.120803102832"><vh>(Recent files bug)</vh>
-<v t="edream.121203093714"><vh>Menu activation traceback</vh></v>
-<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
-<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
-<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
-<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
-</v>
-<v t="edream.110203160744.1111" a="M"><vh>createRecentFilesMenuItems (leoMenu)</vh></v>
-<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
-<v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-<v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
-<v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1884"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
-</v>
-<v t="edream.111303093945.3" a=""><vh>set_focus</vh></v>
-<v t="edream.110203160744.753" a=""><vh>idle_redraw</vh></v>
-<v t="edream.121203094533"><vh>Calls to idle_redraw</vh>
-<v t="edream.110203160744.750" a=""><vh>redraw</vh></v>
-<v t="edream.110203160744.751" a=""><vh>force_redraw</vh></v>
-<v t="edream.110203160744.754" a=""><vh>idle_second_redraw</vh></v>
-</v>
-<v t="edream.110203160744.1302" a=""><vh>idle_body_key</vh>
-<v t="edream.110203160744.1303"><vh>&lt;&lt; return if nothing has changed &gt;&gt;</vh></v>
-<v t="edream.110203160744.1304"><vh>&lt;&lt; set removeTrailing &gt;&gt;</vh></v>
-<v t="edream.110203160744.1305"><vh>&lt;&lt; Do auto indent &gt;&gt; (David McNab)</vh></v>
-<v t="edream.110203160744.1306"><vh>&lt;&lt; convert tab to blanks &gt;&gt;</vh></v>
-<v t="edream.110203160744.1307"><vh>&lt;&lt; set s to widget text, removing trailing newlines if necessary &gt;&gt;</vh></v>
-<v t="edream.110203160744.1308"><vh>&lt;&lt; recolor the body &gt;&gt;</vh></v>
-<v t="edream.110203160744.1309"><vh>&lt;&lt; redraw the screen if necessary &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -16282,7 +16260,6 @@ def inExpandedVisibleArea (self,y1):
 def redraw (self,event=None):
 	
 	# trace()
-	# import traceback ; traceback.print_stack()
 	
 	if self.updateCount == 0 and not self.redrawScheduled:
 		self.redrawScheduled = true
@@ -21392,7 +21369,7 @@ except:
 	if not doHook("recentfiles1",c=c,v=v,fileName=fileName,closeFlag=closeFlag):
 		ok, frame = openWithFileName(fileName,c)
 		if ok and closeFlag:
-			app.destroyWindow(self)
+			app.destroyWindow(c.frame) # 12/12/03
 			app.setLog(frame.log,"openRecentFile") # Sets the log stream for es()
 
 	doHook("recentfiles2",c=c,v=v,fileName=fileName,closeFlag=closeFlag)</t>
@@ -56752,10 +56729,7 @@ elif undoType == "De-Hoist":
 
 - These commands eat one too many characters.
 - The selection is not set properly afterwards.</t>
-<t tx="edream.110403112538">@nocolor
-
-- Email re Linux install script.
-- Fix recent files bug.</t>
+<t tx="edream.110403112538">@nocolor</t>
 <t tx="edream.110403150047">def OnCheckOutline (self):
 	
 	self.c.checkOutline()</t>
@@ -58370,10 +58344,14 @@ def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
 	
 	# trace(c)
 	
-	if c.frame.top:
-		focus = c.frame.top.focus_displayof()
-		if focus != widget:
-			widget.focus_set()</t>
+	if widget:
+		widget.focus_set()
+	
+	if 0: # Causes a weird problem on some machines.
+		if c.frame.top:
+			focus = c.frame.top.focus_displayof()
+			if focus != widget:
+				widget.focus_set()</t>
 <t tx="edream.111303093945.4">def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 	
 	# trace(idleTimeHookHandler)
@@ -61454,6 +61432,8 @@ Leo functions perfectly normally.  When the File menu is activated,
 we get the output below to standard error.  I would not usually see
 this, since I usually invoke Leo from a button on the task bar.
 
+This only happens on some machines, and only when bringing up the menu with Alt-F.
+
 #----- activate File menu --------------------------------------------------
 Exception in Tkinter callback
 Traceback (most recent call last):
@@ -61483,6 +61463,52 @@ Traceback (most recent call last):
     w = w.children[name]
 KeyError: #135503820#139072620
 #----- activate File menu --------------------------------------------------</t>
-<t tx="edream.121203094533"></t>
+<t tx="edream.121203134946">@nocolor
+https://sourceforge.net/forum/message.php?msg_id=2330944
+By: rodrigo_b
+
+Now that unittests are ongoing some interfaces and concepts are being fixed.
+
+Using Leo for other one project study and ordering, I have be dissapointed to
+see that during "import to @file" the docustring of the class definitions are
+put in the subnode "class X declarations" (or something like that). The class
+node being almost void "class X():\n @others".
+
+I consider that the class docustring should be keept in the class node, not
+in another subnode.
+</t>
+<t tx="edream.121203135541"></t>
+<t tx="edream.121203135541.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2330580
+By: dsalomoni
+
+1) launch leo, write something and save as test.leo
+2) quit
+3) launch leo, go to recent files, the first item is correcly test.leo, plus
+there are other items pointing to spurious leo files
+(C:\prog\leoCVS\leo\src\LeoPy.leo etc -- I'm on linux). Anyway, loading test.leo
+from the recent files menu generates the following traceback:
+
+Exception in Tkinter callback
+Traceback (most recent call last):
+  File "/localstore/computer/local/lib/python2.3/lib-tk/Tkinter.py", line 1345, in __call__
+    return self.func(*args)
+  File "/user/davides/Software/leocvs/leo/src/leoMenu.py", line 1057, in callback
+    c.openRecentFile(name)
+  File "/user/davides/Software/leocvs/leo/src/leoCommands.py", line 588, in openRecentFile
+    app.destroyWindow(self)
+  File "/user/davides/Software/leocvs/leo/src/leoApp.py", line 248, in destroyWindow
+    app.windowList.remove(frame)
+ValueError: list.remove(x): x not in list
+
+The problem does not occur if I load test.leo from File-&gt;Open.
+This in on linux, python 2.3.
+
+Davide
+</t>
+<t tx="edream.121203202534">@nocolor
+
+It turns out that this bug has existed since at least 3.12.  I solved it by brute force: I removed the call to focus_displayof in set_focus.</t>
 </tnodes>
 </leo_file>
