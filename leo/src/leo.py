@@ -144,7 +144,7 @@ def createFrame (fileName):
 		fileName = os_path_join(os.getcwd(),fileName)
 		fileName = os_path_normpath(fileName)
 		if os_path_exists(fileName):
-			ok, frame = openWithFileName(fileName) # 7/13/03: the global routine.
+			ok, frame = openWithFileName(fileName,None)
 			if ok:
 				# print fileName
 				return frame.c,frame

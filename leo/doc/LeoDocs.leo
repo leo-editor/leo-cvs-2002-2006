@@ -1484,10 +1484,6 @@
 <v t="edream.110203163054.1019"><vh>Future Features</vh></v>
 <v t="edream.110203163054.734" a=""><vh>Known Bugs &amp; Limitations</vh></v>
 <v t="edream.110203163054.1020"><vh>Reference for @file trees</vh></v>
-<v t="edream.110203163054.1021"><vh>Macintosh Notes</vh>
-<v t="edream.110203163054.1022"><vh>Differences Between the PC and Mac Versions</vh></v>
-<v t="edream.110203163054.1023"><vh>Transferring Files</vh></v>
-</v>
 <v t="edream.110203163054.1024"><vh>Sherlock</vh></v>
 <v t="edream.110203163054.1025"><vh>Unicode</vh>
 <v t="edream.110203163054.1026"><vh>How Leo handles unicode</vh></v>
@@ -10886,7 +10882,7 @@ Late in 1997 I wrote a Print command to typeset an outline. Printing (Weaving) i
 
 Starting in May of 1998 I began work on a version of Leo using objective C and Apple's Yellow Box environment.  In some ways, this was the most powerful version of Leo.  Alas, a year later Apple chose not to support Yellow Box on Windows, so I had to begin again.  I was most unhappy.
 
-In May of 1999 I began work on the Borland version of Leo for Windows.  This version was successful, and I continue to support the Windows/Borland version to the present day.  The Borland Delphi classes are a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
+In May of 1999 I began work on the Borland version of Leo for Windows.  The Borland Delphi classes were a pleasure to use and free of bugs.  I redesigned Leo's file format for the Windows version of Leo;  the Yellow Box file format is a binary format that requires the Yellow Box runtime.  Fortunately, I choose to use XML for Leo's file format. I have Marc-Antoine Parent to thank for this decision; he urged me to use XML and patiently explained how to use XML properly.  However, there are two significant problems with the Borland version of Leo.  First, it works only on Windows.  Second, it can never be Open software, because it uses Borland's Delphi classes and a commercial syntax coloring component.
 
 In May of 2000 I began work an wxWindows version of Leo.  This was supposed to be a cross-platform version.  Alas, after much work I chose to abandon the wxWindows version.  There were too many bugs and too many incompatibilities between platforms.  Something good did come from this effort.  I spent a lot of time adding Python scripting to the wxWindows code and I became familiar with Python and its internals.
 
@@ -11568,39 +11564,6 @@ Typically a single @others directive in the @file node suffices.  For example, t
   @others
 
 Sections may be defined in any descendant of the @file node provided that the method is not a descendant of any definition node.</t>
-<t tx="edream.110203163054.1021"></t>
-<t tx="edream.110203163054.1022">The following is a list of the major differences between the Macintosh and PC versions of Leo.
-
-1.  The PC version does not have a Print (Weave) command. This command is under development.
-
-2.  The PC version implements the Untangle command.  The commercial Mac version will implement the Untangle command but the free Mac version does not.
-
-3.  The PC version uses an XML file format.  The commercial Mac version will use the same format.  The free Mac version uses an entirely different format.
-
-4.  The PC version implements clone windows; the Mac versions don't.
-
-5.  Syntax coloring is partially customizable when using the PC version of Leo.  However, at present it is not possible to fully save these options.
-
-6.  The Preferences panel is functional in the PC version.
-
-
-</t>
-<t tx="edream.110203163054.1023">The commercial Mac and PC versions of Leo will use the same file format, so nothing special will need to be done to transfer files between these two versions.  Transferring information between the commercial PC version and the free Mac version is relatively straightforward.
-
-1. Create a text file in MORE format.
-
-On the Mac, simply copy an outline in Leo and paste into a text file.  I use the Metrowerks IDE to create the text file because it handles newlines properly, but almost any text editor will do.  Use the text editor to create the text file.
-
-On the PC, use the Export More Text command, then paste the text into any text editor and use the text editor to create the file.
-
-2. Transfer the text file to the other machine.
-
-3. Create an outline using the text file created in step 1.
-
-On the Mac, load the text file into a text editor.  Select all the text and copy it to the clipboard.  In Leo, choose the Copy Outline command to create the outline.
-
-On the PC, load the text file into a text editor.  Select all the text and copy it to the clipboard.  In Leo, choose the Import More Text command to create the outline.
-</t>
 <t tx="edream.110203163054.1024">Sherlock is a flexible tracing and measurement package for C, C++ and Objective C.  All parts of Sherlock are in the public domain.
 
 You will see Sherlock macros throughout Leo's C++ code.  The most common of these macros are FTAG, STATB, STATX, TRACEP, TRACEPB and TRACEPX.  These Sherlock macros are not functional in the production version of Leo.

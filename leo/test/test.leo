@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2181" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2183" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="90" left="302" height="728" width="912"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -13,6 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203161858"><vh>Distribution checklist</vh>
+<v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
 </v>
 <v t="edream.110203161858.2"><vh>Notes</vh>
@@ -27,7 +28,6 @@
 <v t="edream.112003031953"><vh>tuple unpacking test</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.5" tnodeList="edream.110203161858.5"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
 <v t="edream.110203161858.6"><vh>Tests...</vh>
 <v t="edream.110203161858.25"><vh>Body pane &amp; typing</vh>
 <v t="edream.110203161858.26"><vh>@file c:\prog\test\wrap_test.txt</vh>
@@ -2620,6 +2620,7 @@
 <v t="edream.110203161858.2103"><vh>Script to find which modules define names</vh></v>
 <v t="edream.110203161858.2104"><vh>Script to compare 3.x and 4.x derived files</vh></v>
 <v t="edream.110803170022"><vh>Count pages</vh></v>
+<v t="edream.120203185502" tnodeList="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
 <v t="edream.110203161858.2119"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2120"><vh>Bug reports</vh>
@@ -2704,18 +2705,19 @@
 <v t="edream.110203161858.2092"><vh>others</vh></v>
 </v>
 </v>
-<v t="edream.111903103216" tnodeList="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
-<v t="edream.112003201017" a="E" tnodeList="edream.112003201017"><vh>Find script to clean whitespace</vh>
-<v t="edream.112003201017.1"><vh>Find script</vh></v>
-<v t="edream.112003201017.2"><vh>Change script</vh></v>
-</v>
-</v>
-<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.120303092653"><vh>4.1 beta 5 tests</vh>
+<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 <v t="edream.112303064255" a="E"><vh>Extract section test</vh></v>
-<v t="edream.112303110337" a="E"><vh>Change all headlines/Undo test</vh>
+<v t="edream.112303110337"><vh>Change all headlines/Undo test</vh>
 <v t="edream.112303110337.1"><vh>a</vh></v>
 <v t="edream.112303110337.2"><vh>Ba</vh></v>
 <v t="edream.112303110337.3"><vh>Ca</vh></v>
+</v>
+<v t="edream.120203151550"><vh>@url file:../doc/LeoDocs.leo</vh></v>
+</v>
+<v t="edream.120303093019" a="MV" tnodeList="edream.120303093019,edream.120303093527,edream.120303093527.1"><vh>@file c:\prog\test\atFirstLastTest.txt</vh>
+<v t="edream.120303093527"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.120303093527.1"><vh>others</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -34135,12 +34137,6 @@ after
 	&lt;&lt; rhs &gt;&gt;  &lt;&lt;rhe&gt;&gt; trailing</t>
 <t tx="edream.111803110909.2">rhs line</t>
 <t tx="edream.111803110909.3">rhe line</t>
-<t tx="edream.111903103216">Announcements:
-	
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-</t>
 <t tx="edream.111903143504">@ print "ignored"
 @c
 @tabwidth 2
@@ -34205,50 +34201,6 @@ print app.scriptDict["script2"]
 es(&lt;&lt;2&gt;&gt;+&lt;&lt;2&gt;&gt;, color="blue")</t>
 <t tx="edream.112003094004.1">2</t>
 <t tx="edream.112003103554"></t>
-<t tx="edream.112003201017"># Initialize Leo's find panel using the named children of this node.
-from leoGlobals import *
-
-app.searchDict = {} # Clear dict.get("v") logic.
-initScriptFind("Find script","Change script")
-</t>
-<t tx="edream.112003201017.1">from leoGlobals import *
-
-c = top() ; v = c.currentVnode()
-d = app.searchDict
-found = false
-while v and not found:
-	s = v.bodyString()
-	lines = s.split('\n')
-	for line in lines:
-		if line and not line.strip():
-			c.frame.tree.expandAllAncestors(v)
-			c.selectVnode(v)
-			c.redraw() # Necessary to make the new node visible.
-			if d["type"] == "findAll":
-				es(v.headString()) ; break
-			else:
-				found = true ; break
-	v = v.threadNext()
-	
-# app.searchDict["continue"] = v and found
-
-if not found:
-	es("done",color="blue")
-</t>
-<t tx="edream.112003201017.2">from leoGlobals import *
-
-c = top() ; v = c.currentVnode()
-s = oldText = v.bodyString()
-
-lines = s.split('\n')
-lines = [line.rstrip() for line in lines]
-s = '\n'.join(lines)
-
-v.setBodyStringOrPane(s,encoding=app.tkEncoding)
-c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
-c.frame.body.setInsertPointToStartOfLine(0)
-
-app.searchDict["continue"] = "true" # Allow change all to continue.</t>
 <t tx="edream.112203144347"># Run this using:
 # c:\python23\python c:\prog\leoCVS\leo\src\leo.py -script c:\prog\leoCVS\leo\test\batchScript.py
 
@@ -34286,5 +34238,61 @@ after</t>
 <t tx="edream.112303110337.1"></t>
 <t tx="edream.112303110337.2"></t>
 <t tx="edream.112303110337.3"></t>
+<t tx="edream.120203151550"></t>
+<t tx="edream.120203185502">import sys
+
+sys.path.append(r"c:\Program Files\OpenOffice.org1.1.0\program")
+
+# for p in sys.path: print p
+
+import uno
+
+# get the uno component context from the PyUNO runtime
+localContext = uno.getComponentContext()
+
+# create the UnoUrlResolver 
+resolver = localContext.ServiceManager.createInstanceWithContext(
+	"com.sun.star.bridge.UnoUrlResolver", localContext )
+
+# connect to the running office 				
+ctx = resolver.resolve(
+	"uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext" )
+smgr = ctx.ServiceManager
+
+# get the central desktop object
+desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",ctx)
+
+# access the current writer document
+model = desktop.getCurrentComponent()
+
+# access the document's text property
+text = model.Text
+
+# create a cursor
+cursor = text.createTextCursor()
+
+# insert the text into the document
+text.insertString( cursor, "Hello World", 0 )
+
+# Do a nasty thing before exiting the python process. In case the
+# last call is a oneway call (e.g. see idl-spec of insertString),
+# it must be forced out of the remote-bridge caches before python
+# exits the process. Otherwise, the oneway call may or may not reach
+# the target object.
+# I do this here by calling a cheap synchronous call (getPropertyValue).
+ctx.ServiceManager</t>
+<t tx="edream.120303092653"></t>
+<t tx="edream.120303093019">@first &lt;?
+@language php
+
+&lt;&lt; ref &gt;&gt;
+
+	middle line.
+	another middle line.
+
+@others
+@last ?&gt;</t>
+<t tx="edream.120303093527">ref line 1</t>
+<t tx="edream.120303093527.1">others line 1</t>
 </tnodes>
 </leo_file>
