@@ -23,6 +23,53 @@ import time
 #@-node:ekr.20040929105133.1:<< imports >>
 #@nl
 
+#@+others
+#@+node:ekr.20041001142542:getScript
+def getScript (c,p,useSelectedText=True):
+
+    if not p: p = c.currentPosition()
+    old_body = p.bodyString()
+    
+    try:
+        script = ""
+        # Allow p not to be the present position.
+        if p == c.currentPosition():
+            if useSelectedText and c.frame.body.hasTextSelection():
+                # Temporarily replace v's body text with just the selected text.
+                s = c.frame.body.getSelectedText()
+                p.v.setTnodeText(s)
+            else:
+                s = c.frame.body.getAllText()
+        else:
+            s = p.bodyString()
+    
+        if s.strip():
+            g.app.scriptDict["script1"]=s
+            
+            if 1: df = c.atFileCommands
+            else: df = c.atFileCommands.new_df
+
+            df.scanAllDirectives(p,scripting=True)
+            # Force Python comment delims.
+            df.startSentinelComment = "#"
+            df.endSentinelComment = None
+            df.write(p.copy(),toString=True)
+            script = df.stringOutput
+            assert(p)
+            g.app.scriptDict["script2"]=script
+            error = len(script) == 0
+    except:
+        s = "unexpected exception"
+        print s ; g.es(s)
+        g.es_exception()
+        script = ""
+
+    p.v.setTnodeText(old_body)
+    # g.trace(p,len(script))
+    return script
+#@nonl
+#@-node:ekr.20041001142542:getScript
+#@+node:ekr.20041001142542.1:class newAtFile
 class newAtFile:
     
     #@    << define class constants >>
@@ -218,6 +265,7 @@ class newAtFile:
         self.errors = 0
         self.inCode = True
         self.indent = 0  # The unit of indentation is spaces, not tabs.
+        self.pending = []
         self.raw = False # True: in @raw mode
         self.root = None # The root of tree being read or written.
         self.root_seen = False # True: root vnode has been handled in this file.
@@ -252,7 +300,6 @@ class newAtFile:
         self.leadingWs = ""
         self.out = None
         self.outStack = []
-        self.pending = []
         self.tnodeList = []
         self.tnodeListIndex = 0
         self.t = None
@@ -2582,7 +2629,7 @@ class newAtFile:
     
         try:
             targetFileName = root.atNorefFileNodeName()
-            initWriteIvars(self,root,targetFileName,nosentinels=False,toString=toString)
+            at.initWriteIvars(root,targetFileName,nosentinels=False,toString=toString)
             if at.errors: return
             if not at.openFileForWriting(root,targetFileName,toString):
                 return
@@ -2743,7 +2790,7 @@ class newAtFile:
     #@+node:ekr.20040929105133.244:write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
+    def write(self,root,nosentinels=False,thinFile=False,toString=False):
         
         """Write a 4.x derived file."""
         
@@ -2767,8 +2814,7 @@ class newAtFile:
             return
     
         try:
-            at.writeOpenFile(root,
-                nosentinels=nosentinels,oneNodeOnly=oneNodeOnly,toString=toString)
+            at.writeOpenFile(root,nosentinels=nosentinels,toString=toString)
             if toString:
                 at.closeWriteFile()
                 # Major bug: failure to clear this wipes out headlines!
@@ -2940,7 +2986,7 @@ class newAtFile:
     #@+node:ekr.20040929105133.247:writeOpenFile
     # New in 4.3: must be inited before calling this method.
     
-    def writeOpenFile(self,root,nosentinels=False,oneNodeOnly=False,toString=False):
+    def writeOpenFile(self,root,nosentinels=False,toString=False):
     
         """Do all writes except asis writes."""
         
@@ -2980,7 +3026,7 @@ class newAtFile:
         at.putOpenLeoSentinel("@+leo-ver=4")
         at.putInitialComment()
         at.putOpenNodeSentinel(root)
-        at.putBody(root,oneNodeOnly=oneNodeOnly)
+        at.putBody(root)
         at.putCloseNodeSentinel(root)
         at.putSentinel("@-leo")
         root.setVisited()
@@ -3025,7 +3071,7 @@ class newAtFile:
     #@-node:ekr.20040929105133.32:Writing (top level)
     #@+node:ekr.20040929105133.241:Writing 4.x
     #@+node:ekr.20040929105133.257:putBody
-    # oneNodeOnly is used by c.checkPythonNode.
+    # oneNodeOnly is no longer used.
     
     def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
         
@@ -3089,7 +3135,7 @@ class newAtFile:
             elif kind == at.othersDirective:
                 if not oneNodeOnly:
                     if inCode: at.putAtOthersLine(s,i,p)
-                    else: at.putDocLine(s,i) # 12/7/03
+                    else: at.putDocLine(s,i)
             elif kind == at.rawDirective:
                 at.raw = True
                 at.putSentinel("@@raw")
@@ -4614,12 +4660,20 @@ class newAtFile:
     #@-node:ekr.20040929105133.101:sentinelName
     #@-node:ekr.20040929105133.103:Uilites...
     #@-others
+#@nonl
+#@-node:ekr.20041001142542.1:class newAtFile
+#@-others
 
 if 1:
-    s = "New atFile class installed"
-    print s, g.es(s,color="red")
     import leoAtFile
     leoAtFile.atFile = newAtFile
+    print "New atFile class installed"
+
+    import leoGlobals
+    leoGlobals.getScript = getScript
+    print "g.getScript installed"
+    
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040929104807.2:@thin ___proto_atFile.py
 #@-leo
