@@ -311,15 +311,9 @@ class PluginAbout:
         frame.pack(side="top")
         #@    << Create the contents of the about box >>
         #@+node:EKR.20040517080555.21:<< Create the contents of the about box >>
-        if 0: # The name is now in the window's title.
-            Tk.Label(frame, text="Name:").grid(row=0, column=0, sticky="E")
-            Tk.Label(frame, text=name).grid(row=0, column=1, sticky="W")
-            Tk.Label(frame, text="Version").grid(row=1, column=0, sticky="E")
-            Tk.Label(frame, text=version).grid(row=1, column=1, sticky="W")
-            Tk.Label(frame, text=about, borderwidth=10, justify="left").grid(columnspan=2)
-        else:
-            Tk.Label(frame, text="Version " + version).pack()
-            Tk.Label(frame, text=about, borderwidth=10).pack()
+        Tk.Label(frame, text="Version " + version).pack()
+        
+        Tk.Label(frame, text=about, borderwidth=10,justify="left").pack()
         #@nonl
         #@-node:EKR.20040517080555.21:<< Create the contents of the about box >>
         #@nl
