@@ -2705,7 +2705,7 @@ class LeoFrame:
 		wrap = choose(wrap,"word","none")
 		
 		self.log = log = Tk.Text(split2Pane2,name="log",
-			setgrid=1,wrap="word",bd=2,bg="white",relief="flat")
+			setgrid=1,wrap=wrap,bd=2,bg="white",relief="flat")
 			
 		font = config.getFontFromParams(
 			"log_text_font_family", "log_text_font_size",
