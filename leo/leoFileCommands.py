@@ -313,7 +313,6 @@ class fileCommands:
 	#@+body
 	def getClipboardHeader (self):
 	
-		trace()
 		if self.getOpenTag("<leo_header"):
 			return # 11/24/02
 	
@@ -593,7 +592,6 @@ class fileCommands:
 	#@+body
 	def getPosition (self):
 	
-		trace()
 		top = left = height = width = 0
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
