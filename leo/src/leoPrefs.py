@@ -4,7 +4,6 @@
 #@@tabwidth -4
 
 import leoGlobals as g
-import string
     
 class leoPrefs:
     

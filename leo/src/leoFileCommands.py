@@ -15,7 +15,6 @@ import binascii
 import os
 import pickle
 import string
-import time
 
 #@+at 
 #@nonl

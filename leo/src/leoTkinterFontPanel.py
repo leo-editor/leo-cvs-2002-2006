@@ -5,10 +5,9 @@
 
 import leoGlobals as g
 import leoFontPanel
+
 import Tkinter as Tk
 import tkFont
-import sys
-import string
 
 class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
     

@@ -228,7 +228,6 @@ if g.app.config.use_psyco:
 
 import string
 import time
-import types
 
 #@+others
 #@+node:ekr.20031218072017.3321:class tnode

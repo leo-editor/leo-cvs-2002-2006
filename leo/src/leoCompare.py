@@ -6,7 +6,6 @@
 """Leo's base compare class."""
 
 import leoGlobals as g
-import difflib
 import filecmp
 import os
 import string

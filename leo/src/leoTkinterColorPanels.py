@@ -2,7 +2,7 @@
 #@+node:ekr.20031218072017.3822:@thin leoTkinterColorPanels.py
 import leoGlobals as g
 import leoColorPanel
-import string
+
 import Tkinter as Tk
 import tkColorChooser
 

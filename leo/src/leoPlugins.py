@@ -31,8 +31,8 @@ def doPlugins(tag,keywords):
 def loadHandlers(loadAllFlag=False):
 
     """Load all enabled plugins from the plugins directory"""
-    import glob,os
-    
+    import glob
+
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
     manager_path = g.os_path_join(plugins_path,"pluginsManager.txt")
     

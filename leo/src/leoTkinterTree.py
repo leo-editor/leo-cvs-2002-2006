@@ -30,7 +30,8 @@ if g.app.config.use_psyco:
 import leoFrame
 import Tkinter as Tk
 import tkFont
-import os,string,sys,types
+
+import sys
 
 #@<< about drawing >>
 #@+node:ekr.20031218072017.2409:<< About drawing >>

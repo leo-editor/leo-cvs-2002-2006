@@ -9,8 +9,12 @@
 #@@tabwidth -4
 
 import leoGlobals as g # So code can use g below.
-
-import os,string,sys,time,traceback,types
+import os
+import string
+import sys
+import time
+import traceback
+import types
 
 #@<< define general constants >>
 #@+node:ekr.20031218072017.3094:<< define general constants >>
@@ -3556,25 +3560,6 @@ class nullObject:
     def __setattr__(self,attr,val): return self
 #@nonl
 #@-node:ekr.20031219074948.1:class nullObject
-#@+node:EKR.20040612114220.4:class readLinesClass
-class readLinesClass:
-    
-    """A class whose next method provides a readline method for Python's tokenize module."""
-
-    def __init__ (self,s):
-        self.lines = g.splitLines(s)
-        self.i = 0
-
-    def next(self):
-        if self.i < len(self.lines):
-            line = self.lines[self.i]
-            self.i += 1
-        else:
-            line = ''
-        # g.trace(self.i,line)
-        return line
-#@nonl
-#@-node:EKR.20040612114220.4:class readLinesClass
 #@+node:ekr.20031218072017.3103:g,computeWindowTitle
 def computeWindowTitle (fileName):
 
@@ -3740,14 +3725,36 @@ def getScript (c,p):
     return script
 #@nonl
 #@-node:EKR.20040614071102.1:g.getScript
+#@+node:ekr.20040629162023:readLines class and generator
 #@+node:EKR.20040612114220.3:g.readLinesGenerator
 def readLinesGenerator(s):
 
     for line in g.splitLines(s):
+        # g.trace(repr(line))
         yield line
     yield ''
 #@nonl
 #@-node:EKR.20040612114220.3:g.readLinesGenerator
+#@+node:EKR.20040612114220.4:class readLinesClass
+class readLinesClass:
+    
+    """A class whose next method provides a readline method for Python's tokenize module."""
+
+    def __init__ (self,s):
+        self.lines = g.splitLines(s)
+        self.i = 0
+
+    def next(self):
+        if self.i < len(self.lines):
+            line = self.lines[self.i]
+            self.i += 1
+        else:
+            line = ''
+        # g.trace(repr(line))
+        return line
+#@nonl
+#@-node:EKR.20040612114220.4:class readLinesClass
+#@-node:ekr.20040629162023:readLines class and generator
 #@-node:EKR.20040612114220:Utility classes, functions & objects...
 #@+node:ekr.20031218072017.3197:Whitespace...
 #@+node:ekr.20031218072017.3198:computeLeadingWhitespace

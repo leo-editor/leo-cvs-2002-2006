@@ -4,8 +4,6 @@
 #@@tabwidth -4
 
 import leoGlobals as g
-import sys
-import string
     
 class leoFontPanel:
     
