@@ -1310,7 +1310,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
     def getFocus(self):
         
         """Returns the widget that has focus, or body if None."""
-        f = self.top.focus_displayof()
+        try:
+            f = self.top.focus_displayof()
+        except Exception:
+            f = None
         if f:
             return f
         else:

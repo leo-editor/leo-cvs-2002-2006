@@ -148,7 +148,10 @@ class baseCommands:
                 g.es_exception(c=c)
                 c.frame.tree.redrawAfterException() # 1/26/04
         
-        g.doHook("command2",c=c,v=p,label=label)
+        c = g.top() # 6/17/04: The command can change the commander.
+        if c:
+            p = c.currentPosition()
+            g.doHook("command2",c=c,v=p,label=label)
                 
         return "break" # Inhibit all other handlers.
     #@nonl
