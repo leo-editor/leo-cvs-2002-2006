@@ -2,7 +2,7 @@
 #@+node:rogererens.20041013082304:@thin UNL.py
 #@<< docstring >>
 #@+node:ekr.20050119144617:<< docstring >>
-'''This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
+"""This plugin supports Uniform Node Locators (UNL's). UNL's specify nodes within
 Leo files. UNL's are not limited to nodes within the present Leo file; you can
 use them to create cross-Leo-file links! UNL
 
@@ -51,7 +51,7 @@ node will break the link.
 - Don't refer to nodes that contain UNL's in the headline. Instead, refer to the
 parent or child of such nodes.
 
-- You don't have to replace spaces in URL's or UNL's by '%20'.'''
+- You don't have to replace spaces in URL's or UNL's by '%20'."""
 #@nonl
 #@-node:ekr.20050119144617:<< docstring >>
 #@nl
@@ -79,6 +79,9 @@ import leoGlobals as g
 import leoPlugins
 
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+import os       
+import urlparse 
 #@nonl
 #@-node:rogererens.20041014110709.1:<< imports >>
 #@nl
@@ -91,24 +94,15 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 #@nl
 
 #@+others
-#@+node:rogererens.20041130095659:@url file:C:/Leo/plugins/leoPlugins.leo#Plugins-->Experimental/unfinished plugins-->@thin UNL.py-->To do
-#@+at
-# 
-# A contrived example targeted at MS WindowsXP with Leo installed in the C 
-# directory.
-# Naturally, a clone must be used instead of referring to nodes _within_ a leo 
-# file.
-# UNL is helpful for referring to nodes in _other_ leo files!
-# 
-# on windowsXP:
-#     C:/Leo/plugins/leoPlugins.leo
-#     can also be substituted with
-#     C:\Leo\plugins\leoPlugins.leo
-#@-at
+#@+node:rogererens.20041130095659:@url file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do
+#@+at 
 #@nonl
-#@-node:rogererens.20041130095659:@url file:C:/Leo/plugins/leoPlugins.leo#Plugins-->Experimental/unfinished plugins-->@thin UNL.py-->To do
-#@+node:ekr.20041202032543:@url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
-#@-node:ekr.20041202032543:@url file:c:/prog/leoCvs/leo/doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+# It is possible to link to nodes within the same file.  However clones might 
+# be better.
+#@-at
+#@-node:rogererens.20041130095659:@url file: ./../../plugins/leoPlugins.leo#Plugins-->Enhancing the icon and status areas-->@thin UNL.py-->To do
+#@+node:ekr.20041202032543:@url file: ./../../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
+#@-node:ekr.20041202032543:@url file: ./../../doc/leoDocs.leo#Users Guide-->Chapter 8: Customizing Leo
 #@+node:rogererens.20041013082304.1:createStatusLine
 def createStatusLine(tag,keywords):
 
@@ -122,6 +116,7 @@ def createStatusLine(tag,keywords):
 #@-node:rogererens.20041013082304.1:createStatusLine
 #@+node:rogererens.20041013084119:onSelect2
 def onSelect2 (tag,keywords):
+
     """Shows the UNL in the status line whenever a node gets selected."""
 
     c = keywords.get("c")
@@ -133,7 +128,9 @@ def onSelect2 (tag,keywords):
         myList.insert(0, p.headString())
     myString = "-->".join(myList)   # Rich has reported using ::
                                     # Any suggestions for standardization?
+                                    
     c.frame.putStatusLine(myString)
+#@nonl
 #@-node:rogererens.20041013084119:onSelect2
 #@+node:rogererens.20041021091837:onUrl1
 def onUrl1 (tag,keywords):
@@ -152,9 +149,6 @@ def onUrl1 (tag,keywords):
 #@@c
 
     try:
-        import os       # should these imports also be in the <<imports
-        import urlparse # >> section?
-        
         try:
             urlTuple = urlparse.urlsplit(url)
             #@            << log url-stuff >>
@@ -174,7 +168,7 @@ def onUrl1 (tag,keywords):
             g.es_exception()
        
         if not urlTuple[0]:
-            urlProtocol = "file"    # assume this protocol by default
+            urlProtocol = "file" # assume this protocol by default
         else:
             urlProtocol = urlTuple[0]
         
@@ -183,17 +177,24 @@ def onUrl1 (tag,keywords):
             if ok:
                 #@                << go to the node>>
                 #@+node:rogererens.20041125015212.1:<<go to the node>>
-                c2 = g.top()
+                # Never use g.top() in these situations:
+                # it depends on what Tk thinks is the top window, and that is time dependent.
+                # c2 = g.top()
+                c2 = frame.c
+                
                 if urlTuple[4]: # we have a UNL!
                     nodeList = urlTuple[4].split("-->")
                     p = g.findTopLevelNode(nodeList[0])
                     for headline in nodeList[1:]:
                         p = g.findNodeInTree(p, headline)
                     c2.selectPosition(p)
-                
-                c2.frame.bringToFront() # now, how do I keep it to the front,
-                                        # like the opening of LeoDocs.leo from the Help menu?
-                                        # Maybe something to do with the handling of the doubleclick event?
+                    
+                #@+at
+                # 
+                # EKR: The reason there are problems with selection is that 
+                # button-1 is bound to
+                # OnActivateTree, which calls g.app.gui.set_focus.
+                #@-at
                 #@nonl
                 #@-node:rogererens.20041125015212.1:<<go to the node>>
                 #@nl
@@ -204,14 +205,12 @@ def onUrl1 (tag,keywords):
             try: webbrowser.open(url)
             except: pass
             
-        return 1    # PREVENTS THE EXECUTION OF LEO'S CORE CODE IN
+        return True  # PREVENTS THE EXECUTION OF LEO'S CORE CODE IN
                     # Code-->Gui Base classes-->@thin leoFrame.py-->class leoTree-->tree.OnIconDoubleClick (@url)
     except:
         g.es("exception opening " + url)
         g.es_exception()
 #@nonl
-#@+node:rogererens.20041201000126:@url file:C:/Leo/src/LeoPy.leo#Code-->Gui Base classes-->@thin leoFrame.py-->class leoTree-->tree.OnIconDoubleClick (@url)
-#@-node:rogererens.20041201000126:@url file:C:/Leo/src/LeoPy.leo#Code-->Gui Base classes-->@thin leoFrame.py-->class leoTree-->tree.OnIconDoubleClick (@url)
 #@-node:rogererens.20041021091837:onUrl1
 #@+node:rogererens.20041014110709:To do
 #@+at

@@ -202,6 +202,7 @@ class Chapter:
 #@+others
 #@+node:mork.20040926105355.21:newCreateControl
 cControl = leoTkinterFrame.leoTkinterBody.createControl
+
 def newCreateControl( self, frame, parentFrame  ):
     c = self.c
     notebook = notebooks.get(c)
@@ -237,6 +238,7 @@ def createPanedWidget( parentFrame, c ):
 #@-node:mork.20040929110556:createPanedWidget
 #@+node:mork.20040926105355.22:newEditorPane
 editorNames = {}
+
 def newEditorPane( c ):
     names = pbodies[ c ].panes()
     if names:
@@ -272,9 +274,11 @@ def newCreateCanvas( self, parentFrame, createCanvas = leoTkinterFrame.leoTkinte
     page.sv = sv
     createBalloon( tab, sv )
     canvas.name = pname
+    
+    g.trace(repr(canvas.name),canvas)
+
     return canvas
-
-
+#@nonl
 #@-node:mork.20040926105355.23:newCreateCanvas
 #@+node:mork.20040929120442:createBalloon
 def createBalloon( tab, sv ):
@@ -317,6 +321,8 @@ def getNameMaker( notebook ):
 #@-node:mork.20040929093051:getNameMaker
 #@+node:mork.20040926105355.24:newTreeinit
 def newTreeinit( self, c,frame,canvas, oinit = leoTkinterTree.leoTkinterTree.__init__ ):
+    
+    g.trace(canvas)
 
     sv = getSV( canvas.name, c )
     oinit( self, c, frame, canvas )
