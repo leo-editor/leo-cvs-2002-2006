@@ -1402,6 +1402,7 @@ def init_trace(args,echo=1):
 def trace (*args,**keys):
 	
 	callers = keys.get("callers",false)
+	newline = keys.get("newline",true)
 
 	s = ""
 	for arg in args:
@@ -1426,16 +1427,11 @@ def trace (*args,**keys):
 	if callers:
 		traceback.print_stack()
 		
-	if 1: # Print all traces.
+	if newline:
 		print name + ": " + message
-	else: # Print only enabled traces.
-		t = app.trace_list
-		# tracepoint names starting with '-' must match exactly.
-		minus = len(name) > 0 and name[0] == '-'
-		if minus: name = name[1:]
-		if (not minus and '*' in t) or name.lower() in t:
-			s = name + ": " + message
-			print s # Traces _always_ get printed.
+	else:
+		print name + ": " + message,
+#@nonl
 #@-node:ekr.20031218072017.2317:trace
 #@+node:ekr.20031218072017.2318:trace_tag
 # Convert all args to strings.
@@ -3466,16 +3462,6 @@ def splitLines (s):
 		return s.splitlines(true) # This is a Python string function!
 	else:
 		return []
-
-	if 0:# Rewritten: 4/2/04.  This works, but why bother?
-		if s:
-			lines = s.split('\n')
-			result = [line + '\n' for line in lines[:-1]]
-			if s[-1] != '\n':
-				result.append(lines[-1])
-			return result
-		else:
-			return []
 
 def joinLines (aList):
 	
