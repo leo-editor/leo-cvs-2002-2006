@@ -10842,6 +10842,51 @@ else: # Use plain click.
 #@-node:ekr.20040709081208:<< do scrolling by hand in a separate thread >>
 #@-node:ekr.20041221071131.1:createTkTreeCanvas
 #@-node:ekr.20040226094105:(Put the scrollWheel workaround in createTkTreeCanvas)
+#@+node:ekr.20050119190016.1:(Fixed conflict between settings panel conflicts and chapters plugin)
+@
+#@nonl
+#@+node:ekr.20050121070708:Notes
+@killcolor
+
+With the latest CVS on Linux, attempting to access the preferences dialog when
+the chapters plugin is enabled causes a blank window to appear in the Leo outline
+pane.
+
+Fix:
+    
+chapters.py requires that the canvas have a name ivar, so 
+    
+<< replace tree pane with settings tree >> now sets treeCanvas.name = '1'
+#@nonl
+#@-node:ekr.20050121070708:Notes
+#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
+tree = c.frame.component('tree')
+
+# The new frame must be a child of splitter2Frame.
+splitter2Frame = c.frame.component('splitter2Frame').getFrame()
+
+# Create a Pmw scrolled canvas.
+scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
+    hscrollmode='none',borderframe=3)
+
+treeCanvas = scrolledTreeCanvas.component('canvas')
+treeCanvas.configure(background='white')
+
+# Set canvas.name ivar for chapters.py plugin.
+# This must be a tab number.  The number '1' should work well enough.
+treeCanvas.name = '1'
+
+# Create the settingsTree component.
+c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
+    tree.getPacker(),tree.getUnpacker())
+
+c.frame.replaceTreePaneWithComponent('settingsTree')
+
+self.tree = settingsTree(c,c.frame,treeCanvas,self)
+self.tree.setColorFromConfig()
+#@nonl
+#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
+#@-node:ekr.20050119190016.1:(Fixed conflict between settings panel conflicts and chapters plugin)
 #@-node:ekr.20041228052527:Bug fixes...
 #@+node:ekr.20041228052527.1:Cleanup...
 #@+node:ekr.20040917080403.1:(Cleaned up code in runOpenFileDialog)
@@ -12953,7 +12998,9 @@ def set_focus(self,widget,later=False,tag=''):
                     g.app.gui.set_focus(c,widget,tag='frame.setFocus')
             if not self.wantedCallbackScheduled:
                 self.wantedCallbackScheduled = True
-                self.outerFrame.after(500,setFocusCallback)
+                # We don't have to wait so long now that we don't call this so often.
+                # The difference between 500 msec. and 200 msec. is significant.
+                self.outerFrame.after(200,setFocusCallback)
         else:
             # g.trace(tag,c.shortFileName())
             g.app.gui.set_focus(c,widget,tag='frame.setFocus')
@@ -17931,8 +17978,6 @@ def createCanvas (self,parentFrame,pack=True):
         canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
     else:
         canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
-        
-    self.canvas = canvas
 
     return canvas
 #@nonl
@@ -18918,8 +18963,6 @@ def createCanvas (self,parentFrame,pack=True):
         canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
     else:
         canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
-        
-    self.canvas = canvas
 
     return canvas
 #@nonl
@@ -19919,6 +19962,91 @@ self.recentFiles = [] # 4.1: moved to commands class.  List of recent files
 #@-node:ekr.20041227081942:(Made ivars functional)
 #@-node:ekr.20041228052058:12/28
 #@-node:ekr.20041228053248:Diary
+#@+node:ekr.20050121062047:(Added scrollbars to settings outline pane)
+#@+node:ekr.20041225073207:When replacing body & tree panes...
+#@+node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+body = c.frame.component('body')
+packer = body.getPacker()
+unpacker = body.getUnpacker()
+
+# The new frame must be a child of splitter1Frame.
+parentFrame = c.frame.component('splitter1Frame').getFrame()
+self.top = interior = Tk.Frame(parentFrame)
+
+c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
+c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
+#@nonl
+#@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
+#@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
+tree = c.frame.component('tree')
+
+# The new frame must be a child of splitter2Frame.
+splitter2Frame = c.frame.component('splitter2Frame').getFrame()
+
+# Create a Pmw scrolled canvas.
+scrolledTreeCanvas = Pmw.ScrolledCanvas(splitter2Frame,
+    hscrollmode='none',borderframe=3)
+
+treeCanvas = scrolledTreeCanvas.component('canvas')
+treeCanvas.configure(background='white')
+
+# Set canvas.name ivar for chapters.py plugin.
+# This must be a tab number.  The number '1' should work well enough.
+treeCanvas.name = '1'
+
+# Create the settingsTree component.
+c.frame.componentClass(c,'settingsTree',scrolledTreeCanvas,self,
+    tree.getPacker(),tree.getUnpacker())
+
+c.frame.replaceTreePaneWithComponent('settingsTree')
+
+self.tree = settingsTree(c,c.frame,treeCanvas,self)
+self.tree.setColorFromConfig()
+#@nonl
+#@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
+#@+node:ekr.20041225074713:<< add buttons to paneFrame >>
+buttonFrame = Tk.Frame(paneFrame)
+buttonFrame.pack(side='top')
+
+w = 6
+for name in self.buttonNames:
+    w = max(w,len(name))
+
+for name in self.buttonNames:
+
+    def buttonCallback(name=name):
+        self.onAnyButton(name)
+
+    b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
+    b.pack(side='left',padx=2)
+#@nonl
+#@-node:ekr.20041225074713:<< add buttons to paneFrame >>
+#@+node:ekr.20041225073207.1:<< put setterCanvas in paneFrame>>
+self.sc = sc = Pmw.ScrolledCanvas(paneFrame,
+    hscrollmode='none',vscrollmode='dynamic',
+    labelpos = 'n',label_text = '')
+    
+sc.pack(side='top',expand=0,fill="x")
+
+setterCanvas = sc.component('canvas')
+self.setterLabel = sc.component('label')
+#@nonl
+#@-node:ekr.20041225073207.1:<< put setterCanvas in paneFrame>>
+#@+node:ekr.20041225073207.2:<< add a comment widget to paneFrame >>
+commentFrame = Tk.Frame(paneFrame)
+commentFrame.pack(expand=0,fill="x")
+
+self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
+commentWidget.pack(expand=0,fill="x")
+
+self.commentText = text = commentWidget.component('text')
+
+bg = commentFrame.cget('background')
+text.configure(background=bg,borderwidth=2,height=6,state='disabled')
+#@nonl
+#@-node:ekr.20041225073207.2:<< add a comment widget to paneFrame >>
+#@-node:ekr.20041225073207:When replacing body & tree panes...
+#@-node:ekr.20050121062047:(Added scrollbars to settings outline pane)
 #@-node:ekr.20041115111203:Config...
 #@+node:ekr.20041228052527.2:New features...
 #@+node:ekr.20040930064232.2:(Added new expand/contract or go commands)
@@ -24045,8 +24173,6 @@ def createCanvas (self,parentFrame,pack=True):
         canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
     else:
         canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
-        
-    self.canvas = canvas
 
     return canvas
 #@nonl
