@@ -108,9 +108,20 @@ class config:
     
     # Some data is also stored in the config class
     http_map = None
+    # Maps node anchors to node.
+    # A node anchor is a marker beginning with
+    # node_begin_marker.
+    # It is currently assumed that such a marker
+    # does not occur in the rst document.
+    
     tag = None
+    # either doubleclick or open2.
+    
     current_file = None
     
+    node_counter = 0
+    # Used to mark the beginning of the html code for each new
+    # node.
 #@nonl
 #@-node:bwmulder.20050314132625:config
 #@+node:ekr.20040331071319.3:onIconDoubleClick
@@ -270,6 +281,16 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     
     'Write the tree under position p to the file rstFile (fname is the filename)'
     
+    def add_node_marker():
+        if config.http_server_support:
+            config.node_counter += 1
+            marker = rst_htmlparser.generate_node_marker(config.node_counter)
+            config.last_marker = marker
+            http_map[marker] = p.copy()
+            # the p.copy is necessary, since otherwise the
+            # position is modified and unusable later.
+            rstFile.write("\n\n.. _%s:\n\n" % marker)
+            
     # we don't write a title, so the titlepage can be customized
     # use '#' for title under/overline
     directives = g.scanDirectives(c,p=p) # changed name because don't want to use keyword dict
@@ -312,12 +333,13 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     h = p.headString()
     
     if config.http_server_support:
-        nodecounter = 0
         if config.tag == 'open2':
             http_map = config.http_map
         else:
             http_map = {}
-        # maps v nodes to markers.
+            config.anchormap = {}
+           # maps v nodes to markers.
+            config.node_counter = 0
     for p in p.subtree_iter():
         h = p.headString().strip()
         if config.pure_document or g.match_word(h,0,"@rst"):
@@ -334,14 +356,8 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             ):
                 i = g.skip_line(s,0)
                 s = s[i:]
-                
-            if config.http_server_support:
-                nodecounter += 1
-                marker = rst_htmlparser.generate_node_marker(nodecounter)
-                http_map[marker] = p.copy()
-                # the p.copy is necessary, since otherwise the
-                # position is modified and unusable later.
-                rstFile.write(".. _%s:\n\n" % marker)
+            
+            add_node_marker()    
             
             if config.underline_change:
                 rstFile.write(h+'\n')
@@ -349,6 +365,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
                 rstFile.write('\n')
             
             rstFile.write('%s\n\n'%s.strip())
+            #@nonl
             #@-node:ekr.20040403202850.1:<< handle an rst node >>
             #@nl
         else:
@@ -393,6 +410,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
         #@nonl
         #@-node:bwmulder.20050315150045:<< clear attributes >>
         #@nl
+    add_node_marker()
     if config.http_server_support:
         config.http_map = http_map
 #@-node:ekr.20040331071319.7:writeTreeAsRst
@@ -403,7 +421,9 @@ def onFileOpen(tag, keywords):
     c = keywords["new_c"]
     ignoreset = {}
     if config.run_on_window_open:
-        config.http_map = {}
+        http_map = {}
+        anchormap = {}
+        config.node_counter = 0
         found_rst_trees = False
         root = c.currentVnode()
         
@@ -414,11 +434,18 @@ def onFileOpen(tag, keywords):
                     found_rst_trees = True
                     for p1 in p.subtree_iter():
                         ignoreset[p1.v] = True
+                    config.http_map = {}
+                    config.anchormap = {}
                     onIconDoubleClick("open2", {"c": c, "p": p})
+                    http_map.update(config.http_map)
+                    anchormap.update(config.anchormap)
         if found_rst_trees:
+            config.http_map = http_map
+            config.anchormap = anchormap
             relocate_references() 
           
             config.http_map = None
+            config.anchormap = None
             g.es('html updated for html plugin', color="blue")
             if config.clear_attributes:
                 g.es("http attributes cleared")
@@ -488,14 +515,17 @@ def underline(h,level):
 def http_support_main(tag, fname):
     if config.http_server_support:
         set_initial_http_attributes(fname)
+        find_anchors()
         if tag == 'open2':
             return True
+        
         # We relocate references here if we are only running
         # for one file, otherwise we must postpone the
         # relocation until we have processed all files.
         relocate_references() 
       
         config.http_map = None
+        config.anchormap = None
         g.es('html updated for html plugin', color="blue")
         if config.clear_attributes:
             g.es("http attributes cleared")
@@ -522,6 +552,16 @@ class link_anchor_parser(HTMLParser):
         return False
       
     #@-node:bwmulder.20050319181934.2:is_anchor
+    #@+node:bwmulder.20050323091905:is_link
+    def is_link(self, tag, attrs):
+        if tag != 'a':
+            return False
+        for name, value in attrs:
+            if name == 'href':
+                return True
+        return False
+      
+    #@-node:bwmulder.20050323091905:is_link
     #@-others
 #@nonl
 #@-node:bwmulder.20050319181934:link_anchor_parser
@@ -559,11 +599,8 @@ class rst_htmlparser(link_anchor_parser):
             # previous points to the previous stack element
         
         self.http_map = http_map
-        # The http_map maps anchors to positions.
-        # [actually we want to work with vnodes, but
-        #  navigation seems to require postitions]
-        # Each vnode has a separate anchor.
-        
+        # see remark in config class
+            
         self.node_marker_stack = []
         # self.node_marker_stack.pop() returns True for a closing
         # tag if the opening tag identified an anchor belonging to a vnode.
@@ -582,6 +619,7 @@ class rst_htmlparser(link_anchor_parser):
         self.last_position = None
         # Last vnode; we must attach html code to this node.
             
+    
     #@-node:bwmulder.20050315115739:__init__
     #@+node:bwmulder.20050315115739.1:handle_starttag
     def handle_starttag(self, tag, attrs):
@@ -648,7 +686,8 @@ class rst_htmlparser(link_anchor_parser):
         is_node_marker = self.node_marker_stack.pop()
         if is_node_marker and not config.clear_attributes:
             self.last_position = self.http_map[is_node_marker]
-            set_http_attribute(self.http_map[is_node_marker], self.stack)
+            if is_node_marker != config.last_marker:
+                set_http_attribute(self.http_map[is_node_marker], self.stack)
         self.stack = self.stack[2]
         
     #@nonl
@@ -680,14 +719,17 @@ class anchor_htmlparser(link_anchor_parser):
     
     Each anchor is mapped to a tuple:
         (current_file, vnode).
+        
+    Filters out markers which mark the beginning of the html code for a node.
     """
     #@nonl
     #@-node:bwmulder.20050319180047.1:docstring
     #@+node:bwmulder.20050319235437:__init__
-    def __init__(self, vnode, anchors):
+    def __init__(self, vnode, first_node):
         HTMLParser.__init__(self)
         self.vnode = vnode
-        self.anchors = anchors
+        self.anchormap = config.anchormap
+        self.first_node = first_node
     #@-node:bwmulder.20050319235437:__init__
     #@+node:bwmulder.20050319181934.3:handle_starttag
     def handle_starttag(self, tag, attrs):
@@ -698,10 +740,13 @@ class anchor_htmlparser(link_anchor_parser):
         """
         if not self.is_anchor(tag, attrs):
             return
+        if self.first_node:
+            self.anchormap[config.current_file] = (config.current_file, self.vnode)
+            self.first_node = False
         for name, value in attrs:
             if name == 'name':
                 if not value.startswith(config.node_begin_marker):
-                    self.anchors[value] = (config.current_file, self.vnode)
+                    self.anchormap[value] = (config.current_file, self.vnode)
                   
     #@nonl
     #@-node:bwmulder.20050319181934.3:handle_starttag
@@ -720,10 +765,10 @@ class link_htmlparser(link_anchor_parser):
     #@nonl
     #@-node:bwmulder.20050320102006.1:docstring
     #@+node:bwmulder.20050320102006.2:__init__
-    def __init__(self, vnode, anchormap):
+    def __init__(self, vnode):
         HTMLParser.__init__(self)
         self.vnode = vnode
-        self.anchormap = anchormap
+        self.anchormap = config.anchormap
         self.replacements = []
     #@-node:bwmulder.20050320102006.2:__init__
     #@+node:bwmulder.20050320102006.3:handle_starttag
@@ -733,7 +778,7 @@ class link_htmlparser(link_anchor_parser):
         2. If the current tag is an anchor, update the mapping;
              anchor -> vnode
         """
-        if not self.is_anchor(tag, attrs):
+        if not self.is_link(tag, attrs):
             return
         for name, value in attrs:
             if name == 'href':
@@ -772,42 +817,48 @@ def set_initial_http_attributes(filename):
 #@-node:bwmulder.20050319131813:set_initial_http_attributes
 #@+node:bwmulder.20050319131813.1:relocate_references
 def relocate_references():
-    anchor_map = find_anchors()
-    relocate_references_using_anchormap(anchor_map)
+    relocate_references_using_anchormap()
 #@-node:bwmulder.20050319131813.1:relocate_references
 #@+node:bwmulder.20050319152820:find_anchors
 def find_anchors():
-    anchors = {}
+    """
+    Find the anchors in all the nodes.
+    """
+    first_node = True
     for vnode, attrs in http_attribute_iter():
         html = reconstruct_html_from_attrs(attrs)
         if config.debug_node_html_1:
             pprint(html)
-        parser = anchor_htmlparser(vnode, anchors)
+        parser = anchor_htmlparser(vnode, first_node)
         for line in html:
             parser.feed(line)
+        first_node = parser.first_node
     if config.debug_anchors:
-        pprint(anchors)
-    return anchors
+        print "Anchors found:"
+        pprint(config.anchormap)
 #@-node:bwmulder.20050319152820:find_anchors
 #@+node:bwmulder.20050319153321:relocate_references_using_anchormap
-def relocate_references_using_anchormap(anchormap):
+def relocate_references_using_anchormap():
     for vnode, attr in http_attribute_iter():
         if config.debug_before_and_after_replacement:
             print "Before replacement:", vnode
             pprint (attr)
         http_lines = attr[3:]
-        parser = link_htmlparser(vnode, anchormap)
+        parser = link_htmlparser(vnode)
         for line in attr[3:]:
             parser.feed(line)
         replacements = parser.get_replacements()
         replacements.reverse()
         for line, column, href, href_file, http_node_ref in replacements:
-            if config.debug_before_and_after_replacement:
-                print "replacement_paramters:", line, column, href, href_file, http_node_ref
-            replacement = "%s%s" % (http_node_ref, href)
-            # more work is probably necessary here.
-            attr[line+2] = attr[line+2].replace('href="%s"' % href, 'href="%s"' % replacement)
-        if config.debug_before_and_after_replacement:
+            marker_parts = href.split("#")
+            if len(marker_parts) == 2:
+                marker = marker_parts[1]
+                replacement = "%s#%s" % (http_node_ref, marker)
+                attr[line+2] = attr[line+2].replace('href="%s"' % href, 'href="%s"' % replacement)
+            else:
+                filename = marker_parts[0]
+                attr[line+2] = attr[line+2].replace('href="%s"' % href, 'href="%s"' % http_node_ref)
+    if config.debug_before_and_after_replacement:
             print "After replacement"
             pprint (attr)
             for i in range(3): print
