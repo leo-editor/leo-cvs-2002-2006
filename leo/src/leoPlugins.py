@@ -87,6 +87,11 @@ def doHandlersForTag (tag,keywords):
 	"""Execute all handlers for a given tag, in alphabetical order"""
 
 	global handlers
+	
+	# g.trace(g.app.killed)
+	
+	if g.app.killed:
+		return None
 
 	if handlers.has_key(tag):
 		handle_fns = handlers[tag]
@@ -104,7 +109,6 @@ def doHandlersForTag (tag,keywords):
 			if ret is not None:
 				return ret
 	return None
-#@nonl
 #@-node:ekr.20031218072017.3442:doHandlersForTag
 #@+node:ekr.20031218072017.3443:registerHandler
 def registerHandler(tags,fn):
@@ -126,10 +130,8 @@ def registerOneHandler(tag,fn):
 	global handlers
 
 	existing = handlers.setdefault(tag,[])
-	try:
-		existing.append(fn)
-	except AttributeError:
-		g.es("*** Two exclusive handlers for '%s'" % tag)
+	existing.append(fn)
+#@nonl
 #@-node:ekr.20031218072017.3443:registerHandler
 #@+node:ekr.20031218072017.3444:registerExclusiveHandler
 def registerExclusiveHandler(tags, fn):
