@@ -4,6 +4,8 @@
 
 #@+all
 #@+node:EKR.20040430163619:To do: 4.2
+#@+node:ekr.20040801062809:Fix bugs in node navigator plugin
+#@-node:ekr.20040801062809:Fix bugs in node navigator plugin
 #@+node:ekr.20040801054717:(Improve Go To Line Number command
 #@+node:ekr.20040731212831:To do
 @killcolor
@@ -5616,6 +5618,7 @@ def __init__(self):
     self.tkEncoding = "utf-8"
     self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
     self.unitTestDict = {} # For communication between unit tests and code.
+    self.unitTesting = False # True if unit testing.
     self.use_gnx = True # True: generate gnx's instead of tnode indices.
     self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 
