@@ -13,13 +13,19 @@ cleo plugin by Mark Ng)
 Paul Paterson 
 """ 
  
-__version__ = "0.1" 
+__version__ = "0.2" 
 __plugin_name__ = "Footprints" 
  
 #@<< version history >>
 #@+node:pap.20041020001240.1:<< version history >>
+#@@killcolor
 #@+at 
-#  0.1: Paul Paterson - Initial version
+# 
+# 0.1: Paul Paterson - Initial version.
+# 0.2: EKR:
+#     - Added init method.
+#     - Not safe for unit testing because of lock.acquire.
+#       That is, not installed properly by unit tests.
 #@-at
 #@nonl
 #@-node:pap.20041020001240.1:<< version history >>
@@ -56,6 +62,24 @@ Todo list:
 #@nl
  
 #@+others
+#@+node:ekr.20050310105438:init
+def init ():
+    
+    ok = Tk and not g.app.unitTesting # Not safe for unit testing because of lock.
+    
+    if ok:
+        # Internal controls 
+        click_registry = {} 
+        coloured_nodes = sets.Set() 
+        applyConfiguration(getConfiguration()) 
+        # 
+        leoPlugins.registerHandler("start2", installDrawMethod) 
+        leoPlugins.registerHandler("headclick1", storeHeadlineClick) 
+        g.plugin_signon(__name__)
+        
+    return ok
+#@nonl
+#@-node:ekr.20050310105438:init
 #@+node:pap.20041020001240.5:Error Classes
 pass 
 #@nonl
@@ -174,17 +198,6 @@ def updateNodes():
 #@-node:pap.20041020004243:updateNodes
 #@-node:pap.20041020001240.55:Implementation
 #@-others
- 
-if Tk: 
-    # 
-    # Internal controls 
-    click_registry = {} 
-    coloured_nodes = sets.Set() 
-    applyConfiguration(getConfiguration()) 
-    # 
-    leoPlugins.registerHandler("start2", installDrawMethod) 
-    leoPlugins.registerHandler("headclick1", storeHeadlineClick) 
-    g.plugin_signon(__name__) 
 #@nonl
 #@-node:pap.20041020001240:@thin footprints.py
 #@-leo
