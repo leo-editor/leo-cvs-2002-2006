@@ -127,8 +127,8 @@ class baseAtFile:
     
         # Set by scanHeader when reading. Set by scanAllDirectives...
         self.encoding = g.app.config.default_derived_file_encoding
-        self.endSentinelComment = None
-        self.startSentinelComment = None
+        self.endSentinelComment = ""
+        self.startSentinelComment = ""
     #@nonl
     #@-node:ekr.20031218072017.2623:atFile.__init__ & initIvars
     #@+node:ekr.20031218072017.2624:top_df.error
@@ -610,7 +610,7 @@ class baseAtFile:
             at.endSentinelComment = end
         else:
             at.error("Bad @+leo sentinel in " + fileName)
-        # g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
+        # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
         return firstLines, new_df
     #@nonl
     #@-node:ekr.20031218072017.2633:top_df.scanHeader
@@ -892,8 +892,8 @@ class baseOldDerivedFile:
         self.default_directory = None
         self.page_width = None
         self.tab_width  = None
-        self.startSentinelComment = None
-        self.endSentinelComment = None
+        self.startSentinelComment = ""
+        self.endSentinelComment = ""
         self.language = None
         
         #@+at 
@@ -2316,7 +2316,7 @@ class baseOldDerivedFile:
                 self.startSentinelComment = "#" # This should never happen!
                 self.endSentinelComment = ""
                 
-            # g.trace(self.startSentinelComment)
+            # g.trace(repr(self.startSentinelComment),repr(self.endSentinelComment))
             #@nonl
             #@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
             #@nl
@@ -4292,7 +4292,7 @@ class baseNewDerivedFile(oldDerivedFile):
             # Returns a tuple (single,start,end) of comment delims
             if delim1:
                 at.startSentinelComment = delim1
-                at.endSentinelComment = ""
+                at.endSentinelComment = "" # Must not be None.
             elif delim2 and delim3:
                 at.startSentinelComment = delim2
                 at.endSentinelComment = delim3
@@ -4315,7 +4315,7 @@ class baseNewDerivedFile(oldDerivedFile):
             # Returns a tuple (single,start,end) of comment delims
             if delim1:
                 self.startSentinelComment = delim1
-                self.endSentinelComment = None
+                self.endSentinelComment = "" # Must not be None.
             elif delim2 and delim3:
                 self.startSentinelComment = delim2
                 self.endSentinelComment = delim3
