@@ -36,368 +36,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
     """A class that represents a Leo window rendered in Tk/tkinter."""
 
     #@    @+others
-    #@+node:ekr.20041223095751:class componentClass (componentBaseClass)
-    class componentClass (leoFrame.componentBaseClass):
-        
-        '''A class to manage components of Leo windows'''
-        
-        #@    @+others
-        #@+node:ekr.20041223095751.1: ctor
-        def __init__ (self,c,name,frame,obj=None,packer=None,unpacker=None):
-            
-            # Init the base class.
-            leoFrame.componentBaseClass.__init__(
-                self,c,name,frame,obj,packer,unpacker)
-            
-            self.setPacker(packer)
-            self.setUnpacker(unpacker)
-        #@nonl
-        #@-node:ekr.20041223095751.1: ctor
-        #@+node:ekr.20041223154028.4:__repr__
-        def __repr__ (self):
-            
-            return '<component %s>' % self.name
-        #@nonl
-        #@-node:ekr.20041223154028.4:__repr__
-        #@+node:ekr.20041223124022:destroy
-        def destroy (self):
-            
-            try:
-                del c.frame.componentsDict[self.name]
-            except KeyError:
-                g.es("No component named %s" % name,color='blue')
-        #@nonl
-        #@-node:ekr.20041223124022:destroy
-        #@+node:ekr.20041223124022.1:getters & setters
-        # Setters...
-        def setPacker (self,packer):
-            if not packer: # Define default packer.
-                def packer():
-                    if self.frame:
-                        self.frame.pack(side='top',expand=1,fill='both')
-            self.packer = packer
-        
-        def setUnpacker (self,unpacker):
-            if not unpacker: # Define default unpacker.
-                def unpacker():
-                    if self.frame:
-                        self.frame.pack_forget()
-            self.unpacker = unpacker
-        #@nonl
-        #@-node:ekr.20041223124022.1:getters & setters
-        #@+node:ekr.20041223095751.2:pack & unpack
-        def pack (self):
-        
-            self.packer()
-            
-        def unpack (self):
-        
-            self.unpacker()
-        #@nonl
-        #@-node:ekr.20041223095751.2:pack & unpack
-        #@-others
-    #@nonl
-    #@-node:ekr.20041223095751:class componentClass (componentBaseClass)
-    #@+node:ekr.20041223104933:class statusLineClass
-    class statusLineClass:
-        
-        '''A class representing the status line.'''
-        
-        #@    @+others
-        #@+node:ekr.20031218072017.3961: ctor
-        def __init__ (self,c,parentFrame):
-            
-            self.c = c
-            self.bodyCtrl = c.frame.bodyCtrl
-            self.colorTags = [] # list of color names used as tags.
-            self.enabled = False
-            self.isVisible = False
-            self.lastRow = self.lastCol = 0
-            self.log = c.frame.log
-            #if 'black' not in self.log.colorTags:
-            #    self.log.colorTags.append("black")
-            self.parentFrame = parentFrame
-            self.statusFrame = Tk.Frame(parentFrame,bd=2)
-            text = "line 0, col 0"
-            width = len(text) + 4
-            self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
-            self.labelWidget.pack(side="left",padx=1)
-            
-            bg = self.statusFrame.cget("background")
-            self.textWidget = Tk.Text(self.statusFrame,
-                height=1,state="disabled",bg=bg,relief="groove")
-            self.textWidget.pack(side="left",expand=1,fill="x")
-        #@nonl
-        #@-node:ekr.20031218072017.3961: ctor
-        #@+node:ekr.20031218072017.3962:clear
-        def clear (self):
-            
-            t = self.textWidget
-            if not t: return
-            
-            t.configure(state="normal")
-            t.delete("1.0","end")
-            t.configure(state="disabled")
-        #@nonl
-        #@-node:ekr.20031218072017.3962:clear
-        #@+node:EKR.20040424153344:enable, disable & isEnabled
-        def disable (self,background=None):
-            
-            t = self.textWidget
-            if t:
-                if not background:
-                    background = self.statusFrame.cget("background")
-                t.configure(state="disabled",background=background)
-            self.enabled = False
-            
-        def enable (self,background="white"):
-            
-            g.trace()
-            t = self.textWidget
-            if t:
-                t.configure(state="normal",background=background)
-                t.focus_set()
-            self.enabled = True
-                
-        def isEnabled(self):
-            return self.enabled
-        #@nonl
-        #@-node:EKR.20040424153344:enable, disable & isEnabled
-        #@+node:ekr.20041026132435:get
-        def get (self):
-            
-            t = self.textWidget
-            if t:
-                return t.get("1.0","end")
-            else:
-                return ""
-        #@nonl
-        #@-node:ekr.20041026132435:get
-        #@+node:ekr.20041223114744:getFrame
-        def getFrame (self):
-            
-            return self.statusFrame
-        #@nonl
-        #@-node:ekr.20041223114744:getFrame
-        #@+node:ekr.20031218072017.3963:put
-        def put(self,s,color=None):
-            
-            t = self.textWidget
-            if not t: return
-            
-            t.configure(state="normal")
-                
-            if color and color not in self.colorTags:
-                self.colorTags.append(color)
-                t.tag_config(color,foreground=color)
-        
-            if color:
-                t.insert("end",s)
-                t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
-                t.tag_config("black",foreground="black")
-                t.tag_add("black","end")
-            else:
-                t.insert("end",s)
-            
-            t.configure(state="disabled")
-            t.update_idletasks()
-        #@nonl
-        #@-node:ekr.20031218072017.3963:put
-        #@+node:EKR.20040424154804:setFocus
-        def setFocus (self):
-            
-            t = self.textWidget
-            if t:
-                t.focus_set()
-        #@nonl
-        #@-node:EKR.20040424154804:setFocus
-        #@+node:ekr.20041223111916:pack & show
-        def pack (self):
-            
-            if not self.isVisible:
-                self.isVisible = True
-                self.statusFrame.pack(fill="x",pady=1)
-        
-                # Register an idle-time handler to update the row and column indicators.
-                self.statusFrame.after_idle(self.update)
-                
-        show = pack
-        #@nonl
-        #@-node:ekr.20041223111916:pack & show
-        #@+node:ekr.20041223111916.1:unpack & hide
-        def unpack (self):
-            
-            if self.isVisible:
-                self.isVisible = False
-                self.statusFrame.pack_forget()
-        
-        hide = unpack
-        #@nonl
-        #@-node:ekr.20041223111916.1:unpack & hide
-        #@+node:ekr.20031218072017.1733:update
-        def update (self):
-            
-            c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
-            if g.app.killed or not self.isVisible:
-                return
-        
-            index = body.index("insert")
-            row,col = g.app.gui.getindex(body,index)
-        
-            if col > 0:
-                s = body.get("%d.0" % (row),index)
-                s = g.toUnicode(s,g.app.tkEncoding)
-                col = g.computeWidth (s,c.tab_width)
-        
-            if row != self.lastRow or col != self.lastCol:
-                s = "line %d, col %d " % (row,col)
-                lab.configure(text=s)
-                self.lastRow = row
-                self.lastCol = col
-        
-            self.statusFrame.after(500,self.update)
-        
-            if self.enabled:
-                self.setFocus()
-        #@nonl
-        #@-node:ekr.20031218072017.1733:update
-        #@-others
-    #@nonl
-    #@-node:ekr.20041223104933:class statusLineClass
-    #@+node:ekr.20041223102225:class iconBarClass
-    class iconBarClass:
-        
-        '''A class representing the singleton Icon bar'''
-        
-        #@    @+others
-        #@+node:ekr.20041223102225.1: ctor
-        def __init__ (self,c,parentFrame):
-            
-            self.c = c
-            
-            self.iconFrame = Tk.Frame(
-                parentFrame,height="5m",bd=2,relief="groove") # ,background='blue')
-            self.parentFrame = parentFrame
-            self.visible = False
-        #@nonl
-        #@-node:ekr.20041223102225.1: ctor
-        #@+node:ekr.20031218072017.3958:add
-        def add(self,*args,**keys):
-            
-            """Add a button containing text or a picture to the icon bar.
-            
-            Pictures take precedence over text"""
-            
-            f = self.iconFrame
-            text = keys.get('text')
-            imagefile = keys.get('imagefile')
-            image = keys.get('image')
-            command = keys.get('command')
-            bg = keys.get('bg')
-        
-            if not imagefile and not image and not text: return
-        
-            # First define n.	
-            try:
-                g.app.iconWidgetCount += 1
-                n = g.app.iconWidgetCount
-            except:
-                n = g.app.iconWidgetCount = 1
-        
-            if not command:
-                def command():
-                    print "command for widget %s" % (n)
-        
-            if imagefile or image:
-                #@        << create a picture >>
-                #@+node:ekr.20031218072017.3959:<< create a picture >>
-                try:
-                    if imagefile:
-                        # Create the image.  Throws an exception if file not found
-                        imagefile = g.os_path_join(g.app.loadDir,imagefile)
-                        imagefile = g.os_path_normpath(imagefile)
-                        image = Tk.PhotoImage(master=g.app.root,file=imagefile)
-                        
-                        # Must keep a reference to the image!
-                        try:
-                            refs = g.app.iconImageRefs
-                        except:
-                            refs = g.app.iconImageRefs = []
-                    
-                        refs.append((imagefile,image),)
-                    
-                    if not bg:
-                        bg = f.cget("bg")
-                
-                    b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
-                    b.pack(side="left",fill="y")
-                    return b
-                    
-                except:
-                    g.es_exception()
-                    return None
-                #@nonl
-                #@-node:ekr.20031218072017.3959:<< create a picture >>
-                #@nl
-            elif text:
-                w = min(6,len(text))
-                b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
-                b.pack(side="left", fill="y")
-                return b
-                
-            return None
-        #@nonl
-        #@-node:ekr.20031218072017.3958:add
-        #@+node:ekr.20031218072017.3956:clear
-        def clear(self):
-            
-            """Destroy all the widgets in the icon bar"""
-            
-            f = self.iconFrame
-            
-            for slave in f.pack_slaves():
-                slave.destroy()
-            self.visible = False
-        
-            f.configure(height="5m") # The default height.
-            g.app.iconWidgetCount = 0
-            g.app.iconImageRefs = []
-        #@-node:ekr.20031218072017.3956:clear
-        #@+node:ekr.20041223114821:getFrame
-        def getFrame (self):
-        
-            return self.iconFrame
-        #@nonl
-        #@-node:ekr.20041223114821:getFrame
-        #@+node:ekr.20041223102225.2:pack (show)
-        def pack (self):
-            
-            """Show the icon bar by repacking it"""
-            
-            if not self.visible:
-                self.visible = True
-                self.iconFrame.pack(fill="x",pady=2)
-                
-        show = pack
-        #@nonl
-        #@-node:ekr.20041223102225.2:pack (show)
-        #@+node:ekr.20031218072017.3955:unpack (hide)
-        def unpack (self):
-            
-            """Hide the icon bar by unpacking it.
-            
-            A later call to show will repack it in a new location."""
-            
-            if self.visible:
-                self.visible = False
-                self.iconFrame.pack_forget()
-                
-        hide = unpack
-        #@nonl
-        #@-node:ekr.20031218072017.3955:unpack (hide)
-        #@-others
-    #@nonl
-    #@-node:ekr.20041223102225:class iconBarClass
     #@+node:ekr.20031218072017.3941: Birth & Death (tkFrame)
     #@+node:ekr.20031218072017.1801:__init__ (tkFrame)
     def __init__(self,title,gui):
@@ -433,10 +71,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.treeBar = None
         
         # Used by event handlers...
-        self.redrawCount = 0
-        self.draggedItem = None
         self.controlKeyIsDown = False # For control-drags
+        self.draggedItem = None
+        self.isActive = True
+        self.redrawCount = 0
         self.revertHeadline = None # Previous headline text for abortEditLabel.
+        self.wantedWidget = None
+        self.wantedCallbackScheduled = False
         #@nonl
         #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
         #@nl
@@ -473,8 +114,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         frame.top.protocol("WM_DELETE_WINDOW", frame.OnCloseLeoEvent)
         frame.top.bind("<Button-1>", frame.OnActivateLeoEvent)
         
-        frame.top.bind("<Activate>", frame.OnActivateLeoEvent) # Doesn't work on windows.
-        frame.top.bind("<Deactivate>", frame.OnDeactivateLeoEvent) # Doesn't work on windows.
+        # These don't work on Windows. Because of bugs in window managers,
+        # there is NO WAY to know which window is on top!
+        frame.top.bind("<Activate>",frame.OnActivateLeoEvent)
+        frame.top.bind("<Deactivate>",frame.OnDeactivateLeoEvent)
         
         frame.top.bind("<Control-KeyPress>",frame.OnControlKeyDown)
         frame.top.bind("<Control-KeyRelease>",frame.OnControlKeyUp)
@@ -625,7 +268,24 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         # Bind mouse wheel event to canvas
         if sys.platform != "win32": # Works on 98, crashes on XP.
-            canvas.bind("<MouseWheel>", self.OnMouseWheel)
+            canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+            if 1: # New in 4.3.
+                #@            << workaround for mouse-wheel problems >>
+                #@+node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+                # Handle mapping of mouse-wheel to buttons 4 and 5.
+                
+                def mapWheel(e):
+                    if e.num == 4: # Button 4
+                        e.delta = 120
+                        return frame.OnMouseWheel(e)
+                    elif e.num == 5: # Button 5
+                        e.delta = -120
+                        return frame.OnMouseWheel(e)
+                
+                canvas.bind("<ButtonPress>",mapWheel,add=1)
+                #@nonl
+                #@-node:ekr.20050119210541:<< workaround for mouse-wheel problems >>
+                #@nl
             
         canvas['yscrollcommand'] = self.setCallback
         treeBar['command']     = self.yviewCallback
@@ -695,6 +355,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # g.print_bindings("canvas",canvas)
         return canvas
         
+    #@nonl
     #@-node:ekr.20041221071131.1:createTkTreeCanvas
     #@-node:ekr.20031218072017.3944:f.createCanvas & helpers
     #@+node:ekr.20041221123325:createLeoSplitters & helpers
@@ -1091,6 +752,379 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.1974:destroySelf
     #@-node:ekr.20031218072017.3964:Destroying the frame
     #@-node:ekr.20031218072017.3941: Birth & Death (tkFrame)
+    #@+node:ekr.20041223095751:class componentClass (componentBaseClass)
+    class componentClass (leoFrame.componentBaseClass):
+        
+        '''A class to manage components of Leo windows'''
+        
+        #@    @+others
+        #@+node:ekr.20041223095751.1: ctor
+        def __init__ (self,c,name,frame,obj=None,packer=None,unpacker=None):
+            
+            # Init the base class.
+            leoFrame.componentBaseClass.__init__(
+                self,c,name,frame,obj,packer,unpacker)
+            
+            self.setPacker(packer)
+            self.setUnpacker(unpacker)
+        #@nonl
+        #@-node:ekr.20041223095751.1: ctor
+        #@+node:ekr.20041223154028.4:__repr__
+        def __repr__ (self):
+            
+            return '<component %s>' % self.name
+        #@nonl
+        #@-node:ekr.20041223154028.4:__repr__
+        #@+node:ekr.20041223124022:destroy
+        def destroy (self):
+            
+            try:
+                del c.frame.componentsDict[self.name]
+            except KeyError:
+                g.es("No component named %s" % name,color='blue')
+        #@nonl
+        #@-node:ekr.20041223124022:destroy
+        #@+node:ekr.20041223124022.1:getters & setters
+        # Setters...
+        def setPacker (self,packer):
+            if not packer: # Define default packer.
+                def packer():
+                    if self.frame:
+                        self.frame.pack(side='top',expand=1,fill='both')
+            self.packer = packer
+        
+        def setUnpacker (self,unpacker):
+            if not unpacker: # Define default unpacker.
+                def unpacker():
+                    if self.frame:
+                        self.frame.pack_forget()
+            self.unpacker = unpacker
+        #@nonl
+        #@-node:ekr.20041223124022.1:getters & setters
+        #@+node:ekr.20041223095751.2:pack & unpack
+        def pack (self):
+        
+            self.packer()
+            
+        def unpack (self):
+        
+            self.unpacker()
+        #@nonl
+        #@-node:ekr.20041223095751.2:pack & unpack
+        #@-others
+    #@nonl
+    #@-node:ekr.20041223095751:class componentClass (componentBaseClass)
+    #@+node:ekr.20041223104933:class statusLineClass
+    class statusLineClass:
+        
+        '''A class representing the status line.'''
+        
+        #@    @+others
+        #@+node:ekr.20031218072017.3961: ctor
+        def __init__ (self,c,parentFrame):
+            
+            self.c = c
+            self.bodyCtrl = c.frame.bodyCtrl
+            self.colorTags = [] # list of color names used as tags.
+            self.enabled = False
+            self.isVisible = False
+            self.lastRow = self.lastCol = 0
+            self.log = c.frame.log
+            #if 'black' not in self.log.colorTags:
+            #    self.log.colorTags.append("black")
+            self.parentFrame = parentFrame
+            self.statusFrame = Tk.Frame(parentFrame,bd=2)
+            text = "line 0, col 0"
+            width = len(text) + 4
+            self.labelWidget = Tk.Label(self.statusFrame,text=text,width=width,anchor="w")
+            self.labelWidget.pack(side="left",padx=1)
+            
+            bg = self.statusFrame.cget("background")
+            self.textWidget = Tk.Text(self.statusFrame,
+                height=1,state="disabled",bg=bg,relief="groove")
+            self.textWidget.pack(side="left",expand=1,fill="x")
+            self.textWidget.bind("<Button-1>", self.onActivate)
+        #@nonl
+        #@-node:ekr.20031218072017.3961: ctor
+        #@+node:ekr.20031218072017.3962:clear
+        def clear (self):
+            
+            t = self.textWidget
+            if not t: return
+            
+            t.configure(state="normal")
+            t.delete("1.0","end")
+            t.configure(state="disabled")
+        #@nonl
+        #@-node:ekr.20031218072017.3962:clear
+        #@+node:EKR.20040424153344:enable, disable & isEnabled
+        def disable (self,background=None):
+            
+            c = self.c ; t = self.textWidget
+            if t:
+                if not background:
+                    background = self.statusFrame.cget("background")
+                t.configure(state="disabled",background=background)
+            self.enabled = False
+            c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='statusLine.disable')
+            
+        def enable (self,background="white"):
+            
+            # g.trace()
+            c = self.c ; t = self.textWidget
+            if t:
+                t.configure(state="normal",background=background)
+                c.frame.statusLineWantsFocus(t,tag='statusLine.ensable')
+                t.focus_set()
+            self.enabled = True
+                
+        def isEnabled(self):
+            return self.enabled
+        #@nonl
+        #@-node:EKR.20040424153344:enable, disable & isEnabled
+        #@+node:ekr.20041026132435:get
+        def get (self):
+            
+            t = self.textWidget
+            if t:
+                return t.get("1.0","end")
+            else:
+                return ""
+        #@nonl
+        #@-node:ekr.20041026132435:get
+        #@+node:ekr.20041223114744:getFrame
+        def getFrame (self):
+            
+            return self.statusFrame
+        #@nonl
+        #@-node:ekr.20041223114744:getFrame
+        #@+node:ekr.20050120093555:onActivate
+        def onActivate (self,event=None):
+            
+            # Don't change background as the result of simple mouse clicks.
+            background = self.statusFrame.cget("background")
+            self.enable(background=background)
+        #@nonl
+        #@-node:ekr.20050120093555:onActivate
+        #@+node:ekr.20041223111916:pack & show
+        def pack (self):
+            
+            if not self.isVisible:
+                self.isVisible = True
+                self.statusFrame.pack(fill="x",pady=1)
+        
+                # Register an idle-time handler to update the row and column indicators.
+                self.statusFrame.after_idle(self.update)
+                
+        show = pack
+        #@nonl
+        #@-node:ekr.20041223111916:pack & show
+        #@+node:ekr.20031218072017.3963:put
+        def put(self,s,color=None):
+            
+            t = self.textWidget
+            if not t: return
+            
+            t.configure(state="normal")
+                
+            if color and color not in self.colorTags:
+                self.colorTags.append(color)
+                t.tag_config(color,foreground=color)
+        
+            if color:
+                t.insert("end",s)
+                t.tag_add(color,"end-%dc" % (len(s)+1),"end-1c")
+                t.tag_config("black",foreground="black")
+                t.tag_add("black","end")
+            else:
+                t.insert("end",s)
+            
+            t.configure(state="disabled")
+            t.update_idletasks()
+        #@nonl
+        #@-node:ekr.20031218072017.3963:put
+        #@+node:EKR.20040424154804:setFocus
+        if 0: # No longer used in 4.3.  Done as the result of statusLineWantsFocus.
+        
+            def setFocus (self):
+            
+                # Force the focus to the icon area.
+                t = self.textWidget
+                if t:
+                    t.focus_set()
+        #@nonl
+        #@-node:EKR.20040424154804:setFocus
+        #@+node:ekr.20041223111916.1:unpack & hide
+        def unpack (self):
+            
+            if self.isVisible:
+                self.isVisible = False
+                self.statusFrame.pack_forget()
+        
+        hide = unpack
+        #@nonl
+        #@-node:ekr.20041223111916.1:unpack & hide
+        #@+node:ekr.20031218072017.1733:update
+        def update (self):
+            
+            c = self.c ; body = self.bodyCtrl ; lab = self.labelWidget
+            if g.app.killed or not self.isVisible:
+                return
+        
+            index = body.index("insert")
+            row,col = g.app.gui.getindex(body,index)
+        
+            if col > 0:
+                s = body.get("%d.0" % (row),index)
+                s = g.toUnicode(s,g.app.tkEncoding)
+                col = g.computeWidth (s,c.tab_width)
+        
+            if row != self.lastRow or col != self.lastCol:
+                s = "line %d, col %d " % (row,col)
+                lab.configure(text=s)
+                self.lastRow = row
+                self.lastCol = col
+        
+            self.statusFrame.after(500,self.update)
+        #@nonl
+        #@-node:ekr.20031218072017.1733:update
+        #@-others
+    #@nonl
+    #@-node:ekr.20041223104933:class statusLineClass
+    #@+node:ekr.20041223102225:class iconBarClass
+    class iconBarClass:
+        
+        '''A class representing the singleton Icon bar'''
+        
+        #@    @+others
+        #@+node:ekr.20041223102225.1: ctor
+        def __init__ (self,c,parentFrame):
+            
+            self.c = c
+            
+            self.iconFrame = Tk.Frame(
+                parentFrame,height="5m",bd=2,relief="groove") # ,background='blue')
+            self.parentFrame = parentFrame
+            self.visible = False
+        #@nonl
+        #@-node:ekr.20041223102225.1: ctor
+        #@+node:ekr.20031218072017.3958:add
+        def add(self,*args,**keys):
+            
+            """Add a button containing text or a picture to the icon bar.
+            
+            Pictures take precedence over text"""
+            
+            f = self.iconFrame
+            text = keys.get('text')
+            imagefile = keys.get('imagefile')
+            image = keys.get('image')
+            command = keys.get('command')
+            bg = keys.get('bg')
+        
+            if not imagefile and not image and not text: return
+        
+            # First define n.	
+            try:
+                g.app.iconWidgetCount += 1
+                n = g.app.iconWidgetCount
+            except:
+                n = g.app.iconWidgetCount = 1
+        
+            if not command:
+                def command():
+                    print "command for widget %s" % (n)
+        
+            if imagefile or image:
+                #@        << create a picture >>
+                #@+node:ekr.20031218072017.3959:<< create a picture >>
+                try:
+                    if imagefile:
+                        # Create the image.  Throws an exception if file not found
+                        imagefile = g.os_path_join(g.app.loadDir,imagefile)
+                        imagefile = g.os_path_normpath(imagefile)
+                        image = Tk.PhotoImage(master=g.app.root,file=imagefile)
+                        
+                        # Must keep a reference to the image!
+                        try:
+                            refs = g.app.iconImageRefs
+                        except:
+                            refs = g.app.iconImageRefs = []
+                    
+                        refs.append((imagefile,image),)
+                    
+                    if not bg:
+                        bg = f.cget("bg")
+                
+                    b = Tk.Button(f,image=image,relief="flat",bd=0,command=command,bg=bg)
+                    b.pack(side="left",fill="y")
+                    return b
+                    
+                except:
+                    g.es_exception()
+                    return None
+                #@nonl
+                #@-node:ekr.20031218072017.3959:<< create a picture >>
+                #@nl
+            elif text:
+                w = min(6,len(text))
+                b = Tk.Button(f,text=text,width=w,relief="groove",bd=2,command=command)
+                b.pack(side="left", fill="y")
+                return b
+                
+            return None
+        #@nonl
+        #@-node:ekr.20031218072017.3958:add
+        #@+node:ekr.20031218072017.3956:clear
+        def clear(self):
+            
+            """Destroy all the widgets in the icon bar"""
+            
+            f = self.iconFrame
+            
+            for slave in f.pack_slaves():
+                slave.destroy()
+            self.visible = False
+        
+            f.configure(height="5m") # The default height.
+            g.app.iconWidgetCount = 0
+            g.app.iconImageRefs = []
+        #@-node:ekr.20031218072017.3956:clear
+        #@+node:ekr.20041223114821:getFrame
+        def getFrame (self):
+        
+            return self.iconFrame
+        #@nonl
+        #@-node:ekr.20041223114821:getFrame
+        #@+node:ekr.20041223102225.2:pack (show)
+        def pack (self):
+            
+            """Show the icon bar by repacking it"""
+            
+            if not self.visible:
+                self.visible = True
+                self.iconFrame.pack(fill="x",pady=2)
+                
+        show = pack
+        #@nonl
+        #@-node:ekr.20041223102225.2:pack (show)
+        #@+node:ekr.20031218072017.3955:unpack (hide)
+        def unpack (self):
+            
+            """Hide the icon bar by unpacking it.
+            
+            A later call to show will repack it in a new location."""
+            
+            if self.visible:
+                self.visible = False
+                self.iconFrame.pack_forget()
+                
+        hide = unpack
+        #@nonl
+        #@-node:ekr.20031218072017.3955:unpack (hide)
+        #@-others
+    #@nonl
+    #@-node:ekr.20041223102225:class iconBarClass
     #@+node:ekr.20041222060024:tkFrame.unpack/repack...
     #@+node:ekr.20041223160653:pane packers
     if 0: # placeSplitter and divideAnySplitter.
@@ -1539,23 +1573,25 @@ class leoTkinterFrame (leoFrame.leoFrame):
         self.controlKeyIsDown = False
     
     #@-node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
-    #@+node:ekr.20031218072017.3975:OnActivateBody
+    #@+node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
     def OnActivateBody (self,event=None):
     
         try:
             frame = self ; c = frame.c ; gui = g.app.gui
+            # g.trace(c.shortFileName())
             g.app.setLog(frame.log,"OnActivateBody")
             w = gui.get_focus(frame)
             if w != frame.body.bodyCtrl:
                 self.tree.OnDeactivate()
-                # Reference to bodyCtrl is allowable in an event handler.
-                gui.set_focus(c,frame.body.bodyCtrl) 
+            self.bodyWantsFocus(self.bodyCtrl,tag='OnActivateBody')
         except:
             g.es_event_exception("activate body")
     #@nonl
-    #@-node:ekr.20031218072017.3975:OnActivateBody
+    #@-node:ekr.20031218072017.3975:OnActivateBody (tkFrame)
     #@+node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     def OnActivateLeoEvent(self,event=None):
+        
+        # g.trace(self.c.shortFileName())
     
         try:
             g.app.setLog(self.log,"OnActivateLeoEvent")
@@ -1573,12 +1609,16 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.2253:OnActivateLeoEvent, OnDeactivateLeoEvent
     #@+node:ekr.20031218072017.3976:OnActivateTree
     def OnActivateTree (self,event=None):
+        
+        # g.trace(self.c)
     
         try:
             frame = self ; c = frame.c ; gui = g.app.gui
             g.app.setLog(frame.log,"OnActivateTree")
-            # self.tree.undimEditLabel()
-            gui.set_focus(c, frame.bodyCtrl)
+            if 0: # Do NOT do this here!
+                # OnActivateTree can get called when the tree gets DE-activated!!
+                frame.bodyWantsFocus(frame.bodyCtrl,tag='OnActivateTree')
+                
         except:
             g.es_event_exception("activate tree")
     #@-node:ekr.20031218072017.3976:OnActivateTree
@@ -1611,8 +1651,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
             c = self.c ; v = c.currentVnode()
             if not g.doHook("bodydclick1",c=c,p=v,v=v,event=event):
                 if event: # 8/4/02: prevent wandering insertion point.
-                    index = "@%d,%d" % (event.x, event.y) # Find where we clicked
-                    # 7/9/04
+                    index = "@%d,%d" % (event.x, event.y) # Find where we clicked.
                     event.widget.tag_add('sel', 'insert wordstart', 'insert wordend')
                 body = self.bodyCtrl
                 start = body.index(index + " wordstart")
@@ -1760,7 +1799,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
         if v: # Bug fix 10/9/02: also redraw ancestor headlines.
             tree.force_redraw() # force a redraw of joined headlines.
     
-        gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
+        frame.bodyWantsFocus(frame.bodyCtrl,tag='endEditLabelCommand')
     #@nonl
     #@-node:ekr.20031218072017.3982:endEditLabelCommand
     #@+node:ekr.20031218072017.3983:insertHeadlineTime
@@ -1790,11 +1829,13 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@+node:ekr.20031218072017.3985:toggleActivePane
     def toggleActivePane(self):
         
-        c = self.c ; gui = g.app.gui
-        if gui.get_focus(self) == self.bodyCtrl:
-            gui.set_focus(c,self.canvas)
+        frame = self
+    
+        # Toggle the focus immediately.
+        if g.app.gui.get_focus(self) == frame.bodyCtrl:
+            frame.treeWantsFocus(frame.canvas,later=False,tag='toggleActivePane')
         else:
-            gui.set_focus(c,self.bodyCtrl)
+            frame.bodyWantsFocus(frame.bodyCtrl,later=False,tag='toggleActivePane')
     #@nonl
     #@-node:ekr.20031218072017.3985:toggleActivePane
     #@+node:ekr.20031218072017.3986:cascade
@@ -2001,6 +2042,90 @@ class leoTkinterFrame (leoFrame.leoFrame):
     #@-node:ekr.20031218072017.3992:leoHelp
     #@-node:ekr.20031218072017.3991:Help Menu...
     #@-node:ekr.20031218072017.3979:Gui-dependent commands
+    #@+node:ekr.20050120083053:Delayed Focus (tkFrame)
+    #@+at
+    # 
+    # New in 4.3
+    # 
+    # Rather than calling g.app.gui.set_focus directly, the code calls
+    # self.xWantsFocus. This defers to idle-time code in the status-line 
+    # class.
+    #@-at
+    #@nonl
+    #@+node:ekr.20050120092028:xWantsFocus
+    #@+at 
+    #@nonl
+    # All these do the same thing, but separate names are good for tracing and
+    # makes the intent of the code clearer.
+    #@-at
+    #@@c 
+    
+    def bodyWantsFocus(self,widget,later=True,tag=''):
+        # g.trace(tag,self.c.shortFileName())
+        self.set_focus(widget,later=later,tag=tag)
+        
+    def logWantsFocus(self,widget,later=True,tag=''):
+        # g.trace(tag)
+        self.set_focus(widget,later=later,tag=tag)
+        
+    def statusLineWantsFocus(self,widget,later=True,tag=''):
+        # g.trace(tag)
+        self.set_focus(widget,later=later,tag=tag)
+        
+    def treeWantsFocus(self,widget,later=True,tag=''):
+        # g.trace(tag,repr(widget))
+        self.set_focus(widget,later=later,tag=tag)
+    #@nonl
+    #@-node:ekr.20050120092028:xWantsFocus
+    #@+node:ekr.20050120092028.1:set_focus (tkFrame)
+    #@+at
+    # Very tricky code:
+    # Many Tk calls can mess with the focus, so we must always set the focus,
+    # regardless of what we did previously.
+    # 
+    # Alas, because of bugs in Tk and/or window managers, we can not call 
+    # method at
+    # idle time: that would interfere with switching between windows. Instead, 
+    # the
+    # xWnatFocus routines call this with later=True, to queue up a ONE-SHOT 
+    # later call
+    # to g.app.g.app.gui.set_focus.
+    #@-at
+    #@@c
+    
+    def set_focus(self,widget,later=False,tag=''):
+        
+        '''Set the focus to the widget specified in the xWantsFocus methods.'''
+    
+        c = self.c
+        
+        # Crucial: disable the callback if we later change our minds.
+        self.wantedWidget = widget
+        g.app.wantedCommander = c
+        # g.trace(c.shortFileName())
+    
+        if widget and not g.app.unitTesting:
+            # Messing with focus may be dangerous in unit tests.
+            if later:
+                # Queue up the call (just once) for later.
+                def setFocusCallback(c=c,widget=widget):
+                    self.wantedCallbackScheduled = False
+                    if (
+                        widget == c.frame.wantedWidget
+                        and c == g.app.wantedCommander
+                        and not g.app.unitTesting
+                    ):
+                        # g.trace(repr(c.shortFileName()))
+                        g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+                if not self.wantedCallbackScheduled:
+                    self.wantedCallbackScheduled = True
+                    self.outerFrame.after(500,setFocusCallback)
+            else:
+                # g.trace(tag,c.shortFileName())
+                g.app.gui.set_focus(c,widget,tag='frame.setFocus')
+    #@nonl
+    #@-node:ekr.20050120092028.1:set_focus (tkFrame)
+    #@-node:ekr.20050120083053:Delayed Focus (tkFrame)
     #@+node:ekr.20031218072017.3995:Tk bindings...
     def bringToFront (self):
         self.top.deiconify()
@@ -3107,6 +3232,7 @@ class leoTkinterLog (leoFrame.leoLog):
         try:
             g.app.setLog(self,"OnActivateLog")
             self.frame.tree.OnDeactivate()
+            self.frame.logWantsFocus(self.logCtrl,tag='onActivateLog')
         except:
             g.es_event_exception("activate log")
     #@nonl

@@ -414,7 +414,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
         self.top.deiconify()
         self.top.lift()
     
-        gui.set_focus(c,t)
+        gui.set_focus(c,t,tag='bringToFront')
         gui.setTextSelection (t,"1.0","end") # Thanks Rich.
     #@nonl
     #@-node:ekr.20031218072017.3907:bringToFront

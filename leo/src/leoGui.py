@@ -308,7 +308,7 @@ class leoGui:
     
         self.oops()
             
-    def set_focus(self,commander,widget):
+    def set_focus(self,commander,widget,tag=''):
     
         """Set the focus of the widget in the given commander if it needs to be changed."""
     
@@ -497,7 +497,7 @@ class unitTestGui(leoGui):
     #@nonl
     #@-node:ekr.20031218072017.3744:dialogs (unitTestGui)
     #@+node:ekr.20031218072017.3745:dummy routines
-    def set_focus(self,c,widget):
+    def set_focus(self,c,widget,tag=''):
         pass
     #@nonl
     #@-node:ekr.20031218072017.3745:dummy routines

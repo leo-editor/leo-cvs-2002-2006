@@ -422,23 +422,25 @@ class tkinterGui(leoGui.leoGui):
         return frame.top.focus_displayof()
         
     #@-node:ekr.20031218072017.4065:get_focus
-    #@+node:ekr.20031218072017.2373:set_focus
-    def set_focus(self,c,widget):
+    #@+node:ekr.20031218072017.2373:set_focus (app.gui)
+    def set_focus(self,c,widget,tag=''):
         
-        """Set the focus of the widget in the given commander if it needs to be changed."""
+        """Put the focus on the widget."""
         
-        # g.trace(c)
+        # g.trace(tag,widget)
+        
+        # g.trace(c.frame.top.wm_stackorder())
         
         if widget:
             widget.focus_set()
-        
+    
         if 0: # Causes a weird problem on some machines.
             if c.frame.top:
                 focus = c.frame.top.focus_displayof()
                 if focus != widget:
                     widget.focus_set()
     #@nonl
-    #@-node:ekr.20031218072017.2373:set_focus
+    #@-node:ekr.20031218072017.2373:set_focus (app.gui)
     #@-node:ekr.20031218072017.4064:Focus
     #@+node:ekr.20031218072017.4066:Font
     #@+node:ekr.20031218072017.2187:tkGui.getFontFromParams

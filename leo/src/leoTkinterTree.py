@@ -1641,7 +1641,8 @@ class leoTkinterTree (leoFrame.leoTree):
             self.select(p)
             if c.frame.findPanel:
                 c.frame.findPanel.handleUserClick(p)
-            gui.set_focus(c,c.frame.bodyCtrl)
+                
+            c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='onClickBoxClick')
         g.doHook("boxclick2",c=c,p=p,v=p,event=event)
     #@nonl
     #@-node:ekr.20040803072955.79:onClickBoxClick
@@ -2093,11 +2094,12 @@ class leoTkinterTree (leoFrame.leoTree):
     #@nonl
     #@-node:ekr.20040803072955.103:onEndDrag
     #@-node:ekr.20040803072955.99:Dragging
-    #@+node:ekr.20040803072955.105:OnActivate
+    #@+node:ekr.20040803072955.105:OnActivate (tkTree)
     def OnActivate (self,p,event=None):
     
         try:
             c = self.c ; gui = g.app.gui
+            # g.trace(c)
             #@        << activate this window >>
             #@+node:ekr.20040803072955.106:<< activate this window >>
             current = c.currentPosition()
@@ -2107,8 +2109,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 if self.active:
                     self.editLabel(p)
                 else:
-                    # self.undimEditLabel()
-                    gui.set_focus(c,self.canvas) # Essential for proper editing.
+                    # Set the focus immediately.  This is essential for proper editing.
+                    c.frame.treeWantsFocus(self.canvas,later=False,tag='OnActivate')
             else:
                 # g.trace("not current")
                 self.select(p)
@@ -2119,7 +2121,7 @@ class leoTkinterTree (leoFrame.leoTree):
                     c.frame.bodyCtrl.see(p.v.t.insertSpot)
                 else:
                     c.frame.bodyCtrl.mark_set("insert","1.0")
-                gui.set_focus(c,c.frame.bodyCtrl)
+                c.frame.bodyWantsFocus(c.frame.bodyCtrl,tag='OnActivate')
             
             self.active = True
             #@nonl
@@ -2128,7 +2130,7 @@ class leoTkinterTree (leoFrame.leoTree):
         except:
             g.es_event_exception("activate tree")
     #@nonl
-    #@-node:ekr.20040803072955.105:OnActivate
+    #@-node:ekr.20040803072955.105:OnActivate (tkTree)
     #@+node:ekr.20040803072955.107:Unchanged Event handers
     #@+at 
     #@nonl
@@ -2322,16 +2324,15 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Show a popup menu."""
         
-        c = self.c ; menu = self.popupMenu ; gui = g.app.gui
+        c = self.c ; menu = self.popupMenu
     
         if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
             menu.bind("<FocusOut>",self.OnPopupFocusLost)
         
         menu.post(event.x_root, event.y_root)
     
-        # Make certain we have focus so we know when we lose it.
-        # I think this is OK for all OSes.
-        gui.set_focus(c,menu)
+        # Set the focus immediately so we know when we lose it.
+        c.frame.treeWantsFocus(menu,later=False,tag='showPopupMenu')
     #@nonl
     #@-node:ekr.20040803072955.116:showPopupMenu
     #@-node:ekr.20040803072955.110:tree.OnPopup & allies
@@ -2498,7 +2499,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """End editing for self.editText."""
     
-        c = self.c ; gui = g.app.gui
+        c = self.c ; frame = c.frame
         
         p = self.editPosition()
     
@@ -2512,7 +2513,7 @@ class leoTkinterTree (leoFrame.leoTree):
             # force a redraw of joined and ancestor headlines.
             self.force_redraw() 
     
-        gui.set_focus(c,c.frame.bodyCtrl) # 10/14/02
+        frame.bodyWantsFocus(frame.bodyCtrl,tag='endEditLabel')
     #@nonl
     #@-node:ekr.20040803072955.126:endEditLabel
     #@+node:ekr.20040803072955.127:editLabel
@@ -2544,7 +2545,7 @@ class leoTkinterTree (leoFrame.leoTree):
         old_p = c.currentPosition()
     
         if not p: return
-        
+    
         # g.trace(len(p.bodyString()),p.headString())
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
@@ -2632,8 +2633,9 @@ class leoTkinterTree (leoFrame.leoTree):
         self.c.setCurrentPosition(p)
         if p != old_p:
             self.setSelectedLabelState(p)
-        self.frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
-        g.app.gui.set_focus(c,c.frame.bodyCtrl)
+        frame.scanForTabWidth(p) #GS I believe this should also get into the select1 hook
+        
+        frame.bodyWantsFocus(frame.bodyCtrl,tag='select')
         #@nonl
         #@-node:ekr.20040803072955.133:<< set the current node >>
         #@nl
@@ -2656,7 +2658,8 @@ class leoTkinterTree (leoFrame.leoTree):
             self.setEditHeadlineColors(p)
             p.edit_text().tag_remove("sel","1.0","end")
             p.edit_text().tag_add("sel","1.0","end")
-            g.app.gui.set_focus(self.c,p.edit_text())
+            # Set the focus immediately
+            self.frame.treeWantsFocus(p.edit_text(),later=False,tag='setNormalLabelState')
     #@nonl
     #@-node:ekr.20040803072955.135:setNormalLabelState
     #@+node:ekr.20040803072955.136:setDisabledLabelState
