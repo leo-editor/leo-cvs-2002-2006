@@ -1169,10 +1169,13 @@ class baseCommands:
                 #@nonl
                 #@-node:EKR.20040627100424:<< unredirect output >>
                 #@nl
-                g.es("exception executing script")
+                g.es("exception executing script ")
                 fileName,n = g.es_exception(full=False,c=c)
-                g.trace(fileName)
-                if n is not None:
+                if fileName not in (None,"<string>"):
+                    g.es("exception in file %s, line: %d" % (fileName,n))
+                if p and not script1 and fileName == "<string>":
+                    c.goToScriptLineNumber(p,script,n)
+                else:
                     #@                << dump the lines near the error >>
                     #@+node:EKR.20040612215018:<< dump the lines near the error >>
                     if g.os_path_exists(fileName):
@@ -1205,8 +1208,6 @@ class baseCommands:
                     #@nonl
                     #@-node:EKR.20040612215018:<< dump the lines near the error >>
                     #@nl
-                    if p and not script1 and not fileName:
-                        c.goToScriptLineNumber(p,script,n)
                 c.frame.tree.redrawAfterException()
             del sys.path[0]
         elif not error:
@@ -1226,12 +1227,14 @@ class baseCommands:
     #@nonl
     #@-node:ekr.20031218072017.2140:c.executeScript
     #@+node:ekr.20031218072017.2864:goToLineNumber & allies
-    def goToLineNumber (self,root=None,lines=None,n=None):
+    def goToLineNumber (self,root=None,lines=None,n=None,scriptFind=False):
     
-        c = self ; p = c.currentPosition() ; root1 = root
+        c = self ; p = c.currentPosition()
+        root1 = root
         if root is None:
-            #@        << set root to the nearest ancestor @file node >>
-            #@+node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+            #@        << set root >>
+            #@+node:ekr.20031218072017.2865:<< set root >>
+            # First look for ancestor @file node.
             fileName = None
             for p in p.self_and_parents_iter():
                 fileName = p.anyAtFileNodeName()
@@ -1248,14 +1251,21 @@ class baseCommands:
                             # New in 4.2 b3: ignore @all nodes.
                             if fileName and not p.isAtAllNode(): break
                     if fileName: break
-                
+            
             if fileName:
                 root = p.copy()
             else:
-                g.es("Go to line number: ancestor must be @file node", color="blue")
-                return
+                # New in 4.2.1: assume the c.currentPosition is the root of a script.
+                root = c.currentPosition()
+                g.es("No ancestor @file node: using script line numbers", color="blue")
+                scriptFind = True
+                lines = g.getScript (c,root,useSelectedText=False)
+                lines = g.splitLines(lines)
+                if 1:
+                    for line in lines:
+                        print line,
             #@nonl
-            #@-node:ekr.20031218072017.2865:<< set root to the nearest ancestor @file node >>
+            #@-node:ekr.20031218072017.2865:<< set root >>
             #@nl
         if lines is None:
             #@        << read the file into lines >>
@@ -1313,14 +1323,25 @@ class baseCommands:
             #@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
             #@nl
         else:
-            vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
+            vnodeName,childIndex,gnx,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root,scriptFind)
             found = True
             if not vnodeName:
                 g.es("error handling: " + root.headString())
                 return
-            #@        << set p to the node given by vnodeName and gnx or childIndex or n >>
-            #@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
-            if gnx:
+            #@        << set p to the node given by vnodeName, etc. >>
+            #@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
+            if scriptFind:
+                #@    << just scan for the node name >>
+                #@+node:ekr.20041111093404:<< just scan for the node name >>
+                # This is safe enough because clones are not much of an issue.
+                found = False
+                for p in root.self_and_subtree_iter():
+                    if p.matchHeadline(vnodeName):
+                        found = True ; break
+                #@nonl
+                #@-node:ekr.20041111093404:<< just scan for the node name >>
+                #@nl
+            elif gnx:
                 #@    << 4.2: get node from gnx >>
                 #@+node:EKR.20040609110138:<< 4.2: get node from gnx >>
                 found = False
@@ -1455,7 +1476,7 @@ class baseCommands:
                 #@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
                 #@nl
             #@nonl
-            #@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and gnx or childIndex or n >>
+            #@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName, etc. >>
             #@nl
         #@    << select p and make it visible >>
         #@+node:ekr.20031218072017.2875:<< select p and make it visible >>
@@ -1495,7 +1516,7 @@ class baseCommands:
     #@-at
     #@@c
     
-    def convertLineToVnodeNameIndexLine (self,lines,n,root):
+    def convertLineToVnodeNameIndexLine (self,lines,n,root,scriptFind):
         
         """Convert a line number n to a vnode name, (child index or gnx) and line number."""
         
@@ -1564,7 +1585,13 @@ class baseCommands:
         # g.trace(s)
         #@    << set vnodeName and (childIndex or gnx) from s >>
         #@+node:ekr.20031218072017.2881:<< set vnodeName and (childIndex or gnx) from s >>
-        if newDerivedFile:
+        if scriptFind:
+            # The vnode name follows the first ':'
+            i = s.find(':',i)
+            if i > -1:
+                vnodeName = s[i+1:].strip()
+            childIndex = -1
+        elif newDerivedFile:
             i = 0
             if thinFile:
                 # gnx is lies between the first and second ':':
@@ -1636,10 +1663,14 @@ class baseCommands:
     #@+node:EKR.20040612232221:goToScriptLineNumber
     def goToScriptLineNumber (self,root,script,n):
     
+        """Go to line n of a script."""
+    
         c = self
         
+        # g.trace(n,root)
+        
         lines = g.splitLines(script)
-        c.goToLineNumber(root=root,lines=lines,n=n)
+        c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
     #@nonl
     #@-node:EKR.20040612232221:goToScriptLineNumber
     #@+node:ekr.20031218072017.2088:fontPanel

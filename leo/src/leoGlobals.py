@@ -4041,7 +4041,7 @@ def getScript (c,p,useSelectedText=True):
     
     try:
         script = None
-        # 7/7/04: Allow p not to be the present position.
+        # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
                 # Temporarily replace v's body text with just the selected text.
@@ -4057,7 +4057,7 @@ def getScript (c,p,useSelectedText=True):
             at = c.atFileCommands
             at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
             script = at.stringOutput
-            assert(p)
+            # g.trace(script)
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:

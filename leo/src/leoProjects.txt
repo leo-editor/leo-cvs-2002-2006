@@ -6490,7 +6490,7 @@ def getScript (c,p,useSelectedText=True):
     
     try:
         script = None
-        # 7/7/04: Allow p not to be the present position.
+        # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
                 # Temporarily replace v's body text with just the selected text.
@@ -6506,7 +6506,7 @@ def getScript (c,p,useSelectedText=True):
             at = c.atFileCommands
             at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
             script = at.stringOutput
-            assert(p)
+            # g.trace(script)
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -6978,13 +6978,14 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
                 g.es("end of script",color="purple")
         except:
             << unredirect output >>
-            g.es("exception executing script")
+            g.es("exception executing script ")
             fileName,n = g.es_exception(full=False,c=c)
-            g.trace(fileName)
-            if n is not None:
+            if fileName not in (None,"<string>"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            else:
                 << dump the lines near the error >>
-                if p and not script1 and not fileName:
-                    c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -7091,10 +7092,14 @@ def es_exception (full=True,c=None,color="red"):
 #@+node:EKR.20040612232221:goToScriptLineNumber
 def goToScriptLineNumber (self,root,script,n):
 
+    """Go to line n of a script."""
+
     c = self
     
+    # g.trace(n,root)
+    
     lines = g.splitLines(script)
-    c.goToLineNumber(root=root,lines=lines,n=n)
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
 #@nonl
 #@-node:EKR.20040612232221:goToScriptLineNumber
 #@-node:ekr.20041004094706:(Fixed error reporting in executeScript when the error happens outside the script)
@@ -7181,13 +7186,14 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
                 g.es("end of script",color="purple")
         except:
             << unredirect output >>
-            g.es("exception executing script")
+            g.es("exception executing script ")
             fileName,n = g.es_exception(full=False,c=c)
-            g.trace(fileName)
-            if n is not None:
+            if fileName not in (None,"<string>"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            else:
                 << dump the lines near the error >>
-                if p and not script1 and not fileName:
-                    c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -7250,7 +7256,7 @@ def getScript (c,p,useSelectedText=True):
     
     try:
         script = None
-        # 7/7/04: Allow p not to be the present position.
+        # Allow p not to be the present position.
         if p == c.currentPosition():
             if useSelectedText and c.frame.body.hasTextSelection():
                 # Temporarily replace v's body text with just the selected text.
@@ -7266,7 +7272,7 @@ def getScript (c,p,useSelectedText=True):
             at = c.atFileCommands
             at.write(p.copy(),nosentinels=False,toString=True,scriptWrite=True)
             script = at.stringOutput
-            assert(p)
+            # g.trace(script)
             g.app.scriptDict["script2"]=script
             error = len(script) == 0
     except:
@@ -14557,13 +14563,14 @@ def executeScript(self,p=None,script=None,useSelectedText=True):
                 g.es("end of script",color="purple")
         except:
             << unredirect output >>
-            g.es("exception executing script")
+            g.es("exception executing script ")
             fileName,n = g.es_exception(full=False,c=c)
-            g.trace(fileName)
-            if n is not None:
+            if fileName not in (None,"<string>"):
+                g.es("exception in file %s, line: %d" % (fileName,n))
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            else:
                 << dump the lines near the error >>
-                if p and not script1 and not fileName:
-                    c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -14619,6 +14626,667 @@ else:
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
 #@-node:ekr.20031218072017.2140:c.executeScript
 #@-node:ekr.20041029111407:(Added support for g.app.debugSwitch in es_exception)
+#@+node:ekr.20041107093219:(Added support for Forth)
+@nocolor
+
+Forth support by David McNab, <david@freenet.org.nz>.
+
+Changes by EKR:
+    
+- Look for extension files in plugins folder.
+- Moved data structures into leoColor class.
+- Suppress message about extra words during unit testing and in batch mode.
+- Created this project node.
+
+@color
+#@nonl
+#@+node:ekr.20041107104918:In leoApp.py
+#@+node:ekr.20031218072017.368:<< define global data structures >> app
+# Internally, lower case is used for all language names.
+self.language_delims_dict = {
+    "ada" : "--",
+    "actionscript" : "// /* */", #jason 2003-07-03
+    "c" : "// /* */", # C, C++ or objective C.
+    "csharp" : "// /* */",	# C#
+    "css" : "/* */", # 4/1/04
+    "cweb" : "@q@ @>", # Use the "cweb hack"
+    "elisp" : ";",
+    "forth" : "\\_ _(_ _)", # Use the "REM hack"
+    "fortran" : "C",
+    "fortran90" : "!",
+    "html" : "<!-- -->",
+    "java" : "// /* */",
+    "latex" : "%",
+    "pascal" : "// { }",
+    "perl" : "#",
+    "perlpod" : "# __=pod__ __=cut__", # 9/25/02: The perlpod hack.
+    "php" : "//",
+    "plain" : "#", # We must pick something.
+    "python" : "#",
+    "rapidq" : "'", # fil 2004-march-11
+    "rebol" : ";",  # jason 2003-07-03
+    "shell" : "#",  # shell scripts
+    "tcltk" : "#",
+    "unknown" : "#" } # Set when @comment is seen.
+
+self.language_extension_dict = {
+    "ada" : "ads",
+    "actionscript" : "as", #jason 2003-07-03
+    "c" : "c",
+    "css" : "css", # 4/1/04
+    "cweb" : "w",
+    "elisp" : "el",
+    "forth" : "forth",
+    "fortran" : "f",
+    "fortran90" : "f",
+    "html" : "html",
+    "java" : "java",
+    "latex" : "tex", # 1/8/04
+    "noweb" : "nw",
+    "pascal" : "p",
+    "perl" : "perl",
+    "perlpod" : "perl",
+    "php" : "php",
+    "plain" : "txt",
+    "python" : "py",
+    "rapidq" : "bas", # fil 2004-march-11
+    "rebol" : "r",    # jason 2003-07-03
+    "shell" : "sh",   # DS 4/1/04
+    "tex" : "tex",
+    "tcltk" : "tcl",
+    "unknown" : "txt" } # Set when @comment is seen.
+    
+self.extension_dict = {
+    "ads"   : "ada",
+    "adb"   : "ada",
+    "as"    : "actionscript",
+    "bas"   : "rapidq",
+    "c"     : "c",
+    "css"   : "css",
+    "el"    : "elisp",
+    "forth" : "forth",
+    "f"     : "fortran90", # or fortran ?
+    "html"  : "html",
+    "java"  : "java",
+    "noweb" : "nw",
+    "p"     : "pascal",
+    "perl"  : "perl",
+    "php"   : "php",
+    "py"    : "python",
+    "r"     : "rebol",
+    "sh"    : "shell",
+    "tex"   : "tex",
+    "txt"   : "plain",
+    "tcl"   : "tcltk",
+    "w"     : "cweb" }
+#@-node:ekr.20031218072017.368:<< define global data structures >> app
+#@-node:ekr.20041107104918:In leoApp.py
+#@+node:ekr.20041107103007:In leoColor.py
+#@+node:ekr.20041107093834:forth keywords
+# Default forth keywords: extended by leo-forthwords.txt.
+forth_keywords = [
+    "variable", "constant", "code", "end-code",
+    "dup", "2dup", "swap", "2swap", "drop", "2drop",
+    "r>", ">r", "2r>", "2>r",
+    "if", "else", "then",
+    "begin", "again", "until", "while", "repeat",
+    "v-for", "v-next", "exit",
+    "meta", "host", "target", "picasm", "macro",
+    "needs", "include",
+    "'", "[']",
+    ":", ";",
+    "@", "!", ",", "1+", "+", "-",
+    "<", "<=", "=", ">=", ">",
+    "invert", "and", "or", 
+    ]
+
+# Forth words which define other words: extended by leo-forthdefwords.txt.
+forth_definingwords = [
+    ":", "variable", "constant", "code",
+    ]
+
+# Forth words which start strings: extended by leo-forthstringwords.txt.
+forth_stringwords = [
+    's"', '."', '"', '."',
+    'abort"',
+    ]
+
+# Forth words to be rendered in boldface: extended by leo-forthboldwords.txt.
+forth_boldwords = [ ]
+
+# Forth words to be rendered in italics: extended by leo-forthitalicwords.txt.
+forth_italicwords = [ ]
+
+# Forth bold-italics words: extemded leo-forthbolditalicwords.txt if present
+# Note: on some boxen, bold italics may show in plain bold.
+forth_bolditalicwords = [ ]
+#@nonl
+#@-node:ekr.20041107093834:forth keywords
+#@+node:ekr.20041107094252:<< extend forth words from files >>
+# Associate files with lists: probably no need to edit this.
+forth_items = (
+    (self.forth_definingwords, "leo-forthdefwords.txt", "defining words"),
+    (self.forth_keywords, "leo-forthwords.txt", "words"),
+    (self.forth_stringwords, "leo-forthstringwords.txt", "string words"),
+    (self.forth_boldwords, "leo-forthboldwords.txt", "bold words"),
+    (self.forth_bolditalicwords, "leo-forthbolditalicwords.txt", "bold-italic words"),
+    (self.forth_italicwords, "leo-forthitalicwords.txt", "italic words"),
+)
+
+# Add entries from files (if they exist) and to the corresponding wordlists.
+for (lst, path, typ) in forth_items:
+    try:
+        extras = []
+        path = g.os_path_join(g.app.loadDir,"..","plugins",path) # EKR.
+        for line in file(path).read().strip().split("\n"):
+            line = line.strip()
+            if line and line[0] != '\\':
+                extras.append(line)
+        if extras:
+            if 0: # I find this annoying.  YMMV.
+                if not g.app.unitTesting and not g.app.batchMode:
+                    print "Found extra forth %s" % typ + ": " + " ".join(extras)
+            lst.extend(extras)
+    except IOError:
+        # print "Not found",path
+        pass
+#@nonl
+#@-node:ekr.20041107094252:<< extend forth words from files >>
+#@+node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
+
+if self.language == "cweb": # Use C comments, not cweb sentinel comments.
+    delim1,delim2,delim3 = g.set_delims_from_language("c")
+elif self.comment_string:
+    delim1,delim2,delim3 = g.set_delims_from_string(self.comment_string)
+elif self.language == "plain": # 1/30/03
+    delim1,delim2,delim3 = None,None,None
+else:
+    delim1,delim2,delim3 = g.set_delims_from_language(self.language)
+
+self.single_comment_start = delim1
+self.block_comment_start = delim2
+self.block_comment_end = delim3
+
+# A strong case can be made for making this code as fast as possible.
+# Whether this is compatible with general language descriptions remains to be seen.
+self.case_sensitiveLanguage = self.language not in case_insensitiveLanguages
+self.has_string = self.language != "plain"
+if self.language == "plain":
+    self.string_delims = ()
+elif self.language in ("elisp","html"):
+    self.string_delims = ('"')
+else:
+    self.string_delims = ("'",'"')
+self.has_pp_directives = self.language in ("c","csharp","cweb","latex")
+
+# The list of languages for which keywords exist.
+# Eventually we might just use language_delims_dict.keys()
+languages = [
+    "actionscript","ada","c","csharp","css","cweb","elisp","forth","html","java","latex",
+    "pascal","perl","perlpod","php","python","rapidq","rebol","shell","tcltk"]
+
+self.keywords = []
+if self.language == "cweb":
+    for i in self.c_keywords:
+        self.keywords.append(i)
+    for i in self.cweb_keywords:
+        self.keywords.append(i)
+else:
+    for name in languages:
+        if self.language==name: 
+            # g.trace("setting keywords for",name)
+            self.keywords = getattr(self, name + "_keywords")
+
+# For forth.
+self.nextForthWordIsNew = False
+
+# Color plain text unless we are under the control of @nocolor.
+# state = g.choose(self.flag,"normal","nocolor")
+state = self.setFirstLineState()
+
+if 1: # 10/25/02: we color both kinds of references in cweb mode.
+    self.lb = "<<"
+    self.rb = ">>"
+else:
+    self.lb = g.choose(self.language == "cweb","@<","<<")
+    self.rb = g.choose(self.language == "cweb","@>",">>")
+#@nonl
+#@-node:ekr.20031218072017.370:<< configure language-specific settings >> colorizer
+#@+node:ekr.20031218072017.1896:doNormalState
+## To do: rewrite using dynamically generated tables.
+
+def doNormalState (self,s,i):
+
+    ch = s[i] ; state = "normal"
+    assert(type(ch)==type(u""))
+
+    if ch in string.ascii_letters or ch == '_' or (
+        (ch == '\\' and self.language=="latex") or
+        (ch in '/&<>' and self.language=="html") or
+        (ch == '$' and self.language=="rapidq") or
+        (self.language == 'forth' and ch in "`~!@#$%^&*()_+-={}|[];':\",./<>?")
+    ):
+        << handle possible keyword >>
+    elif g.match(s,i,self.lb):
+        i = self.doNowebSecRef(s,i)
+    elif ch == '@':
+        << handle at keyword >>
+    elif g.match(s,i,self.single_comment_start):
+        << handle single-line comment >>
+    elif g.match(s,i,self.block_comment_start):
+        << start block comment >>
+    elif ch == '%' and self.language=="cweb":
+        << handle latex line >>
+    elif self.language=="latex":
+        << handle latex normal character >>
+    # ---- From here on self.language != "latex" -----
+    elif ch in self.string_delims:
+        << handle string >>
+    elif ch == '#' and self.has_pp_directives:
+        << handle C preprocessor line >>
+    elif self.language == "php" and (g.match(s,i,"<") or g.match(s,i,"?")):
+        # g.trace("%3d" % i,php_re.match(s,i),s)
+        << handle special php keywords >>
+    elif ch == ' ':
+        << handle blank >>
+    elif ch == '\t':
+        << handle tab >>
+    else:
+        << handle normal character >>
+
+    if 0: # This can fail harmlessly when using wxPython plugin.  Don't know exactly why.
+        g.trace(self.progress,i,state)
+        assert(self.progress < i)
+    return i,state
+#@nonl
+#@+node:ekr.20031218072017.1897:Valid regardless of latex mode
+#@+node:ekr.20031218072017.1898:<< handle possible  keyword >>
+if self.language == "latex":
+    << handle possible latex keyword >>
+elif self.language == "html":
+    << handle possible html keyword >>
+elif self.language == "forth":
+    << handle possible forth keyword >>
+else:
+    << handle general keyword >>
+i = j
+#@nonl
+#@+node:ekr.20031218072017.1899:<< handle possible latex keyword >>
+if g.match(s,i,"\\"):
+    j = self.skip_id(s,i+1,chars=self.latex_special_keyword_characters) # 11/9/03
+    word = s[i:j]
+    if word in self.latex_keywords:
+        self.tag("latexKeyword",i,j)
+    else:
+        self.tag("latexBackground",i,j)
+else:
+    self.tag("latexBackground",i,i+1)
+    j = i + 1 # skip the character.
+#@nonl
+#@-node:ekr.20031218072017.1899:<< handle possible latex keyword >>
+#@+node:ekr.20031218072017.1900:<< handle possible html keyword >>
+if g.match(s,i,"<!---") or g.match(s,i,"<!--"):
+    if g.match(s,i,"<!---"): k = 5
+    else: k = 4
+    self.tag("comment",i,i+k)
+    j = i + k ; state = "blockComment"
+elif g.match(s,i,"<"):
+    if g.match(s,i,"</"): k = 2
+    else: k = 1
+    j = self.skip_id(s,i+k)
+    self.tag("keyword",i,j)
+elif g.match(s,i,"&"):
+    j = self.skip_id(s,i+1,';')
+    self.tag("keyword",i,j)
+elif g.match(s,i,"/>"):
+    j = i + 2
+    self.tag("keyword",i,j)
+elif g.match(s,i,">"):
+    j = i + 1
+    self.tag("keyword",i,j)
+else:
+    j = i + 1
+#@-node:ekr.20031218072017.1900:<< handle possible html keyword >>
+#@+node:ekr.20031218072017.1901:<< handle general keyword >>
+if self.language == "rapidq":
+    j = self.skip_id(s,i+1,chars="$")
+elif self.language == "rebol":
+    j = self.skip_id(s,i+1,chars="-~!?")
+elif self.language in ("elisp","css"):
+    j = self.skip_id(s,i+1,chars="-")
+else:
+    j = self.skip_id(s,i)
+
+word = s[i:j]
+if not self.case_sensitiveLanguage:
+    word = word.lower()
+
+if word in self.keywords:
+    self.tag("keyword",i,j)
+elif self.language == "php":
+    if word in self.php_paren_keywords and g.match(s,j,"()"):
+        self.tag("keyword",i,j+2)
+        j += 2
+#@nonl
+#@-node:ekr.20031218072017.1901:<< handle general keyword >>
+#@+node:ekr.20041107093219.3:<< handle possible forth keyword >>
+j = self.skip_id(s,i+1,chars="`~!@#$%^&*()-_=+[]{};:'\\\",./<>?")
+word = s[i:j]
+
+#print "word=%s" % repr(word)
+
+if not self.case_sensitiveLanguage:
+    word = word.lower()
+
+if self.nextForthWordIsNew:
+    #print "trying to bold the defined word '%s'" % word
+    self.tag("bold", i, j)
+    self.nextForthWordIsNew = False
+else:
+    if word in self.forth_definingwords:
+        self.nextForthWordIsNew = True
+    
+    if word in self.forth_boldwords:
+        self.tag("bold", i, j)
+    elif word in self.forth_bolditalicwords:
+        self.tag("bolditalic", i, j)
+    elif word in self.forth_italicwords:
+        self.tag("italic", i, j)
+    elif word in self.forth_stringwords:
+        self.tag("keyword", i, j-1)
+        i = j - 1
+        j, state = self.skip_string(s,j-1)
+        self.tag("string",i,j)
+        word = ''
+    elif word in self.keywords:
+        self.tag("keyword",i,j)
+#@nonl
+#@-node:ekr.20041107093219.3:<< handle possible forth keyword >>
+#@-node:ekr.20031218072017.1898:<< handle possible  keyword >>
+#@+node:ekr.20031218072017.1902:<< handle at keyword >>
+if self.language == "cweb":
+    if g.match(s,i,"@(") or g.match(s,i,"@<"):
+        << handle cweb ref or def >>
+    else:
+        word = self.getCwebWord(s,i)
+        if word:
+            << Handle cweb control word >>
+        else:
+            i,state = self.doAtKeyword(s,i)
+else:
+    i,state = self.doAtKeyword(s,i)
+#@nonl
+#@+node:ekr.20031218072017.1904:<< handle cweb ref or def >>
+self.tag("nameBrackets",i,i+2)
+
+# See if the line contains the right name bracket.
+j = s.find("@>=",i+2)
+k = g.choose(j==-1,2,3)
+if j == -1:
+    j = s.find("@>",i+2)
+
+if j == -1:
+    i += 2
+else:
+    self.tag("cwebName",i+2,j)
+    self.tag("nameBrackets",j,j+k)
+    i = j + k
+#@-node:ekr.20031218072017.1904:<< handle cweb ref or def >>
+#@+node:ekr.20031218072017.1903:<< Handle cweb control word >>
+# Color and skip the word.
+assert(self.language=="cweb")
+
+j = i + len(word)
+self.tag("keyword",i,j)
+i = j
+
+if word in ("@ ","@\t","@\n","@*","@**"):
+    state = "doc"
+elif word in ("@<","@(","@c","@d","@f","@p"):
+    state = "normal"
+elif word in ("@^","@.","@:","@="): # Ended by "@>"
+    j = s.find("@>",i)
+    if j > -1:
+        self.tag("cwebName",i,j)
+        self.tag("nameBrackets",j,j+2)
+        i = j + 2
+#@nonl
+#@-node:ekr.20031218072017.1903:<< Handle cweb control word >>
+#@-node:ekr.20031218072017.1902:<< handle at keyword >>
+#@+node:ekr.20031218072017.1617:<< handle single-line comment >>
+# print "single-line comment i,s:",i,s
+
+if self.language == "cweb" and self.latex_cweb_comments:
+    j = i + len(self.single_comment_start)
+    self.tag("comment",i,j)
+    self.doLatexLine(s,j,len(s))
+    i = len(s)
+elif self.language == "shell" and (i>0 and s[i-1]=='$'):
+    i += 1 # '$#' in shell should not start a comment (DS 040113)
+else:
+    j = len(s)
+    if not g.doHook("color-optional-markup",
+        colorer=self,v=self.p,s=s,i=i,j=j,colortag="comment"):
+        self.tag("comment",i,j)
+    i = j
+#@nonl
+#@-node:ekr.20031218072017.1617:<< handle single-line comment >>
+#@+node:ekr.20031218072017.1619:<< start block comment >>
+k = len(self.block_comment_start)
+
+if not g.doHook("color-optional-markup",
+    colorer=self,v=self.p,s=s,i=i,j=i+k,colortag="comment"):
+    self.tag("comment",i,i+k)
+
+i += k ; state = "blockComment"
+#@nonl
+#@-node:ekr.20031218072017.1619:<< start block comment >>
+#@+node:ekr.20031218072017.1905:<< handle latex line >>
+self.tag("keyword",i,i+1)
+i += 1 # Skip the %
+self.doLatexLine(s,i,len(s))
+i = len(s)
+#@nonl
+#@-node:ekr.20031218072017.1905:<< handle latex line >>
+#@-node:ekr.20031218072017.1897:Valid regardless of latex mode
+#@+node:ekr.20031218072017.1906:Vaid only in latex mode
+#@+node:ekr.20031218072017.1907:<< handle latex normal character >>
+if self.language=="cweb":
+    self.tag("latexModeBackground",i,i+1)
+else:
+    self.tag("latexBackground",i,i+1)
+i += 1
+#@nonl
+#@-node:ekr.20031218072017.1907:<< handle latex normal character >>
+#@-node:ekr.20031218072017.1906:Vaid only in latex mode
+#@+node:ekr.20031218072017.1908:Valid when not in latex_mode
+#@+node:ekr.20031218072017.1612:<< handle string >>
+# g.trace(self.language)
+
+if self.language == "python":
+
+    delim = s[i:i+3]
+    j, state = self.skip_python_string(s,i)
+    if delim == '"""':
+        # Only handle wiki items in """ strings.
+        if not g.doHook("color-optional-markup",
+            colorer=self,v=self.p,s=s,i=i,j=j,colortag="string"):
+            self.tag("string",i,j)
+    else:
+        self.tag("string",i,j)
+    i = j
+
+else:
+    j, state = self.skip_string(s,i)
+    self.tag("string",i,j)
+    i = j
+#@-node:ekr.20031218072017.1612:<< handle string >>
+#@+node:ekr.20031218072017.1909:<< handle C preprocessor line >>
+# 10/17/02: recognize comments in preprocessor lines.
+j = i
+while i < len(s):
+    if g.match(s,i,self.single_comment_start) or g.match(s,i,self.block_comment_start):
+        break
+    else: i += 1
+
+self.tag("pp",j,i)
+#@nonl
+#@-node:ekr.20031218072017.1909:<< handle C preprocessor line >>
+#@+node:ekr.20031218072017.1910:<< handle special php keywords >>
+if g.match(s.lower(),i,"<?php"):
+    self.tag("keyword",i,i+5)
+    i += 5
+elif g.match(s,i,"?>"):
+    self.tag("keyword",i,i+2)
+    i += 2
+else:
+    i += 1
+
+#@-node:ekr.20031218072017.1910:<< handle special php keywords >>
+#@+node:ekr.20031218072017.1911:<< handle blank >>
+if self.showInvisibles:
+    self.tag("blank",i,i+1)
+i += 1
+#@nonl
+#@-node:ekr.20031218072017.1911:<< handle blank >>
+#@+node:ekr.20031218072017.1912:<< handle tab >>
+if self.showInvisibles:
+    self.tag("tab",i,i+1)
+i += 1
+#@nonl
+#@-node:ekr.20031218072017.1912:<< handle tab >>
+#@+node:ekr.20031218072017.1913:<< handle normal character >>
+# self.tag("normal",i,i+1)
+i += 1
+#@nonl
+#@-node:ekr.20031218072017.1913:<< handle normal character >>
+#@-node:ekr.20031218072017.1908:Valid when not in latex_mode
+#@-node:ekr.20031218072017.1896:doNormalState
+#@-node:ekr.20041107103007:In leoColor.py
+#@+node:ekr.20041107103007.1:In leoImport.py
+#@+node:ekr.20031218072017.3210:createOutline
+def createOutline (self,fileName,parent):
+
+    c = self.c ; current = c.currentVnode()
+    junk,self.fileName = g.os_path_split(fileName)
+    self.methodName,ext = g.os_path_splitext(self.fileName)
+    self.fileType = ext
+    self.setEncoding()
+    # g.trace(self.fileName,self.fileType)
+    # All file types except the following just get copied to the parent node.
+    ext = ext.lower()
+    appendFileFlag = ext not in (
+        ".c", ".cpp", ".cxx", ".el", ".java", ".pas", ".py", ".pyw", ".php")
+    << Read file into s >>
+    # Create the top-level headline.
+    v = parent.insertAsLastChild()
+    c.undoer.setUndoParams("Import",v,select=current)
+    if self.treeType == "@file":
+        v.initHeadString("@file " + fileName)
+    else:
+        v.initHeadString(fileName)
+        
+    self.rootLine = g.choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
+
+    if appendFileFlag:
+        body = "@ignore\n"
+        if ext in (".html",".htm"): body += "@language html\n"
+        if ext in (".txt",".text"): body += "@nocolor\n"
+        v.setBodyStringOrPane(body + self.rootLine + s)
+    elif ext in (".c", ".cpp", ".cxx"):
+        self.scanCText(s,v)
+    elif ext == ".el":
+        self.scanElispText(s,v)
+    elif ext in (".fs", ".fi"):
+        self.scanForthText(s,v)
+    elif ext == ".java":
+        self.scanJavaText(s,v,True) #outer level
+    elif ext == ".pas":
+        self.scanPascalText(s,v)
+    elif ext in (".py", ".pyw"):
+        self.scanPythonText(s,v)
+    elif ext == ".php":
+        self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
+    else:
+        g.es("createOutline: can't happen")
+    return v
+#@nonl
+#@+node:ekr.20031218072017.3211:<< Read file into s >>
+try:
+    theFile = open(fileName)
+    s = theFile.read()
+    s = g.toUnicode(s,self.encoding)
+    theFile.close()
+except IOError:
+    g.es("can not open " + fileName)
+    leoTest.fail()
+    return None
+#@nonl
+#@-node:ekr.20031218072017.3211:<< Read file into s >>
+#@-node:ekr.20031218072017.3210:createOutline
+#@+node:ekr.20041107094641:scanForthText
+def scanForthText (self,s,parent):
+    
+    """Minimal forth scanner - leave it to user to create nodes as they see fit."""
+
+    parent.setBodyStringOrPane("@ignore\n" + "@language forth\n" + self.rootLine + s)
+#@nonl
+#@-node:ekr.20041107094641:scanForthText
+#@-node:ekr.20041107103007.1:In leoImport.py
+#@+node:ekr.20041107103007.2:In leoTkinterPrefs.py
+#@+node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
+# Frame and title
+w,target = gui.create_labeled_frame (outer,caption="Default Target Language")
+w.pack(padx=2,pady=2,expand=1,fill="x")
+
+# Frames for two columns of radio buttons
+lt = Tk.Frame(target)
+rt = Tk.Frame(target)
+lt.pack(side="left")
+rt.pack(side="right")
+
+# Left column of radio buttons.
+left_data = [
+    ("ActionScript", "actionscript"),
+    ("Ada", "ada"),
+    ("C#",    "csharp"),
+    ("C/C++", "c"),
+    ("CSS",   "css"),
+    ("CWEB",  "cweb"),
+    ("elisp", "elisp"),
+    ("Forth", "forth"),
+    ("HTML",  "html"),
+    ("Java",  "java"),
+    ("LaTeX", "latex")
+   ]
+
+for text,value in left_data:
+    button = Tk.Radiobutton(lt,anchor="w",text=text,
+        variable=self.lang_var,value=value,command=self.set_lang)
+    button.pack(fill="x")
+
+# Right column of radio buttons.
+right_data = [
+    ("Pascal","pascal"),
+    ("Perl", "perl"),
+    ("Perl+POD",   "perlpod"),
+    ("PHP",        "php"),
+    ("Plain Text", "plain"),
+    ("Python",     "python"),
+    ("RapidQ",     "rapidq"),
+    ("Rebol",      "rebol"),
+    ("Shell",      "shell"),
+    ("tcl/tk",     "tcltk")]
+
+for text,value in right_data:
+    button = Tk.Radiobutton(rt,anchor="w",text=text,
+        variable=self.lang_var,value=value,command=self.set_lang)
+    button.pack(fill="x")
+#@nonl
+#@-node:ekr.20031218072017.369:<< Create the Target Language frame >> frame
+#@-node:ekr.20041107103007.2:In leoTkinterPrefs.py
+#@-node:ekr.20041107093219:(Added support for Forth)
 #@-node:ekr.20040929081120:4.3 a1 projects
 #@-all
 #@nonl
