@@ -2,8 +2,8 @@
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="90" clone_windows="0"/>
-<globals body_outline_ratio="0.627840909091">
-	<global_window_position top="93" left="260" height="704" width="857"/>
+<globals body_outline_ratio="0.5">
+	<global_window_position top="65" left="45" height="704" width="857"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -35,7 +35,7 @@
 <v t="ekr.20041120155431.2"><vh>@type type-name: script: script-name</vh></v>
 </v>
 <v t="ekr.20041119034357.1" a="E"><vh>@settings</vh>
-<v t="ekr.20041120180154" a="E"><vh>Types</vh>
+<v t="ekr.20041120180154"><vh>Types</vh>
 <v t="ekr.20041120180154.1"><vh>@if-gui tkinter</vh>
 <v t="ekr.20041120180707" a="E"><vh>@type font: tuple = @family, @size, @slant, @weight</vh>
 <v t="ekr.20041120180707.1"><vh>@type family: string</vh></v>
@@ -47,23 +47,23 @@
 <v t="ekr.20041120181045.1"><vh>@type orientation: string = vertical, horizontal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.3"><vh>General configuration options</vh>
+<v t="ekr.20041119034357.3"><vh>@page General configuration options</vh>
 <v t="ekr.20041119034357.5"><vh>@bool read_only = False</vh></v>
 <v t="ekr.20041119034357.13"><vh>@bool use_plugins = False</vh></v>
-<v t="ekr.20041119034357.7"><vh>@page .leo file options</vh>
+<v t="ekr.20041119034357.7"><vh>.leo file options</vh>
 <v t="ekr.20041119034357.8"><vh>@string output_initial_comment = None</vh></v>
 <v t="ekr.20041119034357.9"><vh>@string stylesheet = None</vh></v>
 </v>
-<v t="ekr.20041119034357.11"><vh>@page directory options</vh>
+<v t="ekr.20041119034357.11"><vh>directory options</vh>
 <v t="ekr.20041119041304"><vh>@bool create_nonexistent_directories = False</vh></v>
 <v t="ekr.20041119041304.1"><vh>@string relative_path_base_directory = .</vh></v>
 </v>
-<v t="ekr.20041119034357.12"><vh>@page derived files options</vh>
+<v t="ekr.20041119034357.12"><vh>derived files options</vh>
 <v t="ekr.20041119041747"><vh>@string output_newline = nl</vh></v>
 <v t="ekr.20041119041747.1"><vh>@string trailing_body_newlines = one</vh></v>
 <v t="ekr.20041119041747.4"><vh>@bool write_strips_blank_lines = True</vh></v>
 </v>
-<v t="ekr.20041119034357.15"><vh>@page unicode encoding options</vh>
+<v t="ekr.20041119034357.15"><vh>unicode encoding options</vh>
 <v t="ekr.20041119042929.9"><vh>@encoding default_derived_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.10"><vh>@encoding new_leo_file_encoding = UTF-8</vh></v>
 <v t="ekr.20041119042929.11"><vh>@encoding tk_encoding = None</vh></v>
@@ -78,15 +78,15 @@
 <v t="ekr.20041119050749.11"><vh>@bool headline_gmt_time = False</vh></v>
 </v>
 <v t="ekr.20041119043713"><vh>Dialogs</vh>
-<v t="ekr.20041119034357.16"><vh>Compare panel</vh>
-<v t="ekr.20041119034357.17"><vh>@page files &amp; directories</vh>
+<v t="ekr.20041119034357.16"><vh>@page Compare panel</vh>
+<v t="ekr.20041119034357.17"><vh>files &amp; directories</vh>
 <v t="ekr.20041119043902"><vh>@path compare_file_1 = None</vh></v>
 <v t="ekr.20041119043902.1"><vh>@path compare_file_2 = None</vh></v>
 <v t="ekr.20041119043902.2"><vh>@path output_file = None</vh></v>
 <v t="ekr.20041119043902.3"><vh>@bool append_output_to_output_file = False</vh></v>
 <v t="ekr.20041119034357.18"><vh>@string limit_directory_search_extension = .py</vh></v>
 </v>
-<v t="ekr.20041119034357.19"><vh>@page file compare options</vh>
+<v t="ekr.20041119034357.19"><vh>file compare options</vh>
 <v t="ekr.20041119043902.4"><vh>@bool ignore_blank_lines = True</vh></v>
 <v t="ekr.20041119043902.5"><vh>@bool ignore_first_line_of_file_1 = False</vh></v>
 <v t="ekr.20041119043902.6"><vh>@bool ignore_first_line_of_file_2 = False</vh></v>
@@ -94,7 +94,7 @@
 <v t="ekr.20041119043902.8"><vh>@bool ignore_leading_whitespace = False</vh></v>
 <v t="ekr.20041119043902.9"><vh>@bool ignore_sentinel_lines = False</vh></v>
 </v>
-<v t="ekr.20041119050105"><vh>@page output options</vh>
+<v t="ekr.20041119050105"><vh>output options</vh>
 <v t="ekr.20041119043902.10"><vh>@int limit_count = 9</vh></v>
 <v t="ekr.20041119043902.11"><vh>@bool make_whitespace_visible = False</vh></v>
 <v t="ekr.20041119043902.12"><vh>@bool print_both_lines_for_matches = False</vh></v>
@@ -139,24 +139,24 @@
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
 <v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
 <v t="ekr.20041119034357.27"><vh>@shortcuts override defaults</vh></v>
-<v t="ekr.20041119054938" a="TV"><vh>@shortcuts No shortcut specified</vh></v>
+<v t="ekr.20041119054938"><vh>@shortcuts No shortcut specified</vh></v>
 </v>
-<v t="ekr.20041119034357.70" a="E"><vh>Syntax coloring</vh>
-<v t="ekr.20041119034357.71"><vh>@page syntax coloring options</vh>
+<v t="ekr.20041119034357.70" a="TV"><vh>@page Syntax coloring</vh>
+<v t="ekr.20041119034357.71"><vh>syntax coloring options</vh>
 <v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
 <v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
 <v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
 <v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
 <v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
 </v>
-<v t="ekr.20041119034357.77"><vh>@page syntax colors</vh>
+<v t="ekr.20041119034357.77"><vh>syntax colors</vh>
 <v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
 <v t="ekr.20041119034357.79"><vh>@color cweb_section_name_color=red</vh></v>
 <v t="ekr.20041119034357.80"><vh>@color directive_color=blue</vh></v>
@@ -195,7 +195,7 @@
 <v t="ekr.20041119034357.52"><vh>@weight body_text_font_weight = normal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119051246" a="E"><vh>outline pane</vh>
+<v t="ekr.20041119051246"><vh>outline pane</vh>
 <v t="ekr.20041119034357.54"><vh>@page outline options</vh>
 <v t="ekr.20041119050749.3"><vh>@bool allow_clone_drags = False</vh></v>
 <v t="ekr.20041119050749.4"><vh>@bool enable_drag_messages = False</vh></v>
@@ -221,19 +221,19 @@
 <v t="ekr.20041119050749.15"><vh>@slant headline_text_font_slant = roman</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.55" a="E"><vh>@page log pane options</vh>
+<v t="ekr.20041119034357.55"><vh>@page log pane options</vh>
 <v t="ekr.20041119052015.1"><vh>@bool log_pane_wraps = False</vh></v>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
-<v t="ekr.20041119052015.3" a="E"><vh>@page log font</vh>
+<v t="ekr.20041119052015.3"><vh>@page log font</vh>
 <v t="ekr.20041119052015.4"><vh>@family log_text_font_family = None</vh></v>
 <v t="ekr.20041119052015.5"><vh>@size log_text_font_size = None</vh></v>
 <v t="ekr.20041119052015.6"><vh>@slant log_text_font_slant = roman</vh></v>
 <v t="ekr.20041119052015.7"><vh>@weight log_text_font_weight = normal</vh></v>
 </v>
 </v>
-<v t="ekr.20041119034357.56" a="E"><vh>@page options for new windows</vh>
+<v t="ekr.20041119034357.56"><vh>@page options for new windows</vh>
 <v t="ekr.20041119034357.57"><vh>@ratio initial_horizontal_ratio = 0.3</vh></v>
 <v t="ekr.20041119034357.58"><vh>@ratio initial_horizontal_secondary_ratio = 0.5</vh></v>
 <v t="ekr.20041119034357.59"><vh>@orientation initial_splitter_orientation = vertical</vh></v>
@@ -244,7 +244,7 @@
 <v t="ekr.20041119034357.64"><vh>@int initial_window_top = 20</vh></v>
 <v t="ekr.20041119034357.65"><vh>@int initial_window_width = 800</vh></v>
 </v>
-<v t="ekr.20041119034357.66"><vh>@page splitter options</vh>
+<v t="ekr.20041119034357.66" a="E"><vh>@page splitter options</vh>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 <v t="ekr.20041119034357.68"><vh>@relief split_bar_relief = groove</vh></v>
 <v t="ekr.20041119034357.69"><vh>@int split_bar_width = 6</vh></v>

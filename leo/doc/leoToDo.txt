@@ -3,6 +3,16 @@
 #@@nocolor
 
 #@+all
+#@+node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
+http://sourceforge.net/forum/message.php?msg_id=2871977
+
+One thing to think about is to add a 3rd party extension mechanism for Leo.
+
+Have a directory called 'ext', and have Leo automatically add that directory to the import path.
+
+Then you could dump Pmw into that directory and have Leo easily import it from there. Doing so gives you a way to add Pmw easily and any other 3rd party libs Leo ever needs.
+#@nonl
+#@-node:ekr.20041128172446:add a 3rd party extension mechanism for Leo
 #@+node:ekr.20041126102902:(Handle blanks better in imports)
 @
 
