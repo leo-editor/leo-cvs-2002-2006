@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4108" clone_windows="0"/>
 <globals body_outline_ratio="0.55579868708971558">
-	<global_window_position top="2" left="290" height="914" width="919"/>
+	<global_window_position top="10" left="290" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -4276,7 +4276,7 @@
 <v t="ekr.20031218072017.854"><vh>Put tips in LeoDocs.leo</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2406"><vh>Code</vh>
+<v t="ekr.20031218072017.2406" a="V"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4690,7 +4690,7 @@
 <v t="ekr.20031218072017.2816"><vh>c.setIvarsFromPrefs</vh></v>
 </v>
 <v t="ekr.20031218072017.2817" a=""><vh> doCommand</vh></v>
-<v t="ekr.20031218072017.2582" a=""><vh> version &amp; signon stuff</vh></v>
+<v t="ekr.20031218072017.2582" a="M"><vh> version &amp; signon stuff</vh></v>
 <v t="ekr.20031218072017.2818"><vh>Command handlers...</vh>
 <v t="ekr.20031218072017.2819"><vh>File Menu</vh>
 <v t="ekr.20031218072017.2820"><vh>top level</vh>
@@ -7561,7 +7561,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040104162835" a="V"><vh>(Problems with Import Derived File and whitespace (marks) (Dan Winkler)</vh>
+<v t="ekr.20040104162835"><vh>(Problems with Import Derived File and whitespace (marks) (Dan Winkler)</vh>
 <v t="ekr.20040128190248"><vh>What I did</vh></v>
 <v t="ekr.20040104162835.1"><vh>Reports</vh>
 <v t="ekr.20040104162835.2"><vh>Report: marks set when opening file</vh></v>
