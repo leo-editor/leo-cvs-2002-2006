@@ -1272,29 +1272,20 @@ class colorizer:
 			#@<< Test for @comment or @language >>
 			#@+node:1::<< Test for @comment or @language >>
 			#@+body
-			#@+at
-			#  Disabling syntax coloring when @comment is seen is stupid and 
-			# confusing.  If the user want's plain text, then an @language 
-			# plain should work.  Moreover, why not recognize directives even 
-			# in plain text?  If the user _really_ want no syntax coloring, an 
-			# @nocolor in a parent node will work fine.
-
-			#@-at
-			#@@c
-
+			# 10/17/02: @comment and @language may coexist in the same node.
+			
 			if dict.has_key("comment"):
-					
-				# 8/11/02: Allow colorizer to honor the comment string.
 				k = dict["comment"]
 				self.comment_string = s[k:]
-				break
 			
-			elif dict.has_key("language"):
-			
-				issue_error_flag = false
+			if dict.has_key("language"):
 				i = dict["language"]
+				issue_error_flag = false
 				language, junk, junk, junk = set_language(s,i,issue_error_flag)
+			
+			if dict.has_key("comment") or dict.has_key("language"):
 				break
+			
 			#@-body
 			#@-node:1::<< Test for @comment or @language >>
 

@@ -517,17 +517,17 @@ class atFile:
 			#@<< Test for @comment and @language >>
 			#@+node:3::<< Test for @comment and @language >>
 			#@+body
-			if old.has_key("comment") or old.has_key("language"):
-				pass # Do nothing more.
+			# 10/17/02: @language and @comment may coexist in @file trees.
+			# For this to be effective the @comment directive should follow the @language directive.
 			
-			elif dict.has_key("comment"):
+			if not old.has_key("comment") and dict.has_key("comment"):
 				k = dict["comment"]
 				d1, d2, d3 = set_delims_from_string(s[k:])
 				if delim1:
 					# @comment effectively disables Untangle.
 					delim1, delim2, delim3 = d1, d2, d3
 			
-			elif dict.has_key("language"):
+			if not old.has_key("language") and dict.has_key("language"):
 				k = dict["language"]
 				issue_error_flag = false
 				language, d1, d2, d3 = set_language(s,k,issue_error_flag)
