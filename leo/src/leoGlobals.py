@@ -2018,6 +2018,8 @@ def importFromPath (name,path):
 			fn = shortFileName(name)
 			mod_name,ext = os_path_splitext(fn)
 			path = os_path_normpath(path)
+			path = toEncodedString(path,app.tkEncoding) # 12/01/03
+			# trace(path)
 			data = imp.find_module(mod_name,[path]) # This can open the file.
 			if data:
 				file,pathname,description = data
