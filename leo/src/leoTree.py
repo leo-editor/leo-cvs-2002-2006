@@ -1550,48 +1550,73 @@ class baseLeoTree:
 			doHook("@url2",c=c,v=v)
 	#@-body
 	#@-node:12::tree.OnIconDoubleClick (@url)
-	#@+node:13::tree.OnPopup
+	#@+node:13::tree.OnPopup & allies
 	#@+body
-	# 20-SEP-2002 DTHEIN:
-	# On Linux we must do something special to make the popup menu
-	# "unpost" if the mouse is clicked elsewhere.  So we have to 
-	# catch the <FocusOut> event and explicitly unpost.  In order
-	# to process the <FocusOut> event, we need to be able to find
-	# the reference to the popup window again, so this needs to be
-	# an attribute of the tree object; hence, "self.popupMenu".
-	#
-	# Aside: though Tk tries to be muli-platform, the interaction with
-	# different window managers does cause small differences that will
-	# need to be compensated by system specific application code. :-(
-	
 	def OnPopup (self,v,event):
+		
+		"""Handle right-clicks in the outline."""
 		
 		# Note: "headrclick" hooks handled by vnode callback routine.
 	
-		if event == None:
-			return
-		c = self.commands ; frame = c.frame
+		if event != None:
+			c = self.commands
+			if not doHook("create-popup-menu",c=c,v=v,event=event):
+				self.createPopupMenu(v,event)
+			if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
+				self.enablePopupMenuItems(v,event)
+			if not doHook("show-popup-menu",c=c,v=v,event=event):
+				self.showPopupMenu(v,event)
+	
+		return "break"
+	#@-body
+	#@+node:1::OnPopupFocusLost
+	#@+body
+	#@+at
+	#  On Linux we must do something special to make the popup menu "unpost" 
+	# if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> 
+	# event and explicitly unpost.  In order to process the <FocusOut> event, 
+	# we need to be able to find the reference to the popup window again, so 
+	# this needs to be an attribute of the tree object; hence, "self.popupMenu".
+	# 
+	# Aside: though Tk tries to be muli-platform, the interaction with 
+	# different window managers does cause small differences that will need to 
+	# be compensated by system specific application code. :-(
+
+	#@-at
+	#@@c
+
+	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+	
+	def OnPopupFocusLost(self,event=None):
+	
+		self.popupMenu.unpost()
 		
-		#@<< create the popup menu >>
-		#@+node:1::<< create the popup menu >>
-		#@+body
-		# 20-SEP-2002 DTHEIN: If we are going to recreate it, we'd
-		#                     better destroy it.
+	
+	#@-body
+	#@-node:1::OnPopupFocusLost
+	#@+node:2::createPopupMenu
+	#@+body
+	def createPopupMenu (self,v,event):
+		
+		a = app() ; c = self.commands ; frame = c.frame
+		
+		# If we are going to recreate it, we had better destroy it.
 		if self.popupMenu:
 			self.popupMenu.destroy()
 			self.popupMenu = None
+		
 		self.popupMenu = menu = Tkinter.Menu(app().root, tearoff=0)
 		
-		#@<< create the popup menu items >>
-		#@+node:1::<< create the popup menu items>>
-		#@+body
-		a = app()
 		# Add the Open With entries if they exist.
 		if a.openWithTable:
 			frame.createMenuEntries(menu,a.openWithTable,openWith=1)
 			table = (("-",None,None),)
 			frame.createMenuEntries(menu,table)
-		# Create the rest of the popup menu.
+			
+		
+		#@<< Create the menu table >>
+		#@+node:1::<< Create the menu table >>
+		#@+body
 		table = (
 			("&Read @file Nodes",None,frame.OnReadAtFileNodes),
 			("&Write @file Nodes",None,frame.OnWriteAtFileNodes),
@@ -1612,20 +1637,35 @@ class baseLeoTree:
 			("&Sort Siblings","Alt-A",frame.OnSortSiblings),
 			("-",None,None),
 			("Contract Parent","Alt+0",frame.OnContractParent))
-		
+		#@-body
+		#@-node:1::<< Create the menu table >>
+
 		frame.createMenuEntries(menu,table)
+	#@-body
+	#@-node:2::createPopupMenu
+	#@+node:3::enablePopupMenuItems
+	#@+body
+	def enablePopupMenuItems (self,v,event):
 		
-		# Enable and disable.
+		"""Enable and disable items in the popup menu."""
+		
+		c = self.commands ; menu = self.popupMenu
+	
 		
 		#@<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@+node:1::<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@+body
 		isAtFile = false ; isAtRoot = false
-		next = v.nodeAfterTree()
-		v2 = v
+		v2 = v ; next = v.nodeAfterTree()
+		
 		while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
-			if v2.isAtFileNode() or v.isAtRawFileNode() or v.isAtSilentFileNode() or v.isAtNoSentinelsFileNode():
+			if (
+				v2.isAtFileNode() or
+				v.isAtRawFileNode() or
+				v.isAtSilentFileNode() or
+				v.isAtNoSentinelsFileNode()):
 				isAtFile = true
+		
 			isRoot, junk = is_special(v2.bodyString(),0,"@root")
 			if isRoot:
 				isAtRoot = true
@@ -1649,25 +1689,27 @@ class baseLeoTree:
 		enableMenu(menu,"Sort Children",c.canSortChildren())
 		enableMenu(menu,"Sort Siblings",c.canSortSiblings())
 		enableMenu(menu,"Contract Parent",c.canContractParent())
-		#@-body
-		#@-node:1::<< create the popup menu items>>
-
+	#@-body
+	#@-node:3::enablePopupMenuItems
+	#@+node:4::showPopupMenu
+	#@+body
+	def showPopupMenu (self,v,event):
+		
+		"""Show a popup menu."""
+		
+		menu = self.popupMenu
+	
 		if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
 			menu.bind("<FocusOut>",self.OnPopupFocusLost)
+		
 		menu.post(event.x_root, event.y_root)
-		# 20-SEP-2002 DTHEIN: make certain we have focus so we know when we lose it.
-		#                     I think this is OK for all OSes.
-		menu.focus_set()
-		#@-body
-		#@-node:1::<< create the popup menu >>
-
-		return "break"
 	
-	# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux
-	def OnPopupFocusLost(self,event=None):
-		self.popupMenu.unpost()
+		# Make certain we have focus so we know when we lose it.
+		# I think this is OK for all OSes.
+		menu.focus_set()
 	#@-body
-	#@-node:13::tree.OnPopup
+	#@-node:4::showPopupMenu
+	#@-node:13::tree.OnPopup & allies
 	#@-node:6::Event handers (tree)
 	#@+node:7::Incremental drawing
 	#@+node:1::allocateNodes

@@ -548,7 +548,7 @@ class baseVnode:
 			es_event_exception("enddrag")
 	#@-body
 	#@-node:3::OnEndDrag
-	#@+node:4::OnHeadlineClick & OnHeadlineRightClick
+	#@+node:4::v.OnHeadlineClick & OnHeadlineRightClick
 	#@+body
 	def OnHeadlineClick(self,event=None):
 		try:
@@ -569,7 +569,7 @@ class baseVnode:
 		except:
 			es_event_exception("headrclick")
 	#@-body
-	#@-node:4::OnHeadlineClick & OnHeadlineRightClick
+	#@-node:4::v.OnHeadlineClick & OnHeadlineRightClick
 	#@+node:5::OnHeadlineKey
 	#@+body
 	def OnHeadlineKey (self,event=None):
