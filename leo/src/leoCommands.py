@@ -120,6 +120,16 @@ class baseCommands:
     __str__ = __repr__
     
     #@-node:ekr.20031218072017.2814:c.__repr__ & __str__
+    #@+node:ekr.20041130173135:c.hash
+    def hash (self):
+    
+        c = self
+        if c.mFileName:
+            return hash(c.mFileName)
+        else:
+            return 0
+    #@nonl
+    #@-node:ekr.20041130173135:c.hash
     #@-node:ekr.20031218072017.2811: c.Birth & death
     #@+node:ekr.20031218072017.2817: doCommand
     def doCommand (self,command,label,event=None):
