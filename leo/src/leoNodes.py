@@ -438,6 +438,9 @@ class baseVnode (object):
 	
 		if label:
 			print '-'*10,label,v
+		else:
+			print "self    ",v.dumpLink(v)
+			print "len(vnodeList)",len(v.t.vnodeList)
 		print "_back   ",v.dumpLink(v._back)
 		print "_next   ",v.dumpLink(v._next)
 		print "_parent ",v.dumpLink(v._parent)
@@ -1724,30 +1727,31 @@ class position (object):
 	#@nonl
 	#@-node:p.isVisible
 	#@+node:p.lastVisible & oldLastVisible
-	# Returns the last visible node of the screen.
-	
 	def oldLastVisible(self):
-		p = self
-		p = p.c.rootPosition()
+		"""Move to the last visible node of the entire tree."""
+		p = self.c.rootPosition()
 		assert(p.isVisible())
 		last = p.copy()
 		while 1:
+			if g.app.debug: g.trace(last)
 			p.moveToVisNext()
 			if not p: return last
 			last = p.copy()
 			
 	def lastVisible(self):
 		"""Move to the last visible node of the entire tree."""
-		p = self
-		p = p.c.rootPosition()
+		p = self.c.rootPosition()
 		# Move to the last top-level node.
 		while p.hasNext():
+			if g.app.debug: g.trace(p)
 			p.moveToNext()
 		assert(p.isVisible())
 		# Move to the last visible child.
 		while p.hasChildren() and p.isExpanded():
+			if g.app.debug: g.trace(p)
 			p.moveToLastChild()
 		assert(p.isVisible())
+		if g.app.debug: g.trace(p)
 		return p
 	#@nonl
 	#@-node:p.lastVisible & oldLastVisible
@@ -2342,7 +2346,7 @@ class position (object):
 	
 	def doDelete (self,newPosition):
 	
-		"""Unlinks p.v from the outline.  May be undone.
+		"""Deletes position p from the outline.  May be undone.
 	
 		Returns newPosition."""
 	
@@ -2351,39 +2355,11 @@ class position (object):
 		assert(newPosition != p)
 		p.setDirty() # Mark @file nodes dirty!
 		p.unlink()
-		
-		
-		# 4/8/02: Alter all _parent links in children of this node.
-		# This needs to be done only when deleting a node.
-		vnodeList = p.v.t.vnodeList
-		if vnodeList:
-			#@		<< Alter all _parent links of children of this node >>
-			#@+node:<< Alter all _parent links of children of this node >>
-			assert(p.v not in vnodeList)
-			parent = vnodeList[0]
-			child = p.v.t._firstChild
-			while child:
-				if child._parent == p.v:
-					child._parent = parent
-				child = child._next
-			#@nonl
-			#@-node:<< Alter all _parent links of children of this node >>
-			#@nl
-		#@	<< remove all deleted nodes from their vnodeList's >>
-		#@+node:<< remove all deleted nodes from their vnodeList's >>
-		for p2 in p.self_and_subtree_iter():
-			vnodeList = p2.v.t.vnodeList
-			if p2.v in vnodeList:
-				g.trace("removing",p2.v)
-				vnodeList.remove(p2.v)
-				assert(p2.v not in vnodeList)
-		#@nonl
-		#@-node:<< remove all deleted nodes from their vnodeList's >>
-		#@nl
-	
+		p.deleteLinksInTree()
 		c.selectVnode(newPosition)
 		
 		return newPosition
+	
 	#@-node:p.doDelete
 	#@+node:p.insertAfter
 	def insertAfter (self,t=None):
@@ -2909,6 +2885,77 @@ class position (object):
 			return None,n
 	#@nonl
 	#@-node:p.vParentWithStack
+	#@+node:p.restoreLinksInTree/Suibtree
+	def restoreLinksInTree (self):
+	
+		"""Restore and otherwise adjust links when undoing a delete node operation."""
+		
+		root = p = self
+	
+		if p.v not in p.v.t.vnodeList:
+			p.v.t.vnodeList.append(p.v)
+			
+		for p in root.children_iter():
+			p.restoreLinksInSubtree()
+			
+	def restoreLinksInSubtree (self):
+		
+		p = self
+	
+		if p.v not in p.v.t.vnodeList:
+			p.v.t.vnodeList.append(p.v)
+	#@nonl
+	#@-node:p.restoreLinksInTree/Suibtree
+	#@+node:p.deleteLinksInTree & allies
+	def deleteLinksInTree (self):
+		
+		"""Delete and otherwise adjust links when deleting node."""
+		
+		root = self
+		
+		# The root has been unlinked.
+		assert(root.v not in root.v.t.vnodeList)
+		
+		for p in root.children_iter():
+			p.deleteLinksInSubtree()
+			
+		for p in root.children_iter():
+			p.adjustParentLinksInSubtree(parent=root)
+	#@nonl
+	#@-node:p.deleteLinksInTree & allies
+	#@+node:p.deleteLinksInSubtree
+	def deleteLinksInSubtree (self):
+	
+		root = p = self
+	
+		# Delete p.v from the vnodeList
+		if p.v in p.v.t.vnodeList:
+			p.v.t.vnodeList.remove(p.v)
+			assert(p.v not in p.v.t.vnodeList)
+	
+		if len(p.v.t.vnodeList) > 0:
+			# This node is shared by other nodes. Don't delete anything more.
+			# g.trace("stopping deletes at",p)
+			return
+		else:
+			for p in root.children_iter():
+				p.deleteLinksInSubtree()
+	#@nonl
+	#@-node:p.deleteLinksInSubtree
+	#@+node:p.adjustParentLinksInSubtree
+	def adjustParentLinksInSubtree (self,parent):
+		
+		root = p = self
+		
+		assert(parent)
+		
+		if p.v._parent and parent.v.t.vnodeList and p.v._parent not in parent.v.t.vnodeList:
+			p.v._parent = parent.v.t.vnodeList[0]
+			
+		for p in root.children_iter():
+			p.adjustParentLinksInSubtree(parent=root)
+	#@nonl
+	#@-node:p.adjustParentLinksInSubtree
 	#@+node:p.Link/Unlink methods
 	# These remain in 4.2:  linking and unlinking does not depend on position.
 	
