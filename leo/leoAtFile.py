@@ -152,7 +152,7 @@ class atFile:
 		self.trace = false
 		
 		# The encoding used to convert from unicode to a byte stream.
-		self.encoding = "utf-8"
+		self.encoding = app().config.default_derived_file_encoding
 		#@-body
 		#@-node:1::<< initialize atFile ivars >>
 	#@-body
@@ -226,7 +226,7 @@ class atFile:
 		if encoding != "utf-8":
 			self.os("-encoding=")
 			self.os(encoding)
-			self.os(",")
+			self.os(".")
 		self.os(self.endSentinelComment)
 		if self.suppress_newlines: # 9/27/02
 			self.newline_pending = true # Schedule a newline.
@@ -451,7 +451,7 @@ class atFile:
 		delim1, delim2, delim3 = set_delims_from_language(c.target_language)
 		self.language = c.target_language
 		
-		self.encoding = app().config.xml_version_string
+		self.encoding = app().config.default_derived_file_encoding
 		#@-body
 		#@-node:1::<< Set ivars >>
 
@@ -558,11 +558,9 @@ class atFile:
 				i = skip_to_end_of_line(s,k)
 				encoding = s[k+j:i].strip()
 				# trace("encoding:",encoding)
-			
-				try: # Make sure the encoding is known.
-					u = unicode("a",encoding)
+				if isValidEncoding(encoding):
 					self.encoding = encoding
-				except:
+				else:
 					es("invalid @encoding:", encoding)
 			
 			#@-body
@@ -945,8 +943,7 @@ class atFile:
 			# print self.default_directory, self.targetFileName
 			fn = os.path.join(self.default_directory, self.targetFileName)
 			fn = os.path.normpath(fn)
-			if type(fn) == type(""):
-				fn = unicode(fn,"ascii","ignore")
+			fn = toUnicode(fn,"ascii")
 			try:
 				file = open(fn,'r')
 				if file:
@@ -1226,7 +1223,7 @@ class atFile:
 		"""Reads one line from file using the present encoding"""
 		
 		s = readlineForceUnixNewline(file)
-		u = unicode(s,self.encoding,"replace")
+		u = toUnicode(s,self.encoding)
 		return u
 	
 	
@@ -1431,22 +1428,21 @@ class atFile:
 		# 1/20/03: EKR: Read optional encoding param, e.g., -encoding=utf-8,
 		
 		# Set the default encoding
-		self.encoding = app().config.xml_version_string
+		self.encoding = app().config.default_derived_file_encoding
 		
 		if match(s,i,encoding_tag):
 			i += len(encoding_tag)
 			# Skip to the next comma
 			j = i
-			while i < len(s) and not is_nl(s,i) and s[i] != ',':
+			while i < len(s) and not is_nl(s,i) and s[i] not in (',','.'):
 				i += 1
-			if match(s,i,','):
+			if match(s,i,',') or match(s,i,'.'):
 				encoding = s[j:i]
 				i += 1
-				print "@+leo-encoding=",encoding
-				try:
-					u = unicode("a",encoding)
+				# print "@+leo-encoding=",encoding
+				if isValidEncoding(encoding):
 					self.encoding = encoding
-				except:
+				else:
 					es("bad encoding in derived file:",encoding)
 			else:
 				valid = false
@@ -2097,8 +2093,7 @@ class atFile:
 			s = self.output_newline + s
 		if self.outputFile:
 			try:
-				if type(s) == type(u""):
-					s = s.encode(self.encoding,"replace")
+				s = toEncodedString(s,self.encoding,reportErrors=true)
 				self.outputFile.write(s)
 			except:
 				es("exception writing:" + `s`)
@@ -2781,13 +2776,12 @@ class atFile:
 			root.setDirty()
 	#@-body
 	#@-node:11::atFile.handleWriteException
-	#@+node:12::atFile.openWriteFile
+	#@+node:12::atFile.openWriteFile (assert)
 	#@+body
 	# Open files.  Set root.orphan and root.dirty flags and return on errors.
 	
 	def openWriteFile (self,root):
 	
-		encoding = app().config.xml_version_string # EKR: 12/15/02
 		try:
 			self.scanAllDirectives(root)
 			valid = self.errors == 0
@@ -2802,7 +2796,6 @@ class atFile:
 				self.shortFileName = fn # name to use in status messages.
 				self.targetFileName = os.path.join(self.default_directory,fn)
 				self.targetFileName = os.path.normpath(self.targetFileName)
-				assert(type(self.targetFileName) == type(u"")) # EKR: 1/21/03
 				path = os.path.dirname(self.targetFileName)
 				if path and len(path) > 0:
 					valid = os.path.exists(path)
@@ -2844,7 +2837,7 @@ class atFile:
 		return valid
 	
 	#@-body
-	#@-node:12::atFile.openWriteFile
+	#@-node:12::atFile.openWriteFile (assert)
 	#@+node:13::atFile.replaceTargetFileIfDifferent
 	#@+body
 	def replaceTargetFileIfDifferent (self):

@@ -462,15 +462,14 @@ def scanDirectives(c,v=None):
 			
 			k = dict["encoding"]
 			j = len("@encoding")
-			i = skip_to_end_of_line(s,i)
-			encoding = s[k+j:i].strip()
-			trace("encoding",encoding)
+			i = skip_to_end_of_line(s,k)
+			e = s[k+j:i].strip()
+			# trace("encoding",e)
 		
-			try: # Make sure the encoding is known.
-				u = unicode("a",encoding)
-			except:
-				es("invalid @encoding:", encoding)
-				encoding = app().config.xml_version_string # revert to default encoding
+			if isValidEncoding(e):
+				encoding = e
+			else:
+				es("invalid @encoding:", e)
 		
 		#@-body
 		#@-node:3::<< Test for @encoding >>
@@ -2830,6 +2829,67 @@ def unloadAll():
 #@-body
 #@-node:2::unloadAll
 #@-node:10::Startup & initialization...
+#@+node:11::Unicode utils...
+#@+node:1::isValidEncoding
+#@+body
+def isValidEncoding (encoding):
+
+	try:
+		u = unicode("a",encoding)
+		return true
+	except:
+		return false
+
+#@-body
+#@-node:1::isValidEncoding
+#@+node:2::reportBadChars
+#@+body
+def reportBadChars (s,encoding):
+	
+	if type(s) == type(u""):
+		for ch in s:
+			try:
+				ch.encode(encoding,"strict")
+			except:
+				# import traceback ; traceback.print_stack()
+				es("can't convert " + ch + " to " + encoding)
+
+	elif type(s) == type(""):
+		for ch in s:
+			try:
+				unicode(ch,encoding,"strict")
+			except:
+				es("can't convert " + repr(ch) + " from " + encoding + " to unicode")
+
+#@-body
+#@-node:2::reportBadChars
+#@+node:3::toUnicode & toEncodedString
+#@+body
+def toUnicode (s,encoding,reportErrors=false):
+	
+	if type(s) == type(""):
+		try:
+			s = unicode(s,encoding,"strict")
+		except:
+			if reportErrors:
+				reportBadChars(s,encoding)
+			s = unicode(s,encoding,"replace")
+	return s
+	
+def toEncodedString (s,encoding,reportErrors=false):
+	
+	if type(s) == type(u""):
+		try:
+			s = s.encode(encoding,"strict")
+		except:
+			if reportErrors:
+				reportBadChars(s,encoding)
+			s = s.encode(encoding,"replace")
+	return s
+
+#@-body
+#@-node:3::toUnicode & toEncodedString
+#@-node:11::Unicode utils...
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py

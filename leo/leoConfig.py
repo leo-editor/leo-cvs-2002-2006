@@ -151,15 +151,18 @@ class config:
 		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
 		self.output_newline = "nl"
 		self.create_nonexistent_directories = false
+		self.default_derived_file_encoding = "utf-8"
+		self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
 		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
 		self.save_clears_undo_buffer = false
 		self.stylesheet = None
-		self.use_relative_node_indices = 1 # Not used.  Will disappear.
-		self.use_customizeLeo_dot_py = 0 # Should _never_ be 1 (!!)
-		self.write_clone_indices = 0 # Should be 0 for writes to CVS. Will disappear in 4.0.
-		self.xml_version_string = "UTF-8" # Upper case for compatibility with previous versions.
+		self.use_customizeLeo_dot_py = 0 # Should _never_ be 1 here (!!)
+		
+		if 1: # To be deleted
+			self.use_relative_node_indices = 1 # Not used. 
+			self.write_clone_indices = 0 # Should be 0 for writes to CVS. Will disappear in 4.0.
 		
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
@@ -554,13 +557,32 @@ class config:
 			self.at_root_bodies_start_in_doc_mode = self.initBooleanConfigParam(
 				"at_root_bodies_start_in_doc_mode",
 				self.at_root_bodies_start_in_doc_mode)
+				
+			encoding = self.initConfigParam(
+				"default_derived_file_encoding",
+				self.default_derived_file_encoding)
+			
+			if isValidEncoding(encoding):
+				self.default_derived_file_encoding = encoding
+			else:
+				es("bad default_derived_file_encoding: " + encoding)
+				
+			encoding = self.initConfigParam(
+				"new_leo_file_encoding",
+				self.new_leo_file_encoding)
+			
+			if isValidEncoding(encoding):
+				self.new_leo_file_encoding = encoding
+			else:
+				es("bad new_leo_file_encoding: " + encoding)
 			
 			self.output_initial_comment = self.initConfigParam(
 				"output_initial_comment",
 				self.output_initial_comment)
 			
 			self.output_newline = self.initConfigParam(
-				"output_newline",self.output_newline)
+				"output_newline",
+				self.output_newline)
 			
 			self.create_nonexistent_directories = self.initBooleanConfigParam(
 				"create_nonexistent_directories",
@@ -581,10 +603,6 @@ class config:
 				"stylesheet",
 				self.stylesheet)
 			
-			self.xml_version_string = self.initConfigParam(
-				"xml_version_string",
-				self.xml_version_string)
-			
 			self.use_relative_node_indices = self.initBooleanConfigParam(
 				"use_relative_node_indices",
 				self.use_relative_node_indices)
@@ -600,6 +618,7 @@ class config:
 			self.write_clone_indices = self.initBooleanConfigParam(
 				"write_clone_indices",
 				self.write_clone_indices)
+			
 			#@-body
 			#@-node:1::<< get config options >>
 
@@ -632,13 +651,13 @@ class config:
 			find = self.findDict.get("find_string")
 			if find:
 				# Leo always writes utf-8 encoding, but users may not.
-				find = unicode(find,"utf-8","replace")
+				find = toUnicode(find,"utf-8")
 				self.findDict["find_string"] = find
 			
 			change = self.findDict.get("change_string")
 			if change:
 				# Leo always writes utf-8 encoding, but users may not.
-				change = unicode(change,"utf-8","replace")
+				change = toUnicode(change,"utf-8")
 				self.findDict["change_string"] = change
 			
 			#@-body
@@ -741,8 +760,7 @@ class config:
 		keys.sort() # Not effective.
 		for name in keys:
 			val = dict [name]
-			if type(val) == type(u""):
-				val = val.encode("utf-8","replace")
+			val = toEncodedString(val,"utf-8")
 			config.set(section,name,val)
 	
 	#@-body

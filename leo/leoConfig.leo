@@ -16,11 +16,11 @@
 <v t="T1" a="E"><vh>leoConfig.leo</vh>
 <v t="T2" a="E"><vh>@root leoConfig.txt</vh>
 <v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T7" a="V"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
 <v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
@@ -102,6 +102,21 @@ create_nonexistent_directories = 0
 #	This option applies to directories specified in filenames in
 #	@file, @rawfile, @root and @silentfile trees, and to filenames
 #	speicied in the @path directory.
+
+default_derived_file_encoding = UTF-8
+#	The encoding used for derived files if no @encoding directive is in effect.
+#	This setting is also used to encode files created by the Tangle commands.
+#	Default is UTF-8 (case not important).
+
+new_leo_file_encoding = UTF-8
+#	The encoding specified in the following line of new .leo files:
+#	&lt;?xml version="1.0" encoding="UTF-8"&gt;
+#	Default is UTF-8 (upper case for compatibility for old versions of Leo).
+#	iso-8859-1 would be a popular alternative.
+#	Important:
+#		Once a .leo file is created the &lt;?xml..."&gt; line can only be changed by hand.
+#		Changing the &lt;?xml..."&gt; line by hand may cause unicode errors the next time the .leo file is loaded,
+#		So you should change the &lt;?xml..."&gt; line by hand only when first creating a .leo file.
 
 output_initial_comment =
 #	Example:
@@ -192,10 +207,7 @@ use_customizeLeo_dot_py = 1
 #	  Please report any such distributions to me.
 
 use_relative_node_indices = 0
-#	At present this user option is non-functional.
-#	1: Files derived from @file nodes use relative node indices.
-#	0: Files derived from @file nodes use absolute node indices.
-#	Please specify 1 if you are going to submit files to Leo's CVS site.
+#	No longer used.
 
 write_clone_indices = 0
 #	1: Files derived from @file nodes contain clone indices.
@@ -203,10 +215,7 @@ write_clone_indices = 0
 #	Please specify 0 if you are going to submit files to Leo's CVS site.
 
 xml_version_string = UTF-8
-#	The version used at the start of .leo files.
-#	Default is UTF-8.  Better may be iso-8859-1 or iso-8859-15.
-#	Important:  Use UTF-8 (case is significant) to write leo.py 2.x files.
-</t>
+#	No longer used.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]

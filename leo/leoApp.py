@@ -53,8 +53,6 @@ class LeoApp:
 		
 		# New in leo.py 3.0
 		self.prolog_prefix_string = "<?xml version=\"1.0\" encoding="
-		self.prolog_version_string1 = "UTF-8" # for leo.py 2.x
-		self.prolog_version_string2 = "ISO-8859-1" # for leo.py 3.x
 		self.prolog_postfix_string = "?>"
 		
 		# leo.py 3.11

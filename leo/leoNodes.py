@@ -327,7 +327,7 @@ class tnode:
 	#@+node:1::Setting body text
 	#@+node:1::saveBodyPaneToTnode
 	#@+body
-	def saveBodyPaneToTnode (self, body):
+	def saveBodyPaneToTnode (self,body): # No need for an encoding param.
 	
 		self.setTnodeText(body.GetValue()) # 1/20/03
 	
@@ -337,17 +337,16 @@ class tnode:
 			i,j = j,i
 		self.selectionStart = i
 		self.selectionLength = j - i
+	
 	#@-body
 	#@-node:1::saveBodyPaneToTnode
 	#@+node:2::setTnodeText
 	#@+body
 	# This sets the text in the tnode from the given string.
 	
-	def setTnodeText (self,s,encoding="UTF-8"):
+	def setTnodeText (self,s,encoding="utf-8"):
 		
-		if type(s) == type(""):
-			s = unicode(s,encoding,"replace")
-	
+		s = toUnicode(s,encoding,reportErrors=true)
 		self.bodyString = s
 	
 	#@-body
@@ -1241,20 +1240,22 @@ class vnode:
 	#@+node:1::Head and body text
 	#@+node:1::appendStringToBody
 	#@+body
-	def appendStringToBody (self, s):
+	def appendStringToBody (self,s,encoding="utf-8"):
 	
 		if len(s) == 0: return
 		body = self.t.bodyString + s
-		self.setBodyStringOrPane(body)
+		self.setBodyStringOrPane(body,encoding)
+	
 	#@-body
 	#@-node:1::appendStringToBody
 	#@+node:2::setBodyStringOrPane & setBodyTextOrPane
 	#@+body
-	def setBodyStringOrPane (self,s):
+	def setBodyStringOrPane (self,s,encoding="utf-8"):
 	
 		v = self ; c = v.commands
 		if not c or not v: return
-	
+		
+		s = toUnicode(s,encoding)
 		if v == c.currentVnode():
 			# This code destoys all tags, so we must recolor.
 			c.frame.body.delete("1.0","end")
@@ -1262,7 +1263,6 @@ class vnode:
 			c.recolor()
 			
 		# Keep the body text in the tnode up-to-date.
-		s = unicode(s,"utf-8","replace") # 1/21/03
 		if v.t.bodyString != s:
 			v.t.setTnodeText(s)
 			v.t.setSelection(0,0)
@@ -1282,9 +1282,7 @@ class vnode:
 	
 	def initHeadString (self,s,encoding="utf-8"):
 	
-		if type(s) == type(""):
-			s = unicode(s,encoding,"replace")
-		
+		s = toUnicode(s,encoding,reportErrors=true)
 		self.mHeadString = s
 	
 	#@-body
@@ -1293,11 +1291,12 @@ class vnode:
 	#@+body
 	# Compatibility routine for scripts
 	
-	def setHeadStringOrHeadline (self, s):
+	def setHeadStringOrHeadline (self,s,encoding="utf-8"):
 	
 		c = self.commands
 		c.endEditing()
-		self.setHeadString(s)
+		self.setHeadString(s,encoding)
+	
 	#@-body
 	#@-node:4::setHeadStringOrHeadline
 	#@-node:1::Head and body text

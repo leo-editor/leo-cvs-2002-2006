@@ -853,8 +853,7 @@ class leoTree:
 		first,last = getTextSelection(c.body)
 		newSel = (first,last)
 		if s == None: s = u""
-		if type(s) == type(""):
-			s = unicode(s,"UTF-8","replace")
+		s = toUnicode(s,"UTF-8")
 		# Do nothing if nothing has changed.
 		if s == body: return "break"
 		# Do nothing for control characters.
@@ -967,8 +966,7 @@ class leoTree:
 			#@-node:3::<< convert leading tab to blanks >>
 
 		s = c.body.get("1.0", "end")
-		if type(s) == type(""):
-			s = unicode(s,"UTF-8","replace")
+		s = toUnicode(s,"UTF-8")
 		if len(s) > 0 and s[-1] == '\n' and removeTrailing:
 			s = s[:-1]
 		c.undoer.setUndoTypingParams(v,undoType,body,s,oldSel,newSel,oldYview=oldYview)
@@ -1158,8 +1156,7 @@ class leoTree:
 		if handleLeoHook("headkey1",c=c,v=v,ch=ch) != None:
 			return "break" # The hook claims to have handled the event.
 		s = v.edit_text.get("1.0","end")
-		if type(s) == type(""):
-			s = unicode(s,"utf-8","replace")
+		s = toUnicode(s,"utf-8")
 	
 		# remove all newlines and update the vnode
 		if not s: s = u""
@@ -1167,8 +1164,7 @@ class leoTree:
 		s = string.replace(s,'\r','')
 		head = v.headString()
 		if head == None: head = u""
-		if type(head) == type(""):
-			head = unicode(head,"utf-8","replace")
+		head = toUnicode(head,"utf-8")
 		changed = s != head
 		done = ch and (ch == '\r' or ch == '\n')
 		if not changed and not done:
@@ -1621,10 +1617,8 @@ class leoTree:
 			#@+body
 			# Delete only if necessary: this may reduce flicker slightly.
 			s = v.t.bodyString
-			if type(s) == type(""): # EKR: 1/21/03
-				s = unicode(s,"utf-8","replace")
-			if type(old_body) == type(""):
-				old_body = unicode(old_body,"utf-8","replace") # EKR: 1/21/03
+			s = toUnicode(s,"utf-8")
+			old_body = toUnicode(old_body,"utf-8")
 			if old_body != s:
 				body.delete("1.0","end")
 				body.insert("1.0",s)

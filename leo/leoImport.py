@@ -77,6 +77,7 @@ class leoImportCommands:
 		
 		# Used by Importers.
 		self.web_st = []
+		self.encoding = "utf-8"
 	
 	#@-body
 	#@-node:1::import.__init__
@@ -87,14 +88,16 @@ class leoImportCommands:
 	
 		c = self.commands ; current = c.currentVnode()
 		junk, self.fileName = os.path.split(fileName) # junk/fileName
-		self.methodName, type = os.path.splitext(self.fileName) # methodName.fileType
-		self.fileType = type
+		self.methodName, ext = os.path.splitext(self.fileName) # methodName.fileType
+		self.fileType = ext
+		self.setEncoding()
 		# trace(`self.fileName`) ; trace(`self.fileType`)
 		# All file types except the following just get copied to the parent node.
 		# 08-SEP-2002 DTHEIN: Added php
 		# 9/9/02: E.K.Ream.  Allow upper case, add cxx.
 		# Note: we should _not_ import header files using this code.
-		appendFileFlag = string.lower(type) not in [".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".php"]
+		appendFileFlag = string.lower(ext) not in [
+			".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".php"]
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -102,9 +105,11 @@ class leoImportCommands:
 		try:
 			file = open(fileName)
 			s = file.read()
+			s = toUnicode(s,self.encoding)
 			file.close()
 		except:
 			es("can not read " + fileName)
+			es_exception()
 			return None
 		#@-body
 		#@-node:1::<< Read file into s >>
@@ -121,15 +126,15 @@ class leoImportCommands:
 	
 		if appendFileFlag:
 			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
-		elif type == ".c" or type == ".cpp":
+		elif ext == ".c" or ext == ".cpp":
 			self.scanCText(s,v)
-		elif type == ".java":
+		elif ext == ".java":
 			self.scanJavaText(s,v,true) #outer level
-		elif type == ".pas":
+		elif ext == ".pas":
 			self.scanPascalText(s,v)
-		elif type == ".py":
+		elif ext == ".py":
 			self.scanPythonText(s,v)
-		elif type == ".php":
+		elif ext == ".php":
 			self.scanPHPText(s,v) # 08-SEP-2002 DTHEIN
 		else:
 			es("createOutline: can't happen")
@@ -305,6 +310,7 @@ class leoImportCommands:
 		c = self.commands ; current = c.currentVnode()
 		if current == None: return
 		if len(files) < 1: return
+		self.setEncoding()
 		fileName = files[0]
 		
 		#@<< Read the file into array >>
@@ -314,9 +320,12 @@ class leoImportCommands:
 			file = open(fileName)
 			s = file.read()
 			s = string.replace(s,"\r","")
+			s = toUnicode(s,self.encoding)
 			array = string.split(s,"\n")
 			file.close()
-		except: array = []
+		except:
+			es_exception()
+			array = []
 		#@-body
 		#@-node:1::<< Read the file into array >>
 
@@ -2346,6 +2355,7 @@ class leoImportCommands:
 		c = self.commands ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
+		self.setEncoding()
 		after = v.nodeAfterTree()
 		firstLevel = v.level()
 		try:
@@ -2354,6 +2364,8 @@ class leoImportCommands:
 			file = open(fileName,mode)
 			while v and v != after:
 				head = v.moreHead(firstLevel)
+				if type(head) == type(u""):
+					head = head.encode(self.encoding,"replace")
 				file.write(head + nl)
 				v = v.threadNext()
 			file.close()
@@ -2369,6 +2381,7 @@ class leoImportCommands:
 		c = self.commands ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
+		self.setEncoding()
 		after = v.nodeAfterTree()
 		firstLevel = v.level()
 		try:
@@ -2378,6 +2391,8 @@ class leoImportCommands:
 			file = open(fileName,mode)
 			while v and v != after:
 				head = v.moreHead(firstLevel)
+				if type(head) == type(u""):
+					head = head.encode(self.encoding,"replace")
 				file.write(head + nl)
 				body = v.moreBody() # Inserts escapes.
 				if len(body) > 0:
@@ -2396,6 +2411,7 @@ class leoImportCommands:
 		c = self.commands ; v = c.currentVnode()
 		nl = self.output_newline
 		if v == None: return
+		self.setEncoding()
 		self.webType = webType
 		after = v.nodeAfterTree()
 		try: # This can fail if the file is open by another app.
@@ -2414,6 +2430,8 @@ class leoImportCommands:
 			while v and v != after:
 				s = self.convertVnodeToWeb(v)
 				if len(s) > 0:
+					if type(s) == type(u""):
+						s = s.encode(self.encoding,"replace")
 					file.write(s)
 					if s[-1] != '\n':
 						file.write(nl)
@@ -2428,6 +2446,7 @@ class leoImportCommands:
 	#@+body
 	def removeSentinelsCommand (self,fileName):
 	
+		self.setEncoding()
 		path, self.fileName = os.path.split(fileName) # path/fileName
 		# trace(`self.fileName`)
 		
@@ -2437,6 +2456,7 @@ class leoImportCommands:
 		try:
 			file = open(fileName)
 			s = file.read()
+			s = toUnicode(s,self.encoding)
 			file.close()
 		except:
 			es("exception while reading " + fileName)
@@ -2510,6 +2530,8 @@ class leoImportCommands:
 				mode = app().config.output_newline
 				mode = choose(mode=="platform",'w','wb')
 				file = open(newFileName,mode)
+				if type(s) == type(u""):
+					s = s.encode(self.encoding,"replace")
 				file.write(s)
 				file.close()
 				es("creating: " + newFileName)
@@ -2580,6 +2602,7 @@ class leoImportCommands:
 		c = self.commands ; v = c.currentVnode()
 		nl = self.output_newline
 		if not v: return
+		self.setEncoding()
 		
 		#@<< open filename to f, or return >>
 		#@+node:1::<< open filename to f, or return >>
@@ -2619,6 +2642,8 @@ class leoImportCommands:
 				for line in context:
 					f.write(indent)
 					indent += '\t'
+					if type(line) == type(u""):
+						line = line.encode(self.encoding,"replace")
 					f.write(line)
 					f.write(nl)
 				
@@ -2641,10 +2666,10 @@ class leoImportCommands:
 		# trace("parent,headline:" + `parent` + ":" + `headline`)
 		# Create the vnode.
 		v = parent.insertAsLastChild()
-		v.initHeadString(headline)
+		v.initHeadString(headline,self.encoding)
 		# Set the body.
 		if len(body) > 0:
-			v.setBodyStringOrPane(body)
+			v.setBodyStringOrPane(body,self.encoding)
 		return v
 	#@-body
 	#@-node:1::createHeadline
@@ -2835,7 +2860,17 @@ class leoImportCommands:
 		return s
 	#@-body
 	#@-node:7::massageWebBody
-	#@+node:8::skipLeadingComments
+	#@+node:8::setEncoding
+	#@+body
+	def setEncoding (self):
+		
+		# scanDirectives checks the encoding.
+		dict = scanDirectives(self.commands)
+		self.encoding = dict.get("encoding","utf-8")
+	
+	#@-body
+	#@-node:8::setEncoding
+	#@+node:9::skipLeadingComments
 	#@+body
 	#@+at
 	#  This skips all leading comments in s, returning the remaining body text 
@@ -2930,8 +2965,8 @@ class leoImportCommands:
 		else:
 			return s[i:], "@ " + comment + "\n"
 	#@-body
-	#@-node:8::skipLeadingComments
-	#@+node:9::undentBody
+	#@-node:9::skipLeadingComments
+	#@+node:10::undentBody
 	#@+body
 	#@+at
 	#  Removes extra leading indentation from all lines.  We look at the first 
@@ -2960,7 +2995,7 @@ class leoImportCommands:
 			result += line
 		return result
 	#@-body
-	#@-node:9::undentBody
+	#@-node:10::undentBody
 	#@-node:5::Utilities
 	#@-others
 #@-body

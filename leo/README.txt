@@ -106,8 +106,6 @@ Many improvements have been made to Leo.  The highlights:
 - Simplified sentinels reduce spurious CVS diffs.
 - Many other minor improvements and bug fixes.
 
-Warning: Leo expects that all characters in derived files and .leo files are contained in the encoding specified by the xml_version_string option in leoConfig.txt.  Characters will be garbled if this restriction is not followed.  This restriction will be removed in a future release.
-
 leo.py 3.6                                   September 11, 2002
 
 Highlights:

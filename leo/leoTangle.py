@@ -555,7 +555,7 @@ class tangleCommands:
 		# Stephen P. Schaefer 9/13/2002
 		# support @first directive
 		self.first_lines = ""
-		self.encoding = app().config.xml_version_string # 2/21/03
+		self.encoding = app().config.default_derived_file_encoding # 2/21/03
 		#@-body
 		#@-node:3::<< init directive ivars >> (tangle)
 	#@-body
@@ -1475,12 +1475,8 @@ class tangleCommands:
 			
 	def os (self,s):
 		s = string.replace(s,body_ignored_newline,body_newline)
-		try:
-			self.output_file.write(s)
-		except UnicodeError: # 8/9/02
-			xml_encoding = app().config.xml_version_string
-			s = s.encode(xml_encoding)
-			self.output_file.write(s) # 8/14/02
+		s = toEncodedString(s.self.encoding)
+		self.output_file.write(s)
 	
 	def otab (self):
 		self.otabs(1)
@@ -3950,14 +3946,13 @@ class tangleCommands:
 				k = dict["encoding"]
 				j = len("@encoding")
 				i = skip_to_end_of_line(s,i)
-				encoding = s[k+j:i].strip()
-				trace("encoding:",encoding)
+				e = s[k+j:i].strip()
+				trace("encoding:",e)
 			
-				try: # Make sure the encoding is known.
-					u = unicode("a",encoding)
-					self.encoding = encoding
-				except:
-					es("invalid @encoding:", encoding)
+				if isValidEncoding(e):
+					encoding = e
+				else:
+					es("invalid @encoding:", e)
 			
 			#@-body
 			#@-node:3::<< Test for @encoding >>

@@ -263,13 +263,11 @@ class LeoFind:
 			exec("c.%s_flag = self.%s_flag.get()" % (var,var))
 	
 		s = self.find_text.get("1.0","end - 1c") # Remove trailing newline
-		if type(s) == type(""):
-			s = unicode(s,"utf-8","replace")
+		s = toUnicode(s,"utf-8")
 		c.find_text = s
 	
 		s = self.change_text.get("1.0","end - 1c") # Remove trailing newline
-		if type(s) == type(""):
-			s = unicode(s,"utf-8","replace")
+		s = toUnicode(s,"utf-8")
 		c.change_text = s
 	
 	#@-body

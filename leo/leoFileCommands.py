@@ -49,6 +49,7 @@ class fileCommands:
 		self.topVnode = None
 		self.mFileName = ""
 		self.fileDate = -1
+		self.leo_file_encoding = app().config.new_leo_file_encoding
 		# For reading
 		self.fileFormatNumber = 0
 		self.ratio = 0.5
@@ -86,7 +87,7 @@ class fileCommands:
 			v = leoNodes.vnode(c, t)
 			v.moveToRoot()
 			c.tree.rootVnode = v
-		v.initHeadString(headline)
+		v.initHeadString(headline,encoding=self.leo_file_encoding)
 		return v
 	#@-body
 	#@-node:1::createVnode
@@ -723,7 +724,7 @@ class fileCommands:
 		t = self.getT(index)
 		if t:
 			s = self.getEscapedString()
-			t.setTnodeText(s)
+			t.setTnodeText(s,encoding=self.leo_file_encoding)
 		else: # No vnode refers to this tnode.
 			es("no tnode with index: " + `index` + ".  The text will be discarded")
 			self.getEscapedString()
@@ -852,30 +853,20 @@ class fileCommands:
 	#@-node:18::getXmlStylesheetTag
 	#@+node:19::getXmlVersionTag
 	#@+body
-	#@+at
-	#  Parses the xml version string, and sets the xml version string.
-	# 
-	# For example, given: <?xml version="1.0" encoding="UTF-8"?>
-	# the version string is the string UTF-8 (without the quotes)
-	# 
-	# 1/20/03: Leo will only write utf-8 encoding.  The encoding has always 
-	# been ignored anyway(!!)
-
-	#@-at
-	#@@c
-
+	# Parses the encoding string, and sets self.leo_file_encoding.
+	
 	def getXmlVersionTag (self):
 		
 		a = app() ; config = a.config
 	
 		self.getTag(a.prolog_prefix_string)
-		version = self.getDqString()
+		encoding = self.getDqString()
 		self.getTag(a.prolog_postfix_string)
 	
-		if 0: # 1/20/03: This has never been significant.
-			# config.version overrides the version in the .leo file.
-			if not config.xml_version_string:
-				config.xml_version_string = version	
+		if isValidEncoding(encoding):
+			self.leo_file_encoding = encoding
+		else:
+			es("invalid encoding in .leo file: " + encoding)
 	
 	#@-body
 	#@-node:19::getXmlVersionTag
@@ -1134,20 +1125,9 @@ class fileCommands:
 	#@+body
 	# All output eventually comes here.
 	def put (self,s):
-		if s and len(s) > 0:
-			if self.outputFile: # Write to a file
-				try:
-					try:
-						self.outputFile.write(s)
-					except UnicodeError:
-						xml_encoding = app().config.xml_version_string
-						s = s.encode(xml_encoding)
-						self.outputFile.write(s)
-				except:
-					es("exception writing:" + `s`)
-					es_exception()
-			elif self.outputString != None: # Write to a string
-				self.outputString += s
+		if s and len(s) > 0 and self.outputFile:
+			s = toEncodedString(s,self.leo_file_encoding,reportErrors=true)
+			self.outputFile.write(s)
 	
 	def put_dquote (self):
 		self.put('"')
@@ -1395,19 +1375,9 @@ class fileCommands:
 		#@<< Put the <?xml...?> line >>
 		#@+node:1::<< Put the <?xml...?> line >>
 		#@+body
-		if 1: # 1/20/02: We always use utf-8 encoding for .leo files.
-			version = "UTF-8"
-		else:
-			version = config.xml_version_string
-			if not version or len(version) == 0:
-				# This is used only for new files without leoConfig.txt.
-				if 0: # "UTF-8"
-					version = a.prolog_version_string1 # leo.py 2.x
-				else: # "ISO-8859-1"
-					version = a.prolog_version_string2 # leo.py 3.0
-		
+		# 1/22/03: use self.leo_file_encoding encoding.
 		self.put(a.prolog_prefix_string)
-		self.put_dquote() ; self.put(version) ; self.put_dquote()
+		self.put_dquote() ; self.put(self.leo_file_encoding) ; self.put_dquote()
 		self.put(a.prolog_postfix_string) ; self.put_nl()
 		#@-body
 		#@-node:1::<< Put the <?xml...?> line >>
