@@ -3,13 +3,11 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoFontPanel
-import Tkinter,tkFont
-import sys,string
-
-Tk = Tkinter
+import Tkinter as Tk
+import tkFont
+import sys
+import string
 
 class leoTkinterFontPanel (leoFontPanel.leoFontPanel):
 	

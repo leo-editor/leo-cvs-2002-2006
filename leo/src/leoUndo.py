@@ -35,8 +35,6 @@
 #@nl
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import string
 
 #@+others
@@ -50,9 +48,9 @@ class baseUndoer:
 		u = self ; u.c = c
 		
 		# Ivars to transition to new undo scheme...
-		u.debug = false # true: enable debugging code in new undo scheme.
-		u.debug_print = false # true: enable print statements in debug code.
-		u.new_undo = true # true: enable new debug code.
+		u.debug = False # True: enable debugging code in new undo scheme.
+		u.debug_print = False # True: enable print statements in debug code.
+		u.new_undo = True # True: enable new debug code.
 	
 		# Statistics comparing old and new ways (only if u.debug is on).
 		u.new_mem = 0
@@ -65,8 +63,8 @@ class baseUndoer:
 		u.undoMenuLabel = "Can't Undo"
 		u.realRedoMenuLabel = "Can't Redo"
 		u.realUndoMenuLabel = "Can't Undo"
-		u.undoing = false # true if executing an Undo command.
-		u.redoing = false # true if executing a Redo command.
+		u.undoing = False # True if executing an Undo command.
+		u.redoing = False # True if executing a Redo command.
 		
 		# New in 4.2...
 		#@	<< Define optional ivars >>
@@ -176,8 +174,8 @@ class baseUndoer:
 		#@nonl
 		#@-node:EKR.20040526075238:<< define undoDispatchDict >>
 		#@nl
-		u.updateSetChangedFlag = true
-		u.redrawFlag = true
+		u.updateSetChangedFlag = True
+		u.redrawFlag = True
 	#@nonl
 	#@+node:ekr.20031218072017.3607:clearIvars
 	def clearIvars (self):
@@ -191,7 +189,7 @@ class baseUndoer:
 	#@-node:ekr.20031218072017.3607:clearIvars
 	#@-node:ekr.20031218072017.3606:undo.__init__ & clearIvars
 	#@+node:EKR.20040526094429:registerUndoHandlers & registerHandler
-	def registerUndoHandlers (self,undoName,undoFunc,redoFunc,verbose=false):
+	def registerUndoHandlers (self,undoName,undoFunc,redoFunc,verbose=False):
 		
 		"""Public method to set undo & redo handlers for a new command."""
 		
@@ -200,7 +198,7 @@ class baseUndoer:
 		u.registerHandler(undoName,undoFunc,"Undo",u.undoDispatchDict,verbose)
 		
 		
-	def registerHandler (self,undoName,func,kind,dict,verbose=false):
+	def registerHandler (self,undoName,func,kind,dict,verbose=False):
 		
 		"""Private helper method for registerUndoHandlers."""
 		
@@ -742,9 +740,9 @@ class baseUndoer:
 		if not  c.currentPosition(): return
 		# g.trace(u.bead+1,len(u.beads),u.peekBead(u.bead+1))
 	
-		u.redoing = true 
-		u.redrawFlag = true
-		u.updateSetChangedFlag = true
+		u.redoing = True 
+		u.redrawFlag = True
+		u.updateSetChangedFlag = True
 		
 		c.beginUpdate()
 		if 1: # update...
@@ -757,11 +755,11 @@ class baseUndoer:
 			if func:
 				func()
 				if u.updateSetChangedFlag:
-					c.setChanged(true)
+					c.setChanged(True)
 					if u.p: u.p.setDirty()
 		c.endUpdate(u.redrawFlag)
 	
-		u.redoing = false
+		u.redoing = False
 		u.bead += 1
 		u.setUndoTypes()
 	#@nonl
@@ -786,7 +784,7 @@ class baseUndoer:
 			elif u.undoType == "Change Headline":
 				u.p.initHeadString(u.newText)
 				count += 1
-			else: assert(false)
+			else: assert(False)
 	
 		g.es("redo %d instances" % count)
 	#@nonl
@@ -833,7 +831,7 @@ class baseUndoer:
 		
 		c.selectVnode(u.p)
 		c.hoist()
-		u.updateSetChangedFlag = false
+		u.updateSetChangedFlag = False
 		
 	def redoDehoist (self):
 		
@@ -841,7 +839,7 @@ class baseUndoer:
 		
 		c.selectVnode(u.p)
 		c.dehoist()
-		u.updateSetChangedFlag = false
+		u.updateSetChangedFlag = False
 	#@nonl
 	#@-node:EKR.20040526072519.3:redoHoist & redoDehoist
 	#@+node:EKR.20040526072519.4:redoInsertNodes
@@ -914,7 +912,7 @@ class baseUndoer:
 		
 		u = self
 		u.redoReplaceNodes()
-		u.redrawFlag = false
+		u.redrawFlag = False
 	#@-node:EKR.20040526075238.3:redoReplaceNodes & replaceNodesContents
 	#@+node:EKR.20040526075238.4:redoSortChildren/Siblings/TopLevel
 	def redoSortChildren (self):
@@ -978,9 +976,9 @@ class baseUndoer:
 		# g.trace(len(u.beads),u.bead,u.peekBead(u.bead))
 	
 		c.endEditing()# Make sure we capture the headline for a redo.
-		u.undoing = true
-		u.redrawFlag = true
-		u.updateSetChangedFlag = true
+		u.undoing = True
+		u.redrawFlag = True
+		u.updateSetChangedFlag = True
 	
 		c.beginUpdate()
 		if 1: # update...
@@ -993,11 +991,11 @@ class baseUndoer:
 			if func:
 				func()
 				if u.updateSetChangedFlag:
-					c.setChanged(true)
+					c.setChanged(True)
 					if u.p: u.p.setDirty()
 		c.endUpdate(u.redrawFlag)
 	
-		u.undoing = false
+		u.undoing = False
 		u.bead -= 1
 		u.setUndoTypes()
 	#@nonl
@@ -1022,7 +1020,7 @@ class baseUndoer:
 			elif u.undoType == "Change Headline":
 				u.p.initHeadString(u.oldText)
 				count += 1
-			else: assert(false)
+			else: assert(False)
 	
 		g.es("undo %d instances" % count)
 	#@nonl
@@ -1117,7 +1115,7 @@ class baseUndoer:
 		
 		c.selectVnode(u.p)
 		c.dehoist()
-		u.updateSetChangedFlag = false
+		u.updateSetChangedFlag = False
 	
 	def undoDehoist (self):
 		
@@ -1125,7 +1123,7 @@ class baseUndoer:
 		
 		c.selectVnode(u.p)
 		c.hoist()
-		u.updateSetChangedFlag = false
+		u.updateSetChangedFlag = False
 	#@-node:EKR.20040526083847.2:undoHoist and undoDehoist
 	#@+node:EKR.20040526084140:undoInsertNodes
 	def undoInsertNodes (self):
@@ -1266,7 +1264,7 @@ class baseUndoer:
 		if textResult == result:
 			if undoType in ("Cut","Paste"):
 				# g.trace("non-incremental undo")
-				c.frame.body.recolor(p,incremental=false)
+				c.frame.body.recolor(p,incremental=False)
 			else:
 				# g.trace("incremental undo:",leading,trailing)
 				c.frame.body.recolor_range(p,leading,trailing)
@@ -1335,7 +1333,7 @@ class baseUndoer:
 		u = self ; c = u.c
 		
 		u.undoReplaceNodes()
-		u.redrawFlag = false
+		u.redrawFlag = False
 	#@nonl
 	#@-node:EKR.20040526090701.3:undoReplaceNodes & undoReplaceNodesContents
 	#@+node:ekr.20031218072017.3622:undoSortChildren
@@ -1427,10 +1425,10 @@ class nullUndoer (undoer):
 		pass
 		
 	def canRedo (self):
-		return false
+		return False
 
 	def canUndo (self):
-		return false
+		return False
 		
 	def enableMenuItems (self):
 		pass

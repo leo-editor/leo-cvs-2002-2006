@@ -8,14 +8,16 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 import leoColor,leoFrame,leoNodes
-import leoTkinterMenu,leoTkinterTree
-import Tkinter,tkFont
-import os,string,sys,time
-
-Tk = Tkinter
+import leoTkinterMenu
+import leoTkinterTree
+import Tkinter as Tk
+import tkFont
+import os
+import string
+import sys
+import time
 
 #@+others
 #@+node:ekr.20031218072017.3940:class leoTkinterFrame
@@ -55,7 +57,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		# Used by event handlers...
 		self.redrawCount = 0
 		self.draggedItem = None
-		self.controlKeyIsDown = false # For control-drags
+		self.controlKeyIsDown = False # For control-drags
 		self.revertHeadline = None # Previous headline text for abortEditLabel.
 		#@nonl
 		#@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
@@ -70,7 +72,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:ekr.20031218072017.3944:f.createCanvas
 	def createCanvas (self,parentFrame):
 		
-		frame = self ; config = g.app.config ; Tk = Tkinter
+		frame = self ; config = g.app.config
 		
 		scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
 		scrolls = g.choose(scrolls,1,0)
@@ -110,8 +112,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:ekr.20031218072017.2176:f.finishCreate
 	def finishCreate (self,c):
 		
-		frame = self ; frame.c = c
-		Tk = Tkinter ; gui = g.app.gui
+		frame = self ; frame.c = c ; gui = g.app.gui
 	
 		#@	<< create the toplevel frame >>
 		#@+node:ekr.20031218072017.2177:<< create the toplevel frame >>
@@ -189,7 +190,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		c.redraw()
 		c.frame.getFocus()
 		c.editPosition(p)
-		c.endUpdate(false)
+		c.endUpdate(False)
 		#@-node:ekr.20031218072017.2180:<< create the first tree node >>
 		#@nl
 	
@@ -249,8 +250,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		"""Create a splitter window and panes into which the caller packs widgets.
 		
 		Returns (f, bar, pane1, pane2) """
-	
-		Tk = Tkinter
 		
 		# Create the frames.
 		f = Tk.Frame(parent,bd=0,relief="flat")
@@ -434,7 +433,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 					# Create the image.  Throws an exception if file not found
 					imagefile = g.os_path_join(g.app.loadDir,imagefile)
 					imagefile = g.os_path_normpath(imagefile)
-					image = Tkinter.PhotoImage(master=g.app.root,file=imagefile)
+					image = Tk.PhotoImage(master=g.app.root,file=imagefile)
 					
 					# Must keep a reference to the image!
 					try:
@@ -522,7 +521,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			state = t.cget("state")
 			return state == "normal"
 		else:
-			return false
+			return False
 	#@nonl
 	#@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 	#@+node:ekr.20031218072017.3963:putStatusLine
@@ -815,7 +814,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 				self.bodyXBar.pack(side="bottom",fill="x")
 	#@-node:ekr.20031218072017.1540:setWrap
 	#@+node:ekr.20031218072017.2307:setTopGeometry
-	def setTopGeometry(self,w,h,x,y,adjustSize=true):
+	def setTopGeometry(self,w,h,x,y,adjustSize=True):
 		
 		# Put the top-left corner on the screen.
 		x = max(10,x) ; y = max(10,y)
@@ -857,7 +856,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:ekr.20031218072017.3971:Event handlers (Frame)
 	#@+node:ekr.20031218072017.3972:frame.OnCloseLeoEvent
 	# Called from quit logic and when user closes the window.
-	# Returns true if the close happened.
+	# Returns True if the close happened.
 	
 	def OnCloseLeoEvent(self):
 	
@@ -867,11 +866,11 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	#@+node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
 	def OnControlKeyDown (self,event=None):
 		
-		self.controlKeyIsDown = true
+		self.controlKeyIsDown = True
 		
 	def OnControlKeyUp (self,event=None):
 	
-		self.controlKeyIsDown = false
+		self.controlKeyIsDown = False
 	
 	#@-node:ekr.20031218072017.3973:frame.OnControlKeyUp/Down
 	#@+node:ekr.20031218072017.3974:frame.OnVisibility
@@ -977,9 +976,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
 	
 		try:
 			if event.delta < 1:
-				self.canvas.yview(Tkinter.SCROLL, 1, Tkinter.UNITS)
+				self.canvas.yview(Tk.SCROLL, 1, Tk.UNITS)
 			else:
-				self.canvas.yview(Tkinter.SCROLL, -1, Tkinter.UNITS)
+				self.canvas.yview(Tk.SCROLL, -1, Tk.UNITS)
 		except:
 			g.es_event_exception("scroll wheel")
 	
@@ -1114,7 +1113,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			sel1,sel2 = g.app.gui.getTextSelection(v.edit_text())
 			if sel1 and sel2 and sel1 != sel2: # 7/7/03
 				v.edit_text().delete(sel1,sel2)
-			v.edit_text().insert("insert",c.getTime(body=false))
+			v.edit_text().insert("insert",c.getTime(body=False))
 			frame.tree.idle_head_key(v)
 	
 		# A kludge to get around not knowing whether we are editing or not.
@@ -1149,7 +1148,7 @@ class leoTkinterFrame (leoFrame.leoFrame):
 			w,h = int(w),int(h)
 	
 			# Set new x,y and old w,h
-			frame.setTopGeometry(w,h,x,y,adjustSize=false)
+			frame.setTopGeometry(w,h,x,y,adjustSize=False)
 	
 			# Compute the new offsets.
 			x += 30 ; y += 30
@@ -1264,7 +1263,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
 		if self.scale == None:
 			#@		<< create the scale widget >>
 			#@+node:ekr.20031218072017.3994:<< create the scale widget >>
-			Tk = Tkinter
 			top = Tk.Toplevel()
 			top.title("Download progress")
 			self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
@@ -1541,22 +1539,22 @@ class leoTkinterBody (leoFrame.leoBody):
 		
 		if len(new) == 0 or new[-1] != '\n':
 			# There is no newline to remove.  Probably will never happen.
-			# g.trace("false: no newline to remove")
-			removeTrailing = false
+			# g.trace("False: no newline to remove")
+			removeTrailing = False
 		elif len(old) == 0:
 			# Ambigous case.
-			# g.trace("false: empty old")
-			removeTrailing = ch != '\n' # false
+			# g.trace("False: empty old")
+			removeTrailing = ch != '\n' # False
 		elif old == new[:-1]:
 			# A single trailing character has been added.
-			# g.trace("false: only changed trailing.")
-			removeTrailing = false
+			# g.trace("False: only changed trailing.")
+			removeTrailing = False
 		else:
 			# The text didn't have a newline, and now it does.
 			# Moveover, some other change has been made to the text,
 			# So at worst we have misreprented the user's intentions slightly.
-			# g.trace("true")
-			removeTrailing = true
+			# g.trace("True")
+			removeTrailing = True
 			
 		# g.trace(ch,removeTrailing)
 		#@nonl
@@ -1595,7 +1593,7 @@ class leoTkinterBody (leoFrame.leoBody):
 					ws = g.computeLeadingWhitespace (width,tab_width)
 					if ws and len(ws) > 0:
 						c.frame.bodyCtrl.insert("insert", ws)
-						removeTrailing = false # bug fix: 11/18
+						removeTrailing = False # bug fix: 11/18
 				#@nonl
 				#@-node:ekr.20031218072017.1324:<< Do auto indent >> (David McNab)
 				#@nl
@@ -1622,10 +1620,10 @@ class leoTkinterBody (leoFrame.leoBody):
 						prev=c.frame.bodyCtrl.get("insert linestart","insert -1c")
 				
 						# Do nothing if there are non-whitespace in prev:
-						all_ws = true
+						all_ws = True
 						for ch in prev:
 							if ch != ' ' and ch != '\t':
-								all_ws = false
+								all_ws = False
 						if all_ws:
 							w = g.computeWidth(prev,tab_width)
 							w2 = (abs(tab_width) - (w % abs(tab_width)))
@@ -1687,27 +1685,27 @@ class leoTkinterBody (leoFrame.leoBody):
 		incremental = undoType not in ("Cut","Paste") and not self.forceFullRecolorFlag
 		self.frame.body.recolor_now(p,incremental=incremental)
 		
-		self.forceFullRecolorFlag = false
+		self.forceFullRecolorFlag = False
 		#@nonl
 		#@-node:ekr.20031218072017.1327:<< recolor the body >>
 		#@nl
 		if not c.changed:
-			c.setChanged(true)
+			c.setChanged(True)
 		#@	<< redraw the screen if necessary >>
 		#@+node:ekr.20031218072017.1328:<< redraw the screen if necessary >>
-		redraw_flag = false
+		redraw_flag = False
 		
 		c.beginUpdate()
 		
 		# Update dirty bits.
 		if not p.isDirty() and p.setDirty(): # Sets all cloned and @file dirty bits
-			redraw_flag = true
+			redraw_flag = True
 			
 		# Update icons.
 		val = p.computeIcon()
 		if val != v.iconVal:
 			v.iconVal = val
-			redraw_flag = true
+			redraw_flag = True
 		
 		c.endUpdate(redraw_flag) # redraw only if necessary
 		#@nonl
@@ -1820,7 +1818,7 @@ class leoTkinterBody (leoFrame.leoBody):
 	#@+node:ekr.20031218072017.3999:forceRecolor
 	def forceFullRecolor (self):
 		
-		self.forceFullRecolorFlag = true
+		self.forceFullRecolorFlag = True
 	#@nonl
 	#@-node:ekr.20031218072017.3999:forceRecolor
 	#@+node:ekr.20031218072017.4000:Tk bindings (leoTkinterBody)
@@ -2449,11 +2447,11 @@ class leoTkinterLog (leoFrame.leoLog):
 			self.logCtrl.insert("end",'\n')
 			self.logCtrl.see("end")
 			
-			self.frame.tree.disableRedraw = true
+			self.frame.tree.disableRedraw = True
 			self.logCtrl.update_idletasks()
 			#self.frame.outerFrame.update_idletasks() # 4/23/04
 			#self.frame.top.update_idletasks()
-			self.frame.tree.disableRedraw = false
+			self.frame.tree.disableRedraw = False
 			#@nonl
 			#@-node:EKR.20040423082910.2:<< put newline to log control >>
 			#@nl
@@ -2469,11 +2467,11 @@ class leoTkinterLog (leoFrame.leoLog):
 			
 	def forceLogUpdate (self):
 		if sys.platform != "darwin": # Does not work on darwin.
-			self.frame.tree.disableRedraw = true
+			self.frame.tree.disableRedraw = True
 			self.logCtrl.update_idletasks()
 			#self.frame.outerFrame.update_idletasks() # 4/23/04
 			#self.frame.top.update_idletasks()
-			self.frame.tree.disableRedraw = false
+			self.frame.tree.disableRedraw = False
 	#@nonl
 	#@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
 	#@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
@@ -2503,5 +2501,6 @@ class leoTkinterLog (leoFrame.leoLog):
 #@nonl
 #@-node:ekr.20031218072017.4039:class leoTkinterLog
 #@-others
+#@nonl
 #@-node:ekr.20031218072017.3939:@thin leoTkinterFrame.py
 #@-leo

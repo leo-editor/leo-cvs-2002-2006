@@ -3,10 +3,8 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-import string,Tkinter
-
-Tk = Tkinter
+import string
+import Tkinter as Tk
 
 #@+others
 #@+node:ekr.20031218072017.3859: class leoTkinterDialog
@@ -14,7 +12,7 @@ class leoTkinterDialog:
 	"""The base class for all Leo Tkinter dialogs"""
 	#@	@+others
 	#@+node:ekr.20031218072017.3860:__init__ (leoDialog)
-	def __init__(self,title="",resizeable=true):
+	def __init__(self,title="",resizeable=True):
 		
 		"""Constructor for the leoTkinterDialog class."""
 		
@@ -83,7 +81,7 @@ class leoTkinterDialog:
 		buttonList = []
 		for d in buttons:
 			text = d.get("text","<missing button name>")
-			isDefault = d.get("default",false)
+			isDefault = d.get("default",False)
 			underline = d.get("underline",0)
 			command = d.get("command",None)
 			bd = g.choose(isDefault,4,2)
@@ -164,7 +162,7 @@ class tkinterAboutLeo (leoTkinterDialog):
 		
 		"""Create a Tkinter About Leo dialog."""
 	
-		leoTkinterDialog.__init__(self,"About Leo",resizeable=true) # Initialize the base class.
+		leoTkinterDialog.__init__(self,"About Leo",resizeable=True) # Initialize the base class.
 		
 		self.copyright = copyright
 		self.email = email
@@ -199,7 +197,7 @@ class tkinterAboutLeo (leoTkinterDialog):
 		
 		try:
 			bitmap_name = g.os_path_join(g.app.loadDir,"..","Icons","Leoapp.GIF") # 5/12/03
-			image = Tkinter.PhotoImage(file=bitmap_name)
+			image = Tk.PhotoImage(file=bitmap_name)
 			text.image_create("1.0",image=image,padx=10)
 		except:
 			g.es("exception getting icon")
@@ -279,7 +277,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 		
 		"""Create the Leo Id dialog."""
 		
-		leoTkinterDialog.__init__(self,"Enter unique id",resizeable=false) # Initialize the base class.
+		leoTkinterDialog.__init__(self,"Enter unique id",resizeable=False) # Initialize the base class.
 		self.id_entry = None
 		self.answer = None
 	
@@ -296,7 +294,7 @@ class tkinterAskLeoID (leoTkinterDialog):
 		self.createFrame(message)
 		self.focus_widget = self.id_entry
 	
-		buttons = {"text":"OK","command":self.onButton,"default":true}, # Singleton tuple.
+		buttons = {"text":"OK","command":self.onButton,"default":True}, # Singleton tuple.
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0]
 		self.ok_button.configure(state="disabled")
@@ -346,13 +344,13 @@ class tkinterAskLeoID (leoTkinterDialog):
 		#@+node:ekr.20031218072017.1989:<< eliminate invalid characters >>
 		e = self.id_entry
 		s = e.get().strip()
-		i = 0 ; ok = true
+		i = 0 ; ok = True
 		while i < len(s):
 			ch = s[i]
 			if ch not in string.ascii_letters and ch not in string.digits:
 				e.delete(str(i))
 				s = e.get()
-				ok = false
+				ok = False
 			else:
 				i += 1
 		if not ok: return
@@ -388,7 +386,7 @@ class tkinterAskOk(leoTkinterDialog):
 
 	#@	@+others
 	#@+node:ekr.20031218072017.3874:class tkinterAskOk.__init__
-	def __init__ (self,title,message=None,text="Ok",resizeable=false):
+	def __init__ (self,title,message=None,text="Ok",resizeable=False):
 	
 		"""Create a dialog with one button"""
 	
@@ -400,7 +398,7 @@ class tkinterAskOk(leoTkinterDialog):
 		if message:
 			self.createMessageFrame(message)
 	
-		buttons = {"text":text,"command":self.okButton,"default":true}, # Singleton tuple.
+		buttons = {"text":text,"command":self.okButton,"default":True}, # Singleton tuple.
 		self.createButtons(buttons)
 	#@nonl
 	#@-node:ekr.20031218072017.3874:class tkinterAskOk.__init__
@@ -430,7 +428,7 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 		
 		"""Create a number dialog"""
 	
-		leoTkinterDialog.__init__(self,title,resizeable=false) # Initialize the base class.
+		leoTkinterDialog.__init__(self,title,resizeable=False) # Initialize the base class.
 		self.answer = -1
 		self.number_entry = None
 	
@@ -441,7 +439,7 @@ class  tkinterAskOkCancelNumber (leoTkinterDialog):
 		self.focus_widget = self.number_entry
 	
 		buttons = (
-				{"text":"Ok",    "command":self.okButton,     "default":true},
+				{"text":"Ok",    "command":self.okButton,     "default":True},
 				{"text":"Cancel","command":self.cancelButton} )
 		buttonList = self.createButtons(buttons)
 		self.ok_button = buttonList[0] # Override the default kind of Ok button.
@@ -522,7 +520,7 @@ class tkinterAskYesNo (leoTkinterDialog):
 
 	#@	@+others
 	#@+node:ekr.20031218072017.3883:tkinterAskYesNo.__init__
-	def __init__ (self,title,message=None,resizeable=false):
+	def __init__ (self,title,message=None,resizeable=False):
 		
 		"""Create a dialog having yes and no buttons."""
 	
@@ -534,7 +532,7 @@ class tkinterAskYesNo (leoTkinterDialog):
 			self.createMessageFrame(message)
 			
 		buttons = (
-			{"text":"Yes","command":self.yesButton,  "default":true},
+			{"text":"Yes","command":self.yesButton,  "default":True},
 			{"text":"No", "command":self.noButton} )
 		self.createButtons(buttons)
 	#@-node:ekr.20031218072017.3883:tkinterAskYesNo.__init__
@@ -570,7 +568,7 @@ class tkinterAskYesNoCancel(leoTkinterDialog):
 		yesMessage="Yes",
 		noMessage="No",
 		defaultButton="Yes",
-		resizeable=false):
+		resizeable=False):
 			
 		"""Create a dialog having three buttons."""
 	
@@ -639,7 +637,7 @@ class tkinterListBoxDialog (leoTkinterDialog):
 		
 		"""Constructor for the base listboxDialog class."""
 		
-		leoTkinterDialog.__init__(self,title,resizeable=true) # Initialize the base class.
+		leoTkinterDialog.__init__(self,title,resizeable=True) # Initialize the base class.
 		self.createTopFrame()
 		self.top.protocol("WM_DELETE_WINDOW", self.destroy)
 	
@@ -745,7 +743,7 @@ class tkinterListBoxDialog (leoTkinterDialog):
 			v = self.vnodeList[n]
 			c.beginUpdate()
 			c.frame.tree.expandAllAncestors(v)
-			c.selectVnode(v,updateBeadList=true) # A case could be made for updateBeadList=false
+			c.selectVnode(v,updateBeadList=True) # A case could be made for updateBeadList=False
 			c.endUpdate()
 			c.frame.tree.idle_scrollTo(v)
 	#@-node:ekr.20031218072017.3896:go

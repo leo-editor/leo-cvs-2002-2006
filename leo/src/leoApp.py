@@ -6,9 +6,8 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
-import os,sys
+import os
+import sys
 
 class LeoApp:
 
@@ -22,47 +21,47 @@ class LeoApp:
 	
 		# These ivars are the global vars of this program.
 		self.afterHandler = None
-		self.batchMode = false # true: run in batch mode.
+		self.batchMode = False # True: run in batch mode.
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.count = 0 # General purpose debugging count.
 		self.copies = 0 # Number of calls to position.copy
-		self.debug = false # True: enable extra debugging tests (not used at present).
+		self.debug = False # True: enable extra debugging tests (not used at present).
 			# WARNING: this could greatly slow things down.
-		self.disableSave = false
+		self.disableSave = False
 		self.globalWindows = []
 		self.gui = None # The gui class.
-		self.hasOpenWithMenu = false # true: open with plugin has been loaded.
-		self.hookError = false # true: suppress further calls to hooks.
+		self.hasOpenWithMenu = False # True: open with plugin has been loaded.
+		self.hookError = False # True: suppress further calls to hooks.
 		self.hookFunction = None # Application wide hook function.
-		self.idle_imported = false # true: we have done an import idle
+		self.idle_imported = False # True: we have done an import idle
 		self.idleTimeDelay = 100 # Delay in msec between calls to "idle time" hook.
-		self.idleTimeHook = false # true: the global idleTimeHookHandler will reshedule itself.
-		self.initing = true # true: we are initiing the app.
-		self.killed = false # true: we are about to destroy the root window.
+		self.idleTimeHook = False # True: the global idleTimeHookHandler will reshedule itself.
+		self.initing = True # True: we are initiing the app.
+		self.killed = False # True: we are about to destroy the root window.
 		self.leoID = None # The id part of gnx's.
 		self.loadDir = None # The directory from which Leo was loaded.
 		self.loadedPlugins = [] # List of loaded plugins that have signed on.
 		self.log = None # The LeoFrame containing the present log.
-		self.logIsLocked = false # true: no changes to log are allowed.
+		self.logIsLocked = False # True: no changes to log are allowed.
 		self.logWaiting = [] # List of messages waiting to go to a log.
-		self.menuWarningsGiven = false # true: supress warnings in menu code.
+		self.menuWarningsGiven = False # True: supress warnings in menu code.
 		self.nodeIndices = None # Singleton node indices instance.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.
 		self.openWithTable = None # The table passed to createOpenWithMenuFromTable.
-		self.quitting = false # true if quitting.  Locks out some events.
+		self.quitting = False # True if quitting.  Locks out some events.
 		self.realMenuNameDict = {} # Contains translations of menu names and menu item names.
 		self.root = None # The hidden main window. Set later.
 		self.searchDict = {} # For communication between find/change scripts.
 		self.scriptDict = {} # For communication between Execute Script command and scripts.
-		self.trace = false # true: enable debugging traces.
+		self.trace = False # True: enable debugging traces.
 		self.trace_list = [] # "Sherlock" argument list for tracing().
 		self.tkEncoding = "utf-8"
-		self.unicodeErrorGiven = true # true: suppres unicode tracebacks.
+		self.unicodeErrorGiven = True # True: suppres unicode tracebacks.
 		self.unitTestDict = {} # For communication between unit tests and code.
-		self.use_gnx = true # true: generate gnx's instead of tnode indices.
+		self.use_gnx = True # True: generate gnx's instead of tnode indices.
 		self.windowList = [] # Global list of all frames.  Does not include hidden root window.
 	
 		# Global panels.  Destroyed when Leo ends.
@@ -78,7 +77,7 @@ class LeoApp:
 		self.prolog_postfix_string = "?>"
 		
 		# leo.py 3.11
-		self.use_unicode = true # true: use new unicode logic.
+		self.use_unicode = True # True: use new unicode logic.
 		#@-node:ekr.20031218072017.1417:<< define global constants >>
 		#@nl
 		#@	<< Define global data structures >>
@@ -144,14 +143,14 @@ class LeoApp:
 		
 		"""Attempt to close a Leo window.
 		
-		Return false if the user veto's the close."""
+		Return False if the user veto's the close."""
 		
 		c = frame.c
 	
 		if c.changed:
 			veto = frame.promptForSave()
 			# print "veto",veto
-			if veto: return false
+			if veto: return False
 	
 		g.app.setLog(None) # no log until we reactive a window.
 		
@@ -169,7 +168,7 @@ class LeoApp:
 		else:
 			g.app.finishQuit()
 	
-		return true # The window has been closed.
+		return True # The window has been closed.
 	#@-node:ekr.20031218072017.2609:app.closeLeoWindow
 	#@+node:ekr.20031218072017.2610:app.createTkGui
 	def createTkGui (self,fileName=None): # Do NOT omit fileName param: it is used in plugin code.
@@ -265,7 +264,7 @@ class LeoApp:
 		if g.app.gui:
 			g.app.gui.destroySelf()
 			
-		g.app.killed = true
+		g.app.killed = True
 			# Disable all further hooks and events.
 			# Alas, "idle" events can still be called even after the following code.
 	
@@ -291,7 +290,7 @@ class LeoApp:
 		g.doHook("end1")
 		
 		self.log = None # Disable writeWaitingLog
-		self.killed = true # Disable all further hooks.
+		self.killed = True # Disable all further hooks.
 		
 		for w in self.windowList[:]:
 			self.destroyWindow(w)
@@ -302,14 +301,14 @@ class LeoApp:
 	#@+node:ekr.20031218072017.2617:app.onQuit
 	def onQuit (self):
 		
-		g.app.quitting = true
+		g.app.quitting = True
 		
 		while g.app.windowList:
 			w = g.app.windowList[0]
 			if not g.app.closeLeoWindow(w):
 				break
 	
-		g.app.quitting = false # If we get here the quit has been disabled.
+		g.app.quitting = False # If we get here the quit has been disabled.
 	
 	
 	#@-node:ekr.20031218072017.2617:app.onQuit
@@ -429,11 +428,11 @@ class LeoApp:
 			
 	def lockLog(self):
 		"""Disable changes to the log"""
-		self.logIsLocked = true
+		self.logIsLocked = True
 		
 	def unlockLog(self):
 		"""Enable changes to the log"""
-		self.logIsLocked = false
+		self.logIsLocked = False
 	#@nonl
 	#@-node:ekr.20031218072017.1847:app.setLog, lockLog, unlocklog
 	#@+node:ekr.20031218072017.2619:app.writeWaitingLog

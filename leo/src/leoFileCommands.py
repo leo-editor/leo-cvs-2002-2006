@@ -3,7 +3,6 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 if g.app.config.use_psyco:
 	# print "enabled psyco classes",__file__
@@ -11,7 +10,9 @@ if g.app.config.use_psyco:
 	except ImportError: pass
 
 import leoNodes
-import os,string,time
+import os
+import string
+import time
 
 #@+at 
 #@nonl
@@ -62,12 +63,12 @@ class baseFileCommands:
 		self.currentVnodeStack = [] # A stack of vnodes giving the current position.
 		self.topVnodeStack     = [] # A stack of vnodes giving the top position.
 		# For writing
-		self.read_only = false
+		self.read_only = False
 		self.outputFile = None # File for normal writing
 		self.outputList = None # List of strings for pasting
 		self.openDirectory = None
 		self.topVnode = None
-		self.usingClipboard = false
+		self.usingClipboard = False
 		self.currentPosition = None
 		# New in 3.12
 		self.copiedTree = None
@@ -166,7 +167,7 @@ class baseFileCommands:
 	#@nonl
 	#@-node:ekr.20040326063413:getExistingVnode
 	#@+node:ekr.20031218072017.1557:finishPaste
-	def finishPaste(self,reassignIndices=true):
+	def finishPaste(self,reassignIndices=True):
 		
 		"""Finish pasting an outline from the clipboard.
 		
@@ -182,7 +183,7 @@ class baseFileCommands:
 			#@nonl
 			# putLeoOutline calls assignFileIndices (when copying nodes) so 
 			# that vnode can be associated with tnodes.
-			# However, we must _reassign_ the indices here so that no "false 
+			# However, we must _reassign_ the indices here so that no "False 
 			# clones" are created.
 			#@-at
 			#@@c
@@ -212,9 +213,9 @@ class baseFileCommands:
 		self.skipWs() # guarantees at least one more character.
 		ch = self.fileBuffer[self.fileIndex]
 		if ch == '0':
-			self.fileIndex += 1 ; return false
+			self.fileIndex += 1 ; return False
 		elif ch == '1':
-			self.fileIndex += 1 ; return true
+			self.fileIndex += 1 ; return True
 		else:
 			raise BadLeoFile("expecting bool constant")
 	#@nonl
@@ -297,12 +298,12 @@ class baseFileCommands:
 		if tag[-1] == ">":
 			# Only the tag itself or a collapsed tag are valid.
 			if self.matchTag(tag):
-				return false # Not a collapsed tag.
+				return False # Not a collapsed tag.
 			elif self.matchTag(tag[:-1]):
 				# It must be a collapsed tag.
 				self.skipWs()
 				if self.matchTag("/>"):
-					return true
+					return True
 			print "getOpenTag(", tag, ") failed:"
 			raise BadLeoFile("expecting" + tag)
 		else:
@@ -311,10 +312,10 @@ class baseFileCommands:
 				old_index = self.fileIndex
 				self.skipWs()
 				if self.matchTag("/>"):
-					return true
+					return True
 				else:
 					self.fileIndex = old_index
-					return false
+					return False
 			else:
 				print "getOpenTag(", tag, ") failed:"
 				raise BadLeoFile("expecting" + tag)
@@ -340,7 +341,7 @@ class baseFileCommands:
 		
 		"""
 		Look ahead for closing />
-		Return true if found.
+		Return True if found.
 		"""
 		
 		if self.matchTag(tag):
@@ -390,8 +391,8 @@ class baseFileCommands:
 	def matchChar (self,ch):
 		self.skipWs() # guarantees at least one more character.
 		if ch == self.fileBuffer[self.fileIndex]:
-			self.fileIndex += 1 ; return true
-		else: return false
+			self.fileIndex += 1 ; return True
+		else: return False
 	
 	# Warning: does not check for end-of-word,
 	# so caller must match prefixes first.
@@ -400,9 +401,9 @@ class baseFileCommands:
 		i = self.fileIndex
 		if tag == self.fileBuffer[i:i+len(tag)]:
 			self.fileIndex += len(tag)
-			return true
+			return True
 		else:
-			return false
+			return False
 	
 	def matchTagWordIgnoringCase (self,tag):
 		self.skipWsAndNl() # guarantees at least one more character.
@@ -413,9 +414,9 @@ class baseFileCommands:
 		word = string.lower(word)
 		if tag == word:
 			self.fileIndex += len(tag)
-			return true
+			return True
 		else:
-			return false
+			return False
 	#@-node:ekr.20031218072017.1245:match routines
 	#@-node:ekr.20031218072017.1243:get & match (basic)(leoFileCommands)
 	#@+node:ekr.20031218072017.3022:getClipboardHeader
@@ -480,7 +481,7 @@ class baseFileCommands:
 		
 			for var in findFrame.intKeys:
 				attr = "%s_flag" % (var)
-				setattr(c,attr,false)
+				setattr(c,attr,False)
 				# g.trace(attr)
 		#@-node:ekr.20031218072017.2065:<< Set defaults of all flags >>
 		#@nl
@@ -549,14 +550,14 @@ class baseFileCommands:
 	#@+node:ekr.20031218072017.1553:getLeoFile
 	# The caller should enclose this in begin/endUpdate.
 	
-	def getLeoFile (self,fileName,atFileNodesFlag=true):
+	def getLeoFile (self,fileName,atFileNodesFlag=True):
 	
 		c = self.c
-		c.setChanged(false) # 10/1/03: May be set when reading @file nodes.
+		c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
 		#@	<< warn on read-only files >>
 		#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
 		try:
-			self.read_only = false
+			self.read_only = False
 			self.read_only = not os.access(fileName,os.W_OK)
 			if self.read_only:
 				g.es("read only: " + fileName,color="red")
@@ -569,8 +570,8 @@ class baseFileCommands:
 		#@nl
 		self.mFileName = c.mFileName
 		self.tnodesDict = {}
-		ok = true
-		c.loading = true # disable c.changed
+		ok = True
+		c.loading = True # disable c.changed
 		
 		try:
 			#@		<< scan all the xml elements >>
@@ -604,18 +605,18 @@ class baseFileCommands:
 			#@nonl
 			#@-node:ekr.20031218072017.1556:<< raise an alert >>
 			#@nl
-			ok = false
+			ok = False
 	
-		c.frame.tree.redraw_now(scroll=false)
+		c.frame.tree.redraw_now(scroll=False)
 		
 		if ok and atFileNodesFlag:
-			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
+			c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
 	
 		if not c.currentPosition():
 			c.setCurrentPosition(c.rootPosition())
 	
 		c.selectVnode(c.currentPosition()) # load body pane
-		c.loading = false # reenable c.changed
+		c.loading = False # reenable c.changed
 		c.setChanged(c.changed) # Refresh the changed marker.
 		self.tnodesDict = {}
 		return ok, self.ratio
@@ -650,9 +651,9 @@ class baseFileCommands:
 	#@-node:ekr.20031218072017.1970:getLeoHeader
 	#@+node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
 	# This method reads a Leo outline from string s in clipboard format.
-	def getLeoOutline (self,s,reassignIndices=true):
+	def getLeoOutline (self,s,reassignIndices=True):
 	
-		self.usingClipboard = true
+		self.usingClipboard = True
 		self.fileBuffer = s ; self.fileIndex = 0
 		self.tnodesDict = {}
 		
@@ -689,7 +690,7 @@ class baseFileCommands:
 	
 		# Clean up.
 		self.fileBuffer = None ; self.fileIndex = 0
-		self.usingClipboard = false
+		self.usingClipboard = False
 		self.tnodesDict = {}
 		return v
 	#@-node:ekr.20031218072017.1559:getLeoOutline (from clipboard)
@@ -732,7 +733,7 @@ class baseFileCommands:
 			("use_header_flag","use_header_flag",self.getBool))
 		
 		while 1:
-			found = false
+			found = False
 			for tag,var,f in table:
 				if self.matchTag("%s=" % tag):
 					if var:
@@ -740,7 +741,7 @@ class baseFileCommands:
 						setattr(c,var,val)
 					else:
 						self.getDqString()
-					found = true ; break
+					found = True ; break
 			if not found:
 				if self.matchTag(">"):
 					break
@@ -857,7 +858,7 @@ class baseFileCommands:
 	def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 	
 		c = self.c ; v = None
-		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
+		setCurrent = setExpanded = setMarked = setOrphan = setTop = False
 		tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
 		# we have already matched <v.
 		while 1:
@@ -868,11 +869,11 @@ class baseFileCommands:
 				while 1:
 					if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
 					elif self.matchChar('D'): pass # Not used.
-					elif self.matchChar('E'): setExpanded = true
-					elif self.matchChar('M'): setMarked = true
-					elif self.matchChar('O'): setOrphan = true
-					elif self.matchChar('T'): setTop = true
-					elif self.matchChar('V'): setCurrent = true
+					elif self.matchChar('E'): setExpanded = True
+					elif self.matchChar('M'): setMarked = True
+					elif self.matchChar('O'): setOrphan = True
+					elif self.matchChar('T'): setTop = True
+					elif self.matchChar('V'): setCurrent = True
 					else: break
 				
 				self.getDquote()
@@ -994,7 +995,7 @@ class baseFileCommands:
 		while self.matchTag("<v"):
 			append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
 			append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
-			back = self.getVnode(parent,back,skip=false,
+			back = self.getVnode(parent,back,skip=False,
 				appendToCurrentStack=append1,appendToTopStack=append2)
 	
 		if self.usingClipboard:
@@ -1113,7 +1114,7 @@ class baseFileCommands:
 	def readAtFileNodes (self):
 	
 		c = self.c ; current = c.currentVnode()
-		c.atFileCommands.readAll(current,partialFlag=true)
+		c.atFileCommands.readAll(current,partialFlag=True)
 		c.redraw() # 4/4/03
 		
 		# 7/8/03: force an update of the body pane.
@@ -1147,7 +1148,7 @@ class baseFileCommands:
 		#@-node:ekr.20031218072017.2298:<< Set the default directory >> in fileCommands.readOutlineOnly
 		#@nl
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=false)
+		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
 		c.endUpdate()
 		c.frame.deiconify()
 		vflag,junk,secondary_ratio = self.frame.initialRatios()
@@ -1189,7 +1190,7 @@ class baseFileCommands:
 		#@nl
 		self.topPosition = None
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
+		ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
 		frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
 		if 0: # 1/30/04: this is useless.
 			if self.topPosition: 
@@ -1268,7 +1269,7 @@ class baseFileCommands:
 	def put (self,s):
 		if s and len(s) > 0:
 			if self.outputFile:
-				s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=true)
+				s = g.toEncodedString(s,self.leo_file_encoding,reportErrors=True)
 				self.outputFile.write(s)
 			elif self.outputList != None: # Write to a list.
 				self.outputList.append(s) # 1/8/04: avoid using string concatenation here!
@@ -1286,7 +1287,7 @@ class baseFileCommands:
 			
 	def put_in_dquotes (self,a):
 		self.put('"')
-		if a: self.put(a) # will always be true if we use backquotes.
+		if a: self.put(a) # will always be True if we use backquotes.
 		else: self.put('0')
 		self.put('"')
 	
@@ -1445,7 +1446,7 @@ class baseFileCommands:
 	def putLeoOutline (self):
 	
 		self.outputList = [] ; self.outputFile = None
-		self.usingClipboard = true
+		self.usingClipboard = True
 		self.assignFileIndices() # 6/11/03: Must do this for 3.x code.
 		self.putProlog()
 		self.putClipboardHeader()
@@ -1454,7 +1455,7 @@ class baseFileCommands:
 		self.putPostlog()
 		s = ''.join(self.outputList) # 1/8/04: convert the list to a string.
 		self.outputList = []
-		self.usingClipboard = false
+		self.usingClipboard = False
 		return s
 	#@nonl
 	#@-node:ekr.20031218072017.1573:putLeoOutline (to clipboard)
@@ -1654,7 +1655,7 @@ class baseFileCommands:
 		for key in attrDict.keys():
 			val = attrDict[key]
 			try:
-				s = pickle.dumps(val,bin=true)
+				s = pickle.dumps(val,bin=True)
 			except pickle.PicklingError:
 				g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
 				g.es(key,val)
@@ -1796,8 +1797,8 @@ class baseFileCommands:
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
-				c.setChanged(false) # Clears all dirty bits.
+			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+				c.setChanged(False) # Clears all dirty bits.
 				g.es("saved: " + g.shortFileName(fileName))
 				if g.app.config.save_clears_undo_buffer:
 					g.es("clearing undo")
@@ -1815,8 +1816,8 @@ class baseFileCommands:
 			c.beginUpdate()
 			c.endEditing() # Set the current headline text.
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
-				c.setChanged(false) # Clears all dirty bits.
+			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
+				c.setChanged(False) # Clears all dirty bits.
 				g.es("saved: " + g.shortFileName(fileName))
 			c.endUpdate()
 		g.doHook("save2",c=c,v=v,fileName=fileName)
@@ -1830,7 +1831,7 @@ class baseFileCommands:
 			c.beginUpdate()
 			c.endEditing()# Set the current headline text.
 			self.setDefaultDirectoryForNewFiles(fileName)
-			if self.write_Leo_file(fileName,false): # outlineOnlyFlag
+			if self.write_Leo_file(fileName,False): # outlineOnlyFlag
 				g.es("saved: " + g.shortFileName(fileName))
 			c.endUpdate()
 		g.doHook("save2",c=c,v=v,fileName=fileName)
@@ -1865,7 +1866,7 @@ class baseFileCommands:
 			except:
 				g.es_error("exception writing derived files")
 				g.es_exception()
-				return false
+				return False
 			#@nonl
 			#@-node:ekr.20040324080359:<< write all @file nodes >>
 			#@nl
@@ -1877,7 +1878,7 @@ class baseFileCommands:
 			try:
 				if not os.access(fileName,os.W_OK):
 					self.writeError("can not create: read only: " + self.targetFileName)
-					return false
+					return False
 			except:
 				pass # os.access() may not exist on all platforms.
 		#@nonl
@@ -1901,12 +1902,12 @@ class baseFileCommands:
 					else:
 						g.es("exception creating backup file: " + backupName)
 						g.es_exception()
-					return false
+					return False
 				except:
 					g.es("exception creating backup file: " + backupName)
 					g.es_exception()
 					backupName = None
-					return false
+					return False
 			else:
 				backupName = None
 			#@nonl
@@ -1929,14 +1930,14 @@ class baseFileCommands:
 						else:
 							g.es("exception deleting backup file:" + backupName)
 							g.es_exception()
-						return false
+						return False
 					except:
 						g.es("exception deleting backup file:" + backupName)
 						g.es_exception()
-						return false
+						return False
 				#@-node:ekr.20031218072017.3048:<< delete backup file >>
 				#@nl
-				return false
+				return False
 			#@nonl
 			#@-node:ekr.20040324080359.2:<< create the output file >>
 			#@nl
@@ -2014,7 +2015,7 @@ class baseFileCommands:
 			#@nonl
 			#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
 			#@nl
-			return false
+			return False
 		if self.outputFile:
 			#@		<< close the output file >>
 			#@+node:ekr.20040324080819.3:<< close the output file >>
@@ -2039,15 +2040,15 @@ class baseFileCommands:
 					else:
 						g.es("exception deleting backup file:" + backupName)
 						g.es_exception()
-					return false
+					return False
 				except:
 					g.es("exception deleting backup file:" + backupName)
 					g.es_exception()
-					return false
+					return False
 			#@-node:ekr.20031218072017.3048:<< delete backup file >>
 			#@-middle:ekr.20040324080359.2:<< create the output file >>
 			#@nl
-			return true
+			return True
 		else: # This probably will never happen because errors should raise exceptions.
 			#@		<< erase filename and rename backupName to fileName >>
 			#@+node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
@@ -2082,7 +2083,7 @@ class baseFileCommands:
 			#@nonl
 			#@-node:ekr.20031218072017.3049:<< erase filename and rename backupName to fileName >>
 			#@nl
-			return false
+			return False
 	#@nonl
 	#@-node:ekr.20031218072017.3046:write_Leo_file
 	#@+node:ekr.20031218072017.2012:writeAtFileNodes
@@ -2091,7 +2092,7 @@ class baseFileCommands:
 		c = self.c
 	
 		self.assignFileIndices() # 4/3/04
-		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
+		changedFiles = c.atFileCommands.writeAll(writeAtFileNodesFlag=True)
 		assert(changedFiles != None)
 		if changedFiles:
 			g.es("auto-saving outline",color="blue")
@@ -2106,7 +2107,7 @@ class baseFileCommands:
 		c = self.c
 	
 		self.assignFileIndices() # 4/3/04
-		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+		changedFiles = c.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=True)
 		if changedFiles:
 			g.es("auto-saving outline",color="blue")
 			c.save() # Must be done to set or clear tnodeList.
@@ -2132,7 +2133,7 @@ class baseFileCommands:
 	
 		c = self.c
 		c.endEditing()
-		self.write_Leo_file(self.mFileName,true) # outlineOnlyFlag
+		self.write_Leo_file(self.mFileName,True) # outlineOnlyFlag
 	#@nonl
 	#@-node:ekr.20031218072017.3050:writeOutlineOnly
 	#@+node:ekr.20031218072017.3051:xmlEscape

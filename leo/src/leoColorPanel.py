@@ -1,7 +1,6 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3626:@thin leoColorPanel.py
 import leoGlobals as g
-from leoGlobals import true,false
 
 class leoColorPanel:
 	
@@ -51,6 +50,5 @@ class leoColorPanel:
 	#@nonl
 	#@-node:ekr.20031218072017.3629:Must be overridden in subclasses
 	#@-others
-#@nonl
 #@-node:ekr.20031218072017.3626:@thin leoColorPanel.py
 #@-leo

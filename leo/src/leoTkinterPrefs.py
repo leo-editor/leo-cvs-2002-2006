@@ -3,8 +3,6 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoPrefs
 import leoTkinterDialog
 import string
@@ -25,7 +23,7 @@ class leoTkinterPrefs (leoPrefs.leoPrefs,leoTkinterDialog.leoTkinterDialog):
 		leoPrefs.leoPrefs.__init__(self,c)
 		
 		head,tail = g.os_path_split(c.frame.title)
-		leoTkinterDialog.leoTkinterDialog.__init__(self,"Prefs for " + tail,resizeable=false)
+		leoTkinterDialog.leoTkinterDialog.__init__(self,"Prefs for " + tail,resizeable=False)
 		
 		self.createTopFrame() # Create the outer tkinter dialog frame.
 		self.createFrame()

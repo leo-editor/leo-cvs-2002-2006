@@ -3,9 +3,8 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
-import sys,string
+import sys
+import string
 	
 class leoFontPanel:
 	

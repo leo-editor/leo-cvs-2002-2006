@@ -20,7 +20,6 @@
 #@nl
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 if g.app.config.use_psyco:
 	# print "enabled psyco classes",__file__
@@ -28,7 +27,8 @@ if g.app.config.use_psyco:
 	except ImportError: pass
 
 import leoFrame
-import Tkinter,tkFont
+import Tkinter as Tk
+import tkFont
 import os,string,sys,types
 
 #@<< about drawing >>
@@ -51,7 +51,7 @@ import os,string,sys,types
 # c.redraw() to force a redraw of the outline pane.
 # 
 # In leo.py, code may call c.endUpdate(flag) instead of c.endUpdate().  Leo 
-# redraws the screen only if flag is true.  This allows code to suppress 
+# redraws the screen only if flag is True.  This allows code to suppress 
 # redrawing entirely when needed.  For example, study the idle_body_key event 
 # handler to see how Leo conditionally redraws the outline pane.
 # 
@@ -76,7 +76,7 @@ child_indent = 28 # was 20
 hline_y = 7 # Vertical offset of horizontal line
 root_left = 7 + box_width
 root_top = 2
-hiding = true # true if we don't reallocate items
+hiding = True # True if we don't reallocate items
 line_height = 17 + 2 # To be replaced by Font height
 #@nonl
 #@-node:ekr.20031218072017.4140:<< drawing constants >>
@@ -84,7 +84,7 @@ line_height = 17 + 2 # To be replaced by Font height
 
 class leoTkinterTree (leoFrame.leoTree):
 	
-	callbacksInjected = false
+	callbacksInjected = False
 
 	"""Leo tkinter tree class."""
 	
@@ -101,10 +101,10 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		# Miscellaneous info.
 		self.iconimages = {} # Image cache set by getIconImage().
-		self.active = false # true if tree is active
+		self.active = False # True if tree is active
 		self._editPosition = None
 		self.lineyoffset = 0 # y offset for this headline.
-		self.disableRedraw = false # True: reschedule a redraw for later.
+		self.disableRedraw = False # True: reschedule a redraw for later.
 		
 		# Set self.font and self.fontName.
 		self.setFontFromConfig()
@@ -117,7 +117,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		# Drag and drop
 		self.drag_p = None
-		self.controlDrag = false # true: control was down when drag started.
+		self.controlDrag = False # True: control was down when drag started.
 		self.drag_id = None # To reset bindings after drag
 		
 		# 20-SEP-2002 DTHEIN: keep track of popup menu so we can handle
@@ -126,8 +126,8 @@ class leoTkinterTree (leoFrame.leoTree):
 		self.popupMenu = None
 		
 		# Incremental redraws:
-		self.allocateOnlyVisibleNodes = false # true: enable incremental redraws.
-		self.trace = false # true enabling of various traces.
+		self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+		self.trace = False # True enabling of various traces.
 		self.prevMoveToFrac = None
 		self.visibleArea = None
 		self.expandedVisibleArea = None
@@ -140,7 +140,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.frame.bar1.bind("<B1-ButtonRelease>", self.redraw)
 		
 		if not leoTkinterTree.callbacksInjected: # Class var.
-			leoTkinterTree.callbacksInjected = true
+			leoTkinterTree.callbacksInjected = True
 			self.injectCallbacks()
 	#@nonl
 	#@-node:ekr.20031218072017.1017:tree.__init__
@@ -404,7 +404,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		# g.trace(self.updateCount,self.redrawScheduled)
 		
 		if self.updateCount == 0 and not self.redrawScheduled:
-			self.redrawScheduled = true
+			self.redrawScheduled = True
 			self.canvas.after_idle(self.idle_redraw)
 	#@nonl
 	#@-node:ekr.20031218072017.1012:tree.redraw
@@ -421,7 +421,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		"""Make sure drawing is enabled following an exception."""
 			
 		if not self.redrawScheduled:
-			self.redrawScheduled = true
+			self.redrawScheduled = True
 			self.canvas.after_idle(self.idle_redraw)
 			self.updateCount = 0 # would not work if we are in a beginUpdate/endUpdate pair.
 	#@nonl
@@ -434,33 +434,33 @@ class leoTkinterTree (leoFrame.leoTree):
 		# import traceback ; traceback.print_stack()
 	
 		if not self.redrawScheduled:
-			self.redrawScheduled = true
+			self.redrawScheduled = True
 			self.canvas.after_idle(self.idle_redraw)
 	#@nonl
 	#@-node:ekr.20031218072017.1013:force_redraw
 	#@+node:ekr.20031218072017.1014:redraw_now
 	# Redraws immediately: used by Find so a redraw doesn't mess up selections in headlines.
 	
-	def redraw_now (self,scroll=true):
+	def redraw_now (self,scroll=True):
 		
 		# g.trace()
 		
 		# Bug fix: 4/24/04: cancel any pending redraw "by hand".
 		# Make _sure_ that no other redraws take place after this.
-		self.disableRedraw = true
+		self.disableRedraw = True
 		self.canvas.update_idletasks()
-		self.disableRedraw = false
+		self.disableRedraw = False
 			
 		# Now do the actual redraw.
 		self.idle_redraw(scroll=scroll)
 	#@nonl
 	#@-node:ekr.20031218072017.1014:redraw_now
 	#@+node:ekr.20031218072017.1015:idle_redraw
-	def idle_redraw (self,scroll=true):
+	def idle_redraw (self,scroll=True):
 		
 		c = self.c ; frame = c.frame
 	
-		self.redrawScheduled = false # Always do this here.
+		self.redrawScheduled = False # Always do this here.
 	
 		#@	<< return if disabled, or quitting or dragging >>
 		#@+node:ekr.20040324090957:<< return if disabled, or quitting or dragging >>
@@ -554,7 +554,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	# automatically from the "outermost" call to tree.endUpdate.  Moreover, 
 	# calling .tree.redraw() inside a tree.beginUpdate/tree.endUpdate pair 
 	# does nothing.  c.redraw(), c.beginUpdate() and c.endUpdate() just call 
-	# the corresponding tree methods.  Finally, beginUpdate()/endUpdate(false) 
+	# the corresponding tree methods.  Finally, beginUpdate()/endUpdate(False) 
 	# can be used to suppress redrawing entirely.
 	# 
 	# Therefore, the Commands class never needs to worry about extra calls to 
@@ -734,7 +734,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
 		if data is not None: return data
 	
-		t = Tkinter.Text(self.canvas,
+		t = Tk.Text(self.canvas,
 			font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
 	
 		# New in 4.2: entries a pairs (p,t) indexed by v.
@@ -802,14 +802,14 @@ class leoTkinterTree (leoFrame.leoTree):
 		
 		if c.hoistStack:
 			p,junk = c.hoistStack[-1]
-			self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
+			self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=True)
 		else:
 			self.drawTree(c.rootPosition(),root_left,root_top,0,0)
 			
 		
 	#@-node:ekr.20031218072017.2029:drawTopTree
 	#@+node:ekr.20031218072017.1008:drawTree
-	def drawTree(self,p,x,y,h,level,hoistFlag=false):
+	def drawTree(self,p,x,y,h,level,hoistFlag=False):
 	
 		tree = self ; v = p.v
 		yfirst = ylast = y
@@ -898,7 +898,7 @@ class leoTkinterTree (leoFrame.leoTree):
 				try:
 					fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
 					fullname = g.os_path_normpath(fullname)
-					image = Tkinter.PhotoImage(master=self.canvas,file=fullname)
+					image = Tk.PhotoImage(master=self.canvas,file=fullname)
 					self.iconimages[fullname] = image
 				except:
 					#g.es("Exception loading: " + fullname)
@@ -960,9 +960,9 @@ class leoTkinterTree (leoFrame.leoTree):
 				vis1,vis2 = self.visibleArea
 				y2 = y1 + self.line_height
 				return y2 >= vis1 and y1 <= vis2
-			else: return false
+			else: return False
 		else:
-			return true # This forces all nodes to be allocated on all redraws.
+			return True # This forces all nodes to be allocated on all redraws.
 			
 	def inExpandedVisibleArea (self,y1):
 		
@@ -971,7 +971,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			y2 = y1 + self.line_height
 			return y2 >= vis1 and y1 <= vis2
 		else:
-			return false
+			return False
 	#@nonl
 	#@-node:ekr.20031218072017.1010:inVisibleArea & inExpandedVisibleArea
 	#@+node:ekr.20031218072017.4147:tree.getIconImage
@@ -984,7 +984,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		try:
 			fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
 			fullname = g.os_path_normpath(fullname)
-			image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
+			image = Tk.PhotoImage(master=self.canvas, file=fullname)
 			self.iconimages[name] = image
 			return image
 		except:
@@ -1085,7 +1085,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		# if not v1.isVisible(): print "yoffset not visible:",v1
 		root = self.c.rootPosition()
 		h, flag = self.yoffsetTree(root,v1)
-		# flag can be false during initialization.
+		# flag can be False during initialization.
 		# if not flag: print "yoffset fails:",h,v1
 		return h
 	
@@ -1097,15 +1097,15 @@ class leoTkinterTree (leoFrame.leoTree):
 		for p in p.siblings_iter():
 			# print "yoffsetTree:", p
 			if p == p1:
-				return h, true
+				return h, True
 			h += self.line_height
 			if p.isExpanded() and p.hasChildren():
 				child = p.firstChild()
 				h2, flag = self.yoffsetTree(child,p1)
 				h += h2
-				if flag: return h, true
+				if flag: return h, True
 		
-		return h, false
+		return h, False
 	#@nonl
 	#@-node:ekr.20031218072017.4149:tree.yoffset
 	#@-node:ekr.20031218072017.4144:Drawing (tkTree)
@@ -1210,7 +1210,7 @@ class leoTkinterTree (leoFrame.leoTree):
 					c.frame.bodyCtrl.mark_set("insert","1.0")
 				gui.set_focus(c,c.frame.bodyCtrl)
 			
-			self.active = true
+			self.active = True
 			#@nonl
 			#@-node:ekr.20031218072017.2338:<< activate this window >>
 			#@nl
@@ -1231,7 +1231,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		if p.isExpanded(): p.contract()
 		else:              p.expand()
 	
-		self.active = true
+		self.active = True
 		self.select(p)
 		g.app.findFrame.handleUserClick(p) # 4/3/04
 		gui.set_focus(c,c.frame.bodyCtrl) # 7/12/03
@@ -1348,7 +1348,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			windowPref = g.app.config.getBoolWindowPref
 			# Only do this once: greatly speeds drags.
 			self.savedNumberOfVisibleNodes = self.numberOfVisibleNodes()
-			self.setDragging(true)
+			self.setDragging(True)
 			if windowPref("allow_clone_drags"):
 				self.controlDrag = c.frame.controlKeyIsDown
 				if windowPref("look_for_control_drag_on_mouse_down"):
@@ -1357,7 +1357,7 @@ class leoTkinterTree (leoFrame.leoTree):
 							g.es("dragged node will be cloned")
 						else:
 							g.es("dragged node will be moved")
-			else: self.controlDrag = false
+			else: self.controlDrag = False
 			self.canvas['cursor'] = "hand2" # "center_ptr"
 	
 		self.OnContinueDrag(p,event)
@@ -1419,7 +1419,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			canvas.tag_unbind(self.drag_id,"<Any-ButtonRelease-1>")
 			self.drag_id = None
 			
-		self.setDragging(false)
+		self.setDragging(False)
 		self.drag_p = None
 	#@nonl
 	#@-node:ekr.20031218072017.1777:tree.OnEndDrag
@@ -1517,7 +1517,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			if 1: # update...
 				# Update changed bit.
 				if not c.changed:
-					c.setChanged(true)
+					c.setChanged(True)
 				# Update all dirty bits.
 				p.setDirty()
 				# Update v.
@@ -1525,7 +1525,7 @@ class leoTkinterTree (leoFrame.leoTree):
 				edit_text.delete("1.0","end")
 				edit_text.insert("end",s)
 				edit_text.mark_set("insert",index)
-			c.endUpdate(false) # do not redraw now.
+			c.endUpdate(False) # do not redraw now.
 			#@nonl
 			#@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 			#@nl
@@ -1648,7 +1648,7 @@ class leoTkinterTree (leoFrame.leoTree):
 			self.popupMenu.destroy()
 			self.popupMenu = None
 		
-		self.popupMenu = menu = Tkinter.Menu(g.app.root, tearoff=0)
+		self.popupMenu = menu = Tk.Menu(g.app.root, tearoff=0)
 		
 		# Add the Open With entries if they exist.
 		if g.app.openWithTable:
@@ -1684,7 +1684,7 @@ class leoTkinterTree (leoFrame.leoTree):
 		#@nl
 		
 		# 11/27/03: Don't actually set binding: it would conflict with previous.
-		frame.menu.createMenuEntries(menu,table,dontBind=true)
+		frame.menu.createMenuEntries(menu,table,dontBind=True)
 	#@nonl
 	#@-node:ekr.20031218072017.2249:createPopupMenu
 	#@+node:ekr.20031218072017.2350:enablePopupMenuItems
@@ -1696,8 +1696,8 @@ class leoTkinterTree (leoFrame.leoTree):
 	
 		#@	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@+node:ekr.20031218072017.2351:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
-		isAtFile = false
-		isAtRoot = false
+		isAtFile = False
+		isAtRoot = False
 		
 		for v2 in v.self_and_subtree_iter():
 			if isAtFile and isAtRoot:
@@ -1707,11 +1707,11 @@ class leoTkinterTree (leoFrame.leoTree):
 				v2.isAtAsisFileNode() or
 				v2.isAtNoSentFileNode()
 			):
-				isAtFile = true
+				isAtFile = True
 				
 			isRoot,junk = g.is_special(v2.bodyString(),0,"@root")
 			if isRoot:
-				isAtRoot = true
+				isAtRoot = True
 		#@nonl
 		#@-node:ekr.20031218072017.2351:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
 		#@nl
@@ -1930,12 +1930,12 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:ekr.20031218072017.4161:tree.expandAllAncestors
 	def expandAllAncestors (self,p):
 		
-		redraw_flag = false
+		redraw_flag = False
 	
 		for p in p.parents_iter():
 			if not p.isExpanded():
 				p.expand()
-				redraw_flag = true
+				redraw_flag = True
 	
 		return redraw_flag
 	
@@ -1943,7 +1943,7 @@ class leoTkinterTree (leoFrame.leoTree):
 	#@+node:ekr.20031218072017.1019:tree.select
 	# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
 	
-	def select (self,p,updateBeadList=true):
+	def select (self,p,updateBeadList=True):
 	
 		if not p: return
 		

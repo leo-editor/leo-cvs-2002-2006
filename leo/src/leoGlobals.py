@@ -8,7 +8,6 @@
 #@@language python
 
 import leoGlobals as g # So code can use g below.
-# true,false defined below.
 
 import os,string,sys,time,traceback,types
 
@@ -16,11 +15,6 @@ import os,string,sys,time,traceback,types
 #@+node:ekr.20031218072017.3094:<< define general constants >>
 body_newline = '\n'
 body_ignored_newline = '\r'
-
-try:
-	true,false = True,False
-except NameError:
-	true,false = 1,0
 #@nonl
 #@-node:ekr.20031218072017.3094:<< define general constants >>
 #@nl
@@ -42,7 +36,7 @@ app = None # The singleton app object.
 #@+others
 #@+node:ekr.20031218072017.3095:Checking Leo Files...
 #@+node:ekr.20031218072017.822:createTopologyList
-def createTopologyList (c=None,root=None,useHeadlines=false):
+def createTopologyList (c=None,root=None,useHeadlines=False):
 	
 	"""Creates a list describing a node and all its descendents"""
 	
@@ -70,8 +64,8 @@ def createTopologyList (c=None,root=None,useHeadlines=false):
 # 
 # RETURN VALUE
 # 
-# 1 if comparison is true
-# 0 if comparison is false
+# 1 if comparison is True
+# 0 if comparison is False
 # 
 # PARAMETERS
 # 
@@ -274,7 +268,7 @@ def set_delims_from_string(s):
 #@nonl
 #@-node:ekr.20031218072017.1383:set_delims_from_string
 #@+node:ekr.20031218072017.1384:set_language
-def set_language(s,i,issue_errors_flag=false):
+def set_language(s,i,issue_errors_flag=False):
 	
 	"""Scan the @language directive that appears at s[i:].
 
@@ -438,7 +432,7 @@ def scanAtLineendingDirective(s,dict):
 #@nonl
 #@-node:ekr.20031218072017.1388:scanAtLineendingDirective
 #@+node:ekr.20031218072017.1389:scanAtPagewidthDirective
-def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
+def scanAtPagewidthDirective(s,dict,issue_error_flag=False):
 	
 	"""Scan the @pagewidth directive at s[dict["pagewidth"]:].
 
@@ -458,7 +452,7 @@ def scanAtPagewidthDirective(s,dict,issue_error_flag=false):
 		return None
 #@-node:ekr.20031218072017.1389:scanAtPagewidthDirective
 #@+node:ekr.20031218072017.1390:scanAtTabwidthDirective
-def scanAtTabwidthDirective(s,dict,issue_error_flag=false):
+def scanAtTabwidthDirective(s,dict,issue_error_flag=False):
 	
 	"""Scan the @tabwidth directive at s[dict["tabwidth"]:].
 
@@ -606,9 +600,9 @@ def scanDirectives(c,p=None):
 		if not old.has_key("wrap") and not old.has_key("nowrap"):
 			
 			if dict.has_key("wrap"):
-				wrap = true
+				wrap = True
 			elif dict.has_key("nowrap"):
-				wrap = false
+				wrap = False
 		#@nonl
 		#@-node:ekr.20031218072017.1400:<< Test for @wrap and @nowrap >>
 		#@nl
@@ -632,7 +626,7 @@ def scanDirectives(c,p=None):
 #@-node:ekr.20031218072017.1391:scanDirectives (utils)
 #@-node:ekr.20031218072017.1380:Directive utils...
 #@+node:ekr.20031218072017.2052:openWithFileName
-def openWithFileName(fileName,old_c,enableLog=true):
+def openWithFileName(fileName,old_c,enableLog=True):
 	
 	"""Create a Leo Frame for the indicated fileName if the file exists."""
 
@@ -640,7 +634,7 @@ def openWithFileName(fileName,old_c,enableLog=true):
 	assert(app.config)
 
 	if not fileName or len(fileName) == 0:
-		return false, None
+		return False, None
 
 	# Create a full normalized path name.
 	# Display the file name with case intact.
@@ -658,7 +652,7 @@ def openWithFileName(fileName,old_c,enableLog=true):
 			frame.deiconify()
 			app.setLog(frame.log,"openWithFileName")
 			# g.es("This window already open")
-			return true, frame
+			return True, frame
 			
 	fileName = oldFileName # Use the idiosyncratic file name.
 
@@ -675,13 +669,13 @@ def openWithFileName(fileName,old_c,enableLog=true):
 				app.unlockLog()
 			frame.openDirectory = g.os_path_dirname(fileName)
 			g.doHook("open2",old_c=old_c,new_c=frame.c,fileName=fileName)
-			return true, frame
+			return True, frame
 		else:
 			g.es("can not open: " + fileName,color="red")
-			return false, None
+			return False, None
 	except IOError:
 		g.es("can not open: " + fileName, color="blue")
-		return false, None
+		return False, None
 	except:
 		if 1:
 			print "exceptions opening:", fileName
@@ -689,7 +683,7 @@ def openWithFileName(fileName,old_c,enableLog=true):
 		else:
 			g.es("exceptions opening: " + fileName,color="red")
 			g.es_exception()
-		return false, None
+		return False, None
 #@nonl
 #@-node:ekr.20031218072017.2052:openWithFileName
 #@+node:ekr.20031218072017.3100:wrap_lines
@@ -853,7 +847,7 @@ def es_error (s):
 #@nonl
 #@-node:ekr.20031218072017.3110:es_error
 #@+node:ekr.20031218072017.3111:es_event_exception
-def es_event_exception (eventName,full=false):
+def es_event_exception (eventName,full=False):
 
 	g.es("exception handling ", eventName, " event")
 	typ,val,tb = sys.exc_info()
@@ -871,7 +865,7 @@ def es_event_exception (eventName,full=false):
 #@nonl
 #@-node:ekr.20031218072017.3111:es_event_exception
 #@+node:ekr.20031218072017.3112:es_exception
-def es_exception (full=true,c=None):
+def es_exception (full=True,c=None):
 	
 	typ,val,tb = sys.exc_info()
 	errList = traceback.format_exception(typ,val,tb)
@@ -1201,7 +1195,7 @@ redirectStdOutObj = redirectClass()
 # Redirect streams to the current log window.
 def redirectStderr():
 	global redirectStdErrObj
-	redirectStdErrObj.redirect(stdout=false)
+	redirectStdErrObj.redirect(stdout=False)
 
 def redirectStdout():
 	global redirectStdOutObj
@@ -1210,7 +1204,7 @@ def redirectStdout():
 # Restore standard streams.
 def restoreStderr():
 	global redirectStdErrObj
-	redirectStdErrObj.undirect(stdout=false)
+	redirectStdErrObj.undirect(stdout=False)
 	
 def restoreStdout():
 	global redirectStdOutObj
@@ -1230,29 +1224,22 @@ def stdOutIsRedirected():
 if 0: # Test code: may be safely and conveniently executed in the child node.
 	#@	<< test code >>
 	#@+node:ekr.20031218072017.3123:<< test code >>
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", g.stdOutIsRedirected()
 	print "stderr isRedirected:", g.stdErrIsRedirected()
 	
-	from leoGlobals import redirectStderr,redirectStdout
 	g.redirectStderr()
 	g.redirectStdout()
 	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", g.stdOutIsRedirected()
 	print "stderr isRedirected:", g.stdErrIsRedirected()
 	
-	from leoGlobals import restoreStderr
 	g.restoreStderr()
 	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", g.stdOutIsRedirected()
 	print "stderr isRedirected:", g.stdErrIsRedirected()
 	
-	from leoGlobals import restoreStdout
 	g.restoreStdout()
 	
-	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
 	print "stdout isRedirected:", g.stdOutIsRedirected()
 	print "stderr isRedirected:", g.stdErrIsRedirected()
 	#@nonl
@@ -1401,8 +1388,8 @@ def init_trace(args,echo=1):
 
 def trace (*args,**keys):
 	
-	callers = keys.get("callers",false)
-	newline = keys.get("newline",true)
+	callers = keys.get("callers",False)
+	newline = keys.get("newline",True)
 
 	s = ""
 	for arg in args:
@@ -1593,7 +1580,7 @@ def executeScript (name):
 #@+node:ekr.20031218072017.1588:Garbage Collection
 lastObjectCount = 0
 lastObjectsDict = {}
-debugGC = false
+debugGC = False
 
 # gc may not exist everywhere.
 try: 
@@ -1653,7 +1640,7 @@ def collectGarbage(message=None):
 		print "%25s: %d new, %d total objects" % (message,len(newObjects),len(objects))
 #@-node:ekr.20031218072017.1590:collectGarbage
 #@+node:ekr.20031218072017.1592:printGc
-def printGc(message=None,onlyPrintChanges=false):
+def printGc(message=None,onlyPrintChanges=False):
 	
 	if not debugGC: return None
 	
@@ -1680,7 +1667,7 @@ def printGc(message=None,onlyPrintChanges=false):
 #@nonl
 #@-node:ekr.20031218072017.1592:printGc
 #@+node:ekr.20031218072017.1593:printGcRefs
-def printGcRefs (verbose=true):
+def printGcRefs (verbose=True):
 
 	refs = gc.get_referrers(app.windowList[0])
 	print '-' * 30
@@ -1711,7 +1698,7 @@ def enableIdleTimeHook(idleTimeDelay=100):
 	if not g.app.idleTimeHook:
 		s = "idle-time hooks enabled"
 		# print s ; g.es(s)
-		g.app.idleTimeHook = true
+		g.app.idleTimeHook = True
 		g.app.idleTimeDelay = idleTimeDelay # Delay in msec.
 		
 		# Start idle-time processing only after the first idle-time event.
@@ -1723,7 +1710,7 @@ def enableIdleTimeHook(idleTimeDelay=100):
 # Disables the "idle" hook.
 def disableIdleTimeHook():
 	
-	g.app.idleTimeHook = false
+	g.app.idleTimeHook = False
 #@nonl
 #@-node:EKR.20040602125018.1:disableIdleTimeHook
 #@+node:EKR.20040602125018.2:idleTimeHookHandler
@@ -1809,13 +1796,13 @@ def doHook(tag,*args,**keywords):
 
 	# Handle all exceptions.
 	g.es_exception()
-	g.app.hookError = true # Supress this function.
-	g.app.idleTimeHook = false # Supress idle-time hook
+	g.app.hookError = True # Supress this function.
+	g.app.idleTimeHook = False # Supress idle-time hook
 	return None # No return value
 #@nonl
 #@-node:ekr.20031218072017.1596:g.doHook
 #@+node:ekr.20031218072017.1318:g.plugin_signon
-def plugin_signon(module_name,verbose=false):
+def plugin_signon(module_name,verbose=False):
 	
 	exec("import %s ; m = %s" % (module_name,module_name))
 	
@@ -1950,7 +1937,7 @@ def enl():
 def es(s,*args,**keys):
 	if app.killed:
 		return
-	newline = keys.get("newline",true)
+	newline = keys.get("newline",True)
 	color = keys.get("color",None)
 	if type(s) != type("") and type(s) != type(u""): # 1/20/03
 		s = repr(s)
@@ -2218,11 +2205,11 @@ class mulderUpdateAlgorithm:
 	#@-at
 	#@-node:EKR.20040505103527:TO DO
 	#@+node:EKR.20040504150046.3:__init__
-	def __init__ (self,testing=false,verbose=false):
+	def __init__ (self,testing=False,verbose=False):
 		
 		self.testing = testing
-		self.verbose = false
-		self.do_backups = false
+		self.verbose = False
+		self.do_backups = False
 	#@nonl
 	#@-node:EKR.20040504150046.3:__init__
 	#@+node:EKR.20040504150046.9:copy_sentinels
@@ -2699,7 +2686,7 @@ def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
 #@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
 #@+node:ekr.20031218072017.3151:Scanning...
 #@+node:ekr.20031218072017.3152:g.scanAtFileOptions
-def scanAtFileOptions (h,err_flag=false):
+def scanAtFileOptions (h,err_flag=False):
 	
 	assert(g.match(h,0,"@file"))
 	i = len("@file")
@@ -2767,7 +2754,7 @@ def scanAtFileOptions (h,err_flag=false):
 #@nonl
 #@-node:ekr.20031218072017.3152:g.scanAtFileOptions
 #@+node:ekr.20031218072017.3154:scanAtRootOptions
-def scanAtRootOptions (s,i,err_flag=false):
+def scanAtRootOptions (s,i,err_flag=False):
 	
 	assert(g.match(s,i,"@root"))
 	i += len("@root")
@@ -2831,7 +2818,6 @@ def scanf (s,pat):
 	return result
 	
 if 0: # testing
-	from leoGlobals import trace
 	g.scanf("1.0","%d.%d",)
 #@nonl
 #@-node:ekr.20031218072017.3157:scanf
@@ -3196,7 +3182,7 @@ def skip_typedef(s,i):
 #@-node:ekr.20031218072017.3158:Scanners: calling scanError
 #@+node:ekr.20031218072017.3173:Scanners: no error messages
 #@+node:ekr.20031218072017.3174:escaped
-# Returns true if s[i] is preceded by an odd number of backslashes.
+# Returns True if s[i] is preceded by an odd number of backslashes.
 
 def escaped(s,i):
 
@@ -3243,7 +3229,7 @@ def is_nl(s,i):
 
 def is_special(s,i,directive):
 
-	"""Return true if the body text contains the @ directive."""
+	"""Return True if the body text contains the @ directive."""
 
 	# j = g.skip_line(s,i) ; g.trace(s[i:j],':',directive)
 	assert (directive and directive [0] == '@' )
@@ -3252,12 +3238,12 @@ def is_special(s,i,directive):
 	skip_flag = directive == "@others"
 	while i < len(s):
 		if g.match_word(s,i,directive):
-			return true, i
+			return True, i
 		else:
 			i = g.skip_line(s,i)
 			if skip_flag:
 				i = g.skip_ws(s,i)
-	return false, -1
+	return False, -1
 #@nonl
 #@-node:ekr.20031218072017.3179:is_special
 #@+node:ekr.20031218072017.3180:is_ws & is_ws_or_nl
@@ -3281,29 +3267,29 @@ def match(s,i,pattern):
 #@+node:ekr.20031218072017.3182:match_c_word
 def match_c_word (s,i,name):
 
-	if name == None: return false
+	if name == None: return False
 	n = len(name)
-	if n == 0: return false
+	if n == 0: return False
 	return name == s[i:i+n] and (i+n == len(s) or not g.is_c_id(s[i+n]))
 #@nonl
 #@-node:ekr.20031218072017.3182:match_c_word
 #@+node:ekr.20031218072017.3183:match_ignoring_case
 def match_ignoring_case(s1,s2):
 
-	if s1 == None or s2 == None: return false
+	if s1 == None or s2 == None: return False
 	return string.lower(s1) == string.lower(s2)
 #@nonl
 #@-node:ekr.20031218072017.3183:match_ignoring_case
 #@+node:ekr.20031218072017.3184:match_word
 def match_word(s,i,pattern):
 
-	if pattern == None: return false
+	if pattern == None: return False
 	j = len(pattern)
-	if j == 0: return false
+	if j == 0: return False
 	if string.find(s,pattern,i,i+j) != i:
-		return false
+		return False
 	if i+j >= len(s):
-		return true
+		return True
 	c = s[i+j]
 	return not (c in string.ascii_letters or c in string.digits or c == '_')
 #@nonl
@@ -3459,7 +3445,7 @@ def splitLines (s):
 	"""Split s into lines, preserving the number of lines and the ending of the last line."""
 	
 	if s:
-		return s.splitlines(true) # This is a Python string function!
+		return s.splitlines(True) # This is a Python string function!
 	else:
 		return []
 
@@ -3472,11 +3458,10 @@ def joinLines (aList):
 #@+node:ekr.20040327103735.2:Script Tools (leoGlobals.py)
 #@+node:ekr.20031218072017.2418:g.initScriptFind (set up dialog)
 def initScriptFind(findHeadline,changeHeadline=None,firstNode=None,
-	script_search=true,script_change=true):
+	script_search=True,script_change=True):
 	
 	import leoTest
 	import leoGlobals as g
-	from leoGlobals import true,false
 	
 	# Find the scripts.
 	c = g.top() ; p = c.currentPosition()
@@ -3553,11 +3538,11 @@ def isValidEncoding (encoding):
 	
 	try:
 		if len(encoding) == 0:
-			return false
+			return False
 		unicode("a",encoding)
-		return true
+		return True
 	except:
-		return false
+		return False
 #@-node:ekr.20031218072017.1500:isValidEncoding
 #@+node:ekr.20031218072017.1501:reportBadChars
 def reportBadChars (s,encoding):
@@ -3582,7 +3567,7 @@ def reportBadChars (s,encoding):
 #@nonl
 #@-node:ekr.20031218072017.1501:reportBadChars
 #@+node:ekr.20031218072017.1502:toUnicode & toEncodedString
-def toUnicode (s,encoding,reportErrors=false):
+def toUnicode (s,encoding,reportErrors=False):
 	
 	if s is None:
 		s = u""
@@ -3595,7 +3580,7 @@ def toUnicode (s,encoding,reportErrors=false):
 			s = unicode(s,encoding,"replace")
 	return s
 	
-def toEncodedString (s,encoding,reportErrors=false):
+def toEncodedString (s,encoding,reportErrors=False):
 
 	if type(s) == type(u""):
 		try:
@@ -3622,7 +3607,7 @@ except:
 		# On the Mac, it should return the system encoding;
 		# it might return "ascii" instead.
 		
-		def getpreferredencoding(do_setlocale = true):
+		def getpreferredencoding(do_setlocale = True):
 			"""Return the charset that the user is likely using."""
 			try:
 				import _locale
@@ -3640,7 +3625,7 @@ except:
 			local.CODESET
 		except NameError:
 			# Fall back to parsing environment variables :-(
-			def getpreferredencoding(do_setlocale = true):
+			def getpreferredencoding(do_setlocale = True):
 				"""Return the charset that the user is likely using,
 				by looking at environment variables."""
 				try:
@@ -3648,7 +3633,7 @@ except:
 				except:
 					return None
 		else:
-			def getpreferredencoding(do_setlocale = true):
+			def getpreferredencoding(do_setlocale = True):
 				"""Return the charset that the user is likely using,
 				according to the system configuration."""
 				try:

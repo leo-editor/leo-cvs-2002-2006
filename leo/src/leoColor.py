@@ -5,8 +5,6 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import re
 import string
 
@@ -655,9 +653,9 @@ class baseColorizer:
 		self.body = c.frame.body
 	
 		self.count = 0 # how many times this has been called.
-		self.use_hyperlinks = false # true: use hyperlinks and underline "live" links.
-		self.enabled = true # true: syntax coloring enabled
-		self.showInvisibles = false # true: show "invisible" characters.
+		self.use_hyperlinks = False # True: use hyperlinks and underline "live" links.
+		self.enabled = True # True: syntax coloring enabled
+		self.showInvisibles = False # True: show "invisible" characters.
 		self.comment_string = None # Set by scanColorDirectives on @comment
 		# For incremental coloring.
 		self.tags = (
@@ -667,9 +665,9 @@ class baseColorizer:
 			"link","name","nameBrackets","pp","string","tab",
 			"elide","bold","bolditalic","italic") # new for wiki styling.
 		self.color_pass = 0
-		self.incremental = false
-		self.redoColoring = false
-		self.redoingColoring = false
+		self.incremental = False
+		self.redoColoring = False
+		self.redoingColoring = False
 		self.sel = None
 		self.lines = []
 		self.states = []
@@ -685,7 +683,7 @@ class baseColorizer:
 		self.p = None
 		self.language = None
 		self.flag = None
-		self.killFlag = false
+		self.killFlag = False
 		self.line_index = 0
 		
 		# Others.
@@ -812,7 +810,7 @@ class baseColorizer:
 	#@+node:ekr.20031218072017.2801:colorize & recolor_range
 	# The main colorizer entry point.
 	
-	def colorize(self,p,incremental=false):
+	def colorize(self,p,incremental=False):
 	
 		if self.enabled:
 			# g.trace("incremental",incremental)
@@ -829,7 +827,7 @@ class baseColorizer:
 		
 		if self.enabled:
 			# g.trace("leading,trailing",leading,trailing)
-			self.incremental=true
+			self.incremental=True
 			self.updateSyntaxColorer(p)
 			return self.colorizeAnyLanguage(p,leading=leading,trailing=trailing)
 		else:
@@ -870,8 +868,8 @@ class baseColorizer:
 				self.removeAllTags()
 				self.removeAllImages()
 			
-			self.redoColoring = false
-			self.redoingColoring = false
+			self.redoColoring = False
+			self.redoingColoring = False
 			
 			#@<< configure tags >>
 			#@+node:ekr.20031218072017.1603:<< configure tags >>
@@ -1343,11 +1341,11 @@ class baseColorizer:
 	# Similar to skip_string.
 	def continueString (self,s,i,delim,continueState):
 		# g.trace(delim + s[i:])
-		continueFlag = g.choose(self.language in ("elisp","html"),true,false)
+		continueFlag = g.choose(self.language in ("elisp","html"),True,False)
 		j = i
 		while i < len(s) and s[i] != delim:
 			if s[i:] == "\\":
-				i = len(s) ; continueFlag = true ; break
+				i = len(s) ; continueFlag = True ; break
 			elif s[i] == "\\":
 				i += 2
 			else:
@@ -1355,7 +1353,7 @@ class baseColorizer:
 		if i >= len(s):
 			i = len(s)
 		elif s[i] == delim:
-			i += 1 ; continueFlag = false
+			i += 1 ; continueFlag = False
 		self.tag("string",j,i)
 		state = g.choose(continueFlag,continueState,"normal")
 		return i,state
@@ -2028,7 +2026,7 @@ class baseColorizer:
 	#@nonl
 	#@-node:ekr.20031218072017.1944:removeAllImages
 	#@+node:ekr.20031218072017.2804:updateSyntaxColorer
-	# self.flag is true unless an unambiguous @nocolor is seen.
+	# self.flag is True unless an unambiguous @nocolor is seen.
 	
 	def updateSyntaxColorer (self,p):
 	
@@ -2039,10 +2037,10 @@ class baseColorizer:
 	#@+node:ekr.20031218072017.2805:useSyntaxColoring
 	def useSyntaxColoring (self,p):
 		
-		"""Return true unless p is unambiguously under the control of @nocolor."""
+		"""Return True unless p is unambiguously under the control of @nocolor."""
 		
 		p = p.copy() ; first = p.copy()
-		val = true ; self.killFlag = false
+		val = True ; self.killFlag = False
 		for p in p.self_and_parents_iter():
 			# g.trace(p)
 			s = p.v.t.bodyString
@@ -2052,15 +2050,15 @@ class baseColorizer:
 			kill_color = dict.has_key("killcolor")
 			# A killcolor anywhere disables coloring.
 			if kill_color:
-				val = false ; self.killFlag = true ; break
+				val = False ; self.killFlag = True ; break
 			# A color anywhere in the target enables coloring.
 			if color and p == first:
-				val = true ; break
+				val = True ; break
 			# Otherwise, the @nocolor specification must be unambiguous.
 			elif no_color and not color:
-				val = false ; break
+				val = False ; break
 			elif color and not no_color:
-				val = true ; break
+				val = True ; break
 	
 		return val
 	#@-node:ekr.20031218072017.2805:useSyntaxColoring
@@ -2166,7 +2164,7 @@ class nullColorizer (colorizer):
 		self.c = c
 	#@-node:ekr.20031218072017.2219:__init__
 	#@+node:ekr.20031218072017.2220:entry points
-	def colorize(self,p,incremental=false):
+	def colorize(self,p,incremental=False):
 		pass
 		
 	def idle_colorize(self,p):

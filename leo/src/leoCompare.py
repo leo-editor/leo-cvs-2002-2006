@@ -5,9 +5,10 @@
 """Leo's base compare class."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
-import difflib,filecmp,os,string
+import difflib
+import filecmp
+import os
+import string
 
 #@+others
 #@+node:ekr.20031218072017.3631:choose
@@ -22,23 +23,23 @@ def go ():
 	cmp = leoCompare(
 		commands = None,
 		
-		appendOutput = true,
+		appendOutput = True,
 
-		ignoreBlankLines = true,
-		ignoreFirstLine1 = false,
-		ignoreFirstLine2 = false,
-		ignoreInteriorWhitespace = false,
-		ignoreLeadingWhitespace = true,
-		ignoreSentinelLines = false,
+		ignoreBlankLines = True,
+		ignoreFirstLine1 = False,
+		ignoreFirstLine2 = False,
+		ignoreInteriorWhitespace = False,
+		ignoreLeadingWhitespace = True,
+		ignoreSentinelLines = False,
 		
 		limitCount = 9, # Zero means don't stop.
 		limitToExtension = ".py",  # For directory compares.
-		makeWhitespaceVisible = true,
+		makeWhitespaceVisible = True,
 		
-		printBothMatches = false,
-		printMatches = false,
-		printMismatches = true,
-		printTrailingMismatches = false,
+		printBothMatches = False,
+		printMatches = False,
+		printMismatches = True,
+		printTrailingMismatches = False,
 
 		outputFileName = None)
 
@@ -67,23 +68,23 @@ class baseLeoCompare:
 		# Keyword arguments are much convenient and more clear for scripts.
 		commands = None,
 		
-		appendOutput = false,
+		appendOutput = False,
 	
-		ignoreBlankLines = true,
-		ignoreFirstLine1 = false,
-		ignoreFirstLine2 = false,
-		ignoreInteriorWhitespace = false,
-		ignoreLeadingWhitespace = true,
-		ignoreSentinelLines = false,
+		ignoreBlankLines = True,
+		ignoreFirstLine1 = False,
+		ignoreFirstLine2 = False,
+		ignoreInteriorWhitespace = False,
+		ignoreLeadingWhitespace = True,
+		ignoreSentinelLines = False,
 	
 		limitCount = 0, # Zero means don't stop.
 		limitToExtension = ".py",  # For directory compares.
-		makeWhitespaceVisible = true,
+		makeWhitespaceVisible = True,
 	
-		printBothMatches = false,
-		printMatches = false,
-		printMismatches = true,
-		printTrailingMismatches = false,
+		printBothMatches = False,
+		printMatches = False,
+		printMismatches = True,
+		printTrailingMismatches = False,
 	
 		outputFileName = None ):
 			
@@ -255,7 +256,7 @@ class baseLeoCompare:
 	def compare_open_files (self, f1, f2, name1, name2):
 	
 		# self.show("compare_open_files")
-		lines1 = 0 ; lines2 = 0 ; mismatches = 0 ; printTrailing = true
+		lines1 = 0 ; lines2 = 0 ; mismatches = 0 ; printTrailing = True
 		sentinelComment1 = sentinelComment2 = None
 		if self.openOutputFile():
 			self.show("1: " + name1)
@@ -342,7 +343,7 @@ class baseLeoCompare:
 					self.show("")
 					self.show("limit count reached")
 					self.show("")
-					printTrailing = false
+					printTrailing = False
 			#@nonl
 			#@-node:ekr.20031218072017.3642:<< warn if mismatch limit reached >>
 			#@nl

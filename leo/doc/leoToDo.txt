@@ -203,7 +203,7 @@ With this long background, there are two main approaches to improving how Leo ha
 
 2. Improve how Leo handles leoConfig.leo and leoConfig.txt so that leoConfig.leo can use @file trees and so that settings are _reliably_ updated when the user would expect them to be.
 
-At present, I favor the second scheme.  It is simple to implement, it is the most Leonine, and moreover it allows for full discussion of all options.  true, the graphical way is good looking, but that is about all it has going for it.  I suppose a help feature could be added to the graphical way, but we are talking about a lot of effort for very little real value to the user.
+At present, I favor the second scheme.  It is simple to implement, it is the most Leonine, and moreover it allows for full discussion of all options.  True, the graphical way is good looking, but that is about all it has going for it.  I suppose a help feature could be added to the graphical way, but we are talking about a lot of effort for very little real value to the user.
 
 Actually though, the issues of keeping leoConfig.txt up-to-date and of applying settings immediately remain mostly the same regardless of which way is chosen.  In particular, without the "help" of the ConfigParser module Leo could maintain options much more easily.
 
@@ -416,7 +416,7 @@ def getPrefs (self):
 		("use_header_flag","use_header_flag",self.getBool))
 	
 	while 1:
-		found = false
+		found = False
 		for tag,var,f in table:
 			if self.matchTag("%s=" % tag):
 				if var:
@@ -424,7 +424,7 @@ def getPrefs (self):
 					setattr(c,var,val)
 				else:
 					self.getDqString()
-				found = true ; break
+				found = True ; break
 		if not found:
 			if self.matchTag(">"):
 				break
@@ -563,13 +563,13 @@ def error(self,message):
 #@-node:ekr.20031218072017.2624:top_df.error
 #@+node:ekr.20031218072017.2625:Reading
 #@+node:ekr.20031218072017.2626: top_df.readAll
-def readAll(self,root,partialFlag=false):
+def readAll(self,root,partialFlag=False):
 	
 	"""Scan vnodes, looking for @file nodes to read."""
 
 	at = self ; c = at.c
 	c.endEditing() # Capture the current headline.
-	anyRead = false
+	anyRead = False
 	at.initIvars()
 	p = root.copy()
 	if partialFlag: after = p.nodeAfterTree()
@@ -578,11 +578,11 @@ def readAll(self,root,partialFlag=false):
 		if p.isAtIgnoreNode():
 			p.moveToNodeAfterTree()
 		elif p.isAtThinFileNode():
-			anyRead = true
-			at.read(p,thinFile=true)
+			anyRead = True
+			at.read(p,thinFile=True)
 			p.moveToNodeAfterTree()
 		elif p.isAtFileNode() or p.isAtNorefFileNode():
-			anyRead = true
+			anyRead = True
 			if partialFlag:
 				# We are forcing the read.
 				at.read(p)
@@ -594,7 +594,7 @@ def readAll(self,root,partialFlag=false):
 				if wasOrphan and not ok:
 					# Remind the user to fix the problem.
 					p.setDirty()
-					c.setChanged(true)
+					c.setChanged(True)
 			p.moveToNodeAfterTree()
 		else: p.moveToThreadNext()
 	# Clear all orphan bits.
@@ -609,7 +609,7 @@ def readAll(self,root,partialFlag=false):
 def parseLeoSentinel (self,s):
 	
 	at = self
-	new_df = false ; valid = true ; n = len(s)
+	new_df = False ; valid = True ; n = len(s)
 	encoding_tag = "-encoding="
 	version_tag = "-ver="
 	tag = "@+leo"
@@ -633,7 +633,7 @@ while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
 if j < i:
 	start = s[j:i]
 else:
-	valid = false
+	valid = False
 #@nonl
 #@-node:EKR.20040604155223:<< set the opening comment delim >>
 #@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
@@ -645,7 +645,7 @@ if 0: # Make leading whitespace significant.
 
 if g.match(s,i,tag):
 	i += len(tag)
-else: valid = false
+else: valid = False
 #@nonl
 #@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
 #@+node:ekr.20031218072017.2636:<< read optional version param >>
@@ -661,7 +661,7 @@ if new_df:
 	if j < i:
 		pass # version = s[j:i]
 	else:
-		valid = false
+		valid = False
 #@-node:ekr.20031218072017.2636:<< read optional version param >>
 #@+node:EKR.20040503105354:<< read optional thin param >>
 if g.match(s,i,thin_tag):
@@ -697,7 +697,7 @@ if g.match(s,i,encoding_tag):
 			print "bad encoding in derived file:",encoding
 			g.es("bad encoding in derived file:",encoding)
 	else:
-		valid = false
+		valid = False
 #@-node:ekr.20031218072017.2637:<< read optional encoding param >>
 #@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
 # The closing comment delim is the trailing non-whitespace.
@@ -711,7 +711,7 @@ end = s[j:i]
 #@+node:ekr.20031218072017.1812:top_df.read
 # The caller has enclosed this code in beginUpdate/endUpdate.
 
-def read(self,root,importFileName=None,thinFile=false):
+def read(self,root,importFileName=None,thinFile=False):
 	
 	"""Common read logic for any derived file."""
 	
@@ -719,7 +719,7 @@ def read(self,root,importFileName=None,thinFile=false):
 	at.errors = 0
 	importing = importFileName is not None
 	<< set fileName from root and importFileName >>
-	<< open file or return false >>
+	<< open file or return False >>
 	g.es("reading: " + root.headString())
 	firstLines,read_new = at.scanHeader(file,fileName)
 	df = g.choose(read_new,at.new_df,at.old_df)
@@ -730,7 +730,7 @@ def read(self,root,importFileName=None,thinFile=false):
 		# 1/28/04: Don't set comment delims when importing.
 		# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
 		importing = importFileName is not None
-		df.scanAllDirectives(root,importing=importing,reading=true)
+		df.scanAllDirectives(root,importing=importing,reading=True)
 		df.readOpenFile(root,file,firstLines)
 	except:
 		at.error("Unexpected exception while reading derived file")
@@ -758,7 +758,7 @@ else:
 
 if not fileName:
 	at.error("Missing file name.  Restoring @file tree from .leo file.")
-	return false
+	return False
 #@nonl
 #@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
 #@+node:ekr.20031218072017.1814:<< open file or return false >>
@@ -770,11 +770,11 @@ try:
 	file = open(fn,'rb')
 	if file:
 		<< warn on read-only file >>
-	else: return false
+	else: return False
 except:
 	at.error("Can not open: " + '"@file ' + fn + '"')
 	root.setDirty()
-	return false
+	return False
 #@nonl
 #@+node:ekr.20031218072017.1815:<< warn on read-only file >>
 try:
@@ -789,9 +789,9 @@ except:
 #@+node:ekr.20031218072017.1816:<< copy ivars to df >>
 # Telling what kind of file we are reading.
 df.importing = importFileName != None
-df.raw = false
+df.raw = False
 if importing and df == at.new_df:
-	thinFile = true
+	thinFile = True
 df.thinFile = thinFile
 
 # Set by scanHeader.
@@ -802,11 +802,11 @@ df.startSentinelComment = at.startSentinelComment
 # Set other common ivars.
 df.errors = 0
 df.file = file
-df.importRootSeen = false
+df.importRootSeen = False
 df.indent = 0
 df.targetFileName = fileName
 df.root = root
-df.root_seen = false
+df.root_seen = False
 #@nonl
 #@-node:ekr.20031218072017.1816:<< copy ivars to df >>
 #@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
@@ -855,7 +855,7 @@ def readLine (self,file):
 #@nonl
 #@-node:ekr.20031218072017.2639:top_df.readLine
 #@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
-def scanDefaultDirectory(self,p,importing=false):
+def scanDefaultDirectory(self,p,importing=False):
 	
 	"""Set default_directory ivar by looking for @path directives."""
 
@@ -965,12 +965,12 @@ def scanHeader(self,file,fileName):
 	
 	Returns (firstLines,new_df) where:
 	firstLines contains all @first lines,
-	new_df is true if we are reading a new-format derived file."""
+	new_df is True if we are reading a new-format derived file."""
 	
 	at = self
 	firstLines = [] # The lines before @+leo.
 	tag = "@+leo"
-	valid = true ; new_df = false
+	valid = True ; new_df = False
 	<< skip any non @+leo lines >>
 	if valid:
 		valid,new_df,start,end = at.parseLeoSentinel(s)
@@ -1002,7 +1002,7 @@ valid = n > 0
 #@-node:ekr.20031218072017.2625:Reading
 #@+node:ekr.20031218072017.2640:Writing
 #@+node:ekr.20031218072017.2015:top_df.writeAll
-def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
+def writeAll(self,writeAtFileNodesFlag=False,writeDirtyAtFileNodesFlag=False):
 	
 	"""Write @file nodes in all or part of the outline"""
 
@@ -1011,7 +1011,7 @@ def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
 	df = g.choose(write_new,at.new_df,at.old_df)
 	df.initIvars()
 	writtenFiles = [] # Files that might be written again.
-	mustAutoSave = false
+	mustAutoSave = False
 
 	if writeAtFileNodesFlag:
 		# Write all nodes in the selected tree.
@@ -1046,30 +1046,30 @@ for v2 in p.self_and_subtree_iter():
 #@+node:ekr.20031218072017.2017:<< handle v's tree >>
 if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
 
-	df.fileChangedFlag = false # 1/9/04
-	autoSave = false
+	df.fileChangedFlag = False # 1/9/04
+	autoSave = False
 	
 	# Tricky: @ignore not recognised in @silentfile nodes.
 	if p.isAtAsisFileNode():
 		at.asisWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
+		writtenFiles.append(p.v.t) ; autoSave = True
 	elif p.isAtIgnoreNode():
 		pass
 	elif p.isAtNorefFileNode():
 		at.norefWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
+		writtenFiles.append(p.v.t) ; autoSave = True
 	elif p.isAtNoSentFileNode():
-		at.write(p,nosentinels=true)
+		at.write(p,nosentinels=True)
 		writtenFiles.append(p.v.t) # No need for autosave
 	elif p.isAtThinFileNode():
-		at.write(p,thinFile=true)
+		at.write(p,thinFile=True)
 		writtenFiles.append(p.v.t) # No need for autosave.
 	elif p.isAtFileNode():
 		at.write(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
+		writtenFiles.append(p.v.t) ; autoSave = True
 
 	if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
-		mustAutoSave = true
+		mustAutoSave = True
 #@nonl
 #@-node:ekr.20031218072017.2017:<< handle v's tree >>
 #@+node:ekr.20031218072017.2018:<< say the command is finished >>
@@ -1100,7 +1100,7 @@ def asisWrite (self,p):
 	
 selentWrite = asisWrite # Compatibility with old scripts.
 	
-def write (self,p,nosentinels=false,thinFile=false):
+def write (self,p,nosentinels=False,thinFile=False):
 	at = self
 	write_new = thinFile or not g.app.config.write_old_format_derived_files
 	df = g.choose(write_new,at.new_df,at.old_df)
@@ -1115,18 +1115,18 @@ def writeException(self,p):
 #@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
 def writeOldDerivedFiles (self):
 	
-	self.writeDerivedFiles(write_old=true)
+	self.writeDerivedFiles(write_old=True)
 
 def writeNewDerivedFiles (self):
 
-	self.writeDerivedFiles(write_old=false)
+	self.writeDerivedFiles(write_old=False)
 	
 def writeDerivedFiles (self,write_old):
 	
 	config = g.app.config
 	old = config.write_old_format_derived_files
 	config.write_old_format_derived_files = write_old
-	self.writeAll(writeAtFileNodesFlag=true)
+	self.writeAll(writeAtFileNodesFlag=True)
 	config.write_old_format_derived_files = old
 #@nonl
 #@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
@@ -1138,13 +1138,13 @@ def writeMissing(self,p):
 	write_new = not g.app.config.write_old_format_derived_files
 	df = g.choose(write_new,at.new_df,at.old_df)
 	df.initIvars()
-	writtenFiles = false ; changedFiles = false
+	writtenFiles = False ; changedFiles = False
 
 	p = p.copy()
 	after = p.nodeAfterTree()
 	while p and p != after: # Don't use iterator.
 		if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
-			missing = false ; valid = true
+			missing = False ; valid = True
 			df.targetFileName = p.anyAtFileNodeName()
 			<< set missing if the file does not exist >>
 			if valid and missing:
@@ -1177,7 +1177,7 @@ if valid:
 	except:
 		g.es("exception in atFile.scanAllDirectives")
 		g.es_exception()
-		valid = false
+		valid = False
 
 if valid:
 	try:
@@ -1193,7 +1193,7 @@ if valid:
 	except:
 		g.es("exception creating path:" + fn)
 		g.es_exception()
-		valid = false
+		valid = False
 #@nonl
 #@-node:ekr.20031218072017.2020:<< set missing if the file does not exist >>
 #@+node:ekr.20031218072017.2021:<< create df.outputFile >>
@@ -1214,20 +1214,20 @@ if p.isAtAsisFileNode():
 elif p.isAtNorefFileNode():
 	at.norefWrite(p)
 elif p.isAtNoSentFileNode():
-	at.write(p,nosentinels=true)
+	at.write(p,nosentinels=True)
 elif p.isAtFileNode():
 	at.write(p)
 else: assert(0)
 
-writtenFiles = true
+writtenFiles = True
 
 if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
-	changedFiles = true
+	changedFiles = True
 #@nonl
 #@-node:ekr.20031218072017.2022:<< write the @file node >>
 #@-node:ekr.20031218072017.2019:top_df.writeMissing
 #@+node:EKR.20040507095329:top_df.writeToString
-def writeToString (self,p,nosentinels=false,thinFile=false):
+def writeToString (self,p,nosentinels=False,thinFile=False):
 	
 	at = self ; df = at.new_df
 	
@@ -1241,13 +1241,13 @@ def writeToString (self,p,nosentinels=false,thinFile=false):
 	
 	if 0: # From execute script:
 		
-		df.scanAllDirectives(p,scripting=true)
+		df.scanAllDirectives(p,scripting=True)
 		# Force Python comment delims.
 		df.startSentinelComment = "#"
 		df.endSentinelComment = None
 		# Write the "derived file" into fo.
 		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=true,scriptFile=fo)
+		df.write(p.copy(),nosentinels=True,scriptFile=fo)
 		assert(p)
 		s = fo.get()
 #@nonl
@@ -1260,7 +1260,7 @@ def writeToString (self,p,nosentinels=false,thinFile=false):
 This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
 @c
 
-def scanAllDirectives(self,p,scripting=false,importing=false,reading=false):
+def scanAllDirectives(self,p,scripting=False,importing=False,reading=False):
 	
 	"""Scan position p and p's ancestors looking for directives,
 	setting corresponding atFile ivars.
@@ -1400,7 +1400,7 @@ else: # 9/25/02
 #@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
 if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 	
-	w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=true)
+	w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=True)
 	if w and w > 0:
 		self.page_width = w
 #@nonl
@@ -1408,7 +1408,7 @@ if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
 #@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
 if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
 	
-	w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=true)
+	w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=True)
 	if w and w != 0:
 		self.tab_width = w
 
@@ -1508,7 +1508,7 @@ def readOpenFile(self,root,file,firstLines):
 #@nonl
 #@-node:ekr.20031218072017.2757:new_df.readOpenFile
 #@+node:EKR.20040507095329:top_df.writeToString
-def writeToString (self,p,nosentinels=false,thinFile=false):
+def writeToString (self,p,nosentinels=False,thinFile=False):
 	
 	at = self ; df = at.new_df
 	
@@ -1522,19 +1522,19 @@ def writeToString (self,p,nosentinels=false,thinFile=false):
 	
 	if 0: # From execute script:
 		
-		df.scanAllDirectives(p,scripting=true)
+		df.scanAllDirectives(p,scripting=True)
 		# Force Python comment delims.
 		df.startSentinelComment = "#"
 		df.endSentinelComment = None
 		# Write the "derived file" into fo.
 		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=true,scriptFile=fo)
+		df.write(p.copy(),nosentinels=True,scriptFile=fo)
 		assert(p)
 		s = fo.get()
 #@nonl
 #@-node:EKR.20040507095329:top_df.writeToString
 #@+node:EKR.20040506075328:new_df.writeOpenFile
-def writeOpenFile(self,root,nosentinels=false,scriptFile=None,thinFile=false):
+def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False):
 	
 	at = self ; c = at.c
 	
@@ -1563,7 +1563,7 @@ def writeOpenFile(self,root,nosentinels=false,scriptFile=None,thinFile=false):
 at.sentinels = not nosentinels
 at.thinFile = thinFile
 at.scripting = scriptFile is not None
-at.raw = false
+at.raw = False
 
 # Init other ivars.
 at.errors = 0
@@ -1647,7 +1647,7 @@ self.statusLabel = None # 5/20/02
 # Used by event handlers...
 self.redrawCount = 0
 self.draggedItem = None
-self.controlKeyIsDown = false # For control-drags
+self.controlKeyIsDown = False # For control-drags
 self.revertHeadline = None # Previous headline text for abortEditLabel.
 #@nonl
 #@-node:ekr.20031218072017.1802:<< set the leoTkinterFrame ivars >>
@@ -1661,7 +1661,7 @@ def __repr__ (self):
 #@+node:ekr.20031218072017.3944:f.createCanvas
 def createCanvas (self,parentFrame):
 	
-	frame = self ; config = g.app.config ; Tk = Tkinter
+	frame = self ; config = g.app.config
 	
 	scrolls = config.getBoolWindowPref('outline_pane_scrolls_horizontally')
 	scrolls = g.choose(scrolls,1,0)
@@ -1701,8 +1701,7 @@ def createCanvas (self,parentFrame):
 #@+node:ekr.20031218072017.2176:f.finishCreate
 def finishCreate (self,c):
 	
-	frame = self ; frame.c = c
-	Tk = Tkinter ; gui = g.app.gui
+	frame = self ; frame.c = c ; gui = g.app.gui
 
 	<< create the toplevel frame >>
 	<< create all the subframes >>
@@ -1794,7 +1793,7 @@ c.selectVnode(p)
 c.redraw()
 c.frame.getFocus()
 c.editPosition(p)
-c.endUpdate(false)
+c.endUpdate(False)
 #@-node:ekr.20031218072017.2180:<< create the first tree node >>
 #@-node:ekr.20031218072017.2176:f.finishCreate
 #@+node:ekr.20031218072017.3945:Creating the splitter
@@ -1829,8 +1828,6 @@ def createLeoSplitter (self, parent, verticalFlag):
 	"""Create a splitter window and panes into which the caller packs widgets.
 	
 	Returns (f, bar, pane1, pane2) """
-
-	Tk = Tkinter
 	
 	# Create the frames.
 	f = Tk.Frame(parent,bd=0,relief="flat")
@@ -2022,7 +2019,7 @@ try:
 		# Create the image.  Throws an exception if file not found
 		imagefile = g.os_path_join(g.app.loadDir,imagefile)
 		imagefile = g.os_path_normpath(imagefile)
-		image = Tkinter.PhotoImage(master=g.app.root,file=imagefile)
+		image = Tk.PhotoImage(master=g.app.root,file=imagefile)
 		
 		# Must keep a reference to the image!
 		try:
@@ -2101,7 +2098,7 @@ def statusLineIsEnabled(self):
 		state = t.cget("state")
 		return state == "normal"
 	else:
-		return false
+		return False
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 #@+node:ekr.20031218072017.3963:putStatusLine
@@ -2310,7 +2307,7 @@ def statusLineIsEnabled(self):
 		state = t.cget("state")
 		return state == "normal"
 	else:
-		return false
+		return False
 #@nonl
 #@-node:EKR.20040424153344:enable/disableStatusLine & isEnabled
 #@+node:ekr.20031218072017.3963:putStatusLine
@@ -2573,608 +2570,6 @@ import xml.sax
 #@+node:ekr.20040329182535:plugins
 #@+node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
 #@-node:ekr.20040130185920.1:** Add incremental search to search plugin (make find panel smaller)
-#@+node:ekr.20031218072017.757:Calltips
-Jonathan M. Gilligan
-
-Calltips, as in IDLE. 
-#@nonl
-#@+node:ekr.20031218072017.758:Study for Tooltips/Auto-completion
-@ignore
-@language python
-#@nonl
-#@+node:ekr.20031218072017.759:Writing an Idle extension
-@nocolor
-
-Writing an IDLE extension
-
-An IDLE extension can define new key bindings and menu entries for IDLE
-edit windows.  There is a simple mechanism to load extensions when IDLE
-starts up and to attach them to each edit window. (It is also possible
-to make other changes to IDLE, but this must be done by editing the IDLE
-source code.)
-
-The list of extensions loaded at startup time is configured by editing
-the file config.txt; see below for details.
-
-An IDLE extension is defined by a class.  Methods of the class define
-actions that are invoked by those bindings or menu entries. Class (or
-instance) variables define the bindings and menu additions; these are
-automatically applied by IDLE when the extension is linked to an edit
-window.
-
-An IDLE extension class is instantiated with a single argument,
-`editwin', an EditorWindow instance. The extension cannot assume much
-about this argument, but it is guarateed to have the following instance
-variables:
-
-    text	a Text instance (a widget)
-    io		an IOBinding instance (more about this later)
-    flist	the FileList instance (shared by all edit windows)
-
-(There are a few more, but they are rarely useful.)
-
-The extension class must not bind key events.  Rather, it must define
-one or more virtual events, e.g. <<zoom-height>>, and corresponding
-methods, e.g. zoom_height_event(), and have one or more class (or instance)
-variables that define mappings between virtual events and key sequences,
-e.g. <Alt-F2>.  When the extension is loaded, these key sequences will
-be bound to the corresponding virtual events, and the virtual events
-will be bound to the corresponding methods.  (This indirection is done
-so that the key bindings can easily be changed, and so that other
-sources of virtual events can exist, such as menu entries.)
-
-The following class or instance variables are used to define key
-bindings for virtual events:
-
-    keydefs		for all platforms
-    mac_keydefs		for Macintosh
-    windows_keydefs	for Windows
-    unix_keydefs	for Unix (and other platforms)
-
-Each of these variables, if it exists, must be a dictionary whose
-keys are virtual events, and whose values are lists of key sequences.
-
-An extension can define menu entries in a similar fashion.  This is done
-with a class or instance variable named menudefs; it should be a list of
-pair, where each pair is a menu name (lowercase) and a list of menu
-entries. Each menu entry is either None (to insert a separator entry) or
-a pair of strings (menu_label, virtual_event).  Here, menu_label is the
-label of the menu entry, and virtual_event is the virtual event to be
-generated when the entry is selected.  An underscore in the menu label
-is removed; the character following the underscore is displayed
-underlined, to indicate the shortcut character (for Windows).
-
-At the moment, extensions cannot define whole new menus; they must
-define entries in existing menus.  Some menus are not present on some
-windows; such entry definitions are then ignored, but the key bindings
-are still applied.  (This should probably be refined in the future.)
-
-Here is a complete example example:
-
-class ZoomHeight:
-
-    menudefs = [
-        ('edit', [
-            None, # Separator
-            ('_Zoom Height', '<<zoom-height>>'),
-         ])
-    ]
-
-    windows_keydefs = {
-        '<<zoom-height>>': ['<Alt-F2>'],
-    }
-    unix_keydefs = {
-        '<<zoom-height>>': ['<Control-z><Control-z>'],
-    }
-
-    def __init__(self, editwin):
-        self.editwin = editwin
-
-    def zoom_height_event(self, event):
-        "...Do what you want here..."
-
-The final piece of the puzzle is the file "config.txt", which is used
-to to configure the loading of extensions.  For each extension,
-you must include a section in config.txt (or in any of the other
-configuration files that are consulted at startup: config-unix.txt,
-config-win.txt, or ~/.idle).  A section is headed by the module name
-in square brackets, e.g.
-
-    [ZoomHeight]
-
-The section may be empty, or it may define configuration options for
-the extension.  (See ParenMatch.py for an example.)  A special option
-is 'enable': including
-
-    enable = 0
-
-in a section disables that extension.  More than one configuration
-file may specify options for the same extension, so a user may disable
-an extension that is loaded by default, or enable an extension that is
-disabled by default.
-
-Extensions can define key bindings and menu entries that reference
-events they don't implement (including standard events); however this is
-not recommended (and may be forbidden in the future).
-
-Extensions are not required to define menu entries for all events they
-implement.
-
-Note: in order to change key bindings, you must currently edit the file
-keydefs.  It contains two dictionaries named and formatted like the
-keydefs dictionaries described above, one for the Unix bindings and one
-for the Windows bindings.  In the future, a better mechanism will be
-provided.
-
-#@-node:ekr.20031218072017.759:Writing an Idle extension
-#@+node:ekr.20031218072017.760:config.txt
-# IDLE reads several config files to determine user preferences.  This 
-# file is the default config file.  When IDLE starts, it will look in
-# the following four files in order:
-#     config.txt                      the default config file
-#     config-[win/unix/mac].txt       the generic platform config file
-#     config-[sys.platform].txt       the specific platform config file
-#     ~/.idle                         the user config file
-#
-# The last definition of each option is used.  For example, you can
-# override the default window size (80x24) by defining width and
-# height options in the EditorWindow section of your ~/.idle file
-#
-# IDLE extensions can be enabled and disabled by adding them to one of
-# the config files.  To enable an extension, create a section with the
-# same name as the extension, e.g. the [ParenMatch] section below.  To
-# disable an extension, either remove the section or add the 'enable'
-# option with the value 0.  
-
-[EditorWindow]
-width= 80
-height= 24
-# fonts defined in config-[win/unix].txt
-
-[Colors]
-normal-foreground= black
-normal-background= white
-# These color types are not explicitly defined= sync, todo, stdin
-keyword-foreground= #ff7700
-comment-foreground= #dd0000
-string-foreground= #00aa00
-definition-foreground= #0000ff
-hilite-foreground= #000068
-hilite-background= #006868
-break-foreground= #ff7777
-hit-foreground= #ffffff
-hit-background= #000000
-stdout-foreground= blue
-stderr-foreground= red
-console-foreground= #770000
-error-background= #ff7777
-cursor-background= black
-
-[SearchBinding]
-
-[AutoIndent]
-
-[AutoExpand]
-
-[FormatParagraph]
-
-[ZoomHeight]
-
-[ScriptBinding]
-
-[CallTips]
-
-[ParenMatch]
-enable= 0
-style= expression
-flash-delay= 500
-bell= 1
-hilite-foreground= black
-hilite-background= #43cd80
-#@-node:ekr.20031218072017.760:config.txt
-#@+node:ekr.20031218072017.761:AutoExpand.py (idle extension)
-@ignore
-@language python
-
-import string
-import re
-
-###$ event <<expand-word>>
-###$ win <Alt-slash>
-###$ unix <Alt-slash>
-
-class AutoExpand:
-	<< decls >>
-@others
-
-#@+node:ekr.20031218072017.762:<< decls >>
-keydefs = {
-    '<<expand-word>>': ['<Alt-slash>'],
-}
-
-unix_keydefs = {
-    '<<expand-word>>': ['<Meta-slash>', '<Alt-slash>'],
-}
-
-menudefs = [
-    ('edit', [
-        ('E_xpand word', '<<expand-word>>'),
-     ]),
-]
-
-wordchars = string.ascii_letters + string.digits + "_"
-
-#@-node:ekr.20031218072017.762:<< decls >>
-#@+node:ekr.20031218072017.763:__init__
-def __init__(self, editwin):
-    self.text = editwin.text
-    self.state = None
-#@-node:ekr.20031218072017.763:__init__
-#@+node:ekr.20031218072017.764:expand_word_event
-def expand_word_event(self, event):
-    curinsert = self.text.index("insert")
-    curline = self.text.get("insert linestart", "insert lineend")
-    if not self.state:
-        words = self.getwords()
-        index = 0
-    else:
-        words, index, insert, line = self.state
-        if insert != curinsert or line != curline:
-            words = self.getwords()
-            index = 0
-    if not words:
-        self.text.bell()
-        return "break"
-    word = self.getprevword()
-    self.text.delete("insert - %d chars" % len(word), "insert")
-    newword = words[index]
-    index = (index + 1) % len(words)
-    if index == 0:
-        self.text.bell()            # Warn we cycled around
-    self.text.insert("insert", newword)
-    curinsert = self.text.index("insert")
-    curline = self.text.get("insert linestart", "insert lineend")
-    self.state = words, index, curinsert, curline
-    return "break"
-#@-node:ekr.20031218072017.764:expand_word_event
-#@+node:ekr.20031218072017.765:getwords
-def getwords(self):
-    word = self.getprevword()
-    if not word:
-        return []
-    before = self.text.get("1.0", "insert wordstart")
-    wbefore = re.findall(r"\b" + word + r"\w+\b", before)
-    del before
-    after = self.text.get("insert wordend", "end")
-    wafter = re.findall(r"\b" + word + r"\w+\b", after)
-    del after
-    if not wbefore and not wafter:
-        return []
-    words = []
-    dict = {}
-    # search backwards through words before
-    wbefore.reverse()
-    for w in wbefore:
-        if dict.get(w):
-            continue
-        words.append(w)
-        dict[w] = w
-    # search onwards through words after
-    for w in wafter:
-        if dict.get(w):
-            continue
-        words.append(w)
-        dict[w] = w
-    words.append(word)
-    return words
-#@nonl
-#@-node:ekr.20031218072017.765:getwords
-#@+node:ekr.20031218072017.766:getprevword
-def getprevword(self):
-
-    line = self.text.get("insert linestart", "insert")
-    i = len(line)
-    while i > 0 and line[i-1] in self.wordchars:
-        i = i-1
-    return line[i:]
-#@-node:ekr.20031218072017.766:getprevword
-#@-node:ekr.20031218072017.761:AutoExpand.py (idle extension)
-#@+node:ekr.20031218072017.767:CallTips.py (idle extension)
-# An IDLE extension that provides "Call Tips" - ie, a floating window that
-# displays parameter information as you open parens.
-
-import string,sys,types
-
-class CallTips:
-	<< class CallTips members >>
-
-@others
-#@+node:ekr.20031218072017.768:<< class CallTips members >>
-@others
-#@nonl
-#@+node:ekr.20031218072017.769: data members
-menudefs = [ ]
-
-keydefs = {
-    '<<paren-open>>': ['<Key-parenleft>'],
-    '<<paren-close>>': ['<Key-parenright>'],
-    '<<check-calltip-cancel>>': ['<KeyRelease>'],
-    '<<calltip-cancel>>': ['<ButtonPress>', '<Key-Escape>'],
-}
-
-windows_keydefs = { }
-
-unix_keydefs = { }
-
-#@-node:ekr.20031218072017.769: data members
-#@+node:ekr.20031218072017.770:__init__
-def __init__(self, editwin):
-
-    self.editwin = editwin
-    self.text = editwin.text
-    self.calltip = None
-
-    if hasattr(self.text, "make_calltip_window"):
-        self._make_calltip_window = self.text.make_calltip_window
-    else:
-        self._make_calltip_window = self._make_tk_calltip_window
-#@-node:ekr.20031218072017.770:__init__
-#@+node:ekr.20031218072017.771:close
-def close(self):
-
-    self._make_calltip_window = None
-#@-node:ekr.20031218072017.771:close
-#@+node:ekr.20031218072017.772:_make_tk_calltip_window
-# Makes a Tk based calltip window.
-# Used by IDLE, but not Pythonwin.
-# See __init__ above for how this is used.
-
-def _make_tk_calltip_window(self):
-
-    import CallTipWindow
-    return CallTipWindow.CallTip(self.text)
-#@-node:ekr.20031218072017.772:_make_tk_calltip_window
-#@+node:ekr.20031218072017.773:_remove_calltip_window
-def _remove_calltip_window(self):
-	
-    if self.calltip:
-        self.calltip.hidetip()
-        self.calltip = None
-
-#@-node:ekr.20031218072017.773:_remove_calltip_window
-#@+node:ekr.20031218072017.774:paren_open_event
-def paren_open_event(self, event):
-
-    self._remove_calltip_window()
-    arg_text = get_arg_text(self.get_object_at_cursor())
-    if arg_text:
-        self.calltip_start = self.text.index("insert")
-        self.calltip = self._make_calltip_window()
-        self.calltip.showtip(arg_text)
-    return "" #so the event is handled normally.
-#@-node:ekr.20031218072017.774:paren_open_event
-#@+node:ekr.20031218072017.775:paren_close_event
-def paren_close_event(self, event):
-	
-    # Now just hides, but later we should check if other
-    # paren'd expressions remain open.
-    self._remove_calltip_window()
-    return "" #so the event is handled normally.
-
-#@-node:ekr.20031218072017.775:paren_close_event
-#@+node:ekr.20031218072017.776:check_calltip_cancel_event
-def check_calltip_cancel_event(self, event):
-
-    if self.calltip:
-        # If we have moved before the start of the calltip,
-        # or off the calltip line, then cancel the tip.
-        # (Later need to be smarter about multi-line, etc)
-        if self.text.compare("insert", "<=", self.calltip_start) or \
-           self.text.compare("insert", ">", self.calltip_start + " lineend"):
-            self._remove_calltip_window()
-
-    return "" #so the event is handled normally.
-#@-node:ekr.20031218072017.776:check_calltip_cancel_event
-#@+node:ekr.20031218072017.777:calltip_cancel_event
-def calltip_cancel_event(self, event):
-
-    self._remove_calltip_window()
-    return "" #so the event is handled normally.
-#@-node:ekr.20031218072017.777:calltip_cancel_event
-#@+node:ekr.20031218072017.778:get_object_at_cursor
-def get_object_at_cursor(self,wordchars="._" + string.ascii_letters + string.digits):
-    # Usage of ascii_letters is necessary to avoid UnicodeErrors
-    # if chars contains non-ASCII.
-
-    # XXX - This needs to be moved to a better place
-    # so the "." attribute lookup code can also use it.
-    text = self.text
-    chars = text.get("insert linestart", "insert")
-    i = len(chars)
-    while i and chars[i-1] in wordchars:
-        i = i-1
-    word = chars[i:]
-    if word:
-        # How is this for a hack!
-        import sys, __main__
-        namespace = sys.modules.copy()
-        namespace.update(__main__.__dict__)
-        try:
-            return eval(word, namespace)
-        except:
-            pass
-    return None # Can't find an object.
-#@-node:ekr.20031218072017.778:get_object_at_cursor
-#@-node:ekr.20031218072017.768:<< class CallTips members >>
-#@+node:ekr.20031218072017.779:_find_constructor
-@ Given a class object, return a function object used for the constructor,
-i.e., __init__() or None if we can't find one.
-@c
-
-def _find_constructor(class_ob):
-
-    try:
-        return class_ob.__init__.im_func
-
-    except AttributeError:
-        for base in class_ob.__bases__:
-            rc = _find_constructor(base)
-            if rc is not None: return rc
-
-    return None
-#@-node:ekr.20031218072017.779:_find_constructor
-#@+node:ekr.20031218072017.780:get_arg_text
-def get_arg_text(ob):
-
-    # Get a string describing the arguments for the given object.
-	argText = "" ; argOffset = 0
-	if ob is not None:
-		<< set fob depending on the type of ob >>
-		<< get argText for functions and lambdas >>
-		<< append the docstring if it exists >>
-    return argText
-#@nonl
-#@+node:ekr.20031218072017.781:<< set fob depending on the type of ob >>
-if type(ob)==types.ClassType:
-    # Look for the highest __init__ in the class chain.
-    fob = _find_constructor(ob)
-    if fob is None:
-        fob = lambda: None
-    else:
-        argOffset = 1
-
-elif type(ob)==types.MethodType:
-    # A hack for methods: turn it into a function but drop the "self" param.
-    fob = ob.im_func
-    argOffset = 1
-
-else:
-    fob = ob
-#@nonl
-#@-node:ekr.20031218072017.781:<< set fob depending on the type of ob >>
-#@+node:ekr.20031218072017.782:<< get argText for functions and lambdas >>
-@ Examples
-
-1. string.replace(  generates:
-
-	(s, old, new, maxsplit=-1)
-	replace (str, old, new[,maxsplit]) -> string
-
-2. d = {} ; d.get( generates:
-	D.get(k[,d]) -> D[k] if D.has_key(k), else d.  d defaults to None.
-
-This last presumably comes from the docstring.
-@c
-
-# Try and build one for Python defined functions
-if type(fob) in [types.FunctionType, types.LambdaType]:
-    try:
-        realArgs = fob.func_code.co_varnames[argOffset:fob.func_code.co_argcount]
-        defaults = fob.func_defaults or []
-		# Use "=value" for each value in defaults
-        defaults = list(map(lambda name: "=%s" % name, defaults))
-		# Use "" for all args without defaults.
-        defaults = [""] * (len(realArgs)-len(defaults)) + defaults
-		# Set items to a list of arg+deflt values.
-        items = map(
-			lambda arg, dflt: arg+dflt, realArgs, defaults )
-	
-        if fob.func_code.co_flags & 0x4: items.append("...")
-        if fob.func_code.co_flags & 0x8: items.append("***")
-        argText = string.join(items,", ")
-        argText = "(%s)" % argText
-    except:pass
-#@nonl
-#@-node:ekr.20031218072017.782:<< get argText for functions and lambdas >>
-#@+node:ekr.20031218072017.783:<< append the docstring if it exists >>
-doc = getattr(ob, "__doc__", "")
-if doc:
-	# Remove all leading tabs, blanks and newlines.
-    while doc[:1] in " \t\n":
-        doc = doc[1:]
-		
-	# EKR: I would replace runs of whitespace by a single blank.
-	doc = doc.replace("\t"," ")
-	while 1:
-		n = len(doc)
-		doc = string.replace("  "," ")
-		if n == len(doc): break
-
-	# Take at most 70 characters of the docstring.
-    pos = doc.find("\n")
-    if pos < 0 or pos > 70: pos = 70
-
-	# Append the result to argText.
-    if argText: argText += "\n"
-    argText += doc[:pos]
-#@nonl
-#@-node:ekr.20031218072017.783:<< append the docstring if it exists >>
-#@-node:ekr.20031218072017.780:get_arg_text
-#@+node:ekr.20031218072017.784:Test code
-if __name__=='__main__':
-
-    def t1(): "()"
-    def t2(a, b=None): "(a, b=None)"
-    def t3(a, *args): "(a, ...)"
-    def t4(*args): "(...)"
-    def t5(a, *args): "(a, ...)"
-    def t6(a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    class TC:
-        "(a=None, ...)"
-        def __init__(self, a=None, *b): "(a=None, ...)"
-        def t1(self): "()"
-        def t2(self, a, b=None): "(a, b=None)"
-        def t3(self, a, *args): "(a, ...)"
-        def t4(self, *args): "(...)"
-        def t5(self, a, *args): "(a, ...)"
-        def t6(self, a, b=None, *args, **kw): "(a, b=None, ..., ***)"
-
-    def test( tests ):
-        failed=[]
-        for t in tests:
-            expected = t.__doc__ + "\n" + t.__doc__
-            if get_arg_text(t) != expected:
-                failed.append(t)
-                print "%s - expected %s, but got %s" % (t, `expected`, `get_arg_text(t)`)
-        print "%d of %d tests failed" % (len(failed), len(tests))
-
-    tc = TC()
-    tests = t1, t2, t3, t4, t5, t6, \
-            TC, tc.t1, tc.t2, tc.t3, tc.t4, tc.t5, tc.t6
-
-    test(tests)
-#@-node:ekr.20031218072017.784:Test code
-#@-node:ekr.20031218072017.767:CallTips.py (idle extension)
-#@-node:ekr.20031218072017.758:Study for Tooltips/Auto-completion
-#@+node:ekr.20031218072017.785:Test
-@ We have _lots_ of object available while Leo is running, so it would be possible to pass those objects to the tooltip routines.  However, it is not clear how useful all those global names will be.
-@c
-
-from leoGlobals import *
-#print app()
-#import __main__
-#print __main__
-#print __main__.__dict__
-print es
-#@nonl
-#@-node:ekr.20031218072017.785:Test
-#@+node:ekr.20031218072017.816:call tips to extend headlines
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=1861038
-By: korakot
-
-I would like leo to have something similar to call tips
-for the tree pane. It's always inconvenient that I must
-resize the pane just to read the full headString.
-Allowing horizontal scroll is an option, though I prefer
-that leo could popup a call tip of the full headstring
-when the full headstring could not be display.
-
-Please see how 'windows explorer' do this. It help
-my 'exploring' a lot.
-#@-node:ekr.20031218072017.816:call tips to extend headlines
-#@-node:ekr.20031218072017.757:Calltips
 #@+node:ekr.20040217154256:Autocompletion
 #@+node:ekr.20031218072017.798:@dictionary
 @nocolor
@@ -3918,7 +3313,7 @@ because we have 'all versions' stored.
 
 #@-node:ekr.20040117092727.2:using zodb versions
 #@+node:ekr.20040226114127:Zope test
-from leoGlobals import *
+import leoGlobals
 
 from ZODB import FileStorage, DB
 
@@ -3928,6 +3323,7 @@ if 1:
 	db = DB(storage)
 	print storage ; print db
 	db.close()
+#@nonl
 #@-node:ekr.20040226114127:Zope test
 #@+node:ekr.20031218072017.737:Leo & data bases
 From: "Scott Chapman" <scott_list@mischko.com>
@@ -4821,7 +4217,7 @@ if frame.body.hasFocus():
 	canCut = data and len(data) > 0
 else:
 	# This isn't strictly correct, but we can't get the Tk headline selection.
-	canCut = true
+	canCut = True
 
 enable(menu,"Cut",canCut)
 enable(menu,"Copy",canCut)
@@ -5468,7 +4864,7 @@ c.beginUpdate()
 if 1: # update...
 	# Update changed bit.
 	if not c.changed:
-		c.setChanged(true)
+		c.setChanged(True)
 	# Update all dirty bits.
 	p.setDirty()
 	# Update v.
@@ -5476,7 +4872,7 @@ if 1: # update...
 	edit_text.delete("1.0","end")
 	edit_text.insert("end",s)
 	edit_text.mark_set("insert",index)
-c.endUpdate(false) # do not redraw now.
+c.endUpdate(False) # do not redraw now.
 #@nonl
 #@-node:ekr.20031218072017.1338:<< update v and all nodes joined to v >>
 #@+node:ekr.20031218072017.1339:<< reconfigure v and all nodes joined to v >>
@@ -6808,7 +6204,7 @@ def putVnodes (self):
 def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 
 	c = self.c ; v = None
-	setCurrent = setExpanded = setMarked = setOrphan = setTop = false
+	setCurrent = setExpanded = setMarked = setOrphan = setTop = False
 	tref = -1 ; headline = "" ; tnodeList = None ; attrDict = {} 
 	# we have already matched <v.
 	while 1:
@@ -6862,11 +6258,11 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 while 1:
 	if   self.matchChar('C'): pass # Not used: clone bits are recomputed later.
 	elif self.matchChar('D'): pass # Not used.
-	elif self.matchChar('E'): setExpanded = true
-	elif self.matchChar('M'): setMarked = true
-	elif self.matchChar('O'): setOrphan = true
-	elif self.matchChar('T'): setTop = true
-	elif self.matchChar('V'): setCurrent = true
+	elif self.matchChar('E'): setExpanded = True
+	elif self.matchChar('M'): setMarked = True
+	elif self.matchChar('O'): setOrphan = True
+	elif self.matchChar('T'): setTop = True
+	elif self.matchChar('V'): setCurrent = True
 	else: break
 
 self.getDquote()
@@ -7001,7 +6397,7 @@ def open(self,file,fileName):
 	<< Set the default directory >>
 	self.topPosition = None
 	c.beginUpdate()
-	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
+	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=True)
 	frame.resizePanesToRatio(ratio,frame.secondary_ratio) # 12/2/03
 	if 0: # 1/30/04: this is useless.
 		if self.topPosition: 
@@ -7031,7 +6427,7 @@ def readOutlineOnly (self,file,fileName):
 	self.fileIndex = 0
 	<< Set the default directory >>
 	c.beginUpdate()
-	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=false)
+	ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=False)
 	c.endUpdate()
 	c.frame.deiconify()
 	vflag,junk,secondary_ratio = self.frame.initialRatios()

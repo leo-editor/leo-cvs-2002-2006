@@ -1,12 +1,12 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3897:@thin leoTkinterFind.py
 import leoGlobals as g
-from leoGlobals import true,false
-
-import leoFind, leoTkinterDialog
-import string,sys,Tkinter,types
-
-Tk=Tkinter
+import leoFind
+import leoTkinterDialog
+import string
+import sys
+import Tkinter as Tk
+import types
 
 class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 
@@ -15,7 +15,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 	#@	@+others
 	#@+node:ekr.20031218072017.3898:Birth & death
 	#@+node:ekr.20031218072017.3899:__init__
-	def __init__(self,title="Find/Change",resizeable=false):
+	def __init__(self,title="Find/Change",resizeable=False):
 		
 		# Init the base classes...
 	
@@ -206,18 +206,18 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 		#@nl
 		#@	<< set radio buttons from ivars >>
 		#@+node:ekr.20031218072017.2061:<< set radio buttons from ivars >>
-		found = false
+		found = False
 		for var,setting in (
 			("pattern_match","pattern-search"),
 			("script_search","script-search")):
 			val = self.dict[var].get()
 			if val:
 				self.dict["radio-find-type"].set(setting)
-				found = true ; break
+				found = True ; break
 		if not found:
 			self.dict["radio-find-type"].set("plain-search")
 			
-		found = false
+		found = False
 		for var,setting in (
 			("suboutline_only","suboutline-only"),
 			("node_only","node-only"),
@@ -225,7 +225,7 @@ class leoTkinterFind (leoFind.leoFind,leoTkinterDialog.leoTkinterDialog):
 			val = self.dict[var].get()
 			if val:
 				self.dict["radio-search-scope"].set(setting)
-				found = true ; break
+				found = True ; break
 		if not found:
 			self.dict["radio-search-scope"].set("entire-outine")
 		#@nonl

@@ -3,7 +3,6 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 #@<< Theory of operation of find/change >>
 #@+node:ekr.20031218072017.2414:<< Theory of operation of find/change >>
@@ -84,9 +83,9 @@ class leoFind:
 		# Ivars containing internal state...
 		self.c = None # The commander for this search.
 		self.v = None # The vnode being searched.  Never saved between searches!
-		self.in_headline = false # true: searching headline text.
+		self.in_headline = False # True: searching headline text.
 		self.s_text = None # The search text for this search.
-		self.wrapping = false # true: wrapping is enabled.
+		self.wrapping = False # True: wrapping is enabled.
 			# This is _not_ the same as c.wrap_flag for batch searches.
 		
 		#@+at 
@@ -360,7 +359,7 @@ class leoFind:
 		if c.mark_changes_flag:
 			v.setMarked()
 		if not c.isChanged():
-			c.setChanged(true)
+			c.setChanged(True)
 		v.setDirty()
 	#@nonl
 	#@-node:ekr.20031218072017.2293:batchChange
@@ -389,7 +388,7 @@ class leoFind:
 				count += 1
 				self.batchChange(pos1,pos2,count)
 				line = gui.getLineContainingIndex(st,pos1)
-				self.printLine(line,allFlag=true)
+				self.printLine(line,allFlag=True)
 			else: break
 		c.endUpdate()
 		# Make sure the headline and body text are updated.
@@ -419,7 +418,7 @@ class leoFind:
 				sel = None
 		if not sel or len(sel) != 2:
 			g.es("No text selected")
-			return false
+			return False
 	
 		# Replace the selection in _both_ controls.
 		start,end = oldSel
@@ -440,8 +439,8 @@ class leoFind:
 		else:
 			c.frame.body.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
 		c.frame.tree.drawIcon(v) # redraw only the icon.
-		c.endUpdate(false) # No redraws here: they would destroy the headline selection.
-		return true
+		c.endUpdate(False) # No redraws here: they would destroy the headline selection.
+		return True
 	#@nonl
 	#@-node:ekr.20031218072017.3070:changeSelection
 	#@+node:ekr.20031218072017.3071:changeThenFind
@@ -452,7 +451,7 @@ class leoFind:
 	
 		self.initInHeadline()
 		if self.changeSelection():
-			self.findNext(false) # don't reinitialize
+			self.findNext(False) # don't reinitialize
 	#@nonl
 	#@-node:ekr.20031218072017.3071:changeThenFind
 	#@+node:ekr.20031218072017.2417:doChange...Script
@@ -481,8 +480,8 @@ class leoFind:
 			exec c.change_text in {} # Use {} to get a pristine environment.
 		except:
 			g.es("exception executing change script")
-			g.es_exception(full=false)
-			g.app.searchDict["continue"] = false # 2/1/04
+			g.es_exception(full=False)
+			g.app.searchDict["continue"] = False # 2/1/04
 	#@nonl
 	#@-node:ekr.20031218072017.2417:doChange...Script
 	#@+node:ekr.20031218072017.3072:doFind...Script
@@ -510,8 +509,8 @@ class leoFind:
 			exec c.find_text in {} # Use {} to get a pristine environment.
 		except:
 			g.es("exception executing find script")
-			g.es_exception(full=false)
-			g.app.searchDict["continue"] = false # 2/1/04
+			g.es_exception(full=False)
+			g.app.searchDict["continue"] = False # 2/1/04
 	#@-node:ekr.20031218072017.3072:doFind...Script
 	#@+node:ekr.20031218072017.3073:findAll
 	def findAll(self):
@@ -529,7 +528,7 @@ class leoFind:
 			if pos:
 				count += 1
 				line = gui.getLineContainingIndex(t,pos)
-				self.printLine(line,allFlag=true)
+				self.printLine(line,allFlag=True)
 			else: break
 		c.endUpdate()
 		g.es("found: ",count)
@@ -537,7 +536,7 @@ class leoFind:
 	#@nonl
 	#@-node:ekr.20031218072017.3073:findAll
 	#@+node:ekr.20031218072017.3074:findNext
-	def findNext(self,initFlag=true):
+	def findNext(self,initFlag=True):
 	
 		c = self.c
 		if not self.checkArgs():
@@ -552,7 +551,7 @@ class leoFind:
 	
 		c.beginUpdate()
 		pos, newpos = self.findNextMatch()
-		c.endUpdate(false) # Inhibit redraws so that headline remains selected.
+		c.endUpdate(False) # Inhibit redraws so that headline remains selected.
 	
 		if pos:
 			self.showSuccess(pos,newpos)
@@ -605,7 +604,7 @@ class leoFind:
 	#@+node:ekr.20031218072017.3077:search
 	def search (self):
 	
-		"""Searches the present headline or body text for c.find_text and returns true if found.
+		"""Searches the present headline or body text for c.find_text and returns True if found.
 	
 		c.whole_word_flag, c.ignore_case_flag, and c.pattern_match_flag control the search."""
 	
@@ -625,7 +624,7 @@ class leoFind:
 					stopindex=stopindex,backwards=c.reverse_flag,
 					regexp=c.pattern_match_flag,nocase=c.ignore_case_flag)
 			except:
-				g.es_exception(full=false)
+				g.es_exception(full=False)
 				self.errors += 1
 				return None, None
 			if not pos:
@@ -715,7 +714,7 @@ class leoFind:
 	
 		if self.in_headline and c.search_body_flag:
 			# just switch to body pane.
-			self.in_headline = false
+			self.in_headline = False
 			self.initNextText()
 			# g.trace(v)
 			return v
@@ -756,13 +755,13 @@ class leoFind:
 	def checkArgs (self):
 	
 		c = self.c
-		val = true
+		val = True
 		if not c.search_headline_flag and not c.search_body_flag:
 			g.es("not searching headline or body")
-			val = false
+			val = False
 		if len(c.find_text) == 0:
 			g.es("empty find patttern")
-			val = false
+			val = False
 		return val
 	#@nonl
 	#@-node:ekr.20031218072017.3083:checkArgs
@@ -796,7 +795,7 @@ class leoFind:
 	# Returns s_text with "insert" point set properly for batch searches.
 	def initBatchText(self):
 		v = self.v
-		self.wrapping = false # Only interactive commands allow wrapping.
+		self.wrapping = False # Only interactive commands allow wrapping.
 		s = g.choose(self.in_headline,v.headString(), v.bodyString())
 		return self.init_s_text(s)
 	
@@ -853,7 +852,7 @@ class leoFind:
 	#@nonl
 	#@-node:ekr.20031218072017.3087:initInteractiveCommands
 	#@+node:ekr.20031218072017.3088:printLine
-	def printLine (self,line,allFlag=false):
+	def printLine (self,line,allFlag=False):
 	
 		c = self.c
 		both = c.search_body_flag and c.search_headline_flag
@@ -936,7 +935,7 @@ class leoFind:
 				assert(v.edit_text())
 			else:
 				c.selectVnode(v)
-		c.endUpdate(false) # Do not draw again!
+		c.endUpdate(False) # Do not draw again!
 	
 		t = g.choose(self.in_headline,v.edit_text(),c.frame.bodyCtrl)
 		
@@ -966,6 +965,5 @@ class leoFind:
 			"should be overridden in subclass")
 	#@-node:ekr.20031218072017.3092:Must be overridden in subclasses
 	#@-others
-#@nonl
 #@-node:ekr.20031218072017.3052:@thin leoFind.py
 #@-leo

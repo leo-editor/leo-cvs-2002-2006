@@ -6,17 +6,19 @@
 """Leo's Tkinter Gui module."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoGui
-import leoTkinterColorPanels,leoTkinterComparePanel,leoTkinterDialog
-import leoTkinterFind,leoTkinterFontPanel,leoTkinterFrame
+import leoTkinterColorPanels
+import leoTkinterComparePanel
+import leoTkinterDialog
+import leoTkinterFind
+import leoTkinterFontPanel
+import leoTkinterFrame
 import leoTkinterPrefs
-import tkFont,Tkinter,tkFileDialog
-
-import string,sys
-
-Tk = Tkinter
+import tkFont
+import Tkinter as Tk
+import tkFileDialog
+import string
+import sys
 
 class tkinterGui(leoGui.leoGui):
 	
@@ -48,7 +50,7 @@ class tkinterGui(leoGui.leoGui):
 	
 		"""Create a hidden Tk root window."""
 	
-		self.root = root = Tkinter.Tk()
+		self.root = root = Tk.Tk()
 		root.title("Leo Main Window")
 		root.withdraw()
 		
@@ -75,7 +77,7 @@ class tkinterGui(leoGui.leoGui):
 				if g.os_path_exists(path):
 					file = g.os_path_join(path,"LeoApp16.ico")
 					if g.os_path_exists(path):
-						self.bitmap = Tkinter.BitmapImage(file)
+						self.bitmap = Tk.BitmapImage(file)
 					else:
 						g.es("LeoApp16.ico not in Icons directory", color="red")
 				else:
@@ -90,7 +92,7 @@ class tkinterGui(leoGui.leoGui):
 		
 		"""Get the default font from a new text widget."""
 	
-		t = Tkinter.Text()
+		t = Tk.Text()
 		fn = t.cget("font")
 		font = tkFont.Font(font=fn)
 		config.defaultFont = font
@@ -124,9 +126,9 @@ class tkinterGui(leoGui.leoGui):
 		
 	#@-node:ekr.20031218072017.4052:finishCreate (not used: must be present)
 	#@+node:ekr.20031218072017.4053:killGui (not used)
-	def killGui(self,exitFlag=true):
+	def killGui(self,exitFlag=True):
 		
-		"""Destroy a gui and terminate Leo if exitFlag is true."""
+		"""Destroy a gui and terminate Leo if exitFlag is True."""
 	
 		pass # Not ready yet.
 	
@@ -135,7 +137,7 @@ class tkinterGui(leoGui.leoGui):
 	def recreateRootWindow(self):
 		"""A do-nothing base class to create the hidden root window of a gui
 	
-		after a previous gui has terminated with killGui(false)."""
+		after a previous gui has terminated with killGui(False)."""
 		pass
 	
 	#@-node:ekr.20031218072017.4054:recreateRootWindow (not used)
@@ -153,34 +155,34 @@ class tkinterGui(leoGui.leoGui):
 	def runAboutLeoDialog(self,version,copyright,url,email):
 		"""Create and run a Tkinter About Leo dialog."""
 		d = leoTkinterDialog.tkinterAboutLeo(version,copyright,url,email)
-		return d.run(modal=false)
+		return d.run(modal=False)
 		
 	def runAskLeoIDDialog(self):
 		"""Create and run a dialog to get g.app.LeoID."""
 		d = leoTkinterDialog.tkinterAskLeoID()
-		return d.run(modal=true)
+		return d.run(modal=True)
 	
 	def runAskOkDialog(self,title,message=None,text="Ok"):
 		"""Create and run a Tkinter an askOK dialog ."""
 		d = leoTkinterDialog.tkinterAskOk(title,message,text)
-		return d.run(modal=true)
+		return d.run(modal=True)
 	
 	def runAskOkCancelNumberDialog(self,title,message):
 		"""Create and run askOkCancelNumber dialog ."""
 		d = leoTkinterDialog.tkinterAskOkCancelNumber(title,message)
-		return d.run(modal=true)
+		return d.run(modal=True)
 	
 	def runAskYesNoDialog(self,title,message=None):
 		"""Create and run an askYesNo dialog."""
 		d = leoTkinterDialog.tkinterAskYesNo(title,message)
-		return d.run(modal=true)
+		return d.run(modal=True)
 	
 	def runAskYesNoCancelDialog(self,title,
 		message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
 		"""Create and run an askYesNoCancel dialog ."""
 		d = leoTkinterDialog.tkinterAskYesNoCancel(
 			title,message,yesMessage,noMessage,defaultButton)
-		return d.run(modal=true)
+		return d.run(modal=True)
 	#@nonl
 	#@-node:ekr.20031218072017.4056:app.gui.Tkinter dialogs
 	#@+node:ekr.20031218072017.4057:app.gui.Tkinter file dialogs
@@ -324,8 +326,7 @@ class tkinterGui(leoGui.leoGui):
 	
 	def create_labeled_frame (self,parent,
 		caption=None,relief="groove",bd=2,padx=0,pady=0):
-		
-		Tk = Tkinter
+	
 		# Create w, the master frame.
 		w = Tk.Frame(parent)
 		w.grid(sticky="news")

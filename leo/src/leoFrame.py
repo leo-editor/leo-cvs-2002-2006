@@ -5,10 +5,11 @@
 These classes should be overridden to create frames for a particular gui."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoColor,leoMenu,leoNodes,leoUndo
-import os,string,sys,time
+import os
+import string
+import sys
+import time
 
 #@<< About handling events >>
 #@+node:ekr.20031218072017.2410:<< About handling events >>
@@ -63,7 +64,7 @@ class leoBody:
 	
 		self.frame = frame
 		self.c = c = frame.c
-		self.forceFullRecolorFlag = false
+		self.forceFullRecolorFlag = False
 		frame.body = self
 		
 		# May be overridden in subclasses...
@@ -329,7 +330,7 @@ class leoBody:
 		
 		return self.colorizer
 	
-	def recolor_now(self,p,incremental=false):
+	def recolor_now(self,p,incremental=False):
 	
 		self.colorizer.colorize(p.copy(),incremental)
 	
@@ -337,7 +338,7 @@ class leoBody:
 		
 		self.colorizer.recolor_range(p.copy(),leading,trailing)
 	
-	def recolor(self,p,incremental=false):
+	def recolor(self,p,incremental=False):
 		
 		if 0: # Do immediately
 			self.colorizer.colorize(p.copy(),incremental)
@@ -377,9 +378,9 @@ class leoFrame:
 		# Gui-independent data
 		self.es_newlines = 0 # newline count for this log stream
 		self.openDirectory = ""
-		self.saved=false # true if ever saved
+		self.saved=False # True if ever saved
 		self.splitVerticalFlag,self.ratio, self.secondary_ratio = self.initialRatios()
-		self.startupWindow=false # true if initially opened window
+		self.startupWindow=False # True if initially opened window
 		self.stylesheet = None # The contents of <?xml-stylesheet...?> line.
 	
 		# Colors of log pane.
@@ -449,7 +450,7 @@ class leoFrame:
 	#@nonl
 	#@-node:ekr.20031218072017.3685:setInitialWindowGeometry
 	#@+node:ekr.20031218072017.3686:setTopGeometry
-	def setTopGeometry (self,w,h,x,y,adjustSize=true):
+	def setTopGeometry (self,w,h,x,y,adjustSize=True):
 		
 		self.oops()
 	#@nonl
@@ -514,7 +515,7 @@ class leoFrame:
 		
 		"""Prompt the user to save changes.
 		
-		Return true if the user vetos the quit or save operation."""
+		Return True if the user vetos the quit or save operation."""
 		
 		c = self.c
 		name = g.choose(c.mFileName,c.mFileName,self.title)
@@ -526,9 +527,9 @@ class leoFrame:
 			
 		# print answer	
 		if answer == "cancel":
-			return true # Veto.
+			return True # Veto.
 		elif answer == "no":
-			return false # Don't save and don't veto.
+			return False # Don't save and don't veto.
 		else:
 			if not c.mFileName:
 				#@			<< Put up a file save dialog to set mFileName >>
@@ -548,9 +549,9 @@ class leoFrame:
 			if c.mFileName:
 				# print "saving", c.mFileName
 				c.fileCommands.save(c.mFileName)
-				return false # Don't veto.
+				return False # Don't veto.
 			else:
-				return true # Veto.
+				return True # Veto.
 	#@nonl
 	#@-node:ekr.20031218072017.3692:promptForSave
 	#@+node:ekr.20031218072017.1375:scanForTabWidth
@@ -567,7 +568,7 @@ class leoFrame:
 			#@+node:ekr.20031218072017.1376:<< set w and break on @tabwidth >>
 			if dict.has_key("tabwidth"):
 				
-				val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=false)
+				val = g.scanAtTabwidthDirective(s,dict,issue_error_flag=False)
 				if val and val != 0:
 					w = val
 					break
@@ -592,7 +593,7 @@ class leoLog:
 		
 		self.frame = frame
 		self.c = frame.c
-		self.enabled = true
+		self.enabled = True
 		self.newlines = 0
 	
 		self.logCtrl = self.createControl(parentFrame)
@@ -616,13 +617,13 @@ class leoLog:
 	#@nonl
 	#@-node:ekr.20031218072017.3698:leoLog.createControl
 	#@+node:ekr.20031218072017.3699:leoLog.enable & disable
-	def enable (self,enabled=true):
+	def enable (self,enabled=True):
 		
 		self.enabled = enabled
 		
 	def disable (self):
 		
-		self.enabled = false
+		self.enabled = False
 	#@-node:ekr.20031218072017.3699:leoLog.enable & disable
 	#@+node:ekr.20031218072017.3700:leoLog.oops
 	def oops (self):
@@ -678,13 +679,13 @@ class leoTree:
 			# New in 4.2: keys are vnodes, values are pairs (p,Tk.Text).
 		
 		# "public" ivars: correspond to setters & getters.
-		self._dragging = false
+		self._dragging = False
 		self._editPosition = None
 	
 		# Controlling redraws
 		self.updateCount = 0 # self.redraw does nothing unless this is zero.
 		self.redrawCount = 0 # For traces
-		self.redrawScheduled = false # true if redraw scheduled.
+		self.redrawScheduled = False # True if redraw scheduled.
 	#@nonl
 	#@-node:ekr.20031218072017.3705:  tree.__init__ (base class)
 	#@+node:ekr.20031218072017.3706: Must be defined in subclasses
@@ -747,7 +748,7 @@ class leoTree:
 	
 	#@-node:ekr.20031218072017.3711:Scrolling
 	#@+node:ekr.20031218072017.3712:Selecting
-	def select(self,p,updateBeadList=true):
+	def select(self,p,updateBeadList=True):
 		
 		self.oops()
 	#@nonl
@@ -766,7 +767,7 @@ class leoTree:
 	#@nonl
 	#@-node:ekr.20031218072017.3714:beginUpdate
 	#@+node:ekr.20031218072017.3715:endUpdate
-	def endUpdate (self,flag=true):
+	def endUpdate (self,flag=True):
 	
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
@@ -999,7 +1000,7 @@ class nullBody (leoBody):
 	#@-node:ekr.20031218072017.2200:Configuration
 	#@+node:ekr.20031218072017.2201:Focus
 	def hasFocus (self):
-		return true
+		return True
 		
 	def setFocus (self):
 		pass
@@ -1304,7 +1305,7 @@ class nullFrame (leoFrame):
 	
 	#@	@+others
 	#@+node:ekr.20040327105706:__init__
-	def __init__ (self,title,useNullUndoer=false):
+	def __init__ (self,title,useNullUndoer=False):
 	
 		leoFrame.__init__(self) # Init the base class.
 		assert(self.c is None)
@@ -1356,10 +1357,10 @@ class nullLog (leoLog):
 		if 0: # No longer needed: use base enable/disable methods.
 			if g.app.batchMode:
 				if g.app.log: self.enabled = g.app.log.enabled
-				else:         self.enabled = true
+				else:         self.enabled = True
 				g.app.log = self
 			else:
-				self.enabled = true
+				self.enabled = True
 		# g.trace("nullLog",self.enabled)
 		
 	def createControl (self,parentFrame):
@@ -1454,7 +1455,7 @@ class nullTree (leoTree):
 	#@nonl
 	#@-node:ekr.20031218072017.2241:getFont & setFont
 	#@+node:ekr.20031218072017.2242:select
-	def select(self,p,updateBeadList=true):
+	def select(self,p,updateBeadList=True):
 		
 		self.c.setCurrentPosition(p)
 	

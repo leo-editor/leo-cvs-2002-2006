@@ -3,9 +3,8 @@
 """Gui-independent menu handling for Leo."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
-import string,sys
+import string
+import sys
 
 #@+others
 #@+node:ekr.20031218072017.3750:class leoMenu
@@ -96,7 +95,7 @@ class leoMenu:
 		try:
 			show = c.frame.body.getColorizer().showInvisibles
 		except:
-			show = false
+			show = False
 		
 		label = g.choose(show,"Hide In&visibles","Show In&visibles")
 			
@@ -402,7 +401,7 @@ class leoMenu:
 				canCut = data and len(data) > 0
 			else:
 				# This isn't strictly correct, but we can't get the Tk headline selection.
-				canCut = true
+				canCut = True
 			
 			enable(menu,"Cut",canCut)
 			enable(menu,"Copy",canCut)
@@ -525,7 +524,7 @@ class leoMenu:
 	#@nonl
 	#@-node:ekr.20031218072017.3779:updateOutlineMenu
 	#@+node:ekr.20031218072017.3780:hasSelection
-	# Returns true if text in the outline or body text is selected.
+	# Returns True if text in the outline or body text is selected.
 	
 	def hasSelection (self):
 		
@@ -535,7 +534,7 @@ class leoMenu:
 			first, last = body.getTextSelection()
 			return first != last
 		else:
-			return false
+			return False
 	#@nonl
 	#@-node:ekr.20031218072017.3780:hasSelection
 	#@-node:ekr.20031218072017.3776:Gui-independent menu enablers
@@ -609,7 +608,7 @@ class leoMenu:
 		has_shift = s.find("shift") >= 0   or s.find("shft") >= 0
 		if sys.platform == "darwin":
 			if has_ctrl and not has_cmd:
-				has_cmd = true ; has_ctrl = false
+				has_cmd = True ; has_ctrl = False
 	
 		#@	<< set the last field, preserving case >>
 		#@+node:ekr.20031218072017.2102:<< set the last field, preserving case >>
@@ -779,7 +778,7 @@ class leoMenu:
 	#@-at
 	#@@c
 	
-	def createMenuEntries (self,menu,table,openWith=false,dontBind=false):
+	def createMenuEntries (self,menu,table,openWith=False,dontBind=False):
 		
 		for label,accel,command in table:
 			if label == None or command == None or label == "-":
@@ -862,7 +861,7 @@ class leoMenu:
 					command=callback,underline=amp_index)
 					
 				if 0: # testing
-					dontBind = true
+					dontBind = True
 	
 				if bind_shortcut and not dontBind:
 					#@				<< handle bind_shorcut >>
@@ -881,14 +880,14 @@ class leoMenu:
 								print "exception binding menu shortcut..."
 								print bind_shortcut
 								g.es_exception()
-								g.app.menuWarningsGive = true
+								g.app.menuWarningsGive = True
 					#@nonl
 					#@-node:ekr.20031218072017.1729:<< handle bind_shorcut >>
 					#@nl
 	#@nonl
 	#@-node:ekr.20031218072017.1723:createMenuEntries
 	#@+node:ekr.20031218072017.3784:createMenuItemsFromTable
-	def createMenuItemsFromTable (self,menuName,table,openWith=false):
+	def createMenuItemsFromTable (self,menuName,table,openWith=False):
 		
 		try:
 			menu = self.getMenu(menuName)
@@ -902,7 +901,7 @@ class leoMenu:
 			print s ; g.es(s)
 			g.es_exception()
 			
-		g.app.menuWarningsGiven = true
+		g.app.menuWarningsGiven = True
 	#@nonl
 	#@-node:ekr.20031218072017.3784:createMenuItemsFromTable
 	#@+node:ekr.20031218072017.3785:createMenusFromTables

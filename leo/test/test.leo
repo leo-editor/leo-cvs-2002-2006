@@ -390,7 +390,7 @@
 <v t="EKR.20040517074600.13"><vh>Print default font</vh></v>
 </v>
 </v>
-<v t="EKR.20040531110157" a="E"><vh>at-file thin tests</vh>
+<v t="EKR.20040531110157"><vh>at-file thin tests</vh>
 <v t="EKR.20040520104329"><vh>@thin c:\prog\test\thinCloneTest.txt</vh></v>
 <v t="EKR.20040524050419" tnodeList="EKR.20040524050419,EKR.20040524050419.1,EKR.20040524050419.2"><vh>@file c:\prog\test\fatGrandChildTest.txt</vh>
 <v t="EKR.20040524050419.1"><vh>Organizer node</vh>
@@ -416,7 +416,7 @@
 <v t="ekr.20040402074431.1"><vh>dumpToken</vh></v>
 </v>
 </v>
-<v t="EKR.20040430160416"><vh>Tests: for unit tests</vh>
+<v t="EKR.20040430160416" a="TV"><vh>Tests: for unit tests</vh>
 <v t="EKR.20040430160416.1"><vh>jEdit modes Colorizer tests (bugs here)</vh>
 <v t="EKR.20040430160416.2"><vh>tex.xml</vh>
 <v t="EKR.20040430160416.3"><vh>&lt;&lt; general rules &gt;&gt;</vh></v>
@@ -623,7 +623,7 @@
 </v>
 <v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
 <v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
-<v t="ekr.20040317101155" a="E"><vh>Test of user icons</vh>
+<v t="ekr.20040317101155"><vh>Test of user icons</vh>
 <v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
 <v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
@@ -632,7 +632,7 @@
 <v t="EKR.20040603174633"><vh>test of focus</vh></v>
 <v t="EKR.20040604082113"><vh>Test of @tabwidth</vh></v>
 <v t="EKR.20040604143253"><vh>Test of Remove sentinels</vh>
-<v t="EKR.20040604143253.1" a="E"><vh>@thin removeSentTest.txt</vh></v>
+<v t="EKR.20040604143253.1"><vh>@thin removeSentTest.txt</vh></v>
 </v>
 <v t="EKR.20040604170105"><vh>Mini test of Remove sentinels</vh></v>
 <v t="EKR.20040606204316"><vh>test of @first</vh>
@@ -654,13 +654,13 @@
 <v t="EKR.20040610132739"><vh>copied</vh></v>
 </v>
 </v>
-<v t="EKR.20040610201941" a="E"><vh>Check Syntax prototype</vh>
-<v t="EKR.20040610192622" a="E"><vh>Check Syntax script</vh></v>
+<v t="EKR.20040610201941"><vh>Check Syntax prototype</vh>
+<v t="EKR.20040610192622"><vh>Check Syntax script</vh></v>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data</vh></v>
 </v>
-<v t="EKR.20040610201236" a="E"><vh>Tabnanny prototype</vh>
-<v t="EKR.20040610194209" a="E"><vh>TabNanny script</vh>
-<v t="EKR.20040610195543" a="TV"><vh>checkString</vh></v>
+<v t="EKR.20040610201236"><vh>Tabnanny prototype</vh>
+<v t="EKR.20040610194209"><vh>TabNanny script</vh>
+<v t="EKR.20040610195543"><vh>checkString</vh></v>
 </v>
 <v t="EKR.20040610195543.1"><vh>tabnanny.py (reference only)</vh>
 <v t="EKR.20040610195543.2"><vh>&lt;&lt; tabnanny declarations &gt;&gt;</vh></v>
@@ -686,9 +686,9 @@
 <v t="EKR.20040610195543.20"><vh>format_witnesses</vh></v>
 <v t="EKR.20040610195543.21"><vh>process_tokens</vh></v>
 </v>
-<v t="EKR.20040610194209.1" a="E"><vh>TabNanny data</vh></v>
+<v t="EKR.20040610194209.1"><vh>TabNanny data</vh></v>
 </v>
-<v t="EKR.20040611083703" a="E"><vh>Using a generator instead of readLinesClass</vh>
+<v t="EKR.20040611083703"><vh>Using a generator instead of readLinesClass</vh>
 <v t="EKR.20040611094028"><vh>readLinesGenerator</vh></v>
 <v t="EKR.20040610195651"><vh>readLinesClass</vh></v>
 </v>
@@ -1094,9 +1094,9 @@ node 1 last line</t>
 &lt;KEYWORD3&gt;UnicodeType&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;XRangeType&lt;/KEYWORD3&gt;
 
-&lt;KEYWORD3&gt;false&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;False&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;None&lt;/KEYWORD3&gt;
-&lt;KEYWORD3&gt;true&lt;/KEYWORD3&gt;
+&lt;KEYWORD3&gt;True&lt;/KEYWORD3&gt;
 
 &lt;KEYWORD3&gt;__abs__&lt;/KEYWORD3&gt;
 &lt;KEYWORD3&gt;__add__&lt;/KEYWORD3&gt;
@@ -1212,7 +1212,8 @@ string"""
 
 and if
 
-from leoGlobals import * ; print `app().loadDir`</t>
+import leoGlobals as g
+print `g.app().loadDir`</t>
 <t tx="EKR.20040430162649.1"></t>
 <t tx="EKR.20040430162649.2"></t>
 <t tx="EKR.20040430162649.3">@nocolor
@@ -1345,11 +1346,9 @@ some text
 <t tx="EKR.20040504083716">@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import shutil
 
-testing = true
+testing = True
 
 sourcedir=r"c:/prog/test/perfectImport"
 targetdir=r"c:/prog/test/perfectImport/leo"
@@ -1829,7 +1828,7 @@ test_to_run = all
 # use all to run all tests.
 
 cleanup = True
-# Set to true if you want all files deleted.
+# Set to True if you want all files deleted.
 
 leodir = C:/bwm/ftptoot/Cleo-4.1-beta-5</t>
 <t tx="EKR.20040504083716.75"></t>
@@ -1854,12 +1853,12 @@ if sourcetime:
 		operation = push
 elif targettime:
 	operation = pull</t>
-<t tx="EKR.20040517074600.8">from leoGlobals import *
+<t tx="EKR.20040517074600.8">import leoGlobals as g
 import leoTest
 
 u = leoTest.testUtils()
 nodes = 0 ; lines = 0
-c = top()
+c = g.top()
 c.clearAllVisited()
 v = u.findNodeAnywhere(c,"Plugins &amp; scripts")
 after = v.nodeAfterTree()
@@ -1873,9 +1872,9 @@ while v and v != after:
 	
 pages = ((nodes * 10) + lines) / 50
 print "nodes,lines,pages",nodes,lines,pages
-es("nodes,lines,pages",nodes,lines,pages)</t>
+g.es("nodes,lines,pages",nodes,lines,pages)</t>
 <t tx="EKR.20040517074600.9"></t>
-<t tx="EKR.20040517074600.10">from leoGlobals import *
+<t tx="EKR.20040517074600.10">import leoGlobals as g
 config = g.app.config
 
 font = config.getFontFromParams(
@@ -1890,12 +1889,12 @@ c = top() ; body = c.frame.body.bodyCtrl
 print body
 
 # body.configure(font=font)</t>
-<t tx="EKR.20040517074600.11">from leoGlobals import *
+<t tx="EKR.20040517074600.11">import leoGlobals as g
 import tkFont
 
 @others
 
-c = top()
+c = g.top()
 
 # Body pane.
 fn = c.frame.body.cget("font")
@@ -1909,12 +1908,12 @@ if 0:
 	fn = c.frame.log.getFontConfig()
 	font = tkFont.Font(font=fn)
 	name,size,slant,weight = getFontSettings(font)
-	es("log:" + name + "," + `size` + "," + slant + "," + weight)
+	g.es("log:" + name + "," + `size` + "," + slant + "," + weight)
 	
 	# Tree pane.
 	font = c.frame.tree.getFont()
 	name,size,slant,weight = getFontSettings(font)
-	es("head:" + name + "," + `size` + "," + slant + "," + weight)</t>
+	g.es("head:" + name + "," + `size` + "," + slant + "," + weight)</t>
 <t tx="EKR.20040517074600.12">def getFontSettings (font):
 
 	name   = font.cget("family")
@@ -1923,7 +1922,7 @@ if 0:
 	weight = font.cget("weight")
 
 	return name, size, slant, weight</t>
-<t tx="EKR.20040517074600.13">from leoGlobals import *
+<t tx="EKR.20040517074600.13">import leoGlobals as g
 
 font = g.app.config.defaultFont
 
@@ -1946,7 +1945,6 @@ last line</t>
 <t tx="EKR.20040525083635">@others</t>
 <t tx="EKR.20040525083635.1"></t>
 <t tx="EKR.20040526094831">import leoGlobals as g
-from leoGlobals import true,false
 
 def redoBletch(self):
 	g.trace()
@@ -1967,17 +1965,15 @@ else:
 u.setUndoParams("Bletch",p)
 
 # Selecting "Undo Bletch" will enable "Redo Bletch", etc.</t>
-<t tx="EKR.20040526193608">import pickle
+<t tx="EKR.20040526193608">import leoGlobals as g
 import binascii
-
-import leoGlobals as g
-from leoGlobals import true,false
+import pickle
 
 d = { "a":True }
 
 print '-' * 40
 
-s = pickle.dumps(d,bin=true)
+s = pickle.dumps(d,bin=True)
 s2 = binascii.hexlify(s)
 print `s`,s2
 
@@ -1987,7 +1983,6 @@ d2 = cPickle.loads(s3)
 print `d2`
 print d == d2, d is d2</t>
 <t tx="EKR.20040526200017">import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; p = c.currentPosition()
 
@@ -2058,7 +2053,6 @@ print len(allList),len(vList1),len(vList2)
 
 &lt;&lt; print nodes returned by iterators &gt;&gt;</t>
 <t tx="EKR.20040529092739">import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; p = c.currentPosition()
 
@@ -2118,9 +2112,8 @@ except AssertionError:
 	for v in list2: print v</t>
 <t tx="EKR.20040529105640"></t>
 <t tx="EKR.20040531110157">@ignore</t>
-<t tx="EKR.20040602101648">import leoPlugins
-import leoGlobals as g
-from leoGlobals import true,false
+<t tx="EKR.20040602101648">import leoGlobals as g
+import leoPlugins
 
 def onEnd (tag,keys):
 	print "onEnd",tag,keys
@@ -2483,7 +2476,7 @@ S, T = ' \t'
 #       It's A Theorem that m.indent_level(t) ==
 #       n.indent_level(t) for all t &gt;= 1 iff m.norm == n.norm.
 #   is_simple
-#       true iff raw[:n] is of the form (T*)(S*)
+#       True iff raw[:n] is of the form (T*)(S*)
 
 </t>
 <t tx="EKR.20040610195543.13">def __init__(self, ws):
@@ -2536,7 +2529,7 @@ def longest_run_of_spaces(self):
         il = il + i/tabsize * count[i]
     return trailing + tabsize * (il + self.nt)
 </t>
-<t tx="EKR.20040610195543.16"># return true iff self.indent_level(t) == other.indent_level(t)
+<t tx="EKR.20040610195543.16"># return True iff self.indent_level(t) == other.indent_level(t)
 # for all t &gt;= 1
 def equal(self, other):
     return self.norm == other.norm
@@ -2724,7 +2717,7 @@ print ; print '-' * 20</t>
 <t tx="ekr.20040301191933"></t>
 <t tx="ekr.20040301191933.1"></t>
 <t tx="ekr.20040301191933.2"></t>
-<t tx="ekr.20040302091705">from leoGlobals import *
+<t tx="ekr.20040302091705">import leoGlobals as g
 
 class position:
 	def __init__(self):
@@ -3524,7 +3517,7 @@ string"""
 
 and if
 
-from leoGlobals import * ; print g.app().loadDir</t>
+import leoGlobals as g ; print g.app().loadDir</t>
 <t tx="ekr.20040303063549.61"># both color_markup &amp; add_directives plugins must be enabled.
 @markup wiki
 
@@ -3556,7 +3549,7 @@ __abc__
 
 and if
 
-from leoGlobals import * ; print g.app().loadDir
+import leoGlobals as g ; print g.app().loadDir
 </t>
 <t tx="ekr.20040303063549.62"># both color_markup &amp; add_directives plugins must be enabled.
 
@@ -3719,7 +3712,7 @@ runner.run(suite)</t>
 <t tx="ekr.20040303063549.122"></t>
 <t tx="ekr.20040303063549.123"></t>
 <t tx="ekr.20040303063549.124"></t>
-<t tx="ekr.20040303063549.125">from leoGlobals import *
+<t tx="ekr.20040303063549.125">import leoGlobals as g
 import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
@@ -3738,7 +3731,7 @@ for f,arg in (
 	(leoTest.makeReformatParagraphSuite,None)
 	# 
 	# These tests presently have problem with the gui when run with other tests...
-	# (leoTest.makePluginsSuite,false) # verbose
+	# (leoTest.makePluginsSuite,False) # verbose
 ):
 	suite = f(arg,"tempNode")
 	mainSuite.addTest(suite)
@@ -3746,7 +3739,7 @@ for f,arg in (
 runner = unittest.TextTestRunner()
 runner.run(mainSuite)</t>
 <t tx="ekr.20040303071432"></t>
-<t tx="ekr.20040303080010">from leoGlobals import *
+<t tx="ekr.20040303080010">import leoGlobals as g
 import unittest
 import leoTest
 reload(leoTest) # Allows us to rerun this script when leoTest.py changes.
@@ -3761,7 +3754,7 @@ for f,arg in (
 	(leoTest.makeReformatParagraphSuite,None),
 	(leoTest.makeOutlineSuite,"outlineTests")
 	# These tests presently have problem with the gui when run with other tests...
-	# (leoTest.makePluginsSuite,false)
+	# (leoTest.makePluginsSuite,False)
 ):
 	suite = f(arg,"tempNode")
 	mainSuite.addTest(suite)
@@ -3772,7 +3765,6 @@ runner.run(mainSuite)</t>
 <t tx="ekr.20040303080938.1"></t>
 <t tx="ekr.20040309095121"></t>
 <t tx="ekr.20040309111054">import leoGlobals as g
-from leoGlobals import true,false
 import leoNodes
 
 c = g.top()
@@ -3835,7 +3827,6 @@ for p in root.allNodes_iter():
 print "done"</t>
 <t tx="ekr.20040312021734"></t>
 <t tx="ekr.20040312021734.1">import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top()
 
@@ -3847,7 +3838,7 @@ for p in c.rootPosition().allNodes_iter():
 	if hasattr(v,"tnodeList") and len(v.tnodeList) &gt; 0 and not v.isAnyAtFileNode():
 		g.es("deleting tnodeList for " + `v`,color="blue")
 		delattr(v,"tnodeList")
-		c.setChanged(true)
+		c.setChanged(True)
 
 s = "%d nodes" % count
 print s ; g.es(s)</t>
@@ -3871,7 +3862,7 @@ print s ; g.es(s)</t>
 			array.append(body +'\n')
 
 	return ''.join(array)</t>
-<t tx="ekr.20040315025315.2">def moreHead (self, firstLevel,useVerticalBar=false):
+<t tx="ekr.20040315025315.2">def moreHead (self, firstLevel,useVerticalBar=False):
 	
 	"""Return the headline string in MORE format."""
 
@@ -3912,7 +3903,6 @@ def moreBody (self):
 	return string.join(result,'\n')
 </t>
 <t tx="ekr.20040315030123">import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; p = c.currentPosition()
 
@@ -3933,8 +3923,8 @@ runner.run(suite)
 
 - Used iterators in test utils.
 - Used "import leoGlobals as g" style.</t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
-from leoGlobals import true,false
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+
 c = g.top()
 
 p = c.currentPosition()
@@ -3973,7 +3963,7 @@ a["lineYOffset"] = 3
 c.redraw()
 </t>
 <t tx="ekr.20040317173327">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 for p in c.allNodes_iter():
@@ -3998,7 +3988,7 @@ def onDoubleClick(p=p):
 	
 	g.trace(p)</t>
 <t tx="ekr.20040318091620">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 for p in c.allNodes_iter():
@@ -4010,12 +4000,11 @@ c.redraw()</t>
 <t tx="ekr.20040318102920"># The actual test is in a child node.</t>
 <t tx="ekr.20040318102920.1"></t>
 <t tx="ekr.20040318102920.2">import leoGlobals as g
-from leoGlobals import true,false
 c = g.top()
 
 print '-'*20
 
-count = 0 ; ok = true
+count = 0 ; ok = True
 for p in c.allNodes_iter():
 # for p in [c.currentPosition()]:
 	count += 1
@@ -4034,15 +4023,15 @@ for p in c.allNodes_iter():
 	
 	if len(parents1) != len(parents2):
 		print "length mismatch",p,p.v._parent
-		ok = false
+		ok = False
 	for parent in parents1:
 		if parent not in parents2:
 			print "not in parent2",p,parent
-			ok = false
+			ok = False
 	for parent in parents2:
 		if parent not in parents1:
 			print "not in parents1",p,parent
-			ok = false
+			ok = False
 	if not ok:
 		print "parents1"
 		for parent in parents1: print parent
@@ -4244,13 +4233,12 @@ vals = [val for val in test_iter()]
 print vals
 </t>
 <t tx="ekr.20040323080317">import leoGlobals as g
-from leoGlobals import true,false
 c = g.top()
 
 print '-'*20
 
 # These are equivalent.
-positions1 = [p for p in c.allNodes_iter(copy=true)]
+positions1 = [p for p in c.allNodes_iter(copy=True)]
 positions2 = [p.copy() for p in c.allNodes_iter()]
 
 assert(len(positions1) == len(positions2))
@@ -4262,7 +4250,6 @@ if 0:
 		print p
 print "done"</t>
 <t tx="ekr.20040323082119">import leoGlobals as g
-from leoGlobals import true,false
 c = g.top()
 
 print '-'*20
@@ -4281,7 +4268,7 @@ print len(positions),len(vnodes)
 for v in vnodes:
 	print v</t>
 <t tx="ekr.20040323085406">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 print '-'*20
@@ -4292,7 +4279,7 @@ for p in c.allNodes_iter():
 		
 print "done"</t>
 <t tx="ekr.20040323085933">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 print '-'*20
@@ -4306,11 +4293,11 @@ for p in c.allNodes_iter():
 
 print "done"</t>
 <t tx="ekr.20040323090541">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 print '-'*20
-ok = true ; count = 0
+ok = True ; count = 0
 for p in c.allNodes_iter():
 	if p.isCloned():
 		count += 1
@@ -4319,15 +4306,15 @@ for p in c.allNodes_iter():
 			vparents = child.v.directParents()
 			if len(parents) != len(vparents):
 					print "length mismatch",p,child,
-					ok = false
+					ok = False
 			for parent in parents:
 				if parent not in vparents:
 					print "not in vparents",p,child
-					ok = false
+					ok = False
 			for parent in vparents:
 				if parent not in parents:
 					print "not in parents",p,child
-					ok = false
+					ok = False
 			if not ok:
 				print "parents"
 				for parent in parents: print parent
@@ -4340,7 +4327,7 @@ s = "checked %d cloned positions" % count
 print s ; g.es(s)
 </t>
 <t tx="ekr.20040323162303">import leoGlobals as g
-from leoGlobals import true,false
+
 c = g.top()
 
 for p in c.allNodes_iter():
@@ -4567,7 +4554,7 @@ part.
 """A script to reformat non-leading whitespace."""
 
 import leoGlobals as g
-from leoGlobals import true,false
+
 import tokenize,token
 
 @others
@@ -4610,7 +4597,7 @@ else:
 	self.parenLevel = 0
 	self.bracketLevel = 0
 	self.p = p</t>
-<t tx="ekr.20040402072335">def put (self,s,strip=true):
+<t tx="ekr.20040402072335">def put (self,s,strip=True):
 	
 	if self.array and strip:
 		prev = self.array[-1]

@@ -16,7 +16,6 @@ After startup:
 """
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 handlers = {}
 
@@ -29,7 +28,7 @@ def doPlugins(tag,keywords):
 		
 #@+others
 #@+node:ekr.20031218072017.3440:loadHandlers
-def loadHandlers(loadAllFlag=false):
+def loadHandlers(loadAllFlag=False):
 
 	"""Load all enabled plugins from the plugins directory"""
 	import glob,os
@@ -158,6 +157,5 @@ def registerOneExclusiveHandler(tag, fn):
 		handlers[tag] = (fn,)
 #@-node:ekr.20031218072017.3444:registerExclusiveHandler
 #@-others
-#@nonl
 #@-node:ekr.20031218072017.3439:@thin leoPlugins.py
 #@-leo

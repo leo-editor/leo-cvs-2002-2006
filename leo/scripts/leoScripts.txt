@@ -30,8 +30,8 @@ def runFindScript (self):
 		exec c.find_text in {} # Use {} to get a pristine environment.
 	except:
 		g.es("exception executing find script")
-		g.es_exception(full=false)
-		g.app.searchDict["continue"] = false # 2/1/04
+		g.es_exception(full=False)
+		g.app.searchDict["continue"] = False # 2/1/04
 #@-node:EKR.20040502195524.3:doFind...Script
 #@+node:EKR.20040502195524.4:doChange...Script
 def doChangeScript (self):
@@ -59,15 +59,14 @@ def runChangeScript (self):
 		exec c.change_text in {} # Use {} to get a pristine environment.
 	except:
 		g.es("exception executing change script")
-		g.es_exception(full=false)
-		g.app.searchDict["continue"] = false # 2/1/04
+		g.es_exception(full=False)
+		g.app.searchDict["continue"] = False # 2/1/04
 #@nonl
 #@-node:EKR.20040502195524.4:doChange...Script
 #@-node:EKR.20040502195524.2:Routines that execute script-find and script-change
 #@+node:EKR.20040502195524.5:Find script to check for dubious leading whitespace
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
-from leoGlobals import true,false
 
 g.app.searchDict = {} # Clear dict.get("v") logic.
 g.initScriptFind("Find script")
@@ -78,13 +77,12 @@ c.redraw()
 #@nonl
 #@+node:EKR.20040502195524.6:Find script
 import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; v = c.currentVnode()
 last_v = g.app.searchDict.get("v")
 if last_v and v == last_v:
 	v = v.threadNext()
-found = false
+found = False
 while v:
 	lines = v.bodyString().split('\n')
 	for s in lines:
@@ -100,7 +98,7 @@ while v:
 			if blanks > 0 and tabs > 0:
 				# g.trace(leading)
 				g.es("blanks precede leading tab: " + v.headString())
-				found = true ; break
+				found = True ; break
 	if found: break
 	v = v.threadNext()
 if found:
@@ -110,7 +108,7 @@ if found:
 else:
 	g.es("done",color="blue")
 	g.app.searchDict["v"] = None
-g.app.searchDict["continue"] = false
+g.app.searchDict["continue"] = False
 #@nonl
 #@-node:EKR.20040502195524.6:Find script
 #@+node:EKR.20040502195524.7:test
@@ -122,7 +120,6 @@ if 1:
 #@+node:EKR.20040502195524.8:Find script to clean whitespace
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
-from leoGlobals import true,false
 
 g.app.searchDict = {} # Clear dict.get("v") logic.
 g.initScriptFind("Find script","Change script")
@@ -133,7 +130,6 @@ c.redraw()
 #@nonl
 #@+node:EKR.20040502195524.9:Find script
 import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; v = c.currentVnode() ; d = g.app.searchDict
 findAll = d.get("type") == "findAll"
@@ -143,7 +139,7 @@ if findAll and c.suboutline_only_flag:
 else:
 	after = None
 
-found = false ; count = 0
+found = False ; count = 0
 while v and v != after and not found:
 	s = v.bodyString()
 	lines = s.split('\n')
@@ -157,7 +153,7 @@ while v and v != after and not found:
 				c.redraw() # Necessary to make the new node visible.
 				if not findAll:
 					g.es("found node with whitespace to clean")
-				found = true 
+				found = True 
 			break
 	v = v.threadNext()
 
@@ -169,7 +165,6 @@ if not found:
 #@-node:EKR.20040502195524.9:Find script
 #@+node:EKR.20040502195524.10:Change script
 import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top() ; d = g.app.searchDict
 changeAll = d.get("type") == "changeAll"
@@ -212,7 +207,6 @@ else:
 #@+node:EKR.20040502195524.11:Find scripts to convert @doc comments to doc strings
 # Initialize Leo's find panel using the named children of this node.
 import leoGlobals as g
-from leoGlobals import true,false
 
 g.app.searchDict = {} # Clear dict.get("v") logic.
 g.initScriptFind("Find script","Change script")
@@ -223,7 +217,6 @@ c.selectVnode(c.rootPosition())
 #@nonl
 #@+node:EKR.20040502195524.12:Find script
 import leoGlobals as g
-from leoGlobals import true,false
 
 import re
 
@@ -255,7 +248,6 @@ if not d.get("v"):
 #@-node:EKR.20040502195524.12:Find script
 #@+node:EKR.20040502195524.13:Change script
 import leoGlobals as g
-from leoGlobals import true,false
 
 def replaceDocPart(m,body):
 	# Warning: m.group(0) is the _whole_ match.
@@ -292,7 +284,6 @@ if c and v and m:
 #@-node:EKR.20040502195524.13:Change script
 #@+node:EKR.20040502195524.14:re tests
 import leoGlobals as g
-from leoGlobals import true,false
 import re
 
 s = """@doc line 0
@@ -327,11 +318,9 @@ else:
 # Executing this script initializes the Find text from the given script string.
 # To do: get the script from a named child of this node.
 import leoGlobals as g
-from leoGlobals import true,false
 
 script = """
 import leoGlobals as g
-from leoGlobals import true,false
 c = g.top() ; v = c.currentVnode()
 print v
 v = v.threadNext()
@@ -339,7 +328,7 @@ c.selectVnode(v)"""
 
 g.app.searchDict = {} # Communication between search & change scripts
 c = g.top()
-c.script_search_flag = true
+c.script_search_flag = True
 c.find_text = script
 g.app.findFrame.init(c)
 c.frame.OnFindPanel()
@@ -361,7 +350,7 @@ def changeAll ( commander, findPat, changePat, bodyFlag = 1 ):
 	commander	Commands object for a Leo outline window.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	"""
 	n = len(changePat)
 	v = commander.rootVnode()
@@ -380,7 +369,7 @@ def changeNext ( v, pos, findPat, changePat, bodyFlag = 1 ):
 	pos			the position within the body text of v to start the search.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	
 	returns a tuple (v,pos) showing where the change occured.
 	returns (None,0) if no further match in the outline was found.
@@ -416,7 +405,7 @@ def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
 	pos			the position within the body text of v to start the search.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	
 	returns a tuple (v,pos) showing where the change occured.
 	returns (None,0) if no further match in the outline was found.
@@ -449,7 +438,7 @@ def findAll(c,pattern,bodyFlag=1):
 	
 	c        commander for a Leo outline window.
 	pattern		the search string.
-	bodyFlag	true: search body text. false: search headline text.
+	bodyFlag	True: search body text. False: search headline text.
 	
 	returns a list of tuples (v,pos) showing where matches occured.
 	returns [] if no match were found.
@@ -473,7 +462,7 @@ def findNext ( v, pos, pattern, bodyFlag = 1 ):
 	v	 		the vnode to start the search.
 	pos			the position within the body text of v to start the search.
 	pattern		the search string.
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	True: search body text.  False: search headline text.
 	
 	returns a tuple (v,pos) showing where the match occured.
 	returns (None,0) if no further match in the outline was found.
@@ -502,7 +491,7 @@ def findPrev ( v, pos, pattern, bodyFlag = 1 ):
 	v	 		the vnode to start the search.
 	pos			the position within the body text of v to start the search.
 	pattern		the search string
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	True: search body text.  False: search headline text.
 	
 	returns a tuple (v,pos) showing where the match occured.
 	returns (None,0) if no further match in the outline was found.
@@ -531,7 +520,7 @@ def reChangeAll ( commander, findPat, changePat, bodyFlag, reFlags = None ):
 	commander	Commands object for a Leo outline window.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	reFlags		flags argument to re.search().
 	"""
 	n = len(changePat)
@@ -552,7 +541,7 @@ def reChangeNext ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 	pos			the position within the body text of v to start the search.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	reFlags		flags argument to re.search().
 	
 	returns a tuple (v,pos) showing where the change occured.
@@ -589,7 +578,7 @@ def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 	pos			the position within the body text of v to start the search.
 	findPat		the search string.
 	changePat	the replacement string.
-	bodyFlag	true: change body text.  false: change headline text.
+	bodyFlag	True: change body text.  False: change headline text.
 	reFlags		flags argument to re.search().
 	
 	returns a tuple (v,pos) showing where the change occured.
@@ -623,7 +612,7 @@ def reFindAll(c,findPat,bodyFlag,reFlags=None):
 	
 	c	     commander for a Leo outline window.
 	pattern		the search string.
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	True: search body text.  False: search headline text.
 	reFlags		flags argument to re.search().
 
 	returns a list of tuples (v,pos) showing where matches occured.
@@ -648,7 +637,7 @@ def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
 	v	 		the vnode to start the search.
 	pos			the position within the body text of v to start the search.
 	pattern		the search string
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	True: search body text.  False: search headline text.
 	reFlags		the flags argument to re.search()
 	
 	returns a tuple (v,mo,pos) showing where the match occured.
@@ -682,7 +671,7 @@ def reFindPrev ( v, pos, pattern, bodyFlag, reFlags = None ):
 	v	 		the vnode to start the search.
 	pos			the position within the body text of v to start the search.
 	pattern		the search string
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	True: search body text.  False: search headline text.
 	reFlags		the flags argument to re.search()
 	
 	returns a tuple (v,mo,pos) showing where the match occured.
@@ -765,7 +754,6 @@ def printFindList( findList, bodyFlag = 1 ):
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
 import string
 
 #@+at 
@@ -841,8 +829,8 @@ import string
 # Removes all #endif
 # Changes all && to and
 # Changes all || to or
-# Changes all TRUE to true
-# Changes all FALSE to false
+# Changes all TRUE to True
+# Changes all FALSE to False
 # Changes all NULL to None
 # Changes all this to self
 # Changes all @code to @c.  This Leo-specific translation is not done when 
@@ -964,8 +952,8 @@ ivarsDict = {
 #@-node:EKR.20040517142700.4:<< specify user types >>
 #@nl
 tabWidth = 4 # how many blanks in a tab.
-printFlag = false
-doLeoTranslations = true ; dontDoLeoTranslations = false
+printFlag = False
+doLeoTranslations = True ; dontDoLeoTranslations = False
 #@<< define testData >>
 #@+node:EKR.20040517142700.5:<< define testData >>
 testData = [ "\n@doc\n\
@@ -1181,7 +1169,7 @@ def convertCFileToPython(file):
 def convertCStringToPython(s, leoFlag):
 
 	# print "convertCStringToPython:start\n", s
-	firstPart = true
+	firstPart = True
 	codeList = stringToList(s)
 	
 	if not leoFlag:
@@ -1199,7 +1187,7 @@ def convertCStringToPython(s, leoFlag):
 			#print "-----code:", listToString(code)
 			for item in code:
 				outputList.append(item)
-		firstPart = false # don't remove @c from here on.
+		firstPart = False # don't remove @c from here on.
 		j = skipDocPart(codeList,i)
 		if j > i:
 			doc = codeList[i:j]
@@ -1237,8 +1225,8 @@ def convertCodeList(list, firstPart, leoFlag):
 	safeReplace(list, "else", "else:")
 	safeReplace(list, "&&", "and")
 	safeReplace(list, "||", "or")
-	safeReplace(list, "TRUE", "true")
-	safeReplace(list, "FALSE", "false")
+	safeReplace(list, "TRUE", "True")
+	safeReplace(list, "FALSE", "False")
 	safeReplace(list, "NULL", "None")
 	safeReplace(list, "this", "self")
 	safeReplace(list, "try", "try:")
@@ -1643,7 +1631,7 @@ def handleAllKeywords(codeList):
 #@+node:EKR.20040517142700.36:handleKeyword
 def handleKeyword(codeList,i):
 
-	isFor = false
+	isFor = False
 	if (matchWord(codeList,i,"if")):
 		i += 2
 	elif (matchWord(codeList,i,"elif")):
@@ -1652,7 +1640,7 @@ def handleKeyword(codeList,i):
 		i += 5
 	elif (matchWord(codeList,i,"for")):
 		i += 3
-		isFor = true
+		isFor = True
 	else: assert(0)
 	# Make sure one space follows the keyword
 	k = i
@@ -1686,11 +1674,11 @@ def isWsOrNl(c):
 def isSectionDef(list, i):
 
 	i = skipWs(list,i)
-	if not match(list,i,"<<"): return false
+	if not match(list,i,"<<"): return False
 	while i < len(list) and list[i] != '\n':
 		if match(list,i,">>="): return i+3
 		else: i += 1
-	return false
+	return False
 #@nonl
 #@-node:EKR.20040517142700.38:isSectionDef
 #@+node:EKR.20040517142700.39:isStringOrComment
@@ -1700,7 +1688,7 @@ def isStringOrComment(list, i):
 #@nonl
 #@-node:EKR.20040517142700.39:isStringOrComment
 #@+node:EKR.20040517142700.40:match
-# returns true if findList matches starting at codeList[i]
+# returns True if findList matches starting at codeList[i]
 
 def match (codeList, i, findStringOrList):
 
@@ -1709,12 +1697,12 @@ def match (codeList, i, findStringOrList):
 	j = 0
 	while i+j < len(codeList) and j < len(findList):
 		if codeList[i+j] != findList[j]:
-			return false
+			return False
 		else:
 			j += 1
 			if j == n:
 				return i+j
-	return false
+	return False
 #@nonl
 #@-node:EKR.20040517142700.40:match
 #@+node:EKR.20040517142700.41:matchWord
@@ -1722,9 +1710,9 @@ def matchWord (codeList, i, findStringOrList):
 
 	j = match(codeList,i,findStringOrList)
 	if not j:
-		return false
+		return False
 	elif j >= len(codeList):
-		return true
+		return True
 	else:
 		c = codeList[j]
 		return not (c in string.letters or c in string.digits or c == '_')
@@ -2164,7 +2152,7 @@ gClassName = "" # The class name for the present function.  Used to modify ivars
 gIvars = [] # List of ivars to be converted to self.ivar
 
 def test():
-	global printFlag ; printFlag = true
+	global printFlag ; printFlag = True
 	for s in testData:
 		convertCStringToPython(s, doLeoTranslations)
 		
@@ -2181,7 +2169,6 @@ if __name__ == "__main__":
 # - when making a retroactive change to leoID.txt.
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 if 0: # This is usually a very bad idea.
 
@@ -2195,8 +2182,6 @@ if 0: # This is usually a very bad idea.
 #@-node:EKR.20040502195524.24:Clear all timestamps
 #@+node:EKR.20040502195524.30:Count pages
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoTest
 
 u = leoTest.testUtils()
@@ -2732,7 +2717,6 @@ as they can evaluate to True or False.
 #@-node:EKR.20040518104556.31:@url http://dkbza.org/pydot/pydot.html
 #@+node:EKR.20040518104556.33:Write an outline using Graphviz
 import leoGlobals as g
-from leoGlobals import true,false
 import string
 
 try: import pydot
@@ -2745,7 +2729,7 @@ except:
 #@+node:EKR.20040518104556.34:<< code >>
 #@+others
 #@+node:EKR.20040518104556.35:addLeoNodesToGraph
-def addLeoNodesToGraph(p,graph,top=false):
+def addLeoNodesToGraph(p,graph,top=False):
 
 	# Create p's vnode.
 	thisNode = pydot.Node(name=vnodeRepr(p.v),label=vnodeLabel(p.v))
@@ -2819,9 +2803,9 @@ def vnodeRepr(v):
 
 if pydot:
 	c = g.top() ; p = c.currentPosition()
-	graph = pydot.Dot(simplify=true,ordering="out")
+	graph = pydot.Dot(simplify=True,ordering="out")
 	root = g.findNodeInTree(p,"Root")
-	addLeoNodesToGraph(root,graph,top=true)
+	addLeoNodesToGraph(root,graph,top=True)
 	graph.write_jpeg(r'c:\prog\test\pydotOut.jpg',prog='dot')
 #@nonl
 #@+node:EKR.20040518104556.38:Root
@@ -2840,7 +2824,6 @@ if pydot:
 # Script to change OnXXX to xxx in all body text.
 if 0:
 	import leoGlobals as g
-	from leoGlobals import true,false
 
 	c = g.top() ; v = c.currentVnode()
 	v = v.threadNext()
@@ -2863,7 +2846,6 @@ if 0:
 #@+node:EKR.20040502195524.34:Find scripts to change OnX to x in headline
 if 0: # Script to change OnXxx to xxx in all headlines
 	import leoGlobals as g
-	from leoGlobals import true,false
 
 	c = g.top() ; v = c.currentVnode()
 	after = v.nodeAfterTree()
@@ -2878,7 +2860,6 @@ if 0: # Script to change OnXxx to xxx in all headlines
 # Script to change OnXXX to xxx in all body text.
 if 0:
 	import leoGlobals as g
-	from leoGlobals import true,false
 
 	c = g.top() ; v = c.currentVnode()
 	after = v.nodeAfterTree()
@@ -2919,9 +2900,12 @@ print ; findDosFile("*",dir)
 #@+node:EKR.20040502195213:Get statistics using dis module
 # routines to gather static statistics about opcodes based on dis module.
 import leoGlobals as g
-from leoGlobals import true,false
-
-import compiler,dis,os,string,sys,types
+import compiler
+import dis
+import os
+import string
+import sys
+import types
 
 #@+others
 #@+node:EKR.20040502195213.1:go
@@ -2954,8 +2938,6 @@ def go():
 #@-node:EKR.20040502195213.1:go
 #@+node:EKR.20040502195213.2:getFiles
 def getFiles (dir):
-	
-	from leoGlobals import os_path_join,os_path_split,os_path_splitext
 
 	# Generate the list of modules.
 	allFiles = os.listdir(dir)
@@ -2973,8 +2955,6 @@ def getFiles (dir):
 def getModules (dir):
 	
 	"""Return the list of Python files in dir."""
-	
-	from leoGlobals import os_path_split,os_path_splitext
 	
 	files = []
 	
@@ -3092,8 +3072,8 @@ print "***** Leo installed successfully - type 'leo filename.leo' to use it."
 #@-node:EKR.20040517143706:Linux install script
 #@+node:EKR.20040502195524.17:Script to find and replace all functions in leoGlobals.py
 import leoGlobals as g
-from leoGlobals import true,false
 import string
+
 c = g.top()
 
 #@+others
@@ -3131,7 +3111,7 @@ def findDefs(body):
 #@nonl
 #@-node:EKR.20040502195524.20:findDefs
 #@+node:EKR.20040502195524.21:prependNamesInTree
-def prependNamesInTree(p,nameList,prefix,replace=false):
+def prependNamesInTree(p,nameList,prefix,replace=False):
 	
 	c = p.c
 	
@@ -3144,7 +3124,7 @@ def prependNamesInTree(p,nameList,prefix,replace=false):
 	c.beginUpdate()
 	for p in p.self_and_subtree_iter():
 		count = 0 ; s = p.bodyString()
-		printFlag = false
+		printFlag = False
 		if s:
 			for name in nameList:
 				i = 0 ; n = len(name)
@@ -3172,10 +3152,10 @@ def prependNamesInTree(p,nameList,prefix,replace=false):
 						else: # Replace name by prefix+name
 							s = s[:i] + prefix + name + s[i+n:]
 							i += n ; count += 1
-							# g.es('.',newline=false)
+							# g.es('.',newline=False)
 							if 1:
 								if not printFlag:
-									printFlag = true
+									printFlag = True
 									# print p.headString()
 								print g.get_line(s,i-n)
 					#@nonl
@@ -3382,7 +3362,7 @@ else:
 if 0:
 	p = g.findTopLevelNode(c,"Code")
 	g.enl() ; g.enl()
-	count = prependNamesInTree(p,nameList,"g.",replace=true) # Just prints if replace==false.
+	count = prependNamesInTree(p,nameList,"g.",replace=True) # Just prints if replace==False.
 	s = "%d --- done --- " % count
 	print s ; g.es(s)
 #@nonl
@@ -3391,11 +3371,10 @@ if 0:
 #@+node:EKR.20040502195524.35:Recursive import script
 # An example of running this script:
 import leoGlobals as g
-from leoGlobals import true,false
 
 #@+others
 #@+node:EKR.20040502195524.36:importFiles
-def importFiles (dir,type=None,kind="@file",recursive=false):
+def importFiles (dir,type=None,kind="@file",recursive=False):
 	
 	c = g.top() ; v = c.currentVnode()
 
@@ -3461,15 +3440,13 @@ types = (".py",) #,".c",".html",".txt")
 dir = "c:/Zope-2.6.2-src/lib/python"
 dir = "c:/Zope-2.6.2-src/lib/Components"
 
-importFiles(dir,types,recursive=true)
+importFiles(dir,types,recursive=True)
 
 g.es("done",color="blue")
-#@nonl
 #@-node:EKR.20040502195524.35:Recursive import script
 #@+node:EKR.20040502195524.39:Testing scripts
 #@+node:EKR.20040502195524.40:Script to clean unused tnodeLists
 import leoGlobals as g
-from leoGlobals import true,false
 
 c = g.top()
 v = c.rootVnode()
@@ -3479,23 +3456,20 @@ while v:
 	if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and not v.isAnyAtFileNode():
 		g.es("deleting tnodeList for ",v,color="blue")
 		delattr(v.t,"tnodeList")
-		c.setChanged(true)
+		c.setChanged(True)
 	v = v.threadNext()
 g.es("tnodeList script complete")
-#@nonl
 #@-node:EKR.20040502195524.40:Script to clean unused tnodeLists
 #@+node:EKR.20040502195524.41:Script to check topology of all clones
 import leoGlobals as g
-from leoGlobals import true,false
 
 g.checkTopologyOfAllClones()
-#@nonl
 #@-node:EKR.20040502195524.41:Script to check topology of all clones
 #@+node:EKR.20040502195524.42:Scripts for checking clones
 if 0:
 	checkForMismatchedJoinedNodes()
 	
-	print g.createTopologyList(c=g.top(),root=g.top().currentVnode().parent(),useHeadlines=false)
+	print g.createTopologyList(c=g.top(),root=g.top().currentVnode().parent(),useHeadlines=False)
 	
 	checkTopologiesOfLinkedNodes()
 	

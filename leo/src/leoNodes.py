@@ -219,14 +219,15 @@
 from __future__ import generators # To make the code work in Python 2.2.
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 if g.app.config.use_psyco:
 	# print "enabled psyco classes",__file__
 	try: from psyco.classes import *
 	except ImportError: pass
 
-import string,time,types
+import string
+import time
+import types
 
 #@+others
 #@+node:ekr.20031218072017.3321:class tnode
@@ -273,7 +274,7 @@ class baseTnode (object):
 	#@-node:ekr.20031218072017.3323:t.__repr__ & t.__str__
 	#@+node:EKR.20040530121847.1:For undo
 	#@+node:EKR.20040530120245:t.createUndoInfo
-	def createUndoInfo (self,copyLinks=true):
+	def createUndoInfo (self,copyLinks=True):
 		
 		"""Create a dict containing all info needed to recreate a vnode."""
 		
@@ -362,7 +363,7 @@ class baseTnode (object):
 	
 	def setTnodeText (self,s,encoding="utf-8"):
 		
-		s = g.toUnicode(s,encoding,reportErrors=true)
+		s = g.toUnicode(s,encoding,reportErrors=True)
 		self.bodyString = s
 	#@-node:ekr.20031218072017.1485:setTnodeText
 	#@+node:ekr.20031218072017.1486:setSelection
@@ -451,14 +452,14 @@ class baseVnode (object):
 	# Define the meaning of status bits in new vnodes.
 	
 	# Archived...
-	clonedBit	  = 0x01 # true: vnode has clone mark.
+	clonedBit	  = 0x01 # True: vnode has clone mark.
 	
 	# not used	 = 0x02
-	expandedBit = 0x04 # true: vnode is expanded.
-	markedBit	  = 0x08 # true: vnode is marked
-	orphanBit	  = 0x10 # true: vnode saved in .leo file, not derived file.
-	selectedBit = 0x20 # true: vnode is current vnode.
-	topBit		    = 0x40 # true: vnode was top vnode when saved.
+	expandedBit = 0x04 # True: vnode is expanded.
+	markedBit	  = 0x08 # True: vnode is marked
+	orphanBit	  = 0x10 # True: vnode saved in .leo file, not derived file.
+	selectedBit = 0x20 # True: vnode is current vnode.
+	topBit		    = 0x40 # True: vnode was top vnode when saved.
 	
 	# Not archived...
 	dirtyBit    =	0x060
@@ -614,7 +615,7 @@ class baseVnode (object):
 	#@+node:EKR.20040430152000:isAtAllNode
 	def isAtAllNode (self):
 	
-		"""Returns true if the receiver contains @others in its body at the start of a line."""
+		"""Returns True if the receiver contains @others in its body at the start of a line."""
 	
 		flag, i = g.is_special(self.t.bodyString,0,"@all")
 		return flag
@@ -623,7 +624,7 @@ class baseVnode (object):
 	#@+node:ekr.20040326031436:isAnyAtFileNode
 	def isAnyAtFileNode (self):
 		
-		"""Return true if v is any kind of @file or related node."""
+		"""Return True if v is any kind of @file or related node."""
 		
 		# This routine should be as fast as possible.
 		# It is called once for every vnode when writing a file.
@@ -634,19 +635,19 @@ class baseVnode (object):
 	#@-node:ekr.20040326031436:isAnyAtFileNode
 	#@+node:ekr.20040325073709:isAt...FileNode
 	def isAtFileNode (self):
-		return g.choose(self.atFileNodeName(),true,false)
+		return g.choose(self.atFileNodeName(),True,False)
 		
 	def isAtNoSentinelsFileNode (self):
-		return g.choose(self.atNoSentinelsFileNodeName(),true,false)
+		return g.choose(self.atNoSentinelsFileNodeName(),True,False)
 	
 	def isAtRawFileNode (self): # @file-noref
-		return g.choose(self.atRawFileNodeName(),true,false)
+		return g.choose(self.atRawFileNodeName(),True,False)
 	
 	def isAtSilentFileNode (self): # @file-asis
-		return g.choose(self.atSilentFileNodeName(),true,false)
+		return g.choose(self.atSilentFileNodeName(),True,False)
 	
 	def isAtThinFileNode (self):
-		return g.choose(self.atThinFileNodeName(),true,false)
+		return g.choose(self.atThinFileNodeName(),True,False)
 		
 	# New names, less confusing:
 	isAtNoSentFileNode = isAtNoSentinelsFileNode
@@ -657,7 +658,7 @@ class baseVnode (object):
 	#@+node:ekr.20031218072017.3351:isAtIgnoreNode
 	def isAtIgnoreNode (self):
 	
-		"""Returns true if the receiver contains @ignore in its body at the start of a line."""
+		"""Returns True if the receiver contains @ignore in its body at the start of a line."""
 	
 		flag, i = g.is_special(self.t.bodyString, 0, "@ignore")
 		return flag
@@ -666,7 +667,7 @@ class baseVnode (object):
 	#@+node:ekr.20031218072017.3352:isAtOthersNode
 	def isAtOthersNode (self):
 	
-		"""Returns true if the receiver contains @others in its body at the start of a line."""
+		"""Returns True if the receiver contains @others in its body at the start of a line."""
 	
 		flag, i = g.is_special(self.t.bodyString,0,"@others")
 		return flag
@@ -675,7 +676,7 @@ class baseVnode (object):
 	#@+node:ekr.20031218072017.3353:matchHeadline
 	def matchHeadline (self,pattern):
 	
-		"""Returns true if the headline matches the pattern ignoring whitespace and case.
+		"""Returns True if the headline matches the pattern ignoring whitespace and case.
 		
 		The headline may contain characters following the successfully matched pattern."""
 	
@@ -1182,7 +1183,7 @@ class baseVnode (object):
 		
 		v = self
 	
-		s = g.toUnicode(s,encoding,reportErrors=true)
+		s = g.toUnicode(s,encoding,reportErrors=True)
 		v.t.headString = s
 	#@nonl
 	#@-node:ekr.20040315032144:v.initHeadString
@@ -1209,13 +1210,13 @@ class baseVnode (object):
 		body = v.bodyString()
 		# g.trace(body)
 		lines = string.split(body,'\n')
-		i = len(lines) - 1 ; changed = false
+		i = len(lines) - 1 ; changed = False
 		while i >= 0:
 			line = lines[i]
 			j = g.skip_ws(line,0)
 			if j + 1 == len(line):
 				del lines[i]
-				i -= 1 ; changed = true
+				i -= 1 ; changed = True
 			else: break
 		if changed:
 			body = string.join(body,'') + '\n' # Add back one last newline.
@@ -1337,7 +1338,7 @@ class nodeIndices (object):
 	#@+node:ekr.20031218072017.1993:areEqual
 	def areEqual (self,gnx1,gnx2):
 		
-		"""Return true if all fields of gnx1 and gnx2 are equal"""
+		"""Return True if all fields of gnx1 and gnx2 are equal"""
 	
 		# works whatever the format of gnx1 and gnx2.
 		# This should never throw an exception.
@@ -1392,7 +1393,7 @@ class nodeIndices (object):
 			id,t,n = gnx
 			return t != None
 		except:
-			return false
+			return False
 	#@nonl
 	#@-node:ekr.20031218072017.1996:isGnx
 	#@+node:ekr.20031218072017.1997:scanGnx
@@ -1434,7 +1435,7 @@ class nodeIndices (object):
 	#@nonl
 	#@-node:ekr.20031218072017.1998:setTimeStamp
 	#@+node:ekr.20031218072017.1999:toString
-	def toString (self,index,removeDefaultId=false):
+	def toString (self,index,removeDefaultId=False):
 		
 		"""Convert a gnx (a tuple) to its string representation"""
 	
@@ -1548,7 +1549,7 @@ class position (object):
 	#@+node:ekr.20040325142015:p.equal
 	def equal(self,p2):
 	
-		"""Return true if two postions are equivalent.
+		"""Return True if two postions are equivalent.
 		
 		Use this method when the speed comparisons is crucial
 		
@@ -1594,7 +1595,7 @@ class position (object):
 	
 	def __nonzero__ ( self):
 		
-		"""Return true if a position is valid."""
+		"""Return True if a position is valid."""
 		
 		# if g.app.trace: "__nonzero__",self.v
 	
@@ -1762,7 +1763,7 @@ class position (object):
 	#@+node:ekr.20040307104131.3:p.exists
 	def exists(self,c):
 		
-		"""Return true if a position exists in c's tree"""
+		"""Return True if a position exists in c's tree"""
 		
 		p = self.copy()
 		
@@ -1770,13 +1771,13 @@ class position (object):
 		root = c.rootPosition()
 		while p:
 			if p == root:
-				return true
+				return True
 			if p.hasParent():
 				p.moveToParent()
 			else:
 				p.moveToBack()
 			
-		return false
+		return False
 	#@nonl
 	#@-node:ekr.20040307104131.3:p.exists
 	#@+node:ekr.20040306215548:p.findRoot
@@ -1841,18 +1842,18 @@ class position (object):
 	def hasThreadNext(self):
 	
 		p = self ; v = p.v
-		if not p.v: return false
+		if not p.v: return False
 	
 		if v.t._firstChild or v._next:
-			return true
+			return True
 		else:
 			n = len(p.stack)-1
 			v,n = p.vParentWithStack(v,p.stack,n)
 			while v:
 				if v._next:
-					return true
+					return True
 				v,n = p.vParentWithStack(v,p.stack,n)
-			return false
+			return False
 	
 	hasVisNext = hasThreadNext
 	#@nonl
@@ -1866,17 +1867,17 @@ class position (object):
 		if 0: # Avoid the copies made in the iterator.
 			for p3 in p2.parents_iter():
 				if p3 == p:
-					return true
+					return True
 	
 		# Avoid calling p.copy() or copying the stack.
 	 	v2 = p2.v ; n = len(p.stack)-1
 		v2,n = p2.vParentWithStack(v2,p2.stack,n)
 		while v2:
 			if v2 == p.v:
-				return true
+				return True
 			v2,n = p2.vParentWithStack(v2,p2.stack,n)
 	
-		return false
+		return False
 	#@nonl
 	#@-node:ekr.20040307104131.1:p.isAncestorOf
 	#@+node:ekr.20040306215056:p.isCloned
@@ -1896,7 +1897,7 @@ class position (object):
 	#@+node:ekr.20040117162509.16:p.isVisible
 	def isVisible (self):
 		
-		"""Return true if all of a position's parents are expanded."""
+		"""Return True if all of a position's parents are expanded."""
 	
 		# v.isVisible no longer exists.
 		p = self
@@ -1907,10 +1908,10 @@ class position (object):
 		v,n = p.vParentWithStack(v,p.stack,n)
 		while v:
 			if not v.isExpanded():
-				return false
+				return False
 			v,n = p.vParentWithStack(v,p.stack,n)
 	
-		return true
+		return True
 	#@nonl
 	#@-node:ekr.20040117162509.16:p.isVisible
 	#@+node:ekr.20031218072017.4146:p.lastVisible & oldLastVisible
@@ -1950,7 +1951,7 @@ class position (object):
 			level += 1
 		return level
 	
-	def level(self,verbose=false):
+	def level(self,verbose=False):
 		
 		# if g.app.debug: simpleLevel = self.simpleLevel()
 		
@@ -2056,7 +2057,7 @@ class position (object):
 			v.t.setSelection(0,0)
 			p.setDirty()
 			if not c.isChanged():
-				c.setChanged(true)
+				c.setChanged(True)
 	
 	setBodyTextOrPane = setBodyStringOrPane # Compatibility with old scripts
 	#@nonl
@@ -2168,7 +2169,7 @@ class position (object):
 	def setAllAncestorAtFileNodesDirty (self):
 	
 		p = self ; c = p.c
-		changed = false
+		changed = False
 		
 		# Calculate all nodes that are joined to v or parents of such nodes.
 		nodes = p.findAllPotentiallyDirtyNodes()
@@ -2178,7 +2179,7 @@ class position (object):
 			for v in nodes:
 				# g.trace(v.isAnyAtFileNode(),v.t.isDirty(),v)
 				if not v.t.isDirty() and v.isAnyAtFileNode():
-					changed = true
+					changed = True
 					v.t.setDirty() # Do not call v.setDirty here!
 		c.endUpdate(changed)
 		return changed
@@ -2194,13 +2195,13 @@ class position (object):
 	
 		c.beginUpdate()
 		if 1: # update...
-			changed = false
+			changed = False
 			if not p.v.t.isDirty():
 				p.v.t.setDirty()
-				changed = true
+				changed = True
 			# This must be called even if p.v is already dirty.
 			if p.setAllAncestorAtFileNodesDirty():
-				changed = true
+				changed = True
 		c.endUpdate(changed)
 	
 		return changed
@@ -2233,7 +2234,7 @@ class position (object):
 		return ''.join(array)
 	#@-node:ekr.20040315023430.1:convertTreeToString
 	#@+node:ekr.20040315023430.2:moreHead
-	def moreHead (self, firstLevel,useVerticalBar=false):
+	def moreHead (self, firstLevel,useVerticalBar=False):
 		
 		"""Return the headline string in MORE format."""
 	
@@ -2361,7 +2362,7 @@ class position (object):
 		#@-node:ekr.20040305171133.3:next
 		#@-others
 	
-	def allNodes_iter (self,copy=false):
+	def allNodes_iter (self,copy=False):
 		
 		return self.allNodes_iter_class(self,copy)
 	#@nonl
@@ -2411,13 +2412,13 @@ class position (object):
 		#@-node:ekr.20040305173559.2:next
 		#@-others
 	
-	def subtree_iter (self,copy=false):
+	def subtree_iter (self,copy=False):
 		
-		return self.subtree_iter_class(self,copy,includeSelf=false)
+		return self.subtree_iter_class(self,copy,includeSelf=False)
 		
-	def self_and_subtree_iter (self,copy=false):
+	def self_and_subtree_iter (self,copy=False):
 		
-		return self.subtree_iter_class(self,copy,includeSelf=true)
+		return self.subtree_iter_class(self,copy,includeSelf=True)
 	#@nonl
 	#@-node:ekr.20040305173559:p.subtree_iter
 	#@+node:ekr.20040305172211.1:p.children_iter
@@ -2459,7 +2460,7 @@ class position (object):
 		#@-node:ekr.20040305172211.3:next
 		#@-others
 	
-	def children_iter (self,copy=false):
+	def children_iter (self,copy=False):
 		
 		return self.children_iter_class(self,copy)
 	#@nonl
@@ -2506,15 +2507,15 @@ class position (object):
 		#@-node:ekr.20040305172855.2:next
 		#@-others
 	
-	def parents_iter (self,copy=false):
+	def parents_iter (self,copy=False):
 		
 		p = self
 	
-		return self.parents_iter_class(self,copy,includeSelf=false)
+		return self.parents_iter_class(self,copy,includeSelf=False)
 		
-	def self_and_parents_iter(self,copy=false):
+	def self_and_parents_iter(self,copy=False):
 		
-		return self.parents_iter_class(self,copy,includeSelf=true)
+		return self.parents_iter_class(self,copy,includeSelf=True)
 	#@nonl
 	#@-node:ekr.20040305172855:p.parents_iter
 	#@+node:ekr.20040305173343:p.siblings_iter
@@ -2526,7 +2527,7 @@ class position (object):
 		#@+node:ekr.20040305173343.1:__init__ & __iter__
 		def __init__(self,p,copy,following):
 			
-			# We always include p, even if following is true.
+			# We always include p, even if following is True.
 			
 			if following:
 				self.first = p.copy()
@@ -2562,15 +2563,15 @@ class position (object):
 		#@-node:ekr.20040305173343.2:next
 		#@-others
 	
-	def siblings_iter (self,copy=false,following=false):
+	def siblings_iter (self,copy=False,following=False):
 		
 		return self.siblings_iter_class(self,copy,following)
 		
 	self_and_siblings_iter = siblings_iter
 		
-	def following_siblings_iter (self,copy=false):
+	def following_siblings_iter (self,copy=False):
 		
-		return self.siblings_iter_class(self,copy,following=true)
+		return self.siblings_iter_class(self,copy,following=True)
 	#@nonl
 	#@-node:ekr.20040305173343:p.siblings_iter
 	#@-others
@@ -2792,7 +2793,7 @@ class position (object):
 	def validateOutlineWithParent (self,pv):
 		
 		p = self
-		result = true # optimists get only unpleasant surprises.
+		result = True # optimists get only unpleasant surprises.
 		parent = p.getParent()
 		childIndex = p.childIndex()
 		
@@ -2827,7 +2828,7 @@ class position (object):
 		# Recursively validate all the children.
 		for child in p.children_iter():
 			r = child.validateOutlineWithParent(p)
-			if not r: result = false
+			if not r: result = False
 	
 		return result
 	#@nonl

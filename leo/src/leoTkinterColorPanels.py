@@ -1,12 +1,10 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20031218072017.3822:@thin leoTkinterColorPanels.py
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoColorPanel
-import string,Tkinter,tkColorChooser
-
-Tk = Tkinter
+import string
+import Tkinter as Tk
+import tkColorChooser
 
 #@<< define gui-dependent color panel data >>
 #@+node:ekr.20031218072017.3823:<< define gui-dependent color panel data >>
@@ -123,7 +121,7 @@ class leoTkinterColorNamePanel:
 		assert(color==self.color)
 		self.revertColor = color
 		
-		Tk = Tkinter ; gui = g.app.gui
+		gui = g.app.gui
 	
 		self.top = top = Tk.Toplevel(g.app.root)
 		top.title("Color names for " + '"' + name + '"')

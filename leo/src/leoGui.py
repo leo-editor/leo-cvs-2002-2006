@@ -11,8 +11,6 @@ Leo's core calls this class to allocate all gui objects.
 Plugins may define their own gui classes by setting g.app.gui."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoFrame # for null gui.
 
 #@+others
@@ -158,11 +156,11 @@ class leoGui:
 	#@nonl
 	#@-node:ekr.20031218072017.3726:finishCreate
 	#@+node:ekr.20031218072017.3727:killGui
-	def killGui(self,exitFlag=true):
+	def killGui(self,exitFlag=True):
 	
 		"""Destroy the gui.
 		
-		The entire Leo application should terminate if exitFlag is true."""
+		The entire Leo application should terminate if exitFlag is True."""
 	
 		self.oops()
 	#@nonl
@@ -171,7 +169,7 @@ class leoGui:
 	def recreateRootWindow(self):
 	
 		"""Create the hidden root window of the gui
-	    after a previous gui has terminated with killGui(false)."""
+	    after a previous gui has terminated with killGui(False)."""
 	
 		self.oops()
 	#@nonl
@@ -446,7 +444,7 @@ class unitTestGui(leoGui):
 	
 	#@	@+others
 	#@+node:ekr.20031218072017.3743: test.gui.__init__& destroySelf
-	def __init__ (self,dict,trace=false):
+	def __init__ (self,dict,trace=False):
 		
 		self.dict = dict
 		self.oldGui = g.app.gui

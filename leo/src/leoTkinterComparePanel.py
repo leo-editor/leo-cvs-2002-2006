@@ -5,13 +5,10 @@
 """Leo's base compare class."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoCompare
 import leoTkinterDialog
-import Tkinter,tkFileDialog
-
-Tk = Tkinter
+import Tkinter as Tk
+import tkFileDialog
 
 class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterDialog):
 	
@@ -24,7 +21,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
 		
 		# Init the base class.
 		leoCompare.leoCompare.__init__ (self,c)
-		leoTkinterDialog.leoTkinterDialog.__init__(self,"Compare files and directories",resizeable=false)
+		leoTkinterDialog.leoTkinterDialog.__init__(self,"Compare files and directories",resizeable=False)
 		self.c = c
 	
 		#@	<< init tkinter compare ivars >>
@@ -357,7 +354,7 @@ class leoTkinterComparePanel (leoCompare.leoCompare,leoTkinterDialog.leoTkinterD
 		if self.printMatches:
 			self.printBothMatches = self.printBothMatchesVar.get()
 		else:
-			self.printBothMatches = false
+			self.printBothMatches = False
 		
 		if self.stopAfterMismatchVar.get():
 			try:

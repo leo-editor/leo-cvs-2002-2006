@@ -3,10 +3,8 @@
 """Tkinter menu handling for Leo."""
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import leoMenu
-import Tkinter
+import Tkinter as Tk
 
 class leoTkinterMenu (leoMenu.leoMenu):
 	"""A class that represents a Leo window."""
@@ -96,11 +94,11 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	
 	#@-node:ekr.20031218072017.4112:insert_cascade
 	#@+node:ekr.20031218072017.4113:new_menu
-	def new_menu(self,parent,tearoff=false):
+	def new_menu(self,parent,tearoff=False):
 		
 		"""Wrapper for the Tkinter new_menu menu method."""
 	
-		return Tkinter.Menu(parent,tearoff=tearoff)
+		return Tk.Menu(parent,tearoff=tearoff)
 	#@nonl
 	#@-node:ekr.20031218072017.4113:new_menu
 	#@-node:ekr.20031218072017.4104:9 Routines with Tk spellings
@@ -109,7 +107,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 	def createMenuBar(self,frame):
 	
 		top = frame.top
-		topMenu = Tkinter.Menu(top,postcommand=self.updateAllMenus)
+		topMenu = Tk.Menu(top,postcommand=self.updateAllMenus)
 		
 		# Do gui-independent stuff.
 		self.setMenu("top",topMenu)
@@ -155,7 +153,7 @@ class leoTkinterMenu (leoMenu.leoMenu):
 				parent.delete(index)
 			except: return
 		# Create the "Open With..." menu.
-		openWithMenu = Tkinter.Menu(parent,tearoff=0)
+		openWithMenu = Tk.Menu(parent,tearoff=0)
 		self.setMenu("Open With...",openWithMenu)
 		parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
 		# Populate the "Open With..." menu.

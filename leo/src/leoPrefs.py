@@ -3,8 +3,6 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
 import string
 	
 class leoPrefs:

@@ -49,7 +49,6 @@ def run(fileName=None,*args,**keywords):
 	if not isValidPython(): return
 	# Import leoGlobals, but do NOT set g.
 	import leoGlobals
-	from leoGlobals import true,false
 	# Create the application object.
 	import leoApp ; leoGlobals.app = leoApp.LeoApp()
 	g = leoGlobals ; assert(g.app) # NOW we can set g.
@@ -115,13 +114,12 @@ def run(fileName=None,*args,**keywords):
 	g.enableIdleTimeHook()
 	frame.tree.redraw()
 	frame.body.setFocus()
-	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
+	g.app.initing = False # "idle" hooks may now call g.app.forceShutdown.
 	g.app.gui.runMainLoop()
 #@+node:ekr.20031218072017.1936:isValidPython
 def isValidPython():
 	
 	import leoGlobals as g
-	from leoGlobals import true,false
 	
 	message = """\
 Leo requires Python 2.2 or higher.
@@ -130,13 +128,13 @@ You may download Python 2.2 and Python 2.3 from http://python.org/download/
 	try:
 		if not g.CheckVersion(sys.version, "2.2"):
 			g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
-			return false
+			return False
 		else:
-			return true
+			return True
 	except:
 		print "exception getting Python version"
 		import traceback ; traceback.print_exc()
-		return false
+		return False
 #@nonl
 #@-node:ekr.20031218072017.1936:isValidPython
 #@+node:ekr.20031218072017.1937:computeLoadDir
@@ -145,7 +143,6 @@ def computeLoadDir():
 	"""Returns the directory containing leo.py."""
 	
 	import leoGlobals as g
-	from leoGlobals import true,false
 	
 	# g.trace(g.app.tkEncoding)
 	
@@ -183,7 +180,6 @@ def createFrame (fileName):
 	"""Create a LeoFrame during Leo's startup process."""
 	
 	import leoGlobals as g
-	from leoGlobals import true,false
 	
 	# g.trace(g.app.tkEncoding,fileName)
 	
@@ -199,7 +195,7 @@ def createFrame (fileName):
 	# Create a new frame & indicate it is the startup window.
 	c,frame = g.app.gui.newLeoCommanderAndFrame(fileName=None)
 	frame.setInitialWindowGeometry()
-	frame.startupWindow = true
+	frame.startupWindow = True
 	
 	# Report the failure to open the file.
 	if fileName:
@@ -211,10 +207,9 @@ def createFrame (fileName):
 def createNullGuiWithScript (script):
 	
 	import leoGlobals as g
-	from leoGlobals import true,false
 	import leoGui
 	
-	g.app.batchMode = true
+	g.app.batchMode = True
 	g.app.gui = leoGui.nullGui("nullGui")
 	g.app.root = g.app.gui.createRootWindow()
 	g.app.gui.finishCreate()
@@ -224,7 +219,6 @@ def createNullGuiWithScript (script):
 def getBatchScript ():
 	
 	import leoGlobals as g
-	from leoGlobals import true,false
 	
 	name = None ; i = 1 # Skip the dummy first arg.
 	while i + 1 < len(sys.argv):

@@ -6,6 +6,8 @@
 # Example tangle_done.py file.
 # Leo catches all exceptions thrown here; there is no need for try:except blocks.
 
+import leoGlobals as g
+
 #@+others
 #@+node:EKR.20040502194930.1:run
 # Leo calls this routine if "Run tangle-done.py after Tangle" is checked in the Prefs panel.
@@ -26,8 +28,6 @@ def run (root_list):
 def convertRSTfilesToHTML(root_list):
 
 	"""This routine creates .html files from all .rst files in root_list, the list of files that have just been tangled."""
-	
-	from leoGlobals import os_path_join,os_path_split,os_path_splitext
 	
 	for root in root_list: 
 		base,fullname = g.os_path_split(root)
@@ -58,7 +58,7 @@ def convertRSTfilesToHTML(root_list):
 			encoding = dict.get("encoding",None)
 			if encoding == None:
 				encoding = g.app.config.default_derived_file_encoding
-			output = g.toEncodedString(output,encoding,reportErrors=true) 
+			output = g.toEncodedString(output,encoding,reportErrors=True) 
 			
 			# Write the corresponding html file.
 			f = open(file,"w")

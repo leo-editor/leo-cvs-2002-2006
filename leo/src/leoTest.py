@@ -9,7 +9,6 @@ Run the unit tests in test.leo using the Execute Script command.
 """
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 #@<< to do >>
 #@+node:ekr.20040303062846.1:<< to do >>
@@ -27,7 +26,10 @@ from leoGlobals import true,false
 
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
-import glob,os,sys,unittest
+import glob
+import os
+import sys
+import unittest
 
 #@+others
 #@+node:ekr.20040303062846.3: class testUtils
@@ -47,7 +49,7 @@ class testUtils:
 		after2 = v2.nodeAfterTree()
 		v1 = v1.firstChild()
 		v2 = v2.firstChild()
-		ok = true
+		ok = True
 		while v2 and v1 != after1 and v2 != after2:
 			ok = (
 				v1.numberOfChildren() == v2.numberOfChildren() and
@@ -240,7 +242,7 @@ class colorTestCase(unittest.TestCase):
 	def color (self):
 		
 		c = self.c
-		val = c.frame.body.colorizer.colorize(self.temp_v,incremental=false)
+		val = c.frame.body.colorizer.colorize(self.temp_v,incremental=False)
 		assert(val=="ok")
 	#@nonl
 	#@-node:ekr.20040303062846.15:color
@@ -394,7 +396,7 @@ class editBodyTestCase(unittest.TestCase):
 		temp_v.clearDirty()
 		
 		if not self.wasChanged:
-			c.setChanged (false)
+			c.setChanged (False)
 			
 		# Delete all children of temp node.
 		while temp_v.firstChild():
@@ -448,7 +450,7 @@ class editBodyTestCase(unittest.TestCase):
 #@-node:ekr.20040303062846.19:Edit body tests
 #@+node:ekr.20040315202201:Find Command tests
 #@+node:ekr.20040315202250: makeFindCommandSuite
-def makeFindCommandSuite(arg=None,all=true,verbose=false):
+def makeFindCommandSuite(arg=None,all=True,verbose=False):
 	
 	return unittest.makeSuite(findCommandTestCase,'test')
 #@nonl
@@ -468,7 +470,7 @@ class findCommandTestCase(unittest.TestCase):
 		
 		self.c = c = g.top()
 	
-		self.verbose = true
+		self.verbose = True
 		
 		self.root = c.rootPosition()
 		
@@ -587,7 +589,7 @@ class importExportTestCase(unittest.TestCase):
 		val = lines[1]
 		self.fileName = val
 		dict = {name: val}
-		self.gui = leoGui.unitTestGui(dict,trace=false)
+		self.gui = leoGui.unitTestGui(dict,trace=False)
 		
 		
 	#@nonl
@@ -614,7 +616,7 @@ class importExportTestCase(unittest.TestCase):
 		temp_v.clearDirty()
 		
 		if not self.wasChanged:
-			c.setChanged (false)
+			c.setChanged (False)
 			
 		if 1: # Delete all children of temp node.
 			while temp_v.firstChild():
@@ -670,7 +672,7 @@ class leoFileTestCase(unittest.TestCase):
 		
 		"""Run the Check Outline command."""
 	
-		errors = self.c.checkOutline(verbose=false,unittest=true)
+		errors = self.c.checkOutline(verbose=False,unittest=True)
 		assert(errors == 0)
 	#@nonl
 	#@-node:ekr.20040303062846.40:runTest
@@ -686,7 +688,7 @@ class leoFileTestCase(unittest.TestCase):
 		self.oldGui = g.app.gui
 		# g.app.gui = leoGui.nullGui("nullGui")
 	
-		ok, frame = g.openWithFileName(fileName,c,enableLog=false)
+		ok, frame = g.openWithFileName(fileName,c,enableLog=False)
 		assert(ok)
 		self.c = frame.c
 	#@nonl
@@ -818,7 +820,7 @@ class outlineTestCase(unittest.TestCase):
 #@-node:ekr.20040303062846.63:Outline tests (tests undo)
 #@+node:ekr.20040303062846.72:Plugin tests
 #@+node:ekr.20040303062846.71: makePluginsSuite
-def makePluginsSuite(verbose=false,*args,**keys):
+def makePluginsSuite(verbose=False,*args,**keys):
 	
 	"""Create an plugins test for every .py file in the plugins directory."""
 	
@@ -908,7 +910,7 @@ class pluginTestCase(unittest.TestCase):
 #@-node:ekr.20040303062846.72:Plugin tests
 #@+node:ekr.20040303063644:Position tests
 #@+node:ekr.20040303064013: makePositionSuite
-def makePositionSuite(arg=None,all=true,verbose=false):
+def makePositionSuite(arg=None,all=True,verbose=False):
 	
 	if all: # Include everything.
 	
@@ -944,7 +946,7 @@ class positionTestCase(unittest.TestCase):
 		
 		self.c = c = g.top()
 	
-		self.verbose = true
+		self.verbose = True
 		
 		self.root = c.rootPosition()
 	#@nonl
@@ -975,10 +977,10 @@ class positionTestCase(unittest.TestCase):
 	#@+node:ekr.20040312101853:Consistency tests...
 	#@+node:ekr.20040309101454.15:testConsistencyOfAllNodesThreadNext
 	def testConsistencyOfAllNodesThreadNextWithCopy(self):
-		self.doConsistencyOfAllNodesThreadNext(true)
+		self.doConsistencyOfAllNodesThreadNext(True)
 		
 	def testConsistencyOfAllNodesThreadNext(self):
-		self.doConsistencyOfAllNodesThreadNext(false)
+		self.doConsistencyOfAllNodesThreadNext(False)
 	
 	def doConsistencyOfAllNodesThreadNext (self,copy):
 		
@@ -998,10 +1000,10 @@ class positionTestCase(unittest.TestCase):
 	#@-node:ekr.20040309101454.15:testConsistencyOfAllNodesThreadNext
 	#@+node:ekr.20040309101454.17:testConsistencyOfFirstChildAndChildrenIter
 	def testConsistencyOfFirstChildAndChildrenIterWithCopy(self):
-		self.doConsistencyOfFirstChildAndChildrenIter(true)
+		self.doConsistencyOfFirstChildAndChildrenIter(True)
 		
 	def testConsistencyOfFirstChildAndChildrenIter(self):
-		self.doConsistencyOfFirstChildAndChildrenIter(false)
+		self.doConsistencyOfFirstChildAndChildrenIter(False)
 	
 	def doConsistencyOfFirstChildAndChildrenIter (self,copy):
 		
@@ -1056,10 +1058,10 @@ class positionTestCase(unittest.TestCase):
 	#@-node:ekr.20040303064020.5:testConsistencyOfNextBack
 	#@+node:ekr.20040309101454.16:testConsistencyOfParentAndParentsIter
 	def testConsistencyOfParentAndParentsIterWithCopy(self):
-		self.doConsistencyOfParentAndParentsIter(true)
+		self.doConsistencyOfParentAndParentsIter(True)
 		
 	def testConsistencyOfParentAndParentsIter(self):
-		self.doConsistencyOfParentAndParentsIter(false)
+		self.doConsistencyOfParentAndParentsIter(False)
 	
 	def doConsistencyOfParentAndParentsIter (self,copy):
 		
@@ -1281,7 +1283,7 @@ class reformatParagraphTestCase(unittest.TestCase):
 		temp_v.clearDirty()
 		
 		if not self.wasChanged:
-			c.setChanged (false)
+			c.setChanged (False)
 			
 		# Delete all children of temp node.
 		#

@@ -3,9 +3,11 @@
 #@@language python
 
 import leoGlobals as g
-from leoGlobals import true,false
-
-import ConfigParser,exceptions,os,string,sys
+import ConfigParser
+import exceptions
+import os
+import string
+import sys
 
 class baseConfig:
 	"""The base class for Leo's configuration handler."""
@@ -86,7 +88,7 @@ class baseConfig:
 	
 		self.configFileName = g.os_path_join(self.configDir,"leoConfig.txt")
 	
-		self.configsExist = false # true when we successfully open leoConfig.txt.
+		self.configsExist = False # True when we successfully open leoConfig.txt.
 		
 		# These are now set in gui.getDefaultConfigFont
 		self.defaultFont = None
@@ -133,26 +135,26 @@ class baseConfig:
 		#@+node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
 		# 10/11/02: Defaults are specified only here.
 		
-		self.at_root_bodies_start_in_doc_mode = true # For compatibility with previous versions.
+		self.at_root_bodies_start_in_doc_mode = True # For compatibility with previous versions.
 		self.config = None # The current instance of ConfigParser
 		self.config_encoding = "utf-8" # Encoding used for leoConfig.txt.
-		self.create_nonexistent_directories = false
+		self.create_nonexistent_directories = False
 		self.default_derived_file_encoding = "utf-8"
 		self.load_derived_files_immediately = 0
 		self.new_leo_file_encoding = "UTF-8" # Upper case for compatibility with previous versions.
 		self.output_initial_comment = "" # "" or None for compatibility with previous versions.
 		self.output_newline = "nl"
-		self.read_only = true # Make sure we don't alter an illegal leoConfig.txt file!
-		self.redirect_execute_script_output_to_log_pane = false
+		self.read_only = True # Make sure we don't alter an illegal leoConfig.txt file!
+		self.redirect_execute_script_output_to_log_pane = False
 		self.relative_path_base_directory = "!"
 		self.remove_sentinels_extension = ".txt"
-		self.save_clears_undo_buffer = false
+		self.save_clears_undo_buffer = False
 		self.stylesheet = None
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
-		self.use_plugins = false # Should never be true here!
-		self.use_psyco = false
+		self.use_plugins = False # Should never be True here!
+		self.use_psyco = False
 		self.undo_granularity = "word" # "char","word","line","node"
-		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
+		self.write_old_format_derived_files = False # Use new format if leoConfig.txt does not exist.
 		#@nonl
 		#@-node:ekr.20031218072017.3004:<< initialize ivars that may be set by config options >>
 		#@nl
@@ -674,7 +676,7 @@ class baseConfig:
 			#@-node:ekr.20031218072017.1931:<< print options >>
 			#@nl
 			cf.close()
-			self.configsExist = true
+			self.configsExist = True
 		except IOError:
 			pass
 		except:
