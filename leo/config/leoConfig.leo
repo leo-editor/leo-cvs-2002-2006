@@ -31,8 +31,8 @@
 <v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18" a="V"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -730,7 +730,7 @@ body_text_font_family = Courier New
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-body_text_font_size = 11
+body_text_font_size = 9
 #	Size of body text. Must be an integer.
 #	Default is 12.
 
@@ -799,7 +799,7 @@ headline_text_font_family =
 #	Default is default font for Tk.Text widgets.
 #	Invalid font names are translated to a font in a system-dependent way.
 
-headline_text_font_size = 11
+headline_text_font_size = 9
 #	Size of headline text. Must be an integer.
 #	Default is 12
 

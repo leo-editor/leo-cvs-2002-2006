@@ -123,7 +123,7 @@ class LeoFrame:
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 3.11.1, ",newline=0)
+		es("Leo 4.0 alpha 1, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -1559,7 +1559,7 @@ class LeoFrame:
 			#@+node:2::<< create PlugIn objects for all plugin files >>
 			#@+body
 			# Look for all the plug-ins that are on the system
-			path = os.path.join(app().loadDir,"..","plugins") 
+			path = os.path.join(app().loadDir,"..","plugins") # 5/12/03
 			plugin_files = glob.glob(os.path.join(path,"mod_*.py"))
 			plugins = [PlugIn(file) for file in plugin_files]
 			
@@ -2149,6 +2149,7 @@ class LeoFrame:
 				frame = LeoFrame(fileName)
 				if handleLeoHook("open1",
 					old_c=self,new_c=frame.commands,fileName=fileName)==None:
+					app().log = frame # 5/12/03
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				frame.updateRecentFiles(fileName)
@@ -2307,6 +2308,9 @@ class LeoFrame:
 	#@+body
 	def updateRecentFiles (self, fileName):
 		
+		if not fileName or len(fileName) == 0:
+			return
+		
 		# Update the recent files list in all windows.
 		normFileName = os.path.normcase(fileName)
 		
@@ -2361,6 +2365,7 @@ class LeoFrame:
 				frame = LeoFrame(fileName)
 				if handleLeoHook("open1",
 					old_c=self,new_c=frame.commands,fileName=fileName)==None:
+					app().log = frame # 5/12/03
 					frame.commands.fileCommands.open(file,fileName) # closes file.
 				frame.openDirectory=os.path.dirname(fileName)
 				frame.updateRecentFiles(fileName)
@@ -3272,6 +3277,7 @@ class LeoFrame:
 	
 		c = self.commands ; v = c.currentVnode() ; colorizer = c.tree.colorizer
 		colorizer.showInvisibles = choose(colorizer.showInvisibles,0,1)
+		# print `colorizer.showInvisibles`
 	
 		# It is much easier to change the menu name here than in the menu updater.
 		menu = self.getMenu("Edit")
@@ -4247,7 +4253,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.11.1, Build " + build + ", May 1, 2003\n\n"
+		version = "leo.py 4.0 alpha 1, Build " + build + ", May 12, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +
@@ -4992,6 +4998,7 @@ class LeoFrame:
 	# All output to the log stream eventually comes here.
 	
 	def put (self,s,color=None):
+		# print `app().quitting`,`self.log`
 		if app().quitting > 0: return
 		if self.log:
 			if type(s) == type(u""): # 3/18/03

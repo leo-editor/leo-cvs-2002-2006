@@ -54,10 +54,7 @@ class fileCommands:
 		# For reading
 		self.fileFormatNumber = 0
 		self.ratio = 0.5
-		self.tnodesDict = {}
 		self.fileBuffer = None ; self.fileIndex = 0
-		self.dummy_v = None
-		self.dummy_t = None
 		# For writing
 		self.read_only = false
 		self.outputFile = None # File for normal writing
@@ -67,6 +64,7 @@ class fileCommands:
 		# New in 4.0
 		self.a = app()
 		self.nodeIndices = self.a.nodeIndices
+		self.tnodesDict = {} # New in 4.0: this dict is only initialized here!
 	
 	#@-body
 	#@-node:1::leoFileCommands._init_
@@ -96,7 +94,7 @@ class fileCommands:
 		return v
 	#@-body
 	#@-node:1::createVnode
-	#@+node:2::finishPaste (creating join lists could be a problem)
+	#@+node:2::finishPaste (Changed for 4.0)
 	#@+body
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
@@ -111,62 +109,23 @@ class fileCommands:
 				#@<< Create join lists of all pasted vnodes >>
 				#@+node:1::<< Create join lists of all pasted vnodes >>
 				#@+body
-				# Pass 1: create all join lists using tnode::joinHead
 				v = c.currentVnode()
+				
 				while v and v != after:
-					# Put v at the head of t's list of joined vnodes.
-					v.setJoinList(v.t.joinHead)
-					v.t.setJoinHead(v)
+					if v not in v.t.joinList:
+						v.t.joinList.append(v)
 					v = v.threadNext()
-					
-				# Pass 2: circularize each join list.
-				v = c.currentVnode()
-				while v and v != after:
-					head = v.t.joinHead
-					if not head:
-						v = v.threadNext() ;continue
-					# Make sure we don't handle this list again.
-					v.t.setJoinHead(None)
-					# Clear the join list if it has only one member.
-					if head == v and not v.getJoinList():
-						v.setJoinList(None)
-						v = v.threadNext() ; continue
-					# Point last at the last vnode of the list.
-					last = head
-					while last and last.getJoinList():
-						last = last.getJoinList()
-					assert(last)
-					# Link last to head.
-					last.setJoinList(head)
-					v = v.threadNext()
+				
 				#@-body
 				#@-node:1::<< Create join lists of all pasted vnodes >>
 
-			
-			#@<< Recompute clone bits for pasted vnodes >>
-			#@+node:2::<< Recompute clone bits for pasted vnodes >>
-			#@+body
-			#@+at
-			#  This must be done after the join lists have been created.  The 
-			# saved clone bit is unreliable for pasted nodes.
-
-			#@-at
-			#@@c
-
-			v = c.currentVnode()
-			while v and v != after:
-				v.initClonedBit(v.shouldBeClone())
-				v.clearDirty()
-				v = v.threadNext()
-			#@-body
-			#@-node:2::<< Recompute clone bits for pasted vnodes >>
-
+			c.initAllCloneBits() # 5/3/03
 			self.compactFileIndices()
 			c.selectVnode(current)
 		c.endUpdate()
 		return current
 	#@-body
-	#@-node:2::finishPaste (creating join lists could be a problem)
+	#@-node:2::finishPaste (Changed for 4.0)
 	#@+node:3::get routines
 	#@+node:1::get & match (basic)(leoFileCommands)
 	#@+node:1::get routines
@@ -454,18 +413,17 @@ class fileCommands:
 		self.getTag("</globals>")
 	#@-body
 	#@-node:6::getGlobals (changed for 4.0)
-	#@+node:7::getLeoFile (Leo2)
+	#@+node:7::getLeoFile
 	#@+body
 	# The caller should enclose this in begin/endUpdate.
 	
-	def getLeoFile (self,frame,fileName,atFileNodesFlag):
+	def getLeoFile (self,frame,fileName,atFileNodesFlag=true):
 	
 		c=self.commands
 		
 		#@<< warn on read-only files >>
 		#@+node:1::<< warn on read-only files >>
 		#@+body
-		# 8/13/02
 		try:
 			self.read_only = false
 			self.read_only = not os.access(fileName,os.W_OK)
@@ -482,75 +440,57 @@ class fileCommands:
 		#@-body
 		#@-node:1::<< warn on read-only files >>
 
-			
 		self.mFileName = frame.mFileName
-		self.tnodesDict = {} ; ok = true
+		ok = true
 		try:
 			c.tree.initing = true # inhibit endEditLabel from marking the file changed.
-			self.getXmlVersionTag() # leo.py 3.0
-			self.getXmlStylesheetTag() # 10/25/02
+			
+			#@<< scan all the xml elements >>
+			#@+node:2::<< scan all the xml elements >>
+			#@+body
+			self.getXmlVersionTag()
+			self.getXmlStylesheetTag()
 			self.getTag("<leo_file>")
 			self.getLeoHeader()
 			self.getGlobals()
 			self.getPrefs()
 			self.getFindPanelSettings()
-			c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) # Causes window to appear.
+			
+			# Causes window to appear.
+			c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
 			es("reading: " + fileName)
+			
 			self.getVnodes()
 			self.getTnodes()
 			self.getCloneWindows()
 			self.getTag("</leo_file>")
-			
-			#@<< Create join lists of all vnodes >>
-			#@+node:2::<< Create join lists of all vnodes >>
-			#@+body
-			# Pass 1: create all join lists using the joinHead field in each tnode
-			v = c.rootVnode()
-			while v:
-				v.setJoinList(v.t.joinHead)
-				v.t.setJoinHead(v)
-				v = v.threadNext()
-			
-			# Pass 2: Circularize each join list.
-			v = c.rootVnode()
-			while v:
-				head = v.t.joinHead
-				if not head:
-					v = v.threadNext() ; continue
-				# Make sure we don't handle this list again.
-				v.t.setJoinHead(None)
-				# Clear the join list if it has only one member.
-				if head == v and not v.getJoinList():
-					v.setJoinList(None)
-					v = v.threadNext() ; continue
-				# Point last at the last vnode of the list.
-				last = head
-				while last and last.getJoinList():
-					assert(last != last.getJoinList())
-					last = last.getJoinList()
-				assert(last)
-				# Link last to head.
-				last.setJoinList(head)
-				v = v.threadNext()
 			#@-body
-			#@-node:2::<< Create join lists of all vnodes >>
+			#@-node:2::<< scan all the xml elements >>
 
-		except BadLeoFile, message: # All other exceptions are Leo bugs
+		except BadLeoFile, message:
+			
+			#@<< raise an alert >>
+			#@+node:3::<< raise an alert >>
+			#@+body
+			# All other exceptions are Leo bugs.
+			
 			# es_exception()
 			alert(self.mFileName + " is not a valid Leo file: " + `message`)
+			#@-body
+			#@-node:3::<< raise an alert >>
+
 			ok = false
-		# Leo2: read all @file nodes and reset orphan bits.
 		if ok and atFileNodesFlag:
-			at = c.atFileCommands
-			at.readAll(c.rootVnode(), false) # partialFlag
+			c.atFileCommands.readAll(c.rootVnode(),partialFlag=false)
 		if not c.tree.currentVnode:
 			c.tree.currentVnode = c.tree.rootVnode
+		self.setAllJoinLinks() # 5/3/03
+		c.initAllCloneBits() # 5/3/03
 		c.selectVnode(c.tree.currentVnode) # load body pane
 		c.tree.initing = false # Enable changes in endEditLabel
-		self.tnodesDict = {}
 		return ok, self.ratio
 	#@-body
-	#@-node:7::getLeoFile (Leo2)
+	#@-node:7::getLeoFile
 	#@+node:8::getLeoHeader
 	#@+body
 	def getLeoHeader (self):
@@ -583,7 +523,6 @@ class fileCommands:
 	
 		self.usingClipboard = true
 		self.fileBuffer = s ; self.fileIndex = 0
-		self.tnodesDict = {}
 		try:
 			self.getXmlVersionTag() # leo.py 3.0
 			self.getXmlStylesheetTag() # 10/25/02
@@ -597,7 +536,6 @@ class fileCommands:
 			v = None
 		# Clean up.
 		self.fileBuffer = None ; self.fileIndex = 0
-		self.tnodesDict = {}
 		self.usingClipboard = false
 		return v
 	#@-body
@@ -766,14 +704,7 @@ class fileCommands:
 	
 		# trace("parent:" + `parent` + ", back:" + `back`)
 		c = self.commands
-		# Create a single dummy vnode to carry status bits.
-		if not self.dummy_v:
-			self.dummy_t = leoNodes.tnode(0,"")
-			self.dummy_v = leoNodes.vnode(c,self.dummy_t)
-			self.dummy_v.initHeadString("dummy")
-		self.dummy_v.statusBits=0
-		currentVnodeFlag = false # true if the 'V' attribute seen.
-		topVnodeFlag = false # true if 'T' attribute seen.
+		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
 		tref = -1 ; headline = "" ; gnxString = None
 		# we have already matched <v.
 		while 1:
@@ -786,13 +717,13 @@ class fileCommands:
 				#@+body
 				# The a=" has already been seen.
 				while 1:
-					if   self.matchChar('C'): self.dummy_v.initClonedBit(true)
-					elif self.matchChar('D'): pass # no longer used.
-					elif self.matchChar('E'): self.dummy_v.initExpandedBit()
-					elif self.matchChar('M'): self.dummy_v.initMarkedBit()
-					elif self.matchChar('O'): self.dummy_v.setOrphan()
-					elif self.matchChar('T'): topVnodeFlag = true
-					elif self.matchChar('V'): currentVnodeFlag = true
+					if   self.matchChar('C'): pass # Not used 4.0:clone bits are recomputed later.
+					elif self.matchChar('D'): pass # Not used.
+					elif self.matchChar('E'): setExpanded = true
+					elif self.matchChar('M'): setMarked = true
+					elif self.matchChar('O'): setOrphan = true
+					elif self.matchChar('T'): setTop = true
+					elif self.matchChar('V'): setCurrent = true
 					else: break
 				self.getDquote()
 				#@-body
@@ -812,11 +743,28 @@ class fileCommands:
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
 		v = self.createVnode(parent,back,tref,headline)
-		v.statusBits = self.dummy_v.statusBits
-		# Remember various info that may have been specified.
-		if currentVnodeFlag:
+		
+		#@<< Set the remembered status bits >>
+		#@+node:2::<< Set the remembered status bits >>
+		#@+body
+		if setCurrent:
 			c.tree.currentVnode = v
-		if topVnodeFlag: c.mTopVnode = v
+		
+		if setExpanded:
+			v.initExpandedBit()
+		
+		if setMarked:
+			v.setMarked()
+		
+		if setOrphan:
+			v.setOrphan()
+		
+		if setTop:
+			c.mTopVnode = v  # Not used at present.
+		
+		#@-body
+		#@-node:2::<< Set the remembered status bits >>
+
 		# Recursively create all nested nodes.
 		parent = v ; back = None
 		while self.matchTag("<v"):
@@ -939,8 +887,10 @@ class fileCommands:
 	#@+body
 	def readAtFileNodes (self):
 	
-		c = self.commands
-		c.atFileCommands.readAll(c.currentVnode(), true) # partialFlag
+		c = self.commands ; current = c.currentVnode()
+		c.atFileCommands.readAll(current,partialFlag=true)
+		self.setAllJoinLinks(current) # 5/3/03
+		c.initAllCloneBits() # 5/3/03
 		c.redraw() # 4/4/03
 	#@-body
 	#@-node:5::readAtFileNodes
@@ -972,7 +922,7 @@ class fileCommands:
 		#@-node:1::<< Set the default directory >>
 
 		c.beginUpdate()
-		ok, ratio = self.getLeoFile(self.frame,fileName,false) # readAtFileNodes
+		ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=false)
 		c.endUpdate()
 		c.frame.top.deiconify()
 		c.setChanged(false)
@@ -1021,7 +971,7 @@ class fileCommands:
 		c.beginUpdate()
 		if 1: # inside update...
 			c.loading = true # disable c.changed
-			ok, ratio = self.getLeoFile(self.frame,fileName,true) # readAtFileNodes
+			ok, ratio = self.getLeoFile(self.frame,fileName,atFileNodesFlag=true)
 			c.loading = false # reenable c.changed
 			c.setChanged(false)
 			if 0: # This can't be done directly.
@@ -1035,7 +985,28 @@ class fileCommands:
 		return ok
 	#@-body
 	#@-node:7::fileCommands.open
-	#@+node:8::xmlUnescape
+	#@+node:8::fileCommands.setAllJoinLinks
+	#@+body
+	def setAllJoinLinks (self,root=None):
+		
+		"""Update all join links in the tree"""
+		
+		trace(root)
+		if root: # Only update the subtree.
+			after = root.nodeAfterTree()
+			while v and v != after:
+				if v not in v.t.joinList:
+					v.t.joinList.append(v)
+				v = v.threadNext()
+		else: # Update everything.
+			v = self.commands.rootVnode()
+			while v:
+				if v not in v.t.joinList:
+					v.t.joinList.append(v)
+				v = v.threadNext()
+	#@-body
+	#@-node:8::fileCommands.setAllJoinLinks
+	#@+node:9::xmlUnescape
 	#@+body
 	def xmlUnescape(self,s):
 	
@@ -1046,7 +1017,7 @@ class fileCommands:
 			s = string.replace(s, "&amp;", '&')
 		return s
 	#@-body
-	#@-node:8::xmlUnescape
+	#@-node:9::xmlUnescape
 	#@-node:2::Reading
 	#@+node:3::Writing
 	#@+node:1::assignAllGnx
@@ -1080,7 +1051,7 @@ class fileCommands:
 			while v:
 				t = v.t
 				# 8/28/99.  Write shared tnodes even if they are empty.
-				if t.hasBody() or v.getJoinList():
+				if t.hasBody() or len(v.t.joinList) > 0:
 					if t.fileIndex == 0:
 						self.maxTnodeIndex += 1
 						t.setFileIndex(self.maxTnodeIndex)
@@ -1106,7 +1077,7 @@ class fileCommands:
 			v = c.rootVnode()
 			while v: # Set indices for all tnodes that will be written.
 				t = v.t
-				if t.hasBody() or v.getJoinList(): # 8/28/99. Write shared tnodes even if they are empty.
+				if t.hasBody() or len(v.t.joinList) > 0: # Write shared tnodes even if they are empty.
 					if t.fileIndex == 0:
 						self.maxTnodeIndex += 1
 						t.setFileIndex(self.maxTnodeIndex)
@@ -1131,7 +1102,7 @@ class fileCommands:
 		after = v.nodeAfterTree()
 		while v and v != after:
 			t = v.t
-			if t and not t.isVisited() and (t.hasBody() or v.getJoinList()):
+			if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
 				t.setVisited()
 				tnodes += 1
 			v = v.threadNext()
@@ -1592,7 +1563,7 @@ class fileCommands:
 			#@+node:2::<< Put tnode index if this vnode has body text >>
 			#@+body
 			t = v.t
-			if t and (t.hasBody() or v.getJoinList()):
+			if t and (t.hasBody() or len(v.t.joinList) > 0):
 				if t.fileIndex > 0:
 					self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 					v.t.setVisited() # Indicate we wrote the body text.

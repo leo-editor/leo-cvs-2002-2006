@@ -168,6 +168,17 @@ def run(*args):
 #@-node:4::leo.run
 #@+node:5::profile
 #@+body
+#@+at
+#  To gather statistics, do the following in a Python window, not idle:
+# 
+# import leo
+# leo.profile()  (this runs leo)
+# load leoDocs.leo (it is very slow)
+# quit Leo.
+
+#@-at
+#@@c
+
 def profile ():
 
 	import profile, pstats

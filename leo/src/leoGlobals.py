@@ -904,7 +904,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 #@-body
 #@-node:5::wrap_lines
 #@-node:4::Commands, Dialogs, Directives, & Menus...
-#@+node:5::Dumping, Timing, Tracing & Sherlock
+#@+node:5::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::alert
 #@+body
 def alert(message):
@@ -928,7 +928,27 @@ def angleBrackets(s):
 virtual_event_name = angleBrackets
 #@-body
 #@-node:2::angleBrackets & virtual_event_name
-#@+node:3::dump
+#@+node:3::createTopologyList
+#@+body
+def createTopologyList (c=None,root=None,useHeadlines=false):
+	
+	"""Creates a list describing a node and all its descendents"""
+	
+	if not c: c = top()
+	if not root: root = c.rootVnode()
+	v = root
+	if useHeadlines:
+		aList = [(v.numberOfChildren(),v.headString()),]
+	else:
+		aList = [v.numberOfChildren()]
+	child = v.firstChild()
+	while child:
+		aList.append(createTopologyList(c,child,useHeadlines))
+		child = child.next()
+	return aList
+#@-body
+#@-node:3::createTopologyList
+#@+node:4::dump
 #@+body
 def dump(s):
 	
@@ -950,8 +970,8 @@ def oldDump(s):
 		else: out += i
 	return out
 #@-body
-#@-node:3::dump
-#@+node:4::es_error
+#@-node:4::dump
+#@+node:5::es_error
 #@+body
 def es_error (s):
 	
@@ -962,8 +982,8 @@ def es_error (s):
 	else:
 		es(s)
 #@-body
-#@-node:4::es_error
-#@+node:5::es_exception
+#@-node:5::es_error
+#@+node:6::es_exception
 #@+body
 def es_exception (full=false):
 
@@ -977,8 +997,8 @@ def es_exception (full=false):
 		es_error(i)
 	traceback.print_exc()
 #@-body
-#@-node:5::es_exception
-#@+node:6::es_event_exception
+#@-node:6::es_exception
+#@+node:7::es_event_exception
 #@+body
 def es_event_exception (eventName,full=false):
 
@@ -993,8 +1013,32 @@ def es_event_exception (eventName,full=false):
 		es(i)
 	traceback.print_exc()
 #@-body
-#@-node:6::es_event_exception
-#@+node:7::get_line & get_line_after
+#@-node:7::es_event_exception
+#@+node:8::funcToMethod
+#@+body
+#@+at
+#  The following is taken from page 188 of the Python Cookbook.
+# 
+# The following method allows you to add a function as a method of any class.  
+# That is, it converts the function to a method of the class.  The method just 
+# added is available instantly to all existing instances of the class, and to 
+# all instances created in the future.
+# 
+# The function's first argument should be self.
+# 
+# The newly created method has the same name as the function unless the 
+# optional name argument is supplied, in which case that name is used as the 
+# method name.
+
+#@-at
+#@@c
+
+def funcToMethod(f,theClass,name=None):
+	setattr(theClass,name or f.__name__,f)
+	trace(`name`)
+#@-body
+#@-node:8::funcToMethod
+#@+node:9::get_line & get_line_after
 #@+body
 # Very useful for tracing.
 
@@ -1018,8 +1062,8 @@ def get_line_after (s,i):
 	return nl + s[i:k]
 
 #@-body
-#@-node:7::get_line & get_line_after
-#@+node:8::file/module/plugin_date
+#@-node:9::get_line & get_line_after
+#@+node:10::file/module/plugin_date
 #@+body
 def module_date (mod,format=None):
 	file = os.path.join(app().loadDir,mod.__file__)
@@ -1027,7 +1071,7 @@ def module_date (mod,format=None):
 	return file_date(root + ".py",format=format)
 
 def plugin_date (plugin_mod,format=None):
-	file = os.path.join(app().loadDir,"..","plugins",plugin_mod.__file__)
+	file = os.path.join(app().loadDir,"plugins",plugin_mod.__file__)
 	root,ext = os.path.splitext(file) 
 	return file_date(root + ".py",format=format)
 
@@ -1043,8 +1087,8 @@ def file_date (file,format=None):
 	return ""
 
 #@-body
-#@-node:8::file/module/plugin_date
-#@+node:9::printBindings
+#@-node:10::file/module/plugin_date
+#@+node:11::printBindings
 #@+body
 def print_bindings (name,window):
 
@@ -1054,8 +1098,8 @@ def print_bindings (name,window):
 	for b in bindings:
 		print b
 #@-body
-#@-node:9::printBindings
-#@+node:10::printGlobals
+#@-node:11::printBindings
+#@+node:12::printGlobals
 #@+body
 def printGlobals(message=None):
 	
@@ -1070,8 +1114,8 @@ def printGlobals(message=None):
 	for glob in globs:
 		print glob
 #@-body
-#@-node:10::printGlobals
-#@+node:11::printLeoModules
+#@-node:12::printGlobals
+#@+node:13::printLeoModules
 #@+body
 def printLeoModules(message=None):
 	
@@ -1090,8 +1134,8 @@ def printLeoModules(message=None):
 		print m,
 	print
 #@-body
-#@-node:11::printLeoModules
-#@+node:12::Sherlock...
+#@-node:13::printLeoModules
+#@+node:14::Sherlock...
 #@+body
 #@+at
 #  Starting with this release, you will see trace statements throughout the 
@@ -1260,8 +1304,8 @@ def trace_tag (name, *args):
 
 #@-body
 #@-node:5::trace_tag
-#@-node:12::Sherlock...
-#@+node:13::Statistics
+#@-node:14::Sherlock...
+#@+node:15::Statistics
 #@+node:1::clear_stats
 #@+body
 def clear_stats():
@@ -1296,9 +1340,13 @@ def print_stats (name=None):
 
 #@-body
 #@-node:2::print_stats
-#@+node:3::tick
+#@+node:3::stat
 #@+body
-def tick (name=None):
+def stat (name=None):
+
+	"""Increments the statistic for name in app().stats
+	The caller's name is used by default.
+	"""
 	
 	if name:
 		if type(name) != type(""):
@@ -1310,12 +1358,13 @@ def tick (name=None):
 		stats = app().stats
 	except:
 		app().stats = stats = {}
+
 	stats[name] = 1 + stats.get(name,0)
 
 #@-body
-#@-node:3::tick
-#@-node:13::Statistics
-#@+node:14::Timing
+#@-node:3::stat
+#@-node:15::Statistics
+#@+node:16::Timing
 #@+body
 #@+at
 #  pychecker bug: pychecker complains that there is no attribute time.clock
@@ -1330,8 +1379,8 @@ def esDiffTime(message, start):
 	es(message + ("%6.3f" % (time.clock()-start)))
 	return time.clock()
 #@-body
-#@-node:14::Timing
-#@+node:15::Files & Directories...
+#@-node:16::Timing
+#@+node:17::Files & Directories...
 #@+node:1::create_temp_name
 #@+body
 # Returns a temporary file name.
@@ -1660,8 +1709,8 @@ def utils_rename(src,dst):
 		move_file(src,dst)
 #@-body
 #@-node:10::utils_rename
-#@-node:15::Files & Directories...
-#@-node:5::Dumping, Timing, Tracing & Sherlock
+#@-node:17::Files & Directories...
+#@-node:5::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:6::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
 #@+body
@@ -1853,6 +1902,7 @@ def es(s,*args,**keys):
 		s = s + ", " + arg
 	a = app() ; log = a.log
 	if log:
+		# print s
 		log.put(s,color=color)
 		# 6/2/02: This logic will fail if log is None.
 		for ch in s:

@@ -35,7 +35,7 @@ def loadHandlers():
 	import glob,os,sys
 	oldpath = sys.path
 	try: # Make sure we restore sys.path.
-		path = os.path.join(app().loadDir,"..","plugins") # 2/19/03
+		path = os.path.join(app().loadDir,"plugins") # 2/19/03
 		files = glob.glob(os.path.join(path,"mod_*.py"))
 		if len(files) > 0:
 			es("Loading plugins:",color="red")

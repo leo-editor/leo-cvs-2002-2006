@@ -1342,8 +1342,7 @@ class Commands:
 	#@+node:3::clearAllVisited
 	#@+body
 	def clearAllVisited (self):
-		
-		# tick()
+	
 		c = self ; v = c.rootVnode()
 		c.beginUpdate()
 		while v:
@@ -1417,8 +1416,7 @@ class Commands:
 	# Returns false if any node of tree is a clone of parent or any of parents ancestors.
 	
 	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
-		
-		# tick()
+	
 		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
 		drag_message  = "Illegal drag: Can't drag a node into its own tree"
 	
@@ -1480,8 +1478,7 @@ class Commands:
 	# Inserts a vnode after the current vnode.  All details are handled by the vnode class.
 	
 	def insertHeadline (self,op_name="Insert Outline"):
-		
-		# tick()
+	
 		c = self ; current = c.currentVnode()
 		if not current: return
 		c.beginUpdate()
@@ -1539,82 +1536,47 @@ class Commands:
 		return result
 	#@-body
 	#@-node:5::c.copyTree
-	#@+node:6::initAllCloneBits
+	#@+node:6::initAllCloneBits (changed in 4.0)
 	#@+body
-	#@+at
-	#  This function initializes all clone bits in the entire outline's tree.
-
-	#@-at
-	#@@c
-
 	def initAllCloneBits (self):
+		
+		"""Initialize all clone bits in the entire outline"""
+		trace()
 	
 		c=self
 		c.clearAllVisited()
 		v = self.tree.rootVnode
 		c.beginUpdate()
 		while v:
-			if v.isVisited():
-				v = v.threadNext()
-				continue
-			mark = v.shouldBeClone()
-			# Mark all nodes joined to v.
-			v2 = v.getJoinList()
-			while v2 and v2 != v:
-				v2.setVisited()
-				# Important speedup: only change the bit if it needs changing.
-				if not mark and v2.isCloned():
-					v2.clearClonedBit()
-				elif mark and not v2.isCloned():
-					v2.setClonedBit()
-				v2 = v2.getJoinList()
-			# Mark v.
-			v.setVisited()
-			if not mark and v.isCloned():
-				v.clearClonedBit()
-			elif mark and not v.isCloned():
-				v.setClonedBit()
+			if not v.t.isVisited():
+				v.t.setVisited() # Inhibit visits to all joined nodes.
+				c.initJoinedCloneBits(v)
 			v = v.threadNext()
 		c.endUpdate()
+	
 	#@-body
-	#@-node:6::initAllCloneBits
+	#@-node:6::initAllCloneBits (changed in 4.0)
 	#@+node:7::c.initJoinedClonedBits (changed in 3.11.1)
 	#@+body
 	# Initializes all clone bits in the all nodes joined to v.
 	
 	def initJoinedCloneBits (self,v):
 	
-		c = self ; v1 = v
-	
+		c = self
 		c.beginUpdate()
-		if 1: # update range...
-			mark = v.shouldBeClone() # 4/29/03: only calculate mark once!
-			
-			#@<< init clone bit for v >>
-			#@+node:1::<< init clone bit for v >>
-			#@+body
-			if not mark and v.isCloned():
-				v.clearClonedBit()
-			elif mark and not v.isCloned():
-				v.setClonedBit()
-			#@-body
-			#@-node:1::<< init clone bit for v >>
-
-			v = v.getJoinList()
-			while v and v != v1:
-				
-				#@<< init clone bit for v >>
-				#@+node:1::<< init clone bit for v >>
-				#@+body
-				if not mark and v.isCloned():
-					v.clearClonedBit()
-				elif mark and not v.isCloned():
-					v.setClonedBit()
-				#@-body
-				#@-node:1::<< init clone bit for v >>
-
-				v = v.getJoinList()
+		mark = v.shouldBeClone()
+		if mark:
+			# Set clone bit in v and all joined nodes.
+			v.setClonedBit()
+			for v2 in v.t.joinList:
+				v2.setClonedBit()
+		else:
+			# Set clone bit in v and all joined nodes.
+			v.clearClonedBit()
+			for v2 in v.t.joinList:
+				v2.clearClonedBit()
 		c.endUpdate()
+	
 	#@-body
 	#@-node:7::c.initJoinedClonedBits (changed in 3.11.1)
 	#@+node:8::validateOutline
@@ -2088,7 +2050,7 @@ class Commands:
 	#@+body
 	def moveOutlineLeft(self):
 		
-		# clear_stats() ; # tick()
+		# clear_stats() ; # stat()
 		c = self
 		v = c.currentVnode()
 		if not v: return
@@ -2117,7 +2079,7 @@ class Commands:
 	#@+body
 	def moveOutlineRight(self):
 		
-		# clear_stats() ; # tick()
+		# clear_stats() ; # stat()
 		c = self
 		v = c.currentVnode()
 		if not v: return

@@ -84,6 +84,7 @@ class atFile:
 	
 		# trace("__init__", "atFile.__init__")
 		self.commands = theCommander # The commander for the current window.
+		self.fileCommands = self.commands.fileCommands
 	
 		# < < init the 4.x constants > >
 		self.initIvars()
@@ -167,7 +168,7 @@ class atFile:
 		self.nodeIndices = app().nodeIndices
 		self.using_gnx = false # true: present derived file uses gnxs.
 		self.root_seen = false # true: root vnode has been handled in this file.
-		self.tnodes_dict = {} # Dict to recognize shared tnodes.  Keys are stringized gnx's, entries are tnodes.
+		
 		
 		#@-body
 		#@-node:1::<< init atFile ivars >>
@@ -525,41 +526,7 @@ class atFile:
 		return s
 	#@-body
 	#@-node:5::handleLinesFollowingSentinel
-	#@+node:6::joinTrees
-	#@+body
-	#@+at
-	#  This function joins all nodes in the two trees which should have the 
-	# same topology. This code makes no other assumptions about the two trees; 
-	# some or all of the nodes may already have been joined.
-	# 
-	# There are several differences between this method and the similar 
-	# vnode:joinTreeTo method.  First, we can not assert that the two trees 
-	# have the same topology because the derived file could have been edited 
-	# outside of Leo.  Second, this method also merges the tnodes of all 
-	# joined nodes.
-
-	#@-at
-	#@@c
-	def joinTrees(self,tree1,tree2):
-	
-		assert(tree1 and tree2)
-		# Use a common tnode for both nodes.
-		if tree1.t != tree2.t:
-			tree1.setT(tree2.t)
-		# Join the roots using the vnode class.
-		tree1.joinNodeTo(tree2)
-		# Recursively join all subtrees.
-		child1 = tree1.firstChild()
-		child2 = tree2.firstChild()
-		while child1 and child2:
-			self.joinTrees(child1, child2)
-			child1 = child1.next()
-			child2 = child2.next()
-		if child1 or child2:
-			self.readError("cloned nodes have different topologies")
-	#@-body
-	#@-node:6::joinTrees
-	#@+node:7::readLine
+	#@+node:6::readLine
 	#@+body
 	def readLine (self,file):
 		"""Reads one line from file using the present encoding"""
@@ -570,8 +537,8 @@ class atFile:
 	
 	
 	#@-body
-	#@-node:7::readLine
-	#@+node:8::readLinesToNextSentinel
+	#@-node:6::readLine
+	#@+node:7::readLinesToNextSentinel
 	#@+body
 	# We expect only a single line, and more may exist if cvs detects a conflict.
 	# We accept the first line even if it looks like a sentinel.
@@ -598,8 +565,8 @@ class atFile:
 	
 		return nextLine,lines
 	#@-body
-	#@-node:8::readLinesToNextSentinel
-	#@+node:9::scanDoc
+	#@-node:7::readLinesToNextSentinel
+	#@+node:8::scanDoc
 	#@+body
 	# Scans the doc part and appends the text out.
 	# s,i point to the present line on entry.
@@ -726,8 +693,8 @@ class atFile:
 		#@-body
 		#@-node:6::<< Remove a closing block delim from out >>
 	#@-body
-	#@-node:9::scanDoc
-	#@+node:10::scanHeader
+	#@-node:8::scanDoc
+	#@+node:9::scanHeader
 	#@+body
 	#@+at
 	#  This method sets self.startSentinelComment and self.endSentinelComment 
@@ -860,8 +827,8 @@ class atFile:
 			self.readError("Bad @+leo sentinel in " + self.targetFileName)
 		return firstLines
 	#@-body
-	#@-node:10::scanHeader
-	#@+node:11::scanText
+	#@-node:9::scanHeader
+	#@+node:10::scanText
 	#@+body
 	#@+at
 	#  This method is the heart of both the 3.x and 4.0 read code.
@@ -1249,7 +1216,7 @@ class atFile:
 				# The  3.0 code handled shared tnodes automatically.
 				# This 4.0 code must check for shared tnode here.
 				s = a.nodeIndices.toString(gnx)
-				d = self.tnodes_dict
+				d = self.fileCommands.tnodesDict # Use the global dict.
 				shared_t = d.get(s,None)
 				if shared_t:
 					print "replacing t by shared_t",s
@@ -1517,8 +1484,8 @@ class atFile:
 		assert(len(s)==0 and nextLine==None) # We get here only if readline fails.
 		return lastLines # We get here only if there are problems.
 	#@-body
-	#@-node:11::scanText
-	#@+node:12::Top level
+	#@-node:10::scanText
+	#@+node:11::Top level
 	#@+node:1::atFile.readAll
 	#@+body
 	#@+at
@@ -1536,7 +1503,7 @@ class atFile:
 	#@-at
 	#@@c
 
-	def readAll(self,root,partialFlag):
+	def readAll(self,root,partialFlag=false):
 	
 		c = self.commands
 		c.endEditing() # Capture the current headline.
@@ -1554,7 +1521,7 @@ class atFile:
 					# We are forcing the read.
 					self.read(v)
 				else:
-					# f v is an orphan, we don't expect to see a derived file,
+					# if v is an orphan, we don't expect to see a derived file,
 					# and we shall read a derived file if it exists.
 					wasOrphan = v.isOrphan()
 					ok = self.read(v)
@@ -1591,15 +1558,19 @@ class atFile:
 	#@@c
 	def read(self,root):
 	
-		t1 = getTime()
 		c = self.commands
-		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
+		
+		#@<< set self.targetFileName >>
+		#@+node:5::<< set self.targetFileName >>
+		#@+body
 		if root.isAtFileNode():
 			self.targetFileName = root.atFileNodeName()
 		else:
 			self.targetFileName = root.atRawFileNodeName()
-		self.root = root
-		self.raw = false
+		#@-body
+		#@-node:5::<< set self.targetFileName >>
+
+		self.root = root ; self.raw = false
 		self.errors = self.structureErrors = 0
 		
 		#@<< open file >>
@@ -1654,8 +1625,8 @@ class atFile:
 		if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
 			print "reading 4.0 file:", self.targetFileName
 			
-			#@<< quickly unlink and delete all children >>
-			#@+node:1::<< quickly unlink and delete all children >>
+			#@<< quickly unlink and delete all children of root >>
+			#@+node:1::<< quickly unlink and delete all children of root >>
 			#@+body
 			#@+at
 			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
@@ -1663,6 +1634,7 @@ class atFile:
 
 			#@-at
 			#@@c
+
 			child = root.firstChild()
 			while child:
 				next = child.next()
@@ -1673,9 +1645,10 @@ class atFile:
 				child = next
 			c.selectVnode(root)
 			#@-body
-			#@-node:1::<< quickly unlink and delete all children >>
+			#@-node:1::<< quickly unlink and delete all children of root >>
 
 			
+		root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 		lastLines = self.scanText(file,root,out,atFile.endLeo)
 		
 		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -1690,47 +1663,58 @@ class atFile:
 		#@-body
 		#@-node:2::<< Scan the file buffer  >>
 
-		
-		#@<< Bump mStructureErrors if any vnodes are unvisited >>
-		#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
-		#@+body
-		#@+at
-		#  createNthNode marks all nodes in the derived file as visited.  Any 
-		# unvisited nodes are either dummies or nodes that don't exist in the 
-		# derived file.
+		if not self.using_gnx:
+			
+			#@<< Bump mStructureErrors if any vnodes are unvisited >>
+			#@+node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+			#@+body
+			#@+at
+			#  createNthNode marks all nodes in the derived file as visited.  
+			# Any unvisited nodes are either dummies or nodes that don't exist 
+			# in the derived file.
 
-		#@-at
-		#@@c
+			#@-at
+			#@@c
 
-		next = root.nodeAfterTree()
-		v = root.threadNext()
-		while v and v != next:
-			if not v.isVisited():
-				if 0: # CVS produces to many errors for this to be useful.
-					es("unvisited node: " + v.headString())
-				self.structureErrors += 1
-			v = v.threadNext()
-		
-		#@-body
-		#@-node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
+			next = root.nodeAfterTree()
+			v = root.threadNext()
+			while v and v != next:
+				if not v.isVisited():
+					if 0: # CVS produces to many errors for this to be useful.
+						es("unvisited node: " + v.headString())
+					self.structureErrors += 1
+				v = v.threadNext()
+			
+			#@-body
+			#@-node:3::<< Bump mStructureErrors if any vnodes are unvisited >>
 
-		next = root.nodeAfterTree()
-		if self.structureErrors > 0:
-			if self.using_gnx: # Testing.
-				return false
+		if self.structureErrors > 0 and not self.using_gnx:
 			self.readError("-- Rereading file.  Clone links into this file will be lost.") ;
 			self.errors = 0
-			root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 			
-			#@<< Delete root's tree and body text >>
-			#@+node:4::<< Delete root's tree and body text >>
+			#@<< quickly delete root's tree and body text >>
+			#@+node:4::<< quickly delete root's tree and body text >>
 			#@+body
-			while root.firstChild():
-				root.firstChild().doDelete(root)
+			#@+at
+			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
+			# calls c.initAllCloneBits.
+
+			#@-at
+			#@@c
+
+			child = root.firstChild()
+			while child:
+				next = child.next()
+				# The guts of doDelete
+				child.destroyDependents()
+				child.unjoinTree()
+				child.unlink()
+				child = next
+			c.selectVnode(root)
 			
 			root.setBodyStringOrPane("")
 			#@-body
-			#@-node:4::<< Delete root's tree and body text >>
+			#@-node:4::<< quickly delete root's tree and body text >>
 
 			file.seek(0)
 			
@@ -1745,8 +1729,8 @@ class atFile:
 			if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
 				print "reading 4.0 file:", self.targetFileName
 				
-				#@<< quickly unlink and delete all children >>
-				#@+node:1::<< quickly unlink and delete all children >>
+				#@<< quickly unlink and delete all children of root >>
+				#@+node:1::<< quickly unlink and delete all children of root >>
 				#@+body
 				#@+at
 				#  Calling v.doDelete is _way_ too slow here because it 
@@ -1754,6 +1738,7 @@ class atFile:
 
 				#@-at
 				#@@c
+
 				child = root.firstChild()
 				while child:
 					next = child.next()
@@ -1764,9 +1749,10 @@ class atFile:
 					child = next
 				c.selectVnode(root)
 				#@-body
-				#@-node:1::<< quickly unlink and delete all children >>
+				#@-node:1::<< quickly unlink and delete all children of root >>
 
 				
+			root.clearVisitedInTree() # Clear the list of nodes for orphans logic.
 			lastLines = self.scanText(file,root,out,atFile.endLeo)
 			
 			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -1782,128 +1768,15 @@ class atFile:
 			#@-node:2::<< Scan the file buffer  >>
 
 		file.close()
-		if self.errors == 0:
-			next = root.nodeAfterTree()
-			if 0: # 9/26/02: No longer used: derived files contain no clone indices.
-				root.clearAllVisitedInTree()
-				
-				#@<< Handle clone bits >>
-				#@+node:5::<< Handle clone bits >> (no longer used)
-				#@+body
-				h = {}
-				v = root
-				while v and v != next:
-					cloneIndex = v.t.cloneIndex
-					# new Leo2: we skip the root node: @file nodes can not be cloned.
-					if cloneIndex > 0 and v != root:
-						if h.has_key(cloneIndex):
-							t = h[cloneIndex]
-							# v is a clone: share the previous tnode.
-							v.setT(t)
-							t.setVisited() # We will mark these clones later.
-						else: h[cloneIndex] = v.t
-					v = v.threadNext()
-				
-				# Set clone marks for all visited tnodes.
-				v = root
-				while v and v != next:
-					if v.t.isVisited():
-						if v == root:
-							pass
-						elif v.shouldBeClone():
-							v.initClonedBit(true)
-						else:
-							# Not a serious error.
-							es("clone links cleared for: " + v.headString())
-							v.unjoinTree();
-							t.setCloneIndex(0) # t is no longer cloned.
-					v = v.threadNext()
-				#@-body
-				#@-node:5::<< Handle clone bits >> (no longer used)
-
-				
-				#@<< Join cloned trees >>
-				#@+node:6::<< Join cloned trees >> (no longer used)
-				#@+body
-				#@+at
-				#  In most cases, this code is not needed, because the outline 
-				# already has been read and nodes joined.  However, there 
-				# could be problems on read errors, so we also join nodes here.
-
-				#@-at
-				#@@c
-
-				h = {}
-				v = root
-				while v and v != next:
-					cloneIndex = v.t.cloneIndex
-					# new Leo2: we skip the root node: @file nodes can not be cloned.
-					if cloneIndex > 0 and v != root:
-						if h.has_key(cloneIndex):
-							clone = h[cloneIndex]
-							if v.headString() == clone.headString():
-								self.joinTrees(clone,v)
-							else:
-								# An extremely serious error.  Data may be lost.
-								self.readError(
-									"Outline corrupted: " +
-									"different nodes have same clone index!\n\t" +
-									v.headString() + "\n\t" + clone.headString())
-						# Enter v so we can join the next clone to it.
-						# The next call to lookup will find this v, not the previous.
-						h[cloneIndex] = v
-					v = v.threadNext()
-				#@-body
-				#@-node:6::<< Join cloned trees >> (no longer used)
-
-			
-			#@<< Handle all status bits >>
-			#@+node:7::<< Handle all status bits >>
-			#@+body
-			current = None
-			v = root
-			while v and v != next:
-				if v.isSelected():
-					self.commands.tree.currentVnode = current = v
-				if v.isTopBitSet():
-					# Just tell the open code we have seen the top vnode.
-					self.commands.tree.topVnode = v ;
-				v = v.threadNext()
-			
-			if current:
-				# Indicate what the current node will be.
-				c.tree.currentVnode = current
-			
-			#@-body
-			#@-node:7::<< Handle all status bits >>
-
-			if app().use_gnx and self.using_gnx:
-				
-				#@<< Update join links and clone bits for 4.0 derived file >>
-				#@+node:8::<< Update join links and clone bits for 4.0 derived file >>
-				#@+body
-				v = root ; after = v.nodeAfterTree()
-				
-				# Add v to the join list.  How to do this???
-				
-				# Update the clone bits.
-				print "recomputing clone bits"
-				while v and v != after:
-					c.initJoinedCloneBits(v)
-					v = v.threadNext()
-				#@-body
-				#@-node:8::<< Update join links and clone bits for 4.0 derived file >>
-
 		if self.errors > 0:
 			# A serious error has occured that has not been corrected.
 			self.readError("----- File may have damaged sentinels!")
 			root.unjoinTree();
 		else: root.clearDirty()
-		# esDiffTime("read: exit", t1)
 		return self.errors == 0
 	#@-body
 	#@-node:2::atFile.read
-	#@-node:12::Top level
+	#@-node:11::Top level
 	#@-node:4::Reading
 	#@+node:5::Sentinels
 	#@+node:1::nodeSentinelText
@@ -2619,46 +2492,7 @@ class atFile:
 		return i
 	#@-body
 	#@-node:5::skipIndent
-	#@+node:6::updateCloneIndices (3.x only)
-	#@+body
-	#@+at
-	#  The new Leo2 computes clone indices differently from the old Leo2:
-	# 
-	# 1. The new Leo2 recomputes clone indices for every write.
-	# 2. The new Leo2 forces the clone index of the @file node to be zero.
-	# 
-	# Also, the read logic ignores the clone index of @file nodes, thereby 
-	# ensuring that we don't mistakenly join an @file node to another node.
-
-	#@-at
-	#@@c
-	def updateCloneIndices(self,root,next):
-	
-		if root.isCloned():
-			if 0: # 9/26/02: Silently allow this.  Everything appears to work.
-				self.error("ignoring clone mark for " + root.headString())
-			root.t.setCloneIndex(0)
-		index = 0
-		# 12/17/01: increment each cloneIndex at most once.
-		v = root
-		while v and v != next:
-			v.t.cloneIndex = 0
-			v = v.threadNext()
-		v = root
-		while v and v != next:
-			vIs = v.isCloned()
-			vShould = v.shouldBeClone() #verbose
-			if 0: # vIs or vShould:
-				es("update:"+`index`+" is:"+`vIs`+" should:"+`vShould`+`v`) ; enl()
-			if v.t.cloneIndex == 0 and vIs and vShould:
-				index += 1
-				v.t.cloneIndex = index
-			v = v.threadNext()
-		# Make sure the root's clone index is zero.
-		root.t.setCloneIndex(0)
-	#@-body
-	#@-node:6::updateCloneIndices (3.x only)
-	#@+node:7::writeError
+	#@+node:6::writeError
 	#@+body
 	def writeError(self,message):
 	
@@ -2668,7 +2502,7 @@ class atFile:
 		self.root.setOrphan()
 		self.root.setDirty()
 	#@-body
-	#@-node:7::writeError
+	#@-node:6::writeError
 	#@-node:7::Utilites
 	#@+node:8::Writing
 	#@+node:1::Top level
@@ -2699,7 +2533,9 @@ class atFile:
 			#@+node:1::<< write root's tree >>
 			#@+body
 			next = root.nodeAfterTree()
-			self.updateCloneIndices(root, next)
+			
+			if 0: # Clone indices are no longer used.
+				self.updateCloneIndices(root, next)
 			
 			
 			#@<< put all @first lines in root >>
@@ -2906,8 +2742,9 @@ class atFile:
 			root.clearVisitedInTree()
 			next = root.nodeAfterTree()
 			
-			if not self.using_gnx:
-				self.updateCloneIndices(root, next)
+			if 0: # Clone indices are no longer used.
+				if not self.using_gnx:
+					self.updateCloneIndices(root, next)
 			
 			
 			#@<< put all @first lines in root >>

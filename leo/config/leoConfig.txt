@@ -153,7 +153,7 @@ expandtolevel8 = Alt+8
 body_text_background_color = 
 body_time_format_string = %m/%d/%Y %H:%M:%S
 headline_gmt_time = 0
-body_text_font_size = 11
+body_text_font_size = 9
 body_insertion_cursor_color = 
 log_text_foreground_color = 
 headline_text_editing_foreground_color = black
@@ -192,7 +192,7 @@ outline_pane_background_color =
 body_text_font_slant = roman
 split_bar_color = LightSteelBlue2
 initial_window_left = 10
-headline_text_font_size = 11
+headline_text_font_size = 9
 split_bar_width = 6
 initial_window_width = 60
 body_cursor_foreground_color = 
@@ -203,10 +203,9 @@ headline_text_editing_background_color = white
 headline_text_editing_selection_foreground_color = white
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
-file2 = C:\prog\leoCVS\leo\config\leoConfig.leo
-file1 = C:\Documents and Settings\default\My Documents\ekr.leo
-file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file2 = C:\Documents and Settings\default\Desktop\leo(devel)\src\LeoPy.leo
+file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file0 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
 
 [find/change options]
 mark_changes = 0
@@ -217,7 +216,7 @@ search_headline = 0
 batch = 0
 node_only = 0
 search_body = 1
-find_string = Icons
+find_string = 
 pattern_match = 0
 wrap = 0
 mark_finds = 0

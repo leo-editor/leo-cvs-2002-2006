@@ -249,8 +249,7 @@ class leoTree:
 	#@+node:2::beginUpdate
 	#@+body
 	def beginUpdate (self):
-		
-		# tick()
+	
 		self.updateCount += 1
 	#@-body
 	#@-node:2::beginUpdate
@@ -261,6 +260,7 @@ class leoTree:
 		y += 7 # draw the box at x, y+7
 	
 		iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
+		
 		image = self.getIconImage(iconname)
 		id = self.canvas.create_image(x,y,image=image)
 		if 0: # don't create a reference to this!
@@ -334,7 +334,7 @@ class leoTree:
 	#@+body
 	def drawTree(self,v,x,y,h,level):
 		
-		# Recursive routine, tick() not useful.
+		# Recursive routine, stat() not useful.
 		yfirst = ylast = y
 		if level==0: yfirst += 10
 		while v:
@@ -364,8 +364,7 @@ class leoTree:
 	#@+node:7::endUpdate
 	#@+body
 	def endUpdate (self, flag=true):
-		
-		# tick()
+	
 		assert(self.updateCount > 0)
 		self.updateCount -= 1
 		if flag and self.updateCount == 0:
@@ -624,7 +623,7 @@ class leoTree:
 	# This _is_ useful when a flag is passed to c.endUpdate.
 	def redraw (self):
 		if self.updateCount == 0 and not self.redrawScheduled:
-			# tick() # print "tree.redraw"
+			# stat() # print "tree.redraw"
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
@@ -632,7 +631,6 @@ class leoTree:
 	def force_redraw (self):
 		# print "tree.force_redraw"
 		if not self.redrawScheduled:
-			# tick()
 			self.redrawScheduled = true
 			self.canvas.after_idle(self.idle_redraw)
 			
@@ -640,7 +638,7 @@ class leoTree:
 	# It is up to the caller to ensure that no other redraws are pending.
 	def redraw_now (self):
 	
-		# tick() ; # print "tree.redraw_now: ", self.redrawScheduled
+		# print "tree.redraw_now: ", self.redrawScheduled
 		self.idle_redraw()
 	
 	def idle_redraw (self):
@@ -1212,13 +1210,12 @@ class leoTree:
 			v.edit_text.insert("end",s)
 			v.edit_text.mark_set("insert",index)
 			# Update all joined nodes.
-			v2 = v.joinList
-			while v2 and v2 != v:
-				v2.initHeadString(s)
-				if v2.edit_text: # v2 may not be visible
-					v2.edit_text.delete("1.0","end")
-					v2.edit_text.insert("end",s)
-				v2 = v2.joinList
+			for v2 in v.t.joinList:
+				if v2 != v:
+					v2.initHeadString(s)
+					if v2.edit_text: # v2 may not be visible
+						v2.edit_text.delete("1.0","end")
+						v2.edit_text.insert("end",s)
 			c.endUpdate(false) # do not redraw now.
 	
 		# Reconfigure v's headline.
@@ -1227,11 +1224,10 @@ class leoTree:
 		v.edit_text.configure(width=self.headWidth(v))
 	
 		# Reconfigure all joined headlines.
-		v2 = v
-		while v2 and v2 != v:
-			if v2.edit_text: # v2 may not be visible
-				v2.edit_text.configure(width=self.headWidth(v2))
-			v2 = v2.joinList
+		for v2 in v.t.joinList:
+			if v2 != v:
+				if v2.edit_text: # v2 may not be visible
+					v2.edit_text.configure(width=self.headWidth(v2))
 			
 		# Update the screen.
 		if done:
@@ -1284,20 +1280,21 @@ class leoTree:
 			if flag == None:  # Anything other than None overrides.
 				url = s[4:].strip()
 				
-				#@<< stop the url after any embedded blank and issue warning >>
-				#@+node:1::<< stop the url after any embedded blank and issue warning >>
+				#@<< stop the url after any whitespace >>
+				#@+node:1::<< stop the url after any whitespace  >>
 				#@+body
 				# For safety, the URL string should end at the first whitespace.
 				
 				url = url.replace('\t',' ')
 				i = url.find(' ')
 				if i > -1:
-					es("ignoring characters after space in url:"+url[i:])
-					es("use %20 instead of spaces")
+					if 0: # No need for a warning.  Assume everything else is a comment.
+						es("ignoring characters after space in url:"+url[i:])
+						es("use %20 instead of spaces")
 					url = url[:i]
 				
 				#@-body
-				#@-node:1::<< stop the url after any embedded blank and issue warning >>
+				#@-node:1::<< stop the url after any whitespace  >>
 
 				
 				#@<< check the url; return if bad >>
@@ -1495,7 +1492,7 @@ class leoTree:
 			self.idle_head_key(v) # Must be done immediately.
 			self.revertHeadline = None
 			self.select(v)
-			if v and v.joinList:
+			if v and len(v.t.joinList) > 0:
 				# 3/26/03: changed redraw_now to force_redraw.
 				self.force_redraw() # force a redraw of joined headlines.
 	#@-body

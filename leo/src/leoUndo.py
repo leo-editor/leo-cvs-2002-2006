@@ -505,7 +505,7 @@ class undoer:
 	#@+body
 	def redo (self):
 		
-		# clear_stats() ; tick()
+		# clear_stats() ; stat()
 		u = self ; c = u.commands
 		if not u.canRedo(): return
 		if not u.getBead(u.bead+1): return
@@ -533,8 +533,6 @@ class undoer:
 				shared = u.findSharedVnode(u.v)
 				if shared: u.v.joinTreeTo(shared)
 				u.v.createDependents()
-				if u.v.shouldBeClone():
-					u.v.setClonedBit()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			
@@ -557,8 +555,6 @@ class undoer:
 				shared = u.findSharedVnode(u.v)
 				if shared: u.v.joinTreeTo(shared)
 				u.v.createDependents()
-				if u.v.shouldBeClone():
-					u.v.setClonedBit()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			#@-body
@@ -705,11 +701,10 @@ class undoer:
 				
 				# trace(`u.newText`)
 				u.v.setHeadStringOrHeadline(u.newText)
-				# 9/24/02: update all joined headlines.
-				v2 = u.v.joinList
-				while v2 and v2 != u.v:
-					v2.setHeadString(u.newText)
-					v2 = v2.joinList
+				# Update all joined headlines.
+				for v2 in u.v.t.joinList:
+					if v2 != u.v:
+						v2.setHeadString(u.newText)
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:8::<< redo typing cases >>
@@ -734,7 +729,7 @@ class undoer:
 
 	def undo (self):
 		
-		# clear_stats() ; # tick()
+		# clear_stats() ; # stat()
 		u = self ; c = u.commands
 		if not u.canUndo(): return
 		if not u.getBead(u.bead): return
@@ -790,8 +785,6 @@ class undoer:
 				shared = u.findSharedVnode(u.v)
 				if shared: u.v.joinTreeTo(shared)
 				u.v.createDependents()
-				if u.v.shouldBeClone():
-					u.v.setClonedBit()
 				c.initAllCloneBits()
 				c.selectVnode(u.v)
 			#@-body
@@ -962,10 +955,9 @@ class undoer:
 				# trace(`u.oldText`)
 				u.v.setHeadStringOrHeadline(u.oldText)
 				# 9/24/02: update all joined headlines.
-				v2 = u.v.joinList
-				while v2 and v2 != u.v:
-					v2.setHeadString(u.oldText)
-					v2 = v2.joinList
+				for v2 in u.v.t.joinList:
+					if v2 != u.v:
+						v2.setHeadString(u.oldText)
 				c.selectVnode(u.v)
 			#@-body
 			#@-node:8::<< undo typing cases >>
@@ -1067,29 +1059,28 @@ class undoer:
 		assert(v)
 		assert(oldv)
 		u = self ; c = u.commands
-		j = v.joinList
 		copies = []
 	
 		# For each node joined to v, swap in a copy of oldv.
-		while j and j != v:
-			nextj = j.joinList
-			copy = c.copyTree(oldv)
-			copies.append(copy)
-			j.swap_links(copy,j)
-			j = nextj
+		trace("old" + `oldv.t.joinList`)
+		trace("new" + `v.t.joinList`)
+		joinList = v.t.joinList[:] # Copy the join list: it will change.
+		for j in joinList:
+			if j != v:
+				copy = c.copyTree(oldv)
+				copies.append(copy)
+				j.swap_links(copy,j)
 	
 		# Swap v and oldv.
 		# trace("final swap")
 		v.swap_links(v,oldv)
-		trace("new linked tree:"+`v`)
+		# trace("new linked tree:"+`v`)
 		
 		# Join v to all copies.
 		for copy in copies:
 			v.joinTreeTo(copy)
 			
 		# Restore all clone bits.
-		if v.shouldBeClone():
-			v.setClonedBit()
 		c.initAllCloneBits()
 		
 		return v
