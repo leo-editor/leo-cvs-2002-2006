@@ -484,7 +484,8 @@ class listBoxDialog:
 	#@+body
 	def __init__ (self,c,label):
 	
-		trace(`label`)
+		# trace(`label`)
+	
 		# Initialize common ivars.
 		self.c = c
 		self.label = label
@@ -556,6 +557,10 @@ class listBoxDialog:
 	#@+body
 	def destroy (self,event=None):
 		
+		"""Hide, do not destroy, a listboxDialog window
+		
+		subclasses may override to really destroy the window"""
+		
 		self.top.withdraw() # Don't allow this window to be destroyed.
 	
 	#@-body
@@ -615,55 +620,7 @@ class recentSectionsDialog (listBoxDialog):
 	#@+node:3::<< recentSectionsDialog methods >>
 	#@+body
 	#@+others
-	#@+node:1::recent...__init__
-	#@+body
-	def __init__ (self,c,label):
-		
-		listBoxDialog.__init__(self,c,label)
-		
-		if self not in app().sectionDialogs:
-			app().sectionDialogs.append(self)
-	
-	
-	#@-body
-	#@-node:1::recent...__init__
-	#@+node:2::createFrame
-	#@+body
-	def createFrame(self):
-		
-		c = self.c
-	
-		listBoxDialog.createFrame(self)	
-		self.addButtons()
-	
-	#@-body
-	#@-node:2::createFrame
-	#@+node:3::fillbox
-	#@+body
-	def fillbox(self,event=None):
-	
-		"""Update the listbox and update vnodeList & tnodeList ivars"""
-		
-		c = self.c
-		
-		self.box.delete(0,"end")
-		self.vnodeList = []
-		self.tnodeList = []
-		
-		# Make sure the node still exists.
-		# Insert only the last cloned node.
-		i = 0
-		for v in c.visitedList:
-			if v.exists(self.c) and v.t not in self.tnodeList:
-				self.box.insert(i,v.headString().strip())
-				self.tnodeList.append(v.t)
-				self.vnodeList.append(v)
-				i += 1
-				
-		self.synchButtons()
-	#@-body
-	#@-node:3::fillbox
-	#@+node:4::addButtons
+	#@+node:1::addButtons
 	#@+body
 	def addButtons (self):
 		
@@ -701,8 +658,8 @@ class recentSectionsDialog (listBoxDialog):
 		b.pack(side="left",pady=2,padx=5)
 	
 	#@-body
-	#@-node:4::addButtons
-	#@+node:5::clearAll
+	#@-node:1::addButtons
+	#@+node:2::clearAll
 	#@+body
 	def clearAll (self,event=None):
 	
@@ -715,8 +672,19 @@ class recentSectionsDialog (listBoxDialog):
 		self.fillbox()
 	
 	#@-body
-	#@-node:5::clearAll
-	#@+node:6::deleteEntry
+	#@-node:2::clearAll
+	#@+node:3::createFrame
+	#@+body
+	def createFrame(self):
+		
+		c = self.c
+	
+		listBoxDialog.createFrame(self)	
+		self.addButtons()
+	
+	#@-body
+	#@-node:3::createFrame
+	#@+node:4::deleteEntry
 	#@+body
 	def deleteEntry (self,event=None):
 	
@@ -739,8 +707,72 @@ class recentSectionsDialog (listBoxDialog):
 			self.fillbox()
 	
 	#@-body
-	#@-node:6::deleteEntry
-	#@+node:7::synchNavButtons
+	#@-node:4::deleteEntry
+	#@+node:5::destroy
+	#@+body
+	def destroy (self,event=None):
+		
+		"""Really destroy a recentSectionsDialog
+		
+		This is an escape from possible performace penalties"""
+		
+		if self in app().sectionDialogs:
+			app().sectionDialogs.remove(self)
+			
+		self.top.destroy()
+	#@-body
+	#@-node:5::destroy
+	#@+node:6::fillbox (recent sections)
+	#@+body
+	def fillbox(self,event=None):
+	
+		"""Update the listbox and update vnodeList & tnodeList ivars"""
+		
+		c = self.c
+		
+		# Only fill the box if the dialog is visible.
+		# This is another escape to avoid possible performance problems.
+		
+		# trace(self.top.state())
+		
+		if self.top.state() == "normal":
+			
+			#@<< reconstruct the contents of self.box >>
+			#@+node:1::<< reconstruct the contents of self.box >>>
+			#@+body
+			self.box.delete(0,"end")
+			self.vnodeList = []
+			self.tnodeList = []
+			
+			# Make sure the node still exists.
+			# Insert only the last cloned node.
+			i = 0
+			for v in c.visitedList:
+				if v.exists(self.c) and v.t not in self.tnodeList:
+					self.box.insert(i,v.headString().strip())
+					self.tnodeList.append(v.t)
+					self.vnodeList.append(v)
+					i += 1
+			
+			#@-body
+			#@-node:1::<< reconstruct the contents of self.box >>>
+
+			self.synchButtons()
+	#@-body
+	#@-node:6::fillbox (recent sections)
+	#@+node:7::recent...__init__
+	#@+body
+	def __init__ (self,c,label):
+		
+		listBoxDialog.__init__(self,c,label)
+		
+		if self not in app().sectionDialogs:
+			app().sectionDialogs.append(self)
+	
+	
+	#@-body
+	#@-node:7::recent...__init__
+	#@+node:8::synchNavButtons
 	#@+body
 	def synchButtons (self):
 		
@@ -753,7 +785,7 @@ class recentSectionsDialog (listBoxDialog):
 		image = c.rt_nav_button.cget("image")
 		self.rt_nav_button.configure(image=image)
 	#@-body
-	#@-node:7::synchNavButtons
+	#@-node:8::synchNavButtons
 	#@-others
 	
 	#@-body
