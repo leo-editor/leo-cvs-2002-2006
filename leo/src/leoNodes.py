@@ -2356,7 +2356,7 @@ class position (object):
         
         p = self
         for p in p.self_and_subtree_iter():
-            yield p.v
+            yield p.v.t
             
     def unique_tnodes_iter(self):
         
@@ -2365,9 +2365,9 @@ class position (object):
         p = self
         marks = {}
         for p in p.self_and_subtree_iter():
-            if p.v not in marks:
-                marks[p.v] = p.v
-                yield p.v
+            if p.v.t not in marks:
+                marks[p.v.t] = p.v.t
+                yield p.v.t
     #@nonl
     #@-node:EKR.20040529103843:p.tnodes_iter & unique_tnodes_iter
     #@+node:EKR.20040529103945:p.vnodes_iter & unique_vnodes_iter
