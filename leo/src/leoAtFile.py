@@ -101,28 +101,25 @@ class baseAtFile:
 		
 		# trace("topLevelDerivedFile.__init__")
 		
-		at = self
-		at.commands = theCommander
-		at.fileCommands = self.commands.fileCommands
+		self.commands = theCommander
+		self.fileCommands = self.commands.fileCommands
 		
 		# Create subcommanders to handler old and new format derived files.
-		at.old_df = oldDerivedFile(theCommander)
-		at.new_df = newDerivedFile(theCommander)
+		self.old_df = oldDerivedFile(theCommander)
+		self.new_df = newDerivedFile(theCommander)
 		
-		at.initIvars()
+		self.initIvars()
 		
 	def initIvars(self):
 		
-		at = self
-		
 		# Set by scanDefaultDirectory.
-		at.default_directory = None
-		at.errors = 0
+		self.default_directory = None
+		self.errors = 0
 	
 		# Set by scanHeader when reading. Set by scanAllDirectives...
 		self.encoding = app().config.default_derived_file_encoding
-		at.endSentinelComment = None
-		at.startSentinelComment = None
+		self.endSentinelComment = None
+		self.startSentinelComment = None
 	#@nonl
 	#@-node:atFile.__init__ & initIvars
 	#@+node:top_df.error
@@ -257,7 +254,7 @@ class baseAtFile:
 		#@nl
 		root.clearVisitedInTree()
 		try:
-			df.readOpenFile(root,file,fileName,firstLines)
+			df.readOpenFile(root,file,firstLines)
 		except:
 			at.error("Unexpected exception while reading derived file")
 			es_exception()
@@ -438,7 +435,7 @@ class baseAtFile:
 		at = self
 		new_df = false # Set default.
 		firstLines = [] # The lines before @+leo.
-		version_tag = "-ver=" ; gnx_tag = "-gnx="
+		version_tag = "-ver="
 		tag = "@+leo" ; encoding_tag = "-encoding="
 		valid = true
 		#@	<< skip any non @+leo lines >>
@@ -658,7 +655,8 @@ class baseAtFile:
 		
 	def silentWrite (self,v):
 	
-		try: self.old_df.silentWrite(v) # No new_df.silentWrite method.
+		at = self # 9/26/03
+		try: at.old_df.silentWrite(v) # No new_df.silentWrite method.
 		except: at.writeException(v)
 		
 	def write (self,v,nosentinels=false):
@@ -874,7 +872,7 @@ class baseOldDerivedFile:
 		#@nl
 	#@-node: old_df.__init__& initIvars
 	#@+node:old_df.readOpenFile
-	def readOpenFile(self,root,file,fileName,firstLines):
+	def readOpenFile(self,root,file,firstLines):
 		
 		"""Read an open 3.x derived file."""
 		
@@ -1914,21 +1912,24 @@ class baseOldDerivedFile:
 	sentinelNameDict = {
 		noSentinel: "<no sentinel>",
 		startAt:     "@+at",     endAt:     "@-at",
-		startBody:   "@+body",   endBody:   "@-body",
+		startBody:   "@+body",   endBody:   "@-body", # 3.x only.
 		startDoc:    "@+doc",    endDoc:    "@-doc",
 		startLeo:    "@+leo",    endLeo:    "@-leo",
 		startNode:   "@+node",   endNode:   "@-node",
 		startOthers: "@+others", endOthers: "@-others",
+		startAfterRef:  "@afterref", # 4.x
 		startComment:   "@comment",
 		startDelims:    "@delims",
 		startDirective: "@@",
+		startNl:        "@nl",   # 4.x
+		startNonl:      "@nonl", # 4.x
 		startRef:       "@<<",
 		startVerbatim:  "@verbatim",
-		startVerbatimAfterRef: "@verbatimAfterRef" }
+		startVerbatimAfterRef: "@verbatimAfterRef" } # 3.x only.
 	
 	def sentinelName(self, kind):
-		if atFile.sentinelNameDict.has_key(kind):
-			return atFile.sentinelNameDict[kind]
+		if self.sentinelNameDict.has_key(kind):
+			return self.sentinelNameDict[kind]
 		else:
 			return "<unknown sentinel!>"
 	#@nonl
@@ -1948,52 +1949,6 @@ class baseOldDerivedFile:
 		assert(i < len(s) and s[i] == '@')
 		return i + 1
 	#@-node:skipSentinelStart
-	#@+node:scanAll
-	def scanAll (self):
-	
-		c = self.commands ; v = c.rootVnode()
-		while v:
-			if v.isAtIgnoreNode():
-				v = v.nodeAfterTree()
-			elif v.isAtFileNode():
-				self.scanFile(v)
-				v = v.nodeAfterTree()
-			else: v = v.threadNext()
-	#@nonl
-	#@-node:scanAll
-	#@+node:scanFile
-	def scanFile(self,root):
-	
-		es("scanning: " + root.headString())
-		self.targetFileName = root.atFileNodeName()
-		self.root = root
-		self.errors = 0
-		#@	<< open file >>
-		#@+node:<< open file >>
-		if len(self.targetFileName) == 0:
-			self.readError("Missing file name")
-		else:
-			try:
-				file = open(self.targetFileName,'r')
-			except:
-				self.readError("Error reading file")
-		#@-node:<< open file >>
-		#@nl
-		if self.errors > 0: return 0
-		#@	<< Scan the file buffer >>
-		#@+node:<< Scan the file buffer  >>
-		self.indent = 0
-		out = []
-		self.scanHeader(file)
-		self.scanText(file,root,out,endLeo)
-		s = string.join(out, "")
-		root.setBodyStringOrPane(s)
-		#@nonl
-		#@-node:<< Scan the file buffer  >>
-		#@nl
-		return self.errors == 0
-	#@nonl
-	#@-node:scanFile
 	#@+node:directiveKind
 	# Returns the kind of at-directive or noDirective.
 	
@@ -2325,11 +2280,6 @@ class baseOldDerivedFile:
 			next = root.nodeAfterTree()
 			#@		<< write root's tree >>
 			#@+node:<< write root's tree >>
-			next = root.nodeAfterTree()
-			
-			if 0: # Clone indices are no longer used.
-				self.updateCloneIndices(root, next)
-			
 			#@<< put all @first lines in root >>
 			#@+node:<< put all @first lines in root >>
 			#@+at 
@@ -3490,7 +3440,7 @@ class baseNewDerivedFile(oldDerivedFile):
 	#@nonl
 	#@-node:newDerivedFile.__init__
 	#@+node:new_df.readOpenFile
-	def readOpenFile(self,root,file,fileName,firstLines):
+	def readOpenFile(self,root,file,firstLines):
 		
 		"""Read an open 4.x derived file."""
 		
@@ -4466,6 +4416,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at = self
 		c = at.commands ; at.root = root
 		at.errors = 0
+		at.root.tnodeList = [] # 9/26/03: after beta 1 release.
 		c.endEditing() # Capture the current headline.
 		try:
 			at.targetFileName = root.atRawFileNodeName()
@@ -4501,7 +4452,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			#@nonl
 			#@-node:<< put all @first lines in root >>
 			#@nl
-			at.putOpenLeoSentinel()
+			at.putOpenLeoSentinel("@+leo-ver=4") # 9/26/03: after beta 1 release.
 			#@<< put optional @comment sentinel lines >>
 			#@+node:<< put optional @comment sentinel lines >>
 			s2 = app().config.output_initial_comment
@@ -4531,7 +4482,7 @@ class baseNewDerivedFile(oldDerivedFile):
 				#@nl
 				v = v.threadNext()
 			
-			at.putSentinel()
+			at.putSentinel("@-leo")
 			#@<< put all @last lines in root >>
 			#@+node:<< put all @last lines in root >>
 			#@+at 

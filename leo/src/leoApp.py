@@ -5,7 +5,7 @@
 #@@language python
 
 from leoGlobals import *
-import leo,leoConfig,leoDialog,leoFind,leoNodes
+import leo,leoConfig,leoDialog,leoFind,leoGui,leoNodes
 import locale,os,sys
 
 class LeoApp:
@@ -23,7 +23,7 @@ class LeoApp:
 		self.commandName = None # The name of the command being executed.
 		self.config = None # The leoConfig instance.
 		self.globalWindows = []
-		self.gui = "tkinter" # Name of the gui in use.
+		self.gui = None # The gui class.
 		self.guiDispatcher = None # Class used to dispatch gui calls to proper object.
 		self.hasOpenWithMenu = false # True: open with plugin has been loaded.
 		self.hookError = false # true: suppress further calls to hooks.
@@ -148,6 +148,14 @@ class LeoApp:
 	
 		return true # The window has been closed.
 	#@-node:app.closeLeoWindow
+	#@+node:app.createTkGui
+	def createTkGui (self):
+		
+		app = self
+		app.gui = gui = leoGui.tkinterGui()
+		assert(app.gui.guiName()=="tkinter")
+		app.root = app.gui.createRootWindow()
+	#@-node:app.createTkGui
 	#@+node:app.destroyAllGlobalWindows
 	def destroyAllGlobalWindows (self):
 		

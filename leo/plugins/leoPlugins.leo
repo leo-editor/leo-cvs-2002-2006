@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="E"><vh>Diary</vh>
+<v t="T1"><vh>Diary</vh>
 <v t="T2"><vh>7/7 Created leoPlugins.leo</vh></v>
 </v>
 <v t="T3"><vh>Documentation and security warnings</vh>
@@ -41,8 +41,8 @@
 </v>
 <v t="T22"><vh>FindPanel.cpp</vh>
 <v t="T23"><vh>&lt;&lt; FindPanel declarations &gt;&gt;</vh></v>
-<v t="T24" a="M"><vh>BEGIN_EVENT_TABLE</vh></v>
-<v t="T25" a="M"><vh>ctor</vh></v>
+<v t="T24"><vh>BEGIN_EVENT_TABLE</vh></v>
+<v t="T25"><vh>ctor</vh></v>
 <v t="T26"><vh>OnActivateFindFrame</vh></v>
 <v t="T27"><vh>OnSetFocus</vh></v>
 <v t="T28"><vh>OnCloseFindFrame</vh></v>
@@ -67,8 +67,8 @@
 <v t="T47"><vh>set_check_boxes</vh></v>
 <v t="T48"><vh>FindPanel</vh></v>
 </v>
-<v t="T49" a="M"><vh>LeoApp.cpp</vh>
-<v t="T50" a="M"><vh>Event table</vh></v>
+<v t="T49"><vh>LeoApp.cpp</vh>
+<v t="T50"><vh>Event table</vh></v>
 <v t="T51"><vh>OnInit</vh>
 <v t="T52"><vh>&lt;&lt; Switch to the other running copy of Leo if one is already open &gt;&gt;</vh></v>
 <v t="T53"><vh>&lt;&lt; Set gAppDirectory &gt;&gt;</vh></v>
@@ -83,11 +83,11 @@
 <v t="T61"><vh>log_open</vh></v>
 <v t="T62"><vh>put_cstring_to_log_window</vh></v>
 </v>
-<v t="T63" a="M"><vh>LeoFrame.cpp</vh>
-<v t="T64" a="M"><vh>BEGIN_EVENT_TABLE</vh>
+<v t="T63"><vh>LeoFrame.cpp</vh>
+<v t="T64"><vh>BEGIN_EVENT_TABLE</vh>
 <v t="T65"><vh>&lt;&lt; Declare menu events &gt;&gt;</vh></v>
 </v>
-<v t="T66" a="M"><vh>ctor</vh>
+<v t="T66"><vh>ctor</vh>
 <v t="T67"><vh>&lt;&lt; Initialize the private vars &gt;&gt;</vh></v>
 <v t="T68"><vh>&lt;&lt; Initialize the argument settings &gt;&gt;</vh></v>
 <v t="T69"><vh>&lt;&lt; Create the splitter windows &gt;&gt;</vh></v>
@@ -279,7 +279,7 @@
 <v t="T250"><vh>wxPython docs: local @urls</vh>
 <v t="T251"><vh>@url file:///C:/prog/wxDocs/wx26.htm#classref</vh></v>
 <v t="T252"><vh>@url file:c:\prog\wxDocs\index.htm</vh></v>
-<v t="T253" a="M"><vh>@url file:///C:\Python22\Lib\site-packages\wxPython\docs\wxPythonManual.html</vh></v>
+<v t="T253"><vh>@url file:///C:\Python22\Lib\site-packages\wxPython\docs\wxPythonManual.html</vh></v>
 <v t="T254"><vh>app, color, icon, sizer, xmlresource</vh>
 <v t="T255"><vh>@url file:///C:/prog/wxDocs/wx30.htm#wxapp</vh></v>
 <v t="T256"><vh>@url file:///C:/prog/wxDocs/wx63.htm#wxcolour</vh></v>
@@ -306,7 +306,7 @@
 <v t="T274"><vh>@url file:///C:/prog/wxDocs/wx265.htm#wxmenuitem</vh></v>
 </v>
 <v t="T275"><vh>tree</vh>
-<v t="T276" a="M"><vh>@url file:///C:/prog/wxDocs/wx399.htm#wxtreectrl</vh></v>
+<v t="T276"><vh>@url file:///C:/prog/wxDocs/wx399.htm#wxtreectrl</vh></v>
 <v t="T277"><vh>@url file:///C:/prog/wxDocs/wx401.htm#wxtreeitemdata</vh></v>
 </v>
 <v t="T278"><vh>widgets</vh>
@@ -314,7 +314,7 @@
 <v t="T280"><vh>@url file:///C:/prog/wxDocs/wx52.htm#wxcheckbox</vh></v>
 <v t="T281"><vh>@url file:///C:/prog/wxDocs/wx212.htm#wxhtmlwindow</vh></v>
 <v t="T282"><vh>@url file:///C:/prog/wxDocs/wx357.htm#wxsplitterwindow</vh></v>
-<v t="T283" a="M"><vh>@url file:///C:/prog/wxDocs/wx381.htm#wxtextctrl</vh></v>
+<v t="T283"><vh>@url file:///C:/prog/wxDocs/wx381.htm#wxtextctrl</vh></v>
 </v>
 <v t="T284"><vh>wx Questions</vh></v>
 </v>
@@ -384,10 +384,10 @@
 </v>
 </v>
 </v>
-<v t="T337" a="EV"><vh>Plugins</vh>
+<v t="T337" a="V"><vh>Plugins</vh>
 <v t="T338"><vh>Commands</vh>
 <v t="T339"><vh> Importing Cisco configuration files</vh>
-<v t="T340" tnodeList="340,341,342,343,344,345,346,347"><vh>@file import_cisco_config.py</vh>
+<v t="T340" a="M" tnodeList="340,341,342,343,344,345,346,347"><vh>@file import_cisco_config.py</vh>
 <v t="T341"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
 <v t="T342"><vh>create_import_cisco_menu</vh></v>
 <v t="T343"><vh>importCiscoConfig</vh>
@@ -484,7 +484,7 @@
 </v>
 </v>
 <v t="T414"><vh>Drawing, graphics &amp; styled text</vh>
-<v t="T415" tnodeList="415,416,417,418,419,420,421,422"><vh>@file color_markup.py</vh>
+<v t="T415" a="M" tnodeList="415,416,417,418,419,420,421,422"><vh>@file color_markup.py</vh>
 <v t="T416"><vh>initAnyMarkup</vh></v>
 <v t="T417"><vh>colorWikiMarkup</vh></v>
 <v t="T418"><vh>doWikiText</vh>
@@ -495,7 +495,7 @@
 </v>
 <v t="T422"><vh>insertWikiPicture</vh></v>
 </v>
-<v t="T423" tnodeList="423,424,425,426,427"><vh>@file image.py</vh>
+<v t="T423" a="M" tnodeList="423,424,425,426,427"><vh>@file image.py</vh>
 <v t="T424"><vh>onSelect</vh>
 <v t="T425"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
@@ -503,7 +503,7 @@
 <v t="T427"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T428" tnodeList="428,429,430,431,432,433,434,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459"><vh>@file nav_buttons.py</vh>
+<v t="T428" a="M" tnodeList="428,429,430,431,432,433,434,436,437,438,439,440,441,442,443,444,445,446,447,448,449,450,451,452,453,454,455,456,457,458,459"><vh>@file nav_buttons.py</vh>
 <v t="T429"><vh>class commanderInfoClass</vh>
 <v t="T430"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="T431"><vh>addWidgets</vh>
@@ -600,7 +600,7 @@
 </v>
 <v t="T498"><vh>Menus</vh>
 <v t="T499"><vh> Plugins menu</vh>
-<v t="T500" tnodeList="500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522"><vh>@file plugins_menu.py</vh>
+<v t="T500" a="M" tnodeList="500,501,502,503,504,505,506,507,508,509,510,511,512,513,514,515,516,517,518,519,520,521,522"><vh>@file plugins_menu.py</vh>
 <v t="T501"><vh>class Plugin</vh>
 <v t="T502"><vh>__init__</vh>
 <v t="T503"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -632,7 +632,7 @@
 <v t="T522"><vh>&lt;&lt; add items to the plugins menu &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="T523"><vh>@file test.py</vh>
+<v t="T523" a="M"><vh>@file test.py</vh>
 <v t="T524"><vh>applyConfiguration</vh></v>
 <v t="T525"><vh>cmd_fn1/2/3</vh></v>
 <v t="T526"><vh>onSelect</vh>
@@ -736,7 +736,7 @@
 <v t="T597"><vh>Spell Checking</vh>
 <v t="T598"><vh>@silentfile mod_spelling.txt</vh></v>
 <v t="T599" tnodeList="599"><vh>@file mod_spelling.ini</vh></v>
-<v t="T600" tnodeList="600,602,603,604,605,607,608,609,610,611,612,613,614,615,617,618,619,620,621,622,623,624,626,627,628,629,630,631,633,634,635,636,637,639,640,641,642,643,644,645,646,647,648"><vh>@file mod_spelling.py</vh>
+<v t="T600" a="M" tnodeList="600,602,603,604,605,607,608,609,610,611,612,613,614,615,617,618,619,620,621,622,623,624,626,627,628,629,630,631,633,634,635,636,637,639,640,641,642,643,644,645,646,647,648"><vh>@file mod_spelling.py</vh>
 <v t="T601"><vh>Functions</vh>
 <v t="T602"><vh>createSpellMenu</vh></v>
 <v t="T603"><vh>onSelect</vh></v>
@@ -6418,11 +6418,16 @@ import tkFileDialog
 @others
 
 if 0:
-	registerHandler(("start2","open2","command2"), create_import_cisco_menu)
 	
-	__version__ = "1.3" # Set version for the plugin handler.
-	plugin_signon(__name__)
-</t>
+	if not app().gui:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+
+		registerHandler(("start2","open2","command2"), create_import_cisco_menu)
+
+		__version__ = "1.3" # Set version for the plugin handler.
+		plugin_signon(__name__)</t>
 <t tx="T341">@ This plugin adds a menu item under the File-&gt;Import menu to import
 Cisco configuration files.
 
@@ -7374,11 +7379,16 @@ import string  # zfill does not exist in Python 2.2.1
 
 if 1: # Register the handlers...
 
-	registerHandler("color-optional-markup", colorWikiMarkup)
-	registerHandler("init-color-markup", initAnyMarkup)
+	if not app().gui:
+		app().createTkGui()
 
-	__version__ = "1.1"
-	plugin_signon(__name__)</t>
+	if app().gui.guiName() == "tkinter":
+
+		registerHandler("color-optional-markup", colorWikiMarkup)
+		registerHandler("init-color-markup", initAnyMarkup)
+	
+		__version__ = "1.1"
+		plugin_signon(__name__)</t>
 <t tx="T416">def initAnyMarkup (tag,keywords):
 	
 	"""initialize colorer.markup_string
@@ -7542,11 +7552,17 @@ from leoGlobals import *
 @others
 
 if 1: # Register the handlers...
-	registerHandler("select2", onSelect)
-	registerHandler("unselect1", onUnselect)
-	
-	__version__ = "1.2" # Set version for the plugin handler.
-	plugin_signon(__name__)
+
+	if app().gui == None:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+		
+		registerHandler("select2", onSelect)
+		registerHandler("unselect1", onUnselect)
+		
+		__version__ = "1.2" # Set version for the plugin handler.
+		plugin_signon(__name__)
 </t>
 <t tx="T424">def onSelect (tag,keywords):
 
@@ -7619,17 +7635,22 @@ Tk = Tkinter
 
 if 1: # Register the handlers...
 
-	registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
-	registerHandler("select2",globalInfo.updateRecentSections)
-	registerHandler("command2",globalInfo.updateMarksAfterCommand)
-	registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
-	registerHandler("close-frame",globalInfo.destroyFrame)
-	registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
+	if app().gui == None:
+		app().createTkGui()
 
-	# 7/12/03: Moved marksDialog and recentSectionsDialog into this plugin.
-	# 7/12/03: Handled "set-mark" and "clear-mark" hooks.
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+	if app().gui.guiName() == "tkinter":
+
+		registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
+		registerHandler("select2",globalInfo.updateRecentSections)
+		registerHandler("command2",globalInfo.updateMarksAfterCommand)
+		registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
+		registerHandler("close-frame",globalInfo.destroyFrame)
+		registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
+	
+		# 7/12/03: Moved marksDialog and recentSectionsDialog into this plugin.
+		# 7/12/03: Handled "set-mark" and "clear-mark" hooks.
+		__version__ = "1.2"
+		plugin_signon(__name__)</t>
 <t tx="T429">class commanderInfoClass:
 	@others</t>
 <t tx="T430">def __init__ (self,c,globalInfo):
@@ -8224,8 +8245,6 @@ if 1: # Register the handlers...
 	# No hooks, we just use the cmd_Export to trigger an export
 	__version__ = "0.1"
 	__name__ = "Word Export"
-	
-	print __name__
 
 	plugin_signon("word_export")</t>
 <t tx="T472">def getConfiguration():
@@ -8722,10 +8741,15 @@ Tk = Tkinter
 @others
 
 if 1: # Register the handlers...
-	registerHandler("create-optional-menus",createPluginsMenu)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+
+	if app().gui == None:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+		registerHandler("create-optional-menus",createPluginsMenu)
+		
+		__version__ = "1.2"
+		plugin_signon(__name__)</t>
 <t tx="T501">class PlugIn:
 
 	"""A class to hold information about one plugin"""
@@ -8969,11 +8993,16 @@ from leoGlobals import *
 
 if 0: # Register the handlers...
 
-	registerHandler("select2", onSelect)
-	registerHandler("unselect1", onUnselect)
-	
-	__version__ = "1.1"
-	plugin_signon(__name__)</t>
+	if app().gui == None:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+
+		registerHandler("select2", onSelect)
+		registerHandler("unselect1", onUnselect)
+		
+		__version__ = "1.1"
+		plugin_signon(__name__)</t>
 <t tx="T524">def applyConfiguration(config):
 	
 	sections = config.sections()
@@ -9265,15 +9294,21 @@ from htmllib import HTMLParser
 @others
 
 if 0: # Register the handlers...
-	registerHandler(("start2","open2"), on_open2)
-	registerHandler("bodykey1", on_bodykey1)
-	registerHandler("headkey2", on_headkey2)
-	if 0: # doesn't work: the cursor stops blinking.
-		registerHandler("select1", on_select1)
-		registerHandler("select2", on_select2)
 
-	__version__ = "1.5" # Set version for the plugin handler.
-	plugin_signon(__name__)
+	if not app().gui:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+
+		registerHandler(("start2","open2"), on_open2)
+		registerHandler("bodykey1", on_bodykey1)
+		registerHandler("headkey2", on_headkey2)
+		if 0: # doesn't work: the cursor stops blinking.
+			registerHandler("select1", on_select1)
+			registerHandler("select2", on_select2)
+	
+		__version__ = "1.5" # Set version for the plugin handler.
+		plugin_signon(__name__)
 </t>
 <t tx="T544">@ Dear Leo users,
 
@@ -9866,8 +9901,6 @@ except:
 <t tx="T583">from leoPlugins import *
 from leoGlobals import *
 
-Tk = Tkinter
-
 @others
 
 if 0: # Override classes &amp; methods...
@@ -10127,18 +10160,23 @@ Tk = Tkinter
 
 if 1: # Register the handlers...
 
-	spellFrame = spellDialog()
-	spellFrame.top.withdraw()
-	app().globalWindows.append(spellFrame)
-	
-	registerHandler("create-optional-menus",createSpellMenu)
-	registerHandler("select2",onSelect)
-	registerHandler("command2",onCommand) # For any command that might change the text.
-	registerHandler("bodykey2",onSelect) # For updating buttons.
-	registerHandler(("bodyclick2","bodydclick2","bodyrclick2"),onSelect) # These affect selection.
-	
-	__version__ = "0.2.0"
-	plugin_signon(__name__)</t>
+	if app().gui == None:
+		app().createTkGui()
+
+	if app().gui.guiName() == "tkinter":
+
+		spellFrame = spellDialog()
+		spellFrame.top.withdraw()
+		app().globalWindows.append(spellFrame)
+		
+		registerHandler("create-optional-menus",createSpellMenu)
+		registerHandler("select2",onSelect)
+		registerHandler("command2",onCommand) # For any command that might change the text.
+		registerHandler("bodykey2",onSelect) # For updating buttons.
+		registerHandler(("bodyclick2","bodydclick2","bodyrclick2"),onSelect) # These affect selection.
+		
+		__version__ = "0.2.0"
+		plugin_signon(__name__)</t>
 <t tx="T601"></t>
 <t tx="T602">def createSpellMenu(tag,keywords):
 	

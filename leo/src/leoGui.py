@@ -12,18 +12,31 @@ import os,sys,tkFont,Tkinter,traceback
 
 Tk = Tkinter
 
-class tkinterGuiClass:
+#@+others
+#@+node:class leoGui
+class leoGui:
 	
-	"""A class encapulating all calls to tkinter."""
+	"""The base class of all gui classes.
+	
+	Subclasses are expected to override all do-nothing methods of this class."""
 	
 	#@	@+others
+	#@+node:leoGui.__init__
+	def __init__ (self,guiName):
+		
+		# print "leoGui.__init__",guiName
+		
+		self.mGuiName = guiName
+	#@nonl
+	#@-node:leoGui.__init__
 	#@+node:__getattr__ & ignoreUnknownAttr
-	def __getattr__(self,name):
+	if 0: # This makes debugging difficult.
+		def __getattr__(self,name):
 		
-		"""tkinterGuiClass.__getattr to handle unknown calls without crashing."""
-		
-		# print "tkinterGui.__getattr__: not found:",name
-		return self.ignoreUnknownAttr
+			"""tkinterGui.__getattr to handle unknown calls without crashing."""
+			
+			print "leoGui.__getattr__: not found:",name
+			return self.ignoreUnknownAttr
 		
 	def  ignoreUnknownAttr(self,*args,**keys):
 		
@@ -33,9 +46,121 @@ class tkinterGuiClass:
 	#@-node:__getattr__ & ignoreUnknownAttr
 	#@+node:guiName
 	def guiName(self):
-		return "tkinter"
+		
+		try:
+			return self.mGuiName
+		except:
+			return "invalid gui name"
 	#@nonl
 	#@-node:guiName
+	#@+node:do-nothing methods
+	#@+at 
+	#@nonl
+	# Subclasses are expected to subclass all of the following methods.
+	# 
+	# These are all do-nothing methods: callers are expected to check for None 
+	# returns.
+	# 
+	# The type of commander passed to methods depends on the type of frame or 
+	# dialog being created.  The commander may be a Commands instance or one 
+	# of its subcommanders.
+	#@-at
+	#@nonl
+	#@-node:do-nothing methods
+	#@+node:Birth, death & rebirth
+	def createRootWindow(self):
+		"""A do-nothing base class to create the hidden root window for a gui.
+		
+		Nothing needs to be done if the root window need not exist."""
+		pass
+	
+	def killGui(self,exitFlag=true):
+		"""A do-nothing base class to destroy a gui.
+		
+		The entire Leo application should terminate if exitFlag is true."""
+		pass
+	
+	def recreateRootWindow(self):
+		"""A do-nothing base class to create the hidden root window of a gui
+	
+		after a previous gui has terminated with killGui(false)."""
+		pass
+	
+	#@-node:Birth, death & rebirth
+	#@+node:Creating Frames
+	def newColorFrame(self,commander):
+		"""A do-nothing base class to create a colorFrame."""
+		pass
+	
+	def newColorNameFrame(self,commander):
+		"""A do-nothing base class to create a colorNameFrame."""
+		pass
+	
+	def newCompareFrame(self,commander):
+		"""A do-nothing base class to create a compareFrame."""
+		pass
+	
+	def newFindFrame(self,commander):
+		"""A do-nothing base class to create a findFrame."""
+		pass
+	
+	def newFontFrame(self,commander):
+		"""A do-nothing base class to create a fondFrame."""
+		pass
+	
+	def newLeoFrame(self,commander):
+		"""A do-nothing base class to create a view frame for the Leo main window."""
+		pass
+	
+	def newPrefsFrame(self,commander):
+		"""A do-nothing base class to create a prefsFrame."""
+		pass
+	#@nonl
+	#@-node:Creating Frames
+	#@+node:Creating and running dialogs
+	def newAboutLeoDialog(self,commander):
+		"""A do-nothing base class to create an About Leo dialog."""
+		pass
+	
+	def newAskOkDialog(self,commander):
+		"""A do-nothing base class to create an askOK dialog ."""
+		pass
+	
+	def newAskOkCancelDialog(self,commander):
+		"""A do-nothing base class to create an askOkCancel dialog."""
+		pass
+	
+	def newAskOkCancelNumberDialog(self,commander):
+		"""A do-nothing base class to create an askOkCancelNumber dialog ."""
+		pass
+	
+	def newAskYesNoDialog(self,commander):
+		"""A do-nothing base class to create an askYesNo dialog."""
+		pass
+	
+	def newAskYesNoCancelDialg(self,commander):
+		"""A do-nothing base class to create an askYesNoCancel dialog ."""
+		pass
+	#@nonl
+	#@-node:Creating and running dialogs
+	#@-others
+#@nonl
+#@-node:class leoGui
+#@+node:class tkinterGui(leoGui)
+class tkinterGui(leoGui):
+	
+	"""A class encapulating all calls to tkinter."""
+	
+	#@	@+others
+	#@+node:tkinterGui.__init__
+	def __init__ (self):
+		
+		# print "tkinterGui.__init__"
+		
+		# Initialize the base class.
+		leoGui.__init__(self,"tkinter")
+	#@nonl
+	#@-node:tkinterGui.__init__
 	#@+node:destroy
 	def destroy(self,widget):
 		
@@ -274,5 +399,8 @@ class tkinterGuiClass:
 	#@-node:getFontFromParams
 	#@-others
 #@nonl
+#@-node:class tkinterGui(leoGui)
+#@-others
+
 #@-node:@file leoGui.py
 #@-leo

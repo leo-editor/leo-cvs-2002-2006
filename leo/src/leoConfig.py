@@ -143,7 +143,7 @@ class baseConfig:
 		self.thin_at_file_trees = 0
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
 		self.use_plugins = false # Should never be true here!
-		self.write_old_format_derived_files = true # Revert to old format if leoConfig.txt does not exist.
+		self.write_old_format_derived_files = false # Use new format if leoConfig.txt does not exist.
 		#@nonl
 		#@-node:<< initialize ivars that may be set by config options >>
 		#@nl

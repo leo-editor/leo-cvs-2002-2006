@@ -58,35 +58,30 @@ def run(fileName=None,*args,**keywords):
 	setApp(app)
 	if not app.startCreate(): return
 	app.runMainLoop = runMainLoop # For LeoN.
-	
 	app.config = leoConfig.config() # No longer contains gui code.
-	
-	# Create default gui and the gui's main window.
-	app.gui = gui = leoGui.tkinterGuiClass()
-	app.root = gui.createRootWindow()
-	gui.unknownMethod() # Unknown methods shouldn't cause crashes.
-
-	# To do: plugins should test app.gui.
-	doHook("start1") # Load plugins.
-
+	# Load plugins before creating a gui so plugins can create their own gui.
+	doHook("start1")
+	# Create a default gui if none has been created by a plugin.
+	if app.gui == None: app.createTkGui()
+	# Finish creating the gui: maybe this should be part of createGui.
+	gui = app.gui
 	gui.setDefaultIcon()
 	gui.getDefaultConfigFont(app.config)
 	gui.setEncoding()
-	app.finishCreate() # No longer contains gui code.
-
+	## gui.createGlobalWindows() ## Code should move out of finishCreate.
+	app.finishCreate() # No longer contains gui code.  Probably should be eliminated.
+	# Initialize tracing.
 	initSherlock(app,args)
+	# Create the main frame.  Show it and all queued messages.
 	frame = createFrame(app,fileName)
 	if not frame: return
-
-	# Write queued output and redraw the screen.
 	app.writeWaitingLog()
-
 	c = frame.commands ; v = c.currentVnode()
 	doHook("start2",c=c,v=v,fileName=fileName)
-
 	frame.commands.redraw()
+	## Should be gui.setfocus.
 	set_focus(frame.commands,frame.body)
-
+	## Should be gui.runMainLoop()
 	app.runMainLoop(app.root)
 #@-node:run & allies
 #@+node:createFrame (leo.py)
