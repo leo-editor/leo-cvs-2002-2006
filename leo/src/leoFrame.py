@@ -4,8 +4,6 @@
 
 #@@language python
 
-__pychecker__ = 'argumentsused=0' # Pychecker param.
-
 from leoGlobals import *
 import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPlugins,leoPrefs,leoTree
 import os,string,sys,tempfile,time,traceback
@@ -3013,9 +3011,9 @@ class baseLeoFrame:
 		
 		c = self ; body = c.body
 		brackets = "()[]{}<>"
-		ch1=body.get("insert -1c")
-		ch1= toUnicode(ch1,app.tkEncoding) # 9/28/03
-		ch2=body.get("insert")
+		ch1 = body.get("insert -1c")
+		ch1 = toUnicode(ch1,app.tkEncoding) # 9/28/03
+		ch2 = body.get("insert")
 		ch2= toUnicode(ch2,app.tkEncoding) # 9/28/03
 	
 		# Prefer to match the character to the left of the cursor.
@@ -3038,6 +3036,7 @@ class baseLeoFrame:
 			es("unmatched " + `ch`)
 	#@-node:OnFindMatchingBracket
 	#@+node:findMatchingBracket
+	# To do: replace comments with blanks before scanning.
 	# Test  unmatched())
 	def findMatchingBracket(self,ch,body,index):
 	
@@ -3046,6 +3045,7 @@ class baseLeoFrame:
 		brackets = open_brackets + close_brackets
 		matching_brackets = close_brackets + open_brackets
 		forward = ch in open_brackets
+		trace(forward,ch)
 		# Find the character matching the initial bracket.
 		for n in xrange(len(brackets)):
 			if ch == brackets[n]:
@@ -3053,17 +3053,20 @@ class baseLeoFrame:
 				break
 		level = 0
 		while 1:
-			if (forward and body.compare(index, ">=", "end")):
-				return None
-			if (not forward and body.compare(index,"<=","1.0")):
+			if forward and body.compare(index,">=","end"):
+				# trace("not found")
 				return None
 			ch2 = body.get(index)
-			ch2= toUnicode(ch2,app.tkEncoding) # 9/28/03
-			if ch2 == ch: level += 1
+			ch2 = toUnicode(ch2,app.tkEncoding) # 9/28/03
+			if ch2 == ch:
+				level += 1 #; trace(level,index)
 			if ch2 == match_ch:
-				level -= 1
+				level -= 1 #; trace(level,index)
 				if level <= 0:
 					return index
+			if not forward and body.compare(index,"<=","1.0"):
+				# trace("not found")
+				return None
 			index = index + choose(forward,"+1c","-1c")
 			index = body.index(index)
 		return 0 # unreachable: keeps pychecker happy.
