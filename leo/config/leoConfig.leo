@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="23" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="107" left="235" height="758" width="785"/>
+	<global_window_position top="107" left="247" height="758" width="773"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -13,36 +13,36 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1" a="E"><vh>leoConfig.leo</vh>
-<v t="T2" a="E"><vh>@root leoConfig.txt</vh>
-<v t="T3"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="T4" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
-<v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
-<v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
-<v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
-<v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
-<v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
-<v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
-<v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
-<v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
-<v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
+<v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
+<v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
+<v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
+<v t="edream.110203150636.3" a="V"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh></v>
+<v t="edream.110203150636.4"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
+<v t="edream.110203150636.5"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
+<v t="edream.110203150636.6"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
+<v t="edream.110203150636.7"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="edream.110203150636.8"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
+<v t="edream.110203150636.9"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
+<v t="edream.110203150636.10"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
+<v t="edream.110203150636.11"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
+<v t="edream.110203150636.12"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
+<v t="edream.110203150636.13"><vh>&lt;&lt; None &gt;&gt;</vh></v>
 </v>
-<v t="T15"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
-<v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="T17"><vh>&lt;&lt; Window options &gt;&gt;</vh>
-<v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
-<v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
-<v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
-<v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
-<v t="T23"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
+<v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
+<v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
+<v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
+<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
+<v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
+<v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
+<v t="edream.110203150636.22"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
 </vnodes>
 <tnodes>
-<t tx="T1">@nocolor
+<t tx="edream.110203150636">@nocolor
 
 This is the file that creates leoConfig.txt.  We use this file for two reasons:
 	
@@ -53,7 +53,7 @@ This is the file that creates leoConfig.txt.  We use this file for two reasons:
 Note: using @rawfile here would not be so useful, because we would have to remember to do a "Write @file Nodes" command to update leoConfig.txt anyway.
 
 @color</t>
-<t tx="T2">@comment #
+<t tx="edream.110203150636.1">@comment #
 @ We use an @root node here to suppress automatic untangling, so we don't lose all these nice comments in read-write mode.
 @root-code leoConfig.txt
 
@@ -73,7 +73,7 @@ Note: using @rawfile here would not be so useful, because we would have to remem
 &lt;&lt; Syntax coloring options and colors &gt;&gt;
 &lt;&lt; Window options &gt;&gt;
 </t>
-<t tx="T3">@ Leo looks for this file using the directory in sys.leo_config_directory.
+<t tx="edream.110203150636.2">@ Leo looks for this file using the directory in sys.leo_config_directory.
 (You would typically set this attribute in sitecustomize.py).
 If sys.leo_config_directory does not exist,
 Leo attempts to load this file from the directory from which Leo was loaded.
@@ -87,7 +87,7 @@ with all of ConfigParser's features (and bugs!).
 Comments start with a pound character in the leftmost column.
 You must specify booleans as 0/1.
 </t>
-<t tx="T4">[config options]
+<t tx="edream.110203150636.3">[config options]
 
 at_root_bodies_start_in_doc_mode = 1
 
@@ -102,6 +102,12 @@ create_nonexistent_directories = 0
 #	This option applies to directories specified in filenames in
 #	@file, @rawfile, @root and @silentfile trees, and to filenames
 #	speicied in the @path directory.
+
+config_encoding = iso-8859-1
+
+#	The encoding for leoConfig.txt:
+#	Default is utf-8
+#	iso-8859-1 would be a popular alternative.
 
 default_derived_file_encoding = UTF-8
 #	The encoding used for derived files if no @encoding directive is in effect.
@@ -210,6 +216,12 @@ tk_encoding =
 #	2. locale.getdefaultlocale()[1] if it is exists.
 #	3. sys.getdefaultencoding()
 
+use_gnx = 1
+#	1: tnode indices in .leo files have the form id.timestamp.n (n optional)
+#      Strongly recommended when using cvs.
+#	0: tnode indices in .leo files are integers.
+#      For compatibility with Leo 3.x file format.
+
 use_plugins = 0
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
@@ -222,7 +234,7 @@ write_old_format_derived_files = 0
 #	0: Write all derived files using 4.0 format.
 #	Please write 4.0 derived files when uploading code to cvs.
 #	The use of pre-4.0 derived files is deprecated.</t>
-<t tx="T5"># The list of files in the "Recent Files" menu at startup.
+<t tx="edream.110203150636.4"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]
 
@@ -232,7 +244,7 @@ write_old_format_derived_files = 0
 
 #	Paths to recent files.
 #	Valid option names: file0 through file9.</t>
-<t tx="T6"># 	These correspond to the keyword parameters of the leoCompare constructor.
+<t tx="edream.110203150636.5"># 	These correspond to the keyword parameters of the leoCompare constructor.
 # 	Exception: there are no keywords for compare file names in the constructor.
 
 [compare options]
@@ -313,7 +325,7 @@ print_mismatching_lines = 1
 
 print_trailing_lines = 1
 #	1: Print lines all lines in one file after an end-of-file is seen on the other file.</t>
-<t tx="T7"># The initial settings of the Find/Change panel.
+<t tx="edream.110203150636.6"># The initial settings of the Find/Change panel.
 
 [find/change options]
 
@@ -339,7 +351,7 @@ suboutline_only = 0
 whole_word = 1
 wrap = 0
 node_only = 0</t>
-<t tx="T8">@ Keyboard shortcuts for menu commands.
+<t tx="edream.110203150636.7">@ Keyboard shortcuts for menu commands.
 
 A shortcut specification has the form:
 	
@@ -383,7 +395,7 @@ See the section called "About keyboard shortcuts" for a full discussion of what 
 &lt;&lt; Shift-Control &gt;&gt;
 &lt;&lt; None &gt;&gt;
 </t>
-<t tx="T9">@ The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
+<t tx="edream.110203150636.8">@ The following special single characters may be used in the tails of shortcuts.  They are listed along with their associated Tk binding value.  Leo contains special code to handle these characters.  No other single characters may be specified.
 
 For example, you could specify Ctrl+! as a shortcut, and Leo will create a binding for &lt;Control+exclam&gt;.  Some of these values may be invalid on some machines.
 
@@ -447,7 +459,7 @@ KP_Add, KP_Decimal, KP_Divide, KP_Enter, KP_Equal,
 KP_Multiply, KP_Separator, KP_Space, KP_Subtract, KP_Tab,
 KP_F1, KP_F2, KP_F3, KP_F4,
 KP_0, KP_1, KP_2, KP_3, KP_4, KP_5, KP_6, KP_7, KP_8, KP_9</t>
-<t tx="T10">ExpandNextLevel   = Alt+=
+<t tx="edream.110203150636.9">ExpandNextLevel   = Alt+=
 ExpandPrevLevel   = Alt+.
 ContractAll       = Alt+-
 ContractParent    = Alt+0
@@ -498,7 +510,7 @@ GoToNextVisible  = Alt+DnArrow
 GoToPrevVisible  = Alt+UpArrow
 GoToPrevNode     = Alt+Shift+UpArrow
 GoToNextNode     = Alt+Shift+DnArrow</t>
-<t tx="T11">CloneNode        = Ctrl+`
+<t tx="edream.110203150636.10">CloneNode        = Ctrl+`
 Replace          = Ctrl+=
 ReplaceThenFind  = Ctrl+-
 Indent           = Ctrl+]
@@ -533,7 +545,7 @@ Close            = Ctrl+W
 Cut              = Ctrl+X
 Preferences      = Ctrl+Y
 CantUndo         = Ctrl+Z</t>
-<t tx="T12">DeleteNode      = Shift+Ctrl+BkSp
+<t tx="edream.110203150636.11">DeleteNode      = Shift+Ctrl+BkSp
 
 TangleAll       = Shift+Ctrl+A
 ConvertBlanks   = Shift+Ctrl+B
@@ -560,7 +572,7 @@ PasteNode       = Shift+Ctrl+V
 WritefileNodes  = Shift+Ctrl+W
 CutNode         = Shift+Ctrl+X
 CantRedo        = Shift+Ctrl+Z</t>
-<t tx="T13"># F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
+<t tx="edream.110203150636.12"># F4 seems to interfere with Alt-F4 processing on windows.  Sigh.
 
 FindNext     = F3
 FindPrevious = F2
@@ -568,7 +580,7 @@ FindPrevious = F2
 AbortEditHeadline = Shift+Esc
 EndEditHeadline = Esc
 </t>
-<t tx="T14"># These entries explicitly overrides whatever default exists.
+<t tx="edream.110203150636.13"># These entries explicitly overrides whatever default exists.
 
 AboutLeo                = None
 
@@ -609,7 +621,7 @@ UntangleAll             = None
 UntangleMarked          = None
 Weave                   = None
 WriteOutlineOnly        = None</t>
-<t tx="T15"># The initial settings of the Preferences panel.
+<t tx="edream.110203150636.14"># The initial settings of the Preferences panel.
 
 [prefs panel options]
 
@@ -642,7 +654,7 @@ run_tangle_done.py = 0
 
 run_untangle_done.py = 0
 # 	1/0: Run tangle_done.py after explicit Untangle commands.</t>
-<t tx="T16">[syntax coloring options]
+<t tx="edream.110203150636.15">[syntax coloring options]
 
 color_cweb_doc_parts_with_latex = 1
 #	1: @space, @* and @** sections in cweb mode are colored black with LaTeX keywords highlighted.
@@ -707,7 +719,7 @@ string_color = #00aa00
 
 undefined_section_name_color = red
 #	The color of name in &lt; &lt; name &gt; &gt; when name is undefined.</t>
-<t tx="T17">@ Options that affect the appearance of windows.
+<t tx="edream.110203150636.16">@ Options that affect the appearance of windows.
 
 Options that require pixel values can be any Python expression that yields an int.
 Warning: the number of pixels per inch varies...
@@ -721,7 +733,7 @@ Warning: the number of pixels per inch varies...
 &lt;&lt; Options for new windows &gt;&gt;
 &lt;&lt; Options for newly opened windows &gt;&gt;
 &lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</t>
-<t tx="T18">body_pane_wraps = 1
+<t tx="edream.110203150636.17">body_pane_wraps = 1
 #	0/1: Wrap body text if 1.
 
 additional_body_text_border = 0
@@ -769,7 +781,7 @@ body_gmt_time = 0
 smart_auto_indent = 0
 #	1: auto-indent aligns with open ({[ brackets
 #	0: auto-indent increases indentation by one tab for Python only.</t>
-<t tx="T19">allow_clone_drags = 1
+<t tx="edream.110203150636.18">allow_clone_drags = 1
 # 1: Allows control-dragging to create clones.
 # 0: All drags move nodes.
 # See also: look_for_control_drag_on_mouse_down
@@ -839,7 +851,7 @@ look_for_control_drag_on_mouse_down = 1
 
 outline_pane_scrolls_horizontally = 0
 #	0/1: 1: Use horizontal scrollbar in outline pane.</t>
-<t tx="T20">log_error_color = red
+<t tx="edream.110203150636.19">log_error_color = red
 # Color for error messages written to the log window.
 # Must be a valid Tk color name.
 
@@ -864,7 +876,7 @@ log_text_font_slant = roman
 
 log_text_font_weight = normal
 #	The Tk -weight setting: normal or bold.  Default is normal.</t>
-<t tx="T21"># Leo now properly opens windows for existing files where they were last positioned.
+<t tx="edream.110203150636.20"># Leo now properly opens windows for existing files where they were last positioned.
 
 initial_window_height = 600
 #	Height of window in pixels. (must be an integer).
@@ -877,7 +889,7 @@ initial_window_left = 20
 
 initial_window_top = 20
 #	Distance from top of screen of window, in pixels (must be an integer).</t>
-<t tx="T22">initial_splitter_orientation = v
+<t tx="edream.110203150636.21">initial_splitter_orientation = v
 #	Defines the primary splitter orientation.
 #	The primary panes are the body pane and the secondary pane.
 #	The secondary pane contains the outline and log panes.
@@ -917,7 +929,7 @@ initial_vertical_secondary_ratio = 0.7
 
 #	Applies to all newly opened windows.
 #	Valid values: 0.0 to 1.0.</t>
-<t tx="T23"># Leo should save these to .leo files, and it doesn't.
+<t tx="edream.110203150636.22"># Leo should save these to .leo files, and it doesn't.
 
 split_bar_color = LightSteelBlue2
 #	gray90 also looks good.

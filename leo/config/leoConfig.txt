@@ -108,6 +108,7 @@ relative_path_base_directory = .
 new_leo_file_encoding = UTF-8
 output_initial_comment = 
 load_derived_files_immediately = 0
+config_encoding = iso-8859-1
 default_derived_file_encoding = UTF-8
 remove_sentinels_extension = .txt
 tk_encoding = 
@@ -116,9 +117,9 @@ stylesheet =
 at_root_bodies_start_in_doc_mode = 1
 write_old_format_derived_files = 0
 create_nonexistent_directories = 0
+use_plugins = 0
 save_clears_undo_buffer = 0
-thin_at_file_trees = 0
-use_plugins = 1
+use_gnx = 1
 
 [keyboard shortcuts]
 writefilenodes = Shift+Ctrl+W
@@ -218,12 +219,10 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\Documents and Settings\default\Desktop\Wiki plugin 1.2.1.leo
-file2 = c:\prog\leoCVS\leo\doc\LeoDocs.leo
-file1 = C:\prog\leo 4.1 sandbox\src\LeoPy.leo
-file0 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file5 = C:\prog\leoCVS\leo\test\test.leo
-file4 = C:\prog\leoCVS\leo\plugins\leoPlugins.leo
+file3 = C:\prog\leoCVS\leo\test\test.leo
+file2 = C:\Documents and Settings\default\Desktop\LeoPy.leo
+file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file0 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
 
 [find/change options]
 mark_changes = 0
@@ -234,7 +233,7 @@ search_headline = 0
 node_only = 0
 batch = 0
 search_body = 1
-find_string = top.title("Syntax colors for "
+find_string = no tnodeList
 pattern_match = 0
 wrap = 0
 mark_finds = 0
