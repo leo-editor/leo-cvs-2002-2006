@@ -363,10 +363,14 @@ class tkinterGui(leoGui.leoGui):
 		
 		# trace(c)
 		
-		if c.frame.top:
-			focus = c.frame.top.focus_displayof()
-			if focus != widget:
-				widget.focus_set()
+		if widget:
+			widget.focus_set()
+		
+		if 0: # Causes a weird problem on some machines.
+			if c.frame.top:
+				focus = c.frame.top.focus_displayof()
+				if focus != widget:
+					widget.focus_set()
 	#@nonl
 	#@-node:set_focus
 	#@+node:tkGui.getFontFromParams
