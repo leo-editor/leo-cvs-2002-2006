@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="4109" clone_windows="0"/>
-<globals body_outline_ratio="0.6345733041575492">
-	<global_window_position top="10" left="336" height="914" width="919"/>
+<globals body_outline_ratio="0.43326039387308535">
+	<global_window_position top="10" left="301" height="914" width="919"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -15,6 +15,10 @@
 <v t="ekr.20031218072017"><vh> Diary</vh>
 <v t="ekr.20040105070023"><vh>2004</vh>
 <v t="ekr.20040105070023.1"><vh>January 2004</vh>
+<v t="ekr.20040129154656" a="E"><vh>1/29</vh>
+<v t="ekr.20040129154656.1"><vh>Only mark ancestor @file nodes dirty when creating,moving,changing nodes</vh></v>
+<v t="ekr.20040129133809"><vh>fixed bugs: see 4.1 rc4 projects for details</vh></v>
+</v>
 <v t="ekr.20040126115428"><vh>1/26</vh>
 <v t="ekr.20040126131801"><vh>Properly handle exceptions in commands</vh></v>
 <v t="ekr.20040126121604"><vh>Eliminated control-v bug on various platforms</vh></v>
@@ -4271,8 +4275,8 @@
 <v t="ekr.20031218072017.2778"><vh>readDelims</vh></v>
 <v t="ekr.20031218072017.2779"><vh>readDirective</vh></v>
 <v t="ekr.20031218072017.2780"><vh>readNl</vh></v>
-<v t="ekr.20031218072017.2781"><vh>readNonl</vh></v>
-<v t="ekr.20031218072017.2782"><vh>readRef</vh></v>
+<v t="ekr.20031218072017.2781" a=""><vh>readNonl</vh></v>
+<v t="ekr.20031218072017.2782" a=""><vh>readRef</vh></v>
 <v t="ekr.20031218072017.2783"><vh>readVerbatim</vh></v>
 </v>
 <v t="ekr.20031218072017.2784"><vh>badEndSentinel, push/popSentinelStack</vh></v>
@@ -4342,9 +4346,21 @@
 <v t="ekr.20031218072017.1359"><vh>&lt;&lt; init directive ivars &gt;&gt; (tangle)</vh></v>
 </v>
 </v>
+<v t="ekr.20040115165504"><vh>(Fixed bug with idlelib import: Python 2.2</vh>
+<v t="ekr.20040129105514"><vh>Report &amp; Fix</vh></v>
+<v t="ekr.20031218072017.2932" a=""><vh>openPythonWindow (Dave Hein)</vh>
+<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
+<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+</v>
+<v t="ekr.20031218072017.2278" a=""><vh>importFromPath</vh></v>
+</v>
 </v>
 <v t="ekr.20031219082559" a="M"><vh>To do: 4.1 rc4</vh>
-<v t="ekr.20040105064959"><vh>Fix Bugs 7+</vh>
+<v t="ekr.20040105064959"><vh>Fix Bugs: 12+</vh>
 <v t="ekr.20040129074950" a="M"><vh>(Problems with cvs diff: Dan Winkler)</vh>
 <v t="ekr.20040104162835.1"><vh>Reports</vh>
 <v t="ekr.20040104162835.2"><vh>Report: marks set when opening file</vh></v>
@@ -4353,11 +4369,67 @@
 </v>
 <v t="ekr.20040128174817"><vh>Files that changed...</vh></v>
 <v t="ekr.20040129080202.1"><vh>Figure out how to do cvs checkout</vh></v>
+<v t="ekr.20031218072017.2758" a=""><vh>scanText4 &amp; allies</vh>
+<v t="ekr.20031218072017.2759"><vh>&lt;&lt; init ivars for scanText4 &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2760"><vh>&lt;&lt; report unexpected end of text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2761"><vh>readNormalLine</vh>
+<v t="ekr.20031218072017.2762"><vh>&lt;&lt; Skip the leading stuff &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2763"><vh>&lt;&lt; Append s to docOut &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040105080119.3"><vh>Multiple bugs Windows</vh></v>
-<v t="ekr.20040116023856"><vh>Drags make node dirty</vh></v>
-<v t="ekr.20040125114453"><vh>Bug: control-alt-f of python code misalloctes code</vh></v>
-<v t="ekr.20040129092815"><vh>script bugs 2</vh>
+<v t="ekr.20031218072017.2764"><vh>start sentinels</vh>
+<v t="ekr.20031218072017.1752" a=""><vh>readStartAt &amp; readStartDoc</vh></v>
+<v t="ekr.20031218072017.2765"><vh>readStartLeo</vh></v>
+<v t="ekr.20031218072017.2766"><vh>readStartNode</vh>
+<v t="ekr.20031218072017.2767"><vh>&lt;&lt; Set headline, undoing the CWEB hack &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2768"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2769"><vh>readStartOthers</vh></v>
+</v>
+<v t="ekr.20031218072017.2770"><vh>end sentinels</vh>
+<v t="ekr.20031218072017.1954" a=""><vh>readEndAt &amp; readEndDoc</vh></v>
+<v t="ekr.20031218072017.2771"><vh>readEndLeo</vh></v>
+<v t="ekr.20031218072017.2772"><vh>readEndNode</vh></v>
+<v t="ekr.20031218072017.2773"><vh>readEndOthers</vh></v>
+<v t="ekr.20031218072017.1753" a=""><vh>readLastDocLine</vh>
+<v t="ekr.20031218072017.1754"><vh>&lt;&lt; new code &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1755"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.2774"><vh>Unpaired sentinels</vh>
+<v t="ekr.20031218072017.2775"><vh>ignoreOldSentinel</vh></v>
+<v t="ekr.20031218072017.2776"><vh>readAfterRef</vh></v>
+<v t="ekr.20031218072017.2777"><vh>readComment</vh></v>
+<v t="ekr.20031218072017.2778"><vh>readDelims</vh></v>
+<v t="ekr.20031218072017.2779"><vh>readDirective</vh></v>
+<v t="ekr.20031218072017.2780"><vh>readNl</vh></v>
+<v t="ekr.20031218072017.2781" a=""><vh>readNonl</vh></v>
+<v t="ekr.20031218072017.2782" a=""><vh>readRef</vh></v>
+<v t="ekr.20031218072017.2783"><vh>readVerbatim</vh></v>
+</v>
+<v t="ekr.20031218072017.2784"><vh>badEndSentinel, push/popSentinelStack</vh></v>
+</v>
+<v t="ekr.20031218072017.2781" a=""><vh>readNonl</vh></v>
+<v t="ekr.20031218072017.2782" a=""><vh>readRef</vh></v>
+<v t="ekr.20031218072017.2701" a=""><vh>skipSentinelStart</vh></v>
+</v>
+<v t="ekr.20040117112213.1"><vh>Check mod_autosave</vh></v>
+<v t="ekr.20040105080119.3"><vh>Bugs on windows: 6 minor</vh>
+<v t="ekr.20040129133809.1" a="M"><vh>Indent problem in leoTkinterGui.py:</vh></v>
+<v t="ekr.20040129133809.2" a="M"><vh>Control-v</vh></v>
+<v t="ekr.20040129133809.3" a="M"><vh>Copy/paste not always properly enabled</vh></v>
+<v t="ekr.20040129133809.4" a="M"><vh>Too verbose a message for read-only</vh></v>
+<v t="ekr.20040129133809.5" a="M"><vh>Expand/contract may not work after drag</vh></v>
+<v t="ekr.20040129133809.6" a="M"><vh>crash calling launchCmd</vh></v>
+<v t="ekr.20040129133809.7"><vh>Not real or not serious</vh>
+<v t="ekr.20040129133809.8"><vh>top node not saved</vh></v>
+<v t="ekr.20040129133809.9"><vh>autosave on write @file shouldn't be on by default.</vh></v>
+<v t="ekr.20040129133809.10"><vh>^Z dosent work in headlines: </vh></v>
+<v t="ekr.20040129133809.11"><vh>hard to read very long headlines with no scrolling</vh></v>
+<v t="ekr.20040129133809.12"><vh>Plugins are @ignored</vh></v>
+<v t="ekr.20040129133809.13"><vh>Config problem</vh></v>
+</v>
+</v>
+<v t="ekr.20040129092815"><vh>script bugs/improvements</vh>
 <v t="ekr.20040104184913"><vh>Script code should make sure all nodes end in a newline.</vh></v>
 <v t="ekr.20040124073929"><vh>Backslashes not handled properly in executeScript</vh></v>
 </v>
@@ -4366,12 +4438,7 @@
 <v t="ekr.20040115165036.3" tnodeList="ekr.20040115165036.3"><vh>@file xmlcommentbug.xml</vh></v>
 <v t="ekr.20040115165036.4"><vh>xmlcommentbug.xml</vh></v>
 </v>
-</v>
-<v t="ekr.20040118101339.1"><vh>Plugins</vh>
-<v t="ekr.20040115162445"><vh>Create plugin to insert status bar</vh></v>
-<v t="ekr.20040117112213.1"><vh>mod_autosave doesn't work (?)</vh></v>
-<v t="ekr.20040116023408"><vh>xemacs plugin activates on drags!</vh></v>
-<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
+<v t="ekr.20040125114453"><vh>Import bug?control-alt-f of python code misalloctes code</vh></v>
 </v>
 <v t="ekr.20040126115447"><vh>Docs</vh>
 <v t="ekr.20040105080119.2"><vh>Document new stuff</vh></v>
@@ -4386,6 +4453,10 @@
 </v>
 <v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
 <v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
+</v>
+<v t="ekr.20040118101339.1"><vh>Plugins to add</vh>
+<v t="ekr.20040115162445"><vh>Create plugin to insert status bar</vh></v>
+<v t="ekr.20040125114744"><vh>Michael Dawson: Leo to docbook xml plugin</vh></v>
 </v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
@@ -4797,7 +4868,7 @@
 <v t="ekr.20031218072017.2698"><vh>putSentinel (applies cweb hack)</vh></v>
 <v t="ekr.20031218072017.2699"><vh>sentinelKind</vh></v>
 <v t="ekr.20031218072017.2700"><vh>sentinelName</vh></v>
-<v t="ekr.20031218072017.2701"><vh>skipSentinelStart</vh></v>
+<v t="ekr.20031218072017.2701" a=""><vh>skipSentinelStart</vh></v>
 </v>
 <v t="ekr.20031218072017.2702"><vh>Utilites (3.x)</vh>
 <v t="ekr.20031218072017.2703"><vh>directiveKind</vh></v>
@@ -4941,8 +5012,8 @@
 <v t="ekr.20031218072017.2778"><vh>readDelims</vh></v>
 <v t="ekr.20031218072017.2779"><vh>readDirective</vh></v>
 <v t="ekr.20031218072017.2780"><vh>readNl</vh></v>
-<v t="ekr.20031218072017.2781"><vh>readNonl</vh></v>
-<v t="ekr.20031218072017.2782"><vh>readRef</vh></v>
+<v t="ekr.20031218072017.2781" a=""><vh>readNonl</vh></v>
+<v t="ekr.20031218072017.2782" a=""><vh>readRef</vh></v>
 <v t="ekr.20031218072017.2783"><vh>readVerbatim</vh></v>
 </v>
 <v t="ekr.20031218072017.2784"><vh>badEndSentinel, push/popSentinelStack</vh></v>
@@ -5294,8 +5365,8 @@
 </v>
 <v t="ekr.20031218072017.2893"><vh>notValidInBatchMode</vh></v>
 </v>
-<v t="ekr.20031218072017.2894"><vh>Outline menu...</vh>
-<v t="ekr.20031218072017.2895"><vh> Top Level...</vh>
+<v t="ekr.20031218072017.2894" a="E"><vh>Outline menu...</vh>
+<v t="ekr.20031218072017.2895" a="E"><vh> Top Level...</vh>
 <v t="ekr.20031218072017.1548" a=""><vh>Cut &amp; Paste Outlines</vh>
 <v t="ekr.20031218072017.1549"><vh>cutOutline</vh></v>
 <v t="ekr.20031218072017.1550"><vh>copyOutline</vh></v>
@@ -5316,7 +5387,7 @@
 <v t="ekr.20031218072017.1189"><vh>&lt;&lt; Set the undo info for sortChildren &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1190"><vh>&lt;&lt; Set the undo info for sortSiblings &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2896"><vh>c.sortTopLevel</vh>
+<v t="ekr.20031218072017.2896" a=""><vh>c.sortTopLevel</vh>
 <v t="ekr.20031218072017.2897"><vh>&lt;&lt; Set the undo info for sortTopLevel &gt;&gt;</vh></v>
 </v>
 </v>
@@ -5393,7 +5464,7 @@
 <v t="ekr.20031218072017.2944"><vh>applyConfig</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.2945"><vh>Dragging</vh>
+<v t="ekr.20031218072017.2945" a=""><vh>Dragging (commands)</vh>
 <v t="ekr.20031218072017.2353" a=""><vh>c.dragAfter</vh></v>
 <v t="ekr.20031218072017.2946"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
 <v t="ekr.20031218072017.2947"><vh>c.dragToNthChildOf</vh></v>
@@ -6072,7 +6143,7 @@
 <v t="ekr.20031218072017.3319"><vh>undentBody</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20031218072017.3355,ekr.20031218072017.3356,ekr.20031218072017.3357,ekr.20031218072017.3358,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20031218072017.2048,ekr.20031218072017.3382,ekr.20031218072017.3383,ekr.20031218072017.1478,ekr.20031218072017.1479,ekr.20031218072017.1480,ekr.20031218072017.1481,ekr.20031218072017.1482,ekr.20031218072017.3385,ekr.20031218072017.3387,ekr.20031218072017.3388,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3394,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.1185,ekr.20031218072017.1186,ekr.20031218072017.3397,ekr.20031218072017.1187,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3402,ekr.20031218072017.3403,ekr.20031218072017.3404,ekr.20031218072017.3406,ekr.20031218072017.3407,ekr.20031218072017.3408,ekr.20031218072017.3409,ekr.20031218072017.3410,ekr.20031218072017.3411,ekr.20031218072017.3412,ekr.20031218072017.3413,ekr.20031218072017.3414,ekr.20031218072017.3415,ekr.20031218072017.3418,ekr.20031218072017.3419,ekr.20031218072017.3420,ekr.20031218072017.3421,ekr.20031218072017.3422,ekr.20031218072017.3423,ekr.20031218072017.3424,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.2354,ekr.20031218072017.1192,ekr.20031218072017.1191,ekr.20031218072017.3428,ekr.20031218072017.3429,ekr.20031218072017.3430,ekr.20031218072017.3431,ekr.20031218072017.1574,ekr.20031218072017.3432,ekr.20031218072017.3433,ekr.20031218072017.3434,ekr.20031218072017.3435,ekr.20031218072017.1647,ekr.20031218072017.3436,ekr.20031218072017.3437,ekr.20031218072017.1648,ekr.20031218072017.3438,ekr.20031218072017.818,ekr.20031218072017.819,ekr.20031218072017.820,ekr.20031218072017.821,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20040117181936,ekr.20031218072017.890,ekr.20031218072017.891,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040117171654,ekr.20040117162509.16,ekr.20031218072017.915,ekr.20031218072017.916,ekr.20031218072017.917,ekr.20031218072017.918,ekr.20031218072017.919,ekr.20031218072017.920,ekr.20031218072017.921,ekr.20031218072017.922,ekr.20031218072017.923,ekr.20031218072017.924,ekr.20031218072017.925,ekr.20031218072017.926,ekr.20031218072017.927,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117201228"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20031218072017.3347,ekr.20031218072017.3348,ekr.20031218072017.3349,ekr.20031218072017.3350,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20031218072017.3355,ekr.20031218072017.3356,ekr.20031218072017.3357,ekr.20031218072017.3358,ekr.20031218072017.3361,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20031218072017.2048,ekr.20031218072017.3382,ekr.20031218072017.3383,ekr.20031218072017.1478,ekr.20031218072017.1479,ekr.20031218072017.1480,ekr.20031218072017.1481,ekr.20031218072017.1482,ekr.20031218072017.3385,ekr.20031218072017.3387,ekr.20031218072017.3388,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3394,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20040129153428,ekr.20031218072017.1185,ekr.20031218072017.1186,ekr.20031218072017.3397,ekr.20031218072017.1187,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3402,ekr.20031218072017.3403,ekr.20031218072017.3404,ekr.20031218072017.3406,ekr.20031218072017.3407,ekr.20031218072017.3408,ekr.20031218072017.3409,ekr.20031218072017.3410,ekr.20031218072017.3411,ekr.20031218072017.3412,ekr.20031218072017.3413,ekr.20031218072017.3414,ekr.20031218072017.3415,ekr.20031218072017.3418,ekr.20031218072017.3419,ekr.20031218072017.3420,ekr.20031218072017.3421,ekr.20031218072017.3422,ekr.20031218072017.3423,ekr.20031218072017.3424,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.2354,ekr.20031218072017.1192,ekr.20031218072017.1191,ekr.20031218072017.3428,ekr.20031218072017.3429,ekr.20031218072017.3430,ekr.20031218072017.3431,ekr.20031218072017.1574,ekr.20031218072017.3432,ekr.20031218072017.3433,ekr.20031218072017.3434,ekr.20031218072017.3435,ekr.20031218072017.1647,ekr.20031218072017.3436,ekr.20031218072017.3437,ekr.20031218072017.1648,ekr.20031218072017.3438,ekr.20031218072017.818,ekr.20031218072017.819,ekr.20031218072017.820,ekr.20031218072017.821,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20040117181936,ekr.20031218072017.890,ekr.20031218072017.891,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040117170612,ekr.20040117173448,ekr.20040117171654,ekr.20040117162509.16,ekr.20031218072017.915,ekr.20031218072017.916,ekr.20031218072017.917,ekr.20031218072017.918,ekr.20031218072017.919,ekr.20031218072017.920,ekr.20031218072017.921,ekr.20031218072017.922,ekr.20031218072017.923,ekr.20031218072017.924,ekr.20031218072017.925,ekr.20031218072017.926,ekr.20031218072017.927,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117201228"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412" a=""><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -6179,6 +6250,7 @@
 <v t="ekr.20031218072017.3394"><vh>clearVisitedInTree</vh></v>
 <v t="ekr.20031218072017.3395"><vh>contract &amp; expand &amp; initExpandedBit</vh></v>
 <v t="ekr.20031218072017.3396"><vh>initStatus</vh></v>
+<v t="ekr.20040129153428" a=""><vh>v.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20031218072017.1185" a=""><vh>setAncestorsOfClonedNodesInTreeDirty</vh></v>
 <v t="ekr.20031218072017.1186" a=""><vh>setAncestorAtFileNodeDirty</vh></v>
 <v t="ekr.20031218072017.3397"><vh>setClonedBit &amp; initClonedBit</vh></v>
@@ -7673,17 +7745,45 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040115165504" a="EV"><vh>(Fix bug with idlelib import: Python 2.2</vh>
-<v t="ekr.20040129105514"><vh>Report &amp; Fix</vh></v>
-<v t="ekr.20031218072017.2932" a=""><vh>openPythonWindow (Dave Hein)</vh>
-<v t="ekr.20031218072017.2933"><vh>&lt;&lt; open idle in Linux &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2934"><vh>&lt;&lt; open idle in Windows &gt;&gt;</vh>
-<v t="ekr.20031218072017.2936"><vh>&lt;&lt; Try to open idle in Python 2.3 systems &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2935"><vh>&lt;&lt; Try to open idle in Python 2.2 systems&gt;&gt;</vh></v>
+<v t="ekr.20040116023856" a="E"><vh>(Set only @file nodes dirty (not nodes themselves) when altering nodes)</vh>
+<v t="ekr.20040129153428" a=""><vh>v.setAllAncestorAtFileNodesDirty</vh></v>
+<v t="ekr.20031218072017.1777" a=""><vh>tree.OnEndDrag</vh>
+<v t="ekr.20031218072017.1778"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.2937"><vh>leoPyShellMain</vh></v>
+<v t="ekr.20031218072017.2945" a=""><vh>Dragging (commands)</vh>
+<v t="ekr.20031218072017.2353" a=""><vh>c.dragAfter</vh></v>
+<v t="ekr.20031218072017.2946"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
+<v t="ekr.20031218072017.2947"><vh>c.dragToNthChildOf</vh></v>
+<v t="ekr.20031218072017.2948"><vh>c.dragCloneAfter</vh></v>
 </v>
-<v t="ekr.20031218072017.2278" a=""><vh>importFromPath</vh></v>
+<v t="ekr.20031218072017.1766" a="V"><vh>Move...</vh>
+<v t="ekr.20031218072017.1767"><vh>demote</vh></v>
+<v t="ekr.20031218072017.1768"><vh>moveOutlineDown</vh>
+<v t="ekr.20031218072017.1769"><vh>&lt;&lt; Move v down &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1770"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20031218072017.1771"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20031218072017.1772" a=""><vh>moveOutlineUp</vh>
+<v t="ekr.20031218072017.1773"><vh>&lt;&lt; Move v up &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1774"><vh>promote</vh></v>
+</v>
+<v t="ekr.20031218072017.1759" a=""><vh>Insert, Delete &amp; Clone (Commands)</vh>
+<v t="ekr.20031218072017.1760"><vh>c.checkMoveWithParentWithWarning</vh></v>
+<v t="ekr.20031218072017.1193" a=""><vh>c.deleteOutline</vh></v>
+<v t="ekr.20031218072017.1761"><vh>c.insertHeadline</vh></v>
+<v t="ekr.20031218072017.1762"><vh>c.clone</vh></v>
+<v t="ekr.20031218072017.1763"><vh>initAllCloneBits &amp; initAllCloneBitsInTree</vh></v>
+<v t="ekr.20031218072017.1764"><vh>c.initJoinedClonedBits (changed in 3.11.1)</vh></v>
+<v t="ekr.20031218072017.1765"><vh>validateOutline</vh></v>
+</v>
+<v t="ekr.20031218072017.2896" a=""><vh>c.sortTopLevel</vh>
+<v t="ekr.20031218072017.2897"><vh>&lt;&lt; Set the undo info for sortTopLevel &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1188" a=""><vh>c.sortChildren, sortSiblings</vh>
+<v t="ekr.20031218072017.1189"><vh>&lt;&lt; Set the undo info for sortChildren &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1190"><vh>&lt;&lt; Set the undo info for sortSiblings &gt;&gt;</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -20814,7 +20914,8 @@ def initDirtyBit (self):
 	c.beginUpdate()
 	c.endEditing()
 	v.sortChildren()
-	v.setDirty()
+	# v.setDirty()
+	v.setAllAncestorAtFileNodesDirty() # 1/12/04
 	c.setChanged(true)
 	c.endUpdate()
 	
@@ -20830,7 +20931,8 @@ def sortSiblings (self):
 		c.beginUpdate()
 		c.endEditing()
 		parent.sortChildren()
-		parent.setDirty()
+		# parent.setDirty()
+		parent.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 		c.endUpdate()</t>
 <t tx="ekr.20031218072017.1189"># Get the present list of children.
@@ -20893,7 +20995,8 @@ def deleteOutline (self,op_name="Delete Outline"):
 	if not newNode: return
 	c.endEditing()# Make sure we capture the headline for Undo.
 	c.beginUpdate()
-	v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
+	# v.setDirtyDeleted() # 8/3/02: Mark @file nodes dirty for all clones in subtree.
+	v.setAllAncestorAtFileNodesDirty() # 1/12/04
 	# Reinsert v after back, or as the first child of parent, or as the root.
 	c.undoer.setUndoParams(op_name,v,select=newNode)
 	v.doDelete(newNode) # doDelete destroys dependents.
@@ -28854,7 +28957,8 @@ def insertHeadline (self,op_name="Insert Outline"):
 		v.createDependents() # To handle effects of clones.
 		c.selectVnode(v)
 		c.editVnode(v)
-		v.setDirty() # Essential in Leo2.
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 	c.endUpdate()</t>
 <t tx="ekr.20031218072017.1762">def clone (self):
@@ -28864,7 +28968,8 @@ def insertHeadline (self,op_name="Insert Outline"):
 	c.beginUpdate()
 	clone = v.clone(v)
 	c.initAllCloneBitsInTree(v) # 10/14/03
-	clone.setDirty() # essential in Leo2
+	# clone.setDirty() # essential in Leo2
+	clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 	c.setChanged(true)
 	if c.validateOutline():
 		c.selectVnode(clone)
@@ -28952,7 +29057,8 @@ def validateOutline (self):
 			child.moveToNthChildOf(v,v.numberOfChildren())
 		v.expand()
 		c.selectVnode(v)
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 		c.mInhibitOnTreeChanged = false
 		c.initAllCloneBits() # 7/6/02
@@ -28978,9 +29084,11 @@ def moveOutlineDown(self):
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		&lt;&lt; Move v down &gt;&gt;
-		v.setDirty() # This second call is essential.
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)# 4/23/01
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
@@ -29021,11 +29129,13 @@ else:
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		v.moveAfter(parent)
 		c.undoer.setUndoParams("Move Left",v,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
@@ -29051,12 +29161,14 @@ else:
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		n = back.numberOfChildren()
 		v.moveToNthChildOf(back,n)
 		c.undoer.setUndoParams("Move Right",v,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 7/6/02
@@ -29082,9 +29194,11 @@ else:
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		&lt;&lt; Move v up &gt;&gt;
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
@@ -29126,7 +29240,8 @@ elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
 			child = v.firstChild()
 			child.moveAfter(after)
 			after = child
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.setChanged(true)
 		c.selectVnode(v)
 	c.endUpdate()
@@ -36803,11 +36918,13 @@ while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		v.moveAfter(after)
 		c.undoer.setUndoParams("Drag",v,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
@@ -43794,6 +43911,7 @@ def readRef (self,s,i):
 	at = self
 	j = skip_ws(s,i)
 	assert(match(s,j,"&lt;&lt;"))
+	# trace(i,s)
 	
 	if len(at.endSentinelComment) == 0:
 		line = s[i:-1] # No trailing newline
@@ -43806,7 +43924,8 @@ def readRef (self,s,i):
 	if start and len(start) &gt; 0 and start[-1] == '@':
 		line = line.replace('@@','@')
 
-	at.out.append(line)</t>
+	at.out.append(line)
+</t>
 <t tx="ekr.20031218072017.2783">def readVerbatim (self,s,i):
 	
 	"""Read an @verbatim sentinel."""
@@ -45226,7 +45345,9 @@ if not vnodeName:
 	c.beginUpdate()
 	h,v = sortedNodes[0]
 	if v != root:
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		v.moveToRoot(oldRoot=root)
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 	for h,next in sortedNodes[1:]:
 		next.moveAfter(v)
 		v = next
@@ -45766,16 +45887,19 @@ def leoPyShellMain(self):
 	oldParent = v.parent()
 	oldN = v.childIndex()
 	c.endEditing()
-	clone.setDirty()
+	# clone.setDirty()
+	clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 	clone.moveToNthChildOf(parent,n)
 	c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 	c.undoer.setUndoParams("Drag &amp; Clone",clone,
 		oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-	clone.setDirty()
+	# clone.setDirty()
+	clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 	c.selectVnode(clone)
 	c.setChanged(true)
 	c.endUpdate()
-	c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.</t>
+	c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
+</t>
 <t tx="ekr.20031218072017.2947">def dragToNthChildOf(self,v,parent,n):
 
 	# es("dragToNthChildOf")
@@ -45788,11 +45912,13 @@ def leoPyShellMain(self):
 	c.beginUpdate()
 	if 1: # inside update...
 		c.endEditing()
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		v.moveToNthChildOf(parent,n)
 		c.undoer.setUndoParams("Drag",v,
 			oldBack=oldBack,oldParent=oldParent,oldN=oldN)
-		v.setDirty()
+		# v.setDirty()
+		v.setAllAncestorAtFileNodesDirty() # 1/12/04
 		c.selectVnode(v)
 		c.setChanged(true)
 		c.initJoinedCloneBits(v) # 10/8/03
@@ -45814,12 +45940,14 @@ def leoPyShellMain(self):
 	oldParent = v.parent()
 	oldN = v.childIndex()
 	c.endEditing()
-	clone.setDirty()
+	# clone.setDirty()
+	clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 	clone.moveAfter(after)
 	c.initJoinedCloneBits(clone) # Bug fix: 4/29/03
 	c.undoer.setUndoParams("Drag &amp; Clone",clone,
 		oldBack=oldBack,oldParent=oldParent,oldN=oldN,oldV=v)
-	clone.setDirty()
+	# clone.setDirty()
+	clone.setAllAncestorAtFileNodesDirty() # 1/12/04
 	c.selectVnode(clone)
 	c.setChanged(true)
 	c.endUpdate()
@@ -61701,57 +61829,6 @@ Dave </t>
 https://sourceforge.net/forum/message.php?msg_id=2357964
 By: nobody
 
-also the paste doesnt stick in the headline if you paste from the edit menu. 
-but the paste does stick if use ^C ^V
-
-sometimes copy &amp; paste is greyed out from the log or if the headline is active
-window, even if selected.
-not sure how or what happens but its frequent.
-
-Im going to add a few more in this message.
-
-^Z dosent work in headlines
-
-sometimes after a drag of a node, 
-then the expand/contract doesnt work.
-click or menu has no effect.
-in an open leo
-maybe it is ok after you save the file
-other times only fix is to exit &amp; restart.
-
-python.exe -i -tOO 
-\leo4CVS\src\leoTkinterGui.py: inconsistent use of tabs and spaces
-in indentation
-\leo4CVS\src\leoFind.py: inconsistent use of tabs and spaces in indentation
-&gt;&gt;only get this warning on the first compile run
-
-autosave on write @file shouldent be on by default.
-I definatly dont want to generate all plugins,
-but I understand the @ignore was a roadblock for some of the nubies to generate
-any plugins...
-please put the @ignore back at the top of the file.
-or not.
-
-hard to read very long headlines with no scrolling.
-
-leoConfig.txt reverted back to plugins=0 redirect to log=0 when I opened another
-leo.
-was busy so I just read protected it.
-now I get a traceback every time it trys to write.
-a simple write protected warning would be enough.
-
-
-extensions menu either launch console or explorer:
-Traceback (most recent call last):
-  File "\leo4CVS\src\leoCommands.py", line 127, in doCommand
-    command()
-TypeError: launchCmd() takes exactly 1 argument (0 given)
-once in red once in black, must be from the redirect to log getting doubled.
-
-opening a leo the curser moves to the correct node but it is no longer the top
-most node in the window. pobably related to Leo now saving of the body pane
-size.
-
 thats the short list of buggyness I've noticed.
 
 is some of this caused by one of 
@@ -62268,8 +62345,7 @@ the same line as the at-sign.
 &lt;!--@-node:@file xmlcommentbug.xml--&gt;
 &lt;!--@-leo--&gt;</t>
 <t tx="ekr.20040115165504"></t>
-<t tx="ekr.20040116023408"></t>
-<t tx="ekr.20040116023856"></t>
+<t tx="ekr.20040116023856"># Affects moving, inserting, deleting, cloning and sorting nodes.</t>
 <t tx="ekr.20040117092727">By: dthein ( Dave Hein ) 
  RE: BUG: Non-leading tabs not working properl   
 2004-01-17 14:40  
@@ -63933,7 +64009,7 @@ to:
 
 if sys.platform not in ("darwin",freebsd4","freebsd5","linux1","linux2"):</t>
 <t tx="ekr.20040125114453">@nocolor
-https://sourceforge.net/forum/message.php?msg_id=2391076
+http://sourceforge.net/forum/message.php?msg_id=2391076
 By: thyrsus
 
 There is a lot of correct intepretation going on, but there are some errors.
@@ -63941,23 +64017,23 @@ As an example, the anaconda code, in text.py, contains the following lines.
 I'll use periods for leading whitespace, the two characters ^I for leading tabs,
 and a $ to indicate a newline:
 
-class WaitWindow:$
-....def pop(self):$
-^Iself.screen.popWindow()$
-^Iself.screen.refresh()$
-$
-....def __init__(self, screen, title, text):$
-^Iself.screen = screen$
-^Iwidth = 40$
-^Iif (len(text) &lt; width): width = len(text)$
-$
-^It = TextboxReflowed(width, text)$
-$
-^Ig = GridForm(self.screen, title, 1, 1)$
-^Ig.add(t, 0, 0)$
-^Ig.draw()$
-^Iself.screen.refresh()$
-$
+class WaitWindow:
+def pop(self):
+	self.screen.popWindow()
+	self.screen.refresh()
+
+def __init__(self, screen, title, text):
+	self.screen = screen
+	width = 40
+	if (len(text) &lt; width): width = len(text)
+
+	t = TextboxReflowed(width, text)
+
+	g = GridForm(self.screen, title, 1, 1)
+	g.add(t, 0, 0)
+	g.draw()
+	self.screen.refresh()
+
 
 After importing file text.py, I get three associated nodes like so:
 
@@ -63970,28 +64046,28 @@ After importing file text.py, I get three associated nodes like so:
 However, the contents of the nodes are off.  In node [class WaitWindow] the
 text is
 
-class WaitWindow:$
-^I@others$
-^Iself.screen = screen$
-^Iwidth = 40$
-^Iif (len(text) &lt; width): width = len(text)$
-$
-^It = TextboxReflowed(width, text)$
-^Ig = GridForm(self.screen, title, 1, 1)$
-^Ig.add(t, 0, 0)$
-^Ig.draw()$
-^Iself.screen.refresh()$
+class WaitWindow:
+	@others
+	self.screen = screen
+	width = 40
+	if (len(text) &lt; width): width = len(text)
+
+	t = TextboxReflowed(width, text)
+	g = GridForm(self.screen, title, 1, 1)
+	g.add(t, 0, 0)
+	g.draw()
+	self.screen.refresh()
 
 Node [pop] contains the text
 
-def pop(self):$
+def pop(self):
 
 Node [__init__] contains the text
 
-self.screen.popWindow()$
-self.screen.refresh()$
-$
-def __init__(self, screen, title, text):$
+self.screen.popWindow()
+self.screen.refresh()
+
+def __init__(self, screen, title, text):
 
 This anaconda code is being correctly interpreted by the python 1.5 interpreter.
 I'm too green with python to pronounce on whether the formatting is conventional.
@@ -65515,5 +65591,70 @@ File "C:\Apps\leo-4.1-rc3\src\leoCommands.py", line 3425, in openPythonWindow
 ImportError: No module named idlelib.PyShell
 
 The fix was mostly to convert to do idle_dir = str(idle_dir) before setting sys.path: In Python 2.2 sys.path doesn't handle Unicode strings properly.</t>
+<t tx="ekr.20040129133809"></t>
+<t tx="ekr.20040129133809.1">python.exe -i -tOO 
+\leo4CVS\src\leoTkinterGui.py: inconsistent use of tabs and spaces
+in indentation
+\leo4CVS\src\leoFind.py: inconsistent use of tabs and spaces in indentation
+&gt;&gt;only get this warning on the first compile run</t>
+<t tx="ekr.20040129133809.2">also the paste doesnt stick in the headline if you paste from the edit menu. 
+but the paste does stick if use ^C ^V</t>
+<t tx="ekr.20040129133809.3">sometimes copy &amp; paste is greyed out from the log or if the headline is active
+window, even if selected.
+not sure how or what happens but its frequent.</t>
+<t tx="ekr.20040129133809.4">was busy so I just read protected it.
+now I get a traceback every time it trys to write.
+a simple write protected warning would be enough.</t>
+<t tx="ekr.20040129133809.5">sometimes after a drag of a node, 
+then the expand/contract doesnt work.
+click or menu has no effect.
+in an open leo
+maybe it is ok after you save the file
+other times only fix is to exit &amp; restart.</t>
+<t tx="ekr.20040129133809.6">extensions menu either launch console or explorer:
+Traceback (most recent call last):
+  File "\leo4CVS\src\leoCommands.py", line 127, in doCommand
+    command()
+TypeError: launchCmd() takes exactly 1 argument (0 given)
+once in red once in black, must be from the redirect to log getting doubled.</t>
+<t tx="ekr.20040129133809.7"></t>
+<t tx="ekr.20040129133809.8">opening a leo the curser moves to the correct node but it is no longer the top
+most node in the window. pobably related to Leo now saving of the body pane
+size.</t>
+<t tx="ekr.20040129133809.9"></t>
+<t tx="ekr.20040129133809.10"></t>
+<t tx="ekr.20040129133809.11"></t>
+<t tx="ekr.20040129133809.12">I definatly dont want to generate all plugins,
+but I understand the @ignore was a roadblock for some of the nubies to generate
+any plugins...
+please put the @ignore back at the top of the file.
+or not.</t>
+<t tx="ekr.20040129133809.13">leoConfig.txt reverted back to plugins=0 redirect to log=0 when I opened another
+leo.
+</t>
+<t tx="ekr.20040129153428"># !1/29/04: new routine.
+
+def setAllAncestorAtFileNodesDirty (self):
+
+	v = self ; c = v.c
+	changed = false
+	c.beginUpdate()
+	if v.setAncestorAtFileNodeDirty():
+		changed = true
+	for v2 in v.t.joinList:
+		if v2 != v and v2.setAncestorAtFileNodeDirty():
+			changed = true
+	c.endUpdate(changed)
+	return changed</t>
+<t tx="ekr.20040129154656"></t>
+<t tx="ekr.20040129154656.1">This is correct and more accurate.
+
+- Created v.setAllAncestorAtFileNodesDirty.
+
+- Call v.setAllAncestorAtFileNodesDirty instead of v.setDirty.
+
+- "Duplicate" calls to v.setAllAncestorAtFileNodesDirty are needed just as with v.setDirty.
+
+- This change affects drags, moves, clones, insert, delete, sorting.</t>
 </tnodes>
 </leo_file>
