@@ -8,23 +8,24 @@ This information is organized around "labels", which is are just strings and
 freely chosen by the user.
 
 The plugin allows you to create such a label quickly for each marked node, and
-to mark all nodes with have a certain label.
+to mark all nodes which have a certain label.
 
 "labels" can be converted to subnodes, and vice versa. This facility allows you
 to add additional information for each label.
 
-Finally, you can create clones for each node which has a label. These clones are
+You can create clones for each node which has a label. These clones are
 created as children of the current node.
 
 This last facility can be used to create clones for each node which has been
-found or changed by the standard search / replace dialog: - delete all marks.
+found or changed by the standard search / replace dialog:
 
-- do a "find all" / "change all".
-- convert the marks to a label.
+- Delete all marks.
+- Do a "find all" / "change all".
+- Convert the marks to a label.
 - Run the "Clone label subnodes" command.
 
 Finally, if you read a derived file, and the content of a node changes, the
-previous content is availab le under the label "before change:"
+previous content is available under the label "before change:"
 '''
 #@nonl
 #@-node:ekr.20050301095332.1:<<docstring>>
