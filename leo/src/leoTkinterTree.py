@@ -341,7 +341,6 @@ class leoTkinterTree (leoFrame.leoTree):
             
             """Callback injected into position class."""
         
-            #g.trace(self)
             try:
                 p = self ; c = p.c
                 if not g.doHook("hypercclick1",c=c,p=p,event=event):
@@ -364,7 +363,6 @@ class leoTkinterTree (leoFrame.leoTree):
             
             """Callback injected into position class."""
         
-            # g.trace(self)
             try:
                 p = self ; c = p.c
                 if not g.doHook("hyperenter1",c=c,p=p,event=event):
@@ -382,7 +380,6 @@ class leoTkinterTree (leoFrame.leoTree):
             
             """Callback injected into position class."""
         
-            #g.trace(self)
             try:
                 p = self ; c = p.c
                 if not g.doHook("hyperleave1",c=c,p=p,event=event):
@@ -521,7 +518,6 @@ class leoTkinterTree (leoFrame.leoTree):
         for i in xrange(len(pList)):
             p2,t,id = pList[i]
             if p2 == p:
-                # if self.trace and self.verbose g.trace("allocating from freeText")
                 del pList[i]
                 id = t.leo_window_id
                 assert(id)
@@ -569,8 +565,6 @@ class leoTkinterTree (leoFrame.leoTree):
     #@-node:ekr.20040803072955.11:newText
     #@+node:ekr.20040803072955.12:recycleWidgets
     def recycleWidgets (self):
-        
-        # if self.trace: g.trace()
         
         canvas = self.canvas
         
@@ -620,8 +614,6 @@ class leoTkinterTree (leoFrame.leoTree):
     # This was a desparation measure.  It would leak bindings bigtime.
     
     def destroyWidgets (self):
-        
-        g.trace('*' * 20)
     
         self.canvas.delete("all")
         
@@ -687,8 +679,6 @@ class leoTkinterTree (leoFrame.leoTree):
         s = g.toEncodedString(s,g.app.tkEncoding)
         
         width = self.font.measure(s)
-        
-        # g.trace(width,s)
         
         return width
     #@nonl
@@ -1141,8 +1131,7 @@ class leoTkinterTree (leoFrame.leoTree):
             try: self.redrawCount += 1
             except: self.radrawCount = 1
             g.trace(self.redrawCount)
-            
-        # g.trace("begin %s" % self.getTextStats())
+    
         self.redrawing = True
         
         # Recycle all widgets.
@@ -1174,7 +1163,6 @@ class leoTkinterTree (leoFrame.leoTree):
         canvas.lift("clickBox")
         canvas.lift("iconBox") # Higest.
     
-        # g.trace("end   %s" % self.getTextStats())
         self.redrawing = False
     #@nonl
     #@-node:ekr.20040803072955.52:drawTopTree
@@ -1258,8 +1246,6 @@ class leoTkinterTree (leoFrame.leoTree):
     
     def redraw_now (self,scroll=True):
         
-        # g.trace()
-        
         # Bug fix: 4/24/04: cancel any pending redraw "by hand".
         # Make _sure_ that no other redraws take place after this.
         self.disableRedraw = True
@@ -1323,8 +1309,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def idle_second_redraw (self):
         
         c = self.c
-        
-        g.trace()
             
         # Erase and redraw the entire tree the SECOND time.
         # This ensures that all visible nodes are allocated.
@@ -1458,7 +1442,7 @@ class leoTkinterTree (leoFrame.leoTree):
     def scrollTo (self,p):
         
         def scrollToCallback(event=None,self=self,p=p):
-            g.trace(event,self,p)
+            # if self.trace and self.verbose: g.trace(event,self,p)
             self.idle_scrollTo(p)
         
         self.canvas.after_idle(scrollToCallback)
@@ -1591,10 +1575,8 @@ class leoTkinterTree (leoFrame.leoTree):
         
         """Returns the Tk.Edit widget for position p."""
         
-        if self.editPosition:
-            return self.findEditWidget(p,tag="tree:edit_text")
-        else:
-            return None
+        # Bug fix: 8/9/04.
+        return self.findEditWidget(p,tag="tree:edit_text")
     #@nonl
     #@-node:ekr.20040803072955.75:edit_text
     #@+node:ekr.20040803072955.76:findEditWidget
@@ -1618,36 +1600,6 @@ class leoTkinterTree (leoFrame.leoTree):
             return None
         else:
             return None
-            
-        if 0:
-            #@        << buggy code >>
-            #@+node:ekr.20040803072955.77:<< buggy code >>
-            
-            if not p: return None
-            
-            n = len(self.visibleText)
-            
-            for i in xrange(n):
-                t = self.visibleText[i]
-                assert(t.leo_position)
-                if t.leo_position == p:
-                    if t.leo_generation != self.generation:
-                        g.trace("***** generation mismatch *****")
-                        return None
-                    if 1: # Report any other potential matches.  Might cause problems.
-                        count = 0; i += 1
-                        for j in xrange(i+1,n):
-                            if self.visibleText[j].leo_position == p:
-                                count += 1
-                        if count:
-                            g.trace("***** %d other matches for p *****" % (count,p.headString()))
-                    g.trace(self.textAddr(t),p)
-                    return t
-            
-            return None
-            #@nonl
-            #@-node:ekr.20040803072955.77:<< buggy code >>
-            #@nl
     #@nonl
     #@-node:ekr.20040803072955.76:findEditWidget
     #@+node:ekr.20040803072955.78:Click Box...
@@ -1685,12 +1637,14 @@ class leoTkinterTree (leoFrame.leoTree):
         
         p = self.eventToPosition(event)
         if not p: return
-    
-        if event:
-            self.onDrag(event)
-    
-        tree.select(p)
-        g.app.findFrame.handleUserClick(p) # 4/3/04
+        
+        if not g.doHook("iconclick1",c=c,p=p,event=event):
+            if event:
+                self.onDrag(event)
+            tree.select(p)
+            g.app.findFrame.handleUserClick(p) # 4/3/04
+            g.doHook("iconclick2",c=c,p=p,event=event)
+            
         return "break" # disable expanded box handling.
     #@nonl
     #@-node:ekr.20040803072955.81:onIconBoxClick
@@ -1740,9 +1694,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         c = self.c
         
-        if not p:
-            g.trace("Can't happen")
-            return
+        if not p: return
         
         if p.isCurrentPosition():
             if p == self.editPosition():
@@ -1796,9 +1748,7 @@ class leoTkinterTree (leoFrame.leoTree):
         except AttributeError:
             return "continue"
     
-        self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
-        
-        # return "continue"
+        return self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p,ch)
     #@nonl
     #@-node:ekr.20040803072955.88:onHeadlineKey
     #@+node:ekr.20040803072955.83:onHeadlineRightClick
@@ -1952,8 +1902,6 @@ class leoTkinterTree (leoFrame.leoTree):
     def onHeadChanged (self,p):
     
         """Handle a change to headline text."""
-        
-        g.trace()
         
         self.c.frame.bodyCtrl.after_idle(self.idle_head_key,p)
     #@nonl
@@ -2176,7 +2124,8 @@ class leoTkinterTree (leoFrame.leoTree):
                     g.trace(id,p.headString())
                 return p
             else:
-                g.trace("*** wrong generation: %d ***" % id)
+                if self.trace and self.verbose:
+                    g.trace("*** wrong generation: %d ***" % id)
                 return None
         else:
             if self.trace and self.verbose: g.trace(id,None)
