@@ -76,12 +76,15 @@ def createButtons (tag, keys):
             c.frame.putStatusLine("Executing %s..." % statusMessage)
             if bindLate:
                 script = g.getScript(c,p)
-            try:
-                exec script.strip() + '\n' in {}
-            except:
-                g.es("Exception executing script button")
-                g.es_exception(full=False,c=c)
-            c.frame.putStatusLine("Finished!")
+            if script:
+                try:
+                    exec script.strip() + '\n' in {}
+                except:
+                    g.es("Exception executing script button")
+                    g.es_exception(full=False,c=c)
+                c.frame.putStatusLine("Finished!")
+            else:
+                g.es("No script selected",color="blue")
             
         def mouseEnterCallback(event=None,c=c,statusMessage=statusMessage):
             mouseEnter(c,statusMessage)
