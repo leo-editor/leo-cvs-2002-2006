@@ -3,7 +3,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="95" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="37" left="146" height="703" width="911"/>
+	<global_window_position top="27" left="13" height="703" width="911"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -126,7 +126,7 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20050203090810" a="TV"><vh>@page For unit tests</vh>
+<v t="ekr.20050203090810"><vh>@page For unit tests</vh>
 <v t="ekr.20050203085250"><vh>@int global_setting_for_unit_tests = 132</vh></v>
 </v>
 <v t="ekr.20041119034357.21"><vh>Keyboard shortcuts</vh>
@@ -142,8 +142,8 @@
 <v t="ekr.20041119034357.45" a="E"><vh>@font body text font</vh></v>
 <v t="ekr.20041119051246.4" a="E"><vh>@font outline font</vh></v>
 </v>
-<v t="ekr.20041213105007.1"><vh>Colors</vh>
-<v t="ekr.20041213105007.3" a="E"><vh>@page Log pane colors</vh>
+<v t="ekr.20041213105007.1" a="TV"><vh>Colors</vh>
+<v t="ekr.20041213105007.3"><vh>@page Log pane colors</vh>
 <v t="ekr.20041119052015"><vh>@color log_error_color = red</vh></v>
 <v t="ekr.20041119052015.2"><vh>@color log_text_foreground_color = None</vh></v>
 <v t="ekr.20041119053445"><vh>@color log_text_background_color = None</vh></v>
@@ -156,7 +156,7 @@
 <v t="ekr.20041119034357.49"><vh>@color body_text_background_color = None</vh></v>
 <v t="ekr.20041119034357.48"><vh>@color body_text_foreground_color = None</vh></v>
 </v>
-<v t="ekr.20041119051246.1" a="E"><vh>@page Outline pane colors</vh>
+<v t="ekr.20041119051246.1"><vh>@page Outline pane colors</vh>
 <v t="ekr.20041119051246.2"><vh>@color headline_text_unselected_background_color = #ffffec</vh></v>
 <v t="ekr.20041119050749.6"><vh>@color headline_text_unselected_foreground_color = None</vh></v>
 <v t="ekr.20041119051246.3"><vh>@color headline_text_selected_background_color = #dbdbdb</vh></v>
@@ -168,24 +168,24 @@
 <v t="ekr.20041119050749.12"><vh>@color outline_pane_background_color = #ffffec</vh></v>
 </v>
 <v t="ekr.20041119034357.70"><vh>@page Syntax colors &amp; options</vh>
-<v t="ekr.20041119034357.78"><vh>@color comment_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.79"><vh>@color cweb_section_name_color=red</vh></v>
-<v t="ekr.20041119034357.80"><vh>@color directive_color=blue</vh></v>
-<v t="ekr.20041119034357.81"><vh>@color doc_part_color=firebrick3</vh></v>
-<v t="ekr.20041119034357.82"><vh>@color keyword_color=blue</vh></v>
+<v t="ekr.20041119034357.78"><vh>@color comment_color = firebrick3</vh></v>
+<v t="ekr.20041119034357.79"><vh>@color cweb_section_name_color = red</vh></v>
+<v t="ekr.20041119034357.80"><vh>@color directive_color = blue</vh></v>
+<v t="ekr.20041119034357.81"><vh>@color doc_part_color = firebrick3</vh></v>
+<v t="ekr.20041119034357.82"><vh>@color keyword_color = blue</vh></v>
 <v t="ekr.20041120152508"><vh>@color latex_background_color = None</vh></v>
-<v t="ekr.20041119034357.83"><vh>@color leo_keyword_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.84"><vh>@color section_name_color=red</vh></v>
-<v t="ekr.20041119034357.85"><vh>@color section_name_brackets_color=blue</vh></v>
-<v t="ekr.20041119034357.86"><vh>@color show_invisibles_space_background_color=Gray90</vh></v>
-<v t="ekr.20041119034357.87"><vh>@color show_invisibles_tab_foreground_color=Gray80</vh></v>
-<v t="ekr.20041119034357.88"><vh>@color string_color=#00aa00</vh></v>
-<v t="ekr.20041119034357.89"><vh>@color undefined_section_name_color=red</vh></v>
-<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex=True</vh></v>
-<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex=True</vh></v>
-<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text=True</vh></v>
-<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names=True</vh></v>
-<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks=False</vh></v>
+<v t="ekr.20041119034357.83"><vh>@color leo_keyword_color = #00aa00</vh></v>
+<v t="ekr.20041119034357.84"><vh>@color section_name_color = red</vh></v>
+<v t="ekr.20041119034357.85"><vh>@color section_name_brackets_color = blue</vh></v>
+<v t="ekr.20041119034357.86"><vh>@color show_invisibles_space_background_color = Gray90</vh></v>
+<v t="ekr.20041119034357.87"><vh>@color show_invisibles_tab_foreground_color = Gray80</vh></v>
+<v t="ekr.20041119034357.88"><vh>@color string_color = #00aa00</vh></v>
+<v t="ekr.20041119034357.89"><vh>@color undefined_section_name_color = red</vh></v>
+<v t="ekr.20041119034357.72"><vh>@bool color_cweb_doc_parts_with_latex = True</vh></v>
+<v t="ekr.20041119034357.73"><vh>@bool color_cweb_comments_with_latex = True</vh></v>
+<v t="ekr.20041119034357.74"><vh>@bool color_directives_in_plain_text = True</vh></v>
+<v t="ekr.20041119034357.75"><vh>@bool underline_undefined_section_names = True</vh></v>
+<v t="ekr.20041119034357.76"><vh>@bool use_hyperlinks = False</vh></v>
 </v>
 <v t="ekr.20041119034357.67"><vh>@color split_bar_color = LightSteelBlue2</vh></v>
 </v>
@@ -735,8 +735,8 @@ zero: Leo removes all trailing whitespace from body text.
 
 one:  Leo ends each non-empty body text with exactly one trailing newline.</t>
 <t tx="ekr.20041119041747.4">
-1:    Leo strips blanks and tabs from otherwise blank lines.
-0:    Leo retains whitespace even in otherwise blank lines.</t>
+True:  Leo strips blanks and tabs from otherwise blank lines.
+False: Leo retains whitespace even in otherwise blank lines.</t>
 <t tx="ekr.20041119042929"></t>
 <t tx="ekr.20041119042929.1"></t>
 <t tx="ekr.20041119042929.2">Same as @directory.</t>
@@ -838,28 +838,44 @@ N.B. Leo requires utf-8 encoding for any non-ascii characters.
 </t>
 <t tx="ekr.20041119050105.3">These settings determine whether the corresponding checkbox is checked by default.</t>
 <t tx="ekr.20041119050105.4">Despite its name, this setting affects the default value of the Show Context checkbox.</t>
-<t tx="ekr.20041119050105.5"></t>
-<t tx="ekr.20041119050105.6"></t>
-<t tx="ekr.20041119050105.7"></t>
-<t tx="ekr.20041119050105.8"></t>
+<t tx="ekr.20041119050105.5">When checked, the Find and Change commands ignore the case of alphabetic characters when determining matches.
+</t>
+<t tx="ekr.20041119050105.6">When checked, the Change command marks all headlines whose headline or body text are changed by the command.
+</t>
+<t tx="ekr.20041119050105.7">When checked, the Find and Change commands mark all headlines in which a match is found with the pattern.
+</t>
+<t tx="ekr.20041119050105.8">When checked, the Find and Change commands treat several characters specially in
+the find pattern. The '*' character matches any sequence of zero or more
+characters. The '.' character matches any single character. The '^' character at
+the start of a pattern, or a '$' character at the end of a pattern matches a
+newline.
+
+Examples:
+
+The pattern "^abc$" matches lines that only contain "abc".
+The pattern "^a" matches any line starting with "A".
+The pattern "a$" matches any line ending with "a".
+The pattern "^*$" matches any line at all.</t>
 <t tx="ekr.20041119050105.9"></t>
 <t tx="ekr.20041119050105.10"></t>
 <t tx="ekr.20041119050105.11"></t>
 <t tx="ekr.20041119050105.12"></t>
-<t tx="ekr.20041119050105.13">Only one of these settings can be True.</t>
-<t tx="ekr.20041119050105.14"></t>
-<t tx="ekr.20041119050105.15"></t>
-<t tx="ekr.20041119050105.16"></t>
-<t tx="ekr.20041119050749.3">
-1: Allows control-dragging to create clones.
-0: All drags move nodes.
-See also: look_for_control_drag_on_mouse_down
-Setting this setting to 0 allows Leo to be used on Aqua.
+<t tx="ekr.20041119050105.13">Only one of these settings can be True.
 
+If None are true, Leo searches the entire headline.</t>
+<t tx="ekr.20041119050105.14">When checked, the Find and Change commands search body text.
 </t>
-<t tx="ekr.20041119050749.4">
-1: Tell whether drags will move nodes or clone nodes.
-0: Don't issue such messages.
+<t tx="ekr.20041119050105.15">When checked, the Find and Change commands search headline text.
+</t>
+<t tx="ekr.20041119050105.16">When checked, the Find and Change commands search only the currently selected headline and its offspring.
+</t>
+<t tx="ekr.20041119050749.3">True:  Allows control-dragging to create clones.
+False: All drags move nodes.
+
+See also: look_for_control_drag_on_mouse_down
+Setting this setting to False allows Leo to be used on Aqua.</t>
+<t tx="ekr.20041119050749.4">True:  Tell whether drags will move nodes or clone nodes.
+False: Don't issue such messages.
 
 </t>
 <t tx="ekr.20041119050749.5">
@@ -987,8 +1003,66 @@ This would be the natural way to implement platform-dependent settings.</t>
 <t tx="ekr.20041120152508"></t>
 <t tx="ekr.20041120152657"></t>
 <t tx="ekr.20041120152900"></t>
-<t tx="ekr.20041120152900.1"></t>
-<t tx="ekr.20041120152900.2"></t>
+<t tx="ekr.20041120152900.1">Only one of these settings can be True.
+
+If None are true, uses a 'Plain' search.</t>
+<t tx="ekr.20041120152900.2">When the Script Search radio button is selected Leo treats the contents of the
+Search Text as a script to execute whenever any kind of Find command is
+executed. Similarly, when the Script Change checkbox is selected Leo treats the
+context of the Change Text as a script to execute whenever any kind of Change
+command is executed. See below for just how this works.
+
+Script-based find-change is extremely powerful. In effect, Leo's Find/Change
+panel becomes a new platform for running scripts interactively. Leo now has all
+the find/change capability of pattern matching languages like Snobol and Icon,
+just by using the capabilities of the plain Python language. Moreover, Leo can
+deliver these capabilities interactively or not depending which buttons you push
+in Leo's Find/Change panel.
+
+Script-based find/change frees the user from having to control script-based
+searches interactively. Rather than forcing find/change scripts to implement
+their own interactive controls, it is much easier to use what Leo already has.
+
+HOW IT WORKS
+
+Leo dedicates a Python dictionary called app.searchDict for communication
+between Leo and the search and change scripts. The search and change scripts may
+also use app.searchDict for communication between themselves. Leo sets
+app.searchDict["type"] to "find", "change", "findAll" or "changeAll" to indicate
+the kind of command being executed. Scripts may use all other entries in
+app.searchDict as they please.
+
+Leo executes the find script once when you press the Find button (or the Change
+then Find button) in Leo's Find/Change dialog. Typically, the find script would
+traversing the tree and highlight the found text or otherwise indicate to the
+user that the find operation has succeeded. However, the script can do anything
+it pleases.
+
+Leo executes the the find script repeatedly when you press the Find All button.
+Leo keeps executing the find script until app.searchDict["continue"] evaluates
+to false. Initially there is no entry for app.searchDict["continue"], so the
+find script must set app.searchDict["continue"] = true if it wants Leo to keep
+executing it.
+
+Leo executes the change script once when you press the Change button. Typically,
+the change script would change the selected text. Usually the change script will
+compute the new value of body text and call v.setBodyStringOrPane(newText) to
+make that change permanent. 
+
+The change script also may handle undo, typically by calling
+c.frame.onBodyChanged(v,"Change",oldText=oldText). Leo does not handle undo
+automatically. Indeed, Leo makes no assumptions whatever about what the change
+script really does.
+
+Leo executes the the change script repeatedly when you press the Change All
+button. Just as with the Find All command, Leo keeps executing the change script
+until app.searchDict["continue"] evaluates to false.
+
+Most find and change scripts will ignore settings in the Find Panel like "whole
+word", "pattern match", and "reverse". However, these settings are available to
+the scripts via ivars such as c.whole_word_flag, etc. if desired.
+
+For examples, see the node called 'Script Find and Script Change' in leoDocs.leo.</t>
 <t tx="ekr.20041120155431.1">The body text of @shortcut nodes contain the specification for zero or more shortcuts.
 
 Lines starting with # are ignored.
