@@ -498,14 +498,14 @@ class tkinterGui(leoGui.leoGui):
 	#@-node:ekr.20031218072017.4068:attachLeoIcon & createLeoIcon
 	#@-node:ekr.20031218072017.4067:Icons
 	#@+node:ekr.20031218072017.4071:Idle Time
-	#@+node:ekr.20031218072017.4072:setIdleTimeHook
+	#@+node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
 	def setIdleTimeHook (self,idleTimeHookHandler,*args,**keys):
 		
 		# g.trace(idleTimeHookHandler)
 		if self.root:
 			self.root.after_idle(idleTimeHookHandler,*args,**keys)
-			
-	#@-node:ekr.20031218072017.4072:setIdleTimeHook
+	#@nonl
+	#@-node:ekr.20031218072017.4072:tkinterGui.setIdleTimeHook
 	#@+node:ekr.20031218072017.4073:setIdleTimeHookAfterDelay
 	def setIdleTimeHookAfterDelay (self,delay,idleTimeHookHandler,*args,**keys):
 		

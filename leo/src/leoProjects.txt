@@ -1218,6 +1218,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -2646,82 +2649,93 @@ def yviewCallback (self,*args,**keys):
 #@+node:ekr.20031218072017.999:From Tree class
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
-
+	
+	tree = self
 	y += 7 # draw the box at x, y+7
 	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 
-	tree = self
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
 	return 0,icon_width # dummy icon height,width
 #@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
 #@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
 #@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 def drawNode(self,p,x,y):
 
 	"""Draw horizontal line from vertical line to icon"""
 	
-	# g.trace(p)
+	tree = self ; v = p.v
 	
+	data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+	
+	# g.trace(p)
 	if 1:
 		self.lineyoffset = 0
 	else:
@@ -2792,6 +2806,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -2848,6 +2865,7 @@ else:
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -2856,6 +2874,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -3824,1875 +3846,6 @@ def startElement(self,name,atts):
 #@-node:ekr.20031218072017.1664:startElement
 #@-node:ekr.20031218072017.1658:(Using xml parser)
 #@-node:ekr.20031218072017.984:Unfinished projects
-#@+node:EKR.20040512081330:In progress
-#@+node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
-import difflib,shutil
-
-class mulderUpdateAlgorithm:
-	
-	"""A class to update derived files using
-	diffs in files without sentinels."""
-	
-	@others
-	
-def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
-
-	mu = mulderUpdateAlgorithm()
-
-	mu.pull_source(sourcefilename,targetfilename)
-	mu.copy_time(targetfilename,sourcefilename)
-#@nonl
-#@+node:EKR.20040505103527:TO DO
-@
-
-- is_sentinel is not strictly correct.  There must be an atFile method that does the job absolutely correctly.
-
-- Similarly, marker_from_extension can probably be replaced by a call to some method in leoGlobals.py.
-#@-node:EKR.20040505103527:TO DO
-#@+node:EKR.20040504150046.3:__init__
-def __init__ (self,testing=false,verbose=false):
-	
-	self.testing = testing
-	self.verbose = false
-	self.do_backups = false
-#@nonl
-#@-node:EKR.20040504150046.3:__init__
-#@+node:EKR.20040504150046.9:copy_sentinels
-@ This script retains _all_ sentinels.  If lines are replaced, or deleted,
-we restore deleted sentinel lines by checking for gaps in the mapping.
-@c
-
-def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
-	"""
-	
-	Copy sentinel lines from fat_lines to write_lines.
-
-	Copy all sentinels _after_ the current reader postion up to,
-	but not including, mapping[endline].
-
-	"""
-
-	j_last = mapping[startline]
-	i = startline + 1
-	while i <= endline:
-		j = mapping[i]
-		if j_last + 1 != j:
-			fat_pos = j_last + 1
-			# Copy the deleted sentinels that comprise the gap.
-			while fat_pos < j:
-				line = fat_lines[fat_pos]
-				write_lines.append(line)
-				if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
-				fat_pos += 1
-		j_last = j ; i += 1
-
-	fat_pos = mapping[endline]
-	return fat_pos
-#@nonl
-#@-node:EKR.20040504150046.9:copy_sentinels
-#@+node:EKR.20040504155109:copy_time
-def copy_time(self,sourcefilename,targetfilename):
-	
-	"""
-	Set the target file's modification time to
-	that of the source file.
-	"""
-
-	st = os.stat(sourcefilename)
-	if hasattr(os, 'utime'):
-		os.utime(targetfilename, (st.st_atime, st.st_mtime))
-	elif hasattr(os, 'mtime'):
-		os.mtime(targetfilename, st.st_mtime)
-	else:
-		g.trace("Can not set modification time")
-#@nonl
-#@-node:EKR.20040504155109:copy_time
-#@+node:EKR.20040504150046.6:create_mapping
-def create_mapping (self,lines,marker):
-	"""
-
-	'lines' is a list of lines of a file with sentinels.
- 
-	Returns:
-
-	result: lines with all sentinels removed.
-
-	mapping: a list such that result[mapping[i]] == lines[i]
-	for all i in range(len(result))
-
-	"""
-
-	mapping = [] ; result = []
-	for i in xrange(len(lines)):
-		line = lines[i]
-		if not self.is_sentinel(line,marker):
-			result.append(line)
-			mapping.append(i)
-
-	# Create a last mapping entry for copy_sentinels.
-	mapping.append(i)
-
-	return result, mapping
-#@nonl
-#@-node:EKR.20040504150046.6:create_mapping
-#@+node:EKR.20040504154039:is_sentinel NOT CORRECT
-def is_sentinel (self,line,marker):
-	
-	"""
-	Check if line starts with a sentinel comment.
-	"""
-	
-	return line.lstrip().startswith(marker)
-#@-node:EKR.20040504154039:is_sentinel NOT CORRECT
-#@+node:EKR.20040504150046.4:marker_from_extension
-def marker_from_extension(self,filename):
-	"""
-	Tries to guess the sentinel leadin
-	comment from the filename extension.
-	
-	This code should probably be shared
-	with the main Leo code.
-	"""
-	root, ext = os.path.splitext(filename)
-	if ext == '.tmp':
-		root, ext = os.path.splitext(root)
-	if ext in ('.h', '.c'):
-		marker = "//@"
-	elif ext in (".py", ".cfg", ".bat", ".ksh"):
-		marker = "#@"
-	else:
-		g.trace("unknown extension %s" % ext)
-		marker = None
-
-	return marker
-#@nonl
-#@-node:EKR.20040504150046.4:marker_from_extension
-#@+node:EKR.20040505080156:Get or remove sentinel lines
-# These routines originally were part of push_filter & push_filter_lines.
-#@nonl
-#@+node:EKR.20040505081121:separateSentinelsFromFile/Lines
-def separateSentinelsFromFile (self,filename):
-	
-	"""Separate the lines of the file into a tuple of two lists,
-	containing the sentinel and non-sentinel lines of the file."""
-	
-	lines = file(filename).readlines()
-	marker = self.marker_from_extension(filename)
-	
-	return self.separateSentinelsFromLines(lines,marker)
-	
-def separateSentinelsFromLines (self,lines,marker):
-	
-	"""Separate lines (a list of lines) into a tuple of two lists,
-	containing the sentinel and non-sentinel lines of the original list."""
-	
-	strippedLines = self.removeSentinelsFromLines(lines,marker)
-	sentinelLines = self.getSentinelsFromLines(lines,marker)
-	
-	return strippedLines,sentinelLines
-#@nonl
-#@-node:EKR.20040505081121:separateSentinelsFromFile/Lines
-#@+node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
-def removeSentinelsFromFile (self,filename):
-	
-	"""Return a copy of file with all sentinels removed."""
-	
-	lines = file(filename).readlines()
-	marker = self.marker_from_extension(filename)
-	
-	return removeSentinelsFromLines(lines,marker)
-	
-def removeSentinelsFromLines (self,lines,marker):
-
-	"""Return a copy of lines with all sentinels removed."""
-	
-	return [line for line in lines if not self.is_sentinel(line,marker)]
-#@nonl
-#@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
-#@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
-def getSentinelsFromFile (self,filename,marker):
-	
-	"""Returns all sentinels lines in a file."""
-	
-	lines = file(filename).readlines()
-	marker = self.marker_from_extension(filename)
-
-	return getSentinelsFromLines(lines,marker)
-	
-def getSentinelsFromLines (self,lines,marker):
-	
-	"""Returns all sentinels lines in lines."""
-	
-	return [line for line in lines if self.is_sentinel(line,marker)]
-#@nonl
-#@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
-#@-node:EKR.20040505080156:Get or remove sentinel lines
-#@+node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
-def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
-	
-	<< init propagateDiffsToSentinelsFile vars >>
-	
-	write_lines = self.propagateDiffsToSentinelsLines(
-		i_lines,j_lines,fat_lines,mapping)
-		
-	# Update _source_ file if it is not the same as write_lines.
-	written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
-	if written:
-		<< paranoia check>>
-#@nonl
-#@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
-# Get the sentinel comment marker.
-marker = self.marker_from_extension(sourcefilename)
-if not marker:
-	return
-
-try:
-	# Create the readers.
-	sfile = file(sourcefilename)
-	tfile = file(targetfilename)
-	
-	fat_lines = sfile.readlines() # Contains sentinels.
-	j_lines   = tfile.readlines() # No sentinels.
-	
-	i_lines,mapping = self.create_mapping(fat_lines,marker)
-	
-	sfile.close()
-	tfile.close()
-except:
-	g.es_exception("can not open files")
-	return
-#@nonl
-#@-node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
-#@+node:EKR.20040504150046.12:<<paranoia check>>
-# Check that 'push' will re-create the changed file.
-strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
-
-if strippedLines != j_lines:
-	self.report_mismatch(strippedLines, j_lines,
-		"Propagating diffs did not work as expected",
-		"Content of sourcefile:",
-		"Content of modified file:")
-
-# Check that no sentinels got lost.
-fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
-
-if sentinel_lines != fat_sentinel_lines:
-	self.report_mismatch(sentinel_lines,fat_sentinel_lines,
-		"Propagating diffs modified sentinel lines:",
-		"Current sentinel lines:",
-		"Old sentinel lines:")
-#@nonl
-#@-node:EKR.20040504150046.12:<<paranoia check>>
-#@-node:EKR.20040504150046.10:propagateDiffsToSentinelsFile
-#@+node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
-def propagateDiffsToSentinelsLines (self,i_lines,j_lines,fat_lines,mapping):
-	
-	"""Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
-	'write_lines' making sure that all sentinels of 'fat_lines' are copied.
-
-	i/j_lines have no sentinels.  fat_lines does."""
-
-	<< init propagateDiffsToSentinelsLines vars >>
-	<< copy the sentinels at the beginning of the file >>
-	for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-		if testing:
-			if verbose: print
-			print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
-			if verbose: print
-		<< update and check the loop invariant >>
-		if tag == 'equal':
-			<< handle 'equal' tag >>
-		elif tag == 'replace':
-			<< handle 'replace' tag >>
-		elif tag == 'delete':
-			<< handle 'delete' tag >>
-		elif tag == 'insert':
-			<< handle 'insert' tag >>
-		else: assert 0,"bad tag"
-	<< copy the sentinels at the end of the file >>
-	return write_lines
-#@nonl
-#@+node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
-# Indices into i_lines, j_lines & fat_lines.
-i_pos = j_pos = fat_pos = 0
-
-# These vars check that all ranges returned by get_opcodes() are contiguous.
-i2_old = j2_old = -1
-
-# Create the output lines.
-write_lines = []
-
-matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
-
-testing = self.testing
-verbose = self.verbose
-#@nonl
-#@-node:EKR.20040504145804.2:<< init propagateDiffsToSentinelsLines vars >>
-#@+node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
-while fat_pos < mapping[0]:
-	line = fat_lines[fat_pos]
-	write_lines.append(line)
-	if testing and verbose: print "copy initial line",fat_pos,line,
-	fat_pos += 1
-#@nonl
-#@-node:EKR.20040504145804.3:<< copy the sentinels at the beginning of the file >>
-#@+node:EKR.20040504145804.4:<< update and check the loop invariant>>
-# We need the ranges returned by get_opcodes to completely cover the source lines being compared.
-# We also need the ranges not to overlap.
-
-assert(i2_old in (-1,i1))
-assert(j2_old in (-1,j1))
-
-i2_old = i2 ; j2_old = j2
-
-# Check the loop invariants.
-assert i_pos == i1
-assert j_pos == j1
-assert fat_pos == mapping[i1]
-
-if 0: # not yet.
-	if testing: # A bit costly.
-		t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
-		# Check that we have all the modifications so far.
-		assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
-		# Check that we kept all sentinels so far.
-		assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
-#@nonl
-#@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
-#@+node:EKR.20040504145804.5:<< handle 'equal' tag >>
-# Copy the lines, including sentinels.
-while fat_pos <= mapping[i2-1]:
-	line = fat_lines[fat_pos]
-	if 0: # too verbose.
-		if testing: print "Equal: copying ", line,
-	write_lines.append(line)
-	fat_pos += 1
-
-if testing and verbose:
-	print "Equal: synch i", i_pos,i2
-	print "Equal: synch j", j_pos,j2
-
-i_pos = i2
-j_pos = j2
-
-# Copy the sentinels which might follow the lines.       
-fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)
-#@nonl
-#@-node:EKR.20040504145804.5:<< handle 'equal' tag >>
-#@+node:EKR.20040504145804.6:<< handle 'replace' tag >>
-@ Replace lines that may span sentinels.
-
-For now, we put all the new contents after the first sentinel.
-
-A more complex approach: run the difflib across the different lines and try to
-construct a mapping changed line => orignal line.
-@c
-
-while j_pos < j2:
-	line = j_lines[j_pos]
-	if testing:
-		print "Replace i:",i_pos,repr(i_lines[i_pos])
-		print "Replace j:",j_pos,repr(line)
-		i_pos += 1
-
-	write_lines.append(line)
-	j_pos += 1
-
-i_pos = i2
-
-# Copy the sentinels which might be between the changed code.         
-fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
-#@nonl
-#@-node:EKR.20040504145804.6:<< handle 'replace' tag >>
-#@+node:EKR.20040504145804.7:<< handle 'delete' tag >>
-if testing and verbose:
-	print "delete: i",i_pos,i1
-	print "delete: j",j_pos,j1
-
-j_pos = j2
-i_pos = i2
-
-# Restore any deleted sentinels.
-fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)
-#@nonl
-#@-node:EKR.20040504145804.7:<< handle 'delete' tag >>
-#@+node:EKR.20040504145804.8:<< handle 'insert' tag >>
-while j_pos < j2:
-	line = j_lines[j_pos]
-	if testing: print "Insert:", line,
-	write_lines.append(line)
-	j_pos += 1
-
-# The input streams are already in synch.
-#@nonl
-#@-node:EKR.20040504145804.8:<< handle 'insert' tag >>
-#@+node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
-while fat_pos < len(fat_lines):
-	line = fat_lines[fat_pos]
-	write_lines.append(line)
-	if testing and verbose: print "Append last line",line
-	fat_pos += 1
-#@nonl
-#@-node:EKR.20040504145804.9:<< copy the sentinels at the end of the file >>
-#@-node:EKR.20040504145804.1:propagateDiffsToSentinelsLines
-#@+node:EKR.20040504150046.5:report_mismatch
-def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
-
-	"""
-	Generate a report when something goes wrong.
-	"""
-
-	print '='*20
-	print message
-	
-	if 0:
-		print lines1_message
-		print '-'*20
-		for line in lines1:
-		  print line,
-		 
-		print '='*20
-	
-		print lines2_message
-		print '-'*20
-		for line in lines2:
-			print line,
-#@nonl
-#@-node:EKR.20040504150046.5:report_mismatch
-#@+node:EKR.20040504160820:write_if_changed
-def write_if_changed(self,lines,sourcefilename,targetfilename):
-	"""
-	
-	Replaces target file if it is not the same as 'lines',
-	and makes the modification date of target file the same as the source file.
-	
-	Optionally backs up the overwritten file.
-
-	"""
-	
-	copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
-		
-	if self.testing:
-		if copy:
-			print "Writing",targetfilename,"without sentinals"
-		else:
-			print "Files are identical"
-
-	if copy:
-		if self.do_backups:
-			<< make backup file >>
-		outfile = open(targetfilename, "w")
-		for line in lines:
-			outfile.write(line)
-		outfile.close()
-		self.copy_time(sourcefilename,targetfilename)
-	return copy
-#@+node:EKR.20040504160820.1:<< make backup file >>
-if os.path.exists(targetfilename):
-	count = 0
-	backupname = "%s.~%s~" % (targetfilename,count)
-	while os.path.exists(backupname):
-		count += 1
-		backupname = "%s.~%s~" % (targetfilename,count)
-	os.rename(targetfilename, backupname)
-	if testing:
-		print "backup file in ", backupname
-#@nonl
-#@-node:EKR.20040504160820.1:<< make backup file >>
-#@-node:EKR.20040504160820:write_if_changed
-#@-node:EKR.20040504150046:class mulderUpdateAlgorithm (leoGlobals)
-#@+node:EKR.20040506075328.3:(Perfect Import)
-#@+node:EKR.20040506091116:Notes
-@nocolor
-
-2.  Write a _virtual output file_ to a string.  This is easily done:  we pass a file-like-object to Leo's atFile.write routines.  This virtual file will have @file-thin sentinels.  In other words, the virtual file will specify _all_ aspects of the structure of the newly imported outline.
-
-3.  Convert the string got by writing the virtual output file to a list of lines.  This will become the fat_lines argument.
-
-The strategy is simple:  we want to make corrections to fat_lines using Bernhard's algorithm.  If in fact the fat_lines has changed, we will delete root's outline and recreate the outline using the atFile.read code applied to the virtual output file, i.e., fat_lines.
-
-4.  Set i_lines to the contents of the virtual output file (fat_lines) stripped of sentinels.  Set j_lines to the lines of the original imported file.  As stated above, set fat_lines to the lines of the virtual output file.  Call propagateDiffsToSentinelsLines to update fat_lines to make it equivalent to the original imported file.  Replace root's outline if a real change has happened.
-#@-node:EKR.20040506091116:Notes
-#@+node:ekr.20040331083824.1:fileLikeObject
-class fileLikeObject:
-	
-	"""Define a file-like object for redirecting i/o."""
-	
-	# Used by Execute Script command and rClick plugin.
-	
-	def __init__(self): self.s = ""
-	def clear (self):   self.s = ""
-	def close (self):   pass
-	def flush (self):   pass
-		
-	def get (self):
-		return self.s
-		
-	def write (self,s):
-		if s:
-			self.s = self.s + s
-#@nonl
-#@-node:ekr.20040331083824.1:fileLikeObject
-#@+node:ekr.20031218072017.3212:importFilesCommand
-def importFilesCommand (self,files,treeType):
-
-	c = self.c
-	if c == None: return
-	v = current = c.currentVnode()
-	if current == None: return
-	if len(files) < 1: return
-	self.treeType = treeType
-	c.beginUpdate()
-	if 1: # range of update...
-		if len(files) == 2:
-			<< Create a parent for two files having a common prefix >>
-		for i in xrange(len(files)):
-			fileName = files[i]
-			v = self.createOutline(fileName,current)
-			self.perfectImport(fileName,v)
-			if v: # 8/11/02: createOutline may fail.
-				g.es("imported " + fileName)
-				v.contract()
-				v.setDirty()
-				c.setChanged(true)
-		c.validateOutline()
-		current.expand()
-	c.endUpdate()
-	c.selectVnode(current)
-#@nonl
-#@+node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
-@ The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
-@c
-
-name0 = files[0]
-name1 = files[1]
-prefix0, junk = g.os_path_splitext(name0)
-prefix1, junk = g.os_path_splitext(name1)
-if len(prefix0) > 0 and prefix0 == prefix1:
-	current = current.insertAsLastChild()
-	junk, nameExt = g.os_path_split(prefix1)
-	name,ext = g.os_path_splitext(prefix1)
-	current.initHeadString(name)
-#@nonl
-#@-node:ekr.20031218072017.3213:<< Create a parent for two files having a common prefix >>
-#@-node:ekr.20031218072017.3212:importFilesCommand
-#@+node:EKR.20040506075328.2:perfectImport
-def perfectImport (self,fileName,p):
-	
-	return ### not ready yet.
-
-	g.trace(fileName,p)
-	
-	<< write p to a virtual thin derived file s >>
-	if not s: return
-	
-	mu = g.mulderUpdateAlgorithm(testing=true)
-	marker = mu.marker_from_extension(fileName)
-
-	fat_lines = s.splitlines(true) # Keep line endings.
-	
-	i_lines,mapping = mu.create_mapping(fat_lines,marker)
-	j_lines = file(fileName).readlines()
-	
-	if i_lines != j_lines:
-		g.trace("correcting import")
-		write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
-		<< replace root's tree using write_lines >>
-	else:
-		g.trace("imported lines are perfect")
-#@+node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
-try:
-	df = self.c.atFileCommands.new_df
-	df.targetFileName = "<virtual-file>"
-	df.outputFile = fo = g.fileLikeObject()
-	df.writeOpenFile(p)
-	s = fo.get()
-except:
-	g.es("Exception in Perfect Import (write)")
-	g.es_exception()
-	s = None
-#@-node:EKR.20040506105049:<< write p to a virtual thin derived file s >>
-#@+node:EKR.20040506115229:<< replace root's tree using write_lines >>
-if 0: # Not ready yet.
-
-	# Remove all of root's tree.
-	while p.hasChildren():
-		child = p.firstChild()
-		child.doDelete(p)
-		
-	p.setBodyStringOrPane("")
-
-	try:
-		df = self.c.atFileCommands.new_df
-		df.targetFileName = "<virtual-file>"
-		df.inputFile = fo = g.fileLikeObject()
-		fo.set(string.join(write_lines))
-		df.readOpenFile(p)
-	except:
-		g.es("Exception in Perfect Import (read)")
-		g.es_exception()
-		s = None
-#@nonl
-#@-node:EKR.20040506115229:<< replace root's tree using write_lines >>
-#@-node:EKR.20040506075328.2:perfectImport
-#@-node:EKR.20040506075328.3:(Perfect Import)
-#@+node:EKR.20040507095329.1:(More flexible atFile classes)
-#@+node:EKR.20040507100502:about calling scanDirectives
-- called by top_df.read just before calling df.readOpenFile.
-
-- called by atFile.openWriteFile
-#@nonl
-#@-node:EKR.20040507100502:about calling scanDirectives
-#@+node:ekr.20031218072017.2622:<< class baseAtFile methods >>
-@others
-#@nonl
-#@+node:ekr.20031218072017.2623:atFile.__init__ & initIvars
-def __init__(self,c):
-	
-	self.c = c
-	self.fileCommands = self.c.fileCommands
-	
-	# Create subcommanders to handler old and new format derived files.
-	self.old_df = oldDerivedFile(c)
-	self.new_df = newDerivedFile(c)
-	
-	self.initIvars()
-	
-def initIvars(self):
-	
-	# Set by scanDefaultDirectory.
-	self.default_directory = None
-	self.errors = 0
-
-	# Set by scanHeader when reading. Set by scanAllDirectives...
-	self.encoding = g.app.config.default_derived_file_encoding
-	self.endSentinelComment = None
-	self.startSentinelComment = None
-#@nonl
-#@-node:ekr.20031218072017.2623:atFile.__init__ & initIvars
-#@+node:ekr.20031218072017.2624:top_df.error
-def error(self,message):
-
-	g.es(message,color="red")
-	print message
-	self.errors += 1
-#@nonl
-#@-node:ekr.20031218072017.2624:top_df.error
-#@+node:ekr.20031218072017.2625:Reading
-#@+node:ekr.20031218072017.2626: top_df.readAll
-def readAll(self,root,partialFlag=false):
-	
-	"""Scan vnodes, looking for @file nodes to read."""
-
-	at = self ; c = at.c
-	c.endEditing() # Capture the current headline.
-	anyRead = false
-	at.initIvars()
-	p = root.copy()
-	if partialFlag: after = p.nodeAfterTree()
-	else: after = c.nullPosition()
-	while p and not p.equal(after): # Don't use iterator.
-		if p.isAtIgnoreNode():
-			p.moveToNodeAfterTree()
-		elif p.isAtThinFileNode():
-			anyRead = true
-			at.read(p,thinFile=true)
-			p.moveToNodeAfterTree()
-		elif p.isAtFileNode() or p.isAtNorefFileNode():
-			anyRead = true
-			if partialFlag:
-				# We are forcing the read.
-				at.read(p)
-			else:
-				# if p is an orphan, we don't expect to see a derived file,
-				# and we shall read a derived file if it exists.
-				wasOrphan = p.isOrphan()
-				ok = at.read(p)
-				if wasOrphan and not ok:
-					# Remind the user to fix the problem.
-					p.setDirty()
-					c.setChanged(true)
-			p.moveToNodeAfterTree()
-		else: p.moveToThreadNext()
-	# Clear all orphan bits.
-	for p in c.allNodes_iter():
-		p.v.clearOrphan()
-		
-	if partialFlag and not anyRead:
-		g.es("no @file nodes in the selected tree")
-#@nonl
-#@-node:ekr.20031218072017.2626: top_df.readAll
-#@+node:ekr.20031218072017.1812:top_df.read
-# The caller has enclosed this code in beginUpdate/endUpdate.
-
-def read(self,root,importFileName=None,thinFile=false):
-	
-	"""Common read logic for any derived file."""
-	
-	at = self ; c = at.c
-	at.errors = 0
-	at.scanDefaultDirectory(root)
-	if at.errors: return
-	<< set fileName from root and importFileName >>
-	<< open file or return false >>
-	g.es("reading: " + root.headString())
-	firstLines,read_new = at.scanHeader(file,fileName)
-	df = g.choose(read_new,at.new_df,at.old_df)
-	# g.trace(g.choose(df==at.new_df,"new","old"))
-	# import traceback ; traceback.print_stack()
-	<< copy ivars to df >>
-	root.clearVisitedInTree()
-	try:
-		# 1/28/04: Don't set comment delims when importing.
-		# 1/28/04: Call scanAllDirectives here, not in readOpenFile.
-		importing = importFileName is not None
-		df.scanAllDirectives(root,importing=importing,reading=true)
-		df.readOpenFile(root,file,firstLines)
-	except:
-		at.error("Unexpected exception while reading derived file")
-		g.es_exception()
-	file.close()
-	root.clearDirty() # May be set dirty below.
-	after = root.nodeAfterTree()
-	<< warn about non-empty unvisited nodes >>
-	if df.errors == 0:
-		if not df.importing:
-			<< copy all tempBodyStrings to tnodes >>
-	<< delete all tempBodyStrings >>
-	return df.errors == 0
-#@nonl
-#@+node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-if importFileName:
-	fileName = importFileName
-elif root.isAnyAtFileNode():
-	fileName = root.anyAtFileNodeName()
-else:
-	fileName = None
-
-if not fileName:
-	at.error("Missing file name.  Restoring @file tree from .leo file.")
-	return false
-#@nonl
-#@-node:ekr.20031218072017.1813:<< set fileName from root and importFileName >>
-#@+node:ekr.20031218072017.1814:<< open file or return false >>
-fn = g.os_path_join(at.default_directory,fileName)
-fn = g.os_path_normpath(fn)
-
-try:
-	# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
-	file = open(fn,'rb')
-	if file:
-		<< warn on read-only file >>
-	else: return false
-except:
-	at.error("Can not open: " + '"@file ' + fn + '"')
-	root.setDirty()
-	return false
-#@nonl
-#@+node:ekr.20031218072017.1815:<< warn on read-only file >>
-try:
-	read_only = not os.access(fn,os.W_OK)
-	if read_only:
-		g.es("read only: " + fn,color="red")
-except:
-	pass # os.access() may not exist on all platforms.
-#@nonl
-#@-node:ekr.20031218072017.1815:<< warn on read-only file >>
-#@-node:ekr.20031218072017.1814:<< open file or return false >>
-#@+node:ekr.20031218072017.1816:<< copy ivars to df >>
-# Telling what kind of file we are reading.
-df.importing = importFileName != None
-df.raw = false
-df.thinFile = thinFile
-
-# Set by scanHeader.
-df.encoding = at.encoding
-df.endSentinelComment = at.endSentinelComment
-df.startSentinelComment = at.startSentinelComment
-
-# Set other common ivars.
-df.errors = 0
-df.file = file
-df.importRootSeen = false
-df.indent = 0
-df.targetFileName = fileName
-df.root = root
-df.root_seen = false
-#@nonl
-#@-node:ekr.20031218072017.1816:<< copy ivars to df >>
-#@+node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-for p in root.self_and_subtree_iter():
-
-	# g.trace(p)
-	try: s = p.v.t.tempBodyString
-	except: s = ""
-	if s and not p.v.t.isVisited():
-		at.error("Not in derived file:" + p.headString())
-		p.v.t.setVisited() # One message is enough.
-#@nonl
-#@-node:ekr.20031218072017.1817:<< warn about non-empty unvisited nodes >>
-#@+node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-for p in root.self_and_subtree_iter():
-	try: s = p.v.t.tempBodyString
-	except: s = ""
-	if s != p.bodyString():
-		if 0: # For debugging.
-			print ; print "changed: " + p.headString()
-			print ; print "new:",s
-			print ; print "old:",p.bodyString()
-		if thinFile:
-			p.v.setTnodeText(s)
-		else:
-			g.es("changed: " + p.headString(),color="blue")
-			p.setMarked()
-			p.setBodyStringOrPane(s) # Sets v and v.c dirty.
-#@nonl
-#@-node:ekr.20031218072017.1818:<< copy all tempBodyStrings to tnodes >>
-#@+node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-for p in c.allNodes_iter():
-	if hasattr(p.v.t,"tempBodyString"):
-		delattr(p.v.t,"tempBodyString")
-#@nonl
-#@-node:ekr.20031218072017.1819:<< delete all tempBodyStrings >>
-#@-node:ekr.20031218072017.1812:top_df.read
-#@+node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
-def scanDefaultDirectory(self,p):
-	
-	"""Set default_directory ivar by looking for @path directives."""
-
-	at = self ; c = at.c
-	at.default_directory = None
-	<< Set path from @file node >>
-	if at.default_directory:
-		return
-		
-	for p in p.self_and_parents_iter():
-		s = p.v.t.bodyString
-		dict = g.get_directives_dict(s)
-		if dict.has_key("path"):
-			<< handle @path >>
-			return
-
-	<< Set current directory >>
-	if not at.default_directory:
-		# This should never happen: c.openDirectory should be a good last resort.
-		g.trace()
-		at.error("No absolute directory specified anywhere.")
-		at.default_directory = ""
-#@nonl
-#@+node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
-# An absolute path in an @file node over-rides everything else.
-# A relative path gets appended to the relative path by the open logic.
-
-name = p.anyAtFileNodeName() # 4/28/04
-	
-dir = g.choose(name,g.os_path_dirname(name),None)
-
-if dir and g.os_path_isabs(dir):
-	if g.os_path_exists(dir):
-		at.default_directory = dir
-	else:
-		at.default_directory = g.makeAllNonExistentDirectories(dir)
-		if not at.default_directory:
-			at.error("Directory \"" + dir + "\" does not exist")
-#@nonl
-#@-node:ekr.20031218072017.2628:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
-#@+node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
-# We set the current director to a path so future writes will go to that directory.
-
-k = dict["path"]
-<< compute relative path from s[k:] >>
-
-if path and len(path) > 0:
-	base = g.getBaseDirectory() # returns "" on error.
-	path = g.os_path_join(base,path)
-	
-	if g.os_path_isabs(path):
-		<< handle absolute path >>
-	else:
-		at.error("ignoring bad @path: " + path)
-else:
-	at.error("ignoring empty @path")
-
-#@+node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
-j = i = k + len("@path")
-i = g.skip_to_end_of_line(s,i)
-path = string.strip(s[j:i])
-
-# Remove leading and trailing delims if they exist.
-if len(path) > 2 and (
-	(path[0]=='<' and path[-1] == '>') or
-	(path[0]=='"' and path[-1] == '"') ):
-	path = path[1:-1]
-
-path = path.strip()
-#@nonl
-#@-node:ekr.20031218072017.2630:<< compute relative path from s[k:] >>
-#@+node:ekr.20031218072017.2631:<< handle absolute path >>
-# path is an absolute path.
-
-if g.os_path_exists(path):
-	at.default_directory = path
-else:
-	at.default_directory = g.makeAllNonExistentDirectories(path)
-	if not at.default_directory:
-		at.error("invalid @path: " + path)
-#@nonl
-#@-node:ekr.20031218072017.2631:<< handle absolute path >>
-#@-node:ekr.20031218072017.2629:<< handle @path >> in df.scanDeafaultDirectory in leoAtFile.py
-#@+node:ekr.20031218072017.2632:<< Set current directory >>
-# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
-
-assert(not at.default_directory)
-
-if c.frame :
-	base = g.getBaseDirectory() # returns "" on error.
-	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-		if dir and len(dir) > 0:
-			dir = g.os_path_join(base,dir)
-			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-				if g.os_path_exists(dir):
-					at.default_directory = dir ; break
-				else:
-					at.default_directory = g.makeAllNonExistentDirectories(dir)
-#@-node:ekr.20031218072017.2632:<< Set current directory >>
-#@-node:ekr.20031218072017.2627:top_df.scanDefaultDirectory
-#@+node:ekr.20031218072017.2633:top_df.scanHeader
-def scanHeader(self,file,fileName):
-	
-	"""Scan the @+leo sentinel.
-	
-	Sets self.encoding, and self.start/endSentinelComment.
-	
-	Returns (firstLines,new_df) where:
-	firstLines contains all @first lines,
-	new_df is true if we are reading a new-format derived file."""
-	
-	at = self
-	new_df = false # Set default.
-	firstLines = [] # The lines before @+leo.
-	version_tag = "-ver="
-	thin_tag = "-thin"
-	tag = "@+leo" ; encoding_tag = "-encoding="
-	valid = true
-	<< skip any non @+leo lines >>
-	<< make sure we have @+leo >>
-	<< read optional version param >>
-	<< read optional thin param >>
-	<< read optional encoding param >>
-	<< set the closing comment delim >>
-	if not valid:
-		at.error("Bad @+leo sentinel in " + fileName)
-	# g.trace("start,end",at.startSentinelComment,at.endSentinelComment)
-	return firstLines, new_df
-#@nonl
-#@+node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-@ Queue up the lines before the @+leo.  These will be used to add as parameters to the @first directives, if any.  Empty lines are ignored (because empty @first directives are ignored). NOTE: the function now returns a list of the lines before @+leo.
-
-We can not call sentinelKind here because that depends on the comment delimiters we set here.  @first lines are written "verbatim", so nothing more needs to be done!
-@c
-
-s = at.readLine(file)
-while len(s) > 0:
-	j = s.find(tag)
-	if j != -1: break
-	firstLines.append(s) # Queue the line
-	s = at.readLine(file)
-n = len(s)
-valid = n > 0
-# s contains the tag
-i = j = g.skip_ws(s,0)
-# The opening comment delim is the initial non-whitespace.
-# 7/8/02: The opening comment delim is the initial non-tag
-while i < n and not g.match(s,i,tag) and not g.is_nl(s,i):
-	i += 1
-if j < i:
-	at.startSentinelComment = s[j:i]
-	# g.trace(at.startSentinelComment)
-else: valid = false
-#@nonl
-#@-node:ekr.20031218072017.2634:<< skip any non @+leo lines >>
-#@+node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-@ REM hack: leading whitespace is significant before the @+leo.  We do this so that sentinelKind need not skip whitespace following self.startSentinelComment.  This is correct: we want to be as restrictive as possible about what is recognized as a sentinel.  This minimizes false matches.
-@c
-
-if 0:# 7/8/02: make leading whitespace significant.
-	i = g.skip_ws(s,i)
-
-if g.match(s,i,tag):
-	i += len(tag)
-else: valid = false
-#@nonl
-#@-node:ekr.20031218072017.2635:<< make sure we have @+leo >>
-#@+node:ekr.20031218072017.2636:<< read optional version param >>
-new_df = g.match(s,i,version_tag)
-
-if new_df:
-	# Skip to the next minus sign or end-of-line
-	i += len(version_tag)
-	j = i
-	while i < len(s) and not g.is_nl(s,i) and s[i] != '-':
-		i += 1
-
-	if j < i:
-		pass # version = s[j:i]
-	else:
-		valid = false
-#@-node:ekr.20031218072017.2636:<< read optional version param >>
-#@+node:EKR.20040503105354:<< read optional thin param >>
-if g.match(s,i,thin_tag):
-	i += len(tag)
-#@nonl
-#@-node:EKR.20040503105354:<< read optional thin param >>
-#@+node:ekr.20031218072017.2637:<< read optional encoding param >>
-# Set the default encoding
-at.encoding = g.app.config.default_derived_file_encoding
-
-if g.match(s,i,encoding_tag):
-	# Read optional encoding param, e.g., -encoding=utf-8,
-	i += len(encoding_tag)
-	# Skip to the next end of the field.
-	j = s.find(",.",i)
-	if j > -1:
-		# The encoding field was written by 4.2 or after:
-		encoding = s[i:j]
-	else:
-		# The encoding field was written before 4.2.
-		j = s.find('.',i)
-		if j > -1:
-			encoding = s[i:j]
-		else:
-			encoding = None
-	# g.trace("encoding:",encoding)
-	if encoding:
-		if g.isValidEncoding(encoding):
-			at.encoding = encoding
-		else:
-			print "bad encoding in derived file:",encoding
-			g.es("bad encoding in derived file:",encoding)
-	else:
-		valid = false
-#@-node:ekr.20031218072017.2637:<< read optional encoding param >>
-#@+node:ekr.20031218072017.2638:<< set the closing comment delim >>
-# The closing comment delim is the trailing non-whitespace.
-i = j = g.skip_ws(s,i)
-while i < n and not g.is_ws(s[i]) and not g.is_nl(s,i):
-	i += 1
-at.endSentinelComment = s[j:i]
-#@nonl
-#@-node:ekr.20031218072017.2638:<< set the closing comment delim >>
-#@-node:ekr.20031218072017.2633:top_df.scanHeader
-#@+node:ekr.20031218072017.2639:top_df.readLine
-def readLine (self,file):
-
-	"""Reads one line from file using the present encoding"""
-	
-	s = g.readlineForceUnixNewline(file)
-	u = g.toUnicode(s,self.encoding)
-	return u
-#@nonl
-#@-node:ekr.20031218072017.2639:top_df.readLine
-#@-node:ekr.20031218072017.2625:Reading
-#@+node:ekr.20031218072017.2640:Writing
-#@+node:ekr.20031218072017.2015:top_df.writeAll
-def writeAll(self,writeAtFileNodesFlag=false,writeDirtyAtFileNodesFlag=false):
-	
-	"""Write @file nodes in all or part of the outline"""
-
-	at = self ; c = at.c
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	df.initIvars()
-	writtenFiles = [] # Files that might be written again.
-	mustAutoSave = false
-
-	if writeAtFileNodesFlag:
-		# Write all nodes in the selected tree.
-		p = c.currentPosition()
-		after = p.nodeAfterTree()
-	else:
-		# Write dirty nodes in the entire outline.
-		p =  c.rootPosition()
-		after = c.nullPosition()
-
-	<< Clear all orphan bits >>
-	while p and p != after:
-		if p.isAnyAtFileNode() or p.isAtIgnoreNode():
-			<< handle v's tree >>
-			p.moveToNodeAfterTree()
-		else:
-			p.moveToThreadNext()
-
-	<< say the command is finished >>
-	return mustAutoSave
-#@nonl
-#@+node:ekr.20031218072017.2016:<< Clear all orphan bits >>
-@ We must clear these bits because they may have been set on a previous write.
-Calls to atFile::write may set the orphan bits in @file nodes.
-If so, write_Leo_file will write the entire @file tree.
-@c
-	
-for v2 in p.self_and_subtree_iter():
-	v2.clearOrphan()
-#@nonl
-#@-node:ekr.20031218072017.2016:<< Clear all orphan bits >>
-#@+node:ekr.20031218072017.2017:<< handle v's tree >>
-if p.v.isDirty() or writeAtFileNodesFlag or p.v.t in writtenFiles:
-
-	df.fileChangedFlag = false # 1/9/04
-	autoSave = false
-	
-	# Tricky: @ignore not recognised in @silentfile nodes.
-	if p.isAtAsisFileNode():
-		at.asisWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
-	elif p.isAtIgnoreNode():
-		pass
-	elif p.isAtNorefFileNode():
-		at.norefWrite(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
-	elif p.isAtNoSentFileNode():
-		at.write(p,nosentinels=true)
-		writtenFiles.append(p.v.t) # No need for autosave
-	elif p.isAtThinFileNode():
-		at.write(p,thinFile=true)
-		writtenFiles.append(p.v.t) # No need for autosave.
-	elif p.isAtFileNode():
-		at.write(p)
-		writtenFiles.append(p.v.t) ; autoSave = true
-
-	if df.fileChangedFlag and autoSave: # Set by replaceTargetFileIfDifferent.
-		mustAutoSave = true
-#@nonl
-#@-node:ekr.20031218072017.2017:<< handle v's tree >>
-#@+node:ekr.20031218072017.2018:<< say the command is finished >>
-if writeAtFileNodesFlag or writeDirtyAtFileNodesFlag:
-	if len(writtenFiles) > 0:
-		g.es("finished")
-	elif writeAtFileNodesFlag:
-		g.es("no @file nodes in the selected tree")
-	else:
-		g.es("no dirty @file nodes")
-#@nonl
-#@-node:ekr.20031218072017.2018:<< say the command is finished >>
-#@-node:ekr.20031218072017.2015:top_df.writeAll
-#@+node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
-def norefWrite (self,p):
-	at = self
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	try:    df.norefWrite(p)
-	except: at.writeException(p)
-	
-rawWrite = norefWrite # Compatibility with old scripts.
-	
-def asisWrite (self,p):
-	at = self
-	try: at.old_df.asisWrite(p) # No new_df.asisWrite method.
-	except: at.writeException(p)
-	
-selentWrite = asisWrite # Compatibility with old scripts.
-	
-def write (self,p,nosentinels=false,thinFile=false):
-	at = self
-	write_new = thinFile or not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile)
-	except: at.writeException(p)
-
-def writeException(self,p):
-	self.error("Unexpected exception while writing " + p.headString())
-	g.es_exception()
-#@nonl
-#@-node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
-#@+node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
-def writeOldDerivedFiles (self):
-	
-	self.writeDerivedFiles(write_old=true)
-
-def writeNewDerivedFiles (self):
-
-	self.writeDerivedFiles(write_old=false)
-	
-def writeDerivedFiles (self,write_old):
-	
-	config = g.app.config
-	old = config.write_old_format_derived_files
-	config.write_old_format_derived_files = write_old
-	self.writeAll(writeAtFileNodesFlag=true)
-	config.write_old_format_derived_files = old
-#@nonl
-#@-node:ekr.20031218072017.2642:top_df.writeOld/NewDerivedFiles
-#@+node:ekr.20031218072017.2019:top_df.writeMissing
-def writeMissing(self,p):
-
-	at = self
-
-	write_new = not g.app.config.write_old_format_derived_files
-	df = g.choose(write_new,at.new_df,at.old_df)
-	df.initIvars()
-	writtenFiles = false ; changedFiles = false
-
-	p = p.copy()
-	after = p.nodeAfterTree()
-	while p and p != after: # Don't use iterator.
-		if p.isAtAsisFileNode() or (p.isAnyAtFileNode() and not p.isAtIgnoreNode()):
-			missing = false ; valid = true
-			df.targetFileName = p.anyAtFileNodeName()
-			<< set missing if the file does not exist >>
-			if valid and missing:
-				<< create df.outputFile >>
-				if at.outputFile:
-					<< write the @file node >>
-			p.moveToNodeAfterTree()
-		elif p.isAtIgnoreNode():
-			p.moveToNodeAfterTree()
-		else:
-			p.moveToThreadNext()
-	
-	if writtenFiles > 0:
-		g.es("finished")
-	else:
-		g.es("no missing @file node in the selected tree")
-		
-	return changedFiles # So caller knows whether to do an auto-save.
-#@nonl
-#@+node:ekr.20031218072017.2020:<< set missing if the file does not exist >>
-# This is similar, but not the same as, the logic in openWriteFile.
-
-valid = df.targetFileName and len(df.targetFileName) > 0
-
-if valid:
-	try:
-		# Creates missing directives if option is enabled.
-		df.scanAllDirectives(p)
-		valid = df.errors == 0
-	except:
-		g.es("exception in atFile.scanAllDirectives")
-		g.es_exception()
-		valid = false
-
-if valid:
-	try:
-		fn = df.targetFileName
-		df.shortFileName = fn # name to use in status messages.
-		df.targetFileName = g.os_path_join(df.default_directory,fn)
-		df.targetFileName = g.os_path_normpath(df.targetFileName)
-
-		path = df.targetFileName # Look for the full name, not just the directory.
-		valid = path and len(path) > 0
-		if valid:
-			missing = not g.os_path_exists(path)
-	except:
-		g.es("exception creating path:" + fn)
-		g.es_exception()
-		valid = false
-#@nonl
-#@-node:ekr.20031218072017.2020:<< set missing if the file does not exist >>
-#@+node:ekr.20031218072017.2021:<< create df.outputFile >>
-try:
-	df.outputFileName = df.targetFileName + ".leotmp"
-	df.outputFile = open(df.outputFileName,'wb')
-	if df.outputFile is None:
-		g.es("can not open " + df.outputFileName)
-except:
-	g.es("exception opening:" + df.outputFileName)
-	g.es_exception()
-	df.outputFile = None
-#@nonl
-#@-node:ekr.20031218072017.2021:<< create df.outputFile >>
-#@+node:ekr.20031218072017.2022:<< write the @file node >>
-if p.isAtAsisFileNode():
-	at.asisWrite(p)
-elif p.isAtNorefFileNode():
-	at.norefWrite(p)
-elif p.isAtNoSentFileNode():
-	at.write(p,nosentinels=true)
-elif p.isAtFileNode():
-	at.write(p)
-else: assert(0)
-
-writtenFiles = true
-
-if df.fileChangedFlag: # Set by replaceTargetFileIfDifferent.
-	changedFiles = true
-#@nonl
-#@-node:ekr.20031218072017.2022:<< write the @file node >>
-#@-node:ekr.20031218072017.2019:top_df.writeMissing
-#@+node:EKR.20040507095329:top_df.writeToString
-def writeToString (self,p,nosentinels=false,thinFile=false):
-	
-	at = self ; df = at.new_df
-	
-	### Can this be correct?  what about scanAllDirectives?  what about comment delims?
-
-	# From perfect import
-	df.targetFileName = "<string-file>"
-	df.outputFile = fo = g.fileLikeObject()
-	df.writeOpenFile(p)
-	return fo.get()
-	
-	if 0: # From execute script:
-		
-		df.scanAllDirectives(p,scripting=true)
-		# Force Python comment delims.
-		df.startSentinelComment = "#"
-		df.endSentinelComment = None
-		# Write the "derived file" into fo.
-		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=true,scriptFile=fo)
-		assert(p)
-		s = fo.get()
-#@nonl
-#@-node:EKR.20040507095329:top_df.writeToString
-#@-node:ekr.20031218072017.2640:Writing
-#@-node:ekr.20031218072017.2622:<< class baseAtFile methods >>
-#@+node:ekr.20031218072017.2387:old_df.scanAllDirectives
-@ Once a directive is seen, no other related directives in nodes further up the tree have any effect.  For example, if an @color directive is seen in node p, no @color or @nocolor directives are examined in any ancestor of p.
-
-This code is similar to Commands.scanAllDirectives, but it has been modified for use by the atFile class.
-@c
-
-def scanAllDirectives(self,p,scripting=false,importing=false,reading=false):
-	
-	"""Scan position p and p's ancestors looking for directives,
-	setting corresponding atFile ivars.
-	"""
-
-	c = self.c
-	<< Set ivars >>
-	<< Set path from @file node >>
-	old = {}
-	for p in p.self_and_parents_iter():
-		s = p.v.t.bodyString
-		dict = g.get_directives_dict(s)
-		<< Test for @path >>
-		<< Test for @encoding >>
-		<< Test for @comment and @language >>
-		<< Test for @header and @noheader >>
-		<< Test for @lineending >>
-		<< Test for @pagewidth >>
-		<< Test for @tabwidth >>
-		old.update(dict)
-	<< Set current directory >>
-	if not importing and not reading:
-		# 5/19/04: don't override comment delims when reading!
-		<< Set comment strings from delims >>
-#@nonl
-#@+node:ekr.20031218072017.2388:<< Set ivars >>
-self.page_width = self.c.page_width
-self.tab_width  = self.c.tab_width
-
-self.default_directory = None # 8/2: will be set later.
-
-delim1, delim2, delim3 = g.set_delims_from_language(c.target_language)
-self.language = c.target_language
-
-self.encoding = g.app.config.default_derived_file_encoding
-self.output_newline = g.getOutputNewline() # 4/24/03: initialize from config settings.
-#@nonl
-#@-node:ekr.20031218072017.2388:<< Set ivars >>
-#@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
-# An absolute path in an @file node over-rides everything else.
-# A relative path gets appended to the relative path by the open logic.
-
-name = p.anyAtFileNodeName() # 4/28/04
-
-dir = g.choose(name,g.os_path_dirname(name),None)
-
-if dir and len(dir) > 0 and g.os_path_isabs(dir):
-	if g.os_path_exists(dir):
-		self.default_directory = dir
-	else: # 9/25/02
-		self.default_directory = g.makeAllNonExistentDirectories(dir)
-		if not self.default_directory:
-			self.error("Directory \"" + dir + "\" does not exist")
-#@nonl
-#@-node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
-#@+node:ekr.20031218072017.2390:<< Test for @comment and @language >>
-# 10/17/02: @language and @comment may coexist in @file trees.
-# For this to be effective the @comment directive should follow the @language directive.
-
-if not old.has_key("comment") and dict.has_key("comment"):
-	k = dict["comment"]
-	# 11/14/02: Similar to fix below.
-	delim1, delim2, delim3 = g.set_delims_from_string(s[k:])
-
-# Reversion fix: 12/06/02: We must use elif here, not if.
-elif not old.has_key("language") and dict.has_key("language"):
-	k = dict["language"]
-	# 11/14/02: Fix bug reported by J.M.Gilligan.
-	self.language,delim1,delim2,delim3 = g.set_language(s,k)
-#@nonl
-#@-node:ekr.20031218072017.2390:<< Test for @comment and @language >>
-#@+node:ekr.20031218072017.2391:<< Test for @encoding >>
-if not old.has_key("encoding") and dict.has_key("encoding"):
-	
-	e = g.scanAtEncodingDirective(s,dict)
-	if e:
-		self.encoding = e
-#@nonl
-#@-node:ekr.20031218072017.2391:<< Test for @encoding >>
-#@+node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
-# EKR: 10/10/02: perform the sames checks done by tangle.scanAllDirectives.
-if dict.has_key("header") and dict.has_key("noheader"):
-	g.es("conflicting @header and @noheader directives")
-#@nonl
-#@-node:ekr.20031218072017.2392:<< Test for @header and @noheader >>
-#@+node:ekr.20031218072017.2393:<< Test for @lineending >>
-if not old.has_key("lineending") and dict.has_key("lineending"):
-	
-	lineending = g.scanAtLineendingDirective(s,dict)
-	if lineending:
-		self.output_newline = lineending
-#@-node:ekr.20031218072017.2393:<< Test for @lineending >>
-#@+node:ekr.20031218072017.2394:<< Test for @path >>
-# We set the current director to a path so future writes will go to that directory.
-
-if not self.default_directory and not old.has_key("path") and dict.has_key("path"):
-
-	k = dict["path"]
-	<< compute relative path from s[k:] >>
-	if path and len(path) > 0:
-		base = g.getBaseDirectory() # returns "" on error.
-		path = g.os_path_join(base,path)
-		if g.os_path_isabs(path):
-			<< handle absolute path >>
-		else:
-			self.error("ignoring bad @path: " + path)
-	else:
-		self.error("ignoring empty @path")
-#@nonl
-#@+node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
-j = i = k + len("@path")
-i = g.skip_to_end_of_line(s,i)
-path = string.strip(s[j:i])
-
-# Remove leading and trailing delims if they exist.
-if len(path) > 2 and (
-	(path[0]=='<' and path[-1] == '>') or
-	(path[0]=='"' and path[-1] == '"') ):
-	path = path[1:-1]
-path = path.strip()
-
-if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
-	path = g.os_path_join(g.app.loadDir,path)
-#@nonl
-#@-node:ekr.20031218072017.2395:<< compute relative path from s[k:] >>
-#@+node:ekr.20031218072017.2396:<< handle absolute path >>
-# path is an absolute path.
-
-if g.os_path_exists(path):
-	self.default_directory = path
-else: # 9/25/02
-	self.default_directory = g.makeAllNonExistentDirectories(path)
-	if not self.default_directory:
-		self.error("invalid @path: " + path)
-#@-node:ekr.20031218072017.2396:<< handle absolute path >>
-#@-node:ekr.20031218072017.2394:<< Test for @path >>
-#@+node:ekr.20031218072017.2397:<< Test for @pagewidth >>
-if dict.has_key("pagewidth") and not old.has_key("pagewidth"):
-	
-	w = g.scanAtPagewidthDirective(s,dict,issue_error_flag=true)
-	if w and w > 0:
-		self.page_width = w
-#@nonl
-#@-node:ekr.20031218072017.2397:<< Test for @pagewidth >>
-#@+node:ekr.20031218072017.2398:<< Test for @tabwidth >>
-if dict.has_key("tabwidth") and not old.has_key("tabwidth"):
-	
-	w = g.scanAtTabwidthDirective(s,dict,issue_error_flag=true)
-	if w and w != 0:
-		self.tab_width = w
-
-#@-node:ekr.20031218072017.2398:<< Test for @tabwidth >>
-#@+node:ekr.20031218072017.2399:<< Set current directory >>
-# This code is executed if no valid absolute path was specified in the @file node or in an @path directive.
-
-if c.frame and not self.default_directory:
-	base = g.getBaseDirectory() # returns "" on error.
-	for dir in (c.tangle_directory,c.frame.openDirectory,c.openDirectory):
-		if dir and len(dir) > 0:
-			dir = g.os_path_join(base,dir)
-			if g.os_path_isabs(dir): # Errors may result in relative or invalid path.
-				if g.os_path_exists(dir):
-					self.default_directory = dir ; break
-				else: # 9/25/02
-					self.default_directory = g.makeAllNonExistentDirectories(dir)
-
-if not self.default_directory and not scripting:
-	# This should never happen: c.openDirectory should be a good last resort.
-	self.error("No absolute directory specified anywhere.")
-	self.default_directory = ""
-#@nonl
-#@-node:ekr.20031218072017.2399:<< Set current directory >>
-#@+node:ekr.20031218072017.2400:<< Set comment strings from delims >>
-# Use single-line comments if we have a choice.
-# 8/2/01: delim1,delim2,delim3 now correspond to line,start,end
-if delim1:
-	self.startSentinelComment = delim1
-	self.endSentinelComment = "" # Must not be None.
-elif delim2 and delim3:
-	self.startSentinelComment = delim2
-	self.endSentinelComment = delim3
-else: # Emergency!
-	# assert(0)
-	g.es("Unknown language: using Python comment delimiters")
-	g.es("c.target_language:",c.target_language)
-	g.es("delim1,delim2,delim3:",delim1,delim2,delim3)
-	self.startSentinelComment = "#" # This should never happen!
-	self.endSentinelComment = ""
-	
-# g.trace(self.startSentinelComment)
-#@nonl
-#@-node:ekr.20031218072017.2400:<< Set comment strings from delims >>
-#@-node:ekr.20031218072017.2387:old_df.scanAllDirectives
-#@+node:EKR.20040507095329.2:To do
-@nocolor
-
-- Reading and writing to/from strings.
-	- Use these routines in perfectImport and Execute Script command.
-
-- User alterable reading/writing (tangling/untangling)
-#@nonl
-#@-node:EKR.20040507095329.2:To do
-#@+node:ekr.20031218072017.2647:old_df.readOpenFile
-def readOpenFile(self,root,file,firstLines):
-	
-	"""Read an open 3.x derived file."""
-	
-	at = self
-
-	# Scan the file buffer
-	lastLines = at.scanText(file,root,[],endLeo)
-	root.v.t.setVisited() # Disable warning about set nodes.
-
-	# Handle first and last lines.
-	try: body = root.v.t.tempBodyString
-	except: body = ""
-	lines = body.split('\n')
-	at.completeFirstDirectives(lines,firstLines)
-	at.completeLastDirectives(lines,lastLines)
-	s = '\n'.join(lines).replace('\r', '')
-	root.v.t.tempBodyString = s
-#@nonl
-#@-node:ekr.20031218072017.2647:old_df.readOpenFile
-#@+node:ekr.20031218072017.2757:new_df.readOpenFile
-def readOpenFile(self,root,file,firstLines):
-	
-	"""Read an open 4.x thick or thin derived file."""
-	
-	at = self
-
-	# Scan the 4.x file.
-	at.tnodeListIndex = 0
-	# 4/27/04: at.thinFile tells scanText4 whether this is a thin file or not.
-	lastLines = at.scanText4(file,root)
-	root.v.t.setVisited() # Disable warning about set nodes.
-	
-	# Handle first and last lines.
-	try: body = root.v.t.tempBodyString
-	except: body = ""
-	lines = body.split('\n')
-	at.completeFirstDirectives(lines,firstLines)
-	at.completeLastDirectives(lines,lastLines)
-	s = '\n'.join(lines).replace('\r', '')
-	root.v.t.tempBodyString = s
-#@-node:ekr.20031218072017.2757:new_df.readOpenFile
-#@+node:EKR.20040507095329:top_df.writeToString
-def writeToString (self,p,nosentinels=false,thinFile=false):
-	
-	at = self ; df = at.new_df
-	
-	### Can this be correct?  what about scanAllDirectives?  what about comment delims?
-
-	# From perfect import
-	df.targetFileName = "<string-file>"
-	df.outputFile = fo = g.fileLikeObject()
-	df.writeOpenFile(p)
-	return fo.get()
-	
-	if 0: # From execute script:
-		
-		df.scanAllDirectives(p,scripting=true)
-		# Force Python comment delims.
-		df.startSentinelComment = "#"
-		df.endSentinelComment = None
-		# Write the "derived file" into fo.
-		fo = g.fileLikeObject()
-		df.write(p.copy(),nosentinels=true,scriptFile=fo)
-		assert(p)
-		s = fo.get()
-#@nonl
-#@-node:EKR.20040507095329:top_df.writeToString
-#@+node:EKR.20040506075328:new_df.writeOpenFile
-def writeOpenFile(self,root,nosentinels=false,scriptFile=None,thinFile=false):
-	
-	at = self ; c = at.c
-	
-	<< init atFile ivars for writing >>
-	root.clearAllVisitedInTree() # Clear both vnode and tnode bits.
-	root.clearVisitedInTree()
-
-	<< put all @first lines in root >>
-
-	# Put the main part of the file.
-	at.putOpenLeoSentinel("@+leo-ver=4")
-	at.putInitialComment()
-	at.putOpenNodeSentinel(root)
-	at.putBody(root)
-	at.putCloseNodeSentinel(root)
-	at.putSentinel("@-leo")
-	root.setVisited()
-	
-	<< put all @last lines in root >>
-	
-	if not scriptFile and not nosentinels:
-		at.warnAboutOrphandAndIgnoredNodes()
-#@nonl
-#@+node:EKR.20040506075328.1:<< init atFile ivars for writing >>
-# Set flags telling what kind of writing we are doing.
-at.sentinels = not nosentinels
-at.thinFile = thinFile
-at.scripting = scriptFile is not None
-at.raw = false
-
-# Init other ivars.
-at.errors = 0
-c.setIvarsFromPrefs()
-at.root = root
-at.root.v.t.tnodeList = []
-
-c.endEditing() # Capture the current headline.
-#@nonl
-#@-node:EKR.20040506075328.1:<< init atFile ivars for writing >>
-#@+node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
-@ Write any @first lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines preceding the @+leo sentinel.
-@c
-
-s = root.v.t.bodyString
-tag = "@first"
-i = 0
-while g.match(s,i,tag):
-	i += len(tag)
-	i = g.skip_ws(s,i)
-	j = i
-	i = g.skip_to_end_of_line(s,i)
-	# Write @first line, whether empty or not
-	line = s[j:i]
-	self.os(line) ; self.onl()
-	i = g.skip_nl(s,i)
-#@nonl
-#@-node:ekr.20031218072017.2118:<< put all @first lines in root >> (4.x)
-#@+node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
-@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
-@c
-
-tag = "@last"
-lines = root.v.t.bodyString.split('\n')
-n = len(lines) ; j = k = n - 1
-# Don't write an empty last line.
-if j >= 0 and len(lines[j])==0:
-	j = k = n - 2
-# Scan backwards for @last directives.
-while j >= 0:
-	line = lines[j]
-	if g.match(line,0,tag): j -= 1
-	else: break
-# Write the @last lines.
-for line in lines[j+1:k+1]:
-	i = len(tag) ; i = g.skip_ws(line,i)
-	self.os(line[i:]) ; self.onl()
-#@nonl
-#@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
-#@-node:EKR.20040506075328:new_df.writeOpenFile
-#@-node:EKR.20040507095329.1:(More flexible atFile classes)
-#@+node:EKR.20040512084028:Plugin generalizing marks (mulder)
-#@+node:EKR.20040512084028.1:@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo
-#@-node:EKR.20040512084028.1:@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo
-#@+node:EKR.20040512084134:Crash
-@nocolor
-
-getUnknownTag: labels <long string>
-
-exceptions opening: C:\Documents and Settings\default\Desktop\mod_label.leo
-Traceback (most recent call last):
-  File "C:\prog\leoCVS\leo\src\leoGlobals.py", line 670, in openWithFileName
-    frame.c.fileCommands.open(file,fileName) # closes file.
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 1121, in open
-    ok, ratio = self.getLeoFile(fileName,atFileNodesFlag=true)
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 525, in getLeoFile
-    self.getVnodes()
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 927, in getVnodes
-    appendToCurrentStack=append1,appendToTopStack=append2)
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 864, in getVnode
-    appendToCurrentStack=append1,appendToTopStack=append2)
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 833, in getVnode
-    v,skip = self.createVnode(parent,back,tref,headline,attrDict)
-  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 145, in createVnode
-    p.v.unknownAttributes = attrDict
-NameError: global name 'p' is not defined
-#@nonl
-#@-node:EKR.20040512084134:Crash
-#@-node:EKR.20040512084028:Plugin generalizing marks (mulder)
-#@+node:EKR.20040512085700:Dynabutton script
-#@+node:EKR.20040512085700.1:Description
-@nocolor
-https://sourceforge.net/forum/message.php?msg_id=2556085
-By: nobody
-
-@
-exec this script, then select some text and hit dynabuttton
-its perfect! no plugin to bother with.
-and re-editing the code is simple.
-leverage Leo to keep a collection of macro scripts.
-just switch in new dosomething nodes as needed.
-
-#w04505p01:22:22 add a button works!
-I can have a script that acts on selected text
-usable from the button.
-how to get the button in an exact position?
-toolbar is getting crowded.
-why did noone think of this before?
-you could give it other commands once its up,
-like soakup the current selected text as a script.
-anything you like. a poor mans macro.
-more than one active button easily possible.
-
-use it wisely and test everything fully.
-works at least on Leo 4.1final & win9x
-
-replace leading dots with spaces
-enjoy
-@c
-
-#@-node:EKR.20040512085700.1:Description
-#@+node:EKR.20040512090213:Description 2
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2560787
-By: nobody
-
-I've uploaded a new version which includes a few sample "macro's" and a node
-structure that lends itself to better work out the bugs in new scripts. and
-a rightclick menu for the button to select from the script samples.
-the menu is built from nodes cloned in the macro node which you drag into the
-dynamenu node.
-also a better way to copy the XML of the node off the html page so you can paste
-it into a leo.
-http://rclick.netfirms.com/rCpython.htm
-
-you can now toggle a menu item to either print selected text transformed by
-whichever item or to paste over the selected text.
-there is a dump selected text or body in hex form, good for debugging char related
-problems.
-one to put a triple double quote around the selected text.
-one that isnt quite ready to output python in txt or html prettyprint form.
-one that deletes the first char of each line in selected text.
-one to sort the selected text line by line.
-
-of course, it is easy enough to add your own and be up and running with it in
-under a minute.
-I will post more examples as they are contributed here or in the comments page
-there.
-#@nonl
-#@-node:EKR.20040512090213:Description 2
-#@+node:EKR.20040512090213.1:@url http://rclick.netfirms.com/rCpython.htm
-#@-node:EKR.20040512090213.1:@url http://rclick.netfirms.com/rCpython.htm
-#@+node:EKR.20040512085700.2:Install script
-import leoGlobals as g
-c = g.top()
-cf = c.frame
- 
-#used first for changing Tk pack options to dict's
-#side=Tk.LEFT, expand=1, fill=Tk.BOTH
-#{'side':'left', 'expand':'1', 'fill':'both'}
-#this might have been ok as a find/change script as too...
-
-@others
-
-deldyna()
-
-cf.dynacb = cf.addIconButton(text="dyna", command= dynaclick)
-
-#later can add its own menu and options
-#bind double right click button3 to make dynaclick dissapear
-cf.dynacb.bind('<Double-3>', deldyna)
-#more likely use, rclick to select different functions
-cf.dynacb.bind('<3>', dynaclick)
-
-#bind Alt+1 to dosomething, needs work
-cf.dynacb.bind('<'+'<Key-Alt-1>>', dynaclick)
-
-cf.clearStatusLine() 
-for msg, color in (('dyn',"red"),('a',"orange"),('click',"blue")):
-	cf.putStatusLine("%s"%(msg,),color= color)
-
-print "dynaclick button installed"
-#@nonl
-#@+node:EKR.20040512085700.3:dosomething
-def dosomething(c):
-
-	if c.frame.body.hasTextSelection():
-		newSel = str(c.frame.body.getSelectedText() )
-		so = '{'
-		print 'text is', newSel
-		for x in newSel.split():
-			s = x.replace('"', "'").replace("'", "")
-			s = s.replace("=", "':'")
-			s = s.replace('Tk.', "").replace(",", "', ")
-			so += "'%s"%(s.lower(),)
-			#idealy it wouldn't add SQ around plain numbers
-			#split on , maybe or resplit later, 
-			#good enough for now
-		print so + "'}"
-
-	else:
-		g.es("no text selected", color= 'red' )
-
-
-#@-node:EKR.20040512085700.3:dosomething
-#@+node:EKR.20040512085700.4:dynaclick
-def dynaclick(*a, **k):
-	
-	import leoGlobals as g
-
-	c = g.top()
-	c.frame.clearStatusLine()
-	c.frame.putStatusLine('Dyna Click Active')
-	dosomething(c)
-	print 'add your own code here to dosomething'
-#@nonl
-#@-node:EKR.20040512085700.4:dynaclick
-#@+node:EKR.20040512085700.5:deldyna
-def deldyna(*a, **k):
-
-	try:
-		cf.dynacb.destroy()
-	except:
-		print "no dyna button active"
-#@nonl
-#@-node:EKR.20040512085700.5:deldyna
-#@-node:EKR.20040512085700.2:Install script
-#@-node:EKR.20040512085700:Dynabutton script
-#@+node:EKR.20040512090759:Leo.app for MacOS X
-@nocolor
-
-Hi Ed,
-
-
-I've created a Leo.app that I'm using reasonably successfully. Hopefully 
-you'll be able to take the pattern for a Mac OS X binary download option!
-
-
-http://idisk.mac.com/genthaler-Public/Leo.zip
-(WebDAV)
-
-Regards,
-
-Günther
-#@nonl
-#@-node:EKR.20040512090759:Leo.app for MacOS X
-#@-node:EKR.20040512081330:In progress
 #@+node:ekr.20040107064101.1:4.2 Projects
 #@+node:ekr.20040326032652: Notes
 #@+node:ekr.20040301192211: What I did
@@ -5950,6 +4103,7 @@ def run(fileName=None,*args,**keywords):
 	g.app.writeWaitingLog()
 	v = c.currentVnode()
 	g.doHook("start2",c=c,v=v,fileName=fileName)
+	g.enableIdleTimeHook()
 	frame.tree.redraw()
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
@@ -9640,74 +7794,81 @@ The draw_box
 #@-node:ekr.20040309045858:Notes
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
-
+	
+	tree = self
 	y += 7 # draw the box at x, y+7
 	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 
-	tree = self
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
 	return 0,icon_width # dummy icon height,width
 #@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
 #@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
 #@+node:ekr.20031218072017.1956:tree.injectCallbacks (class method)
 def injectCallbacks(self):
@@ -12948,6 +11109,7 @@ def drawTopTree (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -12956,6 +11118,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -12986,6 +11152,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -13216,6 +11385,7 @@ def drawTopTree (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -13224,6 +11394,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -14963,8 +13137,12 @@ def drawNode(self,p,x,y):
 
 	"""Draw horizontal line from vertical line to icon"""
 	
-	# g.trace(p)
+	tree = self ; v = p.v
 	
+	data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+	
+	# g.trace(p)
 	if 1:
 		self.lineyoffset = 0
 	else:
@@ -15035,6 +13213,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -16586,6 +14767,7 @@ def copy (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -16594,6 +14776,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -17498,6 +15684,7 @@ def deleteWidgets (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -17506,6 +15693,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -18479,872 +16670,6 @@ if headString:
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:ekr.20040318164450:(Saving a .leo file created too many positions)
-#@+node:ekr.20040317094229:(Draw user icons)
-#@+node:ekr.20031218072017.4140:<< drawing constants >>
-box_padding = 5 # extra padding between box and icon
-box_width = 9 + box_padding
-icon_width = 20
-icon_padding = 2
-text_indent = 4 # extra padding between icon and tex
-child_indent = 28 # was 20
-hline_y = 7 # Vertical offset of horizontal line
-root_left = 7 + box_width
-root_top = 2
-hiding = true # true if we don't reallocate items
-line_height = 17 + 2 # To be replaced by Font height
-#@nonl
-#@-node:ekr.20031218072017.4140:<< drawing constants >>
-#@+node:ekr.20040317184631.2:Changes
-@nocolor
-
-"lineHeight"
-
-This key won't be used.
-
-t.unknownAttributes["lineYOffset"] 
-
-An integer y offset for the entire line (except user icons, which are flexible enough).  You can use this to center the following vertically: the plus/minus box, the horizontal line to the plus/minus box, the standard headline box, and the Tk.Text widget for the headline.
-#@nonl
-#@-node:ekr.20040317184631.2:Changes
-#@+node:ekr.20040317184631:Design
-@nocolor
-http://sourceforge.net/forum/message.php?msg_id=2477913
-By: edream
-
-A better design for user icons
-
-Using tuples in t.unknownAttributes["icons"] is too constricted.  Much better
-to have t.unknownAttributes["icons"] be a list of Python _dictionaries_ rather
-than a list of tuples.  Each of these "subsidiary" dictionaries could have the
-following keys:
-
-"type"
-
-"file", "icon" or "url".  At present my prototype code uses "file" to specify
-the location of an icon.
-
-"where":
-
-"beforeBox", "beforeIcon", "beforeHeadLine", "afterHeadline".  This specifies
-where to put the icon.  The default would be "beforeHeadline".  "beforeBox"
-means before the plus/minus box.  "beforeIcon" means before the standard icon.
-
-"height":
-
-the height of the icon to use when calculating the line height.  Default: get
-from the icon itself, if possible.
-
-"width":
-
-the width of the icon to use when calculating where to put the following element.
-Default: get from the icon, if possible.
-
-"xoffset"
-
-Leo draws the icon at x + xoffset, where x is determined by the where param
-above.  Default 0.
-
-"xpad"
-
-The amount of extra space following the icon.  Default 0.
-
-"yoffset"
-
-Leo draws the icon at y + yoffset.  Default 0.
-
-"ypad"
-
-The amount of extra vertical space to add to the line height.  Default 0.
-
-These offset and pad values are integer pixel values and may be positive or
-negative.
-
-"lineHeight"  NOT USED.
-
-Overrides any calculated line height.  Default:  lineHeight = yoffset + height + ypad.
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-
-Edward
-
-P.S.  Other gui's might not be able to support all these options.  That's ok.
-The drawing code in gui plugins should degrade gracefully.
-
-EKR
-
-#@-node:ekr.20040317184631:Design
-#@+node:ekr.20031218072017.1000:drawBox (tag_bind)
-def drawBox (self,p,x,y):
-
-	y += 7 # draw the box at x, y+7
-	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
-	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
-
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
-	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-#@-node:ekr.20031218072017.1000:drawBox (tag_bind)
-#@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
-def drawIcon(self,p,x=None,y=None):
-	
-	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
-
-	tree = self
-	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
-	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
-	return 0,icon_width # dummy icon height,width
-#@nonl
-#@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
-#@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
-def drawNode(self,p,x,y):
-
-	"""Draw horizontal line from vertical line to icon"""
-	
-	# g.trace(p)
-	
-	if 1:
-		self.lineyoffset = 0
-	else:
-		if hasattr(p.v.t,"unknownAttributes"):
-			self.lineyoffset = p.v.t.unknownAttributes.get("lineYOffset",0)
-		else:
-			self.lineyoffset = 0
-		
-	self.canvas.create_line(x,y+7+self.lineyoffset,
-		x+box_width,y+7+self.lineyoffset,
-		tag="lines",fill="gray50") # stipple="gray25")
-
-	if self.inVisibleArea(y):
-		return self.force_draw_node(p,x,y)
-	else:
-		return self.line_height,0
-#@nonl
-#@+node:ekr.20040317171729:force_draw_node (new)
-def force_draw_node(self,p,x,y):
-
-	self.allocatedNodes += 1
-	h,w = self.drawUserIcons(p,"beforeBox",x,y)
-	xw = w # The extra indentation before the icon box.
-	if p.hasChildren():
-		self.drawBox(p,x+w,y)
-	w += box_width # even if box isn't drawn.
-
-	h2,w2 = self.drawUserIcons(p,"beforeIcon",x+w,y)
-	h = max(h,h2) ; w += w2 ; xw += w2
-
-	h2,w2 = self.drawIcon(p,x+w,y)
-	h = max(h,h2) ; w += w2
-
-	h2,w2 = self.drawUserIcons(p,"beforeHeadline",x+w,y)
-	h = max(h,h2) ; w += w2
-
-	h2 = self.drawText(p,x+w,y)
-	h = max(h,h2)
-	w += self.widthInPixels(p.headString())
-
-	h2,w2 = self.drawUserIcons(p,"afterHeadline",x+w,y)
-	h = max(h,h2)
-
-	return h,xw
-#@nonl
-#@-node:ekr.20040317171729:force_draw_node (new)
-#@+node:ekr.20040318090335:force_draw_node (old)
-def force_draw_nodeOLD(self,p,x,y):
-
-	self.allocatedNodes += 1
-
-	if p.hasChildren():
-		self.drawBox(p,x,y)
-	w = box_width # Even if the box isn't drawn.
-
-	h2,w2 = self.drawIcon(p,x+w,y)
-	w += w2
-
-	h = self.drawText(p,x+w,y)
-	
-	return h,0
-#@-node:ekr.20040318090335:force_draw_node (old)
-#@-node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
-#@+node:ekr.20031218072017.1005:drawText (bind)
-def drawText(self,p,x,y):
-	
-	"""draw text for v at nominal coordinates x,y."""
-
-	tree = self ; c = self.c ; v = p.v
-	x += text_indent
-
-	t = Tkinter.Text(self.canvas,
-		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
-
-	# New in 4.2: entries a pairs (p,t) indexed by v.
-	# Remember which text widget belongs to v.
-	d = self.edit_text_dict
-	val = d.get(v,[])
-	val.append((p,t),)
-	d[v] = val
-	# g.trace("entry",d[p.v])
-
-	# Remember the widget so deleteBindings can delete it.
-	self.widgets.append(t) # Fixes a _huge_ memory leak.
-
-	t.insert("end", v.headString())
-	<< configure the text depending on state >>
-
-	# Use vnode or postion callbacks.
-	id1 = t.bind("<1>",p.OnHeadlineClick)
-	id2 = t.bind("<3>",p.OnHeadlineRightClick)
-	
-	if 0: # 6/15/02: Bill Drissel objects to this binding.
-		t.bind("<Double-1>", p.OnBoxClick)
-	id3 = t.bind("<Key>", p.OnHeadlineKey)
-	id4 = t.bind("<Control-t>",self.OnControlT)
-		# 10/16/02: Stamp out the erroneous control-t binding.
-		
-	# Remember the bindings so deleteBindings can delete them.
-	self.bindings.append((t,id1,"<1>"),)
-	self.bindings.append((t,id2,"<3>"),)
-	self.bindings.append((t,id3,"<Key>"),)
-	self.bindings.append((t,id4,"<Control-t>"),)
-
-	id = self.canvas.create_window(x,y+self.lineyoffset,anchor="nw",window=t)
-	self.canvas.tag_lower(id)
-	
-	# This doesn't work: must call update_idletasks first, and that's hard here.
-	# g.trace(t,t.winfo_height(),t.winfo_width())
-	
-	return self.line_height
-#@nonl
-#@+node:ekr.20031218072017.1006:<< configure the text depending on state >>
-if p and p == c.currentPosition():
-	if p == self.editPosition():
-		self.setNormalLabelState(p)
-	else:
-		self.setDisabledLabelState(p) # selected, disabled
-else:
-	self.setUnselectedLabelState(p) # unselected
-#@nonl
-#@-node:ekr.20031218072017.1006:<< configure the text depending on state >>
-#@-node:ekr.20031218072017.1005:drawText (bind)
-#@+node:ekr.20031218072017.2029:drawTopTree
-def drawTopTree (self):
-	
-	"""Draws the top-level tree, taking into account the hoist state."""
-	
-	c = self.c
-	
-	if c.hoistStack:
-		p,junk = c.hoistStack[-1]
-		self.drawTree(p.copy(),root_left,root_top,0,0,hoistFlag=true)
-	else:
-		self.drawTree(c.rootPosition(),root_left,root_top,0,0)
-		
-	# g.trace(g.app.copies) ; g.app.copies = 0
-	# g.trace()
-	# import traceback ; traceback.print_stack()
-#@-node:ekr.20031218072017.2029:drawTopTree
-#@+node:ekr.20031218072017.1008:drawTree
-def drawTree(self,p,x,y,h,level,hoistFlag=false):
-
-	yfirst = ylast = y
-	if level==0: yfirst += 10
-	w = 0
-	
-	# We must make copies for drawText and drawBox and drawIcon,
-	# So making copies here actually reduces the total number of copies.
-	### This will change for incremental redraw.
-	p = p.copy()
-	while p: # Do not use iterator.
-		h,w = self.drawNode(p,x,y)
-		y += h ; ylast = y
-		if p.isExpanded() and p.hasFirstChild():
-			# Must make an additional copy here by calling firstChild.
-			y,w2 = self.drawTree(p.firstChild(),x+child_indent+w,y,h,level+1)
-			x += w2 ; w += w2
-		if hoistFlag: break
-		else:         p = p.next()
-	<< draw vertical line >>
-	return y,w
-#@nonl
-#@+node:ekr.20031218072017.1009:<< draw vertical line >>
-id = self.canvas.create_line(
-	x, yfirst-hline_y,
-	x, ylast+hline_y-h,
-	fill="gray50", # stipple="gray50"
-	tag="lines")
-
-self.canvas.tag_lower(id)
-#@nonl
-#@-node:ekr.20031218072017.1009:<< draw vertical line >>
-#@-node:ekr.20031218072017.1008:drawTree
-#@+node:ekr.20040317095510:drawUserIcon
-def drawUserIcon (self,where,x,y,dict):
-	
-	h,w = 0,0
-
-	if where != dict.get("where","beforeHeadline"):
-		return h,w
-		
-	# g.trace(where,x,y,dict)
-	
-	<< set offsets and pads >>
-	type = dict.get("type")
-	if type == "icon":
-		s = dict.get("icon")
-		<< draw the icon in string s >>
-	elif type == "file":
-		file = dict.get("file")
-		<< draw the icon at file >>
-	elif type == "url":
-		url = dict.get("url")
-		<< draw the icon at url >>
-		
-	# Allow user to specify height, width explicitly.
-	h = dict.get("height",h)
-	w = dict.get("width",w)
-
-	return h,w
-#@nonl
-#@+node:ekr.20040317173849:<< set offsets and pads >>
-xoffset = dict.get("xoffset")
-try:    xoffset = int(xoffset)
-except: xoffset = 0
-
-yoffset = dict.get("yoffset")
-try:    yoffset = int(yoffset)
-except: yoffset = 0
-
-xpad = dict.get("xpad")
-try:    xpad = int(xpad)
-except: xpad = 0
-
-ypad = dict.get("ypad")
-try:    ypad = int(ypad)
-except: ypad = 0
-#@nonl
-#@-node:ekr.20040317173849:<< set offsets and pads >>
-#@+node:ekr.20040317095153:<< draw the icon in string s >>
-pass
-#@nonl
-#@-node:ekr.20040317095153:<< draw the icon in string s >>
-#@+node:ekr.20040317095153.1:<< draw the icon at url >>
-pass
-#@nonl
-#@-node:ekr.20040317095153.1:<< draw the icon at url >>
-#@+node:ekr.20040317100702:<< draw the icon at file >>
-try:
-	image = self.iconimages[file]
-	# Get the image from the cache if possible.
-except KeyError:
-	try:
-		fullname = g.os_path_join(g.app.loadDir,"..","Icons",file)
-		fullname = g.os_path_normpath(fullname)
-		image = Tkinter.PhotoImage(master=self.canvas,file=fullname)
-		self.iconimages[fullname] = image
-	except:
-		#g.es("Exception loading: " + fullname)
-		#g.es_exception()
-		image = None
-		
-if image:
-	id = self.canvas.create_image(x+xoffset,y+yoffset,anchor="nw",image=image)
-	self.canvas.lift(id)
-	h = image.height() + yoffset + ypad
-	w = image.width()  + xoffset + xpad
-#@nonl
-#@-node:ekr.20040317100702:<< draw the icon at file >>
-#@-node:ekr.20040317095510:drawUserIcon
-#@+node:ekr.20040317094609:drawUserIcons
-def drawUserIcons(self,p,where,x,y):
-	
-	"""Draw any icons specified by p.v.t.unknownAttributes["icons"]."""
-	
-	h,w = 0,0 ; t = p.v.t
-	
-	if not hasattr(t,"unknownAttributes"):
-		return h,w
-	
-	iconsList = t.unknownAttributes.get("icons")
-	# g.trace(iconsList)
-	
-	try:
-		for dict in iconsList:
-			h2,w2 = self.drawUserIcon(where,x+w,y,dict)
-			h = max(h,h2) ; w += w2
-	except:
-		g.es_exception()
-
-	return h,w
-#@nonl
-#@-node:ekr.20040317094609:drawUserIcons
-#@+node:ekr.20040317184631.1:To do
-@nocolor
-
-"onClick", "onRightClick", "onDoubleClick"
-
-commands to call when the specified event happens.  By default, the "onRightClick"
-icon will be bound to a popup menu that offers the user a chance to delete the
-icon,  and maybe other options such as "nudging" the icon up or down, left or
-right.
-
-"popUpMenu"
-
-a list of items to put in a popup menu.  This would be a convenience to avoid
-having to use "onRightClick".
-
-I think you get the idea.  We want the drawing code to support lots of common
-things that plugins would like to do.  I'll probably think of other goodies,
-but this already is a big step forward.  Note that each of these keys will have
-a default, so plugins only need to specify keys that have non-default values.
-#@nonl
-#@-node:ekr.20040317184631.1:To do
-#@+node:ekr.20031218072017.4147:tree.getIconImage
-def getIconImage (self, name):
-
-	# Return the image from the cache if possible.
-	if self.iconimages.has_key(name):
-		return self.iconimages[name]
-		
-	try:
-		fullname = g.os_path_join(g.app.loadDir,"..","Icons",name)
-		fullname = g.os_path_normpath(fullname)
-		image = Tkinter.PhotoImage(master=self.canvas, file=fullname)
-		self.iconimages[name] = image
-		return image
-	except:
-		g.es("Exception loading: " + fullname)
-		g.es_exception()
-		return None
-#@nonl
-#@-node:ekr.20031218072017.4147:tree.getIconImage
-#@-node:ekr.20040317094229:(Draw user icons)
-#@+node:ekr.20040322074056:(Fixed Go To Line Number command)
-#@+node:ekr.20040322121338:Notes
-@nocolor
-
-Rewrote logic that finds parent node.  This takes a lot more work because:
-
-1. There are no join lists.
-2. p.v.t.vnodeList contains vnodes, not positions.
-
-We must search the entire tree looking for positions that match the vnodes in p.v.t.vnodeList.
-
-Another change:  the tnodeList is a part of tnodes in 4.2.
-#@nonl
-#@-node:ekr.20040322121338:Notes
-#@+node:ekr.20031218072017.2864:goToLineNumber & allies
-def goToLineNumber (self):
-
-	c = self ; p = c.currentPosition()
-	<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-	<< read the file into lines >>
-	<< get n, the line number, from a dialog >>
-	# g.trace(n)
-	if n==1:
-		p = root ; n2 = 1 ; found = true
-	elif n >= len(lines):
-		p = root ; found = false
-		n2 = p.bodyString().count('\n')
-	elif root.isAtAsisFileNode():
-		<< count outline lines, setting p,n2,found >>
-	else:
-		vnodeName,childIndex,n2,delim = self.convertLineToVnodeNameIndexLine(lines,n,root)
-		found = true
-		if not vnodeName:
-			g.es("invalid derived file: " + fileName)
-			return
-		<< set p to the node given by vnodeName and childIndex or n >>
-	<< select p and make it visible >>
-	<< put the cursor on line n2 of the body text >>
-#@nonl
-#@+node:ekr.20031218072017.2865:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-fileName = None
-for p in p.self_and_parents_iter():
-	fileName = self.getGoToFileName(p)
-	if fileName: break
-
-# New in 4.2: Search the entire tree for joined nodes.
-if not fileName:
-	p1 = c.currentPosition()
-	for p in c.allNodes_iter():
-		if p.v.t == p1.v.t and p != p1:
-			# Found a joined position.
-			for p in p.self_and_parents_iter():
-				fileName = self.getGoToFileName(p)
-				if fileName: break
-		if fileName: break
-	
-if fileName:
-	g.trace(fileName,p)
-	root = p.copy()
-else:
-	g.es("Go to line number: ancestor must be @file node", color="blue")
-	return
-#@nonl
-#@-node:ekr.20031218072017.2865:<< set root to the nearest @file, @silentfile or @rawfile ancestor node >>
-#@+node:ekr.20031218072017.2866:<< read the file into lines >> in OnGoToLineNumber
-# 1/26/03: calculate the full path.
-d = g.scanDirectives(c)
-path = d.get("path")
-
-fileName = g.os_path_join(path,fileName)
-
-try:
-	file=open(fileName)
-	lines = file.readlines()
-	file.close()
-except:
-	g.es("not found: " + fileName)
-	return
-	
-#@-node:ekr.20031218072017.2866:<< read the file into lines >> in OnGoToLineNumber
-#@+node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-n = g.app.gui.runAskOkCancelNumberDialog("Enter Line Number","Line number:")
-if n == -1:
-	return
-#@nonl
-#@-node:ekr.20031218072017.2867:<< get n, the line number, from a dialog >>
-#@+node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-p = lastv = root
-prev = 0 ; found = false
-for p in p.self_and_subtree_iter():
-	lastv = p.copy()
-	s = p.bodyString()
-	lines = s.count('\n')
-	if len(s) > 0 and s[-1] != '\n':
-		lines += 1
-	# print lines,prev,p
-	if prev + lines >= n:
-		found = true ; break
-	prev += lines
-
-p = lastv
-n2 = max(1,n-prev)
-#@nonl
-#@-node:ekr.20031218072017.2868:<< count outline lines, setting p,n2,found >> (@file-nosent only)
-#@+node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and childIndex or n >>
-after = root.nodeAfterTree()
-
-if childIndex == -1:
-	<< 4.x: scan for the node using tnodeList and n >>
-else:
-	<< 3.x: scan for the node with the given childIndex >>
-#@nonl
-#@+node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
-# This is about the best that can be done without replicating the entire atFile write logic.
-
-ok = true
-
-if not hasattr(root.v.t,"tnodeList"):
-	s = "no child index for " + root.headString()
-	print s ; g.es(s, color="red")
-	ok = false
-
-if ok:
-	tnodeList = root.v.t.tnodeList
-	<< set tnodeIndex to the number of +node sentinels before line n >>
-	tnodeIndex = max(0,tnodeIndex)
-	<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-			
-if not ok:
-	# Fall back to the old logic.
-	<< set p to the first node whose headline matches vnodeName >>
-#@nonl
-#@+node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
-tnodeIndex = -1 # Don't count the @file node.
-scanned = 0 # count of lines scanned.
-
-for s in lines:
-	if scanned >= n:
-		break
-	i = g.skip_ws(s,0)
-	if g.match(s,i,delim):
-		i += len(delim)
-		if g.match(s,i,"+node"):
-			# g.trace(tnodeIndex,s.rstrip())
-			tnodeIndex += 1
-	scanned += 1
-#@nonl
-#@-node:ekr.20031218072017.2871:<< set tnodeIndex to the number of +node sentinels before line n >>
-#@+node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-@ We use the tnodeList to find a _tnode_ corresponding to the proper node, so the user will for sure be editing the proper text, even if several nodes happen to have the same headline.  This is really all that we need.
-
-However, this code has no good way of distinguishing between different cloned vnodes in the file: they all have the same tnode.  So this code just picks p = t.vnodeList[0] and leaves it at that.
-
-The only way to do better is to scan the outline, replicating the write logic to determine which vnode created the given line.  That's way too difficult, and it would create an unwanted dependency in this code.
-@c
-
-# g.trace("tnodeIndex",tnodeIndex)
-if tnodeIndex < len(tnodeList):
-	t = tnodeList[tnodeIndex]
-	# Find the first vnode whose tnode is t.
-	found = false
-	for p in root.self_and_subtree_iter():
-		if p.v.t == t:
-			found = true ; break
-	if not found:
-		s = "tnode not found for " + vnodeName
-		print s ; g.es(s, color="red") ; ok = false
-	elif p.headString().strip() != vnodeName:
-		if 0: # Apparently this error doesn't prevent a later scan for working properly.
-			s = "Mismatched vnodeName\nExpecting: %s\n got: %s" % (p.headString(),vnodeName)
-			print s ; g.es(s, color="red")
-		ok = false
-else:
-	s = "Invalid computed tnodeIndex: %d" % tnodeIndex
-	print s ; g.es(s, color = "red") ; ok = false
-#@nonl
-#@-node:ekr.20031218072017.2872:<< set p to the first vnode whose tnode is tnodeList[tnodeIndex] or set ok = false >>
-#@+node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
-found = false
-for p in root.self_and_subtree_iter():
-	if p.matchHeadline(vnodeName):
-		found = true ; break
-
-if not found:
-	s = "not found: " + vnodeName
-	print s ; g.es(s, color="red")
-	return
-#@nonl
-#@-node:ekr.20031218072017.2873:<< set p to the first node whose headline matches vnodeName >>
-#@-node:ekr.20031218072017.2870:<< 4.x: scan for the node using tnodeList and n >>
-#@+node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
-found = false
-for p in root.self_and_subtree_iter():
-	if p.matchHeadline(vnodeName):
-		if childIndex <= 0 or p.childIndex() + 1 == childIndex:
-			found = true ; break
-
-if not found:
-	g.es("not found: " + vnodeName, color="red")
-	return
-#@nonl
-#@-node:ekr.20031218072017.2874:<< 3.x: scan for the node with the given childIndex >>
-#@-node:ekr.20031218072017.2869:<< set p to the node given by vnodeName and childIndex or n >>
-#@+node:ekr.20031218072017.2875:<< select p and make it visible >>
-c.beginUpdate()
-c.frame.tree.expandAllAncestors(p)
-c.selectVnode(p)
-c.endUpdate()
-#@nonl
-#@-node:ekr.20031218072017.2875:<< select p and make it visible >>
-#@+node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
-if found:
-	c.frame.body.setInsertPointToStartOfLine(n2-1)
-else:
-	c.frame.body.setInsertionPointToEnd()
-	g.es("%d lines" % len(lines), color="blue")
-
-c.frame.body.makeInsertPointVisible()
-#@nonl
-#@-node:ekr.20031218072017.2876:<< put the cursor on line n2 of the body text >>
-#@+node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
-@ We count "real" lines in the derived files, ignoring all sentinels that do not arise from source lines.  When the indicated line is found, we scan backwards for an @+body line, get the vnode's name from that line and set p to the indicated vnode.  This will fail if vnode names have been changed, and that can't be helped.
-
-Returns (vnodeName,offset)
-
-vnodeName: the name found in the previous @+body sentinel.
-offset: the offset within p of the desired line.
-@c
-
-def convertLineToVnodeNameIndexLine (self,lines,n,root):
-	
-	"""Convert a line number n to a vnode name, child index and line number."""
-	
-	childIndex = 0 ; newDerivedFile = false
-	<< set delim, leoLine from the @+leo line >>
-	if not delim:
-		g.es("bad @+leo sentinel")
-		return None,None,None,None
-	<< scan back to @+node, setting offset,nodeSentinelLine >>
-	if nodeSentinelLine == -1:
-		# The line precedes the first @+node sentinel
-		# g.trace("before first line")
-		return root.headString(),0,1,delim # 10/13/03
-	s = lines[nodeSentinelLine]
-	# g.trace(s)
-	<< set vnodeName and childIndex from s >>
-	# g.trace("childIndex,offset",childIndex,offset,vnodeName)
-	return vnodeName,childIndex,offset,delim
-#@nonl
-#@+node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
-# Find the @+leo line.
-tag = "@+leo"
-i = 0 
-while i < len(lines) and lines[i].find(tag)==-1:
-	i += 1
-leoLine = i # Index of the line containing the leo sentinel
-# g.trace("leoLine:",leoLine)
-
-delim = None # All sentinels start with this.
-if leoLine < len(lines):
-	# The opening comment delim is the initial non-whitespace.
-	s = lines[leoLine]
-	i = g.skip_ws(s,0)
-	j = s.find(tag)
-	newDerivedFile = g.match(s,j,"@+leo-ver=4")
-	delim = s[i:j]
-	if len(delim)==0:
-		delim=None
-	else:
-		delim += '@'
-#@nonl
-#@-node:ekr.20031218072017.2878:<< set delim, leoLine from the @+leo line >>
-#@+node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-offset = 0 # This is essentially the Tk line number.
-nodeSentinelLine = -1
-line = n - 1
-while line >= 0:
-	s = lines[line]
-	# g.trace(s)
-	i = g.skip_ws(s,0)
-	if g.match(s,i,delim):
-		<< handle delim while scanning backward >>
-	else:
-		offset += 1 # Assume the line is real.  A dubious assumption.
-	line -= 1
-#@nonl
-#@+node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
-if line == n:
-	g.es("line "+str(n)+" is a sentinel line")
-i += len(delim)
-
-if g.match(s,i,"-node"):
-	# The end of a nested section.
-	line = self.skipToMatchingNodeSentinel(lines,line,delim)
-elif g.match(s,i,"+node"):
-	nodeSentinelLine = line
-	break
-elif g.match(s,i,"<<") or g.match(s,i,"@first"):
-	offset += 1 # Count these as a "real" lines.
-#@nonl
-#@-node:ekr.20031218072017.2880:<< handle delim while scanning backward >>
-#@-node:ekr.20031218072017.2879:<< scan back to  @+node, setting offset,nodeSentinelLine >>
-#@+node:ekr.20031218072017.2881:<< set vnodeName and childIndex from s >>
-if newDerivedFile:
-	# vnode name is everything following the first ':'
-	# childIndex is -1 as a flag for later code.
-	i = s.find(':')
-	if i > -1: vnodeName = s[i+1:].strip()
-	else: vnodeName = None
-	childIndex = -1
-else:
-	# vnode name is everything following the third ':'
-	i = 0 ; colons = 0
-	while i < len(s) and colons < 3:
-		if s[i] == ':':
-			colons += 1
-			if colons == 1 and i+1 < len(s) and s[i+1] in string.digits:
-				junk,childIndex = g.skip_long(s,i+1)
-		i += 1
-	vnodeName = s[i:].strip()
-	
-# g.trace("vnodeName:",vnodeName)
-if not vnodeName:
-	vnodeName = None
-	g.es("bad @+node sentinel")
-#@-node:ekr.20031218072017.2881:<< set vnodeName and childIndex from s >>
-#@-node:ekr.20031218072017.2877:convertLineToVnodeNameIndexLine
-#@+node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
-def skipToMatchingNodeSentinel (self,lines,n,delim):
-	
-	s = lines[n]
-	i = g.skip_ws(s,0)
-	assert(g.match(s,i,delim))
-	i += len(delim)
-	if g.match(s,i,"+node"):
-		start="+node" ; end="-node" ; delta=1
-	else:
-		assert(g.match(s,i,"-node"))
-		start="-node" ; end="+node" ; delta=-1
-	# Scan to matching @+-node delim.
-	n += delta ; level = 0
-	while 0 <= n < len(lines):
-		s = lines[n] ; i = g.skip_ws(s,0)
-		if g.match(s,i,delim):
-			i += len(delim)
-			if g.match(s,i,start):
-				level += 1
-			elif g.match(s,i,end):
-				if level == 0: break
-				else: level -= 1
-		n += delta # bug fix: 1/30/02
-		
-	# g.trace(n)
-	return n
-#@nonl
-#@-node:ekr.20031218072017.2882:skipToMatchingNodeSentinel
-#@+node:ekr.20040322115523:getGoToFileName
-def getGoToFileName (self,p):
-	
-	return p.anyAtFileNodeName() # 4/28/04
-#@nonl
-#@-node:ekr.20040322115523:getGoToFileName
-#@-node:ekr.20031218072017.2864:goToLineNumber & allies
-#@-node:ekr.20040322074056:(Fixed Go To Line Number command)
 #@-node:ekr.20040325203859.2:3/22
 #@+node:ekr.20040325203859.3:3/24
 #@+node:ekr.20040323072005:(Fixed select headline bug)
@@ -21125,82 +18450,93 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 #@-node:ekr.20031218072017.4145:About drawing and updating
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
-
+	
+	tree = self
 	y += 7 # draw the box at x, y+7
 	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 
-	tree = self
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
 	return 0,icon_width # dummy icon height,width
 #@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
 #@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
 #@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 def drawNode(self,p,x,y):
 
 	"""Draw horizontal line from vertical line to icon"""
 	
-	# g.trace(p)
+	tree = self ; v = p.v
 	
+	data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+	
+	# g.trace(p)
 	if 1:
 		self.lineyoffset = 0
 	else:
@@ -21271,6 +18607,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -21344,6 +18683,7 @@ def drawTopTree (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -21352,6 +18692,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -24304,6 +21648,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -24475,82 +21822,93 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 #@-node:ekr.20031218072017.4145:About drawing and updating
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
-
+	
+	tree = self
 	y += 7 # draw the box at x, y+7
 	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 
-	tree = self
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
 	return 0,icon_width # dummy icon height,width
 #@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
 #@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
 #@+node:ekr.20031218072017.1004:drawNode & force_draw_node (good trace)
 def drawNode(self,p,x,y):
 
 	"""Draw horizontal line from vertical line to icon"""
 	
-	# g.trace(p)
+	tree = self ; v = p.v
 	
+	data = g.doHook("draw-outline-node",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
+	
+	# g.trace(p)
 	if 1:
 		self.lineyoffset = 0
 	else:
@@ -24621,6 +21979,9 @@ def drawText(self,p,x,y):
 
 	tree = self ; c = self.c ; v = p.v
 	x += text_indent
+	
+	data = g.doHook("draw-outline-text-box",tree=tree,p=p,v=v,x=x,y=y)
+	if data is not None: return data
 
 	t = Tkinter.Text(self.canvas,
 		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
@@ -24694,6 +22055,7 @@ def drawTopTree (self):
 #@+node:ekr.20031218072017.1008:drawTree
 def drawTree(self,p,x,y,h,level,hoistFlag=false):
 
+	tree = self ; v = p.v
 	yfirst = ylast = y
 	if level==0: yfirst += 10
 	w = 0
@@ -24702,6 +22064,10 @@ def drawTree(self,p,x,y,h,level,hoistFlag=false):
 	# So making copies here actually reduces the total number of copies.
 	### This will change for incremental redraw.
 	p = p.copy()
+	
+	data = g.doHook("draw-sub-outline",tree=tree,p=p,v=v,x=x,y=y,h=h,level=level,hoistFlag=hoistFlag)
+	if data is not None: return data
+	
 	while p: # Do not use iterator.
 		h,w = self.drawNode(p,x,y)
 		y += h ; ylast = y
@@ -25524,12 +22890,6 @@ def matchHeadline (self,pattern):
 #@-node:ekr.20031218072017.3346:v.Comparisons
 #@-node:ekr.20040323090456.1:(Fixed bugs in up isAnyAtFileNode & related routines)
 #@+node:ekr.20040328093126:(Cleaned up using @file type names)
-#@+node:ekr.20040322115523:getGoToFileName
-def getGoToFileName (self,p):
-	
-	return p.anyAtFileNodeName() # 4/28/04
-#@nonl
-#@-node:ekr.20040322115523:getGoToFileName
 #@+node:ekr.20031218072017.2389:<< Set path from @file node >> in scanDirectory in leoGlobals.py
 # An absolute path in an @file node over-rides everything else.
 # A relative path gets appended to the relative path by the open logic.
@@ -27859,74 +25219,81 @@ def OnIconRightClick (self,p,event):
 #@-node:ekr.20031218072017.2346:tree.OnIconClick & OnIconRightClick
 #@+node:ekr.20031218072017.1000:drawBox (tag_bind)
 def drawBox (self,p,x,y):
-
+	
+	tree = self
 	y += 7 # draw the box at x, y+7
 	h = self.line_height
-
-	tree = self
-	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
-	image = self.getIconImage(iconname)
-	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
 	
-	if 1: # New in 4.2.  Create a frame to catch all clicks.
-		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
-		color = ""
-		self.canvas.itemconfig(id4,fill=color,outline=color)
-		self.canvas.lower(id4)
-		id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
-		self.tagBindings.append((id,id3,"<1>"),)
+	if not g.doHook("draw-outline-box",tree=tree,p=p,v=p,x=x,y=y):
 
-	id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
-	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
+		image = self.getIconImage(iconname)
+		id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+		
+		if 1: # New in 4.2.  Create a frame to catch all clicks.
+			id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+			color = ""
+			self.canvas.itemconfig(id4,fill=color,outline=color)
+			self.canvas.lower(id4)
+			id3 = self.canvas.tag_bind(id4, "<1>", p.OnBoxClick)
+			self.tagBindings.append((id,id3,"<1>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
+		id1 = self.canvas.tag_bind(id, "<1>", p.OnBoxClick)
+		id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
 #@-node:ekr.20031218072017.1000:drawBox (tag_bind)
 #@+node:ekr.20031218072017.1002:drawIcon (tag_bind)
 def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
 
-	tree = self
+	tree = self ; v = p.v # Make sure the bindings refer to the _present_ position.
+
+	<< compute x,y and iconVal >>
+
+	if not g.doHook("draw-outline-icon",tree=tree,p=p,v=v,x=x,y=y):
+
+		# Get the image.
+		imagename = "box%02d.GIF" % val
+		image = self.getIconImage(imagename)
+		id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
+		self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
 	
-	# Make sure the bindings refer to the _present_ position.
-	v = p.v
-
-	if x is None and y is None:
-		try:
-			x,y = v.iconx, v.icony
-		except:
-			# Inject the ivars.
-			x,y = v.iconx, v.icony = 0,0
-	else:
-		# Inject the ivars.
-		v.iconx, v.icony = x,y
-
-	y += 2 # draw icon at y + 2
-
-	# Always recompute v.iconVal.
-	# This is an important drawing optimization.
-	val = v.iconVal = v.computeIcon()
-	assert(0 <= val <= 15)
-
-	# Get the image.
-	imagename = "box%02d.GIF" % val
-	image = self.getIconImage(imagename)
-	id = self.canvas.create_image(x,y+self.lineyoffset,anchor="nw",image=image)
-	self.icon_id_dict[id] = p # Remember which vnode belongs to the icon.
-
-	id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
-	id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
-	id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		id1 = self.canvas.tag_bind(id,"<1>",p.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",p.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",p.OnIconRightClick)
+		
+		# Remember the bindings so deleteBindings can delete them.
+		self.tagBindings.append((id,id1,"<1>"),)
+		self.tagBindings.append((id,id2,"<Double-1>"),)
+		self.tagBindings.append((id,id3,"<3>"),)
 	
-	# Remember the bindings so deleteBindings can delete them.
-	self.tagBindings.append((id,id1,"<1>"),)
-	self.tagBindings.append((id,id2,"<Double-1>"),)
-	self.tagBindings.append((id,id3,"<3>"),)
-
 	return 0,icon_width # dummy icon height,width
 #@nonl
+#@+node:EKR.20040602150338:<< compute x,y and iconVal >>
+
+if x is None and y is None:
+	try:
+		x,y = v.iconx, v.icony
+	except:
+		# Inject the ivars.
+		x,y = v.iconx, v.icony = 0,0
+else:
+	# Inject the ivars.
+	v.iconx, v.icony = x,y
+
+y += 2 # draw icon at y + 2
+
+# Always recompute v.iconVal.
+# This is an important drawing optimization.
+val = v.iconVal = v.computeIcon()
+assert(0 <= val <= 15)
+#@nonl
+#@-node:EKR.20040602150338:<< compute x,y and iconVal >>
 #@-node:ekr.20031218072017.1002:drawIcon (tag_bind)
 #@-node:ekr.20040106115311:* Expanding the +- box
 #@+node:ekr.20040409080127:(Fixed failed assert in undo)
@@ -28237,6 +25604,7 @@ def run(fileName=None,*args,**keywords):
 	g.app.writeWaitingLog()
 	v = c.currentVnode()
 	g.doHook("start2",c=c,v=v,fileName=fileName)
+	g.enableIdleTimeHook()
 	frame.tree.redraw()
 	frame.body.setFocus()
 	g.app.initing = false # "idle" hooks may now call g.app.forceShutdown.
@@ -37501,9 +34869,11 @@ def putUnknownAttributes (self,torv):
 		val = attrDict[key]
 		if 1:
 			try:
+				g.es(key,val)
 				s = pickle.dumps(val,bin=true)
-			except PicklingError:
+			except pickle.PicklingError:
 				g.es("ignoring non-pickleable unknownAttributes for",torv,color="blue")
+				# import traceback ; traceback.print_exc()
 				return
 			attr = ' %s="%s"' % (key,binascii.hexlify(s))
 		else: # This is not general enough
