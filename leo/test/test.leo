@@ -2785,10 +2785,10 @@
 <v t="edream.110803170022"><vh>Count pages</vh></v>
 <v t="edream.120203185502"><vh>PyUno script</vh></v>
 </v>
-<v t="edream.121303091808" a="V"><vh>Batch test</vh>
-<v t="edream.112203144347" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
+<v t="edream.121303091808" a="E"><vh>Batch test</vh>
+<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </v>
-<v t="edream.110203161858.2119"><vh>Unit Tests</vh>
+<v t="edream.110203161858.2119" a="E"><vh>Unit Tests</vh>
 <v t="edream.110203161858.2124"><vh>tempNode</vh></v>
 <v t="edream.110203161858.2125"><vh>colorizerTests</vh>
 <v t="edream.110203161858.2126"><vh>Actionscript</vh></v>
@@ -34362,12 +34362,16 @@ enable = false # Enable or disable the log.
 
 path = r"c:\prog\leoCVS\leo\plugins\leoPlugins.leo"
 
+print app.log
+
 if app.batchMode:
 	print ; print "Start of batchScript.py"
 	if not enable:
 		print "Disabling log"
 		
 	flag,frame = openWithFileName(path,old_c=None,enableLog=enable)
+	
+	print app.log
 	
 	if not enable:
 		print "Enabling log"

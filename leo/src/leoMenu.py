@@ -791,6 +791,9 @@ class leoMenu:
 		
 				self.add_command(menu,label=realLabel,accelerator=menu_shortcut,
 					command=callback,underline=amp_index)
+					
+				if 0: # testing
+					dontBind = true
 	
 				if bind_shortcut and not dontBind:
 					#@				<< handle bind_shorcut >>
