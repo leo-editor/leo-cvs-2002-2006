@@ -416,7 +416,7 @@ class atFile:
             try: s = p.v.t.tempBodyString
             except: s = ""
             if s and not p.v.t.isVisited():
-                at.error("Not in derived file:" + p.headString())
+                at.error("Not in derived file: %s" % p.headString())
                 p.v.t.setVisited() # One message is enough.
         #@nonl
         #@-node:ekr.20041005105605.23:<< warn about non-empty unvisited nodes >>
@@ -2485,13 +2485,9 @@ class atFile:
     
         # This is useful now that we don't print the actual messages.
         if self.errors == 0:
-            g.es_error("----- error reading @file " + self.targetFileName)
-            self.error(message) # 9/10/02: we must increment self.errors!
-        else:
-            print message
-    
-        if 0: # CVS conflicts create too many messages.
-            self.error(message)
+            self.printError("----- error reading @file: %s" % self.targetFileName)
+        
+        self.error(message)
         
         self.root.setOrphan()
         self.root.setDirty()
@@ -2555,7 +2551,7 @@ class atFile:
             at.startSentinelComment = start
             at.endSentinelComment = end
         else:
-            at.error("Bad @+leo sentinel in " + fileName)
+            at.error("Bad @+leo sentinel in: %s" % fileName)
         # g.trace("start,end",repr(at.startSentinelComment),repr(at.endSentinelComment))
         return firstLines,new_df,isThinDerivedFile
     #@nonl
@@ -4399,7 +4395,7 @@ class atFile:
             return True
         except:
             if verbose:
-                self.error("exception removing:" + fileName)
+                self.error("exception removing: %s" % fileName)
                 g.es_exception()
             return False
     #@nonl
@@ -4442,16 +4438,28 @@ class atFile:
     #@nonl
     #@-node:ekr.20050104132026:stat
     #@-node:ekr.20050104131929:file operations...
-    #@+node:ekr.20041005105605.220:error
+    #@+node:ekr.20041005105605.220:atFile.error
     def error(self,message):
     
         if message:
-            g.es_error(message)
-            print message
+            self.printError(message)
     
         self.errors += 1
+    #@-node:ekr.20041005105605.220:atFile.error
+    #@+node:ekr.20050206085258:atFile.printError
+    def printError (self,message):
+    
+        '''Print an error message that may contain non-ascii characters.'''
+    
+        if self.errors == 0:
+            g.es_error(message)
+        else:
+            try:
+                print message
+            except UnicodeError:
+                print g.toEncodedString(message)
     #@nonl
-    #@-node:ekr.20041005105605.220:error
+    #@-node:ekr.20050206085258:atFile.printError
     #@+node:ekr.20041005105605.221:exception
     def exception (self,message):
         
@@ -4509,7 +4517,7 @@ class atFile:
             else: # 9/25/02
                 self.default_directory = g.makeAllNonExistentDirectories(theDir)
                 if not self.default_directory:
-                    self.error("Directory \"" + theDir + "\" does not exist")
+                    self.error("Directory \"%s\" does not exist" % theDir)
         #@nonl
         #@-node:ekr.20041005105605.224:<< Set path from @file node >> in scanDirectory in leoGlobals.py
         #@nl
@@ -4555,11 +4563,11 @@ class atFile:
                         else: # 9/25/02
                             self.default_directory = g.makeAllNonExistentDirectories(path)
                             if not self.default_directory:
-                                self.error("invalid @path: " + path)
+                                self.error("invalid @path: %s" % path)
                         #@-node:ekr.20041005105605.227:<< handle absolute path >>
                         #@nl
                     else:
-                        self.error("ignoring bad @path: " + path)
+                        self.error("ignoring bad @path: %s" % path)
                 else:
                     self.error("ignoring empty @path")
             #@nonl
@@ -4711,7 +4719,7 @@ class atFile:
             else:
                 at.default_directory = g.makeAllNonExistentDirectories(theDir)
                 if not at.default_directory:
-                    at.error("Directory \"" + theDir + "\" does not exist")
+                    at.error("Directory \"%s\" does not exist" % theDir)
         #@nonl
         #@-node:ekr.20041005105605.237:<< Set path from @file node >>  in df.scanDeafaultDirectory in leoAtFile.py
         #@nl
@@ -4758,12 +4766,12 @@ class atFile:
                         else:
                             at.default_directory = g.makeAllNonExistentDirectories(path)
                             if not at.default_directory:
-                                at.error("invalid @path: " + path)
+                                at.error("invalid @path: %s" % path)
                         #@nonl
                         #@-node:ekr.20041005105605.240:<< handle absolute path >>
                         #@nl
                     else:
-                        at.error("ignoring bad @path: " + path)
+                        at.error("ignoring bad @path: %s" % path)
                 else:
                     at.error("ignoring empty @path")
                 
