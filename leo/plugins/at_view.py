@@ -1,0 +1,259 @@
+#@+leo-ver=4-thin
+#@+node:ktenney.20041211072654.1:@thin at_view.py
+"""View files and directories."""
+
+#@@language python
+#@@tabwidth -4
+
+#@<< about this plugin >>
+#@+node:ktenney.20041211072654.2:<< about this plugin >>
+#@+at 
+#@nonl
+# if the headline of a node starts with @view, load the body with the file contents
+#   if
+#@-at
+#@nonl
+#@-node:ktenney.20041211072654.2:<< about this plugin >>
+#@nl
+__version__ = "0.2"
+#@<< version history >>
+#@+node:ktenney.20041211072654.3:<< version history >>
+#@+at
+# 
+# 0.1 KT 2004/12/07 begin converting @button to plugin
+# 
+# 0.2 EKR style changes:
+#     - used g.trace to simply all traces.
+#     - removed comments originating from style guide.
+#     - defined __version__ only in root node.
+#     - used g.importModule to try to import win32clipboard
+#@-at
+#@nonl
+#@-node:ktenney.20041211072654.3:<< version history >>
+#@nl
+#@<< imports >>
+#@+node:ktenney.20041211072654.4:<< imports >>
+# Almost all plugins will use these two imports.
+import leoGlobals as g
+import leoPlugins
+
+path = g.importModule('path')
+win32clipboard = g.importModule('win32clipboard')
+#@nonl
+#@-node:ktenney.20041211072654.4:<< imports >>
+#@nl
+
+#@+others
+#@+node:ktenney.20041211072654.6:onCreate
+def onCreate(tag, keywords):
+
+    if g.app.unitTesting: return
+
+    # Register the handlers...
+    g.plugin_signon(__name__)
+    g.trace('tag',tag)
+
+    c = keywords.get("c")
+    myView = View(c)
+    leoPlugins.registerHandler("icondclick2", myView.icondclick2)
+    leoPlugins.registerHandler("idle", myView.idle)
+#@nonl
+#@-node:ktenney.20041211072654.6:onCreate
+#@+node:ktenney.20041211072654.7:class View
+class View:
+    
+    """
+    A class illustrating how to bind a class instance permanently to a _particular_ window.
+    All methods of this class should use self.c rather than c = g.top().
+    """
+
+    #@    @+others
+    #@+node:ktenney.20041211072654.8:__init__
+    def __init__ (self,c):
+        
+        self.c = c
+        # g.trace('View')
+    #@nonl
+    #@-node:ktenney.20041211072654.8:__init__
+    #@+node:ktenney.20041211072654.9:icondclick2
+    def icondclick2 (self, tag, keywords):
+        
+        self.current = self.c.currentPosition()
+        hs = self.current.headString()
+    
+        # g.trace('head',hs)
+        
+        if hs.startswith('@view'):
+            self.view()
+            
+        if hs.startswith('@strip'):
+            self.strip()
+    #@nonl
+    #@-node:ktenney.20041211072654.9:icondclick2
+    #@+node:ktenney.20041211203715:idle
+    def idle(self, tag, keywords):
+     
+        self.current = self.c.currentPosition()
+        s = self.current.headString()
+    
+        if s.startswith("@clip"):
+            self.clip()
+    #@nonl
+    #@-node:ktenney.20041211203715:idle
+    #@+node:ktenney.20041211072654.10:view
+    def view(self):
+        
+        '''Place the contents of a file in the body pane
+        
+        the file is either in the current headstring, 
+        or found by ascending the tree
+        '''
+    
+        # get a path object for this position
+        currentPath = self.getCurrentPath()
+        g.trace(currentPath)
+    
+        if currentPath.exists():
+            g.es('currentPath exists as %s' % currentPath.abspath())
+            if currentPath.isfile():
+                self.processFile(currentPath, self.current)
+    
+            if currentPath.isdir():
+                self.processDirectory(currentPath, self.current)
+    
+    #@-node:ktenney.20041211072654.10:view
+    #@+node:ktenney.20041212102137:clip
+    def clip(self):
+        
+        '''Watch the clipboard, and copy new items to the body.'''
+        
+        if not win32clipboard:
+            return
+    
+        divider = '\n' + ('_-' * 34) + '\n'
+            
+        win32clipboard.OpenClipboard()
+        clipboard = ""
+        if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_TEXT):
+            clipboard = win32clipboard.GetClipboardData()
+        else:
+            banner = '*' * 8
+            clipboard = banner + 'Image data was copied to the clipboard' + banner
+    
+        win32clipboard.CloseClipboard()
+        
+        body = self.current.bodyString().split(divider)
+        if not body[0] == clipboard:
+            g.es('clipboard now holds %s' % clipboard)
+            body.insert(0, clipboard)
+            self.current.setBodyTextOrPane(divider.join(body))
+        
+        
+    #@nonl
+    #@-node:ktenney.20041212102137:clip
+    #@+node:ktenney.20041211072654.15:strip
+    def strip(self):
+        
+        '''Display a file with all sentinel lines removed'''
+        
+        # get a path object for this position
+        currentPath = self.getCurrentPath()
+        g.es('in View.strip(), currentPath is %s' % currentPath)
+        
+        if currentPath.exists():
+            g.es('currentPath exists as %s' % currentPath.abspath())
+            filelines = currentPath.lines()
+            #make it an @ignore node, preventing it from appearing in files
+            lines = ['@ignore\n']
+            for line in filelines:
+                if not line.strip().startswith('#@'):
+                    lines.append(line)
+            self.current.setBodyTextOrPane("".join(lines))
+            
+       
+    #@nonl
+    #@-node:ktenney.20041211072654.15:strip
+    #@+node:ktenney.20041211072654.11:getCurrentPath
+    def getCurrentPath(self):
+    
+        """ traverse the current tree and build a path
+            using all @path statements found
+        """
+        pathFragments = []
+        
+        # we are currently in a @view node; get the file or directory name
+        pathFragments.append(self.getPathFragment(self.current))
+        
+        for node in self.current.parents_iter():
+            pathFragments.append(self.getPathFragment(node))
+                
+        if pathFragments:
+            currentPath = path.path(pathFragments.pop())
+            while pathFragments:
+                # pop takes the last appended, which is at the top of the tree
+                # build a path from the fragments
+                currentPath = currentPath / path.path(pathFragments.pop())
+                
+        return currentPath.normpath()
+    #@nonl
+    #@-node:ktenney.20041211072654.11:getCurrentPath
+    #@+node:ktenney.20041211072654.12:getPathFragment
+    def getPathFragment(self, node):
+        
+        """
+        Return the path fragment if this node is a @path or @view or any @file node.
+        """
+    
+        head = node.headString()
+        
+        if (head.startswith('@path') or head.startswith('@view') or head.startswith('@file') or \
+            head.startswith('@thin') or head.startswith('@nosent') or head.startswith('@asis') ):
+            
+            return head[head.find(' '):].strip()
+            
+        return ''
+    #@nonl
+    #@-node:ktenney.20041211072654.12:getPathFragment
+    #@+node:ktenney.20041211072654.13:processFile
+    def processFile(self, path, node):
+        
+        """parameters are a path object and a node.
+           the path is a file, place it's contents into the node
+        """
+    
+        node.setBodyTextOrPane(''.join(path.lines()))
+    #@nonl
+    #@-node:ktenney.20041211072654.13:processFile
+    #@+node:ktenney.20041211072654.14:processDirectory
+    def processDirectory(self, path, node):
+        
+        """
+        create child nodes for each member of the directory
+        
+        @path is a path object for a directory
+        @node is the node to work with
+        """
+    
+        # delete all nodes before creating, to avoid duplicates
+        while node.firstChild():
+            node.firstChild().doDelete(node)
+        
+        for file in path.files():
+            child = node.insertAsLastChild()
+            child.setHeadString('@view %s' % file.name)
+    
+        for file in path.dirs():
+           child = node.insertAsLastChild()
+           child.setHeadString('@view %s' % file.name)
+        
+    #@nonl
+    #@-node:ktenney.20041211072654.14:processDirectory
+    #@-others
+#@nonl
+#@-node:ktenney.20041211072654.7:class View
+#@-others
+
+leoPlugins.registerHandler("after-create-leo-frame",onCreate)
+#@nonl
+#@-node:ktenney.20041211072654.1:@thin at_view.py
+#@-leo
