@@ -230,8 +230,6 @@ class leoTkinterFrame (leoFrame.leoFrame):
             canvas = self.createPmwTreeCanvas(parentFrame,scrolls,pack)
         else:
             canvas = self.createTkTreeCanvas(parentFrame,scrolls,pack)
-            
-        self.canvas = canvas
     
         return canvas
     #@nonl
@@ -2119,7 +2117,9 @@ class leoTkinterFrame (leoFrame.leoFrame):
                         g.app.gui.set_focus(c,widget,tag='frame.setFocus')
                 if not self.wantedCallbackScheduled:
                     self.wantedCallbackScheduled = True
-                    self.outerFrame.after(500,setFocusCallback)
+                    # We don't have to wait so long now that we don't call this so often.
+                    # The difference between 500 msec. and 200 msec. is significant.
+                    self.outerFrame.after(200,setFocusCallback)
             else:
                 # g.trace(tag,c.shortFileName())
                 g.app.gui.set_focus(c,widget,tag='frame.setFocus')
