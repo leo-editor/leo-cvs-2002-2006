@@ -661,8 +661,10 @@ class config:
 
 			for section, dict in self.sectionInfo:
 				if dict != None:
-					for opt in config.options(section):
-						dict[string.lower(opt)]=config.get(section,opt)
+					try:
+						for opt in config.options(section):
+							dict[string.lower(opt)]=config.get(section,opt)
+					except: pass
 			
 			#@<< print options >>
 			#@+node:3::<< print options >>
