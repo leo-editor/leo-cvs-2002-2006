@@ -11408,18 +11408,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -11454,22 +11451,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -11658,18 +11655,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -11704,22 +11698,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -11752,21 +11746,25 @@ def getLastTracebackFileAndLineNumber():
 #@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
-    
-    typ,val,tb = sys.exc_info()
-    
-    full = full or g.app.debugSwitch > 0
 
-    if full: lines = traceback.format_exception(typ,val,tb)
-    else:    lines = traceback.format_exception_only(typ,val)
-        
+    typ,val,tb = sys.exc_info()
+
+    # g.trace(full,typ,tb)
+    
     fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    if full or g.app.debugSwitch > 0:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
-            
+
     if g.app.debugSwitch > 1:
         import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
@@ -21869,21 +21867,25 @@ except ImportError:
 #@nonl
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
-    
-    typ,val,tb = sys.exc_info()
-    
-    full = full or g.app.debugSwitch > 0
 
-    if full: lines = traceback.format_exception(typ,val,tb)
-    else:    lines = traceback.format_exception_only(typ,val)
-        
+    typ,val,tb = sys.exc_info()
+
+    # g.trace(full,typ,tb)
+    
     fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    if full or g.app.debugSwitch > 0:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
-            
+
     if g.app.debugSwitch > 1:
         import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
@@ -21988,18 +21990,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -22034,22 +22033,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -22733,21 +22732,25 @@ How did we ever live without this?
 #@-node:ekr.20041111100436:Notes
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
-    
-    typ,val,tb = sys.exc_info()
-    
-    full = full or g.app.debugSwitch > 0
 
-    if full: lines = traceback.format_exception(typ,val,tb)
-    else:    lines = traceback.format_exception_only(typ,val)
-        
+    typ,val,tb = sys.exc_info()
+
+    # g.trace(full,typ,tb)
+    
     fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    if full or g.app.debugSwitch > 0:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
-            
+
     if g.app.debugSwitch > 1:
         import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
@@ -22852,18 +22855,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -22898,22 +22898,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -28334,18 +28334,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -28380,22 +28377,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -32183,18 +32180,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -32229,22 +32223,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -32323,18 +32317,15 @@ def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
                 g.es("end of script",color="purple")
         except Exception:
             << unredirect output >>
-            g.es("exception executing script ")
+            g.es("exception executing script",color='blue')
             if 0:
                 print 'script...'
                 for line in g.splitLines(script):
                     print repr(line)
-            fileName,n = g.es_exception(full=False,c=c)
-            if fileName not in (None,"<string>"):
-                g.es("exception in file %s, line: %d" % (fileName,n))
+            fileName,n = g.es_exception(full=True,c=c)
             if p and not script1 and fileName == "<string>":
                 c.goToScriptLineNumber(p,script,n)
-            else:
-                << dump the lines near the error >>
+            << dump the lines near the error >>
             c.frame.tree.redrawAfterException()
         del sys.path[0]
     elif not error:
@@ -32369,22 +32360,22 @@ else:
 s = '-' * 20
 print s; g.es(s)
 
-if 1:
+if 0:
     # Just print the error line.
     try:
         s = "%s line %d: %s" % (fileName,n,lines[n-1])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
     except IndexError:
         s = "%s line %d" % (fileName,n)
-        print s, ; g.es(s,newline=False)
-else:
+        g.es(s,newline=False)
+else: # Print surrounding lines.
     i = max(0,n-2)
     j = min(n+2,len(lines))
     # g.trace(n,i,j)
     while i < j:
         ch = g.choose(i==n-1,'*',' ')
         s = "%s line %d: %s" % (ch,i+1,lines[i])
-        print s, ; g.es(s,newline=False)
+        g.es(s,newline=False)
         i += 1
 #@nonl
 #@-node:EKR.20040612215018:<< dump the lines near the error >>
@@ -33876,21 +33867,25 @@ This allows plugins such as plugin_manager.py to work on Python 2.2.x.
 #@+node:ekr.20050220034952:(Added test for g.exception & added color='suppress' hack to g.es)
 #@+node:ekr.20031218072017.3112:es_exception & test
 def es_exception (full=True,c=None,color="red"):
-    
-    typ,val,tb = sys.exc_info()
-    
-    full = full or g.app.debugSwitch > 0
 
-    if full: lines = traceback.format_exception(typ,val,tb)
-    else:    lines = traceback.format_exception_only(typ,val)
-        
+    typ,val,tb = sys.exc_info()
+
+    # g.trace(full,typ,tb)
+    
     fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    if full or g.app.debugSwitch > 0:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
 
     for line in lines:
         g.es_error(line,color=color)
         if not g.stdErrIsRedirected():
             print line
-            
+
     if g.app.debugSwitch > 1:
         import pdb # Be careful: g.pdb may or may not have been defined.
         pdb.set_trace()
@@ -33972,7 +33967,7 @@ def test_g_es_exception():
 #@-node:ekr.20050220034952:(Added test for g.exception & added color='suppress' hack to g.es)
 #@-node:ekr.20050214092455.2:New features
 #@-node:ekr.20050214092455:4.3 a3 projects
-#@+node:ekr.20050225104239:4.4 a4 projects
+#@+node:ekr.20050225104239:4.3 a4 projects
 #@+node:ekr.20050225104239.1:Bugs
 #@+node:ekr.20050209094854:(Investigated disappearing node body text)
 #@+node:ekr.20050225074932:Original posting: (not correct!)
@@ -37021,7 +37016,421 @@ def putOpenNodeSentinel(self,p,inAtAll=False,inAtOthers=False,middle=False):
 #@+node:ekr.20050228200421:Revised scripting chapter (on web and in LeoDocs.leo) to use predefined g, c, p
 #@-node:ekr.20050228200421:Revised scripting chapter (on web and in LeoDocs.leo) to use predefined g, c, p
 #@-node:ekr.20050225155947:Docs
-#@-node:ekr.20050225104239:4.4 a4 projects
+#@-node:ekr.20050225104239:4.3 a4 projects
+#@+node:ekr.20050316083031:4.3 b1 projects
+#@+node:ekr.20050316083031.1:Bugs...
+#@+node:ekr.20050315082746:(Made sure NameErrors are reported with tracebacks in scripts)
+#@+node:ekr.20050315082746.1:Report
+@killcolor
+http://sourceforge.net/forum/message.php?msg_id=3048149
+By: bwmulder
+
+Create a node with some code:
+
+x = 0
+import pdb; pdb.set_trace()
+y = 1
+z = z + 1
+
+And then either use the "run_script" button from the plugin, or "execute script"
+from the menu. You get:
+
+
+>> <string>(5)?()
+
+(Pdb) s
+
+>> <string>(6)?()
+
+(Pdb) s
+NameError: "name 'z' is not defined"
+
+>> <string>(6)?()
+
+(Pdb) s
+NameError: "name 'z' is not defined"
+
+>> c:\bwm\svn_checkouts\oracle_ipf\trunk\python\other\leo_cvs\src\leocommands.py(
+
+1195)executeScript()
+-> exec script in d # Use {} to get a pristine environment!
+
+[Assuming that you have a DOS window in which you started leo.py].
+
+The debugger indicates some line numbers, but no source lines.
+
+When you remove the import line, you just get:
+
+exception executing script 
+NameError: name 'z' is not defined
+#@nonl
+#@-node:ekr.20050315082746.1:Report
+#@+node:ekr.20050316073527:What I did
+@killcolor
+
+The problem arose from a misguided attempt to eliminate non-useful information from traces.  Alas, the baby got thrown out with the bath water.
+
+Here are the changes I made:
+
+ - c.executeScript now calls g.es_exception(full=True) to ensure that a full stack trace always gets produced.  This is especially important when the exception happens in a module (file) called by the script.
+
+-  c.executeScript now always executes the section < < dump the lines near the error > >,  regardless of context.  The lines are printed (in black) in the log.  This is useful information in almost all cases.
+
+- After much experimentation, g.es_exception is basically unchanged.
+
+Note: If the error occurs in your script itself (as contrasted with an exception thrown from a file called by your script) Leo always has properly put the cursor on the offending line.  I made no changes in this logic.
+
+BTW, calling pdb.set_trace() in your scripts may cause more problems than it is worth.  Indeed.pdb.set_trace() uses only the information on the stack, and that may not be enough information to be useful.  I usually use g.trace to find out what is happening.  This works well.
+#@nonl
+#@-node:ekr.20050316073527:What I did
+#@+node:EKR.20040612232221:goToScriptLineNumber
+def goToScriptLineNumber (self,root,script,n):
+
+    """Go to line n of a script."""
+
+    c = self
+    
+    # g.trace(n,root)
+    
+    lines = g.splitLines(script)
+    c.goToLineNumber(root=root,lines=lines,n=n,scriptFind=True)
+#@nonl
+#@-node:EKR.20040612232221:goToScriptLineNumber
+#@+node:ekr.20031218072017.3138:g.executeScript
+def executeScript (name):
+    
+    """Execute a script whose short python file name is given"""
+    
+    mod_name,ext = g.os_path_splitext(name)
+    theFile = None
+    try:
+        # This code is in effect an import or a reload.
+        # This allows the user to modify scripts without leaving Leo.
+        import imp
+        theFile,filename,description = imp.find_module(mod_name)
+        imp.load_module(mod_name,theFile,filename,description)
+    except:
+        g.es("Exception executing " + name,color="red")
+        g.es_exception()
+
+    if theFile:
+        theFile.close()
+
+#@-node:ekr.20031218072017.3138:g.executeScript
+#@+node:ekr.20031218072017.2140:c.executeScript
+def executeScript(self,p=None,script=None,useSelectedText=True,define_g=True):
+
+    """This executes body text as a Python script.
+    
+    We execute the selected text, or the entire body text if no text is selected."""
+    
+    c = self ; error = False ; s = None ; script1 = script
+
+    if not script:
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
+    << redirect output >>
+    # New in 4.3: Don't touch the script once it has been set, except to add a trailing newline.
+    if script.strip():
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
+        script += '\n' # Make sure we end the script properly.
+        try:
+            p = c.currentPosition()
+            d = g.choose(define_g,{'c':c,'g':g,'p':p},{})
+            exec script in d # Use {} to get a pristine environment!
+            << unredirect output >>
+            if not script1:
+                g.es("end of script",color="purple")
+        except Exception:
+            << unredirect output >>
+            g.es("exception executing script",color='blue')
+            if 0:
+                print 'script...'
+                for line in g.splitLines(script):
+                    print repr(line)
+            fileName,n = g.es_exception(full=True,c=c)
+            if p and not script1 and fileName == "<string>":
+                c.goToScriptLineNumber(p,script,n)
+            << dump the lines near the error >>
+            c.frame.tree.redrawAfterException()
+        del sys.path[0]
+    elif not error:
+        << unredirect output >>
+        g.es("no script selected",color="blue")
+        
+    # Force a redraw _after_ all messages have been output.
+    c.redraw() 
+#@nonl
+#@+node:ekr.20031218072017.2143:<< redirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.redirectStdout() # Redirect stdout
+    g.redirectStderr() # Redirect stderr
+#@nonl
+#@-node:ekr.20031218072017.2143:<< redirect output >>
+#@+node:EKR.20040627100424:<< unredirect output >>
+if c.config.redirect_execute_script_output_to_log_pane:
+
+    g.restoreStderr()
+    g.restoreStdout()
+#@nonl
+#@-node:EKR.20040627100424:<< unredirect output >>
+#@+node:EKR.20040612215018:<< dump the lines near the error >>
+if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
+
+s = '-' * 20
+print s; g.es(s)
+
+if 0:
+    # Just print the error line.
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        g.es(s,newline=False)
+else: # Print surrounding lines.
+    i = max(0,n-2)
+    j = min(n+2,len(lines))
+    # g.trace(n,i,j)
+    while i < j:
+        ch = g.choose(i==n-1,'*',' ')
+        s = "%s line %d: %s" % (ch,i+1,lines[i])
+        g.es(s,newline=False)
+        i += 1
+#@nonl
+#@-node:EKR.20040612215018:<< dump the lines near the error >>
+#@-node:ekr.20031218072017.2140:c.executeScript
+#@+node:ekr.20031218072017.3108:Dumps
+#@+node:ekr.20031218072017.3109:dump
+def dump(s):
+    
+    out = ""
+    for i in s:
+        out += str(ord(i)) + ","
+    return out
+        
+def oldDump(s):
+
+    out = ""
+    for i in s:
+        if i=='\n':
+            out += "[" ; out += "n" ; out += "]"
+        if i=='\t':
+            out += "[" ; out += "t" ; out += "]"
+        elif i==' ':
+            out += "[" ; out += " " ; out += "]"
+        else: out += i
+    return out
+#@nonl
+#@-node:ekr.20031218072017.3109:dump
+#@+node:ekr.20031218072017.3110:es_error
+def es_error (s,color=None):
+
+    if color is None and g.app.config: # May not exist during initialization.
+        color = g.app.config.getColor(None,"log_error_color")
+
+    g.es(s,color=color)
+#@nonl
+#@-node:ekr.20031218072017.3110:es_error
+#@+node:ekr.20031218072017.3111:es_event_exception
+def es_event_exception (eventName,full=False):
+
+    g.es("exception handling ", eventName, " event")
+    typ,val,tb = sys.exc_info()
+
+    if full:
+        errList = traceback.format_exception(typ,val,tb)
+    else:
+        errList = traceback.format_exception_only(typ,val)
+
+    for i in errList:
+        g.es(i)
+        
+    if not g.stdErrIsRedirected(): # 2/16/04
+        traceback.print_exc()
+#@nonl
+#@-node:ekr.20031218072017.3111:es_event_exception
+#@+node:ekr.20031218072017.3112:es_exception & test
+def es_exception (full=True,c=None,color="red"):
+
+    typ,val,tb = sys.exc_info()
+
+    # g.trace(full,typ,tb)
+    
+    fileName,n = g.getLastTracebackFileAndLineNumber()
+
+    if full or g.app.debugSwitch > 0:
+        lines = traceback.format_exception(typ,val,tb)
+    else:
+        lines = traceback.format_exception_only(typ,val)
+        if 0: # We might as well print the entire SyntaxError message.
+            lines = lines[-1:] # Usually only one line, but more for Syntax errors!
+
+    for line in lines:
+        g.es_error(line,color=color)
+        if not g.stdErrIsRedirected():
+            print line
+
+    if g.app.debugSwitch > 1:
+        import pdb # Be careful: g.pdb may or may not have been defined.
+        pdb.set_trace()
+
+    return fileName,n
+#@nonl
+#@+node:ekr.20031218072017.1474:es, enl, ecnl
+def ecnl():
+    g.ecnls(1)
+
+def ecnls(n):
+    log = app.log
+    if log and not log.isNull:
+        while log.newlines < n:
+            g.enl()
+
+def enl():
+    log = app.log
+    if log and not log.isNull:
+        log.newlines += 1
+        log.putnl()
+
+def es(s,*args,**keys):
+    if app.killed:
+        return
+    newline = keys.get("newline",True)
+    color = keys.get("color",None)
+    if color == 'suppress': return # New in 4.3.
+    if type(s) != type("") and type(s) != type(u""): # 1/20/03
+        s = repr(s)
+    for arg in args:
+        if type(arg) != type("") and type(arg) != type(u""): # 1/20/03
+            arg = repr(arg)
+        s = s + ", " + arg
+    if app.batchMode:
+        if app.log:
+            app.log.put(s)
+    else:
+        log = app.log
+        if log and not log.isNull:
+            # print 'g.es',s
+            log.put(s,color=color)
+            for ch in s:
+                if ch == '\n': log.newlines += 1
+                else: log.newlines = 0
+            if newline:
+                g.ecnl() # only valid here
+        elif newline:
+            app.logWaiting.append((s+'\n',color),)
+            # print s
+        else:
+            app.logWaiting.append((s,color),)
+            # print s,
+#@nonl
+#@-node:ekr.20031218072017.1474:es, enl, ecnl
+#@+node:ekr.20050220030850:test_g_es_exception
+def test_g_es_exception():
+
+    try:
+        import sys
+        # Catch the output of g.es_exception.
+        # We catch the AssertionError, so nothing gets written to stderr.
+        sys.stdout = fo = g.fileLikeObject()
+        try: # Create an exception to catch.
+            assert False, 'Assert False in test_g_es_exception'
+        except AssertionError:
+            g.es_exception(color='suppress')
+            result = fo.get()
+            s1 = 'Traceback (most recent call last):'
+            s2 = 'AssertionError: Assert False in test_g_es_exception'
+            assert result.find(s1) > -1, 'No traceback line: %s' % repr(result)
+            assert result.find(s2) > -1, 'No AssertionError line: %s' % repr(result)
+    finally:
+        # Not needed unless we execute this script as selected text.
+        sys.stdout = sys.__stdout__
+#@nonl
+#@-node:ekr.20050220030850:test_g_es_exception
+#@-node:ekr.20031218072017.3112:es_exception & test
+#@+node:ekr.20040731204831:getLastTracebackFileAndLineNumber
+def getLastTracebackFileAndLineNumber():
+    
+    typ,val,tb = sys.exc_info()
+    
+    if typ is exceptions.SyntaxError:
+        # Syntax errors are a special case.
+        # extract_tb does _not_ return the proper line number!
+        # This code is similar to the code in format_exception_only(!!)
+        try:
+            msg,(filename, lineno, offset, line) = val
+            return filename,lineno
+        except:
+            g.trace("bad line number")
+            return None,0
+
+    else:
+        # The proper line number is the second element in the last tuple.
+        data = traceback.extract_tb(tb)
+        # g.trace(data)
+        item = data[-1]
+        filename = item[0]
+        n = item[1]
+        return filename,n
+#@nonl
+#@-node:ekr.20040731204831:getLastTracebackFileAndLineNumber
+#@+node:ekr.20031218072017.3113:printBindings
+def print_bindings (name,window):
+
+    bindings = window.bind()
+    print
+    print "Bindings for", name
+    for b in bindings:
+        print b
+#@nonl
+#@-node:ekr.20031218072017.3113:printBindings
+#@+node:ekr.20031218072017.3114:printGlobals
+def printGlobals(message=None):
+    
+    # Get the list of globals.
+    globs = list(globals())
+    globs.sort()
+    
+    # Print the list.
+    if message:
+        leader = "-" * 10
+        print leader, ' ', message, ' ', leader
+    for glob in globs:
+        print glob
+#@nonl
+#@-node:ekr.20031218072017.3114:printGlobals
+#@+node:ekr.20031218072017.3115:printLeoModules
+def printLeoModules(message=None):
+    
+    # Create the list.
+    mods = []
+    for name in sys.modules.keys():
+        if name and name[0:3] == "leo":
+            mods.append(name)
+
+    # Print the list.
+    if message:
+        leader = "-" * 10
+        print leader, ' ', message, ' ', leader
+    mods.sort()
+    for m in mods:
+        print m,
+    print
+#@nonl
+#@-node:ekr.20031218072017.3115:printLeoModules
+#@-node:ekr.20031218072017.3108:Dumps
+#@-node:ekr.20050315082746:(Made sure NameErrors are reported with tracebacks in scripts)
+#@-node:ekr.20050316083031.1:Bugs...
+#@+node:ekr.20050316083031.2:Features...
+#@-node:ekr.20050316083031.2:Features...
+#@-node:ekr.20050316083031:4.3 b1 projects
 #@-all
 #@nonl
 #@-node:EKR.20040429143933:@thin leoProjects.txt
