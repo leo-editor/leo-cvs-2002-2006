@@ -4,50 +4,6 @@
 
 from leoGlobals import *
 
-#@<< scripts >>
-#@+node:<< scripts >>
-#@+others
-#@+node:importFiles
-# An example of running this script:
-#
-# import leoImport
-# leoImport.importFiles("c:/prog/test", ".py")
-
-def importFiles (dir, type = None, kind = "@file"):
-	
-	from leoGlobals import os_path_exists,os_path_isfile,os_path_join,os_path_splitext
-
-	# Check the params.
-	if kind != "@file" and kind != "@root":
-		es("kind must be @file or @root: " + `kind`)
-		return
-	if not os_path_exists(dir):
-		es("directory does not exist: " + `dir`)
-		return
-	
-	c = top() # Get the commander.
-	
-	try:
-		files = os.listdir(dir)
-		files2 = []
-		for f in files:
-			path = os_path_join(dir,f)
-			if os_path_isfile(path):
-				name, ext = os_path_splitext(f)
-				if type == None or ext == type:
-					files2.append(path)
-		if len(files2) > 0:
-			c.importCommands.importFilesCommand(files2,kind)
-	except:
-		es("exception in importFiles script")
-		es_exception()
-#@nonl
-#@-node:importFiles
-#@-others
-#@nonl
-#@-node:<< scripts >>
-#@nl
-
 class baseLeoImportCommands:
 	"""The base class for Leo's import commands."""
 	#@	@+others
@@ -111,7 +67,7 @@ class baseLeoImportCommands:
 		else:
 			v.initHeadString(self.fileName)
 			
-		self.rootLine = choose(self.treeType=="@file","","@root "+self.fileName+'\n')
+		self.rootLine = choose(self.treeType=="@file","","@root-code "+self.fileName+'\n')
 	
 		if appendFileFlag:
 			v.setBodyStringOrPane("@ignore\n" + self.rootLine + s)
