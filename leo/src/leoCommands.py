@@ -5602,12 +5602,15 @@ class configSettings:
             return
     
         # g.trace("updating @recent-files for ",c.mFileName)
-    
+        
         # Update the @recent-files entry, leaving c's changed status untouched.
+        oldText = p.bodyString()
         changed = c.isChanged()
-        body = '\n'.join(files)
-        p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+        newText = '\n'.join(files)
+        p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
         c.setChanged(changed)
+        c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+            oldText,newText,oldSel=None,newSel=None)
     #@nonl
     #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
     #@+node:ekr.20041118195812.2:set & setString

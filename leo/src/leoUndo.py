@@ -96,6 +96,7 @@ class baseUndoer:
             "Change":             u.redoTyping,
             "Change All":         u.redoChangeAll,
             "Change Headline":    u.redoChangeHeadline,
+            'Clear Recent Files': u.redoTyping,
             "Clone Node":         u.redoClone,
             "Convert All Blanks": u.redoReplaceNodesContents,
             "Convert All Tabs":   u.redoReplaceNodesContents,
@@ -140,6 +141,7 @@ class baseUndoer:
             "Change":             u.undoTyping,
             "Change All":         u.undoChangeAll,
             "Change Headline":    u.undoChangeHeadline,
+            'Clear Recent Files': u.undoTyping,
             "Clone Node":         u.undoClone,
             "Convert All Blanks": u.undoReplaceNodesContents,
             "Convert All Tabs":   u.undoReplaceNodesContents,
@@ -952,7 +954,7 @@ class baseUndoer:
         # selectVnode causes recoloring, so avoid if possible.
         if current != u.p:
             c.selectVnode(u.p)
-        elif u.undoType in ("Cut","Paste"):
+        elif u.undoType in ('Cut','Paste','Clear Recent Files'):
             c.frame.body.forceFullRecolor()
     
         self.undoRedoText(
@@ -1399,7 +1401,7 @@ class baseUndoer:
         # selectVnode causes recoloring, so don't do this unless needed.
         if current != u.p:
             c.selectVnode(u.p)
-        elif u.undoType in ("Cut","Paste"):
+        elif u.undoType in ("Cut","Paste",'Clear Recent Files'):
             c.frame.body.forceFullRecolor()
     
         self.undoRedoText(

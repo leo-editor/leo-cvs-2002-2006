@@ -13991,12 +13991,15 @@ def setRecentFiles (self,files):
         return
 
     # g.trace("updating @recent-files for ",c.mFileName)
-
+    
     # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
     changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
     c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@+node:ekr.20041118195812.2:set & setString
@@ -14024,12 +14027,15 @@ def setRecentFiles (self,files):
         return
 
     # g.trace("updating @recent-files for ",c.mFileName)
-
+    
     # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
     changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
     c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@-node:ekr.20041123074733:(Update recent files in local .leo file when opening another file)
@@ -16263,12 +16269,15 @@ def setRecentFiles (self,files):
         return
 
     # g.trace("updating @recent-files for ",c.mFileName)
-
+    
     # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
     changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
     c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@+node:ekr.20041118195812.2:set & setString
@@ -19910,12 +19919,15 @@ def setRecentFiles (self,files):
         return
 
     # g.trace("updating @recent-files for ",c.mFileName)
-
+    
     # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
     changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
     c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@+node:ekr.20041118195812.2:set & setString
@@ -21152,8 +21164,8 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
 C:\prog\leoCVS\leo\doc\leoDocs.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\config\leoSettings.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\src\LeoPy.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
@@ -21201,12 +21213,15 @@ def setRecentFiles (self,files):
         return
 
     # g.trace("updating @recent-files for ",c.mFileName)
-
+    
     # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
     changed = c.isChanged()
-    body = '\n'.join(files)
-    p.setBodyStringOrPane(body,encoding=g.app.tkEncoding)
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
     c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
 #@nonl
 #@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
 #@+node:ekr.20031218072017.2080:clearRecentFiles
@@ -25190,6 +25205,34 @@ def openWithFileName(fileName,old_c,enableLog=True,readAtFileNodesFlag=True):
         return False, None
 #@-node:ekr.20031218072017.2052:g.openWithFileName
 #@-node:ekr.20050119211822.2:(Added support for Leo-relative files)
+#@+node:ekr.20050122105757:(Implemented 'Undo Clear Recent Files')
+#@+node:ekr.20041118195812.3:setRecentFiles (configSettings)
+def setRecentFiles (self,files):
+    
+    c = self.c
+    
+    # Append the files to the global list.
+    g.app.config.appendToRecentFiles(files)
+    
+    # Do nothing if there is no @settings tree or no @recent-files node.
+    p = g.app.config.findSettingsPosition(c,"@recent-files")
+    if not p:
+        # g.trace("no @recent-files node for ",c.mFileName)
+        return
+
+    # g.trace("updating @recent-files for ",c.mFileName)
+    
+    # Update the @recent-files entry, leaving c's changed status untouched.
+    oldText = p.bodyString()
+    changed = c.isChanged()
+    newText = '\n'.join(files)
+    p.setBodyStringOrPane(newText,encoding=g.app.tkEncoding)
+    c.setChanged(changed)
+    c.undoer.setUndoTypingParams(p,'Clear Recent Files',
+        oldText,newText,oldSel=None,newSel=None)
+#@nonl
+#@-node:ekr.20041118195812.3:setRecentFiles (configSettings)
+#@-node:ekr.20050122105757:(Implemented 'Undo Clear Recent Files')
 #@-node:ekr.20041228052527.2:New features...
 #@+node:ekr.20041228052527.3:Plugins...
 #@+node:EKR.20040424151321:(Improved status line plugin)
