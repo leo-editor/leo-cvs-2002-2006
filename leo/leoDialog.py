@@ -80,8 +80,9 @@ class leoDialog:
 	
 		self.center() # Do this after packing.
 		top.resizable(0,0) # neither height or width is resizable.
-		top.grab_set() # Make the dialog a modal dialog.
-		top.focus_force() # Get all keystrokes.
+		if 0: # No need to make this modal
+			top.grab_set() # Make the dialog a modal dialog.
+			top.focus_force() # Get all keystrokes.
 		root.wait_window(top)
 	#@-body
 	#@+node:1::onAboutLeoUrl
