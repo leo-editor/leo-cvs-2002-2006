@@ -68,6 +68,36 @@ def createTopologyList (c=None,root=None,useHeadlines=False):
 #@-node:ekr.20031218072017.3095:Checking Leo Files...
 #@+node:ekr.20031218072017.3099:Commands & Directives
 #@+node:ekr.20031218072017.1380:Directive utils...
+#@+node:EKR.20040504150046.4:g.comment_delims_from_extension
+def comment_delims_from_extension(filename):
+    
+    """
+    Return the comment delims corresponding to the filename's extension.
+
+    >>> g.comment_delims_from_extension(".py")
+    ('#', None, None)
+
+    >>> g.comment_delims_from_extension(".c")
+    ('//', '/*', '*/')
+    
+    >>> g.comment_delims_from_extension(".html")
+    (None, '<!--', '-->')
+
+    """
+
+    root, ext = os.path.splitext(filename)
+    if ext == '.tmp':
+        root, ext = os.path.splitext(root)
+        
+    language = g.app.extension_dict.get(ext[1:])
+    if ext:
+        
+        return g.set_delims_from_language(language)
+    else:
+        g.trace("unknown extension %s" % ext)
+        return None,None,None
+#@nonl
+#@-node:EKR.20040504150046.4:g.comment_delims_from_extension
 #@+node:ekr.20031218072017.1381:@language and @comment directives (leoUtils)
 #@+node:ekr.20031218072017.1382:set_delims_from_language
 # Returns a tuple (single,start,end) of comment delims
@@ -1258,6 +1288,52 @@ def getBaseDirectory():
     else:
         return "" # No relative base given.
 #@-node:ekr.20031218072017.1264:getBaseDirectory
+#@+node:EKR.20040504154039:g.is_sentinel
+def is_sentinel (line,delims):
+    
+    #@    << is_sentinel doc tests >>
+    #@+node:ekr.20040719161756:<< is_sentinel doc tests >>
+    """
+    
+    Return True if line starts with a sentinel comment.
+    
+    >>> py_delims = comment_delims_from_extension('.py')
+    >>> is_sentinel("#@+node",py_delims)
+    True
+    >>> is_sentinel("#comment",py_delims)
+    False
+    
+    >>> c_delims = comment_delims_from_extension('.c')
+    >>> is_sentinel("//@+node",c_delims)
+    True
+    >>> is_sentinel("//comment",c_delims)
+    False
+    
+    >>> html_delims = comment_delims_from_extension('.html')
+    >>> is_sentinel("<!--@+node-->",html_delims)
+    True
+    >>> is_sentinel("<!--comment-->",html_delims)
+    False
+    
+    """
+    #@nonl
+    #@-node:ekr.20040719161756:<< is_sentinel doc tests >>
+    #@nl
+    
+    delim1,delim2,delim3 = delims
+    
+    line = line.lstrip()
+
+    if delim1:
+        return line.startswith(delim1+'@')
+    elif delim2 and delim3:
+        i = line.find(delim2+'@')
+        j = line.find(delim3)
+        return 0 == i < j
+    else:
+        g.es("Can't happen: is_sentinel",color="red")
+        return False
+#@-node:EKR.20040504154039:g.is_sentinel
 #@+node:ekr.20031218072017.3119:makeAllNonExistentDirectories
 # This is a generalization of os.makedir.
 
@@ -3172,7 +3248,8 @@ import difflib,shutil
 class mulderUpdateAlgorithm:
     
     """A class to update derived files using
-    diffs in files without sentinels."""
+    diffs in files without sentinels.
+    """
     
     #@    @+others
     #@+node:EKR.20040504150046.3:__init__
@@ -3238,7 +3315,7 @@ class mulderUpdateAlgorithm:
     #@nonl
     #@-node:EKR.20040504155109:copy_time
     #@+node:EKR.20040504150046.6:create_mapping
-    def create_mapping (self,lines,marker):
+    def create_mapping (self,lines,delims):
         """
     
         'lines' is a list of lines of a file with sentinels.
@@ -3258,50 +3335,18 @@ class mulderUpdateAlgorithm:
         # Create mapping and set i to the index of the last non-sentinel line.
         mapping = []
         for i in xrange(len(lines)):
-            if not self.is_sentinel(lines[i],marker):
+            if not g.is_sentinel(lines[i],delims):
                 mapping.append(i)
     
         # Create a last mapping entry for copy_sentinels.
         mapping.append(i)
         
         # Use removeSentinelsFromLines to handle @nonl properly.
-        stripped_lines = self.removeSentinelsFromLines(lines,marker)
+        stripped_lines = self.removeSentinelsFromLines(lines,delims)
     
         return stripped_lines, mapping
     #@nonl
     #@-node:EKR.20040504150046.6:create_mapping
-    #@+node:EKR.20040504154039:is_sentinel
-    def is_sentinel (self,line,marker):
-        
-        """
-        Check if line starts with a sentinel comment.
-        """
-        
-        return line.lstrip().startswith(marker)
-    #@-node:EKR.20040504154039:is_sentinel
-    #@+node:EKR.20040504150046.4:marker_from_extension
-    def marker_from_extension(self,filename):
-        """
-        Tries to guess the sentinel leadin
-        comment from the filename extension.
-        
-        This code should probably be shared
-        with the main Leo code.
-        """
-        root, ext = os.path.splitext(filename)
-        if ext == '.tmp':
-            root, ext = os.path.splitext(root)
-        if ext in ('.h', '.c'):
-            marker = "//@"
-        elif ext in (".py", ".cfg", ".bat", ".ksh"):
-            marker = "#@"
-        else:
-            g.trace("unknown extension %s" % ext)
-            marker = None
-    
-        return marker
-    #@nonl
-    #@-node:EKR.20040504150046.4:marker_from_extension
     #@+node:EKR.20040505080156:Get or remove sentinel lines
     # These routines originally were part of push_filter & push_filter_lines.
     #@nonl
@@ -3312,17 +3357,17 @@ class mulderUpdateAlgorithm:
         containing the sentinel and non-sentinel lines of the file."""
         
         lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
+        delims = g.comment_delims_from_extension(filename)
         
-        return self.separateSentinelsFromLines(lines,marker)
+        return self.separateSentinelsFromLines(lines,delims)
         
-    def separateSentinelsFromLines (self,lines,marker):
+    def separateSentinelsFromLines (self,lines,delims):
         
         """Separate lines (a list of lines) into a tuple of two lists,
         containing the sentinel and non-sentinel lines of the original list."""
         
-        strippedLines = self.removeSentinelsFromLines(lines,marker)
-        sentinelLines = self.getSentinelsFromLines(lines,marker)
+        strippedLines = self.removeSentinelsFromLines(lines,delims)
+        sentinelLines = self.getSentinelsFromLines(lines,delims)
         
         return strippedLines,sentinelLines
     #@nonl
@@ -3333,63 +3378,58 @@ class mulderUpdateAlgorithm:
         """Return a copy of file with all sentinels removed."""
         
         lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
+        delims = g.comment_delims_from_extension(filename)
         
-        return removeSentinelsFromLines(lines,marker)
+        return removeSentinelsFromLines(lines,delims)
         
-    def removeSentinelsFromLines (self,lines,marker):
+    def removeSentinelsFromLines (self,lines,delims):
     
         """Return a copy of lines with all sentinels removed."""
         
-        if 0: # Doesn't handle trailing @nonl properly.
-            return [line for line in lines if not self.is_sentinel(line,marker)]
-        else:
-            result = [] ; last_nosent_i = -1
-            for i in xrange(len(lines)):
-                if not self.is_sentinel(lines[i],marker):
-                    result.append(lines[i])
-                    last_nosent_i = i
-            #@        << remove the newline from result[-1] if line[i] is followed by @nonl >>
-            #@+node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
-            i = last_nosent_i
-            
-            if i + 1 < len(lines):
-                
-                # The mu.marker probably ends in '@'
-                if marker[-1] == '@': marker = marker[:-1]
-            
-                line = lines[i+1]
-                j = g.skip_ws(line,0)
-            
-                if match(line,j,marker):
-                    j += len(marker)
-            
-                    if g.match(line,j,"@nonl"):
-                        line = lines[i]
-                        if line[-1] == '\n':
-                            assert(result[-1] == line)
-                            result[-1] = line[:-1]
-            #@nonl
-            #@-node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
-            #@nl
-            return result
+        delim1,delim2,delim3 = delims
+        result = [] ; last_nosent_i = -1
+        for i in xrange(len(lines)):
+            if not g.is_sentinel(lines[i],delims):
+                result.append(lines[i])
+                last_nosent_i = i
+        #@    << remove the newline from result[-1] if line[i] is followed by @nonl >>
+        #@+node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+        i = last_nosent_i
+        
+        if i + 1 < len(lines):
+        
+            line = lines[i+1]
+            j = g.skip_ws(line,0)
+        
+            if match(line,j,delim1):
+                j += len(delim1)
+        
+                if g.match(line,j,"@nonl"):
+                    line = lines[i]
+                    if line[-1] == '\n':
+                        assert(result[-1] == line)
+                        result[-1] = line[:-1]
+        #@nonl
+        #@-node:ekr.20040716105102:<< remove the newline from result[-1] if line[i] is followed by @nonl >>
+        #@nl
+        return result
     #@nonl
     #@-node:EKR.20040505080156.2:removeSentinelsFromFile/Lines
     #@+node:EKR.20040505080156.3:getSentinelsFromFile/Lines
-    def getSentinelsFromFile (self,filename,marker):
+    def getSentinelsFromFile (self,filename,delims):
         
         """Returns all sentinels lines in a file."""
         
         lines = file(filename).readlines()
-        marker = self.marker_from_extension(filename)
+        delims = g.comment_delims_from_extension(filename)
     
-        return getSentinelsFromLines(lines,marker)
+        return getSentinelsFromLines(lines,delims)
         
-    def getSentinelsFromLines (self,lines,marker):
+    def getSentinelsFromLines (self,lines,delims):
         
         """Returns all sentinels lines in lines."""
         
-        return [line for line in lines if self.is_sentinel(line,marker)]
+        return [line for line in lines if g.is_sentinel(line,delims)]
     #@nonl
     #@-node:EKR.20040505080156.3:getSentinelsFromFile/Lines
     #@-node:EKR.20040505080156:Get or remove sentinel lines
@@ -3398,9 +3438,9 @@ class mulderUpdateAlgorithm:
         
         #@    << init propagateDiffsToSentinelsFile vars >>
         #@+node:EKR.20040504150046.11:<< init propagateDiffsToSentinelsFile vars >>
-        # Get the sentinel comment marker.
-        marker = self.marker_from_extension(sourcefilename)
-        if not marker:
+        # Get the sentinel comment delims.
+        delims = self.comment_delims_from_extension(sourcefilename)
+        if not delims:
             return
         
         try:
@@ -3411,7 +3451,7 @@ class mulderUpdateAlgorithm:
             fat_lines = sfile.readlines() # Contains sentinels.
             j_lines   = tfile.readlines() # No sentinels.
             
-            i_lines,mapping = self.create_mapping(fat_lines,marker)
+            i_lines,mapping = self.create_mapping(fat_lines,delims)
             
             sfile.close()
             tfile.close()
@@ -3440,7 +3480,7 @@ class mulderUpdateAlgorithm:
                     "Content of modified file:")
             
             # Check that no sentinels got lost.
-            fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,marker)
+            fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,delims)
             
             if sentinel_lines != fat_sentinel_lines:
                 self.report_mismatch(sentinel_lines,fat_sentinel_lines,
@@ -3512,11 +3552,11 @@ class mulderUpdateAlgorithm:
             
             if 0: # not yet.
                 if testing: # A bit costly.
-                    t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, marker)
+                    t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, delims)
                     # Check that we have all the modifications so far.
                     assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
                     # Check that we kept all sentinels so far.
-                    assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], marker)[1]
+                    assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], delims)[1]
             #@nonl
             #@-node:EKR.20040504145804.4:<< update and check the loop invariant>>
             #@nl
