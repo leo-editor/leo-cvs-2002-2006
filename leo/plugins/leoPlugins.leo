@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="1544" clone_windows="0"/>
-<globals body_outline_ratio="0.42888165038002174">
-	<global_window_position top="10" left="246" height="921" width="951"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="1773" clone_windows="0"/>
+<globals body_outline_ratio="0.42888165038">
+	<global_window_position top="10" left="268" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -651,9 +651,9 @@
 <v t="edream.110203113231.307"><vh> wxGui.__init__</vh></v>
 <v t="edream.111303091300"><vh>app.gui.wx birth &amp; death</vh>
 <v t="edream.110203113231.308"><vh>createRootWindow &amp; allies</vh>
-<v t="edream.110203113231.309"><vh>setDefaultIcon</vh></v>
+<v t="edream.110203113231.309"><vh>setDefaultIcon CONTAINS TK CODE</vh></v>
 <v t="edream.110203113231.310"><vh>setEncoding</vh></v>
-<v t="edream.110203113231.311"><vh>getDefaultConfigFont</vh></v>
+<v t="edream.110203113231.311"><vh>getDefaultConfigFont CONTAINS TK CODE</vh></v>
 <v t="edream.110203113231.312"><vh>createGlobalWindows</vh></v>
 </v>
 <v t="edream.111303085447.1"><vh>destroySelf</vh></v>
@@ -987,11 +987,11 @@
 </v>
 <v t="edream.120203141927"><vh>Print default font</vh></v>
 </v>
-</v>
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
+</v>
+<v t="ekr.20040331070534" a="E"><vh>Scripts</vh>
 <v t="edream.031217101015"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.619"><vh>From Bernhard Mulder</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
@@ -1055,6 +1055,17 @@
 </v>
 </v>
 </v>
+<v t="ekr.20040330110504"><vh>Script to find and replace all functions in leoGlobals.py</vh>
+<v t="ekr.20040330110504.1"><vh>&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;</vh></v>
+<v t="ekr.20040330110504.2"><vh>findFunctionsInTree</vh></v>
+<v t="ekr.20040330110504.3"><vh>findDefs</vh></v>
+<v t="ekr.20040330110504.4"><vh>prependNamesInTree</vh>
+<v t="ekr.20040330110504.5"><vh>&lt;&lt; look for name followed by '(' &gt;&gt;</vh></v>
+<v t="ekr.20040330110504.6"><vh>&lt;&lt; print before and after &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="edream.110203113231.618"><vh>Plugins</vh>
 <v t="edream.110203113231.667"><vh>Commands</vh>
 <v t="edream.110203113231.668"><vh> Importing Cisco configuration files</vh>
 <v t="edream.110203113231.669" tnodeList="edream.110203113231.669,edream.110203113231.670,edream.110203113231.671,edream.110203113231.672,edream.110203113231.673,edream.110203113231.674,edream.110203113231.675,edream.110203113231.676"><vh>@file import_cisco_config.py</vh>
@@ -1122,7 +1133,7 @@
 <v t="edream.110203113231.721"><vh>newMoreHead</vh></v>
 </v>
 <v t="edream.110203113231.722"><vh>mod_autosave</vh>
-<v t="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
+<v t="edream.110203113231.723" tnodeList="edream.110203113231.723"><vh>@file-nosent mod_autosave.ini</vh></v>
 <v t="edream.110203113231.724" tnodeList="edream.110203113231.724,edream.110203113231.725,edream.110203113231.726"><vh>@file mod_autosave.py</vh>
 <v t="edream.110203113231.725"><vh>applyConfiguration</vh></v>
 <v t="edream.110203113231.726"><vh>autosave</vh></v>
@@ -1270,7 +1281,7 @@
 <v t="edream.110203113231.808"><vh>writeNodeAndTree</vh></v>
 <v t="edream.110203113231.809"><vh>cmd_Export</vh></v>
 </v>
-<v t="edream.110203113231.810"><vh>@file-nosent word_export.ini</vh></v>
+<v t="edream.110203113231.810" tnodeList="edream.110203113231.810"><vh>@file-nosent word_export.ini</vh></v>
 </v>
 </v>
 <v t="edream.110203113231.811"><vh>Files</vh>
@@ -1528,22 +1539,9 @@
 </v>
 </v>
 </v>
-</v>
-<v t="ekr.20040107092135" a="E"><vh>New plugins:  very cool</vh>
+<v t="ekr.20040107092135"><vh>New in 4.1</vh>
 <v t="ekr.20040109080300"><vh> Changes made by EKR</vh></v>
 <v t="ekr.20040111053758"><vh> Description of rst2 by Steve Zatz</vh></v>
-<v t="ekr.20040118081748" tnodeList="ekr.20040118081748,ekr.20040118081748.1,ekr.20040118081748.2,ekr.20040118081748.3,ekr.20040118081748.4,ekr.20040118081748.5,ekr.20040118081748.6,ekr.20040118081748.7,ekr.20040118081748.8"><vh>@file rst2.py</vh>
-<v t="ekr.20040118081748.1" a="M"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
-<v t="ekr.20040118081748.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
-<v t="ekr.20040118081748.3"><vh>onIconDoubleClick</vh>
-<v t="ekr.20040118081748.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
-<v t="ekr.20040118081748.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040118081748.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040118081748.7"><vh>writeTreeAsRst</vh></v>
-<v t="ekr.20040118081748.8"><vh>underline</vh></v>
-</v>
 <v t="ekr.20040107092135.2" tnodeList="ekr.20040107092135.2,ekr.20040108060748,ekr.20040108054555.14,ekr.20040107092135.3,ekr.20040108054555.4,ekr.20040108054555.3,ekr.20040107092135.5,ekr.20040107111307,ekr.20040108054555.5,ekr.20040108054555.8,ekr.20040108054555.7,ekr.20040107092135.6,ekr.20040107092135.7,ekr.20040107092135.8,ekr.20040107103252,ekr.20040107103339"><vh>@file searchbox.py</vh>
 <v t="ekr.20040108054555.14"><vh>&lt;&lt; vars &gt;&gt;</vh></v>
 <v t="ekr.20040107092135.3"><vh>class SearchBox</vh>
@@ -1572,7 +1570,7 @@
 <v t="ekr.20040108062655.6"><vh>updateMarks</vh></v>
 </v>
 </v>
-<v t="ekr.20040108095351" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
+<v t="ekr.20040108095351" a="M" tnodeList="ekr.20040108095351,ekr.20040108095351.1,ekr.20040108100040,ekr.20040108095351.2,ekr.20040108095351.4"><vh>@file rowcol.py</vh>
 <v t="ekr.20040108095351.1"><vh>class rowColClass</vh>
 <v t="ekr.20040108100040"><vh>__init__</vh></v>
 <v t="ekr.20040108095351.2"><vh>addWidgets</vh></v>
@@ -1638,7 +1636,7 @@
 </v>
 <v t="ekr.20040119044414.48" tnodeList="ekr.20040119044414.48"><vh>@file mod_http.ini</vh></v>
 </v>
-<v t="ekr.20040127111517"><vh>@file-noref newButtons.py</vh>
+<v t="ekr.20040127111517" tnodeList="ekr.20040127111517,ekr.20040127111023,ekr.20040127111023.1,ekr.20040127111023.2,ekr.20040127111023.3,ekr.20040127111023.4,ekr.20040127113621.5,ekr.20040127120834,ekr.20040127113621.6,ekr.20040127113621.7,ekr.20040127113621.8,ekr.20040127113621.9,ekr.20040127113621.10,ekr.20040127114616"><vh>@file-noref newButtons.py</vh>
 <v t="ekr.20040127111023"><vh>Helper classes</vh>
 <v t="ekr.20040127111023.1"><vh>class FlatOptionMenu</vh></v>
 <v t="ekr.20040127111023.2"><vh>class Node</vh></v>
@@ -1656,16 +1654,6 @@
 <v t="ekr.20040127114616"><vh>main code</vh></v>
 </v>
 <v t="ekr.20040201060959" tnodeList="ekr.20040201060959"><vh>@file status_line.py</vh></v>
-<v t="ekr.20040211080148" a="V" tnodeList="ekr.20040211080148,ekr.20040211080148.1,ekr.20040211080148.2,ekr.20040211080148.3,ekr.20040211080148.4,ekr.20040211080148.5,ekr.20040211080148.6"><vh>@file hoist.py</vh>
-<v t="ekr.20040211080148.1"><vh>class HoistButtons</vh>
-<v t="ekr.20040211080148.2"><vh>_getSizer</vh></v>
-<v t="ekr.20040211080148.3"><vh>addWidgets</vh></v>
-<v t="ekr.20040211080148.4"><vh>doHoistOn</vh></v>
-<v t="ekr.20040211080148.5"><vh>doHoistOff</vh></v>
-<v t="ekr.20040211080148.6"><vh>onIdle</vh></v>
-</v>
-</v>
-</v>
 <v t="ekr.20040205071616"><vh>mnplugins.py</vh>
 <v t="ekr.20040205071616.1"><vh>mnstamp</vh></v>
 <v t="ekr.20040205071616.2"><vh>mnOKstamp</vh></v>
@@ -1678,11 +1666,16 @@
 <v t="ekr.20040205071616.9"><vh>insertUser</vh></v>
 <v t="ekr.20040205071616.10"><vh>create_UserMenu</vh></v>
 </v>
+</v>
+</v>
 <v t="edream.120603093808" a="M" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 <v t="ekr.20040317155851"><vh>Suggestions for improvement</vh>
 <v t="ekr.20040317155817"><vh>@url http://komodo.nique.net/~grayrest/leoUIproposal.txt</vh></v>
 </v>
-<v t="ekr.20040320072156"><vh>Word completion</vh>
+<v t="ekr.20040330120121" a="E"><vh>New or improved in 4.2</vh>
+<v t="ekr.20040401055913" a="TV"><vh>Read me</vh></v>
+<v t="ekr.20040401054523"><vh>New conventions</vh></v>
+<v t="ekr.20040320072156"><vh>Word completion (prototype)</vh>
 <v t="ekr.20040320075528"><vh>Documentation</vh></v>
 <v t="ekr.20040320075528.1"><vh>Code notes</vh></v>
 <v t="ekr.20040320121631"><vh>Changes made</vh></v>
@@ -1721,10 +1714,227 @@
 <v t="ekr.20040320072156.27"><vh>class SimpleCompleter</vh></v>
 </v>
 </v>
-<v t="ekr.20040320091826"><vh>(problem with dot)</vh>
+<v t="ekr.20040320091826"><vh>(problem with dot in Word completion plugin)</vh>
 <v t="ekr.20040320072156.23"><vh>addKeyBinding</vh></v>
 <v t="ekr.20040320072156.14"><vh>suggestfrom</vh></v>
 <v t="ekr.20040320072156.13"><vh>suggestions</vh></v>
+</v>
+<v t="ekr.20040331071319" tnodeList="ekr.20040331071319,ekr.20040331071319.1,ekr.20040331071319.2,ekr.20040331071319.3,ekr.20040331071319.4,ekr.20040331071319.5,ekr.20040331071319.6,ekr.20040331071319.7,ekr.20040331071319.8"><vh>@file rst2.py</vh>
+<v t="ekr.20040331071319.1" a="M"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071319.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
+<v t="ekr.20040331071319.3"><vh>onIconDoubleClick</vh>
+<v t="ekr.20040331071319.4"><vh>&lt;&lt; write rST as HTML/LaTeX &gt;&gt;</vh>
+<v t="ekr.20040331071319.5"><vh>&lt;&lt; define code-block &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071319.6"><vh>&lt;&lt; write rST file &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071319.7"><vh>writeTreeAsRst</vh></v>
+<v t="ekr.20040331071319.8"><vh>underline</vh></v>
+</v>
+<v t="ekr.20040331071919"><vh>Leo to AsciiDoc</vh>
+<v t="ekr.20040331071919.1"><vh>Leo 2 AsciiDoc Developers Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.5"><vh>Version, Requirements</vh></v>
+<v t="ekr.20040331071919.6"><vh>The General Approach</vh>
+<v t="ekr.20040331071919.7"><vh>Markup Added</vh></v>
+</v>
+<v t="ekr.20040331071919.8"><vh>&lt;&lt; The Code &gt;&gt;</vh>
+<v t="ekr.20040331071919.9"><vh>&lt;&lt; Key Functions &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.10"><vh>&lt;&lt; Declarations and Utilities &gt;&gt;</vh>
+<v t="ekr.20040331071919.11"><vh>&lt;&lt; The Code -- Declarations and Utilities &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.12"><vh>&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;</vh>
+<v t="ekr.20040331071919.13"><vh>&lt;&lt; Write a node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.14"><vh>Other programs</vh></v>
+<v t="ekr.20040331071919.15"><vh>&lt;&lt;Appendix: AsciiDoc &gt;&gt;</vh>
+<v t="ekr.20040331071919.16"><vh>&lt;&lt; Configuration file &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.17"><vh>&lt;&lt; Patches &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331071919.18"><vh>&lt;&lt;Appendix: DocBook&gt;&gt;</vh>
+<v t="ekr.20040331071919.19"><vh>&lt;&lt; Tool Chain &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.20"><vh>&lt;&lt; Make File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.21"><vh>&lt;&lt; Style Sheets &gt;&gt;</vh>
+<v t="ekr.20040331071919.22"><vh>&lt;&lt; General &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.23"><vh>&lt;&lt; Customize &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.24"><vh>&lt;&lt; HTML: One File &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.25"><vh>&lt;&lt; HTML: Individual Pages &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.26"><vh>&lt;&lt; HTML: base css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.27"><vh>&lt;&lt; HTML: css style sheet &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.28"><vh>&lt;&lt; HTML: common &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.29"><vh>&lt;&lt; PDF &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.30"><vh>&lt;&lt;Appendix: XEmacs Text Editor&gt;&gt;</vh>
+<v t="ekr.20040331071919.31"><vh>&lt;&lt; Open_With Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.32"><vh>&lt;&lt; Open_Tree Plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.33"><vh>&lt;&lt; Filename modification &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.34"><vh>&lt;&lt; Kill Temporary Buffers &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.35"><vh>&lt;&lt; MMM-mode &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.36"><vh>&lt;&lt; Insert indexterm &gt;&gt;</vh></v>
+<v t="ekr.20040331071919.37"><vh>&lt;&lt; Indent Leo comments &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.38"><vh>Leo 2 AsciiDoc Users Guide</vh>
+<v t="ekr.20040331071919.2"><vh>About this document</vh>
+<v t="ekr.20040331071919.3"><vh>License</vh>
+<v t="ekr.20040331071919.4"><vh>License document</vh></v>
+</v>
+</v>
+<v t="ekr.20040331071919.39"><vh>Installation</vh></v>
+<v t="ekr.20040331071919.40"><vh>Operation</vh>
+<v t="ekr.20040331071919.41"><vh>Directives</vh>
+<v t="ekr.20040331071919.42"><vh>Configuration</vh></v>
+</v>
+<v t="ekr.20040331071919.43"><vh>Markup</vh>
+<v t="ekr.20040331071919.44"><vh>Standard AsciiDoc Markup</vh>
+<v t="ekr.20040331071919.45"><vh>Headings</vh></v>
+<v t="ekr.20040331071919.46"><vh>Lists</vh></v>
+<v t="ekr.20040331071919.47"><vh>URLs</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040331072431"><vh>Custom @file plugin (prototype)</vh>
+<v t="ekr.20040331072431.1"><vh>Documentation</vh>
+<v t="ekr.20040331072431.2"><vh>Summary of the problem</vh></v>
+<v t="ekr.20040331072431.3"><vh>Proposed solution</vh></v>
+<v t="ekr.20040331072431.4"><vh>Proof-of-concept</vh>
+<v t="ekr.20040331072431.5"><vh>Base Implementation</vh>
+<v t="ekr.20040331072431.6"><vh>_doDispatch</vh></v>
+<v t="ekr.20040331072431.7"><vh>putAtOthersChild</vh></v>
+<v t="ekr.20040331072431.8"><vh>write</vh></v>
+</v>
+<v t="ekr.20040331072431.9"><vh>Handler calls</vh>
+<v t="ekr.20040331072431.10"><vh>&lt;&lt; class dispatchedDerivedFile declarations &gt;&gt;</vh></v>
+<v t="ekr.20040331072431.11"><vh>registerDispatcher</vh></v>
+<v t="ekr.20040331072431.12"><vh>registerNullDispatcher</vh></v>
+</v>
+<v t="ekr.20040331072431.13"><vh>FreeMind Implementation</vh>
+<v t="ekr.20040331072431.14"><vh>Hooking the body call</vh></v>
+</v>
+</v>
+<v t="ekr.20040331072431.15"><vh>Conclusions from the proof-of-concept</vh></v>
+<v t="ekr.20040331072431.16"><vh>Next steps</vh></v>
+</v>
+<v t="ekr.20040331072431.17"><vh>Code</vh>
+<v t="ekr.20040331072431.18"><vh>atfile_dispatch.py</vh>
+<v t="ekr.20040331072431.19"><vh>&lt;&lt; atfile_dispatch declarations &gt;&gt;</vh></v>
+<v t="ekr.20040331072431.20"><vh>class dispatchedDerivedFile</vh>
+<v t="ekr.20040331072431.10"><vh>&lt;&lt; class dispatchedDerivedFile declarations &gt;&gt;</vh></v>
+<v t="ekr.20040331072431.6"><vh>_doDispatch</vh></v>
+<v t="ekr.20040331072431.21"><vh>putBody</vh></v>
+<v t="ekr.20040331072431.22"><vh>putCodeLine</vh></v>
+<v t="ekr.20040331072431.23"><vh>putSentinel</vh></v>
+<v t="ekr.20040331072431.24"><vh>_handleStartNode</vh></v>
+<v t="ekr.20040331072431.25"><vh>_handleEndNode</vh></v>
+<v t="ekr.20040331072431.7"><vh>putAtOthersChild</vh></v>
+<v t="ekr.20040331072431.26"><vh>_handleStart</vh></v>
+<v t="ekr.20040331072431.27"><vh>_handleEnd</vh></v>
+<v t="ekr.20040331072431.8"><vh>write</vh></v>
+</v>
+<v t="ekr.20040331072431.11"><vh>registerDispatcher</vh></v>
+<v t="ekr.20040331072431.12"><vh>registerNullDispatcher</vh></v>
+</v>
+<v t="ekr.20040331072431.28"><vh>freemind_export.py</vh>
+<v t="ekr.20040331072431.29"><vh>&lt;&lt; freemind_export declarations &gt;&gt;</vh></v>
+<v t="ekr.20040331072431.30"><vh>class MindMapNode</vh>
+<v t="ekr.20040331072431.31"><vh>&lt;&lt; class MindMapNode declarations &gt;&gt;</vh></v>
+<v t="ekr.20040331072431.32"><vh>__init__</vh></v>
+<v t="ekr.20040331072431.33"><vh>render</vh></v>
+</v>
+<v t="ekr.20040331072431.34"><vh>handleStart</vh></v>
+<v t="ekr.20040331072431.35"><vh>handleMindMapLine</vh></v>
+<v t="ekr.20040331072431.36"><vh>handleMindMapStartNode</vh></v>
+<v t="ekr.20040331072431.37"><vh>handleMindMapEndNode</vh></v>
+<v t="ekr.20040331072431.38"><vh>handleEnd</vh></v>
+</v>
+</v>
+<v t="ekr.20040331072431.39"><vh>Test files</vh>
+<v t="ekr.20040331072431.40" tnodeList="ekr.20040331072431.40,ekr.20040331072431.41,ekr.20040331072431.42,ekr.20040331072431.43,ekr.20040331072431.44,ekr.20040331072431.45,ekr.20040331072431.46,ekr.20040331072431.47"><vh>@file c:\temp\mind.mm</vh>
+<v t="ekr.20040331072431.41"><vh>a</vh></v>
+<v t="ekr.20040331072431.42"><vh>b</vh></v>
+<v t="ekr.20040331072431.43"><vh>c</vh>
+<v t="ekr.20040331072431.44"><vh>c1</vh>
+<v t="ekr.20040331072431.45"><vh>c1a</vh></v>
+</v>
+<v t="ekr.20040331072431.46"><vh>c2</vh></v>
+</v>
+<v t="ekr.20040331072431.47"><vh>d</vh></v>
+</v>
+<v t="ekr.20040331072431.48" tnodeList="ekr.20040331072431.48,ekr.20040331072431.49,ekr.20040331072431.50,ekr.20040331072431.51,ekr.20040331072431.52,ekr.20040331072431.53,ekr.20040331072431.54,ekr.20040331072431.55"><vh>@file c:\temp\mind2.txt</vh>
+<v t="ekr.20040331072431.49"><vh>a</vh></v>
+<v t="ekr.20040331072431.50"><vh>b</vh></v>
+<v t="ekr.20040331072431.51"><vh>c</vh>
+<v t="ekr.20040331072431.52"><vh>c1</vh>
+<v t="ekr.20040331072431.53"><vh>c1a</vh></v>
+</v>
+<v t="ekr.20040331072431.54"><vh>c2</vh></v>
+</v>
+<v t="ekr.20040331072431.55"><vh>d</vh></v>
+</v>
+<v t="ekr.20040331072431.56" tnodeList="ekr.20040331072431.56,ekr.20040331072431.57"><vh>@file c:\temp\test.txt</vh>
+<v t="ekr.20040331072431.57"><vh>Header</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040331072607" tnodeList="ekr.20040331072607,ekr.20040331072607.1,ekr.20040331072607.2,ekr.20040331072607.3,ekr.20040331072607.4,ekr.20040331072607.5,ekr.20040331072607.6,ekr.20040331072607.7"><vh>@file hoist.py</vh>
+<v t="ekr.20040331072607.1"><vh>class HoistButtons</vh>
+<v t="ekr.20040331072607.2"><vh>__init__</vh></v>
+<v t="ekr.20040331072607.3"><vh>_getSizer</vh></v>
+<v t="ekr.20040331072607.4"><vh>addWidgets</vh></v>
+<v t="ekr.20040331072607.5"><vh>doHoistOn</vh></v>
+<v t="ekr.20040331072607.6"><vh>doHoistOff</vh></v>
+<v t="ekr.20040331072607.7"><vh>onIdle</vh></v>
+</v>
+</v>
+<v t="ekr.20040331080749" tnodeList="ekr.20040331080749,ekr.20040331080749.3,ekr.20040331080749.4,ekr.20040331080749.5,ekr.20040401060550,ekr.20040331080749.6,ekr.20040331080749.9,ekr.20040331091659,ekr.20040331091659.1"><vh>@file rClick.py</vh>
+<v t="ekr.20040331080749.3"><vh>rc_help</vh></v>
+<v t="ekr.20040331080749.4"><vh>rc_dbody</vh></v>
+<v t="ekr.20040331080749.5"><vh>rc_nl</vh></v>
+<v t="ekr.20040401060550"><vh>rc_selectAll</vh></v>
+<v t="ekr.20040331080749.6"><vh>rClickbinder</vh></v>
+<v t="ekr.20040331080749.9"><vh>rClicker</vh>
+<v t="ekr.20040331091659"><vh>&lt;&lt; define commandList for body &gt;&gt;</vh></v>
+<v t="ekr.20040331091659.1"><vh>&lt;&lt; define commandList for log pane &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331151007" tnodeList="ekr.20040331151007,ekr.20040331151007.1,ekr.20040331151007.2,ekr.20040331151007.3,ekr.20040331151007.4"><vh>@file niceNosent.py</vh>
+<v t="ekr.20040331151007.1"><vh>onPreSave</vh></v>
+<v t="ekr.20040331151007.2"><vh>onPostSave</vh>
+<v t="ekr.20040331151007.3"><vh>&lt;&lt; add a newline before def or class &gt;&gt;</vh></v>
+<v t="ekr.20040331151007.4"><vh>&lt;&lt; replace tabs with spaces &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040331153923" tnodeList="ekr.20040331153923,ekr.20040331153923.1,ekr.20040331153923.2,ekr.20040331153923.3,ekr.20040331153923.4,ekr.20040331153923.5,ekr.20040331160627,ekr.20040331153923.6,ekr.20040331155341,ekr.20040331153923.7,ekr.20040331155341.1,ekr.20040331153923.8,ekr.20040331153923.9,ekr.20040331153923.10,ekr.20040331155341.2,ekr.20040331153923.11,ekr.20040331153923.12,ekr.20040331153923.13"><vh>@file scheduler.py</vh>
+<v t="ekr.20040331153923.1"><vh>&lt;&lt; about this plugin &gt;&gt;</vh></v>
+<v t="ekr.20040331153923.2"><vh>&lt;&lt; define scheduler data &gt;&gt;</vh></v>
+<v t="ekr.20040331153923.3"><vh>wait_sleep</vh></v>
+<v t="ekr.20040331153923.4"><vh>class Schedule</vh></v>
+<v t="ekr.20040331153923.5"><vh>viewQueue</vh>
+<v t="ekr.20040331160627"><vh>&lt;&lt; define cancel and close callbacks &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331153923.6"><vh>popupMessage</vh>
+<v t="ekr.20040331155341"><vh>&lt;&lt; define close callback &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331153923.7"><vh>createMessage</vh>
+<v t="ekr.20040331155341.1"><vh>&lt;&lt; define schedule callback &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331153923.8"><vh>startRecord</vh></v>
+<v t="ekr.20040331153923.9"><vh>setTime</vh></v>
+<v t="ekr.20040331153923.10"><vh>endRecord</vh>
+<v t="ekr.20040331155341.2"><vh>&lt;&lt; setAll and set_time callbacks &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040331153923.11"><vh>prepareCom</vh></v>
+<v t="ekr.20040331153923.12"><vh>doCommand</vh></v>
+<v t="ekr.20040331153923.13"><vh>addScheduleMenu</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -1738,7 +1948,7 @@ By: dsalomoni
 Traceback (most recent call last):
   File "/user/davides/Software/leo-4.1-rc1/src/leoGlobals.py", line 1977, in
 doHook
-    return app.hookFunction(tag,keywords)
+    return g.app.hookFunction(tag,keywords)
   File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 27,
 in doPlugins
     return doHandlersForTag(tag,keywords)
@@ -1757,7 +1967,7 @@ AttributeError: 'module' object has no attribute 'LeoFrame'
 Traceback (most recent call last):
   File "/user/davides/Software/leo-4.1-rc1/src/leoGlobals.py", line 1977, in
 doHook
-    return app.hookFunction(tag,keywords)
+    return g.app.hookFunction(tag,keywords)
   File "/user/davides/Software/leo-4.1-rc1/src/leoPlugins.py", line 27,
 in doPlugins
     return doHandlersForTag(tag,keywords)
@@ -1777,7 +1987,7 @@ NameError: global name 'count' is not defined
 <t tx="edream.031217101015.1"></t>
 <t tx="edream.110203113231">@nocolor</t>
 <t tx="edream.110203113231.1">Updated color_markup.py to use c.body.bodyCtrl.</t>
-<t tx="edream.110203113231.2">- Made open_with.py gui-independent by calling app.gui dialog routines.
+<t tx="edream.110203113231.2">- Made open_with.py gui-independent by calling g.app.gui dialog routines.
 
 - Updated nav_buttons.py to use new tkinter class:
 	from leoTkinterDialog import tkinterListBoxDialog</t>
@@ -1817,9 +2027,9 @@ which should appear as the outer level of the .py file:
 
 """A description of this plugin"""
 
-registerHandler("xxx", onXXX)
+leoPlugins.registerHandler("xxx", onXXX)
 __version__ = "1.2"
-plugin_signon(__name__)
+g.plugin_signon(__name__)
 	
 @nocolor
 
@@ -1830,28 +2040,28 @@ Line by line:
 This is a Python doc string describing the plugin. This string becomes the
 value of the __name__ attribute for the module (.py file).
 
-2) registerHandler("xxx", onXXX)
+2) leoPlugins.registerHandler("xxx", onXXX)
 
 This line registers a handler called onXXX for the hook called "xxx". See the
 documentation for hooks for a complete list of hook names that you can use
 instead of "xxx". onXXX is the name of a function or method, presumably defined
 in the plugin file, that Leo will call at "xxx" time. For example:
 
-registerHandler("idle",onIdle)
+leoPlugins.registerHandler("idle",onIdle)
 
 will cause Leo to call the onIdle function at "idle" time.
 
-You can pass a list of hook names as the first argument to registerHandler. For
+You can pass a list of hook names as the first argument to leoPlugins.registerHandler. For
 example:
 
-registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
 
 3) __version__ = "1.2"
 
 This assigns a version attribute to module. At present this attribute is used
 by the plugin code that creates Leo's Plugins menu.
 
-4) plugin_signon(__name__)
+4) g.plugin_signon(__name__)
 
 This line increases the count of loaded modules. The present code for
 plugin_signon does not actually print separate signons--it seems to verbose.
@@ -1959,7 +2169,7 @@ tag argument                                              keys in keywords
 "drag2"                 after  start of drag              c,v,event 
 "dragging1"    yes      before continuing to drag         c,v,event 
 "dragging2"             after  continuing to drag         c,v,event 
-"end1"                  start of app.quit()
+"end1"                  start of g.app.quit()
 "enddrag1"     yes      before end of drag                c,v,event 
 "enddrag2"              after  end of drag                c,v,event 
 "headkey1"     yes      before headline keystrokes        c,v,ch
@@ -1994,7 +2204,7 @@ tag argument                                              keys in keywords
 "save2"                 after  any Save command           c,v,fileName
 "select1"      yes      before selecting a vnode          c,new_v,old_v
 "select2"               after  selecting a vnode          c,new_v,old_v
-"start1"       no       after app.finishCreate()
+"start1"       no       after g.app.finishCreate()
 "start2"                after opening first Leo window    c,v,fileName
 "unselect1"    yes      before unselecting a vnode        c,new_v,old_v 
 "unselect2"             after  unselecting a vnode        c,old_v,old_v 
@@ -2037,12 +2247,12 @@ with all non-alphabetic characters removed.
 Commands hooks now set the label for undo and redo commands "undo" and "redo"
 rather than "cantundo" and "cantredo".
 
-(3) "menu1" hook: Setting app().realMenuNameDict in this hook is an easy way of
+(3) "menu1" hook: Setting g.app().realMenuNameDict in this hook is an easy way of
 translating menu names to other languages. Note: the "new" names created this
 way affect only the actual spelling of the menu items, they do _not_ affect how
 you specify shortcuts in leoConfig.txt, nor do they affect the "official"
-command names passed in app().commandName. For example, suppose you set
-app().realMenuNameDict["Open..."] = "Ouvre".
+command names passed in g.app().commandName. For example, suppose you set
+g.app().realMenuNameDict["Open..."] = "Ouvre".
 
 (4) "open1" and "open2" hooks: These are called with a keywords dict containing
 the following entries:
@@ -2165,22 +2375,22 @@ child = parent</t>
 <t tx="edream.110203113231.12"></t>
 <t tx="edream.110203113231.13">"""Create a settings menu to replace LeoConfig.leo"""
 
-from leoPlugins import *
+import leoPlugins
 from leoGlobals import *
 
-try:  import Tkinter
-except: Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import leoApp,leoAtFile,leoTkinterDialog,leoFileCommands,leoFrame,leoNodes
 
-if Tkinter and 0: # Register the handlers...
+if Tk and 0: # Register the handlers...
 
 	settingsMenu = None
 
 	@others
 	
-	# registerHandler("start1",onAfterFinishCreate)
-	registerHandler("create-optional-menus",createSettingsMenu)
+	# leoPlugins.registerHandler("start1",onAfterFinishCreate)
+	leoPlugins.registerHandler("create-optional-menus",createSettingsMenu)
 
 	__version__ = "0.1"
 	plugin_signon(__name__)</t>
@@ -3537,8 +3747,8 @@ def OnMaximize(self, evt):
     except:
         pass
 
-    app = MyApp(wx.Platform == "__WXMAC__")
-    app.MainLoop()</t>
+    g.app = MyApp(wx.Platform == "__WXMAC__")
+    g.app.MainLoop()</t>
 <t tx="edream.110203113231.123">overview = """&lt;html&gt;&lt;body&gt;
 &lt;h2&gt;wxPython&lt;/h2&gt;
 
@@ -3945,7 +4155,7 @@ else:
 </t>
 <t tx="edream.110203113231.152">def OnDestroy(self, evt):
     # This is how the clipboard contents can be preserved after
-    # the app has exited.
+    # the g.app has exited.
     wxTheClipboard.Flush()
     evt.Skip()
 </t>
@@ -5168,8 +5378,8 @@ def const(name):
 	if 0: # Not ready yet...
 		self.wxApp.SetTopWindow(self.wxFrame)
 		self.wxFrame.Show(true)
-		if not app.root:
-			app.root = self.wxFrame
+		if not g.app.root:
+			g.app.root = self.wxFrame
 			
 	self.colorizer = leoColor.colorizer(c)
 			
@@ -5179,7 +5389,7 @@ def const(name):
 	self.injectCallbacks()
 
 	# Add the frame to the global window list.
-	app.windowList.append(self)
+	g.app.windowList.append(self)
 	self.tree.redraw()
 	self.Show(true) # required on some platforms: a cross-platform bug.</t>
 <t tx="edream.110203113231.261">self.splitter1 = wx.wxSplitterWindow(self,
@@ -5212,7 +5422,7 @@ if 0: # Causes problems at present.  The screen isn't drawn properly.
 	wx.EVT_SIZE(self,self.onResize)</t>
 <t tx="edream.110203113231.265">if wx.wxPlatform == "__WXMSW__":
 
-	path = os.path.join(app.loadDir,"..","Icons","LeoApp16.ico")
+	path = os.path.join(g.app.loadDir,"..","Icons","LeoApp16.ico")
 	icon = wx.wxIcon(path,wx.wxBITMAP_TYPE_ICO,16,16)
 	self.SetIcon(icon)
 </t>
@@ -5266,8 +5476,8 @@ else:
 
 	frame = self
 	
-	# The app class does all the hard work now.
-	if not app.closeLeoWindow(frame):
+	# The g.app class does all the hard work now.
+	if not g.app.closeLeoWindow(frame):
 		if event.CanVeto():
 			event.Veto()</t>
 <t tx="edream.110203113231.273">def onResize(self,event):
@@ -5367,7 +5577,7 @@ def onTreeExpanding (self,event):
 	
 	c.selectVnode(v)
 	s = v.t.bodyString
-	s = toUnicode(s,"utf-8")  # No app.tkEncoding or similar yet.
+	s = toUnicode(s,"utf-8")  # No g.app.tkEncoding or similar yet.
 	t = self.frame.body.bodyCtrl
 	t.Clear()
 	t.WriteText(s)
@@ -5559,7 +5769,7 @@ def redraw_now(self):
 
 """A plugin to use wxPython as Leo's gui."""
 
-from leoPlugins import *
+import leoPlugins
 from leoGlobals import *
 
 &lt;&lt; imports for wx plugin &gt;&gt;
@@ -5569,7 +5779,7 @@ if wx and 0: # Enable the plugin (only if wxPython has been imported)...
 
 	@others
 
-	if app.gui is None:
+	if g.app.gui is None:
 		&lt;&lt; Set app.gui &gt;&gt;
 		__version__ = "0.1" # Set version for the plugin handler.
 		plugin_signon(__name__)
@@ -5579,11 +5789,11 @@ if wx and 0: # Enable the plugin (only if wxPython has been imported)...
 <t tx="edream.110203113231.303">import leoColor,leoCommands,leoFind,leoFrame,leoGui,leoMenu,leoNodes,leoTree
 import os,sys,traceback
 
-try:    from wxPython import wx
+try: from wxPython import wx
 except: wx = None</t>
-<t tx="edream.110203113231.304">app.gui = wxGui()
-app.root = app.gui.createRootWindow()
-app.gui.finishCreate()
+<t tx="edream.110203113231.304">g.app.gui = wxGui()
+g.app.root = g.app.gui.createRootWindow()
+g.app.gui.finishCreate()
 </t>
 <t tx="edream.110203113231.305">class wxGui(leoGui.leoGui):
 	
@@ -5608,7 +5818,7 @@ app.gui.finishCreate()
 	
 	if 0: # Not ready yet.
 		self.setDefaultIcon()
-		self.getDefaultConfigFont(app.config)
+		self.getDefaultConfigFont(g.app.config)
 		self.setEncoding()
 		self.createGlobalWindows()
 
@@ -5625,11 +5835,11 @@ app.gui.finishCreate()
 		version = gui.root.getvar("tk_patchLevel")
 		if CheckVersion(version,"8.4.3"):
 			# tk 8.4.3 or greater: load a 16 by 16 icon.
-			path = os.path.join(app.loadDir,"..","Icons")
+			path = os.path.join(g.app.loadDir,"..","Icons")
 			if os.path.exists(path):
 				file = os.path.join(path,"LeoApp16.ico")
 				if os.path.exists(path):
-					self.bitmap = Tkinter.BitmapImage(file)
+					self.bitmap = Tk.BitmapImage(file)
 				else:
 					es("LeoApp16.ico not in Icons directory", color="red")
 			else:
@@ -5643,25 +5853,25 @@ app.gui.finishCreate()
 def setEncoding (self):
 
 	for (encoding,src) in (
-		(app.config.tkEncoding,"config"),
+		(g.app.config.tkEncoding,"config"),
 		#(locale.getdefaultlocale()[1],"locale"),
 		(getpreferredencoding(),"locale"),
 		(sys.getdefaultencoding(),"sys"),
 		("utf-8","default")):
 	
 		if isValidEncoding (encoding): # 3/22/03
-			app.tkEncoding = encoding
-			# trace(app.tkEncoding,src)
+			g.app.tkEncoding = encoding
+			# trace(g.app.tkEncoding,src)
 			break
 		elif encoding and len(encoding) &gt; 0:
 			trace("ignoring invalid " + src + " encoding: " + `encoding`)
 			
-	# trace(app.tkEncoding)</t>
+	# trace(g.app.tkEncoding)</t>
 <t tx="edream.110203113231.311">def getDefaultConfigFont(self,config):
 	
 	"""Get the default font from a new text widget."""
 
-	t = Tkinter.Text()
+	t = Tk.Text()
 	fn = t.cget("font")
 	font = tkFont.Font(font=fn)
 	config.defaultFont = font
@@ -5670,9 +5880,9 @@ def setEncoding (self):
 	
 	"""Create the global windows for the application."""
 	
-	app.findFrame = wxFindFrame()
-	app.findFrame.top.withdraw()
-	app.globalWindows.append(app.findFrame)</t>
+	g.app.findFrame = wxFindFrame()
+	g.app.findFrame.top.withdraw()
+	g.app.globalWindows.append(g.app.findFrame)</t>
 <t tx="edream.110203113231.314">def finishCreate (self):
 
 	pass
@@ -5702,9 +5912,9 @@ def setEncoding (self):
 <t tx="edream.110203113231.318"></t>
 <t tx="edream.110203113231.319">def getFontFromParams(self,family,size,slant,weight):
 	
-	## trace(app.config.defaultFont)
+	## trace(g.app.config.defaultFont)
 	
-	return app.config.defaultFont ##
+	return g.app.config.defaultFont ##
 	
 	family_name = family
 	
@@ -5718,7 +5928,7 @@ def setEncoding (self):
 		es("family,size,slant,weight:"+
 			`family`+':'+`size`+':'+`slant`+':'+`weight`)
 		es_exception()
-		return app.config.defaultFont</t>
+		return g.app.config.defaultFont</t>
 <t tx="edream.110203113231.320">def replaceClipboardWith (self,s):
 
 	cb = wx.wxTheClipboard
@@ -5879,7 +6089,7 @@ def visibilityCallback(event,self=self,w=w):
 w.bind("&lt;Visibility&gt;",visibilityCallback)
 if not self.leoIcon:
 	# Load a 16 by 16 gif.  Using .gif rather than an .ico allows us to specify transparency.
-	icon_file_name = os.path.join(app.loadDir,'..','Icons','LeoWin.gif')
+	icon_file_name = os.path.join(g.app.loadDir,'..','Icons','LeoWin.gif')
 	icon_file_name = os.path.normpath(icon_file_name)
 	icon_image = Image.open(icon_file_name)
 	if 1: # Doesn't resize.
@@ -5934,8 +6144,8 @@ def createLeoIcon (self,icon):
 	#trace("wx.wxPlatform",wx.wxPlatform)
 	
 	self.SetAppName("Leo")
-	app.findFrame = wxFindFrame()
-	app.globalWindows.append(app.findFrame)
+	g.app.findFrame = wxFindFrame()
+	g.app.globalWindows.append(g.app.findFrame)
 	return true</t>
 <t tx="edream.110203113231.348">def OnExit(self):
 	
@@ -5957,7 +6167,7 @@ def createLeoIcon (self,icon):
 
 def get_window_info (self):
 	"""Return the window information."""
-	return app.gui.get_window_info(self)
+	return g.app.gui.get_window_info(self)
 
 def resizePanesToRatio(self,ratio1,ratio2):
 	pass
@@ -7018,8 +7228,9 @@ class node:
 <t tx="edream.110203113231.668"></t>
 <t tx="edream.110203113231.669">"""Import cisco configuration files"""
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @language python
 
@@ -7034,17 +7245,17 @@ if tkFileDialog:
 	
 	@others
 	
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
 		# Register the handlers...
-		registerHandler(("start2","open2","command2"),
+		leoPlugins.registerHandler(("start2","open2","command2"),
 			create_import_cisco_menu)
 
 		__version__ = "1.3" 
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.670">@ This plugin adds a menu item under the File-&gt;Import menu to import
 Cisco configuration files.
@@ -7076,7 +7287,7 @@ Feedback on this plugin can be sent to Davide Salomoni (dsalomoni@yahoo.com).
 		(tag=="start2" and not keywords.has_key('c')) or
 		(tag=="command2" and keywords.get("label")=="new")):
 
-		c = top()
+		c = g.top()
 		importMenu = c.frame.menu.getMenu('import')
 		newEntries = (
 			("-", None, None),
@@ -7084,7 +7295,7 @@ Feedback on this plugin can be sent to Davide Salomoni (dsalomoni@yahoo.com).
 		
 		c.frame.menu.createMenuEntries(importMenu, newEntries)</t>
 <t tx="edream.110203113231.672">def importCiscoConfig(event=None):
-	c = top(); current = c.currentVnode()
+	c = g.top(); current = c.currentVnode()
 	if current == None: return
 	&lt;&lt; open file &gt;&gt;
 
@@ -7132,18 +7343,18 @@ c.endUpdate()
 
 try:
 	fh = open(name)
-	es("importing: %s" % name)
+	g.es("importing: %s" % name)
 	linelist = fh.read().splitlines()
 	fh.close()
 except IOError,msg:
-	es("error reading %s: %s" % (name, msg))
+	g.es("error reading %s: %s" % (name, msg))
 	return</t>
 <t tx="edream.110203113231.674">if not blocks.has_key(customLine):
 	blocks[customLine] = []
-	out.append(angleBrackets(customLine))
+	out.append(g.angleBrackets(customLine))
 	# create first-level child
 	child = v.insertAsNthChild(0)
-	child.setHeadStringOrHeadline(angleBrackets(customLine))
+	child.setHeadStringOrHeadline(g.angleBrackets(customLine))
 	children.append(child)
 
 blocks[customLine].append(linelist[i])</t>
@@ -7153,10 +7364,10 @@ if space == -1:
 key = linelist[i][:space]
 if not blocks.has_key(key):
 	blocks[key] = []
-	out.append(angleBrackets(key))
+	out.append(g.angleBrackets(key))
 	# create first-level child
 	child = v.insertAsNthChild(0)
-	child.setHeadStringOrHeadline(angleBrackets(key))
+	child.setHeadStringOrHeadline(g.angleBrackets(key))
 	children.append(child)
 
 value = [linelist[i]]
@@ -7202,7 +7413,7 @@ for child in children:
 		child.sortChildren()
 	else:
 		# this should never happen
-		es("Unknown key: %s" % key)
+		g.es("Unknown key: %s" % key)
 v.sortChildren()</t>
 <t tx="edream.110203113231.677">@ignore
 @language plain
@@ -7680,20 +7891,21 @@ no service single-slot-reload-enable</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 def onStart (tag,keywords):
 	import leoNodes
-	funcToMethod(newMoreHead,leoNodes.vnode,"moreHead")
+	g.funcToMethod(newMoreHead,leoNodes.vnode,"moreHead")
 
 @others
 
 # Register the handlers...
-registerHandler("start2", onStart)
+leoPlugins.registerHandler("start2", onStart)
 
 __version__ = "1.2" # Set version for the plugin handler.
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.721"># Returns the headline string in MORE format.
 
 def newMoreHead (self,firstLevel,useVerticalBar=true):
@@ -7709,7 +7921,7 @@ def newMoreHead (self,firstLevel,useVerticalBar=true):
 			s = "\t"
 	else:
 		s = ""
-	s += choose(v.hasChildren(), "+ ", "- ")
+	s += g.choose(v.hasChildren(), "+ ", "- ")
 	s += v.headString()
 	return s
 </t>
@@ -7722,9 +7934,9 @@ interval = 20</t>
 @language python
 
 # By Paul Paterson.
-
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import ConfigParser
 import time, os
@@ -7738,10 +7950,10 @@ LAST_AUTOSAVE = time.time()
 applyConfiguration()
 
 # Register the handlers...
-registerHandler("idle", autosave)
+leoPlugins.registerHandler("idle", autosave)
 
 __version__ = "0.2"
-es("auto save enabled",color="orange")</t>
+g.es("auto save enabled",color="orange")</t>
 <t tx="edream.110203113231.725">def applyConfiguration(config=None):
 	
 	"""Called when the user presses the "Apply" button on the Properties form"""
@@ -7749,7 +7961,7 @@ es("auto save enabled",color="orange")</t>
 	global LAST_AUTOSAVE, ACTIVE, AUTOSAVE_INTERVAL
 
 	if config is None:
-		fileName = os.path.join(app.loadDir,"../","plugins","mod_autosave.ini")
+		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_autosave.ini")
 		config = ConfigParser.ConfigParser()
 		config.read(fileName)
 
@@ -7763,9 +7975,9 @@ es("auto save enabled",color="orange")</t>
 
 	if ACTIVE == "Yes":
 		if time.time() - LAST_AUTOSAVE &gt; AUTOSAVE_INTERVAL:
-			c = top()
+			c = g.top()
 			if c.mFileName and c.changed:
-				es("Autosave: %s" % time.ctime(),color="orange")
+				g.es("Autosave: %s" % time.ctime(),color="orange")
 				c.fileCommands.save(c.mFileName)
 			LAST_AUTOSAVE = time.time()</t>
 <t tx="edream.110203113231.727">"""Timestamp all save operations to show when they occur"""
@@ -7774,39 +7986,41 @@ es("auto save enabled",color="orange")</t>
 
 # By Paul Paterson.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import time
 	
 @others
 
 # Register the handlers...
-registerHandler("command1", timestamp)
+leoPlugins.registerHandler("command1", timestamp)
 __version__ = "0.1"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.728">def timestamp(tag=None, keywords=None):
 	
 	cmd = keywords.get('label', 'save')
 
 	if cmd.startswith("save") or cmd.startswith("tangle"):
-		es("%s: %s" % (cmd, time.ctime()))
+		g.es("%s: %s" % (cmd, time.ctime()))
 </t>
 <t tx="edream.110203113231.729"></t>
 <t tx="edream.110203113231.730">"""Dump globals at startup"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler("start2", onStart)
+leoPlugins.registerHandler("start2", onStart)
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.731">def onStart (tag,keywords):
 
 	print "\nglobals..."
@@ -7823,16 +8037,17 @@ plugin_signon(__name__)</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler("start2", onStart)
+leoPlugins.registerHandler("start2", onStart)
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.733">def onStart (tag,keywords):
 
 	try:
@@ -7843,39 +8058,41 @@ plugin_signon(__name__)</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 def forceLeoToQuit(tag,keywords):
-	if not app.initing:
+	if not g.app.initing:
 		print "forceLeoToQuit",tag
-		app.forceShutdown()
+		g.app.forceShutdown()
 
 if 0: # Force a shutdown during startup.
 	print "quitting during startup"
-	app.forceShutdown()
+	g.app.forceShutdown()
 
 if 0: # Force a shutdown at any other time, even "idle" time.
 
-	# Exception: do not call app.forceShutdown in a "start2" hook.
+	# Exception: do not call g.app.forceShutdown in a "start2" hook.
 
 	print __doc__
-	registerHandler("idle",forceLeoToQuit)
+	leoPlugins.registerHandler("idle",forceLeoToQuit)
 
 	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+	g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.735">"""Trace changes to objects at idle time"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoGlobals
 leoGlobals.debugGC = true # Force debugging on.
 
 def printIdleRefs(tag,keywords):
-	printGcRefs(verbose=false)
+	g.printGcRefs(verbose=false)
 	
 gcCount = 0
 
@@ -7885,55 +8102,57 @@ def printIdleGC(tag,keywords):
 	if tag == "idle":
 		global gcCount ; gcCount += 1
 		if (gcCount % 20) == 0:
-			printGc(tag,onlyPrintChanges=true)
+			g.printGc(tag,onlyPrintChanges=true)
 	else:
-		printGc(tag,onlyPrintChanges=false)
+		g.printGc(tag,onlyPrintChanges=false)
 
 # Register the handlers...
 if 1: # Very effective.
-	registerHandler("idle", printIdleGC)
+	leoPlugins.registerHandler("idle", printIdleGC)
 else: # Very precise.
-	registerHandler("all", printIdleGC)
+	leoPlugins.registerHandler("all", printIdleGC)
 if 0: # Another idea.
-	registerHandler("command2", printIdleRefs)
+	leoPlugins.registerHandler("command2", printIdleRefs)
 
 __version__ = "1.3"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.736">"""Trace keystrokes in the outline and body panes"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.737">def onKey (tag,keywords):
 
 	ch = keywords.get("ch")
 	if ch and len(ch) &gt; 0:
-		es("key",`ch`)</t>
+		g.es("key",`ch`)</t>
 <t tx="edream.110203113231.738">"""Trace most comment events, but not key, drag or idle events"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 tagCount = 0
 
 @others
 
 # Register the handlers...
-registerHandler("all", trace_tags)
+leoPlugins.registerHandler("all", trace_tags)
 
 __version__ = "1.2" # Set version for the plugin handler.
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.739">def trace_tags (tag,keywords):
 	
 	global tagCount # 8/28/03
@@ -7972,8 +8191,9 @@ plugin_signon(__name__)</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 if 1:
 	directives = "markup", # A tuple with one string.
@@ -7983,14 +8203,14 @@ else:
 @others
 
 # Register the handlers...
-registerHandler("start1",addPluginDirectives)
-registerHandler("scan-directives",scanPluginDirectives)
+leoPlugins.registerHandler("start1",addPluginDirectives)
+leoPlugins.registerHandler("scan-directives",scanPluginDirectives)
 
 __version__ = "1.1"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.742">def addPluginDirectives (tag,keywords):
 	
-	"""Add all new directives to globalDirectivesList"""
+	"""Add all new directives to g.globalDirectiveList"""
 	
 	global directives
 
@@ -7998,11 +8218,11 @@ plugin_signon(__name__)</t>
 		s = ""
 		for d in directives:
 			s += '@' + d + ' '
-		es(s,color="blue")
+		g.es(s,color="blue")
 
 	for d in directives:
-		if d not in globalDirectiveList:
-			globalDirectiveList.append(d)</t>
+		if d not in g.globalDirectiveList:
+			g.globalDirectiveList.append(d)</t>
 <t tx="edream.110203113231.743">def scanPluginDirectives (tag, keywords):
 	
 	"""Add a tuple (d,v,s,k) to list for every directive d found"""
@@ -8017,8 +8237,8 @@ plugin_signon(__name__)</t>
 			# Point k at whatever follows the directive.
 			k = dict[d]
 			k += 1 + len(d) # Skip @directive
-			k = skip_ws(s,k) # Skip whitespace
-			# trace(`d`,`k`)
+			k = g.skip_ws(s,k) # Skip whitespace
+			# g.trace(`d`,`k`)
 			pluginsList.append((d,v,s,k),)
 </t>
 <t tx="edream.110203113231.744"></t>
@@ -8026,28 +8246,29 @@ plugin_signon(__name__)</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
 import os
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		
-		registerHandler("select2", onSelect)
-		registerHandler("unselect1", onUnselect)
+		leoPlugins.registerHandler("select2", onSelect)
+		leoPlugins.registerHandler("unselect1", onUnselect)
 		
 		__version__ = "1.2" # Set version for the plugin handler.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.754">def onSelect (tag,keywords):
 
@@ -8057,16 +8278,16 @@ if Tkinter: # Register the handlers...
 		filename = h[7:]
 		&lt;&lt; Select Image &gt;&gt;</t>
 <t tx="edream.110203113231.755"># Display the image file in the text pane, if you can find the file
-a = app
+a = g.app
 c = keywords.get("c")
 body = c.frame.body
 
 if os.path.isfile(filename):
 	try:
 		# Note that Tkinter only understands GIF
-		photo = Tkinter.PhotoImage(master=a.root, file=filename)
+		photo = Tk.PhotoImage(master=a.root, file=filename)
 	except:
-		es("error: cannot load image")
+		g.es("error: cannot load image")
 		return
 	# Nicely display the image at the center top and push the text below.
 	a.gsphoto = photo # This is soooo important.
@@ -8076,10 +8297,10 @@ if os.path.isfile(filename):
 	padding = max(0,padding)
 	a.gsimage = body.bodyCtrl.image_create("1.0",image=photo,padx=padding)
 else:
-	es("warning: missing image file")</t>
+	g.es("warning: missing image file")</t>
 <t tx="edream.110203113231.756">def onUnselect (tag,keywords):
 
-	a = app
+	a = g.app
 	old_v = keywords.get("old_v")
 	if old_v:
 		h = old_v.headString()
@@ -8089,13 +8310,13 @@ else:
 		a.gsphoto = None # Holds our photo file
 		a.gsimage = None # Holds our image instance within the text pane</t>
 <t tx="edream.110203113231.757"># Erase image if it was previously displayed
-a = app ; c = keywords.get("c")
+a = g.app ; c = keywords.get("c")
 
 if a.gsimage:
 	try:
 		 c.frame.body.bodyCtrl.delete(a.gsimage)
 	except:
-		es("info: no image to erase")
+		g.es("info: no image to erase")
 
 # And forget about it
 a.gsimage = None
@@ -8105,38 +8326,36 @@ a.gsphoto = None
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 from leoTkinterDialog import tkinterListBoxDialog
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import os
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 	
 	globalInfo = globalInfoClass()
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
-		registerHandler("select2",globalInfo.updateRecentSections)
-		registerHandler("command2",globalInfo.updateMarksAfterCommand)
-		registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
-		registerHandler("close-frame",globalInfo.destroyFrame)
-		registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
+		leoPlugins.registerHandler("after-create-leo-frame", globalInfo.addNavWidgets)
+		leoPlugins.registerHandler("select2",globalInfo.updateRecentSections)
+		leoPlugins.registerHandler("command2",globalInfo.updateMarksAfterCommand)
+		leoPlugins.registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
+		leoPlugins.registerHandler("close-frame",globalInfo.destroyFrame)
+		leoPlugins.registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
 
 		__version__ = "1.2"
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.759">class commanderInfoClass:
 	@others</t>
 <t tx="edream.110203113231.760">def __init__ (self,c,globalInfo):
@@ -8212,13 +8431,13 @@ def onRecentButton(self=self):
 	self.recentButtonCallback()</t>
 <t tx="edream.110203113231.763">def createImage (self,path):
 	
-	path = os.path.join(app.loadDir,path)
+	path = os.path.join(g.app.loadDir,path)
 	path = os.path.normpath(path)
 	
 	try:
-		image = Tkinter.PhotoImage(master=app.root,file=path)
+		image = Tk.PhotoImage(master=g.app.root,file=path)
 	except:
-		es("can not load icon: " + shortFileName(path))
+		g.es("can not load icon: " + g.shortFileName(path))
 		image = None
 	return image
 
@@ -8261,7 +8480,7 @@ def onRecentButton(self=self):
 	else:
 		# Create and run the dialog.
 		title = "Marks"
-		label = "Marks: " + shortFileName(c.mFileName)
+		label = "Marks: " + g.shortFileName(c.mFileName)
 		d = marksDialog(c,title,label)
 		self.marksDialog = d
 		d.root.wait_window(d.top)
@@ -8276,7 +8495,7 @@ def onRecentButton(self=self):
 	else:
 		# Create and run the dialog.]
 		title = "Recent Nodes"
-		label = "Recent nodes: " + shortFileName(c.mFileName)
+		label = "Recent nodes: " + g.shortFileName(c.mFileName)
 		d = recentSectionsDialog(c,self.nav_buttons,title,label)
 		self.recentSectionsDialog = d
 		d.root.wait_window(d.top)
@@ -8343,7 +8562,7 @@ def updateMarks (self,tag,keywords):
 	"""Update the marks dialog."""
 	
 	c = keywords.get("c")
-	# trace()
+	# g.trace()
 	info = self.commanderInfo.get(c)
 	if info and info.marksDialog:
 		info.marksDialog.fillbox()</t>
@@ -8536,36 +8755,35 @@ for v in c.visitedList:
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		app.hasOpenWithMenu = true
-		registerHandler("idle", on_idle)
-		registerHandler(("start2","open2","command2"), create_open_with_menu)
+		g.app.hasOpenWithMenu = true
+		leoPlugins.registerHandler("idle", on_idle)
+		leoPlugins.registerHandler(("start2","open2","command2"), create_open_with_menu)
 	
 		__version__ = "1.4" # Set version for the plugin handler.
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.792"># frame.OnOpenWith creates the dict with the following entries:
 # "body", "c", "encoding", "f", "path", "time" and "v".
 
 def on_idle (tag,keywords):
 
 	import os
-	a = app
+	a = g.app
 	for dict in a.openWithFiles:
 		path = dict.get("path")
 		c = dict.get("c")
@@ -8580,41 +8798,41 @@ def on_idle (tag,keywords):
 					# The file has changed.
 					&lt;&lt; update v's body text &gt;&gt;
 			except:
-				es_exception() ## testing
+				g.es_exception() ## testing
 				pass</t>
 <t tx="edream.110203113231.793">&lt;&lt; set s to the file text &gt;&gt;
 
 # Convert body and s to whatever encoding is in effect.
 body = v.bodyString()
-body = toEncodedString(body,encoding,reportErrors=true)
-s = toEncodedString(s,encoding,reportErrors=true) # 10/13/03
+body = g.toEncodedString(body,encoding,reportErrors=true)
+s = g.toEncodedString(s,encoding,reportErrors=true) # 10/13/03
 
 conflict = body != old_body and body != s
 
 # Set update if we should update the outline from the file.
 if conflict:
 	# See how the user wants to resolve the conflict.
-	es("conflict in " + shortFileName(path),color="red")
+	g.es("conflict in " + g.shortFileName(path),color="red")
 	message = "Replace changed outline with external changes?"
-	result = app.gui.runAskYesNoDialog("Conflict!",message)
+	result = g.app.gui.runAskYesNoDialog("Conflict!",message)
 	update = result.lower() == "yes"
 else:
 	update = s != body
 
 if update:
-	es("updated from: " + shortFileName(path),color="blue")
+	g.es("updated from: " + g.shortFileName(path),color="blue")
 	v.setBodyStringOrPane(s,encoding) # 10/16/03
 	c.selectVnode(v)
 	dict["body"] = s
 elif conflict:
-	es("not updated from: " + shortFileName(path),color="blue")</t>
+	g.es("not updated from: " + g.shortFileName(path),color="blue")</t>
 <t tx="edream.110203113231.794">try:
 	# Update v from the changed temp file.
 	f=open(path)
 	s=f.read()
 	f.close()
 except:
-	es("can not open " + shortFileName(path))
+	g.es("can not open " + g.shortFileName(path))
 	break
 </t>
 <t tx="edream.110203113231.795">def create_open_with_menu (tag,keywords):
@@ -8625,7 +8843,7 @@ except:
 		&lt;&lt; create the Open With menu &gt;&gt;
 		# Enable the idle-time hook so we can check temp files created by Open With.
 		from leoGlobals import enableIdleTimeHook
-		enableIdleTimeHook(idleTimeDelay=500)
+		g.enableIdleTimeHook(idleTimeDelay=500)
 </t>
 <t tx="edream.110203113231.796">@ Entries in the following table are the tuple (commandName,shortcut,data).
 
@@ -8650,29 +8868,30 @@ elif 1: # Test table.
 else: # David McNab's table.
 	table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
 
-top().frame.menu.createOpenWithMenuFromTable(table)</t>
+g.top().frame.menu.createOpenWithMenuFromTable(table)</t>
 <t tx="edream.110203113231.797">"""emacs handler"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 # path = "/usr/bin/gnuclient"
 path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
 
 def open_in_emacs (tag,keywords):
-	top() and top().openWith(("os.spawnl",path,None),)
+	g.top() and g.top().openWith(("os.spawnl",path,None),)
 
 # Register the handlers...
 
 if 1: # Edit when double-clicking a node's icon.
-	registerHandler("icondclick2", open_in_emacs) # 1/29/03: activate on _double_ click.
+	leoPlugins.registerHandler("icondclick2", open_in_emacs) # 1/29/03: activate on _double_ click.
 else: # Edit when selecting any node. That's a bit much for my taste.
-	registerHandler("select2", open_in_emacs)
+	leoPlugins.registerHandler("select2", open_in_emacs)
 
 __version__ = "1.4"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.799">"""vim handler"""
 
 @language python
@@ -8692,8 +8911,9 @@ plugin_signon(__name__)</t>
 #
 # - Leo will update the node in the outline when you save the file in VIM.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 # This command is used to communicate with the vim server. If you use gvim
 # you can leave the command as is, you do not need to change it to "gvim ..."
@@ -8705,22 +8925,22 @@ _vim_cmd = "vim --servername LEO "
 @others
 
 # Register the handlers...
-registerHandler("iconclick2", open_in_vim)
+leoPlugins.registerHandler("iconclick2", open_in_vim)
 
 # if you want to start a (g)vim server when leo is started
 # uncomment this line:
 # os.system("gvim --servername LEO")
 
 __version__ = "1.4" # Set version for the plugin handler.
-plugin_signon(__name__)
+g.plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.800">def open_in_vim (tag,keywords):
-	if not top():
+	if not g.top():
 		return
 
 	v=keywords['v']
 	# Find dictionary with infos about this node
-	this=filter(lambda x: id(x['v'])==id(v), app.openWithFiles)
+	this=filter(lambda x: id(x['v'])==id(v), g.app.openWithFiles)
 	
 	# Retrieve the name of the temporary file (if any).
 	if this != []:
@@ -8738,12 +8958,12 @@ plugin_signon(__name__)
 		# buffer from vim
 		if path != '':
 			os.remove(path)
-			app.openWithFiles=filter(lambda x: x['path']!=path,app.openWithFiles)
+			g.app.openWithFiles=filter(lambda x: x['path']!=path,g.app.openWithFiles)
 			os.system(_vim_cmd+"--remote-send '&lt;C-\\&gt;&lt;C-N&gt;:bd! "+path+"&lt;CR&gt;'")
 		# update old body with new contents
 		v.OpenWithOldBody=v.bodyString()
 		# open the node in vim (note the space after --remote)
-		top().openWith(("os.system", _vim_cmd+"--remote ", None),) # 6/27/03: add comma.
+		g.top().openWith(("os.system", _vim_cmd+"--remote ", None),) # 6/27/03: add comma.
 	# else, display the old temp file in vim because other files 
 	# may have been opened in the meantime
 	else:
@@ -8762,8 +8982,9 @@ to export the selected outline to Word."""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 try:
 	import win32com.client # From win32 extensions: http://www.python.org/windows/win32/
 	client = win32com.client
@@ -8779,12 +9000,12 @@ if client: # Register the handlers...
 	__version__ = "0.1"
 	__name__ = "Word Export"
 
-	plugin_signon("word_export")</t>
+	g.plugin_signon("word_export")</t>
 <t tx="edream.110203113231.805">def getConfiguration():
 	
 	"""Called when the user presses the "Apply" button on the Properties form"""
 
-	fileName = os.path.join(app.loadDir,"../","plugins","word_export.ini")
+	fileName = os.path.join(g.app.loadDir,"../","plugins","word_export.ini")
 	config = ConfigParser.ConfigParser()
 	config.read(fileName)
 	return config
@@ -8793,14 +9014,14 @@ if client: # Register the handlers...
 	
 	"""Get a connection to Word"""
 
-	es("Trying to connect to Word")
+	g.es("Trying to connect to Word")
 	try:
 		word = win32com.client.Dispatch("Word.Application")
 		return word
 	except Exception, err:
-		# es("Failed to connect to Word: %s", err)
-		es("Failed to connect to Word",color="blue")
-		es("Please make sure word is running with an open (empty) document.")
+		# g.es("Failed to connect to Word: %s", err)
+		g.es("Failed to connect to Word",color="blue")
+		g.es("Please make sure word is running with an open (empty) document.")
 		return None</t>
 <t tx="edream.110203113231.807">def doPara(word, text, style=None):
 	
@@ -8812,24 +9033,24 @@ if client: # Register the handlers...
 		try:
 			sel.Style = doc.Styles(style)
 		except:
-			es("Unknown style: '%s'" % style)
+			g.es("Unknown style: '%s'" % style)
 	sel.TypeText(text)
 	sel.TypeParagraph()</t>
 <t tx="edream.110203113231.808">def writeNodeAndTree(word, header_style, level, maxlevel=3, usesections=1, sectionhead="", vnode=None):
 	
 	"""Write a node and its children to Word"""
 
-	c = top()
+	c = g.top()
 	if vnode is None:
-		vnode = top().currentVnode()
+		vnode = g.top().currentVnode()
 	#
-	dict = scanDirectives(c,p=vnode)
+	dict = g.scanDirectives(c,p=vnode)
 	encoding = dict.get("encoding",None)
 	if encoding == None:
-		encoding = app.config.default_derived_file_encoding
+		encoding = g.app.config.default_derived_file_encoding
 	# 
 	s = vnode.bodyString()
-	s = toEncodedString(s,encoding,reportErrors=true)
+	s = g.toEncodedString(s,encoding,reportErrors=true)
 	doPara(word, s)
 	#
 	for i in range(vnode.numberOfChildren()):
@@ -8839,7 +9060,7 @@ if client: # Register the handlers...
 			thishead = ""
 		child = vnode.nthChild(i)
 		h = child.headString()
-		h = toEncodedString(h, encoding, reportErrors=true)
+		h = g.toEncodedString(h, encoding, reportErrors=true)
 		doPara(word, "%s %s" % (thishead, h), "%s %d" % (header_style, min(level, maxlevel)))
 		writeNodeAndTree(word, header_style, level+1, maxlevel, usesections, thishead, child)
 </t>
@@ -8852,7 +9073,7 @@ if client: # Register the handlers...
 		if word:
 			header_style = getConfiguration().get("Main", "Header_Style")
 			# Based on the rst plugin
-			es("Writing tree to Word",color="blue")
+			g.es("Writing tree to Word",color="blue")
 			config = getConfiguration()
 			writeNodeAndTree(word,
 				config.get("Main", "header_style").strip(),
@@ -8860,10 +9081,10 @@ if client: # Register the handlers...
 				int(config.get("Main", "max_headings")),
 				config.get("Main", "use_section_numbers") == "Yes",
 				"")						 
-			es("Done!")
+			g.es("Done!")
 	except Exception,err:
-		es("Failed to connect to Word",color="blue")
-		es("Please make sure an empty word document is open.")</t>
+		g.es("Failed to connect to Word",color="blue")
+		g.es("Please make sure an empty word document is open.")</t>
 <t tx="edream.110203113231.810">[Main]
 use_styles = Yes
 use_section_numbers = Yes
@@ -8877,17 +9098,18 @@ header_style = Heading
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 &lt;&lt; define minimal .leo file &gt;&gt;
 @others
 
 # Register the handlers...
-registerHandler("open1", onOpen)
+leoPlugins.registerHandler("open1", onOpen)
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.813">empty_leo_file = """&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
 &lt;leo_file&gt;
 &lt;leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/&gt;
@@ -8914,7 +9136,7 @@ plugin_signon(__name__)</t>
 
 	if file_name and os.path.getsize(file_name)==0:
 		# Rewrite the file before really opening it.
-		es("rewriting empty .leo file: %s" % (file_name))
+		g.es("rewriting empty .leo file: %s" % (file_name))
 		file = open(file_name,'w')
 		file.write(empty_leo_file)
 		file.flush()
@@ -8929,8 +9151,9 @@ as @file nodes or children ..."""
 &lt;&lt; about the open shell plugin &gt;&gt;
 
 import leo,os,os.path,sys
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 pathToExplorer = 'c:/windows/explorer.exe'
 pathToCmd = 'c:/windows/system32/cmd.exe'
@@ -8938,10 +9161,10 @@ pathToCmd = 'c:/windows/system32/cmd.exe'
 @others
 
 # Register the handlers...
-registerHandler("after-create-leo-frame", load_menu)
+leoPlugins.registerHandler("after-create-leo-frame", load_menu)
 
 __version__ = "1.4"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.816">@ Written by Ed Taekema.  Modified by E.K.Ream
 
 Please submit bugs / feature requests to etaekema@earthlink.net"""
@@ -8963,11 +9186,11 @@ Current limitations ...
 	else:
 		table = ( ("Open &amp;xterm",None,launchxTerm), ) 
 	
-	top().frame.menu.createNewMenu("E&amp;xtensions","top")
-	top().frame.menu.createMenuItemsFromTable("Extensions",table)
+	g.top().frame.menu.createNewMenu("E&amp;xtensions","top")
+	g.top().frame.menu.createMenuItemsFromTable("Extensions",table)
 </t>
 <t tx="edream.110203113231.818">def _getpath(c,v):
-	dict = scanDirectives(c,p=v)
+	dict = g.scanDirectives(c,p=v)
 	d = dict.get("path")
 
 	if d == None:
@@ -9024,16 +9247,17 @@ See http://www.python.org/peps/pep-0263.html for full details.</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler("menu1", onMenu)
+leoPlugins.registerHandler("menu1", onMenu)
 	
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.825">@ The translation table used by setRealMenuNamesFromTable has entries of the form:
 
 	("official name","translated name"),
@@ -9046,7 +9270,7 @@ The official name can be any name equivalent to the standard English menu names.
 	("&amp;Open",  "&amp;Ouvre"),
 @c
 def onMenu (tag,keywords):
-	trace(tag,keywords)
+	g.trace(tag,keywords)
 	c = keywords.get("c")
 	table = (
 		("Open...","&amp;Ouvre"),
@@ -9067,16 +9291,17 @@ def onMenu (tag,keywords):
 
 # French translation completed by Frédéric Momméja, Spring 2003
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler("menu1", onMenu)
+leoPlugins.registerHandler("menu1", onMenu)
 
 __version__ = "1.4" # Set version for the plugin handler.
-plugin_signon(__name__)
+g.plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.827">def onMenu (tag,keywords):
 	c = keywords.get("c")
@@ -9237,27 +9462,26 @@ plugin_signon(__name__)
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler("open2", onOpen)
+		leoPlugins.registerHandler("open2", onOpen)
 	
 		__version__ = "1.3"
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.830"># Warning: the bindings created this way conflict with shift-arrow keys.
 
 def onOpen (tag,keywords):
@@ -9285,28 +9509,26 @@ def onOpen (tag,keywords):
 
 ## To do: add Revert button to each dialog.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import ConfigParser,glob,os,sys
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		registerHandler("create-optional-menus",createPluginsMenu)
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("create-optional-menus",createPluginsMenu)
 		
 		__version__ = "1.2"
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.834">class PlugIn:
 
 	"""A class to hold information about one plugin"""
@@ -9328,7 +9550,7 @@ if Tkinter: # Register the handlers...
 		self.name = self.mod.__name__
 		self.doc = self.mod.__doc__
 		self.version = self.mod.__dict__.get("__version__") # "&lt;unknown&gt;")
-		# if self.version: print self.version,shortFileName(filename)
+		# if self.version: print self.version,g.shortFileName(filename)
 	except: return
 
 	&lt;&lt; Check if this can be configured &gt;&gt;
@@ -9387,18 +9609,18 @@ self.plugin = plugin
 # This list is used by writeConfiguration to write all settings.
 self.entries = []
 </t>
-<t tx="edream.110203113231.844">root = app.root
+<t tx="edream.110203113231.844">root = g.app.root
 
 &lt;&lt; Create the top level and the main frame &gt;&gt;
 &lt;&lt; Create widgets for each section and option &gt;&gt;
 &lt;&lt; Create Ok, Cancel and Apply buttons &gt;&gt;
 
-app.gui.center_dialog(top) # Do this after packing.
+g.app.gui.center_dialog(top) # Do this after packing.
 top.grab_set() # Make the dialog a modal dialog.
 top.focus_force() # Get all keystrokes.
 root.wait_window(top)</t>
 <t tx="edream.110203113231.845">self.top = top = Tk.Toplevel(root)
-app.gui.attachLeoIcon(self.top)
+g.app.gui.attachLeoIcon(self.top)
 top.title("Properties of "+ plugin.name)
 top.resizable(0,0) # neither height or width is resizable.
 	
@@ -9471,9 +9693,9 @@ def onOk(self):
 	version and description of a plugin.
 	"""
 
-	root = app.root
+	root = g.app.root
 	self.top = top = Tk.Toplevel(root)
-	app.gui.attachLeoIcon(self.top)
+	g.app.gui.attachLeoIcon(self.top)
 	top.title("About " + name)
 	top.resizable(0,0) # neither height or width is resizable.
 	
@@ -9482,7 +9704,7 @@ def onOk(self):
 	&lt;&lt; Create the contents of the about box &gt;&gt;
 	&lt;&lt; Create the close button &gt;&gt;
 	
-	app.gui.center_dialog(top) # Do this after packing.
+	g.app.gui.center_dialog(top) # Do this after packing.
 	top.grab_set() # Make the dialog a modal dialog.
 	top.focus_force() # Get all keystrokes.
 	root.wait_window(top)</t>
@@ -9505,7 +9727,7 @@ self.button.pack(side="bottom")</t>
 	c = keywords.get("c")
 	old_path = sys.path[:] # Make a _copy_ of the path.
 
-	path = os.path.join(app.loadDir,"..","plugins")
+	path = os.path.join(g.app.loadDir,"..","plugins")
 	sys.path = path
 	
 	if os.path.exists(path):
@@ -9541,30 +9763,29 @@ self.button.pack(side="bottom")</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import os
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler("select2", onSelect)
-		registerHandler("unselect1", onUnselect)
+		leoPlugins.registerHandler("select2", onSelect)
+		leoPlugins.registerHandler("unselect1", onUnselect)
 		
 		__version__ = "1.1"
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.857">def applyConfiguration(config):
 	
 	sections = config.sections()
@@ -9577,13 +9798,13 @@ if Tkinter: # Register the handlers...
 			print section, option, config.get(section, option)
 </t>
 <t tx="edream.110203113231.858">def cmd_fn1(event=None):
-	es("Fn1",color="blue")
+	g.es("Fn1",color="blue")
 
 def cmd_fn2(event=None):
-	es("Fn2",color="blue")
+	g.es("Fn2",color="blue")
 
 def cmd_fn3(event=None):
-	es("Fn3",color="blue")
+	g.es("Fn3",color="blue")
 </t>
 <t tx="edream.110203113231.859">def onSelect (tag,keywords):
 
@@ -9593,16 +9814,16 @@ def cmd_fn3(event=None):
 		filename = h[7:]
 		&lt;&lt; Select Image &gt;&gt;</t>
 <t tx="edream.110203113231.860"># Display the image file in the text pane, if you can find the file
-a = app
+a = g.app
 c = keywords.get("c")
 body = c.frame.body
 
 if os.path.isfile(filename):
 	try:
 		# Note that Tkinter only understands GIF
-		photo = Tkinter.PhotoImage(master=a.root, file=filename)
+		photo = Tk.PhotoImage(master=a.root, file=filename)
 	except:
-		es("error: cannot load image")
+		g.es("error: cannot load image")
 		return
 	# Nicely display the image at the center top and push the text below.
 	a.gsphoto = photo # This is soooo important.
@@ -9612,10 +9833,10 @@ if os.path.isfile(filename):
 	padding = max(0,padding)
 	a.gsimage = body.bodyCtrl.image_create("1.0",image=photo,padx=padding)
 else:
-	es("warning: missing image file")</t>
+	g.es("warning: missing image file")</t>
 <t tx="edream.110203113231.861">def onUnselect (tag,keywords):
 
-	a = app
+	a = g.app
 	c = keywords.get("c")
 	old_v = keywords.get("old_v")
 
@@ -9631,7 +9852,7 @@ if a.gsimage:
 	try:
 		 c.frame.body.bodyCtrl.delete(a.gsimage)
 	except:
-		es("info: no image to erase")
+		g.es("info: no image to erase")
 
 # And forget about it
 a.gsimage = None
@@ -9681,11 +9902,11 @@ All code resides under the "Plug in changes" node. The additions are all under t
  
 The basic idea is to allow plug-ins to be configured and also allow them to expose additional functions which can be accessed by a menu item. The advantage is that people don't have to mess with adding menus to Leo. Existing plug-ins don't need to be changed in any way to work with the new patch.
  
-Ok, here's what it does....
+Ok, here's what it does	
  
 1. A new "Plug-ins" menu item is added
  
-2. Each plug-in gets an "About x...." entry.
+2. Each plug-in gets an "About x	" entry.
  
     - clicking on "About x..." brings up an about box which shows name, version and documentation for the plug in
     - name comes from the module name
@@ -9719,8 +9940,9 @@ Ok, here's what it does....
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import glob,os
 
 @others
@@ -9729,14 +9951,14 @@ import glob,os
 # The new Execute Script command seems much safer and more convenient.
 
 # Register the handlers...
-registerHandler("create-optional-menus",createScriptsMenu)
+leoPlugins.registerHandler("create-optional-menus",createScriptsMenu)
 
 __version__ = "1.4"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.868">def createScriptsMenu (tag,keywords):
 
 	c = keywords.get("c")
-	path = os.path.join(app.loadDir,"..","scripts")
+	path = os.path.join(g.app.loadDir,"..","scripts")
 	
 	if os.path.exists(path):
 
@@ -9765,24 +9987,24 @@ plugin_signon(__name__)</t>
 <t tx="edream.110203113231.870">table = []
 top_scripts.sort()
 for script in top_scripts:
-	name = shortFileName(script)
+	name = g.shortFileName(script)
 	def doScript(event=None,name=name):
-		executeScript(name)
+		g.executeScript(name)
 	table.append((name,None,doScript),)
 	
 c.frame.menu.createMenuEntries(scriptsMenu, table)
 </t>
 <t tx="edream.110203113231.871"># Create the submenu.
-name = os.path.join("scripts",shortFileName(dir))
+name = os.path.join("scripts",g.shortFileName(dir))
 menu = c.frame.menu.createNewMenu(name,"&amp;Scripts")
 
 # Populate the submenu.
 table = []
 for file in files:
-	name = shortFileName(file)
+	name = g.shortFileName(file)
 	def doScript(event=None,name=name):
 		from leoGlobals import executeScript
-		executeScript(name)
+		g.executeScript(name)
 	table.append((name,None,doScript),)
 
 c.frame.menu.createMenuEntries(menu, table)</t>
@@ -9791,8 +10013,9 @@ c.frame.menu.createMenuEntries(menu, table)</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 &lt;&lt; about this plugin &gt;&gt;
 
@@ -9801,14 +10024,14 @@ from leoGlobals import *
 def onSelect (tag,keywords):
 	v = keywords.get("new_v")
 	h = v.headString()
-	if match_word(h,0,"@folder"):
+	if g.match_word(h,0,"@folder"):
 		sync_node_to_folder(v,h[8:])
 
 # Register the handlers...
-registerHandler("select1", onSelect)
+leoPlugins.registerHandler("select1", onSelect)
 
 __version__ = "1.2" # Set version for the plugin handler.
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.874">@ If a node is named '@folder path_to_folder', the content (filenames) of the
 folder and the children of that node will be sync. Whenever a new file is put
 there, a new node will appear on top of the children list (with mark). So that
@@ -9846,7 +10069,7 @@ while keep every files in a flat/single directory on your computer.
 		v.setMarked()
 	#warn for orphan oldlist
 	if len(oldlist)&gt;0:
-		es('missing: '+','.join(oldlist.keys()))
+		g.es('missing: '+','.join(oldlist.keys()))
 </t>
 <t tx="edream.110203113231.876">"""Inhibit changes to @read-only nodes"""
 
@@ -9854,8 +10077,9 @@ while keep every files in a flat/single directory on your computer.
 
 # Contributed by Davide Salomoni &lt;dsalomoni@yahoo.com&gt;
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import ftplib, urllib, urlparse, os, cStringIO
 from formatter import AbstractFormatter, DumbWriter
@@ -9870,20 +10094,20 @@ if tkFileDialog: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler(("start2","open2"), on_open2)
-		registerHandler("bodykey1", on_bodykey1)
-		registerHandler("headkey2", on_headkey2)
+		leoPlugins.registerHandler(("start2","open2"), on_open2)
+		leoPlugins.registerHandler("bodykey1", on_bodykey1)
+		leoPlugins.registerHandler("headkey2", on_headkey2)
 		if 0: # doesn't work: the cursor stops blinking.
-			registerHandler("select1", on_select1)
-			registerHandler("select2", on_select2)
+			leoPlugins.registerHandler("select1", on_select1)
+			leoPlugins.registerHandler("select2", on_select2)
 	
 		__version__ = "1.5" # Set version for the plugin handler.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 
 </t>
 <t tx="edream.110203113231.877">@ Dear Leo users,
@@ -10094,22 +10318,22 @@ def enable_body(body):
 	global insertOnTime,insertOffTime
 	if body.cget("state") == "disabled":
 		try:
-			es("enable")
+			g.es("enable")
 			print insertOffTime,insertOnTime
 			body.configure(state="normal")
 			body.configure(insertontime=insertOnTime,insertofftime=insertOffTime)
-		except: es_exception()
+		except: g.es_exception()
 			
 def disable_body(body):
 	global insertOnTime,insertOffTime
 	if body.cget("state") == "normal":
 		try:
-			es("disable")
+			g.es("disable")
 			insertOnTime = body.cget("insertontime")
 			insertOffTime = body.cget("insertofftime")
 			print insertOffTime,insertOnTime
 			body.configure(state="disabled")
-		except: es_exception()
+		except: g.es_exception()
 </t>
 <t tx="edream.110203113231.894"># Sets v's body text from the file with the given name.
 # Returns true if the body text changed.
@@ -10130,12 +10354,12 @@ def insert_read_only_node (c,v,name):
 			file = urllib.urlopen(name)  # HTTP URL
 		else:
 			file = open(name,"r")  # local file
-		# es("..." + name)
+		# g.es("..." + name)
 		new = file.read()
 		file.close()
 	except IOError,msg:
-		# es("error reading %s: %s" % (name, msg))
-		# es("...not found: " + name)
+		# g.es("error reading %s: %s" % (name, msg))
+		# g.es("...not found: " + name)
 		v.setBodyStringOrPane("") # Clear the body text.
 		return true # Mark the node as changed.
 	else:
@@ -10144,9 +10368,9 @@ def insert_read_only_node (c,v,name):
 			&lt;&lt; convert HTML to text &gt;&gt;
 		previous = v.t.bodyString
 		v.setBodyStringOrPane(new)
-		changed = (toUnicode(new,'ascii') != toUnicode(previous,'ascii'))
+		changed = (g.toUnicode(new,'ascii') != g.toUnicode(previous,'ascii'))
 		if changed and previous != "":
-			es("changed: %s" % name) # A real change.
+			g.es("changed: %s" % name) # A real change.
 		return changed</t>
 <t tx="edream.110203113231.895">fh = cStringIO.StringIO()
 fmt = AbstractFormatter(DumbWriter(fh))
@@ -10174,18 +10398,18 @@ def on_open2 (tag,keywords):
 	
 	
 	if tag == "start2":
-		c = top()
+		c = g.top()
 	else:
 		c = keywords.get("new_c")
 
 	v = c.rootVnode()
-	es("scanning for @read-only nodes...",color="blue")
+	g.es("scanning for @read-only nodes...",color="blue")
 	c.beginUpdate()
 	while v:
 		h = v.headString()
-		if match_word(h,0,"@read-only"):
+		if g.match_word(h,0,"@read-only"):
 			changed = insert_read_only_node(c,v,h[11:])
-			es("changing %s" % v.headString(),color="red")
+			g.es("changing %s" % v.headString(),color="red")
 			if changed:
 				if not v.isDirty():
 					v.setDirty()
@@ -10201,7 +10425,7 @@ def on_bodykey1 (tag,keywords):
 	c = keywords.get("c")
 	v = keywords.get("v")
 	h = v.headString()
-	if match_word(h,0,"@read-only"):
+	if g.match_word(h,0,"@read-only"):
 		# The following code causes problems with scrolling and syntax coloring.
 		# Its advantage is that it makes clear that the text can't be changed,
 		# but perhaps that is obvious anyway...
@@ -10219,7 +10443,7 @@ def on_headkey2 (tag,keywords):
 	v = keywords.get("v")
 	h = v.headString()
 	ch = keywords.get("ch")
-	if ch == '\r' and match_word(h,0,"@read-only"):
+	if ch == '\r' and g.match_word(h,0,"@read-only"):
 		# on-the-fly update of @read-only directives
 		changed = insert_read_only_node(c,v,h[11:])
 		c.setChanged(changed)</t>
@@ -10235,7 +10459,7 @@ def on_headkey2 (tag,keywords):
 	c = keywords.get("c")
 	v = c.currentVnode()
 	h = v.headString()
-	if match_word(h,0,"@read-only"):
+	if g.match_word(h,0,"@read-only"):
 		disable_body(c.frame.body)
 	else:
 		enable_body(c.frame.body)
@@ -10250,8 +10474,9 @@ This does not work on Linux (yet)."""
 
 # By Josef Dalcolmo: contributed under the same license as Leo.py itself.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import os
 
 &lt;&lt; about this plugin &gt;&gt;
@@ -10260,10 +10485,10 @@ import os
 @others
 
 # Register the handlers...
-registerHandler("icondclick1",onIconDoubleClick)
+leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
 
 __version__ = "1.1"
-plugin_signon(__name__)
+g.plugin_signon(__name__)
 
 def unitTest ():
 	pass
@@ -10307,7 +10532,7 @@ try:
 	parv = v.parent()	# start with parent
 	while parv:	# stop when no more parent found
 		p = parv.headString().strip()
-		if match_word(p,0,'@folder'):
+		if g.match_word(p,0,'@folder'):
 			basedir = p[8:]	# take rest of headline as pathname
 			break	# we found the closest @folder
 		else:
@@ -10315,16 +10540,17 @@ try:
 	fname = os.path.join(basedir,h) # join path and filename
 	os.startfile(fname)	# Try to open the file; it may not work for all file types.
 except:
-	es(os.path.join(os.getcwd(),fname)+' - file or application not found')
-	es_exception()
+	g.es(os.path.join(os.getcwd(),fname)+' - file or application not found')
+	g.es_exception()
 </t>
 <t tx="edream.110203113231.915"></t>
 <t tx="edream.110203113231.916">"""A plugin showing how to override Leo's core classes."""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
@@ -10337,7 +10563,7 @@ if 0:
 	&lt;&lt; override methods of the LeoApp class &gt;&gt;
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.917"># print "overriding LeoFrame class"
 
 import leoFrame
@@ -10356,9 +10582,9 @@ class myLeoFrame(leoFrame.leoCoreFrame):
 leoFrame.LeoFrame = myLeoFrame</t>
 <t tx="edream.110203113231.918">import leoApp
 
-# print "overriding app.closeLeoWindow"
+# print "overriding g.app.closeLeoWindow"
 
-oldAppCloseLeoWindow = app.closeLeoWindow
+oldAppCloseLeoWindow = g.app.closeLeoWindow
 
 def myAppCloseLeoWindow(self,frame):
 	
@@ -10367,47 +10593,47 @@ def myAppCloseLeoWindow(self,frame):
 	oldAppCloseLeoWindow(frame)
 	print "after closeLeoWindow"
 
-funcToMethod(myAppCloseLeoWindow,leoApp.LeoApp,"closeLeoWindow")</t>
+g.funcToMethod(myAppCloseLeoWindow,leoApp.LeoApp,"closeLeoWindow")</t>
 <t tx="edream.110203113231.919">"""Override the Equal Sized Pane command"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 @others
 
 # Register the handlers...
-registerHandler("command1", onCommand)
+leoPlugins.registerHandler("command1", onCommand)
 
 __version__ = "1.2"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.920">def onCommand (tag,keywords):
 
 	if keywords.get("label")=="equalsizedpanes":
-		es("over-riding Equal Sized Panes")
+		g.es("over-riding Equal Sized Panes")
 		return "override" # Anything other than None overrides.</t>
 <t tx="edream.110203113231.921">"""Redefine the "put" and "put_nl" methods"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
 	# Register the handlers...
-	registerHandler("start2", onStart)
+	leoPlugins.registerHandler("start2", onStart)
 	
 	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+	g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.922">@ This code illustrates how to redefine _any_ method of Leo.
 Python makes this is almost too easy :-)
 @c
@@ -10418,16 +10644,16 @@ def onStart (tag,keywords):
 	log = leoTkinterFrame.leoTkinterLog
 	
 	# Replace frame.put with newPut.
-	funcToMethod(newPut,log,"put")
+	g.funcToMethod(newPut,log,"put")
 	
 	# Replace frame.putnl with newPutNl.
-	funcToMethod(newPutNl,log,"putnl")</t>
+	g.funcToMethod(newPutNl,log,"putnl")</t>
 <t tx="edream.110203113231.923"># Contrived examples of how to redefine frame.put and frame.putnl
 
 # Same as frame.put except converts everything to upper case.
 def newPut (self,s,color="black"):
 	print "newPut",s,
-	if app.quitting &gt; 0: return
+	if g.app.quitting &gt; 0: return
 	s = s.upper()
 	t = self.logCtrl
 	if t:
@@ -10439,7 +10665,7 @@ def newPut (self,s,color="black"):
 # Same as frame.putnl except writes two newlines.
 def newPutNl (self):
 	print "newPutNl"
-	if app.quitting &gt; 0: return
+	if g.app.quitting &gt; 0: return
 	t = self.logCtrl
 	if t:
 		t.insert("end","\n\n")
@@ -10450,49 +10676,49 @@ def newPutNl (self):
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 def onStart (tag,keywords):
 	from leoGlobals import redirectStdout,redirectStderr
-	redirectStdout() # Redirect stdout
-	redirectStderr() # Redirect stderr
+	g.redirectStdout() # Redirect stdout
+	g.redirectStderr() # Redirect stderr
 
 # Register the handlers...
-registerHandler("start2", onStart)
+leoPlugins.registerHandler("start2", onStart)
 
 __version__ = "1.3"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.925">"""Send output from the Execute Script command to the end of the body pane"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
-		registerHandler("start1", onStart)
+		leoPlugins.registerHandler("start1", onStart)
 	
 		__version__ = "1.3" # Contains Tk-specific code.
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.926">def onStart (tag,keywords):
 	
 	# Replace frame.put with newPut.
 	import leoTkinterFrame
-	funcToMethod(newExecuteScript,leoTkinterFrame.leoTkinterFrame,"OnExecuteScript")
+	g.funcToMethod(newExecuteScript,leoTkinterFrame.leoTkinterFrame,"OnExecuteScript")
 </t>
 <t tx="edream.110203113231.927"># Execute the selected body text as a Python script and sends the output to the end of the body pane.
 
@@ -10523,29 +10749,29 @@ def newExecuteScript(self,event=None,v=None):
 		leoGlobals.enl = newEnl
 		leoGlobals.ecnl = newEcnl
 		leoGlobals.ecnls = newEcnls
-		funcToMethod(newPut,leoTkinterFrame.leoTkinterLog,"put") #  11/7/03
-		funcToMethod(newPutNl,leoTkinterFrame.leoTkinterLog,"putNl") # 11/7/03
-		redirectStderr()
-		redirectStdout()
+		g.funcToMethod(newPut,leoTkinterFrame.leoTkinterLog,"put") #  11/7/03
+		g.funcToMethod(newPutNl,leoTkinterFrame.leoTkinterLog,"putNl") # 11/7/03
+		g.redirectStderr()
+		g.redirectStdout()
 		try:
 			exec s in {} # Use {} to get a pristine environment!
 			ok = true
 		except:
 			ok = false
 		# Restore output.
-		funcToMethod(oldput,leoTkinterFrame.leoTkinterLog,"put") # 11/7/03
-		funcToMethod(oldputnl,leoTkinterFrame.leoTkinterLog,"putNl") # 11/7/03
+		g.funcToMethod(oldput,leoTkinterFrame.leoTkinterLog,"put") # 11/7/03
+		g.funcToMethod(oldputnl,leoTkinterFrame.leoTkinterLog,"putNl") # 11/7/03
 		leoGlobals.es = oldes
 		leoGlobals.enl = oldenl
 		leoGlobals.ecnl = oldecnl
 		leoGlobals.ecnls = oldecnls
-		restoreStderr()
-		restoreStdout()
+		g.restoreStderr()
+		g.restoreStdout()
 		if not ok:
-			es("newExecuteScript: exception executing script")
-			es_exception(full=false)
+			g.es("newExecuteScript: exception executing script")
+			g.es_exception(full=false)
 	else:
-		es("newExecuteScript: empty script")</t>
+		g.es("newExecuteScript: empty script")</t>
 <t tx="edream.110203113231.928"># Same as frame.put except sends output to the end of the body text.
 def newPut (self,s):
 	c = self.frame.c
@@ -10605,40 +10831,38 @@ local_language_code=en</t>
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoTkinterFind
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import ConfigParser,os,popen2,re,sys,traceback
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 
 		spellFrame = spellDialog()
 		spellFrame.top.withdraw()
-		app.globalWindows.append(spellFrame)
+		g.app.globalWindows.append(spellFrame)
 		
-		registerHandler("create-optional-menus",createSpellMenu)
-		registerHandler("select2",onSelect)
-		registerHandler("command2",onCommand) # For any command that might change the text.
-		registerHandler("bodykey2",onSelect) # For updating buttons.
-		registerHandler(("bodyclick2","bodydclick2","bodyrclick2"),onSelect) # These affect selection.
+		leoPlugins.registerHandler("create-optional-menus",createSpellMenu)
+		leoPlugins.registerHandler("select2",onSelect)
+		leoPlugins.registerHandler("command2",onCommand) # For any command that might change the text.
+		leoPlugins.registerHandler("bodykey2",onSelect) # For updating buttons.
+		leoPlugins.registerHandler(("bodyclick2","bodydclick2","bodyrclick2"),onSelect) # These affect selection.
 		
 		__version__ = "0.4.0" # EKR: 11/12/03: modified to use new leoTkinterFind class.
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="edream.110203113231.934"></t>
 <t tx="edream.110203113231.935">def createSpellMenu(tag,keywords):
 	
@@ -10659,7 +10883,7 @@ if Tkinter: # Register the handlers...
 	v = keywords.get("new_v")
 	global spellFrame
 	
-	if top() and c and c.currentVnode():
+	if g.top() and c and c.currentVnode():
 		if c.currentVnode() != spellFrame.v:
 			# print "onSelect",tag,`c.currentVnode()`,`spellFrame.v`
 			spellFrame.update(show=false,fill=true)
@@ -10671,7 +10895,7 @@ if Tkinter: # Register the handlers...
 
 	global spellFrame
 	
-	if top() and top().currentVnode():
+	if g.top() and g.top().currentVnode():
 		
 		# print "onCommand",tag
 		spellFrame.update(show=false,fill=false)</t>
@@ -10706,12 +10930,12 @@ if Tkinter: # Register the handlers...
 	"""Get the directory containing aspell.exe from mod_spelling.ini"""
 
 	try:
-		fileName = os.path.join(app.loadDir,"../","plugins","mod_spelling.ini")
+		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
 		config = ConfigParser.ConfigParser()
 		config.read(fileName)
 		return config.get("main","aspell_dir")
 	except:
-		es_exception()
+		g.es_exception()
 		return None</t>
 <t tx="edream.110203113231.942">def openPipes (self):
 	
@@ -10741,10 +10965,10 @@ if Tkinter: # Register the handlers...
 		self.signonGiven = true
 		if self.attached:
 			print self.attached
-			es(self.attached,color="blue")
+			g.es(self.attached,color="blue")
 		else:
 			print "can not open aspell"
-			es("can not open aspell",color="red")</t>
+			g.es("can not open aspell",color="red")</t>
 <t tx="edream.110203113231.943">add_dicts = ""
 
 if self.local_dictionary:
@@ -10809,7 +11033,7 @@ if self.local_dictionary:
 		return true
 
 	except Exception, err:
-		es("Unable to update local aspell dictionary: %s" % err)
+		g.es("Unable to update local aspell dictionary: %s" % err)
 		print err
 		add_dicts = ""
 		return false</t>
@@ -10849,7 +11073,7 @@ if self.local_dictionary:
 	self.dictionary = self.readLocalDictionary(self.local_dictionary_file)
 	if self.dictionary:
 		# print "Local dictionary:", self.local_dictionary_file
-		es("Local dictionary: %s" % shortFileName(self.local_dictionary_file),color="blue")
+		g.es("Local dictionary: %s" % g.shortFileName(self.local_dictionary_file),color="blue")
 		if 0:
 			keys = self.dictionary.keys()
 			keys.sort()
@@ -10864,24 +11088,24 @@ else:
 	"""Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
 
 	try:
-		fileName = os.path.join(app.loadDir,"../","plugins","mod_spelling.ini")
+		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
 		config = ConfigParser.ConfigParser()
 		config.read(fileName)
 		return config.get("main","local_leo_dictionary",None)
 	except:
-		es_exception()
+		g.es_exception()
 		return None</t>
 <t tx="edream.110203113231.953">def getLocalLanguageCode(self,defaultLanguageCode):
 	
 	"""Get the dictionaries containing words not in the standard dictionary from mod_spelling.ini"""
 
 	try:
-		fileName = os.path.join(app.loadDir,"../","plugins","mod_spelling.ini")
+		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_spelling.ini")
 		config = ConfigParser.ConfigParser()
 		config.read(fileName)
 		return config.get("main","local_language_code",defaultLanguageCode)
 	except:
-		es_exception()
+		g.es_exception()
 		return defaultLanguageCode</t>
 <t tx="edream.110203113231.954">def readLocalDictionary (self,local_dictionary):
 	
@@ -10894,7 +11118,7 @@ else:
 	try:
 		f = open(local_dictionary,"r")
 	except IOError:
-		es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
+		g.es("Unable to open local dictionary '%s' - using a blank one instead" % local_dictionary)
 		return None
 	
 	try:
@@ -11055,9 +11279,9 @@ def onUndoButton (self):
 				f.write("%s\n" % word)
 			f.flush()
 			f.close()
-			es("Adding ",color="blue",newline=false) ; es('%s' % self.currentWord)
+			g.es("Adding ",color="blue",newline=false) ; g.es('%s' % self.currentWord)
 		except IOError:
-			es("Can not add %s to dictionary" % self.currentWord,color="red")
+			g.es("Can not add %s to dictionary" % self.currentWord,color="red")
 	finally:
 		if f: f.close()
 		
@@ -11076,14 +11300,14 @@ def onUndoButton (self):
 	
 	selection = self.getSuggestion()
 	if selection:
-		start,end = oldSel = app.gui.getTextSelection(t)
+		start,end = oldSel = g.app.gui.getTextSelection(t)
 		if start:
 			if t.compare(start, "&gt;", end):
 				start,end = end,start
 			t.delete(start,end)
 			t.insert(start,selection)
-			app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
-			newSel = app.gui.getTextSelection(t)
+			g.app.gui.setTextSelection(t,start,start + "+%dc" % (len(selection)))
+			newSel = g.app.gui.getTextSelection(t)
 
 			# update node, undo status, dirty flag, changed mark &amp; recolor
 			c.beginUpdate()
@@ -11123,16 +11347,16 @@ def onUndoButton (self):
 		self.body.bodyCtrl.focus_set()
 					
 		# Copy the working selection range to the body pane
-		start,end = app.gui.getTextSelection(self.workCtrl)
-		app.gui.setTextSelection(self.body.bodyCtrl,start,end)
+		start,end = g.app.gui.getTextSelection(self.workCtrl)
+		g.app.gui.setTextSelection(self.body.bodyCtrl,start,end)
 	else:
-		es("no more misspellings")
+		g.es("no more misspellings")
 		self.fillbox([])</t>
 <t tx="edream.110203113231.970">def ignore (self):
 	
 	"""Ignore the incorrect word for the duration of this spell check session."""
 	
-	es("Ignoring ",color="blue",newline=false) ; es('%s' % self.currentWord)
+	g.es("Ignoring ",color="blue",newline=false) ; g.es('%s' % self.currentWord)
 	self.dictionary[self.currentWord.lower()] = 0
 	self.onFindButton()</t>
 <t tx="edream.110203113231.971"></t>
@@ -11180,7 +11404,7 @@ def onUndoButton (self):
 					c.endUpdate()
 					break
 		except:
-			es_exception()
+			g.es_exception()
 	finally:
 		aspell.closePipes()
 		return alts, word</t>
@@ -11214,7 +11438,7 @@ if self.dictionary.has_key(word.lower()):
 			ch = t.get("insert")
 			if ch in word_start:
 				word = t.get("insert wordstart","insert wordend")
-				app.gui.setTextSelection(t,"insert wordstart","insert wordend")
+				g.app.gui.setTextSelection(t,"insert wordstart","insert wordend")
 				# print "findNextWord:",`word`
 				return v,word
 			elif ch:
@@ -11254,7 +11478,7 @@ if self.dictionary.has_key(word.lower()):
 	# print "update(show=%d,fill=%d)" % (show,fill)
 	
 	# Always assume that the user has changed text.
-	self.c = c = top()
+	self.c = c = g.top()
 	self.v = c.currentVnode()
 	self.body = c.frame.body
 	if fill:
@@ -11273,19 +11497,19 @@ if self.dictionary.has_key(word.lower()):
 	
 	"""Enable or disable buttons in the Check Spelling dialog."""
 	
-	start,end = app.gui.getTextSelection(self.body.bodyCtrl)
-	state = choose(self.suggestions and start,"normal","disabled")
+	start,end = g.app.gui.getTextSelection(self.body.bodyCtrl)
+	state = g.choose(self.suggestions and start,"normal","disabled")
 	
 	self.changeButton.configure(state=state)
 	self.changeFindButton.configure(state=state)
 
-	state = choose(self.c.undoer.canRedo(),"normal","disabled")
+	state = g.choose(self.c.undoer.canRedo(),"normal","disabled")
 	self.redoButton.configure(state=state)
 	
-	state = choose(self.c.undoer.canUndo(),"normal","disabled")
+	state = g.choose(self.c.undoer.canUndo(),"normal","disabled")
 	self.undoButton.configure(state=state)
 	
-	state = choose(self.local_dictionary_file,"normal","disabled")
+	state = g.choose(self.local_dictionary_file,"normal","disabled")
 	self.addButton.configure(state=state)
 
 	self.ignoreButton.configure(state="normal")</t>
@@ -11343,14 +11567,10 @@ plug-ins as well."""
 
 @language python
 
-try:
-	import Tkinter
-	from Tkinter import *
-	import os,re,xmlrpclib
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 	
-Tk = Tkinter
+import os,re,xmlrpclib
 
 if Tk:
 	__version__ = "0.1"
@@ -11365,8 +11585,7 @@ if Tk:
 		server = xmlrpclib.ServerProxy(HOST)
 		root = Tk()
 		client = LeoPMClient(root, server, ROOTDIR)
-		root.mainloop()
-	</t>
+		root.mainloop()</t>
 <t tx="edream.110203113231.985">class LeoPMClient:
 	
 	"""The client to talk to the LeoPM server"""
@@ -11650,44 +11869,43 @@ Added support for clickable http tags.
 
 Version 1.4, November 4, 2003.
 Put import tkinter in a try/except block.
-Made changes for 4.1 app.gui architecture. (More work needed).</t>
+Made changes for 4.1 g.app.gui architecture. (More work needed).</t>
 <t tx="edream.110403140857.8">"""Handle coloring for markup in doc parts and Python triple-double-quoted strings"""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 import string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	@others
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		
 		print "wiki markup enabled"
 		
 		# default value for color-tagged wiki text
 		wikiColoredText = "blue"
 
-		registerHandler("color-optional-markup", colorWikiMarkup)
-		registerHandler("init-color-markup", initAnyMarkup)
-		#registerHandler("bodykey1", onBodykey1)
-		registerHandler("bodydclick1", onBodydclick1)
-		registerHandler(("start2","open2","command2"), createWikiMenu)
+		leoPlugins.registerHandler("color-optional-markup", colorWikiMarkup)
+		leoPlugins.registerHandler("init-color-markup", initAnyMarkup)
+		#leoPlugins.registerHandler("bodykey1", onBodykey1)
+		leoPlugins.registerHandler("bodydclick1", onBodydclick1)
+		leoPlugins.registerHandler(("start2","open2","command2"), createWikiMenu)
 	
 		__version__ = "1.4" # DS: 10/29/03.  EKR: 11/4/03: mods for 4.1.
-		plugin_signon(__name__)
+		g.plugin_signon(__name__)
 </t>
 <t tx="edream.110403140857.9">def initAnyMarkup (tag,keywords):
 	
@@ -11699,13 +11917,13 @@ if Tkinter: # Register the handlers...
 	colorer,v = [keywords.get(key) for key in keys]
 
 	c = colorer.c
-	if not c or not v or not top(): return
+	if not c or not v or not g.top(): return
 
 	# underline means hyperlinks
 	c.frame.body.tag_configure("http",underline=1) # EKR: 11/4/03
 	c.frame.body.tag_configure("https",underline=1) # EKR: 11/4/03
-	# trace()
-	dict = scanDirectives(c,p=v) # v arg is essential.
+	# g.trace()
+	dict = g.scanDirectives(c,p=v) # v arg is essential.
 	pluginsList = dict.get("pluginsList")
 	
 	if pluginsList:
@@ -11727,18 +11945,18 @@ def colorWikiMarkup (tag,keywords):
 	global colorCount ; colorCount += 1
 	
 	c = colorer.c
-	dict = scanDirectives(c,p=v) # v arg is essential.
+	dict = g.scanDirectives(c,p=v) # v arg is essential.
 	pluginsList = dict.get("pluginsList")
 	
 	if pluginsList:
 		for d,v,s2,k in pluginsList:
 			if d == "markup":
-				# trace(`colorCount`,`d`)
-				if match_word(s2,k,"wiki"):
+				# g.trace(`colorCount`,`d`)
+				if g.match_word(s2,k,"wiki"):
 					doWikiText(colorer,v,s,i,j,colortag)
 					return true # We have colored the text.
 			
-	# trace(`colorCount`,"no markup")
+	# g.trace(`colorCount`,"no markup")
 	return None # We have not colored the text.</t>
 <t tx="edream.110403140857.11">def doWikiText (colorer,v,s,i,end,colortag):
 
@@ -11772,7 +11990,7 @@ for tag,delim1,delim2 in (
 <t tx="edream.110403140857.13">if tag =="picture":
 	colorer.tag("elide",n1,n2+len(delim2)) # Elide everything.
 	filename = s[n1+len(delim1):n2]
-	filename = os.path.join(app.loadDir,filename)
+	filename = os.path.join(g.app.loadDir,filename)
 	filename = os.path.normpath(filename)
 	inserted += insertWikiPicture(colorer,filename,n2+len(delim2))
 elif tag == "color":
@@ -11821,35 +12039,35 @@ if n2 &gt; n &gt; j &gt; -1:
 			colorer.tag(name,n+1,n2)
 			colorer.tag("elide",n2,n2+len(delim2))
 		except: # an invalid color name: elide nothing.
-			pass # es_exception()</t>
+			pass # g.es_exception()</t>
 <t tx="edream.110403140857.15">def insertWikiPicture (colorer,filename,i):
 	
 	"""Try to insert a picture with the give filename.
 	
 	Returns the number of characters actually inserted"""
 	
-	# trace(`colorer.color_pass`)
+	# g.trace(`colorer.color_pass`)
 	if colorer.color_pass == 0:
 		colorer.redoColoring = true # schedule a two-pass recoloring.
 		return 0
-		
+
 	if colorer.color_pass == 2:
 		return 0 # The second redo pass.
 		
-	# trace(`filename`,`v`)
+	# g.trace(`filename`,`v`)
 	if not os.path.exists(filename):
 		return 0
 
 	try:
 		# Create the image
-		photo = Tkinter.PhotoImage(master=app.root, file=filename)
+		photo = Tk.PhotoImage(master=g.app.root, file=filename)
 		image = colorer.body.bodyCtrl.image_create(colorer.index(i),image=photo,padx=0)
 		
 		# Keep references so images stay on the canvas.
 		colorer.image_references.append((photo,image,colorer.line_index,i),)
 		return 1
 	except:
-		es_exception()
+		g.es_exception()
 		return 0</t>
 <t tx="edream.110403140857.16">def onBodykey1(tag,keywords):
 	c = keywords.get("c")
@@ -11876,8 +12094,8 @@ if n2 &gt; n &gt; j &gt; -1:
 			import webbrowser
 			webbrowser.open(url)
 		except:
-			es("exception opening " + url)
-			es_exception()
+			g.es("exception opening " + url)
+			g.es_exception()
 </t>
 <t tx="edream.110403140857.18">def getUrl(c, *tags):
 	"""See if the current text belongs to a hyperlink tag and, if so, return the url."""
@@ -11901,7 +12119,7 @@ if n2 &gt; n &gt; j &gt; -1:
 	if	(tag=="open2" or tag=="start2" or
 		(tag=="command2" and keywords.get("label")=="new")):
 
-		c = top()
+		c = g.top()
 		
 		editBodyMenuName = "Edit Body..."
 		wikiMenuName = "&amp;Wiki Tags..."
@@ -11925,14 +12143,14 @@ if n2 &gt; n &gt; j &gt; -1:
 
 </t>
 <t tx="edream.110403140857.21">def doWikiBold(event=None):
-	c = top()
+	c = g.top()
 	v = c.currentVnode()
 	if not v: return
 
 	insertWikiMarkup(c,v,"__","__")
 	return</t>
 <t tx="edream.110403140857.22">def doWikiItalic(event=None):
-	c = top()
+	c = g.top()
 	v = c.currentVnode()
 	if not v: return
 
@@ -11942,7 +12160,7 @@ if n2 &gt; n &gt; j &gt; -1:
 <t tx="edream.110403140857.23">def doWikiColor(event=None):
 	global wikiColoredText
 	
-	c = top()
+	c = g.top()
 	v = c.currentVnode()
 	if not v: return
 
@@ -11952,7 +12170,7 @@ if n2 &gt; n &gt; j &gt; -1:
 <t tx="edream.110403140857.24">def doWikiChooseColor(event=None):
 	global wikiColoredText
 	
-	c = top()
+	c = g.top()
 	v = c.currentVnode()
 	if not v: return
 	
@@ -11964,7 +12182,7 @@ if n2 &gt; n &gt; j &gt; -1:
 <t tx="edream.110403140857.25">def doWikiPicture(event=None):
 	import tkFileDialog
 
-	c = top()
+	c = g.top()
 	v = c.currentVnode()
 	if not v: return
 
@@ -11990,7 +12208,7 @@ body.bodyCtrl.insert(start, leftTag)
 # we need to review where the selection now ends
 start,end = body.bodyCtrl.tag_ranges("sel")
 body.bodyCtrl.insert(end, rightTag)
-app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
+g.app.gui.setTextSelection(body.bodyCtrl, start + "-" + `len(leftTag)`  + "c",
 						 end + "+" + `len(rightTag)` + "c")
 newSel = body.getTextSelection()
 c.frame.onBodyChanged(v,"Change",oldSel=oldSel,newSel=newSel)
@@ -12438,7 +12656,7 @@ next = 1        # Next bp to be assigned
 bplist = {}     # indexed by (file, lineno) tuple
 bpbynumber = [None] # Each entry is None or an instance of Bpt
             # index 0 is unused, except for marking an
-            # effective break .... see effective()</t>
+            # effective break 	 see effective()</t>
 <t tx="edream.110603185221.50">def __init__(self, file, line, temporary=0, cond = None):
 
     self.file = file    # This better be in canonical form!
@@ -13726,7 +13944,7 @@ from ScrolledList import ScrolledList
     # toggled debugger from pyshell Debug menu)
     self.pyshell.close_debugger()
 
-    # Now close the debugger control window....
+    # Now close the debugger control window	
     self.top.destroy()</t>
 <t tx="edream.110603185221.180">def make_gui(self):
 
@@ -14142,12 +14360,12 @@ def load_dict(self, dict, force=0, rpc_client=None):
 <t tx="edream.110703030027">def destroySelf (self):
 	
 	self.top.destroy() # 11/7/03</t>
-<t tx="edream.110703035301">Corrected crashes in the following plugins due to app.gui reorg:
+<t tx="edream.110703035301">Corrected crashes in the following plugins due to g.app.gui reorg:
 
 - script_io_to_body.py 
 - mod_spelling.py
 
-Changed several other plugins so they load only if app.gui.guiName == "tkinter".
+Changed several other plugins so they load only if g.app.gui.guiName == "tkinter".
 
 Converted all .ini files to @silentfile</t>
 <t tx="edream.110803170600">from leoGlobals import *
@@ -14299,22 +14517,22 @@ es("nodes,lines,pages",nodes,lines,pages)</t>
 	if s is None:
 		return u""
 	else:
-		return toUnicode(s,app.tkEncoding)</t>
+		return toUnicode(s,g.app.tkEncoding)</t>
 <t tx="edream.111303093953.19">def getCharAfterIndex (self,t,index):
 
 	ch = t.get(index + "+1c")
-	return toUnicode(ch,app.tkEncoding)</t>
+	return toUnicode(ch,g.app.tkEncoding)</t>
 <t tx="edream.111303093953.20">def getCharAtIndex (self,t,index):
 	ch = t.get(index)
-	return toUnicode(ch,app.tkEncoding)</t>
+	return toUnicode(ch,g.app.tkEncoding)</t>
 <t tx="edream.111303093953.21">def getCharBeforeIndex (self,t,index):
 
 	ch = t.get(index + "-1c")
-	return toUnicode(ch,app.tkEncoding)</t>
+	return toUnicode(ch,g.app.tkEncoding)</t>
 <t tx="edream.111303093953.22">def getLineContainingIndex (self,t,index):
 
 	line = t.get(index + " linestart", index + " lineend")
-	return toUnicode(line,app.tkEncoding)</t>
+	return toUnicode(line,g.app.tkEncoding)</t>
 <t tx="edream.111303093953.23">def replaceSelectionRangeWithText (self,t,start,end,text):
 
 	t.delete(start,end)
@@ -14360,7 +14578,7 @@ es("nodes,lines,pages",nodes,lines,pages)</t>
 	h = v.headString() # Remember the old value.
 
 	if v.edit_text():
-		sel1,sel2 = app.gui.getTextSelection(v.edit_text())
+		sel1,sel2 = g.app.gui.getTextSelection(v.edit_text())
 		if sel1 and sel2 and sel1 != sel2: # 7/7/03
 			v.edit_text().delete(sel1,sel2)
 		v.edit_text().insert("insert",c.getTime(body=false))
@@ -14376,7 +14594,7 @@ es("nodes,lines,pages",nodes,lines,pages)</t>
 	return
 
 	x,y,delta = 10,10,10
-	for frame in app.windowList:
+	for frame in g.app.windowList:
 		top = frame.top
 		# Compute w,h
 		top.update_idletasks() # Required to get proper info.
@@ -14413,9 +14631,9 @@ es("nodes,lines,pages",nodes,lines,pages)</t>
 	es("minimizeAll not ready yet")
 	return
 
-	self.minimize(app.findFrame)
-	self.minimize(app.pythonFrame)
-	for frame in app.windowList:
+	self.minimize(g.app.findFrame)
+	self.minimize(g.app.pythonFrame)
+	for frame in g.app.windowList:
 		self.minimize(frame)
 	
 def minimize(self, frame):
@@ -14436,7 +14654,7 @@ def toggleSplitDirection(self):
 	# Switch directions.
 	verticalFlag = self.splitVerticalFlag = not self.splitVerticalFlag
 	orientation = choose(verticalFlag,"vertical","horizontal")
-	app.config.setWindowPref("initial_splitter_orientation",orientation)
+	g.app.config.setWindowPref("initial_splitter_orientation",orientation)
 	# Reconfigure the bars.
 	bar1.place_forget()
 	bar2.place_forget()
@@ -14598,7 +14816,7 @@ def toggleSplitDirection(self):
 <t tx="edream.111303141147">def signOnWithVersion (self):
 
 	c = self.c
-	color = app.config.getWindowPref("log_error_color")
+	color = g.app.config.getWindowPref("log_error_color")
 	signon = c.getSignOnLine()
 	n1,n2,n3,junk,junk=sys.version_info
 	
@@ -14980,7 +15198,7 @@ def setFont(self,font):
 	c.change_text = fp.changeText.GetValue()</t>
 <t tx="edream.111403141810">def initialRatios (self):
 
-	config = app.config
+	config = g.app.config
 	s = config.getWindowPref("initial_splitter_orientation")
 	verticalFlag = s == None or (s != "h" and s != "horizontal")
 	
@@ -15005,7 +15223,7 @@ def setFont(self,font):
 	window.Show(true)</t>
 <t tx="edream.111403151611.1">def bringToFront (self):
 	
-	app.gui.bringToFront(self)
+	g.app.gui.bringToFront(self)
 	self.c = top()
 	self.init(self.c)
 	self.findPanel.findText.SetFocus()
@@ -15182,9 +15400,9 @@ Later:
 - Completed Find panel.
 
 - Made sure Leo prompts when closing a window.
-	- The new code is very simple: it just calls app.closeLeoWindow.
-		- Removed some gui dependencies from the app.finishQuit logic.
-		  (They are now in the app.tkinterGui.destroySelf routine.)
+	- The new code is very simple: it just calls g.app.closeLeoWindow.
+		- Removed some gui dependencies from the g.app.finishQuit logic.
+		  (They are now in the g.app.tkinterGui.destroySelf routine.)
 
 - Implemented the wx gui dialog code.
 	- Only the number dialog remains...
@@ -15276,7 +15494,7 @@ def createOpenWithMenuFromTable (self,table):
 	
 	return ### Not ready yet
 
-	app.openWithTable = table # Override any previous table.
+	g.app.openWithTable = table # Override any previous table.
 	# Delete the previous entry.
 	parent = self.getMenu("File")
 	label = self.getRealMenuName("Open &amp;With...")
@@ -15291,7 +15509,7 @@ def createOpenWithMenuFromTable (self,table):
 			parent.delete(index)
 		except: return
 	# Create the "Open With..." menu.
-	openWithMenu = Tkinter.Menu(parent,tearoff=0)
+	openWithMenu = Tk.Menu(parent,tearoff=0)
 	self.setMenu("Open With...",openWithMenu)
 	parent.insert_cascade(index,label=label,menu=openWithMenu,underline=amp_index)
 	# Populate the "Open With..." menu.
@@ -15430,7 +15648,7 @@ if 0: ## Not ready yet
 	self.setSelectedLabelState(v)
 	self.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook.
 
-app.gui.set_focus(c,c.frame.bodyCtrl)</t>
+g.app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 <t tx="edream.111603222048">def bind (self,bind_shortcut,callback):
 	
 	pass # later.</t>
@@ -15441,13 +15659,13 @@ app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 	
 	return ##
 	
-	file = os.path.join(app.loadDir,"..","doc","sbooks.chm")
-	file = toUnicode(file,app.tkEncoding) # 10/20/03
+	file = os.path.join(g.app.loadDir,"..","doc","sbooks.chm")
+	file = toUnicode(file,g.app.tkEncoding) # 10/20/03
 
 	if os.path.exists(file):
 		os.startfile(file)
 	else:	
-		answer = app.gui.runAskYesNoDialog(
+		answer = g.app.gui.runAskYesNoDialog(
 			"Download Tutorial?",
 			"Download tutorial (sbooks.chm) from SourceForge?")
 
@@ -15464,7 +15682,7 @@ app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 				else:
 					url = "http://prdownloads.sourceforge.net/leo/sbooks.chm?download"
 					import webbrowser
-					os.chdir(app.loadDir)
+					os.chdir(g.app.loadDir)
 					webbrowser.open_new(url)
 			except:
 				es("exception dowloading sbooks.chm")
@@ -15476,8 +15694,7 @@ app.gui.set_focus(c,c.frame.bodyCtrl)</t>
 		&lt;&lt; create the scale widget &gt;&gt;
 	self.scale.set(count*size)
 	self.scale.update_idletasks()</t>
-<t tx="edream.111703103908.4">Tk = Tkinter
-top = Tk.Toplevel()
+<t tx="edream.111703103908.4">top = Tk.Toplevel()
 top.title("Download progress")
 self.scale = scale = Tk.Scale(top,state="normal",orient="horizontal",from_=0,to=total)
 scale.pack()
@@ -15495,8 +15712,9 @@ docutils installed, it will generate HTML or LaTeX, respectively."""
 
 # EKR: The code now lets other plugins handle @folder and @url nodes.
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import os
 
@@ -15506,10 +15724,10 @@ import os
 @others
 
 # Register the handlers...
-registerHandler("icondclick1",onIconDoubleClick)
+leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
 	
 __version__ = "1.5" # Set version for the plugin handler.
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.111803100242.1">@ This plugin writes out @rst nodes as a reStructuredText file.
 
 If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
@@ -15561,7 +15779,7 @@ def onIconDoubleClick(tag,keywords):
 	v = keywords.get("v")
 	c = keywords.get("c")
 	h = v.headString().strip()
-	if match_word(h,0,"@rst"):
+	if g.match_word(h,0,"@rst"):
 		fname = h[5:]
 		ext = os.path.splitext(fname)[1].lower()
 		if ext in ('.htm','.html','.tex'):
@@ -15573,7 +15791,7 @@ def onIconDoubleClick(tag,keywords):
 	import docutils
 except ImportError:
 	docutils = None
-	es('HTML/LaTeX generation requires docutils')
+	g.es('HTML/LaTeX generation requires docutils')
 
 if docutils:
 	import StringIO
@@ -15592,7 +15810,7 @@ if docutils:
 	convertedFile.write(output)
 	convertedFile.close()
 	rstFile.close()
-	es('written: '+str(fname))</t>
+	g.es('written: '+str(fname))</t>
 <t tx="edream.111803100242.5"># this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
 from docutils.core import Publisher
 from docutils.io import StringOutput, StringInput
@@ -15607,23 +15825,23 @@ output = pub.publish()</t>
 <t tx="edream.111803100242.6">rstFile = file(fname,'w')
 writeTreeAsRst(rstFile, fname, v, c)
 rstFile.close()
-es('written: '+str(fname))</t>
+g.es('written: '+str(fname))</t>
 <t tx="edream.111803100242.7">def writeTreeAsRst(rstFile, fname, vnode, c):
 	'Writes the tree under vnode to the file rstFile (fname is the filename)'
 	# we don't write a title, so the titlepage can be customized
 	# use '#' for title under/overline
 	# 3/7/03
-	dict = scanDirectives(c,p=vnode)
+	dict = g.scanDirectives(c,p=vnode)
 	encoding = dict.get("encoding",None)
 	if encoding == None:
-		encoding = app.config.default_derived_file_encoding
+		encoding = g.app.config.default_derived_file_encoding
 	# 3/7/03
-	s = toEncodedString(fname,encoding,reportErrors=true)
+	s = g.toEncodedString(fname,encoding,reportErrors=true)
 	rstFile.write('.. filename: '+s+'\n')
 	rstFile.write('\n')
 	# 3/7/03
 	s = vnode.bodyString()
-	s = toEncodedString(s,encoding,reportErrors=true)
+	s = g.toEncodedString(s,encoding,reportErrors=true)
 	rstFile.write(s+'\n')		# write body of titlepage
 	rstFile.write('\n')
 	
@@ -15634,13 +15852,13 @@ es('written: '+str(fname))</t>
 	while v != stopHere:
 		# 3/7/03
 		h = v.headString()
-		h = toEncodedString(h,encoding,reportErrors=true)
+		h = g.toEncodedString(h,encoding,reportErrors=true)
 		rstFile.write(h+'\n')
 		rstFile.write(underline(h,v.level()-toplevel))
 		rstFile.write('\n')
 		# 3/7/03
 		s = v.bodyString()
-		s = toEncodedString(s,encoding,reportErrors=true)
+		s = g.toEncodedString(s,encoding,reportErrors=true)
 		rstFile.write(s+'\n')
 		rstFile.write('\n')
 		v = v.threadNext()</t>
@@ -15706,12 +15924,12 @@ that no import of standard modules will work in plugins.
 In plugins_menu: createPluginsMenu
 
 replace:
-path = os.path.join(app().loadDir,"..","plugins")
+path = os.path.join(g.app().loadDir,"..","plugins")
 sys.path = path
 
 by:
 
-path = os.path.join(app().loadDir,"..","plugins")
+path = os.path.join(g.app().loadDir,"..","plugins")
 newpath = old_path; newpath.append(path)
 sys.path = newpath
 </t>
@@ -15750,7 +15968,7 @@ if 0:
 	return name, size, slant, weight</t>
 <t tx="edream.120203141341"></t>
 <t tx="edream.120203141341.1">from leoGlobals import *
-config = app.config
+config = g.app.config
 
 font = config.getFontFromParams(
 		"body_text_font_family", "body_text_font_size",
@@ -15766,7 +15984,7 @@ print body
 # body.configure(font=font)</t>
 <t tx="edream.120203141927">from leoGlobals import *
 
-font = app.config.defaultFont
+font = g.app.config.defaultFont
 
 print font.cget("family"), font.cget("weight")</t>
 <t tx="edream.120303095057.1">"""Replace Commands.openWithTempFilePath so Leo opens temporary
@@ -15777,8 +15995,9 @@ see which temporary file is related to which outline node."""
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoCommands
 import getpass,os,tempfile
@@ -15786,15 +16005,15 @@ import getpass,os,tempfile
 @others
 
 # Register the handlers...
-registerHandler("start2", onStart)
+leoPlugins.registerHandler("start2", onStart)
 
 __version__ = "1.3"
-plugin_signon(__name__)</t>
+g.plugin_signon(__name__)</t>
 <t tx="edream.120303095910">def onStart (tag,keywords):
 
-	# trace("replacing openWithTempFilePath")
+	# g.trace("replacing openWithTempFilePath")
 
-	funcToMethod(openWithTempFilePath,leoCommands.Commands,"openWithTempFilePath")
+	g.funcToMethod(openWithTempFilePath,leoCommands.Commands,"openWithTempFilePath")
 </t>
 <t tx="edream.120303095910.1">def openWithTempFilePath (self,v,ext):
 
@@ -15806,14 +16025,14 @@ plugin_signon(__name__)</t>
 		leoTempDir = getpass.getuser() + "_" + "Leo"
 	except:
 		leoTempDir = "LeoTemp"
-		es("Could not retrieve your user name.")
-		es("Temporary files will be stored in: %s" % leoTempDir)
+		g.es("Could not retrieve your user name.")
+		g.es("Temporary files will be stored in: %s" % leoTempDir)
 
 	td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
 	if not os.path.exists(td):
 		os.mkdir(td)
 
-	name = sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+	name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
 	path = os.path.join(td,name)
 	return path</t>
 <t tx="edream.120603093808"># Leo enables only those plugins whose filenames appear here.
@@ -15842,7 +16061,7 @@ plugin_signon(__name__)</t>
 # New from Steve Zatz
 	# ** requires docutils: http://docutils.sourceforge.net/
 	# ** Will use SilverCity syntax styline if present: http://silvercity.sourceforge.net/
-	# rst2.py
+	rst2.py
 
 # New from Paul Paterson.
 	nodenavigator.py
@@ -15854,7 +16073,12 @@ plugin_signon(__name__)</t>
 	# mod_http.py
 	
 # New from Davide Salomoni
-	hoist.py</t>
+	hoist.py
+	
+# New in 4.2
+	rClick.py
+	# niceNosent.py
+	# scheduler.py</t>
 <t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 <t tx="edream.120703082844">"""
 Up Down, show the body as a continum space, the user can go up or down, and will automatically jump from one node to the next.
@@ -15870,42 +16094,43 @@ Up Down, show the body as a continum space, the user can go up or down, and will
 
 __version__ = "0.0.3"
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 last_key = None # global var for this module.
 
-try:    import Tkinter
-except: Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter and app.gui.guiName() == "tkinter":
+if Tk and g.app.gui.guiName() == "tkinter":
 
     @others
 
 	# Register the handlers...
-	registerHandler("start2", OnStart2) #  install the plugin hooks
+	leoPlugins.registerHandler("start2", OnStart2) #  install the plugin hooks
 
-	plugin_signon(__name__)
+	g.plugin_signon(__name__)
 </t>
 <t tx="edream.120703082844.1">def OnStart2(tag, keywords):
 
 	"""."""
 	
-	trace("updown started")
+	g.trace("updown started")
 	
 	c = keywords['c']
 	c.frame.body.bodyCtrl.bind("&lt;Key&gt;", OnBodyKey, '+') # append an extra binding.</t>
 <t tx="edream.120703082844.2">def OnBodyKey(event):
 	"""."""
 	tracing = true
-	c = top() ; global last_key
+	c = g.top() ; global last_key
 	text = c.frame.body.bodyCtrl
 	v = c.currentVnode()
 	keycode = event.keycode
 	if 0:
 		if tracing: # for debugging.
-			# trace("event %s %s" % (event, dir(event))) 
-			trace("ch %s %s %s" % (event.char, event.keycode, event.num))
+			# g.trace("event %s %s" % (event, dir(event))) 
+			g.trace("ch %s %s %s" % (event.char, event.keycode, event.num))
 	if keycode in [33, 98, 99]: # up, page up
 		keycode = "up"
 	elif keycode in [34, 104, 105]: # down, page down
@@ -15914,10 +16139,10 @@ if Tkinter and app.gui.guiName() == "tkinter":
 	if last_key == keycode:
 		if keycode == "up":
 			new = v.threadBack()
-			if tracing: trace("Going up")
+			if tracing: g.trace("Going up")
 		elif keycode == "down":
 			new = v.threadNext()
-			if tracing: trace("Going down")
+			if tracing: g.trace("Going down")
 		else:
 			new = None	
 		if new:
@@ -15941,29 +16166,27 @@ if Tkinter and app.gui.guiName() == "tkinter":
 
 __version__ = "0.3"
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import leoFind
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
 &lt;&lt; vars &gt;&gt;
 @others
 
-if Tkinter:
+if Tk:
 	search = SearchBox()
 	
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		# es("Starting searchbox", color="orange")
-		registerHandler("after-create-leo-frame", search.addWidgets)
-		plugin_signon(__name__)</t>
+	if g.app.gui.guiName() == "tkinter":
+		# g.es("Starting searchbox", color="orange")
+		leoPlugins.registerHandler("after-create-leo-frame", search.addWidgets)
+		g.plugin_signon(__name__)</t>
 <t tx="ekr.20040107092135.3">class SearchBox:
 	"""A search box for Leo"""
 	@others</t>
@@ -15975,11 +16198,11 @@ if Tkinter:
 	# Remove the old find frame so its options don't compete with ours.
 	search_mode = self.option_value.get() 
 	new_find = QuickFind(text,search_mode)
-	old_find, app.findFrame = app.findFrame, new_find
+	old_find, g.app.findFrame = g.app.findFrame, new_find
 	# Do the search.
 	self.c.findNext()
 	# Restore the find frame.
-	app.findFrame = old_find
+	g.app.findFrame = old_find
 	# Remember this list 
 	self.updateRecentList(text, search_mode) 
 	if 0: # This doesn't work yet: the user can't see the match.
@@ -16026,31 +16249,31 @@ if Tkinter:
 	c = self.c ; t = self.s_text	
 	t.delete("1.0","end")
 	t.insert("end",s)
-	t.mark_set("insert",choose(c.reverse_flag,"end","1.0"))
+	t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
 	return t
 </t>
 <t tx="ekr.20040107103339">def gui_search (self,t,*args,**keys):
 
 	return t.search(*args,**keys)</t>
 <t tx="ekr.20040107111307">def onBackSpace (self,event=None):
-	trace()
+	g.trace()
 </t>
 <t tx="ekr.20040108054555.3">def addWidgets(self, tags, keywords):
 	"""Add the widgets to the navigation bar"""
 	self.c = keywords['c'] 
 	toolbar = self.c.frame.iconFrame
 	# Button.
-	self.go = Tkinter.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
+	self.go = Tk.Button(self._getSizer(toolbar, 25, 32), text="GO", command=self.doSearch)
 	self.go.pack(side="right", fill="both", expand=1)
 	# Search options.
 	options = [name for name, flags in OPTION_LIST]
-	self.option_value = Tkinter.StringVar() 
-	self.options = Tkinter.OptionMenu(
+	self.option_value = Tk.StringVar() 
+	self.options = Tk.OptionMenu(
 		self._getSizer(toolbar, 29, 130), self.option_value, *options)
 	self.option_value.set(options[0]) 
 	self.options.pack(side="right", fill="both", expand=1)
 	# Text entry.
-	self.search = Tkinter.Entry(self._getSizer(toolbar, 24, 130))
+	self.search = Tk.Entry(self._getSizer(toolbar, 24, 130))
 	self.search.pack(side="right", padx=3, fill="both", expand=1)
 	self.search.bind("&lt;Return&gt;", self.onKey)
 	# Store a list of the last searches.
@@ -16060,7 +16283,7 @@ if Tkinter:
 <t tx="ekr.20040108054555.4">def _getSizer(self, parent, height, width):
 	"""Return a sizer object to force a Tk widget to be the right size"""
 	if USE_FIXED_SIZES: 
-		sizer = Tkinter.Frame(parent, height=height, width=width)
+		sizer = Tk.Frame(parent, height=height, width=width)
 		sizer.pack_propagate(0) # don't shrink 
 		sizer.pack(side="right")
 		return sizer
@@ -16088,7 +16311,7 @@ if Tkinter:
 	# Now update the menu 
 	for name, mode in self.search_list:
 		menu.add_command(
-			label=name,command=Tkinter._setit(self.option_value,name,self.searchRecent))</t>
+			label=name,command=Tk._setit(self.option_value,name,self.searchRecent))</t>
 <t tx="ekr.20040108054555.8">def searchRecent(self, *args, **kw):
 	"""Do a search on a recently used item"""
 	# Find the item.
@@ -16103,7 +16326,7 @@ if Tkinter:
 			break
 	else:
 		print name, self.search_list 
-		es("Recent search item not found! Looks like a bug ...", color="red")</t>
+		g.es("Recent search item not found! Looks like a bug ...", color="red")</t>
 <t tx="ekr.20040108054555.14"># Set this to 0 if the sizing of the toolbar controls doesn't look good on 
 # your platform 
 USE_FIXED_SIZES = 1
@@ -16159,28 +16382,28 @@ the marked node.
 __name__ = "Node Navigator"
 __version__ = "0.3" 
 
-from leoPlugins import * 
-from leoGlobals import * 
+import leoPlugins 
+import leoGlobals as g
+from leoGlobals import true,false 
 
-try:    import Tkinter 
-except: Tkinter = None 
-Tk = Tkinter 
+try: import Tkinter as Tk 
+except ImportError: Tk = None
 
 # Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
 USE_FIXED_SIZES = 1 
 
 @others
 
-if Tkinter: 
-	if app.gui is None: 
-		app.createTkGui(__file__) 
+if Tk: 
+	if g.app.gui is None: 
+		g.app.createTkGui(__file__) 
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 		nav = Navigator() 
-		registerHandler("after-create-leo-frame", nav.addWidgets) 
-		registerHandler(("set-mark","clear-mark"),nav.updateMarks)
-		registerHandler("select2",nav.updateRecent)
-		plugin_signon("nodenavigator")</t>
+		leoPlugins.registerHandler("after-create-leo-frame", nav.addWidgets) 
+		leoPlugins.registerHandler(("set-mark","clear-mark"),nav.updateMarks)
+		leoPlugins.registerHandler("select2",nav.updateRecent)
+		g.plugin_signon("nodenavigator")</t>
 <t tx="ekr.20040108062655.2">class Navigator: 
 	"""A node navigation aid for Leo"""
 	@others
@@ -16190,18 +16413,18 @@ if Tkinter:
 	self.c = c = keywords['c'] 
 	toolbar = self.c.frame.iconFrame 
 	# Main container 
-	self.frame = Tkinter.Frame(toolbar) 
+	self.frame = Tk.Frame(toolbar) 
 	self.frame.pack(side="left")
 	# Marks
 	marks = ["Marks"] 
-	self.mark_value = Tkinter.StringVar() 
-	self.marks = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.mark_value,*marks)
+	self.mark_value = Tk.StringVar() 
+	self.marks = Tk.OptionMenu(self._getSizer(self.frame,29,70),self.mark_value,*marks)
 	self.mark_value.set(marks[0]) 
 	self.marks.pack(side="right",fill="both",expand=1)
 	# Recent.
 	recent = ["Recent"]
-	self.recent_value = Tkinter.StringVar() 
-	self.recent = Tkinter.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
+	self.recent_value = Tk.StringVar() 
+	self.recent = Tk.OptionMenu(self._getSizer(self.frame,29,70),self.recent_value,*recent) 
 	self.recent_value.set(recent[0]) 
 	self.recent.pack(side="left",fill="both",expand=1)
 	# Recreate the menus immediately.
@@ -16211,7 +16434,7 @@ if Tkinter:
 	
 	"""Return a sizer object to force a Tk widget to be the right size""" 
 	if USE_FIXED_SIZES: 
-		sizer = Tkinter.Frame(parent,height=height,width=width) 
+		sizer = Tk.Frame(parent,height=height,width=width) 
 		sizer.pack_propagate(0) # don't shrink 
 		sizer.pack(side="right") 
 		return sizer 
@@ -16275,37 +16498,39 @@ if Tkinter:
 __name__ = "Row/Column indicators"
 __version__ = "0.1" 
 
-from leoPlugins import * 
-from leoGlobals import * 
+import leoPlugins 
+import leoGlobals as g
+from leoGlobals import true,false 
 
-try:    import Tkinter 
-except: Tkinter = None 
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None 
 
 @others
 
-if Tkinter: 
+if Tk: 
 
-	if app.gui is None: 
-		app.createTkGui(__file__)
+	if g.app.gui is None: 
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		rowCol = rowColClass() 
-		registerHandler("after-create-leo-frame",rowCol.addWidgets) 
-		plugin_signon("rowcol")</t>
+	if g.app.gui.guiName() == "tkinter":
+		rowCol = rowColClass()
+		leoPlugins.registerHandler("after-create-leo-frame",rowCol.addWidgets)
+		leoPlugins.registerHandler("idle",rowCol.updateRowColWidget) 
+		g.plugin_signon("rowcol")</t>
 <t tx="ekr.20040108095351.1">class rowColClass:
 	
 	"""Class that puts row/column indicators in the status bar."""
 	
 	@others</t>
 <t tx="ekr.20040108095351.2">def addWidgets (self,tag,keywords):
-	
-	self.c = keywords['c']
+
+	self.c = c = keywords.get("c")
+	assert(c)
 
 	toolbar = self.c.frame.iconFrame
 
 	# Main container 
-	self.rowColFrame = f = Tkinter.Frame(toolbar) 
+	self.rowColFrame = f = Tk.Frame(toolbar) 
 	f.pack(side="left")
 	
 	text = "line 0, col 0"
@@ -16314,39 +16539,40 @@ if Tkinter:
 	self.rowColLabel.pack(side="left")
 	
 	# Update the row/column indicators immediately to reserve a place.
-	self.updateRowColWidget()</t>
-<t tx="ekr.20040108095351.4">def updateRowColWidget (self):
+	self.updateRowColWidget()
 	
-	c = self.c ; body = c.frame.body.bodyCtrl ; gui = app.gui
-	tab_width = c.frame.tab_width
+	g.enableIdleTimeHook()</t>
+<t tx="ekr.20040108095351.4">### There seems to be no way of undoing the idle-time hook!
+### And one idle-time hook interferes with other hooks!
+
+def updateRowColWidget (self,*args,**keys):
 	
-	# New for Python 2.3: may be called during shutdown.
-	if app.killed:
+	c = self.c
+
+	# This is called at idle-time, and there can be problems when closing the window.
+	if g.app.killed or not c or c != g.top():
 		return
+
+	body = c.frame.body.bodyCtrl ; gui = g.app.gui
+	tab_width = c.frame.tab_width
 
 	index = body.index("insert")
 	row,col = gui.getindex(body,index)
 	
 	if col &gt; 0:
-		if 0: # new code
-			s = c.frame.body.getRange(index1,index2)
-		else:
-			s = body.get("%d.0" % (row),index)
-		s = toUnicode(s,app.tkEncoding)
-		col = computeWidth(s,tab_width)
+		s = body.get("%d.0" % (row),index)
+		s = g.toUnicode(s,g.app.tkEncoding)
+		col = g.computeWidth(s,tab_width)
 
 	if row != self.lastStatusRow or col != self.lastStatusCol:
 		s = "line %d, col %d " % (row,col)
 		self.rowColLabel.configure(text=s)
 		self.lastStatusRow = row
-		self.lastStatusCol = col
-		
-	# Reschedule this routine 100 ms. later.
-	# Don't use after_idle: it hangs Leo.
-	self.rowColFrame.after(100,self.updateRowColWidget)</t>
+		self.lastStatusCol = col</t>
 <t tx="ekr.20040108100040">def __init__ (self):
 	
-	self.lastStatusRow, self.lastStatusCol = -1,-1</t>
+	self.lastStatusRow, self.lastStatusCol = -1,-1
+	self.c = None # Will be set later.  Needed for idle handling.</t>
 <t tx="ekr.20040109080300">@nocolor
 
 1/9/04: nodenavigator.py
@@ -16443,293 +16669,6 @@ Literate Programming but in my mind this is practical Literate Programming.
 Frankly, I think this is all a minor miracle but maybe I've lost perspective.
 
 Steve Zatz</t>
-<t tx="ekr.20040118081748">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
-write a file in outline order, with the headlines converted to reStructuredText 
-section headings.
-
-If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
-docutils installed, it will generate HTML or LaTeX, respectively."""
-
-@language python
-
-# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
-
-# EKR: The code now lets other plugins handle @folder and @url nodes.
-
-# S. Zatz: some modifications to create the ability to combine program code and documentation
-# using @rst nodes (with no file name) in orde to produce combined code/documentation HTML output.
-# See the 'about this plugin' section for more information
-
-from leoPlugins import *
-from leoGlobals import *
-
-import os
-#import reST_HTML
-
-&lt;&lt; about this plugin &gt;&gt;
-&lt;&lt; change log &gt;&gt;
-
-@others
-
-# Register the handlers...
-registerHandler("icondclick1",onIconDoubleClick)
-__version__ = "2.0"
-plugin_signon(__name__)
-
-
-</t>
-<t tx="ekr.20040118081748.1">@ This plugin writes out @rst nodes as a reStructuredText file.
-
-If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
-module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
-from bug-free, but remember, docutils is alpha software. (Perhaps a future
-version will allow automatic translation to other formats, like OpenOffice.org
-as well).
-
-Headlines are translated into reStructuredText headlines, e.g. underlined
-depending on the level and empty line separated from body text otherwise, text
-is written as it is. The "#" character is not used for underlining, so it may
-be used for a title as in::
-
-    #####
-    Title
-    #####
-
-Otherwise, section underlining is discouraged, since it is automatically generated.
-
-.. _docutils: http://docutils.sourceforge.net
-
---------------------------------------------------------
-
-S Zatz modifications
-
-Assumes Leo outlines are in the form
-
-@rst somefilename.[txt/html/tex]
-..@file-nosent somefilename.py
-....code node
-......@rst
-......another code node
-........@rst
-......more code
-........@rst
-
-and so on
-
-If you want a table of contents, put the following:  '.. contents:: Table of Contents'
-on its own line in the body of the root '@rst somefilename.[txt/html/tex]' node.
-(Maybe this should be done in the plugin?)
-
-Double-clicking on a @rst somefilename.ext node generates a reST-structured [txt/html/tex] file that combines
-program code nodes with reST documentation from @rst nodes that have no associated filename.
-
-Note: if the SilverCity lexing package is present then code is presented with syntax highlighting.  For the
-HTML output to look OK you need the following cascading style sheets:
-    1) default.css -&gt; docutils default style sheet
-    2) leo_rst.css -&gt; contains some style 'improvements' mostly based on Gunnar Schwant's DocFactory
-    3) silver_city.css -&gt; if SilverCity is present, this is the style sheet that supports syntax highlighting
-The latter two style sheets are imported at the end of the default.css.  Since I know only enough css to be dangerous,
-would be great to have someone clean this up.  I am following David Goodger request that the default docutils
-style sheet be kept intact with modifications done via imported style sheets.
-</t>
-<t tx="ekr.20040118081748.2">@ Change log:
-
-- New tree types: @rst has been added.
-
-- EKR: The code now lets other plugins handle @folder and @url nodes.
-
-- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
-  installed. Simply give the filename an extension .htm or .html. You can try
-  this out by renaming the filename in this @rst tree.
-
-- underlines: I changed the order of the underline characters again. The "&gt;" is
-  doesn't really look good as an underline in my opinion, so I moved it to a very
-  low level.
-
-- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
-  No only check for missing docutils (doesn't mask other errors any more).
-
-- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
-
-- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
-
-- 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation
-
-- 2004-01-17 S Zatz allow whitespace in paths.</t>
-<t tx="ekr.20040118081748.3"># by Josef Dalcolmo 2003-01-13
-#
-# this does not check for proper filename syntax.
-# path is the current dir, or the place @folder points to
-# this should probably be changed to @path or so.
-
-def onIconDoubleClick(tag,keywords):
-
-	v = keywords.get("v")
-	c = keywords.get("c")
-	h = v.headString().strip()
-
-	if match_word(h,0,"@rst"):
-		if len(h) &gt; 5:
-			fname = h[5:]
-			ext = os.path.splitext(fname)[1].lower()
-			if ext in ('.htm','.html','.tex'):
-				&lt;&lt; write rST as HTML/LaTeX &gt;&gt;
-			else:
-				&lt;&lt; write rST file &gt;&gt;
-		else:
-			pass
-			# if the headline only contains @rst then open the node and its parent in text editor
-			# this works for me but needs to be generalized and should probably be a component
-			# of the open_with plugin
-			#c.openWith(("os.startfile", None, ".txt"))
-			#c.selectVnode(v.parent())
-			#c.openWith(("os.startfile", None, ".tp"))
-
-
-</t>
-<t tx="ekr.20040118081748.4">try:
-	import docutils
-except:
-	es('HTML/LaTeX generation requires docutils',color="blue")
-	return
-else:
-	from docutils.core import Publisher
-	from docutils.io import StringOutput, StringInput
-	import StringIO
-	
-# Set the writer and encoding for the converted file
-if ext in ('.html','.htm'):
-	writer='html'
-	enc="utf-8"
-else:
-	writer='latex'
-	enc="iso-8859-1"
-
-if writer == 'html':
-	try:
-		import SilverCity
-	except:
-		es('SilverCity not present so no syntax highlighting')
-		syntax = False
-	else:
-		&lt;&lt; define code-block &gt;&gt;
-		syntax = True     
-else:
-	syntax = False
-	
-rstFile = StringIO.StringIO()
-writeTreeAsRst(rstFile, fname, v, c, syntax)
-rstText = rstFile.getvalue()
-
-# this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
-pub = Publisher()
-pub.source = StringInput(source=rstText)
-pub.destination = StringOutput(pub.settings, encoding=enc)
-pub.set_reader('standalone', None, 'restructuredtext')
-pub.set_writer(writer)
-output = pub.publish(argv=[]) # 1/18/04
-
-convertedFile = file(fname,'w')
-convertedFile.write(output)
-convertedFile.close()
-rstFile.close()
-es('written: '+str(fname))</t>
-<t tx="ekr.20040118081748.5"># See Syntax-highlighted code blocks for docutils by Kevin Schluff in ASPN Python Cookbook
-# this code defines a new "code-block" directive for docutils
-import docutils.parsers.rst
-
-def code_block(name, arguments, options, content, lineno, content_offset, block_text, state, state_machine):
-	language = arguments[0]
-	module = getattr(SilverCity, language)
-	generator = getattr(module, language+"HTMLGenerator")
-	io = StringIO.StringIO()
-	generator().generate_html(io, '\n'.join(content))
-	html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'%io.getvalue()
-	raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
-	return [raw]
-
-code_block.arguments = (1,0,0)
-code_block.options = {'language' : docutils.parsers.rst.directives.unchanged}
-code_block.content = 1
-  
-# Need to register the directive with docutils
-docutils.parsers.rst.directives.register_directive('code-block', code_block)
-
-</t>
-<t tx="ekr.20040118081748.6">rstFile = file(fname,'w')
-writeTreeAsRst(rstFile, fname, v, c)
-rstFile.close()
-es('written: '+str(fname))</t>
-<t tx="ekr.20040118081748.7">def writeTreeAsRst(rstFile, fname, vnode, c, syntax=None):
-	'Writes the tree under vnode to the file rstFile (fname is the filename)'
-	# we don't write a title, so the titlepage can be customized
-	# use '#' for title under/overline
-	directives = scanDirectives(c,p=vnode) # changed name because don't want to use keyword dict
-	
-	encoding = directives.get("encoding",None)
-	if encoding == None:
-		encoding = app.config.default_derived_file_encoding
-	
-	if syntax:
-		lang_dict = {'python':'Python', 'ruby':'Ruby', 'perl':'Perl', 'c':'CPP'}
-		language = directives['language']
-		# SilverCity modules have first letter in caps
-		if language in lang_dict:
-			code_dir = '**code**:\n\n.. code-block:: %s\n\n'%lang_dict[language]
-		else:
-			code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
-	else:
-		code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
-
-	s = toEncodedString(fname,encoding,reportErrors=true)
-	rstFile.write('.. filename: '+s+'\n')
-	rstFile.write('\n')
-
-	s = vnode.bodyString()
-	s = toEncodedString(s,encoding,reportErrors=true)
-	rstFile.write(s+'\n')		# write body of titlepage
-	rstFile.write('\n')
-	
-	toplevel = vnode.level()+1 #Dec 20
-	h = vnode.headString()
-	stopHere = vnode.nodeAfterTree()
-	v = vnode.threadNext()
-	# repeat for all nodes in this tree
-	while v != stopHere:
-		h = v.headString().strip()
-		if match_word(h,0,"@rst"):
-			s = v.bodyString()
-			s = toEncodedString(s,encoding,reportErrors=true)
-			# next line is an total hack to take care of @ignore, @nocolor, @wrap in the @rst nodes
-			s = s.split('\n',3)[3]
-			rstFile.write('**comments**:\n%s\n'%s)
-			rstFile.write('\n')
-		else:
-			if match_word(h,0,"@file-nosent"):
-				h = h[13:]
-			h = toEncodedString(h,encoding,reportErrors=true)
-			s = v.bodyString()
-			s = toEncodedString(s,encoding,reportErrors=true)
-			rstFile.write(h+'\n')
-			rstFile.write(underline(h,v.level()-toplevel))
-			rstFile.write('\n')
-			if s.strip():
-				rstFile.write(code_dir)
-				s = s.split('\n')
-				for linenum,linetext in enumerate(s[:-1]):
-					if "@others" in linetext: #deleting lines with @other directive from output
-						continue
-					rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
-			rstFile.write('\n')
-			
-		v = v.threadNext()</t>
-<t tx="ekr.20040118081748.8"># note the first character is intentionally unused, to serve as the underline
-# character in a title (in the body of the @rst node)
-
-def underline(h,level):
-	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
-	return str*max(len(h),4)+'\n'
-</t>
 <t tx="ekr.20040119044414"></t>
 <t tx="ekr.20040119044414.1">"""
 A minimal http plugin for LEO, based on AsyncHttpServer.py.
@@ -16757,9 +16696,9 @@ applyConfiguration()
 if active:
 	s=Server('',port,RequestHandler)
 	asyncore.read = a_read
-	registerHandler("idle", plugin_wrapper)
+	leoPlugins.registerHandler("idle", plugin_wrapper)
 	
-	es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
+	g.es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
 </t>
 <t tx="ekr.20040119044414.3">import asynchat,asyncore,socket,SimpleHTTPServer, select, urllib, urlparse
 import posixpath,sys, cgi,cStringIO, os
@@ -16773,11 +16712,10 @@ import time
 import shutil
 from StringIO import StringIO
 
-from  leoPlugins import registerHandler
-from leoGlobals import es, app
+import leoPlugins
+import leoGlobals as g
 
-import ConfigParser
-</t>
+import ConfigParser</t>
 <t tx="ekr.20040119044414.5">class delayedSocketStream(asyncore.dispatcher_with_send):
 	@others
 </t>
@@ -16887,7 +16825,7 @@ import ConfigParser
 		self.address_string(),
 		self.log_date_time_string(),
 		format%args)
-	es(message)
+	g.es(message)
 </t>
 <t tx="ekr.20040119044414.17">def __init__(self,conn,addr,server):
 	asynchat.async_chat.__init__(self,conn)
@@ -17054,7 +16992,7 @@ import ConfigParser
 		Return None if that node can not be identified that way.
 	"""
 	# Identify the window
-	for w in app.windowList:
+	for w in g.app.windowList:
 		if w.shortFileName() == path[0]:
 			break
 	else:
@@ -17085,7 +17023,7 @@ import ConfigParser
 	write("&lt;h2&gt;Windowlist&lt;/h2&gt;\n")
 	write("&lt;hr&gt;\n") # horizontal rule
 	write("&lt;ul&gt;\n")
-	a = app # get the singleton application instance.
+	a = g.app # get the singleton application instance.
 	windows = a.windowList # get the list of all open frames.
 	for w in windows:
 		write("&lt;li&gt;")
@@ -17329,7 +17267,7 @@ import ConfigParser
 	global timeout, port, active
 
 	if config is None:
-		fileName = os.path.join(app.loadDir,"../","plugins","mod_http.ini")
+		fileName = os.path.join(g.app.loadDir,"../","plugins","mod_http.ini")
 		config = ConfigParser.ConfigParser()
 		config.read(fileName)
 
@@ -17387,7 +17325,7 @@ the text entry box.
 """
 
 USE_FIXED_SIZES = 1</t>
-<t tx="ekr.20040127111023.1">class FlatOptionMenu(Tkinter.OptionMenu):
+<t tx="ekr.20040127111023.1">class FlatOptionMenu(Tk.OptionMenu):
 
 	"""Flat version of OptionMenu which allows the user to select a value from a menu."""
 
@@ -17400,9 +17338,9 @@ USE_FIXED_SIZES = 1</t>
 			"borderwidth": 2, "textvariable": variable,
 			"indicatoron": 1, "relief": "flat", "anchor": "c",
 			"highlightthickness": 2}
-		Tkinter.Widget.__init__(self, master, "menubutton", kw)
+		Tk.Widget.__init__(self, master, "menubutton", kw)
 		self.widgetName = 'tk_optionMenu' 
-		menu = self.__menu = Tkinter.Menu(self, name="menu", tearoff=0)
+		menu = self.__menu = Tk.Menu(self, name="menu", tearoff=0)
 		self.menuname = menu._w
 		# 'command' is the only supported keyword 
 		callback = kwargs.get('command')
@@ -17411,10 +17349,10 @@ USE_FIXED_SIZES = 1</t>
 		if kwargs:
 			raise TclError, 'unknown option -'+kwargs.keys()[0]
 		menu.add_command(label=value,
-			command=Tkinter._setit(variable, value, callback))
+			command=Tk._setit(variable, value, callback))
 		for v in values:
 			menu.add_command(label=v,
-				command=Tkinter._setit(variable, v, callback))
+				command=Tk._setit(variable, v, callback))
 		self["menu"] = menu</t>
 <t tx="ekr.20040127111023.2">class Node: 
 	"""A node to add"""
@@ -17462,7 +17400,7 @@ USE_FIXED_SIZES = 1</t>
 
 	def doIt(self, entry):
 		"""Create the nodes"""
-		c = top()
+		c = g.top()
 		name = entry.get()
 		for node in self.nodes:
 			node.addTo(c, name)</t>
@@ -17482,21 +17420,21 @@ USE_FIXED_SIZES = 1</t>
 		self.commander = keywords['c']
 		toolbar = self.commander.frame.iconFrame
 		# 
-		self.frame = Tkinter.Frame(toolbar)
+		self.frame = Tk.Frame(toolbar)
 		self.frame.pack(side="right", padx=2)
 		# 
-		self.text = Tkinter.Entry(self._getSizer(self.frame, 24, 130))
+		self.text = Tk.Entry(self._getSizer(self.frame, 24, 130))
 		self.text.pack(side="left", padx=3, fill="both", expand=1)
 		self.text.bind("&lt;Return&gt;", self.doCallback)
 		# 
-		self.pseudobutton = Tkinter.Frame(self._getSizer(self.frame, 24, 142), relief="raised", borderwidth=2) 
+		self.pseudobutton = Tk.Frame(self._getSizer(self.frame, 24, 142), relief="raised", borderwidth=2) 
 		self.pseudobutton.pack(side="right")
 		# 
-		self.doit = Tkinter.Button(self._getSizer(self.pseudobutton, 25, 32), text="New", relief="flat", command=self.doCallback)
+		self.doit = Tk.Button(self._getSizer(self.pseudobutton, 25, 32), text="New", relief="flat", command=self.doCallback)
 		self.doit.pack(side="left")
 		# 
 		options = [adder.button_name for adder in self.adders]
-		self.option_value = Tkinter.StringVar()
+		self.option_value = Tk.StringVar()
 		self.options = FlatOptionMenu(self._getSizer(self.pseudobutton, 29, 110), self.option_value, *options)
 		self.option_value.set(options[0])
 		self.options.pack(side="right", fill="both", expand=1)
@@ -17506,7 +17444,7 @@ USE_FIXED_SIZES = 1</t>
 		"""Return a sizer object to force a Tk widget to be the right size"""
 	
 		if USE_FIXED_SIZES:
-			sizer = Tkinter.Frame(parent, height=height, width=width)
+			sizer = Tk.Frame(parent, height=height, width=width)
 			sizer.pack_propagate(0) # don't shrink 
 			sizer.pack(side=pack)
 			return sizer
@@ -17527,18 +17465,18 @@ USE_FIXED_SIZES = 1</t>
 # We must use @file-noref because data below might look like section references,
 # so ORDER IS IMPORTANT throughout this tree (we can't use @others).
 
-@language python
+# @language python
 
 __name__ = "New Buttons"
 __version__ = "0.2" # Converted to @file-noref by EKR.
  
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 import leoFind
 
-try:    import Tkinter
-except: Tkinter = None
-Tk = Tkinter</t>
+try: import Tkinter as Tk
+except ImportError: Tk = None</t>
 <t tx="ekr.20040127113621.5"># Modify these classes or data as you like to create templates that suit you.</t>
 <t tx="ekr.20040127113621.6">class AddTestModule(NodeAdder):
 
@@ -17640,14 +17578,14 @@ class AddClassMethod(NodeAdder):
 			name="XXX",
 			body=CLASS_METHOD_BODY,
 			inherit=0)] # EKR: was 1.</t>
-<t tx="ekr.20040127114616">if Tkinter:
+<t tx="ekr.20040127114616">if Tk:
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
+	if g.app.gui.guiName() == "tkinter":
 	
-		es("Activating newButtons", color="orange")
+		g.es("Activating newButtons", color="orange")
 
 		buttonList = [
 			AddTestModule(),AddTestClass(),
@@ -17655,8 +17593,8 @@ class AddClassMethod(NodeAdder):
 	
 		helper = Helper(buttonList)
 
-		registerHandler("after-create-leo-frame", helper.addWidgets)
-		plugin_signon("newButtons")</t>
+		leoPlugins.registerHandler("after-create-leo-frame", helper.addWidgets)
+		g.plugin_signon("newButtons")</t>
 <t tx="ekr.20040127120834">TEST_NODE_BODY = '''
 import unittest
 
@@ -17686,28 +17624,27 @@ def setUp(self):
 
 @language python
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: # Register the handlers...
+if Tk: # Register the handlers...
 
 	def createStatusLine(tag,keywords):
 		c = keywords.get("c")
 		c.frame.createStatusLine()
 		c.frame.putStatusLine("Welcome to Leo")
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		registerHandler("after-create-leo-frame", createStatusLine)
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("after-create-leo-frame", createStatusLine)
 		__version__ = "0.1"
-		plugin_signon(__name__)</t>
+		g.plugin_signon(__name__)</t>
 <t tx="ekr.20040201061422"></t>
 <t tx="ekr.20040201061422.1"></t>
 <t tx="ekr.20040201061422.2">This creates a status area at the bottom of the Leo Window.  Plugins may write to this area using the status area convenience routines in leoTkinterFrame.py.</t>
@@ -17729,8 +17666,9 @@ insertUser : Shift-F6
 	
 """
 
-from leoPlugins import *
-from leoGlobals import *
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
 
 import leoCommands
 import time
@@ -17739,32 +17677,29 @@ OKFLAG='OK '  # Space required.
 
 @others
 
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
+try: import Tkinter as Tk
+except ImportError: Tk = None
 
-if Tkinter: 
+if Tk: 
 
-	if app.gui is None:
-		app.createTkGui(__file__)
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
 
-	if app.gui.guiName() == "tkinter":
-		registerHandler("start1", onStart)
-		registerHandler("create-optional-menus",create_UserMenu)
-		registerHandler("iconrclick2", onRclick)
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("start1", onStart)
+		leoPlugins.registerHandler("create-optional-menus",create_UserMenu)
+		leoPlugins.registerHandler("iconrclick2", onRclick)
 
 		__version__ = "0.1"
-		plugin_signon(__name__)
-		es('mnplug OK+Commands+Menu aktiv',color='green')
+		g.plugin_signon(__name__)
+		g.es('mnplug OK+Commands+Menu aktiv',color='green')
 		
 </t>
 <t tx="ekr.20040205071616.1">def mnstamp():
 
 	lt=time.localtime(time.time())
 	mndatetime=time.strftime('%y%m%d %H:%M',(lt))
-	return '### '+app.leoID+mndatetime
+	return '### '+g.app.leoID+mndatetime
 
 
 </t>
@@ -17772,13 +17707,13 @@ if Tkinter:
 
 	lt=time.localtime(time.time())
 	mndatetime=time.strftime('%y%m%d %H:%M',(lt))
-	return '###'+OKFLAG+app.leoID+mndatetime
+	return '###'+OKFLAG+g.app.leoID+mndatetime
 </t>
 <t tx="ekr.20040205071616.3">def onStart (tag,keywords):
 
 	# insert function insertUser as method of class Commands at runtime
-	funcToMethod(insertUser,leoCommands.Commands)
-	funcToMethod(insertOKcmd,leoCommands.Commands)
+	g.funcToMethod(insertUser,leoCommands.Commands)
+	g.funcToMethod(insertOKcmd,leoCommands.Commands)
 
 </t>
 <t tx="ekr.20040205071616.4">def setHeadOK(v):
@@ -17830,7 +17765,7 @@ if Tkinter:
 		setHeadOK(v)
 		insertBodystamp(c,v)
 	else: 
-		es('OK in child missing')</t>
+		g.es('OK in child missing')</t>
 <t tx="ekr.20040205071616.9">def insertUser (self,event=None):
 	
 	"""Handle the Insert User command."""
@@ -17855,95 +17790,6 @@ if Tkinter:
 		("insOK",'Ctrl+Shift+O',c.insertOKcmd)]
 
 	c.frame.menu.createMenuEntries(c.pluginMenu,table)</t>
-<t tx="ekr.20040211080148">"""Add Hoist/De-Hoist buttons to the toolbar."""
-
-@language python
-
-# By Davide Salomoni.
-
-__version__ = "0.2" # Color, enable/disable mods by EKR.
-
-from leoPlugins import *
-from leoGlobals import *
-
-try:
-	import Tkinter
-except ImportError:
-	Tkinter = None
-Tk = Tkinter
-
-activeHoistColor = "pink1" # The Tk color to use for the active hoist button.
-
-# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
-USE_FIXED_SIZES = 1 
-
-@others
-
-if Tkinter:
-	hoist = HoistButtons()
-	
-	if app.gui is None:
-		app.createTkGui(__file__)
-	
-	if app.gui.guiName() == "tkinter":
-		registerHandler("after-create-leo-frame", hoist.addWidgets)
-		registerHandler("idle", hoist.onIdle)
-		plugin_signon(__name__)
-</t>
-<t tx="ekr.20040211080148.1">class HoistButtons:
-	"""Hoist/dehoist buttons for the toolbar."""
-	@others</t>
-<t tx="ekr.20040211080148.2">def _getSizer(self, parent, height, width):
-	"""Return a sizer object to force a Tk widget to be the right size"""
-	if USE_FIXED_SIZES: 
-		sizer = Tkinter.Frame(parent, height=height, width=width)
-		sizer.pack_propagate(0) # don't shrink 
-		sizer.pack(side="right")
-		return sizer
-	else:
-		return parent</t>
-<t tx="ekr.20040211080148.3">def addWidgets(self, tags, keywords):
-	"""Add the widgets to the toolbar."""
-	self.c = keywords['c'] 
-	toolbar = self.c.frame.iconFrame
-	# Button De-Hoist
-	self.hoistOff = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="De-Hoist", command=self.doHoistOff)
-	self.hoistOff.pack(side="right", fill="both", expand=1)
-	# Button Hoist
-	self.hoistOn = Tkinter.Button(self._getSizer(toolbar, 25, 70), text="Hoist", command=self.doHoistOn)
-	self.hoistOn.pack(side="left", fill="both", expand=1)
-	self.bgColor = self.hoistOn["background"]
-	self.activeBgColor = self.hoistOn["activebackground"]
-</t>
-<t tx="ekr.20040211080148.4">def doHoistOn(self, *args, **keys):
-
-	self.c.hoist()
-</t>
-<t tx="ekr.20040211080148.5">def doHoistOff(self, *args, **keys):
-
-	self.c.dehoist()
-</t>
-<t tx="ekr.20040211080148.6">def onIdle(self, tag, keywords):
-	
-	c = self.c
-	
-	if not hasattr(c,"hoistStack"):
-		return
-	
-	state = choose(c.canHoist(),"normal","disabled")
-	self.hoistOn.config(state=state)
-	
-	state = choose(c.canDehoist(),"normal","disabled")
-	self.hoistOff.config(state=state)
-
-	if len(c.hoistStack) &gt; 0:
-		self.hoistOn.config(bg=activeHoistColor)
-		self.hoistOn.config(activebackground=activeHoistColor)
-		self.hoistOn.config(text="Hoist %s" % len(c.hoistStack))
-	else:
-		self.hoistOn.config(bg=self.bgColor)
-		self.hoistOn.config(activebackground=self.activeBgColor)
-		self.hoistOn.config(text="Hoist")</t>
 <t tx="ekr.20040226104623">- Except @file-nosent.
 </t>
 <t tx="ekr.20040317155817"></t>
@@ -18140,22 +17986,22 @@ if __name__ == "__main__":
 </t>
 <t tx="ekr.20040320072156.20">"""Plugin to add word completion to the edit pane"""
 
+import leoPlugins
 import leoGlobals as g
+from leoGlobals import true,false
 
 try: import Tkinter as Tk
-except: Tk = None
+except ImportError: Tk = None
 
 import extender
 
 @others
 
 if Tk:
-	from leoPlugins import registerHandler,plugin_signon
-
 	__version__ = "0.2" # Converted to @file by EKR.
 	__name__ = "Word Completer"
 
-	plugin_signon("wordcompleter")
+	g.plugin_signon("wordcompleter")
 
 	s = "Starting word completer"
 	g.trace(s) ; g.es(s,color="purple")
@@ -18163,10 +18009,8 @@ if Tk:
 	completer1 = DottedCompleter()
 	completer2 = SimpleCompleter()
 
-	#registerHandler("start2", completer.addKeyBinding)
-	registerHandler("open2", completer1.createWordList)
-	registerHandler("open2", completer2.createWordList)
-</t>
+	#leoPlugins.registerHandler("start2", completer.addKeyBinding)
+	leoPlugins.registerHandler("open2", completer1.createWordList)</t>
 <t tx="ekr.20040320072156.21">class WordCompleter:
 
 	"""A class to help in suggesting words"""
@@ -18277,7 +18121,7 @@ the methods and attributes of an object)
 * F5 - complete a stand alone word (eg type "imp" followed by F5 will cycle
 though some standard words ... import etc)
 
-Pressing F4 with a partial match (eg "os.pa") will cycle through the methods
+Pressing F4 with a partial g.match (eg "os.pa") will cycle through the methods
 begining with "pa".
 
 The plugin works by scanning the Leo file to look for words and objects. Hence
@@ -18318,9 +18162,4981 @@ EKR: 3/20/04
 
 I don't understand the code yet, but already I love this plugin!</t>
 <t tx="ekr.20040325075338"></t>
-<t tx="ekr.20040325075338.1">- Changed app() to app.
+<t tx="ekr.20040325075338.1">- Changed g.app() to g.app.
 - Changed scanDirectives(c,v=whatever) to scanDirectives(c,p=whatever)
 
 This is a reversion somehow.  I need to rerun the script that converts to the "import leoGlobals as g"  code style.</t>
+<t tx="ekr.20040330110504">import leoGlobals as g
+from leoGlobals import true,false
+import string
+c = g.top()
+
+@others
+
+if 1:
+	&lt;&lt; set nameList to the list of functions in leoGlobals.py &gt;&gt;
+else:
+	p = g.findNodeAnywhere("@file leoGlobals.py")
+	nameList = findFunctionsInTree(p)
+
+	nameList.sort() ; g.enl()
+	for name in nameList: g.es("'%s'," % name)
+	
+	s = "%d functions in leoGlobals.py" % len(nameList)
+	print s ; g.es(s)
+
+if 1:
+	p = g.findTopLevelNode("New or improved in 4.2") ## Change this to have this script work on other subtrees.
+	g.enl() ; g.enl()
+	count = prependNamesInTree(p,nameList,"g.",replace=true) # Just prints if replace==false.
+	s = "%d --- done --- " % count
+	print s ; g.es(s)</t>
+<t tx="ekr.20040330110504.1">nameList = (
+'alert',
+'angleBrackets',
+'appendToList',
+'callerName',
+'CheckVersion',
+'choose',
+'clearAllIvars',
+'clear_stats',
+'collectGarbage',
+'computeLeadingWhitespace',
+'computeWidth',
+'computeWindowTitle',
+'createTopologyList',
+'create_temp_name',
+'disableIdleTimeHook',
+'doHook',
+'dump',
+'ecnl',
+'ecnls',
+'enableIdleTimeHook',
+'enl',
+'ensure_extension',
+'es',
+'esDiffTime',
+'es_error',
+'es_event_exception',
+'es_exception',
+'escaped',
+'executeScript',
+'file_date',
+'findNodeAnywhere',
+'findNodeInTree',
+'findTopLevelNode',
+'findReference',
+'find_line_start',
+'find_on_line',
+'flattenList',
+'funcToMethod',
+'getBaseDirectory',
+'getOutputNewline',
+'getTime',
+'get_Sherlock_args',
+'get_directives_dict',
+'get_leading_ws',
+'get_line',
+'get_line_after',
+'getpreferredencoding',
+'idleTimeHookHandler',
+'importFromPath',
+'initScriptFind',
+'init_sherlock',
+'init_trace',
+'isUnicode',
+'isValidEncoding',
+'is_c_id',
+'is_nl',
+'is_special',
+'is_ws',
+'is_ws_or_nl',
+'joinLines',
+'listToString',
+'makeAllNonExistentDirectories',
+'makeDict',
+'match',
+'match_c_word',
+'match_ignoring_case',
+'match_word',
+'module_date',
+'openWithFileName',
+'optimizeLeadingWhitespace',
+'os_path_abspath',
+'os_path_basename',
+'os_path_dirname',
+'os_path_exists',
+'os_path_getmtime',
+'os_path_isabs',
+'os_path_isdir',
+'os_path_isfile',
+'os_path_join',
+'os_path_norm',
+'os_path_normcase',
+'os_path_normpath',
+'os_path_split',
+'os_path_splitext',
+'pause',
+'plugin_date',
+'plugin_signon',
+'printDiffTime',
+'printGc',
+'printGcRefs',
+'printGlobals',
+'printLeoModules',
+'print_bindings',
+'print_stats',
+'readlineForceUnixNewline',
+'redirectStderr',
+'redirectStdout',
+'removeLeadingWhitespace',
+'removeTrailingWs',
+'reportBadChars',
+'restoreStderr',
+'restoreStdout',
+'sanitize_filename',
+'scanAtEncodingDirective',
+'scanAtFileOptions',
+'scanAtLineendingDirective',
+'scanAtPagewidthDirective',
+'scanAtRootOptions',
+'scanAtTabwidthDirective',
+'scanDirectives',
+'scanError',
+'scanf',
+'set_delims_from_language',
+'set_delims_from_string',
+'set_language',
+'shortFileName',
+'skip_blank_lines',
+'skip_block_comment',
+'skip_braces',
+'skip_c_id',
+'skip_heredoc_string',
+'skip_leading_ws',
+'skip_leading_ws_with_indent',
+'skip_line',
+'skip_long',
+'skip_matching_delims',
+'skip_nl',
+'skip_non_ws',
+'skip_parens',
+'skip_pascal_begin_end',
+'skip_pascal_block_comment',
+'skip_pascal_braces',
+'skip_pascal_string',
+'skip_php_braces',
+'skip_pp_directive',
+'skip_pp_if',
+'skip_pp_part',
+'skip_python_string',
+'skip_string',
+'skip_to_char',
+'skip_to_end_of_line',
+'skip_to_semicolon',
+'skip_typedef',
+'skip_ws',
+'skip_ws_and_nl',
+'splitLines',
+'stat',
+'stdErrIsRedirected',
+'stdOutIsRedirected',
+'toEncodedString',
+'toUnicode',
+'toUnicodeFileEncoding',
+'top',
+'trace',
+'trace_tag',
+'update_file_if_changed',
+'utils_rename',
+'windows',
+'wrap_lines')</t>
+<t tx="ekr.20040330110504.2">def findFunctionsInTree(p):
+	
+	nameList = []
+	for p in p.self_and_subtree_iter():
+		names = findDefs(p.bodyString())
+		if names:
+			for name in names:
+				if name not in nameList:
+					nameList.append(name)
+	return nameList</t>
+<t tx="ekr.20040330110504.3">def findDefs(body):
+	
+	lines = body.split('\n')
+	names = []
+	for s in lines:
+		i = g.skip_ws(s,0)
+		if g.match(s,i,"class"):
+			return [] # The classes are defined in a single node.
+		if g.match(s,i,"def"):
+			i = g.skip_ws(s,i+3)
+			j = g.skip_c_id(s,i)
+			if j &gt; i:
+				name = s[i:j]
+				if g.match(name,0,"__init__"): 
+					return [] # Disallow other class methods.
+				names.append(name)
+	return names</t>
+<t tx="ekr.20040330110504.4">def prependNamesInTree(p,nameList,prefix,replace=false):
+	
+	c = p.c
+	
+	assert(len(prefix) &gt; 0)
+	ch1 = string.letters + '_'
+	ch2 = string.letters + string.digits + '_'
+	def_s = "def " ; def_n = len(def_s)
+	prefix_n = len(prefix)
+	total = 0
+	c.beginUpdate()
+	for p in p.self_and_subtree_iter():
+		count = 0 ; s = p.bodyString()
+		printFlag = false
+		if s:
+			for name in nameList:
+				i = 0 ; n = len(name)
+				while 1:
+					&lt;&lt; look for name followed by '(' &gt;&gt;
+			if count and replace:
+				if 0:
+					&lt;&lt; print before and after &gt;&gt;
+				p.setBodyStringOrPane(s)
+				p.setDirty()
+		g.es("%3d %s" % (count,p.headString()))
+		total += count
+	c.endUpdate()
+	return total</t>
+<t tx="ekr.20040330110504.5">i = s.find(name,i)
+if i == -1:
+	break
+elif g.match(s,i-1,'.'):
+	i += n # Already an attribute.
+elif g.match(s,i-prefix_n,prefix):
+	i += n # Already preceded by the prefix.
+elif g.match(s,i-def_n,def_s):
+	i += n # preceded by "def"
+elif i &gt; 0 and s[i-1] in ch1:
+	i += n # Not a word match.
+elif i+n &lt; len(s) and s[i+n] in ch2:
+	i += n # Not a word match.
+else:
+	j = i + n
+	j = g.skip_ws(s,j)
+	if j &gt;= len(s) or s[j] != '(':
+		i += n
+	else: # Replace name by prefix+name
+		s = s[:i] + prefix + name + s[i+n:]
+		i += n ; count += 1
+		# g.es('.',newline=false)
+		if 1:
+			if not printFlag:
+				printFlag = true
+				# print p.headString()
+			print g.get_line(s,i-n)</t>
+<t tx="ekr.20040330110504.6">print "-"*10,count,p.headString()
+print "before..."
+print p.bodyString()
+print "-"*10,"after..."
+print s</t>
+<t tx="ekr.20040330120121"># Test rst2.py,</t>
+<t tx="ekr.20040331070534"></t>
+<t tx="ekr.20040331071319">"""If a headline starts with @rst &lt;filename&gt;, double-clicking on it will 
+write a file in outline order, with the headlines converted to reStructuredText 
+section headings.
+
+If the name of the &lt;filename&gt; has the extension .html, .htm or .tex, and if you have
+docutils installed, it will generate HTML or LaTeX, respectively."""
+
+# By Josef Dalcolmo: contributed under the same licensed as Leo.py itself.
+
+# EKR: The code now lets other plugins handle @folder and @url nodes.
+
+# S. Zatz: some modifications to create the ability to combine program code and documentation
+# using @rst nodes (with no file name) in orde to produce combined code/documentation HTML output.
+# See the 'about this plugin' section for more information
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+import os
+#import reST_HTML
+
+&lt;&lt; about this plugin &gt;&gt;
+&lt;&lt; change log &gt;&gt;
+
+@others
+
+# Register the handlers...
+leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+__version__ = "2.0"
+g.plugin_signon(__name__)
+
+</t>
+<t tx="ekr.20040331071319.1">@ This plugin writes out @rst nodes as a reStructuredText file.
+
+If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
+module) installed, then it will be written as HTML or LaTeX, respectively. The HTML converter is far
+from bug-free, but remember, docutils is alpha software. (Perhaps a future
+version will allow automatic translation to other formats, like OpenOffice.org
+as well).
+
+Headlines are translated into reStructuredText headlines, e.g. underlined
+depending on the level and empty line separated from body text otherwise, text
+is written as it is. The "#" character is not used for underlining, so it may
+be used for a title as in::
+
+	#####
+	Title
+	#####
+
+Otherwise, section underlining is discouraged, since it is automatically generated.
+
+.. _docutils: http://docutils.sourceforge.net
+
+--------------------------------------------------------
+
+S Zatz modifications
+
+Assumes Leo outlines are in the form
+
+@rst somefilename.[txt/html/tex]
+..@file-nosent somefilename.py
+	code node
+	..@rst
+	..another code node
+		@rst
+	..more code
+		@rst
+
+and so on
+
+If you want a table of contents, put the following:  '.. contents:: Table of Contents'
+on its own line in the body of the root '@rst somefilename.[txt/html/tex]' node.
+(Maybe this should be done in the plugin?)
+
+Double-clicking on a @rst somefilename.ext node generates a reST-structured [txt/html/tex] file that combines
+program code nodes with reST documentation from @rst nodes that have no associated filename.
+
+Note: if the SilverCity lexing package is present then code is presented with syntax highlighting.  For the
+HTML output to look OK you need the following cascading style sheets:
+	1) default.css -&gt; docutils default style sheet
+	2) leo_rst.css -&gt; contains some style 'improvements' mostly based on Gunnar Schwant's DocFactory
+	3) silver_city.css -&gt; if SilverCity is present, this is the style sheet that supports syntax highlighting
+The latter two style sheets are imported at the end of the default.css.  Since I know only enough css to be dangerous,
+would be great to have someone clean this up.  I am following David Goodger request that the default docutils
+style sheet be kept intact with modifications done via imported style sheets.
+</t>
+<t tx="ekr.20040331071319.2">@ Change log:
+
+- New tree types: @rst has been added.
+
+- EKR: The code now lets other plugins handle @folder and @url nodes.
+
+- HTML generation: @rst nodes can now generate HTML, if Python docutils_ are
+  installed. Simply give the filename an extension .htm or .html. You can try
+  this out by renaming the filename in this @rst tree.
+
+- underlines: I changed the order of the underline characters again. The "&gt;" is
+  doesn't really look good as an underline in my opinion, so I moved it to a very
+  low level.
+
+- JD 2003-03-10 (rev 1.3): some more corrections to the unicode-&gt; encoding translation.
+  No only check for missing docutils (doesn't mask other errors any more).
+
+- JD 2003-03-11 (rev 1.4): separated out the file launching code to a different pluging.
+
+- 2003-11-02 Added generation of LaTeX files, just make the extension of the filename '.tex'. --Timo Honkasalo
+
+- 2003-12-24 S Zatz modifications to introduce concept of plain @rst nodes to improve program documentation</t>
+<t tx="ekr.20040331071319.3"># by Josef Dalcolmo 2003-01-13
+#
+# this does not check for proper filename syntax.
+# path is the current dir, or the place @folder points to
+# this should probably be changed to @path or so.
+
+def onIconDoubleClick(tag,keywords):
+
+	v = keywords.get("v")
+	c = keywords.get("c")
+	h = v.headString().strip()
+
+	if g.match_word(h,0,"@rst"):
+		if len(h) &gt; 5:
+			fname = h[5:]
+			ext = os.path.splitext(fname)[1].lower()
+			if ext in ('.htm','.html','.tex'):
+				&lt;&lt; write rST as HTML/LaTeX &gt;&gt;
+			else:
+				&lt;&lt; write rST file &gt;&gt;
+		else:
+			# if the headline only contains @rst then open the node and its parent in text editor
+			# this works for me but needs to be generalized and should probably be a component
+			# of the open_with plugin.
+			if 0:
+				c.openWith(("os.startfile", None, ".txt"))
+				c.selectVnode(v.parent())
+				c.openWith(("os.startfile", None, ".tp"))</t>
+<t tx="ekr.20040331071319.4">try:
+	import docutils
+except:
+	g.es('HTML/LaTeX generation requires docutils')
+	return
+else:
+	from docutils.core import Publisher
+	from docutils.io import StringOutput, StringInput
+	import StringIO
+	
+# Set the writer and encoding for the converted file
+if ext in ('.html','.htm'):
+	writer='html'
+	enc="utf-8"
+else:
+	writer='latex'
+	enc="iso-8859-1"
+
+if writer == 'html':
+	try:
+		import SilverCity
+	except:
+		g.es('SilverCity not present so no syntax highlighting')
+		syntax = False
+	else:
+		&lt;&lt; define code-block &gt;&gt;
+		syntax = True     
+else:
+	syntax = False
+	
+rstFile = StringIO.StringIO()
+writeTreeAsRst(rstFile, fname, v, c, syntax)
+rstText = rstFile.getvalue()
+
+# this code snipped has been taken from code contributed by Paul Paterson 2002-12-05
+pub = Publisher()
+pub.source = StringInput(source=rstText)
+pub.destination = StringOutput(pub.settings, encoding=enc)
+pub.set_reader('standalone', None, 'restructuredtext')
+pub.set_writer(writer)
+output = pub.publish()
+
+convertedFile = file(fname,'w')
+convertedFile.write(output)
+convertedFile.close()
+rstFile.close()
+g.es('written: '+str(fname))</t>
+<t tx="ekr.20040331071319.5"># See Syntax-highlighted code blocks for docutils by Kevin Schluff in ASPN Python Cookbook
+# this code defines a new "code-block" directive for docutils
+import docutils.parsers.rst
+
+def code_block(name, arguments, options, content, lineno, content_offset, block_text, state, state_machine):
+	language = arguments[0]
+	module = getattr(SilverCity, language)
+	generator = getattr(module, language+"HTMLGenerator")
+	io = StringIO.StringIO()
+	generator().generate_html(io, '\n'.join(content))
+	html = '&lt;div class="code-block"&gt;\n%s\n&lt;/div&gt;\n'%io.getvalue()
+	raw = docutils.nodes.raw('',html, format='html') #(self, rawsource='', text='', *children, **attributes):
+	return [raw]
+
+code_block.arguments = (1,0,0)
+code_block.options = {'language' : docutils.parsers.rst.directives.unchanged}
+code_block.content = 1
+  
+# Need to register the directive with docutils
+docutils.parsers.rst.directives.register_directive('code-block', code_block)
+</t>
+<t tx="ekr.20040331071319.6">rstFile = file(fname,'w')
+writeTreeAsRst(rstFile, fname, v, c)
+rstFile.close()
+g.es('written: '+str(fname))</t>
+<t tx="ekr.20040331071319.7">def writeTreeAsRst(rstFile, fname, vnode, c, syntax):
+	'Writes the tree under vnode to the file rstFile (fname is the filename)'
+	# we don't write a title, so the titlepage can be customized
+	# use '#' for title under/overline
+	directives = g.scanDirectives(c, v=vnode) # changed name because don't want to use keyword dict
+	
+	encoding = directives.get("encoding",None)
+	if encoding == None:
+		encoding = g.app.config.default_derived_file_encoding
+	
+	if syntax:
+		lang_dict = {'python':'Python', 'ruby':'Ruby', 'perl':'Perl', 'c':'CPP'}
+		language = directives['language']
+		# SilverCity modules have first letter in caps
+		if language in lang_dict:
+			code_dir = '**code**:\n\n.. code-block:: %s\n\n'%lang_dict[language]
+		else:
+			code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+	else:
+		code_dir = '**code**:\n\n.. class:: code\n..\n\n::\n\n'
+
+	s = g.toEncodedString(fname,encoding,reportErrors=true)
+	rstFile.write('.. filename: '+s+'\n')
+	rstFile.write('\n')
+
+	s = vnode.bodyString()
+	s = g.toEncodedString(s,encoding,reportErrors=true)
+	rstFile.write(s+'\n')		# write body of titlepage
+	rstFile.write('\n')
+	
+	toplevel = vnode.level()+1 #Dec 20
+	h = vnode.headString()
+	stopHere = vnode.nodeAfterTree()
+	v = vnode.threadNext()
+	# repeat for all nodes in this tree
+	while v != stopHere:
+		h = v.headString().strip()
+		if g.match_word(h,0,"@rst"):
+			s = v.bodyString()
+			s = g.toEncodedString(s,encoding,reportErrors=true)
+			# next line is an total hack to take care of @ignore, @nocolor, @wrap in the @rst nodes
+			s = s.split('\n',3)[3]
+			rstFile.write('**comments**:\n%s\n'%s)
+			rstFile.write('\n')
+		else:
+			if g.match_word(h,0,"@file-nosent"):
+				h = h[13:]
+			h = g.toEncodedString(h,encoding,reportErrors=true)
+			s = v.bodyString()
+			s = g.toEncodedString(s,encoding,reportErrors=true)
+			rstFile.write(h+'\n')
+			rstFile.write(underline(h,v.level()-toplevel))
+			rstFile.write('\n')
+			if s.strip():
+				rstFile.write(code_dir)
+				s = s.split('\n')
+				for linenum,linetext in enumerate(s[:-1]):
+					if "@others" in linetext: #deleting lines with @other directive from output
+						continue
+					rstFile.write('\t%2d  %s\n'%(linenum+1,linetext))
+			rstFile.write('\n')
+			
+		v = v.threadNext()
+</t>
+<t tx="ekr.20040331071319.8"># note the first character is intentionally unused, to serve as the underline
+# character in a title (in the body of the @rst node)
+
+def underline(h,level):
+	str = """#=+*^~"'`-:&gt;&lt;_"""[level]
+	return str*max(len(h),4)+'\n'</t>
+<t tx="ekr.20040331071919"></t>
+<t tx="ekr.20040331071919.1">@language plain
+@ascfile "doc/mod_asc_dev.asc"
+@doc                
+@ascskip # Time-stamp: "Mon, Jan 19 15:30 CST 2004  michael@redpriest Leo_AsciiDoc_Developers_Guide_141612300.txt"
+Preface
+-------
+
+Leo2AsciiDoc is a small Python program which has been built to be used as
+a plugin module for the Leo outlining editor.
+
+This is the Developer Documentation and source code listing of
+Leo2AsciiDoc.
+
+Leo2AsciiDoc enables the contents of Leo outlines to be published to
+HTML or PDF via the DocBook XML set of publishing tools.  Plain text
+from the Leo outline is transformed into a final result that has:
+
+    - typeset body text, in which bulleted and numbered lists,
+      variable lists, page numbers, URLs, index terms,and bold and
+      italic text are automatically recognized.
+    - typeset Headings
+    - a Table of Contents
+    - an Index containing any items marked by the user, and any
+      Python classes or functions.
+
+indexterm:[Literate Programming]
+For programmers, Leo2AsciiDoc enables a simplified version of
+Literate Programming: all the documentation and code for a program
+can be written in a Leo outline, and published with just a few
+keystrokes.  As is normal for a Leo outline, Leo can also extract
+the source code from the outline and package it into text files,
+ready to be run or compiled.
+
+Specifically, what the Leo2AsciiDoc program does is:
+
+    - wait to be called by the Leo menu (File; Export; Export to
+      AsciiDoc), and then
+    - read a part of a Leo outline, and
+    - write the contents to a text file that can be understood by
+      the AsciiDoc program.
+
+From there:
+
+    - the xref:AsciiDoc[] program can then convert that text file to
+      another text file that is in the DocBook XML format.
+    - the standard collection of xref:DocBook[] tools can then format the
+      text in HTML (web page) files or as a typeset PDF file.
+    - Once set up, the whole process happens quickly and
+      automatically, usually with a simple "make" command.
+
+Here are some web locations for the items I've referenced above:
+
+Leo::    
+    http://webpages.charter.net/edreamleo/front.html[]
+Python::
+    http://www.python.org[]
+Docbook::    
+    http://docbook.org/[]
+Literate Programming::
+    http://www.literateprogramming.com/[]
+AsciiDoc::
+    http://www.methods.co.nz/asciidoc/[]
+PDF::
+    Adobe provides a free program, Adobe Acrobat Reader (Windows &amp;
+    Linux), that is used to read and print documents produced in the
+    Adobe Portable Document Format.
+    http://www.adobe.com/products/acrobat/readermain.html[]
+
+---
+Michael Dawson
+Marshall Research
+michael_dawson at marshallresearch dot com
+---
+@code</t>
+<t tx="ekr.20040331071919.2">@doc
+@ascskip # Time-stamp: "Fri, Jan  9 15:19 CST 2004  michael@redpriest About_this_document_140583820.txt"
+
+If you are reading this document in HTML (in a web browser) or as a
+PDF file (usually in Adobe Acrobat Reader), it may interest you to
+know that this document was generated from a Leo outline.
+
+The Leo outline (in the file mod_leo2ascd.leo) contained the
+Leo2AsciiDoc Users Guide, the Leo2AsciiDoc Developers Guide, and all
+the Leo2AsciiDoc source code.  All of them were created by simply
+typing plain text.
+
+The working source code was exported by Leo using the "File; Tangle;
+Tangle" menu selection, which created the Python program file
+"mod_leo2ascd.py".
+
+The Users Guide and the Developers Guide were created by exporting
+the text from Leo, using the menu selection "File; Export; Export
+All to AsciiDoc".  This created the plain text files
+"mod_asc_user.asc" and "mod_asc_dev.asc" (which are the file names I
+told Leo to use.)
+
+I then typed "make all" at the console in the directory, and the
+make program:
+
+    - ran the AsciiDoc program to produce the DocBook XML files.
+    - ran the xsltproc program to produce the HTML files from the
+      XML files.
+    - ran the xsltproc program to produce "fo" files, and ran the
+      fop program to produce PDF files from the fo files.
+
+Everything was generated automatically without any further work on
+my part.
+
+@code</t>
+<t tx="ekr.20040331071919.3">@doc
+@ascskip # Time-stamp: "Mon, Jan 19 15:28 CST 2004  michael@redpriest License_141615068.txt"
+
+This is part of the Leo2AsciiDoc software package, which is released
+as open source.  
+
+The license is the most "open" I know of, and is sometimes referred
+to as the "X11" or "MIT" license.  Boiled down, in non-legal terms:
+
+    - the software is yours for free -- to run, modify and
+      distribute as you will
+    - I have no legal liability for any of it
+    - you may not use my name.
+
+Michael Dawson
+Marshall Research
+michael_dawson at marshallresearch dot com
+
+NOTE: The following license is often referred to as the "MIT/X
+Consortium License", as the "MIT license" and as the "X11" license.
+My source for the exact wording is the copy at the Open Source
+Initiative:  http://opensource.org/licenses/mit-license.html[]
+
+
+@code
+</t>
+<t tx="ekr.20040331071919.4">@doc
+@ascskip # Time-stamp: "Fri, Jan  9 09:18 CST 2004  michael@redpriest License_document_140581532.txt"
+---
+Terms and Conditions
+ 
+COPYRIGHT AND PERMISSION NOTICE
+
+Copyright (c) 1999,2000,2001,2002,2003,2004 Michael W. Dawson
+
+All rights reserved.
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation files
+(the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, provided
+that the above copyright notice(s) and this permission notice appear
+in all copies of the Software and that both the above copyright
+notice(s) and this permission notice appear in supporting
+documentation.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE BE LIABLE FOR
+ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY
+DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THIS SOFTWARE.
+
+Except as contained in this notice, the name of a copyright holder
+shall not be used in advertising or otherwise to promote the sale,
+use or other dealings in this Software without prior written
+authorization of the copyright holder.
+---
+@code</t>
+<t tx="ekr.20040331071919.5">@doc
+@ascskip # Time-stamp: "Fri, Jan  9 16:13 CST 2004  michael@redpriest Version_Requirements_140584132.txt"
+
+This is version 0.4 of Leo2AsciiDoc.  The major version of zero
+indicates that it is an in-house version, not suitable for
+production use elsewhere.
+
+It was created and tested using:
+
+    - Leo version 4.1 (release candidate 3).  Leo2AsciiDoc was
+      upgraded to use the new features in 4.1 and is no longer
+      compatible with previous versions.
+    - AsciiDoc version 5.0.2.  Leo2AsciiDoc was upgraded to use the
+      new features in 5.0.2, and is no longer compatible with older
+      versions of AsciiDoc.
+    - DocBook XML DTD version 4.2 and DocBook XSL stylesheets 1.60.1
+    - xsltproc 1.0.30
+    - fop 0.20.5
+
+The last three items are the DocBook tool chain I'm currently using.
+Any working DocBook XML tool chain you may have is likely to work,
+since the major Leo2AsciiDoc effort is in producing the XML files
+the tool chain uses as input.
+
+@code</t>
+<t tx="ekr.20040331071919.6">@language plain
+@doc
+@ascskip # Time-stamp: "Fri, Jan  9 16:00 CST 2004  michael@redpriest The_General_Approach_140588436.txt"
+
+Leo2AsciiDoc simply copies the text from a portion of a Leo outline
+to a text file.  That text file can then be processed by other
+programs to produce HTML, PDF's, etc.
+
+The text will be copied from each outline item, in outline order,
+though you can skip individual nodes or sub-trees.
+
+The idea is that you write the outline as a book, or series of
+books.
+
+If your book contains source code, you can break it up into pieces
+that make it convenient to review with the reader.  Additionally,
+you can discuss the pieces in any order that you like.  Using the
+"tangle" command, Leo will be able to assemble and reorder the
+pieces in the order required for a file of compilable source code.
+
+As the text is copied from the outline, Leo2AsciiDoc adds minimal markup,
+generally:
+
+    - It marks up node headlines as Titles and Section Headings
+      in the AsciiDoc format.
+    - Program listings have AsciiDoc section markers inserted before
+      and after.
+
+A specific list follows.
+
+@code</t>
+<t tx="ekr.20040331071919.7">@language plain
+@doc
+@ascskip # Time-stamp: "Fri, Jan  9 16:05 CST 2004  michael@redpriest Markup_Added_140589620.txt"
+
+    - headings:
+        * By default, all outline node headings are underlined with
+          the appropriate section underline character, which
+          AsciiDoc will use to transform the headings into titles:
+          chapter, section1, section2, etc.
+        * code extracts are given an "example" heading.
+    - source code sections are marked with delimiters, so that they
+      can be assigned to the DocBook "programlisting" element.
+    - source code sections are line-wrapped in the document output,
+      for convenient html display.
+    - wherever source code is exported to a source code file, the
+      document with note this with an automatically generated "note"
+      element.
+
+@code
+</t>
+<t tx="ekr.20040331071919.8">@language python
+@doc
+@ascskip on
+ @silent
+NB: remove leading space from above silent directive for final clean
+code.
+
+@ascskip off
+@ascskip # Time-stamp: "Thu, Dec  4 11:58 CST 2003  michael@redpriest _The_Code__140751676.py"
+
+This chapter contains all the source code for the Leo2AsciiDoc program.
+The code is arranged in an order that is convenient for discussion.
+
+On its way from the Leo outline to this document, the code has been
+reformatted for printing.  Please note that:
+
+    - code lines that are longer than the current publishing limit
+      are wrapped.  Wrapped lines end in a "\" character and have
+      the remainder of the text on the next line, preceeded by 4
+      spaces. The real working code is not changed in this way when
+      exported for actual use.
+    - Some code has been extracted as Examples, and has a title
+      saying something like "Example: Interesting Code".  Rather
+      than repeat that code in the main code body, there is simply a
+      reference to the name, enclosed in double angle brackets:
+      \&lt;&lt;Interesting Code&gt;&gt;. All extracts are indexed, see "Python
+      code, extracts used" in the Index at the end of the document.
+
+@ascskip on
+@root "mod_leo2ascd.py"
+&lt;&lt; Declarations and Utilities &gt;&gt;
+&lt;&lt; Write the outline tree as AsciiDoc file &gt;&gt;
+&lt;&lt; Write a node &gt;&gt;
+&lt;&lt; Key Functions &gt;&gt;
+@code</t>
+<t tx="ekr.20040331071919.9">@doc
+@ascskip # Time-stamp: "Thu, Dec  4 16:05 CST 2003  michael@redpriest _Key_Functions__141128028.py"
+
+These are the top-level functions that can be called from the Leo menu.
+
+The next function writes the Leo outline tree of the current node to
+a text file.  It first checks to see that there is an ascfile
+directive in the current node, or above it, and then calls the
+WriteTreeAsAsc function to write the tree starting at the ascfile
+node.
+
+If you have several documents in one Leo outline, this function will
+write out the current one.
+
+@code
+
+def WriteTreeOfCurrentNode():
+    c = g.top() ; f = c.frame
+    vnode = c.currentVnode() # get the current vnode.
+    while vnode:
+        ascFileN = GetAscFilename(vnode)
+        if ascFileN == None:
+            vnode = vnode.parent()
+        else:
+            break
+
+    if ascFileN == None:
+        g.es("Sorry, there was no @ascfile directive in this outline tree.")
+    else:
+        WriteTreeAsAsc(vnode, ascFileN)
+
+@doc
+
+The next function exports all Leo2AsciiDoc documents in the entire Leo
+outline, starting at the top and working through all nodes.
+
+@code
+def WriteAll():
+    c = g.top() ; f = c.frame
+    v = c.rootVnode()
+    while v:
+        ascFileN = GetAscFilename(v)
+        if ascFileN != None:
+            WriteTreeAsAsc(v, ascFileN)
+            v = v.nodeAfterTree()
+        else:
+            v = v.threadNext()
+@doc
+
+This function is handy to see all the Leo2AsciiDoc sub-trees and source
+code sub-trees in a Leo outline.  It prints the results in the log pane.
+
+@code
+
+def WriteAllRoots():
+    "Writes @root directive and/or @ascfile directive to log pane."
+
+    patternAscDirectiveFile = re.compile(r'^@ascfile')
+    patternRoot = re.compile(r'^@root')
+
+    g.es('Looking for @root or @ascfile.')
+    c = g.top() ; f = c.frame
+    vnode = c.rootVnode()
+    while vnode:
+        bodyString = vnode.bodyString()
+        lines = bodyString.splitlines()
+        printedHeading = False
+        for line in lines:
+            printLine = False
+            containsAscFileDirective = patternAscDirectiveFile.match(line)
+            if containsAscFileDirective:
+                printLine = True
+            containsRootDirective = patternRoot.match(line)
+            if containsRootDirective:
+                printLine = True
+            if printLine:
+                if not printedHeading:
+                    g.es(vnode.headString())
+                    printedHeading = True
+                g.es('  ' + line)
+        vnode = vnode.threadNext()
+
+@doc
+
+Next, we simply create Leo menu items for the above functions,
+assuming Leo is loading this code as a module (i.e. the Python
+source has been placed in the Leo plugins directory.)  As a module,
+the phrase "if 0:" must be changed to "if 1:" to activate the
+module.
+
+But while the "if 0:" is left, this code can be used as a script
+from the Leo scripts menu (assuming a copy of the code has been
+placed in the Leo scripts directory), implementing the WriteAll
+function above. This is useful in testing.
+
+@code
+def CreateAscMenu(tag,keywords):
+
+    """Create the Outline to AsciiDoc menu item in the Export menu."""
+
+
+    if  (tag=="open2" or
+        (tag=="start2") or
+        (tag=="command2" and keywords.get("label")=="new")):
+
+        c = g.top()
+        exportMenu = c.frame.menu.getMenu('export')
+        newEntries = (
+            ("-", None, None),
+            ("Export all to &amp;AsciiDoc","Alt+Shift+A",WriteAll),
+            ("Export current tree to AsciiDoc","Alt+Shift+T",WriteTreeOfCurrentNode),
+            ("Log all root and ascfile to log pane","Alt+Shift+L",WriteAllRoots)
+            )
+
+        c.frame.menu.createMenuEntries(exportMenu, newEntries)
+    
+
+if 1:
+    leoPlugins.registerHandler(("start2","open2","command2"), CreateAscMenu)
+
+    __version__ = ".4" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
+else:
+    WriteTreeOfCurrentNode()
+
+@doc
+
+</t>
+<t tx="ekr.20040331071919.10">@doc
+@ascskip # Time-stamp: "Tue, Nov 25 11:25 CST 2003  michael@redpriest _Declarations_and_Utilities__140958380.py"
+
+Next, we define new directives to control the way we export the Leo
+text, as seen in this extract from the main code.  Directives start
+with an "@" character as the first character in the line.
+
+@code
+&lt;&lt;New Leo2AsciiDoc directives&gt;&gt;=
+patternAscDirectiveConfig = re.compile(r'^@ascconfig\W+(\w+)\s+(\S+)')
+patternAscDirectiveFile = re.compile(r'^@ascfile *"*([\w\\/\.]*)"*')
+patternAscDirectiveExit = re.compile(r"^@ascexit")
+patternAscDirectiveIgnore = re.compile(r"^@ascignore")
+patternAscDirectiveSkip = re.compile(r"^@ascskip")
+patternAscDirectiveSkipToggle = re.compile(r"^@ascskip\s*(\w+)+.*")
+@doc
+
+Next, a class to simulate constants, and make it easy to use
+them. We create a class whose variables can be assigned, but not
+reassigned inadvertently. As well, the "Next" function gives us an
+easy way to acquire a variable of unique value when we don't care
+what that value actually is, just that it is unique.
+
+@code
+&lt;&lt;Simulate Python constants&gt;&gt;=
+class   _AssignUniqueConstantValue:
+	""" Provide unique value to be used as a constant """
+	def __init__(self):
+		self.UniqueInternalValue = 0
+		self.Assign_at_start()
+
+    class ConstError(TypeError): pass
+    def __setattr__(self,name,value):
+        if self.__dict__.has_key(name):
+            if name != "UniqueInternalValue":
+                raise self.ConstError, "Can't rebind const(%s)"%name
+        self.__dict__[name]=value
+
+	def Assign_at_start(self):
+		self.END_PROGRAM = self.Next()   # signal abort
+		self.LINE_WAS_NONE = self.Next() # describe last line printed
+		self.LINE_WAS_CODE = self.Next()
+		self.LINE_WAS_DOC  = self.Next()
+		self.LINE_WAS_HEAD = self.Next()
+		self.LINE_PENDING_NONE  = self.Next() # describe next line to be printed
+		self.LINE_PENDING_CODE  = self.Next()
+		self.LINE_PENDING_DOC   = self.Next()
+
+	def Next(self):
+		self.UniqueInternalValue += 1
+		return(self.UniqueInternalValue)
+@doc
+@ascexit
+@code
+&lt;&lt;The Code -- Declarations and Utilities&gt;&gt;</t>
+<t tx="ekr.20040331071919.11">@doc
+@ascskip # Time-stamp: "Fri, Dec 19 10:42 CST 2003  michael@redpriest _The_Code_Declarations_and_Utilities__140568852.py"
+
+Here we begin the Python program, importing the modules we need, and
+signing on as the Leo2AsciiDoc module in the Leo log window.
+
+@code
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+import re
+import os
+
+g.es("---mod_leo2asc 0.4-------")
+@doc
+
+Next, a class to hold our configuration data. Users can change the
+Leo2AsciiDoc configuration by including an "@ascconfig" directive in the
+body text of a Leo outline, either in the root node or in the same
+node as an "@ascfile" directive.  User directives in the root node
+override the Leo2AsciiDoc defaults. Further, directives in an ascfile
+node not only override the Leo2AsciiDoc defaults, but also any user
+directives in the root node.
+
+@code
+&lt;&lt;Simulate Python constants&gt;&gt;
+
+class _ConfigOptions:
+    """Hold current configuration options."""
+    def __init__(self):
+        self.current = {}
+        self.default = {}
+        self.default["maxCodeLineLength"] = '76'
+        self.default["delimiterForCodeStart"] = '~-~--- code starts --------'
+        self.default["delimiterForCodeEnd"]   = '~-~--- code ends ----------'
+        self.default["delimiterForCodeSectionDefinition"] = '*example*'
+        self.default["headingUnderlines"] = '=-~^+'
+        self.default["asciiDocSectionLevels"] = '5'
+        self.default["PrintHeadings"] = "on"
+
+    def __GetNodeOptions(self, vnode):
+        bodyString = vnode.bodyString()
+        lines = bodyString.splitlines()
+        for line in lines:
+            containsAscConfigDirective = patternAscDirectiveConfig.match(line)
+            if containsAscConfigDirective:
+                # Leo uses unicode, convert to plain ascii
+                name = str(containsAscConfigDirective.group(1))
+                value = str(containsAscConfigDirective.group(2))
+                if self.current.has_key(name):
+                    self.current[name] = value
+                else:
+                    g.es(vnode.headString())
+                    g.es("  No such config option: %s" % name)
+
+    def GetCurrentOptions(self, vnode):
+        self.current.clear()
+        self.current = self.default.copy()
+        c = g.top()
+        v = c.rootVnode()
+        self.__GetNodeOptions(v)             # root node
+        self.__GetNodeOptions(vnode)         # current node
+
+# ----- assign constants ---------------------------------------------------
+CV = _AssignUniqueConstantValue()
+CV.NODE_IGNORE = CV.Next()              # demo of adding in code
+Conf = _ConfigOptions()
+
+# ----- globals ------------------------------------------------------------
+#   compile the patterns we'll be searching for frequently
+patternSectionName = re.compile("\&lt;\&lt; *(.+?) *\&gt;\&gt;")
+patternSectionDefinition = re.compile("(\&lt;\&lt; *)(.+?)( *\&gt;\&gt;)(=)")
+patternDirective = re.compile(r"^@")
+patternCodeDirective = re.compile(r"^(@c *$)|(@code)")
+patternDocDirective = re.compile(r"^(@ |@doc)(.*)")
+patternRootDirective = re.compile(r"^@root\s+(.+)")
+patternAscDirective = re.compile(r"^@asc")
+&lt;&lt;New Leo2AsciiDoc directives&gt;&gt;
+@doc
+
+AsciiDoc recognizes titles and section headings by the underlining (a
+line of characters on the next line after the text) with a line
+of flag characters.  This function calculates the section level
+(considering the ascfile node to be the top or "book" level) and
+creates the appropriate string of flag characters.
+
+@code
+def SectionUnderline(h,level,v):
+    'Return a section underline string.'
+    asciiDocSectionLevels = int(Conf.current["asciiDocSectionLevels"])
+    if level &lt; 0:
+        g.es("Section level is less than 1:\n  %s" % v.headString())
+        level = 1
+    elif level &gt; asciiDocSectionLevels - 1:
+        g.es("Section level is more than maximum Section Levels: %d\n  %s" \
+           % (asciiDocSectionLevels, v.headString()))
+        level = asciiDocSectionLevels - 1
+    str = Conf.current["headingUnderlines"][level]  #'
+    return str*max(len(h),1)
+@doc
+
+GetAscFilename is a frequently used function that checks a node for
+the presence of an "@ascfile" directive, which specifies the name
+and location of the Leo2AsciiDoc output file.
+
+Leo2AsciiDoc will not export text without finding a file name. If no path
+is given, the file will be created in the same directory as the Leo
+outline.
+
+@code
+def GetAscFilename(vnode):
+    'Checks a node for a filename directive.'
+    # f is the Leo outline
+    c = g.top()
+    ascFileName = None
+    bodyString = vnode.bodyString()
+    lines = bodyString.splitlines()
+    for line in lines:
+        containsAscFileDirective = patternAscDirectiveFile.match(line)
+        if containsAscFileDirective:
+            ascFileName = containsAscFileDirective.group(1)
+            if (ascFileName != None):
+                base = os.path.split(c.mFileName)[0]  # linux or windows
+                if (((base[0]=="/") and (ascFileName[0] != "/")) or 
+                   ((base[1]==":") and (ascFileName[1] != ":"))): 
+                    # no full pathname specified
+                    ascFileName = os.path.join(base, ascFileName)
+                Conf.GetCurrentOptions(vnode)
+    return ascFileName
+        
+@doc
+
+CodeChunk splits a line of text into chunks of a maximum length.
+This is used in exporting source code sections of the Leo outline
+for publication.
+
+@code
+def CodeChunk(text, width=72):
+    """Split a line of text into a list of chunks not longer
+    than width."""
+    chunkList = []
+    chunkStart = 0
+    chunkEnd = 0
+    lastSpacePosition = 0
+    shortWidth = width - 4
+    prefix = ''
+    suffix = ' \\'
+    textLen = len(text)
+    if width &gt; textLen:
+        chunkList.append(text)
+    else:
+        while chunkEnd &lt; textLen:
+            if len(chunkList) &gt; 0:
+                prefix = '  '
+            chunkEnd = chunkStart + shortWidth
+            if chunkEnd &gt; textLen:
+                chunkList.append(prefix + text[chunkStart:])
+                chunkEnd = textLen          # get out of jail
+            else:
+                lastSpacePosition = text.rfind(' ',chunkStart, chunkEnd +1)
+                if lastSpacePosition != -1:  # success
+                    chunkList.append(prefix + text[chunkStart:lastSpacePosition] + ' \\')
+                    chunkStart = lastSpacePosition + 1
+                else:
+                    chunkEnd = chunkStart + shortWidth
+                    chunkList.append(prefix + text[chunkStart:chunkEnd] + ' \\')
+                    chunkStart = chunkEnd
+    return chunkList</t>
+<t tx="ekr.20040331071919.12">@doc
+@ascskip # Time-stamp: "Thu, Dec  4 15:28 CST 2003  michael@redpriest _Write_the_outline_tree_as_AsciiDoc_file__141131100.py"
+
+This function opens the output file and walks the tree of outline
+nodes under the node that is passed as the first parameter.  At each
+node, it calls our workhorse "WriteNode".
+
+
+@code
+def WriteTreeAsAsc(vnode, ascFileN):
+    'Writes the tree under vnode to the file ascFile'
+    def CleanUp():
+        'Cleanup on exit'
+        ascFile.close()
+
+    writeNodeReturnValue = None
+    startinglevel = vnode.level()
+    try:
+        ascFile = file(ascFileN,'w')
+    except IOError:
+        g.es("Could not open output file: %s" % ascFileN)
+        return
+    stopHere = vnode.nodeAfterTree()
+    v = vnode
+    while v != stopHere:
+        writeNodeReturnValue = WriteNode(v, startinglevel, ascFile)
+        if  writeNodeReturnValue == CV.END_PROGRAM:
+            CleanUp()
+            return
+        elif  writeNodeReturnValue == CV.NODE_IGNORE:
+            v = v.nodeAfterTree()       # ran into an @ascignore
+        else:
+            v = v.threadNext()
+
+    CleanUp()
+    g.es('Wrote: '+`ascFileN`)
+
+
+
+
+
+</t>
+<t tx="ekr.20040331071919.13">@doc
+@ascskip # Time-stamp: "Fri, Jan  9 13:58 CST 2004  michael@redpriest _Write_a_node__140596620.py"
+
+This is the workhorse of the program, exporting the text in a node
+to the output file in a way that the AsciiDoc program will
+recognize.
+
+The basic activity is:
+    - output the node headline as a DocBook section heading (Book,
+      Chapter, Section1, Section2, etc.)
+    - scan each line of the body text for directives, and take the
+      appropriate action.  Regular expressions do the heavy lifting.
+    - mark the code sections and documentation sections, so that
+      DocBook can print them in the correct styles.
+    - ensure that code lines do not exceed a maximum length.
+
+
+
+@code
+def WriteNode(v,startinglevel, ascFile):
+
+    'Writes the contents of the node v to the ascFile.'
+
+    containsAscIignore = None          # initialize
+    skippingDocLines = False
+    startingCodeExtract = False
+    inCodeExtract = False
+    statusOfWriteOutputLine = None
+
+    def WriteOutputLine(lineString):
+
+        'Writes a line of text to the output file.'
+        try:
+            ascFile.write("%s\n" % lineString)
+        except IOError:
+            g.es("Could not write to output file: %s" % ascFile.name)
+            statusOfWriteOutputLine = CV.END_PROGRAM
+
+
+    # ----- get the headline text ------------------------------------------
+    h = v.headString()
+    markedupAsSection = patternSectionName.match(h)
+    if markedupAsSection:
+        h = markedupAsSection.group(1) # dump the angle brackets
+
+    # ----- put the body text into a list of lines -------------------------
+    bodyString = v.bodyString()
+    lines = bodyString.splitlines()
+
+    lastLinePrintedType = CV.LINE_WAS_NONE
+    # ----- by default, nodes start with a code section --------------------
+    pendinglineType = CV.LINE_PENDING_CODE
+
+    for line in lines:
+        containsRootDirective = None
+
+@doc
+
+If this line starts a code extract, called a Section Definition
+here, then extract the text to use as the title and set the
+"startingCodeExtract" flag to guide further processing.
+
+@code
+        containsSectionDefinition = patternSectionDefinition.match(line)
+        if containsSectionDefinition:
+            # dump the angle brackets, etc.
+#             line = containsSectionDefinition.group(2)  + '\n' + \
+#                    (SectionUnderline(containsSectionDefinition.group(2),2,v))
+            line = '.' + containsSectionDefinition.group(2)
+            pendinglineType = CV.LINE_PENDING_CODE
+            startingCodeExtract = True
+@doc
+
+Check if this line starts a @doc or @code section.
+
+@code
+        containsCodeDirective = patternCodeDirective.match(line)
+        if containsCodeDirective:
+            pendinglineType = CV.LINE_PENDING_CODE
+            skippingDocLines = False
+            continue                    # don't print this line
+
+        containsDocDirective = patternDocDirective.match(line)
+        if containsDocDirective:
+            pendinglineType = CV.LINE_PENDING_DOC
+            if containsDocDirective.group(2):
+                # it is legal to have text on the same line
+                # as a doc directive.
+                line = containsDocDirective.group(2)
+            else:
+                continue
+@doc
+
+Check line for a Leo2AsciiDoc directive, and if so, act on it.
+
+@code
+        containsAscDirective = patternAscDirective.match(line)
+        if containsAscDirective:
+            containsAscIignore = patternAscDirectiveIgnore.match(line)
+            if containsAscIignore:
+                break
+
+            containsAscExit = patternAscDirectiveExit.match(line)
+            if containsAscExit:
+                break
+
+            containsAscSkip = patternAscDirectiveSkip.match(line)
+            if containsAscSkip:
+                containsAscSkipDirectiveToggle = patternAscDirectiveSkipToggle.match(line)
+                if containsAscSkipDirectiveToggle:
+                    if containsAscSkipDirectiveToggle.group(1).lower() == "on":
+                        skippingDocLines = True
+                    elif containsAscSkipDirectiveToggle.group(1).lower() == "off":
+                        skippingDocLines = False
+                continue
+
+        containsOtherDirective = patternDirective.match(line)
+        if containsOtherDirective:
+            containsRootDirective = patternRootDirective.match(line)
+            if containsRootDirective:
+                line = "*note*\nThe code sections that follow, when extracted from a " + \
+                       "Leo outline, will be located in: %s\n*note*" % \
+                       containsRootDirective.group(1)
+            else:
+                continue
+
+        # ----- we have something to print, so print heading ---------------
+        if lastLinePrintedType == CV.LINE_WAS_NONE:
+            if (len(h) &gt; 0) and (Conf.current["PrintHeadings"] == "on"):
+                WriteOutputLine("\n\n%s" % h)
+                WriteOutputLine(SectionUnderline(h,v.level()-startinglevel,v))
+                lastLinePrintedType = CV.LINE_WAS_HEAD
+@doc
+
+Here we manage the transitions between code and doc sections.
+
+@code
+        if pendinglineType == CV.LINE_PENDING_DOC:
+            if lastLinePrintedType != CV.LINE_WAS_DOC and \
+               lastLinePrintedType != CV.LINE_WAS_HEAD:
+                WriteOutputLine("%s" % Conf.current["delimiterForCodeEnd"])
+                if inCodeExtract:
+                    WriteOutputLine("\n%s" % Conf.current["delimiterForCodeSectionDefinition"])
+                    inCodeExtract = False
+                lastLinePrintedType = CV.LINE_WAS_DOC
+            if skippingDocLines:
+                if not containsRootDirective: # always document a root directive
+                    continue
+
+        if pendinglineType == CV.LINE_PENDING_CODE:
+            if lastLinePrintedType != CV.LINE_WAS_CODE:
+                if startingCodeExtract:
+                    WriteOutputLine("\n%s" % line)
+                    WriteOutputLine("%s" % Conf.current["delimiterForCodeSectionDefinition"])
+                    inCodeExtract = True
+                    line = ''
+                WriteOutputLine("%s" % Conf.current["delimiterForCodeStart"])
+                lastLinePrintedType = CV.LINE_WAS_CODE
+                if startingCodeExtract:
+                    startingCodeExtract = False
+                    continue
+@doc
+
+Check for maximum code line length.  Finally, output the text to the
+export file.
+
+@code
+            maxCodeLineLength = int(Conf.current["maxCodeLineLength"])
+            if len(line) &lt;= maxCodeLineLength:
+                WriteOutputLine("%s" % line)
+            elif len(line.rstrip()) &lt;= maxCodeLineLength:
+                WriteOutputLine("%s" % line.rstrip())
+            else:
+                lineList = CodeChunk(line, maxCodeLineLength)
+                for ln in lineList:
+                    WriteOutputLine("%s" % ln)
+            lastLinePrintedType = CV.LINE_WAS_CODE
+        else:
+            WriteOutputLine("%s" % line)
+
+        if statusOfWriteOutputLine != None:
+            return statusOfWriteOutputLine
+
+@doc
+
+Before we leave, make sure that any ending code section is marked as
+ended.
+
+@code
+    if lastLinePrintedType == CV.LINE_WAS_CODE:
+        WriteOutputLine("%s" % Conf.current["delimiterForCodeEnd"])
+        if inCodeExtract:
+            WriteOutputLine("\n%s" % Conf.current["delimiterForCodeSectionDefinition"])
+            inCodeExtract = False
+
+    if containsAscIignore != None:
+        return CV.NODE_IGNORE                        # flag ignore tree to caller
+
+@doc
+
+</t>
+<t tx="ekr.20040331071919.14">@doc
+@ascskip # Time-stamp: "Tue, Jan 13 11:09 CST 2004  michael@redpriest Other_programs_140636444.txt"
+
+The appendices are about other programs that are used with Leo.
+I'm including them because they are examples of how my setup works,
+for those who may be interested in setting up something similar.
+
+    - AsciiDoc is the program that processes the output from Leo2AsciiDoc
+      into a DocBook-ready XML file.
+    - Setting up DocBook is a topic that is far too large for this
+      little manual, but the DocBook section which follows contains
+      documentation of exactly how my working system is configured.
+    - The XEmacs text editor is the one I prefer, but it is not
+      necessary for the use of Leo2AsciiDoc.  Others who also use XEmacs
+      might find the documentation of my Leo integration and
+      multi-mode support to be useful.
+@code</t>
+<t tx="ekr.20040331071919.15">@language plain
+@ascskip Time-stamp: "Thu, Oct 30 10:58 CST 2003  michael@redpriest Appendix_AsciiDoc__140954356.txt"
+@doc
+anchor:AsciiDoc[AsciiDoc]
+
+The AsciiDoc program is written by Stuart Rackham and has its own
+web site at http://www.methods.co.nz/asciidoc/[], with full
+documentation.
+
+AsciiDoc is a small program, written in Python, that reads text
+which is in the AsciiDoc text format. Generally speaking, ordinary
+text (such as you would write in an email message) is already in the
+AsciiDoc format.  The AsciiDoc program produces (among other
+choices) output in the DocBook XML format.
+
+Text exported from a Leo outline by Leo2AsciiDoc is ready to be processed
+by AsciiDoc, once AsciiDoc has been configured to recognize it.
+
+Leo2AsciiDoc comes with an AsciiDoc configuration file that will enable
+AsciiDoc to process all Leo2AsciiDoc features.  The following section
+describes that configuration file.
+
+Of course, you don't need to read or understand the configuration
+file to use it.  Simply put it (leo-docbook.conf) in the same
+directory as AsciiDoc's "docbook.conf" file.  When you invoke
+AsciiDoc (see the xref:Makefile[] section in the DocBook appendix for
+examples), give the "leo-docbook.conf" file as the configuration
+parameter ("-f leo-docbook.conf".)
+
+@ascskip on
+&lt;&lt; Appendix: AsciiDoc &gt;&gt;
+@code
+</t>
+<t tx="ekr.20040331071919.16">@language python
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 11:58 CST 2004  michael@redpriest _Configuration_file__140640380.py"
+
+AsciiDoc is customized through the use of configuration files, which
+cascade, so that you can include other configuration files and
+then proceed to add your changes.
+
+The main elements of the configuration file below:
+
+    - adds chapter and web site document types
+    - switches code listings to use the DocBook "programlisting"
+      element 
+
+    *note*
+
+    If you choose to export this configuration file from the Leo
+    outline, you will have to remove escape charactersfrom some
+    lines after you have exported it.
+
+    Specifically, some lines begin with the character "\".  That
+    character should be removed.
+
+    *note*
+
+@ascskip on
+@root "other/asciidoc/leo-docbook.conf"
+&lt;&lt; Configuration File &gt;&gt;
+@code
+# Start with the standard docbook back end configuration.
+# ensure the next line is uncommented before installing
+\include::docbook.conf[]
+
+@doc
+
+I want tabs interpreted as 4 spaces.
+
+@code
+[options]
+tabsize=4
+@doc
+
+Interpret an indented paragraph as a simple paragraph.
+
+@code
+[indentedparagraph]
+&lt;simpara&gt;|&lt;/simpara&gt;
+
+
+@doc
+
+For our code listings we invent a new markup that will use the
+DocBook programlisting element.
+
+@code
+[blockdef-leocode]
+delimiter=^\~\-~--- code(.*?)$
+section=programlistingblock
+presubs=specialcharacters, replacements
+
+[programlistingblock]
+&lt;programlisting&gt;
+|
+&lt;/programlisting&gt;
+
+@doc
+
+We add new markup to signify the DocBook "note" element.  This
+predates AsciiDoc 5.0, and is still useful.
+
+@code
+[blockdef-note]
+delimiter=^ *\*note\*$
+section=noteblock
+presubs=specialcharacters,quotes,specialwords,replacements,macros,glossary
+
+# Block macro
+[noteblock]
+&lt;note&gt;
+|
+&lt;/note&gt;
+
+[blockdef-example]
+delimiter=^ *\*example\*$
+options=section
+section=exampleblock
+presubs=replacements
+
+# Block macro
+[exampleblock]
+&lt;example&gt;
+&lt;title&gt;{title}&lt;/title&gt;
+|
+&lt;/example&gt;
+
+
+@doc
+
+The following replacements ensure basic Python code indexing.
+
+@code
+[replacements]
+#----- indexing markup -----------------------------------------------------
+# using regular expressions because I don't want to introduce a filter, which
+# would slow things down.
+#
+# index python classes and defs
+^(def +)(.+?)(\(.+:)=\1\2\3&lt;indexterm&gt;&lt;primary&gt;Python code, functions&lt;/primary&gt;&lt;secondary&gt;\2&lt;/secondary&gt;&lt;/indexterm&gt; 
+^(class +)(.+?)(:)=\1\2\3&lt;indexterm&gt;&lt;primary&gt;Python code, classes&lt;/primary&gt;&lt;secondary&gt;\2&lt;/secondary&gt;&lt;/indexterm&gt; 
+^( +def +)(.+?)(\(.+:)=\1\2\3&lt;indexterm&gt;&lt;primary&gt;Python code, methods and nested functions&lt;/primary&gt;&lt;secondary&gt;\2&lt;/secondary&gt;&lt;/indexterm&gt; 
+
+# index code extracts
+(\&amp;lt\;\&amp;lt\;)(.+?)(\&amp;gt\;\&amp;gt\;\=)=\2&lt;indexterm&gt;&lt;primary&gt;Python code, extracts explained&lt;/primary&gt;&lt;secondary&gt;\2&lt;/secondary&gt;&lt;/indexterm&gt;
+(\&amp;lt\;\&amp;lt\;)(.+?)(\&amp;gt\;\&amp;gt\;)(\s*$)=\1\2\3\4&lt;indexterm&gt;&lt;primary&gt;Python code, extracts used&lt;/primary&gt;&lt;secondary&gt;\2&lt;/secondary&gt;&lt;/indexterm&gt; 
+
+@doc
+
+Change the standard AsciiDoc article, book and manpage definition to
+use the DocBook 4.2 DTD.  Add an empty index element to the end of
+the book definition so that DocBook will automatically generate an
+index.
+
+@code
+#---------------------------------------------------------------------------
+#----- article -------------------------------------------------------------
+#---------------------------------------------------------------------------
+
+# changing to our version of the docbook dtd
+\ifdef::doctype-article[]
+
+[header]
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE article
+        PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+        "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"&gt;
+
+&lt;article lang="en"&gt;
+&lt;articleinfo&gt;
+    &lt;title&gt;{doctitle}&lt;/title&gt;
+    &lt;date&gt;{date}&lt;/date&gt;
+    &lt;author&gt;
+        &lt;firstname&gt;{firstname}&lt;/firstname&gt;
+        &lt;othername&gt;{middlename}&lt;/othername&gt;
+        &lt;surname&gt;{lastname}&lt;/surname&gt;
+        &lt;affiliation&gt;
+            &lt;address&gt;
+                &lt;email&gt;{email}&lt;/email&gt;
+            &lt;/address&gt;
+        &lt;/affiliation&gt;
+    &lt;/author&gt;
+    &lt;authorinitials&gt;{authorinitials}&lt;/authorinitials&gt;
+    &lt;revhistory&gt;&lt;revision&gt;&lt;revnumber&gt;{revision}&lt;/revnumber&gt;&lt;date&gt;{date}&lt;/date&gt;&lt;/revision&gt;&lt;/revhistory&gt;
+    &lt;corpname&gt;{companyname}&lt;/corpname&gt;
+&lt;/articleinfo&gt;
+
+\endif::doctype-article[]
+
+
+#---------------------------------------------------------------------------
+#----- book ----------------------------------------------------------------
+#---------------------------------------------------------------------------
+# change to our version of docbook dtd
+
+\ifdef::doctype-book[]
+
+[header]
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE book
+        PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+        "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"&gt;
+
+&lt;book lang="en"&gt;
+&lt;bookinfo&gt;
+    &lt;title&gt;{doctitle}&lt;/title&gt;
+    &lt;date&gt;{date}&lt;/date&gt;
+    &lt;author&gt;
+        &lt;firstname&gt;{firstname}&lt;/firstname&gt;
+        &lt;othername&gt;{middlename}&lt;/othername&gt;
+        &lt;surname&gt;{lastname}&lt;/surname&gt;
+        &lt;affiliation&gt;
+            &lt;address&gt;
+                &lt;email&gt;{email}&lt;/email&gt;
+            &lt;/address&gt;
+        &lt;/affiliation&gt;
+    &lt;/author&gt;
+    &lt;authorinitials&gt;{authorinitials}&lt;/authorinitials&gt;
+    &lt;revhistory&gt;&lt;revision&gt;&lt;revnumber&gt;{revision}&lt;/revnumber&gt;&lt;date&gt;{date}&lt;/date&gt;&lt;/revision&gt;&lt;/revhistory&gt;
+    &lt;corpname&gt;{companyname}&lt;/corpname&gt;
+&lt;/bookinfo&gt;
+
+
+[footer]
+&lt;index/&gt;
+&lt;/book&gt;
+
+\endif::doctype-book[]
+
+#---------------------------------------------------------------------------
+#----- manpage -------------------------------------------------------------
+#---------------------------------------------------------------------------
+\ifdef::doctype-manpage[]
+
+[header]
+&lt;!DOCTYPE refentry
+        PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+        "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"&gt;
+&lt;refentry&gt;
+# The refentryinfo element is legal and should not normally be printed.
+# Unfortunately some docbook processors do print it.
+&lt;refentryinfo&gt;
+    &lt;title&gt;{doctitle}&lt;/title&gt;
+    &lt;date&gt;{date}&lt;/date&gt;
+    &lt;author&gt;
+        &lt;firstname&gt;{firstname}&lt;/firstname&gt;
+        &lt;othername&gt;{middlename}&lt;/othername&gt;
+        &lt;surname&gt;{lastname}&lt;/surname&gt;
+        &lt;affiliation&gt;
+            &lt;address&gt;
+                &lt;email&gt;{email}&lt;/email&gt;
+            &lt;/address&gt;
+        &lt;/affiliation&gt;
+    &lt;/author&gt;
+    &lt;authorinitials&gt;{authorinitials}&lt;/authorinitials&gt;
+    &lt;revhistory&gt;&lt;revision&gt;&lt;revnumber&gt;{revision}&lt;/revnumber&gt;&lt;date&gt;{date}&lt;/date&gt;&lt;/revision&gt;&lt;/revhistory&gt;
+    &lt;corpname&gt;{companyname}&lt;/corpname&gt;
+&lt;/refentryinfo&gt;
+&lt;refmeta&gt;
+&lt;refentrytitle&gt;{mantitle}&lt;/refentrytitle&gt;
+&lt;manvolnum&gt;{manvolnum}&lt;/manvolnum&gt;
+&lt;/refmeta&gt;
+&lt;refnamediv&gt;
+    &lt;refname&gt;{manname}&lt;/refname&gt;
+    &lt;refpurpose&gt;{manpurpose}&lt;/refpurpose&gt;
+&lt;/refnamediv&gt;
+
+\endif::doctype-manpage[]
+
+
+
+@doc
+
+Add chapter and website document types.
+
+@code
+#---------------------------------------------------------------------------
+#----- new: chapter --------------------------------------------------------
+#---------------------------------------------------------------------------
+\ifdef::doctype-chapter[]
+
+[header]
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE chapter
+        PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+        "http://www.oasis-open.org/docbook/xml/4.0/docbookx.dtd"&gt;
+&lt;chapter&gt;
+&lt;title&gt;{doctitle}&lt;/title&gt;
+
+[footer]
+&lt;/chapter&gt;
+
+
+# Section macros
+# Using &lt;abstract&gt; semantics restricts preface to &lt;simpara&gt; elements.
+[preface]
+|
+
+[sect1]
+&lt;sect1&gt;
+&lt;title&gt;{title}&lt;/title&gt;
+|
+&lt;/sect1&gt;
+
+[sect2]
+&lt;sect2&gt;
+&lt;title&gt;{title}&lt;/title&gt;
+|
+&lt;/sect2&gt;
+
+[sect3]
+&lt;sect3&gt;
+&lt;title&gt;{title}&lt;/title&gt;
+|
+&lt;/sect3&gt;
+
+[options]
+outfilesuffix=.xml
+
+\endif::doctype-chapter[]
+
+@doc
+
+Website requires a unique id for each page.  I've changed AsciiDoc
+to provide the HTML filename as the id, and we use it here. We'll
+use the date the XML file was created as the update date.
+
+@code
+#---------------------------------------------------------------------------
+#----- new: website --------------------------------------------------------
+#---------------------------------------------------------------------------
+\ifdef::doctype-website[]
+[header]
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;!DOCTYPE webpage SYSTEM "website-full.dtd"&gt;
+&lt;webpage id="{infilebase}"&gt;
+  &lt;head&gt;
+    &lt;title&gt;{doctitle}&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;config param="rcsdate" value="Updated: {localdate}  {localtime}"/&gt;
+[footer]
+&lt;/webpage&gt;
+
+[options]
+outfilesuffix=.xml
+
+\endif::doctype-website[]
+
+</t>
+<t tx="ekr.20040331071919.17">@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 14:11 CST 2004  michael@redpriest _Patches__140641532.txt"
+
+I've patched the source code for AsciiDoc (asciidoc.py) with a few
+small changes to allow AsciiDoc to process chapters and DocBook
+web site documents as well as the DocBook book format.  Since I use
+Linux, I also changed the default line-ending code to the Linux
+default.
+
+For the exact changes I made, the following output at the end of
+this section was created by GNU diff (version 2.8.4) with the
+command
+
+---
+LC_ALL=C TZ=UTC0 diff -Naur 5.0.2-original 5.0.2-mrc-patched \
+    &gt;mrc-asciidoc-5.0.2-patch-diff
+---
+
+I include this mainly so that you can see the exact changes I made.
+However, you may want to patch a copy of the original in exactly the
+same way. 
+
+To patch a copy of the original asciidoc.py (version 5.0.2), one
+would use the patch command as follows (when in the same directory
+as the copy of asciidoc.py and mrc-asciidoc-5.0.2-patch-diff)
+
+---
+patch -Np1 &lt;mrc2-asciidoc-5.0.2-patch-diff
+---
+
+@ascskip on
+@root "other/asciidoc/mrc-asciidoc-5.0.2-patch-diff"
+&lt;&lt; Patches &gt;&gt;
+@code
+diff -Naur 5.0.2-original/asciidoc.py 5.0.2-mrc-patched/asciidoc.py
+--- 5.0.2-original/asciidoc.py	2003-12-16 00:16:28.000000000 +0000
++++ 5.0.2-mrc-patched/asciidoc.py	2004-01-08 17:45:37.000000000 +0000
+@@ -838,12 +838,15 @@
+         '''Set predefined glossary entries that follow configuration file
+         loading.'''
+         self.glossary['infile'] = reader.fname
++        # mwd Monday, June 23, 2003 for use in website
++        self.glossary['infilebase'] = os.path.splitext(os.path.split(reader.fname)[1]) [0]
+         self.glossary['outfile'] = reader.fname
+         s = os.path.splitext(writer.fname)[1][1:]   # Output file extension.
+         self.glossary['filetype'] = s
+         self.glossary['filetype-'+s] = ''
+     def translate(self):
+-        assert self.doctype in ('article','manpage','book'), \
++        # mwd 2003-Jun-23 assert self.doctype in ('article','manpage','book'), \
++        assert self.doctype in ('article','chapter','website','manpage', 'book'), \
+             'illegal document type'
+         assert self.level == 0
+         reader.tabsize = config.tabsize
+@@ -864,7 +867,8 @@
+             if not config.suppress_headers:
+                 hdr = config.subs_section('header',{})
+                 writer.write(hdr)
+-            if self.doctype in ('article','book'):
++            # mwd 2003-Jun-23 if self.doctype in ('article','book'):
++            if self.doctype in ('article','book','chapter','website'):
+                 # Translate 'preamble' (untitled elements between header
+                 # and first section title).
+                 if Lex.next() is not Title:
+@@ -952,7 +956,7 @@
+                 # Parse revision line.
+                 s = reader.read()
+                 s = subs_glossary([s])[0]
+-                # Match RCS/CVS $Id$ marker format.
++                # Match RCS/CVS $Id$ marker format.
+                 mo = re.match(r'^\$Id: \S+ (?P&lt;revision&gt;\S+)' \
+                     ' (?P&lt;date&gt;\S+) \S+ \S+ \S+ \$$',s)
+                 if not mo:
+@@ -2573,7 +2577,8 @@
+ 
+ class Writer:
+     '''Writes lines to output file.'''
+-    EOL = '\r\n'    # End of line terminator.
++    # mwd 2003-Jun-23 EOL = '\r\n'    # End of line terminator.
++    EOL = '\n'    # End of line terminator.
+     f = None        # Output file object.
+     fname= None     # Output file name.
+     lines_out = 0   # Number of lines written.
+@@ -3068,7 +3073,8 @@
+     The AsciiDoc document is read from file object src the translated
+     DocBook file written to file object dst.'''
+     try:
+-        if doctype not in ('article','manpage','book'):
++        # mwd-2004-Jan-05 if doctype not in ('article','manpage','book'):
++        if doctype not in ('article','chapter','website','manpage', 'book'):
+             raise EAsciiDoc,'illegal document type'
+         if backend == 'linuxdoc' and doctype != 'article':
+             raise EAsciiDoc,'%s %s documents are not supported' \
+</t>
+<t tx="ekr.20040331071919.18">@language plain
+@ascskip Time-stamp: "Fri, Dec 19 11:48 CST 2003  michael@redpriest Appendix_DocBook_140578660.txt"
+@doc
+
+anchor:DocBook[DocBook]
+DocBook is a project that provides:
+
+    - a specification for the text markup (DTD) of DocBook XML
+      documents, and
+    - a set of XSLT stylesheets that can be used by an XSLT engine
+      to transform those XML documents to HTML, PDF, etc.
+      
+If you create your text documents using the rules in the DocBook
+DTD, you can use the DocBook XSLT stylesheets to produce various
+output formats, such as HTML and PDF.
+
+The DocBook project is designed for the production of computer
+documentation, but is actually used for a wide variety of documents.
+
+Some web resources:
+
+    - the official home page for DocBook: The Definitive Guide:
+        http://docbook.org/[]
+    - DocBook Basics:
+        http://www.dpawson.co.uk/docbook/reference.html[]
+    - DocBook Open Repository:
+        http://sourceforge.net/projects/docbook/[]
+    - DocBook XSL: The Complete Guide:
+        http://www.sagehill.net/docbookxsl/index.html[]
+
+I include this section as documentation of one setup that works --
+it translates Leo2AsciiDoc output to HTML and PDF.
+
+This is not a guide to the installation, setup and operation of
+DocBook, just an example of a working system.
+
+@ascskip on
+&lt;&lt; Appendix: DocBook &gt;&gt;
+@code
+</t>
+<t tx="ekr.20040331071919.19">@doc
+@ascskip # Time-stamp: "Thu, Jan  8 13:57 CST 2004  michael@redpriest _Tool_Chain__140810780.txt"
+
+Documents go through a number of stages in their creation.  Each
+stage may involve one or more tools or programs, which form a tool
+chain: each performing some processing and handing off to the next.
+
+As a simple example, for this document:
+
+
+    - text creation was handled by XEmacs, a text
+      editor (which functioned as a Leo plugin.)
+      indexterm:[XEmacs]
+      indexterm:[GNU Make]
+      indexterm:[AsciiDoc]
+      indexterm:[xsltproc]
+      indexterm:[FOP]
+    - text storage and organization was handled by Leo, an outlining
+      editor.
+    - text was exported from Leo to a plain-text file, using the
+      Leo2AsciiDoc program.
+    - from there, all transformations are automated by the
+      GNU Make program.
+    - the DocBook XML document was created by the
+      AsciiDoc program, which transformed the
+      plain-text file to XML.
+    - The HTML pages were created by the
+      xsltproc program. xsltproc read the XML
+      document, and the DocBook XSLT stylesheets, and then created
+      each HTML page.
+    - To make the PDF file, the xsltproc program used the same
+      process as for the HTML pages, except that it created a
+      Formatting Objects (FO) file instead.  Then the
+      FOP program processed the FO file, producing
+      the final PDF file.  This process was also automated.
+
+All I did was type in text for each section, arranging it much as I
+usually do for email.  The rest was handled automatically by
+clicking on a Leo menu, or entering a short command at the console.
+For example: "make all".
+
+There are many, many choices of tools to put in your DocBook tool
+chain.  You can even purchase complete packages, from text editing
+to PDF generation.
+
+@code</t>
+<t tx="ekr.20040331071919.20">@language plain
+@tabwidth 4
+@doc
+@ascskip # Time-stamp: "Thu, Jan 15 15:39 CST 2004  michael@redpriest _Make_File__140651828.txt"
+
+anchor:Makefile[Makefile]
+In my case, I use a standard unix-style "make" setup for processing
+the text exported from a Leo outline.  It simply automates the
+commands which I would otherwise have to type at the command line.
+
+After Leo2AsciiDoc exports the text from the Leo outline to a disk file,
+the Make program takes over.  It reads rules in a file named
+"Makefile" and calls the necessary programs to make the
+requested output.
+
+This Makefile takes over where Leo2AsciiDoc leaves off.  It directs the
+AsciiDoc conversion of the Leo2AsciiDoc text file to XML, and then the
+DocBook conversion of the XML file to HTML pages or a PDF document.
+
+indexterm:[GNU Make]
+I use GNU Make.  For example, assuming I am in xterm and located in
+the same directory as the Makefile, I just enter the command
+
+---
+make pdf-dev
+---
+and the make program guides the creation of the PDF version of The
+Developers Guide, using the instructions in this Makefile.  The PDF
+is available within seconds.
+
+The Makefile instructions, in brief:
+
+    - the AsciiDoc program is called to make an XML file.
+    - the xsltproc program is called to process the XML file to
+      either HTML or a Formatting Objects file for further
+      translation to PDF
+        * various XSLT style sheets (html.xsl, man.xsl, etc.) are
+          used by xsltproc to guide the transformation of the XML
+          file.  Typically, they call the DocBook stylesheets for
+          the heavy lifting, and set a few simple options.
+    - the FOP program is used to process the intermediate fo file to
+      the final PDF file.
+
+This is by no means a model Makefile.  It is included because it
+works for me in my office, and may thus be useful as an example for
+other people who want to set up Make for this purpose.
+
+@ascskip xemacs-makefile-mode-on
+@ascskip on
+@root "doc/Makefile"
+&lt;&lt; Make File &gt;&gt;
+@code
+#----- global variables -----------------------------------------
+DEVGUIDE=mod_asc_dev
+USERGUIDE=mod_asc_user
+CSS=dbstyle.css
+
+MAN=${DOC}.1
+STYLESHEET_MAN=man.xsl
+# default docbook, located by /etc/xml/catalog
+STYLESHEET_MAN_HTML=docbook.xsl
+MAN_OUTPUT_DIR=man
+
+STYLESHEET_HTML=html.xsl
+HTML_DEV_OUTPUT_DIR=html-dev
+HTML_USER_OUTPUT_DIR=html-user
+STYLESHEET_CHUNK=chunkit.xsl
+CHUNK_DEV_OUTPUT_DIR=chunk-dev
+CHUNK_USER_OUTPUT_DIR=chunk-user
+
+STYLESHEET_FO_FOP=fo-fop.xsl
+PDF_DEV_OUTPUT_DIR=pdf-dev
+PDF_USER_OUTPUT_DIR=pdf-user
+
+ASCIIDOC_COMMAND=python asciidoc/asciidoc.py -v -b docbook -d book
+ASCIIDOC_CONFIG=asciidoc/leo-docbook.conf
+
+#   $@ target file name
+#   $&lt; name of the first prerequisite
+#   $* stem that rule matched
+
+#----- pattern rules -------------------------------------------------------
+%.xml	:	%.asc
+#	asciidoc -b docbook -d book -f ${ASCIIDOC_CONFIG} -o $@ $&lt;
+	${ASCIIDOC_COMMAND}  -f ${ASCIIDOC_CONFIG} -o $@ $&lt;
+	xsltproc --output $*.final.xml customize.xsl $@
+
+
+%.html	:	%.xml css
+	xsltproc --xinclude --output ${OUTPUT} ${STYLESHEET}  $*.final.xml
+	touch $*.xml
+
+%.pdf	:	%.xml
+	xsltproc --xinclude  --output ${OUTPUT}/$*.fo $(STYLESHEET) $*.final.xml
+	fop -fo  ${OUTPUT}/$*.fo  -pdf ${OUTPUT}/$*.pdf 
+	-$(RM) ${OUTPUT}/$*.fo
+
+#----- usage ---------------------------------------------------------------
+usage	:
+	@echo; echo "primary make modules: html-dev chunk-dev pdf-dev"
+	@echo       "                      html-user chunk-user pdf-user"
+	@echo
+
+
+
+#---------------------------------------------------------------------------
+#----- modules -------------------------------------------------------------
+#---------------------------------------------------------------------------
+
+# docbook
+#---------------------------------------------------------------------------
+
+all	:	css pdf-dev html-dev sub-chunk-dev html-user sub-chunk-user pdf-user
+
+#----- DocBook html stylesheet ---------------------------------------------
+css:
+	cat base.css   &gt;  $(CSS)
+	cat docstyle.css &gt;&gt; $(CSS)
+
+#----- Developers Guide ----------------------------------------------------
+#   #----- one page -----------------------------------------------------
+html-dev	:	STYLESHEET=$(STYLESHEET_HTML)
+html-dev	:	OUTPUT=${HTML_DEV_OUTPUT_DIR}/$*.html
+html-dev	:	mkdirhtmldev ${DEVGUIDE}.html
+	cp ${CSS} ${HTML_DEV_OUTPUT_DIR}
+
+mkdirhtmldev	:	cleanhtmldev
+	mkdir ${HTML_DEV_OUTPUT_DIR}
+
+#   #----- individual pages ------------------------------------------------
+chunk-dev	:	STYLESHEET=$(STYLESHEET_CHUNK)
+chunk-dev	:	OUTPUT=$(CHUNK_DEV_OUTPUT_DIR)/
+chunk-dev	:	mkdirchunkdev ${DEVGUIDE}.html
+	cp chunk-dev-frame*.html ${CHUNK_DEV_OUTPUT_DIR}
+	cp ${CSS} ${CHUNK_DEV_OUTPUT_DIR}
+	cp frametoc.css ${CHUNK_DEV_OUTPUT_DIR}
+	cp -r ../graphics ${CHUNK_DEV_OUTPUT_DIR}
+# put in frame target line
+	sed -f sed-dev-frame ${CHUNK_DEV_OUTPUT_DIR}/index.html &gt;${CHUNK_DEV_OUTPUT_DIR}/chunk-dev-frame-toc.html
+
+mkdirchunkdev	:	cleanchunkdev
+	mkdir ${CHUNK_DEV_OUTPUT_DIR}
+
+sub-chunk-dev	:
+	${MAKE} chunk-dev
+
+#----- Users Guide ---------------------------------------------------------
+#   #----- one page -----------------------------------------------------
+html-user	:	STYLESHEET=$(STYLESHEET_HTML)
+html-user:	OUTPUT=${HTML_USER_OUTPUT_DIR}/$*.html
+html-user:	mkdirhtmluser ${USERGUIDE}.html
+	cp ${CSS} ${HTML_USER_OUTPUT_DIR}
+
+mkdirhtmluser	:	cleanhtmluser
+	mkdir ${HTML_USER_OUTPUT_DIR}
+
+#   #----- individual pages ------------------------------------------------
+chunk-user	:	STYLESHEET=$(STYLESHEET_CHUNK)
+chunk-user	:	OUTPUT=$(CHUNK_USER_OUTPUT_DIR)/
+chunk-user	:	cleanchunkuser ${USERGUIDE}.html
+	cp chunk-user-frame*.html ${CHUNK_USER_OUTPUT_DIR}
+	cp ${CSS} ${CHUNK_USER_OUTPUT_DIR}
+	cp frametoc.css ${CHUNK_USER_OUTPUT_DIR}
+	cp -r ../graphics ${CHUNK_USER_OUTPUT_DIR}
+# put in frame target line
+	sed -f sed-user-frame ${CHUNK_USER_OUTPUT_DIR}/index.html &gt;${CHUNK_USER_OUTPUT_DIR}/chunk-user-frame-toc.html
+
+mkdirchunkuser	:	cleanchunkuser
+	mkdir ${CHUNK_USER_OUTPUT_DIR}
+
+sub-chunk-user	:
+	${MAKE} chunk-user
+
+#   #----- pdf -------------------------------------------------------------
+pdf-dev		:	STYLESHEET=$(STYLESHEET_FO_FOP)
+pdf-dev		:	OUTPUT=$(PDF_DEV_OUTPUT_DIR)
+pdf-dev		:	mkdirpdf ${DEVGUIDE}.pdf
+
+pdf-user		:	STYLESHEET=$(STYLESHEET_FO_FOP)
+pdf-user		:	OUTPUT=$(PDF_USER_OUTPUT_DIR)
+pdf-user		:	mkdirpdf ${USERGUIDE}.pdf
+
+#   mkdirpdf exists only to make an empty directory for the pdf working files
+mkdirpdf	:
+	-mkdir $(PDF_DEV_OUTPUT_DIR)
+	-mkdir $(PDF_USER_OUTPUT_DIR)
+
+
+
+
+#----- clean ---------------------------------------------------------------
+clean	: cleanhtml cleanchunk cleanpdf cleanman cleanclutter 
+
+cleanhtml	:	cleanhtmluser cleanhtmldev
+
+cleanhtmluser	:
+	-$(RM) -r $(HTML_USER_OUTPUT_DIR)
+
+cleanhtmldev	:
+	-$(RM) -r $(HTML_DEV_OUTPUT_DIR)
+
+cleanchunk	:	cleanchunkuser cleanchunkdev
+
+cleanchunkuser	:
+	-$(RM) -r $(CHUNK_USER_OUTPUT_DIR)
+
+cleanchunkdev	:
+	-$(RM) -r $(CHUNK_DEV_OUTPUT_DIR)
+
+cleanpdf	:
+	-$(RM) -r $(PDF_OUTPUT_DIR)
+
+cleanman	:
+	-$(RM) -r $(MAN_OUTPUT_DIR)
+
+cleanclutter: 
+	-$(RM) -r *.xml
+
+.PRECIOUS	:	%.xml
+@doc
+@ascskip xemacs-makefile-mode-off
+@code
+</t>
+<t tx="ekr.20040331071919.21">@silent
+@doc
+@ascskip # Time-stamp: "Wed, Oct  1 15:33 CST 2003  michael@redpriest _Style_Sheets__140741140.txt"
+
+When the Makefile calls the xsltproc program, it gives it the name
+of an XSLT stylesheet to guide the production of the result.
+
+Following are simple XSLT stylesheets that are used to:
+    - set formatting options, and
+    - call the main DocBook XSLT stylesheets.
+
+The stylesheets cascade (each adding its options to the total), with
+the original stylesheet including others as needed, and always
+calling the main DocBook stylesheets at some point.
+
+@code
+</t>
+<t tx="ekr.20040331071919.22">@comment &lt;!-- --&gt;
+@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:01 CST 2004  michael@redpriest _General__139758588.txt"
+
+indexterm:[Stylesheets, common-links.xsl]
+This is the entire common-links style sheet ("common-links.xsl"),
+which sets basic Table of Contents and chapter cross-reference
+preferences.
+
+This stylesheet is called by both HTML and PDF stylesheets.
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/common-links.xsl"
+&lt;&lt; General &gt;&gt;
+@code
+&lt;?xml version='1.0'?&gt; 
+&lt;xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"  version="1.0"&gt; 
+
+&lt;!--===== 
+    This changes a chapter cross-reference to include the chapter
+    title text. 
+--&gt;
+&lt;xsl:param name="local.l10n.xml" select="document('')"/&gt; 
+&lt;l:i18n xmlns:l="http://docbook.sourceforge.net/xmlns/l10n/1.0"&gt; 
+  &lt;l:l10n language="en"&gt; 
+    &lt;l:context name="xref"&gt; 
+      &lt;l:template name="chapter" text="Chapter %n: &amp;#8220;%t&amp;#8221;"/&gt; 
+    &lt;/l:context&gt;   
+  &lt;/l:l10n&gt;
+&lt;/l:i18n&gt;
+
+&lt;xsl:param name="generate.toc"&gt;
+book      toc,title,figure,table,example,equation
+chapter   title
+&lt;/xsl:param&gt;
+
+&lt;!-- only 1 toc in the doc --&gt;
+&lt;xsl:param name="generate.section.toc.level" select="1"/&gt;
+
+&lt;!-- toc shows 3 levels of sections --&gt;
+&lt;xsl:param name="toc.section.depth"&gt;3&lt;/xsl:param&gt;
+
+&lt;xsl:param name="generate.index" select="1"&gt;&lt;/xsl:param&gt;
+
+&lt;!--===== omit the title for notes, tips ================================--&gt;
+&lt;xsl:param name="admon.textlabel" select="0"&gt;&lt;/xsl:param&gt;
+
+&lt;/xsl:stylesheet&gt;
+@doc
+@ascskip xemacs-xsl-mode-off
+
+
+</t>
+<t tx="ekr.20040331071919.23">@comment &lt;!-- --&gt;
+@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 20 11:42 CST 2004  michael@redpriest _Customize__141637044.txt"
+
+
+indexterm:[customize.xsl]
+This is the entire customize style sheet ("customize.xsl", which is
+used by the Makefile to make changes to the standard xml file
+produced from the AsciiDoc output.  It results in a file suffixed
+".final.xml" which is used by both the HTML and PDF stylesheets.
+
+Currently, the stylesheet copies the xml file:
+
+    - changing any chapter elements that have a title beginning
+      with "Appendix: " to DocBook appendix elements.  This is from
+      AsciiDoc 3.2 days, when AsciiDoc didn't know about appendix
+      elements. I haven't yet modified Leo2AsciiDoc to take
+      advantage of the automatic appendix elements in AsciiDoc 5.0.
+    - adding custom bookinfo elements
+
+I've used XSLT for this, but it could have been done with python,
+AWK, sed, or other tools.
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/customize.xsl"
+&lt;&lt; Customize &gt;&gt;
+@code
+&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                version="1.0"&gt;
+
+&lt;xsl:variable name="AppendBegin"&gt;Appendix: &lt;/xsl:variable&gt;
+
+&lt;!--~~~~~~ copy everything ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--&gt;
+&lt;xsl:template match="@*|node()"&gt;
+   &lt;xsl:copy&gt;
+      &lt;xsl:apply-templates select="@*|node()"/&gt;
+   &lt;/xsl:copy&gt;
+&lt;/xsl:template&gt;
+
+&lt;!--~~~~~~ delete the appendix string from the title ~~~~~~~~~~~~~~~~~~~~--&gt;
+&lt;xsl:template match="/book/chapter/title[starts-with(text(),$AppendBegin)]"&gt;
+  &lt;title&gt;
+  &lt;xsl:value-of select="substring-after(text(),$AppendBegin)"/&gt;
+  &lt;/title&gt;
+  &lt;xsl:apply-templates select="*" /&gt; 
+&lt;/xsl:template&gt;
+
+&lt;!--~~~~~~ change appendix chapter element to appendix element ~~~~~~~~~~--&gt;
+&lt;xsl:template match="/book/chapter[starts-with(title,$AppendBegin)]"&gt;
+  &lt;appendix&gt;
+    &lt;xsl:apply-templates select="*" /&gt; 
+  &lt;/appendix&gt;
+&lt;/xsl:template&gt;
+
+&lt;!--~~~~~~ bookinfo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~--&gt;
+&lt;!--
+From Leo2AsciiDoc, only the bookinfo title is filled in, with a
+blank author.  Here, we replace the author element with any and all
+bookinfo elements we please.
+--&gt;
+  
+&lt;xsl:template match="/book/bookinfo/author"&gt;
+  &lt;author&gt;
+    &lt;firstname&gt;Michael&lt;/firstname&gt;&lt;surname&gt;Dawson&lt;/surname&gt;
+    &lt;affiliation&gt;
+      &lt;address&gt;
+        &lt;otheraddr&gt;
+          &lt;ulink url="http://www.marshallresearch.com/contact.html"&gt;
+            at Marshall Research
+          &lt;/ulink&gt;
+        &lt;/otheraddr&gt;
+      &lt;/address&gt;
+    &lt;/affiliation&gt;
+  &lt;/author&gt;
+  &lt;revhistory&gt;
+    &lt;revision&gt;
+      &lt;revnumber&gt;0.4a&lt;/revnumber&gt;
+      &lt;date&gt;Jan 21 2004&lt;/date&gt;
+      &lt;authorinitials&gt;mwd&lt;/authorinitials&gt;
+      &lt;revremark&gt;Formatting enhancements&lt;/revremark&gt;
+    &lt;/revision&gt;
+    &lt;revision&gt;
+      &lt;revnumber&gt;0.4&lt;/revnumber&gt;
+      &lt;date&gt;Jan 19 2004&lt;/date&gt;
+      &lt;authorinitials&gt;mwd&lt;/authorinitials&gt;
+      &lt;revremark&gt;First release&lt;/revremark&gt;
+    &lt;/revision&gt;
+  &lt;/revhistory&gt;
+&lt;/xsl:template&gt;
+
+
+&lt;/xsl:stylesheet&gt;
+
+@doc
+@ascskip xemacs-xsl-mode-off
+
+</t>
+<t tx="ekr.20040331071919.24">@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:02 CST 2004  michael@redpriest _HTML_One_File__139289780.txt"
+
+indexterm:[Stylesheets,html.xsl]
+For one long page of HTML, we simply import the DocBook stylesheets
+and our small custom stylesheets that set our standard options.
+This is the "html.xsl" stylesheet.
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/html.xsl"
+&lt;&lt; HTML: One File &gt;&gt;
+@code
+&lt;?xml version='1.0'?&gt; 
+&lt;xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"  version="1.0"&gt; 
+
+&lt;!--===== the catalog (/etx/xml/catalog) will convert this to the local pathname --&gt;
+&lt;xsl:import href="docbook.xsl"/&gt;
+
+&lt;xsl:import href="common-links.xsl"/&gt;
+&lt;xsl:import href="common-html.xsl"/&gt;
+
+&lt;/xsl:stylesheet&gt; 
+@doc
+@ascskip xemacs-xsl-mode-off
+
+
+</t>
+<t tx="ekr.20040331071919.25">@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:40 CST 2004  michael@redpriest _HTML_Individual_Pages__141001292.txt"
+
+For individual section pages of HTML, we import the DocBook stylesheets
+and our small custom stylesheets that set our standard options.
+
+Then we set our chunking options, and tell the web pages where to
+find the header and footer graphics.
+
+indexterm:[Stylesheets,chunkit.xsl]
+The following code is the entire chunkit style sheet
+("chunkit.xsl").
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/chunkit.xsl"
+&lt;&lt; HTML: Individual Pages &gt;&gt;
+@code
+&lt;?xml version='1.0'?&gt; 
+&lt;xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"  version="1.0"&gt; 
+
+&lt;xsl:import href="chunk.xsl"/&gt;
+
+&lt;xsl:import href="common-links.xsl"/&gt;
+&lt;xsl:import href="common-html.xsl"/&gt;
+
+&lt;xsl:param name="navig.graphics" select="1"/&gt;
+&lt;xsl:param name=
+  "navig.graphics.path"&gt;graphics/&lt;/xsl:param&gt;
+    &lt;!--  "navig.graphics.path"&gt;/usr/share/xml/docbook/docbook-xsl-1.59.1/images/&lt;/xsl:param&gt;--&gt;
+    &lt;!--&lt;xsl:param name="navig.graphics.path"&gt;graphics/dbook/navicons/&lt;/xsl:param&gt;--&gt;
+&lt;xsl:param name="navig.graphics.extension"&gt;.png&lt;/xsl:param&gt;
+&lt;xsl:param name="navig.showtitles"&gt;1&lt;/xsl:param&gt;
+
+&lt;xsl:param name="chunk.first.sections" select="1"&gt;&lt;/xsl:param&gt;
+&lt;xsl:param name="chunk.section.depth" select="2"&gt;&lt;/xsl:param&gt;
+&lt;xsl:param name="section.autolabel" select="0"&gt;&lt;/xsl:param&gt;
+
+&lt;xsl:param name="css.decoration"&gt;1&lt;/xsl:param&gt;
+
+&lt;/xsl:stylesheet&gt;
+
+@doc
+@ascskip xemacs-xsl-mode-off
+</t>
+<t tx="ekr.20040331071919.26">@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:58 CST 2004  michael@redpriest _HTML_base_css_style_sheet__141160708.txt"
+
+css style sheet
+
+@ascskip on
+@ascskip xemacs-css-mode-on
+@root "doc/base.css"
+&lt;&lt; HTML: base css style sheet &gt;&gt;
+@code
+/* base from http://www.w3.org/TR/CSS21/sample.html */
+
+address,
+blockquote,
+body, dd, div,
+dl, dt, fieldset, form,
+frame, frameset,
+h1, h2, h3, h4,
+h5, h6, noframes,
+ol, p, ul, center,
+dir, hr, menu, pre   { display: block }
+li              { display: list-item }
+head            { display: none }
+table           { display: table }
+tr              { display: table-row }
+thead           { display: table-header-group }
+tbody           { display: table-row-group }
+tfoot           { display: table-footer-group }
+col             { display: table-column }
+colgroup        { display: table-column-group }
+td, th          { display: table-cell; }
+caption         { display: table-caption }
+th              { font-weight: bolder; text-align: center }
+caption         { text-align: center }
+body            { padding: 8px; line-height: 1.12em }
+h1              { font-size: 2em; margin: .67em 0 }
+h2              { font-size: 1.5em; margin: .75em 0 }
+h3              { font-size: 1.17em; margin: .83em 0 }
+h4, p,
+blockquote, ul,
+fieldset, form,
+ol, dl, dir,
+menu            { margin: 1.12em 0 }
+h5              { font-size: .83em; margin: 1.5em 0 }
+h6              { font-size: .75em; margin: 1.67em 0 }
+h1, h2, h3, h4,
+h5, h6, b,
+strong          { font-weight: bolder }
+blockquote      { margin-left: 40px; margin-right: 40px }
+i, cite, em,
+var, address    { font-style: italic }
+pre, tt, code,
+kbd, samp       { font-family: monospace }
+pre             { white-space: pre }
+
+/********** comment **********/
+/* http://www.w3.org/TR/CSS21/visuren.html#propdef-display lists inline-block */
+button, textarea,
+input, object, 
+select, img { display:inline-block; }
+
+big             { font-size: 1.17em }
+small, sub, sup { font-size: .83em }
+sub             { vertical-align: sub }
+sup             { vertical-align: super }
+s, strike, del  { text-decoration: line-through }
+hr              { border: 1px inset }
+ol, ul, dir,
+menu, dd        { margin-left: 40px }
+ol              { list-style-type: decimal }
+ol ul, ul ol,
+ul ul, ol ol    { margin-top: 0; margin-bottom: 0 }
+u, ins          { text-decoration: underline }
+/*br:before       { content: "\A" }*/
+center          { text-align: center }
+
+/********** changed **********/
+/*
+abbr, acronym   { font-variant: small-caps; letter-spacing: 0.1em }
+*/
+
+:link, :visited { text-decoration: underline }
+:focus          { outline: thin dotted invert }
+
+/* Begin bidirectionality settings (do not change) */
+BDO[DIR="ltr"]  { direction: ltr; unicode-bidi: bidi-override }
+BDO[DIR="rtl"]  { direction: rtl; unicode-bidi: bidi-override }
+
+*[DIR="ltr"]    { direction: ltr; unicode-bidi: embed }
+*[DIR="rtl"]    { direction: rtl; unicode-bidi: embed }
+
+@media print {
+  h1            { page-break-before: always }
+  h1, h2, h3,
+  h4, h5, h6    { page-break-after: avoid }
+  ul, ol, dl    { page-break-before: avoid }
+}
+
+
+
+@doc
+@ascskip xemacs-css-mode-off
+</t>
+<t tx="ekr.20040331071919.27">@silent
+@doc
+@ascskip # Time-stamp: "Wed, Jan 21 09:13 CST 2004  michael@redpriest _HTML_css_style_sheet__140659188.txt"
+
+css style sheet
+
+@ascskip on
+@ascskip xemacs-css-mode-on
+@root "doc/docstyle.css"
+&lt;&lt; HTML: css style sheet &gt;&gt;
+@code
+
+html, body {
+  background-color: #CCCCCC;
+  font-family: "Verdana", arial;
+}
+
+body {
+  font-size: 9pt;
+  line-height: 125%;
+/*   margin: 1em; */
+  padding: 2em;
+  margin-top: 1em;
+  margin-left: 3em;
+/*   width: 39em; */
+  min-height: 60em;
+/*   margin-right: 0.5em; */
+  background-color: white;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+/*   border-right: 2px solid black; */
+/*   border-bottom: 2px solid black; */
+}
+
+.strong {
+  font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6,
+p
+{
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
+  line-height: 125%;
+}
+
+h1 { font-size: 2em;}
+h2 { font-size: 1.4em; }
+h3 { font-size: 1.2em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 1.0em; }
+h6 { font-size: 1.0em; }
+
+h1, h2, h3, h4, h5, h6 {
+  color: #660000;
+  margin-right: 20%;
+}
+
+* &gt; h1 {
+  padding-top: 0.5em;
+}
+
+/* h2, h3 */
+/* { */
+/*   margin-right: 10em; */
+/* } */
+
+h1.title 
+{
+  margin-top: 3em;
+  border-top: 3px solid #660000;
+  border-bottom: 3px solid #660000;
+  border-color: #660000;
+  padding: .4em;
+  text-align: center;
+}
+
+h2.title 
+{
+  margin-top: 3em;
+  border-top: 3px solid #660000;
+  border-bottom: 3px solid #660000;
+  border-color: #660000;
+  padding: .4em;
+}
+
+div.toc {
+    line-height: 100%;
+}
+
+div.list-of-examples {
+    margin-top: 3em;
+}
+
+div.sect1 h2 {
+  font-size: 1.5em;
+  margin-top: 4em;
+  margin-left: 0em;
+  margin-right: 25%;
+  margin-bottom: 1em;
+  /* border-color: #660000; */
+  border-top: 0em;
+  border-bottom: 1px solid;
+  padding: 0em;
+}
+
+div.sect2 h3 {
+  font-size: 1em;
+  margin-top: 4em;
+  margin-bottom: 1em;
+  margin-right: 25%;
+  /* border-color: #660000; */
+  border-top: 0em;
+  border-bottom: 1px solid;
+}
+
+div.sect3 h4 {
+  font-size: small;
+  color: black;
+  margin-top: 4em;
+  margin-bottom: 1em;
+  margin-right: 25%;
+  /* border-color: #660000; */
+  border-top: 0em;
+  border-bottom: 1px solid;
+}
+
+div.note
+{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+div.note .title
+{
+  color: black;
+  font-size: x-small;
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+/* ----- links ---------------------------------------------------------- */
+:link {
+  color: #660000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+:visited {
+  color: #333333;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+
+div.toc :link, :visited {
+  font-weight: normal;
+ }
+
+div.list-of-examples :link, :visited {
+  font-weight: normal;
+ }
+
+
+a:link img {border-style: none;}
+a:visited img {border-style: none;}
+
+div.toc dd, dl
+{
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+div.toc dt
+{
+  margin-top: 0.2em;
+}
+
+ul, ol
+{
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.para {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.sect1,
+.toplevel.section
+{
+  padding-bottom: 0.25em;
+}
+
+
+tt,pre {
+    font-family: Courier New,Courier,monospace;
+    font-size: smaller;
+}
+
+.programlisting {
+    margin-top: 8pt;
+    margin-bottom: 8pt;
+    margin-left: 1em;
+    background-color: #FFFFCC;
+    white-space: pre;
+    border-style: solid;
+    border-width: 1pt;
+    border-color: #999999;
+    padding-left: 6pt;
+    padding-top: 2pt;
+    padding-bottom: 2pt;
+    width: 100%;
+    line-height: 100%;
+}
+
+table{
+    background-color: #FFFFFF;
+    width: 99.6%;
+}
+
+div.example {
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    padding-top: 0pt;
+    padding-bottom: 0pt;
+}
+
+div.example .title {
+    color: black;
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    padding-top: 8pt;
+    padding-bottom: 0pt;
+}
+
+div.sidebar .title {
+  font-weight: bold;
+  color: black;
+}
+
+div.sidebar  {
+  font-size: x-small;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  /* margin-left: 1em; */
+  margin-right: 33%; 
+  padding: 4pt;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+
+h1 &gt; a,
+h2 &gt; a {
+  padding-top: 0.5em;
+}
+
+ol.vert, ol.inline {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+
+hr, .toc, .title
+{ color: #660000 
+}
+
+
+.navfooter
+{
+  margin-top: 2em;
+}
+.navheader
+{
+  margin-bottom: 1em;
+
+}
+
+/* ------ title page ---------------------------------------------------- */
+h3.author
+{
+  padding: 0em;
+  margin-top: 0em;
+  margin-bottom: -1em;
+}
+
+.affiliation
+{
+  padding: 0em;
+  margin-top: 0em;
+  margin-bottom: 0em;
+  font-size: smaller;
+}
+
+
+div.revhistory table, tr, td
+{
+  border-collapse: collapse;
+  border: hidden;
+  font-size: x-small;
+ }
+
+div.revhistory table
+{
+  width: auto;
+  }
+
+div.revhistory td[colspan="3"]
+{
+  padding-left: 2em;  
+ }
+
+
+/* div.draft { */
+/*   background-image: url('pics/draft.png'); */
+/* } */
+
+
+@doc
+@ascskip xemacs-css-mode-off
+
+</t>
+<t tx="ekr.20040331071919.28">@comment &lt;!-- --&gt;
+@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:03 CST 2004  michael@redpriest _HTML_common__140982180.txt"
+@ascskip xemacs-xsl-mode-off
+
+indexterm:[Stylesheets,common-html.xsl]
+The following section is the entire common-html style sheet
+("common-html.xsl"), which sets basic HTML options.
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/common-html.xsl"
+&lt;&lt; HTML: common&gt;&gt;
+@code
+&lt;?xml version='1.0'?&gt; 
+&lt;xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"  version="1.0"&gt; 
+&lt;!--===== ==========================================================--&gt;
+&lt;xsl:param name="default.table.width" select="'100%'"&gt;&lt;/xsl:param&gt;
+&lt;xsl:param name="html.stylesheet" select="'dbstyle.css'"/&gt;
+&lt;xsl:param name="shade.verbatim" select="1"/&gt;
+&lt;xsl:attribute-set name="shade.verbatim.style"&gt;
+  &lt;xsl:attribute name="border"&gt;0&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="bgcolor"&gt;#F3F3F3&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+
+
+&lt;/xsl:stylesheet&gt;
+@doc
+@ascskip xemacs-xsl-mode-off
+</t>
+<t tx="ekr.20040331071919.29">@comment &lt;!-- --&gt;
+@silent
+@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:03 CST 2004  michael@redpriest _PDF__139549436.txt"
+
+indexterm:[Stylesheets, fo-fop.xsl]
+This is the Formatting Objects style sheet ("fo-fop.xsl", which sets
+the options for all printed output.
+
+The actual output is a file with the ".fo" extension, which will be
+used by a Formatting Object processor to produce a PDF file.
+
+@ascskip on
+@ascskip xemacs-xsl-mode-on
+@root "doc/fo-fop.xsl"
+&lt;&lt; PDF &gt;&gt;
+@code
+&lt;?xml version='1.0'?&gt; 
+&lt;xsl:stylesheet  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"  version="1.0"&gt; 
+&lt;!--===== ==========================================================--&gt;
+
+&lt;!--===== catalog will convert the url to our file location =========--&gt;
+&lt;xsl:import href="fo-docbook.xsl"/&gt;
+&lt;xsl:import href="common-links.xsl"/&gt;
+
+&lt;!--===== using the fop pdf processor ===================================--&gt;
+&lt;xsl:param name="fop.extensions" select="1"/&gt;
+
+&lt;!--===== single sided pages ============================================--&gt;
+&lt;xsl:param name="double.sided" select="0"&gt;&lt;/xsl:param&gt;
+
+&lt;!--===== body print ====================================================--&gt;
+&lt;xsl:param name="body.font.master"&gt;12&lt;/xsl:param&gt;
+&lt;xsl:param name="alignment"&gt;left&lt;/xsl:param&gt;
+&lt;xsl:param name="hyphenate"&gt;true&lt;/xsl:param&gt;
+
+&lt;!--===== set page margins ==============================================--&gt;
+&lt;xsl:param name="page.margin.inner"&gt;
+  &lt;xsl:choose&gt;
+    &lt;xsl:when test="$double.sided != 0"&gt;1.25in&lt;/xsl:when&gt;
+    &lt;xsl:otherwise&gt;1.5in&lt;/xsl:otherwise&gt;
+  &lt;/xsl:choose&gt;
+&lt;/xsl:param&gt;
+
+&lt;xsl:param name="body.margin.top" select="'.75in'"&gt;&lt;/xsl:param&gt;
+
+&lt;!--===== set title fonts ===============================================
+     Title fonts require replacing the standard
+     titlepage.templates.xsl with a custom version.  This is done
+     here by copying the fo/titlepage.templates.xml to
+     mrc.titlepage.templates.xsl, editing it, and then processing it
+     with
+      xsltproc -output mrc.titlepage.templates.xsl \
+         /usr/share/xml/docbook/docbook-xsl-1.60.1/template/titlepage.xsl  \
+         mrc.titlepage.templates.xml
+     Now we replace the old titlepage.templates.xsl with our new
+     mrc.titlepage.templates.xsl
+--&gt;
+&lt;xsl:include href="mrc.titlepage.templates.xsl"/&gt;
+
+&lt;!--===== blank verso titlepage =========================================--&gt;
+&lt;xsl:template name="book.titlepage.verso"/&gt;
+
+&lt;!--===== outdent titles ================================================--&gt;
+&lt;xsl:param name="title.margin.left" select="'-2pc'"/&gt;
+
+&lt;!--===== set section font, break ======================================--&gt;
+&lt;xsl:attribute-set name="section.title.level1.properties"&gt;
+  &lt;xsl:attribute name="font-size"&gt;14pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="break-before"&gt;page&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="border-bottom"&gt;1pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="border-bottom-style"&gt;solid&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="border-bottom-color"&gt;black&lt;/xsl:attribute&gt;  
+  &lt;xsl:attribute name="margin-right"&gt;6em&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+&lt;xsl:attribute-set name="section.title.level2.properties"&gt;
+  &lt;xsl:attribute name="break-before"&gt;page&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+&lt;xsl:attribute-set name="section.title.level3.properties"&gt;
+  &lt;xsl:attribute name="break-before"&gt;page&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+
+&lt;!--===== Code extract titles are sidebars ==============================--&gt;
+&lt;xsl:attribute-set name="sidebar.properties" use-attribute-sets="formal.object.properties"&gt;
+  &lt;xsl:attribute name="border-style"&gt;solid&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="border-width"&gt;1pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="border-color"&gt;black&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="background-color"&gt;#EDEDED&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="padding-left"&gt;12pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="padding-right"&gt;12pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="padding-top"&gt;2pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="padding-bottom"&gt;4pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="margin-left"&gt;0pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="margin-right"&gt;4em&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="margin-top"&gt;2pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="margin-bottom"&gt;2pt&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+&lt;!--===== code (verbatim) font and spacing ==============================--&gt;
+&lt;xsl:attribute-set name="verbatim.properties"&gt;
+  &lt;xsl:attribute name="space-before.minimum"&gt;0.1pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="space-before.optimum"&gt;2pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="space-before.maximum"&gt;3pt&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="space-after.minimum"&gt;0.4em&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="space-after.optimum"&gt;.5em&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="space-after.maximum"&gt;1.2em&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+&lt;xsl:attribute-set name="monospace.verbatim.properties"
+    use-attribute-sets="verbatim.properties monospace.properties"&gt;
+  &lt;xsl:attribute name="text-align"&gt;start&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="font-size"&gt;9pt&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+    &lt;!--===== 2003-Oct-01 FOP does not appear to support shade.verbatim yet =--&gt;
+&lt;xsl:param name="shade.verbatim" select="1"/&gt;
+&lt;xsl:attribute-set name="shade.verbatim.style"&gt;
+  &lt;xsl:attribute name="border"&gt;1&lt;/xsl:attribute&gt;
+  &lt;xsl:attribute name="bgcolor"&gt;#E0E0E0&lt;/xsl:attribute&gt;
+&lt;/xsl:attribute-set&gt;
+
+    &lt;!--===== FOP did not like this =========================================--&gt;
+&lt;!--&lt;xsl:attribute-set name="xref.properties"&gt;--&gt;
+&lt;!--  &lt;xsl:attribute name="font-size"&gt;14pt&lt;/xsl:attribute&gt;--&gt;
+&lt;!--  &lt;xsl:attribute name="font-style"&gt;bold&lt;/xsl:attribute&gt;--&gt;
+&lt;!--&lt;/xsl:attribute-set&gt;--&gt;
+
+&lt;/xsl:stylesheet&gt;
+
+@doc
+@ascskip xemacs-xsl-mode-off
+
+
+
+
+</t>
+<t tx="ekr.20040331071919.30">@language plain
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:21 CST 2004  michael@redpriest Appendix_XEmacs_Text_Editor_140657924.txt"
+
+You can use Leo to enter all the text in an outline, but Leo also
+allows you to use your familiar editing environment.  In my case,
+that is XEmacs.  Fortunately, Leo integrates with XEmacs quite well.
+
+The following items are code I use, some Leo Python plugins and some
+XEmacs elisp functions.  You may find them useful.
+
+@ascskip on
+&lt;&lt; Appendix: XEmacs Text Editor &gt;&gt;
+@code</t>
+<t tx="ekr.20040331071919.31">@language python
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:10 CST 2004  michael@redpriest _OpenWith_Plugin__140659092.py"
+
+Leo's Open_With plugin can be modified so that the body text of any
+outline node can be edited in XEmacs by choosing "File; OpenWith;
+XEmacs" or "File; OpenWith; XEmacs - noshow"  from the menu.
+
+What actually happens is that Leo places the text in a temporary
+file, and calls XEmacs with the address of that temporary file.  Leo
+then watches for changes in the temporary file.  When and if the
+temporary file changes, Leo copies the contents to the body text of
+the Leo node.
+      
+Below is the standard open_with.py plugin that came with Leo 4.1-rc3
+The only modification I've made is to insert
+@code
+&lt;&lt;call XEmacs&gt;&gt;=
+table = (
+    ("X&amp;Emacs", "Alt+Shift+O", ("os.system","/usr/bin/gnuclient -q ", None)),
+    ("X&amp;Emacs - noshow", "Ctrl+Shift+O", ("os.system","/mrc2/linux-bin/gnuclient-noshow ", None))
+    )
+@doc
+as noted below.  A similar alteration should work for future
+versions.
+
+Note: this alteration is for XEmacs running under Linux, but a
+similar command should work in the Windows environment.
+
+I use the "gnuclient-noshow" selection to load the temporary open_with file in
+the background.  It is a small bash shell script:
+---
+#!/bin/bash
+gnuclient -eval "(find-file-noselect \"${1}\")"
+---
+
+To implement this, edit a copy of the open_with.py file that comes
+with your version of Leo.  Move the original copy to a safe place,
+and put your edited copy in the Leo plugins directory.  Check to see
+it is included in "pluginsManager.txt" in that directory.
+@ascskip on
+@root "other/xemacs/open_with.py"
+&lt;&lt; Open_With Plugin&gt;&gt;
+@code
+"""Create menu for Open With command and handle the resulting commands"""
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+try:    import Tkinter
+except: Tkinter = None
+
+import os
+
+if Tkinter: # Register the handlers...
+
+    def on_idle (tag,keywords):
+        a = g.app
+        for dict in a.openWithFiles:
+            path = dict.get("path")
+            c = dict.get("c")
+            encoding = dict.get("encoding",None)
+            v = dict.get("v")
+            old_body = dict.get("body")
+            if path and os.path.exists(path):
+                try:
+                    time = os.path.getmtime(path)
+                    if time and time != dict.get("time"):
+                        dict["time"] = time # inhibit endless dialog loop.
+                        # The file has changed.
+                        try:
+                            # Update v from the changed temp file.
+                            f=open(path)
+                            s=f.read()
+                            f.close()
+                        except:
+                            g.es("can not open " + g.shortFileName(path))
+                            break
+                        
+                        # Convert body and s to whatever encoding is in effect.
+                        body = v.bodyString()
+                        body = g.toEncodedString(body,encoding,reportErrors=true)
+                        s = g.toEncodedString(s,encoding,reportErrors=true) # 10/13/03
+                        
+                        conflict = body != old_body and body != s
+                        
+                        # Set update if we should update the outline from the file.
+                        if conflict:
+                            # See how the user wants to resolve the conflict.
+                            g.es("conflict in " + g.shortFileName(path),color="red")
+                            message = "Replace changed outline with external changes?"
+                            result = g.app.gui.runAskYesNoDialog("Conflict!",message)
+                            update = result.lower() == "yes"
+                        else:
+                            update = s != body
+                        
+                        if update:
+                            g.es("updated from: " + g.shortFileName(path),color="blue")
+                            v.setBodyStringOrPane(s,encoding) # 10/16/03
+                            c.selectVnode(v)
+                            dict["body"] = s
+                        elif conflict:
+                            g.es("not updated from: " + g.shortFileName(path),color="blue")
+                except:
+                    g.es_exception() ## testing
+                    pass
+    def create_open_with_menu (tag,keywords):
+    
+        if  (tag in ("start2","open2") or
+            (tag=="command2" and keywords.get("label")=="new")):
+    
+            # Entries in the following table are the tuple 
+            # (commandName,shortcut,data).
+            # 
+            # - data is the tuple (command,arg,ext).
+            # - command is one of "os.system", "os.startfile", "os.spawnl", 
+            # "os.spawnv" or "exec".
+            # 
+            # Leo executes command(arg+path) where path is the full path to 
+            # the temp file.
+            # If ext is not None, the temp file has the extension ext,
+            # Otherwise, Leo computes an extension based on what @language 
+            # directive is in effect.
+            
+            idle_arg = "c:/python22/tools/idle/idle.py -e "
+            
+@doc
+Here is where we insert the &lt; Call XEmacs &gt; code fragment defined above:
+@code
+            if 1: # Default table.
+
+
+&lt;&lt; Call XEmacs &gt;&gt;
+#               table = (
+#                   # Opening idle this way doesn't work so well.
+#                   # ("&amp;Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+#                   ("&amp;Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+#                   ("Word&amp;Pad","Alt+Shift+T",("os.startfile",None,".txt")))
+#           elif 1: # Test table.
+#               table = ("&amp;Word","Alt+Shift+W",("os.startfile",None,".doc")),
+#           else: # David McNab's table.
+#               table = ("X&amp;Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
+            
+            g.top().frame.menu.createOpenWithMenuFromTable(table)
+            # Enable the idle-time hook so we can check temp files created by Open With.
+            g.enableIdleTimeHook(idleTimeDelay=500)
+
+    if g.app.gui is None:
+        g.app.createTkGui(__file__)
+
+    if g.app.gui.guiName() == "tkinter":
+
+        g.app.hasOpenWithMenu = true
+        leoPlugins.registerHandler("idle", on_idle)
+        leoPlugins.registerHandler(("start2","open2","command2"), create_open_with_menu)
+    
+        __version__ = "1.4" # Set version for the plugin handler.
+        g.plugin_signon(__name__)
+
+</t>
+<t tx="ekr.20040331071919.32">@language python
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:14 CST 2004  michael@redpriest _OpenTree_Plugin__140660268.py"
+
+This is a module that creates an "Open With" menu item that opens
+Leo outline nodes in the tree below the current Leo node in the
+XEmacs editor.  I frequently have a small tree of Leo nodes which
+contain code that is usually edited in the same session.
+
+NOTE: I use the "gnuclient-noshow" selection to load the temporary
+open_with file in the background.  Leo calls a command with the
+temporary file name at the end of the command, but the gnuclient
+command needs to receive it enclosed in quotes and parentheses.  The
+solution is a small intermediary bash shell script called
+"gnuclient-noshow":
+
+---
+#!/bin/bash
+gnuclient -eval "(find-file-noselect \"${1}\")"
+---
+
+I would rather have this operate in the background, but Leo's
+openWith always operates on the current node, and openWith has much
+good error checking that I want to use. So the fast solution was to
+have OpenTreeInXEmacs visibly traverse the tree.
+
+@ascskip on
+@root "other/xemacs/mod_xemacsopentree.py"
+&lt;&lt; Open_Tree Plugin &gt;&gt;
+@code
+
+import leoPlugins
+
+def OpenTreeInXEmacs():
+    import leoCommands
+    #XEmacsCommand = "/usr/bin/gnuclient -q "
+    XEmacsCommand = "/mrc2/linux-bin/gnuclient-noshow "
+    c = g.top()
+    vnode = c.currentVnode() # get the current vnode.
+    stopHere = vnode.nodeAfterTree()
+    v = vnode
+    while v != stopHere:
+        c.openWith(data=("os.system", XEmacsCommand, None))
+        v = v.threadNext()
+        if (not v) or (v == stopHere):
+            break
+        c.selectVnode(v)
+    c.selectVnode(vnode)
+
+
+def CreateOpenTreeMenu(tag,keywords):
+
+    """Create the 'Xemacs: Open Tree' menu item in the Open With menu."""
+
+
+    if  (tag=="open2" or
+        (tag=="start2") or
+        (tag=="command2" and keywords.get("label")=="new")):
+
+        c = g.top()
+        exportMenu = c.frame.menu.getMenu('Open With')
+        newEntries = (
+            ("-", None, None),
+            ("XEmacs: Open nodes in sub-tree","None",OpenTreeInXEmacs),
+            )
+
+        c.frame.menu.createMenuEntries(exportMenu, newEntries)
+
+if 1:
+    leoPlugins.registerHandler(("start2","open2","command2"), CreateOpenTreeMenu)
+
+    __version__ = ".4" # Set version for the plugin handler.
+    g.plugin_signon(__name__)
+@doc
+
+
+@code
+</t>
+<t tx="ekr.20040331071919.33">@language python
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:15 CST 2004  michael@redpriest _Filename_modification__140661308.py"
+
+This is a small modification to Leo (via a Python plugin module) so
+that Leo will open the temporary files with a name that can be
+easily recognized in an XEmacs buffer listing.
+
+On Linux, Leo opens files in the temporary files directory, all
+prefixed with "LeoTemp_", which makes the names difficult to tell
+apart when you have many different nodes loaded in XEmacs.
+
+This code replaces the openWithTempFilePath method of the LeoFrame
+class with code that opens temporary files in a subdirectory of the
+temporary files directory, called "username_Leo", and omits the
+"LeoTemp" prefix.
+
+For example, I'm now editing this Leo node in XEmacs as
+    "/tmp/michael_Leo/_Filename_modification__138976348.py"
+In the XEmacs buffer list, the filename is shown as
+    "_Filename_modification__138976348.py"
+and all the Leo buffer names start with a leading underscore, so
+they are grouped together.
+
+For general use, this code should be considerably more robust about
+creating the Leo subdirectory and signaling errors, but it is just a
+quick hack that works for me on my machines.
+
+This is distributed with Leo version 4.1rc3, so I've updated it with
+Ed Ream's modifications to match that distribution.
+
+@ascskip on
+@root "other/xemacs/mod_tempfname.py"
+&lt;&lt; Filename modification &gt;&gt;
+@code
+
+"""Replace Commands.openWithTempFilePath so Leo opens temporary
+files with a filename that begins with the headline text, and
+located in a 'username_Leo' subdirectory of the temporary
+directory. The 'LeoTemp' prefix is omitted.  This makes it easier to
+see which temporary file is related to which outline node.""" #'
+
+from leoPlugins import *
+import leoGlobals as g
+from leoGlobals import true,false
+
+import leoCommands
+import getpass
+import os
+import tempfile
+
+def onStart (tag,keywords):
+
+	# g.trace("replacing openWithTempFilePath")
+
+	g.funcToMethod(openWithTempFilePath,leoCommands.Commands,"openWithTempFilePath")
+
+def openWithTempFilePath (self,v,ext):
+
+	"""Return the path to the temp file corresponding to v and ext.
+
+	Replaces the Commands method."""    
+
+	try:
+		leoTempDir = getpass.getuser() + "_" + "Leo"
+	except:
+		leoTempDir = "LeoTemp"
+		g.es("Could not retrieve your user name.")
+		g.es("Temporary files will be stored in: %s" % leoTempDir)
+
+	td = os.path.join(os.path.abspath(tempfile.gettempdir()), leoTempDir)
+	if not os.path.exists(td):
+		os.mkdir(td)
+
+	name = g.sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
+	path = os.path.join(td,name)
+	return path
+
+# Register the handlers...
+leoPlugins.registerHandler("start2", onStart)
+
+__version__ = "1.3"
+g.plugin_signon(__name__)
+</t>
+<t tx="ekr.20040331071919.34">@language plain
+@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 09:58 CST 2004  michael@redpriest _Kill_Temporary_Buffers__140661388.txt"
+
+If you've opened a number of Leo temporary buffers in XEmacs, this
+XEmacs function will kill them for you.  Just set the tempdir
+variable to whatever matches your local value.
+
+XEmacs will prompt you about any buffers that have unsaved changes.
+
+@ascskip on
+@ascskip xemacs-lisp-mode-on
+@root "other/xemacs/kill-temporary-buffers.el"
+&lt;&lt; Kill Temporary Buffers &gt;&gt;
+@code
+;;
+;;-     mwd-leo-kill-buffers
+(defun mwd-leo-kill-buffers ()
+  "Kill any buffers for files in my Leo temporary directory."
+  (interactive)
+  (let ((bl (buffer-list))
+        (tempdir "/tmp/michael_Leo" )  ;; change this to your temporary directory.
+        )
+    (while bl
+      (setq test-buffer (car bl))
+      (setq bname (buffer-file-name test-buffer))
+      (if (and bname (string-match tempdir bname))
+          (kill-buffer test-buffer)
+        )
+      (setq bl (cdr bl))
+      )
+    )
+  )
+
+
+
+@doc
+@ascskip xemacs-lisp-mode-off
+</t>
+<t tx="ekr.20040331071919.35">@language plain
+@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:18 CST 2004  michael@redpriest _MMMmode__140663340.txt"
+
+There is an editing mode for XEmacs called Multiple Major Modes,
+which allows us to edit the temporary text conveniently: with all
+the syntax highlighting, special keymaps, etc. available, even
+though Leo nodes may contain both plain text and program code.
+
+When the XEmacs cursor is in a section of plain text, all the plain
+text facilities are available, and there is no syntax
+highlighting. When the XEmacs cursor is in a section of code
+(Python, XSL, whatever) XEmacs invokes the syntax highlighting,
+special keymaps, etc. appropriate for that code.
+
+indexterm:[Multiple Major Modes]
+indexterm:[Multiple Major Modes,mmm-mode.el]
+If you have XEmacs installed, and you have also installed the
+Multiple Major Modes mmm-mode.el package, the following code will
+customize mmm-mode for use while editing Leo temporary files.
+
+NOTE: mmm-mode is already installed by default in most
+distributions.
+
+Installation: Load mmm-leo-config.el from your .init.el file, or
+just load it manually to try it out.
+
+I won't go through it all, but for example, when editing a temporary
+Leo file that is in XEmacs Python mode, and/or has a ".py" suffix:
+
+    - when your cursor is any text between the @doc and @code
+      directives XEmacs will enter text-mode.  Otherwise (e.g. with
+      the cursor after the @code directive), XEmacs will be in
+      Python mode.
+    - when your cursor is between text that says
+      "xemacs -makefile-mode-on" and text that says
+      "xemacs -makefile-mode-off", XEmacs will enter makefile-mode.
+      (You key in those text markers to mark out the area you want
+      as makefile-mode.  See the Leo2AsciiDoc.leo outline for examples,
+      e.g the "Make File" section in the Leo2AsciiDoc Users Guide.)
+
+      Otherwise, XEmacs will be in Python mode in that buffer.
+
+Similarly, makefile-mode, xsl-mode and emacs-lisp-mode are added to
+temporary Leo files that created with a ".txt" extension.      
+
+A future project may be to create a Leo module to use in the
+Leo "openWith" function that examines each node for these mmm-mode
+markers and creates the temporary file with the proper extension.
+
+@ascskip on
+@ascskip xemacs-lisp-mode-on
+@root "other/xemacs/mmm-leo-config.el"
+&lt;&lt; MMM-mode &gt;&gt;
+@code
+;;-     mmm-mode                multiple modes
+(require 'mmm-auto)
+(require 'mmm-vars)
+
+;   mmm-mode-on and mmm-mode-off turn it on and off in a buffer.
+;   \c-c % \c-b re-parses the whole buffer
+
+;   set mode to activate on mode or extension
+(setq mmm-global-mode 'maybe)
+
+; turn off gray background
+(setq mmm-submode-decoration-level 0)
+
+;   add embedded modes in python
+(mmm-add-group
+ 'py-embedded-text
+ '(
+   (py-leo
+    :submode text-mode
+    :face mmm-code-submode-face
+    :front "^@doc.*"
+    :back "^@code"
+    :insert ((?l py-leo-tag nil @ "@doc"
+                 @ "\n\n" _ "\n\n" @ "@code" @))
+    ; \c % l will insert the doc-code pair at point.
+    )
+   (py-doc
+    :submode text-mode
+    :face mmm-code-submode-face
+    :front "^\"\"\".*"
+    :back "^.+\"\"\""
+    )
+   (py-makefile
+    :submode makefile-mode
+    :face mmm-code-submode-face
+    :front "xemacs-makefile-mode-on"
+    :back "xemacs-makefile-mode-off"
+    )
+   )
+ )
+;   add embedded modes in text
+(mmm-add-group
+ 'text-embedded
+ '(
+   (txt-makefile-mode
+    :submode makefile-mode
+    :face mmm-code-submode-face
+    :front "xemacs-makefile-mode-on"
+    :back "xemacs-makefile-mode-off"
+    :insert ((?l text-embedded-tag nil @ "@doc"
+                 @ "\n\n" _ "\n\n" @ "@code" @))
+    ; \c % l will insert the doc-code pair at point.
+    )
+   (txt-xsl-mode
+    :submode xsl-mode
+    :face mmm-code-submode-face
+    :front "xemacs-xsl-mode-on"
+    :back "xemacs-xsl-mode-off"
+    :insert ((?l text-embedded-tag nil @ "@doc"
+                 @ "\n\n" _ "\n\n" @ "@code" @))
+    ; \c % l will insert the doc-code pair at point.
+    )
+   (txt-lisp-mode
+    :submode emacs-lisp-mode
+    :face mmm-code-submode-face
+    :front "xemacs-lisp-mode-on"
+    :back "xemacs-lisp-mode-off"
+    :insert ((?l text-embedded-tag nil @ "@doc"
+                 @ "\n\n" _ "\n\n" @ "@code" @))
+    ; \c % l will insert the doc-code pair at point.
+    )
+   )
+ )
+(mmm-add-mode-ext-class 'python-mode "\\.py\\'" 'py-embedded-text)
+(mmm-add-mode-ext-class 'text-mode "\\.txt\\'" 'text-embedded)
+
+@doc
+@ascskip xemacs-lisp-mode-off
+</t>
+<t tx="ekr.20040331071919.36">@language plain
+@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:20 CST 2004  michael@redpriest _Insert_indexterm__140664580.txt"
+
+indexterm:[XEmacs, Indexing]
+Indexing is tedious work, and it interferes with the readability of
+the ascii text as well.  However, used sparingly, it helps the
+reader.
+
+When editing a Leo node (in an XEmacs buffer), this function copies
+a highlighted word or phrase and inserts an AsciiDoc index code on a
+new line immediately before the paragraph.  I try to keep markup out
+of the way of the reader.  In this case, AsciiDoc requires that the
+index code be part of the same block of text, and the first line of
+the block is the least annoying place I can find.
+
+For example, if I wanted to index the words "XEmacs buffer" above, I
+would highlight them (usually by pressing M-@ a couple of times) and
+then call this function (I have it bound to C-k C-h C-i).  At the
+beginning of the paragraph, my text would say "\indexterm:[XEmacs
+buffer]".
+
+@ascskip on
+@ascskip xemacs-lisp-mode-on
+@root "other/xemacs/index-leo-region.el"
+&lt;&lt; Insert indexterm &gt;&gt;
+@code
+(defun mwd-index-leo-region (start end)
+  "preface paragraph with AsciiDoc index macro of region."
+  (interactive "r")
+  (save-excursion
+    (copy-region-as-kill start end)
+    (backward-paragraph)
+    (insert "\nindexterm:[")
+    (yank)
+    (insert "]")
+    )
+  )
+
+@doc
+@ascskip xemacs-lisp-mode-off
+
+</t>
+<t tx="ekr.20040331071919.37">@language plain
+@silent
+@doc
+@ascskip # Time-stamp: "Tue, Jan 13 10:56 CST 2004  michael@redpriest _Indent_Leo_comments__141202716.txt"
+
+Leo derived files are sprinkled with comments, which Leo uses as
+markers to be able to "untangle" files, i.e. import changes made to
+a derived file back into the Leo outline.
+
+Useful as they may be, the comments are an ugly distraction when
+reading the source code.  One could have XEmacs flush them from the
+file, but then the untangle feature is gone for that file.
+
+This pair of XEmacs elisp functions moves them to the right, where
+they aren't so distracting, and moves them back again if you should
+want to untangle the file.
+
+@ascskip on
+@ascskip xemacs-lisp-mode-on
+@root "other/xemacs/indent-leo-comments.el"
+&lt;&lt; Indent Leo comments &gt;&gt;
+@code
+(defun mwd-leo-comments-indent ()
+  "Indent Leo comments to make them less distracting."
+  (interactive)
+  (save-excursion
+    (let* (
+          (leading-spaces 40)
+          (start-string (concat (make-string leading-spaces ? ) "\\1" ))
+          (end-string (concat (make-string leading-spaces ? ) "\\1" ))
+          )
+      (goto-char (point-min))
+      (while (search-forward-regexp "\\(^# &lt;&lt;\\)" nil t) (replace-match start-string))
+      (goto-char (point-min))
+      (while (search-forward-regexp "\\(^# -- end\\)" nil t) (replace-match end-string))
+      )
+    )
+  )
+
+(defun mwd-leo-comments-unindent ()
+  "Reverse the effect of mwd-leo-comments-indent."
+  (interactive)
+  (save-excursion
+      (goto-char (point-min))
+      (while (search-forward-regexp "^\\(\\s-\\)+\\(# &lt;&lt;\\)" nil t) (replace-match "\\2" ))
+      (goto-char (point-min))
+      (while (search-forward-regexp "^\\(\\s-\\)+\\(# -- end\\)" nil t) (replace-match "\\2" ))
+    )
+  )
+@doc
+@ascskip xemacs-lisp-mode-off
+</t>
+<t tx="ekr.20040331071919.38">@language plain
+@ascfile "doc/mod_asc_user.asc"
+@ascconfig maxCodeLineLength 80
+@doc
+@ascskip # Time-stamp: "Mon, Jan 19 15:29 CST 2004  michael@redpriest Leo_AsciiDoc_Users_Guide_141652036.txt"
+
+Preface
+-------
+
+Leo2AsciiDoc is a small Python program which has been
+built to be used as a plugin module for the Leo outlining editor.
+
+Leo2AsciiDoc enables the contents of Leo outlines to be published to HTML
+or PDF via the DocBook set of publishing tools.  Plain text from the
+Leo outline is transformed into a final result that has:
+
+    - typeset body text, in which bulleted and numbered lists,
+      variable lists, page numbers, URLs, index terms,and bold and
+      italic text are automatically recognized.
+    - typeset Headings
+    - a Table of Contents
+    - an Index containing any items marked by the user, and any
+      Python classes or functions.
+
+As you will see, there's not a lot involved in using the
+Leo2AsciiDoc module.  It simply copies text from a Leo outline (or a
+portion of a Leo outline) to a text file.  In turn that text file can
+be automatically converted by the AsciiDoc program and a DocBook
+system to properly typeset DocBook HTML, PDF or other formats.
+
+If you keep your text plain, and use a few simple formatting
+conventions, the final output can have typeset headings, bulleted
+lists, indexing and cross-referencing, as well as many other
+features.
+
+---
+Michael Dawson
+Marshall Research
+michael_dawson at marshallresearch dot com
+---
+
+*note*
+
+Leo2AsciiDoc is suited for general text documents, most programming
+documentation and most business documents.  Leo2AsciiDoc (being based on
+DocBook) is not the choice for anyone needing detailed typographic
+control of individual words or characters -- for example, typeset
+equations.  In general, DocBook typesets blocks of text.
+
+*note*
+
+@code
+</t>
+<t tx="ekr.20040331071919.39">@doc
+@ascskip # Time-stamp: "Mon, Jan 19 11:48 CST 2004  michael@redpriest Installation_140689076.txt"
+Installation of this plugin is very straightforward, using Leo
+version 4.1:
+
+    - copy the python source code (mod_leo2ascd.py) to your Leo
+      plugin directory (a subdirectory called "plugins" under your
+      main Leo directory).
+    - in that directory should be a text file called
+      pluginsManager.txt, containing a list of all plugins that are
+      to be loaded when Leo starts.  Add mod_leo2ascd.py to the
+      list.
+    - start or re-start Leo.
+    - in the Leo Log Window you should see the Leo2AsciiDoc sign-on
+      message "---mod_leo2asc 0.4-------".
+    - in the Leo main menu "File; Export", there should be two menu
+      items called something like "Export to AsciiDoc".
+
+@code</t>
+<t tx="ekr.20040331071919.40">@language plain
+@doc
+@ascskip # Time-stamp: "Thu, Oct 16 13:46 CST 2003  michael@redpriest Operation_140791428.txt"
+
+Using Leo2AsciiDoc is as simple as choosing the Leo menu item: "File;
+Export; Export All to AsciiDoc".  From there, you have the AsciiDoc
+program and the DocBook system automatically convert your outline to
+HTML or PDF (or to a manpage or a DocBook website.)
+
+Step by step:
+
+    - You need a Leo outline containing some plain text, or plain
+      text and code.
+    - You ensure that the top node in the outline (or part of the
+      outline tree which you want to be a separate document) must
+      have an @ascfile directive in the body text. The @ascfile
+      directive is used to specify the filename in which the output
+      text will be put.
+    - You then use Leo's menu: "File; Export; Export All to
+      AsciiDoc" (or one of the other Leo2AsciiDoc menu items) to
+      have Leo2AsciiDoc automatically export the outline to a text file.
+    - After that, you run the AsciiDoc program on the exported text
+      file, and process it as a DocBook document.  Most often,
+      people have a Make file set up to do this automatically.
+
+In practice, people often want to use special features:
+
+    - plain text formatting, sometimes referred to as "structured
+      text" or "minimal markup"
+    - Leo2AsciiDoc configuration options
+
+The following sections cover this.  If you've downloaded the Leo2AsciiDoc
+package, the mod_leo2asc.leo outline is available, and illustrates
+all the features.  It is the outline from which all the Leo2AsciiDoc HTML
+and PDF documentation and code were derived.
+
+@code
+</t>
+<t tx="ekr.20040331071919.41">@doc
+@ascskip # Time-stamp: "Mon, Jan 19 13:19 CST 2004  michael@redpriest Directives_140672364.txt"
+
+The following are non-printing directives that you can insert into
+your outline text to control Leo2AsciiDoc behaviour.  All must be at the
+beginning of the line.
+
+{amp}commat;ascfile::
+    e.g: `@ascfile "doc/mod_asc_user.asc" `
+
+    Ascfile is the equivalent of a Leo @root directive. Ascfile
+    signals the start of a document and specifies the file name to
+    receive the text.
+
+    The default directory is the directory containing the Leo
+    outline.  If you were editing an outline that resided in
+    /home/me then the above ascfile directive would create the file
+    mod_asc/user.asc in the directory /home/me/doc.
+
+{amp}commat;ascignore::
+    Ascignore causes Leo2AsciiDoc to ignore the outline node, and any
+    sub-nodes. It must be placed before any line in the node which
+    will print.
+
+{amp}commat;ascskip::
+    Causes Leo2AsciiDoc to skip the line.  If followed by the word "on",
+    causes Leo2AsciiDoc to skip all succeeding document lines until an
+    "{amp}commat;ascskip off" directive is read, or a code section is reached.
+
+{amp}commat;ascexit::
+    Causes Leo2AsciiDoc to exit the outline node without processing any
+    further lines.  Sub-nodes will be processed.
+
+{amp}commat;ascconfig::
+    e.g. `{amp}commat;ascconfig maxCodeLineLength 70` -- see
+    Configuration below. 
+    
+
+@code
+</t>
+<t tx="ekr.20040331071919.42">@doc
+@ascskip # Time-stamp: "Mon, Jan 19 13:20 CST 2004  michael@redpriest Configuration_140673612.txt"
+
+There are a few configuration settings which may be set in an
+outline.  To take effect, they must be placed:
+
+    - in the top node of the outline, or
+    - the same node as an @ascfile directive.
+    
+Configuration settings in the top node of the outline are effective
+for the whole outline, unless overridden by settings in sub-nodes.
+
+maxCodeLineLength::
+    e.g. `{amp}commat;ascconfig maxCodeLineLength 70` -- 
+    sets the maximum length of code printout lines to 70 characters.
+    Longer lines will be wrapped and a line continuation character
+    displayed.
+
+PrintHeadings::    
+    e.g. `{amp}commat;ascconfig PrintHeadings off` -- turns off the
+    export of outline node headings as section titles.  In that
+    case, you must have correctly entered AsciiDoc section titles in
+    the body text of your outline.
+
+Readers of the code will note that there are other configuration
+settings in the code. These will be used in future, and so I won't
+document them yet.
+
+
+@code</t>
+<t tx="ekr.20040331071919.43">@language plain
+@doc
+@ascskip # Time-stamp: "Mon, Jan 19 13:22 CST 2004  michael@redpriest Markup_140672220.txt"
+
+The point of using a system like AsciiDoc is to get a document that
+is properly typeset, while writing only plain text with as little
+embedded formatting instruction as possible.
+
+For the most part, you simply write chunks of text, which become
+typeset paragraphs.
+
+I've tried to use most commonly used markup in the Leo outline that
+contains all the Leo2AsciiDoc source and documentation, so that you
+can see exactly how markup may be used.
+
+@code</t>
+<t tx="ekr.20040331071919.44">@doc
+@ascskip # Time-stamp: "Mon, Jan 19 13:20 CST 2004  michael@redpriest Standard_AsciiDoc_Markup_140676540.txt"
+
+This section illustrates a very small part of the standard AsciiDoc
+markup.  However, AsciiDoc comes with extensive documentation of its
+own, which any Leo2AsciiDoc user should read.
+
+
+@code</t>
+<t tx="ekr.20040331071919.45">@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:06 CST 2004  michael@redpriest Headings_141020668.txt"
+
+indexterm:[Markup, Headings]
+Leo2AsciiDoc will automatically create Headings from the headings of
+your Leo outline.  You can turn this off (see Configuration), and
+create your own headings in the body text of an outline node.  For
+example, a Chapter heading is text at the left margin that has a
+following line of dashes.  For example,
+
+@code
+ Operation
+ ---------
+
+@doc
+is the heading of this chapter.  Chapter sub-sections have a
+following line of tildes.  For example,
+
+@code
+
+ Markup
+ ~~~~~~
+
+@doc
+
+is the heading of Section One of this chapter.  Section Two markup
+is a following line of "^".  For example, 
+
+@code
+
+Standard AsciiDoc Markup
+^^^^^^^^^^^^^^^^^^^^^^^^
+@doc
+
+is the heading of the section, which is a Section Two.
+
+As I say, you normally don't need to do this, since Leo2AsciiDoc does all
+this itself from the outline headings.
+
+
+@code
+</t>
+<t tx="ekr.20040331071919.46">@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:06 CST 2004  michael@redpriest Lists_141018612.txt"
+
+indexterm:[Markup, lists]
+Bulleted lists start with a dash (or asterisk) followed by a space
+or tab character.  I've extended this to allow leading spaces.  For
+example,
+    
+@code
+    - this is a list item
+        * this is a sub-item
+    - this is another list item
+@doc
+
+produces:
+
+    - this is a list item
+        * this is a sub-item
+    - this is another list item
+
+
+@code</t>
+<t tx="ekr.20040331071919.47">@doc
+@ascskip # Time-stamp: "Thu, Jan  8 14:07 CST 2004  michael@redpriest URLs_140994492.txt"
+
+indexterm:[Markup, URL]
+The URL address of a web page will be "hot" in the HTML or PDF
+document, when terminated with square brackets:
+
+@code
+
+http://www.docbook.org[The official home page for DocBook: The Definitive  Guide.]
+
+@doc
+
+results in:
+
+http://www.docbook.org[The official home page for DocBook: The Definitive Guide.]
+
+
+@code</t>
+<t tx="ekr.20040331072431"></t>
+<t tx="ekr.20040331072431.1">@nocolor</t>
+<t tx="ekr.20040331072431.2">Leo's @file concept is very powerful but there are numerous occasions when the user wants to read and write outlines in specialized formats which cannot be handled using the @comment, @first etc directives. Examples would be,
+
+- exporting to restructured text (where additional markup steps are required
+- exporting to MS Word
+- custom file formats/XML which require restructuring before input/output
+
+Currently there exist two approaches to get around this,
+
+1. Use tangle_done (or other script) to post-process the file - not very efficient since all knowledge of the structure of the outline has to be reinvented by the tangle_done script
+
+2. Use a plugin (eg rst or mod_wordexport) - more efficient but still not ideal since each plugin writer ends up spinning his/her own node traversal scheme and strategy for handling directives, &lt;&lt;headers&gt;&gt; etc
+
+
+</t>
+<t tx="ekr.20040331072431.3">The solution proposed here is to allow handlers to register themselves to hook into the process of deriving/underiving a file. Handlers would be dispatched on a file type basis (determined by the file extension) and would be able to take over all or part of the (un)derivation process. 
+
+The tricky part of the proposal is to design the hooks to allow the user enough control to completely redefine the format of the derived file whilst not requiring them to rewrite the hard parts of the @file code.
+
+Based on the proof-of-concept example presented here, the following hooks may be sufficient for writing,
+
+1. start (begining to derive a file)
+2. body (complete handling of the body)
+3. sentinel (handle a sentinel)
+4. line (handle a line or part of a line)
+5. startnode (when a new node is being processed)
+6. endnode (the node and all its children have been processed)
+7. end (ready to write the file)
+
+
+At this time it is not clear whether hooking the read code is actually the best way to go - it may be that the handler would have to override the entire read process.</t>
+<t tx="ekr.20040331072431.4">A proof-of-concept has been built to try out the feasibility on the writing side. The example chosen is to write a FreeMind file. FreeMind (freemind.sourceforge.net) is an open source mind-mapping program which fits very well with Leo as an outlining system. A two-way link between the two would offer interesting possibilities.
+
+The FreeMind file is an XML file which is very similar to Leo's. It would be rather easy to write a converter but it serves as a good starting point.</t>
+<t tx="ekr.20040331072431.5">The code is implemented as a plugin which subclasses leoAtFile.baseNewDerivedFile and replaces it. The new class implements a dispatching mechanism similar to the plugin system itself, allowing handlers to register themselves to take over various stages of the derivation process.
+
+Most of the heavy lifting is done in the _doDispatch method which checks to see if a handler is available for the current action for the current file type.
+
+Many of the method of baseNewDerivedFile are override to pass through _doDispatch. In addition, it was necessary to wrap some methods in pre and post calls to allow, for example, the startnode and endnode functions.
+
+One example of this is putAtOthersChild.
+
+
+A slightly more ugly wrapping of the 'write' method was required since this method performs many actions which we would like to control. In this case these methods had to be switched out with dummy calls so that the handler could call them when it required.
+
+</t>
+<t tx="ekr.20040331072431.6">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def _doDispatch(self, ontype, default, *args, **kw):
+	"""Do a dispatch"""
+	base, ext = os.path.splitext(self.derivedname)
+	print "Putting %s, dispatching on '%s' ('%s')" % (ontype, ext, self.derivedname)
+	try:
+		function = self.dispatch[ontype][ext[1:]] # [1:] to remove the "." from the extension
+	except KeyError:
+		function = default
+	if function:
+		return function(self, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.7">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def putAtOthersChild(self, *args, **kw):
+	self._handleStartNode(*args, **kw)
+	leoAtFile.baseNewDerivedFile.putAtOthersChild(self, *args, **kw)
+	self._handleEndNode(*args, **kw)
+</t>
+<t tx="ekr.20040331072431.8">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def write(self, *args, **kw):
+	root = args[0]
+	self.derivedname = root.t.headString
+	self._handleStart(*args, **kw)
+	#
+	# Make sure we hold the write file open
+	oldclose = self.closeWriteFile
+	oldreplace = self.replaceTargetFileIfDifferent
+	self.closeWriteFile = lambda : None
+	self.replaceTargetFileIfDifferent = lambda : None
+	#
+	leoAtFile.baseNewDerivedFile.write(self, *args, **kw)
+	self._handleEnd(*args, **kw)
+	#
+	# Now we can close it
+	self.closeWriteFile = oldclose
+	self.closeWriteFile()
+	self.replaceTargetFileIfDifferent = oldreplace
+	self.replaceTargetFileIfDifferent()
+</t>
+<t tx="ekr.20040331072431.9">Handler clients register themselves using the registerDispatcher call which takes three parameters
+
+- extension (the file extension to register for)
+- ontype (the handler event to hook, see declarations)
+- handler (the function to recieve the call)
+
+
+In addition, a convenience blank handler (ie ignore the event) can be inserted by calling the registerNullDispatcher for a particular extension and ontype.</t>
+<t tx="ekr.20040331072431.10">@code
+
+"""New type of derived file which can dispatch on the file type"""
+
+dispatch = {"startnode" : {},
+			"endnode" : {},
+			"body" : {},  # Only dispatch 'body' if you know what you are doing!
+			"code" : {},
+			"sentinel" : {},
+			"start" : {},
+			"end" : {},
+			}
+
+</t>
+<t tx="ekr.20040331072431.11">&lt;&lt; atfile_dispatch methods &gt;&gt;=
+
+leoAtFile.newDerivedFile = dispatchedDerivedFile
+
+def registerDispatcher(extension, ontype, handler):
+	"""Register a handler for an file extension"""
+	dispatchedDerivedFile.dispatch[ontype][extension] = handler
+</t>
+<t tx="ekr.20040331072431.12">&lt;&lt; atfile_dispatch methods &gt;&gt;=
+
+def registerNullDispatcher(extension, ontype):
+	"""Register that a handler shouldn't be called"""
+	dispatchedDerivedFile.dispatch[ontype][extension] = None
+</t>
+<t tx="ekr.20040331072431.13">The FreeMind example shows that the plugin begins by registering its dispatchers. It is then called during the normal process of deriving a file (with a ".mm" extension).
+
+It hooks nearly all the events with the exception of body (see the child of this node for a discussion of why not!). The handler functions are rather simple although I took a slightly more complex route than is required in order to exercise all the events.
+
+The implementation builds a separate node structure to represent the tree and then writes this out when the process is complete.</t>
+<t tx="ekr.20040331072431.14">This hooks the putBody method call. It is tough to override this as this basically means the handler must do all the hard work of traversing the tree and remembering to call v.setVisited. Finer control of this process is probably a good idea since getting someone to override this properly is quite tricky.</t>
+<t tx="ekr.20040331072431.15">1. It works for writing the derived file.
+
+2. The handler code is pretty clean and doesn't require the handler writer to know about the internals of the @file writing code.
+
+3. Overriding "putBody" is probably a bit too tough to expect people to do.
+
+4. It isn't clear that the same approach will work for reading derived files. This might have to be delegated completely to the handler.
+
+</t>
+<t tx="ekr.20040331072431.16">I want to try out something on the read side (mainly because I want to see if I can get a two way link with FreeMind!). This would complete the proof-of-concept and achieve the aim, which was to demonstrate that Leo could incorporate custom handlers for derived files without any structural changes.
+
+Following that a more complete implementation could be put together if this is thought to be a valuable way to go.</t>
+<t tx="ekr.20040331072431.17"></t>
+<t tx="ekr.20040331072431.18">@ignore
+@root atfile_dispatch.py
+@language python
+&lt;&lt; atfile_dispatch declarations &gt;&gt;
+&lt;&lt; atfile_dispatch methods &gt;&gt;
+
+	
+if 1: # Register the handlers...
+	g.plugin_signon(__name__)
+
+</t>
+<t tx="ekr.20040331072431.19">@code
+
+"""Enable dispatching of @file writing to custom handlers"""
+
+__version__ = "0.1"
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+import leoAtFile
+import os.path</t>
+<t tx="ekr.20040331072431.20">&lt;&lt; atfile_dispatch methods &gt;&gt;=
+
+class dispatchedDerivedFile(leoAtFile.baseNewDerivedFile):
+	&lt;&lt; class dispatchedDerivedFile declarations &gt;&gt;
+	&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;
+
+</t>
+<t tx="ekr.20040331072431.21">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def putBody(self, *args, **kw):
+	"""Put the body text"""
+	return self._doDispatch("body", leoAtFile.baseNewDerivedFile.putBody, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.22">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def putCodeLine(self, *args, **kw):
+	"""Put the code line"""
+	return self._doDispatch("code", leoAtFile.baseNewDerivedFile.putCodeLine, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.23">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def putSentinel(self, *args, **kw):
+	"""Put the sentinel line"""
+	return self._doDispatch("sentinel", leoAtFile.baseNewDerivedFile.putSentinel, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.24">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def _handleStartNode(self, *args, **kw):
+	return self._doDispatch("startnode", None, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.25">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def _handleEndNode(self, *args, **kw):
+	return self._doDispatch("endnode", None, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.26">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def _handleStart(self, *args, **kw):
+	return self._doDispatch("start", None, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.27">&lt;&lt; class dispatchedDerivedFile methods &gt;&gt;=
+
+def _handleEnd(self, *args, **kw):
+	return self._doDispatch("end", None, *args, **kw)
+</t>
+<t tx="ekr.20040331072431.28">@ignore
+@root freemind_export.py
+@language python
+&lt;&lt; freemind_export declarations &gt;&gt;
+&lt;&lt; freemind_export methods &gt;&gt;
+
+		
+if 1: # Register the handlers...
+	g.plugin_signon(__name__)
+	import atfile_dispatch
+	# Register dispatch functions for writing
+	atfile_dispatch.registerDispatcher("mm", "code", handleMindMapLine)
+	atfile_dispatch.registerDispatcher("mm", "startnode", handleMindMapStartNode)
+	atfile_dispatch.registerDispatcher("mm", "endnode", handleMindMapEndNode)
+	atfile_dispatch.registerNullDispatcher("mm", "sentinel")
+	atfile_dispatch.registerDispatcher("mm", "start", handleStart)
+	atfile_dispatch.registerDispatcher("mm", "end", handleEnd)
+	
+</t>
+<t tx="ekr.20040331072431.29">@code
+
+"""Export part of a Leo outline to FreeMind"""
+
+__version__ = "0.1"
+
+import leoPlugins
+
+import leoGlobals as g
+from leoGlobals import true,false
+
+</t>
+<t tx="ekr.20040331072431.30">&lt;&lt; freemind_export methods &gt;&gt;=
+
+class MindMapNode(list):
+	&lt;&lt; class MindMapNode declarations &gt;&gt;
+	&lt;&lt; class MindMapNode methods &gt;&gt;
+
+</t>
+<t tx="ekr.20040331072431.31">@code
+
+"""Class representing a mind map node"""
+
+</t>
+<t tx="ekr.20040331072431.32">&lt;&lt; class MindMapNode methods &gt;&gt;=
+
+def __init__(self, header, parent, body=""):
+	"""Initialize"""
+	self.header = header
+	self.parent = parent
+	self.body = body
+</t>
+<t tx="ekr.20040331072431.33">&lt;&lt; class MindMapNode methods &gt;&gt;=
+
+def render(self, at):
+	"""Render to the file"""
+	if not self.body:
+		txt = self.header
+	else:
+		txt = "%s\n%s" % (self.header, self.body)
+		txt = txt.replace("\n", "e&amp;#xa;")
+	at.os('&lt;node text="%s"&gt;\n' % (txt,))
+	for child in self:
+		child.render(at)
+	at.os('&lt;/node&gt;\n')
+</t>
+<t tx="ekr.20040331072431.34">&lt;&lt; freemind_export methods &gt;&gt;=
+
+def handleStart(self, *args, **kw):
+	"""Start of writing process"""
+	print "Handling start"
+	global nodes, current_node, first_node
+	nodes = {} # Dictionary of nodes
+	root = args[0]
+	nodes[root] = current_node = MindMapNode(root.t.headString, None)
+	first_node = current_node
+	print "End"
+</t>
+<t tx="ekr.20040331072431.35">&lt;&lt; freemind_export methods &gt;&gt;=
+
+def handleMindMapLine(self, s, i):
+	"""Handling body for mind mapper"""
+	print "Handling body '%s'" % s
+	current_node.body += s
+	print "End"
+</t>
+<t tx="ekr.20040331072431.36">&lt;&lt; freemind_export methods &gt;&gt;=
+
+def handleMindMapStartNode(self, v):
+	"""Handle the start header"""
+	global current_node
+	print "Handling start header '%s'" % (v, )
+	this = MindMapNode(v.t.headString, current_node)
+	nodes[v] = this
+	current_node.append(this)
+	current_node = this
+	print "End"
+</t>
+<t tx="ekr.20040331072431.37">&lt;&lt; freemind_export methods &gt;&gt;=
+
+def handleMindMapEndNode(self, v):
+	"""Handle the end header"""
+	global current_node
+	print "Handling end header '%s'" % (v, )
+	current_node = current_node.parent
+	print "End"
+</t>
+<t tx="ekr.20040331072431.38">&lt;&lt; freemind_export methods &gt;&gt;=
+
+def handleEnd(self, *args, **kw):
+	"""Handle the end"""
+	print "Handling end"
+	self.os("&lt;map&gt;\n")	
+	first_node.render(self)
+	self.os("&lt;/map&gt;\n")
+	print "End"	
+</t>
+<t tx="ekr.20040331072431.39">@ignore</t>
+<t tx="ekr.20040331072431.40">The main node
+@others
+</t>
+<t tx="ekr.20040331072431.41">aaaa</t>
+<t tx="ekr.20040331072431.42">bbb</t>
+<t tx="ekr.20040331072431.43">ccc
+@others</t>
+<t tx="ekr.20040331072431.44">c1c1
+
+@others</t>
+<t tx="ekr.20040331072431.45">c1ac1a</t>
+<t tx="ekr.20040331072431.46">c2c2</t>
+<t tx="ekr.20040331072431.47">ddd</t>
+<t tx="ekr.20040331072431.48">@others</t>
+<t tx="ekr.20040331072431.49">aaaa</t>
+<t tx="ekr.20040331072431.50">bbb</t>
+<t tx="ekr.20040331072431.51">ccc</t>
+<t tx="ekr.20040331072431.52">c1c1</t>
+<t tx="ekr.20040331072431.53">c1ac1a</t>
+<t tx="ekr.20040331072431.54">c2c2</t>
+<t tx="ekr.20040331072431.55">ddd</t>
+<t tx="ekr.20040331072431.56">This is some text
+second line
+third
+
+@others
+</t>
+<t tx="ekr.20040331072431.57">inside header
+</t>
+<t tx="ekr.20040331072607">"""Add Hoist/De-Hoist buttons to the toolbar.
+"""
+
+__version__ = "0.4"
+	# 0.1: Original version by Davide Salomoni.
+	# 0.2: EKR, Color mod by EKR.
+	# 0.3: DS, Works with multiple open files.
+	# 0.4: EKR, 4.2 coding style, enable or disable buttons, support for unit tests.
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+activeHoistColor = "pink1" # The Tk color to use for the active hoist button.
+
+# Set this to 0 if the sizing of the toolbar controls doesn't look good on your platform. 
+USE_FIXED_SIZES = 1 
+
+@others
+
+if Tk:
+	hoist = HoistButtons()
+
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
+	
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("after-create-leo-frame", hoist.addWidgets)
+		leoPlugins.registerHandler("idle", hoist.onIdle)
+		g.plugin_signon(__name__)
+</t>
+<t tx="ekr.20040331072607.1">class HoistButtons:
+	"""Hoist/dehoist buttons for the toolbar."""
+	@others</t>
+<t tx="ekr.20040331072607.2">def __init__(self):
+
+	self.hoistOn = {}
+	self.hoistOff = {}
+</t>
+<t tx="ekr.20040331072607.3">def _getSizer(self, parent, height, width):
+
+	"""Return a sizer object to force a Tk widget to be the right size"""
+
+	if USE_FIXED_SIZES: 
+		sizer = Tk.Frame(parent, height=height, width=width)
+		sizer.pack_propagate(0) # don't shrink 
+		sizer.pack(side="right")
+		return sizer
+	else:
+		return parent</t>
+<t tx="ekr.20040331072607.4">def addWidgets(self, tags, keywords):
+
+	"""Add the widgets to the toolbar."""
+
+	c = keywords['c'] 
+	toolbar = c.frame.iconFrame
+	
+	def hoistOffCallback(self=self,c=c):
+		self.doHoistOff(c)
+		
+	def hoistOnCallback(self=self,c=c):
+		self.doHoistOn(c)
+
+	# Button De-Hoist
+	self.hoistOff[c] = Tk.Button(
+		self._getSizer(toolbar, 25, 70),text="De-Hoist",
+		command = hoistOffCallback)
+		#command=lambda s=self,arg=c: s.doHoistOff(arg))
+	self.hoistOff[c].pack(side="right", fill="both", expand=1)
+
+	# Button Hoist
+	self.hoistOn[c] = Tk.Button(
+		self._getSizer(toolbar, 25, 70),text="Hoist", 
+		#command=lambda s=self,arg=c: s.doHoistOn(arg))
+		command = hoistOnCallback)
+
+	self.hoistOn[c].pack(side="left", fill="both", expand=1)
+	self.bgColor = self.hoistOn[c]["background"]
+	self.activeBgColor = self.hoistOn[c]["activebackground"]</t>
+<t tx="ekr.20040331072607.5">def doHoistOn (self,c,*args,**keys):
+	
+	c.hoist()
+
+</t>
+<t tx="ekr.20040331072607.6">def doHoistOff (self,c,*args,**keys):
+	
+	c.dehoist()</t>
+<t tx="ekr.20040331072607.7">def onIdle(self, tag, keywords):
+	
+	c = keywords.get('c')
+
+	if not c or not hasattr(c,"hoistStack"):
+		return
+		
+	on_widget  = self.hoistOn.get(c)
+	off_widget = self.hoistOff.get(c)
+
+	if not on_widget or not off_widget:
+		return # This can happend during unit tests.
+
+	state = g.choose(c.canHoist(),"normal","disabled")
+	on_widget.config(state=state)
+	
+	state = g.choose(c.canDehoist(),"normal","disabled")
+	off_widget.config(state=state)
+
+	if len(c.hoistStack) &gt; 0:
+		on_widget.config(bg=activeHoistColor,
+			activebackground=activeHoistColor,
+			text="Hoist %s" % len(c.hoistStack))
+	else:
+		on_widget.config(bg=self.bgColor,
+			activebackground=self.activeBgColor,
+			text="Hoist")</t>
+<t tx="ekr.20040331080749">"""Create a context menu when right-clicking in the body pane."""
+
+# Send bug reports to
+# http://sourceforge.net/forum/forum.php?thread_id=980723&amp;forum_id=10228
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+try:    import Tkinter as Tk
+except: Tk = None
+
+import sys
+
+@others
+
+__version__ = "0.3"
+	# 0.1, 0.2: Created by 'e'.
+	# 0.3: EKR:
+		# - Converted to 4.2 code style. Use @file node.
+		# - Simplified rClickBinder, rClicker, rc_help.  Disabled signon.
+		# - Removed calls to registerHandler, "by" ivar, rClickNew, and shutdown code.
+		# - Added select all item for the log pane.
+
+if Tk:
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
+
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler("after-create-leo-frame",rClickbinder)
+		leoPlugins.registerHandler("bodyrclick1",rClicker)
+		g.plugin_signon(__name__)</t>
+<t tx="ekr.20040331080749.3">def rc_help():
+	
+	"""Highlight txt then rclick for python help() builtin."""
+
+	c = g.top()
+	
+	if c.frame.body.hasTextSelection():
+
+		newSel = c.frame.body.getSelectedText()
+
+		# EKR: nothing bad happens if the status line does not exist.
+		c.frame.clearStatusLine()
+		c.frame.putStatusLine(' Help for '+newSel) 
+	
+		# Redirect stdout to a "file like object".
+		sys.stdout = fo = g.fileLikeObject()
+	
+		# Python's builtin help function writes to stdout.
+		help(str(newSel))
+		
+		# Restore original stdout.
+		sys.stdout = sys.__stdout__
+
+		# Print what was written to fo.
+		s = fo.get() ; g.es(s) ; print s</t>
+<t tx="ekr.20040331080749.4">def rc_dbody():
+
+	c = g.top() ; p = c.currentPosition()
+
+	if c.frame.body.hasTextSelection():
+
+		c.frame.body.deleteTextSelection()
+		c.frame.body.onBodyWillChange(v,"Delete")</t>
+<t tx="ekr.20040331080749.5">def rc_nl():
+	
+	"""Insert a newline at the current curser position."""
+
+	c = g.top()
+
+	c.frame.body.insertAtInsertPoint('\n')
+	c.frame.body.onBodyWillChange(c.currentPosition(),"Typing")</t>
+<t tx="ekr.20040331080749.6">def rClickbinder(tag,keywords):
+
+	c = g.top() # c may be None during startup.
+	
+	if c:
+		c.frame.log.logCtrl.bind  ('&lt;Button-3&gt;',c.frame.OnBodyRClick)
+		# c.frame.body.bodyCtrl.bind('&lt;Button-3&gt;',c.frame.OnBodyRClick)</t>
+<t tx="ekr.20040331080749.9"># EKR: it is not necessary to catch exceptions or to return "break".
+
+def rClicker(tag,keywords):
+	
+	c = g.top() #c = keywords.get("c")  #"commands"
+	e = keywords.get("event")
+	if not c or not e: return
+
+	e.widget.focus()
+
+	if e.widget._name == 'body':
+		&lt;&lt; define commandList for body &gt;&gt;
+	else:
+		&lt;&lt; define commandList for log pane &gt;&gt;
+		
+	rmenu = Tk.Menu(None,tearoff=0,takefocus=0)
+	for (txt,cmd) in commandList:
+		if txt == '-':
+			rmenu.add_separator()
+		else:
+			rmenu.add_command(label=txt,command=cmd)
+
+	rmenu.tk_popup(e.x_root-23,e.y_root+13)</t>
+<t tx="ekr.20040331091659">commandList = [
+	#('-||-|-||-',None),   #
+	#('U',c.undoer.undo),  #no c.undoer
+	#('R',undoer.redo),
+	# ('-',None),
+	('Cut', c.frame.OnCutFromMenu), 
+	('Copy',c.frame.OnCopyFromMenu),
+	('Paste', c.frame.OnPasteFromMenu),
+	('Delete',rc_dbody),
+	('-',None),
+	('SelectAll',c.frame.body.selectAllText),
+	('Indent',c.indentBody),
+	('Dedent',c.dedentBody),  
+	('Find Bracket',c.findMatchingBracket),
+	('Insert newline', rc_nl),
+	('Help(txt)',rc_help),   #how to highlight 'txt' in the menu?
+	('Execute Script',c.executeScript)
+	# ('-||-|-||-',None),   # 1st &amp; last needed because of freaky sticky finger
+	]</t>
+<t tx="ekr.20040331091659.1">commandList=[
+	('Cut', c.frame.OnCutFromMenu), 
+	('Copy',c.frame.OnCopyFromMenu),
+	('Paste', c.frame.OnPasteFromMenu),
+	('Select All', rc_selectAll)]</t>
+<t tx="ekr.20040331151007">@language python
+
+"""Edit @file-nosent nodes: make sure there is a newline at the end
+of each subnode, replace all tabs with spaces and add a newline before
+class and functions in the derived file."""
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+import os
+
+NSPACES = ' '*4
+nosentNodes = []
+
+@others
+
+leoPlugins.registerHandler("save1",onPreSave)
+leoPlugins.registerHandler("save2",onPostSave)
+
+__version__ = "0.1"
+g.plugin_signon(__name__)</t>
+<t tx="ekr.20040331151007.1">def onPreSave(tag=None, keywords=None):
+	"""Before saving a nosentinels file, make sure that all nodes have a blank line at the end."""
+
+	global nosentNodes
+	
+	v = g.top().rootVnode()
+	while v:
+		h = v.headString()
+		if h.startswith("@file-nosent") and v.isDirty():
+			nosentNodes.append(v)
+			after = v.nodeAfterTree()
+			while v and v != after:
+				text = v.t.bodyString
+				lastline = text.split("\n")[-1]
+				if lastline.strip() != "":
+					# add a blank line if necessary
+					v.setBodyStringOrPane(text+"\n")
+				v = v.threadNext()
+		else:
+			v = v.threadNext()
+</t>
+<t tx="ekr.20040331151007.2">def onPostSave(tag=None, keywords=None):
+	"""After saving a nosentinels file, replace all tabs with spaces."""
+
+	global nosentNodes
+	
+	for v in nosentNodes:
+		h = v.headString()
+		#g.es("node %s found" % h, color="red")
+		df = v.c.atFileCommands.new_df
+		df.scanAllDirectives(v)
+		name = h[len("@file-nosent"):].strip()
+		fname = os.path.join(df.default_directory,name)
+		fh = open(fname,"r")
+		lines = fh.readlines()
+		fh.close()
+		&lt;&lt; add a newline before def or class &gt;&gt;
+		&lt;&lt; replace tabs with spaces &gt;&gt;
+
+	nosentNodes = []
+</t>
+<t tx="ekr.20040331151007.3">for i in range(len(lines)):
+	ls = lines[i].lstrip()
+	if ls.startswith("def ") or ls.startswith("class "):
+		try:
+			if lines[i-1].strip() != "":
+				lines[i] = "\n" + lines[i]
+		except IndexError:
+			pass</t>
+<t tx="ekr.20040331151007.4">s = ''.join(lines)
+fh = open(fname,"w")
+fh.write(s.replace("\t",NSPACES))
+fh.close()</t>
+<t tx="ekr.20040331153923">"""A plugin to schedule commands for later execution."""
+
+&lt;&lt; about this plugin &gt;&gt;
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+import leoNodes
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+import sched
+import time
+import threading
+
+&lt;&lt; define scheduler data &gt;&gt;
+
+__version__ = "0.2"
+	# 0.1: Original version by ?
+	# 0.2: EKR: converted to 4.2 code standards.
+
+@others
+
+if Tk:
+	global sd
+	sc = sched.scheduler(time.time,time.sleep)
+	lk = threading.Condition(threading.RLock())
+	sd = Schedule()
+	sd.start()
+	leoPlugins.registerHandler(('start2','open2','new'),addScheduleMenu)
+	g.plugin_signon(__name__)</t>
+<t tx="ekr.20040331153923.1">@
+
+Scheduler.py is a plugin for Leo. It's purpose is to provide the ability to
+issue commands at a future time and to write messages that will be displayed at
+a later time.
+
+To record commands You goto Schedule and choose begin recording. Then you jump
+to the nodes and select the commands you want issued on them. This process is
+ended with the end recording option.
+
+A dialog pops up. You can then click on the individual commands and set the time
+for execution. To set the execution time for all, enter a value and hit set_all.
+All times must be in the form hh:mm. For example I want to issue a save command
+for 5:00 PM. I would do so by using the value 17:00.
+
+The Schedule Message is simple. There is a Text box to enter the message and a
+Entry to place the time. View Queue will summon a view of The Queue. This dialog
+will show the commands that have been enqued. There is also the option to Cancel
+out any scheduled commands/messages.</t>
+<t tx="ekr.20040331153923.2">record = False
+haveseen = []
+commands = []
+cmds = {}
+timepanel = None
+svs = []</t>
+<t tx="ekr.20040331153923.3">def wait_sleep(i):
+	lk.acquire()
+	lk.wait(i)
+	lk.release()</t>
+<t tx="ekr.20040331153923.4">class Schedule(threading.Thread):
+
+	def __init__(self):
+		threading.Thread.__init__(self)
+		self.setDaemon(true)
+	def run(self):
+		while 1:
+			lk.acquire()
+			lk.wait()
+			lk.release()
+			sc.run()</t>
+<t tx="ekr.20040331153923.5">def viewQueue():
+	
+	'''Brings up a dialog showing qscheduled commands and messages'''
+
+	tl = Tk.Toplevel()
+	tl.title("The Queue")
+	f = Tk.Frame(tl)
+	f.pack(fill="both")
+	lb = Tk.Listbox(f,background='white')
+	for z in sc.queue:
+		if z[2] == prepareCom:
+			#s = z[3][3]+" "+ z[3][0].headString()+"  "+time.ctime(z[0])
+			s = "%s %s %s" % (z[3][3],z[3][0].headString(),time.ctime(z[0]))
+		else:
+			s = "Message at " + time.ctime(z[0])
+		lb.insert("end",s)
+	lb.pack(fill="both")
+	&lt;&lt; define cancel and close callbacks &gt;&gt;
+	f2 = Tk.Frame(tl)
+	f2.pack()
+	b = Tk.Button(f2,text="Close",command=close)
+	b.pack(side="right")
+	b2 = Tk.Button(f2,text="Cancel",command=cancel)
+	b2.pack(side="left")
+	sh = tl.winfo_screenheight()/4
+	sw = tl.winfo_screenwidth()/4
+	tl.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))</t>
+<t tx="ekr.20040331153923.6">def popupMessage(message):
+
+	'''Pops up a message when the time comes'''
+
+	dialog = Tk.Toplevel()
+	dialog.title("You've Got a Message!")
+	&lt;&lt; define close callback &gt;&gt;
+	l = Tk.Label(dialog,text=message,background='white')
+	l.pack()
+	b = Tk.Button(dialog,text='Close',command=close)
+	b.pack()
+	sh = dialog.winfo_screenheight()/4
+	sw = dialog.winfo_screenwidth()/4
+	dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))</t>
+<t tx="ekr.20040331153923.7">def createMessage():
+	'''Creates dialog to enter message to self in'''
+	
+	dialog = Tk.Toplevel()
+	dialog.title("Enter Message")
+	t = Tk.StringVar()
+	tv = Tk.Text(dialog,background='white')
+	tv.pack(side="top")
+	ts = Tk.StringVar()
+	ti = Tk.Entry(dialog,text=ts,background='white')
+	ti.pack()
+	&lt;&lt; define schedule callback &gt;&gt;
+	b = Tk.Button(dialog,text='Schedule',command=schedule)
+	b.pack(side="bottom")  
+	tv.focus_set()
+	sh = dialog.winfo_screenheight()/4
+	sw = dialog.winfo_screenwidth()/4
+	dialog.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))</t>
+<t tx="ekr.20040331153923.8">def startRecord(c):
+
+	'''begins recording'''
+
+	global record
+
+	cmds[c] = c.doCommand
+	c.doCommand = doCommand
+	record = True</t>
+<t tx="ekr.20040331153923.9">def setTime():
+
+	'''adds Commands to the Queue for timely processing'''
+
+	global commands
+
+	timepanel.withdraw()
+	lk.acquire()
+	lt = time.localtime()
+	priority = 1
+	for i in xrange(len(commands)):
+		z = commands[i]
+		tm = svs[i].get()
+		p = tm.split(':')
+		g.trace(p)
+		nt = (lt[0],lt[1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
+		sse = time.mktime(nt)
+		sc.enterabs(sse,priority,prepareCom,z)
+		priority += 1
+
+	commands = []
+	lk.notify()
+	lk.release()</t>
+<t tx="ekr.20040331153923.10">def endRecord(c):
+	'''what happens when recording is ended.  To be cleaned up :) '''
+	&lt;&lt; setAll and set_time callbacks &gt;&gt;
+	global record,timepanel
+	record = False
+	c.doCommand = cmds[c]
+	if timepanel == None:
+		timepanel = Tk.Toplevel()
+		f1 = Tk.Frame(timepanel)
+		f1.pack(side="top",fill="both")
+		timepanel.e = Tk.Entry(f1)
+		b = Tk.Button(f1,text ='Schedule',command=setTime)
+		sa = Tk.Button(f1,text ='Set_All',command=setAll)
+		timepanel.e.pack()
+		b.pack(side="left") 
+		sa.pack(side="right")
+		f = Tk.Frame(timepanel)
+		f.pack(side="bottom",fill="both")
+		bottom = Tk.Scrollbar(f,orient="horizontal")
+		bottom.pack(side="bottom",fill=Tk.X)
+		timepanel.lb = Tk.Listbox(f,background='white')
+		timepanel.lb.bind('&lt;ButtonRelease-1&gt;',set_time)
+		timepanel.lb.pack(side="left",fill="both")
+		right = Tk.Scrollbar(f)
+		right.pack(side="right",fill="y")
+		right.config(command=timepanel.lb.yview)
+		timepanel.lb.config(yscrollcommand=right.set)
+		bottom.config(command=timepanel.lb.xview)
+		timepanel.lb.config(xscrollcommand=bottom.set)
+		sh = timepanel.winfo_screenheight()/4
+		sw = timepanel.winfo_screenwidth()/4
+		timepanel.geometry(str(525)+"x"+str(400)+"+"+str(sw)+"+"+str(sh))
+	else: 
+		timepanel.deiconify()
+	timepanel.lb.delete(0,"end")
+	global svs
+	svs = []
+	for z in commands:
+		sv = Tk.StringVar()
+		s = z[3] + ': ' + z[0].headString() + "   " + sv.get()
+		svs.append(sv)
+		timepanel.lb.insert("end",s)
+	timepanel.e.focus_set()    </t>
+<t tx="ekr.20040331153923.11">def prepareCom(p,c,command,label):
+
+	''' a simple method that executes commands'''
+	
+	c.selectPosition(p)
+	command()</t>
+<t tx="ekr.20040331153923.12">def doCommand (command,label,event=None):
+	
+	''' a swap method.  When Leo is recording, most methods pass through here,
+we record them'''
+
+	if label == 'exit': shutdown(None,None)
+	if record:
+		if label == 'endrecording':
+			command()
+			return None
+		lk.acquire()
+		c = g.top()
+		commands.append((c.currentVnode(),c,command,label))
+		lk.release()
+		return True
+	else:
+		return None</t>
+<t tx="ekr.20040331153923.13">def addScheduleMenu(tag,keywords):
+
+	men = None
+	if keywords.has_key('c'):
+		men = keywords['c'].frame.menu
+	else:
+		men = keywords['new_c'].frame.menu
+
+	if men in haveseen:
+		return None
+	
+	haveseen.append(men)
+	name = 'Schedule'
+	men.createNewMenu(name)
+	
+	table = (
+		('Begin Recording',None,lambda c = g.top(): startRecord(c)),
+		('End Recording',None,lambda c = g.top(): endRecord(c)),
+		('Schedule Message',None,createMessage),
+		('View Queue',None,viewQueue))
+
+	men.createMenuItemsFromTable(name,table)</t>
+<t tx="ekr.20040331155341">def close(dialog=dialog):
+
+	dialog.withdraw()
+	dialog.destroy()</t>
+<t tx="ekr.20040331155341.1">def schedule(dialog=dialog,lk=lk,sc=sc):
+
+	dialog.withdraw()
+	lk.acquire()
+	lt = time.localtime()
+	p = ts.get().split(':')
+	nt = (lt[0],lt [1],lt[2],int(p[0]),int(p[1]),lt[5],lt[6],lt[7],lt[8])
+	sse = time.mktime(nt)
+	sc.enterabs(sse,1,popupMessage,tuple([tv.get('1.0',"end")]))
+	lk.notify()
+	lk.release()
+	dialog.destroy()</t>
+<t tx="ekr.20040331155341.2">def setAll():
+	value = timepanel.e.get()
+	for z in svs:
+		z.set(value)
+
+def set_time(*ignore):
+	which = timepanel.lb.curselection()
+	which = int(which[0])
+	item = timepanel.lb.get(which)
+	sv = svs[which]
+	timepanel.e.config(textvariable=sv)</t>
+<t tx="ekr.20040331160627">def cancel(lb=lb):
+
+	try:
+		i = int(lb.curselection()[0])
+		x = sc.queue[i]
+		sc.cancel(x)
+		lb.delete(i,i)
+	except:
+		print "BOOM!"
+
+def close(tl=tl):
+	
+	tl.withdraw()
+	tl.destroy()</t>
+<t tx="ekr.20040401054523">@nocolor
+
+Leo 4.2 uses new coding conventions internally.  I recommend using the new coding conventions in all plugins, although the old way will work inside LeoPlugins.leo.
+
+The new way replaces:
+	
+from leoPlugins import *
+from leoGlobals import *
+
+with:
+
+import leoPlugins
+import leoGlobals as g
+from leoGlobals import true,false
+
+This removes a major source of namespace pollution and it makes clear where all functions are defined.  To access functions in leoGlobals.py you must preceed the names of such functions with g. N.B. script in the node called
+
+"Script to find and replace all functions in leoGlobals.py"
+
+does this for you. This script make replacements only in a named, top-level subtree.  To change the name of the subtree change the name of the argument in the statement:
+
+p = g.findTopLevelNode("New or improved in 4.2")
+
+Besides changing the imports as shown above, you should do the following:
+
+1. Change app or app() to g.app
+
+2. Change registerHandler(...) to leoPlugins.registerHandler(...)
+
+3. The new standard for importing and using Tkinter is as follows:
+
+try: import Tkinter as Tk
+except ImportError: Tk = None
+
+if Tk:
+	if g.app.gui is None:
+		g.app.createTkGui(__file__)
+	
+	if g.app.gui.guiName() == "tkinter":
+		leoPlugins.registerHandler(...)
+		g.plugin_signon(__name__)
+
+This means that the code would refer to Tk.widget instead of Tkinter.widget.  Also, please avoid the use of the completely useless Tk constants such as Tk.RIGHT, Tk.TOP.  Use "right" or "top" instead.
+
+Typical calls to functions in leoGlobals.py include the following:
+
+g.plugin_signon(__name__)
+g.es(...) # etc.
+
+Please use @file trees unless you _must_ use an @root tree for some reason.
+Please put each class, method and function in a separate node.
+</t>
+<t tx="ekr.20040401055913">@nocolor
+
+None of these plugins is guaranteed to be ready for prime time.  I am including these here now so that we shall all have a common base from which to work.
+
+I believe all these new plugins follow the 4.2 conventions (see next node).  I may, however, have introduced bugs in making the conversion to the 4.2 code style.  I apologize for any such problems.</t>
+<t tx="ekr.20040401060550">def rc_selectAll():
+	
+	"""Select the entire log pane."""
+
+	c = g.top()
+	
+	g.app.gui.setTextSelection(c.frame.log.logCtrl,"1.0","end")</t>
 </tnodes>
 </leo_file>
