@@ -193,7 +193,7 @@ class leoGui:
     #@-node:ekr.20031218072017.3723:stubs
     #@-node:ekr.20031218072017.3721:app.gui Birth & death
     #@+node:ekr.20031218072017.3730:app.gui dialogs
-    def runAboutLeoDialog(self,version,theCopyright,url,email):
+    def runAboutLeoDialog(self,c,version,theCopyright,url,email):
         """Create and run Leo's About Leo dialog."""
         self.oops()
         
@@ -201,19 +201,19 @@ class leoGui:
         """Create and run a dialog to get g.app.LeoID."""
         self.oops()
     
-    def runAskOkDialog(self,title,message=None,text="Ok"):
+    def runAskOkDialog(self,c,title,message=None,text="Ok"):
         """Create and run an askOK dialog ."""
         self.oops()
     
-    def runAskOkCancelNumberDialog(self,title,message):
+    def runAskOkCancelNumberDialog(self,c,title,message):
         """Create and run askOkCancelNumber dialog ."""
         self.oops()
     
-    def runAskYesNoDialog(self,title,message=None):
+    def runAskYesNoDialog(self,c,title,message=None):
         """Create and run an askYesNo dialog."""
         self.oops()
     
-    def runAskYesNoCancelDialog(self,title,
+    def runAskYesNoCancelDialog(self,c,title,
         message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
         """Create and run an askYesNoCancel dialog ."""
         self.oops()
@@ -303,6 +303,12 @@ class leoGui:
     def set_focus(self,commander,widget,tag=''):
     
         """Set the focus of the widget in the given commander if it needs to be changed."""
+    
+        self.oops()
+        
+    def widget_wants_focus(self,commander,widget,tag=''):
+    
+        """Indicate that a widget want to get focus."""
     
         self.oops()
     #@nonl
@@ -464,16 +470,16 @@ class unitTestGui(leoGui):
     #@nonl
     #@-node:ekr.20031218072017.3743: test.gui.__init__& destroySelf
     #@+node:ekr.20031218072017.3744:dialogs (unitTestGui)
-    def runAboutLeoDialog(self,version,theCopyright,url,email):
+    def runAboutLeoDialog(self,c,version,theCopyright,url,email):
         return self.simulateDialog("aboutLeoDialog")
         
     def runAskLeoIDDialog(self):
         return self.simulateDialog("leoIDDialog")
     
-    def runAskOkDialog(self,title,message=None,text="Ok"):
+    def runAskOkDialog(self,c,title,message=None,text="Ok"):
         return self.simulateDialog("okDialog","Ok")
     
-    def runAskOkCancelNumberDialog(self,title,message):
+    def runAskOkCancelNumberDialog(self,c,title,message):
         return self.simulateDialog("numberDialog",-1)
         
     def runOpenFileDialog(self,title,filetypes,defaultextension,multiple=False):
@@ -482,15 +488,18 @@ class unitTestGui(leoGui):
     def runSaveFileDialog(self,initialfile,title,filetypes,defaultextension):
         return self.simulateDialog("saveFileDialog")
     
-    def runAskYesNoDialog(self,title,message=None):
+    def runAskYesNoDialog(self,c,title,message=None):
         return self.simulateDialog("yesNoDialog","no")
     
-    def runAskYesNoCancelDialog(self,title,
+    def runAskYesNoCancelDialog(self,c,title,
         message=None,yesMessage="Yes",noMessage="No",defaultButton="Yes"):
         return self.simulateDialog("yesNoCancelDialog","cancel")
     #@nonl
     #@-node:ekr.20031218072017.3744:dialogs (unitTestGui)
     #@+node:ekr.20031218072017.3745:dummy routines
+    def getindex(self,body,index):
+        return 0,0
+    
     def set_focus(self,c,widget,tag=''):
         pass
     #@nonl
