@@ -1526,7 +1526,7 @@ class baseCommands:
         if nodeSentinelLine == -1:
             # The line precedes the first @+node sentinel
             # g.trace("before first line")
-            return root.headString(),0,1,delim # 10/13/03
+            return root.headString(),0,gnx,1,delim # 10/13/03
         s = lines[nodeSentinelLine]
         # g.trace(s)
         #@    << set vnodeName and (childIndex or gnx) from s >>
