@@ -1133,38 +1133,7 @@ class baseFileCommands:
 	#@-body
 	#@-node:2::compactFileIndices
 	#@+node:3::put routines
-	#@+node:1::putClipboardHeader
-	#@+body
-	def putClipboardHeader (self):
-	
-		tnodes = 0
-		
-		#@<< count the number of tnodes >>
-		#@+node:1::<< count the number of tnodes >>
-		#@+body
-		c=self.commands
-		c.clearAllVisited()
-		
-		# Count the vnode and tnodes.
-		v = c.currentVnode()
-		after = v.nodeAfterTree()
-		while v and v != after:
-			t = v.t
-			if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
-				t.setVisited()
-				tnodes += 1
-			v = v.threadNext()
-		#@-body
-		#@-node:1::<< count the number of tnodes >>
-
-		self.put('<leo_header file_format="1" tnodes=')
-		self.put_in_dquotes(`tnodes`)
-		self.put(" max_tnode_index=")
-		self.put_in_dquotes(`tnodes`)
-		self.put("/>") ; self.put_nl()
-	#@-body
-	#@-node:1::putClipboardHeader
-	#@+node:2::put (basic)(leoFileCommands)
+	#@+node:1::put (basic)(leoFileCommands)
 	#@+body
 	# All output eventually comes here.
 	def put (self,s):
@@ -1203,7 +1172,38 @@ class baseFileCommands:
 			self.put("\t")
 			n -= 1
 	#@-body
-	#@-node:2::put (basic)(leoFileCommands)
+	#@-node:1::put (basic)(leoFileCommands)
+	#@+node:2::putClipboardHeader
+	#@+body
+	def putClipboardHeader (self):
+	
+		tnodes = 0
+		
+		#@<< count the number of tnodes >>
+		#@+node:1::<< count the number of tnodes >>
+		#@+body
+		c=self.commands
+		c.clearAllVisited()
+		
+		# Count the vnode and tnodes.
+		v = c.currentVnode()
+		after = v.nodeAfterTree()
+		while v and v != after:
+			t = v.t
+			if t and not t.isVisited() and (t.hasBody() or len(v.t.joinList) > 0):
+				t.setVisited()
+				tnodes += 1
+			v = v.threadNext()
+		#@-body
+		#@-node:1::<< count the number of tnodes >>
+
+		self.put('<leo_header file_format="1" tnodes=')
+		self.put_in_dquotes(`tnodes`)
+		self.put(" max_tnode_index=")
+		self.put_in_dquotes(`tnodes`)
+		self.put("/>") ; self.put_nl()
+	#@-body
+	#@-node:2::putClipboardHeader
 	#@+node:3::putEscapedString
 	#@+body
 	#@+at
@@ -1358,7 +1358,14 @@ class baseFileCommands:
 		return s
 	#@-body
 	#@-node:7::putLeoOutline (to clipboard)
-	#@+node:8::putPrefs
+	#@+node:8::putPostlog
+	#@+body
+	def putPostlog (self):
+	
+		self.put("</leo_file>") ; self.put_nl()
+	#@-body
+	#@-node:8::putPostlog
+	#@+node:9::putPrefs
 	#@+body
 	def putPrefs (self):
 	
@@ -1411,8 +1418,8 @@ class baseFileCommands:
 		
 		self.put("</preferences>") ; self.put_nl()
 	#@-body
-	#@-node:8::putPrefs
-	#@+node:9::putProlog
+	#@-node:9::putPrefs
+	#@+node:10::putProlog
 	#@+body
 	def putProlog (self):
 	
@@ -1451,15 +1458,38 @@ class baseFileCommands:
 	
 		self.put("<leo_file>") ; self.put_nl()
 	#@-body
-	#@-node:9::putProlog
-	#@+node:10::putPostlog
+	#@-node:10::putProlog
+	#@+node:11::putTnode
 	#@+body
-	def putPostlog (self):
+	def putTnode (self,t):
+		
+		# if self.usingClipboard: trace(t.fileIndex)
 	
-		self.put("</leo_file>") ; self.put_nl()
+		self.put("<t")
+		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+		self.put(">")
+	
+		if t.bodyString and len(t.bodyString) > 0:
+			self.putEscapedString(t.bodyString)
+	
+		self.put("</t>") ; self.put_nl()
 	#@-body
-	#@-node:10::putPostlog
-	#@+node:11::putTnodes
+	#@-node:11::putTnode
+	#@+node:12::putTnodeList (4.0)
+	#@+body
+	def putTnodeList (self,v):
+		
+		"""Put the optional tnodeList attribute of a vnode."""
+	
+		fc = self
+		if v.tnodeList:
+			trace("%4d" % len(v.tnodeList),v)
+			fc.put(" tnodeList=") ; fc.put_dquote()
+			s = ','.join([str(t.fileIndex) for t in v.tnodeList])
+			fc.put(s) ; fc.put_dquote()
+	#@-body
+	#@-node:12::putTnodeList (4.0)
+	#@+node:13::putTnodes
 	#@+body
 	def putTnodes (self):
 		
@@ -1496,24 +1526,79 @@ class baseFileCommands:
 
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
-	#@-node:11::putTnodes
-	#@+node:12::putTnode
+	#@-node:13::putTnodes
+	#@+node:14::putVnode (3.x and 4.x)
 	#@+body
-	def putTnode (self,t):
+	#@+at
+	#  This writes full headline and body text for all vnodes, even orphan and 
+	# @ignored nodes.  This allows all Leo outlines to be used as backup files.
+
+	#@-at
+	#@@c
+
+	def putVnode (self,v,topVnode):
+	
+		fc = self ; c = fc.commands
+		fc.put("<v")
 		
-		# if self.usingClipboard: trace(t.fileIndex)
-	
-		self.put("<t")
-		self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
-		self.put(">")
-	
-		if t.bodyString and len(t.bodyString) > 0:
-			self.putEscapedString(t.bodyString)
-	
-		self.put("</t>") ; self.put_nl()
+		#@<< Put tnode index if this vnode has body text >>
+		#@+node:1::<< Put tnode index if this vnode has body text >>
+		#@+body
+		t = v.t
+		if t and (t.hasBody() or len(v.t.joinList) > 0):
+			if t.fileIndex > 0:
+				fc.put(" t=") ; fc.put_in_dquotes("T" + `t.fileIndex`)
+				v.t.setVisited() # Indicate we wrote the body text.
+			else:
+				es("error writing file(bad vnode)!")
+				es("try using the Save To command")
+		#@-body
+		#@-node:1::<< Put tnode index if this vnode has body text >>
+
+		
+		#@<< Put attribute bits >>
+		#@+node:2::<< Put attribute bits >>
+		#@+body
+		current = c.currentVnode()
+		top = topVnode
+		if ( v.isCloned() or v.isExpanded() or v.isMarked() or
+			v == current or v == top ):
+			fc.put(" a=") ; fc.put_dquote()
+			if v.isCloned(): fc.put("C")
+			if v.isExpanded(): fc.put("E")
+			if v.isMarked(): fc.put("M")
+			if v.isOrphan(): fc.put("O")
+			if v == top: fc.put("T")
+			if v == current: fc.put("V")
+			fc.put_dquote()
+		#@-body
+		#@-node:2::<< Put attribute bits >>
+
+		if hasattr(v,"tnodeList") and len(v.tnodeList) > 0:
+			fc.putTnodeList(v) # New in 4.0
+		fc.put(">")
+		
+		#@<< write the head text >>
+		#@+node:3::<< write the head text >>
+		#@+body
+		headString = v.headString()
+		if len(headString) > 0:
+			fc.put("<vh>")
+			fc.putEscapedString(headString)
+			fc.put("</vh>")
+		#@-body
+		#@-node:3::<< write the head text >>
+
+		child = v.firstChild()
+		if child:
+			fc.put_nl()
+			while child:
+				fc.putVnode(child,topVnode)
+				child = child.next()
+		fc.put("</v>") ; fc.put_nl()
 	#@-body
-	#@-node:12::putTnode
-	#@+node:13::putVnodes
+	#@-node:14::putVnode (3.x and 4.x)
+	#@+node:15::putVnodes
 	#@+body
 	#@+at
 	#  This method puts all vnodes by starting the recursion.  putVnode will 
@@ -1540,77 +1625,7 @@ class baseFileCommands:
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@-body
-	#@-node:13::putVnodes
-	#@+node:14::putVnode
-	#@+body
-	#@+at
-	#  This writes full headline and body text for all vnodes, even orphan and 
-	# @ignored nodes.  This allows all Leo outlines to be used as backup files.
-
-	#@-at
-	#@@c
-
-	def putVnode (self,v,topVnode):
-	
-		c = self.commands
-		self.put("<v")
-		
-		#@<< Put tnode index if this vnode has body text >>
-		#@+node:1::<< Put tnode index if this vnode has body text >>
-		#@+body
-		t = v.t
-		if t and (t.hasBody() or len(v.t.joinList) > 0):
-			if t.fileIndex > 0:
-				self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
-				v.t.setVisited() # Indicate we wrote the body text.
-			else:
-				es("error writing file(bad vnode)!")
-				es("try using the Save To command")
-		#@-body
-		#@-node:1::<< Put tnode index if this vnode has body text >>
-
-		
-		#@<< Put attribute bits >>
-		#@+node:2::<< Put attribute bits >>
-		#@+body
-		# Dummy vnodes carry all attributes.
-		current = c.currentVnode()
-		top = topVnode
-		if ( v.isCloned() or v.isExpanded() or v.isMarked() or
-			v == current or v == top ):
-			self.put(" a=") ; self.put_dquote()
-			if v.isCloned(): self.put("C")
-			if v.isExpanded(): self.put("E")
-			if v.isMarked(): self.put("M")
-			if v.isOrphan(): self.put("O")
-			if v == top: self.put("T")
-			if v == current: self.put("V")
-			self.put_dquote()
-		#@-body
-		#@-node:2::<< Put attribute bits >>
-
-		self.put(">")
-		
-		#@<< write the head text >>
-		#@+node:3::<< write the head text >>
-		#@+body
-		headString = v.headString()
-		if len(headString) > 0:
-			self.put("<vh>")
-			self.putEscapedString(headString)
-			self.put("</vh>")
-		#@-body
-		#@-node:3::<< write the head text >>
-
-		child = v.firstChild()
-		if child:
-			self.put_nl()
-			while child:
-				self.putVnode(child,topVnode)
-				child = child.next()
-		self.put("</v>") ; self.put_nl()
-	#@-body
-	#@-node:14::putVnode
+	#@-node:15::putVnodes
 	#@-node:3::put routines
 	#@+node:4::save
 	#@+body
@@ -1684,57 +1699,7 @@ class baseFileCommands:
 				c.openDirectory = dir
 	#@-body
 	#@-node:7::setDefaultDirectoryForNewFiles
-	#@+node:8::xmlEscape
-	#@+body
-	# Surprisingly, this is a time critical routine.
-	
-	def xmlEscape(self,s):
-	
-		assert(s and len(s) > 0) # check is made in putEscapedString
-		s = string.replace(s, '\r', '')
-		s = string.replace(s, '&', "&amp;")
-		s = string.replace(s, '<', "&lt;")
-		s = string.replace(s, '>', "&gt;")
-		return s
-	#@-body
-	#@-node:8::xmlEscape
-	#@+node:9::writeAtFileNodes
-	#@+body
-	def writeAtFileNodes (self):
-	
-		self.commands.atFileCommands.writeAll(writeAtFileNodesFlag=true)
-	#@-body
-	#@-node:9::writeAtFileNodes
-	#@+node:10::writeDirtyAtFileNodes
-	#@+body
-	def writeDirtyAtFileNodes (self): # fileCommands
-	
-		"""The Write Dirty @file Nodes command"""
-	
-		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
-	#@-body
-	#@-node:10::writeDirtyAtFileNodes
-	#@+node:11::writeMissingAtFileNodes
-	#@+body
-	def writeMissingAtFileNodes (self):
-	
-		c = self.commands ; v = c.currentVnode()
-		if v:
-			at = c.atFileCommands
-			at.writeMissing(v)
-	#@-body
-	#@-node:11::writeMissingAtFileNodes
-	#@+node:12::writeOutlineOnly
-	#@+body
-	def writeOutlineOnly (self):
-	
-		c=self.commands
-		c.endEditing()
-		self.compactFileIndices()
-		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
-	#@-body
-	#@-node:12::writeOutlineOnly
-	#@+node:13::write_LEO_file
+	#@+node:8::write_LEO_file
 	#@+body
 	def write_LEO_file(self,fileName,outlineOnlyFlag):
 	
@@ -1900,7 +1865,63 @@ class baseFileCommands:
 
 			return false
 	#@-body
-	#@-node:13::write_LEO_file
+	#@-node:8::write_LEO_file
+	#@+node:9::writeAtFileNodes
+	#@+body
+	def writeAtFileNodes (self):
+		
+		c = self.commands
+	
+		c.atFileCommands.writeAll(writeAtFileNodesFlag=true)
+		
+		if not app().config.write_old_format_derived_files:
+			es("auto-saving outline",color="blue")
+			c.frame.OnSave() # Must be done to preserve tnodeList.
+	#@-body
+	#@-node:9::writeAtFileNodes
+	#@+node:10::writeDirtyAtFileNodes
+	#@+body
+	def writeDirtyAtFileNodes (self): # fileCommands
+	
+		"""The Write Dirty @file Nodes command"""
+	
+		self.commands.atFileCommands.writeAll(writeDirtyAtFileNodesFlag=true)
+	#@-body
+	#@-node:10::writeDirtyAtFileNodes
+	#@+node:11::writeMissingAtFileNodes
+	#@+body
+	def writeMissingAtFileNodes (self):
+	
+		c = self.commands ; v = c.currentVnode()
+		if v:
+			at = c.atFileCommands
+			at.writeMissing(v)
+	#@-body
+	#@-node:11::writeMissingAtFileNodes
+	#@+node:12::writeOutlineOnly
+	#@+body
+	def writeOutlineOnly (self):
+	
+		c=self.commands
+		c.endEditing()
+		self.compactFileIndices()
+		self.write_LEO_file(self.mFileName,true) # outlineOnlyFlag
+	#@-body
+	#@-node:12::writeOutlineOnly
+	#@+node:13::xmlEscape
+	#@+body
+	# Surprisingly, this is a time critical routine.
+	
+	def xmlEscape(self,s):
+	
+		assert(s and len(s) > 0) # check is made in putEscapedString
+		s = string.replace(s, '\r', '')
+		s = string.replace(s, '&', "&amp;")
+		s = string.replace(s, '<', "&lt;")
+		s = string.replace(s, '>', "&gt;")
+		return s
+	#@-body
+	#@-node:13::xmlEscape
 	#@-node:3::Writing
 	#@-others
 

@@ -1256,14 +1256,18 @@ class baseLeoFrame:
 		#@+body
 		readWriteMenu = self.createNewMenu("&Read/Write...","File")
 		
-		table = [
+		table = (
 				("&Read Outline Only","Shift+Ctrl+R",self.OnReadOutlineOnly),
 				("Read @file &Nodes",None,self.OnReadAtFileNodes),
 				("-",None,None),
 				("Write &Dirty @file Nodes","Shift+Ctrl+Q",self.OnWriteDirtyAtFileNodes),
 				("Write &Missing @file Nodes",None,self.OnWriteMissingAtFileNodes),
 				("Write &Outline Only",None,self.OnWriteOutlineOnly),
-				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
+				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes),
+				("-",None,None),
+				("Write 4.x Derived Files",None,self.OnWriteNewDerivedFiles),
+				("Write 3.x Derived Files",None,self.OnWriteOldDerivedFiles),
+				("Write 3.x Outline",None,self.OnWriteOldOutline))
 		
 		self.createMenuEntries(readWriteMenu,table)
 		#@-body
@@ -1314,7 +1318,9 @@ class baseLeoFrame:
 			("Import To @&root",None,self.OnImportAtRoot),
 			("Import &CWEB Files",None,self.OnImportCWEBFiles),
 			("Import &noweb Files",None,self.OnImportNowebFiles),
-			("Import Flattened &Outline",None,self.OnImportFlattenedOutline))
+			("Import Flattened &Outline",None,self.OnImportFlattenedOutline),
+			("-",None,None),
+			("Import 4.0 Derived File",None,self.OnImportDerivedFile))
 		
 		self.createMenuEntries(importMenu,table)
 		
