@@ -226,7 +226,7 @@ Label1:
   WriteRegStr HKCR "LeoFile" "" "Leo File"
   WriteRegStr HKCR "LeoFile\shell" "" "open"
   WriteRegStr HKCR "LeoFile\DefaultIcon" "" $INSTDIR\Icons\LeoDoc.ico,0 
-  WriteRegStr HKCR "LeoFile\shell\open\command" "" '$8 "$INSTDIR\src\leo.py" %1'  
+  WriteRegStr HKCR "LeoFile\shell\open\command" "" '$8 "$INSTDIR\src\leo.py" "%1"'  
 
 SectionEnd
 ;@nonl
