@@ -599,6 +599,7 @@ class leoLog:
         # Note: self.logCtrl is None for nullLog's.
         self.logCtrl = self.createControl(parentFrame)
         self.setFontFromConfig()
+        self.setColorFromConfig()
     #@nonl
     #@-node:ekr.20031218072017.3695:leoLog.__init__
     #@+node:ekr.20031218072017.3696:leoLog.configure
@@ -691,6 +692,17 @@ class leoTree:
     #@nonl
     #@-node:ekr.20031218072017.3705:  tree.__init__ (base class)
     #@+node:ekr.20031218072017.3706: Must be defined in subclasses
+    #@+node:ekr.20031218072017.3709:Colors & Fonts
+    def getFont(self):
+        self.oops()
+        
+    def setFont(self,font=None,fontName=None):
+        self.oops()
+        
+    def setFontFromConfig (self):
+        self.oops()
+    #@nonl
+    #@-node:ekr.20031218072017.3709:Colors & Fonts
     #@+node:ekr.20031218072017.3707:Drawing
     def drawIcon(self,v,x=None,y=None):
         self.oops()
@@ -715,17 +727,6 @@ class leoTree:
         self.oops()
     #@nonl
     #@-node:ekr.20031218072017.3708:Edit label
-    #@+node:ekr.20031218072017.3709:Fonts
-    def getFont(self):
-        self.oops()
-        
-    def setFont(self,font=None,fontName=None):
-        self.oops()
-        
-    def setFontFromConfig (self):
-        self.oops()
-    #@nonl
-    #@-node:ekr.20031218072017.3709:Fonts
     #@+node:ekr.20031218072017.3710:Notifications
     # These should all be internal to the tkinter.frame class.
     
@@ -1296,11 +1297,14 @@ class nullBody (leoBody):
     #@nonl
     #@-node:ekr.20031218072017.2216:Visibility & scrolling
     #@-node:ekr.20031218072017.2197:Must be overriden in subclasses
-    #@+node:ekr.20041217074557:setFontFromConfig
+    #@+node:ekr.20041217074557:setColorFromConfig & setFontFromConfig
     def setFontFromConfig (self):
         pass
+        
+    def setColorFromConfig (self):
+        pass
     #@nonl
-    #@-node:ekr.20041217074557:setFontFromConfig
+    #@-node:ekr.20041217074557:setColorFromConfig & setFontFromConfig
     #@+node:ekr.20031218072017.2217:oops
     def oops(self):
     
@@ -1434,11 +1438,14 @@ class nullLog (leoLog):
             g.rawPrint("")
     #@nonl
     #@-node:ekr.20041012083237.3:put and putnl
-    #@+node:ekr.20041012083237.4:setFontFromConfig
+    #@+node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
     def setFontFromConfig (self):
         pass
+        
+    def setColorFromConfig (self):
+        pass
     #@nonl
-    #@-node:ekr.20041012083237.4:setFontFromConfig
+    #@-node:ekr.20041012083237.4:setColorFromConfig & setFontFromConfig
     #@-others
 #@nonl
 #@-node:ekr.20031218072017.2232:class nullLog
@@ -1520,11 +1527,16 @@ class nullTree (leoTree):
     
         self.font = font
         self.fontName = fontName
+    #@nonl
+    #@-node:ekr.20031218072017.2241:getFont & setFont
+    #@+node:ekr.20041217135735:setColorFromConfig & setFontFromConfig
+    def setColorFromConfig (self):
+        pass
         
     def setFontFromConfig (self):
         pass
     #@nonl
-    #@-node:ekr.20031218072017.2241:getFont & setFont
+    #@-node:ekr.20041217135735:setColorFromConfig & setFontFromConfig
     #@+node:ekr.20031218072017.2242:select
     def select(self,p,updateBeadList=True):
         

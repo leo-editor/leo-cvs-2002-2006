@@ -239,6 +239,7 @@ class leoTkinterTree (leoFrame.leoTree):
         
         # Set self.font and self.fontName.
         self.setFontFromConfig()
+        self.setColorFromConfig()
         
         # Drag and drop
         self.drag_p = None
@@ -706,16 +707,20 @@ class leoTkinterTree (leoFrame.leoTree):
             g.es_exception()
     #@nonl
     #@-node:ekr.20040803072955.29:setLineHeight
-    #@+node:ekr.20040803072955.30:setTreeColorsFromConfig
-    def setTreeColorsFromConfig (self):
+    #@+node:ekr.20040803072955.30:tkTree.setColorFromConfig
+    def setColorFromConfig (self):
         
         c = self.c
     
-        bg = c.config.getColor("outline_pane_background_color")
-        if bg:
-            try: self.canvas.configure(bg=bg)
-            except: pass
-    #@-node:ekr.20040803072955.30:setTreeColorsFromConfig
+        bg = c.config.getColor("outline_pane_background_color") or 'white'
+    
+        try:
+            self.canvas.configure(bg=bg)
+        except:
+            g.es("exception setting outline pane background color")
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20040803072955.30:tkTree.setColorFromConfig
     #@-node:ekr.20040803072955.26:Config & Measuring...
     #@+node:ekr.20040803072955.31:Debugging...
     #@+node:ekr.20040803072955.32:setText
@@ -2697,11 +2702,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 print "%10s %d %s" % ("disabled",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
     
-        fg = c.config.getColor("headline_text_selected_foreground_color")
-        bg = c.config.getColor("headline_text_selected_background_color")
-        
-        if not fg or not bg:
-            fg,bg = "black","gray80"
+        fg = c.config.getColor("headline_text_selected_foreground_color") or 'black'
+        bg = c.config.getColor("headline_text_selected_background_color") or 'grey80'
         
         try:
             w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)
@@ -2718,18 +2720,23 @@ class leoTkinterTree (leoFrame.leoTree):
             if not self.redrawing:
                 print "%10s %d %s" % ("edit",id(2),p.headString())
         
-        fg    = c.config.getColor("headline_text_editing_foreground_color")
-        bg    = c.config.getColor("headline_text_editing_background_color")
+        fg    = c.config.getColor("headline_text_editing_foreground_color") or 'black'
+        bg    = c.config.getColor("headline_text_editing_background_color") or 'white'
         selfg = c.config.getColor("headline_text_editing_selection_foreground_color")
         selbg = c.config.getColor("headline_text_editing_selection_background_color")
         
-        if not fg or not bg:
-            fg,bg = "black","white"
-        
-        try:
+        try: # Use system defaults for selection foreground/background
             if selfg and selbg:
                 w.configure(
                     selectforeground=selfg,selectbackground=selbg,
+                    state="normal",highlightthickness=1,fg=fg,bg=bg)
+            elif selfg and not selbg:
+                w.configure(
+                    selectforeground=selfg,
+                    state="normal",highlightthickness=1,fg=fg,bg=bg)
+            elif selbg and not selfg:
+                w.configure(
+                    selectbackground=selbg,
                     state="normal",highlightthickness=1,fg=fg,bg=bg)
             else:
                 w.configure(
@@ -2748,11 +2755,8 @@ class leoTkinterTree (leoFrame.leoTree):
                 print "%10s %d %s" % ("unselect",id(w),p.headString())
                 # import traceback ; traceback.print_stack(limit=6)
         
-        fg = c.config.getColor("headline_text_unselected_foreground_color")
-        bg = c.config.getColor("headline_text_unselected_background_color")
-        
-        if not fg or not bg:
-            fg,bg = "black","white"
+        fg = c.config.getColor("headline_text_unselected_foreground_color") or 'black'
+        bg = c.config.getColor("headline_text_unselected_background_color") or 'white'
         
         try:
             w.configure(state="disabled",highlightthickness=0,fg=fg,bg=bg)

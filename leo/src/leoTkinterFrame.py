@@ -215,9 +215,10 @@ class leoTkinterFrame (leoFrame.leoFrame):
         
         # Configure.  N.B. There may be Tk bugs here that make the order significant!
         frame.setTabWidth(c.tab_width)
-        frame.tree.setTreeColorsFromConfig()
+        frame.tree.setColorFromConfig()
         self.reconfigurePanes()
         self.body.setFontFromConfig()
+        self.body.setColorFromConfig()
         
         if 0: # No longer done automatically.
         
@@ -814,14 +815,17 @@ class leoTkinterFrame (leoFrame.leoFrame):
         # Without them the text settings get applied to the wrong widget!
         # Moreover, only this order seems to work on Windows XP...
         frame.tree.setFontFromConfig()
-        frame.tree.setTreeColorsFromConfig()
+        frame.tree.setColorFromConfig()
         frame.configureBarsFromConfig()
-        c.redraw()
+        #c.redraw()
         frame.body.setFontFromConfig()
-        frame.setTabWidth(c.tab_width) # 12/2/03
-        c.redraw()
+        frame.body.setColorFromConfigt()
+        frame.setTabWidth(c.tab_width)
+        #c.redraw()
         frame.log.setFontFromConfig()
+        frame.log.setColorFromConfig()
         c.redraw()
+    #@nonl
     #@-node:ekr.20031218072017.2246:reconfigureFromConfig
     #@+node:ekr.20031218072017.1625:setInitialWindowGeometry
     def setInitialWindowGeometry(self):
@@ -1490,6 +1494,49 @@ class leoTkinterBody (leoFrame.leoBody):
     #@nonl
     #@-node:ekr.20031218072017.3998:tkBody.createControl
     #@-node:ekr.20031218072017.3997: Birth & death
+    #@+node:ekr.20041217135735.1:tkBody.setColorFromConfig
+    def setColorFromConfig (self):
+        
+        c = self.c ; body = self.bodyCtrl
+        
+        # Note: this has little or no effect: use body_text_background_color instead.
+        bg = c.config.getColor("body_pane_background_color") or 'white'
+        try:
+            self.bodyCtrl.configure(bg=bg)
+        except:
+            g.es("exception setting body pane background color")
+            g.es_exception()
+            pass
+            
+        bg = c.config.getColor("body_text_background_color") or 'white'
+        try: body.configure(bg=bg)
+        except:
+            g.es("exception setting body text background color")
+            g.es_exception()
+        
+        fg = c.config.getColor("body_text_foreground_color") or 'black'
+        try: body.configure(fg=fg)
+        except:
+            g.es("exception setting body textforeground color")
+            g.es_exception()
+    
+        bg = c.config.getColor("body_insertion_cursor_color")
+        if bg:
+            try: body.configure(insertbackground=bg)
+            except:
+                g.es("exception setting body pane cursor color")
+                g.es_exception()
+            
+        if sys.platform != "win32": # Maybe a Windows bug.
+            fg = c.config.getColor("body_cursor_foreground_color")
+            bg = c.config.getColor("body_cursor_background_color")
+            if fg and bg:
+                cursor="xterm" + " " + fg + " " + bg
+                try: body.configure(cursor=cursor)
+                except:
+                    import traceback ; traceback.print_exc()
+    #@nonl
+    #@-node:ekr.20041217135735.1:tkBody.setColorFromConfig
     #@+node:ekr.20031218072017.2183:tkBody.setFontFromConfig
     def setFontFromConfig (self):
     
@@ -1504,37 +1551,6 @@ class leoTkinterBody (leoFrame.leoBody):
         body.configure(font=font)
     
         # g.trace("BODY",body.cget("font"),font.cget("family"),font.cget("weight"))
-    
-        bg = c.config.getColor("body_text_background_color")
-        if bg:
-            try: body.configure(bg=bg)
-            except:
-                g.es("exception setting body background color")
-                g.es_exception()
-        
-        fg = c.config.getColor("body_text_foreground_color")
-        if fg:
-            try: body.configure(fg=fg)
-            except:
-                g.es("exception setting body foreground color")
-                g.es_exception()
-    
-        bg = c.config.getColor("body_insertion_cursor_color")
-        if bg:
-            try: body.configure(insertbackground=bg)
-            except:
-                g.es("exception setting insertion cursor color")
-                g.es_exception()
-            
-        if sys.platform != "win32": # Maybe a Windows bug.
-            fg = c.config.getColor("body_cursor_foreground_color")
-            bg = c.config.getColor("body_cursor_background_color")
-            # print fg, bg
-            if fg and bg:
-                cursor="xterm" + " " + fg + " " + bg
-                try: body.configure(cursor=cursor)
-                except:
-                    import traceback ; traceback.print_exc()
     #@nonl
     #@-node:ekr.20031218072017.2183:tkBody.setFontFromConfig
     #@+node:ekr.20031218072017.1320:body key handlers
@@ -2561,6 +2577,20 @@ class leoTkinterLog (leoFrame.leoLog):
             self.frame.tree.disableRedraw = False
     #@nonl
     #@-node:ekr.20031218072017.1473:tkLog.put & putnl & forceLogUpdate
+    #@+node:ekr.20041217135735.2:tkLog.setColorFromConfig
+    def setColorFromConfig (self):
+        
+        c = self.c
+        
+        bg = c.config.getColor("log_pane_background_color") or 'white'
+        
+        try:
+            self.logCtrl.configure(bg=bg)
+        except:
+            g.es("exception setting log pane background color")
+            g.es_exception()
+    #@nonl
+    #@-node:ekr.20041217135735.2:tkLog.setColorFromConfig
     #@+node:ekr.20031218072017.4046:tkLog.setFontFromConfig
     def setFontFromConfig (self):
     
