@@ -37,6 +37,7 @@ tangle_done.py
 untangle_done.py
 Icons\LeoApp.ico
 Icons\LeoDoc.ico
+Icons\Leoapp.GIF
 Icons\Thumbs.db
 Icons\box00.GIF
 Icons\box00.bmp
@@ -76,5 +77,4 @@ Icons\leo_off.bmp
 Icons\leo_on.bmp
 Icons\minusnode.gif
 Icons\plusnode.gif
-Icons\test2.txt
 Icons\uninst.ico

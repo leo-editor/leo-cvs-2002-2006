@@ -565,6 +565,7 @@ class atFile:
 		# This is useful now that we don't print the actual messages.
 		if self.errors == 0:
 			es("----- error reading @file " + self.targetFileName)
+			self.error(message) # 9/10/02: we must increment self.errors!
 	
 		if 0: # CVS conflicts create too many messages.
 			self.error(message)

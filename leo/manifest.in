@@ -5,6 +5,7 @@ include leoConfig.leo
 include leo*.py
 include leoConfig.txt
 include c2py.py
+include disStats.py
 include openLeo.py
 include tangle_done.py
 include untangle_done.py
