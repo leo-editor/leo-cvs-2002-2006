@@ -165,7 +165,8 @@ stylesheet =
 #		&lt;?xml-stylesheet s?&gt;
 #	Note 1: The string s should contain any needed XML escapes.
 #	        Leo simply copies this line as given.
-#	Note 2: Please set this field to None or empty when uploading to CVS.
+#	Note 2: Please set this field empty when uploading to CVS.
+#	Note 3: This field must be empty for compatibility with older versions of Leo.
 
 use_relative_node_indices = 0
 #	At present this user option is non-functional.

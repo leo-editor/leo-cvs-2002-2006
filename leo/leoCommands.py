@@ -1355,28 +1355,35 @@ class Commands:
 	
 	def checkMoveWithParentWithWarning (self,root,parent,warningFlag):
 	
-		next = root.nodeAfterTree() ; parent1 = parent
 		clone_message = "Illegal move or drag: no clone may contain a clone of itself"
+		drag_message  = "Illegal drag: Can't drag a node into its own tree"
+	
+		# 10/25/02: Create dictionaries for faster checking.
+		parents = {} ; clones = {}
 		while parent:
+			parents [parent.t] = parent.t
 			if parent.isCloned():
-				v = root
-				while v and v != next:
-					if v.t == parent.t:
-						if warningFlag:
-							alert(clone_message)
-						return false
-					v = v.threadNext()
+				clones [parent.t] = parent.t
 			parent = parent.parent()
-			
-		drag_message = "Can't drag a node into its own tree"
-		parent = parent1
-		while parent:
-			if root == parent:
+		
+		# 10/25/02: Scan the tree only once.
+		v = root ; next = root.nodeAfterTree()
+		while v and v != next:
+			ct = clones.get(v.t)
+			if ct != None and ct == v.t:
 				if warningFlag:
-					alert(drag_message)
+					alert(clone_message)
 				return false
-			parent = parent.parent()
-		return true
+			v = v.threadNext()
+	
+		pt = parents.get(root.t)
+		if pt == None:
+			return true
+		else:
+			if warningFlag:
+				alert(drag_message)
+			return false
+	
 	#@-body
 	#@-node:1::c.checkMoveWithParentWithWarning
 	#@+node:2::c.deleteHeadline

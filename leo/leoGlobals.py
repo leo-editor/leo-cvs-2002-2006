@@ -125,14 +125,31 @@ def print_stack():
 	traceback.print_stack()
 #@-body
 #@-node:6::print_stack
-#@+node:7::top
+#@+node:7::reloadAll
+#@+body
+# Adapted from the Python Cookbook.
+# It's not clear how useful this is with Tk programs.
+
+def reloadAll ():
+
+	if globals().has_key("init_modules"):
+		for m in sys.modules.keys():
+			if m not in init_modules:
+				print "deleting:", sys.modules[m]
+				del sys.modules[m]
+	else:
+		init_modules = sys.modules.keys()
+
+#@-body
+#@-node:7::reloadAll
+#@+node:8::top
 #@+body
 def top():
 
 	frame = app().log # the current frame
 	return frame.commands
 #@-body
-#@-node:7::top
+#@-node:8::top
 #@-others
 #@-body
 #@-node:0::@file leoGlobals.py
