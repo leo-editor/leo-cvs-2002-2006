@@ -359,6 +359,7 @@ class colorizer:
 		self.enabled = true # true: syntax coloring enabled
 		self.showInvisibles = false # true: show "invisible" characters.
 		self.delim = None # delimiter for triple strings.
+		self.comment_string = None # Set by scanColorDirectives on @comment
 		trace("-nocolor", self.disable)
 	#@-body
 	#@-node:1:C=2:color.__init__
@@ -462,9 +463,13 @@ class colorizer:
 		#@<< configure language-specific settings >>
 		#@+node:2:C=6:<< configure language-specific settings >> (colorizer)
 		#@+body
-		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
+		# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 		
-		delim1,delim2,delim3 = set_delims_from_language(language)
+		if self.comment_string: # 8/11/02
+			delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
+		else:
+			delim1,delim2,delim3 = set_delims_from_language(language)
+		
 		# 8/1/02: this now works as expected.
 		single_comment_start = delim1
 		block_comment_start = delim2
@@ -906,6 +911,7 @@ class colorizer:
 	
 		c = self.commands
 		language = c.target_language
+		self.comment_string = None
 		while v:
 			s = v.t.bodyString
 			bits, dict = is_special_bits(s)
@@ -922,9 +928,14 @@ class colorizer:
 			#@@c
 			
 			if btest(comment_bits,bits):
+				
 				# @comment effectively disables syntax coloring.
 				if 0: # 7/8/02: This is stupid and confusing.
 					language = plain_text_language
+					
+				# 8/11/02: Allow colorizer to honor the comment string.
+				k = dict["comment"]
+				self.comment_string = s[k:]
 				break
 			
 			elif btest(language_bits,bits):

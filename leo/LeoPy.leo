@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1999" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="34" left="166" height="24" width="84"/>
+	<global_window_position top="21" left="114" height="24" width="84"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -14,6 +14,7 @@
 <vnodes>
 <v t="T1"><vh>Diary</vh>
 <v><vh>Aug 2002</vh>
+<v><vh>8/11 Syntax colorer now honors @comment</vh></v>
 <v><vh>8/10</vh>
 <v><vh>Added save_clears_undo_buffer configuration option</vh></v>
 <v t="T2"><vh>Improved Recent Files menu</vh></v>
@@ -765,7 +766,7 @@
 <v t="T478"><vh>Why I like Python</vh></v>
 </v>
 </v>
-<v t="T479" a="E"><vh>To do</vh>
+<v t="T479" a="EV"><vh>To do</vh>
 <v><vh>After 3.4</vh>
 <v><vh>Right-click deletes items in Recent Files submenu ?</vh></v>
 <v><vh>nested @file directives??</vh></v>
@@ -2237,7 +2238,7 @@
 </v>
 <v t="T1173" a="C"><vh>Menu Command Handlers</vh>
 <v t="T1174"><vh>File Menu</vh>
-<v t="T1175" a="E"><vh>top level</vh>
+<v t="T1175"><vh>top level</vh>
 <v t="T1014" a="C"><vh>OnNew</vh></v>
 <v t="T1099" a="C"><vh>frame.OnOpen</vh>
 <v t="T1100"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
@@ -2478,6 +2479,12 @@
 <v t="T917"><vh>&lt;&lt; create the log pane &gt;&gt;</vh></v>
 </v>
 </v>
+<v><vh>(colorizer honors @comment)</vh>
+<v t="T601" a="C"><vh>scanColorDirectives</vh>
+<v t="T602"><vh>&lt;&lt; Test for @comment or @language &gt;&gt;</vh></v>
+</v>
+<v t="T370" a="C"><vh>&lt;&lt; configure language-specific settings &gt;&gt; (colorizer)</vh></v>
+</v>
 <v t="T1297"><vh>(config precedence)</vh>
 <v t="T47" a="C"><vh>7/18 Changed precedence scheme for preferences</vh></v>
 <v t="T1289" a="C"><vh>getFindPanelSettings</vh>
@@ -2567,7 +2574,7 @@
 </v>
 <v t="T1305"><vh>(Save clears undo option)</vh>
 <v t="T1278" a="C"><vh>&lt;&lt; Define names of settings &gt;&gt;</vh></v>
-<v a="E"><vh>Save clears undo</vh>
+<v><vh>Save clears undo</vh>
 <v t="T581" a="C"><vh>OnSave</vh></v>
 <v t="T1306" a="C"><vh>save</vh></v>
 </v>
@@ -2599,7 +2606,7 @@
 <v t="T1313" a="C"><vh>setTnodeText</vh></v>
 </v>
 </v>
-<v t="T1314" a="V"><vh>Code</vh>
+<v t="T1314"><vh>Code</vh>
 <v t="T1269" a="C"><vh> OnAbout (version number)</vh></v>
 <v t="T1315"><vh> Overview of code</vh></v>
 <v t="T1316"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
@@ -3195,7 +3202,7 @@
 </v>
 <v t="T1286" a="C"><vh>setConfigFindIvars</vh></v>
 <v t="T1287" a="C"><vh>setConfigIvars</vh></v>
-<v t="T1608" a="E"><vh>update</vh>
+<v t="T1608"><vh>update</vh>
 <v t="T1609"><vh>&lt;&lt; write config section &gt;&gt;</vh></v>
 <v t="T1610"><vh>&lt;&lt; write recent files section &gt;&gt;</vh></v>
 <v t="T1611"><vh>&lt;&lt; write prefs section &gt;&gt;</vh></v>
@@ -3262,7 +3269,7 @@
 </v>
 <v t="T1644"><vh>xmlUnescape</vh></v>
 </v>
-<v a="E"><vh>Writing</vh>
+<v><vh>Writing</vh>
 <v t="T1645"><vh>assignFileIndices</vh></v>
 <v t="T1646"><vh>compactFileIndices</vh></v>
 <v t="T1647"><vh>shouldCompactOnSave</vh></v>
@@ -3449,8 +3456,8 @@
 <v t="T1276"><vh>updateOutlineMenu</vh></v>
 </v>
 <v t="T1173" a="C"><vh>Menu Command Handlers</vh>
-<v t="T1174" a="E"><vh>File Menu</vh>
-<v t="T1175" a="E"><vh>top level</vh>
+<v t="T1174"><vh>File Menu</vh>
+<v t="T1175"><vh>top level</vh>
 <v t="T1014" a="C"><vh>OnNew</vh></v>
 <v t="T1099" a="C"><vh>frame.OnOpen</vh>
 <v t="T1100"><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
@@ -6437,9 +6444,13 @@ tcltk_keywords = ( # Only the tcl keywords are here.
 	"unknown",   "unset",     "update",     "uplevel",   "upvar",
 	"variable",  "vwait",
 	"while" )</t>
-<t tx="T370"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end
+<t tx="T370"># Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 
-delim1,delim2,delim3 = set_delims_from_language(language)
+if self.comment_string: # 8/11/02
+	delim1,delim2,delim3 = set_delims_from_string(self.comment_string)
+else:
+	delim1,delim2,delim3 = set_delims_from_language(language)
+
 # 8/1/02: this now works as expected.
 single_comment_start = delim1
 block_comment_start = delim2
@@ -8581,7 +8592,8 @@ The only hope of making Leo all it can be is to use the best possible tools.  I 
 
 Edward K. Ream
 October 25, 2001</t>
-<t tx="T479">@nocolor</t>
+<t tx="T479">@nocolor
+</t>
 <t tx="T480">This is also the time to handle bold &amp; italics, colors and "extra" fonts.
 
 
@@ -10528,6 +10540,7 @@ def scanColorDirectives(self,v):
 
 	c = self.commands
 	language = c.target_language
+	self.comment_string = None
 	while v:
 		s = v.t.bodyString
 		bits, dict = is_special_bits(s)
@@ -10539,9 +10552,14 @@ def scanColorDirectives(self,v):
 @c
 
 if btest(comment_bits,bits):
+	
 	# @comment effectively disables syntax coloring.
 	if 0: # 7/8/02: This is stupid and confusing.
 		language = plain_text_language
+		
+	# 8/11/02: Allow colorizer to honor the comment string.
+	k = dict["comment"]
+	self.comment_string = s[k:]
 	break
 
 elif btest(language_bits,bits):
@@ -17725,6 +17743,7 @@ def __init__(self, commands):
 	self.enabled = true # true: syntax coloring enabled
 	self.showInvisibles = false # true: show "invisible" characters.
 	self.delim = None # delimiter for triple strings.
+	self.comment_string = None # Set by scanColorDirectives on @comment
 	trace("-nocolor", self.disable)</t>
 <t tx="T1037">tags = (
 	"blank", "comment", "docPart", "keyword", "leoKeyword",
@@ -20143,7 +20162,7 @@ def minimize(self, frame):
 	tkMessageBox.showinfo("About Leo",
 	# Don't use triple-quoted strings or continued strings here.
 	# Doing so would add unwanted leading tabs.
-	" leo.py 3.4 beta 1, August 5, 2002\n\n" +
+	" leo.py 3.4, August 11, 2002\n\n" +
 
 	"Copyright 1999-2002 by\n" +
 	"Edward K. Ream, edream@tds.net\n" +
@@ -21075,6 +21094,7 @@ c:\python22\python setup.py bdist --formats=wininst</t>
 include leo_license.txt
 include LeoPy.leo
 include LeoDocs.leo
+include leoConfig.leo
 include leo*.py
 include leoConfig.txt
 include c2py.py

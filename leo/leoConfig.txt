@@ -63,9 +63,6 @@ initial_window_top = 10
 split_bar_relief = groove
 
 [recent files]
-file2 = c:\prog\leocvs\leo\leoConfig.leo
-file1 = c:\prog\leoCVS\leo\LeoPy.leo
-file0 = c:\prog\LeoCVS\leo\LeoDocs.leo
 
 [prefs panel options]
 output_doc_chunks = 1
@@ -85,10 +82,10 @@ whole_word = 1
 search_headline = 0
 batch = 0
 search_body = 1
-find_string = 
+find_string = include
 pattern_match = 0
 wrap = 0
 mark_finds = 0
 suboutline_only = 0
-change_string = 
+change_string = File
 

@@ -11,6 +11,7 @@ leoAtFile.py
 leoColor.py
 leoCommands.py
 leoCompare.py
+leoConfig.leo
 leoConfig.py
 leoConfig.txt
 leoDialog.py

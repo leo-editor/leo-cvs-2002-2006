@@ -1,4 +1,15 @@
-leo.py 3.3                                    August 3, 2002
+leo.py 3.4                                     August 11, 2002
+
+This version contains many small improvements and bug fixes:
+
+- Fixed several crashers involving Unicode.
+- The Show Invisibles command now makes blanks and tabs look much better.
+- Created leoConfig.leo, from which leoConfig.txt is now derived.
+- Added save_clears_undo_buffer configuration option.
+- Fixed a large number of problems with the configuration code.
+- The usual minor improvements and bug fixes.
+
+leo.py 3.3                                     August 3, 2002
 
 This version of Leo:
 

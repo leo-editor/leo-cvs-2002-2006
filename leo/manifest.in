@@ -1,6 +1,7 @@
 include leo_license.txt
 include LeoPy.leo
 include LeoDocs.leo
+include leoConfig.leo
 include leo*.py
 include leoConfig.txt
 include c2py.py
