@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2939" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2938" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="31" left="308" height="26" width="61"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -12,7 +12,7 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="T1"><vh>Diary</vh>
+<v t="T1" a="V"><vh>Diary</vh>
 <v><vh>Dec 2002</vh>
 <v><vh>112/16</vh>
 <v t="T2"><vh>Improved es and trace, added trace_tag</vh></v>
@@ -5594,7 +5594,7 @@
 <v t="T2587"><vh>printGlobals</vh></v>
 <v t="T2588"><vh>printLeoModules</vh></v>
 <v t="T2589" a="C"><vh>Sherlock...</vh>
-<v t="T2332"><vh>init_sherlock</vh></v>
+<v t="T2332" a="C"><vh>init_sherlock</vh></v>
 <v t="T2590"><vh>get_Sherlock_args</vh></v>
 <v t="T2591"><vh>init_trace</vh></v>
 <v t="T2592"><vh>trace</vh></v>
@@ -6491,11 +6491,10 @@
 </v>
 <v t="T2935" a="M"><vh>First: cleanup</vh>
 <v t="T2936"><vh>improve read/write code</vh></v>
-<v t="T2937"><vh>Replace self by f in leoFrame.py</vh></v>
 <v><vh>Replace string.x(s...) by s.x(...)</vh></v>
 </v>
-<v t="T2938" a="V"><vh>(improved es and trace)</vh>
-<v t="T2939"><vh> test</vh></v>
+<v t="T2937"><vh>(improved es and trace)</vh>
+<v t="T2938"><vh> test</vh></v>
 <v t="T2589" a="C"><vh>Sherlock...</vh>
 <v t="T2332" a="C"><vh>init_sherlock</vh></v>
 <v t="T2590"><vh>get_Sherlock_args</vh></v>
@@ -10140,7 +10139,7 @@ self.lines = new_lines</t>
 	return state</t>
 <t tx="T564">def continueBlockComment (self,s,i,n):
 	
-	j = string.find(s,self.block_comment_end,i)
+	j = s.find(self.block_comment_end,i)
 
 	if j == -1:
 		# The entire line is part of the block comment.
@@ -10202,7 +10201,7 @@ if word and len(word) &gt; 0:
 		self.body.tag_add("keyword", index(n,i), index(n,j))
 		i = j
 		if word in ("@^","@.","@:","@="): # Ended by "@&gt;"
-			j = string.find(s,"@&gt;",i)
+			j = s.find("@&gt;",i)
 			if j &gt; -1:
 				self.body.tag_add("cwebName", index(n,i), index(n,j))
 				self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
@@ -10214,13 +10213,13 @@ elif match(s,i,self.lb):
 	i = j
 elif self.latex_cweb_docs:
 	# Everything up to the next "@" is latex colored.
-	j = string.find(s,"@",i+1)
+	j = s.find("@",i+1)
 	if j == -1: j = len(s)
 	self.doLatexLine(s,i,j,n)
 	i = j
 else:
 	# Everthing up to the next "@" is in the doc part.
-	j = string.find(s,"@",i+1)
+	j = s.find("@",i+1)
 	if j == -1: j = len(s)
 	self.body.tag_add("docPart", index(n,i), index(n,j))
 	i = j</t>
@@ -10231,7 +10230,7 @@ else:
 if i == 0 and s[i] == '@':
 	j = self.skip_id(s,i+1,chars='-')
 	word = s[i:j]
-	word = string.lower(word)
+	word = word.lower()
 else:
 	word = ""
 
@@ -10250,7 +10249,7 @@ else:
 	if i == 0 and s[i] == '@':
 		j = self.skip_id(s,i+1)
 		word = s[i:j]
-		word = string.lower(word)
+		word = word.lower()
 	else:
 		word = ""
 	
@@ -10269,11 +10268,11 @@ else:
 			i += 1
 		return i,"nocolor"</t>
 <t tx="T570">def continueDoublePythonString (self,s,i,n):
-	j = string.find(s,'"""',i)
+	j = s.find('"""',i)
 	return self.continuePythonString(s,i,j,n,"string3d")
 
 def continueSinglePythonString (self,s,i,n):
-	j = string.find(s,"'''",i)
+	j = s.find("'''",i)
 	return self.continuePythonString(s,i,j,n,"string3s")
 
 def continuePythonString (self,s,i,j,n,continueState):
@@ -10292,7 +10291,7 @@ def doAtKeyword (self,s,i,n):
 
 	j = self.skip_id(s,i+1,chars="-") # to handle @root-code, @root-doc
 	word = s[i:j]
-	word = string.lower(word)
+	word = word.lower()
 	if i != 0 and word != "@others":
 		word = "" # can't be a Leo keyword, even if it looks like it.
 	
@@ -10407,7 +10406,7 @@ if word in ("@ ","@\t","@\n","@*","@**"):
 elif word in ("@&lt;","@(","@c","@d","@f","@p"):
 	state = "normal"
 elif word in ("@^","@.","@:","@="): # Ended by "@&gt;"
-	j = string.find(s,"@&gt;",i)
+	j = s.find("@&gt;",i)
 	if j &gt; -1:
 		self.body.tag_add("cwebName", index(n,i), index(n,j))
 		self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
@@ -10415,10 +10414,10 @@ elif word in ("@^","@.","@:","@="): # Ended by "@&gt;"
 <t tx="T578">self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 
 # See if the line contains the right name bracket.
-j = string.find(s,"@&gt;=",i+2)
+j = s.find("@&gt;=",i+2)
 k = choose(j==-1,2,3)
 if j == -1:
-	j = string.find(s,"@&gt;",i+2)
+	j = s.find("@&gt;",i+2)
 
 if j == -1:
 	i += 2
@@ -10490,10 +10489,10 @@ i += 1</t>
 	self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 	
 	# See if the line contains the right name bracket.
-	j = string.find(s,self.rb+"=",i+2)
+	j = s.find(self.rb+"=",i+2)
 	k = choose(j==-1,2,3)
 	if j == -1:
-		j = string.find(s,self.rb,i+2)
+		j = s.find(self.rb,i+2)
 	if j == -1:
 		return i + 2
 	else:
@@ -13610,7 +13609,7 @@ def putSentinel(self,s):
 	start = self.startSentinelComment
 	if start and len(start) &gt; 0 and start[-1] == '@':
 		assert(s and len(s)&gt;0 and s[0]=='@')
-		s = string.replace(s,'@','@@')[1:]
+		s = s.replace('@','@@')[1:]
 
 	self.os(s)
 	self.os(self.endSentinelComment)
@@ -13704,19 +13703,19 @@ if len(self.endSentinelComment) == 0:
 	headline = string.strip(s[i:-1])
 else:
 	# 10/24/02: search from the right, not the left.
-	k = string.rfind(s,self.endSentinelComment,i)
+	k = s.rfind(self.endSentinelComment,i)
 	headline = string.strip(s[i:k]) # works if k == -1
 	
 # 10/23/02: The cweb hack: undouble @ signs if the opening comment delim ends in '@'.
 if self.startSentinelComment[-1:] == '@':
-	headline = string.replace(headline,'@@','@')
+	headline = headline.replace('@@','@')
 
 # Set reference if it exists.
 i = skip_ws(s,i)
 
 if 0: # no longer used
 	if match(s,i,"&lt;&lt;"):
-		k = string.find(s,"&gt;&gt;",i)
+		k = s.find("&gt;&gt;",i)
 		if k != -1: ref = s[i:k+2]</t>
 <t tx="T777">@ The sentinel contains an @ followed by a section name in angle brackets.  This code is different from the code for the @@ sentinel: the expansion of the reference does not include a trailing newline.
 @c
@@ -13726,13 +13725,13 @@ assert(match(s,i,"&lt;&lt;"))
 if len(self.endSentinelComment) == 0:
 	line = s[i:-1] # No trailing newline
 else:
-	k = string.find(s,self.endSentinelComment,i)
+	k = s.find(self.endSentinelComment,i)
 	line = s[i:k] # No trailing newline, whatever k is.
 		
 # 10/30/02: undo cweb hack here
 start = self.startSentinelComment
 if start and len(start) &gt; 0 and start[-1] == '@':
-	line = string.replace(line,'@@','@')
+	line = line.replace('@@','@')
 
 out.append(line)</t>
 <t tx="T778"># The first '@' has already been eaten.
@@ -13746,13 +13745,13 @@ elif match_word(s,i,"@end_raw"):
 e = self.endSentinelComment
 s2 = s[i:]
 if len(e) &gt; 0:
-	k = string.rfind(s,e,i)
+	k = s.rfind(e,i)
 	if k != -1:
 		s2 = s[i:k] + '\n'
 	
 start = self.startSentinelComment
 if start and len(start) &gt; 0 and start[-1] == '@':
-	s2 = string.replace(s2,'@@','@')
+	s2 = s2.replace('@@','@')
 out.append(s2)
 # trace(`s2`)</t>
 <t tx="T779"># Returns the kind of at-directive or noDirective.
@@ -24757,7 +24756,7 @@ while match(s,i,tag):
 if s2:
 	lines = string.split(s2,"\\n")
 	for line in lines:
-		line = string.replace(line,"@date",time.asctime())
+		line = line.replace("@date",time.asctime())
 		if len(line)&gt; 0:
 			self.putSentinel("@comment " + line)</t>
 <t tx="T1397">@ Write any @last lines.  These lines are also converted to @verbatim lines, so the read logic simply ignores lines following the @-leo sentinel.
@@ -24814,7 +24813,7 @@ def scanHeader(self,file):
 	# Skip any non @+leo lines.
 	s = readlineForceUnixNewline(file)
 	while len(s) &gt; 0:
-		j = string.find(s,tag)
+		j = s.find(tag)
 		if j != -1: break
 		firstLines.append(s) # DTHEIN: queue the line
 		s = readlineForceUnixNewline(file)
@@ -27619,13 +27618,13 @@ if j &lt; i:
 	if end == self.endSentinelComment and (i2 &gt;= len(s) or is_nl(s,i2)):
 		self.endSentinelComment = "" # Not really two params.
 		line = s[i0:j]
-		line = string.rstrip(line)
+		line = line.rstrip()
 		out.append(line+'\n')
 	else:
 		self.endSentinelComment = end
 		# print "delim2:",end
 		line = s[i0:i]
-		line = string.rstrip(line)
+		line = line.rstrip()
 		out.append(line+'\n')
 else:
 	self.readError("Bad @delims")
@@ -28220,7 +28219,7 @@ else:
 
 line = s[i:-1] # remove newline for rstrip.
 
-if line == string.rstrip(line):
+if line == line.rstrip():
 	# no trailing whitespace: the newline is real.
 	out.append(line + '\n')
 else:
@@ -28236,7 +28235,7 @@ if not single:
 	
 	# Remove delim and possible a leading newline.
 	s = string.join(out,"")
-	s = string.rstrip(s)
+	s = s.rstrip()
 	if s[-n:] == delim:
 		s = s[:-n]
 	if s[-1] == '\n':
@@ -28537,7 +28536,7 @@ if match(s,i,":"):
 	i += 1
 else:
 	self.readError("Bad attribute field in @+node")</t>
-<t tx="T1695">h = string.strip(headline)
+<t tx="T1695">h = headline.strip()
 
 if h[:5] == "@file":
 	i,junk = scanAtFileOptions(h)
@@ -30961,7 +30960,7 @@ if len(path) &gt; 2 and (
 	(path[0]=='&lt;' and path[-1] == '&gt;') or
 	(path[0]=='"' and path[-1] == '"') ):
 	path = path[1:-1]
-path = string.strip(path)
+path = path.strip()
 
 if 0: # 11/14/02: we want a _relative_ path, not an absolute path.
 	path = os.path.join(loadDir,path)</t>
@@ -32043,7 +32042,7 @@ if child.isOrphan():
 # Set the body, removing cursed newlines.
 # Note:  This code must be done here, not in the @+node logic.
 body = string.join(child_out, "")
-body = string.replace(body, '\r', '')
+body = body.replace('\r', '')
 child.t.setTnodeText(body)
 self.indent = oldIndent</t>
 <t tx="T2019">@ This method is the same as putSentinel except we don't put an opening newline and leading whitespace.
@@ -33853,11 +33852,7 @@ def createNthChild(self,n,parent,headline):
 	if n &lt;= parent.numberOfChildren():
 		result = parent.nthChild(n-1)
 		resulthead = result.headString()
-		if string.strip(headline) != string.strip(resulthead):
-			if 0: # CVS produces to many errors for this to be useful.
-				es("headline mismatch:")
-				es("head1:" + `string.strip(headline)`)
-				es("head2:" + `string.strip(resulthead)`)
+		if headline.strip() != resulthead.strip():
 			self.structureErrors += 1
 	else:
 		# This is using a dummy; we should already have bumped structureErrors.
@@ -34552,7 +34547,7 @@ while match(s,i,tag):
 if s2:
 	lines = string.split(s2,"\\n")
 	for line in lines:
-		line = string.replace(line,"@date",time.asctime())
+		line = line.replace("@date",time.asctime())
 		if len(line)&gt; 0:
 			self.putSentinel("@comment " + line)
 </t>
@@ -34627,7 +34622,6 @@ a: the application object.
 c: a commander
 ch: a character
 d: a dialog or a dict.
-f: a frame (only in leoFrame.py).
 i, j, k: indices into a string
 lst: a list (Do _not_ use list, it is a Python global!)
 s: a string
@@ -36118,7 +36112,7 @@ void vnode::OnPasteNode(wxCommandEvent&amp; WXUNUSED(event))\n\
 			if s[i] == '\n':
 				lines += 1 ; i += 1
 			else:
-				i = string.find(s,'\n',i) # _much_ faster than list-based-find.
+				i = s.find('\n',i) # _much_ faster than list-based-find.
 			continue
 			# match is about 9 times slower than simple test.
 			if s[i]=='\n': # match(s,i,'\n'): # 
@@ -37293,7 +37287,7 @@ import leo, string, re
 			s = v.bodyString()
 		else:
 			s = v.headString()
-		pos = string.find (s,pattern,pos )
+		pos = s.find(pattern,pos )
 		if pos != -1:
 			return v, pos
 		v = v.threadNext()
@@ -37319,7 +37313,7 @@ import leo, string, re
 			s = v.bodyString()
 		else:
 			s = v.headString()
-		pos = string.rfind ( s, pattern, 0, pos )
+		pos = s.rfind(pattern,0,pos)
 		if pos != -1:
 			return v, pos
 		v  = v.threadBack()
@@ -37516,7 +37510,7 @@ import leo, string, re
 			pos = pos - 1
 	# return the line containing the match
 	s = s[pos:]
-	list = string.split(s,"\n")
+	list = s.split("\n")
 	return list[0]</t>
 <t tx="T2317">def printFindList( findList, bodyFlag = 1 ):
 	"""
@@ -38413,7 +38407,7 @@ def useSyntaxColoring (self,v):
 
 	delim = s[i:i+3]
 	if delim == "'''" or delim == '"""':
-		k = string.find(s,delim,i+3)
+		k = s.find(delim,i+3)
 		if k == -1:
 			return len(s),choose(delim=="'''","string3s","string3d")
 		else:
@@ -46067,11 +46061,10 @@ class undoer:
 	Do this in 3.11 so the general mechanism can be thoroughly tested.
 
 - Use try:except:else to open files.</t>
-<t tx="T2937">Do this in stages.  Replace f by file (or whatever) first.</t>
-<t tx="T2938">- trace_tag for explicit tags.
+<t tx="T2937">- trace_tag for explicit tags.
 - use *args for unlimited args in trace and es.
 - convert non-string args to strings in trace, trace2 and es.</t>
-<t tx="T2939">from leoGlobals import es
+<t tx="T2938">from leoGlobals import es
 es(None,None,'a')
 es("hello ",newline=0) ; es("world")
 
