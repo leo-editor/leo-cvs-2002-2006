@@ -1371,7 +1371,8 @@ class LeoFrame:
 			f = None
 			while f == None:
 				a.openWithFileNum += 1
-				name = "LeoTemp" + str(a.openWithFileNum) + ext
+				# name = "LeoTemp" + str(a.openWithFileNum) + ext
+				name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
 				path = os.path.join(a.loadDir,name)
 				if not os.path.exists(path):
 					try:

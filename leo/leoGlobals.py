@@ -5,8 +5,7 @@
 
 
 #@@language python
-
-import exceptions,os,string,sys,time,types,Tkinter
+import exceptions,os,re,string,sys,time,types,Tkinter
 
 
 #@<< define general constants >>
@@ -1209,7 +1208,31 @@ def readlineForceUnixNewline(f):
 
 #@-body
 #@-node:7::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:8::shortFileName
+#@+node:8::sanitize_filename
+#@+body
+#@+at
+#  This prepares string s to be a valid file name:
+# 
+# - substitute '_' for forbidden characters.
+# - strip leading and trailing whitespace.
+# - return at most 128 characters.
+
+#@-at
+#@@c
+
+def sanitize_filename(s):
+	
+	import re
+	s = s.strip()
+	ws = re.compile('[ \t]')
+	bad_chars = re.compile('[\\/&<>\'"`@|?*]')
+	s = bad_chars.sub('',s)
+	s = s.strip()
+	s = ws.sub('_',s)
+	return s[:128]
+#@-body
+#@-node:8::sanitize_filename
+#@+node:9::shortFileName
 #@+body
 def shortFileName (fileName):
 	
@@ -1218,8 +1241,8 @@ def shortFileName (fileName):
 	head,tail = os.path.split(fileName)
 	return tail
 #@-body
-#@-node:8::shortFileName
-#@+node:9::update_file_if_changed
+#@-node:9::shortFileName
+#@+node:10::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1265,8 +1288,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:9::update_file_if_changed
-#@+node:10::utils_rename
+#@-node:10::update_file_if_changed
+#@+node:11::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1288,7 +1311,7 @@ def utils_rename(src,dst):
 		from distutils.file_util import move_file
 		move_file(src,dst)
 #@-body
-#@-node:10::utils_rename
+#@-node:11::utils_rename
 #@-node:6::Files & Directories...
 #@+node:7::Lists...
 #@+node:1::appendToList
