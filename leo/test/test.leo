@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6449" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6450" clone_windows="0"/>
 <globals body_outline_ratio="0.590643274854">
-	<global_window_position top="32" left="186" height="839" width="907"/>
+	<global_window_position top="110" left="201" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -13,8 +13,15 @@
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902"><vh>@font log font</vh></v>
-<v t="ekr.20041217042849"><vh>@font body font</vh></v>
+<v t="ekr.20041213075902" a="E"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849" a="E"><vh>@font body font</vh></v>
+<v t="ekr.20041217132317" a="E"><vh>@strings [a,b, c] test = a</vh></v>
+<v t="ekr.20041217132338"><vh>@ints [1, 2, 3] test = 3</vh></v>
+<v t="ekr.20041217144914"><vh>@page colors</vh>
+<v t="ekr.20041217135841"><vh>@color outline_pane_background_color = None</vh></v>
+<v t="ekr.20041217142026"><vh>@color log_pane_background_color = None</vh></v>
+<v t="ekr.20041217143421"><vh>@color body_text_background_color = None</vh></v>
+</v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
@@ -575,7 +582,7 @@
 <v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
 <v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
 </v>
-<v t="ekr.20040715105834"><vh>Fun...</vh>
+<v t="ekr.20040715105834" a="E"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
@@ -1436,21 +1443,18 @@
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
-<v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
-<v t="ekr.20041217104513"><vh>Remove all user-type machinery</vh></v>
-<v t="ekr.20041217111551"><vh>Make sure not to re-read settings files</vh></v>
-<v t="ekr.20041217032543"><vh>Add support for @strings and @ints</vh></v>
-<v t="ekr.20041130085943.1"><vh>Put ALL settings into effect immediately</vh></v>
+<v t="ekr.20041213074603" a="ETV"><vh>Settings dialog To do</vh>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
 <v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
 <v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
+<v t="ekr.20041217140915"><vh>Unit tests</vh></v>
 <v t="ekr.20041213115848"><vh>Later or never...</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="MTV"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1" a="M"><vh>Settings dialog</vh>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
 <v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
 </v>
@@ -1498,7 +1502,7 @@
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
 <v t="ekr.20041130061955"><vh>callbacks...</vh>
-<v t="ekr.20041126104958" a="E"><vh>onAnyButton</vh></v>
+<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
 <v t="ekr.20041128082112"><vh>revert</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
@@ -1584,6 +1588,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20041130062919" a="E"><vh>updateConfig</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040424065452">import leoGlobals as g
@@ -11220,15 +11225,15 @@ Bigger projects:
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
-C:\prog\leoCVS\leo\src\LeoPy.leo
 C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\src\LeoPy.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -13651,15 +13656,17 @@ print ; print</t>
                 c2.frame.log.setFontFromConfig()
                 c2.frame.tree.setFontFromConfig()
                 c2.redraw()
+        elif munge(kind) == "color":
+            g.trace("setting colors")
+            g.app.config.set(c,name,kind,val)
+            for c2 in (c,self.c):
+                c2.frame.tree.setColorFromConfig()
+                c2.frame.log.setColorFromConfig()
+                c2.frame.body.setColorFromConfig()
         elif munge(name) == "recentfiles":
             c.setRecentFiles(val)
         else:
             g.app.config.set(c,name,kind,val)</t>
-<t tx="ekr.20041130085943.1">- Color changes are written properly, but do not take effect until next reload.
-    Specify tree colors when using recycled tree widgets.
-
-- Must use unit tests to verify that all is handled properly.
-    There are too many cases to test by hand.</t>
 <t tx="ekr.20041130092210"></t>
 <t tx="ekr.20041130191836">def copyExpansionState(self,p1,p2):
  
@@ -13705,7 +13712,9 @@ if name in ("OK","Cancel"):</t>
 
 </t>
 <t tx="ekr.20041213074603">@ignore
-@killcolor</t>
+@killcolor
+
+- Force all tree widgets to new color scheme when colors change.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -13891,8 +13900,6 @@ w.update_idletasks()</t>
         d2[key] = name,val
 
     return d2</t>
-<t tx="ekr.20041217032543">@strings[x,y,z] name = val
-@ints[n1,n2,...] name = val</t>
 <t tx="ekr.20041217033348"></t>
 <t tx="ekr.20041217042849"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
@@ -13923,7 +13930,12 @@ body_text_font_weight = None
     g.trace(fontName,font,params)
     
     sample.configure(font=font)</t>
-<t tx="ekr.20041217104513"></t>
-<t tx="ekr.20041217111551"></t>
+<t tx="ekr.20041217132317"></t>
+<t tx="ekr.20041217132338"></t>
+<t tx="ekr.20041217135841"></t>
+<t tx="ekr.20041217140915">There are too many cases to test by hand.</t>
+<t tx="ekr.20041217142026">LightYellow1</t>
+<t tx="ekr.20041217143421">ivory1</t>
+<t tx="ekr.20041217144914"></t>
 </tnodes>
 </leo_file>
