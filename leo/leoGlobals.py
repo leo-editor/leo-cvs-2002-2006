@@ -37,7 +37,7 @@ language_delims_dict = {
 	"fortran" : "C",
 	"fortran90" : "!",
 	"html" : "<!-- -->",
-	"java" : "/* */",
+	"java" : "// /* */",
 	"latex" : "%",
 	"pascal" : "// { }",
 	"perl" : "#",
