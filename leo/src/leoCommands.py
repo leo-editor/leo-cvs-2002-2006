@@ -774,13 +774,6 @@ class baseCommands:
 	
 		if fileName:
 			c.importCommands.importDerivedFiles(v,fileName)
-		
-		if 0: # old code: very non-intuitive.
-			if v.isAtFileNode():
-				fileName = v.atFileNodeName()
-				c.importCommands.importDerivedFiles(v,fileName)
-			else:
-				g.es("not an @file node",color="blue")
 	#@nonl
 	#@-node:ekr.20031218072017.1809:importDerivedFile
 	#@+node:ekr.20031218072017.2014:writeNew/OldDerivedFiles
