@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5946" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="15" left="462" height="864" width="913"/>
+	<global_window_position top="106" left="314" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="ekr.20040721153143" a="TV"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
+<v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
@@ -311,7 +311,7 @@
 <v t="ekr.20040708135624"><vh>Print fundChildrenOf and </vh></v>
 <v t="EKR.20040526193608"><vh>Tests of pickle &amp; hexlify</vh></v>
 <v t="EKR.20040526094831"><vh>Test of undo registration</vh></v>
-<v t="EKR.20040526200017" myPlugin="7d710055016171014930310a732e"><vh>Test of unknownAttributes</vh></v>
+<v t="EKR.20040526200017" myPlugin="7d710055016171014b01732e"><vh>Test of unknownAttributes</vh></v>
 <v t="EKR.20040602101648"><vh>Test of "end1" hook</vh></v>
 <v t="EKR.20040603064545"><vh>Print timestamps of all nodes</vh></v>
 <v t="EKR.20040603174633"><vh>test of focus</vh></v>
@@ -649,11 +649,11 @@
 <v t="ekr.20040717121014"><vh>tellGnxScript</vh></v>
 <v t="ekr.20040706071823"><vh>test of Python's parser module</vh></v>
 </v>
-<v t="ekr.20040723064143.1" a="E"><vh>To do (when file tests are easier)</vh>
+<v t="ekr.20040723064143.1"><vh>To do (when file tests are easier)</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
@@ -1111,7 +1111,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1" a="TV"><vh>Do @test</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1636,7 +1636,7 @@ import unittest
 
 c = g.top()
 
-result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False)
+result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False,suppressErrors=True)
 
 assert result=="error", "checkPythonCode returns: %s" % result
 </t>
@@ -2050,7 +2050,9 @@ approach to tree walking.</t>
     c.hoist()
     fhp.withdraw()
 </t>
-<t tx="ekr.20040319111213.3">def OLDsearch(vn,regex):
+<t tx="ekr.20040319111213.3">from __future__ import generators # To make the code work in Python 2.2.
+
+def OLDsearch(vn,regex):
 
     sn = vn 
     while vn != None:
@@ -5068,26 +5070,29 @@ if suite:
 import unittest
 import leoTest
 reload(leoTest)
+import sys
+
 c = g.top()
 
-createUnitTest = True
+# DocTestSuite exists in Python 2.3 and above.
 
-if createUnitTest:
-    suite = unittest.makeSuite(unittest.TestCase)
-else:
-    suite = None
+if g.CheckVersion(sys.version, "2.3"):
+
+    path = g.os_path_join(g.app.loadDir,"..","src")
+    modules = leoTest.importAllModulesInPath(path)
     
-path = g.os_path_join(g.app.loadDir,"..","src")
-modules = leoTest.importAllModulesInPath(path)
-
-if createUnitTest:
     suite = leoTest.createUnitTestsFromDoctests(modules)
+                                
+    if suite:
+        g.app.scriptDict['suite'] = suite
+        
 else:
-    for module in modules:
-        doctest.testmod(module,verbose=True,report=False)
-                            
-if suite:
-    g.app.scriptDict['suite'] = suite</t>
+    # Create an empty suite to suppress a warning.
+    g.app.scriptDict['suite'] = unittest.TestSuite()
+    print
+    print "Can't create unit tests from doctests"
+    print "doctest.DocTestSuite requires Python 2.3 or above."
+    print</t>
 <t tx="ekr.20040712101813">import leoGlobals as g
 
 c = g.top()
@@ -8569,7 +8574,7 @@ import unittest
 
 c = g.top()
 
-result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False)
+result = c.checkPythonCode(unittest=True,ignoreAtIgnore=False,suppressErrors=True)
 
 assert result=="error", "checkPythonCode returns: %s" % result</t>
 <t tx="ekr.20040716062608"># Run this script to import a file.
@@ -9300,15 +9305,14 @@ if 0: # This actually saves this file, so it is a bit dangerous.
 
 c = g.top()
 
-if 0: # This trace catches leaks of positions.
-    g.app.tracePositions = True
-else:
-    g.app.tracePositions = False
+tracePositions = False
+traceDrawing = True
+
+# This trace catches leaks of positions.
+g.app.tracePositions = tracePositions
     
-if 0: # This trace shows overall position statistics.
-    c.frame.tree.trace = True
-    c.frame.tree.verbose = False
-else:
-    c.frame.tree.trace = False</t>
+# This trace shows overall position statistics.
+c.frame.tree.trace = traceDrawing
+c.frame.tree.verbose = True</t>
 </tnodes>
 </leo_file>

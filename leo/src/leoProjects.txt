@@ -5448,16 +5448,19 @@ else:
 #@-node:ekr.20031218072017.2135:Writing Utils...
 #@-node:ekr.20031218072017.2111:Writing (4.x)
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
+def putVnode (self,p,ignored):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
     isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -5478,7 +5481,7 @@ def putVnode (self,p):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p)
+                fc.putVnode(p,ignored)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
@@ -6177,7 +6180,7 @@ if count % 2000 == 0:
 #@-node:ekr.20040723094220.2:<< print dots >>
 #@-node:ekr.20040723094220.1:checkAllPythonCode
 #@+node:ekr.20040723094220.3:checkPythonCode
-def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
+def checkPythonCode (self,unittest=False,ignoreAtIgnore=True,suppressErrors=False):
     
     c = self ; count = 0 ; result = "ok"
     
@@ -6193,10 +6196,12 @@ def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
         if g.scanForAtLanguage(c,p) == "python":
             if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
                 try:
-                    c.checkPythonNode(p,unittest)
-                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    c.checkPythonNode(p,unittest,suppressErrors)
+                except (parser.ParserError,SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
                     result = "error" # Continue to check.
                 except:
+                    g.es("surprise in checkPythonNode")
+                    g.es_exception()
                     return "surprise" # abort
 
     if not unittest:
@@ -6215,7 +6220,7 @@ if count % 2000 == 0:
 #@-node:ekr.20040723094220.4:<< print dots >>
 #@-node:ekr.20040723094220.3:checkPythonCode
 #@+node:ekr.20040723094220.5:checkPythonNode
-def checkPythonNode (self,p,unittest=False):
+def checkPythonNode (self,p,unittest=False,suppressErrors=False):
 
     c = self
     
@@ -6225,11 +6230,12 @@ def checkPythonNode (self,p,unittest=False):
 
     try:
         compiler.parse(body + '\n')
-    except SyntaxError:
-        if unittest:
-            raise
+    except (parser.ParserError,SyntaxError):
+        if not suppressErrors:
+            s = "Syntax error in: %s" % h
+            print s ; g.es(s,color="blue")
+        if unittest: raise
         else:
-            g.es("Syntax error in: %s" % h,color="blue")
             g.es_exception(full=False,color="black")
             p.setMarked()
 
@@ -6247,31 +6253,34 @@ def tabNannyNode (self,p,headline,body,unittest=False):
         # readline = g.readLinesGenerator(body).next
         readline = g.readLinesClass(body).next
         tabnanny.process_tokens(tokenize.generate_tokens(readline))
-
-    except tokenize.TokenError, msg:
-        if unittest:
-            raise
-        else:
-            g.es("Token error in %s" % headline,color="blue")
+        return
+        
+    except parser.ParserError, msg:
+        if not suppressErrors:
+            g.es("ParserError in %s" % headline,color="blue")
             g.es(str(msg))
-            p.setMarked()
+        
+    except tokenize.TokenError, msg:
+        if not suppressErrors:
+            g.es("TokenError in %s" % headline,color="blue")
+            g.es(str(msg))
 
     except tabnanny.NannyNag, nag:
-        if unittest:
-            raise
-        else:
+        if not suppressErrors:
             badline = nag.get_lineno()
             line    = nag.get_line()
             message = nag.get_msg()
             g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
             g.es(message)
             g.es("offending line:\n%s" % repr(str(line))[1:-1])
-            p.setMarked()
         
     except:
         g.trace("unexpected exception")
         g.es_exception()
-        if unittest: raise
+
+    if unittest: raise
+    else: p.setMarked()
+#@nonl
 #@-node:ekr.20040723094220.6:tabNannyNode
 #@-node:ekr.20040723094220:Check Outline commands & allies
 #@+node:ekr.20040412060927:c.dumpOutline
@@ -6737,16 +6746,19 @@ def findNextMatch(self):
 # The new code only writes tnodes for the current tree when pasting to the clipboard.
 #@nonl
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
+def putVnode (self,p,ignored):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
     isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -6767,7 +6779,7 @@ def putVnode (self,p):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p)
+                fc.putVnode(p,ignored)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
@@ -9372,7 +9384,7 @@ if count % 2000 == 0:
 #@-node:ekr.20040723094220.2:<< print dots >>
 #@-node:ekr.20040723094220.1:checkAllPythonCode
 #@+node:ekr.20040723094220.3:checkPythonCode
-def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
+def checkPythonCode (self,unittest=False,ignoreAtIgnore=True,suppressErrors=False):
     
     c = self ; count = 0 ; result = "ok"
     
@@ -9388,10 +9400,12 @@ def checkPythonCode (self,unittest=False,ignoreAtIgnore=True):
         if g.scanForAtLanguage(c,p) == "python":
             if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
                 try:
-                    c.checkPythonNode(p,unittest)
-                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    c.checkPythonNode(p,unittest,suppressErrors)
+                except (parser.ParserError,SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
                     result = "error" # Continue to check.
                 except:
+                    g.es("surprise in checkPythonNode")
+                    g.es_exception()
                     return "surprise" # abort
 
     if not unittest:
@@ -9410,7 +9424,7 @@ if count % 2000 == 0:
 #@-node:ekr.20040723094220.4:<< print dots >>
 #@-node:ekr.20040723094220.3:checkPythonCode
 #@+node:ekr.20040723094220.5:checkPythonNode
-def checkPythonNode (self,p,unittest=False):
+def checkPythonNode (self,p,unittest=False,suppressErrors=False):
 
     c = self
     
@@ -9420,11 +9434,12 @@ def checkPythonNode (self,p,unittest=False):
 
     try:
         compiler.parse(body + '\n')
-    except SyntaxError:
-        if unittest:
-            raise
+    except (parser.ParserError,SyntaxError):
+        if not suppressErrors:
+            s = "Syntax error in: %s" % h
+            print s ; g.es(s,color="blue")
+        if unittest: raise
         else:
-            g.es("Syntax error in: %s" % h,color="blue")
             g.es_exception(full=False,color="black")
             p.setMarked()
 
@@ -9442,31 +9457,34 @@ def tabNannyNode (self,p,headline,body,unittest=False):
         # readline = g.readLinesGenerator(body).next
         readline = g.readLinesClass(body).next
         tabnanny.process_tokens(tokenize.generate_tokens(readline))
-
-    except tokenize.TokenError, msg:
-        if unittest:
-            raise
-        else:
-            g.es("Token error in %s" % headline,color="blue")
+        return
+        
+    except parser.ParserError, msg:
+        if not suppressErrors:
+            g.es("ParserError in %s" % headline,color="blue")
             g.es(str(msg))
-            p.setMarked()
+        
+    except tokenize.TokenError, msg:
+        if not suppressErrors:
+            g.es("TokenError in %s" % headline,color="blue")
+            g.es(str(msg))
 
     except tabnanny.NannyNag, nag:
-        if unittest:
-            raise
-        else:
+        if not suppressErrors:
             badline = nag.get_lineno()
             line    = nag.get_line()
             message = nag.get_msg()
             g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
             g.es(message)
             g.es("offending line:\n%s" % repr(str(line))[1:-1])
-            p.setMarked()
         
     except:
         g.trace("unexpected exception")
         g.es_exception()
-        if unittest: raise
+
+    if unittest: raise
+    else: p.setMarked()
+#@nonl
 #@-node:ekr.20040723094220.6:tabNannyNode
 #@-node:ekr.20040723094220:Check Outline commands & allies
 #@+node:ekr.20040412060927:c.dumpOutline
@@ -12052,16 +12070,19 @@ Instead it issues an informational message and deletes the tnodeList.
 @color
 #@nonl
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
+def putVnode (self,p,ignored):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
     isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -12082,7 +12103,7 @@ def putVnode (self,p):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p)
+                fc.putVnode(p,ignored)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
@@ -13135,16 +13156,19 @@ if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
 #@-node:ekr.20040326055828:<< Append to current or top stack >>
 #@-node:ekr.20031218072017.1566:getVnode changed for 4.2)
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
+def putVnode (self,p,ignored):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
     isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -13165,7 +13189,7 @@ def putVnode (self,p):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p)
+                fc.putVnode(p,ignored)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
@@ -13908,16 +13932,19 @@ def doHook(tag,*args,**keywords):
 #@nonl
 #@-node:ekr.20031218072017.1596:g.doHook
 #@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
-def putVnode (self,p):
+def putVnode (self,p,ignored):
 
     """Write a <v> element corresponding to a vnode."""
 
     fc = self ; c = fc.c ; v = p.v
     isThin = p.isAtThinFileNode()
     isIgnore = False
-    for p2 in p.self_and_parents_iter():
-        if p2.isAtIgnoreNode():
-            isIgnore = True ; break
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
     isOrphan = p.isOrphan()
     forceWrite = isIgnore or not isThin or (isThin and isOrphan)
 
@@ -13938,7 +13965,7 @@ def putVnode (self,p):
             # This optimization eliminates all "recursive" copies.
             p.moveToFirstChild()
             while 1:
-                fc.putVnode(p)
+                fc.putVnode(p,ignored)
                 if p.hasNext(): p.moveToNext()
                 else:           break
             p.moveToParent()
@@ -14029,6 +14056,330 @@ if headString:
 #@-node:ekr.20031218072017.1866:<< Write the head text >>
 #@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
 #@-node:ekr.20040803160307:(Fixed several big leaks of positions)
+#@+node:ekr.20040804052207:(Removed leak of positions from putVnode)
+#@+node:ekr.20031218072017.1579:putVnodes
+def putVnodes (self):
+
+    """Puts all <v> elements in the order in which they appear in the outline."""
+
+    c = self.c
+    c.clearAllVisited()
+
+    self.put("<vnodes>") ; self.put_nl()
+
+    # Make only one copy for all calls.
+    self.currentPosition = c.currentPosition() 
+    self.topPosition     = c.topPosition()
+
+    if self.usingClipboard:
+        self.putVnode(self.currentPosition,ignored=False) # Write only current tree.
+    else:
+        for p in c.rootPosition().self_and_siblings_iter():
+            self.putVnode(p,ignored=False) # Write the next top-level node.
+
+    self.put("</vnodes>") ; self.put_nl()
+#@nonl
+#@-node:ekr.20031218072017.1579:putVnodes
+#@+node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+def putVnode (self,p,ignored):
+
+    """Write a <v> element corresponding to a vnode."""
+
+    fc = self ; c = fc.c ; v = p.v
+    isThin = p.isAtThinFileNode()
+    isIgnore = False
+    if 1: # New in 4.2 b3: use ignored argument to compute this without leaking positions.
+        ignored = ignored or p.isAtIgnoreNode()
+    else:
+        for p2 in p.self_and_parents_iter():
+            if p2.isAtIgnoreNode():
+                isIgnore = True ; break
+    isOrphan = p.isOrphan()
+    forceWrite = isIgnore or not isThin or (isThin and isOrphan)
+
+    fc.put("<v")
+    << Put tnode index >>
+    << Put attribute bits >>
+    << Put tnodeList and unKnownAttributes >>
+    fc.put(">")
+    << Write the head text >>
+
+    if not self.usingClipboard:
+        << issue informational messages >>
+
+   # New in 4.2: don't write child nodes of @file-thin trees (except when writing to clipboard)
+    if p.hasChildren():
+        if forceWrite or self.usingClipboard:
+            fc.put_nl()
+            # This optimization eliminates all "recursive" copies.
+            p.moveToFirstChild()
+            while 1:
+                fc.putVnode(p,ignored)
+                if p.hasNext(): p.moveToNext()
+                else:           break
+            p.moveToParent()
+
+    fc.put("</v>") ; fc.put_nl()
+#@nonl
+#@+node:ekr.20031218072017.1864:<< Put tnode index >>
+if v.t.fileIndex:
+    if g.app.use_gnx:
+        gnx = g.app.nodeIndices.toString(v.t.fileIndex)
+        fc.put(" t=") ; fc.put_in_dquotes(gnx)
+    else:
+        fc.put(" t=") ; fc.put_in_dquotes("T" + str(v.t.fileIndex))
+        
+    # g.trace(v.t)
+    if forceWrite or self.usingClipboard:
+        v.t.setWriteBit() # 4.2: Indicate we wrote the body text.
+else:
+    g.trace(v.t.fileIndex,v)
+    g.es("error writing file(bad v.t.fileIndex)!")
+    g.es("try using the Save To command")
+#@nonl
+#@-node:ekr.20031218072017.1864:<< Put tnode index >>
+#@+node:ekr.20031218072017.1865:<< Put attribute bits >>
+attr = ""
+if p.v.isExpanded(): attr += "E"
+if p.v.isMarked():   attr += "M"
+if p.v.isOrphan():   attr += "O"
+
+if 1: # No longer a bottleneck now that we use p.equal rather than p.__cmp__
+    # Almost 30% of the entire writing time came from here!!!
+    if p.equal(self.topPosition):   attr += "T" # was a bottleneck
+    if c.isCurrentPosition(p):      attr += "V" # was a bottleneck
+
+if attr: fc.put(' a="%s"' % attr)
+#@nonl
+#@-node:ekr.20031218072017.1865:<< Put attribute bits >>
+#@+node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+# Write the tnodeList only for @file nodes.
+# New in 4.2: tnode list is in tnode.
+
+if 0: # Debugging.
+    if v.isAnyAtFileNode():
+        if hasattr(v.t,"tnodeList"):
+            g.trace(v.headString(),len(v.t.tnodeList))
+        else:
+            g.trace(v.headString(),"no tnodeList")
+
+if hasattr(v.t,"tnodeList") and len(v.t.tnodeList) > 0 and v.isAnyAtFileNode():
+    if isThin:
+        if g.app.unitTesting:
+            g.app.unitTestDict["warning"] = True
+        g.es("deleting tnode list for %s" % p.headString(),color="blue")
+        # This is safe: cloning can't change the type of this node!
+        delattr(v.t,"tnodeList")
+    else:
+        fc.putTnodeList(v) # New in 4.0
+
+if hasattr(v,"unknownAttributes"): # New in 4.0
+    self.putUnknownAttributes(v)
+    
+if p.hasChildren() and not forceWrite and not self.usingClipboard:
+    # We put the entire tree when using the clipboard, so no need for this.
+    self.putDescendentUnknownAttributes(p)
+    self.putDescendentAttributes(p)
+#@nonl
+#@-node:ekr.20040324082713:<< Put tnodeList and unKnownAttributes >>
+#@+node:ekr.20040702085529:<< issue informational messages >>
+if p.isAtThinFileNode and p.isOrphan():
+    g.es("Writing erroneous: %s" % p.headString(),color="blue")
+    p.clearOrphan()
+
+if 0: # For testing.
+    if p.isAtIgnoreNode():
+         for p2 in p.self_and_subtree_iter():
+                if p2.isAtThinFileNode():
+                    g.es("Writing @ignore'd: %s" % p2.headString(),color="blue")
+#@nonl
+#@-node:ekr.20040702085529:<< issue informational messages >>
+#@+node:ekr.20031218072017.1866:<< Write the head text >>
+headString = p.v.headString()
+
+if headString:
+    fc.put("<vh>")
+    fc.putEscapedString(headString)
+    fc.put("</vh>")
+#@nonl
+#@-node:ekr.20031218072017.1866:<< Write the head text >>
+#@-node:ekr.20031218072017.1863:putVnode (3.x and 4.x)
+#@-node:ekr.20040804052207:(Removed leak of positions from putVnode)
+#@+node:ekr.20040804083729:Fixed hang in unit tests when run under Python 2.2
+@killcolor
+
+doctest.DocTestSuite requires Python 2.3 or above.
+#@nonl
+#@-node:ekr.20040804083729:Fixed hang in unit tests when run under Python 2.2
+#@+node:ekr.20040803101341:(Fixed checks so they work with Python 2.2)
+# The interface is different and it isn't worth fixing.
+#@nonl
+#@+node:ekr.20040723094220:Check Outline commands & allies
+#@+node:ekr.20040723094220.1:checkAllPythonCode
+def checkAllPythonCode(self,unittest=False,ignoreAtIgnore=True):
+    
+    c = self ; count = 0 ; result = "ok"
+
+    for p in c.all_positions_iter():
+        
+        count += 1
+        if not unittest:
+            << print dots >>
+
+        if g.scanForAtLanguage(c,p) == "python":
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest)
+                except (SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    return "surprise" # abort
+                if unittest and result != "ok":
+                    print "Syntax error in %s" % p.headString()
+                    return result # End the unit test: it has failed.
+            
+    if not unittest:
+        g.es("Check complete",color="blue")
+        
+    return result
+#@nonl
+#@+node:ekr.20040723094220.2:<< print dots >>
+if count % 100 == 0:
+    g.es('.',newline=False)
+
+if count % 2000 == 0:
+    g.enl()
+#@nonl
+#@-node:ekr.20040723094220.2:<< print dots >>
+#@-node:ekr.20040723094220.1:checkAllPythonCode
+#@+node:ekr.20040723094220.3:checkPythonCode
+def checkPythonCode (self,unittest=False,ignoreAtIgnore=True,suppressErrors=False):
+    
+    c = self ; count = 0 ; result = "ok"
+    
+    if not unittest:
+        g.es("checking all Python code   ")
+    
+    for p in c.currentPosition().self_and_subtree_iter():
+        
+        count += 1
+        if not unittest:
+            << print dots >>
+
+        if g.scanForAtLanguage(c,p) == "python":
+            if not ignoreAtIgnore or not g.scanForAtIgnore(c,p):
+                try:
+                    c.checkPythonNode(p,unittest,suppressErrors)
+                except (parser.ParserError,SyntaxError,tokenize.TokenError,tabnanny.NannyNag):
+                    result = "error" # Continue to check.
+                except:
+                    g.es("surprise in checkPythonNode")
+                    g.es_exception()
+                    return "surprise" # abort
+
+    if not unittest:
+        g.es("Check complete",color="blue")
+        
+    # We _can_ return a result for unit tests because we aren't using doCommand.
+    return result
+#@nonl
+#@+node:ekr.20040723094220.4:<< print dots >>
+if count % 100 == 0:
+    g.es('.',newline=False)
+
+if count % 2000 == 0:
+    g.enl()
+#@nonl
+#@-node:ekr.20040723094220.4:<< print dots >>
+#@-node:ekr.20040723094220.3:checkPythonCode
+#@+node:ekr.20040723094220.5:checkPythonNode
+def checkPythonNode (self,p,unittest=False,suppressErrors=False):
+
+    c = self
+    
+    h = p.headString()
+    body = g.getScript(c,p.copy(),oneNodeOnly=True)
+    if not body: return
+
+    try:
+        compiler.parse(body + '\n')
+    except (parser.ParserError,SyntaxError):
+        if not suppressErrors:
+            s = "Syntax error in: %s" % h
+            print s ; g.es(s,color="blue")
+        if unittest: raise
+        else:
+            g.es_exception(full=False,color="black")
+            p.setMarked()
+
+    c.tabNannyNode(p,h,body,unittest)
+#@nonl
+#@-node:ekr.20040723094220.5:checkPythonNode
+#@+node:ekr.20040723094220.6:tabNannyNode
+# This code is based on tabnanny.check.
+
+def tabNannyNode (self,p,headline,body,unittest=False):
+
+    """Check indentation using tabnanny."""
+
+    try:
+        # readline = g.readLinesGenerator(body).next
+        readline = g.readLinesClass(body).next
+        tabnanny.process_tokens(tokenize.generate_tokens(readline))
+        return
+        
+    except parser.ParserError, msg:
+        if not suppressErrors:
+            g.es("ParserError in %s" % headline,color="blue")
+            g.es(str(msg))
+        
+    except tokenize.TokenError, msg:
+        if not suppressErrors:
+            g.es("TokenError in %s" % headline,color="blue")
+            g.es(str(msg))
+
+    except tabnanny.NannyNag, nag:
+        if not suppressErrors:
+            badline = nag.get_lineno()
+            line    = nag.get_line()
+            message = nag.get_msg()
+            g.es("Indentation error in %s, line %d" % (headline, badline),color="blue")
+            g.es(message)
+            g.es("offending line:\n%s" % repr(str(line))[1:-1])
+        
+    except:
+        g.trace("unexpected exception")
+        g.es_exception()
+
+    if unittest: raise
+    else: p.setMarked()
+#@nonl
+#@-node:ekr.20040723094220.6:tabNannyNode
+#@-node:ekr.20040723094220:Check Outline commands & allies
+#@-node:ekr.20040803101341:(Fixed checks so they work with Python 2.2)
+#@+node:ekr.20040804101139:(Fixed problems with unknown __del__ methods in Python 2.2)
+#@+node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
+if 1: # Good for compatibility, bad for finding conversion problems.
+
+    def __getattr__ (self,attr):
+        
+        """Convert references to p.t into references to p.v.t.
+        
+        N.B. This automatically keeps p.t in synch with p.v.t."""
+
+        if attr=="t":
+            return self.v.t
+        elif attr=="__del__":
+            # This works around a Python 2.2 wierdness.
+            return AttributeError # Silently ignore this.
+        else:
+            # Only called when normal lookup fails.
+            print "unknown position attribute:",attr
+            # import traceback ; traceback.print_stack()
+            raise AttributeError
+#@nonl
+#@-node:ekr.20040117170612:p.__getattr__  ON:  must be ON if use_plugins
+#@-node:ekr.20040804101139:(Fixed problems with unknown __del__ methods in Python 2.2)
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@+node:ekr.20031218072017.984:Unfinished projects
 #@+node:ekr.20031218072017.985:(Button class)
