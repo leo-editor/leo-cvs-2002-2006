@@ -2405,6 +2405,7 @@ class baseLeoFrame:
 			c = self.commands
 			# alas, askopenfilename returns only a single name.
 			c.importCommands.removeSentinelsCommand (fileName)
+	#@nonl
 	#@-node:OnRemoveSentinels
 	#@+node:OnWeave
 	def OnWeave (self,event=None):
