@@ -6,17 +6,17 @@
 	<global_window_position top="14" left="246" height="924" width="789"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
-<preferences>
+<preferences defaultTargetLanguage="Python" node_only="0" output_doc_chunks="1" page_width="132" tab_width="-4" tangle_bat="0" untangle_bat="0" use_header_flag="1">
 </preferences>
-<find_panel_settings>
+<find_panel_settings search_body="1" whole_word="1">
 	<find_string></find_string>
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
-<v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
+<v t="edream.110203150636.1" a="TV"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
-<v t="edream.110203150636.3" a="E"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh>
+<v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh>
 <v t="ekr.20040720065653.6"><vh>&lt;&lt; .leo file options &gt;&gt;</vh></v>
 <v t="ekr.20040720065653"><vh>&lt;&lt; command options &gt;&gt;</vh></v>
 <v t="ekr.20040720065653.1"><vh>&lt;&lt; directory options &gt;&gt;</vh></v>
@@ -38,13 +38,13 @@
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
-<v t="edream.110203150636.22" a="TV"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
+<v t="edream.110203150636.22"><vh>&lt;&lt; Options for the bar that separates panes in the Leo window &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
