@@ -1525,6 +1525,7 @@ class baseVnode:
 		"""Moves the receiver after a"""
 	
 		v = self ; c = self.c
+	
 		v.destroyDependents()
 		v.unlink()
 		v.linkAfter(a)

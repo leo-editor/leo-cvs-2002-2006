@@ -3532,7 +3532,6 @@ class baseCommands:
 	#@+node:c.dragAfter
 	def dragAfter(self,v,after):
 	
-		# es("dragAfter")
 		c = self
 		if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
 		# Remember both the before state and the after state for undo/redo
@@ -3607,13 +3606,13 @@ class baseCommands:
 		c.updateSyntaxColorer(v) # Dragging can change syntax coloring.
 	#@nonl
 	#@-node:c.dragToNthChildOf
-	#@+node:c.dragCloneAfter (changed in 3.11.1)
+	#@+node:c.dragCloneAfter
 	def dragCloneAfter (self,v,after):
 	
 		c = self
 		c.beginUpdate()
 		clone = v.clone(v) # Creates clone & dependents, does not set undo.
-		# trace("v,after:"+v.headString()+","+after.headString())
+		# trace("v,after:",v.headString(),after.headString())
 		if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
 			trace("invalid clone move")
 			clone.doDelete(v) # Destroys clone & dependents. Makes v the current node.
@@ -3635,7 +3634,7 @@ class baseCommands:
 		c.endUpdate()
 		c.updateSyntaxColorer(clone) # Dragging can change syntax coloring.
 	#@nonl
-	#@-node:c.dragCloneAfter (changed in 3.11.1)
+	#@-node:c.dragCloneAfter
 	#@+node:beginUpdate
 	def beginUpdate(self):
 	

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="3986" clone_windows="0"/>
 <globals body_outline_ratio="0.49655172413793103">
-	<global_window_position top="29" left="176" height="870" width="827"/>
+	<global_window_position top="39" left="397" height="870" width="827"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -14,6 +14,11 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.120603095416"><vh>12/06</vh>
+<v t="edream.120603140102"><vh>Fixed bug when untangling html</vh></v>
+<v t="edream.120603140102.1"><vh>Fixed clone-dragging bug</vh></v>
+<v t="edream.120603095416.1"><vh>Load plugins dynamically using pluginsManager.txt</vh></v>
+</v>
 <v t="edream.120503070828"><vh>12/05</vh>
 <v t="edream.120503070828.1"><vh>Ran pychecker</vh></v>
 </v>
@@ -399,7 +404,7 @@
 <v t="edream.110203160744.206"><vh>ANN: Leo 3.12 outlining editor</vh></v>
 <v t="edream.110203160744.207"><vh>ANN: Leo 3.12 outlining editor (c.l.py)</vh></v>
 </v>
-<v t="edream.110703091849"><vh>ANN: Leo 4.1 beta 4: An outlining editor</vh></v>
+<v t="edream.120503083057"><vh>ANN: Leo 4.1 beta 5: An outlining editor</vh></v>
 <v t="edream.110203160744.209"><vh>4.0.x announcements</vh>
 <v t="edream.110203160744.208"><vh>ANN: Leo 4.0.4: An outlining editor</vh></v>
 <v t="edream.110203160744.214"><vh>ANN: Leo 4.0 final: An outlining editor</vh></v>
@@ -1021,12 +1026,12 @@
 </v>
 </v>
 <v t="edream.110403112538"><vh>To do: 4.1</vh>
-<v t="edream.110203160744.2419"><vh>Improve how plugins are loaded</vh></v>
 <v t="edream.120203124941.1"><vh>Unit tests</vh>
 <v t="edream.112303032011"><vh>New unit test ideas</vh></v>
 <v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
 </v>
 <v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
+<v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
 </v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
@@ -3284,10 +3289,59 @@
 </v>
 </v>
 <v t="edream.112303174924"><vh>beta 5 projects</vh>
-<v t="edream.112103080619"><vh>(Made newTnode and scanGnx more robust)</vh>
-<v t="edream.112303082755"><vh>traceback</vh></v>
-<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
-<v t="edream.110203160744.3329" a=""><vh>scanGnx</vh></v>
+<v t="edream.111603175355"><vh>(Added defensive code to prevent crash in colorizer)</vh>
+<v t="edream.112303105217"><vh>Report</vh></v>
+<v t="edream.110203160744.1717" a=""><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+</v>
+<v t="edream.112203144820.2"><vh>(Adding batch-script logic to startup code)</vh>
+<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
+<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
+<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
+<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
+<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="edream.112203144820.1"><vh>getBatchScript</vh></v>
+</v>
+</v>
+<v t="edream.112203132842" a="M"><vh>(Bold body pane bug)</vh>
+<v t="edream.120203130055"><vh>Scripts</vh>
+<v t="edream.120203140055" tnodeList="edream.120203140055,edream.120203140210"><vh>Show settings</vh>
+<v t="edream.120203140210"><vh>getFontSettings</vh></v>
+</v>
+<v t="edream.120203132327" tnodeList="edream.120203132327"><vh>Set tracing var</vh></v>
+<v t="edream.120203130055.1" tnodeList="edream.120203130055.1"><vh>Print font</vh></v>
+<v t="edream.120203130901" tnodeList="edream.120203130901"><vh>Print default font</vh></v>
+</v>
+<v t="edream.120203130055.2"><vh>Code</vh>
+<v t="edream.110203160744.1398" a=""><vh>app.__init__</vh>
+<v t="edream.110203160744.1399"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
+<v t="edream.110203160744.220" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+</v>
+<v t="edream.120403033313"><vh>config</vh>
+<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
+</v>
+<v t="edream.120403033313.1"><vh>frame</vh>
+<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
+<v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
+<v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
+<v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1884"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.120403033313.2"><vh>body</vh>
+<v t="edream.110203160744.2286" a=""><vh>tkBody. __init__</vh></v>
+<v t="edream.110203160744.2289" a="M"><vh>tkBody.setFontFromConfig</vh></v>
+<v t="edream.111003102135" a=""><vh>Configuration (Tk spelling)</vh></v>
+</v>
+<v t="edream.120203132019"><vh>gui</vh>
+<v t="edream.110203160744.3686" a=""><vh>tkGui.getDefaultConfigFont</vh></v>
+<v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
+<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
+<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
+</v>
 </v>
 <v t="edream.112103084204"><vh>(Created null classes)</vh>
 <v t="edream.112103083853" a=""><vh>class nullBody</vh>
@@ -3354,23 +3408,9 @@
 </v>
 <v t="edream.112203164505.1" a=""><vh>class nullUndoer</vh></v>
 </v>
-<v t="edream.112203144820.2"><vh>(Adding batch-script logic to startup code)</vh>
-<v t="edream.110203160744.1583" a=""><vh>run &amp; allies</vh>
-<v t="edream.110203160744.1584"><vh>isValidPython</vh></v>
-<v t="edream.110203160744.1585" a=""><vh>computeLoadDir</vh></v>
-<v t="edream.110203160744.1586" a=""><vh>createFrame (leo.py)</vh></v>
-<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="edream.112203144820.1"><vh>getBatchScript</vh></v>
-</v>
-</v>
-<v t="edream.112303042302"><vh>(Using a common log in batch mode)</vh>
-<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
-<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
-<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
-<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
-<v t="edream.110203160744.1456" a=""><vh>es, enl, ecnl</vh></v>
-<v t="edream.110203160744.1774" a=""><vh>trace</vh></v>
-<v t="edream.110203160744.3019" a=""><vh>trace_tag</vh></v>
+<v t="edream.120103075217"><vh>(Fixed apply settings bug)</vh>
+<v t="edream.120103075217.1"><vh>Report</vh></v>
+<v t="edream.110203160744.2264" a=""><vh>reconfigureFromConfig</vh></v>
 </v>
 <v t="edream.112103193136"><vh>(Fixed duplicate bindings with clear leoConfig.txt)</vh>
 <v t="edream.112303083451"><vh>Report</vh></v>
@@ -3393,66 +3433,6 @@
 <v t="edream.110203160744.1281"><vh>&lt;&lt; set realLabel, amp_index and menu_shortcut &gt;&gt;</vh></v>
 <v t="edream.110203160744.1282" a="M"><vh>&lt;&lt; handle bind_shorcut &gt;&gt;</vh></v>
 </v>
-</v>
-<v t="edream.111603175355"><vh>(Added defensive code to prevent crash in colorizer)</vh>
-<v t="edream.112303105217"><vh>Report</vh></v>
-<v t="edream.110203160744.1717" a=""><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
-</v>
-<v t="edream.111803084214"><vh>(Fixed Undo Change All (in headlines) problem)</vh>
-<v t="edream.112303110845.1"><vh>Report</vh></v>
-<v t="edream.110203160744.2098" a=""><vh>batchChange</vh>
-<v t="edream.110203160744.2099"><vh>&lt;&lt; set the undo head params &gt;&gt;</vh></v>
-<v t="edream.110203160744.2100"><vh>&lt;&lt; set the undo body typing params &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1932" a=""><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
-<v t="edream.110203160744.1931" a=""><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.112303174924.1"><vh>beta 6 projects</vh>
-<v t="edream.112203132842" a="M"><vh>(Bold body pane bug)</vh>
-<v t="edream.120203130055"><vh>Scripts</vh>
-<v t="edream.120203140055" tnodeList="edream.120203140055,edream.120203140210"><vh>Show settings</vh>
-<v t="edream.120203140210"><vh>getFontSettings</vh></v>
-</v>
-<v t="edream.120203132327" tnodeList="edream.120203132327"><vh>Set tracing var</vh></v>
-<v t="edream.120203130055.1" tnodeList="edream.120203130055.1"><vh>Print font</vh></v>
-<v t="edream.120203130901" tnodeList="edream.120203130901"><vh>Print default font</vh></v>
-</v>
-<v t="edream.120203130055.2"><vh>Code</vh>
-<v t="edream.110203160744.1398" a=""><vh>app.__init__</vh>
-<v t="edream.110203160744.1399"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
-<v t="edream.110203160744.220" a=""><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-</v>
-<v t="edream.120403033313"><vh>config</vh>
-<v t="edream.110203160744.2956" a=""><vh>config.getFontFromParams</vh></v>
-</v>
-<v t="edream.120403033313.1"><vh>frame</vh>
-<v t="edream.110203160744.1880" a=""><vh>f.finishCreate</vh>
-<v t="edream.110203160744.1881"><vh>&lt;&lt; create the toplevel frame &gt;&gt;</vh></v>
-<v t="edream.110203160744.1882"><vh>&lt;&lt; create all the subframes &gt;&gt;</vh>
-<v t="edream.110203160744.1883"><vh>&lt;&lt; create both splitters &gt;&gt;</vh></v>
-</v>
-<v t="edream.110203160744.1884"><vh>&lt;&lt; create the first tree node &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.120403033313.2"><vh>body</vh>
-<v t="edream.110203160744.2286" a=""><vh>tkBody. __init__</vh></v>
-<v t="edream.110203160744.2289" a="M"><vh>tkBody.setFontFromConfig</vh></v>
-<v t="edream.111003102135" a=""><vh>Configuration (Tk spelling)</vh></v>
-</v>
-<v t="edream.120203132019"><vh>gui</vh>
-<v t="edream.110203160744.3686" a=""><vh>tkGui.getDefaultConfigFont</vh></v>
-<v t="edream.110203160744.3695" a=""><vh>tkGui.getFontFromParams</vh></v>
-<v t="edream.110203160744.1846" a=""><vh>newLeoCommanderAndFrame (gui-independent)</vh>
-<v t="edream.110203160744.1847"><vh>&lt;&lt; compute the window title &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="edream.110203160744.1706" a=""><vh>openWithFileName</vh></v>
-</v>
-</v>
-<v t="edream.120103075217"><vh>(Fixed apply settings bug)</vh>
-<v t="edream.120103075217.1"><vh>Report</vh></v>
-<v t="edream.110203160744.2264" a=""><vh>reconfigureFromConfig</vh></v>
 </v>
 <v t="edream.120203075836"><vh>(Fixed Find panel bug on the Mac)</vh>
 <v t="edream.120203080733"><vh>Trace</vh></v>
@@ -3555,6 +3535,15 @@
 <v t="edream.120103073624.1"><vh>Report</vh></v>
 <v t="edream.110203160744.1194" a=""><vh>toggleAngleBrackets</vh></v>
 </v>
+<v t="edream.111803084214"><vh>(Fixed Undo Change All (in headlines) problem)</vh>
+<v t="edream.112303110845.1"><vh>Report</vh></v>
+<v t="edream.110203160744.2098" a=""><vh>batchChange</vh>
+<v t="edream.110203160744.2099"><vh>&lt;&lt; set the undo head params &gt;&gt;</vh></v>
+<v t="edream.110203160744.2100"><vh>&lt;&lt; set the undo body typing params &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1932" a=""><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
+<v t="edream.110203160744.1931" a=""><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
+</v>
 <v t="edream.120203084427"><vh>(Honor outline/body pane ratio when opening files)</vh>
 <v t="edream.110203160744.1957" a=""><vh>fileCommands.open</vh>
 <v t="edream.110203160744.1958" a=""><vh>&lt;&lt; Set the default directory &gt;&gt; in fileCommands.readOutlineOnly</vh></v>
@@ -3564,6 +3553,11 @@
 <v t="edream.120103091913"><vh>(Icon bug in Linux)</vh>
 <v t="edream.120103091913.1"><vh>Report</vh></v>
 <v t="edream.110203160744.1853" a=""><vh>setDefaultIcon</vh></v>
+</v>
+<v t="edream.112103080619"><vh>(Made newTnode and scanGnx more robust)</vh>
+<v t="edream.112303082755"><vh>traceback</vh></v>
+<v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
+<v t="edream.110203160744.3329" a=""><vh>scanGnx</vh></v>
 </v>
 <v t="edream.120303103648"><vh>(Made sure Leo doesn't put windows off the screen)</vh>
 <v t="edream.120403060637"><vh>Report</vh></v>
@@ -3594,10 +3588,76 @@
 <v t="edream.110203160744.1757"><vh>&lt;&lt; pass the url to the web browser &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.112303042302"><vh>(Using a common log in batch mode)</vh>
+<v t="edream.112203144820" a=""><vh>createNullGuiWithScript (leo.py)</vh></v>
+<v t="edream.112103085124" a=""><vh>createLeoFrame</vh></v>
+<v t="edream.112103154736.1" a=""><vh>runMainLoop</vh></v>
+<v t="edream.112103100651" a=""><vh>class nullLog</vh></v>
+<v t="edream.110203160744.1456" a=""><vh>es, enl, ecnl</vh></v>
+<v t="edream.110203160744.1774" a=""><vh>trace</vh></v>
+<v t="edream.110203160744.3019" a=""><vh>trace_tag</vh></v>
+</v>
+</v>
+<v t="edream.112303174924.1"><vh>beta 6 projects</vh>
+<v t="edream.120603112107"><vh>(Fixed clone-drag bug)</vh>
+<v t="edream.120603112107.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1740" a=""><vh>Event handers (tree)</vh>
+<v t="edream.110203160744.1741"><vh>OnActivate</vh>
+<v t="edream.110203160744.1742"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1743"><vh>OnBoxClick</vh></v>
+<v t="edream.110203160744.1692"><vh>tree.OnDeactivate (caused double-click problem)</vh></v>
+<v t="edream.110203160744.1744"><vh>tree.findVnodeWithIconId</vh></v>
+<v t="edream.110203160744.1745"><vh>tree.OnContinueDrag</vh>
+<v t="edream.110203160744.1746"><vh>&lt;&lt; continue dragging &gt;&gt;</vh>
+<v t="edream.110203160744.1747"><vh>&lt;&lt; scroll the canvas as needed &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1748"><vh>tree.OnCtontrolT</vh></v>
+<v t="edream.110203160744.1749" a=""><vh>tree.OnDrag</vh></v>
+<v t="edream.110203160744.1750" a=""><vh>tree.OnEndDrag</vh>
+<v t="edream.110203160744.1751"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1313" a=""><vh>headline key handlers (tree)</vh>
+<v t="edream.110203160744.1314"><vh>onHeadChanged</vh></v>
+<v t="edream.110203160744.1315"><vh>OnHeadlineKey</vh></v>
+<v t="edream.110203160744.1316"><vh>idle_head_key</vh>
+<v t="edream.110203160744.1317"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="edream.110203160744.1318"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="edream.110203160744.1319"><vh>&lt;&lt; update v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="edream.110203160744.1320"><vh>&lt;&lt; reconfigure v and all nodes joined to v &gt;&gt;</vh></v>
+<v t="edream.110203160744.1321"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1752"><vh>tree.OnIconClick &amp; OnIconRightClick</vh>
+<v t="edream.110203160744.1753"><vh>&lt;&lt; define drag callbacks &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1673"><vh>tree.OnPopup &amp; allies</vh>
+<v t="edream.110203160744.1674"><vh>OnPopupFocusLost</vh></v>
+<v t="edream.110203160744.1675" a=""><vh>createPopupMenu</vh>
+<v t="edream.110203160744.1676"><vh>&lt;&lt; Create the menu table &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1677"><vh>enablePopupMenuItems</vh>
+<v t="edream.110203160744.1678"><vh>&lt;&lt; set isAtRoot and isAtFile if v's tree contains @root or @file nodes &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1679"><vh>showPopupMenu</vh></v>
+</v>
+</v>
+<v t="edream.110203160744.1750" a=""><vh>tree.OnEndDrag</vh>
+<v t="edream.110203160744.1751"><vh>&lt;&lt; set vdrag, childFlag &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1912" a=""><vh>c.dragAfter</vh></v>
+<v t="edream.110203160744.3315" a=""><vh>v.moveAfter</vh></v>
+<v t="edream.110203160744.3312" a=""><vh>v.linkAfter</vh></v>
+</v>
+<v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
+<v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
+<v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
 </v>
 </v>
 </v>
-<v t="edream.110203160744.2458" a="V"><vh>Code</vh>
+</v>
+<v t="edream.110203160744.2458"><vh>Code</vh>
 <v t="edream.110203160744.2459"><vh>  Overview of code</vh>
 <v t="edream.110203160744.2460" a=""><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="edream.110203160744.2461" a=""><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -4592,10 +4652,10 @@
 </v>
 </v>
 <v t="edream.111103194948"><vh>Dragging</vh>
-<v t="edream.110203160744.1912"><vh>c.dragAfter</vh></v>
+<v t="edream.110203160744.1912" a=""><vh>c.dragAfter</vh></v>
 <v t="edream.110203160744.1913"><vh>c.dragCloneToNthChildOf (changed in 3.11.1)</vh></v>
 <v t="edream.110203160744.1914"><vh>c.dragToNthChildOf</vh></v>
-<v t="edream.110203160744.1923"><vh>c.dragCloneAfter (changed in 3.11.1)</vh></v>
+<v t="edream.110203160744.1923"><vh>c.dragCloneAfter</vh></v>
 </v>
 <v t="edream.110203160744.2869"><vh>Drawing Utilities</vh>
 <v t="edream.110203160744.2870"><vh>beginUpdate</vh></v>
@@ -5034,7 +5094,7 @@
 <v t="edream.110203160744.3070"><vh>skip_pp_if</vh></v>
 <v t="edream.110203160744.3071"><vh>skip_pp_part</vh></v>
 <v t="edream.110203160744.3072"><vh>skip_python_string</vh></v>
-<v t="edream.110203160744.3073"><vh>skip_string : called by tangle</vh></v>
+<v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
 <v t="edream.110203160744.3074"><vh>skip_to_semicolon</vh></v>
 <v t="edream.110203160744.3075"><vh>skip_typedef</vh></v>
 </v>
@@ -5413,10 +5473,10 @@
 <v t="edream.110203160744.3310"><vh>moveToRoot</vh></v>
 <v t="edream.110203160744.3311"><vh>restoreOutlineFromDVnodes (test)</vh></v>
 <v t="edream.110203160744.1783"><vh>v.clone</vh></v>
-<v t="edream.110203160744.3312"><vh>v.linkAfter</vh></v>
+<v t="edream.110203160744.3312" a=""><vh>v.linkAfter</vh></v>
 <v t="edream.110203160744.3313"><vh>v.linkAsNthChild</vh></v>
 <v t="edream.110203160744.3314"><vh>v.linkAsRoot</vh></v>
-<v t="edream.110203160744.3315"><vh>v.moveAfter</vh></v>
+<v t="edream.110203160744.3315" a=""><vh>v.moveAfter</vh></v>
 <v t="edream.110203160744.930" a=""><vh>v.moveToNthChildOf</vh></v>
 <v t="edream.110203160744.929" a=""><vh>v.sortChildren</vh></v>
 </v>
@@ -5454,8 +5514,10 @@
 <v t="edream.110203160744.3331"><vh>toString</vh></v>
 </v>
 </v>
-<v t="edream.110203160744.3332" tnodeList="edream.110203160744.3332,edream.110203160744.2382,edream.110203160744.3333,edream.110203160744.3334,edream.110203160744.3335,edream.110203160744.3336"><vh>@file leoPlugins.py</vh>
-<v t="edream.110203160744.2382"><vh>loadHandlers</vh></v>
+<v t="edream.110203160744.3332" tnodeList="edream.110203160744.3332,edream.110203160744.2382,edream.120603091450,edream.110203160744.3333,edream.110203160744.3334,edream.110203160744.3335,edream.110203160744.3336"><vh>@file leoPlugins.py</vh>
+<v t="edream.110203160744.2382"><vh>loadHandlers</vh>
+<v t="edream.120603091450"><vh>&lt;&lt; set enabled_files from pluginsManager.txt &gt;&gt;</vh></v>
+</v>
 <v t="edream.110203160744.3333"><vh>doHandlersForTag</vh></v>
 <v t="edream.110203160744.3334"><vh>registerHandler</vh></v>
 <v t="edream.110203160744.3335"><vh>registerExclusiveHandler</vh></v>
@@ -5630,7 +5692,7 @@
 </v>
 <v t="edream.110203160744.3451"><vh>mismatch</vh></v>
 <v t="edream.110203160744.3452"><vh>scan_derived_file (pass 1)</vh>
-<v t="edream.110203160744.3453"><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
+<v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3454"><vh>&lt;&lt; Skip the header line output by tangle &gt;&gt;</vh></v>
 <v t="edream.110203160744.3455"><vh>&lt;&lt; handle the start of a new line &gt;&gt;</vh></v>
 <v t="edream.110203160744.3456"><vh>&lt;&lt; handle a sentinel line &gt;&gt;</vh>
@@ -6615,7 +6677,7 @@
 <v t="edream.110203160744.3709"><vh>setLineHeight</vh></v>
 <v t="edream.110203160744.2266"><vh>setTreeColorsFromConfig</vh></v>
 </v>
-<v t="edream.110203160744.1740"><vh>Event handers (tree)</vh>
+<v t="edream.110203160744.1740" a=""><vh>Event handers (tree)</vh>
 <v t="edream.110203160744.1741"><vh>OnActivate</vh>
 <v t="edream.110203160744.1742"><vh>&lt;&lt; activate this window &gt;&gt;</vh></v>
 </v>
@@ -6804,6 +6866,7 @@
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
 </v>
 </v>
+<v t="edream.120603162124" a="V"><vh>Colorizer bug</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203160744">@ignore
@@ -23071,10 +23134,7 @@ def file_date (file,format=None):
 
 		print m.__name__, m.__version__
 		
-	# Increment a global count.
-	import leoPlugins
-	leoPlugins.count += 1
-</t>
+	app.loadedPlugins.append(module_name)</t>
 <t tx="edream.110203160744.1300">@ These routines are involved in many projects.  Cloning them over and over can slow down Leo a lot.
 </t>
 <t tx="edream.110203160744.1301">@ The &lt;Key&gt; event generates the event before the body text is changed(!), so we register an idle-event handler to do the work later.
@@ -23662,7 +23722,7 @@ self.use_header_flag = c.use_header_flag
 # Default tangle language
 self.language = c.target_language
 delim1,delim2,delim3 = set_delims_from_language(self.language)
-# print `delim1`,`delim2`,`delim3`
+# trace(delim1,delim2,delim3)
 
 # 8/1/02: this now works as expected.
 self.single_comment_string = delim1
@@ -23767,10 +23827,10 @@ elif dict.has_key("language"):
 	self.start_comment_string = delim2
 	self.end_comment_string = delim3
 	if 0:
-		trace(`self.single_comment_string` + "," +
-			`self.start_comment_string` + "," +
-			`self.end_comment_string`)
-		
+		trace(self.single_comment_string,
+			self.start_comment_string,
+			self.end_comment_string)
+
 	# 10/30/02: These ivars must be updated here!
 	# trace(`self.language`)
 	self.use_noweb_flag = true
@@ -24439,6 +24499,7 @@ This is exactly the same behaviour as in beta3.</t>
 	self.killed = false # true: we are about to destroy the root window.
 	self.leoID = None # The id part of gnx's.
 	self.loadDir = None # The directory from which Leo was loaded.
+	self.loadedPlugins = [] # List of loaded plugins that have signed on.
 	self.log = None # The LeoFrame containing the present log.
 	self.logIsLocked = false # true: no changes to log are allowed.
 	self.logWaiting = [] # List of messages waiting to go to a log.
@@ -29687,7 +29748,9 @@ def OnDrag(self,v,event):
 			if not config.getBoolWindowPref("look_for_control_drag_on_mouse_down"):
 				self.controlDrag = c.frame.controlKeyIsDown
 
-		if vdrag and vdrag != v:
+		if vdrag and vdrag != v and ( # 12/6/03
+			vdrag not in v.t.joinList or v.childIndex() != vdrag.childIndex()):
+
 			if self.controlDrag: # Clone v and move the clone.
 				if childFlag:
 					c.dragCloneToNthChildOf(v,vdrag,0)
@@ -32022,7 +32085,6 @@ def validateOutline (self):
 <t tx="edream.110203160744.1911"></t>
 <t tx="edream.110203160744.1912">def dragAfter(self,v,after):
 
-	# es("dragAfter")
 	c = self
 	if not c.checkMoveWithParentWithWarning(v,after.parent(),true): return
 	# Remember both the before state and the after state for undo/redo
@@ -32289,7 +32351,7 @@ elif c.checkMoveWithParentWithWarning(v,back2.parent(),true):
 	c = self
 	c.beginUpdate()
 	clone = v.clone(v) # Creates clone &amp; dependents, does not set undo.
-	# trace("v,after:"+v.headString()+","+after.headString())
+	# trace("v,after:",v.headString(),after.headString())
 	if not c.checkMoveWithParentWithWarning(clone,after.parent(),true):
 		trace("invalid clone move")
 		clone.doDelete(v) # Destroys clone &amp; dependents. Makes v the current node.
@@ -37339,20 +37401,36 @@ def importFiles (dir, type = None, kind = "@file"):
 	except:
 		es("exception in importFiles script")
 		es_exception()</t>
-<t tx="edream.110203160744.2382">def loadHandlers():
+<t tx="edream.110203160744.2382">def loadHandlers(loadAllFlag=false):
 
-	"""Load all plugins from the plugins directory"""
+	"""Load all enabled plugins from the plugins directory"""
 	import glob,os
-	global count
 	
-	path = os_path_join(app.loadDir,"..","plugins")
-	files = glob.glob(os_path_join(path,"*.py"))
-	files.sort()
-	if files:
-		for file in files:
-			file = toUnicode(file,app.tkEncoding)
-			importFromPath(file,path)
-		es("%d plugins loaded, %d examined" % (count,len(files)), color="blue")</t>
+	plugins_path = os_path_join(app.loadDir,"..","plugins")
+	manager_path = os_path_join(plugins_path,"pluginsManager.txt")
+	
+	files = glob.glob(os_path_join(plugins_path,"*.py"))
+	files = [os_path_abspath(file) for file in files]
+
+	if loadAllFlag:
+		files.sort()
+		enabled_files = files
+	else:
+		&lt;&lt; set enabled_files from pluginsManager.txt &gt;&gt;
+		enabled_files = [os_path_abspath(file) for file in enabled_files]
+	
+	# Load plugins in the order they appear in the enabled_files list.
+	app.loadedPlugins = []
+	if files and enabled_files:
+		for file in enabled_files:
+			if file in files:
+				file = toUnicode(file,app.tkEncoding)
+				importFromPath(file,plugins_path)
+	if app.loadedPlugins and not loadAllFlag:
+		es("%d plugins loaded" % (len(app.loadedPlugins)), color="blue")
+		if 0:
+			for name in app.loadedPlugins:
+				print name</t>
 <t tx="edream.110203160744.2383">f = None
 try:
 	path = os_path_join(self.tangle_directory,path)
@@ -37640,14 +37718,6 @@ def setDict (self,name,val,dict):
 getStringFromDict = getFromDict
 </t>
 <t tx="edream.110203160744.2418"></t>
-<t tx="edream.110203160744.2419">@nocolor
-
-Because I use plugins, I didn't notice this until I started customizing Leo. When I loaded Leo, I got the message, "5 plugins loaded, 40 examined"; however "use_plugins = " was set to zero. If these 5 are "system plugins" (for lack of a better name), I think they should be quietly loaded, and probably from the SRC directory. Otherwise, it will cause _many_ messages here: "I turned off all plugins. Why are 5 still being loaded?"
-
-EKR: and maybe Leo should keep loading plugins even if there is a fault?
-
-- Distribution should _not_ copy plugins/siteCustomize.py (one way to set app.leoID)
-</t>
 <t tx="edream.110203160744.2423">@nocolor
 
 Under X Window system, when text is selected, it is automatically entered into a buffer and can be pasted with the middle button of the mouse.
@@ -47373,6 +47443,7 @@ def skip_pp_part(s,i):
 	
 	j = i ; delim = s[i] ; i += 1
 	assert(delim == '"' or delim == '\'')
+	
 	n = len(s)
 	while i &lt; n and s[i] != delim:
 		if s[i] == '\\' : i += 2
@@ -47382,7 +47453,10 @@ def skip_pp_part(s,i):
 		scanError("Run on string: " + s[j:i])
 	elif s[i] == delim:
 		i += 1
-	return i</t>
+
+	# trace(s[j:i])
+	return i
+</t>
 <t tx="edream.110203160744.3074"># Skips to the next semicolon that is not in a comment or a string.
 
 def skip_to_semicolon(s,i):
@@ -50102,6 +50176,7 @@ def moveAfter (self,a):
 	"""Moves the receiver after a"""
 
 	v = self ; c = self.c
+
 	v.destroyDependents()
 	v.unlink()
 	v.linkAfter(a)
@@ -50347,7 +50422,6 @@ After startup:
 from leoGlobals import *
 
 handlers = {}
-count = 0 ; examined = 0
 
 def doPlugins(tag,keywords):
 	if app.killed:
@@ -52222,7 +52296,8 @@ if self.language == "pascal":
 	self.comment2 = "(*" ; self.comment2_end = "*)"
 if self.language == "latex": # 3/10/03: Joo-won Jung
 	self.string1 = self.string2 = None # This is debatable.
-</t>
+if self.language == "html":
+	self.string1 = '"' ; self.string2 = None # 12/3/03</t>
 <t tx="edream.110203160744.3454">if self.sentinel or self.comment:
 	line = choose(self.sentinel,self.sentinel,self.comment) + " Created by Leo from" 
 	if match(s,i,line):
@@ -56598,80 +56673,6 @@ Leo will execute a "default change script" when the Script Change checkbox is ch
 <t tx="edream.110703024557.1"></t>
 <t tx="edream.110703040104"></t>
 <t tx="edream.110703040104.1"></t>
-<t tx="edream.110703091849">Leo 4.1 beta 4 is now available at: http://sourceforge.net/projects/leo/
-
-This is the fourth official release of the reorganized 4.1 code base.
-
-Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
-
-Beta 4:
-  - Fixes several "reorg" bugs, some of which affected plugins.
-  - Allows @directives and section references when executing scripts!
-  - More than one section reference may now appear on the same line.
-  - Uses "utf-8" encoding for filenames under MacOS (Darwin)
-  - Allows command or cmnd prefix for menu shortcuts under Darwin.
-  - Wraps all os.path calls to that file and directory names can be converted to Unicode.
-    This is necessary (but not sufficient?) to support Chinese file and directory names.
-
-Beta 3 completes the reorg: many changes to the code.  Also fixes a LaTeX coloring bug.
-
-Beta 2 fixes a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
-
-Highlights of 4.1 beta 1:
-------------------------
-* New commands:
-  - script-based find/change commands: very powerful and flexible.
-  - Hoist &amp; DeHoist commands for viewing parts of an outline.
-  - Check Outline command finds user clone mistakes.
-* New configuration settings:
-  - use_gnx specifies whether .leo files use integers as indices:
-    use_gnx = 0 makes .leo files compatible with previous versions of Leo.
-    use_gnx = 1 makes .leo files cvs-friendly
-  - config_encoding specifies the encoding of leoConfig.txt.
-* Several significant code-level changes:
-  - The 4.1 code base has been reorganized to support gui plugins.
-    An example wx_gui plugin is partly functional.
-  - Created a flexible framework for creating &amp; running regression tests.
-    This framework takes full advantage of outlines to organize tests.
-  - app.forceShutdown now works when called from plugins.
-- Fixed several long-standing bugs.  More fixes are coming.
-
-Quotes of the month
--------------------
-I like Leo more the more I use it...It's an unexpected pleasure to
-see my (linearly written) code outlined in Leo. I can't wait to use
-Leo to start a new project, going from outline to code...Thanks again
-for providing the computing community with such a fine piece of
-software. -- Jim Shapiro, Ph.D.
-
-If you think you have used all possible programmer's editors, but
-have not yet tried Leo, you are wrong...I rate Leo as a "must have"
-for Python programmers. The code makes for a good read.
--- John Tobler  http://weblogs.asp.net/Jtobler/
-
-What is Leo?
-------------
-- A programmer's editor, an outlining editor and a flexible browser.
-- A literate programming tool, compatible with noweb and CWEB.
-- A data organizer and project manager. Leo provides multiple views
-   of projects within a single outline.
-- Fully scriptable using Python. Leo saves its files in XML format.
-- Portable. leo.py is 100% pure Python.
-- Open Software, distributed under the Python License.
-
-Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
-Leo works on Linux, Windows and MacOs X.
-
-Links:
-------
-Leo:      http://webpages.charter.net/edreamleo/front.html
-Home:     http://sourceforge.net/projects/leo/
-Download: http://sourceforge.net/project/showfiles.php?group_id=3458
-CVS:      http://sourceforge.net/cvs/?group_id=3458
-Wiki:     http://leo.hd1.org/
-
-Edward K. Ream
-November 20, 2003</t>
 <t tx="edream.110703095626"></t>
 <t tx="edream.110703151909"></t>
 <t tx="edream.110703151909.1"></t>
@@ -60670,5 +60671,157 @@ T node references of clones? The the user could then drag this somewhere else.</
 <t tx="edream.120503070828"></t>
 <t tx="edream.120503070828.1">The only change was that replaceClipboardWith now no longer returns a value.</t>
 <t tx="edream.120503070828.2"></t>
+<t tx="edream.120503083057">Leo 4.1 beta 5 is now available at: http://sourceforge.net/projects/leo/
+
+For the first time in months there are no serious bugs outstanding.
+
+Warning: By default Leo 4.1 creates .leo files that can not be read by older versions of Leo.
+
+Warning: Use the __wx_gui.py plugin with _extreme_ caution until further notice:
+bugs in this plugin could cause body text to be lost when changing nodes.
+
+Beta 5:
+  * Leo runs in batch mode when invoked with --script aScriptFile.py
+    - Created "null gui" classes that do not write to the screen.
+  * Leo supports Unicode characters (e.g. Chinese) in path and file names.
+  * Fixed several long-standing bugs:
+    - Fixed several minor problems with the Extract Section and Import commands.
+    - Fixed problem that prevent the Find panel from working on the Mac.
+    - Improved @url handling so that @url file:\\path\x.leo works properly.
+    - Improved support for @lineending platform.
+    - Leo honors outline/body pane ratio when opening .leo files.
+    - Leo now ensures that newly-opened windows fit entirely on the screen.
+    - Fixed a crasher when Undoing a Change All command when searching headlines.
+  - Fixed other bugs resulting from the 4.1 reorg:
+    - Fixed problem loading plugins on Linux.
+    - Fixed crashers in the Extract Section and Extract commands.
+    - Fixed crasher when writing a file containing an undefined section.
+    - Removed duplicate bindings in popup menus.
+    - Made sure to show Leo's windows in wx gui plugin.
+
+Beta 4:
+  * Allow @directives and section references when executing scripts!
+  - Fixed several "reorg" bugs, some of which affected plugins.
+  - More than one section reference may now appear on the same line.
+  - Use "utf-8" encoding for filenames under MacOS (Darwin)
+  - Allow command or cmnd prefix for menu shortcuts under Darwin.
+
+Beta 3:
+  - Completed the reorg, making _many_ changes to the code base.
+  - Fixed a LaTeX coloring bug
+
+Beta 2:
+  - Fixed a startup problem on Linux: the "mbcs" text encoding is not valid on Linux.
+
+Beta 1:
+  * New script-based find/change commands.
+  - Hoist &amp; DeHoist commands for viewing parts of an outline.
+  - Check Outline command finds user clone mistakes.
+  * New configuration settings:
+    - use_gnx specifies whether .leo files use integers as indices:
+      use_gnx = 0 makes .leo files compatible with previous versions of Leo.
+      use_gnx = 1 makes .leo files cvs-friendly
+    - config_encoding specifies the encoding of leoConfig.txt.
+  * Several significant code-level changes:
+    - The 4.1 code base has been reorganized to support gui plugins.
+    - An example wx_gui plugin is partly functional.
+    - Created a flexible framework for creating &amp; running regression tests.
+    - app.forceShutdown now works when called from plugins.
+
+Quotes of the month
+-------------------
+"I like Leo more the more I use it...It's an unexpected pleasure to
+see my (linearly written) code outlined in Leo. I can't wait to use
+Leo to start a new project, going from outline to code...Thanks again
+for providing the computing community with such a fine piece of
+software." -- Jim Shapiro, Ph.D.
+
+"If you think you have used all possible programmer's editors, but
+have not yet tried Leo, you are wrong...I rate Leo as a 'must have'
+for Python programmers. The code makes for a good read."
+-- John Tobler  http://weblogs.asp.net/Jtobler/
+
+What is Leo?
+------------
+- A programmer's editor, an outlining editor and a flexible browser.
+- A literate programming tool, compatible with noweb and CWEB.
+- A data organizer and project manager. Leo provides multiple views
+   of projects within a single outline.
+- Fully scriptable using Python. Leo saves its files in XML format.
+- Portable. leo.py is 100% pure Python.
+- Open Software, distributed under the Python License.
+
+Leo requires Python 2.1 or above and tcl/tk 8.3 or above.
+Leo works on Linux, Windows and MacOs X.
+
+Links:
+------
+Leo:      http://webpages.charter.net/edreamleo/front.html
+Home:     http://sourceforge.net/projects/leo/
+Download: http://sourceforge.net/project/showfiles.php?group_id=3458
+CVS:      http://sourceforge.net/cvs/?group_id=3458
+Wiki:     http://leo.hd1.org/
+
+Edward K. Ream
+December 5, 2003</t>
+<t tx="edream.120503112445"># Only a double-quote is a valid string in html.</t>
+<t tx="edream.120603055749">@nocolor
+
+Interim design:
+	
+- use pluginsManager.txt in plugins directory.
+	- Load file, scan for non-comment lines whose files are in plugins directory
+- load plugins only if they are in pluginsManager.txt
+- (later?) do a graphical interface for pluginsManager.txt
+
+Simplest graphical interface:
+
+- Listbox of all files.
+- Enable, Disable, Revert, Cancel, OK buttons, Enable All, Disable All.
+- Selecting an item in the Listbox enables one of the Enable/Disable buttons
+- Selecting OK rewrites the file "in place" without altering comment lines.
+- Opening file creates one entry for each .py file in plugins directory.
+
+This is like the Spell-check plugin.</t>
+<t tx="edream.120603091450">if not os_path_exists(manager_path):
+	return
+
+enabled_files = []
+try:
+	file = open(manager_path)
+	lines = file.readlines()
+	for s in lines:
+		s = s.strip()
+		if s and not match(s,0,"#"):
+			enabled_files.append(os_path_join(plugins_path,s))
+	file.close()
+except:
+	es("Can not open: " + manager_path)
+	return</t>
+<t tx="edream.120603095416"></t>
+<t tx="edream.120603095416.1">Plugins are now loaded in the order in which they appear in pluginsManager.txt.
+
+Removed all "compile-time" enabling/disabling code from leoPlugins.leo.
+
+The only such checks that remain are checks to see if Tkinter can be imported, and other similar checks.
+</t>
+<t tx="edream.120603112107"></t>
+<t tx="edream.120603112107.1">@nocolor
+
+dragged ... the 'f' node onto the ... 'f' clone above it. The resultant tree has only two 'f' nodes, siblings, on it.  Everything else seems to have vanished.</t>
+<t tx="edream.120603140102">Only double-quoted strings are valid in html.  A lone single-quote caused a cascade of mismatched comments.</t>
+<t tx="edream.120603140102.1">This has been around ever since the dragging code was created.</t>
+<t tx="edream.120603162124">@color
+@language python
+
+@ 
+some snap code
+@others
+more snap code
+@c
+
+in the output file "more snap code" will be NOT commented, but in Leo that line will appear as a red comment line.
+I do not know which is the "correct behaviour" but the colorizer should be consisten with it.
+</t>
 </tnodes>
 </leo_file>

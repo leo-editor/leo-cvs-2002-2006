@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2190" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2256" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
-	<global_window_position top="3" left="198" height="936" width="894"/>
+	<global_window_position top="10" left="82" height="936" width="1147"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2718,15 +2718,104 @@
 <v t="edream.120303093527"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 <v t="edream.120303093527.1"><vh>others</vh></v>
 </v>
-</v>
-<v t="edream.120403115355"><vh>Cut/paste</vh></v>
-<v t="edream.120403121826"><vh>Extract text</vh>
-<v t="edream.120403141200"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-</v>
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
-<v t="edream.120503065917" a="V" tnodeList="edream.120503065917"><vh>Distribution checklist for 4.1 beta 5</vh>
-<v t="edream.120503065917.1" tnodeList="edream.120503065917.1"><vh>@file-nosent c:\prog\leoCVS\.pycheckrc</vh></v>
-<v t="edream.120503065917.2"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
+</v>
+<v t="edream.120603125057" a="E"><vh>4.1 beta 6 tests</vh>
+<v t="edream.120603112201"><vh>clone-drag bug</vh>
+<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.3"><vh>f</vh></v>
+<v t="edream.120603112201.2"><vh>b</vh></v>
+<v t="edream.120603113726"><vh>c</vh></v>
+</v>
+<v t="edream.120603112201.1" a=""><vh>a</vh>
+<v t="edream.120603112201.3"><vh>f</vh></v>
+<v t="edream.120603112201.2"><vh>b</vh></v>
+<v t="edream.120603113726"><vh>c</vh></v>
+</v>
+</v>
+<v t="edream.120603125159" a="V"><vh>ItemTemplate</vh>
+<v t="edream.120603125159.1"><vh>&lt;&lt; html_body &gt;&gt;</vh>
+<v t="edream.120603125159.2"><vh>&lt;&lt; head  &gt;&gt;</vh></v>
+<v t="edream.120603125159.3"><vh>&lt;&lt; body &gt;&gt;</vh>
+<v t="edream.120603125159.4"><vh>&lt;&lt; form &gt;&gt;</vh>
+<v t="edream.120603125159.5"><vh>&lt;&lt; xsl_var_initialisation &gt;&gt;</vh></v>
+<v t="edream.120603125159.6"><vh>&lt;&lt; status &gt;&gt;</vh></v>
+<v t="edream.120603125159.7"><vh>&lt;&lt; tabs &gt;&gt;</vh></v>
+<v t="edream.120603125159.8"><vh>&lt;&lt; policy_selector &gt;&gt;</vh>
+<v t="edream.120603125159.9"><vh>&lt;&lt; policy_category &gt;&gt;</vh></v>
+<v t="edream.120603125159.10"><vh>&lt;&lt; policy &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.11" a="M"><vh>&lt;&lt; table_container &gt;&gt;</vh>
+<v t="edream.120603125159.12"><vh>&lt;&lt; dynamic_zone &gt;&gt;</vh>
+<v t="edream.120603125159.13" a="M"><vh>&lt;&lt; date &gt;&gt;</vh>
+<v t="edream.120603125159.14"><vh>&lt;&lt; date_error &gt;&gt;</vh></v>
+<v t="edream.120603125159.15"><vh>&lt;&lt; from_date &gt;&gt;</vh></v>
+<v t="edream.120603125159.16"><vh>&lt;&lt; to_date &gt;&gt;</vh></v>
+<v t="edream.120603125159.17"><vh>&lt;&lt; taxpoint &gt;&gt;</vh></v>
+<v t="edream.120603125159.18"><vh>&lt;&lt; calendar_jscript &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.19"><vh>&lt;&lt; quantity &gt;&gt;</vh>
+<v t="edream.120603125159.20"><vh>&lt;&lt; item_quantity &gt;&gt;</vh></v>
+<v t="edream.120603125159.21"><vh>&lt;&lt; person_quantity &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.22"><vh>&lt;&lt; employee &gt;&gt;</vh>
+<v t="edream.120603125159.23"><vh>&lt;&lt; emp_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.24"><vh>&lt;&lt; emp_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.25"><vh>&lt;&lt; emp_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.26"><vh>&lt;&lt; nonemployee &gt;&gt;</vh>
+<v t="edream.120603125159.27"><vh>&lt;&lt; nonemp_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.28"><vh>&lt;&lt; nonemp_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.29"><vh>&lt;&lt; nonemp_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.30"><vh>&lt;&lt; allowance &gt;&gt;</vh></v>
+<v t="edream.120603125159.31"><vh>&lt;&lt; calc_explanation &gt;&gt;</vh></v>
+<v t="edream.120603125159.32"><vh>&lt;&lt; home_value &gt;&gt;</vh>
+<v t="edream.120603125159.33"><vh>&lt;&lt; hv_currency_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.34"><vh>&lt;&lt; hv_currency_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.35"><vh>&lt;&lt; hv_value_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.36"><vh>&lt;&lt; hv_value &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.37"><vh>&lt;&lt; foreign_value &gt;&gt;</vh>
+<v t="edream.120603125159.38"><vh>&lt;&lt; fv_error &gt;&gt;</vh></v>
+<v t="edream.120603125159.39"><vh>&lt;&lt; fv_currency_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.40"><vh>&lt;&lt; fv_currency_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.41"><vh>&lt;&lt; fv_exchange_rate_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.42"><vh>&lt;&lt; fv_exchange_rate_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.43"><vh>&lt;&lt; fv_value_label &gt;&gt;</vh></v>
+<v t="edream.120603125159.44"><vh>&lt;&lt; fv_value &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.45"><vh>&lt;&lt; vat &gt;&gt;</vh>
+<v t="edream.120603125159.46"><vh>&lt;&lt; vat_flag &gt;&gt;</vh></v>
+<v t="edream.120603125159.47"><vh>&lt;&lt; vat_rate &gt;&gt;</vh></v>
+<v t="edream.120603125159.48"><vh>&lt;&lt; vat_value &gt;&gt;</vh></v>
+<v t="edream.120603125159.49"><vh>&lt;&lt; vat_reason&gt;&gt;</vh></v>
+<v t="edream.120603125159.50"><vh>&lt;&lt; vat_comment &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.51"><vh>&lt;&lt; comment &gt;&gt;</vh></v>
+<v t="edream.120603125159.52"><vh>&lt;&lt; supplier &gt;&gt;</vh>
+<v t="edream.120603125159.53"><vh>&lt;&lt; preferred_supplier &gt;&gt;</vh></v>
+<v t="edream.120603125159.54"><vh>&lt;&lt; other_supplier &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.55"><vh>&lt;&lt; user_defined &gt;&gt;</vh>
+<v t="edream.120603125159.56"><vh>&lt;&lt; udf1 &gt;&gt;</vh></v>
+<v t="edream.120603125159.57"><vh>&lt;&lt; udf2 &gt;&gt;</vh></v>
+<v t="edream.120603125159.58"><vh>&lt;&lt; udf3 &gt;&gt;</vh></v>
+<v t="edream.120603125159.59"><vh>&lt;&lt; udf4 &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.60"><vh>&lt;&lt; charge &gt;&gt;</vh>
+<v t="edream.120603125159.61"><vh>&lt;&lt; charge_titles &gt;&gt;</vh></v>
+<v t="edream.120603125159.62"><vh>&lt;&lt; charge_unallocated_row &gt;&gt;</vh></v>
+<v t="edream.120603125159.63"><vh>&lt;&lt; charge_records &gt;&gt;</vh></v>
+<v t="edream.120603125159.64"><vh>&lt;&lt; charge_add_row &gt;&gt;</vh></v>
+</v>
+<v t="edream.120603125159.65"><vh>&lt;&lt; buttons &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -34303,268 +34392,1231 @@ ctx.ServiceManager</t>
 @last ?&gt;</t>
 <t tx="edream.120303093527">ref line 1</t>
 <t tx="edream.120303093527.1">others line 1</t>
-<t tx="edream.120403115355">xxxx</t>
-<t tx="edream.120403121826">line 1
-&lt;&lt; ref &gt;&gt;
-line 2
-&lt;&lt; ref2 &gt;&gt;
-</t>
-<t tx="edream.120403141200"></t>
 <t tx="edream.120403143517">脖</t>
-<t tx="edream.120503065917">if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
-
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
-
-@nocolor
-Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
-
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
-	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
-	- Announce to comp.lang.python
-	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="edream.120503065917.1"># Sample defaults file for PyChecker 0.8.13
-# This file should be called:  .pycheckrc
-# It should be placed in your home directory (value of $HOME).
-# If $HOME is not set, it will look in the current directory.
-
-# file = c:/prog/leoCVS/leo/src/leo.py
-
-# bool: warnings for Doc Strings
-noDocModule = 0
-noDocClass = 0
-noDocFunc = 0
-
-# bool: when checking if class data members (attributes) are set
-#       check all members or __init__() only
-onlyCheckInitForMembers = 0
-
-# bool: warn when all module variables are not used (including private vars)
-allVariablesUsed = 0
-
-# bool: produce warnings for each occurrence of a warning for global (xxx)
-reportAllGlobals = 0
-
-# bool: warn when private module variables are not used (_var)
-privateVariableUsed = 1
-
-# bool: warn when imports are not used
-importUsed = 1
-
-# bool: warn when import and from ... import are used for same module
-mixImport = 0 # EKR
-
-# bool: warn when imports are not used in __init__.py
-packageImportUsed = 1
-
-# bool: warn when a module reimports another module (import &amp; from/import)
-moduleImportErrors = 0 # EKR
-
-# bool: warn when modules import themselves
-reimportSelf = 0 # EKR
-
-# bool: warn when local variables are not used
-localVariablesUsed = 1
-
-# bool:  assume a, b, and c are used in this case:  a, b, c = func()
-unusedLocalTuple = 0
-
-# bool:  warn when class attributes (data members) are unused
-membersUsed = 0
-
-# bool: warn when Subclass.__init__ is not called in a subclass
-baseClassInitted = 1
-
-# bool: warn when Subclass needs to override methods that only throw exceptions
-abstractClasses = 1
-
-# bool: warn when __init__ is defined in a subclass
-initDefinedInSubclass = 0
-
-# bool: warn when __init__ returns None
-returnNoneFromInit = 1
-
-# bool: warn when code is not reachable
-unreachableCode = 0
-
-# bool: warn when a constant is used in a conditional statement (if '':)
-constantConditions = 1
-
-# bool: warn when 1 is used in a conditional statement, (if 1: while 1: etc)
-constant1 = 0
-
-# bool: warn when iterating over a string in a for loop
-stringIteration = 1
-
-# bool: warn when setting a variable to different types
-inconsistentTypes = 0
-
-# bool: warn when setting a tuple of variables to a non-sequence (a, b = None)
-unpackNonSequence = 1
-
-# bool: warn when setting a tuple of variables to the wrong length (a, b = 1,)
-unpackLength = 1
-
-# bool: warn when using strings exceptions or 
-#       other classes not derived from Exception to raise/catch exceptions
-badExceptions = 1
-
-# bool: warn when statements appear to have no effect
-noEffect = 1
-
-# bool: warn when using (expr % 1), it has no effect on integers and strings
-modulo1 = 1
-
-# bool: warn if using (expr is const-literal), 
-# doesn't always work on integers and strings
-isLiteral = 0 # EKR
-
-# bool: warn when using a deprecated module or function
-deprecated = 1
-
-# bool: warn when the class attribute does not exist
-classAttrExists = 1
-
-# bool: warn when calling an attribute not a method
-callingAttribute = 0
-
-# bool: warn when using named arguments: func(a=1, b=2), where def func(a, b):
-#       def func2(a, b, **kw): doesn't generate a warning
-namedArgs = 0 # EKR
-
-# str: name of 'self' parameter
-methodArgName = 'self'
-
-# list of str: names of first parameter to classmethods
-## classmethodArgNames = ['cls', 'klass']
-
-# bool: warn when method/function arguments are unused
-argumentsUsed = 1
-
-# bool: ignore if self is unused in methods
-ignoreSelfUnused = 0
-
-# bool: warn if functions/classes/methods names are redefined in same scope
-redefiningFunction = 1
-
-# bool:  check if an overriden method has the same signature
-#	 as base class method (__init__() methods are not checked)
-checkOverridenMethods = 1
-
-# bool:  check if a special (reserved) method has the correct signature
-#	 and is known (these are methods that begin and end with __
-## checkSpecialMethods = 1
-
-# int: warnings for code complexity, max value before generating a warning
-maxLines = 2000
-maxBranches = 500
-maxReturns = 100
-maxArgs = 100
-maxLocals = 250
-maxReferences = 500
-
-# bool:  ignore all warnings from standard library components
-#	 (this includes anything under the standard library, eg, site-packages)
-ignoreStandardLibrary = 1 # EKR
-
-# list of strings: ignore unused locals/arguments if name is one of
-unusedNames = [
-	'_', 'empty', 'unused', 'dummy', 'event', 'commander',
-	'c', 'i', 'j', 'k', 's',
-	'tag', 'args', 'keys', 'keywords']
-
-# list of strings: ignore warnings generated from these modules
-blacklist = [
-	'leoGlobals',
-	'leoConfig',
-	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
-	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
-
-# list of strings: ignore global variables not used if name is one of
-variablesToIgnore = [ '__all__', '__version__', '__copyright__', ]
-
-# bool: print the PyChecker parse of modules, classes, etc.
-printParse = 0
-
-# bool: turn debugging of PyChecker on
-debug = 0
-
-# bool: check that attributes of objects exist
-checkObjectAttrs = 1
-
-# bool: various warnings about incorrect usage of __slots__
-slots = 1
-
-# bool: check if __slots__ is empty
-emptySlots = 1
-
-# bool: check for using properties in classic classes
-classicProperties = 1
-
-# bool: check for integer division (may be problem between Python versions)
-intDivide = 1
-
-# bool: check if local variables shadow a global variable with same name
-shadows = 0 # EKR
-
-# bool: check if input() is used, which is a security problem, use raw_input()
-usesInput = 1
-
-# bool: check if using a constant string to getattr()/setattr()
-# Doesn't exist.
-## constAttr = 1
-
-# bool: check for using +variable, since it is almost always has no effect
-unaryPositive = 1
-
-# bool: check for modifying a parameter with a default value
-#       (value must be: list, dict, instance)
-#       modifying the value may have undesirable/unexpected side-effects
-modifyDefaultValue = 1
-
-# bool: check if the exec statement is used (possible security problem)
-usesExec = 0
-
-# bool: check consistent return values
-checkReturnValues = 1
-
-# bool: check if using implict and explicit return values
-checkImplicitReturns = 1
-
-# dict: suppress warnings, key is module.class.method or module.function
-#	value is a string of command line arguments (can omit -- for long args)
-#       { 'module1': 'no-namedargs maxlines=0',
-#	  'module2.my_func': 'argsused',
-#	  'module3.my_class': 'no-initreturn', }
-if 1:
-	suppressions = {}
-else: # Doesn't work
-	suppressions = {
-		'leoFrame' : 'argumentsUsed=0',
-		'leoGui' : 'argumentsUsed=0' }
-
-# dict: suppress warnings where keys can be regular expressions
-suppressionRegexs = {}</t>
-<t tx="edream.120503065917.2"></t>
+<t tx="edream.120603112201"></t>
+<t tx="edream.120603112201.1"></t>
+<t tx="edream.120603112201.2"></t>
+<t tx="edream.120603112201.3"></t>
+<t tx="edream.120603113726"></t>
+<t tx="edream.120603125057"></t>
+<t tx="edream.120603125159">@ignore
+@language html 
+@root "c:\prog\test\bedellUntangleTest.html"
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:user="http://mycompany.com/mynamespace"&gt;
+	&lt;xsl:import href="../../../Resources/system/ExtensionFunctions.xslt"/&gt;
+	&lt;xsl:template match="/"&gt;
+		&lt;!--&lt;xsl:value-of select="concat('7180=',user:EXF_Translate(21000))"/&gt;--&gt;
+		&lt;&lt; html_body &gt;&gt;
+	&lt;/xsl:template&gt;
+&lt;/xsl:stylesheet&gt;
+</t>
+<t tx="edream.120603125159.1">@code
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+	&lt;&lt; head &gt;&gt; 
+	&lt;&lt; body &gt;&gt;
+&lt;/html&gt;</t>
+<t tx="edream.120603125159.2">@code
+&lt;head&gt;
+	&lt;title&gt;Item&lt;/title&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/&gt;
+	&lt;link href="../../../css/forms.css" rel="stylesheet" type="text/css"/&gt;
+	&lt;link href="template.css" rel="stylesheet" type="text/css"/&gt;
+	&lt;!-- VERY IMPORTANT to have explicit end script tags otherwise page will break --&gt;
+	&lt;script language="JavaScript" src="../../../Js/Other/Calendar/calendar1.js" type="text/javascript"&gt;&lt;/script&gt;
+	&lt;script language="JavaScript" src="../../../js/General/generic.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;/head&gt;</t>
+<t tx="edream.120603125159.3">@code
+&lt;body bgcolor="#66CC99" text="#000000" link="#000000" vlink="#000000" alink="#000000" onLoad="REM_SetScrollPos()"&gt;
+	&lt;&lt; form &gt;&gt;
+&lt;/body&gt;</t>
+<t tx="edream.120603125159.4">@code
+&lt;form action="broker.asp" method="post" name="Item" id="Item"&gt;
+	&lt;input name="formname" type="hidden" value="Item"/&gt;
+	&lt;input name="Btn" type="hidden" value=""/&gt;
+	&lt;input name="ScrollX" type="hidden" value="{/SESSION/FORM/ITEM[@group='Item' and @name='ScrollX']/@value}"/&gt;
+	&lt;input name="ScrollY" type="hidden" value="{/SESSION/FORM/ITEM[@group='Item' and @name='ScrollY']/@value}"/&gt;
+	&lt;input name="Action" type="hidden" value="{/SESSION/FORM/ITEM[@group='Item' and @name='Action']/@value}"/&gt;
+	&lt;input name="ItemId" type="hidden" value="{/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value}"/&gt;
+	&lt;input name="LineNo" type="hidden" value="{/SESSION/FORM/ITEM[@group='Item' and @name='LineNo']/@value}"/&gt;
+	&lt;&lt; xsl_var_initialisation &gt;&gt;
+	&lt;!-- ***************************************************************************************************************** --&gt;
+	&lt;&lt; status &gt;&gt;
+	&lt;&lt; tabs &gt;&gt;
+	&lt;!-- ***************************************************************************************************************** --&gt;
+	&lt;&lt; policy_selector &gt;&gt;
+	&lt;&lt; table_container &gt;&gt;
+&lt;/form&gt;</t>
+<t tx="edream.120603125159.5">@code
+&lt;xsl:variable name="SingleQuote"&gt;'&lt;/xsl:variable&gt;
+&lt;xsl:variable name="Comma"&gt;,&lt;/xsl:variable&gt;</t>
+<t tx="edream.120603125159.6">@code
+&lt;div id="Status"&gt;
+	&lt;div id="PageTitle" class="REM_FormTitle"&gt; Item&lt;/div&gt;
+	&lt;!--
+	&lt;div id="Error" class="REM_FormError"&gt;
+		&lt;xsl:for-each select="/SESSION/ERROR/ITEM"&gt;
+			&lt;xsl:value-of select="@message"/&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/div&gt;
+	--&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.7">@code
+&lt;div id="Tab" class="REM_BaseLine"&gt;
+	&lt;div id="TabItem" class="REM_Tab"&gt;
+		&lt;div id="TabItemText" class="REM_SelectedTabText"&gt;Item&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div id="TabPolicy" class="REM_Tab"&gt;
+		&lt;div id="TabPolicyText"&gt;
+			&lt;a href="../E_DisplayPolicy/initiate.asp" class="REM_NoSelectedTabText"&gt;Policy&lt;/a&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.8">@code
+&lt;div id="PolicySelector"&gt;
+	&lt;&lt; policy_category &gt;&gt;
+	&lt;&lt; policy &gt;&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.9">@code
+&lt;div id="PolicyCategory"&gt;
+	&lt;select name="ExpenseCategory" size="1" class="REM_Ddlb" onchange="REM_ResetScrollPos();REM_SetButtonSubmit('ExpenseCategory')"&gt;
+		&lt;option value=""&gt;--Select Expense Category--&lt;/option&gt;
+		&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[CATEGORY/@default='Y']"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="./CATEGORY/@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpenseCategory']/@value"&gt;
+					&lt;option value="{./CATEGORY/@id}" selected="selected"&gt;
+						&lt;xsl:value-of select="./CATEGORY"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;option value="{./CATEGORY/@id}"&gt;
+						&lt;xsl:value-of select="./CATEGORY"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/select&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.10">@code
+&lt;div id="Policy"&gt;
+	&lt;select name="ExpensePolicy" size="1" class="REM_Ddlb" onChange="REM_ResetScrollPos();REM_SetButtonSubmit('ExpensePolicy')"&gt;
+		&lt;option value=""&gt;--Select Expense Policy--&lt;/option&gt;
+		&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[CATEGORY/@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpenseCategory']/@value]"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="./@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value"&gt;
+					&lt;option value="{./@id}" selected="selected"&gt;
+						&lt;xsl:value-of select="concat(substring(./LOCATION,1,1),'---',./NAME)"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;option value="{./@id}"&gt;
+						&lt;xsl:value-of select="concat(substring(./LOCATION,1,1),'---',./NAME)"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/select&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.11">@code
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;div id="Base"&gt;
+	&lt;table width="100%" border="0" cellspacing="0" cellpadding="0"&gt;
+		&lt;&lt; dynamic_zone &gt;&gt;
+	&lt;/table&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.12">@code
+&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value]/CONFIG/ITEM"&gt;
+&lt;xsl:choose&gt;
+&lt;xsl:when test="./@name='DA'"&gt;
+	&lt;&lt; date &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='QU'"&gt;
+	&lt;&lt; quantity &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='EM'"&gt;
+	&lt;&lt; employee &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='NE'"&gt;
+	&lt;&lt; nonemployee &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='AL'"&gt;
+	&lt;&lt; allowance &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='CE'"&gt;
+	&lt;&lt; calc_explanation &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='HV'"&gt;
+	&lt;&lt; home_value &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='FV'"&gt;
+	&lt;&lt; foreign_value &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='VA'"&gt;
+	&lt;&lt; vat &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='CO'"&gt;
+	&lt;&lt; comment &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='SU'"&gt;
+	&lt;&lt; supplier &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='UD'"&gt;
+	&lt;&lt; user_defined &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;xsl:when test="./@name='CH'"&gt;
+	&lt;&lt; charge &gt;&gt;
+&lt;/xsl:when&gt;
+&lt;/xsl:choose&gt;
+&lt;/xsl:for-each&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;!-- *****************************************END OF DYNAMIC ZONE******************************************--&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;&lt; buttons &gt;&gt;</t>
+<t tx="edream.120603125159.13">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="DA" type="hidden"/&gt;
+		&lt;div id="Date" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;&lt; date_error &gt;&gt;
+			&lt;&lt; from_date &gt;&gt;
+			&lt;&lt; to_date &gt;&gt;
+			&lt;&lt; taxpoint &gt;&gt;
+		&lt;/div&gt;
+		&lt;&lt; calendar_jscript &gt;&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.14">@code
+&lt;xsl:if test="count(/SESSION/ERROR/ITEM[@block='Date'])&amp;gt;0"&gt;
+	&lt;div id="DateError" style="position:absolute; left:0px; top:14px; width:15px; height:13px; z-index:38"&gt;
+	&lt;img src="../../../Img/red_exclaim_on_grey.gif" width="16" height="17"&gt;
+		&lt;xsl:attribute name="alt"&gt;
+			&lt;xsl:for-each select="/SESSION/ERROR/ITEM[@block='Date']"&gt;
+				&lt;xsl:value-of select="@message"/&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/img&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.15">@code
+&lt;div id="FromDate"&gt;
+	&lt;div id="FromDateLabel"&gt;
+		&lt;p class="REM_FieldTitle"&gt;From:&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="FromDateValue"&gt;
+		&lt;input name="FromDate" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/DATETIME/FROM"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='FromDate']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+	&lt;div id="FromDateGo"&gt;
+		&lt;a href="javascript:cal1.popup();"&gt;
+			&lt;img src="../../../img/ddlb.gif" alt="Click Here to Pick up the date" border="0"/&gt;
+		&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.16">@code
+&lt;div id="ToDate"&gt;
+	&lt;div id="ToDateLabel"&gt;
+		&lt;p class="REM_FieldTitle"&gt;To:&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="ToDateValue"&gt;
+		&lt;input name="ToDate" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/DATETIME/TO"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ToDate']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+	&lt;div id="ToDateGo"&gt;
+		&lt;a href="javascript:cal2.popup();"&gt;
+			&lt;img src="../../../img/ddlb.gif" alt="Click Here to Pick up the date" border="0"/&gt;
+		&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.17">@code
+&lt;div id="TaxPoint"&gt;
+	&lt;div id="TaxPointLabel"&gt;
+		&lt;p class="REM_FieldTitle"&gt;Date when Expense incurred:&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="TaxPointValue"&gt;
+		&lt;input name="TaxPoint" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/DATETIME/TAXPOINT"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='TaxPoint']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+	&lt;div id="TaxPointGo"&gt;
+		&lt;a href="javascript:cal3.popup();"&gt;
+			&lt;img src="../../../img/ddlb.gif" alt="Click Here to Pick up the date" border="0"/&gt;
+		&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.18">@code
+&lt;script language="JavaScript" type="text/javascript"&gt;
+var cal1 = new calendar1(document.forms['Item'].elements['FromDate'],document.forms['Item'].elements['ToDate'],document.forms['Item'].elements['TaxPoint'],"20:00:00");  
+cal1.year_scroll = true;
+cal1.time_comp = false;
+&lt;/script&gt;
+&lt;script language="JavaScript" type="text/javascript"&gt;
+var cal2 = new calendar1(document.forms['Item'].elements['ToDate'],"20:00:00");
+cal2.year_scroll = true;
+cal2.time_comp = false;
+&lt;/script&gt;
+&lt;script language="JavaScript" type="text/javascript"&gt;
+var cal3 = new calendar1(document.forms['Item'].elements['TaxPoint'],"20:00:00");
+cal3.year_scroll = true;
+cal3.time_comp = false;
+&lt;/script&gt;</t>
+<t tx="edream.120603125159.19">@code									
+&lt;tr&gt;
+	&lt;td width="50%"&gt;
+		&lt;input name="Block" value="QU" type="hidden"/&gt;
+		&lt;&lt; item_quantity &gt;&gt;
+	&lt;/td&gt;
+	&lt;td width="50%" align="right"&gt;
+		&lt;&lt; person_quantity &gt;&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.20">@code
+&lt;div id="Quantity" class="REM_CSSP_FreeFormBackground"&gt;
+	&lt;div id="QV"&gt;
+		&lt;div id="QVLabel"&gt;
+			&lt;p class="REM_FieldTitle"&gt;Quantity&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div id="QVValue"&gt;
+			&lt;input name="Quantity" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+				&lt;xsl:attribute name="value"&gt;
+					&lt;xsl:choose&gt;
+						&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+							&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/QUANTITY/QUANTITY"/&gt;
+						&lt;/xsl:when&gt;
+						&lt;xsl:otherwise&gt;
+							&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='Quantity']/@value"/&gt;
+						&lt;/xsl:otherwise&gt;
+					&lt;/xsl:choose&gt;
+				&lt;/xsl:attribute&gt;
+			&lt;/input&gt;
+		&lt;/div&gt;
+		&lt;div id="QVUnit"&gt;
+			&lt;p class="REM_FieldTitle"&gt;
+				&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/UOM"/&gt;
+			&lt;/p&gt;
+		&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.21">@code
+&lt;div id="PersonQuantity" class="REM_CSSP_FreeFormBackground"&gt;
+	&lt;div id="PQV"&gt;
+		&lt;div id="PQVLabel"&gt;
+			&lt;p class="REM_FieldTitle"&gt;No. of People&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div id="PQVValue"&gt;
+			&lt;input name="PersonQuantity" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+				&lt;xsl:attribute name="value"&gt;
+					&lt;xsl:choose&gt;
+						&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+							&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/QUANTITY_OF_PEOPLE/VALUE"/&gt;
+						&lt;/xsl:when&gt;
+						&lt;xsl:otherwise&gt;
+							&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='PersonQuantity']/@value"/&gt;
+						&lt;/xsl:otherwise&gt;
+					&lt;/xsl:choose&gt;
+				&lt;/xsl:attribute&gt;
+			&lt;/input&gt;
+		&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.22">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="EM" type="hidden"/&gt;
+		&lt;!-- &lt;div id="Employee"&gt; --&gt;
+		&lt;table width="100%" border="0" cellpadding="3" cellspacing="0" class="TableItemBorder"&gt;
+			&lt;tr valign="top" bordercolor="#CCFFCC" bgcolor="#D6D3CE"&gt;
+				&lt;td colspan="5" bgcolor="#CCCCCC" class="REM_FieldTitle"&gt;
+					&lt;table width="100%" border="0" cellpadding="2" cellspacing="0"&gt;
+						&lt;&lt; emp_titles &gt;&gt;
+						&lt;&lt; emp_records &gt;&gt;
+						&lt;&lt; emp_add_row &gt;&gt;
+					&lt;/table&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+		&lt;!-- &lt;/div&gt; --&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.23">@code
+&lt;tr&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Employee(s):&lt;/td&gt;
+	&lt;td width="15%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Name:&lt;/td&gt;
+	&lt;td width="45%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Company:&lt;/td&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Reason:&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.24">@code
+&lt;xsl:for-each select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/EMPLOYEES/PERSON"&gt;
+	&lt;xsl:choose&gt;
+		&lt;xsl:when test="@action='delete'"&gt;
+			&lt;xsl:text/&gt;
+		&lt;/xsl:when&gt;
+		&lt;xsl:otherwise&gt;
+			&lt;tr&gt;
+				&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;input name="BtnEmployee" type="submit" class="REM_FormTextButtonFixed" value="Remove"&gt;
+						&lt;xsl:attribute name="onClick"&gt;
+							&lt;xsl:value-of select="concat('REM_GetScrollPos(0);REM_SetButtonLineNoSubmit(',$SingleQuote,@id,$SingleQuote,$Comma,$SingleQuote,'EmployeeRemove',$SingleQuote,')')"/&gt;
+						&lt;/xsl:attribute&gt;
+					&lt;/input&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./NAME"/&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./COMPANY"/&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./REASON"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/xsl:otherwise&gt;
+	&lt;/xsl:choose&gt;
+&lt;/xsl:for-each&gt;</t>
+<t tx="edream.120603125159.25">@code
+&lt;tr&gt;
+	&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="BtnEmployee" type="submit" class="REM_FormTextButtonFixed" value="Add" onClick="REM_GetScrollPos(20);REM_SetButton('EmployeeAdd')"/&gt;
+		&lt;input name="EmployeeId" type="hidden" value="{user:EXF_get_unique_id()}"/&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="EmployeeName" type="text" class="REM_FormTextboxList" value="" size="30" maxlength="30"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='EmployeeName']/@value"/&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="EmployeeCompany" type="text" class="REM_FormTextboxList" value="" size="30" maxlength="30"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='EmployeeCompany']/@value"/&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;select name="EmployeeReason" class="REM_Ddlb"&gt;
+			&lt;option value=""&gt;-- Please Select --&lt;/option&gt;
+			&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTREASON/REASON/ITEM"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="./@name=/SESSION/FORM/ITEM[@group='Item' and @name='EmployeeReason']/@value"&gt;
+						&lt;option value="{./@name}" selected="selected"&gt;
+							&lt;xsl:value-of select="./@name"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="{./@name}"&gt;
+							&lt;xsl:value-of select="./@name"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/select&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.26">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="NE" type="hidden"/&gt;
+		&lt;!-- &lt;div id="NonEmployee"&gt; --&gt;
+		&lt;table width="100%" border="0" cellpadding="3" cellspacing="0" class="TableItemBorder"&gt;
+			&lt;tr valign="top" bordercolor="#CCFFCC" bgcolor="#D6D3CE"&gt;
+				&lt;td colspan="5" bgcolor="#CCCCCC" class="REM_FieldTitle"&gt;
+					&lt;table width="100%" border="0" cellpadding="2" cellspacing="0"&gt;
+						&lt;&lt; nonemp_titles &gt;&gt;
+						&lt;&lt; nonemp_records &gt;&gt;
+						&lt;&lt; nonemp_add_row &gt;&gt;
+					&lt;/table&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+		&lt;!-- &lt;/div&gt; --&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.27">@code
+&lt;tr&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Non Employee(s):&lt;/td&gt;
+	&lt;td width="15%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Name:&lt;/td&gt;
+	&lt;td width="45%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Company:&lt;/td&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Reason:&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.28">@code
+&lt;xsl:for-each select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/NONEMPLOYEES/PERSON"&gt;
+	&lt;xsl:choose&gt;
+		&lt;xsl:when test="@action='delete'"&gt;
+			&lt;xsl:text/&gt;
+		&lt;/xsl:when&gt;
+		&lt;xsl:otherwise&gt;
+			&lt;tr&gt;
+				&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;input name="BtnNonEmployee" type="submit" class="REM_FormTextButtonFixed" value="Remove"&gt;
+						&lt;xsl:attribute name="onClick"&gt;
+							&lt;xsl:value-of select="concat('REM_GetScrollPos(0);REM_SetButtonLineNoSubmit(',$SingleQuote,@id,$SingleQuote,$Comma,$SingleQuote,'NonEmployeeRemove',$SingleQuote,')')"/&gt;
+						&lt;/xsl:attribute&gt;
+					&lt;/input&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./NAME"/&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./COMPANY"/&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./REASON"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/xsl:otherwise&gt;
+	&lt;/xsl:choose&gt;
+&lt;/xsl:for-each&gt;</t>
+<t tx="edream.120603125159.29">@code
+&lt;tr&gt;
+	&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="BtnNonEmployee" type="submit" class="REM_FormTextButtonFixed" value="Add" onClick="REM_GetScrollPos(20);REM_SetButton('NonEmployeeAdd')"/&gt;
+		&lt;input name="NonEmployeeId" type="hidden" value="{user:EXF_get_unique_id()}"/&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="NonEmployeeName" type="text" class="REM_FormTextboxList" size="30" maxlength="30"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='NonEmployeeName']/@value"/&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="NonEmployeeCompany" type="text" class="REM_FormTextboxList" value="" size="30" maxlength="30"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='NonEmployeeCompany']/@value"/&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;select name="NonEmployeeReason" class="REM_Ddlb"&gt;
+			&lt;option value=""&gt;-- Please Select --&lt;/option&gt;
+			&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTREASON/REASON/ITEM"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="./@name=/SESSION/FORM/ITEM[@group='Item' and @name='NonEmployeeReason']/@value"&gt;
+						&lt;option value="{./@name}" selected="selected"&gt;
+							&lt;xsl:value-of select="./@name"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="{./@name}"&gt;
+							&lt;xsl:value-of select="./@name"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/select&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.30">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;div id="Allowance" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="AllowanceControl"&gt;
+				&lt;div id="AllowanceLabel"&gt;
+					&lt;p class="REM_FieldTitle"&gt;Allowance&lt;/p&gt;
+				&lt;/div&gt;
+				&lt;div id="AllowanceValue" class="REM_FormTextboxReadOnly"&gt;
+					&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value]/ALLOWANCE_TERMS"/&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.31">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;div id="Explain" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="ExplainControl"&gt;
+				&lt;div id="ExplainLabel"&gt;
+					&lt;p class="REM_FieldTitle"&gt;Calculation Explanation &lt;/p&gt;
+				&lt;/div&gt;
+				&lt;div id="ExplainValue" class="REM_FormTextboxReadOnly"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/CALC_EXPLANATION"/&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.32">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="HV" type="hidden"/&gt;
+		&lt;div id="HomeValue" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="HVControl"&gt;
+				&lt;&lt; hv_currency_label &gt;&gt;
+				&lt;&lt; hv_currency_value &gt;&gt;
+				&lt;&lt; hv_value_label &gt;&gt;
+				&lt;&lt; hv_value &gt;&gt;
+		  &lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.33">@code
+&lt;div id="HVCurrencyL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Home Currency&lt;/p&gt;
+	&lt;xsl:if test="count(/SESSION/ERROR/ITEM[@block='Value'])&amp;gt;0"&gt;
+		&lt;img src="../../../Img/red_exclaim_on_white.gif" width="16" height="17"&gt;
+			&lt;xsl:attribute name="alt"&gt;
+				&lt;xsl:for-each select="/SESSION/ERROR/ITEM[@block='Value']"&gt;
+					&lt;xsl:value-of select="@message"/&gt;
+				&lt;/xsl:for-each&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/img&gt;
+	&lt;/xsl:if&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.34">@code
+&lt;div id="HVCurrencyV"&gt;
+	&lt;input name="Currency" readonly="true" type="text" class="REM_FormTextbox" size="10" maxlength="10" value="{/SESSION/RS_MSG/RSRS/VIEWUSER/USER/CURRENCY}"/&gt;
+	&lt;input name="SystemExchangeRate" type="hidden" size="10" maxlength="10" value="1"/&gt;
+	&lt;input name="ExchangeRate" type="hidden" size="10" maxlength="10" value="1"/&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.35">@code
+&lt;div id="HVValueL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Gross Value&lt;/p&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.36">@code
+&lt;div id="HVValueV"&gt;
+	&lt;input name="ItemValue" type="text" class="REM_FormTextboxNumericSubTotal" size="10" maxlength="10" onblur="REM_GetScrollPos(0);REM_SetButtonSubmit('FormSave')"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/GROSS_VALUE"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ItemValue']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.37">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="Value" type="hidden"/&gt;
+		&lt;div id="ForeignValue" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="ForeignValueControl"&gt;
+				&lt;&lt; fv_error &gt;&gt;
+				&lt;&lt; fv_currency_label &gt;&gt;
+				&lt;&lt; fv_currency_value &gt;&gt;
+				&lt;&lt; fv_exchange_rate_label &gt;&gt;
+				&lt;&lt; fv_exchange_rate_value &gt;&gt;
+				&lt;&lt; fv_value_label &gt;&gt;
+				&lt;&lt; fv_value &gt;&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.38">@code
+&lt;xsl:if test="count(/SESSION/ERROR/ITEM[@block='Value'])&amp;gt;0"&gt;
+	&lt;div id="FVError" style="position:absolute; left:0px; top:14px; width:15px; height:13px; z-index:38"&gt;
+	&lt;img src="../../../Img/red_exclaim_on_grey.gif" width="16" height="17"&gt;
+		&lt;xsl:attribute name="alt"&gt;
+			&lt;xsl:for-each select="/SESSION/ERROR/ITEM[@block='Value']"&gt;
+				&lt;xsl:value-of select="@message"/&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/img&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.39">@code
+&lt;div id="FVCurrencyL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Foreign Currency&lt;/p&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.40">@code
+&lt;div id="FVCurrencyV"&gt;
+	&lt;div align="right"&gt;
+		&lt;select name="Currency" class="REM_Ddlb" onchange="REM_SetButtonSubmit('Currency')"&gt;
+			&lt;option value=""&gt;-- Please Select -- &lt;/option&gt;
+			&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTCURRENCY/CURRENCY"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc' and ./@id=/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/CURRENCY"&gt;
+						&lt;option value="{./@id}" selected="selected"&gt;
+							&lt;xsl:value-of select="concat(./NAME,' - ',./@id,' (',./HOME_XRATE,')')"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Form' and ./@id=/SESSION/FORM/ITEM[@group='Item' and @name='Currency']/@value"&gt;
+						&lt;option value="{./@id}" selected="selected"&gt;
+							&lt;xsl:value-of select="concat(./NAME,' - ',./@id,' (',./HOME_XRATE,')')"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="{./@id}"&gt;
+							&lt;xsl:value-of select="concat(./NAME,' - ',./@id,' (',./HOME_XRATE,')')"/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/select&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.41">@code
+&lt;div id="FVExchangeRateL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Exchange Rate &lt;/p&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.42">@code
+&lt;div id="FVExchangeRateV"&gt;
+	&lt;input name="SystemExchangeRate" type="hidden" size="10" maxlength="10"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/BASE_EXCHANGE_RATE"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='SystemExchangeRate']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+	&lt;input name="ExchangeRate" type="text" class="REM_FormTextboxNumeric" size="10" maxlength="10"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/EXCHANGE_RATE"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ExchangeRate']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.43">@code
+&lt;div id="FVValueL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Gross Value&lt;/p&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.44">@code
+&lt;div id="FVValueV"&gt;
+	&lt;input name="ItemValue" type="text" class="REM_FormTextboxNumericSubTotal" size="10" maxlength="10" onChange="REM_GetScrollPos(0);REM_SetButtonSubmit('FormSave')"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/GROSS_VALUE"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ItemValue']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.45">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="VA" type="hidden"/&gt;
+		&lt;div id="Vat" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="VatControl"&gt;
+				&lt;&lt; vat_flag &gt;&gt;
+				&lt;&lt; vat_rate &gt;&gt;
+				&lt;&lt; vat_value &gt;&gt;
+				&lt;&lt; vat_reason &gt;&gt;
+				&lt;&lt; vat_comment &gt;&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.46">@code
+&lt;div id="VTFlagL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Do you have a Vat Receipt? &lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="VTFlagV"&gt;
+	&lt;select name="VatReceipt" class="REM_Ddlb" onchange="REM_GetScrollPos(0);REM_SetButtonSubmit('VatReceipt')"&gt;
+		&lt;option value="0"&gt;-- Please Select --&lt;/option&gt;
+		&lt;xsl:choose&gt;
+			&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/VAT/RECEIPT=1"&gt;
+						&lt;option value="1" selected="selected"&gt;Yes&lt;/option&gt;
+						&lt;option value="0"&gt;No&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:when test="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/VAT/RECEIPT=0"&gt;
+						&lt;option value="1"&gt;Yes&lt;/option&gt;
+						&lt;option value="0" selected="selected"&gt;No&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="1"&gt;Yes&lt;/option&gt;
+						&lt;option value="0"&gt;No&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:when&gt;
+			&lt;xsl:otherwise&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='VatReceipt']/@value=1"&gt;
+						&lt;option value="1" selected="selected"&gt;Yes&lt;/option&gt;
+						&lt;option value="0"&gt;No&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='VatReceipt']/@value=0"&gt;
+						&lt;option value="1"&gt;Yes&lt;/option&gt;
+						&lt;option value="0" selected="selected"&gt;No&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="1"&gt;Yes&lt;/option&gt;
+						&lt;option value="0"&gt;No&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:otherwise&gt;
+		&lt;/xsl:choose&gt;
+	&lt;/select&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.47">@code
+&lt;div id="VTRateL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;VAT Rate &lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="VTRateV"&gt;
+	&lt;input name="VatRate" readonly="true" type="text" class="REM_FormTextbox" size="10" maxlength="10" value="{/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value]/VAT/RATE}"/&gt;
+&lt;/div&gt;
+&lt;div id="VTRateL2"&gt;
+	&lt;p class="REM_FieldTitle"&gt;%&lt;/p&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.48">@code
+&lt;div id="VTValueL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;VAT Amount &lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="VTValueV"&gt;
+	&lt;input name="NetVatValue" type="text" class="REM_FormTextboxNumericSubTotal" size="10" maxlength="10"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/VAT/VALUE"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='NetVatValue']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.49">@code
+&lt;div id="VTReasonL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;If No Receipt, then please explain why:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="VTReasonV"&gt;
+	&lt;!-- KEEP textarea end tag, otherwise page breaks --&gt;
+	&lt;textarea name="VatReason" cols="139" rows="2" id="textarea3" class="REM_FormTextbox"&gt;
+		&lt;xsl:choose&gt;
+			&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+				&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/VAT/REASON"/&gt;
+			&lt;/xsl:when&gt;
+			&lt;xsl:otherwise&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='VatReason']/@value"/&gt;
+			&lt;/xsl:otherwise&gt;
+		&lt;/xsl:choose&gt;
+	&lt;/textarea&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.50">@code
+&lt;div id="VTCommentL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Comment&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="VTCommentV" class="REM_FormTextboxReadOnly"&gt;
+	&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value]/VAT/COMMENTS"/&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.51">@code
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"&gt;
+		&lt;input name="Block" value="CO" type="hidden"/&gt;
+		&lt;div id="Comment" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="CommentControl"&gt;
+				&lt;div id="CCommentV"&gt;
+					&lt;!-- KEEP textarea end tag, otherwise page breaks --&gt;
+					&lt;textarea name="Comment" cols="139" rows="3" class="REM_FormTextbox"&gt;
+						&lt;xsl:choose&gt;
+							&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+								&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/COMMENT/VALUE"/&gt;
+							&lt;/xsl:when&gt;
+							&lt;xsl:otherwise&gt;
+								&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='Comment']/@value"/&gt;
+							&lt;/xsl:otherwise&gt;
+						&lt;/xsl:choose&gt;
+					&lt;/textarea&gt;
+					&lt;div align="right"/&gt;
+			  &lt;/div&gt;
+				&lt;div id="CCommentL"&gt;
+					&lt;p class="REM_FieldTitle"&gt;Additional Comment:&lt;/p&gt;
+			  &lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.52">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="SU" type="hidden"/&gt;
+		&lt;div id="Supplier" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="SControl"&gt;
+				&lt;&lt; preferred_supplier &gt;&gt;
+				&lt;&lt; other_supplier &gt;&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.53">@code
+&lt;div id="SPreferredL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Preferred Supplier &lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="SPreferredV"&gt;
+	&lt;select name="PreferredSupplier" class="REM_Ddlb"&gt;
+		&lt;option value=""&gt;-- Please Select -- &lt;/option&gt;
+		&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTPOLICY/POLICY[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ExpensePolicy']/@value]/SUPPLIER/ITEM"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc' and ./@id=/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/SUPPLIER/ID"&gt;
+					&lt;option value="{./@id}" selected="selected"&gt;
+						&lt;xsl:value-of select="./@name"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Form' and ./@id=/SESSION/FORM/ITEM[@group='Item' and @name='PreferredSupplier']/@value"&gt;
+					&lt;option value="{./@id}" selected="selected"&gt;
+						&lt;xsl:value-of select="./@name"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;option value="{./@id}"&gt;
+						&lt;xsl:value-of select="./@name"/&gt;
+					&lt;/option&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:for-each&gt;
+	&lt;/select&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.54">@code
+&lt;div id="SOtherL"&gt;
+	&lt;p class="REM_FieldTitle"&gt;Other Supplier &lt;/p&gt;
+&lt;/div&gt;
+&lt;div id="SOtherV"&gt;
+	&lt;input name="OtherSupplier" style="width:157px;height:19px" type="text" class="REM_FormTextboxGo" size="16" maxlength="20"&gt;
+		&lt;xsl:attribute name="value"&gt;
+			&lt;xsl:choose&gt;
+				&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+					&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/SUPPLIER/OTHER"/&gt;
+				&lt;/xsl:when&gt;
+				&lt;xsl:otherwise&gt;
+					&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='OtherSupplier']/@value"/&gt;
+				&lt;/xsl:otherwise&gt;
+			&lt;/xsl:choose&gt;
+		&lt;/xsl:attribute&gt;
+	&lt;/input&gt;
+&lt;/div&gt;</t>
+<t tx="edream.120603125159.55">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="UD" type="hidden"/&gt;
+		&lt;div id="UserDefined" class="REM_CSSP_FreeFormBackground"&gt;
+			&lt;div id="UDControl"&gt;
+				&lt;&lt; udf1 &gt;&gt;
+				&lt;&lt; udf2 &gt;&gt;
+				&lt;&lt; udf3 &gt;&gt;
+				&lt;&lt; udf4 &gt;&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.56">@code
+&lt;xsl:if test="string-length(/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='0']/NAME) &amp;gt; 0"&gt;
+	&lt;div id="UD1L"&gt;
+		&lt;p class="REM_FieldTitle"&gt;
+			&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='0']/NAME"/&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="UD1V"&gt;
+		&lt;input name="UD1" type="text" class="REM_FormTextbox" size="10" maxlength="10"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/USER_DEFINED/FIELD[@id ='0']/NAME"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='UD1']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.57">@code
+&lt;xsl:if test="string-length(/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='1']/NAME) &amp;gt; 0"&gt;
+	&lt;div id="UD2L"&gt;
+		&lt;p class="REM_FieldTitle"&gt;
+			&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='1']/NAME"/&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="UD2V"&gt;
+		&lt;input name="UD2" type="text" class="REM_FormTextbox" value="PRJ123" size="10" maxlength="10"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/USER_DEFINED/FIELD[@id ='1']/NAME"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='UD2']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.58">@code
+&lt;xsl:if test="string-length(/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='2']/NAME) &amp;gt; 0"&gt;
+	&lt;div id="UD3L"&gt;
+		&lt;p class="REM_FieldTitle"&gt;
+			&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='2']/NAME"/&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="UD3V"&gt;
+		&lt;input name="UD3" type="text" class="REM_FormTextbox" value="" size="10" maxlength="10"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/USER_DEFINED/FIELD[@id ='2']/NAME"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='UD3']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.59">@code
+&lt;xsl:if test="string-length(/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/FIELD[@id='3']/NAME) &amp;gt; 0"&gt;
+	&lt;div id="UD4L"&gt;
+		&lt;p class="REM_FieldTitle"&gt;
+			&lt;xsl:value-of select="/SESSION/RS_MSG/RSRS/LISTUSERDEFINED/ITEM[@id='UD4']/@name"/&gt;
+		&lt;/p&gt;
+	&lt;/div&gt;
+	&lt;div id="UD4V"&gt;
+		&lt;input name="UD4" type="text" class="REM_FormTextbox" value="PRJ123" size="10" maxlength="10"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="/SESSION/FORM/ITEM[@group='Item' and @name='DataSource']/@value='Doc'"&gt;
+						&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/USER_DEFINED/FIELD[@id ='3']/NAME"/&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='UD4']/@value"/&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/div&gt;
+&lt;/xsl:if&gt;</t>
+<t tx="edream.120603125159.60">@code
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;input name="Block" value="CH" type="hidden"/&gt;
+		&lt;!-- &lt;div id="Charge"&gt; --&gt;
+		&lt;table width="100%" border="0" cellpadding="3" cellspacing="0" class="TableItemBorder"&gt;
+			&lt;tr valign="top" bordercolor="#CCFFCC" bgcolor="#D6D3CE"&gt;
+				&lt;td colspan="5" bgcolor="#CCCCCC" class="REM_FieldTitle"&gt;
+					&lt;table width="100%" border="0" cellpadding="2" cellspacing="0"&gt;
+						&lt;&lt; charge_titles &gt;&gt;
+						&lt;&lt; charge_unallocated_row &gt;&gt;
+						&lt;&lt; charge_records &gt;&gt;
+						&lt;&lt; charge_add_row &gt;&gt;
+					&lt;/table&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/table&gt;
+		&lt;!-- &lt;/div&gt; --&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.61">@code
+&lt;tr&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Charge:&lt;/td&gt;
+	&lt;td width="15%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Budget:&lt;/td&gt;
+	&lt;td width="20%" height="15" valign="bottom" class="REM_FieldTitle"&gt;Allocation:&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.62">@code
+&lt;tr&gt;
+	&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;xsl:text disable-output-escaping="yes"&gt;&amp;amp;&lt;/xsl:text&gt;nbsp; 
+  &lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;Unallocated &lt;/td&gt;
+	&lt;td align="right" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;xsl:variable name="ItemId"&gt;
+			&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value"/&gt;
+		&lt;/xsl:variable&gt;
+		&lt;xsl:variable name="GrossTotal"&gt;
+			&lt;xsl:value-of select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/ITEMVALUE/RECEIPT/GROSS_VALUE"/&gt;
+		&lt;/xsl:variable&gt;
+		&lt;xsl:variable name="AllocationTotal"&gt;
+			&lt;xsl:value-of select="sum(/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=$ItemId]/CHARGE/ITEM[@action!='delete']/ALLOCATION)"/&gt;
+		&lt;/xsl:variable&gt;
+		&lt;xsl:value-of select="$GrossTotal"/&gt;/
+			&lt;xsl:value-of select=" $AllocationTotal"/&gt;/
+			&lt;xsl:value-of select="$GrossTotal - $AllocationTotal"/&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.63">@code
+&lt;xsl:for-each select="/SESSION/DOC/CLAIM/ITEMS/ITEM[@id=/SESSION/FORM/ITEM[@group='Item' and @name='ItemId']/@value]/CHARGE/ITEM"&gt;
+	&lt;xsl:choose&gt;
+		&lt;xsl:when test="@action='delete'"&gt;
+			&lt;xsl:text/&gt;
+		&lt;/xsl:when&gt;
+		&lt;xsl:otherwise&gt;
+			&lt;tr&gt;
+				&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;input name="BtnCharge" type="submit" class="REM_FormTextButtonFixed" value="Remove"&gt;
+						&lt;xsl:attribute name="onClick"&gt;
+							&lt;xsl:value-of select="concat('REM_GetScrollPos(0);REM_SetButtonLineNoSubmit(',$SingleQuote,@id,$SingleQuote,$Comma,$SingleQuote,'ChargeRemove',$SingleQuote,')')"/&gt;
+						&lt;/xsl:attribute&gt;
+					&lt;/input&gt;
+				&lt;/td&gt;
+				&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./BUDGET/DESC"/&gt;
+				&lt;/td&gt;
+				&lt;td align="right" valign="middle" class="REM_ListValueBlock"&gt;
+					&lt;xsl:value-of select="./ALLOCATION"/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/xsl:otherwise&gt;
+	&lt;/xsl:choose&gt;
+&lt;/xsl:for-each&gt;</t>
+<t tx="edream.120603125159.64">@code
+&lt;tr&gt;
+	&lt;td height="22" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="BtnCharge" type="submit" class="REM_FormTextButtonFixed" value="Add" onClick="REM_GetScrollPos(20);REM_SetButton('ChargeAdd')"/&gt;
+		&lt;input name="ChargeId" type="hidden" value="{user:EXF_get_unique_id()}"/&gt;
+		&lt;xsl:if test="count(/SESSION/ERROR/ITEM[@block='Charge'])&amp;gt;0"&gt;
+			&lt;img src="../../../Img/red_exclaim_on_white.gif" width="16" height="17"&gt;
+				&lt;xsl:attribute name="alt"&gt;
+					&lt;xsl:for-each select="/SESSION/ERROR/ITEM[@block='Charge']"&gt;
+						&lt;xsl:value-of select="@message"/&gt;
+					&lt;/xsl:for-each&gt;
+				&lt;/xsl:attribute&gt;
+			&lt;/img&gt;
+		&lt;/xsl:if&gt;
+	&lt;/td&gt;
+	&lt;td valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;select name="ChargeBudget" class="REM_Ddlb"&gt;
+			&lt;option value=""&gt;-- Please Select --&lt;/option&gt;
+			&lt;xsl:for-each select="/SESSION/RS_MSG/RSRS/LISTBUDGET/BUDGET"&gt;
+				&lt;xsl:choose&gt;
+					&lt;xsl:when test="@id=/SESSION/FORM/ITEM[@group='Item' and @name='ChargeBudget']/@value"&gt;
+						&lt;option value="{@id}" selected="selected"&gt;
+							&lt;xsl:value-of select="."/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:when&gt;
+					&lt;xsl:otherwise&gt;
+						&lt;option value="{@id}"&gt;
+							&lt;xsl:value-of select="."/&gt;
+						&lt;/option&gt;
+					&lt;/xsl:otherwise&gt;
+				&lt;/xsl:choose&gt;
+			&lt;/xsl:for-each&gt;
+		&lt;/select&gt;
+	&lt;/td&gt;
+	&lt;td align="right" valign="middle" class="REM_ListValueBlock"&gt;
+		&lt;input name="ChargeAllocation" type="text" class="REM_FormTextboxNumericSubTotal" size="10" maxlength="10"&gt;
+			&lt;xsl:attribute name="value"&gt;
+				&lt;xsl:value-of select="/SESSION/FORM/ITEM[@group='Item' and @name='ChargeAllocation']/@value"/&gt;
+			&lt;/xsl:attribute&gt;
+		&lt;/input&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;</t>
+<t tx="edream.120603125159.65">@code
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2"&gt;
+		&lt;div id="Button" class="REM_BaseLineTopBottom"&gt;
+			&lt;div id="ButtonDelete"&gt;
+				&lt;input name="BtnDelete" type="submit" class="REM_FormTextButton" value="Delete" onClick="REM_SetButton('Delete')"/&gt;
+			&lt;/div&gt;
+			&lt;div id="ButtonSave"&gt;
+				&lt;input name="BtnSave" type="submit" class="REM_FormTextButton" value="Save" onClick="REM_ResetScrollPos();REM_SetButton('Save')"/&gt;
+			&lt;/div&gt;
+			&lt;div id="ButtonCancel"&gt;
+				&lt;input name="BtnCancel" type="submit" class="REM_FormTextButton" value="Cancel" onClick="REM_SetButton('Cancel')"/&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/td&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;
+&lt;tr&gt;
+	&lt;td colspan="2" height="5px"/&gt;
+&lt;/tr&gt;
+&lt;!-- *****************************************************************************************************************--&gt;</t>
 </tnodes>
 </leo_file>
