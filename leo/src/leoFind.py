@@ -474,16 +474,18 @@ class leoFind:
                 line = gui.getLineContainingIndex(st,pos1)
                 self.printLine(line,allFlag=True)
             else: break
+        
         # Make sure the headline and body text are updated.
         v = c.currentVnode()
-        c.frame.tree.onHeadChanged(v)
-        c.frame.body.onBodyChanged(v,"Can't Undo")
+        if 0: # No longer needed, and interferes with later redraw!
+            c.frame.tree.onHeadChanged(v)
+            c.frame.body.onBodyChanged(v,"Can't Undo")
         if count > 0:
             # A change was made.  Tag the end of the Change All command.
             c.undoer.setUndoParams("Change All",v)
         g.es("changed: %d instances" % (count))
         self.restore(data)
-        c.endUpdate() # Bug fix.  Redraw after all console output.
+        c.endUpdate()
     #@nonl
     #@-node:ekr.20031218072017.3069:changeAll
     #@+node:ekr.20031218072017.3070:changeSelection
