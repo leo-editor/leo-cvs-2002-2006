@@ -219,10 +219,10 @@ expandtolevel1 = Alt+1
 expandtolevel8 = Alt+8
 
 [recent files]
-file3 = C:\prog\leoCVS\leo\test\test.leo
-file2 = C:\Documents and Settings\default\Desktop\LeoPy.leo
-file1 = C:\prog\leoCVS\leo\src\LeoPy.leo
-file0 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
+file3 = C:\Documents and Settings\default\Desktop\LeoPy.leo
+file2 = C:\prog\leoCVS\leo\src\LeoPy.leo
+file1 = C:\prog\leoCVS\leo\doc\LeoDocs.leo
+file0 = C:\prog\leoCVS\leo\test\test.leo
 
 [find/change options]
 mark_changes = 0
