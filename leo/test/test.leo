@@ -591,7 +591,7 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 </v>
 <v t="ekr.20041126055818.2"><vh>pyclbr module (parses python)</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040312021734" a="TV"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
 <v t="ekr.20040915080419"><vh>Print all uAs (unknown attributes)</vh></v>
 <v t="EKR.20040424065452"><vh>Compare files</vh></v>
@@ -958,11 +958,12 @@ marks="ekr.20050106081120.1,"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20050108110751.2"><vh>NewHeadline</vh></v>
 </v>
 </v>
+<v t="ekr.20050124065111"><vh>Prototype for Pretty Print command</vh></v>
 </v>
-<v t="ekr.20041001211817" a="E"><vh>Startup...</vh>
+<v t="ekr.20041001211817"><vh>Startup...</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
-<v t="ekr.20041113113555" a="TV"><vh>@button check spelling...</vh></v>
+<v t="ekr.20041113113555"><vh>@button check spelling...</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
 <v t="ekr.20041125145818.1"><vh>@button Settings...</vh></v>
 <v t="ekr.20041230121429"><vh>@ button pydoc</vh></v>
@@ -13354,5 +13355,16 @@ for p in g.app.loadedPlugins:
     
 leoPlugins.printHandlers()</t>
 <t tx="ekr.20050123143337"></t>
+<t tx="ekr.20050124065111">import leoGlobals as g
+c = g.top() ; p = c.currentPosition()
+
+headlines = []
+for p in p.self_and_subtree_iter():
+    headlines.append(' '*p.level() + '- ' + p.headString())
+    
+headlines = '\n'.join(headlines)
+print headlines
+
+</t>
 </tnodes>
 </leo_file>
