@@ -75,6 +75,9 @@ class leoImportCommands:
 		self.fileName = None # The original file name, say x.cpp
 		self.methodName = None # x, as in < < x methods > > =
 		self.fileType = None # ".py", ".c", etc.
+	
+		# Support of output_newline option
+		self.output_newline = getOutputNewline()
 		
 		# Used by Importers.
 		self.web_st = []
@@ -2039,7 +2042,7 @@ class leoImportCommands:
 	def convertCodePartToWeb (self,s,i,v,result):
 	
 		# line = get_line(s,i) ; trace(`line`)
-		c = self.commands
+		c = self.commands ; nl = self.output_newline
 		lb = choose(self.webType=="cweb","@<","<<")
 		rb = choose(self.webType=="cweb","@>",">>")
 		h = string.strip(v.headString())
@@ -2113,13 +2116,13 @@ class leoImportCommands:
 			#@+body
 			if self.webType == "cweb":
 				if not file_name:
-					result += "@<root@>=\n"
+					result += "@<root@>=" + nl
 				else:
-					result += "@(" + file_name + "@>\n" # @(...@> denotes a file.
+					result += "@(" + file_name + "@>" + nl # @(...@> denotes a file.
 			else:
 				if not file_name:
 					file_name = "*"
-				result += lb + file_name + rb + "=\n"
+				result += lb + file_name + rb + "=" + nl
 			
 			#@-body
 			#@-node:3::<< append ref to file_name >>
@@ -2132,11 +2135,11 @@ class leoImportCommands:
 			#@+body
 			if self.webType == "cweb":
 				if not head_ref:
-					result += "@^" + h + "@>\n" # Convert the headline to an index entry.
-					result += "@c\n" # @c denotes a new section.
+					result += "@^" + h + "@>" + nl # Convert the headline to an index entry.
+					result += "@c" + nl # @c denotes a new section.
 				else: 
 					escaped_head_ref = string.replace(head_ref,"@","@@")
-					result += "@<" + escaped_head_ref + "@>=\n"
+					result += "@<" + escaped_head_ref + "@>=" + nl
 			else:
 				if not head_ref:
 					if v == c.currentVnode():
@@ -2144,7 +2147,7 @@ class leoImportCommands:
 					else:
 						head_ref = "@others"
 			
-				result += lb + head_ref + rb + "=\n"
+				result += lb + head_ref + rb + "=" + nl
 			#@-body
 			#@-node:4::<< append head_ref >>
 
@@ -2156,13 +2159,13 @@ class leoImportCommands:
 			#@+body
 			if self.webType == "cweb":
 				if not file_name:
-					result += "@<root@>=\n"
+					result += "@<root@>=" + nl
 				else:
-					result += "@(" + file_name + "@>\n" # @(...@> denotes a file.
+					result += "@(" + file_name + "@>" + nl # @(...@> denotes a file.
 			else:
 				if not file_name:
 					file_name = "*"
-				result += lb + file_name + rb + "=\n"
+				result += lb + file_name + rb + "=" + nl
 			
 			#@-body
 			#@-node:3::<< append ref to file_name >>
@@ -2175,11 +2178,11 @@ class leoImportCommands:
 			#@+body
 			if self.webType == "cweb":
 				if not head_ref:
-					result += "@^" + h + "@>\n" # Convert the headline to an index entry.
-					result += "@c\n" # @c denotes a new section.
+					result += "@^" + h + "@>" + nl # Convert the headline to an index entry.
+					result += "@c" + nl # @c denotes a new section.
 				else: 
 					escaped_head_ref = string.replace(head_ref,"@","@@")
-					result += "@<" + escaped_head_ref + "@>=\n"
+					result += "@<" + escaped_head_ref + "@>=" + nl
 			else:
 				if not head_ref:
 					if v == c.currentVnode():
@@ -2187,12 +2190,12 @@ class leoImportCommands:
 					else:
 						head_ref = "@others"
 			
-				result += lb + head_ref + rb + "=\n"
+				result += lb + head_ref + rb + "=" + nl
 			#@-body
 			#@-node:4::<< append head_ref >>
 
 		i,result = self.copyPart(s,i,result)
-		return i, string.strip(result) + "\n"
+		return i, string.strip(result) + nl
 		
 
 	#@+at
@@ -2204,6 +2207,8 @@ class leoImportCommands:
 	#@+node:2::convertDocPartToWeb (handle @ %def)
 	#@+body
 	def convertDocPartToWeb (self,s,i,result):
+		
+		nl = self.output_newline
 	
 		# line = get_line(s,i) ; trace(`line`)
 		if match_word(s,i,"@doc"):
@@ -2216,12 +2221,12 @@ class leoImportCommands:
 		i, result2 = self.copyPart(s,i,"")
 		if len(result2) > 0:
 			# Break lines after periods.
-			result2 = string.replace(result2,".  ",".\n")
-			result2 = string.replace(result2,". ",".\n")
-			result += "\n@\n" + string.strip(result2) + "\n\n"
+			result2 = string.replace(result2,".  ","." + nl)
+			result2 = string.replace(result2,". ","." + nl)
+			result += nl+"@"+nl+string.strip(result2)+nl+nl
 		else:
 			# All nodes should start with '@', even if the doc part is empty.
-			result += choose(self.webType=="cweb","\n@ ","\n@\n")
+			result += choose(self.webType=="cweb",nl+"@ ",nl+"@"+nl)
 		return i, result
 	#@-body
 	#@-node:2::convertDocPartToWeb (handle @ %def)
@@ -2243,6 +2248,7 @@ class leoImportCommands:
 	def convertVnodeToWeb (self,v):
 	
 		if not v: return ""
+		nl = self.output_newline
 		s = v.bodyString()
 		lb = choose(self.webType=="cweb","@<","<<")
 		i = 0 ; result = "" ; docSeen = false
@@ -2261,7 +2267,7 @@ class leoImportCommands:
 				#@+body
 				if not docSeen:
 					docSeen = true
-					result += choose(self.webType=="cweb","\n@ ","\n@\n")
+					result += choose(self.webType=="cweb",nl+"@ ",nl+"@"+nl)
 				#@-body
 				#@-node:1::<< Supply a missing doc part >>
 
@@ -2273,7 +2279,7 @@ class leoImportCommands:
 				#@+body
 				if not docSeen:
 					docSeen = true
-					result += choose(self.webType=="cweb","\n@ ","\n@\n")
+					result += choose(self.webType=="cweb",nl+"@ ",nl+"@"+nl)
 				#@-body
 				#@-node:1::<< Supply a missing doc part >>
 
@@ -2284,7 +2290,7 @@ class leoImportCommands:
 			assert(progress < i)
 		result = string.strip(result)
 		if len(result) > 0:
-			result += "\n"
+			result += nl
 		return result
 	#@-body
 	#@-node:3::convertVnodeToWeb
@@ -2334,17 +2340,21 @@ class leoImportCommands:
 	def flattenOutline (self,fileName):
 	
 		c = self.commands ; v = c.currentVnode()
+		nl = self.output_newline
 		if not v: return
 		after = v.nodeAfterTree()
 		firstLevel = v.level()
 		try:
-			file = open(fileName,'wb')
+			# 10/14/02: support for output_newline setting.
+			mode = app().config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			file = open(fileName,mode)
 			while v and v != after:
 				head = v.moreHead(firstLevel)
-				file.write( head + '\n')
+				file.write(head + nl)
 				body = v.moreBody() # Inserts escapes.
 				if len(body) > 0:
-					file.write(body + '\n')
+					file.write(body + nl)
 				v = v.threadNext()
 			file.close()
 		except:
@@ -2357,11 +2367,15 @@ class leoImportCommands:
 	def outlineToWeb (self,fileName,webType):
 	
 		c = self.commands ; v = c.currentVnode()
+		nl = self.output_newline
 		if v == None: return
 		self.webType = webType
 		after = v.nodeAfterTree()
 		try: # This can fail if the file is open by another app.
-			file = open(fileName,'wb')
+			# 10/14/02: support for output_newline setting.
+			mode = app().config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			file = open(fileName,mode)
 			self.treeType = "@file"
 			# Set self.treeType to @root if v or an ancestor is an @root node.
 			while v:
@@ -2375,7 +2389,7 @@ class leoImportCommands:
 				if len(s) > 0:
 					file.write(s)
 					if s[-1] != '\n':
-						file.write('\n')
+						file.write(nl)
 				v = v.threadNext()
 			file.close()
 		except:
@@ -2465,7 +2479,10 @@ class leoImportCommands:
 			#@+node:3::<< Write s into newFileName >>
 			#@+body
 			try:
-				file = open(newFileName,"wb")
+				# 10/14/02: support for output_newline setting.
+				mode = app().config.output_newline
+				mode = choose(mode=="platform",'w','wb')
+				file = open(newFileName,mode)
 				file.write(s)
 				file.close()
 				es("creating: " + newFileName)
@@ -2534,13 +2551,17 @@ class leoImportCommands:
 	def weave (self,filename):
 		
 		c = self.commands ; v = c.currentVnode()
+		nl = self.output_newline
 		if not v: return
 		
 		#@<< open filename to f, or return >>
 		#@+node:1::<< open filename to f, or return >>
 		#@+body
 		try:
-			f = open(filename,'wb')
+			# 10/14/02: support for output_newline setting.
+			mode = app().config.output_newline
+			mode = choose(mode=="platform",'w','wb')
+			f = open(filename,mode)
 			if not f: return
 		except:
 			es("exception opening:" + filename)
@@ -2554,7 +2575,7 @@ class leoImportCommands:
 			s = v.bodyString()
 			s2 = string.strip(s)
 			if s2 and len(s2) > 0:
-				f.write("-" * 60) ; f.write('\n')
+				f.write("-" * 60) ; f.write(nl)
 				
 				#@<< write the context of v to f >>
 				#@+node:2::<< write the context of v to f >>
@@ -2572,13 +2593,13 @@ class leoImportCommands:
 					f.write(indent)
 					indent += '\t'
 					f.write(line)
-					f.write('\n')
+					f.write(nl)
 				
 				#@-body
 				#@-node:2::<< write the context of v to f >>
 
-				f.write("-" * 60) ; f.write('\n')
-				f.write(string.rstrip(s) + '\n')
+				f.write("-" * 60) ; f.write(nl)
+				f.write(string.rstrip(s) + nl)
 			v = v.threadNext()
 		f.flush()
 		f.close()
