@@ -13,6 +13,7 @@ import string,Tkinter,tkColorChooser
 #@+node:1::<< define colorizer constants >>
 #@+body
 # We only define states that can continue across lines.
+unknownState = 0
 normalState = 1
 blockCommentState = 2
 continueCommentState = 3
@@ -565,14 +566,19 @@ class colorizer:
 		self.showInvisibles = false # true: show "invisible" characters.
 		self.delim = None # delimiter for triple strings.
 		self.comment_string = None # Set by scanColorDirectives on @comment
+		# For incremental coloring.
+		self.lines = []
+		self.states = []
 		
-		# For communication between colorAllDirectives and its allies.
-		# Copies of arguments...
+		#@<< ivars for communication between colorAllDirectives and its allies >>
+		#@+node:1::<< ivars for communication between colorAllDirectives and its allies >>
+		#@+body
+		# Copies of arguments.
 		self.v = None
 		self.body = None
 		self.language = None
 		self.flag = None
-		# Others...
+		# Others.
 		self.single_comment_start = None
 		self.block_comment_start = None
 		self.block_comment_end = None
@@ -581,7 +587,78 @@ class colorizer:
 		self.keywords = None
 		self.lb = None
 		self.rb = None
-	
+		#@-body
+		#@-node:1::<< ivars for communication between colorAllDirectives and its allies >>
+
+		
+		#@<< define dispatch dicts >>
+		#@+node:2::<< define dispatch dicts >>
+		#@+body
+		self.state_dict = {
+			normalState : self.doNormalState,
+			string3State : self.continuePythonString,
+			docState : self.continueDocPart,
+			nocolorState : self.continueNocolor,
+			continueCommentState : self.continueString,
+			blockCommentState : self.continueBlockComment }
+			
+		# Eventually all entries in these dicts will be entered dynamically
+		# under the control of the XML description of the present language.
+		
+		if 0: # not ready yet.
+		
+			self.dict1 = { # 1-character patterns.
+				'"' : self.doString,
+				"'" : self.doString,
+				'@' : self.doPossibleLeoKeyword,
+				' ' : self.doBlank,
+				'\t': self.doTab }
+		
+			self.dict2 = {} # 2-character patterns
+			
+			# Searching this list might be very slow!
+			mutli_list = [] # Multiple character patterns.
+			
+			# Enter single-character patterns...
+			if self.has_pp_directives:
+				dict1 ["#"] = self.doPPDirective
+						
+			for ch in string.letters:
+				dict1 [ch] = self.doPossibleKeyword
+			dict1 ['_'] = self.doPossibleKeyword
+			
+			if self.language == "latex":
+				dict1 ['\\'] = self.doPossibleKeyword
+				
+			if self.language == "php":
+				dict1 ['<'] = self.doSpecialPHPKeyword
+				dict1 ['?'] = self.doSpecialPHPKeyword
+			
+			# Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
+			if self.language == "cweb":
+				dict2 ["@("] = self.doPossibleSectionRefOrDef
+			else:
+				dict2 ["<<"] = self.doPossibleSectionRefOrDef
+				
+			if self.single_comment_start:
+				n = len(self.single_comment_start)
+				if n == 1:
+					dict1 [self.single_comment_start] = self.doSingleCommentLine
+				elif n == 2:
+					dict2 [self.single_comment_start] = self.doSingleCommentLine
+				else:
+					mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
+			
+			if self.block_comment_start:
+				n = len(self.block_comment_start)
+				if n == 1:
+					dict1 [self.block_comment_start] = self.doBlockComment
+				elif n == 2:
+					ddict2 [self.block_comment_start] = self.doBlockComment
+				else:
+					mutli_list.append((self.block_comment_start,self.doBlockComment),)
+		#@-body
+		#@-node:2::<< define dispatch dicts >>
 	#@-body
 	#@-node:1::color.__init__
 	#@+node:2::color.callbacks...
@@ -618,17 +695,18 @@ class colorizer:
 	#@-node:3::colorize
 	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
-	tags = (
-		"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-		"link", "name", "nameBrackets", "pp", "string", "tab")
-	
-	def colorizeAnyLanguage(self,v,body,language,flag):
-	
+	def colorizeAnyLanguage (self,v,body,language,flag):
+		
 		try:
+			incremental = 0
 			
-			#@<< initialize ivars, tags, dispatching tables >>
-			#@+node:1::<< initialize ivars, tags, dispatching tables >>
+			#@<< initialize ivars & tags >>
+			#@+node:1::<< initialize ivars & tags >>
 			#@+body
+			tags = (
+				"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+				"link", "name", "nameBrackets", "pp", "string", "tab")
+			
 			# Copy the arguments.
 			self.v = v
 			self.body = body
@@ -747,94 +825,178 @@ class colorizer:
 			#@-node:3::<< configure language-specific settings >>
 
 			
-			#@<< define dispatch dicts >>
-			#@+node:4::<< define dispatch dicts >>
-			#@+body
-			state_dict = {
-				normalState : self.doNormalState,
-				string3State : self.continuePythonString,
-				docState : self.continueDocPart,
-				nocolorState : self.continueNocolor,
-				continueCommentState : self.continueString,
-				blockCommentState : self.continueBlockComment }
-				
-			# Eventually all entries in these dicts will be entered dynamically
-			# under the control of the XML description of the present language.
-			
-			if 0: # not ready yet.
-			
-				dict1 = { # 1-character patterns.
-					'"' : self.doString,
-					"'" : self.doString,
-					'@' : self.doPossibleLeoKeyword,
-					' ' : self.doBlank,
-					'\t': self.doTab }
-			
-				dict2 = {} # 2-character patterns
-				
-				# Searching this list might be very slow!
-				mutli_list = [] # Multiple character patterns.
-				
-				# Enter single-character patterns...
-				if self.has_pp_directives:
-					dict1 ["#"] = self.doPPDirective
-							
-				for ch in string.letters:
-					dict1 [ch] = self.doPossibleKeyword
-				dict1 ['_'] = self.doPossibleKeyword
-				
-				if self.language == "latex":
-					dict1 ['\\'] = self.doPossibleKeyword
-					
-				if self.language == "php":
-					dict1 ['<'] = self.doSpecialPHPKeyword
-					dict1 ['?'] = self.doSpecialPHPKeyword
-				
-				# Enter potentially multi-character patterns.  (or should this be just 2-character patterns)
-				if self.language == "cweb":
-					dict2 ["@("] = self.doPossibleSectionRefOrDef
-				else:
-					dict2 ["<<"] = self.doPossibleSectionRefOrDef
-					
-				if self.single_comment_start:
-					n = len(self.single_comment_start)
-					if n == 1:
-						dict1 [self.single_comment_start] = self.doSingleCommentLine
-					elif n == 2:
-						dict2 [self.single_comment_start] = self.doSingleCommentLine
-					else:
-						mutli_list.append((self.single_comment_start,self.doSingleCommentLine),)
-				
-				if self.block_comment_start:
-					n = len(self.block_comment_start)
-					if n == 1:
-						dict1 [self.block_comment_start] = self.doBlockComment
-					elif n == 2:
-						ddict2 [self.block_comment_start] = self.doBlockComment
-					else:
-						mutli_list.append((self.block_comment_start,self.doBlockComment),)
-			#@-body
-			#@-node:4::<< define dispatch dicts >>
-
-			
 			self.hyperCount = 0 # Number of hypertext tags
 			self.count += 1
 			lines = string.split(s,'\n')
 			#@-body
-			#@-node:1::<< initialize ivars, tags, dispatching tables >>
+			#@-node:1::<< initialize ivars & tags >>
 
-			n = 0 # The line number for indices, as in n.i
-			for s in lines:
-				n += 1 ; i = 0 ; sLen = len(s)
-				# trace(`n` + ", " + `s`)
-				while i < sLen:
-					self.progress = i
-					func = state_dict[state]
-					i,state = func(s,i,n)
+			if incremental:
+				
+				#@<< incrementally color the text >>
+				#@+node:2::<< incrementally color the text >>
+				#@+body
+				old_lines = self.lines
+				old_states = self.states
+				new_lines = lines
+				new_states = []
+				
+				new_len = len(new_lines)
+				old_len = len(old_lines)
+				
+				print "new_len:",str(new_len)
+				if new_len == 0:
+					self.states = []
+					self.lines = []
+					return
+				
+				
+				#@<< find leading and trailing matching lines >>
+				#@+node:1::<< find leading and trailing matching lines >>
+				#@+body
+				min_len = min(old_len,new_len)
+				
+				i = 0
+				while i < min_len:
+					if old_lines[i] != new_lines[i]:
+						break
+					i += 1
+				leading_lines = i
+				
+				if leading_lines == new_len:
+					# All lines match.
+					print "all lines match"
+					self.states = old_states[0:new_len]
+					self.lines = new_lines
+					return
+				
+				i = 0
+				while i < min_len:
+					if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+						break
+					i += 1
+				trailing_lines = i
+				
+				# Assert that the two texts are different.
+				print "lead,trail:", str(leading_lines), str(trailing_lines)
+				if 0: # apparently there may be overlap?
+					assert(new_len > leading_lines + trailing_lines)
+				#@-body
+				#@-node:1::<< find leading and trailing matching lines >>
+
+				
+				#@<< initialize new states >>
+				#@+node:2::<< initialize new states >>
+				#@+body
+				# Copy the leading states from the old to the new lines.
+				i = 0
+				while i < leading_lines:
+					new_states.append(old_states[i])
+					i += 1
+					
+				# Set the state of all middle lines to "unknown".
+				first_trailing_line = new_len - trailing_lines
+				while i < first_trailing_line:
+					new_states.append(unknownState)
+					i += 1
+				
+				# Copy the trailing states from the old to the new lines.
+				j = old_len - trailing_lines
+				while j < old_len:
+					new_states.append(old_states[j])
+					j += 1
+					i += 1 # for the assert below.
+				
+				# Step 1 writes leading_lines lines
+				# Step 2 writes (new_len - trailing_lines - leading_lines) lines.
+				# Step 3 writes trailing_lines lines.
+				print "i:", i
+				assert(i == new_len)
+				print "new_states:", str(new_states)
+				#@-body
+				#@-node:2::<< initialize new states >>
+
+				
+				#@<< colorize until the states match >>
+				#@+node:3::<< colorize until the states match >>
+				#@+body
+				# Colorize until the states match.
+				# All middle lines have "unknown" state, so they will all be colored.
+				
+				# Start in the state _after_ the last leading line, which may be unknown.
+				i = leading_lines ; state = unknownState
+				
+				while i > 0:
+					assert(i < old_len)
+					state = old_states[i]
+					if state == unknownState:
+						i -= 1
+					else: break
+				
+				if i == 0 and state == unknownState:
+					state = normalState
+					new_states[0] = normalState
+				
+				while i < new_len:
+					state = self.colorizeLine(new_lines[i],i+1,state)
+					i += 1
+					# Set the state of the _next_ line.
+					if i < new_len and state != new_lines[i]:
+						new_states[i] = state
+					else: break
+					
+				# Update the ivars
+				self.states = new_states
+				self.lines = new_lines
+				
+				#@-body
+				#@-node:3::<< colorize until the states match >>
+				#@-body
+				#@-node:2::<< incrementally color the text >>
+
+			else:
+				n = 1 # The Tk line number for indices, as in n.i
+				for s in lines:
+					state = self.colorizeLine(s,n,state)
+					n += 1		
 		except:
 			es_exception()
 	
 	#@-body
+	#@+node:3::colorizeLine & allies
+	#@+body
+	def colorizeLine (self,s,n,state):
+	
+		# print "colorizeLine:", str(n), state
+		
+		i = 0
+		while i < len(s):
+			self.progress = i
+			func = self.state_dict[state]
+			i,state = func(s,i,n)
+	
+		return state
+	#@-body
+	#@+node:1::continueBlockComment
+	#@+body
+	def continueBlockComment (self,s,i,n):
+		
+		body = self.body
+		
+		j = string.find(s,self.block_comment_end,i)
+		if j == -1:
+			# The entire line is part of the block comment.
+			body.tag_add("comment", index(n,i), index(n,"end"))
+			return len(s),blockCommentState # skipt the rest of the line.
+	
+		else:
+			# End the block comment.
+			k = len(self.block_comment_end)
+			body.tag_add("comment", index(n,i), index(n,j+k))
+			i = j + k
+			return i,normalState
+	#@-body
+	#@-node:1::continueBlockComment
 	#@+node:2::continueDocPart
 	#@+body
 	def continueDocPart (self,s,i,n):
@@ -902,53 +1064,7 @@ class colorizer:
 		return i,state
 	#@-body
 	#@-node:2::continueDocPart
-	#@+node:3::continuePythonString
-	#@+body
-	def continuePythonString (self,s,i,n):
-	
-		body = self.body ; delim = self.delim
-		state = string3State
-	
-		if delim=="'''":
-			j = string.find(s,"'''",i)
-		elif delim=='"""':
-			j = string.find(s,'"""', i)
-		else:
-			state = normalState ; self.delim = None
-			return i,state
-	
-		if j == -1:
-			# The entire line is part of the triple-quoted string.
-			body.tag_add("string", index(n,i), index(n,"end"))
-			i = len(s)  # skipt the rest of the line.
-		else:
-			# End the string
-			body.tag_add("string", index(n,i), index(n,j+3))
-			i = j + 3 ; state = normalState ; self.delim = None
-		return i,state
-	#@-body
-	#@-node:3::continuePythonString
-	#@+node:4::continueBlockComment
-	#@+body
-	def continueBlockComment (self,s,i,n):
-		
-		body = self.body
-		
-		j = string.find(s,self.block_comment_end,i)
-		if j == -1:
-			# The entire line is part of the block comment.
-			body.tag_add("comment", index(n,i), index(n,"end"))
-			return len(s),blockCommentState # skipt the rest of the line.
-	
-		else:
-			# End the block comment.
-			k = len(self.block_comment_end)
-			body.tag_add("comment", index(n,i), index(n,j+k))
-			i = j + k
-			return i,normalState
-	#@-body
-	#@-node:4::continueBlockComment
-	#@+node:5::continueNocolor
+	#@+node:3::continueNocolor
 	#@+body
 	def continueNocolor (self,s,i,n):
 		
@@ -976,8 +1092,34 @@ class colorizer:
 				i += 1
 			return i,nocolorState
 	#@-body
-	#@-node:5::continueNocolor
-	#@+node:6::continueString
+	#@-node:3::continueNocolor
+	#@+node:4::continuePythonString
+	#@+body
+	def continuePythonString (self,s,i,n):
+	
+		body = self.body ; delim = self.delim
+		state = string3State
+	
+		if delim=="'''":
+			j = string.find(s,"'''",i)
+		elif delim=='"""':
+			j = string.find(s,'"""', i)
+		else:
+			state = normalState ; self.delim = None
+			return i,state
+	
+		if j == -1:
+			# The entire line is part of the triple-quoted string.
+			body.tag_add("string", index(n,i), index(n,"end"))
+			i = len(s)  # skipt the rest of the line.
+		else:
+			# End the string
+			body.tag_add("string", index(n,i), index(n,j+3))
+			i = j + 3 ; state = normalState ; self.delim = None
+		return i,state
+	#@-body
+	#@-node:4::continuePythonString
+	#@+node:5::continueString
 	#@+body
 	# Similar to skip_string.
 	def continueString (self,s,i,n):
@@ -1000,7 +1142,41 @@ class colorizer:
 		state = choose(continueFlag, continueCommentState, normalState)
 		return i,state
 	#@-body
-	#@-node:6::continueString
+	#@-node:5::continueString
+	#@+node:6::doAtKeyword
+	#@+body
+	# Handles non-cweb keyword.
+	
+	def doAtKeyword (self,s,i,n):
+		
+		body = self.body ; sLen = len(s)
+		state = normalState
+	
+		j = self.skip_id(s,i+1)
+		word = s[i:j]
+		word = string.lower(word)
+		if i != 0 and word != "@others":
+			word = "" # can't be a Leo keyword, even if it looks like it.
+		
+		# 7/8/02: don't color doc parts in plain text.
+		if self.language != "plain" and (word == "@" or word == "@doc"):
+			# at-space starts doc part
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			# Everything on the line is in the doc part.
+			body.tag_add("docPart", index(n,j), index(n,sLen))
+			i = sLen ; state = docState
+		elif word == "@nocolor":
+			# Nothing on the line is colored.
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			i = j ; state = nocolorState
+		elif word in leoKeywords:
+			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			i = j
+		else:
+			i = j
+		return i,state
+	#@-body
+	#@-node:6::doAtKeyword
 	#@+node:7::doNormalState
 	#@+body
 	## To do: rewrite using dyntamically generated tables.
@@ -1247,40 +1423,7 @@ class colorizer:
 		return i,state
 	#@-body
 	#@-node:7::doNormalState
-	#@+node:8::doAtKeyword
-	#@+body
-	# Handles non-cweb keyword.
-	
-	def doAtKeyword (self,s,i,n):
-		
-		body = self.body ; sLen = len(s)
-		state = normalState
-	
-		j = self.skip_id(s,i+1)
-		word = s[i:j]
-		word = string.lower(word)
-		if i != 0 and word != "@others":
-			word = "" # can't be a Leo keyword, even if it looks like it.
-		
-		# 7/8/02: don't color doc parts in plain text.
-		if self.language != "plain" and (word == "@" or word == "@doc"):
-			# at-space starts doc part
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
-			# Everything on the line is in the doc part.
-			body.tag_add("docPart", index(n,j), index(n,sLen))
-			i = sLen ; state = docState
-		elif word == "@nocolor":
-			# Nothing on the line is colored.
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
-			i = j ; state = nocolorState
-		elif word in leoKeywords:
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
-			i = j
-		else:
-			i = j
-		return i,state
-	#@-body
-	#@-node:8::doAtKeyword
+	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
 	#@+body
