@@ -935,7 +935,6 @@ class baseOldDerivedFile:
         # Support of @raw
         self.raw = False # True: in @raw mode
         self.sentinels = True # True: output sentinels while expanding refs.
-        self.scripting = False # True: generating text for a script.
         
         # The encoding used to convert from unicode to a byte stream.
         self.encoding = g.app.config.default_derived_file_encoding
@@ -4692,7 +4691,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@+node:ekr.20031218072017.2114:new_df.write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False,oneNodeOnly=False):
+    def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
         
         """Write a 4.x derived file."""
         
@@ -4702,8 +4701,6 @@ class baseNewDerivedFile(oldDerivedFile):
         #@+node:ekr.20031218072017.2116:<< open the file; return on error >>
         if toString:
             at.targetFileName = "<string-file>"
-        elif scriptFile:
-            at.targetFileName = "<script>"
         elif nosentinels:
             at.targetFileName = root.atNoSentFileNodeName()
         elif thinFile:
@@ -4711,12 +4708,7 @@ class baseNewDerivedFile(oldDerivedFile):
         else:
             at.targetFileName = root.atFileNodeName()
             
-        if scriptFile:
-            ok = True
-            at.outputFileName = "<script>"
-            at.outputFile = scriptFile
-        else:
-            ok = at.openWriteFile(root,toString)
+        ok = at.openWriteFile(root,toString)
             
         if not ok:
             return
@@ -4724,12 +4716,12 @@ class baseNewDerivedFile(oldDerivedFile):
         #@-node:ekr.20031218072017.2116:<< open the file; return on error >>
         #@nl
         try:
-            self.writeOpenFile(root,nosentinels,scriptFile,thinFile,toString,oneNodeOnly)
+            self.writeOpenFile(root,nosentinels,thinFile,toString,oneNodeOnly)
             if toString:
                 at.closeWriteFile()
                 # Major bug: failure to clear this wipes out headlines!
                 at.root.v.t.tnodeList = [] 
-            elif scriptFile is None:
+            else:
                 at.closeWriteFile()
                 #@            << set dirty and orphan bits on error >>
                 #@+node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
@@ -4747,20 +4739,17 @@ class baseNewDerivedFile(oldDerivedFile):
                 #@nonl
                 #@-node:ekr.20031218072017.2121:<< set dirty and orphan bits on error >>
                 #@nl
-            else:
-                at.root.v.t.tnodeList = []
         except:
-            if scriptFile or toString:
+            if toString:
                 g.es("exception preprocessing script",color="blue")
                 g.es_exception(full=False)
-                scriptFile.clear()
                 at.root.v.t.tnodeList = []
             else:
                 at.handleWriteException() # Sets dirty and orphan bits.
     #@nonl
     #@-node:ekr.20031218072017.2114:new_df.write
     #@+node:EKR.20040506075328:new_df.writeOpenFile
-    def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False,oneNodeOnly=False):
+    def writeOpenFile(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
         
         at = self ; c = at.c
         
@@ -4769,7 +4758,6 @@ class baseNewDerivedFile(oldDerivedFile):
         # Set flags telling what kind of writing we are doing.
         at.sentinels = not nosentinels
         at.thinFile = thinFile
-        at.scripting = scriptFile is not None
         at.raw = False
         assert(at.toStringFlag == toString) # Must have been set earlier.
         
@@ -4854,7 +4842,7 @@ class baseNewDerivedFile(oldDerivedFile):
         #@-node:ekr.20031218072017.2119:<< put all @last lines in root >> (4.x)
         #@nl
         
-        if not toString and not scriptFile and not nosentinels:
+        if not toString and not nosentinels:
             at.warnAboutOrphandAndIgnoredNodes()
     #@nonl
     #@-node:EKR.20040506075328:new_df.writeOpenFile
@@ -4867,7 +4855,6 @@ class baseNewDerivedFile(oldDerivedFile):
         at.errors = 0
         at.root.t.tnodeList = [] # 9/26/03: after beta 1 release.
         at.sentinels = True # 10/1/03
-        at.scripting = False # 1/30/04
         at.thinFile = False # 5/17/04
         c.endEditing() # Capture the current headline.
         try:
@@ -4996,7 +4983,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         if s:
             trailingNewlineFlag = s and s[-1] == '\n'
-            if (at.sentinels or at.scripting) and not trailingNewlineFlag:
+            if at.sentinels and not trailingNewlineFlag:
                 s = s + '\n'
         else:
             trailingNewlineFlag = True # don't need to generate an @nonl
@@ -5102,7 +5089,7 @@ class baseNewDerivedFile(oldDerivedFile):
         
         if s:
             trailingNewlineFlag = s and s[-1] == '\n'
-            if (at.sentinels or at.scripting) and not trailingNewlineFlag:
+            if at.sentinels and not trailingNewlineFlag:
                 s = s + '\n'
         else:
             trailingNewlineFlag = True # don't need to generate an @nonl
