@@ -127,14 +127,15 @@ def checkClones2Links (c=None,verbose=false):
 #@nonl
 #@-node:checkClones2Links
 #@+node:checkTopologyOfAllClones
-def checkTopologyOfAllClones (c=None):
+def checkTopologyOfAllClones (c=None,verbose=false):
 	
 	if c == None: c = top()
 	root = v = c.rootVnode()
 	c.clearAllVisited()
-	count = 0
-	s = "Testing topology of all clones"
-	es(s) ; print s
+	count = 0 ; errors = 0
+	if verbose:
+		s = "Testing topology of all clones"
+		es(s) ; print s
 	while v:
 		if not v.t.isVisited():
 			v.t.setVisited()
@@ -147,10 +148,13 @@ def checkTopologyOfAllClones (c=None):
 					if tlist != tlist2:
 						s = "topology mismatch for %s" % v.headString()
 						print s ; es(s)
+						errors += 1
 						break
 		v = v.threadNext()
-	s = "Testing complete: %d clones tested" % count
-	es(s) ; print s
+	if verbose:
+		s = "Testing complete: %d clones tested" % count
+		es(s) ; print s
+	return count, errors
 #@nonl
 #@-node:checkTopologyOfAllClones
 #@+node:CheckVersion (Dave Hein)
@@ -766,7 +770,8 @@ def openWithFileName(fileName,old_c=None):
 	fileName = oldFileName # Use the idiosyncratic file name.
 
 	try:
-		file = open(fileName,'r')
+		# 11/4/03: open the file in binary mode to allow 0x1a in bodies & headlines.
+		file = open(fileName,'rb')
 		if file:
 			c,frame = app.gui.newLeoCommanderAndFrame(fileName)
 			if not doHook("open1",
