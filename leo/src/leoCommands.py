@@ -43,7 +43,10 @@ class baseCommands:
     #@+node:ekr.20031218072017.2812:c.__init__
     def __init__(self,frame,fileName):
     
-        c = self ; c.frame = frame ; c.mFileName = g.os_path_norm(fileName)
+        c = self
+        c.frame = frame
+        c.mFileName = fileName
+            # Do _not_ use os_path_norm: it converts an empty path to '.' (!!)
     
         # g.trace(c) # Do this after setting c.mFileName.
         c.initIvars()
@@ -716,12 +719,12 @@ class baseCommands:
         
         # Update the recent files list in all windows.
         if fileName:
-            normFileName = g.os_path_norm(fileName)
+            absFileName = g.os_path_abspath(fileName)
             for frame in g.app.windowList:
                 c = frame.c
                 # Remove all versions of the file name.
                 for name in c.recentFiles:
-                    if normFileName == g.os_path_norm(name):
+                    if absFileName == g.os_path_abspath(name):
                         c.recentFiles.remove(name)
                 c.recentFiles.insert(0,fileName)
                 # Recreate the Recent Files menu.

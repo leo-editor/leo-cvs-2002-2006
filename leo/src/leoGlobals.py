@@ -1105,7 +1105,7 @@ def pause (s):
         i += 1
 #@nonl
 #@-node:ekr.20031218072017.3128:pause
-#@+node:ekr.20041126060136:print_dict
+#@+node:ekr.20041126060136:print_dict & dictToString
 def print_dict(d):
     
     keys = d.keys()
@@ -1114,8 +1114,14 @@ def print_dict(d):
         print key, d.get(key)
     
 printDict = print_dict
+
+def dictToString(d):
+    keys = d.keys()
+    keys.sort()
+    lines = ["%s %s" % (key,d.get(key)) for key in keys]
+    return '\n'.join(lines)
 #@nonl
-#@-node:ekr.20041126060136:print_dict
+#@-node:ekr.20041126060136:print_dict & dictToString
 #@+node:ekr.20041122153823:print_stack
 def print_stack():
     
@@ -2136,34 +2142,38 @@ def os_path_join(*args,**keys):
     return path
 #@nonl
 #@-node:ekr.20031218072017.2154:os_path_join
-#@+node:ekr.20031218072017.2155:os_path_norm
-def os_path_norm(path,encoding=None):
+#@+node:ekr.20031218072017.2155:os_path_norm NOT USED
+if 0:  # A bad idea.
     
-    """Normalize both the path and the case."""
-
-    path = g.toUnicodeFileEncoding(path,encoding)
-
-    path = os.path.normcase(path)
-    path = os.path.normpath(path)
+    def os_path_norm(path,encoding=None):
     
-    path = g.toUnicodeFileEncoding(path,encoding)
+        """Normalize both the path and the case."""
     
-    return path
+        path = g.toUnicodeFileEncoding(path,encoding)
+    
+        path = os.path.normcase(path)
+        path = os.path.normpath(path)
+        
+        path = g.toUnicodeFileEncoding(path,encoding)
+        
+        return path
 #@nonl
-#@-node:ekr.20031218072017.2155:os_path_norm
-#@+node:ekr.20041115103456:os_path_normabs (new in 4.3)
-def os_path_normabs (path,encoding=None):
-    
-    """Convert the file name to a fully normalized absolute path.
-    
-    There is no exact analog to this in os.path"""
-    
-    path = g.os_path_abspath(path,encoding = encoding)
-    path = g.os_path_norm(path,encoding = encoding)
+#@-node:ekr.20031218072017.2155:os_path_norm NOT USED
+#@+node:ekr.20041115103456:os_path_normabs NOT USED
+if 0: # A bad idea.
 
-    return path
+    def os_path_normabs (path,encoding=None):
+    
+        """Convert the file name to a fully normalized absolute path.
+        
+        There is no exact analog to this in os.path"""
+        
+        path = g.os_path_abspath(path,encoding = encoding)
+        path = g.os_path_norm(path,encoding = encoding)
+    
+        return path
 #@nonl
-#@-node:ekr.20041115103456:os_path_normabs (new in 4.3)
+#@-node:ekr.20041115103456:os_path_normabs NOT USED
 #@+node:ekr.20031218072017.2156:os_path_normcase
 def os_path_normcase(path,encoding=None):
     

@@ -142,9 +142,6 @@ def completeFileName (fileName):
     # This does not depend on config settings.
     fileName = g.os_path_join(os.getcwd(),fileName)
 
-    if 0: # Do _not_ convert to lower case.  We want to preserve case for the window name.
-        fileName = g.os_path_norm(fileName)
-
     head,ext = g.os_path_splitext(fileName)
     if not ext:
         fileName = fileName + ".leo"
@@ -165,7 +162,7 @@ def computeGlobalConfigDir():
         theDir = g.os_path_join(g.app.loadDir,"..","config")
         
     if theDir:
-        theDir = g.os_path_normabs(theDir)
+        theDir = g.os_path_abspath(theDir)
         
     if (
         not theDir or
@@ -185,9 +182,9 @@ def computeHomeDir():
     import leoGlobals as g
 
     encoding = startupEncoding()
-    dotDir = g.os_path_normabs('./',encoding)
+    dotDir = g.os_path_abspath('./',encoding)
     home = os.getenv('HOME',default=dotDir)
-    home = g.os_path_normabs(home,encoding)
+    home = g.os_path_abspath(home,encoding)
     
     if (
         not home or
@@ -209,7 +206,7 @@ def computeLoadDir():
     try:
         import leo
         encoding = startupEncoding()
-        path = g.os_path_normabs(leo.__file__,encoding)
+        path = g.os_path_abspath(leo.__file__,encoding)
         if path:
             loadDir = g.os_path_dirname(path,encoding)
         else: loadDir = None
@@ -222,7 +219,7 @@ def computeLoadDir():
             loadDir = os.getcwd()
             print "Using emergency loadDir:",repr(loadDir)
         
-        loadDir = g.os_path_normabs(loadDir,encoding)
+        loadDir = g.os_path_abspath(loadDir,encoding)
         # g.es("load dir: %s" % (loadDir),color="blue")
         return loadDir
     except:
