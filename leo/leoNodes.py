@@ -2508,7 +2508,7 @@ class nodeIndices:
 	#@+body
 	def __init__ (self):
 		
-		self.defaultId = ""
+		self.defaultId = ""  ## testing only
 		self.defaultLoc = ""
 		self.lastIndex = None
 	#@-body
@@ -2517,15 +2517,15 @@ class nodeIndices:
 	#@+body
 	def toString (self,index):
 		
-		id  = index.get('id')
-		loc = index.get('loc')
-		t   = index.get('time')
-		n   = last.get('n')
+		id  = index.get('id',"")
+		loc = index.get('loc',"")
+		t   = index.get('time',"")
+		n   = index.get('n',None)
 	
 		if n == None:
-			return "%s:%s:%s" % (id,loc,t)
+			return "%s.%s.%s" % (id,loc,t)
 		else:
-			return "%s:%s:%s:%d" % (id,loc,t,n)
+			return "%s.%s.%s.%d" % (id,loc,t,n)
 	
 	#@-body
 	#@-node:2::toString
@@ -2536,19 +2536,33 @@ class nodeIndices:
 		import time
 	
 		if id  == None: id  = self.defaultId
-		if loc == None: loc = self.defaultLoc
-		t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
+		if id == "": id = None
 		
+		if loc == None: loc = self.defaultLoc
+		if loc == "": loc = None
+		
+		t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
+	
 		# Set n if all other fields match the previous index.
+		
 		last = self.lastIndex
 		if (last and id == last.get('id') and
 			loc == last.get('loc') and t == last.get('time')):
 			n = last.get('n')
-			n = choose(n==None,1,n+1)
+			if n == None: n = 1
+			else: n += 1
 		else: n = None
+		
+		d = {'time':t}
+		for key, val in (('id',id),('loc',loc),('n',n)):
+			if val != None and val != "":
+				d[key] = val
 	
-		self.lastIndex = {'id':id,'loc':loc,'time':t,'n':n}
-		return self.lastIndex
+		self.lastIndex = d
+		trace(d)
+		return d
+	
+	
 	
 	#@-body
 	#@-node:3::getNewIndex
@@ -2571,20 +2585,28 @@ class nodeIndices:
 	#@+node:5::scanGnx
 	#@+body
 	def scanGnx (self,s,i):
-		
-		id  = self.defaultId
-		loc = self.defaultLoc
-		dict = {'id':id,'loc':loc,'time':"",'n':None}
-		keys = ('id','loc','time','n')
+	
+		if len(s) > 0 and s[-1] == '\n':
+			s = s[:-1]
+	
+		# Set then entries of d from s.
+		d = {} ; keys = ('id','loc','time','n')
 		n = 0
 		while n < 4 and i < len(s):
-			i,val = skip_to_char(s,i,':')
+			i,val = skip_to_char(s,i,'.')
 			if val:
-				dict[keys[n]] = val
-			if match(s,i,':'):
+				d[keys[n]] = val
+			if match(s,i,'.'):
 				i += 1
 			n += 1
-		return dict
+	
+		# Convert n to int.
+		n = d.get('n')
+		if n:
+			try: d['n'] = int(n)
+			except: pass
+	
+		return d
 	
 	#@-body
 	#@-node:5::scanGnx

@@ -904,7 +904,7 @@ class LeoFrame:
 				("Write &Outline Only",None,self.OnWriteOutlineOnly),
 				("&Write @file Nodes","Shift+Ctrl+W",self.OnWriteAtFileNodes)]
 		
-		if app().use_gnx:
+		if app().use_gnx: # Testing.
 			table2 = (
 				("-",None,None),
 				("Read 4.0 Derived File",None,self.OnReadGnxFile),
@@ -3762,7 +3762,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.11 beta 4, Build " + build + ", March 26, 2003\n\n"
+		version = "leo.py 3.11 beta 4, Build " + build + ", March 31, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

@@ -1,8 +1,20 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.11 beta 4                       March 31, 2003
+
+This will be the last beta release before 3.11 final.
+
+- Fixed several minor problems with unicode.
+	The way Leo handles unicode has proven to be correct.
+- Fixed a _huge_ performance bug that slowed moving nodes left.
+- Added several new plugins:
+	- Support for the VIM editor.
+	- A French translation of all menus.
+- Added many minor bug fixes and improvements.
+
 leo.py 3.11 beta 3                       February 26, 2003
 
-- Added tk_encoding setting and new logic for determining encoding of strings returned by Tk Text widgets.  Many people report that these changes solve their problems with non-ascii characters.
+- Added tk_encoding setting and new logic for determining encoding of strings returned by Tk Text widgets.
 
 leo.py 3.11 beta 2                       February 24, 2003
 

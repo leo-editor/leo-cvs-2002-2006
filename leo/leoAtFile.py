@@ -164,6 +164,7 @@ class atFile:
 		
 		# New in 4.x...
 		# Note: app().use_gnx enables/disables 4.x code.
+		self.nodeIndices = app().nodeIndices
 		self.using_gnx = false # true: present derived file uses gnxs.
 		self.root_seen = false # true: root vnode has been handled in this file.
 		
@@ -184,7 +185,7 @@ class atFile:
 		#@+body
 		def __init__ (self):
 			
-			self.defaultId = ""
+			self.defaultId = ""  ## testing only
 			self.defaultLoc = ""
 			self.lastIndex = None
 		#@-body
@@ -193,15 +194,15 @@ class atFile:
 		#@+body
 		def toString (self,index):
 			
-			id  = index.get('id')
-			loc = index.get('loc')
-			t   = index.get('time')
-			n   = last.get('n')
+			id  = index.get('id',"")
+			loc = index.get('loc',"")
+			t   = index.get('time',"")
+			n   = index.get('n',None)
 		
 			if n == None:
-				return "%s:%s:%s" % (id,loc,t)
+				return "%s.%s.%s" % (id,loc,t)
 			else:
-				return "%s:%s:%s:%d" % (id,loc,t,n)
+				return "%s.%s.%s.%d" % (id,loc,t,n)
 		
 		#@-body
 		#@-node:2::toString
@@ -212,19 +213,33 @@ class atFile:
 			import time
 		
 			if id  == None: id  = self.defaultId
-			if loc == None: loc = self.defaultLoc
-			t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
+			if id == "": id = None
 			
+			if loc == None: loc = self.defaultLoc
+			if loc == "": loc = None
+			
+			t = time.strftime("%d/%m/%Y %H:%M:%S",time.gmtime())
+		
 			# Set n if all other fields match the previous index.
+			
 			last = self.lastIndex
 			if (last and id == last.get('id') and
 				loc == last.get('loc') and t == last.get('time')):
 				n = last.get('n')
-				n = choose(n==None,1,n+1)
+				if n == None: n = 1
+				else: n += 1
 			else: n = None
+			
+			d = {'time':t}
+			for key, val in (('id',id),('loc',loc),('n',n)):
+				if val != None and val != "":
+					d[key] = val
 		
-			self.lastIndex = {'id':id,'loc':loc,'time':t,'n':n}
-			return self.lastIndex
+			self.lastIndex = d
+			trace(d)
+			return d
+		
+		
 		
 		#@-body
 		#@-node:3::getNewIndex
@@ -247,20 +262,28 @@ class atFile:
 		#@+node:5::scanGnx
 		#@+body
 		def scanGnx (self,s,i):
-			
-			id  = self.defaultId
-			loc = self.defaultLoc
-			dict = {'id':id,'loc':loc,'time':"",'n':None}
-			keys = ('id','loc','time','n')
+		
+			if len(s) > 0 and s[-1] == '\n':
+				s = s[:-1]
+		
+			# Set then entries of d from s.
+			d = {} ; keys = ('id','loc','time','n')
 			n = 0
 			while n < 4 and i < len(s):
-				i,val = skip_to_char(s,i,':')
+				i,val = skip_to_char(s,i,'.')
 				if val:
-					dict[keys[n]] = val
-				if match(s,i,':'):
+					d[keys[n]] = val
+				if match(s,i,'.'):
 					i += 1
 				n += 1
-			return dict
+		
+			# Convert n to int.
+			n = d.get('n')
+			if n:
+				try: d['n'] = int(n)
+				except: pass
+		
+			return d
 		
 		#@-body
 		#@-node:5::scanGnx
@@ -1179,11 +1202,16 @@ class atFile:
 			elif kind == atFile.startT and self.using_gnx:
 				
 				#@<< scan @+t >>
-				#@+node:9::<< scan @+t >> (was body)  Done ??
+				#@+node:9::<< scan @+t >>
 				#@+body
 				assert(match(s,i,"+t"))
 				assert(nextLine == None)
+				i += 2 ; i = skip_ws(s,i)
+				# set gnx from the sentinel.
+				gnx = app().nodeIndices.scanGnx(s,i)
+				print "t:gnx:", gnx
 				
+				# Recursively handle the entire vnode tree.
 				child_out = [] ; child = v # Do not change out or v!
 				oldIndent = self.indent ; self.indent = lineIndent
 				self.scanText(file,child,child_out,atFile.endT)
@@ -1195,27 +1223,19 @@ class atFile:
 				child.t.setTnodeText(body)
 				self.indent = oldIndent
 				#@-body
-				#@-node:9::<< scan @+t >> (was body)  Done ??
+				#@-node:9::<< scan @+t >>
 
 			elif kind == atFile.startV and self.using_gnx:
 				
 				#@<< scan @+v >>
-				#@+node:10::<< scan @+v >> (was node)
+				#@+node:10::<< scan @+v >>
 				#@+body
 				assert(match(s,i,"+v"))
-				i += 2
-				
-				#@<< set gnx from the sentinel >>
-				#@+node:1::<< set gnx from the sentinel >>
-				#@+body
-				i = skip_ws(s,i)
-				dict = app().nodeIndices.scanGnx(s,i)
-				gnx = dict.get("id")
-				print "gnx:",gnx
-				# print `dict`
-				#@-body
-				#@-node:1::<< set gnx from the sentinel >>
-
+				i += 2 ; i = skip_ws(s,i)
+				# set gnx from the sentinel.
+				gnx = app().nodeIndices.scanGnx(s,i)
+				print "v:gnx:", gnx
+				# Get the headline from the line following the +v sentinel.
 				next,lines = self.readLinesToNextSentinel(file)
 				headline = self.handleLinesFollowingSentinel(lines,"+v")
 				
@@ -1223,7 +1243,7 @@ class atFile:
 					self.root_seen = true
 					
 					#@<< Check the filename >>
-					#@+node:2::<< Check the filename >>
+					#@+node:1::<< Check the filename >>
 					#@+body
 					h = headline.strip()
 					
@@ -1243,7 +1263,7 @@ class atFile:
 						self.readError("Missing @file in root @node sentinel")
 					
 					#@-body
-					#@-node:2::<< Check the filename >>
+					#@-node:1::<< Check the filename >>
 
 					# Put the text in the current node.
 					self.scanText(file,v,out,atFile.endV,nextLine=next)
@@ -1254,7 +1274,7 @@ class atFile:
 				
 				
 				#@<< look for sentinels that may follow a reference >>
-				#@+node:3::<< look for sentinels that may follow a reference >>
+				#@+node:2::<< look for sentinels that may follow a reference >>
 				#@+body
 				# Get the next line.
 				s = self.readLine(file)
@@ -1274,9 +1294,9 @@ class atFile:
 				else:
 					nextLine = s # Handle the sentinel or blank line later.
 				#@-body
-				#@-node:3::<< look for sentinels that may follow a reference >>
+				#@-node:2::<< look for sentinels that may follow a reference >>
 				#@-body
-				#@-node:10::<< scan @+v >> (was node)
+				#@-node:10::<< scan @+v >>
 
 			elif kind == atFile.startAt:
 				
@@ -1830,7 +1850,7 @@ class atFile:
 	def putCloseNodeSentinel(self,v):
 	
 		if self.using_gnx:
-			self.putSentinelAndGnx(v,"@-v")
+			self.putSentinel("@-v")
 		else:
 			s = self.nodeSentinelText(v)
 			self.putSentinel("@-node:" + s)
@@ -1974,15 +1994,17 @@ class atFile:
 	#@+body
 	def putSentinelAndGnx (self,vt,s):
 		
+		x = self.nodeIndices
+	
 		try:
 			gnx = vt.gnx
 		except:
-			if 0: # not ready yet: self.indices does not exist
-				vt.gnx = gnx = self.indices.getNewIndex()
-			else:
-				gnx = ' ' + `id(vt)`
+			gnx = None
+			
+		if gnx == None:
+			vt.gnx = x.getNewIndex()
 	
-		self.putSentinel(s + gnx)
+		self.putSentinel(s + ' ' + x.toString(vt.gnx))
 	
 	#@-body
 	#@-node:8::putSentinelAndGnx (4.0)
@@ -2826,14 +2848,13 @@ class atFile:
 			#@+node:2::<< write the derived file>>
 			#@+body
 			tag1 = choose(self.using_gnx,"@+leo-ver=2","@+leo")
-			tag2 = choose(self.using_gnx,"@-leo-ver=2","@-leo")
 			
 			self.putOpenLeoSentinel(tag1)
 			self.putInitialComment()
 			self.putOpenNodeSentinel(root)
 			self.putBodyPart(root)
 			self.putCloseNodeSentinel(root)
-			self.putSentinel(tag2)
+			self.putSentinel("@-leo")
 			#@-body
 			#@-node:2::<< write the derived file>>
 
@@ -3400,7 +3421,7 @@ class atFile:
 		#@-node:1::<< put code/doc parts and sentinels >>
 
 		if self.using_gnx:
-			self.putSentinelAndGnx(v.t,"@-t")
+			self.putSentinel("@-t")
 		else:
 			self.putSentinel("@-body")
 	#@-body
