@@ -30,16 +30,26 @@ Still to do:
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.5"
+__version__ = "0.6"
 
 #@<< version history >>
 #@+node:ekr.20040908094021.3:<< version history >>
 #@+at
-# 
 # 0.4 EKR: Don't mess with button width on MacOS/darwin.
 # 
 # 0.5 EKR: Create a separate SearchBox instance for each open window.
 #     This eliminates problems when multiple windows are open.
+# 0.6 EKR: Changes required by revisions of leoFind.leoFind class in Leo 4.3:
+#     - Removed '_flag' suffixes in OPTION_LIST.
+#     - Added c arg to QuickFind ctor.
+#         - We now have per-commander find panels.
+#     - update_ivars
+#         - Changed name from set_ivars.
+#         - Call setattr(self,key,0), not setattr(c,key+'_flag',0)
+#         - No more _flag hack.
+#         - Set self ivars, not c ivars.
+#     - Changed init_s_text to init_s_ctrl.
+#         - Changed s_text to s_ctrl.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021.3:<< version history >>
@@ -69,17 +79,17 @@ SEARCH_LIST_LENGTH = 10
 # Define the search option/find option matrix - we define as a list first 
 # so we can keep a nice order. You can easily add options here if you 
 # know what you are doing ;) 
-# If an option is supposed to zero a flag then start the name with a ! 
+# If an option is supposed to zero a flag then start the name with a !
 
+# New in 4.3: removed the odious _flag hack.
 OPTION_LIST = [
-    ("Search text", ["search_body_flag", "search_headline_flag", "ignore_case_flag"]), 
-    ("Search word", ["search_body_flag", "search_headline_flag", "whole_word_flag", "ignore_case_flag"]), 
-    ("Search headlines", ["search_headline_flag","ignore_case_flag"]), 
-    ("Search body", ["search_body_flag", "ignore_case_flag"]), 
-    ("Case sensitive", ["search_body_flag", "search_headline_flag"]), 
+    ("Search text", ["search_body", "search_headline", "ignore_case"]), 
+    ("Search word", ["search_body", "search_headline", "whole_word", "ignore_case"]), 
+    ("Search headlines", ["search_headline","ignore_case"]), 
+    ("Search body", ["search_body", "ignore_case"]), 
+    ("Case sensitive", ["search_body", "search_headline"]), 
 ]
 
-# dict is new in Python 2.2.
 OPTION_DICT = dict(OPTION_LIST)
 #@nonl
 #@-node:ekr.20040108054555.14:<< vars >>
@@ -145,15 +155,23 @@ class SearchBox:
         
         """Do the actual search"""
         # import pdb; pdb.set_trace()
+        c = self.c
         text = self.search.get()
         # Remove the old find frame so its options don't compete with ours.
         search_mode = self.option_value.get() 
-        new_find = QuickFind(text,search_mode)
-        old_find, g.app.findFrame = g.app.findFrame, new_find
+        new_find = QuickFind(c,text,search_mode)
+        
+        if 1:
+            old_find, c.frame.findPanel = c.frame.findPanel, new_find
+        else: # Global find frame.
+            old_find, g.app.findFrame = g.app.findFrame, new_find
         # Do the search.
-        self.c.findNext()
+        c.findNext()
         # Restore the find frame.
-        g.app.findFrame = old_find
+        if 1:
+            c.frame.findPanel = old_find
+        else:
+            g.app.findFrame = old_find
         # Remember this list 
         self.updateRecentList(text, search_mode) 
         if 0: # This doesn't work yet: the user can't see the match.
@@ -219,47 +237,55 @@ class QuickFind(leoFind.leoFind):
     
     #@    @+others
     #@+node:ekr.20040107092135.7:__init__
-    def __init__(self, text, search_option=""):
+    def __init__(self,c,text,search_option=""):
         
         """Initialize the finder"""
     
         # Init the base class.
-        leoFind.leoFind.__init__(self)
+        leoFind.leoFind.__init__(self,c)
         
-        self.s_text = Tk.Text() # Used by find.search()
+        self.c = c
+        self.s_ctrl = Tk.Text() # Used by find.search()
         self.__find_text = text
         self.search_option = search_option
+    #@nonl
     #@-node:ekr.20040107092135.7:__init__
-    #@+node:ekr.20040107092135.8:set_ivars
-    def set_ivars(self, c):
+    #@+node:ekr.20040107092135.8:update_ivars
+    # Modified from leoTkinterFind.update_ivars.
     
-        """Set the ivars for the find"""
-    
-        # Modified from leoTkinterFind.set_ivars
-        for key in self.intKeys:
-            setattr(c, key + "_flag", 0)
-        c.change_text = ""
-        c.find_text = self.__find_text
+    def update_ivars (self):
         
-        # Set options
+        """Called just before doing a find to update ivars."""
+    
+        for key in self.intKeys:
+            # g.trace('settattr',key,False)
+            setattr(self, key,False)
+    
+        self.change_text = ""
+        self.find_text = self.__find_text
+    
+        # Set options from OPTIONS_DICT.
         for flag_name in OPTION_DICT[self.search_option]: 
             if flag_name.startswith("!"): 
                 value = 0 
                 name = flag_name[1:] 
             else: 
                 value = 1 
-                name = flag_name 
-            setattr(c, name, value) 
-    #@-node:ekr.20040107092135.8:set_ivars
-    #@+node:ekr.20040107103252:init_s_text
-    def init_s_text (self,s):
-    
-        c = self.c ; t = self.s_text	
+                name = flag_name
+            # g.trace('settattr',name,value)
+            setattr(self, name, value)
+    #@nonl
+    #@-node:ekr.20040107092135.8:update_ivars
+    #@+node:ekr.20040107103252:init_s_ctrl
+    def init_s_ctrl (self,s):
+        
+        t = self.s_ctrl
         t.delete("1.0","end")
         t.insert("end",s)
-        t.mark_set("insert",g.choose(c.reverse_flag,"end","1.0"))
+        t.mark_set("insert",g.choose(self.reverse,"end","1.0"))
         return t
-    #@-node:ekr.20040107103252:init_s_text
+    #@nonl
+    #@-node:ekr.20040107103252:init_s_ctrl
     #@+node:ekr.20040107103339:gui_search
     def gui_search (self,t,*args,**keys):
     
