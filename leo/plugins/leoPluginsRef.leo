@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2102" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2103" clone_windows="0"/>
 <globals body_outline_ratio="0.332247557003">
 	<global_window_position top="12" left="258" height="921" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -261,7 +261,7 @@
 <v t="edream.110203113231.933"><vh>@file-thin mod_spelling.py</vh></v>
 </v>
 </v>
-<v t="ekr.20040330120121" a="E"><vh>New or improved in 4.2</vh>
+<v t="ekr.20040330120121"><vh>New or improved in 4.2</vh>
 <v t="ekr.20040331072607"><vh>@file-thin hoist.py</vh></v>
 <v t="ekr.20040419105219"><vh>@file-thin lineNumbers.py</vh></v>
 <v t="ekr.20040331151007"><vh>@file-thin niceNosent.py</vh></v>
@@ -364,16 +364,12 @@ expanded="EKR.20040613215415.2,EKR.20040613222712.1,EKR.20040618091543.2,"><vh>@
 <v t="ekr.20040331071319"><vh>@file-thin rst2.py</vh></v>
 </v>
 </v>
-<v t="EKR.20040517090508" a="EM"><vh>Enable plugins by changing pluginsManager.txt</vh>
-<v t="edream.120603093808"><vh>@file-thin pluginsManager.txt</vh></v>
-</v>
-<v t="EKR.20040612183736" a="TV"><vh>Unfinished</vh>
-<v t="EKR.20040608080921.1"><vh>@thin fastgotonode.py</vh></v>
+<v t="EKR.20040612183736"><vh>Unfinished</vh>
 <v t="EKR.20040609091913"><vh>Plugin generalizing marks (mulder)</vh>
 <v t="EKR.20040609091913.1"><vh>@url http://home.pacbell.net/bwmulder/python/Leo/mod_label.leo</vh></v>
 <v t="EKR.20040609091913.2"><vh>Crash</vh></v>
 </v>
-<v t="EKR.20040609213754" tnodeList="EKR.20040609213754,EKR.20040609213754.1"><vh>@file Configurator.py</vh>
+<v t="EKR.20040609213754"><vh>Configurator.py</vh>
 <v t="EKR.20040609213754.1"><vh>&lt;&lt; create the top frame tl and its contents &gt;&gt;</vh></v>
 </v>
 <v t="EKR.20040611044600"><vh>Mulder undo</vh>
@@ -544,7 +540,6 @@ expanded="EKR.20040613215415.2,EKR.20040613222712.1,EKR.20040618091543.2,"><vh>@
 <v t="bwmulder.20040602230426"><vh>test_main</vh></v>
 </v>
 </v>
-<v t="mark.20040522114528.1"><vh>@thin xemacs_a.py</vh></v>
 <v t="EKR.20040605181725"><vh>Autocompleter</vh>
 <v t="EKR.20040605181725.1"><vh>Docs for v125</vh>
 <v t="EKR.20040608070256"><vh>autocompleter.ini</vh></v>
@@ -552,6 +547,10 @@ expanded="EKR.20040613215415.2,EKR.20040613222712.1,EKR.20040618091543.2,"><vh>@
 </v>
 <v t="EKR.20040605181725.2"><vh>@thin autocompleter.py</vh></v>
 </v>
+<v t="ekr.20040717133342"><vh>Shadow files plugin</vh></v>
+</v>
+<v t="EKR.20040517090508" a="MTV"><vh>Enable plugins by changing pluginsManager.txt</vh>
+<v t="edream.120603093808"><vh>@file-thin pluginsManager.txt</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -6929,6 +6928,71 @@ It would be also be possible to use cloned nodes to embed code nodes in .html fi
         code node 3
 
 The disadvantage of this organization is that you must update spamDocs.html by hand to keep it up-to-date with spam.py.
+</t>
+<t tx="ekr.20040717133342">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2521345
+By: bwmulder
+
+I am working on a plugin which works with shadow files in a Leo subdirectory.
+
+This is really the same code posted integrated with Leo. New is that
+the goto linenumber command works properly as well.
+
+The new code only kicks in if:
+   - A leo subdirectory exists, and
+   - both directories contain the file in question.
+   
+To get things started, create a Leo subdirectory, move the source
+files there, and then create zero length strings instead of the moved
+files. Whenever you change something in the sourcefile, both files
+will be brought up to date automatically.
+
+In the future, I might provide a script which provides this initial
+setup automatically.
+
+Implementation notes (relative to 4.1):
+
+In order to use this mechanism to annotate foreign code, I am missing
+two pieces:
+   
+   - The import command should import the source *exactly*.
+   - I would like to add comments to the source which are *not* output into
+source,
+     and live in Leo only (or the shadowfile under Leo sentinel comments).
+     
+I changed the "message_comment" function to do nothing.
+
+I do not think that this function is a good idea, since Leo can not know
+if the line structure in a comment.
+
+There might be more to do in this area.
+
+It seems that I can get around the second limitation by writing "//@"
+at the beginning of the line in the code sections, since this is
+filtered away by the plugin.
+
+Is there some other way to put comments only in the Leo document, but
+not in the derived file?
+
+I had to copy quite a bit of source code for the gotolinenr
+command. It probably won't work for the next version of Leo
+
+It seems that Leo somewhat encourages a coding style with long
+routines, since complexity can be tugged away into subnodes rather
+than creating functions to structure the code.
+
+For the read and write command, I decided to inject a new "open"
+function into the global namespace of leoAtFile.py. This function
+checks if the caller is the read or write function of leoAtFile.py. In
+this case, some special processing for synchronization is done.
+
+I did this strange programming since I did not want to copy large
+amounts of code and just add a few lines.
+
+Currently the script works for C and python files. It looks at the
+file extension to determine if C or python type annotations are
+used. Maybe this information can be centralized.
 </t>
 </tnodes>
 </leo_file>
