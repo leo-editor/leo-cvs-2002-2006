@@ -1016,47 +1016,7 @@ def setMenuLabel (menu,name,label,underline=-1):
 #@-body
 #@-node:2::enableMenu & disableMenu & setMenuLabel
 #@-node:3::Menus...
-#@+node:4::sortSequence
-#@+body
-#@+at
-#  sequence is a sequence of items, each of which is a sequence containing at 
-# least n elements.
-# returns a list of the the items sorted on the n'th element of each tuple.
-
-#@-at
-#@@c
-
-def sortSequence (sequence, n):
-
-	keys = [] ; links = {}
-	for item in sequence:
-		key = item[n]
-		links[key] = item
-		keys.append(key)
-	keys.sort() ; sorted = []
-	for key in keys:
-		sorted.append(links[key])
-	return sorted
-	
-
-#@+at
-#  The sort() method takes an optional argument specifying a comparison 
-# function of two arguments (list items) which should return -1, 0 or 1 
-# depending on whether the first argument is considered smaller than, equal 
-# to, or larger than the second argument.
-# 
-# Note that this slows the sorting process down considerably; e.g. to sort a 
-# list in reverse order it is much faster to use calls to the methods sort() 
-# and reverse() than to use the built-in function sort() with a comparison 
-# function that reverses the ordering of the elements.
-# 
-# So a "clever" solution wouldn't be so clever after all.
-
-#@-at
-#@@c
-#@-body
-#@-node:4::sortSequence
-#@+node:5::wrap_lines
+#@+node:4::wrap_lines
 #@+body
 #@+at
 #  Returns a list of lines, consisting of the input lines wrapped to the given pageWidth.
@@ -1137,7 +1097,7 @@ def wrap_lines (lines,pageWidth,firstLineWidth=None):
 	# trace(`result`)
 	return result
 #@-body
-#@-node:5::wrap_lines
+#@-node:4::wrap_lines
 #@-node:5::Commands, Dialogs, Directives, & Menus...
 #@+node:6::Debugging, Dumping, Timing, Tracing & Sherlock
 #@+node:1::Files & Directories...
