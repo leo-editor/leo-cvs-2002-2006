@@ -400,7 +400,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
     if g.app.gui.guiName() == "tkinter":
         leoPlugins.registerHandler("create-optional-menus",createPluginsMenu)
         
-        __version__ = "1.3"
+        __version__ = "1.4"
         g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080555.2:@thin plugins_menu.py
