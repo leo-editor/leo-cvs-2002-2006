@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="1088" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="34" left="197" height="23" width="80"/>
+	<global_window_position top="-2" left="187" height="23" width="80"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0" tab_width="4" page_width="132" tangle_bat="0" untangle_bat="0" output_doc_chunks="1" use_header_flag="1" defaultTargetLanguage="Python">
@@ -27,19 +27,19 @@
 <v t="T10"><vh>David McNab</vh></v>
 <v t="T11"><vh>Speed Ream's slashdot article</vh></v>
 </v>
-<v t="T12" a="E"><vh>Release Notes</vh>
+<v t="T12"><vh>Release Notes</vh>
 <v t="T13"><vh>Warnings</vh></v>
-<v t="T14" a="E"><vh>Installation notes</vh>
+<v t="T14"><vh>Installation notes</vh>
 <v t="T15" a="C"><vh>System requirements</vh></v>
-<v t="T16" a="CE"><vh>How to Install &amp; Run Leo</vh>
-<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T16" a="C"><vh>How to Install &amp; Run Leo</vh>
+<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
 <v t="T19" a="C"><vh>How to associate leo.py with .leo files (Windows only)</vh></v>
 <v t="T20" a="C"><vh>Quick start</vh></v>
 </v>
-<v a="E"><vh>Latest version</vh>
+<v><vh>Latest version</vh>
 <v t="T21" a="C"><vh>leo.py 3.5</vh>
 <v t="T22"><vh>Bug fixes</vh>
 <v t="T23"><vh>Called cf.flush in leoConfig.update</vh></v>
@@ -57,7 +57,7 @@
 </v>
 </v>
 </v>
-<v a="E"><vh>leo.py versions</vh>
+<v><vh>leo.py versions</vh>
 <v t="T21" a="C"><vh>leo.py 3.5</vh>
 <v t="T22"><vh>Bug fixes</vh>
 <v t="T23"><vh>Called cf.flush in leoConfig.update</vh></v>
@@ -175,8 +175,8 @@
 <v t="T101"><vh>Made Prefs panel non-modal</vh></v>
 </v>
 </v>
-<v t="T102" a="E"><vh>leo.py 2.5.1 Many improvements</vh>
-<v t="T103" a="E"><vh>New &amp; improved commands</vh>
+<v t="T102"><vh>leo.py 2.5.1 Many improvements</vh>
+<v t="T103"><vh>New &amp; improved commands</vh>
 <v t="T104"><vh>Tabs and spaces</vh>
 <v t="T105"><vh>Added Convert All Blanks and Convert All Tabs commands</vh></v>
 <v t="T106"><vh>Added Convert Tabs command</vh></v>
@@ -184,7 +184,7 @@
 <v t="T108"><vh>Negative tab width converts tabs to spaces</vh></v>
 </v>
 <v t="T109"><vh>Improved Preferences panel</vh></v>
-<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 <v t="T110"><vh>Cut and Paste now works properly in all situations</vh></v>
@@ -245,7 +245,7 @@
 <v t="T145"><vh>Fixed bugs</vh></v>
 <v t="T146"><vh>Remaining minor problems</vh></v>
 </v>
-<v t="T147" a="E"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
+<v t="T147"><vh>0.08 Find, Change and Tangle commands &amp; major bugs fixed</vh>
 <v t="T148"><vh>About the Find and Change commands</vh></v>
 <v t="T149"><vh>About the Tangle command</vh></v>
 <v t="T150"><vh>About hyperlinking</vh></v>
@@ -276,7 +276,7 @@
 <v t="T172"><vh>New Things To Do</vh></v>
 </v>
 </v>
-<v a="E"><vh>Borland PC versions</vh>
+<v><vh>Borland PC versions</vh>
 <v t="T173"><vh>Borland 2.7 Major bug fix: please upgrade</vh></v>
 <v t="T174"><vh>Borland 2.6 Major changes: please upgrade</vh>
 <v t="T175" a="M"><vh>Format change: no blank lines between sentinels in derived files</vh></v>
@@ -307,7 +307,7 @@
 </v>
 <v t="T198"><vh>version 2.2 (beta)</vh></v>
 <v t="T199"><vh>version 2.1 (beta)</vh></v>
-<v a="E"><vh>1.x versions</vh>
+<v><vh>1.x versions</vh>
 <v t="T200"><vh>Changes made in version 1.15</vh></v>
 <v t="T201"><vh>Changes made in version 1.14</vh></v>
 <v t="T202"><vh>Changes made in version 1.13</vh></v>
@@ -353,7 +353,7 @@
 <v t="T236"><vh>Changes made in version 1.2</vh></v>
 <v t="T237"><vh>Changes made in version 1.1</vh></v>
 <v t="T238"><vh>Changes made in version 1.0</vh></v>
-<v t="T239" a="E"><vh>Changes made in version 0.19</vh>
+<v t="T239"><vh>Changes made in version 0.19</vh>
 <v t="T240"><vh>Fixed directory bug</vh></v>
 <v t="T241"><vh>Added @language HTML, perl and perlpod</vh></v>
 <v t="T242"><vh>Eliminated @noweb &amp; replaced @cweb with @language cweb</vh></v>
@@ -371,7 +371,7 @@
 <v t="T252"><vh>Added @language fortran90</vh></v>
 <v t="T253"><vh>Added @language perlpod</vh></v>
 </v>
-<v t="T254" a="E"><vh>Changes made in version 0.17</vh>
+<v t="T254"><vh>Changes made in version 0.17</vh>
 <v t="T255"><vh>Support for noweb &lt;&lt;*&gt;&gt; convention</vh></v>
 <v t="T256"><vh>new @cweb, @noweb, @path, @tabwidth and @pagewidth directives</vh></v>
 <v t="T257"><vh>CWEB mode now has a chance of working</vh></v>
@@ -398,7 +398,7 @@
 </v>
 </v>
 </v>
-<v t="T276" a="E"><vh>Users Guide</vh>
+<v t="T276" a="V"><vh>Users Guide</vh>
 <v t="T277"><vh>An overview of Leo</vh></v>
 <v t="T278"><vh>Front material</vh>
 <v t="T279"><vh>Title Page &amp; Summary</vh></v>
@@ -423,15 +423,15 @@
 </v>
 <v t="T293"><vh>Chapter 2: Installing Leo</vh>
 <v t="T15" a="C"><vh>System requirements</vh></v>
-<v t="T16" a="CE"><vh>How to Install &amp; Run Leo</vh>
-<v t="T17" a="CE"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T16" a="C"><vh>How to Install &amp; Run Leo</vh>
+<v t="T17" a="C"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
 <v t="T19" a="C"><vh>How to associate leo.py with .leo files (Windows only)</vh></v>
 <v t="T20" a="C"><vh>Quick start</vh></v>
 </v>
-<v t="T294"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
+<v t="T294" a="E"><vh>Chapter 3: Using Outlines &amp; Body text</vh>
 <v t="T295" a="C"><vh>Cloning headlines</vh>
 <v t="T296"><vh>read me</vh></v>
 <v t="T297" a="C"><vh>a</vh>
@@ -491,7 +491,7 @@
 <v t="T309"><vh>Resizing panes</vh></v>
 <v t="T310"><vh>Undoing operations</vh></v>
 </v>
-<v t="T311" a="E"><vh>Chapter 4: Writing Programs in Leo</vh>
+<v t="T311"><vh>Chapter 4: Writing Programs in Leo</vh>
 <v t="T312"><vh>Overview</vh></v>
 <v t="T313"><vh>Sections and section references</vh></v>
 <v t="T314"><vh>Organizing @file trees.</vh>
@@ -533,7 +533,7 @@
 </v>
 </v>
 </v>
-<v t="T331" a="E"><vh>More about directives</vh>
+<v t="T331"><vh>More about directives</vh>
 <v t="T332"><vh>@CWEB and @noweb specify the source language</vh></v>
 <v t="T333"><vh>@color and @nocolor control syntax coloring</vh></v>
 <v t="T334"><vh>@comment sets comment delimiters in @root and @unit trees</vh></v>
@@ -544,7 +544,7 @@
 </v>
 <v t="T243" a="C"><vh>About CWEB   </vh></v>
 </v>
-<v a="E"><vh>Appendix to Chapter 4: Using @root directives, Tangling and Untangling</vh>
+<v><vh>Appendix to Chapter 4: Using @root directives, Tangling and Untangling</vh>
 <v t="T339"><vh>@root vs. @file trees</vh></v>
 <v t="T340"><vh>Sections and section definitions</vh></v>
 <v t="T341"><vh>Tangling @root trees with the Tangle commands</vh></v>
@@ -561,7 +561,7 @@
 <v t="T349"><vh>Exporting Files from Leo Outlines</vh></v>
 <v t="T350"><vh>Quitting Leo</vh></v>
 </v>
-<v a="E"><vh> The Edit Menu</vh>
+<v><vh> The Edit Menu</vh>
 <v t="T351"><vh>Undoing changes</vh></v>
 <v t="T352"><vh>Cutting, pasting and selecting text</vh></v>
 <v t="T353"><vh>Shifting body text</vh></v>
@@ -762,7 +762,7 @@
 <v t="T456"><vh>Unlimited undo</vh></v>
 </v>
 </v>
-<v t="T457" a="E"><vh>FAQ</vh>
+<v t="T457"><vh>FAQ</vh>
 <v t="T458"><vh>What's the best way to learn to use Leo?</vh></v>
 <v t="T459"><vh>Where are the simple examples?</vh></v>
 <v t="T460"><vh>How can I create Javascript comments?</vh></v>
@@ -770,13 +770,13 @@
 <v t="T462"><vh>How should I choose between @root and @file trees?</vh></v>
 <v t="T463"><vh>When should I use clones?</vh></v>
 <v t="T464"><vh>How can I cut and paste nodes between different copies of Leo</vh></v>
-<v t="T465" a="E"><vh>How can I customize Leo?</vh>
-<v t="T17" a="CEM"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
+<v t="T465"><vh>How can I customize Leo?</vh>
+<v t="T17" a="CM"><vh>Configuring leo.py using leoConfig.leo and leoConfig.txt</vh>
 <v t="T18"><vh>Example of leoConfig.txt</vh></v>
 </v>
 </v>
-<v t="T466" a="E"><vh>How can I add support in Leo for a new language?</vh>
-<v t="T467" a="E"><vh>code</vh>
+<v t="T466"><vh>How can I add support in Leo for a new language?</vh>
+<v t="T467"><vh>code</vh>
 <v t="T468"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
 <v t="T469"><vh>&lt;&lt; Create the Target Language frame &gt;&gt;</vh></v>
 <v t="T470"><vh>&lt;&lt; define colorizer keywords &gt;&gt;</vh></v>
@@ -822,7 +822,7 @@
 </v>
 </v>
 </v>
-<v t="T500" a="E"><vh>Appendices</vh>
+<v t="T500"><vh>Appendices</vh>
 <v t="T42" a="C"><vh>Code hidden in leo.py</vh>
 <v t="T43"><vh>c2py.py</vh></v>
 <v t="T44"><vh>disStats.py</vh></v>
@@ -832,7 +832,7 @@
 <v t="T48"><vh>Tree code</vh></v>
 </v>
 <v t="T501"><vh>Converting @root trees to @file trees</vh></v>
-<v t="T502" a="E"><vh>Directives</vh>
+<v t="T502"><vh>Directives</vh>
 <v t="T503"><vh>@c and @code</vh></v>
 <v t="T504"><vh>@chapter (Macintosh only)</vh></v>
 <v t="T505"><vh>@color</vh></v>
@@ -848,7 +848,7 @@
 <v t="T515"><vh>@noweb</vh></v>
 <v t="T516"><vh>@others (valid only in @file trees)</vh></v>
 <v t="T517"><vh>@pagewidth</vh></v>
-<v t="T518" a="V"><vh>@path</vh></v>
+<v t="T518"><vh>@path</vh></v>
 <v t="T519"><vh>@root  (not valid in @file trees)</vh></v>
 <v t="T520"><vh>@section (Macintosh only)</vh></v>
 <v t="T521"><vh>@silent (not valid in @file trees)</vh></v>
@@ -4220,11 +4220,15 @@ The Delete Node command deletes a headline and all its children.
 
 Leo auto indents when @nocolor is not in effect.  That is, typing a newline automatically inserts the same leading whitespace present on the previous line.  If the present language is Python (set either in the preferences or with an @language Python command), Leo inserts an additional tab if the previous line ends with a colon.
 
+The default features of Leo's body text derive from the Tk Text widget, described at:
+http://www.tcl.tk/man/tcl8.3/TkCmd/text.htm
+Not all these features are found on all platforms.
+
 The following features are mostly derived from the Tk Text widget.  Some default behaviors have been changed because they conflict with other Leo features.
 
 Clicking mouse button 1 positions the insertion cursor just before the character underneath the mouse cursor, sets the input focus to this widget, and clears any selection in the widget. Dragging with mouse button 1 strokes out a selection between the insertion cursor and the character under the mouse. 
 
-Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the beginning of the word. Dragging after a double click will stroke out a selection consisting of whole words. 
+Double-clicking with mouse button 1 selects the word under the mouse and positions the insertion cursor at the beginning of the word.
 
 The ends of the selection can be adjusted by dragging with mouse button 1 while the Shift key is down; this will adjust the end of the selection that was nearest to the mouse cursor when button 1 was pressed. 
 
@@ -4232,23 +4236,23 @@ Clicking mouse button 1 with the Control key down will reposition the insertion 
 
 If any normal printing characters are typed, they are inserted at the point of the insertion cursor. 
 
-The view in the body pane can be adjusted by dragging with mouse button 2. If mouse button 2 is clicked without moving the mouse, the selection is copied into the text at the position of the mouse cursor. The Insert key also inserts the selection, but at the position of the insertion cursor. 
-
 If the mouse is dragged out of the body pane while button 1 is pressed, the entry will automatically scroll to make more text visible (if there is more text off-screen on the side where the mouse left the window). 
 
-The Left and Right (arrow) keys move the insertion cursor one character to the left or right; they also clear any selection in the text. If Left or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Left and Control-Right move the insertion cursor by words, and Control-Shift-Left and Control-Shift-Right move the insertion cursor by words and also extend the selection. Control-b and Control-f behave the same as Left and Right, respectively. Meta-b and Meta-f behave the same as Control-Left and Control-Right, respectively. 
+The Left and Right (arrow) keys move the insertion cursor one character to the left or right; they also clear any selection in the text. If Left or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Left and Control-Right move the insertion cursor by words, and Control-Shift-Left and Control-Shift-Right move the insertion cursor by words and also extend the selection.
 
 The Up and Down (arrow) keys move the insertion cursor one line up or down and clear any selection in the text. If Up or Right is typed with the Shift key down, then the insertion cursor moves and the selection is extended to include the new character. Control-Up and Control-Down move the insertion cursor by paragraphs (groups of lines separated by blank lines), and Control-Shift-Up and Control-Shift-Down move the insertion cursor by paragraphs and also extend the selection. Control-p and Control-n behave the same as Up and Down, respectively. 
 
-The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character. Control-v moves the view down one screenful without moving the insertion cursor or adjusting the selection. 
+(12) The Next(Page Down) and Prior(Page Up) keys move the insertion cursor forward or backwards by one screenful and clear any selection in the text. If the Shift key is held down while Next or Prior is typed, then the selection is extended to include the new character.
 
-Home and Control-a move the insertion cursor to the beginning of its line and clear any selection in the widget. Shift-Home moves the insertion cursor to the beginning of the line and also extends the selection to that point. 
+Line movement is by text lines terminated by hard returns (newlines), not by displayed lines;  if a text line is long and wraps across more than one display line, then the Up and Down movement will skip the extra wrapped display lines.
 
-End and Control-e move the insertion cursor to the end of the line and clear any selection in the widget. Shift-End moves the cursor to the end of the line and extends the selection to that point. 
+Home moves the insertion cursor to the beginning of its line and clear any selection in the widget. Shift-Home moves the insertion cursor to the beginning of the line and also extends the selection to that point. 
 
-Control-Home and Meta-&lt; move the insertion cursor to the beginning of the text and clear any selection in the widget. Control-Shift-Home moves the insertion cursor to the beginning of the text and also extends the selection to that point. 
+End moves the insertion cursor to the end of the line and clear any selection in the widget. Shift-End moves the cursor to the end of the line and extends the selection to that point. 
 
-Control-End and Meta-&gt; move the insertion cursor to the end of the text and clear any selection in the widget. Control-Shift-End moves the cursor to the end of the text and extends the selection to that point. 
+Control-Home moves the insertion cursor to the beginning of the text and clear any selection in the widget. Control-Shift-Home moves the insertion cursor to the beginning of the text and also extends the selection to that point. 
+
+Control-End moves the insertion cursor to the end of the text and clear any selection in the widget. Control-Shift-End moves the cursor to the end of the text and extends the selection to that point. 
 
 The Select key and Control-Space set the selection anchor to the position of the insertion cursor. They don't affect the current selection. Shift-Select and Control-Shift-Space adjust the selection to the current position of the insertion cursor, selecting from the anchor to the insertion cursor if there was not any selection previously. 
 
@@ -4256,33 +4260,15 @@ Control-/ selects the entire contents of the widget.
 
 Control-\ clears any selection in the widget. 
 
-The F16 key (labeled Copy on many Sun workstations) or Meta-w copies the selection in the widget to the clipboard, if there is a selection. This action is carried out by the command tk_textCopy. 
+The F16 key (labeled Copy on many Sun workstations) or Control-c copies the selection in the widget to the clipboard, if there is a selection. This action is carried out by the command tk_textCopy. 
 
-The F20 key (labeled Cut on many Sun workstations) or Control-w copies the selection in the widget to the clipboard and deletes the selection. This action is carried out by the command tk_textCut. If there is no selection in the widget then these keys have no effect. 
+The F20 key (labeled Cut on many Sun workstations) or Control-x copies the selection in the widget to the clipboard and deletes the selection. This action is carried out by the command tk_textCut. If there is no selection in the widget then these keys have no effect. 
 
-The F18 key (labeled Paste on many Sun workstations) or Control-y inserts the contents of the clipboard at the position of the insertion cursor. This action is carried out by the command tk_textPaste. 
+The F18 key (labeled Paste on many Sun workstations) or Control-v inserts the contents of the clipboard at the position of the insertion cursor. This action is carried out by the command tk_textPaste. 
 
 The Delete key deletes the selection, if there is one in the widget. If there is no selection, it deletes the character to the right of the insertion cursor. 
 
-Backspace and Control-h delete the selection, if there is one in the widget. If there is no selection, they delete the character to the left of the insertion cursor. 
-
-Meta-d deletes the word to the right of the insertion cursor. 
-
-Control-k deletes from the insertion cursor to the end of its line; if the insertion cursor is already at the end of a line, then Control-k deletes the newline character. 
-
-Meta-backspace and Meta-Delete delete the word to the left of the insertion cursor. 
-
-Control-x deletes whatever is selected in the text widget. 
-
-The following do _not_ work as in the default Tk.Text widget.
-
-1. Triple clicking is not supported.
-
-2. Control-d moves an outline down.  It does _not_ delete the character to the right of the insertion cursor.
-
-3. Control-o opens a new file.  Id does _not_ "open" the line by inserting a newline character in front of the insertion cursor without moving the insertion cursor.
-
-4. Control-t toggles the active pane.  It does _not_ reverse the order of the two characters to the right of the insertion cursor.</t>
+Backspace deletes the selection, if there is one in the widget. If there is no selection, they delete the character to the left of the insertion cursor. </t>
 <t tx="T306">You can expand or contract a headline by clicking in the standard Windows Tree View icon to the left of the status icon.
 
 Expanding a node shows its immediate children; contracting a node hides all its children.  The Expand All Subheads command expands all of a nodes offspring (children, grandchildren, etc.)</t>
@@ -4318,14 +4304,18 @@ The essentials of writing programs in Leo are as follows:
 
 1. A Leo program is composed the all the body text in an outline, or part of an outline.
 
-2. Body text is a sequence of _sections_.
+2. Body text is a sequence of _sections_.  There are two kinds of sections: doc sections and code sections.
 
 3. Sections may contain _section references_ that refer to other sections by their nam.
 
 4. Leo uses outline structure to control the scope of section definitions.
 
-5. Leo creates source files called derived files by expanding all section references in an @file tree.</t>
+5. Leo creates source files called _derived files_ by expanding all section references in an @file tree.</t>
 <t tx="T313">@nocolor
+There are two kinds of sections: code sections and doc sections.  Code sections start with the @c directive.  Within @file trees, the entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+
 Code sections may contain section references of the form &lt;&lt;section name&gt;&gt;. That is, a section reference is any sequence of characters except newlines enclosed in &lt;&lt; and &gt;&gt;. Leo ignores whitespace and case inside section names, so the following are equivalent:
 @color
 
@@ -4337,7 +4327,7 @@ Leo underlines section names whose definitions are not found in any descendent. 
 
 Paired &lt;&lt; and &gt;&gt; characters on the same line always denote a section name, even within comments are strings.  That is, &lt;&lt; and &gt;&gt; characters that do not delimit a section name must be placed on separate lines.  If &lt;&lt; and &gt;&gt; are not paired on a line, they are treated as literal &lt;&lt; and &gt;&gt; characters.
 
-Body text may contain zero or more sections in any order.  The @ directive (an @ followed by whitespace or a newline) begins a doc section.  The @c directive begins code section.  The section is named if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the section is unnamed.  Body text that contains no @ or @c directive is considered to be a single unnamed code section. @ and @c directives terminate any previous section. For example,
+Body text may contain zero or more sections in any order.  A code section is named if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the code section is unnamed.  Body text that contains no @ or @c directive is considered to be a single unnamed code section. @ and @c directives terminate any previous section. For example,
 
 @color
 @ This method puts an open node sentinel for node v.
@@ -4613,7 +4603,11 @@ However, @root trees are more flexible than @file trees:
 - @c directives are optional at the start of body text in @file trees only.
 Body text without markup is ignored in @root trees; it creates unnamed code sections in @file trees.</t>
 <t tx="T340">@nocolor
-Just as with @file trees, body text in @root trees contain zero or more sections in any order.  The @ directive (an @ followed by whitespace or a newline) starts a doc section.  The @c directive is starts a named code section if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the @c directive is invalid.
+Just as with @file trees, @root may contain kinds of sections: code sections and doc sections.  Code sections start with section definition lines (see below) or the @c directive.  Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.
+
+Body text in @root trees contain zero or more sections in any order.  The @ directive (an @ followed by whitespace or a newline) starts a doc section.  The @c directive is starts a named code section if the node's headline starts with &lt;&lt;section name&gt;&gt;.  Otherwise, the @c directive is invalid.
 
 Section definition lines of the form:
 
@@ -7552,7 +7546,21 @@ Outlines are composed of headlines representing data.  The combination of a head
 <t tx="T625">To move all children of a node left in an outline so that they become siblings of the node.</t>
 <t tx="T626">The first node of the entire outline.  In the PC version of Leo several nodes may be siblings of the root.</t>
 <t tx="T627">The portion of the outline in which a section definition is known. By default the scope of a section definition is the smallest subtree containing both the section and a node containing an @root directive. The @unit directive declares that the subtree containing the @unit directive is the scope for all sections defined in that tree.</t>
-<t tx="T628"> synonym for part or chunk.  A named fragment of code that can be incorporated into other code by referring to the section name.</t>
+<t tx="T628">A synonym for part or chunk.  A named fragment of code that can be incorporated into other code by referring to the section name.
+
+There are two kinds of sections: code sections and doc sections. Sections are defined in slightly different ways in @file in @root trees (that's the difference between the two kinds of trees.)
+
+In @file trees
+--------------
+Code sections start with the @c directive.  The entire body text of a node is a code section by default, so the @c directive can be omitted if there are no doc sections in the body pane.  Doc sections start with @ followed by a space at the start of a line. Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+In @root trees
+--------------
+Code sections start with the @c directive or section definition lines of the form:
+&lt;&lt; section name &gt;&gt;=
+Such lines begin named code sections.  Other code sections are unnamed. Doc sections start with @ followed by a space at the start of a line.  Doc sections continue until the end of body text or until the next @c or @(space) directive.
+
+The term "section" has two related meanings.  Sections are syntactic units of text in the body pane.  Leo writes the text of section to derived files, so another meaining of "section" is "the text that is written to the derived file."  Which meaning is intended should be clear from context.</t>
 <t tx="T629">A name enclosed in &lt;&lt; and &gt;&gt;.  Section names may contain any characters except newlines and "&gt;&gt;".</t>
 <t tx="T630">A section name appearing in a code part. Tangling replaces all references by their definitions.</t>
 <t tx="T631">Comment lines in files derived from @file nodes.  Such lines start with an @ following the opening comment delimiter.  Sentinels embed outline structure into derived files.  Do not alter such lines!  Doing so can corrupt the outline structure.</t>
