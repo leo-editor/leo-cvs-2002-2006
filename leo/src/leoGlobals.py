@@ -11,8 +11,6 @@
 
 from __future__ import generators # To make the code work in Python 2.2.
 
-__pychecker__ = '--no-reimport' # Reimports needed in test methods.
-
 #@<< imports >>
 #@+node:ekr.20050208101229:<< imports >>
 
