@@ -14,7 +14,7 @@ import exceptions,os,re,string,sys,time,types,Tkinter
 body_newline = '\n'
 body_ignored_newline = '\r'
 
-if 1: # Work around problems in 2.3 a1
+if 0: # Work around problems in 2.3 a1
 	true = 1
 	false = 0 # Better than None
 else:
@@ -23,8 +23,8 @@ else:
 		false = False
 	except:
 		# print "True and False not defined"
-		true = 1
-		false = 0 # Better than None
+		true = True = 1
+		false = False = 0 # Better than None
 
 assert(false!=None)
 #@-body
@@ -1623,7 +1623,7 @@ def update_file_if_changed(file_name,temp_name):
 					os.chmod(file_name,mode)
 				es("***updating: " + file_name)
 			except:
-				es("Rename failed: no file created!")
+				es("Rename failed: no file created!",color="red")
 				es(`file_name` + " may be read-only or in use")
 				es_exception()
 	else:
@@ -1632,7 +1632,7 @@ def update_file_if_changed(file_name,temp_name):
 			utils_rename(temp_name, file_name)
 			es("creating: " + file_name)
 		except:
-			es("rename failed: no file created!")
+			es("rename failed: no file created!",color="red")
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
@@ -1950,7 +1950,7 @@ def scanAtFileOptions (h,err_flag=false):
 			elif err_flag:
 				es("ignoring redundant -nosent in:" + h)
 		else:
-			for option in ("fat","now","thin","wait"):
+			for option in ("fat","new","now","old","thin","wait"):
 				if match_word(h,i,option):
 					optionsList.append(option)
 			if len(option) == 0:
@@ -1960,8 +1960,6 @@ def scanAtFileOptions (h,err_flag=false):
 			i += 1
 		if err > -1:
 			es("unknown option:" + h[err:i] + " in " + h)
-		
-		
 		#@-body
 		#@-node:1::<< scan another @file option >>
 
@@ -3241,25 +3239,25 @@ except:
 		#@+body
 		# On Unix, if CODESET is available, use that.
 		try:
-		    CODESET
+		    local.CODESET
 		except NameError:
 		    # Fall back to parsing environment variables :-(
 		    def getpreferredencoding(do_setlocale = true):
 		        """Return the charset that the user is likely using,
 		        by looking at environment variables."""
-		        return getdefaultlocale()[1]
+		        return locale.getdefaultlocale()[1]
 		else:
 		    def getpreferredencoding(do_setlocale = true):
 		        """Return the charset that the user is likely using,
 		        according to the system configuration."""
 		        if do_setlocale:
-		            oldloc = setlocale(LC_CTYPE)
-		            setlocale(LC_CTYPE, "")
-		            result = nl_langinfo(CODESET)
-		            setlocale(LC_CTYPE, oldloc)
+		            oldloc = locale.setlocale(LC_CTYPE)
+		            locale.setlocale(LC_CTYPE, "")
+		            result = locale.nl_langinfo(CODESET)
+		            locale.setlocale(LC_CTYPE, oldloc)
 		            return result
 		        else:
-		            return nl_langinfo(CODESET)
+		            return locale.nl_langinfo(CODESET)
 		#@-body
 		#@-node:2::<< define getpreferredencoding for *nix >>
 #@-body
