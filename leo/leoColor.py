@@ -74,32 +74,23 @@ cweb_keywords = c_keywords
 #@<< html keywords >>
 #@+node:3::<< html keywords >>
 #@+body
-html_keywords = (
-	# HTML constructs.
-	"<","</",">",
-	'"',
-	"<!---","<!--","<!",
-	"<%","%>",
-	"<a","</a",
-	"<img",
-	"<cf","</cf",
-	# Common tags: tables
-	"<table","</table",
-	"<td","</td",
-	"<th","</th",
-	"<tr","</tr",
-	"<caption","</caption",
-	"<col","</col",
-	"<colgroup","</colgroup",
-	"<tbody","</tbody",
-	"<tfoot","</tfoot",
-	"<thead","</thead",	
-	# Common tags: styles
-	"<style","</style",
-	# Common tags: scripts
-	"<script","</script",
-	# Escapes
-	"&amp;", "&lt;", "&gt;", "&quot;" )
+# No longer used by syntax colorer.
+html_keywords = ()
+
+if 0: # Not used at present.
+	unused_keywords = (
+		# html constructs.
+		"a","body","cf",
+		"h1","h2","h3","h4","h5","h6",
+		"head","html","hr",
+		"i","img","li","lu","meta",
+		"p","title","ul",
+		# Common tags
+		"caption","col","colgroup",
+		"table","tbody","td","tfoot","th","thead","tr",
+		"script","style")
+
+	html_specials = ( "<%","%>" )
 #@-body
 #@-node:3::<< html keywords >>
 
@@ -435,23 +426,8 @@ php_paren_keywords = (
 #@-node:1::<< define colorizer keywords >>
 
 
-#@<< define colorizer functions >>
-#@+node:3::<< define colorizer functions >>
-#@+body
-def index(i,j):
-
-	if type(i) != type("end"):
-		i = `i`
-	if type(j) != type("end"):
-		j = `j`
-	return i + '.' + j
-
-#@-body
-#@-node:3::<< define colorizer functions >>
-
-
 #@<< define color panel data >>
-#@+node:4::<< define color panel data >>
+#@+node:3::<< define color panel data >>
 #@+body
 colorPanelData = (
 	#Dialog name,                option name,         default color),
@@ -531,12 +507,352 @@ colorNamesList = (
 	"thistle4" )
 
 #@-body
-#@-node:4::<< define color panel data >>
+#@-node:3::<< define color panel data >>
 
 
 
 #@+others
-#@+node:5::class colorizer
+#@+node:4::class leoColorPanel
+#@+body
+class leoColorPanel:
+
+	#@+others
+	#@+node:1::colorPanel.__init__
+	#@+body
+	def __init__ (self,c):
+		
+		self.commands = c
+		self.frame = c.frame
+		# Set by run.
+		self.top = None
+		# Options provisionally set by callback.
+		self.changed_options = []
+		# For communication with callback.
+		self.buttons = {}
+		self.nameButtons = {}
+		self.option_names = {}
+		# Save colors for revert.  onOk alters this.
+		self.revertColors = {}
+		config = app().config
+		for name,option_name,default_color in colorPanelData:
+			self.revertColors[option_name] = config.getColorsPref(option_name)
+	#@-body
+	#@-node:1::colorPanel.__init__
+	#@+node:2::run
+	#@+body
+	def run (self):
+		
+		c = self.commands ; Tk = Tkinter
+		config = app().config
+		
+		self.top = top = Tk.Toplevel(app().root)
+		top.title("Syntax colors for " + shortFileName(c.frame.title))
+		top.protocol("WM_DELETE_WINDOW", self.onOk)
+		attachLeoIcon(top)
+	
+		
+		#@<< create color panel >>
+		#@+node:1::<< create color panel >>
+		#@+body
+		outer = Tk.Frame(top,bd=2,relief="groove")
+		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
+		
+		# Create all the rows.
+		for name,option_name,default_color in colorPanelData:
+			# Get the color.
+			option_color = config.getColorsPref(option_name)
+			color = choose(option_color,option_color,default_color)
+			# Create the row.
+			f = Tk.Frame(outer,bd=2)
+			f.pack()
+			
+			lab=Tk.Label(f,text=name,width=17,anchor="e")
+		
+			b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
+			self.buttons[name]=b1 # For callback.
+			self.option_names[name]=option_name # For callback.
+			
+			b2 = Tk.Button(f,width=12,text=option_color)
+			self.nameButtons[name]=b2
+			
+			# 9/15/02: Added self=self to remove Python 2.1 warning.
+			callback = lambda name=name,self=self:self.showColorPicker(name)
+			b3 = Tk.Button(f,text="Color Picker...",command=callback)
+		
+			# 9/15/02: Added self=self to remove Python 2.1 warning.
+			callback = lambda name=name,color=color,self=self:self.showColorName(name,color)
+			b4 = Tk.Button(f,text="Color Name...",command=callback)
+		
+			lab.pack(side="left",padx=3)
+			b1.pack (side="left",padx=3)
+			b2.pack (side="left",padx=3)
+			b3.pack (side="left",padx=3)
+			b4.pack (side="left",padx=3)
+			
+		# Create the Ok, Cancel & Revert buttons
+		f = Tk.Frame(outer,bd=2)
+		f.pack()
+		b = Tk.Button(f,width=6,text="OK",command=self.onOk)
+		b.pack(side="left",padx=4)
+		b = Tk.Button(f,width=6,text="Cancel",command=self.onCancel)
+		b.pack(side="left",padx=4,expand=1,fill="x")
+		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
+		b.pack(side="right",padx=4)
+		#@-body
+		#@-node:1::<< create color panel >>
+
+		center_dialog(top) # Do this _after_ building the dialog!
+		top.resizable(0,0)
+		
+		# We are associated with a commander, so
+		# There is no need to make this a modal dialog.
+		if 0:
+			top.grab_set() # Make the dialog a modal dialog.
+			top.focus_force() # Get all keystrokes.
+	#@-body
+	#@-node:2::run
+	#@+node:3::showColorPicker
+	#@+body
+	def showColorPicker (self,name):
+		
+		option_name = self.option_names[name]
+		color = app().config.getColorsPref(option_name)
+		rgb,val = tkColorChooser.askcolor(color=color)
+		if val != None:
+			self.update(name,val)
+	#@-body
+	#@-node:3::showColorPicker
+	#@+node:4::showColorName
+	#@+body
+	def showColorName (self,name,color):
+		
+		np = leoColorNamePanel(self,name,color)
+		np.run(name,color)
+	#@-body
+	#@-node:4::showColorName
+	#@+node:5::colorPanel.onOk, onCancel, onRevert
+	#@+body
+	def onOk (self):
+		# Update the revert colors
+		config = app().config
+		for name in self.changed_options:
+			option_name = self.option_names[name]
+			self.revertColors[option_name] = config.getColorsPref(option_name)
+		self.changed_options = []
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.colorPanel = None
+			self.top.destroy()
+		
+	def onCancel (self):
+		self.onRevert()
+		if 1: # Hide the window, preserving its position.
+			self.top.withdraw()
+		else: # works.
+			self.commands.frame.colorPanel = None
+			self.top.destroy()
+		
+	def onRevert (self):
+		config = app().config
+		for name in self.changed_options:
+			option_name = self.option_names[name]
+			old_val = self.revertColors[option_name]
+			# Update the current settings.
+			config.setColorsPref(option_name,old_val)
+			# Update the buttons.
+			b = self.buttons[name]
+			b.configure(bg=old_val)
+			b = self.nameButtons[name]
+			b.configure(text=`old_val`)
+		self.changed_options = []
+		self.commands.recolor()
+	#@-body
+	#@-node:5::colorPanel.onOk, onCancel, onRevert
+	#@+node:6::update
+	#@+body
+	def update (self,name,val):
+		
+		config = app().config
+		# es(str(name) + " = " + str(val))
+		
+		# Put the new color in the button.
+		b = self.buttons[name]
+		b.configure(bg=val)
+		option_name = self.option_names[name]
+		
+		# Put the new color name or value in the name button.
+		b = self.nameButtons[name]
+		b.configure(text=str(val))
+		
+		# Save the changed option names for revert and cancel.
+		if name not in self.changed_options:
+			self.changed_options.append(name)
+	
+		# Set the new value and recolor.
+		config.setColorsPref(option_name,val)
+		self.commands.recolor()
+	#@-body
+	#@-node:6::update
+	#@-others
+#@-body
+#@-node:4::class leoColorPanel
+#@+node:5::class leoColorNamePanel
+#@+body
+class leoColorNamePanel:
+
+	#@+others
+	#@+node:1::namePanel.__init__
+	#@+body
+	def __init__ (self, colorPanel, name, color):
+		
+		self.colorPanel = colorPanel
+		self.name = name
+		self.color = color
+		self.revertColor = color
+	#@-body
+	#@-node:1::namePanel.__init__
+	#@+node:2::getSelection
+	#@+body
+	def getSelection (self):
+	
+		box = self.box ; color = None
+		
+		# Get the family name if possible, or font otherwise.
+		items = box.curselection()
+	
+		if len(items)> 0:
+			try: # This shouldn't fail now.
+				items = map(int, items)
+				color = box.get(items[0])
+			except:
+				es("unexpected exception")
+				es_exception()
+	
+		if not color:
+			color = self.color
+		return color
+	#@-body
+	#@-node:2::getSelection
+	#@+node:3::run
+	#@+body
+	def run (self,name,color):
+		
+		assert(name==self.name)
+		assert(color==self.color)
+		self.revertColor = color
+		
+		Tk = Tkinter
+		config = app().config
+	
+		self.top = top = Tk.Toplevel(app().root)
+		top.title("Color names for " + '"' + name + '"')
+		top.protocol("WM_DELETE_WINDOW", self.onOk)
+	
+		
+		#@<< create color name panel >>
+		#@+node:1::<< create color name panel >>
+		#@+body
+		# Create organizer frames
+		outer = Tk.Frame(top,bd=2,relief="groove")
+		outer.pack(fill="both",expand=1)
+		
+		upper = Tk.Frame(outer)
+		upper.pack(fill="both",expand=1)
+		
+		# A kludge to give vertical space to the listbox!
+		spacer = Tk.Frame(upper) 
+		spacer.pack(side="right",pady="2i") 
+		
+		lower = Tk.Frame(outer)
+		# padx=20 gives more room to the Listbox!
+		lower.pack(padx=40) # Not expanding centers the buttons.
+		
+		# Create and populate the listbox.
+		self.box = box = Tk.Listbox(upper) # height doesn't seem to work.
+		box.bind("<Double-Button-1>", self.onApply)
+		
+		if color not in colorNamesList:
+			box.insert(0,color)
+			
+		names = list(colorNamesList) # It's actually a tuple.
+		names.sort()
+		for name in names:
+			box.insert("end",name)
+		
+		bar = Tk.Scrollbar(box)
+		bar.pack(side="right", fill="y")
+		box.pack(padx=2,pady=2,expand=1,fill="both")
+		
+		bar.config(command=box.yview)
+		box.config(yscrollcommand=bar.set)
+			
+		# Create the row of buttons.
+		for text,command in (
+			("OK",self.onOk),
+			("Cancel",self.onCancel),
+			("Revert",self.onRevert),
+			("Apply",self.onApply) ):
+				
+			b = Tk.Button(lower,text=text,command=command)
+			b.pack(side="left",pady=6,padx=4)
+		#@-body
+		#@-node:1::<< create color name panel >>
+
+		self.select(color)
+		
+		center_dialog(top) # Do this _after_ building the dialog!
+		# top.resizable(0,0)
+		
+		# This must be a modal dialog.
+		top.grab_set()
+		top.focus_force() # Get all keystrokes.
+	#@-body
+	#@-node:3::run
+	#@+node:4::onOk, onCancel, onRevert, OnApply
+	#@+body
+	def onApply (self,event=None):
+		self.color = color = self.getSelection()
+		self.colorPanel.update(self.name,color)
+	
+	def onOk (self):
+		color = self.getSelection()
+		self.colorPanel.update(self.name,color)
+		self.top.destroy()
+		
+	def onCancel (self):
+		self.onRevert()
+		self.top.destroy()
+		
+	def onRevert (self):
+		self.color = color = self.revertColor
+		self.select(self.color)
+		self.colorPanel.update(self.name,color)
+	#@-body
+	#@-node:4::onOk, onCancel, onRevert, OnApply
+	#@+node:5::select
+	#@+body
+	def select (self,color):
+	
+		# trace(color)
+	
+		# The name should be on the list!
+		box = self.box
+		for i in xrange(0,box.size()):
+			item = box.get(i)
+			if color == item:
+				box.select_clear(0,"end")
+				box.select_set(i)
+				box.see(i)
+				return
+	
+		# trace("not found:" + `color`)
+	#@-body
+	#@-node:5::select
+	#@-others
+#@-body
+#@-node:5::class leoColorNamePanel
+#@+node:6::class colorizer
 #@+body
 class colorizer:
 
@@ -575,11 +891,13 @@ class colorizer:
 		self.body = None
 		self.language = None
 		self.flag = None
+		self.line_index = 0
 		# Others.
 		self.single_comment_start = None
 		self.block_comment_start = None
 		self.block_comment_end = None
 		self.has_string = None
+		self.string_delims = ("'",'"')
 		self.has_pp_directives = None
 		self.keywords = None
 		self.lb = None
@@ -599,10 +917,10 @@ class colorizer:
 		#@+body
 		self.state_dict = {
 			"blockComment" : self.continueBlockComment,
-			"doubleString" : self.continueSingleString,
+			"doubleString" : self.continueDoubleString, # 1/25/03
 			"nocolor"      : self.continueNocolor,
 			"normal"       : self.doNormalState,
-			"singleString" : self.continueDoubleString,
+			"singleString" : self.continueSingleString,  # 1/25/03
 			"string3s"     : self.continueSinglePythonString,
 			"string3d"     : self.continueDoublePythonString,
 			"doc"          : self.continueDocPart }
@@ -742,7 +1060,7 @@ class colorizer:
 			self.language = language
 			self.flag = flag
 			
-			s = body.get("1.0", "end")
+			s = body.get("1.0","end")
 			sel = body.index("insert") # get the location of the insert point
 			start, end = string.split(sel,'.')
 			start = int(start)
@@ -829,6 +1147,12 @@ class colorizer:
 			# A strong case can be made for making this code as fast as possible.
 			# Whether this is compatible with general language descriptions remains to be seen.
 			self.has_string = self.language != "plain"
+			if self.language == "plain":
+				self.string_delims = ()
+			elif self.language == "html":
+				self.string_delims = ('"')
+			else:
+				self.string_delims = ("'",'"')
 			self.has_pp_directives = self.language in ("c","cweb","latex")
 			
 			# The list of languages for which keywords exist.
@@ -845,7 +1169,9 @@ class colorizer:
 					self.keywords.append(i)
 			else:
 				for name in languages:
-					exec("if self.language==name: self.keywords=%s_keywords" % name)
+					if self.language==name: 
+						# print "setting keywords for",name
+						exec("self.keywords=%s_keywords" % name)
 			
 			# Color plain text unless we are under the control of @nocolor.
 			# state = choose(self.flag,"normal","nocolor")
@@ -1053,7 +1379,8 @@ class colorizer:
 				# The new_states[] will be "unknown" unless the lines match,
 				# so we do not need to compare lines here.
 				while i < new_len:
-					state = self.colorizeLine(new_lines[i],i+1,state)
+					self.line_index = i + 1
+					state = self.colorizeLine(new_lines[i],state)
 					i += 1
 					# Set the state of the _next_ line.
 					if i < new_len and state != new_states[i]:
@@ -1069,10 +1396,10 @@ class colorizer:
 				#@-node:2::<< incrementally color the text >>
 
 			else:
-				n = 1 # The Tk line number for indices, as in n.i
+				self.line_index = 1 # The Tk line number for indices, as in n.i
 				for s in lines:
-					state = self.colorizeLine(s,n,state)
-					n += 1		
+					state = self.colorizeLine(s,state)
+					self.line_index += 1		
 			self.last_language = language
 		except:
 			self.last_language = "unknown"
@@ -1080,58 +1407,58 @@ class colorizer:
 	#@-body
 	#@+node:3::colorizeLine & allies
 	#@+body
-	def colorizeLine (self,s,n,state):
+	def colorizeLine (self,s,state):
 	
-		# print "inc,state,s:",self.incremental,state,s
+		# print "line,inc,state,s:",self.line_index,self.incremental,state,s
 	
 		if self.incremental:
-			self.removeTagsFromLine(n)
+			self.removeTagsFromLine()
 	
 		i = 0
 		while i < len(s):
 			self.progress = i
 			func = self.state_dict[state]
-			i,state = func(s,i,n)
+			i,state = func(s,i)
 	
 		return state
 	#@-body
 	#@+node:1::continueBlockComment
 	#@+body
-	def continueBlockComment (self,s,i,n):
+	def continueBlockComment (self,s,i):
 		
 		j = s.find(self.block_comment_end,i)
 	
 		if j == -1:
 			# The entire line is part of the block comment.
 			if self.language=="cweb":
-				self.doLatexLine(s,i,len(s),n)
+				self.doLatexLine(s,i,len(s))
 			else:
-				self.body.tag_add("comment", index(n,i), index(n,"end"))
+				self.tag("comment",i,"end")
 			return len(s),"blockComment" # skipt the rest of the line.
 		else:
 			# End the block comment.
 			k = len(self.block_comment_end)
 			if self.language=="cweb" and self.latex_cweb_comments:
-				self.doLatexLine(s,i,j,n)
-				self.body.tag_add("comment", index(n,j), index(n,j+k))
+				self.doLatexLine(s,i,j)
+				self.tag("comment",j,j+k)
 			else:
-				self.body.tag_add("comment", index(n,i), index(n,j+k))
+				self.tag("comment",i,j+k)
 			i = j + k
 			return i,"normal"
 	#@-body
 	#@-node:1::continueBlockComment
 	#@+node:2::continueSingle/DoubleString
 	#@+body
-	def continueDoubleString (self,s,i,n):
-		return self.continueString(s,i,n,'"',"doubleString")
+	def continueDoubleString (self,s,i):
+		return self.continueString(s,i,'"',"doubleString")
 		
-	def continueSingleString (self,s,i,n):
-		return self.continueString(s,i,n,"'","singleString")
+	def continueSingleString (self,s,i):
+		return self.continueString(s,i,"'","singleString")
 	
 	# Similar to skip_string.
-	def continueString (self,s,i,n,delim,continueState):
-	
-		continueFlag = false
+	def continueString (self,s,i,delim,continueState):
+		# trace(delim + s[i:])
+		continueFlag = choose(self.language=="html",true,false)
 		j = i
 		while i < len(s) and s[i] != delim:
 			if s[i:] == "\\":
@@ -1143,15 +1470,15 @@ class colorizer:
 		if i >= len(s):
 			i = len(s)
 		elif s[i] == delim:
-			i += 1
-		self.body.tag_add("string", index(n,j), index(n,i))
+			i += 1 ; continueFlag = false
+		self.tag("string",j,i)
 		state = choose(continueFlag,continueState,"normal")
 		return i,state
 	#@-body
 	#@-node:2::continueSingle/DoubleString
 	#@+node:3::continueDocPart
 	#@+body
-	def continueDocPart (self,s,i,n):
+	def continueDocPart (self,s,i):
 		
 		state = "doc"
 		if self.language == "cweb":
@@ -1166,30 +1493,30 @@ class colorizer:
 					state = "normal" # end the doc part and rescan
 				else:
 					# The control code does not end the doc part.
-					self.body.tag_add("keyword", index(n,i), index(n,j))
+					self.tag("keyword",i,j)
 					i = j
 					if word in ("@^","@.","@:","@="): # Ended by "@>"
 						j = s.find("@>",i)
 						if j > -1:
-							self.body.tag_add("cwebName", index(n,i), index(n,j))
-							self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+							self.tag("cwebName",i,j)
+							self.tag("nameBrackets",j,j+2)
 							i = j + 2
 			elif match(s,i,self.lb):
-				j = self.doNowebSecRef(s,i,n)
+				j = self.doNowebSecRef(s,i)
 				if j == i + 2: # not a section ref.
-					self.body.tag_add("docPart", index(n,i), index(n,j))
+					self.tag("docPart",i,j)
 				i = j
 			elif self.latex_cweb_docs:
 				# Everything up to the next "@" is latex colored.
 				j = s.find("@",i+1)
 				if j == -1: j = len(s)
-				self.doLatexLine(s,i,j,n)
+				self.doLatexLine(s,i,j)
 				i = j
 			else:
 				# Everthing up to the next "@" is in the doc part.
 				j = s.find("@",i+1)
 				if j == -1: j = len(s)
-				self.body.tag_add("docPart", index(n,i), index(n,j))
+				self.tag("docPart",i,j)
 				i = j
 			#@-body
 			#@-node:1::<< handle cweb doc part >>
@@ -1212,12 +1539,12 @@ class colorizer:
 			
 			if word in ["@c","@code","@unit","@root","@root-code","@root-doc","@color","@nocolor"]:
 				# End of the doc part.
-				self.body.tag_remove("docPart", index(n,i), index(n,j))
-				self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+				self.body.tag_remove("docPart",self.index(i),self.index(j))
+				self.tag("leoKeyword",i,j)
 				i = j ; state = "normal"
 			else:
 				# The entire line is in the doc part.
-				self.body.tag_add("docPart", index(n,i), index(n,len(s)))
+				self.tag("docPart",i,"end")
 				i = len(s) # skipt the rest of the line.
 			
 			#@-body
@@ -1228,7 +1555,7 @@ class colorizer:
 	#@-node:3::continueDocPart
 	#@+node:4::continueNocolor
 	#@+body
-	def continueNocolor (self,s,i,n):
+	def continueNocolor (self,s,i):
 	
 		if i == 0 and s[i] == '@':
 			j = self.skip_id(s,i+1)
@@ -1239,39 +1566,39 @@ class colorizer:
 		
 		if word == "@color" and self.language != "plain":
 			# End of the nocolor part.
-			self.body.tag_add("leoKeyword", index(n,0), index(n,j))
+			self.tag("leoKeyword",0,j)
 			return i,"normal"
 		else:
 			# The entire line is in the nocolor part.
 			# Add tags for blanks and tabs to make "Show Invisibles" work.
 			for ch in s[i:]:
 				if ch == ' ':
-					self.body.tag_add("blank", index(n,i))
+					self.tag("blank",i,i+1)
 				elif ch == '\t':
-					self.body.tag_add("tab", index(n,i))
+					self.tag("tab",i,i+1)
 				i += 1
 			return i,"nocolor"
 	#@-body
 	#@-node:4::continueNocolor
 	#@+node:5::continueSingle/DoublePythonString
 	#@+body
-	def continueDoublePythonString (self,s,i,n):
+	def continueDoublePythonString (self,s,i):
 		j = s.find('"""',i)
-		return self.continuePythonString(s,i,j,n,"string3d")
+		return self.continuePythonString(s,i,j,"string3d")
 	
-	def continueSinglePythonString (self,s,i,n):
+	def continueSinglePythonString (self,s,i):
 		j = s.find("'''",i)
-		return self.continuePythonString(s,i,j,n,"string3s")
+		return self.continuePythonString(s,i,j,"string3s")
 	
-	def continuePythonString (self,s,i,j,n,continueState):
+	def continuePythonString (self,s,i,j,continueState):
 	
 		if j == -1:
 			# The entire line is part of the triple-quoted string.
-			self.body.tag_add("string", index(n,i), index(n,"end"))
+			self.tag("string",i,"end")
 			return len(s),continueState # skip the rest of the line.
 		else:
 			# End the string
-			self.body.tag_add("string", index(n,i), index(n,j+3))
+			self.tag("string",i,j+3)
 			return j+3,"normal"
 	#@-body
 	#@-node:5::continueSingle/DoublePythonString
@@ -1279,7 +1606,7 @@ class colorizer:
 	#@+body
 	# Handles non-cweb keyword.
 	
-	def doAtKeyword (self,s,i,n):
+	def doAtKeyword (self,s,i):
 	
 		j = self.skip_id(s,i+1,chars="-") # to handle @root-code, @root-doc
 		word = s[i:j]
@@ -1290,16 +1617,16 @@ class colorizer:
 		# 7/8/02: don't color doc parts in plain text.
 		if self.language != "plain" and (word == "@" or word == "@doc"):
 			# at-space is a Leo keyword.
-			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+			self.tag("leoKeyword",i,j)
 			# Everything on the line is in the doc part.
-			self.body.tag_add("docPart", index(n,j), index(n,len(s)))
+			self.tag("docPart",j,"end")
 			return len(s),"doc"
 		elif word == "@nocolor":
 			# Nothing on the line is colored.
-			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+			self.tag("leoKeyword",i,j)
 			return j,"nocolor"
 		elif word in leoKeywords:
-			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+			self.tag("leoKeyword",i,j)
 			return j,"normal"
 		else:
 			return j,"normal"
@@ -1309,17 +1636,17 @@ class colorizer:
 	#@+body
 	# Colorize the line from i to j.
 	
-	def doLatexLine (self,s,i,j,n):
+	def doLatexLine (self,s,i,j):
 	
 		while i < j:
 			if match(s,i,"\\"):
 				k = self.skip_id(s,i+1)
 				word = s[i:k]
 				if word in latex_keywords:
-					self.body.tag_add("latexModeKeyword",index(n,i),index(n,k))
+					self.tag("latexModeKeyword",i,k)
 				i = k
 			else:
-				self.body.tag_add("latexModeBackground",index(n,i),index(n,i+1))
+				self.tag("latexModeBackground",i,i+1)
 				i += 1
 	#@-body
 	#@-node:7::doLatexLine
@@ -1327,43 +1654,90 @@ class colorizer:
 	#@+body
 	## To do: rewrite using dynamically generated tables.
 	
-	def doNormalState (self,s,i,n):
+	def doNormalState (self,s,i):
 	
 		ch = s[i] ; state = "normal"
 	
-		if ch in string.letters or ch == '_' or (ch == '\\' and self.language=="latex"):
+		if ch in string.letters or ch == '_' or (
+			(ch == '\\' and self.language=="latex") or
+			(ch in '/&<>' and self. language=="html")):
 			
 			#@<< handle possible keyword >>
 			#@+node:1::Valid regardless of latex mode
 			#@+node:1::<< handle possible  keyword >>
 			#@+body
 			if self.language == "latex":
+				
+				#@<< handle possible latex keyword >>
+				#@+node:1::<< handle possible latex keyword >>
+				#@+body
 				if match(s,i,"\\"):
 					j = self.skip_id(s,i+1)
 					word = s[i:j]
 					if word in latex_keywords:
-						self.body.tag_add("latexKeyword", index(n,i), index(n,j))
+						self.tag("latexKeyword",i,j)
 					else:
-						self.body.tag_add("latexBackground", index(n,i), index(n,j))
+						self.tag("latexBackground",i,j)
 				else:
-					self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
+					self.tag("latexBackground",i,i+1)
 					j = i + 1 # skip the character.
+				#@-body
+				#@-node:1::<< handle possible latex keyword >>
+
+			elif self.language == "html":
+				
+				#@<< handle possible html keyword >>
+				#@+node:2::<< handle possible html keyword >>
+				#@+body
+				if match(s,i,"<!---") or match(s,i,"<!--"):
+					if match(s,i,"<!---"): k = 5
+					else: k = 4
+					self.tag("comment",i,i+k)
+					j = i + k ; state = "blockComment"
+				elif match(s,i,"<"):
+					if match(s,i,"</"): k = 2
+					else: k = 1
+					j = self.skip_id(s,i+k)
+					self.tag("keyword",i,j)
+				elif match(s,i,"&"):
+					j = self.skip_id(s,i+1,';')
+					self.tag("keyword",i,j)
+				elif match(s,i,"/>"):
+					j = i + 2
+					self.tag("keyword",i,j)
+				elif match(s,i,">"):
+					j = i + 1
+					self.tag("keyword",i,j)
+				else:
+					j = i + 1
+				
+				#@-body
+				#@-node:2::<< handle possible html keyword >>
+
 			else:
+				
+				#@<< handle general keyword >>
+				#@+node:3::<< handle general keyword >>
+				#@+body
 				j = self.skip_id(s,i)
 				word = s[i:j]
 				if word in self.keywords:
-					self.body.tag_add("keyword", index(n,i), index(n,j))
+					self.tag("keyword",i,j)
 				elif self.language == "php":
 					if word in php_paren_keywords and match(s,j,"()"):
-						self.body.tag_add("keyword", index(n,i), index(n,j+2))
+						self.tag("keyword",i,j+2)
 						j += 2
+				
+				#@-body
+				#@-node:3::<< handle general keyword >>
+
 			i = j
 			#@-body
 			#@-node:1::<< handle possible  keyword >>
 			#@-node:1::Valid regardless of latex mode
 
 		elif match(s,i,self.lb):
-			i = self.doNowebSecRef(s,i,n)
+			i = self.doNowebSecRef(s,i)
 		elif ch == '@':
 			
 			#@<< handle at keyword >>
@@ -1376,7 +1750,7 @@ class colorizer:
 					#@<< handle cweb ref or def >>
 					#@+node:2::<< handle cweb ref or def >>
 					#@+body
-					self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+					self.tag("nameBrackets",i,i+2)
 					
 					# See if the line contains the right name bracket.
 					j = s.find("@>=",i+2)
@@ -1387,8 +1761,8 @@ class colorizer:
 					if j == -1:
 						i += 2
 					else:
-						self.body.tag_add("cwebName", index(n,i+2), index(n,j))
-						self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+						self.tag("cwebName",i+2,j)
+						self.tag("nameBrackets",j,j+k)
 						i = j + k
 					
 					#@-body
@@ -1405,7 +1779,7 @@ class colorizer:
 						assert(self.language=="cweb")
 						
 						j = i + len(word)
-						self.body.tag_add("keyword",index(n,i),index(n,j))
+						self.tag("keyword",i,j)
 						i = j
 						
 						if word in ("@ ","@\t","@\n","@*","@**"):
@@ -1415,16 +1789,16 @@ class colorizer:
 						elif word in ("@^","@.","@:","@="): # Ended by "@>"
 							j = s.find("@>",i)
 							if j > -1:
-								self.body.tag_add("cwebName", index(n,i), index(n,j))
-								self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+								self.tag("cwebName",i,j)
+								self.tag("nameBrackets",j,j+2)
 								i = j + 2
 						#@-body
 						#@-node:1::<< Handle cweb control word >>
 
 					else:
-						i,state = self.doAtKeyword(s,i,n)
+						i,state = self.doAtKeyword(s,i)
 			else:
-				i,state = self.doAtKeyword(s,i,n)
+				i,state = self.doAtKeyword(s,i)
 			#@-body
 			#@-node:2::<< handle at keyword >>
 			#@-node:1::Valid regardless of latex mode
@@ -1435,16 +1809,16 @@ class colorizer:
 			#@+node:1::Valid regardless of latex mode
 			#@+node:3::<< handle single-line comment >>
 			#@+body
-			# print "single-line comment n,i,s:",n,i,s
+			# print "single-line comment i,s:",i,s
 			
 			if self.language == "cweb" and self.latex_cweb_comments:
 				j = i + len(self.single_comment_start)
-				self.body.tag_add("comment", index(n,i), index(n,j))
-				self.doLatexLine(s,j,len(s),n)
+				self.tag("comment",i,j)
+				self.doLatexLine(s,j,len(s))
 				i = len(s)
 			else:
-				self.body.tag_add("comment", index(n,i), index(n,"end"))
-			i = len(s)
+				self.tag("comment",i,"end")
+				i = len(s)
 			#@-body
 			#@-node:3::<< handle single-line comment >>
 			#@-node:1::Valid regardless of latex mode
@@ -1456,7 +1830,7 @@ class colorizer:
 			#@+node:4::<< start block comment >>
 			#@+body
 			k = len(self.block_comment_start)
-			self.body.tag_add("comment", index(n,i), index(n,i+k))
+			self.tag("comment",i,i+k)
 			i += k ; state = "blockComment"
 			#@-body
 			#@-node:4::<< start block comment >>
@@ -1468,9 +1842,9 @@ class colorizer:
 			#@+node:1::Valid regardless of latex mode
 			#@+node:5::<< handle latex line >>
 			#@+body
-			self.body.tag_add("keyword", index(n,i), index(n,i+1))
+			self.tag("keyword",i,i+1)
 			i += 1 # Skip the %
-			self.doLatexLine(s,i,len(s),n)
+			self.doLatexLine(s,i,len(s))
 			i = len(s)
 			#@-body
 			#@-node:5::<< handle latex line >>
@@ -1483,16 +1857,16 @@ class colorizer:
 			#@+node:1::<< handle latex normal character >>
 			#@+body
 			if self.language=="cweb":
-				self.body.tag_add("latexModeBackground", index(n,i), index(n,i+1))
+				self.tag("latexModeBackground",i,i+1)
 			else:
-				self.body.tag_add("latexBackground", index(n,i), index(n,i+1))
+				self.tag("latexBackground",i,i+1)
 			i += 1
 			#@-body
 			#@-node:1::<< handle latex normal character >>
 			#@-node:2::Vaid only in latex mode
 
 		# ---- From here on self.language != "latex" -----
-		elif self.has_string and (ch == '"' or ch == "'"):
+		elif ch in self.string_delims:
 			
 			#@<< handle string >>
 			#@+node:3::Valid when not in latex_mode
@@ -1500,11 +1874,11 @@ class colorizer:
 			#@+body
 			if self.language == "python":
 				j, state = self.skip_python_string(s,i)
-				self.body.tag_add("string", index(n,i), index(n,j))
+				self.tag("string",i,j)
 				i = j
 			else:
 				j, state = self.skip_string(s,i)
-				self.body.tag_add("string", index(n,i), index(n,j))
+				self.tag("string",i,j)
 				i = j
 			
 			#@-body
@@ -1524,7 +1898,7 @@ class colorizer:
 					break
 				else: i += 1
 			
-			self.body.tag_add("pp", index(n,j), index(n,i))
+			self.tag("pp",j,i)
 			#@-body
 			#@-node:2::<< handle C preprocessor line >>
 			#@-node:3::Valid when not in latex_mode
@@ -1536,10 +1910,10 @@ class colorizer:
 			#@+node:3::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
-				self.body.tag_add("keyword", index(n,i), index(n,i+5))
+				self.tag("keyword",i,i+5)
 				i += 5
 			elif match(s,i,"?>"):
-				self.body.tag_add("keyword", index(n,i), index(n,i+2))
+				self.tag("keyword",i,i+2)
 				i += 2
 			else:
 				i += 1
@@ -1555,7 +1929,7 @@ class colorizer:
 			#@+node:4::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
-				self.body.tag_add("blank", index(n,i))
+				self.tag("blank",i,i+1)
 			i += 1
 			#@-body
 			#@-node:4::<< handle blank >>
@@ -1568,7 +1942,7 @@ class colorizer:
 			#@+node:5::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
-				self.body.tag_add("tab", index(n,i))
+				self.tag("tab",i,i+1)
 			i += 1
 			#@-body
 			#@-node:5::<< handle tab >>
@@ -1580,7 +1954,7 @@ class colorizer:
 			#@+node:3::Valid when not in latex_mode
 			#@+node:6::<< handle normal character >>
 			#@+body
-			# self.body.tag_add("normal", index(n,i))
+			# self.tag("normal",i,i+1)
 			i += 1
 			#@-body
 			#@-node:6::<< handle normal character >>
@@ -1589,6 +1963,7 @@ class colorizer:
 	
 		assert(self.progress < i)
 		return i,state
+	
 	#@-body
 	#@+node:1::Valid regardless of latex mode
 	#@-node:1::Valid regardless of latex mode
@@ -1599,9 +1974,9 @@ class colorizer:
 	#@-node:8::doNormalState
 	#@+node:9::doNowebSecRef
 	#@+body
-	def doNowebSecRef (self,s,i,n):
+	def doNowebSecRef (self,s,i):
 	
-		self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+		self.tag("nameBrackets",i,i+2)
 		
 		# See if the line contains the right name bracket.
 		j = s.find(self.rb+"=",i+2)
@@ -1611,10 +1986,10 @@ class colorizer:
 		if j == -1:
 			return i + 2
 		else:
-			searchName = self.body.get(index(n,i), index(n,j+k)) # includes brackets
+			searchName = self.body.get(self.index(i),self.index(j+k)) # includes brackets
 			ref = findReference(searchName,self.v)
 			if ref:
-				self.body.tag_add("link", index(n,i+2), index(n,j))
+				self.tag("link",i+2,j)
 				if self.use_hyperlinks:
 					
 					#@<< set the hyperlink >>
@@ -1626,7 +2001,7 @@ class colorizer:
 					tagName = "hyper" + `self.hyperCount`
 					self.hyperCount += 1
 					self.body.tag_delete(tagName)
-					self.body.tag_add(tagName, index(n,i+2), index(n,j))
+					self.tag(tagName,i+2,j)
 					ref.tagName = tagName
 					self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
 					self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
@@ -1635,10 +2010,10 @@ class colorizer:
 					#@-node:1::<< set the hyperlink >>
 
 			elif k == 3: # a section definition
-				self.body.tag_add("link", index(n,i+2), index(n,j))
+				self.tag("link",i+2,j)
 			else:
-				self.body.tag_add("name", index(n,i+2), index(n,j))
-			self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+				self.tag("name",i+2,j)
+			self.tag("nameBrackets",j,j+k)
 			return j + k
 	#@-body
 	#@-node:9::doNowebSecRef
@@ -1652,10 +2027,12 @@ class colorizer:
 			"latexBackground","latexKeyword",
 			"link","name","nameBrackets","pp","string","tab")
 			
-	def removeTagsFromLine (self,n):
+	def removeTagsFromLine (self):
 		
+		# print "removeTagsFromLine",self.line_index
 		for tag in self.tags:
-			self.body.tag_remove(tag,index(n,0),index(n,"end"))
+			self.body.tag_remove(tag,self.index(0),self.index("end"))
+	
 	#@-body
 	#@-node:10::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
@@ -1813,7 +2190,18 @@ class colorizer:
 
 	#@-at
 	#@-body
-	#@+node:1::setFirstLineState
+	#@+node:1::index & tag
+	#@+body
+	def index (self,i):
+		
+		return "%s.%s" % (self.line_index,i)
+			
+	def tag (self,name,i,j):
+	
+		self.body.tag_add(name,self.index(i),self.index(j))
+	#@-body
+	#@-node:1::index & tag
+	#@+node:2::setFirstLineState
 	#@+body
 	def setFirstLineState (self):
 		
@@ -1827,8 +2215,8 @@ class colorizer:
 	
 		return state
 	#@-body
-	#@-node:1::setFirstLineState
-	#@+node:2::skip_id
+	#@-node:2::setFirstLineState
+	#@+node:3::skip_id
 	#@+body
 	def skip_id(self,s,i,chars=None):
 	
@@ -1843,8 +2231,8 @@ class colorizer:
 		return i
 	
 	#@-body
-	#@-node:2::skip_id
-	#@+node:3::skip_python_string
+	#@-node:3::skip_id
+	#@+node:4::skip_python_string
 	#@+body
 	def skip_python_string(self,s,i):
 	
@@ -1858,8 +2246,8 @@ class colorizer:
 		else:
 			return self.skip_string(s,i)
 	#@-body
-	#@-node:3::skip_python_string
-	#@+node:4::skip_string
+	#@-node:4::skip_python_string
+	#@+node:5::skip_string
 	#@+body
 	def skip_string(self,s,i):
 	
@@ -1874,357 +2262,20 @@ class colorizer:
 			else: i += 1
 	
 		if i >= n:
-			return n, "normal"
+			if self.language=="html":
+				return n,"doubleString"
+			else:
+				return n, "normal"
 		elif s[i] == delim:
 			i += 1
 		return i,"normal"
 	
 	#@-body
-	#@-node:4::skip_string
+	#@-node:5::skip_string
 	#@-node:10::Utils
 	#@-others
 #@-body
-#@-node:5::class colorizer
-#@+node:6::class leoColorPanel
-#@+body
-class leoColorPanel:
-
-	#@+others
-	#@+node:1::colorPanel.__init__
-	#@+body
-	def __init__ (self,c):
-		
-		self.commands = c
-		self.frame = c.frame
-		# Set by run.
-		self.top = None
-		# Options provisionally set by callback.
-		self.changed_options = []
-		# For communication with callback.
-		self.buttons = {}
-		self.nameButtons = {}
-		self.option_names = {}
-		# Save colors for revert.  onOk alters this.
-		self.revertColors = {}
-		config = app().config
-		for name,option_name,default_color in colorPanelData:
-			self.revertColors[option_name] = config.getColorsPref(option_name)
-	#@-body
-	#@-node:1::colorPanel.__init__
-	#@+node:2::run
-	#@+body
-	def run (self):
-		
-		c = self.commands ; Tk = Tkinter
-		config = app().config
-		
-		self.top = top = Tk.Toplevel(app().root)
-		top.title("Syntax colors for " + shortFileName(c.frame.title))
-		top.protocol("WM_DELETE_WINDOW", self.onOk)
-		attachLeoIcon(top)
-	
-		
-		#@<< create color panel >>
-		#@+node:1::<< create color panel >>
-		#@+body
-		outer = Tk.Frame(top,bd=2,relief="groove")
-		outer.pack(anchor="n",pady=2,ipady=1,expand=1,fill="x")
-		
-		# Create all the rows.
-		for name,option_name,default_color in colorPanelData:
-			# Get the color.
-			option_color = config.getColorsPref(option_name)
-			color = choose(option_color,option_color,default_color)
-			# Create the row.
-			f = Tk.Frame(outer,bd=2)
-			f.pack()
-			
-			lab=Tk.Label(f,text=name,width=17,anchor="e")
-		
-			b1 = Tk.Button(f,text="",state="disabled",bg=color,width=4)
-			self.buttons[name]=b1 # For callback.
-			self.option_names[name]=option_name # For callback.
-			
-			b2 = Tk.Button(f,width=12,text=option_color)
-			self.nameButtons[name]=b2
-			
-			# 9/15/02: Added self=self to remove Python 2.1 warning.
-			callback = lambda name=name,self=self:self.showColorPicker(name)
-			b3 = Tk.Button(f,text="Color Picker...",command=callback)
-		
-			# 9/15/02: Added self=self to remove Python 2.1 warning.
-			callback = lambda name=name,color=color,self=self:self.showColorName(name,color)
-			b4 = Tk.Button(f,text="Color Name...",command=callback)
-		
-			lab.pack(side="left",padx=3)
-			b1.pack (side="left",padx=3)
-			b2.pack (side="left",padx=3)
-			b3.pack (side="left",padx=3)
-			b4.pack (side="left",padx=3)
-			
-		# Create the Ok, Cancel & Revert buttons
-		f = Tk.Frame(outer,bd=2)
-		f.pack()
-		b = Tk.Button(f,width=6,text="OK",command=self.onOk)
-		b.pack(side="left",padx=4)
-		b = Tk.Button(f,width=6,text="Cancel",command=self.onCancel)
-		b.pack(side="left",padx=4,expand=1,fill="x")
-		b = Tk.Button(f,width=6,text="Revert",command=self.onRevert)
-		b.pack(side="right",padx=4)
-		#@-body
-		#@-node:1::<< create color panel >>
-
-		center_dialog(top) # Do this _after_ building the dialog!
-		top.resizable(0,0)
-		
-		# We are associated with a commander, so
-		# There is no need to make this a modal dialog.
-		if 0:
-			top.grab_set() # Make the dialog a modal dialog.
-			top.focus_force() # Get all keystrokes.
-	#@-body
-	#@-node:2::run
-	#@+node:3::showColorPicker
-	#@+body
-	def showColorPicker (self,name):
-		
-		option_name = self.option_names[name]
-		color = app().config.getColorsPref(option_name)
-		rgb,val = tkColorChooser.askcolor(color=color)
-		if val != None:
-			self.update(name,val)
-	#@-body
-	#@-node:3::showColorPicker
-	#@+node:4::showColorName
-	#@+body
-	def showColorName (self,name,color):
-		
-		np = leoColorNamePanel(self,name,color)
-		np.run(name,color)
-	#@-body
-	#@-node:4::showColorName
-	#@+node:5::colorPanel.onOk, onCancel, onRevert
-	#@+body
-	def onOk (self):
-		# Update the revert colors
-		config = app().config
-		for name in self.changed_options:
-			option_name = self.option_names[name]
-			self.revertColors[option_name] = config.getColorsPref(option_name)
-		self.changed_options = []
-		if 1: # Hide the window, preserving its position.
-			self.top.withdraw()
-		else: # works.
-			self.commands.frame.colorPanel = None
-			self.top.destroy()
-		
-	def onCancel (self):
-		self.onRevert()
-		if 1: # Hide the window, preserving its position.
-			self.top.withdraw()
-		else: # works.
-			self.commands.frame.colorPanel = None
-			self.top.destroy()
-		
-	def onRevert (self):
-		config = app().config
-		for name in self.changed_options:
-			option_name = self.option_names[name]
-			old_val = self.revertColors[option_name]
-			# Update the current settings.
-			config.setColorsPref(option_name,old_val)
-			# Update the buttons.
-			b = self.buttons[name]
-			b.configure(bg=old_val)
-			b = self.nameButtons[name]
-			b.configure(text=`old_val`)
-		self.changed_options = []
-		self.commands.recolor()
-	#@-body
-	#@-node:5::colorPanel.onOk, onCancel, onRevert
-	#@+node:6::update
-	#@+body
-	def update (self,name,val):
-		
-		config = app().config
-		# es(str(name) + " = " + str(val))
-		
-		# Put the new color in the button.
-		b = self.buttons[name]
-		b.configure(bg=val)
-		option_name = self.option_names[name]
-		
-		# Put the new color name or value in the name button.
-		b = self.nameButtons[name]
-		b.configure(text=str(val))
-		
-		# Save the changed option names for revert and cancel.
-		if name not in self.changed_options:
-			self.changed_options.append(name)
-	
-		# Set the new value and recolor.
-		config.setColorsPref(option_name,val)
-		self.commands.recolor()
-	#@-body
-	#@-node:6::update
-	#@-others
-#@-body
-#@-node:6::class leoColorPanel
-#@+node:7::class leoColorNamePanel
-#@+body
-class leoColorNamePanel:
-
-	#@+others
-	#@+node:1::namePanel.__init__
-	#@+body
-	def __init__ (self, colorPanel, name, color):
-		
-		self.colorPanel = colorPanel
-		self.name = name
-		self.color = color
-		self.revertColor = color
-	#@-body
-	#@-node:1::namePanel.__init__
-	#@+node:2::getSelection
-	#@+body
-	def getSelection (self):
-	
-		box = self.box ; color = None
-		
-		# Get the family name if possible, or font otherwise.
-		items = box.curselection()
-	
-		if len(items)> 0:
-			try: # This shouldn't fail now.
-				items = map(int, items)
-				color = box.get(items[0])
-			except:
-				es("unexpected exception")
-				es_exception()
-	
-		if not color:
-			color = self.color
-		return color
-	#@-body
-	#@-node:2::getSelection
-	#@+node:3::run
-	#@+body
-	def run (self,name,color):
-		
-		assert(name==self.name)
-		assert(color==self.color)
-		self.revertColor = color
-		
-		Tk = Tkinter
-		config = app().config
-	
-		self.top = top = Tk.Toplevel(app().root)
-		top.title("Color names for " + '"' + name + '"')
-		top.protocol("WM_DELETE_WINDOW", self.onOk)
-	
-		
-		#@<< create color name panel >>
-		#@+node:1::<< create color name panel >>
-		#@+body
-		# Create organizer frames
-		outer = Tk.Frame(top,bd=2,relief="groove")
-		outer.pack(fill="both",expand=1)
-		
-		upper = Tk.Frame(outer)
-		upper.pack(fill="both",expand=1)
-		
-		# A kludge to give vertical space to the listbox!
-		spacer = Tk.Frame(upper) 
-		spacer.pack(side="right",pady="2i") 
-		
-		lower = Tk.Frame(outer)
-		# padx=20 gives more room to the Listbox!
-		lower.pack(padx=40) # Not expanding centers the buttons.
-		
-		# Create and populate the listbox.
-		self.box = box = Tk.Listbox(upper) # height doesn't seem to work.
-		box.bind("<Double-Button-1>", self.onApply)
-		
-		if color not in colorNamesList:
-			box.insert(0,color)
-			
-		names = list(colorNamesList) # It's actually a tuple.
-		names.sort()
-		for name in names:
-			box.insert("end",name)
-		
-		bar = Tk.Scrollbar(box)
-		bar.pack(side="right", fill="y")
-		box.pack(padx=2,pady=2,expand=1,fill="both")
-		
-		bar.config(command=box.yview)
-		box.config(yscrollcommand=bar.set)
-			
-		# Create the row of buttons.
-		for text,command in (
-			("OK",self.onOk),
-			("Cancel",self.onCancel),
-			("Revert",self.onRevert),
-			("Apply",self.onApply) ):
-				
-			b = Tk.Button(lower,text=text,command=command)
-			b.pack(side="left",pady=6,padx=4)
-		#@-body
-		#@-node:1::<< create color name panel >>
-
-		self.select(color)
-		
-		center_dialog(top) # Do this _after_ building the dialog!
-		# top.resizable(0,0)
-		
-		# This must be a modal dialog.
-		top.grab_set()
-		top.focus_force() # Get all keystrokes.
-	#@-body
-	#@-node:3::run
-	#@+node:4::onOk, onCancel, onRevert, OnApply
-	#@+body
-	def onApply (self,event=None):
-		self.color = color = self.getSelection()
-		self.colorPanel.update(self.name,color)
-	
-	def onOk (self):
-		color = self.getSelection()
-		self.colorPanel.update(self.name,color)
-		self.top.destroy()
-		
-	def onCancel (self):
-		self.onRevert()
-		self.top.destroy()
-		
-	def onRevert (self):
-		self.color = color = self.revertColor
-		self.select(self.color)
-		self.colorPanel.update(self.name,color)
-	#@-body
-	#@-node:4::onOk, onCancel, onRevert, OnApply
-	#@+node:5::select
-	#@+body
-	def select (self,color):
-	
-		# trace(color)
-	
-		# The name should be on the list!
-		box = self.box
-		for i in xrange(0,box.size()):
-			item = box.get(i)
-			if color == item:
-				box.select_clear(0,"end")
-				box.select_set(i)
-				box.see(i)
-				return
-	
-		# trace("not found:" + `color`)
-	#@-body
-	#@-node:5::select
-	#@-others
-#@-body
-#@-node:7::class leoColorNamePanel
+#@-node:6::class colorizer
 #@-others
 #@-body
 #@-node:0::@file leoColor.py
