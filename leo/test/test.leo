@@ -542,11 +542,11 @@
 <v t="ekr.20050119220832"><vh>@url file:.\..\leo\doc\LeoDocs.leo#Users Guide--&gt;Chapter 8: Customizing Leo</vh></v>
 <v t="ekr.20050203085849"><vh>test local settings (c.redirect_execute_script_output_to_log_pane)</vh></v>
 </v>
-<v t="ekr.20041126132604"><vh>Prototypes</vh>
+<v t="ekr.20041126132604" a="TV"><vh>Prototypes</vh>
 <v t="ekr.20041220080654"><vh>Setting Tk config values safely</vh>
 <v t="ekr.20041220091350"><vh>&lt;&lt; documentation about how to set general options &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20041220172118"><vh>Resolve CVS Conflicts command</vh>
+<v t="ekr.20041220172118" a="E"><vh>Resolve CVS Conflicts command</vh>
 <v t="ekr.20041220172118.1"><vh>Cvs markers &amp; file names</vh></v>
 <v t="ekr.20041220172118.2"><vh>Conflicts not involving sentinels</vh></v>
 <v t="ekr.20041220173231"><vh>Conflicts involving sentinels</vh></v>
@@ -1575,7 +1575,7 @@
 <v t="ekr.20050120095423.21"><vh>print all loaded plugins</vh></v>
 </v>
 <v t="ekr.20050210180034"><vh>jython script</vh></v>
-<v t="ekr.20050211121701" a="ETV"><vh>Develop &amp; test g.removeExtraLws</vh>
+<v t="ekr.20050211121701" a="E"><vh>Develop &amp; test g.removeExtraLws</vh>
 <v t="ekr.20050211121701.1"><vh>g.removeExtraLws</vh></v>
 <v t="ekr.20050211121701.2" a="E"><vh>test_g_removeExtraLws</vh></v>
 </v>
@@ -2199,7 +2199,7 @@ import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
 <t tx="EKR.20040627103801"></t>
-<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
+<t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c6571066806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff6806582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
 c = g.top() ; p = c.currentPosition()
@@ -2354,7 +2354,7 @@ for p in c.rootPosition().allNodes_iter():
 s = "%d nodes" % count
 print s ; g.es(s)</t>
 <t tx="ekr.20040312101720"></t>
-<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d710128550577686572657102550a6265666f726549636f6e710355047870616471044b025504747970657105550466696c65710668065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286805680668084afdffffff68065834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6802550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
+<t tx="ekr.20040317101155" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e710668035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff68035834000000433a5c70726f675c6c656f4356535c6c656f5c7372635c2e2e5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e">import leoGlobals as g
 
 c = g.top()
 
@@ -10898,11 +10898,11 @@ if not spellpyx or not spellFrame:
     g.app.scriptDict['removeMe'] = True</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">/Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/doc/LeoDocs.leo
 /Users/edream/leoCVS/leo/config/leoSettings.leo
-/Users/edream/leoCVS/leo/src/LeoPy.leo
+/Users/edream/leoCVS/leo/test/test.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo
 C:\prog\leoCVS\leo\test\test.leo
-/Users/edream/leoCVS/leo/test/test.leo</t>
+/Users/edream/leoCVS/leo/src/LeoPy.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124144944">import os
 import sys
