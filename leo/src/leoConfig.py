@@ -1207,6 +1207,7 @@ class settingsController:
         self.c = c
         self.buttonNames = ('OK', 'Cancel','Apply','Revert')
         self.colorSettingDict = {} # Contains entries for all changed colors.
+        self.commentWidget = None
         self.initValueDict = {} # Initial value of settings in present pane.
         self.fileValueDict = {} # Values of settings written to file.
         self.filesInfoDict = {} # Info about all settings file in the settings outline.
@@ -1223,6 +1224,24 @@ class settingsController:
         self._settingsPosition = p = self.createSettingsTree()
         self.parser = settingsDialogParserClass(c,p,self)
     
+        #@    << set background color for widgets >>
+        #@+node:ekr.20050121105232:<< set background color for widgets >>
+        if 0:
+            # Get the color from the background color of the body text widget.
+            commonBackground = c.frame.body.bodyCtrl.cget('background')
+            
+        else:
+            # 'LightSteelBlue1' # too blue.
+            # 'gray80' # too dark.
+            # 'gray90' # Possible: very light.
+            # '#f2fdff' # Same as log window.  Too cute.
+            
+            commonBackground = 'gray90'
+            
+        self.commonBackground = commonBackground
+        #@nonl
+        #@-node:ekr.20050121105232:<< set background color for widgets >>
+        #@nl
         if self.replaceBody:
             #@        << replace the body pane with the outer dialog frame >>
             #@+middle:ekr.20041225073207:When replacing body & tree panes...
@@ -1233,7 +1252,7 @@ class settingsController:
             
             # The new frame must be a child of splitter1Frame.
             parentFrame = c.frame.component('splitter1Frame').getFrame()
-            self.top = interior = Tk.Frame(parentFrame)
+            self.top = interior = Tk.Frame(parentFrame,background=commonBackground)
             
             c.frame.componentClass(c,'settingDialogFrame',interior,self,packer,unpacker)
             c.frame.replaceBodyPaneWithComponent('settingDialogFrame')
@@ -1241,8 +1260,6 @@ class settingsController:
             #@-node:ekr.20041225071604:<< replace the body pane with the outer dialog frame >>
             #@-middle:ekr.20041225073207:When replacing body & tree panes...
             #@nl
-            self.paneFrame = paneFrame = Tk.Frame(interior)
-            paneFrame.pack(expand=1,fill='both')
             #@        << replace tree pane with settings tree >>
             #@+middle:ekr.20041225073207:When replacing body & tree panes...
             #@+node:ekr.20041225090725:<< replace tree pane with settings tree >>
@@ -1274,11 +1291,18 @@ class settingsController:
             #@-node:ekr.20041225090725:<< replace tree pane with settings tree >>
             #@-middle:ekr.20041225073207:When replacing body & tree panes...
             #@nl
-            #@        << add buttons to paneFrame >>
+            #@        << add buttons and label to interior >>
             #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225074713:<< add buttons to paneFrame >>
-            buttonFrame = Tk.Frame(paneFrame)
-            buttonFrame.pack(side='top')
+            #@+node:ekr.20041225074713:<< add buttons and label to interior >>
+            # Put the label on the same line as the buttons.
+            labelButtonFrame = Tk.Frame(interior,background=commonBackground)
+            labelButtonFrame.pack(side='top',expand=0,fill='x',pady=4)
+            buttonFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
+            buttonFrame.pack(side='left',padx=10)
+            labelFrame = Tk.Frame(labelButtonFrame,background=commonBackground)
+            labelFrame.pack(side='left')
+            self.setterLabel = label = Tk.Label(labelFrame,anchor='w',background=commonBackground)
+            label.pack(side='right')
             
             w = 6
             for name in self.buttonNames:
@@ -1290,41 +1314,28 @@ class settingsController:
                     self.onAnyButton(name)
             
                 b = Tk.Button(buttonFrame,text=name,command=buttonCallback,width=w)
-                b.pack(side='left',padx=2)
+                b.pack(side='left',padx=4)
             #@nonl
-            #@-node:ekr.20041225074713:<< add buttons to paneFrame >>
+            #@-node:ekr.20041225074713:<< add buttons and label to interior >>
             #@-middle:ekr.20041225073207:When replacing body & tree panes...
             #@nl
-            #@        << put setterCanvas in paneFrame >>
+            #@        << add setterCanvas to interior >>
             #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225073207.1:<< put setterCanvas in paneFrame>>
-            self.sc = sc = Pmw.ScrolledCanvas(paneFrame,
-                hscrollmode='none',vscrollmode='dynamic',
-                labelpos = 'n',label_text = '')
-                
-            sc.pack(side='top',expand=0,fill="x")
+            #@+node:ekr.20041225073207.1:<< add setterCanvas to interior>>
+            self.sc = sc = Pmw.ScrolledCanvas(interior,
+                hscrollmode='dynamic',vscrollmode='dynamic',
+                canvas_background = commonBackground,
+                borderframe=1,
+                # A fixed size here works best.
+                # Pmw does not handle the changes to the canvas very well.
+                usehullsize = 1,
+                hull_height = 400,
+                hull_width = 800,
+            )
             
-            setterCanvas = sc.component('canvas')
-            self.setterLabel = sc.component('label')
+            sc.pack(side='top',expand=1,fill="both")
             #@nonl
-            #@-node:ekr.20041225073207.1:<< put setterCanvas in paneFrame>>
-            #@-middle:ekr.20041225073207:When replacing body & tree panes...
-            #@nl
-            #@        << add a comment widget to paneFrame >>
-            #@+middle:ekr.20041225073207:When replacing body & tree panes...
-            #@+node:ekr.20041225073207.2:<< add a comment widget to paneFrame >>
-            commentFrame = Tk.Frame(paneFrame)
-            commentFrame.pack(expand=0,fill="x")
-            
-            self.commentWidget = commentWidget = Pmw.ScrolledText(commentFrame)
-            commentWidget.pack(expand=0,fill="x")
-            
-            self.commentText = text = commentWidget.component('text')
-            
-            bg = commentFrame.cget('background')
-            text.configure(background=bg,borderwidth=2,height=6,state='disabled')
-            #@nonl
-            #@-node:ekr.20041225073207.2:<< add a comment widget to paneFrame >>
+            #@-node:ekr.20041225073207.1:<< add setterCanvas to interior>>
             #@-middle:ekr.20041225073207:When replacing body & tree panes...
             #@nl
             self.log = g.app.log
@@ -1376,7 +1387,7 @@ class settingsController:
             ):
                 self.panes[name] = pane = paneFrame.add(name,min=minsize,size=size)
                 if label is not None:
-                    label = label = Tk.Label(pane,text=label)
+                    label = label = Tk.Label(pane,text=label,background=commonBackground)
                     label.pack(side = 'top', expand = 0)
                     if isSetterLabel:
                         self.setterLabel = label
@@ -1572,7 +1583,7 @@ class settingsController:
     #@-node:ekr.20041225063637.24:rootNodeComments
     #@-node:ekr.20041225063637.21:createSettingsTree & helpers
     #@+node:ekr.20041225063637.25:createWidgets & helpers
-    def createWidgets (self,widgets,parent):
+    def createWidgets (self,widgets,parent,p):
         
         munge = g.app.config.munge
     
@@ -1602,6 +1613,8 @@ class settingsController:
         
         self.h = 0 # Offset from top of pane for first widget.
         self.createSpacerFrame(parent,size=15)
+        
+        self.createComments(parent,p)
                 
         for data in widgets:
             p,kind,name,vals = data
@@ -1635,7 +1648,7 @@ class settingsController:
         val = g.choose(val,True,False)
         self.initValue(p,name,kind,val,boolCallback)
     
-        box = Tk.Checkbutton(parent,text=name,variable=var)
+        box = Tk.Checkbutton(parent,text=name,variable=var,background=self.commonBackground)
     
         self.sc.create_window(10,self.h,anchor='w',window=box)
         self.h += 30
@@ -1648,7 +1661,7 @@ class settingsController:
         noColor = "<no color>"
         colorNamesList = list(leoTkinterColorPanels.colorNamesList)
         
-        f = Tk.Frame(parent) # No need to pack.
+        f = Tk.Frame(parent,background=self.commonBackground) # No need to pack.
         #@    << munge val and add val to colorNamesList >>
         #@+node:ekr.20041225063637.29:<< munge val and add val to colorNamesList >>
         if val in ("None",None): val = noColor
@@ -1702,12 +1715,12 @@ class settingsController:
                 self.colorSettingDict[munge(name)] = val
                 colorSample.configure(background=val,activebackground=val,text=val)
         
-        b = Tk.Button(f,text="Color Picker...",command=pickerCallback)
+        b = Tk.Button(f,text="Color Picker...",command=pickerCallback,background=self.commonBackground)
         b.pack(side="left")
         #@nonl
         #@-node:ekr.20041225063637.31:<< create picker button and callback >>
         #@nl
-        Tk.Label(f,text=name).pack(side='left')
+        Tk.Label(f,text=name,background=self.commonBackground).pack(side='left')
         
         self.colorSettingDict [munge(name)] = val
     
@@ -1720,6 +1733,46 @@ class settingsController:
         self.h += 30
     #@nonl
     #@-node:ekr.20041225063637.28:createColor
+    #@+node:ekr.20050121131613:createComents
+    def createComments (self,parent,p):
+        
+        bg = self.commonBackground
+    
+        s = p.bodyString().strip()
+        if not s:
+            return
+        
+        f = Tk.Frame(parent,background=bg) # No need to pack.
+        
+        if 0: # atoi problem.
+            group = Pmw.Group(f,tag_text='comments',hull_background = bg)
+            group.pack(side='left',padx=6,pady=6)
+            label = Tkinter.Label(group.interior(),text=s)
+            label.pack(padx=2,pady=2,expand=1,fill='both')
+        else:
+            scrolled_text = Pmw.ScrolledText(f,
+                labelpos = 'ew',label_text='comments',
+                hull_background=bg,
+                hull_bd=2,hull_relief='groove',
+                hull_padx=6,hull_pady=6,
+                text_background=bg,
+                text_padx=6,text_pady=6,
+                text_bd=2,text_relief='sunken',
+                label_background=bg,
+                text_height=5,text_width=80)
+            scrolled_text.pack(side='left',pady=6,padx=6,expand=1,fill='x')
+            t = scrolled_text.component('text')
+            t.insert('end',s)
+            t.configure(state='disabled')
+            hull=scrolled_text.component('hull')
+            
+    
+        item = self.sc.create_window(10-2,self.h,anchor='w',window=f)
+        # bbox=hull.bbox() ; print bbox # (0,0,0,0)
+        
+        self.h += 70
+    #@nonl
+    #@-node:ekr.20050121131613:createComents
     #@+node:ekr.20041225063637.32:createDirectory
     def createDirectory (self,parent,p,kind,name,val):
         
@@ -1728,14 +1781,16 @@ class settingsController:
     #@-node:ekr.20041225063637.32:createDirectory
     #@+node:ekr.20041225063637.33:createFloat
     def createFloat (self,parent,p,kind,name,val):
+        
+        bg = self.commonBackground
     
         # Inits the entry widget.
         var = Tk.StringVar()
         var.set(val)
     
-        f = Tk.Frame(parent)
-        Tk.Entry(f,textvariable=var).pack(side='left')
-        Tk.Label(f,text=name).pack(side='left')
+        f = Tk.Frame(parent,background=bg)
+        Tk.Entry(f,textvariable=var,background=bg).pack(side='left')
+        Tk.Label(f,text=name,background=self.bg).pack(side='left')
         
         def floatCallback():
             val2 = var.get()
@@ -1757,10 +1812,10 @@ class settingsController:
     def createFont (self,parent,p,kind,fontName,val):
         
         """Create a font picker.  val is a dict containing the specified values."""
-    
+        bg = self.commonBackground
         d = val ; widgets = {}
         munge = g.app.config.munge
-        f = Tk.Frame(parent) # No need to pack.
+        f = Tk.Frame(parent,background=bg) # No need to pack.
         self.alterComments = p.copy()
         self.alteredCommentsString = d.get('comments')
         #@    << create the family combo box >>
@@ -1779,6 +1834,8 @@ class settingsController:
         
         familyBox = Pmw.ComboBox(f,
             labelpos="we",label_text='Family:',
+            label_background=bg,
+            arrowbutton_background=bg,
             scrolledlist_items=names)
         
         familyBox.selectitem(initialitem)
@@ -1788,7 +1845,7 @@ class settingsController:
         #@nl
         #@    << create the size entry >>
         #@+node:ekr.20041225063637.36:<< create the size entry >>
-        Tk.Label(f,text="Size:").pack(side="left")
+        Tk.Label(f,text="Size:",background=bg).pack(side="left")
         
         sizeEntry = Tk.Entry(f,width=4)
         sizeEntry.pack(side="left")
@@ -1818,6 +1875,8 @@ class settingsController:
         
         weightBox = Pmw.ComboBox(f,
             labelpos="we",label_text="Weight:",
+            label_background=bg,
+            arrowbutton_background=bg,
             scrolledlist_items=values)
         
         weightBox.selectitem(initialitem)
@@ -1837,6 +1896,8 @@ class settingsController:
         
         slantBox = Pmw.ComboBox(f,
             labelpos="we",label_text="Slant:",
+            label_background=bg,
+            arrowbutton_background=bg,
             scrolledlist_items=values)
         
         slantBox.selectitem(initialitem)
@@ -1844,7 +1905,7 @@ class settingsController:
         #@nonl
         #@-node:ekr.20041225063637.38:<< create the slant combo box>>
         #@nl
-        Tk.Label(f,text=fontName).pack(side='left')
+        Tk.Label(f,text=fontName,background=bg).pack(side='left')
         #@    << define fontCallback >>
         #@+node:ekr.20041225063637.39:<< define fontCallback >>
         def fontCallback(*args,**keys):
@@ -1882,6 +1943,8 @@ class settingsController:
     #@-node:ekr.20041225063637.34:createFont
     #@+node:ekr.20041225063637.40:createInt
     def createInt (self,parent,p,kind,name,val):
+        
+        bg = self.commonBackground
     
         # Inits the entry widget.
         var = Tk.StringVar()
@@ -1889,7 +1952,7 @@ class settingsController:
     
         f = Tk.Frame(parent)
         Tk.Entry(f,textvariable=var).pack(side='left')
-        Tk.Label(f,text=name).pack(side='left')
+        Tk.Label(f,text=name,background=bg).pack(side='left')
     
         def intCallback():
             val2 = var.get()
@@ -1912,6 +1975,8 @@ class settingsController:
         
         # g.trace(repr(kind),repr(name),val)
         
+        bg = self.commonBackground
+        
         i = kind.find('[')
         j = kind.find(']')
         if not (-1 < i < j):
@@ -1930,6 +1995,7 @@ class settingsController:
     
         intsBox = Pmw.ComboBox(f,
             labelpos="ew",label_text=name,
+            label_background=bg,
             scrolledlist_items=items)
     
         intsBox.selectitem(initialitem)
@@ -1959,13 +2025,15 @@ class settingsController:
     #@+node:ekr.20041225063637.43:createRatio
     def createRatio (self,parent,p,kind,name,val):
         
+        bg = self.commonBackground
+        
         # Inits the entry widget.
         var = Tk.StringVar()
         var.set(val)
     
         f = Tk.Frame(parent)
         Tk.Entry(f,textvariable=var).pack(side='left')
-        Tk.Label(f,text=name).pack(side='left')
+        Tk.Label(f,text=name,background=bg).pack(side='left')
         
         def ratioCallback():
             val2 = var.get()
@@ -1986,6 +2054,8 @@ class settingsController:
     #@+node:ekr.20041225063637.44:createRecentFiles
     def createRecentFiles (self,parent,p,kind,name,vals):
         
+        bg = self.commonBackground
+        
         s = p.bodyString()
         lines = g.splitLines(s)
         
@@ -1993,6 +2063,7 @@ class settingsController:
         
         recentFilesBox = Pmw.ComboBox(f,
             labelpos="ew",label_text='recent files',
+            label_background = bg,
             scrolledlist_items=lines)
     
         if lines:
@@ -2051,6 +2122,8 @@ class settingsController:
     #@-node:ekr.20041225063637.47:createSpacerFrame
     #@+node:ekr.20041225063637.48:createString
     def createString (self,parent,p,kind,name,val):
+        
+        bg = self.commonBackground
     
         if val in (None,'None'): val = ""
         
@@ -2060,7 +2133,7 @@ class settingsController:
         
         f = Tk.Frame(parent) # No need to pack.
         Tk.Entry(f,textvariable=var,width=40).pack(side='left')
-        Tk.Label(f,text=name).pack(side='left')
+        Tk.Label(f,text=name,background=bg).pack(side='left')
         
         def stringCallback():
             val = var.get()
@@ -2076,6 +2149,8 @@ class settingsController:
     #@+node:ekr.20041225063637.49:createStrings
     def createStrings (self,parent,p,kind,name,val):
         
+        bg = self.commonBackground
+        
         # g.trace(repr(kind),repr(name),val)
         i = kind.find('[')
         j = kind.find(']')
@@ -2090,10 +2165,11 @@ class settingsController:
         else:
             initialitem = 0
             
-        f = Tk.Frame(parent)
+        f = Tk.Frame(parent,background=bg)
     
         stringsBox = Pmw.ComboBox(f,
             labelpos="ew",label_text=name,
+            label_background = bg,
             scrolledlist_items=items)
     
         stringsBox.selectitem(initialitem)
@@ -2259,32 +2335,13 @@ class settingsController:
         self.parser.widgets = []
         self.parser.visitNode(p)
         if self.parser.widgets:
-            self.createWidgets(self.parser.widgets,interior)
+            self.createWidgets(self.parser.widgets,interior,p)
             
         self.sc.resizescrollregion()
         self.sc.yview('moveto',0)
-        self.updateComments(p)
         self.updateSetterLabel(p)
     #@nonl
     #@-node:ekr.20041225063637.60:updateSetter
-    #@+node:ekr.20041225063637.61:updateComments
-    def updateComments (self,p):
-    
-        self.commentWidget.clear()
-        
-        if not p or p == self.suppressComments:
-            comments = ''
-        elif p == self.alterComments:
-            comments = self.alteredCommentsString
-        else:
-            comments = p.bodyString()
-        
-        self.commentWidget.setvalue(comments)
-    
-        self.suppressComments = None
-        self.alterComments = None
-    #@nonl
-    #@-node:ekr.20041225063637.61:updateComments
     #@+node:ekr.20041225063637.62:updateSetterLabel
     def updateSetterLabel (self,p):
         
@@ -2295,9 +2352,16 @@ class settingsController:
             for name in ('@page','@font','@ignore','@'):
                 if g.match(h,0,name):
                     h = h[len(name):].strip()
+                    i = h.find('=')
+                    if i > -1:
+                        h = h[:i].strip()
                     break
-        
+    
             self.setterLabel.configure(text=h)
+            return h
+            
+        else:
+            return None
     #@nonl
     #@-node:ekr.20041225063637.62:updateSetterLabel
     #@-node:ekr.20041225063637.59:redrawing...
