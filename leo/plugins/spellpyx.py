@@ -44,9 +44,28 @@ __version__ = "0.9"
 #     - Added spellFrames global dict for use by @button code.
 #     - N.B. Rewrote @button script: see test.leo.
 # 0.9 EKR:  Added top-level init method.
+# 0.10 EKR:
+#     - Distinguish between aspell_dir and aspell_bin_dir in < < imports > >
 #@-at
 #@nonl
 #@-node:ekr.20040915052810:<< version history >>
+#@nl
+#@<< specify aspell directories for imports >>
+#@+node:ekr.20050217113606:<< specify aspell directories for imports >>
+import sys
+
+if sys.platform == 'darwin':
+    aspell_dir = '/sw/lib'
+        # The top-level directory.
+    aspell_bin_dir = '/sw/lib/bin'
+        # NOT TESTED YET.
+else:
+    aspell_dir = r'c:\Aspell'
+        # The top-level directory.
+    aspell_bin_dir = r'c:\Aspell\bin'
+        # The directory continaing apell.pyd and aspell-15.dll
+#@nonl
+#@-node:ekr.20050217113606:<< specify aspell directories for imports >>
 #@nl
 #@<< spellpx imports >>
 #@+node:ekr.20040809151600.3:<< spellpx imports >>
@@ -55,15 +74,10 @@ import sys
 
 # Specify the path to the top-level Aspell directory.
 if sys.platform == 'darwin':
-    aspell_dir = '/sw/lib'
-    # Doesn't work yet.  We need something that Python recognizes.
     aspell = g.importFromPath ("aspell",aspell_dir,pluginName=__name__,verbose=True)
 else:
-    # On Windows this directory should contain aspell.pyd.
-    # Change this path in setup.py if you recompile the pyd.
-    aspell_dir = r'c:/Aspell'
-    aspell = g.importFromPath(
-        "aspell",aspell_dir,pluginName=__name__,verbose=True)
+     aspell = g.importFromPath(
+        "aspell",aspell_bin_dir,pluginName=__name__,verbose=True)
 
 import leoPlugins
 import leoTkinterFind
@@ -93,7 +107,7 @@ def init():
     
     ok = Tk and aspell
 
-    if ok: # Ok for unit testing.
+    if ok: # Not ok for unit testing: can't use unitTestGui.
         if g.app.gui is None:
             g.app.createTkGui(__file__)
     
@@ -111,19 +125,23 @@ def onCreate (tag,keys):
     
     c = keys.get('c')
 
-    if c:
+    if c and not g.app.unitTesting: # Not ok for unit testing: can't use unitTestGui.
         global globalData,spellFrames
-        spellFrame = spellDialog(c,aspell,globalData)
-        spellFrames[c]=spellFrame
+        spellFrames[c] = spellFrame = spellDialog(c,aspell,globalData)
+
         if not visibleInitially:
             spellFrame.top.withdraw()
-        leoPlugins.registerHandler("create-optional-menus",
-            spellFrame.createSpellMenu)
-        leoPlugins.registerHandler("command2",
-            spellFrame.onCommand) 
+    
+        # New in 4.3: do this immediately.
+        spellFrame.createSpellMenu()
+
+        # Register handlers.
+        leoPlugins.registerHandler("command2",spellFrame.onCommand)
+
         leoPlugins.registerHandler(
-                ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),
-                    spellFrame.onSelect)
+            ("bodyclick2","bodydclick2","bodyrclick2","bodykey2","select2"),
+            spellFrame.onSelect)
+#@nonl
 #@-node:ekr.20041226064125:onCreate
 #@+node:ekr.20040809151600.10:class Aspell
 class Aspell:
@@ -441,17 +459,19 @@ class spellDialog(leoTkinterFind.leoTkinterFind):
     # These formerly were global functions.
     #@nonl
     #@+node:ekr.20040809151600.7:createSpellMenu
-    def createSpellMenu(self,tag,keys):
+    def createSpellMenu(self,*args,**keys):
     
-        """Create the Check Spelling menu item in the Edit menu."""
+        """Create the Check Spelling menu item in the Edit menu.
+        
+        The args and keys params are for backward compatibility."""
     
         c = self.c
-        
-        if keys.get('c') == c:
-            table = (
-                ("-", None, None),
-                ("Check Spelling", "Alt+Shift+A",self.checkSpelling))
-            c.frame.menu.createMenuItemsFromTable("Edit",table)
+    
+        table = (
+            ("-", None, None),
+            ("Check Spelling", "Alt+Shift+A",self.checkSpelling))
+    
+        c.frame.menu.createMenuItemsFromTable("Edit",table)
     #@nonl
     #@-node:ekr.20040809151600.7:createSpellMenu
     #@+node:ekr.20040809151600.8:onSelect

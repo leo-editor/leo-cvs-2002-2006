@@ -1659,7 +1659,7 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
             if os.path.exists(file):
                 os.startfile(file)
             else:	
-                answer = g.app.gui.runAskYesNoDialog(
+                answer = g.app.gui.runAskYesNoDialog(c,
                     "Download Tutorial?",
                     "Download tutorial (sbooks.chm) from SourceForge?")
         
@@ -2979,14 +2979,16 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
     
         #@    @+others
         #@+node:edream.110203113231.563:FindFrame.__init__
-        def __init__ (self):
+        def __init__ (self,c):
         
             # Init the base classes
             wx.wxFrame.__init__(self,None,-1,"Leo Find/Change",
                 wx.wxPoint(50,50), wx.wxDefaultSize,
                 wx.wxMINIMIZE_BOX | wx.wxTHICK_FRAME | wx.wxSYSTEM_MENU | wx.wxCAPTION)
         
-            leoFind.leoFind.__init__(self)
+            # At present this is a global window, so the c param doesn't make sense.
+            # This must be changed to match how Leo presently works.
+            leoFind.leoFind.__init__(self,c)
             
             self.dict = {} # For communication between panel and frame.
             self.findPanel = wxFindPanel(self)
@@ -3116,8 +3118,8 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
             c.change_text = fp.changeText.GetValue()
         #@nonl
         #@-node:edream.111403135745:set_ivars
-        #@+node:edream.111503091617:init_s_text
-        def init_s_text (self,s):
+        #@+node:edream.111503091617:init_s_ctrl
+        def init_s_ctrl (self,s):
             
             c = self.c
             t = self.s_text # the dummy widget
@@ -3132,7 +3134,7 @@ if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
                 t.SetInsertionPoint(0)
             return t
         #@nonl
-        #@-node:edream.111503091617:init_s_text
+        #@-node:edream.111503091617:init_s_ctrl
         #@+node:edream.111503093522:gui_search
         def gui_search (self,t,find_text,index,
             stopindex,backwards,regexp,nocase):

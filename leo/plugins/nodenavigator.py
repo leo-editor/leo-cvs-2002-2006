@@ -54,10 +54,15 @@ USE_FIXED_SIZES = sys.platform != "darwin"
 #@+others
 #@+node:ekr.20040909132810:onCreate
 def onCreate(tag, keywords):
+    
+    # Not ok for unit testing: can't use unitTestGui.
+    if g.app.unitTesting:
+        return
 
     c = keywords.get("new_c")
     nav = Navigator(c)
     nav.addWidgets()
+
     leoPlugins.registerHandler("set-mark",nav.addMark)
     leoPlugins.registerHandler("clear-mark",nav.clearMark)
     leoPlugins.registerHandler("select3",nav.updateRecent)
@@ -148,6 +153,33 @@ class Navigator:
         self.initMarks("tag",{"c":c})
     #@nonl
     #@-node:ekr.20040108062655.3:addWidgets
+    #@+node:ekr.20040730092357:initMarks
+    def initMarks(self, tag, keywords):
+    
+        """Initialize the marks list."""
+    
+        c = keywords.get("c")
+        if not c : return
+    
+        # Clear old marks menu
+        menu = self.marksMenus.get(c)
+        if menu is None: return
+    
+        menu = menu["menu"]
+        menu.delete(0,"end")
+    
+        # Find all marked nodes. We only do this once!
+        marks = self.markLists.get(c,[])
+        for p in c.all_positions_iter():
+            if p.isMarked() and p.v.t not in marks:
+                def callback(event=None,self=self,c=c,p=p.copy()):
+                    self.select(c,p)
+                name = p.headString().strip()
+                menu.add_command(label=name,command=callback)
+                marks.append(p.v.t)
+        self.markLists[c] = marks
+    #@nonl
+    #@-node:ekr.20040730092357:initMarks
     #@+node:ekr.20040730093250:clearMark
     def clearMark(self, tag, keywords):
     
@@ -177,33 +209,6 @@ class Navigator:
         self.markLists[c] = marks
     #@nonl
     #@-node:ekr.20040730093250:clearMark
-    #@+node:ekr.20040730092357:initMarks
-    def initMarks(self, tag, keywords):
-    
-        """Initialize the marks list."""
-    
-        c = keywords.get("c")
-        if not c : return
-    
-        # Clear old marks menu
-        menu = self.marksMenus.get(c)
-        if menu is None: return
-    
-        menu = menu["menu"]
-        menu.delete(0,"end")
-    
-        # Find all marked nodes. We only do this once!
-        marks = self.markLists.get(c,[])
-        for p in c.all_positions_iter():
-            if p.isMarked() and p.v.t not in marks:
-                def callback(event=None,self=self,c=c,p=p.copy()):
-                    self.select(c,p)
-                name = p.headString().strip()
-                menu.add_command(label=name,command=callback)
-                marks.append(p.v.t)
-        self.markLists[c] = marks
-    #@nonl
-    #@-node:ekr.20040730092357:initMarks
     #@+node:ekr.20040730094103:select
     def select(self,c,p):
     
@@ -239,13 +244,6 @@ class Navigator:
     #@-node:ekr.20040108091136:updateRecent
     #@-others
 #@-node:ekr.20040108062655.2:class Navigator
-#@+node:ekr.20040801125228:unitTest
-def unitTest (verbose=False):
-    
-    if verbose:
-        g.trace(__name__)
-#@nonl
-#@-node:ekr.20040801125228:unitTest
 #@-others
 
 if Tk: # OK for unit testing.

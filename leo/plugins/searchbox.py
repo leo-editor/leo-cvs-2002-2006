@@ -98,6 +98,10 @@ OPTION_DICT = dict(OPTION_LIST)
 #@+others
 #@+node:ekr.20040909132007:onCreate
 def onCreate(tag, keywords):
+    
+    # Not ok for unit testing: can't use unitTestGui.
+    if g.app.unitTesting:
+        return
 
     c = keywords.get("c")
     search = SearchBox(c)

@@ -46,7 +46,7 @@ def open_in_vim (tag,keywords,val=None):
     v = p.v
 
     # Find dictionary with infos about this node
-    this=filter(lambda x: id(x['v'])==id(v), g.app.openWithFiles)
+    this=filter(lambda x: id(x['v'])==id(v),g.app.openWithFiles)
     
     # Retrieve the name of the temporary file (if any).
     if this != []:  path=this[0]['path']
