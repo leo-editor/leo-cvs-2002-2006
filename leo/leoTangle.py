@@ -1475,7 +1475,7 @@ class tangleCommands:
 			
 	def os (self,s):
 		s = string.replace(s,body_ignored_newline,body_newline)
-		s = toEncodedString(s.self.encoding,reportErrors=true)
+		s = toEncodedString(s,self.encoding,reportErrors=true)
 		self.output_file.write(s)
 	
 	def otab (self):
