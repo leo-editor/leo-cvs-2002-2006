@@ -10,17 +10,8 @@ import string,Tkinter,tkColorChooser
 
 
 #@<< define colorizer constants >>
-#@+node:1::<< define colorizer constants >>
+#@+node:2::<< define colorizer constants >>
 #@+body
-# We only define states that can continue across lines.
-unknownState = 0
-normalState = 1
-blockCommentState = 2
-continueCommentState = 3
-docState = 4
-nocolorState = 5
-string3State = 6
-
 # These defaults are sure to exist.
 default_colors_dict = {
 	# tag name     :(     option name,           default color),
@@ -36,11 +27,11 @@ default_colors_dict = {
 	"name"         :("undefined_section_name_color","red") }
 
 #@-body
-#@-node:1::<< define colorizer constants >>
+#@-node:2::<< define colorizer constants >>
 
 
 #@<< define colorizer keywords >>
-#@+node:2::<< define colorizer keywords >>
+#@+node:1::<< define colorizer keywords >>
 #@+body
 #@<< leo keywords >>
 #@+node:1::<< leo keywords >>
@@ -441,7 +432,7 @@ php_paren_keywords = (
 #@-body
 #@-node:10::<< php keywords >>
 #@-body
-#@-node:2::<< define colorizer keywords >>
+#@-node:1::<< define colorizer keywords >>
 
 
 #@<< define colorizer functions >>
@@ -564,9 +555,12 @@ class colorizer:
 		self.use_hyperlinks = false # true: use hyperlinks and underline "live" links.
 		self.enabled = true # true: syntax coloring enabled
 		self.showInvisibles = false # true: show "invisible" characters.
-		self.delim = None # delimiter for triple strings.
 		self.comment_string = None # Set by scanColorDirectives on @comment
 		# For incremental coloring.
+		self.tags = (
+			"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+			"link", "name", "nameBrackets", "pp", "string", "tab")
+		self.incremental = false
 		self.lines = []
 		self.states = []
 		
@@ -595,12 +589,14 @@ class colorizer:
 		#@+node:2::<< define dispatch dicts >>
 		#@+body
 		self.state_dict = {
-			normalState : self.doNormalState,
-			string3State : self.continuePythonString,
-			docState : self.continueDocPart,
-			nocolorState : self.continueNocolor,
-			continueCommentState : self.continueString,
-			blockCommentState : self.continueBlockComment }
+			"blockComment" : self.continueBlockComment,
+			"doubleString" : self.continueSingleString,
+			"nocolor"      : self.continueNocolor,
+			"normal"       : self.doNormalState,
+			"singleString" : self.continueDoubleString,
+			"string3s"     : self.continueSinglePythonString,
+			"string3d"     : self.continueDoublePythonString,
+			"doc"          : self.continueDocPart }
 			
 		# Eventually all entries in these dicts will be entered dynamically
 		# under the control of the XML description of the present language.
@@ -686,27 +682,30 @@ class colorizer:
 	#@-node:2::color.callbacks...
 	#@+node:3::colorize
 	#@+body
-	def colorize(self,v,body):
+	def colorize(self,v,body,incremental=false):
 	
 		if self.enabled:
+			self.incremental=incremental
 			flag,language = self.updateSyntaxColorer(v)
 			self.colorizeAnyLanguage(v,body,language,flag)
 	#@-body
 	#@-node:3::colorize
 	#@+node:4::colorizeAnyLanguage & allies
 	#@+body
+	#@+at
+	#  Leo needs both incremental and non-incremental colorizing; this routine 
+	# does both.
+
+	#@-at
+	#@@c
+
 	def colorizeAnyLanguage (self,v,body,language,flag):
 		
 		try:
-			incremental = 0
 			
 			#@<< initialize ivars & tags >>
 			#@+node:1::<< initialize ivars & tags >>
 			#@+body
-			tags = (
-				"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-				"link", "name", "nameBrackets", "pp", "string", "tab")
-			
 			# Copy the arguments.
 			self.v = v
 			self.body = body
@@ -722,23 +721,12 @@ class colorizer:
 			# trace(`self.count` + `self.v`)
 			# trace(`body.tag_names()`)
 			
+			if not self.incremental:
+				self.removeAllTags()
 			
-			#@<< remove tags >>
-			#@+node:1::<< remove tags >>
-			#@+body
-			if 0: # Remove all tags from the selected line.
-				for tag in self.tags:
-					body.tag_remove(tag, index(start,0), index(start,"end"))
-			else: # Remove all tags from body.
-				body.tag_delete(
-					"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
-					"link", "name", "nameBrackets", "pp", "string", "tab")
-			#@-body
-			#@-node:1::<< remove tags >>
-
 			
 			#@<< configure tags >>
-			#@+node:2::<< configure tags >>
+			#@+node:1::<< configure tags >>
 			#@+body
 			config = app().config
 			assert(config)
@@ -773,11 +761,11 @@ class colorizer:
 				body.tag_config("blank",background="Gray90")
 				body.tag_config("tab",background="Gray80")
 			#@-body
-			#@-node:2::<< configure tags >>
+			#@-node:1::<< configure tags >>
 
 			
 			#@<< configure language-specific settings >>
-			#@+node:3::<< configure language-specific settings >>
+			#@+node:2::<< configure language-specific settings >>
 			#@+body
 			# Define has_string, keywords, single_comment_start, block_comment_start, block_comment_end.
 			
@@ -813,7 +801,7 @@ class colorizer:
 					exec("if self.language==name: self.keywords=%s_keywords" % name)
 			
 			# Color plain text unless we are under the control of @nocolor.
-			state = choose(self.flag,normalState,nocolorState)
+			state = choose(self.flag,"normal","nocolor")
 			
 			if 1: # 10/25/02: we color both kinds of references in cweb mode.
 				self.lb = "<<"
@@ -822,7 +810,7 @@ class colorizer:
 				self.lb = choose(self.language == "cweb","@<","<<")
 				self.rb = choose(self.language == "cweb","@>",">>")
 			#@-body
-			#@-node:3::<< configure language-specific settings >>
+			#@-node:2::<< configure language-specific settings >>
 
 			
 			self.hyperCount = 0 # Number of hypertext tags
@@ -831,11 +819,30 @@ class colorizer:
 			#@-body
 			#@-node:1::<< initialize ivars & tags >>
 
-			if incremental:
+			if self.incremental:
 				
 				#@<< incrementally color the text >>
 				#@+node:2::<< incrementally color the text >>
 				#@+body
+				#@+at
+				#   Each line has a starting state.  The starting state for 
+				# the first line is always "normal".
+				# 
+				# We need remember only self.lines and self.states between 
+				# colorizing.  It is not necessary to know where the text 
+				# comes from, only what the previous text was!  We must always 
+				# colorize everything when changing nodes, even if all lines 
+				# match, because the context may be different.
+				# 
+				# We compute the range of lines to be recolored by comparing 
+				# leading lines and trailing lines of old and new text.  All 
+				# other lines (the middle lines) must be colorized, as well as 
+				# any trailing lines whose states may have changed as the 
+				# result of changes to the middle lines.
+
+				#@-at
+				#@@c
+
 				old_lines = self.lines
 				old_states = self.states
 				new_lines = lines
@@ -844,16 +851,24 @@ class colorizer:
 				new_len = len(new_lines)
 				old_len = len(old_lines)
 				
-				print "new_len:",str(new_len)
 				if new_len == 0:
 					self.states = []
 					self.lines = []
 					return
 				
 				
-				#@<< find leading and trailing matching lines >>
-				#@+node:1::<< find leading and trailing matching lines >>
+				#@<< compute leading, middle & trailing lines >>
+				#@+node:1::<< compute leading, middle & trailing  lines >>
 				#@+body
+				#@+at
+				#  The leading lines are the leading matching lines.  The 
+				# trailing lines are the trailing matching lines.  The middle 
+				# lines are all other new lines.  We will color at least all 
+				# the middle lines.  There may be no middle lines if we delete lines.
+
+				#@-at
+				#@@c
+
 				min_len = min(old_len,new_len)
 				
 				i = 0
@@ -864,25 +879,23 @@ class colorizer:
 				leading_lines = i
 				
 				if leading_lines == new_len:
-					# All lines match.
-					print "all lines match"
-					self.states = old_states[0:new_len]
-					self.lines = new_lines
-					return
-				
-				i = 0
-				while i < min_len:
-					if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
-						break
-					i += 1
-				trailing_lines = i
-				
-				# Assert that the two texts are different.
-				print "lead,trail:", str(leading_lines), str(trailing_lines)
-				if 0: # apparently there may be overlap?
-					assert(new_len > leading_lines + trailing_lines)
+					# All lines match, and we must color _everything_.
+					# (several routine delete, then insert the text again,
+					# deleting all tags in the process).
+					# print "recolor all"
+					leading_lines = trailing_lines = 0
+				else:
+					i = 0
+					while i < min_len - leading_lines:
+						if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+							break
+						i += 1
+					trailing_lines = i
+					
+				middle_lines = new_len - leading_lines - trailing_lines
+				# print "middle lines", middle_lines
 				#@-body
-				#@-node:1::<< find leading and trailing matching lines >>
+				#@-node:1::<< compute leading, middle & trailing  lines >>
 
 				
 				#@<< initialize new states >>
@@ -894,10 +907,15 @@ class colorizer:
 					new_states.append(old_states[i])
 					i += 1
 					
-				# Set the state of all middle lines to "unknown".
+				# We know the starting state of the first middle line!
+				if middle_lines > 0 and i < old_len:
+					new_states.append(old_states[i])
+					i += 1
+					
+				# Set the state of all other middle lines to "unknown".
 				first_trailing_line = new_len - trailing_lines
 				while i < first_trailing_line:
-					new_states.append(unknownState)
+					new_states.append("unknown")
 					i += 1
 				
 				# Copy the trailing states from the old to the new lines.
@@ -906,13 +924,15 @@ class colorizer:
 					new_states.append(old_states[j])
 					j += 1
 					i += 1 # for the assert below.
-				
-				# Step 1 writes leading_lines lines
-				# Step 2 writes (new_len - trailing_lines - leading_lines) lines.
-				# Step 3 writes trailing_lines lines.
-				print "i:", i
+					
+				# A crucial assertion.  If it fails we won't handle continued states properly.
 				assert(i == new_len)
-				print "new_states:", str(new_states)
+					# Step 1 writes leading_lines lines
+					# Step 2 writes (new_len - trailing_lines - leading_lines) lines.
+					# Step 3 writes trailing_lines lines.
+				
+				# print "i:", i
+				# print "new_states:", str(new_states)
 				#@-body
 				#@-node:2::<< initialize new states >>
 
@@ -924,31 +944,32 @@ class colorizer:
 				# All middle lines have "unknown" state, so they will all be colored.
 				
 				# Start in the state _after_ the last leading line, which may be unknown.
-				i = leading_lines ; state = unknownState
-				
+				i = leading_lines
 				while i > 0:
-					assert(i < old_len)
-					state = old_states[i]
-					if state == unknownState:
+					if i < old_len:
+						state = new_states[i]
+						assert(state!="unknown")
+						break
+					else:
 						i -= 1
-					else: break
 				
-				if i == 0 and state == unknownState:
-					state = normalState
-					new_states[0] = normalState
+				if i == 0:
+					state = "normal"
+					new_states[0] = "normal"
 				
+				# The new_states[] will be "unknown" unless the lines match,
+				# so we do not need to compare lines here.
 				while i < new_len:
 					state = self.colorizeLine(new_lines[i],i+1,state)
 					i += 1
 					# Set the state of the _next_ line.
-					if i < new_len and state != new_lines[i]:
+					if i < new_len and state != new_states[i]:
 						new_states[i] = state
 					else: break
 					
 				# Update the ivars
 				self.states = new_states
 				self.lines = new_lines
-				
 				#@-body
 				#@-node:3::<< colorize until the states match >>
 				#@-body
@@ -961,14 +982,16 @@ class colorizer:
 					n += 1		
 		except:
 			es_exception()
-	
 	#@-body
 	#@+node:3::colorizeLine & allies
 	#@+body
 	def colorizeLine (self,s,n,state):
 	
-		# print "colorizeLine:", str(n), state
-		
+		# print state,s
+	
+		if self.incremental:
+			self.removeTagsFromLine(n)
+	
 		i = 0
 		while i < len(s):
 			self.progress = i
@@ -976,33 +999,61 @@ class colorizer:
 			i,state = func(s,i,n)
 	
 		return state
+	
 	#@-body
 	#@+node:1::continueBlockComment
 	#@+body
 	def continueBlockComment (self,s,i,n):
 		
-		body = self.body
-		
 		j = string.find(s,self.block_comment_end,i)
+	
 		if j == -1:
 			# The entire line is part of the block comment.
-			body.tag_add("comment", index(n,i), index(n,"end"))
-			return len(s),blockCommentState # skipt the rest of the line.
+			self.body.tag_add("comment", index(n,i), index(n,"end"))
+			return len(s),"blockComment" # skipt the rest of the line.
 	
 		else:
 			# End the block comment.
 			k = len(self.block_comment_end)
-			body.tag_add("comment", index(n,i), index(n,j+k))
+			self.body.tag_add("comment", index(n,i), index(n,j+k))
 			i = j + k
-			return i,normalState
+			return i,"normal"
 	#@-body
 	#@-node:1::continueBlockComment
-	#@+node:2::continueDocPart
+	#@+node:2::continueSingle/DoubleString
+	#@+body
+	def continueDoubleString (self,s,i,n):
+		return self.continueString(s,i,n,'"',"doubleString")
+		
+	def continueSingleString (self,s,i,n):
+		return self.continueString(s,i,n,"'","singleString")
+	
+	# Similar to skip_string.
+	def continueString (self,s,i,n,delim,continueState):
+	
+		continueFlag = false
+		j = i
+		while i < len(s) and s[i] != delim:
+			if s[i:] == "\\":
+				i = len(s) ; continueFlag = true ; break
+			elif s[i] == "\\":
+				i += 2
+			else:
+				i += 1
+		if i >= len(s):
+			i = len(s)
+		elif s[i] == delim:
+			i += 1
+		self.body.tag_add("string", index(n,j), index(n,i))
+		state = choose(continueFlag,continueState,"normal")
+		return i,state
+	#@-body
+	#@-node:2::continueSingle/DoubleString
+	#@+node:3::continueDocPart
 	#@+body
 	def continueDocPart (self,s,i,n):
 		
-		body = self.body ; state = docState
-	
+		state = "doc"
 		if self.language in ("cweb","latex"):
 			
 			#@<< handle cweb doc part >>
@@ -1012,22 +1063,22 @@ class colorizer:
 			if word and len(word) > 0:
 				j = i + len(word)
 				if word in ("@<","@(","@c","@d","@f","@p"):
-					state = normalState # end the doc part and rescan
+					state = "normal" # end the doc part and rescan
 				else:
 					# The control code does not end the doc part.
-					body.tag_add("keyword", index(n,i), index(n,j))
+					self.body.tag_add("keyword", index(n,i), index(n,j))
 					i = j
 					if word in ("@^","@.","@:","@="): # Ended by "@>"
 						j = string.find(s,"@>",i)
 						if j > -1:
-							body.tag_add("cwebName", index(n,i), index(n,j))
-							body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+							self.body.tag_add("cwebName", index(n,i), index(n,j))
+							self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
 							i = j + 2
 			else:
 				# Everthing up to the next "@" is in the doc part.
 				j = string.find(s,"@",i+1)
 				if j == -1: j = len(s)
-				body.tag_add("docPart", index(n,i), index(n,j))
+				self.body.tag_add("docPart", index(n,i), index(n,j))
 				i = j
 			#@-body
 			#@-node:1::<< handle cweb doc part >>
@@ -1039,7 +1090,7 @@ class colorizer:
 			#@+body
 			if i == 0 and match(s,i,"<<"):
 				# Possible section definition line.
-				return i,normalState # rescan the line.
+				return i,"normal" # rescan the line.
 			
 			if i == 0 and s[i] == '@':
 				j = self.skip_id(s,i+1)
@@ -1050,25 +1101,23 @@ class colorizer:
 			
 			if word in ["@c","@code","@unit","@root","@color","@nocolor"]:
 				# End of the doc part.
-				body.tag_remove("docPart", index(n,i), index(n,j))
-				body.tag_add("leoKeyword", index(n,i), index(n,j))
-				i = j ; state = normalState
+				self.body.tag_remove("docPart", index(n,i), index(n,j))
+				self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+				i = j ; state = "normal"
 			else:
 				# The entire line is in the doc part.
-				sLen = len(s)
-				body.tag_add("docPart", index(n,i), index(n,sLen))
-				i = sLen # skipt the rest of the line.
+				self.body.tag_add("docPart", index(n,i), index(n,len(s)))
+				i = len(s) # skipt the rest of the line.
+			
 			#@-body
 			#@-node:2::<< handle noweb doc part >>
 
 		return i,state
 	#@-body
-	#@-node:2::continueDocPart
-	#@+node:3::continueNocolor
+	#@-node:3::continueDocPart
+	#@+node:4::continueNocolor
 	#@+body
 	def continueNocolor (self,s,i,n):
-		
-		body = self.body
 	
 		if i == 0 and s[i] == '@':
 			j = self.skip_id(s,i+1)
@@ -1079,78 +1128,47 @@ class colorizer:
 		
 		if word == "@color" and self.language != "plain":
 			# End of the nocolor part.
-			body.tag_add("leoKeyword", index(n,0), index(n,j))
-			return i,normalState
+			self.body.tag_add("leoKeyword", index(n,0), index(n,j))
+			return i,"normal"
 		else:
 			# The entire line is in the nocolor part.
 			# Add tags for blanks and tabs to make "Show Invisibles" work.
 			for ch in s[i:]:
 				if ch == ' ':
-					body.tag_add("blank", index(n,i))
+					self.body.tag_add("blank", index(n,i))
 				elif ch == '\t':
-					body.tag_add("tab", index(n,i))
+					self.body.tag_add("tab", index(n,i))
 				i += 1
-			return i,nocolorState
+			return i,"nocolor"
 	#@-body
-	#@-node:3::continueNocolor
-	#@+node:4::continuePythonString
+	#@-node:4::continueNocolor
+	#@+node:5::continueSingle/DoublePythonString
 	#@+body
-	def continuePythonString (self,s,i,n):
+	def continueDoublePythonString (self,s,i,n):
+		j = string.find(s,'"""',i)
+		return self.continuePythonString(s,i,j,n,"string3d")
 	
-		body = self.body ; delim = self.delim
-		state = string3State
+	def continueSinglePythonString (self,s,i,j,n):
+		j = string.find(s,"'''",i)
+		return self.continuePythonString(s,i,n,"string3s")
 	
-		if delim=="'''":
-			j = string.find(s,"'''",i)
-		elif delim=='"""':
-			j = string.find(s,'"""', i)
-		else:
-			state = normalState ; self.delim = None
-			return i,state
+	def continuePythonString (self,s,i,j,n,continueState):
 	
 		if j == -1:
 			# The entire line is part of the triple-quoted string.
-			body.tag_add("string", index(n,i), index(n,"end"))
-			i = len(s)  # skipt the rest of the line.
+			self.body.tag_add("string", index(n,i), index(n,"end"))
+			return len(s),contineuState # skipt the rest of the line.
 		else:
 			# End the string
-			body.tag_add("string", index(n,i), index(n,j+3))
-			i = j + 3 ; state = normalState ; self.delim = None
-		return i,state
+			self.body.tag_add("string", index(n,i), index(n,j+3))
+			return j+3,"normal"
 	#@-body
-	#@-node:4::continuePythonString
-	#@+node:5::continueString
-	#@+body
-	# Similar to skip_string.
-	def continueString (self,s,i,n):
-	
-		body = self.body ; sLen = len(s) ; delim = self.delim
-		continueFlag = false
-		j = i
-		while i < sLen and s[i] != delim:
-			if s[i:] == "\\":
-				i = sLen ; continueFlag = true ; break
-			elif s[i] == "\\":
-				i += 2
-			else:
-				i += 1
-		if i >= sLen:
-			i = sLen
-		elif s[i] == delim:
-			i += 1
-		body.tag_add("string", index(n,j), index(n,i))
-		state = choose(continueFlag, continueCommentState, normalState)
-		return i,state
-	#@-body
-	#@-node:5::continueString
+	#@-node:5::continueSingle/DoublePythonString
 	#@+node:6::doAtKeyword
 	#@+body
 	# Handles non-cweb keyword.
 	
 	def doAtKeyword (self,s,i,n):
-		
-		body = self.body ; sLen = len(s)
-		state = normalState
 	
 		j = self.skip_id(s,i+1)
 		word = s[i:j]
@@ -1161,30 +1179,28 @@ class colorizer:
 		# 7/8/02: don't color doc parts in plain text.
 		if self.language != "plain" and (word == "@" or word == "@doc"):
 			# at-space starts doc part
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
+			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
 			# Everything on the line is in the doc part.
-			body.tag_add("docPart", index(n,j), index(n,sLen))
-			i = sLen ; state = docState
+			self.body.tag_add("docPart", index(n,j), index(n,len(s)))
+			return len(s),"doc"
 		elif word == "@nocolor":
 			# Nothing on the line is colored.
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
-			i = j ; state = nocolorState
+			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+			return j,"nocolor"
 		elif word in leoKeywords:
-			body.tag_add("leoKeyword", index(n,i), index(n,j))
-			i = j
+			self.body.tag_add("leoKeyword", index(n,i), index(n,j))
+			return j,"normal"
 		else:
-			i = j
-		return i,state
+			return j,"normal"
 	#@-body
 	#@-node:6::doAtKeyword
 	#@+node:7::doNormalState
 	#@+body
-	## To do: rewrite using dyntamically generated tables.
+	## To do: rewrite using dynamically generated tables.
 	
 	def doNormalState (self,s,i,n):
 	
-		body = self.body ; sLen = len(s) ; ch = s[i]
-		state = normalState
+		ch = s[i] ; state = "normal"
 	
 		if self.has_string and (ch == '"' or ch == "'"):
 			
@@ -1193,11 +1209,11 @@ class colorizer:
 			#@+body
 			if self.language == "python":
 				j, state = self.skip_python_string(s,i)
-				body.tag_add("string", index(n,i), index(n,j))
+				self.body.tag_add("string", index(n,i), index(n,j))
 				i = j
 			else:
 				j, state = self.skip_string(s,i)
-				body.tag_add("string", index(n,i), index(n,j))
+				self.body.tag_add("string", index(n,i), index(n,j))
 				i = j
 			
 			#@-body
@@ -1208,8 +1224,8 @@ class colorizer:
 			#@<< handle single-line comment >>
 			#@+node:3::<< handle single-line comment >>
 			#@+body
-			body.tag_add("comment", index(n,i), index(n,"end"))
-			i = sLen
+			self.body.tag_add("comment", index(n,i), index(n,"end"))
+			i = len(s)
 			#@-body
 			#@-node:3::<< handle single-line comment >>
 
@@ -1219,8 +1235,8 @@ class colorizer:
 			#@+node:2::<< start block comment >>
 			#@+body
 			k = len(self.block_comment_start)
-			body.tag_add("comment", index(n,i), index(n,i+k))
-			i += k ; state = blockCommentState
+			self.body.tag_add("comment", index(n,i), index(n,i+k))
+			i += k ; state = "blockComment"
 			#@-body
 			#@-node:2::<< start block comment >>
 
@@ -1231,12 +1247,12 @@ class colorizer:
 			#@+body
 			# 10/17/02: recognize comments in preprocessor lines.
 			j = i
-			while i < sLen:
+			while i < len(s):
 				if match(s,i,self.single_comment_start) or match(s,i,self.block_comment_start):
 					break
 				else: i += 1
 			
-			body.tag_add("pp", index(n,j), index(n,i))
+			self.body.tag_add("pp", index(n,j), index(n,i))
 			#@-body
 			#@-node:4::<< handle C preprocessor line >>
 
@@ -1245,7 +1261,7 @@ class colorizer:
 			#@<< handle possible noweb section ref or def >>
 			#@+node:6::<< handle possible noweb section ref or def >>
 			#@+body
-			body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+			self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 			
 			# See if the line contains the right name bracket.
 			j = string.find(s,self.rb+"=",i+2)
@@ -1256,10 +1272,10 @@ class colorizer:
 			if j == -1:
 				i += 2
 			else:
-				searchName = body.get(index(n,i), index(n,j+k)) # includes brackets
+				searchName = self.body.get(index(n,i), index(n,j+k)) # includes brackets
 				ref = findReference(searchName,self.v)
 				if ref:
-					body.tag_add("link", index(n,i+2), index(n,j))
+					self.body.tag_add("link", index(n,i+2), index(n,j))
 					if self.use_hyperlinks:
 						
 						#@<< set the hyperlink >>
@@ -1270,21 +1286,22 @@ class colorizer:
 						# Create the tag name.
 						tagName = "hyper" + `self.hyperCount`
 						self.hyperCount += 1
-						body.tag_delete(tagName)
-						body.tag_add(tagName, index(n,i+2), index(n,j))
+						self.body.tag_delete(tagName)
+						self.body.tag_add(tagName, index(n,i+2), index(n,j))
 						ref.tagName = tagName
-						body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
-						body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
-						body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
+						self.body.tag_bind(tagName,"<Control-1>",ref.OnHyperLinkControlClick)
+						self.body.tag_bind(tagName,"<Any-Enter>",ref.OnHyperLinkEnter)
+						self.body.tag_bind(tagName,"<Any-Leave>",ref.OnHyperLinkLeave)
 						#@-body
 						#@-node:1::<< set the hyperlink >>
 
 				elif k == 3: # a section definition
-					body.tag_add("link", index(n,i+2), index(n,j))
+					self.body.tag_add("link", index(n,i+2), index(n,j))
 				else:
-					body.tag_add("name", index(n,i+2), index(n,j))
-				body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+					self.body.tag_add("name", index(n,i+2), index(n,j))
+				self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 				i = j + k
+			
 			#@-body
 			#@-node:6::<< handle possible noweb section ref or def >>
 
@@ -1299,7 +1316,7 @@ class colorizer:
 					#@<< handle cweb ref or def >>
 					#@+node:2::<< handle cweb ref or def >>
 					#@+body
-					body.tag_add("nameBrackets", index(n,i), index(n,i+2))
+					self.body.tag_add("nameBrackets", index(n,i), index(n,i+2))
 					
 					# See if the line contains the right name bracket.
 					j = string.find(s,"@>=",i+2)
@@ -1310,8 +1327,8 @@ class colorizer:
 					if j == -1:
 						i += 2
 					else:
-						body.tag_add("cwebName", index(n,i+2), index(n,j))
-						body.tag_add("nameBrackets", index(n,j), index(n,j+k))
+						self.body.tag_add("cwebName", index(n,i+2), index(n,j))
+						self.body.tag_add("nameBrackets", index(n,j), index(n,j+k))
 						i = j + k
 					
 					#@-body
@@ -1326,16 +1343,16 @@ class colorizer:
 						#@+body
 						# Color and skip the word.
 						j = i + len(word)
-						body.tag_add("keyword",index(n,i),index(n,j))
+						self.body.tag_add("keyword",index(n,i),index(n,j))
 						i = j
 						
 						if word in ("@ ","@\t","@\n","@*","@**"):
-							state = docState
+							state = "doc"
 						elif word in ("@^","@.","@:","@="): # Ended by "@>"
 							j = string.find(s,"@>",i)
 							if j > -1:
-								body.tag_add("cwebName", index(n,i), index(n,j))
-								body.tag_add("nameBrackets", index(n,j), index(n,j+2))
+								self.body.tag_add("cwebName", index(n,i), index(n,j))
+								self.body.tag_add("nameBrackets", index(n,j), index(n,j+2))
 								i = j + 2
 						#@-body
 						#@-node:1::<< Handle cweb control word >>
@@ -1359,10 +1376,10 @@ class colorizer:
 			
 			word = s[i:j]
 			if word in self.keywords:
-				body.tag_add("keyword", index(n,i), index(n,j))
+				self.body.tag_add("keyword", index(n,i), index(n,j))
 			elif self.language == "php":
 				if word in php_paren_keywords and match(s,j,"()"):
-					body.tag_add("keyword", index(n,i), index(n,j+2))
+					self.body.tag_add("keyword", index(n,i), index(n,j+2))
 					j += 2
 			i = j
 			#@-body
@@ -1374,10 +1391,10 @@ class colorizer:
 			#@+node:8::<< handle special php keywords >>
 			#@+body
 			if match(s,i,"<?php"):
-				body.tag_add("keyword", index(n,i), index(n,i+5))
+				self.body.tag_add("keyword", index(n,i), index(n,i+5))
 				i += 5
 			elif match(s,i,"?>"):
-				body.tag_add("keyword", index(n,i), index(n,i+2))
+				self.body.tag_add("keyword", index(n,i), index(n,i+2))
 				i += 2
 			else:
 				i += 1
@@ -1391,7 +1408,7 @@ class colorizer:
 			#@+node:9::<< handle blank >>
 			#@+body
 			if self.showInvisibles:
-				body.tag_add("blank", index(n,i))
+				self.body.tag_add("blank", index(n,i))
 			i += 1
 			#@-body
 			#@-node:9::<< handle blank >>
@@ -1402,7 +1419,7 @@ class colorizer:
 			#@+node:10::<< handle tab >>
 			#@+body
 			if self.showInvisibles:
-				body.tag_add("tab", index(n,i))
+				self.body.tag_add("tab", index(n,i))
 			i += 1
 			#@-body
 			#@-node:10::<< handle tab >>
@@ -1412,7 +1429,7 @@ class colorizer:
 			#@<< handle normal character >>
 			#@+node:11::<< handle normal character >>
 			#@+body
-			# body.tag_add("normal", index(n,i))
+			# self.body.tag_add("normal", index(n,i))
 			i += 1
 			
 			#@-body
@@ -1423,6 +1440,21 @@ class colorizer:
 		return i,state
 	#@-body
 	#@-node:7::doNormalState
+	#@+node:8::removeAllTags & removeTagsFromLines
+	#@+body
+	def removeAllTags (self):
+	
+		self.body.tag_delete(
+			"blank", "comment", "cwebName", "docPart", "keyword", "leoKeyword",
+			"link", "name", "nameBrackets", "pp", "string", "tab")
+			
+	def removeTagsFromLine (self,n):
+		
+		for tag in self.tags:
+			self.body.tag_remove(tag,index(n,0),index(n,"end"))
+	
+	#@-body
+	#@-node:8::removeAllTags & removeTagsFromLines
 	#@-node:3::colorizeLine & allies
 	#@-node:4::colorizeAnyLanguage & allies
 	#@+node:5::scanColorDirectives
@@ -1470,16 +1502,17 @@ class colorizer:
 	#@-node:5::scanColorDirectives
 	#@+node:6::color.schedule
 	#@+body
-	def schedule(self,v,body):
+	def schedule(self,v,body,incremental=0):
 	
 		if self.enabled:
+			self.incremental=incremental
 			body.after_idle(self.idle_colorize,v,body)
 			
 	def idle_colorize(self,v,body):
 	
 		# trace(`v` + ", " + `body`)
 		if v and body and self.enabled:
-			self.colorize(v,body)
+			self.colorize(v,body,self.incremental)
 	#@-body
 	#@-node:6::color.schedule
 	#@+node:7::getCwebWord
@@ -1578,13 +1611,13 @@ class colorizer:
 	#@+body
 	def skip_python_string(self,s,i):
 	
-		self.delim = delim = s[i:i+3]
+		delim = s[i:i+3]
 		if delim == "'''" or delim == '"""':
 			k = string.find(s,delim,i+3)
 			if k == -1:
-				return len(s), string3State
+				return len(s),choose(delim=="'''","string3s","string3d")
 			else:
-				return k+3, normalState
+				return k+3, "normal"
 		else:
 			return self.skip_string(s,i)
 	#@-body
@@ -1593,22 +1626,21 @@ class colorizer:
 	#@+body
 	def skip_string(self,s,i):
 	
-		# Remember delim for colorizeAnyLanguage.
-		self.delim = delim = s[i] ; i += 1
-		assert(delim == '"' or delim == '\'')
+		delim = s[i] ; i += 1
+		assert(delim == '"' or delim == "'")
 		n = len(s)
 		while i < n and s[i] != delim:
 			if s[i:] == "\\":
-				return n, continueCommentState
+				return n,choose(delim=="'","singleString","doubleString")
 			elif s[i] == '\\' :
 				i += 2
 			else: i += 1
 	
 		if i >= n:
-			return n, normalState
+			return n, "normal"
 		elif s[i] == delim:
 			i += 1
-		return i,normalState
+		return i,"normal"
 	
 	#@-body
 	#@-node:3::skip_string

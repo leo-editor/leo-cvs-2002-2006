@@ -528,19 +528,19 @@ class leoTree:
 	#@-node:14::lastVisible
 	#@+node:15::tree.recolor & recolor_now
 	#@+body
-	def recolor(self,v):
+	def recolor(self,v,incremental=0):
 	
 		body = self.commands.frame.body
 		
 		if 0: # Do immediately
-			self.colorizer.colorize(v,body)
+			self.colorizer.colorize(v,body,incremental)
 		else: # Do at idle time
-			self.colorizer.schedule(v,body)
+			self.colorizer.schedule(v,body,incremental)
 	
-	def recolor_now(self,v):
+	def recolor_now(self,v,incremental=0):
 	
 		body = self.commands.frame.body
-		self.colorizer.colorize(v,body)
+		self.colorizer.colorize(v,body,incremental)
 	#@-body
 	#@-node:15::tree.recolor & recolor_now
 	#@+node:16::tree.redraw , force_redraw, redraw_now
@@ -880,7 +880,7 @@ class leoTree:
 		# print `v.t.insertSpot`,`v`
 		# Recolor the body.
 		self.scanForTabWidth(v) # 9/13/02
-		self.recolor_now(v) # We are already at idle time, so this doesn't help much.
+		self.recolor_now(v,incremental=true)
 		# Update dirty bits and changed bit.
 		if not c.changed:
 			c.setChanged(true) 
@@ -1388,9 +1388,9 @@ class leoTree:
 		# Remember the position of the scrollbar before making any changes.
 		yview=body.yview()
 		insertSpot = c.body.index("insert") # 9/21/02
-		# Replace body text
-		body.delete("1.0", "end")
-		
+		# Remember the old body text
+		old_body = body.get("1.0","end")
+	
 		xml_encoding = app().config.xml_version_string
 		s = v.t.bodyString
 		if type(s) != types.UnicodeType:
@@ -1405,8 +1405,14 @@ class leoTree:
 				s = replaceNonEncodingChars(s,"?",xml_encoding)
 				v.setBodyStringOrPane(s)
 	
-		body.insert("1.0", s)
+		# Delete only if necessary: this may reduce flicker slightly.
+		if old_body != s:
+			body.delete("1.0","end")
+			body.insert("1.0", s)
+	
+		# We must do a full recoloring: we may be changing context!
 		self.recolor_now(v)
+	
 		# Unselect any previous selected but unedited label.
 		self.endEditLabel()
 		old = self.currentVnode
