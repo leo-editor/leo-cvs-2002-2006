@@ -54,6 +54,8 @@ class baseFileCommands:
 		self.fileFormatNumber = 0
 		self.ratio = 0.5
 		self.fileBuffer = None ; self.fileIndex = 0
+		self.currentVnodeStack = [] # A stack of vnodes giving the current position.
+		self.topVnodeStack     = [] # A stack of vnodes giving the top position.
 		# For writing
 		self.read_only = false
 		self.outputFile = None # File for normal writing
@@ -81,6 +83,29 @@ class baseFileCommands:
 		return index
 	#@nonl
 	#@-node:canonicalTnodeIndex
+	#@+node:convertStackToPosition
+	def convertStackToPosition (self,stack):
+	
+		c = self.c ; p2 = None
+		if not stack: return None
+	
+		for p in c.allNodes_iter():
+			if p.v == stack[0]:
+				p2 = p.copy()
+				for n in xrange(len(stack)):
+					if not p2: break
+					# g.trace("compare",n,p2.v,stack[n])
+					if p2.v != stack[n]:
+						p2 = None
+					elif n + 1 == len(stack):
+						break
+					else:
+						p2.moveToParent()
+				if p2: return p
+	
+		return None
+	#@nonl
+	#@-node:convertStackToPosition
 	#@+node:createVnode (changed for 4.2)
 	def createVnode (self,parent,back,tref,headline,attrDict):
 		
@@ -125,6 +150,15 @@ class baseFileCommands:
 		return v,skip
 	#@nonl
 	#@-node:createVnode (changed for 4.2)
+	#@+node:getExistingVnode
+	def getExistingVnode (self,tref):
+	
+		assert(tref > -1)
+		tref = self.canonicalTnodeIndex(tref)
+		t = self.tnodesDict.get(tref)
+		return t.vnodeList[0]
+	#@nonl
+	#@-node:getExistingVnode
 	#@+node:finishPaste
 	# This method finishes pasting the outline from the clipboard.
 	def finishPaste(self):
@@ -741,7 +775,7 @@ class baseFileCommands:
 		self.getTag("</tnodes>")
 	#@-node:getTnodes
 	#@+node:getVnode changed for 4.2)
-	def getVnode (self,parent,back,skip):
+	def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
 	
 		c = self.c ; v = None
 		setCurrent = setExpanded = setMarked = setOrphan = setTop = false
@@ -784,30 +818,54 @@ class baseFileCommands:
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		
 		# g.trace("skip:",skip,"parent:",parent,"back:",back,"headline:",headline)
-		if not skip:
+		if skip:
+			v = self.getExistingVnode(tref)
+		else:
 			v,skip = self.createVnode(parent,back,tref,headline,attrDict)
 			if tnodeList:
 				v.t.tnodeList = tnodeList # New for 4.0, 4.2: now in tnode.
 				# g.trace("%4d" % len(tnodeList),v)
-			#@		<< Set the remembered status bits >>
-			#@+node:<< Set the remembered status bits >>
-			# We can't set the current position in here!
+	
+		#@	<< Set the remembered status bits >>
+		#@+node:<< Set the remembered status bits >>
+		if setCurrent:
+			self.currentVnodeStack = [v]
+		
+		if setTop:
+			self.topVnodeStack = [v]
 			
-			# if setCurrent:
-			#	c.setCurrentPosition(p)
+		if setExpanded:
+			v.initExpandedBit()
 			
-			if setExpanded: v.initExpandedBit()
-			if setMarked:   v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
-			if setOrphan:   v.setOrphan()
-			if setTop:      self.topVnode = v
-			#@nonl
-			#@-node:<< Set the remembered status bits >>
-			#@nl
+		if setMarked:
+			v.initMarkedBit() # 3/25/03: Do not call setMarkedBit here!
+		
+		if setOrphan:
+			v.setOrphan()
+		#@nonl
+		#@-node:<< Set the remembered status bits >>
+		#@nl
 	
 		# Recursively create all nested nodes.
 		parent = v ; back = None
 		while self.matchTag("<v"):
-			back = self.getVnode(parent,back,skip)
+			append1 = appendToCurrentStack and len(self.currentVnodeStack) == 0
+			append2 = appendToTopStack and len(self.topVnodeStack) == 0
+			back = self.getVnode(parent,back,skip,
+				appendToCurrentStack=append1,appendToTopStack=append2)
+				
+		#@	<< Append to current or top stack >>
+		#@+node:<< Append to current or top stack >>
+		if not setCurrent and len(self.currentVnodeStack) > 0 and appendToCurrentStack:
+			#g.trace("append current",v)
+			self.currentVnodeStack.append(v)
+			
+		if not setTop and len(self.topVnodeStack) > 0 and appendToTopStack:
+			#g.trace("append top",v)
+			self.topVnodeStack.append(v)
+		#@nonl
+		#@-node:<< Append to current or top stack >>
+		#@nl
 	
 		# End this vnode.
 		self.getTag("</v>")
@@ -850,8 +908,14 @@ class baseFileCommands:
 			oldCurrent = c.currentPosition()
 	
 		back = parent = None # This routine _must_ work on vnodes!
+		
+		self.currentVnodeStack = []
+		self.topVnodeStack = []
 		while self.matchTag("<v"):
-			back = self.getVnode(parent,back,skip=false)
+			append1 = not self.usingClipboard and len(self.currentVnodeStack) == 0
+			append2 = not self.usingClipboard and len(self.topVnodeStack) == 0
+			back = self.getVnode(parent,back,skip=false,
+				appendToCurrentStack=append1,appendToTopStack=append2)
 	
 		if self.usingClipboard:
 			# Link in the pasted nodes after the current position.
@@ -861,11 +925,25 @@ class baseFileCommands:
 			newCurrent = oldCurrent.copy()
 			newCurrent.v = newRoot.v
 			c.setCurrentPosition(newCurrent)
-			
-		if self.topVnode:
-			pass ## TO DO: create topPosition by searching for topVnode.
+		else:
+			#@		<< set current and top positions >>
+			#@+node:<< set current and top positions >>
+			current = self.convertStackToPosition(self.currentVnodeStack)
+			if current:
+				c.setCurrentPosition(current)
+			else:
+				g.trace(self.currentVnodeStack)
+				c.setCurrentPosition(c.rootPosition())
+				
+			# At present this is useless: the drawing code doesn't set the top position properly.
+			top = self.convertStackToPosition(self.topVnodeStack)
+			if top:
+				c.setTopPosition(top)
+			#@-node:<< set current and top positions >>
+			#@nl
 	
 		self.getTag("</vnodes>")
+	#@nonl
 	#@-node:getVnodes
 	#@+node:getXmlStylesheetTag
 	def getXmlStylesheetTag (self):
@@ -1594,19 +1672,13 @@ class baseFileCommands:
 	
 		# Make only one copy for all calls.
 		self.currentPosition = c.currentPosition() 
-		self.topPosition     = c.nullPosition()
+		self.topPosition     = c.topPosition()
 	
 		if self.usingClipboard:
 			self.putVnode(c.currentPosition()) # Write only current tree.
 		else:
-			root = p = c.rootPosition()
-			if 1:
-				while p:
-					self.putVnode(p) # Write the next top-level node.
-					p.moveToNext()
-			else:
-				for p in root.self_and_siblings_iter():
-					self.putVnode(p) # Write the next top-level node.
+			for p in c.rootPosition().self_and_siblings_iter():
+				self.putVnode(p) # Write the next top-level node.
 	
 		self.put("</vnodes>") ; self.put_nl()
 	#@nonl
@@ -1778,17 +1850,20 @@ class baseFileCommands:
 			#@nl
 			#@		<< put the .leo file >>
 			#@+node:<< put the .leo file >>
-			# start = g.getTime()
 			self.putProlog()
 			self.putHeader()
 			self.putGlobals()
 			self.putPrefs()
 			self.putFindSettings()
-			# start = g.printDiffTime("headers",start)
+			
+			start = g.getTime()
+			
 			self.putVnodes()
-			# start = g.printDiffTime("vnodes ",start)
+			start = g.printDiffTime("vnodes ",start)
+			
 			self.putTnodes()
-			# start = g.printDiffTime("tnodes ",start)
+			start = g.printDiffTime("tnodes ",start)
+			
 			self.putPostlog()
 			#@nonl
 			#@-node:<< put the .leo file >>
