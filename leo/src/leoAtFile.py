@@ -1451,23 +1451,24 @@ class baseOldDerivedFile:
 				# print childIndex,headline
 				
 				if childIndex == 0: # The root node.
-					#@	<< Check the filename in the sentinel >>
-					#@+node:<< Check the filename in the sentinel >>
-					h = headline.strip()
-					
-					if h[:5] == "@file":
-						i,junk,junk = scanAtFileOptions(h)
-						fileName = string.strip(h[i:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					elif h[:8] == "@rawfile":
-						fileName = string.strip(h[8:])
-						if fileName != self.targetFileName:
-							self.readError("File name in @node sentinel does not match file's name")
-					else:
-						self.readError("Missing @file in root @node sentinel")
-					#@-node:<< Check the filename in the sentinel >>
-					#@nl
+					if not at.importing:
+						#@		<< Check the filename in the sentinel >>
+						#@+node:<< Check the filename in the sentinel >>
+						h = headline.strip()
+						
+						if h[:5] == "@file":
+							i,junk,junk = scanAtFileOptions(h)
+							fileName = string.strip(h[i:])
+							if fileName != self.targetFileName:
+								self.readError("File name in @node sentinel does not match file's name")
+						elif h[:8] == "@rawfile":
+							fileName = string.strip(h[8:])
+							if fileName != self.targetFileName:
+								self.readError("File name in @node sentinel does not match file's name")
+						else:
+							self.readError("Missing @file in root @node sentinel")
+						#@-node:<< Check the filename in the sentinel >>
+						#@nl
 					# Put the text of the root node in the current node.
 					self.scanText(file,v,out,endNode)
 					v.t.setCloneIndex(cloneIndex)
@@ -3636,24 +3637,25 @@ class baseNewDerivedFile(oldDerivedFile):
 		#@nl
 		if not at.root_seen:
 			at.root_seen = true
-			#@		<< Check the filename in the sentinel >>
-			#@+node:<< Check the filename in the sentinel >>
-			h = headline.strip()
-			
-			if h[:5] == "@file":
-				i,junk,junk = scanAtFileOptions(h)
-				fileName = string.strip(h[i:])
-				if fileName != at.targetFileName:
-					at.readError("File name in @node sentinel does not match file's name")
-			elif h[:8] == "@rawfile":
-				fileName = string.strip(h[8:])
-				if fileName != at.targetFileName:
-					at.readError("File name in @node sentinel does not match file's name")
-			else:
-				at.readError("Missing @file in root @node sentinel")
-			#@nonl
-			#@-node:<< Check the filename in the sentinel >>
-			#@nl
+			if not at.importing:
+				#@			<< Check the filename in the sentinel >>
+				#@+node:<< Check the filename in the sentinel >>
+				h = headline.strip()
+				
+				if h[:5] == "@file":
+					i,junk,junk = scanAtFileOptions(h)
+					fileName = string.strip(h[i:])
+					if fileName != at.targetFileName:
+						at.readError("File name in @node sentinel does not match file's name")
+				elif h[:8] == "@rawfile":
+					fileName = string.strip(h[8:])
+					if fileName != at.targetFileName:
+						at.readError("File name in @node sentinel does not match file's name")
+				else:
+					at.readError("Missing @file in root @node sentinel")
+				#@nonl
+				#@-node:<< Check the filename in the sentinel >>
+				#@nl
 	
 		i,newIndent = skip_leading_ws_with_indent(s,0,at.tab_width)
 		at.indentStack.append(at.indent) ; at.indent = newIndent
@@ -4560,7 +4562,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			assert(next_i > i)
 			kind = at.directiveKind(s,i)
 			#@		<< handle line at s[i] >>
-			#@+node:<< handle line at s[i]  >>
+			#@+node:<< handle line at s[i]  >> (4.x)
 			if kind == noDirective:
 				if inCode:
 					hasRef,n1,n2 = at.findSectionName(s,i)
@@ -4581,8 +4583,8 @@ class baseNewDerivedFile(oldDerivedFile):
 				at.putDirective(s,i)
 				inCode = true
 			elif kind == othersDirective:
-				inCode = true
-				at.putAtOthersLine(s,i,v)
+				if inCode: at.putAtOthersLine(s,i,v)
+				else: at.putDocLine(s,i) # 12/7/03
 			elif kind == rawDirective:
 				at.raw = true
 				at.putSentinel("@@raw")
@@ -4595,7 +4597,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				assert(0) # Unknown directive.
 			#@nonl
-			#@-node:<< handle line at s[i]  >>
+			#@-node:<< handle line at s[i]  >> (4.x)
 			#@nl
 			i = next_i
 		if not inCode:
