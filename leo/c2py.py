@@ -3,7 +3,7 @@
 
 #@+node:0::@file c2py.py
 #@+body
-#@@first #! /usr/bin/env python
+#@@first
 #@@language python
 
 

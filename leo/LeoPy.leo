@@ -3285,7 +3285,7 @@
 </v>
 </v>
 </v>
-<v t="T1510" a="V"><vh>(atFile read bug)</vh>
+<v t="T1510"><vh>(atFile read bug)</vh>
 <v t="T760" a="C"><vh>atFile.read</vh>
 <v t="T761"><vh>&lt;&lt; open file &gt;&gt;</vh>
 <v t="T762"><vh>&lt;&lt; warn on read-only file &gt;&gt;</vh></v>
@@ -3385,7 +3385,7 @@
 </v>
 </v>
 </v>
-<v t="T1547"><vh>Code</vh>
+<v t="T1547" a="E"><vh>Code</vh>
 <v t="T1548"><vh> Overview of code</vh></v>
 <v t="T1549"><vh> Scripts &amp; Batch Files (Change version in setup.py)</vh>
 <v t="T1550" a="E"><vh> Batch Files &amp; other @root trees</vh>
@@ -3540,7 +3540,7 @@
 <v t="T972" a="C"><vh>app.quit</vh></v>
 <v t="T1658"><vh>app.testDialogs</vh></v>
 </v>
-<v t="T1659"><vh>@file leoAtFile.py</vh>
+<v t="T1659" a="E"><vh>@file leoAtFile.py</vh>
 <v t="T1660"><vh>&lt;&lt; atFile constants &gt;&gt;</vh></v>
 <v t="T1287" a="C"><vh>atFile ctor</vh>
 <v t="T1288"><vh>&lt;&lt; initialize atFile ivars &gt;&gt;</vh></v>
@@ -3628,11 +3628,11 @@
 <v t="T1528"><vh>&lt;&lt; warn about unknown sentinel &gt;&gt;</vh></v>
 </v>
 </v>
-<v><vh>Writing</vh>
+<v a="E"><vh>Writing</vh>
 <v t="T617" a="C"><vh>os, onl, etc. (leoAtFile)</vh></v>
 <v t="T1687"><vh>putBody</vh></v>
-<v t="T1688"><vh>putBodyPart (removes trailing lines)</vh>
-<v t="T1689" a="M"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh>
+<v t="T1688" a="E"><vh>putBodyPart (removes trailing lines)</vh>
+<v t="T1689" a="MV"><vh>&lt;&lt; put code/doc parts and sentinels &gt;&gt;</vh>
 <v t="T1690"><vh>&lt;&lt; initialize lookingForFirst/Last &amp; initialLastDirective &gt;&gt;</vh></v>
 <v t="T1691"><vh>&lt;&lt; set lookingForFirst/Last &amp; initialLastDirective &gt;&gt;</vh></v>
 <v t="T1692"><vh>&lt;&lt; handle misc directives &gt;&gt;</vh></v>
@@ -27503,7 +27503,7 @@ def putBodyPart(self,v):
 	&lt;&lt; put code/doc parts and sentinels &gt;&gt;
 	self.putSentinel("@-body")</t>
 <t tx="T1689">i = 0 ; n = len(s)
-firstLastHack = 0
+firstLastHack = 1
 
 if firstLastHack:
 	&lt;&lt; initialize lookingForFirst/Last &amp; initialLastDirective &gt;&gt;

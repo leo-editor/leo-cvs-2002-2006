@@ -1760,7 +1760,7 @@ class atFile:
 		#@+node:1::<< put code/doc parts and sentinels >>
 		#@+body
 		i = 0 ; n = len(s)
-		firstLastHack = 0
+		firstLastHack = 1
 		
 		if firstLastHack:
 			
