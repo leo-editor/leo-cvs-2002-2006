@@ -109,25 +109,24 @@ def changePrev ( v, pos, findPat, changePat, bodyFlag = 1 ):
 #@-node:3::changePrev
 #@+node:4::findAll
 #@+body
-def findAll ( commander, pattern, bodyFlag = 1 ):
+def findAll(c,pattern,bodyFlag=1):
 	"""
 	findAll		search an entire Leo outline for a pattern.
 	
-	commander	Commands object for a Leo outline window.
+	c        commander for a Leo outline window.
 	pattern		the search string.
-	bodyFlag	true: search body text.  false: search headline text.
+	bodyFlag	true: search body text. false: search headline text.
 	
 	returns a list of tuples (v,pos) showing where matches occured.
 	returns [] if no match were found.
 	"""
+	v = c.rootVnode()
 	n = len(pattern)
-	result = []
-	v = commander.rootVnode()
-	pos = 0
+	result = [] ; pos = 0
 	while v != None:
-		v, pos = findNext(v, pos, pattern, bodyFlag)
-		if v != None:
-			result.append ( (v, pos) )
+		v, pos = findNext(v,pos,pattern,bodyFlag)
+		if v:
+			result.append ((v, pos),)
 		pos = pos + n
 	return result
 #@-body
@@ -154,7 +153,7 @@ def findNext ( v, pos, pattern, bodyFlag = 1 ):
 			s = v.bodyString()
 		else:
 			s = v.headString()
-		pos = string.find ( s, pattern, pos )
+		pos = string.find (s,pattern,pos )
 		if pos != -1:
 			return v, pos
 		v = v.threadNext()
@@ -290,24 +289,23 @@ def reChangePrev ( v, pos, findPat, changePat, bodyFlag, reFlags = None ):
 #@-node:9::reChangePrev
 #@+node:10::reFindAll
 #@+body
-def reFindAll ( commander, findPat, bodyFlag, reFlags = None ):
+def reFindAll(c,findPat,bodyFlag,reFlags=None):
 	"""
 	reFindAll	search an entire Leo outline using re module.
 	
-	commander	Commands object for a Leo outline window.
+	c	     commander for a Leo outline window.
 	pattern		the search string.
 	bodyFlag	true: search body text.  false: search headline text.
 	reFlags		flags argument to re.search().
-	
+
 	returns a list of tuples (v,pos) showing where matches occured.
 	returns [] if no match were found.
 	"""
+	v = c.rootVnode()
 	n = len(findPat)
-	result = []
-	v = commander.rootVnode()
-	pos = 0
+	result = [] ; pos = 0
 	while v != None:
-		v, mo, pos = reFindNext(v, pos, findPat, bodyFlag, reFlags)
+		v, mo, pos = reFindNext(v,pos,findPat,bodyFlag,reFlags)
 		if v != None:
 			result.append ( (v,mo,pos) )
 		pos = pos + n
@@ -328,6 +326,7 @@ def reFindNext ( v, pos, pattern, bodyFlag, reFlags = None ):
 	
 	returns a tuple (v,mo,pos) showing where the match occured.
 	returns (None,None,0) if no further match in the outline was found.
+	mo is a "match object"
 
 	Note: if (v,pos) is a tuple returned previously from reFindNext,
 	reFindNext(v,pos+len(pattern),pattern) finds the next match.

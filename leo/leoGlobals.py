@@ -1117,7 +1117,119 @@ def readlineForceUnixNewline(f):
 
 #@-body
 #@-node:6::readlineForceUnixNewline (Steven P. Schaefer)
-#@+node:7::sanitize_filename
+#@+node:7::redirecting stderr and stdout
+#@+body
+class redirectClass:
+	
+	#@<< redirectClass methods >>
+	#@+node:1::<< redirectClass methods >>
+	#@+body
+	# To redirect stdout a class only needs to implement a write(self,s) method.
+	def __init__ (self):
+		self.old = None
+		
+	def isRedirected (self):
+		return self.old != None
+	
+	def redirect (self,stdout=1):
+		import sys
+		if not self.old:
+			if stdout:
+				self.old,sys.stdout = sys.stdout,self
+			else:
+				self.old,sys.stderr = sys.stderr,self
+	
+	def undirect (self,stdout=1):
+		import sys
+		if self.old:
+			if stdout:
+				sys.stdout,self.old = self.old,None
+			else:
+				sys.stderr,self.old = self.old,None
+	
+	def write(self,s):
+		if self.old:
+			if app().log: app().log.put(s)
+			else: self.old.write(s)
+		else: print s # Typically will not happen.
+	
+	#@-body
+	#@-node:1::<< redirectClass methods >>
+
+
+# Create two redirection objects, one for each stream.
+redirectStdErrObj = redirectClass()
+redirectStdOutObj = redirectClass()
+
+
+#@<< define convenience methods for redirecting streams >>
+#@+node:2::<< define convenience methods for redirecting streams >>
+#@+body
+
+# Redirect streams to the current log window.
+def redirectStderr():
+	global redirectStdErrObj
+	redirectStdErrObj.redirect(stdout=false)
+
+def redirectStdout():
+	global redirectStdOutObj
+	redirectStdOutObj.redirect()
+
+# Restore standard streams.
+def restoreStderr():
+	global redirectStdErrObj
+	redirectStdErrObj.undirect(stdout=false)
+	
+def restoreStdout():
+	global redirectStdOutObj
+	redirectStdOutObj.undirect()
+		
+def stdErrIsRedirected():
+	global redirectStdErrObj
+	return redirectStdErrObj.isRedirected()
+	
+def stdOutIsRedirected():
+	global redirectStdOutObj
+	return redirectStdOutObj.isRedirected()
+#@-body
+#@-node:2::<< define convenience methods for redirecting streams >>
+
+
+if 0: # Test code: may be safely and conveniently executed in the child node.
+	
+	#@<< test code >>
+	#@+node:3::<< test code >>
+	#@+body
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import redirectStderr,redirectStdout
+	redirectStderr()
+	redirectStdout()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import restoreStderr
+	restoreStderr()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	
+	from leoGlobals import restoreStdout
+	restoreStdout()
+	
+	from leoGlobals import stdErrIsRedirected,stdOutIsRedirected
+	print "stdout isRedirected:", stdOutIsRedirected()
+	print "stderr isRedirected:", stdErrIsRedirected()
+	#@-body
+	#@-node:3::<< test code >>
+#@-body
+#@-node:7::redirecting stderr and stdout
+#@+node:8::sanitize_filename
 #@+body
 #@+at
 #  This prepares string s to be a valid file name:
@@ -1140,15 +1252,15 @@ def sanitize_filename(s):
 	s = ws.sub('_',s)
 	return s[:128]
 #@-body
-#@-node:7::sanitize_filename
-#@+node:8::shortFileName
+#@-node:8::sanitize_filename
+#@+node:9::shortFileName
 #@+body
 def shortFileName (fileName):
 	
 	return os.path.basename(fileName)
 #@-body
-#@-node:8::shortFileName
-#@+node:9::update_file_if_changed
+#@-node:9::shortFileName
+#@+node:10::update_file_if_changed
 #@+body
 #@+at
 #  This function compares two files. If they are different, we replace 
@@ -1194,8 +1306,8 @@ def update_file_if_changed(file_name,temp_name):
 			es(`file_name` + " may be read-only or in use")
 			es_exception()
 #@-body
-#@-node:9::update_file_if_changed
-#@+node:10::utils_rename
+#@-node:10::update_file_if_changed
+#@+node:11::utils_rename
 #@+body
 #@+at
 #  Platform-independent rename.
@@ -1217,7 +1329,7 @@ def utils_rename(src,dst):
 		from distutils.file_util import move_file
 		move_file(src,dst)
 #@-body
-#@-node:10::utils_rename
+#@-node:11::utils_rename
 #@-node:5::Files & Directories...
 #@+node:6::Hooks
 #@+node:1::enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler
