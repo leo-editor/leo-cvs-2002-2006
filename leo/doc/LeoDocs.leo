@@ -81,7 +81,7 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040713110718" a="ETV"><vh>4.2 beta 3</vh>
+<v t="ekr.20040713110718" a="TV"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
 <v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
@@ -2286,7 +2286,7 @@ Leo was designed and built by:
 Edward K. Ream
 email:  edream@tds.net
 voice: (608) 231-0766</t>
-<t tx="EKR.20040524104904.5">Using Leo quickly becomes completely addicting.  I would never willing program in Leo again; many of Leo's users say the same.
+<t tx="EKR.20040524104904.5">Using Leo quickly becomes completely addicting.  I would never again willingly program without Leo; many of Leo's users say the same.
 
 What makes Leo special?
 
@@ -14904,7 +14904,7 @@ Front Matter
 
 Leo has thousands of users. They use Leo to create programs in all kinds of languages and for all kinds of projects.  Leo's users write programs in assembly language, C and C++, Java, Python Tk, PHP, XML and XSLT and many more.  They use Leo to build and maintain web sites and to manage large amounts of other data.  Managers use Leo to organize projects and to communicate general ideas to programmers.
 
-I would never willing program in Leo again; many of Leo's users say the same.
+I would never again willingly program without Leo; many of Leo's users say the same.
 What makes Leo so special?  The general answer is that Leo creates a new way of programming, a new way of organizing data, and a new way of managing projects.  One can speak of good or bad style in using Leo.  That there could *be* such a thing as proper "Leonine" style shows that Leo does, in fact, create a rich new environment for design.
 </t>
 <t tx="ekr.20040414172617">@ignore
