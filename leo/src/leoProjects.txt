@@ -22133,9 +22133,10 @@ This is important, the settings node found by findSettingsPosition may be a clon
 #@nonl
 #@-node:ekr.20050122104754.1:What I did
 #@+node:ekr.20041122162610:@recent_files
+/Users/edream/leoCVS/leo/config/leoSettings.leo
 /Users/edream/leoCVS/leo/src/LeoPy.leo
 /Users/edream/leoCVS/leo/plugins/leoPlugins.leo
-/Users/edream/leoCVS/leo/config/leoSettings.leo
+/Users/edream/leoCVS/leo/doc/LeoDocs.leo
 #@nonl
 #@-node:ekr.20041122162610:@recent_files
 #@+node:ekr.20040305223522:p.setBodyStringOrPane & p.setBodyTextOrPane
@@ -31791,6 +31792,26 @@ A script in an @button node or script node can now request to be removed by
 setting g.app.scriptDict['removeMe'] = True.
 #@nonl
 #@-node:ekr.20050202074304:Script buttons can request to be removed
+#@+node:ekr.20050206120754:Improved documentation in leoSettings.leo
+@killcolor
+
+Documentation problem in "Leo\config\leoSettings.leo"
+
+- (done) The body text shows 1: & 0: as selections, not True/False.
+    - @bool write_strips_blank_lines = True
+    - @bool allow_clone_drags = False"
+    - @bool enable_drag_messages = False"
+
+- (done) @bool script_change = None
+    What's a 'script change'?
+    All the nodes under "Checkboxes" could use descriptions.
+
+- (done) @page Syntax colors & options
+
+    It would be nice if there were spaces before & after the "=" to allow easier
+    double-click selection of just the colors.
+#@nonl
+#@-node:ekr.20050206120754:Improved documentation in leoSettings.leo
 #@-node:ekr.20050125203059.2:New features...
 #@-node:ekr.20050125203059:4.3 a2 projects
 #@-all
