@@ -12,7 +12,8 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="edream.110203113231"><vh>Diary</vh>
+<v t="edream.110203113231" a="V"><vh>Diary</vh>
+<v t="edream.120603100522"><vh>12/6/03 Removed compile-time enable/disable code</vh></v>
 <v t="edream.112103192146"><vh>11/21</vh>
 <v t="edream.112303075625"><vh>Added wxVersion to signon</vh></v>
 <v t="edream.112103192146.1"><vh>Fixed and test vim plugin</vh></v>
@@ -969,7 +970,7 @@
 <v t="edream.120103084310"><vh>(Load plugins only from plugins menu)</vh>
 <v t="edream.120103084310.1"><vh>Report</vh></v>
 </v>
-<v t="edream.110203113231.618" a="E"><vh>Plugins &amp; scripts</vh>
+<v t="edream.110203113231.618"><vh>Plugins &amp; scripts</vh>
 <v t="edream.110203113231.619"><vh>Contributed scripts</vh>
 <v t="edream.110203113231.620" tnodeList="edream.110203113231.620,edream.110203113231.621,edream.110203113231.622,edream.110203113231.623,edream.110203113231.624,edream.110203113231.625,edream.110203113231.626,edream.110203113231.627,edream.110203113231.628,edream.110203113231.629"><vh>@file ../scripts/foldersize_leo.py</vh>
 <v t="edream.110203113231.621"><vh>normalize</vh></v>
@@ -1119,7 +1120,7 @@
 </v>
 </v>
 <v t="edream.110203113231.740"><vh>Directives</vh>
-<v t="edream.110203113231.741" tnodeList="edream.110203113231.741,edream.110203113231.742,edream.110203113231.743"><vh>@file add_directives.py</vh>
+<v t="edream.110203113231.741" a="M" tnodeList="edream.110203113231.741,edream.110203113231.742,edream.110203113231.743"><vh>@file add_directives.py</vh>
 <v t="edream.110203113231.742"><vh>addPluginDirectives</vh></v>
 <v t="edream.110203113231.743"><vh>scanPluginDirectives</vh></v>
 </v>
@@ -1136,7 +1137,7 @@
 </v>
 <v t="edream.110403140857.7"><vh>Release notes</vh></v>
 </v>
-<v t="edream.110403140857.8" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
+<v t="edream.110403140857.8" a="M" tnodeList="edream.110403140857.8,edream.110403140857.9,edream.110403140857.10,edream.110403140857.11,edream.110403140857.12,edream.110403140857.13,edream.110403140857.14,edream.110403140857.15,edream.110403140857.16,edream.110403140857.17,edream.110403140857.18,edream.110403140857.20,edream.110403140857.21,edream.110403140857.22,edream.110403140857.23,edream.110403140857.24,edream.110403140857.25,edream.110403140857.26,edream.110403140857.27,edream.110403140857.28"><vh>@file color_markup.py</vh>
 <v t="edream.110403140857.9"><vh>initAnyMarkup</vh></v>
 <v t="edream.110403140857.10"><vh>colorWikiMarkup</vh></v>
 <v t="edream.110403140857.11"><vh>doWikiText</vh>
@@ -1164,7 +1165,7 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.753" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
+<v t="edream.110203113231.753" a="M" tnodeList="edream.110203113231.753,edream.110203113231.754,edream.110203113231.755,edream.110203113231.756,edream.110203113231.757"><vh>@file image.py</vh>
 <v t="edream.110203113231.754"><vh>onSelect</vh>
 <v t="edream.110203113231.755"><vh>&lt;&lt; Select Image &gt;&gt;</vh></v>
 </v>
@@ -1172,7 +1173,7 @@
 <v t="edream.110203113231.757"><vh>&lt;&lt; Unselect Image &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="edream.110203113231.758" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
+<v t="edream.110203113231.758" a="M" tnodeList="edream.110203113231.758,edream.110203113231.759,edream.110203113231.760,edream.110203113231.761,edream.110203113231.762,edream.110203113231.763,edream.110203113231.764,edream.110203113231.766,edream.110203113231.767,edream.110203113231.768,edream.110203113231.769,edream.110203113231.770,edream.110203113231.771,edream.110203113231.772,edream.110203113231.773,edream.110203113231.774,edream.110203113231.775,edream.110203113231.776,edream.110203113231.777,edream.110203113231.778,edream.110203113231.779,edream.110203113231.780,edream.110203113231.781,edream.110203113231.782,edream.110203113231.783,edream.110203113231.784,edream.110203113231.785,edream.110203113231.786,edream.110203113231.787,edream.110203113231.788,edream.110203113231.789"><vh>@file nav_buttons.py</vh>
 <v t="edream.110203113231.759"><vh>class commanderInfoClass</vh>
 <v t="edream.110203113231.760"><vh>__init__ (commanderInfoClass)</vh></v>
 <v t="edream.110203113231.761"><vh>addWidgets</vh>
@@ -1213,12 +1214,12 @@
 </v>
 </v>
 </v>
-<v t="edream.110203113231.790" a="E"><vh>External editors &amp; Open With</vh>
-<v t="edream.120303095057.1" a="V" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
+<v t="edream.110203113231.790"><vh>External editors &amp; Open With</vh>
+<v t="edream.120303095057.1" tnodeList="edream.120303095057.1,edream.120303095910,edream.120303095910.1"><vh>@file mod_tempfname.py</vh>
 <v t="edream.120303095910"><vh>onStart</vh></v>
 <v t="edream.120303095910.1"><vh>openWithTempFilePath</vh></v>
 </v>
-<v t="edream.110203113231.791" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
+<v t="edream.110203113231.791" a="M" tnodeList="edream.110203113231.791,edream.110203113231.792,edream.110203113231.793,edream.110203113231.794,edream.110203113231.795,edream.110203113231.796"><vh>@file open_with.py</vh>
 <v t="edream.110203113231.792"><vh>on_idle</vh>
 <v t="edream.110203113231.793"><vh>&lt;&lt; update v's body text &gt;&gt;</vh>
 <v t="edream.110203113231.794"><vh>&lt;&lt; set s to the file text &gt;&gt;</vh></v>
@@ -1273,7 +1274,7 @@
 </v>
 <v t="edream.110203113231.831"><vh>Menus</vh>
 <v t="edream.110203113231.832"><vh> Plugins menu</vh>
-<v t="edream.110203113231.833" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
+<v t="edream.110203113231.833" a="M" tnodeList="edream.110203113231.833,edream.110203113231.834,edream.110203113231.835,edream.110203113231.836,edream.110203113231.837,edream.110203113231.838,edream.110203113231.839,edream.110203113231.840,edream.110203113231.841,edream.110203113231.842,edream.110203113231.843,edream.110203113231.844,edream.110203113231.845,edream.110203113231.846,edream.110203113231.847,edream.110203113231.848,edream.110203113231.849,edream.110203113231.850,edream.110203113231.851,edream.110203113231.852,edream.110203113231.853,edream.110203113231.854,edream.110203113231.855"><vh>@file plugins_menu.py</vh>
 <v t="edream.110203113231.834"><vh>class Plugin</vh>
 <v t="edream.110203113231.835"><vh>__init__</vh>
 <v t="edream.110203113231.836"><vh>&lt;&lt; Check if this can be configured &gt;&gt;</vh></v>
@@ -1366,7 +1367,7 @@
 <v t="edream.110203113231.899"><vh>on_select1</vh></v>
 <v t="edream.110203113231.900"><vh>on_select2</vh></v>
 </v>
-<v t="edream.111803100242" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
+<v t="edream.111803100242" a="M" tnodeList="edream.111803100242,edream.111803100242.1,edream.111803100242.2,edream.111803100242.3,edream.111803100242.4,edream.111803100242.5,edream.111803100242.6,edream.111803100242.7,edream.111803100242.8"><vh>@file rst.py</vh>
 <v t="edream.111803100242.1"><vh>&lt;&lt;about this plugin &gt;&gt;</vh></v>
 <v t="edream.111803100242.2"><vh>&lt;&lt; change log &gt;&gt;</vh></v>
 <v t="edream.111803100242.3"><vh>onIconDoubleClick</vh>
@@ -1499,6 +1500,7 @@
 </v>
 </v>
 </v>
+<v t="edream.120603093808" tnodeList="edream.120603093808"><vh>@file pluginsManager.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203113231">@nocolor</t>
@@ -1543,10 +1545,9 @@ which should appear as the outer level of the .py file:
 
 """A description of this plugin"""
 
-if 1: # 1 to enable the plugin, 0 to disable the plugin:
-	registerHandler("xxx", onXXX)
-	__version__ = "1.2"
-	plugin_signon(__name__)
+registerHandler("xxx", onXXX)
+__version__ = "1.2"
+plugin_signon(__name__)
 	
 @nocolor
 
@@ -1557,12 +1558,7 @@ Line by line:
 This is a Python doc string describing the plugin. This string becomes the
 value of the __name__ attribute for the module (.py file).
 
-2) if 1: # 1 to enable the plugin, 0 to disable the plugin:
-
-This line enables or disables the code that registers the plugin. Plugins do
-nothing unless they are actually registered when Leo first imports them.
-
-3) registerHandler("xxx", onXXX)
+2) registerHandler("xxx", onXXX)
 
 This line registers a handler called onXXX for the hook called "xxx". See the
 documentation for hooks for a complete list of hook names that you can use
@@ -1578,12 +1574,12 @@ example:
 
 registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
 
-4) __version__ = "1.2"
+3) __version__ = "1.2"
 
 This assigns a version attribute to module. At present this attribute is used
 by the plugin code that creates Leo's Plugins menu.
 
-5) plugin_signon(__name__)
+4) plugin_signon(__name__)
 
 This line increases the count of loaded modules. The present code for
 plugin_signon does not actually print separate signons--it seems to verbose.
@@ -6758,7 +6754,7 @@ except: tkFileDialog = None
 
 &lt;&lt; about this plugin &gt;&gt;
 
-if tkFileDialog and 0:
+if tkFileDialog:
 	
 	@others
 	
@@ -6767,9 +6763,11 @@ if tkFileDialog and 0:
 
 	if app.gui.guiName() == "tkinter":
 
-		registerHandler(("start2","open2","command2"), create_import_cisco_menu)
+		# Register the handlers...
+		registerHandler(("start2","open2","command2"),
+			create_import_cisco_menu)
 
-		__version__ = "1.3" # Set version for the plugin handler.
+		__version__ = "1.3" 
 		plugin_signon(__name__)</t>
 <t tx="edream.110203113231.670">@ This plugin adds a menu item under the File-&gt;Import menu to import
 Cisco configuration files.
@@ -7412,11 +7410,11 @@ def onStart (tag,keywords):
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("start2", onStart)
-	
-	__version__ = "1.2" # Set version for the plugin handler.
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("start2", onStart)
+
+__version__ = "1.2" # Set version for the plugin handler.
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.721"># Returns the headline string in MORE format.
 
 def newMoreHead (self,firstLevel,useVerticalBar=true):
@@ -7452,17 +7450,17 @@ import time, os
 
 @others
 
-if 0: # Register the handlers...
+# Register the handlers...
+AUTOSAVE_INTERVAL = 600
+ACTIVE = "Yes"
+LAST_AUTOSAVE = time.time()
+applyConfiguration()
 
-	AUTOSAVE_INTERVAL = 600
-	ACTIVE = "Yes"
-	LAST_AUTOSAVE = time.time()
-	applyConfiguration()
+# Register the handlers...
+registerHandler("idle", autosave)
 
-	__version__ = "0.2"
-	registerHandler("idle", autosave)
-	es("auto save enabled",color="orange")
-</t>
+__version__ = "0.2"
+es("auto save enabled",color="orange")</t>
 <t tx="edream.110203113231.725">def applyConfiguration(config=None):
 	
 	"""Called when the user presses the "Apply" button on the Properties form"""
@@ -7500,12 +7498,10 @@ import time
 	
 @others
 
-if 0: # Register the handlers...
-
-	registerHandler("command1", timestamp)
-
-	__version__ = "0.1" # Set version for the plugin handler.
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("command1", timestamp)
+__version__ = "0.1"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.728">def timestamp(tag=None, keywords=None):
 	
 	cmd = keywords.get('label', 'save')
@@ -7521,11 +7517,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("start2", onStart)
+# Register the handlers...
+registerHandler("start2", onStart)
 
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.731">def onStart (tag,keywords):
 
 	print "\nglobals..."
@@ -7545,11 +7541,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("start2", onStart)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("start2", onStart)
+
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.733">def onStart (tag,keywords):
 
 	try:
@@ -7599,22 +7595,17 @@ def printIdleGC(tag,keywords):
 			printGc(tag,onlyPrintChanges=true)
 	else:
 		printGc(tag,onlyPrintChanges=false)
-		
-if 0:
+
+# Register the handlers...
+if 1: # Very effective.
+	registerHandler("idle", printIdleGC)
+else: # Very precise.
+	registerHandler("all", printIdleGC)
+if 0: # Another idea.
 	registerHandler("command2", printIdleRefs)
 
-if 0: # Register the handlers...
-
-	count = 0 # For Pychecker: don't define this unless we are using this module.
-
-	if 1: # Very effective.
-		registerHandler("idle", printIdleGC)
-	else: # Very precise.
-		registerHandler("all", printIdleGC)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)
-</t>
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.736">"""Trace keystrokes in the outline and body panes"""
 
 from leoPlugins import *
@@ -7622,11 +7613,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)
+
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.737">def onKey (tag,keywords):
 
 	ch = keywords.get("ch")
@@ -7641,12 +7632,11 @@ tagCount = 0
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("all", trace_tags)
+# Register the handlers...
+registerHandler("all", trace_tags)
 
-	__version__ = "1.2" # Set version for the plugin handler.
-	plugin_signon(__name__)
-</t>
+__version__ = "1.2" # Set version for the plugin handler.
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.739">def trace_tags (tag,keywords):
 	
 	global tagCount # 8/28/03
@@ -7693,13 +7683,12 @@ else:
 	
 @others
 
-if 1: # Register the handlers...
+# Register the handlers...
+registerHandler("start1",addPluginDirectives)
+registerHandler("scan-directives",scanPluginDirectives)
 
-	registerHandler("start1",addPluginDirectives)
-	registerHandler("scan-directives",scanPluginDirectives)
-	
-	__version__ = "1.1"
-	plugin_signon(__name__)</t>
+__version__ = "1.1"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.742">def addPluginDirectives (tag,keywords):
 	
 	"""Add all new directives to globalDirectivesList"""
@@ -7742,7 +7731,7 @@ try:    import Tkinter
 except: Tkinter = None
 import os
 
-if Tkinter and 1: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -7821,7 +7810,7 @@ Tk = Tkinter
 
 import os
 
-if Tkinter and 1: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 	
@@ -7838,9 +7827,7 @@ if Tkinter and 1: # Register the handlers...
 		registerHandler(("set-mark","clear-mark"),globalInfo.updateMarks)
 		registerHandler("close-frame",globalInfo.destroyFrame)
 		registerHandler("destroy-all-global-windows",globalInfo.destroyAllFrames)
-	
-		# 7/12/03: Moved marksDialog and recentSectionsDialog into this plugin.
-		# 7/12/03: Handled "set-mark" and "clear-mark" hooks.
+
 		__version__ = "1.2"
 		plugin_signon(__name__)</t>
 <t tx="edream.110203113231.759">class commanderInfoClass:
@@ -8246,7 +8233,7 @@ from leoGlobals import *
 try:    import Tkinter
 except: Tkinter = None
 
-if Tkinter and 1: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -8364,16 +8351,15 @@ path = r"c:\Program Files\XEmacs\XEmacs-21.4.13\i586-pc-win32\xemacs.exe"
 def open_in_emacs (tag,keywords):
 	top() and top().openWith(("os.spawnl",path,None),)
 
-if 0: # Register the handlers...
+# Register the handlers...
 
-	if 1: # Edit when double-clicking a node's icon.
-		registerHandler("iconclick2", open_in_emacs)
-	else: # Edit when selecting any node. That's a bit much for my taste.
-		registerHandler("select2", open_in_emacs)
-	
-	__version__ = "1.3" # Set version for the plugin handler.
+if 1: # Edit when double-clicking a node's icon.
+	registerHandler("iconclick2", open_in_emacs)
+else: # Edit when selecting any node. That's a bit much for my taste.
+	registerHandler("select2", open_in_emacs)
 
-	plugin_signon(__name__)</t>
+__version__ = "1.3"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.799">"""vim handler"""
 
 # Contributed by Andrea Galimberti.
@@ -8403,16 +8389,15 @@ _vim_cmd = "vim --servername LEO "
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("iconclick2", open_in_vim)
-	
-	# if you want to start a (g)vim server when leo is started
-	# uncomment this line:
-	# os.system("gvim --servername LEO")
-	
-	
-	__version__ = "1.4" # Set version for the plugin handler.
-	plugin_signon(__name__)
+# Register the handlers...
+registerHandler("iconclick2", open_in_vim)
+
+# if you want to start a (g)vim server when leo is started
+# uncomment this line:
+# os.system("gvim --servername LEO")
+
+__version__ = "1.4" # Set version for the plugin handler.
+plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.800">def open_in_vim (tag,keywords):
 	if not top():
@@ -8473,7 +8458,7 @@ import ConfigParser
 
 @others
 
-if client and 0: # Register the handlers...
+if client: # Register the handlers...
 
 	# No hooks, we just use the cmd_Export to trigger an export
 	__version__ = "0.1"
@@ -8581,11 +8566,11 @@ from leoGlobals import *
 &lt;&lt; define minimal .leo file &gt;&gt;
 @others
 
-if 0: # Register the handlers...
-	registerHandler("open1", onOpen)
-	
-	__version__ = "1.2" # Set version for the plugin handler.
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("open1", onOpen)
+
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.813">empty_leo_file = """&lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
 &lt;leo_file&gt;
 &lt;leo_header file_format="2" tnodes="0" max_tnode_index="0" clone_windows="0"/&gt;
@@ -8635,11 +8620,11 @@ pathToCmd = 'c:/windows/system32/cmd.exe'
 
 @others
 
-if 0: # Register the plugin
+# Register the handlers...
+registerHandler("after-create-leo-frame", load_menu)
 
-	registerHandler("after-create-leo-frame", load_menu)
-	__version__ = "1.3"
-	plugin_signon(__name__)</t>
+__version__ = "1.3"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.816">@ Written by Ed Taekema.  Modified by E.K.Ream
 
 Please submit bugs / feature requests to etaekema@earthlink.net"""
@@ -8725,11 +8710,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("menu1", onMenu)
+# Register the handlers...
+registerHandler("menu1", onMenu)
 	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.825">@ The translation table used by setRealMenuNamesFromTable has entries of the form:
 
 	("official name","translated name"),
@@ -8767,11 +8752,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("menu1", onMenu)
-	
-	__version__ = "1.4" # Set version for the plugin handler.
-	plugin_signon(__name__)
+# Register the handlers...
+registerHandler("menu1", onMenu)
+
+__version__ = "1.4" # Set version for the plugin handler.
+plugin_signon(__name__)
 </t>
 <t tx="edream.110203113231.827">def onMenu (tag,keywords):
 	c = keywords.get("c")
@@ -8936,7 +8921,7 @@ from leoGlobals import *
 try:    import Tkinter
 except: Tkinter = None
 
-if Tkinter and 0: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -8972,9 +8957,6 @@ def onOpen (tag,keywords):
 
 # Written by Paul A. Paterson.  Revised by Edward K. Ream.
 
-## To do: confine the imports to the plugins directory.
-## This does _not_ happen now!  import test gets a module from the Python directory!
-
 ## To do: add Revert button to each dialog.
 
 from leoPlugins import *
@@ -8985,7 +8967,7 @@ try:    import Tkinter
 except: Tkinter = None
 Tk = Tkinter
 
-if Tkinter and 1: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -9240,7 +9222,7 @@ except: Tkinter = None
 
 import os
 
-if Tkinter and 0: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -9415,11 +9397,11 @@ import glob,os
 # EKR:  I don't like the scripts menu now.
 # The new Execute Script command seems much safer and more convenient.
 
-if 0: # Register the handlers...
-	registerHandler("create-optional-menus",createScriptsMenu)
-	
-	__version__ = "1.4"
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("create-optional-menus",createScriptsMenu)
+
+__version__ = "1.4"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.868">def createScriptsMenu (tag,keywords):
 
 	c = keywords.get("c")
@@ -9488,11 +9470,11 @@ def onSelect (tag,keywords):
 	if match_word(h,0,"@folder"):
 		sync_node_to_folder(v,h[8:])
 
-if 0: # Register the handlers...
-	registerHandler("select1", onSelect)
+# Register the handlers...
+registerHandler("select1", onSelect)
 
-	__version__ = "1.2" # Set version for the plugin handler.
-	plugin_signon(__name__)</t>
+__version__ = "1.2" # Set version for the plugin handler.
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.874">@ If a node is named '@folder path_to_folder', the content (filenames) of the
 folder and the children of that node will be sync. Whenever a new file is put
 there, a new node will appear on top of the children list (with mark). So that
@@ -9546,7 +9528,7 @@ from htmllib import HTMLParser
 try:    import tkFileDialog
 except: tkFileDialog = None
 
-if tkFileDialog and 0: # Register the handlers...
+if tkFileDialog: # Register the handlers...
 
 	@others
 
@@ -9936,11 +9918,11 @@ import os
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("icondclick1",onIconDoubleClick)
-	
-	__version__ = "1.1" # Set version for the plugin handler.
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("icondclick1",onIconDoubleClick)
+
+__version__ = "1.1"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.911">@ This plugin starts a file with the name of a headline.
 
 
@@ -9997,16 +9979,16 @@ from leoGlobals import *
 
 @others
 
-if 0: # Override classes &amp; methods...
+# Override classes &amp; methods...
 
-	if 0:
-		&lt;&lt; override the LeoFrame class &gt;&gt;
+if 0:
+	&lt;&lt; override the LeoFrame class &gt;&gt;
 
-	if 0:
-		&lt;&lt; override methods of the LeoApp class &gt;&gt;
+if 0:
+	&lt;&lt; override methods of the LeoApp class &gt;&gt;
 
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.917"># print "overriding LeoFrame class"
 
 import leoFrame
@@ -10044,11 +10026,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("command1", onCommand)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("command1", onCommand)
+
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.920">def onCommand (tag,keywords):
 
 	if keywords.get("label")=="equalsizedpanes":
@@ -10061,11 +10043,11 @@ from leoGlobals import *
 
 @others
 
-if 0: # Register the handlers...
-	registerHandler("start2", onStart)
-	
-	__version__ = "1.2"
-	plugin_signon(__name__)</t>
+# Register the handlers...
+registerHandler("start2", onStart)
+
+__version__ = "1.2"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.922">@ This code illustrates how to redefine _any_ method of Leo.
 Python makes this is almost too easy :-)
 @c
@@ -10112,13 +10094,11 @@ def onStart (tag,keywords):
 	redirectStdout() # Redirect stdout
 	redirectStderr() # Redirect stderr
 
-if 0: # Register the handlers...
-	registerHandler("start2", onStart)
+# Register the handlers...
+registerHandler("start2", onStart)
 
-	__version__ = "1.3" # Set version for the plugin handler.
-	plugin_signon(__name__)
-
-</t>
+__version__ = "1.3"
+plugin_signon(__name__)</t>
 <t tx="edream.110203113231.925">"""Send output from the Execute Script command to the end of the body pane"""
 
 from leoPlugins import *
@@ -10127,7 +10107,7 @@ from leoGlobals import *
 try:    import Tkinter
 except: Tkinter = None
 
-if Tkinter and 0: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -10265,7 +10245,7 @@ Tk = Tkinter
 
 import ConfigParser,os,popen2,re,sys,traceback
 
-if Tkinter and 0: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -10997,8 +10977,7 @@ except:
 	
 Tk = Tkinter
 
-if Tk and 0:
-
+if Tk:
 	__version__ = "0.1"
 	
 	PORT = 8001 # The port the server is listening on
@@ -11212,9 +11191,10 @@ def getPluginNames(self):
 	b) generate the plugin file. Right click with the mouse on the outline heading "@file add_directives.py" and select "Write @file nodes".
 
 2) enable the "color_markup.py" plugin:
-	a) check that the plugin code is enabled. You should have a line like (note the "if 1"):
-		if Tkinter and 1: # Register the handlers...
+	a) check that the plugin code is enabled. You should have a line like:
+		if Tkinter: # Register the handlers...
 	b) generate the plugin file. Right click with the mouse on the outline heading "@file color_markup.py" and select "Write @file nodes".
+
 </t>
 <t tx="edream.110403140857.3">@
 --How to use the wiki markup plugin--
@@ -11305,7 +11285,7 @@ except: Tkinter = None
 import string  # zfill does not exist in Python 2.2.1
 import tkColorChooser
 
-if Tkinter and 1: # Register the handlers...
+if Tkinter: # Register the handlers...
 
 	@others
 
@@ -15141,12 +15121,11 @@ import os
 
 @others
 
-if 1: # Register the handlers...
-	registerHandler("icondclick1",onIconDoubleClick)
+# Register the handlers...
+registerHandler("icondclick1",onIconDoubleClick)
 	
-	__version__ = "1.5" # Set version for the plugin handler.
-	plugin_signon(__name__)
-</t>
+__version__ = "1.5" # Set version for the plugin handler.
+plugin_signon(__name__)</t>
 <t tx="edream.111803100242.1">@ This plugin writes out @rst nodes as a reStructuredText file.
 
 If the filename ends in .html, .htm or .tex and if you have docutils_ (a Python
@@ -15420,14 +15399,13 @@ from leoGlobals import *
 import leoCommands
 import getpass,os,tempfile
 
-if 0: # Register the handlers...
+@others
 
-	@others
+# Register the handlers...
+registerHandler("start2", onStart)
 
-	registerHandler("start2", onStart)
-
-	__version__ = "1.3"
-	plugin_signon(__name__)</t>
+__version__ = "1.3"
+plugin_signon(__name__)</t>
 <t tx="edream.120303095910">def onStart (tag,keywords):
 
 	# trace("replacing openWithTempFilePath")
@@ -15454,5 +15432,15 @@ if 0: # Register the handlers...
 	name = sanitize_filename(v.headString()) + '_' + str(id(v.t))  + ext
 	path = os.path.join(td,name)
 	return path</t>
+<t tx="edream.120603093808"># Only plugins whose filenames appear in this file will be enabled.
+# Leo loads plugins in the order they appear in this file.
+
+add_directives.py
+open_with.py
+color_markup.py
+image.py
+nav_buttons.py
+plugins_menu.py</t>
+<t tx="edream.120603100522">leoPlugins.py now enables plugins using pluginsManager.txt.</t>
 </tnodes>
 </leo_file>
