@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2174" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2179" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="107" left="101" height="728" width="987"/>
+	<global_window_position top="90" left="302" height="728" width="819"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -2555,10 +2555,6 @@
 <v t="edream.110203161858.2089"><vh>undoSortTopLevel</vh></v>
 </v>
 </v>
-<v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
-<v t="edream.110203161858.2091"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
-<v t="edream.110203161858.2092"><vh>others</vh></v>
-</v>
 <v t="edream.110203161858.2093" tnodeList="edream.110203161858.2093,edream.110203161858.2094,edream.110203161858.2095,edream.110203161858.2096"><vh>@rawfile c:\prog\test\rawFile.txt </vh>
 <v t="edream.110203161858.2094"><vh>node1</vh></v>
 <v t="edream.110203161858.2095"><vh>@@ node2 headline  d</vh></v>
@@ -2681,14 +2677,12 @@
 <v t="edream.110203161858.2156"><vh>run outline tests</vh></v>
 </v>
 </v>
-<v t="edream.111803061611"><vh>4.1 beta 3 test</vh>
+<v t="edream.111803061611"><vh>4.1 beta 3 tests</vh>
 <v t="edream.110903121744"><vh>Latex colorizer</vh></v>
 <v t="edream.111103091713"><vh>Test of match brackets</vh></v>
 <v t="edream.111303082913"><vh>Redirect script output</vh></v>
 </v>
-<v t="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
-<v t="edream.111903103216.1"><vh>@url http://www.python.org/pypi?:action=submit_form</vh></v>
-</v>
+<v t="edream.112003103554"><vh>4.1 beta 4 tests</vh>
 <v t="edream.111903143504" tnodeList="edream.111903143504,edream.111903143504.1,edream.111903144347"><vh>Handle Leo constructs when executing scripts</vh>
 <v t="edream.111903144347" tnodeList="edream.111903144347"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
 <v t="edream.111903143504.1" tnodeList="edream.111903143504.1"><vh>more</vh></v>
@@ -2702,8 +2696,19 @@
 <v t="edream.112003090130" tnodeList="edream.112003090130,edream.112003090753"><vh>Script crash</vh>
 <v t="edream.112003090753"><vh>test</vh></v>
 </v>
-<v t="edream.112003094004" a="EV" tnodeList="edream.112003094004,edream.112003094004.1,edream.112003094004.1"><vh>Another test script</vh>
+<v t="edream.112003094004" a="M" tnodeList="edream.112003094004,edream.112003094004.1,edream.112003094004.1,edream.112003094004.1,edream.112003094004.1"><vh>Another test script</vh>
 <v t="edream.112003094004.1"><vh>&lt;&lt; 2 &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203161858.2090" tnodeList="edream.110203161858.2090,edream.110203161858.2091,edream.110203161858.2092"><vh>@nosentinelsfile c:\prog\test\nosentinelstest.txt</vh>
+<v t="edream.110203161858.2091"><vh>&lt;&lt; ref &gt;&gt;</vh></v>
+<v t="edream.110203161858.2092"><vh>others</vh></v>
+</v>
+</v>
+<v t="edream.111903103216" a="E" tnodeList="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
+<v t="edream.112003201017" a="E" tnodeList="edream.112003201017"><vh>Find script to clean whitespace</vh>
+<v t="edream.112003201017.1"><vh>Find script</vh></v>
+<v t="edream.112003201017.2" a="V"><vh>Change script</vh></v>
+</v>
 </v>
 </vnodes>
 <tnodes>
@@ -2927,7 +2932,7 @@ unusedNames = [
 
 # list of strings: ignore warnings generated from these modules
 blacklist = [
-	# 'leoGlobals',
+	'leoGlobals',
 	'leoConfig',
 	'leoFrame', 'leoMenu', 'leoGui', # Base classes have lots of unused params.
 	'Tkinter', 'wxPython', 'gtk', 'GTK', 'GDK', ]
@@ -33274,12 +33279,13 @@ print "actual  :",`textResult`
 	c.endUpdate()
 </t>
 <t tx="edream.110203161858.2090">line 1
-&lt;&lt; ref &gt;&gt;
-@others
-last line changed</t>
+	&lt;&lt; ref &gt;&gt; afterref
+	@others
+last line</t>
 <t tx="edream.110203161858.2091">ref line 1
-ref line 2</t>
-<t tx="edream.110203161858.2092">others line 1.changed
+ref line 2
+</t>
+<t tx="edream.110203161858.2092">others line 1.
 </t>
 <t tx="edream.110203161858.2093"># Directives _are_ recognized only in the root of @silentfile or @rawfile trees.
 
@@ -34122,58 +34128,12 @@ after
 	&lt;&lt; rhs &gt;&gt;  &lt;&lt;rhe&gt;&gt; trailing</t>
 <t tx="edream.111803110909.2">rhs line</t>
 <t tx="edream.111803110909.3">rhe line</t>
-<t tx="edream.111903103216">@color
-
-# **** Run this from test.leo ****
-
-# Run pychecker from idle.
-if 1:
-	import pychecker.checker
-	import leo
-@nocolor
-Documentation
-	- Update readme.txt
-	- Update LeoDocs.leo
-	- Update web site.
-Version numbers
-	- Update version number in Help menu.
-	- Update version number in setup.py (@ignore'd!!)
-	** Make sure the top-level directory has no spaces in its name.
-@color
-
-if 1: # Save all files and tangle leoConfig.leo
-	from leoGlobals import importFromPath
-	preSetup = importFromPath("preSetup","c:\prog\leoCvs\leo")
-	preSetup.setup()
-
-if 1: # Replace config settings and create .zip file.
-	import os
-	os.system(r"c:\python22\python c:\prog\leoCvs\leo\setup.py sdist --formats=zip")
-
-@nocolor
-Create and test leosetup.exe.
-	- Create leosetup.exe by right-clicking leo.nsi and choosing "compile with NSI (bz2)"
-	- Test created leosetup.exe file.
-	- test the files created in c:\program files\leo
-
-@color
-# **** Scan all folders &amp; files before uploading.
-@nocolor
-
-Create Release on SourceForge
-
-Uploads
-    - Upload leodocs.zip
-	- Upload leosetup.exe
-	- Upload leo-x-y.zip
-	- Upload sbook.chm if it has been changed.
-Announcements
+<t tx="edream.111903103216">Announcements:
+	
 	- Announce to SourceForge itself. USE ANNOUNCEMENT FORMAT, not readme format.
-	- Announce to Leo's SourceForce site.
 	- Announce to comp.lang.python
 	- Announce to comp.programming.literate
-	- Register Leo at http://www.python.org/pypi?:action=submit_form</t>
-<t tx="edream.111903103216.1"></t>
+</t>
 <t tx="edream.111903143504">@ print "ignored"
 @c
 @tabwidth 2
@@ -34230,7 +34190,57 @@ c = foo()
 print c.f(math.pi)</t>
 <t tx="edream.112003094004">from leoGlobals import *
 
-es( &lt;&lt;2&gt;&gt; + &lt;&lt;2&gt;&gt;, color="red")</t>
+es( &lt;&lt;2&gt;&gt; + &lt;&lt;2&gt;&gt;, color="red")
+
+print "script2"
+print app.scriptDict["script2"]
+
+es(&lt;&lt;2&gt;&gt;+&lt;&lt;2&gt;&gt;, color="blue")</t>
 <t tx="edream.112003094004.1">2</t>
+<t tx="edream.112003103554"></t>
+<t tx="edream.112003201017"># Initialize Leo's find panel using the named children of this node.
+from leoGlobals import *
+
+app.searchDict = {} # Clear dict.get("v") logic.
+initScriptFind("Find script","Change script")
+</t>
+<t tx="edream.112003201017.1">from leoGlobals import *
+
+c = top() ; v = c.currentVnode()
+d = app.searchDict
+found = false
+while v and not found:
+	s = v.bodyString()
+	lines = s.split('\n')
+	for line in lines:
+		if line and not line.strip():
+			c.frame.tree.expandAllAncestors(v)
+			c.selectVnode(v)
+			c.redraw() # Necessary to make the new node visible.
+			if d["type"] == "findAll":
+				es(v.headString()) ; break
+			else:
+				found = true ; break
+	v = v.threadNext()
+	
+# app.searchDict["continue"] = v and found
+
+if not found:
+	es("done",color="blue")
+</t>
+<t tx="edream.112003201017.2">from leoGlobals import *
+
+c = top() ; v = c.currentVnode()
+s = oldText = v.bodyString()
+
+lines = s.split('\n')
+lines = [line.rstrip() for line in lines]
+s = '\n'.join(lines)
+
+v.setBodyStringOrPane(s,encoding=app.tkEncoding)
+c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
+c.frame.body.setInsertPointToStartOfLine(0)
+
+app.searchDict["continue"] = "true" # Allow change all to continue.</t>
 </tnodes>
 </leo_file>
