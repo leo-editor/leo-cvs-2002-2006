@@ -14,7 +14,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="edream.110203150636" a="E"><vh>leoConfig.leo</vh>
-<v t="edream.110203150636.1" a="E"><vh>@root leoConfig.txt</vh>
+<v t="edream.110203150636.1" a="ETV"><vh>@root leoConfig.txt</vh>
 <v t="edream.110203150636.2"><vh>&lt;&lt; general comments and warnings &gt;&gt;</vh></v>
 <v t="edream.110203150636.3"><vh>&lt;&lt; General configuration options, especially read-only mode &gt;&gt;</vh>
 <v t="ekr.20040720065653.6"><vh>&lt;&lt; .leo file options &gt;&gt;</vh></v>
@@ -38,9 +38,9 @@
 </v>
 <v t="edream.110203150636.14"><vh>&lt;&lt; Preferences Panel settings &gt;&gt;</vh></v>
 <v t="edream.110203150636.15"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
-<v t="edream.110203150636.16" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
+<v t="edream.110203150636.16"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="edream.110203150636.17"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="edream.110203150636.18" a="TV"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="edream.110203150636.18"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="edream.110203150636.19"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="edream.110203150636.20"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="edream.110203150636.21"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>

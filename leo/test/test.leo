@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5965" clone_windows="0"/>
 <globals body_outline_ratio="0.635416666667">
-	<global_window_position top="64" left="210" height="864" width="907"/>
+	<global_window_position top="50" left="343" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -23,7 +23,7 @@
 <v t="ekr.20040804052804"><vh>Set tracing</vh></v>
 <v t="ekr.20040901065642"><vh>test of new timit script</vh></v>
 </v>
-<v t="ekr.20040708205841"><vh>Other tests...</vh>
+<v t="ekr.20040708205841" a="TV"><vh>Other tests...</vh>
 <v t="ekr.20040414082806"><vh>Clone test</vh>
 <v t="ekr.20040409140301"><vh>clone test</vh>
 <v t="ekr.20040409140301.1"><vh>b</vh>
@@ -371,6 +371,8 @@
 <v t="ekr.20040915111739"><vh>FileActions</vh>
 <v t="ekr.20040915111853"><vh>leo*.py</vh></v>
 </v>
+<v t="ekr.20040922064156"><vh>Test of reportBadChars</vh></v>
+<v t="ekr.20040920104357"><vh>Tix Tests</vh></v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all unknown attributes</vh></v>
@@ -715,9 +717,9 @@
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
 </v>
-<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250" tnodeList="ekr.20040327114250"><vh>@file c:\prog\test\unittest\batchTest.py</vh></v>
-<v t="ekr.20040712101754" a="TV"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -9664,5 +9666,19 @@ print "%3d.%-3d %4s" % (n1,n2,' '),pyRowColToTkIndex(s,n1,n2)</t>
 two
 three
 </t>
+<t tx="ekr.20040920104357">import Tix
+root = Tix.Tk()
+print repr(root)
+root.tk.eval('package require Tix')
+
+tree = Tix.Tree(root)
+tree.pack()</t>
+<t tx="ekr.20040922064156">import leoGlobals as g
+
+s = u"ß"
+
+g.reportBadChars(s,"latin_1")
+
+print g.toEncodedString(s,"latin_1")</t>
 </tnodes>
 </leo_file>

@@ -2107,6 +2107,1267 @@ def writeConfiguration(self):
 Each can be done without impacting other code.
 Each can be done relatively easily: one week or less
 #@nonl
+#@+node:EKR.20040611044600:Mulder undo
+#@+node:bwmulder.20040601212737:basic_undo.py
+"""
+Define a general purpose monitor module.
+
+Can be used for classes derived from "object" to intercept assignment to instance attributes.
+
+For lists and dictionaries, it also offers drop-in replacements which monitor all changes to those list and mappings.
+
+This module also includes a basic undo / redo mechanism.
+
+For this undo / redo mechanism, it is important that the undo / redo steps do not trigger any monitoring calls. 
+This module should fullfill that requirement.
+
+For scalars, we put "scalar_monitor" into the attribute slot to intercept accesses to the attribute. The values
+themselves live in a differnt, "private" attribute. These private attributes are accessed directly for the
+undo / redo steps.
+
+For dictionaries and lists, we extend the base types. The undo / redo mechanism 
+uses the methods of the basic type.
+
+If you assign a list or a dictionary to a monitored attribute, the list or mapping is automatically converted to
+a monitored list or mapping (but only one level deep).
+
+[Question: do we need a convenience function which does this recursively?]
+"""
+
+@language python
+@tabwidth -4
+
+@others
+#@+node:bwmulder.20040601212737.1:class passthrough
+class passthrough(object):
+    """
+    Instances of this class are used to disable monitoring.
+    The values are just passed through.
+    """
+    @others
+
+#@+node:bwmulder.20040601212737.2:__init__
+def __init__(self, private_attributename):
+   self.private_attributename = private_attributename
+#@-node:bwmulder.20040601212737.2:__init__
+#@+node:bwmulder.20040601212737.3:__set__
+def __set__( self, instance, value):
+   setattr(instance, self.private_attributename, value)
+#@-node:bwmulder.20040601212737.3:__set__
+#@+node:bwmulder.20040601212737.4:__get__
+def __get__(self, instance, owner):
+   return getattr(instance, self.private_attributename)
+#@-node:bwmulder.20040601212737.4:__get__
+#@-node:bwmulder.20040601212737.1:class passthrough
+#@+node:bwmulder.20040601212737.5:class scalar_monitor
+   
+class scalar_monitor(object):
+    """
+   Monitor a scalar attribute.
+   A scalar attribute is an attribute whose values do not have internal structure.
+   Used for Integers and references.
+    """
+    @others
+#@+node:bwmulder.20040601212737.6:__init__
+def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.private_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+#@-node:bwmulder.20040601212737.6:__init__
+#@+node:bwmulder.20040601212737.7:__set__
+def __set__( self, instance, value):
+    private_attributename = self.private_attributename
+    external_attributename = self.external_attributename
+    try:
+        oldvalue = getattr(instance, private_attributename)
+    except AttributeError:
+        self.monitor_object.scalar_set(instance, private_attributename, external_attributename)
+    else:
+        if oldvalue != value:
+            self.monitor_object.scalar_modify(instance, private_attributename, external_attributename, oldvalue)
+    setattr(instance, private_attributename, value)
+
+#@-node:bwmulder.20040601212737.7:__set__
+#@+node:bwmulder.20040601212737.8:__get__
+def __get__(self, instance, owner):
+   return getattr(instance, self.private_attributename)
+
+#@-node:bwmulder.20040601212737.8:__get__
+#@-node:bwmulder.20040601212737.5:class scalar_monitor
+#@+node:bwmulder.20040601212737.9:class list_monitor
+class list_monitor(list):
+    """
+    Monitor changes to a list.
+    
+    Calls a "monitor_object" whenever changes are made to a list.
+    
+    You can use this class whenever you want to track changes to a list.
+    """
+    @others
+#@+node:bwmulder.20040605231305:__init__
+def __init__(self, value, monitor):
+    list.__init__(self, value)
+    self.set_monitor_object(monitor)
+#@-node:bwmulder.20040605231305:__init__
+#@+node:bwmulder.20040601212737.10:set_monitor_object
+def set_monitor_object(self, monitor_object):
+    """
+    All changes to this list will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
+
+#@-node:bwmulder.20040601212737.10:set_monitor_object
+#@+node:bwmulder.20040601212737.11:__setitem__
+def __setitem__( self, key, value):
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.list_create(self, key)
+    else:
+        self.monitor_object.list_set(self, key, oldvalue)
+    list.__setitem__(self, key, value)
+#@-node:bwmulder.20040601212737.11:__setitem__
+#@+node:bwmulder.20040601212737.12:__delitem__
+def __delitem__( self, key):
+   oldvalue = list.__getitem__(self, key)
+   self.monitor_object.list_del(self, key, oldvalue)
+   list.__delitem__(self, key)
+#@-node:bwmulder.20040601212737.12:__delitem__
+#@+node:bwmulder.20040601212737.13:append
+def append(self, value):
+   self.monitor_object.list_append(self)
+   list.append(self, value)
+
+
+#@-node:bwmulder.20040601212737.13:append
+#@+node:bwmulder.20040602152548:pop
+def pop(self):
+    oldvalue = list.pop(self)
+    self.monitor_object.list_pop(self, oldvalue)
+#@-node:bwmulder.20040602152548:pop
+#@-node:bwmulder.20040601212737.9:class list_monitor
+#@+node:bwmulder.20040601212737.14:class list_monitor_in_instance
+class list_monitor_in_instance(object):
+    """
+    Monitor instance attributes which contain a list as a value.
+
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+   """
+    @others
+#@+node:bwmulder.20040601212737.15:__init__
+def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+#@-node:bwmulder.20040601212737.15:__init__
+#@+node:bwmulder.20040601212737.16:__set__
+def __set__(self, instance, value):
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type([]))
+    if isinstance(value, list_monitor):
+        newvalue = value
+        # if the value is already a list monitor, assume that this value
+        # is already monitored. Do not create a new value.
+    else:
+        newvalue = list_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
+
+#@-node:bwmulder.20040601212737.16:__set__
+#@+node:bwmulder.20040601212737.17:__get__
+def __get__(self, instance, owner):
+   try:
+      return instance.__dict__[self.internal_attributename]
+   except KeyError: 
+      return instance.__dict__[self.external_attributename]
+
+#@-node:bwmulder.20040601212737.17:__get__
+#@-node:bwmulder.20040601212737.14:class list_monitor_in_instance
+#@+node:bwmulder.20040602153618:class dict_monitor
+class dict_monitor(dict):
+    """
+    Overwrite dictionaries so that we can monitor them.
+    """
+    @others
+#@+node:bwmulder.20040605231401:__init__
+def __init__(self, value, monitor):
+    dict.__init__(self, value)
+    self.set_monitor_object(monitor)
+#@-node:bwmulder.20040605231401:__init__
+#@+node:bwmulder.20040602153642:set_monitor_object
+def set_monitor_object(self, monitor_object):
+    """
+    All changes to this dictionary will trigger calls to monitor_object methods
+    """
+    self.monitor_object = monitor_object
+
+#@-node:bwmulder.20040602153642:set_monitor_object
+#@+node:bwmulder.20040602153723:__setitem__
+def __setitem__( self, key, value):
+    """
+    Intercept the l[key]=value operations.
+    Also covers slice assignment.
+    """
+    try:
+        oldvalue = self.__getitem__(key)
+    except KeyError:
+        self.monitor_object.dict_create(self, key, value)
+    else:
+        self.monitor_object.dict_set(self, key, oldvalue)
+    dict.__setitem__(self, key, value)
+#@-node:bwmulder.20040602153723:__setitem__
+#@+node:bwmulder.20040602153835:__delitem__
+def __delitem__( self, key):
+   oldvalue = dict.__getitem__(self, key)
+   self.monitor_object.dict_del(self, key, oldvalue)
+   dict.__delitem__(self, key)
+#@-node:bwmulder.20040602153835:__delitem__
+#@-node:bwmulder.20040602153618:class dict_monitor
+#@+node:bwmulder.20040602154259:class  dict_monitor_in_instance
+class dict_monitor_in_instance(object):
+    """
+    Monitor instance attributes which contain a list as a value.
+
+    Assignments to this attributes, which must be lists, are replaced by instances of 'list_monitor'.
+   """
+    @others
+#@+node:bwmulder.20040602154259.1:__init__
+def __init__(self, external_attributename, monitor_object):
+    self.external_attributename = external_attributename
+    self.internal_attributename = '__' + external_attributename
+    self.monitor_object = monitor_object
+#@-node:bwmulder.20040602154259.1:__init__
+#@+node:bwmulder.20040602154259.2:__set__
+def __set__(self, instance, value):
+    """Intercept assignments to the external attribute"""
+    assert isinstance(value, type({}))
+    if isinstance(value, dict_monitor):
+        newvalue = value
+        # if the value is already a dict_monitor,
+        # assume that the value is already monitored.
+    else:
+        newvalue = dict_monitor(value, self.monitor_object)
+    internal_attributename = self.internal_attributename
+    try:
+        oldvalue = getattr(instance, internal_attributename)
+    except AttributeError:
+        self.monitor_object.list_assignment_new(instance, internal_attributename)
+    else:
+        self.monitor_object.list_assignment_replace(instance, internal_attributename, oldvalue)
+    setattr(instance, self.internal_attributename, newvalue)
+#@-node:bwmulder.20040602154259.2:__set__
+#@+node:bwmulder.20040602154259.3:__get__
+def __get__(self, instance, owner):
+   try:
+      return instance.__dict__[self.internal_attributename]
+   except KeyError: 
+      return instance.__dict__[self.external_attributename]
+
+#@-node:bwmulder.20040602154259.3:__get__
+#@-node:bwmulder.20040602154259:class  dict_monitor_in_instance
+#@+node:bwmulder.20040601212737.18:class monitor
+class monitor:
+    """
+   Monitor changes to (new style) classes.
+
+   To use:
+      1. 
+            a) Call monitor_scalar(klass, external_attributename, internal_attributename)
+                    for each scalar attribute you want to monitor.
+
+                A scalar attribute is an attribute without internal structure (int and reference).
+
+                The normal Python comparison operation (=) is used to check if a new value is stored
+                in an instance attribute.
+                
+            b) Call monitor_list(klass, external_attributename, internal_attributename) for each
+               list attribute you want to monitor.
+                
+           c) Call monitor_dict(klass, external_attributename, internal_attributename) for each
+               dict attribute you want to monitor.
+         
+      2. 
+            Call enable / disable to enable / disable monitoring.
+
+   This is an abstract class.
+   
+   Concrete subclasses are the classes "tracer" and "basic_undomechanism". The latter does most
+   (almost all) of the work of a (fairly) general undo mechanism.
+
+   Limitations:
+   
+      Assumes that instance attributes are used consistently with certain types.
+      
+   """
+    @others
+#@+node:bwmulder.20040601212737.19:__init__
+def __init__(self):
+   self.monitored_scalar_attributes = []
+   self.monitored_list_attributes = []
+   self.monitored_dict_attributes = []
+   self.removed_functions = []
+   
+   self.monitor_object = self
+   # See enable_category.
+   
+   # Overwriting this one attribute allows
+   # Clients of this module to implemente tracing of all
+   # calls to this module.
+   
+#@-node:bwmulder.20040601212737.19:__init__
+#@+node:bwmulder.20040601214251:scalars
+#@+node:bwmulder.20040601212737.20:monitor_scalar
+def monitor_scalar(self, klass, external_attributename):
+   """
+   Put in a hook so that we can monitor modications to instances of classref'
+   with respect to the attribute "attributename".
+
+   It is assumed that the attribute only contains scalar objects. A scalar
+   object is an object which is unstructured, and not shared.
+   """
+   self.monitored_scalar_attributes.append(
+      (klass, external_attributename))
+#@-node:bwmulder.20040601212737.20:monitor_scalar
+#@+node:bwmulder.20040601212737.24:scalar_set
+def scalar_set(self, instance, private_attributename, external_attributename):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.24:scalar_set
+#@+node:bwmulder.20040601212737.25:scalar_modify
+def scalar_modify(self, instance, private_attributename, external_attributename, oldvalue):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.25:scalar_modify
+#@-node:bwmulder.20040601214251:scalars
+#@+node:bwmulder.20040601215339:lists
+#@+node:bwmulder.20040601212737.21:monitor_list_attribute_in_class
+def monitor_list_attribute_in_class(self, klass, external_attributename):
+   self.monitored_list_attributes.append(
+      (klass, external_attributename))
+#@-node:bwmulder.20040601212737.21:monitor_list_attribute_in_class
+#@+node:bwmulder.20040601212737.26:list_create
+def list_create(self, array, key, value):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.26:list_create
+#@+node:bwmulder.20040601212737.27:list_set
+def list_set(self, array, key, value):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.27:list_set
+#@+node:bwmulder.20040601212737.28:list_del
+def list_del(self, array, key, oldvalue):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.28:list_del
+#@+node:bwmulder.20040601212737.29:list_append
+def list_append(self, array, value):
+   raise notImplementedError
+#@-node:bwmulder.20040601212737.29:list_append
+#@-node:bwmulder.20040601215339:lists
+#@+node:bwmulder.20040602165344:dicts
+#@+node:bwmulder.20040602165402:monitor_dict_attribute_in_class
+def monitor_dict_attribute_in_class(self, klass, external_attributename):
+   self.monitored_dict_attributes.append(
+      (klass, external_attributename))
+#@-node:bwmulder.20040602165402:monitor_dict_attribute_in_class
+#@+node:bwmulder.20040602165506:dict_create
+def dict_create(self, array, key, value):
+   raise notImplementedError
+#@-node:bwmulder.20040602165506:dict_create
+#@+node:bwmulder.20040602165513:dict_set
+def dict_set(self, array, key, value):
+   raise notImplementedError
+#@-node:bwmulder.20040602165513:dict_set
+#@+node:bwmulder.20040602165553:dict_del
+def dict_del(self, array, key, oldvalue):
+   raise notImplementedError
+#@-node:bwmulder.20040602165553:dict_del
+#@-node:bwmulder.20040602165344:dicts
+#@+node:bwmulder.20040601215339.1:switching on and off
+@doc
+Delayed activation of the monitor mechanism is probably useful.
+
+Not clear of switching off and on is useful, though.
+#@nonl
+#@+node:bwmulder.20040601212737.22:enable
+def enable(self):
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+             (self.monitored_list_attributes, list_monitor_in_instance),
+             (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.enable_category(l, klass)
+        
+    self.enable_put_in_removed_functions()
+    
+
+#@-node:bwmulder.20040601212737.22:enable
+#@+node:bwmulder.20040602164627:enable_put_in_removed_functions
+def enable_put_in_removed_functions(self):
+    """
+    Reinstate the functions which were removed from list_monitor and dict_monitor.
+    """
+    for klass, attribute, function in self.removed_functions:
+        setattr(klass, attribute, function)
+#@-node:bwmulder.20040602164627:enable_put_in_removed_functions
+#@+node:bwmulder.20040602154259.4:enable_category
+def enable_category(self, l, monitor_class):
+   for klass, external_attributename in l:
+      setattr(klass, external_attributename, monitor_class(
+         external_attributename, self.monitor_object))
+    
+#@nonl
+#@-node:bwmulder.20040602154259.4:enable_category
+#@+node:bwmulder.20040602161525:disable_category
+def disable_category(self, l, monitor_class):
+   for klass, external_attributename in l:
+      setattr(klass, external_attributename, passthrough (internal_attributename))
+    
+#@-node:bwmulder.20040602161525:disable_category
+#@+node:bwmulder.20040601212737.23:disable
+def disable(self):
+    """
+    Disable monitoring (temporarily).
+    """
+    for l, klass in ((self.monitored_scalar_attributes, scalar_monitor),
+                     (self.monitored_list_attributes, list_monitor_in_instance),
+                     (self.monitored_dict_attributes, dict_monitor_in_instance)):
+        self.disable_category(l, klass)
+    
+    self.remove_overrides_in_list_and_dict_monitor()
+    
+#@-node:bwmulder.20040601212737.23:disable
+#@+node:bwmulder.20040603081718:remove_overrides_in_list_and_dict_monitor
+def remove_overrides_in_list_and_dict_monitor(self):
+    """
+    Deletes all function definitions in list_monitor and dict_monitor.
+    The net effect of this is that instances of these classes should
+    behave like regular lists and dictionaries.
+    """	
+    import inspect
+    for klass in (list_monitor, dict_monitor):
+        for attribute in dir(klass):
+            try:
+                entity = getattr(klass, attribute)
+            except AttributeError:
+                pass
+            else:
+                if inspect.isfunction(entity):
+                    delattr(klass, attribute)
+                    self.removed_functions.append(klass, attribute, entity)
+#@nonl
+#@-node:bwmulder.20040603081718:remove_overrides_in_list_and_dict_monitor
+#@-node:bwmulder.20040601215339.1:switching on and off
+#@-node:bwmulder.20040601212737.18:class monitor
+#@+node:bwmulder.20040601222230:class basic_undomechanism
+class basic_undomechanism(monitor):
+    """
+    This class provides the basic operations for undoable operations.
+    
+    Records a list of changes which it will undo or redo one by one.
+    
+    The granularity of the undo / redo operations is determined by calls to
+    the 'mark' procedure. Only immediately after the 'mark' call can undo be called.
+    Redo can only be called after calling undo.
+    
+    'rollback' is a special case of undo: it is not redoable. The envisioned usage of
+    this facility is in error recovery: if a command does not go through, you can call
+    this command to undo all your changes (and leave the application in a consistent state).
+    
+    Uses the monitor_scalar, monitor_list_attribute_in_class and monitor_dict_attribute_in_class
+    methods to make assignment to instance variables undoable.
+    
+    Call 'enable' to activate the undo mechanism, 'disable' to temporarily
+    stop the undo mechanism from collecting information about changes.
+    
+    The individual changes are bundled into "_commands'. The boundaries of
+    these _commands are marked by a call to the procedure "mark".
+    
+    The procedure 'reset' can be called externally to erase all undo information.
+    
+    Individual lists and dictionaries can also be monitored for change with the
+    list_monitor and dict_monitor classes.
+    
+    Possible optimizations later: special handling for string attributes.
+    """
+    @others
+#@nonl
+#@+node:bwmulder.20040601222230.1:__init__
+def __init__(self):
+
+    monitor.__init__(self)
+    self.reset()
+    
+#@nonl
+#@-node:bwmulder.20040601222230.1:__init__
+#@+node:bwmulder.20040602171606:reset
+def reset(self):
+
+    self._steps = []
+    self._commands = [None, None]
+    self._index = 0
+    
+
+
+#@-node:bwmulder.20040602171606:reset
+#@+node:bwmulder.20040601222230.2:scalars
+#@+node:bwmulder.20040601222230.3:scalar_set
+def scalar_set(self, instance, private_attributename, external_attributename):
+   self._steps.append((self.scalar_set_undo, (instance, private_attributename)))
+    
+
+#@-node:bwmulder.20040601222230.3:scalar_set
+#@+node:bwmulder.20040601222230.4:scalar_set_undo
+def scalar_set_undo(self, instance, private_attributename):
+
+    """Undo the changes done by the assignment of an instance"""
+    newvalue = getattr(instance, private_attributename)
+    delattr(instance, private_attributename)
+    return self.scalar_set_redo, (instance, private_attributename, newvalue)
+#@-node:bwmulder.20040601222230.4:scalar_set_undo
+#@+node:bwmulder.20040601222230.5:scalar_set_redo
+def scalar_set_redo(self, instance, private_attributename, newvalue):
+
+    setattr(instance, private_attributename, newvalue)
+    return self.scalar_set_undo, (instance, private_attributename)
+#@-node:bwmulder.20040601222230.5:scalar_set_redo
+#@+node:bwmulder.20040601222230.6:scalar_modify
+def scalar_modify(self, instance, private_attributename, external_attributename, oldvalue):
+
+  self._steps.append((self.scalar_modify_undo, (instance, private_attributename, oldvalue)))
+#@-node:bwmulder.20040601222230.6:scalar_modify
+#@+node:bwmulder.20040601222431:scalar_modify_undo
+def scalar_modify_undo(self, instance, private_attributename, oldvalue):
+
+    new_value = getattr(instance, private_attributename)
+    setattr(instance, private_attributename, oldvalue)
+    return self.scalar_modify_undo, (instance, private_attributename, new_value)
+#@nonl
+#@-node:bwmulder.20040601222431:scalar_modify_undo
+#@-node:bwmulder.20040601222230.2:scalars
+#@+node:bwmulder.20040602075341:lists
+#@+node:bwmulder.20040602084701.1:creation
+#@+node:bwmulder.20040602175523:list_assignment_replace
+def list_assignment_replace(self, instance, attributename, oldvalue):
+    self._steps.append((self.list_assignment_replace_undo, (instance, attributename, oldvalue)))
+#@nonl
+#@-node:bwmulder.20040602175523:list_assignment_replace
+#@+node:bwmulder.20040602175523.1:list_assignment_replace_undo
+def list_assignment_replace_undo(self, instance, attributename, oldvalue):
+    newvalue = getattr(instance, attributename)
+    setattr(instance, attributename, oldvalue)
+    return self.list_assignment_replace_redo, (instance, attributename, newvalue)
+#@nonl
+#@-node:bwmulder.20040602175523.1:list_assignment_replace_undo
+#@+node:bwmulder.20040602175740:list_assignment_replace_redo
+def list_assignment_replace_redo(self, instance, attributename, newvalue):
+    oldvalue = getattr(instance, attributename)
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_replace_undo, (instance, attributename, oldvalue)
+#@-node:bwmulder.20040602175740:list_assignment_replace_redo
+#@+node:bwmulder.20040602183806:list_assignment_new
+def list_assignment_new(self, instance, attributename):
+    self._steps.append((self.list_assignment_new_undo, (instance, attributename)))
+#@nonl
+#@-node:bwmulder.20040602183806:list_assignment_new
+#@+node:bwmulder.20040602183814:list_assignment_new_undo
+def list_assignment_new_undo(self, instance, attributename):
+    newvalue = getattr(instance, attributename)
+    delattr(instance, attributename)
+    return self.list_assignment_new_redo, (instance, attributename, newvalue)
+#@nonl
+#@-node:bwmulder.20040602183814:list_assignment_new_undo
+#@+node:bwmulder.20040602183911:list_assignment_new_redo
+def list_assignment_new_redo(self, instance, attributename, newvalue):
+    setattr(instance, attributename, newvalue)
+    return self.list_assignment_new_undo, (instance, attributename)
+#@-node:bwmulder.20040602183911:list_assignment_new_redo
+#@+node:bwmulder.20040602075341.1:list_create
+def list_create(self, array, key):
+    self._steps.append((self.list_create_undo, (array, key)))
+
+#@-node:bwmulder.20040602075341.1:list_create
+#@+node:bwmulder.20040602084701.2:list_create_undo
+def list_create_undo(self, array, key):
+    value = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_create_redo, (array, key, value)
+
+#@-node:bwmulder.20040602084701.2:list_create_undo
+#@+node:bwmulder.20040602084701.3:list_create_redo
+def list_create_redo(self, array, key, value):
+    list.__setitem__(array, key, value)
+    return self.list_create_undo, (array, key)
+#@nonl
+#@-node:bwmulder.20040602084701.3:list_create_redo
+#@-node:bwmulder.20040602084701.1:creation
+#@+node:bwmulder.20040602084701.4:setting
+#@+node:bwmulder.20040602085955:list_set
+def list_set(self, array, key, oldvalue):
+    self._steps.append((self.list_set_undo, (array, key, oldvalue)))
+
+#@-node:bwmulder.20040602085955:list_set
+#@+node:bwmulder.20040602085955.1:list_set_undo
+def list_set_undo(self, array, key, value):
+    oldvalue = list.__getitem__(array, key)
+    list.__setitem__(array, key, value)
+    return self.list_set_undo, (array, key, oldvalue)
+#@-node:bwmulder.20040602085955.1:list_set_undo
+#@-node:bwmulder.20040602084701.4:setting
+#@+node:bwmulder.20040602085955.2:deletion
+#@+node:bwmulder.20040602085955.3:list_del
+def list_del(self, array, key, oldvalue):
+   self._steps.append((self.list_del_undo, (array, key, oldvalue)))
+   
+#@-node:bwmulder.20040602085955.3:list_del
+#@+node:bwmulder.20040602085955.4:list_del_undo
+def list_del_undo(self, array, key, oldvalue):
+    if type(key) == type(1):
+        list.__setitem__(array, slice(key, key), [oldvalue])
+    else:
+        list.__setitem__(array, key, oldvalue)
+    return self.list_del_redo, (array, key, oldvalue)
+#@-node:bwmulder.20040602085955.4:list_del_undo
+#@+node:bwmulder.20040602085955.5:list_del_redo
+def list_del_redo(self, array, key, oldvalue):
+    oldvalue = list.__getitem__(array, key)
+    list.__delitem__(array, key)
+    return self.list_del_undo, (array, key, oldvalue)
+#@-node:bwmulder.20040602085955.5:list_del_redo
+#@-node:bwmulder.20040602085955.2:deletion
+#@+node:bwmulder.20040602151709:append
+#@+node:bwmulder.20040602152051:list_append
+def list_append(self, array):
+    self._steps.append((self.list_append_undo, (array,)))
+    
+
+
+#@-node:bwmulder.20040602152051:list_append
+#@+node:bwmulder.20040602152051.1:list_append_undo
+def list_append_undo(self, array):
+    oldvalue = list.pop(array)
+    return self.list_append_redo, (array, oldvalue)
+#@-node:bwmulder.20040602152051.1:list_append_undo
+#@+node:bwmulder.20040602152051.2:list_append_redo
+def list_append_redo(self, array, oldvalue):
+    list.append(array, oldvalue)
+    return self.list_append_undo, (array,)
+#@nonl
+#@-node:bwmulder.20040602152051.2:list_append_redo
+#@-node:bwmulder.20040602151709:append
+#@+node:bwmulder.20040602152548.1:pop
+#@+node:bwmulder.20040602152548.2:list_pop
+def list_pop(self, array, oldvalue):
+    self._steps.append((self.list_append_redo, (array, oldvalue)))
+#@-node:bwmulder.20040602152548.2:list_pop
+#@-node:bwmulder.20040602152548.1:pop
+#@-node:bwmulder.20040602075341:lists
+#@+node:bwmulder.20040602171032:dictionaries
+#@+node:bwmulder.20040602171032.1:creation
+#@+node:bwmulder.20040602175801:dictionary creation
+# Dictionary monitors are are really handled like
+# list monitors.
+# For now, just use the same methods.
+dict_assignment_new = list_assignment_new
+dict_assignment_new_undo = list_assignment_new_undo
+dict_assignment_new_redo = list_assignment_new_redo
+
+dict_assignment_replace      = list_assignment_replace
+dict_assignment_replace_undo = list_assignment_replace_undo
+dict_assignment_replace_redo = list_assignment_replace_redo
+#@nonl
+#@-node:bwmulder.20040602175801:dictionary creation
+#@+node:bwmulder.20040602171032.2:dict_create
+def dict_create(self, dictionary, key, value):
+    self._steps.append((self.dict_create_undo, (dictionary, key)))
+
+#@-node:bwmulder.20040602171032.2:dict_create
+#@+node:bwmulder.20040602171032.3:dict_create_undo
+def dict_create_undo(self, dictionary, key):
+    value = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_create_redo, (dictionary, key, value)
+
+#@-node:bwmulder.20040602171032.3:dict_create_undo
+#@+node:bwmulder.20040602171032.4:dict_create_redo
+def dict_create_redo(self, dictionary, key, value):
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_create_undo, (dictionary, key,)
+#@-node:bwmulder.20040602171032.4:dict_create_redo
+#@-node:bwmulder.20040602171032.1:creation
+#@+node:bwmulder.20040602171032.5:setting
+#@+node:bwmulder.20040602171032.6:dict_set
+def dict_set(self, dictionary, key, oldvalue):
+    self._steps.append((self.dict_set_undo, (dictionary, key, oldvalue)))
+
+#@-node:bwmulder.20040602171032.6:dict_set
+#@+node:bwmulder.20040602171032.7:dict_set_undo
+def dict_set_undo(self, dictionary, key, value):
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__setitem__(dictionary, key, value)
+    return self.dict_set_undo, (dictionary, key, oldvalue)
+#@-node:bwmulder.20040602171032.7:dict_set_undo
+#@-node:bwmulder.20040602171032.5:setting
+#@+node:bwmulder.20040602171032.8:deletion
+#@+node:bwmulder.20040602171032.9:dict_del
+def dict_del(self, dictionary, key, oldvalue):
+   self._steps.append((self.dict_del_undo, (dictionary, key, oldvalue)))
+   
+#@-node:bwmulder.20040602171032.9:dict_del
+#@+node:bwmulder.20040602171032.10:dict_del_undo
+def dict_del_undo(self, dictionary, key, oldvalue ):
+    dict.__setitem__(dictionary, key, oldvalue)
+    return self.dict_del_redo, (dictionary, key, oldvalue)
+#@-node:bwmulder.20040602171032.10:dict_del_undo
+#@+node:bwmulder.20040602171032.11:dict_del_redo
+def dict_del_redo(self, dictionary, key, oldvalue ):
+    oldvalue = dict.__getitem__(dictionary, key)
+    dict.__delitem__(dictionary, key)
+    return self.dict_del_undo, (dictionary, key, oldvalue)
+#@-node:bwmulder.20040602171032.11:dict_del_redo
+#@-node:bwmulder.20040602171032.8:deletion
+#@-node:bwmulder.20040602171032:dictionaries
+#@+node:bwmulder.20040601224447:the undo machinery
+#@+node:bwmulder.20040603211921:queries
+#@+node:bwmulder.20040601224447.5:canUndo
+def canUndo(self):
+    
+    return self._commands[self._index] is not None and len(self._steps) == 0
+#@-node:bwmulder.20040601224447.5:canUndo
+#@+node:bwmulder.20040601224447.6:canRedo
+def canRedo(self):
+    return self._commands[self._index+1] is not None and len(self._steps) == 0
+#@nonl
+#@-node:bwmulder.20040601224447.6:canRedo
+#@+node:bwmulder.20040603212552:commands
+def commands(self):
+
+    return len(self._commands) - 2
+#@nonl
+#@-node:bwmulder.20040603212552:commands
+#@+node:bwmulder.20040603212612:commands_to_undo
+def commands_to_undo(self):
+
+    return self._index
+#@nonl
+#@-node:bwmulder.20040603212612:commands_to_undo
+#@+node:bwmulder.20040603212713:commands_to_redo
+def commands_to_redo(self):
+    return self.commands() - self._index
+#@nonl
+#@-node:bwmulder.20040603212713:commands_to_redo
+#@+node:bwmulder.20040604165011:steps_stored
+def steps_stored(self):
+    """
+    Return the total number of steps stored in the undoer.
+    """
+    result = 0
+    for command in self._commands[1:-1]:
+        result += len(command)
+    return result
+#@nonl
+#@-node:bwmulder.20040604165011:steps_stored
+#@+node:bwmulder.20040605220919:print_commands
+def print_commands(self, comment):
+    """
+    rint a readable list of all commands
+    """
+    print "===== Commands: %s ========" % comment
+    i = 0
+    while i < len(self._commands):
+        print "Command", i
+        steps = self._commands[i]
+        if steps:
+            for step in steps:
+                function, args = step
+                print "  ",function.__name__, args
+        if i == self._index:
+            print "---------------------"
+        i += 1
+    print "========================"
+#@-node:bwmulder.20040605220919:print_commands
+#@-node:bwmulder.20040603211921:queries
+#@+node:bwmulder.20040601224447.2:mark
+def mark(self):
+    
+    """Mark the end of the current commmand."""
+
+    if self._steps:
+        self._commands[self._index+1:] = [self._steps, None]
+        self._index += 1
+        self._steps = []
+#@nonl
+#@-node:bwmulder.20040601224447.2:mark
+#@+node:bwmulder.20040601224447.3:undo
+def undo(self):
+
+    assert self.canUndo()
+    self._commands[self._index] = self.run_commands(self._commands[self._index])
+    self._index -= 1
+    
+#@-node:bwmulder.20040601224447.3:undo
+#@+node:bwmulder.20040601224447.4:redo
+def redo(self):
+
+    assert self.canRedo()
+    self._commands[self._index+1] = self.run_commands(self._commands[self._index+1])
+    self._index += 1
+#@nonl
+#@-node:bwmulder.20040601224447.4:redo
+#@+node:bwmulder.20040603212934:rollback
+def rollback(self):
+
+    self.run_commands(self._steps)
+#@-node:bwmulder.20040603212934:rollback
+#@+node:bwmulder.20040601222649:run_commands
+def run_commands(self, steps):
+    
+    """
+    Run the undo / redo _steps.
+    Returns the list of steps to redo / undo the steps just made.
+    """
+
+    steps.reverse()
+    return [func(*args) for func, args in steps]
+#@-node:bwmulder.20040601222649:run_commands
+#@-node:bwmulder.20040601224447:the undo machinery
+#@-node:bwmulder.20040601222230:class basic_undomechanism
+#@-node:bwmulder.20040601212737:basic_undo.py
+#@+node:bwmulder.20040602221559:basic_undo_test.py
+<< imports >>
+
+undo_tracing = False
+
+@others
+
+if __name__ == '__main__':
+    test_main()
+#@nonl
+#@+node:bwmulder.20040602223236:<< imports >>
+from basic_undo import monitor, basic_undomechanism, list_monitor, dict_monitor
+import unittest
+from test import test_support
+#@-node:bwmulder.20040602223236:<< imports >>
+#@+node:bwmulder.20040602223236.1:class tracer
+class tracer(monitor):
+    
+    # The output format could be improved, but this is only for testing.
+    """Simple class which can be used to trace all calls made from a monitor."""
+
+    @others
+
+#@+node:bwmulder.20040602223236.2:__getattr__
+def __getattr__(self, attributename):
+    self.attributename = attributename
+    return self.catchall
+#@nonl
+#@-node:bwmulder.20040602223236.2:__getattr__
+#@+node:bwmulder.20040602223906:catchall
+def catchall(self, *args, **kwrds):
+
+    print "Tracer:", self.attributename, ":", args, kwds
+#@nonl
+#@-node:bwmulder.20040602223906:catchall
+#@-node:bwmulder.20040602223236.1:class tracer
+#@+node:bwmulder.20040602224231:class delegator
+class delegator(object):
+    """
+    Simple class to print all arguments passed to a monitor.
+    Allows you to watch the undoer in action...
+    """
+    @others
+#@nonl
+#@+node:bwmulder.20040602224413:__init__
+def __init__(self):
+    
+    self.undoer = basic_undomechanism()
+    self.undoer.monitor_object = self
+    
+
+#@-node:bwmulder.20040602224413:__init__
+#@+node:bwmulder.20040602224332:__getattr__
+def __getattr__(self, attributename):
+    self.attributename = attributename
+    return self.catchall
+#@nonl
+#@-node:bwmulder.20040602224332:__getattr__
+#@+node:bwmulder.20040602231914:catchall
+def catchall(self, *args, **kwrds):
+    print "delegator:", self.attributename, ":", args, kwrds
+    getattr(self.undoer, self.attributename) (*args, **kwrds)
+#@-node:bwmulder.20040602231914:catchall
+#@+node:bwmulder.20040602231934:enable_category
+def enable_category(self, l, monitor_class):
+    
+   for klass, external_attributename, internal_attributename in l:
+      setattr(klass, external_attributename, monitor_class(
+         external_attributename, internal_attributename, self))
+    
+
+#@-node:bwmulder.20040602231934:enable_category
+#@-node:bwmulder.20040602224231:class delegator
+#@+node:bwmulder.20040602225640:class basic_scalar_test
+class basic_scalar_test_class(object):
+    """Simple class for the basic_scalar_test"""
+    pass
+
+class basic_scalar_test(unittest.TestCase):
+    @others
+#@nonl
+#@+node:bwmulder.20040602230124:test_scalar_basic
+def test_scalar_basic(self):
+    """
+    Some basic testing for the scalar undoer.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_scalar(basic_scalar_test_class, "x")
+    m.enable()
+    # command 1
+    c = basic_scalar_test_class()
+    c.x = "First value"
+    m.mark()
+    # command 2	
+    c.x = "second value"
+    m.mark()
+    # command 3
+    c.x = "third value"
+    m.mark()
+    # command 4
+    # Check that the second assignment can be undone
+    assert c.x == "third value", c.x
+    m.undo()
+    # command 2
+    assert c.x == "second value"
+    m.undo()
+    # command 1
+    assert c.x == "First value", c.x
+    m.undo()
+    assert not hasattr(c, "x")
+#@-node:bwmulder.20040602230124:test_scalar_basic
+#@+node:bwmulder.20040604184443:test_linked_list
+def test_linked_list(self):
+    """
+    Shows that the basic undo mechanism can be used to undo the construction of a linked list.
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+
+    # Create a linked list and check that the link operations can be undone.
+    class root_class(object):
+        pass
+        
+    class x(object):
+        def __init__(self, name, next=None):
+            self.name = name
+            self.next = next
+    
+    def p(root):
+        result = []
+        r = root.root
+        while r:
+            result.append(r.name)
+            r = r.next
+        return result
+            
+    undoer = basic_undomechanism()
+    
+    m.monitor_scalar(root_class, "root")
+    m.monitor_scalar(x, "name")
+    m.monitor_scalar(x, "next")
+    m.enable()
+    
+    root = root_class()
+    root.root = x("first")
+    root.root.next = x("second")
+    m.mark()
+    root.root.next.next = x("third")
+    root.root.next.next.next = x("fourth")
+    m.mark()
+    assert p(root) == ["first", "second", "third", "fourth"]
+    m.undo()
+    assert  p(root) == ["first", "second"]
+    m.redo()
+    assert p(root) ==["first", "second", "third", "fourth"]
+    
+    # now try a few things with dictionaries.
+    m.monitor_dict_attribute_in_class(root_class, "d")
+    m.enable()
+    root.d = {}
+    m.mark()
+    root.d = {'Some dict': 1}
+    m.mark()
+    root.d[1] = 2
+    assert root.d == {'Some dict': 1, 1: 2}, root.d
+    m.mark()
+    m.undo()
+    assert root.d == {'Some dict': 1}, root.d
+    m.undo()
+    assert root.d == {}, root.d
+    
+    
+    
+#@nonl
+#@-node:bwmulder.20040604184443:test_linked_list
+#@-node:bwmulder.20040602225640:class basic_scalar_test
+#@+node:bwmulder.20040605104941:class basic_list_test
+class basic_list_test_class(object):
+    """Simple class to test the list undoer"""
+    pass
+
+class basic_list_test(unittest.TestCase):
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
+#@+node:bwmulder.20040605105746:test_lists_basic
+def test_lists_basic(self):
+    """
+    Some basic testing for the list undoer.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c = basic_list_test_class()
+    c.a = [1, 2, 3]
+    c.a = c.a
+    m.mark()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a.append(5)
+    m.mark()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == [1, 2, 3], c.a
+    m.redo()
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    m.undo()
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    m.undo()
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    m.redo()
+    assert c.a == [1, 2, 3, 5], c.a
+    del c.a[2]
+    assert c.a == [1, 2, 5], c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3, 5], c.a # 2
+    m.redo()
+    assert c.a == [1, 2, 5], c.a # 3
+    x = c.a.pop()
+    m.mark()
+    assert c.a == [1, 2]
+    m.undo()
+    assert c.a == [1, 2, 5]
+
+    
+
+    
+
+
+#@-node:bwmulder.20040605105746:test_lists_basic
+#@+node:bwmulder.20040605174728:test_lists_replace
+def test_lists_replace(self):
+    """
+    
+    Test that list assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_list_test_class()
+    m.monitor_list_attribute_in_class(basic_list_test_class, "a")
+    m.enable()
+    c.a = [1, 2, 3]
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a.append(4)
+    c.a.append(5)
+    assert c.a == [1, 2, 3, 4, 5]
+    m.mark()
+    m.undo()
+    assert c.a == [1, 2, 3]
+    m.redo()
+    assert c.a == [1, 2, 3, 4, 5]
+    b = list_monitor(('a', 'b', 'c'), m)
+    m.enable()
+    b.append('d')
+    assert b == ['a', 'b', 'c', 'd']
+    m.mark()
+    m.undo()
+    assert b == ['a', 'b', 'c']
+    m.redo()
+    assert b == ['a', 'b', 'c', 'd']
+    
+    
+#@-node:bwmulder.20040605174728:test_lists_replace
+#@-node:bwmulder.20040605104941:class basic_list_test
+#@+node:bwmulder.20040605180204:class basic_dict_test
+class basic_dict_test_class(object):
+    """Simple class to test the list undoer"""
+    pass
+
+class basic_dict_test(unittest.TestCase):
+    """
+    Test the basic operations of the list class
+    """
+    @others
+        
+
+#@+node:bwmulder.20040605180225:test_dicts_basic
+def test_dicts_basic(self):
+    """
+    Some basic testing for the dict undoer.
+    
+    """
+    trace_commands = False
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c = basic_dict_test_class()
+    c.a = {1:1, 2:2, 3:3}
+    c.a = c.a
+    m.mark()
+    if trace_commands:  print; m.print_commands(1)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    c.a[5] = 5
+    m.mark()
+    if trace_commands: m.print_commands(2)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 1
+    m.undo()
+    if trace_commands: m.print_commands(3)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    if trace_commands: m.print_commands(4)
+    assert m.commands_to_undo() == 2, m.commands_to_undo()
+    assert m.commands_to_redo() == 0, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 3
+    m.undo()
+    if trace_commands: m.print_commands(5)
+    assert m.commands_to_undo() == 1, m.commands_to_undo()
+    assert m.commands_to_redo() == 1, m.commands_to_redo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 4
+    m.undo()
+    if trace_commands: m.print_commands(6)
+    assert m.commands_to_undo() == 0, m.commands_to_undo()
+    assert m.commands_to_redo() == 2, m.commands_to_redo()
+    assert not hasattr(c, "a"), "A should not exist here"
+    assert m.steps_stored() == 3, m.steps_stored()
+    m.redo()
+    if trace_commands: m.print_commands(7)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 5
+    m.redo()
+    if trace_commands: m.print_commands(8)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 6
+    del c.a[5]
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 7
+    m.mark()
+    if trace_commands: m.print_commands(9)
+    m.undo()
+    if trace_commands: m.print_commands(10)
+    assert c.a == {1:1, 2:2, 3:3, 5:5}, c.a # 8
+    m.redo()
+    if trace_commands: m.print_commands(11)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 9
+    del c.a[2]
+    m.mark()
+    if trace_commands: m.print_commands(12)
+    assert c.a == {1:1, 3:3}, c.a # 10
+    m.undo()
+    if trace_commands: m.print_commands(13)
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 11
+#@nonl
+#@-node:bwmulder.20040605180225:test_dicts_basic
+#@+node:bwmulder.20040605180245:test_dicts_replace
+def test_dicts_replace(self):
+    """
+    
+    Test that dict assignment works for an instance attribute that is put under the
+    undo mechanism.
+    
+    """
+    if undo_tracing:
+        self.m = m = delegator()
+    else:
+        self.m = m = basic_undomechanism()
+    c = basic_dict_test_class()
+    m.monitor_dict_attribute_in_class(basic_dict_test_class, "a")
+    m.enable()
+    c.a = {1:1, 2:2, 3:3}
+    m.mark()
+    m.undo()
+    assert not hasattr(c,"a")
+    m.redo()
+    c.a[4] = 4
+    c.a[5] = 5
+    assert c.a == {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 1
+    m.mark()
+    m.undo()
+    assert c.a == {1:1, 2:2, 3:3}, c.a # 2
+    m.redo()
+    assert c.a ==  {1:1, 2:2, 3:3, 4:4, 5:5}, c.a # 3
+    b = dict_monitor({'a':'a', 'b':'b', 'c':'c'}, m)
+    m.enable()
+    b['d'] = 'd'
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 4
+    m.mark()
+    m.undo()
+    assert b == {'a':'a', 'b':'b', 'c':'c'}, b # 5
+    m.redo()
+    assert b == {'a':'a', 'b':'b', 'c':'c', 'd':'d'}, b # 6
+    
+    
+#@nonl
+#@-node:bwmulder.20040605180245:test_dicts_replace
+#@-node:bwmulder.20040605180204:class basic_dict_test
+#@+node:bwmulder.20040602230426:test_main
+def test_main():
+
+    test_support.run_unittest(
+        basic_scalar_test,
+        basic_list_test,					
+        basic_dict_test)
+#@nonl
+#@-node:bwmulder.20040602230426:test_main
+#@-node:bwmulder.20040602221559:basic_undo_test.py
+#@-node:EKR.20040611044600:Mulder undo
 #@+node:ekr.20040916073636:@thin ConceptualSort.py
 """
 A plugin to enhance the EditAttributes.py plugin.

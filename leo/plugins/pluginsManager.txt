@@ -8,22 +8,6 @@
 # File names may be indented as desired.
 
 #@+others
-#@+node:ekr.20040909092620:To be enabled in distribution
-# add_directives.py
-# color_markup.py
-# image.py
-# rClick.py
-# hoist.py
-# nodenavigator.py
-# searchbox.py
-# open_with.py
-# mod_scripting.py
-# plugins_menu.py
-# rst2.py
-# run_nodes.py
-# spellpyx.py
-#@nonl
-#@-node:ekr.20040909092620:To be enabled in distribution
 #@+node:ekr.20040722122459.4:Commands &  directives
 # Allows plugins to add their own directives.
     # Required by the syntax check unit test.

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="11706" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="11731" clone_windows="0"/>
 <globals body_outline_ratio="0.452928870293">
 	<global_window_position top="12" left="284" height="860" width="988"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -82,7 +82,11 @@
 <v t="edream.110203163054.62"><vh>Quick start</vh></v>
 </v>
 <v t="edream.110203163054.63" a="E"><vh>Latest versions</vh>
-<v t="ekr.20040914103359" a="TV"><vh>4.2 rc1</vh>
+<v t="ekr.20040922074200" a="ETV"><vh>4.2 final</vh></v>
+</v>
+<v t="edream.110203163054.117"><vh>leo.py versions</vh>
+<v t="ekr.20040922074200"><vh>4.2 final</vh></v>
+<v t="ekr.20040914103359"><vh>4.2 rc1</vh>
 <v t="ekr.20040914103743.1"><vh>Added new features</vh>
 <v t="ekr.20040914103359.137"><vh>Added c.frame.openDirectory to sys.path when executing scripts</vh></v>
 <v t="ekr.20040914103359.37"><vh>Added expanded_click_area option to disable left click logic in outline pane</vh></v>
@@ -112,38 +116,6 @@
 <v t="ekr.20040914103359.129"><vh>Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac</vh></v>
 </v>
 </v>
-<v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
-<v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
-<v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
-<v t="ekr.20040804164600.36"><vh>Fixed some unit-test bugs</vh></v>
-<v t="ekr.20040804164600.56"><vh>Added 3 .cascading style sheets to the distribution list</vh></v>
-<v t="ekr.20040804164600.98"><vh>Fixed some bugs in g.importFromPath</vh></v>
-<v t="ekr.20040804164600.102"><vh>Fixed major bug in write logic</vh></v>
-<v t="ekr.20040804164600.265"><vh>Fixed bug in p.isAncestorOf</vh></v>
-<v t="ekr.20040804164600.275"><vh>Leo now writes only the currently selected tree when pasting to the clipboard</vh></v>
-<v t="ekr.20040804164600.377"><vh>Fixed performance bug when reading .leo files</vh></v>
-<v t="ekr.20040804170846"><vh>Leo now reports problems with bad directories more clearly</vh></v>
-<v t="ekr.20040804164600.394"><vh>Leo reads collapsed xml tags properly in .leo files</vh></v>
-<v t="ekr.20040804164600.406"><vh>Leo makes brings the confirm save box to the front</vh></v>
-<v t="ekr.20040804164600.419"><vh>Improved how es_exception gets line number of errors</vh></v>
-<v t="ekr.20040804164600.421"><vh>Fixed major bug: changing headline now marks subnodes dirty</vh></v>
-<v t="ekr.20040804164600.470"><vh>Leo now gives update warning only once per derived file</vh></v>
-<v t="ekr.20040804164600.471"><vh>Leo updates tnodeLists properly in all situations</vh></v>
-<v t="ekr.20040804164600.515"><vh>Fixed several leaks of positions</vh></v>
-<v t="ekr.20040804171818"><vh>Fixed all unit tests so they work with both Python 2.2 and Python 2.3</vh></v>
-</v>
-<v t="ekr.20040804165258.2"><vh>Features</vh>
-<v t="ekr.20040804172113"><vh>@test and @suite greatly aid unit testing</vh></v>
-<v t="ekr.20040804172113.1"><vh>New scripts in test.leo make it very easy to use the gc, profile and timeit modules</vh></v>
-<v t="ekr.20040804165258.3"><vh>Import dialogs allow multiple selections</vh></v>
-<v t="ekr.20040804165258.4"><vh>New Check menu and commands</vh></v>
-<v t="ekr.20040804170531"><vh>Perfect Import feature automatically corrects imported files</vh></v>
-<v t="ekr.20040804170657"><vh>Improved performance of outline pane</vh></v>
-<v t="ekr.20040804164600.424"><vh>The Go To Line Number command ignores all @all nodes</vh></v>
-</v>
-</v>
-</v>
-<v t="edream.110203163054.117"><vh>leo.py versions</vh>
 <v t="ekr.20040713110718"><vh>4.2 beta 3</vh>
 <v t="ekr.20040804165258.1"><vh>Bug fixes</vh>
 <v t="ekr.20040804164600.16"><vh>Leo gives the user a chance to save read-only files</vh></v>
@@ -2156,7 +2128,6 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040829091910" a="M"><vh>TO DO:  Revise MacOS install notes</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040518070558">Leo 4.2 alpha 2           May 18, 2004
@@ -14109,7 +14080,17 @@ For complete installation instructions see:
 
 http://www.teti.ch/share/leo.php
 
-Many thanks to Gaspard Bucher for these instructions.</t>
+Many thanks to Gaspard Bucher for these instructions.
+
+Another set of instructions:
+
+MacOS 10.3 comes with a near-complete version of MacPython 2.3. Instead of
+installing a full MacPython 2.3, get the "MacPython 2.3 for Panther addons"
+(from http://homepages.cwi.nl/~jack/macpython/), which add the package manager
+and the Mac-specific Python IDE. After installing TclTkAcqua (8.4.7 BI works
+fine for me), you can use the package manager to install tkinter. Then you have
+everything needed for Leo, you can just download Leo and run leo.py from
+wherever it happens to be, or install it to wherever you would like it to have.</t>
 <t tx="ekr.20040403051340">@color
 
 # The g.es method prints its arguments to the log pane.
@@ -15202,21 +15183,6 @@ now for about 2 -- 3 months. It has totally changed not only the way that I
 program, but also the way that I store and organise all of the information that
 I need for the job that I do. -- Ian Mulvany
 </t>
-<t tx="ekr.20040829091910">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2734512
-By: hinsen
-
-MacOS 10.3 comes with a near-complete version of MacPython 2.3. Instead of installing
-a full MacPython 2.3, get the "MacPython 2.3 for Panther addons" (from
-http://homepages.cwi.nl/~jack/macpython/), which add the package manager and
-the Mac-specific Python IDE. After installing TclTkAcqua (8.4.7 BI works fine
-for me), you can use the package manager to install tkinter. Then you have everything
-needed for Leo, you can just download Leo and run leo.py from wherever it happens
-to be, or install it to wherever you would like it to have.
-
-Konrad.
-</t>
 <t tx="ekr.20040903095817">The tests:
 
 @color
@@ -15557,5 +15523,30 @@ Konrad.
 <t tx="ekr.20040914103359.137"></t>
 <t tx="ekr.20040914103743"></t>
 <t tx="ekr.20040914103743.1"></t>
+<t tx="ekr.20040922074200">Leo 4.2 Final       September 20, 2004
+
+The highlights of Leo 4.2:
+
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
+
+- Leo's data structures have been reorganized. As a result, all outline
+operations are much faster. To support this organization, scripts that traverse
+Leo's data structures must now use a positions rather than vnodes. Old scripts
+that appear to use vnodes will still work because methods like c.currentVnode
+that appear to return vnodes actually return positions.
+
+- A new mod_scripting plugin is a big advance in scripting and testing.
+test.leo now uses @test and @script nodes to define unit tests without
+explicitly creating subclasses of unittest.TestCase. Converting scripts to unit
+tests now takes a few seconds!
+
+- A much faster and more robust spell checker plugin. (requires Python 2.3)
+
+- Leo is now much more friendly to using spaces instead of tabs.
+
+- The Execute Script command reports erroneous lines more clearly.</t>
 </tnodes>
 </leo_file>
