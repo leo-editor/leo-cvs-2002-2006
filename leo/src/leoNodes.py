@@ -252,6 +252,18 @@ class baseTnode:
 		self.bodyString = toUnicode(bodyString,app.tkEncoding) # 9/28/03
 	#@nonl
 	#@-node:t.__init__
+	#@+node:t.extraAttributes & setExtraAttributes
+	def extraAttributes (self):
+	
+		try:    return self.unknownAttributes
+		except: return None
+		
+	def setExtraAttributes (self,attributes):
+		
+		if attributes != None:
+			self.unknownAttributes = attributes
+	#@nonl
+	#@-node:t.extraAttributes & setExtraAttributes
 	#@+node:hasBody
 	def hasBody (self):
 	
@@ -790,6 +802,28 @@ class baseVnode:
 			return string.join(list,'')
 	#@nonl
 	#@-node:v.moreBody
+	#@+node:v.extraAttributes & setExtraAttributes
+	def extraAttributes (self):
+	
+		try:    tnodeList = self.tnodeList
+		except: tnodeList = None
+		
+		try:    unknownAttributes = self.unknownAttributes
+		except: unknownAttributes = None
+	
+		return tnodeList, unknownAttributes
+		
+	def setExtraAttributes (self,data):
+		
+		tnodeList, unknownAttributes = data
+	
+		if tnodeList != None:
+			self.tnodeList = tnodeList
+	
+		if unknownAttributes != None:
+			self.unknownAttributes = unknownAttributes
+	#@nonl
+	#@-node:v.extraAttributes & setExtraAttributes
 	#@+node:childIndex
 	# childIndex and nthChild are zero-based.
 	
