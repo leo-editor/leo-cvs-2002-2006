@@ -15,4 +15,3 @@ Description: Leo is an outline-oriented editor written in 100% pure Python.
 		powerful outline commands and many other things, including
 		Unlimited Undo/Redo and an integrated Python shell(IDLE) window.
 Platform: Windows, Linux, Macintosh
-
