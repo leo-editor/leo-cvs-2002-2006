@@ -1,20 +1,23 @@
-Leo 4.2 alpha 3           June 1, 2004
+Leo 4.2 beta 1           June 30, 2004
 
-This version fixes completes the essential features of version 4.2.  All known incompletions and bugs involving shared nodes and Leo's new file format have been fixed.  BTW, this version of Leo completes Leaps 201 and 202.
+Beta 1 completes all fundamental work in the 4.2 code base. All essential code
+is complete. Dozens of bugs have been fixed since the Alpha 3 release about a
+month ago.
 
-It should be safe to use this version for collaboration between Leo's developers.  I hereby encourage people to start using cvs for collaboration.  Only by doing so will we discover any possible problems.
+The highlights of Leo 4.2:
 
-The only item that must be completed before releasing 4.2 beta is fixing the Go To Line Number command so it supports thin derived files.
+- @thin trees make Leo much more friendly to cvs. Files derived from @thin can
+be committed to cvs and updated from cvs without having to commit or update the
+corresponding .leo file. There is no longer any need to keep .leo files and
+derived files in synch.
 
-There are many known bugs in this version: most are minor bugs that have been around for a long time.  All known bugs will be fixed by the first release candidate.  See the to-do list in LeoPy.leo for the complete list.
+- Leo's data structures have been reorganized. As a result, all outline
+operations are much faster. To support this organization, scripts that traverse
+Leo's data structures must now use a positions rather than vnodes. Old scripts
+that appear to use vnodes will still work because methods like c.currentVnode
+that appear to return vnodes actually return positions.
 
-The highlights of this version:
+Still to do:
 
-- All features of @file-thin are now complete and appear to be stable.
-	- All .leo files in the distribution use @thin files where possible.
-	- Leo ignores all directives within the range of the @all directive.
-	- The @+middle and @-middle sentinels allow sections to be defined in any descendant node.
-	- The @clone sentinel marks duplicate cloned siblings.
-- The beginnings of a new undo scheme are in place.
-- @thin, @nosent, @noref and @asis are abbreviations for @file-thin, @file-nosent, @file-noref and @file-asis.
-- Created new iterators that return lists of vnodes and tnodes, including iterators that remove all duplicates from those lists.
+- Perfect import and @import. These will allow people to use Leo without having
+to convert source files.

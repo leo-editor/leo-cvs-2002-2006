@@ -4,7 +4,6 @@
 #@@first
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 import distutils.core
 import os,sys
@@ -33,11 +32,11 @@ def replacePatterns (file,pats):
 	try:
 		data = f.read()
 		f.close()
-		changed = false
+		changed = False
 		for pat1,pat2 in pats:
 			newdata = data.replace(pat1,pat2)
 			if data != newdata:
-				changed = true
+				changed = True
 				data = newdata
 				print file,"replaced",pat1,"by",pat2
 		if changed:
@@ -77,7 +76,7 @@ distutils.core.setup (
     url="http://webpages.charter.net/edreamleo/front.html",
     py_modules=modules, # leo*.py also included in manifest
     description = "Leo: Literate Editor with Outlines",
-    licence="Python", # [sic], not license
+    licence="Python", # licence [sic] changed to license in Python 2.3
     platforms=["Windows, Linux, Macintosh"],
     long_description =
     """Leo is an outline-oriented editor written in 100% pure Python.

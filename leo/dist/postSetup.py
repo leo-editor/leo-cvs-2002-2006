@@ -6,7 +6,6 @@
 """ Postprocess after executing setup.py """
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 #@+others
 #@+node:EKR.20040519082027.30:replacePatterns
@@ -22,11 +21,11 @@ def replacePatterns (file,pats):
 	try:
 		data = f.read()
 		f.close()
-		changed = false
+		changed = False
 		for pat1,pat2 in pats:
 			newdata = data.replace(pat1,pat2)
 			if data != newdata:
-				changed = true
+				changed = True
 				data = newdata
 				print file,"replaced",pat1,"by",pat2
 		if changed:

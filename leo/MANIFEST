@@ -1,5 +1,6 @@
 MANIFEST
 __init__.py
+createLeoDist.py
 install
 manifest.in
 uninstall
@@ -51,10 +52,8 @@ Icons\plusnode.gif
 Icons\rt_arrow_disabled.gif
 Icons\rt_arrow_enabled.gif
 Icons\uninst.ico
-c:\prog\leoCvs\leo\dist\createLeoDist.py
 config\leoConfig.leo
 config\leoConfig.txt
-dist\createLeoDist.py
 dist\leo.nsi
 dist\postSetup.py
 dist\preSetup.py
@@ -64,11 +63,8 @@ doc\LeoDocs.leo
 doc\PKG-INFO.TXT
 doc\README.TXT
 doc\leoDiary.txt
-doc\leoFAQ.txt
-doc\leoLeaps.txt
 doc\leoNotes.txt
 doc\leoToDo.txt
-doc\leoUsersGuide.txt
 plugins\__overrideClasses.py
 plugins\__wx_gui.py
 plugins\add_directives.py
@@ -89,6 +85,7 @@ plugins\mod_autosave.ini
 plugins\mod_autosave.py
 plugins\mod_http.ini
 plugins\mod_http.py
+plugins\mod_scripting.py
 plugins\mod_spelling.ini
 plugins\mod_spelling.py
 plugins\mod_spelling.txt

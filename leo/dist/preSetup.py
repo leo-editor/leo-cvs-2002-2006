@@ -6,7 +6,6 @@
 """ Preprocess before executing setup.py. """
 
 import leoGlobals as g
-from leoGlobals import true,false
 
 #@+others
 #@+node:EKR.20040519082027.21:saveAllLeoFiles
