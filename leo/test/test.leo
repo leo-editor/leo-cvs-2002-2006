@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6014" clone_windows="0"/>
-<globals body_outline_ratio="0.474537037037">
+<leo_header file_format="2" tnodes="0" max_tnode_index="6020" clone_windows="0"/>
+<globals body_outline_ratio="0.559027777778">
 	<global_window_position top="10" left="283" height="864" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
@@ -216,23 +216,6 @@
 <v t="EKR.20040627103902"><vh>Test of user icons</vh></v>
 <v t="EKR.20040627103801"><vh>@thin c:\prog\test\uaTest.txt</vh></v>
 </v>
-<v t="EKR.20040430162649.1"><vh>Unicode tests</vh>
-<v t="EKR.20040430162649.2"><vh> Tests</vh>
-<v t="EKR.20040430162649.3"><vh>@file-asis c:\prog\test\asisTest.txt</vh></v>
-<v t="EKR.20040430162649.4" tnodeList="EKR.20040430162649.4"><vh>@file-nosent c:\prog\test\nosentTest.txt</vh></v>
-<v t="EKR.20040430162649.5" tnodeList="EKR.20040430162649.5"><vh>@file-noref c:\prog\test\norefTest.txt</vh></v>
-</v>
-<v t="EKR.20040430162649.6"><vh> Tests</vh>
-<v t="EKR.20040430162649.7"><vh>Import/export tests</vh>
-<v t="EKR.20040430162649.8"><vh>test</vh>
-<v t="EKR.20040430162649.9"><vh>NewHeadlineë</vh></v>
-</v>
-</v>
-<v t="EKR.20040430162649.10"><vh>@file c:/prog/test/unicodeTest.doc</vh>
-<v t="EKR.20040430162649.11"><vh>NewÖ</vh></v>
-</v>
-</v>
-</v>
 </v>
 <v t="ekr.20040708210442"><vh>Manual tests...</vh>
 <v t="EKR.20040605200750"><vh>autocompleter test</vh></v>
@@ -406,6 +389,8 @@
 </v>
 <v t="ekr.20041012102030"><vh>Test reporting of IndexError in another file</vh></v>
 </v>
+<v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
+<v t="ekr.20041017100700"><vh>Test of autocompleter</vh></v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
 <v t="ekr.20040318091620"><vh>Clear all uAs (unknown attributes)</vh></v>
@@ -748,24 +733,149 @@
 <v t="ekr.20041013101029.1"><vh>&lt;&lt; about this script &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041001161303"><vh>print all laoded plugins</vh></v>
+<v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
 </v>
 <v t="ekr.20041001211817"><vh>Startup</vh>
 <v t="ekr.20041001203411"><vh>@ plugin ___proto_atFile.py</vh></v>
 <v t="ekr.20041001203411.1"><vh>@ script hi</vh></v>
 </v>
 <v t="ekr.20040723064143.1"><vh>To do...</vh>
-<v t="ekr.20041004093917"><vh>@test read from string</vh>
-<v t="ekr.20041004093917.1"><vh>From @thin at-file-thin-test2.txt</vh></v>
-<v t="ekr.20041004100940"><vh>root</vh></v>
-</v>
-<v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
 <v t="ekr.20040903102217"><vh>Test multi-line @doc parts with @language html</vh></v>
+<v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
+<v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
+<v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
+<v t="ekr.20040712101754.216"><vh>root1</vh>
+<v t="ekr.20040712101754.217"><vh>a</vh>
+<v t="ekr.20040712101754.218"><vh>c</vh>
+<v t="ekr.20040712101754.219"><vh>d</vh></v>
 </v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+</v>
+<v t="ekr.20040712101754.220"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.221"><vh>Manual test of testUtils.replaceOutline</vh>
+<v t="ekr.20040712101754.222"><vh>outline1</vh>
+<v t="ekr.20040712101754.223"><vh>a</vh></v>
+</v>
+<v t="ekr.20040712101754.224"><vh>outline2</vh>
+<v t="ekr.20040712101754.225"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.226"><vh>testUtils.replaceOutline</vh></v>
+<v t="ekr.20040712101754.227"><vh>@@ suite Outline/Undo tests</vh>
+<v t="ekr.20040712101754.228"><vh> makeOutlineSuite</vh></v>
+<v t="ekr.20040712101754.229"><vh>class outlineTestCase</vh>
+<v t="ekr.20040712101754.230"><vh>__init__</vh></v>
+<v t="ekr.20040712101754.231"><vh>outlineCommand</vh></v>
+<v t="ekr.20040712101754.232"><vh>runTest</vh></v>
+<v t="ekr.20040712101754.233"><vh>setUp</vh></v>
+<v t="ekr.20040712101754.234"><vh>tearDown</vh></v>
+<v t="ekr.20040712101754.235"><vh>shortDescription</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.236"><vh>outlineTests</vh>
+<v t="ekr.20040712101754.237"><vh>moveOutlineDown</vh>
+<v t="ekr.20040712101754.238"><vh>before</vh>
+<v t="ekr.20040712101754.239"><vh>a</vh></v>
+<v t="ekr.20040712101754.240"><vh>move</vh></v>
+<v t="ekr.20040712101754.241"><vh>b</vh></v>
+</v>
+<v t="ekr.20040712101754.242"><vh>after</vh>
+<v t="ekr.20040712101754.243"><vh>a</vh></v>
+<v t="ekr.20040712101754.244"><vh>b</vh></v>
+<v t="ekr.20040712101754.245"><vh>move</vh></v>
+</v>
+<v t="ekr.20040712101754.246"><vh>ref</vh>
+<v t="ekr.20040712101754.247"><vh>a</vh></v>
+<v t="ekr.20040712101754.248"><vh>move</vh></v>
+<v t="ekr.20040712101754.249"><vh>b</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.250"><vh>moveOutlineLeft</vh></v>
+<v t="ekr.20040712101754.251"><vh>moveOutlineRight</vh></v>
+<v t="ekr.20040712101754.252"><vh>moveOutlineUp</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.253"><vh>Find Command tests...(Not finished)</vh>
+<v t="ekr.20040712101754.254"><vh>@suite Find sommands tests</vh>
+<v t="ekr.20040712101754.255"><vh>class findCommandTestCase</vh>
+<v t="ekr.20040712101754.256"><vh>setUp</vh></v>
+<v t="ekr.20040712101754.257"><vh>testFindCommand</vh></v>
+<v t="ekr.20040712101754.258"><vh>testFindWordCommand</vh></v>
+<v t="ekr.20040712101754.259"><vh>testFindIgnoreCaseCommand</vh></v>
+</v>
+</v>
+<v t="ekr.20040712101754.260"><vh>findTests</vh></v>
+</v>
+</v>
+</v>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040327114250"><vh>@thin ../test/unittest/batchTest.py</vh></v>
 <v t="ekr.20041012101944"><vh>@thin ../test/unittest/errorTest.py</vh></v>
-<v t="ekr.20040712101754"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754" a="E"><vh>Unit Tests</vh>
+<v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
+<v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
+<v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
+<v t="ekr.20040712101754.104"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.105"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
+<v t="ekr.20040712101754.107"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.108"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
+<v t="ekr.20040712101754.110"><vh>#@file</vh></v>
+<v t="ekr.20040712101754.111"><vh>Output</vh></v>
+</v>
+<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
+<v t="ekr.20040707141957.13"><vh>#@thin</vh></v>
+<v t="ekr.20040707141957.14"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041020100733"><vh>@test @nosent</vh>
+<v t="ekr.20041020100733.1"><vh>#@nosent</vh>
+<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041020100733.2"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021062800"><vh>@test @noref</vh>
+<v t="ekr.20041021063220"><vh>#@noref</vh>
+<v t="ekr.20041021063220.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021063220.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021063220.3"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041021065844"><vh>@test @asis</vh>
+<v t="ekr.20041021065903"><vh>#@asis</vh>
+<v t="ekr.20041021065903.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
+<v t="ekr.20041021065903.2"><vh>unnamed node</vh></v>
+</v>
+<v t="ekr.20041021065844.1"><vh>Output</vh></v>
+</v>
+<v t="ekr.20041004093917"><vh>@test read from string</vh>
+<v t="ekr.20041004093917.1"><vh>Input</vh></v>
+<v t="ekr.20041021071036"><vh>Result</vh></v>
+<v t="ekr.20041004100940"><vh>Expected</vh>
+<v t="ekr.20041001111106"><vh>@thin c:\prog\test\at-file-thin-test2.txt</vh>
+<v t="ekr.20041001111106.1"><vh>node 1</vh>
+<v t="ekr.20041001111106.2"><vh>&lt;&lt; node 1 ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.3"><vh>child node 1</vh></v>
+<v t="ekr.20041001111106.4"><vh>child node 2</vh></v>
+</v>
+</v>
+<v t="ekr.20041001111106.5"><vh>&lt;&lt; ref &gt;&gt;</vh>
+<v t="ekr.20041001111106.6"><vh>organizer node</vh>
+<v t="ekr.20041001111106.7"><vh>ref child 1</vh></v>
+<v t="ekr.20041001111106.8"><vh>ref child 2</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+</v>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
 <v t="ekr.20040716071856.1"><vh>-input</vh></v>
@@ -867,7 +977,7 @@
 <v t="ekr.20040712101754.6"><vh>@test LeoDocs.leo</vh></v>
 <v t="ekr.20040831101747"><vh>@test line endings of Linux scripts</vh></v>
 </v>
-<v t="ekr.20040712101754.36"><vh>Non-file tests</vh>
+<v t="ekr.20040712101754.36" a="E"><vh>Non-file tests</vh>
 <v t="ekr.20040712101754.37"><vh>@suite Edit body tests</vh>
 <v t="ekr.20040712101754.38"><vh>editBodyTests</vh>
 <v t="ekr.20040712101754.39"><vh>tempNode</vh></v>
@@ -969,7 +1079,7 @@
 <v t="ekr.20040713123828.1"><vh>after</vh></v>
 </v>
 <v t="ekr.20040803091512"><vh>@test bogus tnodeList doesn't corrupt @thin nodes</vh></v>
-<v t="ekr.20040917062206"><vh>@test g.cantImport returns None</vh></v>
+<v t="ekr.20040917062206" a="TV"><vh>@test g.cantImport returns None</vh></v>
 <v t="ekr.20040712101754.115"><vh>Colorizer tests...</vh>
 <v t="ekr.20040712101754.116"><vh>@test @comment after @language plain</vh>
 <v t="ekr.20040712101754.117"><vh>Test</vh></v>
@@ -1116,43 +1226,19 @@
 <v t="ekr.20040722055040"><vh>@test isAncestorOf</vh></v>
 <v t="ekr.20041013062906"><vh>@test onHyperLinkControlClick</vh></v>
 </v>
+<v t="ekr.20041019124050"><vh>@test pretty printing a docstring</vh>
+<v t="ekr.20041019124050.1"><vh>Original</vh></v>
+<v t="ekr.20041019124050.2"><vh>Test</vh></v>
+</v>
+</v>
 <v t="ekr.20040723062819"><vh>Syntax Checks...</vh>
-<v t="EKR.20040612095237"><vh>@test checkPythonCode (bad syntax)</vh>
+<v t="EKR.20040612095237" a="E"><vh>@test checkPythonCode (bad syntax)</vh>
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
-<v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
+<v t="ekr.20040715154319" a="E"><vh>@test checkPythonCode (bad tabnanny)</vh>
 <v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.102"><vh>atFileTests...</vh>
-<v t="ekr.20040707140849.5"><vh>at-File test code (leoTest.py)</vh>
-<v t="ekr.20040707141957"><vh>&lt;&lt; dump result and expected &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040712101754.103"><vh>@test @file no newline</vh>
-<v t="ekr.20040712101754.104"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.105"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.106"><vh>@test @file one newline</vh>
-<v t="ekr.20040712101754.107"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.108"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040712101754.109"><vh>@test @file two newlines</vh>
-<v t="ekr.20040712101754.110"><vh>@@file</vh></v>
-<v t="ekr.20040712101754.111"><vh>Output</vh></v>
-</v>
-<v t="ekr.20040707141957.12"><vh>@test @thin</vh>
-<v t="ekr.20040707141957.13"><vh>@@thin</vh></v>
-<v t="ekr.20040707141957.14"><vh>Output</vh></v>
-</v>
-<v t="ekr.20041020100733"><vh>@test @nosent</vh>
-<v t="ekr.20041020100733.1"><vh>@@nosent</vh>
-<v t="ekr.20041020100918"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041020100918.1"><vh>unnamed node</vh></v>
-</v>
-<v t="ekr.20041020100733.2"><vh>Output</vh></v>
-</v>
 </v>
 <v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.261"><vh>Plugins tests</vh>
@@ -1172,87 +1258,9 @@
 </v>
 <v t="ekr.20040801124822.1"><vh>@test plugins/nodenavigator.py</vh></v>
 </v>
-<v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
-<v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
-<v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
-<v t="ekr.20040712101754.216"><vh>root1</vh>
-<v t="ekr.20040712101754.217"><vh>a</vh>
-<v t="ekr.20040712101754.218"><vh>c</vh>
-<v t="ekr.20040712101754.219"><vh>d</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.220"><vh>b</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.221"><vh>Manual test of testUtils.replaceOutline</vh>
-<v t="ekr.20040712101754.222"><vh>outline1</vh>
-<v t="ekr.20040712101754.223"><vh>a</vh></v>
-</v>
-<v t="ekr.20040712101754.224"><vh>outline2</vh>
-<v t="ekr.20040712101754.225"><vh>b</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.226"><vh>testUtils.replaceOutline</vh></v>
-<v t="ekr.20040712101754.227"><vh>@@ suite Outline/Undo tests</vh>
-<v t="ekr.20040712101754.228"><vh> makeOutlineSuite</vh></v>
-<v t="ekr.20040712101754.229"><vh>class outlineTestCase</vh>
-<v t="ekr.20040712101754.230"><vh>__init__</vh></v>
-<v t="ekr.20040712101754.231"><vh>outlineCommand</vh></v>
-<v t="ekr.20040712101754.232"><vh>runTest</vh></v>
-<v t="ekr.20040712101754.233"><vh>setUp</vh></v>
-<v t="ekr.20040712101754.234"><vh>tearDown</vh></v>
-<v t="ekr.20040712101754.235"><vh>shortDescription</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.236"><vh>outlineTests</vh>
-<v t="ekr.20040712101754.237"><vh>moveOutlineDown</vh>
-<v t="ekr.20040712101754.238"><vh>before</vh>
-<v t="ekr.20040712101754.239"><vh>a</vh></v>
-<v t="ekr.20040712101754.240"><vh>move</vh></v>
-<v t="ekr.20040712101754.241"><vh>b</vh></v>
-</v>
-<v t="ekr.20040712101754.242"><vh>after</vh>
-<v t="ekr.20040712101754.243"><vh>a</vh></v>
-<v t="ekr.20040712101754.244"><vh>b</vh></v>
-<v t="ekr.20040712101754.245"><vh>move</vh></v>
-</v>
-<v t="ekr.20040712101754.246"><vh>ref</vh>
-<v t="ekr.20040712101754.247"><vh>a</vh></v>
-<v t="ekr.20040712101754.248"><vh>move</vh></v>
-<v t="ekr.20040712101754.249"><vh>b</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.250"><vh>moveOutlineLeft</vh></v>
-<v t="ekr.20040712101754.251"><vh>moveOutlineRight</vh></v>
-<v t="ekr.20040712101754.252"><vh>moveOutlineUp</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.253"><vh>Find Command tests...(Not finished)</vh>
-<v t="ekr.20040712101754.254"><vh>@suite Find sommands tests</vh>
-<v t="ekr.20040712101754.255"><vh>class findCommandTestCase</vh>
-<v t="ekr.20040712101754.256"><vh>setUp</vh></v>
-<v t="ekr.20040712101754.257"><vh>testFindCommand</vh></v>
-<v t="ekr.20040712101754.258"><vh>testFindWordCommand</vh></v>
-<v t="ekr.20040712101754.259"><vh>testFindIgnoreCaseCommand</vh></v>
-</v>
-</v>
-<v t="ekr.20040712101754.260"><vh>findTests</vh></v>
-</v>
-</v>
 </v>
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 <v t="ekr.20041001194357"><vh>@button unit test</vh></v>
-</v>
-<v t="ekr.20041017100700" a="TV"><vh>Test of autocompleter</vh></v>
-<v t="ekr.20041018193142"><vh>Make sure openWith changes are benign</vh></v>
-<v t="ekr.20041019080125"><vh>Report loaded plugins</vh></v>
-<v t="ekr.20041019124050"><vh>@test pretty printing a docstring</vh>
-<v t="ekr.20041019124050.1"><vh>Original</vh></v>
-<v t="ekr.20041019124050.2"><vh>Test</vh></v>
-</v>
-<v t="ekr.20041020100956" tnodeList="ekr.20041020100956,ekr.20041020100956.1,ekr.20041020100956.2"><vh>@nosent c:\prog\test\nosentTest2.txt</vh>
-<v t="ekr.20041020100956.1"><vh>&lt;&lt; section &gt;&gt;</vh></v>
-<v t="ekr.20041020100956.2"><vh>unnamed node</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -1315,44 +1323,6 @@ node 1 last line</t>
 <t tx="EKR.20040428145826"></t>
 <t tx="EKR.20040428145826.1"></t>
 <t tx="EKR.20040428150018">text of organizer node</t>
-<t tx="EKR.20040430162649.1"></t>
-<t tx="EKR.20040430162649.2"></t>
-<t tx="EKR.20040430162649.3">@nocolor
-
-I tried to write out text containing characters like:
-ä ö ü Ä Ö Ü ß ø ó
-with @file-asis and get:
-
-UnicodeError: ASCII encoding error: ordinal not in range(128)
-
-@file (without option) works fine.</t>
-<t tx="EKR.20040430162649.4">@nocolor
-
-I tried to write out text containing characters like:
-ä ö ü Ä Ö Ü ß ø ó
-with @file-asis and get:
-
-UnicodeError: ASCII encoding error: ordinal not in range(128)
-
-@file (without option) works fine.</t>
-<t tx="EKR.20040430162649.5">@nocolor
-
-I tried to write out text containing characters like:
-ä ö ü Ä Ö Ü ß ø ó
-with @file-asis and get:
-
-UnicodeError: ASCII encoding error: ordinal not in range(128)
-
-@file (without option) works fine.</t>
-<t tx="EKR.20040430162649.6">@ignore
-
-Ä á Û</t>
-<t tx="EKR.20040430162649.7">@encoding iso-8859-1</t>
-<t tx="EKR.20040430162649.8"></t>
-<t tx="EKR.20040430162649.9"></t>
-<t tx="EKR.20040430162649.10">@encoding cp1252
-@others</t>
-<t tx="EKR.20040430162649.11">aÖb</t>
 <t tx="EKR.20040430162649.12">@ignore</t>
 <t tx="EKR.20040430162649.13">@language perlpod
 @path c:\prog\test</t>
@@ -1560,6 +1530,7 @@ if 0:
 font = g.app.config.defaultFont
 
 print font.cget("family"), font.cget("weight")</t>
+<t tx="EKR.20040520104329"></t>
 <t tx="EKR.20040523112430"></t>
 <t tx="EKR.20040523112430.1"></t>
 <t tx="EKR.20040523112430.2"></t>
@@ -1575,6 +1546,7 @@ print font.cget("family"), font.cget("weight")</t>
 last line</t>
 <t tx="EKR.20040524050419.1">Organizer line</t>
 <t tx="EKR.20040524050419.2">grandChild line</t>
+<t tx="EKR.20040524050438"></t>
 <t tx="EKR.20040525083635">@others</t>
 <t tx="EKR.20040525083635.1"></t>
 <t tx="EKR.20040526094831">import leoGlobals as g
@@ -1685,6 +1657,7 @@ def test(a,b): pass
 
 v.copyTree(self,root)</t>
 <t tx="EKR.20040606204316">@ignore</t>
+<t tx="EKR.20040606204316.1"></t>
 <t tx="EKR.20040608095146">@language python
 @tabwidth -4</t>
 <t tx="EKR.20040608095146.1">@ignore
@@ -1820,6 +1793,7 @@ except IOError:
 <t tx="EKR.20040622074004.1"></t>
 <t tx="EKR.20040622074004.2">node b, line 1 (changed 12)</t>
 <t tx="EKR.20040622074004.3"></t>
+<t tx="EKR.20040622102618"></t>
 <t tx="EKR.20040625110032">@ignore
 
 @others</t>
@@ -1907,6 +1881,7 @@ print '
 import leoGlobals as g
 print g.app.config.redirect_execute_script_output_to_log_pane</t>
 <t tx="EKR.20040627103732">@ignore</t>
+<t tx="EKR.20040627103801"></t>
 <t tx="EKR.20040627103902" lineYOffset="4b032e" icons="5d7100287d7101285504747970657102550466696c65710355047870616471044b02550577686572657105550a6265666f726549636f6e71066803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c6c745f6172726f775f656e61626c65642e67696671075507796f666673657471084afdffffff757d7109286802680368084afdffffff6803582d000000633a5c70726f675c6c656f4356535c6c656f5c49636f6e735c72745f6172726f775f656e61626c65642e676966710a68044afeffffff6805550e6265666f7265486561646c696e65710b5507786f6666736574710c4b0275652e"></t>
 <t tx="EKR.20040627121836">import leoGlobals as g
 
@@ -2450,6 +2425,7 @@ oblk[2] = b64[((iblk[1] &amp; 0x0F) &lt;&lt; 2) |
 <t tx="ekr.20040704104554.1">@language html
 @language python
 </t>
+<t tx="ekr.20040704104554.2"></t>
 <t tx="ekr.20040705191805">@ignore
 
 import leoGlobals as g
@@ -2477,7 +2453,9 @@ for child in p.children_iter():
 <t tx="ekr.20040705192522.3"></t>
 <t tx="ekr.20040705192522.4"></t>
 <t tx="ekr.20040705192522.5"></t>
+<t tx="ekr.20040705192522.6"></t>
 <t tx="ekr.20040705192610"></t>
+<t tx="ekr.20040705192610.1"></t>
 <t tx="ekr.20040705212227"></t>
 <t tx="ekr.20040706071823"># This works, and doesn't seem convenient for Leo's importers.
 
@@ -2516,7 +2494,7 @@ leoTest.doTests(all=False)</t>
     child2 = child1.next()
     h1 = child1.headString().lower().strip()
     h2 = child2.headString().lower().strip()
-    assert(g.match(h1,0,"@@"))
+    assert(g.match(h1,0,"#@"))
     assert(g.match(h2,0,"output"))
     expected = child2.bodyString()
 
@@ -2530,7 +2508,7 @@ leoTest.doTests(all=False)</t>
 
     if theType == "@asis":
         at.asisWrite(child1,toString=True)
-    elif theType == "noref":
+    elif theType == "@noref":
         at.norefWrite(child1,toString=True)
     else:
         at.write(child1,thinFile=thinFile,nosentinels=nosentinels,toString=True)
@@ -2560,12 +2538,12 @@ leoTest.runAtFileTest(c,p)</t>
 
 @last last line 1: no newline</t>
 <t tx="ekr.20040707141957.14">#@+leo-ver=4-thin
-#@+node:ekr.20040707141957.13:@@thin
+#@+node:ekr.20040707141957.13:#@thin
 Line 1
 
 #@@last
 #@nonl
-#@-node:ekr.20040707141957.13:@@thin
+#@-node:ekr.20040707141957.13:#@thin
 #@-leo
 last line 1: no newline</t>
 <t tx="ekr.20040708135624">import leoGlobals as g
@@ -3284,7 +3262,7 @@ for t in c.all_unique_tnodes_iter():
     nodes.append(t)
     
 # print "duplicate tests pass"</t>
-<t tx="ekr.20040712101754.102"># @language plain
+<t tx="ekr.20040712101754.102">@ignore
 @color</t>
 <t tx="ekr.20040712101754.103">import leoGlobals as g
 import leoTest
@@ -3297,12 +3275,12 @@ leoTest.runAtFileTest(c,p)</t>
 
 @last last line 1: no newline</t>
 <t tx="ekr.20040712101754.105">#@+leo-ver=4
-#@+node:@@file
+#@+node:#@file
 Line 1
 
 #@@last
 #@nonl
-#@-node:@@file
+#@-node:#@file
 #@-leo
 last line 1: no newline</t>
 <t tx="ekr.20040712101754.106">import leoGlobals as g
@@ -3317,11 +3295,11 @@ leoTest.runAtFileTest(c,p)</t>
 @last last line 1: newline
 </t>
 <t tx="ekr.20040712101754.108">#@+leo-ver=4
-#@+node:@@file
+#@+node:#@file
 Line 1
 
 #@@last
-#@-node:@@file
+#@-node:#@file
 #@-leo
 last line 1: newline
 </t>
@@ -3337,11 +3315,11 @@ leoTest.runAtFileTest(c,p)</t>
 @last last line 1: two trailing newlines
 </t>
 <t tx="ekr.20040712101754.111">#@+leo-ver=4
-#@+node:@@file
+#@+node:#@file
 Line 1
 
 #@@last
-#@-node:@@file
+#@-node:#@file
 #@-leo
 last line 1: two trailing newlines
 </t>
@@ -5305,7 +5283,9 @@ else:
     after = u.findNodeInTree(p,"after")
     temp.scriptSetBodyString(before.bodyString())
     c.prettyPrintPythonCode(p=temp,dump=dump)
-    assert temp.bodyString() == after.bodyString()</t>
+    if not dump:
+        assert temp.bodyString() == after.bodyString()
+    temp.setBodyStringOrPane("")</t>
 <t tx="ekr.20040713071919">@ This is    a test of stuff.in doc parts.
 
          I wonder           what will happen.
@@ -5330,30 +5310,7 @@ class eggs:
     """ A typical doc string """
     
     @others</t>
-<t tx="ekr.20040713123617">@ This is a test of stuff.in doc parts.
-
-         I wonder what will happen.
-@c 
-
-def spam (self):
-
-    """ This is a ' triple'   quoted string:
-        It should remain untouched."""
-    
-    if a==3:
-        print "Ä á Û"
-        
-    ''' Another ' triple'   quoted string:
-        It should remain untouched.'''
-        
-    "yet another\
-    multi-line string"
-        
-class eggs:
-    
-    """ A typical doc string """
-    
-    @others </t>
+<t tx="ekr.20040713123617"></t>
 <t tx="ekr.20040713123617.1">@language python
 @tabwidth -4
 
@@ -9197,7 +9154,6 @@ for p in c.allNodes_iter():
 - Unit tests for Find commands.
 
 - Unit tests for dialogs.</t>
-<t tx="ekr.20040723064143.2"></t>
 <t tx="ekr.20040723064143.3"></t>
 <t tx="ekr.20040723065021">import leoGlobals as g
 c = g.top()
@@ -9689,7 +9645,7 @@ c = g.top()
 # print c,c.currentPosition()
 print "filename", filename</t>
 <t tx="ekr.20040917062206">import leoGlobals as g
-assert(g.cantImport("xyzzy") is None)</t>
+assert(g.cantImport("xyzzy","during unit testing") is None)</t>
 <t tx="ekr.20040918093738">@ignore # To suppress syntax checking.</t>
 <t tx="ekr.20040918093738.1">import leoGlobals as g
 
@@ -9785,6 +9741,30 @@ s = u"ß"
 g.reportBadChars(s,"latin_1")
 
 print g.toEncodedString(s,"latin_1")</t>
+<t tx="ekr.20041001111106"># root line 1
+
+@others
+
+# root after at-others
+
+&lt;&lt; ref &gt;&gt;
+</t>
+<t tx="ekr.20041001111106.1"># node 1 line 1
+
+&lt;&lt; node 1 ref &gt;&gt;
+
+# node 1 last line</t>
+<t tx="ekr.20041001111106.2"># node 1 ref line 1
+
+@others</t>
+<t tx="ekr.20041001111106.3"></t>
+<t tx="ekr.20041001111106.4"></t>
+<t tx="ekr.20041001111106.5"># ref line 1
+
+@others</t>
+<t tx="ekr.20041001111106.6"># text of organizer node</t>
+<t tx="ekr.20041001111106.7"></t>
+<t tx="ekr.20041001111106.8"></t>
 <t tx="ekr.20041001161303">import leoGlobals as g
 
 for s in g.app.loadedPlugins:
@@ -9801,7 +9781,6 @@ leoTest.doTests(all=False)</t>
 g.es("hi",color="red")</t>
 <t tx="ekr.20041001211817"></t>
 <t tx="ekr.20041004093917">@color
-
 @language python
 @tabwidth -4
 
@@ -9809,12 +9788,26 @@ import leoGlobals as g
 
 c = g.top()
 p = c.currentPosition()
-child = p.firstChild()
+input = p.firstChild()
+result = input.next()
+expected = result.next()
+s = input.bodyString()
 
-root = child.next()
-s = child.bodyString()
+c.atFileCommands.read(result,thinFile=True,fromString=s)
 
-c.atFileCommands.read(root,thinFile=True,fromString=s)</t>
+try:
+    p1 = result.firstChild()
+    p2 = expected.firstChild()
+    for p in p1.self_and_subtree_iter():
+        assert p.headString() == p2.headString(),p
+        assert p.bodyString() == p2.bodyString(),p
+        p2.moveToThreadNext()
+    c.selectVnode(result.firstChild(),updateBeadList=False)
+    c.deleteOutline()
+except AssertionError:
+    c.selectVnode(result.firstChild(),updateBeadList=False)
+    c.deleteOutline()
+    raise</t>
 <t tx="ekr.20041004093917.1">#@+leo-ver=4-thin
 #@+node:ekr.20041001111106:@thin c:\prog\test\at-file-thin-test2.txt
 # root line 1
@@ -9864,7 +9857,7 @@ c.atFileCommands.read(root,thinFile=True,fromString=s)</t>
 #@-node:ekr.20041001111106:@thin c:\prog\test\at-file-thin-test2.txt
 #@-leo
 </t>
-<t tx="ekr.20041004100940"></t>
+<t tx="ekr.20041004100940">@ignore</t>
 <t tx="ekr.20041011160953">@ignore</t>
 <t tx="ekr.20041011160953.1">@language html</t>
 <t tx="ekr.20041011160953.2">"""Adds XSLT-Node Command submen item to the Outline menu.
@@ -10277,14 +10270,66 @@ unnamed node line 1
 last line</t>
 <t tx="ekr.20041020100918">section line 1</t>
 <t tx="ekr.20041020100918.1">unnamed node line 1</t>
-<t tx="ekr.20041020100956"># Test that @nosent generates no sentinels
+<t tx="ekr.20041021062800">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+c = g.top() ; p = c.currentPosition()
+
+leoTest.runAtFileTest(c,p)</t>
+<t tx="ekr.20041021063220"># Test that @nosent generates no sentinels
 
 &lt;&lt; section &gt;&gt;
 
 @others
 
 last line</t>
-<t tx="ekr.20041020100956.1">section line 1</t>
-<t tx="ekr.20041020100956.2">unnamed node line 1</t>
+<t tx="ekr.20041021063220.1">section line 1</t>
+<t tx="ekr.20041021063220.2">unnamed node line 1</t>
+<t tx="ekr.20041021063220.3">#@+leo-ver=4
+#@+node:#@noref
+# Test that @nosent generates no sentinels
+
+&lt;&lt; section &gt;&gt;
+
+@others
+
+last line
+#@nonl
+#@-node:#@noref
+#@+node:&lt;&lt; section &gt;&gt;
+section line 1
+#@nonl
+#@-node:&lt;&lt; section &gt;&gt;
+#@+node:unnamed node
+unnamed node line 1
+#@nonl
+#@-node:unnamed node
+#@-leo
+</t>
+<t tx="ekr.20041021065844">import leoGlobals as g
+import leoTest
+reload(leoTest)
+
+c = g.top() ; p = c.currentPosition()
+
+leoTest.runAtFileTest(c,p)</t>
+<t tx="ekr.20041021065844.1"># Test that @nosent generates no sentinels
+
+&lt;&lt; section &gt;&gt;
+
+@others
+
+last linesection line 1unnamed node line 1</t>
+<t tx="ekr.20041021065903"># Test that @nosent generates no sentinels
+
+&lt;&lt; section &gt;&gt;
+
+@others
+
+last line</t>
+<t tx="ekr.20041021065903.1">section line 1</t>
+<t tx="ekr.20041021065903.2">unnamed node line 1</t>
+<t tx="ekr.20041021071036"></t>
 </tnodes>
 </leo_file>
