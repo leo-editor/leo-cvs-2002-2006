@@ -179,6 +179,10 @@ class myLeoTkinterTree(leoFrame.leoTree):
     # constant.
     # 
     # - Simplified drawTree to use indentation returned from forceDrawNode.
+    # 
+    # - setText now ensures that state is "normal" before attempting to set 
+    # the text.
+    #     - This is the robust way.
     #@-at
     #@nonl
     #@-node:ekr.20040728143724:Most recent changes
@@ -716,10 +720,14 @@ class myLeoTkinterTree(leoFrame.leoTree):
                 g.trace(self.textAddr(t),tag,s)
             else:
                 g.trace(self.textAddr(t),tag,len(s))
-        
+                
+        state = t.cget("state")
+        if state != "normal":
+            t.configure(state="normal")
         t.delete("1.0","end")
         t.insert("end",s)
-    #@nonl
+        if state != "normal":
+            t.configure(state=state)
     #@-node:ekr.20040725114147:setText
     #@+node:ekr.20040724161900:textAddr
     def textAddr(self,t):

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="5921" clone_windows="0"/>
 <globals body_outline_ratio="0.481481481481">
-	<global_window_position top="43" left="232" height="864" width="913"/>
+	<global_window_position top="63" left="107" height="864" width="913"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -21,7 +21,7 @@
 </v>
 </v>
 <v t="ekr.20040312021734"><vh>Scripts</vh>
-<v t="ekr.20040715105834"><vh>Fun...</vh>
+<v t="ekr.20040715105834" a="E"><vh>Fun...</vh>
 <v t="EKR.20040626212434"><vh>Drawing experiments</vh>
 <v t="EKR.20040626212434.1"><vh>Rectangles &amp; ovals</vh></v>
 <v t="EKR.20040626212434.2"><vh>Lines &amp; arcs</vh></v>
@@ -30,12 +30,12 @@
 </v>
 <v t="ekr.20040714055306"><vh>elispToPy</vh>
 <v t="ekr.20040715133744"><vh>To do</vh></v>
-<v t="ekr.20040713123617.1"><vh>e2pyScript</vh>
-<v t="ekr.20040713200238"><vh>Ref</vh>
-<v t="ekr.20040713131315" a="M"><vh>To do</vh>
-<v t="ekr.20040713133131" a="M"><vh>Tokens</vh></v>
-<v t="ekr.20040713133131.1" a="M"><vh>Statements</vh></v>
-<v t="ekr.20040713133131.2" a="M"><vh>Expressions</vh></v>
+<v t="ekr.20040713123617.1" a="E"><vh>e2pyScript</vh>
+<v t="ekr.20040713200238" a="E"><vh>Ref</vh>
+<v t="ekr.20040713131315" a="E"><vh>To do</vh>
+<v t="ekr.20040713133131"><vh>Tokens</vh></v>
+<v t="ekr.20040713133131.1"><vh>Statements</vh></v>
+<v t="ekr.20040713133131.2"><vh>Expressions</vh></v>
 </v>
 <v t="ekr.20040713130853"><vh>Docs</vh>
 <v t="ekr.20040713130853.1"><vh>What elisp2py does</vh></v>
@@ -52,7 +52,7 @@
 </v>
 <v t="ekr.20040713130853.19"><vh>Top Level</vh>
 <v t="ekr.20040713130853.20"><vh>convertCStringToPython</vh></v>
-<v t="ekr.20040713130853.21" a="M"><vh>OLDconvertCodeList</vh></v>
+<v t="ekr.20040713130853.21"><vh>OLDconvertCodeList</vh></v>
 <v t="ekr.20040713130853.22"><vh>convertDocList</vh></v>
 <v t="ekr.20040713130853.23"><vh>skipDocPart</vh></v>
 <v t="ekr.20040713130853.24"><vh>skipCodePart</vh></v>
@@ -179,7 +179,7 @@
 <v t="ekr.20040713132127.21"><vh>var igrep-null-device</vh></v>
 <v t="ekr.20040713132127.22"><vh>unnamed data</vh></v>
 <v t="ekr.20040713132127.23"><vh>var igrep-program</vh></v>
-<v t="ekr.20040713132127.24" a="M"><vh>var igrep-expression-option</vh></v>
+<v t="ekr.20040713132127.24"><vh>var igrep-expression-option</vh></v>
 <v t="ekr.20040713132127.25"><vh>var igrep-program-table</vh></v>
 <v t="ekr.20040713132127.26"><vh>var igrep-use-zgrep</vh></v>
 <v t="ekr.20040713132127.27"><vh>var igrep-find</vh></v>
@@ -293,7 +293,7 @@
 <v t="ekr.20040715091409"><vh>gen_function</vh></v>
 <v t="ekr.20040715120001.4"><vh>gen_if</vh></v>
 <v t="ekr.20040715120001.5"><vh>gen_let, gen_let_star</vh></v>
-<v t="ekr.20040715084435" a="M"><vh>gen_list</vh></v>
+<v t="ekr.20040715084435"><vh>gen_list</vh></v>
 <v t="ekr.20040715120001.7"><vh>gen_prog, gen_prog1, gen_progn</vh></v>
 <v t="ekr.20040715120001.8"><vh>gen_set &amp; gen_setq</vh></v>
 <v t="ekr.20040715090957.1"><vh>gen_statement</vh></v>
@@ -432,7 +432,7 @@
 <v t="ekr.20040710125250.2"><vh>@test import from string</vh></v>
 </v>
 <v t="ekr.20040711093916"><vh>Subclass the file type for use with imp module</vh></v>
-<v t="ekr.20040711085843" a="M"><vh>Use parser module to simulate import from string</vh>
+<v t="ekr.20040711085843"><vh>Use parser module to simulate import from string</vh>
 <v t="ekr.20040711092603"><vh>test1</vh></v>
 </v>
 </v>
@@ -502,18 +502,18 @@
 </v>
 <v t="EKR.20040622074004"><vh>Test of conflicting node defs</vh>
 <v t="EKR.20040622074004.1"><vh>a</vh>
-<v t="EKR.20040622074004.2" a="M"><vh>b</vh></v>
+<v t="EKR.20040622074004.2"><vh>b</vh></v>
 <v t="EKR.20040622074004.3"><vh>c</vh></v>
 </v>
 <v t="EKR.20040622102618"><vh>@thin c:\prog\test\cloneConflicts.txt</vh></v>
 </v>
 <v t="ekr.20040701081330"><vh>Test of decendent attributes</vh>
 <v t="ekr.20040701065412"><vh>@ thin c:\prog\test\attribTest.txt</vh>
-<v t="ekr.20040701065412.1" a="M"><vh>Marked</vh></v>
+<v t="ekr.20040701065412.1"><vh>Marked</vh></v>
 <v t="ekr.20040701065412.2"><vh>Expanded</vh>
 <v t="ekr.20040701065412.3"><vh>child</vh></v>
 </v>
-<v t="ekr.20040701065412.4" a="M"><vh>Marked and expanded</vh>
+<v t="ekr.20040701065412.4"><vh>Marked and expanded</vh>
 <v t="ekr.20040701065412.5"><vh>child2</vh></v>
 </v>
 <v t="ekr.20040701065424"><vh>Neither Expanded or marked</vh>
@@ -600,13 +600,13 @@
 </v>
 <v t="ekr.20040705191805"><vh>Print abbreviations</vh>
 <v t="ekr.20040705212227"><vh>@file file</vh></v>
-<v t="ekr.20040705192522" a="M"><vh>@silentfile silentfile</vh></v>
+<v t="ekr.20040705192522"><vh>@silentfile silentfile</vh></v>
 <v t="ekr.20040705192522.1"><vh>@file-asis file-asis</vh></v>
 <v t="ekr.20040705192522.2"><vh>@asis asis</vh></v>
-<v t="ekr.20040705192522.3" a="M"><vh>@nosentinelsfile nosentinelsfile</vh></v>
+<v t="ekr.20040705192522.3"><vh>@nosentinelsfile nosentinelsfile</vh></v>
 <v t="ekr.20040705191805.1"><vh>@file-nosent file-nosent</vh></v>
 <v t="ekr.20040705191805.2"><vh>@nosent nosent</vh></v>
-<v t="ekr.20040705192610" a="M"><vh>@rawfile rawfile</vh></v>
+<v t="ekr.20040705192610"><vh>@rawfile rawfile</vh></v>
 <v t="ekr.20040705192522.4"><vh>@file-noref file-noref</vh></v>
 <v t="ekr.20040705192522.5"><vh>@noref noref</vh></v>
 <v t="ekr.20040705192522.6"><vh>@file-thin file-thin</vh></v>
@@ -637,7 +637,7 @@
 </v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
-<v t="EKR.20040619133116"><vh>Unit testing...</vh>
+<v t="EKR.20040619133116" a="E"><vh>Unit testing...</vh>
 <v t="ekr.20040723064143.1"><vh>To do</vh>
 <v t="ekr.20040723064143.2"><vh>Finish unit tests for @asis</vh></v>
 <v t="ekr.20040723064143.3"><vh>Test error recovery when reading descendentTnodeUa's</vh></v>
@@ -646,46 +646,46 @@
 <v t="ekr.20040712101754"><vh>Unit Tests</vh>
 <v t="ekr.20040716144017"><vh>Perfect Import tests</vh>
 <v t="ekr.20040716071029.6"><vh>@test inserting a line: no trailing newline</vh>
-<v t="ekr.20040716071856.1" a="M"><vh>-input</vh></v>
-<v t="ekr.20040716081019" a="M"><vh>-input-after</vh></v>
-<v t="ekr.20040716071856" a="M"><vh>-output-sent</vh></v>
-<v t="ekr.20040716091245" a="M"><vh>-output-after-sent</vh></v>
-<v t="ekr.20040716084934" a="M"><vh>-i_lines</vh></v>
-<v t="ekr.20040716084934.1" a="M"><vh>-j_lines</vh></v>
-<v t="ekr.20040716081943" a="M"><vh>-result</vh></v>
+<v t="ekr.20040716071856.1"><vh>-input</vh></v>
+<v t="ekr.20040716081019"><vh>-input-after</vh></v>
+<v t="ekr.20040716071856"><vh>-output-sent</vh></v>
+<v t="ekr.20040716091245"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716084934"><vh>-i_lines</vh></v>
+<v t="ekr.20040716084934.1"><vh>-j_lines</vh></v>
+<v t="ekr.20040716081943"><vh>-result</vh></v>
 </v>
 <v t="ekr.20040716140926"><vh>@test replace one line</vh>
-<v t="ekr.20040716140926.1" a="M"><vh>-input</vh></v>
-<v t="ekr.20040716140926.2" a="M"><vh>-input-after</vh></v>
-<v t="ekr.20040716140926.3" a="M"><vh>-output-sent</vh></v>
-<v t="ekr.20040716140926.4" a="M"><vh>-output-after-sent</vh></v>
-<v t="ekr.20040716140926.5" a="M"><vh>-i_lines</vh></v>
-<v t="ekr.20040716140926.6" a="M"><vh>-j_lines</vh></v>
-<v t="ekr.20040716140926.7" a="M"><vh>-result</vh></v>
+<v t="ekr.20040716140926.1"><vh>-input</vh></v>
+<v t="ekr.20040716140926.2"><vh>-input-after</vh></v>
+<v t="ekr.20040716140926.3"><vh>-output-sent</vh></v>
+<v t="ekr.20040716140926.4"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716140926.5"><vh>-i_lines</vh></v>
+<v t="ekr.20040716140926.6"><vh>-j_lines</vh></v>
+<v t="ekr.20040716140926.7"><vh>-result</vh></v>
 </v>
 <v t="ekr.20040716141621"><vh>@test replace multiple lines</vh>
-<v t="ekr.20040716141621.1" a="M"><vh>-input</vh></v>
-<v t="ekr.20040716141621.2" a="M"><vh>-input-after</vh></v>
-<v t="ekr.20040716141621.3" a="M"><vh>-output-sent</vh></v>
-<v t="ekr.20040716141621.4" a="M"><vh>-output-after-sent</vh></v>
-<v t="ekr.20040716141621.5" a="M"><vh>-i_lines</vh></v>
-<v t="ekr.20040716141621.6" a="M"><vh>-j_lines</vh></v>
-<v t="ekr.20040716141621.7" a="M"><vh>-result</vh></v>
+<v t="ekr.20040716141621.1"><vh>-input</vh></v>
+<v t="ekr.20040716141621.2"><vh>-input-after</vh></v>
+<v t="ekr.20040716141621.3"><vh>-output-sent</vh></v>
+<v t="ekr.20040716141621.4"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716141621.5"><vh>-i_lines</vh></v>
+<v t="ekr.20040716141621.6"><vh>-j_lines</vh></v>
+<v t="ekr.20040716141621.7"><vh>-result</vh></v>
 </v>
 <v t="ekr.20040716142121"><vh>@test replace across sentinel blocks: Succeeds ONLY when ignoring sentinels</vh>
-<v t="ekr.20040716142423" a="M"><vh>-input</vh>
-<v t="ekr.20040716142423.1" a="M"><vh>Node 1</vh></v>
-<v t="ekr.20040716142423.2" a="M"><vh>Node 2</vh></v>
+<v t="ekr.20040716142423"><vh>-input</vh>
+<v t="ekr.20040716142423.1"><vh>Node 1</vh></v>
+<v t="ekr.20040716142423.2"><vh>Node 2</vh></v>
 </v>
-<v t="ekr.20040716142121.2" a="M"><vh>-input-after</vh>
-<v t="ekr.20040717071133" a="M"><vh>Node 1</vh></v>
-<v t="ekr.20040717071133.1" a="M"><vh>Node 2</vh></v>
+<v t="ekr.20040716142121.2"><vh>-input-after</vh>
+<v t="ekr.20040717071133"><vh>Node 1</vh></v>
+<v t="ekr.20040717071133.1"><vh>Node 2</vh></v>
 </v>
-<v t="ekr.20040716142121.3" a="M"><vh>-output-sent</vh></v>
-<v t="ekr.20040716142121.5" a="M"><vh>-i_lines</vh></v>
-<v t="ekr.20040716142121.6" a="M"><vh>-j_lines</vh></v>
-<v t="ekr.20040716142121.4" a="M"><vh>-output-after-sent</vh></v>
-<v t="ekr.20040716142121.7" a="M"><vh>-result</vh></v>
+<v t="ekr.20040716142121.3"><vh>-output-sent</vh></v>
+<v t="ekr.20040716142121.5"><vh>-i_lines</vh></v>
+<v t="ekr.20040716142121.6"><vh>-j_lines</vh></v>
+<v t="ekr.20040716142121.4"><vh>-output-after-sent</vh></v>
+<v t="ekr.20040716142121.7"><vh>-result</vh></v>
 </v>
 </v>
 <v t="ekr.20040712101754.7"><vh>Import/Export tests</vh>
@@ -998,12 +998,12 @@
 <v t="EKR.20040610192622.1"><vh>Check Syntax data (bad)</vh></v>
 </v>
 <v t="ekr.20040715154319"><vh>@test checkPythonCode (bad tabnanny)</vh>
-<v t="EKR.20040610194209.1" a="M"><vh>TabNanny data (bad)</vh></v>
+<v t="EKR.20040610194209.1"><vh>TabNanny data (bad)</vh></v>
 </v>
 <v t="ekr.20040712101813"><vh>@test checkAllPythonCode</vh></v>
 </v>
 </v>
-<v t="ekr.20040712101754.274" a="M"><vh>@suite run all doctests in leo*.py</vh></v>
+<v t="ekr.20040712101754.274"><vh>@suite run all doctests in leo*.py</vh></v>
 <v t="ekr.20040712101754.213"><vh>Unfinished tests...</vh>
 <v t="ekr.20040712101754.214"><vh>Outline tests (Sometimes fails)</vh>
 <v t="ekr.20040712101754.215"><vh>test of p.copyTreeAfter and p.copyTreeFromSelfTo</vh>
@@ -1025,7 +1025,7 @@
 </v>
 </v>
 <v t="ekr.20040712101754.226"><vh>testUtils.replaceOutline</vh></v>
-<v t="ekr.20040712101754.227" a="M"><vh>@@ suite Outline/Undo tests</vh>
+<v t="ekr.20040712101754.227"><vh>@@ suite Outline/Undo tests</vh>
 <v t="ekr.20040712101754.228"><vh> makeOutlineSuite</vh></v>
 <v t="ekr.20040712101754.229"><vh>class outlineTestCase</vh>
 <v t="ekr.20040712101754.230"><vh>__init__</vh></v>
@@ -1086,14 +1086,14 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040707081532.1" a="M"><vh>Do @test</vh></v>
+<v t="ekr.20040707081532.1" a="TV"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20040721153143"><vh>Main testing scripts</vh>
 <v t="ekr.20040721113934"><vh>runProfile</vh></v>
 <v t="ekr.20040721114839.1"><vh>runTimeit</vh></v>
 <v t="ekr.20040721145258.1"><vh>Run gc</vh></v>
 </v>
-<v t="EKR.20040608095146" a="E"><vh>Perfect import stuff...</vh>
+<v t="EKR.20040608095146"><vh>Perfect import stuff...</vh>
 <v t="EKR.20040504083716"><vh>Mulder Update script</vh>
 <v t="EKR.20040504083716.39"><vh>sync</vh>
 <v t="EKR.20040504153320"><vh>&lt;&lt; compute sourcetime and targettime &gt;&gt;</vh></v>
@@ -1114,7 +1114,7 @@
 </v>
 <v t="ekr.20040716062608"><vh>Perfect Import Script</vh></v>
 </v>
-<v t="ekr.20040723065021" a="ETV"><vh>stripBlankLines</vh>
+<v t="ekr.20040723065021"><vh>stripBlankLines</vh>
 <v t="ekr.20040723065047"><vh>Test</vh></v>
 </v>
 <v t="ekr.20040723095151"><vh>Tk tests</vh></v>

@@ -3548,7 +3548,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -5594,8 +5594,10 @@ def redoChangeHeadline (self):
     
     u = self ; c = u.c
     
-    # g.trace(u.undoType,u.p,u.newText)
+    # g.trace(u.newText)
+    
     u.p.setHeadStringOrHeadline(u.newText)
+    
     c.selectVnode(u.p)
 #@nonl
 #@-node:EKR.20040526090701.2:redoChangeHeadline
@@ -5831,9 +5833,12 @@ def undoChangeHeadline (self):
     u = self ; c = u.c
     
     # g.trace(u.oldText)
-
+    
     u.p.setHeadStringOrHeadline(u.oldText)
+    
     c.selectVnode(u.p)
+
+    
 #@nonl
 #@-node:EKR.20040526090701.6:undoChangeHeadline
 #@+node:EKR.20040526083847:undoClone & undoDragClone
@@ -7210,25 +7215,27 @@ for resultDict in self.descendentUnknownAttributesDictList:
         if t: t.unknownAttributes = resultDict[gnx]
         else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
-marks = [] ; expanded = []
+marks = {} ; expanded = {}
 for gnx in self.descendentExpandedList:
     t = self.tnodesDict.get(gnx)
-    if t: expanded.append(t)
+    if t: expanded[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
 for gnx in self.descendentMarksList:
     t = self.tnodesDict.get(gnx)
-    if t: marks.append(t)
+    if t: marks[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
+
 if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
     for p in c.all_positions_iter():
-        if p.v.t in marks:
-            p.setMarked()
-            # g.trace("mark",str(p.headString()))
-        if p.v.t in expanded:
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
             p.expand()
-            # g.trace("expand",str(p.headString()))
+    # g.trace("done")
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
@@ -10264,7 +10271,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -10516,7 +10523,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -12402,7 +12409,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -13724,7 +13731,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -15879,16 +15886,15 @@ g.doHook("set-mark",c=self.c,v=self)
 I'm not sure why this generated go many positions, but it did.
 #@nonl
 #@-node:ekr.20040325115038:Notes
-#@+node:ekr.20031218072017.3398:setMarked & initMarkedBit
+#@+node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
 def setMarked (self):
 
     self.statusBits |= self.markedBit
-    g.doHook("set-mark",c=self.c,v=self)
 
 def initMarkedBit (self):
 
     self.statusBits |= self.markedBit
-#@-node:ekr.20031218072017.3398:setMarked & initMarkedBit
+#@-node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
 #@+node:ekr.20031218072017.1565:getVnodes
 def getVnodes (self):
 
@@ -16886,25 +16892,27 @@ for resultDict in self.descendentUnknownAttributesDictList:
         if t: t.unknownAttributes = resultDict[gnx]
         else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
-marks = [] ; expanded = []
+marks = {} ; expanded = {}
 for gnx in self.descendentExpandedList:
     t = self.tnodesDict.get(gnx)
-    if t: expanded.append(t)
+    if t: expanded[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
 for gnx in self.descendentMarksList:
     t = self.tnodesDict.get(gnx)
-    if t: marks.append(t)
+    if t: marks[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
+
 if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
     for p in c.all_positions_iter():
-        if p.v.t in marks:
-            p.setMarked()
-            # g.trace("mark",str(p.headString()))
-        if p.v.t in expanded:
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
             p.expand()
-            # g.trace("expand",str(p.headString()))
+    # g.trace("done")
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
@@ -17092,7 +17100,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -17428,25 +17436,27 @@ for resultDict in self.descendentUnknownAttributesDictList:
         if t: t.unknownAttributes = resultDict[gnx]
         else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
-marks = [] ; expanded = []
+marks = {} ; expanded = {}
 for gnx in self.descendentExpandedList:
     t = self.tnodesDict.get(gnx)
-    if t: expanded.append(t)
+    if t: expanded[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
 for gnx in self.descendentMarksList:
     t = self.tnodesDict.get(gnx)
-    if t: marks.append(t)
+    if t: marks[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
+
 if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
     for p in c.all_positions_iter():
-        if p.v.t in marks:
-            p.setMarked()
-            # g.trace("mark",str(p.headString()))
-        if p.v.t in expanded:
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
             p.expand()
-            # g.trace("expand",str(p.headString()))
+    # g.trace("done")
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
@@ -19718,7 +19728,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -20826,7 +20836,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -23199,25 +23209,27 @@ for resultDict in self.descendentUnknownAttributesDictList:
         if t: t.unknownAttributes = resultDict[gnx]
         else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
-marks = [] ; expanded = []
+marks = {} ; expanded = {}
 for gnx in self.descendentExpandedList:
     t = self.tnodesDict.get(gnx)
-    if t: expanded.append(t)
+    if t: expanded[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
 for gnx in self.descendentMarksList:
     t = self.tnodesDict.get(gnx)
-    if t: marks.append(t)
+    if t: marks[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
+
 if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
     for p in c.all_positions_iter():
-        if p.v.t in marks:
-            p.setMarked()
-            # g.trace("mark",str(p.headString()))
-        if p.v.t in expanded:
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
             p.expand()
-            # g.trace("expand",str(p.headString()))
+    # g.trace("done")
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
@@ -24103,6 +24115,7 @@ def openWriteFile (self,root,toString):
     
     self.toStringFlag = toString
     self.errors = 0 # Bug fix: 6/25/04.
+    self.root = root # Bug fix: 7/30/04: needed by error logic.
 
     try:
         self.scanAllDirectives(root)
@@ -29383,6 +29396,7 @@ def openWriteFile (self,root,toString):
     
     self.toStringFlag = toString
     self.errors = 0 # Bug fix: 6/25/04.
+    self.root = root # Bug fix: 7/30/04: needed by error logic.
 
     try:
         self.scanAllDirectives(root)
@@ -29653,8 +29667,10 @@ def redoChangeHeadline (self):
     
     u = self ; c = u.c
     
-    # g.trace(u.undoType,u.p,u.newText)
+    # g.trace(u.newText)
+    
     u.p.setHeadStringOrHeadline(u.newText)
+    
     c.selectVnode(u.p)
 #@nonl
 #@-node:EKR.20040526090701.2:redoChangeHeadline
@@ -29890,9 +29906,12 @@ def undoChangeHeadline (self):
     u = self ; c = u.c
     
     # g.trace(u.oldText)
-
+    
     u.p.setHeadStringOrHeadline(u.oldText)
+    
     c.selectVnode(u.p)
+
+    
 #@nonl
 #@-node:EKR.20040526090701.6:undoChangeHeadline
 #@+node:EKR.20040526083847:undoClone & undoDragClone
@@ -38957,7 +38976,7 @@ if updateBeadList:
 if p in c.visitedList:
     c.visitedList.remove(p)
 
-c.visitedList.insert(0,p)
+c.visitedList.insert(0,p.copy())
 #@nonl
 #@-node:ekr.20031218072017.1024:<< update c.visitedList >>
 #@+node:ekr.20031218072017.1025:<< set the current node >>
@@ -41632,6 +41651,7 @@ def openWriteFile (self,root,toString):
     
     self.toStringFlag = toString
     self.errors = 0 # Bug fix: 6/25/04.
+    self.root = root # Bug fix: 7/30/04: needed by error logic.
 
     try:
         self.scanAllDirectives(root)
@@ -42776,6 +42796,7 @@ def openWriteFile (self,root,toString):
     
     self.toStringFlag = toString
     self.errors = 0 # Bug fix: 6/25/04.
+    self.root = root # Bug fix: 7/30/04: needed by error logic.
 
     try:
         self.scanAllDirectives(root)
@@ -46933,25 +46954,27 @@ for resultDict in self.descendentUnknownAttributesDictList:
         if t: t.unknownAttributes = resultDict[gnx]
         else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
             
-marks = [] ; expanded = []
+marks = {} ; expanded = {}
 for gnx in self.descendentExpandedList:
     t = self.tnodesDict.get(gnx)
-    if t: expanded.append(t)
+    if t: expanded[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
     
 for gnx in self.descendentMarksList:
     t = self.tnodesDict.get(gnx)
-    if t: marks.append(t)
+    if t: marks[t]=t
     else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
-    
+
 if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
     for p in c.all_positions_iter():
-        if p.v.t in marks:
-            p.setMarked()
-            # g.trace("mark",str(p.headString()))
-        if p.v.t in expanded:
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
             p.expand()
-            # g.trace("expand",str(p.headString()))
+    # g.trace("done")
 #@nonl
 #@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
 #@-node:ekr.20031218072017.1553:getLeoFile
@@ -47162,9 +47185,12 @@ def undoChangeHeadline (self):
     u = self ; c = u.c
     
     # g.trace(u.oldText)
-
+    
     u.p.setHeadStringOrHeadline(u.oldText)
+    
     c.selectVnode(u.p)
+
+    
 #@nonl
 #@-node:EKR.20040526090701.6:undoChangeHeadline
 #@+node:EKR.20040526083847:undoClone & undoDragClone
@@ -47589,8 +47615,10 @@ def redoChangeHeadline (self):
     
     u = self ; c = u.c
     
-    # g.trace(u.undoType,u.p,u.newText)
+    # g.trace(u.newText)
+    
     u.p.setHeadStringOrHeadline(u.newText)
+    
     c.selectVnode(u.p)
 #@nonl
 #@-node:EKR.20040526090701.2:redoChangeHeadline
@@ -57499,6 +57527,385 @@ def endUndo (self):
 #@-node:ekr.20040711135959.1:Pretty Print commands
 #@-node:ekr.20040711135959.2:Check Outline submenu...
 #@-node:ekr.20040723094220.7:(Improved and simplified Syntax Checking commands)
+#@+node:ekr.20040725043937:(Simplified edit_text)
+def 
+#@nonl
+#@+node:ekr.20040725043937.1:Notes
+@killcolor
+
+Removed v.edit_text.
+
+p.edit_text now just returns tree.edit_text.
+
+I did this to avoid messing with edit_text in the outlines plugin.
+#@nonl
+#@-node:ekr.20040725043937.1:Notes
+#@+node:ekr.20040306220230.1:p.edit_text
+def edit_text (self):
+    
+    # New in 4.3 beta 3: let the tree classes do all the work.
+    
+    p = self ; c = p.c
+    
+    return c.frame.tree.edit_text(p)
+#@nonl
+#@-node:ekr.20040306220230.1:p.edit_text
+#@+node:ekr.20040725044521.1:tree.edit_text
+def edit_text (self,p):
+    
+    c = self.c
+    
+    if c:
+        # New in 4.2: the dictionary is a list of pairs(p,v)
+        pairs = self.getEditTextDict(p.v)
+        for p2,t2 in pairs:
+            if p.equal(p2):
+                # g.trace("found",t2)
+                return t2
+        return None
+    else:
+        return None
+#@nonl
+#@-node:ekr.20040725044521.1:tree.edit_text
+#@-node:ekr.20040725043937:(Simplified edit_text)
+#@+node:ekr.20040723050246:(Fixed big performance bug in the read code)
+#@+node:ekr.20040730090103:Notes: 
+@killcolor
+
+The problem was in g.doHook("set-mark",c=self.c,v=self).
+
+There was a _big_ performance bug in the nodenavigator plugin.
+#@nonl
+#@-node:ekr.20040730090103:Notes: 
+#@+node:ekr.20031218072017.1596:g.doHook
+@ This global function calls a hook routine.  Hooks are identified by the tag param.
+Returns the value returned by the hook routine, or None if the there is an exception.
+
+We look for a hook routine in three places:
+1. g.top().hookFunction
+2. app.hookFunction
+3. leoPlugins.doPlugins()
+We set app.hookError on all exceptions.  Scripts may reset app.hookError to try again.
+@c
+
+def doHook(tag,*args,**keywords):
+    
+    if g.app.killed or g.app.hookError:
+        return None
+    
+    # New in 4.2.  We call the idle-time handlers for all open windows.
+    c = keywords.get("c")
+    
+    if 0: # Don't use trace here!
+        if tag != "idle":
+            print "doHook",tag,c
+
+    if not g.app.config.use_plugins:
+        if tag == "start1":
+            g.es("Plugins disabled: use_plugins is 0",color="blue")
+        return None
+    elif c and c.hookFunction:
+        try:
+            return c.hookFunction(tag,keywords)
+        except:
+            g.es("exception in c.hookFunction for " + c.frame.getTitle())
+    elif g.app.hookFunction:
+        try:
+            return g.app.hookFunction(tag,keywords)
+        except:
+            g.es("exception in app.hookFunction")
+    else:
+        import leoPlugins
+        try:
+            g.app.hookFunction = leoPlugins.doPlugins
+            return app.hookFunction(tag,keywords)
+        except:
+            g.app.hookFunction = None
+            g.es("exception in plugin")
+
+    # Handle all exceptions.
+    g.es_exception()
+    g.app.hookError = True # Supress this function.
+    g.app.idleTimeHook = False # Supress idle-time hook
+    return None # No return value
+#@nonl
+#@-node:ekr.20031218072017.1596:g.doHook
+#@+node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+def setMarked (self):
+
+    self.statusBits |= self.markedBit
+
+def initMarkedBit (self):
+
+    self.statusBits |= self.markedBit
+#@-node:ekr.20031218072017.3398:v.setMarked & initMarkedBit
+#@+node:ekr.20031218072017.1553:getLeoFile
+# The caller should enclose this in begin/endUpdate.
+
+def getLeoFile (self,fileName,atFileNodesFlag=True):
+
+    c = self.c
+    c.setChanged(False) # 10/1/03: May be set when reading @file nodes.
+    << warn on read-only files >>
+    self.mFileName = c.mFileName
+    self.tnodesDict = {}
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.descendentUnknownAttributesDictList = []
+    ok = True
+    c.loading = True # disable c.changed
+    
+    try:
+        << scan all the xml elements >>
+    except BadLeoFile, message:
+        << raise an alert >>
+        ok = False
+
+    c.frame.tree.redraw_now(scroll=False)
+    
+    if ok and atFileNodesFlag:
+        c.atFileCommands.readAll(c.rootVnode(),partialFlag=False)
+
+    if not c.currentPosition():
+        c.setCurrentPosition(c.rootPosition())
+
+    c.selectVnode(c.currentPosition()) # load body pane
+    c.loading = False # reenable c.changed
+    c.setChanged(c.changed) # Refresh the changed marker.
+    << restore attributes in descendent tnodes >>
+    self.descendentUnknownAttributesDictList = []
+    self.descendentExpandedList = []
+    self.descendentMarksList = []
+    self.tnodesDict = {}
+    return ok, self.ratio
+#@nonl
+#@+node:ekr.20031218072017.1554:<< warn on read-only files >>
+try:
+    self.read_only = False
+    self.read_only = not os.access(fileName,os.W_OK)
+    if self.read_only:
+        g.es("read only: " + fileName,color="red")
+except:
+    if 0: # testing only: access may not exist on all platforms.
+        g.es("exception getting file access")
+        g.es_exception()
+#@nonl
+#@-node:ekr.20031218072017.1554:<< warn on read-only files >>
+#@+node:ekr.20031218072017.1555:<< scan all the xml elements >>
+self.getXmlVersionTag()
+self.getXmlStylesheetTag()
+self.getTag("<leo_file>")
+self.getLeoHeader()
+self.getGlobals()
+self.getPrefs()
+self.getFindPanelSettings()
+
+# Causes window to appear.
+c.frame.resizePanesToRatio(c.frame.ratio,c.frame.secondary_ratio) 
+g.es("reading: " + fileName)
+
+self.getVnodes()
+self.getTnodes()
+self.getCloneWindows()
+self.getTag("</leo_file>")
+#@nonl
+#@-node:ekr.20031218072017.1555:<< scan all the xml elements >>
+#@+node:ekr.20031218072017.1556:<< raise an alert >>
+# All other exceptions are Leo bugs.
+
+g.es_exception()
+g.alert(self.mFileName + " is not a valid Leo file: " + str(message))
+#@nonl
+#@-node:ekr.20031218072017.1556:<< raise an alert >>
+#@+node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+for resultDict in self.descendentUnknownAttributesDictList:
+    for gnx in resultDict.keys():
+        tref = self.canonicalTnodeIndex(gnx)
+        t = self.tnodesDict.get(tref)
+        if t: t.unknownAttributes = resultDict[gnx]
+        else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+            
+marks = {} ; expanded = {}
+for gnx in self.descendentExpandedList:
+    t = self.tnodesDict.get(gnx)
+    if t: expanded[t]=t
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+    
+for gnx in self.descendentMarksList:
+    t = self.tnodesDict.get(gnx)
+    if t: marks[t]=t
+    else: g.trace("can not find tnode: gnx = %s" % gnx,color="red")
+
+if marks or expanded:
+    # g.trace("marks",len(marks),"expanded",len(expanded))
+    for p in c.all_positions_iter():
+        if marks.get(p.v.t):
+            p.v.initMarkedBit()
+                # This was the problem: was p.setMark.
+                # There was a big performance bug in the mark hook in the Node Navigator plugin.
+        if expanded.get(p.v.t):
+            p.expand()
+    # g.trace("done")
+#@nonl
+#@-node:EKR.20040627120120:<< restore attributes in descendent tnodes >>
+#@-node:ekr.20031218072017.1553:getLeoFile
+#@-node:ekr.20040723050246:(Fixed big performance bug in the read code)
+#@+node:ekr.20040730061923:(Fixed undo headline problem)
+# We must make sure that state is "normal" in p.setHeadStringOrHeadline.
+#@nonl
+#@+node:EKR.20040526090701.2:redoChangeHeadline
+def redoChangeHeadline (self):
+    
+    u = self ; c = u.c
+    
+    # g.trace(u.newText)
+    
+    u.p.setHeadStringOrHeadline(u.newText)
+    
+    c.selectVnode(u.p)
+#@nonl
+#@-node:EKR.20040526090701.2:redoChangeHeadline
+#@+node:EKR.20040526090701.6:undoChangeHeadline
+def undoChangeHeadline (self):
+    
+    u = self ; c = u.c
+    
+    # g.trace(u.oldText)
+    
+    u.p.setHeadStringOrHeadline(u.oldText)
+    
+    c.selectVnode(u.p)
+
+    
+#@nonl
+#@-node:EKR.20040526090701.6:undoChangeHeadline
+#@+node:ekr.20040305223225:p.setHeadStringOrHeadline
+def setHeadStringOrHeadline (self,s,encoding="utf-8"):
+
+    p = self ; c = p.c
+    
+    t = p.edit_text()
+    
+    p.initHeadString(s,encoding)
+
+    if t:
+        
+        state = t.cget("state")
+        # g.trace(state,s)
+        t.configure(state="normal")
+        t.delete("1.0","end")
+        t.insert("end",s)
+        t.configure(state=state)
+
+    p.setDirty()
+#@nonl
+#@-node:ekr.20040305223225:p.setHeadStringOrHeadline
+#@-node:ekr.20040730061923:(Fixed undo headline problem)
+#@+node:ekr.20040709053152:(Fixed bug: @thin badDirectory/name caused too much traceback)
+#@+node:ekr.20040730162633:Traceback & Notes
+# Solution: openWriteFile must set self.root for the exception handling logic.
+
+http://sourceforge.net/forum/message.php?msg_id=2654109
+
+# @thin leo/4
+
+errors writing: C:\prog\leoCVS\leo\test\leo\4
+path does not exist: C:\prog\leoCVS\leo\test\leo
+exception creating path:leo/4
+Unexpected exception while writing @thin leo/4
+
+Traceback (most recent call last):
+    
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 731, in write
+    try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile,toString=toString,oneNodeOnly=oneNodeOnly)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 4766, in write
+    ok = at.openWriteFile(root,toString)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2740, in openWriteFile
+    self.writeError("exception creating path:" + fn)
+  File "C:\prog\leoCVS\leo\src\leoAtFile.py", line 2347, in writeError
+    self.root.setOrphan()
+AttributeError: 'NoneType' object has no attribute 'setOrphan'
+#@-node:ekr.20040730162633:Traceback & Notes
+#@+node:ekr.20031218072017.2720:atFile.openWriteFile (used by both old and new code)
+# Open files.  Set root.orphan and root.dirty flags and return on errors.
+
+def openWriteFile (self,root,toString):
+    
+    self.toStringFlag = toString
+    self.errors = 0 # Bug fix: 6/25/04.
+    self.root = root # Bug fix: 7/30/04: needed by error logic.
+
+    try:
+        self.scanAllDirectives(root)
+        valid = self.errors == 0
+    except:
+        self.writeError("exception in atFile.scanAllDirectives")
+        g.es_exception()
+        valid = False
+        
+    if valid and toString:
+        self.targetFileName = self.outputFileName = "<string-file>"
+        self.outputFile = g.fileLikeObject()
+        self.stringOutput = ""
+        return valid
+
+    if valid:
+        try:
+            fn = self.targetFileName
+            self.shortFileName = fn # name to use in status messages.
+            self.targetFileName = g.os_path_join(self.default_directory,fn)
+            self.targetFileName = g.os_path_normpath(self.targetFileName)
+            path = g.os_path_dirname(self.targetFileName)
+            if not path or not g.os_path_exists(path):
+                self.writeError("path does not exist: " + path)
+                valid = False
+        except:
+            self.writeError("exception creating path:" + fn)
+            g.es_exception()
+            valid = False
+
+    if valid and g.os_path_exists(self.targetFileName):
+        try:
+            if not os.access(self.targetFileName,os.W_OK):
+                self.writeError("can not create: read only: " + self.targetFileName)
+                valid = False
+        except:
+            pass # os.access() may not exist on all platforms.
+        
+    if valid:
+        try:
+            root.clearOrphan() # Bug fix: 5/25/04.
+            self.outputFileName = self.targetFileName + ".tmp"
+            self.outputFile = open(self.outputFileName,'wb')
+            if self.outputFile is None:
+                self.writeError("can not create " + self.outputFileName)
+                valid = False
+        except:
+            g.es("exception creating:" + self.outputFileName)
+            g.es_exception()
+            valid = False
+            self.outputFile = None # 3/22/04
+
+    if not valid:
+        root.setOrphan()
+        root.setDirty()
+        self.outputFile = None # 1/29/04
+    
+    return valid
+#@nonl
+#@-node:ekr.20031218072017.2720:atFile.openWriteFile (used by both old and new code)
+#@+node:ekr.20031218072017.2707:writeError
+def writeError(self,message):
+
+    if self.errors == 0:
+        g.es_error("errors writing: " + self.targetFileName)
+
+    self.error(message)
+    self.root.setOrphan()
+    self.root.setDirty()
+#@nonl
+#@-node:ekr.20031218072017.2707:writeError
+#@-node:ekr.20040709053152:(Fixed bug: @thin badDirectory/name caused too much traceback)
 #@-node:ekr.20040706080316:Projects: 4.2 b3
 #@-node:ekr.20040107064101.1:4.2 Projects
 #@-all
