@@ -898,7 +898,7 @@ class colorizer:
 					continue
 				else: assert(state == normalState)
 	
-				if has_string and ch == '"' or ch == "'":
+				if has_string and (ch == '"' or ch == "'"):
 					
 					#@<< handle string >>
 					#@+node:4::<< handle string >>
