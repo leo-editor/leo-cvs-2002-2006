@@ -639,7 +639,7 @@ class baseFileCommands:
 		for name in app.language_delims_dict.keys():
 			if self.matchTagWordIgnoringCase(name):
 				language = name.replace("/","")
-				self.getDquote()
+				# self.getDquote()
 				return language
 				
 		return "c" # default
