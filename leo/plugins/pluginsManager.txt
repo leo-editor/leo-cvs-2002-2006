@@ -81,12 +81,18 @@
 #@nonl
 #@-node:ekr.20040722122459.2:Enhance the icon or status areas
 #@+node:ekr.20040722121404:Experimental plugins
+# A plugin to test optimizations in Leo's outline redraw code.
+    #__outlineExperiments.py
+
 # PRE_ALPHA QUALITY: MAY BE DANGEROUS
 
 	# __wx_gui.py
     
 # The original inspirations for mod_scripting.py 
     # dyna_menu.py
+    
+# """Add and edit unknown attributes of a node
+    # editAttributes.py
     
 # New from Bernhard Mulder
 	# mod_http.py
@@ -99,8 +105,7 @@
     # status_line.py
     
 # New from Paul Paterson.
-	
-	
+    # I'm not sure what the status of this is.
 	# wordcompleter.py
 #@nonl
 #@-node:ekr.20040722121404:Experimental plugins
@@ -140,7 +145,7 @@
     # scripts_menu.py
 #@nonl
 #@-node:ekr.20040722135618:Menus
-#@+node:ekr.20040722140829:New nodes
+#@+node:ekr.20040722140829:New kinds of nodes
 # The predecessor to rst2.py
     # rst.py
 
@@ -151,7 +156,7 @@
     # See also, rst3.py
 	rst2.py
 #@nonl
-#@-node:ekr.20040722140829:New nodes
+#@-node:ekr.20040722140829:New kinds of nodes
 #@+node:ekr.20040722121404.1:Other plugins
 # Adds #line directives in perl and perlpod programs.
 	# lineNumbers.py
