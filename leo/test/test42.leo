@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2821" clone_windows="0"/>
-<globals body_outline_ratio="0.4370860927152318">
-	<global_window_position top="54" left="366" height="755" width="891"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2828" clone_windows="0"/>
+<globals body_outline_ratio="0.54966887417218546">
+	<global_window_position top="67" left="327" height="755" width="891"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -20,52 +20,8 @@
 <v t="ekr.20040303080938.1"><vh>3/3: created position tests</vh></v>
 </v>
 </v>
-<v t="ekr.20040303062846"><vh>Unit Testing</vh>
-<v t="ekr.20040303062846.1"><vh>To do</vh></v>
-<v t="ekr.20040126105605"><vh>Clone test data</vh>
-<v t="ekr.20040302092753"><vh>aa</vh></v>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.1"><vh>d</vh>
-<v t="ekr.20040126105605.2"><vh>a</vh>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040126105605.3"><vh>b</vh>
-<v t="ekr.20040301191933"><vh>c</vh>
-<v t="ekr.20040302092753.1"><vh>c2</vh>
-<v t="ekr.20040302092753.2"><vh>c3</vh></v>
-<v t="ekr.20040302092753.3"><vh>c4</vh></v>
-</v>
-</v>
-</v>
-</v>
-</v>
-<v t="ekr.20040301191933.2"><vh>e</vh></v>
-<v t="ekr.20040302092753.4"><vh>z</vh></v>
-</v>
-<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.2" tnodeList="ekr.20040303062846.2,ekr.20040303062846.1,ekr.20040303062846.3,ekr.20040303062846.4,ekr.20040303062846.5,ekr.20040303062846.6,ekr.20040303062846.7,ekr.20040303062846.8,ekr.20040303062846.10,ekr.20040303062846.12,ekr.20040303062846.13,ekr.20040303062846.14,ekr.20040303062846.15,ekr.20040303062846.16,ekr.20040303062846.17,ekr.20040303062846.18,ekr.20040303062846.20,ekr.20040303062846.21,ekr.20040303062846.22,ekr.20040303062846.23,ekr.20040303062846.24,ekr.20040303062846.25,ekr.20040303062846.26,ekr.20040315202250,ekr.20040315202314,ekr.20040315202314.1,ekr.20040315202347,ekr.20040315202718,ekr.20040315202718.1,ekr.20040303062846.28,ekr.20040303062846.29,ekr.20040303062846.30,ekr.20040303062846.31,ekr.20040303062846.32,ekr.20040303062846.33,ekr.20040303062846.34,ekr.20040303062846.35,ekr.20040303062846.37,ekr.20040303062846.38,ekr.20040303062846.39,ekr.20040303062846.40,ekr.20040303062846.41,ekr.20040303062846.42,ekr.20040303062846.64,ekr.20040303062846.65,ekr.20040303062846.66,ekr.20040303062846.67,ekr.20040303062846.68,ekr.20040303062846.69,ekr.20040303062846.70,ekr.20040303062846.71,ekr.20040303062846.73,ekr.20040303062846.74,ekr.20040303062846.75,ekr.20040303062846.76,ekr.20040303062846.77,ekr.20040303062846.78,ekr.20040303062846.79,ekr.20040303064013,ekr.20040303063118,ekr.20040303063118.4,ekr.20040309105731,ekr.20040309101454.15,ekr.20040309101454.17,ekr.20040309101454.13,ekr.20040303064020.5,ekr.20040309101454.16,ekr.20040309101454.14,ekr.20040303064020.7,ekr.20040303091606,ekr.20040303092153,ekr.20040303092153.1,ekr.20040303064020.6,ekr.20040303062846.80,ekr.20040303062846.81,ekr.20040303062846.82,ekr.20040303062846.83,ekr.20040303062846.84,ekr.20040303062846.85,ekr.20040303062846.86,ekr.20040303062846.87,ekr.20040303062846.88,ekr.20040303062846.89,ekr.20040303062846.90,ekr.20040303062846.91,ekr.20040303062846.92,ekr.20040303062846.93,ekr.20040303062846.94,ekr.20040303062846.95,ekr.20040303062846.96,ekr.20040303062846.97,ekr.20040303062846.98,ekr.20040303062846.99,ekr.20040303062846.100,ekr.20040303062846.101,ekr.20040303062846.102,ekr.20040303062846.103,ekr.20040303062846.104"><vh>@file ..\src\leoTest.py</vh>
+<v t="ekr.20040303062846.1"><vh>&lt;&lt; to do &gt;&gt;</vh></v>
 <v t="ekr.20040303062846.3"><vh> class testUtils</vh>
 <v t="ekr.20040303062846.4"><vh>compareOutlines</vh></v>
 <v t="ekr.20040303062846.5"><vh>findChildrenOf &amp; findSubnodesOf (revise)</vh></v>
@@ -192,9 +148,51 @@
 </v>
 </v>
 </v>
-</v>
 <v t="ekr.20040303063549"><vh>Unit Tests (Tests must be run from inside this tree!)</vh>
 <v t="ekr.20040309101454"><vh> To do</vh></v>
+<v t="ekr.20040126105605"><vh>cloneTestData (not used yet)</vh>
+<v t="ekr.20040302092753"><vh>aa</vh></v>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.1"><vh>d</vh>
+<v t="ekr.20040126105605.2"><vh>a</vh>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040126105605.3"><vh>b</vh>
+<v t="ekr.20040301191933"><vh>c</vh>
+<v t="ekr.20040302092753.1"><vh>c2</vh>
+<v t="ekr.20040302092753.2"><vh>c3</vh></v>
+<v t="ekr.20040302092753.3"><vh>c4</vh></v>
+</v>
+</v>
+</v>
+</v>
+</v>
+<v t="ekr.20040301191933.2"><vh>e</vh></v>
+<v t="ekr.20040302092753.4"><vh>z</vh></v>
+</v>
 <v t="ekr.20040303063549.1"><vh>tempNode</vh></v>
 <v t="ekr.20040303063549.45"><vh>colorizerTests</vh>
 <v t="ekr.20040303063549.46"><vh>Actionscript</vh></v>
@@ -373,6 +371,8 @@
 <v t="ekr.20040309091917"><vh>To do</vh></v>
 <v t="ekr.20040312101720"><vh>Experiments</vh>
 <v t="ekr.20040302091705"><vh>Test of moving positions</vh></v>
+<v t="ekr.20040323075614"><vh>Test of using an iterator inside a list comprehension</vh></v>
+<v t="ekr.20040323080317"><vh>Test of using c.allNodes_iter to create a list of all positions</vh></v>
 </v>
 <v t="ekr.20040312101720.1"><vh>Mini tests</vh>
 <v t="ekr.20040309111054"><vh>Print iterations: do not delete</vh>
@@ -423,11 +423,10 @@
 </v>
 <v t="ekr.20040311125054"><vh>Test that p.t == p.v.t</vh></v>
 <v t="ekr.20040310145919"><vh>Change python keywords</vh></v>
+<v t="ekr.20040317101155"><vh>Test of user icons</vh>
+<v t="ekr.20040317185041"><vh>&lt;&lt; define event callbacks &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040312021734"><vh>Testing scripts</vh>
-<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
-<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
-</v>
+<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
 <v t="ekr.20040315030123"><vh>test convertTreeToString and allies</vh>
 <v t="ekr.20040315025315"><vh>File Conversion</vh>
 <v t="ekr.20040315025315.1"><vh>convertTreeToString</vh></v>
@@ -435,9 +434,33 @@
 <v t="ekr.20040315025315.3"><vh>moreBody</vh></v>
 </v>
 </v>
+<v t="ekr.20040318102920"><vh>test of parents iter</vh>
+<v t="ekr.20040318102920.1" a="E"><vh>parent</vh>
+<v t="ekr.20040318102920.2"><vh>actual test</vh></v>
 </v>
-<v t="ekr.20040317101155" a="TV"><vh>Test of user icons</vh></v>
-<v t="ekr.20040317173327"><vh>Delete user icons</vh></v>
+<v t="ekr.20040318102920.1" a="E"><vh>parent</vh>
+<v t="ekr.20040318102920.2"><vh>actual test</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040312021734"><vh>Scripts</vh>
+<v t="ekr.20040311090054"><vh>Dump fileIndex</vh></v>
+<v t="ekr.20040312021734.1"><vh>Script to clean unused tnodeLists</vh></v>
+<v t="ekr.20040318091620" a="E"><vh>Clear all unknown attributes</vh></v>
+<v t="ekr.20040319111213"><vh>FilterHoise script</vh>
+<v t="ekr.20040319111213.1"><vh>description</vh></v>
+<v t="ekr.20040319142708"><vh>filter</vh></v>
+<v t="ekr.20040319142202"><vh>old code</vh>
+<v t="ekr.20040319111213.2"><vh>filter</vh></v>
+<v t="ekr.20040319111213.3"><vh>search</vh></v>
+</v>
+<v t="ekr.20040319111213.4"><vh>filterHoist</vh></v>
+<v t="ekr.20040319111213.5"><vh>addMenu</vh></v>
+</v>
+<v t="ekr.20040322120331"><vh>script to print tnodeList's</vh></v>
+</v>
+</v>
+<v t="ekr.20040321091021" a="EV" tnodeList="ekr.20040321091021,ekr.20040322081749.1,ekr.20040322081749,ekr.20040322081749"><vh>@file-thin c:\prog\test\at-file-thin-test.txt</vh></v>
 </vnodes>
 <tnodes>
 <t tx="ekr.20040126105605"></t>
@@ -464,21 +487,13 @@ print "after ", v, p.v, v is p.v</t>
 <t tx="ekr.20040302092753.2"></t>
 <t tx="ekr.20040302092753.3"></t>
 <t tx="ekr.20040302092753.4"></t>
-<t tx="ekr.20040303062846"># Run the unit tests in test.leo using the Execute Script command.</t>
-<t tx="ekr.20040303062846.1">@nocolor
+<t tx="ekr.20040303062846.1">@
 
 - Have log classes increment a count.
 	Can be used to ensure that messages did or did not occcur.
 
 - Have the nullGui create a nullUndoer by default
-	But allow the possibility of leaving the full undoer in place.
-
-- More checks in CheckOutline command.
-
-- (done by hand) batch mode.
-	Have script create a file, fail if the file does not exist.
-
-- Unit tests for read/write commands.</t>
+	But allow the possibility of leaving the full undoer in place.</t>
 <t tx="ekr.20040303062846.2">"""
 
 Unit tests for Leo.
@@ -490,11 +505,14 @@ Run the unit tests in test.leo using the Execute Script command.
 import leoGlobals as g
 from leoGlobals import true,false
 
+&lt;&lt; to do &gt;&gt;
+
 import leoColor,leoCommands,leoFrame,leoGui,leoNodes,leoTkinterGui
 
 import glob,os,sys,unittest
 
-@others</t>
+@others
+</t>
 <t tx="ekr.20040303062846.3">class testUtils:
 	
 	"""Common utility routines used by unit tests."""
@@ -2623,7 +2641,9 @@ runner.run(mainSuite)</t>
 - Tests for c.rootPosition, c.currentPosition, c.setCurrentPosition.
 - Menu enablers
 - Test new p and v routines.
-- Test undo/redo for all commands.</t>
+- Test undo/redo for all commands.
+- (done by hand) batch mode.
+	Have script create a file, fail if the file does not exist.</t>
 <t tx="ekr.20040309101454.13">def testConsistencyOfLevel (self):
 	
 	"""Test consistency of p.level."""
@@ -2960,6 +2980,8 @@ p = c.currentPosition()
 p.v.t.unknownAttributes = {}
 a = p.v.t.unknownAttributes
 
+&lt;&lt; define event callbacks &gt;&gt;
+
 path = r"c:\prog\leoCVS\leo\Icons"
 icon1 = g.os_path_join(path,"lt_arrow_enabled.gif")
 icon2 = g.os_path_join(path,"rt_arrow_enabled.gif")
@@ -2970,7 +2992,10 @@ d1 = {
 "yoffset" : -3,
 # "yoffset" : 5, "ypad" : -5,
 # "height" : 40, # automatically adjust headline y position.
-"xpad": 2 } # "yoffset" : -5, , "ypad": 5}
+"xpad": 2, # "yoffset" : -5, , "ypad": 5}
+"onClick" : onClick,
+"onRightClick" : onRightClick,
+"onDoubleClick" : onDoubleClick }
 
 d2 = {
 "type" : "file", "file" : icon2,
@@ -2981,7 +3006,8 @@ d2 = {
 a["icons"] = [d1,d2] # [d1,d2]
 a["lineYOffset"] = 3
 
-c.redraw()</t>
+c.redraw()
+</t>
 <t tx="ekr.20040317173327">import leoGlobals as g
 from leoGlobals import true,false
 c = g.top()
@@ -2995,6 +3021,264 @@ for p in c.allNodes_iter():
 			a["icons"] = []
 			a["lineYOffset"] = 0
 			
-c.redraw() </t>
+c.redraw()</t>
+<t tx="ekr.20040317185041">def onClick(p=p):
+	
+	g.trace(p)
+
+def onRightClick(p=p):
+	
+	g.trace(p)
+
+def onDoubleClick(p=p):
+	
+	g.trace(p)</t>
+<t tx="ekr.20040318091620">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+for p in c.allNodes_iter():
+	if hasattr(p.v.t,"unknownAttributes"):
+		print "deleting unknownAttributes:",p
+		delattr(p.v.t,"unknownAttributes")
+			
+c.redraw()</t>
+<t tx="ekr.20040318102920"></t>
+<t tx="ekr.20040318102920.1"></t>
+<t tx="ekr.20040318102920.2">import leoGlobals as g
+c = g.top()
+
+p = c.currentPosition()
+p1 = p
+print '-'*20
+g.trace(p1)
+assert(p1 is p)
+for p in p.self_and_parents_iter():
+	g.trace(p)
+	assert(p is not p1)
+g.trace(p1)
+d</t>
+<t tx="ekr.20040319111213">from leoPlugins import *
+from leoGlobals import *
+from leoNodes import *
+import Tkinter
+import re
+import sys
+
+@others
+
+fhp = None
+fhp_entry = None
+    
+if 1:
+	addMenu("none",None)
+else:
+	hooks = choose(sys.platform == 'win32',
+		('open2',"new"),
+		('start2','open2',"new"))
+		
+	print "hi"
+		
+	registerHandler(hooks,addMenu)
+
+	__version__ = ".1"
+	plugin_signon(__name__)
+</t>
+<t tx="ekr.20040319111213.1">@nocolor
+
+@ This is what it does:
+
+1. Under Outline it puts an Option called 'FilterHoist'
+2. Selecting the option pops up an ugly little window.  On it is a section where
+you can type in text.  You can close the window with the close button.  You
+can activate the functionality with the Filter Button.
+3. Filtering will walk the Leo tree, looking for a text match from the Text
+field with the Nodes bodyString.
+4. After finding some nodes it creates a new node at the root.  Then it clones
+the matching nodes under that new node.  A Hoist operation is performed on the
+new node.  This gives a view of all matching nodes.
+
+I put this together because I wanted a find that was based in terms of Leo's
+nodes.  Find as it is bounces you around the Tree(it bothers me).  This brings
+the nodes to you and presents them.  As it is I may work further on this if
+people like the idea.  It's possible I might migrate it to the NodeRoundup plugin
+to.
+
+You need 2.3 python; it uses generators in it's find method.
+
+That was one motivation for writing this thing, using a generator vs. Recursive
+approach to tree walking.</t>
+<t tx="ekr.20040319111213.2">def OLDfilter(c,e):
+
+	v = c.rootVnode()
+	
+	nodes = []
+	while v:
+		nodes.append(v)
+		v = v.next()
+    
+	regex = re.compile(e.get())
+	c.beginUpdate()
+	if 1: # update...
+		t = tnode('','A Filtered Hoist')
+		ticker = c.rootVnode().insertAfter(t)
+		for z in nodes:
+			for x in search(z,regex):
+				clone = x.clone( x )
+				clone.moveToNthChildOf(ticker,0)
+		c.setCurrentVnode(ticker)
+		ticker.moveToRoot(c.rootVnode())
+	c.endUpdate()
+	c.hoist()
+	fhp.withdraw()
+</t>
+<t tx="ekr.20040319111213.3">def OLDsearch(vn,regex):
+
+	sn = vn 
+	while vn != None:
+		if regex.search( vn.t.bodyString ) : yield vn
+		nc = vn.numberOfChildren()
+		if nc == 0:
+			i = vn.childIndex()
+			p = vn.parent()
+			if p == None: 
+				vn = None
+				continue
+			if i == 0:
+				while 1:
+					if p == sn :
+						vn = None
+						break
+					vn = p.back() 
+					if vn == None:
+						p = p.parent()
+						continue
+					break
+				continue                                                        
+			vn = p.nthChild( i - 1)
+			continue
+		vn = vn.nthChild( nc - 1 )
+</t>
+<t tx="ekr.20040319111213.4">def filterHoist(c):
+
+	global fhp
+	global e
+	
+	if fhp is None:
+
+		fhp = Tkinter.Toplevel()
+		fhp.title('FilterHoist')
+
+		fhp_entry = e = Tkinter.Entry(fhp)
+		e.pack(side="top",fill="both")
+
+		def closeCallback(fhp=fhp):
+			fhp.withdraw()
+			
+		def filterCallback(c=c,entry=e):
+			filter(c,entry)
+
+		b1 = Tkinter.Button(fhp,text='Close',command=closeCallback)
+		b2 = Tkinter.Button(fhp,text='Filter',command=filterCallback)
+		b1.pack(side="left")
+		b2.pack(side="right")
+
+	fhp.geometry('200x200+250+250') 
+	fhp.deiconify()
+	fhp_entry.focus_set()
+</t>
+<t tx="ekr.20040319111213.5">def addMenu(tag,keywords):
+	
+	c = top()
+	
+	trace()
+	
+	def callback(c=c):
+		filterHoist(c)
+	
+	table = ("FilterHoist",None,callback),
+
+	c.frame.menu.createMenuItemsFromTable("Outline",table)</t>
+<t tx="ekr.20040319142202"></t>
+<t tx="ekr.20040319142708">def filter(c,e):
+	
+	pat = re.compile(e.get())
+
+	c.beginUpdate()
+	if 1: # update...
+		t = tnode('','A Filtered Hoist')
+		newRoot = c.rootVnode().insertAfter(t)
+		p = c.rootVnode()
+		while p:
+			if pat.search(p.bodyString()):
+				clone = p.clone(p)
+				clone.moveToLastChildOf(newRoot)
+			p = p.threadNext()
+		newRoot.moveToRoot(c.rootVnode())
+		c.setCurrentVnode(newRoot)
+	c.endUpdate()
+
+	c.hoist()
+	fhp.withdraw()
+</t>
+<t tx="ekr.20040321091021">import leoGlobals as g
+c = g.top()
+
+
+print '-'*20
+p = c.currentPosition()
+print p.v.isAtThinFileNode()
+
+@others
+
+&lt;&lt; ref &gt;&gt;
+</t>
+<t tx="ekr.20040322120331">import leoGlobals as g
+c = g.top()
+
+print '-'*20
+for p in c.allNodes_iter():
+	if hasattr(p.v.t,"tnodeList"):
+		print p,p.v.t.tnodeList</t>
+<t tx="ekr.20040323075614">import leoGlobals as g
+
+class test_iter_class:
+	def __init__ (self):
+		self.vals = ("a","b","c")
+		self.n = 0
+	def __iter__(self):
+		return self
+	def next(self):
+		if self.n &lt; len(self.vals):
+			val = self.vals[self.n]
+			self.n += 1
+			return val
+		else:
+			raise StopIteration
+			
+def test_iter(): return test_iter_class()
+		
+vals = [val for val in test_iter()]
+
+print vals
+</t>
+<t tx="ekr.20040323080317">import leoGlobals as g
+from leoGlobals import true,false
+c = g.top()
+
+print '-'*20
+
+# These are equivalent.
+positions1 = [p for p in c.allNodes_iter(copy=true)]
+positions2 = [p.copy() for p in c.allNodes_iter()]
+
+assert(len(positions1) == len(positions2))
+for i in xrange(len(positions1)):
+	assert(positions1[i] == positions2[i])
+
+if 0:
+	for p in positions1:
+		print p
+print "done"</t>
 </tnodes>
 </leo_file>
