@@ -324,6 +324,12 @@ class baseTnode (object):
     #@-node:EKR.20040530121847.2:t.restoreUndoInfo
     #@-node:EKR.20040530121847.1:For undo
     #@+node:ekr.20031218072017.3325:Getters
+    #@+node:EKR.20040625161602:getBody
+    def getBody (self):
+    
+        return self.bodyString
+    #@nonl
+    #@-node:EKR.20040625161602:getBody
     #@+node:ekr.20031218072017.3326:hasBody
     def hasBody (self):
     
