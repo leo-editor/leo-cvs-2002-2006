@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="144" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="113" left="202" height="734" width="651"/>
+	<global_window_position top="60" left="330" height="841" width="843"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences allow_rich_text="0">
@@ -57,210 +57,210 @@
 </v>
 <v t="T32"><vh>@file c:\prog\test\tab_test.txt</vh></v>
 <v t="T33"><vh>@image Icons/Leoapp.GIF</vh></v>
-<v t="T34"><vh>alloc tests</vh></v>
-<v t="T35"><vh>Assignment tests</vh></v>
-<v t="T36"><vh>clone tests</vh>
-<v t="T37" a="C"><vh>A</vh>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T34"><vh>Actionscript keywords</vh></v>
+<v t="T35"><vh>alloc tests</vh></v>
+<v t="T36"><vh>Assignment tests</vh></v>
+<v t="T37"><vh>clone tests</vh>
+<v t="T38" a="C"><vh>A</vh>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-</v>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T41" a="C"><vh>New root</vh>
-<v t="T37" a="CE"><vh>A</vh>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-</v>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
 </v>
+<v t="T42" a="C"><vh>New root</vh>
+<v t="T38" a="CE"><vh>A</vh>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T41" a="C"><vh>New root</vh>
-<v t="T37" a="C"><vh>A</vh>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
-</v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
-<v t="T38" a="C"><vh>B</vh>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T39" a="C"><vh>C</vh>
-<v t="T40"><vh>D</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
 </v>
 </v>
+<v t="T42" a="C"><vh>New root</vh>
+<v t="T38" a="C"><vh>A</vh>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T42"><vh>Coloring Test</vh>
-<v t="T43"><vh>Colorizing Test</vh></v>
-<v t="T44"><vh>Color test without images</vh></v>
-<v t="T45"><vh>Color names test</vh></v>
-</v>
-<v t="T46"><vh>Copy/Clones test</vh>
-<v t="T47" a="C"><vh>a Å</vh>
-<v t="T48" a="C"><vh>b</vh>
-<v t="T49"><vh>c</vh></v>
-</v>
-<v t="T48" a="C"><vh>b</vh>
-<v t="T49"><vh>c</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
-<v t="T47" a="C"><vh>a Å</vh>
-<v t="T48" a="C"><vh>b</vh>
-<v t="T49"><vh>c</vh></v>
+<v t="T39" a="C"><vh>B</vh>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
-<v t="T48" a="C"><vh>b</vh>
-<v t="T49"><vh>c</vh></v>
+<v t="T40" a="C"><vh>C</vh>
+<v t="T41"><vh>D</vh></v>
 </v>
 </v>
 </v>
-<v t="T50"><vh>Dialog tests</vh>
-<v t="T51"><vh>Test askOk</vh></v>
-<v t="T52"><vh>Test aboutLeo</vh></v>
-<v t="T53"><vh>Test askLeoID</vh></v>
-<v t="T54"><vh>Test askOkCancelNumber</vh></v>
-<v t="T55"><vh>Test askOkCancel</vh></v>
-<v t="T56"><vh>Test askYesNo</vh></v>
-<v t="T57"><vh>Test askYesNoCancel</vh></v>
 </v>
-<v t="T58"><vh>Go to line number test</vh>
-<v t="T59"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
-<v t="T60"><vh>__init__</vh></v>
+</v>
+<v t="T43"><vh>Coloring Test</vh>
+<v t="T44"><vh>Colorizing Test</vh></v>
+<v t="T45"><vh>Color test without images</vh></v>
+<v t="T46"><vh>Color names test</vh></v>
+</v>
+<v t="T47"><vh>Copy/Clones test</vh>
+<v t="T48" a="C"><vh>a Å</vh>
+<v t="T49" a="C"><vh>b</vh>
+<v t="T50"><vh>c</vh></v>
+</v>
+<v t="T49" a="C"><vh>b</vh>
+<v t="T50"><vh>c</vh></v>
+</v>
+</v>
+<v t="T48" a="C"><vh>a Å</vh>
+<v t="T49" a="C"><vh>b</vh>
+<v t="T50"><vh>c</vh></v>
+</v>
+<v t="T49" a="C"><vh>b</vh>
+<v t="T50"><vh>c</vh></v>
+</v>
+</v>
+</v>
+<v t="T51"><vh>Dialog tests</vh>
+<v t="T52"><vh>Test askOk</vh></v>
+<v t="T53"><vh>Test aboutLeo</vh></v>
+<v t="T54"><vh>Test askLeoID</vh></v>
+<v t="T55"><vh>Test askOkCancelNumber</vh></v>
+<v t="T56"><vh>Test askOkCancel</vh></v>
+<v t="T57"><vh>Test askYesNo</vh></v>
+<v t="T58"><vh>Test askYesNoCancel</vh></v>
+</v>
+<v t="T59"><vh>Go to line number test</vh>
+<v t="T60"><vh>@file c:\prog\test\goToLineNumber.txt</vh>
 <v t="T61"><vh>__init__</vh></v>
+<v t="T62"><vh>__init__</vh></v>
 </v>
 </v>
-<v t="T62"><vh>Icon bar</vh>
-<v t="T63"><vh>add some buttons</vh></v>
-<v t="T64"><vh>add all gif files</vh></v>
-<v t="T65"><vh>clear</vh></v>
-<v t="T66"><vh>hide</vh></v>
-<v t="T67"><vh>configure</vh></v>
-<v t="T68"><vh>show (puts at bottom)</vh></v>
+<v t="T63"><vh>Icon bar</vh>
+<v t="T64"><vh>add some buttons</vh></v>
+<v t="T65"><vh>add all gif files</vh></v>
+<v t="T66"><vh>clear</vh></v>
+<v t="T67"><vh>hide</vh></v>
+<v t="T68"><vh>configure</vh></v>
+<v t="T69"><vh>show (puts at bottom)</vh></v>
 </v>
-<v t="T69"><vh>Ignore</vh>
-<v t="T70"><vh>@lineending and @encoding tests</vh></v>
-<v t="T71"><vh>@file test.py</vh>
-<v t="T72"><vh>Outer</vh>
-<v t="T73"><vh>A2</vh></v>
-<v t="T74"><vh>B</vh></v>
-</v>
-</v>
-<v t="T75"><vh>Check clones links</vh></v>
-</v>
-<v t="T76"><vh>Line break problems</vh>
-<v t="T77"><vh>Error</vh>
-<v t="T78"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
-<v t="T79"><vh>functions</vh>
-<v t="T80"><vh>objects</vh>
-<v t="T81" a="M"><vh>class shape</vh>
-<v t="T82"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
+<v t="T70"><vh>Ignore</vh>
+<v t="T71"><vh>@lineending and @encoding tests</vh></v>
+<v t="T72"><vh>@file test.py</vh>
+<v t="T73"><vh>Outer</vh>
+<v t="T74"><vh>A2</vh></v>
+<v t="T75"><vh>B</vh></v>
 </v>
 </v>
+<v t="T76"><vh>Check clones links</vh></v>
 </v>
-</v>
-</v>
-</v>
-<v t="T83"><vh>New import</vh></v>
-<v t="T84"><vh>Overriding core classes</vh></v>
-<v t="T85"><vh>Read @file nodes</vh>
-<v t="T86"><vh>@file c:\prog\test\atFileTest.txt</vh>
-<v t="T87"><vh>Node 1</vh></v>
-</v>
-</v>
-<v t="T88"><vh>reformatParagraph test</vh></v>
-<v t="T89"><vh>Spell test </vh>
-<v t="T90"><vh>node two</vh></v>
-<v t="T91"><vh>node two no misspellings</vh></v>
-</v>
-<v t="T92"><vh>Status line</vh>
-<v t="T93"><vh>put message</vh></v>
-<v t="T94"><vh>clear</vh></v>
-<v t="T95"><vh>tab width tests</vh>
-<v t="T96"><vh>2</vh></v>
-<v t="T97"><vh>4</vh></v>
-<v t="T98"><vh>6</vh></v>
-<v t="T99"><vh>8</vh></v>
-</v>
-</v>
-<v t="T100"><vh>Test of recent sections &amp; clones</vh>
-<v t="T101" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T102" a="C"><vh>hyper link test</vh>
-<v t="T101" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T103"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-<v t="T102" a="C"><vh>hyper link test</vh>
-<v t="T101" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
-<v t="T103"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="T104"><vh>timeit (in 2.3b1)</vh></v>
-<v t="T105"><vh>Trailing newline in body</vh></v>
-<v t="T106"><vh>Undo replace tests</vh>
-<v t="T107" a="C"><vh>A</vh>
-<v t="T108" a="C"><vh>B</vh>
-<v t="T109"><vh>C</vh></v>
-<v t="T110"><vh>C2</vh></v>
-</v>
-<v t="T108" a="C"><vh>B</vh>
-<v t="T109"><vh>C</vh></v>
-<v t="T110"><vh>C2</vh></v>
-</v>
-</v>
-<v t="T107" a="C"><vh>A</vh>
-<v t="T108" a="C"><vh>B</vh>
-<v t="T109"><vh>C</vh></v>
-<v t="T110"><vh>C2</vh></v>
-</v>
-<v t="T108" a="C"><vh>B</vh>
-<v t="T109"><vh>C</vh></v>
-<v t="T110"><vh>C2</vh></v>
+<v t="T77"><vh>Line break problems</vh>
+<v t="T78"><vh>Error</vh>
+<v t="T79"><vh>@nosentinelsfile c:\prog\test\lineBreakError.txt</vh>
+<v t="T80"><vh>functions</vh>
+<v t="T81"><vh>objects</vh>
+<v t="T82" a="M"><vh>class shape</vh>
+<v t="T83"><vh>&lt;&lt; class shape declarations &gt;&gt;</vh></v>
 </v>
 </v>
 </v>
-<v t="T111"><vh>Undo typing tests</vh></v>
-<v t="T112"><vh>v.__repr__ and v.__str___</vh></v>
-<v t="T113"><vh>wrap test</vh>
-<v t="T114"><vh>@file c:\prog\test\wrap_test.txt</vh>
-<v t="T115"><vh>wrap node</vh></v>
-<v t="T116"><vh>nowrap node</vh></v>
 </v>
 </v>
-<v t="T117"><vh>Write Missing @file nodes test</vh>
-<v t="T118"><vh>@file ../test/missing_test.txt</vh></v>
+</v>
+<v t="T84"><vh>New import</vh></v>
+<v t="T85"><vh>Overriding core classes</vh></v>
+<v t="T86"><vh>Read @file nodes</vh>
+<v t="T87"><vh>@file c:\prog\test\atFileTest.txt</vh>
+<v t="T88"><vh>Node 1</vh></v>
 </v>
 </v>
-<v t="T119" a="E"><vh>To do</vh>
-<v t="T120"><vh>Use xml.sax</vh></v>
-<v t="T121" a="V"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
-<v t="T122"><vh>Actionscript keywords</vh></v>
+<v t="T89"><vh>Rebol keywords (- ? ~ ! recognized as a part of a keyword)</vh></v>
+<v t="T90"><vh>reformatParagraph test</vh></v>
+<v t="T91"><vh>Spell test </vh>
+<v t="T92"><vh>node two</vh></v>
+<v t="T93"><vh>node two no misspellings</vh></v>
+</v>
+<v t="T94"><vh>Status line</vh>
+<v t="T95"><vh>put message</vh></v>
+<v t="T96"><vh>clear</vh></v>
+<v t="T97"><vh>tab width tests</vh>
+<v t="T98"><vh>2</vh></v>
+<v t="T99"><vh>4</vh></v>
+<v t="T100"><vh>6</vh></v>
+<v t="T101"><vh>8</vh></v>
+</v>
+</v>
+<v t="T102"><vh>Test of recent sections &amp; clones</vh>
+<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T104" a="C"><vh>hyper link test</vh>
+<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T105"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+</v>
+<v t="T104" a="C"><vh>hyper link test</vh>
+<v t="T103" a="C"><vh>&lt;&lt; section a &gt;&gt;</vh></v>
+<v t="T105"><vh>&lt;&lt; section b &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="T106"><vh>timeit (in 2.3b1)</vh></v>
+<v t="T107"><vh>Trailing newline in body</vh></v>
+<v t="T108"><vh>Undo replace tests</vh>
+<v t="T109" a="C"><vh>A</vh>
+<v t="T110" a="C"><vh>B</vh>
+<v t="T111"><vh>C</vh></v>
+<v t="T112"><vh>C2</vh></v>
+</v>
+<v t="T110" a="C"><vh>B</vh>
+<v t="T111"><vh>C</vh></v>
+<v t="T112"><vh>C2</vh></v>
+</v>
+</v>
+<v t="T109" a="C"><vh>A</vh>
+<v t="T110" a="C"><vh>B</vh>
+<v t="T111"><vh>C</vh></v>
+<v t="T112"><vh>C2</vh></v>
+</v>
+<v t="T110" a="C"><vh>B</vh>
+<v t="T111"><vh>C</vh></v>
+<v t="T112"><vh>C2</vh></v>
+</v>
+</v>
+</v>
+<v t="T113"><vh>Undo typing tests</vh></v>
+<v t="T114"><vh>v.__repr__ and v.__str___</vh></v>
+<v t="T115"><vh>wrap test</vh>
+<v t="T116"><vh>@file c:\prog\test\wrap_test.txt</vh>
+<v t="T117"><vh>wrap node</vh></v>
+<v t="T118"><vh>nowrap node</vh></v>
+</v>
+</v>
+<v t="T119"><vh>Write Missing @file nodes test</vh>
+<v t="T120"><vh>@file ../test/missing_test.txt</vh></v>
+</v>
+</v>
+<v t="T121" a="E"><vh>To do</vh>
+<v t="T122"><vh>Use xml.sax</vh></v>
 </v>
 <v t="T123"><vh>TDD experiments</vh>
 <v t="T124"><vh>To do</vh>
@@ -289,7 +289,7 @@
 </v>
 </v>
 </v>
-<v t="T144"><vh>Leo Unit Tests</vh></v>
+<v t="T144" a="V"><vh>Leo Unit Tests</vh></v>
 </vnodes>
 <tnodes>
 <t tx="T1">@color
@@ -1081,7 +1081,64 @@ This is an umlaute ë</t>
 .   ..  ... ....    .   
         .   ..</t>
 <t tx="T33"></t>
-<t tx="T34">import gc,Tkinter
+<t tx="T34">@language actionscript
+
+break
+call, continue
+delete, do
+else
+false, for, function
+goto
+if, in
+new, null
+return
+true, typeof
+undefined
+var, void, while, with
+#include
+catch, constructor
+prototype
+this, try
+_parent, _root, __proto__
+// Jeeze hasn't anyone ever heard of namespaces??
+ASnative, abs, acos, appendChild, asfunction, asin, atan, atan2, attachMovie, attachSound, attributes
+BACKSPACE
+CAPSLOCK, CONTROL, ceil, charAt, charCodeAt, childNodes, chr, cloneNode, close, concat, connect, cos, createElement, createTextNode
+DELETEKEY, DOWN, docTypeDecl, duplicateMovieClip
+END, ENTER, ESCAPE, enterFrame, entry, equal, eval, evaluate, exp
+firstChild, floor, fromCharCode, fscommand, getAscii
+getBeginIndex, getBounds, getBytesLoaded, getBytesTotal, getCaretIndex, getCode, getDate, getDay, getEndIndex, getFocus, getFullYear, getHours, getMilliseconds, getMinutes, getMonth, getPan, getProperty, getRGB, getSeconds, getTime, getTimer, getTimezoneOffset, getTransform, getURL, getUTCDate, getUTCDay, getUTCFullYear, getUTCHours, getUTCMilliseconds, getUTCMinutes, getUTCMonth, getUTCSeconds, getVersion, getVolume, getYear, globalToLocal, gotoAndPlay, gotoAndStop
+HOME, haschildNodes, hide, hitTest
+INSERT, Infinity, ifFrameLoaded, ignoreWhite, indexOf, insertBefore, int, isDown, isFinite, isNaN, isToggled
+join
+keycode, keyDown, keyUp
+LEFT, LN10, LN2, LOG10E, LOG2E, lastChild, lastIndexOf, length, load, loaded, loadMovie, loadMovieNum, loadVariables, loadVariablesNum, localToGlobal, log
+MAX_VALUE, MIN_VALUE, max, maxscroll, mbchr, mblength, mbord, mbsubstring, min, 
+NEGATIVE_INFINITY, NaN, newline, nextFrame, nextScene, nextSibling, nodeName, nodeType, nodeValue
+on, onClipEvent, onClose, onConnect, onData, onLoad, onXML, ord
+PGDN, PGUP, PI, POSITIVE_INFINITY, parentNode, parseFloat, parseInt, parseXML, play, pop, pow, press, prevFrame, previousSibling, prevScene, print, printAsBitmap, printAsBitmapNum, printNum, push
+RIGHT, random, release, removeMovieClip, removeNode, reverse, round
+SPACE, SQRT1_2, SQRT2, scroll, send, sendAndLoad, set, setDate, setFocus, setFullYear, setHours, setMilliseconds, setMinutes, setMonth, setPan, setProperty, setRGB, setSeconds, setSelection, setTime, setTransform, setUTCDate, setUTCFullYear, setUTCHours, setUTCMilliseconds, setUTCMinutes, setUTCMonth, setUTCSeconds, setVolume, setYear, shift, show, sin, slice, sort, start, startDrag, status, stop, stopAllSounds, stopDrag, substr, substring, swapDepths, splice, split, sqrt
+TAB, tan, targetPath, tellTarget, toggleHighQuality, toLowerCase, toString, toUpperCase, trace
+UP, UTC, unescape, unloadMovie, unLoadMovieNum, unshift, updateAfterEvent
+valueOf
+xmlDecl, _alpha
+_currentframe
+_droptarget
+_focusrect, _framesloaded
+_height, _highquality
+_name
+_quality
+_rotation
+_soundbuftime
+_target, _totalframes
+_url
+_visible
+_width
+_x, _xmouse, _xscale
+_y, _ymouse, _yscale
+and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
+<t tx="T35">import gc,Tkinter
 
 # gc.set_debug(gc.DEBUG_STATS)
 
@@ -1121,7 +1178,7 @@ printGarbage("end 2")
 top = frame = canvas = None
 gc.collect()
 printGarbage("end 3")</t>
-<t tx="T35"># The output of this is 5 5 6
+<t tx="T36"># The output of this is 5 5 6
 # This shows that o2 is merely an alias for o.
 
 class obj:
@@ -1131,10 +1188,10 @@ class obj:
 o = obj(5) ; print o.n,
 o2  = o    ; print o2.n,
 o.n = 6    ; print o2.n</t>
-<t tx="T36"># The following corrupts the outline: extract section (in B), undo.
+<t tx="T37"># The following corrupts the outline: extract section (in B), undo.
 </t>
-<t tx="T37"></t>
-<t tx="T38"># The following used to corrupt the outline: extract section, undo.
+<t tx="T38"></t>
+<t tx="T39"># The following used to corrupt the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
@@ -1142,11 +1199,11 @@ line 2
 
 after
 </t>
-<t tx="T39"></t>
 <t tx="T40"></t>
 <t tx="T41"></t>
-<t tx="T42">@markup wiki</t>
-<t tx="T43">@language python
+<t tx="T42"></t>
+<t tx="T43">@markup wiki</t>
+<t tx="T44">@language python
 
 """ {picture file=../Icons/Leoapp.GIF}this """ # Problems with correct indexing following a graphic.
 
@@ -1182,7 +1239,7 @@ string"""
 and if
 
 from leoGlobals import * ; print app().loadDir</t>
-<t tx="T44">""" continued
+<t tx="T45">""" continued
 string"""
 
 @ ''ab'' __xxx__ ''wx'' __xyz__  __''bolditalic''__ and ''__italicbold__''
@@ -1212,15 +1269,15 @@ and if
 
 from leoGlobals import * ; print app().loadDir
 </t>
-<t tx="T45">""" text~~red:some text~~more text"""
+<t tx="T46">""" text~~red:some text~~more text"""
 
 """ text~~#ee0ff:some text~~more text"""</t>
-<t tx="T46"></t>
 <t tx="T47"></t>
 <t tx="T48"></t>
 <t tx="T49"></t>
 <t tx="T50"></t>
-<t tx="T51">from leoGlobals import *
+<t tx="T51"></t>
+<t tx="T52">from leoGlobals import *
 import leoDialog
 
 if 1: # passed
@@ -1238,7 +1295,7 @@ if 1: # passed
 	fileName = "xyzzy"
 	print leoDialog.askOk("Read-only ouline",
 		"Warning: the outline: " + fileName + " is read-only.").run(modal=true)</t>
-<t tx="T52">from leoGlobals import *
+<t tx="T53">from leoGlobals import *
 import leoDialog
 
 ver = "version 3.14159 "
@@ -1252,18 +1309,18 @@ url = "http://webpages.charter.net/edreamleo/front.html"
 email = "edreamleo@charter.net"
 
 leoDialog.aboutLeo(version,copyright,url,email).run(modal=false)</t>
-<t tx="T53">import leoDialog
+<t tx="T54">import leoDialog
 
 print leoDialog.askLeoID().run(modal=1)</t>
-<t tx="T54">import leoDialog
+<t tx="T55">import leoDialog
 
 print leoDialog.askOkCancelNumber("Enter Line Number","Line number:").run(modal=1)
 </t>
-<t tx="T55">import leoDialog
+<t tx="T56">import leoDialog
 
 print leoDialog.askOkCancel("Proceed?",
 	"Read @file Nodes is not undoable.\nProceed?").run(modal=1)</t>
-<t tx="T56">import leoDialog
+<t tx="T57">import leoDialog
 
 if 1: # passed
 	message = "Replace changed outline with external changes?"
@@ -1277,7 +1334,7 @@ if 1: # passed
 	print leoDialog.askYesNo(
 		"Download Tutorial?",
 		"Download tutorial (sbooks.chm) from SourceForge?").run(modal=1)</t>
-<t tx="T57">import leoDialog
+<t tx="T58">import leoDialog
 
 if 1: # passed
 	print leoDialog.askYesNoCancel("Confirm",
@@ -1293,23 +1350,23 @@ if 1: # passed
 		yesMessage = "Outline",
 		noMessage = "File",
 		defaultButton = "Cancel").run(modal=1)</t>
-<t tx="T58"></t>
-<t tx="T59">@others</t>
-<t tx="T60">def __init__ (self):
-	
-	pass # line 9</t>
+<t tx="T59"></t>
+<t tx="T60">@others</t>
 <t tx="T61">def __init__ (self):
 	
+	pass # line 9</t>
+<t tx="T62">def __init__ (self):
+	
 	pass # line 16</t>
-<t tx="T62"></t>
-<t tx="T63">from leoGlobals import *
+<t tx="T63"></t>
+<t tx="T64">from leoGlobals import *
 
 top().frame.addIconButton(imagefile="../Icons/Leoapp.gif")
 
 top().frame.addIconButton(text="hi")
 
 top().frame.addIconButton(imagefile="../Icons/Leodoc.gif")</t>
-<t tx="T64">from leoGlobals import *
+<t tx="T65">from leoGlobals import *
 import glob,os
 
 f = top().frame
@@ -1321,56 +1378,56 @@ files.sort()
 f.clearIconBar()
 for file in files:
 	f.addIconButton(imagefile=file,bg="lightBlue")</t>
-<t tx="T65">from leoGlobals import *
-
-top().frame.clearIconBar()</t>
 <t tx="T66">from leoGlobals import *
 
-top().frame.hideIconBar()</t>
+top().frame.clearIconBar()</t>
 <t tx="T67">from leoGlobals import *
 
-top().frame.iconFrame.configure(height="15m")</t>
+top().frame.hideIconBar()</t>
 <t tx="T68">from leoGlobals import *
 
+top().frame.iconFrame.configure(height="15m")</t>
+<t tx="T69">from leoGlobals import *
+
 top().frame.showIconBar()</t>
-<t tx="T69">@ignore</t>
-<t tx="T70">@lineending nl         (the default, Linux)
+<t tx="T70">@ignore</t>
+<t tx="T71">@lineending nl         (the default, Linux)
 @lineending cr         (Mac)
 @lineending crlf       (Windows)
 @lineending lf          (same as nl, not recommended)
 @lineending platform (same as platform value for output_newline setting in leoConfig.txt)
 
 @encoding utf-8</t>
-<t tx="T71"># Test file for cut/paste operations.
+<t tx="T72"># Test file for cut/paste operations.
 
 @others</t>
-<t tx="T72"></t>
-<t tx="T73">node A Text</t>
-<t tx="T74">node B text</t>
-<t tx="T75">from leoGlobals import *
+<t tx="T73"></t>
+<t tx="T74">node A Text</t>
+<t tx="T75">node B text</t>
+<t tx="T76">from leoGlobals import *
 
 checkClones2Links(verbose=true)</t>
-<t tx="T76"></t>
-<t tx="T77">@ EKR: the doc string in class shape is improperly indented.
+<t tx="T77"></t>
+<t tx="T78">@ EKR: the doc string in class shape is improperly indented.
 @c
 
 @language Python
 @tabwidth -4</t>
-<t tx="T78">@first #!/usr/bin/python
+<t tx="T79">@first #!/usr/bin/python
 
 @others
 </t>
-<t tx="T79">@others
-</t>
 <t tx="T80">@others
 </t>
-<t tx="T81">class shape(object):
+<t tx="T81">@others
+</t>
+<t tx="T82">class shape(object):
   	&lt;&lt; class shape declarations &gt;&gt;
   	# after decls</t>
-<t tx="T82">"""Parent class of all shapes."""
+<t tx="T83">"""Parent class of all shapes."""
 pass
 </t>
-<t tx="T83"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
+<t tx="T84"># This shows that Python programs _could_ use .xpy files (xml files containing Leo/Python code).
 
 from leoGlobals import *
 import imp
@@ -1393,14 +1450,80 @@ def leo_import(name,old_import,globals=None, locals=None, fromlist=None):
 		
 m = leo_import("leoTest",__import__)
 es(m,color="red")</t>
-<t tx="T84">import leoFrame
+<t tx="T85">import leoFrame
 print "%d leoFrame instances" % leoFrame.LeoFrame.instances</t>
-<t tx="T85">@ignore</t>
-<t tx="T86">@nocolor
+<t tx="T86">@ignore</t>
+<t tx="T87">@nocolor
 This is a test file
 @others</t>
-<t tx="T87">Node one text.  changed 2.</t>
-<t tx="T88">@language plain
+<t tx="T88">Node one text.  changed 2.</t>
+<t tx="T89">@language rebol
+
+; a comment
+about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
+back bind boot-prefs break browse build-port build-tag  
+call caret-to-offset catch center-face change change-dir charset checksum choose clean-path clear clear-fields close comment complement compose compress confirm continue-post context copy cosine create-request crypt cvs-date cvs-version  
+debase decode-cgi decode-url decompress deflag-face dehex delete demo desktop detab dh-compute-key dh-generate-key dh-make-key difference dirize disarm dispatch divide do do-boot do-events do-face do-face-alt does dsa-generate-key dsa-make-key dsa-make-signature dsa-verify-signature  
+echo editor either else emailer enbase entab exclude exit exp extract 
+fifth find find-key-face find-window flag-face first flash focus for forall foreach forever form forskip fourth free func function  
+get get-modes get-net-info get-style  
+halt has head help hide hide-popup  
+if import-email in inform input insert insert-event-func intersect 
+join 
+last launch launch-thru layout license list-dir load load-image load-prefs load-thru log-10 log-2 log-e loop lowercase  
+make make-dir make-face max maximum maximum-of min minimum minimum-of mold multiply  
+negate net-error next not now  
+offset-to-caret open open-events or or~ 
+parse parse-email-addrs parse-header parse-header-date parse-xml path-thru pick poke power prin print probe protect protect-system  
+q query quit  
+random read read-io read-net read-thru reboot recycle reduce reform rejoin remainder remold remove remove-event-func rename repeat repend replace request request-color request-date request-download request-file request-list request-pass request-text resend return reverse rsa-encrypt rsa-generate-key rsa-make-key 
+save save-prefs save-user scroll-para second secure select send send-and-check set set-modes set-font set-net set-para set-style set-user set-user-name show show-popup sine size-text skip sort source split-path square-root stylize subtract switch  
+tail tangent textinfo third throw throw-on-error to to-binary to-bitset to-block to-char to-date to-decimal to-email to-event to-file to-get-word to-hash to-hex to-idate to-image to-integer to-issue to-list to-lit-path to-lit-word to-local-file to-logic to-money to-none to-pair to-paren to-path to-rebol-file to-refinement to-set-path to-set-word to-string to-tag to-time to-tuple to-url to-word trace trim try  
+unfocus union unique uninstall unprotect unset until unview update upgrade uppercase usage use  
+vbug view view-install view-prefs  
+wait what what-dir while write write-io  
+xor xor~  
+action! any-block! any-function! any-string! any-type! any-word!  
+binary! bitset! block!  
+char!  
+datatype! date! decimal! 
+email! error! event!  
+file! function!  
+get-word!  
+hash!  
+image! integer! issue!  
+library! list! lit-path! lit-word! logic!  
+money!  
+native! none! number!  
+object! op!  
+pair! paren! path! port!  
+refinement! routine!  
+series! set-path! set-word! string! struct! symbol!  
+tag! time! tuple!  
+unset! url!  
+word!  
+any-block? any-function? any-string? any-type? any-word?  
+binary? bitset? block?  
+char? connected? crypt-strength? 
+datatype? date? decimal? dir?  
+email? empty? equal? error? even? event? exists? exists-key?
+file? flag-face? found? function?  
+get-word? greater-or-equal? greater?  
+hash? head?  
+image? in-window? index? info? input? inside? integer? issue?  
+length? lesser-or-equal? lesser? library? link-app? link? list? lit-path? lit-word? logic?  
+modified? money?  
+native? negative? none? not-equal? number?  
+object? odd? offset? op? outside?  
+pair? paren? path? port? positive?  
+refinement? routine?  
+same? screen-offset? script? series? set-path? set-word? size? span? strict-equal? strict-not-equal? string? struct?  
+tag? tail? time? tuple? type?  
+unset? url?  
+value? view? 
+within? word?  
+zero?</t>
+<t tx="T90">@language plain
 @pagewidth 72
 @tabwidth 2
 
@@ -1415,10 +1538,10 @@ to be able to recreate a chunk of
 text in your head or on paper, and perhaps verbally.
 
 The steps might be as follows:</t>
-<t tx="T89">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
+<t tx="T91">a b leoDialogs leoFind leoAtFile leoFileCommands leoGlobals modal end
 line tooo changed 9
 </t>
-<t tx="T90">this is another test.
+<t tx="T92">this is another test.
 
 hello there jkk this is werg
 		
@@ -1426,9 +1549,9 @@ the cht sat on the marh
 the cat was sitting phew, another day. by zz z z 
 two initabc
 </t>
-<t tx="T91">everything good.</t>
-<t tx="T92"></t>
-<t tx="T93">from leoGlobals import *
+<t tx="T93">everything good.</t>
+<t tx="T94"></t>
+<t tx="T95">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
@@ -1439,67 +1562,67 @@ for color in ("red","blue","yellow","green","orange"):
 	f.putStatusLine (" %s " % (color),color=color)
 
 f.putStatusLine(" World")</t>
-<t tx="T94">from leoGlobals import *
+<t tx="T96">from leoGlobals import *
 f = top().frame
 
 f.clearStatusLine()
 </t>
-<t tx="T95"></t>
-<t tx="T96">@tabwidth 2
+<t tx="T97"></t>
+<t tx="T98">@tabwidth 2
 
 a
 	b
 		c	d</t>
-<t tx="T97">@tabwidth 4
+<t tx="T99">@tabwidth 4
 
 a
 	b
 		c	d</t>
-<t tx="T98">@tabwidth 6
+<t tx="T100">@tabwidth 6
 
 a
 	b
 		c	d</t>
-<t tx="T99">@tabwidth 8
+<t tx="T101">@tabwidth 8
 
 a
 	b
 		c	d</t>
-<t tx="T100"></t>
-<t tx="T101">This is section a.</t>
-<t tx="T102">&lt;&lt; section a &gt;&gt;</t>
-<t tx="T103"></t>
-<t tx="T104">import timeit</t>
-<t tx="T105">ab
+<t tx="T102"></t>
+<t tx="T103">This is section a.</t>
+<t tx="T104">&lt;&lt; section a &gt;&gt;</t>
+<t tx="T105"></t>
+<t tx="T106">import timeit</t>
+<t tx="T107">ab
 </t>
-<t tx="T106"></t>
-<t tx="T107"></t>
-<t tx="T108"># The following corrupts the outline: extract section, undo.
+<t tx="T108"></t>
+<t tx="T109"></t>
+<t tx="T110"># The following corrupts the outline: extract section, undo.
 
 &lt;&lt; test &gt;&gt;
 line 1
 	line 2
 
 	after</t>
-<t tx="T109"></t>
-<t tx="T110"></t>
-<t tx="T111">test one</t>
-<t tx="T112">from leoGlobals import *
+<t tx="T111"></t>
+<t tx="T112"></t>
+<t tx="T113">test one</t>
+<t tx="T114">from leoGlobals import *
 c = top() ; v = c.currentVnode()
 print v
 print `v`</t>
-<t tx="T113"></t>
-<t tx="T114">@others</t>
-<t tx="T115">@wrap
+<t tx="T115"></t>
+<t tx="T116">@others</t>
+<t tx="T117">@wrap
 
 this should wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T116">@nowrap
+<t tx="T118">@nowrap
 
 this should NOT wrap aaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbb cccccccccccccccccc ddddddddddddddddddd eeeeeeeeeeeeeeeeeeeeee ffffffffffffffffffff</t>
-<t tx="T117">@ignore</t>
-<t tx="T118"></t>
-<t tx="T119"></t>
-<t tx="T120">from leoGlobals import *
+<t tx="T119">@ignore</t>
+<t tx="T120"></t>
+<t tx="T121"></t>
+<t tx="T122">from leoGlobals import *
 import gc,os,time,leoNodes
 from xml.sax import saxutils, make_parser
 from xml.sax.xmlreader import InputSource
@@ -1582,129 +1705,6 @@ try:
 	except: es_exception()
 finally:
 	if f: f.close()</t>
-<t tx="T121">@language rebol
-
-; a comment
-about abs absolute add alert alias all alter and and~ any append arccosine arcsine arctangent array ask at  
-back bind boot-prefs break browse build-port build-tag  
-call caret-to-offset catch center-face change change-dir charset checksum choose clean-path clear clear-fields close comment complement compose compress confirm continue-post context copy cosine create-request crypt cvs-date cvs-version  
-debase decode-cgi decode-url decompress deflag-face dehex delete demo desktop detab dh-compute-key dh-generate-key dh-make-key difference dirize disarm dispatch divide do do-boot do-events do-face do-face-alt does dsa-generate-key dsa-make-key dsa-make-signature dsa-verify-signature  
-echo editor either else emailer enbase entab exclude exit exp extract 
-fifth find find-key-face find-window flag-face first flash focus for forall foreach forever form forskip fourth free func function  
-get get-modes get-net-info get-style  
-halt has head help hide hide-popup  
-if import-email in inform input insert insert-event-func intersect 
-join 
-last launch launch-thru layout license list-dir load load-image load-prefs load-thru log-10 log-2 log-e loop lowercase  
-make make-dir make-face max maximum maximum-of min minimum minimum-of mold multiply  
-negate net-error next not now  
-offset-to-caret open open-events or or~ 
-parse parse-email-addrs parse-header parse-header-date parse-xml path-thru pick poke power prin print probe protect protect-system  
-q query quit  
-random read read-io read-net read-thru reboot recycle reduce reform rejoin remainder remold remove remove-event-func rename repeat repend replace request request-color request-date request-download request-file request-list request-pass request-text resend return reverse rsa-encrypt rsa-generate-key rsa-make-key 
-save save-prefs save-user scroll-para second secure select send send-and-check set set-modes set-font set-net set-para set-style set-user set-user-name show show-popup sine size-text skip sort source split-path square-root stylize subtract switch  
-tail tangent textinfo third throw throw-on-error to to-binary to-bitset to-block to-char to-date to-decimal to-email to-event to-file to-get-word to-hash to-hex to-idate to-image to-integer to-issue to-list to-lit-path to-lit-word to-local-file to-logic to-money to-none to-pair to-paren to-path to-rebol-file to-refinement to-set-path to-set-word to-string to-tag to-time to-tuple to-url to-word trace trim try  
-unfocus union unique uninstall unprotect unset until unview update upgrade uppercase usage use  
-vbug view view-install view-prefs  
-wait what what-dir while write write-io  
-xor xor~  
-action! any-block! any-function! any-string! any-type! any-word!  
-binary! bitset! block!  
-char!  
-datatype! date! decimal! 
-email! error! event!  
-file! function!  
-get-word!  
-hash!  
-image! integer! issue!  
-library! list! lit-path! lit-word! logic!  
-money!  
-native! none! number!  
-object! op!  
-pair! paren! path! port!  
-refinement! routine!  
-series! set-path! set-word! string! struct! symbol!  
-tag! time! tuple!  
-unset! url!  
-word!  
-any-block? any-function? any-string? any-type? any-word?  
-binary? bitset? block?  
-char? connected? crypt-strength? 
-datatype? date? decimal? dir?  
-email? empty? equal? error? even? event? exists? exists-key?
-file? flag-face? found? function?  
-get-word? greater-or-equal? greater?  
-hash? head?  
-image? in-window? index? info? input? inside? integer? issue?  
-length? lesser-or-equal? lesser? library? link-app? link? list? lit-path? lit-word? logic?  
-modified? money?  
-native? negative? none? not-equal? number?  
-object? odd? offset? op? outside?  
-pair? paren? path? port? positive?  
-refinement? routine?  
-same? screen-offset? script? series? set-path? set-word? size? span? strict-equal? strict-not-equal? string? struct?  
-tag? tail? time? tuple? type?  
-unset? url?  
-value? view? 
-within? word?  
-zero?</t>
-<t tx="T122">@language actionscript
-
-break
-call, continue
-delete, do
-else
-false, for, function
-goto
-if, in
-new, null
-return
-true, typeof
-undefined
-var, void, while, with
-#include
-catch, constructor
-prototype
-this, try
-_parent, _root, __proto__
-// Jeeze hasn't anyone ever heard of namespaces??
-ASnative, abs, acos, appendChild, asfunction, asin, atan, atan2, attachMovie, attachSound, attributes
-BACKSPACE
-CAPSLOCK, CONTROL, ceil, charAt, charCodeAt, childNodes, chr, cloneNode, close, concat, connect, cos, createElement, createTextNode
-DELETEKEY, DOWN, docTypeDecl, duplicateMovieClip
-END, ENTER, ESCAPE, enterFrame, entry, equal, eval, evaluate, exp
-firstChild, floor, fromCharCode, fscommand, getAscii
-getBeginIndex, getBounds, getBytesLoaded, getBytesTotal, getCaretIndex, getCode, getDate, getDay, getEndIndex, getFocus, getFullYear, getHours, getMilliseconds, getMinutes, getMonth, getPan, getProperty, getRGB, getSeconds, getTime, getTimer, getTimezoneOffset, getTransform, getURL, getUTCDate, getUTCDay, getUTCFullYear, getUTCHours, getUTCMilliseconds, getUTCMinutes, getUTCMonth, getUTCSeconds, getVersion, getVolume, getYear, globalToLocal, gotoAndPlay, gotoAndStop
-HOME, haschildNodes, hide, hitTest
-INSERT, Infinity, ifFrameLoaded, ignoreWhite, indexOf, insertBefore, int, isDown, isFinite, isNaN, isToggled
-join
-keycode, keyDown, keyUp
-LEFT, LN10, LN2, LOG10E, LOG2E, lastChild, lastIndexOf, length, load, loaded, loadMovie, loadMovieNum, loadVariables, loadVariablesNum, localToGlobal, log
-MAX_VALUE, MIN_VALUE, max, maxscroll, mbchr, mblength, mbord, mbsubstring, min, 
-NEGATIVE_INFINITY, NaN, newline, nextFrame, nextScene, nextSibling, nodeName, nodeType, nodeValue
-on, onClipEvent, onClose, onConnect, onData, onLoad, onXML, ord
-PGDN, PGUP, PI, POSITIVE_INFINITY, parentNode, parseFloat, parseInt, parseXML, play, pop, pow, press, prevFrame, previousSibling, prevScene, print, printAsBitmap, printAsBitmapNum, printNum, push
-RIGHT, random, release, removeMovieClip, removeNode, reverse, round
-SPACE, SQRT1_2, SQRT2, scroll, send, sendAndLoad, set, setDate, setFocus, setFullYear, setHours, setMilliseconds, setMinutes, setMonth, setPan, setProperty, setRGB, setSeconds, setSelection, setTime, setTransform, setUTCDate, setUTCFullYear, setUTCHours, setUTCMilliseconds, setUTCMinutes, setUTCMonth, setUTCSeconds, setVolume, setYear, shift, show, sin, slice, sort, start, startDrag, status, stop, stopAllSounds, stopDrag, substr, substring, swapDepths, splice, split, sqrt
-TAB, tan, targetPath, tellTarget, toggleHighQuality, toLowerCase, toString, toUpperCase, trace
-UP, UTC, unescape, unloadMovie, unLoadMovieNum, unshift, updateAfterEvent
-valueOf
-xmlDecl, _alpha
-_currentframe
-_droptarget
-_focusrect, _framesloaded
-_height, _highquality
-_name
-_quality
-_rotation
-_soundbuftime
-_target, _totalframes
-_url
-_visible
-_width
-_x, _xmouse, _xscale
-_y, _ymouse, _yscale
-and, add, eq, ge, gt, le, lt, ne, not, or, Array, Boolean, Color, Date, Key, Math, MovieClip, Mouse, Number, Object, Selection, Sound, String, XML, XMLSocket</t>
 <t tx="T123"># I ran these from idle:
 	
 def r():

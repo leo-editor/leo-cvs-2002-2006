@@ -4,52 +4,32 @@ leo.py is available at:  http://sourceforge.net/projects/leo/
 leo.py requires Python 2.1 or above and tcl/tk 8.3 or above.
 leo.py will work on Linux, Windows and MacOs X Jaguar.
 
-leo.py 3.12 beta 3                       July 15, 2003
+leo.py 3.12                              July 17, 2003
 
-This version corrects some distribution problems and adds new scripts for linux.
-
-This version also contains makes some minor improvements.  See LeoDocs.leo for details.
-
-leo.py 3.12 beta 2                       July 13, 2003
-
-This version fixes many bugs and adds a few minor new features.  There are no known serious bugs in this version of Leo.  N.B. See the documentation 3.12 beta 1 for many more changes added since 3.11 final.
-
-The hightlights of 3.12 beta 2:
-
-- Window sizes are now in pixels rather than grid units.  As a result, existing outlines (.leo files) will need to be resized when opening them for the first time.  Don't panic!
-
-- Improvements:
-	- Undo now restores the insert point or the selection range after most commands.
-	- Added apply button to Font panel.
-	- Improved the reporting of characters that do not exist in the present encoding.
-
-- Fixed a major bug involving undo.  Undoing the following commands could corrupt outlines:
-	Convert All Blanks, Convert All Tabs, Extract, Extract Names, Extract Section.
-
-- Fixed more than a dozen minor bugs, some several months old.
-
-leo.py 3.12 beta 1                       June 28, 2003
+Window sizes are now in pixels rather than grid units, so you must resize existing outlines (.leo files) when opening them for the first time using this version of Leo.  Don't panic!
 
 Highlights of this version:
 
 * Plugged a huge memory leak.
 * Added Icon & Status areas to Leo window for use by plugins.
-* Important new plugins:
+* New plugins:
   - add_directives.py allows plugins to define new directives.
   - color_markup.py supports wiki-styled markup.
   - nav_buttons.py creates browser-style navigation plugins in the icon area.
   - plugins_menu.py creates a Plugins menu items for all loaded plugins.
   - scripts_menu.py creates a Scripts menu for all scripts in scripts folder.
+  - spell checking using aspell.
   - trace_gc traces all changes to memory at idle time.
 * Other enhancements:
-  - Redesigned the Find panel.   Non-functional options are dimmed.
+  - Redesigned the Find panel. Non-functional options are dimmed.
   - Added @wrap and @nowrap directives.
   - Added Write Dirty @file Nodes command.
   - Added several new "stub hooks".
-   - Hyperlinks are now enabled by default.
+  - Hyperlinks are now enabled by default.
   - Leo now loads plugins in alphabetical order.
   - Leo now remembers the size and location of Leo windows.
-  - Fixed numerous minor bugs.
+* The usual assortment of bug fixes and minor improvements.
+  - There are no known bugs in this version of Leo.
 
 leo.py 3.11.1                       May 1, 2003
 
