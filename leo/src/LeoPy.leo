@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4474" clone_windows="0"/>
-<globals body_outline_ratio="0.425223214286">
-	<global_window_position top="21" left="265" height="896" width="951"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4475" clone_windows="0"/>
+<globals body_outline_ratio="0.580357142857">
+	<global_window_position top="12" left="223" height="896" width="951"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -105,414 +105,6 @@
 <v t="ekr.20040105115534.1"><vh>Added test/test.leo to all distributions</vh></v>
 <v t="ekr.20040105121411"><vh>Added LP link to Leo's site</vh></v>
 </v>
-</v>
-</v>
-<v t="ekr.20040105070023.4"><vh>2003</vh>
-<v t="ekr.20031218072017.1"><vh>December 2003</vh>
-<v t="ekr.20031219073155"><vh>12/19</vh>
-<v t="ekr.20031219073155.1"><vh>Released 4.1 rc3</vh></v>
-<v t="ekr.20031219082957"><vh>All unittests pass (but only with tkinterGui)</vh></v>
-<v t="ekr.20031219074948"><vh>Added nullObject class to leoGlobals.py</vh></v>
-<v t="ekr.20031219073155.2"><vh>Fixed serious problem reading 3.x files</vh></v>
-</v>
-<v t="ekr.20031218072017.2"><vh>12/18</vh>
-<v t="ekr.20031218192539"><vh>Fixed crasher in 3.x version of scanText</vh></v>
-<v t="ekr.20031218192539.1"><vh>Released 4.1 rc2</vh></v>
-<v t="ekr.20031218072017.3"><vh>Added year to timestamp</vh></v>
-<v t="ekr.20031218072017.4"><vh>Fixed bug in getInsertLines</vh></v>
-</v>
-<v t="ekr.20031218072017.5"><vh>12/17</vh>
-<v t="ekr.20031218072017.6"><vh>Unittests for import don't alter test.leo</vh></v>
-</v>
-<v t="ekr.20031218072017.7"><vh>12/15</vh>
-<v t="ekr.20031218072017.8"><vh>Supported default font sizes for all panes</vh></v>
-<v t="ekr.20031218072017.9"><vh>Changed format of timestamps</vh></v>
-<v t="ekr.20031218072017.10"><vh>Changed *.* to * in dialogs</vh></v>
-<v t="ekr.20031218072017.11"><vh>Released 4.1 rc1</vh></v>
-<v t="ekr.20031218072017.12"><vh>All unit tests now pass (import tests leave stuff behind)</vh></v>
-<v t="ekr.20031218072017.13"><vh>Don't warn about missing path when writing scripts</vh></v>
-<v t="ekr.20031218072017.14"><vh>Set default font size to None in leoConfig.txt.</vh></v>
-</v>
-<v t="ekr.20031218072017.15"><vh>12/13</vh>
-<v t="ekr.20031218072017.16"><vh>Completed move code in leoTest.py</vh></v>
-<v t="ekr.20031218072017.17"><vh>Moved encoding messages so they don't appear in batch mode</vh></v>
-<v t="ekr.20031218072017.18"><vh>Autoclean outline on save &amp; executeScript does not set tnodeList</vh></v>
-<v t="ekr.20031218072017.19"><vh>Patched scanPythonClass to put class docstrings in class nodes</vh></v>
-</v>
-<v t="ekr.20031218072017.20"><vh>12/11</vh>
-<v t="ekr.20031218072017.21"><vh>Fixed big performance bug in removeSentinelLines</vh></v>
-<v t="ekr.20031218072017.22"><vh>Call leoTest.fail in when import/export routines can't open a file</vh></v>
-<v t="ekr.20031218072017.23"><vh>created unitTestGui class</vh></v>
-</v>
-<v t="ekr.20031218072017.24"><vh>12/09</vh>
-<v t="ekr.20031218072017.25"><vh>Leo now allows @ignore nodes and orphan nodes in @file-nosent trees</vh></v>
-<v t="ekr.20031218072017.26"><vh>Looked at report of import bug</vh></v>
-</v>
-<v t="ekr.20031218072017.27"><vh>12/08</vh>
-<v t="ekr.20031218072017.28"><vh>Investigated &amp; fixed copy/paste bugs</vh></v>
-</v>
-<v t="ekr.20031218072017.29"><vh>12/07</vh>
-<v t="ekr.20031218072017.30"><vh>Corrected counts when replacing tabs/blanks</vh></v>
-<v t="ekr.20031218072017.31"><vh>Added file open dialog to Import Derived Files command</vh></v>
-<v t="ekr.20031218072017.32"><vh>Made sure that Reformat Paragraph makes the new insertion point visible</vh></v>
-<v t="ekr.20031218072017.33"><vh>Changed logControl to logCtrl</vh></v>
-</v>
-<v t="ekr.20031218072017.34"><vh>12/06</vh>
-<v t="ekr.20031218072017.35"><vh>Fixed bug when untangling html</vh></v>
-<v t="ekr.20031218072017.36"><vh>Fixed clone-dragging bug</vh></v>
-<v t="ekr.20031218072017.37"><vh>Load plugins dynamically using pluginsManager.txt</vh></v>
-</v>
-<v t="ekr.20031218072017.38"><vh>12/05</vh>
-<v t="ekr.20031218072017.39"><vh>Ran pychecker</vh></v>
-</v>
-<v t="ekr.20031218072017.40"><vh>12/04</vh>
-<v t="ekr.20031218072017.41"><vh>Created and read paths with chinese characters in folder and file names</vh></v>
-<v t="ekr.20031218072017.42"><vh>Fixed all remaining bugs (except duplicate tnode index)</vh></v>
-</v>
-<v t="ekr.20031218072017.43"><vh>12/03</vh>
-<v t="ekr.20031218072017.44"><vh>Replaced c.OpenWithFileName by global openWithFileName</vh></v>
-<v t="ekr.20031218072017.45"><vh>Fixed dangerous bug in Convert Blanks command</vh></v>
-<v t="ekr.20031218072017.46"><vh>Added the mod_tempfname plugin</vh></v>
-</v>
-<v t="ekr.20031218072017.47"><vh>12/01</vh>
-<v t="ekr.20031218072017.48"><vh>Update recent files in newLeoCommanderAndFrame</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.49"><vh>November 2003</vh>
-<v t="ekr.20031218072017.50"><vh>11/23 Released 4.1 beta 5 to cvs only</vh>
-<v t="ekr.20031218072017.51"><vh>Replaced app.batchLog with app.log</vh></v>
-<v t="ekr.20031218072017.52"><vh>Fixed Undo Change All (in headlines) problem</vh></v>
-<v t="ekr.20031218072017.53"><vh>Added defensive code to prevent crash in colorizer</vh></v>
-<v t="ekr.20031218072017.54"><vh>Removed annoying Go To Line Number "error" message.</vh></v>
-<v t="ekr.20031218072017.55"><vh>Fixed duplicate shortcut message when creating a popup menu</vh></v>
-<v t="ekr.20031218072017.56"><vh>Made newTnode more robust</vh></v>
-<v t="ekr.20031218072017.57"><vh>Fixed crashers in extract and extract section</vh></v>
-<v t="ekr.20031218072017.58"><vh>Fixed bug in putRefLine</vh></v>
-<v t="ekr.20031218072017.59"><vh>Tested --script from command line</vh></v>
-</v>
-<v t="ekr.20031218072017.60"><vh>11/22</vh>
-<v t="ekr.20031218072017.61"><vh>Moved batch plugin into Leo's core.</vh></v>
-<v t="ekr.20031218072017.62"><vh>Added nullUndoer class</vh></v>
-<v t="ekr.20031218072017.63"><vh>Disabled Edit Body/Headline commands in batch mode</vh></v>
-<v t="ekr.20031218072017.64"><vh>Added app.batchMode ivar</vh></v>
-<v t="ekr.20031218072017.65"><vh>Added enable/disable methods to nullLog</vh></v>
-<v t="ekr.20031218072017.66"><vh>Created  v.scriptSetBodyString</vh></v>
-</v>
-<v t="ekr.20031218072017.67"><vh>11/20 released 4.1 beta 4</vh>
-<v t="ekr.20031218072017.68"><vh>created null frame,log,body,tree,menu,gui classes</vh></v>
-</v>
-<v t="ekr.20031218072017.69"><vh>11/19</vh>
-<v t="ekr.20031218072017.70"><vh>Initialize write routines properly in Execute Script command</vh></v>
-<v t="ekr.20031218072017.71"><vh>Leo now generates reference properly when more than one on the same line</vh></v>
-<v t="ekr.20031218072017.72"><vh>Fixed several reorg bugs in leoPlugins.leo</vh></v>
-<v t="ekr.20031218072017.73"><vh>Allow all Leo constructs in Execute Script command</vh></v>
-<v t="ekr.20031218072017.74"><vh>Protected all tk code in leoPlugins.leo</vh></v>
-<v t="ekr.20031218072017.75"><vh>Fixed reorg problem in the nav bar</vh></v>
-<v t="ekr.20031218072017.76"><vh>Wrapped all calls to os.path</vh></v>
-<v t="ekr.20031218072017.77"><vh>Convert doc sections to doc strings</vh></v>
-</v>
-<v t="ekr.20031218072017.78"><vh>11/18 released 4.1 beta 3</vh>
-<v t="ekr.20031218072017.79"><vh>Fixed bug in initScriptFind</vh></v>
-<v t="ekr.20031218072017.80"><vh>released 4.1b3</vh></v>
-</v>
-<v t="ekr.20031218072017.81"><vh>11/17</vh>
-<v t="ekr.20031218072017.82"><vh>Fixed all problems reported by Pychecker</vh></v>
-<v t="ekr.20031218072017.83"><vh>Fixed new crasher in batch change commands</vh></v>
-<v t="ekr.20031218072017.84"><vh>Fixed new crasher in Show Invisibles command</vh></v>
-<v t="ekr.20031218072017.85"><vh>Fixed (new?) unbounded recursion in Go To Next Clone command</vh></v>
-<v t="ekr.20031218072017.86"><vh>Fixed (new?) crasher in Abort Edit Headline command</vh></v>
-<v t="ekr.20031218072017.87"><vh>Fixed new crashers when opening popup menu</vh></v>
-<v t="ekr.20031218072017.88"><vh>Fixed new crasher in Font panel</vh></v>
-<v t="ekr.20031218072017.89"><vh>Import traceback only as needed</vh></v>
-<v t="ekr.20031218072017.90"><vh>Fixed bug that caused new headlines not to be selected</vh></v>
-<v t="ekr.20031218072017.91"><vh>getSelectionLines now returns the insertion line if no selection</vh></v>
-<v t="ekr.20031218072017.92"><vh>Replaced c.body and c.log by c.frame.body &amp; c.frame.log</vh></v>
-</v>
-<v t="ekr.20031218072017.93"><vh>11/16</vh>
-<v t="ekr.20031218072017.94"><vh>Reorg is now complete!</vh></v>
-<v t="ekr.20031218072017.95"><vh>Moved menu utilities to leoMenu class</vh></v>
-<v t="ekr.20031218072017.96"><vh>Removed all redirectors from frame to body</vh></v>
-<v t="ekr.20031218072017.97"><vh>Simplified menu bindings</vh></v>
-<v t="ekr.20031218072017.98"><vh>Fixed Find Matching Brackets command</vh></v>
-</v>
-<v t="ekr.20031218072017.99"><vh>11/15</vh>
-<v t="ekr.20031218072017.100"><vh>Fixed problem with whole-word searches</vh></v>
-<v t="ekr.20031218072017.101"><vh>Fixed problem with attaching icons to dialogs</vh></v>
-<v t="ekr.20031218072017.102"><vh>Fixed crasher in Toggle Active Pane command</vh></v>
-</v>
-<v t="ekr.20031218072017.103"><vh>11/13</vh>
-<v t="ekr.20031218072017.104"><vh>wx gui plugin now works again</vh></v>
-<v t="ekr.20031218072017.105"><vh>Finished reorg</vh></v>
-</v>
-<v t="ekr.20031218072017.106"><vh>11/12</vh>
-<v t="ekr.20031218072017.107"><vh>Created app.gui.utils class</vh></v>
-<v t="ekr.20031218072017.108"><vh>Created base classes for color, compare, find, font &amp; prefs panels</vh></v>
-<v t="ekr.20031218072017.109"><vh>Fixed Recent Files regression</vh></v>
-</v>
-<v t="ekr.20031218072017.110"><vh>11/10</vh>
-<v t="ekr.20031218072017.111"><vh>Continued major reorg</vh></v>
-<v t="ekr.20031218072017.112"><vh>Added redirection routines to leoFrame class</vh></v>
-</v>
-<v t="ekr.20031218072017.113"><vh>11/9</vh>
-<v t="ekr.20031218072017.114"><vh>Reorganized the code to use leoMenu and leoTkinterMenu classes</vh></v>
-<v t="ekr.20031218072017.115"><vh>Fixed LaTeX syntax coloring bug</vh></v>
-<v t="ekr.20031218072017.116"><vh>Implemented a limited form of the Selection Only find/change commands</vh></v>
-<v t="ekr.20031218072017.117"><vh>Created unit tests to run Check Outline command</vh></v>
-</v>
-<v t="ekr.20031218072017.118"><vh>11/8</vh>
-<v t="ekr.20031218072017.119"><vh>Created Page Count script</vh></v>
-</v>
-<v t="ekr.20031218072017.120"><vh>11/7 4.1 beta 1 released</vh>
-<v t="ekr.20031218072017.121"><vh>Fixed crasher in computeLoadDir</vh></v>
-<v t="ekr.20031218072017.122"><vh>Fixed a real bug in the Change, Then Find command</vh></v>
-<v t="ekr.20031218072017.123"><vh>Cleaned up Pychecker complaints</vh></v>
-<v t="ekr.20031218072017.124"><vh>Released 4.1 beta 1</vh></v>
-</v>
-<v t="ekr.20031218072017.125"><vh>11/6</vh>
-<v t="ekr.20031218072017.126"><vh>Create initScriptFind</vh></v>
-<v t="ekr.20031218072017.127"><vh>Added support for undo</vh></v>
-<v t="ekr.20031218072017.128"><vh>Yes, a script change checkbox IS a good idea</vh></v>
-</v>
-<v t="ekr.20031218072017.129"><vh>11/5</vh>
-<v t="ekr.20031218072017.130"><vh>Got script search/change working (!!)</vh>
-<v t="ekr.20031218072017.131"><vh>find script</vh></v>
-</v>
-<v t="ekr.20031218072017.132"><vh>Fixed Serious Undo Change All bug</vh></v>
-<v t="ekr.20031218072017.133"><vh>Leo now ignores unknown prefs and find prefs</vh></v>
-<v t="ekr.20031218072017.134"><vh>Leo now writes node_only find prefs</vh></v>
-<v t="ekr.20031218072017.135"><vh>Fixed first node-only find bug</vh></v>
-</v>
-<v t="ekr.20031218072017.136"><vh>11/4</vh>
-<v t="ekr.20031218072017.137"><vh>Fixed bug involving 0x1a characters in body text.</vh></v>
-<v t="ekr.20031218072017.138"><vh>Added Check Outline command</vh></v>
-<v t="ekr.20031218072017.139"><vh>Added Hoist/De-Hoist commands</vh></v>
-</v>
-<v t="ekr.20031218072017.140"><vh>11/3</vh>
-<v t="ekr.20031218072017.141"><vh>Leo now does an auto-save only if files have actually been changed.</vh></v>
-<v t="ekr.20031218072017.142"><vh>Changed all .leo files to use the -ko cvs option</vh></v>
-</v>
-<v t="ekr.20031218072017.143"><vh>11/2</vh>
-<v t="ekr.20031218072017.144"><vh>Added use_gnx config setting</vh></v>
-<v t="ekr.20031218072017.145"><vh>Converted to using gnx</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.146"><vh>October 2003</vh>
-<v t="ekr.20031218072017.147"><vh>10/31</vh>
-<v t="ekr.20031218072017.148"><vh>Added bindings to app.gui.root to catch all control keys</vh></v>
-<v t="ekr.20031218072017.149"><vh>Added config_encoding setting</vh></v>
-</v>
-<v t="ekr.20031218072017.150"><vh>10/27</vh>
-<v t="ekr.20031218072017.151"><vh>Colorizer now uses c.body routines</vh></v>
-<v t="ekr.20031218072017.152"><vh>Replaced frame.top by frame in call to set_focus</vh></v>
-<v t="ekr.20031218072017.153"><vh>Replace calls to after and after_idle by app.gui calls.</vh></v>
-<v t="ekr.20031218072017.154"><vh>Removed app.root from all non-gui code</vh></v>
-</v>
-<v t="ekr.20031218072017.155"><vh>10/26 code reorg</vh>
-<v t="ekr.20031218072017.156"><vh>Replaced all references to leoDialog by corresponding app.gui calls</vh></v>
-<v t="ekr.20031218072017.157"><vh>Moved color panels into leoTkinterColorPanels.py</vh></v>
-<v t="ekr.20031218072017.158"><vh>Replaced all direct references to color panels by corresponding appl.gui calls</vh></v>
-<v t="ekr.20031218072017.159"><vh>Replaced all direct references to find panel by corresponding appl.gui calls</vh></v>
-</v>
-<v t="ekr.20031218072017.160"><vh>10/25</vh>
-<v t="ekr.20031218072017.161"><vh>Made tnode indices immutable: fixed bad copy/paste bug</vh></v>
-<v t="ekr.20031218072017.162"><vh>Fixed crasher with bad pattern match patterns</vh></v>
-<v t="ekr.20031218072017.163"><vh>Fixed bug in Go To Line Number command</vh></v>
-<v t="ekr.20031218072017.164"><vh>Disabled startup traces</vh></v>
-<v t="ekr.20031218072017.165"><vh>Fixed plugin problems (now fixed in 4.0.2 and 4.1)</vh></v>
-<v t="ekr.20031218072017.166"><vh>Cleaned up the reformatParagraph code</vh></v>
-<v t="ekr.20031218072017.167"><vh>Removed kludge from setSelectionAreas</vh></v>
-</v>
-<v t="ekr.20031218072017.168"><vh>10/24</vh>
-<v t="ekr.20031218072017.169"><vh>Completed new version of reformatParagraph</vh></v>
-<v t="ekr.20031218072017.170"><vh>Rewrote findBoundParagraph using splitLines</vh></v>
-<v t="ekr.20031218072017.171"><vh>Rewrote getInsertLines (leoTkinterBody)</vh></v>
-<v t="ekr.20031218072017.172"><vh>Wrote splitLines &amp; joinLines utilities</vh></v>
-<v t="ekr.20031218072017.173"><vh>Fixed problem with indent/undent</vh></v>
-</v>
-<v t="ekr.20031218072017.174"><vh>10/22</vh>
-<v t="ekr.20031218072017.175"><vh>Fixed crasher in onOpenWithFileName</vh></v>
-</v>
-<v t="ekr.20031218072017.176"><vh>10/19</vh>
-<v t="ekr.20031218072017.177"><vh>Made app.forceShutdown work in "idle" hook</vh></v>
-<v t="ekr.20031218072017.178"><vh>Properly enable green back arrow in nav bar</vh></v>
-</v>
-<v t="ekr.20031218072017.179"><vh>10/17</vh>
-<v t="ekr.20031218072017.180"><vh>Renamed .body to .bodyCtrl</vh></v>
-<v t="ekr.20031218072017.181"><vh>Create leoTkinterLog  &amp; leoTkinterBody classes</vh></v>
-<v t="ekr.20031218072017.182"><vh>Created frame.destroySelf routine</vh></v>
-<v t="ekr.20031218072017.183"><vh>Eliminated all references to frame.top outside of LeoTkinterFrame class</vh></v>
-<v t="ekr.20031218072017.184"><vh>tree.drawIcon now injects v.iconx and v.iconv ivars</vh></v>
-<v t="ekr.20031218072017.185"><vh>Began gui reorg</vh></v>
-<v t="ekr.20031218072017.186"><vh>4.0 final released</vh></v>
-</v>
-<v t="ekr.20031218072017.187"><vh>10/16</vh>
-<v t="ekr.20031218072017.188"><vh>Created app.forceShutdown</vh></v>
-<v t="ekr.20031218072017.189"><vh>Fixed more bugs in undoReplace: all undo tests now pass</vh></v>
-</v>
-<v t="ekr.20031218072017.190"><vh>10/15</vh>
-<v t="ekr.20031218072017.191"><vh>Added several plugins and scripts to leoPlugins.leo</vh></v>
-<v t="ekr.20031218072017.192"><vh>Removed "invalid @lineending directive" warning</vh></v>
-<v t="ekr.20031218072017.193"><vh>Added support so plugins can force Leo to quit during startup</vh></v>
-<v t="ekr.20031218072017.194"><vh>Fixed bug in removeSentinelsCommand</vh></v>
-<v t="ekr.20031218072017.195"><vh>Improved Go To Line Number command</vh></v>
-<v t="ekr.20031218072017.196"><vh>Improved confusing error message from Go To Line Number command</vh></v>
-</v>
-<v t="ekr.20031218072017.197"><vh>10/14</vh>
-<v t="ekr.20031218072017.198"><vh>Added redirect_execute_script_output_to_log_pane setting</vh></v>
-<v t="ekr.20031218072017.199"><vh>Speed up clone operation by calling initAllCloneBitsInTree</vh></v>
-<v t="ekr.20031218072017.200"><vh>Several undo changes &amp; bug fixes</vh></v>
-</v>
-<v t="ekr.20031218072017.201"><vh>10/13 Released 4.0 beta 4</vh></v>
-<v t="ekr.20031218072017.202"><vh>10/10</vh>
-<v t="ekr.20031218072017.203"><vh>Added var or const prefixes when importing elisp</vh></v>
-<v t="ekr.20031218072017.204"><vh>Added support for elisp colorising</vh></v>
-<v t="ekr.20031218072017.205"><vh>Fixed bug in c.clone</vh></v>
-<v t="ekr.20031218072017.206"><vh>Created hint messages for Extract Section &amp; Extract Section Names commands</vh></v>
-<v t="ekr.20031218072017.207"><vh>changed string.letters to string.ascii_letters throughout</vh></v>
-<v t="ekr.20031218072017.208"><vh>Fixed bug in bracket scanner</vh></v>
-</v>
-<v t="ekr.20031218072017.209"><vh>10/9 Released 4.0 beta 3</vh>
-<v t="ekr.20031218072017.210"><vh>Added support for importing elisp (.el) files</vh></v>
-<v t="ekr.20031218072017.211"><vh>Force a complete recolor after any cut/paste or corresponding undo/redo</vh></v>
-<v t="ekr.20031218072017.212"><vh>Improved 4.0 version of Go To Line Number command</vh></v>
-<v t="ekr.20031218072017.213"><vh>Released 4.0 beta 3</vh></v>
-</v>
-<v t="ekr.20031218072017.214"><vh>10/8</vh>
-<v t="ekr.20031218072017.215"><vh>Fixed long-standing clone-mark bug</vh></v>
-<v t="ekr.20031218072017.216"><vh>Added support for unknown tnode and vnode attributes</vh></v>
-<v t="ekr.20031218072017.217"><vh>Fixed bug in gui destroy logic</vh></v>
-<v t="ekr.20031218072017.218"><vh>Changed c.frame.mFileName to c.mFileName in plugins.leo</vh></v>
-</v>
-<v t="ekr.20031218072017.219"><vh>10/7</vh>
-<v t="ekr.20031218072017.220"><vh>Fixed crash in sentinelName</vh></v>
-<v t="ekr.20031218072017.221"><vh>Added __setattr__ method to leoProxy class</vh></v>
-<v t="ekr.20031218072017.222"><vh>Reenabled orphans &amp; ignored test in new write logic</vh></v>
-<v t="ekr.20031218072017.223"><vh>Cleaned up version code and added build number to signon</vh></v>
-</v>
-<v t="ekr.20031218072017.224"><vh>10/6</vh>
-<v t="ekr.20031218072017.225"><vh>Converted the code to use newLeoCommanderAndFrame</vh></v>
-<v t="ekr.20031218072017.226"><vh>Added better error message in setDefaultIcon</vh></v>
-</v>
-<v t="ekr.20031218072017.227"><vh>10/3 Released 4.0 beta 2</vh>
-<v t="ekr.20031218072017.228"><vh>Released 4.0 beta 2</vh></v>
-<v t="ekr.20031218072017.229"><vh>Fixed problem setting loadDir in startup logic</vh></v>
-</v>
-<v t="ekr.20031218072017.230"><vh>10/2</vh>
-<v t="ekr.20031218072017.231"><vh>Still problems making Read @file Nodes undoable</vh></v>
-<v t="ekr.20031218072017.232"><vh>Import Derived File command is now undoable</vh></v>
-<v t="ekr.20031218072017.233"><vh>Moved Clear Recent Files menu item into Recent Files menu</vh></v>
-<v t="ekr.20031218072017.234"><vh>Fixed bugs involving find params</vh></v>
-<v t="ekr.20031218072017.235"><vh>Fixed Python Import bug</vh></v>
-</v>
-<v t="ekr.20031218072017.236"><vh>10/1</vh>
-<v t="ekr.20031218072017.237"><vh>Added support for two new settings affecting drags</vh></v>
-<v t="ekr.20031218072017.238"><vh>Marked changed nodes &amp; make the @file node and the outline dirty.</vh></v>
-<v t="ekr.20031218072017.239"><vh>Fixed Go To Outline command so it doesn't crash: More work needed.</vh></v>
-<v t="ekr.20031218072017.240"><vh>Ensured newlines before all sentinels in @rawfile</vh></v>
-<v t="ekr.20031218072017.241"><vh>Fixed @rawfile write problem</vh></v>
-</v>
-</v>
-<v t="ekr.20031218072017.242"><vh>Sept 2003</vh>
-<v t="ekr.20031218072017.243"><vh>9/30</vh>
-<v t="ekr.20031218072017.244"><vh>Removed unused v arg from writeOld/NewDerivedFiles</vh></v>
-<v t="ekr.20031218072017.245"><vh>Removed unused nosentinels arg from writeNewDerivedFiles</vh></v>
-<v t="ekr.20031218072017.246"><vh>Removed putLeadingNewlineFlag arg from putSentinel</vh></v>
-<v t="ekr.20031218072017.247"><vh>Renamed new scanText to scanText4</vh></v>
-<v t="ekr.20031218072017.248"><vh>Removed many Pychecker warnings</vh>
-<v t="ekr.20031218072017.249"><vh>Details</vh></v>
-</v>
-<v t="ekr.20031218072017.250"><vh>Added better log message for Convert All Tabs/Blanks commands</vh></v>
-<v t="ekr.20031218072017.251"><vh>Created leoProxy class and simplified the code</vh></v>
-</v>
-<v t="ekr.20031218072017.252"><vh>9/29</vh>
-<v t="ekr.20031218072017.253"><vh>A "gotcha" re using global app var</vh></v>
-<v t="ekr.20031218072017.254"><vh>Added crucial defensive checks in v.headString() and v.bodySting()</vh></v>
-<v t="ekr.20031218072017.255"><vh>Fixed several more unicode bugs</vh></v>
-<v t="ekr.20031218072017.256"><vh>Removed setApp function</vh></v>
-</v>
-<v t="ekr.20031218072017.257"><vh>9/28</vh>
-<v t="ekr.20031218072017.258"><vh>Added many calls to toUnicode.  Marked with 9/28/03</vh></v>
-<v t="ekr.20031218072017.259"><vh>trace now always prints arguments.</vh></v>
-<v t="ekr.20031218072017.260"><vh>Rewrote icon code so it doesn't use PIL or tkIcon in Python 2.3</vh></v>
-</v>
-<v t="ekr.20031218072017.261"><vh>9/27 </vh>
-<v t="ekr.20031218072017.262"><vh>Defined dialog and icons routines in tkinterGui and leoGui</vh></v>
-<v t="ekr.20031218072017.263"><vh>Defined focus routines in tkinterGui and leoGui</vh></v>
-<v t="ekr.20031218072017.264"><vh>Replaced app.runMainLoop with app.gui.runMainLoop</vh></v>
-<v t="ekr.20031218072017.265"><vh>Created leoGui base class for tkinterGui class</vh></v>
-<v t="ekr.20031218072017.266"><vh>Moved all gui startup logic into tkingerGui class</vh></v>
-</v>
-<v t="ekr.20031218072017.267"><vh>9/26 4.0 beta 1 released</vh>
-<v t="ekr.20031218072017.268"><vh>changed default for config.write_old_format_derived_files</vh></v>
-</v>
-<v t="ekr.20031218072017.269"><vh>9/22</vh>
-<v t="ekr.20031218072017.270"><vh>Changed leoConfig.txt so we write 3.x derived files if leoConfig.txt does not exist</vh></v>
-<v t="ekr.20031218072017.271"><vh>writeAll and writeMissing now return a count of the written files</vh></v>
-<v t="ekr.20031218072017.272"><vh>getLeoFile computes joinLists before reading derived files</vh></v>
-<v t="ekr.20031218072017.273"><vh>Fixed putCode so @raw test passes</vh></v>
-<v t="ekr.20031218072017.274"><vh>4.x code passes @delims test</vh></v>
-</v>
-<v t="ekr.20031218072017.275"><vh>9/21</vh>
-<v t="ekr.20031218072017.276"><vh>Import derived file command now works for both 3.x and 4.x files</vh></v>
-<v t="ekr.20031218072017.277"><vh>Test @file-nosent</vh></v>
-<v t="ekr.20031218072017.278"><vh>Enclosed top-level read/write code in try/except</vh></v>
-<v t="ekr.20031218072017.279"><vh>findChild now handles bad tnodeList indices without crashing</vh></v>
-<v t="ekr.20031218072017.280"><vh>Fixed bugs in @+doc and @+at sentinels.</vh></v>
-<v t="ekr.20031218072017.281"><vh>Removed Write 3.x Outline command</vh></v>
-<v t="ekr.20031218072017.282"><vh>Auto-save on Write 3.x derived files.</vh></v>
-<v t="ekr.20031218072017.283"><vh>Put section references only if not in raw mode</vh></v>
-</v>
-<v t="ekr.20031218072017.284"><vh>9/20 4.0 code works &amp; integrated with LeoPy.leo !!</vh>
-<v t="ekr.20031218072017.285"><vh>Started merging of plugin code with leoAtFile.py</vh></v>
-<v t="ekr.20031218072017.286"><vh>Fixed problems with @doc parts</vh></v>
-<v t="ekr.20031218072017.287"><vh>Write @file Nodes does auto-save if we are writing new-format files</vh></v>
-<v t="ekr.20031218072017.288"><vh>Changed Wirte 3.x/4x Derived File so they write multiple files</vh></v>
-<v t="ekr.20031218072017.289"><vh>Fixed @last bug by using same code as in 3.x</vh></v>
-<v t="ekr.20031218072017.290"><vh>Write 4.x Derived File command auto-saves outline</vh></v>
-<v t="ekr.20031218072017.291"><vh>Fixed (?) @last newline bug</vh></v>
-<v t="ekr.20031218072017.292"><vh>Removed all using_gnx ivars</vh></v>
-<v t="ekr.20031218072017.293"><vh>Write code now clears tnodeList attribute before writing</vh></v>
-<v t="ekr.20031218072017.294"><vh>Removed "not undoable" message from Read @file Nodes command</vh></v>
-<v t="ekr.20031218072017.295"><vh>Removed app.use_gnx ivar</vh></v>
-<v t="ekr.20031218072017.296"><vh>Set using_gnx in top_df.write_all</vh></v>
-<v t="ekr.20031218072017.297"><vh>Created top_df.oldWrite and top_df.newWrite</vh></v>
-<v t="ekr.20031218072017.298"><vh>Added test for unvisited nodes in read logic</vh></v>
-</v>
-<v t="ekr.20031218072017.299"><vh>9/19</vh>
-<v t="ekr.20031218072017.300"><vh>Major reorganization of leoAtFile.py</vh></v>
-<v t="ekr.20031218072017.301"><vh>Moved code from leoPlugins.leo to LeoPy.leo</vh></v>
-<v t="ekr.20031218072017.302"><vh>Tested splitting very long doc words.</vh></v>
-<v t="ekr.20031218072017.303"><vh>Removed @ws stuff</vh></v>
-<v t="ekr.20031218072017.304"><vh>Fixed bug related to @last</vh></v>
-<v t="ekr.20031218072017.305"><vh>Added Write 3.x Format Derived File command.</vh></v>
-<v t="ekr.20031218072017.306"><vh>Added Clear Recent Files command</vh></v>
-<v t="ekr.20031218072017.307"><vh>Added write_old_format_derived_files option</vh></v>
-<v t="ekr.20031218072017.308"><vh>Removed @ws stuff</vh></v>
-</v>
-<v t="ekr.20031218072017.309"><vh>9/18</vh>
-<v t="ekr.20031218072017.310"><vh>Fixed some (all?) problems with tnodeList</vh></v>
-<v t="ekr.20031218072017.311"><vh>All files now pass the file-compare (semantic test)</vh></v>
-<v t="ekr.20031218072017.312"><vh>Fixed @others bug</vh></v>
-</v>
-<v t="ekr.20031218072017.313"><vh>9/17</vh>
-<v t="ekr.20031218072017.314"><vh>Wrote compare script</vh></v>
-<v t="ekr.20031218072017.315"><vh>Wrote Import Derived File command</vh></v>
-</v>
-<v t="ekr.20031218072017.316"><vh>9/16</vh>
-<v t="ekr.20031218072017.317"><vh>Changed how @ws sentinel works</vh></v>
-<v t="ekr.20031218072017.318"><vh>Properly indent @nl sentinels</vh></v>
-<v t="ekr.20031218072017.319"><vh>Fixed bugs in putting doc parts</vh></v>
-<v t="ekr.20031218072017.320"><vh>Fixed bugs in readLastDocLine</vh></v>
-</v>
-<v t="ekr.20031218072017.321"><vh>9/14</vh>
-<v t="ekr.20031218072017.322"><vh>Added ignoreOldSentinel to warn about 3.x sentinels</vh></v>
-<v t="ekr.20031218072017.323"><vh>Milestone: first successful use of hidden machinery</vh></v>
-<v t="ekr.20031218072017.324"><vh>Added support for tnodeList tag in fileCommands.getVnode</vh></v>
-<v t="ekr.20031218072017.325"><vh>Rewrote createChild and renamed it to findChild</vh></v>
-<v t="ekr.20031218072017.326"><vh>Added check to see whether read is the same as the write.</vh></v>
-<v t="ekr.20031218072017.327"><vh>Added support for tnodeList</vh></v>
-</v>
-<v t="ekr.20031218072017.328"><vh>9/13 work on 4.0 read code</vh></v>
 </v>
 </v>
 </v>
@@ -868,6 +460,7 @@
 </v>
 </v>
 </v>
+<v t="ekr.20031218072017.3375"><vh>v.isVisible (no longer used in 4.2)</vh></v>
 </v>
 </v>
 </v>
@@ -925,74 +518,6 @@
 <v t="ekr.20040208095208"><vh>Mark Task &amp; Clone To Task commands</vh></v>
 </v>
 <v t="ekr.20040329182535.1"><vh>1-2 week projects</vh>
-<v t="ekr.20040319104735"><vh>(@file-thin)</vh>
-<v t="ekr.20040321064134.1"><vh>To do</vh></v>
-<v t="ekr.20040321095547"><vh>Comparisons</vh>
-<v t="ekr.20031218072017.3152"><vh>g.scanAtFileOptions</vh>
-<v t="ekr.20031218072017.3153"><vh>&lt;&lt; scan another @file option &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3346"><vh>v.Comparisons</vh>
-<v t="ekr.20040328055931"><vh>afterHeadlineFileTypeName</vh></v>
-<v t="ekr.20031218072017.3347"><vh>afterHeadlineMatch</vh></v>
-<v t="ekr.20031218072017.3350"><vh>anyAtFileNodeName</vh></v>
-<v t="ekr.20031218072017.3348" a="M"><vh>at...FileNodeName</vh></v>
-<v t="ekr.20040326031436"><vh>isAnyAtFileNode</vh></v>
-<v t="ekr.20040325073709" a="M"><vh>isAt...FileNode</vh></v>
-<v t="ekr.20031218072017.3351"><vh>isAtIgnoreNode</vh></v>
-<v t="ekr.20031218072017.3352"><vh>isAtOthersNode</vh></v>
-<v t="ekr.20031218072017.3353"><vh>matchHeadline</vh></v>
-</v>
-<v t="ekr.20040306211032"><vh>p.Comparisons</vh></v>
-</v>
-<v t="ekr.20040321064134.2"><vh>Writing...</vh>
-<v t="ekr.20031218072017.2720"><vh>atFile.openWriteFile</vh></v>
-<v t="ekr.20031218072017.2128"><vh>putBody (4.x)</vh>
-<v t="ekr.20031218072017.2129"><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
-</v>
-<v t="ekr.20031218072017.2106"><vh>putRefLine (new) &amp; allies</vh>
-<v t="ekr.20031218072017.2107"><vh>PutRefAt</vh></v>
-<v t="ekr.20031218072017.2108"><vh>putAfterLastRef</vh></v>
-<v t="ekr.20031218072017.2109"><vh>putAfterMiddleef</vh></v>
-</v>
-<v t="ekr.20031218072017.2788"><vh>putLeadInSentinel</vh></v>
-<v t="ekr.20031218072017.2786"><vh>nodeSentinelText 4.x</vh>
-<v t="ekr.20031218072017.2787"><vh>&lt;&lt; remove comment delims from h if necessary &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2015"><vh>top_df.writeAll</vh>
-<v t="ekr.20031218072017.2016"><vh>&lt;&lt; Clear all orphan bits &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2017"><vh>&lt;&lt; handle v's tree &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2018"><vh>&lt;&lt; say the command is finished &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2114"><vh>new_df.write (inits root.tnodeList)</vh>
-<v t="ekr.20031218072017.2115"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2116"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2117"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
-<v t="ekr.20031218072017.2118"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2119"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
-</v>
-<v t="ekr.20031218072017.2121"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2697"><vh>putOpenSentinels 3.x</vh></v>
-<v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList) 4.x</vh></v>
-<v t="ekr.20040321064134.3"><vh>putOpenThinSentinels (4.2)</vh></v>
-<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
-<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
-<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
-<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040321064134.4"><vh>Reading</vh>
-<v t="ekr.20031218072017.2007"><vh>findChild 4.x</vh></v>
-<v t="ekr.20031218072017.2650"><vh>createNthChild 3.x</vh>
-<v t="ekr.20031218072017.2651"><vh>&lt;&lt; check the headlines &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040321064134.5"><vh>createNextChild (thin)</vh></v>
-</v>
-</v>
-<v t="ekr.20040330064657"><vh>(@file-thin-wait) (Many issues re clones)</vh></v>
 <v t="ekr.20031218072017.828"><vh>Rewrite the config manager</vh>
 <v t="ekr.20040105080119"><vh>Search for settings in various places: Rodrigo</vh></v>
 <v t="ekr.20040208112836"><vh>Specify shortcuts, ampersand bindings &amp; translations in the same place</vh></v>
@@ -1040,48 +565,10 @@
 <v t="ekr.20031218072017.811"><vh>Split panes (could be done in gui plugins)</vh></v>
 </v>
 <v t="ekr.20040329182535.3"><vh>2 day projects</vh>
-<v t="ekr.20040129080202" a="M"><vh>* Mac/Linux  bugs</vh>
-<v t="ekr.20040106122602"><vh>Install Leo in the site-packages directory</vh></v>
-<v t="ekr.20040212094121"><vh>Fit window on screen command</vh></v>
-<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
-<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
-<v t="ekr.20040206080140"><vh>Make sure find panel goes to background</vh></v>
-<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
-<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
-<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
-<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
-</v>
-<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
-<v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
-</v>
-<v t="ekr.20040323084434" a="M"><vh>* (Add granularity setting for undo)</vh>
-<v t="ekr.20040328111626"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
-<v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
-</v>
-<v t="ekr.20031218072017.1421"><vh>&lt;&lt; get config options &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1490" a="M"><vh>setUndoTypingParams</vh>
-<v t="ekr.20040324061854"><vh>&lt;&lt; return if there is nothing to do &gt;&gt;</vh></v>
-<v t="ekr.20040324061854.1"><vh>&lt;&lt; init the undo params &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1491"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1492"><vh>&lt;&lt; save undo text info &gt;&gt;</vh></v>
-<v t="ekr.20040324061854.2"><vh>&lt;&lt; save the selection and scrolling position &gt;&gt;</vh></v>
-<v t="ekr.20040324061854.3"><vh>&lt;&lt; adjust the undo stack, clearing all forward entries &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.2038"><vh>&lt;&lt; redo typing cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.2047"><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1493"><vh>undoRedoText</vh>
-<v t="ekr.20031218072017.1494"><vh>&lt;&lt; Incrementally update the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1495"><vh>&lt;&lt; Compute the result using v's body text &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1496"><vh>&lt;&lt; Get textResult from the Tk.Text widget &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040130185920.1" a="M"><vh>** Add incremental search to search plugin (make find panel smaller)</vh></v>
+<v t="ekr.20040330064657" a="M"><vh>(@file-thin-wait)</vh></v>
 <v t="ekr.20031218072017.734" a="M"><vh>** Rewrite colorizer to use jEdit language descriptionfiles</vh>
 <v t="ekr.20031218072017.735"><vh>Option: case insensitive keywords</vh></v>
 </v>
-<v t="ekr.20040327051732.2" a="M"><vh>** Perfect import using Bernhard's algorithm</vh></v>
 <v t="ekr.20040217152936.1"><vh>Incremental drawing of outline pane: see projects</vh></v>
 <v t="ekr.20031218072017.743"><vh>Note windows</vh></v>
 <v t="ekr.20031218072017.754"><vh>Open text files in text window</vh></v>
@@ -1132,10 +619,6 @@
 <v t="ekr.20031218072017.736"><vh>Use xml parser to read .leo files</vh></v>
 </v>
 <v t="ekr.20040329182535.5"><vh>1 day projects</vh>
-<v t="ekr.20040329182535.6" a="M"><vh>* Integrate all new plugins into leoPlugins.leo</vh></v>
-<v t="ekr.20040327050211" a="M"><vh>* Fix problems with updating leoConfig.txt</vh>
-<v t="ekr.20040330092305" a="M"><vh>Preserve comments in config files (so we can use sentinels!)</vh></v>
-</v>
 <v t="ekr.20031218072017.794"><vh>LeoDocs.leo -&gt; html or latex</vh></v>
 <v t="ekr.20031218072017.801"><vh>Zipped .leo files</vh>
 <v t="ekr.20040226092546"><vh>Saving .leo files with file compression</vh></v>
@@ -1151,135 +634,7 @@
 <v t="ekr.20040329094003"><vh>Apply patch command</vh></v>
 </v>
 <v t="ekr.20040329182535.7"><vh>1-2 hour projects</vh>
-<v t="ekr.20040323170225"><vh>Fix bugs</vh>
-<v t="ekr.20040327123438"><vh>Idle hooks are not working properly!  (add unregisterHandler)</vh>
-<v t="ekr.20040327132739.3"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.3139"><vh>Hooks &amp; plugins (leoGlobals)</vh>
-<v t="ekr.20031218072017.1315"><vh>enableIdleTimeHook, disableIdleTimeHook, idleTimeHookHandler</vh></v>
-<v t="ekr.20031218072017.1596"><vh>frame.doHook</vh></v>
-<v t="ekr.20031218072017.1318"><vh>plugin_signon</vh></v>
-</v>
-</v>
-<v t="ekr.20040329094003.1"><vh>Fix or improve Import command</vh>
-<v t="ekr.20040319102251"><vh>Import bug: section names when importing C files</vh></v>
-<v t="ekr.20040329094003.2"><vh>Import bug: @tabwidth -4 doesn't work</vh></v>
-<v t="ekr.20040329094003.3"><vh>Import bug: Import should create absolute path</vh></v>
-<v t="ekr.20040129080256.1"><vh>(Import bugs: fixed??)</vh>
-<v t="ekr.20040125114612"><vh>Can't import extensionless file: works on Windows</vh></v>
-<v t="ekr.20040105103517"><vh>Importing @file issues</vh>
-<v t="ekr.20040129094501"><vh>Reports</vh>
-<v t="ekr.20040129100453"><vh>Imported @files have an extra newline in the body</vh></v>
-<v t="ekr.20040129100453.1"><vh>@last fails with multiple newlines</vh></v>
-<v t="ekr.20040129100453.2"><vh>derived files with @last always end with a newline character</vh></v>
-</v>
-<v t="ekr.20040105103916"><vh>Fix?</vh></v>
-<v t="ekr.20031218072017.3243"><vh>&lt;&lt; Append file if not pure PHP &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3242"><vh>scanPHPText (Dave Hein)</vh>
-<v t="ekr.20031218072017.3243"><vh>&lt;&lt; Append file if not pure PHP &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3244"><vh>&lt;&lt; define scanPHPText vars &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3245"><vh>&lt;&lt; handle possible heredoc string &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3246"><vh>&lt;&lt; handle possible PHP comments &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3247"><vh>&lt;&lt; handle possible class or function &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3248"><vh>&lt;&lt; handle end of class &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.3249"><vh>&lt;&lt; Append any unused text to the parent's body text &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20040104200407"><vh>Add @language html when importing html files</vh></v>
-<v t="ekr.20040107090747.1"><vh>Add @nocolor when importing text files</vh></v>
-</v>
-<v t="ekr.20040225061559"><vh>Look at older config files when reading config data the first time for a new install</vh></v>
-<v t="ekr.20031218072017.744"><vh>@tab, @notab (or make @tabwidth -n work again)</vh></v>
-<v t="ekr.20040218053305"><vh>Fix names of Leo windows</vh></v>
-<v t="ekr.20040329094003.4"><vh>Preserve whitespace in imports</vh></v>
-<v t="ekr.20040310091144"><vh>Window position: possible bug</vh></v>
-<v t="ekr.20040310092400"><vh>Allow &lt;/leo_header&gt;</vh></v>
-<v t="ekr.20040225061559.1"><vh>Change message when derived file not found</vh></v>
-<v t="ekr.20031218072017.859"><vh>Should mouse up cancel a drag?</vh></v>
-<v t="ekr.20040216153243.5"><vh>Select All in headline affects body text</vh>
-<v t="ekr.20031218072017.839"><vh>&lt;&lt; define editMenuTopTable &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040330092305.1"><vh>Make "end1" events (and destroy-all-global-windows) work again</vh></v>
-<v t="ekr.20040331152236"><vh>Fix unicode problem in config module</vh></v>
-</v>
 <v t="ekr.20040329190314"><vh>Most important</vh>
-<v t="ekr.20040317050439"><vh>* Right-click to add user-specified attributes and icons</vh></v>
-<v t="ekr.20031218072017.853"><vh>* More intelligent untangling of clones</vh></v>
-<v t="ekr.20040206075634.1"><vh>* Colorizing additions</vh>
-<v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
-<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-<v t="ekr.20031218072017.369"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
-<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
-<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
-<v t="ekr.20031218072017.372"><vh>actionscript keywords</vh></v>
-<v t="ekr.20040206072057"><vh>c# keywords</vh></v>
-<v t="ekr.20031218072017.373"><vh>c/c++ keywords</vh></v>
-<v t="ekr.20040401103539"><vh>css keywords</vh></v>
-<v t="ekr.20031218072017.374"><vh>elisp keywords</vh></v>
-<v t="ekr.20031218072017.375"><vh>html keywords</vh></v>
-<v t="ekr.20031218072017.376"><vh>java keywords</vh></v>
-<v t="ekr.20031218072017.377"><vh>latex keywords</vh></v>
-<v t="ekr.20031218072017.378"><vh>pascal keywords</vh></v>
-<v t="ekr.20031218072017.379"><vh>perl keywords</vh></v>
-<v t="ekr.20031218072017.380"><vh>php keywords</vh></v>
-<v t="ekr.20031218072017.381"><vh>python keywords</vh></v>
-<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
-<v t="ekr.20031218072017.382"><vh>rebol keywords</vh></v>
-<v t="ekr.20040401111125"><vh>shell keywords</vh></v>
-<v t="ekr.20031218072017.383"><vh>tcl/tk keywords</vh></v>
-</v>
-</v>
-<v t="ekr.20040331145826.1"><vh>(done) RapidQ support</vh>
-<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
-</v>
-<v t="ekr.20040117111755"><vh>(done) css support</vh>
-<v t="ekr.20040401104931"><vh>Notes</vh></v>
-<v t="ekr.20040401103539"><vh>css keywords</vh></v>
-<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20040117113539.1"><vh>(done) Coloring for Shell Scripts (Davide)</vh>
-<v t="ekr.20040401111308"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20040106145421"><vh>(not yet) PHP syntax coloring</vh>
-<v t="ekr.20040401110507"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
-<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
-<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
-<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
-<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.3195"><vh>splitLines &amp; joinLines</vh></v>
-</v>
-<v t="ekr.20040105080119.4"><vh>* put drawing hooks back in</vh></v>
-<v t="ekr.20040106115311"><vh>* Expanding the +- box</vh></v>
 <v t="ekr.20040115163454"><vh>@killcolor directive</vh></v>
 <v t="ekr.20031218072017.833"><vh>Use @file extension by default if no @language</vh></v>
 <v t="ekr.20031218072017.856"><vh>context menu in body pane</vh></v>
@@ -1551,7 +906,7 @@
 </v>
 <v t="ekr.20031218072017.1010"><vh>inVisibleArea &amp; inExpandedVisibleArea</vh></v>
 <v t="ekr.20031218072017.1011"><vh>Updating routines (tree)...</vh>
-<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20031218072017.1012"><vh>tree.redraw</vh></v>
 <v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
@@ -3612,7 +2967,6 @@
 </v>
 <v t="ekr.20031218072017.2139"><vh>(Support directives &amp; sections in Execute Script Command)</vh>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -4032,7 +3386,6 @@
 <v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -4362,13 +3715,12 @@
 <v t="ekr.20040126131359"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.2817"><vh> doCommand</vh></v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1011"><vh>Updating routines (tree)...</vh>
-<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20031218072017.1012"><vh>tree.redraw</vh></v>
 <v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
@@ -4621,7 +3973,6 @@
 <v t="ekr.20031218072017.2129"><vh>&lt;&lt; handle line at s[i]  &gt;&gt; (4.x)</vh></v>
 </v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -4853,7 +4204,8 @@
 </v>
 </v>
 <v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
-<v t="ekr.20040325203859"><vh>3/11 to 3/20/04</vh>
+<v t="ekr.20040403104315"><vh>March 2004</vh>
+<v t="ekr.20040325203859"><vh>3/11 to 3/20</vh>
 <v t="ekr.20040302094109"><vh>(p.level bug)</vh>
 <v t="ekr.20040227214711"><vh>p.level &amp; simpleLevel</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
@@ -4942,7 +4294,7 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 </v>
 <v t="ekr.20040305222007"><vh>(undo/redo)</vh>
@@ -5010,7 +4362,6 @@
 <v t="ekr.20031218072017.2400"><vh>&lt;&lt; Set comment Strings from delims &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -5078,7 +4429,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040325203859.1"><vh>3/21/04</vh>
+<v t="ekr.20040325203859.1"><vh>3/21</vh>
 <v t="ekr.20040312024615"><vh>(Fixed bug in sortTopLevel)</vh>
 <v t="ekr.20040312145256"><vh>v.dump</vh></v>
 <v t="ekr.20040310153624"><vh>p.dump</vh></v>
@@ -5173,10 +4524,13 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
+<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
+<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -5197,7 +4551,7 @@
 <v t="ekr.20040301205720"><vh>p.__str__ and p.__repr__</vh></v>
 <v t="ekr.20031218072017.915"><vh>p.getX &amp; vnode compatibility traversal routines</vh></v>
 <v t="ekr.20040227214711"><vh>p.level &amp; simpleLevel</vh></v>
-<v t="ekr.20031218072017.4146"><vh>p.lastVisible</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
 <v t="ekr.20031218072017.928" a="M"><vh>p.moveToX</vh>
 <v t="ekr.20031218072017.930"><vh>p.moveToBack</vh></v>
 <v t="ekr.20031218072017.931"><vh>p.moveToFirstChild (pushes stack for cloned nodes)</vh></v>
@@ -5325,7 +4679,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040325203859.2"><vh>3/22/04</vh>
+<v t="ekr.20040325203859.2"><vh>3/22</vh>
 <v t="ekr.20040318112729"><vh>(trace p.copy)</vh>
 <v t="ekr.20031218072017.1416"><vh>app.__init__</vh>
 <v t="ekr.20031218072017.1417"><vh>&lt;&lt; define global constants &gt;&gt;</vh></v>
@@ -5340,7 +4694,7 @@
 <v t="ekr.20040305162628"><vh>p.Dirty bits</vh>
 <v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
 <v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040318125934"><vh>p.findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
 </v>
@@ -5527,7 +4881,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040325203859.3"><vh>3/24/04</vh>
+<v t="ekr.20040325203859.3"><vh>3/24</vh>
 <v t="ekr.20040323072005"><vh>(Fixed select headline bug)</vh>
 <v t="ekr.20031218072017.3716"><vh>Getters/Setters (tree)</vh></v>
 <v t="ekr.20031218072017.4157"><vh>Selecting &amp; editing (tree)</vh>
@@ -5556,7 +4910,7 @@
 <v t="ekr.20040305162628"><vh>p.Dirty bits</vh>
 <v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
 <v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040318125934"><vh>p.findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
 </v>
@@ -5567,7 +4921,7 @@
 <v t="ekr.20040227224946"><vh>hasThreadNext (the only complex hasX method)</vh></v>
 </v>
 <v t="ekr.20031218072017.1968"><vh>&lt;&lt; initialize vnode data members &gt;&gt;</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040318125934"><vh>p.findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040301071824"><vh>v.Link/Unlink/Insert methods (used by file read logic)</vh>
 <v t="ekr.20031218072017.3419"><vh>v.insertAfter</vh></v>
 <v t="ekr.20031218072017.3421"><vh>v.insertAsNthChild</vh></v>
@@ -5577,7 +4931,7 @@
 <v t="ekr.20031218072017.3422"><vh>v.moveToRoot</vh></v>
 <v t="ekr.20031218072017.3438"><vh>v.unlink</vh></v>
 </v>
-<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
+<v t="ekr.20040323100443"><vh>v.directParents (new method in 4.2)</vh></v>
 <v t="ekr.20040228060340"><vh>p.vParentWithStack</vh>
 <v t="ekr.20040228060340.1"><vh>&lt;&lt; about the vParentWithStack utility method &gt;&gt;</vh></v>
 </v>
@@ -5587,7 +4941,7 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 <v t="ekr.20031218072017.1860" a="M"><vh>createVnode (changed for 4.2)</vh>
 <v t="ekr.20031218072017.1861"><vh>&lt;&lt; handle unknown vnode attributes &gt;&gt;</vh></v>
@@ -5666,7 +5020,7 @@
 <v t="ekr.20031218072017.2910"><vh>contractSubtree</vh></v>
 </v>
 </v>
-<v t="ekr.20040325203859.4"><vh>3/25/04</vh>
+<v t="ekr.20040325203859.4"><vh>3/25</vh>
 <v t="ekr.20040325104344"><vh>(Optimized drawing and saving recursions)</vh>
 <v t="ekr.20031218072017.4144"><vh>Drawing (tkTree)</vh>
 <v t="ekr.20031218072017.4145"><vh>About drawing and updating</vh></v>
@@ -5784,7 +5138,7 @@
 </v>
 <v t="ekr.20031218072017.4160"><vh>endEditLabel</vh></v>
 <v t="ekr.20031218072017.1011"><vh>Updating routines (tree)...</vh>
-<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20031218072017.1012"><vh>tree.redraw</vh></v>
 <v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
@@ -5808,7 +5162,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040326040442.1"><vh>3/26/04</vh>
+<v t="ekr.20040326040442.1"><vh>3/26</vh>
 <v t="ekr.20040326033431"><vh>(Made sure second argument to p.__cmp__ is always a position)</vh>
 <v t="ekr.20040326035757"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.893"><vh>p.__cmp__</vh></v>
@@ -5955,7 +5309,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040327132739.2"><vh>3/27/04</vh>
+<v t="ekr.20040327132739.2"><vh>3/27</vh>
 <v t="ekr.20031218072017.862"><vh>(Added useNullUndoer option to nullFrame class)</vh>
 <v t="ekr.20031218072017.2222"><vh>class nullFrame</vh>
 <v t="ekr.20040327105706"><vh>__init__</vh></v>
@@ -5965,7 +5319,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20040328082044"><vh>3/28/04</vh>
+<v t="ekr.20040328082044"><vh>3/28</vh>
 <v t="ekr.20040323090456.1"><vh>(Fixed bugs in up isAnyAtFileNode &amp; related routines)</vh>
 <v t="ekr.20031218072017.3152"><vh>g.scanAtFileOptions</vh>
 <v t="ekr.20031218072017.3153"><vh>&lt;&lt; scan another @file option &gt;&gt;</vh></v>
@@ -6012,10 +5366,127 @@
 <v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList) 4.x</vh></v>
 </v>
 </v>
-<v t="ekr.20040331080343"><vh>3/31/04</vh>
+<v t="ekr.20040331080343"><vh>3/31</vh>
 <v t="ekr.20040331074940"><vh>(Fixed bug in hoist)</vh>
 <v t="ekr.20031218072017.2028"><vh>Hoist &amp; dehoist &amp; enablers</vh></v>
 <v t="ekr.20031218072017.2029"><vh>drawTopTree</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040403104315.1"><vh>April 2004</vh>
+<v t="ekr.20040403104315.2"><vh>4/2</vh>
+<v t="ekr.20040206075634.1"><vh>Colorizing additions</vh>
+<v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+<v t="ekr.20031218072017.369"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
+<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="ekr.20031218072017.372"><vh>actionscript keywords</vh></v>
+<v t="ekr.20040206072057"><vh>c# keywords</vh></v>
+<v t="ekr.20031218072017.373"><vh>c/c++ keywords</vh></v>
+<v t="ekr.20040401103539"><vh>css keywords</vh></v>
+<v t="ekr.20031218072017.374"><vh>elisp keywords</vh></v>
+<v t="ekr.20031218072017.375"><vh>html keywords</vh></v>
+<v t="ekr.20031218072017.376"><vh>java keywords</vh></v>
+<v t="ekr.20031218072017.377"><vh>latex keywords</vh></v>
+<v t="ekr.20031218072017.378"><vh>pascal keywords</vh></v>
+<v t="ekr.20031218072017.379"><vh>perl keywords</vh></v>
+<v t="ekr.20031218072017.380"><vh>php keywords</vh></v>
+<v t="ekr.20031218072017.381"><vh>python keywords</vh></v>
+<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
+<v t="ekr.20031218072017.382"><vh>rebol keywords</vh></v>
+<v t="ekr.20040401111125"><vh>shell keywords</vh></v>
+<v t="ekr.20031218072017.383"><vh>tcl/tk keywords</vh></v>
+</v>
+</v>
+<v t="ekr.20040331145826.1"><vh>(done) RapidQ support</vh>
+<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
+</v>
+<v t="ekr.20040117111755"><vh>(done) css support</vh>
+<v t="ekr.20040401104931"><vh>Notes</vh></v>
+<v t="ekr.20040401103539"><vh>css keywords</vh></v>
+<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040117113539.1"><vh>(done) Coloring for Shell Scripts (Davide)</vh>
+<v t="ekr.20040401111308"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040106145421"><vh>(not yet) PHP syntax coloring</vh>
+<v t="ekr.20040401110507"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
+<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
+<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
+<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
+<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.3195"><vh>splitLines &amp; joinLines</vh></v>
+</v>
+</v>
+<v t="ekr.20040403104315.3"><vh>4/3</vh>
+<v t="ekr.20040403091954"><vh>(Problems with marking nodes in a script)</vh>
+<v t="ekr.20040403095129"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.2140"><vh>executeScript</vh>
+<v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040409081506"><vh>4/8</vh>
+<v t="ekr.20040106115311"><vh>* Expanding the +- box</vh>
+<v t="ekr.20040409074345"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.2339"><vh>OnBoxClick</vh></v>
+<v t="ekr.20031218072017.1019"><vh>tree.select</vh>
+<v t="ekr.20031218072017.1020"><vh>&lt;&lt; define vars and stop editing &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1021"><vh>&lt;&lt; unselect the old node &gt;&gt; (changed in 4.2)</vh></v>
+<v t="ekr.20031218072017.1022"><vh>&lt;&lt; select the new node &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1023"><vh>&lt;&lt; update c.beadList or c.beadPointer &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1024"><vh>&lt;&lt; update c.visitedList &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1025"><vh>&lt;&lt; set the current node and redraw &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2346"><vh>tree.OnIconClick &amp; OnIconRightClick</vh></v>
+<v t="ekr.20031218072017.1000"><vh>drawBox (tag_bind)</vh></v>
+<v t="ekr.20031218072017.1002"><vh>drawIcon (tag_bind)</vh></v>
+</v>
+<v t="ekr.20040409080127"><vh>(Fixed failed assert in undo)</vh>
+<v t="ekr.20031218072017.2035"><vh>&lt;&lt; redo move &amp; drag cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2044"><vh>&lt;&lt; undo move  &amp; drag cases &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040409081506.1"><vh>(Assert failed in lastVisible)</vh>
+<v t="ekr.20040409081716"><vh>Traceback</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
+<v t="ekr.20040117162509.16"><vh>p.isVisible</vh></v>
+<v t="ekr.20031218072017.1018"><vh>tree.idle_scrollTo</vh>
+<v t="ekr.20040314092716"><vh>&lt;&lt; compute approximate line height &gt;&gt;</vh></v>
+<v t="ekr.20040314092716.1"><vh>&lt;&lt; Compute the fractions to scroll down/up &gt;&gt;</vh></v>
+</v>
+</v>
 </v>
 </v>
 </v>
@@ -6077,7 +5548,6 @@
 <v t="ekr.20031218072017.3372"><vh>isOrphan</vh></v>
 <v t="ekr.20031218072017.3373"><vh>isSelected</vh></v>
 <v t="ekr.20031218072017.3374"><vh>isTopBitSet</vh></v>
-<v t="ekr.20031218072017.3375"><vh>isVisible</vh></v>
 <v t="ekr.20031218072017.3376"><vh>isVisited</vh></v>
 <v t="ekr.20031218072017.3377"><vh>status</vh></v>
 </v>
@@ -6086,7 +5556,7 @@
 <v t="ekr.20031218072017.3380"><vh>v.edit_text TO BE DELETED</vh></v>
 <v t="ekr.20031218072017.3381"><vh>v.findRoot (4.2)</vh></v>
 <v t="ekr.20031218072017.1581"><vh>v.headString &amp; v.cleanHeadString</vh></v>
-<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
+<v t="ekr.20040323100443"><vh>v.directParents (new method in 4.2)</vh></v>
 </v>
 <v t="ekr.20040301071824"><vh>v.Link/Unlink/Insert methods (used by file read logic)</vh>
 <v t="ekr.20031218072017.3419"><vh>v.insertAfter</vh></v>
@@ -6155,7 +5625,7 @@
 <v t="ekr.20040306215056"><vh>p.isCloned</vh></v>
 <v t="ekr.20040307104131.2"><vh>p.isRoot</vh></v>
 <v t="ekr.20040117162509.16"><vh>p.isVisible</vh></v>
-<v t="ekr.20031218072017.4146"><vh>p.lastVisible</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
 <v t="ekr.20040227214711"><vh>p.level &amp; simpleLevel</vh></v>
 </v>
 <v t="ekr.20040305222924"><vh>Setters</vh>
@@ -6181,7 +5651,7 @@
 <v t="ekr.20040305162628"><vh>p.Dirty bits</vh>
 <v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
 <v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040318125934"><vh>p.findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
 </v>
@@ -6214,7 +5684,10 @@
 </v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
+<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
+<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -6257,7 +5730,7 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 </v>
 <v t="ekr.20040305162628.1"><vh>p.Iterators</vh>
@@ -6307,7 +5780,28 @@
 <v t="ekr.20040321104014"><vh>  Big picture</vh></v>
 </v>
 <v t="ekr.20040330070756"><vh>Will do in 4.2</vh>
-<v t="ekr.20040323170225"><vh>Fix bugs</vh>
+<v t="ekr.20031218072017.847"><vh>Cleanup</vh>
+<v t="ekr.20031218072017.848"><vh>Cleanup Pychecker stuff</vh></v>
+<v t="ekr.20031218072017.849"><vh>Cleanup undo logic</vh></v>
+<v t="ekr.20040124073801"><vh>Add nullConfig class?</vh></v>
+<v t="ekr.20040328082044.1"><vh>Convert all plugins to "g style"</vh></v>
+</v>
+<v t="ekr.20040409164648"><vh>Bugs</vh>
+<v t="ekr.20040129080202"><vh>Mac/Linux  bugs</vh>
+<v t="ekr.20040106122602"><vh>Install Leo in the site-packages directory</vh></v>
+<v t="ekr.20040212094121"><vh>Fit window on screen command</vh></v>
+<v t="ekr.20040105080119.1"><vh>Linux bug: paste does not work in find panel</vh></v>
+<v t="ekr.20040105070616.2"><vh>Mac bugs</vh></v>
+<v t="ekr.20040206080140"><vh>Make sure find panel goes to background</vh></v>
+<v t="ekr.20040117112808.1"><vh>small bug in install script</vh></v>
+<v t="ekr.20040117112213"><vh>config problem on Linux</vh></v>
+<v t="ekr.20040115162445.1"><vh>Backspace problems on Linux</vh>
+<v t="ekr.20040115162445.2"><vh>Dave Hein: fix</vh></v>
+</v>
+<v t="ekr.20040104162835.18"><vh>Bug: vpython and mac</vh></v>
+<v t="ekr.20040207170503"><vh>double-paste in searchbox</vh></v>
+</v>
+<v t="ekr.20040323170225"><vh>General bugs</vh>
 <v t="ekr.20040327123438"><vh>Idle hooks are not working properly!  (add unregisterHandler)</vh>
 <v t="ekr.20040327132739.3"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.3139"><vh>Hooks &amp; plugins (leoGlobals)</vh>
@@ -6357,8 +5851,11 @@
 </v>
 <v t="ekr.20040330092305.1"><vh>Make "end1" events (and destroy-all-global-windows) work again</vh></v>
 <v t="ekr.20040331152236"><vh>Fix unicode problem in config module</vh></v>
+<v t="ekr.20040403121321"><vh>Cutting and pasting created "invalid outline" messages</vh></v>
 </v>
-<v t="ekr.20040317050439"><vh>* Right-click to add user-specified attributes and icons</vh></v>
+</v>
+<v t="ekr.20040409164648.1"><vh>Features</vh>
+<v t="ekr.20040317050439"><vh>Right-click to add user-specified attributes and icons</vh></v>
 <v t="ekr.20040319104735"><vh>(@file-thin)</vh>
 <v t="ekr.20040321064134.1"><vh>To do</vh></v>
 <v t="ekr.20040321095547"><vh>Comparisons</vh>
@@ -6426,7 +5923,7 @@
 <v t="ekr.20040321064134.5"><vh>createNextChild (thin)</vh></v>
 </v>
 </v>
-<v t="ekr.20040323084434"><vh>* (Add granularity setting for undo)</vh>
+<v t="ekr.20040323084434"><vh>(Add granularity setting for undo)</vh>
 <v t="ekr.20040328111626"><vh>Notes</vh></v>
 <v t="ekr.20031218072017.3606"><vh>undo.__init__ &amp; clearIvars</vh>
 <v t="ekr.20031218072017.3607"><vh>clearIvars</vh></v>
@@ -6449,12 +5946,87 @@
 <v t="ekr.20031218072017.1497"><vh>&lt;&lt; print mismatch trace &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.853"><vh>* More intelligent untangling of clones</vh></v>
-<v t="ekr.20040327050211"><vh>* Fix problems with updating leoConfig.txt</vh>
+<v t="ekr.20031218072017.853"><vh>More intelligent untangling of clones</vh></v>
+<v t="ekr.20040327050211"><vh>Fix problems with updating leoConfig.txt</vh>
 <v t="ekr.20040330092305" a="M"><vh>Preserve comments in config files (so we can use sentinels!)</vh></v>
 </v>
-<v t="ekr.20040105080119.4"><vh>* put drawing hooks back in</vh></v>
-<v t="ekr.20040106115311"><vh>* Expanding the +- box</vh></v>
+<v t="ekr.20040105080119.4"><vh>Put drawing hooks back in</vh></v>
+<v t="ekr.20040408042209"><vh>Perfect Import is vital: do it for 4.2</vh></v>
+<v t="ekr.20040206075634.1"><vh>Colorizing additions</vh>
+<v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
+<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
+<v t="ekr.20031218072017.369"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
+<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
+<v t="ekr.20031218072017.372"><vh>actionscript keywords</vh></v>
+<v t="ekr.20040206072057"><vh>c# keywords</vh></v>
+<v t="ekr.20031218072017.373"><vh>c/c++ keywords</vh></v>
+<v t="ekr.20040401103539"><vh>css keywords</vh></v>
+<v t="ekr.20031218072017.374"><vh>elisp keywords</vh></v>
+<v t="ekr.20031218072017.375"><vh>html keywords</vh></v>
+<v t="ekr.20031218072017.376"><vh>java keywords</vh></v>
+<v t="ekr.20031218072017.377"><vh>latex keywords</vh></v>
+<v t="ekr.20031218072017.378"><vh>pascal keywords</vh></v>
+<v t="ekr.20031218072017.379"><vh>perl keywords</vh></v>
+<v t="ekr.20031218072017.380"><vh>php keywords</vh></v>
+<v t="ekr.20031218072017.381"><vh>python keywords</vh></v>
+<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
+<v t="ekr.20031218072017.382"><vh>rebol keywords</vh></v>
+<v t="ekr.20040401111125"><vh>shell keywords</vh></v>
+<v t="ekr.20031218072017.383"><vh>tcl/tk keywords</vh></v>
+</v>
+</v>
+<v t="ekr.20040331145826.1"><vh>(done) RapidQ support</vh>
+<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
+</v>
+<v t="ekr.20040117111755"><vh>(done) css support</vh>
+<v t="ekr.20040401104931"><vh>Notes</vh></v>
+<v t="ekr.20040401103539"><vh>css keywords</vh></v>
+<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040117113539.1"><vh>(done) Coloring for Shell Scripts (Davide)</vh>
+<v t="ekr.20040401111308"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040106145421"><vh>(not yet) PHP syntax coloring</vh>
+<v t="ekr.20040401110507"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
+<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
+<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
+<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
+<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
+<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20031218072017.3195"><vh>splitLines &amp; joinLines</vh></v>
+</v>
+<v t="ekr.20040327051732.2"><vh>Perfect import using Bernhard's algorithm</vh></v>
+</v>
 </v>
 <v t="ekr.20040325095459"><vh>Conversion</vh>
 <v t="ekr.20040304163125"><vh>Script to find and replace all functions in leoGlobals.py</vh>
@@ -6472,7 +6044,7 @@
 <v t="ekr.20040327103735"><vh>Email to Fred Drake re 4.1 final</vh></v>
 <v t="ekr.20040323195916.1"><vh>Tests</vh></v>
 </v>
-<v t="ekr.20031218072017.2406" a="TV"><vh>Code</vh>
+<v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2407"><vh>  Overview of code</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2409"><vh>&lt;&lt; About drawing &gt;&gt;</vh></v>
@@ -7270,6 +6842,14 @@
 </v>
 </v>
 <v t="ekr.20031218072017.3811"><vh>class nullMenu</vh></v>
+</v>
+<v t="ekr.20031218072017.3439" tnodeList="ekr.20031218072017.3439,ekr.20031218072017.3440,ekr.20031218072017.3441,ekr.20031218072017.3442,ekr.20031218072017.3443,ekr.20031218072017.3444"><vh>@file leoPlugins.py</vh>
+<v t="ekr.20031218072017.3440"><vh>loadHandlers</vh>
+<v t="ekr.20031218072017.3441"><vh>&lt;&lt; set enabled_files from pluginsManager.txt &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3442"><vh>doHandlersForTag</vh></v>
+<v t="ekr.20031218072017.3443"><vh>registerHandler</vh></v>
+<v t="ekr.20031218072017.3444"><vh>registerExclusiveHandler</vh></v>
 </v>
 <v t="ekr.20031218072017.3446" tnodeList="ekr.20031218072017.3446,ekr.20031218072017.2411,ekr.20031218072017.3447,ekr.20031218072017.3449,ekr.20031218072017.3450,ekr.20031218072017.3451,ekr.20031218072017.3452,ekr.20031218072017.3453,ekr.20031218072017.3454,ekr.20031218072017.3455,ekr.20031218072017.3456,ekr.20031218072017.3457,ekr.20031218072017.3458,ekr.20031218072017.3459,ekr.20031218072017.3460,ekr.20031218072017.3461,ekr.20031218072017.3462,ekr.20031218072017.3463,ekr.20031218072017.3464,ekr.20031218072017.3465,ekr.20031218072017.3466,ekr.20031218072017.1356,ekr.20031218072017.1357,ekr.20031218072017.1358,ekr.20031218072017.1359,ekr.20031218072017.3467,ekr.20031218072017.3468,ekr.20031218072017.3469,ekr.20031218072017.3470,ekr.20031218072017.3471,ekr.20031218072017.3472,ekr.20031218072017.3473,ekr.20031218072017.3474,ekr.20031218072017.3475,ekr.20031218072017.3476,ekr.20031218072017.3477,ekr.20031218072017.3478,ekr.20031218072017.3479,ekr.20031218072017.3480,ekr.20031218072017.3481,ekr.20031218072017.3483,ekr.20031218072017.3482,ekr.20031218072017.3484,ekr.20031218072017.3485,ekr.20031218072017.3486,ekr.20031218072017.3487,ekr.20031218072017.3490,ekr.20031218072017.3491,ekr.20031218072017.3494,ekr.20031218072017.3493,ekr.20031218072017.3495,ekr.20031218072017.3496,ekr.20031218072017.3497,ekr.20031218072017.3492,ekr.20031218072017.3498,ekr.20031218072017.3499,ekr.20031218072017.3500,ekr.20031218072017.3501,ekr.20031218072017.3502,ekr.20031218072017.3503,ekr.20031218072017.3504,ekr.20031218072017.1488,ekr.20031218072017.1151,ekr.20031218072017.1152,ekr.20031218072017.1153,ekr.20031218072017.1154,ekr.20031218072017.1155,ekr.20031218072017.3506,ekr.20031218072017.3507,ekr.20031218072017.3508,ekr.20031218072017.3509,ekr.20031218072017.3510,ekr.20031218072017.3511,ekr.20031218072017.3512,ekr.20031218072017.3513,ekr.20031218072017.3514,ekr.20031218072017.3515,ekr.20031218072017.3516,ekr.20031218072017.3517,ekr.20031218072017.3518,ekr.20031218072017.3519,ekr.20031218072017.3520,ekr.20031218072017.3521,ekr.20031218072017.3522,ekr.20031218072017.3523,ekr.20031218072017.3524,ekr.20031218072017.3524,ekr.20031218072017.3525,ekr.20031218072017.3526,ekr.20031218072017.3527,ekr.20031218072017.3529,ekr.20031218072017.3530,ekr.20031218072017.3531,ekr.20031218072017.3532,ekr.20031218072017.3533,ekr.20031218072017.3534,ekr.20031218072017.3535,ekr.20031218072017.3536,ekr.20031218072017.3537,ekr.20031218072017.3539,ekr.20031218072017.3540,ekr.20031218072017.3541,ekr.20031218072017.3542,ekr.20031218072017.3543,ekr.20031218072017.3545,ekr.20031218072017.3546,ekr.20031218072017.3547,ekr.20031218072017.3548,ekr.20031218072017.3549,ekr.20031218072017.3546,ekr.20031218072017.3550,ekr.20031218072017.3551,ekr.20031218072017.3555,ekr.20031218072017.3557,ekr.20031218072017.3556,ekr.20031218072017.3553,ekr.20031218072017.3552,ekr.20031218072017.3554,ekr.20031218072017.3553,ekr.20031218072017.3558,ekr.20031218072017.3559,ekr.20031218072017.3553,ekr.20031218072017.3560,ekr.20031218072017.3561,ekr.20031218072017.3562,ekr.20031218072017.3563,ekr.20031218072017.2368,ekr.20031218072017.3564,ekr.20031218072017.3565,ekr.20031218072017.3566,ekr.20031218072017.3567,ekr.20031218072017.3568,ekr.20031218072017.3570,ekr.20031218072017.3571,ekr.20031218072017.3569,ekr.20031218072017.3572,ekr.20031218072017.3573,ekr.20031218072017.3574,ekr.20031218072017.3575,ekr.20031218072017.3576,ekr.20031218072017.3577,ekr.20031218072017.3578,ekr.20031218072017.3579,ekr.20031218072017.3580,ekr.20031218072017.3581,ekr.20031218072017.3582,ekr.20031218072017.3583,ekr.20031218072017.3584,ekr.20031218072017.3585,ekr.20031218072017.3586,ekr.20031218072017.3587,ekr.20031218072017.3588,ekr.20031218072017.3589,ekr.20031218072017.3590,ekr.20031218072017.3591,ekr.20031218072017.3592,ekr.20031218072017.3593,ekr.20031218072017.3594,ekr.20031218072017.1259,ekr.20031218072017.3595,ekr.20031218072017.3596,ekr.20031218072017.3597,ekr.20031218072017.3598,ekr.20031218072017.1360,ekr.20031218072017.1361,ekr.20031218072017.1362,ekr.20031218072017.1363,ekr.20031218072017.1364,ekr.20031218072017.1365,ekr.20031218072017.1366,ekr.20031218072017.1367,ekr.20031218072017.1368,ekr.20031218072017.1369,ekr.20031218072017.1370,ekr.20031218072017.1371,ekr.20031218072017.1372,ekr.20031218072017.1373,ekr.20031218072017.1374,ekr.20031218072017.3599,ekr.20031218072017.3600,ekr.20031218072017.3601,ekr.20031218072017.3602"><vh>@file leoTangle.py</vh>
 <v t="ekr.20031218072017.2411"><vh>&lt;&lt; About Tangle and Untangle &gt;&gt;</vh></v>
@@ -8568,7 +8148,7 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2141,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040323155951,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040323155951.1,ekr.20040323161837,ekr.20040323162707,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20040303165342,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
+<v t="ekr.20031218072017.2810" tnodeList="ekr.20031218072017.2810,ekr.20031218072017.2812,ekr.20031218072017.2813,ekr.20031218072017.2814,ekr.20031218072017.2815,ekr.20031218072017.2816,ekr.20031218072017.2817,ekr.20031218072017.2582,ekr.20040312090934,ekr.20031218072017.1623,ekr.20031218072017.2821,ekr.20031218072017.2822,ekr.20031218072017.2823,ekr.20031218072017.2824,ekr.20031218072017.2825,ekr.20031218072017.2826,ekr.20031218072017.2827,ekr.20031218072017.2828,ekr.20031218072017.2829,ekr.20031218072017.2830,ekr.20031218072017.2831,ekr.20031218072017.2832,ekr.20031218072017.2833,ekr.20031218072017.2834,ekr.20031218072017.2835,ekr.20031218072017.2836,ekr.20031218072017.2837,ekr.20031218072017.2080,ekr.20031218072017.2081,ekr.20031218072017.2082,ekr.20031218072017.2083,ekr.20031218072017.2839,ekr.20031218072017.1839,ekr.20031218072017.1809,ekr.20031218072017.2014,ekr.20031218072017.2842,ekr.20031218072017.2843,ekr.20031218072017.2844,ekr.20031218072017.2846,ekr.20031218072017.2847,ekr.20031218072017.2848,ekr.20031218072017.2850,ekr.20031218072017.2851,ekr.20031218072017.2852,ekr.20031218072017.2853,ekr.20031218072017.2854,ekr.20031218072017.2855,ekr.20031218072017.2856,ekr.20031218072017.2857,ekr.20031218072017.2858,ekr.20031218072017.2859,ekr.20031218072017.2860,ekr.20031218072017.2863,ekr.20031218072017.2140,ekr.20031218072017.2142,ekr.20031218072017.2143,ekr.20031218072017.2864,ekr.20031218072017.2865,ekr.20031218072017.2866,ekr.20031218072017.2867,ekr.20031218072017.2868,ekr.20031218072017.2869,ekr.20031218072017.2870,ekr.20031218072017.2871,ekr.20031218072017.2872,ekr.20031218072017.2873,ekr.20031218072017.2874,ekr.20031218072017.2875,ekr.20031218072017.2876,ekr.20031218072017.2877,ekr.20031218072017.2878,ekr.20031218072017.2879,ekr.20031218072017.2880,ekr.20031218072017.2881,ekr.20031218072017.2882,ekr.20040322115523,ekr.20031218072017.2088,ekr.20031218072017.2090,ekr.20031218072017.2883,ekr.20031218072017.2086,ekr.20031218072017.1704,ekr.20031218072017.1705,ekr.20031218072017.1821,ekr.20031218072017.1822,ekr.20031218072017.1823,ekr.20031218072017.1824,ekr.20031218072017.1706,ekr.20031218072017.1707,ekr.20031218072017.1708,ekr.20031218072017.1709,ekr.20031218072017.1710,ekr.20031218072017.1711,ekr.20031218072017.1825,ekr.20031218072017.1826,ekr.20031218072017.1827,ekr.20031218072017.1828,ekr.20031218072017.1829,ekr.20031218072017.1830,ekr.20031218072017.1831,ekr.20031218072017.1832,ekr.20031218072017.1833,ekr.20031218072017.1834,ekr.20031218072017.1835,ekr.20031218072017.1836,ekr.20031218072017.1837,ekr.20031218072017.1838,ekr.20031218072017.2886,ekr.20031218072017.2290,ekr.20031218072017.2888,ekr.20031218072017.2889,ekr.20031218072017.2890,ekr.20031218072017.2891,ekr.20031218072017.2892,ekr.20031218072017.2893,ekr.20031218072017.1549,ekr.20031218072017.1550,ekr.20031218072017.1551,ekr.20031218072017.2072,ekr.20040314062338,ekr.20040313150633,ekr.20040323155951,ekr.20040314035615,ekr.20040314035615.1,ekr.20040314035615.2,ekr.20040323155951.1,ekr.20040323161837,ekr.20040323162707,ekr.20040314043623,ekr.20040314044652,ekr.20040314043900,ekr.20031218072017.2028,ekr.20031218072017.1760,ekr.20031218072017.1193,ekr.20031218072017.1761,ekr.20031218072017.1762,ekr.20031218072017.1765,ekr.20031218072017.1188,ekr.20031218072017.1189,ekr.20031218072017.1190,ekr.20031218072017.2896,ekr.20031218072017.2897,ekr.20031218072017.2900,ekr.20031218072017.2901,ekr.20031218072017.2902,ekr.20031218072017.2903,ekr.20031218072017.2904,ekr.20031218072017.2905,ekr.20031218072017.2906,ekr.20031218072017.2907,ekr.20031218072017.2908,ekr.20031218072017.2910,ekr.20031218072017.2911,ekr.20031218072017.2912,ekr.20031218072017.1628,ekr.20031218072017.1627,ekr.20031218072017.2914,ekr.20031218072017.2915,ekr.20031218072017.2916,ekr.20031218072017.2917,ekr.20031218072017.2918,ekr.20031218072017.2919,ekr.20031218072017.2920,ekr.20031218072017.2921,ekr.20031218072017.2923,ekr.20031218072017.2924,ekr.20031218072017.2925,ekr.20031218072017.2926,ekr.20031218072017.2927,ekr.20031218072017.2928,ekr.20031218072017.2929,ekr.20031218072017.2930,ekr.20031218072017.1767,ekr.20031218072017.1768,ekr.20031218072017.1769,ekr.20031218072017.1770,ekr.20031218072017.1771,ekr.20031218072017.1772,ekr.20031218072017.1773,ekr.20031218072017.1774,ekr.20031218072017.2092,ekr.20031218072017.2932,ekr.20031218072017.2933,ekr.20031218072017.2934,ekr.20031218072017.2936,ekr.20031218072017.2935,ekr.20031218072017.2937,ekr.20031218072017.2939,ekr.20031218072017.2940,ekr.20031218072017.2941,ekr.20031218072017.2942,ekr.20031218072017.2943,ekr.20031218072017.2944,ekr.20031218072017.2353,ekr.20031218072017.2946,ekr.20031218072017.2947,ekr.20031218072017.2948,ekr.20031218072017.2950,ekr.20031218072017.2951,ekr.20031218072017.2952,ekr.20031218072017.2953,ekr.20031218072017.2954,ekr.20031218072017.2966,ekr.20031218072017.2967,ekr.20031218072017.2968,ekr.20031218072017.2969,ekr.20040131170659,ekr.20031218072017.2956,ekr.20031218072017.2957,ekr.20031218072017.2958,ekr.20031218072017.2959,ekr.20031218072017.2960,ekr.20031218072017.2961,ekr.20031218072017.2962,ekr.20031218072017.2963,ekr.20031218072017.2964,ekr.20031218072017.2287,ekr.20031218072017.2965,ekr.20040303165342,ekr.20031218072017.2970,ekr.20031218072017.2971,ekr.20031218072017.2972,ekr.20031218072017.2973,ekr.20031218072017.2974,ekr.20031218072017.2975,ekr.20031218072017.2976,ekr.20031218072017.2977,ekr.20031218072017.2978,ekr.20031218072017.2979,ekr.20031218072017.2980,ekr.20031218072017.2981,ekr.20031218072017.2983,ekr.20031218072017.2984,ekr.20031218072017.2985,ekr.20031218072017.2986,ekr.20031218072017.2987,ekr.20031218072017.2988,ekr.20040311173238,ekr.20031218072017.2989,ekr.20040311094927,ekr.20031218072017.2991,ekr.20031218072017.2992,ekr.20031218072017.2993,ekr.20031218072017.2994,ekr.20031218072017.2995,ekr.20031218072017.2996,ekr.20031218072017.2997,ekr.20031218072017.2998,ekr.20031218072017.2999,ekr.20031218072017.3000"><vh>@file leoCommands.py</vh>
 <v t="ekr.20031218072017.2811"><vh> c.Birth &amp; death</vh>
 <v t="ekr.20031218072017.2812"><vh>c.__init__, initIvars</vh>
 <v t="ekr.20031218072017.2813"><vh>&lt;&lt; initialize ivars &gt;&gt;</vh></v>
@@ -8650,7 +8230,6 @@
 <v t="ekr.20031218072017.2862"><vh>Edit top level</vh>
 <v t="ekr.20031218072017.2863"><vh>delete</vh></v>
 <v t="ekr.20031218072017.2140"><vh>executeScript</vh>
-<v t="ekr.20031218072017.2141"><vh>&lt;&lt; define class fileLikeObject &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2142"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
@@ -9269,7 +8848,7 @@
 <v t="ekr.20031218072017.3205"><vh>skip_leading_ws_with_indent</vh></v>
 </v>
 </v>
-<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20040328055931,ekr.20031218072017.3347,ekr.20031218072017.3350,ekr.20031218072017.3348,ekr.20040326031436,ekr.20040325073709,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040303212445,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20040307085922,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3375,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040325142015,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040326064330,ekr.20040306214240.3,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
+<v t="ekr.20031218072017.3320" tnodeList="ekr.20031218072017.3320,ekr.20031218072017.2412,ekr.20031218072017.2408,ekr.20031218072017.3321,ekr.20031218072017.3322,ekr.20031218072017.2006,ekr.20031218072017.3323,ekr.20031218072017.3324,ekr.20031218072017.3326,ekr.20031218072017.3328,ekr.20031218072017.3329,ekr.20031218072017.3330,ekr.20031218072017.1485,ekr.20031218072017.1486,ekr.20031218072017.3333,ekr.20031218072017.3334,ekr.20031218072017.3335,ekr.20031218072017.3336,ekr.20031218072017.3337,ekr.20031218072017.3338,ekr.20031218072017.3339,ekr.20031218072017.3340,ekr.20031218072017.3341,ekr.20031218072017.951,ekr.20031218072017.3343,ekr.20031218072017.3344,ekr.20031218072017.1968,ekr.20031218072017.3345,ekr.20040312145256,ekr.20040328055931,ekr.20031218072017.3347,ekr.20031218072017.3350,ekr.20031218072017.3348,ekr.20040326031436,ekr.20040325073709,ekr.20031218072017.3351,ekr.20031218072017.3352,ekr.20031218072017.3353,ekr.20040306214240,ekr.20031218072017.3406,ekr.20031218072017.3409,ekr.20040303212445,ekr.20031218072017.3362,ekr.20031218072017.3363,ekr.20040307085922,ekr.20031218072017.3364,ekr.20031218072017.3365,ekr.20031218072017.3366,ekr.20031218072017.3368,ekr.20031218072017.3369,ekr.20031218072017.3370,ekr.20031218072017.3371,ekr.20031218072017.3372,ekr.20031218072017.3373,ekr.20031218072017.3374,ekr.20031218072017.3376,ekr.20031218072017.3377,ekr.20031218072017.3378,ekr.20031218072017.3379,ekr.20031218072017.3380,ekr.20031218072017.3381,ekr.20031218072017.1581,ekr.20040323100443,ekr.20040301071824,ekr.20031218072017.3419,ekr.20031218072017.3421,ekr.20031218072017.2355,ekr.20031218072017.3425,ekr.20031218072017.3426,ekr.20031218072017.3422,ekr.20031218072017.3438,ekr.20031218072017.3389,ekr.20031218072017.3390,ekr.20031218072017.3391,ekr.20031218072017.3392,ekr.20031218072017.3393,ekr.20031218072017.3395,ekr.20031218072017.3396,ekr.20031218072017.3397,ekr.20031218072017.3398,ekr.20031218072017.3399,ekr.20031218072017.3400,ekr.20031218072017.3401,ekr.20031218072017.3385,ekr.20040315032144,ekr.20031218072017.3402,ekr.20040315042106,ekr.20031218072017.3404,ekr.20031218072017.3358,ekr.20031218072017.1991,ekr.20031218072017.1992,ekr.20031218072017.1993,ekr.20031218072017.1994,ekr.20031218072017.1995,ekr.20031218072017.1996,ekr.20031218072017.1997,ekr.20031218072017.1998,ekr.20031218072017.1999,ekr.20031218072017.889,ekr.20031218072017.890,ekr.20031218072017.892,ekr.20031218072017.893,ekr.20040325142015,ekr.20040117170612,ekr.20040117173448,ekr.20040301205720,ekr.20040310153624,ekr.20040306211032,ekr.20040306212151,ekr.20040306220230,ekr.20040306214401,ekr.20040306220230.1,ekr.20040323160302,ekr.20040326064330,ekr.20040306214240.3,ekr.20040306212636.1,ekr.20040307104131.3,ekr.20040306215548,ekr.20031218072017.915,ekr.20040227212621,ekr.20040227224946,ekr.20040307104131.1,ekr.20040306215056,ekr.20040307104131.2,ekr.20040117162509.16,ekr.20031218072017.4146,ekr.20040227214711,ekr.20040306220634.9,ekr.20040306220634.8,ekr.20040306220634.29,ekr.20040306220634.31,ekr.20040315034158,ekr.20040315032503,ekr.20040305223522,ekr.20040305222924.1,ekr.20040305223225,ekr.20040315031445,ekr.20040312015705,ekr.20040306220634.17,ekr.20031218072017.3388,ekr.20040311113514,ekr.20040303163717,ekr.20040318125934,ekr.20040303214038,ekr.20040303163330,ekr.20040315023430,ekr.20040315023430.1,ekr.20040315023430.2,ekr.20040315023430.3,ekr.20040305162628.1,ekr.20040305171133,ekr.20040305171133.1,ekr.20040305171133.3,ekr.20040305173559,ekr.20040305173559.1,ekr.20040305173559.2,ekr.20040305172211.1,ekr.20040305172211.2,ekr.20040305172211.3,ekr.20040305172855,ekr.20040305172855.1,ekr.20040305172855.2,ekr.20040305173343,ekr.20040305173343.1,ekr.20040305173343.2,ekr.20040303175026.2,ekr.20040409162703,ekr.20040409162703.1,ekr.20040303175026.3,ekr.20040303175026.4,ekr.20040303175026.5,ekr.20040303175026.6,ekr.20040303175026.8,ekr.20040303175026.9,ekr.20040303175026.10,ekr.20040306060312,ekr.20040303175026.11,ekr.20040303175026.12,ekr.20040303175026.13,ekr.20040303175026.14,ekr.20040303175026.15,ekr.20040303175026.16,ekr.20040303175026.18,ekr.20031218072017.928,ekr.20031218072017.930,ekr.20031218072017.931,ekr.20031218072017.932,ekr.20031218072017.933,ekr.20031218072017.934,ekr.20031218072017.935,ekr.20031218072017.936,ekr.20031218072017.937,ekr.20031218072017.938,ekr.20031218072017.939,ekr.20031218072017.940,ekr.20031218072017.941,ekr.20040117171654,ekr.20040228060340,ekr.20040228060340.1,ekr.20040310062332,ekr.20040310062332.1,ekr.20040310062332.2,ekr.20040310062332.3,ekr.20040310062332.4,ekr.20040310062332.5"><vh>@file leoNodes.py</vh>
 <v t="ekr.20031218072017.2408"><vh>&lt;&lt; About clones &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.2412"><vh>&lt;&lt; About the vnode and tnode classes &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.3321"><vh>class tnode</vh>
@@ -9345,7 +8924,6 @@
 <v t="ekr.20031218072017.3372"><vh>isOrphan</vh></v>
 <v t="ekr.20031218072017.3373"><vh>isSelected</vh></v>
 <v t="ekr.20031218072017.3374"><vh>isTopBitSet</vh></v>
-<v t="ekr.20031218072017.3375"><vh>isVisible</vh></v>
 <v t="ekr.20031218072017.3376"><vh>isVisited</vh></v>
 <v t="ekr.20031218072017.3377"><vh>status</vh></v>
 </v>
@@ -9354,7 +8932,7 @@
 <v t="ekr.20031218072017.3380"><vh>v.edit_text TO BE DELETED</vh></v>
 <v t="ekr.20031218072017.3381"><vh>v.findRoot (4.2)</vh></v>
 <v t="ekr.20031218072017.1581"><vh>v.headString &amp; v.cleanHeadString</vh></v>
-<v t="ekr.20040323100443"><vh>v.parents (new method in 4.2)</vh></v>
+<v t="ekr.20040323100443"><vh>v.directParents (new method in 4.2)</vh></v>
 </v>
 <v t="ekr.20040301071824"><vh>v.Link/Unlink/Insert methods (used by file read logic)</vh>
 <v t="ekr.20031218072017.3419"><vh>v.insertAfter</vh></v>
@@ -9433,7 +9011,7 @@
 <v t="ekr.20040306215056"><vh>p.isCloned</vh></v>
 <v t="ekr.20040307104131.2"><vh>p.isRoot</vh></v>
 <v t="ekr.20040117162509.16"><vh>p.isVisible</vh></v>
-<v t="ekr.20031218072017.4146"><vh>p.lastVisible</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
 <v t="ekr.20040227214711"><vh>p.level &amp; simpleLevel</vh></v>
 </v>
 <v t="ekr.20040305222924"><vh>Setters</vh>
@@ -9459,7 +9037,7 @@
 <v t="ekr.20040305162628"><vh>p.Dirty bits</vh>
 <v t="ekr.20040311113514"><vh>p.clearDirty</vh></v>
 <v t="ekr.20040303163717"><vh>p.isDirty</vh></v>
-<v t="ekr.20040318125934"><vh>findAllPotentiallyDirtyNodes</vh></v>
+<v t="ekr.20040318125934"><vh>p.findAllPotentiallyDirtyNodes</vh></v>
 <v t="ekr.20040303214038" a="M"><vh>p.setAllAncestorAtFileNodesDirty</vh></v>
 <v t="ekr.20040303163330"><vh>p.setDirty</vh></v>
 </v>
@@ -9492,7 +9070,10 @@
 </v>
 </v>
 <v t="ekr.20040303175026"><vh>p.Moving, Inserting, Deleting, Cloning, Sorting (position) </vh>
-<v t="ekr.20040303175026.2"><vh>p.doDelete</vh></v>
+<v t="ekr.20040303175026.2"><vh>p.doDelete</vh>
+<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
+<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
+</v>
 <v t="ekr.20040303175026.3"><vh>p.insertAfter</vh></v>
 <v t="ekr.20040303175026.4"><vh>p.insertAsLastChild</vh></v>
 <v t="ekr.20040303175026.5"><vh>p.insertAsNthChild</vh></v>
@@ -9535,17 +9116,9 @@
 <v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
 <v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
 <v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
-<v t="ekr.20040310062332.5"><vh>p.unlink</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
 </v>
-</v>
-<v t="ekr.20031218072017.3439" tnodeList="ekr.20031218072017.3439,ekr.20031218072017.3440,ekr.20031218072017.3441,ekr.20031218072017.3442,ekr.20031218072017.3443,ekr.20031218072017.3444"><vh>@file leoPlugins.py</vh>
-<v t="ekr.20031218072017.3440"><vh>loadHandlers</vh>
-<v t="ekr.20031218072017.3441"><vh>&lt;&lt; set enabled_files from pluginsManager.txt &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.3442"><vh>doHandlersForTag</vh></v>
-<v t="ekr.20031218072017.3443"><vh>registerHandler</vh></v>
-<v t="ekr.20031218072017.3444"><vh>registerExclusiveHandler</vh></v>
 </v>
 <v t="ekr.20031218072017.4138" tnodeList="ekr.20031218072017.4138,ekr.20031218072017.4139,ekr.20031218072017.2409,ekr.20031218072017.4140,ekr.20031218072017.1017,ekr.20031218072017.4142,ekr.20031218072017.4143,ekr.20031218072017.1956,ekr.20031218072017.1957,ekr.20031218072017.1958,ekr.20031218072017.1959,ekr.20031218072017.1960,ekr.20031218072017.1961,ekr.20031218072017.1962,ekr.20031218072017.1963,ekr.20031218072017.1964,ekr.20031218072017.1965,ekr.20031218072017.1966,ekr.20031218072017.1967,ekr.20031218072017.1012,ekr.20040106095546,ekr.20031218072017.1013,ekr.20031218072017.1014,ekr.20031218072017.1015,ekr.20040324090957,ekr.20040324090957.1,ekr.20031218072017.1016,ekr.20031218072017.4145,ekr.20031218072017.1000,ekr.20031218072017.1002,ekr.20031218072017.1004,ekr.20040317171729,ekr.20040318090335,ekr.20031218072017.1005,ekr.20031218072017.1006,ekr.20031218072017.2029,ekr.20031218072017.1008,ekr.20031218072017.1009,ekr.20040317095510,ekr.20040317173849,ekr.20040317095153,ekr.20040317100702,ekr.20040317095153.1,ekr.20040317094609,ekr.20031218072017.1010,ekr.20031218072017.4147,ekr.20040322122232,ekr.20031218072017.1018,ekr.20040314092716,ekr.20040314092716.1,ekr.20031218072017.4148,ekr.20031218072017.4149,ekr.20031218072017.4151,ekr.20031218072017.4152,ekr.20031218072017.4153,ekr.20031218072017.4154,ekr.20031218072017.2336,ekr.20031218072017.2337,ekr.20031218072017.2338,ekr.20031218072017.2339,ekr.20031218072017.2340,ekr.20031218072017.2341,ekr.20031218072017.2342,ekr.20031218072017.2343,ekr.20031218072017.2344,ekr.20031218072017.2345,ekr.20031218072017.1776,ekr.20031218072017.1777,ekr.20031218072017.1778,ekr.20031218072017.1332,ekr.20031218072017.1333,ekr.20031218072017.1334,ekr.20031218072017.1335,ekr.20031218072017.1336,ekr.20031218072017.1337,ekr.20031218072017.1338,ekr.20031218072017.1339,ekr.20031218072017.1340,ekr.20031218072017.2346,ekr.20031218072017.2348,ekr.20031218072017.2349,ekr.20031218072017.2249,ekr.20031218072017.2250,ekr.20031218072017.2350,ekr.20031218072017.2351,ekr.20031218072017.2352,ekr.20031218072017.1027,ekr.20031218072017.1028,ekr.20031218072017.4156,ekr.20031218072017.1030,ekr.20031218072017.1029,ekr.20031218072017.1031,ekr.20031218072017.4158,ekr.20031218072017.4159,ekr.20031218072017.4160,ekr.20031218072017.4161,ekr.20031218072017.1019,ekr.20031218072017.1020,ekr.20031218072017.1021,ekr.20031218072017.1022,ekr.20031218072017.1023,ekr.20031218072017.1024,ekr.20031218072017.1025,ekr.20031218072017.4162,ekr.20031218072017.4163,ekr.20031218072017.4164,ekr.20031218072017.4165,ekr.20031218072017.1141"><vh>@file leoTkinterTree.py</vh>
 <v t="ekr.20031218072017.4139"><vh>&lt;&lt; about the tree classes &gt;&gt;</vh></v>
@@ -9571,7 +9144,7 @@
 </v>
 </v>
 <v t="ekr.20031218072017.1011"><vh>Updating routines (tree)...</vh>
-<v t="ekr.20031218072017.1012"><vh>redraw</vh></v>
+<v t="ekr.20031218072017.1012"><vh>tree.redraw</vh></v>
 <v t="ekr.20040106095546"><vh>tkTree.redrawAfterException</vh></v>
 <v t="ekr.20031218072017.1013"><vh>force_redraw</vh></v>
 <v t="ekr.20031218072017.1014"><vh>redraw_now</vh></v>
@@ -9755,85 +9328,55 @@
 </v>
 </v>
 </v>
-<v t="ekr.20031218072017.847"><vh>Cleanup</vh>
-<v t="ekr.20031218072017.848"><vh>Cleanup Pychecker stuff</vh></v>
-<v t="ekr.20031218072017.849"><vh>Cleanup undo logic</vh></v>
-<v t="ekr.20040124073801"><vh>Add nullConfig class?</vh></v>
-<v t="ekr.20040328051719"><vh>Upgrade the rst plugin</vh></v>
-<v t="ekr.20040328082044.1"><vh>Convert all plugins to "g style"</vh></v>
+<v t="ekr.20040408041921"><vh>Notes re new @file code</vh></v>
+<v t="ekr.20040409083211" a="E"><vh>(Fixed problems deleting cloned nodes &amp; trees)</vh>
+<v t="ekr.20040409083211.1"><vh>tracebacks</vh></v>
+<v t="ekr.20040409160021"><vh>Notes</vh></v>
+<v t="ekr.20040409130322" a="E"><vh>commands &amp; fileCommands methods...</vh>
+<v t="ekr.20031218072017.1863"><vh>putVnode (3.x and 4.x)</vh>
+<v t="ekr.20031218072017.1864"><vh>&lt;&lt; Put tnode index &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1865" a="M"><vh>&lt;&lt; Put attribute bits &gt;&gt;</vh></v>
+<v t="ekr.20040324082713"><vh>&lt;&lt; Put tnodeList and unKnownAttributes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1867"><vh>&lt;&lt; put unknown vnode attributes &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20040206075634.1"><vh>* Colorizing additions</vh>
-<v t="ekr.20031218072017.367"><vh>How to add support for a new language</vh>
-<v t="ekr.20031218072017.368"><vh>&lt;&lt; define global data structures &gt;&gt; app</vh></v>
-<v t="ekr.20031218072017.369"><vh>&lt;&lt; Create the Target Language frame &gt;&gt; frame</vh></v>
-<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
-<v t="ekr.20031218072017.371"><vh>&lt;&lt; define colorizer keywords &gt;&gt; colorizer</vh>
-<v t="ekr.20031218072017.372"><vh>actionscript keywords</vh></v>
-<v t="ekr.20040206072057"><vh>c# keywords</vh></v>
-<v t="ekr.20031218072017.373"><vh>c/c++ keywords</vh></v>
-<v t="ekr.20040401103539"><vh>css keywords</vh></v>
-<v t="ekr.20031218072017.374"><vh>elisp keywords</vh></v>
-<v t="ekr.20031218072017.375"><vh>html keywords</vh></v>
-<v t="ekr.20031218072017.376"><vh>java keywords</vh></v>
-<v t="ekr.20031218072017.377"><vh>latex keywords</vh></v>
-<v t="ekr.20031218072017.378"><vh>pascal keywords</vh></v>
-<v t="ekr.20031218072017.379"><vh>perl keywords</vh></v>
-<v t="ekr.20031218072017.380"><vh>php keywords</vh></v>
-<v t="ekr.20031218072017.381"><vh>python keywords</vh></v>
-<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
-<v t="ekr.20031218072017.382"><vh>rebol keywords</vh></v>
-<v t="ekr.20040401111125"><vh>shell keywords</vh></v>
-<v t="ekr.20031218072017.383"><vh>tcl/tk keywords</vh></v>
+<v t="ekr.20031218072017.1866"><vh>&lt;&lt; Write the head text &gt;&gt;</vh></v>
 </v>
+<v t="ekr.20031218072017.1193"><vh>c.deleteOutline</vh></v>
+<v t="ekr.20031218072017.2072" a="E"><vh>c.checkOutline</vh>
+<v t="ekr.20040314062338" a="TV"><vh>&lt;&lt; assert equivalence of lastVisible methods &gt;&gt;</vh></v>
+<v t="ekr.20040313150633"><vh>&lt;&lt; remove unused tnodeList &gt;&gt;</vh></v>
+<v t="ekr.20040323155951"><vh>&lt;&lt; do full tests &gt;&gt;</vh>
+<v t="ekr.20040314035615"><vh>assert consistency of threadNext &amp; threadBack links</vh></v>
+<v t="ekr.20040314035615.1"><vh>assert consistency of next and back links</vh></v>
+<v t="ekr.20040314035615.2"><vh>assert consistency of parent and chiild links</vh></v>
+<v t="ekr.20040323155951.1"><vh>assert consistency of directParents and parent</vh></v>
+<v t="ekr.20040323161837"><vh>assert consistency of p.v.t.vnodeList, &amp; v.parents for cloned nodes</vh></v>
+<v t="ekr.20040323162707"><vh>assert that clones actually share subtrees</vh></v>
+<v t="ekr.20040314043623"><vh>assert consistency of vnodeList</vh></v>
 </v>
-<v t="ekr.20040331145826.1"><vh>(done) RapidQ support</vh>
-<v t="ekr.20040331145826"><vh>rapidq keywords</vh></v>
-</v>
-<v t="ekr.20040117111755"><vh>(done) css support</vh>
-<v t="ekr.20040401104931"><vh>Notes</vh></v>
-<v t="ekr.20040401103539"><vh>css keywords</vh></v>
-<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+<v t="ekr.20040314043900"><vh>&lt;&lt;print summary message &gt;&gt;</vh></v>
+<v t="ekr.20040314044652"><vh>&lt;&lt; give test failed message &gt;&gt;</vh></v>
 </v>
 </v>
-<v t="ekr.20040117113539.1"><vh>(done) Coloring for Shell Scripts (Davide)</vh>
-<v t="ekr.20040401111308"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
+<v t="ekr.20040409130322.2" a="E"><vh>position methods ...</vh>
+<v t="ekr.20040310062332"><vh>p.Link/Unlink methods</vh>
+<v t="ekr.20040310062332.1"><vh>p.invalidOutline</vh></v>
+<v t="ekr.20040310062332.2"><vh>p.linkAfter</vh></v>
+<v t="ekr.20040310062332.3"><vh>p.linkAsNthChild</vh></v>
+<v t="ekr.20040310062332.4"><vh>p.linkAsRoot</vh></v>
+<v t="ekr.20040310062332.5" a="M"><vh>p.unlink</vh></v>
 </v>
-<v t="ekr.20040106145421"><vh>(not yet) PHP syntax coloring</vh>
-<v t="ekr.20040401110507"><vh>Notes</vh></v>
-<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1896"><vh>doNormalState</vh>
-<v t="ekr.20031218072017.1897"><vh>Valid regardless of latex mode</vh>
-<v t="ekr.20031218072017.1898"><vh>&lt;&lt; handle possible  keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1899"><vh>&lt;&lt; handle possible latex keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1900"><vh>&lt;&lt; handle possible html keyword &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1901"><vh>&lt;&lt; handle general keyword &gt;&gt;</vh></v>
+<v t="ekr.20040303175026.2" a="M"><vh>p.doDelete</vh>
+<v t="ekr.20040409162703"><vh>&lt;&lt; Alter all _parent links of children of this node &gt;&gt;</vh></v>
+<v t="ekr.20040409162703.1"><vh>&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1902"><vh>&lt;&lt; handle at keyword &gt;&gt;</vh>
-<v t="ekr.20031218072017.1903"><vh>&lt;&lt; Handle cweb control word &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1904"><vh>&lt;&lt; handle cweb ref or def &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.4146"><vh>p.lastVisible &amp; oldLastVisible</vh></v>
+<v t="ekr.20040310153624"><vh>p.dump</vh></v>
 </v>
-<v t="ekr.20031218072017.1617"><vh>&lt;&lt; handle single-line comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1619"><vh>&lt;&lt; start block comment &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1905"><vh>&lt;&lt; handle latex line &gt;&gt;</vh></v>
+<v t="ekr.20040409163052"><vh>Undo</vh>
+<v t="ekr.20031218072017.2034"><vh>&lt;&lt; redo insert cases &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2041"><vh>&lt;&lt; undo delete cases &gt;&gt;</vh></v>
 </v>
-<v t="ekr.20031218072017.1906"><vh>Vaid only in latex mode</vh>
-<v t="ekr.20031218072017.1907"><vh>&lt;&lt; handle latex normal character &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20031218072017.1908"><vh>Valid when not in latex_mode</vh>
-<v t="ekr.20031218072017.1612"><vh>&lt;&lt; handle string &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1909"><vh>&lt;&lt; handle C preprocessor line &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1910"><vh>&lt;&lt; handle special php keywords &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1911"><vh>&lt;&lt; handle blank &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1912"><vh>&lt;&lt; handle tab &gt;&gt;</vh></v>
-<v t="ekr.20031218072017.1913"><vh>&lt;&lt; handle normal character &gt;&gt;</vh></v>
-</v>
-</v>
-</v>
-<v t="ekr.20031218072017.3195"><vh>splitLines &amp; joinLines</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9841,866 +9384,6 @@
 @nocolor
 
 Older diary entries are in LeoDocs.leo.</t>
-<t tx="ekr.20031218072017.1"></t>
-<t tx="ekr.20031218072017.2"></t>
-<t tx="ekr.20031218072017.3"></t>
-<t tx="ekr.20031218072017.4">This affects only the Reformat Paragraph command.</t>
-<t tx="ekr.20031218072017.5"></t>
-<t tx="ekr.20031218072017.6"></t>
-<t tx="ekr.20031218072017.7"></t>
-<t tx="ekr.20031218072017.8"></t>
-<t tx="ekr.20031218072017.9">@nocolor
-
-Leo now uses yymmddhhmmss as the format of timestamps.  This is good for sorting chronologically.</t>
-<t tx="ekr.20031218072017.10">Using * shows files like readme that don't have a file extension.</t>
-<t tx="ekr.20031218072017.11"></t>
-<t tx="ekr.20031218072017.12"></t>
-<t tx="ekr.20031218072017.13">The fix is to add a scripting arg to atFile.scanAllDirectives.</t>
-<t tx="ekr.20031218072017.14">Also removed a confusing traceback.</t>
-<t tx="ekr.20031218072017.15"></t>
-<t tx="ekr.20031218072017.16">Found a batch-mode bug: the meaning of moves depends on whether nodes are expanded.  This won't be good in batch mode.</t>
-<t tx="ekr.20031218072017.17"></t>
-<t tx="ekr.20031218072017.18">It turns out that executing a script was setting the tnodeList for the node if the node had section refs!  This was the source of the ongoing mystery about why some nodes had tnodeLists.  Resolving this mystery puts Leo's read/write code on a firmer foundation.
-
-This was tricky to make sure that tnodeList's are created and written only when necessary:
-
-- The fileCommands.putVnode writes tnodeList only for @file nodes.
-  (and only non-empty tnodeList's)
-
-- new_df.write clears at.root.tnodeList when writing a script.
-
-- c.checkOutline (and the related script) does not consider that an empty tnodeList is an error.</t>
-<t tx="ekr.20031218072017.19"></t>
-<t tx="ekr.20031218072017.20"></t>
-<t tx="ekr.20031218072017.21">Replaced string concatenation with list operations.</t>
-<t tx="ekr.20031218072017.22"></t>
-<t tx="ekr.20031218072017.23">Dialogs return a predefined value.</t>
-<t tx="ekr.20031218072017.24"></t>
-<t tx="ekr.20031218072017.25"></t>
-<t tx="ekr.20031218072017.26"># Line 1108: _multiples = [(2., Numeric.log10(2.)), (5., Numeric.log10(5.))]
-
-I suspect this was a file that contained both tabs and spaces.</t>
-<t tx="ekr.20031218072017.27"></t>
-<t tx="ekr.20031218072017.28">My conclusion at present is that the problem lies with 4.0.4, not 4.1.  I can see nothing seriously wrong with the present code:
-
-- Missing tnodeList errors are possible when @file nodes are cloned when converting from 3.x to 4.x.  The tnodeList probably should have been made part of tnodes, not vnodes; it's too late to change now.
-
-- Missing tnodeList errors are not serious: Leo will recover as usual.
-
-- The copy/paste code had a few bugs that I corrected today.  I doubt whether these would have caused major problems.
-
-In short, the present code appears to be reasonably solid.  I should withdraw the 4.0.4 code asap.</t>
-<t tx="ekr.20031218072017.29"></t>
-<t tx="ekr.20031218072017.30"></t>
-<t tx="ekr.20031218072017.31">The old way always surprised me.
-
-To make this work I disabled checks in the read logic if at.importing is true</t>
-<t tx="ekr.20031218072017.32"></t>
-<t tx="ekr.20031218072017.33"></t>
-<t tx="ekr.20031218072017.34"></t>
-<t tx="ekr.20031218072017.35">Only double-quoted strings are valid in html.  A lone single-quote caused a cascade of mismatched comments.</t>
-<t tx="ekr.20031218072017.36">This has been around ever since the dragging code was created.</t>
-<t tx="ekr.20031218072017.37">Plugins are now loaded in the order in which they appear in pluginsManager.txt.
-
-Removed all "compile-time" enabling/disabling code from leoPlugins.leo.
-
-The only such checks that remain are checks to see if Tkinter can be imported, and other similar checks.
-</t>
-<t tx="ekr.20031218072017.38"></t>
-<t tx="ekr.20031218072017.39">The only change was that replaceClipboardWith now no longer returns a value.</t>
-<t tx="ekr.20031218072017.40"></t>
-<t tx="ekr.20031218072017.41"></t>
-<t tx="ekr.20031218072017.42"></t>
-<t tx="ekr.20031218072017.43"></t>
-<t tx="ekr.20031218072017.44"></t>
-<t tx="ekr.20031218072017.45">getBodyLines must set head = tail = None when lines is expanded to include everything.
-
-This probably affects several other commands.</t>
-<t tx="ekr.20031218072017.46"></t>
-<t tx="ekr.20031218072017.47"></t>
-<t tx="ekr.20031218072017.48">This fixes several related bugs:  updateRecentFiles was not being called except when openWithFileName was called.</t>
-<t tx="ekr.20031218072017.49"></t>
-<t tx="ekr.20031218072017.50"></t>
-<t tx="ekr.20031218072017.51">app.batchLog was completely redundant.</t>
-<t tx="ekr.20031218072017.52"></t>
-<t tx="ekr.20031218072017.53"></t>
-<t tx="ekr.20031218072017.54">The command seems to work well enough when we get this message.</t>
-<t tx="ekr.20031218072017.55">Apparently I added shortcuts to the popup menu for the first time recently.
-
-The "duplicate binding" logic would complain if popups actually tried to bind the shortcuts.
-
-The fix: to add a dontBind param to createMenuEntries and set that param when creating the popup menu.</t>
-<t tx="ekr.20031218072017.56">Replaced asserts with warnings.</t>
-<t tx="ekr.20031218072017.57">Renaming bodyCtrl to body conflicted with a previous var named body.</t>
-<t tx="ekr.20031218072017.58">putRefLine must return if putRefAt finds an error.</t>
-<t tx="ekr.20031218072017.59">This "real" test exposed several problems:
-
-- Only --script was recognized, not -script.
-- Created global app.batchLog var.
-- Changes to nullLog.__init__
-	- inits app.batchLog if app.batchMode is true.
-	- inits app.batchLog if app.batchMode is true (only if app.batchLog not inited).
-- trace now _always_ uses print.  This prevents problems with traces in nullLog.
-- es now uses app.batchLog.put if app.batchMode is true.
-- nullGui.runMainLoop prints nothing unless app.batchLog is enabled.</t>
-<t tx="ekr.20031218072017.60"></t>
-<t tx="ekr.20031218072017.61"></t>
-<t tx="ekr.20031218072017.62"></t>
-<t tx="ekr.20031218072017.63"></t>
-<t tx="ekr.20031218072017.64"></t>
-<t tx="ekr.20031218072017.65"></t>
-<t tx="ekr.20031218072017.66">This is a convenience routine for scripts.  It does not update the body pane.</t>
-<t tx="ekr.20031218072017.67"></t>
-<t tx="ekr.20031218072017.68">These exposed some further problems with the reorg.
-</t>
-<t tx="ekr.20031218072017.69"></t>
-<t tx="ekr.20031218072017.70">Must call </t>
-<t tx="ekr.20031218072017.71"></t>
-<t tx="ekr.20031218072017.72">@nocolor
-
-- (fixed) I noticed this in leoConfig.leo: config_encoding = iso-8859-1
-
-- (fixed) ImportError: No module named leoDialog.
-
-- (fixed) TypeError: about() takes exactly 2 arguments (1 given) (plugin_menu plugin)
-
-- (fixed) mod_spelling plugin: several bugs.</t>
-<t tx="ekr.20031218072017.73">It was very easy to do: just use the atFile.write to write into a file-like object.
-
-The only other complication: we temporarily replace the root's body text with just the selected text.
-
-Created app.scriptDict to communicate between the Execute Script command and the scripts being executed.
-
-app.script["script1"] contains the original script.
-
-app.script["script2"] contains the preprocessed script.  This will contain Leo sentinel lines.</t>
-<t tx="ekr.20031218072017.74">Moved @others inside if "tk and 1:"</t>
-<t tx="ekr.20031218072017.75"></t>
-<t tx="ekr.20031218072017.76">This is a necessary precondition to supporting Unicode file and directory names properly.  It's not at all clear whether this is sufficient.  Anyway, these routines help clean up the code.
-
-I took care that scripts import only those os_path_xxx routines that are necessary.  However, this process could have introduced bugs.</t>
-<t tx="ekr.20031218072017.77">The find &amp; change scripts show the power of Leo's new script find/change commands.
-
-Getting these scripts correct was a bit tricky.</t>
-<t tx="ekr.20031218072017.78"></t>
-<t tx="ekr.20031218072017.79"></t>
-<t tx="ekr.20031218072017.80"></t>
-<t tx="ekr.20031218072017.81"></t>
-<t tx="ekr.20031218072017.82"></t>
-<t tx="ekr.20031218072017.83"></t>
-<t tx="ekr.20031218072017.84"></t>
-<t tx="ekr.20031218072017.85"></t>
-<t tx="ekr.20031218072017.86"></t>
-<t tx="ekr.20031218072017.87">Due to moving and renaming some commands routines.</t>
-<t tx="ekr.20031218072017.88">A simple bug due to the reorg.</t>
-<t tx="ekr.20031218072017.89"></t>
-<t tx="ekr.20031218072017.90">The new setEditVnode setter didn't set the global.</t>
-<t tx="ekr.20031218072017.91">This is much more natural than the old way.</t>
-<t tx="ekr.20031218072017.92">This removes a bit of a kludge.</t>
-<t tx="ekr.20031218072017.93"></t>
-<t tx="ekr.20031218072017.94">The biggest Aha was getting rid of redirection routines.
-
-I could get rid of the tree redicrection routines if I used a proper tree class.  It's probably not worth it...</t>
-<t tx="ekr.20031218072017.95">Moved get/setRealMenuName &amp; setRealMenuNamesFromTable.
-
-It is really satisfying to get rid of these globals.  It makes the leoGlobals file much stronger.</t>
-<t tx="ekr.20031218072017.96">These were hardly used anyway, and getting rid of them greatly clarifies the code.
-
-These may create small problems in plugins...</t>
-<t tx="ekr.20031218072017.97">- Key insight 1:  menus must belong to frames, _not_ to a gui.
-
-- Key insight 2:  frame.menu.getFrame is gui-independed, so no need to "redirect"
-
-- Key insight 3:  We prefer "binding" routines to "redirection" routines.
-
-	Redirection routines just cause confusion and unnecessary work.
-
-- Moved all global menu routines into gui-specific classes.
-
-	This is an application of insight 3.  We want to bind things, not redirect calls.
-
-- Moved all gui menu routines into gui-specfic classes.
-
-	Same principle at work.  Much less work.
-
-- Key insight 4:  Leo's core always calls frame.menu.x, _not_ app.gui.menu.x.
-
-	For one thing, menu code must be frame-dependent, so a general app.gui.menu method WILL NOT WORK.
-
-- Eliminated all frame "redirection" routines relating to menus.
-
-I am very pleased with the result.  The new code is simpler and much less confusion.</t>
-<t tx="ekr.20031218072017.98">There was a name colision between the code that used to be in the Frame class.</t>
-<t tx="ekr.20031218072017.99"></t>
-<t tx="ekr.20031218072017.100">Another problems due to the reorg.
-
-Whole word searches did not succeed if the pattern was at the start or end of body text.
-
-The getCharBeforeIndex and getCharAfterIndex routines must check for start and end of text.
-
-While I was at it, I changed is_c_id so that it returns false if the argument is None.</t>
-<t tx="ekr.20031218072017.101">Apparently this must be done after creating the dialog.</t>
-<t tx="ekr.20031218072017.102">This was the result of the reorg.</t>
-<t tx="ekr.20031218072017.103"></t>
-<t tx="ekr.20031218072017.104"></t>
-<t tx="ekr.20031218072017.105">- Eliminated app.gui.utils class (all code in app.gui class).
-
-- Eliminated Focus routines in leoGlobals.py (now in app.gui class).</t>
-<t tx="ekr.20031218072017.106"></t>
-<t tx="ekr.20031218072017.107">At long last I realized that the gui-specific app.gui class should have an associated utils class to handle gui-specific routines that used to be in leoGlobals.py.
-
-The pattern is:
-
-	gu = app.gui.utils
-	...
-	gu.xxx(args)
-
-It would be possible to define all the body wrapper methods in terms of the app.gui.utils class.  However, these routines naturally belong in the gui-specific class, so not as much is gained by doing this as might be imagined at first.
-
-Anyway, the road is now clear to rewrite the wx gui plugin.  It will probably take only a few hours to do this!</t>
-<t tx="ekr.20031218072017.108">This went remarkably smoothly.
-
-The separation of gui-dependent from gui-independent code was usually trivial.
-
-The Find classes were a bit harder: I created about a dozen tkinter wrapper routines so that all the utils could be moved into the base class.  This means that all the find logic is in the base class, and implementing a wx Find panel will be very easy.
-
-The app.gui routines no longer require a "run" routine.  Instead, calling app.gui.createXPanel creates the panel and runs it.  All panels now support a "bringToFront" routine that is called to make the panel visible when the panel already exists.</t>
-<t tx="ekr.20031218072017.109">- Moved recentFiles ivar from frame class to commands class.
-
-- updateRecentFiles must call app.config.setRecentFiles with self.recentFiles as the arg, not c.recentFiles.</t>
-<t tx="ekr.20031218072017.110"></t>
-<t tx="ekr.20031218072017.111">What I did:
-
-- Created wrappers for tk calls in core.
-	- Removed all tk calls in undoRedoText
-- Created wrappers for all tk calls in leoTkinterFrame
-	(exception) OnInsertHeadlineTime uses v.edit_text
-- Moved gui-independent commands code from leoTkinterFrame to leoFrame.
-	No changes were needed!
-- Changed x.commands to x.c for all classes x.
-- Eliminated intermediate event handlers in frame class.
-- Removed event param from all commands handlers.
-	- Exception: the cut/copy/paste handlers must have an event param.
--Moved all non-gui commands into commands class.
-	- Removed all frame routines that called commands.
-	**There is now a clear separation between gui-dependent routines in leoFrame subclasses
-	  and gui-independent routines in Commands class.
-- Created stub routines for gui-dependent routines in leoFrame class</t>
-<t tx="ekr.20031218072017.112">Rather than calling oops, it is so much more intelligent to call the corresponding bodyCtrl routine!</t>
-<t tx="ekr.20031218072017.113"></t>
-<t tx="ekr.20031218072017.114">This was very easy.  Almost all the menu code is now gui-independent.  This will make implementing the wx gui plugin _much_ easier.</t>
-<t tx="ekr.20031218072017.115">Leo was mistaking the escaped percentile sign "\%" (backslash followed by
-percentile) for the LaTeX comment delimiter (plain percentile sign).
-
-The fix was:
-
-1. Add "\\%" to the list of LaTeX keywords.
-2. Create latex_special_keyword_characters = "@(){}%"
-3. Use latex_special_keyword_characters when scanning for possible LaTeX keywords.
-</t>
-<t tx="ekr.20031218072017.116">The problem is that a successful search _must_ reset the selection range, so there isn't much point to this command.  Moreover, the Find All and Change All commands would loop if they aren't equivalent to the Find and Change commands when this option is in effect.  All in all, an almost useless option.  Too bad.</t>
-<t tx="ekr.20031218072017.117"></t>
-<t tx="ekr.20031218072017.118"></t>
-<t tx="ekr.20031218072017.119">LeoPy.leo, The "Code" part only:
-
-nodes,lines,pages, 2398, 79524, 2070
-
-leoPlugins.leo:  Plugins &amp; scripts
-
-nodes,lines,pages, 403, 10880, 298
-
-LeoDocs.leo:  Users Guide
-
-nodes,lines,pages, 379, 44606, 967</t>
-<t tx="ekr.20031218072017.120"></t>
-<t tx="ekr.20031218072017.121">"mbcs" probably will work only on Windows!</t>
-<t tx="ekr.20031218072017.122">A recent change was done incorrectly.  There is no "find()" method: I changed it to findNext().</t>
-<t tx="ekr.20031218072017.123"></t>
-<t tx="ekr.20031218072017.124"></t>
-<t tx="ekr.20031218072017.125"></t>
-<t tx="ekr.20031218072017.126">A useful little utility to set up script-find/change.</t>
-<t tx="ekr.20031218072017.127">This involved fixing a bug in idle_body_key so that the oldText param is honored if present.</t>
-<t tx="ekr.20031218072017.128">The Script Change checkbox will have a few uses:
-
-- It is replacement for a script that replaces the selection with text.  Yes, this script would be easy to write, but why not write it for the user?
-
-Leo will execute a "default change script" when the Script Change checkbox is checked.  Simple and effective.</t>
-<t tx="ekr.20031218072017.129"></t>
-<t tx="ekr.20031218072017.130">Yes, we really do need script-based find/change.  The reason is that the find panel (and the associated find commands) is really the only good place to allow the user to do an interactive search.  Without this feature, all interactive find/change scripts would have to duplicate all the work of the find/change commands.
-
-Still to do: help scripts do undo.
-
-Conventions enforced by Leo:
-
-- The app.searchDict ivar can be used for communication between find &amp; change scripts.
-- app.searchDict["type"] contains either "find", "change", "findAll" or "changeAll".
-- The Find All command executes the find script only once unless the script sets
-  app.searchDict["Continue"] = true  (similarly for the change all command.
-- The Find Then Change command executes the find command followed by the change command.
-- The Change Script command supports undo if app.searchDict has the following entry after the script executes:
-	{ "v" : v, "oldText" : oldText, "newText" : s }
-	A "keys" key is an optional keyword dict to be passed to setUndoParams.
-
-Leo actually doesn't do much:
-
-- Leo doesn't clear app.searchDict.
-	- However, a _script_ can
-		a) init itself and
-		b) bring up the find window (Eureka!)
-- The find script is repsonsible for traversing the tree.
-- The find script is responsible for highlighting the found text
-  or otherwise indicating to the change script what the found text was.
-  For example, the re find script can set app.searchDict["m"] to the match object.
-- The find script must communicate with the change script.  Leo does nothing.
-- The change script must change the text, usually by using v.setBodyStringOrPane.</t>
-<t tx="ekr.20031218072017.131">@color
-
-# Example showing how a script can init the Find panel
-
-script = """from leoGlobals import *
-c = top() ; v = c.currentVnode()
-print `v`
-v = v.threadNext()
-c.selectVnode(v)"""
-
-from leoGlobals import *
-app.searchDict = {} # Communication between search &amp; change scripts
-c = top()
-c.script_search_flag = true
-c.find_text = script
-app.findFrame.init(c)
-c.frame.OnFindPanel()
-</t>
-<t tx="ekr.20031218072017.132">Undoing Change All cleared the body pane.
-
-The fix was simple: call setUndoParams instead of setUndoTypingParams in batchChange.</t>
-<t tx="ekr.20031218072017.133"></t>
-<t tx="ekr.20031218072017.134"></t>
-<t tx="ekr.20031218072017.135">The node-only option wasn't working due to a bug in createFrame.
-
-There still may be a problem with the interaction between Node-only,Change All and Undo.</t>
-<t tx="ekr.20031218072017.136"></t>
-<t tx="ekr.20031218072017.137">The fix was to open files with 'rb' instead of 'r'.  This probably should be done in more places.</t>
-<t tx="ekr.20031218072017.138">This command checks for unused tnodeLists and checks the topology of all clones.</t>
-<t tx="ekr.20031218072017.139">Hoisting itself is easy.  The biggest challenge was preventing moves outside the hoisted area, which would too confusing.</t>
-<t tx="ekr.20031218072017.140"></t>
-<t tx="ekr.20031218072017.141">- Added df.fileChanged flag.  This is set by replaceTargetFileIfDifferent.
-
-- Separated the "written" logic from the "changed" logic.  We do an auto-save only if something has actually been changed.  The "written" logic is used to warn if a tree contains no @file nodes.</t>
-<t tx="ekr.20031218072017.142"></t>
-<t tx="ekr.20031218072017.143"></t>
-<t tx="ekr.20031218072017.144">This is required for compatibility with Leo 3.x versions.</t>
-<t tx="ekr.20031218072017.145">app.use_gnx controls whether we generate full gnx's or not.  At present there is no setting for this, so 4.1 really defines a new file format.
-
-There was some weirdness: assignFileIndices didn't actually assign all file indices!  As a hack, putTnodeList also assigns file indices.  The mystery is solved.  Leo only clears the tnodeList of roots when writing, so once a non-root node gets a tnode list it can stay a long time.  Probably should clear all non-root tnode lists, and this would slow things down.
-
-Perhaps a script could do the job?</t>
-<t tx="ekr.20031218072017.146"></t>
-<t tx="ekr.20031218072017.147"></t>
-<t tx="ekr.20031218072017.148">The state of frame.controlKeyIsDown is not always correct.  I added bindings to the hidden root window to try to catch this.  This may not be a good idea...</t>
-<t tx="ekr.20031218072017.149">- Added config_encoding setting to specify the encoding of leoConfig.txt.
-- Converted all options to Unicode when reading leoConfig.txt.
-- Converted all options to config.config_encoding when writing leoConfig.txt.</t>
-<t tx="ekr.20031218072017.150"></t>
-<t tx="ekr.20031218072017.151">- Replaced all references in colorizer to bodyCtrl by body.x.
-- Removed colorizer.bodyCtrl ivar.
-- Created colorizer.body ivar.</t>
-<t tx="ekr.20031218072017.152">This removes all possibility that call set_focus from Leo's core will cause problems.
-
-Actually though, Leo's core calls no focus routines, so there should be no problems.</t>
-<t tx="ekr.20031218072017.153"></t>
-<t tx="ekr.20031218072017.154">Create new Idle-time and clipboard routines in leoGui and leoTkinterGui classes.  Also updated wx plugin.</t>
-<t tx="ekr.20031218072017.155"></t>
-<t tx="ekr.20031218072017.156"></t>
-<t tx="ekr.20031218072017.157"></t>
-<t tx="ekr.20031218072017.158"></t>
-<t tx="ekr.20031218072017.159"></t>
-<t tx="ekr.20031218072017.160"></t>
-<t tx="ekr.20031218072017.161">What I did:
-
-- assignFileIndices &amp; compactFileIndices now are identical.
-
-- putVnode now assigns vnode indices to _all_ tnodes.
-	(not all of them may be written, but that doesn't matter)
-
-- putVnode no longer writes the "C" (cloned) attribute.
-
-- finishPaste now _reallocates_ tnode indices in all pasted nodes.  This fixes a major copy/paste bug.  Failure to do this would have created "false clones": hidden clones that would show up when the file was read again.</t>
-<t tx="ekr.20031218072017.162"></t>
-<t tx="ekr.20031218072017.163">The root wasn't being set properly because of a missing break statement.</t>
-<t tx="ekr.20031218072017.164"></t>
-<t tx="ekr.20031218072017.165"># Changed col= to column= in several places.
-# Changed @file to @file-nosent mod_autosave.ini.</t>
-<t tx="ekr.20031218072017.166">The code now uses updateBodyPane as before.</t>
-<t tx="ekr.20031218072017.167">We don't have to mess with the ending selection for reformatParagraph because the shift commands now properly restore the selection.</t>
-<t tx="ekr.20031218072017.168"></t>
-<t tx="ekr.20031218072017.169">This is a bit kludgy, due to Tk weirdnesses.  I don't think it can be helped...</t>
-<t tx="ekr.20031218072017.170"></t>
-<t tx="ekr.20031218072017.171">This now preserves trailing newlines correctly.  Far from intuitive.</t>
-<t tx="ekr.20031218072017.172">Unlike using string.split and string.join, these preserve the state of the trailing newline.</t>
-<t tx="ekr.20031218072017.173">Added -1c in setSelectionAreas and getSelectionLines.
-
-Tk's selection mechanism isn't great here.  I want to select to the end of the line, and if I specifing x lineend the cursor actually gets placed at the start of the next line!</t>
-<t tx="ekr.20031218072017.174"></t>
-<t tx="ekr.20031218072017.175">The code was mistakenly calling frame.destroySelf() if the file could not be opened.  This is always wrong.
-
-While I was at it, I added an except IOError: clause that simply reports that the file could not be opened.
-
-I really should create a wrapper for file to handle the except IOError: case...</t>
-<t tx="ekr.20031218072017.176"></t>
-<t tx="ekr.20031218072017.177">"idle" hooks must test app.initing before calling app.forceShutdown().
-</t>
-<t tx="ekr.20031218072017.178"></t>
-<t tx="ekr.20031218072017.179"></t>
-<t tx="ekr.20031218072017.180">This will allow me to define frame.body as an instance of the leoTkinterBody class.</t>
-<t tx="ekr.20031218072017.181"></t>
-<t tx="ekr.20031218072017.182">This removes some of the frame details from the app class.
-
-As a result, several app methods went away.</t>
-<t tx="ekr.20031218072017.183">- Added new getters and setters to leoTkinterFrame.
-
-- The following classes will soon become tkinter classes, so references to top are not important:
-
-LeoColorPanel, LeoColorNamePanel, leoCompare, leoDialog, leoFind, leoFont, leoPrefs</t>
-<t tx="ekr.20031218072017.184">- Removed v.iconx and vicony from Leo's core.
-	- Added default args in tree.drawIcon() so Leo's core doesn't know about the ivars.
-
-- tree.drawIcon is now the only routine that accesses these ivars!</t>
-<t tx="ekr.20031218072017.185">
-- tkinterTree now injects callbacks into vnode class.
-- leoFrame.py now contains base classes named leoFrame, leoBody, leoLog and leoTree.
-- Renamed present LeoFrame class to leoTkinterFrame and move it to leoTkinterFrame.py.
-- Renamed present leoTree class to leoTkinterTree and move it to leoTkinterTree.py.</t>
-<t tx="ekr.20031218072017.186"></t>
-<t tx="ekr.20031218072017.187"></t>
-<t tx="ekr.20031218072017.188"></t>
-<t tx="ekr.20031218072017.189">- Simplified undoReplace code &amp; removed asserts.
-- The text param is no longer used and could be removed.
-
-Undo tests:
-
-(passed) Read @file Nodes.
-(passed) Import Derived Files
-
-(passed) Extract Section
-(passed) Extract Section Names.
-(passed) Extract
-
-(passed) Convert Tabs &amp; Convert All Tabs.
-</t>
-<t tx="ekr.20031218072017.190"></t>
-<t tx="ekr.20031218072017.191"></t>
-<t tx="ekr.20031218072017.192">This is too distracting while typing the directive.</t>
-<t tx="ekr.20031218072017.193">@nocolor
-
-The following appears in run() in leo.py:
-
-@color
-
-doHook("start1")
-if app.killed: return # 10/15/03: allows the plugin to kill the app.</t>
-<t tx="ekr.20031218072017.194">This command was not taking into account the optional -ver= part of the @+leo sentinel.</t>
-<t tx="ekr.20031218072017.195">The command now looks at joined nodes if no ancestor @file node.</t>
-<t tx="ekr.20031218072017.196"></t>
-<t tx="ekr.20031218072017.197"></t>
-<t tx="ekr.20031218072017.198"></t>
-<t tx="ekr.20031218072017.199"></t>
-<t tx="ekr.20031218072017.200">- Replaced all calls to v.copyTree related to undo by c.undoer.saveTree.
-
-- Hacked u.undoReplace to handle tuple returned by u.saveTree.
-
-- Fixed bugs in Convert All Blanks and Convert All Tabs routines.
-	- These routines call convertBlanks and convertTabs as helpers.
-	- Added arg to convertBlanks and convertTabs controlling whether these routines set undo state.
-</t>
-<t tx="ekr.20031218072017.201"></t>
-<t tx="ekr.20031218072017.202"></t>
-<t tx="ekr.20031218072017.203"></t>
-<t tx="ekr.20031218072017.204">@language elisp
-@color
-
-(defun abc 'a "abc
-xyz" cons)</t>
-<t tx="ekr.20031218072017.205">Must call c.initAllCloneBits.</t>
-<t tx="ekr.20031218072017.206"></t>
-<t tx="ekr.20031218072017.207">This is a temporary expedient.  Probably using ch.isalpha() would be better</t>
-<t tx="ekr.20031218072017.208">When doing a back scan we must test for the start of the text _after_ looking for brackets.</t>
-<t tx="ekr.20031218072017.209"></t>
-<t tx="ekr.20031218072017.210"></t>
-<t tx="ekr.20031218072017.211">This was tricky to get right:
-
-- There are several calls to after_idle(idle_body_key), so which gets scheduled is a matter of timing.  To handle that I added the tree.forceFullRedraw() routine.
-
-- The undo/redo code also recolors the text.  Added a new param to undoRedoText so that it could force a full redraw after cut/paste.
-</t>
-<t tx="ekr.20031218072017.212">The new code is now guaranteed to go to the proper node of the outline.  However, @doc parts may disrupt line counts within a node.</t>
-<t tx="ekr.20031218072017.213"></t>
-<t tx="ekr.20031218072017.214"></t>
-<t tx="ekr.20031218072017.215">Somehow a number of calls to c.initJoinedCloneBits got omitted.</t>
-<t tx="ekr.20031218072017.216">vnode attributes would typically be used for things like marks or additional icons.
-
-tnode attributes would typically be used for anything associated with shared headline or body text.</t>
-<t tx="ekr.20031218072017.217">tkinterGui.destroy must call frame.top.destroy.</t>
-<t tx="ekr.20031218072017.218"></t>
-<t tx="ekr.20031218072017.219"></t>
-<t tx="ekr.20031218072017.220">The code was attempting to reference an ivar.  I placed sentinelNameDict inside sentinelName() and referenced it directly.</t>
-<t tx="ekr.20031218072017.221">This is required so that attributes get set in the leoApp object rather than the proxy object.</t>
-<t tx="ekr.20031218072017.222"></t>
-<t tx="ekr.20031218072017.223"></t>
-<t tx="ekr.20031218072017.224"></t>
-<t tx="ekr.20031218072017.225">This is a big step forward.  newLeoCommanderAndFrame provides a place to explore the complexities of initializing LeoFrames and their commanders.
-
-newLeoCommanderAndFrame does the following.  Order is _crucial_:
-
-- first creates an "empty" frame first to pass to the commanders.  This was an Aha!
-- then creates the commander and all subcommanders.
-- then calls the new frame.finishCreate routine to create the actual frames.
-- finally calls c.undoer.clearUndoState(), which requires that menus have already been created.
-
-The present code should be moved to the tkinterGui class.</t>
-<t tx="ekr.20031218072017.226">Leo now warns if it can't find either the Icons directory or the LeoApp16.ico icon in that directory.</t>
-<t tx="ekr.20031218072017.227"></t>
-<t tx="ekr.20031218072017.228"></t>
-<t tx="ekr.20031218072017.229"></t>
-<t tx="ekr.20031218072017.230"></t>
-<t tx="ekr.20031218072017.231"></t>
-<t tx="ekr.20031218072017.232"></t>
-<t tx="ekr.20031218072017.233">This is much more natural and less cluttered.</t>
-<t tx="ekr.20031218072017.234">There were bugs involving the c.pattern_match_flag and c.suboutline_only_flag.
-
-The present code is way too fragil and clumsy.  I plan to rewrite it completely when the configuration logic is redone.
-
-Also, the present code using only a single copy of leoConfig.txt, so changing a setting in one .leo file may change settings in other .leo files.</t>
-<t tx="ekr.20031218072017.235">@nocolor
-
-Class level-code after the method definitions was dropped:
-
-@color
-
-class someclass:
-	def __init__(self):
-		pass
-
-	# this code is dropped
-	class_var = None
-
-def some_proc():
-	pass</t>
-<t tx="ekr.20031218072017.236"></t>
-<t tx="ekr.20031218072017.237">allow_clone_drags = 1
-# 1: Allows control-dragging to create clones.
-# 0: All drags move nodes.
-# See also: look_for_control_drag_on_mouse_down
-# Setting this setting to 0 allows Leo to be used on Aqua.
-
-enable_drag_messages = 1
-# 1: Tell whether drags will move nodes or clone nodes.
-# 0: Don't issue such messages.</t>
-<t tx="ekr.20031218072017.238">The read code now clears the dirty bit in the root vnode before looking for changed text.
-
-While I was at it, I moved some of the dirty bit logic into getLeoFile.  This makes all read commands work the same.</t>
-<t tx="ekr.20031218072017.239">Fixed Go To Outline command so it doesn't crash on 4.0 files.  More work is needed:
-
-- There are "off-by-one" errors.
-- It is possible that a complete rewrite in the 4.0 case would be significantly better.</t>
-<t tx="ekr.20031218072017.240">This was easy: just write a newline and an @nonl sentinel if the text does not end in a newline.
-
-Compare with the messy 3.x code: a huge simplification.</t>
-<t tx="ekr.20031218072017.241">The reason this was so strange is that the at.sentinels ivar was not initialized properly, either in the the old or new classes.  Usually this ivar is set properly (to true) because the _preceding_ file is an @file node that does init the ivar to true.
-
-So the fix was just to set self.sentinel = true in new_df.rawWrite and old_df.rawWrite</t>
-<t tx="ekr.20031218072017.242"></t>
-<t tx="ekr.20031218072017.243"></t>
-<t tx="ekr.20031218072017.244">Again, this wasn't an error, and it was confusing.</t>
-<t tx="ekr.20031218072017.245">This wasn't a bug, but it was quite confusing.</t>
-<t tx="ekr.20031218072017.246">This avoids overriding the base putSentinel routine with a routine with a different signature.
-
-This argument was never used anyway.</t>
-<t tx="ekr.20031218072017.247">This avoids overriding the base scanText routine with a routine with a different signature.</t>
-<t tx="ekr.20031218072017.248">leo.py
-
-- Added leoDialog and traceback to import list.
-- Removed app args from createFrame and initSherlock.
-
-leoApp
-
-- Changed tList = [] to tDict = {}
-- Removed app.finishCreate.
-
-- leoCommands
-
-- Removed some unused local vars in Convert Blanks/Tabs and Reformat Paragraph commands.
-
-leoCompare
-
-- Removed import leoApp, leoCommands from run() method.
-
-leoFileCommands
-
-- Removed unused self.a ivar.
-- Removed unused first line below in getPrefs:
-	s = string.lower(name)
-	language = string.replace(name,"/","")
-
-leoFrame:
-
-- removed some imports from inside createNewMenu and deleteMenuItem.  Plugins should not need these.
-
-- Removed unused vars:
-	changed: &lt;&lt; read optional version param &gt;&gt;
-	changed: old_df.readOpenFile
-	changed: scanText
-	changed: &lt;&lt; Test for @path &gt;&gt;
-	changed: &lt;&lt; compute relative path from s[k:] &gt;&gt;
-	changed: putDocPart (3.x)
-	changed: putCodePart &amp; allies
-	changed: new_df.readOpenFile
-	changed: nodeSentinelText
-	changed: &lt;&lt; write then entire @file tree &gt;&gt; (4.x)
-
-leoGlobals:
-
-- Removed unused vars in
-	scanAtTabwidthDirective,skip_braces,skip_php_braces,skip_pp_part,isValidEncoding
-	&lt;&lt; Set local vars &gt;&gt;
-	&lt;&lt; compute relative path from s[k:] &gt;&gt;
-
-leoGui
-
-- Changed self.defaultFont to app.config.defaultFont in getFontFromParams.
-- Added leoFrame to import list.
-
-leoNodes
-
-- Fixed real bug in appendStringToBody.
-	- The code used none instead of None: changed test just to if not s: return
-
-leoPlugins
-
-- Removed import sys from loadHanders()
-
-leoTree
-
-- Disabled unused call to canvas.find_closest in OnContinueDrag.  Maybe this will help performance?</t>
-<t tx="ekr.20031218072017.249">Fixed:
-
-c:\prog\leoCVS\leo\src\leoFileCommands.py:814: Local variable (config) not used
-c:\prog\leoCVS\leo\src\leoImport.py:994: Local variable (c) not used
-c:\prog\leoCVS\leo\src\leoCompare.py:707: Local variable (c) not used
-c:\prog\leoCVS\leo\src\leoCompare.py:707: Local variable (cmp) not used
-c:\prog\leoCVS\leo\src\leoFontPanel.py:155: Local variable (c) not used
-c:\prog\leoCVS\leo\src\leoApp.py:224: Local variable (tList) not used
-c:\prog\leoCVS\leo\src\leoTree.py:1512: Parameter (v) not used (createPopupMenu)
-c:\prog\leoCVS\leo\src\leoTree.py:1603: Parameter (v) not used (showPopupMenu)
-c:\prog\leoCVS\leo\src\leoApp.py:365: No module attribute (leoID) found (remove app.setLeoId)</t>
-<t tx="ekr.20031218072017.250"></t>
-<t tx="ekr.20031218072017.251">- Changed app().x to app.x everywhere.
-
-- Changed a.x to app.x everywhere, and eliminated the assignments a = app()
-
-This paves the way to use the app.gui.x pattern more widely.
-
-I did this now so that I could check this with Pychecker: I must run Pychecker anyway so this kills two birds with one stone.
-</t>
-<t tx="ekr.20031218072017.252"></t>
-<t tx="ekr.20031218072017.253">The reason app() is needed is that it's definition doesn't change, even though what it returns does change during startup.
-
-The problem with using a global app var is that from leoGlobals import * picks up and _caches_ the _uninitialized_ value.  Setting leoGlobals.app in the startup logic does not affect all the cached values.
-
-The only way to prevent this would be be avoid importing any of Leo's modules until after the app object has been created.  This looks impossible, and it would be very brittle even if it were possible.
-
-I _really_ would like from leoGlobals import app to work, but how to delay the import until later?</t>
-<t tx="ekr.20031218072017.254">These routines now do the following:
-
-1. Print a warning message if their internal string representation is not a unicode string.
-
-2. Convert their results to unicode.</t>
-<t tx="ekr.20031218072017.255">The tnode ctor now ensures that headline and body text are converted to Unicode using app.tkEncoding.</t>
-<t tx="ekr.20031218072017.256">This was never needed, and removing it prepares to change app from a function to a global var.
-</t>
-<t tx="ekr.20031218072017.257"></t>
-<t tx="ekr.20031218072017.258">1. Called getAllText in the following routines:
-
-colorizeAnyLanguage
-convertAllBlanks,convertAllTabs,extract,extractSection,extractSectionNames
-OnExecuteScript
-
-2. Called getSelectedText in the following routines:
-
-OnExecuteScript
-
-3. Called x = toUnicode(s,app().tkEncoding) in the following routines after a call to t.get(...)
-
-bound_paragraph,getBodyLines,reformatParagraph
-OnReturnKey
-OnFindMatchingBracket,findMatchingBracket
-updateStatusRowCol
-changeAll,findAll
-&lt;&lt; test for whole word match &gt;&gt;</t>
-<t tx="ekr.20031218072017.259">Previously, nothing was printed if </t>
-<t tx="ekr.20031218072017.260">Created new LeoApp16.ico icon w.wm_iconbitmap().
-
-The old code still works with Python 2.2.</t>
-<t tx="ekr.20031218072017.261"></t>
-<t tx="ekr.20031218072017.262">All the real code has now been moved from leoGlobals.py to leoGui.py.</t>
-<t tx="ekr.20031218072017.263"></t>
-<t tx="ekr.20031218072017.264"></t>
-<t tx="ekr.20031218072017.265">This is the foundation for "foreign" guis.</t>
-<t tx="ekr.20031218072017.266"></t>
-<t tx="ekr.20031218072017.267"></t>
-<t tx="ekr.20031218072017.268">After the 4.0 beta 1 release I changed the default so that _new_ format derived files are written if leoConfig.txt does not exist.</t>
-<t tx="ekr.20031218072017.269"></t>
-<t tx="ekr.20031218072017.270"></t>
-<t tx="ekr.20031218072017.271">This allows the caller to do an auto-save only if something was really written.</t>
-<t tx="ekr.20031218072017.272">When I first tried to open LeoPy.leo after writing all @file nodes (With the Write @file Nodes command) I got a
-
-"No joinList for tnode" message.
-
-What I did:
-
-1. Error recovery worked perfectly.  No damage was done!
-
-2. getLeoFile must call setAllJoinLinks _before_ reading @file nodes so that findChild will see a valid joinList.
-
-	- This is perfectly safe in 4.0 because reading _never_ creates vnodes or alters vnode links.
-
-3. writeAtFileNodes now does an auto-save.</t>
-<t tx="ekr.20031218072017.273"></t>
-<t tx="ekr.20031218072017.274"></t>
-<t tx="ekr.20031218072017.275"></t>
-<t tx="ekr.20031218072017.276"></t>
-<t tx="ekr.20031218072017.277">The output is the same in both the old and new versions.</t>
-<t tx="ekr.20031218072017.278"></t>
-<t tx="ekr.20031218072017.279">findChild now calls at.readError when t.joinList is None so reading will stop immediately without crashing.</t>
-<t tx="ekr.20031218072017.280">@+doc and @+at sentinels indicate trailing whitespace.
-
-It is crucial that whitespace is _always_ handled correctly.</t>
-<t tx="ekr.20031218072017.281">This didn't do anything...</t>
-<t tx="ekr.20031218072017.282">Must be done to clear tnodeList in the .leo file.  This allows the user to create a 3.x compatible .leo file.</t>
-<t tx="ekr.20031218072017.283"></t>
-<t tx="ekr.20031218072017.284"></t>
-<t tx="ekr.20031218072017.285">I was surprised that the top-level class was a subclass of oldDerivedFile.  This isn't really good.
-
-The first step of separating the class was to make the sentinel constants global to the module.  This required substantial changes.
-
-After that, I separated the atFile class just by providing the initIvars and readLine routines.  To make readLine work I had to init self.encoding.  That's all!
-
-Derived classes must follow base classes in the module, so I changed the top-level node to force the correct order regardless of node order.</t>
-<t tx="ekr.20031218072017.286">Changed made:
-
-1. Look ahead in putDocLine to preserve additional leading whitespace.
-2. Do _not_ eliminate newline in readLastDocLine.  That must be done only by @nonl logic.
-
-Note:  The code can not do a perfect job of restoring whitespace: it can not distinguish between @ and @space on a line by itself.  However, this construction is rare, and there really is no difference between them.</t>
-<t tx="ekr.20031218072017.287"></t>
-<t tx="ekr.20031218072017.288">The code calls at.writeAll(writeAtFileNodesFlag=true) to write all nodes in the selected tree.</t>
-<t tx="ekr.20031218072017.289">Handling @first and @last is actually quite subtle, and the old code handles the job correctly.
-
-getAtFirstLastLines simply couldn't cut it.  Thanks again to Dave Hein.</t>
-<t tx="ekr.20031218072017.290">This must be done to preserve the tnodeList.</t>
-<t tx="ekr.20031218072017.291">This code hasn't been tested yet.
-
-- Don't change body text if a) @last and b) only difference is last newline.</t>
-<t tx="ekr.20031218072017.292">This is a big step forward:  it eliminates some nasty modes.
-
-- scanHeader returns flag instead of setting ivar.
-- Write code uses config.write_old_format_derived_files.</t>
-<t tx="ekr.20031218072017.293">Both the old and new write code does this.</t>
-<t tx="ekr.20031218072017.294">This is too annoying during testing.</t>
-<t tx="ekr.20031218072017.295">We no longer need this: the write_old_format_derived_files setting is enough to disable new writes.
-
-In other words, the transition to 4.0 has begun!</t>
-<t tx="ekr.20031218072017.296">This is the clean way of setting the default using the config.write_old_format_derived_files setting.</t>
-<t tx="ekr.20031218072017.297">This is the clean way of forcing writes using old or new format.</t>
-<t tx="ekr.20031218072017.298">findChild(4.0) and createNthChild (3.x) both now call v.t.setVisited.  The code in top_df.read warns if any non-empty node is unvisited.
-
-This check, and the check that headlines match pretty much guarantees that out-of-synch outlines will generate errors.  In that case, there is no need a gnx timestamp in @+leo sentinels!</t>
-<t tx="ekr.20031218072017.299"></t>
-<t tx="ekr.20031218072017.300">These changes made in leoPlugins.leo (use_gnx) first.  They will be moved into LeoPy.leo soon.
-
-What I did:
-	- Removed gnx's for now (maybe forever?)
-	- Eliminated use_gnx and using_gnx code from new read code.
-	- All old read/write routines pass.
-	- Fixed a bug in old write code(!!) @verbatim was not output correctly!
-	- Created top_df.scanDefaultDirectory and top_df.error.
-		- We must have this in order to open files in the proper directory.
-	- Replaced calls to at.init_ivars by df.init_ivars
-	- Created new_df.raw_write
-	- Create top_df write routines.
-	- Created class topLevelDerivedFileCommands
-	- Created class oldDerivedFile
-	- Created class newDerivedFile(oldDerivedFile)
-	- Removed all error recovery logic from old read code.
-	- Replaced structureErrors ivar with errors ivar.
-	- Old read code now sets t.tempBodyString.
-	- Move all common read code into top_df.read.
-</t>
-<t tx="ekr.20031218072017.301">- Moved setLeoID into leoApp.py
-- Moved nodeIndices class into leoNodes.py.
-- Moved askLeoID into leoDialogs.py
-- Eliminated myTnode class.
-- Moved myFrame methods into leoFrame.py and eliminated myFrame.
-</t>
-<t tx="ekr.20031218072017.302"></t>
-<t tx="ekr.20031218072017.303"></t>
-<t tx="ekr.20031218072017.304"></t>
-<t tx="ekr.20031218072017.305"></t>
-<t tx="ekr.20031218072017.306"></t>
-<t tx="ekr.20031218072017.307"></t>
-<t tx="ekr.20031218072017.308"></t>
-<t tx="ekr.20031218072017.309"></t>
-<t tx="ekr.20031218072017.310">tnodeList must be a list of tnodes, _not_ a list of tnode indices.
-
-Indices may be reassigned, tnodes won't.
-
-The _only_ place that an index is proper is in the file format itelf.</t>
-<t tx="ekr.20031218072017.311">The script is called "Script to compare 3.x and 4.x derived files" in test.leo.
-</t>
-<t tx="ekr.20031218072017.312">The bug was in directiveKind.  There are two ways for the code to recognize @others.  After inserting the second way, I mistakenly commented out the first way (by commenting out @others in the table).</t>
-<t tx="ekr.20031218072017.313"></t>
-<t tx="ekr.20031218072017.314"></t>
-<t tx="ekr.20031218072017.315"></t>
-<t tx="ekr.20031218072017.316"></t>
-<t tx="ekr.20031218072017.317">The new version of putLeadInSentinel works as follows:
-
-1. It calls at.putIndent(at.indent) followed by the leading whitespace in the outline line.
-
-The effect of this is
-
-a) to align the @ws sentinel with the following sentinel and
-b) to preserve the "spelling" of the leading whitespace on the line.
-
-2. N.B. The calls to putLeadInSentinel happen _before_ at.indent is changed as the result of the leading whitespace. 
-
-Again, this is so that putLeadInSentinel can preserve the spelling of whitespace.
-
-3. The contribution of the @ws sentinel is the _difference_ between the value of at.indent when the @ws sentinel is being read and the actual whitespace on the line.  Again, we do this to make the derived file look better.</t>
-<t tx="ekr.20031218072017.318">This makes the @nl look better, and has no other effect.</t>
-<t tx="ekr.20031218072017.319">- Special case code for blank lines.
-- Created putBlankDocLine.</t>
-<t tx="ekr.20031218072017.320"></t>
-<t tx="ekr.20031218072017.321"></t>
-<t tx="ekr.20031218072017.322"></t>
-<t tx="ekr.20031218072017.323"></t>
-<t tx="ekr.20031218072017.324">I added this code to the "main" line for upward compatibility with 4.0.  The main line code does nothing with the new tnodeList attribute as yet.</t>
-<t tx="ekr.20031218072017.325">This method now uses the tnode list to find the indicated tnode.  It also checks the headline.</t>
-<t tx="ekr.20031218072017.326"></t>
-<t tx="ekr.20031218072017.327">The code that reads the new tnodeList attribute of vnodes is contained in the "main line" code, i.e., in LeoPy.leo.  This means that Leo will always be able to read (and ignore) the tnodeList attribute.
-
-The code that writes the attribute is part of the use_gnx plugin.
-
-The tnodeList returns a tnode, not a vnode, so it makes sense to keep track of at.t not at.v.
-</t>
-<t tx="ekr.20031218072017.328">- The new code now hanles the basic cases properly.
-
-- Added @nl sentinel to indicate whether a section ref should be followed by a newline.
-
-- The read code now sets v.t.tempBodyString instead of call v.setBodyStringOrPane.  This is a major advance in error recovery:  nothing at all changes if errors happen.
-
-What I did earlier:
-	- Removed @+body and @-body
-	- Don't write organizer nodes in @others</t>
 <t tx="ekr.20031218072017.329">@ignore
 @nocolor</t>
 <t tx="ekr.20031218072017.330"></t>
@@ -17096,9 +15779,8 @@ An important complication is the need to avoid creating temporary positions whil
 	"""Return 0 if two postions are equivalent."""
 
 	# Use p.equal if speed is crucial.
-	
 	p1 = self
-	
+
 	if p2 is None: # Allow tests like "p == None"
 		if p1.v: return 1 # not equal
 		else:    return 0 # equal
@@ -17322,7 +16004,7 @@ These routines all return self on exit so the following kind of code will work:
 	p = self
 
 	p.moveToThreadNext()
-	while p and not p.isVisible(): # v.isVisible no longer exists.
+	while p and not p.isVisible():
 		p.moveToThreadNext()
 			
 	return p</t>
@@ -18022,18 +16704,28 @@ def yviewCallback (self,*args,**keys):
 <t tx="ekr.20031218072017.1000">def drawBox (self,p,x,y):
 
 	y += 7 # draw the box at x, y+7
+	h = self.line_height
 
 	tree = self
 	iconname = g.choose(p.isExpanded(),"minusnode.gif", "plusnode.gif")
 	image = self.getIconImage(iconname)
 	id = self.canvas.create_image(x,y+self.lineyoffset,image=image)
+	
+	if 1: # New in 4.2.  Create a frame to catch all clicks.
+		id4 = self.canvas.create_rectangle(0,y-7,1000,y-7+h-3)
+		color = ""
+		self.canvas.itemconfig(id4,fill=color,outline=color)
+		self.canvas.lower(id4)
+		id3 = self.canvas.tag_bind(id4, "&lt;1&gt;", p.OnBoxClick)
+		self.tagBindings.append((id,id3,"&lt;1&gt;"),)
 
 	id1 = self.canvas.tag_bind(id, "&lt;1&gt;", p.OnBoxClick)
 	id2 = self.canvas.tag_bind(id, "&lt;Double-1&gt;", lambda x: None)
 	
 	# Remember the bindings so deleteBindings can delete them.
 	self.tagBindings.append((id,id1,"&lt;1&gt;"),)
-	self.tagBindings.append((id,id2,"&lt;Double-1&gt;"),)</t>
+	self.tagBindings.append((id,id2,"&lt;Double-1&gt;"),)
+</t>
 <t tx="ekr.20031218072017.1002">def drawIcon(self,p,x=None,y=None):
 	
 	"""Draws icon for position p at x,y, or at p.v.iconx,p.v.icony if x,y = None,None"""
@@ -18203,7 +16895,7 @@ def inExpandedVisibleArea (self,y1):
 
 def redraw (self,event=None):
 	
-	# g.trace()
+	# g.trace(self.updateCount,self.redrawScheduled)
 	
 	if self.updateCount == 0 and not self.redrawScheduled:
 		self.redrawScheduled = true
@@ -18211,13 +16903,12 @@ def redraw (self,event=None):
 <t tx="ekr.20031218072017.1013"># Schedules a redraw even if inside beginUpdate/endUpdate
 def force_redraw (self):
 	
-	# g.trace()
+	# g.trace(self.redrawScheduled)
 	# import traceback ; traceback.print_stack()
 
 	if not self.redrawScheduled:
 		self.redrawScheduled = true
-		self.canvas.after_idle(self.idle_redraw)
-</t>
+		self.canvas.after_idle(self.idle_redraw)</t>
 <t tx="ekr.20031218072017.1014"># Redraws immediately: used by Find so a redraw doesn't mess up selections.
 # It is up to the caller to ensure that no other redraws are pending.
 
@@ -18250,7 +16941,8 @@ def redraw_now (self,scroll=true):
 			print "idle_redraw allocated:",self.redrawCount,self.allocatedNodes
 	g.doHook("after-redraw-outline",c=self.c)
 
-	self.canvas['cursor'] = oldcursor</t>
+	self.canvas['cursor'] = oldcursor
+</t>
 <t tx="ekr.20031218072017.1016">def idle_second_redraw (self):
 	
 	c = self.c
@@ -18327,6 +17019,7 @@ def redraw_now (self,scroll=true):
 
 	c = self.c ; frame = c.frame
 	if not p: p = self.c.currentPosition()
+	if not p: p = self.c.rootPosition() # 4/8/04.
 	try:
 		last = p.lastVisible()
 		nextToLast = last.visBack()
@@ -21070,9 +19763,11 @@ def moveToNthChildOf (self, pv, n):
 	# Moving a node can create a new root node.
 	if not pv.parent() and not pv.back():
 		c.frame.tree.setRootVnode(pv)</t>
-<t tx="ekr.20031218072017.1193"># Deletes the current vnode and dependent nodes. Does nothing if the outline would become empty.
-
-def deleteOutline (self,op_name="Delete Node"):
+<t tx="ekr.20031218072017.1193">def deleteOutline (self,op_name="Delete Node"):
+	
+	"""Deletes the current position.
+	
+	Does nothing if the outline would become empty."""
 
 	c = self ; p = c.currentPosition()
 	if not p: return
@@ -21082,13 +19777,13 @@ def deleteOutline (self,op_name="Delete Node"):
 	else:              newNode = p.next()
 	if not newNode: return
 
-	c.endEditing()# Make sure we capture the headline for Undo.
+	c.endEditing() # Make sure we capture the headline for Undo.
 	c.beginUpdate()
-	p.setAllAncestorAtFileNodesDirty() # 1/12/04
-	# Reinsert v after back, or as the first child of parent, or as the root.
-	c.undoer.setUndoParams(op_name,p,select=newNode)
-	p.doDelete(newNode) # doDelete destroys dependents.
-	c.setChanged(true)
+	if 1: # update...
+		p.setAllAncestorAtFileNodesDirty()
+		c.undoer.setUndoParams(op_name,p,select=newNode)
+		p.doDelete(newNode)
+		c.setChanged(true)
 	c.endUpdate()
 	c.validateOutline()</t>
 <t tx="ekr.20031218072017.1194">@ignore</t>
@@ -28939,6 +27634,9 @@ def initJoinedCloneBits (self,v):
 def validateOutline (self):
 
 	c = self
+	
+	if not g.app.debug:
+		return true
 
 	root = c.rootPosition()
 	parent = c.nullPosition()
@@ -30469,8 +29167,7 @@ if keys:
 			else:           break
 		p.moveToParent()
 
-	fc.put("&lt;/v&gt;") ; fc.put_nl()
-</t>
+	fc.put("&lt;/v&gt;") ; fc.put_nl()</t>
 <t tx="ekr.20031218072017.1864">if v.t.fileIndex:
 	if g.app.use_gnx:
 		gnx = g.app.nodeIndices.toString(v.t.fileIndex)
@@ -31439,11 +30136,11 @@ if 0: # This is just confusing for users.
 	from leoGlobals import true,false
 	
 	message = """
-Leo requires Python 2.1 or higher.
-You may download Python 2.1 and Python 2.2 from http://python.org/download/
+Leo requires Python 2.2 or higher.
+You may download Python 2.2 and Python 2.3 from http://python.org/download/
 """
 	try:
-		if not g.CheckVersion(sys.version, "2.1"):
+		if not g.CheckVersion(sys.version, "2.2"):
 			g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
 			return false
 		else:
@@ -32705,6 +31402,12 @@ elif redoType == "De-Hoist":
 		u.p.linkAsNthChild(u.parent,0)
 	else:
 		u.p.linkAsRoot()
+		
+	# Restore all vnodeLists (and thus all clone marks).
+	for p2 in u.p.self_and_subtree_iter():
+		vnodeList = p2.v.t.vnodeList
+		if p2.v not in vnodeList:
+			vnodeList.append(p2.v)
 
 	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2035">elif redoType in ["Drag","Move Down","Move Left","Move Right","Move Up"]:
@@ -32715,11 +31418,8 @@ elif redoType == "De-Hoist":
 	elif u.back:
 		u.p.moveAfter(u.back)
 	else:
-		# Moving up is the only case that can do this.
-		assert(u.p.hasParent)
-		parent = u.p.getParent()
-		u.p.moveToRoot(c.rootPostion())
-		parent.moveAfter(u.p)
+		oldRoot = c.rootPosition() # Bug fix: 4/9/04
+		u.p.moveToRoot(oldRoot)
 
 	c.selectVnode(u.p)
 	
@@ -32862,6 +31562,12 @@ elif undoType == "Delete Node" or undoType == "Cut Node":
 		u.p.linkAsNthChild(u.parent,0)
 	else:
 		u.p.linkAsRoot()
+		
+	# Restore all vnodeLists (and thus all clone marks).
+	for p2 in u.p.self_and_subtree_iter():
+		vnodeList = p2.v.t.vnodeList
+		if p2.v not in vnodeList:
+			vnodeList.append(p2.v)
 
 	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2042">elif undoType == "Hoist":
@@ -32887,16 +31593,14 @@ elif undoType == "De-Hoist":
 <t tx="ekr.20031218072017.2044">elif undoType in ["Drag", "Move Down","Move Left","Move Right","Move Up"]:
 
 	# g.trace("oldParent",u.oldParent)
+
 	if u.oldParent:
 		u.p.moveToNthChildOf(u.oldParent,u.oldN)
 	elif u.oldBack:
 		u.p.moveAfter(u.oldBack)
 	else:
-		# Moving up is the only case that can do this.
-		assert(u.p.hasParent())
-		parent = u.p.getParent()
-		u.p.moveToRoot(c.rootPosition())
-		parent.moveAfter(u.p)
+		oldRoot = c.rootPosition() # Bug fix: 4/9/04
+		u.p.moveToRoot(oldRoot)
 
 	c.selectVnode(u.p)</t>
 <t tx="ekr.20031218072017.2045">@ Promote and demote operations are the hard to undo, because they involve relinking a list of nodes. We pass the work off to routines dedicated to the task.
@@ -34254,7 +32958,6 @@ def otabs(self,n):
 	if script:
 		s = script
 	else:
-		&lt;&lt; define class fileLikeObject &gt;&gt;
 		&lt;&lt; get script into s &gt;&gt;
 	&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;
 	s = s.strip()
@@ -34269,22 +32972,10 @@ def otabs(self,n):
 			g.es_exception(full=false,c=c)
 			c.frame.tree.redrawAfterException() # 1/26/04
 	elif not error:
-		g.es("no script selected",color="blue")</t>
-<t tx="ekr.20031218072017.2141">if 0: # Now defined in leoGlobals.py
-
-	class fileLikeObject:
+		g.es("no script selected",color="blue")
 		
-		def __init__(self): self.s = ""
-		def clear (self):   self.s = ""
-		def close (self):   pass
-		def flush (self):   pass
-			
-		def get (self):
-			return self.s
-			
-		def write (self,s):
-			if s:
-				self.s = self.s + s</t>
+	# 4/3/04: The force a redraw _after_ all messages have been output.
+	c.redraw() </t>
 <t tx="ekr.20031218072017.2142">try:
 	try:
 		if not p:
@@ -36637,6 +35328,8 @@ def OnControlT (self,event=None):
 	return "break"</t>
 <t tx="ekr.20031218072017.2346">def OnIconClick (self,p,event):
 	
+	# g.trace(p)
+	
 	p = p.copy() # Make sure callbacks use the _present_ position.
 
 	tree = self ; canvas = tree.canvas
@@ -36658,10 +35351,12 @@ def OnControlT (self,event=None):
 			self.tagBindings.append((id,id4,"&lt;B1-Motion&gt;"),)
 			self.tagBindings.append((id,id5,"&lt;Any-ButtonRelease-1&gt;"),)
 	tree.select(p)
+	return "break" # disable expanded box handling.
 	
 def OnIconRightClick (self,p,event):
 
-	self.select(p)</t>
+	self.select(p)
+	return "break" # disable expanded box handling.</t>
 <t tx="ekr.20031218072017.2348">def OnPopup (self,p,event):
 	
 	"""Handle right-clicks in the outline."""
@@ -45565,7 +44260,8 @@ def expandLevel9 (self): self.expandToLevel(9)
 	else:
 		v.setMarked()
 		v.setDirty()
-		c.setChanged(true)
+		if 0: # 4/3/04: Marking a headline is a minor operation.
+			c.setChanged(true)
 	c.endUpdate()</t>
 <t tx="ekr.20031218072017.2929">def markSubheads(self):
 
@@ -51447,14 +50143,16 @@ def nthChild (self, n):
 	return ( self.statusBits &amp; self.topBit ) != 0</t>
 <t tx="ekr.20031218072017.3375"># Returns true if all parents are expanded.
 
-def isVisible (self):
-	
-	v = self.parent()
-	while v:
-		if not v.isExpanded():
-			return false
-		v = v.parent()
-	return true</t>
+if 0: # No longer used in 4.2
+
+	def isVisible (self):
+		
+		v = self.parent()
+		while v:
+			if not v.isExpanded():
+				return false
+			v = v.parent()
+		return true</t>
 <t tx="ekr.20031218072017.3376">def isVisited (self):
 
 	return ( self.statusBits &amp; vnode.visitedBit ) != 0</t>
@@ -51559,7 +50257,8 @@ def clearDirtyJoined (self):
 <t tx="ekr.20031218072017.3391">def clearMarked (self):
 
 	self.statusBits &amp;= ~ self.markedBit
-	g.doHook("clear-mark",c=self.c,v=self)</t>
+	g.doHook("clear-mark",c=self.c,v=self)
+</t>
 <t tx="ekr.20031218072017.3392">def clearOrphan (self):
 
 	self.statusBits &amp;= ~ self.orphanBit</t>
@@ -51597,7 +50296,8 @@ def initClonedBit (self, val):
 
 def initMarkedBit (self):
 
-	self.statusBits |= self.markedBit</t>
+	self.statusBits |= self.markedBit
+</t>
 <t tx="ekr.20031218072017.3399">def setOrphan (self):
 
 	self.statusBits |= self.orphanBit</t>
@@ -55987,6 +54687,7 @@ def idle_scrollTo(self,v):
 
 	assert(self.updateCount &gt; 0)
 	self.updateCount -= 1
+	# g.trace(self.updateCount)
 	if flag and self.updateCount == 0:
 		self.redraw()</t>
 <t tx="ekr.20031218072017.3716">def dragging(self):
@@ -56940,7 +55641,11 @@ self.revert_target_language = c.target_language</t>
 def oops(self):
 	print ("leoPrefs oops:",
 		g.callerName(2),
-		"should be overridden in subclass")</t>
+		"should be overridden in subclass")
+		
+def setWidgets(self):
+	self.oops()
+</t>
 <t tx="ekr.20031218072017.3820">def print_ivars (self):
 	
 	"""Debugging routine for Prefs panel."""
@@ -60905,7 +59610,6 @@ Therefore, the Commands class never needs to worry about extra calls to tree.red
 <t tx="ekr.20031218072017.4146"># Returns the last visible node of the screen.
 
 def oldLastVisible(self):
-	
 	p = self
 	p = p.c.rootPosition()
 	assert(p.isVisible())
@@ -60916,9 +59620,7 @@ def oldLastVisible(self):
 		last = p.copy()
 		
 def lastVisible(self):
-
 	"""Move to the last visible node of the entire tree."""
-	
 	p = self
 	p = p.c.rootPosition()
 	# Move to the last top-level node.
@@ -61241,13 +59943,7 @@ if 0: # This is usually a very bad idea.
 		v = v.threadNext()
 		
 	g.es("all timestamps cleared")</t>
-<t tx="ekr.20031218192539">Added at = self</t>
-<t tx="ekr.20031218192539.1"></t>
 <t tx="ekr.20031219071829"></t>
-<t tx="ekr.20031219073155"></t>
-<t tx="ekr.20031219073155.1"></t>
-<t tx="ekr.20031219073155.2"></t>
-<t tx="ekr.20031219074948">Useful for unit testing.</t>
 <t tx="ekr.20031219074948.1"># From the Python cookbook, recipe 5.23
 
 class nullObject:
@@ -61270,7 +59966,6 @@ class nullObject:
 
 		g.trace("nullGui",attr)
 		return nullObject()</t>
-<t tx="ekr.20031219082957">The nullGui class is not ready for prime time yet.</t>
 <t tx="ekr.20031219100030"></t>
 <t tx="ekr.20040104162835"></t>
 <t tx="ekr.20040104162835.1">@nocolor
@@ -61630,7 +60325,6 @@ g.es("done",color="blue")</t>
 </t>
 <t tx="ekr.20040105070023.2"></t>
 <t tx="ekr.20040105070023.3"></t>
-<t tx="ekr.20040105070023.4"></t>
 <t tx="ekr.20040105070023.5">Leo 4.1 rc3, build 1.62 , December 19, 2003
 Python 2.3.0, Tk 8.4.2
 Linux 2.4.22-21mdkenterprise
@@ -61848,54 +60542,7 @@ leoConfig.txt encoding: utf-8
 Text encoding: cp1252
 
 </t>
-<t tx="ekr.20040106115311">@nocolor
-
-https://sourceforge.net/forum/message.php?msg_id=2361036
-By: jasonic
-
-I just had a great user interface idea to improve Leo tree behavior. 
-
-The most common tree node clicking task people do is expand or contract by clicking
-on the little +/- squares.
-
-But why should one have such a small target?
-HCI research studies have all shown one can improve interfaces just  by making
-target areas as large as possible in ebery case. Preceise hand eye skills shoudl
-not be squandered especially for repetitive tasks.
-
-So in Leo's case one could make the target for each node exactly one line high,
-and as wide as the entire pane. This could be an active rollover with a highlight
-color. then single clicking would expand/contract that node.
-
-The exception would be when you want to rename a node. Then clicking directly
-on the name itself would only affect the name to make it editable as now.
-
-Enhancements would be use of modifier Keys to alter the expand/contract nodeclick
-behavior.
-
-Ctrl+click would apply expand/contract one nested level down in that node.
-
-Shift+click would apply expand/contract to all nested levels in that node.
-
-Holding a number keyclick wouldapply/contract to the same number of nested levelsin
-that node.
-3+node click would affect 3 nested levels 
-5+node click would affect  5 nested levels
-etc.
-
-I've mocked up a tiny flash version to help you explore the rollover idea yourselves.
-In my minimal demo, the only active node "4.1 final".
-
-Click on it and you can se how they could all work. Rollover the text and you
-can see how that area could catch focus into editing. Colors are a little dull,
-but they would be set all by preferences anyway.
-[Also, complex clicking is not enabled in the this demo either. I'll play more
-with it later when I have time and after some feedback. This direction is prelim
-to my LeoFlashJabber project for 2004
-
-http://tranzilla.net/leo/swf/tree_ui_idea_000.html
-
-</t>
+<t tx="ekr.20040106115311"></t>
 <t tx="ekr.20040106121339"></t>
 <t tx="ekr.20040106121339.1"></t>
 <t tx="ekr.20040106122602"></t>
@@ -62270,19 +60917,10 @@ fi
 <t tx="ekr.20040117162509.16">def isVisible (self):
 	
 	"""Return true if all of a position's parents are expanded."""
-	
-	if 0: # Using an iterator here allocates one extracopy.
-		for p in self.parents_iter():
-			if not p.v.isExpanded():
-				return false
-		return true
-	
-	# Note: v.isVisible no longer exists.
-	
+
+	# v.isVisible no longer exists.
 	p = self
-	if not p:
-		return false
-		
+
 	# Avoid calling p.copy() or copying the stack.
 	v = p.v ; n = len(p.stack)-1
 
@@ -62292,8 +60930,7 @@ fi
 			return false
 		v,n = p.vParentWithStack(v,p.stack,n)
 
-	return true
-</t>
+	return true</t>
 <t tx="ekr.20040117170612">if 1: # Good for compatibility, bad for finding conversion problems.
 
 	def __getattr__ (self,attr):
@@ -62324,6 +60961,8 @@ In particular, tests like "if p is None" or "if p is not None" will not work pro
 def __nonzero__ ( self):
 	
 	"""Return true if a position is valid."""
+	
+	# if g.app.trace: "__nonzero__",self.v
 
 	return self.v is not None</t>
 <t tx="ekr.20040117181936"></t>
@@ -64421,10 +63060,9 @@ def convertTreeToSharedNodes(self):
 	if p.v:
 		return "&lt;pos %d lvl: %d [%d] %s&gt;" % (id(p),p.level(),len(p.stack),p.v.headString())
 	else:
-		return "&lt;pos %d None&gt;" % (id(p))
+		return "&lt;pos %d        [%d] None&gt;" % (id(p),len(p.stack))
 		
-__repr__ = __str__
-</t>
+__repr__ = __str__</t>
 <t tx="ekr.20040301211500">def checkNextThreadNextLevel(self,level1):
 	
 	"""Return true if p.getThreadNext().level() &gt; level1.
@@ -64552,16 +63190,27 @@ def canHoist(self):
 def doDelete (self,newPosition):
 
 	"""Unlinks p.v from the outline.  May be undone.
-	
+
 	Returns newPosition."""
 
 	p = self ; c = p.c
 
+	assert(newPosition != p)
 	p.setDirty() # Mark @file nodes dirty!
 	p.unlink()
+	
+	
+	# 4/8/02: Alter all _parent links in children of this node.
+	# This needs to be done only when deleting a node.
+	vnodeList = p.v.t.vnodeList
+	if vnodeList:
+		&lt;&lt; Alter all _parent links of children of this node &gt;&gt;
+	&lt;&lt; remove all deleted nodes from their vnodeList's &gt;&gt;
+
 	c.selectVnode(newPosition)
 	
-	return newPosition</t>
+	return newPosition
+</t>
 <t tx="ekr.20040303175026.3">def insertAfter (self,t=None):
 
 	"""Inserts a new vnode after self.
@@ -65019,7 +63668,9 @@ def __iter__(self):
 	if self.p:
 		if self.copy: return self.p.copy()
 		else:         return self.p
-	else: raise StopIteration</t>
+	else:
+		raise StopIteration
+</t>
 <t tx="ekr.20040305173343">class siblings_iter_class:
 
 	"""Returns a list of siblings of a position."""
@@ -65688,8 +64339,14 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 	The p.v._fistChild link does NOT change."""
 
 	p = self ; v = p.v ; parent = p.parent()
+	
+	# Note:  p.parent() is not necessarily the same as v._parent.
+	
+	if parent:
+		assert(p.v and p.v._parent in p.v.directParents())
+		assert(parent.v in p.v.directParents())
 
-	# g.trace(v._parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
+	# g.trace("parent",parent," child:",v.t._firstChild," back:",v._back, " next:",v._next)
 	
 	# Special case the root.
 	if p == p.c.rootPosition():
@@ -65700,24 +64357,26 @@ So. Clones saved the day. I'm even more convinced that Leo is brilliant. Thanks 
 	vnodeList = v.t.vnodeList
 	if v in vnodeList:
 		vnodeList.remove(v)
+	assert(v not in vnodeList)
 	
+	# Reset the firstChild link in its direct father.
 	if parent and parent.v.t._firstChild == v:
 		parent.v.t._firstChild = v._next
-		
-	# Do NOT alter the links in any child nodes.
-	# Unlinking a node unlinks its entire subtree.
+
+	# Do _not_ delete the links in any child nodes.
 
 	# Clear the links in other nodes.
 	if v._back: v._back._next = v._next
 	if v._next: v._next._back = v._back
-	
-	# Clear the links in this node.
+
+	# Unlink _this_ node.
 	v._parent = v._next = v._back = None
-	
+
 	if 0:
 		g.trace('-'*20)
-		p.dump(p,label="p")
-		if parent: p.dump(parent,label="parent")</t>
+		p.dump(label="p")
+		if parent: parent.dump(label="parent")
+</t>
 <t tx="ekr.20040310062415.1"></t>
 <t tx="ekr.20040310091144">@nocolor
 
@@ -65786,28 +64445,17 @@ billp
 <t tx="ekr.20040310092400.1"></t>
 <t tx="ekr.20040310104639"></t>
 <t tx="ekr.20040310153624">def dumpLink (self,link):
+
 	return g.choose(link,link,"&lt;none&gt;")
 
 def dump (self,label=""):
 	
 	p = self
 
-	# assert(not p.v or isinstance(p.v,vnode))
-	
-	if 1:
-		p.v.dump(label=label)
-	else:
-		print '-'*10,label,p
-		print "back   ",p.dumpLink(p.back())
-		print "next   ",p.dumpLink(p.next())
-		print "parent ",p.dumpLink(p.parent())
-		print "_parent",p.dumpLink(p.v and p.v._parent)
-		print "child  ",p.dumpLink(p.firstChild())
-		print "vnodes..."
-		if p.v:
-			for v in p.v.t.vnodeList:
-				print v
-		print</t>
+	print '-'*10,label,p
+
+	if p.v:
+		p.v.dump() # Don't print a label</t>
 <t tx="ekr.20040311022923"></t>
 <t tx="ekr.20040311075229">This allows the user to choose a "safe mode".  It is off by default.</t>
 <t tx="ekr.20040311080500"></t>
@@ -65892,7 +64540,8 @@ def dump (self,label=""):
 	
 	v = self
 
-	print '-'*10,label,v
+	if label:
+		print '-'*10,label,v
 	print "_back   ",v.dumpLink(v._back)
 	print "_next   ",v.dumpLink(v._next)
 	print "_parent ",v.dumpLink(v._parent)
@@ -65990,7 +64639,16 @@ elif verbose:
 	print s
 	g.es(s,color="red")</t>
 <t tx="ekr.20040314061426"></t>
-<t tx="ekr.20040314062338">assert p.oldLastVisible()==p.lastVisible(), "oldLastVisible==lastVisible"</t>
+<t tx="ekr.20040314062338">p1 = p.oldLastVisible()
+p2 = p.lastVisible()
+
+if p1 != p2:
+	print "oldLastVisible",p1
+	print "   lastVisible",p2
+
+assert p1 and p2 and p1 == p2, "oldLastVisible==lastVisible"
+assert p1.isVisible() and p2.isVisible(), "p1.isVisible() and p2.isVisible()"
+</t>
 <t tx="ekr.20040314074041"></t>
 <t tx="ekr.20040314092716">if nextToLast: # 2/2/03: compute approximate line height.
 	lineHeight = h2 - self.yoffset(nextToLast)
@@ -67322,6 +65980,8 @@ I'm not sure why this generated go many positions, but it did.</t>
 	N.B. Unlike __cmp__, p2 must not be None."""
 
 	p1 = self
+	
+	# if g.app.trace: "equal",p1.v,p2.v
 
 	# Check entire stack quickly.
 	# The stack contains vnodes, so this does not call p.__cmp__.
@@ -67526,7 +66186,6 @@ This was apparently an old bug.</t>
 Also, the doHook logic seems much too complex.
 	- It doesn't correspond to the registerHandler logic.
 	- And why is there a separate doHandlersForTag method???</t>
-<t tx="ekr.20040328051719"></t>
 <t tx="ekr.20040328055931">def afterHeadlineFileTypeName(self,s):
 	
 	h = self.headString()
@@ -67568,7 +66227,6 @@ Also, the doHook logic seems much too complex.
 <t tx="ekr.20040329182535.3"></t>
 <t tx="ekr.20040329182535.4"></t>
 <t tx="ekr.20040329182535.5"></t>
-<t tx="ekr.20040329182535.6"></t>
 <t tx="ekr.20040329182535.7"></t>
 <t tx="ekr.20040329185649"></t>
 <t tx="ekr.20040329190314"></t>
@@ -68010,5 +66668,182 @@ That would be pretty easy in a plugin.  This is probably the most important thin
 That already exists in various forms.  However, if what already exists isn't exactly what you want it would be very easy to write a plugin to do it.
 
 Edward</t>
+<t tx="ekr.20040403091954"></t>
+<t tx="ekr.20040403095129">@nocolor
+
+The problem was that the calls to put in execute script were disabling the redraw.
+
+The solution is for the execute script command always to redraw the screen.</t>
+<t tx="ekr.20040403104315"></t>
+<t tx="ekr.20040403104315.1"></t>
+<t tx="ekr.20040403104315.2"></t>
+<t tx="ekr.20040403104315.3"></t>
+<t tx="ekr.20040403121321">@nocolor
+
+These did not harm the actual data.</t>
+<t tx="ekr.20040408041921">@nocolor
+
+- @file-thin can't have any essential info in .leo file.
+	- order info _might_ be in .leo file, but user should not rely on it.
+	- good style: don't rely on order of nodes in @file-thin trees.
+	- order resolution algorithm:
+		- list of named sections. (order unknown)
+		- list of @others (unnamed) sections.  (order known)
+		- place named sections in _assumed_ or _recreated. order
+		- place unnamed sections in known order.
+
+- Allow @unit to affect @file trees.
+	- Creates 2-pass write algorithm.
+		- Definitions may appear anywhere in @unit tree.
+		- Must write sentinels "all the way up".
+		- The user is responsible for keeping all files in @unit tree in synch.
+			*** This may not be possible in a cvs environment.
+			*** That is the _user's_ problem, not Leo's.
+	- Do _not_ allow &lt;&lt;x&gt;&gt;= definitions: all definitions must follow @file style.
+
+- Deprecate @root trees.
+	- Create script to convert @root to new-style @file.</t>
+<t tx="ekr.20040408042209"></t>
+<t tx="ekr.20040409074345">@nocolor
+
+https://sourceforge.net/forum/message.php?msg_id=2361036
+By: jasonic
+
+I just had a great user interface idea to improve Leo tree behavior. 
+
+The most common tree node clicking task people do is expand or contract by clicking
+on the little +/- squares.
+
+But why should one have such a small target?
+HCI research studies have all shown one can improve interfaces just  by making
+target areas as large as possible in ebery case. Preceise hand eye skills shoudl
+not be squandered especially for repetitive tasks.
+
+So in Leo's case one could make the target for each node exactly one line high,
+and as wide as the entire pane. This could be an active rollover with a highlight
+color. then single clicking would expand/contract that node.
+
+The exception would be when you want to rename a node. Then clicking directly
+on the name itself would only affect the name to make it editable as now.
+
+Enhancements would be use of modifier Keys to alter the expand/contract nodeclick
+behavior.
+
+Ctrl+click would apply expand/contract one nested level down in that node.
+
+Shift+click would apply expand/contract to all nested levels in that node.
+
+Holding a number keyclick wouldapply/contract to the same number of nested levelsin
+that node.
+3+node click would affect 3 nested levels 
+5+node click would affect  5 nested levels
+etc.
+
+I've mocked up a tiny flash version to help you explore the rollover idea yourselves.
+In my minimal demo, the only active node "4.1 final".
+
+Click on it and you can se how they could all work. Rollover the text and you
+can see how that area could catch focus into editing. Colors are a little dull,
+but they would be set all by preferences anyway.
+[Also, complex clicking is not enabled in the this demo either. I'll play more
+with it later when I have time and after some feedback. This direction is prelim
+to my LeoFlashJabber project for 2004
+
+http://tranzilla.net/leo/swf/tree_ui_idea_000.html
+
+</t>
+<t tx="ekr.20040409080127">@nocolor
+
+I dragged the root node down, then did undo.
+
+exception executing command
+Traceback (most recent call last):
+
+  File "c:\prog\leoCVS\leo\src\leoCommands.py", line 135, in doCommand
+    command()
+
+  File "C:\prog\leoCVS\leo\src\leoUndo.py", line 800, in undo
+    assert(u.p.hasParent())
+
+AssertionError
+
+C:\prog\leoCVS\leo&gt;
+
+@color</t>
+<t tx="ekr.20040409081506"></t>
+<t tx="ekr.20040409081506.1"></t>
+<t tx="ekr.20040409081716">@nocolor
+
+goToLineNumber: u'leoUndo.py' &lt;pos 38659536 lvl: 2 [0] @file leoUndo.py&gt;
+Traceback (most recent call last):
+
+  File "C:\prog\leoCVS\leo\src\leoTkinterTree.py", line 965, in idle_scrollTo
+
+  File "c:\prog\leoCVS\leo\src\leoNodes.py", line 1780, in lastVisible
+    assert(p.isVisible())
+
+AssertionError
+
+--------
+
+I'm not sure what caused this.  I added some defensive code in idle_scrollTo.</t>
+<t tx="ekr.20040409083211"></t>
+<t tx="ekr.20040409083211.1">@nocolor
+
+This happened when deleting a clone (the first child of its parent)
+
+  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 1861, in write_Leo_file
+    self.putVnodes()
+
+  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 1683, in putVnodes
+    self.putVnode(p) # Write the next top-level node.
+
+  File "c:\prog\leoCVS\leo\src\leoFileCommands.py", line 1660, in putVnode
+    p.moveToParent()
+
+  File "C:\prog\leoCVS\leo\src\leoNodes.py", line 2762, in moveToParent
+    if p.v._parent and len(p.v._parent.t.vnodeList) == 1:
+
+AttributeError: 'NoneType' object has no attribute '_parent'
+
+&gt;&gt;&gt;
+
+----  Deleted (@file-thin) clone, then did Check Outline.
+
+7536 nodes checked, 0 errors
+test failed: oldLastVisible==lastVisible &lt;pos 29196336 lvl: 0 [0]  Diary&gt;
+
+1 nodes checked, 1 errors
+&gt;&gt;&gt;</t>
+<t tx="ekr.20040409130322"></t>
+<t tx="ekr.20040409130322.2"></t>
+<t tx="ekr.20040409160021">@nocolor
+
+This was a tricky one.  Normally, when a node is unlinked it is immediately relinked, so the _parent field of all its children need not change.  The exception is when we are actually deleting a cloned node.  In that case:
+
+a) Another node (it was a clone, it may still be a clone) will refer to the shared tree.
+b) We must reassign the _parent field of all children of the deleted node.
+
+Rather than mess with unlink, I put the new code in p.doDelete.
+
+While I was at it, I improved the p.dump method.
+
+By luck I realized that unlinking a tree leaves most vnodeLists unchanged.  They must be cleared by doDelete and restored in the corresponding undo/redo methods.</t>
+<t tx="ekr.20040409162703">assert(p.v not in vnodeList)
+parent = vnodeList[0]
+child = p.v.t._firstChild
+while child:
+	if child._parent == p.v:
+		child._parent = parent
+	child = child._next</t>
+<t tx="ekr.20040409162703.1">for p2 in p.self_and_subtree_iter():
+	vnodeList = p2.v.t.vnodeList
+	if p2.v in vnodeList:
+		g.trace("removing",p2.v)
+		vnodeList.remove(p2.v)
+		assert(p2.v not in vnodeList)</t>
+<t tx="ekr.20040409163052"></t>
+<t tx="ekr.20040409164648"></t>
+<t tx="ekr.20040409164648.1"></t>
 </tnodes>
 </leo_file>
