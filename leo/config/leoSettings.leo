@@ -125,9 +125,9 @@
 <v t="ekr.20041119034357.35"><vh>@bool run_tangle_done.py = False</vh></v>
 <v t="ekr.20041119034357.36"><vh>@bool run_untangle_done.py = False</vh></v>
 </v>
-<v t="ekr.20041119034357.21" a="TV"><vh>Keyboard shortcuts</vh>
+<v t="ekr.20041119034357.21" a="E"><vh>Keyboard shortcuts</vh>
 <v t="ekr.20041119034357.22"><vh>About keyboard shortcuts</vh></v>
-<v t="ekr.20041119034357.23"><vh>@shortcuts Alt and Shift-Alt</vh></v>
+<v t="ekr.20041119034357.23" a="TV"><vh>@shortcuts Alt and Shift-Alt</vh></v>
 <v t="ekr.20041119034357.24"><vh>@shortcuts Control</vh></v>
 <v t="ekr.20041119034357.25"><vh>@shortcuts Shift-Control</vh></v>
 <v t="ekr.20041119034357.26"><vh>@shortcuts F-keys and Esc</vh></v>
@@ -400,13 +400,11 @@ UnmarkAll        = Alt+U
 ShowInvisibles   = Alt+V
 # Reserved         Alt+W  (Opens Window Menu)
 
-# EKR: I set the following in customizeLeo.py
 CheckSpelling    = Alt+Shift+A
 # Idle           = Alt+Shift+I
 # Word           = Alt+Shift+W
 # WordPad        = Alt+Shift+T
-#                = Alt+Shift+E
-
+EqualSizedPanes  = Alt+Shift+E
 
 GoToFirstNode    = Alt+Shift+G
 GoToLastNode     = Alt+Shift+H
