@@ -4699,6 +4699,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		
 		# Compute delta only once.
 		delta = self.putRefAt(s,i,n1,n2,v,delta=None)
+		if delta is None: return # 11/23/03
 		
 		while 1:
 			i = n2 + 2
@@ -4724,7 +4725,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.writeError(
 				"undefined section: %s\n\treferenced from: %s" %
 				( name,v.headString()))
-			return
+			return None
 		
 		# Expand the ref.
 		if not delta:
