@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2179" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2180" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
 	<global_window_position top="90" left="302" height="728" width="819"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -2704,12 +2704,13 @@
 <v t="edream.110203161858.2092"><vh>others</vh></v>
 </v>
 </v>
-<v t="edream.111903103216" a="E" tnodeList="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
+<v t="edream.111903103216" tnodeList="edream.111903103216"><vh>Distribution checklist for 4.1 beta 4</vh>
 <v t="edream.112003201017" a="E" tnodeList="edream.112003201017"><vh>Find script to clean whitespace</vh>
 <v t="edream.112003201017.1"><vh>Find script</vh></v>
-<v t="edream.112003201017.2" a="V"><vh>Change script</vh></v>
+<v t="edream.112003201017.2"><vh>Change script</vh></v>
 </v>
 </v>
+<v t="edream.112203144347" a="V" tnodeList="edream.112203144347"><vh>@file ..\test\batchScript.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="edream.110203161858">@color
@@ -34242,5 +34243,14 @@ c.frame.body.onBodyChanged(v,"Change",oldText=oldText) # Handles undo.
 c.frame.body.setInsertPointToStartOfLine(0)
 
 app.searchDict["continue"] = "true" # Allow change all to continue.</t>
+<t tx="edream.112203144347">from leoGlobals import *
+
+print "Hello from batchScript.py"
+
+path = r"c:\prog\leoCVS\leo\plugins\leoPlugins.leo"
+print path
+
+flag,frame = openWithFileName(path)
+print `frame`</t>
 </tnodes>
 </leo_file>
