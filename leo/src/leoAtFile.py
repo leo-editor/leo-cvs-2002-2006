@@ -4126,7 +4126,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		at.putSentinel(s)
 	#@nonl
 	#@-node:putOpenLeoSentinel
-	#@+node:putOpenNodeSentinel
+	#@+node:putOpenNodeSentinel (sets tnodeList)
 	def putOpenNodeSentinel(self,v):
 		
 		"""Write @+node sentinel for v."""
@@ -4145,7 +4145,7 @@ class baseNewDerivedFile(oldDerivedFile):
 		# trace("%3d %3d" % (len(at.root.tnodeList),v.t.fileIndex),v)
 		at.root.tnodeList.append(v.t)
 	#@nonl
-	#@-node:putOpenNodeSentinel
+	#@-node:putOpenNodeSentinel (sets tnodeList)
 	#@+node:putSentinel (applies cweb hack)
 	# This method outputs all sentinels.
 	
@@ -4261,7 +4261,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			at.outputFile = None
 	#@nonl
 	#@-node:new_df.closeWriteFile
-	#@+node:new_df.write
+	#@+node:new_df.write (inits root.tnodeList)
 	# This is the entry point to the write code.  root should be an @file vnode.
 	
 	def write(self,root,nosentinels=false,scriptFile=None):
@@ -4421,7 +4421,7 @@ class baseNewDerivedFile(oldDerivedFile):
 			else:
 				at.handleWriteException()
 	#@nonl
-	#@-node:new_df.write
+	#@-node:new_df.write (inits root.tnodeList)
 	#@+node:new_df.rawWrite
 	def rawWrite(self,root):
 	

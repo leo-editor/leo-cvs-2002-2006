@@ -14,7 +14,11 @@
 <vnodes>
 <v t="edream.110203160744"><vh> Diary</vh>
 <v t="edream.120103054230"><vh>December 2003</vh>
+<v t="edream.120803170142"><vh>12/08</vh>
+<v t="edream.120803170142.1"><vh>Investigated &amp; fixed copy/paste bugs</vh></v>
+</v>
 <v t="edream.120703115300"><vh>12/07</vh>
+<v t="edream.120803143354"><vh>Corrected counts when replacing tabs/blanks</vh></v>
 <v t="edream.120703170710"><vh>Added file open dialog to Import Derived Files command</vh></v>
 <v t="edream.120703113459"><vh>Made sure that Reformat Paragraph makes the new insertion point visible</vh></v>
 <v t="edream.120703115300.1"><vh>Changed logControl to logCtrl</vh></v>
@@ -754,6 +758,7 @@
 </v>
 <v t="edream.110203160744.419"><vh> To do...</vh>
 <v t="edream.110203160744.420"><vh>To do: 4.2</vh>
+<v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
 <v t="edream.110203160744.425"><vh>Best minor improvements</vh>
 <v t="edream.110203160744.426"><vh>Use @file extension by default if no @language</vh></v>
 <v t="edream.110203160744.427"><vh>Secondary icons: use for marks?</vh></v>
@@ -1031,13 +1036,14 @@
 </v>
 </v>
 </v>
-<v t="edream.110403112538"><vh>To do: 4.1</vh>
+<v t="edream.110403112538" a="E"><vh>To do: 4.1</vh>
+<v t="edream.120803171529" a="V"><vh>Fix import bug</vh></v>
 <v t="edream.120203124941.1"><vh>Unit tests</vh>
 <v t="edream.112303032011"><vh>New unit test ideas</vh></v>
 <v t="edream.110703024557.1"><vh>More checks in CheckOutline command</vh></v>
 </v>
-<v t="edream.120303071612"><vh>Finish wx plugin &amp; improve how Leo uses indices</vh></v>
-<v t="edream.120603055749"><vh>gui interface for plugins manager</vh></v>
+<v t="edream.120803170142.2"><vh>Documentation for recent changes</vh></v>
+<v t="edream.120303071612"><vh>(maybe) Finish wx plugin &amp; improve how Leo uses indices</vh></v>
 </v>
 <v t="edream.110203160744.601"><vh>(Project Views)</vh>
 <v t="edream.110203160744.602"><vh>  Reports</vh>
@@ -2919,7 +2925,7 @@
 <v t="edream.110203160744.3331"><vh>toString</vh></v>
 </v>
 <v t="edream.110203160744.3807"><vh>Writing gnx's</vh>
-<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel</vh></v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
 <v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
 <v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
 <v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
@@ -3205,7 +3211,7 @@
 <v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
 <v t="edream.110203160744.2842"><vh>Top level</vh>
 <v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
 <v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -3263,7 +3269,7 @@
 <v t="edream.110203160744.1152"><vh>&lt;&lt; get script into s &gt;&gt;</vh></v>
 <v t="edream.110203160744.1153"><vh>&lt;&lt; redirect output if redirect_execute_script_output_to_log_pane &gt;&gt;</vh></v>
 </v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
 <v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -3608,6 +3614,43 @@
 <v t="edream.120703082927"><vh>(Added dialog to Import Derived File)</vh>
 <v t="edream.110203160744.1120" a="M"><vh>importDerivedFile</vh></v>
 </v>
+<v t="edream.120803101918"><vh>(Corrected counts when replacing tabs/blanks)</vh>
+<v t="edream.110203160744.2010" a=""><vh>Edit Body Text</vh>
+<v t="edream.110203160744.1801" a=""><vh>convertAllBlanks</vh></v>
+<v t="edream.110203160744.1802" a=""><vh>convertAllTabs</vh></v>
+<v t="edream.110203160744.2011"><vh>convertBlanks</vh></v>
+<v t="edream.110203160744.2012"><vh>convertTabs</vh></v>
+<v t="edream.110203160744.2013"><vh>createLastChildNode</vh></v>
+<v t="edream.110203160744.2014"><vh>dedentBody</vh></v>
+<v t="edream.110203160744.1803" a=""><vh>extract</vh>
+<v t="edream.110203160744.1804"><vh>&lt;&lt; Set headline for extract &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1805" a=""><vh>extractSection</vh>
+<v t="edream.110203160744.1806"><vh>&lt;&lt; Set headline for extractSection &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1807" a=""><vh>extractSectionNames</vh>
+<v t="edream.110203160744.1808"><vh>&lt;&lt; Find the next section name &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2015"><vh>findBoundParagraph</vh>
+<v t="edream.110203160744.2016"><vh>&lt;&lt; trace head_lines, ins, tail_lines &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1185"><vh>findMatchingBracket</vh>
+<v t="edream.110203160744.1186"><vh>findMatchingBracket</vh></v>
+</v>
+<v t="edream.110203160744.1779"><vh>getBodyLines</vh></v>
+<v t="edream.110203160744.2017"><vh>indentBody</vh></v>
+<v t="edream.110203160744.1188"><vh>insertBodyTime &amp; allies</vh>
+<v t="edream.110203160744.1189"><vh>getTime</vh></v>
+</v>
+<v t="edream.110203160744.2018"><vh>reformatParagraph</vh>
+<v t="edream.110203160744.2019"><vh>&lt;&lt; compute vars for reformatParagraph &gt;&gt;</vh></v>
+<v t="edream.110203160744.2020"><vh>&lt;&lt; compute the leading whitespace &gt;&gt;</vh></v>
+<v t="edream.110203160744.2021"><vh>&lt;&lt; compute the result of wrapping all lines &gt;&gt;</vh></v>
+<v t="edream.110203160744.2022"><vh>&lt;&lt; update the body, selection &amp; undo state &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2023"><vh>updateBodyPane (handles undo)</vh></v>
+</v>
+</v>
 <v t="edream.120703061418"><vh>(Fixed 2 new reorg bugs)</vh>
 <v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
 </v>
@@ -3670,6 +3713,37 @@
 <v t="edream.120503112445"><vh>(Fixed problem untangling html file)</vh>
 <v t="edream.110203160744.3453" a=""><vh>&lt;&lt; set the private global matching vars &gt;&gt;</vh></v>
 <v t="edream.110203160744.3073" a=""><vh>skip_string : called by tangle</vh></v>
+</v>
+<v t="edream.120803102832"><vh>(Recent files bug: works for me)</vh>
+<v t="edream.120803102832.1"><vh>Report</vh></v>
+<v t="edream.110203160744.1107" a=""><vh>Recent Files submenu &amp; allies</vh>
+<v t="edream.110203160744.1108"><vh>clearRecentFiles</vh></v>
+<v t="edream.110203160744.1109"><vh>openRecentFile</vh>
+<v t="edream.110203160744.1110" a=""><vh>&lt;&lt; Set closeFlag if the only open window is empty &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.1106" a=""><vh>updateRecentFiles</vh></v>
+</v>
+</v>
+<v t="edream.111003111536"><vh>(Investigated No tnode list)</vh>
+<v t="edream.120803164637"><vh>Report</vh></v>
+<v t="edream.120803164637.1"><vh>Writing</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
+<v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
+<v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
+<v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
+<v t="edream.110203160744.2848"><vh>&lt;&lt; put all @first lines in root &gt;&gt;</vh></v>
+<v t="edream.110203160744.2849"><vh>&lt;&lt; put all @last lines in root &gt;&gt; (4.x)</vh></v>
+</v>
+<v t="edream.110203160744.2850"><vh>&lt;&lt; Warn about @ignored and orphans  &gt;&gt;</vh></v>
+<v t="edream.110203160744.2851"><vh>&lt;&lt; finish writing &gt;&gt;</vh></v>
+</v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
+<v t="edream.110203160744.2992" a=""><vh>putTnodeList (4.0)</vh></v>
+</v>
+<v t="edream.120803164637.2"><vh>Reading</vh>
+<v t="edream.110203160744.1842" a=""><vh>findChild</vh></v>
+<v t="edream.110203160744.2973" a=""><vh>getTnodeList (4.0)</vh></v>
+</v>
 </v>
 </v>
 </v>
@@ -4228,7 +4302,7 @@
 </v>
 <v t="edream.110203160744.1955"><vh>putLeadInSentinel</vh></v>
 <v t="edream.110203160744.2835"><vh>putOpenLeoSentinel</vh></v>
-<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel</vh></v>
+<v t="edream.110203160744.2836" a=""><vh>putOpenNodeSentinel (sets tnodeList)</vh></v>
 <v t="edream.110203160744.2837"><vh>putSentinel (applies cweb hack)</vh>
 <v t="edream.110203160744.2838"><vh>&lt;&lt; apply the cweb hack to s &gt;&gt;</vh></v>
 </v>
@@ -4238,7 +4312,7 @@
 <v t="edream.110203160744.2841" a=""><vh>Writing (4.x)</vh>
 <v t="edream.110203160744.2842"><vh>Top level</vh>
 <v t="edream.110203160744.2843"><vh>new_df.closeWriteFile</vh></v>
-<v t="edream.110203160744.2844" a=""><vh>new_df.write</vh>
+<v t="edream.110203160744.2844" a=""><vh>new_df.write (inits root.tnodeList)</vh>
 <v t="edream.110203160744.2845"><vh>&lt;&lt; initialize &gt;&gt;</vh></v>
 <v t="edream.110203160744.2846"><vh>&lt;&lt; open the file; return on error &gt;&gt;</vh></v>
 <v t="edream.110203160744.2847"><vh>&lt;&lt; write then entire @file tree &gt;&gt; (4.x)</vh>
@@ -5821,7 +5895,7 @@
 <v t="edream.110203160744.1932" a=""><vh>&lt;&lt; undo typing cases &gt;&gt;</vh></v>
 </v>
 <v t="edream.110203160744.3517"><vh>Undo helpers</vh>
-<v t="edream.110203160744.2027"><vh>saveTree, restoreExtraAttributes</vh></v>
+<v t="edream.110203160744.2027"><vh>u.saveTree, restoreExtraAttributes</vh></v>
 <v t="edream.110203160744.3518"><vh>findSharedVnode</vh></v>
 <v t="edream.110203160744.3519"><vh>undoDemote</vh></v>
 <v t="edream.110203160744.3520"><vh>undoPromote</vh></v>
@@ -6862,9 +6936,11 @@
 </v>
 </v>
 </v>
-<v t="edream.110203160744.3805" a="EV"><vh>(Fix major copy/paste bugs involving clones)</vh>
-<v t="edream.120403144310"><vh>Report</vh></v>
-<v t="edream.111003111536"><vh>Investigate No tnode list</vh></v>
+<v t="edream.110203160744.3805"><vh>(Fixed minor bugs with copy/paste bugs involving clones)</vh>
+<v t="edream.120403144310"><vh>Notes</vh></v>
+<v t="edream.120803164637.3"><vh>Report: billp9619: fixed</vh></v>
+<v t="edream.120803161153"><vh>Report: RodrigoB: Probably a 4.0.4 issue</vh></v>
+<v t="edream.120803161842.1"><vh>Reading</vh>
 <v t="edream.110203160744.2978" a=""><vh>fileCommands.setAllJoinLinks</vh></v>
 <v t="edream.110203160744.2976" a=""><vh>newTnode</vh></v>
 <v t="edream.110203160744.1555" a=""><vh>getTnode</vh>
@@ -6881,6 +6957,13 @@
 </v>
 <v t="edream.110203160744.1551" a=""><vh>finishPaste</vh>
 <v t="edream.110203160744.1552"><vh>&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="edream.120803161842.2"><vh>Writing</vh>
+<v t="edream.110203160744.1564" a=""><vh>assignFileIndices &amp; compactFileIndices</vh>
+<v t="edream.110203160744.1565"><vh>&lt;&lt; assign missing gnx's, converting ints to gnx's &gt;&gt;</vh></v>
+<v t="edream.110203160744.1566"><vh>&lt;&lt; reassign all tnode indices &gt;&gt;</vh></v>
+</v>
 </v>
 </v>
 </vnodes>
@@ -26800,6 +26883,8 @@ def finishPaste(self):
 	after = current.nodeAfterTree()
 	c.beginUpdate()
 	&lt;&lt; reassign tnode indices and clear all clone links &gt;&gt;
+	self.setAllJoinLinks(root=current) # 12/8/03
+	c.initAllCloneBits() # 12/8/03
 	c.selectVnode(current)
 	c.endUpdate()
 	return current</t>
@@ -30411,6 +30496,7 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 	oldSel = body.getTextSelection()
 	count = 0
 	while v and v != next:
+		vChanged = false
 		if v == current:
 			if c.convertBlanks(setUndoParams=false):
 				count += 1
@@ -30422,7 +30508,9 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 			for line in lines:
 				s = optimizeLeadingWhitespace(line,tabWidth)
 				if s != line:
-					changed = true ; count += 1
+					changed = true
+					if not vChanged:
+						count += 1 ; vChanged = true
 				result.append(s)
 			if changed:
 				result = string.join(result,'\n')
@@ -30436,7 +30524,8 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 			current,select=current,oldTree=v_copy,
 			oldText=oldText,newText=newText,
 			oldSel=oldSel,newSel=newSel)
-	es("blanks converted to tabs in %d nodes" % count)</t>
+	es("blanks converted to tabs in %d nodes" % count)
+</t>
 <t tx="edream.110203160744.1802">def convertAllTabs (self):
 
 	c = self ; body = c.frame.body ; v = current = c.currentVnode()
@@ -30454,6 +30543,7 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 	oldSel = body.getTextSelection()
 	count = 0
 	while v and v != next:
+		vChanged = false
 		if v == current:
 			if self.convertTabs(setUndoParams=false):
 				count += 1
@@ -30466,7 +30556,9 @@ Probably undoing a non-cloned node that was the descendent of a cloned node.  </
 				i,w = skip_leading_ws_with_indent(line,0,tabWidth)
 				s = computeLeadingWhitespace(w,-abs(tabWidth)) + line[i:] # use negative width.
 				if s != line:
-					changed = true ; count += 1
+					changed = true
+					if not vChanged:
+						count += 1 ; vChanged = true
 				result.append(s)
 			if changed:
 				result = string.join(result,'\n')
@@ -57306,16 +57398,7 @@ def configure (self,*args,**keys):
 		trace(args,keys)
 	
 	return self.bodyCtrl.configure(*args,**keys)</t>
-<t tx="edream.111003111536">no tnodeList for &lt;vnode 39953512:u'@file leoCompare.py'&gt;
-no tnodeList for &lt;vnode 39991816:u'@file leoFontPanel.py'&gt;
-no tnodeList for &lt;vnode 40002464:u'@file leoPrefs.py'&gt;
-no tnodeList for &lt;vnode 40003584:u'@file leoTkinterColorPanels.py'&gt;
-no tnodeList for &lt;vnode 40014072:u'@file leoTkinterDialog.py'&gt;
-no tnodeList for &lt;vnode 40051736:u'@file leoTkinterKeys.py'&gt;
-no tnodeList for &lt;vnode 40051896:u'@file leoTkinterTree.py'&gt;
-no tnodeList for &lt;vnode 40083784:u'@file leoTkinterMenu.py'&gt;
-
-## Shouldn't tnodeList be in the tnode???????</t>
+<t tx="edream.111003111536"></t>
 <t tx="edream.111103053839">def compareIndices(self,i,rel,j):
 
 	return self.bodyCtrl.compare(i,rel,j)</t>
@@ -60679,30 +60762,11 @@ I imported as @file a python file, and there's a line with a line-continuation b
 
 The 4.0.x paste code (and all previous versions) may be buggy: pasted nodes can share tnodes.  This never happens when cutting and pasting in the same outline, because the indices are reassigned when _cutting_.
 
-finishPaste must create _new_ tnodes for all indices.  But notice, new_tnodes already warns if there are "overlap" problems, and this rarely if ever happens.  So maybe the code isn't buggy?  Or maybe the bug only happens very rarely???
+I believe the 4.1 code is presently correct.  In any event, there is no way to fix 4.0.4 now: it must be withdrawn.
 
-At any rate, is it crucial that all possibilities of a bug be stamped out completely.  But how to reassign a tnode once vnodes point to it?  It's a little tricky.
+12/8/03: finishPaste now recomputes all join links and sets clone marks correctly.
 
-Read and respond to this message at: 
-https://sourceforge.net/forum/message.php?msg_id=2285457
-By: billp9619
-
-Assume a node with two child clones representing the same T node.
-
-If I paste this somewhere else in the outline the clones are maintained as clones
-...except they now associate with a new T node.
-
-This makes sense since the clipboard might not be from the current outline and
-there would be the possibility of pasting a clone into itself, etc.
-
-PROBLEM/BUG?: The pasted clones do not get a red symbol identifying them as
-clones. If I save and reload the outline then the red clone symbols appear.
-This is the behavior of both 4.0.3 and 4.1.
-
-ENHANCEMENT/IDEA: How to keep original clones after paste.
-Why not add a command to "cut and paste to end" command that would copy AND
-paste a selected node in one step ... to the end of the outline..retaining original
-T node references of clones? The the user could then drag this somewhere else.</t>
+</t>
 <t tx="edream.120503070828"></t>
 <t tx="edream.120503070828.1">The only change was that replaceClipboardWith now no longer returns a value.</t>
 <t tx="edream.120503070828.2"></t>
@@ -60926,5 +60990,91 @@ more snap code
 in the output file "more snap code" will be NOT commented, but in Leo that line will appear as a red comment line.
 I do not know which is the "correct behaviour" but the colorizer should be consisten with it.
 </t>
+<t tx="edream.120803101918"></t>
+<t tx="edream.120803102832"></t>
+<t tx="edream.120803102832.1">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2322452
+By: billp9619
+
+The RecentFiles list appears with files listed but when selected nothing happens.
+
+Log pane:
+
+Leo Log Window...
+Leo 4.1 beta 5, build  1.51 , December 5, 2003
+Python 2.2.1, Tk 8.3.2
+
+leoConfig.txt encoding: utf-8
+Text encoding: cp1252
+leoID = id9619</t>
+<t tx="edream.120803143354"></t>
+<t tx="edream.120803161153">@nocolor
+
+Tonight Leo 4.0 erased my LeoN.leo project !
+
+Yesterday I started the port of LeoN from Leo3.12 to Leo4.1 (previous beta seemed too much inmatures to start such work). Working on new adaptation I required to copy some nodes of the Leo4.1 code to the LeoN outline.
+
+When doing such copy-paste an error raised during the paste (something about node attributes) and the pasted outline give a tree of empty nodes. I deleted this failed paste nodes, saved the project and quited to open LeoN.leo with Leo4.1. When I opened it with Leo4.1 Horror ! all the LeoN project had disapeared, and the only nodes in LeoN.leo where, the outline that I just tried to paste (the nodes where non empty this time). Frightened, I quited and checked the LeoN.leo file size, all the data was lost.
+
+The Leo version I'm using commonly is:
+Leo 4.0.4, build  1.100 , October 29, 2003
+Python 2.3.2, Tk 8.4.4
+
+is very stable and I had no problem working with it in LeoN. This is the first oops that I get.&lt;br /&gt;
+
+** It happened when I pasted an outline of Leo4.1 to Leo4.0.
+
+I do not know if this is a particular error, a backward problem or anything. I jusst wanted to point that:
+
+- thanks Edward for keeping fat .leo files AND keeping always the @file nodes syncronised.
+
+- I know that this error is a strange condition (backward copy/paste), but I do not understand why the Visual Output was fine, but Leo saved a totally different outline.
+
+- Please enforce checks and safety during copy/paste operations. If I had a project in a pure Leo outline (no @file outputs) this issue would have been fatal.</t>
+<t tx="edream.120803161842.1"></t>
+<t tx="edream.120803161842.2"></t>
+<t tx="edream.120803164637">@nocolor
+
+In retrospect, the tnodeList should have been in at.root.t, not at.root.  Alas, it is too late to change this cleanly now.
+
+Please note: findChild will call readError in this case, so we will revert to the outline info and no great harm will be done.
+
+Also, it may be that the entire 4.x read logic might be replaced by Bernhard's "no-sentinel" scheme, in which case:
+
+a) The sentinel scheme used _does not matter_ (provided Leo can read it)
+b) Leo might as well use child indices (and the 3.x read scheme) and eliminate the tnodeList entirely!</t>
+<t tx="edream.120803164637.1"></t>
+<t tx="edream.120803164637.2"></t>
+<t tx="edream.120803164637.3">@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2285457
+By: billp9619
+
+Assume a node with two child clones representing the same T node.
+
+If I paste this somewhere else in the outline the clones are maintained as clones
+...except they now associate with a new T node.
+
+This makes sense since the clipboard might not be from the current outline and
+there would be the possibility of pasting a clone into itself, etc.
+
+BUG: The pasted clones do not get a red symbol identifying them as
+clones. If I save and reload the outline then the red clone symbols appear.
+This is the behavior of both 4.0.3 and 4.1.</t>
+<t tx="edream.120803170142"></t>
+<t tx="edream.120803170142.1">My conclusion at present is that the problem lies with 4.0.4, not 4.1.  I can see nothing seriously wrong with the present code:
+
+- Missing tnodeList errors are possible when @file nodes are cloned when converting from 3.x to 4.x.  The tnodeList probably should have been made part of tnodes, not vnodes; it's too late to change now.
+
+- Missing tnodeList errors are not serious: Leo will recover as usual.
+
+- The copy/paste code had a few bugs that I corrected today.  I doubt whether these would have caused major problems.
+
+In short, the present code appears to be reasonably solid.  I should withdraw the 4.0.4 code asap.</t>
+<t tx="edream.120803170142.2">- pluginsManager.text
+- Import Derived File command now puts up a dialog.
+</t>
+<t tx="edream.120803171529"></t>
 </tnodes>
 </leo_file>

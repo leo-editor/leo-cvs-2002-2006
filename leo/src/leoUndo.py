@@ -935,7 +935,7 @@ class baseUndoer:
 		u.setUndoTypes()
 		# print_stats()
 	#@-node:u.undo
-	#@+node:saveTree, restoreExtraAttributes
+	#@+node:u.saveTree, restoreExtraAttributes
 	def saveTree (self,v):
 		
 		tree = v.copyTree()
@@ -957,7 +957,7 @@ class baseUndoer:
 		v.setExtraAttributes(v_extraAttributes)
 		v.t.setExtraAttributes(t_extraAttributes)
 	#@nonl
-	#@-node:saveTree, restoreExtraAttributes
+	#@-node:u.saveTree, restoreExtraAttributes
 	#@+node:findSharedVnode
 	def findSharedVnode (self,target):
 	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="2256" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="2259" clone_windows="0"/>
 <globals body_outline_ratio="0.50724637681159424">
 	<global_window_position top="10" left="82" height="784" width="822"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
@@ -2721,7 +2721,7 @@
 <v t="edream.120403143517" tnodeList="edream.120403143517"><vh>@file c:\prog\test\chinese脖folder\chinese脖test.txt</vh></v>
 </v>
 <v t="edream.120603125057"><vh>4.1 beta 6 tests</vh>
-<v t="edream.120603112201" a="E"><vh>clone-drag bug</vh>
+<v t="edream.120603112201"><vh>clone-drag bug</vh>
 <v t="edream.120603112201.1" a=""><vh>a</vh>
 <v t="edream.120603112201.3"><vh>f</vh></v>
 <v t="edream.120603112201.2"><vh>b</vh></v>
@@ -2816,9 +2816,24 @@
 </v>
 </v>
 </v>
+<v t="edream.120703182038"><vh>Test of @others inside doc part</vh>
+<v t="edream.120703182038.1" a="M" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
 </v>
-<v t="edream.120703182038" a="E"><vh>Test of @others inside doc part</vh>
-<v t="edream.120703182038.1" a="MV" tnodeList="edream.120703182038.1"><vh>@file c:\prog\test\atOthersInDocTest.txt</vh></v>
+</v>
+<v t="edream.120803091715"><vh>using pdb</vh></v>
+<v t="edream.120803164745" a="E"><vh>clone copy/paste test</vh>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+<v t="edream.120803164745.3"><vh>copy</vh>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+<v t="edream.120803164745.1" a=""><vh>a</vh>
+<v t="edream.120803164745.2"><vh>b</vh></v>
+</v>
+</v>
+<v t="edream.120803164752" a="V"><vh>paste</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -35627,5 +35642,11 @@ cal3.time_comp = false;
 This should be more doc part
 @c
 </t>
+<t tx="edream.120803091715">import pdb ; pdb.set_trace()</t>
+<t tx="edream.120803164745"></t>
+<t tx="edream.120803164745.1"></t>
+<t tx="edream.120803164745.2"></t>
+<t tx="edream.120803164745.3"></t>
+<t tx="edream.120803164752"></t>
 </tnodes>
 </leo_file>
