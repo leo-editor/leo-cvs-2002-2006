@@ -189,7 +189,7 @@ class LeoPrefs:
 
 		center_dialog(top) # Do this _after_ building the dialog!
 		top.resizable(0,0) # neither height or width is resizable.
-		self.top.protocol("WM_DELETE_WINDOW", self.OnClosePrefsFrame)
+		self.top.protocol("WM_DELETE_WINDOW", self.onCancel) # 1/31/03
 		self.init(c)
 		# es("Prefs.__init__")
 	#@-body
@@ -329,21 +329,7 @@ class LeoPrefs:
 		# print "set_lang",language
 	#@-body
 	#@-node:2::set_lang
-	#@+node:3::OnClosePrefsFrame
-	#@+body
-	def OnClosePrefsFrame(self):
-	
-		# trace()
-		app().config.setConfigIvars(self.commands)
-		app().config.update()
-		if 1: # Hide the window, preserving its position.
-			self.top.withdraw()
-		else: # works.
-			self.commands.frame.prefsPanel = None
-			self.top.destroy()
-	#@-body
-	#@-node:3::OnClosePrefsFrame
-	#@+node:4::prefs.onOK, onCancel, onRevert
+	#@+node:3::prefs.onOK, onCancel, onRevert
 	#@+body
 	def onOK (self):
 		app().config.setConfigIvars(self.commands)
@@ -405,7 +391,7 @@ class LeoPrefs:
 		self.init(c)
 		self.set_ivars(c)
 	#@-body
-	#@-node:4::prefs.onOK, onCancel, onRevert
+	#@-node:3::prefs.onOK, onCancel, onRevert
 	#@-node:3::Event handlers
 	#@-others
 #@-body
