@@ -429,7 +429,7 @@ class Commands:
 			c.updateBodyPane(head,result,tail,"Undent",oldSel,oldYview)
 	#@-body
 	#@-node:6::dedentBody
-	#@+node:7::extract
+	#@+node:7::extract (undo clears undo buffer)
 	#@+body
 	def extract(self):
 	
@@ -463,12 +463,13 @@ class Commands:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		c.createLastChildNode(v,headline,body)
-		c.updateBodyPane(head,None,tail,"Can't Undo",oldSel,oldYview)
+		undoType =  "Can't Undo" # 12/8/02: None enables further undoes, but there are bugs now.
+		c.updateBodyPane(head,None,tail,undoType,oldSel,oldYview)
 		c.undoer.setUndoParams("Extract",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	#@-body
-	#@-node:7::extract
-	#@+node:8::extractSection
+	#@-node:7::extract (undo clears undo buffer)
+	#@+node:8::extractSection (undo clears undo buffer)
 	#@+body
 	def extractSection(self):
 	
@@ -480,6 +481,8 @@ class Commands:
 		line1 = "\n" + headline
 		# Create copy for undo.
 		v_copy = c.copyTree(v)
+		#trace("v:     " + `v`)
+		#trace("v_copy:" + `v_copy`)
 		
 		#@<< Set headline for extractSection >>
 		#@+node:1::<< Set headline for extractSection >>
@@ -505,12 +508,13 @@ class Commands:
 			head = string.rstrip(head)
 		c.beginUpdate()
 		c.createLastChildNode(v,headline,body)
-		c.updateBodyPane(head,line1,tail,"Can't Undo",oldSel,oldYview)
+		undoType =  "Can't Undo" # 2/8/02: None enables further undoes, but there are bugs now.
+		c.updateBodyPane(head,line1,tail,undoType,oldSel,oldYview)
 		c.undoer.setUndoParams("Extract Section",v,select=current,oldTree=v_copy)
 		c.endUpdate()
 	
 	#@-body
-	#@-node:8::extractSection
+	#@-node:8::extractSection (undo clears undo buffer)
 	#@+node:9::extractSectionNames
 	#@+body
 	def extractSectionNames(self):
@@ -548,7 +552,6 @@ class Commands:
 		c.validateOutline()
 		c.endUpdate()
 		c.undoer.setUndoParams("Extract Names",v,select=current,oldTree=v_copy)
-		#c.undoer.clearUndoState()
 		# Restore the selection.
 		setTextSelection(c.body,i,j)
 		c.body.focus_force()

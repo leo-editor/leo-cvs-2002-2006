@@ -11,6 +11,7 @@ __pychecker__ = 'argumentsused=0' # Pychecker param.
 from leoGlobals import *
 import leoColor,leoCommands,leoCompare,leoDialog,leoFontPanel,leoNodes,leoPrefs,leoTree
 import os,string,sys,Tkinter,tkFileDialog,tkFont
+import tempfile
 
 class LeoFrame:
 
@@ -1461,11 +1462,17 @@ class LeoFrame:
 			#@+node:2::<< set path to the full pathname of a temp file using ext >>
 			#@+body
 			file = None
+			open_with_file_num = 0
 			while file == None:
-				a.openWithFileNum += 1
-				# name = "LeoTemp" + str(a.openWithFileNum) + ext
-				name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
-				path = os.path.join(a.loadDir,name)
+				# a.openWithFileNum += 1
+				# name = "LeoTemp_" + sanitize_filename(v.headString()) + ext
+				# path = os.path.join(a.loadDir,name)
+				name = "LeoTemp_" + sanitize_filename(v.headString())
+				if open_with_file_num:
+					name += '_' + str(a.openWithFileNum)
+				name += ext
+				td = os.path.abspath(tempfile.gettempdir())
+				path = os.path.join(td,name)
 				if not os.path.exists(path):
 					try:
 						file = open(path,"w")
@@ -1484,6 +1491,7 @@ class LeoFrame:
 						file = None
 						es("exception opening temp file")
 						es_exception()
+				open_with_file_num += 1
 			if not file: return
 			#@-body
 			#@-node:2::<< set path to the full pathname of a temp file using ext >>

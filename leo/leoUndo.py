@@ -82,6 +82,8 @@ class undoer:
 		
 		# State ivars...
 		u.undoType = "Can't Undo"
+		u.realRedoMenuLabel = "Can't Redo"
+		u.realUndoMenuLabel = "Can't Undo"
 		u.undoing = false # True if executing an Undo command.
 		u.redoing = false # True if executing a Redo command.
 	
@@ -99,15 +101,14 @@ class undoer:
 	def clearUndoState (self):
 		
 		u = self
-		
 		u.redoMenuLabel = "Can't Redo" # Set here to indicate initial menu entry.
 		u.undoMenuLabel = "Can't Undo" # Set here to indicate initial menu entry.
-	
-		realLabel = app().getRealMenuName("Can't Redo")
-		u.realRedoMenuLabel = realLabel.replace("&","")
-	
-		realLabel = app().getRealMenuName("Can't Undo")
-		u.realUndoMenuLabel = realLabel.replace("&","")
+		
+		if 0: # This would wrong; set realLabel only when calling setMenuLabel.
+			realLabel = app().getRealMenuName("Can't Redo")
+			u.realRedoMenuLabel = realLabel.replace("&","")
+			realLabel = app().getRealMenuName("Can't Undo")
+			u.realUndoMenuLabel = realLabel.replace("&","")
 		
 		u.setRedoType("Can't Redo")
 		u.setUndoType("Can't Undo")
@@ -120,7 +121,6 @@ class undoer:
 		self.v = None # The node being operated upon for undo and redo.
 		for ivar in optionalIvars:
 			exec('self.%s = None' % ivar)
-	
 	#@-body
 	#@-node:1::clearUndoState & clearIvars
 	#@-node:3::undo.__init__
@@ -279,9 +279,10 @@ class undoer:
 
 	def setUndoParams (self,undo_type,v,**keywords):
 	
-		# trace(`undo_type`)
 		u = self
 		if u.redoing or u.undoing: return None
+		if undo_type == None:
+			return None
 		if undo_type == "Can't Undo":
 			u.clearUndoState()
 			return None
@@ -318,6 +319,8 @@ class undoer:
 	
 		u = self ; c = self.commands
 		if u.redoing or u.undoing: return None
+		if undo_type == None:
+			return None
 		if undo_type == "Can't Undo":
 			u.clearUndoState()
 			return None
@@ -607,25 +610,15 @@ class undoer:
 			#@<< redo replace cases >>
 			#@+node:6::<< redo replace cases >>
 			#@+body
-			elif redoType in [
-				"Convert All Blanks",
-				"Convert All Tabs",
-				"Extract",
-				"Extract Names",
-				"Extract Section"]:
+			elif redoType in (
+				"Convert All Blanks","Convert All Tabs",
+				"Extract","Extract Names","Extract Section"):
 				
 				# Same as undo except we interchange u.oldTree and u.v in the call to undoReplace.
-				self.undoReplace(u.oldTree,u.v)
-				u.v,u.oldTree = u.oldTree,u.v
-				
-				v = u.oldTree
-				# selectVnode causes recoloring, so don't do this unless needed.
-				if current != u.v:
-					c.selectVnode(v)
-				# This rewrites the body pane, so we must do a full recolor.
-				v.setBodyStringOrPane(v.bodyString())
-				c.tree.recolor(u.v)
-				redrawFlag = (current != u.v)
+				u.v = self.undoReplace(u.v,u.oldTree)
+				# u.v.setBodyStringOrPane(u.v.bodyString())
+				c.selectVnode(u.v) # Does full recolor.
+				redrawFlag = redoType in ("Extract","Extract Names","Extract Section")
 			
 			#@-body
 			#@-node:6::<< redo replace cases >>
@@ -846,24 +839,17 @@ class undoer:
 			#@<< undo replace cases >>
 			#@+node:6::<< undo replace cases >>
 			#@+body
-			elif undoType in [
-				"Convert All Blanks",
-				"Convert All Tabs",
-				"Extract",
-				"Extract Names",
-				"Extract Section"]:
+			elif undoType in (
+				"Convert All Blanks","Convert All Tabs",
+				"Extract","Extract Names","Extract Section"):
 				
-				self.undoReplace(u.v,u.oldTree)
-				u.v,u.oldTree = u.oldTree,u.v
-				
-				v = u.v
-				# selectVnode causes recoloring, so don't do this unless needed.
-				if current != u.v:
-					c.selectVnode(v)
-				# This rewrites the body pane, so we must do a full recolor.
-				v.setBodyStringOrPane(v.bodyString())
-				c.tree.recolor(u.v)
-				redrawFlag = (current != u.v)
+				# Major bug: this restores the copy, so further undos don't work properly.
+				u.v = self.undoReplace(u.oldTree,u.v)
+				#trace(`current`)
+				#trace(`u.v`)
+				# u.v.setBodyStringOrPane(u.v.bodyString())
+				c.selectVnode(u.v) # Does full recolor.
+				redrawFlag = true
 			#@-body
 			#@-node:6::<< undo replace cases >>
 
@@ -1040,15 +1026,16 @@ class undoer:
 	# 	< < make arbitrary changes to v's tree > >
 	# 	c.undoer.setUndoParams("Op Name",v,select=current,oldTree=v_copy)
 	# 
-	# This way is far more elegant than calling v.destroyDependents and 
-	# v.createDependents.  This is the way it is written in "The Book." Yes, 
-	# entire trees are copied, but in the most general case that is necessary.
+	# This way is far more elegant than calling v.destroyDependents and v.createDependents.
+	# Yes, entire trees are copied, but in the most general case that is necessary.
 
 	#@-at
 	#@@c
 
 	def undoReplace (self,v,oldv):
 	
+		#trace("v   :%s" % v)
+		#trace("oldv:%s" % oldv)
 		assert(v)
 		assert(oldv)
 		u = self ; c = u.commands
@@ -1064,8 +1051,9 @@ class undoer:
 			j = nextj
 	
 		# Swap v and oldv.
-		v.swap_links(oldv,v)
-		v = oldv
+		# trace("final swap")
+		v.swap_links(v,oldv)
+		trace("new linked tree:"+`v`)
 		
 		# Join v to all copies.
 		for copy in copies:
@@ -1075,6 +1063,8 @@ class undoer:
 		if v.shouldBeClone():
 			v.setClonedBit()
 		c.initAllCloneBits()
+		
+		return v
 	#@-body
 	#@-node:4::undoReplace
 	#@+node:5::undoRedoText
@@ -1157,7 +1147,10 @@ class undoer:
 		#@-body
 		#@-node:2::<< Compute the result using v's body text >>
 
+		#trace(`v`)
+		#trace("old:"+`v.bodyString()`)
 		v.t.setTnodeText(result)
+		#trace("new:"+`v.bodyString()`)
 		
 		#@<< Get textResult from the Tk.Text widget >>
 		#@+node:3::<< Get textResult from the Tk.Text widget >>
@@ -1190,6 +1183,7 @@ class undoer:
 
 			# print "non-incremental undo"
 			v.setBodyStringOrPane(result)
+	
 	#@-body
 	#@-node:5::undoRedoText
 	#@+node:6::undoSortChildren

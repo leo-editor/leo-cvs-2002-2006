@@ -521,7 +521,6 @@ class LeoFind:
 		if count > 0:
 			# A change was made.  Tag the end of the Change All command.
 			c.undoer.setUndoParams("Change All",v)
-		## c.undoer.clearUndoState()
 		es("changed: " + `count`)
 		self.restore(data)
 	#@-body

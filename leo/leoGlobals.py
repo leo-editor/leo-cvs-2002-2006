@@ -570,6 +570,7 @@ def enableMenu (menu,name,val):
 			realName = realName.replace("&","")
 			menu.entryconfig(realName,state=state)
 		except:
+			print "setMenuLabel menu,name,val:",menu,name,val
 			es_exception()
 			pass
 
@@ -581,7 +582,10 @@ def disableMenu (menu,name):
 			realName = app().getRealMenuName(name)
 			realName = realName.replace("&","")
 			menu.entryconfig(realName,state="disabled")
-		except: pass
+		except:
+			print "setMenuLabel menu,name:",menu,name
+			es_exception()
+			pass
 
 def setMenuLabel (menu,name,label,underline=-1):
 	try:
