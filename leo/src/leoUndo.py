@@ -35,7 +35,7 @@
 #@nl
 #@<< Define optional ivars >>
 #@+node:ekr.20031218072017.3604:<< Define optional ivars >>
-optionalIvars = (
+optionalIvars = [
 	"lastChild",
 	"parent","oldParent",
 	"back","oldBack",
@@ -48,7 +48,7 @@ optionalIvars = (
 	# For incremental undo typing...
 	"leading","trailing",
 	"oldMiddleLines","newMiddleLines",
-	"oldNewlines","newNewlines")
+	"oldNewlines","newNewlines" ]
 #@nonl
 #@-node:ekr.20031218072017.3604:<< Define optional ivars >>
 #@nl
