@@ -23,7 +23,7 @@ class underlinedTkButton:
         self.hotKey = None
         text = keywords['text']
     
-        #@	<< set self.hotKey if '&' is in the string >>
+        #@    << set self.hotKey if '&' is in the string >>
         #@+node:ekr.20041025152712.2:<< set self.hotKey if '&' is in the string >>
         index = text.find('&')
         
@@ -38,9 +38,9 @@ class underlinedTkButton:
         #@nonl
         #@-node:ekr.20041025152712.2:<< set self.hotKey if '&' is in the string >>
         #@nl
-        
+    
         # Create the button...
-    	if self.hotKey:
+        if self.hotKey:
             keywords['text'] = text
             keywords['underline'] = index
     
@@ -67,10 +67,10 @@ class underlinedTkButton:
     # The hot key has been hit.  Call the button's command.
     
     def callback (self, event):
-        
-        g.trace(self.text)
     
-    	self.button.invoke ()
+        # g.trace(self.text)
+    
+        self.button.invoke ()
     #@-node:ekr.20041025152717:callback
     #@-others
 #@nonl
