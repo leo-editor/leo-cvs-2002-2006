@@ -1,6 +1,7 @@
-#@+leo-ver=4-thin
-#@+node:EKR.20040519082027.34:@file-thin ../uninstall
 #!/bin/sh
+#@+leo-ver=4-thin
+#@+node:EKR.20040519082027.34:@thin ../uninstall
+#@@first
 
 ############################################
 # This is a small install script to install
@@ -57,5 +58,5 @@ rm -f  $LEO_RUN_SCRIPT_OUTPUT
 
 "
 #@nonl
-#@-node:EKR.20040519082027.34:@file-thin ../uninstall
+#@-node:EKR.20040519082027.34:@thin ../uninstall
 #@-leo

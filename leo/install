@@ -1,6 +1,7 @@
-#@+leo-ver=4-thin
-#@+node:EKR.20040519082027.33:@file-thin ../install
 #!/bin/sh
+#@+leo-ver=4-thin
+#@+node:EKR.20040519082027.33:@thin ../install
+#@@first
 
 ############################################
 # This is a small install script to install
@@ -140,5 +141,5 @@ echo "                                                 *****"
 echo ""
 exit 0;
 #@nonl
-#@-node:EKR.20040519082027.33:@file-thin ../install
+#@-node:EKR.20040519082027.33:@thin ../install
 #@-leo
