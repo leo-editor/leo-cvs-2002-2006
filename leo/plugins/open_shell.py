@@ -1,34 +1,29 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517080049.4:@thin open_shell.py
-"""Opens up cmd and explorer window to same directory 
-as @file nodes or children ..."""
+#@<< docstring >>
+#@+node:ekr.20050111112200:<< docstring >>
+'''
+Creates an 'extensions' menu with commands to open either an xterm on linux
+or a cmd windows/explorer window on win32 in the directory of the current @file.
+This allows quick navigation to facilitate testing and navigating large systems
+with complex direcgtories.
+
+Please submit bugs / feature requests to etaekema@earthlink.net
+
+Current limitations:
+- Not tested on Mac OS X ...
+- On linux, xterm must be in your path.
+'''
+#@nonl
+#@-node:ekr.20050111112200:<< docstring >>
+#@nl
+
+# Written by Ed Taekema.  Modified by EKR
 
 #@@language python
 #@@tabwidth -4
 
-#@<< about the open shell plugin >>
-#@+node:EKR.20040517080049.5:<< about the open shell plugin >>
-#@+at 
-#@nonl
-# Written by Ed Taekema.  Modified by E.K.Ream
-# 
-# Please submit bugs / feature requests to etaekema@earthlink.net"""
-# 
-# This is a simple plugin for leo 3.12 that allows the user to open either an 
-# xterm on linux or a cmd windows/explorer window on win32 in the directory of 
-# the current @file.  This allows quick navigation to facilitate testing and 
-# navigating large systems with complex direcgtories.
-# 
-# Current limitations ...
-# 
-# - Not tested on Mac OS X ...
-# 
-# - On linux, xterm must be in your path.
-#@-at
-#@-node:EKR.20040517080049.5:<< about the open shell plugin >>
-#@nl
-
-__version__ = "1.5"
+__version__ = "0.6"
 
 #@<< version history >>
 #@+node:ekr.20040909100119:<< version history >>
@@ -38,6 +33,8 @@ __version__ = "1.5"
 #     - Generalized the code for any kind of @file node.
 #     - Changed _getpath so that explicit paths in @file nodes override @path 
 # directives.
+# 0.6 EKR:
+#     - Moved most docs into the docstring.
 #@-at
 #@nonl
 #@-node:ekr.20040909100119:<< version history >>
@@ -135,7 +132,7 @@ def launchxTerm(not_used):
 #@-node:EKR.20040517080049.11:launchxTerm
 #@-others
 
-if not g.app.unitTesting:
+if 1: # Ok for unit testing: creates a new menu.
 
     # Register the handlers...
     leoPlugins.registerHandler("after-create-leo-frame", load_menu)

@@ -87,52 +87,46 @@ def on_idle (tag,keywords):
 #@nonl
 #@-node:EKR.20040517075715.5:on_idle
 #@+node:EKR.20040517075715.8:create_open_with_menu
+#@+at 
+#@nonl
+# Entries in the following table are the tuple (commandName,shortcut,data).
+# 
+# - data is the tuple (command,arg,ext).
+# - command is one of "os.system", "os.startfile", "os.spawnl", "os.spawnv" or 
+# "exec".
+# 
+# Leo executes command(arg+path) where path is the full path to the temp file.
+# If ext is not None, the temp file has the extension ext,
+# Otherwise, Leo computes an extension based on what @language directive is in 
+# effect.
+#@-at
+#@@c
+
 def create_open_with_menu (tag,keywords):
 
-    if  (tag in ("start2","open2") or
-        (tag=="command2" and keywords.get("label")=="new")):
-
-        #@        << create the Open With menu >>
-        #@+node:EKR.20040517075715.9:<< create the Open With menu >>
-        #@+at 
-        #@nonl
-        # Entries in the following table are the tuple 
-        # (commandName,shortcut,data).
-        # 
-        # - data is the tuple (command,arg,ext).
-        # - command is one of "os.system", "os.startfile", "os.spawnl", 
-        # "os.spawnv" or "exec".
-        # 
-        # Leo executes command(arg+path) where path is the full path to the 
-        # temp file.
-        # If ext is not None, the temp file has the extension ext,
-        # Otherwise, Leo computes an extension based on what @language 
-        # directive is in effect.
-        #@-at
-        #@@c
-        
-        idle_arg = "c:/python22/tools/idle/idle.py -e "
-        
-        if 1: # Default table.
-            table = (
-                # Opening idle this way doesn't work so well.
-                # ("&Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
-                ("&Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
-                ("Word&Pad","Alt+Shift+T",("os.startfile",None,".txt")))
-        elif 1: # Test table.
-            table = ("&Word","Alt+Shift+W",("os.startfile",None,".doc")),
-        else: # David McNab's table.
-            table = ("X&Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
-        
-        g.top().frame.menu.createOpenWithMenuFromTable(table)
-        #@nonl
-        #@-node:EKR.20040517075715.9:<< create the Open With menu >>
-        #@nl
+    c = keywords.get('new_c') or keywords.get('c')
+    if not c:
+        print 'can not create Open With menu for %s' % c.shortFileName()
+        return
+    idle_arg = "c:/python22/tools/idle/idle.py -e "
+    
+    if 1: # Default table.
+        table = (
+            # Opening idle this way doesn't work so well.
+            # ("&Idle",   "Alt+Shift+I",("os.system",idle_arg,".py")),
+            ("&Word",   "Alt+Shift+W",("os.startfile",None,".doc")),
+            ("Word&Pad","Alt+Shift+T",("os.startfile",None,".txt")))
+    elif 1: # Test table.
+        table = ("&Word","Alt+Shift+W",("os.startfile",None,".doc")),
+    else: # David McNab's table.
+        table = ("X&Emacs", "Ctrl+E", ("os.spawnl","/usr/bin/gnuclient", None)),
+    
+    c.frame.menu.createOpenWithMenuFromTable(table)
 #@nonl
 #@-node:EKR.20040517075715.8:create_open_with_menu
 #@-others
 
-if Tk and not g.app.unitTesting: # Register the handlers...
+if Tk: # Ok for unit testing: creates Open With menu.
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
@@ -141,7 +135,7 @@ if Tk and not g.app.unitTesting: # Register the handlers...
 
         g.app.hasOpenWithMenu = True
         leoPlugins.registerHandler("idle", on_idle)
-        leoPlugins.registerHandler(("start2","open2","command2"), create_open_with_menu)
+        leoPlugins.registerHandler(("start2","open2","new"), create_open_with_menu)
     
         __version__ = "1.4" # Set version for the plugin handler.
         g.plugin_signon(__name__)

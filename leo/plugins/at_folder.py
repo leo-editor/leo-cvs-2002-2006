@@ -29,6 +29,7 @@ import os  # added JD 2004-09-10
 #@-at
 #@-node:edream.110203113231.874:<< about this plugin >>
 #@nl
+__version__ = "1.3"
 
 #@+others
 #@+node:edream.110203113231.875:sync_node_to_folder
@@ -68,12 +69,8 @@ def onSelect (tag,keywords):
     if g.match_word(h,0,"@folder"):
         sync_node_to_folder(v,h[8:])
         
-if not g.app.unitTesting:
-
-    # Register the handlers...
+if 1: # Ok for unit testing.
     leoPlugins.registerHandler("select1", onSelect)
-    
-    __version__ = "1.3" # Set version for the plugin handler.
     g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.873:@thin at_folder.py

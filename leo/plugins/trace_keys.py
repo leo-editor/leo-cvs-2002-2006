@@ -19,7 +19,7 @@ def onKey (tag,keywords):
 #@-node:edream.110203113231.737:onKey
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing.
 
     # Register the handlers...
     leoPlugins.registerHandler(("bodykey1","bodykey2","headkey1","headkey2"), onKey)

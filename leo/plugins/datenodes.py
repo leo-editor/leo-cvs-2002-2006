@@ -260,10 +260,7 @@ class DateNodes:
     #@-others
 #@-node:gfunch.20041207100416.5:class DateNodes
 #@+node:gfunch.20041207100654:on_create
-#@@c
-
 def on_create(tag, keywords):
-    """Actions to carry out when the Leo frame is created."""
 
     #@    << get settings >>
     #@+node:gfunch.20041209141737.8:<< get settings >>
@@ -282,14 +279,9 @@ def on_create(tag, keywords):
     
     # create the plug-in menu
     create_menu(c,myDateNodes)
-
-
-
-
+#@nonl
 #@-node:gfunch.20041207100654:on_create
 #@+node:gfunch.20041209063345:read_config
-#@@c
-
 def read_config(fname):
     """Read the configuration (ini) file and parse it into a dictionary.""" 
     config = ConfigParser.ConfigParser()
@@ -302,11 +294,11 @@ def read_config(fname):
             name, val = item
             config_dat[section].update({name: val})
     return config_dat
-    
 #@nonl
 #@-node:gfunch.20041209063345:read_config
 #@+node:gfunch.20041207102456:create_menu
 def create_menu(c, instance):
+
     """Create the plug-in menu."""
 
     # create a menu separator
@@ -319,12 +311,13 @@ def create_menu(c, instance):
 
     expandMenu = c.frame.menu.createNewMenu("Insert Date Nodes...","Outline")
     c.frame.menu.createMenuEntries(expandMenu,table)
-
+#@nonl
 #@-node:gfunch.20041207102456:create_menu
 #@-others
 
-leoPlugins.registerHandler("after-create-leo-frame", on_create)
-
-g.plugin_signon(__name__)
+if 1: # OK for unit testing.
+    leoPlugins.registerHandler("after-create-leo-frame", on_create)
+    g.plugin_signon(__name__)
+#@nonl
 #@-node:gfunch.20041207100416:@thin datenodes.py
 #@-leo

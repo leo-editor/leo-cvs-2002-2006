@@ -171,7 +171,7 @@ def onMenu (tag,keywords):
 #@-node:EKR.20040517080202.4:onMenu
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Unpleasant for unit testing.
 
     # Register the handlers...
     leoPlugins.registerHandler("menu1", onMenu)

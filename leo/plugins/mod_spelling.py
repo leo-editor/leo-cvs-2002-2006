@@ -28,7 +28,7 @@ import traceback
 #@-node:ekr.20040809111112:<< mod_spelling imports >>
 #@nl
 
-if Tk and not g.app.unitTesting: # Register the handlers...
+if Tk and not g.app.unitTesting: # Ok for unit testing, but doesn't work ;-)
 
     #@    @+others
     #@+node:edream.110203113231.934:Functions

@@ -481,7 +481,7 @@ def addPMenu( self, parentFrame ):
 #@-node:ekr.20040828122150.12:addPMenu
 #@-others
 
-if Tk:
+if Tk and not g.app.unitTesting:  # Changes Leo's core.
     leoTkinterFrame.leoTkinterFrame.createCanvas = addPMenu
     __version__ = ".27a"
     g.plugin_signon( __name__ )

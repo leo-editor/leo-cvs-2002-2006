@@ -63,41 +63,60 @@ __version__ = '.55'
 #@+node:mork.20041101132349:<<version history>>
 #@+at 
 # 
-# .5 -- fixed problem with spurious whitespace being added in some of the paste commands when Return was entered.  This was
-#       because Leo is programmed to indent after Enter is pressed.  We decorate the OnBodyKey with usetemacs modifyOnBodyKey.
+# .5 -- fixed problem with spurious whitespace being added in some of the 
+# paste commands when Return was entered.  This was
+#       because Leo is programmed to indent after Enter is pressed.  We 
+# decorate the OnBodyKey with usetemacs modifyOnBodyKey.
 #    -- made transitions to temacs.Emacs class
-#    -- Help text can now be searched.  Search is initiated by either typing Return in the Entry or pressing the go button.
-#    -- Set it up so when the Text widget has all of its text deleted via a call to delete '1.0', 'end', this calls
-#       the StopControlX method of the Emacs object.  This is equivilant of pressing Control-G.
+#    -- Help text can now be searched.  Search is initiated by either typing 
+# Return in the Entry or pressing the go button.
+#    -- Set it up so when the Text widget has all of its text deleted via a 
+# call to delete '1.0', 'end', this calls
+#       the StopControlX method of the Emacs object.  This is equivilant of 
+# pressing Control-G.
 #    -- Added ability to load temacs.Emacs extensions
 #    -- Added ability to change default key bindings( in alpha stage ).
 #    -- Created example Emacs extension.
-#    -- Added ability for user to see each node in the outline as a buffer.  There are methods in temacs such as
-#       append-to-buffer, copy-to-buffer, etc... that needs a name and some supplied functionality to do its work.
-#       usetemacs does this for the Emacs instance.  Note: if a group of nodes have the same name, then only one will be viewable
-#       by the Emacs instance.  This might be enhanced in the future to include all headlines.
-#       I would not recommend 'list-buffers' if you have a large outline.  This will have to be enhanced in the future as well.
-#    -- Removed all references to Pmw in code( still exists in comments ).  Reports of some weirdness with the string.atoi and how
-#       it was behaving in Pmw.  This helps lower the bar of entry to this.  I have replaced the megawidgets with items like
-#       ScrolledText and a minibuffer composed of a Frame, a Frame in this Frame, and 2 labels.
+#    -- Added ability for user to see each node in the outline as a buffer.  
+# There are methods in temacs such as
+#       append-to-buffer, copy-to-buffer, etc... that needs a name and some 
+# supplied functionality to do its work.
+#       usetemacs does this for the Emacs instance.  Note: if a group of nodes 
+# have the same name, then only one will be viewable
+#       by the Emacs instance.  This might be enhanced in the future to 
+# include all headlines.
+#       I would not recommend 'list-buffers' if you have a large outline.  
+# This will have to be enhanced in the future as well.
+#    -- Removed all references to Pmw in code( still exists in comments ).  
+# Reports of some weirdness with the string.atoi and how
+#       it was behaving in Pmw.  This helps lower the bar of entry to this.  I 
+# have replaced the megawidgets with items like
+#       ScrolledText and a minibuffer composed of a Frame, a Frame in this 
+# Frame, and 2 labels.
 #    -- folded in changes from .4 that could be detected
 # 
 # .51
 # .52 EKR: Minor style changes.
 # .53 EKR: Use __name__ in .plugin_signon
 # .55
-#     --added a def that adds all the Leo Commands to the Emacs instance, in command addLeoCommands.  I no longer need to
-#     remember how to summon the find panel, its done via Alt-x 'find panel'.  This was a very good use of the extension mechanism
-#     that was put into place in .5.  I should note that there are a couple I left out like Recent Files, and End Edit Headline,
-#     since they didnt seem to functional( i.e. no good way to use them within the Alt-x mechanism).
-#     --changed the location of where text appears in the minibuffer, it now always starts from the left instead of the center.
+#     --added a def that adds all the Leo Commands to the Emacs instance, in 
+# command addLeoCommands.  I no longer need to
+#     remember how to summon the find panel, its done via Alt-x 'find panel'.  
+# This was a very good use of the extension mechanism
+#     that was put into place in .5.  I should note that there are a couple I 
+# left out like Recent Files, and End Edit Headline,
+#     since they didnt seem to functional( i.e. no good way to use them within 
+# the Alt-x mechanism).
+#     --changed the location of where text appears in the minibuffer, it now 
+# always starts from the left instead of the center.
 #     This is what Emacs does, and its less disorienting.
-#     --added a dialog to show up if there are multiple nodes with the same name.  This gives the user the ability to select a 
-# node
-#     in its numerical position in the graph, from 1 to N.  Im still surprised that this works as quick as it does, more power to 
-# the
+#     --added a dialog to show up if there are multiple nodes with the same 
+# name.  This gives the user the ability to select a node
+#     in its numerical position in the graph, from 1 to N.  Im still surprised 
+# that this works as quick as it does, more power to the
 #     graph!
-#     --added Leo Commands to Temacs Help, good to see which Leo commands you can execute.
+#     --added Leo Commands to Temacs Help, good to see which Leo commands you 
+# can execute.
 # 
 # 
 #@-at
@@ -109,15 +128,18 @@ __version__ = '.55'
 #@+node:mork.20041104100514:future directions
 #@+at
 # 
-# Hard to say at this point.  usetemacs is essentially the glue between Leo and temacs.py.  Anytime
-# temacs needs some machinery from the surrounding environment, usetemacs.py is supposed to supply it.
+# Hard to say at this point.  usetemacs is essentially the glue between Leo 
+# and temacs.py.  Anytime
+# temacs needs some machinery from the surrounding environment, usetemacs.py 
+# is supposed to supply it.
 # temacs development drives this development.
 #@-at
 #@-node:mork.20041104100514:future directions
 #@+node:mork.20041101204659:adding Emacs extensions via usetemacs
 #@+at
 # 
-# to begin to understand how to write an Emacs extension see temacs.py section 'how to write an Emacs extension'.
+# to begin to understand how to write an Emacs extension see temacs.py section 
+# 'how to write an Emacs extension'.
 # 
 # usetemacs will look for a file called usetemacs.ini
 # 
@@ -132,23 +154,31 @@ __version__ = '.55'
 # The module anExtension.py must be importable by usetemacs.
 # 
 # -----
-# usetemacs will load anExtension as a module.  For each Emacs object created it will
-# call the modules getExtensions() method which should return a dictionary containing:
-#     a. keys that are strings.  These are the names that will be added to the Alt-x command in Emacs.
-#     b. functions.  These should not be methods, as they become methods when added to Emacs.
+# usetemacs will load anExtension as a module.  For each Emacs object created 
+# it will
+# call the modules getExtensions() method which should return a dictionary 
+# containing:
+#     a. keys that are strings.  These are the names that will be added to the 
+# Alt-x command in Emacs.
+#     b. functions.  These should not be methods, as they become methods when 
+# added to Emacs.
 #     for example:
 #         module test.py:
 #         def power( self, event ):
 #             print 'power'
 #         def getExtensions():
 #             return { 'power' : power }
-#     upon loading by usetemacs, every Emacs instance will have 'power' added as an Alt-x command which will call
-#     the power function( method after adding ).  The extension write should not worry about the name of the function,
-#     they should only worry about the name that they want to access the function-method by.  It is possible to overwrite
+#     upon loading by usetemacs, every Emacs instance will have 'power' added 
+# as an Alt-x command which will call
+#     the power function( method after adding ).  The extension write should 
+# not worry about the name of the function,
+#     they should only worry about the name that they want to access the 
+# function-method by.  It is possible to overwrite
 #     a default Alt-x method if the same name is used.
 # -----
 # 
-# To test an Emacs extensions try out the exampleTemacsExtension.py with this mechanism.
+# To test an Emacs extensions try out the exampleTemacsExtension.py with this 
+# mechanism.
 # 
 #@-at
 #@-node:mork.20041101204659:adding Emacs extensions via usetemacs
@@ -160,18 +190,21 @@ __version__ = '.55'
 # 
 # This keeps temacs extensions separate from regular plugins.
 # 
-# usetemacs creates this directory for the user if it doesn't alread exist upon startup.
+# usetemacs creates this directory for the user if it doesn't alread exist 
+# upon startup.
 # 
 #@-at
 #@-node:mork.20041104100856:where to put your temacs-Emacs Python extensions
 #@+node:mork.20041102102111:change Emacs keystrokes via configuration
 #@+at
 # 
-# usetemacs allows the user to change keystrokes in the Emacs instances via the ustemacs.ini file.
+# usetemacs allows the user to change keystrokes in the Emacs instances via 
+# the ustemacs.ini file.
 # 
 # the section should be called [ newkeystrokes ].
 # 
-# To reconfigure a keystroke or add a keystroke, under the section add for example:
+# To reconfigure a keystroke or add a keystroke, under the section add for 
+# example:
 # Alt-q=Alt-f
 # 
 # 
@@ -194,25 +227,30 @@ __version__ = '.55'
 # 
 # usetemacs brings the two together.
 # 
-# Its the glue between the temacs module and Leo.  Leo doesn't need usetemacs to function, temacs doesn't need usetemacs to be 
-# used.
-# But if temacs.py and Leo are to work together usetemacs.py must be employed as a plugin for Leo.
+# Its the glue between the temacs module and Leo.  Leo doesn't need usetemacs 
+# to function, temacs doesn't need usetemacs to be used.
+# But if temacs.py and Leo are to work together usetemacs.py must be employed 
+# as a plugin for Leo.
 # 
 # It performs several helpful functions for temacs and Leo:
 # 
-# 1. Protects against bad whitespace being added because of a Return key press.
+# 1. Protects against bad whitespace being added because of a Return key 
+# press.
 # 2. Does a keyboardQuit if a new node is selected.
 # 3. Configures temacs with temacs extensions.
 # 4. Adds abbreviations and macros to Emacs instances
-# 5. Configures Emac instances with functions that allow it to treat nodes as buffers.
+# 5. Configures Emac instances with functions that allow it to treat nodes as 
+# buffers.
 #@-at
 #@nonl
 #@-node:mork.20041102094131:usetemacs design
 #@+node:mork.20041102094341:a note on loading temacs
 #@+at 
 # 
-# temacs.py prior to the .4 version needed to be installed so that it could be loaded anywhere from a python instance.
-# Now all the user needs to do is have temacs.py in the same plugins directory of the usetemacs plugin.  The plugin should
+# temacs.py prior to the .4 version needed to be installed so that it could be 
+# loaded anywhere from a python instance.
+# Now all the user needs to do is have temacs.py in the same plugins directory 
+# of the usetemacs plugin.  The plugin should
 # be able to load the module if done in this way.
 # 
 # 
@@ -792,7 +830,7 @@ def addLeoCommands( c, emacs ):
 #@-node:mork.20041204141826:addLeoCommands
 #@-others
 
-if temacs and Tk:
+if temacs and Tk and not g.app.unitTesting:
 
     if g.app.gui is None: 
         g.app.createTkGui(__file__)
@@ -825,19 +863,25 @@ if temacs and Tk:
 #     When Leo starts,
 #     select a set of lines
 #     type Alt-x
-#     the format-selection-as-list and hit Enter( or type format and hit tab, the autocompletion will work ).
-#     After typing Enter you should see you selection indented and each line prefixed with an ascending number.'''
+#     the format-selection-as-list and hit Enter( or type format and hit tab, 
+# the autocompletion will work ).
+#     After typing Enter you should see you selection indented and each line 
+# prefixed with an ascending number.'''
 # 
 # 
 # 
 # 
 # def formatSelectionAsList( self, event ):
 #     '''This function indents and prepends a number to a selection of text'''
-#     try: #We guard against there not being anything selected, which throws an Exception in this block.
-#         tbuffer = event.widget # call the Text instance tbuffer as in Emacs class.
-#         self.indentRegion( event ) # use the Emacs instances indentRegion method to do initial formatting.
+#     try: #We guard against there not being anything selected, which throws 
+# an Exception in this block.
+#         tbuffer = event.widget # call the Text instance tbuffer as in Emacs 
+# class.
+#         self.indentRegion( event ) # use the Emacs instances indentRegion 
+# method to do initial formatting.
 #         start = tbuffer.index( 'sel.first linestart' )
-#         start = tbuffer.search( '\w', start, regexp = True, stopindex = '%s lineend' % 'sel.last' )
+#         start = tbuffer.search( '\w', start, regexp = True, stopindex = '%s 
+# lineend' % 'sel.last' )
 #         if not start:
 #             return self.keyboardQuit( event )
 #         end = tbuffer.index( 'sel.last' )
@@ -851,19 +895,17 @@ if temacs and Tk:
 #     for z in xrange( amount + 1 ):
 #         tbuffer.insert( '%s.%s' % ( r1, c1 ), '%s. ' % ( z + 1 ))
 #         r1 = r1 + 1
-#     self.keyboardQuit( event ) # this turns off the state and sets things to normal
-#     return self._tailEnd( tbuffer ) # this calls the _tailEnd method, which when used with usetemacs will ensure that the text 
-# sticks.
-# 
-# 
-# 
+#     self.keyboardQuit( event ) # this turns off the state and sets things to 
+# normal
+#     return self._tailEnd( tbuffer ) # this calls the _tailEnd method, which 
+# when used with usetemacs will ensure that the text sticks.
 # 
 # def getExtensions():
 # 
-#     return { 'format-selection-as-list': formatSelectionAsList } #We return the one function in this module.
-# 
-# 
+#     return { 'format-selection-as-list': formatSelectionAsList } #We return 
+# the one function in this module.
 #@-at
+#@nonl
 #@-node:mork.20041102091309:<<exampleTemacsExtension.py>>
 #@nl
 #@<<usetemacs.ini example>>

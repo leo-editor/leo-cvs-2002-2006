@@ -61,6 +61,8 @@ def onIconDoubleClick(tag,keywords):
 
     c = keywords.get("c")
     p = keywords.get("p")
+    # g.trace(c)
+
     if not c or not p:
         return
     
@@ -290,10 +292,10 @@ def underline(h,level):
 #@-node:ekr.20040331071319.8:underline
 #@-others
 
-# Register the handlers...
-leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
-__version__ = "2.1"
-g.plugin_signon(__name__)
+if 1: # Ok for unit testing.
+    leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
+    __version__ = "2.1"
+    g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331071319:@thin rst2.py
 #@-leo

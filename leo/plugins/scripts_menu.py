@@ -2,14 +2,24 @@
 #@+node:EKR.20040517080555.36:@thin scripts_menu.py
 """Create a Scripts menu for LeoPy.leo"""
 
+# The new Execute Script command seems much safer and more convenient.
+
 #@@language python
 #@@tabwidth -4
+
+#@<< imports >>
+#@+node:ekr.20050111115429:<< imports >>
 
 import leoGlobals as g
 import leoPlugins
 
 import glob
 import os
+#@nonl
+#@-node:ekr.20050111115429:<< imports >>
+#@nl
+
+__version__ = "1.4"
 
 #@+others
 #@+node:EKR.20040517080555.37:createScriptsMenu
@@ -77,15 +87,8 @@ def createScriptsMenu (tag,keywords):
 #@-node:EKR.20040517080555.37:createScriptsMenu
 #@-others
 
-if not g.app.unitTesting:
-
-    # EKR:  I don't like the scripts menu now.
-    # The new Execute Script command seems much safer and more convenient.
-    
-    # Register the handlers...
+if 1: # Ok for unit testing: creates menu.
     leoPlugins.registerHandler("create-optional-menus",createScriptsMenu)
-    
-    __version__ = "1.4"
     g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517080555.36:@thin scripts_menu.py

@@ -11,7 +11,7 @@ import leoPlugins
 #@+others
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing: overrides core methods.
 
     # Override classes & methods...
     

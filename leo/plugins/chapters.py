@@ -1497,7 +1497,7 @@ def _changeTreeToPDF( name, num, p, c, Story, styles , maxlen):
     
 ol_select = leoTkinterTree.leoTkinterTree.select
 
-if Pmw:
+if Pmw and not g.app.unitTesting: # Not for unit testing:  modifies core classes.
     if g.app.gui is None: 
         g.app.createTkGui(__file__)
 

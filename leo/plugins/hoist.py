@@ -165,7 +165,7 @@ class HoistButtons:
 #@-node:ekr.20040331072607.1:class HoistButtons
 #@-others
 
-if Tk and not g.app.unitTesting:
+if Tk: # OK for unit testing.
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)

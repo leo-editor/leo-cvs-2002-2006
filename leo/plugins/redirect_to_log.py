@@ -12,7 +12,7 @@ def onStart (tag,keywords):
     g.redirectStdout() # Redirect stdout
     g.redirectStderr() # Redirect stderr
     
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit tests.
 
     # Register the handlers...
     leoPlugins.registerHandler("start2", onStart)

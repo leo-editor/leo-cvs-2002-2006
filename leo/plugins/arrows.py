@@ -34,10 +34,11 @@ def onOpen (tag,keywords):
     old_binding = body.bodyCtrl.bind("<Down>")
     if len(old_binding) == 0:
         body.bodyCtrl.bind("<Down>",tree.OnDownKey)
+#@nonl
 #@-node:EKR.20040517080517.2:onOpen
 #@-others
 
-if Tk and not g.app.unitTesting: # Register the handlers...
+if Tk and not g.app.unitTesting:  # Not for unit testing. (conflicts key bindings)
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)

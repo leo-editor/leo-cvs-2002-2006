@@ -19,7 +19,7 @@ def onCommand (tag,keywords):
 #@-node:edream.110203113231.920:onCommand
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing: overrides core methods.
 
     # Register the handlers...
     leoPlugins.registerHandler("command1", onCommand)

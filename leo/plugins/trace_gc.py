@@ -9,12 +9,16 @@ import leoGlobals as g
 import leoPlugins
 
 g.debugGC = True # Force debugging on.
-
-def printIdleRefs(tag,keywords):
-    g.printGcRefs(verbose=False)
-    
 gcCount = 0
 
+#@+others
+#@+node:ekr.20050111084900:printIdleRefs
+def printIdleRefs(tag,keywords):
+
+    g.printGcRefs(verbose=False)
+#@nonl
+#@-node:ekr.20050111084900:printIdleRefs
+#@+node:ekr.20050111084900.1:printIdleGC
 def printIdleGC(tag,keywords):
     
     # Calling printGc is too expensive to do on every idle call.
@@ -26,8 +30,11 @@ def printIdleGC(tag,keywords):
             g.printGc(tag,onlyPrintChanges=True)
     else:
         g.printGc(tag,onlyPrintChanges=False)
+#@nonl
+#@-node:ekr.20050111084900.1:printIdleGC
+#@-others
         
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing.
 
     # Register the handlers...
     if 1: # Very effective.

@@ -52,7 +52,7 @@ def autosave(tag, keywords):
 #@-node:edream.110203113231.726:autosave
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Don't want autosave after unit testing.
 
     # Register the handlers...
     AUTOSAVE_INTERVAL = 600

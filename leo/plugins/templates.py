@@ -364,7 +364,7 @@ def scanForTemplates (tag,keywords):
 #@-node:mork.20041022122959:scanForTemplates
 #@-others
 
-if import_succeed:
+if import_succeed: # OK for unit testing.
     leoPlugins.registerHandler("after-create-leo-frame",addButtons)
     leoPlugins.registerHandler("after-redraw-outline",drawImages)
     leoPlugins.registerHandler(("start2","open2"),scanForTemplates)

@@ -652,7 +652,7 @@ def addMenu( tag, keywords ):
 #@-node:mork.20041025100716:examples/tests
 #@-others
 
-if Ft and Tk:
+if Ft and Tk: # Ok for unit testing.  Just adds menu.
     leoPlugins.registerHandler(('start2','open2',"new"),addMenu)
     g.plugin_signon(__name__)
 #@nonl

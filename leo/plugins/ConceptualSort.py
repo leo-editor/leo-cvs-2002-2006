@@ -264,7 +264,7 @@ def addCommand( tag, keywords ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw:
+if Tk and Pmw: # Ok for unit testing.  add's menu.
     leoPlugins.registerHandler(('new2','open2'), addCommand)
     __version__ = ".2"
     g.plugin_signon( __name__ )

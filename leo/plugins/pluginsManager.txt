@@ -12,22 +12,19 @@
 # Icon area: order is important.
 # rowcol.py
 mod_scripting.py
-hoist.py
+# hoist.py
 
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
-#UNL.py
-#datenodes.py
-#at_view.py
 plugin_manager.py
 
 # Other plugins: order not so important.
-add_directives.py
-image.py
-rClick.py
-mod_tempfname.py
-open_with.py
-rst2.py
+# add_directives.py
+# image.py
+# rClick.py
+# mod_tempfname.py
+# open_with.py
+# rst2.py
 # spellpyx.py
 #@nonl
 #@-node:ekr.20041113105336:Enabled plugins

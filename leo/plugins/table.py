@@ -199,7 +199,7 @@ def addMenu( tag, keywords ):
 #@-node:ekr.20041017035937.13:addMenu
 #@-others
 
-if Pmw and Tk and tktab:
+if Pmw and Tk and tktab: # Ok for unit testing.
 
     leoPlugins.registerHandler( ('start2' , 'open2', "new") , addMenu )
     __version__ = ".125"

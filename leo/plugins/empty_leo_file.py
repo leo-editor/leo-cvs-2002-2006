@@ -42,7 +42,7 @@ def onOpen (tag,keywords):
 #@-node:EKR.20040517080049.3:onOpen
 #@-others
 
-if not g.app.unitTesting:
+if 1:  # Ok for unit testing.  Only rewrites empty files.
 
     # Register the handlers...
     leoPlugins.registerHandler("open1", onOpen)

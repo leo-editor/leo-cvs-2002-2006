@@ -1037,9 +1037,8 @@ except:
 else:
     applyConfiguration()
 
-if active:
-   putInHooks()
-   # Register the handlers...
+if active and not g.app.unitTesting: # Not safe for unit testing: changes Leo's core.
+   putInHooks() # Changes Leo's core.
    # leoPlugins.registerHandler("idle", autosave)
    if verbosity >= 1:
       g.es("Shadow plugin enabled!",color="orange")

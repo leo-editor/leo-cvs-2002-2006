@@ -7,8 +7,8 @@ Summon it by pressing button-2 or button-3 on an icon Box in the outline."""
 #@@language python
 #@@tabwidth -4
 
-#@<< editAttributes imports >>
-#@+node:ekr.20040722142445.1:<< editAttributes imports >>
+#@<< imports >>
+#@+node:ekr.20040722142445.1:<< imports >>
 import leoGlobals as g
 import leoPlugins
 
@@ -17,7 +17,7 @@ Pmw = g.importExtension('Pmw',    pluginName=__name__,verbose=True)
     
 import weakref
 #@nonl
-#@-node:ekr.20040722142445.1:<< editAttributes imports >>
+#@-node:ekr.20040722142445.1:<< imports >>
 #@nl
 
 #@+others
@@ -175,8 +175,8 @@ def addAttrDetection( tag, keywords ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw and not g.app.unitTesting:
-    leoPlugins.registerHandler('open2', addAttrDetection)
+if Tk and Pmw: # Ok for unit testing: add's binding for Button-2 and Button-3 to canvas.
+    leoPlugins.registerHandler(('new','open2'), addAttrDetection)
     __version__ = ".0.2"
         # 0.2 EKR: converted to outline.  Fixed some bugs.
     g.plugin_signon( __name__ )

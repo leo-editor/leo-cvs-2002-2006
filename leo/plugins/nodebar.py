@@ -418,7 +418,7 @@ usehelp=1
 #@-node:mork.20041026084509:readConfigFile
 #@-others
 
-if load_ok:
+if load_ok: # Ok for unit test.
     configureNodebar()
     
     if g.app.gui is None: 

@@ -350,7 +350,7 @@ def getdoc(thing, title='Help on %s', forceload=0):
 
 __version__ = "0.6"
 
-if Tk and not g.app.unitTesting:
+if Tk: # OK for unit tests.
     
     if g.app.gui is None:
         g.app.createTkGui(__file__)

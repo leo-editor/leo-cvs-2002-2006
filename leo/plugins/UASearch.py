@@ -144,12 +144,13 @@ def getT( node ):
 #@-node:ekr.20040915075530.5:getT
 #@-others
    
-if TabbedLog and Tk and Pmw:
+if TabbedLog and Tk: # Ok for unit tests: adds menu.
     
     nbs = weakref.WeakKeyDictionary()
     haveseen = weakref.WeakKeyDictionary()
 
-    leoPlugins.registerHandler( ('start2' , 'open2') ,addPMenu)
-    g.plugin_signon( __name__ ) 
+    leoPlugins.registerHandler( ('start2','new','open2') ,addPMenu)
+    g.plugin_signon( __name__ )
+#@nonl
 #@-node:ekr.20040915075530:@thin UASearch.py
 #@-leo

@@ -30,6 +30,9 @@ import os
 # - EKR: 2004-08-28:
 #     - Test for presence of os.startfile.
 #     - Other minor changes.
+# - EKR: 2005-01-11:
+#     - Don't rely on os.startfile to throw an exception if the file does not 
+# exist.
 #@-at
 #@nonl
 #@-node:ekr.20040828103325.1:<< change log >>
@@ -59,6 +62,8 @@ def onIconDoubleClick(tag,keywords):
 
     v = keywords.get("p") or keywords.get("v") # Use p for 4.2 code base, v for 4.1 code base.
     c = keywords.get("c")
+    # g.trace(c)
+
     if c and v:
         h = v.headString().strip()
         if h and h[0]!='@':
@@ -86,11 +91,17 @@ def onIconDoubleClick(tag,keywords):
                 dirfound = 0
             
             if dirfound:
-                try:
-                    os.startfile(filename) # Try to open the file; it may not work for all file types.
-                except:
-                    g.es(filename+' - file not found in '+startdir)
-                    g.es_exception()
+                fullpath = g.os_path_join(startdir,filename)
+                fullpath = g.os_path_abspath(fullpath)
+                if g.os_path_exists(filename):
+                    try:
+                        # Warning: os.startfile usually does not throw exceptions.
+                        os.startfile(filename) # Try to open the file; it may not work for all file types.
+                    except Exception:
+                        g.es(filename+' - file not found in '+startdir)
+                        g.es_exception()
+                else:
+                    g.es('%s not found in %s' % (filename,startdir),color='blue')
             os.chdir(thisdir) # restore the original current dir.
             #@nonl
             #@-node:ekr.20040828103325.4:<< find path and start file >>
@@ -99,17 +110,13 @@ def onIconDoubleClick(tag,keywords):
 #@-node:ekr.20040828103325.3:onIconDoubleClick
 #@-others
 
-# Enable this plugin only if the os module supports startfile.
-if hasattr(os,"startfile"):
+if hasattr(os,"startfile"): # Ok for unit testing, but may be icondclick1 conflicts.
 
     # Register the handlers...
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)
     
     __version__ = "1.4"
     g.plugin_signon(__name__)
-
-    def unitTest ():
-        pass
 #@nonl
 #@-node:ekr.20040828103325:@thin startfile.py
 #@-leo

@@ -109,7 +109,8 @@ def addUThreading( self, parentFrame ):
 #@-node:ekr.20040915104230:addUThreading & callbacks
 #@-others
 
-if 1:
+# This probably is not ready for 4.3.
+if not g.app.unitTesting: # Not for unit test: Adds binding to Tk canvas.
     leoTkinterFrame.leoTkinterFrame.createCanvas = addUThreading 
 #@nonl
 #@-node:ekr.20040831122004:@thin UniversalScrolling.py

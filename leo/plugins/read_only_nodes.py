@@ -432,7 +432,7 @@ def on_select2 (tag,keywords):
 #@-node:edream.110203113231.900:on_select2
 #@-others
 
-if tkFileDialog and not g.app.unitTesting: # Register the handlers...
+if tkFileDialog and not g.app.unitTesting: # Not Ok for unit testing??
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)

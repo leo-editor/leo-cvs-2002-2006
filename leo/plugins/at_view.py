@@ -66,9 +66,8 @@ win32clipboard = g.importExtension('win32clipboard',pluginName=__name__,verbose=
 #@+node:ktenney.20041211072654.6:onCreate
 def onCreate(tag, keywords):
 
-    if g.app.unitTesting: return
-    
     c = keywords.get("c")
+    if not c: return
     myView = View(c)
 
     # Register the handlers...
@@ -278,7 +277,7 @@ class View:
 #@-node:ktenney.20041211072654.7:class View
 #@-others
 
-if path and win32clipboard:
+if path and win32clipboard: # Ok for unit testing.
     leoPlugins.registerHandler("after-create-leo-frame",onCreate)
 else:
     s = 'at_view plugin not loaded'

@@ -55,7 +55,7 @@ def const(name):
 #@-node:edream.110203113231.259:<< constants for wx plugin >>
 #@nl
 
-if wx and not g.app.unitTesting: # Enable the plugin (only if wxPython has been imported)...
+if wx and not g.app.unitTesting: # Not Ok for unit testing !!!
 
     #@    @+others
     #@+node:edream.110203113231.305:wxGui class

@@ -110,13 +110,13 @@ class rowColClass:
 #@-node:ekr.20040108095351.1:class rowColClass
 #@-others
 
-if Tk and not g.app.unitTesting:
+if Tk: # OK for unit testing.
 
     if g.app.gui is None: 
         g.app.createTkGui(__file__)
 
     if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler("after-create-leo-frame",onCreate) 
+        leoPlugins.registerHandler("after-create-leo-frame",onCreate)
         g.plugin_signon("rowcol")
 #@nonl
 #@-node:ekr.20040108095351:@thin rowcol.py

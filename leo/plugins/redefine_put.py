@@ -65,7 +65,7 @@ def newPutNl (self):
 #@-node:edream.110203113231.923:newPut and newPutNl
 #@-others
 
-if Tk and not g.app.unitTesting: # Register the handlers...
+if Tk and not g.app.unitTesting: # Not for unit testing: overrides core methods.
 
     # Register the handlers...
     leoPlugins.registerHandler("start2", onStart)

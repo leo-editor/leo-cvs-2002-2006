@@ -309,7 +309,7 @@ def executeScriptNode (c,p):
 #@-node:ekr.20041001203145:executeScriptNode
 #@-others
 
-if Tk and not g.app.unitTesting:
+if Tk: # Ok for unit testing.  Add's buttons.
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 

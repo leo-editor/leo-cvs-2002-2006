@@ -35,7 +35,7 @@ def newMoreHead (self,firstLevel,useVerticalBar=True):
 #@-node:edream.110203113231.721:newMoreHead
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing: modifies core class.
 
     # Register the handlers...
     leoPlugins.registerHandler("start2", onStart)

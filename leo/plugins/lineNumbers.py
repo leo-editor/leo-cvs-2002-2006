@@ -1,19 +1,15 @@
 #@+leo-ver=4-thin
 #@+node:ekr.20040419105219:@thin lineNumbers.py
-"""Adds #line directives in perl and perlpod programs."""
+'''
+Adds #line directives in perl and perlpod programs.
 
-#@+at 
-#@nonl
-# Over-ride two methods in leoAtFile.py to write #line directives after node 
-# sentinels.
-# This allows compilers to give locations of errors in relation to the node 
-# name rather than the filename.
-# Currently supports only perl and perlpod.
-# 
+Over-rides two methods in leoAtFile.py to write #line directives after node sentinels.
+This allows compilers to give locations of errors in relation to the node name rather than the filename.
+Currently supports only perl and perlpod.
+'''
+
 # Use and distribute under the same terms as Leo.
 # Original code by Mark Ng <markn@cs.mu.oz.au>
-#@-at
-#@@c
 
 #@<< imports >>
 #@+node:ekr.20050105150253:<< imports >>
@@ -39,6 +35,8 @@ __version__ = "0.3"
 #     - Changed leoAtFile.newDerivedFile to leoAtFile.atFile when overriding 
 # methods.
 #       This is required because of changes in 4.3 to Leo's core code.
+# 0.4 EKR:
+#     - Used named sections to emphasize the dangerous nature of this code.
 #@-at
 #@nonl
 #@-node:ekr.20050105150253.1:<< version history >>
@@ -46,39 +44,41 @@ __version__ = "0.3"
 
 linere = re.compile("^#line 1 \".*\"$")
 
-#@+others
-#@+node:ekr.20040419105219.1:writing derived files
-oldOpenNodeSentinel = leoAtFile.atFile.putOpenNodeSentinel
+if not g.app.unitTesting: # Not safe for unit testing.  Changes core class.
 
-def putLineNumberDirective(self,v,inAtAll=False,inAtOthers=False,middle=False):
-
-    oldOpenNodeSentinel(self,v,inAtAll,inAtOthers,middle)
-
-    if self.language in ("perl","perlpod"):
-        line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
-        self.putSentinel(line)
-        
-g.funcToMethod(putLineNumberDirective,	
-    leoAtFile.atFile,"putOpenNodeSentinel")
-#@nonl
-#@-node:ekr.20040419105219.1:writing derived files
-#@+node:ekr.20040419105219.2:reading derived files
-readNormalLine = leoAtFile.atFile.readNormalLine
-
-def skipLineNumberDirective(self, s, i):
-
-    if linere.search(s): 
-        return  # Skipt the line.
-    else:		
-        readNormalLine(self,s,i)
-
-g.funcToMethod(skipLineNumberDirective,
-    leoAtFile.atFile,"readNormalLine")
-#@nonl
-#@-node:ekr.20040419105219.2:reading derived files
-#@-others
-
-if not g.app.unitTesting:
+    #@    << override write methods >>
+    #@+node:ekr.20040419105219.1:<< override write methods >>
+    oldOpenNodeSentinel = leoAtFile.atFile.putOpenNodeSentinel
+    
+    def putLineNumberDirective(self,v,inAtAll=False,inAtOthers=False,middle=False):
+    
+        oldOpenNodeSentinel(self,v,inAtAll,inAtOthers,middle)
+    
+        if self.language in ("perl","perlpod"):
+            line = 'line 1 "node:%s (%s)"' % (self.nodeSentinelText(v),self.shortFileName)
+            self.putSentinel(line)
+            
+    g.funcToMethod(putLineNumberDirective,	
+        leoAtFile.atFile,"putOpenNodeSentinel")
+    #@nonl
+    #@-node:ekr.20040419105219.1:<< override write methods >>
+    #@nl
+    #@    << override read methods >>
+    #@+node:ekr.20040419105219.2:<< override read methods >>
+    readNormalLine = leoAtFile.atFile.readNormalLine
+    
+    def skipLineNumberDirective(self, s, i):
+    
+        if linere.search(s): 
+            return  # Skipt the line.
+        else:		
+            readNormalLine(self,s,i)
+    
+    g.funcToMethod(skipLineNumberDirective,
+        leoAtFile.atFile,"readNormalLine")
+    #@nonl
+    #@-node:ekr.20040419105219.2:<< override read methods >>
+    #@nl
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040419105219:@thin lineNumbers.py

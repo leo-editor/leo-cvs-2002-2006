@@ -169,12 +169,13 @@ def onStart2 (tag, keywords):
 #@-node:ekr.20040919085752:onStart2
 #@-others
 
-if Tk and Pmw: # This statement needed only if the plugin uses modules that are not always available.
+# This statement needed only if the plugin uses modules that are not always available.
+if Tk and Pmw and not g.app.unitTesting:
+    g.trace('style_guide')
     # The following three lines needed only if the plugin uses a gui.
     if g.app.gui is None: 
         g.app.createTkGui(__file__)
     if g.app.gui.guiName() == "tkinter":
-
         # Shows how to create a class that binds self.c properly.
         leoPlugins.registerHandler("after-create-leo-frame", onCreate)
         # Shows how to create a hook that doesn't access commanders.

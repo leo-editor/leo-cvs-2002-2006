@@ -8,12 +8,12 @@
 import leoGlobals as g
 import leoPlugins
 
-def forceLeoToQuit(tag,keywords):
-    if not g.app.initing:
-        print "forceLeoToQuit",tag
-        g.app.forceShutdown()
-        
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing.
+
+    def forceLeoToQuit(tag,keywords):
+        if not g.app.initing:
+            print "forceLeoToQuit",tag
+            g.app.forceShutdown()
 
     if 0: # Force a shutdown during startup.
         print "quitting during startup"

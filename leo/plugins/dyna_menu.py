@@ -4402,7 +4402,7 @@ def timestamp(tag=None, keywords=None):
         g.es('at node:' + (c.currentVnode().headString().strip())[:128])
 
 
-if Tk:
+if Tk: # Ok for unit testing.
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 

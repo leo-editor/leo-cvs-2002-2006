@@ -1,11 +1,9 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517075715.14:@thin word_export.py
-"""Formats and exports the selected outline to a Word document, starting Word if necessary.
-
-Do the actual export using the the Plugins:Word Export:Export menu item.
-"""
-
-# Note: the Export menu is a submenu of the Scripts:Word Export menu.
+'''
+Use commands in the Plugins:Word Export:Export menu to formats and export
+the selected outline to a Word document, starting Word if necessary.
+'''
 
 #@@language python
 #@@tabwidth -4
@@ -36,10 +34,12 @@ import leoGlobals as g
 import leoPlugins
 
 try:
-    import win32com.client # From win32 extensions: http://www.python.org/windows/win32/
+    # From win32 extensions: http://www.python.org/windows/win32/
+    import win32com.client 
     client = win32com.client
 except ImportError:
-    client = None
+    client = g.cantImport('win32com.client')
+
 import ConfigParser
 #@nonl
 #@-node:ekr.20040909105522:<< imports >>
@@ -145,7 +145,7 @@ def cmd_Export(event=None):
 #@-node:EKR.20040517075715.19:cmd_Export
 #@-others
 
-if client and not g.app.unitTesting:
+if client: # Ok for unit test: just uses Plugins menu.
 
     # No hooks, we just use the cmd_Export to trigger an export
     g.plugin_signon("word_export")

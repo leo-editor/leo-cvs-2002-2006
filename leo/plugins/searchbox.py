@@ -270,7 +270,7 @@ class QuickFind(leoFind.leoFind):
 #@-node:ekr.20040107092135.6:class QuickFind
 #@-others
 
-if Tk and not g.app.unitTesting:
+if Tk: # OK for unit testing.
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)

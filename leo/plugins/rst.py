@@ -101,6 +101,8 @@ def onIconDoubleClick(tag,keywords):
 
     v = keywords.get("p") or keywords.get("v")
     c = keywords.get("c")
+    # g.trace(c)
+
     h = v.headString().strip()
     if g.match_word(h,0,"@text"):
         fname = h[5:]
@@ -211,7 +213,7 @@ def underline(h,level):
 #@-node:edream.111803100242.8:underline
 #@-others
 
-if not g.app.unitTesting:
+if 1: # Ok for unit testing??
 
     # Register the handlers...
     leoPlugins.registerHandler("icondclick1",onIconDoubleClick)

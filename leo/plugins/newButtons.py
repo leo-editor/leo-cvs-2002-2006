@@ -16,6 +16,8 @@ import leoPlugins
 import leoFind
 
 Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
+
+# N.B. We can NOT put the top-level code here: we are using @nosent!
 #@nonl
 #@-node:@file-noref newButtons.py
 #@+node:Helper classes
@@ -321,8 +323,8 @@ class AddClassMethod(NodeAdder):
             inherit=0)] # EKR: was 1.
 #@nonl
 #@-node:class AddClassMethod
-#@+node:main code
-if Tk:
+#@+node:Top-level code
+if Tk: # OK for unit testing.
 
     if g.app.gui is None:
         g.app.createTkGui(__file__)
@@ -340,5 +342,5 @@ if Tk:
         leoPlugins.registerHandler("after-create-leo-frame", helper.addWidgets)
         g.plugin_signon("newButtons")
 #@nonl
-#@-node:main code
+#@-node:Top-level code
 #@-leo

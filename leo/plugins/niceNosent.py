@@ -8,7 +8,7 @@ add a newline before class and functions in the derived file.
 #@@language python
 #@@tabwidth -4
 
-__version__ = "0.2" # Use 
+__version__ = "0.2"
 #@<< version history >>
 #@+node:ekr.20040909122647:<< version history >>
 #@+at
@@ -20,8 +20,6 @@ __version__ = "0.2" # Use
 #@nonl
 #@-node:ekr.20040909122647:<< version history >>
 #@nl
-
-
 #@<< imports >>
 #@+node:ekr.20040909122647.1:<< imports >>
 import leoGlobals as g
@@ -30,8 +28,6 @@ import os
 #@nonl
 #@-node:ekr.20040909122647.1:<< imports >>
 #@nl
- 
-
 
 NSPACES = ' '*4
 nosentNodes = []
@@ -57,6 +53,7 @@ def onPreSave(tag=None, keywords=None):
                 v = v.threadNext()
         else:
             v = v.threadNext()
+#@nonl
 #@-node:ekr.20040331151007.1:onPreSave
 #@+node:ekr.20040331151007.2:onPostSave
 def onPostSave(tag=None, keywords=None):
@@ -97,15 +94,14 @@ def onPostSave(tag=None, keywords=None):
         #@nl
 
     nosentNodes = []
+#@nonl
 #@-node:ekr.20040331151007.2:onPostSave
 #@-others
 
-if not g.app.unitTesting:
+if 1: # Should be safe for unit testing.  Only works on @nosent files.
 
     leoPlugins.registerHandler("save1",onPreSave)
     leoPlugins.registerHandler("save2",onPostSave)
-    
-   
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040331151007:@thin niceNosent.py

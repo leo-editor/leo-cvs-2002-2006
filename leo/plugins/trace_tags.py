@@ -49,7 +49,7 @@ def trace_tags (tag,keywords):
 #@-node:edream.110203113231.739:trace_tags
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing.
 
     # Register the handlers...
     leoPlugins.registerHandler("all", trace_tags)

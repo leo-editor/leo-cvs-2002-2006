@@ -73,9 +73,8 @@ def load( event, entry, c ):
 
 haveseen = weakref.WeakKeyDictionary()
 
-if Tk and Pmw and TabbedLog:
-
-    leoPlugins.registerHandler( ('start2' , 'open2') , addURLPane)
+if Tk and Pmw and TabbedLog: # Ok for unit test: adds tabbed pane to log.
+    leoPlugins.registerHandler(('start2','new','open2'), addURLPane)
     __version__ = ".2"
     g.plugin_signon( __name__ )
 #@nonl

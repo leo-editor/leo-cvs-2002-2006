@@ -1,10 +1,27 @@
 #@+leo-ver=4-thin
 #@+node:EKR.20040517080250.1:@thin mod_http.py
-"""
+#@<< docstring >>
+#@+node:ekr.20050111111238:<< docstring >>
+'''
 A minimal http plugin for LEO, based on AsyncHttpServer.py.
 
 Based on the asyncore / asynchat framework.
-"""
+
+Use this plugin is as follows:
+
+1. Start Leo with the plugin enabled.  You will see a purple message that says something like:
+
+"http serving enabled on port 8080, version 0.9"
+
+2. Start a web browser, and enter the following url: http://localhost:8080/
+
+You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
+
+You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
+'''
+#@nonl
+#@-node:ekr.20050111111238:<< docstring >>
+#@nl
 
 #@@language python
 #@@tabwidth -4
@@ -18,22 +35,7 @@ __version__ = "0.9"
 #@<< how to use this plugin >>
 #@+node:EKR.20040517080250.2:<< how to use this plugin >>
 #@+at
-# Use this plugin is as follows:
-# 
-# 1. Start Leo with the plugin enabled.  You will see a purple message that 
-# says something like:
-# 
-# "http serving enabled on port 8080, version 0.9"
-# 
-# 2. Start a web browser, and enter the following url: http://localhost:8080/
-# 
-# You will see a a "top" level page containing one link for every open .leo 
-# file.  Start clicking :-)
-# 
-# You can use the browser's refresh button to update the top-level view in the 
-# browser after you have opened or closed files.
 #@-at
-#@nonl
 #@-node:EKR.20040517080250.2:<< how to use this plugin >>
 #@nl
 #@<< imports >>
@@ -726,12 +728,13 @@ def applyConfiguration(config=None):
 
 applyConfiguration()
 
-if active and not g.app.unitTesting:
+if active: # Ok for unit testing:
 
     s=Server('',port,RequestHandler)
     asyncore.read = a_read
     leoPlugins.registerHandler("idle", plugin_wrapper)
     
     g.es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
+#@nonl
 #@-node:EKR.20040517080250.1:@thin mod_http.py
 #@-leo

@@ -242,9 +242,8 @@ else:
 #@-node:ekr.20040915105758.20:shellScriptInWindow
 #@-others
 
-if 1: # Register the handlers...
+if not g.app.unitTesting: # Dangerous for unit testing.
     leoPlugins.registerHandler("icondclick1", onIconDoubleClick)
-    
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040915105758.13:@thin FileActions.py

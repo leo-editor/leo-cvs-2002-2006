@@ -28,7 +28,7 @@ import os
 # you can leave the command as is, you do not need to change it to "gvim ..."
 # Note: _vim_cmd must end with a space.
 
-if 1:
+if not g.app.unitTesting:
     _vim_cmd = "vim --servername LEO "
 else: # Works for xp with vim in the folder indicated.
     _vim_cmd = r"c:\vim\vim61\gvim --servername LEO"
@@ -78,9 +78,10 @@ def open_in_vim (tag,keywords,val=None):
 #@-node:EKR.20040517075715.11:open_in_vim
 #@-others
 
-if not g.app.unitTesting:
+if 1 and not g.app.unitTesting: # Ok for unit testing, but you might want to disable it.
     
-    # print "vim plugin installed"
+    if g.app.unitTesting:
+        print '\nvim plugin installed: double-clicking icons will start vim.'
 
     # Register the handlers...
     if 1: # Open on double click
@@ -88,10 +89,10 @@ if not g.app.unitTesting:
     else: # Open on single click: interferes with dragging.
         leoPlugins.registerHandler("iconclick2", open_in_vim,val=True)
     
-    # if you want to start a (g)vim server when leo is started
-    # uncomment this line:
-    # os.system(_vim_cmd)
-    
+    # Enable the os.system call if you want to start a (g)vim server.
+    if g.app.unitTesting:
+        os.system(_vim_cmd)
+
     __version__ = "1.4" # Set version for the plugin handler.
     g.plugin_signon(__name__)
     

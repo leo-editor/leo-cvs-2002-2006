@@ -245,7 +245,7 @@ def add_exSb(a, msg, *arg, **kwd):
 #print '__name__ =', __name__  # __builtin__ when execscript
 if __name__ != 'exSButton': add_exSb('dynaExS1', 'exS') #one extra
 
-elif Tk:  #must be running as plugin
+elif Tk:  # Ok for unit testing.
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 

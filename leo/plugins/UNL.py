@@ -244,7 +244,7 @@ def onUrl1 (tag,keywords):
 #@-node:rogererens.20041014110709:To do
 #@-others
 
-if Tk and not g.app.unitTesting: # Register the handlers...
+if Tk: # Ok for unit testing.
     if g.app.gui is None:
         g.app.createTkGui(__file__)
 

@@ -154,7 +154,7 @@ def addMenu( tag, keywords ):
 #@-node:ekr.20040915085351.7:addMenu
 #@-others
 
-if Tk:
+if Tk: # Ok for unit testing: adds menu and new directive.
     haveseen = weakref.WeakKeyDictionary()
     leoPlugins.registerHandler( ("start2", "open2", "new") , addMenu )
     g.globalDirectiveList.append( 'produce' ) 

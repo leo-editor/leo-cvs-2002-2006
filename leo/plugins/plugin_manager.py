@@ -1366,7 +1366,7 @@ class EnableManager:
 #@-node:pap.20041009140132.1:Implementation
 #@-others
 
-if Tk and Pmw:
+if Tk and Pmw: # Ok for unit testing: adds menu.
     g.plugin_signon(__name__)
 #@nonl
 #@-node:pap.20041006184225:@thin plugin_manager.py

@@ -29,7 +29,7 @@ def maximize_window(tag, keywords):
     c.frame.top.state("zoomed")
 
 # Works only on Windows platform.
-if sys.platform == "win32":
+if sys.platform == "win32": # Ok for unit test.
     leoPlugins.registerHandler("after-create-leo-frame", maximize_window)
     g.plugin_signon(__name__)
 #@nonl

@@ -221,7 +221,7 @@ def onCreate( tag, keywords ):
 #@-node:ekr.20041003172238.16:onCreate
 #@-others
 
-if Pmw and Tk and zlib:
+if Pmw and Tk and zlib: # Ok for unit testing.
     leoPlugins.registerHandler(('open2', "new") , onCreate)
     g.plugin_signon( __name__ ) 
 #@nonl

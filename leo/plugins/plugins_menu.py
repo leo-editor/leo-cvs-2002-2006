@@ -387,19 +387,17 @@ def createPluginsMenu (tag,keywords):
             #@+node:EKR.20040517080555.24:<< add items to the plugins menu >>
             for name,p in items:
                 if p.hastoplevel:
-                    if 1: # Check at runtime to see if the plugin has actually been loaded.
-                        # This prevents us from calling hasTopLevel() on unloaded plugins.
-                        def callback(p=p):
-                            path,name = g.os_path_split(p.filename)
-                            name,ext = g.os_path_splitext(name)
-                            # g.trace(name,g.app.loadedPlugins)
-                            if name in g.app.loadedPlugins:
-                                p.hastoplevel()
-                            else:
-                                p.about()
-                        table = ((p.name, None, callback),)
-                    else:
-                        table = ((p.name, None, p.hastoplevel),)
+                    # Check at runtime to see if the plugin has actually been loaded.
+                    # This prevents us from calling hasTopLevel() on unloaded plugins.
+                    def callback(p=p):
+                        path,name = g.os_path_split(p.filename)
+                        name,ext = g.os_path_splitext(name)
+                        # g.trace(name,g.app.loadedPlugins)
+                        if name in g.app.loadedPlugins:
+                            p.hastoplevel()
+                        else:
+                            p.about()
+                    table = ((p.name, None, callback),)
                     c.frame.menu.createMenuEntries(pluginMenu, table)
                 elif p.hasconfig or p.othercmds:
                     m = c.frame.menu.createNewMenu(p.name, "&Plugins")
@@ -420,8 +418,7 @@ def createPluginsMenu (tag,keywords):
             #@nl
             
     sys.path = old_path
-
-
+#@nonl
 #@-node:EKR.20040517080555.23:createPluginsMenu
 #@-others
 

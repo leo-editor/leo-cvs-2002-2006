@@ -50,7 +50,7 @@ def openWithTempFilePath (self,v,ext):
 #@-node:EKR.20040517075715.3:openWithTempFilePath
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not Ok for unit testing: it changes Leo's core.
 
     # Register the handlers...
     leoPlugins.registerHandler("start2", onStart)

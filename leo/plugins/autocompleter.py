@@ -876,8 +876,7 @@ def onOpenWindow ():
 #@-node:ekr.20041017105122.2:onOpenWindow
 #@-others
 
-if Pmw and Tk:
-
+if Pmw and Tk and not g.app.unitTesting: # Not for unit tests: modifies core classes.
     leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
     leoPlugins.registerHandler(('start2','open2'),initialScan)   
     g.plugin_signon(__name__)

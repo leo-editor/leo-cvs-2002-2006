@@ -353,7 +353,7 @@ def addScheduleMenu(tag,keywords):
 #@-node:ekr.20040331153923.13:addScheduleMenu
 #@-others
 
-if Tk and not g.app.unitTesting:
+if Tk: # Ok for unit testing: creates new menu.
     global sd
     sc = sched.scheduler(time.time,time.sleep)
     lk = threading.Condition(threading.RLock())

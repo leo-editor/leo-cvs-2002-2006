@@ -71,8 +71,8 @@ def getPane( name, c ):
 #@-node:ekr.20040915074510.2:getPane
 #@-others
 
-if Tk and Pmw:
-    
+if Tk and Pmw: # Ok for unit tests even though it modifies core classes!
+
     nbs = weakref.WeakKeyDictionary()
     oldCLog = leoTkinterFrame.leoTkinterLog.createControl
     leoTkinterFrame.leoTkinterLog.createControl = createLog

@@ -297,9 +297,11 @@ def OnBodyKey(tag,keywords):
 def OnIconDoubleClick(tag,keywords):
     
     global RunNode,RunList,OwnIdleHook,ExitCode
-
+    
     c=g.top() ; p = c.currentPosition()
- 
+    
+    # g.trace(c)
+
     h = p.headString()
     if g.match_word(h,0,"@run"):
         if RunNode or RunList:
@@ -375,7 +377,7 @@ def OnQuit(tag,keywords=None):
 #@-node:ekr.20040910070811.15:OnQuit
 #@-others
 
-if not g.app.unitTesting:
+if 1: # Ok for unit testing.
     leoPlugins.registerHandler("bodykey2",OnBodyKey)
     leoPlugins.registerHandler("icondclick2",OnIconDoubleClick)
     leoPlugins.registerHandler("end1",OnQuit)

@@ -137,8 +137,8 @@ class paramClass:
 #@-node:ekr.20040916091520.2:class paramClass
 #@-others
 
-if 1:
-    leoPlugins.registerHandler( ('new2' , 'open2') ,onCreate)
+if 1: # Ok for unit testing: adds command to Outline menu.
+    leoPlugins.registerHandler( ('new','open2') ,onCreate)
     g.plugin_signon(__name__)
 #@nonl
 #@-node:ekr.20040916084945:@thin macros.py

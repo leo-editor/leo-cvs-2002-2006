@@ -210,7 +210,7 @@ class myPrettyPrinter(leoCommands.Commands.prettyPrinter):
 #@-node:ekr.20041021120454:class myPrettyPrinter
 #@-others
 
-if not g.app.unitTesting:
+if not g.app.unitTesting: # Not for unit testing:  modifies core.
 
     leoCommands.Commands.prettyPrinter = myPrettyPrinter
 
