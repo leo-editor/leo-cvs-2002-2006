@@ -59,9 +59,11 @@ class baseConfig:
         ("body_text_font_slant","slant","roman"),
         ("body_text_font_weight","weight","normal"),
         ("enable_drag_messages","bool",True),
+        ("headline_text_font_family","string",None),
         ("headline_text_font_size","size",defaultLogFontSize),
         ("headline_text_font_slant","slant","roman"),
         ("headline_text_font_weight","weight","normal"),
+        ("log_text_font_family","string",None),
         ("log_text_font_size","size",defaultLogFontSize),
         ("log_text_font_slant","slant","roman"),
         ("log_text_font_weight","weight","normal"),
@@ -97,25 +99,40 @@ class baseConfig:
     # Each of these settings sets the ivar with the same name.
     ivarsDict = {}
     
+    if 0: # From c.__init__
+    
+        # Global options
+        self.tangle_batch_flag = False
+        self.untangle_batch_flag = False
+        # Default Tangle options
+        self.tangle_directory = ""
+        self.use_header_flag = False
+        self.output_doc_flag = False
+        # Default Target Language
+        self.target_language = "python" # 8/11/02: Required if leoConfig.txt does not exist.
+    
     ivarsData = (
         ("at_root_bodies_start_in_doc_mode","bool",True),
             # For compatibility with previous versions.
         ("create_nonexistent_directories","bool",False),
         ("output_initial_comment","string",""),
             # "" for compatibility with previous versions.
-        ("output_newline","newline-type","nl"),
+        ("output_newline","string","nl"),
+        ("page_width","int","132"),
         ("read_only","bool",True),
             # Make sure we don't alter an illegal leoConfig.txt file!
         ("redirect_execute_script_output_to_log_pane","bool",False),
-        ("relative_path_base_directory","directory","!"),
+        ("relative_path_base_directory","string","!"),
         ("remove_sentinels_extension","string",".txt"),
         ("save_clears_undo_buffer","bool",False),
         ("stylesheet","string",None),
-        ("trailing_body_newlines","newline-type","asis"),
+        ("tab_width","int",-4),
+        ("trailing_body_newlines","string","asis"),
         ("use_plugins","bool",False),
             # Should never be True here!
-        ("use_psyco","bool",False),
-        ("undo_granularity","undo_granularity","word"),
+        # use_pysco can not be set by 4.3:  config processing happens too late.
+            # ("use_psyco","bool",False),
+        ("undo_granularity","string","word"),
             # "char","word","line","node"
         ("write_strips_blank_lines","bool",False),
     )
@@ -320,45 +337,49 @@ class baseConfig:
     
         data = d.get(self.munge(setting))
         if data:
+            # g.trace(setting,requestedType,data)
             found = True
             if len(data) == 2:
                 path = None ; dType,val = data
             else:
                 path,dType,val = data
-            if dType != requestedType:
-                ok = False
-                #@            << set ok if we can translate one type into the other >>
-                #@+node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
-                for toBeTranslatedType,otherType in (
-                    (requestedType,dType),(dType,requestedType)):
-                    data = self.types_dict.get(toBeTranslatedType)
-                    if data:
-                        transType,validValues = data
-                        ok = transType == otherType
-                        if ok:
-                            # g.trace("translated %12s to %s for %s" % (toBeTranslatedType,transType,setting))
-                            break
-                #@nonl
-                #@-node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
-                #@nl
-                if not ok:
-                    #@                << give warning the first time (setting,dType) is seen >>
-                    #@+node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
-                    wTypes = self.warningsDict.get(setting,[])
-                    if dType not in wTypes:
-                        wTypes.append(dType)
-                        self.warningsDict[setting] = wTypes
-                        g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
-                        # g.print_stack()
+                
+            if 0: # This is not reliable.
+                if dType != requestedType:
+                    ok = False
+                    #@                << set ok if we can translate one type into the other >>
+                    #@+node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
+                    for toBeTranslatedType,otherType in (
+                        (requestedType,dType),(dType,requestedType)):
+                        data = self.types_dict.get(toBeTranslatedType)
+                        if data:
+                            transType,validValues = data
+                            ok = transType == otherType
+                            if ok:
+                                # g.trace("translated %12s to %s for %s" % (toBeTranslatedType,transType,setting))
+                                break
                     #@nonl
-                    #@-node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
+                    #@-node:ekr.20041122164849:<< set ok if we can translate one type into the other >>
                     #@nl
+                    if not ok:
+                        #@                    << give warning the first time (setting,dType) is seen >>
+                        #@+node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
+                        wTypes = self.warningsDict.get(setting,[])
+                        if dType not in wTypes:
+                            wTypes.append(dType)
+                            self.warningsDict[setting] = wTypes
+                            g.trace("Requested type %s, got %s for setting %s" % (requestedType,dType,setting))
+                            # g.print_stack()
+                        #@nonl
+                        #@-node:ekr.20041122164849.1:<< give warning the first time (setting,dType) is seen >>
+                        #@nl
             if val not in (u'None',u'none','None','none','',None):
                 # g.trace(setting,val)
                 return val,found
                 
         # Do NOT warn if not found here.  It may be in another dict.
         return None,found
+    #@nonl
     #@-node:ekr.20041121143823:getValFromDict
     #@-node:ekr.20041117083141:get & allies
     #@+node:ekr.20041117081009.3:getBool
@@ -408,19 +429,6 @@ class baseConfig:
             return None
     #@nonl
     #@-node:ekr.20041117082135:getFloat
-    #@+node:ekr.20041118055543:getFontDict  FINISH (needed for @settings tree, maybe)
-    def getFontDict (self,c,setting):
-        
-        """Search all dictionaries for the setting & check it's type"""
-        
-        # To do:
-        # - get params from somewhere.
-        # - call getFontFromParams.
-        # - make a dict and return it.
-        
-        return self.get(c,setting,"string")
-    #@nonl
-    #@-node:ekr.20041118055543:getFontDict  FINISH (needed for @settings tree, maybe)
     #@+node:ekr.20041117062717.13:getFontFromParams (config)
     def getFontFromParams(self,c,family,size,slant,weight,defaultSize=12,tag=""):
     
@@ -563,20 +571,16 @@ class baseConfig:
         
         """Set the setting and make sure its type matches the given type."""
     
-        munge = self.munge
-        localOptionsDict = self.localOptionsDict
-    
-        # c may not be in localOptionsDict exactly.
-        g.trace("c",c)
-        d = localOptionsDict.get(c.hash())
-        if d:
-            g.trace("c",c)
-            dkind = "c dict"
+        if c:
+            d = self.localOptionsDict.get(c.hash())
+            assert(d is not None) # Should have been created in readSettings.
+            dkind = "c dict: %s" % (c.mFileName)
         else:
             dkind = "global dict"
             d = self.dictList [0]
+    
+        d[self.munge(setting)] = (kind,val),
         
-        d[munge(setting)] = (kind,val),
         g.trace(dkind,setting,kind,val)
     #@nonl
     #@-node:ekr.20041118084146.1:set (g.app.config)
@@ -656,7 +660,7 @@ class baseConfig:
                             #@-node:ekr.20041120113116:<< print d >>
                             #@nl
                         if setOptionsFlag:
-                            self.localOptionsDict[c] = d
+                            self.localOptionsDict[c.hash()] = d
                             #@                        << update recent files from d >>
                             #@+node:ekr.20041201081440:<< update recent files from d >>
                             for key in d.keys():
@@ -693,6 +697,10 @@ class baseConfig:
         
         # g.trace(c.mFileName)
         
+        # Create a settings dict for c for set()
+        if c and self.localOptionsDict.get(c.hash()) is None:
+            self.localOptionsDict[c.hash()] = {}
+    
         parser = settingsTreeParser(c)
         d = parser.traverse()
     
@@ -719,11 +727,12 @@ class parserBaseClass:
     # These are the canonicalized names.  Case is ignored, as are '_' and '-' characters.
     
     basic_types = [
-        'bool','color','directory','font','int',
+        # Headlines have the form @kind name = var
+        'bool','color','directory','int',
         'float','path','ratio','shortcut','string']
     
     control_types = [
-        'if','ifgui','ifplatform','ignore','page',
+        'font','if','ifgui','ifplatform','ignore','page',
         'recentfiles','settings','shortcuts','type']
     
     # Keys are settings names, values are (type,value) tuples.
@@ -789,6 +798,39 @@ class parserBaseClass:
         self.set(kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.2:doColor
+    #@+node:ekr.20041120094940.3:doDirectory & doPath
+    def doDirectory (self,p,kind,name,val):
+        
+        # At present no checking is done.
+        self.set(p,kind,name,val)
+    
+    doPath = doDirectory
+    #@nonl
+    #@-node:ekr.20041120094940.3:doDirectory & doPath
+    #@+node:ekr.20041120094940.6:doFloat
+    def doFloat (self,p,kind,name,val):
+        
+        try:
+            val = float(val)
+            self.set(kind,name,val)
+        except ValueError:
+            self.valueError(p,kind,name,val)
+    #@nonl
+    #@-node:ekr.20041120094940.6:doFloat
+    #@+node:ekr.20041120094940.4:doFont
+    def doFont (self,p,kind,name,val):
+        
+        d = self.parseFont(p)
+        
+        # Set individual settings.
+        for key in ('family','size','slant','weight'):
+            data = d.get(key)
+            if data is not None:
+                name,val = data
+                setKind = key
+                self.set(setKind,name,val)
+    #@nonl
+    #@-node:ekr.20041120094940.4:doFont
     #@+node:ekr.20041120103933:doIf
     def doIf(self,p,kind,name,val):
     
@@ -814,22 +856,6 @@ class parserBaseClass:
             return "skip"
     #@nonl
     #@-node:ekr.20041120104215:doIfPlatform
-    #@+node:ekr.20041120094940.3:doDirectory & doPath
-    def doDirectory (self,p,kind,name,val):
-        
-        # At present no checking is done.
-        self.set(kind,name,val)
-        
-    doPath = doDirectory
-    #@nonl
-    #@-node:ekr.20041120094940.3:doDirectory & doPath
-    #@+node:ekr.20041120094940.4:doFont
-    def doFont (self,p,kind,name,val):
-        
-        # At present no checking is done.
-        self.set(kind,name,val)
-    #@nonl
-    #@-node:ekr.20041120094940.4:doFont
     #@+node:ekr.20041120104215.1:doIgnore
     def doIgnore(self,p,kind,name,val):
     
@@ -846,16 +872,6 @@ class parserBaseClass:
             self.valueError(p,kind,name,val)
     #@nonl
     #@-node:ekr.20041120094940.5:doInt
-    #@+node:ekr.20041120094940.6:doFloat
-    def doFloat (self,p,kind,name,val):
-        
-        try:
-            val = float(val)
-            self.set(kind,name,val)
-        except ValueError:
-            self.valueError(p,kind,name,val)
-    #@nonl
-    #@-node:ekr.20041120094940.6:doFloat
     #@+node:ekr.20041120104215.2:doPage
     def doPage(self,p,kind,name,val):
     
@@ -928,7 +944,7 @@ class parserBaseClass:
                     path2 = None ; theType2,values2 = data
                 else:
                     path2,theType2,values2 = data
-                if g.os_path_normabs(c.mFileName) != g.os_path_normabs(path2):
+                if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path2):
                     g.es("over-riding @type %s from %s" % (name,path2), color="red")
             else:
                 # g.trace("defining @type %s = (%s,%s)" % (name,repr(theType),repr(values)))
@@ -952,6 +968,71 @@ class parserBaseClass:
             g.callerName(2),
             "must be overridden in subclass")
     #@-node:ekr.20041119204700.2:oops
+    #@+node:ekr.20041213082558:parsers
+    #@+node:ekr.20041213083651:fontSettingNameToFontKind
+    def fontSettingNameToFontKind (self,name):
+        
+        s = name.strip()
+        if s:
+            for tag in ('_family','_size','_slant','_weight'):
+                if s.endswith(tag):
+                    return tag[1:]
+    
+        return None
+    #@nonl
+    #@-node:ekr.20041213083651:fontSettingNameToFontKind
+    #@+node:ekr.20041213082558.1:parseFont
+    def parseFont (self,p):
+        
+        d = {
+            'comments': [],
+            'family': None,
+            'size': None,
+            'slant': None,
+            'weight': None,
+        }
+    
+        s = p.bodyString()
+        lines = g.splitLines(s)
+    
+        for line in lines:
+            self.parseFontLine(p,line,d)
+            
+        comments = d.get('comments')
+        d['comments'] = '\n'.join(comments)
+            
+        return d
+    #@nonl
+    #@-node:ekr.20041213082558.1:parseFont
+    #@+node:ekr.20041213082558.2:parseFontLine
+    def parseFontLine (self,p,line,d):
+        
+        s = line.strip()
+        if not s: return
+        
+        try:
+            s = str(s)
+        except UnicodeError:
+            pass
+        
+        if g.match(s,0,'#'):
+            s = s[1:].strip()
+            comments = d.get('comments')
+            comments.append(s)
+            d['comments'] = comments
+        else:
+            # name is everything up to '='
+            i = s.find('=')
+            if i == -1:
+                name = s ; val = None
+            else:
+                name = s[:i].strip() ; val = s[i+1:].strip()
+    
+            fontKind = self.fontSettingNameToFontKind(name)
+            if fontKind:
+                d[fontKind] = name,val # Used only by doFont.
+    #@nonl
+    #@-node:ekr.20041213082558.2:parseFontLine
     #@+node:ekr.20041119205148:parseHeadline
     def parseHeadline (self,s):
         
@@ -1033,6 +1114,7 @@ class parserBaseClass:
         return name,theType,values
     #@nonl
     #@-node:ekr.20041122100810:parseType
+    #@-node:ekr.20041213082558:parsers
     #@+node:ekr.20041120094940.9:set (settingsParser)
     def set (self,kind,name,val):
         
@@ -1048,10 +1130,10 @@ class parserBaseClass:
         if data:
             if len(data) == 2: path2 = None
             else: path2 = data[0]
-            if g.os_path_normabs(c.mFileName) != g.os_path_normabs(path2):
+            if g.os_path_abspath(c.mFileName) != g.os_path_abspath(path2):
                 g.es("over-riding setting: %s from %s" % (name,path2))
     
-        # N.B.  We can't use c here: it may not exist later.
+        # N.B.  We can't use c here: it may be destroyed!
         d[self.munge(name)] = c.mFileName,kind,val
         
         data = g.app.config.ivarsDict.get(self.munge(name))
