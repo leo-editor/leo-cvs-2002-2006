@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="4402" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="4438" clone_windows="0"/>
 <globals body_outline_ratio="0.494983277592">
-	<global_window_position top="26" left="498" height="897" width="816"/>
+	<global_window_position top="30" left="232" height="897" width="816"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
@@ -31,11 +31,11 @@ marks="pap.20041008200028,pap.20041006194759,pap.20041008224625,pap.200410061930
 </v>
 <v t="ekr.20041113110210"><vh>@button Spelling...</vh></v>
 </v>
-<v t="edream.110203113231.618"><vh>Plugins</vh>
+<v t="edream.110203113231.618" a="TV"><vh>Plugins</vh>
 <v t="EKR.20040517090508"><vh>  Enable plugins by changing pluginsManager.txt or using plugin_manager plugin</vh>
 <v t="edream.120603093808"><vh>@thin pluginsManager.txt</vh></v>
 </v>
-<v t="ekr.20050303051035" a="E"><vh> Templates: these show recommended ways of defining plugins.</vh>
+<v t="ekr.20050303051035"><vh> Templates: these show recommended ways of defining plugins.</vh>
 <v t="ekr.20041114102139"><vh>Notes</vh>
 <v t="ekr.20041114103913"><vh>About comments in the style guide</vh></v>
 <v t="ekr.20041114102139.1"><vh>About the root node</vh></v>
@@ -735,6 +735,21 @@ marks="mork.20040930091035,mork.20040930091624,"><vh>@thin chapters.py</vh></v>
 <v t="ekr.20040419105219"><vh>@thin lineNumbers.py</vh></v>
 <v t="ekr.20040331151007"><vh>@thin niceNosent.py</vh></v>
 </v>
+<v t="ekr.20050402080206"><vh>LeoN</vh>
+<v t="ekr.20050402080206.1"><vh>Readme file.</vh></v>
+<v t="ekr.20050402080206.2"><vh>Overview</vh>
+<v t="ekr.20050402080206.3" a="E"><vh>&lt;&lt; Step four, Realtime interaction &gt;&gt;</vh>
+<v t="ekr.20050402080206.4"><vh>Design notes</vh>
+<v t="ekr.20050402080206.5"><vh>LeoN devellopment status III</vh></v>
+<v t="ekr.20050402080206.6"><vh>LeoN devellopment status IV</vh></v>
+</v>
+<v t="ekr.20050402080206.7" a="E"><vh>Notes</vh></v>
+</v>
+</v>
+<v t="ekr.20050402080206.8" a="E"
+marks="ekr.20050402080206.34,ekr.20050402080206.38,"
+expanded="ekr.20050402080206.30,"><vh>@thin LeoN.py</vh></v>
+</v>
 <v t="EKR.20040517080555"><vh>Menus &amp; translations</vh>
 <v t="ekr.20041019072632"><vh>Chinese:  Must use @file due to problems with cvs</vh>
 <v t="ekr.20040828105233" tnodeList="ekr.20040828105233,ekr.20040828105233.1,ekr.20040828105233.2,ekr.20040828105233.3,ekr.20040828105233.4,ekr.20040828105233.5,ekr.20040828105233.6,ekr.20040828105233.7"><vh>@file chinese_menu.py</vh>
@@ -898,9 +913,11 @@ marks="pap.20041008224625,pap.20041006193013,pap.20041006194759,pap.200410082000
 <v t="ekr.20040331071319"
 expanded="ekr.20040331071319.4,bwmulder.20050319191929.1,"><vh>@thin rst2.py</vh></v>
 </v>
-<v t="ekr.20050331061925"><vh>golf</vh>
+<v t="ekr.20050331061925"><vh>golf prototype</vh>
+<v t="ekr.20050331081136" a="E"><vh>Design notes</vh></v>
+<v t="ekr.20050331100205"><vh>To do</vh></v>
 <v t="ekr.20050331061925.2" a="E"
-expanded="ekr.20050331062614.1,ekr.20050331064504,"><vh>@thin golf.py</vh></v>
+expanded="ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </v>
 </v>
@@ -911,12 +928,6 @@ expanded="ekr.20050331062614.1,ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 <v t="mork.20041018131258.1"><vh>@thin groupOperations.py</vh></v>
 <v t="mork.20041018204908.1"><vh>@thin multifile.py</vh></v>
 <v t="mork.20041010095009"><vh>@thin xsltWithNodes.py</vh></v>
-</v>
-<v t="ekr.20040331071319"
-expanded="ekr.20040331071319.4,bwmulder.20050319191929.1,"><vh>@thin rst2.py</vh></v>
-<v t="ekr.20050331061925" a="TV"><vh>golf</vh>
-<v t="ekr.20050331061925.2" a="E"
-expanded="ekr.20050331062614.1,ekr.20050331064504,"><vh>@thin golf.py</vh></v>
 </v>
 </vnodes>
 <tnodes>
@@ -9709,5 +9720,211 @@ token_bg         =  #FFFAFA  ;snow
 ;configparser needs a complete testsuite to answer these questions
 ;maybe there is one already?</t>
 <t tx="ekr.20050331061925"></t>
+<t tx="ekr.20050331081136">@killcolor
+
+Design
+
+Add another pass after the prepass?
+    - This would allow scripts to a list of nodes to process. (Gathering pass)
+
+- @golf-options
+    Execute the body text as a script with 'self' bound to the settingsController?
+
+- @golf-script
+    Similar to script button.  When do we call the script:
+        - @golf-run-script myScript directive.
+        - Specified by option:
+            onStartup = myScript, onNode = myScript
+        - Specified by node name:  (Can't replace pass 0)
+            @golf-pass1-script # Replaces default pass 1
+            @golf-pass2-script, # Replaces default pass 2
+            @golf-node-script # Called once per node during pass 1.
+
+- @golf-directive
+    Similar to script button.  Run when corresponding directive is seen.
+
+Questions
+
+- Is @golf-others useful?
+    - Maybe not.  Maybe all golf sections should be named.
+- How to specify output processor?
+- Do we need hooks ?  How to register?
+
+
+</t>
+<t tx="ekr.20050331100205">@killcolor
+
+Write a script that supports golf sections.
+    - Similar to atFile.write logic, but probably simpler:
+        - @golf-others probably not needed.
+        - It's not clear that @golf-root or @golf-unit are needed.</t>
+<t tx="ekr.20050402080206">@
+
+This is LeoN-0.0.1 as created by Rodrigo Berenson, very slightly reorganized form.
+
+An important project for Leo's long-term development.
+
+See leo/doc/LeoN for important research papers that form the basis of this project.</t>
+<t tx="ekr.20050402080206.1">@killcolor
+
+Read the docustrings in the code.
+
+Run the code LeoN.py to test it. 
+
+You need to read sun98acheiving.pdf to understand what is all this stuff about.  This and other .pdf files are now in the leo/doc/LeoN folder.
+
+Rodrigo Benenson. 2003. LeoN project. &lt;rodrigob@elo.utfsm.cl&gt;</t>
+<t tx="ekr.20050402080206.2">@language plain
+
+LeoN is Leo over the Network.
+
+LeoN is Collaborative Leo.
+
+Leo is http://leo.sf.net
+
+@language plain
+
+Leo over network requirements
+-----------------------------
+
+This is my résumé of the Requirements and design issues for Leo over the Network. (LeoN).
+
+First in sake of simplicity a N-clients/One server architecture is imposed, being much more easy to design and implement.
+Also it's required that the code could be as most Plugin as possible and as most python Modules independent as possible (one and only one instalation required).
+
+Now, the list presented approximately in the logic order of implementation:
+
+&lt;Step one, Merging&gt;
+
+&lt;Step two, Publishing&gt;
+
+&lt;Step three, Interacting by turns&gt;
+
+&lt;&lt;Step four, Realtime interaction&gt;&gt;
+
+Please comment this document.
+
+RodrigoB. </t>
+<t tx="ekr.20050402080206.3">Step four, "Realtime interaction":
+- There should be a way that multiple online users edit on realtime the same Node.
+This is the final step and is truly difficult. Probably this code should be merged from a parallel (but related) project.
+(Guy X,Y,Z having a code party.)
+
+- The client should show the editors cursors and edition on realtime.
+Adquire the status, of Hydra Open Source, Multiplatform, Clone.
+(Guy X,Y,Z enjoying the code party.)
+
+Some features were intentionally omited:
+- Versioning system. (there exists better solutions)
+- Voice chat. (there exists parallel solutions)
+
+
+</t>
+<t tx="ekr.20050402080206.4">The realtime edition  could be implemented initially on a lock/unlock fashion automatized on a per line basis, very much like an online CVS editor...
+
+The complications should be left to a parallel project, or maybe to another community (search, propose and merge/translate)
+
+@nocolor</t>
+<t tx="ekr.20050402080206.5">29/06/03
+
+Hi!
+
+It's time to news again. This last weeks were my final exams weeks but LeoN devellopment is going on as planned.
+
+The last two weeks where focused on the Gui control, intercepting the whole list of actions that the user can do into the collaborative outline. There still some importants events to manage, but I think almost the base code is there. As mentioned this stage is absolutelly non trivial nor little; and is characterised to be some how frustating ("Tk marks are before or bellow a charater? Event occurs before or after effects?", and similars) and slow (because you have to test by hand the gui to debug it). The important elements missing will be done at the time it becomes strictly necessary.
+
+
+The LeoN code is already pretty big and relativelly complex (3500 raw lines count) and there is a big list of things to do. Anyway no one said it would be easy.
+Somes days ago I drafted the code base for Step4, hopefully the more important piece of code, due of it reusability and because I think it will give to LeoN an important sparky effect (near realtime multiuser text edition).
+
+
+So now the actual plan is:
+- Focus the next two weeks on the implementation of Step4 and his unit tests.
+- Release the Step4 code. (because it is usefull without Leo and could be used in parallel projects)
+- Integrate Step4 and Step(2,3) (one week)
+- Move the code over Leo 3.1x  and Twisted 1.0.6 (which unfortunelly changed some classes used in LeoN (cred module)) (horizont: one week)
+- After that I will focus strictly on finishing the usability elements and (if everything go fine) will start the releases iterations. This stage will have at least the following milestones:
+	- Finish and debug the interface hooks (this can be long...)
+	- Implement server persistence (should be easy)
+	- Implement the admin interface (should be boring)
+	- Implement Clones (two weeks if things go fine)
+	- Improve the LeoN web views (implement more than one view  model?)
+	- Allow as easy as possible instalations
+
+Of course the releases will be all alpha during a probably long period until the devellopers are happy and then we will switch to beta and when everyone will be happy : the first stable Release !
+
+I'm pretty impacient to finish the vapourware status of LeoN, we have the luck that the timing are acceptable, and Leo has some importants things to do before LeoN will become the first priority. This will give me the time to work on the mentioned plan.
+
+RodrigoB.</t>
+<t tx="ekr.20050402080206.6">As said, it is times to news. Briefly.
+
+about step4
+-----------
+
+The code is ready and running since wednesday (mercredi) on the morning, but until now I'm  grumbling-grumbling with the code to get it working as supposed; I have found some minor bugs and solved some conceptuals problems and bugs. Debugging code of someelse algorithm is notoriously harder than working on your own ideas but the work give his fruits and each day we are one step nearer to us dreams.
+Most of the hard problems are due to some ambiguities or not so clear ideas in the papers, so I have to crunch my brain to guess the correct way to manage the presented abstractions (or apply a 'guess, try, evaluate' strategy).
+
+Due to this problems, and after five days of debugging work I will delay the code release until I get the unit test passed, this should not take more than a week more (I hope so, but you never know if the actual bug is or not the last one).
+
+
+what is next
+------------
+
+- Finish debug of step4
+- Implement and test the one server various clients collaborative editing (a special case of the above class)
+- move codebase to 3.12b* and twisted 1.0.6
+- merge step2, step3, step4 
+- start the release of the code snapshots.
+- start working on last frozen elements and on the Todo List:
+	- hooks installations and debug (starting by node renaming)
+	- admin interface
+	- server side persistence 
+	- clone support
+	- cut and paste (with download interface)
+	- better web server views
+	- design a web plugin system ?
+	- debugging, debugging
+	- as easy as possible instalations
+	- work on the design of LeoN2 features
+
+I will stay working on a two weeks devellopment cycles, and post news at the end of each cycle.
+
+
+RodrigoB.</t>
+<t tx="ekr.20050402080206.7">@nocolor
+
+25/06/03 Copying of the main algorithms into the code. RodrigoB.
+01/07/03 Programming. RodrigoB.
+02/07/03 Programming. RodrigoB.
+05/07/03 Reading about the garbage collector stuff. RodrigoB.
+07/07/03 Programming. RodrigoB.
+08/07/03 Programming, operations herit from dict, support splitted ops, working on tests, syntax debugging. RodrigoB.
+09/07/03 Implementing operations relations, starting debug iterations based on unittests.
+		 Added another parameters form for receive_operation. RodrigoB.
+10/07/03 Debugging conceptual aspects; management of timestamps on transformed operations. minor bugs fixed. Splitted special cases appears.RodrigoB.
+12/07/03 Searching bugs. bugfixes. RodrigoB.
+13/07/03 Implementing the garbage collector. Searching bugs. bugfixes. Testing garbage collector. RA problems. RodrigoB.
+14/07/03 (vive la France!) Testing an idea (__eq__). Little edit to the root docustring. RodrigoB.
+15/07/03 Hunting the Last Bug. Eureka. First successful execution. Code cleanup. Using unittest module. Release 1. RodrigoB.
+
+Todo
+
+- Find a good TestConcurrentEditable2 to test LostInformation cases
+
+- LI is absolutelly not verified
+- Find the Recover_LI specifications.
+- Find a better way to quit the ambiguities on the 'if else {}' operation pertenence. (save_RA, save_LI conditions ?)
+
+- collect garbage do not work anymore exactly like in the example. (is this a problem ?)
+
+- Implement ConcurrentEditableServer
+- Implement the  client-server tests
+
+- Debug.
+
+@color
+@language python
+
+</t>
 </tnodes>
 </leo_file>
