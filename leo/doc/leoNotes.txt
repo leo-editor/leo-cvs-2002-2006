@@ -3037,6 +3037,212 @@ def edit_text (self):
     return None
 #@nonl
 #@-node:ekr.20031218072017.3380:v.edit_text
+#@+node:ekr.20041118184748:Unused old config stuff
+#@+node:ekr.20041115110846.4:Apply Config command
+#@+node:ekr.20031218072017.3774:<< define help menu tables >>
+self.helpMenuTopTable = (
+    ("&About Leo...",None,c.about),
+    ("Online &Home Page",None,c.leoHome),
+    ("-",None,None),
+    ("Open Online &Tutorial",None,c.leoTutorial),
+)
+    
+self.helpMenuTop2Table = (
+    ("Open &Offline Tutorial",None,f.leoHelp),
+)
+    
+self.helpMenuTop3Table = (
+    ("Open Leo&Docs.leo",None,c.leoDocumentation),
+    ("-",None,None),
+    ("Open Leo&Config.leo",None,c.leoConfig),
+    # ("Apply &Settings",None,c.applyConfig),
+)
+#@nonl
+#@-node:ekr.20031218072017.3774:<< define help menu tables >>
+#@+node:ekr.20031218072017.2944:applyConfig
+def applyConfig (self):
+
+    c = self
+    g.app.config.init()
+    c.frame.reconfigureFromConfig()
+#@nonl
+#@-node:ekr.20031218072017.2944:applyConfig
+#@-node:ekr.20041115110846.4:Apply Config command
+#@+node:ekr.20041118184544:From leoFileCommands
+#@+node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >> (putFindSettings)
+c = self.c
+
+if g.app.config.configsExist and not c.config.read_only:
+    pass # config.update has already been called.
+else:
+    self.put_flag(c.batch_flag,"batch")
+    self.put_flag(c.ignore_case_flag,"ignore_case")
+    self.put_flag(c.mark_changes_flag,"mark_changes")
+    self.put_flag(c.mark_finds_flag,"mark_finds")
+    self.put_flag(c.pattern_match_flag,"pattern_match")
+    self.put_flag(c.reverse_flag,"reverse")
+    self.put_flag(c.search_headline_flag,"search_headline")
+    self.put_flag(c.search_body_flag,"search_body")
+    self.put_flag(c.suboutline_only_flag,"suboutline_only")
+    self.put_flag(c.whole_word_flag,"whole_word")
+    self.put_flag(c.wrap_flag,"wrap")
+    self.put_flag(c.node_only_flag,"node_only")
+
+self.put(">") ; self.put_nl()
+
+if g.app.config.configsExist and not c.config.read_only: # 8/6/02
+    self.put_tab()
+    self.put("<find_string></find_string>") ; self.put_nl()
+else:
+    self.put_tab()
+    self.put("<find_string>") ; self.putEscapedString(c.find_text)
+    self.put("</find_string>") ; self.put_nl()
+
+if g.app.config.configsExist and not c.config.read_only: # 8/6/02
+    self.put_tab()
+    self.put("<change_string></change_string>") ; self.put_nl()
+else:
+    self.put_tab()
+    self.put("<change_string>") ; self.putEscapedString(c.change_text)
+    self.put("</change_string>") ; self.put_nl()
+#@nonl
+#@-node:ekr.20031218072017.3036:<< put find settings that may exist in leoConfig.txt >> (putFindSettings)
+#@+node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+c = self.c
+language = c.target_language
+for name in xml_language_names:
+    s = string.lower(name)
+    s = string.replace(s,"/","")
+    if s == language:
+        language = name ; break
+
+if g.app.config.configsExist and not c.config.read_only: # 8/6/02
+    pass # config.update has already been called.
+else:
+    self.put(" defaultTargetLanguage=") ; self.put_in_dquotes(language)
+    self.put(" node_only=") ; self.put_dquoted_bool(c.node_only_flag)
+    self.put(" output_doc_chunks=") ; self.put_dquoted_bool(c.output_doc_flag)
+    self.put(" page_width=") ; self.put_in_dquotes(str(c.page_width))
+    self.put(" tab_width=") ; self.put_in_dquotes(str(c.tab_width))
+    self.put(" tangle_bat=") ; self.put_dquoted_bool(c.tangle_batch_flag)
+    self.put(" untangle_bat=") ; self.put_dquoted_bool(c.untangle_batch_flag)
+    self.put(" use_header_flag=") ; self.put_dquoted_bool(c.use_header_flag)
+
+self.put(">") ; self.put_nl()
+# New in version 0.16
+<< put default directory >>
+#@nonl
+#@+node:ekr.20031218072017.2068:<< put default directory >>
+if g.app.config.configsExist:
+    pass # Has been done earlier.
+elif len(c.tangle_directory) > 0:
+    self.put_tab()
+    self.put("<defaultDirectory>")
+    self.putEscapedString(c.tangle_directory)
+    self.put("</defaultDirectory>")
+    self.put_nl()
+#@nonl
+#@-node:ekr.20031218072017.2068:<< put default directory >>
+#@-node:ekr.20031218072017.2067:<< put prefs that may exist in leoConfig.txt >> (putPrefs)
+#@-node:ekr.20041118184544:From leoFileCommands
+#@+node:ekr.20041117062717.27:update (config)
+# Before 4.3: called when writing .leo file.  This had various unpleasant consequences.
+# After  4.3: called immediately when a setting changes, and never when writing .leo files.
+
+def update (self,verbose=False):
+    
+    g.trace()
+    """Write the entire config file from ivars."""
+    # Do nothing if the file does not exist, or if read_only.
+    if self.read_only:
+        if verbose:
+            g.es("Read only config file",color="blue")
+        return
+    if not g.os_path_exists(self.configFileName):
+        if verbose:
+            g.es("No config file",color="blue")
+        return
+    
+    config = ConfigParser.ConfigParser()
+    self.config = config
+    try:
+        # 9/1/02: apparently Linux requires w+ and XP requires w.
+        mode = g.choose(sys.platform=="win32","wb","wb+")
+        cf = open(self.configFileName,mode)
+        config.readfp(cf)
+        << write recent files section >>
+        for section,dict in self.sectionInfo:
+            if dict:
+                self.update_section(config,section,dict)
+        config.write(cf)
+        cf.flush()
+        cf.close()
+    except:
+        g.es("exception writing: " + self.configFileName)
+        g.es_exception()
+    self.config = None
+#@nonl
+#@+node:ekr.20041117062717.28:<< write recent files section >>
+section = self.recentFilesSection
+files = self.recentFiles
+
+section = g.toEncodedString(section,"utf-8") # 10/31/03
+
+if config.has_section(section):
+    config.remove_section(section)
+config.add_section(section)
+
+if 0: # elegant, but may be a security hole.
+    config.set(section,"recentFiles",files)
+else: # easier to read in the config file.
+    for i in xrange(len(files)):
+        f = g.toEncodedString(files[i],self.config_encoding) # 10/31/03
+        config.set(section, "file"+str(i), f)
+#@nonl
+#@-node:ekr.20041117062717.28:<< write recent files section >>
+#@-node:ekr.20041117062717.27:update (config)
+#@+node:ekr.20041117062717.29:update_section 
+def update_section (self,config,section,dict):
+    
+    section = g.toEncodedString(section,self.config_encoding) # 10/31/03
+
+    if config.has_section(section):
+        config.remove_section(section)
+    config.add_section(section)
+    
+    keys = dict.keys()
+    keys.sort() # Not effective.
+    for name in keys:
+        val = dict [name]
+        val  = g.toEncodedString(val,self.config_encoding)
+        name = g.toEncodedString(name,self.config_encoding) # 10/31/03
+        config.set(section,name,val)
+#@nonl
+#@-node:ekr.20041117062717.29:update_section 
+#@+node:ekr.20041117062717.25:<< convert find/change options to unicode >>
+find = self.findDict.get("find_string")
+if find:
+    # Leo always writes utf-8 encoding, but users may not.
+    find = g.toUnicode(find,"utf-8")
+    self.findDict["find_string"] = find
+
+change = self.findDict.get("change_string")
+if change:
+    # Leo always writes utf-8 encoding, but users may not.
+    change = g.toUnicode(change,"utf-8")
+    self.findDict["change_string"] = change
+#@nonl
+#@-node:ekr.20041117062717.25:<< convert find/change options to unicode >>
+#@+node:ekr.20040324080819:<< update leoConfig.txt >>
+if 0: # Not done in 4.3.
+    c.setIvarsFromFind()
+    c.config.setConfigFindIvars(c)
+    c.setIvarsFromPrefs()
+    c.config.setCommandsIvars(c)
+    c.config.update()
+#@nonl
+#@-node:ekr.20040324080819:<< update leoConfig.txt >>
+#@-node:ekr.20041118184748:Unused old config stuff
 #@-node:ekr.20031218072017.434:Unused code
 #@-all
 #@nonl

@@ -81,7 +81,6 @@ class baseConfig:
     #@    << define encodingIvarsDict >>
     #@+node:ekr.20041118062709:<< define encodingIvarsDict >>
     encodingIvarsDict = {
-        "config_encoding" : ("unicode-encoding","utf-8"), # Encoding used for leoConfig.txt.
         "default_derived_file_encoding" : ("unicode-encoding","utf-8"),
         "new_leo_file_encoding" : ("unicode-encoding","UTF-8"), # Upper case for compatibility with previous versions.
         "tkEncoding" : ("unicode-encoding",None), # Defaults to None so it doesn't override better defaults.
@@ -128,7 +127,10 @@ class baseConfig:
         self.defaultFont = None # Set in gui.getDefaultConfigFont.
         self.defaultFontFamily = None # Set in gui.getDefaultConfigFont.
         self.dictList = [self.defaultsDict] # List of dictionaries.
+        self.inited = False
         self.recentFiles = [] # List of recent files.
+        
+        
         self.initIvarsFromSettings()
         self.initSettingsFiles()
         self.initRecentFiles()
@@ -242,15 +244,21 @@ class baseConfig:
         
         """Get the setting and make sure its type matches the expected type."""
         
+        found = False
         for d in self.dictList:
             data = d.get(setting)
             if data:
+                found = True
                 theType,val = data
                 if val not in (u'None',u'none','None','none','',None):
                     # g.trace(theType,repr(val))
                     return val
     
-        # g.trace("Not found:",setting)
+        if 0: # Good for debugging leoSettings.leo.
+            # Don't warn if None was specified.
+            if not found and self.inited:
+                g.trace("Not found:",setting)
+    
         return None 
     #@nonl
     #@-node:ekr.20041117083141:get
@@ -259,9 +267,12 @@ class baseConfig:
         
         """Search all dictionaries for the setting & check it's type"""
         
-        if setting is None: g.trace(setting)
+        val = self.get(c,setting,"bool")
         
-        return self.get(c,setting,"bool")
+        if val in (True,False):
+            return True
+        else:
+            return None
     #@nonl
     #@-node:ekr.20041117081009.3:getBool
     #@+node:ekr.20041117093009.1:getDirectory
@@ -285,9 +296,10 @@ class baseConfig:
         val = self.get(c,setting,"int")
         try:
             val = int(val)
+            return val
         except TypeError:
             return None
-    
+    #@nonl
     #@-node:ekr.20041117081513:getInt
     #@+node:ekr.20041117082135:getFloat
     def getFloat (self,c,setting):
@@ -297,6 +309,7 @@ class baseConfig:
         val = self.get(c,setting,"float")
         try:
             val = float(val)
+            return val
         except TypeError:
             return None
     #@nonl
@@ -327,11 +340,7 @@ class baseConfig:
     def getString (self,c,setting):
         
         """Search all dictionaries for the setting & check it's type"""
-        
-        if setting is None:
-            g.trace(setting)
-            # import traceback ; traceback.print_stack()
-        
+    
         return self.get(c,setting,"string")
     #@nonl
     #@-node:ekr.20041117081009.4:getString
@@ -344,8 +353,6 @@ class baseConfig:
         # - get params from somewhere.
         # - call getFontFromParams.
         # - make a dict and return it.
-        
-        if name is None: g.trace(name,type,val)
         
         return self.get(c,setting,"string")
     #@nonl
@@ -509,7 +516,7 @@ class baseConfig:
         # Init settings from leoSettings.leo files.
         for path in (self.globalConfigFile, self.homeFile):
             if path:
-                g.es("reading %s" % path,color="blue")
+                g.es("reading settings in %s" % path,color="blue")
                 c = self.openSettingsFile(path)
                 if c:
                     d = self.readSettings(c)
@@ -531,6 +538,8 @@ class baseConfig:
                     else:
                         g.es("No @settings tree in %s",color="red")
                     g.app.destroyWindow(c.frame)
+                    
+        self.inited = True
     #@nonl
     #@-node:ekr.20041120064303:readSettingsFiles
     #@+node:ekr.20041117083857.1:readSettings
@@ -782,12 +791,11 @@ class parserBaseClass:
         
         """Init the setting for name to val."""
         
-        # g.trace("%50s %10s %s" %(name,kind,val))
+        # g.trace("%10s %15s %s" %(kind,val,name))
         
         d = self.settingsDict
-        
-        previous = d.get(name)
-        if previous:
+    
+        if d.get(name):
             g.es("overriding setting: %s" % (name))
         
         d[name] = kind,val
@@ -851,13 +859,14 @@ class settingsTreeParser (parserBaseClass):
         """Init any settings found in node p."""
         
         # g.trace(p.headString())
-        
+    
         kind,name,val = self.parseHeadline(p.headString())
-        
+    
         if kind == "settings":
             pass
-        if val in (u'None',u'none','None','none','',None) and kind in self.basic_types:
-            pass # This is not an error
+        if kind not in self.control_types and val in (u'None',u'none','None','none','',None):
+            # None is valid for all data types.
+            self.set(kind,name,None)
         elif kind in self.control_types or kind in self.basic_types:
             f = self.dispatchDict.get(kind)
             try:

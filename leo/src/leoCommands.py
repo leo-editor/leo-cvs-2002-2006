@@ -5460,8 +5460,6 @@ class configSettings:
             
         for ivar in g.app.config.ivarsDict.keys():
             self.initIvar(ivar)
-            
-        c.use_plugins = True ### Testing only.
     #@nonl
     #@+node:ekr.20041118104240:initIvar
     def initIvar(self,ivarName):

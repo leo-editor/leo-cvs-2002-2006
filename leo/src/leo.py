@@ -60,15 +60,6 @@ def run(fileName=None,*args,**keywords):
     if script:
         createNullGuiWithScript(script)
         fileName = None
-    else:
-        #@        << print encoding info >>
-        #@+node:ekr.20031218072017.1935:<< print encoding info >>
-        if 0: # This is just confusing for users.
-            g.es("leoConfig.txt encoding: " + g.app.config.config_encoding, color="blue")
-            g.es("Text encoding: " + g.app.tkEncoding, color="blue")
-        #@nonl
-        #@-node:ekr.20031218072017.1935:<< print encoding info >>
-        #@nl
     # Load plugins. Plugins may create g.app.gui.
     g.doHook("start1")
     if g.app.killed: return # Support for g.app.forceShutdown.
