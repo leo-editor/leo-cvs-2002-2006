@@ -544,8 +544,8 @@ class Commands:
 			head = c.body.get("1.0",i)
 			tail = c.body.get(j,"end")
 		else: # Convert the entire text.
-			i = "1.0" ; endSel = j = "end" ; head = tail = ""
-			endSel = c.body.index(j + "- 1 chars")
+			i = "1.0" ; j = "end" ; head = tail = ""
+			endSel = c.body.index(j + "- 1 chars") # 14-SEP-2002 DTHEIN
 			trailingNewline = ""
 		if i == endSel:
 			head = tail = None ; lines = []
@@ -554,6 +554,7 @@ class Commands:
 			lines = string.split(lines, '\n')
 			lines[-1] += trailingNewline # DTHEIN: add newline if needed
 		return head, lines, tail
+	
 
 	#@-body
 	#@-node:10:C=10:getBodyLines (Dave Hein)

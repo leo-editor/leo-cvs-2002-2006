@@ -902,6 +902,7 @@ def skip_heredoc_string(s,i):
 	elif match(s,i,delim):
 		i += len(delim)
 	return i
+
 #@-body
 #@-node:8:C=12:skip_heredoc_string : called by php import (Dave Hein)
 #@+node:9:C=13:skip_pp_directive

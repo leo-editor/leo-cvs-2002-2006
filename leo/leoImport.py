@@ -94,7 +94,9 @@ class leoImportCommands:
 		# trace(`self.fileName`) ; trace(`self.fileType`)
 		# All file types except the following just get copied to the parent node.
 		# 08-SEP-2002 DTHEIN: Added php
-		appendFileFlag = type not in [".c", ".cpp", ".java", ".pas", ".py", ".php"]
+		# 9/9/02: E.K.Ream.  Allow upper case, add cxx.
+		# Note: we should _not_ import header files using this code.
+		appendFileFlag = string.lower(type) not in [".c", ".cpp", ".cxx", ".java", ".pas", ".py", ".php"]
 		
 		#@<< Read file into s >>
 		#@+node:1::<< Read file into s >>
@@ -1035,7 +1037,6 @@ class leoImportCommands:
 	# Creates a child of parent for each class and function definition seen.
 	# 
 	# PHP uses both # and // as line comments, and /* */ as block comments
-	# 
 
 	#@-at
 	#@@c
@@ -1072,6 +1073,7 @@ class leoImportCommands:
 		class_node = ""
 		phpClassName = re.compile("class\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
 		phpFunctionName = re.compile("function\s+([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)")
+		
 		# 14-SEP-2002 DTHEIN: added these 2 variables to allow use of @first/last
 		startOfCode = s.find("\n") + 1 # this should be the line containing the initial <?php
 		endOfCode = s.rfind("?>") # this should be the line containing the last ?>
@@ -1238,7 +1240,7 @@ class leoImportCommands:
 		#@<< Append any unused text to the parent's body text >>
 		#@+node:7::<< Append any unused text to the parent's body text >>
 		#@+body
-		parent.appendStringToBody(s[scan_start:endOfCode])
+		parent.appendStringToBody(s[scan_start:])
 
 		#@-body
 		#@-node:7::<< Append any unused text to the parent's body text >>
@@ -1246,7 +1248,6 @@ class leoImportCommands:
 		# 14-SEP-2002 DTHEIN: Make leading <?php use the @first directive
 		parent.appendStringToBody("@last ")	
 		parent.appendStringToBody(s[endOfCode:])
-
 	#@-body
 	#@-node:2:C=8:scanPHPText (Dave Hein)
 	#@+node:3:C=9:scanCText
