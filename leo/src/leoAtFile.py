@@ -723,11 +723,11 @@ class baseAtFile:
         
     selentWrite = asisWrite # Compatibility with old scripts.
         
-    def write (self,p,nosentinels=False,thinFile=False,toString=False):
+    def write (self,p,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
         at = self
         write_new = thinFile or not g.app.config.write_old_format_derived_files
         df = g.choose(write_new,at.new_df,at.old_df)
-        try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile,toString=toString)
+        try:    df.write(p,nosentinels=nosentinels,thinFile=thinFile,toString=toString,oneNodeOnly=oneNodeOnly)
         except: at.writeException(p)
     #@nonl
     #@-node:ekr.20031218072017.2641:top_df.write, norefWrite, asisWrite
@@ -2507,7 +2507,7 @@ class baseOldDerivedFile:
     #@+node:ekr.20031218072017.2322:old_df.write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,thinFile=False,toString=False):
+    def write(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
         
         if thinFile:
             self.error("@file-thin not supported before 4.2")
@@ -4692,7 +4692,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@+node:ekr.20031218072017.2114:new_df.write
     # This is the entry point to the write code.  root should be an @file vnode.
     
-    def write(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False):
+    def write(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False,oneNodeOnly=False):
         
         """Write a 4.x derived file."""
         
@@ -4724,9 +4724,11 @@ class baseNewDerivedFile(oldDerivedFile):
         #@-node:ekr.20031218072017.2116:<< open the file; return on error >>
         #@nl
         try:
-            self.writeOpenFile(root,nosentinels,scriptFile,thinFile,toString)
+            self.writeOpenFile(root,nosentinels,scriptFile,thinFile,toString,oneNodeOnly)
             if toString:
                 at.closeWriteFile()
+                # Major bug: failure to clear this wipes out headlines!
+                at.root.v.t.tnodeList = [] 
             elif scriptFile is None:
                 at.closeWriteFile()
                 #@            << set dirty and orphan bits on error >>
@@ -4748,7 +4750,7 @@ class baseNewDerivedFile(oldDerivedFile):
             else:
                 at.root.v.t.tnodeList = []
         except:
-            if scriptFile:
+            if scriptFile or toString:
                 g.es("exception preprocessing script",color="blue")
                 g.es_exception(full=False)
                 scriptFile.clear()
@@ -4758,7 +4760,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@nonl
     #@-node:ekr.20031218072017.2114:new_df.write
     #@+node:EKR.20040506075328:new_df.writeOpenFile
-    def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False):
+    def writeOpenFile(self,root,nosentinels=False,scriptFile=None,thinFile=False,toString=False,oneNodeOnly=False):
         
         at = self ; c = at.c
         
@@ -4973,7 +4975,7 @@ class baseNewDerivedFile(oldDerivedFile):
     #@-node:ekr.20031218072017.2122:new_df.norefWrite
     #@-node:ekr.20031218072017.2112:Top level
     #@+node:ekr.20031218072017.2128:putBody (4.x)
-    def putBody(self,p,putCloseSentinel=True):
+    def putBody(self,p,putCloseSentinel=True,oneNodeOnly=False):
         
         """ Generate the body enclosed in sentinel lines."""
     
@@ -5009,14 +5011,15 @@ class baseNewDerivedFile(oldDerivedFile):
             #@        << handle line at s[i] >>
             #@+node:ekr.20031218072017.2129:<< handle line at s[i]  >> (4.x)
             if kind == noDirective:
-                if inCode:
-                    hasRef,n1,n2 = at.findSectionName(s,i)
-                    if hasRef and not at.raw:
-                        at.putRefLine(s,i,n1,n2,p)
+                if not oneNodeOnly:
+                    if inCode:
+                        hasRef,n1,n2 = at.findSectionName(s,i)
+                        if hasRef and not at.raw:
+                            at.putRefLine(s,i,n1,n2,p)
+                        else:
+                            at.putCodeLine(s,i)
                     else:
-                        at.putCodeLine(s,i)
-                else:
-                    at.putDocLine(s,i)
+                        at.putDocLine(s,i)
             elif kind in (docDirective,atDirective):
                 assert(not at.pending)
                 at.putStartDocLine(s,i,kind)
@@ -5028,11 +5031,13 @@ class baseNewDerivedFile(oldDerivedFile):
                 at.putDirective(s,i)
                 inCode = True
             elif kind == allDirective:
-                if inCode: at.putAtAllLine(s,i,p)
-                else: at.putDocLine(s,i)
+                if not oneNodeOnly:
+                    if inCode: at.putAtAllLine(s,i,p)
+                    else: at.putDocLine(s,i)
             elif kind == othersDirective:
-                if inCode: at.putAtOthersLine(s,i,p)
-                else: at.putDocLine(s,i) # 12/7/03
+                if not oneNodeOnly:
+                    if inCode: at.putAtOthersLine(s,i,p)
+                    else: at.putDocLine(s,i) # 12/7/03
             elif kind == rawDirective:
                 at.raw = True
                 at.putSentinel("@@raw")
