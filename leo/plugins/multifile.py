@@ -52,7 +52,7 @@ except ImportError:
 #@-node:ekr.20050226114732.1:<< imports >>
 #@nl
 
-__version__ = ".3"
+__version__ = ".4"
 #@<< version history >>
 #@+node:ekr.20050226115130:<< version history >>
 #@@killcolor
@@ -62,6 +62,9 @@ __version__ = ".3"
 # 0.3 EKR:
 #     - Added init method.
 #     - Minor code reorg.  The actual code is unchanged.
+# 
+# 0.4 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20050226115130:<< version history >>
@@ -151,19 +154,19 @@ def stop( tag, keywords ):
 #@-node:mork.20041018204908.6:stop
 #@+node:mork.20041019091317:addMenu
 haveseen = weakref.WeakKeyDictionary()
+
 def addMenu( tag, keywords ):
     
-    if keywords.has_key( 'c' ):
-        c = keywords[ 'c']
-    elif keywords.has_key( 'new_c' ):
-        c = keywords[ 'new_c' ]
-    if haveseen.has_key( c ):
+    c = keywords.get('c')
+    if not c or haveseen.has_key( c ):
         return
     haveseen[ c ] = None
     men = c.frame.menu
     men = men.getMenu( 'Edit' )
-    men.add_command( label = "Insert Directory String", 
-                     command = lambda c = c: insertDirectoryString( c ) )
+    men.add_command(
+        label = "Insert Directory String", 
+        command = lambda c = c: insertDirectoryString( c ) )
+#@nonl
 #@-node:mork.20041019091317:addMenu
 #@+node:mork.20041019091524:insertDirectoryString
 def insertDirectoryString( c ):
@@ -178,7 +181,6 @@ def insertDirectoryString( c ):
 #@nonl
 #@-node:mork.20041019091524:insertDirectoryString
 #@-others
-
-
+#@nonl
 #@-node:mork.20041018204908.1:@thin multifile.py
 #@-leo

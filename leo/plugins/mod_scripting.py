@@ -60,7 +60,7 @@ import sys
 #@-node:EKR.20040613215415:<< imports >>
 #@nl
 
-__version__ = "0.9"
+__version__ = "0.10"
 #@<< version history >>
 #@+node:ekr.20040908094021:<< version history >>
 #@+at
@@ -84,6 +84,8 @@ __version__ = "0.9"
 # 0.9 EKR:
 #     - Added init, onCreate.
 #     - Created scriptingController class.
+# 0.10 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20040908094021:<< version history >>
@@ -128,7 +130,7 @@ def onCreate (tag, keys):
 
     """Handle the onCreate event in the mod_scripting plugin."""
     
-    c = keys.get('new_c')
+    c = keys.get('c')
 
     if c:
         sc = scriptingController(c)

@@ -62,9 +62,24 @@ svs = []
 #@-node:ekr.20040331153923.2:<< define scheduler data >>
 #@nl
 
-__version__ = "0.2"
-    # 0.1: Original version by ?
-    # 0.2: EKR: converted to 4.2 code standards.
+__version__ = "0.3"
+#@<< version history >>
+#@+node:ekr.20050311090939:<< version history >>
+#@@killcolor
+
+#@+at
+# 
+# 0.1: Original version by ?
+# 
+# 0.2: EKR:
+#     - converted to 4.2 code standards.
+# 
+# 0.3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#@-at
+#@nonl
+#@-node:ekr.20050311090939:<< version history >>
+#@nl
 
 #@+others
 #@+node:ekr.20040331153923.3:wait_sleep
@@ -329,15 +344,11 @@ we record them'''
 #@+node:ekr.20040331153923.13:addScheduleMenu
 def addScheduleMenu(tag,keywords):
 
-    men = None
-    if keywords.has_key('c'):
-        men = keywords['c'].frame.menu
-    else:
-        men = keywords['new_c'].frame.menu
+    men = keywords['c'].frame.menu
 
-    if men in haveseen:
+    if not men or men in haveseen:
         return None
-    
+
     haveseen.append(men)
     name = 'Schedule'
     men.createNewMenu(name)

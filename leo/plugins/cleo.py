@@ -33,31 +33,24 @@ import sys
 #@nonl
 #@-node:ekr.20050227071948.35:<< imports >>
 #@nl
-__version__ = "0.11"
+__version__ = "0.12"
 #@<< version history >>
 #@+node:ekr.20050227071948.36:<< version history >>
 #@@killcolor
 
-#@+at
-# 
+#@+at 
+#@nonl
 # Use and distribute under the same terms as leo itself.
 # 
 # Original code by Mark Ng <z3r0.00@gmail.com>
 # 
 # 0.5  Priority arrows and Archetype-based colouring of headline texts.
-# 
 # 0.6  Arbitary headline colouring.
-# 
 # 0.7  Colouring for node types. Added "Others" type option
-# 
 # 0.8  Added "Clear Priority" option
-# 
 # 0.8.1  Fixed popup location
-# 
 # 0.8.2  Fixed unposting
-# 
 # 0.9  Automatically colour @file and @ignore nodes
-# 
 # 0.10 EKR:
 #     - Repackaged for leoPlugins.leo.
 #         - Define g.  Eliminate from x import *.
@@ -69,9 +62,10 @@ __version__ = "0.11"
 #     - Replaced string.find(s,...) by s.find(...) & removed import string.
 #     - show_menu now returns 'break':  fixes the 'popup menu is not unposting 
 # bug)
-# 
 # 0.11 EKR:
 #     - hasUD and getUD now make sure that the dict is actually a dict.
+# 0.12 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20050227071948.36:<< version history >>
@@ -93,7 +87,7 @@ def init():
 #@+node:ekr.20050227085542:onCreate
 def onCreate (tag,keywords):
     
-    c = keywords.get('c') or keywords.get('new_c')
+    c = keywords.get('c')
     
     cc = cleoController(c)
     cc.install_drawing_overrides()

@@ -147,7 +147,7 @@ moverightPI = Tk.PhotoImage( data = moveright )
 #@nonl
 #@-node:mork.20041023210407:<<images2>>
 #@nl
-__version__ = ".5"
+__version__ = ".6"
 #@<<version>>
 #@+node:mork.20041023091529:<<version>>
 #@+at
@@ -178,6 +178,9 @@ __version__ = ".5"
 # 
 # .5 EKR
 #     - Defined __version__
+# .6 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:mork.20041023091529:<<version>>
@@ -226,6 +229,23 @@ __version__ = ".5"
 #@nl
 
 #@+others
+#@+node:ekr.20050311090939.5:init
+def init():
+    
+    if load_ok: # Ok for unit test.
+
+        configureNodebar()
+        
+        if g.app.gui is None: 
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            leoPlugins.registerHandler( ('start2','open2',"new") , addNodeBar )
+            g.plugin_signon(__name__)
+            
+    return load_ok
+#@nonl
+#@-node:ekr.20050311090939.5:init
 #@+node:mork.20041026090227:determineFrame
 def determineFrame( c ):
     '''Returns the area in Leo where the user wants the nodebar.  Default to are 1'''
@@ -245,10 +265,8 @@ def determineFrame( c ):
 haveseen = weakref.WeakKeyDictionary()
 def addNodeBar( tag, keywords ):
     '''Add nodebar to new frame'''
-    c = keywords.get( 'c' ) or keywords.get( 'new_c' )
-    if not c:
-        return
-    if haveseen.has_key( c ):
+    c = keywords.get( 'c' )
+    if not c or haveseen.has_key( c ):
         return
     haveseen[ c ] = None
     
@@ -417,16 +435,6 @@ usehelp=1
 #@nonl
 #@-node:mork.20041026084509:readConfigFile
 #@-others
-
-if load_ok: # Ok for unit test.
-    configureNodebar()
-    
-    if g.app.gui is None: 
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler( ('start2' , 'open2', "new") , addNodeBar )
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:mork.20041022155742.1:@thin nodebar.py
 #@-leo

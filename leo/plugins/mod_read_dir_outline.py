@@ -40,7 +40,7 @@ import os
 #@-node:ekr.20050301083306.2:<< imports >>
 #@nl
 
-__version__ = '1.5'
+__version__ = '1.6'
 #@<< version history >>
 #@+node:ekr.20050301083306.3:<< version history >>
 #@@killcolor
@@ -61,6 +61,10 @@ __version__ = '1.5'
 # 1.5 EKR:
 #     - use g.importExtension to import tkFileDialog.
 #     - Redraw the screen only once (in readDir instead of importDir).
+# 
+# 1.6 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20050301083306.3:<< version history >>
@@ -84,8 +88,7 @@ def init ():
 #@+node:ekr.20050301083306.5:onCreate
 def onCreate (tag, keywords):
     
-    c = keywords.get('c') or keywords.get('new_c')
-    
+    c = keywords.get('c')
     cc = controller(c)
 
     menu = c.frame.menu.getMenu('Outline')

@@ -7,6 +7,9 @@
 
 # Contributed by Davide Salomoni <dsalomoni@yahoo.com>
 
+#@<< imports >>
+#@+node:ekr.20050311091110.1:<< imports >>
+
 import leoGlobals as g
 import leoPlugins
 
@@ -23,8 +26,47 @@ try:
     import tkFileDialog
 except ImportError:
     tkFileDialog = None
+#@nonl
+#@-node:ekr.20050311091110.1:<< imports >>
+#@nl
+__version__ = "1.6" # Set version for the plugin handler.
+#@<< version history >>
+#@+node:ekr.20050311091110:<< version history >>
+#@@killcolor
+#@+at
+# 
+# 1.6 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
+#@-at
+#@nonl
+#@-node:ekr.20050311091110:<< version history >>
+#@nl
     
 #@+others
+#@+node:ekr.20050311092840:init
+def init ():
+    
+    
+    ok = tkFileDialog and not g.app.unitTesting # Not Ok for unit testing.
+    
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            leoPlugins.registerHandler(("start2","open2"), on_open2)
+            leoPlugins.registerHandler("bodykey1", on_bodykey1)
+            leoPlugins.registerHandler("headkey2", on_headkey2)
+            if 0: # doesn't work: the cursor stops blinking.
+                leoPlugins.registerHandler("select1", on_select1)
+                leoPlugins.registerHandler("select2", on_select2)
+    
+            g.plugin_signon(__name__)
+            
+    return ok
+#@nonl
+#@-node:ekr.20050311092840:init
 #@+node:edream.110203113231.877:documentation for @read-only nodes
 #@+at 
 #@nonl
@@ -358,7 +400,7 @@ def on_open2 (tag,keywords):
     if tag == "start2":
         c = g.top()
     else:
-        c = keywords.get("new_c")
+        c = keywords.get("c")
 
     v = c.rootVnode()
     g.es("scanning for @read-only nodes...",color="blue")
@@ -431,23 +473,6 @@ def on_select2 (tag,keywords):
         enable_body(c.frame.body)
 #@-node:edream.110203113231.900:on_select2
 #@-others
-
-if tkFileDialog and not g.app.unitTesting: # Not Ok for unit testing??
-
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-
-        leoPlugins.registerHandler(("start2","open2"), on_open2)
-        leoPlugins.registerHandler("bodykey1", on_bodykey1)
-        leoPlugins.registerHandler("headkey2", on_headkey2)
-        if 0: # doesn't work: the cursor stops blinking.
-            leoPlugins.registerHandler("select1", on_select1)
-            leoPlugins.registerHandler("select2", on_select2)
-    
-        __version__ = "1.5" # Set version for the plugin handler.
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:edream.110203113231.876:@thin read_only_nodes.py
 #@-leo

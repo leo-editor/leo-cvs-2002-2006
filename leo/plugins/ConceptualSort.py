@@ -48,7 +48,7 @@ Puts ConceptualSort command in the Outline Menu.
 #@nonl
 #@-node:ekr.20040916073636.1:<< about this plugin >>
 #@nl
-__version__ = "0.3"
+__version__ = "0.4"
 #@<< version history >>
 #@+node:ekr.20040916075741:<< version history >>
 #@+at
@@ -58,6 +58,8 @@ __version__ = "0.3"
 #     - Style improvements.
 #     - Changes for 4.2 code base in hit().
 #     - Use 'new2' instead of 'start2' hook.
+# 0.4 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20040916075741:<< version history >>
@@ -253,12 +255,13 @@ def csort( a, b, atdict ):
 #@+node:ekr.20040916074337.10:addCommand
 def addCommand( tag, keywords ):
     
-    c = keywords.get('c') or keywords.get('new_c')
-    if haveseen.has_key( c ): return
+    c = keywords.get('c')
+    if not c or haveseen.has_key( c ): return
     
     table = ( ( "Conceptual Sort" , None, lambda c = c: getConcept( c )), )
     men = c.frame.menu
     men.createMenuItemsFromTable( "Outline" , table )
+#@nonl
 #@-node:ekr.20040916074337.10:addCommand
 #@-others
 

@@ -49,7 +49,7 @@ except Exception, x:
 #@nonl
 #@-node:ekr.20050307134613.1:<< imports >>
 #@nl
-__version__ = '.2'
+__version__ = '.3'
 #@<< version history >>
 #@+node:ekr.20050307135219:<< version history >>
 #@@killcolor
@@ -61,6 +61,9 @@ __version__ = '.2'
 #     - Revised comments and created docstring.
 #     - Added imports section.
 #     - Added init function.
+# 
+# .3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20050307135219:<< version history >>
@@ -75,15 +78,9 @@ haveseen = weakref.WeakKeyDictionary()
 
 def addMenu( tag, keywords ):
     
-    c = None
-    if keywords.has_key( 'c' ):
-        c = keywords[ 'c' ]
-    elif keywords.has_key( 'new_c' ):
-        c = keywords[ 'new_c' ]
-    if not c: return None
-    if haveseen.has_key( c ):
+    c = keywords.get('c')
+    if not c or haveseen.has_key( c ):
         return
-
     haveseen[ c ] = None
     men = c.frame.menu
     imen = men.getMenu( 'Import' )

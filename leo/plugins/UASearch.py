@@ -19,6 +19,9 @@ __version__ = ".2"
 #     - Converted to outline.
 #     - Enable this plugin only if TabbedLog, Tkand Pmw can be imported.
 #     - Added found function to handle selecting found nodes properly.
+# 0.3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20040915075530.1:<< version history >>
@@ -39,14 +42,26 @@ import weakref
 #@-node:ekr.20040915075530.2:<< imports >>
 #@nl
 
+haveseen = weakref.WeakKeyDictionary()
+
 #@+others
+#@+node:ekr.20050311090939.6:init
+def init ():
+    
+    ok = TabbedLog and Tk # Ok for unit tests: adds menu.
+    
+    if ok:
+        nbs = weakref.WeakKeyDictionary()
+        leoPlugins.registerHandler( ('start2','new','open2') ,addPMenu)
+        g.plugin_signon( __name__ )
+
+    return ok
+#@nonl
+#@-node:ekr.20050311090939.6:init
 #@+node:ekr.20040915075530.3:addPMenu
 def addPMenu( tag, keywords ):
-    if keywords.has_key( 'c' ):
-        c = keywords[ 'c' ]
-    else:
-        c = keywords[ 'new_c' ]
-    if haveseen.has_key( c ): return  
+    c = keywords.get('c')
+    if not c or haveseen.has_key( c ): return  
     haveseen[ c ] = True  
     x = TabbedLog.getPane( "UASearch", c )
     ef = Pmw.EntryField( x, labelpos = 'w', label_text = 'uaname:' )
@@ -143,14 +158,6 @@ def getT( node ):
 #@nonl
 #@-node:ekr.20040915075530.5:getT
 #@-others
-   
-if TabbedLog and Tk: # Ok for unit tests: adds menu.
-    
-    nbs = weakref.WeakKeyDictionary()
-    haveseen = weakref.WeakKeyDictionary()
-
-    leoPlugins.registerHandler( ('start2','new','open2') ,addPMenu)
-    g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20040915075530:@thin UASearch.py
 #@-leo

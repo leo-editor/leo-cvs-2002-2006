@@ -6,7 +6,7 @@
 #@@tabwidth -4
 
 __name__ = "Node Navigator"
-__version__ = "0.6"
+__version__ = "0.8"
 
 #@<< version history >>
 #@+node:ekr.20040908093511.2:<< version history >>
@@ -32,6 +32,9 @@ __version__ = "0.6"
 # - Fix problems with initialization:
 #     - Bind onCreate to the "open2" hook.
 #     - Set c = keywords.get("new_c") in onCreate.
+# .8 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20040908093511.2:<< version history >>
@@ -52,6 +55,22 @@ import sys
 USE_FIXED_SIZES = sys.platform != "darwin"
 
 #@+others
+#@+node:ekr.20050311090939.4:init
+def init ():
+    
+    ok = Tk is not None # OK for unit testing.
+    
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            leoPlugins.registerHandler("open2", onCreate)
+            g.plugin_signon("nodenavigator")
+    
+    return ok
+#@nonl
+#@-node:ekr.20050311090939.4:init
 #@+node:ekr.20040909132810:onCreate
 def onCreate(tag, keywords):
     
@@ -59,7 +78,7 @@ def onCreate(tag, keywords):
     if g.app.unitTesting:
         return
 
-    c = keywords.get("new_c")
+    c = keywords.get("c")
     nav = Navigator(c)
     nav.addWidgets()
 
@@ -245,14 +264,6 @@ class Navigator:
     #@-others
 #@-node:ekr.20040108062655.2:class Navigator
 #@-others
-
-if Tk: # OK for unit testing.
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-        leoPlugins.registerHandler("open2", onCreate)
-        g.plugin_signon("nodenavigator")
 #@nonl
 #@-node:ekr.20040108062655:@thin nodenavigator.py
 #@-leo

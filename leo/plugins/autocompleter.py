@@ -38,7 +38,7 @@ Pmw = g.importExtension("Pmw",    pluginName=__name__,verbose=True)
 #@nonl
 #@-node:ekr.20041017043622.26:<< imports >>
 #@nl
-__version__ = ".72"
+__version__ = ".73"
 #@<<version history>>
 #@+node:ekr.20041017102904:<<version history>>
 #@+at
@@ -111,6 +111,10 @@ __version__ = ".72"
 # initialScan thread. This will just entail moving all the reading and writing 
 # of
 # the config and language files out of the thread.
+# 
+# .73 EKR:
+#     - Changed 'new_c' logic to 'c' logic in initialScan.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20041017102904:<<version history>>
@@ -284,6 +288,19 @@ okchars['_'] = '_'
 #@nl
 
 #@+others
+#@+node:ekr.20050311090939.3:init
+def init ():
+    
+    ok = Pmw and Tk and not g.app.unitTesting # Not for unit tests: modifies core classes.
+    
+    if ok:
+        leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
+        leoPlugins.registerHandler(('start2','open2'),initialScan)   
+        g.plugin_signon(__name__)
+        
+    return ok
+#@nonl
+#@-node:ekr.20050311090939.3:init
 #@+node:ekr.20041017043622.3:watcher
 watchitems = ( '.',')' )
 txt_template = '%s%s%s'
@@ -393,8 +410,8 @@ def _reverseFindWhitespace (s):
 #@+node:ekr.20041017043622.10:initialScan
 def initialScan (tag,keywords):
     '''This method walks the node structure to build the in memory database.'''
-    c = keywords.get("c")or keywords.get("new_c")
-    if haveseen.has_key(c):
+    c = keywords.get("c")
+    if not c or haveseen.has_key(c):
         return 
 
     haveseen[c] = None 
@@ -867,7 +884,7 @@ def addAutoboxAndCalltipWidgets( context ):
 #@+node:ekr.20041017105122.2:onOpenWindow
 def onOpenWindow ():
     #what does this do?
-    c = keywords.get("c")or keywords.get("new_c")
+    c = keywords.get("c")
     if haveseen.has_key(c):
         return 
         
@@ -875,11 +892,6 @@ def onOpenWindow ():
 #@nonl
 #@-node:ekr.20041017105122.2:onOpenWindow
 #@-others
-
-if Pmw and Tk and not g.app.unitTesting: # Not for unit tests: modifies core classes.
-    leoTkinterFrame.leoTkinterBody.createControl = newCreateControl 
-    leoPlugins.registerHandler(('start2','open2'),initialScan)   
-    g.plugin_signon(__name__)
-    
+#@nonl
 #@-node:ekr.20041017043622:@thin autocompleter.py
 #@-leo

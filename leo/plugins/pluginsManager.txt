@@ -24,12 +24,34 @@ hoist.py
 # Plugin_manager.py needs plugins_menu.py
 plugins_menu.py
 spellpyx.py
-#nodenavigator.py
+nodenavigator.py
 rst2.py
 #searchbox.py
-#xemacs.py
+xemacs.py
 open_with.py
 #nav_buttons.py
+base64Packager.py
+#EditAttributes.py
+#groupOperations.py
+multifile.py
+#xsltWithNodes.py
+cleo.py
+mod_read_dir_outline.py
+#footprints.py
+#mod_labels.py
+#trace_tags.py
+#Library.py
+ConceptualSort.py
+macros.py
+scheduler.py
+#templates.py
+dyna_menu.py
+arrows.py
+autocompleter.py
+#nodebar.py
+UASearch.py
+URLloader.py
+read_only_nodes.py
 plugin_manager.py
 
 UNL.py

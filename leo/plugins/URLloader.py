@@ -8,11 +8,16 @@ It requires the TabbedLog plugin.
 #@@language python
 #@@tabwidth -4
 
+__version__ = ".3"
 #@<< Change log >>
 #@+node:ekr.20040831115918:<< Change log >>
 #@+at
 # 
-# 0.2:  8/31/04 EKR:  Minor changes for 4.2 style.
+# .2:  8/31/04 EKR:  Minor changes for 4.2 style.
+# 
+# .3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
+#     - Added init function.
 #@-at
 #@nonl
 #@-node:ekr.20040831115918:<< Change log >>
@@ -33,13 +38,26 @@ import weakref
 #@-node:ekr.20040831115918.1:<< imports >>
 #@nl
 
+haveseen = weakref.WeakKeyDictionary()
+
 #@+others
+#@+node:ekr.20050311090939.7:init
+def init ():
+    
+    ok = Tk and Pmw and TabbedLog # Ok for unit test: adds tabbed pane to log.
+    
+    if ok:
+        leoPlugins.registerHandler(('start2','new','open2'), addURLPane)
+        g.plugin_signon( __name__ )
+        
+    return ok
+#@nonl
+#@-node:ekr.20050311090939.7:init
 #@+node:ekr.20040831115238.1:addURLPane
 def addURLPane( tag, keywords ):
 
-    c = keywords.get('c') or keywords.get('new_c')
-    if haveseen.has_key( c ): return
-   
+    c = keywords.get('c')
+    if not c or haveseen.has_key( c ): return
     haveseen[ c ] = True
     x = TabbedLog.getPane( "URLLoad", c )
     ef = Pmw.EntryField( x, labelpos = 'n', label_text = 'URL:' )
@@ -70,13 +88,6 @@ def load( event, entry, c ):
 #@nonl
 #@-node:ekr.20040831115238.2:load
 #@-others
-
-haveseen = weakref.WeakKeyDictionary()
-
-if Tk and Pmw and TabbedLog: # Ok for unit test: adds tabbed pane to log.
-    leoPlugins.registerHandler(('start2','new','open2'), addURLPane)
-    __version__ = ".2"
-    g.plugin_signon( __name__ )
 #@nonl
 #@-node:ekr.20040831115238:@thin URLloader.py
 #@-leo

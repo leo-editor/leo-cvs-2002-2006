@@ -4222,7 +4222,7 @@ def dynaZ_del_first_char(c):
 def load_menu(tag, keywords ):
     global dynaMvar
 
-    c = keywords.get("c") #, 'new_c')  #chg incase there is no c
+    c = keywords.get("c")
     cf = c.frame
     if NDebug:
         g.es('entering load_menu')

@@ -5,6 +5,8 @@
 #@@language python
 #@@tabwidth -4
 
+__version__ = "1.4" # Set version for the plugin handler.
+
 #@<< imports >>
 #@+node:ekr.20050101090207.8:<< imports >>
 import leoGlobals as g
@@ -16,6 +18,24 @@ Tk = g.importExtension('Tkinter',pluginName=__name__,verbose=True)
 #@nl
 
 #@+others
+#@+node:ekr.20050311090939.8:init
+def init():
+    
+    ok = Tk is not None # Ok for unit testing: creates Open With menu.
+    
+    if ok:
+        if g.app.gui is None:
+            g.app.createTkGui(__file__)
+    
+        if g.app.gui.guiName() == "tkinter":
+            g.app.hasOpenWithMenu = True
+            leoPlugins.registerHandler("idle", on_idle)
+            leoPlugins.registerHandler(("start2","open2","new"), create_open_with_menu)
+            g.plugin_signon(__name__)
+            
+    return ok
+#@nonl
+#@-node:ekr.20050311090939.8:init
 #@+node:EKR.20040517075715.5:on_idle
 # frame.OnOpenWith creates the dict with the following entries:
 # "body", "c", "encoding", "f", "path", "time" and "p".
@@ -101,7 +121,7 @@ def on_idle (tag,keywords):
 
 def create_open_with_menu (tag,keywords):
 
-    c = keywords.get('new_c') or keywords.get('c')
+    c = keywords.get('c')
     if not c:
         print 'can not create Open With menu for %s' % c.shortFileName()
         return
@@ -122,20 +142,6 @@ def create_open_with_menu (tag,keywords):
 #@nonl
 #@-node:EKR.20040517075715.8:create_open_with_menu
 #@-others
-
-if Tk: # Ok for unit testing: creates Open With menu.
-
-    if g.app.gui is None:
-        g.app.createTkGui(__file__)
-
-    if g.app.gui.guiName() == "tkinter":
-
-        g.app.hasOpenWithMenu = True
-        leoPlugins.registerHandler("idle", on_idle)
-        leoPlugins.registerHandler(("start2","open2","new"), create_open_with_menu)
-    
-        __version__ = "1.4" # Set version for the plugin handler.
-        g.plugin_signon(__name__)
 #@nonl
 #@-node:EKR.20040517075715.4:@thin open_with.py
 #@-leo

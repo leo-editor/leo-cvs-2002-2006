@@ -3,17 +3,19 @@
 """
 Creates new nodes containing parameterized section references.
 """
-__version__ = "1.2"
+__version__ = "1.3"
 #@<< version history >>
 #@+node:ekr.20040916091520:<< version history >>
 #@+at
 # 
-# 0.3 EKR:
+# 1.2 EKR:
 #     - Converted to outline.
 #     - Use g.angleBrackets to enclose lines with < < and > >.
 #     - Use new2 instead of start2 hook.
 #     - onCreate creates a new class for each commander.
 #     - Removed all globals.
+# 1.3 EKR:
+#     - Changed 'new_c' logic to 'c' logic.
 #@-at
 #@nonl
 #@-node:ekr.20040916091520:<< version history >>
@@ -27,7 +29,7 @@ import re
 #@+node:ekr.20040916091520.1:onCreate
 def onCreate(tag,keywords):
     
-    c = keywords.get("c") or keywords.get("new_c")
+    c = keywords.get("c")
     if c:
         paramClass(c)
 #@nonl
