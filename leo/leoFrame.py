@@ -2595,7 +2595,7 @@ class LeoFrame:
 		except:
 			try:
 				executable_dir = os.path.dirname(sys.executable)
-				idle_dir=os.path.join(executable_dir, "tools/idle")
+				idle_dir=os.path.join(executable_dir,"tools","idle")
 				sys.path.append(idle_dir)
 				# Try again
 				import idle
