@@ -20,10 +20,10 @@
 <v t="T5"><vh>&lt;&lt; The "Recent Files" menu &gt;&gt;</vh></v>
 <v t="T6"><vh>&lt;&lt; Compare Panel settings &gt;&gt;</vh></v>
 <v t="T7"><vh>&lt;&lt; Find/Change Panel settings &gt;&gt;</vh></v>
-<v t="T8"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
+<v t="T8" a="E"><vh>&lt;&lt; Keyboard shortcuts settings &gt;&gt;</vh>
 <v t="T9"><vh>&lt;&lt; About keyboard shortcuts &gt;&gt;</vh></v>
 <v t="T10"><vh>&lt;&lt; Alt and Shift-Alt&gt;&gt;</vh></v>
-<v t="T11"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
+<v t="T11" a="V"><vh>&lt;&lt; Control &gt;&gt;</vh></v>
 <v t="T12"><vh>&lt;&lt; Shift-Control &gt;&gt;</vh></v>
 <v t="T13"><vh>&lt;&lt; F-keys and others &gt;&gt;</vh></v>
 <v t="T14"><vh>&lt;&lt; None &gt;&gt;</vh></v>
@@ -32,7 +32,7 @@
 <v t="T16"><vh>&lt;&lt; Syntax coloring options and colors &gt;&gt;</vh></v>
 <v t="T17" a="E"><vh>&lt;&lt; Window options &gt;&gt;</vh>
 <v t="T18"><vh>&lt;&lt; body pane options &gt;&gt;</vh></v>
-<v t="T19" a="V"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
+<v t="T19"><vh>&lt;&lt; outline pane options&gt;&gt;</vh></v>
 <v t="T20"><vh>&lt;&lt; log pane options &gt;&gt;</vh></v>
 <v t="T21"><vh>&lt;&lt; Options for new windows &gt;&gt;</vh></v>
 <v t="T22"><vh>&lt;&lt; Options for newly opened windows &gt;&gt;</vh></v>
@@ -488,7 +488,7 @@ Promote          = Ctrl+{
 Demote           = Ctrl+}
 
 SelectAll        = Ctrl+A
-# Unused         = Ctrl+B
+ToggleAngleBrackets = Ctrl+B
 Copy             = Ctrl+C
 MoveDown         = Ctrl+D
 EqualSizedPanes  = Ctrl+E

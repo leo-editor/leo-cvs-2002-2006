@@ -1137,7 +1137,7 @@ class leoTree:
 	
 	#@-body
 	#@-node:9::tree.OnEndDrag
-	#@+node:10::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@+node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
 	#@+body
 	#@+at
 	#  The <Key> event generates the event before the headline text is 
@@ -1147,6 +1147,7 @@ class leoTree:
 	#@@c
 
 	def onHeadChanged (self,v):
+		forceUpdate = true
 		self.commands.body.after_idle(self.idle_head_key,v)
 	
 	def OnHeadlineKey (self,v,event):
@@ -1167,8 +1168,8 @@ class leoTree:
 	
 		# remove all newlines and update the vnode
 		if not s: s = u""
-		s = string.replace(s,'\n','')
-		s = string.replace(s,'\r','')
+		s = s.replace('\n','')
+		s = s.replace('\r','')
 		head = v.headString()
 		if head == None: head = u""
 		head = toUnicode(head,"utf-8")
@@ -1219,7 +1220,7 @@ class leoTree:
 			c.beginUpdate()
 			self.endEditLabel()
 			c.endUpdate()
-		elif changed:
+		elif changed or forceUpdate:
 			# update v immediately.  Joined nodes are redrawn later by endEditLabel.
 			# Redrawing the whole screen now messes up the cursor in the headline.
 			self.drawIcon(v,v.iconx,v.icony) # just redraw the icon.
@@ -1227,7 +1228,7 @@ class leoTree:
 		handleLeoHook("headkey2",c=c,v=v,ch=ch)
 		return "break"
 	#@-body
-	#@-node:10::tree.OnHeadlineKey, onHeadlineChanged, idle_head_key
+	#@-node:10::tree.OnHeadlineKey, onHeadChanged, idle_head_key
 	#@+node:11::tree.OnIconClick
 	#@+body
 	def OnIconClick (self,v,event):

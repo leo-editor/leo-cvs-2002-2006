@@ -963,7 +963,8 @@ class LeoFrame:
 			("Edit &Headline","Ctrl+H",self.OnEditHeadline),
 			("&End Edit Headline","Escape",self.OnEndEditHeadline),
 			("&Abort Edit Headline","Shift-Escape",self.OnAbortEditHeadline),
-			("Insert Headline Time/&Date","Shift+Ctrl+H",self.OnInsertHeadlineTime))
+			("Insert Headline Time/&Date","Shift+Ctrl+H",self.OnInsertHeadlineTime),
+			("Toggle Angle Brackets","Ctrl+B",self.OnToggleAngleBrackets))
 			
 		self.createMenuEntries(editHeadlineMenu,table)
 		
@@ -2950,6 +2951,28 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:3::OnAbortEditHeadline
+	#@+node:4::OnToggleAngleBrackets
+	#@+body
+	def OnToggleAngleBrackets (self,event=None):
+		
+		c = self.commands ; v = c.currentVnode()
+		s = v.headString().strip()
+		if (s[0:2] == "<<"
+		    or s[-2:] == ">>"): # Must be on separate line.
+			if s[0:2] == "<<": s = s[2:]
+			if s[-2:] == ">>": s = s[:-2]
+			s = s.strip()
+		else:
+			s = angleBrackets(' ' + s + ' ')
+		
+		c.tree.editLabel(v)
+		if v.edit_text:
+			v.edit_text.delete("1.0","end")
+			v.edit_text.insert("1.0",s)
+			c.tree.onHeadChanged(v)
+	
+	#@-body
+	#@-node:4::OnToggleAngleBrackets
 	#@-node:3::Edit Headline submenu
 	#@+node:4::Find submenu (frame methods)
 	#@+node:1::OnFindPanel
