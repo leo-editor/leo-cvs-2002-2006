@@ -38,9 +38,9 @@ bindLate = True
     # False: Bind script when button is created.
 atButtonNodes = True
     # True: adds a button for every @button node.
-atPluginNodes = True
+atPluginNodes = False
     # True: dynamically loads plugins in @plugins nodes when a window is created.
-atScriptNodes = True
+atScriptNodes = False
     # True: dynamically executes script in @script nodes when a window is created.  DANGEROUS!
 
 #@+others
@@ -87,9 +87,13 @@ def onOpenWindow (tag, keys):
         createDynamicButtons(c,d)
         
     data[c] = d
-        
-    loadPlugins(c)
-    executeScriptNodes(c)
+    
+    # Scan for @plugin and @script nodes.
+    for p in c.allNodes_iter():
+        if p.headString().startswith("@plugin"):
+            loadPlugin(c,p)
+        elif p.headString().startswith("@script"):
+            executeScriptNode(c,p)
 #@nonl
 #@-node:EKR.20040613215415.2:onOpenWindow
 #@+node:ekr.20041001183818:createStandardButtons
@@ -101,8 +105,7 @@ def createStandardButtons(c,d):
     #@    << define execCommand >>
     #@+node:EKR.20040618091543.1:<< define execCommand >>
     def execCommand (event=None,c=c):
-        p = c.currentPosition()
-        c.executeScript(p)
+        c.executeScript(c.currentPosition())
     #@nonl
     #@-node:EKR.20040618091543.1:<< define execCommand >>
     #@nl
@@ -129,16 +132,11 @@ def createStandardButtons(c,d):
         #@    << define callbacks for addScriptButton >>
         #@+node:EKR.20040613231552:<< define callbacks for addScriptButton >>
         def deleteButtonCallback(event=None,c=c,buttonName=buttonName):
-        
             deleteButton(c,buttonName)
             
         def commandCallback(event=None,c=c,p=p.copy(),script=script,statusMessage=statusMessage):
-            
             global bindLate
-            
             if script is None: script = ""
-            
-            # N.B. p and script are bound at the time this callback is created.
             c.frame.clearStatusLine()
             c.frame.putStatusLine("Executing %s..." % statusMessage)
             if bindLate:
@@ -219,6 +217,7 @@ def createDynamicButtons (c,d):
 def createDynamicButton (c,p,d):
     
     tag = "@button"
+    p = p.copy()
     text = p.headString()
     assert(g.match(text,0,tag))
     text = text[len(tag):].strip()
@@ -253,21 +252,8 @@ def createDynamicButton (c,p,d):
     b.bind('<3>',deleteButtonCallback)
     b.bind('<Enter>', mouseEnterCallback)
     b.bind('<Leave>', mouseLeaveCallback)
-    
-#@+at 
-#@nonl
-# ideas:
-# - @color, @script etc.  In children?
-#@-at
 #@nonl
 #@-node:ekr.20041001184024:createDynamicButton
-#@+node:ekr.20041001202645:loadPlugins
-def loadPlugins (c):
-    
-    for p in c.allNodes_iter():
-        if p.headString().startswith("@plugin"):
-            loadPlugin(c,p)
-#@-node:ekr.20041001202645:loadPlugins
 #@+node:ekr.20041001202905:loadPlugin
 def loadPlugin (c,p):
     
@@ -297,14 +283,6 @@ def loadPlugin (c,p):
             g.es("can not load plugin: %s" % (theFile),color="blue")
 #@nonl
 #@-node:ekr.20041001202905:loadPlugin
-#@+node:ekr.20041001184439:executeScriptNodes
-def executeScriptNodes (c):
-    
-    for p in c.allNodes_iter():
-        if p.headString().startswith("@script"):
-            executeScriptNode(c,p)
-#@nonl
-#@-node:ekr.20041001184439:executeScriptNodes
 #@+node:ekr.20041001203145:executeScriptNode
 def executeScriptNode (c,p):
     
