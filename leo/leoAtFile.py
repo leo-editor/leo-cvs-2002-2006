@@ -167,6 +167,7 @@ class atFile:
 		self.nodeIndices = app().nodeIndices
 		self.using_gnx = false # true: present derived file uses gnxs.
 		self.root_seen = false # true: root vnode has been handled in this file.
+		self.tnodes_dict = {} # Dict to recognize shared tnodes.  Keys are stringized gnx's, entries are tnodes.
 		
 		#@-body
 		#@-node:1::<< init atFile ivars >>
@@ -181,57 +182,66 @@ class atFile:
 	class nodeIndices:
 
 		#@+others
-		#@+node:1::nodeIndices.__init__
+		#@+node:1::areEqual
+		#@+body
+		def areEqual (self,gnx1,gnx2):
+			
+			"""Return True if all fields of gnx1 and gnx2 are equal"""
+		
+			id1,time1,n1 = gnx1
+			id2,time2,n2 = gnx2
+			return id1==id2 and time1==time2 and n1==n2
+		#@-body
+		#@-node:1::areEqual
+		#@+node:2::nodeIndices.__init__
 		#@+body
 		def __init__ (self):
 			
 			self.defaultId = app().leoID
 			self.lastIndex = None
 		#@-body
-		#@-node:1::nodeIndices.__init__
-		#@+node:2::toString
+		#@-node:2::nodeIndices.__init__
+		#@+node:3::toString
 		#@+body
-		def toString (self,index):
+		def toString (self,index,removeDefaultId=false):
 			
-			id  = index.get('id',"")
-			t   = index.get('time',"")
-			n   = index.get('n',None)
+			"""convert a gnx (a tuple) to its string representation"""
+		
+			id,t,n = index
+		
+			if removeDefaultId and id == self.defaultId:
+				id = ""
 		
 			if n == None:
 				return "%s.%s" % (id,t)
 			else:
 				return "%s.%s.%d" % (id,t,n)
-		
 		#@-body
-		#@-node:2::toString
-		#@+node:3::getNewIndex
+		#@-node:3::toString
+		#@+node:4::getNewIndex
 		#@+body
-		def getNewIndex (self,id=None):
+		def getNewIndex (self,id=None,tag=""):
 			
 			import time
 			if id == None: id=self.defaultId
 			t = time.strftime("%m%d%y%H%M%S",time.localtime()) # compact timestamp is best
+			n = None
 		
 			# Set n if id and time match the previous index.
 			last = self.lastIndex
-			if last and id==last.get('id') and t==last.get('time'):
-				n = last.get('n')
-				if n == None: n = 1
-				else: n += 1
-			else: n = None
-			
-			d = {'time':t}
-			for key, val in (('id',id),('n',n)):
-				if val != None and val != "":
-					d[key] = val
-		
+			if last:
+				lastId,lastTime,lastN = last
+				if id==lastId and t==lastTime:
+					if lastN == None: n = 1
+					else: n = lastN + 1
+					
+			d = (id,t,n)
 			self.lastIndex = d
-			trace(d)
+			trace(tag,d)
 			return d
-		
 		#@-body
-		#@-node:3::getNewIndex
-		#@+node:4::getters & setters
+		#@-node:4::getNewIndex
+		#@+node:5::get/setDefaultId
 		#@+body
 		def getDefaultId (self):
 			return self.defaultId
@@ -240,35 +250,32 @@ class atFile:
 			self.defaultId = id
 		
 		#@-body
-		#@-node:4::getters & setters
-		#@+node:5::scanGnx
+		#@-node:5::get/setDefaultId
+		#@+node:6::scanGnx
 		#@+body
 		def scanGnx (self,s,i):
 		
 			if len(s) > 0 and s[-1] == '\n':
 				s = s[:-1]
 		
-			# Set then entries of d from s.
-			d = {} ; keys = ('id','time','n')
-			n = 0
-			while n < 3 and i < len(s):
-				i,val = skip_to_char(s,i,'.')
-				if val:
-					d[keys[n]] = val
+			id,t,n=None,None,None
+			i,id = skip_to_char(s,i,'.')
+			if match(s,i,'.'):
+				i,t = skip_to_char(s,i+1,'.')
 				if match(s,i,'.'):
-					i += 1
-				n += 1
-		
+					i,n = skip_to_char(s,i+1,'.')
+			# Use self.defaultId for missing id entries.
+			if id == None or len(id) == 0:
+				id = self.defaultId
 			# Convert n to int.
-			n = d.get('n')
 			if n:
-				try: d['n'] = int(n)
+				try: n = int(n)
 				except: pass
+			d = (id,t,n)
 		
 			return d
-		
 		#@-body
-		#@-node:5::scanGnx
+		#@-node:6::scanGnx
 		#@-others
 	
 	#@-body
@@ -338,14 +345,19 @@ class atFile:
 	#@-node:2::completeLastDirectives (Dave Hein)
 	#@+node:3::createChild (4.0)
 	#@+body
-	# Creates a child node of parent with the given gnx if necessary.
-	
 	def createChild (self,parent,headline,gnx):
 		
-		# trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
+		""" Create a 4.0 child vnode of parent with the given gnx if necessary.
+		
+		A placeholder tnode is created without a gnx.
+		If the node isn't shared a new gnx will be allocated later.
+		Otherwise the temporary tnode will be replaced by the shared tnode.
+		"""
 	
+		# trace("parent,headline,gnx:",`parent`,`headline`,`gnx`)
 		t = leoNodes.tnode()
-		v = parent.insertAsLastChild(t)
+		v = parent.insertAsLastChild(t=t)
+		v.gnx = gnx
 		v.initHeadString(headline)
 		return v
 	#@-body
@@ -834,7 +846,7 @@ class atFile:
 	#@@c
 	def scanText (self,file,v,out,endSentinelKind,nextLine=None):
 	
-		c = self.commands ; config = app().config
+		a = app() ; c = self.commands ; config = a.config
 		lastLines = [] # The lines after @-leo
 		lineIndent = 0 ; linep = 0 # Changed only for sentinels.
 		while 1:
@@ -1191,8 +1203,8 @@ class atFile:
 				assert(nextLine == None)
 				i += 2 ; i = skip_ws(s,i)
 				# set gnx from the sentinel.
-				gnx = app().nodeIndices.scanGnx(s,i)
-				print "t:gnx:", gnx
+				gnx = a.nodeIndices.scanGnx(s,i)
+				print "scanning t:gnx:", gnx
 				
 				# Recursively handle the entire vnode tree.
 				child_out = [] ; child = v # Do not change out or v!
@@ -1203,7 +1215,22 @@ class atFile:
 				# This code must be done here, not in the @+v logic.
 				body = string.join(child_out, "")
 				body = body.replace('\r', '')
-				child.t.setTnodeText(body)
+				
+				# The  3.0 code handled shared tnodes automatically.
+				# This 4.0 code must check for shared tnode here.
+				s = a.nodeIndices.toString(gnx)
+				d = self.tnodes_dict
+				shared_t = d.get(s,None)
+				if shared_t:
+					print "replacing t by shared_t",s
+					if body != shared_t.bodyString:
+						print "shared body text do not match!"
+					child.t = t = shared_t
+				else:
+					d[s] = child.t
+					child.t.gnx = gnx
+					child.t.setTnodeText(body)
+				
 				self.indent = oldIndent
 				#@-body
 				#@-node:9::<< scan @+t >>
@@ -1216,8 +1243,8 @@ class atFile:
 				assert(match(s,i,"+v"))
 				i += 2 ; i = skip_ws(s,i)
 				# set gnx from the sentinel.
-				gnx = app().nodeIndices.scanGnx(s,i)
-				print "v:gnx:", gnx
+				gnx = a.nodeIndices.scanGnx(s,i)
+				print "scanning v:gnx:", gnx
 				# Get the headline from the line following the +v sentinel.
 				next,lines = self.readLinesToNextSentinel(file)
 				headline = self.handleLinesFollowingSentinel(lines,"+v")
@@ -1573,7 +1600,7 @@ class atFile:
 					try:
 						read_only = not os.access(fn,os.W_OK)
 						if read_only:
-							es("read only: " + fn)
+							es("read only: " + fn,color="red")
 					except:
 						pass # os.access() may not exist on all platforms.
 					
@@ -1595,6 +1622,32 @@ class atFile:
 		self.indent = 0
 		self.root_seen = false
 		out = []
+		
+		if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
+			print "reading 4.0 file:", self.targetFileName
+			
+			#@<< quickly unlink and delete all children >>
+			#@+node:1::<< quickly unlink and delete all children >>
+			#@+body
+			#@+at
+			#  Calling v.doDelete is _way_ too slow here because it repeatedly 
+			# calls c.initAllCloneBits.
+
+			#@-at
+			#@@c
+			child = root.firstChild()
+			while child:
+				next = child.next()
+				# The guts of doDelete
+				child.destroyDependents()
+				child.unjoinTree()
+				child.unlink()
+				child = next
+			c.selectVnode(root)
+			#@-body
+			#@-node:1::<< quickly unlink and delete all children >>
+
+			
 		lastLines = self.scanText(file,root,out,atFile.endLeo)
 		
 		# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -1606,7 +1659,6 @@ class atFile:
 			bodyText = '\n'.join(bodyLines)
 			bodyText = bodyText.replace('\r', '')
 			root.t.setTnodeText(bodyText)
-		
 		#@-body
 		#@-node:2::<< Scan the file buffer  >>
 
@@ -1661,6 +1713,32 @@ class atFile:
 			self.indent = 0
 			self.root_seen = false
 			out = []
+			
+			if app().use_gnx and self.using_gnx: # 4.0 code: delete all children of root.
+				print "reading 4.0 file:", self.targetFileName
+				
+				#@<< quickly unlink and delete all children >>
+				#@+node:1::<< quickly unlink and delete all children >>
+				#@+body
+				#@+at
+				#  Calling v.doDelete is _way_ too slow here because it 
+				# repeatedly calls c.initAllCloneBits.
+
+				#@-at
+				#@@c
+				child = root.firstChild()
+				while child:
+					next = child.next()
+					# The guts of doDelete
+					child.destroyDependents()
+					child.unjoinTree()
+					child.unlink()
+					child = next
+				c.selectVnode(root)
+				#@-body
+				#@-node:1::<< quickly unlink and delete all children >>
+
+				
 			lastLines = self.scanText(file,root,out,atFile.endLeo)
 			
 			# 18-SEP-2002 DTHEIN: update the bodyString directly, because
@@ -1672,7 +1750,6 @@ class atFile:
 				bodyText = '\n'.join(bodyLines)
 				bodyText = bodyText.replace('\r', '')
 				root.t.setTnodeText(bodyText)
-			
 			#@-body
 			#@-node:2::<< Scan the file buffer  >>
 
@@ -1972,8 +2049,11 @@ class atFile:
 	#@+body
 	def putSentinelAndGnx (self,vt,s):
 	
-		gnx = vt.getGnx()
-		self.putSentinel(s + ' ' + self.nodeIndices.toString(gnx))
+		# Allocate the gnx if necessary.
+		if vt.gnx == None:
+			vt.gnx = self.nodeIndices.getNewIndex("putSentinelAndGnx")
+	
+		self.putSentinel(s + ' ' + self.nodeIndices.toString(vt.gnx))
 	#@-body
 	#@-node:8::putSentinelAndGnx (4.0)
 	#@+node:9::sentinelKind
@@ -3281,14 +3361,20 @@ class atFile:
 	#@-node:1::Top level
 	#@+node:2::putBodyPart
 	#@+body
-	# We generate the body part only if it contains something besides whitespace.
-	
 	def putBodyPart(self,v):
+		
+		""" Generate the body enclosed in sentinel lines.
+		
+		3.0: Use @+-body sentinels.  Write only non-empty bodies.
+		4.0: Use @+-t sentines.  Write all bodies.
+		"""
 	
 		# trace(`v`)
 		s = v.t.bodyString
-		i = skip_ws_and_nl(s, 0)
-		if i >= len(s): return
+		if not self.using_gnx:
+			i = skip_ws_and_nl(s, 0)
+			if i >= len(s): return
+	
 		s = removeTrailingWs(s) # don't use string.rstrip!
 		if self.using_gnx:
 			self.putSentinelAndGnx(v.t,"@+t")

@@ -1,5 +1,14 @@
 Important note: See INSTALL.TXT for installation instructions.
 
+leo.py 3.11.1                       April 29, 2003
+
+This version fixes two serious bugs:
+	
+- getpreferredencoding threw an exception on some Linux systems.
+- Creating clones by control dragging did not always work.
+
+This code contains permanently disabled 4.0 code. That is, the use_pre_4pt0_file_formats setting is non-functional and Leo acts as if use_pre_4pt0_file_formats = 1
+
 leo.py 3.11                         April 27, 2003
 
 leo.py 3.11 is now available at:  http://sourceforge.net/projects/leo/

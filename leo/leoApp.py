@@ -28,6 +28,7 @@ class LeoApp:
 		self.log = None # The LeoFrame containing the present log.
 		self.logWaiting = [] # List of messages waiting to go to a log.
 		self.menuWarningsGiven = false # true: supress warnings in menu code.
+		self.nodeIndices = None # Initialized in finishCreate.
 		self.numberOfWindows = 0 # Number of opened windows.
 		self.openWithFiles = [] # List of data used by Open With command.
 		self.openWithFileNum = 0 # Used to generate temp file names for Open With command.

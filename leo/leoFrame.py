@@ -123,7 +123,7 @@ class LeoFrame:
 		# Sign on.
 		color = app().config.getWindowPref("log_error_color")
 		es("Leo Log Window...",color=color)
-		es("Leo 3.11, ",newline=0)
+		es("Leo 3.11.1, ",newline=0)
 		n1,n2,n3,junk,junk=sys.version_info
 		ver1 = "Python %d.%d.%d" % (n1,n2,n3)
 		ver2 = ", Tk " + self.top.getvar("tk_patchLevel")
@@ -894,7 +894,8 @@ class LeoFrame:
 			table2 = (
 				("-",None,None),
 				("Read 4.0 Derived File",None,self.OnReadGnxFile),
-				("Write 4.0 Derived File",None,self.OnWriteGnxFile))
+				("Write 4.0 Derived File",None,self.OnWriteGnxFile),
+				("Clear All Node Indices",None,self.OnClearAllNodeIndices))
 			table.extend(table2)
 		
 		self.createMenuEntries(readWriteMenu,table)
@@ -960,13 +961,18 @@ class LeoFrame:
 		#@+body
 		exportMenu = self.createNewMenu("&Export...","File")
 		
-		table = (
+		table = [
 			("Export &Headlines",None,self.OnExportHeadlines),
 			("Outline To &CWEB",None,self.OnOutlineToCWEB),
 			("Outline To &Noweb",None,self.OnOutlineToNoweb),
 			("&Flatten Outline",None,self.OnFlattenOutline),
 			("&Remove Sentinels",None,self.OnRemoveSentinels),
-			("&Weave",None,self.OnWeave))
+			("&Weave",None,self.OnWeave)]
+			
+		if app().use_gnx:
+			table2 = (
+				("Write Old Format Outline",None,self.OnWriteOldOutline),)
+			table.extend(table2)
 		
 		self.createMenuEntries(exportMenu,table)
 		
@@ -1232,8 +1238,7 @@ class LeoFrame:
 		if app().use_gnx: # This code will make its official debut in 4.0.
 		
 			import ConfigParser, glob
-		
-			pluginMenu = self.createNewMenu("&Plugins")
+			
 			
 			#@<< define classes used in the plugins menu >>
 			#@+node:1::<< define classes used in the plugins menu >>
@@ -1554,58 +1559,52 @@ class LeoFrame:
 			#@+node:2::<< create PlugIn objects for all plugin files >>
 			#@+body
 			# Look for all the plug-ins that are on the system
-			
 			path = os.path.join(app().loadDir,"plugins") 
 			plugin_files = glob.glob(os.path.join(path,"mod_*.py"))
-			
 			plugins = [PlugIn(file) for file in plugin_files]
 			
 			#@-body
 			#@-node:2::<< create PlugIn objects for all plugin files >>
 
 			
-			#@<< add enabled plugins to the plugins menu >>
-			#@+node:3::<< add enabled plugins to the plugins menu >>
-			#@+body
 			# Create a sorted list of all active plugins.
-			sorted_items = []
-			for p in plugins:
-				if p.version:
-					sorted_items.append((p.name,p),)
+			sorted_items = [(p.name,p) for p in plugins if p.version]
 			sorted_items.sort()
-			
-			# Add an item or submenu to the Plugins menu for each plugin.
-			for name,p in sorted_items:
-				if p.hasconfig:
-					m = self.createNewMenu(p.name, "&Plugins")
-					table = [("About...", None, p.about),
-							 ("Properties...", None, p.properties)]
-					
-					#@<< Append plug-in specific menu items to table >>
-					#@+node:1::<< Append plug-in specific menu items to table >>
-					#@+body
-					# Add other menu items to call cmd_* functions in the module
-					
-					if p.othercmds:
-						table.append(("-", None, None))
-						table_items = []
-						for cmd, fn in p.othercmds.iteritems():
-							table_items.append((cmd, fn),)
-						table_items.sort()
-						for cmd, fn in table_items:
-							table.append((cmd, None, fn))
-							
-					
-					#@-body
-					#@-node:1::<< Append plug-in specific menu items to table >>
+		
+			# Create the Plugins menu only if there are active plugins.
+			if len(sorted_items) > 0:
+				pluginMenu = self.createNewMenu("&Plugins")
+				
+				#@<< add enabled plugins to the plugins menu >>
+				#@+node:3::<< add enabled plugins to the plugins menu >>
+				#@+body
+				# Add an item or submenu to the Plugins menu for each plugin.
+				for name,p in sorted_items:
+					if p.hasconfig:
+						m = self.createNewMenu(p.name, "&Plugins")
+						table = [("About...", None, p.about),
+								 ("Properties...", None, p.properties)]
+						
+						#@<< Append plug-in specific menu items to table >>
+						#@+node:1::<< Append plug-in specific menu items to table >>
+						#@+body
+						# Add other menu items to call cmd_* functions in the module
+						
+						if p.othercmds:
+							table.append(("-", None, None))
+							items = [(cmd,None,fn) for cmd,fn in p.othercmds.iteritems()]
+							items.sort()
+							table.extend(items)
+						
+						#@-body
+						#@-node:1::<< Append plug-in specific menu items to table >>
 
-					self.createMenuEntries(m, table)
-				else:
-					table = ((p.name, None, p.about),)
-					self.createMenuEntries(pluginMenu, table)
-			
-			#@-body
-			#@-node:3::<< add enabled plugins to the plugins menu >>
+						self.createMenuEntries(m, table)
+					else:
+						table = ((p.name, None, p.about),)
+						self.createMenuEntries(pluginMenu, table)
+				#@-body
+				#@-node:3::<< add enabled plugins to the plugins menu >>
 		#@-body
 		#@-node:4::<< create the plug-ins menu >>
 
@@ -2488,10 +2487,13 @@ class LeoFrame:
 		trace()
 		c = self.commands ; v = c.currentVnode()
 		
+		c.beginUpdate()
 		c.atFileCommands.using_gnx = true # Flag to add ".txt" to file name.
 		c.atFileCommands.read(v)
 		c.atFileCommands.using_gnx = false
-		c.redraw()
+		c.initAllCloneBits() ## Must be done after all reads.
+		c.endUpdate()
+		c.recolor()
 		es("finished")
 	
 	#@-body
@@ -2509,6 +2511,19 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:7::OnWriteGnxFile
+	#@+node:8::OnClearAllNodeIndices
+	#@+body
+	def OnClearAllNodeIndices (self,event=None):
+		
+		c = self.commands ; root = c.rootVnode()
+		v = root
+		while v:
+			v.gnx = None
+			v.t.gnx = None
+			v = v.threadNext()
+		es("all node indices cleared",color="red")
+	#@-body
+	#@-node:8::OnClearAllNodeIndices
 	#@-node:3::Read/Write submenu
 	#@+node:4::Tangle submenu
 	#@+node:1::OnTangleAll
@@ -2780,6 +2795,34 @@ class LeoFrame:
 	
 	#@-body
 	#@-node:11::OnWeave
+	#@+node:12::OnWriteOldOutline
+	#@+body
+	# Based on the Save As code.
+	
+	def OnWriteOldOutline (self,event=None):
+		
+		"""Saves a pre-4.0 outline"""
+		a = app()
+	
+		# Make sure we never pass None to the ctor.
+		if not self.mFileName:
+			self.title = ""
+	
+		# set local fileName, _not_ self.mFileName
+		fileName = tkFileDialog.asksaveasfilename(
+			initialfile = self.mFileName,
+			title="Write Pre 4.0 Outline",
+			filetypes=[("Leo files", "*.leo")],
+			defaultextension=".leo")
+	
+		if len(fileName) > 0:
+			fileName = ensure_extension(fileName, ".leo")
+			old = a.use_gnx ; a.use_gnx = false
+			self.commands.fileCommands.saveTo(fileName)
+			self.updateRecentFiles(self.mFileName)
+			a.use_gnx = old
+	#@-body
+	#@-node:12::OnWriteOldOutline
 	#@-node:6::Import&Export submenu
 	#@-node:1::File Menu
 	#@+node:2::Edit Menu (change to handle log pane too)
@@ -4205,7 +4248,7 @@ class LeoFrame:
 		# Doing so would add unwanted leading tabs.
 		ver = "$Revision$" # CVS will update this.
 		build = ver[10:-1] # Strip off "$Reversion" and "$"
-		version = "leo.py 3.11, Build " + build + ", April 26, 2003\n\n"
+		version = "leo.py 3.11.1, Build " + build + ", April 29, 2003\n\n"
 		copyright = (
 			"Copyright 1999-2003 by Edward K. Ream\n" +
 			"All Rights Reserved\n" +

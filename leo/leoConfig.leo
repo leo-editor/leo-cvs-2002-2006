@@ -206,24 +206,17 @@ tk_encoding =
 #	2. locale.getdefaultlocale()[1] if it is exists.
 #	3. sys.getdefaultencoding()
 
-# use_customizeLeo_dot_py = 0
-#	No longer used.
-
-use_plugins = 1
+use_plugins = 0
 #	1: Leo enables plugins.
 #      Naive or hostile hooks may execute HOSTILE CODE contained in .leo files.
 #	   See the warnings in LeoDocs.leo.
 #
 #   0: (The default) Leo disables all plugins.
 
-# use_relative_node_indices = 0
-#	No longer used.
-
-# write_clone_indices = 0
-#	No longer used
-
-# xml_version_string = UTF-8
-#	No longer used.</t>
+use_pre_4pt0_file_formats = 0
+#	1: Use pre 4.0 formats for .leo files and derived files.
+#	0: Use 4.0 formats for .leo files and derived files.
+#	This setting should be 0 if you intend to upload files to Leo's cvs repository.</t>
 <t tx="T5"># The list of files in the "Recent Files" menu at startup.
 
 [recent files]

@@ -64,12 +64,15 @@ class fileCommands:
 		self.outputString = None # String for pasting
 		self.openDirectory = None
 		self.usingClipboard = false
+		# New in 4.0
+		self.a = app()
+		self.nodeIndices = self.a.nodeIndices
 	#@-body
 	#@-node:1::leoFileCommands._init_
 	#@+node:2::Reading
 	#@+node:1::createVnode
 	#@+body
-	def createVnode(self,parent,back,tref,headline,gnx=None):
+	def createVnode(self,parent,back,tref,headline):
 		
 		# tick()
 	
@@ -77,17 +80,17 @@ class fileCommands:
 		v = None ; c = self.commands
 		# Shared tnodes are placed in the file even if empty.
 		if tref == -1:
-			t = leoNodes.tnode()
+			t = ()
 		else:
 			t = self.getT(tref)
 			if not t:
 				t = self.newTnode(tref)
 		if back: # create v after back.
-			v = back.insertAfter(t,gnx)
+			v = back.insertAfter(t)
 		elif parent: # create v as the parent's first child.
-			v = parent.insertAsNthChild(0,t,gnx)
+			v = parent.insertAsNthChild(0,t)
 		else: # create a root vnode
-			v = leoNodes.vnode(c,t,gnx)
+			v = leoNodes.vnode(c,t)
 			v.moveToRoot()
 			c.tree.rootVnode = v
 		v.initHeadString(headline,encoding=self.leo_file_encoding)
@@ -415,7 +418,7 @@ class fileCommands:
 		app().findFrame.init(c)
 	#@-body
 	#@-node:5::getFindPanelSettings
-	#@+node:6::getGlobals
+	#@+node:6::getGlobals (changed for 4.0)
 	#@+body
 	def getGlobals (self):
 	
@@ -441,10 +444,16 @@ class fileCommands:
 		self.getTag("<global_log_window_position")
 		self.getPosition() ;
 		self.getTag("/>") # no longer used.
+		
+		# New in 4.0.
+		if self.matchTag("<default_gnx_id="):
+			id = self.getDqString() ; self.getTag("/>")
+			es("default id = " + id,color="blue")
+			self.a.nodeIndices.setDefaultId(id)
 	
 		self.getTag("</globals>")
 	#@-body
-	#@-node:6::getGlobals
+	#@-node:6::getGlobals (changed for 4.0)
 	#@+node:7::getLeoFile (Leo2)
 	#@+body
 	# The caller should enclose this in begin/endUpdate.
@@ -461,7 +470,7 @@ class fileCommands:
 			self.read_only = false
 			self.read_only = not os.access(fileName,os.W_OK)
 			if self.read_only:
-				es("read only: " + fileName)
+				es("read only: " + fileName,color="red")
 				d = leoDialog.leoDialog()
 				d.askOk(
 					"Read-only ouline",
@@ -710,15 +719,18 @@ class fileCommands:
 			return None
 	#@-body
 	#@-node:13::getT
-	#@+node:14::getTnode
+	#@+node:14::getTnode (changed in 4.0)
 	#@+body
 	def getTnode (self):
 	
 		# we have already matched <t.
-		index = -1
+		index = -1 ; gnxString = None 
 		# New in version 1.7: attributes may appear in any order.
 		while 1:
-			if self.matchTag("tx=\"T"):
+			if self.matchTag("tnx="): # New in 4.0
+				index = gnxString = self.getDqString()
+			elif self.matchTag("tx=\"T"): # Pre 4.0
+				# tx overrides tnx for compatibility with pre 4.0 files.
 				index = self.getIndex() ; self.getDquote()
 			elif self.matchTag("rtf=\"1\""): pass # ignored
 			elif self.matchTag("rtf=\"0\""): pass # ignored
@@ -728,12 +740,21 @@ class fileCommands:
 		if t:
 			s = self.getEscapedString()
 			t.setTnodeText(s,encoding=self.leo_file_encoding)
+			if gnxString and self.a.use_gnx: # New in 4.0.
+				gnx = self.nodeIndices.scanGnx(gnxString,0)
+				if t.gnx:
+					if not self.nodeIndices.areEqual(gnx,t.gnx):
+						print "conflicting gnx values",
+						print gnxString, self.nodeIndices.toString(t.gnx)
+				else:
+					# print "tnode gnx from .leo file:", gnxString
+					t.gnx = gnx
 		else: # No vnode refers to this tnode.
 			es("no tnode with index: " + `index` + ".  The text will be discarded")
 			self.getEscapedString()
 		self.getTag("</t>")
 	#@-body
-	#@-node:14::getTnode
+	#@-node:14::getTnode (changed in 4.0)
 	#@+node:15::getTnodes
 	#@+body
 	def getTnodes (self):
@@ -748,12 +769,12 @@ class fileCommands:
 	
 	#@-body
 	#@-node:15::getTnodes
-	#@+node:16::getVnode (Leo2)
+	#@+node:16::getVnode (changed in 4.0)
 	#@+body
 	def getVnode (self,parent,back):
 	
 		# trace("parent:" + `parent` + ", back:" + `back`)
-		c=self.commands
+		c = self.commands
 		# Create a single dummy vnode to carry status bits.
 		if not self.dummy_v:
 			self.dummy_t = leoNodes.tnode(0,"")
@@ -762,13 +783,13 @@ class fileCommands:
 		self.dummy_v.statusBits=0
 		currentVnodeFlag = false # true if the 'V' attribute seen.
 		topVnodeFlag = false # true if 'T' attribute seen.
-		tref = -1 ; headline = ""
+		tref = -1 ; headline = "" ; gnxString = None
 		# we have already matched <v.
 		while 1:
-			if self.matchTag("t=\"T"):
-				tref = self.getIndex() ; self.getDquote()
-			elif self.matchTag("vtag=\"V"):
-				self.getIndex() ; self.getDquote() # ignored
+			if self.matchTag("vnx="): # New in 4.0.
+				gnxString = self.getDqString() 
+			elif self.matchTag("tnx="): # New in 4.0
+				tref = self.getDqString()
 			elif self.matchTag("a=\""):
 				
 				#@<< Handle vnode attribute bits >>
@@ -788,13 +809,20 @@ class fileCommands:
 				#@-body
 				#@-node:1::<< Handle vnode attribute bits  >>
 
+			elif self.matchTag("t=\"T"): # Pre-4.0.
+				# tx overrides tnx for compatibility with pre 4.0 files.
+				tref = self.getIndex() ; self.getDquote()
+			elif self.matchTag("vtag=\"V"): # Pre-3.0
+				self.getIndex() ; self.getDquote() # ignored
 			else: break
 		self.getTag(">")
-		# Leo2: headlines are optional.
+		# Headlines are optional.
 		if self.matchTag("<vh>"):
 			headline = self.getEscapedString() ; self.getTag("</vh>")
 		# Link v into the outline using parent and back.
 		v = self.createVnode(parent,back,tref,headline)
+		if gnxString and self.a.use_gnx: # New in 4.0.
+			v.gnx = self.nodeIndices.scanGnx(gnxString,0)
 		v.statusBits = self.dummy_v.statusBits
 		# Remember various info that may have been specified.
 		if currentVnodeFlag:
@@ -808,7 +836,7 @@ class fileCommands:
 		self.getTag("</v>")
 		return v
 	#@-body
-	#@-node:16::getVnode (Leo2)
+	#@-node:16::getVnode (changed in 4.0)
 	#@+node:17::getVnodes
 	#@+body
 	def getVnodes (self):
@@ -1232,7 +1260,7 @@ class fileCommands:
 		self.put("</find_panel_settings>") ; self.put_nl()
 	#@-body
 	#@-node:4::putFindSettings
-	#@+node:5::putGlobals
+	#@+node:5::putGlobals (changed for 4.0)
 	#@+body
 	def putGlobals (self):
 	
@@ -1281,9 +1309,24 @@ class fileCommands:
 		#@-body
 		#@-node:3::<< put the position of the log window >>
 
+		
+		#@<< put default gnx >>
+		#@+node:4::<< put default gnx >>
+		#@+body
+		# New in 4.0.
+		if self.a.use_gnx:
+			id = self.nodeIndices.getDefaultId()
+			if id and len(id) > 0:
+				self.put_tab()
+				self.put("<default_gnx_id=")
+				self.put_in_dquotes(id) ; self.put("/>") ; self.put_nl()
+		#@-body
+		#@-node:4::<< put default gnx >>
+
+	
 		self.put("</globals>") ; self.put_nl()
 	#@-body
-	#@-node:5::putGlobals
+	#@-node:5::putGlobals (changed for 4.0)
 	#@+node:6::putHeader
 	#@+body
 	def putHeader (self):
@@ -1419,7 +1462,7 @@ class fileCommands:
 		self.put("</leo_file>") ; self.put_nl()
 	#@-body
 	#@-node:10::putPostlog
-	#@+node:11::putTnodes (Leo2)
+	#@+node:11::putTnodes
 	#@+body
 	#@+at
 	#  This method puts all tnodes in index order.  All tnode indices must 
@@ -1435,37 +1478,76 @@ class fileCommands:
 			v = c.currentVnode() ; after = v.nodeAfterTree()
 		else: # write everything
 			v = c.rootVnode() ; after = None
-		# Populate tnodes
-		while v and v != after:
-			index = v.t.fileIndex
-			if index > 0 and not tnodes.has_key(index):
-				tnodes[index] = v.t
-			v = v.threadNext()
-		# Put all tnodes in index order.
+	
 		self.put("<tnodes>") ; self.put_nl()
-		#
-		keys = tnodes.keys() ; keys.sort()
-		for index in keys:
-			t = tnodes[index]
-			assert(t)
-			# New for Leo2: write only those tnodes whose vnodes were written.
-			if t.isVisited(): self.putTnode(t)
-		#
+		if self.a.use_gnx:
+			
+			#@<< write all visited tnodes >>
+			#@+node:1::<< write all visited tnodes >>
+			#@+body
+			# putVnodes sets the visited bit in all tnodes that should be written.
+			while v and v != after:
+				t = v.t
+				if t.isVisited():
+					self.putTnode(t)
+					t.clearVisited() # Don't write the tnode again.
+				v = v.threadNext()
+			#@-body
+			#@-node:1::<< write all visited tnodes >>
+
+		else:
+			
+			#@<< write only those tnodes that were referenced >>
+			#@+node:2::<< write only those tnodes that were referenced >>
+			#@+body
+			# Populate tnodes
+			while v and v != after:
+				index = v.t.fileIndex
+				if index > 0 and not tnodes.has_key(index):
+					tnodes[index] = v.t
+				v = v.threadNext()
+			
+			# Put all tnodes in index order.
+			keys = tnodes.keys() ; keys.sort()
+			for index in keys:
+				t = tnodes[index]
+				assert(t)
+				# New for Leo2: write only those tnodes whose vnodes were written.
+				if t.isVisited(): self.putTnode(t)
+			#@-body
+			#@-node:2::<< write only those tnodes that were referenced >>
+
 		self.put("</tnodes>") ; self.put_nl()
 	#@-body
-	#@-node:11::putTnodes (Leo2)
-	#@+node:12::putTnode
+	#@-node:11::putTnodes
+	#@+node:12::putTnode (changed in 4.0)
 	#@+body
 	def putTnode (self,t):
 	
-		self.put("<t tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+		self.put("<t")
+		if self.a.use_gnx:
+			
+			#@<< put t.gnx, assigning it if needed >>
+			#@+node:1::<< put t.gnx, assigning it if needed >>
+			#@+body
+			if not t.gnx:
+				t.gnx = self.nodeIndices.getNewIndex(tag="putTnode")
+			
+			gnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
+				
+			self.put(" tnx=") ; self.put_in_dquotes(gnxString)
+			#@-body
+			#@-node:1::<< put t.gnx, assigning it if needed >>
+
+		else:
+			self.put(" tx=") ; self.put_in_dquotes("T" + `t.fileIndex`)
 		self.put(">")
-		if t and t.bodyString and len(t.bodyString) > 0:
+		if t.bodyString and len(t.bodyString) > 0:
 			self.putEscapedString(t.bodyString)
 		self.put("</t>") ; self.put_nl()
 	#@-body
-	#@-node:12::putTnode
-	#@+node:13::putVnodes (Leo2)
+	#@-node:12::putTnode (changed in 4.0)
+	#@+node:13::putVnodes
 	#@+body
 	#@+at
 	#  This method puts all vnodes by starting the recursion.  putVnode will 
@@ -1492,8 +1574,8 @@ class fileCommands:
 				v = v.next()
 		self.put("</vnodes>") ; self.put_nl()
 	#@-body
-	#@-node:13::putVnodes (Leo2)
-	#@+node:14::putVnode (Leo2)
+	#@-node:13::putVnodes
+	#@+node:14::putVnode (changed in 4.0)
 	#@+body
 	#@+at
 	#  This writes full headline and body text for all vnodes, even orphan and 
@@ -1506,24 +1588,49 @@ class fileCommands:
 	
 		c = self.commands
 		self.put("<v")
-		
-		#@<< Put tnode index if this vnode has body text >>
-		#@+node:1::<< Put tnode index if this vnode has body text >>
-		#@+body
-		t = v.t
-		if t and (t.hasBody() or v.getJoinList()):
-			if t.fileIndex > 0:
-				self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
-				v.t.setVisited() # Indicate we wrote the body text.
-			else:
-				es("error writing file(bad vnode)!")
-				es("try using the Save To command")
-		#@-body
-		#@-node:1::<< Put tnode index if this vnode has body text >>
+		if self.a.use_gnx:
+			
+			#@<< put v.gnx and v.t.gxx, assigning them if needed >>
+			#@+node:1::<< put v.gnx and v.t.gxx, assigning them if needed >>
+			#@+body
+			if not v.gnx:
+				tag = "putVnode v " + v.headString()
+				v.gnx = self.nodeIndices.getNewIndex(tag=tag)
+			
+			gnxString = self.nodeIndices.toString(v.gnx,removeDefaultId=true)
+			self.put(" vnx=") ; self.put_in_dquotes(gnxString)
+			
+			t = v.t
+			if not t.gnx:
+				tag = "putVnode t " + v.headString()
+				t.gnx = self.nodeIndices.getNewIndex(tag=tag)
+			
+			tnxString = self.nodeIndices.toString(t.gnx,removeDefaultId=true)
+			self.put(" tnx=") ; self.put_in_dquotes(tnxString)
+			
+			t.setVisited() # Indicate we wrote the body text.
+			#@-body
+			#@-node:1::<< put v.gnx and v.t.gxx, assigning them if needed >>
+
+		else:
+			
+			#@<< Put tnode index if this vnode has body text >>
+			#@+node:2::<< Put tnode index if this vnode has body text >>
+			#@+body
+			t = v.t
+			if t and (t.hasBody() or v.getJoinList()):
+				if t.fileIndex > 0:
+					self.put(" t=") ; self.put_in_dquotes("T" + `t.fileIndex`)
+					v.t.setVisited() # Indicate we wrote the body text.
+				else:
+					es("error writing file(bad vnode)!")
+					es("try using the Save To command")
+			#@-body
+			#@-node:2::<< Put tnode index if this vnode has body text >>
 
 		
 		#@<< Put attribute bits >>
-		#@+node:2::<< Put attribute bits >>
+		#@+node:3::<< Put attribute bits >>
 		#@+body
 		# Dummy vnodes carry all attributes.
 		current = c.currentVnode()
@@ -1539,12 +1646,12 @@ class fileCommands:
 			if v == current: self.put("V")
 			self.put_dquote()
 		#@-body
-		#@-node:2::<< Put attribute bits >>
+		#@-node:3::<< Put attribute bits >>
 
 		self.put(">")
 		
 		#@<< write the head text >>
-		#@+node:3::<< write the head text >>
+		#@+node:4::<< write the head text >>
 		#@+body
 		headString = v.headString()
 		if len(headString) > 0:
@@ -1552,7 +1659,7 @@ class fileCommands:
 			self.putEscapedString(headString)
 			self.put("</vh>")
 		#@-body
-		#@-node:3::<< write the head text >>
+		#@-node:4::<< write the head text >>
 
 		child = v.firstChild()
 		if child:
@@ -1562,7 +1669,7 @@ class fileCommands:
 				child = child.next()
 		self.put("</v>") ; self.put_nl()
 	#@-body
-	#@-node:14::putVnode (Leo2)
+	#@-node:14::putVnode (changed in 4.0)
 	#@-node:4::put routines
 	#@+node:5::save
 	#@+body

@@ -161,7 +161,8 @@ class config:
 		self.stylesheet = None
 		self.thin_at_file_trees = 0
 		self.tkEncoding = None # Defaults to None so it doesn't override better defaults.
-		self.use_plugins = 0 # Should _never_ be 1 here!
+		self.use_pre_4pt0_file_formats = false # Should not be true here!
+		self.use_plugins = false # Should never be true here!
 		#@-body
 		#@-node:3::<< initialize ivars that may be set by config options >>
 
@@ -604,6 +605,14 @@ class config:
 					self.tkEncoding = encoding
 				else:
 					es("bad tk_encoding: " + encoding)
+					
+			self.use_pre_4pt0_file_formats = self.initBooleanConfigParam(
+				"use_pre_4pt0_file_formats",self.use_pre_4pt0_file_formats)
+			
+			if self.use_pre_4pt0_file_formats:
+				if app().use_gnx == true:
+					es("using pre 4.0 format",color="red")
+				app().use_gnx = false # Never set use_gnx here!
 				
 			self.use_plugins = self.initBooleanConfigParam(
 				"use_plugins",self.use_plugins)

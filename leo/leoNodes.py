@@ -250,8 +250,9 @@ class tnode:
 	#@+body
 	# All params have defaults, so t = tnode() is valid.
 	
-	def __init__ (self,index=0,bodyString=None,gnx=None):
+	def __init__ (self,index=0,bodyString=None):
 	
+		a = app()
 		self.bodyString = choose(bodyString, bodyString, "")
 		self.joinHead = None # The head of the join list while a file is being read.
 		self.statusBits = 0 # status bits
@@ -259,11 +260,12 @@ class tnode:
 		self.selectionLength = 0 # The length of the selected body text.
 		self.insertSpot = None # Location of previous insert point.
 		self.scrollBarSpot = None # Previous value of scrollbar position.
-		if 1: # To be deleted?
-			self.fileIndex = index # The immutable file index for self tnode.
-			self.cloneIndex = 0 # Zero for @file nodes
-		if gnx != None:
-			self.gnx = gnx
+		# For Pre-4.0 files.  These must always exist, even in 4.0.
+		self.fileIndex = index # The immutable file index for self tnode.
+		self.cloneIndex = 0 # Zero for @file nodes
+		# New in 4.0.
+		self.gnx = None #  Will be set later.
+	
 	#@-body
 	#@-node:2::t.__init__
 	#@+node:3::t.destroy
@@ -278,15 +280,7 @@ class tnode:
 	#@+body
 	def getGnx(self):
 		
-		try:
-			gnx = self.gnx
-		except:
-			gnx = None
-			
-		if gnx == None:
-			gnx = self.gnx = app().nodeIndices.getNewIndex()
-			
-		return gnx
+		return self.gnx
 	
 	#@-body
 	#@-node:1::t.getGnx
@@ -466,8 +460,9 @@ class vnode:
 	#@+others
 	#@+node:2::v.__init__
 	#@+body
-	def __init__ (self,commands,t,gnx=None):
+	def __init__ (self,commands,t):
 	
+		a = app()
 		assert(t and commands)
 		
 		#@<< initialize vnode data members >>
@@ -486,19 +481,13 @@ class vnode:
 		# Canvas items.  Set by tree.redraw
 		self.iconx, self.icony = 0,0 # Coords of icon so icon can be redrawn separately.
 		self.edit_text = None # Essential: used by many parts of tree code.
+		self.icon_id = None
 		
-		if 1:
-			self.icon_id = None # 6/15/02: Now cleared in __del__
-		
-		if 0: # These links are harmful: they prevent old tree items from being recycled properly.
-			self.box_id = None
-			self.edit_text_id = None # The editable text field for this vnode.
-		
+		# New in 4.0.
+		self.gnx = None # Will be set later, if needed.
 		#@-body
 		#@-node:1::<< initialize vnode data members >>
 
-		if gnx != None:
-			self.gnx = gnx
 		if app().deleteOnClose:
 			self.commands.tree.vnode_alloc_list.append(self)
 	#@-body
@@ -1055,15 +1044,7 @@ class vnode:
 	#@+body
 	def getGnx(self):
 		
-		try:
-			gnx = self.gnx
-		except:
-			gnx = None
-			
-		if gnx == None:
-			gnx = self.gnx = app().nodeIndices.getNewIndex()
-			
-		return gnx
+		return self.gnx
 	
 	#@-body
 	#@-node:5::v.getGnx
@@ -1799,13 +1780,14 @@ class vnode:
 	#@-node:1::doDelete
 	#@+node:2::insertAfter
 	#@+body
-	def insertAfter (self,t=None,gnx=None):
+	def insertAfter (self,t=None):
 	
 		"""Inserts a new vnode after the receiver"""
 		
 		# tick()
-		if not t: t = tnode()
-		v = vnode(self.commands,t,gnx)
+		if not t:
+			t = tnode()
+		v = vnode(self.commands,t)
 		v.mHeadString = "NewHeadline"
 		v.iconVal = 0
 		v.linkAfter(self)
@@ -1814,7 +1796,7 @@ class vnode:
 	#@-node:2::insertAfter
 	#@+node:3::insertAsLastChild
 	#@+body
-	def insertAsLastChild (self,t=None,gnx=None):
+	def insertAsLastChild (self,t=None):
 	
 		"""Inserts a new vnode as the last child of the receiver"""
 		
@@ -1822,26 +1804,26 @@ class vnode:
 		n = self.numberOfChildren()
 		if not t:
 			t = tnode()
-		return self.insertAsNthChild(n,t,gnx)
+		return self.insertAsNthChild(n,t)
 	#@-body
 	#@-node:3::insertAsLastChild
 	#@+node:4::insertAsNthChild
 	#@+body
-	def insertAsNthChild (self,n,t=None,gnx=None):
+	def insertAsNthChild (self,n,t=None):
 	
 		"""Inserts a new node as the the nth child of the receiver.
 		The receiver must have at least n-1 children"""
 		
 		# tick() ; # trace(`n` + `self`)
 		if not t: t = tnode()
-		v = vnode(self.commands,t,gnx)
+		v = vnode(self.commands,t)
 		v.mHeadString = "NewHeadline"
 		v.iconVal = 0
 		v.linkAsNthChild(self,n)
 		return v
 	#@-body
 	#@-node:4::insertAsNthChild
-	#@+node:5::moveAfter
+	#@+node:5::v.moveAfter
 	#@+body
 	# Used by scripts
 	
@@ -1860,8 +1842,8 @@ class vnode:
 		if not a.parent() and not a.back():
 			c.tree.rootVnode = a
 	#@-body
-	#@-node:5::moveAfter
-	#@+node:6::moveToNthChildOf
+	#@-node:5::v.moveAfter
+	#@+node:6::v.moveToNthChildOf
 	#@+body
 	# Compatibility routine for scripts
 	
@@ -1881,7 +1863,7 @@ class vnode:
 		if not p.parent() and not p.back():
 			c.tree.rootVnode = p
 	#@-body
-	#@-node:6::moveToNthChildOf
+	#@-node:6::v.moveToNthChildOf
 	#@+node:7::moveToRoot
 	#@+body
 	def moveToRoot (self, oldRoot = None):
@@ -2522,57 +2504,66 @@ class vnode:
 class nodeIndices:
 
 	#@+others
-	#@+node:1::nodeIndices.__init__
+	#@+node:1::areEqual
+	#@+body
+	def areEqual (self,gnx1,gnx2):
+		
+		"""Return True if all fields of gnx1 and gnx2 are equal"""
+	
+		id1,time1,n1 = gnx1
+		id2,time2,n2 = gnx2
+		return id1==id2 and time1==time2 and n1==n2
+	#@-body
+	#@-node:1::areEqual
+	#@+node:2::nodeIndices.__init__
 	#@+body
 	def __init__ (self):
 		
 		self.defaultId = app().leoID
 		self.lastIndex = None
 	#@-body
-	#@-node:1::nodeIndices.__init__
-	#@+node:2::toString
+	#@-node:2::nodeIndices.__init__
+	#@+node:3::toString
 	#@+body
-	def toString (self,index):
+	def toString (self,index,removeDefaultId=false):
 		
-		id  = index.get('id',"")
-		t   = index.get('time',"")
-		n   = index.get('n',None)
+		"""convert a gnx (a tuple) to its string representation"""
+	
+		id,t,n = index
+	
+		if removeDefaultId and id == self.defaultId:
+			id = ""
 	
 		if n == None:
 			return "%s.%s" % (id,t)
 		else:
 			return "%s.%s.%d" % (id,t,n)
-	
 	#@-body
-	#@-node:2::toString
-	#@+node:3::getNewIndex
+	#@-node:3::toString
+	#@+node:4::getNewIndex
 	#@+body
-	def getNewIndex (self,id=None):
+	def getNewIndex (self,id=None,tag=""):
 		
 		import time
 		if id == None: id=self.defaultId
 		t = time.strftime("%m%d%y%H%M%S",time.localtime()) # compact timestamp is best
+		n = None
 	
 		# Set n if id and time match the previous index.
 		last = self.lastIndex
-		if last and id==last.get('id') and t==last.get('time'):
-			n = last.get('n')
-			if n == None: n = 1
-			else: n += 1
-		else: n = None
-		
-		d = {'time':t}
-		for key, val in (('id',id),('n',n)):
-			if val != None and val != "":
-				d[key] = val
-	
+		if last:
+			lastId,lastTime,lastN = last
+			if id==lastId and t==lastTime:
+				if lastN == None: n = 1
+				else: n = lastN + 1
+				
+		d = (id,t,n)
 		self.lastIndex = d
-		trace(d)
+		trace(tag,d)
 		return d
-	
 	#@-body
-	#@-node:3::getNewIndex
-	#@+node:4::getters & setters
+	#@-node:4::getNewIndex
+	#@+node:5::get/setDefaultId
 	#@+body
 	def getDefaultId (self):
 		return self.defaultId
@@ -2581,35 +2572,32 @@ class nodeIndices:
 		self.defaultId = id
 	
 	#@-body
-	#@-node:4::getters & setters
-	#@+node:5::scanGnx
+	#@-node:5::get/setDefaultId
+	#@+node:6::scanGnx
 	#@+body
 	def scanGnx (self,s,i):
 	
 		if len(s) > 0 and s[-1] == '\n':
 			s = s[:-1]
 	
-		# Set then entries of d from s.
-		d = {} ; keys = ('id','time','n')
-		n = 0
-		while n < 3 and i < len(s):
-			i,val = skip_to_char(s,i,'.')
-			if val:
-				d[keys[n]] = val
+		id,t,n=None,None,None
+		i,id = skip_to_char(s,i,'.')
+		if match(s,i,'.'):
+			i,t = skip_to_char(s,i+1,'.')
 			if match(s,i,'.'):
-				i += 1
-			n += 1
-	
+				i,n = skip_to_char(s,i+1,'.')
+		# Use self.defaultId for missing id entries.
+		if id == None or len(id) == 0:
+			id = self.defaultId
 		# Convert n to int.
-		n = d.get('n')
 		if n:
-			try: d['n'] = int(n)
+			try: n = int(n)
 			except: pass
+		d = (id,t,n)
 	
 		return d
-	
 	#@-body
-	#@-node:5::scanGnx
+	#@-node:6::scanGnx
 	#@-others
 #@-body
 #@-node:5::class nodeIndices
