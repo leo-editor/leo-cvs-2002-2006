@@ -2542,7 +2542,7 @@ class leoTkinterTree (leoFrame.leoTree):
     
         if not p: return
     
-        # g.trace(len(p.bodyString()),p.headString())
+        # g.trace('len(body)',len(p.bodyString()),p.headString())
     
         if not g.doHook("unselect1",c=c,new_p=p,old_p=old_p,new_v=p,old_v=old_p):
             #@        << unselect the old node >>
