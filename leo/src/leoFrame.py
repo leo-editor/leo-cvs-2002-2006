@@ -1306,6 +1306,11 @@ class nullFrame (leoFrame):
 		leoFrame.__init__(self) # Init the base class.
 		assert(self.c is None)
 		self.title = title
+		
+	def __getattr__(self,attr):
+
+		trace("nullFrame",attr)
+		return nullObject()
 
 	def finishCreate(self,c):
 
