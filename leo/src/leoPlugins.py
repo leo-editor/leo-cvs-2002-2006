@@ -190,7 +190,7 @@ def loadHandlers():
 #@+node:ekr.20041113113140:loadOnePlugin
 def loadOnePlugin (moduleOrFileName, verbose=False):
     
-    global loadedModules
+    global loadedModules,loadingModuleNameStack
     
     if moduleOrFileName [-3:] == ".py":
         moduleName = moduleOrFileName [:-3]
@@ -201,27 +201,42 @@ def loadOnePlugin (moduleOrFileName, verbose=False):
     if isLoaded(moduleName):
         module = loadedModules.get(moduleName)
         if verbose:
-            print 'plugin %s already loaded' % moduleName
+            s = 'plugin %s already loaded' % moduleName
+            print s ; g.es(s,color="blue")
         return module
 
     plugins_path = g.os_path_join(g.app.loadDir,"..","plugins")
     moduleName = g.toUnicode(moduleName,g.app.tkEncoding)
     
-    # This import typically results in calls to registerHandler.
-    global loadingModuleNameStack
+    # This import will typically result in calls to registerHandler.
+    # if the plugin does _not_ use the init top-level function.
     loadingModuleNameStack.append(moduleName)
     result = g.importFromPath(moduleName,plugins_path)
     loadingModuleNameStack.pop()
 
     if result:
-        loadedModules[moduleName] = result
+        loadingModuleNameStack.append(moduleName)
+        try:
+            # Indicate success only if init_result is True.
+            init_result = result.init()
+            # g.trace('%s.init() returns %s' % (moduleName,init_result))
+            if init_result:
+                loadedModules[moduleName] = result
+            else:
+                result = None
+        except AttributeError:
+            # No top-level init function.
+            # Guess that the module was loaded correctly.
+            loadedModules[moduleName] = result
+        loadingModuleNameStack.pop()
     
     if verbose:
         if result is None:
             s = 'can not load %s plugin' % moduleName
             print s ; g.es(s,color="blue")
         else:
-            print 'loaded %s plugin' % moduleName
+            s = 'loaded %s plugin' % moduleName
+            print s ; g.es(s,color="blue")
     
     return result
 #@-node:ekr.20041113113140:loadOnePlugin
