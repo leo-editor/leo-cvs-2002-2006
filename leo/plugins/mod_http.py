@@ -18,6 +18,14 @@ Use this plugin is as follows:
 You will see a a "top" level page containing one link for every open .leo file.  Start clicking :-)
 
 You can use the browser's refresh button to update the top-level view in the browser after you have opened or closed files.
+
+To enable this plugin:
+    put this into your file
+    @settings
+        @page http plugin
+        @bool http_active = True
+        @int  port = 8080
+        @string rst_http_attributename = '
 '''
 #@nonl
 #@-node:ekr.20050111111238:<< docstring >>
@@ -26,11 +34,10 @@ You can use the browser's refresh button to update the top-level view in the bro
 #@@language python
 #@@tabwidth -4
 
-# From http://home.pacbell.net/bwmulder/python/Leo/HttpPlugin.leo
-# See also, the related script from the Python Cookbook:
+# Adapted and extended from the Python Cookbook:
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/259148
 
-__version__ = "0.91"
+__version__ = "0.92"
 
 #@<< how to use this plugin >>
 #@+node:EKR.20040517080250.2:<< how to use this plugin >>
@@ -66,7 +73,35 @@ import urlparse
 
 sockets_to_close = []
 
+#@<< config >>
+#@+node:bwmulder.20050326191345:<< config >>
+class config:
+    http_active = False
+    http_timeout = 0
+    http_port = 8080
+    rst2_http_attributename = 'rst_http_attribute'
+#@-node:bwmulder.20050326191345:<< config >>
+#@nl
 #@+others
+#@+node:bwmulder.20050326224000:possible @settings
+See the rst2 plugin.
+#@nonl
+#@-node:bwmulder.20050326224000:possible @settings
+#@+node:bwmulder.20050326191345.1:onFileOpen
+def onFileOpen(tag, keywords):
+    c = keywords.get("new_c")
+
+    wasactive = config.http_active
+    applyConfiguration(c)
+
+    if config.http_active and not wasactive: # Ok for unit testing:
+    
+        s=Server('',config.http_port,RequestHandler)
+        asyncore.read = a_read
+        leoPlugins.registerHandler("idle", plugin_wrapper)
+        
+        g.es("http serving enabled on port %s, version %s" % (config.http_port, __version__), color="purple")
+#@-node:bwmulder.20050326191345.1:onFileOpen
 #@+node:bwmulder.20050322132919:rst_related
 #@+node:bwmulder.20050322134325:reconstruct_html_from_attrs
 def reconstruct_html_from_attrs(attrs, how_much_to_ignore=0):
@@ -94,7 +129,7 @@ def reconstruct_html_from_attrs(attrs, how_much_to_ignore=0):
 def get_http_attribute(p):
     vnode = p.v
     if hasattr(vnode, 'unknownAttributes'):
-        return vnode.unknownAttributes.get(rst_http_attributename, None)
+        return vnode.unknownAttributes.get(config.rst2_http_attributename, None)
     return None
 
 #@-node:bwmulder.20050322132919.2:get_http_attribute
@@ -102,9 +137,9 @@ def get_http_attribute(p):
 def set_http_attribute(p, value):
     vnode = p.v
     if hasattr(vnode, 'unknownAttributes'):
-        vnode.unknownAttributes[rst_http_attributename] = value
+        vnode.unknownAttributes[config.rst2_http_attributename] = value
     else:
-        vnode.unknownAttributes = {rst_http_attributename: value}
+        vnode.unknownAttributes = {config.rst2_http_attributename: value}
 
 #@-node:bwmulder.20050322133050:set_http_attribute
 #@+node:bwmulder.20050322135114:node_reference
@@ -276,7 +311,7 @@ class leo_interface(object):
     #@+node:bwmulder.20050319134815:create_leo_h_reference
     def create_leo_h_reference(self, window, node):
         parts = [window.shortFileName()] + self.get_leo_nameparts(node)
-        href = '_'.join(parts)
+        href = '/' + '/'.join(parts)
         return href
     #@-node:bwmulder.20050319134815:create_leo_h_reference
     #@+node:EKR.20040517080250.23:create_leo_reference
@@ -295,7 +330,7 @@ class leo_interface(object):
         Include some navigational references too
         """
     
-        if node is not None:
+        if node:
             headString = node.headString()
             bodyString = node.bodyString()
             format_info = get_http_attribute(node)
@@ -355,7 +390,7 @@ class leo_interface(object):
     def get_leo_node(self, path):
         """
         given a path of the form:
-            <short filename>_<number1>_<number2>...<numbern>
+            [<short filename>,<number1>,<number2>...<numbern>]
             identify the leo node which is in that file, and,
             from top to bottom, is the <number1> child of the topmost
             node, the <number2> child of that node, and so on.
@@ -427,7 +462,8 @@ class leo_interface(object):
         # 2. Return the window
         window = [w for w in g.app.windowList if w.c.rootVnode().v == root.v][0]
         
-        return self.create_leo_h_reference(window, vnode)
+        result = self.create_leo_h_reference(window, vnode)
+        return result
     #@-node:bwmulder.20050319135316:node_reference
     #@+node:bwmulder.20050322224921:send_head
     def send_head(self):
@@ -479,7 +515,7 @@ class leo_interface(object):
             return '/'
         if path.startswith("/"):
             path = path[1:]
-        return path.split('_')
+        return path.split('/')
     #@nonl
     #@-node:EKR.20040517080250.30:split_leo_path
     #@+node:EKR.20040517080250.28:write_path
@@ -779,7 +815,7 @@ def plugin_wrapper(tag, keywords):
     if g.app.killed: return
 
     first = True
-    while loop(timeout):
+    while loop(config.http_timeout):
         pass
 #@nonl
 #@-node:EKR.20040517080250.45:plugin_wrapper
@@ -797,34 +833,26 @@ def a_read(obj):
 #@-node:EKR.20040517080250.47:a_read
 #@-node:EKR.20040517080250.46:asynchore_overrides
 #@+node:EKR.20040517080250.48:applyConfiguration
-def applyConfiguration(config=None):
+def applyConfiguration(c):
 
-    """Called when the user presses the "Apply" button on the Properties form"""
+    """Called when the user opens a new file."""
 
-    global timeout, port, active, rst_http_attributename
-
-    if config is None:
-        fileName = os.path.join(g.app.loadDir,"../","plugins","mod_http.ini")
-        config = ConfigParser.ConfigParser()
-        config.read(fileName)
-
-    timeout = config.getint("Main", "timeout") / 1000.0
-    port = config.getint("Main", "port")
-    active = config.getboolean("Main", "active")
-    rst_http_attributename = config.get("Main", "rst_http_attributename")
+    newtimeout = c.config.getInt("http_timeout")
+    if newtimeout is not None:
+        config.http_timeout = newtimeout  / 1000.0
+    newport = c.config.getInt("http_port") 
+    if newport:
+        config.port = newport
+    newactive = c.config.getBool("http_active")
+    if newactive is not None:
+        config.http_active = newactive
+    new_rst2_http_attributename = c.config.getString("rst2_http_attributename")
+    if new_rst2_http_attributename:
+        config.rst2_http_attributename = new_rst2_http_attributename
 #@nonl
 #@-node:EKR.20040517080250.48:applyConfiguration
 #@-others
-
-applyConfiguration()
-
-if active: # Ok for unit testing:
-
-    s=Server('',port,RequestHandler)
-    asyncore.read = a_read
-    leoPlugins.registerHandler("idle", plugin_wrapper)
+leoPlugins.registerHandler("open2", onFileOpen)
     
-    g.es("http serving enabled on port %s, version %s" % (port, __version__), color="purple")
-#@nonl
 #@-node:EKR.20040517080250.1:@thin mod_http.py
 #@-leo

@@ -55,7 +55,7 @@ except:
 # 2.2 EKR 2005-03-07 changed publish() to publish(argv=[''])
 # 
 # 2.3 bwmulder
-#     - add rst2.ini with various options
+#     - added various options which can be set with @settings directive
 #     - add support for mod_http plugin.
 #@-at
 #@nonl
@@ -63,6 +63,117 @@ except:
 #@nl
 
 #@+others
+#@+node:bwmulder.20050326220848:Possible settings with rst2 and http plugin
+#@+node:bwmulder.20050326220848.1:@settings
+#@@nocolor
+#@nonl
+#@+node:bwmulder.20050326220848.2:@page rst2
+Here are the possible settings for the rst2 plugin.
+
+Typical settings:
+
+Everything false: previous version of plugin.
+
+Everything false except rst2_replace_code_blocks:
+
+Like the old plugin, but some of the documentation of Leo works even if Silvercity is not installed.
+
+rst2_bodyfilter = True
+rstfile = True
+rst2_format_headlines = True
+rst2_run_on_open_window = True
+rst2_http_server_support = True
+
+Format (non-code) documents.
+#@nonl
+#@+node:bwmulder.20050326220848.3:@bool rst2_bodyfilter = True
+A pure document contains (only) node for rst formatting.
+
+If this is not set, then the plugins assumes that rst code is only under @rst nodes.
+#@nonl
+#@-node:bwmulder.20050326220848.3:@bool rst2_bodyfilter = True
+#@+node:bwmulder.20050326220848.4:@bool rst2file = True
+Set to true if the rst file should be written to disk.
+
+Useful for debugging.
+
+The name is the same as the html file with the extension .txt.
+#@nonl
+#@-node:bwmulder.20050326220848.4:@bool rst2file = True
+#@+node:bwmulder.20050326220848.5:@bool rst2_format_headlines = True
+Should headline be included in the html file?
+#@-node:bwmulder.20050326220848.5:@bool rst2_format_headlines = True
+#@+node:bwmulder.20050326220848.6:@bool rst2_clear_attributes=False
+Set this attribute to clear all http attribute (the name is set by the rst2_http_attributename setting).
+
+Useful to clean up the document from unwanted html attributes.
+#@nonl
+#@-node:bwmulder.20050326220848.6:@bool rst2_clear_attributes=False
+#@+node:bwmulder.20050326220848.7:@bool rst2_run_on_open_window = True
+Should rst nodes be formatted as soon as the window is opened?
+#@nonl
+#@-node:bwmulder.20050326220848.7:@bool rst2_run_on_open_window = True
+#@+node:bwmulder.20050326220848.8:@bool rst2_http_server_support=True
+Attach http code to nodes so that the http plugin can use the code for display.
+#@-node:bwmulder.20050326220848.8:@bool rst2_http_server_support=True
+#@+node:bwmulder.20050326220848.9:@bool rst2_replace_code_blocks = True
+Compatibility option if you format some code which has the code-block directive, but the silvercity software is not installed.
+#@nonl
+#@-node:bwmulder.20050326220848.9:@bool rst2_replace_code_blocks = True
+#@+node:bwmulder.20050326220848.10:@string rst2_node_begin_marker=http-node-marker-
+Internal marker used to delimit the http code for one node.
+
+This marker must not be occur elsewhere in the document.
+
+Unless your document contains this marker, you should not need to change this setting.
+#@nonl
+#@-node:bwmulder.20050326220848.10:@string rst2_node_begin_marker=http-node-marker-
+#@+node:bwmulder.20050326220848.11:@page debug settings for rst2
+#@+node:bwmulder.20050326220848.12:@bool rst2_debug_handle_starttag = False
+#@-node:bwmulder.20050326220848.12:@bool rst2_debug_handle_starttag = False
+#@+node:bwmulder.20050326220848.13:@bool rst2_debug_store_lines = False
+#@-node:bwmulder.20050326220848.13:@bool rst2_debug_store_lines = False
+#@+node:bwmulder.20050326220848.14:@bool rst2_debug_handle_endtag = False
+#@-node:bwmulder.20050326220848.14:@bool rst2_debug_handle_endtag = False
+#@+node:bwmulder.20050326220848.15:@bool rst2_debug_show_unknownattributes = False
+#@-node:bwmulder.20050326220848.15:@bool rst2_debug_show_unknownattributes = False
+#@+node:bwmulder.20050326220848.16:@bool rst2_debug_node_html_1 = False
+#@-node:bwmulder.20050326220848.16:@bool rst2_debug_node_html_1 = False
+#@+node:bwmulder.20050326220848.17:@bool rst2_debug_anchors = False
+#@-node:bwmulder.20050326220848.17:@bool rst2_debug_anchors = False
+#@+node:bwmulder.20050326220848.18:@bool rst2_debug_before_and_after_replacement = False
+#@-node:bwmulder.20050326220848.18:@bool rst2_debug_before_and_after_replacement = False
+#@-node:bwmulder.20050326220848.11:@page debug settings for rst2
+#@-node:bwmulder.20050326220848.2:@page rst2
+#@+node:bwmulder.20050326220848.19:@page http
+#@+node:bwmulder.20050326220848.20:@bool http_active = True
+Use this option to activate the http plugin.
+
+Point your browser to http://localhost:8080 to start browsing your outline.
+
+Use http_port to change the default port.
+#@nonl
+#@-node:bwmulder.20050326220848.20:@bool http_active = True
+#@+node:bwmulder.20050326220848.21:@int http_port = 8080 
+The port used for the http server.
+
+Default is 8080.
+
+#@-node:bwmulder.20050326220848.21:@int http_port = 8080 
+#@+node:bwmulder.20050326220848.22:@int http_timeout = 0
+Timeout for the select call of the server in milliseconds.
+
+Normally, there is no need to change this setting.;
+#@-node:bwmulder.20050326220848.22:@int http_timeout = 0
+#@+node:bwmulder.20050326220848.23:@string rst2_http_attributename = rst_http_attribute
+Attribute used in vnodes to store the http code for a node.
+ 
+Normally you would have little reason to change this settings.
+#@nonl
+#@-node:bwmulder.20050326220848.23:@string rst2_http_attributename = rst_http_attribute
+#@-node:bwmulder.20050326220848.19:@page http
+#@-node:bwmulder.20050326220848.1:@settings
+#@-node:bwmulder.20050326220848:Possible settings with rst2 and http plugin
 #@+node:bwmulder.20050319123911:http plugin interface
 #@+doc
 # if enabled, this plugin stores information for the http plugin.
@@ -83,34 +194,36 @@ except:
 #@+node:bwmulder.20050314132625:config
 class config:
     # 
-    bodyfilter = False
-    rst2file = ''
-    pure_document = False
-    http_server_support = True
-    underline_change = False
-    number_headlines = False
-    warnofdrags = False
-    clear_attributes = False
-    run_on_window_open = False
+    rst2_bodyfilter = False
+    rst2file = False
+    rst2_pure_document = False
+    rst2_http_server_support = True
+    rst2_format_headlines = False
+    # number_headlines = False
+    # warnofdrags = False
+    rst2_clear_attributes = False
+    rst2_run_on_window_open = False
+    rst2_replace_code_blocks = True
     
     # debug flags: ignore in normal use
-    debug_handle_starttag = False
-    debug_handle_endtag = False
-    debug_store_lines = False
-    debug_show_unknownattributes = False
-    debug_node_html_1 = False
-    debug_anchors = False
-    debug_before_and_after_replacement = False
+    rst2_debug_handle_starttag = False
+    rst2_debug_handle_endtag = False
+    rst2_debug_store_lines = False
+    rst2_debug_show_unknownattributes = False
+    rst2_debug_node_html_1 = False
+    rst2_debug_anchors = False
+    rst2_debug_before_and_after_replacement = False
     
     # These are really configuration options.
-    node_begin_marker = 'http-node-marker-'
-    rst_http_attributename = 'rst_http_attribute'
+    rst2_node_begin_marker = 'http-node-marker-'
+    rst2_http_attributename = 'rst_http_attribute'
+    
     
     # Some data is also stored in the config class
     http_map = None
     # Maps node anchors to node.
     # A node anchor is a marker beginning with
-    # node_begin_marker.
+    # rst2_node_begin_marker.
     # It is currently assumed that such a marker
     # does not occur in the rst document.
     
@@ -122,8 +235,49 @@ class config:
     node_counter = 0
     # Used to mark the beginning of the html code for each new
     # node.
-#@nonl
+    
+    do_replace_code_blocks = False
 #@-node:bwmulder.20050314132625:config
+#@+node:bwmulder.20050320000243:onFileOpen
+def onFileOpen(tag, keywords):
+    # c,old_c,new_c,fileName):
+    c = keywords["new_c"]
+    applyConfiguration(c)
+    ignoreset = {}
+    if c.config.getBool("rst2_run_on_open_window"):
+    # if config.rst2_run_on_window_open:
+        http_map = {}
+        anchormap = {}
+        config.node_counter = 0
+        found_rst_trees = False
+        root = c.currentVnode()
+        
+        for p in c.allNodes_iter(root):
+            if p.v not in ignoreset:
+                s = p.v.headString()
+                if s.startswith("@rst ") and len(s.split()) >= 2:
+                    for p1 in p.subtree_iter():
+                        ignoreset[p1.v] = True
+                    try:
+                        config.http_map = {}
+                        config.anchormap = {}
+                        onIconDoubleClick("open2", {"c": c, "p": p})
+                        http_map.update(config.http_map)
+                        anchormap.update(config.anchormap)
+                        found_rst_trees = True
+                    except SystemExit, s:
+                        g.es("Formatting failed for %s" % p, color='red')
+        if found_rst_trees:
+            config.http_map = http_map
+            config.anchormap = anchormap
+            relocate_references() 
+          
+            config.http_map = None
+            config.anchormap = None
+            g.es('html updated for html plugin', color="blue")
+        if config.rst2_clear_attributes:
+            g.es("http attributes cleared")
+#@-node:bwmulder.20050320000243:onFileOpen
 #@+node:ekr.20040331071319.3:onIconDoubleClick
 # by Josef Dalcolmo 2003-01-13
 #
@@ -140,7 +294,7 @@ def onIconDoubleClick(tag,keywords):
     if not c or not p:
         return
     
-    applyConfiguration()
+    applyConfiguration(c)
     config.tag = tag
 
     h = p.headString().strip()
@@ -205,15 +359,31 @@ def onIconDoubleClick(tag,keywords):
                          
                         # Register the directive with docutils.
                         docutils.parsers.rst.directives.register_directive('code-block',code_block)
+                        
+                        config.do_replace_code_blocks = False
                         #@nonl
                         #@-node:ekr.20040331071319.5:<< define code-block >>
                         #@nl
                         syntax = True
                     except ImportError:
                         g.es('SilverCity not present so no syntax highlighting')
+                        #@        << define alternate code block implementation>>
+                        #@+node:bwmulder.20050326114320: << define alternate code block implementation>>
+                        # Don't know what to do here: Can someone make a suggestion?
+                        #import docutils.parsers.rst.directives.admonitions
+                        #import docutils.parsers.rst.directives.body
+                        # docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.block 
+                        # docutils.parsers.rst.directives.register_directive('code-block', docutils.parsers.rst.directives.admonitions.admonition)
+                        #docutils.parsers.rst.directives._directives['code-block'] = docutils.parsers.rst.directives.body.pull_quote 
+                        # g.es("Registered some alternate implementation for code-block directive")
+                        config.do_replace_code_blocks = config.rst2_replace_code_blocks
+                        #@-node:bwmulder.20050326114320: << define alternate code block implementation>>
+                        #@nl
                 
                 if config.rst2file:
-                    rstFile = file(config.rst2file, "w")
+                    rstFileName = os.path.splitext(fname)[0] + ".txt"
+                    rstFile = file(rstFileName, "w")
+                    g.es("Using %s as rst file" % rstFileName)
                 else:
                     rstFile = StringIO.StringIO()
                 config.current_file = fname
@@ -226,7 +396,7 @@ def onIconDoubleClick(tag,keywords):
                 # This code snipped has been taken from code contributed by Paul Paterson 2002-12-05.
                 pub = Publisher()
                 if config.rst2file:
-                    pub.source = FileInput(source_path=config.rst2file)
+                    pub.source = FileInput(source_path=rstFileName)
                     pub.destination = FileOutput(destination_path=fname, encoding='unicode')
                 else:
                     pub.source = StringInput(source=rstText)
@@ -276,13 +446,22 @@ def writeFullFileName (fname):
     g.es('rst written: ' + path,color="blue")
 #@nonl
 #@-node:ekr.20040811064922:writeFullFileName
+#@+node:bwmulder.20050326125712:replace_code_block_directive
+def replace_code_block_directive(line):
+    if u"code-block::" in line:
+        parts = line.split()
+        if len(parts) == 3 and (parts[0] == '..') and (parts[1]=='code-block::'):
+            line = '%s code::\n' % parts[2]
+    return line
+#@nonl
+#@-node:bwmulder.20050326125712:replace_code_block_directive
 #@+node:ekr.20040331071319.7:writeTreeAsRst
 def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     
     'Write the tree under position p to the file rstFile (fname is the filename)'
     
     def add_node_marker():
-        if config.http_server_support:
+        if config.rst2_http_server_support:
             config.node_counter += 1
             marker = rst_htmlparser.generate_node_marker(config.node_counter)
             config.last_marker = marker
@@ -321,7 +500,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     rstFile.write('.. filename: '+s+'\n')
     rstFile.write('\n')
 
-    if config.bodyfilter:
+    if config.rst2_bodyfilter:
         s = bodyfilter(p)
     else:
         s = p.bodyString()
@@ -332,7 +511,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
     toplevel = p.level()+1 # Dec 20
     h = p.headString()
     
-    if config.http_server_support:
+    if config.rst2_http_server_support:
         if config.tag == 'open2':
             http_map = config.http_map
         else:
@@ -342,7 +521,7 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             config.node_counter = 0
     for p in p.subtree_iter():
         h = p.headString().strip()
-        if config.pure_document or g.match_word(h,0,"@rst"):
+        if config.rst2_pure_document or g.match_word(h,0,"@rst"):
             #@            << handle an rst node >>
             #@+node:ekr.20040403202850.1:<< handle an rst node >>
             s = p.bodyString()
@@ -359,10 +538,13 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             
             add_node_marker()    
             
-            if config.underline_change:
+            if config.rst2_format_headlines:
                 rstFile.write(h+'\n')
                 rstFile.write(underline(h,p.level()-toplevel))
                 rstFile.write('\n')
+            
+            if config.do_replace_code_blocks and 'code-block::' in s:
+                s = '\n'.join([replace_code_block_directive(line) for line in s.split("\n")])
             
             rstFile.write('%s\n\n'%s.strip())
             #@nonl
@@ -374,13 +556,15 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             if g.match_word(h,0,"@file-nosent"):
                 h = h[13:]
             h = g.toEncodedString(h,encoding,reportErrors=True)
-            if config.bodyfilter:
+            if config.rst2_bodyfilter:
                 s = bodyfilter(p)
             else:
                 s = p.bodyString()
             s = g.toEncodedString(s,encoding,reportErrors=True)
             
-            if config.underline_change:
+            add_node_marker()    
+            
+            if config.rst2_format_headlines:
                 pass
             else:
                 rstFile.write(h+'\n')
@@ -401,58 +585,21 @@ def writeTreeAsRst(rstFile,fname,p,c,syntax=False):
             #@nl
         #@        << clear attributes >>
         #@+node:bwmulder.20050315150045:<< clear attributes >>
-        if config.clear_attributes:
+        if config.rst2_clear_attributes:
             if hasattr(p.v, 'unknownAttributes'):
-                if p.v.unknownAttributes.has_key(config.rst_http_attributename):
-                    del p.v.unknownAttributes[config.rst_http_attributename]
+                if p.v.unknownAttributes.has_key(config.rst2_http_attributename):
+                    del p.v.unknownAttributes[config.rst2_http_attributename]
                     if p.v.unknownAttributes == {}:
                         del p.v.unknownAttributes
         #@nonl
         #@-node:bwmulder.20050315150045:<< clear attributes >>
         #@nl
     add_node_marker()
-    if config.http_server_support:
+    if config.rst2_http_server_support:
         config.http_map = http_map
 #@-node:ekr.20040331071319.7:writeTreeAsRst
-#@+node:bwmulder.20050320000243:onFileOpen
-def onFileOpen(tag, keywords):
-    # c,old_c,new_c,fileName):
-    applyConfiguration()
-    c = keywords["new_c"]
-    ignoreset = {}
-    if config.run_on_window_open:
-        http_map = {}
-        anchormap = {}
-        config.node_counter = 0
-        found_rst_trees = False
-        root = c.currentVnode()
-        
-        for p in c.allNodes_iter(root):
-            if p.v not in ignoreset:
-                s = p.v.headString()
-                if s.startswith("@rst ") and len(s.split()) >= 2:
-                    found_rst_trees = True
-                    for p1 in p.subtree_iter():
-                        ignoreset[p1.v] = True
-                    config.http_map = {}
-                    config.anchormap = {}
-                    onIconDoubleClick("open2", {"c": c, "p": p})
-                    http_map.update(config.http_map)
-                    anchormap.update(config.anchormap)
-        if found_rst_trees:
-            config.http_map = http_map
-            config.anchormap = anchormap
-            relocate_references() 
-          
-            config.http_map = None
-            config.anchormap = None
-            g.es('html updated for html plugin', color="blue")
-            if config.clear_attributes:
-                g.es("http attributes cleared")
-    
-#@-node:bwmulder.20050320000243:onFileOpen
 #@+node:bwmulder.20050314131619:applyConfiguration
-def applyConfiguration (configfile=None):
+def applyConfiguration (c):
 
     """Called when the user presses the "Apply" button on the Properties form.
  
@@ -460,32 +607,27 @@ def applyConfiguration (configfile=None):
     """
 
     def getboolean(name):
-        setattr(config, name, configparser.getboolean("Main", name))
-    configparser = None
-    if configfile is None:
-        fileName = os.path.join(g.app.loadDir,"..","plugins","rst2.ini")
-        if os.path.exists(fileName):
-            configparser = ConfigParser.ConfigParser()
-            configparser.read(fileName)
+        value = getattr(config, name)
+        newvalue = c.config.getBool(name)
+        if newvalue is not None:
+            setattr(config, name, newvalue)
+        
+    getboolean("rst2file")
+    getboolean("rst2_bodyfilter")
+    getboolean("rst2_clear_attributes")
+    getboolean("rst2_http_server_support")
+    getboolean("rst2_pure_document")
+    getboolean("rst2_format_headlines")
+    # getboolean("rst2_warnofdrags")
+    getboolean("rst2_run_on_window_open")
     
-    if configparser:
-        config.rst2file = configparser.get("Main", "rst2file")
-        
-        getboolean("bodyfilter")
-        getboolean("clear_attributes")
-        getboolean("http_server_support")
-        getboolean("pure_document")
-        getboolean("underline_change")
-        getboolean("warnofdrags")
-        getboolean("run_on_window_open")
-        
-        getboolean("debug_handle_endtag")
-        getboolean("debug_store_lines")
-        getboolean("debug_handle_starttag")
-        getboolean("debug_show_unknownattributes")
-        getboolean("debug_node_html_1")
-        getboolean("debug_anchors")
-        getboolean("debug_before_and_after_replacement")
+    getboolean("rst2_debug_handle_endtag")
+    getboolean("rst2_debug_store_lines")
+    getboolean("rst2_debug_handle_starttag")
+    getboolean("rst2_debug_show_unknownattributes")
+    getboolean("rst2_debug_node_html_1")
+    getboolean("rst2_debug_anchors")
+    getboolean("rst2_debug_before_and_after_replacement")
 
 #@-node:bwmulder.20050314131619:applyConfiguration
 #@+node:bwmulder.20041011145032:bodyfilter
@@ -513,7 +655,7 @@ def underline(h,level):
 #@+node:bwmulder.20050319191929:http related stuff
 #@+node:bwmulder.20050320092000:http_support_main
 def http_support_main(tag, fname):
-    if config.http_server_support:
+    if config.rst2_http_server_support:
         set_initial_http_attributes(fname)
         find_anchors()
         if tag == 'open2':
@@ -527,7 +669,7 @@ def http_support_main(tag, fname):
         config.http_map = None
         config.anchormap = None
         g.es('html updated for html plugin', color="blue")
-        if config.clear_attributes:
+        if config.rst2_clear_attributes:
             g.es("http attributes cleared")
         
 #@nonl
@@ -634,7 +776,7 @@ class rst_htmlparser(link_anchor_parser):
         is_node_marker = False
         if self.is_anchor(tag, attrs):
             for name, value in attrs:
-                if name == 'name' and value.startswith(config.node_begin_marker):
+                if name == 'name' and value.startswith(config.rst2_node_begin_marker):
                     is_node_marker = True
                     break
             if is_node_marker:
@@ -644,13 +786,13 @@ class rst_htmlparser(link_anchor_parser):
                     lines = self.node_code[:]
                     lines[0] = lines[0][self.startpos:]
                     del lines[line - self.deleted_lines - 1:]
-                    if config.debug_store_lines:
+                    if config.rst2_debug_store_lines:
                         print "rst2: Storing in", self.last_position, ":"
                         print lines
                     get_http_attribute(self.last_position).extend(lines)
     
-                    if config.debug_show_unknownattributes:
-                        print "rst2: unknownAttributes[config.rst_http_attributename]"
+                    if config.rst2_debug_show_unknownattributes:
+                        print "rst2: unknownAttributes[config.rst2_http_attributename]"
                         print "For:", self.last_position
                         pprint(get_http_attr(self.last_position))
                                 
@@ -658,7 +800,7 @@ class rst_htmlparser(link_anchor_parser):
                     del self.node_code[:line - 1 - self.deleted_lines]
                     self.deleted_lines = line - 1
                     self.endpos_pending = True
-        if config.debug_handle_starttag:
+        if config.rst2_debug_handle_starttag:
             from pprint import pprint
             print "rst2: handle_starttag:", tag, attrs, is_node_marker
         starttag = self.get_starttag_text( ) 
@@ -675,7 +817,7 @@ class rst_htmlparser(link_anchor_parser):
            store the current stack for that node.
         """
         self.stack[1] = "</" + tag + ">"
-        if config.debug_handle_endtag:
+        if config.rst2_debug_handle_endtag:
             from pprint import pprint
             print "rst2: handle_endtag:", tag
             pprint(self.stack)
@@ -684,7 +826,7 @@ class rst_htmlparser(link_anchor_parser):
             self.startpos = self.node_code[0].find(">", column) + 1
             self.endpos_pending = False
         is_node_marker = self.node_marker_stack.pop()
-        if is_node_marker and not config.clear_attributes:
+        if is_node_marker and not config.rst2_clear_attributes:
             self.last_position = self.http_map[is_node_marker]
             if is_node_marker != config.last_marker:
                 set_http_attribute(self.http_map[is_node_marker], self.stack)
@@ -697,7 +839,7 @@ class rst_htmlparser(link_anchor_parser):
         """
         Generate a node marker for 
         """
-        return config.node_begin_marker + ("%s" % number)
+        return config.rst2_node_begin_marker + ("%s" % number)
         
     generate_node_marker = classmethod(generate_node_marker)
         
@@ -745,7 +887,7 @@ class anchor_htmlparser(link_anchor_parser):
             self.first_node = False
         for name, value in attrs:
             if name == 'name':
-                if not value.startswith(config.node_begin_marker):
+                if not value.startswith(config.rst2_node_begin_marker):
                     self.anchormap[value] = (config.current_file, self.vnode)
                   
     #@nonl
@@ -788,7 +930,7 @@ class link_htmlparser(link_anchor_parser):
                     href_a = href_parts[0]
                 else:
                     href_a = href_parts[1]
-                if not href_a.startswith(config.node_begin_marker):
+                if not href_a.startswith(config.rst2_node_begin_marker):
                     if href_a in self.anchormap:
                         href_file, href_node = self.anchormap[href_a]
                         http_node_ref = mod_http.node_reference(href_node)
@@ -827,20 +969,20 @@ def find_anchors():
     first_node = True
     for vnode, attrs in http_attribute_iter():
         html = reconstruct_html_from_attrs(attrs)
-        if config.debug_node_html_1:
+        if config.rst2_debug_node_html_1:
             pprint(html)
         parser = anchor_htmlparser(vnode, first_node)
         for line in html:
             parser.feed(line)
         first_node = parser.first_node
-    if config.debug_anchors:
+    if config.rst2_debug_anchors:
         print "Anchors found:"
         pprint(config.anchormap)
 #@-node:bwmulder.20050319152820:find_anchors
 #@+node:bwmulder.20050319153321:relocate_references_using_anchormap
 def relocate_references_using_anchormap():
     for vnode, attr in http_attribute_iter():
-        if config.debug_before_and_after_replacement:
+        if config.rst2_debug_before_and_after_replacement:
             print "Before replacement:", vnode
             pprint (attr)
         http_lines = attr[3:]
@@ -858,7 +1000,7 @@ def relocate_references_using_anchormap():
             else:
                 filename = marker_parts[0]
                 attr[line+2] = attr[line+2].replace('href="%s"' % href, 'href="%s"' % http_node_ref)
-    if config.debug_before_and_after_replacement:
+    if config.rst2_debug_before_and_after_replacement:
             print "After replacement"
             pprint (attr)
             for i in range(3): print
