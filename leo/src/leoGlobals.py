@@ -3646,6 +3646,19 @@ class mulderUpdateAlgorithm:
     #@+node:ekr.20040718101315:stripWhitespaceFromBlankLines(before_lines)
     def stripWhitespaceFromBlankLines (self,lines):
         
+        # All backslashes must be doubled.
+    
+        """Strip blanks and tabs from lines containing only blanks and tabs.
+        
+        >>> import leoGlobals as g
+        >>> s = "a\\n \\t\\n\\t\\t \\t\\nb"
+        >>> theLines = g.splitLines(s)
+        >>> theLines
+        ['a\\n', ' \\t\\n', '\\t\\t \\t\\n', 'b']
+        >>> g.mulderUpdateAlgorithm().stripWhitespaceFromBlankLines(theLines)
+        ['a\\n', '\\n', '\\n', 'b']
+        """
+    
         for i in xrange(len(lines)):
             stripped_line = lines[i].lstrip(" \t")
             if stripped_line in ('\n',''):
