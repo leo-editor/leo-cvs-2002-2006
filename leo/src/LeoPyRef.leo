@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="7096" clone_windows="0"/>
-<globals body_outline_ratio="0.396226415094">
-	<global_window_position top="30" left="410" height="901" width="776"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="7097" clone_windows="0"/>
+<globals body_outline_ratio="0.550499445061">
+	<global_window_position top="25" left="343" height="901" width="868"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -12,19 +12,16 @@
 	<change_string></change_string>
 </find_panel_settings>
 <vnodes>
-<v t="EKR.20040519090151"><vh>Diary</vh>
-<v t="ekr.20031218072017"><vh>@thin ../doc/leoDiary.txt</vh></v>
-</v>
 <v t="EKR.20040430162943"><vh>Notes</vh>
 <v t="ekr.20031218072017.329"><vh>@thin ../doc/leoNotes.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.3"><vh>Projects</vh>
 <v t="EKR.20040429143933"
-marks="ekr.20040701152235.15,ekr.20040701152235.16,"><vh>@thin leoProjects.txt</vh></v>
+marks="ekr.20040701152235.15,ekr.20040701152235.16,ekr.20031218072017.1863,ekr.20040711135244.10,"><vh>@thin leoProjects.txt</vh></v>
 </v>
 <v t="EKR.20040519090151.2" a="TV"><vh>To do</vh>
-<v t="ekr.20040117181936"
-marks="ekr.20031218072017.828,ekr.20031218072017.734,ekr.20040831092540,ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
+<v t="ekr.20040117181936" a="E"
+marks="ekr.20040831092540,ekr.20031218072017.1863,"><vh>@thin ../doc/leoToDo.txt</vh></v>
 </v>
 <v t="ekr.20031218072017.2406"><vh>Code</vh>
 <v t="ekr.20031218072017.2582"><vh> version &amp; signon stuff</vh>
@@ -48,7 +45,7 @@ marks="ekr.20031218072017.828,ekr.20031218072017.734,ekr.20040831092540,ekr.2003
 <v t="ekr.20041005105605.1"><vh>@thin leoAtFile.py</vh></v>
 <v t="ekr.20031218072017.2794"><vh>@thin leoColor.py</vh></v>
 <v t="ekr.20031218072017.2810"
-marks="ekr.20040629121554.2,ekr.20031218072017.2865,"><vh>@thin leoCommands.py</vh></v>
+marks="ekr.20040629121554.2,ekr.20031218072017.2865,ekr.20040711135244.10,"><vh>@thin leoCommands.py</vh></v>
 <v t="ekr.20031218072017.3001"><vh>@thin leoConfig.py</vh></v>
 <v t="ekr.20031218072017.3018"
 marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
@@ -87,7 +84,6 @@ marks="ekr.20031218072017.1863,"><vh>@thin leoFileCommands.py</vh></v>
 </vnodes>
 <tnodes>
 <t tx="EKR.20040430162943"></t>
-<t tx="EKR.20040519090151"></t>
 <t tx="EKR.20040519090151.2">@ The present code is almost useless if there is a crash in Leo's core (instead of the script itself).</t>
 <t tx="EKR.20040519090151.3"></t>
 <t tx="ekr.20031218072017.2406">@language python
@@ -189,7 +185,7 @@ def findTopLevelNode(headline):
 </t>
 <t tx="ekr.20040629121554.2">def initVersion (self):
     c = self
-    c.ver = "$Revision: 1.165 $" # CVS updates this.</t>
+    c.ver = "$Revision: 1.171 $" # CVS updates this.</t>
 <t tx="ekr.20040629121554.3">def signOnWithVersion (self):
 
     c = self

@@ -2,7 +2,7 @@
 <leo_file>
 <leo_header file_format="2" tnodes="0" max_tnode_index="528" clone_windows="0"/>
 <globals body_outline_ratio="0.5">
-	<global_window_position top="51" left="145" height="827" width="800"/>
+	<global_window_position top="127" left="276" height="827" width="953"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences>
@@ -13,7 +13,7 @@
 </find_panel_settings>
 <vnodes>
 <v t="ekr.20040801060323" a="E"><vh>Old Projects</vh>
-<v t="ekr.20031218072017.1135" a="TV"><vh> Bindings</vh>
+<v t="ekr.20031218072017.1135"><vh> Bindings</vh>
 <v t="ekr.20031218072017.1136" a="E"><vh>(up-down arrows )</vh>
 <v t="ekr.20031218072017.1137"><vh> Original proc moveUpDown</vh></v>
 <v t="ekr.20031218072017.1138"><vh> New notes from Brian</vh></v>
@@ -166,7 +166,196 @@
 <v t="ekr.20031218072017.1656"><vh>&lt;&lt; redirectClass methods &gt;&gt;</vh></v>
 <v t="ekr.20031218072017.1657"><vh>runMainLoop</vh></v>
 </v>
-<v t="ekr.20040107064101.1" a="E"><vh>4.2 Projects</vh>
+<v t="ekr.20040809102904" a="TV"><vh>4.2 rc1 projects</vh>
+<v t="ekr.20040809095716"><vh>(Restored the "iconclick1/2" hooks)</vh>
+<v t="ekr.20040803072955.81"><vh>onIconBoxClick</vh></v>
+</v>
+<v t="ekr.20040830210600"><vh>(Made sure a proper message is given with invalid versions of Python)</vh>
+<v t="ekr.20040831063427"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1936"><vh>isValidPython</vh></v>
+</v>
+<v t="ekr.20040831093934"><vh>(Fixed problem with tabs on MacOs)</vh>
+<v t="ekr.20040831093934.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1330"><vh>onBodyKey</vh>
+<v t="ekr.20040105223536"><vh>handleStatusLineKey</vh>
+<v t="ekr.20040105223536.1"><vh>&lt;&lt; trace the key event &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040829101055"><vh>(Fixed Import Derived Files command)</vh>
+<v t="ekr.20040831095613"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.1809"><vh>importDerivedFile</vh></v>
+</v>
+<v t="ekr.20040831104303"><vh>(Fixed parsing of minimal &lt;preferences&gt; tag</vh>
+<v t="ekr.20040831104303.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.2062"><vh>getPrefs</vh>
+<v t="ekr.20031218072017.2063"><vh>getTargetLanguage</vh></v>
+</v>
+</v>
+<v t="ekr.20040831110923"><vh>(Allow longer headlines for to support long url's)</vh>
+<v t="ekr.20040831111203"><vh>Report</vh></v>
+<v t="ekr.20040803072955.91"><vh>idle_head_key</vh>
+<v t="ekr.20040803072955.92"><vh>&lt;&lt; set head to vnode text &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.93"><vh>&lt;&lt; set the widget text to head &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.94"><vh>&lt;&lt; set s to the widget text &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.95"><vh>&lt;&lt; update p &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.96"><vh>&lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.97"><vh>&lt;&lt; update the screen &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040831120106"><vh>(Fixed read errors with @language html)</vh>
+<v t="ekr.20040831120106.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1753"><vh>readLastDocLine</vh>
+<v t="ekr.20031218072017.1754"><vh>&lt;&lt; new code &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1755"><vh>&lt;&lt; old code &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040831113849"><vh>(Removed spurious "Warning: updating changed text" message)</vh>
+<v t="ekr.20040831121549.1"><vh>Report</vh></v>
+<v t="ekr.20040904080309"><vh>Notes</vh></v>
+<v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
+<v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040901061935"><vh>(Added option to disable left click logic in outline pane)</vh>
+<v t="ekr.20040906081644"><vh>Notes: expanded_click_area</vh></v>
+<v t="ekr.20040803072955.16"><vh>__init__</vh>
+<v t="ekr.20040803072955.17"><vh>&lt;&lt; define drawing constants &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.18"><vh>&lt;&lt; old ivars &gt;&gt;</vh></v>
+<v t="ekr.20040803072955.19"><vh>&lt;&lt; inject callbacks into the position class &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20040803072955.20"><vh>createPermanentBindings</vh></v>
+<v t="ekr.20040803072955.7"><vh>newBox</vh></v>
+<v t="ekr.20040803072955.37"><vh>drawClickBox</vh>
+<v t="ekr.20040803072955.38"><vh>&lt;&lt; change the appearance of headlines &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040812033107"><vh>(Fix bugs in perfect import)  *** Disabled perfect import</vh>
+<v t="ekr.20040828161347"><vh>Report</vh></v>
+<v t="ekr.20040907083404"><vh>Notes</vh></v>
+<v t="EKR.20040504150046"><vh>class mulderUpdateAlgorithm (leoGlobals)</vh>
+<v t="EKR.20040504150046.3"><vh>__init__</vh></v>
+<v t="EKR.20040504150046.9"><vh>copy_sentinels</vh></v>
+<v t="EKR.20040504155109"><vh>copy_time</vh></v>
+<v t="EKR.20040504150046.6"><vh>create_mapping</vh></v>
+<v t="EKR.20040505080156"><vh>Get or remove sentinel lines</vh>
+<v t="EKR.20040505081121"><vh>separateSentinelsFromFile/Lines</vh></v>
+<v t="EKR.20040505080156.2"><vh>removeSentinelsFromFile/Lines</vh>
+<v t="ekr.20040716105102"><vh>&lt;&lt; remove the newline from result[-1] if line[i] is followed by @nonl &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040505080156.3"><vh>getSentinelsFromFile/Lines</vh></v>
+</v>
+<v t="EKR.20040504150046.10"><vh>propagateDiffsToSentinelsFile</vh>
+<v t="EKR.20040504150046.11"><vh>&lt;&lt; init propagateDiffsToSentinelsFile vars &gt;&gt;</vh></v>
+<v t="EKR.20040504150046.12"><vh>&lt;&lt;paranoia check&gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040504145804.1"><vh>propagateDiffsToSentinelsLines (called from perfect import)</vh>
+<v t="EKR.20040504145804.2"><vh>&lt;&lt; init propagateDiffsToSentinelsLines vars &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.3"><vh>&lt;&lt; copy the sentinels at the beginning of the file &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.4"><vh>&lt;&lt; update and check the loop invariant&gt;&gt;</vh></v>
+<v t="EKR.20040504145804.5"><vh>&lt;&lt; handle 'equal' tag &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.6"><vh>&lt;&lt; handle 'replace' tag &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.7"><vh>&lt;&lt; handle 'delete' tag &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.8"><vh>&lt;&lt; handle 'insert' tag &gt;&gt;</vh></v>
+<v t="EKR.20040504145804.9"><vh>&lt;&lt; copy the sentinels at the end of the file &gt;&gt;</vh></v>
+</v>
+<v t="EKR.20040504150046.5"><vh>report_mismatch</vh></v>
+<v t="ekr.20040718101315"><vh>stripWhitespaceFromBlankLines(before_lines)</vh></v>
+<v t="EKR.20040504160820"><vh>write_if_changed</vh>
+<v t="EKR.20040504160820.1"><vh>&lt;&lt; make backup file &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="EKR.20040506075328.2"><vh>perfectImport</vh>
+<v t="ekr.20040717112739"><vh>&lt;&lt; about this algorithm &gt;&gt;</vh></v>
+<v t="ekr.20040716065356"><vh>&lt;&lt; clear all dirty bits &gt;&gt;</vh></v>
+<v t="ekr.20040716064333"><vh>&lt;&lt; Assign file indices  &gt;&gt;</vh></v>
+<v t="ekr.20040716064333.1"><vh>&lt;&lt; Write root's tree to to string s &gt;&gt;</vh></v>
+<v t="ekr.20040717132539"><vh>&lt;&lt; put the corrected fat lines in a new node &gt;&gt;</vh></v>
+<v t="ekr.20040717113036"><vh>&lt;&lt; correct root's tree using write_lines &gt;&gt;</vh></v>
+<v t="ekr.20040718035658"><vh>&lt;&lt; verify that writing the tree would produce the original file &gt;&gt;</vh>
+<v t="ekr.20040718045423"><vh>&lt;&lt; dump the files &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20031218072017.3212"><vh>importFilesCommand</vh>
+<v t="ekr.20031218072017.3213"><vh>&lt;&lt; Create a parent for two files having a common prefix &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.3319"><vh>undentBody</vh></v>
+<v t="ekr.20031218072017.3202"><vh>removeLeadingWhitespace</vh></v>
+<v t="ekr.20031218072017.2256"><vh>Python scanners</vh>
+<v t="ekr.20031218072017.2257"><vh>scanPythonClass</vh>
+<v t="ekr.20031218072017.2258"><vh>&lt;&lt; set classname and headline, or return i &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2259"><vh>&lt;&lt; create class_vnode  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2260"><vh>&lt;&lt; create nodes for all defs of the class &gt;&gt;</vh>
+<v t="ekr.20031218072017.2261"><vh>&lt;&lt; create parent_vnode &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2262"><vh>&lt;&lt; append any other class material &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2263"><vh>scanPythonDef</vh>
+<v t="ekr.20031218072017.2264"><vh>&lt;&lt; set headline or return i &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2265"><vh>&lt;&lt; skip the Python def &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2266"><vh>&lt;&lt; Create def node &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2267"><vh>scanPythonDecls</vh>
+<v t="ekr.20031218072017.2268"><vh>&lt;&lt; break on def or class &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2269"><vh>&lt;&lt; Create a child node for declarations &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2270"><vh>scanPythonText</vh>
+<v t="ekr.20031218072017.2271"><vh>&lt;&lt; handle possible Python function or class &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2272"><vh>&lt;&lt; Append a reference to the methods of this file &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2273"><vh>&lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040831112005"><vh>(Investigated control-v problems on the Mac)</vh>
+<v t="ekr.20040831112005.1"><vh>Report</vh></v>
+</v>
+<v t="EKR.20040422132037.8"><vh>Mouse / Paste Anomalies (email sent)</vh></v>
+<v t="ekr.20040910064225"><vh>(Removed assert from colorizer)</vh>
+<v t="ekr.20040910064225.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.1880"><vh>colorizeAnyLanguage &amp; allies</vh>
+<v t="ekr.20031218072017.1602"><vh>&lt;&lt; initialize ivars &amp; tags &gt;&gt; colorizeAnyLanguage</vh>
+<v t="ekr.20031218072017.1603"><vh>&lt;&lt; configure tags &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.370"><vh>&lt;&lt; configure language-specific settings &gt;&gt; colorizer</vh></v>
+</v>
+<v t="ekr.20031218072017.1881"><vh>&lt;&lt; all state ivars match &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1882"><vh>&lt;&lt; incrementally color the text &gt;&gt;</vh>
+<v t="ekr.20031218072017.1883"><vh>&lt;&lt; compute leading, middle &amp; trailing  lines &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1884"><vh>&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1885"><vh>&lt;&lt; initialize new states &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1886"><vh>&lt;&lt; colorize until the states match &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1887"><vh>&lt;&lt; non-incrementally color the text &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1890"><vh>&lt;&lt; completely recolor in two passes &gt;&gt;</vh>
+<v t="ekr.20031218072017.1891"><vh>&lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.1888"><vh>&lt;&lt; update state ivars &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.1889"><vh>&lt;&lt; set state ivars to "unknown" &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040913111703"><vh>(Fixed bugs in Tangle/Untangle)</vh>
+<v t="ekr.20040914074643"><vh>Report</vh></v>
+</v>
+<v t="ekr.20040914081306"><vh>(Shifted all Alt-shortcuts to Ctrl shortcuts on the Mac)</vh>
+<v t="ekr.20040914081306.1"><vh>Report</vh></v>
+<v t="ekr.20031218072017.2098"><vh>canonicalizeShortcut</vh>
+<v t="ekr.20031218072017.2099"><vh>&lt;&lt; canonicalize the last field &gt;&gt;</vh>
+<v t="ekr.20031218072017.2100"><vh>&lt;&lt; define dict of Tk bind names &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2101"><vh>&lt;&lt; define dict of special names &gt;&gt;</vh></v>
+</v>
+<v t="ekr.20031218072017.2102"><vh>&lt;&lt; set the last field, preserving case &gt;&gt;</vh></v>
+<v t="ekr.20031218072017.2103"><vh>&lt;&lt; synthesize the shortcuts from the information &gt;&gt;</vh></v>
+</v>
+</v>
+<v t="ekr.20040914082436"><vh>(Added c.frame.openDirectory to sys.path when executing scripts)</vh>
+<v t="ekr.20031218072017.2140"><vh>c.executeScript</vh>
+<v t="ekr.20031218072017.2143"><vh>&lt;&lt; redirect output &gt;&gt;</vh></v>
+<v t="EKR.20040612215018"><vh>&lt;&lt; dump the lines of script near the error &gt;&gt;</vh></v>
+<v t="EKR.20040627100424"><vh>&lt;&lt; unredirect output &gt;&gt;</vh></v>
+</v>
+</v>
+</v>
+<v t="ekr.20040107064101.1"><vh>4.2 Projects</vh>
 <v t="ekr.20040629162300"><vh>In 4.2 a1</vh>
 <v t="ekr.20040403104315"><vh>March 2004</vh>
 <v t="ekr.20040325203859"><vh>3/11 to 3/20</vh>
@@ -1605,6 +1794,7 @@
 <v t="ekr.20031218072017.2771"><vh>readEndLeo</vh></v>
 <v t="EKR.20040524071414"><vh>readEndMiddle</vh></v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2773"><vh>readEndOthers</vh></v>
@@ -1638,6 +1828,7 @@
 <v t="ekr.20031218072017.2768"><vh>&lt;&lt; Check the filename in the sentinel &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 </v>
@@ -1839,6 +2030,7 @@
 <v t="ekr.20031218072017.2001"><vh>putOpenNodeSentinel (sets tnodeList) 4.x</vh></v>
 <v t="EKR.20040427095028"><vh>putCloseNodeSentinel 4.x</vh></v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2758"><vh>scanText4 &amp; allies</vh>
@@ -1866,6 +2058,7 @@
 <v t="ekr.20031218072017.2771"><vh>readEndLeo</vh></v>
 <v t="EKR.20040524071414"><vh>readEndMiddle</vh></v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2773"><vh>readEndOthers</vh></v>
@@ -2333,6 +2526,7 @@
 <v t="ekr.20031218072017.1819"><vh>&lt;&lt; delete all tempBodyStrings &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 </v>
@@ -3008,6 +3202,7 @@
 <v t="ekr.20031218072017.1819"><vh>&lt;&lt; delete all tempBodyStrings &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20031218072017.2772"><vh>readEndNode (4.x)</vh>
+<v t="ekr.20040904081433"><vh>&lt;&lt; indicate that the node has been changed &gt;&gt;</vh></v>
 <v t="ekr.20040717133944"><vh>&lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;</vh></v>
 </v>
 </v>
@@ -4176,6 +4371,32 @@ I'll try to track this down, but if anyone has a clue right away, please post th
 Dave Hein  
 </t>
 <t tx="EKR.20040422132037.1"></t>
+<t tx="EKR.20040422132037.8">@nocolor
+
+By: Bill Drissel - drissel
+2004-04-13 19:43  
+
+Xserver (XFree86 under Cygwin) on PC (W2000); controlling Linux Red Hat;
+buncha windows up including one Leo window and many xterms and Xemacs.
+
+A: means action, R: means result
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; locate mouse symbol in text
+R: text shows in body pane; headline is not marked with blue square; text is not colorized; text is not saved to file
+
+A: hilite text in Xemacs window; move mouse symbol to Leo body pane; middle click; up arrow to locate Ibeam in text
+R: Joy! colorizes, marks headline and saves!
+
+A: hilite headline text; type on KB
+R: keystrokes replace hilited text
+
+A: hilite text in Xemacs window; hilite headline; middle click
+R: hilited text appended to headline rather than replacing
+
+This last anomaly seems to persist regardless of how the headline is hilited and regardless of pasting method (middle click or Control-V)</t>
 <t tx="EKR.20040423082910">if type(s) == type(u""): # 3/18/03
     s = g.toEncodedString(s,g.app.tkEncoding)
     
@@ -4593,6 +4814,158 @@ What I did:
 <t tx="EKR.20040503105354">if g.match(s,i,thin_tag):
     i += len(tag)</t>
 <t tx="EKR.20040503105740"></t>
+<t tx="EKR.20040504145804.1">def propagateDiffsToSentinelsLines (self,
+    i_lines,j_lines,fat_lines,mapping):
+    
+    """Compare the 'i_lines' with 'j_lines' and propagate the diffs back into
+    'write_lines' making sure that all sentinels of 'fat_lines' are copied.
+
+    i/j_lines have no sentinels.  fat_lines does."""
+
+    &lt;&lt; init propagateDiffsToSentinelsLines vars &gt;&gt;
+    &lt;&lt; copy the sentinels at the beginning of the file &gt;&gt;
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if testing:
+            if verbose: print
+            print "Opcode %7s %3d %3d %3d %3d" % (tag,i1,i2,j1,j2)
+            if verbose: print
+        &lt;&lt; update and check the loop invariant &gt;&gt;
+        if tag == 'equal':
+            &lt;&lt; handle 'equal' tag &gt;&gt;
+        elif tag == 'replace':
+            &lt;&lt; handle 'replace' tag &gt;&gt;
+        elif tag == 'delete':
+            &lt;&lt; handle 'delete' tag &gt;&gt;
+        elif tag == 'insert':
+            &lt;&lt; handle 'insert' tag &gt;&gt;
+        else: assert 0,"bad tag"
+    &lt;&lt; copy the sentinels at the end of the file &gt;&gt;
+    return write_lines</t>
+<t tx="EKR.20040504145804.2"># Indices into i_lines, j_lines &amp; fat_lines.
+i_pos = j_pos = fat_pos = 0
+
+# These vars check that all ranges returned by get_opcodes() are contiguous.
+i2_old = j2_old = -1
+
+# Create the output lines.
+write_lines = []
+
+matcher = difflib.SequenceMatcher(None,i_lines,j_lines)
+
+testing = self.testing
+verbose = self.verbose</t>
+<t tx="EKR.20040504145804.3">while fat_pos &lt; mapping[0]:
+
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing:
+        print "copy initial line",fat_pos,line,
+    fat_pos += 1
+</t>
+<t tx="EKR.20040504145804.4"># We need the ranges returned by get_opcodes to completely cover the source lines being compared.
+# We also need the ranges not to overlap.
+
+assert(i2_old in (-1,i1))
+assert(j2_old in (-1,j1))
+
+i2_old = i2 ; j2_old = j2
+
+# Check the loop invariants.
+assert i_pos == i1
+assert j_pos == j1
+assert fat_pos == mapping[i1]
+
+if 0: # not yet.
+    if testing: # A bit costly.
+        t_sourcelines,t_sentinel_lines = push_filter_lines(write_lines, delims)
+        # Check that we have all the modifications so far.
+        assert t_sourcelines == j_lines[:j1],"t_sourcelines == j_lines[:j1]"
+        # Check that we kept all sentinels so far.
+        assert t_sentinel_lines == push_filter_lines(fat_lines[:fat_pos], delims)[1]</t>
+<t tx="EKR.20040504145804.5"># Copy the lines, including sentinels.
+while fat_pos &lt;= mapping[i2-1]:
+    line = fat_lines[fat_pos]
+    if 0: # too verbose.
+        if testing: print "Equal: copying ", line,
+    write_lines.append(line)
+    fat_pos += 1
+
+if testing and verbose:
+    print "Equal: synch i", i_pos,i2
+    print "Equal: synch j", j_pos,j2
+
+i_pos = i2
+j_pos = j2
+
+# Copy the sentinels which might follow the lines.       
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i2-1,i2)</t>
+<t tx="EKR.20040504145804.6">@ Replace lines that may span sentinels.
+
+For now, we put all the new contents after the first sentinel.
+
+A more complex approach: run the difflib across the different lines and try to
+construct a mapping changed line =&gt; orignal line.
+@c
+
+while j_pos &lt; j2:
+    line = j_lines[j_pos]
+    if testing:
+        print "Replace i:",i_pos,repr(i_lines[i_pos])
+        print "Replace j:",j_pos,repr(line)
+        i_pos += 1
+
+    write_lines.append(line)
+    j_pos += 1
+
+i_pos = i2
+
+# Copy the sentinels which might be between the changed code.         
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)</t>
+<t tx="EKR.20040504145804.7">if testing and verbose:
+    print "delete: i",i_pos,i1
+    print "delete: j",j_pos,j1
+
+j_pos = j2
+i_pos = i2
+
+# Restore any deleted sentinels.
+fat_pos = self.copy_sentinels(write_lines,fat_lines,fat_pos,mapping,i1,i2)</t>
+<t tx="EKR.20040504145804.8">while j_pos &lt; j2:
+    line = j_lines[j_pos]
+    if testing: print "Insert:", line,
+    write_lines.append(line)
+    j_pos += 1
+
+# The input streams are already in synch.</t>
+<t tx="EKR.20040504145804.9">while fat_pos &lt; len(fat_lines):
+
+    line = fat_lines[fat_pos]
+    write_lines.append(line)
+    if testing:
+        print "Append last line",line
+    fat_pos += 1
+</t>
+<t tx="EKR.20040504150046">import difflib,shutil
+
+class mulderUpdateAlgorithm:
+    
+    """A class to update derived files using
+    diffs in files without sentinels.
+    """
+    
+    @others
+    
+def doMulderUpdateAlgorithm(sourcefilename,targetfilename):
+
+    mu = mulderUpdateAlgorithm()
+
+    mu.pull_source(sourcefilename,targetfilename)
+    mu.copy_time(targetfilename,sourcefilename)</t>
+<t tx="EKR.20040504150046.3">def __init__ (self,testing=False,verbose=False):
+    
+    self.testing = testing
+    self.verbose = False
+    self.do_backups = False</t>
 <t tx="EKR.20040504150046.4">def comment_delims_from_extension(filename):
     
     """
@@ -4620,6 +4993,242 @@ What I did:
     else:
         g.trace("unknown extension %s" % ext)
         return None,None,None</t>
+<t tx="EKR.20040504150046.5">def report_mismatch (self,lines1,lines2,message,lines1_message,lines2_message):
+
+    """
+    Generate a report when something goes wrong.
+    """
+
+    print '='*20
+    print message
+    
+    if 0:
+        print lines1_message
+        print '-'*20
+        for line in lines1:
+          print line,
+         
+        print '='*20
+    
+        print lines2_message
+        print '-'*20
+        for line in lines2:
+            print line,</t>
+<t tx="EKR.20040504150046.6">def create_mapping (self,lines,delims):
+    """
+
+    'lines' is a list of lines of a file with sentinels.
+ 
+    Returns:
+
+    result: lines with all sentinels removed.
+
+    mapping: a list such that result[mapping[i]] == lines[i]
+    for all i in range(len(result))
+
+    """
+    
+    if not lines:
+        return [],[]
+
+    # Create mapping and set i to the index of the last non-sentinel line.
+    mapping = []
+    for i in xrange(len(lines)):
+        if not g.is_sentinel(lines[i],delims):
+            mapping.append(i)
+
+    # Create a last mapping entry for copy_sentinels.
+    mapping.append(i)
+    
+    # Use removeSentinelsFromLines to handle @nonl properly.
+    stripped_lines = self.removeSentinelsFromLines(lines,delims)
+
+    return stripped_lines, mapping</t>
+<t tx="EKR.20040504150046.9">@ This script retains _all_ sentinels.  If lines are replaced, or deleted,
+we restore deleted sentinel lines by checking for gaps in the mapping.
+@c
+
+def copy_sentinels (self,write_lines,fat_lines,fat_pos,mapping,startline,endline):
+    """
+    
+    Copy sentinel lines from fat_lines to write_lines.
+
+    Copy all sentinels _after_ the current reader postion up to,
+    but not including, mapping[endline].
+
+    """
+
+    j_last = mapping[startline]
+    i = startline + 1
+    while i &lt;= endline:
+        j = mapping[i]
+        if j_last + 1 != j:
+            fat_pos = j_last + 1
+            # Copy the deleted sentinels that comprise the gap.
+            while fat_pos &lt; j:
+                line = fat_lines[fat_pos]
+                write_lines.append(line)
+                if self.testing and self.verbose: print "Copy sentinel:",fat_pos,line,
+                fat_pos += 1
+        j_last = j ; i += 1
+
+    fat_pos = mapping[endline]
+    return fat_pos</t>
+<t tx="EKR.20040504150046.10">def propagateDiffsToSentinelsFile(self,sourcefilename,targetfilename):
+    
+    &lt;&lt; init propagateDiffsToSentinelsFile vars &gt;&gt;
+    
+    write_lines = self.propagateDiffsToSentinelsLines(
+        i_lines,j_lines,fat_lines,mapping)
+        
+    # Update _source_ file if it is not the same as write_lines.
+    written = self.write_if_changed(write_lines,targetfilename,sourcefilename)
+    if written:
+        &lt;&lt; paranoia check&gt;&gt;</t>
+<t tx="EKR.20040504150046.11"># Get the sentinel comment delims.
+delims = self.comment_delims_from_extension(sourcefilename)
+if not delims:
+    return
+
+try:
+    # Create the readers.
+    sfile = file(sourcefilename)
+    tfile = file(targetfilename)
+    
+    fat_lines = sfile.readlines() # Contains sentinels.
+    j_lines   = tfile.readlines() # No sentinels.
+    
+    i_lines,mapping = self.create_mapping(fat_lines,delims)
+    
+    sfile.close()
+    tfile.close()
+except:
+    g.es_exception("can not open files")
+    return</t>
+<t tx="EKR.20040504150046.12"># Check that 'push' will re-create the changed file.
+strippedLines,sentinel_lines = self.separateSentinelsFromFile(sourcefilename)
+
+if strippedLines != j_lines:
+    self.report_mismatch(strippedLines, j_lines,
+        "Propagating diffs did not work as expected",
+        "Content of sourcefile:",
+        "Content of modified file:")
+
+# Check that no sentinels got lost.
+fat_sentinel_lines = self.getSentinelsFromLines(fat_lines,delims)
+
+if sentinel_lines != fat_sentinel_lines:
+    self.report_mismatch(sentinel_lines,fat_sentinel_lines,
+        "Propagating diffs modified sentinel lines:",
+        "Current sentinel lines:",
+        "Old sentinel lines:")</t>
+<t tx="EKR.20040504155109">def copy_time(self,sourcefilename,targetfilename):
+    
+    """
+    Set the target file's modification time to
+    that of the source file.
+    """
+
+    st = os.stat(sourcefilename)
+
+    if hasattr(os, 'utime'):
+        os.utime(targetfilename, (st.st_atime, st.st_mtime))
+    elif hasattr(os, 'mtime'):
+        os.mtime(targetfilename, st.st_mtime)
+    else:
+        g.trace("Can not set modification time")</t>
+<t tx="EKR.20040504160820">def write_if_changed(self,lines,sourcefilename,targetfilename):
+    """
+    
+    Replaces target file if it is not the same as 'lines',
+    and makes the modification date of target file the same as the source file.
+    
+    Optionally backs up the overwritten file.
+
+    """
+    
+    copy = not os.path.exists(targetfilename) or lines != file(targetfilename).readlines()
+        
+    if self.testing:
+        if copy:
+            print "Writing",targetfilename,"without sentinals"
+        else:
+            print "Files are identical"
+
+    if copy:
+        if self.do_backups:
+            &lt;&lt; make backup file &gt;&gt;
+        outfile = open(targetfilename, "w")
+        for line in lines:
+            outfile.write(line)
+        outfile.close()
+        self.copy_time(sourcefilename,targetfilename)
+    return copy
+</t>
+<t tx="EKR.20040504160820.1">if os.path.exists(targetfilename):
+    count = 0
+    backupname = "%s.~%s~" % (targetfilename,count)
+    while os.path.exists(backupname):
+        count += 1
+        backupname = "%s.~%s~" % (targetfilename,count)
+    os.rename(targetfilename, backupname)
+    if testing:
+        print "backup file in ", backupname</t>
+<t tx="EKR.20040505080156"># These routines originally were part of push_filter &amp; push_filter_lines.</t>
+<t tx="EKR.20040505080156.2">def removeSentinelsFromFile (self,filename):
+    
+    """Return a copy of file with all sentinels removed."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+    
+    return removeSentinelsFromLines(lines,delims)
+    
+def removeSentinelsFromLines (self,lines,delims):
+
+    """Return a copy of lines with all sentinels removed."""
+    
+    delim1,delim2,delim3 = delims
+    result = [] ; last_nosent_i = -1
+    for i in xrange(len(lines)):
+        if not g.is_sentinel(lines[i],delims):
+            result.append(lines[i])
+            last_nosent_i = i
+    &lt;&lt; remove the newline from result[-1] if line[i] is followed by @nonl &gt;&gt;
+    return result</t>
+<t tx="EKR.20040505080156.3">def getSentinelsFromFile (self,filename,delims):
+    
+    """Returns all sentinels lines in a file."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+
+    return getSentinelsFromLines(lines,delims)
+    
+def getSentinelsFromLines (self,lines,delims):
+    
+    """Returns all sentinels lines in lines."""
+    
+    return [line for line in lines if g.is_sentinel(line,delims)]</t>
+<t tx="EKR.20040505081121">def separateSentinelsFromFile (self,filename):
+    
+    """Separate the lines of the file into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the file."""
+    
+    lines = file(filename).readlines()
+    delims = g.comment_delims_from_extension(filename)
+    
+    return self.separateSentinelsFromLines(lines,delims)
+    
+def separateSentinelsFromLines (self,lines,delims):
+    
+    """Separate lines (a list of lines) into a tuple of two lists,
+    containing the sentinel and non-sentinel lines of the original list."""
+    
+    strippedLines = self.removeSentinelsFromLines(lines,delims)
+    sentinelLines = self.getSentinelsFromLines(lines,delims)
+    
+    return strippedLines,sentinelLines</t>
 <t tx="EKR.20040506075328">def writeOpenFile(self,root,nosentinels=False,thinFile=False,toString=False,oneNodeOnly=False):
     
     at = self ; c = at.c
@@ -4656,6 +5265,33 @@ at.root = root
 at.root.v.t.tnodeList = []
 
 c.endEditing() # Capture the current headline.</t>
+<t tx="EKR.20040506075328.2">def perfectImport (self,fileName,p,testing=False,verbose=False,convertBlankLines=True,verify=True):
+    
+    &lt;&lt; about this algorithm &gt;&gt;
+    c = p.c ; root = p.copy()
+    at = c.atFileCommands
+    if testing:
+        &lt;&lt; clear all dirty bits &gt;&gt;
+    &lt;&lt; Assign file indices &gt;&gt;
+    &lt;&lt; Write root's tree to to string s &gt;&gt;
+
+    # Set up the data for the algorithm.
+    mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
+    delims = g.comment_delims_from_extension(fileName)
+    fat_lines = g.splitLines(s) # Keep the line endings.
+    i_lines,mapping = mu.create_mapping(fat_lines,delims)
+    j_lines = file(fileName).readlines()
+    
+    # Correct write_lines using the algorihm.
+    if i_lines != j_lines:
+        if verbose:
+            g.es("Running Perfect Import",color="blue")
+        write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
+        if 1: # For testing.
+            &lt;&lt; put the corrected fat lines in a new node &gt;&gt;
+        &lt;&lt; correct root's tree using write_lines &gt;&gt;
+    if verify:
+        &lt;&lt; verify that writing the tree would produce the original file &gt;&gt;</t>
 <t tx="EKR.20040507093503"></t>
 <t tx="EKR.20040512081330.1"></t>
 <t tx="EKR.20040512084726">@nocolor
@@ -6256,15 +6892,24 @@ A new idea:  Make sure the text _does_ have a newline at all times.  I'm not sur
 
 - ALWAYS set the text in select.  This prevents some weird problems with trailling newlines.</t>
 <t tx="EKR.20040612213138"></t>
-<t tx="EKR.20040612215018">lines = g.splitLines(script)
+<t tx="EKR.20040612215018">if g.os_path_exists(fileName):
+    f = file(fileName)
+    lines = f.readlines()
+    f.close()
+else:
+    lines = g.splitLines(script)
 
 s = '-' * 20
 print s; g.es(s)
 
 if 1:
     # Just print the error line.
-    s = "line %d: %s" % (n,lines[n-1])
-    print s, ; g.es(s,newline=False)
+    try:
+        s = "%s line %d: %s" % (fileName,n,lines[n-1])
+        print s, ; g.es(s,newline=False)
+    except IndexError:
+        s = "%s line %d" % (fileName,n)
+        print s, ; g.es(s,newline=False)
 else:
     i = max(0,n-2)
     j = min(n+2,len(lines))
@@ -8926,22 +9571,22 @@ def onBodyChanged (self,p,undoType,oldSel=None,oldYview=None,newSel=None,oldText
     
     """Handle any key press event in the body pane."""
 
-    c = self.c ; ch = event.char 
+    c = self.c ; ch = event.char
+    
+    # This translation is needed on MacOS.
+    if ch == '':
+        d = {'Return':'\r', 'Tab':'\t', 'BackSpace':chr(8)}
+        ch = d.get(event.keysym,'')
+
     oldSel = c.frame.body.getTextSelection()
     
     p = c.currentPosition()
 
-    # g.trace(repr(ch))
-
     if 0: # won't work when menu keys are bound.
         self.handleStatusLineKey(event)
         
-    # g.trace(p)
-        
     # We must execute this even if len(ch) &gt; 0 to delete spurious trailing newlines.
-    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)
-
-</t>
+    self.c.frame.bodyCtrl.after_idle(self.idle_body_key,p,oldSel,"Typing",ch)</t>
 <t tx="ekr.20031218072017.1331"># Called by command handlers that change the text just before idle time.
 
 def onBodyWillChange (self,p,undoType,oldSel=None,oldYview=None):
@@ -10679,6 +11324,100 @@ def doHook(tag,*args,**keywords):
     g.app.hookError = True # Supress this function.
     g.app.idleTimeHook = False # Supress idle-time hook
     return None # No return value</t>
+<t tx="ekr.20031218072017.1602"># Add any newly-added user keywords.
+for d in g.globalDirectiveList:
+    name = '@' + d
+    if name not in leoKeywords:
+        leoKeywords.append(name)
+
+# Copy the arguments.
+self.p = p
+
+# Get the body text, converted to unicode.
+s = self.body.getAllText() # 10/27/03
+self.sel = sel = self.body.getInsertionPoint() # 10/27/03
+start,end = self.body.convertIndexToRowColumn(sel) # 10/27/03
+
+# g.trace(self.language)
+# g.trace(self.count,self.p)
+# g.trace(body.tag_names())
+
+if not self.incremental:
+    self.removeAllTags()
+    self.removeAllImages()
+
+self.redoColoring = False
+self.redoingColoring = False
+
+&lt;&lt; configure tags &gt;&gt;
+&lt;&lt; configure language-specific settings &gt;&gt;
+
+self.hyperCount = 0 # Number of hypertext tags
+self.count += 1
+lines = string.split(s,'\n')</t>
+<t tx="ekr.20031218072017.1603">config = g.app.config
+assert(config)
+
+for name in default_colors_dict.keys(): # Python 2.1 support.
+    option_name,default_color = default_colors_dict[name]
+    option_color = config.getColorsPref(option_name)
+    color = g.choose(option_color,option_color,default_color)
+    # Must use foreground, not fg.
+    try:
+        self.body.tag_configure(name, foreground=color)
+    except: # Recover after a user error.
+        self.body.tag_configure(name, foreground=default_color)
+
+underline_undefined = config.getBoolColorsPref("underline_undefined_section_names")
+use_hyperlinks      = config.getBoolColorsPref("use_hyperlinks")
+self.use_hyperlinks = use_hyperlinks
+
+# underline=var doesn't seem to work.
+if 0: # use_hyperlinks: # Use the same coloring, even when hyperlinks are in effect.
+    self.body.tag_configure("link",underline=1) # defined
+    self.body.tag_configure("name",underline=0) # undefined
+else:
+    self.body.tag_configure("link",underline=0)
+    if underline_undefined:
+        self.body.tag_configure("name",underline=1)
+    else:
+        self.body.tag_configure("name",underline=0)
+        
+# 8/4/02: we only create tags for whitespace when showing invisibles.
+if self.showInvisibles:
+    for name,option_name,default_color in (
+        ("blank","show_invisibles_space_background_color","Gray90"),
+        ("tab",  "show_invisibles_tab_background_color",  "Gray80")):
+        option_color = config.getColorsPref(option_name)
+        color = g.choose(option_color,option_color,default_color)
+        try:
+            self.body.tag_configure(name,background=color)
+        except: # Recover after a user error.
+            self.body.tag_configure(name,background=default_color)
+    
+# 11/15/02: Colors for latex characters.  Should be user options...
+
+if 1: # Alas, the selection doesn't show if a background color is specified.
+    self.body.tag_configure("latexModeBackground",foreground="black")
+    self.body.tag_configure("latexModeKeyword",foreground="blue")
+    self.body.tag_configure("latexBackground",foreground="black")
+    self.body.tag_configure("latexKeyword",foreground="blue")
+else: # Looks cool, and good for debugging.
+    self.body.tag_configure("latexModeBackground",foreground="black",background="seashell1")
+    self.body.tag_configure("latexModeKeyword",foreground="blue",background="seashell1")
+    self.body.tag_configure("latexBackground",foreground="black",background="white")
+    self.body.tag_configure("latexKeyword",foreground="blue",background="white")
+    
+# Tags for wiki coloring.
+if self.showInvisibles:
+    self.body.tag_configure("elide",background="yellow")
+else:
+    self.body.tag_configure("elide",elide="1")
+self.body.tag_configure("bold",font=self.bold_font)
+self.body.tag_configure("italic",font=self.italic_font)
+self.body.tag_configure("bolditalic",font=self.bolditalic_font)
+for name in self.color_tags_list:
+    self.body.tag_configure(name,foreground=name)</t>
 <t tx="ekr.20031218072017.1606"># Copies of arguments.
 self.p = None
 self.language = None
@@ -11283,10 +12022,35 @@ def skipToEndSentinel(self,s,i):
     start = at.startSentinelComment
     s = ''.join(at.docOut)
     
-    if 0: # new code.
-        &lt;&lt; new code &gt;&gt;
+    # Remove the @doc or @space.  We'll add it back at the end.
+    if g.match(s,0,tag):
+        s = s[len(tag):]
     else:
-        &lt;&lt; old code &gt;&gt;</t>
+        at.readError("Missing start of doc part")
+        return
+
+    if end:
+        # 9/3/04: Remove leading newline.
+        if s[0] == '\n': s = s[1:]
+        # Remove opening block delim.
+        if g.match(s,0,start):
+            s = s[len(start):]
+        else:
+            at.readError("Missing open block comment")
+            g.trace(s)
+            return
+        # Remove trailing newline.
+        if s[-1] == '\n': s = s[:-1]
+        # Remove closing block delim.
+        if s[-len(end):] == end:
+            s = s[:-len(end)]
+        else:
+            at.readError("Missing close block comment")
+            return
+
+    at.out.append(tag + s)
+    at.docOut = []
+    </t>
 <t tx="ekr.20031218072017.1754">if end:
     # Remove opening block delim.
     if g.match(s,0,start):
@@ -11725,6 +12489,30 @@ id = self.canvas.find_closest(canvas_x,canvas_y)
 
 vdrag = self.findVnodeWithIconId(id)
 childFlag = vdrag and vdrag.hasChildren() and vdrag.isExpanded()</t>
+<t tx="ekr.20031218072017.1809">def importDerivedFile (self):
+    
+    """Create a new outline from a 4.0 derived file."""
+    
+    c = self ; frame = c.frame ; v = c.currentVnode()
+    
+    types = [
+        ("All files","*"),
+        ("C/C++ files","*.c"),
+        ("C/C++ files","*.cpp"),
+        ("C/C++ files","*.h"),
+        ("C/C++ files","*.hpp"),
+        ("Java files","*.java"),
+        ("Pascal files","*.pas"),
+        ("Python files","*.py") ]
+    
+    names = g.app.gui.runOpenFileDialog(
+        title="Import Derived File",
+        filetypes=types,
+        defaultextension=".py",
+        multiple=True)
+
+    if names:
+        c.importCommands.importDerivedFiles(v,names)</t>
 <t tx="ekr.20031218072017.1810">def importDerivedFiles (self,parent,paths):
     
     c = self.c ; at = c.atFileCommands
@@ -12046,6 +12834,230 @@ if headString:
     fc.put("&lt;vh&gt;")
     fc.putEscapedString(headString)
     fc.put("&lt;/vh&gt;")</t>
+<t tx="ekr.20031218072017.1880">def colorizeAnyLanguage (self,p,leading=None,trailing=None):
+    
+    """Color the body pane either incrementally or non-incrementally"""
+    
+    # g.trace("incremental",self.incremental,p)
+    if self.killFlag:
+        self.removeAllTags()
+        return
+    try:
+        &lt;&lt; initialize ivars &amp; tags &gt;&gt;
+        g.doHook("init-color-markup",colorer=self,v=self.p)
+        self.color_pass = 0
+        if self.incremental and (
+            &lt;&lt; all state ivars match &gt;&gt; ):
+            &lt;&lt; incrementally color the text &gt;&gt;
+        else:
+            &lt;&lt; non-incrementally color the text &gt;&gt;
+        if self.redoColoring:
+            &lt;&lt; completely recolor in two passes &gt;&gt;
+        &lt;&lt; update state ivars &gt;&gt;
+        return "ok" # for testing.
+    except:
+        &lt;&lt; set state ivars to "unknown" &gt;&gt;
+        if self.c:
+            g.es_exception()
+        else:
+            import traceback ; traceback.print_exc()
+        return "error" # for unit testing.</t>
+<t tx="ekr.20031218072017.1881">self.flag == self.last_flag and
+self.last_language == self.language and
+self.comment_string == self.last_comment and
+self.markup_string == self.last_markup</t>
+<t tx="ekr.20031218072017.1882">@  Each line has a starting state.  The starting state for the first line is always "normal".
+
+We need remember only self.lines and self.states between colorizing.  It is not necessary to know where the text comes from, only what the previous text was!  We must always colorize everything when changing nodes, even if all lines match, because the context may be different.
+
+We compute the range of lines to be recolored by comparing leading lines and trailing lines of old and new text.  All other lines (the middle lines) must be colorized, as well as any trailing lines whose states may have changed as the result of changes to the middle lines.
+@c
+
+# g.trace("incremental")
+
+# 6/30/03: make a copies of everything
+old_lines = self.lines[:]
+old_states = self.states[:]
+new_lines = lines[:]
+new_states = []
+
+new_len = len(new_lines)
+old_len = len(old_lines)
+
+if new_len == 0:
+    self.states = []
+    self.lines = []
+    return
+
+# Bug fix: 11/21/02: must test against None.
+if leading != None and trailing != None:
+    # print "leading,trailing:",leading,trailing
+    leading_lines = leading
+    trailing_lines = trailing
+else:
+    &lt;&lt; compute leading, middle &amp; trailing lines &gt;&gt;
+    
+middle_lines = new_len - leading_lines - trailing_lines
+# print "middle lines", middle_lines
+
+&lt;&lt; clear leading_lines if middle lines involve @color or @recolor  &gt;&gt;
+&lt;&lt; initialize new states &gt;&gt;
+&lt;&lt; colorize until the states match &gt;&gt;</t>
+<t tx="ekr.20031218072017.1883">@ The leading lines are the leading matching lines.  The trailing lines are the trailing matching lines.  The middle lines are all other new lines.  We will color at least all the middle lines.  There may be no middle lines if we delete lines.
+@c
+
+min_len = min(old_len,new_len)
+
+i = 0
+while i &lt; min_len:
+    if old_lines[i] != new_lines[i]:
+        break
+    i += 1
+leading_lines = i
+
+if leading_lines == new_len:
+    # All lines match, and we must color _everything_.
+    # (several routine delete, then insert the text again,
+    # deleting all tags in the process).
+    # print "recolor all"
+    leading_lines = trailing_lines = 0
+else:
+    i = 0
+    while i &lt; min_len - leading_lines:
+        if old_lines[old_len-i-1] != new_lines[new_len-i-1]:
+            break
+        i += 1
+    trailing_lines = i
+</t>
+<t tx="ekr.20031218072017.1884">@ 11/19/02: Changing @color or @nocolor directives requires we recolor all leading states as well.
+@c
+
+if trailing_lines == 0:
+    m1 = new_lines[leading_lines:]
+    m2 = old_lines[leading_lines:]
+else:
+    m1 = new_lines[leading_lines:-trailing_lines]
+    m2 = old_lines[leading_lines:-trailing_lines]
+m1.extend(m2) # m1 now contains all old and new middle lines.
+if m1:
+    for s in m1:
+        s = g.toUnicode(s,g.app.tkEncoding) # 10/28/03
+        i = g.skip_ws(s,0)
+        if g.match_word(s,i,"@color") or g.match_word(s,i,"@nocolor"):
+            leading_lines = 0
+            break
+</t>
+<t tx="ekr.20031218072017.1885"># Copy the leading states from the old to the new lines.
+i = 0
+while i &lt; leading_lines and i &lt; old_len: # 12/8/02
+    new_states.append(old_states[i])
+    i += 1
+    
+# We know the starting state of the first middle line!
+if middle_lines &gt; 0 and i &lt; old_len:
+    new_states.append(old_states[i])
+    i += 1
+    
+# Set the state of all other middle lines to "unknown".
+first_trailing_line = max(0,new_len - trailing_lines)
+while i &lt; first_trailing_line:
+    new_states.append("unknown")
+    i += 1
+
+# Copy the trailing states from the old to the new lines.
+i = max(0,old_len - trailing_lines)
+while i &lt; old_len and i &lt; len(old_states):
+    new_states.append(old_states[i])
+    i += 1
+
+# 1/8/03: complete new_states by brute force.
+while len(new_states) &lt; new_len:
+    new_states.append("unknown")</t>
+<t tx="ekr.20031218072017.1886"># Colorize until the states match.
+# All middle lines have "unknown" state, so they will all be colored.
+
+# Start in the state _after_ the last leading line, which may be unknown.
+i = leading_lines
+while i &gt; 0:
+    if i &lt; old_len and i &lt; new_len:
+        state = new_states[i]
+        # assert(state!="unknown") # This can fail.
+        break
+    else:
+        i -= 1
+
+if i == 0:
+    # Color plain text unless we are under the control of @nocolor.
+    # state = g.choose(self.flag,"normal","nocolor")
+    state = self.setFirstLineState()
+    new_states[0] = state
+
+# The new_states[] will be "unknown" unless the lines match,
+# so we do not need to compare lines here.
+while i &lt; new_len:
+    self.line_index = i + 1
+    state = self.colorizeLine(new_lines[i],state)
+    i += 1
+    # Set the state of the _next_ line.
+    if i &lt; new_len and state != new_states[i]:
+        new_states[i] = state
+    else: break
+    
+# Update the ivars
+self.states = new_states
+self.lines = new_lines</t>
+<t tx="ekr.20031218072017.1887"># g.trace("non-incremental",self.language)
+
+self.line_index = 1 # The Tk line number for indices, as in n.i
+for s in lines:
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+</t>
+<t tx="ekr.20031218072017.1888">self.last_flag = self.flag
+self.last_language = self.language
+self.last_comment = self.comment_string
+self.last_markup = self.markup_string</t>
+<t tx="ekr.20031218072017.1889">self.last_flag = "unknown"
+self.last_language = "unknown"
+self.last_comment = "unknown"</t>
+<t tx="ekr.20031218072017.1890"># This code is executed only if graphics characters will be inserted by user markup code.
+
+# Pass 1:  Insert all graphics characters.
+
+self.removeAllImages()
+s = self.body.getAllText() # 10/27/03
+lines = s.split('\n')
+
+self.color_pass = 1
+self.line_index = 1
+state = self.setFirstLineState()
+for s in lines:
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+
+# Pass 2: Insert one blank for each previously inserted graphic.
+
+self.color_pass = 2
+self.line_index = 1
+state = self.setFirstLineState()
+for s in lines:
+    &lt;&lt; kludge: insert a blank in s for every image in the line &gt;&gt;
+    state = self.colorizeLine(s,state)
+    self.line_index += 1
+</t>
+<t tx="ekr.20031218072017.1891">@ A spectacular kludge.
+
+Images take up a real index, yet the get routine does not return any character for them!
+In order to keep the colorer in synch, we must insert dummy blanks in s at the positions corresponding to each image.
+@c
+
+inserted = 0
+
+for photo,image,line_index,i in self.image_references:
+    if self.line_index == line_index:
+        n = i+inserted ; 	inserted += 1
+        s = s[:n] + ' ' + s[n:]
+</t>
 <t tx="ekr.20031218072017.1896">## To do: rewrite using dynamically generated tables.
 
 def doNormalState (self,s,i):
@@ -12362,19 +13374,23 @@ Bill
 if 0: # This is just confusing for users.
     g.es("Text encoding: " + g.app.tkEncoding, color="blue")</t>
 <t tx="ekr.20031218072017.1936">def isValidPython():
-    
-    import leoGlobals as g
-    
+
     message = """\
-Leo requires Python 2.2 or higher.
-You may download Python 2.2 and Python 2.3 from http://python.org/download/
+Leo requires Python 2.2.1 or higher.
+You may download Python from http://python.org/download/
 """
+    
     try:
-        if not g.CheckVersion(sys.version, "2.2"):
+        # This will fail if True/False are not defined.
+        import leoGlobals as g
+    except:
+        print message
+        return 0
+    try:
+        ok = g.CheckVersion(sys.version, "2.2.1")
+        if not ok:
             g.app.gui.runAskOkDialog("Python version error",message=message,text="Exit")
-            return False
-        else:
-            return True
+        return ok
     except:
         print "exception getting Python version"
         import traceback ; traceback.print_exc()
@@ -13268,6 +14284,71 @@ elif undoType == "Delete Node" or undoType == "Cut Node":
             g.es("exceptions opening: " + fileName,color="red")
             g.es_exception()
         return False, None</t>
+<t tx="ekr.20031218072017.2062">def getPrefs (self):
+
+    c = self.c ; config = g.app.config
+    
+    if self.getOpenTag("&lt;preferences"):
+        return # &lt;preferences/&gt; seeen
+
+    table = (
+        ("allow_rich_text",None,None), # Ignored.
+        ("tab_width","tab_width",self.getLong),
+        ("page_width","page_width",self.getLong),
+        ("tangle_bat","tangle_batch_flag",self.getBool),
+        ("untangle_bat","untangle_batch_flag",self.getBool),
+        ("output_doc_chunks","output_doc_flag",self.getBool),
+        ("noweb_flag",None,None), # Ignored.
+        ("extended_noweb_flag",None,None), # Ignored.
+        ("defaultTargetLanguage","target_language",self.getTargetLanguage),
+        ("use_header_flag","use_header_flag",self.getBool))
+    
+    done = False
+    while 1:
+        found = False
+        for tag,var,f in table:
+            if self.matchTag("%s=" % tag):
+                if var:
+                    self.getDquote() ; val = f() ; self.getDquote()
+                    setattr(c,var,val)
+                else:
+                    self.getDqString()
+                found = True ; break
+        if not found:
+            if self.matchTag("/&gt;"):
+                done = True ; break
+            if self.matchTag("&gt;"):
+                break
+            else: # New in 4.1: ignore all other tags.
+                self.getUnknownTag()
+
+    if not done: # 8/31/04
+        while 1:
+            if self.matchTag("&lt;defaultDirectory&gt;"):
+                # New in version 0.16.
+                c.tangle_directory = self.getEscapedString()
+                self.getTag("&lt;/defaultDirectory&gt;")
+                if not g.os_path_exists(c.tangle_directory):
+                    g.es("default tangle directory not found:" + c.tangle_directory)
+            elif self.matchTag("&lt;TSyntaxMemo_options&gt;"):
+                self.getEscapedString() # ignored
+                self.getTag("&lt;/TSyntaxMemo_options&gt;")
+            else: break
+        self.getTag("&lt;/preferences&gt;")
+
+    # Override .leo file's preferences if settings are in leoConfig.txt.
+    if config.configsExist:
+        config.setCommandsIvars(c)</t>
+<t tx="ekr.20031218072017.2063">def getTargetLanguage (self):
+    
+    # Must match longer tags before short prefixes.
+    for name in g.app.language_delims_dict.keys():
+        if self.matchTagWordIgnoringCase(name):
+            language = name.replace("/","")
+            # self.getDquote()
+            return language
+            
+    return "c" # default</t>
 <t tx="ekr.20031218072017.2072">def checkOutline (self,verbose=True,unittest=False,full=True):
     
     """Report any possible clone errors in the outline.
@@ -13338,7 +14419,8 @@ def canonicalizeShortcut (self,shortcut):
     if sys.platform == "darwin":
         if has_ctrl and not has_cmd:
             has_cmd = True ; has_ctrl = False
-
+        if has_alt and not has_ctrl: # 9/14/04
+            has_ctrl = True ; has_alt = False
     &lt;&lt; set the last field, preserving case &gt;&gt;
     &lt;&lt; canonicalize the last field &gt;&gt;
     &lt;&lt; synthesize the shortcuts from the information &gt;&gt;
@@ -13357,15 +14439,15 @@ if len(last) == 1:
         bind_last = "Key-" + ch # 1-5 refer to mouse buttons, not keys.
     else:
         &lt;&lt; define dict of Tk bind names &gt;&gt;
-        if ch in dict.keys():
-            bind_last = dict[ch]
+        if ch in theDict.keys():
+            bind_last = theDict[ch]
 elif len(last) &gt; 0:
     &lt;&lt; define dict of special names &gt;&gt;
     last2 = string.lower(last)
-    if last2 in dict.keys():
-        bind_last,menu_last = dict[last2]</t>
+    if last2 in theDict.keys():
+        bind_last,menu_last = theDict[last2]</t>
 <t tx="ekr.20031218072017.2100"># These are defined at http://tcl.activestate.com/man/tcl8.4/TkCmd/keysyms.htm.
-dict = {
+theDict = {
     "!" : "exclam",
     '"' : "quotedbl",
     "#" : "numbersign",
@@ -13401,7 +14483,7 @@ dict = {
 <t tx="ekr.20031218072017.2101"># These keys are simply made-up names.  The menu_bind values are known to Tk.
 # Case is not significant in the keys.
 
-dict = {
+theDict = {
     "bksp"    : ("BackSpace","BkSp"),
     "esc"     : ("Escape","Esc"),
     # Arrow keys...
@@ -13970,7 +15052,7 @@ def directiveKind(self,s,i):
 <t tx="ekr.20031218072017.2138"># Note:  self.outputFile may be either a fileLikeObject or a real file.
 
 </t>
-<t tx="ekr.20031218072017.2140">def executeScript(self,p=None,script=None):
+<t tx="ekr.20031218072017.2140">def executeScript(self,p=None,script=None,useSelectedText=True):
 
     """This executes body text as a Python script.
     
@@ -13979,11 +15061,14 @@ def directiveKind(self,s,i):
     c = self ; error = False ; s = None ; script1 = script
 
     if not script:
-        script = g.getScript(c,p)
+        script = g.getScript(c,p,useSelectedText=useSelectedText)
     &lt;&lt; redirect output &gt;&gt;
+    # g.trace(script)
     if script:
         script = script.strip()
     if script:
+        # 9/14/04: Temporarily add the open directory to sys.path.
+        sys.path.insert(0,c.frame.openDirectory)
         script += '\n' # Make sure we end the script properly.
         try:
             exec script in {} # Use {} to get a pristine environment!
@@ -13993,12 +15078,14 @@ def directiveKind(self,s,i):
         except:
             &lt;&lt; unredirect output &gt;&gt;
             g.es("exception executing script")
-            n = g.es_exception(full=False,c=c)
+            fileName,n = g.es_exception(full=False,c=c)
+            g.trace(fileName)
             if n is not None:
-                &lt;&lt; dump the lines of script near the error &gt;&gt;
-                if p and not script1:
+                &lt;&lt; dump the lines near the error &gt;&gt;
+                if p and not script1 and not fileName:
                     c.goToScriptLineNumber(p,script,n)
             c.frame.tree.redrawAfterException()
+        del sys.path[0]
     elif not error:
         &lt;&lt; unredirect output &gt;&gt;
         g.es("no script selected",color="blue")
@@ -14106,6 +15193,240 @@ else:
     ("&amp;Sort Siblings","Alt-A",c.sortSiblings),
     ("-",None,None),
     ("Contract Parent","Alt+0",c.contractParent))</t>
+<t tx="ekr.20031218072017.2256"></t>
+<t tx="ekr.20031218072017.2257">def scanPythonClass (self,s,i,start,parent):
+
+    """Creates a child node c of parent for the class, and children of c for each def in the class."""
+
+    # g.trace(g.get_line(s,i))
+    classIndent = self.getLeadingIndent(s,i)
+    &lt;&lt; set classname and headline, or return i &gt;&gt;
+    i = g.skip_line(s,i) # Skip the class line.
+    &lt;&lt; create class_vnode &gt;&gt;
+    savedMethodName = self.methodName
+    self.methodName = headline
+    # Create a node for leading declarations of the class.
+    i = self.scanPythonDecls(s,i,class_vnode,classIndent,indent_parent_ref_flag=True)
+    &lt;&lt; create nodes for all defs of the class &gt;&gt;
+    &lt;&lt; append any other class material &gt;&gt;
+    self.methodName = savedMethodName
+    return i
+</t>
+<t tx="ekr.20031218072017.2258"># Skip to the class name.
+i = g.skip_ws(s,i)
+i = g.skip_c_id(s,i) # skip "class"
+i = g.skip_ws_and_nl(s,i)
+if i &lt; len(s) and g.is_c_id(s[i]):
+    j = i ; i = g.skip_c_id(s,i)
+    classname = s[j:i]
+    headline = "class " + classname
+else:
+    return i</t>
+<t tx="ekr.20031218072017.2259"># Create the section name using the old value of self.methodName.
+if  self.treeType == "@file":
+    prefix = ""
+else:
+    prefix = g.angleBrackets(" " + self.methodName + " methods ") + "=\n\n"
+    self.methodsSeen = True
+
+# i points just after the class line.
+
+# Add a docstring to the class node.
+docStringSeen = False
+j = g.skip_ws_and_nl(s,i)
+if g.match(s,j,'"""') or g.match(s,j,"'''"):
+    j = g.skip_python_string(s,j)
+    if j != len(s): # No scanning error.
+        i = j ; docStringSeen = True
+
+body = s[start:i]
+body = self.undentBody(body)
+if docStringSeen: body = body + '\n'
+class_vnode = self.createHeadline(parent,prefix + body,headline)</t>
+<t tx="ekr.20031218072017.2260">indent =  self.getLeadingIndent(s,i)
+start = i = g.skip_blank_lines(s,i)
+parent_vnode = None # 7/6/02
+while i &lt; len(s) and indent &gt; classIndent:
+    progress = i
+    if g.is_nl(s,i):
+        backslashNewline = i &gt; 0 and g.match(s,i-1,"\\\n")
+        j = g.skip_nl(s,i)
+        if not backslashNewline:
+            indent = self.getLeadingIndent(s,j)
+            if indent &gt; classIndent: i = j
+            else: break
+        else: i = j
+    elif g.match_c_word(s,i,"def"):
+        if not parent_vnode:
+            &lt;&lt; create parent_vnode &gt;&gt;
+        i = start = self.scanPythonDef(s,i,start,parent_vnode)
+        indent = self.getLeadingIndent(s,i)
+    elif g.match_c_word(s,i,"class"):
+        if not parent_vnode:
+            &lt;&lt; create parent_vnode &gt;&gt;
+        i = start = self.scanPythonClass(s,i,start,parent_vnode)
+        indent = self.getLeadingIndent(s,i)
+    elif s[i] == '#': i = g.skip_to_end_of_line(s,i)
+    elif s[i] == '"' or s[i] == '\'': i = g.skip_python_string(s,i)
+    else: i += 1
+    assert(progress &lt; i)</t>
+<t tx="ekr.20031218072017.2261"># This must be done after the declaration reference is generated.
+if self.treeType == "@file":
+    class_vnode.appendStringToBody("\t@others\n")
+else:
+    ref = g.angleBrackets(" class " + classname + " methods ")
+    class_vnode.appendStringToBody("\t" + ref + "\n\n")
+parent_vnode = class_vnode</t>
+<t tx="ekr.20031218072017.2262">s2 = s[start:i]
+if s2:
+    class_vnode.appendStringToBody(s2)</t>
+<t tx="ekr.20031218072017.2263">def scanPythonDef (self,s,i,start,parent):
+
+    """Creates a node of parent for the def."""
+
+    # g.trace(g.get_line(s,i))
+    &lt;&lt; set headline or return i &gt;&gt;
+    &lt;&lt; skip the Python def &gt;&gt;
+    # Create the def node.
+    savedMethodName = self.methodName
+    self.methodName = headline
+    &lt;&lt; Create def node &gt;&gt;
+    self.methodName = savedMethodName
+    return i
+</t>
+<t tx="ekr.20031218072017.2264">i = g.skip_ws(s,i)
+i = g.skip_c_id(s,i) # Skip the "def"
+i = g.skip_ws_and_nl(s,i)
+if i &lt; len(s) and g.is_c_id(s[i]):
+    j = i ; i = g.skip_c_id(s,i)
+    headline = s[j:i]
+    # g.trace("headline:" + headline)
+else: return i</t>
+<t tx="ekr.20031218072017.2265"># Set defIndent to the indentation of the def line.
+defIndent = self.getLeadingIndent(s,start)
+i = g.skip_line(s,i) # Skip the def line.
+indent = self.getLeadingIndent(s,i)
+while i &lt; len(s) and indent &gt; defIndent:
+    progress = i
+    ch = s[i]
+    if g.is_nl(s,i):
+        backslashNewline = i &gt; 0 and g.match(s,i-1,"\\\n")
+        i = g.skip_nl(s,i)
+        if not backslashNewline:
+            indent = self.getLeadingIndent(s,i)
+            if indent &lt;= defIndent:
+                break
+    elif ch == '#':
+        i = g.skip_to_end_of_line(s,i) # 7/29/02
+    elif ch == '"' or ch == '\'':
+        i = g.skip_python_string(s,i)
+    else: i += 1
+    assert(progress &lt; i)</t>
+<t tx="ekr.20031218072017.2266"># Create the prefix line for @root trees.
+if self.treeType == "@file":
+    prefix = ""
+else:
+    prefix = g.angleBrackets(" " + savedMethodName + " methods ") + "=\n\n"
+    self.methodsSeen = True
+
+# Create body.
+start = g.skip_blank_lines(s,start)
+body = s[start:i]
+body = self.undentBody(body)
+
+# Create the node.
+self.createHeadline(parent,prefix + body,headline)
+
+</t>
+<t tx="ekr.20031218072017.2267">def scanPythonDecls (self,s,i,parent,indent,indent_parent_ref_flag=True):
+    
+    done = False ; start = i
+    while not done and i &lt; len(s):
+        progress = i
+        # g.trace(g.get_line(s,i))
+        ch = s[i]
+        if ch == '\n':
+            backslashNewline = i &gt; 0 and g.match(s,i-1,"\\\n")
+            i = g.skip_nl(s,i)
+            # 2/14/03: break on lesser indention.
+            j = g.skip_ws(s,i)
+            if not g.is_nl(s,j) and not g.match(s,j,"#") and not backslashNewline:
+                lineIndent = self.getLeadingIndent(s,i)
+                if lineIndent &lt;= indent:
+                    break
+        elif ch == '#': i = g.skip_to_end_of_line(s,i)
+        elif ch == '"' or ch == '\'':
+            i = g.skip_python_string(s,i)
+        elif g.is_c_id(ch):
+            &lt;&lt; break on def or class &gt;&gt;
+        else: i += 1
+        assert(progress &lt; i)
+    j = g.skip_blank_lines(s,start)
+    if g.is_nl(s,j): j = g.skip_nl(s,j)
+    if j &lt; i:
+        &lt;&lt; Create a child node for declarations &gt;&gt;
+    return i</t>
+<t tx="ekr.20031218072017.2268">if g.match_c_word(s,i,"def") or g.match_c_word(s,i,"class"):
+    i = g.find_line_start(s,i)
+    done = True
+    break
+else:
+    i = g.skip_c_id(s,i)</t>
+<t tx="ekr.20031218072017.2269">headline = ref = g.angleBrackets(" " + self.methodName + " declarations ")
+leading_tab = g.choose(indent_parent_ref_flag,"\t","")
+
+# Append the reference to the parent's body.
+parent.appendStringToBody(leading_tab + ref + "\n") # 7/6/02
+
+# Create the node for the decls.
+body = self.undentBody(s[j:i])
+if self.treeType == "@root":
+    body = "@code\n\n" + body
+self.createHeadline(parent,body,headline)</t>
+<t tx="ekr.20031218072017.2270"># See the comments for scanCText for what the text looks like.
+
+def scanPythonText (self,s,parent):
+
+    """Creates a child of parent for each Python function definition seen."""
+
+    decls_seen = False ; start = i = 0
+    self.methodsSeen = False
+    while i &lt; len(s):
+        progress = i
+        # g.trace(g.get_line(s,i))
+        ch = s[i]
+        if ch == '\n' or ch == '\r': i = g.skip_nl(s,i)
+        elif ch == '#': i = g.skip_to_end_of_line(s,i)
+        elif ch == '"' or ch == '\'': i = g.skip_python_string(s,i)
+        elif g.is_c_id(ch):
+            &lt;&lt; handle possible Python function or class &gt;&gt;
+        else: i += 1
+        assert(progress &lt; i)
+    if not decls_seen: # 2/17/03
+        parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
+    &lt;&lt; Append a reference to the methods of this file &gt;&gt;
+    &lt;&lt; Append any unused python text to the parent's body text &gt;&gt;</t>
+<t tx="ekr.20031218072017.2271">if g.match_c_word(s,i,"def") or g.match_word(s,i,"class"):
+    isDef = g.match_c_word(s,i,"def")
+    if not decls_seen:
+        parent.appendStringToBody("@ignore\n" + self.rootLine + "@language python\n")
+        i = start = self.scanPythonDecls(s,start,parent,-1,indent_parent_ref_flag=False)
+        decls_seen = True
+        if self.treeType == "@file": # 7/29/02
+            parent.appendStringToBody("@others\n") # 7/29/02
+    if isDef:
+        i = start = self.scanPythonDef(s,i,start,parent)
+    else:
+        i = start = self.scanPythonClass(s,i,start,parent)
+else:
+    i = g.skip_c_id(s,i)</t>
+<t tx="ekr.20031218072017.2272">if self.treeType == "@root" and self.methodsSeen:
+    parent.appendStringToBody(
+        g.angleBrackets(" " + self.methodName + " methods ") + "\n\n")</t>
+<t tx="ekr.20031218072017.2273"># Do nothing if only whitespace is left.
+i = start ; i = g.skip_ws_and_nl(s,i)
+if i &lt; len(s):
+    parent.appendStringToBody(s[start:])</t>
 <t tx="ekr.20031218072017.2287">def canExtract (self):
 
     c = self ; body = c.frame.body
@@ -15450,23 +16771,9 @@ if at.startSentinelComment[-1:] == '@':
             old = at.t.getBody()
         else:
             old = None
-        if old:
-            if at.perfectImportRoot:
-                &lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;
-                p.setMarked()
-                at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
-                at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
-                at.c.setChanged(True)
-            else:
-                g.es("Warning: updating changed text",color="blue")
-                #g.es("old...\n%s\n" % old)
-                #g.es("new...\n%s\n" % s)
-                # Just set the dirty bit. Ancestors will be marked dirty later.
-                at.t.setDirty()
-                if 1: # We must avoid the full setChanged logic here!
-                    c.changed = True
-                else: # Far too slow for mass changes.
-                    at.c.setChanged(True)
+        # 9/4/04: Suppress this warning for the root: @first complicates matters.
+        if old and not g.app.unitTesting and at.t != at.root.t:
+            &lt;&lt; indicate that the node has been changed &gt;&gt;
         at.t.tempBodyString = s
 
     # Indicate that the tnode has been set in the derived file.
@@ -17293,6 +18600,22 @@ def is_special(s,i,directive):
             if skip_flag:
                 i = g.skip_ws(s,i)
     return False, -1</t>
+<t tx="ekr.20031218072017.3202"># Remove whitespace up to first_ws wide in s, given tab_width, the width of a tab.
+
+def removeLeadingWhitespace (s,first_ws,tab_width):
+
+    j = 0 ; ws = 0
+    for ch in s:
+        if ws &gt;= first_ws:
+            break
+        elif ch == ' ':
+            j += 1 ; ws += 1
+        elif ch == '\t':
+            j += 1 ; ws += (abs(tab_width) - (ws % abs(tab_width)))
+        else: break
+    if j &gt; 0:
+        s = s[j:]
+    return s</t>
 <t tx="ekr.20031218072017.3210">def createOutline (self,fileName,parent):
 
     c = self.c ; current = c.currentVnode()
@@ -17345,6 +18668,47 @@ except IOError:
     g.es("can not open " + fileName)
     leoTest.fail()
     return None</t>
+<t tx="ekr.20031218072017.3212">def importFilesCommand (self,files,treeType,
+    perfectImport=True,testing=False,verbose=False):
+
+    c = self.c
+    if c == None: return
+    v = current = c.currentVnode()
+    if current == None: return
+    if len(files) &lt; 1: return
+    self.treeType = treeType
+    c.beginUpdate()
+    if 1: # range of update...
+        if len(files) == 2:
+            &lt;&lt; Create a parent for two files having a common prefix &gt;&gt;
+        for fileName in files:
+            v = self.createOutline(fileName,current)
+            if v: # createOutline may fail.
+                perfectImport = False ###
+                testing = True; verbose = True
+                if perfectImport and treeType == "@file": # Can't correct @root trees.
+                    self.perfectImport(fileName,v,testing=testing,verbose=verbose,verify=False)
+                else:
+                    g.es("imported " + fileName,color="blue")
+                v.contract()
+                v.setDirty()
+                c.setChanged(True)
+        c.validateOutline()
+        current.expand()
+    c.endUpdate()
+    c.selectVnode(current)</t>
+<t tx="ekr.20031218072017.3213">@ The two filenames have a common prefix everything before the last period is the same.  For example, x.h and x.cpp.
+@c
+
+name0 = files[0]
+name1 = files[1]
+prefix0, junk = g.os_path_splitext(name0)
+prefix1, junk = g.os_path_splitext(name1)
+if len(prefix0) &gt; 0 and prefix0 == prefix1:
+    current = current.insertAsLastChild()
+    junk, nameExt = g.os_path_split(prefix1)
+    name,ext = g.os_path_splitext(prefix1)
+    current.initHeadString(name)</t>
 <t tx="ekr.20031218072017.3250"># Creates a child of parent for each C function definition seen.
 
 def scanCText (self,s,parent):
@@ -17678,6 +19042,29 @@ elif nlSeen and start &lt; i:
     # Put the newline that was at the start of this line.
     result.append(s[start:i])
     continue</t>
+<t tx="ekr.20031218072017.3319"># We look at the first line to determine how much leading whitespace to delete.
+
+def undentBody (self,s):
+
+    """Removes extra leading indentation from all lines."""
+
+    # g.trace(s)
+    c = self.c
+    i = 0 ; result = ""
+    # Copy an @code line as is.
+    if g.match(s,i,"@code"):
+        j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
+        result += s[j:i]
+    # Calculate the amount to be removed from each line.
+    undent = self.getLeadingIndent(s,i)
+    if undent == 0: return s
+    while i &lt; len(s):
+        j = i ; i = g.skip_line(s,i) # don't use get_line: it is only for dumping.
+        line = s[j:i]
+        # g.trace(line)
+        line = g.removeLeadingWhitespace(line,undent,c.tab_width)
+        result += line
+    return result</t>
 <t tx="ekr.20031218072017.3345">def __repr__ (self):
     
     if self.t:
@@ -21705,6 +23092,86 @@ else:
     g.trace("Mismatched headline",headline,v.headString())
     g.trace(at.tnodeListIndex,len(at.root.v.t.tnodeList))
     return None</t>
+<t tx="ekr.20040716064333">nodeIndices = g.app.nodeIndices
+
+nodeIndices.setTimestamp()
+
+for p2 in root.self_and_subtree_iter():
+    try: # Will fail for None or any pre 4.1 file index.
+        theId,time,n = p2.v.t.fileIndex
+    except TypeError:
+        p2.v.t.fileIndex = nodeIndices.getNewIndex()</t>
+<t tx="ekr.20040716064333.1">at.write(root,thinFile=True,toString=True)
+s = at.stringOutput
+if not s: return
+</t>
+<t tx="ekr.20040716065356">for p2 in p.self_and_subtree_iter():
+    p2.clearDirty()</t>
+<t tx="ekr.20040716105102">i = last_nosent_i
+
+if i + 1 &lt; len(lines):
+
+    line = lines[i+1]
+    j = g.skip_ws(line,0)
+
+    if match(line,j,delim1):
+        j += len(delim1)
+
+        if g.match(line,j,"@nonl"):
+            line = lines[i]
+            if line[-1] == '\n':
+                assert(result[-1] == line)
+                result[-1] = line[:-1]</t>
+<t tx="ekr.20040717112739">@nocolor
+@
+
+This algorithm corrects the result of an Import To @file command so that it is guaranteed that the result of writing the imported file will be identical to the original file except for any sentinels that have been inserted.
+
+On entry, p points to the newly imported outline.
+
+We correct the outline by applying Bernhard Mulder's algorithm.
+
+1.  We use the atFile.write code to write the newly imported outline to a string s.  This string contains represents a thin derived file, so it can be used to recreate then entire outline structure without any other information.
+
+Splitting s into lines creates the fat_lines argument to mu methods.
+
+2. We make corrections to fat_lines using Mulder's algorithm.  The corrected fat_lines represents the corrected outline.  To do this, we set the arguments as follows:
+
+- i_lines: fat_lines stripped of sentinels
+- j_lines to the lines of the original imported file.
+
+The algorithm updates fat_lines using diffs between i_lines and j_lines.
+
+3. Mulder's algorithm doesn't specify which nodes have been changed.  In fact, it Mulder's algorithm doesn't really understand nodes at all.  Therefore, if we want to mark changed nodes we do so by comparing the original version of the imported outline with the corrected version of the outline.</t>
+<t tx="ekr.20040717113036">@ Notes:
+1. This code must overwrite the newly-imported tree because the gnx's in
+write_lines refer to those nodes.
+
+2. The code in readEndNode now reports when nodes change during importing. This
+code also marks changed nodes.
+@c
+
+try:
+    at.correctedLines = 0
+    at.targetFileName = "&lt;perfectImport string-file&gt;"
+    at.inputFile = fo = g.fileLikeObject()
+    at.file = fo # Strange, that this is needed.  Should be cleaned up.
+    for line in write_lines:
+        fo.write(line)
+    firstLines,junk,junk = c.atFileCommands.scanHeader(fo,at.targetFileName)
+    # To do: pass params to readEndNode.
+    at.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
+    n = at.correctedLines
+    if verbose:
+        g.es("%d marked node%s corrected" % (n,g.choose(n==1,'','s')),color="blue")
+except:
+    g.es("Exception in Perfect Import",color="red")
+    g.es_exception()
+    s = None</t>
+<t tx="ekr.20040717132539">write_lines_node = root.insertAfter()
+write_lines_node.initHeadString("write_lines")
+s = ''.join(write_lines)
+write_lines_node.scriptSetBodyString(s,encoding=g.app.tkEncoding)</t>
 <t tx="ekr.20040717133944"># Report the number of corrected nodes.
 at.correctedLines += 1
 
@@ -21731,6 +23198,92 @@ if found:
 else:
     # This should never happen.
     g.es("Correcting hidden node: t=%s" % repr(at.t),color="red")</t>
+<t tx="ekr.20040718035658">try:
+    # Read the original file into before_lines.
+    before = file(fileName)
+    before_lines = before.readlines()
+    before.close()
+    
+    # Write the tree into after_lines.
+    at.write(root,thinFile=True,toString=True)
+    after_lines1 = g.splitLines(at.stringOutput)
+    
+    # Strip sentinels from after_lines and compare.
+    after_lines = mu.removeSentinelsFromLines(after_lines1,delims)
+    
+    # A major kludge: Leo can not represent unindented blank lines in indented nodes!
+    # We ignore the problem here by stripping whitespace from blank lines.
+    # We shall need output options to handle such lines.
+    if convertBlankLines:
+        mu.stripWhitespaceFromBlankLines(before_lines)
+        mu.stripWhitespaceFromBlankLines(after_lines)
+    if before_lines == after_lines:
+        if verbose:
+            g.es("Perfect Import verified",color="blue")
+    else:
+        leoTest.fail()
+        if verbose:
+            g.es("Perfect Import failed verification test!",color="red")
+            &lt;&lt; dump the files &gt;&gt;
+except IOError:
+    g.es("Can not reopen %s!" % fileName,color="red")
+    leoTest.fail()</t>
+<t tx="ekr.20040718045423">print len(before_lines),len(after_lines)
+
+if len(before_lines)==len(after_lines):
+    for i in xrange(len(before_lines)):
+        extra = 3
+        if before_lines[i] != after_lines[i]:
+            j = max(0,i-extra)
+            print '-' * 20
+            while j &lt; i + extra + 1:
+                leader = g.choose(i == j,"* ","  ")
+                print "%s%3d" % (leader,j), repr(before_lines[j])
+                print "%s%3d" % (leader,j), repr(after_lines[j])
+                j += 1
+else:
+    for i in xrange(min(len(before_lines),len(after_lines))):
+        if before_lines[i] != after_lines[i]:
+            extra = 5
+            print "first mismatch at line %d" % i
+            print "printing %d lines after mismatch" % extra
+            print "before..."
+            for j in xrange(i+1+extra):
+                print "%3d" % j, repr(before_lines[j])
+            print
+            print "after..."
+            for k in xrange(1+extra):
+                print "%3d" % (i+k), repr(after_lines[i+k])
+            print
+            print "with sentinels"
+            j = 0 ; k = 0
+            while k &lt; i + 1 + extra:
+                print "%3d" % k,repr(after_lines1[j])
+                if not g.is_sentinel(after_lines1[j],delims):
+                    k += 1
+                j += 1
+            break</t>
+<t tx="ekr.20040718101315">def stripWhitespaceFromBlankLines (self,lines):
+    
+    # All backslashes must be doubled.
+
+    """Strip blanks and tabs from lines containing only blanks and tabs.
+    
+    &gt;&gt;&gt; import leoGlobals as g
+    &gt;&gt;&gt; s = "a\\n \\t\\n\\t\\t \\t\\nb"
+    &gt;&gt;&gt; theLines = g.splitLines(s)
+    &gt;&gt;&gt; theLines
+    ['a\\n', ' \\t\\n', '\\t\\t \\t\\n', 'b']
+    &gt;&gt;&gt; g.mulderUpdateAlgorithm().stripWhitespaceFromBlankLines(theLines)
+    ['a\\n', '\\n', '\\n', 'b']
+    """
+
+    for i in xrange(len(lines)):
+        stripped_line = lines[i].lstrip(" \t")
+        if stripped_line in ('\n',''):
+            lines[i] = stripped_line
+            
+    return lines</t>
 <t tx="ekr.20040725044521.1">def edit_text (self,p):
     
     c = self.c
@@ -21795,6 +23348,294 @@ for line in errList[-4:]:
 
 I created this file by copying project nodes from leoPy.leo and pasting them
 with the Paste Retaining Clones command.</t>
+<t tx="ekr.20040803072955.7">def newBox (self,p,x,y,image):
+    
+    canvas = self.canvas ; tag = "plusBox" # 9/5/04: was plugBox.
+
+    if self.freeBoxes:
+        theId = self.freeBoxes.pop(0)
+        canvas.coords(theId,x,y)
+        canvas.itemconfigure(theId,image=image)
+    else:
+        theId = canvas.create_image(x,y,image=image,tag=tag)
+        
+    if self.trace and self.verbose:
+        g.trace("%3d %3d %3d %8s" % (theId,x,y,' '),p.headString(),align=-20)
+
+    assert(theId not in self.visibleBoxes)
+    self.visibleBoxes.append(theId)
+
+    assert(not self.ids.get(theId))
+    assert(p)
+    self.ids[theId] = p
+
+    return theId</t>
+<t tx="ekr.20040803072955.16">def __init__(self,c,frame,canvas):
+    
+    # Init the base class.
+    leoFrame.leoTree.__init__(self,frame)
+
+    # Objects associated with this tree.
+    self.canvas = canvas
+    
+    &lt;&lt; define drawing constants &gt;&gt;
+    &lt;&lt; old ivars &gt;&gt;
+    &lt;&lt; inject callbacks into the position class &gt;&gt;
+    
+    self.redrawing = False # Used only to disable traces.
+    self.trace = False
+    self.verbose = False
+    self.useBindtags = True
+    self.generation = 0
+    self.dragging = False
+    self.prevPositions = 0
+    self.expanded_click_area = g.app.config.getBoolWindowPref("expanded_click_area")
+    
+    self.createPermanentBindings()
+    self.setEditPosition(None) # Set positions returned by leoTree.editPosition()
+    
+    # Keys are id's, values are unchanging positions...
+    self.ids = {}
+    self.iconIds = {}
+
+    # Lists of visible (in-use) widgets...
+    self.visibleBoxes = []
+    self.visibleClickBoxes = []
+    self.visibleIcons = []
+    self.visibleLines = []
+    self.visibleText  = {} # Keys are vnodes, values are Tk.Text widgets
+    self.visibleUserIcons = []
+
+    # Lists of free, hidden widgets...
+    self.freeBoxes = []
+    self.freeClickBoxes = []
+    self.freeIcons = []
+    self.freeLines = []
+    self.freeText = {} # Keys are vnodes, values are Tk.Text widgets
+    self.freeUserIcons = []</t>
+<t tx="ekr.20040803072955.17">self.box_padding = 5 # extra padding between box and icon
+self.box_width = 9 + self.box_padding
+self.icon_width = 20
+self.text_indent = 4 # extra padding between icon and tex
+
+self.hline_y = 7 # Vertical offset of horizontal line
+self.root_left = 7 + self.box_width
+self.root_top = 2
+
+self.default_line_height = 17 + 2 # default if can't set line_height from font.
+self.line_height = self.default_line_height</t>
+<t tx="ekr.20040803072955.18"># Miscellaneous info.
+self.iconimages = {} # Image cache set by getIconImage().
+self.active = False # True if tree is active
+self._editPosition = None # Returned by leoTree.editPosition()
+self.lineyoffset = 0 # y offset for this headline.
+self.disableRedraw = False # True: reschedule a redraw for later.
+self.lastClickFrameId = None # id of last entered clickBox.
+self.lastColoredText = None # last colored text widget.
+
+# Set self.font and self.fontName.
+self.setFontFromConfig()
+
+# Drag and drop
+self.drag_p = None
+self.controlDrag = False # True: control was down when drag started.
+
+# Keep track of popup menu so we can handle behavior better on Linux Context menu
+self.popupMenu = None
+
+# Incremental redraws:
+self.allocateOnlyVisibleNodes = False # True: enable incremental redraws.
+self.prevMoveToFrac = None
+self.visibleArea = None
+self.expandedVisibleArea = None
+
+if self.allocateOnlyVisibleNodes:
+    self.frame.bar1.bind("&lt;B1-ButtonRelease&gt;", self.redraw)</t>
+<t tx="ekr.20040803072955.19"># The new code injects 3 callbacks for the colorizer.
+
+if not leoTkinterTree.callbacksInjected: # Class var.
+    leoTkinterTree.callbacksInjected = True
+    self.injectCallbacks()</t>
+<t tx="ekr.20040803072955.20">def createPermanentBindings (self):
+    
+    canvas = self.canvas
+
+    if self.expanded_click_area:
+        canvas.tag_bind('clickBox','&lt;Button-1&gt;', self.onClickBoxClick)
+    else:
+        canvas.tag_bind('plusBox','&lt;Button-1&gt;',   self.onClickBoxClick)
+
+    canvas.tag_bind('iconBox','&lt;Button-1&gt;', self.onIconBoxClick)
+    canvas.tag_bind('iconBox','&lt;Double-1&gt;', self.onIconBoxDoubleClick)
+    canvas.tag_bind('iconBox','&lt;Button-3&gt;', self.onIconBoxRightClick)
+    canvas.tag_bind('iconBox','&lt;B1-Motion&gt;',            self.onDrag)
+    canvas.tag_bind('iconBox','&lt;Any-ButtonRelease-1&gt;',  self.onEndDrag)
+
+    if self.useBindtags: # Create a dummy widget to hold all bindings.
+        t = Tk.Text(canvas) # This _must_ be a Text widget attached to the canvas!
+        if 1: # Either way works properly.
+            t.bind("&lt;Button-1&gt;", self.onHeadlineClick)
+            t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick)
+            t.bind("&lt;Key&gt;",      self.onHeadlineKey)
+        else:
+            t.bind("&lt;Button-1&gt;", self.onHeadlineClick, '+')
+            t.bind("&lt;Button-3&gt;", self.onHeadlineRightClick, '+')
+            t.bind("&lt;Key&gt;",      self.onHeadlineKey, '+')
+        t.bind("&lt;Control-t&gt;",self.onControlT)
+    
+        # newText() attaches these bindings to all headlines.
+        self.textBindings = t.bindtags()</t>
+<t tx="ekr.20040803072955.37">def drawClickBox (self,p,y):
+
+    canvas = self.canvas ; h = self.line_height
+    
+    # Define a slighly larger rect to catch clicks.
+    if self.expanded_click_area:
+        theId = self.newClickBox(p,0,y,1000,y+h-2)
+        
+        if 0: # A major change to the user interface.
+            &lt;&lt; change the appearance of headlines &gt;&gt;</t>
+<t tx="ekr.20040803072955.38">
+# Define a slighly smaller rect to colorize.
+color_rect = self.canvas.create_rectangle(0,y,1000,y+h-4,tag="colorBox")
+self.canvas.itemconfig(color_rect,fill=defaultColor,outline=defaultColor)
+
+# Color the click box or the headline
+def enterRect(event,id=color_rect,p=p,t=self.lastText):
+    if 1: # Color or underline the headline
+        t2 = self.lastColoredText
+        if t2: # decolor the old headline.
+            if 1: # deunderline
+                t2.tag_delete('underline')
+            else: # decolor
+                t2.configure(background="white")
+        if t and p != self.editPosition():
+            if 1: # underline
+                t.tag_add('underline','1.0','end')
+                t.tag_configure('underline',underline=True)
+            else: # color
+                t.configure(background="LightSteelBlue1")
+            self.lastColoredText = t
+        else: self.lastColoredText = None
+    else: # Color the click box.
+        if self.lastClickFrameId:
+            self.canvas.itemconfig(self.lastClickFrameId,fill=defaultColor,outline=defaultColor)
+        self.lastClickFrameId = id
+        color = "LightSteelBlue1"
+        self.canvas.itemconfig(id,fill=color,outline=color)
+
+bind_id = self.canvas.tag_bind(click_rect, "&lt;Enter&gt;", enterRect) # , '+')
+self.tagBindings.append((click_rect,bind_id,"&lt;Enter&gt;"),)</t>
+<t tx="ekr.20040803072955.81">def onIconBoxClick (self,event):
+    
+    c = self.c ; gui = g.app.gui
+    tree = self ; canvas = tree.canvas
+    
+    if self.trace and self.verbose: g.trace()
+    
+    p = self.eventToPosition(event)
+    if not p: return
+    
+    if not g.doHook("iconclick1",c=c,p=p,event=event):
+        if event:
+            self.onDrag(event)
+        tree.select(p)
+        g.app.findFrame.handleUserClick(p) # 4/3/04
+        g.doHook("iconclick2",c=c,p=p,event=event)
+        
+    return "break" # disable expanded box handling.</t>
+<t tx="ekr.20040803072955.91">def idle_head_key (self,p,ch=None):
+    
+    """Update headline text at idle time."""
+    
+    c = self.c
+
+    if not p or not p.isCurrentPosition():
+        return "break"
+        
+    edit_text = self.edit_text(p)
+    index = edit_text.index("insert")
+
+    if g.doHook("headkey1",c=c,p=p,ch=ch):
+        return "break" # The hook claims to have handled the event.
+        
+    &lt;&lt; set head to vnode text &gt;&gt;
+    done = ch in ('\r','\n')
+    if done:
+        &lt;&lt; set the widget text to head &gt;&gt;
+    &lt;&lt; set s to the widget text &gt;&gt;
+    changed = s != head
+    if changed:
+        c.undoer.setUndoParams("Change Headline",p,newText=s,oldText=head)
+        &lt;&lt; update p &gt;&gt;
+    if done or changed:
+        &lt;&lt; reconfigure p and all nodes joined to p &gt;&gt;
+        &lt;&lt; update the screen &gt;&gt;
+
+    g.doHook("headkey2",c=c,p=p,ch=ch)
+    return "break"</t>
+<t tx="ekr.20040803072955.92">head = p.headString()
+if head == None:
+    head = u""
+head = g.toUnicode(head,"utf-8")</t>
+<t tx="ekr.20040803072955.93">self.setText(edit_text,head,tag="idle_head_key")
+edit_text.mark_set("insert",index)</t>
+<t tx="ekr.20040803072955.94">s = edit_text.get("1.0","end")
+
+# Don't truncate if the user is hitting return.
+# That should just end editing.
+if 1:
+    # Truncate headline text to workaround Tk problems...
+    # Another kludge: remove one or two trailing newlines before warning of truncation.
+    if s and s[-1] == '\n': s = s[:-1]
+    if s and s[-1] == '\n': s = s[:-1]
+    i = s.find('\n')
+    if i &gt; -1:
+        # g.trace(i,len(s),repr(s))
+        g.es("Truncating headline to one line",color="blue")
+        s = s[:i]
+    limit = 1000
+    if len(s) &gt; limit:
+        g.es("Truncating headline to %d characters" % (limit),color="blue")
+        s = s[:limit]
+
+s = g.toUnicode(s,g.app.tkEncoding)
+
+if not s:
+    s = u""
+    
+if 0: # 6/10/04: No longer needed.  This was stressing Tk needlessly.
+    s = s.replace('\n','')
+    s = s.replace('\r','')</t>
+<t tx="ekr.20040803072955.95">c.beginUpdate()
+if 1: # update...
+    # Update changed bit.
+    if not c.changed:
+        c.setChanged(True)
+    # Update all dirty bits.
+    # Bug fix 8/2/04: must call p.setDirty even if p is dirty!
+    p.setDirty()
+    # Update p.
+    p.initHeadString(s)
+    self.setText(edit_text,s,tag="idle_head_key2")
+    edit_text.mark_set("insert",index)
+c.endUpdate(False) # do not redraw now.</t>
+<t tx="ekr.20040803072955.96"># Reconfigure p's headline.
+if done:
+    self.setDisabledLabelState(p)
+
+edit_text.configure(width=self.headWidth(p))</t>
+<t tx="ekr.20040803072955.97">if done:
+    # g.trace("done")
+    c.beginUpdate()
+    self.endEditLabel()
+    c.endUpdate()
+
+elif changed:
+    # g.trace("changed")
+    # Update p immediately.  Joined nodes are redrawn later by endEditLabel.
+    # Redrawing the whole screen now messes up the cursor in the headline.
+    self.drawIcon(p) # just redraw the icon.</t>
 <t tx="ekr.20040809071510"></t>
 <t tx="ekr.20040809071510.1"></t>
 <t tx="ekr.20040809071510.2">def scanAtFileOptions (h,err_flag=False):
@@ -29603,5 +31444,318 @@ doctest.DocTestSuite requires Python 2.3 or above.</t>
             print "unknown position attribute:",attr
             # import traceback ; traceback.print_stack()
             raise AttributeError</t>
+<t tx="ekr.20040809095716"></t>
+<t tx="ekr.20040809102904"></t>
+<t tx="ekr.20040812033107">@nocolor
+
+One problem is that continued lines don't have to be indented!  This should be fixed asap.
+
+@color</t>
+<t tx="ekr.20040828161347">@killcolor
+
+https://sourceforge.net/forum/message.php?msg_id=2711908
+By: nobody
+
+import worked ok on a few files already ok since b3,
+this one doesn't import well.
+&lt;http://users.wpi.edu/~squirrel/programs/piemenu.html&gt;
+&lt;http://users.wpi.edu/~squirrel/programs/piemenu.py&gt;
+
+the methods are all in each class declaration node.
+the nodes for each method are made and marked but empty.
+same with the other 2 classes in the file.
+the generated @file had indentation errors...
+
+import to @file doesn't print status to log?
+and why must it mark each method node?
+did it know there were problems? why no errors?
+maybe a config enabled backup dir to put bak files
+if there are going to be some incomplete imports.
+
+looks like it got confused on class variables
+and some var = funct asssignments after methods.
+some got put after @others at the wrong indent.
+
+has anyone tried to import decorators?
+no time like the present...
+they import ok for a simple @memoize example.
+
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.3, Tk 8.4.3, win32
+e</t>
+<t tx="ekr.20040829101055"></t>
+<t tx="ekr.20040830210600"></t>
+<t tx="ekr.20040831063427">@killcolor
+
+I'm a new user and just installed 4.2b3 on a Win2ksp4 box with Python 2.2 and Tcl/Tk 8.4.6.1
+
+Leo refuses to start. This is what I get when using the Python repl:
+
+&gt;&gt;&gt; import leo
+&gt;&gt;&gt; leo.run()
+Traceback (most recent call last):
+File "&lt;stdin&gt;", line 1, in ?
+File "leo.py", line 45, in run
+if not isValidPython(): return
+File "leo.py", line 118, in isValidPython
+import leoGlobals as g
+File "k:\apps\Leo\src\leoGlobals.py", line 51, in ?
+def createTopologyList (c=None,root=None,useHeadlines=False):
+NameError: name 'False' is not defined
+
+&gt; NameError: name 'False' is not defined
+
+Thanks for this report.
+
+Leo has code that is intended to warn if you aren't using the proper version of Python.  Apparently this code isn't getting a chance to execute before the traceback is generated.  This is a bug.  Thanks again.
+
+Edward</t>
+<t tx="ekr.20040831093934"></t>
+<t tx="ekr.20040831093934.1">@killcolor
+
+With TclTkAqua on the Mac (but *not* with tcltk installed via Fink), the tab
+problem doesn't exist there), the tab, return, and backspace keys do not generate
+ASCII codes, i.e. event.char is an empty string. So when I press the tab key,
+Tk inserts a tab character and Leo isn't even aware of it.</t>
+<t tx="ekr.20040831095613">@killcolor
+
+Leo gave an error for every character of the file name!
+
+This method got overlooked when runOpenFileDialog got changed recently.
+
+Added unit test to test.leo.</t>
+<t tx="ekr.20040831104303"></t>
+<t tx="ekr.20040831104303.1">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2720802
+By: billp9619
+
+This  file testmini.leo
+
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;leo_file&gt;
+&lt;leo_header/&gt;
+&lt;globals/&gt;
+&lt;preferences allow_rich_text="0"/&gt;
+&lt;find_panel_settings/&gt;
+&lt;vnodes/&gt;
+&lt;tnodes/&gt;
+&lt;/leo_file&gt;
+
+Gives error message as follows.
+
+Leo Log Window...
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.4, Tk 8.4.3, win32
+
+File encoding: UTF-8
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 610, in getLeoFile
+    self.getPrefs()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 814, in getPrefs
+    self.getUnknownTag()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 371, in
+getUnknownTag
+    tag = self.getStringToTag('=')
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 349, in
+getStringToTag
+    raise BadLeoFile("expecting string terminated by " + tag)
+BadLeoFile: Bad Leo File:expecting string terminated by =
+C:\Program Files\Leo\testmini.leo is not a valid Leo file: Bad Leo File:expecting
+string terminated by =
+
+
+A copy of LeoDocs.leo with the &lt;preferences allow_rich_text="0"/&gt; tag in it
+gave this error message:
+
+File encoding: UTF-8
+Traceback (most recent call last):
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 610, in getLeoFile
+    self.getPrefs()
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 827, in getPrefs
+    self.getTag("&lt;/preferences&gt;")
+  File "C:\Program Files\Leo\src\leoFileCommands.py", line 365, in getTag
+    raise BadLeoFile("expecting" + tag)
+BadLeoFile: Bad Leo File:expecting&lt;/preferences&gt;
+C:\Program Files\Leo\leodocsTESTCOPY.leo is not a valid Leo file: Bad Leo
+File:expecting&lt;/preferences&gt;
+
+regards,
+
+bill p</t>
+<t tx="ekr.20040831110923"></t>
+<t tx="ekr.20040831111203">@killcolor
+
+From Dan Winkler:
+
+On a couple of occasions, I tried to paste in a long @url node and got 
+this message:
+
+	Truncating headline to 250 characters
+
+I wonder if the 250 character limit on headline length should be 
+rethought in light of the @url directive and long web addresses.</t>
+<t tx="ekr.20040831112005"></t>
+<t tx="ekr.20040831112005.1">@killcolor
+
+Dan Winkler
+
+&gt; I've noticed that Leo often inserts a v when I hit command-v to paste.  
+&gt; I'm sure I've got the command key down before I type the v, but Leo is 
+&gt; more sensitive to the timing somehow than most apps.
+
+&gt; Now I'm seeing a problem where when I use command-v to paste into a 
+&gt; headline it pastes the text twice.  If I use the edit menu and choose 
+&gt; paste it works correctly and only pastes once.  Also, if I paste into 
+&gt; the body of a node with command-v, that works correctly too.  It's only 
+&gt; when I use the command key to paste into a headline that I see the 
+&gt; problem.
+
+EKR:  I don't see any of these problems on my Mac.</t>
+<t tx="ekr.20040831113849"></t>
+<t tx="ekr.20040831120106"></t>
+<t tx="ekr.20040831120106.1">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2714125
+
+1) Create a node that contains the following.
+
+@language html
+@doc
+
+Multi
+line
+HTML
+comments
+
+@c
+&lt;p&gt;HTML code&lt;/p&gt;
+
+2) Save the leo file.
+3) Re-open leo and you'll get a "Missing open block comment in readLastDocLine:"
+error.
+
+Leo 4.2 beta 3, build  1.152 , August 10, 2004
+Python 2.3.4, Tk 8.4.4, linux2</t>
+<t tx="ekr.20040831121549.1">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2735294
+By: lmcgign
+
+If I create an @file or @thin node, clone that node, put an
+'@first &lt;something&gt;' directive in it, save all changes and exit, and *then*
+open up the file in Leo again, Leo indicates there have been changes (with the
+'*' in the title bar) to the Leo file as soon as it starts up.
+
+If the node is *not* cloned, or if the node does *not* contain a *non empty*
+@first directive, this behavior does not appear.
+
+I'm running Leo 4.2 beta 3, build  1.152,
+Python 2.3.4, Tk 8.4.3, win32.
+
+-----------
+
+Small correction:
+
+If the node is an @file one the behavior appears, even if the node has *not*
+been cloned.
+
+For an @thin node, though, the node needs to be cloned for the behavior
+to appear.
+
+Leo's console window indicates a Warning line when the behavior occurs:
+
+reading: &lt;leo_filename&gt;
+reading: @file gratis.py
+Warning: updating changed text   &lt;--- 
+leoConfig.txt encoding: utf-8
+
+-Martin</t>
+<t tx="ekr.20040901061935"></t>
+<t tx="ekr.20040904080309">@killcolor
+
+- This happens in leoPlugins.leo at present.
+
+- It happens with @file and @first, but not with @thin and @first.</t>
+<t tx="ekr.20040904081433">if at.perfectImportRoot:
+    &lt;&lt; bump at.correctedLines and tell about the correction &gt;&gt;
+    # p.setMarked()
+    at.t.bodyString = s # Just etting at.t.tempBodyString won't work here.
+    at.t.setDirty() # Mark the node dirty.  Ancestors will be marked dirty later.
+    at.c.setChanged(True)
+else:
+    if not at.updateWarningGiven:
+        at.updateWarningGiven = True
+        # print "***",at.t,at.root.t
+        g.es("Warning: updating changed text in %s" %
+            (at.root.headString()),color="blue")
+    # g.es("old...\n%s\n" % old)
+    # g.es("new...\n%s\n" % s)
+    # Just set the dirty bit. Ancestors will be marked dirty later.
+    at.t.setDirty()
+    if 1: # We must avoid the full setChanged logic here!
+        c.changed = True
+    else: # Far too slow for mass changes.
+        at.c.setChanged(True)</t>
+<t tx="ekr.20040906081644">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2706676
+By: nobody
+
+Ive downloaded 4.2B3 and really really dont want to use the left click select/expand
+anywhere Tree functionality( Ive never had a problem selecting the node I want
+:) ).  I looked in the config file and didnt see an option for turning it off.
+So do I need to hack the leo code to do this?
+
+Option name: expanded_click_area</t>
+<t tx="ekr.20040907083404">@killcolor
+
+A file containing tabs generates diffs for every line, which means that perfect import is totally confused.
+
+I suppose that if perfect import is in effect then maybe we should leave whitespace alone, regardless of tab setting...
+
+Hmmm...</t>
+<t tx="ekr.20040910064225"></t>
+<t tx="ekr.20040910064225.1">Traceback (most recent call last):
+  File "C:\prog\leoCVS\leo\src\leoColor.py", line 1179, in colorizeAnyLanguage
+    assert(state!="unknown")
+    
+This assert failed when when undoing a cut operation.</t>
+<t tx="ekr.20040913111703"></t>
+<t tx="ekr.20040914074643">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2756978
+By: nobody
+
+The tangle menu options tangle all the @root nodes in a Leo file regardless
+of the selection made (tangle m tangle marked, tangle all). In some of my files
+Two of more will tangle togeather leaving others alone. Any suggestions.
+
+The fix was to do p = p.copy in tangleTree, tanglePass1 and untangleTree.  untangleTree calls tanglePass1 to traverse the tree, so there are the only changes needed.</t>
+<t tx="ekr.20040914081306"></t>
+<t tx="ekr.20040914081306.1">@killcolor
+
+http://sourceforge.net/forum/message.php?msg_id=2742238
+By: hinsen
+
+The shortcut definitions in Leo are quite inconvenient on the Mac, as those
+using the Alt key don't work. Alt is used for entry of additional characters.
+On the other hand, ctrl is available for shortcuts but not used in Leo, since
+the ctrl-based shortcuts are shifted to the command key (following standard
+Mac practice).
+
+The patch at the end of this message simply shifts all Alt-shortcuts to Ctrl
+on the Mac.
+
+That leaves one minor clash: Command-` is used for CloneNode in Leo, although
+it canonical MacOS function (switching between the windows of an application)
+would be very useful in Leo as well. Removing the CloneNode binding is easy
+enough, but it seems that I must implement a window switching function myself.
+Not today :-)
+
+Konrad.
+
+</t>
+<t tx="ekr.20040914082436"></t>
 </tnodes>
 </leo_file>

@@ -3,162 +3,868 @@
 #@@nocolor
 
 #@+all
-#@+node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041018195347:Docs
-#@+node:ekr.20041018195347.1:Improve MacOS Docs
-I just succeeded at installing Leo under os x (10.2.8) by folliwing  
-your instructions with modification.  It would be nice to get the  
-modification added to your page for others. I actually found the mods  
-by doing a search for help after following the present instructions  
-failed. The step that is missing (as clearly as I can see) is step 3  
-(using the Package Manager) in the following that comes from
+#@+node:ekr.20041022091645.6:Today
+#@+node:ekr.20041018194900:(Support drawing hooks)
+if not g.doHook("xxx",c==c,p==p,v==v,event=event):
+                
+"boxclick1"    yes      before click in +- box            c,v,event
+"boxclick2"             after  click in +- box            c,v,event
 
-http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
-3431.html
+"drag1"        yes      before start of drag              c,v,event
+"drag2"                 after  start of drag              c,v,event
+"dragging1"    yes      before continuing to drag         c,v,event
+"dragging2"             after  continuing to drag         c,v,event
 
-> What I did that worked on Jaguar:
->  - Installed MacPython 2.3 for Jaguar using the binary installer from:
->  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
->  - Installed Tcl/Tk 8.4.4 using the binary installer from
->  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
->  - Used Package Manager (in /Applications/MacPython) to install  
-> _tkinter
->  (and also readlines and some other useful stuff)
->
-[x]
-   - type "rehash" in a terminal
-   - type pythonw to start Python and then test Tkinter with the  
-following:
->
-> import Tkinter
->  root = Tkinter.Tk()
->
->
-> should bring up a window.
+"enddrag1"     yes      before end of drag                c,v,event
+"enddrag2"              after  end of drag                c,v,event
 
-(It was also nice to have a test included so you could see that  
-everything was installed properly.)
-
-I also edited the leo file that is part of the leo distribution so it  
-read:
-
-pythonw /usr/local/lib/leo/src/leo.pyw "$1"
-
-That way I can just type "leo" to start leo rather than doing
-
-/usr/local/bin/pythonw leo.pyw
-
-Finally, when leo is run for the first time, it creates a window that  
-is centered on the screen asking for an ID. The screen happened to  
-appear under existing terminal windows and I didn't see it there and  
-thought something was wrong with leo on my system. After I found it  
-(accidentally) and entered a user name, all went as advertised.
-
-Seeing the leo project in python is inspiring.  Thanks for making this  
-available.
-
-/c
+"iconclick1"   yes      before single click in icon box   c,v,event
+"iconclick2"            after  single click in icon box   c,v,event
+"iconrclick1"  yes      before right click in icon box    c,v,event
+"iconrclick2"           after  right click in icon box    c,v,event
+"icondclick1"  yes      before double click in icon box   c,v,event
+"icondclick2"           after  double click in icon box   c,v,event
 #@nonl
-#@-node:ekr.20041018195347.1:Improve MacOS Docs
-#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-@nocolor
+#@+node:ekr.20041018200949:From OLD code
+#@+node:ekr.20041018200728.8:tree.injectCallbacks (class method)
+def injectCallbacks(self):
+	
+	import leoNodes
+	
+	<< define tkinter callbacks to be injected in the vnode class >>
+
+	for f in (
+		OnBoxClick,OnDrag,OnEndDrag,
+		OnHeadlineClick,OnHeadlineRightClick,OnHeadlineKey,
+		OnHyperLinkControlClick,OnHyperLinkEnter,OnHyperLinkLeave,
+		OnIconClick,OnIconDoubleClick,OnIconRightClick):
+
+		# trace(f)
+		funcToMethod(f,leoNodes.vnode)
 #@nonl
-#@+node:ekr.20040226094105.1:halw
+#@+node:ekr.20041018200728.9:<< define tkinter callbacks to be injected in the vnode class >>
+# N.B. These vnode methods are entitled to know about details of the leoTkinterTree class.
 
-https://sourceforge.net/forum/message.php?msg_id=2437859
-By: halw
-
-David,
-
-I agree that your solution is best -- the problem is it doesn't work. 
-
-If you look at the original post you'll note that the mouse wheel works fine
-in all other Leo panes (which are native text panes, not a custom canvas).
-
-In fact, a stock RH9 system does set up X as those pages indicate. The problem
-is elsewhere, perhaps Tk or Tkinter.
-
-If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
-it into the FAQ, though.
-
---Hal
-
-#@-node:ekr.20040226094105.1:halw
-#@+node:ekr.20040226094105.2:djsg
-https://sourceforge.net/forum/message.php?msg_id=2435622
-By: djsg
-
-Tk is complying with the behavior of XFree86, and not hiding that behavior. 
-
-Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
-matches it, so 4.3.0 ought to match it also:
-
-http://www.xfree86.org/4.2.0/mouse7.html
-
-An example of configuration for XFree86 3.3.2.
-
-First, the URL: 
-
-http://www.genius-europe.com/service/faq/tuxmouse.htm
-
-o save their bandwidth, the example follows: 
-
-
-All mices with scroll wheel or stick
-
-XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
-The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
-wheel actions.
-Edit /etc/XF86Config with your favorite editor
-Add the following line to the "Pointer" section.
-
-ZAxisMapping 4 5
-
-Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
-or for serial mice set it to "IntelliMouse" or "Auto".
-Example for PS/2 wheel mouse:
-
-Section "Pointer"
-Protocol "IMPS/2"
-Device "/dev/psaux"
-SampleRate 60
-BaudRate 1200
-ZAxisMapping 4 5
-Buttons 3
-EndSection
-
-After XWindows is started run :
-imwheel -k
-
-
-#@-node:ekr.20040226094105.2:djsg
-#@+node:ekr.20040226094105.3:The actual workaround
-
-https://sourceforge.net/forum/message.php?msg_id=2433628
-By: halw
-
-Okay, I have a workaround that works for me with my existing Tk version. My
-Tkinter skills are weak, but I don't think this will hurt anything else :)
-
-Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
-events, but maps to buttons 4 (up) & 5 (down).
-
-Add to if clause 
-# Handle mouse wheel in the outline pane.
-if sys.platform == "linux2": # This crashes tcl83.dll
-..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
-..def mapWheel(e):
-    if e.num == 4:
-    ..e.delta = 120
-    ..return frame.OnMouseWheel(e)
-    elif e.num == 5:
-    ..e.delta = -120
-    ..return frame.OnMouseWheel(e)
-..canvas.bind("<ButtonPress>", mapWheel, add=1)
+@others
 #@nonl
-#@-node:ekr.20040226094105.3:The actual workaround
-#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
-#@-node:ekr.20041018195347:Docs
+#@+node:ekr.20041018200728.10:OnBoxClick
+# Called when the box is clicked.
+
+def OnBoxClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("boxclick1",c=c,v=v,event=event):
+			c.frame.tree.OnBoxClick(v)
+		doHook("boxclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("boxclick")
+#@nonl
+#@-node:ekr.20041018200728.10:OnBoxClick
+#@+node:ekr.20041018200728.11:OnDrag
+def OnDrag(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if c.frame.tree.dragging():
+			if not doHook("dragging1",c=c,v=v,event=event):
+				c.frame.tree.OnDrag(v,event)
+			doHook("dragging2",c=c,v=v,event=event)
+		else:
+			if not doHook("drag1",c=c,v=v,event=event):
+				c.frame.tree.OnDrag(v,event)
+			doHook("drag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("drag")
+#@nonl
+#@-node:ekr.20041018200728.11:OnDrag
+#@+node:ekr.20041018200728.12:OnEndDrag
+def OnEndDrag(self,event=None):
+	
+	"""Callback injected into vnode class."""
+	
+	# trace()
+
+	try:
+		v = self ; c = v.c
+		# 7/10/03: Always call frame.OnEndDrag, regardless of state.
+		if not doHook("enddrag1",c=c,v=v,event=event):
+			c.frame.tree.OnEndDrag(v,event)
+		doHook("enddrag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("enddrag")
+#@nonl
+#@-node:ekr.20041018200728.12:OnEndDrag
+#@+node:ekr.20041018200728.13:OnHeadlineClick & OnHeadlineRightClick
+def OnHeadlineClick(self,event=None):
+	"""Callback injected into vnode class."""
+	#trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("headclick1",c=c,v=v,event=event):
+			c.frame.tree.OnActivate(v)
+		doHook("headclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headclick")
+	
+def OnHeadlineRightClick(self,event=None):
+	"""Callback injected into vnode class."""
+	#trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("headrclick1",c=c,v=v,event=event):
+			c.frame.tree.OnActivate(v)
+			c.frame.tree.OnPopup(self,event)
+		doHook("headrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headrclick")
+#@nonl
+#@-node:ekr.20041018200728.13:OnHeadlineClick & OnHeadlineRightClick
+#@+node:ekr.20041018200728.14:OnHyperLinkControlClick
+def OnHyperLinkControlClick (self,event):
+	
+	"""Callback injected into vnode class."""
+
+	# trace()
+	try:
+		v = self ; c = v.c
+		if not doHook("hypercclick1",c=c,v=v,event=event):
+			c.beginUpdate()
+			c.selectVnode(v)
+			c.endUpdate()
+			c.frame.bodyCtrl.mark_set("insert","1.0")
+		doHook("hypercclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hypercclick")
+#@nonl
+#@-node:ekr.20041018200728.14:OnHyperLinkControlClick
+#@+node:ekr.20041018200728.15:OnHeadlineKey
+def OnHeadlineKey (self,event=None):
+
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("headkey1",c=c,v=v,event=event):
+			c.frame.tree.OnHeadlineKey(v,event)
+		doHook("headkey2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headkey")
+#@nonl
+#@-node:ekr.20041018200728.15:OnHeadlineKey
+#@+node:ekr.20041018200728.16:OnHyperLinkEnter
+def OnHyperLinkEnter (self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("hyperenter1",c=c,v=v,event=event):
+			if 0: # This works, and isn't very useful.
+				c.frame.bodyCtrl.tag_config(v.tagName,background="green")
+		doHook("hyperenter2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hyperenter")
+#@nonl
+#@-node:ekr.20041018200728.16:OnHyperLinkEnter
+#@+node:ekr.20041018200728.17:OnHyperLinkLeave
+def OnHyperLinkLeave (self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("hyperleave1",c=c,v=v,event=event):
+			if 0: # This works, and isn't very useful.
+				c.frame.bodyCtrl.tag_config(v.tagName,background="white")
+		doHook("hyperleave2",c=c,v=v,event=event)
+	except:
+		es_event_exception("hyperleave")
+#@nonl
+#@-node:ekr.20041018200728.17:OnHyperLinkLeave
+#@+node:ekr.20041018200728.18:OnIconClick & OnIconRightClick
+def OnIconClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("iconclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconClick(v,event)
+		doHook("iconclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconclick")
+	
+def OnIconRightClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("iconrclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconRightClick(v,event)
+		doHook("iconrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconrclick")
+#@-node:ekr.20041018200728.18:OnIconClick & OnIconRightClick
+#@+node:ekr.20041018200728.19:OnIconDoubleClick
+def OnIconDoubleClick(self,event=None):
+	
+	"""Callback injected into vnode class."""
+
+	try:
+		v = self ; c = v.c
+		if not doHook("icondclick1",c=c,v=v,event=event):
+			c.frame.tree.OnIconDoubleClick(self)
+		doHook("icondclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("icondclick")
+#@-node:ekr.20041018200728.19:OnIconDoubleClick
+#@-node:ekr.20041018200728.9:<< define tkinter callbacks to be injected in the vnode class >>
+#@-node:ekr.20041018200728.8:tree.injectCallbacks (class method)
+#@+node:ekr.20041018200728.25:idle_redraw
+def idle_redraw (self):
+	
+	self.redrawScheduled = false # 7/10/03: Always do this here.
+	
+	if 0: # This can be called as the result of update_idletasks, so the count need not be 0.
+		trace(self.updateCount)
+
+	frame = self.c.frame
+	if frame not in app.windowList or app.quitting:
+		# trace("no frame")
+		return
+		
+	if self.drag_v:
+		# trace("dragging",self.drag_v)
+		return
+
+	# trace(frame)
+	# print_bindings("canvas",self.canvas)
+
+	self.expandAllAncestors(self.currentVnode())
+	oldcursor = self.canvas['cursor']
+	self.canvas['cursor'] = "watch"
+	self.allocatedNodes = 0
+	if not doHook("redraw-entire-outline",c=self.c):
+		# Erase and redraw the entire tree.
+		self.setTopVnode(None)
+		self.deleteBindings()
+		self.canvas.delete("all")
+		self.deleteWidgets()
+		self.setVisibleAreaToFullCanvas()
+		self.drawTopTree()
+		# Set up the scroll region after the tree has been redrawn.
+		x0, y0, x1, y1 = self.canvas.bbox("all")
+		self.canvas.configure(scrollregion=(0, 0, x1, y1))
+		# Do a scrolling operation after the scrollbar is redrawn
+		# printGc()
+		self.canvas.after_idle(self.idle_scrollTo)
+		if self.trace:
+			self.redrawCount += 1
+			print "idle_redraw allocated:",self.redrawCount, self.allocatedNodes
+		doHook("after_redraw-outline",c=self.c)
+
+	self.canvas['cursor'] = oldcursor
+#@nonl
+#@-node:ekr.20041018200728.25:idle_redraw
+#@+node:ekr.20041018200728.29:drawBox (tag_bind)
+def drawBox (self,v,x,y):
+	
+	y += 7 # draw the box at x, y+7
+
+	tree = self
+	iconname = choose(v.isExpanded(),"minusnode.gif", "plusnode.gif")
+	image = self.getIconImage(iconname)
+	id = self.canvas.create_image(x,y,image=image)
+	
+	if 1: # use vnode callbacks
+		id1 = self.canvas.tag_bind(id, "<1>", v.OnBoxClick)
+	else:
+		<< define onBoxClickCallback >>
+		id1 = self.canvas.tag_bind(id, "<1>", onBoxClickCallback)
+	id2 = self.canvas.tag_bind(id, "<Double-1>", lambda x: None)
+	
+	# Remember the bindings so deleteBindings can delete them.
+	self.tagBindings.append((id,id1,"<1>"),)
+	self.tagBindings.append((id,id2,"<Double-1>"),)
+#@nonl
+#@+node:ekr.20041018200728.30:<< define onBoxClickCallback >>
+def onBoxClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("boxclick1",c=c,v=v,event=event):
+			tree.OnBoxClick(v)
+		doHook("boxclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("boxclick")
+#@nonl
+#@-node:ekr.20041018200728.30:<< define onBoxClickCallback >>
+#@-node:ekr.20041018200728.29:drawBox (tag_bind)
+#@+node:ekr.20041018200728.31:drawIcon (tag_bind)
+def drawIcon(self,v,x=None,y=None):
+	
+	"""Draws icon for v at x,y, or at v.iconx,v.icony if x,y = None,None"""
+
+	tree = self
+	
+	if x is None and y is None:
+		try:
+			x,y = v.iconx, v.icony
+		except:
+			# Inject the ivars.
+			x,y = v.iconx, v.icony = 0,0
+	else:
+		# Inject the ivars.
+		v.iconx, v.icony = x,y
+
+	y += 2 # draw icon at y + 2
+
+	# Always recompute icon.
+	val = v.iconVal = v.computeIcon()
+	assert(0 <= val <= 15)
+	
+	# Compute the image name
+	imagename = "box"
+	if val < 10: imagename += "0"
+	imagename += `val`
+
+	# Get the image
+	image = self.getIconImage(imagename + ".GIF")
+	id = self.canvas.create_image(x,y,anchor="nw",image=image)
+	self.icon_id_dict[id] = v # Remember which vnode belongs to the icon.
+	
+	if 1: # use vnode callbacks.
+		id1 = self.canvas.tag_bind(id,"<1>",v.OnIconClick)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",v.OnIconDoubleClick)
+		id3 = self.canvas.tag_bind(id,"<3>",v.OnIconRightClick)
+	else:
+		<< define icon click callbacks >>
+		id1 = self.canvas.tag_bind(id,"<1>",onIconClickCallback)
+		id2 = self.canvas.tag_bind(id,"<Double-1>",onIconDoubleClickCallback)
+		id3 = self.canvas.tag_bind(id,"<3>",onIconRightClickCallback)
+	
+	# Remember the bindings so deleteBindings can delete them.
+	self.tagBindings.append((id,id1,"<1>"),)
+	self.tagBindings.append((id,id2,"<Double-1>"),)
+	self.tagBindings.append((id,id3,"<3>"),)
+
+	return 0 # dummy icon height
+#@nonl
+#@+node:ekr.20041018200728.32:<< define icon click callbacks >>
+def onIconClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("iconclick1",c=c,v=v,event=event):
+			tree.OnIconClick(v,event)
+		doHook("iconclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconclick")
+		
+def onIconDoubleClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("icondclick1",c=c,v=v,event=event):
+			tree.OnIconDoubleClick(self)
+		doHook("icondclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("icondclick")
+	
+def onIconRightClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("iconrclick1",c=c,v=v,event=event):
+			tree.OnIconRightClick(v,event)
+		doHook("iconrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("iconrclick")
+#@-node:ekr.20041018200728.32:<< define icon click callbacks >>
+#@-node:ekr.20041018200728.31:drawIcon (tag_bind)
+#@+node:ekr.20041018200728.34:drawText (bind)
+# draws text for v at x,y
+
+def drawText(self,v,x,y):
+	
+	tree = self
+	x += text_indent
+
+	t = Tkinter.Text(self.canvas,
+		font=self.font,bd=0,relief="flat",width=self.headWidth(v),height=1)
+	self.edit_text_dict[v] = t # Remember which text widget belongs to v.
+	
+	# Remember the widget so deleteBindings can delete it.
+	self.widgets.append(t) # Fixes a _huge_ memory leak.
+
+	t.insert("end", v.headString())
+	<< configure the text depending on state >>
+
+	if 1: # Use vnode callbacks.
+		id1 = t.bind("<1>",v.OnHeadlineClick)
+		id2 = t.bind("<3>",v.OnHeadlineRightClick)
+	else:
+		<< define the headline click callbacks >>
+		id1 = t.bind("<1>",onHeadlineClickCallback)
+		id2 = t.bind("<3>",onHeadlineRightClickCallback)
+	if 0: # 6/15/02: Bill Drissel objects to this binding.
+		t.bind("<Double-1>", v.OnBoxClick)
+	id3 = t.bind("<Key>", v.OnHeadlineKey)
+	id4 = t.bind("<Control-t>",self.OnControlT)
+		# 10/16/02: Stamp out the erroneous control-t binding.
+		
+	# Remember the bindings so deleteBindings can delete them.
+	self.bindings.append((t,id1,"<1>"),)
+	self.bindings.append((t,id2,"<3>"),)
+	self.bindings.append((t,id3,"<Key>"),)
+	self.bindings.append((t,id4,"<Control-t>"),)
+
+	id = self.canvas.create_window(x,y,anchor="nw",window=t)
+	self.canvas.tag_lower(id)
+
+	return self.line_height
+#@nonl
+#@+node:ekr.20041018200728.35:<< configure the text depending on state >>
+if v == self.currentVnode():
+	if v == self.editVnode():
+		self.setNormalLabelState(v)
+	else:
+		self.setDisabledLabelState(v) # selected, disabled
+else:
+	self.setUnselectedLabelState(v) # unselected
+#@nonl
+#@-node:ekr.20041018200728.35:<< configure the text depending on state >>
+#@+node:ekr.20041018200728.36:<< define the headline click callbacks >>
+def onHeadlineClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("headclick1",c=c,v=v,event=event):
+			tree.OnActivate(v)
+		doHook("headclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headclick")
+	
+def onHeadlineRightClickCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("headrclick1",c=c,v=v,event=event):
+			tree.OnActivate(v)
+			tree.OnPopup(v,event)
+		doHook("headrclick2",c=c,v=v,event=event)
+	except:
+		es_event_exception("headrclick")
+#@nonl
+#@-node:ekr.20041018200728.36:<< define the headline click callbacks >>
+#@-node:ekr.20041018200728.34:drawText (bind)
+#@+node:ekr.20041018200728.67:idle_head_key
+def idle_head_key (self,v,ch=None):
+	
+	"""Update headline text at idle time."""
+
+	c = self.c
+	if not v or not v.edit_text() or v != c.currentVnode():
+		return "break"
+	if doHook("headkey1",c=c,v=v,ch=ch):
+		return "break" # The hook claims to have handled the event.
+
+	<< set s to the widget text >>
+	<< set head to vnode text >>
+	changed = s != head
+	done = ch and (ch == '\r' or ch == '\n')
+	if not changed and not done:
+		return "break"
+	if changed:
+		c.undoer.setUndoParams("Change Headline",v,newText=s,oldText=head)
+	index = v.edit_text().index("insert")
+	if changed:
+		<< update v and all nodes joined to v >>
+	<< reconfigure v and all nodes joined to v >>
+	<< update the screen >>
+
+	doHook("headkey2",c=c,v=v,ch=ch)
+	return "break"
+#@nonl
+#@+node:ekr.20041018200728.68:<< set s to the widget text >>
+s = v.edit_text().get("1.0","end")
+s = toUnicode(s,app.tkEncoding) # 2/25/03
+
+if not s:
+	s = u""
+s = s.replace('\n','')
+s = s.replace('\r','')
+# trace(`s`)
+#@-node:ekr.20041018200728.68:<< set s to the widget text >>
+#@+node:ekr.20041018200728.69:<< set head to vnode text >>
+head = v.headString()
+if head == None:
+	head = u""
+head = toUnicode(head,"utf-8")
+#@-node:ekr.20041018200728.69:<< set head to vnode text >>
+#@+node:ekr.20041018200728.70:<< update v and all nodes joined to v >>
+c.beginUpdate()
+
+# Update changed bit.
+if not c.changed:
+	c.setChanged(true)
+
+# Update all dirty bits.
+v.setDirty()
+
+# Update v.
+v.initHeadString(s)
+v.edit_text().delete("1.0","end")
+v.edit_text().insert("end",s)
+v.edit_text().mark_set("insert",index)
+
+# Update all joined nodes.
+for v2 in v.t.joinList:
+	if v2 != v:
+		v2.initHeadString(s)
+		if v2.edit_text(): # v2 may not be visible
+			v2.edit_text().delete("1.0","end")
+			v2.edit_text().insert("end",s)
+
+c.endUpdate(false) # do not redraw now.
+#@nonl
+#@-node:ekr.20041018200728.70:<< update v and all nodes joined to v >>
+#@+node:ekr.20041018200728.71:<< reconfigure v and all nodes joined to v >>
+# Reconfigure v's headline.
+if done:
+	self.setDisabledLabelState(v)
+
+v.edit_text().configure(width=self.headWidth(v))
+
+# Reconfigure all joined headlines.
+for v2 in v.t.joinList:
+	if v2 != v:
+		if v2.edit_text(): # v2 may not be visible
+			v2.edit_text().configure(width=self.headWidth(v2))
+#@nonl
+#@-node:ekr.20041018200728.71:<< reconfigure v and all nodes joined to v >>
+#@+node:ekr.20041018200728.72:<< update the screen >>
+if done:
+	c.beginUpdate()
+	self.endEditLabel()
+	c.endUpdate()
+
+elif changed:
+	# update v immediately.  Joined nodes are redrawn later by endEditLabel.
+	# Redrawing the whole screen now messes up the cursor in the headline.
+	self.drawIcon(v) # just redraw the icon.
+#@nonl
+#@-node:ekr.20041018200728.72:<< update the screen >>
+#@-node:ekr.20041018200728.67:idle_head_key
+#@+node:ekr.20041018200728.73:tree.OnIconClick & OnIconRightClick
+def OnIconClick (self,v,event):
+
+	tree = self ; canvas = tree.canvas
+	if event:
+		canvas_x = canvas.canvasx(event.x)
+		canvas_y = canvas.canvasy(event.y)
+		id = canvas.find_closest(canvas_x,canvas_y)
+		if id != None:
+			try: id = id[0]
+			except: pass
+			self.drag_v = v
+			self.drag_id = id
+			if 1: # Use vnode callbacks.
+				id4 = canvas.tag_bind(id,"<B1-Motion>", v.OnDrag)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", v.OnEndDrag)
+			else:
+				<< define drag callbacks >>
+				id4 = canvas.tag_bind(id,"<B1-Motion>", onDragCallback)
+				id5 = canvas.tag_bind(id,"<Any-ButtonRelease-1>", onEndDragCallback)
+			# Remember the bindings so deleteBindings can delete them.
+			self.tagBindings.append((id,id4,"<B1-Motion>"),)
+			self.tagBindings.append((id,id5,"<Any-ButtonRelease-1>"),)
+	tree.select(v)
+	
+def OnIconRightClick (self,v,event):
+
+	self.select(v)
+#@nonl
+#@+node:ekr.20041018200728.74:<< define drag callbacks >>
+def onDragCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if tree.dragging():
+			if not doHook("dragging1",c=c,v=v,event=event):
+				tree.OnDrag(v,event)
+			doHook("dragging2",c=c,v=v,event=event)
+		else:
+			if not doHook("drag1",c=c,v=v,event=event):
+				tree.OnDrag(v,event)
+			doHook("drag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("drag")
+		
+def onEndDragCallback(event,tree=tree,v=v):
+	try:
+		c = v.c
+		if not doHook("enddrag1",c=c,v=v,event=event):
+			tree.OnEndDrag(v,event)
+		doHook("enddrag2",c=c,v=v,event=event)
+	except:
+		es_event_exception("enddrag")
+		
+		
+#@-node:ekr.20041018200728.74:<< define drag callbacks >>
+#@-node:ekr.20041018200728.73:tree.OnIconClick & OnIconRightClick
+#@+node:ekr.20041018200728.75:tree.OnPopup & allies
+def OnPopup (self,v,event):
+	
+	"""Handle right-clicks in the outline."""
+	
+	# Note: "headrclick" hooks handled by vnode callback routine.
+
+	if event != None:
+		c = self.c
+		if not doHook("create-popup-menu",c=c,v=v,event=event):
+			self.createPopupMenu(event)
+		if not doHook("enable-popup-menu-items",c=c,v=v,event=event):
+			self.enablePopupMenuItems(v,event)
+		if not doHook("show-popup-menu",c=c,v=v,event=event):
+			self.showPopupMenu(event)
+
+	return "break"
+#@nonl
+#@+node:ekr.20041018200728.76:OnPopupFocusLost
+@ On Linux we must do something special to make the popup menu "unpost" if the mouse is clicked elsewhere.  So we have to catch the <FocusOut> event and explicitly unpost.  In order to process the <FocusOut> event, we need to be able to find the reference to the popup window again, so this needs to be an attribute of the tree object; hence, "self.popupMenu".
+
+Aside: though Tk tries to be muli-platform, the interaction with different window managers does cause small differences that will need to be compensated by system specific application code. :-(
+@c
+
+# 20-SEP-2002 DTHEIN: This event handler is only needed for Linux.
+
+def OnPopupFocusLost(self,event=None):
+
+	self.popupMenu.unpost()
+	
+#@-node:ekr.20041018200728.76:OnPopupFocusLost
+#@+node:ekr.20041018200728.77:createPopupMenu
+def createPopupMenu (self,event):
+	
+	c = self.c ; frame = c.frame
+	
+	# If we are going to recreate it, we had better destroy it.
+	if self.popupMenu:
+		self.popupMenu.destroy()
+		self.popupMenu = None
+	
+	self.popupMenu = menu = Tkinter.Menu(app.root, tearoff=0)
+	
+	# Add the Open With entries if they exist.
+	if app.openWithTable:
+		frame.menu.createMenuEntries(menu,app.openWithTable,openWith=1)
+		table = (("-",None,None),)
+		frame.menu.createMenuEntries(menu,table)
+		
+	<< Create the menu table >>
+	
+	# 11/27/03: Don't actually set binding: it would conflict with previous.
+	frame.menu.createMenuEntries(menu,table,dontBind=true)
+#@nonl
+#@+node:ekr.20041018200728.78:<< Create the menu table >>
+table = (
+	("&Read @file Nodes",None,c.readAtFileNodes),
+	("&Write @file Nodes",None,c.fileCommands.writeAtFileNodes),
+	("-",None,None),
+	("&Tangle","Shift+Ctrl+T",c.tangle),
+	("&Untangle","Shift+Ctrl+U",c.untangle),
+	("-",None,None),
+	# 2/16/04: Remove shortcut for Toggle Angle Brackets command.
+	("Toggle Angle &Brackets",None,c.toggleAngleBrackets),
+	("-",None,None),
+	("Cut Node","Shift+Ctrl+X",c.cutOutline),
+	("Copy Node","Shift+Ctrl+C",c.copyOutline),
+	("&Paste Node","Shift+Ctrl+V",c.pasteOutline),
+	("&Delete Node","Shift+Ctrl+BkSp",c.deleteOutline),
+	("-",None,None),
+	("&Insert Node","Ctrl+I",c.insertHeadline),
+	("&Clone Node","Ctrl+`",c.clone),
+	("Sort C&hildren",None,c.sortChildren),
+	("&Sort Siblings","Alt-A",c.sortSiblings),
+	("-",None,None),
+	("Contract Parent","Alt+0",c.contractParent))
+#@nonl
+#@-node:ekr.20041018200728.78:<< Create the menu table >>
+#@-node:ekr.20041018200728.77:createPopupMenu
+#@+node:ekr.20041018200728.79:enablePopupMenuItems
+def enablePopupMenuItems (self,v,event):
+	
+	"""Enable and disable items in the popup menu."""
+	
+	c = self.c ; menu = self.popupMenu
+
+	<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+	isAtFile = choose(isAtFile,1,0)
+	isAtRoot = choose(isAtRoot,1,0)
+	canContract = v.parent() != None
+	canContract = choose(canContract,1,0)
+	
+	enable = self.frame.menu.enableMenu
+	
+	for name in ("Read @file Nodes", "Write @file Nodes"):
+		enable(menu,name,isAtFile)
+	for name in ("Tangle", "Untangle"):
+		enable(menu,name,isAtRoot)
+
+	enable(menu,"Cut Node",c.canCutOutline())
+	enable(menu,"Delete Node",c.canDeleteHeadline())
+	enable(menu,"Paste Node",c.canPasteOutline())
+	enable(menu,"Sort Children",c.canSortChildren())
+	enable(menu,"Sort Siblings",c.canSortSiblings())
+	enable(menu,"Contract Parent",c.canContractParent())
+#@nonl
+#@+node:ekr.20041018200728.80:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+isAtFile = false ; isAtRoot = false
+v2 = v ; next = v.nodeAfterTree()
+
+while (not isAtFile or not isAtRoot) and v2 != None and v2 != next:
+	if (
+		v2.isAtFileNode() or
+		v.isAtRawFileNode() or
+		v.isAtSilentFileNode() or
+		v.isAtNoSentinelsFileNode()):
+		isAtFile = true
+
+	isRoot, junk = is_special(v2.bodyString(),0,"@root")
+	if isRoot:
+		isAtRoot = true
+	v2 = v2.threadNext()
+#@nonl
+#@-node:ekr.20041018200728.80:<< set isAtRoot and isAtFile if v's tree contains @root or @file nodes >>
+#@-node:ekr.20041018200728.79:enablePopupMenuItems
+#@+node:ekr.20041018200728.81:showPopupMenu
+def showPopupMenu (self,event):
+	
+	"""Show a popup menu."""
+	
+	c = self.c ; menu = self.popupMenu ; gui = app.gui
+
+	if sys.platform == "linux2": # 20-SEP-2002 DTHEIN: not needed for Windows
+		menu.bind("<FocusOut>",self.OnPopupFocusLost)
+	
+	menu.post(event.x_root, event.y_root)
+
+	# Make certain we have focus so we know when we lose it.
+	# I think this is OK for all OSes.
+	gui.set_focus(c,menu)
+#@nonl
+#@-node:ekr.20041018200728.81:showPopupMenu
+#@-node:ekr.20041018200728.75:tree.OnPopup & allies
+#@+node:ekr.20041018200728.94:tree.select
+# Warning: do not try to "optimize" this by returning if v==tree.currentVnode.
+
+def select (self,v,updateBeadList=true):
+
+	<< define vars and stop editing >>
+
+	if not doHook("unselect1",c=c,new_v=v,old_v=old_v):
+		<< unselect the old node >>
+	else: old_body = u""
+
+	doHook("unselect2",c=c,new_v=v,old_v=old_v)
+	
+	if not doHook("select1",c=c,new_v=v,old_v=old_v):
+		<< select the new node >>
+		if v and v != old_v: # 3/26/03: Suppress duplicate call.
+			try: # may fail during initialization
+				self.idle_scrollTo(v)
+			except: pass
+		<< update c.beadList or c.beadPointer >>
+		<< update c.visitedList >>
+
+	<< set the current node and redraw >>
+	doHook("select2",c=c,new_v=v,old_v=old_v)
+	doHook("select3",c=c,new_v=v,old_v=old_v)
+#@+node:ekr.20041018200728.95:<< define vars and stop editing >>
+c = self.c ; frame = c.frame ; body = frame.bodyCtrl
+old_v = c.currentVnode()
+
+# Unselect any previous selected but unedited label.
+self.endEditLabel()
+old = self.currentVnode()
+self.setUnselectedLabelState(old)
+#@nonl
+#@-node:ekr.20041018200728.95:<< define vars and stop editing >>
+#@+node:ekr.20041018200728.96:<< unselect the old node >>
+# Remember the position of the scrollbar before making any changes.
+yview=body.yview()
+insertSpot = c.frame.body.getInsertionPoint()
+
+# Remember the old body text
+old_body = body.get("1.0","end")
+
+if old and old != v and old.edit_text():
+	old.t.scrollBarSpot = yview
+	old.t.insertSpot = insertSpot
+#@-node:ekr.20041018200728.96:<< unselect the old node >>
+#@+node:ekr.20041018200728.97:<< select the new node >>
+frame.setWrap(v)
+
+# Delete only if necessary: this may reduce flicker slightly.
+s = v.t.bodyString
+s = toUnicode(s,"utf-8")
+old_body = toUnicode(old_body,"utf-8")
+if old_body != s:
+	body.delete("1.0","end")
+	body.insert("1.0",s)
+
+# We must do a full recoloring: we may be changing context!
+self.frame.body.recolor_now(v)
+
+if v and v.t.scrollBarSpot != None:
+	first,last = v.t.scrollBarSpot
+	body.yview("moveto",first)
+
+if v.t.insertSpot != None: # 9/21/02: moved from c.selectVnode
+	c.frame.bodyCtrl.mark_set("insert",v.t.insertSpot)
+	c.frame.bodyCtrl.see(v.t.insertSpot)
+else:
+	c.frame.bodyCtrl.mark_set("insert","1.0")
+#@nonl
+#@-node:ekr.20041018200728.97:<< select the new node >>
+#@+node:ekr.20041018200728.98:<< update c.beadList or c.beadPointer >>
+if updateBeadList:
+	
+	if c.beadPointer > -1:
+		present_v = c.beadList[c.beadPointer]
+	else:
+		present_v = None
+	
+	if v != present_v:
+		# Replace the tail of c.beadList by c and make c the present node.
+		# print "updating c.beadList"
+		c.beadPointer += 1
+		c.beadList[c.beadPointer:] = []
+		c.beadList.append(v)
+		
+	# trace(c.beadPointer,v,present_v)
+
+#@-node:ekr.20041018200728.98:<< update c.beadList or c.beadPointer >>
+#@+node:ekr.20041018200728.99:<< update c.visitedList >>
+# Make v the most recently visited node on the list.
+if v in c.visitedList:
+	c.visitedList.remove(v)
+	
+c.visitedList.insert(0,v)
+#@nonl
+#@-node:ekr.20041018200728.99:<< update c.visitedList >>
+#@+node:ekr.20041018200728.100:<< set the current node and redraw >>
+self.setCurrentVnode(v)
+self.setSelectedLabelState(v)
+self.frame.scanForTabWidth(v) # 9/13/02 #GS I believe this should also get into the select1 hook
+app.gui.set_focus(c,c.frame.bodyCtrl)
+#@nonl
+#@-node:ekr.20041018200728.100:<< set the current node and redraw >>
+#@-node:ekr.20041018200728.94:tree.select
+#@-node:ekr.20041018200949:From OLD code
+#@-node:ekr.20041018194900:(Support drawing hooks)
 #@+node:ekr.20041022080257:Mac Bugs 3
 #@+node:ekr.20041022081937:Get cvs working again on mac
 Just remove the cvs key files?
@@ -346,7 +1052,351 @@ headlines did not change to show the new font until I started up again.
 #@-node:ekr.20041022080455:Report
 #@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
 #@-node:ekr.20041022080257:Mac Bugs 3
-#@+node:ekr.20041006110656:Urgent 7
+#@-node:ekr.20041022091645.6:Today
+#@+node:EKR.20040609091327:To do: 4.3
+#@+node:ekr.20041018195347:Docs 2
+#@+node:ekr.20041018195347.1:Improve MacOS Docs
+I just succeeded at installing Leo under os x (10.2.8) by folliwing  
+your instructions with modification.  It would be nice to get the  
+modification added to your page for others. I actually found the mods  
+by doing a search for help after following the present instructions  
+failed. The step that is missing (as clearly as I can see) is step 3  
+(using the Package Manager) in the following that comes from
+
+http://coding.derkeiler.com/Archive/Python/comp.lang.python/2003-12/ 
+3431.html
+
+> What I did that worked on Jaguar:
+>  - Installed MacPython 2.3 for Jaguar using the binary installer from:
+>  <http://homepages.cwi.nl/~jack/macpython/macpython-osx.html>
+>  - Installed Tcl/Tk 8.4.4 using the binary installer from
+>  <http://www.maths.mq.edu.au/~steffen/tcltk/TclTkAqua/>
+>  - Used Package Manager (in /Applications/MacPython) to install  
+> _tkinter
+>  (and also readlines and some other useful stuff)
+>
+[x]
+   - type "rehash" in a terminal
+   - type pythonw to start Python and then test Tkinter with the  
+following:
+>
+> import Tkinter
+>  root = Tkinter.Tk()
+>
+>
+> should bring up a window.
+
+(It was also nice to have a test included so you could see that  
+everything was installed properly.)
+
+I also edited the leo file that is part of the leo distribution so it  
+read:
+
+pythonw /usr/local/lib/leo/src/leo.pyw "$1"
+
+That way I can just type "leo" to start leo rather than doing
+
+/usr/local/bin/pythonw leo.pyw
+
+Finally, when leo is run for the first time, it creates a window that  
+is centered on the screen asking for an ID. The screen happened to  
+appear under existing terminal windows and I didn't see it there and  
+thought something was wrong with leo on my system. After I found it  
+(accidentally) and entered a user name, all went as advertised.
+
+Seeing the leo project in python is inspiring.  Thanks for making this  
+available.
+
+/c
+#@nonl
+#@-node:ekr.20041018195347.1:Improve MacOS Docs
+#@+node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+@nocolor
+#@nonl
+#@+node:ekr.20040226094105.1:halw
+
+https://sourceforge.net/forum/message.php?msg_id=2437859
+By: halw
+
+David,
+
+I agree that your solution is best -- the problem is it doesn't work. 
+
+If you look at the original post you'll note that the mouse wheel works fine
+in all other Leo panes (which are native text panes, not a custom canvas).
+
+In fact, a stock RH9 system does set up X as those pages indicate. The problem
+is elsewhere, perhaps Tk or Tkinter.
+
+If Edward doesn't want to ship a workaround, that's fine. It should, IMO, make
+it into the FAQ, though.
+
+--Hal
+
+#@-node:ekr.20040226094105.1:halw
+#@+node:ekr.20040226094105.2:djsg
+https://sourceforge.net/forum/message.php?msg_id=2435622
+By: djsg
+
+Tk is complying with the behavior of XFree86, and not hiding that behavior. 
+
+Documentation for XFree86 4.2.0 -- documentation for a 4.4 development version
+matches it, so 4.3.0 ought to match it also:
+
+http://www.xfree86.org/4.2.0/mouse7.html
+
+An example of configuration for XFree86 3.3.2.
+
+First, the URL: 
+
+http://www.genius-europe.com/service/faq/tuxmouse.htm
+
+o save their bandwidth, the example follows: 
+
+
+All mices with scroll wheel or stick
+
+XFree86 >= 3.3.2 (or other XServer with wheel to mouse button support)
+The mouse must be setup in XF86Config to send the mouse buttons 4 and 5 for
+wheel actions.
+Edit /etc/XF86Config with your favorite editor
+Add the following line to the "Pointer" section.
+
+ZAxisMapping 4 5
+
+Make sure your Protocol is set to either "IMPS/2" for a PS/2 mouse
+or for serial mice set it to "IntelliMouse" or "Auto".
+Example for PS/2 wheel mouse:
+
+Section "Pointer"
+Protocol "IMPS/2"
+Device "/dev/psaux"
+SampleRate 60
+BaudRate 1200
+ZAxisMapping 4 5
+Buttons 3
+EndSection
+
+After XWindows is started run :
+imwheel -k
+
+
+#@-node:ekr.20040226094105.2:djsg
+#@+node:ekr.20040226094105.3:The actual workaround
+
+https://sourceforge.net/forum/message.php?msg_id=2433628
+By: halw
+
+Okay, I have a workaround that works for me with my existing Tk version. My
+Tkinter skills are weak, but I don't think this will hurt anything else :)
+
+Turns out this Tk version (or X or Tkinter or 	) doesn't generate MouseWheel
+events, but maps to buttons 4 (up) & 5 (down).
+
+Add to if clause 
+# Handle mouse wheel in the outline pane.
+if sys.platform == "linux2": # This crashes tcl83.dll
+..canvas.bind("<MouseWheel>", frame.OnMouseWheel)
+..def mapWheel(e):
+    if e.num == 4:
+    ..e.delta = 120
+    ..return frame.OnMouseWheel(e)
+    elif e.num == 5:
+    ..e.delta = -120
+    ..return frame.OnMouseWheel(e)
+..canvas.bind("<ButtonPress>", mapWheel, add=1)
+#@nonl
+#@-node:ekr.20040226094105.3:The actual workaround
+#@-node:ekr.20040226094105:Put the scrollWheel workaround in the FAQ (or in the code??)
+#@-node:ekr.20041018195347:Docs 2
+#@+node:ekr.20041022080257:Mac Bugs 3
+#@+node:ekr.20041022081937:Get cvs working again on mac
+Just remove the cvs key files?
+#@nonl
+#@-node:ekr.20041022081937:Get cvs working again on mac
+#@+node:ekr.20041007052853:(Fix problems with paste on Linux)
+@color
+#@nonl
+#@+node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@-node:ekr.20041007052853.1:@url http://www.freedesktop.org/standards/clipboards-spec/clipboards.txt
+#@+node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+@
+
+The following are called only when g.app.gui.win32clipboard is not None, and
+presently that never happens.
+#@nonl
+#@+node:ekr.20031218072017.845:replaceClipboardWith
+def replaceClipboardWith (self,s):
+
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            wcb.EmptyClipboard()
+            wcb.SetClipboardText(s)
+            wcb.CloseClipboard()
+        except:
+            g.es_exception()
+    else:
+        self.root.clipboard_clear()
+        self.root.clipboard_append(s)
+#@nonl
+#@-node:ekr.20031218072017.845:replaceClipboardWith
+#@+node:ekr.20031218072017.846:getTextFromClipboard
+def getTextFromClipboard (self):
+    
+    # g.app.gui.win32clipboard is always None.
+    wcb = g.app.gui.win32clipboard
+    
+    if wcb:
+        try:
+            wcb.OpenClipboard(0)
+            data = wcb.GetClipboardData()
+            wcb.CloseClipboard()
+            # g.trace(data)
+            return data
+        except TypeError:
+            # g.trace(None)
+            return None
+        except:
+            g.es_exception()
+            return None
+    else:
+        try:
+            s = self.root.selection_get(selection="CLIPBOARD")
+            return s
+        except:
+            return None
+#@nonl
+#@-node:ekr.20031218072017.846:getTextFromClipboard
+#@-node:ekr.20031218072017.844:Clipboard (tkGui) NOT USED AT PRESENT
+#@+node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+def OnCut (self,event=None):
+    
+    """The handler for the virtual Cut event."""
+
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+
+    # Activate the body key handler by hand.
+    frame.body.forceFullRecolor()
+    frame.body.onBodyWillChange(v,"Cut")
+
+def OnCutFromMenu (self):
+    
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Cut"))
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+
+
+
+#@-node:ekr.20031218072017.841:frame.OnCut, OnCutFrom Menu
+#@+node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+def OnCopy (self,event=None):
+    
+    frame = self
+
+    if 0: # g.app.gui.win32clipboard is always None.
+        if g.app.gui.win32clipboard:
+            data = frame.body.getSelectedText()
+            if data:
+                g.app.gui.replaceClipboardWith(data)
+        
+    # Copy never changes dirty bits or syntax coloring.
+    
+def OnCopyFromMenu (self):
+
+    frame = self
+    w = frame.getFocus()
+    w.event_generate(g.virtual_event_name("Copy"))
+#@-node:ekr.20031218072017.842:frame.OnCopy, OnCopyFromMenu
+#@+node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+def OnPaste (self,event=None):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+    
+    if 0: # sys.platform=="linux2": # ??? workaround paste problems on Linux.
+        bodyCtrl = frame.body.bodyCtrl
+        s = bodyCtrl.selection_get( selection='CLIPBOARD' )
+        bodyCtrl.insert('insert', s)
+        bodyCtrl.event_generate('<Key>')
+        bodyCtrl.update_idletasks()
+    else:
+        # Activate the body key handler by hand.
+        frame.body.forceFullRecolor()
+        frame.body.onBodyWillChange(v,"Paste")
+    
+def OnPasteFromMenu (self):
+    
+    frame = self ; c = frame.c ; v = c.currentVnode()
+
+    w = self.getFocus()
+    w.event_generate(g.virtual_event_name("Paste"))
+    
+    if not frame.body.hasFocus(): # 1/30/04: Make sure the event sticks.
+        frame.tree.onHeadChanged(v)
+#@nonl
+#@-node:ekr.20031218072017.843:frame.OnPaste & OnPasteFromMenu
+#@-node:ekr.20031218072017.840:Cut/Copy/Paste body text
+#@+node:ekr.20031218072017.838:tkBody.createBindings
+def createBindings (self,frame):
+    
+    t = self.bodyCtrl
+    
+    # Event handlers...
+    t.bind("<Button-1>", frame.OnBodyClick)
+    if sys.platform == "win32":
+        # Support Linux middle-button paste easter egg.
+        t.bind("<Button-2>", frame.OnPaste)
+    t.bind("<Button-3>", frame.OnBodyRClick)
+    t.bind("<Double-Button-1>", frame.OnBodyDoubleClick)
+    t.bind("<Key>", frame.body.onBodyKey)
+
+    # Gui-dependent commands...
+    t.bind(g.virtual_event_name("Cut"), frame.OnCut)
+    t.bind(g.virtual_event_name("Copy"), frame.OnCopy)
+    t.bind(g.virtual_event_name("Paste"), frame.OnPaste)
+#@nonl
+#@-node:ekr.20031218072017.838:tkBody.createBindings
+#@+node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
+@nocolor
+
+- This might fix some binding problems on some platforms.
+
+- Might want to define <<localUndo>> for undo in Find Panel.
+
+- Probably should define <<selectAll>> for Find Panel and similar stuff.
+#@nonl
+#@-node:EKR.20040604082214:Use virtual events for Copy, Paste etc.
+#@-node:ekr.20041007052853:(Fix problems with paste on Linux)
+#@+node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@+node:ekr.20041022080455:Report
+@killcolor
+
+There seems to be a bug when setting font preferences on the Mac.  If I 
+check more than one box and then apply a font change, the change is set 
+correctly when I restart Leo but doesn't always preview correctly 
+before that.  I set headline and body text to the same font and the 
+headlines did not change to show the new font until I started up again. 
+  Not a big deal.
+
+-- Dan Windler
+#@-node:ekr.20041022080455:Report
+#@-node:ekr.20040918093558:(Fix Font dialog problems on the Mac)
+#@-node:ekr.20041022080257:Mac Bugs 3
+#@+node:ekr.20041006110656:Urgent 7 + 0
 #@+node:ekr.20040831092540:Allow uA's to be stored as plain strings (or base64)
 I would like to store unknown
 attributes as a simple string. The reason, is because I am using an unknown
@@ -2200,8 +3250,8 @@ Edward
 #@+node:ekr.20041022083005.1:unregisterhook
 #@-node:ekr.20041022083005.1:unregisterhook
 #@-node:ekr.20041022083005:More flexible plugin manager
-#@-node:ekr.20041006110656:Urgent 7
-#@+node:ekr.20040919101448:Major (Must do) 4
+#@-node:ekr.20041006110656:Urgent 7 + 0
+#@+node:ekr.20040919101448:Major (Must do) 5 + 0
 #@+node:ekr.20040217153407.3:Emacs-style keystroke handling (see status_line plugin)
 @killcolor
 
@@ -3745,8 +4795,20 @@ a big problem with modern editors, but it _would_ be nicer...
 #@+node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20041002112001:Use threaded Colorizer
 #@-node:ekr.20031218072017.734:Rewrite (threaded) colorizer to use jEdit language descriptionfiles
-#@-node:ekr.20040919101448:Major (Must do) 4
-#@+node:ekr.20041001182730:Easy 6
+#@+node:ekr.20041022164727:Rewrite plugins manager
+#@+node:ekr.20041022164727.1:Specify order of plugins
+http://sourceforge.net/forum/message.php?msg_id=2818384
+
+One thing to think about is to have the plugin author be able to specify if the plugin needs to be loaded before or after a set of plugins. Something like: 
+ 
+plugin_signon( __name__, before = ( 'chapters', ), after = ( 'textdance', ) ) 
+ 
+This may assist in ensuring that some plugins with dependencies get loaded right. :)
+#@nonl
+#@-node:ekr.20041022164727.1:Specify order of plugins
+#@-node:ekr.20041022164727:Rewrite plugins manager
+#@-node:ekr.20040919101448:Major (Must do) 5 + 0
+#@+node:ekr.20041001182730:Easy 0 + 6
 #@+node:ekr.20041016134312.1:Allow multiple @language directives in a single node
 @killcolor
 
@@ -3754,6 +4816,8 @@ Treat @language like @color: ambiguous nodes (nodes containing more than one
 @language directive) should not affect descendent nodes.
 #@nonl
 #@-node:ekr.20041016134312.1:Allow multiple @language directives in a single node
+#@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
+#@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
 #@+node:ekr.20031218072017.801:Zipped .leo files
 By: samcollett ( Sam Collett ) 
  Compressed LEO files   
@@ -3784,8 +4848,6 @@ module to uncompress/compress the file, saving a lot of disk space.
 What do you think of this?
 #@-node:ekr.20040226092546:Saving .leo files with file compression
 #@-node:ekr.20031218072017.801:Zipped .leo files
-#@+node:ekr.20041001182730.2:Allow other directive lead-ins besides @
-#@-node:ekr.20041001182730.2:Allow other directive lead-ins besides @
 #@+node:ekr.20031218072017.805:Allow other section delims besides << and >>
 Maybe the section operator could be customizable, 
 I personally prefer the wiki way [[name of section]]. 
@@ -3821,9 +4883,9 @@ http://www.reportlab.com
 
 import xml.sax
 #@-node:ekr.20031218072017.736:Use xml parser to read .leo files
-#@-node:ekr.20041001182730:Easy 6
-#@+node:ekr.20041022081937.1:Others 3
-#@+node:ekr.20041007081134:Convert Leo to Tix
+#@-node:ekr.20041001182730:Easy 0 + 6
+#@+node:ekr.20041022081937.1:Others 1 + 2
+#@+node:ekr.20041007081134:* Convert Leo to Tix
 http://sourceforge.net/forum/message.php?msg_id=2792402
 By: nobody
 
@@ -3833,7 +4895,7 @@ By: nobody
 derived from Tix. Something must happen during that initial creation that sets
 things up. If Tkinter.Tk() is done first, it appears all bets are off.
 #@nonl
-#@-node:ekr.20041007081134:Convert Leo to Tix
+#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:EKR.20040628085831:@import, @shadow
 #@+node:ekr.20040718033104:@shadow
 #@-node:ekr.20040718033104:@shadow
@@ -3859,14 +4921,14 @@ Here are some features I'd like to see:
 -marshall-  
 #@-node:ekr.20031218072017.795:Metatags
 #@-node:ekr.20040217153407:User customizeable tangling and untangling
-#@-node:ekr.20041022081937.1:Others 3
+#@-node:ekr.20041022081937.1:Others 1 + 2
 #@-node:EKR.20040609091327:To do: 4.3
-#@+node:ekr.20041022091645: Top ROTI
+#@+node:ekr.20041022091645:Top ROTI
 ROTI: Return on Time Investment
 #@nonl
-#@+node:ekr.20041022091645.1:Find Next Clone command
-#@-node:ekr.20041022091645.1:Find Next Clone command
-#@+node:ekr.20041007081134:Convert Leo to Tix
+#@+node:ekr.20041022091645.1:* Find Next Clone command
+#@-node:ekr.20041022091645.1:* Find Next Clone command
+#@+node:ekr.20041007081134:* Convert Leo to Tix
 http://sourceforge.net/forum/message.php?msg_id=2792402
 By: nobody
 
@@ -3876,14 +4938,94 @@ By: nobody
 derived from Tix. Something must happen during that initial creation that sets
 things up. If Tkinter.Tk() is done first, it appears all bets are off.
 #@nonl
-#@-node:ekr.20041007081134:Convert Leo to Tix
-#@-node:ekr.20041022091645: Top ROTI
-#@+node:ekr.20041022091645.2: Top Big Picture
+#@-node:ekr.20041007081134:* Convert Leo to Tix
+#@+node:ekr.20031218072017.833:Use @file extension by default if no @language
+@nocolor
+
+Open discussion
+By: jasonic ( Jason Cunliffe ) 
+ use of @language   
+2003-07-16 03:40  
+
+I am wondering why Leo does not default to just use the file suffix in @file nodes, instead of obliging @language line in in the body pane 
+
+For example any @file ending with a suffix as defined in the language extensions could just default to use those. 
+
+".py" for python 
+".r" for rebol 
+".as" for actionscript etc.. 
+
+Should anyone need to over-ride those, they could use @language.
+#@nonl
+#@-node:ekr.20031218072017.833:Use @file extension by default if no @language
+#@-node:ekr.20041022091645:Top ROTI
+#@+node:ekr.20041022091645.2:Top Big Picture
 #@+node:ekr.20041022091645.3:Drive Leo using only keystrokes
 #@-node:ekr.20041022091645.3:Drive Leo using only keystrokes
-#@+node:ekr.20041022091645.4:Better integration with Emacs
-#@-node:ekr.20041022091645.4:Better integration with Emacs
-#@+node:ekr.20041007081134:Convert Leo to Tix
+#@+node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
+#@+node:ekr.20041022144159:Q: Pymacs bridge
+I'm trying to use the Pymacs bridge to add a symbol completion facility to
+Emacs's python-mode.  Neither the Python nor Emacs Lisp portions are all
+that complex, but I'm having trouble passing a list of strings from Emacs
+Lisp into Python.  On the Emacs Lisp side it looks like this:
+
+    (pymacs-load "pycomplete")
+
+    (defun py-complete ()
+      (interactive)
+      (pycomplete-pycomplete (py-symbol-near-point)
+                             (py-find-global-imports)))
+
+(py-find-global-imports) returns a (Lisp) list of strings, e.g.:
+
+    ("import time", "import sys")
+
+On the Python side I have this function:
+
+    def pycomplete(s, imports=None):
+        completions = get_all_completions(s, imports)
+        dots = s.split(".")
+        return os.path.commonprefix([k[len(dots[-1]):] for k in completions])
+
+Unfortunately, the imports arg does not come across as a Python list of
+strings (s does come across the bridge as a normal Python string).  Its
+repr() prints out like this:
+
+    lisp('("import time")')
+
+What do I need to do to convert that object into a true Python list of
+strings?  I'm afraid I don't quite understand the description of the lisp
+object in the Pymacs docs.  I tried imports.value() but that just gave me
+
+    (aref pymacs-lisp 0)
+
+Any help appreciated...
+
+Skip
+#@nonl
+#@-node:ekr.20041022144159:Q: Pymacs bridge
+#@+node:ekr.20041022144159.1:A: pymacs-forget-mutability
+"""
+Proper Emacs Lisp lists, those for which the cdr of last cell is nil, are
+normally transmitted opaquely to Python. If pymacs-forget-mutability is
+set, or if Python later asks for these to be expanded, proper Emacs Lisp
+lists get converted into Python lists, if we except the empty list, which
+is always converted as Python None. In the other direction, Python lists
+are always converted into proper Emacs Lisp lists.
+"""
+
+So, maybe try
+
+    (defun py-complete ()
+      (interactive)
+      (let ((pymacs-forget-mutability t)) 
+	(pycomplete-pycomplete (py-symbol-near-point)
+                               (py-find-global-imports))))
+#@-node:ekr.20041022144159.1:A: pymacs-forget-mutability
+#@-node:ekr.20041022091645.4:Better integration with Emacs/Pymacs
+#@+node:ekr.20041022092601:Get more comfortable with Linux/Emacs
+#@-node:ekr.20041022092601:Get more comfortable with Linux/Emacs
+#@+node:ekr.20041007081134:* Convert Leo to Tix
 http://sourceforge.net/forum/message.php?msg_id=2792402
 By: nobody
 
@@ -3893,7 +5035,7 @@ By: nobody
 derived from Tix. Something must happen during that initial creation that sets
 things up. If Tkinter.Tk() is done first, it appears all bets are off.
 #@nonl
-#@-node:ekr.20041007081134:Convert Leo to Tix
+#@-node:ekr.20041007081134:* Convert Leo to Tix
 #@+node:ekr.20040329182535.4:Leo + zodb
 #@+node:ekr.20041002151816:ZODB docs
 #@+node:ekr.20041002151816.1:What is the ZODB?
@@ -4703,9 +5845,11 @@ Scott
 #@nonl
 #@-node:ekr.20031218072017.737:Leo & data bases
 #@-node:ekr.20040329182535.4:Leo + zodb
-#@-node:ekr.20041022091645.2: Top Big Picture
+#@-node:ekr.20041022091645.2:Top Big Picture
 #@+node:ekr.20040329182535.7:1 hour to 1 day projects
-#@+node:ekr.20041022083833:New commands
+#@+node:ekr.20041022083833:New commands 1
+#@+node:ekr.20041022091645.1:* Find Next Clone command
+#@-node:ekr.20041022091645.1:* Find Next Clone command
 #@+node:ekr.20031218072017.792:Double Click Node command
 #@-node:ekr.20031218072017.792:Double Click Node command
 #@+node:ekr.20040315060557:Declone command
@@ -4722,17 +5866,15 @@ Ive had a use for a declone() method in vnodes recently. Have you ever thought a
 I can see this happening when cutting a node and pasting a node that is a clone. But there doesn't seem to be a dedicated function to do the operation. :)  
 #@nonl
 #@-node:ekr.20040315060557:Declone command
-#@+node:ekr.20041022091645.1:Find Next Clone command
-#@-node:ekr.20041022091645.1:Find Next Clone command
 #@+node:ekr.20031218072017.748:Import/Export to yaml
 Need a good yaml parser first: I don't want to write another parser by hand.
 #@nonl
 #@-node:ekr.20031218072017.748:Import/Export to yaml
 #@+node:ekr.20040329094003:Apply patch command
 #@-node:ekr.20040329094003:Apply patch command
-#@-node:ekr.20041022083833:New commands
-#@+node:ekr.20041022091645.5:New config options
-#@+node:ekr.20040213090121:Insert at end
+#@-node:ekr.20041022083833:New commands 1
+#@+node:ekr.20041022091645.5:New config options 1
+#@+node:ekr.20040213090121:* Insert at end
 @nocolor
 
 By: tibi ( Thiébaut Champenier ) 
@@ -4752,41 +5894,12 @@ diff -r1.76 leoCommands.py
 ---
 > v = current.insertAsLastChild()  
 #@nonl
-#@-node:ekr.20040213090121:Insert at end
+#@-node:ekr.20040213090121:* Insert at end
 #@+node:ekr.20040311022923:Make sentinel name in @-node optional
 #@-node:ekr.20040311022923:Make sentinel name in @-node optional
-#@-node:ekr.20041022091645.5:New config options
-#@+node:ekr.20041022083833.1:Better commands
-#@+node:ekr.20041022083005.3:@path and other directives accept python expressions
-#@-node:ekr.20041022083005.3:@path and other directives accept python expressions
-#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-1. Warn when creating _any_ new file.
-
-2. Warn when rewriting any file that was not read properly.
-
-This prevents "hijacking" an already existing file.
-#@nonl
-#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
-#@+node:ekr.20040217090833:Change how Open with works?
-By: rogererens ( Roger Erens ) 
- RE: Documentation for 4.1rc3   
-2004-02-04 10:04  
-
-@nocolor
-
-It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
-However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
-
-Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
-
-Or, use something else instead of "os.startfile" to really use the intended editor.
-#@nonl
-#@-node:ekr.20040217090833:Change how Open with works?
-#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-add python -t to test suite to catch mixed tab & space in derived files.
-#@nonl
-#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
-#@+node:ekr.20031218072017.800:Enhancements to extract section
+#@-node:ekr.20041022091645.5:New config options 1
+#@+node:ekr.20041022083833.1:Better commands 1
+#@+node:ekr.20031218072017.800:* Enhancements to extract section
 Read and respond to this message at: 
 https://sourceforge.net/forum/message.php?msg_id=1858824
 By: gilshwartz
@@ -4840,11 +5953,40 @@ As an enhancement, the dialog can show the first line of the selection as the
 default section name, which obviously can be changed.
 
 - Rajiv Bhagwat
-#@-node:ekr.20031218072017.800:Enhancements to extract section
+#@-node:ekr.20031218072017.800:* Enhancements to extract section
+#@+node:ekr.20041022083005.3:@path and other directives accept python expressions
+#@-node:ekr.20041022083005.3:@path and other directives accept python expressions
+#@+node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+1. Warn when creating _any_ new file.
+
+2. Warn when rewriting any file that was not read properly.
+
+This prevents "hijacking" an already existing file.
+#@nonl
+#@-node:ekr.20031218072017.740:Disallow writes outside a "top-level" folder
+#@+node:ekr.20040217090833:Change how Open with works?
+By: rogererens ( Roger Erens ) 
+ RE: Documentation for 4.1rc3   
+2004-02-04 10:04  
+
+@nocolor
+
+It is stated that you can edit the temporary file with the editor as named in the "Open with..." submenu.
+However, the temporary files are edited with the application that is associated with their extension. In my case I always fire up vim with .txt-files.
+
+Hence the menu item would be better called something like "Open as..." with submenu items like ".doc file" or ".txt file"
+
+Or, use something else instead of "os.startfile" to really use the intended editor.
+#@nonl
+#@-node:ekr.20040217090833:Change how Open with works?
+#@+node:ekr.20041022083005.8:Catch mixed tab & space in derived files
+add python -t to test suite to catch mixed tab & space in derived files.
+#@nonl
+#@-node:ekr.20041022083005.8:Catch mixed tab & space in derived files
 #@+node:ekr.20031218072017.754:Open text files in text window
 #@-node:ekr.20031218072017.754:Open text files in text window
-#@-node:ekr.20041022083833.1:Better commands
-#@+node:ekr.20041022083226:Better directives
+#@-node:ekr.20041022083833.1:Better commands 1
+#@+node:ekr.20041022083226:Better directives 1
 #@+node:ekr.20031218072017.833:Use @file extension by default if no @language
 @nocolor
 
@@ -4979,7 +6121,7 @@ Scott Powell
 CEO, Dev Designs
 #@-node:ekr.20031218072017.810:Remote access Scott Powell
 #@-node:ekr.20031218072017.797:Allow @file http & @file ftp
-#@-node:ekr.20041022083226:Better directives
+#@-node:ekr.20041022083226:Better directives 1
 #@+node:ekr.20041022083833.2:Better dialogs
 #@+node:ekr.20031218072017.790:Import dialog improvements
 @nocolor
@@ -5003,10 +6145,41 @@ Jason
 #@-node:ekr.20031218072017.790:Import dialog improvements
 #@-node:ekr.20041022083833.2:Better dialogs
 #@+node:ekr.20041022083226.1:Better plugins
-#@+node:ekr.20041022083005.5:Define __main__
-#@-node:ekr.20041022083005.5:Define __main__
 #@-node:ekr.20041022083226.1:Better plugins
-#@+node:ekr.20041022083226.2:Better scripting
+#@+node:ekr.20041022083226.2:Better scripting 2
+#@+node:ekr.20031218072017.733:* Execute scripts like IDE's do
+@nocolor
+
+http://sourceforge.net/forum/message.php?msg_id=2321235
+By: paulpaterson
+
+I think I understand what Samir is getting at. 
+
+In PythonWin, or other IDE's for other languages, you are able to execute the
+"current program" in a way that it will behave identically to if it had been
+run from the command line.
+
+For Python this requires,
+
+1. That the script run with __name__ == "__main__", so that the standard "if
+__name__ ..." section will be executed properly.
+
+2. You are able to pass command line parameters to the script. In some IDE's
+you are able to set default command line parameters and these are "injected"
+into the sys.argv (or equivalent) so that, as far as the program is concerned,
+it looks like you ran it from the command line with some aruments.
+
+The underlying assumption is that you want to run an entire program from Leo,
+not just a script. I would find this very useful also as I could run unit tests
+or even my entire apps by just hitting, for exampe, F5.
+
+Paul
+#@nonl
+#@+node:ekr.20041022083005.5:Define name == "__main__"
+#@-node:ekr.20041022083005.5:Define name == "__main__"
+#@-node:ekr.20031218072017.733:* Execute scripts like IDE's do
+#@+node:ekr.20041022083005.6:* Allow parameters to scripts
+#@-node:ekr.20041022083005.6:* Allow parameters to scripts
 #@+node:EKR.20040611081747.1:Look at windows scripting
 ------cut openleo.pys
 @path c:\bIn\pys\
@@ -5118,38 +6291,7 @@ Information Technology
 Rochester Institute of Technology
 schull@digitalgoods.com 585-738-6696
 #@-node:EKR.20040422132037.7:Problems with run script command on Mac x11
-#@+node:ekr.20041022083005.6:allowi parameters to scripts
-#@-node:ekr.20041022083005.6:allowi parameters to scripts
-#@+node:ekr.20031218072017.733:Execute scripts like IDE's do
-@nocolor
-
-http://sourceforge.net/forum/message.php?msg_id=2321235
-By: paulpaterson
-
-I think I understand what Samir is getting at. 
-
-In PythonWin, or other IDE's for other languages, you are able to execute the
-"current program" in a way that it will behave identically to if it had been
-run from the command line.
-
-For Python this requires,
-
-1. That the script run with __name__ == "__main__", so that the standard "if
-__name__ ..." section will be executed properly.
-
-2. You are able to pass command line parameters to the script. In some IDE's
-you are able to set default command line parameters and these are "injected"
-into the sys.argv (or equivalent) so that, as far as the program is concerned,
-it looks like you ran it from the command line with some aruments.
-
-The underlying assumption is that you want to run an entire program from Leo,
-not just a script. I would find this very useful also as I could run unit tests
-or even my entire apps by just hitting, for exampe, F5.
-
-Paul
-#@nonl
-#@-node:ekr.20031218072017.733:Execute scripts like IDE's do
-#@-node:ekr.20041022083226.2:Better scripting
+#@-node:ekr.20041022083226.2:Better scripting 2
 #@+node:ekr.20041022083226.3:Better windows
 #@+node:ekr.20041022083005.2:add a Stop button for find/change
 #@-node:ekr.20041022083005.2:add a Stop button for find/change
@@ -5274,7 +6416,7 @@ To create a splash screen:
 #@+node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
 #@-node:ekr.20040908221501:@url http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/120687
 #@-node:ekr.20040908104644:Leo splash screen
-#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix?)
+#@+node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix)
 This is done automatically now!  I may have to use configure events.
 
 > When I have the 'split mode' set to display tree and log on left, and viewpane
@@ -5283,7 +6425,7 @@ on right, I sometimes need to increase the width of the window.
 When I do the resize, the tree/log panes grow in proportion. I don't know about
 others, but I'd much prefer if the tree/log panes stayed at the same width,
 and only the view pane grew.
-#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix?)
+#@-node:ekr.20031218072017.793:Keep right panes constant when tiling horizontally (Tix)
 #@+node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@-node:EKR.20040517090625.1:@url http://komodo.nique.net/~grayrest/leoUIproposal.txt
 #@+node:ekr.20031218072017.743:Note windows (plugin)
@@ -8102,7 +9244,9 @@ def getVnode (self,parent,back,skip,appendToCurrentStack,appendToTopStack):
             << Handle vnode attribute bits >>
         elif self.matchTag("t="):
             # New for 4.1.  Read either "Tnnn" or "gnx".
-            tref = self.getDqString()
+            tref = index = self.getDqString()
+            if self.usingClipboard:
+                << raise invalidPaste if the tnode is in self.forbiddenTnodes >>
         elif self.matchTag("vtag=\"V"):
             self.getIndex() ; self.getDquote() # ignored
         elif self.matchTag("tnodeList="):
@@ -8170,6 +9314,20 @@ while 1:
 self.getDquote()
 #@nonl
 #@-node:ekr.20031218072017.1567:<< Handle vnode attribute bits  >>
+#@+node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
+# Bug fix in 4.3 a1: make sure we have valid paste.
+theId,time,n = g.app.nodeIndices.scanGnx(index,0)
+if not time and index[0] == "T":
+    index = index[1:]
+    
+index = self.canonicalTnodeIndex(index)
+t = self.tnodesDict.get(index)
+
+if t in self.forbiddenTnodes:
+    g.trace(t)
+    raise invalidPaste
+#@nonl
+#@-node:ekr.20041023110111:<< raise invalidPaste if the tnode is in self.forbiddenTnodes >>
 #@+node:ekr.20031218072017.1568:<< Set the remembered status bits >>
 if setCurrent:
     self.currentVnodeStack = [v]

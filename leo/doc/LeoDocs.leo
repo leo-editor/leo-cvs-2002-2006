@@ -1231,7 +1231,7 @@
 </v>
 </v>
 </v>
-<v t="EKR.20040524104904" a="E"><vh>Users Guide</vh>
+<v t="EKR.20040524104904" a="TV"><vh>Users Guide</vh>
 <v t="EKR.20040524104904.2"><vh>An overview of Leo</vh></v>
 <v t="EKR.20040524104904.3"><vh>Front material</vh>
 <v t="EKR.20040524104904.4"><vh>Title Page &amp; Summary</vh></v>
@@ -1591,7 +1591,7 @@
 </v>
 <v t="ekr.20040906100024"><vh>Unit testing with @test, @suite</vh></v>
 </v>
-<v t="EKR.20040524104904.211" a="TV"><vh>Chapter 8: Customizing Leo</vh>
+<v t="EKR.20040524104904.211"><vh>Chapter 8: Customizing Leo</vh>
 <v t="EKR.20040524104904.212"><vh>Using leoConfig.leo and leoConfig.txt</vh></v>
 <v t="EKR.20040524104904.213"><vh>Using plugins and hooks</vh>
 <v t="EKR.20040524104904.214"><vh>Overview of plugins and hooks</vh></v>
