@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet ekr_stylesheet?>
 <leo_file>
-<leo_header file_format="2" tnodes="0" max_tnode_index="6448" clone_windows="0"/>
+<leo_header file_format="2" tnodes="0" max_tnode_index="6449" clone_windows="0"/>
 <globals body_outline_ratio="0.590643274854">
-	<global_window_position top="60" left="159" height="855" width="907"/>
+	<global_window_position top="32" left="186" height="839" width="907"/>
 	<global_log_window_position top="0" left="0" height="0" width="0"/>
 </globals>
 <preferences/>
 <find_panel_settings/>
 <vnodes>
-<v t="ekr.20041121151002" a="E"><vh>@settings</vh>
+<v t="ekr.20041121151002"><vh>@settings</vh>
 <v t="ekr.20041121151002.1"><vh>@recent-files</vh></v>
 <v t="ekr.20041124063401"><vh>@bool use_plugins = True</vh></v>
 <v t="ekr.20041211044607"><vh>@int page_width = 80</vh></v>
-<v t="ekr.20041213075902" a="TV"><vh>@font log font</vh></v>
+<v t="ekr.20041213075902"><vh>@font log font</vh></v>
+<v t="ekr.20041217042849"><vh>@font body font</vh></v>
 </v>
 <v t="EKR.20040623200709"><vh>@thin ../src/leoTest.py</vh></v>
 <v t="ekr.20040721153143"><vh>Gc/Profile/Timeit/Tracing scripts</vh>
@@ -1436,17 +1437,18 @@
 <v t="ekr.20040707081532.1"><vh>Do @test</vh></v>
 </v>
 <v t="ekr.20041213074603"><vh>Settings dialog To do</vh>
-<v t="ekr.20041213172250"><vh>Support @strings and @ints NOW</vh></v>
 <v t="ekr.20041130085943.1"><vh>Put settings into effect immediately</vh></v>
+<v t="ekr.20041217032543"><vh>Replace user types by @strings and @ints</vh></v>
 <v t="ekr.20041211053412"><vh>Fix recent files problems</vh></v>
 <v t="ekr.20041211053412.1"><vh>Fix bug: findSettingsRoot doesn't work if no summary node</vh></v>
 <v t="ekr.20041211053412.2"><vh>Support new buttons</vh></v>
 <v t="ekr.20041211053539.1"><vh>Copy expansion state when writing @settings trees</vh></v>
+<v t="ekr.20041217033348"><vh>Handle undo/redo properly</vh></v>
 <v t="ekr.20041213115848"><vh>Later or never...</vh></v>
 </v>
-<v t="ekr.20041125145818.1" a="M"><vh>Settings dialog</vh>
+<v t="ekr.20041125145818.1" a="MTV"><vh>Settings dialog</vh>
 <v t="ekr.20041213090929"><vh>&lt;&lt; imports &gt;&gt;</vh></v>
-<v t="ekr.20041126110057" a="E"><vh>class settingsController</vh>
+<v t="ekr.20041126110057"><vh>class settingsController</vh>
 <v t="ekr.20041216085206"><vh>class logClass</vh>
 <v t="ekr.20041216085206.1"><vh>&lt;&lt; put s to w &gt;&gt;</vh></v>
 </v>
@@ -1475,14 +1477,13 @@
 </v>
 <v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
 <v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont  &amp; helpers</vh>
-<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
+<v t="ekr.20041127134208.4" a="E"><vh>createFont </vh>
 <v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
 <v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
 <v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
 <v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
 <v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-</v>
+<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 <v t="ekr.20041127134208.5"><vh>createInt</vh></v>
 <v t="ekr.20041127134208.7"><vh>createPath</vh></v>
@@ -1495,7 +1496,7 @@
 <v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
 </v>
 <v t="ekr.20041130061955"><vh>callbacks...</vh>
-<v t="ekr.20041126104958"><vh>onAnyButton</vh></v>
+<v t="ekr.20041126104958" a="E"><vh>onAnyButton</vh></v>
 <v t="ekr.20041128082112"><vh>revert</vh></v>
 <v t="ekr.20041127144346"><vh>onPaneResize</vh></v>
 <v t="ekr.20041126124710"><vh>handleTreeClick</vh></v>
@@ -1510,9 +1511,9 @@
 <v t="ekr.20041127092231"><vh>updateComments</vh></v>
 <v t="ekr.20041127155541"><vh>updateSetterLabel</vh></v>
 </v>
-<v t="ekr.20041128042051" a="E"><vh>value handlers...</vh>
+<v t="ekr.20041128042051"><vh>value handlers...</vh>
 <v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041128081018.1" a="E"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
 <v t="ekr.20041130062919"><vh>updateConfig</vh></v>
 <v t="ekr.20041129113302"><vh>updateOneNode &amp; helper</vh>
 <v t="ekr.20041216102449"><vh>computeBodyFromFontDict</vh></v>
@@ -1523,7 +1524,7 @@
 <v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
 </v>
 </v>
-<v t="ekr.20041130061955.3" a="E"><vh>utilities...</vh>
+<v t="ekr.20041130061955.3"><vh>utilities...</vh>
 <v t="ekr.20041129182726"><vh>settingsController.es</vh></v>
 <v t="ekr.20041130191836"><vh>copyExpansionState</vh></v>
 <v t="ekr.20041128230425"><vh>get_window_info</vh></v>
@@ -1581,57 +1582,15 @@
 </v>
 </v>
 </v>
-<v t="ekr.20041216082815" a="E"><vh>(Make @font widgets fully functional)</vh>
-<v t="ekr.20041128042051.1"><vh>initValue</vh></v>
-<v t="ekr.20041129182726"><vh>settingsController.es</vh></v>
-<v t="ekr.20041127103503.8"><vh>doFont</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont  &amp; helpers</vh>
-<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
-<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20041127112925"><vh>createWidgets &amp; helpers</vh>
-<v t="ekr.20041127134208"><vh>&lt;&lt; define creatorDispatchDict &gt;&gt;</vh></v>
-<v t="ekr.20041127134208.1"><vh>createBool</vh></v>
-<v t="ekr.20041127134208.2"><vh>createColor</vh>
-<v t="ekr.20041128062141"><vh>&lt;&lt; munge val and add val to colorNamesList &gt;&gt;</vh></v>
-<v t="ekr.20041128062902"><vh>&lt;&lt; create optionMenu and callback &gt;&gt;</vh></v>
-<v t="ekr.20041128062902.1"><vh>&lt;&lt; create picker button and callback &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041127134208.3"><vh>createDirectory</vh></v>
-<v t="ekr.20041127134208.6"><vh>createFloat</vh></v>
-<v t="ekr.20041127134208.4"><vh>createFont  &amp; helpers</vh>
-<v t="ekr.20041213090401.1" a="E"><vh>createColorPicker</vh>
-<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
-<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
-<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
-<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
-</v>
-</v>
-<v t="ekr.20041127134208.5"><vh>createInt</vh></v>
-<v t="ekr.20041127134208.7"><vh>createPath</vh></v>
-<v t="ekr.20041127134208.8"><vh>createRatio</vh></v>
-<v t="ekr.20041127134208.9"><vh>createRecentFiles (finish)</vh></v>
-<v t="ekr.20041127134208.10"><vh>createShortcut </vh></v>
-<v t="ekr.20041127134613"><vh>createShortcuts (finish)</vh></v>
-<v t="ekr.20041128061452"><vh>createSpacerFrame</vh></v>
-<v t="ekr.20041127134613.1"><vh>createString</vh></v>
-<v t="ekr.20041127134613.2"><vh>createType   ??</vh></v>
-</v>
-<v t="ekr.20041128081018.1"><vh>writeChangedVars &amp; helpers</vh>
+<v t="ekr.20041216082815" a="E"><vh>(Made @font widgets fully functional)</vh>
 <v t="ekr.20041130062919"><vh>updateConfig</vh></v>
-<v t="ekr.20041129113302"><vh>updateOneNode &amp; helper</vh>
-<v t="ekr.20041216102449"><vh>computeBodyFromFontDict</vh></v>
-</v>
-<v t="ekr.20041129095748.1"><vh>writeChangedList</vh>
-<v t="ekr.20041129112522"><vh>&lt;&lt; dump all the dicts in filesInfoDict &gt;&gt;</vh></v>
-</v>
-<v t="ekr.20041129113117"><vh>writeChangesToFile</vh></v>
+<v t="ekr.20041127134208.4"><vh>createFont </vh>
+<v t="ekr.20041213090401.4"><vh>&lt;&lt; create the family option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519"><vh>&lt;&lt; create the size entry &gt;&gt;</vh></v>
+<v t="ekr.20041213090401.5"><vh>&lt;&lt; create the weight option menu &gt;&gt;</vh></v>
+<v t="ekr.20041213163519.1"><vh>&lt;&lt; create the slant option menu &gt;&gt;</vh></v>
+<v t="ekr.20041216110712"><vh>&lt;&lt; define fontCallback &gt;&gt;</vh></v>
+<v t="ekr.20041217072951"><vh>&lt;&lt; create the sample area &gt;&gt;</vh></v>
 </v>
 </v>
 </vnodes>
@@ -11270,15 +11229,15 @@ Bigger projects:
     root.wait_window(top)</t>
 <t tx="ekr.20041121151002">@nocolor</t>
 <t tx="ekr.20041121151002.1">C:\prog\leoCVS\leo\src\LeoPy.leo
-C:\prog\leoCVS\leo\dist\leoDist.leo
-C:\prog\leoCVS\leo\plugins\leoplugins.leo
-C:\prog\leoCVS\leo\plugins\leoPlugins.leo
-C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile3.leo
+C:\prog\leoCVS\leo\dist\leoDist.leo
+C:\prog\leoCVS\leo\doc\LeoDocs.leo
+C:\prog\leoCVS\leo\plugins\leoplugins.leo
 C:\prog\leoCVS\leo\doc\leodocs.leo
+C:\prog\leoCVS\leo\plugins\leoPlugins.leo
 C:\prog\leoCVS\leo\test\test.leo
 C:\prog\leoCVS\leo\test\unittest\minimalLeoFile.leo
-C:\prog\leoCVS\leo\doc\LeoDocs.leo</t>
+C:\prog\leoCVS\leo\test\unittest\minimalLeoFile2.leo</t>
 <t tx="ekr.20041124063401"></t>
 <t tx="ekr.20041124102349">class tixDialog (leoTkinterDialog.leoTkinterDialog):
     
@@ -12647,10 +12606,14 @@ for fileName in fileNames:
     }
     
     f = dispatchDict.get(name)
-    if f: f()
+    if f:
+        f()
 
     if name in (None,"OK","Cancel"):
-        self.dialog.destroy()</t>
+        self.dialog.destroy()
+    else:
+        self.dialog.withdraw()
+        self.dialog.deiconify()</t>
 <t tx="ekr.20041126110057">class settingsController:
     
     @others</t>
@@ -12664,6 +12627,7 @@ for fileName in fileNames:
     self.fileValueDict = {} # Values of settings written to file.
     self.filesInfoDict = {} # Info about all settings file in the settings outline.
         # Keys are positions, values are dicts giving info for a setting file.
+    self.fontRefs = {} # A dict to retain references to fonts.
     self.modal = False
     self.setterLabel = None
     self.suppressComments = None # position for which to suppress comments.
@@ -13012,7 +12976,6 @@ doPath = doDirectory</t>
 
     d = self.parseFont(p)
     # g.trace("\n\nfont dict...\n%s" % g.dictToString(d))
-    
     self.set(p,kind,name,d)</t>
 <t tx="ekr.20041127103503.9">def doIgnore(self,p,kind,name,val):
 
@@ -13194,16 +13157,22 @@ self.setterLabel = sc.component('label')
 <t tx="ekr.20041127134208.3">def createDirectory (self,parent,p,kind,name,val):
     
     self.createString(parent,p,kind,name,val)</t>
-<t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,name,val):
+<t tx="ekr.20041127134208.4">def createFont (self,parent,p,kind,fontName,val):
     
     """Create a font picker.  val is a dict containing the specified values."""
-    
-    d = val
+
+    d = val ; widgets = {}
+    munge = g.app.config.munge
+    f = Tk.Frame(parent) # No need to pack.
     self.alterComments = p.copy()
     self.alteredCommentsString = d.get('comments')
-
-    f = Tk.Frame(parent) # No need to pack.
-    self.createColorPicker(p,name,f,d)
+    &lt;&lt; create the family option menu &gt;&gt;
+    &lt;&lt; create the size entry &gt;&gt;
+    &lt;&lt; create the weight option menu &gt;&gt;
+    &lt;&lt; create the slant option menu &gt;&gt;
+    &lt;&lt; define fontCallback &gt;&gt;
+    &lt;&lt; create the sample area &gt;&gt;
+    self.initValue(p,munge(fontName),'font',d,fontCallback)
 
     self.sc.create_window(15,self.h,anchor='w',window = f)
     self.h += 30</t>
@@ -13674,11 +13643,23 @@ print ; print</t>
     """Update the core config settings from the changes list."""
     
     munge = g.app.config.munge
-    
+
     for data in changes:
         p,name,kind,oldval,val = data
         if munge(kind) == 'font':
-            g.trace("to do: update settings from font dict")
+            for key in ('family','size','slant','weight'):
+                data2 = val.get(key)
+                if data2:
+                    name2,val2 = data2
+                    kind2 = g.choose(key=='size','int','string')
+                    g.app.config.set(c,name2,kind2,val2)
+            # Update the visible fonts: c may not be the same as self.c.
+            for c2 in (c,self.c):
+                c2.frame.body.setFontFromConfig()
+                c2.frame.body.colorizer.setFontFromConfig()
+                c2.frame.log.setFontFromConfig()
+                c2.frame.tree.setFontFromConfig()
+                c2.redraw()
         elif munge(name) == "recentfiles":
             c.setRecentFiles(val)
         else:
@@ -13741,9 +13722,7 @@ if name in ("OK","Cancel"):</t>
 
 First:
 
-- Make size functional.  Maybe use mega widget.
-- Show sample of font in setter.
-- Keep setter dialog in front!</t>
+- Update all font settings immediately.</t>
 <t tx="ekr.20041213075902"># The font for the log pane. Default is default font for Tk.Text widgets.
 # Tk translates invalid font names to another font in a system-dependent way.
 # 
@@ -13751,24 +13730,13 @@ First:
 
 log_text_font_family = None
 log_text_font_size = None
-log_text_font_slant = normal
-log_text_font_weight = bold
+log_text_font_slant = None
+log_text_font_weight = normal
 </t>
-<t tx="ekr.20041213090401.1">def createColorPicker (self,p,name,f,d):
-    
-    munge = g.app.config.munge
-    widgets = {}
-    
-    &lt;&lt; create the family option menu &gt;&gt;
-    &lt;&lt; create the size entry &gt;&gt;
-    &lt;&lt; create the weight option menu &gt;&gt;
-    &lt;&lt; create the slant option menu &gt;&gt;
-    &lt;&lt; define fontCallback &gt;&gt;
-    self.initValue(p,munge(name),'font',d,fontCallback)</t>
 <t tx="ekr.20041213090401.4">names = tkFont.families()
 names = list(names)
 names.sort()
-names.insert(0,'&lt;none&gt;')
+names.insert(0,'&lt;None&gt;')
 
 data = d.get('family')
 initialitem = 0
@@ -13776,19 +13744,24 @@ if data:
     name2,val = data
     if val and val in names:
         initialitem = names.index(val)
+        
+label_text = "%s:" % (fontName)
 
 familyMenu = Pmw.OptionMenu(f,
-    labelpos="we",label_text="Family:",
+    labelpos="we",label_text=label_text,
     items=names,initialitem=initialitem)
 familyMenu.pack(side="left",padx=2)
 
 familyVar = Tk.StringVar()
 familyVar.set(names[initialitem])
 
+labelButton = familyMenu.component('label')
+labelButton.configure(width=20,anchor='e')
+
 familyButton = familyMenu.component('menubutton')
 familyButton.configure(width=20,textvariable=familyVar)</t>
 <t tx="ekr.20041213090401.5">initialitem = 0
-values = ["normal","bold"]
+values = ['&lt;None&gt;','normal','bold']
 data = d.get('weight')
 if data:
     kind,val = data
@@ -13839,14 +13812,9 @@ if data:
             sizeEntry.insert('end',val)
         except ValueError:
             s = "invalid size: %s" % val
-            print s ; self.es(s,color="blue")
-            
-def validateCallback():
-    return 1
-
-#sizeEntry.configure(validate='key',validateCommand=validateCallback)</t>
+            print s ; self.es(s,color="blue")</t>
 <t tx="ekr.20041213163519.1">initialitem = 0
-values=["normal","italic"]
+values=['&lt;None&gt;','roman','italic']
 data = d.get('slant')
 if data:
     kind,val = data
@@ -13863,11 +13831,7 @@ slantVar.set(values[initialitem])
 
 slantButton = slantMenu.component('menubutton')
 slantButton.configure(width=7,textvariable=slantVar)</t>
-<t tx="ekr.20041213172250">@strings[x,y,z] name = val
-@ints[n1,n2,...] name = val
-
-This is required</t>
-<t tx="ekr.20041216082815"></t>
+<t tx="ekr.20041216082815"># There was a bug in the leoTkinterTree logic: recycled widgets didn't have their font updated.</t>
 <t tx="ekr.20041216085206">class logClass:
     
     def __init__ (self,textWidget):
@@ -13937,11 +13901,45 @@ w.update_idletasks()</t>
     ):
         if var:
             val = var.get()
-            # g.trace(val)
-            data = d.get(key)
-            name,oldval = data
-            d2[key] = name,val
+        else:
+            val = sizeEntry.get().strip()
+        if val in (u'','','None','none','&lt;None&gt;','&lt;none&gt;',): val = None
+        data = d.get(key)
+        name,oldval = data
+        d2[key] = name,val
 
     return d2</t>
+<t tx="ekr.20041217032543">@strings[x,y,z] name = val
+@ints[n1,n2,...] name = val</t>
+<t tx="ekr.20041217033348"></t>
+<t tx="ekr.20041217042849"># The font for the log pane. Default is default font for Tk.Text widgets.
+# Tk translates invalid font names to another font in a system-dependent way.
+# 
+# Default size is 12 for Linux, 8 otherwise.
+
+body_text_font_family = Courier New
+body_text_font_size = None
+body_text_font_slant = None
+body_text_font_weight = None
+</t>
+<t tx="ekr.20041217072951">if 0:
+    sample = Tk.Text(f,width = 20,height=1)
+    sample.pack(side="left")
+    
+    sample.insert('end','sample')
+    
+    params = [] ; d2 = fontCallback()
+    for key in ('family','size','slant','weight'):
+        param = d2.get(key)
+        if param:
+            name,val = param
+        params.append(val)
+        
+    font = g.app.gui.getFontFromParams(params[0],params[1],params[2],params[3])
+    
+    self.fontRefs[fontName] = font
+    g.trace(fontName,font,params)
+    
+    sample.configure(font=font)</t>
 </tnodes>
 </leo_file>
