@@ -3540,6 +3540,7 @@ class tangleCommands:
 			#@+body
 			if btest(old_bits,comment_bits)or btest(old_bits,language_bits):
 				 pass # Do nothing more.
+				 
 			elif btest(bits,comment_bits):
 				i = dict["comment"]
 				# self.set_root_delims(s[i:])
@@ -3553,6 +3554,7 @@ class tangleCommands:
 				else:
 					if issue_error_flag:
 						es("ignoring: " + s[i:])
+			
 			elif btest(bits,language_bits):
 				issue_error_flag = false
 				i = dict["language"]
