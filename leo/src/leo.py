@@ -75,6 +75,9 @@ def run(fileName=None,*args,**keywords):
         g.os_path_join(g.app.loadDir,'..','extensions'))
     
     g.app.globalConfigDir = computeGlobalConfigDir()
+    
+    g.app.testDir = g.os_path_abspath(
+        g.os_path_join(g.app.loadDir,'..','test'))
     #@nonl
     #@-node:ekr.20041219072416:<< compute directories >>
     #@nl
