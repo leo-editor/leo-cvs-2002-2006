@@ -148,9 +148,10 @@ class baseLeoImportCommands:
             for fileName in files:
                 v = self.createOutline(fileName,current)
                 if v: # createOutline may fail.
-                    if perfectImport:
+                    if perfectImport and treeType == "@file": # Can't correct @root trees.
                         self.perfectImport(fileName,v,testing=testing,verbose=verbose)
-                    g.es("imported " + fileName)
+                    else:
+                        g.es("imported " + fileName,color="blue")
                     v.contract()
                     v.setDirty()
                     c.setChanged(True)
@@ -663,7 +664,47 @@ class baseLeoImportCommands:
     #@+node:EKR.20040506075328.2:perfectImport
     def perfectImport (self,fileName,p,testing=False,verbose=False):
         
-        c = self.c
+        #@    << about this algorithm >>
+        #@+node:ekr.20040717112739:<< about this algorithm >>
+        #@@nocolor
+        #@+at
+        # 
+        # This algorithm corrects the result of an Import To @file command so 
+        # that it is guaranteed that the result of writing the imported file 
+        # will be identical to the original file except for any sentinels that 
+        # have been inserted.
+        # 
+        # On entry, p points to the newly imported outline.
+        # 
+        # We correct the outline by applying Bernhard Mulder's algorithm.
+        # 
+        # 1.  We use the atFile.write code to write the newly imported outline 
+        # to a string s.  This string contains represents a thin derived file, 
+        # so it can be used to recreate then entire outline structure without 
+        # any other information.
+        # 
+        # Splitting s into lines creates the fat_lines argument to mu methods.
+        # 
+        # 2. We make corrections to fat_lines using Mulder's algorithm.  The 
+        # corrected fat_lines represents the corrected outline.  To do this, 
+        # we set the arguments as follows:
+        # 
+        # - i_lines: fat_lines stripped of sentinels
+        # - j_lines to the lines of the original imported file.
+        # 
+        # The algorithm updates fat_lines using diffs between i_lines and 
+        # j_lines.
+        # 
+        # 3. Mulder's algorithm doesn't specify which nodes have been 
+        # changed.  In fact, it Mulder's algorithm doesn't really understand 
+        # nodes at all.  Therefore, if we want to mark changed nodes we do so 
+        # by comparing the original version of the imported outline with the 
+        # corrected version of the outline.
+        #@-at
+        #@nonl
+        #@-node:ekr.20040717112739:<< about this algorithm >>
+        #@nl
+        c = p.c ; root = p.copy()
         df = c.atFileCommands.new_df
         if testing:
             #@        << clear all dirty bits >>
@@ -689,57 +730,66 @@ class baseLeoImportCommands:
         #@nl
         #@    << Write p to to string s >>
         #@+node:ekr.20040716064333.1:<< Write p to to string s >>
-        
         df.write(p,thinFile=True,toString=True)
         s = df.stringOutput
         if not s: return
         #@-node:ekr.20040716064333.1:<< Write p to to string s >>
         #@nl
+    
+        # Set up the data for the algorithm.
         mu = g.mulderUpdateAlgorithm(testing=testing,verbose=verbose)
         marker = mu.marker_from_extension(fileName)
-    
         fat_lines = g.splitLines(s) # Keep the line endings.
         i_lines,mapping = mu.create_mapping(fat_lines,marker)
         j_lines = file(fileName).readlines()
         
+        # Correct write_lines using the algorihm.
         if i_lines != j_lines:
             g.es("Running Perfect Import",color="blue")
             write_lines = mu.propagateDiffsToSentinelsLines(i_lines,j_lines,fat_lines,mapping)
-            #@        << trace results >>
-            #@+node:ekr.20040716062411:<< trace results >>
-            pass
+            if 0: # For testing.
+                #@            << put the corrected fat lines in a new node >>
+                #@+node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
+                write_lines_node = root.insertAfter()
+                write_lines_node.initHeadString("write_lines")
+                s = ''.join(write_lines)
+                write_lines_node.scriptSetBodyString(s,encoding=g.app.tkEncoding)
+                #@nonl
+                #@-node:ekr.20040717132539:<< put the corrected fat lines in a new node >>
+                #@nl
+            #@        << correct root's tree using write_lines >>
+            #@+node:ekr.20040717113036:<< correct root's tree using write_lines >>
+            #@+at 
             #@nonl
-            #@-node:ekr.20040716062411:<< trace results >>
-            #@nl
-            #@        << replace root's tree by reading write_lines >>
-            #@+node:EKR.20040506115229:<< replace root's tree by reading write_lines >>
-            if 0:
-                
-                # What about tnodeLists's?  How can we read without them?
-                
-                # Do we need to replace?
-                # Wouldn't it be better to tell which nodes were corrected?
-                
-                if 0: # Remove all of root's tree.
-                    while p.hasChildren():
-                        child = p.firstChild()
-                        child.doDelete(p)
-                    
-                p.setBodyStringOrPane("")
+            # Notes:
+            # 1. This code must overwrite the newly-imported tree because the 
+            # gnx's in
+            # write_lines refer to those nodes.
+            # 
+            # 2. The code in readEndNode now reports when nodes change during 
+            # importing. This
+            # code also marks changed nodes.
+            #@-at
+            #@@c
             
-                try:
-                    df.targetFileName = "<virtual-file>"
-                    df.inputFile = fo = g.fileLikeObject()
-                    fo.set(''.join(write_lines))
-                    df.readOpenFile(p)
-                    g.trace("imported lines have been corrected")
-                except:
-                    g.es("Exception in Perfect Import")
-                    g.es_exception()
-                    s = None
+            try:
+                df.correctedLines = 0
+                df.targetFileName = fileName = "<perfectImport string-file>"
+                df.inputFile = fo = g.fileLikeObject()
+                df.file = fo # Strange, that this is needed.  Should be cleaned up.
+                for line in write_lines:
+                    fo.write(line)
+                firstLines,junk = c.atFileCommands.scanHeader(fo,fileName)
+                df.readOpenFile(root,fo,firstLines,perfectImportRoot=root)
+                g.es("The %d marked nodes have been corrected" % df.correctedLines,color="blue")
+            except:
+                g.es("Exception in Perfect Import",color="red")
+                g.es_exception()
+                s = None
             #@nonl
-            #@-node:EKR.20040506115229:<< replace root's tree by reading write_lines >>
+            #@-node:ekr.20040717113036:<< correct root's tree using write_lines >>
             #@nl
+            c.redraw()
     #@nonl
     #@-node:EKR.20040506075328.2:perfectImport
     #@+node:ekr.20031218072017.3241:Scanners for createOutline
